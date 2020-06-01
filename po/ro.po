@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-01 00:27+0000\n"
-"PO-Revision-Date: 2020-05-18 02:16+0300\n"
+"PO-Revision-Date: 2020-06-01 13:48+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -604,7 +604,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid "Improvements for the Wavelet Decompose filter"
-msgstr ""
+msgstr "Îmbunătățiri pentru filtrul de descompunere în vălurele"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid "Improved compatibility with Photoshop .psd files"
@@ -4384,7 +4384,6 @@ msgstr ""
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Lipit ca strat nou deoarece pixelii țintă sunt blocați."
 
-# hm ? sau nu este ?
 #: ../app/actions/edit-commands.c:646
 msgid "There is no active layer or channel to cut from."
 msgstr "Nu există niciun strat activ sau canal din care să se poată tăia."
@@ -4394,7 +4393,6 @@ msgstr "Nu există niciun strat activ sau canal din care să se poată tăia."
 msgid "(Unnamed Buffer)"
 msgstr "(Zonă tampon nedenumită)"
 
-# hm ? sau nu este ?
 #: ../app/actions/edit-commands.c:678
 msgid "There is no active layer or channel to copy from."
 msgstr "Nu există niciun strat activ sau canal din care să se poată copia."
@@ -5895,7 +5893,7 @@ msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
 msgstr ""
-"Selectați de câte ori\n"
+"Selectează de câte ori\n"
 "să fie multiplicat segmentul selectat."
 
 #: ../app/actions/gradient-editor-commands.c:434
@@ -5903,7 +5901,7 @@ msgid ""
 "Select the number of times\n"
 "to replicate the selection."
 msgstr ""
-"Selectați de câte ori\n"
+"Selectează de câte ori\n"
 "să fie multiplicată selecția."
 
 #: ../app/actions/gradient-editor-commands.c:502
@@ -5931,7 +5929,7 @@ msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
 msgstr ""
-"Selectați numărul de părți uniforme\n"
+"Selectează numărul de părți uniforme\n"
 "în care să fie divizat segmentul selectat."
 
 #: ../app/actions/gradient-editor-commands.c:546
@@ -5939,7 +5937,7 @@ msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
 msgstr ""
-"Selectați numărul de părți uniforme\n"
+"Selectează numărul de părți uniforme\n"
 "în care să fie divizate segmentele selectate."
 
 #: ../app/actions/gradients-actions.c:44
@@ -6634,7 +6632,7 @@ msgstr ""
 
 #: ../app/actions/items-commands.c:289 ../app/actions/items-commands.c:334
 msgid "There is no active layer or channel to stroke to."
-msgstr "Nu este niciun strat sau canal activ care să fie conturat."
+msgstr "Nu există niciun strat sau canal activ care să fie conturat."
 
 #: ../app/actions/layers-actions.c:52
 msgctxt "layers-action"
@@ -9592,7 +9590,7 @@ msgstr "Intenția _de randare a afișării"
 #: ../app/actions/view-actions.c:82
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "Intenția de ra_ndare a simulării de tipărire (soft-proof)"
+msgstr "Intenția de ra_ndare a simulării de tipărire (soft-proofing)"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -9715,12 +9713,12 @@ msgstr ""
 #: ../app/actions/view-actions.c:156
 msgctxt "view-action"
 msgid "Soft-_Proofing Profile..."
-msgstr ""
+msgstr "Profil pentru simularea de tipărire (soft-proofing)..."
 
 #: ../app/actions/view-actions.c:157
 msgctxt "view-action"
 msgid "Set the soft-proofing profile"
-msgstr ""
+msgstr "Stabilește profilul pentru simularea de tipărire (soft-proofing)"
 
 #: ../app/actions/view-actions.c:162
 msgctxt "view-action"
@@ -9773,15 +9771,17 @@ msgctxt "view-action"
 msgid "Use color management for this view"
 msgstr "Folosește gestionarea culorilor pentru această vizualizare"
 
+# hm ?
 #: ../app/actions/view-actions.c:199
 msgctxt "view-action"
 msgid "_Proof Colors"
-msgstr ""
+msgstr "_Culori de simulare"
 
 #: ../app/actions/view-actions.c:200
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
 msgstr ""
+"Folosește această vizualizare pentru simularea de tipărire (soft-proofing)"
 
 #: ../app/actions/view-actions.c:206 ../app/actions/view-actions.c:213
 msgctxt "view-action"
@@ -9797,6 +9797,8 @@ msgstr "Folosește compensarea punctului de negru pentru afișarea imaginii"
 msgctxt "view-action"
 msgid "Use black point compensation for soft-proofing"
 msgstr ""
+"Folosește compensarea punctului de negru pentru simularea de tipărire (soft-"
+"proofing)"
 
 #: ../app/actions/view-actions.c:220
 msgctxt "view-action"
@@ -9809,6 +9811,8 @@ msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target color "
 "space"
 msgstr ""
+"La simularea de tipărire (soft-proofing), marchează culorile care nu pot fi "
+"reprezentate în spațiul de culoare țintă"
 
 #: ../app/actions/view-actions.c:228
 msgctxt "view-action"
@@ -10241,25 +10245,28 @@ msgstr "Intenția de randare a afișării este colorimetric absolut"
 #: ../app/actions/view-actions.c:574
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "Intenția de randare a _simulării de tipărire (soft-proof) este perceptiv"
+msgstr ""
+"Intenția de randare a simulării de tipărire (soft-proofing) este perceptiv"
 
 #: ../app/actions/view-actions.c:580
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
 msgstr ""
-"Intenția de ra_ndare a simulării de tipărire (soft-proof) este colorimetric "
+"Intenția de randare a simulării de tipărire (soft-proofing) este colorimetric "
 "relativ"
 
 #: ../app/actions/view-actions.c:586
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "Intenția de ra_ndare a simulării de tipărire (soft-proof) este saturație"
+msgstr ""
+"Intenția de randare a simulării de tipărire (soft-proofing) este saturație"
 
 #: ../app/actions/view-actions.c:592
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
 msgstr ""
-"Intenția de ra_ndare a simulării de tipărire (soft-proof) este colorimetrie"
+"Intenția de randare a simulării de tipărire (soft-proofing) este colorimetric "
+"absolut"
 
 #: ../app/actions/view-actions.c:600
 msgctxt "view-padding-color"
@@ -10862,8 +10869,8 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to focus\"."
 msgstr ""
 "Când opțiunea este activată, o imagine va deveni imaginea activă atunci când "
-"fereastra ei primește focalizarea. Aceasta este util pentru gestionarele de "
-"ferestre care folosesc „clic pentru a focaliza”."
+"fereastra ei primește focalizarea. Această opțiune este utilă pentru "
+"gestionarele de ferestre care folosesc „clic pentru a focaliza”."
 
 #: ../app/config/gimprc-blurbs.h:23 ../app/config/gimprc-blurbs.h:28
 msgid "Sets the dynamics search path."
@@ -10881,6 +10888,8 @@ msgid ""
 "Specifies whether to keep the canvas padding when \"View -> Show All\" is "
 "enabled."
 msgstr ""
+"Specifică dacă să fie păstrată umplerea canavalei atunci când opțiunea "
+"'Vizualizare -> Arată tot' este activată."
 
 #: ../app/config/gimprc-blurbs.h:41
 msgid "Specifies how the area around the image should be drawn."
@@ -11157,6 +11166,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:301
 msgid "When enabled, non-visible layers can be edited as normal."
 msgstr ""
+"Când opțiunea este activată, straturile non-vizibile pot fi editate la fel ca "
+"unele normale."
 
 #: ../app/config/gimprc-blurbs.h:304
 msgid ""
@@ -11240,6 +11251,9 @@ msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
 msgstr ""
+"Când opțiunea este activată, GIMP va încerca să restaureze ferestrele pe "
+"monitorul în care erau deschise înainte.  Când opțiunea este dezactivată, "
+"ferestrele vor apărea pe monitorul utilizat în prezent."
 
 #: ../app/config/gimprc-blurbs.h:373
 msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
@@ -11252,6 +11266,9 @@ msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
 msgstr ""
+"Când opțiunea este activată, aceleași instrumente și opțiuni de instrumente vor "
+"fi folosite pentru toate dispozitivele de introducere. Nu se va schimba niciun "
+"instrument atunci când dispozitivul de intrare se schimbă."
 
 #: ../app/config/gimprc-blurbs.h:382
 msgid ""
@@ -11270,7 +11287,6 @@ msgid "Save the tool options when GIMP exits."
 msgstr "Salvează opțiunile de instrumente la ieșirea GIMP."
 
 #: ../app/config/gimprc-blurbs.h:395
-#, fuzzy
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -11279,12 +11295,11 @@ msgstr ""
 "previzualizare a conturului penelului actual."
 
 #: ../app/config/gimprc-blurbs.h:399
-#, fuzzy
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr ""
-"Când opțiunea este activată, indicatorul de maus va fi arătat peste imagine în "
-"timpul folosirii unui instrument de pictură."
+"Când opțiunea este activată, conturul penelului va acroșa la petele individuale "
+"în timp ce se pictează."
 
 #: ../app/config/gimprc-blurbs.h:403
 msgid ""
@@ -11294,10 +11309,9 @@ msgid ""
 msgstr ""
 "Când opțiunea este activată, dialogurile vor arăta un buton de ajutor care "
 "permite accesul la pagina de ajutor asociată. Fără acest buton, pagina de "
-"ajutor poate fi încă accesată prin apăsarea F1."
+"ajutor poate fi încă accesată prin apăsarea tastei F1."
 
 #: ../app/config/gimprc-blurbs.h:408
-#, fuzzy
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
@@ -11310,85 +11324,88 @@ msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled with "
 "the \"View->Show Menubar\" command."
 msgstr ""
-"Când opțiunea este activată, bara de meniu este vizibilă implicit. Această "
-"opțiune poate fi de asemenea comutată cu comanda „Vizualizare -> Arată bara de "
-"meniu”."
+"Când opțiunea este activată, bara de meniu este vizibilă în mod implicit. "
+"Această opțiune poate fi de asemenea comutată cu comanda 'Vizualizare -> Arată "
+"bara de meniu'."
 
 #: ../app/config/gimprc-blurbs.h:416
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled with "
 "the \"View->Show Rulers\" command."
 msgstr ""
-"Când opțiunea este activată, riglele sunt vizibile implicit. Această opțiune "
-"poate fi de asemenea comutată cu opțiunea „Vizualizare -> Arată riglele”."
+"Când opțiunea este activată, riglele sunt vizibile în mod implicit. Această "
+"opțiune poate fi de asemenea comutată cu comanda 'Vizualizare -> Arată riglele'."
 
 #: ../app/config/gimprc-blurbs.h:420
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be toggled "
 "with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Când opțiunea este activată, barele de derulare sunt vizibile implicit. Această "
-"opțiune poate fi de asemenea comutată cu opțiunea „Vizualizare -> Arată barele "
-"de derulare”."
+"Când opțiunea este activată, barele de derulare sunt vizibile în mod implicit. "
+"Această opțiune poate fi de asemenea comutată cu comanda 'Vizualizare -> Arată "
+"barele de derulare'."
 
 #: ../app/config/gimprc-blurbs.h:424
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
-"Când opțiunea este activată, bara de stare este vizibilă implicit. Această "
-"opțiune poate fi de asemenea comutată cu opțiunea „Vizualizare -> Arată bara de "
-"stare”."
+"Când opțiunea este activată, bara de stare este vizibilă în mod implicit. "
+"Această opțiune poate fi de asemenea comutată cu comanda 'Vizualizare -> Arată "
+"bara de stare'."
 
 #: ../app/config/gimprc-blurbs.h:428
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"Când opțiunea este activată, selecția este vizibilă implicit. Această opțiune "
-"poate fi de asemenea comutată cu opțiunea „Vizualizare -> Arată selecția”."
+"Când opțiunea este activată, selecția este vizibilă în mod implicit. Această "
+"opțiune poate fi de asemenea comutată cu comanda 'Vizualizare -> Arată "
+"selecția'."
 
 #: ../app/config/gimprc-blurbs.h:432
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
-"Când opțiunea este activată, limitele stratului sunt vizibile implicit. Aceasta "
-"poate fi comutată și cu comanda Vizualizare -> Arată limitele stratului."
+"Când opțiunea este activată, limita stratului este vizibilă în mod implicit. "
+"Această opțiune poate fi de asemenea comutată cu comanda 'Vizualizare -> Arată "
+"limitele stratului'."
 
 #: ../app/config/gimprc-blurbs.h:436
-#, fuzzy
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
 msgstr ""
-"Când opțiunea este activată, limitele stratului sunt vizibile implicit. Aceasta "
-"poate fi comutată și cu comanda Vizualizare -> Arată limitele stratului."
+"Când opțiunea este activată, limita canavalei este vizibilă în mod implicit. "
+"Această opțiune poate fi de asemenea comutată cu comanda 'Vizualizare -> Arată "
+"limitele stratului'."
 
 #: ../app/config/gimprc-blurbs.h:440
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled with "
 "the \"View->Show Guides\" command."
 msgstr ""
-"Când opțiunea este activată, ghidajele sunt vizibile implicit. Această opțiune "
-"poate fi de asemenea comutată cu opțiunea „Vizualizare -> Arată ghidajele”."
+"Când opțiunea este activată, ghidajele sunt vizibile în mod implicit. Această "
+"opțiune poate fi de asemenea comutată cu opțiunea 'Vizualizare -> Arată "
+"ghidajele'."
 
 #: ../app/config/gimprc-blurbs.h:444
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with the "
 "\"View->Show Grid\" command."
 msgstr ""
-"Când opțiunea este activată, grila este vizibilă implicit. Această opțiune "
-"poate fi de asemenea comutată cu opțiunea „Vizualizare -> Arată grila”."
+"Când opțiunea este activată, grila este vizibilă în mod implicit. Această "
+"opțiune poate fi de asemenea comutată cu opțiunea 'Vizualizare -> Arată grila'."
 
 #: ../app/config/gimprc-blurbs.h:448
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
-"Când opțiunea este activată, punctele eșantion sunt vizibile implicit. Această "
-"opțiune poate fi de asemenea comutată cu comanda „Vizualizare -> Arată punctele "
-"eșantion”."
+"Când opțiunea este activată, punctele eșantion sunt vizibile în mod implicit. "
+"Această opțiune poate fi de asemenea comutată cu comanda 'Vizualizare -> Arată "
+"punctele eșantion'."
 
 #: ../app/config/gimprc-blurbs.h:452
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -11781,8 +11798,7 @@ msgstr "Stabilește dimensiunea previzualizărilor în istoricul de operații."
 
 #: ../app/config/gimprc-blurbs.h:720
 msgid "When enabled, pressing F1 will open the help browser."
-msgstr ""
-"Când opțiunea este activată, tastarea F1 va deschide navigatorul de ajutor."
+msgstr "Când opțiunea este activată, tastarea F1 va deschide browserul de ajutor."
 
 #: ../app/config/gimprc-blurbs.h:723
 msgid "When enabled, uses OpenCL for some operations."
@@ -11791,6 +11807,8 @@ msgstr "Când opțiunea este activată, folosește OpenCL pentru unele operații
 #: ../app/config/gimprc-blurbs.h:741
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
+"Când opțiunea este activată, o căutare de acțiuni va returna de asemenea "
+"acțiunile inactive."
 
 #: ../app/config/gimprc-blurbs.h:744
 msgid "The maximum number of actions saved in history."
@@ -12763,7 +12781,7 @@ msgstr "Module"
 #: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:111
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr "Interpretorul batch „%s” nu este disponibil. Módul batch este dezactivat."
+msgstr "Interpretorul batch „%s” nu este disponibil. Modul batch este dezactivat."
 
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:338
 #: ../app/core/gimptooloptions.c:361 ../app/gui/session.c:450
@@ -14103,7 +14121,7 @@ msgstr "Stratul de combinat în jos este blocat."
 
 #: ../app/core/gimpimage-merge.c:311
 msgid "There is no visible layer to merge down to."
-msgstr "Nu este niciun strat vizibil de combinat în jos."
+msgstr "Nu există niciun strat vizibil de combinat în jos."
 
 #: ../app/core/gimpimage-merge.c:317
 msgctxt "undo-type"
@@ -14660,14 +14678,13 @@ msgctxt "undo-type"
 msgid "Remove Holes"
 msgstr "Eliminare de găuri"
 
-# hm ? sau nu este ?
 #: ../app/core/gimpselection.c:306
 msgid "There is no selection to fill."
 msgstr "Nu există nicio selecție care să fie umplută."
 
 #: ../app/core/gimpselection.c:342
 msgid "There is no selection to stroke."
-msgstr "Nu este nicio selecție care să fie conturată."
+msgstr "Nu există nicio selecție care să fie conturată."
 
 #: ../app/core/gimpselection.c:699
 msgid "Unable to cut or copy because the selected region is empty."
@@ -14941,7 +14958,7 @@ msgstr "Profil de culoare"
 
 #: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:110
 msgid "Fill type"
-msgstr ""
+msgstr "Tip de umplere"
 
 #: ../app/core/gimptemplate.c:236
 msgid "Comment"
@@ -15219,7 +15236,7 @@ msgstr "Profil de simulare de tipărire (soft-proof)"
 
 #: ../app/dialogs/color-profile-dialog.c:203
 msgid "Select Soft-Proof Profile"
-msgstr "Selectați profilul de simulare de tipărire"
+msgstr "Selectează profilul de simulare de tipărire (soft-proof)"
 
 #: ../app/dialogs/color-profile-dialog.c:209
 #: ../app/tools/gimpforegroundselecttool.c:321
@@ -15250,7 +15267,7 @@ msgstr "_Compensare punct de negru"
 
 #: ../app/dialogs/color-profile-dialog.c:386
 msgid "Select Destination Profile"
-msgstr "Selectați profilul de destinație"
+msgstr "Selectează profilul de destinație"
 
 #: ../app/dialogs/color-profile-dialog.c:485
 #: ../app/widgets/gimpwidgets-constructors.c:86
@@ -15622,7 +15639,7 @@ msgid "You are trying to create an image with a size of %s."
 msgstr "Încercați să creați o imagine cu dimensiunea %s."
 
 #: ../app/dialogs/image-new-dialog.c:348
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
 "\"Maximum new image size\" in the Preferences dialog (currently %s)."
@@ -15694,7 +15711,7 @@ msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:262
 msgid "Is this what you want to do?"
-msgstr "Este acest lucru ceeace vreți să faceți?"
+msgstr "Este acest lucru ceea ce vreți să faceți?"
 
 #: ../app/dialogs/input-devices-dialog.c:59
 msgid "Configure Input Devices"
@@ -15926,7 +15943,7 @@ msgstr "_Importă"
 #. The "Source" frame
 #: ../app/dialogs/palette-import-dialog.c:201
 msgid "Select Source"
-msgstr "Selectați sursa"
+msgstr "Selectează sursa"
 
 #: ../app/dialogs/palette-import-dialog.c:212
 #: ../app/dialogs/preferences-dialog.c:1723
@@ -15989,7 +16006,6 @@ msgstr "Previzualizare"
 msgid "The selected source contains no colors."
 msgstr "Sursa selectată nu conține culori."
 
-# hm ? sau nu este ?
 #: ../app/dialogs/palette-import-dialog.c:466
 msgid "There is no palette to import."
 msgstr "Nu există nicio paletă de importat."
@@ -16109,7 +16125,7 @@ msgstr "Stabilește culoarea personalizată de umplere a canavalei"
 
 #: ../app/dialogs/preferences-dialog.c:1016
 msgid "_Keep canvas padding in \"Show All\" mode"
-msgstr ""
+msgstr "_Păstrează umplerea canavalei în módul 'Arată tot'"
 
 #: ../app/dialogs/preferences-dialog.c:1041
 msgid "Snap to _Guides"
@@ -16146,7 +16162,7 @@ msgstr "Numărul minim al nivel_urilor de anulări:"
 
 #: ../app/dialogs/preferences-dialog.c:1185
 msgid "Maximum undo _memory:"
-msgstr "_Memorie maximă pentru anulări:"
+msgstr "_Memoria maximă pentru anulări:"
 
 #: ../app/dialogs/preferences-dialog.c:1188
 msgid "Tile cache _size:"
@@ -16158,7 +16174,7 @@ msgstr "Dimensiunea maximă a unei imagi _noi:"
 
 #: ../app/dialogs/preferences-dialog.c:1195
 msgid "S_wap compression:"
-msgstr "Comprimare memorie virtuală (s_wap):"
+msgstr "Comprimarea memoriei virtuale (s_wap):"
 
 #: ../app/dialogs/preferences-dialog.c:1200
 msgid "Number of _threads to use:"
@@ -16184,7 +16200,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1220
 msgid "Network access"
-msgstr "Acces de rețea"
+msgstr "Acces la rețea"
 
 #: ../app/dialogs/preferences-dialog.c:1224
 msgid "Check for updates (requires internet)"
@@ -16197,11 +16213,11 @@ msgstr "Miniaturi de imagine"
 
 #: ../app/dialogs/preferences-dialog.c:1234
 msgid "Size of _thumbnails:"
-msgstr "Dimensiune de minia_turi:"
+msgstr "Dimensiunea de minia_turilor:"
 
 #: ../app/dialogs/preferences-dialog.c:1238
 msgid "Maximum _filesize for thumbnailing:"
-msgstr "Dimensiune maximă pentru _fișierele de miniaturi:"
+msgstr "Dimensiunea maximă pentru _fișierele de miniaturi:"
 
 #: ../app/dialogs/preferences-dialog.c:1245
 msgid "_Keep record of used files in the Recent Documents list"
@@ -16260,11 +16276,11 @@ msgstr "Afișor cu gestionare colorimetrică"
 
 #: ../app/dialogs/preferences-dialog.c:1360
 msgid "Select Monitor Color Profile"
-msgstr "Selectați profilul de culoare al monitorului"
+msgstr "Selectează profilul de culoare al monitorului"
 
 #: ../app/dialogs/preferences-dialog.c:1361
 msgid "_Monitor profile:"
-msgstr "Profil de _monitor:"
+msgstr "Profilul de _monitor:"
 
 #: ../app/dialogs/preferences-dialog.c:1367
 msgid "_Try to use the system monitor profile"
@@ -16272,7 +16288,7 @@ msgstr "Încearcă folosirea profilului de moni_tor"
 
 #: ../app/dialogs/preferences-dialog.c:1376
 msgid "_Rendering intent:"
-msgstr "Intenție de _randare:"
+msgstr "Intenția de _randare:"
 
 #: ../app/dialogs/preferences-dialog.c:1381
 msgid "Use _black point compensation"
@@ -16295,19 +16311,20 @@ msgstr "_Optimizează afișarea imaginii pentru:"
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1395
 msgid "Soft-Proofing"
-msgstr ""
+msgstr "Simulare de tipărire (soft-proofing)"
 
 #: ../app/dialogs/preferences-dialog.c:1405
 msgid "Select Soft-Proofing Color Profile"
-msgstr "Selectați profilul de culoare pentru simularea de tipărire (soft-proof)"
+msgstr ""
+"Selectează profilul de culoare pentru simularea de tipărire (soft-proofing)"
 
 #: ../app/dialogs/preferences-dialog.c:1406
 msgid "_Soft-proofing profile:"
-msgstr "Profil pentru _simulare de tipărire (soft-proof)"
+msgstr "Profilul pentru _simularea de tipărire (soft-proofing)"
 
 #: ../app/dialogs/preferences-dialog.c:1412
 msgid "Re_ndering intent:"
-msgstr "Intenție de ra_ndare:"
+msgstr "Intenția de ra_ndare:"
 
 #: ../app/dialogs/preferences-dialog.c:1417
 msgid "Use black _point compensation"
@@ -16315,7 +16332,7 @@ msgstr "Folosește compensarea _punctului de negru"
 
 #: ../app/dialogs/preferences-dialog.c:1427
 msgid "O_ptimize soft-proofing for:"
-msgstr ""
+msgstr "Optimizează simularea de tipărire (soft-proofing) pentru:"
 
 #: ../app/dialogs/preferences-dialog.c:1436
 msgid "Mar_k out of gamut colors"
@@ -16332,24 +16349,23 @@ msgstr "Profiluri preferate"
 
 #: ../app/dialogs/preferences-dialog.c:1461
 msgid "Select Preferred RGB Color Profile"
-msgstr "Selectați profilul de culoare RGB preferat"
+msgstr "Selectează profilul de culoare RGB preferat"
 
 #: ../app/dialogs/preferences-dialog.c:1462
 msgid "_RGB profile:"
 msgstr "Profil _RGB:"
 
 #: ../app/dialogs/preferences-dialog.c:1469
-#, fuzzy
 msgid "Select Preferred Grayscale Color Profile"
-msgstr "Selectează profilul de culoare al imprimantei"
+msgstr "Selectează profilul de culoare în tonuri de gri preferat"
 
 #: ../app/dialogs/preferences-dialog.c:1470
 msgid "_Grayscale profile:"
-msgstr "Profil de tonuri de _gri:"
+msgstr "Profil în tonuri de _gri:"
 
 #: ../app/dialogs/preferences-dialog.c:1477
 msgid "Select CMYK Color Profile"
-msgstr "Selectați profilul de culoare CMYK"
+msgstr "Selectează profilul de culoare CMYK"
 
 #: ../app/dialogs/preferences-dialog.c:1478
 msgid "_CMYK profile:"
@@ -16371,33 +16387,30 @@ msgid "Filter Dialogs"
 msgstr "Dialoguri pentru filtre"
 
 #: ../app/dialogs/preferences-dialog.c:1496
-#, fuzzy
 msgid "Show _advanced color options"
-msgstr "Opțiuni de culoare avansate"
+msgstr "_Arată opțiunile de culoare avansate"
 
 #: ../app/dialogs/preferences-dialog.c:1510
 #: ../app/dialogs/preferences-dialog.c:1511
 msgid "Image Import & Export"
-msgstr ""
+msgstr "Import și export de imagine"
 
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1521
 msgid "Import Policies"
-msgstr ""
+msgstr "Politici de import"
 
 #: ../app/dialogs/preferences-dialog.c:1525
 msgid "Promote imported images to _floating point precision"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1534
-#, fuzzy
 msgid "_Dither images when promoting to floating point"
-msgstr "Convertește imaginea la culori indexate"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1539
-#, fuzzy
 msgid "_Add an alpha channel to imported images"
-msgstr "Adaugă un canal alfa la imaginea importată"
+msgstr "_Adaugă un canal alfa la imaginea importată"
 
 #: ../app/dialogs/preferences-dialog.c:1544
 msgid "Color _profile policy:"
@@ -16677,7 +16690,7 @@ msgstr "Temă de pictograme"
 
 #: ../app/dialogs/preferences-dialog.c:2014
 msgid "Select an Icon Theme"
-msgstr "Selectați o temă de pictograme"
+msgstr "Selectează o temă de pictograme"
 
 #: ../app/dialogs/preferences-dialog.c:2130
 #: ../app/dialogs/preferences-dialog.c:2131 ../app/widgets/gimptoolbox.c:525
@@ -16750,7 +16763,7 @@ msgstr "Dosar de profil:"
 
 #: ../app/dialogs/preferences-dialog.c:2242
 msgid "Select Default Folder for Color Profiles"
-msgstr "Selectați dosarul implicit pentru profilurile de culoare"
+msgstr "Selectează dosarul implicit pentru profilurile de culoare"
 
 # conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #. Convert to Color Profile Dialog
@@ -16760,7 +16773,7 @@ msgstr "Dialog pentru convertire în profil de culoare"
 
 #: ../app/dialogs/preferences-dialog.c:2251
 msgid "Rendering intent:"
-msgstr "Intenție de randare:"
+msgstr "Intenția de randare:"
 
 #: ../app/dialogs/preferences-dialog.c:2255
 msgid "Black point compensation"
@@ -16858,25 +16871,19 @@ msgstr "Nume de strat:"
 msgid "Fill type:"
 msgstr "Tip de umplere:"
 
-# titlu sub bară
 #. Layer Boundary Size Dialog
 #: ../app/dialogs/preferences-dialog.c:2354
-#, fuzzy
 msgid "Layer Boundary Size Dialog"
-msgstr "Stabilește dimensiunea limitei de strat"
+msgstr "Dialog pentru dimensiunea limitei de strat"
 
-# titlu pe bară
-# apare la contextul lui undo
 #. Add Layer Mask Dialog
 #: ../app/dialogs/preferences-dialog.c:2363
-#, fuzzy
 msgid "Add Layer Mask Dialog"
-msgstr "Adăugare mască de strat"
+msgstr "Adaugă un dialog pentru masca de strat"
 
 #: ../app/dialogs/preferences-dialog.c:2368
-#, fuzzy
 msgid "Layer mask type:"
-msgstr "Tipul de umplere al stratului"
+msgstr "Tipul măștii de strat:"
 
 #: ../app/dialogs/preferences-dialog.c:2372
 msgid "Invert mask"
@@ -16887,16 +16894,13 @@ msgstr "Inversează masca"
 msgid "Merge Layers Dialog"
 msgstr "Dialog pentru combinare de straturi"
 
-# apare la contextul lui undo
 #: ../app/dialogs/preferences-dialog.c:2383
-#, fuzzy
 msgid "Merged layer size:"
-msgstr "Combinare de straturi"
+msgstr "Dimensiunea stratului combinat:"
 
 #: ../app/dialogs/preferences-dialog.c:2387
-#, fuzzy
 msgid "Merge within active group only"
-msgstr "Combină numai cu _grupul activ"
+msgstr "Combină numai în cadrul grupului activ"
 
 #: ../app/dialogs/preferences-dialog.c:2390
 msgid "Discard invisible layers"
@@ -16904,30 +16908,25 @@ msgstr "Abandonează straturile invizibile"
 
 #. New Channel Dialog
 #: ../app/dialogs/preferences-dialog.c:2394
-#, fuzzy
 msgid "New Channel Dialog"
-msgstr "Culoare pentru canalul nou"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2399
-#, fuzzy
 msgid "Channel name:"
-msgstr "_Nume de canal:"
+msgstr "Numele de canal:"
 
 #: ../app/dialogs/preferences-dialog.c:2403
-#, fuzzy
 msgid "Color and opacity:"
-msgstr "Spațiu de culoare:"
+msgstr "Culoare și opacitate:"
 
 #: ../app/dialogs/preferences-dialog.c:2404
-#, fuzzy
 msgid "Default New Channel Color and Opacity"
-msgstr "Editează numele, culoarea și opacitatea canalului"
+msgstr "Culoarea și opacitatea implicite ale canalului nou"
 
 #. New Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2409
-#, fuzzy
 msgid "New Path Dialog"
-msgstr "Opțiuni traseu nou"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2414
 msgid "Path name:"
@@ -16935,57 +16934,46 @@ msgstr "Numele traseului:"
 
 #. Export Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2418
-#, fuzzy
 msgid "Export Paths Dialog"
-msgstr "Exportă traseul la SVG"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2423
-#, fuzzy
 msgid "Export folder:"
-msgstr "Dosar pentru fișiere temporare:"
+msgstr "Dosar pentru export:"
 
 #: ../app/dialogs/preferences-dialog.c:2424
-#, fuzzy
 msgid "Select Default Folder for Exporting Paths"
-msgstr "Selectați dosarul pentru fișiere temporare"
+msgstr "Selectează dosarul pentru trasee exportarea traseelor"
 
 #: ../app/dialogs/preferences-dialog.c:2428
-#, fuzzy
 msgid "Export the active path only"
-msgstr "Exportă traseul activ"
+msgstr "Exportă numai traseul activ"
 
 #. Import Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2432
-#, fuzzy
 msgid "Import Paths Dialog"
-msgstr "Importă traseele"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2437
 msgid "Import folder:"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2438
-#, fuzzy
 msgid "Select Default Folder for Importing Paths"
-msgstr "Selectați dosarul pentru fișiere temporare"
+msgstr "Selectează dosarul pentru trasee importarea traseelor"
 
 #: ../app/dialogs/preferences-dialog.c:2442
-#, fuzzy
 msgid "Merge imported paths"
-msgstr "Co_mbină traseele importate"
+msgstr "Combină traseele importate"
 
 #: ../app/dialogs/preferences-dialog.c:2445
-#, fuzzy
 msgid "Scale imported paths"
-msgstr "Co_mbină traseele importate"
+msgstr "Scalează traseele importate"
 
-# titlu pe bară
-# apare la contextul lui undo
 #. Feather Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2449
-#, fuzzy
 msgid "Feather Selection Dialog"
-msgstr "Estompare selecție"
+msgstr "Dialog pentru estomparea selecției"
 
 # checkbox în panoul de selecție
 #: ../app/dialogs/preferences-dialog.c:2454
@@ -17223,9 +17211,8 @@ msgid "Use \"_Dot for dot\" by default"
 msgstr "Folosește implicit „_Punct la punct”"
 
 #: ../app/dialogs/preferences-dialog.c:2881
-#, fuzzy
 msgid "Marching ants s_peed:"
-msgstr "Viteza _furnicilor în marș:"
+msgstr "_Viteza furnicilor în marș:"
 
 # titlu
 #. Zoom & Resize Behavior
@@ -17242,9 +17229,8 @@ msgid "Resize window on image _size change"
 msgstr "Redimensionează fereastra la _schimbarea dimensiunii imaginii"
 
 #: ../app/dialogs/preferences-dialog.c:2898
-#, fuzzy
 msgid "Show entire image"
-msgstr "Arată _imaginea activă"
+msgstr "Arată întreaga imaginea"
 
 #: ../app/dialogs/preferences-dialog.c:2900
 msgid "Initial zoom _ratio:"
@@ -17270,13 +17256,10 @@ msgid "Show _brush outline"
 msgstr "Arată _conturul penelului"
 
 #: ../app/dialogs/preferences-dialog.c:2926
-#, fuzzy
-#| msgid "Show _brush outline"
 msgid "S_nap brush outline to stroke"
-msgstr "Arată _conturul penelului"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2930
-#, fuzzy
 msgid "Show pointer for paint _tools"
 msgstr "Ara_tă indicatorul pentru instrumentele de pictură"
 
@@ -17291,7 +17274,7 @@ msgstr "_Orientarea indicatorului:"
 # titlu
 #: ../app/dialogs/preferences-dialog.c:2950
 msgid "Image Window Appearance"
-msgstr "Aspect fereastră de imagine"
+msgstr "Aspectul ferestrei de imagine"
 
 # titlu
 #: ../app/dialogs/preferences-dialog.c:2958
@@ -17332,9 +17315,8 @@ msgid "Show image size"
 msgstr "Arată dimensiunea imaginii"
 
 #: ../app/dialogs/preferences-dialog.c:2996
-#, fuzzy
 msgid "Show drawable size"
-msgstr "Arată dimensiunea imaginii"
+msgstr "Arată dimensiunea obiectului grafic"
 
 #: ../app/dialogs/preferences-dialog.c:3009
 msgid "Image Title Format"
@@ -17346,31 +17328,24 @@ msgstr "Format de bară de stare imagine"
 
 # titlu
 #: ../app/dialogs/preferences-dialog.c:3096
-#, fuzzy
 msgid "Image Window Snapping Behavior"
-msgstr "Aspect fereastră de imagine"
+msgstr "Comportamentul de acroșare a ferestrei de imagine"
 
 #: ../app/dialogs/preferences-dialog.c:3097
-#, fuzzy
 msgid "Snapping"
-msgstr "Întoarcere"
+msgstr "Acroșare"
 
-# titlu
 #: ../app/dialogs/preferences-dialog.c:3104
-#, fuzzy
 msgid "Default Behavior in Normal Mode"
-msgstr "Aspectul implicit în modul normal"
+msgstr "Comportament implicit în modul normal"
 
-# titlu
 #: ../app/dialogs/preferences-dialog.c:3108
-#, fuzzy
 msgid "Default Behavior in Fullscreen Mode"
-msgstr "Aspect implicit în modul pe tot ecranul"
+msgstr "Comportament implicit în modul pe tot ecranul"
 
 #: ../app/dialogs/preferences-dialog.c:3117
-#, fuzzy
 msgid "_Snapping distance:"
-msgstr "_Distanță de acroșare:"
+msgstr "_Distanța de acroșare:"
 
 #: ../app/dialogs/preferences-dialog.c:3126
 #: ../app/dialogs/preferences-dialog.c:3127
@@ -17383,9 +17358,10 @@ msgid "Extended Input Devices"
 msgstr "Dispozitive de intrare extinse"
 
 #: ../app/dialogs/preferences-dialog.c:3137
-#, fuzzy
 msgid "S_hare tool and tool options between input devices"
-msgstr "Salvează opțiunile de instrumente la ieșirea GIMP."
+msgstr ""
+"_Partajează instrumentul și opțiunile de instrument între dispozitivele de "
+"intrare"
 
 #: ../app/dialogs/preferences-dialog.c:3141
 msgid "Configure E_xtended Input Devices..."
@@ -17397,12 +17373,13 @@ msgstr "_Salvează setările dispozitivelor de intrare la ieșirea din program"
 
 #: ../app/dialogs/preferences-dialog.c:3152
 msgid "Save Input Device Settings _Now"
-msgstr "Salvează setările dispozitivelor de i_ntrare acum"
+msgstr "Salvează acum setările dispozitivelor de i_ntrare"
 
 #: ../app/dialogs/preferences-dialog.c:3159
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr ""
-"_Resetează setările salvate ale dispozitivelor de intrare la valorile implicite"
+"_Resetează setările salvate ale dispozitivelor de intrare la valorile lor "
+"implicite"
 
 #: ../app/dialogs/preferences-dialog.c:3174
 msgid "Additional Input Controllers"
@@ -17427,25 +17404,23 @@ msgstr "Dosar pentru fișiere _temporare:"
 
 #: ../app/dialogs/preferences-dialog.c:3215
 msgid "Select Folder for Temporary Files"
-msgstr "Selectați dosarul pentru fișiere temporare"
+msgstr "Selectează dosarul pentru fișiere temporare"
 
 #: ../app/dialogs/preferences-dialog.c:3219
-#, fuzzy
 msgid "_Swap folder:"
-msgstr "Dosar pentru memorie virtuală (swap):"
+msgstr "Do_sar pentru memorie virtuală (swap):"
 
 #: ../app/dialogs/preferences-dialog.c:3220
 msgid "Select Swap Folder"
-msgstr "Selectați dosarul pentru memoria virtuală (swap)"
+msgstr "Selectează dosarul pentru memoria virtuală (swap)"
 
 #: ../app/dialogs/preferences-dialog.c:3253
 msgid "Brush Folders"
 msgstr "Dosare pentru peneluri"
 
 #: ../app/dialogs/preferences-dialog.c:3256
-#, fuzzy
 msgid "Reset Brush _Folders"
-msgstr "Selectează dosarele pentru peneluri"
+msgstr "_Resetează dosarele pentru peneluri"
 
 #: ../app/dialogs/preferences-dialog.c:3257
 msgid "Select Brush Folders"
@@ -17456,9 +17431,8 @@ msgid "Dynamics Folders"
 msgstr "Dosare pentru dinamică"
 
 #: ../app/dialogs/preferences-dialog.c:3262
-#, fuzzy
 msgid "Reset Dynamics _Folders"
-msgstr "Selectează dosarele pentru dinamică"
+msgstr "_Resetează dosarele pentru dinamică"
 
 #: ../app/dialogs/preferences-dialog.c:3263
 msgid "Select Dynamics Folders"
@@ -17469,9 +17443,8 @@ msgid "Pattern Folders"
 msgstr "Dosare pentru modele"
 
 #: ../app/dialogs/preferences-dialog.c:3268
-#, fuzzy
 msgid "Reset Pattern _Folders"
-msgstr "Selectează dosarele pentru modele"
+msgstr "_Resetează dosarele pentru modele"
 
 #: ../app/dialogs/preferences-dialog.c:3269
 msgid "Select Pattern Folders"
@@ -17482,9 +17455,8 @@ msgid "Palette Folders"
 msgstr "Dosare pentru palete"
 
 #: ../app/dialogs/preferences-dialog.c:3274
-#, fuzzy
 msgid "Reset Palette _Folders"
-msgstr "Selectează dosarele pentru palete"
+msgstr "_Resetează dosarele pentru palete"
 
 #: ../app/dialogs/preferences-dialog.c:3275
 msgid "Select Palette Folders"
@@ -17495,9 +17467,8 @@ msgid "Gradient Folders"
 msgstr "Dosare pentru degradeuri"
 
 #: ../app/dialogs/preferences-dialog.c:3280
-#, fuzzy
 msgid "Reset Gradient _Folders"
-msgstr "Selectează dosarele pentru degradeuri"
+msgstr "_Resetează dosarele pentru degradeuri"
 
 #: ../app/dialogs/preferences-dialog.c:3281
 msgid "Select Gradient Folders"
@@ -17508,9 +17479,8 @@ msgid "Font Folders"
 msgstr "Dosare pentru fonturi"
 
 #: ../app/dialogs/preferences-dialog.c:3286
-#, fuzzy
 msgid "Reset Font _Folders"
-msgstr "Selectează dosarele pentru fonturi"
+msgstr "_Resetează dosarele pentru fonturi"
 
 #: ../app/dialogs/preferences-dialog.c:3287
 msgid "Select Font Folders"
@@ -17523,39 +17493,33 @@ msgstr "Dosarele presetărilor de instrument"
 #: ../app/dialogs/preferences-dialog.c:3292
 #, fuzzy
 msgid "Reset Tool Preset _Folders"
-msgstr "Selectează dosarul presetărilor de instrument"
+msgstr "_Resetează dosarele presetărilor de instrument"
 
 #: ../app/dialogs/preferences-dialog.c:3293
 msgid "Select Tool Preset Folders"
 msgstr "Selectează dosarul presetărilor de instrument"
 
 #: ../app/dialogs/preferences-dialog.c:3295
-#, fuzzy
 msgid "MyPaint Brush Folders"
-msgstr "Dosare pentru peneluri"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:3298
-#, fuzzy
 msgid "Reset MyPaint Brush _Folders"
-msgstr "Selectează dosarele pentru peneluri"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:3299
-#, fuzzy
 msgid "Select MyPaint Brush Folders"
-msgstr "Selectează dosarele pentru peneluri"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:3301
-#, fuzzy
 msgid "Plug-in Folders"
 msgstr "Dosare pentru plugin-uri"
 
 #: ../app/dialogs/preferences-dialog.c:3304
-#, fuzzy
 msgid "Reset plug-in _Folders"
-msgstr "Selectează dosarele pentru plugin-uri"
+msgstr "_Resetează dosarele pentru plugin-uri"
 
 #: ../app/dialogs/preferences-dialog.c:3305
-#, fuzzy
 msgid "Select plug-in Folders"
 msgstr "Selectează dosarele pentru plugin-uri"
 
@@ -17568,9 +17532,8 @@ msgid "Script-Fu Folders"
 msgstr "Dosare pentru Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:3310
-#, fuzzy
 msgid "Reset Script-Fu _Folders"
-msgstr "Selectează dosarele pentru Script-Fu"
+msgstr "_Resetează dosarele pentru Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:3311
 msgid "Select Script-Fu Folders"
@@ -17581,9 +17544,8 @@ msgid "Module Folders"
 msgstr "Dosare pentru module"
 
 #: ../app/dialogs/preferences-dialog.c:3316
-#, fuzzy
 msgid "Reset Module _Folders"
-msgstr "Selectează dosarele pentru module"
+msgstr "_Resetează dosarele pentru module"
 
 #: ../app/dialogs/preferences-dialog.c:3317
 msgid "Select Module Folders"
@@ -17598,9 +17560,8 @@ msgid "Interpreter Folders"
 msgstr "Dosare pentru interpretoare"
 
 #: ../app/dialogs/preferences-dialog.c:3322
-#, fuzzy
 msgid "Reset Interpreter _Folders"
-msgstr "Selectează dosarele pentru interpretoare"
+msgstr "_Resetează dosarele pentru interpretoare"
 
 #: ../app/dialogs/preferences-dialog.c:3323
 msgid "Select Interpreter Folders"
@@ -17647,14 +17608,12 @@ msgid "Icon Theme Folders"
 msgstr "Dosare pentru teme de pictograme"
 
 #: ../app/dialogs/preferences-dialog.c:3340
-#, fuzzy
 msgid "Reset Icon Theme _Folders"
-msgstr "Selectează dosarul de teme"
+msgstr "_Resetează dosarul pentru teme de pictograme"
 
 #: ../app/dialogs/preferences-dialog.c:3341
-#, fuzzy
 msgid "Select Icon Theme Folders"
-msgstr "Selectează dosarul de teme"
+msgstr "Selectează dosarul pentru teme de pictograme"
 
 # apare în dialogul de rezoluție de tipărire
 #: ../app/dialogs/print-size-dialog.c:144
@@ -17859,9 +17818,8 @@ msgid "_Stroke"
 msgstr "_Contureză"
 
 #: ../app/dialogs/stroke-dialog.c:238
-#, fuzzy
 msgid "P_aint tool:"
-msgstr "Instrument de pictură:"
+msgstr "_Instrument de pictură:"
 
 #: ../app/dialogs/stroke-dialog.c:252
 msgid "_Emulate brush dynamics"
@@ -17971,9 +17929,8 @@ msgid "Lock path _strokes"
 msgstr "Blochează contururile tra_seului"
 
 #: ../app/dialogs/vectors-options-dialog.c:109
-#, fuzzy
 msgid "Lock path _position"
-msgstr "Blochează contururile traseului"
+msgstr "Blochează _poziția traseului"
 
 #: ../app/display/display-enums.c:88
 msgctxt "compass-orientation"
@@ -18110,11 +18067,10 @@ msgstr "Y"
 msgid "Units"
 msgstr "Unități de măsură"
 
-# hm ? pe baza discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/d10a79b3e6e6c9db
+# pe baza discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/d10a79b3e6e6c9db
 #: ../app/display/gimpcursorview.c:266
-#, fuzzy
 msgid "The selection's bounding box"
-msgstr "Selecție dreptunghi circumscris (BoundingBox)"
+msgstr "Dreptunghiul circumscris al selecției"
 
 # hm ?
 #. Width
@@ -18263,18 +18219,16 @@ msgstr "Pixelii stratului activ sunt blocați."
 #: ../app/display/gimpdisplayshell-dnd.c:415
 #: ../app/widgets/gimpdrawabletreeview.c:259
 #: ../app/widgets/gimpdrawabletreeview.c:370
-#, fuzzy
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
-msgstr "Plasează un strat nou"
+msgstr "Plasează modelul în strat"
 
 #: ../app/display/gimpdisplayshell-dnd.c:437
 #: ../app/widgets/gimpdrawabletreeview.c:289
 #: ../app/widgets/gimpdrawabletreeview.c:390
-#, fuzzy
 msgctxt "undo-type"
 msgid "Drop color to layer"
-msgstr "Plasează straturi"
+msgstr "Plasează culoarea în strat"
 
 #: ../app/display/gimpdisplayshell-dnd.c:586
 #: ../app/widgets/gimplayertreeview.c:777
@@ -18335,7 +18289,7 @@ msgstr "Raport de zoom"
 # titlu sub bară
 #: ../app/display/gimpdisplayshell-scale-dialog.c:117
 msgid "Select Zoom Ratio"
-msgstr "Selectați raportul de zoom"
+msgstr "Selectează raportul de zoom"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:162
 msgid "Zoom ratio:"
@@ -18407,20 +18361,18 @@ msgid "Click-Drag to move all points"
 msgstr "Clic-și-trageți pentru a muta toate punctele"
 
 #: ../app/display/gimptoolgyroscope.c:713
-#, fuzzy
 msgid "Click-Drag to zoom"
-msgstr "Clic-și-trageți pentru a muta acest punct"
+msgstr "Clic-și-trageți pentru zoom"
 
 #: ../app/display/gimptoolgyroscope.c:717
-#, fuzzy, c-format
+#, c-format
 msgid "%s for constrained steps"
-msgstr "%s pentru unghiuri constrânse"
+msgstr "%s pentru trepte constrânse"
 
 #: ../app/display/gimptoolgyroscope.c:724
 #: ../app/display/gimptooltransformgrid.c:1840
-#, fuzzy
 msgid "Click-Drag to rotate"
-msgstr "Clic pentru a șterge"
+msgstr "Clic-și-trageți pentru a roti"
 
 #: ../app/display/gimptoolgyroscope.c:728 ../app/display/gimptoolline.c:1559
 #: ../app/tools/gimppainttool.c:627
@@ -18429,24 +18381,23 @@ msgid "%s for constrained angles"
 msgstr "%s pentru unghiuri constrânse"
 
 #: ../app/display/gimptoolgyroscope.c:733
-#, fuzzy
 msgid "Click-Drag to pan"
-msgstr "Clic pentru a clona"
+msgstr "Clic-și-trageți pentru a panorama"
 
 #: ../app/display/gimptoolgyroscope.c:739
-#, fuzzy, c-format
+#, c-format
 msgid "%s to rotate"
-msgstr "%s pentru a albi"
+msgstr "%s pentru a roti"
 
 #: ../app/display/gimptoolgyroscope.c:740
-#, fuzzy, c-format
+#, c-format
 msgid "%s for a constrained axis"
-msgstr "%s pentru unghiuri constrânse"
+msgstr "%s pentru o axă constrânsă"
 
 #: ../app/display/gimptoolgyroscope.c:741
-#, fuzzy, c-format
+#, c-format
 msgid "%s to zoom"
-msgstr "%s pentru a albi"
+msgstr "%s pentru zoom"
 
 #: ../app/display/gimptoolhandlegrid.c:865
 #: ../app/display/gimptooltransformgrid.c:1831
@@ -18487,19 +18438,19 @@ msgid "Click-Drag to move the endpoint"
 msgstr "Clic-și-trageți pentru a muta punctul de sfârșit"
 
 #: ../app/display/gimptoolline.c:1566
-#, fuzzy
 msgid "Release to remove the slider"
-msgstr "%s pentru a muta toată linia"
+msgstr "Eliberați pentru a elimina glisorul"
 
 #: ../app/display/gimptoolline.c:1570
-#, fuzzy, c-format
+#, c-format
 msgid "%s for constrained values"
-msgstr "%s pentru unghiuri constrânse"
+msgstr "%s pentru valori constrânse"
 
 #: ../app/display/gimptoolline.c:1580
-#, fuzzy
 msgid "Click-Drag to move the slider; drag away to remove the slider"
-msgstr "Clic-și-trageți pentru a muta masca de selecție"
+msgstr ""
+"Clic-și-trageți pentru a muta glisorul; trageți în afară pentru a elimina "
+"glisorul"
 
 #: ../app/display/gimptoolline.c:1585
 msgid "Click-Drag to move or remove the slider"
@@ -18712,26 +18663,21 @@ msgid "Position: "
 msgstr "Poziție: "
 
 #: ../app/display/gimptooltransform3dgrid.c:632
-#, fuzzy
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the vanishing point"
-msgstr "Clic-și-trageți pentru a muta acest punct"
+msgstr "Clic-și-trageți pentru a muta punctul de dispariție"
 
 #: ../app/display/gimptooltransformgrid.c:1824
 #: ../app/display/gimptooltransformgrid.c:1829
-#, fuzzy
 msgid "Click-Drag to scale"
-msgstr "Clic pentru a clona"
+msgstr "Clic-și-trageți pentru a scala"
 
 #: ../app/display/gimptooltransformgrid.c:1833
-#, fuzzy
 msgid "Click-Drag to move the pivot point"
-msgstr "Clic-și-trageți pentru a muta acest punct"
+msgstr "Clic-și-trageți pentru a muta punctul de pivotare"
 
 #: ../app/display/gimptooltransformgrid.c:1838
-#, fuzzy
 msgid "Click-Drag to shear"
-msgstr "Clic pentru a corecta"
+msgstr ""
 
 #: ../app/file/file-open.c:117 ../app/file/file-save.c:127
 msgid "Not a regular file"
@@ -18747,7 +18693,7 @@ msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Plugin-ul %s a întors SUCCESS, dar nu a întors o imagine"
 
 #: ../app/file/file-open.c:288
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in could not open image"
 msgstr "Plugin-ul %s nu a putut deschide imaginea"
 
@@ -18765,9 +18711,8 @@ msgid "Mounting remote volume"
 msgstr ""
 
 #: ../app/file/file-remote.c:289
-#, fuzzy
 msgid "Opening remote file"
-msgstr "Deschide un fișier de imagine"
+msgstr "Deschidere fișier la distanță"
 
 #: ../app/file/file-remote.c:355
 #, c-format
@@ -18789,11 +18734,9 @@ msgstr ""
 msgid "Uploaded %s of image data"
 msgstr ""
 
-# hm ? sau nu este ?
 #: ../app/file/file-save.c:100
-#, fuzzy
 msgid "There is no active layer to save"
-msgstr "Nu există niciun strat activ din care să se poată decupa."
+msgstr "Nu există niciun strat activ de salvat"
 
 #: ../app/file/file-save.c:120
 msgid "Failed to get file information"
@@ -20982,22 +20925,19 @@ msgid "Red Eye Removal"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:3520
-#, fuzzy
 msgctxt "undo-type"
 msgid "Random Hurl"
-msgstr "Aleator"
+msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:3573
-#, fuzzy
 msgctxt "undo-type"
 msgid "Random Pick"
-msgstr "Aleator"
+msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:3626
-#, fuzzy
 msgctxt "undo-type"
 msgid "Random Slur"
-msgstr "Aleator"
+msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:3701
 msgctxt "undo-type"
@@ -21005,22 +20945,19 @@ msgid "RGB Noise"
 msgstr "Zgomot RGB"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3771
-#, fuzzy
 msgctxt "undo-type"
 msgid "Ripple"
-msgstr "Punctat"
+msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:3896
-#, fuzzy
 msgctxt "undo-type"
 msgid "Noisify"
-msgstr "_Zgomot"
+msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:3940
-#, fuzzy
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
-msgstr "Selectează dosarele pentru degradeuri"
+msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:3984
 msgctxt "undo-type"
@@ -21053,10 +20990,9 @@ msgid "Spread"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:4324
-#, fuzzy
 msgctxt "undo-type"
 msgid "Threshold Alpha"
-msgstr "Prag"
+msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:4370
 msgctxt "undo-type"
@@ -21069,10 +21005,9 @@ msgid "Video"
 msgstr "Video"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4453
-#, fuzzy
 msgctxt "undo-type"
 msgid "Value Invert"
-msgstr "Inversare"
+msgstr "Inversare de valoare"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4560
 msgctxt "undo-type"
@@ -21100,10 +21035,9 @@ msgid "Whirl and Pinch"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:4817
-#, fuzzy
 msgctxt "undo-type"
 msgid "Wind"
-msgstr "Ferestre"
+msgstr "Vânt"
 
 #: ../app/pdb/text-layer-cmds.c:95
 #, c-format
@@ -21217,12 +21151,10 @@ msgstr "Anulat"
 
 # hm ?
 #: ../app/plug-in/gimppluginmanager.c:240
-#, fuzzy
 msgid "Plug-in Interpreters"
-msgstr "Plugin-uri de interpretoare"
+msgstr "Interpretoare de plugin-uri"
 
 #: ../app/plug-in/gimppluginmanager.c:246
-#, fuzzy
 msgid "Plug-in Environment"
 msgstr "Mediu pentru plugin-uri"
 
@@ -21239,13 +21171,12 @@ msgid "Unknown file type"
 msgstr "Tip de fișier necunoscut"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:230
-#, fuzzy
 msgid "Searching plug-ins"
 msgstr "Căutare plugin-uri"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:395
 msgid "Resource configuration"
-msgstr "Configurație de resurse"
+msgstr "Configurare resurse"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:431
 msgid "Querying new Plug-ins"
@@ -21268,14 +21199,12 @@ msgid "RGB with alpha"
 msgstr ""
 
 #: ../app/plug-in/gimppluginprocedure.c:1035
-#, fuzzy
 msgid "Grayscale without alpha"
-msgstr "Tonuri de _gri"
+msgstr "Tonuri de gri fără alfa"
 
 #: ../app/plug-in/gimppluginprocedure.c:1039
-#, fuzzy
 msgid "Grayscale with alpha"
-msgstr "Tonuri de _gri"
+msgstr "Tonuri de gri cu alfa"
 
 #: ../app/plug-in/gimppluginprocedure.c:1053
 msgid "Indexed without alpha"
@@ -21313,9 +21242,9 @@ msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Ignorare „%s”: versiune greșită de protocol GIMP."
 
 #: ../app/plug-in/plug-in-rc.c:244
-#, fuzzy, c-format
+#, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
-msgstr "Ignorare „%s”: versiune greșită de protocol GIMP"
+msgstr "Ignorare „%s”: versiune greșită de format de fișier pluginrc"
 
 #: ../app/plug-in/plug-in-rc.c:547
 #, c-format
@@ -21398,11 +21327,9 @@ msgstr "Păstrează _luminozitatea"
 msgid "Clockwise"
 msgstr "În sens orar"
 
-# apare la contextul lui undo
 #: ../app/propgui/gimppropgui-color-rotate.c:130
-#, fuzzy
 msgid "Invert Range"
-msgstr "Inversare de canal"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-color-rotate.c:134
 msgid "Select All"
@@ -21410,7 +21337,7 @@ msgstr "Selectare totală"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:214
 msgid "Source Range"
-msgstr "ursă"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-color-rotate.c:225
 msgid "Destination Range"
@@ -21528,19 +21455,16 @@ msgid "R_eset Color"
 msgstr "R_esetează culoarea"
 
 #: ../app/propgui/gimppropgui-motion-blur-circular.c:132
-#, fuzzy
 msgid "Circular Motion Blur: "
-msgstr "Rotire _arbitrară..."
+msgstr ""
 
 #: ../app/propgui/gimppropgui-motion-blur-linear.c:126
-#, fuzzy
 msgid "Linear Motion Blur: "
-msgstr "Doar mișcare"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-motion-blur-zoom.c:127
-#, fuzzy
 msgid "Zoom Motion Blur: "
-msgstr "Doar mișcare"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-newsprint.c:92
 msgid "White"
@@ -21711,13 +21635,12 @@ msgstr ""
 "azvârlindu-se în mrejele bălții fumegânde."
 
 #: ../app/text/gimpfontfactory.c:398
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Some fonts failed to load:\n"
 "%s"
 msgstr ""
-"Încărcarea datelor a eșuat:\n"
-"\n"
+"Încărcarea unora dintre fonturi a eșuat:\n"
 "%s"
 
 # apare la contextul lui undo
@@ -21726,9 +21649,8 @@ msgid "Add Text Layer"
 msgstr "Adăugare strat de text"
 
 #: ../app/text/gimptext-parasite.c:101
-#, fuzzy
 msgid "Empty text parasite"
-msgstr "Strat de text gol"
+msgstr ""
 
 #: ../app/text/gimptextlayer.c:155
 msgid "Text Layer"
@@ -21915,12 +21837,12 @@ msgstr "_Aliniere"
 #: ../app/tools/gimpaligntool.c:541
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
-"Clic pe un strat, un traseu, sau un ghidaj, sau clic-și-trageți pentru a "
-"selecta mai multe straturi"
+"Clic pe un strat, un traseu sau un ghidaj, sau clic-și-trageți pentru a alege "
+"mai multe straturi"
 
 #: ../app/tools/gimpaligntool.c:549
 msgid "Click to pick this layer as first item"
-msgstr "Clic pentru a selecta acest strat ca primul element"
+msgstr "Clic pentru a alege acest strat ca prim element"
 
 #: ../app/tools/gimpaligntool.c:556
 msgid "Click to add this layer to the list"
@@ -21928,7 +21850,7 @@ msgstr "Clic pentru a adăuga acest strat la listă"
 
 #: ../app/tools/gimpaligntool.c:560
 msgid "Click to pick this guide as first item"
-msgstr "Clic pentru a selecta acest ghidaj ca primul element"
+msgstr "Clic pentru a alege acest ghidaj ca prim element"
 
 #: ../app/tools/gimpaligntool.c:567
 msgid "Click to add this guide to the list"
@@ -21936,7 +21858,7 @@ msgstr "Clic pentru a adăuga acest ghidaj la listă"
 
 #: ../app/tools/gimpaligntool.c:571
 msgid "Click to pick this path as first item"
-msgstr "Clic pentru a selecta acest traseu ca primul element"
+msgstr "Clic pentru a alege acest traseu ca prim element"
 
 #: ../app/tools/gimpaligntool.c:578
 msgid "Click to add this path to the list"
@@ -22009,12 +21931,9 @@ msgstr "Prag"
 msgid "Maximum color difference"
 msgstr "Diferență maximă de culoare"
 
-# titlu pe bară
-# titlu sub bară
 #: ../app/tools/gimpbucketfilloptions.c:181
-#, fuzzy
 msgid "Source image for line art computation"
-msgstr "Stabilește rezoluția de tipărire a imaginii"
+msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:202
 msgid "Maximum gap length"
@@ -22052,9 +21971,8 @@ msgid "Finding Similar Colors"
 msgstr "Determinarea culorior similare"
 
 #: ../app/tools/gimpbucketfilloptions.c:485
-#, fuzzy
 msgid "Line Art Detection"
-msgstr "Inversare selecție"
+msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:495
 msgid "(computing...)"
@@ -22073,7 +21991,6 @@ msgid "_Bucket Fill"
 msgstr "Umple_re cu găleata"
 
 #: ../app/tools/gimpbucketfilltool.c:344
-#, fuzzy
 msgid "Bucket fill"
 msgstr "Umplere cu găleata"
 
@@ -22081,14 +21998,12 @@ msgstr "Umplere cu găleata"
 #: ../app/tools/gimpfiltertool.c:312 ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:328
 #: ../app/tools/gimptransformtool.c:697 ../app/tools/gimpwarptool.c:794
-#, fuzzy
 msgid "The active layer is not visible."
-msgstr "Pixelii stratului activ sunt blocați."
+msgstr "Stratul activ nu este vizibil."
 
 #: ../app/tools/gimpbucketfilltool.c:578
-#, fuzzy
 msgid "No valid line art source selected."
-msgstr "Niciun filtru selectat"
+msgstr ""
 
 #: ../app/tools/gimpbucketfilltool.c:761 ../app/tools/gimpbucketfilltool.c:894
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:468
@@ -22198,14 +22113,12 @@ msgid "Color Picker Average Radius"
 msgstr "Raza medie a prelevatorului de culoare"
 
 #: ../app/tools/gimpcolorpickeroptions.c:79
-#, fuzzy
 msgid "Pick Target"
-msgstr "Alegeți un traseu"
+msgstr "Alegeți ținta"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
-#, fuzzy
 msgid "Choose what the color picker will do"
-msgstr "Alegeți ce anume să facă prelevatorul de culoare"
+msgstr ""
 
 #: ../app/tools/gimpcolorpickeroptions.c:87 ../app/tools/gimpmeasureoptions.c:79
 msgid "Use info window"
@@ -22219,9 +22132,9 @@ msgstr ""
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:195
-#, fuzzy, c-format
+#, c-format
 msgid "Pick Target  (%s)"
-msgstr "Mod de prelevare  (%s)"
+msgstr ""
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:204
@@ -22314,9 +22227,8 @@ msgid "Highlight opacity"
 msgstr "Evidențiază opacitatea"
 
 #: ../app/tools/gimpcropoptions.c:88 ../app/tools/gimprectangleselectoptions.c:88
-#, fuzzy
 msgid "How much to dim everything outside selection"
-msgstr "Întunecă totul în afara selecției"
+msgstr ""
 
 #: ../app/tools/gimpcropoptions.c:94
 msgid "Current layer only"
@@ -22327,9 +22239,8 @@ msgid "Crop only currently selected layer"
 msgstr "Decupează numai stratul selectat curent"
 
 #: ../app/tools/gimpcropoptions.c:101
-#, fuzzy
 msgid "Delete cropped pixels"
-msgstr "Selectare prim-plan"
+msgstr ""
 
 #: ../app/tools/gimpcropoptions.c:102
 msgid "Discard non-locked layer data that falls out of the crop region"
@@ -22379,7 +22290,6 @@ msgstr "Clic sau apăsați Enter pentru a decupa"
 msgid "Crop to: "
 msgstr "Decupează la: "
 
-# hm ? sau nu este ?
 #: ../app/tools/gimpcroptool.c:454
 msgid "There is no active layer to crop."
 msgstr "Nu există niciun strat activ din care să se poată decupa."
@@ -22517,10 +22427,9 @@ msgstr "Deplasare: "
 msgid "Move Floating Selection"
 msgstr "Mută selecția plutitoare"
 
-# hm ? sau nu este ?
 #: ../app/tools/gimpeditselectiontool.c:1120 ../app/tools/gimpmovetool.c:281
 msgid "There is no path to move."
-msgstr "Nu este niciun traseu de mutat."
+msgstr "Nu există niciun traseu de mutat."
 
 #: ../app/tools/gimpeditselectiontool.c:1124 ../app/tools/gimpmovetool.c:285
 #: ../app/tools/gimptransformtool.c:735
@@ -22529,7 +22438,7 @@ msgstr ""
 
 #: ../app/tools/gimpeditselectiontool.c:1135 ../app/tools/gimpmovetool.c:317
 msgid "There is no layer to move."
-msgstr "Nu este niciun strat de mutat."
+msgstr "Nu există niciun strat de mutat."
 
 #: ../app/tools/gimpeditselectiontool.c:1143
 #: ../app/tools/gimpeditselectiontool.c:1169
@@ -22892,7 +22801,7 @@ msgstr "Operație _GEGL..."
 #. The options vbox
 #: ../app/tools/gimpgegltool.c:494
 msgid "Select an operation from the list above"
-msgstr "Selectați o operație din lista de deasupra"
+msgstr "Selectează o operație din lista de deasupra"
 
 #: ../app/tools/gimpgenerictransformtool.c:101
 msgid "Transform Matrix"
@@ -22912,7 +22821,6 @@ msgid "Metric to use for the distance calculation"
 msgstr ""
 
 #: ../app/tools/gimpgradientoptions.c:109
-#, fuzzy
 msgid "Adaptive Supersampling"
 msgstr "Supereșantionare adaptivă"
 
@@ -22929,14 +22837,13 @@ msgid "Commit gradient instantly"
 msgstr ""
 
 #: ../app/tools/gimpgradientoptions.c:142
-#, fuzzy
 msgid "Modify active gradient"
-msgstr "Editare degrade activ"
+msgstr "Modifică degradeul activ"
 
+# hm ?
 #: ../app/tools/gimpgradientoptions.c:143
-#, fuzzy
 msgid "Modify the active gradient in-place"
-msgstr "Editare degrade activ"
+msgstr "Modifică degradeul activ în locul unde se află"
 
 #: ../app/tools/gimpgradientoptions.c:274 ../app/tools/gimppaintoptions-gui.c:384
 msgid "Edit this gradient"
@@ -23246,14 +23153,12 @@ msgid "_Levels..."
 msgstr "Nive_luri..."
 
 #: ../app/tools/gimplevelstool.c:276
-#, fuzzy
 msgid "Pick black point for all channels"
-msgstr "Clic pentru a adăuga puncte de control la toate canalele"
+msgstr "Alege punctul de negru pentru toate canalele"
 
 #: ../app/tools/gimplevelstool.c:278
-#, fuzzy
 msgid "Pick black point for the selected channel"
-msgstr "Clic-și-trageți pentru a muta pixelii selectați"
+msgstr ""
 
 #: ../app/tools/gimplevelstool.c:285
 #, fuzzy
@@ -23261,9 +23166,8 @@ msgid "Pick gray point for all channels"
 msgstr "Clic pentru a adăuga puncte de control la toate canalele"
 
 #: ../app/tools/gimplevelstool.c:287
-#, fuzzy
 msgid "Pick gray point for the selected channel"
-msgstr "Clic-și-trageți pentru a muta pixelii selectați"
+msgstr ""
 
 #: ../app/tools/gimplevelstool.c:294
 #, fuzzy
@@ -23271,9 +23175,8 @@ msgid "Pick white point for all channels"
 msgstr "Clic pentru a adăuga puncte de control la toate canalele"
 
 #: ../app/tools/gimplevelstool.c:296
-#, fuzzy
 msgid "Pick white point for the selected channel"
-msgstr "Clic-și-trageți pentru a muta pixelii selectați"
+msgstr ""
 
 #: ../app/tools/gimplevelstool.c:400
 msgid "Adjust levels in linear light"
@@ -23400,10 +23303,9 @@ msgid "_Measure"
 msgstr "_Măsurare"
 
 #: ../app/tools/gimpmeasuretool.c:153
-#, fuzzy
 msgctxt "undo-type"
 msgid "Straighten"
-msgstr "Luminozitate"
+msgstr ""
 
 #: ../app/tools/gimpmeasuretool.c:154
 msgid "Straightening"
@@ -24591,7 +24493,7 @@ msgstr ""
 #. vanishing-point frame
 #: ../app/tools/gimptransform3dtool.c:245
 msgid "Vanishing Point"
-msgstr ""
+msgstr "Punct de dispariție"
 
 #: ../app/tools/gimptransform3dtool.c:395
 #| msgid "_X:"
@@ -24600,11 +24502,11 @@ msgstr "_Z:"
 
 #: ../app/tools/gimptransform3dtool.c:438
 msgid "Z"
-msgstr ""
+msgstr "Z"
 
 #: ../app/tools/gimptransform3dtool.c:442
 msgid "Rotation axis order"
-msgstr ""
+msgstr "Ordinea axei de rotație"
 
 #: ../app/tools/gimptransformoptions.c:93
 msgid "Direction of transformation"
@@ -24651,7 +24553,6 @@ msgstr ""
 msgid "Applying the transformation will enlarge the image by a factor of %g."
 msgstr ""
 
-# hm ? sau nu este ?
 #: ../app/tools/gimptransformtool.c:681
 msgid "There is no layer to transform."
 msgstr "Nu există niciun strat de transformat."
@@ -24664,12 +24565,10 @@ msgstr ""
 msgid "The selection does not intersect with the layer."
 msgstr ""
 
-# hm ? sau nu este ?
 #: ../app/tools/gimptransformtool.c:711
 msgid "There is no selection to transform."
 msgstr "Nu există nicio selecție care să fie transformată."
 
-# hm ? sau nu este ?
 #: ../app/tools/gimptransformtool.c:726
 msgid "There is no path to transform."
 msgstr "Nu există niciun traseu de transformat."
@@ -24736,11 +24635,11 @@ msgstr "_Trasee"
 
 #: ../app/tools/gimpvectortool.c:733
 msgid "There is no active layer or channel to fill"
-msgstr "Nu este niciun strat activ sau canal de umplut"
+msgstr "Nu există niciun strat activ sau canal de umplut"
 
 #: ../app/tools/gimpvectortool.c:805
 msgid "There is no active layer or channel to stroke to"
-msgstr "Nu este niciun strat sau canal activ care să fie conturat"
+msgstr "Nu există niciun strat sau canal activ care să fie conturat"
 
 #: ../app/tools/gimpwarpoptions.c:84 ../app/tools/gimpwarpoptions.c:85
 msgid "Behavior"
@@ -24970,13 +24869,11 @@ msgid "Image"
 msgstr "Imaginea"
 
 #: ../app/tools/tools-enums.c:217
-#, fuzzy
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
 msgstr "Desenează prim-planul"
 
 #: ../app/tools/tools-enums.c:218
-#, fuzzy
 msgctxt "matting-draw-mode"
 msgid "Draw background"
 msgstr "Desenează fundalul"
@@ -25045,10 +24942,9 @@ msgid "Shrink area"
 msgstr ""
 
 #: ../app/tools/tools-enums.c:321
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
-msgstr "HSV (nuanță în sens _orar)"
+msgstr ""
 
 #: ../app/tools/tools-enums.c:322
 msgctxt "warp-behavior"
@@ -25595,7 +25491,7 @@ msgstr "Atribuie o acțiune evenimentului „%s”"
 #: ../app/widgets/gimpcontrollereditor.c:649
 #, c-format
 msgid "Select Action for Event '%s'"
-msgstr "Selectați acțiunea pentru evenimentul „%s”"
+msgstr "Selectează acțiunea pentru evenimentul „%s”"
 
 #: ../app/widgets/gimpcontrollereditor.c:654
 msgid "Select Controller Event Action"
@@ -25732,9 +25628,8 @@ msgid "Remove Controller?"
 msgstr "Eliminați controlerul?"
 
 #: ../app/widgets/gimpcontrollerlist.c:563
-#, fuzzy
 msgid "_Disable Controller"
-msgstr "Dezactivare controler"
+msgstr "_Dezactivează controlerul"
 
 #: ../app/widgets/gimpcontrollerlist.c:565
 msgid "_Remove Controller"
@@ -26072,9 +25967,8 @@ msgid "Tile cache hit/miss ratio"
 msgstr "Dimen_siunea cache-ului de dală:"
 
 #: ../app/widgets/gimpdashboard.c:516
-#, fuzzy
 msgid "Swap file occupied size"
-msgstr "Dimen_siunea cache-ului de dală:"
+msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:525 ../app/widgets/gimpdashboard.c:682
 msgctxt "dashboard-variable"
@@ -26082,9 +25976,8 @@ msgid "Size"
 msgstr "Dimensiune"
 
 #: ../app/widgets/gimpdashboard.c:526
-#, fuzzy
 msgid "Swap file size"
-msgstr "Arată dimensiunea imaginii"
+msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:536
 msgid "Swap file size limit"
@@ -26444,7 +26337,7 @@ msgstr "fără"
 #: ../app/widgets/gimpdeviceinfoeditor.c:415
 #, c-format
 msgid "%s Curve"
-msgstr "Curbă %s"
+msgstr "Curbă de %s"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:474
 #: ../app/widgets/gimpdynamicsoutputeditor.c:206
@@ -26523,12 +26416,11 @@ msgid "Auto"
 msgstr "Automat"
 
 #: ../app/widgets/gimpdockwindow.c:394
-#, fuzzy
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
-"Când opțiunea este activată, căsuța de dialog urmărește automat imaginea la "
-"care lucrați."
+"Când opțiunea este activată, dialogul urmărește în mod automat imaginea la care "
+"lucrați."
 
 # tooltip la pictogramele de după „Blochează:” la opțiunile unor panouri andocate
 #: ../app/widgets/gimpdrawabletreeview.c:122
@@ -26616,11 +26508,11 @@ msgstr "_Arată toate fișierele"
 #: ../app/widgets/gimpfiledialog.c:802
 #, c-format
 msgid "Select File _Type (%s)"
-msgstr "Selectați _tipul de fișier (selecția curentă: %s)"
+msgstr "Selectează _tipul de fișier (selecția curentă: %s)"
 
 #: ../app/widgets/gimpfiledialog.c:804
 msgid "Select File _Type"
-msgstr "Selectați _tipul de fișier"
+msgstr "Selectează _tipul de fișier"
 
 #: ../app/widgets/gimpfileprocview.c:200
 msgid "File Type"
@@ -27069,7 +26961,7 @@ msgstr ""
 
 #: ../app/widgets/gimppickablepopup.c:203 ../app/widgets/gimppickablepopup.c:420
 msgid "Select an image in the left pane"
-msgstr "Selectați o imagine în panoul din stânga"
+msgstr "Selectează o imagine în panoul din stânga"
 
 #: ../app/widgets/gimppluginview.c:149
 msgid "Plug-In"
