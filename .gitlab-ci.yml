@@ -57,8 +57,8 @@ build-image:
     - echo "RUN pip3 install zstandard" >> Dockerfile
 
     ## set XDG_* variables to popint to persistent /opt in the image
-    - echo 'RUN export XDG_CACHE_HOME="/opt/.cache/' >> Dockerfile
-    - echo 'RUN export XDG_DATA_HOME="/opt/.local/share/' >> Dockerfile
+    - echo 'RUN export XDG_CACHE_HOME="/opt/.cache/"' >> Dockerfile
+    - echo 'RUN export XDG_DATA_HOME="/opt/.local/share/"' >> Dockerfile
 
     ## install crossroad
     - echo "RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git" >> Dockerfile
