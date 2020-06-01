@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-28 20:09+0000\n"
-"PO-Revision-Date: 2020-05-31 18:25+0300\n"
+"PO-Revision-Date: 2020-06-01 12:11+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -2692,7 +2692,7 @@ msgstr "Animație MNG"
 msgid ""
 "PNG compression level, choose a high compression level for small file size"
 msgstr ""
-"Nivel de compresie PNG, alegeți un nivel ridicat de compresie pentru "
+"Nivelul de comprimare PNG, alegeți un nivel ridicat de comprimare pentru "
 "dimensiuni mici de fișiere"
 
 #. Inform the user that we couldn't losslessly save the
@@ -7071,11 +7071,11 @@ msgstr "Exportă imaginea ca SGI"
 
 #: ../plug-ins/file-sgi/sgi.c:702
 msgid "No compression"
-msgstr "Fără compresie"
+msgstr "Fără comprimare"
 
 #: ../plug-ins/file-sgi/sgi.c:704
 msgid "RLE compression"
-msgstr "Compresie RLE"
+msgstr "Comprimare RLE"
 
 #: ../plug-ins/file-sgi/sgi.c:706
 msgid "Aggressive RLE (not supported by SGI)"
@@ -7083,7 +7083,7 @@ msgstr "RLE agresiv (nesuportat de SGI)"
 
 #: ../plug-ins/file-sgi/sgi.c:714
 msgid "Compression _type:"
-msgstr "_Tip de compresie:"
+msgstr "_Tip de comprimare:"
 
 #: ../plug-ins/file-tiff/file-tiff.c:162 ../plug-ins/file-tiff/file-tiff.c:190
 msgid "TIFF image"
