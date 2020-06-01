@@ -17,6 +17,7 @@ appwidgetsenums = custom_target('widgets-enums.c',
 
 
 libappwidgets_sources = [
+  'gimpaccellabel.c',
   'gimpaction-history.c',
   'gimpaction.c',
   'gimpactioneditor.c',

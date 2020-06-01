@@ -32,6 +32,8 @@ noinst_LIBRARIES = libappwidgets.a
 libappwidgets_a_sources = \
 	widgets-enums.h			\
 	widgets-types.h			\
+	gimpaccellabel.c		\
+	gimpaccellabel.h		\
 	gimpaction.c			\
 	gimpaction.h			\
 	gimpaction-history.c		\
