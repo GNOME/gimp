@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-15 09:00+0000\n"
-"PO-Revision-Date: 2020-05-15 12:17+0300\n"
+"POT-Creation-Date: 2020-06-01 16:34+0000\n"
+"PO-Revision-Date: 2020-06-01 23:29+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -3199,7 +3199,7 @@ msgstr "240 секунд"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:346
-#: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1762
+#: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1763
 #: ../app/tools/gimptransformgridtool.c:1263
 #: ../app/tools/gimptransformtool.c:434 ../app/widgets/gimpactionview.c:668
 #: ../app/widgets/gimpcolordialog.c:110
@@ -5227,8 +5227,6 @@ msgid "_Fattal et al. 2002..."
 msgstr "_Фаттал та ін. 2002…"
 
 #: ../app/actions/filters-actions.c:358
-#| msgctxt "filters-action"
-#| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "_Фокусне розмиття…"
@@ -5604,8 +5602,6 @@ msgid "_Value Propagate..."
 msgstr "По_ширення значення…"
 
 #: ../app/actions/filters-actions.c:733
-#| msgctxt "filters-action"
-#| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "З_мінне розмиття…"
@@ -13991,20 +13987,20 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Додати колір до карти кольорів"
 
-#: ../app/core/gimpimage-convert-indexed.c:792
+#: ../app/core/gimpimage-convert-indexed.c:794
 msgid "Cannot convert image: palette is empty."
 msgstr "Не можна перетворити зображення: палітра порожня."
 
-#: ../app/core/gimpimage-convert-indexed.c:804
+#: ../app/core/gimpimage-convert-indexed.c:806
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Перетворити зображення у індексоване"
 
-#: ../app/core/gimpimage-convert-indexed.c:898
+#: ../app/core/gimpimage-convert-indexed.c:900
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Перетворення в індексовані кольори (2 етап)"
 
-#: ../app/core/gimpimage-convert-indexed.c:947
+#: ../app/core/gimpimage-convert-indexed.c:949
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Триває перетворення в індексовані кольори (3 етап)"
 
@@ -14480,40 +14476,40 @@ msgstr "Маска шару до вибору"
 msgid "Cannot rename layer masks."
 msgstr "Не вдалось перейменувати маски шарів."
 
-#: ../app/core/gimplineart.c:337 ../app/core/gimplineart.c:338
+#: ../app/core/gimplineart.c:338 ../app/core/gimplineart.c:339
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Вибрати прозорі пікселі замість сірих"
 
-#: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:188
+#: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:188
 msgid "Line art detection threshold"
 msgstr "Поріг виявлення контуру"
 
-#: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:189
+#: ../app/core/gimplineart.c:346 ../app/tools/gimpbucketfilloptions.c:189
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 "Поріг виявлення контуру (за більших значень буде включено більше пікселів )"
 
-#: ../app/core/gimplineart.c:351 ../app/tools/gimpbucketfilloptions.c:195
+#: ../app/core/gimplineart.c:352 ../app/tools/gimpbucketfilloptions.c:195
 msgid "Maximum growing size"
 msgstr "Максимальний розмір нарощування"
 
-#: ../app/core/gimplineart.c:352 ../app/tools/gimpbucketfilloptions.c:196
+#: ../app/core/gimplineart.c:353 ../app/tools/gimpbucketfilloptions.c:196
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Максимальна кількість пікселів нарощування під контуром"
 
-#: ../app/core/gimplineart.c:358
+#: ../app/core/gimplineart.c:359
 msgid "Maximum curved closing length"
 msgstr "Найдовше з'єднання кривої"
 
-#: ../app/core/gimplineart.c:359
+#: ../app/core/gimplineart.c:360
 msgid "Maximum curved length (in pixels) to close the line art"
 msgstr "Найдовший розрив кривої (у пікселях) для з'єднання"
 
-#: ../app/core/gimplineart.c:365
+#: ../app/core/gimplineart.c:366
 msgid "Maximum straight closing length"
 msgstr "Найдовше з'єднання прямої"
 
-#: ../app/core/gimplineart.c:366
+#: ../app/core/gimplineart.c:367
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Найдовший розрив прямої (у пікселях) для з'єднання"
 
@@ -18321,66 +18317,60 @@ msgstr "точок"
 msgid "Cancel <i>%s</i>"
 msgstr "Скасувати <i>%s</i>"
 
-#: ../app/display/gimptoolcompass.c:845
+#: ../app/display/gimptoolcompass.c:847
 msgid "Click to place vertical and horizontal guides"
 msgstr "Натисніть для розміщення вертикальної чи горизонтальної напрямної"
 
-#: ../app/display/gimptoolcompass.c:853
+#: ../app/display/gimptoolcompass.c:855
 msgid "Click to place a horizontal guide"
 msgstr "Натисніть для розміщення горизонтальної напрямної"
 
-#: ../app/display/gimptoolcompass.c:861
+#: ../app/display/gimptoolcompass.c:863
 msgid "Click to place a vertical guide"
 msgstr "Натисніть для розміщення вертикальної напрямної"
 
-#: ../app/display/gimptoolcompass.c:869
+#: ../app/display/gimptoolcompass.c:871
 msgid "Click-Drag to add a new point"
 msgstr "Натисніть, щоб створити новий контур."
 
-#: ../app/display/gimptoolcompass.c:880 ../app/tools/gimpiscissorstool.c:911
+#: ../app/display/gimptoolcompass.c:882 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
 msgstr "Натисніть та перетягніть, щоб перемістити точку"
 
-#: ../app/display/gimptoolcompass.c:897
+#: ../app/display/gimptoolcompass.c:899
 msgid "Click-Drag to move all points"
 msgstr "Натисніть та перетягніть, щоб перемістити всі точки"
 
-#: ../app/display/gimptoolfocus.c:1049
-#| msgid "Click-Drag to move the endpoint"
+#: ../app/display/gimptoolfocus.c:1117
 msgid "Click-Drag to change the midpoint"
 msgstr "Натисніть і перетягніть, щоб змінити середню точку"
 
-#: ../app/display/gimptoolfocus.c:1051
-#| msgid "Click-Drag to remove the slider"
+#: ../app/display/gimptoolfocus.c:1119
 msgid "Click-Drag to resize the limit"
 msgstr "Натисніть і перетягніть, щоб змінити розміри обмеження"
 
-#: ../app/display/gimptoolfocus.c:1053 ../app/display/gimptoolfocus.c:1066
+#: ../app/display/gimptoolfocus.c:1121 ../app/display/gimptoolfocus.c:1134
 #, c-format
 msgid "%s to resize the focus"
 msgstr "%s, щоб змінити розміри фокуса"
 
-#: ../app/display/gimptoolfocus.c:1058 ../app/display/gimptoolfocus.c:1071
-#| msgid "Click-Drag to remove the slider"
+#: ../app/display/gimptoolfocus.c:1126 ../app/display/gimptoolfocus.c:1139
 msgid "Click-Drag to resize the focus"
 msgstr "Натисніть і перетягніть, щоб змінити розміри фокуса"
 
-#: ../app/display/gimptoolfocus.c:1065
-#| msgid "Click-Drag to change perspective"
+#: ../app/display/gimptoolfocus.c:1133
 msgid "Click-Drag to change the aspect ratio"
 msgstr "Натисніть і перетягніть, щоб змінити співвідношення розмірів"
 
-#: ../app/display/gimptoolfocus.c:1076
-#| msgid "Click-Drag to move the slider"
+#: ../app/display/gimptoolfocus.c:1144
 msgid "Click-Drag to move the focus"
 msgstr "Натисніть і перетягніть, щоб пересунути фокус"
 
-#: ../app/display/gimptoolfocus.c:1080
-#| msgid "Click-Drag to rotate"
+#: ../app/display/gimptoolfocus.c:1148
 msgid "Click-Drag to rotate the focus"
 msgstr "Натисніть і перетягніть для обертання фокуса"
 
-#: ../app/display/gimptoolfocus.c:1081 ../app/display/gimptoolgyroscope.c:728
+#: ../app/display/gimptoolfocus.c:1149 ../app/display/gimptoolgyroscope.c:728
 #: ../app/display/gimptoolline.c:1559 ../app/tools/gimppainttool.c:627
 #, c-format
 msgid "%s for constrained angles"
@@ -18396,7 +18386,7 @@ msgid "%s for constrained steps"
 msgstr "%s для обмеження кроку"
 
 #: ../app/display/gimptoolgyroscope.c:724
-#: ../app/display/gimptooltransformgrid.c:1840
+#: ../app/display/gimptooltransformgrid.c:1841
 msgid "Click-Drag to rotate"
 msgstr "Натисніть і перетягніть для обертання"
 
@@ -18420,7 +18410,7 @@ msgid "%s to zoom"
 msgstr "%s для масштабування"
 
 #: ../app/display/gimptoolhandlegrid.c:865
-#: ../app/display/gimptooltransformgrid.c:1831
+#: ../app/display/gimptooltransformgrid.c:1832
 msgid "Click-Drag to move"
 msgstr "Натисніть і перетягніть, щоб пересунути"
 
@@ -18433,7 +18423,7 @@ msgid "Click-Drag to shear and scale"
 msgstr "Натисніть і перетягніть для нахиляння і масштабування"
 
 #: ../app/display/gimptoolhandlegrid.c:874
-#: ../app/display/gimptooltransformgrid.c:1819
+#: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to change perspective"
 msgstr "Натисніть і перетягніть, щоб змінити перспективу"
 
@@ -18669,13 +18659,13 @@ msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Клацання+перетягування малює довільну лінію, клацання додає прямий відрізок"
 
-#: ../app/display/gimptoolrectangle.c:566
-#: ../app/display/gimptoolrectangle.c:874
+#: ../app/display/gimptoolrectangle.c:567
+#: ../app/display/gimptoolrectangle.c:875
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Прямокутник: "
 
-#: ../app/display/gimptoolrectangle.c:2138
+#: ../app/display/gimptoolrectangle.c:2139
 msgid "Position: "
 msgstr "Позиція:"
 
@@ -18683,16 +18673,16 @@ msgstr "Позиція:"
 msgid "Click-Drag to move the vanishing point"
 msgstr "Натисніть та перетягніть, щоб перемістити нескінченно віддалену точку"
 
-#: ../app/display/gimptooltransformgrid.c:1824
-#: ../app/display/gimptooltransformgrid.c:1829
+#: ../app/display/gimptooltransformgrid.c:1825
+#: ../app/display/gimptooltransformgrid.c:1830
 msgid "Click-Drag to scale"
 msgstr "Натисніть і перетягніть для масштабування"
 
-#: ../app/display/gimptooltransformgrid.c:1833
+#: ../app/display/gimptooltransformgrid.c:1834
 msgid "Click-Drag to move the pivot point"
 msgstr "Натисніть і перетягніть, щоб пересунути опорну точку"
 
-#: ../app/display/gimptooltransformgrid.c:1838
+#: ../app/display/gimptooltransformgrid.c:1839
 msgid "Click-Drag to shear"
 msgstr "Натисніть і перетягніть для нахиляння"
 
@@ -21588,8 +21578,6 @@ msgid "New Seed"
 msgstr "Нова база"
 
 #: ../app/propgui/gimppropgui-vignette.c:183
-#| msgctxt "filters-action"
-#| msgid "_Vignette..."
 msgid "Vignette: "
 msgstr "Віньєтування: "
 
@@ -21620,7 +21608,7 @@ msgstr ""
 "Не вдалося завантажити деякі шрифти:\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1634
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1635
 msgid "Add Text Layer"
 msgstr "Додавання текстового шару"
 
@@ -23461,7 +23449,6 @@ msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Інструмент Операція: виконання довільної операції GEGL"
 
 #: ../app/tools/gimpoperationtool.c:621
-#| msgid "Aux Input"
 msgid "Aux\\1 Input"
 msgstr "Вхідний дод.\\1"
 
@@ -24056,31 +24043,31 @@ msgstr "Текст: створення або редагування текст�
 msgid "Te_xt"
 msgstr "_Текст"
 
-#: ../app/tools/gimptexttool.c:1039
+#: ../app/tools/gimptexttool.c:1040
 msgid "Fonts are still loading"
 msgstr "Завантаження шрифтів ще не завершено"
 
-#: ../app/tools/gimptexttool.c:1050
+#: ../app/tools/gimptexttool.c:1051
 msgid "Text box: "
 msgstr "Текстовий блок:"
 
-#: ../app/tools/gimptexttool.c:1181
+#: ../app/tools/gimptexttool.c:1182
 msgid "Reshape Text Layer"
 msgstr "Зміна розміру текстового шару"
 
-#: ../app/tools/gimptexttool.c:1754 ../app/tools/gimptexttool.c:1757
+#: ../app/tools/gimptexttool.c:1755 ../app/tools/gimptexttool.c:1758
 msgid "Confirm Text Editing"
 msgstr "Підтвердження зміни тексту"
 
-#: ../app/tools/gimptexttool.c:1761
+#: ../app/tools/gimptexttool.c:1762
 msgid "Create _New Layer"
 msgstr "_Створити новий шар"
 
-#: ../app/tools/gimptexttool.c:1763
+#: ../app/tools/gimptexttool.c:1764
 msgid "_Edit"
 msgstr "З_міни"
 
-#: ../app/tools/gimptexttool.c:1785
+#: ../app/tools/gimptexttool.c:1786
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -25116,28 +25103,28 @@ msgstr "З:"
 
 #. TRANSLATORS: A for Alpha (color transparency)
 #: ../app/widgets/gimpcolorframe.c:770 ../app/widgets/gimpcolorframe.c:783
-#: ../app/widgets/gimpcolorframe.c:819 ../app/widgets/gimpcolorframe.c:861
-#: ../app/widgets/gimpcolorframe.c:889 ../app/widgets/gimpcolorframe.c:921
-#: ../app/widgets/gimpcolorframe.c:953 ../app/widgets/gimpcolorframe.c:985
-#: ../app/widgets/gimpcolorframe.c:1019
+#: ../app/widgets/gimpcolorframe.c:822 ../app/widgets/gimpcolorframe.c:864
+#: ../app/widgets/gimpcolorframe.c:892 ../app/widgets/gimpcolorframe.c:924
+#: ../app/widgets/gimpcolorframe.c:956 ../app/widgets/gimpcolorframe.c:988
+#: ../app/widgets/gimpcolorframe.c:1022
 msgctxt "Alpha channel"
 msgid "A:"
 msgstr "П:"
 
 #. TRANSLATORS: R for Red (RGB)
-#: ../app/widgets/gimpcolorframe.c:775 ../app/widgets/gimpcolorframe.c:811
+#: ../app/widgets/gimpcolorframe.c:775 ../app/widgets/gimpcolorframe.c:814
 msgctxt "RGB"
 msgid "R:"
 msgstr "Ч:"
 
 #. TRANSLATORS: G for Green (RGB)
-#: ../app/widgets/gimpcolorframe.c:777 ../app/widgets/gimpcolorframe.c:813
+#: ../app/widgets/gimpcolorframe.c:777 ../app/widgets/gimpcolorframe.c:816
 msgctxt "RGB"
 msgid "G:"
 msgstr "З:"
 
 #. TRANSLATORS: B for Blue (RGB)
-#: ../app/widgets/gimpcolorframe.c:779 ../app/widgets/gimpcolorframe.c:815
+#: ../app/widgets/gimpcolorframe.c:779 ../app/widgets/gimpcolorframe.c:818
 msgctxt "RGB"
 msgid "B:"
 msgstr "С:"
@@ -25149,126 +25136,126 @@ msgid "Index:"
 msgstr "Індекс:"
 
 #. TRANSLATORS: Hex for Hexadecimal (representation of a color)
-#: ../app/widgets/gimpcolorframe.c:822
+#: ../app/widgets/gimpcolorframe.c:825
 msgctxt "Color representation"
 msgid "Hex:"
 msgstr "Ш.:"
 
 #. TRANSLATORS: H for Hue (HSV color space)
-#: ../app/widgets/gimpcolorframe.c:853
+#: ../app/widgets/gimpcolorframe.c:856
 msgctxt "HSV color space"
 msgid "H:"
 msgstr "В:"
 
 #. TRANSLATORS: S for Saturation (HSV color space)
-#: ../app/widgets/gimpcolorframe.c:855
+#: ../app/widgets/gimpcolorframe.c:858
 msgctxt "HSV color space"
 msgid "S:"
 msgstr "Н:"
 
 #. TRANSLATORS: V for Value (HSV color space)
-#: ../app/widgets/gimpcolorframe.c:857
+#: ../app/widgets/gimpcolorframe.c:860
 msgctxt "HSV color space"
 msgid "V:"
 msgstr "З:"
 
 #. TRANSLATORS: L for Lightness (LCH color space)
-#: ../app/widgets/gimpcolorframe.c:881
+#: ../app/widgets/gimpcolorframe.c:884
 msgctxt "LCH color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: C for Chroma (LCH color space)
-#: ../app/widgets/gimpcolorframe.c:883
+#: ../app/widgets/gimpcolorframe.c:886
 msgctxt "LCH color space"
 msgid "C*:"
 msgstr "C*:"
 
 #. TRANSLATORS: H for Hue angle (LCH color space)
-#: ../app/widgets/gimpcolorframe.c:885
+#: ../app/widgets/gimpcolorframe.c:888
 msgctxt "LCH color space"
 msgid "h°:"
 msgstr "h°:"
 
 #. TRANSLATORS: L* for Lightness (Lab color space)
-#: ../app/widgets/gimpcolorframe.c:913
+#: ../app/widgets/gimpcolorframe.c:916
 msgctxt "Lab color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: a* color channel in Lab color space
-#: ../app/widgets/gimpcolorframe.c:915
+#: ../app/widgets/gimpcolorframe.c:918
 msgctxt "Lab color space"
 msgid "a*:"
 msgstr "a*:"
 
 #. TRANSLATORS: b* color channel in Lab color space
-#: ../app/widgets/gimpcolorframe.c:917
+#: ../app/widgets/gimpcolorframe.c:920
 msgctxt "Lab color space"
 msgid "b*:"
 msgstr "b*:"
 
 #. TRANSLATORS: x from xyY color space
-#: ../app/widgets/gimpcolorframe.c:945
+#: ../app/widgets/gimpcolorframe.c:948
 msgctxt "xyY color space"
 msgid "x:"
 msgstr "x:"
 
 #. TRANSLATORS: y from xyY color space
-#: ../app/widgets/gimpcolorframe.c:947
+#: ../app/widgets/gimpcolorframe.c:950
 msgctxt "xyY color space"
 msgid "y:"
 msgstr "y:"
 
 #. TRANSLATORS: Y from xyY color space
-#: ../app/widgets/gimpcolorframe.c:949
+#: ../app/widgets/gimpcolorframe.c:952
 msgctxt "xyY color space"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: Y from Yu'v' color space
-#: ../app/widgets/gimpcolorframe.c:977
+#: ../app/widgets/gimpcolorframe.c:980
 msgctxt "Yu'v' color space"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: u' from Yu'v' color space
-#: ../app/widgets/gimpcolorframe.c:979
+#: ../app/widgets/gimpcolorframe.c:982
 msgctxt "Yu'v' color space"
 msgid "u':"
 msgstr "u':"
 
 #. TRANSLATORS: v' from Yu'v' color space
-#: ../app/widgets/gimpcolorframe.c:981
+#: ../app/widgets/gimpcolorframe.c:984
 msgctxt "Yu'v' color space"
 msgid "v':"
 msgstr "v':"
 
 #. TRANSLATORS: C for Cyan (CMYK)
-#: ../app/widgets/gimpcolorframe.c:1009
+#: ../app/widgets/gimpcolorframe.c:1012
 msgctxt "CMYK"
 msgid "C:"
 msgstr "Б:"
 
 #. TRANSLATORS: M for Magenta (CMYK)
-#: ../app/widgets/gimpcolorframe.c:1011
+#: ../app/widgets/gimpcolorframe.c:1014
 msgctxt "CMYK"
 msgid "M:"
 msgstr "М:"
 
 #. TRANSLATORS: Y for Yellow (CMYK)
-#: ../app/widgets/gimpcolorframe.c:1013
+#: ../app/widgets/gimpcolorframe.c:1016
 msgctxt "CMYK"
 msgid "Y:"
 msgstr "Ж:"
 
 #. TRANSLATORS: K for Key/black (CMYK)
-#: ../app/widgets/gimpcolorframe.c:1015
+#: ../app/widgets/gimpcolorframe.c:1018
 msgctxt "CMYK"
 msgid "K:"
 msgstr "К:"
 
-#: ../app/widgets/gimpcolorframe.c:1077
+#: ../app/widgets/gimpcolorframe.c:1080
 msgctxt "Color value"
 msgid "n/a"
 msgstr "н/д"
@@ -27251,6 +27238,10 @@ msgid ""
 msgstr ""
 "Активний градієнт.\n"
 "Клацніть, щоб відкрити діалогове вікно \"Градієнти\"."
+
+#: ../app/widgets/gimptoolbutton.c:601
+msgid "Also in group:"
+msgstr "Також у групі:"
 
 #: ../app/widgets/gimptooleditor.c:243
 msgid "Create a new tool group"
