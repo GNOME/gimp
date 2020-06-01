@@ -1668,6 +1668,21 @@ gimp_gtk_container_clear (GtkContainer *container)
                          container);
 }
 
+void
+gimp_gtk_adjustment_chain (GtkAdjustment *adjustment1,
+                           GtkAdjustment *adjustment2)
+{
+  g_return_if_fail (GTK_IS_ADJUSTMENT (adjustment1));
+  g_return_if_fail (GTK_IS_ADJUSTMENT (adjustment2));
+
+  g_object_bind_property (adjustment1, "value",
+                          adjustment2, "lower",
+                          G_BINDING_SYNC_CREATE);
+  g_object_bind_property (adjustment2, "value",
+                          adjustment1, "upper",
+                          G_BINDING_SYNC_CREATE);
+}
+
 static gboolean
 gimp_print_event_free (gpointer data)
 {

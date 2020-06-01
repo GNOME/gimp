@@ -117,6 +117,9 @@ void              gimp_widget_set_fully_opaque     (GtkWidget            *widget
 
 void              gimp_gtk_container_clear         (GtkContainer         *container);
 
+void              gimp_gtk_adjustment_chain        (GtkAdjustment        *adjustment1,
+                                                    GtkAdjustment        *adjustment2);
+
 const gchar     * gimp_print_event                 (const GdkEvent       *event);
 
 gboolean          gimp_color_profile_store_add_defaults
