@@ -166,6 +166,7 @@ typedef struct _GimpPdbDialog                GimpPdbDialog;
 
 /*  misc widgets  */
 
+typedef struct _GimpAccelLabel               GimpAccelLabel;
 typedef struct _GimpActionEditor             GimpActionEditor;
 typedef struct _GimpActionView               GimpActionView;
 typedef struct _GimpBlobEditor               GimpBlobEditor;
