@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-17 10:43+0000\n"
-"PO-Revision-Date: 2020-05-31 18:25+0300\n"
+"PO-Revision-Date: 2020-06-01 12:12+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -7461,7 +7461,7 @@ msgstr "SGI"
 
 #: ../plug-ins/file-sgi/sgi.c:677
 msgid "Compression type"
-msgstr "Tip de compresie"
+msgstr "Tip de comprimare"
 
 #: ../plug-ins/file-sgi/sgi.c:681
 msgid "_No compression"
