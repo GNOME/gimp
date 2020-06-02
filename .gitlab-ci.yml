@@ -324,7 +324,7 @@ deps-win32:
     - mkdir -p $XDG_DATA_HOME
 
     ## create a link to the crossroad environment created in the image prepare step
-    - ln -s /opt/.local/share/crossroad $XDG_DATA_HOME
+    - ln -s /usr/local/share/crossroad $XDG_DATA_HOME
   script:
     - crossroad w32 gimp --run="crossroad_deps_build.sh"
   artifacts:
