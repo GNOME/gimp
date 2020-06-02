@@ -108,7 +108,6 @@ build-image-win32:
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $BUILD_IMAGE_WIN32 --cache=true --cache-ttl=120h
 
-
 ## GNU/Linux 64-bit CIs ##
 
 deps-debian/testing:
@@ -225,9 +224,18 @@ gimp-debian/testing-clang:
     - mkdir -p $XDG_CACHE_HOME
     - mkdir -p $XDG_DATA_HOME
 
+    ## diagnostics output
+    - echo "/opt contents:"
+    - ls -lR /opt
+    
     ## create a link to the crossroad environment created in the image prepare step
     - ln -s /opt/.local/share/crossroad $XDG_DATA_HOME
 
+    ## diagnostics output
+    - echo "$XDG_DATA_HOME contents:"
+    - echo "directory:" $XDG_DATA_HOME
+    - ls -lR $XDG_DATA_HOME
+    
     ## create crossroad script to build deps
     - echo "mkdir _deps && cd _deps" > crossroad_deps_build.sh
 
