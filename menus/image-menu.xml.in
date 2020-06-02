@@ -698,6 +698,7 @@
       <menu action="filters-blur-menu" name="Blur">
 	<menuitem action="filters-focus-blur" />
 	<menuitem action="filters-gaussian-blur" />
+	<menuitem action="filters-lens-blur" />
 	<menuitem action="filters-mean-curvature-blur" />
 	<menuitem action="filters-median-blur" />
 	<menuitem action="filters-pixelize" />

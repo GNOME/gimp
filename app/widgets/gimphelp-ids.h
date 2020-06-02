@@ -393,6 +393,7 @@
 #define GIMP_HELP_FILTER_INVERT_VALUE             "gimp-filter-invert-value"
 #define GIMP_HELP_FILTER_IMAGE_GRADIENT           "gimp-filter-image-gradient"
 #define GIMP_HELP_FILTER_KALEIDOSCOPE             "gimp-filter-kaleidoscope"
+#define GIMP_HELP_FILTER_LENS_BLUR                "gimp-filter-lens-blur"
 #define GIMP_HELP_FILTER_LENS_DISTORTION          "gimp-filter-lens-distortion"
 #define GIMP_HELP_FILTER_LENS_FLARE               "gimp-filter-lens-flare"
 #define GIMP_HELP_FILTER_LINEAR_SINUSOID          "gimp-filter-linear-sinusoid"

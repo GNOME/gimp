@@ -653,6 +653,7 @@ sanity_check_gegl_ops (void)
     "gegl:introspect",
     "gegl:invert-gamma",
     "gegl:invert-linear",
+    "gegl:lens-blur",
     "gegl:lens-distortion",
     "gegl:lens-flare",
     "gegl:linear-sinusoid",
