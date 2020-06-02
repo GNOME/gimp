@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-01 20:58+0000\n"
-"PO-Revision-Date: 2020-05-31 02:23+0300\n"
+"PO-Revision-Date: 2020-06-02 20:08+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -1584,12 +1584,12 @@ msgstr "Drepturi de autor: %s"
 #: ../libgimpconfig/gimpconfigenums.c:24
 msgctxt "color-management-mode"
 msgid "No color management"
-msgstr "Fără gestiune de culori"
+msgstr "Fără gestionare de culori"
 
 #: ../libgimpconfig/gimpconfigenums.c:25
 msgctxt "color-management-mode"
 msgid "Color-managed display"
-msgstr "Afișor cu gestiune de culori"
+msgstr "Afișor cu gestionare de culori"
 
 #: ../libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
