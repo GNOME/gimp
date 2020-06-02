@@ -37,6 +37,22 @@
 #include "gimp-intl.h"
 
 
+static gint
+find_param (GParamSpec  **param_specs,
+            guint         n_param_specs,
+            const gchar  *name)
+{
+  gint i;
+
+  for (i = 0; i < n_param_specs; i++)
+    {
+      if (! strcmp (param_specs[i]->name, name))
+        break;
+    }
+
+  return i;
+}
+
 static void
 focus_callback (GObject       *config,
                 GeglRectangle *area,
@@ -119,19 +135,86 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
                                gpointer                  creator)
 {
   GtkWidget *vbox;
+  gint       first_geometry_param;
+  gint       last_geometry_param;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  vbox = _gimp_prop_gui_new_generic (config,
-                                     param_specs, n_param_specs,
+  first_geometry_param = find_param (param_specs, n_param_specs,
+                                     "shape") + 1;
+  last_geometry_param  = find_param (param_specs, n_param_specs,
+                                     "high-quality");
+
+  if (last_geometry_param <= first_geometry_param)
+    {
+      vbox = _gimp_prop_gui_new_generic (config,
+                                         param_specs, n_param_specs,
+                                         area, context,
+                                         create_picker_func,
+                                         create_controller_func,
+                                         creator);
+    }
+  else
+    {
+      GtkWidget   *widget;
+      GtkWidget   *expander;
+      GtkWidget   *frame;
+      const gchar *label;
+
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+
+      widget = gimp_prop_widget_new (config,
+                                     "shape",
                                      area, context,
                                      create_picker_func,
                                      create_controller_func,
-                                     creator);
+                                     creator,
+                                     &label);
+      gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+      gtk_widget_show (widget);
 
+      widget = _gimp_prop_gui_new_generic (config,
+                                           param_specs,
+                                           first_geometry_param - 1,
+                                           area, context,
+                                           create_picker_func,
+                                           create_controller_func,
+                                           creator);
+      gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+      gtk_widget_show (widget);
+
+      widget = _gimp_prop_gui_new_generic (config,
+                                           param_specs + last_geometry_param,
+                                           n_param_specs - last_geometry_param,
+                                           area, context,
+                                           create_picker_func,
+                                           create_controller_func,
+                                           creator);
+      gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+      gtk_widget_show (widget);
+
+      expander = gtk_expander_new (_("Geometry Options"));
+      gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
+      gtk_widget_show (expander);
+
+      frame = gimp_frame_new (NULL);
+      gtk_container_add (GTK_CONTAINER (expander), frame);
+      gtk_widget_show (frame);
+
+      widget = _gimp_prop_gui_new_generic (config,
+                                           param_specs + first_geometry_param,
+                                           last_geometry_param -
+                                           first_geometry_param,
+                                           area, context,
+                                           create_picker_func,
+                                           create_controller_func,
+                                           creator);
+      gtk_container_add (GTK_CONTAINER (frame), widget);
+      gtk_widget_show (widget);
+    }
 
   if (create_controller_func)
     {
