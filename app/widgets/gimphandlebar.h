@@ -36,6 +36,7 @@ struct _GimpHandleBar
   GtkOrientation  orientation;
 
   GtkAdjustment  *slider_adj[3];
+  gboolean        limits_set;
   gdouble         lower;
   gdouble         upper;
 
@@ -56,6 +57,14 @@ GtkWidget * gimp_handle_bar_new            (GtkOrientation  orientation);
 void        gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
                                             gint            handle_no,
                                             GtkAdjustment  *adjustment);
+
+void        gimp_handle_bar_set_limits     (GimpHandleBar  *bar,
+                                            gdouble         lower,
+                                            gdouble         upper);
+void        gimp_handle_bar_unset_limits   (GimpHandleBar  *bar);
+gboolean    gimp_handle_bar_get_limits     (GimpHandleBar  *bar,
+                                            gdouble        *lower,
+                                            gdouble        *upper);
 
 void        gimp_handle_bar_connect_events (GimpHandleBar  *bar,
                                             GtkWidget      *event_source);

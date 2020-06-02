@@ -97,6 +97,8 @@ gimp_handle_bar_init (GimpHandleBar *bar)
   gtk_event_box_set_visible_window (GTK_EVENT_BOX (bar), FALSE);
 
   bar->orientation = GTK_ORIENTATION_HORIZONTAL;
+
+  bar->limits_set  = FALSE;
   bar->lower       = 0.0;
   bar->upper       = 1.0;
 }
@@ -345,6 +347,45 @@ gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
 }
 
 void
+gimp_handle_bar_set_limits (GimpHandleBar *bar,
+                            gdouble        lower,
+                            gdouble        upper)
+{
+  g_return_if_fail (GIMP_IS_HANDLE_BAR (bar));
+
+  bar->limits_set = TRUE;
+  bar->lower      = lower;
+  bar->upper      = upper;
+
+  gtk_widget_queue_draw (GTK_WIDGET (bar));
+}
+
+void
+gimp_handle_bar_unset_limits (GimpHandleBar *bar)
+{
+  g_return_if_fail (GIMP_IS_HANDLE_BAR (bar));
+
+  bar->limits_set = FALSE;
+  bar->lower      = 0.0;
+  bar->upper      = 1.0;
+
+  gimp_handle_bar_adjustment_changed (NULL, bar);
+}
+
+gboolean
+gimp_handle_bar_get_limits (GimpHandleBar *bar,
+                            gdouble       *lower,
+                            gdouble       *upper)
+{
+  g_return_val_if_fail (GIMP_IS_HANDLE_BAR (bar), FALSE);
+
+  if (lower) *lower = bar->lower;
+  if (upper) *upper = bar->upper;
+
+  return bar->limits_set;
+}
+
+void
 gimp_handle_bar_connect_events (GimpHandleBar *bar,
                                 GtkWidget     *event_source)
 {
@@ -375,11 +416,14 @@ static void
 gimp_handle_bar_adjustment_changed (GtkAdjustment *adjustment,
                                     GimpHandleBar *bar)
 {
-  if (bar->slider_adj[0])
-    bar->lower = gtk_adjustment_get_lower (bar->slider_adj[0]);
+  if (! bar->limits_set)
+    {
+      if (bar->slider_adj[0])
+        bar->lower = gtk_adjustment_get_lower (bar->slider_adj[0]);
 
-  if (bar->slider_adj[2])
-    bar->upper = gtk_adjustment_get_upper (bar->slider_adj[2]);
+      if (bar->slider_adj[2])
+        bar->upper = gtk_adjustment_get_upper (bar->slider_adj[2]);
+    }
 
   gtk_widget_queue_draw (GTK_WIDGET (bar));
 }
