@@ -414,6 +414,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:mirrors",
     GIMP_HELP_FILTER_KALEIDOSCOPE },
 
+  { "filters-lens-blur", GIMP_ICON_GEGL,
+    NC_("filters-action", "Le_ns Blur..."), NULL, NULL,
+    "gegl:lens-blur",
+    GIMP_HELP_FILTER_LENS_BLUR },
+
   { "filters-lens-distortion", GIMP_ICON_GEGL,
     NC_("filters-action", "Le_ns Distortion..."), NULL, NULL,
     "gegl:lens-distortion",
@@ -948,6 +953,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-invert-value",            writable);
   SET_SENSITIVE ("filters-image-gradient",          writable);
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
+  SET_SENSITIVE ("filters-lens-blur",               writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
   SET_SENSITIVE ("filters-lens-flare",              writable);
   SET_SENSITIVE ("filters-levels",                  writable);
