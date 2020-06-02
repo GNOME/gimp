@@ -205,6 +205,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
           GtkWidget   *frame;
           GtkWidget   *range;
           const gchar *label_str;
+          const gchar *range_label_str;
           gdouble      step_increment;
           gdouble      page_increment;
           gdouble      ui_lower;
@@ -223,6 +224,12 @@ _gimp_prop_gui_new_generic (GObject                  *config,
             creator,
             &label_str);
 
+          range_label_str = gegl_param_spec_get_property_key (pspec,
+                                                              "range-label");
+
+          if (range_label_str)
+            label_str = range_label_str;
+
           g_object_set_data_full (G_OBJECT (vbox),
                                   "gimp-underlying-widget",
                                   g_object_ref_sink (spin_scale),
@@ -239,9 +246,12 @@ _gimp_prop_gui_new_generic (GObject                  *config,
           gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
           gtk_widget_show (label);
 
-          g_object_bind_property (spin_scale, "label",
-                                  label,      "label",
-                                  G_BINDING_SYNC_CREATE);
+          if (! range_label_str)
+            {
+              g_object_bind_property (spin_scale, "label",
+                                      label,      "label",
+                                      G_BINDING_SYNC_CREATE);
+            }
 
           frame = gimp_frame_new (NULL);
           gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
