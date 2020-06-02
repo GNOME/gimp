@@ -1131,6 +1131,8 @@ gimp_prop_range_new (GObject     *config,
 
   gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar), color_bar);
 
+  g_object_set_data (G_OBJECT (vbox), "gimp-range-handle-bar", handle_bar);
+
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -1159,6 +1161,20 @@ gimp_prop_range_new (GObject     *config,
     gimp_gtk_adjustment_chain (adjustment1, adjustment2);
 
   return vbox;
+}
+
+void
+gimp_prop_range_set_ui_limits (GtkWidget *widget,
+                               gdouble    lower,
+                               gdouble    upper)
+{
+  GimpHandleBar *handle_bar;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  handle_bar = g_object_get_data (G_OBJECT (widget), "gimp-range-handle-bar");
+
+  gimp_handle_bar_set_limits (handle_bar, lower, upper);
 }
 
 
