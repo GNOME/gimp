@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-31 10:49+0000\n"
-"PO-Revision-Date: 2020-05-31 14:46+0300\n"
+"POT-Creation-Date: 2020-06-02 06:57+0000\n"
+"PO-Revision-Date: 2020-06-02 13:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.07.70\n"
+"X-Generator: Lokalize 20.03.70\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -23817,7 +23817,6 @@ msgid "All selected channels' positions or pixels are locked."
 msgstr "Позиції або пікселі усіх позначених каналів заблоковано."
 
 #: ../app/tools/gimpmovetool.c:365
-#| msgid "All selected_items layers' positions are locked."
 msgid "All selected layers' positions are locked."
 msgstr "Усі позиції позначених шарів заблоковано."
 
@@ -27765,6 +27764,10 @@ msgid ""
 msgstr ""
 "Активний градієнт.\n"
 "Клацніть, щоб відкрити діалогове вікно \"Градієнти\"."
+
+#: ../app/widgets/gimptoolbutton.c:548
+msgid "Also in group:"
+msgstr "Також у групі:"
 
 #: ../app/widgets/gimptooleditor.c:243
 msgid "Create a new tool group"
