@@ -271,6 +271,8 @@ gimp_accel_label_set_action (GimpAccelLabel *accel_label,
         }
 
       gimp_accel_label_update (accel_label);
+
+      g_object_notify (G_OBJECT (accel_label), "action");
     }
 }
 
