@@ -58,7 +58,7 @@ build-image:
 
     ## set XDG_* variables to popint to persistent /opt in the image
     - echo 'RUN export XDG_CACHE_HOME="/opt/.cache/"' >> Dockerfile
-    - echo 'RUN export XDG_DATA_HOME="/opt/.local/share/"' >> Dockerfile
+    - echo 'RUN export XDG_DATA_HOME="/usr/local/share/"' >> Dockerfile
 
     ## install crossroad
     - echo "RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git" >> Dockerfile
@@ -225,11 +225,11 @@ gimp-debian/testing-clang:
     - mkdir -p $XDG_DATA_HOME
 
     ## diagnostics output
-    - echo "/opt contents:"
-    - ls -lR /opt
+    - echo "/usr/local/ contents:"
+    - ls -lR /usr/local/
     
     ## create a link to the crossroad environment created in the image prepare step
-    - ln -s /opt/.local/share/crossroad $XDG_DATA_HOME
+    - ln -s /usr/local/share/crossroad $XDG_DATA_HOME
 
     ## diagnostics output
     - echo "$XDG_DATA_HOME contents:"
@@ -294,7 +294,7 @@ gimp-win64:
     - mkdir -p $XDG_DATA_HOME
 
     ## create a link to the crossroad environment created in the image prepare step
-    - ln -s /opt/.local/share/crossroad $XDG_DATA_HOME
+    - ln -s /usr/local/share/crossroad $XDG_DATA_HOME
   script:
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
