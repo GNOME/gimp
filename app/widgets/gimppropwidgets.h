@@ -88,6 +88,9 @@ GtkWidget * gimp_prop_range_new             (GObject       *config,
                                              gdouble        page_increment,
                                              gint           digits,
                                              gboolean       sorted);
+void        gimp_prop_range_set_ui_limits   (GtkWidget     *widget,
+                                             gdouble        lower,
+                                             gdouble        upper);
 
 
 /*  GParamObject (GimpViewable)  */
