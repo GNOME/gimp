@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-17 10:43+0000\n"
-"PO-Revision-Date: 2020-06-01 12:12+0300\n"
+"PO-Revision-Date: 2020-06-03 17:25+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -1941,15 +1941,15 @@ msgstr "Combină două imagini folosind hărți de adâncime (zone tampon pe axa
 
 #: ../plug-ins/common/depth-merge.c:185
 msgid "_Depth Merge..."
-msgstr "Combinare pe a_dâncime..."
+msgstr "Fuzionare pe a_dâncime..."
 
 #: ../plug-ins/common/depth-merge.c:357
 msgid "Depth-merging"
-msgstr "Combinare pe adâncime"
+msgstr "Fuzionare pe adâncime"
 
 #: ../plug-ins/common/depth-merge.c:617
 msgid "Depth Merge"
-msgstr "Combinare pe adâncime"
+msgstr "Fuzionare pe adâncime"
 
 #: ../plug-ins/common/depth-merge.c:669
 msgid "Source 1:"
@@ -4206,7 +4206,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-svg.c:887
 msgid "Merge imported paths"
-msgstr "_Combină traseele importate"
+msgstr "_Fuzionează traseele importate"
 
 #: ../plug-ins/common/file-tga.c:245 ../plug-ins/common/file-tga.c:264
 msgid "TarGA image"
@@ -7305,7 +7305,7 @@ msgstr "Imagine Photoshop"
 
 #: ../plug-ins/file-psd/psd.c:130
 msgid "Photoshop image (merged)"
-msgstr "Imagine Photoshop (combinată)"
+msgstr "Imagine Photoshop (fuzionată)"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
