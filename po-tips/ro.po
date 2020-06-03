@@ -1,16 +1,16 @@
 # Romanian GIMP translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008-2011.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-12 16:21+0000\n"
-"PO-Revision-Date: 2018-09-27 18:17+0300\n"
-"Last-Translator: Florentina Mușat <florentina.musat.28 [at] gmail [dot] "
-"com>\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2018-05-21 15:43+0000\n"
+"PO-Revision-Date: 2020-06-03 19:43+0300\n"
+"Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);;\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.3\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid ""
@@ -47,7 +47,6 @@ msgstr ""
 "Puteți executa multe operații de strat prin clic-dreapta pe eticheta text a "
 "unui strat în dialogul de straturi."
 
-# de la 2.8 salvarea se face exclusiv în xcf, salvarea în xcf nu acoperă „every aspect” (citat de pe gimp-developer-list: „It was never true -- e.g. undo history is not saved, tool options are not saved...”), iar salvarea la alt tip de fișier se face prin export
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "Saving an image uses XCF, GIMP's native file format (file extension <tt>."
@@ -55,11 +54,11 @@ msgid ""
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Când salvați o imagine pentru a lucra la ea mai târziu, folosiți XCF, "
-"formatul de fișier nativ GIMP (cu extensia <tt>.xcf</tt>). Astfel se "
-"conservă straturile și multe alte aspecte ale lucrului în desfășurare, "
-"permițând lucrul din nou mai târziu. Odată ce proiectul este complet, puteți "
-"să îl exportați ca JPEG, PNG, GIF, etc."
+"Pentru salvarea unei imagini se folosește XCF, formatul de fișier nativ GIMP "
+"(cu extensia <tt>.xcf</tt>). Acest format conservă straturile și multe alte "
+"aspecte ale lucrului în desfășurare, permițând lucrul din nou mai târziu. "
+"Odată ce proiectul este terminat, puteți să îl exportați ca JPEG, PNG, GIF "
+"etc."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
@@ -68,7 +67,7 @@ msgid ""
 "in to work on the whole image."
 msgstr ""
 "Majoritatea plugin-urilor lucrează pe stratul curent al imaginii curente. În "
-"unele cazuri, va trebui să combinați toate straturile (Imagine → Aplatizează "
+"unele cazuri, va trebui să fuzionați toate straturile (Imagine → Aplatizează "
 "imaginea) dacă vreți ca plugin-ul să lucreze pe întreaga imagine."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
@@ -103,8 +102,8 @@ msgid ""
 msgstr ""
 "Puteți să ajustați sau să mutați o selecție prin folosirea <tt>Alt</tt>-și-"
 "tragere. Dacă acest lucru determină mișcarea ferestrei, înseamnă că "
-"gestionarul de fereastră folosește deja tasta <tt>Alt</tt>. Majoritatea "
-"gestionarelor de fereastră pot fi configurate să ignore tasta <tt>Alt</tt>, "
+"gestionarul de ferestre folosește deja tasta <tt>Alt</tt>. Majoritatea "
+"gestionarelor de ferestre pot fi configurate să ignore tasta <tt>Alt</tt>, "
 "sau să folosească tasta <tt>Super</tt> (sau „sigla Windows”) în loc."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
