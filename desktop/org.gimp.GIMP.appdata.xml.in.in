@@ -72,6 +72,37 @@
   </provides>
 
   <releases>
+    <release version="2.10.20" date="2020-06-07">
+      <url type="details">https://www.gimp.org/news/2020/06/07/gimp-2-10-20-released/</url>
+      <description>
+        <_p>
+          GIMP 2.10.20 comes with new features as well as important bugfixes.
+          Notable changes:
+        </_p>
+        <ul>
+          <_li>
+            Tool groups now expand on hover rather than click by default
+          </_li>
+          <_li>
+            Non-destructive cropping now available by cropping the canvas rather
+            than actual pixels
+          </_li>
+          <_li>
+            Better PSD support: exporting of 16-bit files now available,
+            reading/writing channels in the right order
+          </_li>
+          <_li>
+            On-canvas controls for the Vignette filter
+          </_li>
+          <_li>
+            New filters: Bloom, Focus Blur, Lens Blur, Variable Blur
+          </_li>
+          <_li>
+            Over 30 bugfixes
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.18" date="2020-02-23">
       <url type="details">https://www.gimp.org/news/2020/02/22/gimp-2-10-18-released/</url>
       <description>
