@@ -82,6 +82,7 @@ app/actions/tool-preset-editor-commands.c
 app/actions/tool-presets-actions.c
 app/actions/tool-presets-commands.c
 app/actions/tools-actions.c
+app/actions/vector-toolpath-actions.c
 app/actions/vectors-actions.c
 app/actions/vectors-commands.c
 app/actions/view-actions.c

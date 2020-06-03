@@ -39,8 +39,6 @@
 
 #include "vector-toolpath-commands.h"
 
-#include "gimp-intl.h"
-
 
 /*  public functions  */
 
