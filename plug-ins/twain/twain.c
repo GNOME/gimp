@@ -989,12 +989,6 @@ endTransferCallback (int   completionState,
               completionState, pendingCount);
 
   /* Clean up and detach from the drawable */
-  if (destBuf)
-    {
-      g_free (destBuf);
-      destBuf = NULL;
-    }
-
   g_object_unref (theClientData->buffer);
 
   /* Make sure to check our return code */
