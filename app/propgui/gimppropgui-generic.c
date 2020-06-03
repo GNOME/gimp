@@ -223,6 +223,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
             create_controller_func,
             creator,
             &label_str);
+          gtk_widget_show (spin_scale);
 
           range_label_str = gegl_param_spec_get_property_key (pspec,
                                                               "range-label");
