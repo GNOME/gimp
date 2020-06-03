@@ -109,7 +109,6 @@
 /* Global variables */
 pTW_SESSION twSession = NULL;
 
-static char *destBuf = NULL;
 #ifdef _DEBUG
 static int twain_run_mode = RUN_STANDARD;
 #endif
@@ -651,13 +650,13 @@ bitTransferCallback (pTW_IMAGEINFO     imageInfo,
 {
   int   row, col, offset;
   char *srcBuf;
+  char *destBuf;
   int   rows = imageMemXfer->Rows;
   int   cols = imageMemXfer->Columns;
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
 
   /* Allocate a buffer as necessary */
-  if (! destBuf)
-    destBuf = g_new (char, rows * cols);
+  destBuf = gegl_scratch_new (char, rows * cols);
 
   /* Unpack the image data from bits into bytes */
   srcBuf = (char *) imageMemXfer->Memory.TheMem;
@@ -677,6 +676,9 @@ bitTransferCallback (pTW_IMAGEINFO     imageInfo,
                                    cols, rows), 0,
                    theClientData->format, destBuf,
                    GEGL_AUTO_ROWSTRIDE);
+
+  /* Free the buffer */
+  gegl_scratch_free (destBuf);
 
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
@@ -703,14 +705,14 @@ oneBytePerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
 {
   int   row;
   char *srcBuf;
+  char *destBuf;
   int   bytesPerPixel = imageInfo->BitsPerPixel / 8;
   int   rows = imageMemXfer->Rows;
   int   cols = imageMemXfer->Columns;
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
 
   /* Allocate a buffer as necessary */
-  if (! destBuf)
-    destBuf = g_new (char, rows * cols * bytesPerPixel);
+  destBuf = gegl_scratch_new (char, rows * cols * bytesPerPixel);
 
   /* The bytes coming from the source may not be padded in
    * a way that GIMP is terribly happy with.  It is
@@ -736,6 +738,9 @@ oneBytePerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
                    theClientData->format, destBuf,
                    GEGL_AUTO_ROWSTRIDE);
 
+  /* Free the buffer */
+  gegl_scratch_free (destBuf);
+
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
   gimp_progress_update ((double) theClientData->completedPixels /
@@ -758,6 +763,7 @@ twoBytesPerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
 {
   static float  ratio = 0.00390625;
   int           row, col, sample;
+  char         *destBuf;
   char         *destByte;
   int           rows = imageMemXfer->Rows;
   int           cols = imageMemXfer->Columns;
@@ -766,8 +772,7 @@ twoBytesPerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
 
   /* Allocate a buffer as necessary */
-  if (! destBuf)
-    destBuf = g_new (char, rows * cols * imageInfo->SamplesPerPixel);
+  destBuf = gegl_scratch_new (char, rows * cols * imageInfo->SamplesPerPixel);
 
   /* The bytes coming from the source may not be padded in
    * a way that GIMP is terribly happy with.  It is
@@ -815,6 +820,9 @@ twoBytesPerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
                    theClientData->format, destBuf,
                    GEGL_AUTO_ROWSTRIDE);
 
+  /* Free the buffer */
+  gegl_scratch_free (destBuf);
+
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
   gimp_progress_update ((double) theClientData->completedPixels /
@@ -844,6 +852,7 @@ palettedTransferCallback (pTW_IMAGEINFO     imageInfo,
   int   row, col;
   int   rows = imageMemXfer->Rows;
   int   cols = imageMemXfer->Columns;
+  char *destBuf;
   char *destPtr = NULL;
   char *srcPtr = NULL;
 
@@ -855,8 +864,7 @@ palettedTransferCallback (pTW_IMAGEINFO     imageInfo,
     (theClientData->paletteData->PaletteType == TWPA_RGB) ? 3 : 1;
 
   /* Allocate a buffer as necessary */
-  if (! destBuf)
-    destBuf = g_new (char, rows * cols * channelsPerEntry);
+  destBuf = gegl_scratch_new (char, rows * cols * channelsPerEntry);
 
   /* Work through the rows */
   destPtr = destBuf;
@@ -897,6 +905,9 @@ palettedTransferCallback (pTW_IMAGEINFO     imageInfo,
                                    cols, rows), 0,
                    theClientData->format, destBuf,
                    GEGL_AUTO_ROWSTRIDE);
+
+  /* Free the buffer */
+  gegl_scratch_free (destBuf);
 
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
