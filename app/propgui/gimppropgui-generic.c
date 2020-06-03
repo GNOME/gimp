@@ -225,16 +225,16 @@ _gimp_prop_gui_new_generic (GObject                  *config,
             &label_str);
           gtk_widget_show (spin_scale);
 
+          g_object_set_data_full (G_OBJECT (vbox),
+                                  "gimp-underlying-widget",
+                                  g_object_ref_sink (spin_scale),
+                                  g_object_unref);
+
           range_label_str = gegl_param_spec_get_property_key (pspec,
                                                               "range-label");
 
           if (range_label_str)
             label_str = range_label_str;
-
-          g_object_set_data_full (G_OBJECT (vbox),
-                                  "gimp-underlying-widget",
-                                  g_object_ref_sink (spin_scale),
-                                  g_object_unref);
 
           gtk_spin_button_get_increments (GTK_SPIN_BUTTON (spin_scale),
                                           &step_increment, &page_increment);
