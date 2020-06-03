@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-01 00:27+0000\n"
-"PO-Revision-Date: 2020-06-02 09:50+0300\n"
+"PO-Revision-Date: 2020-06-03 19:17+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -119,14 +119,16 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr ""
+"Instrument nou de transformare 3D pentru rotirea și panoramarea articolelor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Much smoother brush outline motion on the canvas"
-msgstr ""
+msgstr "O mișcare mult mai lină a conturului penelului pe canava"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr ""
+"Interfață de utilizator consolidată pentru fuzionarea și ancorarea straturilor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Update check to notify users that a new release/installer is available"
@@ -674,8 +676,8 @@ msgstr ""
 "\n"
 "GIMP este distribuit cu speranța că va fi folositor, dar FĂRĂ NICIO GARANȚIE; "
 "fără nici măcar garanția implicită asociată COMERCIALIZĂRII sau POTRIVIRII "
-"PENTRU UN SCOP PARTICULAR. Consultați licența GNU General Public License pentru "
-"mai multe detalii.\n"
+"PENTRU UN SCOP PARTICULAR.  Consultați licența GNU General Public License "
+"pentru mai multe detalii.\n"
 "\n"
 "Împreună cu GIMP ar trebui să fi primit o copie a licenței GNU General Public "
 "License. Dacă nu, vedeți https://www.gnu.org/licenses/"
@@ -2411,37 +2413,37 @@ msgstr ""
 #: ../app/actions/context-actions.c:673
 msgctxt "context-action"
 msgid "Tool Opacity: Set Transparency"
-msgstr ""
+msgstr "Opacitatea instrumentului: stabilește transparența"
 
 #: ../app/actions/context-actions.c:677
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Transparent"
-msgstr ""
+msgstr "Opacitatea instrumentului: complet transparent"
 
 #: ../app/actions/context-actions.c:681
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Opaque"
-msgstr ""
+msgstr "Opacitatea instrumentului: complet opac"
 
 #: ../app/actions/context-actions.c:685
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Transparent"
-msgstr ""
+msgstr "Opacitatea instrumentului: 1% mai transparent"
 
 #: ../app/actions/context-actions.c:689
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Opaque"
-msgstr ""
+msgstr "Opacitatea instrumentului: 1% mai opac"
 
 #: ../app/actions/context-actions.c:693
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Transparent"
-msgstr ""
+msgstr "Opacitatea instrumentului: 10% mai transparent"
 
 #: ../app/actions/context-actions.c:697
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Opaque"
-msgstr ""
+msgstr "Opacitatea instrumentului: 10% mai opac"
 
 #: ../app/actions/context-actions.c:705
 msgctxt "context-action"
@@ -2886,7 +2888,7 @@ msgstr "Meniul informațiilor despre indicator"
 #: ../app/actions/cursor-info-actions.c:48
 msgctxt "cursor-info-action"
 msgid "_Sample Merged"
-msgstr "_Eșantion combinat"
+msgstr "_Eșantionează fuzionat"
 
 #: ../app/actions/cursor-info-actions.c:49
 msgctxt "cursor-info-action"
@@ -3438,7 +3440,7 @@ msgstr "Deschide consola de erori"
 #: ../app/actions/dialogs-actions.c:239
 msgctxt "dialogs-action"
 msgid "_Dashboard"
-msgstr ""
+msgstr "Tablou _de bord"
 
 #: ../app/actions/dialogs-actions.c:240
 msgctxt "dialogs-action"
@@ -6261,12 +6263,12 @@ msgstr ""
 #: ../app/actions/image-actions.c:154
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
-msgstr "Combină straturi_le vizibile..."
+msgstr "Fuzionează straturi_le vizibile..."
 
 #: ../app/actions/image-actions.c:155
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
-msgstr "Combină toate straturile vizibile într-un singur strat"
+msgstr "Fuzionează toate straturile vizibile într-un singur strat"
 
 #: ../app/actions/image-actions.c:160
 msgctxt "image-action"
@@ -6276,7 +6278,7 @@ msgstr "Aplati_zează imaginea"
 #: ../app/actions/image-actions.c:161
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr "Combină toate straturile într-unul și elimină transparența"
+msgstr "Fuzionează toate straturile într-unul singur și elimină transparența"
 
 #: ../app/actions/image-actions.c:166
 msgctxt "image-action"
@@ -6498,7 +6500,7 @@ msgstr "Salvează profilul de culoare"
 # titlu sub bară
 #: ../app/actions/image-commands.c:655
 msgid "Set Image Canvas Size"
-msgstr "Stabilește dimensiunea canavelei imaginii"
+msgstr "Stabilește dimensiunea de canava a imaginii"
 
 #: ../app/actions/image-commands.c:686 ../app/actions/image-commands.c:711
 #: ../app/actions/image-commands.c:1410
@@ -6844,42 +6846,42 @@ msgstr "Ancorează stratul putitor"
 #: ../app/actions/layers-actions.c:175 ../app/actions/layers-actions.c:184
 msgctxt "layers-action"
 msgid "Merge Do_wn"
-msgstr "Combină în _jos"
+msgstr "Fuzionează în _jos"
 
 #: ../app/actions/layers-actions.c:176 ../app/actions/layers-actions.c:185
 msgctxt "layers-action"
 msgid "Merge this layer with the first visible layer below it"
-msgstr "Combină acest strat cu primul strat vizibil de sub el"
+msgstr "Fuzionează acest strat cu primul strat vizibil de sub el"
 
 #: ../app/actions/layers-actions.c:190
 msgctxt "layers-action"
 msgid "Merge Layer Group"
-msgstr "Combină grupul de straturi"
+msgstr "Fuzionează grupul de straturi"
 
 #: ../app/actions/layers-actions.c:191
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
-msgstr "Combină straturile grupului într-un singur strat normal"
+msgstr "Fuzionează straturile grupului într-un singur strat normal"
 
 #: ../app/actions/layers-actions.c:196
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
-msgstr "Combină straturile _vizibile..."
+msgstr "Fuzionează straturile _vizibile..."
 
 #: ../app/actions/layers-actions.c:197
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
-msgstr "Combină toate straturile vizibile într-un singur strat"
+msgstr "Fuzionează toate straturile vizibile într-un singur strat"
 
 #: ../app/actions/layers-actions.c:202
 msgctxt "layers-action"
 msgid "Merge _Visible Layers"
-msgstr "Combină straturile _vizibile"
+msgstr "Fuzionează straturile _vizibile"
 
 #: ../app/actions/layers-actions.c:203
 msgctxt "layers-action"
 msgid "Merge all visible layers with last used values"
-msgstr "Combină toate straturile vizibile cu ultimele valori folosite"
+msgstr "Fuzionează toate straturile vizibile cu ultimele valori folosite"
 
 #: ../app/actions/layers-actions.c:208
 msgctxt "layers-action"
@@ -6889,7 +6891,7 @@ msgstr "Aplati_zează imaginea"
 #: ../app/actions/layers-actions.c:209
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr "Combină toate straturile într-unul și elimină transparența"
+msgstr "Fuzionează toate straturile într-unul singur și elimină transparența"
 
 #: ../app/actions/layers-actions.c:214
 msgctxt "layers-action"
@@ -7685,12 +7687,12 @@ msgstr "Duplică această paletă"
 #: ../app/actions/palettes-actions.c:66
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
-msgstr "Co_mbină paletele..."
+msgstr "_Fuzionează paletele..."
 
 #: ../app/actions/palettes-actions.c:67
 msgctxt "palettes-action"
 msgid "Merge palettes"
-msgstr "Combină paletele"
+msgstr "Fuzionează paletele"
 
 #: ../app/actions/palettes-actions.c:72
 msgctxt "palettes-action"
@@ -7744,11 +7746,11 @@ msgstr "Editează această paletă"
 
 #: ../app/actions/palettes-commands.c:85
 msgid "Merge Palettes"
-msgstr "Combină paletele"
+msgstr "Fuzionează paletele"
 
 #: ../app/actions/palettes-commands.c:89
 msgid "Enter a name for the merged palette"
-msgstr "Introduceți un nume pentru paleta combinată"
+msgstr "Introduceți un nume pentru paleta fuzionată"
 
 #: ../app/actions/palettes-commands.c:125
 msgid "There must be at least two palettes selected to merge."
@@ -7928,7 +7930,7 @@ msgstr "Meniul punctului de eșantion"
 #: ../app/actions/sample-points-actions.c:47
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
-msgstr "_Eșantion combinat"
+msgstr "_Eșantionează fuzionat"
 
 #: ../app/actions/sample-points-actions.c:49
 msgctxt "sample-points-action"
@@ -8019,7 +8021,7 @@ msgstr "_Restrânge..."
 #: ../app/actions/select-actions.c:88
 msgctxt "select-action"
 msgid "Contract the selection"
-msgstr "Restrânge selecția"
+msgstr "Contractă selecția"
 
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
@@ -8029,7 +8031,7 @@ msgstr "_Extinde..."
 #: ../app/actions/select-actions.c:94
 msgctxt "select-action"
 msgid "Enlarge the selection"
-msgstr "Extinde selecția"
+msgstr "Mărește selecția"
 
 # a trebuit în alltă parte accelratorul de pe r
 #: ../app/actions/select-actions.c:99
@@ -8159,7 +8161,7 @@ msgstr "Creează din selecție un chenar de"
 
 #: ../app/actions/select-commands.c:368
 msgid "Border style"
-msgstr ""
+msgstr "Stil de chenar"
 
 #: ../app/actions/select-commands.c:382
 msgid "When bordering, act as if selected areas continued outside the image."
@@ -8167,7 +8169,7 @@ msgstr ""
 
 #: ../app/actions/select-commands.c:449
 msgid "Fill Selection Outline"
-msgstr ""
+msgstr "Umple conturul selecției"
 
 # titlu pe bară
 #: ../app/actions/select-commands.c:480
@@ -8299,42 +8301,42 @@ msgstr "De la dreapta la stânga"
 #: ../app/actions/text-editor-actions.c:71
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
-msgstr ""
+msgstr "TTB-RTL"
 
 #: ../app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "Vertical, de la dreapta la stânga (orientare mixtă)"
 
 #: ../app/actions/text-editor-actions.c:77
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
-msgstr ""
+msgstr "TTB-RTL-PE_VERTICALĂ"
 
 #: ../app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "Vertical, de la dreapta la stânga (orientare pe verticală)"
 
 #: ../app/actions/text-editor-actions.c:83
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
-msgstr ""
+msgstr "TTB-LTR"
 
 #: ../app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "Vertical, de la stânga la dreapta (orientare mixtă)"
 
 #: ../app/actions/text-editor-actions.c:89
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
-msgstr ""
+msgstr "TTB-LTR-PE_VERTICALĂ"
 
 #: ../app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "Vertical, de la stânga la dreapta (orientare pe verticală)"
 
 #: ../app/actions/text-editor-commands.c:61
 #: ../app/actions/text-tool-commands.c:119
@@ -8437,22 +8439,22 @@ msgstr "De la dreapta la stânga"
 #: ../app/actions/text-tool-actions.c:116
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "Vertical, de la dreapta la stânga (orientare mixtă)"
 
 #: ../app/actions/text-tool-actions.c:121
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "Vertical, de la dreapta la stânga (orientare pe verticală)"
 
 #: ../app/actions/text-tool-actions.c:126
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "Vertical, de la stânga la dreapta (orientare mixtă)"
 
 #: ../app/actions/text-tool-actions.c:131
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "Vertical, de la stânga la dreapta (orientare pe verticală)"
 
 #: ../app/actions/tool-options-actions.c:58
 msgctxt "tool-options-action"
@@ -9192,7 +9194,7 @@ msgstr "Șterge acest traseu"
 #: ../app/actions/vectors-actions.c:90
 msgctxt "vectors-action"
 msgid "Merge _Visible Paths"
-msgstr "Combină traseele _vizibile"
+msgstr "Fuzionează traseele _vizibile"
 
 #: ../app/actions/vectors-actions.c:95
 msgctxt "vectors-action"
@@ -9706,7 +9708,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:156
 msgctxt "view-action"
 msgid "Soft-_Proofing Profile..."
-msgstr "Profil pentru simularea de tipărire (soft-proofing)..."
+msgstr "_Profil pentru simularea de tipărire (soft-proofing)..."
 
 #: ../app/actions/view-actions.c:157
 msgctxt "view-action"
@@ -10689,13 +10691,13 @@ msgstr "Pentru dreptaci"
 #: ../app/config/config-enums.c:186
 msgctxt "help-browser-type"
 msgid "GIMP help browser"
-msgstr "Navigatorul de ajutor GIMP"
+msgstr "Browserul pentru ajutor GIMP"
 
 # listă drop down
 #: ../app/config/config-enums.c:187
 msgctxt "help-browser-type"
 msgid "Web browser"
-msgstr "Navigatorul web al sistemului"
+msgstr "Browserul web al sistemului"
 
 #: ../app/config/config-enums.c:219
 msgctxt "icon-size"
@@ -10892,6 +10894,8 @@ msgstr "Specifică cum să fie desenată zona din jurul imaginii."
 msgid ""
 "Check for availability of GIMP updates through background internet queries."
 msgstr ""
+"Verificați disponibilitatea actualizărilor GIMP prin interogări de internet de "
+"fundal."
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
@@ -10906,10 +10910,12 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
 msgstr ""
+"Stabilește calea implicită a dosarului pentru toate dialogurile de fișiere ale "
+"profilurilor de culoare."
 
 #: ../app/config/gimprc-blurbs.h:59
 msgid "Use compact style for sliders."
-msgstr ""
+msgstr "Folosește stilul commpact pentru glisoare."
 
 #: ../app/config/gimprc-blurbs.h:62
 msgid "Sets the type of mouse pointers to use."
@@ -10951,15 +10957,16 @@ msgstr "Acroșează la ghidaje în mod implicit în ferestrele de imagini noi."
 
 #: ../app/config/gimprc-blurbs.h:119
 msgid "Snap to the grid by default in new image windows."
-msgstr ""
+msgstr "Acroșează la grilă în mod implicit în ferestrele de imagine noi."
 
 #: ../app/config/gimprc-blurbs.h:122
 msgid "Snap to the canvas edges by default in new image windows."
 msgstr ""
+"Acroșează la colțurile canavalei în mod implicit în ferestrele de imagine noi."
 
 #: ../app/config/gimprc-blurbs.h:125
 msgid "Snap to the active path by default in new image windows."
-msgstr ""
+msgstr "Acroșează la traseul activ în mod implicit în ferestrele de imagine noi."
 
 #: ../app/config/gimprc-blurbs.h:128
 msgid ""
@@ -11009,11 +11016,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:187
 msgid "Sets the browser used by the help system."
-msgstr "Stabilește navigatorul folosit de sistemul de ajutor."
+msgstr "Stabilește browserul folosit de sistemul de ajutor."
 
 #: ../app/config/gimprc-blurbs.h:195
 msgid "How many recent settings to keep around in filter tools."
-msgstr ""
+msgstr "Câte setări recente să fie păstrate în instrumentele de filtrare."
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid "Default to the last used settings in filter tools."
@@ -11021,7 +11028,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:201
 msgid "Show advanced color options in filter tools."
-msgstr ""
+msgstr "Arată opțiunile de culoare avansate în instrumentele de filtre."
 
 #: ../app/config/gimprc-blurbs.h:204
 msgid "Sets the text to appear in image window status bars."
@@ -11036,12 +11043,16 @@ msgid ""
 "Promote imported images to floating point precision. Does not apply to indexed "
 "images."
 msgstr ""
+"Promovează imaginile importate la precizie în virgulă mobilă. Nu se aplică la "
+"imaginile indexate."
 
 #: ../app/config/gimprc-blurbs.h:214
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
 msgstr ""
+"Când se promovează imagini importate la precizie în virgulă mobilă, adaugă, de "
+"asemenea, un zgomot minim pentru a distribui puțin valorile culorilor."
 
 #: ../app/config/gimprc-blurbs.h:218
 msgid "Add an alpha channel to all layers of imported images."
@@ -11168,7 +11179,7 @@ msgid ""
 "to be the default behaviour in older versions."
 msgstr ""
 "Dacă opțiunea este activată, instrumentul de mutare desemnează stratul sau "
-"traseul editat ca fiind cel activ. Acesta era comportamentul implicit în "
+"traseul editat ca fiind cel activ.  Acesta era comportamentul implicit în "
 "versiunile mai vechi."
 
 #: ../app/config/gimprc-blurbs.h:313
@@ -11177,13 +11188,13 @@ msgid ""
 "the image window."
 msgstr ""
 "Stabilește dimensiunea previzualizării de navigare disponibilă în colțul din "
-"dreapta jos a ferestrei de imagine."
+"dreapta jos al ferestrei de imagine."
 
 #: ../app/config/gimprc-blurbs.h:317
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr ""
-"Stabilește câte fire de execuție ar trebui să folosească GIMP pentru operații "
-"ce suportă așa ceva."
+"Stabilește câte fire de execuție ar trebui să folosească GIMP pentru operațiile "
+"care suportă așa ceva."
 
 #: ../app/config/gimprc-blurbs.h:339
 msgid ""
@@ -11192,8 +11203,8 @@ msgid ""
 "when working with large images."
 msgstr ""
 "Stabilește dacă GIMP ar trebui să creeze previzualizări ale straturilor și "
-"canalelor. Este drăguț de a avea previzualizări în dialogul de straturi și "
-"canale, dar ele pot încetini lucrurile în cazul imaginilor mari."
+"canalelor. Sunt practice previzualizările în dialogul straturilor și canalelor, "
+"dar ele pot încetini lucrurile atunci când se lucrează cu imagini mari."
 
 #: ../app/config/gimprc-blurbs.h:344
 msgid ""
@@ -11711,8 +11722,8 @@ msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 msgstr ""
-"Miniatura în dialogul de deschidere de fișier va fi actualizată automat dacă "
-"fișierul în cauză este mai mic decât dimensiunea stabilită aici."
+"Miniatura afișată în dialogul de deschidere de fișier va fi actualizată automat "
+"dacă fișierul previzualizat este mai mic decât dimensiunea stabilită aici."
 
 #: ../app/config/gimprc-blurbs.h:674
 msgid ""
@@ -11926,8 +11937,7 @@ msgstr "Păstrează profilul încorporat"
 #: ../app/core/core-enums.c:190
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
-msgstr ""
-"Convertește în spațiu de culoare RGB încorporat sau în tonuri de gri încorporat"
+msgstr "Convertește în spațiul de culoare sRGB sau în tonuri de gri integrat"
 
 #: ../app/core/core-enums.c:284
 msgctxt "convert-dither-type"
@@ -12340,12 +12350,12 @@ msgstr "Rearanjare element"
 #: ../app/core/core-enums.c:1143
 msgctxt "undo-type"
 msgid "Merge layers"
-msgstr "Combinare de straturi"
+msgstr "Fuzionare de straturi"
 
 #: ../app/core/core-enums.c:1144
 msgctxt "undo-type"
 msgid "Merge paths"
-msgstr "Combinare de trasee"
+msgstr "Fuzionare de trasee"
 
 #: ../app/core/core-enums.c:1145
 msgctxt "undo-type"
@@ -13285,12 +13295,12 @@ msgstr "Creare chenar din canal"
 #: ../app/core/gimpchannel.c:296
 msgctxt "undo-type"
 msgid "Grow Channel"
-msgstr "Mărire de canal"
+msgstr "Extindere de canal"
 
 #: ../app/core/gimpchannel.c:297
 msgctxt "undo-type"
 msgid "Shrink Channel"
-msgstr "Micșorare de canal"
+msgstr "Restrângere de canal"
 
 #: ../app/core/gimpchannel.c:298
 msgctxt "undo-type"
@@ -14093,7 +14103,7 @@ msgstr "Transformare de elemente"
 #: ../app/core/gimpimage-merge.c:135
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
-msgstr "Combinare de straturi vizibile"
+msgstr "Fuzionare de straturi vizibile"
 
 #: ../app/core/gimpimage-merge.c:203
 msgctxt "undo-type"
@@ -14114,35 +14124,35 @@ msgstr ""
 
 #: ../app/core/gimpimage-merge.c:292
 msgid "Cannot merge down to a layer group."
-msgstr "Nu se poate combina în jos cu un grup de straturi."
+msgstr "Nu se poate fuziona în jos cu un grup de straturi."
 
 #: ../app/core/gimpimage-merge.c:299
 msgid "The layer to merge down to is locked."
-msgstr "Stratul de combinat în jos este blocat."
+msgstr "Stratul de fuzionat în jos este blocat."
 
 #: ../app/core/gimpimage-merge.c:311
 msgid "There is no visible layer to merge down to."
-msgstr "Nu există niciun strat vizibil de combinat în jos."
+msgstr "Nu există niciun strat vizibil de fuzionat în jos."
 
 #: ../app/core/gimpimage-merge.c:317
 msgctxt "undo-type"
 msgid "Merge Down"
-msgstr "Combinare în jos"
+msgstr "Fuzionare în jos"
 
 #: ../app/core/gimpimage-merge.c:352
 msgctxt "undo-type"
 msgid "Merge Layer Group"
-msgstr "Combinare grup de straturi"
+msgstr "Fuzionare grup de straturi"
 
 #: ../app/core/gimpimage-merge.c:428
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
-msgstr "Combinare trasee vizibile"
+msgstr "Fuzionare trasee vizibile"
 
 #: ../app/core/gimpimage-merge.c:464
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
-"Nu sunt suficiente trasee vizibile pentru o combinare. Trebuie să fie cel puțin "
+"Nu sunt suficiente trasee vizibile pentru o fuzionare. Trebuie să fie cel puțin "
 "două."
 
 #: ../app/core/gimpimage-quick-mask.c:88
@@ -14667,12 +14677,12 @@ msgstr "Creare chenar din selecție"
 #: ../app/core/gimpselection.c:196
 msgctxt "undo-type"
 msgid "Grow Selection"
-msgstr "Mărire selecție"
+msgstr "Extindere de selecție"
 
 #: ../app/core/gimpselection.c:197
 msgctxt "undo-type"
 msgid "Shrink Selection"
-msgstr "Micșorare selecție"
+msgstr "Restrângere de selecție"
 
 #: ../app/core/gimpselection.c:198
 msgctxt "undo-type"
@@ -15598,24 +15608,23 @@ msgstr "Grilă"
 # titlu pe bară
 #: ../app/dialogs/image-merge-layers-dialog.c:93
 msgid "Merge Layers"
-msgstr "Combinare straturi"
+msgstr "Fuzionare de straturi"
 
-# titlu sub bară
 #: ../app/dialogs/image-merge-layers-dialog.c:95
 msgid "Layers Merge Options"
-msgstr "Opțiuni de combinare a straturilor"
+msgstr "Opțiuni de fuzionare a straturilor"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:101
 msgid "_Merge"
-msgstr "Co_mbină"
+msgstr "_Fuzionează"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:129
 msgid "Final, Merged Layer should be:"
-msgstr "Stratul final, combinat, ar trebui să fie:"
+msgstr "Stratul final, fuzionat, ar trebui să fie:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:138
 msgid "Merge within active _group only"
-msgstr "Combină numai cu _grupul activ"
+msgstr "Fuzionează numai cu _grupul activ"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:151
 msgid "_Discard invisible layers"
@@ -15707,7 +15716,7 @@ msgstr ""
 msgid ""
 "Scaling the image to the chosen size will shrink some layers completely away."
 msgstr ""
-"Scalarea imaginii la dimensiunea aleasă va micșora unele straturi până la "
+"Scalarea imaginii la dimensiunea aleasă va restrânge unele straturi până la "
 "dispariție."
 
 #: ../app/dialogs/image-scale-dialog.c:262
@@ -15957,7 +15966,7 @@ msgstr "I_magine"
 
 #: ../app/dialogs/palette-import-dialog.c:237
 msgid "Sample _Merged"
-msgstr "Eșantion co_mbinat"
+msgstr "_Eșantionează fuzionat"
 
 #: ../app/dialogs/palette-import-dialog.c:249
 msgid "_Selected Pixels only"
@@ -16214,7 +16223,7 @@ msgstr "Miniaturi de imagine"
 
 #: ../app/dialogs/preferences-dialog.c:1234
 msgid "Size of _thumbnails:"
-msgstr "Dimensiunea de minia_turilor:"
+msgstr "Dimensiunea minia_turilor:"
 
 #: ../app/dialogs/preferences-dialog.c:1238
 msgid "Maximum _filesize for thumbnailing:"
@@ -16273,7 +16282,7 @@ msgstr "_Módul de afișare al imaginii:"
 #. Color Managed Display
 #: ../app/dialogs/preferences-dialog.c:1351
 msgid "Color Managed Display"
-msgstr "Afișor cu gestionare colorimetrică"
+msgstr "Afișor cu gestionare de culori"
 
 #: ../app/dialogs/preferences-dialog.c:1360
 msgid "Select Monitor Color Profile"
@@ -16285,7 +16294,7 @@ msgstr "Profilul de _monitor:"
 
 #: ../app/dialogs/preferences-dialog.c:1367
 msgid "_Try to use the system monitor profile"
-msgstr "Încearcă folosirea profilului de moni_tor"
+msgstr "Încearcă folosirea profilului moni_torului de sistem"
 
 #: ../app/dialogs/preferences-dialog.c:1376
 msgid "_Rendering intent:"
@@ -16309,19 +16318,20 @@ msgstr "Precizie / Fidelitate de culoare"
 msgid "_Optimize image display for:"
 msgstr "_Optimizează afișarea imaginii pentru:"
 
+# titlu de categorie
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1395
 msgid "Soft-Proofing"
 msgstr "Simulare de tipărire (soft-proofing)"
 
+# titlu pe bară
 #: ../app/dialogs/preferences-dialog.c:1405
 msgid "Select Soft-Proofing Color Profile"
-msgstr ""
-"Selectează profilul de culoare pentru simularea de tipărire (soft-proofing)"
+msgstr "Selectare profil de culoare pentru simularea de tipărire (soft-proofing)"
 
 #: ../app/dialogs/preferences-dialog.c:1406
 msgid "_Soft-proofing profile:"
-msgstr "Profilul pentru _simularea de tipărire (soft-proofing)"
+msgstr "Profilul pentru _simularea de tipărire:"
 
 #: ../app/dialogs/preferences-dialog.c:1412
 msgid "Re_ndering intent:"
@@ -16333,7 +16343,7 @@ msgstr "Folosește compensarea _punctului de negru"
 
 #: ../app/dialogs/preferences-dialog.c:1427
 msgid "O_ptimize soft-proofing for:"
-msgstr "Optimizează simularea de tipărire (soft-proofing) pentru:"
+msgstr "O_ptimizează simularea de tipărire pentru:"
 
 #: ../app/dialogs/preferences-dialog.c:1436
 msgid "Mar_k out of gamut colors"
@@ -16379,7 +16389,7 @@ msgstr "Politici"
 
 #: ../app/dialogs/preferences-dialog.c:1488
 msgid "_File Open behaviour:"
-msgstr "Comportamentul la deschiderea de _fișier:"
+msgstr "Comportamentul la deschiderea ununi _fișier:"
 
 #. Filter Dialogs
 #: ../app/dialogs/preferences-dialog.c:1492
@@ -16464,7 +16474,7 @@ msgstr "Tip de fișier de exportat"
 
 #: ../app/dialogs/preferences-dialog.c:1587
 msgid "Default export file t_ype:"
-msgstr "Tip implicit de fișier de export:"
+msgstr "_Tip implicit de fișier de export:"
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1591
@@ -16672,11 +16682,9 @@ msgstr "Elimină to_ate scurtăturile de tastatură"
 msgid "Theme"
 msgstr "Temă"
 
-# hm?
-# titlu
 #: ../app/dialogs/preferences-dialog.c:1914
 msgid "Select Theme"
-msgstr "Selecție temă"
+msgstr "Selectați o temă"
 
 #: ../app/dialogs/preferences-dialog.c:1996
 msgid "Reload C_urrent Theme"
@@ -16691,14 +16699,13 @@ msgstr "Temă de pictograme"
 
 #: ../app/dialogs/preferences-dialog.c:2014
 msgid "Select an Icon Theme"
-msgstr "Selectează o temă de pictograme"
+msgstr "Selectați o temă de pictograme"
 
 #: ../app/dialogs/preferences-dialog.c:2130
 #: ../app/dialogs/preferences-dialog.c:2131 ../app/widgets/gimptoolbox.c:525
 msgid "Toolbox"
 msgstr "Trusă de instrumente"
 
-# titlu
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2139
 #: ../app/dialogs/preferences-dialog.c:2951 ../app/widgets/gimpgrideditor.c:134
@@ -16707,7 +16714,7 @@ msgstr "Aspect"
 
 #: ../app/dialogs/preferences-dialog.c:2143
 msgid "Show GIMP _logo (drag-and-drop target)"
-msgstr "Arată sig_la GIMP (trage și plasează ținta)"
+msgstr "Arată sig_la GIMP (imaginea țintă poate fi trasă și plasată aici)"
 
 #: ../app/dialogs/preferences-dialog.c:2147
 msgid "Show _foreground & background color"
@@ -16787,15 +16794,15 @@ msgstr "Dialog pentru convertire de precizie"
 
 #: ../app/dialogs/preferences-dialog.c:2266
 msgid "Dither layers:"
-msgstr ""
+msgstr "Dithering pentru straturi:"
 
 #: ../app/dialogs/preferences-dialog.c:2271
 msgid "Dither text layers:"
-msgstr ""
+msgstr "Dithering pentru straturi de text:"
 
 #: ../app/dialogs/preferences-dialog.c:2276
 msgid "Dither channels/masks:"
-msgstr ""
+msgstr "Dithering pentru canale/măști:"
 
 # titlu pe bară
 # conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
@@ -16893,15 +16900,15 @@ msgstr "Inversează masca"
 #. Merge Layers Dialog
 #: ../app/dialogs/preferences-dialog.c:2376
 msgid "Merge Layers Dialog"
-msgstr "Dialog pentru combinare de straturi"
+msgstr "Dialog pentru fuzionare de straturi"
 
 #: ../app/dialogs/preferences-dialog.c:2383
 msgid "Merged layer size:"
-msgstr "Dimensiunea stratului combinat:"
+msgstr "Dimensiunea stratului fuzionat:"
 
 #: ../app/dialogs/preferences-dialog.c:2387
 msgid "Merge within active group only"
-msgstr "Combină numai în cadrul grupului activ"
+msgstr "Fuzionează numai în cadrul grupului activ"
 
 #: ../app/dialogs/preferences-dialog.c:2390
 msgid "Discard invisible layers"
@@ -16910,7 +16917,7 @@ msgstr "Abandonează straturile invizibile"
 #. New Channel Dialog
 #: ../app/dialogs/preferences-dialog.c:2394
 msgid "New Channel Dialog"
-msgstr ""
+msgstr "Dialog pentru canal nou"
 
 #: ../app/dialogs/preferences-dialog.c:2399
 msgid "Channel name:"
@@ -16927,7 +16934,7 @@ msgstr "Culoarea și opacitatea implicite ale canalului nou"
 #. New Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2409
 msgid "New Path Dialog"
-msgstr ""
+msgstr "Dialog pentru traseu nou"
 
 #: ../app/dialogs/preferences-dialog.c:2414
 msgid "Path name:"
@@ -16936,7 +16943,7 @@ msgstr "Numele traseului:"
 #. Export Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2418
 msgid "Export Paths Dialog"
-msgstr ""
+msgstr "Dialog pentru export de trasee"
 
 #: ../app/dialogs/preferences-dialog.c:2423
 msgid "Export folder:"
@@ -16953,11 +16960,11 @@ msgstr "Exportă numai traseul activ"
 #. Import Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2432
 msgid "Import Paths Dialog"
-msgstr ""
+msgstr "Dialog pentru import de trasee"
 
 #: ../app/dialogs/preferences-dialog.c:2437
 msgid "Import folder:"
-msgstr ""
+msgstr "Dosar de import:"
 
 #: ../app/dialogs/preferences-dialog.c:2438
 msgid "Select Default Folder for Importing Paths"
@@ -16965,7 +16972,7 @@ msgstr "Selectează dosarul pentru trasee importarea traseelor"
 
 #: ../app/dialogs/preferences-dialog.c:2442
 msgid "Merge imported paths"
-msgstr "Combină traseele importate"
+msgstr "Fuzionează traseele importate"
 
 #: ../app/dialogs/preferences-dialog.c:2445
 msgid "Scale imported paths"
@@ -16978,7 +16985,7 @@ msgstr "Dialog pentru estomparea selecției"
 
 #: ../app/dialogs/preferences-dialog.c:2454
 msgid "Feather radius:"
-msgstr ""
+msgstr "Rază de estompare:"
 
 #: ../app/dialogs/preferences-dialog.c:2458
 #: ../app/dialogs/preferences-dialog.c:2480
@@ -16991,35 +16998,35 @@ msgstr "Zonele selectate continuă în afara imaginii"
 #. Grow Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2462
 msgid "Grow Selection Dialog"
-msgstr "Dialog pentru mărire de selecție"
+msgstr "Dialog pentru extindere de selecție"
 
 #: ../app/dialogs/preferences-dialog.c:2467
 msgid "Grow radius:"
-msgstr ""
+msgstr "Rază de extindere:"
 
 # titlu pe bară
 # apare la contextul lui undo
 #. Shrink Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2471
 msgid "Shrink Selection Dialog"
-msgstr "Dialog pentru micșorare de selecție"
+msgstr "Dialog pentru restrângere de selecție"
 
 #: ../app/dialogs/preferences-dialog.c:2476
 msgid "Shrink radius:"
-msgstr ""
+msgstr "Rază de restrângere:"
 
 #. Border Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2484
 msgid "Border Selection Dialog"
-msgstr ""
+msgstr "Dialog pentru selecție de chenar"
 
 #: ../app/dialogs/preferences-dialog.c:2489
 msgid "Border radius:"
-msgstr ""
+msgstr "Rază de chenar:"
 
 #: ../app/dialogs/preferences-dialog.c:2493
 msgid "Border style:"
-msgstr ""
+msgstr "Stil de chenar:"
 
 #. Fill Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2501
@@ -17069,7 +17076,7 @@ msgstr "Limba interfeței de utilizator"
 #.
 #: ../app/dialogs/preferences-dialog.c:2625
 msgid "Help Browser"
-msgstr "Navigator de ajutor"
+msgstr "Browser de ajutor"
 
 #: ../app/dialogs/preferences-dialog.c:2632
 msgid "H_elp browser to use:"
@@ -17080,6 +17087,8 @@ msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
 msgstr ""
+"Browserul pentru ajutor GIMP nu pare să fie instalat. Se va folosi în schimb "
+"browserul web."
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2655
@@ -17186,7 +17195,7 @@ msgstr "_Salvează pozițiile ferestrei la ieșire"
 
 #: ../app/dialogs/preferences-dialog.c:2833
 msgid "Open windows on the same _monitor they were open before"
-msgstr ""
+msgstr "Deschide ferestrele pe același _monitor în care erau deschise înainte"
 
 #: ../app/dialogs/preferences-dialog.c:2837
 msgid "Save Window Positions _Now"
@@ -17735,7 +17744,7 @@ msgstr "Umple cu"
 
 #: ../app/dialogs/resize-dialog.c:185
 msgid "Re_set"
-msgstr ""
+msgstr "Re_setează"
 
 #: ../app/dialogs/resize-dialog.c:187
 msgid "_Resize"
@@ -17762,7 +17771,7 @@ msgstr "_Y:"
 
 #: ../app/dialogs/resize-dialog.c:277
 msgid "C_enter"
-msgstr ""
+msgstr "C_entrează"
 
 #: ../app/dialogs/resize-dialog.c:331
 msgid "Resize _layers:"
@@ -17774,7 +17783,7 @@ msgstr "Redimensionează straturile de _text"
 
 #: ../app/dialogs/resize-dialog.c:390
 msgid "Resizing text layers will make them uneditable"
-msgstr ""
+msgstr "Redimensionarea straturilor le va face needitabile"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:69
 msgid "Calibrate Monitor Resolution"
@@ -17913,7 +17922,7 @@ msgstr "Imagine SVG scalabilă (*.svg)"
 
 #: ../app/dialogs/vectors-import-dialog.c:140
 msgid "_Merge imported paths"
-msgstr "Co_mbină traseele importate"
+msgstr "Fuzionează traseele i_mportate"
 
 #: ../app/dialogs/vectors-import-dialog.c:150
 msgid "_Scale imported paths to fit image"
@@ -18085,7 +18094,7 @@ msgstr "Î"
 
 #: ../app/display/gimpcursorview.c:338
 msgid "_Sample Merged"
-msgstr "_Eșantion combinat"
+msgstr "_Eșantionează fuzionat"
 
 #: ../app/display/gimpdisplayshell.c:576
 msgid "Access the image menu"
@@ -19161,14 +19170,14 @@ msgstr "Extragere de granulație (moștenit)"
 #: ../app/operations/operations-enums.c:234
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
-msgstr "Combinare de granulație (moștenit)"
+msgstr "Fuzionare de granulație (moștenit)"
 
 #. Translators: this is an abbreviated version of "Grain merge (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:237
 msgctxt "layer-mode"
 msgid "Grain merge (l)"
-msgstr "Combinare de granulație (moștenit)"
+msgstr "Fuzionare de granulație (moștenit)"
 
 # hm ? sau radiere de culoare ?
 #: ../app/operations/operations-enums.c:238
@@ -19310,7 +19319,7 @@ msgstr "Extragere de granulație"
 #: ../app/operations/operations-enums.c:266
 msgctxt "layer-mode"
 msgid "Grain merge"
-msgstr "Combinare de granulație"
+msgstr "Fuzionare de granulație"
 
 #: ../app/operations/operations-enums.c:267
 msgctxt "layer-mode"
@@ -19385,7 +19394,7 @@ msgstr "Ștergere"
 #: ../app/operations/operations-enums.c:284
 msgctxt "layer-mode"
 msgid "Merge"
-msgstr "Combinare"
+msgstr "Fuzionare"
 
 #: ../app/operations/operations-enums.c:285
 msgctxt "layer-mode"
@@ -20128,7 +20137,7 @@ msgstr ""
 #: ../app/tools/gimpcoloroptions.c:69 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
-msgstr "Eșantionează combinat"
+msgstr "Eșantionează fuzionat"
 
 #: ../app/paint/gimpsourcecore.c:239
 msgid "Set a source image first."
@@ -20698,8 +20707,8 @@ msgstr ""
 #: ../app/pdb/image-cmds.c:2569
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
-"Rezoluția imaginii este în afara limitelor, se va folosi rezoluția implicită în "
-"loc."
+"Rezoluția imaginii este în afara limitelor, se va folosi în schimb rezoluția "
+"implicită."
 
 #: ../app/pdb/image-select-cmds.c:302 ../app/pdb/selection-tools-cmds.c:223
 #: ../app/tools/gimpfreeselecttool.c:105
@@ -22090,7 +22099,7 @@ msgstr "Clic pentru a stabili o nouă sursă pentru clonare"
 #: ../app/tools/gimpcoloroptions.c:70
 msgid "Use merged color value from all composited visible layers"
 msgstr ""
-"Folosește valoarea de culoare combinată din toate straturile vizibile compozite"
+"Folosește valoarea de culoare fuzionată din toate straturile vizibile compozite"
 
 #: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:71
 msgid "Sample average"
@@ -22238,10 +22247,9 @@ msgstr ""
 msgid "Discard non-locked layer data that falls out of the crop region"
 msgstr ""
 
-# hm ?
 #: ../app/tools/gimpcropoptions.c:108
 msgid "Allow growing"
-msgstr "Permite creșterea în afară"
+msgstr "Permite extinderea"
 
 #: ../app/tools/gimpcropoptions.c:109
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
@@ -22769,7 +22777,7 @@ msgstr "Operație _GEGL..."
 #. The options vbox
 #: ../app/tools/gimpgegltool.c:494
 msgid "Select an operation from the list above"
-msgstr "Selectează o operație din lista de deasupra"
+msgstr "Selectați o operație din lista de deasupra"
 
 #: ../app/tools/gimpgenerictransformtool.c:101
 msgid "Transform Matrix"
@@ -23444,22 +23452,21 @@ msgstr "Clic-și-trage pentru a decala obiectul grafic"
 
 #: ../app/tools/gimpoffsettool.c:505
 msgid "By width/_2, height/2"
-msgstr ""
+msgstr "După lățime/_2, înălțime/2"
 
 #: ../app/tools/gimpoffsettool.c:517
 msgid "By _width/2"
-msgstr ""
+msgstr "_După lățime/2"
 
 #: ../app/tools/gimpoffsettool.c:525
 msgid "By _height/2"
-msgstr "_După înălțime/2"
+msgstr "D_upă înălțime/2"
 
 #. The edge behavior frame
 #: ../app/tools/gimpoffsettool.c:534
 msgid "Edge Behavior"
 msgstr "Comportament la margine"
 
-# hm ?
 #: ../app/tools/gimpoffsettool.c:541
 msgid "W_rap around"
 msgstr "Întoa_rce de la început"
@@ -23612,16 +23619,15 @@ msgstr "Transformare de perspectivă"
 #: ../app/tools/gimprectangleoptions.c:84
 msgid "Automatically shrink to the nearest rectangular shape in a layer"
 msgstr ""
-"Micșorează automat la cea mai apropiată formă dreptunghiulară într-un strat"
+"Restrânge automat la cea mai apropiată formă dreptunghiulară într-un strat"
 
-# checkbox în panoul de selecție
 #: ../app/tools/gimprectangleoptions.c:92
 msgid "Shrink merged"
-msgstr "Micșorează combinat"
+msgstr "Restrânge fuzionat"
 
 #: ../app/tools/gimprectangleoptions.c:93
 msgid "Use all visible layers when shrinking the selection"
-msgstr "Folosește toate straturile vizibile la micșorarea selecției"
+msgstr "Folosește toate straturile vizibile la restrângerea selecției"
 
 #: ../app/tools/gimprectangleoptions.c:102
 #: ../app/tools/gimptransformgridoptions.c:148
@@ -23700,7 +23706,7 @@ msgstr "Dimensiune:"
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:1039
 msgid "Auto Shrink"
-msgstr "Micșorează automat"
+msgstr "Restrânge automat"
 
 # checkbox în panoul de selecție
 #: ../app/tools/gimprectangleselectoptions.c:94
@@ -24351,7 +24357,7 @@ msgstr ""
 #: ../app/tools/gimptransformgridtool.c:986
 #, c-format
 msgid "%s (Corrective)"
-msgstr ""
+msgstr "%s (corectiv)"
 
 #: ../app/tools/gimptransformgridtool.c:1266
 msgid "Re_adjust"
@@ -24371,7 +24377,7 @@ msgstr "Interacțiune unificată"
 
 #: ../app/tools/gimptransform3doptions.c:86
 msgid "Combine all interaction modes"
-msgstr ""
+msgstr "Combină toate modurile de interacțiune"
 
 #: ../app/tools/gimptransform3doptions.c:93
 msgid "Constrain transformation to a single axis"
@@ -24871,22 +24877,22 @@ msgstr "Mută pixelii"
 #: ../app/tools/tools-enums.c:319
 msgctxt "warp-behavior"
 msgid "Grow area"
-msgstr ""
+msgstr "Zonă de extindere"
 
 #: ../app/tools/tools-enums.c:320
 msgctxt "warp-behavior"
 msgid "Shrink area"
-msgstr ""
+msgstr "Zonă de restrângere"
 
 #: ../app/tools/tools-enums.c:321
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
-msgstr ""
+msgstr "Răsucește în sens orar"
 
 #: ../app/tools/tools-enums.c:322
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
-msgstr ""
+msgstr "Răsucește în sens anti-orar"
 
 #: ../app/tools/tools-enums.c:323
 msgctxt "warp-behavior"
@@ -24936,7 +24942,7 @@ msgstr "Transformare de traseu"
 #: ../app/vectors/gimpvectors.c:235
 msgctxt "undo-type"
 msgid "Fill Path"
-msgstr ""
+msgstr "Umplere de traseu"
 
 #: ../app/vectors/gimpvectors.c:236
 msgctxt "undo-type"
@@ -26244,7 +26250,7 @@ msgstr "Înclinare Y"
 #: ../app/widgets/gimpdeviceinfoeditor.c:147
 #: ../app/widgets/gimpdynamicseditor.c:165
 msgid "Wheel/Rotation"
-msgstr ""
+msgstr "Roată/Rotație"
 
 #. the axes
 #. The axes of an input device
@@ -26580,40 +26586,41 @@ msgstr "Culoare de _fundal:"
 
 #: ../app/widgets/gimphelp.c:371
 msgid "Help browser is missing"
-msgstr "Lipsă navigator pentru ajutor"
+msgstr "Browserul de ajutor lipsește"
 
 #: ../app/widgets/gimphelp.c:372
 msgid "The GIMP help browser is not available."
-msgstr "Navigatorul pentru ajutor GIMP nu este disponibil."
+msgstr "Browserul pentru ajutor GIMP nu este disponibil."
 
 #: ../app/widgets/gimphelp.c:373
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. You "
 "may instead use the web browser for reading the help pages."
 msgstr ""
-"Plugin-ul navigatorului pentru ajutor GIMP pare că nu este instalat. Ați putea "
-"însă să folosiți navigatorul web pentru citirea paginilor de ajutor."
+"Plugin-ul browserului pentru ajutor GIMP pare să nu fie instalat. Ați putea în "
+"schimb să folosiți browserul web pentru citirea paginilor de ajutor."
 
 #: ../app/widgets/gimphelp.c:419
 msgid "Help browser doesn't start"
-msgstr "Navigatorul pentru ajutor nu pornețte"
+msgstr "Browserul de ajutor nu pornește"
 
 #: ../app/widgets/gimphelp.c:420
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Nu s-a putut porni plugin-ul de navigare pentru ajutor GIMP."
+msgstr "Nu s-a putut porni plugin-ul browserului pentru ajutor GIMP."
 
 #: ../app/widgets/gimphelp.c:422
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
+"Puteți în schimb să folosiți browserul web pentru citirea paginilor de ajutor."
 
 #: ../app/widgets/gimphelp.c:448
 msgid "Use _Web Browser"
-msgstr "Folosește navigatorul _web"
+msgstr "Folosește browserul _web"
 
 # titlu pe bară
 #: ../app/widgets/gimphelp.c:793
 msgid "GIMP user manual is missing"
-msgstr "Lipsește manualul de utilizare GIMP"
+msgstr "Manualul de utilizare GIMP lipsește"
 
 #: ../app/widgets/gimphelp.c:809
 msgid "The GIMP user manual is not installed in your language."
@@ -26885,7 +26892,7 @@ msgstr ""
 
 #: ../app/widgets/gimppickablepopup.c:203 ../app/widgets/gimppickablepopup.c:420
 msgid "Select an image in the left pane"
-msgstr "Selectează o imagine în panoul din stânga"
+msgstr "Selectați o imagine în panoul din stânga"
 
 #: ../app/widgets/gimppluginview.c:149
 msgid "Plug-In"
