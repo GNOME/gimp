@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-28 20:09+0000\n"
-"PO-Revision-Date: 2020-06-02 20:08+0300\n"
+"PO-Revision-Date: 2020-06-03 17:35+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -35,7 +35,7 @@ msgstr "Plugin-ul %s nu poate manipula straturi"
 #: ../libgimp/gimpexport.c:300 ../libgimp/gimpexport.c:309
 #: ../libgimp/gimpexport.c:318 ../libgimp/gimpexport.c:336
 msgid "Merge Visible Layers"
-msgstr "Combină straturile vizibile"
+msgstr "Fuzionează straturile vizibile"
 
 # hm ?
 #: ../libgimp/gimpexport.c:308
@@ -1754,10 +1754,9 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
-"Profilul de culoare de folosit pentru simularea de tipărire (soft-proof) de "
-"la spațiul de culoare al imaginii către un alt spațiu de culoare, inclusiv "
-"simulare de tipărire către o imprimantă sau un alt profil de dispozitiv de "
-"ieșire. "
+"Profilul de culoare de folosit pentru simularea de tipărire de la spațiul de "
+"culoare al imaginii către un alt spațiu de culoare, inclusiv simulare de "
+"tipărire către o imprimantă sau un alt profil de dispozitiv de ieșire. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1807,16 +1806,16 @@ msgstr ""
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Când opțiunea este dezactivată, simularea de tipărire (soft-proof) ar putea "
-"fi de calitate mai bună în detrimentul vitezei."
+"Când opțiunea este dezactivată, simularea de tipărire ar putea fi de "
+"calitate mai bună în detrimentul vitezei."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Când opțiunea este activată, simularea de tipărire (soft-proof) va marca "
-"culorile care nu pot fi reprezentate în spațiul de culoare țintă."
+"Când opțiunea este activată, simularea de tipărire va marca culorile care nu "
+"pot fi reprezentate în spațiul de culoare țintă."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
