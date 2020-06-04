@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-03 07:17+0000\n"
-"PO-Revision-Date: 2020-06-03 15:14+0300\n"
+"POT-Creation-Date: 2020-06-03 22:37+0000\n"
+"PO-Revision-Date: 2020-06-04 12:24+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.07.70\n"
+"X-Generator: Lokalize 20.03.70\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -5296,8 +5296,6 @@ msgid "_Kaleidoscope..."
 msgstr "_Калейдоскоп…"
 
 #: ../app/actions/filters-actions.c:418
-#| msgctxt "filters-action"
-#| msgid "_Focus Blur..."
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
 msgstr "Розмиття _об'єктивом…"
@@ -9395,6 +9393,44 @@ msgstr "Потужність інструменту: зменшити відно
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "Потужність інструменту: збільшити відносно"
+
+#: ../app/actions/vector-toolpath-actions.c:45
+#| msgctxt "text-tool-action"
+#| msgid "Text Tool Menu"
+msgctxt "vector-toolpath-action"
+msgid "Vector Toolpath Menu"
+msgstr "Меню інструменту «Векторний контур»"
+
+#: ../app/actions/vector-toolpath-actions.c:49
+#| msgid "Delete Anchor"
+msgctxt "vector-toolpath-action"
+msgid "_Delete Anchor"
+msgstr "Ви_лучити прив'язку"
+
+#: ../app/actions/vector-toolpath-actions.c:53
+#| msgid "Shift start"
+msgctxt "vector-toolpath-action"
+msgid "Shift S_tart"
+msgstr "По_чаток зсуву"
+
+#: ../app/actions/vector-toolpath-actions.c:58
+#| msgid "Insert Anchor"
+msgctxt "vector-toolpath-action"
+msgid "_Insert Anchor"
+msgstr "_Вставвити прив'язку"
+
+#: ../app/actions/vector-toolpath-actions.c:62
+#| msgid "Delete Segment"
+msgctxt "vector-toolpath-action"
+msgid "Delete _Segment"
+msgstr "Вилучити се_гмент"
+
+#: ../app/actions/vector-toolpath-actions.c:66
+#| msgctxt "undo-type"
+#| msgid "Render Stroke"
+msgctxt "vector-toolpath-action"
+msgid "_Reverse Stroke"
+msgstr "_Розвернути штрих"
 
 #: ../app/actions/vectors-actions.c:46
 msgctxt "vectors-action"
@@ -21804,7 +21840,6 @@ msgid "Other Options"
 msgstr "Інші параметри"
 
 #: ../app/propgui/gimppropgui-focus-blur.c:199
-#| msgid "Other Options"
 msgid "Geometry Options"
 msgstr "Параметри геометрії"
 
