@@ -122,6 +122,7 @@ class Goat (Gimp.PlugIn):
                     dialog.destroy()
                     break
                 elif response == Gtk.ResponseType.APPLY:
+                    url = "https://gitlab.gnome.org/GNOME/gimp/-/blob/master/plug-ins/goat-exercises/goat-exercise-py3.py"
                     Gio.app_info_launch_default_for_uri(url, None)
                     continue
                 else:
