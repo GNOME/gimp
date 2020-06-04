@@ -601,6 +601,7 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
           /* Set up the image and layer types */
           imageType = GIMP_RGB;
           layerType = GIMP_RGB_IMAGE;
+          precision = GIMP_PRECISION_U8_GAMMA;
 
           format = babl_format ("R'G'B' u8");
           break;
@@ -609,6 +610,7 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
           /* Set up the image and layer types */
           imageType = GIMP_GRAY;
           layerType = GIMP_GRAY_IMAGE;
+          precision = GIMP_PRECISION_U8_GAMMA;
 
           format = babl_format ("Y' u8");
           break;
