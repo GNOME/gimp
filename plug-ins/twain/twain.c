@@ -517,9 +517,13 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
 {
   pClientDataStruct theClientData = g_new (ClientDataStruct, 1);
 
-  const Babl *format;
-  int         imageType;
-  int         layerType;
+  const Babl        *format;
+  GimpImageBaseType  imageType;
+  GimpImageType      layerType;
+  GimpPrecision      precision;
+
+  gint               bpc = imageInfo->BitsPerPixel /
+                           imageInfo->SamplesPerPixel;
 
 
 #ifdef _DEBUG
@@ -530,12 +534,33 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
   switch (imageInfo->PixelType)
     {
     case TWPT_BW:
+      /* Set up the image and layer types */
+      imageType = GIMP_GRAY;
+      layerType = GIMP_GRAY_IMAGE;
+      precision = GIMP_PRECISION_U8_GAMMA;
+      format    = babl_format ("Y' u8");
+      break;
+
     case TWPT_GRAY:
       /* Set up the image and layer types */
       imageType = GIMP_GRAY;
       layerType = GIMP_GRAY_IMAGE;
 
-      format = babl_format ("Y' u8");
+      switch (bpc)
+        {
+        case 8:
+          precision = GIMP_PRECISION_U8_GAMMA;
+          format    = babl_format ("Y' u8");
+          break;
+
+        case 16:
+          precision = GIMP_PRECISION_U16_GAMMA;
+          format    = babl_format ("Y' u16");
+          break;
+
+        default:
+          return FALSE;
+        }
       break;
 
     case TWPT_RGB:
@@ -543,7 +568,21 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
       imageType = GIMP_RGB;
       layerType = GIMP_RGB_IMAGE;
 
-      format = babl_format ("R'G'B' u8");
+      switch (bpc)
+        {
+        case 8:
+          precision = GIMP_PRECISION_U8_GAMMA;
+          format    = babl_format ("R'G'B' u8");
+          break;
+
+        case 16:
+          precision = GIMP_PRECISION_U16_GAMMA;
+          format    = babl_format ("R'G'B' u16");
+          break;
+
+        default:
+          return FALSE;
+        }
       break;
 
     case TWPT_PALETTE:
@@ -588,9 +627,11 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
     }
 
   /* Create the GIMP image */
-  theClientData->image_id = gimp_image_new (imageInfo->ImageWidth,
-                                            imageInfo->ImageLength,
-                                            imageType);
+  theClientData->image_id = gimp_image_new_with_precision (
+    imageInfo->ImageWidth,
+    imageInfo->ImageLength,
+    imageType,
+    precision);
 
   /* Set the actual resolution */
   gimp_image_set_resolution (theClientData->image_id,
@@ -703,40 +744,16 @@ oneBytePerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
                                   pTW_IMAGEMEMXFER  imageMemXfer,
                                   void             *clientData)
 {
-  int   row;
-  char *srcBuf;
-  char *destBuf;
-  int   bytesPerPixel = imageInfo->BitsPerPixel / 8;
-  int   rows = imageMemXfer->Rows;
-  int   cols = imageMemXfer->Columns;
+  int rows = imageMemXfer->Rows;
+  int cols = imageMemXfer->Columns;
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
-
-  /* Allocate a buffer as necessary */
-  destBuf = gegl_scratch_new (char, rows * cols * bytesPerPixel);
-
-  /* The bytes coming from the source may not be padded in
-   * a way that GIMP is terribly happy with.  It is
-   * possible to transfer row by row, but that is particularly
-   * expensive in terms of performance.  It is much cheaper
-   * to rearrange the data and transfer it in one large chunk.
-   * The next chunk of code rearranges the incoming data into
-   * a non-padded chunk for GIMP.
-   */
-  srcBuf = (char *) imageMemXfer->Memory.TheMem;
-  for (row = 0; row < rows; row++)
-    {
-      /* Copy the current row */
-      memcpy ((destBuf + (row * bytesPerPixel * cols)),
-              (srcBuf + (row * imageMemXfer->BytesPerRow)),
-              (bytesPerPixel * cols));
-    }
 
   /* Update the complete chunk */
   gegl_buffer_set (theClientData->buffer,
                    GEGL_RECTANGLE (imageMemXfer->XOffset, imageMemXfer->YOffset,
                                    cols, rows), 0,
-                   theClientData->format, destBuf,
-                   GEGL_AUTO_ROWSTRIDE);
+                   theClientData->format, imageMemXfer->Memory.TheMem,
+                   imageMemXfer->BytesPerRow);
 
   /* Free the buffer */
   gegl_scratch_free (destBuf);
@@ -761,67 +778,17 @@ twoBytesPerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
                                    pTW_IMAGEMEMXFER  imageMemXfer,
                                    void             *clientData)
 {
-  static float  ratio = 0.00390625;
-  int           row, col, sample;
-  char         *destBuf;
-  char         *destByte;
-  int           rows = imageMemXfer->Rows;
-  int           cols = imageMemXfer->Columns;
-  TW_UINT16    *samplePtr;
+  int rows = imageMemXfer->Rows;
+  int cols = imageMemXfer->Columns;
 
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
-
-  /* Allocate a buffer as necessary */
-  destBuf = gegl_scratch_new (char, rows * cols * imageInfo->SamplesPerPixel);
-
-  /* The bytes coming from the source may not be padded in
-   * a way that GIMP is terribly happy with.  It is
-   * possible to transfer row by row, but that is particularly
-   * expensive in terms of performance.  It is much cheaper
-   * to rearrange the data and transfer it in one large chunk.
-   * The next chunk of code rearranges the incoming data into
-   * a non-padded chunk for GIMP.  This function must also
-   * reduce from multiple bytes per sample down to single byte
-   * per sample.
-   */
-  /* Work through the rows */
-  for (row = 0; row < rows; row++)
-    {
-      /* The start of this source row */
-      samplePtr = (TW_UINT16 *)
-        ((char *) imageMemXfer->Memory.TheMem + (row * imageMemXfer->BytesPerRow));
-
-      /* The start of this dest row */
-      destByte = destBuf + (row * imageInfo->SamplesPerPixel * cols);
-
-      /* Work through the columns */
-      for (col = 0; col < cols; col++)
-        {
-          /* Finally, work through each of the samples */
-          for (sample = 0; sample < imageInfo->SamplesPerPixel; sample++)
-            {
-              /* Get the value */
-              TW_UINT16 value = *samplePtr;
-
-              /* Move the sample pointer */
-              samplePtr++;
-
-              /* Place in the destination */
-              *destByte = (char) ((float) value * (float) ratio);
-              destByte++;
-            }
-        }
-    }
 
   /* Send the complete chunk */
   gegl_buffer_set (theClientData->buffer,
                    GEGL_RECTANGLE (imageMemXfer->XOffset, imageMemXfer->YOffset,
                                    cols, rows), 0,
-                   theClientData->format, destBuf,
+                   theClientData->format, imageMemXfer->Memory.TheMem,
                    GEGL_AUTO_ROWSTRIDE);
-
-  /* Free the buffer */
-  gegl_scratch_free (destBuf);
 
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
