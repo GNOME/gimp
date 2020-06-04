@@ -418,7 +418,7 @@ gimp_@GIMP_API_MAJOR_VERSION@_vapi_DEPS = \
 	gtk+-3.0
 gimp_@GIMP_API_MAJOR_VERSION@_vapi_GIRDIRS = $(builddir)
 gimp_@GIMP_API_MAJOR_VERSION@_vapi_METADATADIRS = $(srcdir)
-gimp_@GIMP_API_MAJOR_VERSION@_vapi_VAPIDIRS = $(builddir)
+gimp_@GIMP_API_MAJOR_VERSION@_vapi_VAPIDIRS = $(builddir) $(datadir)/vala/vapi
 gimp_@GIMP_API_MAJOR_VERSION@_vapi_FILES = Gimp-@GIMP_API_VERSION@.gir
 
 gimp-$(GIMP_API_MAJOR_VERSION).deps: Makefile.am
@@ -439,7 +439,7 @@ gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_DEPS = \
 
 gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_GIRDIRS = $(builddir)
 gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_METADATADIRS = $(srcdir)
-gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_VAPIDIRS = $(builddir)
+gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_VAPIDIRS = $(builddir) $(datadir)/vala/vapi
 gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_FILES = GimpUi-@GIMP_API_VERSION@.gir
 
 gimp-ui-$(GIMP_API_MAJOR_VERSION).deps: Makefile.am
