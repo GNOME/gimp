@@ -537,7 +537,7 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
       /* Set up the image and layer types */
       imageType = GIMP_GRAY;
       layerType = GIMP_GRAY_IMAGE;
-      precision = GIMP_PRECISION_U8_GAMMA;
+      precision = GIMP_PRECISION_U8_NON_LINEAR;
       format    = babl_format ("Y' u8");
       break;
 
@@ -549,12 +549,12 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
       switch (bpc)
         {
         case 8:
-          precision = GIMP_PRECISION_U8_GAMMA;
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
           format    = babl_format ("Y' u8");
           break;
 
         case 16:
-          precision = GIMP_PRECISION_U16_GAMMA;
+          precision = GIMP_PRECISION_U16_NON_LINEAR;
           format    = babl_format ("Y' u16");
           break;
 
@@ -571,12 +571,12 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
       switch (bpc)
         {
         case 8:
-          precision = GIMP_PRECISION_U8_GAMMA;
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
           format    = babl_format ("R'G'B' u8");
           break;
 
         case 16:
-          precision = GIMP_PRECISION_U16_GAMMA;
+          precision = GIMP_PRECISION_U16_NON_LINEAR;
           format    = babl_format ("R'G'B' u16");
           break;
 
@@ -601,6 +601,7 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
           /* Set up the image and layer types */
           imageType = GIMP_RGB;
           layerType = GIMP_RGB_IMAGE;
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
 
           format = babl_format ("R'G'B' u8");
           break;
@@ -609,6 +610,7 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
           /* Set up the image and layer types */
           imageType = GIMP_GRAY;
           layerType = GIMP_GRAY_IMAGE;
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
 
           format = babl_format ("Y' u8");
           break;
