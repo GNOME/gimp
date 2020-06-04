@@ -101,3 +101,16 @@ Build:
     - a meson cross-build with Mingw-w64 for Windows 32-bit
     - a meson cross-build with Mingw-w64 for Windows 64-bit
     - static code analysis with cppcheck
+
+Known blocker issues:
+
+  - GTK+3 port is functional but not complete as some deprecated APIs
+    are still being used.
+  - Space invasion is still a work-in-progress.
+  - Plug-ins API update is still a work-in-progress.
+  - GIMP extensions are still a work-in-progress.
+  - Multiple layer selection is still work-in-progress. Some issues are
+    expected, and possibly even some crashes in code paths which were
+    not updated yet.
+  - No custom theme yet, in particular we want a neutral gray theme with
+    light/dark variants, and likely a middle-gray theme too.
