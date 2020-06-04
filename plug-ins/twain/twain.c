@@ -756,9 +756,6 @@ oneBytePerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
                    theClientData->format, imageMemXfer->Memory.TheMem,
                    imageMemXfer->BytesPerRow);
 
-  /* Free the buffer */
-  gegl_scratch_free (destBuf);
-
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
   gimp_progress_update ((double) theClientData->completedPixels /
