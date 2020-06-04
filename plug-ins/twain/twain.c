@@ -731,19 +731,16 @@ bitTransferCallback (pTW_IMAGEINFO     imageInfo,
 }
 
 /*
- * oneBytePerSampleTransferCallback
+ * directTransferCallback
  *
  * The following function is called for each memory
  * block that is transferred from the data source if
- * the image type is Grayscale or RGB.  This transfer
- * mode is quicker than the modes that require translation
- * from a greater number of bits per sample down to the
- * 8 bits per sample understood by GIMP.
+ * the image type is Grayscale or RGB.
  */
 static int
-oneBytePerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
-                                  pTW_IMAGEMEMXFER  imageMemXfer,
-                                  void             *clientData)
+directTransferCallback (pTW_IMAGEINFO     imageInfo,
+                        pTW_IMAGEMEMXFER  imageMemXfer,
+                        void             *clientData)
 {
   int rows = imageMemXfer->Rows;
   int cols = imageMemXfer->Columns;
@@ -755,38 +752,6 @@ oneBytePerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
                                    cols, rows), 0,
                    theClientData->format, imageMemXfer->Memory.TheMem,
                    imageMemXfer->BytesPerRow);
-
-  /* Update the user on our progress */
-  theClientData->completedPixels += (cols * rows);
-  gimp_progress_update ((double) theClientData->completedPixels /
-                        (double) theClientData->totalPixels);
-
-  return TRUE;
-}
-
-/*
- * twoBytesPerSampleTransferCallback
- *
- * The following function is called for each memory
- * block that is transferred from the data source if
- * the image type is Grayscale or RGB.
- */
-static int
-twoBytesPerSampleTransferCallback (pTW_IMAGEINFO     imageInfo,
-                                   pTW_IMAGEMEMXFER  imageMemXfer,
-                                   void             *clientData)
-{
-  int rows = imageMemXfer->Rows;
-  int cols = imageMemXfer->Columns;
-
-  pClientDataStruct theClientData = (pClientDataStruct) clientData;
-
-  /* Send the complete chunk */
-  gegl_buffer_set (theClientData->buffer,
-                   GEGL_RECTANGLE (imageMemXfer->XOffset, imageMemXfer->YOffset,
-                                   cols, rows), 0,
-                   theClientData->format, imageMemXfer->Memory.TheMem,
-                   GEGL_AUTO_ROWSTRIDE);
 
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
@@ -908,19 +873,7 @@ dataTransferCallback (pTW_IMAGEINFO     imageInfo,
 
     case TWPT_GRAY:
     case TWPT_RGB:
-      switch (imageInfo->BitsPerPixel / imageInfo->SamplesPerPixel)
-        {
-        case 8:
-          return oneBytePerSampleTransferCallback (imageInfo, imageMemXfer,
-                                                   clientData);
-
-        case 16:
-          return twoBytesPerSampleTransferCallback (imageInfo, imageMemXfer,
-                                                    clientData);
-
-        default:
-          return FALSE;
-        }
+      return directTransferCallback (imageInfo, imageMemXfer, clientData);
 
     default:
       return FALSE;
