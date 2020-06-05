@@ -18,6 +18,8 @@
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
+gi.require_version('GimpUi', '3.0')
+from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -1736,7 +1738,7 @@ class SpyroWindow():
         def create_ui():
 
             use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-            self.dialog = Gimp.Dialog(use_header_bar=use_header_bar,
+            self.dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
                                       title=_("Spyrogimp"))
             #self.set_default_size(350, -1)
             #self.set_border_width(10)
@@ -1746,7 +1748,7 @@ class SpyroWindow():
             self.dialog.get_content_area().add(vbox)
             vbox.show()
 
-            box = Gimp.HintBox.new(_("Draw spyrographs using current tool settings and selection."))
+            box = GimpUi.HintBox.new(_("Draw spyrographs using current tool settings and selection."))
             vbox.pack_start(box, False, False, 0)
             box.show()
 
@@ -1799,7 +1801,7 @@ class SpyroWindow():
         self.drawing_layer = self.spyro_layer
 
         # Create the UI.
-        Gimp.ui_init(sys.argv[0])
+        GimpUi.ui_init(sys.argv[0])
         create_ui()
         self.update_view()   # Update UI to reflect the parameter values.
 
