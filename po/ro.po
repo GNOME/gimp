@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-06-01 11:13+0000\n"
-"PO-Revision-Date: 2020-06-03 19:20+0300\n"
+"PO-Revision-Date: 2020-06-05 10:59+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -2902,12 +2902,12 @@ msgstr "Unghiul penelului: %2.2f"
 #: ../app/actions/cursor-info-actions.c:41
 msgctxt "cursor-info-action"
 msgid "Pointer Information Menu"
-msgstr "Meniul informațiilor despre indicator"
+msgstr "Meniu pentru informațiile despre indicator"
 
 #: ../app/actions/cursor-info-actions.c:48
 msgctxt "cursor-info-action"
 msgid "_Sample Merged"
-msgstr "_Eșantionează fuzionat"
+msgstr "_Eșantionare fuzionată"
 
 #: ../app/actions/cursor-info-actions.c:49
 msgctxt "cursor-info-action"
@@ -2932,7 +2932,7 @@ msgstr "Interval de act_ualizare"
 #: ../app/actions/dashboard-actions.c:48
 msgctxt "dashboard-action"
 msgid "_History Duration"
-msgstr "_Durată de istoric"
+msgstr "_Durata istoricului"
 
 #: ../app/actions/dashboard-actions.c:51
 msgctxt "dashboard-action"
@@ -3871,7 +3871,7 @@ msgstr "_Egalizează"
 #: ../app/actions/drawable-actions.c:46
 msgctxt "drawable-action"
 msgid "Automatic contrast enhancement"
-msgstr "Îmbunătățire automată a contrastului"
+msgstr "Îmbunătățește contrastul în mod automat"
 
 #: ../app/actions/drawable-actions.c:51
 msgctxt "drawable-action"
@@ -3881,7 +3881,7 @@ msgstr "_Balans la alb"
 #: ../app/actions/drawable-actions.c:52
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
-msgstr "Corecție automată a balansului la alb"
+msgstr "Corectează balansul de alb în mod automat"
 
 #: ../app/actions/drawable-actions.c:60
 msgctxt "drawable-action"
@@ -4936,7 +4936,7 @@ msgstr "Inversare l_iniară"
 #: ../app/actions/filters-actions.c:120
 msgctxt "filters-action"
 msgid "In_vert"
-msgstr "In_versează"
+msgstr "In_versare"
 
 #: ../app/actions/filters-actions.c:125
 msgctxt "filters-action"
@@ -4946,7 +4946,7 @@ msgstr "Inversare de _valoare"
 #: ../app/actions/filters-actions.c:130
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
-msgstr ""
+msgstr "Extinde contra_stul HSV"
 
 #: ../app/actions/filters-actions.c:138
 msgctxt "filters-action"
@@ -4956,7 +4956,7 @@ msgstr "_Dilată"
 #: ../app/actions/filters-actions.c:139
 msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
-msgstr ""
+msgstr "Mărește zonele mai luminoase ale imaginii"
 
 #: ../app/actions/filters-actions.c:154
 msgctxt "filters-action"
@@ -4966,32 +4966,32 @@ msgstr "_Erodează"
 #: ../app/actions/filters-actions.c:155
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
-msgstr ""
+msgstr "Mărește zonele mai întunecate ale imaginii"
 
 #: ../app/actions/filters-actions.c:173
 msgctxt "filters-action"
 msgid "_Alien Map..."
-msgstr ""
+msgstr "H_artă extraterestră..."
 
 #: ../app/actions/filters-actions.c:178
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
-msgstr ""
+msgstr "_Aplicare de canava..."
 
 #: ../app/actions/filters-actions.c:183
 msgctxt "filters-action"
 msgid "Apply _Lens..."
-msgstr "Aplicare _lentilă..."
+msgstr "Aplicare de _lentilă..."
 
 #: ../app/actions/filters-actions.c:188
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
-msgstr ""
+msgstr "Matrice _Bayer..."
 
 #: ../app/actions/filters-actions.c:193
 msgctxt "filters-action"
 msgid "_Bloom..."
-msgstr ""
+msgstr "Î_nflorire..."
 
 #: ../app/actions/filters-actions.c:198
 msgctxt "filters-action"
@@ -5001,7 +5001,7 @@ msgstr "Luminozitate-Cont_rast..."
 #: ../app/actions/filters-actions.c:203
 msgctxt "filters-action"
 msgid "_Bump Map..."
-msgstr ""
+msgstr "_Hartă de denivelări..."
 
 #: ../app/actions/filters-actions.c:208
 msgctxt "filters-action"
@@ -5061,7 +5061,7 @@ msgstr "Culoare la _alfa..."
 #: ../app/actions/filters-actions.c:263
 msgctxt "filters-action"
 msgid "_Extract Component..."
-msgstr ""
+msgstr "_Extragere de componentă..."
 
 #: ../app/actions/filters-actions.c:268
 msgctxt "filters-action"
@@ -5091,7 +5091,7 @@ msgstr "_Desaturare..."
 #: ../app/actions/filters-actions.c:293
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
-msgstr ""
+msgstr "Diferența _gaussienelor..."
 
 #: ../app/actions/filters-actions.c:298
 msgctxt "filters-action"
@@ -5131,12 +5131,12 @@ msgstr "_Neon..."
 #: ../app/actions/filters-actions.c:333
 msgctxt "filters-action"
 msgid "_Sobel..."
-msgstr ""
+msgstr "_Sobel..."
 
 #: ../app/actions/filters-actions.c:338
 msgctxt "filters-action"
 msgid "_Emboss..."
-msgstr ""
+msgstr "Stampar_e..."
 
 #: ../app/actions/filters-actions.c:343
 msgctxt "filters-action"
@@ -5151,7 +5151,7 @@ msgstr "E_xpunere..."
 #: ../app/actions/filters-actions.c:353
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
-msgstr ""
+msgstr "_Fattal et al. 2002..."
 
 #: ../app/actions/filters-actions.c:358
 msgctxt "filters-action"
@@ -5161,17 +5161,17 @@ msgstr ""
 #: ../app/actions/filters-actions.c:363
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
-msgstr ""
+msgstr "Urmă de _fractal..."
 
 #: ../app/actions/filters-actions.c:368
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
-msgstr ""
+msgstr "Neclaritate _gaussiană..."
 
 #: ../app/actions/filters-actions.c:373
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
-msgstr ""
+msgstr "Neclaritate gaussiană _selectivă..."
 
 #: ../app/actions/filters-actions.c:378
 msgctxt "filters-action"
@@ -5186,7 +5186,7 @@ msgstr "_Grilă..."
 #: ../app/actions/filters-actions.c:388
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr ""
+msgstr "_Trece-sus..."
 
 #: ../app/actions/filters-actions.c:393
 msgctxt "filters-action"
@@ -5222,7 +5222,7 @@ msgstr "Distorsiune de le_ntilă..."
 #: ../app/actions/filters-actions.c:423
 msgctxt "filters-action"
 msgid "Lens _Flare..."
-msgstr ""
+msgstr "_Halo de lentilă..."
 
 #: ../app/actions/filters-actions.c:428
 msgctxt "filters-action"
@@ -5237,7 +5237,7 @@ msgstr "Sinusoidă _liniară..."
 #: ../app/actions/filters-actions.c:438
 msgctxt "filters-action"
 msgid "_Little Planet..."
-msgstr ""
+msgstr "P_lanetă mică..."
 
 #: ../app/actions/filters-actions.c:443
 msgctxt "filters-action"
@@ -5247,27 +5247,27 @@ msgstr "Umbră _lungă..."
 #: ../app/actions/filters-actions.c:448
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
-msgstr ""
+msgstr "_Mantiuk 2006..."
 
 #: ../app/actions/filters-actions.c:453
 msgctxt "filters-action"
 msgid "_Maze..."
-msgstr ""
+msgstr "_Labirint..."
 
 #: ../app/actions/filters-actions.c:458
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
-msgstr ""
+msgstr "Neclaritate medie de c_urbură..."
 
 #: ../app/actions/filters-actions.c:463
 msgctxt "filters-action"
 msgid "_Median Blur..."
-msgstr ""
+msgstr "Neclaritate _mediană..."
 
 #: ../app/actions/filters-actions.c:468
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
-msgstr ""
+msgstr "_Mixer mono..."
 
 #: ../app/actions/filters-actions.c:473
 msgctxt "filters-action"
@@ -5277,32 +5277,32 @@ msgstr "_Mozaic..."
 #: ../app/actions/filters-actions.c:478
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
-msgstr ""
+msgstr "Neclaritate de mișcare _circulară..."
 
 #: ../app/actions/filters-actions.c:483
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
-msgstr ""
+msgstr "Neclaritate de mișcare _liniară..."
 
 #: ../app/actions/filters-actions.c:488
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
-msgstr ""
+msgstr "Neclaritate de mișcare de _zoom..."
 
 #: ../app/actions/filters-actions.c:493
 msgctxt "filters-action"
 msgid "_Cell Noise..."
-msgstr ""
+msgstr "Zgomot _celular..."
 
 #: ../app/actions/filters-actions.c:498
 msgctxt "filters-action"
 msgid "_Newsprint..."
-msgstr ""
+msgstr "_Hârtie de ziar..."
 
 #: ../app/actions/filters-actions.c:503
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
-msgstr ""
+msgstr "Zgomot _CIE lch..."
 
 #: ../app/actions/filters-actions.c:508
 msgctxt "filters-action"
@@ -5312,7 +5312,7 @@ msgstr "Zgomot HS_V..."
 #: ../app/actions/filters-actions.c:513
 msgctxt "filters-action"
 msgid "_Hurl..."
-msgstr ""
+msgstr "_Dezordine..."
 
 #: ../app/actions/filters-actions.c:518
 msgctxt "filters-action"
@@ -5342,7 +5342,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:543
 msgctxt "filters-action"
 msgid "_Slur..."
-msgstr ""
+msgstr "_Topire..."
 
 #: ../app/actions/filters-actions.c:548
 msgctxt "filters-action"
@@ -5357,7 +5357,7 @@ msgstr "_Răspândire..."
 #: ../app/actions/filters-actions.c:558
 msgctxt "filters-action"
 msgid "_Normal Map..."
-msgstr ""
+msgstr "Hartă _normală..."
 
 #: ../app/actions/filters-actions.c:563
 msgctxt "filters-action"
@@ -5367,12 +5367,12 @@ msgstr "_Decalare..."
 #: ../app/actions/filters-actions.c:568
 msgctxt "filters-action"
 msgid "Oili_fy..."
-msgstr ""
+msgstr "_Uleiere..."
 
 #: ../app/actions/filters-actions.c:573
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
-msgstr ""
+msgstr "_Proiecție panoramică..."
 
 #: ../app/actions/filters-actions.c:578
 msgctxt "filters-action"
@@ -5407,22 +5407,22 @@ msgstr "Transformare _recursivă..."
 #: ../app/actions/filters-actions.c:608
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
-msgstr ""
+msgstr "Elimina_re ochi roșii..."
 
 #: ../app/actions/filters-actions.c:613
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
-msgstr ""
+msgstr "_Reinhard 2005..."
 
 #: ../app/actions/filters-actions.c:618
 msgctxt "filters-action"
 msgid "RGB _Clip..."
-msgstr ""
+msgstr "_Decupare RGB..."
 
 #: ../app/actions/filters-actions.c:623
 msgctxt "filters-action"
 msgid "_Ripple..."
-msgstr ""
+msgstr "Ondula_re..."
 
 #: ../app/actions/filters-actions.c:628
 msgctxt "filters-action"
@@ -5442,7 +5442,7 @@ msgstr "_Sepia..."
 #: ../app/actions/filters-actions.c:643
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr ""
+msgstr "_Umbre-Evidențieri..."
 
 #: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
@@ -5482,7 +5482,7 @@ msgstr "S_pirală..."
 #: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
-msgstr ""
+msgstr "Extinde contra_stul..."
 
 #: ../app/actions/filters-actions.c:688
 msgctxt "filters-action"
@@ -5507,12 +5507,12 @@ msgstr ""
 #: ../app/actions/filters-actions.c:708
 msgctxt "filters-action"
 msgid "_Glass Tile..."
-msgstr ""
+msgstr "_Dale de sticlă..."
 
 #: ../app/actions/filters-actions.c:713
 msgctxt "filters-action"
 msgid "_Paper Tile..."
-msgstr ""
+msgstr "_Dale de hârtie..."
 
 #: ../app/actions/filters-actions.c:718
 msgctxt "filters-action"
@@ -5522,12 +5522,12 @@ msgstr ""
 #: ../app/actions/filters-actions.c:723
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
-msgstr ""
+msgstr "Intensificare de claritate (mască de aten_uare a clarității)..."
 
 #: ../app/actions/filters-actions.c:728
 msgctxt "filters-action"
 msgid "_Value Propagate..."
-msgstr ""
+msgstr "Propagare de _valoare..."
 
 #: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
@@ -5542,7 +5542,7 @@ msgstr "Degradare vi_deo..."
 #: ../app/actions/filters-actions.c:743
 msgctxt "filters-action"
 msgid "_Vignette..."
-msgstr ""
+msgstr "_Vignetare..."
 
 #: ../app/actions/filters-actions.c:748
 msgctxt "filters-action"
@@ -5780,7 +5780,7 @@ msgstr "Sferic (_descrescător)"
 #: ../app/actions/gradient-editor-actions.c:343
 msgctxt "gradient-editor-blending"
 msgid "S_tep"
-msgstr ""
+msgstr "_Treaptă"
 
 # hm ? sau variază ?
 #: ../app/actions/gradient-editor-actions.c:348
@@ -6025,7 +6025,7 @@ msgstr "Arată în gestionarul de _fișiere"
 #: ../app/actions/gradients-actions.c:67
 msgctxt "gradients-action"
 msgid "Show gradient file location in the file manager"
-msgstr ""
+msgstr "Arată locația fișierului de degrade în gestionarul de fișiere"
 
 #: ../app/actions/gradients-actions.c:72
 msgctxt "gradients-action"
@@ -6157,7 +6157,7 @@ msgstr "_Hartă"
 #: ../app/actions/image-actions.c:71
 msgctxt "image-action"
 msgid "_Tone Mapping"
-msgstr ""
+msgstr "Mapare de _tonuri"
 
 #: ../app/actions/image-actions.c:72
 msgctxt "image-action"
@@ -6167,7 +6167,7 @@ msgstr "C_omponente"
 #: ../app/actions/image-actions.c:73
 msgctxt "image-action"
 msgid "D_esaturate"
-msgstr "D_esaturează"
+msgstr "D_esaturare"
 
 # adăugare intenționată
 #: ../app/actions/image-actions.c:76
@@ -6228,7 +6228,7 @@ msgstr "_Salvează profilul de culoare în fișierul..."
 #: ../app/actions/image-actions.c:107
 msgctxt "image-action"
 msgid "Save the image's color profile to an ICC file"
-msgstr ""
+msgstr "Salvează profilul de culoare al imaginii într-un fișier ICC"
 
 #: ../app/actions/image-actions.c:112
 msgctxt "image-action"
@@ -6301,6 +6301,8 @@ msgid ""
 "Crop the image to the extents of its content (remove empty borders from the "
 "image)"
 msgstr ""
+"Decupează imaginea la limitele conținutului acesteia (elimină chenarele "
+"goale din imagine)"
 
 #: ../app/actions/image-actions.c:154
 msgctxt "image-action"
@@ -6423,7 +6425,7 @@ msgstr "Virgulă mobilă pe 16 biți"
 #: ../app/actions/image-actions.c:231
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
-msgstr ""
+msgstr "Convertește imaginea în virgulă mobilă pe 16 biți"
 
 #: ../app/actions/image-actions.c:235
 msgctxt "image-convert-action"
@@ -6433,7 +6435,7 @@ msgstr "Virgulă mobilă pe 32 de biți"
 #: ../app/actions/image-actions.c:237
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
-msgstr ""
+msgstr "Convertește imaginea în virgulă mobilă pe 32 de biți"
 
 #: ../app/actions/image-actions.c:241
 msgctxt "image-convert-action"
@@ -6443,7 +6445,7 @@ msgstr "Virgulă mobilă pe 64 de biți"
 #: ../app/actions/image-actions.c:243
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
-msgstr ""
+msgstr "Convertește imaginea în virgulă mobilă pe 64 de biți"
 
 # hm ? la Adobe este crudă
 #: ../app/actions/image-actions.c:250
@@ -6743,7 +6745,7 @@ msgstr "_Mod strat"
 #: ../app/actions/layers-actions.c:89
 msgctxt "layers-action"
 msgid "Default Edit Action"
-msgstr ""
+msgstr "Acțiune implicită de editare"
 
 #: ../app/actions/layers-actions.c:90
 msgctxt "layers-action"
@@ -6758,7 +6760,7 @@ msgstr "Editare te_xt pe canava"
 #: ../app/actions/layers-actions.c:96
 msgctxt "layers-action"
 msgid "Edit this text layer content on canvas"
-msgstr ""
+msgstr "Editează conținutul acestui strat de text pe canava"
 
 #: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
@@ -7168,7 +7170,7 @@ msgstr ""
 #: ../app/actions/layers-actions.c:404
 msgctxt "layers-action"
 msgid "Union"
-msgstr ""
+msgstr "Uniune"
 
 #: ../app/actions/layers-actions.c:405
 msgctxt "layers-action"
@@ -7178,22 +7180,22 @@ msgstr ""
 #: ../app/actions/layers-actions.c:410
 msgctxt "layers-action"
 msgid "Clip to Backdrop"
-msgstr ""
+msgstr "Decupează la fundal de croma key"
 
 #: ../app/actions/layers-actions.c:411
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Backdrop"
-msgstr ""
+msgstr "Mod de strat compozit: decupează la fundal de croma key"
 
 #: ../app/actions/layers-actions.c:416
 msgctxt "layers-action"
 msgid "Clip to Layer"
-msgstr ""
+msgstr "Decupează la strat"
 
 #: ../app/actions/layers-actions.c:417
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Layer"
-msgstr ""
+msgstr "Mod de strat compozit: decupează la strat"
 
 #: ../app/actions/layers-actions.c:422
 msgctxt "layers-action"
@@ -7203,7 +7205,7 @@ msgstr "Intersecție"
 #: ../app/actions/layers-actions.c:423
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Intersection"
-msgstr ""
+msgstr "Mod de strat compozit: intersecție"
 
 # apare la alinierea de la healing tool
 # apare la redimensionare canava
@@ -7982,7 +7984,7 @@ msgstr "Introduceți un nume pentru paleta fuzionată"
 
 #: ../app/actions/palettes-commands.c:126
 msgid "There must be at least two palettes selected to merge."
-msgstr ""
+msgstr "Trebuie să fie selectate cel puțin două palete pentru fuzionare."
 
 #: ../app/actions/patterns-actions.c:43
 msgctxt "patterns-action"
@@ -8037,7 +8039,7 @@ msgstr "Arată în Gestionar de _fișiere"
 #: ../app/actions/patterns-actions.c:72
 msgctxt "patterns-action"
 msgid "Show pattern file location in the file manager"
-msgstr ""
+msgstr "Arată locația fișierului de model în gestionarul de fișiere"
 
 #: ../app/actions/patterns-actions.c:77
 msgctxt "patterns-action"
@@ -8282,7 +8284,7 @@ msgstr "Eli_mină găurile"
 #: ../app/actions/select-actions.c:106
 msgctxt "select-action"
 msgid "Remove holes from the selection"
-msgstr ""
+msgstr "Elimină găurile din selecție"
 
 #: ../app/actions/select-actions.c:111
 msgctxt "select-action"
@@ -9606,7 +9608,7 @@ msgstr ""
 #: ../app/actions/vectors-actions.c:223
 msgctxt "vectors-action"
 msgid "Brown"
-msgstr ""
+msgstr "Maro"
 
 #: ../app/actions/vectors-actions.c:224
 msgctxt "vectors-action"
@@ -9626,7 +9628,7 @@ msgstr ""
 #: ../app/actions/vectors-actions.c:235
 msgctxt "vectors-action"
 msgid "Violet"
-msgstr ""
+msgstr "Violet"
 
 #: ../app/actions/vectors-actions.c:236
 msgctxt "vectors-action"
@@ -12357,12 +12359,12 @@ msgstr "Model"
 #: ../app/core/core-enums.c:640
 msgctxt "filter-region"
 msgid "Use the selection as input"
-msgstr ""
+msgstr "Folosește selecția ca intrare"
 
 #: ../app/core/core-enums.c:641
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
-msgstr ""
+msgstr "Folosește întregul strat ca intrare"
 
 #: ../app/core/core-enums.c:672
 msgctxt "gradient-color"
@@ -12372,14 +12374,14 @@ msgstr "Fix"
 #: ../app/core/core-enums.c:673
 msgctxt "gradient-color"
 msgid "Foreground color"
-msgstr "Culoarea de prim-plan"
+msgstr "Culoare de prim-plan"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
 #: ../app/core/core-enums.c:676
 msgctxt "gradient-color"
 msgid "FG"
-msgstr ""
+msgstr "PP"
 
 #: ../app/core/core-enums.c:677
 msgctxt "gradient-color"
@@ -12391,19 +12393,19 @@ msgstr "Culoare de prim-plan (transparent)"
 #: ../app/core/core-enums.c:680
 msgctxt "gradient-color"
 msgid "FG (t)"
-msgstr ""
+msgstr "PP (t)"
 
 #: ../app/core/core-enums.c:681
 msgctxt "gradient-color"
 msgid "Background color"
-msgstr "Culoarea de fundal"
+msgstr "Culoare de fundal"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
 #: ../app/core/core-enums.c:684
 msgctxt "gradient-color"
 msgid "BG"
-msgstr ""
+msgstr "FD"
 
 #: ../app/core/core-enums.c:685
 msgctxt "gradient-color"
@@ -12415,7 +12417,7 @@ msgstr "Culoare de fundal (transparent)"
 #: ../app/core/core-enums.c:688
 msgctxt "gradient-color"
 msgid "BG (t)"
-msgstr ""
+msgstr "FD (t)"
 
 #: ../app/core/core-enums.c:801
 msgctxt "histogram-channel"
@@ -13372,7 +13374,7 @@ msgstr ""
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
 "Eroare fatală de prelucrare în fișierul penel: dimensiunile penelurilor sunt "
-"în afara domeniului."
+"în afara intervalului."
 
 #: ../app/core/gimpbrush-load.c:736
 #, c-format
@@ -19414,7 +19416,7 @@ msgstr "Automat"
 #: ../app/operations/operations-enums.c:26
 msgctxt "layer-color-space"
 msgid "RGB (linear)"
-msgstr ""
+msgstr "RGB (liniar)"
 
 #: ../app/operations/operations-enums.c:27
 msgctxt "layer-color-space"
@@ -19424,7 +19426,7 @@ msgstr "RGB (perceptiv)"
 #: ../app/operations/operations-enums.c:28
 msgctxt "layer-color-space"
 msgid "LAB"
-msgstr ""
+msgstr "LAB"
 
 #: ../app/operations/operations-enums.c:59
 msgctxt "layer-composite-mode"
@@ -19434,7 +19436,7 @@ msgstr "Automat"
 #: ../app/operations/operations-enums.c:60
 msgctxt "layer-composite-mode"
 msgid "Union"
-msgstr ""
+msgstr "Uniune"
 
 #: ../app/operations/operations-enums.c:61
 msgctxt "layer-composite-mode"
@@ -20652,7 +20654,7 @@ msgstr "Viteză"
 
 #: ../app/paint/gimpsmudgeoptions.c:73
 msgid "The strength of smudging"
-msgstr ""
+msgstr "Puterea de mânjire"
 
 #: ../app/paint/gimpsmudgeoptions.c:79
 msgctxt "smudge-tool"
@@ -20661,12 +20663,12 @@ msgstr "Debit"
 
 #: ../app/paint/gimpsmudgeoptions.c:80
 msgid "The amount of brush color to blend"
-msgstr ""
+msgstr "Cantitatea de culoare a penelului de amestecat"
 
 #: ../app/paint/gimpsmudgeoptions.c:86
 msgctxt "smudge-tool"
 msgid "No erasing effect"
-msgstr ""
+msgstr "Fără efect de ștergere"
 
 # checkbox în panoul de selecție
 #: ../app/paint/gimpsmudgeoptions.c:93 ../app/paint/gimpsourceoptions.c:72
@@ -21265,7 +21267,7 @@ msgstr "Transformare 2D"
 #: ../app/pdb/plug-in-compat-cmds.c:270
 msgctxt "undo-type"
 msgid "Bump Map"
-msgstr ""
+msgstr "Hartă de denivelări"
 
 #: ../app/pdb/plug-in-compat-cmds.c:342
 msgctxt "undo-type"
@@ -21275,12 +21277,12 @@ msgstr "Deplasare"
 #: ../app/pdb/plug-in-compat-cmds.c:376
 msgctxt "undo-type"
 msgid "Gaussian Blur"
-msgstr ""
+msgstr "Neclaritate gaussiană"
 
 #: ../app/pdb/plug-in-compat-cmds.c:482
 msgctxt "undo-type"
 msgid "Alien Map"
-msgstr ""
+msgstr "Hartă extraterestră"
 
 #: ../app/pdb/plug-in-compat-cmds.c:519
 msgctxt "undo-type"
@@ -21308,12 +21310,12 @@ msgstr "Decupează automat stratul"
 #: ../app/pdb/plug-in-compat-cmds.c:777
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
-msgstr ""
+msgstr "Extinde contrastul HSV"
 
 #: ../app/pdb/plug-in-compat-cmds.c:931
 msgctxt "undo-type"
 msgid "Stretch Contrast"
-msgstr ""
+msgstr "Extinde contrastul"
 
 #: ../app/pdb/plug-in-compat-cmds.c:974
 msgctxt "undo-type"
@@ -21348,7 +21350,7 @@ msgstr "Matrice de convoluție"
 #: ../app/pdb/plug-in-compat-cmds.c:1283
 msgctxt "undo-type"
 msgid "Cubism"
-msgstr ""
+msgstr "Cubism"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1328
 msgctxt "undo-type"
@@ -21373,7 +21375,7 @@ msgstr "Normalizează"
 #: ../app/pdb/plug-in-compat-cmds.c:1645
 msgctxt "undo-type"
 msgid "Edge"
-msgstr ""
+msgstr "Margine"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1697
 msgctxt "undo-type"
@@ -21388,12 +21390,12 @@ msgstr ""
 #: ../app/pdb/plug-in-compat-cmds.c:1813
 msgctxt "undo-type"
 msgid "Color Exchange"
-msgstr ""
+msgstr "Schimb de culori"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1861
 msgctxt "undo-type"
 msgid "Lens Flare"
-msgstr ""
+msgstr "Halo de lentilă"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1926
 msgctxt "undo-type"
@@ -21403,7 +21405,7 @@ msgstr ""
 #: ../app/pdb/plug-in-compat-cmds.c:2110
 msgctxt "undo-type"
 msgid "Glass Tile"
-msgstr ""
+msgstr "Dale de sticlă"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2163
 msgctxt "undo-type"
@@ -21413,7 +21415,7 @@ msgstr "Zgomot HSV"
 #: ../app/pdb/plug-in-compat-cmds.c:2206
 msgctxt "undo-type"
 msgid "Illusion"
-msgstr ""
+msgstr "Iluzie"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2243
 msgctxt "undo-type"
@@ -21423,7 +21425,7 @@ msgstr "Laplace"
 #: ../app/pdb/plug-in-compat-cmds.c:2319
 msgctxt "undo-type"
 msgid "Lens Distortion"
-msgstr ""
+msgstr "Distorsiune de lentilă"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2359
 msgctxt "undo-type"
@@ -21433,7 +21435,7 @@ msgstr ""
 #: ../app/pdb/plug-in-compat-cmds.c:2426
 msgctxt "undo-type"
 msgid "Maze"
-msgstr ""
+msgstr "Labirint"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2509 ../app/pdb/plug-in-compat-cmds.c:2593
 msgctxt "undo-type"
@@ -21443,7 +21445,7 @@ msgstr "Neclaritate de mișcare"
 #: ../app/pdb/plug-in-compat-cmds.c:2694
 msgctxt "undo-type"
 msgid "Mosaic"
-msgstr ""
+msgstr "Mozaic"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2738
 msgctxt "undo-type"
@@ -21453,22 +21455,22 @@ msgstr "Neon"
 #: ../app/pdb/plug-in-compat-cmds.c:2826
 msgctxt "undo-type"
 msgid "Newsprint"
-msgstr ""
+msgstr "Hârtie de ziar"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2928
 msgctxt "undo-type"
 msgid "Supernova"
-msgstr ""
+msgstr "Supernovă"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2972 ../app/pdb/plug-in-compat-cmds.c:3040
 msgctxt "undo-type"
 msgid "Oilify"
-msgstr ""
+msgstr "Uleiere"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3130
 msgctxt "undo-type"
 msgid "Paper Tile"
-msgstr ""
+msgstr "Dale de hârtie"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3179
 msgctxt "undo-type"
@@ -21483,22 +21485,22 @@ msgstr "Pixelizează"
 #: ../app/pdb/plug-in-compat-cmds.c:3314
 msgctxt "undo-type"
 msgid "Plasma"
-msgstr ""
+msgstr "Plasmă"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3368
 msgctxt "undo-type"
 msgid "Polar Coordinates"
-msgstr ""
+msgstr "Coordonate polare"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3408
 msgctxt "undo-type"
 msgid "Red Eye Removal"
-msgstr ""
+msgstr "Eliminare ochi roșii"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3461
 msgctxt "undo-type"
 msgid "Random Hurl"
-msgstr ""
+msgstr "Dezordine aleatorie"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3514
 msgctxt "undo-type"
@@ -21508,7 +21510,7 @@ msgstr ""
 #: ../app/pdb/plug-in-compat-cmds.c:3567
 msgctxt "undo-type"
 msgid "Random Slur"
-msgstr ""
+msgstr "Topire aleatorie"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3642
 msgctxt "undo-type"
@@ -21518,17 +21520,17 @@ msgstr "Zgomot RGB"
 #: ../app/pdb/plug-in-compat-cmds.c:3712
 msgctxt "undo-type"
 msgid "Ripple"
-msgstr ""
+msgstr "Ondulare"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3837
 msgctxt "undo-type"
 msgid "Noisify"
-msgstr ""
+msgstr "Creștere de zgomot"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3881
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
-msgstr ""
+msgstr "Neclaritate gaussiană selectivă"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3925
 msgctxt "undo-type"
@@ -21548,7 +21550,7 @@ msgstr "Sinusoidal"
 #: ../app/pdb/plug-in-compat-cmds.c:4119
 msgctxt "undo-type"
 msgid "Sobel"
-msgstr ""
+msgstr "Sobel"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4167
 msgctxt "undo-type"
@@ -21573,7 +21575,7 @@ msgstr ""
 #: ../app/pdb/plug-in-compat-cmds.c:4359
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
-msgstr ""
+msgstr "Intensificare de claritate (mască de atenuare a clarității)"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4405
 msgctxt "undo-type"
@@ -21788,11 +21790,11 @@ msgstr "Pornire extensii"
 
 #: ../app/plug-in/gimppluginprocedure.c:1015
 msgid "RGB without alpha"
-msgstr ""
+msgstr "RGB fără alfa"
 
 #: ../app/plug-in/gimppluginprocedure.c:1019
 msgid "RGB with alpha"
-msgstr ""
+msgstr "RGB cu alfa"
 
 #: ../app/plug-in/gimppluginprocedure.c:1033
 msgid "Grayscale without alpha"
@@ -21804,15 +21806,15 @@ msgstr "Tonuri de gri cu alfa"
 
 #: ../app/plug-in/gimppluginprocedure.c:1051
 msgid "Indexed without alpha"
-msgstr ""
+msgstr "Indexat fără alfa"
 
 #: ../app/plug-in/gimppluginprocedure.c:1055
 msgid "Indexed with alpha"
-msgstr ""
+msgstr "Indexat cu alfa"
 
 #: ../app/plug-in/gimppluginprocedure.c:1069
 msgid "This plug-in only works on the following layer types:"
-msgstr ""
+msgstr "Acest plugin funcționează numai cu următoarele tipuri de straturi:"
 
 #: ../app/plug-in/gimppluginprocedure.c:1279
 #, c-format
@@ -21925,7 +21927,7 @@ msgstr "În sens orar"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:127
 msgid "Invert Range"
-msgstr ""
+msgstr "Inversează intervalul"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:131
 msgid "Select All"
@@ -21933,11 +21935,11 @@ msgstr "Selectare totală"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:209
 msgid "Source Range"
-msgstr ""
+msgstr "Intervalul sursei"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:219
 msgid "Destination Range"
-msgstr "Interval de destinație"
+msgstr "Intervalul destinației"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:229
 msgid "Gray Handling"
@@ -21969,7 +21971,7 @@ msgstr "Întoarce matricea pe verticală"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:68
 msgid "Frequencies"
-msgstr ""
+msgstr "Frecvențe"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:78
 msgid "Contours"
@@ -21977,7 +21979,7 @@ msgstr "Contururi"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:88
 msgid "Sharp Edges"
-msgstr ""
+msgstr "Margini ascuțite"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:98
 msgid "Other Options"
@@ -22584,7 +22586,7 @@ msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:486
 msgid "(computing...)"
-msgstr ""
+msgstr "(se calculează...)"
 
 #: ../app/tools/gimpbucketfilltool.c:167
 msgid "Bucket Fill"
@@ -22728,7 +22730,7 @@ msgstr ""
 
 #: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:72
 msgid "Sample average"
-msgstr "Medie de eșantion"
+msgstr "Eșantionare medie"
 
 #: ../app/tools/gimpcoloroptions.c:79 ../app/tools/gimpcolorpickeroptions.c:73
 msgid "Use averaged color value from nearby pixels"
@@ -22872,11 +22874,12 @@ msgstr ""
 
 #: ../app/tools/gimpcropoptions.c:102
 msgid "Delete cropped pixels"
-msgstr ""
+msgstr "Șterge pixelii decupați"
 
 #: ../app/tools/gimpcropoptions.c:103
 msgid "Discard non-locked layer data that falls out of the crop region"
 msgstr ""
+"Abandonează datele de strat neblocate care cad în afara zonei de decupare"
 
 #: ../app/tools/gimpcropoptions.c:109
 msgid "Allow growing"
@@ -23074,7 +23077,7 @@ msgstr "Nu există niciun traseu de mutat."
 #: ../app/tools/gimpeditselectiontool.c:1084 ../app/tools/gimpmovetool.c:295
 #: ../app/tools/gimptransformtool.c:729
 msgid "The active path's position is locked."
-msgstr ""
+msgstr "Poziția stratului activ blocată."
 
 #: ../app/tools/gimpeditselectiontool.c:1095 ../app/tools/gimpmovetool.c:327
 msgid "There is no layer to move."
@@ -23088,7 +23091,7 @@ msgstr "Poziția stratului activ este blocată."
 
 #: ../app/tools/gimpeditselectiontool.c:1116
 msgid "The active channel's position is locked."
-msgstr ""
+msgstr "Poziția canalului activ este blocată."
 
 #: ../app/tools/gimpeditselectiontool.c:1120
 msgid "The active channel's pixels are locked."
@@ -23182,7 +23185,7 @@ msgstr ""
 #. The blending-options expander
 #: ../app/tools/gimpfiltertool.c:1123
 msgid "Blending Options"
-msgstr ""
+msgstr "Opțiuni de amestec"
 
 #. The Color Options expander
 #: ../app/tools/gimpfiltertool.c:1162
@@ -23283,11 +23286,12 @@ msgstr "Culoarea măștii de previzualizare a selecției"
 #: ../app/tools/gimpforegroundselectoptions.c:120
 #: ../app/tools/gimpforegroundselectoptions.c:343
 msgid "Engine"
-msgstr ""
+msgstr "Motor"
 
 #: ../app/tools/gimpforegroundselectoptions.c:121
+#, fuzzy
 msgid "Matting engine to use"
-msgstr ""
+msgstr "Motorul de extracție de utilizat"
 
 #: ../app/tools/gimpforegroundselectoptions.c:129
 msgid "Number of downsampled levels to use"
@@ -23438,11 +23442,11 @@ msgstr "Transformare nevalidă"
 #: ../app/tools/gimpgradientoptions.c:102
 #: ../app/tools/gimpgradientoptions.c:296
 msgid "Metric"
-msgstr ""
+msgstr "Metrică"
 
 #: ../app/tools/gimpgradientoptions.c:103
 msgid "Metric to use for the distance calculation"
-msgstr ""
+msgstr "Metrica de folosit pentru calcularea distanței"
 
 #: ../app/tools/gimpgradientoptions.c:110
 msgid "Adaptive Supersampling"
@@ -23454,7 +23458,7 @@ msgstr "Adâncime maximă"
 
 #: ../app/tools/gimpgradientoptions.c:136
 msgid "Instant mode"
-msgstr ""
+msgstr "Mod instantaneu"
 
 #: ../app/tools/gimpgradientoptions.c:137
 msgid "Commit gradient instantly"
@@ -23927,11 +23931,11 @@ msgstr "_Măsurare"
 #: ../app/tools/gimpmeasuretool.c:153
 msgctxt "undo-type"
 msgid "Straighten"
-msgstr ""
+msgstr "Redresare"
 
 #: ../app/tools/gimpmeasuretool.c:154
 msgid "Straightening"
-msgstr ""
+msgstr "Redresare"
 
 #: ../app/tools/gimpmeasuretool.c:173
 msgid "Click-Drag to create a line"
@@ -23941,19 +23945,19 @@ msgstr "Clic-și-trageți pentru a crea o linie"
 #, c-format
 msgctxt "undo-type"
 msgid "Straighten by %-3.3g°"
-msgstr ""
+msgstr "Redresează cu %-3.3g°"
 
 #: ../app/tools/gimpmeasuretool.c:370
 #, c-format
 msgctxt "undo-type"
 msgid "Straighten Horizontally by %-3.3g°"
-msgstr ""
+msgstr "Redresează orizontal cu %-3.3g°"
 
 #: ../app/tools/gimpmeasuretool.c:375
 #, c-format
 msgctxt "undo-type"
 msgid "Straighten Vertically by %-3.3g°"
-msgstr ""
+msgstr "Redresează vertical cu %-3.3g°"
 
 #: ../app/tools/gimpmeasuretool.c:452
 msgid "Add Guides"
@@ -24049,7 +24053,7 @@ msgstr "Rigiditate"
 #: ../app/tools/gimpnpointdeformationoptions.c:92
 #: ../app/tools/gimpnpointdeformationoptions.c:93
 msgid "Deformation mode"
-msgstr ""
+msgstr "Mo de deformare"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:99
 #: ../app/tools/gimpnpointdeformationoptions.c:100
@@ -24784,7 +24788,7 @@ msgstr "Fonturile încă se încarcă"
 
 #: ../app/tools/gimptexttool.c:1066
 msgid "Text box: "
-msgstr ""
+msgstr "Casetă de text: "
 
 #: ../app/tools/gimptexttool.c:1198
 msgid "Reshape Text Layer"
@@ -26272,9 +26276,10 @@ msgid ""
 "removing it."
 msgstr ""
 "Eliminarea acestui controler din lista controlerelor active va șterge "
-"permanent toate asocierile de evenimente pe care le-ați configurat.\n"
+"permanent toate mapările de evenimente pe care le-ați configurat.\n"
 "\n"
-"Selectarea „Dezactivare controler” va dezactiva controlerul fără a-l elimina."
+"Selectarea „Dezactivează controlerul” va dezactiva controlerul fără a-l "
+"elimina."
 
 #: ../app/widgets/gimpcontrollerlist.c:632
 msgid "Configure Input Controller"
@@ -27627,6 +27632,9 @@ msgid ""
 "has no\n"
 "sample points"
 msgstr ""
+"Această imagine\n"
+"nu conține\n"
+"puncte de eșantionare"
 
 #: ../app/widgets/gimpsavedialog.c:150
 msgid "All XCF images"
