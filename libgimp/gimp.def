@@ -700,6 +700,7 @@ EXPORTS
 	gimp_procedure_config_load_parasite
 	gimp_procedure_config_save_default
 	gimp_procedure_config_save_last
+	gimp_procedure_config_save_metadata
 	gimp_procedure_config_save_parasite
 	gimp_procedure_config_set_values
 	gimp_procedure_create_config

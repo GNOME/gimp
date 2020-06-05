@@ -67,6 +67,7 @@ struct _GimpProcedureConfigPrivate
   GimpMetadata          *metadata;
   gchar                 *mime_type;
   GimpMetadataSaveFlags  metadata_flags;
+  gboolean               metadata_saved;
 };
 
 
@@ -622,9 +623,10 @@ gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
  * provides additional features to automate file export:
  *
  * If @status is %GIMP_PDB_SUCCESS, and
- * gimp_procedure_config_begin_export() returned a #GimpMetadata,
- * @config's export properties are synced back to the metadata's
- * #GimpMetadataSaveFlags and the metadata is written to @file using
+ * gimp_procedure_config_begin_export() returned a #GimpMetadata, this
+ * function calls gimp_procedure_config_save_metadata(), which syncs
+ * back @config's export properties to the metadata's
+ * #GimpMetadataSaveFlags and writes metadata to @file using
  * gimp_image_metadata_save_finish().
  *
  * If the procedure has a "comment" argument, and it was modified
@@ -634,10 +636,10 @@ gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
  * Since: 3.0
  **/
 void
-gimp_procedure_config_end_export (GimpProcedureConfig  *config,
-                                  GimpImage            *exported_image,
-                                  GFile                *file,
-                                  GimpPDBStatusType     status)
+gimp_procedure_config_end_export (GimpProcedureConfig *config,
+                                  GimpImage           *exported_image,
+                                  GFile               *file,
+                                  GimpPDBStatusType    status)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
   g_return_if_fail (GIMP_IS_IMAGE (exported_image));
@@ -721,44 +723,83 @@ gimp_procedure_config_end_export (GimpProcedureConfig  *config,
           g_free (comment);
         }
 
-      if (config->priv->metadata)
-        {
-          gint i;
-
-          for (i = 0; i < G_N_ELEMENTS (metadata_properties); i++)
-            {
-              const gchar           *prop_name = metadata_properties[i].name;
-              GimpMetadataSaveFlags  prop_flag = metadata_properties[i].flag;
-              GParamSpec            *pspec;
-              gboolean               value;
-
-              pspec = g_object_class_find_property (object_class, prop_name);
-              if (pspec)
-                {
-                  g_object_get (config,
-                                prop_name, &value,
-                                NULL);
-
-                  if (value)
-                    config->priv->metadata_flags |= prop_flag;
-                  else
-                    config->priv->metadata_flags &= ~prop_flag;
-                }
-
-              gimp_image_metadata_save_finish (exported_image,
-                                               config->priv->mime_type,
-                                               config->priv->metadata,
-                                               config->priv->metadata_flags,
-                                               file, NULL);
-            }
-        }
+      gimp_procedure_config_save_metadata (config, exported_image, file);
     }
 
   g_clear_object (&config->priv->metadata);
   g_clear_pointer (&config->priv->mime_type, g_free);
   config->priv->metadata_flags = 0;
+  config->priv->metadata_saved = FALSE;
 
   gimp_procedure_config_end_run (config, status);
+}
+
+/**
+ * gimp_procedure_config_save_metadata:
+ * @config:         a #GimpProcedureConfig
+ * @exported_image: the #GimpImage that was actually exported
+ * @file:           the #GFile @exported_image was written to
+ *
+ * Note: There is normally no need to call this function because it's
+ * already called from gimp_procedure_config_end_export().
+ *
+ * Only use this function if the #GimpMetadata returned by
+ * gimp_procedure_config_begin_run() needs to be written at a specific
+ * point of the export, other than its end.
+ *
+ * This function syncs back @config's export properties to the
+ * metadata's #GimpMetadataSaveFlags and writes the metadata to @file
+ * using gimp_image_metadata_save_finish().
+ *
+ * The metadata is only ever written once. If this function has been
+ * called explicitly, it will do nothing when called a second time
+ * from gimp_procedure_config_end_export().
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_config_save_metadata (GimpProcedureConfig *config,
+                                     GimpImage           *exported_image,
+                                     GFile               *file)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
+  g_return_if_fail (GIMP_IS_IMAGE (exported_image));
+  g_return_if_fail (G_IS_FILE (file));
+
+  if (config->priv->metadata && ! config->priv->metadata_saved)
+    {
+      GObjectClass *object_class = G_OBJECT_GET_CLASS (config);
+      gint          i;
+
+      for (i = 0; i < G_N_ELEMENTS (metadata_properties); i++)
+        {
+          const gchar           *prop_name = metadata_properties[i].name;
+          GimpMetadataSaveFlags  prop_flag = metadata_properties[i].flag;
+          GParamSpec            *pspec;
+          gboolean               value;
+
+          pspec = g_object_class_find_property (object_class, prop_name);
+          if (pspec)
+            {
+              g_object_get (config,
+                            prop_name, &value,
+                            NULL);
+
+              if (value)
+                config->priv->metadata_flags |= prop_flag;
+              else
+                config->priv->metadata_flags &= ~prop_flag;
+            }
+
+          gimp_image_metadata_save_finish (exported_image,
+                                           config->priv->mime_type,
+                                           config->priv->metadata,
+                                           config->priv->metadata_flags,
+                                           file, NULL);
+        }
+
+      config->priv->metadata_saved = TRUE;
+    }
 }
 
 

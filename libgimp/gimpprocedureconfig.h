@@ -93,6 +93,11 @@ void    gimp_procedure_config_end_export    (GimpProcedureConfig  *config,
                                              GFile                *file,
                                              GimpPDBStatusType     status);
 
+void    gimp_procedure_config_save_metadata (GimpProcedureConfig  *config,
+                                             GimpImage            *exported_image,
+                                             GFile                *file);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_PROCEDURE_CONFIG_H__ */
