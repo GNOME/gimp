@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-31 10:28+0000\n"
-"PO-Revision-Date: 2020-05-28 13:37+0200\n"
+"POT-Creation-Date: 2020-06-05 19:47+0000\n"
+"PO-Revision-Date: 2020-06-06 10:53+0200\n"
 "Last-Translator: Paul Matthijsse <paul.matthijsse@wanadoo.fr>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
@@ -100,6 +100,50 @@ msgstr "Fotobewerking in GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
+"GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
+"changes:"
+msgstr ""
+"GIMP 2.10.20 bevat nieuwe mogelijkheden en belangrijke bug-fixes. "
+"Belangrijkste veranderingen zijn:"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid "Tool groups now expand on hover rather than click by default"
+msgstr ""
+"Gereedschapsgroepen klikken open als de muis erover beweegt, in plaats van "
+"erop te moeten klikken"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid ""
+"Non-destructive cropping now available by cropping the canvas rather than "
+"actual pixels"
+msgstr ""
+"Niet-destructief bijsnijden nu beschikbaar door het canvas bij te snijden in "
+"plaats van de feitelijke pixels"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid ""
+"Better PSD support: exporting of 16-bit files now available, reading/writing "
+"channels in the right order"
+msgstr ""
+"Betere PSD-ondersteuning: export van 16-bit bestanden nu beschikbaar, lezen/"
+"schrijven van kanalen in de juiste volgorde"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid "On-canvas controls for the Vignette filter"
+msgstr "On-canvas hulpmiddelen voor het Vignettefilter"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
+msgstr ""
+"Nieuwe filters: Verbloemen, Focusvervaging, Lensvervaging, Variabele "
+"vervaging"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+msgid "Over 30 bugfixes"
+msgstr "Meer dan dertig bugs verholpen"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
 msgstr ""
@@ -107,7 +151,7 @@ msgstr ""
 "van CMYK PSD-bestanden en biedt nu ook een hoogcontrastvariant van de "
 "symbolische iconen."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
@@ -118,42 +162,42 @@ msgstr ""
 "gebruikelijke hoeveelheid bug-fixes. In het oog springende verbeteringen "
 "zijn:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Tools are now grouped in the toolbox by default"
 msgstr "Gereedschappen zijn nu standaard in de gereedschapskist gegroepeerd"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr "Schuifbalken zijn compacter gemaakt en beter te bedienen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Vastly improved user experience for the transformation preview"
 msgstr "Sterk verbeterd transformatievoorbeeld"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 "Dokbare gebieden lichten nu op wanneer een dokbare dialoog wordt verplaatst"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr "Nieuw 3D-gereedschap om objecten te roteren"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "Much smoother brush outline motion on the canvas"
 msgstr "Kwast veel soepeler gemaakt"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr "Geïntegreerde interface om lagen samen te voegen en te verankeren"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 "Gebruikers krijgen nu een melding wanneer er een nieuwe versie van Gimp "
 "beschikbaar is"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
@@ -164,7 +208,7 @@ msgstr ""
 "GEGL. Natuurlijk bevat deze versie ook een paar noemenswaardige "
 "verbeteringen:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
@@ -172,52 +216,52 @@ msgstr ""
 "Menu Beeld: nieuwe 'Toon alles'-optie om ook pixels buiten het canvas te "
 "tonen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 "Filters: nieuwe 'Afkap-optie' om lagen te schalen indien van toepassing"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr ""
 "Gereedschap voor voorgrondselectie: nieuwe \"Grijswaarden\" voorbeeldmodus"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
 "Gereedschap voor voorgrondselectie: kleur/opaciteits-kiezer voor \"Kleur\"-"
 "voorbeeld"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr "Gereedschap voor vrije selectie: betere kopieer/plak-interactie"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 "Transformeergereedschap: nieuwe optie om de hele afbeelding te transformeren"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr ""
 "Voorkeuren: nieuwe instelling \"Sta bewerkingen op niet-zichtbare lagen toe\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "HEIF import/export: color profile support"
 msgstr "HEIF import/export: ondersteuning kleurprofielen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
 "PDF-export: tekstlagen in laaggroepen worden nu geëxporteerd als teksten"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr ""
 "TIFF-import: vraagt nu hoe ongespecificeerde TIFF-kanalen moeten worden "
 "verwerkt"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
@@ -227,32 +271,32 @@ msgstr ""
 "veel veranderingen bevatte! Niettemin zijn er een paar hele coole "
 "verbeteringen aanwezig, in het bijzonder om curves te bewerken:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "Improved curves interaction overall"
 msgstr "Verbeterde interactie met curves"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "A few enhancements specific to the Curves tool"
 msgstr "Een paar verbeteringen specifiek voor het curve-gereedschap"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "Layer support in TIFF"
 msgstr "Laagondersteuning in TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Discovery of user-installed fonts in Windows"
 msgstr ""
 "In Windows worden de door de gebruiker geïnstalleerde lettertypen herkend"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr "Incrementele modus in het gereedschap voor Tegenhouden/Doordrukken"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Free Select tool creates preliminary selection"
 msgstr "Gereedschap Vrije selectie maakt voorlopige selectie"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
@@ -260,7 +304,7 @@ msgstr ""
 "GIMP 2.10.10 is een behoorlijk grote update met veel nieuwe mogelijkheden en "
 "bug fixes. Belangrijke verbeteringen zijn:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
@@ -268,12 +312,12 @@ msgstr ""
 "Emmergereedschap: nieuwe \"Vul volgens omtrekdetectie\" voor zones die niet "
 "perfect gesloten zijn"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
 "In het Emmergereedschap kunnen kleuren nu snel worden gekozen met Ctrl+klik"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
@@ -281,13 +325,13 @@ msgstr ""
 "Met het Emmergereedschap kan nu de muis worden gebruikt wanneer gevuld wordt "
 "met \"gelijkende kleuren\" en met \"contourdetectie\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
 "Het Schaalgereedschap schaalt rondom het centrum zelfs wanneer numerieke "
 "invoer wordt gebruikt"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
@@ -295,7 +339,7 @@ msgstr ""
 "Het standaardgedrag van het Transformeergereedschap behoudt nu de "
 "aspectratio tijdens het op- of neerschalen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
@@ -303,21 +347,21 @@ msgstr ""
 "Toevoeging opties \"Begrens handvatten\" en \"Rond centrum\" aan het "
 "Perspectiefgereedschap"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr "Nieuwe generieke canvashulp 'Alt+middelklik' om lagen te kiezen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 "Parametrische kwasten ondersteunen nu 32-bit drijvendekomma om posterisatie "
 "te voorkomen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr "Klembordkwasten en -patronen kunnen nu worden gedupliceerd"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
@@ -325,25 +369,25 @@ msgstr ""
 "Foutmelding wanneer vastgezette lagen worden bewerkt zal knipperen om de "
 "oorzaak van de fout te melden"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 "Nieuwe on-canvas GUI (simpele lijnen) voor circulaire, lineaire en "
 "zoomvervaging"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "Several optimizations including faster layer group rendering"
 msgstr "Diverse optimalisaties waaronder snellere rendering van laaggroepen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
 "Het wisselbestand en cache-bestanden worden niet meer in de configuratiemap "
 "bewaard"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
@@ -351,15 +395,15 @@ msgstr ""
 "Bewaren of exporteren van bestanden is robuuster door geen gedeeltelijke "
 "bestanden meer op te slaan"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "HiDPI support improvements"
 msgstr "Verbeteringen voor HiDPI-ondersteuning"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "New preference to choose the default export file type"
 msgstr "Nieuwe voorkeur om het standaard bestandstype voor export te kiezen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -367,18 +411,18 @@ msgstr ""
 "Nieuwe optie om PNG, JPEG en TIFF met een kleurprofiel te exporteren; PSD "
 "wordt altijd met een kleurprofiel geëxporteerd"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid "New DDS format loading/exporting plug-in"
 msgstr "Nieuwe plug-in voor het laden/exporteren van het DDS-formaat"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
 msgstr ""
 "Volledig herschreven Spyrogimp plug-in met meer opties en betere interactie"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
@@ -386,7 +430,7 @@ msgstr ""
 "GIMP 2.10.8 is voornamelijk een release met bug-fixes en optimalisaties. "
 "Verbeteringen zijn:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
@@ -394,11 +438,11 @@ msgstr ""
 "Variabele omvang datablokken tijdens renderen van projecties, met snellere "
 "respons als gevolg"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr "Verbeterde detectie van RawTherapee (v5.5 en hoger) in Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
@@ -406,7 +450,7 @@ msgstr ""
 "Compatibiliteitsinfo XCF-bestanden in Bewaar-dialoog begrijpelijker en "
 "inzichtelijker gemaakt"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
@@ -414,7 +458,7 @@ msgstr ""
 "Diverse prestatielog-tools toegevoegd; logs kunnen gestart worden in het "
 "Dashboard"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -422,7 +466,7 @@ msgstr ""
 "GIMP 2.10.6 kent vele bug-fixes, optimalisaties en nieuwe mogelijkheden. "
 "Belangrijkste veranderingen zijn:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
@@ -430,22 +474,22 @@ msgstr ""
 "Tekstlagen kunnen nu verticale tekst bevatten (met diverse tekstoriëntaties "
 "en lijnrichtingen)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "Nieuw filter \"Kleine Planeet\" (gegl:stereographic-projection)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid "New \"Long Shadow\" filter"
 msgstr "Nieuw \"Lange Schaduw\"-filter"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr ""
 "De rechtzetoptie van het Passergereedschap werkt nu ook in verticale richting"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
@@ -453,7 +497,7 @@ msgstr ""
 "Voorbeeldweergave van het tekengebied worden nu asynchroon gerenderd en "
 "voorbeeldweergave van laaggroepen kan in Voorkeuren worden uitgeschakeld"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
@@ -461,18 +505,18 @@ msgstr ""
 "Nieuw \"async\"-veld in de \"div\"-groep van het Dashboard, dat het aantal "
 "huidige asynchrone operaties toont"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 "Filteren van bestandsformaten in Open/Bewaar/Exporteer-dialogen minder "
 "verwarrend"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr ""
 "Nieuwe taal toegevoegd: Marathi. Hiermee is GIMP in 81 talen beschikbaar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -480,7 +524,7 @@ msgstr ""
 "GIMP 2.10.4 kent vele bug-fixes en diverse optimalisaties. Belangrijkste "
 "veranderingen zijn:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -488,12 +532,12 @@ msgstr ""
 "Rechtzetten met het Passergereedschap: lagen kunnen worden geroteerd met de "
 "meetlijn als horizon"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr ""
 "Sneller starten: het laden van lettertypen vertraagt het starten niet langer"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -501,13 +545,13 @@ msgstr ""
 "Labelen van lettertypen heeft nu dezelfde gebruikersinterface als die voor "
 "kwasten, patronen en verlopen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 "PSD-ondersteuning: een samengevoegde versie van een PSD-afbeelding kan "
 "worden geïmporteerd"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -515,7 +559,7 @@ msgstr ""
 "Dashboard uitgebreid met nieuwe Geheugengroep en Wisselgeheugen toont meer "
 "informatie"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -528,7 +572,7 @@ msgstr ""
 # Filter Recursieve transformatie moet zijn:
 # Herhalende transformatie
 # --pm
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -541,7 +585,7 @@ msgstr ""
 "van ons functiebeleid in stabiele micro-uitgaven."
 
 # j
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -549,7 +593,7 @@ msgstr ""
 "Eerste uitgave van de 2.10 serie, die vooral de overgang naar een nieuwe "
 "beeldprocessor brengt: GEGL. De belangrijkste wijzigingen zijn:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "Kleurverwerking met grote diepte (16/32-bit per kleurkanaal)"
 
@@ -558,7 +602,7 @@ msgstr "Kleurverwerking met grote diepte (16/32-bit per kleurkanaal)"
 # GIMP widgets (oa.)
 # GimpPreviewArea - A general purpose preview widget which caches its pixel data.
 # GimpPreview - A widget providing a GimpPreviewArea plus framework to update the preview.
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -566,35 +610,35 @@ msgstr ""
 "Kleurbeheer is nu standaard, de meeste widgets en voorbeeldweergaven vallen "
 "onder kleurbeheer"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Live voorbeeldweergave, venster splitsbaar voor weergave voor/na bewerking"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 "Multi-threaded en hardware-versnelde rendering, verwerking en schilderen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid "Most tools improved, several new transformation tools"
 msgstr ""
 "Meeste gereedschappen verbeterd, diverse nieuwe transformatiegereedschappen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Verbeterde ondersteuning voor veel beeldformaten, in het bijzonder betere "
 "import voor PSD bestanden"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Nieuwe ondersteunde beeldformaten: OpenEXR, RGBE, WebP, HGT…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -602,25 +646,25 @@ msgstr ""
 "Verbeteringen voor digitaal schilderen: canvas draaien en omwisselen, "
 "symmetrisch schilderen, MyPaint-penselen…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "Metadata bekijken en bewerken voor Exif, XMP, IPTC en DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Basale HiDPI-ondersteuning: automatische of handmatige selectie van "
 "pictogramgrootte"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Nieuwe thema's voor GIMP: Licht, Grijs, Donker en Systeem"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid "And much, much more…"
 msgstr "En nog heel veel meer…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -631,7 +675,7 @@ msgstr ""
 "snelheid en optimalisering voor een betere schilderervaring. De "
 "belangrijkere wijzigingen zijn:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
@@ -641,11 +685,11 @@ msgstr ""
 
 # beelddubbels?
 # --pm
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr "Symmetrieën worden nu bewaard in XCF-bestanden (via beelddubbels)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -654,7 +698,7 @@ msgstr ""
 "bruikbaarheidsproblemen af te komen. Het ‘Lichter’- en ‘Donkerder’-thema "
 "verwijderd."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -664,7 +708,7 @@ msgstr ""
 "voor het Panorama Projection filter. Het bevat canvasbrede interactie voor "
 "3D rotaties (richting, kantelen en rollen)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -675,7 +719,7 @@ msgstr ""
 "maar ook bij waarschuwingen en kritische fouten wanneer de \"fatal-warnings"
 "\" debug-optie is geactiveerd"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -685,11 +729,11 @@ msgstr ""
 "voor debugging en stabiliteit. Naast het oplossen van fouten zijn de "
 "verbeteringen onder andere:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr "Nieuw dokbaar venster om het pc-gebruik door GIMP te volgen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -697,34 +741,34 @@ msgstr ""
 "Nieuw Debug-dialoogvenster toont back-traces en andere foutinformatie, wat "
 "aanmoedigt om bug-rapporten in te sturen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Niet-opgeslagen beelden kunnen nu teruggehaald worden na een crash"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid "Layer masks on layer groups"
 msgstr "Laagmaskers op laaggroepen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Ondersteuning JPEG 2000 verbeterd voor grotere diepte en verschillende "
 "kleurruimtes"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "Schermafdruk en kleurenkiezer verbeterd op verschillende computersystemen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid "Metadata defaults preferences now available"
 msgstr "Metadata standaardvoorkeuren nu beschikbaar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "Various GUI polishing"
 msgstr "Diverse verbeteringen in de gebruikersinterface"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -732,50 +776,50 @@ msgstr ""
 "GIMP 2.9.8 introduceert canvasbrede bewerking van kleurverlopen en de nodige "
 "verbeteringen met aandacht voor het oplossen van problemen en de stabiliteit."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid "On-canvas gradient editing"
 msgstr "Canvasbrede bewerking van kleurverlopen"
 
 # j
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid "Notification when an image is over/underexposed"
 msgstr "Melding wanneer een foto is over- of onderbelicht"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid "Better and faster color management"
 msgstr "Beter en sneller kleurbeheer"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 "Ondersteuning voor de kleurenkiezer en schermafdrukken in Wayland bij KDE "
 "Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid "Paste in place feature"
 msgstr "Mogelijkheid om te plakken op oorspronkelijke positie"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid "Many usability improvements"
 msgstr "Veel verbeteringen in het gebruik"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Handboek kan worden getoond in  de voorkeurstaal"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Verbeteringen aan het Wavelet Decompose-filter"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Verbeterde compatibiliteit met Photoshop .psd-bestanden"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid "New support for password-protected PDF"
 msgstr "Verbeterde ondersteuning van PDF-bestanden met wachtwoord"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr ""
 "Nieuwe ondersteuning voor het HGT-formaat (Digital Elevation Model data)"
@@ -5346,391 +5390,396 @@ msgstr "_Caleidoscoop…"
 
 #: ../app/actions/filters-actions.c:418
 msgctxt "filters-action"
+msgid "Le_ns Blur..."
+msgstr "Le_nsvervaging..."
+
+#: ../app/actions/filters-actions.c:423
+msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "Le_nsvervorming…"
 
-#: ../app/actions/filters-actions.c:423
+#: ../app/actions/filters-actions.c:428
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "_Lensschittering…"
 
-#: ../app/actions/filters-actions.c:428
+#: ../app/actions/filters-actions.c:433
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "Niveaus…"
 
-#: ../app/actions/filters-actions.c:433
+#: ../app/actions/filters-actions.c:438
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "_Lineaire sinusoïde..."
 
-#: ../app/actions/filters-actions.c:438
+#: ../app/actions/filters-actions.c:443
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "K_leine Planeet…"
 
-#: ../app/actions/filters-actions.c:443
+#: ../app/actions/filters-actions.c:448
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "_Lange schaduw…"
 
-#: ../app/actions/filters-actions.c:448
+#: ../app/actions/filters-actions.c:453
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006..."
 
-#: ../app/actions/filters-actions.c:453
+#: ../app/actions/filters-actions.c:458
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Doolhof…"
 
-#: ../app/actions/filters-actions.c:458
+#: ../app/actions/filters-actions.c:463
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "_Mediaanvervaging..."
 
-#: ../app/actions/filters-actions.c:463
+#: ../app/actions/filters-actions.c:468
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "Mediaanvervaging..."
 
-#: ../app/actions/filters-actions.c:468
+#: ../app/actions/filters-actions.c:473
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Monochrome mixer..."
 
-#: ../app/actions/filters-actions.c:473
+#: ../app/actions/filters-actions.c:478
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mozaïek…"
 
-#: ../app/actions/filters-actions.c:478
+#: ../app/actions/filters-actions.c:483
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Circulaire bewegingsvervaging..."
 
-#: ../app/actions/filters-actions.c:483
+#: ../app/actions/filters-actions.c:488
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Lineaire bewegingsvervaging..."
 
-#: ../app/actions/filters-actions.c:488
+#: ../app/actions/filters-actions.c:493
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Zoomvervaging..."
 
-#: ../app/actions/filters-actions.c:493
+#: ../app/actions/filters-actions.c:498
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Celruis..."
 
-#: ../app/actions/filters-actions.c:498
+#: ../app/actions/filters-actions.c:503
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "Kra_ntendruk…"
 
-#: ../app/actions/filters-actions.c:503
+#: ../app/actions/filters-actions.c:508
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "_CIE lch-ruis..."
 
-#: ../app/actions/filters-actions.c:508
+#: ../app/actions/filters-actions.c:513
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "HS_V-ruis..."
 
-#: ../app/actions/filters-actions.c:513
+#: ../app/actions/filters-actions.c:518
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "Goo_ien…"
 
-#: ../app/actions/filters-actions.c:518
+#: ../app/actions/filters-actions.c:523
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "Perli_nruis..."
 
-#: ../app/actions/filters-actions.c:523
+#: ../app/actions/filters-actions.c:528
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Kies…"
 
-#: ../app/actions/filters-actions.c:528
+#: ../app/actions/filters-actions.c:533
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB-ruis…"
 
-#: ../app/actions/filters-actions.c:533
+#: ../app/actions/filters-actions.c:538
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "Ruisv_ermindering…"
 
-#: ../app/actions/filters-actions.c:538
+#: ../app/actions/filters-actions.c:543
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Simplex ruis…"
 
-#: ../app/actions/filters-actions.c:543
+#: ../app/actions/filters-actions.c:548
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "Bedoe_zelen…"
 
-#: ../app/actions/filters-actions.c:548
+#: ../app/actions/filters-actions.c:553
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Solide ruis…"
 
-#: ../app/actions/filters-actions.c:553
+#: ../app/actions/filters-actions.c:558
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Sp_reiding…"
 
 # Weet hier even geen vertaling voor, pm
-#: ../app/actions/filters-actions.c:558
+#: ../app/actions/filters-actions.c:563
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "_Normaliseer..."
 
-#: ../app/actions/filters-actions.c:563
+#: ../app/actions/filters-actions.c:568
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "Ver_schuiving…"
 
-#: ../app/actions/filters-actions.c:568
+#: ../app/actions/filters-actions.c:573
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Olie_verven…"
 
-#: ../app/actions/filters-actions.c:573
+#: ../app/actions/filters-actions.c:578
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Panoramaprojectie…"
 
-#: ../app/actions/filters-actions.c:578
+#: ../app/actions/filters-actions.c:583
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopie…"
 
-#: ../app/actions/filters-actions.c:583
+#: ../app/actions/filters-actions.c:588
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Beeldpunten vergroten…"
 
-#: ../app/actions/filters-actions.c:588
+#: ../app/actions/filters-actions.c:593
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma..."
 
-#: ../app/actions/filters-actions.c:593
+#: ../app/actions/filters-actions.c:598
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "P_oolcoördinaten…"
 
-#: ../app/actions/filters-actions.c:598
+#: ../app/actions/filters-actions.c:603
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterkleuren..."
 
-#: ../app/actions/filters-actions.c:603
+#: ../app/actions/filters-actions.c:608
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "Omgekee_rde transformatie..."
 
-#: ../app/actions/filters-actions.c:608
+#: ../app/actions/filters-actions.c:613
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Rode ogen verwijderen…"
 
-#: ../app/actions/filters-actions.c:613
+#: ../app/actions/filters-actions.c:618
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005…"
 
-#: ../app/actions/filters-actions.c:618
+#: ../app/actions/filters-actions.c:623
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "RGB knippen..."
 
-#: ../app/actions/filters-actions.c:623
+#: ../app/actions/filters-actions.c:628
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Rimpeling…"
 
-#: ../app/actions/filters-actions.c:628
+#: ../app/actions/filters-actions.c:633
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "Verzadiging..."
 
-#: ../app/actions/filters-actions.c:633
+#: ../app/actions/filters-actions.c:638
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Semi-vlak maken..."
 
-#: ../app/actions/filters-actions.c:638
+#: ../app/actions/filters-actions.c:643
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia…"
 
-#: ../app/actions/filters-actions.c:643
+#: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "Sc_haduwen/hoge lichten..."
 
-#: ../app/actions/filters-actions.c:648
+#: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "Ver_schuiving..."
 
-#: ../app/actions/filters-actions.c:653
+#: ../app/actions/filters-actions.c:658
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinusoïde…"
 
-#: ../app/actions/filters-actions.c:658
+#: ../app/actions/filters-actions.c:663
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "Lineair _clusteren…"
 
-#: ../app/actions/filters-actions.c:663
+#: ../app/actions/filters-actions.c:668
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symmetrisch naaste buur…"
 
-#: ../app/actions/filters-actions.c:668
+#: ../app/actions/filters-actions.c:673
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Zachte gloed…"
 
-#: ../app/actions/filters-actions.c:673
+#: ../app/actions/filters-actions.c:678
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "_Bolprojectie…"
 
-#: ../app/actions/filters-actions.c:678
+#: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "S_piraal…"
 
-#: ../app/actions/filters-actions.c:683
+#: ../app/actions/filters-actions.c:688
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "Contrast vergroten…"
 
-#: ../app/actions/filters-actions.c:688
+#: ../app/actions/filters-actions.c:693
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Stress…"
 
-#: ../app/actions/filters-actions.c:693
+#: ../app/actions/filters-actions.c:698
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nova…"
 
-#: ../app/actions/filters-actions.c:698
+#: ../app/actions/filters-actions.c:703
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "Drempelwaarde…"
 
-#: ../app/actions/filters-actions.c:703
+#: ../app/actions/filters-actions.c:708
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Drempelwaarde alfa…"
 
-#: ../app/actions/filters-actions.c:708
+#: ../app/actions/filters-actions.c:713
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Glazen tegel…"
 
-#: ../app/actions/filters-actions.c:713
+#: ../app/actions/filters-actions.c:718
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Papieren tegel..."
 
-#: ../app/actions/filters-actions.c:718
+#: ../app/actions/filters-actions.c:723
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Naadloos tegelen…"
 
-#: ../app/actions/filters-actions.c:723
+#: ../app/actions/filters-actions.c:728
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Verscherpen (_Onscherp masker)…"
 
-#: ../app/actions/filters-actions.c:728
+#: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Waarde_doorgifte…"
 
-#: ../app/actions/filters-actions.c:733
+#: ../app/actions/filters-actions.c:738
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "_Variabele vervaging..."
 
-#: ../app/actions/filters-actions.c:738
+#: ../app/actions/filters-actions.c:743
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "Vi_deodegradatie…"
 
-#: ../app/actions/filters-actions.c:743
+#: ../app/actions/filters-actions.c:748
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vignettering…"
 
-#: ../app/actions/filters-actions.c:748
+#: ../app/actions/filters-actions.c:753
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Waterpixels…"
 
-#: ../app/actions/filters-actions.c:753
+#: ../app/actions/filters-actions.c:758
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Golven…"
 
-#: ../app/actions/filters-actions.c:758
+#: ../app/actions/filters-actions.c:763
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "Golven en _indrukken…"
 
-#: ../app/actions/filters-actions.c:763
+#: ../app/actions/filters-actions.c:768
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "W_ind..."
 
-#: ../app/actions/filters-actions.c:771
+#: ../app/actions/filters-actions.c:776
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "Laatste _herhalen"
 
-#: ../app/actions/filters-actions.c:773
+#: ../app/actions/filters-actions.c:778
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr ""
 "De laatst gebruikte plug-in opnieuw uitvoeren met dezelfde instellingen"
 
-#: ../app/actions/filters-actions.c:778
+#: ../app/actions/filters-actions.c:783
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "Laatste _opnieuw tonen"
 
-#: ../app/actions/filters-actions.c:779
+#: ../app/actions/filters-actions.c:784
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Het dialoogvenster van de laatst gebruikte plug-in opnieuw tonen"
 
-#: ../app/actions/filters-actions.c:1120
+#: ../app/actions/filters-actions.c:1126
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Herhaal \"%s\""
 
-#: ../app/actions/filters-actions.c:1121
+#: ../app/actions/filters-actions.c:1127
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "\"%s\" opni_euw tonen"
 
-#: ../app/actions/filters-actions.c:1159
+#: ../app/actions/filters-actions.c:1165
 msgid "Repeat Last"
 msgstr "Laatste herhalen"
 
-#: ../app/actions/filters-actions.c:1161
+#: ../app/actions/filters-actions.c:1167
 msgid "Re-Show Last"
 msgstr "Laatste opnieuw tonen"
 
@@ -21730,11 +21779,15 @@ msgstr "Scherpe randen"
 msgid "Other Options"
 msgstr "Andere opties"
 
-#: ../app/propgui/gimppropgui-focus-blur.c:143
+#: ../app/propgui/gimppropgui-focus-blur.c:199
+msgid "Geometry Options"
+msgstr "Geometrie-opties"
+
+#: ../app/propgui/gimppropgui-focus-blur.c:226
 msgid "Focus Blur: "
 msgstr "Vervaging scherpstelpunt: "
 
-#: ../app/propgui/gimppropgui-generic.c:185
+#: ../app/propgui/gimppropgui-generic.c:187
 msgid "Pick coordinates from the image"
 msgstr "Kies coördinaten uit de afbeelding"
 
@@ -23126,8 +23179,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Toverstaf"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:551
-#: ../app/tools/gimpgegltool.c:552 ../app/tools/gimpoperationtool.c:136
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:552
+#: ../app/tools/gimpgegltool.c:553 ../app/tools/gimpoperationtool.c:136
 msgid "GEGL Operation"
 msgstr "GEGL-bewerking"
 
@@ -23140,7 +23193,7 @@ msgid "_GEGL Operation..."
 msgstr "_GEGL-bewerking…"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:496
+#: ../app/tools/gimpgegltool.c:497
 msgid "Select an operation from the list above"
 msgstr "Een handeling uit bovenstaande lijst selecteren"
 
@@ -27697,6 +27750,10 @@ msgstr ""
 "Het actieve kleurverloop.\n"
 "Klik om het dialoogvenster Verlopen te openen."
 
+#: ../app/widgets/gimptoolbutton.c:601
+msgid "Also in group:"
+msgstr "Ook in groep:"
+
 #: ../app/widgets/gimptooleditor.c:243
 msgid "Create a new tool group"
 msgstr "Nieuwe gereedschapsgroep aanmaken"
@@ -27817,22 +27874,22 @@ msgstr "%s (probeer %s, %s)"
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (probeer %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1795
+#: ../app/widgets/gimpwidgets-utils.c:1810
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Ingebouwde grijswaarden (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1802
+#: ../app/widgets/gimpwidgets-utils.c:1817
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Ingebouwd RGB (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1819
+#: ../app/widgets/gimpwidgets-utils.c:1834
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Preferente grijswaarden (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1826
+#: ../app/widgets/gimpwidgets-utils.c:1841
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Preferent RGB (%s)"
