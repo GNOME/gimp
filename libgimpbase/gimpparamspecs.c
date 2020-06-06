@@ -334,6 +334,14 @@ gimp_param_spec_uint8_array (const gchar *name,
   return G_PARAM_SPEC (array_spec);
 }
 
+/**
+ * gimp_value_get_uint8_array:
+ * @value: A valid value of type %GIMP_TYPE_UINT8_ARRAY
+ *
+ * Gets the contents of a %GIMP_TYPE_UINT8_ARRAY #GValue
+ *
+ * Returns: (transfer none) (array): The contents of @value
+ */
 const guint8 *
 gimp_value_get_uint8_array (const GValue *value)
 {
@@ -342,6 +350,14 @@ gimp_value_get_uint8_array (const GValue *value)
   return gimp_value_get_array (value);
 }
 
+/**
+ * gimp_value_dup_uint8_array:
+ * @value: A valid value of type %GIMP_TYPE_UINT8_ARRAY
+ *
+ * Gets the contents of a %GIMP_TYPE_UINT8_ARRAY #GValue
+ *
+ * Returns: (transfer full) (array): The contents of @value
+ */
 guint8 *
 gimp_value_dup_uint8_array (const GValue *value)
 {
@@ -350,6 +366,14 @@ gimp_value_dup_uint8_array (const GValue *value)
   return gimp_value_dup_array (value);
 }
 
+/**
+ * gimp_value_set_uint8_array:
+ * @value: A valid value of type %GIMP_TYPE_UINT8_ARRAY
+ * @data: (array length=length): A #guint8 array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data.
+ */
 void
 gimp_value_set_uint8_array (GValue       *value,
                             const guint8 *data,
@@ -360,6 +384,14 @@ gimp_value_set_uint8_array (GValue       *value,
   gimp_value_set_array (value, data, length);
 }
 
+/**
+ * gimp_value_set_static_uint8_array:
+ * @value: A valid value of type %GIMP_TYPE_UINT8_ARRAY
+ * @data: (array length=length): A #guint8 array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, without copying the data.
+ */
 void
 gimp_value_set_static_uint8_array (GValue       *value,
                                    const guint8 *data,
@@ -370,6 +402,14 @@ gimp_value_set_static_uint8_array (GValue       *value,
   gimp_value_set_static_array (value, data, length);
 }
 
+/**
+ * gimp_value_take_uint8_array:
+ * @value: A valid value of type %GIMP_TYPE_UINT8_ARRAY
+ * @data: (transfer full) (array length=length): A #guint8 array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, and takes ownership of @data.
+ */
 void
 gimp_value_take_uint8_array (GValue *value,
                              guint8 *data,
@@ -462,6 +502,14 @@ gimp_param_spec_int16_array (const gchar *name,
   return G_PARAM_SPEC (array_spec);
 }
 
+/**
+ * gimp_value_get_int16_array:
+ * @value: A valid value of type %GIMP_TYPE_INT16_ARRAY
+ *
+ * Gets the contents of a %GIMP_TYPE_INT16_ARRAY #GValue
+ *
+ * Returns: (transfer none) (array): The contents of @value
+ */
 const gint16 *
 gimp_value_get_int16_array (const GValue *value)
 {
@@ -470,6 +518,14 @@ gimp_value_get_int16_array (const GValue *value)
   return (const gint16 *) gimp_value_get_array (value);
 }
 
+/**
+ * gimp_value_dup_int16_array:
+ * @value: A valid value of type %GIMP_TYPE_INT16_ARRAY
+ *
+ * Gets the contents of a %GIMP_TYPE_INT16_ARRAY #GValue
+ *
+ * Returns: (transfer full) (array): The contents of @value
+ */
 gint16 *
 gimp_value_dup_int16_array (const GValue *value)
 {
@@ -478,6 +534,14 @@ gimp_value_dup_int16_array (const GValue *value)
   return (gint16 *) gimp_value_dup_array (value);
 }
 
+/**
+ * gimp_value_set_int16_array:
+ * @value: A valid value of type %GIMP_TYPE_INT16_ARRAY
+ * @data: (array length=length): A #gint16 array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data.
+ */
 void
 gimp_value_set_int16_array (GValue       *value,
                             const gint16 *data,
@@ -489,6 +553,14 @@ gimp_value_set_int16_array (GValue       *value,
                         length * sizeof (gint16));
 }
 
+/**
+ * gimp_value_set_static_int16_array:
+ * @value: A valid value of type %GIMP_TYPE_INT16_ARRAY
+ * @data: (array length=length): A #gint16 array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, without copying the data.
+ */
 void
 gimp_value_set_static_int16_array (GValue       *value,
                                    const gint16 *data,
@@ -500,6 +572,14 @@ gimp_value_set_static_int16_array (GValue       *value,
                                length * sizeof (gint16));
 }
 
+/**
+ * gimp_value_take_int16_array:
+ * @value: A valid value of type %GIMP_TYPE_INT16_ARRAY
+ * @data: (transfer full) (array length=length): A #gint16 array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, and takes ownership of @data.
+ */
 void
 gimp_value_take_int16_array (GValue *value,
                              gint16 *data,
@@ -592,6 +672,14 @@ gimp_param_spec_int32_array (const gchar *name,
   return G_PARAM_SPEC (array_spec);
 }
 
+/**
+ * gimp_value_get_int32_array:
+ * @value: A valid value of type %GIMP_TYPE_INT32_ARRAY
+ *
+ * Gets the contents of a %GIMP_TYPE_INT32_ARRAY #GValue
+ *
+ * Returns: (transfer none) (array): The contents of @value
+ */
 const gint32 *
 gimp_value_get_int32_array (const GValue *value)
 {
@@ -600,6 +688,14 @@ gimp_value_get_int32_array (const GValue *value)
   return (const gint32 *) gimp_value_get_array (value);
 }
 
+/**
+ * gimp_value_dup_int32_array:
+ * @value: A valid value of type %GIMP_TYPE_INT32_ARRAY
+ *
+ * Gets the contents of a %GIMP_TYPE_INT32_ARRAY #GValue
+ *
+ * Returns: (transfer full) (array): The contents of @value
+ */
 gint32 *
 gimp_value_dup_int32_array (const GValue *value)
 {
@@ -608,6 +704,14 @@ gimp_value_dup_int32_array (const GValue *value)
   return (gint32 *) gimp_value_dup_array (value);
 }
 
+/**
+ * gimp_value_set_int32_array:
+ * @value: A valid value of type %GIMP_TYPE_INT32_ARRAY
+ * @data: (array length=length): A #gint32 array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data.
+ */
 void
 gimp_value_set_int32_array (GValue       *value,
                             const gint32 *data,
@@ -619,6 +723,14 @@ gimp_value_set_int32_array (GValue       *value,
                         length * sizeof (gint32));
 }
 
+/**
+ * gimp_value_set_static_int32_array:
+ * @value: A valid value of type %GIMP_TYPE_INT32_ARRAY
+ * @data: (array length=length): A #gint32 array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, without copying the data.
+ */
 void
 gimp_value_set_static_int32_array (GValue       *value,
                                    const gint32 *data,
@@ -630,6 +742,14 @@ gimp_value_set_static_int32_array (GValue       *value,
                                length * sizeof (gint32));
 }
 
+/**
+ * gimp_value_take_int32_array:
+ * @value: A valid value of type %GIMP_TYPE_int32_ARRAY
+ * @data: (transfer full) (array length=length): A #gint32 array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, and takes ownership of @data.
+ */
 void
 gimp_value_take_int32_array (GValue *value,
                              gint32 *data,
@@ -722,6 +842,14 @@ gimp_param_spec_float_array (const gchar *name,
   return G_PARAM_SPEC (array_spec);
 }
 
+/**
+ * gimp_value_get_float_array:
+ * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
+ *
+ * Gets the contents of a %GIMP_TYPE_FLOAT_ARRAY #GValue
+ *
+ * Returns: (transfer none) (array): The contents of @value
+ */
 const gdouble *
 gimp_value_get_float_array (const GValue *value)
 {
@@ -730,6 +858,14 @@ gimp_value_get_float_array (const GValue *value)
   return (const gdouble *) gimp_value_get_array (value);
 }
 
+/**
+ * gimp_value_dup_float_array:
+ * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
+ *
+ * Gets the contents of a %GIMP_TYPE_FLOAT_ARRAY #GValue
+ *
+ * Returns: (transfer full) (array): The contents of @value
+ */
 gdouble *
 gimp_value_dup_float_array (const GValue *value)
 {
@@ -738,6 +874,14 @@ gimp_value_dup_float_array (const GValue *value)
   return (gdouble *) gimp_value_dup_array (value);
 }
 
+/**
+ * gimp_value_set_float_array:
+ * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
+ * @data: (array length=length): A #gfloat array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data.
+ */
 void
 gimp_value_set_float_array (GValue        *value,
                             const gdouble *data,
@@ -749,6 +893,14 @@ gimp_value_set_float_array (GValue        *value,
                         length * sizeof (gdouble));
 }
 
+/**
+ * gimp_value_set_static_float_array:
+ * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
+ * @data: (array length=length): A #gfloat array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, without copying the data.
+ */
 void
 gimp_value_set_static_float_array (GValue        *value,
                                    const gdouble *data,
@@ -760,6 +912,14 @@ gimp_value_set_static_float_array (GValue        *value,
                                length * sizeof (gdouble));
 }
 
+/**
+ * gimp_value_take_float_array:
+ * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
+ * @data: (transfer full) (array length=length): A #gfloat array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, and takes ownership of @data.
+ */
 void
 gimp_value_take_float_array (GValue  *value,
                              gdouble *data,
@@ -1038,6 +1198,14 @@ gimp_value_dup_string_array (const GValue *value)
   return NULL;
 }
 
+/**
+ * gimp_value_set_string_array:
+ * @value: A valid value of type %GIMP_TYPE_STRING_ARRAY
+ * @data: (array length=length): A string array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data.
+ */
 void
 gimp_value_set_string_array (GValue       *value,
                              const gchar **data,
@@ -1052,6 +1220,14 @@ gimp_value_set_string_array (GValue       *value,
   g_value_take_boxed (value, array);
 }
 
+/**
+ * gimp_value_set_static_string_array:
+ * @value: A valid value of type %GIMP_TYPE_STRING_ARRAY
+ * @data: (array length=length): A string array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, without copying the data.
+ */
 void
 gimp_value_set_static_string_array (GValue       *value,
                                     const gchar **data,
@@ -1066,6 +1242,14 @@ gimp_value_set_static_string_array (GValue       *value,
   g_value_take_boxed (value, array);
 }
 
+/**
+ * gimp_value_take_string_array:
+ * @value: A valid value of type %GIMP_TYPE_STRING_ARRAY
+ * @data: (transfer full) (array length=length): A string array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, and takes ownership of @data.
+ */
 void
 gimp_value_take_string_array (GValue  *value,
                               gchar  **data,
@@ -1163,6 +1347,14 @@ gimp_param_spec_rgb_array (const gchar *name,
   return G_PARAM_SPEC (array_spec);
 }
 
+/**
+ * gimp_value_get_rgb_array:
+ * @value: A valid value of type %GIMP_TYPE_RGB_ARRAY
+ *
+ * Gets the contents of a %GIMP_TYPE_RGB_ARRAY #GValue
+ *
+ * Returns: (transfer none) (array): The contents of @value
+ */
 const GimpRGB *
 gimp_value_get_rgb_array (const GValue *value)
 {
@@ -1171,6 +1363,14 @@ gimp_value_get_rgb_array (const GValue *value)
   return (const GimpRGB *) gimp_value_get_array (value);
 }
 
+/**
+ * gimp_value_dup_rgb_array:
+ * @value: A valid value of type %GIMP_TYPE_RGB_ARRAY
+ *
+ * Gets the contents of a %GIMP_TYPE_RGB_ARRAY #GValue
+ *
+ * Returns: (transfer full) (array): The contents of @value
+ */
 GimpRGB *
 gimp_value_dup_rgb_array (const GValue *value)
 {
@@ -1179,6 +1379,14 @@ gimp_value_dup_rgb_array (const GValue *value)
   return (GimpRGB *) gimp_value_dup_array (value);
 }
 
+/**
+ * gimp_value_set_rgb_array:
+ * @value: A valid value of type %GIMP_TYPE_RGB_ARRAY
+ * @data: (array length=length): A #GimpRGB array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data.
+ */
 void
 gimp_value_set_rgb_array (GValue        *value,
                           const GimpRGB *data,
@@ -1190,6 +1398,14 @@ gimp_value_set_rgb_array (GValue        *value,
                         length * sizeof (GimpRGB));
 }
 
+/**
+ * gimp_value_set_static_rgb_array:
+ * @value: A valid value of type %GIMP_TYPE_RGB_ARRAY
+ * @data: (array length=length): A #GimpRGB array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, without copying the data.
+ */
 void
 gimp_value_set_static_rgb_array (GValue        *value,
                                  const GimpRGB *data,
@@ -1201,6 +1417,14 @@ gimp_value_set_static_rgb_array (GValue        *value,
                                length * sizeof (GimpRGB));
 }
 
+/**
+ * gimp_value_take_rgb_array:
+ * @value: A valid value of type %GIMP_TYPE_RGB_ARRAY
+ * @data: (transfer full) (array length=length): A #GimpRGB array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, and takes ownership of @data.
+ */
 void
 gimp_value_take_rgb_array (GValue  *value,
                            GimpRGB *data,
@@ -1511,6 +1735,15 @@ gimp_value_dup_object_array (const GValue *value)
   return NULL;
 }
 
+/**
+ * gimp_value_set_object_array:
+ * @value: A valid value of type %GIMP_TYPE_OBJECT_ARRAY
+ * @object_type: The #GType of the object elements
+ * @data: (array length=length): A #GObject array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data.
+ */
 void
 gimp_value_set_object_array (GValue   *value,
                              GType     object_type,
@@ -1527,6 +1760,15 @@ gimp_value_set_object_array (GValue   *value,
   g_value_take_boxed (value, array);
 }
 
+/**
+ * gimp_value_set_static_object_array:
+ * @value: A valid value of type %GIMP_TYPE_OBJECT_ARRAY
+ * @object_type: The #GType of the object elements
+ * @data: (array length=length): A #GObject array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, without copying the data.
+ */
 void
 gimp_value_set_static_object_array (GValue   *value,
                                     GType     object_type,
@@ -1543,6 +1785,15 @@ gimp_value_set_static_object_array (GValue   *value,
   g_value_take_boxed (value, array);
 }
 
+/**
+ * gimp_value_take_object_array:
+ * @value: A valid value of type %GIMP_TYPE_OBJECT_ARRAY
+ * @object_type: The #GType of the object elements
+ * @data: (transfer full) (array length=length): A #GObject array
+ * @length: The number of elements in @data
+ *
+ * Sets the contents of @value to @data, and takes ownership of @data.
+ */
 void
 gimp_value_take_object_array (GValue   *value,
                               GType     object_type,

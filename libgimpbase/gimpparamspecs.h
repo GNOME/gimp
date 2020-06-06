@@ -163,13 +163,13 @@ GParamSpec   * gimp_param_spec_uint8_array       (const gchar  *name,
 const guint8 * gimp_value_get_uint8_array        (const GValue *value);
 guint8       * gimp_value_dup_uint8_array        (const GValue *value);
 void           gimp_value_set_uint8_array        (GValue       *value,
-                                                  const guint8 *array,
+                                                  const guint8 *data,
                                                   gsize         length);
 void           gimp_value_set_static_uint8_array (GValue       *value,
-                                                  const guint8 *array,
+                                                  const guint8 *data,
                                                   gsize         length);
 void           gimp_value_take_uint8_array       (GValue       *value,
-                                                  guint8       *array,
+                                                  guint8       *data,
                                                   gsize         length);
 
 
@@ -208,13 +208,13 @@ GParamSpec   * gimp_param_spec_int16_array       (const gchar  *name,
 const gint16 * gimp_value_get_int16_array        (const GValue *value);
 gint16       * gimp_value_dup_int16_array        (const GValue *value);
 void           gimp_value_set_int16_array        (GValue       *value,
-                                                  const gint16 *array,
+                                                  const gint16 *data,
                                                   gsize         length);
 void           gimp_value_set_static_int16_array (GValue       *value,
-                                                  const gint16 *array,
+                                                  const gint16 *data,
                                                   gsize         length);
 void           gimp_value_take_int16_array       (GValue       *value,
-                                                  gint16       *array,
+                                                  gint16       *data,
                                                   gsize         length);
 
 
@@ -253,13 +253,13 @@ GParamSpec   * gimp_param_spec_int32_array       (const gchar  *name,
 const gint32 * gimp_value_get_int32_array        (const GValue *value);
 gint32       * gimp_value_dup_int32_array        (const GValue *value);
 void           gimp_value_set_int32_array        (GValue       *value,
-                                                  const gint32 *array,
+                                                  const gint32 *data,
                                                   gsize         length);
 void           gimp_value_set_static_int32_array (GValue       *value,
-                                                  const gint32 *array,
+                                                  const gint32 *data,
                                                   gsize         length);
 void           gimp_value_take_int32_array       (GValue       *value,
-                                                  gint32       *array,
+                                                  gint32       *data,
                                                   gsize         length);
 
 
@@ -298,13 +298,13 @@ GParamSpec    * gimp_param_spec_float_array       (const gchar  *name,
 const gdouble * gimp_value_get_float_array        (const GValue  *value);
 gdouble       * gimp_value_dup_float_array        (const GValue  *value);
 void            gimp_value_set_float_array        (GValue        *value,
-                                                   const gdouble *array,
+                                                   const gdouble *data,
                                                    gsize         length);
 void            gimp_value_set_static_float_array (GValue        *value,
-                                                   const gdouble *array,
+                                                   const gdouble *data,
                                                    gsize         length);
 void            gimp_value_take_float_array       (GValue        *value,
-                                                   gdouble       *array,
+                                                   gdouble       *data,
                                                    gsize         length);
 
 
@@ -364,13 +364,13 @@ GParamSpec   * gimp_param_spec_string_array       (const gchar  *name,
 const gchar ** gimp_value_get_string_array        (const GValue *value);
 gchar       ** gimp_value_dup_string_array        (const GValue *value);
 void           gimp_value_set_string_array        (GValue       *value,
-                                                   const gchar **array,
+                                                   const gchar **data,
                                                    gsize         length);
 void           gimp_value_set_static_string_array (GValue       *value,
-                                                   const gchar **array,
+                                                   const gchar **data,
                                                    gsize         length);
 void           gimp_value_take_string_array       (GValue       *value,
-                                                   gchar       **array,
+                                                   gchar       **data,
                                                    gsize         length);
 
 
@@ -409,13 +409,13 @@ GParamSpec    * gimp_param_spec_rgb_array       (const gchar   *name,
 const GimpRGB * gimp_value_get_rgb_array        (const GValue  *value);
 GimpRGB       * gimp_value_dup_rgb_array        (const GValue  *value);
 void            gimp_value_set_rgb_array        (GValue        *value,
-                                                 const GimpRGB *array,
+                                                 const GimpRGB *data,
                                                  gsize          length);
 void            gimp_value_set_static_rgb_array (GValue        *value,
-                                                 const GimpRGB *array,
+                                                 const GimpRGB *data,
                                                  gsize          length);
 void            gimp_value_take_rgb_array       (GValue        *value,
-                                                 GimpRGB       *array,
+                                                 GimpRGB       *data,
                                                  gsize          length);
 
 
@@ -482,15 +482,15 @@ GObject    ** gimp_value_get_object_array        (const GValue  *value);
 GObject    ** gimp_value_dup_object_array        (const GValue  *value);
 void          gimp_value_set_object_array        (GValue        *value,
                                                   GType          object_type,
-                                                  GObject      **array,
+                                                  GObject      **data,
                                                   gsize          length);
 void          gimp_value_set_static_object_array (GValue        *value,
                                                   GType          object_type,
-                                                  GObject      **array,
+                                                  GObject      **data,
                                                   gsize          length);
 void          gimp_value_take_object_array       (GValue        *value,
                                                   GType          object_type,
-                                                  GObject      **array,
+                                                  GObject      **data,
                                                   gsize          length);
 
 
