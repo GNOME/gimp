@@ -26,7 +26,7 @@ msgstr "インストールの前に"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "インストーラー作成者: Jernej Simonèiè <jernej-gimp@ena.si>"
+msgstr "インストーラー作成者: Jernej Simoncic <jernej-gimp@ena.si>"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
