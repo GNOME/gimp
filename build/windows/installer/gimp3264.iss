@@ -187,6 +187,7 @@ Name: "hr"; MessagesFile: "compiler:Languages\Unofficial\Croatian.isl,lang\hr.se
 Name: "id"; MessagesFile: "compiler:Languages\Unofficial\Indonesian.isl,lang\id.setup.isl"
 Name: "is"; MessagesFile: "compiler:Languages\Unofficial\Icelandic.isl,lang\is.setup.isl"
 Name: "it"; MessagesFile: "compiler:Languages\Italian.isl,lang\it.setup.isl"
+Name: "ja"; MessagesFile: "compiler:Languages\Japanese.isl,lang\ja.setup.isl"
 Name: "ko"; MessagesFile: "compiler:Languages\Unofficial\Korean.isl,lang\ko.setup.isl"
 Name: "lv"; MessagesFile: "compiler:Languages\Unofficial\Latvian.isl,lang\lv.setup.isl"
 Name: "mr"; MessagesFile: "compiler:Languages\Unofficial\Marathi.islu,lang\mr.setup.islu"
