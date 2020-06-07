@@ -1,5 +1,5 @@
 # GIMP Script-Fu Japanese message catalog
-# Copyright (C) 2000,2003,2005,2008 Free Software Foundation, Inc.
+# Copyright (C) 2000, 2003, 2005, 2008-2011, 2018, 2020 Free Software Foundation, Inc.
 # Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
@@ -8,14 +8,15 @@
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
 # Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2011.
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2018
+# sicklylife <translation@sicklylife.jp>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-26 14:00+0000\n"
-"PO-Revision-Date: 2018-03-10 10:31+0900\n"
-"Last-Translator: Jiro Matsuzawa <jmatsuzawa@gnome.org>\n"
+"PO-Revision-Date: 2020-06-07 23:00+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -25,10 +26,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../plug-ins/script-fu/script-fu.c:138
-#, fuzzy
-#| msgid "Script-Fu Console"
 msgid "Script-Fu _Console"
-msgstr "Script-Fu コンソール"
+msgstr "Script-Fu コンソール(_C)"
 
 #: ../plug-ins/script-fu/script-fu.c:143
 msgid "Interactive console for Script-Fu development"
@@ -117,11 +116,11 @@ msgstr "Script-Fu コンソール"
 #: ../plug-ins/script-fu/script-fu-console.c:115
 #: ../plug-ins/script-fu/script-fu-console.c:281
 msgid "_Save"
-msgstr ""
+msgstr "保存(_S)"
 
 #: ../plug-ins/script-fu/script-fu-console.c:116
 msgid "C_lear"
-msgstr ""
+msgstr "クリア(_L)"
 
 #: ../plug-ins/script-fu/script-fu-console.c:117
 #: ../plug-ins/script-fu/script-fu-console.c:359
@@ -232,7 +231,7 @@ msgstr "ブラシの選択 (Script-Fu)"
 #: ../plug-ins/script-fu/script-fu-interface.c:888
 #, c-format
 msgid "Error while executing %s:"
-msgstr "'%s' 実行中にエラーが発生しました。"
+msgstr "%s の実行中にエラーが発生しました。"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:148
 msgid "Too few arguments to 'script-fu-register' call"
@@ -241,7 +240,7 @@ msgstr "'script-fu-register' を呼ぶための引数が不足しています。
 #: ../plug-ins/script-fu/script-fu-scripts.c:647
 #, c-format
 msgid "Error while loading %s:"
-msgstr "\"%s\"読込み中にエラーが発生しました。"
+msgstr "%s の読み込み中にエラーが発生しました。"
 
 #: ../plug-ins/script-fu/script-fu-server.c:830
 msgid "Script-Fu Server Options"
@@ -253,7 +252,7 @@ msgstr "サーバースタート(_S)"
 
 #: ../plug-ins/script-fu/script-fu-server.c:868
 msgid "Listen on IP:"
-msgstr ""
+msgstr "受信する IP:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:875
 msgid "Server port:"
@@ -268,6 +267,9 @@ msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
+"127.0.0.1 以外の IP アドレス (特に 0.0.0.0) の受信は、悪意ある人物がリモ"
+"ートから、このマシン上で任意のコードを実行することを許してしまうかもしれ"
+"ません。"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:76
 msgid "Bumpmap"
@@ -482,7 +484,7 @@ msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
-"選択範囲（または不透明部分）の内容を基にクロームメタルの表面のような効果が施"
+"選択範囲 (または不透明部分) の内容を基にクロームメタルの表面のような効果が施"
 "された画像を生成します。"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:240
@@ -525,7 +527,7 @@ msgstr "回路(_C)..."
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
-"選択範囲（または不透明部分）にプリント基板のようなテクスチャを描画します。"
+"選択範囲 (または不透明部分) にプリント基板のようなテクスチャを描画します。"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:135
 msgid "Oilify mask size"
@@ -559,7 +561,7 @@ msgstr "覆布化(_C)..."
 #: ../plug-ins/script-fu/scripts/clothify.scm:53
 msgid "Add a cloth-like texture to the selected region (or alpha)"
 msgstr ""
-"布の表面のようなテクスチャで選択範囲（または不透明部分）を塗りつぶします。"
+"布の表面のようなテクスチャで選択範囲 (または不透明部分) を塗りつぶします。"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:60
 msgid "Blur X"
@@ -603,10 +605,8 @@ msgid "Darken only"
 msgstr "ダーク色"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-#, fuzzy
-#| msgid "Difference Clouds..."
 msgid "_Difference Clouds..."
-msgstr "差分ソリッドノイズ"
+msgstr "差分ソリッドノイズ(_D)..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
@@ -623,46 +623,32 @@ msgid "Distress the selection"
 msgstr "現在の選択範囲を歪ませます"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-#, fuzzy
-#| msgid "Threshold (bigger 1<-->254 smaller)"
 msgid "_Threshold (bigger 1<-->254 smaller)"
-msgstr "しきい値 (大 1<-->254 小)"
+msgstr "しきい値 (大 1<-->254 小)(_T)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-#, fuzzy
-#| msgid "Spread"
 msgid "_Spread"
-msgstr "拡散度"
+msgstr "拡散度(_S)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-#, fuzzy
-#| msgid "Granularity (1 is low)"
 msgid "_Granularity (1 is low)"
-msgstr "粒状度 (1 が最低)"
+msgstr "粒状度 (1 が最低)(_G)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-#, fuzzy
-#| msgid "Smooth"
 msgid "S_mooth"
-msgstr "滑らかさ"
+msgstr "滑らかさ(_M)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-#, fuzzy
-#| msgid "Smooth horizontally"
 msgid "Smooth hor_izontally"
-msgstr "水平方向を滑らかに"
+msgstr "水平方向を滑らかに(_I)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-#, fuzzy
-#| msgid "Smooth vertically"
 msgid "Smooth _vertically"
-msgstr "垂直方向を滑らかに"
+msgstr "垂直方向を滑らかに(_V)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
-#, fuzzy
-#| msgid "_Drop Shadow..."
 msgid "_Drop Shadow (legacy)..."
-msgstr "ドロップシャドウ(_D)..."
+msgstr "ドロップシャドウ (レガシー)(_D)..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
@@ -699,18 +685,12 @@ msgid "Allow resizing"
 msgstr "画像サイズ変更可"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-#, fuzzy
-#| msgid "_Erase Every Other Row..."
 msgid "_Erase Every Nth Row..."
-msgstr "一行おきに消す(_E)..."
+msgstr ""
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:43
-#, fuzzy
-#| msgid "Erase every other row or column"
 msgid "Erase every nth row or column"
 msgstr ""
-"画像中のピクセルを 1 行おき(または 1 列おき)に消去して縞模様の効果を与えま"
-"す。"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:50
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:65
@@ -787,15 +767,15 @@ msgstr "ラベル(_L)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:161
 msgid "_Filter (regexp)"
-msgstr "フィルター (正規表現) (_F)"
+msgstr "フィルター (正規表現)(_F)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:162
 msgid "Font _size (pixels)"
-msgstr "フォントサイズ (ピクセル) (_S)"
+msgstr "フォントサイズ (ピクセル)(_S)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:163
 msgid "_Border (pixels)"
-msgstr "枠の大きさ (ピクセル) (_B)"
+msgstr "枠の大きさ (ピクセル)(_B)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "_Color scheme"
@@ -844,7 +824,7 @@ msgstr "画像を統合する"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:59
 msgid "Using _Paths"
-msgstr "パスを使う (英語) (_P)"
+msgstr "パスを使う (英語)(_P)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:60
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:73
@@ -859,35 +839,35 @@ msgstr "ユーザーマニュアルへのブックマーク"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
-msgstr "ウェブ用画像を作成するには (英語) (_P)"
+msgstr "ウェブ用画像を作成するには (英語)(_P)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
-msgstr "デジカメ画像を修正する (英語) (_W)"
+msgstr "デジカメ画像を修正する (英語)(_W)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:98
 msgid "Create, Open and Save _Files"
-msgstr "ファイルを開く・作成・保存 (英語) (_F)"
+msgstr "ファイルを開く・作成・保存 (英語)(_F)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:111
 msgid "_Basic Concepts"
-msgstr "基本コンセプト (英語) (_B)"
+msgstr "基本コンセプト (英語)(_B)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:124
 msgid "How to Use _Dialogs"
-msgstr "ダイアログの使い方 (英語) (_D)"
+msgstr "ダイアログの使い方 (英語)(_D)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:137
 msgid "Drawing _Simple Objects"
-msgstr "シンプルなオブジェクトを描く (英語) (_S)"
+msgstr "シンプルなオブジェクトを描く (英語)(_S)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:150
 msgid "Create and Use _Selections"
-msgstr "選択範囲の作成と使用 (英語) (_S)"
+msgstr "選択範囲の作成と使用 (英語)(_S)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:190
 msgid "_Main Web Site"
-msgstr "メインのウェブサイト (英語) (_M)"
+msgstr "メインのウェブサイト (英語)(_M)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:191
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:204
@@ -897,41 +877,35 @@ msgstr "GIMP ウェブサイトへのブックマーク"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:203
 msgid "_Developer Web Site"
-msgstr "開発者用ウェブサイト (英語) (_D)"
+msgstr "開発者用ウェブサイト (英語)(_D)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:216
 msgid "_Roadmap"
-msgstr ""
+msgstr "ロードマップ(_R)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-#, fuzzy
-#| msgid "Bookmark to the GIMP web site"
 msgid "Bookmark to the roadmap of GIMP"
-msgstr "GIMP ウェブサイトへのブックマーク"
+msgstr "GIMP のロードマップへのブックマーク"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "_Wiki"
-msgstr ""
+msgstr "ウィキ(_W)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-#, fuzzy
-#| msgid "Bookmark to the GIMP web site"
 msgid "Bookmark to the wiki of GIMP"
-msgstr "GIMP ウェブサイトへのブックマーク"
+msgstr "GIMP のウィキへのブックマーク"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:242
 msgid "_Bug Reports and Feature Requests"
-msgstr ""
+msgstr "バグ報告と機能の要望(_B)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-#, fuzzy
-#| msgid "Bookmark to the user manual"
 msgid "Bookmark to the bug tracker of GIMP"
-msgstr "ユーザーマニュアルへのブックマーク"
+msgstr "GIMP のバグトラッカーへのブックマーク"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:255
 msgid "_User Manual Web Site"
-msgstr "ユーザーマニュアル (英語) (_U)"
+msgstr "ユーザーマニュアル (英語)(_U)"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:69
 msgid "Custom _Gradient..."
@@ -990,7 +964,7 @@ msgstr "現在の選択範囲の角を丸めます"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
-msgstr "新規ガイド (パーセントで) (_P)..."
+msgstr "新規ガイド (パーセントで)(_P)..."
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -998,10 +972,8 @@ msgstr "位置を比率 (パーセント) で指定してガイドを挿入し�
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-#, fuzzy
-#| msgid "Direction"
 msgid "_Direction"
-msgstr "方向"
+msgstr "方向(_D)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
@@ -1014,10 +986,8 @@ msgid "Vertical"
 msgstr "垂直"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#, fuzzy
-#| msgid "Position (in %)"
 msgid "_Position (in %)"
-msgstr "位置 (パーセントで指定)"
+msgstr "位置 (パーセントで指定)(_P)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
@@ -1028,10 +998,8 @@ msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "位置をピクセルで指定してガイドを挿入します"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-#, fuzzy
-#| msgid "Position"
 msgid "_Position"
-msgstr "位置 (ピクセルで指定)"
+msgstr "位置(_P)"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
@@ -1240,26 +1208,20 @@ msgstr "クリップボードの内容を新しいブラシファイルに変換
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-#, fuzzy
-#| msgid "Brush name"
 msgid "_Brush name"
-msgstr "ブラシ名"
+msgstr "ブラシ名(_B)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-#, fuzzy
-#| msgid "File name"
 msgid "_File name"
-msgstr "ファイル名"
+msgstr "ファイル名(_F)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
-#, fuzzy
-#| msgid "Spacing"
 msgid "_Spacing"
-msgstr "間隔"
+msgstr "間隔(_S)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "New _Pattern..."
@@ -1271,10 +1233,8 @@ msgstr "クリップボードの内容を新しいパターンファイルに変
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-#, fuzzy
-#| msgid "Pattern name"
 msgid "_Pattern name"
-msgstr "パターン名"
+msgstr "パターン名(_P)"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "_Perspective..."
@@ -1307,7 +1267,7 @@ msgstr "プレデター(_P)..."
 #: ../plug-ins/script-fu/scripts/predator.scm:122
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
 msgstr ""
-"選択範囲（または不透明部分）に「プレデター」の赤外線スコープを透して見たよう"
+"選択範囲 (または不透明部分) に「プレデター」の赤外線スコープを透して見たよう"
 "な効果を与えます。"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:129
@@ -1323,10 +1283,8 @@ msgid "Pixel amount"
 msgstr "ピクセル量"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-#, fuzzy
-#| msgid "Reverse Layer Order"
 msgid "Reverse Layer _Order"
-msgstr "レイヤー順序を反転"
+msgstr "レイヤー順序の反転(_O)"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
 msgid "Reverse the order of layers in the image"
@@ -1337,9 +1295,6 @@ msgid "_Rippling..."
 msgstr "波紋(_R)..."
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
-#, fuzzy
-#| msgid ""
-#| "Create a multi-layer image by adding a ripple effect to the current image"
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
@@ -1379,8 +1334,8 @@ msgstr "角丸め(_R)..."
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
-"現在の画像を基に、角が丸められた画像を生成します。（背景にドロップシャドウを"
-"追加することもできます。）"
+"現在の画像を基に、角が丸められた画像を生成します (背景にドロップシャドウを追"
+"加することもできます)"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:137
 msgid "Edge radius"
@@ -1404,11 +1359,11 @@ msgstr "背景追加"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
-msgstr "カラーマップを変更(_T)..."
+msgstr "カラーマップの変更(_T)..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr "現在のカラーマップを指定のパレット(カラーマップ)に置き換えます"
+msgstr "現在のカラーマップを指定のパレット (カラーマップ) に置き換えます"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
 msgid "Palette"
@@ -1423,16 +1378,12 @@ msgid "Round the corners of the current selection"
 msgstr "現在の選択範囲の角を丸めます"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-#, fuzzy
-#| msgid "Radius (%)"
 msgid "R_adius (%)"
-msgstr "半径 (%)"
+msgstr "半径 (%)(_A)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-#, fuzzy
-#| msgid "Concave"
 msgid "Co_ncave"
-msgstr "凹ませる"
+msgstr "凹ませる(_N)"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
 msgid "To _Brush..."
@@ -1465,7 +1416,7 @@ msgstr "スライド(_S)..."
 #: ../plug-ins/script-fu/scripts/slide.scm:246
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr ""
-"元画像にスライドフィルムのような画像（フレーム、フィルム縁の穴、ラベル）を加"
+"元画像にスライドフィルムのような画像 (フレーム、フィルム縁の穴、ラベル) を加"
 "えます。"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:253
@@ -1491,8 +1442,8 @@ msgstr "回転する球体(_S)..."
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
-"アクティブな画像がマップされた球が回転しているアニメーション（アニメーション"
-"用レイヤー）を生成します。"
+"アクティブな画像がマップされた球が回転しているアニメーション (アニメーション"
+"用レイヤー) を生成します。"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
 msgid "Frames"
@@ -1512,7 +1463,7 @@ msgstr "n 色にインデックス化 (0 = RGB のまま)"
 
 #: ../plug-ins/script-fu/scripts/test-sphere.scm:272
 msgid "_Sphere..."
-msgstr "球体...(_S)"
+msgstr "球体(_S)..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:68
 msgid "_Tileable Blur..."
@@ -1564,7 +1515,7 @@ msgid ""
 "current image"
 msgstr ""
 "水面に小石を投げ入れたときにできる波紋を透して見た画像を表現したアニメーショ"
-"ン（アニメーションフレーム用の複数のレイヤーを持つ画像）を生成します。"
+"ン (アニメーションフレーム用の複数のレイヤーを持つ画像) を生成します。"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:103
 msgid "Amplitude"
@@ -1587,8 +1538,8 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"織物が描かれたレイヤーを生成します。（オーバーレイや乗算モードで重ねたりバン"
-"プマップフィルターのマップ画像として使用すると効果的です。）"
+"織物が描かれたレイヤーを生成します (オーバーレイや乗算モードで重ねたりバン"
+"プマップフィルターのマップ画像として使用すると効果的です)"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
@@ -1670,7 +1621,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "Script-Fu コンソール(_C)"
 
 #~ msgid "Plug-in _Registry"
-#~ msgstr "プラグインレジストリ (英語) (_R)"
+#~ msgstr "プラグインレジストリ (英語)(_R)"
 
 #~ msgid "Rendering Spyro"
 #~ msgstr "SpyroGimp を描いています..."
@@ -1767,7 +1718,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "3D アウトライン(_O)..."
 
 #~ msgid "Bumpmap (alpha layer) blur radius"
-#~ msgstr "バンプマップ（アルファレイヤーの）ぼかし半径"
+#~ msgstr "バンプマップ (アルファレイヤーの) ぼかし半径"
 
 #~ msgid "Create a logo with outlined text and a drop shadow"
 #~ msgstr ""
@@ -1787,8 +1738,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "Outline the selected region (or alpha) with a pattern and add a drop "
 #~ "shadow"
 #~ msgstr ""
-#~ "3D アウトラインロゴ（[ファイル] → [画像の生成] → [ロゴ] → [3D アウトライ"
-#~ "ン]）と同じ効果を選択範囲（または不透明部分）に適用します。"
+#~ "3D アウトラインロゴ ([ファイル] → [画像の生成] → [ロゴ] → [3D アウトライ"
+#~ "ン]) と同じ効果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Pattern"
 #~ msgstr "パターン"
@@ -1830,7 +1781,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "矢印"
 
 #~ msgid "Create an arrow graphic with an eerie glow for web pages"
-#~ msgstr "「エイリアン発光」が施されたWEBページ用の「矢印」画像を生成します"
+#~ msgstr "「エイリアン発光」が施された WEB ページ用の「矢印」画像を生成します"
 
 #~ msgid "Down"
 #~ msgstr "下"
@@ -1863,7 +1814,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "罫線の長さ"
 
 #~ msgid "Create an Hrule graphic with an eerie glow for web pages"
-#~ msgstr "「エイリアン発光」が施されたWEBページ用の「罫線」画像を生成します"
+#~ msgstr "「エイリアン発光」が施された WEB ページ用の「罫線」画像を生成します"
 
 #~ msgid "_Hrule..."
 #~ msgstr "罫線(_H)..."
@@ -1872,7 +1823,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "玉"
 
 #~ msgid "Create a bullet graphic with an eerie glow for web pages"
-#~ msgstr "「エイリアン発光」が施されたWEBページ用の「球」画像を生成します"
+#~ msgstr "「エイリアン発光」が施された WEB ページ用の「球」画像を生成します"
 
 #~ msgid "_Bullet..."
 #~ msgstr "玉(_B)..."
@@ -1884,7 +1835,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "ボタン"
 
 #~ msgid "Create a button graphic with an eerie glow for web pages"
-#~ msgstr "「エイリアン発光」が施されたWEBページ用の「ボタン」画像を生成します"
+#~ msgstr "「エイリアン発光」が施された WEB ページ用の「ボタン」画像を生成します"
 
 #~ msgid "Glow"
 #~ msgstr "発光"
@@ -1900,8 +1851,8 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Add an eerie glow around the selected region (or alpha)"
 #~ msgstr ""
-#~ "エイリアン発光ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [エイリアン発"
-#~ "光]）と同じ効果を選択範囲（または不透明部分）に適用します。"
+#~ "エイリアン発光ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [エイリアン発"
+#~ "光]) と同じ効果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Alien _Glow..."
 #~ msgstr "エイリアン発光(_G)..."
@@ -1914,8 +1865,8 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Add psychedelic outlines to the selected region (or alpha)"
 #~ msgstr ""
-#~ "エイリアンネオン・ロゴ（[ファイル]→[画像の生成]→[ロゴ]→[エイリアンネオ"
-#~ "ン]）と同じ効果を選択範囲（または不透明部分）に適用します。"
+#~ "エイリアンネオン・ロゴ ([ファイル]→[画像の生成]→[ロゴ]→[エイリアンネオ"
+#~ "ン]) と同じ効果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Alien _Neon..."
 #~ msgstr "エイリアンネオン(_N)..."
@@ -1940,8 +1891,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "Add a gradient effect, a drop shadow, and a background to the selected "
 #~ "region (or alpha)"
 #~ msgstr ""
-#~ "基本 I ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [基本 I]）と同じ効果を選"
-#~ "択範囲（または不透明部分）に適用します。"
+#~ "基本 I ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [基本 I]) と同じ効果を選"
+#~ "択範囲 (または不透明部分) に適用します。"
 
 #~ msgid ""
 #~ "Create a plain text logo with a gradient effect, a drop shadow, and a "
@@ -1951,15 +1902,15 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "もつロゴを生成します"
 
 #~ msgid "_Basic I..."
-#~ msgstr "基本 I (_B)..."
+#~ msgstr "基本 I(_B)..."
 
 #~ msgid "Add a shadow and a highlight to the selected region (or alpha)"
 #~ msgstr ""
-#~ "基本 II ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [基本 II]）と同じ効果を"
-#~ "選択範囲（または不透明部分）に適用します。"
+#~ "基本 II ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [基本 II]) と同じ効果を"
+#~ "選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "B_asic II..."
-#~ msgstr "基本 II (_A)..."
+#~ msgstr "基本 II(_A)..."
 
 #~ msgid "Create a simple logo with a shadow and a highlight"
 #~ msgstr "シャドウとハイライトが付いたシンプルなロゴを生成します"
@@ -1986,12 +1937,12 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Create a beveled pattern arrow for webpages"
 #~ msgstr ""
-#~ "ベベルが施され、パターンがテクスチャされたWEBページ用「矢印」画像を生成し"
+#~ "ベベルが施され、パターンがテクスチャされた WEB ページ用「矢印」画像を生成し"
 #~ "ます"
 
 #~ msgid "Create a beveled pattern bullet for webpages"
 #~ msgstr ""
-#~ "ベベルが施され、パターンがテクスチャされたWEBページ用「球」画像を生成しま"
+#~ "ベベルが施され、パターンがテクスチャされた WEB ページ用「球」画像を生成しま"
 #~ "す"
 
 #~ msgid "Diameter"
@@ -1999,11 +1950,11 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Create a beveled pattern button for webpages"
 #~ msgstr ""
-#~ "ベベルが施され、パターンがテクスチャされたWEBページ用の「ボタン」画像を生"
+#~ "ベベルが施され、パターンがテクスチャされた WEB ページ用の「ボタン」画像を生"
 #~ "成します"
 
 #~ msgid "Create a beveled pattern heading for webpages"
-#~ msgstr "ベベルが施されパターンがテクスチャされたWEB用「見出し」を生成します"
+#~ msgstr "ベベルが施されパターンがテクスチャされた WEB ページ用「見出し」を生成します"
 
 #~ msgid "H_eading..."
 #~ msgstr "見出し(_E)..."
@@ -2019,7 +1970,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "(or alpha)"
 #~ msgstr ""
 #~ "ブレンドロゴ ([ファイル] → [画像の生成] → [ロゴ] → [ブレンド]) と同じ効果"
-#~ "を選択範囲（または不透明部分）に適用します。"
+#~ "を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Blen_ded..."
 #~ msgstr "ブレンド(_D)..."
@@ -2044,12 +1995,12 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "描画色-透明"
 
 #~ msgid "Offset (pixels)"
-#~ msgstr "オフセット（ピクセル）"
+#~ msgstr "オフセット (ピクセル)"
 
 #~ msgid "Add 'cow spots' to the selected region (or alpha)"
 #~ msgstr ""
-#~ "牛模様ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [牛模様]）と同じ効果を選"
-#~ "択範囲（または不透明部分）に適用します。"
+#~ "牛模様ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [牛模様]) と同じ効果を選"
+#~ "択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Background Color"
 #~ msgstr "背景色"
@@ -2109,8 +2060,8 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Create a chalk drawing effect for the selected region (or alpha)"
 #~ msgstr ""
-#~ "チョークロゴ（[ファイル] → [画像の生成] → [ロゴ] → [チョーク]）と同じ効果"
-#~ "を選択範囲（または不透明部分）に適用します。"
+#~ "チョークロゴ ([ファイル] → [画像の生成] → [ロゴ] → [チョーク]) と同じ効果"
+#~ "を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Create a logo resembling chalk scribbled on a blackboard"
 #~ msgstr "黒板にチョークで描いたようなロゴを生成します。"
@@ -2120,8 +2071,8 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
 #~ msgstr ""
-#~ "かじり取りロゴ（[ファイル] → [画像の生成] → [ロゴ] → [かじり取り]）と同じ"
-#~ "効果を選択範囲（または不透明部分）に適用します。"
+#~ "かじり取りロゴ ([ファイル] → [画像の生成] → [ロゴ] → [かじり取り]) と同じ"
+#~ "効果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Blur amount"
 #~ msgstr "ぼかす量"
@@ -2149,8 +2100,8 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Add a simple chrome effect to the selected region (or alpha)"
 #~ msgstr ""
-#~ "クロームロゴ（[ファイル] → [画像の生成] → [ロゴ] → [クローム]）と同じ効果"
-#~ "を選択範囲（または不透明部分）に適用します。"
+#~ "クロームロゴ ([ファイル] → [画像の生成] → [ロゴ] → [クローム]) と同じ効果"
+#~ "を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "C_hrome..."
 #~ msgstr "クローム(_H)..."
@@ -2165,8 +2116,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "Add a comic-book effect to the selected region (or alpha) by outlining "
 #~ "and filling with a gradient"
 #~ msgstr ""
-#~ "コミック本ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [コミック本]）と同じ"
-#~ "効果を選択範囲（または不透明部分）に適用します。"
+#~ "コミック本ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [コミック本]) と同じ"
+#~ "効果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Comic Boo_k..."
 #~ msgstr "コミック本(_K)..."
@@ -2187,8 +2138,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "Add a metallic effect to the selected region (or alpha) with reflections "
 #~ "and perspective shadows"
 #~ msgstr ""
-#~ "冷たい金属ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [冷たい金属]）と同じ"
-#~ "効果を選択範囲（または不透明部分）に適用します。"
+#~ "冷たい金属ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [冷たい金属]) と同じ"
+#~ "効果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Cool _Metal..."
 #~ msgstr "冷たい金属(_M)..."
@@ -2198,7 +2149,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "反射と遠近感のあるシャドウが付加された、メタリックロゴを生成します。"
 
 #~ msgid "Effect size (pixels)"
-#~ msgstr "効果サイズ（ピクセル）"
+#~ msgstr "効果サイズ (ピクセル)"
 
 #~ msgid "Background image"
 #~ msgstr "背景画像"
@@ -2206,7 +2157,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgid ""
 #~ "Create a logo with a crystal/gel effect displacing the image underneath"
 #~ msgstr ""
-#~ "オブジェクト背景を歪ませて、クリスタル（またはジェル）のように見えるロゴを"
+#~ "オブジェクト背景を歪ませて、クリスタル (またはジェル) のように見えるロゴを"
 #~ "生成します。"
 
 #~ msgid "Crystal..."
@@ -2240,8 +2191,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "Add a frost effect to the selected region (or alpha) with an added drop "
 #~ "shadow"
 #~ msgstr ""
-#~ "霜ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [霜]）と同じ効果を選択範囲"
-#~ "（または不透明部分）に適用します。"
+#~ "霜ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [霜]) と同じ効果を選択範囲"
+#~ " (または不透明部分) に適用します。"
 
 #~ msgid "Create frozen logo with an added drop shadow"
 #~ msgstr "シャドウが付いた、凍った雰囲気のロゴを生成します。"
@@ -2253,8 +2204,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "Add gradients, patterns, shadows, and bump maps to the selected region "
 #~ "(or alpha)"
 #~ msgstr ""
-#~ "光沢ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [光沢]）と同じ効果を選択範"
-#~ "囲（または不透明部分）に適用します。"
+#~ "光沢ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [光沢]) と同じ効果を選択範"
+#~ "囲 (または不透明部分) に適用します。"
 
 #~ msgid "Blend gradient (outline)"
 #~ msgstr "ブレンドグラデーション (輪郭)"
@@ -2296,8 +2247,8 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Add a glowing hot metal effect to the selected region (or alpha)"
 #~ msgstr ""
-#~ "白熱の輝きロゴ（[ファイル] → [画像の生成] → [ロゴ] → [白熱の輝き]）と同じ"
-#~ "効果を選択範囲（または不透明部分）に適用します。"
+#~ "白熱の輝きロゴ ([ファイル] → [画像の生成] → [ロゴ] → [白熱の輝き]) と同じ"
+#~ "効果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Create a logo that looks like glowing hot metal"
 #~ msgstr "白熱灯のフィラメントのように輝くロゴを生成します。"
@@ -2307,8 +2258,8 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
 #~ msgstr ""
-#~ "グラデーションベベル・ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [グラデー"
-#~ "ションベベル]）と同じ効果を選択範囲（または不透明部分）に適用します。"
+#~ "グラデーションベベル・ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [グラデー"
+#~ "ションベベル]) と同じ効果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Bevel height (sharpness)"
 #~ msgstr "ベベルの高さ (鋭さ)"
@@ -2350,8 +2301,8 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Convert the selected region (or alpha) into a neon-sign like object"
 #~ msgstr ""
-#~ "ネオンロゴ（[ファイル] → [画像の生成] → [ロゴ] → [ネオン]）と同じ効果を選"
-#~ "択範囲（または不透明部分）の境界部分に適用します。"
+#~ "ネオンロゴ ([ファイル] → [画像の生成] → [ロゴ] → [ネオン]) と同じ効果を選"
+#~ "択範囲 (または不透明部分) の境界部分に適用します。"
 
 #~ msgid "Create a logo in the style of a neon sign"
 #~ msgstr "ネオンサインのようなロゴを生成します"
@@ -2471,8 +2422,8 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Add a Trace of Particles effect to the selected region (or alpha)"
 #~ msgstr ""
-#~ "粒子の軌跡ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [粒子の軌跡]）と同じ"
-#~ "効果を選択範囲（または不透明部分）に適用します。"
+#~ "粒子の軌跡ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [粒子の軌跡]) と同じ"
+#~ "効果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Base color"
 #~ msgstr "基本色"
@@ -2519,8 +2470,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "Fill the selected region (or alpha) with a texture and add highlights, "
 #~ "shadows, and a mosaic background"
 #~ msgstr ""
-#~ "テクスチャ・ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [テクスチャ]）と同"
-#~ "じ効果を選択範囲（または不透明部分）に適用します。"
+#~ "テクスチャ・ロゴ ([ファイル] → [画像の生成] → [ロゴ] → [テクスチャ]) と同"
+#~ "じ効果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Hexagons"
 #~ msgstr "六角形"
@@ -2610,27 +2561,27 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "Create an image of a second level Tube Button Label using the gimp.org "
 #~ "webpage theme"
 #~ msgstr ""
-#~ "gimp.org ウェブページテーマに沿った、(第 2 レベル)チューブボタンラベル用画"
+#~ "gimp.org ウェブページテーマに沿った、(第 2 レベル) チューブボタンラベル用画"
 #~ "像を生成します"
 
 #~ msgid ""
 #~ "Create an image of a third level Tube Button Label using the gimp.org "
 #~ "webpage theme"
 #~ msgstr ""
-#~ "gimp.org ウェブページテーマに沿った、(第 3 レベル)チューブボタンラベル用画"
+#~ "gimp.org ウェブページテーマに沿った、(第 3 レベル) チューブボタンラベル用画"
 #~ "像を生成します"
 
 #~ msgid "T_ube Sub-Button Label..."
-#~ msgstr "チューブボタンラベル(中) (_U)..."
+#~ msgstr "チューブボタンラベル (中)(_U)..."
 
 #~ msgid "Tub_e Sub-Sub-Button Label..."
-#~ msgstr "チューブボタンラベル(小) (_E)..."
+#~ msgstr "チューブボタンラベル (小)(_E)..."
 
 #~ msgid "_General Tube Labels..."
-#~ msgstr "チューブボタンラベル(汎用) (_G)..."
+#~ msgstr "チューブボタンラベル (汎用)(_G)..."
 
 #~ msgid "_Tube Button Label..."
-#~ msgstr "チューブボタンラベル(大) (_T)..."
+#~ msgstr "チューブボタンラベル (大)(_T)..."
 
 #~ msgid "Matte"
 #~ msgstr "つや消し"
@@ -2648,8 +2599,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
 #~ "glow, and shadow"
 #~ msgstr ""
-#~ "星のきらめき・ロゴ（ファイル > 画像の生成 > ロゴ > 星のきらめき）と同じ効"
-#~ "果を選択範囲（または不透明部分）に適用します。"
+#~ "星のきらめき・ロゴ (ファイル > 画像の生成 > ロゴ > 星のきらめき) と同じ効"
+#~ "果を選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Burst color"
 #~ msgstr "爆発色"
@@ -2664,8 +2615,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ "Fill the selected region (or alpha) with a starburst gradient and add a "
 #~ "shadow"
 #~ msgstr ""
-#~ "超新星爆発・ロゴ（ファイル > 画像の生成 > ロゴ > 超新星爆発）と同じ効果を"
-#~ "選択範囲（または不透明部分）に適用します。"
+#~ "超新星爆発・ロゴ (ファイル > 画像の生成 > ロゴ > 超新星爆発) と同じ効果を"
+#~ "選択範囲 (または不透明部分) に適用します。"
 
 #~ msgid "Starb_urst..."
 #~ msgstr "超新星爆発(_U)..."
@@ -3517,7 +3468,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "<Image>/Script-Fu/動画/選択領域を動画画像化..."
 
 #~ msgid "Anim-Filter for all Copies"
-#~ msgstr "全てのコピーに動画フィルター適用"
+#~ msgstr "すべてのコピーに動画フィルター適用"
 
 #~ msgid "Fill with BG Color"
 #~ msgstr "背景色で塗りつぶす"
