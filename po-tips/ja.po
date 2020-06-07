@@ -1,10 +1,11 @@
 # This is the Japanese locale definition for the GIMP tips.
-# Copyright (C) 1999,2002,2003,2004,2008 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2002-2004, 2008-2011, 2020 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1999
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2002
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2004
 # Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2011.
+# sicklylife <translation@sicklylife.jp>, 2020.
 #
 # Replaced: & -> ＆
 #
@@ -13,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-26 14:00+0000\n"
-"PO-Revision-Date: 2011-12-07 21:47+0900\n"
-"Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
+"PO-Revision-Date: 2020-06-07 22:00+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -48,23 +49,17 @@ msgstr ""
 "に対するいろんな操作が行えるんだ。"
 
 #: ../data/tips/gimp-tips.xml.in.h:4
-#, fuzzy
-#| msgid ""
-#| "When you save an image to work on it again later, try using XCF, GIMP's "
-#| "native file format (use the file extension <tt>.xcf</tt>). This preserves "
-#| "the layers and many aspects of your work-in-progress. Once a project is "
-#| "completed, you can export it as JPEG, PNG, GIF, etc."
 msgid ""
 "Saving an image uses XCF, GIMP's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"編集中の画像を保存する時は、GIMP 固有の XCF 形式 (拡張子は <tt>.xcf</tt>) で"
-"保存しよう。([ファイル] → [保存] または [ファイル] → [名前を付けて保存] だ"
-"よ。) これだとレイヤーやチャンネルといった、作業中の状態のすべてを記録してく"
-"れるんだ。画像を完成させてから JPEG, PNG, GIF やその他の形式の画像ファイルに"
-"エクスポート ([ファイル] → [エクスポート]) しようね。"
+"画像は GIMP 固有の XCF 形式 (拡張子は <tt>.xcf</tt>) で保存しよう ([ファイ"
+"ル] → [保存] または [ファイル] → [名前を付けて保存] だよ)。これは後から編"
+"集し直せるように、レイヤーやチャンネルといった、作業中の状態のすべてを記録"
+"してくれるんだ。画像を完成させてから JPEG、PNG、GIF やその他の形式の画像フ"
+"ァイルにエクスポート ([ファイル] → [エクスポート]) しようね。"
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
