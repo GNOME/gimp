@@ -7,6 +7,7 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+
 Overview of Changes from GIMP 2.10.18 to GIMP 2.10.20
 =====================================================
 
@@ -16,17 +17,18 @@ Tools:
     image crop mode, allowing to choose whether to crop layers or only
     the canvas (cropped pixels will be made invisible as out-of-canvas
     but would still be present). The option is unchecked by default,
-    as it is the non-destructive behavior, which also means the default
-    behavior is changed.
-  - Crop tool in image crop mode will not crop layers with "Lock pixels"
-    on, anymore, even if "Delete cropped pixels" is checked.
-  - Painting tools can now restore opacity and blend mode from presets.
+    as it is the non-destructive behavior, which also means the
+    default behavior is changed.
+  - Crop tool in image crop mode will not crop layers with "Lock
+    pixels" on, anymore, even if "Delete cropped pixels" is checked.
+  - Painting tools can now restore opacity and blend mode from
+    presets.
 
 User interface:
 
   - Image / Precision renamed to Image > Encoding
-  - Tool groups can now display their tool list on hover rather than on
-    click. This can be set in Preferences, in the Toolbox tab.
+  - Tool groups can now display their tool list on hover rather than
+    on click. This can be set in Preferences, in the Toolbox tab.
   - Improved update notification GUI in About dialog, and now also
     showing an update comment when one was set in gimp_versions.json.
   - Palette Editor dockable: the color index in the current palette is
@@ -46,23 +48,23 @@ Plugins:
     similar to animated formats, and also similar to defaults for PDF
     export. This brings consistency but break existing behavior, hence
     needs to be noted.
-  - Added support for exporting 16-bit PSDs, read and write channels from/to
-    PSd in the right order
+  - Added support for exporting 16-bit PSDs, read and write channels
+    from/to PSd in the right order
 
 Filters:
 
   - The 'Vignette' filter now has on-canvas controls
   - New 'Filters -> Blur -> Focus Blur' filter with on-canvas controls
     to emulate out-of-focus blurring
-  - New 'Filters -> Blur -> Variable Blur' filter that uses an aux mask input
-    to blur an image with variable intensity
+  - New 'Filters -> Blur -> Variable Blur' filter that uses an aux
+    mask input to blur an image with variable intensity
   - New 'Filters -> Light and Shadow -> Bloom' filter
   
 Updated translations:
 
-  - British English, Catalan, Chinese (Taiwan), Dutch, Finnish, German, Greek,
-    Italian, Korean, Polish, Romanian, Russian, Spanish, Swedish, Turkish,
-    Ukrainian
+  - British English, Catalan, Chinese (Taiwan), Dutch, Finnish,
+    German, Greek, Italian, Korean, Polish, Romanian, Russian,
+    Spanish, Swedish, Turkish, Ukrainian
 
 Icons:
 
@@ -74,14 +76,15 @@ Icons:
 Bug fixes:
 
   - #189, #354, #872, #1439, #3405, #3533, #3558, #3777, #3841, #4094,
-    #4328, #4363, #4487, #4618, #4641, #4663, #4696, #4734, #4745, #4793,
-    #4827, #4846, #4858, #4871, #4895, #4904, #4919, #4967, #4968, #4992,
-    #4996, #5009, #5010, #5033
+    #4328, #4363, #4487, #4618, #4641, #4663, #4696, #4734, #4745,
+    ##4793, 4827, #4846, #4858, #4871, #4895, #4904, #4919, #4967,
+    ##4968, #4992, 4996, #5009, #5010, #5033
 
 Developers:
 
-  - Ell, Jehan, lillolollo, Marco Ciampa, Michael Natterer, Øyvind Kolås,
-    pesder, Salamandar, Sergio Jiménez Herena, Simon Budig, T Collins, woob
+  - Ell, Jehan, lillolollo, Marco Ciampa, Michael Natterer, Øyvind
+    Kolås, pesder, Salamandar, Sergio Jiménez Herena, Simon Budig, T
+    Collins, woob
 
 Contributors:
 
@@ -89,10 +92,12 @@ Contributors:
 
 Translators:
 
-  - Alexandre Prokoudine, Anders Jonsson, Bruce Cowan, Cristian Secară,
-    Daniel Korostil, Daniel Șerbănescu, Dimitris Spingos, Jiri Grönroos,
-    Jordi Mas, Nathan Follens, Piotr Drąg, Rodrigo Lledó Milanca, Sabri Ünal,
-    Seong-ho Cho, Tim Sabsch, Yuri Chornoivan, Георгий Тимофеевский
+  - Alexandre Prokoudine, Anders Jonsson, Bruce Cowan, Cristian
+    Secară, Daniel Korostil, Daniel Șerbănescu, Dimitris Spingos, Jiri
+    Grönroos, Jordi Mas, Nathan Follens, Piotr Drąg, Rodrigo Lledó
+    Milanca, Sabri Ünal, Seong-ho Cho, Tim Sabsch, Yuri Chornoivan,
+    Георгий Тимофеевский
+
 
 Overview of Changes from GIMP 2.10.16 to GIMP 2.10.18
 =====================================================
