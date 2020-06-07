@@ -402,6 +402,11 @@
 # 
 # (last-release-timestamp 0)
 
+# The last known release version of GIMP as queried from official website. 
+# This is a string value.
+# 
+# 
+
 # The timestamp for the last known release date.  This is an integer value.
 # 
 # (last-revision 0)
@@ -780,6 +785,11 @@
 # no.
 # 
 # (toolbox-groups yes)
+
+# Menu mode of grouped tools.  Possible values are click, hover and
+# hover-single-column.
+# 
+# (toolbox-group-menu-mode hover-single-column)
 
 # Sets the theme search path.  This is a colon-separated list of folders to
 # search.

@@ -491,6 +491,11 @@ Timestamp of the last update check.  (null)
 The timestamp for the last known release date.  (null)
 
 .TP
+
+The last known release version of GIMP as queried from official website.  This
+is a string value.
+
+.TP
 (last-revision 0)
 
 The timestamp for the last known release date.  This is an integer value.
@@ -987,6 +992,12 @@ no.
 
 Use a single toolbox button for grouped tools.  Possible values are yes and
 no.
+
+.TP
+(toolbox-group-menu-mode hover-single-column)
+
+Menu mode of grouped tools.  Possible values are click, hover and
+hover-single-column.
 
 .TP
 (theme-path "${gimp_dir}/themes:${gimp_data_dir}/themes")
