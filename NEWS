@@ -29,23 +29,26 @@ Core:
 
 User Interface:
 
-  - Whole interface ported to GTK+3.
-  - Proper HiDPI support, which will follow the system's scale factor
-    for all widgets. This is a core toolkit support, unlike the basic
-    better-than-nothing hacks from GIMP 2.10.x.
-  - GTK+3 CSS-like support. All themes for former versions are therefore
-    not working anymore.
-  - GTK+3 themes have the concept of "dark variant", so a same theme may
-    propose both a light and a dark versions. Preference for dark
-    variants can now be checked in `Preferences > Themes > Use dark
-    theme variant if available` checkbox, allowing for instance to use
-    your system theme in its light variant everywhere except in GIMP.
-    This option is checked by default as graphics software are often
-    prefered in dark modes.
-  - Symbolic icon themes are now recolored automatically according to
-    the theme colors (no theme and icon theme tweaking anymore to end up
-    with dark on dark or light on light interfaces), except for color
-    elements whose SVG style is marked as "!important".
+  - Whole interface ported to GTK+3:
+    * Proper HiDPI support, which will follow the system's scale factor
+      for all widgets. This is a core toolkit support, unlike the basic
+      better-than-nothing hacks from GIMP 2.10.x.
+    * GTK+3 CSS-like support. All themes for former versions are
+      therefore not working anymore.
+    * GTK+3 themes have the concept of "dark variant", so a same theme
+      may propose both a light and a dark versions. Preference for dark
+      variants can now be checked in `Preferences > Themes > Use dark
+      theme variant if available` checkbox, allowing for instance to use
+      your system theme in its light variant everywhere except in GIMP.
+      This option is checked by default as graphics software are often
+      prefered in dark modes.
+    * Symbolic icon themes are now recolored automatically according to
+      the theme colors (no theme and icon theme tweaking anymore to end
+      up with dark on dark or light on light interfaces), except for
+      color elements whose SVG style is marked as "!important".
+    * Native Wayland support.
+    * Various dialogs now use Client-Side decorations and modern GTK+
+      widgets are being used when relevant.
   - Image display rendered faster with a render cache that keeps the
     result of scaling, color management, display filters and shell mask
     (for tools like fuzzy select).
@@ -55,10 +58,13 @@ User Interface:
 
 Devices:
 
-  - Device hotplug supported. In particular, you don't need to have your
-    tablets and other devices plugged before you start GIMP anymore, and
-    enabling your devices in the "Configure Input Devices" dialog is not
-    needed anymore. Tablets will work out-of-the box.
+  - Device hotplug supported (thanks to GTK+3). In particular:
+    * you don't need to have your tablets and other devices plugged
+      before you start GIMP anymore;
+    * enabling your devices in the "Configure Input Devices" dialog is
+      not needed anymore. Tablets will work out-of-the box;
+    * you can safely unplug and replug the same or other input devices
+      while GIMP is running.
 
 Plug-ins:
 
@@ -68,15 +74,15 @@ Plug-ins:
     just ID integers.
   - The API is GObject Introspected, which means plug-ins can be written
     in various non-C languages. So far the following languages have been
-    tested and work well: Python 3, Lua and Javascript (Note: Python 2
-    is also still working, but considering that this language is
-    end-of-life since 2020, we don't really care).
+    tested and work well: Python 3, Lua, Javascript and Vala.
+    (Note: Python 2 is also still working, but considering that this
+    language is end-of-life since 2020, we don't really care).
   - Every introspected binding which we test comes with a "Goat
     Exercise", which is a demo plug-in popping a dialog and showing its
     own source code. It processes a simple "gegl:invert" operation on a
     drawable. All "Goat Exercises" must do the same thing in the same
-    way, simply in their respective languages, as documentation code for
-    a language binding.
+    way, simply in their respective languages, as documentation/example
+    code for a language binding.
   - Plug-ins must be installed in their own subdirectory in
     `$XDG_CONFIG_HOME/GIMP/2.99/plug-ins/`, thus preventing data mess
     (with plug-ins coming with data and installing it all in the root
