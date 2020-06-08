@@ -1276,7 +1276,7 @@ save_dialog (GimpImage     *image,
   if (has_alpha && ! is_indexed)
     {
       button = gimp_prop_check_button_new (config, "save-transparent-pixels",
-                                           _("Save color values from transparent pisels"));
+                                           _("Save color values from transparent pixels"));
     }
   else
     {
