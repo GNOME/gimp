@@ -71,13 +71,6 @@ typedef struct
 
 } Extract;
 
-typedef struct
-{
-  gchar     extract_type[32];
-  gboolean  as_layers;
-  gboolean  use_registration;
-} DecomposeVals;
-
 
 typedef struct _Decompose      Decompose;
 typedef struct _DecomposeClass DecomposeClass;
@@ -111,7 +104,7 @@ static GimpValueArray * decompose_run              (GimpProcedure        *proced
 
 static gint        decompose                   (GimpImage           *image,
                                                 GimpDrawable        *drawable,
-                                                const gchar         *extract_type,
+                                                GObject             *config,
                                                 GimpImage          **image_dst,
                                                 gint32              *num_layers,
                                                 GimpLayer          **layer_dst);
@@ -145,8 +138,10 @@ static void        copy_one_component          (GeglBuffer          *src,
                                                 const char          *model,
                                                 const Component      component,
                                                 gboolean             clamp);
-static gboolean    decompose_dialog            (void);
+static gboolean    decompose_dialog            (GimpProcedure       *procedure,
+                                                GObject             *config);
 static gchar   *   generate_filename           (GimpImage           *image,
+                                                GObject             *config,
                                                 guint                colorspace,
                                                 guint                channel);
 
@@ -228,13 +223,6 @@ static const Extract extract[] =
   { N_("YCbCr_ITU_R709_256"), "Y'CbCr709", TRUE, 3, TRUE,  { CPN_YCBCR709_Y, CPN_YCBCR709_CB, CPN_YCBCR709_CR} }
 };
 
-static DecomposeVals decovals =
-{
-  "rgb",    /* Decompose type      */
-  TRUE,     /* Decompose to Layers */
-  FALSE     /* use registration color */
-};
-
 
 static void
 decompose_class_init (DecomposeClass *klass)
@@ -304,7 +292,7 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_STRING (procedure, "decompose-type",
                             "Decompose type",
                             type_desc->str,
-                            NULL,
+                            "RGB",
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "layers-mode",
@@ -360,65 +348,63 @@ decompose_run (GimpProcedure        *procedure,
                const GimpValueArray *args,
                gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  gint            num_images;
-  GimpImage      *image_extract[MAX_EXTRACT_IMAGES];
-  GimpLayer      *layer_extract[MAX_EXTRACT_IMAGES];
-  gint            j;
-  gint            num_layers;
-  GString        *data;
+  GimpProcedureConfig *config;
+  GimpValueArray      *return_vals;
+  gint                 num_images;
+  GimpImage           *image_extract[MAX_EXTRACT_IMAGES];
+  GimpLayer           *layer_extract[MAX_EXTRACT_IMAGES];
+  gint                 num_layers;
+  GString             *data;
+  gchar               *decompose_type;
+  gint                 j;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &decovals);
-
-      if (! decompose_dialog ())
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
-                                                 NULL);
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      g_strlcpy (decovals.extract_type,
-                 GIMP_VALUES_GET_STRING (args, 0),
-                 sizeof (decovals.extract_type));
-
-      decovals.as_layers        = GIMP_VALUES_GET_BOOLEAN (args, 1);
-      decovals.use_registration = GIMP_VALUES_GET_BOOLEAN (args, 2);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &decovals);
-      break;
-
-    default:
-      break;
+      if (! decompose_dialog (procedure, G_OBJECT (config)))
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
     }
 
   gimp_progress_init (_("Decomposing"));
 
   num_images = decompose (image,
                           drawable,
-                          decovals.extract_type,
+                          G_OBJECT (config),
                           image_extract,
                           &num_layers,
                           layer_extract);
 
   if (num_images <= 0)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
-                                             NULL);
+    {
+      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
+      g_object_unref (config);
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
+    }
 
   /* create decompose-data parasite */
   data = g_string_new ("");
 
+  g_object_get (config,
+                "decompose-type", &decompose_type,
+                NULL);
+
   g_string_printf (data, "source=%d type=%s ",
                    gimp_item_get_id (GIMP_ITEM (drawable)),
-                   decovals.extract_type);
+                   decompose_type);
+
+  g_free (decompose_type);
 
   for (j = 0; j < num_layers; j++)
     g_string_append_printf (data, "%d ",
@@ -446,8 +432,8 @@ decompose_run (GimpProcedure        *procedure,
         gimp_display_new (image_extract[j]);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (PLUG_IN_PROC, &decovals, sizeof (DecomposeVals));
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  g_object_unref (config);
 
   gimp_progress_end ();
 
@@ -462,7 +448,7 @@ decompose_run (GimpProcedure        *procedure,
 static gint
 decompose (GimpImage    *image,
            GimpDrawable *drawable,
-           const gchar  *extract_type,
+           GObject      *config,
            GimpImage   **image_dst,
            gint         *nlayers,
            GimpLayer   **layer_dst)
@@ -476,11 +462,20 @@ decompose (GimpImage    *image,
   GimpPrecision  precision;
   gboolean       requirements      = FALSE;
   gboolean       decomp_has_alpha = FALSE;
+  gchar         *config_extract_type;
+  gboolean       config_as_layers;
+  gboolean       config_use_registration;
+
+  g_object_get (config,
+                "decompose-type",   &config_extract_type,
+                "layers-mode",      &config_as_layers,
+                "use-registration", &config_use_registration,
+                NULL);
 
   extract_idx = -1;   /* Search extract type */
   for (j = 0; j < G_N_ELEMENTS (extract); j++)
     {
-      if (g_ascii_strcasecmp (extract_type, extract[j].type) == 0)
+      if (g_ascii_strcasecmp (config_extract_type, extract[j].type) == 0)
         {
           extract_idx = j;
           break;
@@ -527,10 +522,10 @@ decompose (GimpImage    *image,
       gchar   *filename;
       gdouble  xres, yres;
 
-      filename = generate_filename (image, extract_idx, j);
+      filename = generate_filename (image, config, extract_idx, j);
       gimp_image_get_resolution (image, &xres, &yres);
 
-      if (decovals.as_layers)
+      if (config_as_layers)
         {
           layername = gettext (extract[extract_idx].component[j].channel_name);
 
@@ -561,7 +556,7 @@ decompose (GimpImage    *image,
   copy_n_components (src_buffer, dst_buffer,
                      extract[extract_idx]);
 
-  if (decovals.use_registration)
+  if (config_use_registration)
     transfer_registration_color (src_buffer, dst_buffer, num_layers);
 
   gimp_progress_update (1.0);
@@ -575,7 +570,7 @@ decompose (GimpImage    *image,
 
   *nlayers = num_layers;
 
-  return (decovals.as_layers ? 1 : num_layers);
+  return (config_as_layers ? 1 : num_layers);
 }
 
 
@@ -815,49 +810,33 @@ copy_one_component (GeglBuffer      *src,
 }
 
 static gboolean
-decompose_dialog (void)
+decompose_dialog (GimpProcedure *procedure,
+                  GObject       *config)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *combo;
-  GtkWidget *toggle;
-  gint       j;
-  gint       extract_idx;
-  gboolean   run;
+  GtkWidget    *dialog;
+  GtkWidget    *main_vbox;
+  GtkWidget    *frame;
+  GtkWidget    *vbox;
+  GtkWidget    *hbox;
+  GtkWidget    *label;
+  GtkListStore *store;
+  GtkWidget    *combo;
+  GtkWidget    *toggle;
+  gchar        *config_extract_type;
+  gint          j;
+  gboolean      run;
 
-  extract_idx = 0;
-  for (j = 0; j < G_N_ELEMENTS (extract); j++)
-    {
-      if (extract[j].dialog &&
-          g_ascii_strcasecmp (decovals.extract_type, extract[j].type) == 0)
-        {
-          extract_idx = j;
-          break;
-        }
-    }
+  g_object_get (config,
+                "decompose-type", &config_extract_type,
+                NULL);
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Decompose"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Decompose"));
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -882,7 +861,8 @@ decompose_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+
   for (j = 0; j < G_N_ELEMENTS (extract); j++)
     {
       if (extract[j].dialog)
@@ -894,59 +874,42 @@ decompose_dialog (void)
             if (*l == '-' || *l == '_')
               *l = ' ';
 
-          gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (combo),
-                                     GIMP_INT_STORE_LABEL, label,
-                                     GIMP_INT_STORE_VALUE, j,
-                                     -1);
+          gtk_list_store_insert_with_values (store, NULL,
+                                             G_N_ELEMENTS (extract),
+                                             0, extract[j].type,
+                                             1, label,
+                                             -1);
+
           g_free (label);
         }
     }
 
+  combo = gimp_prop_string_combo_box_new (config, "decompose-type",
+                                          GTK_TREE_MODEL (store), 0, 1);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
+
+  g_object_unref (store);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              extract_idx,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &extract_idx, NULL);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("_Decompose to layers"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                decovals.as_layers);
+  toggle = gimp_prop_check_button_new (config, "layers-mode",
+                                       _("_Decompose to layers"));
   gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
 
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &decovals.as_layers);
-
-  toggle =
-    gtk_check_button_new_with_mnemonic (_("_Foreground as registration color"));
+  toggle = gimp_prop_check_button_new (config, "use-registration",
+                                       _("_Foreground as registration color"));
   gimp_help_set_help_data (toggle, _("Pixels in the foreground color will "
                                      "appear black in all output images.  "
                                      "This can be used for things like crop "
                                      "marks that have to show up on all "
                                      "channels."), PLUG_IN_PROC);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                decovals.use_registration);
   gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &decovals.use_registration);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
-
-  if (run)
-    g_strlcpy (decovals.extract_type, extract[extract_idx].type,
-               sizeof decovals.extract_type);
 
   return run;
 }
@@ -954,13 +917,19 @@ decompose_dialog (void)
 /* Build a filename like <imagename>-<channel>.<extension> */
 gchar *
 generate_filename (GimpImage *image,
+                   GObject   *config,
                    guint      colorspace,
                    guint      channel)
 {
   /* Build a filename like <imagename>-<channel>.<extension> */
-  gchar   *fname;
-  gchar   *filename;
-  gchar   *extension;
+  gchar    *fname;
+  gchar    *filename;
+  gchar    *extension;
+  gboolean  config_as_layers;
+
+  g_object_get (config,
+                "layers-mode", &config_as_layers,
+                NULL);
 
   fname = g_file_get_path (gimp_image_get_file (image));
 
@@ -979,7 +948,7 @@ generate_filename (GimpImage *image,
         {
           *(extension++) = '\0';
 
-          if (decovals.as_layers)
+          if (config_as_layers)
             filename = g_strdup_printf ("%s-%s.%s", fname,
                                         gettext (extract[colorspace].type),
                                         extension);
@@ -990,7 +959,7 @@ generate_filename (GimpImage *image,
         }
       else
         {
-          if (decovals.as_layers)
+          if (config_as_layers)
             filename = g_strdup_printf ("%s-%s", fname,
                                         gettext (extract[colorspace].type));
           else
