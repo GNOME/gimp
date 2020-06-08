@@ -58,13 +58,13 @@ def foggify(procedure, run_mode, image, drawable, args, data):
     fog.add_mask(mask)
 
     # add some clouds to the layer
-    args = Gimp.ValueArray.new(5)
-    args.insert(0, GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE))
-    args.insert(1, GObject.Value(Gimp.Image, image))
-    args.insert(2, GObject.Value(Gimp.Drawable, mask))
-    args.insert(3, GObject.Value(GObject.TYPE_INT, int(time.time())))
-    args.insert(4, GObject.Value(GObject.TYPE_DOUBLE, turbulence))
-    Gimp.get_pdb().run_procedure('plug-in-plasma', args)
+    Gimp.get_pdb().run_procedure('plug-in-plasma', [
+        Gimp.RunMode.NONINTERACTIVE,
+        image,
+        mask,
+        int(time.time()),
+        turbulence,
+    ])
 
     # apply the clouds to the layer
     fog.remove_mask(Gimp.MaskApplyMode.APPLY)

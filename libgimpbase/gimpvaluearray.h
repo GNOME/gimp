@@ -49,6 +49,9 @@ GimpValueArray * gimp_value_array_new_from_types_valist
                                            (gchar               **error_msg,
                                             GType                 first_type,
                                             va_list               va_args);
+GimpValueArray * gimp_value_array_new_from_values
+                                           (const GValue **values,
+                                            gint           n_values);
 
 GimpValueArray * gimp_value_array_ref      (GimpValueArray       *value_array);
 void             gimp_value_array_unref    (GimpValueArray       *value_array);

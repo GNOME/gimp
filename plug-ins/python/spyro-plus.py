@@ -18,6 +18,8 @@
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
+gi.require_version('GimpUi', '3.0')
+from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -36,18 +38,6 @@ from math import pi, sin, cos, atan, atan2, fmod, radians, sqrt
 import gettext
 import math
 import time
-
-
-def pdb_call(proc_name, *args):
-    if len(args) % 2 == 1:
-        raise ValueError("The number of arguments after proc_name needs to be even. ")
-
-    num_args = len(args) // 2
-    proc_args = Gimp.ValueArray.new(num_args)
-    for i in range(num_args):
-        proc_args.append(GObject.Value(args[2 * i], args[2 * i + 1]))
-
-    return Gimp.get_pdb().run_procedure(proc_name, proc_args)
 
 
 def result_success():
@@ -386,11 +376,11 @@ class SelectionToPath:
         else:
             selection_was_empty = False
 
-        result = pdb_call('plug-in-sel2path',
-                          Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE,
-                          Gimp.Image, self.image,
-                          Gimp.Drawable, self.image.get_active_layer()
-        )
+        result = Gimp.get_pdb().run_procedure('plug-in-sel2path', [
+            Gimp.RunMode.NONINTERACTIVE,
+            self.image,
+            self.image.get_active_layer(),
+        ])
 
         self.path = self.image.get_vectors()[0]
         self.stroke_ids = self.path.get_strokes()
@@ -1736,8 +1726,8 @@ class SpyroWindow():
         def create_ui():
 
             use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-            self.dialog = Gimp.Dialog(use_header_bar=use_header_bar,
-                                      title=_("Spyrogimp"))
+            self.dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
+                                        title=_("Spyrogimp"))
             #self.set_default_size(350, -1)
             #self.set_border_width(10)
 
@@ -1746,7 +1736,7 @@ class SpyroWindow():
             self.dialog.get_content_area().add(vbox)
             vbox.show()
 
-            box = Gimp.HintBox.new(_("Draw spyrographs using current tool settings and selection."))
+            box = GimpUi.HintBox.new(_("Draw spyrographs using current tool settings and selection."))
             vbox.pack_start(box, False, False, 0)
             box.show()
 
@@ -1799,7 +1789,7 @@ class SpyroWindow():
         self.drawing_layer = self.spyro_layer
 
         # Create the UI.
-        Gimp.ui_init(sys.argv[0])
+        GimpUi.ui_init(sys.argv[0])
         create_ui()
         self.update_view()   # Update UI to reflect the parameter values.
 
