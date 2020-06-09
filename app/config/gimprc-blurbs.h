@@ -686,7 +686,7 @@ _("Use a single toolbox button for grouped tools.")
 _("Show the currently active image in the toolbox.")
 
 #define TOOLBOX_WILBER_BLURB \
-"Show the GIMP mascot at the top of the toolbox."
+_("Show the GIMP mascot at the top of the toolbox.")
 
 #define TRANSPARENCY_TYPE_BLURB \
 _("Sets the manner in which transparency is displayed in images.")

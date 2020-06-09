@@ -450,7 +450,7 @@ gimp_device_info_editor_constructed (GObject *object)
       gchar     *title;
 
       /* e.g. "Pressure Curve" for mapping input device axes */
-      title = g_strdup_printf (_("%s Curve"), axis_use_strings[i - 1]);
+      title = g_strdup_printf (_("%s Curve"), gettext (axis_use_strings[i - 1]));
 
       frame = gimp_frame_new (title);
       gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook), frame, NULL);
@@ -523,7 +523,7 @@ gimp_device_info_editor_constructed (GObject *object)
           gchar     *string;
 
           string = g_strdup_printf (_("The axis '%s' has no curve"),
-                                    axis_use_strings[i - 1]);
+                                    gettext (axis_use_strings[i - 1]));
 
           label = gtk_label_new (string);
           gtk_container_add (GTK_CONTAINER (frame), label);
