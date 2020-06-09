@@ -1076,14 +1076,14 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-composite-mode-clip-to-layer",    n_layers && cm_mutable);
   SET_SENSITIVE ("layers-composite-mode-intersection",     n_layers && cm_mutable);
 
-  SET_SENSITIVE ("layers-mask-add",             n_layers > 0 && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-add",             n_layers > 0 && !fs && !ac && have_no_masks);
   SET_SENSITIVE ("layers-mask-add-button",      n_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-mask-add-last-values", n_layers > 0 && !fs && !ac && have_no_masks);
 
   SET_SENSITIVE ("layers-mask-apply",  have_writable && !fs && !ac && have_masks && have_no_groups);
   SET_SENSITIVE ("layers-mask-delete", n_layers > 0 && !fs && !ac && have_masks);
 
-  SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-edit",    n_layers == 1 && !fs && !ac && have_masks);
   SET_SENSITIVE ("layers-mask-show",    n_layers > 0 && !fs && !ac && have_masks);
   SET_SENSITIVE ("layers-mask-disable", n_layers > 0 && !fs && !ac && have_masks);
 
