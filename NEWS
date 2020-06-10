@@ -229,7 +229,7 @@ Tools:
  
   - Add "Show all" support to the Bucket Fill tool in line-art mode
 
-  - Color picker and sample points now support displaying vlaues in
+  - Color picker and sample points now support displaying values in
     Yu'v' (CIE 1976 UCS) color space.
 
   - The Symmetry Painting dock now has an "Enable reflection" option
@@ -337,7 +337,7 @@ macOS:
   - Set required variables if it is running from Apple application
     bundle.
   - The macOS build now ships with the dashboard dock for displaying
-    perfomance graphs.
+    performance graphs.
 
 Updated translations:
 
@@ -425,7 +425,7 @@ Tools:
     When set to Adjust, which is used by default, the filter's output
     may extent past the drawable's boundary, and the drawable will be
     resized to match the output when committed.
-  - Gradient tool: offest support in shaped gradients
+  - Gradient tool: offset support in shaped gradients
 
 Plug-ins:
 
@@ -690,7 +690,7 @@ Core:
     their layer, in which case they should use the same clipping mode
     as the layer. This fixes a regression introduced by commit 2ae823ba,
     causing layer masks to be transformed with a mismatched clipping mode
-    during layer transforms, leading to discrepencies between the
+    during layer transforms, leading to discrepancies between the
     transformed layer and the transformed mask.
   - Moved swap/cache and temporary files out the GIMP user config dir and
     added new config file substitutions ${gimp_cache_dir} and
