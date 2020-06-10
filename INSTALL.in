@@ -187,8 +187,8 @@ header files installed.
      libxpm              -              XPM
      openexr             @OPENEXR_REQUIRED_VERSION@          OpenEXR
      OpenJPEG            @OPENJPEG_REQUIRED_VERSION@          JPEG 2000
-     python 3            @PYTHON3_REQUIRED_VERSION@          Python plug-ins
      webkit              @WEBKITGTK_REQUIRED_VERSION@         Help browser & webpage
+     vala                -              Vala plug-ins
 
  21. Summary of optional runtime dependencies:
 
@@ -198,6 +198,9 @@ header files installed.
      sendmail for sending emails if --with-sendmail enabled
      gdb or lldb for our new bug-reporting dialog
      "gegl:matting-levin" GEGL operation for alternative matting engine
+     Python @PYTHON3_REQUIRED_VERSION@ and PyGObject for Python 3 plug-ins
+     GJS for Javascript plug-ins
+     LuaJIT and LGI for Lua plug-ins
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
 lying around on your system, otherwise configure may fail to find the
@@ -345,8 +348,26 @@ These are:
      gimp-console binary to be built in addition to the standard binary.
      gimp-console is useful for command-line batch mode or as a server.
 
-  --disable-python.  If for some reason you don't want to build the
-     Python based PyGIMP plug-in, you can use --disable-python.
+  --without-python.  If for some reason you don't want to install the
+     Python plug-ins, you can use --with-python=no. Oppositely you can
+     force the installations even without Python or PyGObject installed
+     by setting --with-python=force (these are runtime dependencies
+     which you can install later).
+
+  --without-javascript.  If for some reason you don't want to install the
+     JavaScript plug-ins, you can use --with-javascript=no. Oppositely
+     you can force the installations even without GJS installed by
+     setting --with-javascript=force (GJS is a runtime dependency which
+     you can install later).
+
+  --without-lua.  If for some reason you don't want to install the
+     Lua plug-ins, you can use --with-lua=no. Oppositely you can force
+     the installations even without LuaJIT or LGI installed by setting
+     --with-lua=force (these are runtime dependencies which you can
+     install later).
+
+  --without-vala.  If for some reason you don't want to build the Vala
+     plug-ins, you can use --without-vala.
 
   --without-script-fu.  If for some reason you don't want to build the
      Script-Fu plug-in, you can use --without-script-fu.
