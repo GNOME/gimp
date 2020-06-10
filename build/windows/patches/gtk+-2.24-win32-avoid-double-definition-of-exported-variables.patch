@@ -1,0 +1,70 @@
+From 63378c168bf393a9e2de83fdeb93f187cc3022a5 Mon Sep 17 00:00:00 2001
+From: Ell <ell_se@yahoo.com>
+Date: Wed, 10 Jun 2020 18:22:35 +0300
+Subject: [PATCH] win32: avoid double definition of exported variables
+
+... by qualifying them with "extern", in addition to
+"__declspec(dllexport)".  Omitting "extern" happened to work in the
+past, but recent GCC versions require it.
+---
+ gdk/gdktypes.h     | 2 +-
+ gtk/gtkdebug.h     | 2 +-
+ gtk/gtkmain.h      | 2 +-
+ gtk/gtktexttypes.h | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/gdk/gdktypes.h b/gdk/gdktypes.h
+index eed31243ba..c72b20b92e 100644
+--- a/gdk/gdktypes.h
++++ b/gdk/gdktypes.h
+@@ -39,7 +39,7 @@
+ 
+ #ifdef G_OS_WIN32
+ #  ifdef GDK_COMPILATION
+-#    define GDKVAR __declspec(dllexport)
++#    define GDKVAR extern __declspec(dllexport)
+ #  else
+ #    define GDKVAR extern __declspec(dllimport)
+ #  endif
+diff --git a/gtk/gtkdebug.h b/gtk/gtkdebug.h
+index 05964f8dbe..623750301d 100644
+--- a/gtk/gtkdebug.h
++++ b/gtk/gtkdebug.h
+@@ -64,7 +64,7 @@ typedef enum {
+ 
+ #ifdef G_OS_WIN32
+ #  ifdef GTK_COMPILATION
+-#    define GTKVAR __declspec(dllexport)
++#    define GTKVAR extern __declspec(dllexport)
+ #  else
+ #    define GTKVAR extern __declspec(dllimport)
+ #  endif
+diff --git a/gtk/gtkmain.h b/gtk/gtkmain.h
+index 02a1daea9e..2f057e5478 100644
+--- a/gtk/gtkmain.h
++++ b/gtk/gtkmain.h
+@@ -67,7 +67,7 @@ typedef gint	(*GtkKeySnoopFunc)	    (GtkWidget	  *grab_widget,
+  */
+ #ifdef G_PLATFORM_WIN32
+ #ifdef GTK_COMPILATION
+-#define GTKMAIN_C_VAR __declspec(dllexport)
++#define GTKMAIN_C_VAR extern __declspec(dllexport)
+ #else
+ #define GTKMAIN_C_VAR extern __declspec(dllimport)
+ #endif
+diff --git a/gtk/gtktexttypes.h b/gtk/gtktexttypes.h
+index c624aeaf3a..eb0db36e6d 100644
+--- a/gtk/gtktexttypes.h
++++ b/gtk/gtktexttypes.h
+@@ -44,7 +44,7 @@ typedef struct _GtkTextMarkBody GtkTextMarkBody;
+ 
+ #ifdef G_OS_WIN32
+ #ifdef GTK_COMPILATION
+-#define VARIABLE __declspec(dllexport)
++#define VARIABLE extern __declspec(dllexport)
+ #else
+ #define VARIABLE extern __declspec(dllimport)
+ #endif
+-- 
+2.25.1
+
