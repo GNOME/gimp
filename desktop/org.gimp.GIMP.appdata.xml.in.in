@@ -104,7 +104,7 @@
       </description>
     </release>
     <release version="2.10.18" date="2020-02-23">
-      <url type="details">https://www.gimp.org/news/2020/02/22/gimp-2-10-18-released/</url>
+      <url type="details">https://www.gimp.org/news/2020/02/24/gimp-2-10-18-released/</url>
       <description>
         <_p>
           GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD files,
@@ -113,7 +113,7 @@
       </description>
     </release>
     <release version="2.10.16" date="2020-02-19">
-      <url type="details">https://www.gimp.org/news/2020/02/21/gimp-2-10-18-released/</url>
+      <url type="details">https://www.gimp.org/news/2020/02/24/gimp-2-10-18-released/</url>
       <description>
         <_p>
           GIMP 2.10.16 delivers several major usability improvements, a new tool
