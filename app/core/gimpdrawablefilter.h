@@ -72,7 +72,7 @@ void       gimp_drawable_filter_set_preview_split
                                                (GimpDrawableFilter  *filter,
                                                 gboolean             enabled,
                                                 GimpAlignmentType    alignment,
-                                                gdouble              split_position);
+                                                gint                 split_position);
 void       gimp_drawable_filter_set_opacity    (GimpDrawableFilter  *filter,
                                                 gdouble              opacity);
 void       gimp_drawable_filter_set_mode       (GimpDrawableFilter  *filter,

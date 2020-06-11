@@ -39,7 +39,7 @@ struct _GimpFilterOptions
   gboolean           preview;
   gboolean           preview_split;
   GimpAlignmentType  preview_split_alignment;
-  gdouble            preview_split_position;
+  gint               preview_split_position;
   gboolean           controller;
 
   gboolean           blending_options_expanded;

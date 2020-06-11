@@ -90,11 +90,11 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PREVIEW_SPLIT_POSITION,
-                                   g_param_spec_double ("preview-split-position",
-                                                        NULL, NULL,
-                                                        0.0, 1.0, 0.5,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                   g_param_spec_int ("preview-split-position",
+                                                     NULL, NULL,
+                                                     G_MININT, G_MAXINT, 0,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONTROLLER,
                             "controller",
@@ -144,7 +144,7 @@ gimp_filter_options_set_property (GObject      *object,
       break;
 
     case PROP_PREVIEW_SPLIT_POSITION:
-      options->preview_split_position = g_value_get_double (value);
+      options->preview_split_position = g_value_get_int (value);
       break;
 
     case PROP_CONTROLLER:
@@ -188,7 +188,7 @@ gimp_filter_options_get_property (GObject    *object,
       break;
 
     case PROP_PREVIEW_SPLIT_POSITION:
-      g_value_set_double (value, options->preview_split_position);
+      g_value_set_int (value, options->preview_split_position);
       break;
 
     case PROP_CONTROLLER:
