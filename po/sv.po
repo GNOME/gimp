@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-04 19:02+0000\n"
-"PO-Revision-Date: 2020-06-05 21:43+0200\n"
+"POT-Creation-Date: 2020-06-09 09:06+0000\n"
+"PO-Revision-Date: 2020-06-10 01:47+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -11832,6 +11832,10 @@ msgstr "Använd en ensam verktygslådeknapp för grupperade verktyg."
 #: ../app/config/gimprc-blurbs.h:692
 msgid "Show the currently active image in the toolbox."
 msgstr "Visa den för närvarande aktiva bilden i verktygslådan."
+
+#: ../app/config/gimprc-blurbs.h:695
+msgid "Show the GIMP mascot at the top of the toolbox."
+msgstr "Visa GIMP-maskoten högst upp i verktygslådan."
 
 #: ../app/config/gimprc-blurbs.h:698
 msgid "Sets the manner in which transparency is displayed in images."
