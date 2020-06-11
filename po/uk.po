@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-08 09:11+0000\n"
-"PO-Revision-Date: 2020-06-08 12:24+0300\n"
+"POT-Creation-Date: 2020-06-09 10:04+0000\n"
+"PO-Revision-Date: 2020-06-09 19:22+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -75,9 +75,6 @@ msgid "Photo editing in GIMP"
 msgstr "Редагування фото в GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
-#| msgid ""
-#| "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
-#| "Most notable changes are:"
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
@@ -86,7 +83,6 @@ msgstr ""
 "Найпомітніші зміни:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
-#| msgid "Tools are now grouped in the toolbox by default"
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
 "У новій версії групи інструментів розкриваються при наведенні вказівника "
@@ -12062,6 +12058,11 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:686
 msgid "Show the currently active image in the toolbox."
 msgstr "Показувати активне зображення у панелі інструментів."
+
+#: ../app/config/gimprc-blurbs.h:689
+#| msgid "Show the currently active image in the toolbox."
+msgid "Show the GIMP mascot at the top of the toolbox."
+msgstr "Показувати маскот GIMP над набором інструментів."
 
 #: ../app/config/gimprc-blurbs.h:692
 msgid "Sets the manner in which transparency is displayed in images."
