@@ -722,40 +722,38 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
           GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
           GimpItem         *item  = GIMP_ITEM (tool->drawables->data);
           gint              x, y, width, height;
+          gint              position;
 
           gimp_display_shell_untransform_viewport (shell, TRUE,
                                                    &x, &y, &width, &height);
 
-          if (gimp_rectangle_intersect (gimp_item_get_offset_x (item),
-                                        gimp_item_get_offset_y (item),
-                                        gimp_item_get_width  (item),
-                                        gimp_item_get_height (item),
-                                        x, y, width, height,
-                                        &x, &y, &width, &height))
+          if (! gimp_rectangle_intersect (gimp_item_get_offset_x (item),
+                                          gimp_item_get_offset_y (item),
+                                          gimp_item_get_width  (item),
+                                          gimp_item_get_height (item),
+                                          x, y, width, height,
+                                          &x, &y, &width, &height))
             {
-              gdouble position;
-
-              if (filter_options->preview_split_alignment == GIMP_ALIGN_LEFT ||
-                  filter_options->preview_split_alignment == GIMP_ALIGN_RIGHT)
-                {
-                  position = ((gdouble) ((x + width / 2) -
-                                         gimp_item_get_offset_x (item)) /
-                              (gdouble) gimp_item_get_width (item));
-
-
-                }
-              else
-                {
-                  position = ((gdouble) ((y + height / 2) -
-                                         gimp_item_get_offset_y (item)) /
-                              (gdouble) gimp_item_get_height (item));
-                }
-
-              g_object_set (
-                options,
-                "preview-split-position", CLAMP (position, 0.0, 1.0),
-                NULL);
+              x      = gimp_item_get_offset_x (item);
+              y      = gimp_item_get_offset_y (item);
+              width  = gimp_item_get_width    (item);
+              height = gimp_item_get_height   (item);
             }
+
+          if (filter_options->preview_split_alignment == GIMP_ALIGN_LEFT ||
+              filter_options->preview_split_alignment == GIMP_ALIGN_RIGHT)
+            {
+              position = (x + width  / 2) - gimp_item_get_offset_x (item);
+            }
+          else
+            {
+              position = (y + height / 2) - gimp_item_get_offset_y (item);
+            }
+
+          g_object_set (
+            options,
+            "preview-split-position", position,
+            NULL);
         }
 
       gimp_filter_tool_update_filter (filter_tool);
@@ -1365,18 +1363,14 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
       options->preview_split_alignment == GIMP_ALIGN_RIGHT)
     {
       orientation = GIMP_ORIENTATION_VERTICAL;
-
-      position = (gimp_item_get_offset_x (item) +
-                  gimp_item_get_width (item) *
-                  options->preview_split_position);
+      position    = gimp_item_get_offset_x (item) +
+                    options->preview_split_position;
     }
   else
     {
       orientation = GIMP_ORIENTATION_HORIZONTAL;
-
-      position = (gimp_item_get_offset_y (item) +
-                  gimp_item_get_height (item) *
-                  options->preview_split_position);
+      position    = gimp_item_get_offset_y (item) +
+                    options->preview_split_position;
     }
 
   filter_tool->preview_guide =
@@ -1428,18 +1422,14 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
       options->preview_split_alignment == GIMP_ALIGN_RIGHT)
     {
       orientation = GIMP_ORIENTATION_VERTICAL;
-
-      position = (gimp_item_get_offset_x (item) +
-                  gimp_item_get_width (item) *
-                  options->preview_split_position);
+      position    = gimp_item_get_offset_x (item) +
+                    options->preview_split_position;
     }
   else
     {
       orientation = GIMP_ORIENTATION_HORIZONTAL;
-
-      position = (gimp_item_get_offset_y (item) +
-                  gimp_item_get_height (item) *
-                  options->preview_split_position);
+      position    = gimp_item_get_offset_x (item) +
+                    options->preview_split_position;
     }
 
   if (orientation != gimp_guide_get_orientation (filter_tool->preview_guide) ||
@@ -1479,7 +1469,7 @@ gimp_filter_tool_guide_moved (GimpGuide        *guide,
   GimpTool          *tool    = GIMP_TOOL (filter_tool);
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
   GimpItem          *item;
-  gdouble            position;
+  gint               position;
 
   g_return_if_fail (g_list_length (tool->drawables) == 1);
 
@@ -1488,19 +1478,19 @@ gimp_filter_tool_guide_moved (GimpGuide        *guide,
   if (options->preview_split_alignment == GIMP_ALIGN_LEFT ||
       options->preview_split_alignment == GIMP_ALIGN_RIGHT)
     {
-      position = ((gdouble) (gimp_guide_get_position (guide) -
-                             gimp_item_get_offset_x (item)) /
-                  (gdouble) gimp_item_get_width (item));
+      position = CLAMP (gimp_guide_get_position (guide) -
+                        gimp_item_get_offset_x (item),
+                        0, gimp_item_get_width (item));
     }
   else
     {
-      position = ((gdouble) (gimp_guide_get_position (guide) -
-                             gimp_item_get_offset_y (item)) /
-                  (gdouble) gimp_item_get_height (item));
+      position = CLAMP (gimp_guide_get_position (guide) -
+                        gimp_item_get_offset_y (item),
+                        0, gimp_item_get_height (item));
     }
 
   g_object_set (options,
-                "preview-split-position", CLAMP (position, 0.0, 1.0),
+                "preview-split-position", position,
                 NULL);
 }
 
@@ -1707,8 +1697,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   g_free (operation_name);
 
   g_object_set (GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool),
-                "preview-split",          FALSE,
-                "preview-split-position", 0.5,
+                "preview-split", FALSE,
                 NULL);
 
   g_signal_connect_object (filter_tool->config, "notify",
