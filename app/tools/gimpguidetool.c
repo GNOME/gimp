@@ -292,11 +292,19 @@ gimp_guide_tool_motion (GimpTool         *tool,
     {
       GimpGuideToolGuide *guide = &guide_tool->guides[i];
       gint                max_position;
+      gint                position;
 
       if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
         max_position = gimp_image_get_height (image);
       else
         max_position = gimp_image_get_width (image);
+
+      if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
+        guide->position = RINT (coords->y);
+      else
+        guide->position = RINT (coords->x);
+
+      position = CLAMP (guide->position, 0, max_position);
 
       if (tx < 0 || tx >= shell->disp_width ||
           ty < 0 || ty >= shell->disp_height)
@@ -307,22 +315,13 @@ gimp_guide_tool_motion (GimpTool         *tool,
         }
       else
         {
-          if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
-            guide->position = RINT (coords->y);
-          else
-            guide->position = RINT (coords->x);
-
           if (guide->position < 0 || guide->position > max_position)
             remove_guides = TRUE;
-
-          /* custom guides are moved live */
-          if (guide->custom)
-            {
-              gimp_image_move_guide (image, guide->guide,
-                                     CLAMP (guide->position, 0, max_position),
-                                     TRUE);
-            }
         }
+
+      /* custom guides are moved live */
+      if (guide->custom)
+        gimp_image_move_guide (image, guide->guide, position, TRUE);
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
