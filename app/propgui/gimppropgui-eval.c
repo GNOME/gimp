@@ -453,10 +453,14 @@ gimp_prop_eval_boolean_simple (GObject      *config,
   if (! strcmp (*t, "0"))
     {
       result = FALSE;
+
+      gimp_prop_eval_read_token (expr, t, error);
     }
   else if (! strcmp (*t, "1"))
     {
       result = TRUE;
+
+      gimp_prop_eval_read_token (expr, t, error);
     }
   /* reference */
   else if (! strcmp (*t, "$"))
@@ -600,6 +604,8 @@ gimp_prop_eval_boolean_simple (GObject      *config,
 
           return FALSE;
         }
+
+      gimp_prop_eval_read_token (expr, t, error);
     }
   else
     {
@@ -608,8 +614,6 @@ gimp_prop_eval_boolean_simple (GObject      *config,
 
       return FALSE;
     }
-
-  gimp_prop_eval_read_token (expr, t, error);
 
   return result;
 }
