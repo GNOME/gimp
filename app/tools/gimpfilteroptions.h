@@ -56,8 +56,8 @@ GType   gimp_filter_options_get_type                   (void) G_GNUC_CONST;
 
 void    gimp_filter_options_switch_preview_side        (GimpFilterOptions *options);
 void    gimp_filter_options_switch_preview_orientation (GimpFilterOptions *options,
-                                                        gdouble            position_x,
-                                                        gdouble            position_y);
+                                                        gint               position_x,
+                                                        gint               position_y);
 
 
 #endif /* __GIMP_FILTER_OPTIONS_H__ */
