@@ -411,7 +411,10 @@ gimp_prop_eval_boolean_group (GObject      *config,
       result = gimp_prop_eval_boolean_or (config, pspec,
                                           expr, t, error, depth + 1);
 
-      if (! *error && g_strcmp0 (*t, ")"))
+      if (*error)
+        return FALSE;
+
+      if (g_strcmp0 (*t, ")"))
         {
           g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
                        "unterminated group");
