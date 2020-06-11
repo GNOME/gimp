@@ -234,11 +234,11 @@ gimp_filter_options_switch_preview_side (GimpFilterOptions *options)
 
 void
 gimp_filter_options_switch_preview_orientation (GimpFilterOptions *options,
-                                                gdouble            position_x,
-                                                gdouble            position_y)
+                                                gint               position_x,
+                                                gint               position_y)
 {
   GimpAlignmentType alignment;
-  gdouble           position;
+  gint              position;
 
   g_return_if_fail (GIMP_IS_FILTER_OPTIONS (options));
 
@@ -264,6 +264,6 @@ gimp_filter_options_switch_preview_orientation (GimpFilterOptions *options,
 
   g_object_set (options,
                 "preview-split-alignment", alignment,
-                "preview-split-position",  CLAMP (position, 0.0, 1.0),
+                "preview-split-position",  position,
                 NULL);
 }

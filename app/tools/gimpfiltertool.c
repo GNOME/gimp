@@ -490,13 +490,13 @@ gimp_filter_tool_button_press (GimpTool            *tool,
       else if (state & gimp_get_toggle_behavior_mask ())
         {
           GimpItem *item = GIMP_ITEM (tool->drawable);
-          gdouble   pos_x;
-          gdouble   pos_y;
+          gint      pos_x;
+          gint      pos_y;
 
-          pos_x = ((coords->x - gimp_item_get_offset_x (item)) /
-                   gimp_item_get_width (item));
-          pos_y = ((coords->y - gimp_item_get_offset_y (item)) /
-                   gimp_item_get_height (item));
+          pos_x = CLAMP (RINT (coords->x) - gimp_item_get_offset_x (item),
+                         0, gimp_item_get_width (item));
+          pos_y = CLAMP (RINT (coords->y) - gimp_item_get_offset_y (item),
+                         0, gimp_item_get_height (item));
 
           gimp_filter_options_switch_preview_orientation (options,
                                                           pos_x, pos_y);
