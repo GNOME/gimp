@@ -343,8 +343,13 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
 
   if (copy)
     {
-      GQuark      quark = g_quark_from_static_string ("gegl-property-keys");
-      GHashTable *keys  = g_param_spec_get_qdata (pspec, quark);
+      GQuark      quark = 0;
+      GHashTable *keys;
+
+      if (G_UNLIKELY (! quark))
+        quark = g_quark_from_static_string ("gegl-property-keys");
+
+      keys = g_param_spec_get_qdata (pspec, quark);
 
       if (keys)
         g_param_spec_set_qdata_full (copy, quark, g_hash_table_ref (keys),
