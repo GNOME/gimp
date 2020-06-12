@@ -1141,22 +1141,24 @@ gimp_procedure_get_date (GimpProcedure *procedure)
  * gimp_procedure_add_argument() and
  * gimp_procedure_add_argument_from_property().
  *
+ * Returns: (transfer none): the same @pspec.
+ *
  * Since: 3.0
  **/
-void
+GParamSpec *
 gimp_procedure_add_argument (GimpProcedure *procedure,
                              GParamSpec    *pspec)
 {
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (G_IS_PARAM_SPEC (pspec));
-  g_return_if_fail (gimp_is_canonical_identifier (pspec->name));
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (pspec->name), NULL);
 
   if (gimp_procedure_find_argument (procedure, pspec->name))
     {
       g_warning ("Argument with name '%s' already exists on procedure '%s'",
                  pspec->name,
                  gimp_procedure_get_name (procedure));
-      return;
+      return pspec;
     }
 
   if (gimp_procedure_find_aux_argument (procedure, pspec->name))
@@ -1165,7 +1167,7 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
                  "on procedure '%s'",
                  pspec->name,
                  gimp_procedure_get_name (procedure));
-      return;
+      return pspec;
     }
 
   procedure->priv->args = g_renew (GParamSpec *, procedure->priv->args,
@@ -1176,6 +1178,8 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
   g_param_spec_ref_sink (pspec);
 
   procedure->priv->n_args++;
+
+  return pspec;
 }
 
 /**
@@ -1189,24 +1193,26 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
  *
  * See gimp_procedure_add_argument() for details.
  *
+ * Returns: (transfer none): the added #GParamSpec.
+ *
  * Since: 3.0
  */
-void
+GParamSpec *
 gimp_procedure_add_argument_from_property (GimpProcedure *procedure,
                                            GObject       *config,
                                            const gchar   *prop_name)
 {
   GParamSpec *pspec;
 
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (G_IS_OBJECT (config));
-  g_return_if_fail (prop_name != NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (prop_name != NULL, NULL);
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), prop_name);
 
-  g_return_if_fail (pspec != NULL);
+  g_return_val_if_fail (pspec != NULL, NULL);
 
-  gimp_procedure_add_argument (procedure, pspec);
+  return gimp_procedure_add_argument (procedure, pspec);
 }
 
 /**
@@ -1223,22 +1229,24 @@ gimp_procedure_add_argument_from_property (GimpProcedure *procedure,
  * can be used to persistently store whatever last used values the
  * @procedure wants to remember across invocations
  *
+ * Returns: (transfer none): the same @pspec.
+ *
  * Since: 3.0
  **/
-void
+GParamSpec *
 gimp_procedure_add_aux_argument (GimpProcedure *procedure,
                                  GParamSpec    *pspec)
 {
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (G_IS_PARAM_SPEC (pspec));
-  g_return_if_fail (gimp_is_canonical_identifier (pspec->name));
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), pspec);
+  g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), pspec);
+  g_return_val_if_fail (gimp_is_canonical_identifier (pspec->name), pspec);
 
   if (gimp_procedure_find_argument (procedure, pspec->name))
     {
       g_warning ("Argument with name '%s' already exists on procedure '%s'",
                  pspec->name,
                  gimp_procedure_get_name (procedure));
-      return;
+      return pspec;
     }
 
   if (gimp_procedure_find_aux_argument (procedure, pspec->name))
@@ -1247,7 +1255,7 @@ gimp_procedure_add_aux_argument (GimpProcedure *procedure,
                  "on procedure '%s'",
                  pspec->name,
                  gimp_procedure_get_name (procedure));
-      return;
+      return pspec;
     }
 
   procedure->priv->aux_args = g_renew (GParamSpec *, procedure->priv->aux_args,
@@ -1258,6 +1266,8 @@ gimp_procedure_add_aux_argument (GimpProcedure *procedure,
   g_param_spec_ref_sink (pspec);
 
   procedure->priv->n_aux_args++;
+
+  return pspec;
 }
 
 /**
@@ -1271,24 +1281,26 @@ gimp_procedure_add_aux_argument (GimpProcedure *procedure,
  *
  * See gimp_procedure_add_aux_argument() for details.
  *
+ * Returns: (transfer none): the added #GParamSpec.
+ *
  * Since: 3.0
  */
-void
+GParamSpec *
 gimp_procedure_add_aux_argument_from_property (GimpProcedure *procedure,
                                                GObject       *config,
                                                const gchar   *prop_name)
 {
   GParamSpec *pspec;
 
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (G_IS_OBJECT (config));
-  g_return_if_fail (prop_name != NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (prop_name != NULL, NULL);
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), prop_name);
 
-  g_return_if_fail (pspec != NULL);
+  g_return_val_if_fail (pspec != NULL, NULL);
 
-  gimp_procedure_add_aux_argument (procedure, pspec);
+  return gimp_procedure_add_aux_argument (procedure, pspec);
 }
 
 /**
@@ -1303,22 +1315,24 @@ gimp_procedure_add_aux_argument_from_property (GimpProcedure *procedure,
  * gimp_procedure_add_return_value() and
  * gimp_procedure_add_return_value_from_property().
  *
+ * Returns: (transfer none): the same @pspec.
+ *
  * Since: 3.0
  **/
-void
+GParamSpec *
 gimp_procedure_add_return_value (GimpProcedure *procedure,
                                  GParamSpec    *pspec)
 {
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (G_IS_PARAM_SPEC (pspec));
-  g_return_if_fail (gimp_is_canonical_identifier (pspec->name));
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), pspec);
+  g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), pspec);
+  g_return_val_if_fail (gimp_is_canonical_identifier (pspec->name), pspec);
 
   if (gimp_procedure_find_return_value (procedure, pspec->name))
     {
       g_warning ("Return value with name '%s' already exists on procedure '%s'",
                  pspec->name,
                  gimp_procedure_get_name (procedure));
-      return;
+      return pspec;
     }
 
   procedure->priv->values = g_renew (GParamSpec *, procedure->priv->values,
@@ -1329,6 +1343,8 @@ gimp_procedure_add_return_value (GimpProcedure *procedure,
   g_param_spec_ref_sink (pspec);
 
   procedure->priv->n_values++;
+
+  return pspec;
 }
 
 /**
@@ -1343,23 +1359,27 @@ gimp_procedure_add_return_value (GimpProcedure *procedure,
  * The returned values will be ordered according to the call order to
  * gimp_procedure_add_return_value() and
  * gimp_procedure_add_return_value_from_property().
+ *
+ * Returns: (transfer none): the added #GParamSpec.
+ *
+ * Since: 3.0
  */
-void
+GParamSpec *
 gimp_procedure_add_return_value_from_property (GimpProcedure *procedure,
                                                GObject       *config,
                                                const gchar   *prop_name)
 {
   GParamSpec *pspec;
 
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (G_IS_OBJECT (config));
-  g_return_if_fail (prop_name != NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (prop_name != NULL, NULL);
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), prop_name);
 
-  g_return_if_fail (pspec != NULL);
+  g_return_val_if_fail (pspec != NULL, NULL);
 
-  gimp_procedure_add_return_value (procedure, pspec);
+  return gimp_procedure_add_return_value (procedure, pspec);
 }
 
 /**

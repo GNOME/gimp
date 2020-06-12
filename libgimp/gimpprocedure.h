@@ -164,21 +164,21 @@ const gchar    * gimp_procedure_get_authors        (GimpProcedure        *proced
 const gchar    * gimp_procedure_get_copyright      (GimpProcedure        *procedure);
 const gchar    * gimp_procedure_get_date           (GimpProcedure        *procedure);
 
-void             gimp_procedure_add_argument       (GimpProcedure        *procedure,
+GParamSpec     * gimp_procedure_add_argument       (GimpProcedure        *procedure,
                                                     GParamSpec           *pspec);
-void             gimp_procedure_add_argument_from_property
+GParamSpec     * gimp_procedure_add_argument_from_property
                                                    (GimpProcedure        *procedure,
                                                     GObject              *config,
                                                     const gchar          *prop_name);
-void             gimp_procedure_add_aux_argument   (GimpProcedure        *procedure,
+GParamSpec     * gimp_procedure_add_aux_argument   (GimpProcedure        *procedure,
                                                     GParamSpec           *pspec);
-void             gimp_procedure_add_aux_argument_from_property
+GParamSpec     * gimp_procedure_add_aux_argument_from_property
                                                    (GimpProcedure        *procedure,
                                                     GObject              *config,
                                                     const gchar          *prop_name);
-void             gimp_procedure_add_return_value   (GimpProcedure        *procedure,
+GParamSpec     * gimp_procedure_add_return_value   (GimpProcedure        *procedure,
                                                     GParamSpec           *pspec);
-void             gimp_procedure_add_return_value_from_property
+GParamSpec     * gimp_procedure_add_return_value_from_property
                                                    (GimpProcedure        *procedure,
                                                     GObject              *config,
                                                     const gchar          *prop_name);
