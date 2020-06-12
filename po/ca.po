@@ -3976,7 +3976,7 @@ msgstr "Buida l'historial de documents"
 #: ../app/actions/documents-commands.c:238 ../app/actions/edit-commands.c:168
 #: ../app/dialogs/preferences-dialog.c:665
 msgid "Cl_ear"
-msgstr "N_eteja"
+msgstr "_Buida"
 
 #: ../app/actions/documents-commands.c:253
 msgid "Clear the Recent Documents list?"
@@ -19841,7 +19841,7 @@ msgstr "Fusiona el gra"
 #: ../app/operations/operations-enums.c:267
 msgctxt "layer-mode"
 msgid "Vivid light"
-msgstr "Llum forta"
+msgstr "Llum viva"
 
 #: ../app/operations/operations-enums.c:268
 msgctxt "layer-mode"
