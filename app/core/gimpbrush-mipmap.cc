@@ -292,16 +292,20 @@ struct MipmapAlgorithms
       [=] (gint offset,
            gint size)
       {
-        const T *src  = (const T *) gimp_temp_buf_get_data (source);
-        T       *dest = (T       *) gimp_temp_buf_get_data (destination);
+        const T *src0        = (const T *) gimp_temp_buf_get_data (source);
+        T       *dest0       = (T       *) gimp_temp_buf_get_data (destination);
+        gint     src_stride  = N * gimp_temp_buf_get_width (source);
+        gint     dest_stride = N * gimp_temp_buf_get_width (destination);
         gint     y;
 
-        src  += offset * gimp_temp_buf_get_width (source)      * N;
-        dest += offset * gimp_temp_buf_get_width (destination) * N;
+        src0  += offset * src_stride;
+        dest0 += offset * dest_stride;
 
         for (y = 0; y < size; y++)
           {
-            gint x;
+            const T *src  = src0;
+            T       *dest = dest0;
+            gint     x;
 
             for (x = 0; x < width; x++)
               {
@@ -313,6 +317,9 @@ struct MipmapAlgorithms
                 src  += 2 * N;
                 dest += N;
               }
+
+            src0  += src_stride;
+            dest0 += dest_stride;
           }
       });
 
