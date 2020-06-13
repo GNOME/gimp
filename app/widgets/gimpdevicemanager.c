@@ -32,6 +32,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpcurve.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
@@ -95,6 +96,10 @@ static void   gimp_device_manager_tool_changed    (GimpContext       *user_conte
 
 static void   gimp_device_manager_connect_tool    (GimpDeviceManager *manager);
 static void   gimp_device_manager_disconnect_tool (GimpDeviceManager *manager);
+
+static void   gimp_device_manager_device_defaults (GdkSeat           *seat,
+                                                   GdkDevice         *device,
+                                                   GimpDeviceManager *manager);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceManager, gimp_device_manager,
@@ -330,6 +335,37 @@ gimp_device_manager_set_current_device (GimpDeviceManager *manager,
   g_object_notify (G_OBJECT (manager), "current-device");
 }
 
+void
+gimp_device_manager_reset (GimpDeviceManager *manager)
+{
+  GdkDisplayManager *disp_manager;
+  GSList            *displays;
+  GSList            *list;
+
+  disp_manager = gdk_display_manager_get ();
+  displays = gdk_display_manager_list_displays (disp_manager);
+
+  for (list = displays; list; list = g_slist_next (list))
+    {
+      GdkDisplay *display = list->data;
+      GdkSeat    *seat;
+      GList      *devices;
+      GList      *iter;
+
+      seat    = gdk_display_get_default_seat (display);
+      devices = gdk_seat_get_slaves (seat, GDK_SEAT_CAPABILITY_ALL_POINTING);
+
+      for (iter = devices; iter; iter = g_list_next (iter))
+        {
+          GdkDevice *device = iter->data;
+
+          gimp_device_manager_device_defaults (seat, device, manager);
+        }
+    }
+
+  g_slist_free (displays);
+}
+
 
 /*  private functions  */
 
@@ -455,58 +491,7 @@ gimp_device_manager_device_added (GdkSeat           *seat,
   if (gdk_device_get_source (device) == GDK_SOURCE_KEYBOARD)
     return;
 
-  if (device == gdk_seat_get_pointer (seat))
-    {
-      gdk_device_set_mode (device, GDK_MODE_SCREEN);
-    }
-  else if (gdk_device_get_device_type (device) == GDK_DEVICE_TYPE_MASTER)
-    {
-      return;
-    }
-  else /* slave or floating device */
-    {
-      /* default to enabling all devices */
-      GdkInputMode mode = GDK_MODE_SCREEN;
-
-      switch (gdk_device_get_source (device))
-        {
-        case GDK_SOURCE_MOUSE:
-          mode = GDK_MODE_DISABLED;
-          break;
-
-        case GDK_SOURCE_PEN:
-        case GDK_SOURCE_ERASER:
-        case GDK_SOURCE_CURSOR:
-          break;
-
-        case GDK_SOURCE_TOUCHSCREEN:
-        case GDK_SOURCE_TOUCHPAD:
-        case GDK_SOURCE_TRACKPOINT:
-          mode = GDK_MODE_DISABLED;
-          break;
-
-        case GDK_SOURCE_TABLET_PAD:
-          break;
-
-        default:
-          break;
-        }
-
-      if (gdk_device_set_mode (device, mode))
-        {
-          g_printerr ("set device '%s' to mode: %s\n",
-                      gdk_device_get_name (device),
-                      g_enum_get_value (g_type_class_peek (GDK_TYPE_INPUT_MODE),
-                                        mode)->value_nick);
-        }
-      else
-        {
-          g_printerr ("failed to set device '%s' to mode: %s\n",
-                      gdk_device_get_name (device),
-                      g_enum_get_value (g_type_class_peek (GDK_TYPE_INPUT_MODE),
-                                        mode)->value_nick);
-         }
-    }
+  gimp_device_manager_device_defaults (seat, device, manager);
 
   display = gdk_seat_get_display (seat);
 
@@ -647,5 +632,92 @@ gimp_device_manager_disconnect_tool (GimpDeviceManager *manager)
 
       gimp_config_disconnect (G_OBJECT (private->active_tool->tool_options),
                               G_OBJECT (preset->tool_options));
+    }
+}
+
+static void
+gimp_device_manager_device_defaults (GdkSeat           *seat,
+                                     GdkDevice         *device,
+                                     GimpDeviceManager *manager)
+{
+  GimpDeviceInfo *info;
+  gint            i;
+
+  if (gdk_device_get_source (device) == GDK_SOURCE_KEYBOARD)
+    return;
+
+  /* Set default mode for this device. */
+
+  if (device == gdk_seat_get_pointer (seat))
+    {
+      gdk_device_set_mode (device, GDK_MODE_SCREEN);
+    }
+  else if (gdk_device_get_device_type (device) == GDK_DEVICE_TYPE_MASTER)
+    {
+      return;
+    }
+  else /* slave or floating device */
+    {
+      /* default to enabling all devices */
+      GdkInputMode mode = GDK_MODE_SCREEN;
+
+      switch (gdk_device_get_source (device))
+        {
+        case GDK_SOURCE_MOUSE:
+          mode = GDK_MODE_DISABLED;
+          break;
+
+        case GDK_SOURCE_PEN:
+        case GDK_SOURCE_ERASER:
+        case GDK_SOURCE_CURSOR:
+          break;
+
+        case GDK_SOURCE_TOUCHSCREEN:
+        case GDK_SOURCE_TOUCHPAD:
+        case GDK_SOURCE_TRACKPOINT:
+          mode = GDK_MODE_DISABLED;
+          break;
+
+        case GDK_SOURCE_TABLET_PAD:
+          break;
+
+        default:
+          break;
+        }
+
+      if (gdk_device_set_mode (device, mode))
+        {
+          g_printerr ("set device '%s' to mode: %s\n",
+                      gdk_device_get_name (device),
+                      g_enum_get_value (g_type_class_peek (GDK_TYPE_INPUT_MODE),
+                                        mode)->value_nick);
+        }
+      else
+        {
+          g_printerr ("failed to set device '%s' to mode: %s\n",
+                      gdk_device_get_name (device),
+                      g_enum_get_value (g_type_class_peek (GDK_TYPE_INPUT_MODE),
+                                        mode)->value_nick);
+         }
+    }
+
+  /* Reset curve for this device. */
+
+  info =
+    GIMP_DEVICE_INFO (gimp_container_get_child_by_name (GIMP_CONTAINER (manager),
+                                                        gdk_device_get_name (device)));
+  if (info)
+    {
+      for (i = 0; i < gimp_device_info_get_n_axes (info); i++)
+        {
+          GimpCurve  *curve;
+          GdkAxisUse  use;
+
+          use   = gimp_device_info_get_axis_use (info, i);
+          curve = gimp_device_info_get_curve (info, use);
+
+          if (curve)
+            gimp_curve_reset (curve, TRUE);
+        }
     }
 }

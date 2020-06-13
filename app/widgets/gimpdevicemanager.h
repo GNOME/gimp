@@ -60,6 +60,7 @@ GimpDeviceInfo    * gimp_device_manager_get_current_device (GimpDeviceManager *m
 void                gimp_device_manager_set_current_device (GimpDeviceManager *manager,
                                                             GimpDeviceInfo    *info);
 
+void                gimp_device_manager_reset              (GimpDeviceManager *manager);
 
 G_END_DECLS
 
