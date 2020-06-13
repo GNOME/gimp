@@ -85,8 +85,6 @@ struct _GimpDeviceInfoEditorPrivate
   GtkListStore   *axis_store;
   GtkTreeIter     axis_iters[GDK_AXIS_LAST - GDK_AXIS_X];
 
-  GtkListStore   *key_store;
-
   GtkWidget      *notebook;
 };
 
@@ -112,16 +110,6 @@ static void   gimp_device_info_editor_axis_changed  (GtkCellRendererCombo *combo
                                                      GtkTreeIter          *new_iter,
                                                      GimpDeviceInfoEditor *editor);
 static void   gimp_device_info_editor_axis_selected (GtkTreeSelection     *selection,
-                                                     GimpDeviceInfoEditor *editor);
-
-static void   gimp_device_info_editor_key_edited    (GtkCellRendererAccel *accel,
-                                                     const char           *path_string,
-                                                     guint                 accel_key,
-                                                     GdkModifierType       accel_mask,
-                                                     guint                 hardware_keycode,
-                                                     GimpDeviceInfoEditor *editor);
-static void   gimp_device_info_editor_key_cleared   (GtkCellRendererAccel *accel,
-                                                     const char           *path_string,
                                                      GimpDeviceInfoEditor *editor);
 
 static void   gimp_device_info_editor_curve_reset   (GtkWidget            *button,
@@ -181,8 +169,6 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
   GtkWidget                   *frame2;
   GtkWidget                   *view;
   GtkTreeSelection            *sel;
-  GtkWidget                   *scrolled_win;
-  GtkWidget                   *key_view;
   GtkCellRenderer             *cell;
   gint                         i;
 
@@ -271,58 +257,6 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
   g_signal_connect (sel, "changed",
                     G_CALLBACK (gimp_device_info_editor_axis_selected),
                     editor);
-
-  /*  the keys  */
-
-  frame = gimp_frame_new (_("Keys"));
-  gtk_box_pack_end (GTK_BOX (private->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  private->key_store = gtk_list_store_new (KEY_N_COLUMNS,
-                                           G_TYPE_INT,
-                                           G_TYPE_STRING,
-                                           G_TYPE_UINT,
-                                           GDK_TYPE_MODIFIER_TYPE);
-  key_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (private->key_store));
-  g_object_unref (private->key_store);
-
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (key_view), FALSE);
-
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (key_view),
-                                               -1, NULL,
-                                               gtk_cell_renderer_text_new (),
-                                               "text", KEY_COLUMN_NAME,
-                                               NULL);
-
-  cell = gtk_cell_renderer_accel_new ();
-  g_object_set (cell,
-                "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
-                "editable", TRUE,
-                NULL);
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (key_view),
-                                               -1, NULL,
-                                               cell,
-                                               "accel-key",  KEY_COLUMN_KEY,
-                                               "accel-mods", KEY_COLUMN_MASK,
-                                               NULL);
-
-  g_signal_connect (cell, "accel-edited",
-                    G_CALLBACK (gimp_device_info_editor_key_edited),
-                    editor);
-  g_signal_connect (cell, "accel-cleared",
-                    G_CALLBACK (gimp_device_info_editor_key_cleared),
-                    editor);
-
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
-                                       GTK_SHADOW_IN);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (frame), scrolled_win);
-  gtk_widget_show (scrolled_win);
-
-  gtk_container_add (GTK_CONTAINER (scrolled_win), key_view);
-  gtk_widget_show (key_view);
 }
 
 static void
@@ -335,7 +269,6 @@ gimp_device_info_editor_constructed (GObject *object)
   GtkWidget                   *label;
   GtkWidget                   *combo;
   gint                         n_axes;
-  gint                         n_keys;
   gint                         i;
 
   private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (object);
@@ -413,28 +346,6 @@ gimp_device_info_editor_constructed (GObject *object)
     }
 
   gimp_device_info_editor_set_axes (editor);
-
-  /*  the keys  */
-
-  n_keys = gimp_device_info_get_n_keys (private->info);
-
-  for (i = 0; i < n_keys; i++)
-    {
-      gchar           string[16];
-      guint           keyval;
-      GdkModifierType modifiers;
-
-      g_snprintf (string, sizeof (string), "%d", i + 1);
-
-      gimp_device_info_get_key (private->info, i, &keyval, &modifiers);
-
-      gtk_list_store_insert_with_values (private->key_store, NULL, -1,
-                                         KEY_COLUMN_INDEX, i,
-                                         KEY_COLUMN_NAME,  string,
-                                         KEY_COLUMN_KEY,   keyval,
-                                         KEY_COLUMN_MASK,  modifiers,
-                                         -1);
-    }
 
   /*  the curves  */
 
@@ -718,73 +629,6 @@ gimp_device_info_editor_axis_selected (GtkTreeSelection     *selection,
       gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook),
                                      use - 1);
     }
-}
-
-static void
-gimp_device_info_editor_key_edited (GtkCellRendererAccel *accel,
-                                    const char           *path_string,
-                                    guint                 accel_key,
-                                    GdkModifierType       accel_mask,
-                                    guint                 hardware_keycode,
-                                    GimpDeviceInfoEditor *editor)
-{
-  GimpDeviceInfoEditorPrivate *private;
-  GtkTreePath                 *path;
-  GtkTreeIter                  iter;
-
-  private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (editor);
-
-  path = gtk_tree_path_new_from_string (path_string);
-
-  if (gtk_tree_model_get_iter (GTK_TREE_MODEL (private->key_store), &iter, path))
-    {
-      gint index;
-
-      gtk_tree_model_get (GTK_TREE_MODEL (private->key_store), &iter,
-                          KEY_COLUMN_INDEX, &index,
-                          -1);
-
-      gtk_list_store_set (private->key_store, &iter,
-                          KEY_COLUMN_KEY,  accel_key,
-                          KEY_COLUMN_MASK, accel_mask,
-                          -1);
-
-      gimp_device_info_set_key (private->info, index, accel_key, accel_mask);
-    }
-
-  gtk_tree_path_free (path);
-}
-
-static void
-gimp_device_info_editor_key_cleared (GtkCellRendererAccel *accel,
-                                     const char           *path_string,
-                                     GimpDeviceInfoEditor *editor)
-{
-  GimpDeviceInfoEditorPrivate *private;
-  GtkTreePath                 *path;
-  GtkTreeIter                  iter;
-
-  private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (editor);
-
-  path = gtk_tree_path_new_from_string (path_string);
-
-  if (gtk_tree_model_get_iter (GTK_TREE_MODEL (private->key_store), &iter, path))
-    {
-      gint index;
-
-      gtk_tree_model_get (GTK_TREE_MODEL (private->key_store), &iter,
-                          KEY_COLUMN_INDEX, &index,
-                          -1);
-
-      gtk_list_store_set (private->key_store, &iter,
-                          KEY_COLUMN_KEY,  0,
-                          KEY_COLUMN_MASK, 0,
-                          -1);
-
-      gimp_device_info_set_key (private->info, index, 0, 0);
-    }
-
-  gtk_tree_path_free (path);
 }
 
 static void
