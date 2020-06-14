@@ -1829,7 +1829,7 @@ get_pixel_format (gint32 drawableID)
       g_return_val_if_reached (NULL);
     }
 
-  bpc = get_bpc (gimp_item_get_image (image_id));
+  bpc = get_bpc (image_id);
 
   sprintf (format, "%s u%d", model, 8 * bpc);
 
