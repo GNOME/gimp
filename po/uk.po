@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-09 10:04+0000\n"
-"PO-Revision-Date: 2020-06-09 19:22+0300\n"
+"POT-Creation-Date: 2020-06-13 20:10+0000\n"
+"PO-Revision-Date: 2020-06-14 09:57+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3229,6 +3229,8 @@ msgstr "240 секунд"
 #: ../app/dialogs/image-merge-layers-dialog.c:100
 #: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
 #: ../app/dialogs/image-scale-dialog.c:210
+#: ../app/dialogs/input-devices-dialog.c:66
+#: ../app/dialogs/input-devices-dialog.c:121
 #: ../app/dialogs/item-options-dialog.c:145
 #: ../app/dialogs/layer-add-mask-dialog.c:119
 #: ../app/dialogs/palette-import-dialog.c:161
@@ -4659,7 +4661,6 @@ msgstr "Збереження повідомлень про помилки у ф�
 
 #: ../app/actions/error-console-commands.c:101
 #: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:715
-#: ../app/dialogs/input-devices-dialog.c:65
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:69
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -8190,6 +8191,8 @@ msgstr "Перезавантажити усі фільтри"
 #: ../app/actions/plug-in-commands.c:186
 #: ../app/actions/tool-options-commands.c:211 ../app/dialogs/fill-dialog.c:114
 #: ../app/dialogs/grid-dialog.c:101 ../app/dialogs/image-new-dialog.c:105
+#: ../app/dialogs/input-devices-dialog.c:65
+#: ../app/dialogs/input-devices-dialog.c:122
 #: ../app/dialogs/preferences-dialog.c:292
 #: ../app/dialogs/preferences-dialog.c:1132
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
@@ -10786,6 +10789,7 @@ msgstr "Перемістити це вікно на екран %s"
 #: ../app/actions/window-commands.c:78 ../app/dialogs/extensions-dialog.c:79
 #: ../app/dialogs/file-save-dialog.c:638 ../app/dialogs/grid-dialog.c:103
 #: ../app/dialogs/image-new-dialog.c:107 ../app/dialogs/image-new-dialog.c:326
+#: ../app/dialogs/input-devices-dialog.c:67
 #: ../app/dialogs/item-options-dialog.c:146
 #: ../app/dialogs/preferences-dialog.c:1134
 #: ../app/dialogs/print-size-dialog.c:125
@@ -12060,7 +12064,6 @@ msgid "Show the currently active image in the toolbox."
 msgstr "Показувати активне зображення у панелі інструментів."
 
 #: ../app/config/gimprc-blurbs.h:689
-#| msgid "Show the currently active image in the toolbox."
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr "Показувати маскот GIMP над набором інструментів."
 
@@ -16067,7 +16070,6 @@ msgid "Image Properties"
 msgstr "Властивості зображення"
 
 #: ../app/dialogs/image-properties-dialog.c:68
-#: ../app/dialogs/input-devices-dialog.c:66
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:70
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:350
 #: ../app/tools/gimpgradienttool-editor.c:1811
@@ -16127,6 +16129,17 @@ msgstr "Ви дійсно бажаєте це зробити?"
 #: ../app/dialogs/input-devices-dialog.c:59
 msgid "Configure Input Devices"
 msgstr "Налаштувати пристрої вводу"
+
+#: ../app/dialogs/input-devices-dialog.c:114
+#| msgid "Resource configuration"
+msgid "Reset Input Device Configuration"
+msgstr "Скинути налаштування пристрою введення"
+
+#: ../app/dialogs/input-devices-dialog.c:132
+#| msgid "Do you really want to reset all filters to default values?"
+msgid "Do you really want to reset all input devices to default configuration?"
+msgstr ""
+"Ви дійсно бажаєте відновити типові налаштування для усіх пристроїв введення?"
 
 #: ../app/dialogs/item-options-dialog.c:203
 msgid "Color tag:"
@@ -16199,7 +16212,7 @@ msgid "Layer _name:"
 msgstr "_Назва шару:"
 
 #: ../app/dialogs/layer-options-dialog.c:188
-#: ../app/widgets/gimpdeviceinfoeditor.c:363
+#: ../app/widgets/gimpdeviceinfoeditor.c:296
 msgid "_Mode:"
 msgstr "_Режим:"
 
@@ -16937,7 +16950,7 @@ msgstr "Параметри інструменту"
 #: ../app/dialogs/preferences-dialog.c:2845
 #: ../app/dialogs/preferences-dialog.c:3088
 #: ../app/widgets/gimpcontrollereditor.c:188
-#: ../app/widgets/gimpdeviceinfoeditor.c:349
+#: ../app/widgets/gimpdeviceinfoeditor.c:282
 msgid "General"
 msgstr "Загальне"
 
@@ -18444,13 +18457,13 @@ msgstr "н/д"
 
 #: ../app/display/gimpcursorview.c:224 ../app/display/gimpcursorview.c:249
 #: ../app/display/gimpcursorview.c:276 ../app/tools/gimptransform3dtool.c:435
-#: ../app/widgets/gimpdeviceinfoeditor.c:139
+#: ../app/widgets/gimpdeviceinfoeditor.c:127
 msgid "X"
 msgstr "X"
 
 #: ../app/display/gimpcursorview.c:230 ../app/display/gimpcursorview.c:255
 #: ../app/display/gimpcursorview.c:282 ../app/tools/gimptransform3dtool.c:435
-#: ../app/widgets/gimpdeviceinfoeditor.c:140
+#: ../app/widgets/gimpdeviceinfoeditor.c:128
 msgid "Y"
 msgstr "Y"
 
@@ -20104,7 +20117,7 @@ msgstr "Перетворити кольори на градації сірого
 
 #: ../app/operations/gimpoperationdesaturate.c:91
 #: ../app/operations/gimpoperationsettings.c:92
-#: ../app/tools/gimpfiltertool.c:1146 ../app/tools/gimppaintoptions-gui.c:111
+#: ../app/tools/gimpfiltertool.c:1144 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:124
 #: ../app/widgets/gimplayertreeview.c:277
 msgid "Mode"
@@ -20144,7 +20157,7 @@ msgid "The color"
 msgstr "Колір"
 
 #: ../app/operations/gimpoperationsettings.c:77
-#: ../app/tools/gimpfiltertool.c:1110 ../app/tools/gimpflipoptions.c:156
+#: ../app/tools/gimpfiltertool.c:1108 ../app/tools/gimpflipoptions.c:156
 #: ../app/tools/gimptransformoptions.c:109
 #: ../app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -22889,7 +22902,7 @@ msgstr "В_ихід:"
 msgid "T_ype:"
 msgstr "_Тип:"
 
-#: ../app/tools/gimpcurvestool.c:675 ../app/widgets/gimpdeviceinfoeditor.c:500
+#: ../app/tools/gimpcurvestool.c:675 ../app/widgets/gimpdeviceinfoeditor.c:411
 msgid "Curve _type:"
 msgstr "_Тип кривої:"
 
@@ -23068,21 +23081,21 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: перемикання горизонталь/вертикаль"
 
 #. The blending-options expander
-#: ../app/tools/gimpfiltertool.c:1123
+#: ../app/tools/gimpfiltertool.c:1121
 msgid "Blending Options"
 msgstr "Параметри змішування"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:1162
+#: ../app/tools/gimpfiltertool.c:1160
 msgid "Advanced Color Options"
 msgstr "Додаткові параметри кольорів"
 
-#: ../app/tools/gimpfiltertool.c:1577 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1567 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Імпортувати параметри «%s»"
 
-#: ../app/tools/gimpfiltertool.c:1579 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1569 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Експортувати параметри «%s»"
@@ -23498,27 +23511,27 @@ msgctxt "undo-type"
 msgid "Move Guides"
 msgstr "пересування напрямних"
 
-#: ../app/tools/gimpguidetool.c:433
+#: ../app/tools/gimpguidetool.c:432
 msgid "Remove Guides"
 msgstr "Вилучити напрямні"
 
-#: ../app/tools/gimpguidetool.c:434
+#: ../app/tools/gimpguidetool.c:433
 msgid "Remove Guide"
 msgstr "Вилучити напрямну"
 
-#: ../app/tools/gimpguidetool.c:435
+#: ../app/tools/gimpguidetool.c:434
 msgid "Cancel Guide"
 msgstr "Прибрати напрямну"
 
-#: ../app/tools/gimpguidetool.c:472
+#: ../app/tools/gimpguidetool.c:471
 msgid "Move Guide: "
 msgstr "Переміщення напрямної: "
 
-#: ../app/tools/gimpguidetool.c:482
+#: ../app/tools/gimpguidetool.c:481
 msgid "Move Guides: "
 msgstr "Переміщення напрямних: "
 
-#: ../app/tools/gimpguidetool.c:493
+#: ../app/tools/gimpguidetool.c:492
 msgid "Add Guide: "
 msgstr "Додавання напрямних"
 
@@ -26787,17 +26800,17 @@ msgstr "(Немає пристрою)"
 msgid "(Virtual device)"
 msgstr "(Віртуальний пристрій)"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:141
+#: ../app/widgets/gimpdeviceinfoeditor.c:129
 #: ../app/widgets/gimpdynamicseditor.c:161
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "Натиск"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:142
+#: ../app/widgets/gimpdeviceinfoeditor.c:130
 msgid "X tilt"
 msgstr "Нахил по X"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:143
+#: ../app/widgets/gimpdeviceinfoeditor.c:131
 msgid "Y tilt"
 msgstr "Нахил по Y"
 
@@ -26808,75 +26821,70 @@ msgstr "Нахил по Y"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: ../app/widgets/gimpdeviceinfoeditor.c:151
+#: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "Wheel"
 msgstr "Колесо"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:152
+#: ../app/widgets/gimpdeviceinfoeditor.c:140
 msgid "Distance"
 msgstr "Відстань"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:153
+#: ../app/widgets/gimpdeviceinfoeditor.c:141
 msgid "Rotation"
 msgstr "Обертання"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:154
+#: ../app/widgets/gimpdeviceinfoeditor.c:142
 msgid "Slider"
 msgstr "Повзунок"
 
 #. the axes
 #. The axes of an input device
-#: ../app/widgets/gimpdeviceinfoeditor.c:203
+#: ../app/widgets/gimpdeviceinfoeditor.c:189
 msgid "Axes"
 msgstr "Осі"
 
-#. the keys
-#: ../app/widgets/gimpdeviceinfoeditor.c:277
-msgid "Keys"
-msgstr "Клавіші"
-
-#: ../app/widgets/gimpdeviceinfoeditor.c:368
+#: ../app/widgets/gimpdeviceinfoeditor.c:301
 msgid "Source:"
 msgstr "Джерело:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:373
+#: ../app/widgets/gimpdeviceinfoeditor.c:306
 msgid "Vendor ID:"
 msgstr "Ід. виробника:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:378
+#: ../app/widgets/gimpdeviceinfoeditor.c:311
 msgid "Product ID:"
 msgstr "Ід. продукту:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:383
+#: ../app/widgets/gimpdeviceinfoeditor.c:316
 msgid "Tool type:"
 msgstr "Тип засобу:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:388
+#: ../app/widgets/gimpdeviceinfoeditor.c:321
 msgid "Tool serial:"
 msgstr "Серійний номер засобу:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:393
+#: ../app/widgets/gimpdeviceinfoeditor.c:326
 msgid "Tool hardware ID:"
 msgstr "Апаратний ід. засобу:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:405
-#: ../app/widgets/gimpdeviceinfoeditor.c:619
+#: ../app/widgets/gimpdeviceinfoeditor.c:338
+#: ../app/widgets/gimpdeviceinfoeditor.c:530
 #, c-format
 msgid "none"
 msgstr "немає"
 
 #. e.g. "Pressure Curve" for mapping input device axes
-#: ../app/widgets/gimpdeviceinfoeditor.c:453
+#: ../app/widgets/gimpdeviceinfoeditor.c:364
 #, c-format
 msgid "%s Curve"
 msgstr "Крива %s"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:512
+#: ../app/widgets/gimpdeviceinfoeditor.c:423
 #: ../app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
 msgstr "_Скинути криву"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:525
+#: ../app/widgets/gimpdeviceinfoeditor.c:436
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "У осі %s немає кривої"
@@ -28213,6 +28221,9 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid "Keys"
+#~ msgstr "Клавіші"
 
 #~ msgid "No active drawable."
 #~ msgstr "Немає активного об'єкта для малювання."
