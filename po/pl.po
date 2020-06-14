@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-06 14:12+0200\n"
-"PO-Revision-Date: 2020-06-06 14:14+0200\n"
+"POT-Creation-Date: 2020-06-14 13:41+0200\n"
+"PO-Revision-Date: 2020-06-14 13:42+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -11909,6 +11909,10 @@ msgstr "Używa jednego przycisku przybornika dla narzędzi w grupach."
 msgid "Show the currently active image in the toolbox."
 msgstr "Wyświetla obecnie aktywny obraz w przyborniku."
 
+#: ../app/config/gimprc-blurbs.h:695
+msgid "Show the GIMP mascot at the top of the toolbox."
+msgstr "Wyświetla maskotkę GIMP-a na górze przybornika."
+
 #: ../app/config/gimprc-blurbs.h:698
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Ustawia sposób prezentowania przezroczystości w obrazie."
@@ -22646,12 +22650,12 @@ msgstr ""
 "Przyjmowanie, że piksele są we wbudowanej przestrzeni sRGB (ignorowanie "
 "prawdziwej przestrzeni kolorów obrazu)"
 
-#: ../app/tools/gimpfiltertool.c:1557 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1549 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpfiltertool.c:1559 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1551 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
@@ -23055,27 +23059,27 @@ msgctxt "undo-type"
 msgid "Move Guides"
 msgstr "Przesunięcie prowadnic"
 
-#: ../app/tools/gimpguidetool.c:433
+#: ../app/tools/gimpguidetool.c:432
 msgid "Remove Guides"
 msgstr "Usuń prowadnice"
 
-#: ../app/tools/gimpguidetool.c:434
+#: ../app/tools/gimpguidetool.c:433
 msgid "Remove Guide"
 msgstr "Usuń prowadnicę"
 
-#: ../app/tools/gimpguidetool.c:435
+#: ../app/tools/gimpguidetool.c:434
 msgid "Cancel Guide"
 msgstr "Anuluj prowadnicę"
 
-#: ../app/tools/gimpguidetool.c:472
+#: ../app/tools/gimpguidetool.c:471
 msgid "Move Guide: "
 msgstr "Przesunięcie prowadnicy: "
 
-#: ../app/tools/gimpguidetool.c:482
+#: ../app/tools/gimpguidetool.c:481
 msgid "Move Guides: "
 msgstr "Przesunięcie prowadnic: "
 
-#: ../app/tools/gimpguidetool.c:493
+#: ../app/tools/gimpguidetool.c:492
 msgid "Add Guide: "
 msgstr "Dodanie prowadnicy: "
 
