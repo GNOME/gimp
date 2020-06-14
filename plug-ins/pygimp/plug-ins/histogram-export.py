@@ -64,13 +64,14 @@ def histogram_export(img, drw, filename,
         writer.writerow(["Range start"] + channels_txt)
 
         # FIXME: Will need a specialized 'range' for FP color numbers
-        for start_range in range(0, 256, int(bucket_size)):
+        bucket_size = int(bucket_size)
+        for start_range in range(0, 256, bucket_size):
             row = [start_range]
             for channel in channels_gimp:
                 result = pdb.gimp_histogram(
                              drw, channel,
                              start_range,
-                             min(start_range + bucket_size, 255)
+                             min(start_range + bucket_size - 1, 255)
                             )
                 if output_format == "pixel count":
                     count = result[4]
