@@ -310,6 +310,128 @@ gimp_procedure_config_get_values (GimpProcedureConfig  *config,
   g_free (pspecs);
 }
 
+static void
+gimp_procedure_config_get_parasite (GimpProcedureConfig *config,
+                                    GParamSpec          *pspec)
+{
+  GimpParasite *parasite;
+  gchar        *value = NULL;
+
+  /*  for now we only support strings  */
+  if (! config->priv->image ||
+      ! G_IS_PARAM_SPEC_STRING (pspec))
+    return;
+
+  parasite = gimp_image_get_parasite (config->priv->image, pspec->name);
+
+  if (parasite)
+    {
+      value = g_strndup (gimp_parasite_data (parasite),
+                         gimp_parasite_data_size (parasite));
+      gimp_parasite_free (parasite);
+
+      if (value && ! strlen (value))
+        g_clear_pointer (&value, g_free);
+    }
+
+  if (! value)
+    {
+      /*  special case "gimp-comment" here, yes this is bad hack  */
+      if (! strcmp (pspec->name, "gimp-comment"))
+        {
+          value = gimp_get_default_comment ();
+        }
+    }
+
+  if (value && strlen (value))
+    g_object_set (config,
+                  pspec->name, value,
+                  NULL);
+
+  g_free (value);
+}
+
+static void
+gimp_procedure_config_set_parasite (GimpProcedureConfig *config,
+                                    GParamSpec          *pspec)
+{
+  GimpParasite *parasite;
+  gchar        *value;
+
+  /*  for now we only support strings  */
+  if (! config->priv->image ||
+      ! G_IS_PARAM_SPEC_STRING (pspec))
+    return;
+
+  g_object_get (config,
+                pspec->name, &value,
+                NULL);
+
+  parasite = gimp_image_get_parasite (config->priv->image, pspec->name);
+
+  if (parasite)
+    {
+      /*  it there is a parasite, always override it if its value was
+       *  changed
+       */
+      gchar *image_value;
+
+      image_value = g_strndup (gimp_parasite_data (parasite),
+                               gimp_parasite_data_size (parasite));
+      gimp_parasite_free (parasite);
+
+      if (g_strcmp0 (value, image_value))
+        {
+          if (value && strlen (value))
+            {
+              parasite = gimp_parasite_new (pspec->name,
+                                            GIMP_PARASITE_PERSISTENT,
+                                            strlen (value) + 1,
+                                            value);
+              gimp_image_attach_parasite (config->priv->image,
+                                          parasite);
+              gimp_parasite_free (parasite);
+            }
+          else
+            {
+              gimp_image_detach_parasite (config->priv->image,
+                                          pspec->name);
+            }
+        }
+
+      g_free (image_value);
+    }
+  else
+    {
+      /*  otherwise, set the parasite if the value was changed from
+       *  the default value
+       */
+      gchar *default_value = NULL;
+
+      /*  special case "gimp-comment" here, yes this is bad hack  */
+      if (! strcmp (pspec->name, "gimp-comment"))
+        {
+          default_value = gimp_get_default_comment ();
+        }
+
+      if (g_strcmp0 (value, default_value) &&
+          value && strlen (value))
+        {
+          parasite = gimp_parasite_new (pspec->name,
+                                        GIMP_PARASITE_PERSISTENT,
+                                        strlen (value) + 1,
+                                        value);
+          gimp_image_attach_parasite (config->priv->image,
+                                      parasite);
+          gimp_parasite_free (parasite);
+        }
+
+      g_free (default_value);
+    }
+
+  g_free (value);
+}
+
 /**
  * gimp_procedure_config_begin_run:
  * @config:   a #GimpProcedureConfig
@@ -329,6 +451,18 @@ gimp_procedure_config_get_values (GimpProcedureConfig  *config,
  *
  * If @run_mode is %GIMP_RUN_NONINTERACTIVE, the contents of @args are
  * set on @config using gimp_procedure_config_set_values().
+ *
+ * After setting @config's properties like described above, arguments
+ * and auxiliary arguments are automatically synced from image
+ * parasites of the same name if they were set to
+ * %GIMP_ARGUMENT_SYNC_PARASITE with
+ * gimp_procedure_set_argument_sync():
+ *
+ * String properties are set to the value of the image parasite if
+ * @run_mode is %GIMP_RUN_INTERACTIVE or %GIMP_RUN_WITH_LAST_VALS, or
+ * if the corresponding argument is an auxiliary argument. As a
+ * special case, a propery named "gimp-comment" will default to
+ * gimp_get_default_comment() if there is no "gimp-comment" parasite.
  *
  * After calling this function, the @args passed to run() should be
  * left alone and @config be treated as the procedure's arguments.
@@ -351,8 +485,11 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
                                  GimpRunMode           run_mode,
                                  const GimpValueArray *args)
 {
-  gboolean  loaded = FALSE;
-  GError   *error  = NULL;
+  GParamSpec **pspecs;
+  guint        n_pspecs;
+  gint         i;
+  gboolean     loaded = FALSE;
+  GError      *error  = NULL;
 
   g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
@@ -390,6 +527,42 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
       gimp_procedure_config_set_values (config, args);
       break;
     }
+
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
+                                           &n_pspecs);
+
+  for (i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec = pspecs[i];
+
+      /*  skip our own properties  */
+      if (pspec->owner_type == GIMP_TYPE_PROCEDURE_CONFIG)
+        continue;
+
+      switch (gimp_procedure_get_argument_sync (config->priv->procedure,
+                                                pspec->name))
+        {
+        case GIMP_ARGUMENT_SYNC_PARASITE:
+          /*  we sync the property from the image parasite if it is an
+           *  aux argument, or if we run interactively, because the
+           *  parasite should be global to the image and not depend on
+           *  whatever parasite another image had when last using this
+           *  procedure
+           */
+          if (gimp_procedure_find_aux_argument (config->priv->procedure,
+                                                pspec->name) ||
+              (run_mode != GIMP_RUN_NONINTERACTIVE))
+            {
+              gimp_procedure_config_get_parasite (config, pspec);
+            }
+          break;
+
+        default:
+          break;
+        }
+    }
+
+  g_free (pspecs);
 }
 
 /**
@@ -412,6 +585,10 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
  * conveniently calls gimp_displays_flush(), which is what most
  * procedures want and doesn't do any harm if called redundantly.
  *
+ * After a %GIMP_RUN_INTERACTIVE run, %GIMP_ARGUMENT_SYNC_PARASITE
+ * values that have been changed are written back to their
+ * corresponding image parasite.
+ *
  * See gimp_procedure_config_begin_run().
  *
  * Since: 3.0
@@ -425,10 +602,13 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
   if (config->priv->run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 
-  if (status                 == GIMP_PDB_SUCCESS &&
+  if (status == GIMP_PDB_SUCCESS &&
       config->priv->run_mode == GIMP_RUN_INTERACTIVE)
     {
-      GError *error = NULL;
+      GParamSpec **pspecs;
+      guint        n_pspecs;
+      gint         i;
+      GError      *error = NULL;
 
       if (config->priv->image)
         gimp_procedure_config_save_parasite (config, config->priv->image,
@@ -440,6 +620,31 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
                       error->message);
           g_clear_error (&error);
         }
+
+      pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
+                                               &n_pspecs);
+
+      for (i = 0; i < n_pspecs; i++)
+        {
+          GParamSpec *pspec = pspecs[i];
+
+          /*  skip our own properties  */
+          if (pspec->owner_type == GIMP_TYPE_PROCEDURE_CONFIG)
+            continue;
+
+          switch (gimp_procedure_get_argument_sync (config->priv->procedure,
+                                                    pspec->name))
+            {
+            case GIMP_ARGUMENT_SYNC_PARASITE:
+              gimp_procedure_config_set_parasite (config, pspec);
+              break;
+
+            default:
+              break;
+            }
+        }
+
+      g_free (pspecs);
     }
 
   config->priv->image    = NULL;
@@ -497,18 +702,9 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
  * adding them using GIMP_PROC_ARG_BOOLEAN() or
  * GIMP_PROC_AUX_ARG_BOOLEAN().
  *
- * Additionally, some procedure arguments are handled automatically
- * regardless of whether @mime_type is %NULL or not:
- *
- * If the procedure has a "comment" argument, it is synced with the
- * image's "gimp-comment" parasite, unless @run_mode is
- * %GIMP_RUN_NONINTERACTIVE and the argument is not an auxiliary
- * argument. If there is no "gimp-comment" parasite, the "comment"
- * argument is initialized with the default comment returned by
- * gimp_get_default_comment().
- *
- * Returns: (transfer none) (nullable): The #GimpMetadata to be used for this
- *          export, or %NULL if @original_image doesn't have metadata.
+ * Returns: (transfer none) (nullable): The #GimpMetadata to be used
+ *          for this export, or %NULL if @original_image doesn't have
+ *          metadata.
  *
  * Since: 3.0
  **/
@@ -565,45 +761,6 @@ gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
 
   gimp_procedure_config_begin_run (config, original_image, run_mode, args);
 
-  if (g_object_class_find_property (object_class, "comment"))
-    {
-      /*  we set the comment property from the image comment if it is
-       *  an aux argument, or if we run interactively, because the
-       *  image comment should be global and not depend on whatever
-       *  comment another image had when last using this export
-       *  procedure
-       */
-      if (gimp_procedure_find_aux_argument (config->priv->procedure,
-                                            "comment") ||
-          (run_mode != GIMP_RUN_NONINTERACTIVE))
-        {
-          GimpParasite *parasite;
-          gchar        *comment = NULL;
-
-          parasite = gimp_image_get_parasite (original_image, "gimp-comment");
-          if (parasite)
-            {
-              comment = g_strndup (gimp_parasite_data (parasite),
-                                   gimp_parasite_data_size (parasite));
-
-              if (comment && ! strlen (comment))
-                g_clear_pointer (&comment, g_free);
-
-              gimp_parasite_free (parasite);
-            }
-
-          if (! comment)
-            comment = gimp_get_default_comment ();
-
-          if (comment && strlen (comment))
-            g_object_set (config,
-                          "comment", comment,
-                          NULL);
-
-          g_free (comment);
-        }
-    }
-
   return config->priv->metadata;
 }
 
@@ -629,10 +786,6 @@ gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
  * #GimpMetadataSaveFlags and writes metadata to @file using
  * gimp_image_metadata_save_finish().
  *
- * If the procedure has a "comment" argument, and it was modified
- * during an interactive run, it is synced back to the original
- * image's "gimp-comment" parasite.
- *
  * Since: 3.0
  **/
 void
@@ -647,82 +800,6 @@ gimp_procedure_config_end_export (GimpProcedureConfig *config,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GObjectClass *object_class = G_OBJECT_GET_CLASS (config);
-
-      /*  we write the comment back to the image if it was modified
-       *  during an interactive export
-       */
-      if (g_object_class_find_property (object_class, "comment") &&
-          config->priv->run_mode == GIMP_RUN_INTERACTIVE)
-        {
-          GimpParasite *parasite;
-          gchar        *comment;
-
-          g_object_get (config,
-                        "comment", &comment,
-                        NULL);
-
-          parasite = gimp_image_get_parasite (config->priv->image,
-                                              "gimp-comment");
-          if (parasite)
-            {
-              /*  it there is an image comment, always override it if
-               *  the comment was changed
-               */
-              gchar *image_comment;
-
-              image_comment = g_strndup (gimp_parasite_data (parasite),
-                                         gimp_parasite_data_size (parasite));
-              gimp_parasite_free (parasite);
-
-              if (g_strcmp0 (comment, image_comment))
-                {
-                  if (comment && strlen (comment))
-                    {
-                      parasite = gimp_parasite_new ("gimp-comment",
-                                                    GIMP_PARASITE_PERSISTENT,
-                                                    strlen (comment) + 1,
-                                                    comment);
-                      gimp_image_attach_parasite (config->priv->image,
-                                                  parasite);
-                      gimp_parasite_free (parasite);
-                    }
-                  else
-                    {
-                      gimp_image_detach_parasite (config->priv->image,
-                                                  "gimp-comment");
-                    }
-                }
-
-              g_free (image_comment);
-            }
-          else
-            {
-              /*  otherwise, set an image comment if the comment was
-               *  changed from the default comment
-               */
-              gchar *default_comment;
-
-              default_comment = gimp_get_default_comment ();
-
-              if (g_strcmp0 (comment, default_comment) &&
-                  comment && strlen (comment))
-                {
-                  parasite = gimp_parasite_new ("gimp-comment",
-                                                GIMP_PARASITE_PERSISTENT,
-                                                strlen (comment) + 1,
-                                                comment);
-                  gimp_image_attach_parasite (config->priv->image,
-                                              parasite);
-                  gimp_parasite_free (parasite);
-                }
-
-              g_free (default_comment);
-            }
-
-          g_free (comment);
-        }
-
       gimp_procedure_config_save_metadata (config, exported_image, file);
     }
 
