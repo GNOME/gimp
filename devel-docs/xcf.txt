@@ -1339,7 +1339,7 @@ PROP_MODE (essential)
                      31: Screen
                      32: Difference
                      33: Addition
-                     34: Substract
+                     34: Subtract
                      35: Darken only
                      36: Lighten only
                      37: Hue (HSV)
