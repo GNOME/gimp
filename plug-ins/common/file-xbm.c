@@ -209,11 +209,14 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
                              FALSE, /* *NOT* gimp_export_comment() */
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "comment",
+      GIMP_PROC_ARG_STRING (procedure, "gimp-comment",
                             "Comment",
                             "Image description (maximum 72 bytes)",
                             gimp_get_default_comment (),
                             G_PARAM_READWRITE);
+
+      gimp_procedure_set_argument_sync (procedure, "gimp-comment",
+                                        GIMP_ARGUMENT_SYNC_PARASITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "x10-format",
                              "X10 format",
@@ -988,7 +991,7 @@ save_image (GFile         *file,
 
   g_object_get (config,
                 "save-comment", &config_save_comment,
-                "comment",      &config_comment,
+                "gimp-comment", &config_comment,
                 "x10-format",   &config_x10_format,
                 "use-hot-spot", &config_use_hot,
                 "hot-spot-x",   &config_x_hot,
@@ -1301,7 +1304,7 @@ save_dialog (GimpDrawable  *drawable,
                           grid,   "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  entry = gimp_prop_entry_new (config, "comment", MAX_COMMENT);
+  entry = gimp_prop_entry_new (config, "gimp-comment", MAX_COMMENT);
   gtk_widget_set_size_request (entry, 240, -1);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Comment:"), 0.0, 0.5,

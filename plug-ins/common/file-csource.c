@@ -141,11 +141,14 @@ csource_create_procedure (GimpPlugIn  *plug_in,
                                 "gimp_image",
                                 GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "comment",
+      GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
                                 "Comment",
                                 "Comment",
                                 gimp_get_default_comment (),
                                 GIMP_PARAM_READWRITE);
+
+      gimp_procedure_set_argument_sync (procedure, "gimp-comment",
+                                        GIMP_ARGUMENT_SYNC_PARASITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
                                  "Save comment",
@@ -251,7 +254,7 @@ csource_save (GimpProcedure        *procedure,
 
   g_object_get (config,
                 "prefixed-name", &prefixed_name,
-                "comment",       &comment,
+                "gimp-comment",  &comment,
                 NULL);
 
   if (! prefixed_name || ! prefixed_name[0])
@@ -261,7 +264,7 @@ csource_save (GimpProcedure        *procedure,
 
   if (comment && ! comment[0])
     g_object_set (config,
-                  "comment", NULL,
+                  "gimp-comment", NULL,
                   NULL);
 
   g_free (prefixed_name);
@@ -537,7 +540,7 @@ save_image (GFile         *file,
 
   g_object_get (config,
                 "prefixed-name", &config_prefixed_name,
-                "comment",       &config_comment,
+                "gimp-comment",  &config_comment,
                 "save-comment",  &config_save_comment,
                 "glib-types",    &config_glib_types,
                 "save-alpha",    &config_save_alpha,
@@ -983,7 +986,7 @@ save_dialog (GimpProcedure *procedure,
 
   /* Comment Entry
    */
-  entry = gimp_prop_entry_new (config, "comment", -1);
+  entry = gimp_prop_entry_new (config, "gimp-comment", -1);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Co_mment:"), 0.0, 0.5,
                             entry, 1);

@@ -226,11 +226,14 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                  gimp_export_comment (),
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "comment",
+      GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
                                 "Comment",
                                 _("Image comment"),
                                  gimp_get_default_comment (),
                                  G_PARAM_READWRITE);
+
+      gimp_procedure_set_argument_sync (procedure, "gimp-comment",
+                                        GIMP_ARGUMENT_SYNC_PARASITE);
     }
 
   return procedure;
@@ -770,7 +773,7 @@ save_image (GFile         *file,
                 "force-dispose",   &config_use_default_dispose,
                 "as-animation",    &config_as_animation,
                 "save-comment",    &config_save_comment,
-                "comment",         &config_comment,
+                "gimp-comment",    &config_comment,
                 NULL);
 
   /* The GIF spec says 7bit ASCII for the comment block. */
@@ -1200,7 +1203,8 @@ save_dialog (GimpImage     *image,
 
 #define MAX_COMMENT 240
 
-  text_buffer = gimp_prop_text_buffer_new (config, "comment", MAX_COMMENT);
+  text_buffer = gimp_prop_text_buffer_new (config, "gimp-comment",
+                                           MAX_COMMENT);
   gtk_text_view_set_buffer (GTK_TEXT_VIEW (text_view), text_buffer);
   g_object_unref (text_buffer);
 

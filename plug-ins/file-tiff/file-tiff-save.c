@@ -957,7 +957,7 @@ save_image (GFile         *file,
   gboolean    config_save_thumbnail;
 
   g_object_get (config,
-                "comment",            &config_comment,
+                "gimp-comment",       &config_comment,
                 "save-color-profile", &config_save_profile,
                 "save-thumbnail",     &config_save_thumbnail,
                 NULL);
@@ -1313,7 +1313,7 @@ save_dialog (GimpImage     *image,
   gtk_grid_attach (GTK_GRID (grid), frame, 0, row++, 2, 1);
   gtk_widget_show (frame);
 
-  entry = gimp_prop_entry_new (config, "comment", -1);
+  entry = gimp_prop_entry_new (config, "gimp-comment", -1);
   gtk_container_add (GTK_CONTAINER (frame), entry);
   gtk_widget_show (entry);
 

@@ -271,11 +271,14 @@ png_create_procedure (GimpPlugIn  *plug_in,
                              gimp_export_comment (),
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "comment",
+      GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
                                 "Comment",
                                 "Image comment",
                                 gimp_get_default_comment (),
                                 G_PARAM_READWRITE);
+
+      gimp_procedure_set_argument_sync (procedure, "gimp-comment",
+                                        GIMP_ARGUMENT_SYNC_PARASITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent",
                              "Save transparent",
@@ -1291,7 +1294,7 @@ save_image (GFile        *file,
                 "phys",               &save_phys,
                 "time",               &save_time,
                 "save-comment",       &save_comment,
-                "comment",            &comment,
+                "gimp-comment",       &comment,
                 "save-transparent",   &save_transp_pixels,
                 "compression",        &compression_level,
                 "format",             &export_format,
