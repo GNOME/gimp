@@ -34,13 +34,13 @@
 # line art = tratteggio
 # offset = scostamento
 # shift/move = spostamento
-#
+# vanishing point = punto di fuga (prospettiva)
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-09 14:49+0200\n"
-"PO-Revision-Date: 2020-06-09 15:15+0200\n"
+"PO-Revision-Date: 2020-06-15 10:44+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -18850,7 +18850,7 @@ msgstr "Posizione: "
 
 #: ../app/display/gimptooltransform3dgrid.c:632
 msgid "Click-Drag to move the vanishing point"
-msgstr "Clic e trascina per spostare il punto di dissolvenza"
+msgstr "Clic e trascina per spostare il punto di fuga"
 
 #: ../app/display/gimptooltransformgrid.c:1825
 #: ../app/display/gimptooltransformgrid.c:1830
@@ -24597,7 +24597,7 @@ msgstr "Obiettivo"
 #. vanishing-point frame
 #: ../app/tools/gimptransform3dtool.c:245
 msgid "Vanishing Point"
-msgstr "Punto di dissolvenza"
+msgstr "Punto di fuga"
 
 #: ../app/tools/gimptransform3dtool.c:395
 msgid "_Z:"
