@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-09 09:06+0000\n"
-"PO-Revision-Date: 2020-06-10 01:47+0200\n"
+"POT-Creation-Date: 2020-06-15 18:13+0000\n"
+"PO-Revision-Date: 2020-06-15 22:28+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -110,7 +110,7 @@ msgstr "Kontroller på ritytan för Vinjettfiltret"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
-msgstr "Nya filer: Överstrålning, Fokusoskärpa, Linsoskärpa, Variabel oskärpa"
+msgstr "Nya filter: Överstrålning, Fokusoskärpa, Linsoskärpa, Variabel oskärpa"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Over 30 bugfixes"
@@ -22521,12 +22521,12 @@ msgstr ""
 "Antag att bildpunkter följer inbyggd sRGB (ignorera faktisk färgrymd för "
 "bilden)"
 
-#: ../app/tools/gimpfiltertool.c:1557 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1549 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importera ”%s”-inställningar"
 
-#: ../app/tools/gimpfiltertool.c:1559 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1551 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exportera ”%s”-inställningar"
@@ -22931,27 +22931,27 @@ msgctxt "undo-type"
 msgid "Move Guides"
 msgstr "Flytta hjälplinjer"
 
-#: ../app/tools/gimpguidetool.c:433
+#: ../app/tools/gimpguidetool.c:432
 msgid "Remove Guides"
 msgstr "Ta bort hjälplinjer"
 
-#: ../app/tools/gimpguidetool.c:434
+#: ../app/tools/gimpguidetool.c:433
 msgid "Remove Guide"
 msgstr "Ta bort hjälplinje"
 
-#: ../app/tools/gimpguidetool.c:435
+#: ../app/tools/gimpguidetool.c:434
 msgid "Cancel Guide"
 msgstr "Avbryt hjälplinje"
 
-#: ../app/tools/gimpguidetool.c:472
+#: ../app/tools/gimpguidetool.c:471
 msgid "Move Guide: "
 msgstr "Flytta hjälplinje: "
 
-#: ../app/tools/gimpguidetool.c:482
+#: ../app/tools/gimpguidetool.c:481
 msgid "Move Guides: "
 msgstr "Flytta hjälplinjer: "
 
-#: ../app/tools/gimpguidetool.c:493
+#: ../app/tools/gimpguidetool.c:492
 msgid "Add Guide: "
 msgstr "Lägg till hjälplinje: "
 
