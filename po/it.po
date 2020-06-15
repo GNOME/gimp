@@ -39,8 +39,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-09 14:49+0200\n"
-"PO-Revision-Date: 2020-06-15 10:44+0200\n"
+"POT-Creation-Date: 2020-06-15 15:26+0200\n"
+"PO-Revision-Date: 2020-06-15 15:26+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -106,23 +106,31 @@ msgstr "Fotoritocco in GIMP"
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
-msgstr "GIMP 2.10.20 arriva con nuove caratteristiche e correzioni di difetti. I cambiamenti più importanti sono:"
+msgstr ""
+"GIMP 2.10.20 arriva con nuove caratteristiche e correzioni di difetti. I "
+"cambiamenti più importanti sono:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "Tool groups now expand on hover rather than click by default"
-msgstr "Ora, per impostazione predefinita, i gruppi strumenti si espandono quando si passa sopra col mouse invece che con il clic"
+msgstr ""
+"Ora, per impostazione predefinita, i gruppi strumenti si espandono quando si "
+"passa sopra col mouse invece che con il clic"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
-msgstr "Il ritaglio non-distruttivo è ora disponibile per il ritaglio dell'area disegnabile invece che per i pixel veri"
+msgstr ""
+"Il ritaglio non-distruttivo è ora disponibile per il ritaglio dell'area "
+"disegnabile invece che per i pixel veri"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
-msgstr "Migliore supporto al formato PSD: ora è disponibile l'esportazione di file a 16-bit, leggendo e scrivendo i canali nell'ordine giusto"
+msgstr ""
+"Migliore supporto al formato PSD: ora è disponibile l'esportazione di file a "
+"16-bit, leggendo e scrivendo i canali nell'ordine giusto"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "On-canvas controls for the Vignette filter"
@@ -130,7 +138,8 @@ msgstr "Controllo sull'area disegnabile del filtro Vignettatura"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
-msgstr "Nuovi filtri: Bloom, Sfocatura fuoco, Sfocatura lenti, Sfocatura variabile"
+msgstr ""
+"Nuovi filtri: Bloom, Sfocatura fuoco, Sfocatura lente, Sfocatura variabile"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Over 30 bugfixes"
@@ -5358,7 +5367,7 @@ msgstr "_Caleidoscopio..."
 #: ../app/actions/filters-actions.c:418
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
-msgstr "Sfocatura Le_nti..."
+msgstr "Sfocatura Le_nte..."
 
 #: ../app/actions/filters-actions.c:423
 msgctxt "filters-action"
@@ -20979,7 +20988,7 @@ msgstr "Scambio colore"
 #: ../app/pdb/plug-in-compat-cmds.c:1688
 msgctxt "undo-type"
 msgid "Lens Flare"
-msgstr "Riflesso lenti"
+msgstr "Riflesso lente"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1872
 msgctxt "undo-type"
@@ -22712,12 +22721,12 @@ msgstr ""
 "Presume che i pixel siano in sRGB incorporato (ignora lo spazio colore "
 "immagine corrente)"
 
-#: ../app/tools/gimpfiltertool.c:1557 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1549 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importa le impostazioni \"%s\""
 
-#: ../app/tools/gimpfiltertool.c:1559 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1551 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Esporta le impostazioni \"%s\""
@@ -23124,27 +23133,27 @@ msgctxt "undo-type"
 msgid "Move Guides"
 msgstr "Sposta guide"
 
-#: ../app/tools/gimpguidetool.c:433
+#: ../app/tools/gimpguidetool.c:432
 msgid "Remove Guides"
 msgstr "Rimuovi guide"
 
-#: ../app/tools/gimpguidetool.c:434
+#: ../app/tools/gimpguidetool.c:433
 msgid "Remove Guide"
 msgstr "Rimuovi guida"
 
-#: ../app/tools/gimpguidetool.c:435
+#: ../app/tools/gimpguidetool.c:434
 msgid "Cancel Guide"
 msgstr "Elimina guida"
 
-#: ../app/tools/gimpguidetool.c:472
+#: ../app/tools/gimpguidetool.c:471
 msgid "Move Guide: "
 msgstr "Sposta guida:"
 
-#: ../app/tools/gimpguidetool.c:482
+#: ../app/tools/gimpguidetool.c:481
 msgid "Move Guides: "
 msgstr "Sposta guide:"
 
-#: ../app/tools/gimpguidetool.c:493
+#: ../app/tools/gimpguidetool.c:492
 msgid "Add Guide: "
 msgstr "Aggiungi guida:"
 
