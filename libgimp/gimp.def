@@ -708,6 +708,7 @@ EXPORTS
 	gimp_procedure_find_argument
 	gimp_procedure_find_aux_argument
 	gimp_procedure_find_return_value
+	gimp_procedure_get_argument_sync
 	gimp_procedure_get_arguments
 	gimp_procedure_get_authors
 	gimp_procedure_get_aux_arguments
@@ -732,6 +733,7 @@ EXPORTS
 	gimp_procedure_new_arguments
 	gimp_procedure_new_return_values
 	gimp_procedure_run
+	gimp_procedure_set_argument_sync
 	gimp_procedure_set_attribution
 	gimp_procedure_set_documentation
 	gimp_procedure_set_icon_file

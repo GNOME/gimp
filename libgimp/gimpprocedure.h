@@ -49,6 +49,22 @@ typedef GimpValueArray * (* GimpRunFunc) (GimpProcedure        *procedure,
                                           gpointer              run_data);
 
 
+/**
+ * GimpArgumentSync:
+ * @GIMP_ARGUMENT_SYNC_NONE:     Don't sync this argument
+ * @GIMP_ARGUMENT_SYNC_PARASITE: Sync this argument with an image parasite
+ *
+ * Methods of syncing procedure arguments.
+ *
+ * Since: 3.0
+ **/
+typedef enum
+{
+  GIMP_ARGUMENT_SYNC_NONE,
+  GIMP_ARGUMENT_SYNC_PARASITE
+} GimpArgumentSync;
+
+
 #define GIMP_TYPE_PROCEDURE            (gimp_procedure_get_type ())
 #define GIMP_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROCEDURE, GimpProcedure))
 #define GIMP_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROCEDURE, GimpProcedureClass))
@@ -170,12 +186,14 @@ GParamSpec     * gimp_procedure_add_argument_from_property
                                                    (GimpProcedure        *procedure,
                                                     GObject              *config,
                                                     const gchar          *prop_name);
+
 GParamSpec     * gimp_procedure_add_aux_argument   (GimpProcedure        *procedure,
                                                     GParamSpec           *pspec);
 GParamSpec     * gimp_procedure_add_aux_argument_from_property
                                                    (GimpProcedure        *procedure,
                                                     GObject              *config,
                                                     const gchar          *prop_name);
+
 GParamSpec     * gimp_procedure_add_return_value   (GimpProcedure        *procedure,
                                                     GParamSpec           *pspec);
 GParamSpec     * gimp_procedure_add_return_value_from_property
@@ -196,6 +214,12 @@ GParamSpec    ** gimp_procedure_get_aux_arguments  (GimpProcedure        *proced
                                                     gint                 *n_arguments);
 GParamSpec    ** gimp_procedure_get_return_values  (GimpProcedure        *procedure,
                                                     gint                 *n_return_values);
+
+void             gimp_procedure_set_argument_sync  (GimpProcedure        *procedure,
+                                                    const gchar          *arg_name,
+                                                    GimpArgumentSync      sync);
+GimpArgumentSync gimp_procedure_get_argument_sync  (GimpProcedure        *procedure,
+                                                    const gchar          *arg_name);
 
 GimpValueArray * gimp_procedure_new_arguments      (GimpProcedure        *procedure);
 GimpValueArray * gimp_procedure_new_return_values  (GimpProcedure        *procedure,

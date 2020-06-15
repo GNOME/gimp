@@ -1537,6 +1537,93 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
   return procedure->priv->values;
 }
 
+/**
+ * gimp_procedure_set_argument_sync:
+ * @procedure: a #GimpProcedure.
+ * @arg_name:  the name of one of @procedure's arguments or auxiliary arguments.
+ * @sync:      how to sync the argument or auxiliary argument.
+ *
+ * When using #GimpProcedureConfig, gimp_procedure_config_begin_run()
+ * and gimp_procedure_config_end_run(), a #GimpProcedure's arguments
+ * or auxiliary arguments can be automatically synced with a
+ * #GimpParasite of the #GimpImage the procedure is running on.
+ *
+ * In order to enable this, set @sync to %GIMP_ARGUMENT_SYNC_PARASITE.
+ *
+ * Currently, it is possible to sync a string argument of type
+ * #GParamSpecString with an image parasite of the same name, for
+ * example the "gimp-comment" parasite in file save procedures.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_set_argument_sync (GimpProcedure    *procedure,
+                                  const gchar      *arg_name,
+                                  GimpArgumentSync  sync)
+{
+  GParamSpec *pspec;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (arg_name != NULL);
+
+  pspec = gimp_procedure_find_argument (procedure, arg_name);
+
+  if (! pspec)
+    pspec = gimp_procedure_find_aux_argument (procedure, arg_name);
+
+  g_return_if_fail (pspec != NULL);
+
+  switch (sync)
+    {
+    case GIMP_ARGUMENT_SYNC_NONE:
+      gegl_param_spec_set_property_key (pspec, "gimp-argument-sync", NULL);
+      break;
+
+    case GIMP_ARGUMENT_SYNC_PARASITE:
+      gegl_param_spec_set_property_key (pspec, "gimp-argument-sync", "parasite");
+      break;
+    }
+}
+
+/**
+ * gimp_procedure_get_argument_sync:
+ * @procedure: a #GimpProcedure
+ * @arg_name:  the name of one of @procedure's arguments or auxiliary arguments
+ *
+ * Returns: The #GimpArgumentSync value set with
+ *          gimp_procedure_set_argument_sync():
+ *
+ * Since: 3.0
+ **/
+GimpArgumentSync
+gimp_procedure_get_argument_sync (GimpProcedure *procedure,
+                                  const gchar   *arg_name)
+{
+  GParamSpec       *pspec;
+  GimpArgumentSync  sync = GIMP_ARGUMENT_SYNC_NONE;
+  const gchar      *value;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), GIMP_ARGUMENT_SYNC_NONE);
+  g_return_val_if_fail (arg_name != NULL, GIMP_ARGUMENT_SYNC_NONE);
+
+  pspec = gimp_procedure_find_argument (procedure, arg_name);
+
+  if (! pspec)
+    pspec = gimp_procedure_find_aux_argument (procedure, arg_name);
+
+  g_return_val_if_fail (pspec != NULL, GIMP_ARGUMENT_SYNC_NONE);
+
+  value = gegl_param_spec_get_property_key (pspec, "gimp-argument-sync");
+
+  if (value)
+    {
+      if (! strcmp (value, "parasite"))
+        sync = GIMP_ARGUMENT_SYNC_PARASITE;
+    }
+
+  return sync;
+}
+
 GimpValueArray *
 gimp_procedure_new_arguments (GimpProcedure *procedure)
 {
