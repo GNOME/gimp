@@ -314,9 +314,11 @@ static guint32
 gui_get_user_time (Gimp *gimp)
 {
 #ifdef GDK_WINDOWING_X11
-  return gdk_x11_display_get_user_time (gdk_display_get_default ());
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    return gdk_x11_display_get_user_time (gdk_display_get_default ());
 #endif
-  return 0;
+
+  return gtk_get_current_event_time ();
 }
 
 static GFile *
