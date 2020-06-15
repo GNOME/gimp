@@ -40,7 +40,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-15 15:26+0200\n"
-"PO-Revision-Date: 2020-06-15 15:26+0200\n"
+"PO-Revision-Date: 2020-06-15 15:31+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -12004,7 +12004,7 @@ msgstr "Mostra l'immagine attiva nella casella degli strumenti"
 
 #: ../app/config/gimprc-blurbs.h:695
 msgid "Show the GIMP mascot at the top of the toolbox."
-msgstr "Mostra la mascotte di GIMP nella casella degli strumenti"
+msgstr "Mostra la mascotte di GIMP in cima al pannello strumenti."
 
 #: ../app/config/gimprc-blurbs.h:698
 msgid "Sets the manner in which transparency is displayed in images."
