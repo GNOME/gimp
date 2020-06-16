@@ -39,8 +39,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 15:26+0200\n"
-"PO-Revision-Date: 2020-06-15 15:31+0200\n"
+"POT-Creation-Date: 2020-06-16 16:53+0200\n"
+"PO-Revision-Date: 2020-06-16 16:53+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -16831,7 +16831,7 @@ msgstr "_Abilita anteprime dei livelli e dei canali"
 
 #: ../app/dialogs/preferences-dialog.c:1845
 msgid "Enable layer _group previews"
-msgstr "Abilita anteprime _gruppi livelli"
+msgstr "Abilita anteprime dei _gruppi di livelli"
 
 #: ../app/dialogs/preferences-dialog.c:1851
 msgid "_Default layer & channel preview size:"
