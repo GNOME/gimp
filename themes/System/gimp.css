@@ -133,6 +133,12 @@ GimpRuler {
     font-size: smaller;
 }
 
+GimpSpinScale entry progress {
+    background-color: @theme_selected_bg_color;
+    border-width:     0px;
+    border-radius:    3px;
+}
+
 entry.italic {
     font-style: italic;
 }
