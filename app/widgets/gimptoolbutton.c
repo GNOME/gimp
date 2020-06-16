@@ -671,11 +671,19 @@ gimp_tool_button_enter_notify (GtkWidget        *widget,
                                GdkEventCrossing *event,
                                GimpToolButton   *tool_button)
 {
+  guint button_state;
+
+  button_state = event->state & (GDK_BUTTON1_MASK |
+                                 GDK_BUTTON2_MASK |
+                                 GDK_BUTTON3_MASK |
+                                 GDK_BUTTON4_MASK |
+                                 GDK_BUTTON5_MASK);
+
   if (tool_button->priv->menu                            &&
       tool_button->priv->show_menu_on_hover              &&
       ! gtk_widget_get_visible (tool_button->priv->menu) &&
       event->mode == GDK_CROSSING_NORMAL                 &&
-      event->state == 0)
+      button_state == 0)
     {
       if (tool_button->priv->menu_idle_id)
         {
