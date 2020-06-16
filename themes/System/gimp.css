@@ -84,20 +84,6 @@ GimpToolDialog headerbar button {
     padding: 2px 2px 2px 2px;
 }
 
-GimpDock entry,
-GimpOverlayDialog entry,
-GimpToolDialog entry,
-GimpTextStyleEditor entry {
-    min-height: 2.5em;
-}
-
-GimpDock spinbutton,
-GimpOverlayDialog spinbutton,
-GimpToolDialog spinbutton,
-GimpTextStyleEditor spinbutton {
-    min-height: 2.5em;
-}
-
 GimpDock spinbutton button,
 GimpOverlayDialog spinbutton button,
 GimpToolDialog spinbutton button,
