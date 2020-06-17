@@ -2340,15 +2340,15 @@ msgstr "Op_acitat:"
 
 #: ../plug-ins/common/file-compressor.c:176
 msgid "gzip archive"
-msgstr "arxiu gzip"
+msgstr "Arxiu gzip"
 
 #: ../plug-ins/common/file-compressor.c:195
 msgid "bzip archive"
-msgstr "arxiu bzip"
+msgstr "Arxiu bzip"
 
 #: ../plug-ins/common/file-compressor.c:214
 msgid "xz archive"
-msgstr "arxiu xz"
+msgstr "Arxiu xz"
 
 #: ../plug-ins/common/file-compressor.c:421
 msgid "No sensible file extension, saving as compressed XCF."
