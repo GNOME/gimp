@@ -29,16 +29,11 @@ GimpColorNotebook tab {
     padding: 0 0 0 0;
 }
 
-GimpColorNotebook spinbutton,
-GimpColorNotebook spinbutton entry,
-GimpColorScales spinbutton,
-GimpColorScales spinbutton entry {
+GimpDock GimpColorNotebook spinbutton,
+GimpDock GimpColorNotebook spinbutton entry,
+GimpDock GimpColorScales spinbutton,
+GimpDock GimpColorScales spinbutton entry {
     min-height: 0;
-}
-
-GimpColorNotebook spinbutton button,
-GimpColorScales spinbutton button {
-    padding: 0 0 0 0;
 }
 
 GimpColorSelection ColorselCmyk {
