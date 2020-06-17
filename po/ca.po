@@ -960,7 +960,7 @@ msgid ""
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 "El GIMP no ha pogut inicialitzar la interfície gràfica d'usuari.\n"
-"Assegureu-vos que el vostre entorn de visualització està configurat "
+"Assegureu-vos que l'entorn de visualització està configurat "
 "adequadament."
 
 #: ../app/main.c:615
@@ -11239,7 +11239,7 @@ msgid ""
 "windows."
 msgstr ""
 "Determina el tipus de finestra dels acobladors secundaris i de la caixa "
-"d'eines. Això té a veure amb el comportament del vostre gestor de finestres."
+"d'eines. Això té a veure amb el comportament del gestor de finestres."
 
 #: ../app/config/gimprc-blurbs.h:158
 msgid "When enabled, the selected brush will be used for all tools."
