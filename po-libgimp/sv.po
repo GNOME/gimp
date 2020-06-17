@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-08 13:30+0000\n"
-"PO-Revision-Date: 2020-04-29 22:05+0200\n"
+"POT-Creation-Date: 2020-06-16 14:56+0000\n"
+"PO-Revision-Date: 2020-06-16 23:05+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:176
 msgid "Brush Selection"
@@ -31,84 +31,84 @@ msgstr "Penselval"
 msgid "_Browse..."
 msgstr "_Bläddra…"
 
-#: ../libgimp/gimpexport.c:293 ../libgimp/gimpexport.c:329
+#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:335
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Insticksmodulen %s kan inte hantera lager"
 
-#: ../libgimp/gimpexport.c:294 ../libgimp/gimpexport.c:303
-#: ../libgimp/gimpexport.c:312 ../libgimp/gimpexport.c:330
+#: ../libgimp/gimpexport.c:300 ../libgimp/gimpexport.c:309
+#: ../libgimp/gimpexport.c:318 ../libgimp/gimpexport.c:336
 msgid "Merge Visible Layers"
 msgstr "Sammanfoga synliga lager"
 
-#: ../libgimp/gimpexport.c:302
+#: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Insticksmodulen %s kan inte hantera lageravstånd, lagerstorlek eller "
 "lageropacitet"
 
-#: ../libgimp/gimpexport.c:311 ../libgimp/gimpexport.c:320
+#: ../libgimp/gimpexport.c:317 ../libgimp/gimpexport.c:326
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "Insticksmodulen %s kan endast hantera lager som bildrutor i en animation"
 
-#: ../libgimp/gimpexport.c:312 ../libgimp/gimpexport.c:321
+#: ../libgimp/gimpexport.c:318 ../libgimp/gimpexport.c:327
 msgid "Save as Animation"
 msgstr "Spara som animation"
 
-#: ../libgimp/gimpexport.c:321 ../libgimp/gimpexport.c:330
-#: ../libgimp/gimpexport.c:339 ../libgimp/gimpexport.c:348
+#: ../libgimp/gimpexport.c:327 ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:345 ../libgimp/gimpexport.c:354
 msgid "Flatten Image"
 msgstr "Platta till bild"
 
-#: ../libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:344
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Insticksmodulen %s kan inte hantera transparens"
 
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:353
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Insticksmodulen %s kan inte hantera transparenta lager"
 
-#: ../libgimp/gimpexport.c:356
+#: ../libgimp/gimpexport.c:362
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Insticksmodulen %s kan inte hantera lagermasker"
 
-#: ../libgimp/gimpexport.c:357
+#: ../libgimp/gimpexport.c:363
 msgid "Apply Layer Masks"
 msgstr "Applicera lagermask"
 
-#: ../libgimp/gimpexport.c:365
+#: ../libgimp/gimpexport.c:371
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Insticksmodulen %s kan endast hantera RGB-bilder"
 
-#: ../libgimp/gimpexport.c:366 ../libgimp/gimpexport.c:404
-#: ../libgimp/gimpexport.c:413
+#: ../libgimp/gimpexport.c:372 ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:419
 msgid "Convert to RGB"
 msgstr "Konvertera till RGB"
 
-#: ../libgimp/gimpexport.c:374
+#: ../libgimp/gimpexport.c:380
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Insticksmodulen %s kan endast hantera gråskalebilder"
 
-#: ../libgimp/gimpexport.c:375 ../libgimp/gimpexport.c:404
-#: ../libgimp/gimpexport.c:425
+#: ../libgimp/gimpexport.c:381 ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:431
 msgid "Convert to Grayscale"
 msgstr "Konvertera till gråskala"
 
-#: ../libgimp/gimpexport.c:383
+#: ../libgimp/gimpexport.c:389
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Insticksmodulen %s kan endast hantera indexerade bilder"
 
-#: ../libgimp/gimpexport.c:384 ../libgimp/gimpexport.c:413
-#: ../libgimp/gimpexport.c:423
+#: ../libgimp/gimpexport.c:390 ../libgimp/gimpexport.c:419
+#: ../libgimp/gimpexport.c:429
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -116,14 +116,14 @@ msgstr ""
 "Konvertera till Indexerat med standardinställningar\n"
 "(Gör det manuellt om du vill finjustera)"
 
-#: ../libgimp/gimpexport.c:393
+#: ../libgimp/gimpexport.c:399
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera bitmappindexerade (tvåfärgsindexerade) "
 "bilder"
 
-#: ../libgimp/gimpexport.c:394
+#: ../libgimp/gimpexport.c:400
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -131,38 +131,38 @@ msgstr ""
 "Konvertera till Indexerat med bitmapp-standardinställningar\n"
 "(Gör det manuellt om du vill finjustera)"
 
-#: ../libgimp/gimpexport.c:403
+#: ../libgimp/gimpexport.c:409
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Insticksmodulen %s kan endast hantera RGB-bilder eller gråskalebilder"
 
-#: ../libgimp/gimpexport.c:412
+#: ../libgimp/gimpexport.c:418
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera RGB-bilder eller indexerade bilder"
 
-#: ../libgimp/gimpexport.c:422
+#: ../libgimp/gimpexport.c:428
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera gråskalebilder eller indexerade bilder"
 
-#: ../libgimp/gimpexport.c:433
+#: ../libgimp/gimpexport.c:439
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Insticksmodulen %s behöver en alfakanal"
 
-#: ../libgimp/gimpexport.c:434
+#: ../libgimp/gimpexport.c:440
 msgid "Add Alpha Channel"
 msgstr "Lägg till alfakanal"
 
-#: ../libgimp/gimpexport.c:493
+#: ../libgimp/gimpexport.c:499
 msgid "Confirm Save"
 msgstr "Bekräfta sparande"
 
-#: ../libgimp/gimpexport.c:498 ../libgimp/gimpexport.c:580
-#: ../libgimp/gimpexport.c:1080 ../libgimp/gimpproceduredialog.c:232
+#: ../libgimp/gimpexport.c:504 ../libgimp/gimpexport.c:586
+#: ../libgimp/gimpexport.c:1120 ../libgimp/gimpproceduredialog.c:232
 #: ../libgimpwidgets/gimpcolorbutton.c:553
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -172,25 +172,25 @@ msgstr "Bekräfta sparande"
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: ../libgimp/gimpexport.c:499
+#: ../libgimp/gimpexport.c:505
 msgid "C_onfirm"
 msgstr "_Bekräfta"
 
-#: ../libgimp/gimpexport.c:575
+#: ../libgimp/gimpexport.c:581
 msgid "Export File"
 msgstr "Exportera fil"
 
-#: ../libgimp/gimpexport.c:579
+#: ../libgimp/gimpexport.c:585
 msgid "_Ignore"
 msgstr "_Ignorera"
 
-#: ../libgimp/gimpexport.c:581 ../libgimp/gimpexport.c:1081
+#: ../libgimp/gimpexport.c:587 ../libgimp/gimpexport.c:1121
 #: ../libgimp/gimpproceduredialog.c:226
 msgid "_Export"
 msgstr "_Exportera"
 
 #. the headline
-#: ../libgimp/gimpexport.c:611
+#: ../libgimp/gimpexport.c:617
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -199,11 +199,11 @@ msgstr ""
 "Din bild bör exporteras innan den kan sparas som %s av följande anledningar:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:685
+#: ../libgimp/gimpexport.c:691
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen vid export modifierar inte originalbilden."
 
-#: ../libgimp/gimpexport.c:789
+#: ../libgimp/gimpexport.c:811
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -212,7 +212,7 @@ msgstr ""
 "Du kommer att spara en lagermask som %s.\n"
 "Detta kommer inte att spara de synliga lagren."
 
-#: ../libgimp/gimpexport.c:795
+#: ../libgimp/gimpexport.c:817
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -222,7 +222,7 @@ msgstr ""
 "Detta kommer inte att spara de synliga lagren."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1074
+#: ../libgimp/gimpexport.c:1114
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exportera bild som %s"
@@ -2833,7 +2833,6 @@ msgid "GIMP MIDI Input Controller"
 msgstr "MIDI-inmatningskontroller för GIMP"
 
 #: ../modules/display-filter-aces-rrt.c:84
-#, fuzzy
 msgid ""
 "ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
 "display filter, using a luminance-only approximation of the ACES RRT, a pre-"
@@ -2842,11 +2841,10 @@ msgid ""
 msgstr ""
 "ACES RRT (RRT = Reference Rendering Transform). Ett HDR-till-SDR-säkert "
 "färgvisningsfilter, som använder en luminansapproximation av ACES RRT, ett "
-"fördefinierat filmiskt utseende att använda före ODT (visa eller mata ut "
-"rymd-ICC-profil)"
+"fördefinierat filmiskt utseende att använda före ODT (ICC-profil för skärm "
+"eller utdatarymd)"
 
 #: ../modules/display-filter-aces-rrt.c:121
-#, fuzzy
 msgid "Pre-transform change in stops"
 msgstr "Ändring före transform i stopp"
 
