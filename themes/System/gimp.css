@@ -84,13 +84,6 @@ GimpToolDialog headerbar button {
     padding: 2px 2px 2px 2px;
 }
 
-GimpDock spinbutton button,
-GimpOverlayDialog spinbutton button,
-GimpToolDialog spinbutton button,
-GimpTextStyleEditor spinbutton button {
-    padding: 0 0 0 0;
-}
-
 GimpDock frame {
     -GimpFrame-label-bold:       0;
     -GimpFrame-label-spacing:    2;
@@ -133,7 +126,7 @@ GimpRuler {
     font-size: smaller;
 }
 
-GimpSpinScale entry progress {
+spinbutton entry progress {
     background-color: @theme_selected_bg_color;
     border-width:     0px;
     border-radius:    3px;
