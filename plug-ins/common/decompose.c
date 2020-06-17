@@ -356,6 +356,7 @@ decompose_run (GimpProcedure        *procedure,
   gint                 num_layers;
   GString             *data;
   gchar               *decompose_type;
+  gchar               *tmp;
   gint                 j;
 
   INIT_I18N ();
@@ -363,6 +364,19 @@ decompose_run (GimpProcedure        *procedure,
 
   config = gimp_procedure_create_config (procedure);
   gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+
+  g_object_get (config,
+                "decompose-type", &decompose_type,
+                NULL);
+
+  tmp = g_ascii_strup (decompose_type, -1);
+  g_free (decompose_type);
+
+  g_object_set (config,
+                "decompose-type", tmp,
+                NULL);
+
+  g_free (tmp);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
