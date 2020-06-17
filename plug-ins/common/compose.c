@@ -320,7 +320,7 @@ static COMPOSE_DSC compose_dsc[] =
 static ComposeVals composevals =
 {
   {{ 0, }}, /* Image IDs of images to compose or mask values */
-  "rgb",    /* Type of composition */
+  "RGB",    /* Type of composition */
   FALSE,    /* Do recompose */
   NULL      /* source layer */
 };
@@ -428,7 +428,7 @@ compose_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_STRING (procedure, "compose-type",
                             "Compose type",
                             type_desc->str,
-                            NULL,
+                            "RGB",
                             G_PARAM_READWRITE);
 
       GIMP_PROC_VAL_IMAGE (procedure, "new-image",
@@ -477,7 +477,7 @@ compose_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_STRING (procedure, "compose-type",
                             "Compose type",
                             type_desc->str,
-                            NULL,
+                            "RGB",
                             G_PARAM_READWRITE);
 
       GIMP_PROC_VAL_IMAGE (procedure, "new-image",
