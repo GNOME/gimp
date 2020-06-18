@@ -1226,7 +1226,7 @@ save_dialog (GimpProcedure *procedure,
 
   /* Replace delay */
   button = gimp_prop_check_button_new (config, "delay-replace",
-                                       _("Use delay entred above for "
+                                       _("Use delay entered above for "
                                          "all frames"));
   gtk_grid_attach (GTK_GRID (grid), button, 1, row++, 2, 1);
 
