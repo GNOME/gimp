@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-08 18:46+0000\n"
-"PO-Revision-Date: 2020-06-08 22:37+0300\n"
+"POT-Creation-Date: 2020-06-17 19:57+0000\n"
+"PO-Revision-Date: 2020-06-18 08:41+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -45,10 +45,10 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/common/colormap-remap.c:655 ../plug-ins/common/compose.c:1146
 #: ../plug-ins/common/contrast-retinex.c:325
 #: ../plug-ins/common/curve-bend.c:1189 ../plug-ins/common/curve-bend.c:1963
-#: ../plug-ins/common/curve-bend.c:1998 ../plug-ins/common/decompose.c:849
-#: ../plug-ins/common/depth-merge.c:710 ../plug-ins/common/destripe.c:460
-#: ../plug-ins/common/file-cel.c:1009 ../plug-ins/common/file-gif-save.c:1116
-#: ../plug-ins/common/file-heif.c:1101 ../plug-ins/common/file-jp2-load.c:976
+#: ../plug-ins/common/curve-bend.c:1998 ../plug-ins/common/depth-merge.c:710
+#: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
+#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:1101
+#: ../plug-ins/common/file-jp2-load.c:976
 #: ../plug-ins/common/file-pdf-load.c:645
 #: ../plug-ins/common/file-pdf-load.c:1041
 #: ../plug-ins/common/file-pdf-save.c:1152 ../plug-ins/common/file-ps.c:3550
@@ -106,18 +106,18 @@ msgstr "_Скасувати"
 #: ../plug-ins/common/checkerboard.c:472 ../plug-ins/common/cml-explorer.c:1329
 #: ../plug-ins/common/colormap-remap.c:656 ../plug-ins/common/compose.c:1147
 #: ../plug-ins/common/contrast-retinex.c:326
-#: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/decompose.c:850
-#: ../plug-ins/common/depth-merge.c:711 ../plug-ins/common/destripe.c:461
-#: ../plug-ins/common/file-heif.c:1102 ../plug-ins/common/file-pdf-load.c:646
-#: ../plug-ins/common/file-svg.c:680 ../plug-ins/common/file-wmf.c:550
-#: ../plug-ins/common/film.c:1321 ../plug-ins/common/grid.c:738
-#: ../plug-ins/common/hot.c:657 ../plug-ins/common/jigsaw.c:2473
-#: ../plug-ins/common/nl-filter.c:1100 ../plug-ins/common/qbist.c:847
-#: ../plug-ins/common/smooth-palette.c:489 ../plug-ins/common/sparkle.c:403
-#: ../plug-ins/common/sphere-designer.c:2628 ../plug-ins/common/tile.c:470
-#: ../plug-ins/common/tile-small.c:426 ../plug-ins/common/van-gogh-lic.c:705
-#: ../plug-ins/common/warp.c:468 ../plug-ins/common/wavelet-decompose.c:389
-#: ../plug-ins/flame/flame.c:690 ../plug-ins/flame/flame.c:1014
+#: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/depth-merge.c:711
+#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:1102
+#: ../plug-ins/common/file-pdf-load.c:646 ../plug-ins/common/file-svg.c:680
+#: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1321
+#: ../plug-ins/common/grid.c:738 ../plug-ins/common/hot.c:657
+#: ../plug-ins/common/jigsaw.c:2473 ../plug-ins/common/nl-filter.c:1100
+#: ../plug-ins/common/qbist.c:847 ../plug-ins/common/smooth-palette.c:489
+#: ../plug-ins/common/sparkle.c:403 ../plug-ins/common/sphere-designer.c:2628
+#: ../plug-ins/common/tile.c:470 ../plug-ins/common/tile-small.c:426
+#: ../plug-ins/common/van-gogh-lic.c:705 ../plug-ins/common/warp.c:468
+#: ../plug-ins/common/wavelet-decompose.c:389 ../plug-ins/flame/flame.c:690
+#: ../plug-ins/flame/flame.c:1014
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1247
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -297,15 +297,15 @@ msgstr "_Вертикально"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:329 ../plug-ins/common/compose.c:1092
-#: ../plug-ins/common/decompose.c:634 ../plug-ins/common/file-cel.c:504
+#: ../plug-ins/common/decompose.c:643 ../plug-ins/common/file-cel.c:504
 #: ../plug-ins/common/file-cel.c:509 ../plug-ins/common/file-dicom.c:645
 #: ../plug-ins/common/file-gegl.c:461 ../plug-ins/common/file-gif-load.c:1037
 #: ../plug-ins/common/file-jp2-load.c:1301 ../plug-ins/common/file-pcx.c:483
 #: ../plug-ins/common/file-pcx.c:491 ../plug-ins/common/file-pix.c:424
-#: ../plug-ins/common/file-png.c:870 ../plug-ins/common/file-pnm.c:764
+#: ../plug-ins/common/file-png.c:873 ../plug-ins/common/file-pnm.c:764
 #: ../plug-ins/common/file-raw-data.c:1325
 #: ../plug-ins/common/file-sunras.c:1087 ../plug-ins/common/file-tga.c:1110
-#: ../plug-ins/common/file-xbm.c:907 ../plug-ins/common/film.c:795
+#: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:795
 #: ../plug-ins/common/smooth-palette.c:309 ../plug-ins/common/tile.c:382
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:275
 #: ../plug-ins/file-faxg3/faxg3.c:547 ../plug-ins/file-fits/fits.c:564
@@ -390,7 +390,7 @@ msgstr "Створити текстуру у вигляді шахової до�
 msgid "Checkerboard"
 msgstr "Шахова дошка"
 
-#: ../plug-ins/common/checkerboard.c:532 ../plug-ins/common/file-xmc.c:1248
+#: ../plug-ins/common/checkerboard.c:532
 #: ../plug-ins/gimpressionist/sizemap.c:509
 msgid "_Size:"
 msgstr "_Розмір:"
@@ -593,19 +593,19 @@ msgid "Randoms from seed (shared)"
 msgstr "Випадкове з бази (shared)"
 
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
-#: ../plug-ins/common/decompose.c:205
+#: ../plug-ins/common/decompose.c:200
 #: ../plug-ins/gimpressionist/orientation.c:175
 #: ../plug-ins/gimpressionist/size.c:182
 msgid "Hue"
 msgstr "Відтінок"
 
 #: ../plug-ins/common/cml-explorer.c:303 ../plug-ins/common/cml-explorer.c:311
-#: ../plug-ins/common/decompose.c:206
+#: ../plug-ins/common/decompose.c:201
 msgid "Saturation"
 msgstr "Насиченість"
 
 #: ../plug-ins/common/cml-explorer.c:304 ../plug-ins/common/cml-explorer.c:312
-#: ../plug-ins/common/decompose.c:207
+#: ../plug-ins/common/decompose.c:202
 #: ../plug-ins/gimpressionist/orientation.c:151
 #: ../plug-ins/gimpressionist/size.c:158
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
@@ -862,10 +862,10 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/common/cml-explorer.c:2172 ../plug-ins/common/curve-bend.c:805
 #: ../plug-ins/common/file-dicom.c:1408 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
-#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1445
+#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1448
 #: ../plug-ins/common/file-raw-data.c:1115
 #: ../plug-ins/common/file-raw-data.c:1145 ../plug-ins/common/file-sunras.c:641
-#: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1568
+#: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
 #: ../plug-ins/common/sphere-designer.c:2196
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
 #: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
@@ -892,14 +892,14 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-cel.c:355 ../plug-ins/common/file-cel.c:409
 #: ../plug-ins/common/file-cel.c:649 ../plug-ins/common/file-dicom.c:376
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1412
-#: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:688
+#: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:691
 #: ../plug-ins/common/file-ps.c:1148 ../plug-ins/common/file-ps.c:3500
 #: ../plug-ins/common/file-psp.c:1929 ../plug-ins/common/file-psp.c:1983
 #: ../plug-ins/common/file-raw-data.c:437
 #: ../plug-ins/common/file-raw-data.c:1234 ../plug-ins/common/file-sunras.c:458
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
-#: ../plug-ins/common/file-tga.c:448 ../plug-ins/common/file-xbm.c:744
-#: ../plug-ins/common/file-xmc.c:724 ../plug-ins/common/file-xmc.c:920
+#: ../plug-ins/common/file-tga.c:448 ../plug-ins/common/file-xbm.c:747
+#: ../plug-ins/common/file-xmc.c:662 ../plug-ins/common/file-xmc.c:906
 #: ../plug-ins/common/file-xwd.c:484 ../plug-ins/common/sphere-designer.c:2085
 #: ../plug-ins/file-bmp/bmp-load.c:229 ../plug-ins/file-faxg3/faxg3.c:256
 #: ../plug-ins/file-fits/fits.c:384 ../plug-ins/file-fli/fli-gimp.c:460
@@ -1109,49 +1109,49 @@ msgstr "_Redness cr709:"
 #. Generic case for any data. Let's leave choice to select the
 #. * right type of raw data.
 #.
-#: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:196
+#: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:191
 #: ../plug-ins/common/file-raw-data.c:1878
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/common/compose.c:248 ../plug-ins/common/decompose.c:197
+#: ../plug-ins/common/compose.c:248 ../plug-ins/common/decompose.c:192
 msgid "RGBA"
 msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:256 ../plug-ins/common/decompose.c:204
+#: ../plug-ins/common/compose.c:256 ../plug-ins/common/decompose.c:199
 msgid "HSV"
 msgstr "HSV"
 
-#: ../plug-ins/common/compose.c:263 ../plug-ins/common/decompose.c:209
+#: ../plug-ins/common/compose.c:263 ../plug-ins/common/decompose.c:204
 msgid "HSL"
 msgstr "HSL"
 
-#: ../plug-ins/common/compose.c:270 ../plug-ins/common/decompose.c:214
+#: ../plug-ins/common/compose.c:270 ../plug-ins/common/decompose.c:209
 #: ../plug-ins/common/file-jp2-load.c:1012
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../plug-ins/common/compose.c:278 ../plug-ins/common/decompose.c:220
+#: ../plug-ins/common/compose.c:278 ../plug-ins/common/decompose.c:215
 msgid "LAB"
 msgstr "LAB"
 
-#: ../plug-ins/common/compose.c:285 ../plug-ins/common/decompose.c:222
+#: ../plug-ins/common/compose.c:285 ../plug-ins/common/decompose.c:217
 msgid "LCH"
 msgstr "LCH"
 
-#: ../plug-ins/common/compose.c:292 ../plug-ins/common/decompose.c:224
+#: ../plug-ins/common/compose.c:292 ../plug-ins/common/decompose.c:219
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: ../plug-ins/common/compose.c:299 ../plug-ins/common/decompose.c:227
+#: ../plug-ins/common/compose.c:299 ../plug-ins/common/decompose.c:222
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: ../plug-ins/common/compose.c:306 ../plug-ins/common/decompose.c:225
+#: ../plug-ins/common/compose.c:306 ../plug-ins/common/decompose.c:220
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: ../plug-ins/common/compose.c:313 ../plug-ins/common/decompose.c:228
+#: ../plug-ins/common/compose.c:313 ../plug-ins/common/decompose.c:223
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
@@ -1232,7 +1232,7 @@ msgstr "Зібрати"
 msgid "Compose Channels"
 msgstr "Зібрати канали"
 
-#: ../plug-ins/common/compose.c:1180 ../plug-ins/common/decompose.c:880
+#: ../plug-ins/common/compose.c:1180 ../plug-ins/common/decompose.c:873
 msgid "Color _model:"
 msgstr "Кольорова _модель:"
 
@@ -1466,182 +1466,182 @@ msgstr "Завантажити точки кривої з файлу"
 msgid "Save Curve Points to File"
 msgstr "Зберегти точки кривої у файлі"
 
-#: ../plug-ins/common/decompose.c:159
+#: ../plug-ins/common/decompose.c:154
 msgid "red"
 msgstr "червоний"
 
-#: ../plug-ins/common/decompose.c:160
+#: ../plug-ins/common/decompose.c:155
 msgid "green"
 msgstr "зелений"
 
-#: ../plug-ins/common/decompose.c:161
+#: ../plug-ins/common/decompose.c:156
 msgid "blue"
 msgstr "синій"
 
-#: ../plug-ins/common/decompose.c:162
+#: ../plug-ins/common/decompose.c:157
 msgid "alpha"
 msgstr "альфа"
 
-#: ../plug-ins/common/decompose.c:164 ../plug-ins/common/decompose.c:168
+#: ../plug-ins/common/decompose.c:159 ../plug-ins/common/decompose.c:163
 msgid "hue"
 msgstr "відтінок"
 
-#: ../plug-ins/common/decompose.c:165 ../plug-ins/common/decompose.c:169
+#: ../plug-ins/common/decompose.c:160 ../plug-ins/common/decompose.c:164
 msgid "saturation"
 msgstr "насиченість"
 
-#: ../plug-ins/common/decompose.c:166
+#: ../plug-ins/common/decompose.c:161
 msgid "value"
 msgstr "яскравість"
 
-#: ../plug-ins/common/decompose.c:170
+#: ../plug-ins/common/decompose.c:165
 msgid "lightness"
 msgstr "lightness"
 
-#: ../plug-ins/common/decompose.c:172
+#: ../plug-ins/common/decompose.c:167
 msgid "cyan"
 msgstr "блакитний"
 
-#: ../plug-ins/common/decompose.c:173
+#: ../plug-ins/common/decompose.c:168
 msgid "magenta"
 msgstr "пурпурний"
 
-#: ../plug-ins/common/decompose.c:174
+#: ../plug-ins/common/decompose.c:169
 msgid "yellow"
 msgstr "жовтий"
 
-#: ../plug-ins/common/decompose.c:175
+#: ../plug-ins/common/decompose.c:170
 msgid "black"
 msgstr "чорний"
 
-#: ../plug-ins/common/decompose.c:177 ../plug-ins/common/decompose.c:181
+#: ../plug-ins/common/decompose.c:172 ../plug-ins/common/decompose.c:176
 msgid "L"
 msgstr "L"
 
-#: ../plug-ins/common/decompose.c:178
+#: ../plug-ins/common/decompose.c:173
 msgid "A"
 msgstr "A"
 
-#: ../plug-ins/common/decompose.c:179
+#: ../plug-ins/common/decompose.c:174
 msgid "B"
 msgstr "B"
 
-#: ../plug-ins/common/decompose.c:182
+#: ../plug-ins/common/decompose.c:177
 msgid "C"
 msgstr "C"
 
-#: ../plug-ins/common/decompose.c:183
+#: ../plug-ins/common/decompose.c:178
 msgid "H"
 msgstr "H"
 
-#: ../plug-ins/common/decompose.c:185
+#: ../plug-ins/common/decompose.c:180
 msgid "luma-y470"
 msgstr "luma-y470"
 
-#: ../plug-ins/common/decompose.c:186
+#: ../plug-ins/common/decompose.c:181
 msgid "blueness-cb470"
 msgstr "blueness-cb470"
 
-#: ../plug-ins/common/decompose.c:187
+#: ../plug-ins/common/decompose.c:182
 msgid "redness-cr470"
 msgstr "redness-cr470"
 
-#: ../plug-ins/common/decompose.c:189
+#: ../plug-ins/common/decompose.c:184
 msgid "luma-y709"
 msgstr "luma-y709"
 
-#: ../plug-ins/common/decompose.c:190
+#: ../plug-ins/common/decompose.c:185
 msgid "blueness-cb709"
 msgstr "blueness-cb709"
 
-#: ../plug-ins/common/decompose.c:191
+#: ../plug-ins/common/decompose.c:186
 msgid "redness-cr709"
 msgstr "redness-cr709"
 
 #. Redmode radio frame
-#: ../plug-ins/common/decompose.c:199
+#: ../plug-ins/common/decompose.c:194
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:992
 msgid "Red"
 msgstr "Червоний"
 
 #. Greenmode radio frame
-#: ../plug-ins/common/decompose.c:200
+#: ../plug-ins/common/decompose.c:195
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1033
 msgid "Green"
 msgstr "Зелений"
 
 #. Bluemode radio frame
-#: ../plug-ins/common/decompose.c:201
+#: ../plug-ins/common/decompose.c:196
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1074
 msgid "Blue"
 msgstr "Синій"
 
-#: ../plug-ins/common/decompose.c:202
+#: ../plug-ins/common/decompose.c:197
 msgid "Alpha"
 msgstr "Альфа"
 
-#: ../plug-ins/common/decompose.c:210
+#: ../plug-ins/common/decompose.c:205
 msgid "Hue (HSL)"
 msgstr "Відтінок (HSL)"
 
-#: ../plug-ins/common/decompose.c:211
+#: ../plug-ins/common/decompose.c:206
 msgid "Saturation (HSL)"
 msgstr "Насиченість (HSL)"
 
-#: ../plug-ins/common/decompose.c:212
+#: ../plug-ins/common/decompose.c:207
 msgid "Lightness"
 msgstr "Яскравість"
 
-#: ../plug-ins/common/decompose.c:215
+#: ../plug-ins/common/decompose.c:210
 msgid "Cyan"
 msgstr "Блакитний"
 
-#: ../plug-ins/common/decompose.c:216
+#: ../plug-ins/common/decompose.c:211
 msgid "Magenta"
 msgstr "Пурпурний"
 
-#: ../plug-ins/common/decompose.c:217
+#: ../plug-ins/common/decompose.c:212
 msgid "Yellow"
 msgstr "Жовтий"
 
-#: ../plug-ins/common/decompose.c:218 ../plug-ins/common/warp.c:594
+#: ../plug-ins/common/decompose.c:213 ../plug-ins/common/warp.c:594
 #: ../plug-ins/flame/flame.c:1215 ../plug-ins/gfig/gfig-dialog.c:1498
 msgid "Black"
 msgstr "Чорний"
 
-#: ../plug-ins/common/decompose.c:289
+#: ../plug-ins/common/decompose.c:277
 msgid "_Decompose..."
 msgstr "_Розібрати..."
 
-#: ../plug-ins/common/decompose.c:293
+#: ../plug-ins/common/decompose.c:281
 msgid "Decompose an image into separate colorspace components"
 msgstr "Розібрати зображення на окремі кольорові складові"
 
-#: ../plug-ins/common/decompose.c:402
+#: ../plug-ins/common/decompose.c:391
 msgid "Decomposing"
 msgstr "Розкладання"
 
-#: ../plug-ins/common/decompose.c:517
+#: ../plug-ins/common/decompose.c:526
 msgid "Image not suitable for this decomposition"
 msgstr "Зображення непридатне для такого розкладання"
 
-#: ../plug-ins/common/decompose.c:845
+#: ../plug-ins/common/decompose.c:851
 msgid "Decompose"
 msgstr "Розібрати"
 
-#: ../plug-ins/common/decompose.c:868
+#: ../plug-ins/common/decompose.c:861
 msgid "Extract Channels"
 msgstr "Добути канали"
 
-#: ../plug-ins/common/decompose.c:915
+#: ../plug-ins/common/decompose.c:910
 msgid "_Decompose to layers"
 msgstr "Розібрати на _шари"
 
-#: ../plug-ins/common/decompose.c:926
+#: ../plug-ins/common/decompose.c:914
 msgid "_Foreground as registration color"
 msgstr "П_ередній план як колір приведення"
 
-#: ../plug-ins/common/decompose.c:927
+#: ../plug-ins/common/decompose.c:915
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -1832,11 +1832,11 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/common/file-gegl.c:345 ../plug-ins/common/file-gif-load.c:397
 #: ../plug-ins/common/file-heif.c:373 ../plug-ins/common/file-jp2-load.c:1085
 #: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:801
-#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:678
+#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:681
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
 #: ../plug-ins/common/file-raw-data.c:1224 ../plug-ins/common/file-sunras.c:448
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1035
-#: ../plug-ins/common/file-xbm.c:734 ../plug-ins/common/file-xmc.c:712
+#: ../plug-ins/common/file-xbm.c:737 ../plug-ins/common/file-xmc.c:650
 #: ../plug-ins/common/file-xpm.c:381 ../plug-ins/common/file-xwd.c:474
 #: ../plug-ins/file-bmp/bmp-load.c:219 ../plug-ins/file-exr/file-exr.c:188
 #: ../plug-ins/file-faxg3/faxg3.c:238 ../plug-ins/file-fli/fli-gimp.c:500
@@ -1917,12 +1917,12 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:885
+#: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
 #: ../plug-ins/common/file-heif.c:719 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
-#: ../plug-ins/common/file-png.c:1435 ../plug-ins/common/file-pnm.c:1336
+#: ../plug-ins/common/file-png.c:1438 ../plug-ins/common/file-pnm.c:1336
 #: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
-#: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1046
+#: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1049
 #: ../plug-ins/common/file-xpm.c:699 ../plug-ins/common/file-xwd.c:678
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
 #: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
@@ -1936,48 +1936,48 @@ msgstr "Експортування «%s»"
 msgid "C source code"
 msgstr "Програма на C"
 
-#: ../plug-ins/common/file-csource.c:233
+#: ../plug-ins/common/file-csource.c:236
 #, c-format
 msgid "C source does not support multiple layers."
 msgstr "Для коду C не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-csource.c:963
+#: ../plug-ins/common/file-csource.c:966
 msgid "Export Image as C-Source"
 msgstr "Експортувати зображення як код мовою Сі"
 
-#: ../plug-ins/common/file-csource.c:981
+#: ../plug-ins/common/file-csource.c:984
 msgid "_Prefixed name:"
 msgstr "_Префікс назви:"
 
-#: ../plug-ins/common/file-csource.c:988
+#: ../plug-ins/common/file-csource.c:991
 msgid "Co_mment:"
 msgstr "_Коментар:"
 
-#: ../plug-ins/common/file-csource.c:994
+#: ../plug-ins/common/file-csource.c:997
 msgid "_Save comment to file"
 msgstr "З_берегти коментар у файлі"
 
-#: ../plug-ins/common/file-csource.c:1000
+#: ../plug-ins/common/file-csource.c:1003
 msgid "_Use GLib types (guint8*)"
 msgstr "_Використовувати типи GLib (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:1006
+#: ../plug-ins/common/file-csource.c:1009
 msgid "Us_e macros instead of struct"
 msgstr "Використовувати _макроси замість структур"
 
-#: ../plug-ins/common/file-csource.c:1012
+#: ../plug-ins/common/file-csource.c:1015
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Використовувати _1-байтове RLE"
 
-#: ../plug-ins/common/file-csource.c:1018
+#: ../plug-ins/common/file-csource.c:1021
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Зберегти _альфа-канал (RGBA/RGB)"
 
-#: ../plug-ins/common/file-csource.c:1029
+#: ../plug-ins/common/file-csource.c:1032
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Зберегти як _RGB565 (16 біт)"
 
-#: ../plug-ins/common/file-csource.c:1041
+#: ../plug-ins/common/file-csource.c:1044
 msgid "Op_acity:"
 msgstr "_Непрозорість:"
 
@@ -2134,16 +2134,16 @@ msgstr "Зберегти коментар до зображення у файл�
 msgid "Image comment"
 msgstr "Коментар до зображення"
 
-#: ../plug-ins/common/file-gif-save.c:335
+#: ../plug-ins/common/file-gif-save.c:338
 #, c-format
 msgid "GIF format does not support multiple layers."
 msgstr "Для формату GIF не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-gif-save.c:543
+#: ../plug-ins/common/file-gif-save.c:546
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Неможливе подальше зменшення кольорів. Експортується як непрозоре."
 
-#: ../plug-ins/common/file-gif-save.c:662
+#: ../plug-ins/common/file-gif-save.c:665
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -2152,7 +2152,7 @@ msgstr ""
 "Не вдається експортувати «%s».  Файл формату GIF не підтримує зображень "
 "шириною чи висотою більше ніж %d точок."
 
-#: ../plug-ins/common/file-gif-save.c:786
+#: ../plug-ins/common/file-gif-save.c:789
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -2160,20 +2160,20 @@ msgstr ""
 "Формат GIF підтримує коментарі лише у 7-розрядному ASCII. Коментар не "
 "збережений."
 
-#: ../plug-ins/common/file-gif-save.c:858
+#: ../plug-ins/common/file-gif-save.c:861
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Не вдається експортувати зображення у формат RGB. Спершу перетворіть його на "
 "індексоване чи у градації сірого."
 
-#: ../plug-ins/common/file-gif-save.c:1062
+#: ../plug-ins/common/file-gif-save.c:1065
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Затримка передбачена для запобігання перевантаження процесора складною "
 "анімацією."
 
-#: ../plug-ins/common/file-gif-save.c:1111
+#: ../plug-ins/common/file-gif-save.c:1114
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2181,11 +2181,11 @@ msgstr ""
 "Зображення, яке ви намагаєтесь експортувати як GIF містить шари, що виходять "
 "за дійсні межі зображення."
 
-#: ../plug-ins/common/file-gif-save.c:1117
+#: ../plug-ins/common/file-gif-save.c:1120
 msgid "Cr_op"
 msgstr "_Обрізати"
 
-#: ../plug-ins/common/file-gif-save.c:1128
+#: ../plug-ins/common/file-gif-save.c:1131
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2193,65 +2193,65 @@ msgstr ""
 "Це неприпустимо у форматі GIF. Можна або обрізати всі шари по межі "
 "зображення, або скасувати це експортування."
 
-#: ../plug-ins/common/file-gif-save.c:1165
+#: ../plug-ins/common/file-gif-save.c:1168
 msgid "Export Image as GIF"
 msgstr "Експортувати зображення як GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1175 ../plug-ins/common/file-mng.c:1616
+#: ../plug-ins/common/file-gif-save.c:1178 ../plug-ins/common/file-mng.c:1616
 msgid "_Interlace"
 msgstr "_Черезрядковість"
 
-#: ../plug-ins/common/file-gif-save.c:1184
+#: ../plug-ins/common/file-gif-save.c:1187
 msgid "Save c_omment"
 msgstr "З_берегти коментар"
 
-#: ../plug-ins/common/file-gif-save.c:1222
+#: ../plug-ins/common/file-gif-save.c:1226
 msgid "As _animation"
 msgstr "Як _анімація"
 
-#: ../plug-ins/common/file-gif-save.c:1237
+#: ../plug-ins/common/file-gif-save.c:1241
 msgid "_Loop forever"
 msgstr "_Нескінченний цикл"
 
-#: ../plug-ins/common/file-gif-save.c:1243
+#: ../plug-ins/common/file-gif-save.c:1247
 msgid "_Delay between frames where unspecified:"
 msgstr "_Затримка між кадрами, де не зазначено:"
 
 #. label for 'ms' adjustment
-#: ../plug-ins/common/file-gif-save.c:1251 ../plug-ins/common/file-mng.c:1731
+#: ../plug-ins/common/file-gif-save.c:1255 ../plug-ins/common/file-mng.c:1731
 #: ../plug-ins/file-webp/file-webp-dialog.c:282
 msgid "milliseconds"
 msgstr "мілісекунд"
 
-#: ../plug-ins/common/file-gif-save.c:1255
+#: ../plug-ins/common/file-gif-save.c:1259
 msgid "I don't care"
 msgstr "Неважливо"
 
-#: ../plug-ins/common/file-gif-save.c:1257
+#: ../plug-ins/common/file-gif-save.c:1261
 msgid "Cumulative layers (combine)"
 msgstr "Накладання шарів (об'єднання)"
 
-#: ../plug-ins/common/file-gif-save.c:1259
+#: ../plug-ins/common/file-gif-save.c:1263
 msgid "One frame per layer (replace)"
 msgstr "Один кадр на шар (заміна)"
 
-#: ../plug-ins/common/file-gif-save.c:1267
+#: ../plug-ins/common/file-gif-save.c:1271
 msgid "_Frame disposal where unspecified"
 msgstr "_Усунення кадру, якщо не зазначено"
 
-#: ../plug-ins/common/file-gif-save.c:1273
+#: ../plug-ins/common/file-gif-save.c:1277
 msgid "_Use delay entered above for all frames"
 msgstr "_Використати введену вище затримку для всіх кадрів"
 
-#: ../plug-ins/common/file-gif-save.c:1278
+#: ../plug-ins/common/file-gif-save.c:1282
 msgid "U_se disposal entered above for all frames"
 msgstr "В_икористати введене вище усунення для всіх кадрів"
 
-#: ../plug-ins/common/file-gif-save.c:1286
+#: ../plug-ins/common/file-gif-save.c:1290
 msgid "Animated GIF"
 msgstr "Анімаційний GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1290
+#: ../plug-ins/common/file-gif-save.c:1294
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -2654,7 +2654,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2173
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2176
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
@@ -2667,11 +2667,11 @@ msgstr "Експортувати зображення як PNG"
 msgid "MNG Options"
 msgstr "Параметри MNG"
 
-#: ../plug-ins/common/file-mng.c:1620 ../plug-ins/common/file-png.c:2237
+#: ../plug-ins/common/file-mng.c:1620 ../plug-ins/common/file-png.c:2240
 msgid "Save _background color"
 msgstr "Зберегти колір _тла"
 
-#: ../plug-ins/common/file-mng.c:1626 ../plug-ins/common/file-png.c:2241
+#: ../plug-ins/common/file-mng.c:1626 ../plug-ins/common/file-png.c:2244
 msgid "Save _gamma"
 msgstr "З_берегти гаму"
 
@@ -2679,7 +2679,7 @@ msgstr "З_берегти гаму"
 msgid "Save resolution"
 msgstr "Зберегти роздільну здатність"
 
-#: ../plug-ins/common/file-mng.c:1636 ../plug-ins/common/file-png.c:2253
+#: ../plug-ins/common/file-mng.c:1636 ../plug-ins/common/file-png.c:2256
 msgid "Save creation _time"
 msgstr "Зберегти час _створення"
 
@@ -3059,44 +3059,44 @@ msgstr "Для формату PIX не передбачено підтримку
 msgid "PNG image"
 msgstr "Зображення PNG"
 
-#: ../plug-ins/common/file-png.c:451
+#: ../plug-ins/common/file-png.c:454
 #, c-format
 msgid "PNG format does not support multiple layers."
 msgstr "Для формату PNG не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-png.c:526
+#: ../plug-ins/common/file-png.c:529
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Помилка при завантаженні файла PNG: «%s»\n"
 
-#: ../plug-ins/common/file-png.c:644
+#: ../plug-ins/common/file-png.c:647
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Помилка створення PNG (читання struct) протягом завантаження «%s»."
 
-#: ../plug-ins/common/file-png.c:653
+#: ../plug-ins/common/file-png.c:656
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при читанні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: ../plug-ins/common/file-png.c:661
+#: ../plug-ins/common/file-png.c:664
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Помилка при читанні «%s». Файл пошкоджений?"
 
-#: ../plug-ins/common/file-png.c:822
+#: ../plug-ins/common/file-png.c:825
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Невідома модель кольорів у PNG файлі «%s»."
 
-#: ../plug-ins/common/file-png.c:835 ../plug-ins/file-exr/file-exr.c:256
+#: ../plug-ins/common/file-png.c:838 ../plug-ins/file-exr/file-exr.c:256
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Неможливо створити нове зображення для «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:917
+#: ../plug-ins/common/file-png.c:920
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3104,19 +3104,19 @@ msgstr ""
 "У файлі формату PNG вказано зсув, який призводить до розташування шару за "
 "межами зображення."
 
-#: ../plug-ins/common/file-png.c:1151
+#: ../plug-ins/common/file-png.c:1154
 msgid "Apply PNG Offset"
 msgstr "Застосувати зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1155
+#: ../plug-ins/common/file-png.c:1158
 msgid "Ignore PNG offset"
 msgstr "Знехтувати зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1156
+#: ../plug-ins/common/file-png.c:1159
 msgid "Apply PNG offset to layer"
 msgstr "Застосувати до шару зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1181
+#: ../plug-ins/common/file-png.c:1184
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3125,113 +3125,113 @@ msgstr ""
 "Зображення формату PNG, яке ви імпортуєте, має зміщення %d, %d. Застосувати "
 "це зміщення до шару?"
 
-#: ../plug-ins/common/file-png.c:1401
+#: ../plug-ins/common/file-png.c:1404
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
-#: ../plug-ins/common/file-png.c:1410
+#: ../plug-ins/common/file-png.c:1413
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: ../plug-ins/common/file-png.c:1418
+#: ../plug-ins/common/file-png.c:1421
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
-#: ../plug-ins/common/file-png.c:2214
+#: ../plug-ins/common/file-png.c:2217
 msgid "Export Image as PNG"
 msgstr "Експортувати зображення як PNG"
 
-#: ../plug-ins/common/file-png.c:2233
+#: ../plug-ins/common/file-png.c:2236
 msgid "_Interlacing (Adam7)"
 msgstr "_Черезрядковість (Adam7)"
 
-#: ../plug-ins/common/file-png.c:2245
+#: ../plug-ins/common/file-png.c:2248
 msgid "Save layer o_ffset"
 msgstr "Зберегти зсув шарів:"
 
-#: ../plug-ins/common/file-png.c:2249
+#: ../plug-ins/common/file-png.c:2252
 msgid "Save _resolution"
 msgstr "Зберегти _роздільність"
 
-#: ../plug-ins/common/file-png.c:2257
+#: ../plug-ins/common/file-png.c:2260
 msgid "Save color _values from transparent pixels"
 msgstr "Зберігати значення _кольору прозорих точок"
 
-#: ../plug-ins/common/file-png.c:2267
+#: ../plug-ins/common/file-png.c:2270
 msgid "Save comme_nt"
 msgstr "З_берегти коментар"
 
-#: ../plug-ins/common/file-png.c:2275
+#: ../plug-ins/common/file-png.c:2278
 msgid "Save E_xif data"
 msgstr "Зберегти д_ані Exif"
 
-#: ../plug-ins/common/file-png.c:2279
+#: ../plug-ins/common/file-png.c:2282
 #: ../plug-ins/file-tiff/file-tiff-save.c:1295
 msgid "Save XMP data"
 msgstr "Зберегти дані XMP"
 
-#: ../plug-ins/common/file-png.c:2283
+#: ../plug-ins/common/file-png.c:2286
 #: ../plug-ins/file-tiff/file-tiff-save.c:1299
 msgid "Save IPTC data"
 msgstr "Зберегти дані IPTC"
 
-#: ../plug-ins/common/file-png.c:2287
+#: ../plug-ins/common/file-png.c:2290
 #: ../plug-ins/file-tiff/file-tiff-save.c:1303
 msgid "Save thumbnail"
 msgstr "Зберегти мініатюру"
 
-#: ../plug-ins/common/file-png.c:2291
+#: ../plug-ins/common/file-png.c:2294
 #: ../plug-ins/file-tiff/file-tiff-save.c:1308
 msgid "Save color profile"
 msgstr "Зберегти колірний профіль"
 
 #. Pixel format combo
-#: ../plug-ins/common/file-png.c:2305 ../plug-ins/common/file-ps.c:3693
+#: ../plug-ins/common/file-png.c:2308 ../plug-ins/common/file-ps.c:3693
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: ../plug-ins/common/file-png.c:2306
+#: ../plug-ins/common/file-png.c:2309
 msgid "8 bpc RGB"
 msgstr "8 біт/кан RGB"
 
-#: ../plug-ins/common/file-png.c:2307
+#: ../plug-ins/common/file-png.c:2310
 msgid "8 bpc GRAY"
 msgstr "8 біт/кан GRAY"
 
-#: ../plug-ins/common/file-png.c:2308
+#: ../plug-ins/common/file-png.c:2311
 msgid "8 bpc RGBA"
 msgstr "8 біт/кан RGBA"
 
-#: ../plug-ins/common/file-png.c:2309
+#: ../plug-ins/common/file-png.c:2312
 msgid "8 bpc GRAYA"
 msgstr "8 біт/кан GRAYA"
 
-#: ../plug-ins/common/file-png.c:2310
+#: ../plug-ins/common/file-png.c:2313
 msgid "16 bpc RGB"
 msgstr "16 біт/кан RGB"
 
-#: ../plug-ins/common/file-png.c:2311
+#: ../plug-ins/common/file-png.c:2314
 msgid "16 bpc GRAY"
 msgstr "16 біт/кан GRAY"
 
-#: ../plug-ins/common/file-png.c:2312
+#: ../plug-ins/common/file-png.c:2315
 msgid "16 bpc RGBA"
 msgstr "16 біт/кан RGBA"
 
-#: ../plug-ins/common/file-png.c:2313
+#: ../plug-ins/common/file-png.c:2316
 msgid "16 bpc GRAYA"
 msgstr "16 біт/кан GRAYA"
 
-#: ../plug-ins/common/file-png.c:2320
+#: ../plug-ins/common/file-png.c:2323
 msgid "_Pixel format:"
 msgstr "_Формат пікселів:"
 
-#: ../plug-ins/common/file-png.c:2326
+#: ../plug-ins/common/file-png.c:2329
 msgid "Co_mpression level:"
 msgstr "Рівень _стиснення:"
 
@@ -3879,7 +3879,7 @@ msgstr "Не вдається зчитати записи кольорів з «
 msgid "Type of colormap not supported"
 msgstr "Не підтримується тип мапи кольорів"
 
-#: ../plug-ins/common/file-sunras.c:524 ../plug-ins/common/file-xbm.c:832
+#: ../plug-ins/common/file-sunras.c:524 ../plug-ins/common/file-xbm.c:835
 #: ../plug-ins/common/file-xwd.c:554
 #, c-format
 msgid ""
@@ -3889,7 +3889,7 @@ msgstr ""
 "«%s»:\n"
 "Не вказана ширина зображення"
 
-#: ../plug-ins/common/file-sunras.c:532 ../plug-ins/common/file-xbm.c:840
+#: ../plug-ins/common/file-sunras.c:532 ../plug-ins/common/file-xbm.c:843
 #: ../plug-ins/common/file-xwd.c:562
 #, c-format
 msgid ""
@@ -3899,7 +3899,7 @@ msgstr ""
 "«%s»:\n"
 "GIMP не впорається із зображенням такої ширини"
 
-#: ../plug-ins/common/file-sunras.c:540 ../plug-ins/common/file-xbm.c:848
+#: ../plug-ins/common/file-sunras.c:540 ../plug-ins/common/file-xbm.c:851
 #: ../plug-ins/common/file-xwd.c:569
 #, c-format
 msgid ""
@@ -3909,7 +3909,7 @@ msgstr ""
 "«%s»:\n"
 "Не вказана висота зображення"
 
-#: ../plug-ins/common/file-sunras.c:548 ../plug-ins/common/file-xbm.c:856
+#: ../plug-ins/common/file-sunras.c:548 ../plug-ins/common/file-xbm.c:859
 #: ../plug-ins/common/file-xwd.c:576
 #, c-format
 msgid ""
@@ -4106,12 +4106,12 @@ msgstr "Зображення X BitMap"
 msgid "Write a comment at the beginning of the file."
 msgstr "Записати коментар на початку файла."
 
-#: ../plug-ins/common/file-xbm.c:373
+#: ../plug-ins/common/file-xbm.c:376
 #, c-format
 msgid "XBM format does not support multiple layers."
 msgstr "Для формату XBM не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-xbm.c:824
+#: ../plug-ins/common/file-xbm.c:827
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4120,7 +4120,7 @@ msgstr ""
 "«%s»:\n"
 "Не вдається прочитати заголовок (ftell == %ld)"
 
-#: ../plug-ins/common/file-xbm.c:864
+#: ../plug-ins/common/file-xbm.c:867
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4130,7 +4130,7 @@ msgstr ""
 "Не вказано тип даних зображення"
 
 #. The image is not black-and-white.
-#: ../plug-ins/common/file-xbm.c:1010
+#: ../plug-ins/common/file-xbm.c:1013
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -4143,7 +4143,7 @@ msgstr ""
 "Перетворіть його у чорно-біле (1-бітове) індексоване зображення та спробуйте "
 "знову."
 
-#: ../plug-ins/common/file-xbm.c:1022
+#: ../plug-ins/common/file-xbm.c:1025
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -4151,23 +4151,23 @@ msgstr ""
 "Не вдається зберегти маску курсора в\n"
 "зображенні, яке не має альфа-каналів."
 
-#: ../plug-ins/common/file-xbm.c:1250
+#: ../plug-ins/common/file-xbm.c:1253
 msgid "Export Image as XBM"
 msgstr "Експортувати зображення як XBM"
 
-#: ../plug-ins/common/file-xbm.c:1260
+#: ../plug-ins/common/file-xbm.c:1263
 msgid "_X10 format bitmap"
 msgstr "Бітова карта формату _X10"
 
-#: ../plug-ins/common/file-xbm.c:1272
+#: ../plug-ins/common/file-xbm.c:1275
 msgid "_Identifier prefix:"
 msgstr "Префікс _ідентифікатора:"
 
-#: ../plug-ins/common/file-xbm.c:1281
+#: ../plug-ins/common/file-xbm.c:1284
 msgid "_Write comment"
 msgstr "За_писати коментар"
 
-#: ../plug-ins/common/file-xbm.c:1292
+#: ../plug-ins/common/file-xbm.c:1295
 msgid ""
 "Writing a comment will make the XBM file unreadable by some applications.\n"
 "The comment will not affect embedding the XBM in C source code."
@@ -4176,36 +4176,35 @@ msgstr ""
 "програмах.\n"
 "Коментар не вплине на можливість вбудовування XBM до коду мовою Сі."
 
-#: ../plug-ins/common/file-xbm.c:1307
+#: ../plug-ins/common/file-xbm.c:1310
 msgid "Comment:"
 msgstr "Коментар:"
 
-#: ../plug-ins/common/file-xbm.c:1316
+#: ../plug-ins/common/file-xbm.c:1319
 msgid "_Write hot spot values"
 msgstr "_Записати значення «гарячих точок»"
 
-#: ../plug-ins/common/file-xbm.c:1334 ../plug-ins/common/file-xmc.c:1162
+#: ../plug-ins/common/file-xbm.c:1337 ../plug-ins/common/file-xmc.c:1139
 msgid "Hot spot _X:"
 msgstr "_X «гарячої точки»:"
 
-#: ../plug-ins/common/file-xbm.c:1342
+#: ../plug-ins/common/file-xbm.c:1345 ../plug-ins/common/file-xmc.c:1153
 msgid "Hot spot _Y:"
 msgstr "_Y «гарячої точки»:"
 
-#: ../plug-ins/common/file-xbm.c:1353
+#: ../plug-ins/common/file-xbm.c:1356
 msgid "W_rite extra mask file"
 msgstr "_Записати додатковий файл маски"
 
-#: ../plug-ins/common/file-xbm.c:1368
+#: ../plug-ins/common/file-xbm.c:1371
 msgid "_Mask file extension:"
 msgstr "Розширення файлу _маски:"
 
-#: ../plug-ins/common/file-xmc.c:337 ../plug-ins/common/file-xmc.c:386
-#: ../plug-ins/common/file-xmc.c:1130
+#: ../plug-ins/common/file-xmc.c:297 ../plug-ins/common/file-xmc.c:346
 msgid "X11 Mouse Cursor"
 msgstr "Курсор миші X11"
 
-#: ../plug-ins/common/file-xmc.c:567
+#: ../plug-ins/common/file-xmc.c:538
 #, c-format
 msgid ""
 "Cannot set the hot spot!\n"
@@ -4214,65 +4213,64 @@ msgstr ""
 "Не вдалось установити «гарячу точку»!\n"
 "Потрібно розставити шари так, щоб вони перетинались."
 
-#: ../plug-ins/common/file-xmc.c:731
+#: ../plug-ins/common/file-xmc.c:669
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "«%s» не є коректним курсором X"
 
-#: ../plug-ins/common/file-xmc.c:744
+#: ../plug-ins/common/file-xmc.c:682
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "Кадр %d з «%s» занадто широкий для курсора X."
 
-#: ../plug-ins/common/file-xmc.c:752
+#: ../plug-ins/common/file-xmc.c:690
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Кадр %d з «%s» занадто високий для курсора X."
 
-#: ../plug-ins/common/file-xmc.c:980
+#: ../plug-ins/common/file-xmc.c:966
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "відсутній фрагмент зображення у «%s»."
 
-#: ../plug-ins/common/file-xmc.c:1021
+#: ../plug-ins/common/file-xmc.c:1007
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "Ширина «%s» занадто велика для курсора X."
 
-#: ../plug-ins/common/file-xmc.c:1030
+#: ../plug-ins/common/file-xmc.c:1016
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "Висота «%s» занадто велика для курсора X."
 
-#: ../plug-ins/common/file-xmc.c:1094
+#: ../plug-ins/common/file-xmc.c:1080
 #, c-format
 msgid "A read error occurred."
 msgstr "Помилка при читанні."
 
-#.
-#. * parameter settings
-#.
-#: ../plug-ins/common/file-xmc.c:1136
-msgid "XMC Options"
-msgstr "Параметри XMC"
+#: ../plug-ins/common/file-xmc.c:1120
+#| msgid "Export Image as XBM"
+msgid "Export Image as X11 Mouse Cursor"
+msgstr "Експортувати зображення як вказівник миші X11"
 
-#: ../plug-ins/common/file-xmc.c:1170
+#: ../plug-ins/common/file-xmc.c:1143
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Введіть координату X «гарячої точки». Початок координат у верхньому лівому "
 "куті."
 
-#: ../plug-ins/common/file-xmc.c:1192
+#: ../plug-ins/common/file-xmc.c:1157
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Введіть координату Y «гарячої точки». Початок координат у верхньому лівому "
 "куті."
 
-#: ../plug-ins/common/file-xmc.c:1201
-msgid "_Auto-Crop all frames."
-msgstr "_Автокадрувати всі кадри."
+#: ../plug-ins/common/file-xmc.c:1163
+#| msgid "_Auto-Crop all frames."
+msgid "_Auto-Crop all frames"
+msgstr "_Автокадрувати всі кадри"
 
-#: ../plug-ins/common/file-xmc.c:1213
+#: ../plug-ins/common/file-xmc.c:1167
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4285,7 +4283,16 @@ msgstr ""
 "Заберіть позначку, якщо плануєте редагувати експортований курсор через інші "
 "програми."
 
-#: ../plug-ins/common/file-xmc.c:1236
+#: ../plug-ins/common/file-xmc.c:1186
+#| msgid "_Frame disposal where unspecified"
+msgid ""
+"_Size where\n"
+"unspecified:"
+msgstr ""
+"_Розмір, де\n"
+"не вказано:"
+
+#: ../plug-ins/common/file-xmc.c:1190
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4303,106 +4310,80 @@ msgstr ""
 "Його використовують лише для визначення залежності рамки від послідовності "
 "анімації та послідовності, яка базується на значенні «gtk-cursor-theme-size»."
 
-#: ../plug-ins/common/file-xmc.c:1253
-msgid "_Use this value only for a frame which size is not specified."
-msgstr "_Використовувати це значення лише для кадру, чий розмір не вказано"
+#: ../plug-ins/common/file-xmc.c:1203
+#| msgid "_Use delay entered above for all frames"
+msgid "Use size entered above for all frames"
+msgstr "_Використати введений вище розмір для всіх кадрів"
 
-#: ../plug-ins/common/file-xmc.c:1256
-msgid "_Replace the size of all frames even if it is specified."
-msgstr "_Замінити розмір всіх кадрів, навіть якщо він вже вказаний"
+#: ../plug-ins/common/file-xmc.c:1210
+#| msgid "_Delay between frames where unspecified:"
+msgid ""
+"_Delay where\n"
+"unspecified:"
+msgstr ""
+"_Затримка, де\n"
+"не вказано:"
 
-#: ../plug-ins/common/file-xmc.c:1272
-msgid "_Delay:"
-msgstr "_Затримка:"
-
-#: ../plug-ins/common/file-xmc.c:1277
+#: ../plug-ins/common/file-xmc.c:1215
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr ""
 "Введіть інтервал часу у мілісекундах протягом якого показується кожен кадр."
 
-#: ../plug-ins/common/file-xmc.c:1304
-msgid "_Use this value only for a frame which delay is not specified."
-msgstr ""
-"В_икористовувати це значення лише для кадру, чию тривалість не вказано."
+#: ../plug-ins/common/file-xmc.c:1229
+#| msgid "_Use delay entered above for all frames"
+msgid "Use delay entred above for all frames"
+msgstr "Використати введену вище затримку для всіх кадрів"
 
-#: ../plug-ins/common/file-xmc.c:1307
-msgid "_Replace the delay of all frames even if it is specified."
-msgstr "З_амінити тривалість всіх кадрів, навіть якщо її вже вказано"
-
-#: ../plug-ins/common/file-xmc.c:1332
-msgid ""
-"The part of copyright information that exceeded 65535 characters was removed."
-msgstr ""
-"Було видалено.частину інформації про авторські права, що не уміщається у "
-"межі 65535 символів."
-
-#: ../plug-ins/common/file-xmc.c:1342
-msgid "Enter copyright information."
-msgstr "Вкажіть інформацію про авторські права"
-
-#: ../plug-ins/common/file-xmc.c:1344
+#: ../plug-ins/common/file-xmc.c:1236
 msgid "_Copyright:"
 msgstr "_Авторські права:"
 
-#: ../plug-ins/common/file-xmc.c:1360
-msgid ""
-"The part of license information that exceeded 65535 characters was removed."
-msgstr ""
-"Було видалено.частину інформації про ліцензію, що не уміщається за межі "
-"65535 символів."
+#: ../plug-ins/common/file-xmc.c:1240
+msgid "Enter copyright information."
+msgstr "Вкажіть інформацію про авторські права"
 
-#: ../plug-ins/common/file-xmc.c:1370
-msgid "Enter license information."
-msgstr "Введіть інформацію про ліцензію"
-
-#: ../plug-ins/common/file-xmc.c:1372
+#: ../plug-ins/common/file-xmc.c:1246
 msgid "_License:"
 msgstr "_Ліцензія:"
 
-#.
-#. *  Other
-#.
-#. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
-#. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1379
+#: ../plug-ins/common/file-xmc.c:1250
+msgid "Enter license information."
+msgstr "Введіть інформацію про ліцензію"
+
+#: ../plug-ins/common/file-xmc.c:1260
 msgid "_Other:"
 msgstr "_Інше:"
 
-#: ../plug-ins/common/file-xmc.c:1414
+#: ../plug-ins/common/file-xmc.c:1274
 msgid "Enter other comment if you want."
 msgstr "Введіть бажаний коментар"
 
-#: ../plug-ins/common/file-xmc.c:1466
-#, c-format
-msgid "Comment is limited to %d characters."
-msgstr "Коментар обмежений довжиною  %d символів."
-
 #. Begin displaying export progress
-#: ../plug-ins/common/file-xmc.c:1553
+#: ../plug-ins/common/file-xmc.c:1380
 #: ../plug-ins/file-webp/file-webp-save.c:196
 #: ../plug-ins/file-webp/file-webp-save.c:594
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження «%s»"
 
-#: ../plug-ins/common/file-xmc.c:1630
+#: ../plug-ins/common/file-xmc.c:1457
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
 "Кадр «%s» занадто широкий. Треба зменшити, щоб ширина не перевищувала %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1640
+#: ../plug-ins/common/file-xmc.c:1467
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
 "Кадр «%s» занадто високий. Треба зменшити, щоб висота не перевищувала %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1650
+#: ../plug-ins/common/file-xmc.c:1477
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Ширина і/або висота кадру «%s» дорівнює нулю!"
 
-#: ../plug-ins/common/file-xmc.c:1691
+#: ../plug-ins/common/file-xmc.c:1519
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -4414,7 +4395,7 @@ msgstr ""
 "Спробуйте змінити позицію гарячої точки, геометрію шару або зберегти без "
 "автоматичного обрізування."
 
-#: ../plug-ins/common/file-xmc.c:1864
+#: ../plug-ins/common/file-xmc.c:1693
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -4427,7 +4408,7 @@ msgstr ""
 "курсорів X bitmap.\n"
 "Це може не підтримуватись деякими середовищами."
 
-#: ../plug-ins/common/file-xmc.c:1872
+#: ../plug-ins/common/file-xmc.c:1701
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -4439,16 +4420,7 @@ msgstr ""
 "Це можна виправити увімкнувши у вікні експорту функцію «Замінити розмір всіх "
 "кадрів…», інакше курсор може не з'явитися в аплеті налаштовування GNOME."
 
-#: ../plug-ins/common/file-xmc.c:2109
-#, c-format
-msgid ""
-"The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
-"fit."
-msgstr ""
-"Паразит «%s» надто довгий для коментування X-курсору.\n"
-"Зайву частину рядка було відкинуто."
-
-#: ../plug-ins/common/file-xmc.c:2224
+#: ../plug-ins/common/file-xmc.c:1975
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -4460,7 +4432,7 @@ msgstr ""
 "Їх буде обрізано до %dpx. Перевірте експортований курсор."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2321
+#: ../plug-ins/common/file-xmc.c:2072
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -6991,7 +6963,7 @@ msgstr "_Тип стиснення:"
 msgid "TIFF image"
 msgstr "Зображення TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:416
+#: ../plug-ins/file-tiff/file-tiff.c:419
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -7086,7 +7058,6 @@ msgid "Writing pages with different bit depth is strange."
 msgstr "Записування сторінок із різною бітовою глибиною є доволі дивною дією."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1196
-#| msgid "Export Image as GIF"
 msgid "Export Image as TIFF"
 msgstr "Експортувати зображення як TIFF"
 
@@ -7098,27 +7069,22 @@ msgid "None"
 msgstr "Немає"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1212
-#| msgid "_LZW"
 msgid "LZW"
 msgstr "LZW"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1213
-#| msgid "_Pack Bits"
 msgid "Pack Bits"
 msgstr "Упаковані біти"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1214
-#| msgid "_Deflate"
 msgid "Deflate"
 msgstr "Deflate"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1216
-#| msgid "CCITT Group _3 fax"
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1217
-#| msgid "CCITT Group _4 fax"
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax"
 
@@ -7128,21 +7094,15 @@ msgstr "CCITT Group 4 fax"
 #.
 #: ../plug-ins/file-tiff/file-tiff-save.c:1261
 #: ../plug-ins/file-tiff/file-tiff-save.c:1269
-#| msgid "Save _layers"
 msgid "Save layers"
 msgstr "Зберегти шари"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1279
-#| msgid "Save color values from transparent pixels"
-msgid "Save color values from transparent pisels"
-msgstr "Зберігати значення кольору прозорих точок"
-
 #: ../plug-ins/file-tiff/file-tiff-save.c:1283
 msgid "Save color values from transparent pixels"
 msgstr "Зберігати значення кольору прозорих точок"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1291
-#| msgid "_Save Exif data"
 msgid "Save Exif data"
 msgstr "Зберегти дані Exif"
 
@@ -12135,6 +12095,53 @@ msgstr "_Сканер/Камера..."
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "XMC Options"
+#~ msgstr "Параметри XMC"
+
+#~ msgid "_Use this value only for a frame which size is not specified."
+#~ msgstr "_Використовувати це значення лише для кадру, чий розмір не вказано"
+
+#~ msgid "_Replace the size of all frames even if it is specified."
+#~ msgstr "_Замінити розмір всіх кадрів, навіть якщо він вже вказаний"
+
+#~ msgid "_Delay:"
+#~ msgstr "_Затримка:"
+
+#~ msgid "_Use this value only for a frame which delay is not specified."
+#~ msgstr ""
+#~ "В_икористовувати це значення лише для кадру, чию тривалість не вказано."
+
+#~ msgid "_Replace the delay of all frames even if it is specified."
+#~ msgstr "З_амінити тривалість всіх кадрів, навіть якщо її вже вказано"
+
+#~ msgid ""
+#~ "The part of copyright information that exceeded 65535 characters was "
+#~ "removed."
+#~ msgstr ""
+#~ "Було видалено.частину інформації про авторські права, що не уміщається у "
+#~ "межі 65535 символів."
+
+#~ msgid ""
+#~ "The part of license information that exceeded 65535 characters was "
+#~ "removed."
+#~ msgstr ""
+#~ "Було видалено.частину інформації про ліцензію, що не уміщається за межі "
+#~ "65535 символів."
+
+#~ msgid "Comment is limited to %d characters."
+#~ msgstr "Коментар обмежений довжиною  %d символів."
+
+#~ msgid ""
+#~ "The parasite \"%s\" is too long for an X cursor comment. It was cut off "
+#~ "to fit."
+#~ msgstr ""
+#~ "Паразит «%s» надто довгий для коментування X-курсору.\n"
+#~ "Зайву частину рядка було відкинуто."
+
+#~| msgid "Save color values from transparent pixels"
+#~ msgid "Save color values from transparent pisels"
+#~ msgstr "Зберігати значення кольору прозорих точок"
 
 #~ msgid "TIFF"
 #~ msgstr "TIFF"
