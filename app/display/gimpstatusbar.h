@@ -71,6 +71,8 @@ struct _GimpStatusbar
   gboolean             progress_shown;
   gdouble              progress_value;
   guint64              progress_last_update_time;
+
+  GSList              *size_widgets;
 };
 
 struct _GimpStatusbarClass

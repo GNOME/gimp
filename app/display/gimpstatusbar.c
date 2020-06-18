@@ -132,6 +132,10 @@ static guint    gimp_statusbar_get_context_id     (GimpStatusbar     *statusbar,
                                                    const gchar       *context);
 static gboolean gimp_statusbar_temp_timeout       (GimpStatusbar     *statusbar);
 
+static void     gimp_statusbar_add_size_widget    (GimpStatusbar     *statusbar,
+                                                   GtkWidget         *widget);
+static void     gimp_statusbar_update_size        (GimpStatusbar     *statusbar);
+
 static void     gimp_statusbar_add_message        (GimpStatusbar     *statusbar,
                                                    guint              context_id,
                                                    const gchar       *icon_name,
@@ -216,6 +220,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->progress_shown       = FALSE;
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
+  gimp_statusbar_add_size_widget (statusbar, statusbar->cursor_label);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label,
                       FALSE, FALSE, 0);
   gtk_widget_show (statusbar->cursor_label);
@@ -229,6 +234,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   gtk_widget_set_can_focus (statusbar->unit_combo, FALSE);
   g_object_set (statusbar->unit_combo, "focus-on-click", FALSE, NULL);
+  gimp_statusbar_add_size_widget (statusbar, statusbar->unit_combo);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->unit_combo,
                       FALSE, FALSE, 0);
   gtk_widget_show (statusbar->unit_combo);
@@ -240,6 +246,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->scale_combo = gimp_scale_combo_box_new ();
   gtk_widget_set_can_focus (statusbar->scale_combo, FALSE);
   g_object_set (statusbar->scale_combo, "focus-on-click", FALSE, NULL);
+  gimp_statusbar_add_size_widget (statusbar, statusbar->scale_combo);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->scale_combo,
                       FALSE, FALSE, 0);
   gtk_widget_show (statusbar->scale_combo);
@@ -254,6 +261,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   /* Shell transform status */
   statusbar->rotate_widget = gtk_event_box_new ();
+  gimp_statusbar_add_size_widget (statusbar, statusbar->rotate_widget);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->rotate_widget,
                       FALSE, FALSE, 1);
   gtk_widget_show (statusbar->rotate_widget);
@@ -268,6 +276,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     statusbar);
 
   statusbar->horizontal_flip_icon = gtk_event_box_new ();
+  gimp_statusbar_add_size_widget (statusbar, statusbar->horizontal_flip_icon);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->horizontal_flip_icon,
                       FALSE, FALSE, 1);
   gtk_widget_show (statusbar->horizontal_flip_icon);
@@ -282,6 +291,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     statusbar);
 
   statusbar->vertical_flip_icon = gtk_event_box_new ();
+  gimp_statusbar_add_size_widget (statusbar, statusbar->vertical_flip_icon);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->vertical_flip_icon,
                       FALSE, FALSE, 1);
   gtk_widget_show (statusbar->vertical_flip_icon);
@@ -299,6 +309,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_label_set_ellipsize (GTK_LABEL (statusbar->label), PANGO_ELLIPSIZE_END);
   gtk_label_set_justify (GTK_LABEL (statusbar->label), GTK_JUSTIFY_LEFT);
   gtk_widget_set_halign (statusbar->label, GTK_ALIGN_START);
+  gimp_statusbar_add_size_widget (statusbar, statusbar->label);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->label, TRUE, TRUE, 1);
   gtk_widget_show (statusbar->label);
 
@@ -310,6 +321,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                                          "show-text", TRUE,
                                          "ellipsize", PANGO_ELLIPSIZE_END,
                                          NULL);
+  gimp_statusbar_add_size_widget (statusbar, statusbar->progressbar);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->progressbar,
                       TRUE, TRUE, 0);
   /*  don't show the progress bar  */
@@ -323,6 +335,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_button_set_relief (GTK_BUTTON (statusbar->cancel_button),
                          GTK_RELIEF_NONE);
   gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
+  gimp_statusbar_add_size_widget (statusbar, statusbar->cancel_button);
   gtk_box_pack_end (GTK_BOX (hbox), statusbar->cancel_button,
                     FALSE, FALSE, 0);
   /*  don't show the cancel button  */
@@ -342,6 +355,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   g_signal_connect (statusbar->cancel_button, "clicked",
                     G_CALLBACK (gimp_statusbar_progress_canceled),
                     statusbar);
+
+  gimp_statusbar_update_size (statusbar);
 }
 
 static void
@@ -354,6 +369,8 @@ gimp_statusbar_dispose (GObject *object)
       g_source_remove (statusbar->temp_timeout_id);
       statusbar->temp_timeout_id = 0;
     }
+
+  g_clear_pointer (&statusbar->size_widgets, g_slist_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -400,6 +417,8 @@ gimp_statusbar_style_updated (GtkWidget *widget)
   layout = gtk_widget_create_pango_layout (widget, " ");
   pango_layout_get_pixel_size (layout, &statusbar->icon_space_width, NULL);
   g_object_unref (layout);
+
+  gimp_statusbar_update_size (statusbar);
 }
 
 static GimpProgress *
@@ -1522,6 +1541,38 @@ gimp_statusbar_temp_timeout (GimpStatusbar *statusbar)
   gimp_statusbar_pop_temp (statusbar);
 
   return FALSE;
+}
+
+static void
+gimp_statusbar_add_size_widget (GimpStatusbar *statusbar,
+                                GtkWidget     *widget)
+{
+  statusbar->size_widgets = g_slist_prepend (statusbar->size_widgets, widget);
+}
+
+static void
+gimp_statusbar_update_size (GimpStatusbar *statusbar)
+{
+  GSList *iter;
+  gint    height = -1;
+
+  for (iter = statusbar->size_widgets; iter; iter = g_slist_next (iter))
+    {
+      GtkWidget *widget = iter->data;
+      gint       natural_height;
+      gboolean   visible;
+
+      visible = gtk_widget_get_visible (widget);
+      gtk_widget_set_visible (widget, TRUE);
+
+      gtk_widget_get_preferred_height (widget, NULL, &natural_height);
+
+      gtk_widget_set_visible (widget, visible);
+
+      height = MAX (height, natural_height);
+    }
+
+  gtk_widget_set_size_request (GTK_WIDGET (statusbar), -1, height);
 }
 
 static void

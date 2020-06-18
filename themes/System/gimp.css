@@ -90,10 +90,6 @@ GimpDisplayShell grid > button {
     padding: 0 0 0 0;
 }
 
-GimpDisplayShell statusbar {
-    min-height: 3em;
-}
-
 GimpDisplayShell combobox entry {
     font-size: smaller;
 }
