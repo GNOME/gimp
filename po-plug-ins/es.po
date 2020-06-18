@@ -22,17 +22,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-26 14:54+0000\n"
-"PO-Revision-Date: 2020-05-26 17:09+0200\n"
+"POT-Creation-Date: 2020-06-16 14:57+0000\n"
+"PO-Revision-Date: 2020-06-17 17:31+0200\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
-"Language: es\n"
+"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
 "X-Generator: Gtranslator 3.36.0\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1)\n"
 
 #: ../plug-ins/common/align-layers.c:190
 msgid "Align Visi_ble Layers..."
@@ -58,10 +58,10 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/colormap-remap.c:655 ../plug-ins/common/compose.c:1146
 #: ../plug-ins/common/contrast-retinex.c:325
 #: ../plug-ins/common/curve-bend.c:1189 ../plug-ins/common/curve-bend.c:1963
-#: ../plug-ins/common/curve-bend.c:1998 ../plug-ins/common/decompose.c:849
-#: ../plug-ins/common/depth-merge.c:710 ../plug-ins/common/destripe.c:460
-#: ../plug-ins/common/file-cel.c:1009 ../plug-ins/common/file-gif-save.c:1116
-#: ../plug-ins/common/file-heif.c:1101 ../plug-ins/common/file-jp2-load.c:976
+#: ../plug-ins/common/curve-bend.c:1998 ../plug-ins/common/depth-merge.c:710
+#: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
+#: ../plug-ins/common/file-gif-save.c:1116 ../plug-ins/common/file-heif.c:1101
+#: ../plug-ins/common/file-jp2-load.c:976
 #: ../plug-ins/common/file-pdf-load.c:645
 #: ../plug-ins/common/file-pdf-load.c:1041
 #: ../plug-ins/common/file-pdf-save.c:1152 ../plug-ins/common/file-ps.c:3550
@@ -77,7 +77,7 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/tile-small.c:425 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:704 ../plug-ins/common/warp.c:467
 #: ../plug-ins/common/wavelet-decompose.c:388 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:1870 ../plug-ins/flame/flame.c:513
+#: ../plug-ins/file-tiff/file-tiff-load.c:1877 ../plug-ins/flame/flame.c:513
 #: ../plug-ins/flame/flame.c:689 ../plug-ins/flame/flame.c:1013
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:565
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1640
@@ -91,6 +91,7 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/gimpressionist/presets.c:642
 #: ../plug-ins/gimpressionist/sizemap.c:401
 #: ../plug-ins/goat-exercises/goat-exercise-c.c:164
+#: ../plug-ins/goat-exercises/goat-exercise-vala.vala:70
 #: ../plug-ins/gradient-flare/gradient-flare.c:2494
 #: ../plug-ins/gradient-flare/gradient-flare.c:3356
 #: ../plug-ins/gradient-flare/gradient-flare.c:3468
@@ -118,18 +119,18 @@ msgstr "_Cancelar"
 #: ../plug-ins/common/checkerboard.c:472 ../plug-ins/common/cml-explorer.c:1329
 #: ../plug-ins/common/colormap-remap.c:656 ../plug-ins/common/compose.c:1147
 #: ../plug-ins/common/contrast-retinex.c:326
-#: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/decompose.c:850
-#: ../plug-ins/common/depth-merge.c:711 ../plug-ins/common/destripe.c:461
-#: ../plug-ins/common/file-heif.c:1102 ../plug-ins/common/file-pdf-load.c:646
-#: ../plug-ins/common/file-svg.c:680 ../plug-ins/common/file-wmf.c:550
-#: ../plug-ins/common/film.c:1321 ../plug-ins/common/grid.c:738
-#: ../plug-ins/common/hot.c:657 ../plug-ins/common/jigsaw.c:2473
-#: ../plug-ins/common/nl-filter.c:1100 ../plug-ins/common/qbist.c:847
-#: ../plug-ins/common/smooth-palette.c:489 ../plug-ins/common/sparkle.c:403
-#: ../plug-ins/common/sphere-designer.c:2628 ../plug-ins/common/tile.c:470
-#: ../plug-ins/common/tile-small.c:426 ../plug-ins/common/van-gogh-lic.c:705
-#: ../plug-ins/common/warp.c:468 ../plug-ins/common/wavelet-decompose.c:389
-#: ../plug-ins/flame/flame.c:690 ../plug-ins/flame/flame.c:1014
+#: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/depth-merge.c:711
+#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:1102
+#: ../plug-ins/common/file-pdf-load.c:646 ../plug-ins/common/file-svg.c:680
+#: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1321
+#: ../plug-ins/common/grid.c:738 ../plug-ins/common/hot.c:657
+#: ../plug-ins/common/jigsaw.c:2473 ../plug-ins/common/nl-filter.c:1100
+#: ../plug-ins/common/qbist.c:847 ../plug-ins/common/smooth-palette.c:489
+#: ../plug-ins/common/sparkle.c:403 ../plug-ins/common/sphere-designer.c:2628
+#: ../plug-ins/common/tile.c:470 ../plug-ins/common/tile-small.c:426
+#: ../plug-ins/common/van-gogh-lic.c:705 ../plug-ins/common/warp.c:468
+#: ../plug-ins/common/wavelet-decompose.c:389 ../plug-ins/flame/flame.c:690
+#: ../plug-ins/flame/flame.c:1014
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1247
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -308,7 +309,7 @@ msgstr "_Vertical"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:329 ../plug-ins/common/compose.c:1092
-#: ../plug-ins/common/decompose.c:634 ../plug-ins/common/file-cel.c:504
+#: ../plug-ins/common/decompose.c:629 ../plug-ins/common/file-cel.c:504
 #: ../plug-ins/common/file-cel.c:509 ../plug-ins/common/file-dicom.c:645
 #: ../plug-ins/common/file-gegl.c:461 ../plug-ins/common/file-gif-load.c:1037
 #: ../plug-ins/common/file-jp2-load.c:1301 ../plug-ins/common/file-pcx.c:483
@@ -323,11 +324,11 @@ msgstr "_Vertical"
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:1971 ../plug-ins/file-sgi/sgi.c:424
-#: ../plug-ins/file-tiff/file-tiff-load.c:1032
+#: ../plug-ins/file-tiff/file-tiff-load.c:1039
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1323 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:310 ../plug-ins/twain/twain.c:604
+#: ../plug-ins/screenshot/screenshot-win32.c:310 ../plug-ins/twain/twain.c:645
 msgid "Background"
 msgstr "Fondo"
 
@@ -605,19 +606,19 @@ msgid "Randoms from seed (shared)"
 msgstr "Aleatorizar desde semilla (compartido)"
 
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
-#: ../plug-ins/common/decompose.c:205
+#: ../plug-ins/common/decompose.c:200
 #: ../plug-ins/gimpressionist/orientation.c:175
 #: ../plug-ins/gimpressionist/size.c:182
 msgid "Hue"
 msgstr "Tono"
 
 #: ../plug-ins/common/cml-explorer.c:303 ../plug-ins/common/cml-explorer.c:311
-#: ../plug-ins/common/decompose.c:206
+#: ../plug-ins/common/decompose.c:201
 msgid "Saturation"
 msgstr "Saturación"
 
 #: ../plug-ins/common/cml-explorer.c:304 ../plug-ins/common/cml-explorer.c:312
-#: ../plug-ins/common/decompose.c:207
+#: ../plug-ins/common/decompose.c:202
 #: ../plug-ins/gimpressionist/orientation.c:151
 #: ../plug-ins/gimpressionist/size.c:158
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
@@ -887,8 +888,8 @@ msgstr "Guardar los parámetros del Examinador CML"
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
 #: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
 #: ../plug-ins/file-jpeg/jpeg-save.c:340 ../plug-ins/file-psd/psd-save.c:1753
-#: ../plug-ins/file-tiff/file-tiff-save.c:983
-#: ../plug-ins/file-tiff/file-tiff-save.c:1097 ../plug-ins/flame/flame.c:482
+#: ../plug-ins/file-tiff/file-tiff-save.c:979
+#: ../plug-ins/file-tiff/file-tiff-save.c:1082 ../plug-ins/flame/flame.c:482
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1547
 #: ../plug-ins/gfig/gfig.c:827 ../plug-ins/ifs-compose/ifs-compose.c:2395
 #: ../plug-ins/lighting/lighting-ui.c:1239
@@ -1128,49 +1129,49 @@ msgstr "_Redness cr709:"
 #. Generic case for any data. Let's leave choice to select the
 #. * right type of raw data.
 #.
-#: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:196
+#: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:191
 #: ../plug-ins/common/file-raw-data.c:1878
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/common/compose.c:248 ../plug-ins/common/decompose.c:197
+#: ../plug-ins/common/compose.c:248 ../plug-ins/common/decompose.c:192
 msgid "RGBA"
 msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:256 ../plug-ins/common/decompose.c:204
+#: ../plug-ins/common/compose.c:256 ../plug-ins/common/decompose.c:199
 msgid "HSV"
 msgstr "HSV"
 
-#: ../plug-ins/common/compose.c:263 ../plug-ins/common/decompose.c:209
+#: ../plug-ins/common/compose.c:263 ../plug-ins/common/decompose.c:204
 msgid "HSL"
 msgstr "HSL"
 
-#: ../plug-ins/common/compose.c:270 ../plug-ins/common/decompose.c:214
+#: ../plug-ins/common/compose.c:270 ../plug-ins/common/decompose.c:209
 #: ../plug-ins/common/file-jp2-load.c:1012
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../plug-ins/common/compose.c:278 ../plug-ins/common/decompose.c:220
+#: ../plug-ins/common/compose.c:278 ../plug-ins/common/decompose.c:215
 msgid "LAB"
 msgstr "LAB"
 
-#: ../plug-ins/common/compose.c:285 ../plug-ins/common/decompose.c:222
+#: ../plug-ins/common/compose.c:285 ../plug-ins/common/decompose.c:217
 msgid "LCH"
 msgstr "LCH"
 
-#: ../plug-ins/common/compose.c:292 ../plug-ins/common/decompose.c:224
+#: ../plug-ins/common/compose.c:292 ../plug-ins/common/decompose.c:219
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: ../plug-ins/common/compose.c:299 ../plug-ins/common/decompose.c:227
+#: ../plug-ins/common/compose.c:299 ../plug-ins/common/decompose.c:222
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: ../plug-ins/common/compose.c:306 ../plug-ins/common/decompose.c:225
+#: ../plug-ins/common/compose.c:306 ../plug-ins/common/decompose.c:220
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: ../plug-ins/common/compose.c:313 ../plug-ins/common/decompose.c:228
+#: ../plug-ins/common/compose.c:313 ../plug-ins/common/decompose.c:223
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
@@ -1251,7 +1252,7 @@ msgstr "Componer"
 msgid "Compose Channels"
 msgstr "Componer canales"
 
-#: ../plug-ins/common/compose.c:1180 ../plug-ins/common/decompose.c:880
+#: ../plug-ins/common/compose.c:1180 ../plug-ins/common/decompose.c:859
 msgid "Color _model:"
 msgstr "_Modelo de color:"
 
@@ -1486,182 +1487,182 @@ msgstr "Cargar puntos de curva desde un archivo"
 msgid "Save Curve Points to File"
 msgstr "Guardar puntos de curva en un archivo"
 
-#: ../plug-ins/common/decompose.c:159
+#: ../plug-ins/common/decompose.c:154
 msgid "red"
 msgstr "rojo"
 
-#: ../plug-ins/common/decompose.c:160
+#: ../plug-ins/common/decompose.c:155
 msgid "green"
 msgstr "verde"
 
-#: ../plug-ins/common/decompose.c:161
+#: ../plug-ins/common/decompose.c:156
 msgid "blue"
 msgstr "azul"
 
-#: ../plug-ins/common/decompose.c:162
+#: ../plug-ins/common/decompose.c:157
 msgid "alpha"
 msgstr "alfa"
 
-#: ../plug-ins/common/decompose.c:164 ../plug-ins/common/decompose.c:168
+#: ../plug-ins/common/decompose.c:159 ../plug-ins/common/decompose.c:163
 msgid "hue"
 msgstr "tono"
 
-#: ../plug-ins/common/decompose.c:165 ../plug-ins/common/decompose.c:169
+#: ../plug-ins/common/decompose.c:160 ../plug-ins/common/decompose.c:164
 msgid "saturation"
 msgstr "saturación"
 
-#: ../plug-ins/common/decompose.c:166
+#: ../plug-ins/common/decompose.c:161
 msgid "value"
 msgstr "valor"
 
-#: ../plug-ins/common/decompose.c:170
+#: ../plug-ins/common/decompose.c:165
 msgid "lightness"
 msgstr "luminosidad"
 
-#: ../plug-ins/common/decompose.c:172
+#: ../plug-ins/common/decompose.c:167
 msgid "cyan"
 msgstr "cián"
 
-#: ../plug-ins/common/decompose.c:173
+#: ../plug-ins/common/decompose.c:168
 msgid "magenta"
 msgstr "magenta"
 
-#: ../plug-ins/common/decompose.c:174
+#: ../plug-ins/common/decompose.c:169
 msgid "yellow"
 msgstr "amarillo"
 
-#: ../plug-ins/common/decompose.c:175
+#: ../plug-ins/common/decompose.c:170
 msgid "black"
 msgstr "negro"
 
-#: ../plug-ins/common/decompose.c:177 ../plug-ins/common/decompose.c:181
+#: ../plug-ins/common/decompose.c:172 ../plug-ins/common/decompose.c:176
 msgid "L"
 msgstr "L"
 
-#: ../plug-ins/common/decompose.c:178
+#: ../plug-ins/common/decompose.c:173
 msgid "A"
 msgstr "A"
 
-#: ../plug-ins/common/decompose.c:179
+#: ../plug-ins/common/decompose.c:174
 msgid "B"
 msgstr "B"
 
-#: ../plug-ins/common/decompose.c:182
+#: ../plug-ins/common/decompose.c:177
 msgid "C"
 msgstr "C"
 
-#: ../plug-ins/common/decompose.c:183
+#: ../plug-ins/common/decompose.c:178
 msgid "H"
 msgstr "H"
 
-#: ../plug-ins/common/decompose.c:185
+#: ../plug-ins/common/decompose.c:180
 msgid "luma-y470"
 msgstr "luma-y470"
 
-#: ../plug-ins/common/decompose.c:186
+#: ../plug-ins/common/decompose.c:181
 msgid "blueness-cb470"
 msgstr "blueness-cb470"
 
-#: ../plug-ins/common/decompose.c:187
+#: ../plug-ins/common/decompose.c:182
 msgid "redness-cr470"
 msgstr "redness-cr470"
 
-#: ../plug-ins/common/decompose.c:189
+#: ../plug-ins/common/decompose.c:184
 msgid "luma-y709"
 msgstr "luma-y709"
 
-#: ../plug-ins/common/decompose.c:190
+#: ../plug-ins/common/decompose.c:185
 msgid "blueness-cb709"
 msgstr "blueness-cb709"
 
-#: ../plug-ins/common/decompose.c:191
+#: ../plug-ins/common/decompose.c:186
 msgid "redness-cr709"
 msgstr "redness-cr709"
 
 #. Redmode radio frame
-#: ../plug-ins/common/decompose.c:199
+#: ../plug-ins/common/decompose.c:194
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:992
 msgid "Red"
 msgstr "Rojo"
 
 #. Greenmode radio frame
-#: ../plug-ins/common/decompose.c:200
+#: ../plug-ins/common/decompose.c:195
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1033
 msgid "Green"
 msgstr "Verde"
 
 #. Bluemode radio frame
-#: ../plug-ins/common/decompose.c:201
+#: ../plug-ins/common/decompose.c:196
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1074
 msgid "Blue"
 msgstr "Azul"
 
-#: ../plug-ins/common/decompose.c:202
+#: ../plug-ins/common/decompose.c:197
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../plug-ins/common/decompose.c:210
+#: ../plug-ins/common/decompose.c:205
 msgid "Hue (HSL)"
 msgstr "Tono (HSL)"
 
-#: ../plug-ins/common/decompose.c:211
+#: ../plug-ins/common/decompose.c:206
 msgid "Saturation (HSL)"
 msgstr "Saturación (HSL)"
 
-#: ../plug-ins/common/decompose.c:212
+#: ../plug-ins/common/decompose.c:207
 msgid "Lightness"
 msgstr "Luminosidad"
 
-#: ../plug-ins/common/decompose.c:215
+#: ../plug-ins/common/decompose.c:210
 msgid "Cyan"
 msgstr "Cián"
 
-#: ../plug-ins/common/decompose.c:216
+#: ../plug-ins/common/decompose.c:211
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../plug-ins/common/decompose.c:217
+#: ../plug-ins/common/decompose.c:212
 msgid "Yellow"
 msgstr "Amarillo"
 
-#: ../plug-ins/common/decompose.c:218 ../plug-ins/common/warp.c:594
+#: ../plug-ins/common/decompose.c:213 ../plug-ins/common/warp.c:594
 #: ../plug-ins/flame/flame.c:1215 ../plug-ins/gfig/gfig-dialog.c:1498
 msgid "Black"
 msgstr "Negro"
 
-#: ../plug-ins/common/decompose.c:289
+#: ../plug-ins/common/decompose.c:277
 msgid "_Decompose..."
 msgstr "_Descomponer…"
 
-#: ../plug-ins/common/decompose.c:293
+#: ../plug-ins/common/decompose.c:281
 msgid "Decompose an image into separate colorspace components"
 msgstr "Descomponer una imagen en componentes separados del espacio de color"
 
-#: ../plug-ins/common/decompose.c:402
+#: ../plug-ins/common/decompose.c:377
 msgid "Decomposing"
 msgstr "Descomposición"
 
-#: ../plug-ins/common/decompose.c:517
+#: ../plug-ins/common/decompose.c:512
 msgid "Image not suitable for this decomposition"
 msgstr "Imagen no adecuada para esta decomposición"
 
-#: ../plug-ins/common/decompose.c:845
+#: ../plug-ins/common/decompose.c:837
 msgid "Decompose"
 msgstr "Descomponer"
 
-#: ../plug-ins/common/decompose.c:868
+#: ../plug-ins/common/decompose.c:847
 msgid "Extract Channels"
 msgstr "Extraer canales"
 
-#: ../plug-ins/common/decompose.c:915
+#: ../plug-ins/common/decompose.c:896
 msgid "_Decompose to layers"
 msgstr "_Descomponer en capas"
 
-#: ../plug-ins/common/decompose.c:926
+#: ../plug-ins/common/decompose.c:900
 msgid "_Foreground as registration color"
 msgstr "Color de _frente como color de registro"
 
-#: ../plug-ins/common/decompose.c:927
+#: ../plug-ins/common/decompose.c:901
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -1864,7 +1865,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: ../plug-ins/file-psd/psd-load.c:141
 #: ../plug-ins/file-raw/file-darktable.c:419
 #: ../plug-ins/file-raw/file-rawtherapee.c:345 ../plug-ins/file-sgi/sgi.c:330
-#: ../plug-ins/file-tiff/file-tiff-load.c:170
+#: ../plug-ins/file-tiff/file-tiff-load.c:158
 #, c-format
 msgid "Opening '%s'"
 msgstr "Abriendo «%s»"
@@ -1947,7 +1948,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
 #: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
 #: ../plug-ins/file-jpeg/jpeg-save.c:293 ../plug-ins/file-psd/psd-save.c:1716
-#: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:973
+#: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:969
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exportando «%s»"
@@ -2427,7 +2428,6 @@ msgstr "Ca_lidad"
 
 #: ../plug-ins/common/file-heif.c:1281 ../plug-ins/file-jpeg/jpeg-save.c:1001
 #: ../plug-ins/file-webp/file-webp-dialog.c:305
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "Save color _profile"
 msgstr "Guardar _perfil de color"
 
@@ -2921,7 +2921,7 @@ msgid "Import from PDF"
 msgstr "Importar desde PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1042 ../plug-ins/common/file-ps.c:3551
-#: ../plug-ins/file-tiff/file-tiff-load.c:1871
+#: ../plug-ins/file-tiff/file-tiff-load.c:1878
 #: ../plug-ins/metadata/metadata-editor.c:5665
 msgid "_Import"
 msgstr "_Importar"
@@ -3057,7 +3057,7 @@ msgstr "Capas como páginas (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1315
 #: ../plug-ins/common/file-pdf-save.c:1388
 #: ../plug-ins/common/file-pdf-save.c:1486 ../plug-ins/common/file-ps.c:2036
-#: ../plug-ins/file-tiff/file-tiff-load.c:1034
+#: ../plug-ins/file-tiff/file-tiff-load.c:1041
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
@@ -3185,7 +3185,7 @@ msgstr "Guardar el desplazamiento de _capa"
 msgid "Save _resolution"
 msgstr "Guardar la re_solución"
 
-#: ../plug-ins/common/file-png.c:2257 ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+#: ../plug-ins/common/file-png.c:2257
 msgid "Save color _values from transparent pixels"
 msgstr "Guardar los _valores de los colores de los píxeles transparentes"
 
@@ -3198,18 +3198,22 @@ msgid "Save E_xif data"
 msgstr "Guardar los datos E_xif"
 
 #: ../plug-ins/common/file-png.c:2279
+#: ../plug-ins/file-tiff/file-tiff-save.c:1295
 msgid "Save XMP data"
 msgstr "Guardar los datos XMP"
 
 #: ../plug-ins/common/file-png.c:2283
+#: ../plug-ins/file-tiff/file-tiff-save.c:1299
 msgid "Save IPTC data"
 msgstr "Guardar los datos IPTC"
 
 #: ../plug-ins/common/file-png.c:2287
+#: ../plug-ins/file-tiff/file-tiff-save.c:1303
 msgid "Save thumbnail"
 msgstr "Guardar miniatura"
 
 #: ../plug-ins/common/file-png.c:2291
+#: ../plug-ins/file-tiff/file-tiff-save.c:1308
 msgid "Save color profile"
 msgstr "Guardar perfil de color"
 
@@ -6316,6 +6320,7 @@ msgid "Export Image as DDS"
 msgstr "Exportar imagen como DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1987
+#: ../plug-ins/file-tiff/file-tiff-save.c:1225
 msgid "_Compression:"
 msgstr "_Compresión:"
 
@@ -6572,6 +6577,7 @@ msgid "File size: unknown"
 msgstr "Tamaño de archivo: desconocido"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/file-tiff/file-tiff-save.c:1215
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -6611,22 +6617,20 @@ msgstr "Guardar los datos _Exif"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:959
 #: ../plug-ins/file-webp/file-webp-dialog.c:300
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "Save _XMP data"
 msgstr "Guardar los datos _XMP"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:973
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "Save _IPTC data"
 msgstr "Guardar los datos _IPTC"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:987
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "Save _thumbnail"
 msgstr "Guardar minia_tura"
 
 #. Comment
 #: ../plug-ins/file-jpeg/jpeg-save.c:1014
+#: ../plug-ins/file-tiff/file-tiff-save.c:1312
 msgid "Comment"
 msgstr "Comentario"
 
@@ -7031,23 +7035,23 @@ msgstr "RLE agresivo (no soportado por SGI)"
 msgid "Compression _type:"
 msgstr "_Tipo de compresión:"
 
-#: ../plug-ins/file-tiff/file-tiff.c:162 ../plug-ins/file-tiff/file-tiff.c:190
+#: ../plug-ins/file-tiff/file-tiff.c:147 ../plug-ins/file-tiff/file-tiff.c:175
 msgid "TIFF image"
 msgstr "Imagen TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:442
+#: ../plug-ins/file-tiff/file-tiff.c:416
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 "La opción «Guardar capas» no está activada al intentar exportar múltiples "
 "capas."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:189
+#: ../plug-ins/file-tiff/file-tiff-load.c:177
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "El TIFF «%s» no contiene ninguna carpeta"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:259
+#: ../plug-ins/file-tiff/file-tiff-load.c:247
 msgid "Extra channels with unspecified data."
 msgstr "Canales adicionales con datos sin especificar."
 
@@ -7058,20 +7062,20 @@ msgstr "Canales adicionales con datos sin especificar."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:275
+#: ../plug-ins/file-tiff/file-tiff-load.c:263
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF no conforme: canales adicionales sin el campo «ExtraSamples»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:821
+#: ../plug-ins/file-tiff/file-tiff-load.c:809
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-de-%d-páginas"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1071
+#: ../plug-ins/file-tiff/file-tiff-load.c:1078
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1866
+#: ../plug-ins/file-tiff/file-tiff-load.c:1873
 msgid "Import from TIFF"
 msgstr "Importar desde TIFF"
 
@@ -7079,27 +7083,27 @@ msgstr "Importar desde TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:1919
+#: ../plug-ins/file-tiff/file-tiff-load.c:1926
 msgid "_Keep empty space around imported layers"
 msgstr "_Mantener espacio vacío alrededor de capas importadas"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1936
+#: ../plug-ins/file-tiff/file-tiff-load.c:1943
 msgid "Process extra channel as:"
 msgstr "Procesar canal adicional como:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1939
+#: ../plug-ins/file-tiff/file-tiff-load.c:1946
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _no premultiplicado"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1940
+#: ../plug-ins/file-tiff/file-tiff-load.c:1947
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_multiplicado"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1941
+#: ../plug-ins/file-tiff/file-tiff-load.c:1948
 msgid "Channe_l"
 msgstr "Cana_l"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:608
+#: ../plug-ins/file-tiff/file-tiff-save.c:612
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7107,16 +7111,16 @@ msgstr ""
 "Sólo las imágenes monocromáticas se pueden comprimir con «CCITT Group 4» o "
 "«CCITT Group 3»."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:622
+#: ../plug-ins/file-tiff/file-tiff-save.c:626
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Las imágenes indexadas no se pueden comprimir con «JPEG»."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:755
+#: ../plug-ins/file-tiff/file-tiff-save.c:759
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Ha fallado un trazo de la imagen por lícnea escrita en la fila %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1000
+#: ../plug-ins/file-tiff/file-tiff-save.c:996
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7124,55 +7128,67 @@ msgstr ""
 "El formato TIFF sólo soporta comentarios en \n"
 "codificación ASCII de 7 bits. No se guardará ningún comentario."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1121
+#: ../plug-ins/file-tiff/file-tiff-save.c:1106
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Escribir páginas con distinta profundidad de bit es extraño."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1168
-msgid "TIFF"
-msgstr "TIFF"
+#: ../plug-ins/file-tiff/file-tiff-save.c:1196
+#| msgid "Export Image as GIF"
+msgid "Export Image as TIFF"
+msgstr "Exportar imagen como TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1178
-#, c-format
-msgid "Error loading UI file '%s': %s"
-msgstr "Ocurrió un error al cargar el archivo de IU «%s»: %s"
+#: ../plug-ins/file-tiff/file-tiff-save.c:1211
+#: ../plug-ins/metadata/metadata-tags.c:176
+#: ../plug-ins/metadata/metadata-tags.c:188
+#: ../plug-ins/metadata/metadata-tags.c:219
+msgid "None"
+msgstr "Ninguna"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1179
-msgid "Unknown error"
-msgstr "Error desconocido"
+#: ../plug-ins/file-tiff/file-tiff-save.c:1212
+#| msgid "_LZW"
+msgid "LZW"
+msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1194
-msgid "Compression"
-msgstr "Compresión"
+#: ../plug-ins/file-tiff/file-tiff-save.c:1213
+#| msgid "_Pack Bits"
+msgid "Pack Bits"
+msgstr "Empaquetar bits"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1198
-msgid "_None"
-msgstr "_Ninguno"
+#: ../plug-ins/file-tiff/file-tiff-save.c:1214
+#| msgid "_Deflate"
+msgid "Deflate"
+msgstr "Desinflar"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1199
-msgid "_LZW"
-msgstr "_LZW"
+#: ../plug-ins/file-tiff/file-tiff-save.c:1216
+#| msgid "CCITT Group _3 fax"
+msgid "CCITT Group 3 fax"
+msgstr "Fax CCITT grupo 3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1200
-msgid "_Pack Bits"
-msgstr "_Paquetes de bits"
+#: ../plug-ins/file-tiff/file-tiff-save.c:1217
+#| msgid "CCITT Group _4 fax"
+msgid "CCITT Group 4 fax"
+msgstr "Fax CCITT grupo 4"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1201
-msgid "_Deflate"
-msgstr "_Desinflar"
+#. If single-layer TIFF, set the toggle insensitive and show it as
+#. * unchecked though I don't actually change the tsvals value to
+#. * keep storing previously chosen value.
+#.
+#: ../plug-ins/file-tiff/file-tiff-save.c:1261
+#: ../plug-ins/file-tiff/file-tiff-save.c:1269
+#| msgid "Save _layers"
+msgid "Save layers"
+msgstr "Guardar capas"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1202
-msgid "_JPEG"
-msgstr "_JPEG"
+#: ../plug-ins/file-tiff/file-tiff-save.c:1279
+#: ../plug-ins/file-tiff/file-tiff-save.c:1283
+msgid "Save color values from transparent pixels"
+msgstr "Guardar los valores de los colores de los píxeles transparentes"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1203
-msgid "CCITT Group _3 fax"
-msgstr "Fax CCITT grupo _3"
-
-#: ../plug-ins/file-tiff/file-tiff-save.c:1204
-msgid "CCITT Group _4 fax"
-msgstr "Fax CCITT grupo _4"
+#: ../plug-ins/file-tiff/file-tiff-save.c:1291
+#| msgid "_Save Exif data"
+msgid "Save Exif data"
+msgstr "Guardar datos Exif"
 
 #: ../plug-ins/file-webp/file-webp.c:119 ../plug-ins/file-webp/file-webp.c:146
 msgid "WebP image"
@@ -9018,14 +9034,17 @@ msgid "Exercise a goat (C)"
 msgstr "Ejercitar una cabra (C)"
 
 #: ../plug-ins/goat-exercises/goat-exercise-c.c:165
+#: ../plug-ins/goat-exercises/goat-exercise-vala.vala:71
 msgid "_Source"
 msgstr "_Fuente"
 
 #: ../plug-ins/goat-exercises/goat-exercise-c.c:166
+#: ../plug-ins/goat-exercises/goat-exercise-vala.vala:72
 msgid "_Run"
 msgstr "_Ejecutar"
 
 #: ../plug-ins/goat-exercises/goat-exercise-c.c:180
+#: ../plug-ins/goat-exercises/goat-exercise-vala.vala:86
 #, c-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
@@ -9041,21 +9060,10 @@ msgstr ""
 msgid "Exercise a goat (Python 3)"
 msgstr "Ejercitar una cabra (Python 3)"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:1
-msgid "Save _layers"
-msgstr "Guardar ca_pas"
-
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
-msgid "Colors are not stored premultiplied by the associated alpha"
-msgstr "Los colores no se almacenan premultiplicados por el alfa asociado"
-
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
-msgid "S_ave Exif data"
-msgstr "Gu_ardar los datos Exif"
-
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
-msgid "<b>Comment</b>"
-msgstr "<b>Comentario</b>"
+#: ../plug-ins/goat-exercises/goat-exercise-vala.vala:64
+#| msgid "Exercise a goat (C)"
+msgid "Exercise a goat (Vala)"
+msgstr "Ejercitar una cabra (Vala)"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -11496,12 +11504,6 @@ msgstr "Digitalizado de una impresión en un medio no transparente"
 msgid "Created by software"
 msgstr "Creado por software"
 
-#: ../plug-ins/metadata/metadata-tags.c:176
-#: ../plug-ins/metadata/metadata-tags.c:188
-#: ../plug-ins/metadata/metadata-tags.c:219
-msgid "None"
-msgstr "Ninguna"
-
 #: ../plug-ins/metadata/metadata-tags.c:177
 #: ../plug-ins/metadata/metadata-tags.c:189
 msgid "Not Applicable"
@@ -12222,14 +12224,41 @@ msgstr ""
 msgid "Capture an image from a TWAIN datasource"
 msgstr "Capturar una imagen de una fuente TWAIN"
 
-#: ../plug-ins/twain/twain.c:363
+#: ../plug-ins/twain/twain.c:362
 msgid "_Scanner/Camera..."
 msgstr "_Escáner/Cámara…"
 
 #. Initialize our progress dialog
-#: ../plug-ins/twain/twain.c:506
+#: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Error loading UI file '%s': %s"
+#~ msgstr "Ocurrió un error al cargar el archivo de IU «%s»: %s"
+
+#~ msgid "Unknown error"
+#~ msgstr "Error desconocido"
+
+#~ msgid "Compression"
+#~ msgstr "Compresión"
+
+#~ msgid "_None"
+#~ msgstr "_Ninguno"
+
+#~ msgid "_JPEG"
+#~ msgstr "_JPEG"
+
+#~ msgid "Colors are not stored premultiplied by the associated alpha"
+#~ msgstr "Los colores no se almacenan premultiplicados por el alfa asociado"
+
+#~ msgid "S_ave Exif data"
+#~ msgstr "Gu_ardar los datos Exif"
+
+#~ msgid "<b>Comment</b>"
+#~ msgstr "<b>Comentario</b>"
 
 #~ msgid "CMY"
 #~ msgstr "CMY"
@@ -12969,9 +12998,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 #~ msgctxt "frame-range"
 #~ msgid "To:"
 #~ msgstr "A:"
-
-#~ msgid "Save color values from transparent pixels"
-#~ msgstr "Guardar los valores de los colores de los píxeles transparentes"
 
 #~ msgid "Flame works only on RGB drawables."
 #~ msgstr "Llama sólo funciona en imágenes de color RGB."
