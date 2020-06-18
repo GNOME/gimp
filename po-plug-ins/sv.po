@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-16 14:57+0000\n"
-"PO-Revision-Date: 2020-06-16 22:49+0200\n"
+"POT-Creation-Date: 2020-06-18 09:11+0000\n"
+"PO-Revision-Date: 2020-06-19 01:13+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -49,7 +49,7 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/curve-bend.c:1189 ../plug-ins/common/curve-bend.c:1963
 #: ../plug-ins/common/curve-bend.c:1998 ../plug-ins/common/depth-merge.c:710
 #: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
-#: ../plug-ins/common/file-gif-save.c:1116 ../plug-ins/common/file-heif.c:1101
+#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:1101
 #: ../plug-ins/common/file-jp2-load.c:976
 #: ../plug-ins/common/file-pdf-load.c:645
 #: ../plug-ins/common/file-pdf-load.c:1041
@@ -298,15 +298,15 @@ msgstr "_Vertikal"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:329 ../plug-ins/common/compose.c:1092
-#: ../plug-ins/common/decompose.c:629 ../plug-ins/common/file-cel.c:504
+#: ../plug-ins/common/decompose.c:643 ../plug-ins/common/file-cel.c:504
 #: ../plug-ins/common/file-cel.c:509 ../plug-ins/common/file-dicom.c:645
 #: ../plug-ins/common/file-gegl.c:461 ../plug-ins/common/file-gif-load.c:1037
 #: ../plug-ins/common/file-jp2-load.c:1301 ../plug-ins/common/file-pcx.c:483
 #: ../plug-ins/common/file-pcx.c:491 ../plug-ins/common/file-pix.c:424
-#: ../plug-ins/common/file-png.c:870 ../plug-ins/common/file-pnm.c:764
+#: ../plug-ins/common/file-png.c:873 ../plug-ins/common/file-pnm.c:764
 #: ../plug-ins/common/file-raw-data.c:1325
 #: ../plug-ins/common/file-sunras.c:1087 ../plug-ins/common/file-tga.c:1110
-#: ../plug-ins/common/file-xbm.c:907 ../plug-ins/common/film.c:795
+#: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:795
 #: ../plug-ins/common/smooth-palette.c:309 ../plug-ins/common/tile.c:382
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:275
 #: ../plug-ins/file-faxg3/faxg3.c:547 ../plug-ins/file-fits/fits.c:564
@@ -389,7 +389,7 @@ msgstr "Skapa ett schackrutat mönster"
 msgid "Checkerboard"
 msgstr "Schackrutor"
 
-#: ../plug-ins/common/checkerboard.c:532 ../plug-ins/common/file-xmc.c:1248
+#: ../plug-ins/common/checkerboard.c:532
 #: ../plug-ins/gimpressionist/sizemap.c:509
 msgid "_Size:"
 msgstr "_Storlek:"
@@ -865,10 +865,10 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/common/cml-explorer.c:2172 ../plug-ins/common/curve-bend.c:805
 #: ../plug-ins/common/file-dicom.c:1408 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
-#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1445
+#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1448
 #: ../plug-ins/common/file-raw-data.c:1115
 #: ../plug-ins/common/file-raw-data.c:1145 ../plug-ins/common/file-sunras.c:641
-#: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1568
+#: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
 #: ../plug-ins/common/sphere-designer.c:2196
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
 #: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
@@ -895,14 +895,14 @@ msgstr "Läs in parametrar för CML-utforskare"
 #: ../plug-ins/common/file-cel.c:355 ../plug-ins/common/file-cel.c:409
 #: ../plug-ins/common/file-cel.c:649 ../plug-ins/common/file-dicom.c:376
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1412
-#: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:688
+#: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:691
 #: ../plug-ins/common/file-ps.c:1148 ../plug-ins/common/file-ps.c:3500
 #: ../plug-ins/common/file-psp.c:1929 ../plug-ins/common/file-psp.c:1983
 #: ../plug-ins/common/file-raw-data.c:437
 #: ../plug-ins/common/file-raw-data.c:1234 ../plug-ins/common/file-sunras.c:458
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
-#: ../plug-ins/common/file-tga.c:448 ../plug-ins/common/file-xbm.c:744
-#: ../plug-ins/common/file-xmc.c:724 ../plug-ins/common/file-xmc.c:920
+#: ../plug-ins/common/file-tga.c:448 ../plug-ins/common/file-xbm.c:747
+#: ../plug-ins/common/file-xmc.c:662 ../plug-ins/common/file-xmc.c:906
 #: ../plug-ins/common/file-xwd.c:484 ../plug-ins/common/sphere-designer.c:2085
 #: ../plug-ins/file-bmp/bmp-load.c:229 ../plug-ins/file-faxg3/faxg3.c:256
 #: ../plug-ins/file-fits/fits.c:384 ../plug-ins/file-fli/fli-gimp.c:460
@@ -1227,7 +1227,7 @@ msgstr "Komponera"
 msgid "Compose Channels"
 msgstr "Komponera kanaler"
 
-#: ../plug-ins/common/compose.c:1180 ../plug-ins/common/decompose.c:859
+#: ../plug-ins/common/compose.c:1180 ../plug-ins/common/decompose.c:873
 msgid "Color _model:"
 msgstr "Färg_modell:"
 
@@ -1613,31 +1613,31 @@ msgstr "_Separera…"
 msgid "Decompose an image into separate colorspace components"
 msgstr "Separera en bild till separata färgrymdskomponenter"
 
-#: ../plug-ins/common/decompose.c:377
+#: ../plug-ins/common/decompose.c:391
 msgid "Decomposing"
 msgstr "Separering"
 
-#: ../plug-ins/common/decompose.c:512
+#: ../plug-ins/common/decompose.c:526
 msgid "Image not suitable for this decomposition"
 msgstr "Bild inte lämplig för denna sönderdelning"
 
-#: ../plug-ins/common/decompose.c:837
+#: ../plug-ins/common/decompose.c:851
 msgid "Decompose"
 msgstr "Separera"
 
-#: ../plug-ins/common/decompose.c:847
+#: ../plug-ins/common/decompose.c:861
 msgid "Extract Channels"
 msgstr "Extrahera kanaler"
 
-#: ../plug-ins/common/decompose.c:896
+#: ../plug-ins/common/decompose.c:910
 msgid "_Decompose to layers"
 msgstr "Separera till la_ger"
 
-#: ../plug-ins/common/decompose.c:900
+#: ../plug-ins/common/decompose.c:914
 msgid "_Foreground as registration color"
 msgstr "_Förgrund som registreringsfärg"
 
-#: ../plug-ins/common/decompose.c:901
+#: ../plug-ins/common/decompose.c:915
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -1828,11 +1828,11 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/common/file-gegl.c:345 ../plug-ins/common/file-gif-load.c:397
 #: ../plug-ins/common/file-heif.c:373 ../plug-ins/common/file-jp2-load.c:1085
 #: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:801
-#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:678
+#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:681
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
 #: ../plug-ins/common/file-raw-data.c:1224 ../plug-ins/common/file-sunras.c:448
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1035
-#: ../plug-ins/common/file-xbm.c:734 ../plug-ins/common/file-xmc.c:712
+#: ../plug-ins/common/file-xbm.c:737 ../plug-ins/common/file-xmc.c:650
 #: ../plug-ins/common/file-xpm.c:381 ../plug-ins/common/file-xwd.c:474
 #: ../plug-ins/file-bmp/bmp-load.c:219 ../plug-ins/file-exr/file-exr.c:188
 #: ../plug-ins/file-faxg3/faxg3.c:238 ../plug-ins/file-fli/fli-gimp.c:500
@@ -1913,12 +1913,12 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:885
+#: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
 #: ../plug-ins/common/file-heif.c:719 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
-#: ../plug-ins/common/file-png.c:1435 ../plug-ins/common/file-pnm.c:1336
+#: ../plug-ins/common/file-png.c:1438 ../plug-ins/common/file-pnm.c:1336
 #: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
-#: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1046
+#: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1049
 #: ../plug-ins/common/file-xpm.c:699 ../plug-ins/common/file-xwd.c:678
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
 #: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
@@ -1932,49 +1932,49 @@ msgstr "Exporterar ”%s”"
 msgid "C source code"
 msgstr "C-källkod"
 
-#: ../plug-ins/common/file-csource.c:233
+#: ../plug-ins/common/file-csource.c:236
 #, c-format
 msgid "C source does not support multiple layers."
 msgstr "C-källkod stöder inte flera lager."
 
-#: ../plug-ins/common/file-csource.c:963
+#: ../plug-ins/common/file-csource.c:966
 msgid "Export Image as C-Source"
 msgstr "Exportera bild som C-källkod"
 
-#: ../plug-ins/common/file-csource.c:981
+#: ../plug-ins/common/file-csource.c:984
 msgid "_Prefixed name:"
 msgstr "_Prefixnamn:"
 
 # src/header_stuff.c:462
-#: ../plug-ins/common/file-csource.c:988
+#: ../plug-ins/common/file-csource.c:991
 msgid "Co_mment:"
 msgstr "Ko_mmentar:"
 
-#: ../plug-ins/common/file-csource.c:994
+#: ../plug-ins/common/file-csource.c:997
 msgid "_Save comment to file"
 msgstr "_Spara kommentar till fil"
 
-#: ../plug-ins/common/file-csource.c:1000
+#: ../plug-ins/common/file-csource.c:1003
 msgid "_Use GLib types (guint8*)"
 msgstr "_Använd GLib-typer (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:1006
+#: ../plug-ins/common/file-csource.c:1009
 msgid "Us_e macros instead of struct"
 msgstr "An_vänd makron istället för structar"
 
-#: ../plug-ins/common/file-csource.c:1012
+#: ../plug-ins/common/file-csource.c:1015
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Använd _1-byte skurlängdskodning"
 
-#: ../plug-ins/common/file-csource.c:1018
+#: ../plug-ins/common/file-csource.c:1021
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Spa_ra alfakanal (RGBARGB)"
 
-#: ../plug-ins/common/file-csource.c:1029
+#: ../plug-ins/common/file-csource.c:1032
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Spara som _RGB565 (16-bitars)"
 
-#: ../plug-ins/common/file-csource.c:1041
+#: ../plug-ins/common/file-csource.c:1044
 msgid "Op_acity:"
 msgstr "Op_acitet:"
 
@@ -2131,16 +2131,16 @@ msgstr "Spara bildkommentaren i GIF-filen"
 msgid "Image comment"
 msgstr "Bildkommentar"
 
-#: ../plug-ins/common/file-gif-save.c:335
+#: ../plug-ins/common/file-gif-save.c:338
 #, c-format
 msgid "GIF format does not support multiple layers."
 msgstr "GIF-formatet stöder inte flera lager."
 
-#: ../plug-ins/common/file-gif-save.c:543
+#: ../plug-ins/common/file-gif-save.c:546
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Kunde inte enkelt reducera antalet färger mer. Exporterar som opak."
 
-#: ../plug-ins/common/file-gif-save.c:662
+#: ../plug-ins/common/file-gif-save.c:665
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -2149,7 +2149,7 @@ msgstr ""
 "Kunde inte exportera ”%s”. Filformatet GIF har inte stöd för bilder som är "
 "högre eller bredare än %d bildpunkter."
 
-#: ../plug-ins/common/file-gif-save.c:786
+#: ../plug-ins/common/file-gif-save.c:789
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -2157,18 +2157,18 @@ msgstr ""
 "GIF-formatet stöder endast kommentarer i 7-bitars ASCII. Ingen kommentar "
 "sparad."
 
-#: ../plug-ins/common/file-gif-save.c:858
+#: ../plug-ins/common/file-gif-save.c:861
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Kan ej exportera RGB-färgbilder. Konvertera till indexerad eller gråskala "
 "först."
 
-#: ../plug-ins/common/file-gif-save.c:1062
+#: ../plug-ins/common/file-gif-save.c:1065
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Fördröjning inlagd för att undvika ond CPU-ätande animation."
 
-#: ../plug-ins/common/file-gif-save.c:1111
+#: ../plug-ins/common/file-gif-save.c:1114
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2176,11 +2176,11 @@ msgstr ""
 "Bilden du försöker exportera som en GIF innehåller lager som sträcker sig "
 "utanför själva kanten på bilden."
 
-#: ../plug-ins/common/file-gif-save.c:1117
+#: ../plug-ins/common/file-gif-save.c:1120
 msgid "Cr_op"
 msgstr "B_eskär"
 
-#: ../plug-ins/common/file-gif-save.c:1128
+#: ../plug-ins/common/file-gif-save.c:1131
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2188,65 +2188,65 @@ msgstr ""
 "GIF-filformatet tillåter inte det här. Du kan välja att antingen beskära "
 "alla lager till bildkanterna eller avbryta exporten."
 
-#: ../plug-ins/common/file-gif-save.c:1165
+#: ../plug-ins/common/file-gif-save.c:1168
 msgid "Export Image as GIF"
 msgstr "Exportera bild som GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1175 ../plug-ins/common/file-mng.c:1616
+#: ../plug-ins/common/file-gif-save.c:1178 ../plug-ins/common/file-mng.c:1616
 msgid "_Interlace"
 msgstr "_Fläta"
 
-#: ../plug-ins/common/file-gif-save.c:1184
+#: ../plug-ins/common/file-gif-save.c:1187
 msgid "Save c_omment"
 msgstr "Spara k_ommentar"
 
-#: ../plug-ins/common/file-gif-save.c:1222
+#: ../plug-ins/common/file-gif-save.c:1226
 msgid "As _animation"
 msgstr "Som _animation"
 
-#: ../plug-ins/common/file-gif-save.c:1237
+#: ../plug-ins/common/file-gif-save.c:1241
 msgid "_Loop forever"
 msgstr "_Loopa för evigt"
 
-#: ../plug-ins/common/file-gif-save.c:1243
+#: ../plug-ins/common/file-gif-save.c:1247
 msgid "_Delay between frames where unspecified:"
 msgstr "_Tidsmellanrum mellan bildrutor när inte angivet:"
 
 #. label for 'ms' adjustment
-#: ../plug-ins/common/file-gif-save.c:1251 ../plug-ins/common/file-mng.c:1731
+#: ../plug-ins/common/file-gif-save.c:1255 ../plug-ins/common/file-mng.c:1731
 #: ../plug-ins/file-webp/file-webp-dialog.c:282
 msgid "milliseconds"
 msgstr "millisekunder"
 
-#: ../plug-ins/common/file-gif-save.c:1255
+#: ../plug-ins/common/file-gif-save.c:1259
 msgid "I don't care"
 msgstr "Jag bryr mig inte"
 
-#: ../plug-ins/common/file-gif-save.c:1257
+#: ../plug-ins/common/file-gif-save.c:1261
 msgid "Cumulative layers (combine)"
 msgstr "Kumulativa lager (kombinera)"
 
-#: ../plug-ins/common/file-gif-save.c:1259
+#: ../plug-ins/common/file-gif-save.c:1263
 msgid "One frame per layer (replace)"
 msgstr "En bildruta per lager (ersätt)"
 
-#: ../plug-ins/common/file-gif-save.c:1267
+#: ../plug-ins/common/file-gif-save.c:1271
 msgid "_Frame disposal where unspecified"
 msgstr "Bild_rutehantering där inte specificerat"
 
-#: ../plug-ins/common/file-gif-save.c:1273
+#: ../plug-ins/common/file-gif-save.c:1277
 msgid "_Use delay entered above for all frames"
 msgstr "_Använd ovanstående fördröjning för alla bildrutor"
 
-#: ../plug-ins/common/file-gif-save.c:1278
+#: ../plug-ins/common/file-gif-save.c:1282
 msgid "U_se disposal entered above for all frames"
 msgstr "An_vänd hantering angiven ovan för alla bildrutor"
 
-#: ../plug-ins/common/file-gif-save.c:1286
+#: ../plug-ins/common/file-gif-save.c:1290
 msgid "Animated GIF"
 msgstr "Animerad GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1290
+#: ../plug-ins/common/file-gif-save.c:1294
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -2641,7 +2641,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2173
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2176
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Kunde inte spara transparens utan informationsförlust; sparar opacitet "
@@ -2655,11 +2655,11 @@ msgstr "Exportera bild som MNG"
 msgid "MNG Options"
 msgstr "MNG-inställningar"
 
-#: ../plug-ins/common/file-mng.c:1620 ../plug-ins/common/file-png.c:2237
+#: ../plug-ins/common/file-mng.c:1620 ../plug-ins/common/file-png.c:2240
 msgid "Save _background color"
 msgstr "Spara _bakgrundsfärg"
 
-#: ../plug-ins/common/file-mng.c:1626 ../plug-ins/common/file-png.c:2241
+#: ../plug-ins/common/file-mng.c:1626 ../plug-ins/common/file-png.c:2244
 msgid "Save _gamma"
 msgstr "Spara _gamma"
 
@@ -2667,7 +2667,7 @@ msgstr "Spara _gamma"
 msgid "Save resolution"
 msgstr "Spara upplösning"
 
-#: ../plug-ins/common/file-mng.c:1636 ../plug-ins/common/file-png.c:2253
+#: ../plug-ins/common/file-mng.c:1636 ../plug-ins/common/file-png.c:2256
 msgid "Save creation _time"
 msgstr "Spara skapad _tid"
 
@@ -3045,43 +3045,43 @@ msgstr "PIX-formatet stöder inte flera lager."
 msgid "PNG image"
 msgstr "PNG-bild"
 
-#: ../plug-ins/common/file-png.c:451
+#: ../plug-ins/common/file-png.c:454
 #, c-format
 msgid "PNG format does not support multiple layers."
 msgstr "PNG-formatet stöder inte flera lager."
 
-#: ../plug-ins/common/file-png.c:526
+#: ../plug-ins/common/file-png.c:529
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Fel vid inläsning av PNG-fil: %s\n"
 
-#: ../plug-ins/common/file-png.c:644
+#: ../plug-ins/common/file-png.c:647
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Fel vid skapande av läs-struct för PNG då ”%s” lästes in."
 
-#: ../plug-ins/common/file-png.c:653
+#: ../plug-ins/common/file-png.c:656
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Fel vid läsning av ”%s”. Kunde inte skapa informationsstruktur för PNG-huvud."
 
-#: ../plug-ins/common/file-png.c:661
+#: ../plug-ins/common/file-png.c:664
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Fel vid inläsning av ”%s”. Skadad fil?"
 
-#: ../plug-ins/common/file-png.c:822
+#: ../plug-ins/common/file-png.c:825
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Okänd färgmodell i PNG-filen ”%s”."
 
-#: ../plug-ins/common/file-png.c:835 ../plug-ins/file-exr/file-exr.c:256
+#: ../plug-ins/common/file-png.c:838 ../plug-ins/file-exr/file-exr.c:256
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Kunde inte skapa ny bild för ”%s”: %s"
 
-#: ../plug-ins/common/file-png.c:917
+#: ../plug-ins/common/file-png.c:920
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3089,19 +3089,19 @@ msgstr ""
 "PNG-filen angav en position som orsakade att lagret blev placerat utanför "
 "bilden."
 
-#: ../plug-ins/common/file-png.c:1151
+#: ../plug-ins/common/file-png.c:1154
 msgid "Apply PNG Offset"
 msgstr "Tillämpa PNG-position"
 
-#: ../plug-ins/common/file-png.c:1155
+#: ../plug-ins/common/file-png.c:1158
 msgid "Ignore PNG offset"
 msgstr "Ignorera PNG-position"
 
-#: ../plug-ins/common/file-png.c:1156
+#: ../plug-ins/common/file-png.c:1159
 msgid "Apply PNG offset to layer"
 msgstr "Tillämpa PNG-position på lager"
 
-#: ../plug-ins/common/file-png.c:1181
+#: ../plug-ins/common/file-png.c:1184
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3110,113 +3110,113 @@ msgstr ""
 "PNG-bilden du importerar anger en position på %d, %d. Vill du tillämpa denna "
 "position på lagret?"
 
-#: ../plug-ins/common/file-png.c:1401
+#: ../plug-ins/common/file-png.c:1404
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Fel vid skapande av PNG skriv-struct då ”%s” exporterades."
 
-#: ../plug-ins/common/file-png.c:1410
+#: ../plug-ins/common/file-png.c:1413
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Fel vid export av ”%s”. Kunde inte skapa informationsstruktur för PNG-huvud."
 
-#: ../plug-ins/common/file-png.c:1418
+#: ../plug-ins/common/file-png.c:1421
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Fel vid export av ”%s”. Kunde inte exportera bild."
 
-#: ../plug-ins/common/file-png.c:2214
+#: ../plug-ins/common/file-png.c:2217
 msgid "Export Image as PNG"
 msgstr "Exportera bild som PNG"
 
-#: ../plug-ins/common/file-png.c:2233
+#: ../plug-ins/common/file-png.c:2236
 msgid "_Interlacing (Adam7)"
 msgstr "_Flätning (Adam7)"
 
-#: ../plug-ins/common/file-png.c:2245
+#: ../plug-ins/common/file-png.c:2248
 msgid "Save layer o_ffset"
 msgstr "Spara lager_position"
 
-#: ../plug-ins/common/file-png.c:2249
+#: ../plug-ins/common/file-png.c:2252
 msgid "Save _resolution"
 msgstr "Spara _upplösning"
 
-#: ../plug-ins/common/file-png.c:2257
+#: ../plug-ins/common/file-png.c:2260
 msgid "Save color _values from transparent pixels"
 msgstr "Spara färg_värden från transparenta bildpunkter"
 
-#: ../plug-ins/common/file-png.c:2267
+#: ../plug-ins/common/file-png.c:2270
 msgid "Save comme_nt"
 msgstr "Spara _kommentar"
 
-#: ../plug-ins/common/file-png.c:2275
+#: ../plug-ins/common/file-png.c:2278
 msgid "Save E_xif data"
 msgstr "Spara E_xif-data"
 
-#: ../plug-ins/common/file-png.c:2279
+#: ../plug-ins/common/file-png.c:2282
 #: ../plug-ins/file-tiff/file-tiff-save.c:1295
 msgid "Save XMP data"
 msgstr "Spara XMP-data"
 
-#: ../plug-ins/common/file-png.c:2283
+#: ../plug-ins/common/file-png.c:2286
 #: ../plug-ins/file-tiff/file-tiff-save.c:1299
 msgid "Save IPTC data"
 msgstr "Spara IPTC-data"
 
-#: ../plug-ins/common/file-png.c:2287
+#: ../plug-ins/common/file-png.c:2290
 #: ../plug-ins/file-tiff/file-tiff-save.c:1303
 msgid "Save thumbnail"
 msgstr "Spara miniatyrbild"
 
-#: ../plug-ins/common/file-png.c:2291
+#: ../plug-ins/common/file-png.c:2294
 #: ../plug-ins/file-tiff/file-tiff-save.c:1308
 msgid "Save color profile"
 msgstr "Spara färgprofil"
 
 #. Pixel format combo
-#: ../plug-ins/common/file-png.c:2305 ../plug-ins/common/file-ps.c:3693
+#: ../plug-ins/common/file-png.c:2308 ../plug-ins/common/file-ps.c:3693
 msgid "Automatic"
 msgstr "Automatisk"
 
-#: ../plug-ins/common/file-png.c:2306
+#: ../plug-ins/common/file-png.c:2309
 msgid "8 bpc RGB"
 msgstr "8 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2307
+#: ../plug-ins/common/file-png.c:2310
 msgid "8 bpc GRAY"
 msgstr "8 bpc GRÅ"
 
-#: ../plug-ins/common/file-png.c:2308
+#: ../plug-ins/common/file-png.c:2311
 msgid "8 bpc RGBA"
 msgstr "8 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2309
+#: ../plug-ins/common/file-png.c:2312
 msgid "8 bpc GRAYA"
 msgstr "8 bpc GRÅA"
 
-#: ../plug-ins/common/file-png.c:2310
+#: ../plug-ins/common/file-png.c:2313
 msgid "16 bpc RGB"
 msgstr "16 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2311
+#: ../plug-ins/common/file-png.c:2314
 msgid "16 bpc GRAY"
 msgstr "16 bpc GRÅ"
 
-#: ../plug-ins/common/file-png.c:2312
+#: ../plug-ins/common/file-png.c:2315
 msgid "16 bpc RGBA"
 msgstr "16 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2313
+#: ../plug-ins/common/file-png.c:2316
 msgid "16 bpc GRAYA"
 msgstr "16 bpc GRÅA"
 
 # src/sidebar.c:115
-#: ../plug-ins/common/file-png.c:2320
+#: ../plug-ins/common/file-png.c:2323
 msgid "_Pixel format:"
 msgstr "_Bildpunktsformat:"
 
-#: ../plug-ins/common/file-png.c:2326
+#: ../plug-ins/common/file-png.c:2329
 msgid "Co_mpression level:"
 msgstr "Ko_mprimeringsnivå:"
 
@@ -3866,7 +3866,7 @@ msgstr "Kan inte läsa färgposter från ”%s”"
 msgid "Type of colormap not supported"
 msgstr "Färgkartetypen stöds inte"
 
-#: ../plug-ins/common/file-sunras.c:524 ../plug-ins/common/file-xbm.c:832
+#: ../plug-ins/common/file-sunras.c:524 ../plug-ins/common/file-xbm.c:835
 #: ../plug-ins/common/file-xwd.c:554
 #, c-format
 msgid ""
@@ -3876,7 +3876,7 @@ msgstr ""
 "”%s”:\n"
 "Bildvidd är inte angiven"
 
-#: ../plug-ins/common/file-sunras.c:532 ../plug-ins/common/file-xbm.c:840
+#: ../plug-ins/common/file-sunras.c:532 ../plug-ins/common/file-xbm.c:843
 #: ../plug-ins/common/file-xwd.c:562
 #, c-format
 msgid ""
@@ -3886,7 +3886,7 @@ msgstr ""
 "”%s”:\n"
 "Bildbredden är större än vad GIMP kan hantera"
 
-#: ../plug-ins/common/file-sunras.c:540 ../plug-ins/common/file-xbm.c:848
+#: ../plug-ins/common/file-sunras.c:540 ../plug-ins/common/file-xbm.c:851
 #: ../plug-ins/common/file-xwd.c:569
 #, c-format
 msgid ""
@@ -3896,7 +3896,7 @@ msgstr ""
 "”%s”:\n"
 "Bildhöjd är inte angiven"
 
-#: ../plug-ins/common/file-sunras.c:548 ../plug-ins/common/file-xbm.c:856
+#: ../plug-ins/common/file-sunras.c:548 ../plug-ins/common/file-xbm.c:859
 #: ../plug-ins/common/file-xwd.c:576
 #, c-format
 msgid ""
@@ -4091,12 +4091,12 @@ msgstr "X bitmap-bild"
 msgid "Write a comment at the beginning of the file."
 msgstr "Skriv en kommentar i början på filen."
 
-#: ../plug-ins/common/file-xbm.c:373
+#: ../plug-ins/common/file-xbm.c:376
 #, c-format
 msgid "XBM format does not support multiple layers."
 msgstr "XBM-formatet stöder inte flera lager."
 
-#: ../plug-ins/common/file-xbm.c:824
+#: ../plug-ins/common/file-xbm.c:827
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4105,7 +4105,7 @@ msgstr ""
 "”%s”:\n"
 "Kan inte läsa huvud (ftell == %ld)"
 
-#: ../plug-ins/common/file-xbm.c:864
+#: ../plug-ins/common/file-xbm.c:867
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4115,7 +4115,7 @@ msgstr ""
 "Bilddatatyp är inte angiven"
 
 #. The image is not black-and-white.
-#: ../plug-ins/common/file-xbm.c:1010
+#: ../plug-ins/common/file-xbm.c:1013
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -4126,7 +4126,7 @@ msgstr ""
 "\n"
 "Konvertera den till svart och vit (1-bit) indexerad bild och prova igen."
 
-#: ../plug-ins/common/file-xbm.c:1022
+#: ../plug-ins/common/file-xbm.c:1025
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -4134,23 +4134,23 @@ msgstr ""
 "Du kan inte spara en markörmask för en bild\n"
 "utan alfakanal."
 
-#: ../plug-ins/common/file-xbm.c:1250
+#: ../plug-ins/common/file-xbm.c:1253
 msgid "Export Image as XBM"
 msgstr "Exportera bild som XBM"
 
-#: ../plug-ins/common/file-xbm.c:1260
+#: ../plug-ins/common/file-xbm.c:1263
 msgid "_X10 format bitmap"
 msgstr "_X10-format bitmap"
 
-#: ../plug-ins/common/file-xbm.c:1272
+#: ../plug-ins/common/file-xbm.c:1275
 msgid "_Identifier prefix:"
 msgstr "_ID-prefix:"
 
-#: ../plug-ins/common/file-xbm.c:1281
+#: ../plug-ins/common/file-xbm.c:1284
 msgid "_Write comment"
 msgstr "S_kriv kommentar"
 
-#: ../plug-ins/common/file-xbm.c:1292
+#: ../plug-ins/common/file-xbm.c:1295
 msgid ""
 "Writing a comment will make the XBM file unreadable by some applications.\n"
 "The comment will not affect embedding the XBM in C source code."
@@ -4159,36 +4159,35 @@ msgstr ""
 "Kommentaren kommer inte påverka inbäddning av XBM i C-källkod."
 
 # src/header_stuff.c:462
-#: ../plug-ins/common/file-xbm.c:1307
+#: ../plug-ins/common/file-xbm.c:1310
 msgid "Comment:"
 msgstr "Kommentar:"
 
-#: ../plug-ins/common/file-xbm.c:1316
+#: ../plug-ins/common/file-xbm.c:1319
 msgid "_Write hot spot values"
 msgstr "_Skriv värden för aktiv punkt"
 
-#: ../plug-ins/common/file-xbm.c:1334 ../plug-ins/common/file-xmc.c:1162
+#: ../plug-ins/common/file-xbm.c:1337 ../plug-ins/common/file-xmc.c:1139
 msgid "Hot spot _X:"
 msgstr "Aktivpunkt _X:"
 
-#: ../plug-ins/common/file-xbm.c:1342
+#: ../plug-ins/common/file-xbm.c:1345 ../plug-ins/common/file-xmc.c:1153
 msgid "Hot spot _Y:"
 msgstr "Aktivpunkt _Y:"
 
-#: ../plug-ins/common/file-xbm.c:1353
+#: ../plug-ins/common/file-xbm.c:1356
 msgid "W_rite extra mask file"
 msgstr "_Skriv extra maskfil"
 
-#: ../plug-ins/common/file-xbm.c:1368
+#: ../plug-ins/common/file-xbm.c:1371
 msgid "_Mask file extension:"
 msgstr "_Maskfilsändelse:"
 
-#: ../plug-ins/common/file-xmc.c:337 ../plug-ins/common/file-xmc.c:386
-#: ../plug-ins/common/file-xmc.c:1130
+#: ../plug-ins/common/file-xmc.c:297 ../plug-ins/common/file-xmc.c:346
 msgid "X11 Mouse Cursor"
 msgstr "X11-muspekare"
 
-#: ../plug-ins/common/file-xmc.c:567
+#: ../plug-ins/common/file-xmc.c:538
 #, c-format
 msgid ""
 "Cannot set the hot spot!\n"
@@ -4197,61 +4196,58 @@ msgstr ""
 "Kan inte bestämma aktiv punkt!\n"
 "Du måste arrangera lagren så att alla har en skärningspunkt."
 
-#: ../plug-ins/common/file-xmc.c:731
+#: ../plug-ins/common/file-xmc.c:669
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "”%s” är inte en giltig X-muspekare."
 
-#: ../plug-ins/common/file-xmc.c:744
+#: ../plug-ins/common/file-xmc.c:682
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "Bildruta %d av ”%s” är för bred för en X-muspekare."
 
-#: ../plug-ins/common/file-xmc.c:752
+#: ../plug-ins/common/file-xmc.c:690
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Bildruta %d av ”%s” är för hög för en X-muspekare."
 
-#: ../plug-ins/common/file-xmc.c:980
+#: ../plug-ins/common/file-xmc.c:966
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "det finns ingen bilddel i ”%s”."
 
-#: ../plug-ins/common/file-xmc.c:1021
+#: ../plug-ins/common/file-xmc.c:1007
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "”%s” är för bred för en X-muspekare."
 
-#: ../plug-ins/common/file-xmc.c:1030
+#: ../plug-ins/common/file-xmc.c:1016
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "”%s” är för hög för en X-muspekare."
 
-#: ../plug-ins/common/file-xmc.c:1094
+#: ../plug-ins/common/file-xmc.c:1080
 #, c-format
 msgid "A read error occurred."
 msgstr "Ett läsfel har inträffat."
 
-#.
-#. * parameter settings
-#.
-#: ../plug-ins/common/file-xmc.c:1136
-msgid "XMC Options"
-msgstr "XMC-inställningar"
+#: ../plug-ins/common/file-xmc.c:1120
+msgid "Export Image as X11 Mouse Cursor"
+msgstr "Exportera bild som X11-muspekare"
 
-#: ../plug-ins/common/file-xmc.c:1170
+#: ../plug-ins/common/file-xmc.c:1143
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr "Ange X-koordinat för aktivpunkt. Ursprunget är övre vänstra hörnet."
 
-#: ../plug-ins/common/file-xmc.c:1192
+#: ../plug-ins/common/file-xmc.c:1157
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr "Ange Y-koordinat för aktiv punkt. Ursprunget är övre vänstra hörnet."
 
-#: ../plug-ins/common/file-xmc.c:1201
-msgid "_Auto-Crop all frames."
-msgstr "Beskär _automatiskt alla bildrutor."
+#: ../plug-ins/common/file-xmc.c:1163
+msgid "_Auto-Crop all frames"
+msgstr "Beskär _automatiskt alla bildrutor"
 
-#: ../plug-ins/common/file-xmc.c:1213
+#: ../plug-ins/common/file-xmc.c:1167
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4264,7 +4260,15 @@ msgstr ""
 "Avmarkera om du planerar att redigera den exporterade markören i andra "
 "program."
 
-#: ../plug-ins/common/file-xmc.c:1236
+#: ../plug-ins/common/file-xmc.c:1186
+msgid ""
+"_Size where\n"
+"unspecified:"
+msgstr ""
+"_Storlek där\n"
+"inte specificerat:"
+
+#: ../plug-ins/common/file-xmc.c:1190
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4283,102 +4287,74 @@ msgstr ""
 "animeringssekvens och vilken sekvens som används baseras på värdet av ”gtk-"
 "cursor-theme-size”."
 
-#: ../plug-ins/common/file-xmc.c:1253
-msgid "_Use this value only for a frame which size is not specified."
+#: ../plug-ins/common/file-xmc.c:1203
+msgid "Use size entered above for all frames"
+msgstr "Använd ovanstående storlek för alla bildrutor"
+
+#: ../plug-ins/common/file-xmc.c:1210
+msgid ""
+"_Delay where\n"
+"unspecified:"
 msgstr ""
-"Använd detta värde endast för en bildr_uta vars storlek inte är specificerad."
+"_Tidsmellanrum när\n"
+"inte angivet:"
 
-#: ../plug-ins/common/file-xmc.c:1256
-msgid "_Replace the size of all frames even if it is specified."
-msgstr "_Ersätt storleken för alla bildrutor även om de har angivits."
-
-#: ../plug-ins/common/file-xmc.c:1272
-msgid "_Delay:"
-msgstr "Fördrö_jning:"
-
-#: ../plug-ins/common/file-xmc.c:1277
+#: ../plug-ins/common/file-xmc.c:1215
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "Ange tidsspann i millisekunder i vilken varje bildruta renderas."
 
-#: ../plug-ins/common/file-xmc.c:1304
-msgid "_Use this value only for a frame which delay is not specified."
-msgstr ""
-"Använd detta värde endast för en bildr_uta vars fördröjning inte är "
-"specificerad."
+#: ../plug-ins/common/file-xmc.c:1229
+msgid "Use delay entered above for all frames"
+msgstr "Använd ovanstående fördröjning för alla bildrutor"
 
-#: ../plug-ins/common/file-xmc.c:1307
-msgid "_Replace the delay of all frames even if it is specified."
-msgstr "E_rsätt fördröjningen på alla bildrutor även om den är specificerad."
-
-#: ../plug-ins/common/file-xmc.c:1332
-msgid ""
-"The part of copyright information that exceeded 65535 characters was removed."
-msgstr ""
-"Delen för upphovsrättslig information som översteg 65535 tecken togs bort."
-
-#: ../plug-ins/common/file-xmc.c:1342
-msgid "Enter copyright information."
-msgstr "Ange upphovsrättslig information."
-
-#: ../plug-ins/common/file-xmc.c:1344
+#: ../plug-ins/common/file-xmc.c:1236
 msgid "_Copyright:"
 msgstr "Upp_hovsrätt:"
 
-#: ../plug-ins/common/file-xmc.c:1360
-msgid ""
-"The part of license information that exceeded 65535 characters was removed."
-msgstr "Delen för licensinformation som översteg 65535 tecken togs bort."
+#: ../plug-ins/common/file-xmc.c:1240
+msgid "Enter copyright information."
+msgstr "Ange upphovsrättslig information."
 
-#: ../plug-ins/common/file-xmc.c:1370
-msgid "Enter license information."
-msgstr "Ange licensinformation."
-
-#: ../plug-ins/common/file-xmc.c:1372
+#: ../plug-ins/common/file-xmc.c:1246
 msgid "_License:"
 msgstr "_Licens:"
 
-#.
-#. *  Other
-#.
-#. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
-#. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1379
+#: ../plug-ins/common/file-xmc.c:1250
+msgid "Enter license information."
+msgstr "Ange licensinformation."
+
+#: ../plug-ins/common/file-xmc.c:1260
 msgid "_Other:"
 msgstr "A_nnat:"
 
-#: ../plug-ins/common/file-xmc.c:1414
+#: ../plug-ins/common/file-xmc.c:1274
 msgid "Enter other comment if you want."
 msgstr "Ange en kommentar om du vill."
 
-#: ../plug-ins/common/file-xmc.c:1466
-#, c-format
-msgid "Comment is limited to %d characters."
-msgstr "Kommentaren är begränsad till %d tecken."
-
 #. Begin displaying export progress
-#: ../plug-ins/common/file-xmc.c:1553
+#: ../plug-ins/common/file-xmc.c:1380
 #: ../plug-ins/file-webp/file-webp-save.c:196
 #: ../plug-ins/file-webp/file-webp-save.c:594
 #, c-format
 msgid "Saving '%s'"
 msgstr "Sparar ”%s”"
 
-#: ../plug-ins/common/file-xmc.c:1630
+#: ../plug-ins/common/file-xmc.c:1457
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "Bildruta ”%s” är för bred. Reducera till högst %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1640
+#: ../plug-ins/common/file-xmc.c:1467
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "Bildruta ”%s” är för hög. Reducera till högst %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1650
+#: ../plug-ins/common/file-xmc.c:1477
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Bredd och/eller höjd på bildruta ”%s” är noll!"
 
-#: ../plug-ins/common/file-xmc.c:1691
+#: ../plug-ins/common/file-xmc.c:1519
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -4389,7 +4365,7 @@ msgstr ""
 "Försök att ändra aktiv punkt-läge, lagergeometri eller exportera utan "
 "automatisk beskärning."
 
-#: ../plug-ins/common/file-xmc.c:1864
+#: ../plug-ins/common/file-xmc.c:1693
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -4402,7 +4378,7 @@ msgstr ""
 "bitmappsmarkörer.\n"
 "Det kanske inte stöds av vissa miljöer."
 
-#: ../plug-ins/common/file-xmc.c:1872
+#: ../plug-ins/common/file-xmc.c:1701
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -4415,16 +4391,7 @@ msgstr ""
 "i dialogrutan för att exportera, annars kanske markören inte visas i GNOME:s "
 "inställningar."
 
-#: ../plug-ins/common/file-xmc.c:2109
-#, c-format
-msgid ""
-"The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
-"fit."
-msgstr ""
-"Parasiten ”%s” är för lång för en X-markörkommentar. Den klipptes av för att "
-"passa."
-
-#: ../plug-ins/common/file-xmc.c:2224
+#: ../plug-ins/common/file-xmc.c:1975
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -4436,7 +4403,7 @@ msgstr ""
 "Vi klippte den till %dpx. Du bör undersöka den exporterade markören."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2321
+#: ../plug-ins/common/file-xmc.c:2072
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -6968,7 +6935,7 @@ msgstr "Komprimerings_typ:"
 msgid "TIFF image"
 msgstr "TIFF-bild"
 
-#: ../plug-ins/file-tiff/file-tiff.c:416
+#: ../plug-ins/file-tiff/file-tiff.c:419
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -12126,6 +12093,53 @@ msgstr "_Bildläsare/Kamera…"
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
+
+#~ msgid "Use delay entred above for all frames"
+#~ msgstr "Använd ovanstående fördröjning för alla bildrutor"
+
+#~ msgid "XMC Options"
+#~ msgstr "XMC-inställningar"
+
+#~ msgid "_Use this value only for a frame which size is not specified."
+#~ msgstr ""
+#~ "Använd detta värde endast för en bildr_uta vars storlek inte är "
+#~ "specificerad."
+
+#~ msgid "_Replace the size of all frames even if it is specified."
+#~ msgstr "_Ersätt storleken för alla bildrutor även om de har angivits."
+
+#~ msgid "_Delay:"
+#~ msgstr "Fördrö_jning:"
+
+#~ msgid "_Use this value only for a frame which delay is not specified."
+#~ msgstr ""
+#~ "Använd detta värde endast för en bildr_uta vars fördröjning inte är "
+#~ "specificerad."
+
+#~ msgid "_Replace the delay of all frames even if it is specified."
+#~ msgstr ""
+#~ "E_rsätt fördröjningen på alla bildrutor även om den är specificerad."
+
+#~ msgid ""
+#~ "The part of copyright information that exceeded 65535 characters was "
+#~ "removed."
+#~ msgstr ""
+#~ "Delen för upphovsrättslig information som översteg 65535 tecken togs bort."
+
+#~ msgid ""
+#~ "The part of license information that exceeded 65535 characters was "
+#~ "removed."
+#~ msgstr "Delen för licensinformation som översteg 65535 tecken togs bort."
+
+#~ msgid "Comment is limited to %d characters."
+#~ msgstr "Kommentaren är begränsad till %d tecken."
+
+#~ msgid ""
+#~ "The parasite \"%s\" is too long for an X cursor comment. It was cut off "
+#~ "to fit."
+#~ msgstr ""
+#~ "Parasiten ”%s” är för lång för en X-markörkommentar. Den klipptes av för "
+#~ "att passa."
 
 #~ msgid "TIFF"
 #~ msgstr "TIFF"
