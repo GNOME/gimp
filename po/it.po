@@ -39,8 +39,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-16 16:54+0200\n"
-"PO-Revision-Date: 2020-06-16 16:54+0200\n"
+"POT-Creation-Date: 2020-06-18 16:33+0200\n"
+"PO-Revision-Date: 2020-06-18 16:34+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -18852,7 +18852,7 @@ msgstr "Livello prelevato: \"%s\""
 msgid "pixels"
 msgstr "pixel"
 
-#: ../app/display/gimpstatusbar.c:428
+#: ../app/display/gimpstatusbar.c:447
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Cancella <i>%s</i>"
@@ -28038,15 +28038,15 @@ msgstr "Reimposta l'ordine e la visibilità degli strumenti"
 
 #: ../app/widgets/gimptooloptionseditor.c:195
 msgid "Save Tool Preset..."
-msgstr "Salva le preimpostazioni dello strumento..."
+msgstr "Salva preimpostazioni strumento..."
 
 #: ../app/widgets/gimptooloptionseditor.c:204
 msgid "Restore Tool Preset..."
-msgstr "Ricarica la preimpostazioni dello strumento..."
+msgstr "Ricarica preimpostazioni strumento..."
 
 #: ../app/widgets/gimptooloptionseditor.c:213
 msgid "Delete Tool Preset..."
-msgstr "Cancella le preimpostazioni dello strumento..."
+msgstr "Cancella preimpostazioni strumento..."
 
 #: ../app/widgets/gimptoolpreseteditor.c:291
 #, c-format
