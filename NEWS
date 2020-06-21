@@ -55,6 +55,7 @@ User Interface:
   - Shift-click on layer GimpContainerTreeView (typically the Layers
     dockable) allows to expand/collapse all item groups but the clicked
     one.
+  - Compact GimpSpinScale is now the only available version.
 
 Devices:
 
@@ -119,4 +120,8 @@ Known blocker issues:
     expected, and possibly even some crashes in code paths which were
     not updated yet.
   - No custom theme yet, in particular we want a neutral gray theme with
-    light/dark variants, and likely a middle-gray theme too.
+    light/dark variants, and a middle-gray theme too.
+  - We probably want to revive a "Small" theme as well with smaller
+    icons (useful on smaller displays, or mid-high density displays or
+    simply depending on tastes).
+  - Various blocking bugs happen on Wayland only.
