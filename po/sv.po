@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-13 20:10+0000\n"
-"PO-Revision-Date: 2020-06-15 23:00+0200\n"
+"POT-Creation-Date: 2020-06-16 14:56+0000\n"
+"PO-Revision-Date: 2020-06-21 17:56+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1204,11 +1204,8 @@ msgid "Tools"
 msgstr "Verktyg"
 
 #: ../app/actions/actions.c:238
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Path _Tool"
 msgid "Path Toolpath"
-msgstr "_Banverktyg"
+msgstr "Banverktyg"
 
 #: ../app/actions/actions.c:241 ../app/dialogs/dialogs.c:381
 #: ../app/tools/gimpvectortool.c:167
@@ -7411,20 +7408,14 @@ msgid "Subtract the layer masks from the current selection"
 msgstr "Ta bort lagermaskerna från den aktuella markeringen"
 
 #: ../app/actions/layers-actions.c:521
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Intersect with Selection"
 msgctxt "layers-action"
 msgid "_Intersect Masks with Selection"
-msgstr "_Snitt med markering"
+msgstr "_Snitt mellan masker och markering"
 
 #: ../app/actions/layers-actions.c:522
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Intersect the layer mask with the current selection"
 msgctxt "layers-action"
 msgid "Intersect the layer masks with the current selection"
-msgstr "Skär ut lagermasken med den aktuella markeringen"
+msgstr "Skär ut lagermaskerna med den aktuella markeringen"
 
 #: ../app/actions/layers-actions.c:530
 msgctxt "layers-action"
@@ -7457,12 +7448,9 @@ msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Ta bort lagrets alfakanal från den aktuella markeringen"
 
 #: ../app/actions/layers-actions.c:551
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Intersect with Selection"
 msgctxt "layers-action"
 msgid "_Intersect Alpha with Selection"
-msgstr "_Snitt med markering"
+msgstr "_Snitt mellan alfakanal och markering"
 
 #: ../app/actions/layers-actions.c:553
 msgctxt "layers-action"
@@ -7490,7 +7478,6 @@ msgid "Select the bottommost layers"
 msgstr "Välj de nedersta lagren"
 
 #: ../app/actions/layers-actions.c:573
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Previous Layers"
 msgstr "Välj _föregående lager"
@@ -7501,10 +7488,9 @@ msgid "Select the layers above the current layers"
 msgstr "Välj lagren ovanför de aktuella lagren"
 
 #: ../app/actions/layers-actions.c:579
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Next Layers"
-msgstr "Välj _nästa lager"
+msgstr "Välj _nästkommande lager"
 
 #: ../app/actions/layers-actions.c:580
 msgctxt "layers-action"
@@ -7726,12 +7712,9 @@ msgid "Subtract Masks from Selection"
 msgstr "Ta bort masker från markering"
 
 #: ../app/actions/layers-commands.c:1576
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "_Intersect with Selection"
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
-msgstr "_Snitt med markering"
+msgstr "Snitt mellan masker och markering"
 
 #: ../app/actions/layers-commands.c:1636 ../app/core/gimpchannel-select.c:421
 #: ../app/core/gimplayer.c:442
@@ -7750,47 +7733,30 @@ msgid "Subtract Alpha from Selection"
 msgstr "Ta bort alfakanal från markering"
 
 #: ../app/actions/layers-commands.c:1648
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Intersect path with selection"
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
-msgstr "Skär ut bana med markering"
+msgstr "Snitt mellan alfakanal och markering"
 
 #: ../app/actions/layers-commands.c:1659
-#, fuzzy
-#| msgid "Selection"
 msgid "Empty Selection"
-msgstr "Markering"
+msgstr "Tom markering"
 
 #: ../app/actions/layers-commands.c:1689 ../app/actions/layers-commands.c:1733
 #: ../app/widgets/gimplayertreeview.c:1177
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgid "Set layers opacity"
-msgstr "Ställ in lageropacitet"
+msgstr "Ställ in lagrens opacitet"
 
 #: ../app/actions/layers-commands.c:1803
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgid "Set layers' blend space"
-msgstr "Ställ in lageropacitet"
+msgstr "Ställ in lagrens toningsrymd"
 
 #: ../app/actions/layers-commands.c:1856
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Layer Composite Space: Auto"
 msgid "Set layers' composite space"
-msgstr "Lagerkompositrymd: Auto"
+msgstr "Ställ in lagrens kompositrymd"
 
 #: ../app/actions/layers-commands.c:1909
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer mode"
 msgid "Set layers' composite mode"
-msgstr "Ställ in lagerläge"
+msgstr "Ställ in lagrens kompositläge"
 
 #: ../app/actions/layers-commands.c:1978 ../app/widgets/gimpitemtreeview.c:1683
 msgid "Lock content"
@@ -9416,12 +9382,9 @@ msgid "Tool's Force: Increase Relative"
 msgstr "Verktygskraft: Öka relativt"
 
 #: ../app/actions/vector-toolpath-actions.c:45
-#, fuzzy
-#| msgctxt "text-tool-action"
-#| msgid "Text Tool Menu"
 msgctxt "vector-toolpath-action"
 msgid "Vector Toolpath Menu"
-msgstr "Textverktygsmeny"
+msgstr "Vektorverktygsmeny"
 
 #: ../app/actions/vector-toolpath-actions.c:49
 msgctxt "vector-toolpath-action"
@@ -9429,11 +9392,9 @@ msgid "_Delete Anchor"
 msgstr "_Ta bort ankare"
 
 #: ../app/actions/vector-toolpath-actions.c:53
-#, fuzzy
-#| msgid "Shift"
 msgctxt "vector-toolpath-action"
 msgid "Shift S_tart"
-msgstr "Skift"
+msgstr "Skifta s_tart"
 
 #: ../app/actions/vector-toolpath-actions.c:58
 msgctxt "vector-toolpath-action"
@@ -9446,12 +9407,9 @@ msgid "Delete _Segment"
 msgstr "Ta bort _segment"
 
 #: ../app/actions/vector-toolpath-actions.c:66
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Render Stroke"
 msgctxt "vector-toolpath-action"
 msgid "_Reverse Stroke"
-msgstr "Rendera penseldrag"
+msgstr "_Vänd riktning på streck"
 
 #: ../app/actions/vectors-actions.c:46
 msgctxt "vectors-action"
@@ -12761,20 +12719,14 @@ msgid "Lock/Unlock alpha channels"
 msgstr "Lås/lås upp alfakanaler"
 
 #: ../app/core/core-enums.c:1232
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgctxt "undo-type"
 msgid "Set layers opacity"
-msgstr "Ställ in lageropacitet"
+msgstr "Ställ in lagrens opacitet"
 
 #: ../app/core/core-enums.c:1233
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer mode"
 msgctxt "undo-type"
 msgid "Set layers mode"
-msgstr "Ställ in lagerläge"
+msgstr "Ställ in lagrens läge"
 
 #: ../app/core/core-enums.c:1234 ../app/core/core-enums.c:1293
 msgctxt "undo-type"
@@ -13153,18 +13105,18 @@ msgid "Global Buffer"
 msgstr "Allmän buffert"
 
 #: ../app/core/gimpextension.c:398
-#, fuzzy, c-format
+#, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
 "Tilläggs-AppData måste vara av typen \"addon\", hittade \"%s\" i stället."
 
 #: ../app/core/gimpextension.c:414
-#, fuzzy, c-format
+#, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "Tilläggs-AppData måste utöka \"org.gimp.GIMP\"."
 
 #: ../app/core/gimpextension.c:428
-#, fuzzy, c-format
+#, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr "Tilläggs-AppData måste ha samma id (\"%s\") och katalog (\"%s\")."
 
@@ -13174,9 +13126,9 @@ msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr "Tilläggs-AppData måste annonsera en version i en <release>-tagg."
 
 #: ../app/core/gimpextension.c:477
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported <requires> \"%s\" (type %s)."
-msgstr "<requires> ”%s” stöds ej (typ %s)."
+msgstr "<requires> \"%s\" stöds ej (typ %s)."
 
 #: ../app/core/gimpextension.c:492
 #, c-format
@@ -13208,9 +13160,9 @@ msgid "'%s' is not a valid file."
 msgstr "”%s” är inte en giltig fil."
 
 #: ../app/core/gimpextension.c:876
-#, fuzzy, c-format
+#, c-format
 msgid "This parser does not support imbricated lists."
-msgstr "Denna tolk stöder inte imbrikerade listor."
+msgstr "Denna tolk stöder inte överlappande listor."
 
 #: ../app/core/gimpextension.c:897
 #, c-format
@@ -14217,10 +14169,9 @@ msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Stöd för bildfiler större än 4GB lades till i %s"
 
 #: ../app/core/gimpimage.c:2823
-#, fuzzy, c-format
-#| msgid "Layer mode '%s' was added in %s"
+#, c-format
 msgid "Multiple layer selection was added in %s"
-msgstr "Lagerläget ”%s” lades till i %s"
+msgstr "Markering av flera lager lades till i %s"
 
 #: ../app/core/gimpimage.c:2919
 msgctxt "undo-type"
@@ -14800,25 +14751,16 @@ msgid "Layer to Image Size"
 msgstr "Lager till bildstorlek"
 
 #: ../app/core/gimplayer.c:2715
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgid "Set layer's blend space"
-msgstr "Ställ in lageropacitet"
+msgstr "Ställ in lagrets toningsrymd"
 
 #: ../app/core/gimplayer.c:2762
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Layer Composite Space: Auto"
 msgid "Set layer's composite space"
-msgstr "Lagerkompositrymd: Auto"
+msgstr "Ställ in lagrets kompositrymd"
 
 #: ../app/core/gimplayer.c:2809
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer mode"
 msgid "Set layer's composite mode"
-msgstr "Ställ in lagerläge"
+msgstr "Ställ in lagrets kompositläge"
 
 #: ../app/core/gimplayermask.c:84
 msgctxt "undo-type"
@@ -15360,12 +15302,9 @@ msgstr "Grupp"
 msgid "Apply stored FG/BG"
 msgstr "Tillämpa lagrad FG/BG"
 
-# FIXME: Hitta bättre ord
 #: ../app/core/gimptoolpreset.c:157
-#, fuzzy
-#| msgid "Apply stored pattern"
 msgid "Apply stored opacity/paint mode"
-msgstr "Tillämpa lagrat mönster"
+msgstr "Tillämpa lagrad opacitet/målningsläge"
 
 #: ../app/core/gimptoolpreset.c:164
 msgid "Apply stored brush"
@@ -16027,10 +15966,8 @@ msgid "Final, Merged Layer should be:"
 msgstr "Det slutgiltiga, sammanfogade lagret ska vara:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:138
-#, fuzzy
-#| msgid "Merge within active _group only"
 msgid "Merge within active _groups only"
-msgstr "Sammanfoga bara inom aktiv _grupp"
+msgstr "Sammanfoga bara inom aktiva _grupper"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:151
 msgid "_Discard invisible layers"
@@ -16133,16 +16070,14 @@ msgid "Configure Input Devices"
 msgstr "Konfigurera inmatningsenheter"
 
 #: ../app/dialogs/input-devices-dialog.c:114
-#, fuzzy
-#| msgid "Resource configuration"
 msgid "Reset Input Device Configuration"
-msgstr "Resurskonfiguration"
+msgstr "Återställ konfiguration för inmatningsenheter"
 
 #: ../app/dialogs/input-devices-dialog.c:132
-#, fuzzy
-#| msgid "Do you really want to reset all filters to default values?"
 msgid "Do you really want to reset all input devices to default configuration?"
-msgstr "Vill du verkligen återställa alla filter till standardvärden?"
+msgstr ""
+"Vill du verkligen återställa alla inmatningsenheter till "
+"standardkonfiguration?"
 
 #: ../app/dialogs/item-options-dialog.c:203
 msgid "Color tag:"
@@ -18663,17 +18598,12 @@ msgid "Layer Select"
 msgstr "Lagerval"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:276
-#, fuzzy
-#| msgctxt "line-art-source"
-#| msgid "Layer below the active one"
 msgid "Layer Selection Moved Down"
-msgstr "Lagret under det aktiva"
+msgstr "Lagermarkering flyttad nedåt"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:277
-#, fuzzy
-#| msgid "Layer Select"
 msgid "Layer Selection Moved Up"
-msgstr "Lagerval"
+msgstr "Lagermarkering flyttad uppåt"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:114
 msgid "Rotate View"
@@ -19062,10 +18992,8 @@ msgid "Delete Anchors"
 msgstr "Ta bort ankare"
 
 #: ../app/display/gimptoolpath.c:2041
-#, fuzzy
-#| msgid "Shift"
 msgid "Shift start"
-msgstr "Skift"
+msgstr "Skifta start"
 
 #: ../app/display/gimptoolpolygon.c:891
 msgid "Click to close shape"
@@ -19196,19 +19124,19 @@ msgstr "Ogiltig teckensekvens i URI"
 
 # TODO: path*s*?
 #: ../app/file-data/file-data-gex.c:146
-#, fuzzy, c-format
+#, c-format
 msgid "Absolute path are forbidden in GIMP extension '%s': %s"
 msgstr "Absolut sökväg är förbjuden i GIMP-tillägget ”%s”: %s"
 
 #: ../app/file-data/file-data-gex.c:156
-#, fuzzy, c-format
+#, c-format
 msgid "File not allowed in root of GIMP extension '%s': %s"
 msgstr "Fil ej tillåten i roten av GIMP-tillägget ”%s”: %s"
 
 #: ../app/file-data/file-data-gex.c:167
-#, fuzzy, c-format
+#, c-format
 msgid "File not in GIMP extension '%s' folder id '%s': %s"
-msgstr "Fil inte i GIMP-tillägget ”%s” mapp-id ”%s”: %s"
+msgstr "Fil inte i mapp-id ”%2$s” för GIMP-tillägget ”%1$s”: %3$s"
 
 #: ../app/file-data/file-data-gex.c:263 ../app/file-data/file-data-gex.c:409
 #: ../app/file-data/file-data-gex.c:421 ../app/file-data/file-data-gex.c:433
@@ -19218,7 +19146,7 @@ msgid "Fatal error when uncompressing GIMP extension '%s': %s"
 msgstr "Ödesdigert fel vid dekomprimering av GIMP-tillägget ”%s”: %s"
 
 #: ../app/file-data/file-data-gex.c:297
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP extension '%s' directory (%s) different from AppStream id: %s"
 msgstr "Katalog för GIMP-tillägget ”%s” (%s) skiljer sig från AppStream-id: %s"
 
@@ -20700,7 +20628,7 @@ msgstr "Tröskel"
 #: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:364
 #: ../app/pdb/edit-cmds.c:449
 msgid "All specified drawables must belong to the same image."
-msgstr ""
+msgstr "Alla angivna ritytor måste tillhöra samma bild."
 
 #: ../app/pdb/floating-sel-cmds.c:69
 msgid "Cannot remove this layer because it is not a floating selection."
@@ -21541,11 +21469,10 @@ msgstr "Ta bort banstreck"
 msgid "Close path stroke"
 msgstr "Stäng banstreck"
 
+# Anchors in path in reverse order
 #: ../app/pdb/vectors-cmds.c:404
-#, fuzzy
-#| msgid "Remove path stroke"
 msgid "Reverse path stroke"
-msgstr "Ta bort banstreck"
+msgstr "Vänd riktning på banstreck"
 
 #: ../app/pdb/vectors-cmds.c:449
 msgid "Translate path stroke"
@@ -21559,6 +21486,7 @@ msgstr "Skala banstreck"
 msgid "Rotate path stroke"
 msgstr "Rotera banstreck"
 
+# Flip in horizontal or vertical direction
 #: ../app/pdb/vectors-cmds.c:586 ../app/pdb/vectors-cmds.c:635
 msgid "Flip path stroke"
 msgstr "Vänd banstreck"
@@ -21651,7 +21579,6 @@ msgid "Unknown file type"
 msgstr "Okänd filtyp"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:231
-#, fuzzy
 msgid "Loading extension plug-ins"
 msgstr "Läser in insticksmoduler för tillägg"
 
@@ -22504,7 +22431,7 @@ msgstr "Fyll"
 
 #: ../app/tools/gimpbucketfilltool.c:565
 msgid "Cannot fill multiple layers. Select only one layer."
-msgstr ""
+msgstr "Kan inte fylla flera lager. Markera endast ett lager."
 
 #: ../app/tools/gimpbucketfilltool.c:567 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcurvestool.c:220 ../app/tools/gimpfiltertool.c:296
@@ -22576,7 +22503,7 @@ msgstr "B_urtransformering"
 
 #: ../app/tools/gimpcagetool.c:226
 msgid "Cannot modify multiple layers. Select only one layer."
-msgstr ""
+msgstr "Kan inte modifiera flera lager. Markera endast ett lager."
 
 #: ../app/tools/gimpcagetool.c:763 ../app/tools/gimpwarptool.c:391
 msgid "Press ENTER to commit the transform"
@@ -22833,7 +22760,7 @@ msgstr "_Kurvor…"
 #: ../app/tools/gimplevelstool.c:208 ../app/tools/gimpoffsettool.c:187
 #: ../app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
-msgstr ""
+msgstr "Kan inte modifiera flera ritytor. Markera endast en."
 
 #: ../app/tools/gimpcurvestool.c:411
 msgid "Click to add a control point"
@@ -23211,10 +23138,8 @@ msgid "F_oreground Select"
 msgstr "F_örgrundsmarkering"
 
 #: ../app/tools/gimpforegroundselecttool.c:293
-#, fuzzy
-#| msgid "Base selection on all visible layers"
 msgid "Cannot select from multiple layers."
-msgstr "Basera markering på alla synliga lager"
+msgstr "Kan inte markera från flera lager."
 
 #: ../app/tools/gimpforegroundselecttool.c:326
 msgid "Dialog for foreground select"
@@ -23388,7 +23313,7 @@ msgstr "Klicka och dra för att rita en gradient"
 
 #: ../app/tools/gimpgradienttool.c:257
 msgid "Cannot paint on multiple drawables. Select only one."
-msgstr ""
+msgstr "Kan inte måla på flera ritytor. Markera endast en."
 
 #: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimpwarptool.c:776
 msgid "No active drawables."
@@ -23899,16 +23824,12 @@ msgid "The selected layer's pixels are locked."
 msgstr "Det markerade lagrets bildpunkter är låsta."
 
 #: ../app/tools/gimpmovetool.c:352
-#, fuzzy
-#| msgid "The active channel's pixels are locked."
 msgid "All selected channels' positions or pixels are locked."
-msgstr "Den aktiva kanalens bildpunkter är låsta."
+msgstr "Alla markerade kanalers positioner eller bildpunkter är låsta."
 
 #: ../app/tools/gimpmovetool.c:365
-#, fuzzy
-#| msgid "The active layer's position and size are locked."
 msgid "All selected layers' positions are locked."
-msgstr "Det aktiva lagrets position och storlek är låst."
+msgstr "Alla markerade lagers positioner är låsta."
 
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -24105,7 +24026,7 @@ msgstr "%s för att välja en färg"
 
 #: ../app/tools/gimppainttool.c:296 ../app/tools/gimpperspectiveclonetool.c:225
 msgid "Cannot paint on multiple layers. Select only one layer."
-msgstr ""
+msgstr "Kan inte måla på flera lager. Markera endast ett lager."
 
 #: ../app/tools/gimppainttool.c:310
 msgid "Cannot paint on layer groups."
@@ -25036,16 +24957,12 @@ msgid "There is no layer to transform."
 msgstr "Det finns inget lager att transformera."
 
 #: ../app/tools/gimptransformtool.c:684
-#, fuzzy
-#| msgid "The active layer's position and size are locked."
 msgid "A selected layer's position and size are locked."
-msgstr "Det aktiva lagrets position och storlek är låst."
+msgstr "Ett markerat lagers position och storlek är låst."
 
 #: ../app/tools/gimptransformtool.c:698
-#, fuzzy
-#| msgid "The selection does not intersect with the layer."
 msgid "The selection does not intersect with a selected layer."
-msgstr "Markeringen skär inte lagret."
+msgstr "Markeringen skär inte med ett markerat lager."
 
 #: ../app/tools/gimptransformtool.c:705
 msgid "There is no selection to transform."
@@ -25224,7 +25141,7 @@ msgstr "Vikningstransformering"
 
 #: ../app/tools/gimpwarptool.c:176
 msgid "Warp Transform: Deform with different tools"
-msgstr "Deformeringstransform: Deformera med olika verktyg"
+msgstr "Vikningstransform: Deformera med olika verktyg"
 
 #: ../app/tools/gimpwarptool.c:177
 msgid "_Warp Transform"
@@ -25236,7 +25153,7 @@ msgstr "Deformeringsstreckverktyg"
 
 #: ../app/tools/gimpwarptool.c:773
 msgid "Cannot warp multiple layers. Select only one layer."
-msgstr ""
+msgstr "Kan inte vika flera lager. Markera endast ett lager."
 
 #: ../app/tools/gimpwarptool.c:792
 msgid "Cannot warp layer groups."
@@ -26846,9 +26763,8 @@ msgid "Source:"
 msgstr "Källa:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:306
-#, fuzzy
 msgid "Vendor ID:"
-msgstr "Leverantörs-ID:"
+msgstr "Producent-ID:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:311
 msgid "Product ID:"
@@ -27411,11 +27327,8 @@ msgid "Lock alpha channel"
 msgstr "Lås alfakanal"
 
 #: ../app/widgets/gimplayertreeview.c:1063
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer mode"
 msgid "Set layers mode"
-msgstr "Ställ in lagerläge"
+msgstr "Ställ in lagrens läge"
 
 #: ../app/widgets/gimpmessagebox.c:452
 #, c-format
