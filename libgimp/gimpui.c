@@ -178,8 +178,9 @@ static GdkWindow *
 gimp_ui_get_foreign_window (guint32 window)
 {
 #ifdef GDK_WINDOWING_X11
-  return gdk_x11_window_foreign_new_for_display (gdk_display_get_default (),
-                                                 window);
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    return gdk_x11_window_foreign_new_for_display (gdk_display_get_default (),
+                                                   window);
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
