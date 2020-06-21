@@ -1515,8 +1515,9 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
       attr_iter = pango_attr_list_get_iterator (attrs);
       do
         {
-          gint attr_start;
-          gint attr_end;
+          const gchar *valid_preedit_end;
+          gint         attr_start;
+          gint         attr_end;
 
           pango_attr_iterator_range (attr_iter, &attr_start, &attr_end);
           if (attr_start < strlen (text_tool->preedit_string))
@@ -1534,10 +1535,23 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
 
               gtk_text_buffer_begin_user_action (buffer);
 
+              /*
+               * Returned attribute end by pango_attr_iterator_range()
+               * may be G_MAXINT to mean the string end, though somehow
+               * we only encountered this in Wayland. Anyway let's take
+               * this possibility into account.
+               */
+              if (attr_end > strlen (text_tool->preedit_string))
+                attr_end = strlen (text_tool->preedit_string);
+
+              /* Double check encoding validity. */
+              if (! g_utf8_validate (text_tool->preedit_string + attr_start, attr_end - attr_start, &valid_preedit_end))
+                g_warning ("%s: preedit string is not valid UTF-8.", G_STRFUNC);
+
               /* Insert the preedit chunk at current cursor position. */
               gtk_text_buffer_insert_at_cursor (GTK_TEXT_BUFFER (text_tool->buffer),
                                                 text_tool->preedit_string + attr_start,
-                                                attr_end - attr_start);
+                                                valid_preedit_end - text_tool->preedit_string - attr_start);
               gtk_text_buffer_get_iter_at_mark (buffer, &start,
                                                 start_mark);
               gtk_text_buffer_delete_mark (buffer, start_mark);
