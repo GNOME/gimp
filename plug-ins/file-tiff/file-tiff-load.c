@@ -90,6 +90,7 @@ static void               load_contiguous  (TIFF              *tif,
                                             gushort            bps,
                                             gushort            spp,
                                             gboolean           is_bw,
+                                            gboolean           is_signed,
                                             gint               extra);
 static void               load_separate    (TIFF              *tif,
                                             ChannelData       *channel,
@@ -97,6 +98,7 @@ static void               load_separate    (TIFF              *tif,
                                             gushort            bps,
                                             gushort            spp,
                                             gboolean           is_bw,
+                                            gboolean           is_signed,
                                             gint               extra);
 static void               load_paths       (TIFF              *tif,
                                             GimpImage         *image,
@@ -110,6 +112,13 @@ static void               convert_bit2byte (const guchar      *src,
                                             guchar            *dest,
                                             gint               width,
                                             gint               height);
+
+static void               convert_int2uint (guchar            *buffer,
+                                            gint               bps,
+                                            gint               spp,
+                                            gint               width,
+                                            gint               height,
+                                            gint               stride);
 
 static gboolean           load_dialog      (TIFF              *tif,
                                             const gchar       *help_id,
@@ -314,6 +323,7 @@ load_image (GFile        *file,
       ChannelData      *channel = NULL;
       uint16            planar  = PLANARCONFIG_CONTIG;
       gboolean          is_bw;
+      gboolean          is_signed;
       gint              i;
       gboolean          worst_case = FALSE;
       gint              gimp_compression = GIMP_COMPRESSION_NONE;
@@ -541,7 +551,8 @@ load_image (GFile        *file,
       else if (photomet != PHOTOMETRIC_RGB && spp > 1 + (alpha ? 1 : 0) + extra)
         extra = spp - 1 - (alpha ? 1 : 0);
 
-      is_bw = FALSE;
+      is_bw     = FALSE;
+      is_signed = sampleformat == SAMPLEFORMAT_INT;
 
       switch (photomet)
         {
@@ -1110,11 +1121,13 @@ load_image (GFile        *file,
         }
       else if (planar == PLANARCONFIG_CONTIG)
         {
-          load_contiguous (tif, channel, type, bps, spp, is_bw, extra);
+          load_contiguous (tif, channel, type, bps, spp,
+                           is_bw, is_signed, extra);
         }
       else
         {
-          load_separate (tif, channel, type, bps, spp, is_bw, extra);
+          load_separate (tif, channel, type, bps, spp,
+                         is_bw, is_signed, extra);
         }
 
       if (TIFFGetField (tif, TIFFTAG_ORIENTATION, &orientation))
@@ -1517,6 +1530,7 @@ load_contiguous (TIFF        *tif,
                  gushort      bps,
                  gushort      spp,
                  gboolean     is_bw,
+                 gboolean     is_signed,
                  gint         extra)
 {
   guint32     image_width;
@@ -1593,7 +1607,14 @@ load_contiguous (TIFF        *tif,
           rows = MIN (image_height - y, tile_height);
 
           if (is_bw)
-            convert_bit2byte (buffer, bw_buffer, cols, rows);
+            {
+              convert_bit2byte (buffer, bw_buffer, cols, rows);
+            }
+          else if (is_signed)
+            {
+              convert_int2uint (buffer, bps, spp, cols, rows,
+                                tile_width * bytes_per_pixel);
+            }
 
           src_buf = gegl_buffer_linear_new_from_data (is_bw ? bw_buffer : buffer,
                                                       src_format,
@@ -1659,6 +1680,7 @@ load_separate (TIFF        *tif,
                gushort      bps,
                gushort      spp,
                gboolean     is_bw,
+               gboolean     is_signed,
                gint         extra)
 {
   guint32     image_width;
@@ -1754,7 +1776,14 @@ load_separate (TIFF        *tif,
                   rows = MIN (image_height - y, tile_height);
 
                   if (is_bw)
-                    convert_bit2byte (buffer, bw_buffer, cols, rows);
+                    {
+                      convert_bit2byte (buffer, bw_buffer, cols, rows);
+                    }
+                  else if (is_signed)
+                    {
+                      convert_int2uint (buffer, bps, spp, cols, rows,
+                                        tile_width * bytes_per_pixel);
+                    }
 
                   src_buf = gegl_buffer_linear_new_from_data (is_bw ? bw_buffer : buffer,
                                                               src_format,
@@ -1852,6 +1881,35 @@ convert_bit2byte (const guchar *src,
           memcpy (dest, bit2byte + *src * 8, x);
           dest += x;
           src++;
+        }
+    }
+}
+
+static void
+convert_int2uint (guchar *buffer,
+                  gint    bps,
+                  gint    spp,
+                  gint    width,
+                  gint    height,
+                  gint    stride)
+{
+  gint bytes_per_pixel = bps / 8;
+  gint y;
+
+  for (y = 0; y < height; y++)
+    {
+      guchar *d = buffer + stride * y;
+      gint    x;
+
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+      d += bytes_per_pixel - 1;
+#endif
+
+      for (x = 0; x < width * spp; x++)
+        {
+          *d ^= 0x80;
+
+          d += bytes_per_pixel;
         }
     }
 }
