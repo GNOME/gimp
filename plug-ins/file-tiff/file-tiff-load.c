@@ -1781,7 +1781,7 @@ load_separate (TIFF        *tif,
                     }
                   else if (is_signed)
                     {
-                      convert_int2uint (buffer, bps, spp, cols, rows,
+                      convert_int2uint (buffer, bps, 1, cols, rows,
                                         tile_width * bytes_per_pixel);
                     }
 
