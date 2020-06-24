@@ -1,0 +1,1623 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# enolp <enolp@softastur.org>, 2020
+# Arcipiescu <xandru.martino@gmail.com>, 2020
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2020-06-09 12:34+0000\n"
+"PO-Revision-Date: 2020-05-20 12:36+0000\n"
+"Last-Translator: Arcipiescu <xandru.martino@gmail.com>, 2020\n"
+"Language-Team: Asturian (https://www.transifex.com/softastur/teams/32614/ast/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ast\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../plug-ins/script-fu/script-fu.c:138
+msgid "Script-Fu _Console"
+msgstr "_Consola Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:143
+msgid "Interactive console for Script-Fu development"
+msgstr "Consola interactiva pa desarrollu Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:190
+msgid "_Start Server..."
+msgstr "_Aniciar Sirvidor..."
+
+#: ../plug-ins/script-fu/script-fu.c:195
+msgid "Server for remote Script-Fu operation"
+msgstr "Sirvidor pa operación remota Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:394
+msgid "_GIMP Online"
+msgstr "_GIMP Online"
+
+#: ../plug-ins/script-fu/script-fu.c:395
+msgid "_User Manual"
+msgstr "Manual d'_Usuariu"
+
+#: ../plug-ins/script-fu/script-fu.c:398
+msgid "_Script-Fu"
+msgstr "_Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:400
+msgid "_Test"
+msgstr "_Prueba"
+
+#: ../plug-ins/script-fu/script-fu.c:403
+msgid "_Buttons"
+msgstr "_Botones"
+
+#: ../plug-ins/script-fu/script-fu.c:405
+msgid "_Logos"
+msgstr "_Logos"
+
+#: ../plug-ins/script-fu/script-fu.c:407
+msgid "_Patterns"
+msgstr "_Patrones"
+
+#: ../plug-ins/script-fu/script-fu.c:410
+msgid "_Web Page Themes"
+msgstr "Temes Páxina _Web"
+
+#: ../plug-ins/script-fu/script-fu.c:412
+msgid "_Alien Glow"
+msgstr "_Rellumu alieníxena"
+
+#: ../plug-ins/script-fu/script-fu.c:414
+msgid "_Beveled Pattern"
+msgstr "Patrón _biseláu"
+
+#: ../plug-ins/script-fu/script-fu.c:416
+msgid "_Classic.Gimp.Org"
+msgstr "_Classic.Gimp.Org"
+
+#: ../plug-ins/script-fu/script-fu.c:419
+msgid "Alpha to _Logo"
+msgstr "Alpha a _Logu"
+
+#: ../plug-ins/script-fu/script-fu.c:425
+msgid "_Refresh Scripts"
+msgstr "_Refrescar Scripts"
+
+#: ../plug-ins/script-fu/script-fu.c:430
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Volver lleer tolos scripts Script-Fu disponibles"
+
+#: ../plug-ins/script-fu/script-fu.c:456
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"Nun puedes usar \"Refrescar Scripts\" mientres un ventanu de diálogu Script-"
+"Fu te abiertu. Por favor, zarra tolos ventanos Script-Fu y intentalo otra "
+"vegada."
+
+#: ../plug-ins/script-fu/script-fu-console.c:110
+#: ../plug-ins/script-fu/script-fu-console.c:177
+msgid "Script-Fu Console"
+msgstr "Consola Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-console.c:115
+#: ../plug-ins/script-fu/script-fu-console.c:281
+msgid "_Save"
+msgstr "_Guardar"
+
+#: ../plug-ins/script-fu/script-fu-console.c:116
+msgid "C_lear"
+msgstr "C_laru"
+
+#: ../plug-ins/script-fu/script-fu-console.c:117
+#: ../plug-ins/script-fu/script-fu-console.c:359
+msgid "_Close"
+msgstr "_Zarrar"
+
+#: ../plug-ins/script-fu/script-fu-console.c:173
+msgid "Welcome to TinyScheme"
+msgstr "Bienveníu a TinyScheme"
+
+#: ../plug-ins/script-fu/script-fu-console.c:179
+msgid "Interactive Scheme Development"
+msgstr "Desarrollu Interactive Shceme"
+
+#: ../plug-ins/script-fu/script-fu-console.c:215
+msgid "_Browse..."
+msgstr "_Restolar..."
+
+#: ../plug-ins/script-fu/script-fu-console.c:276
+msgid "Save Script-Fu Console Output"
+msgstr "Guardar Salida Consola Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-console.c:280
+#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-server.c:834
+msgid "_Cancel"
+msgstr "_Encaboxar"
+
+#: ../plug-ins/script-fu/script-fu-console.c:325
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Nun puede abrise '%s' pa escribir: %s"
+
+#: ../plug-ins/script-fu/script-fu-console.c:354
+msgid "Script-Fu Procedure Browser"
+msgstr "Restolar Procedimientu Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-console.c:358
+msgid "_Apply"
+msgstr "_Aplicar"
+
+#: ../plug-ins/script-fu/script-fu-eval.c:53
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Mou evaluación Script-Fu sólo permite invocaciones non interactives"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:202
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Nun pueden procesase dos scripts Script-Fu al mesmu tiempu."
+
+#: ../plug-ins/script-fu/script-fu-interface.c:204
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "Ya tas executando'l script \"%s\"."
+
+#: ../plug-ins/script-fu/script-fu-interface.c:230
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "Script-Fu: %s"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:237
+msgid "_Reset"
+msgstr "R_esetear"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:239
+msgid "_OK"
+msgstr "_OK"
+
+#. we add a colon after the label;
+#. *  some languages want an extra space here
+#: ../plug-ins/script-fu/script-fu-interface.c:293
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:343
+msgid "Script-Fu Color Selection"
+msgstr "Escoyeta Color Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:459
+msgid "Script-Fu File Selection"
+msgstr "Seleición Ficheru Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:462
+msgid "Script-Fu Folder Selection"
+msgstr "Seleición Carpeta Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:475
+msgid "Script-Fu Font Selection"
+msgstr "Seleición Fonte Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:483
+msgid "Script-Fu Palette Selection"
+msgstr "Seleición Paleta Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:492
+msgid "Script-Fu Pattern Selection"
+msgstr "Seleición Patrón Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:501
+msgid "Script-Fu Gradient Selection"
+msgstr "Seleición de dilíu de Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:510
+msgid "Script-Fu Brush Selection"
+msgstr "Esbilla del pincel Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:888
+#, c-format
+msgid "Error while executing %s:"
+msgstr "Fallu mientres s'executaba %s:"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:148
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Demasiaos argumentos pa llamar a 'script-fu-register'"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:647
+#, c-format
+msgid "Error while loading %s:"
+msgstr "Fallu mientres se cargaba %s:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:830
+msgid "Script-Fu Server Options"
+msgstr "Opciones Sirvidor Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-server.c:835
+msgid "_Start Server"
+msgstr "_Aniciar Sirvidor"
+
+#: ../plug-ins/script-fu/script-fu-server.c:868
+msgid "Listen on IP:"
+msgstr "Eschucar en IP:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:875
+msgid "Server port:"
+msgstr "Puertu sirvidor:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:881
+msgid "Server logfile:"
+msgstr "Ficheru rexistru sirvidor:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:894
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+"Escuchar nuna direición IP que nun seya 127.0.0.1 (especialmente 0.0.0.0) "
+"puede permitir a los atacantes executar de forma remota códigu arbitrariu "
+"nesta máquina."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+msgid "Bumpmap"
+msgstr "Mapa de relieve"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:189
+msgid "Add B_evel..."
+msgstr "Amestar _bisel…"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:190
+msgid "Add a beveled border to an image"
+msgstr "Amestar un berbesu biseláu a una imaxe"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:197
+msgid "Thickness"
+msgstr "Grosor"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:198
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: ../plug-ins/script-fu/scripts/old-photo.scm:104
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/slide.scm:257
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+msgid "Work on copy"
+msgstr "Trabayar con copia"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:199
+msgid "Keep bump layer"
+msgstr "Caltener la capa de relieve"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:108
+msgid "Border Layer"
+msgstr "Capa del berbesu"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:162
+msgid "Add _Border..."
+msgstr "Axuntar _Berbesu..."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:163
+msgid "Add a border around an image"
+msgstr "Axuntar un berbesu alrodíu la imaxe"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:170
+msgid "Border X size"
+msgstr "Tamañu berbesu X"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:171
+msgid "Border Y size"
+msgstr "Tamañu berbesu Y"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:172
+msgid "Border color"
+msgstr "Color berbesu"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:173
+msgid "Delta value on color"
+msgstr "Valor Delta nel color"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+msgid "Frame"
+msgstr "Marcu"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+msgid "Blend Animation needs at least three source layers"
+msgstr "Animación de fundíu requier a lo menos trés capes fonte"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+msgid "_Blend..."
+msgstr "_Fundir…"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+"Crear capes intermedies pa fundir dos o más capes sobro un fondu como una "
+"animación"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+msgid "Intermediate frames"
+msgstr "Marcos intermedios"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+msgid "Max. blur radius"
+msgstr "Radiu Máx. de desenfoque"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+msgid "Looped"
+msgstr "Bucle"
+
+#. --- false form of "if-1"
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:217
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"El script Burn-In necesita dos capes en total. Una capa de primer planu con "
+"trasparencia y una capa de fondu."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
+msgid "B_urn-In..."
+msgstr "B_urn-In..."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:225
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+"Crear capes intermedíes pa producir una transación 'burn-in' animada ente "
+"dos capes"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Glow color"
+msgstr "Color del rellumu"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Fadeout"
+msgstr "Desvanecer"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Fadeout width"
+msgstr "Anchor del desvanecimientu"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
+msgid "Corona width"
+msgstr "Anchor de la corona"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:236
+msgid "After glow"
+msgstr "Dempués de resplandecer"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:237
+msgid "Add glowing"
+msgstr "Amestar rellumu"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:238
+msgid "Prepare for GIF"
+msgstr "Pararar pa GIF"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:239
+msgid "Speed (pixels/frame)"
+msgstr "Velocidá (pixels/marcu)"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:176
+msgid "Carved Surface"
+msgstr "Superficie tallada"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:177
+msgid "Bevel Shadow"
+msgstr "Solombra viselada"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:178
+msgid "Bevel Highlight"
+msgstr "Reflexu biseláu"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:179
+msgid "Cast Shadow"
+msgstr "Solombra proyeutada"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:180
+msgid "Inset"
+msgstr "Recuadru"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:192
+msgid "Stencil C_arve..."
+msgstr "_Esculpíu Stencil…"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:193
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+"Usa'l dibuxu especificáu como plantiya pa tallar a partir de la imaxe "
+"especificada."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:200
+msgid "Image to carve"
+msgstr "Imaxe a esculpir"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:201
+msgid "Carve white areas"
+msgstr "Esculpir les estayes blanques"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:93
+msgid "Background"
+msgstr "Fondu de pantalla"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:94
+msgid "Layer 1"
+msgstr "Capa 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:95
+msgid "Layer 2"
+msgstr "Capa 2"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:96
+msgid "Layer 3"
+msgstr "Capa 3"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:97
+msgid "Drop Shadow"
+msgstr "Soltar solombra"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:217
+msgid "Chrome"
+msgstr "Cromáu"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:218
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+msgid "Highlight"
+msgstr "Reflexos"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:232
+msgid "Stencil C_hrome..."
+msgstr "_Cromáu Stencil…"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:233
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"Amestar un efeuto cromáu a la rexón o tresparencia seleicionada usando "
+"l'estarcíu de buxos especificáu"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:240
+msgid "Chrome saturation"
+msgstr "Saturación del cromáu"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
+msgid "Chrome lightness"
+msgstr "Lluminosidá del cromáu"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:242
+msgid "Chrome factor"
+msgstr "Factor de cromáu"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:243
+msgid "Environment map"
+msgstr "Mapa entornu"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
+msgid "Highlight balance"
+msgstr "Balance lluz"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:247
+msgid "Chrome balance"
+msgstr "Balance del cromáu"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:248
+msgid "Chrome white areas"
+msgstr "Cromar les estayes blanques"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:74
+msgid "Effect layer"
+msgstr "Capa d'efeutu"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:127
+msgid "_Circuit..."
+msgstr "_Circuitu..."
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:128
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit "
+"board"
+msgstr ""
+"Enllenar la rexón o tresparencia seleicionada con pistes como les d'un "
+"circuitu impresu"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
+msgid "Oilify mask size"
+msgstr "Tamañu de la mázcara del óleu"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:136
+msgid "Circuit seed"
+msgstr "Semiente del circuitu"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:137
+msgid "No background (only for separate layer)"
+msgstr "Ensín fondu (sólo pa capes dixebraes)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:138
+#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/predator.scm:132
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+msgid "Keep selection"
+msgstr "Mantener seleición"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:139
+#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/predator.scm:133
+msgid "Separate layer"
+msgstr "Dixebrar capa"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:52
+msgid "_Clothify..."
+msgstr "_Entelar…"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:53
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr ""
+"Amestar una testura como de tela a la rexón o tresparencia seleicionada"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:60
+msgid "Blur X"
+msgstr "Desenfoque en X"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Blur Y"
+msgstr "Desenfoque en Y"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:62
+msgid "Azimuth"
+msgstr "Azimut"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:63
+msgid "Elevation"
+msgstr "Elevación"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:64
+msgid "Depth"
+msgstr "Profundidá"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:36
+msgid "Stain"
+msgstr "Mancha"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:82
+msgid "_Coffee Stain..."
+msgstr "Manches de _café…"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:83
+msgid "Add realistic looking coffee stains to the image"
+msgstr "Amestar manches de café d'aspeutu realista a la imaxe"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:90
+msgid "Stains"
+msgstr "Manches"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:91
+msgid "Darken only"
+msgstr "Escurecer namái"
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
+msgid "_Difference Clouds..."
+msgstr "Ñubes de _diferencia"
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
+msgid "Solid noise applied with Difference layer mode"
+msgstr "Ruíu sólidu aplicáu col mou de capa Diferencia"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
+msgid "_Distort..."
+msgstr "_Distorsión…"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
+msgid "Distress the selection"
+msgstr "Destruyir la seleición"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "_Threshold (bigger 1<-->254 smaller)"
+msgstr "_Umbral (más grande 1<-->254 más pequeñu)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+msgid "_Spread"
+msgstr "E_sparder"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+msgid "_Granularity (1 is low)"
+msgstr "_Granuláu (1 ye baxo)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
+msgid "S_mooth"
+msgstr "_Dilir"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
+msgid "Smooth hor_izontally"
+msgstr "Dilir hor_izontalmente"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
+msgid "Smooth _vertically"
+msgstr "Dilir _verticalmente"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow (legacy)..."
+msgstr "_Soltar Solombra (heredáu)..."
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "Amestar una solombra arroxada a la rexón o tresparencia seleicionada"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+msgid "Offset X"
+msgstr "Offset X"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+msgid "Offset Y"
+msgstr "Offset Y"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Blur radius"
+msgstr "Radiu de desenfoque"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+msgid "Color"
+msgstr "Color"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+msgid "Opacity"
+msgstr "Opacidá"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+msgid "Allow resizing"
+msgstr "Permitir redimensionar"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:42
+msgid "_Erase Every Nth Row..."
+msgstr "_Esborrar cada enésima filera..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+msgid "Erase every nth row or column"
+msgstr "Esborrar cada enésima filera o columna"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
+msgid "Rows/cols"
+msgstr "Files/columnes"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
+msgid "Rows"
+msgstr "Files"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
+msgid "Columns"
+msgstr "Columnes"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Erase/fill"
+msgstr "Esborrar/rellenar"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Erase"
+msgstr "Esborrar"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Fill with BG"
+msgstr "Rellenar con BG"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Esborrar Otra Fila..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Esborrar otra fila o columna"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Pares/impares"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Pares"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Impares"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:152
+msgid "Render _Font Map..."
+msgstr "Renderizar Mapa _Fontes..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:153
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr ""
+"Crear una imaxe enllena de vistes previes de fontes que concasen con un "
+"filtru de nomes"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:158
+msgid "_Text"
+msgstr "_Testu"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:159
+msgid "Use font _name as text"
+msgstr "Usar _nome fonte cómo testu"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:160
+msgid "_Labels"
+msgstr "_Etiquetes"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:161
+msgid "_Filter (regexp)"
+msgstr "_Filtru (regexp)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:162
+msgid "Font _size (pixels)"
+msgstr "_Tamañu fonte (pixels)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:163
+msgid "_Border (pixels)"
+msgstr "_Berbesu (pixels)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "_Color scheme"
+msgstr "Esquema de _colores"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Black on white"
+msgstr "Negru sobre blancu"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Active colors"
+msgstr "Colores activos"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
+msgid "_Fuzzy Border..."
+msgstr "_Esfuminar berbesu..."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "Amestar un berbesu difusu ya irregular a una imaxe"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+msgid "Border size"
+msgstr "Tamañu berbesu"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+msgid "Blur border"
+msgstr "Desenfocar el berbesu"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+msgid "Granularity (1 is Low)"
+msgstr "Graniláu (1 ye Baxo)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+msgid "Add shadow"
+msgstr "Amestar solombra"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:162
+msgid "Shadow weight (%)"
+msgstr "Pesu de la solombra (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:164
+msgid "Flatten image"
+msgstr "Aplanar imaxe"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "Using _Paths"
+msgstr "Usar _Caminos"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr "Marcador al manual d'usuariu"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+msgid "_Preparing your Images for the Web"
+msgstr "_Tresnar les tos imáxenes pa la Web"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr "_Trabayar con Camara Díxital de Semeyes"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+msgid "Create, Open and Save _Files"
+msgstr "Crear, Abrir y Guardar _Ficheros"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+msgid "_Basic Concepts"
+msgstr "Conceptos _Básicos"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+msgid "How to Use _Dialogs"
+msgstr "Cómo Usar _Diálogos"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+msgid "Drawing _Simple Objects"
+msgstr "Dibuxar Oxetos _Simples"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "Create and Use _Selections"
+msgstr "Crear y Usar _Seleiciones"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+msgid "_Main Web Site"
+msgstr "Sitiu Web _Principal"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
+msgid "Bookmark to the GIMP web site"
+msgstr "Marcador al sitiu web de GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+msgid "_Developer Web Site"
+msgstr "Sitiu Web de _Desarrollu"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+msgid "_Roadmap"
+msgstr "Mapa _carreteres"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "Bookmark to the roadmap of GIMP"
+msgstr "Marcador nel mapa carreteres de GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+msgid "_Wiki"
+msgstr "_Wiki"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+msgid "Bookmark to the wiki of GIMP"
+msgstr "Marcador na wiki de GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+msgid "_Bug Reports and Feature Requests"
+msgstr "_Informe de fallos y Solicitúes de funciones"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr "Marcador pal rastrexador de fallos de GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+msgid "_User Manual Web Site"
+msgstr "Sitiu Web Manual d'_Usuariu"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+msgid "Custom _Gradient..."
+msgstr "_Dilíu personalizáu…"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+msgid "Create an image filled with an example of the current gradient"
+msgstr "Crear una imaxe enllena con una amuesa del dilíu actual"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:75
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+msgid "Width"
+msgstr "Anchu"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:76
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:197
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+msgid "Height"
+msgstr "Altor"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:77
+msgid "Gradient reverse"
+msgstr "Dilíu invertíu"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+msgid "_Grid..."
+msgstr "_Malla..."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current"
+" brush"
+msgstr ""
+"Dibuxar una malla especificada pola llista de localizaciones X y Y usaes na "
+"brocha actual"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+msgid "X divisions"
+msgstr "Divisiones X"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+msgid "Y divisions"
+msgstr "Divisiones Y"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+msgid "New Guides from _Selection"
+msgstr "Nueves Guíes dende _Seleición"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+msgid "Create four guides around the bounding box of the current selection"
+msgstr ""
+"Crear cuatro guíes al rodiu del cuadru llendador de la escoyeta actual."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+msgid "New Guide (by _Percent)..."
+msgstr "Nueva Guía (por _Porcentaxe)..."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+msgid ""
+"Add a guide at the position specified as a percentage of the image size"
+msgstr ""
+"Amestar una guía na posición especificada por un porcentaxe del tamañu "
+"d'imaxe"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "_Direction"
+msgstr "_Direición"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Vertical"
+msgstr "Vertical"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+msgid "_Position (in %)"
+msgstr "_Posición (en %)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "New _Guide..."
+msgstr "Nueva _Guía..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr "Amestar una guía cola orientación y posición especificada (en pixels)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+msgid "_Position"
+msgstr "_Allugamientu"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr "Esbo_rrar toles Guíes"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+msgid "Remove all horizontal and vertical guides"
+msgstr "Esborrar toles guíes horizontales y verticales"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:117
+msgid "_Lava..."
+msgstr "_Llava…"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:118
+msgid "Fill the current selection with lava"
+msgstr "Enllenar la seleición actual con llava"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:125
+msgid "Seed"
+msgstr "Semiente"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:126
+msgid "Size"
+msgstr "Tamañu"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:127
+msgid "Roughness"
+msgstr "Escarapullu"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:128
+msgid "Gradient"
+msgstr "Dilíu"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:131
+msgid "Use current gradient"
+msgstr "Usar el dilíu actual"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:108
+msgid "Line _Nova..."
+msgstr "_Nova de llinies…"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:109
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr ""
+"Rellena una capa con rayos que salen pa fuera dende'l so centru el color de "
+"primer planu"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+msgid "Number of lines"
+msgstr "Númberu de llínees"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+msgid "Sharpness (degrees)"
+msgstr "(Ángulu) de les púes"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:118
+msgid "Offset radius"
+msgstr "Radiu de desplazamientu"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:119
+msgid "Randomness"
+msgstr "Grau de debalu"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+msgid "_Rectangular..."
+msgstr "_Rectangular..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "Create a rectangular brush"
+msgstr "Crear pincel rectangular"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+msgid "Name"
+msgstr "Nome"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:143
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:198
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:268
+msgid "Spacing"
+msgstr "Espaciáu"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:133
+msgid "Re_ctangular, Feathered..."
+msgstr "Re_utangular, esfuminada…"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:134
+msgid "Create a rectangular brush with feathered edges"
+msgstr "Criar un pincel reutangular con berbesos esfuminaos"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:142
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:267
+msgid "Feathering"
+msgstr "Esfuminar"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:189
+msgid "_Elliptical..."
+msgstr "_Elipticu..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:190
+msgid "Create an elliptical brush"
+msgstr "Crear un pincel elípticu"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:258
+msgid "Elli_ptical, Feathered..."
+msgstr "Elí_ptica, esfuminada…"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:259
+msgid "Create an elliptical brush with feathered edges"
+msgstr "Crear un pincel elípticu con berbesos esfuminaos"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+msgid "_Old Photo..."
+msgstr "Semeya _Vieya..."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+msgid "Make an image look like an old photo"
+msgstr "Facer una imaxe col aspeutu de semeya vieya"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+msgid "Defocus"
+msgstr "Desenfocar"
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+msgid "Sepia"
+msgstr "Sepia"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Mottle"
+msgstr "Moteáu"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:226
+msgid "Folder for the output file"
+msgstr "Carpeta pal ficheru de salida"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:227
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"El nome del ficheru pa crear (si yá existe un ficheru con esi nome, va "
+"reempalzase)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+msgid "The filename you entered is not a suitable name for a file."
+msgstr ""
+"El nome de ficheru que punxisti nun ye una nome afayadizu pa un ficheru."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:237
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+"Tolos carauteres del nome son espacion baleros o carauteres que nun puen "
+"apaecer nos nomes de ficheru."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:265
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+"Esporta la paleta activa como una fueya d'estilu CSS col nome de la entrada "
+"de color como'l so nome de clase y el color en sí como l'atributu de color"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:291
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Esporta la paleta activa como un diccionariu PHP (nome => color)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:323
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Esporta la paleta activa como un diccionariu Python (nome => color)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:352
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+"Escribi tolos colores nuna paleta nun ficheru de testu, un valor hexadecimal"
+" por lllinia (ensin nomes)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:399
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "Esporta la paleta activa como java.util.Hashtable <Cadena, Color>"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+msgid "There is no image data in the clipboard to paste."
+msgstr "Nun hai datos d'imaxe nel cartafueyos pa pegar."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
+msgid "New _Brush..."
+msgstr "Pincel _nuevu..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+msgid "Paste the clipboard contents into a new brush"
+msgstr "Apegar el conteníu del cartafueyu nun pincel nuevu"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+msgid "_Brush name"
+msgstr "Nome de _pincel"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+msgid "_File name"
+msgstr "Nome de _ficheru"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "_Spacing"
+msgstr "_Espaciando"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+msgid "New _Pattern..."
+msgstr "_Patrón nuevu..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "Apegar el conteníu del cartafueyu nun patrón nuevu"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+msgid "_Pattern name"
+msgstr "Nome de _patrón"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+msgid "_Perspective..."
+msgstr "_Perspectiva...."
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "Amestar una solombra de perspectiva a la rexón seleicionada (o alpha)"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+msgid "Angle"
+msgstr "Ángulu"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+msgid "Relative distance of horizon"
+msgstr "Distancia relativa de horizonte"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+msgid "Relative length of shadow"
+msgstr "Llonxitú relativa de solombra"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Interpolation"
+msgstr "Interpolación"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:121
+msgid "_Predator..."
+msgstr "_Predator..."
+
+#: ../plug-ins/script-fu/scripts/predator.scm:122
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "Amestar efeutu 'Predator' a la rexón seleicionada (o alpha)"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:129
+msgid "Edge amount"
+msgstr "Grosor del berbesu"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:130
+msgid "Pixelize"
+msgstr "Pixelar"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:131
+msgid "Pixel amount"
+msgstr "Tamañu del píxel"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse Layer _Order"
+msgstr "Invertir l'_orde de capa"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+msgid "Reverse the order of layers in the image"
+msgstr "Invertir l'orde de les capes na imaxe"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
+msgid "_Rippling..."
+msgstr "_Ondes…"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current layer"
+msgstr ""
+"Crea una imaxe de delles capes amestando un efectu dominó a la capa actual"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Rippling strength"
+msgstr "Fuercia d'ondulación"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:78
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Númberu de marcos"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Edge behavior"
+msgstr "Comportamientu del berbesu"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Wrap"
+msgstr "Endolcar"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Smear"
+msgstr "Manchar"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Black"
+msgstr "Negro"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+msgid "_Round Corners..."
+msgstr "Esquines _Redondeaes..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and "
+"background"
+msgstr ""
+"Redondiar les esquines d'una imaxe y amestar una solombra arroxanda y un "
+"fondu opcionales"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+msgid "Edge radius"
+msgstr "Radiu del berbesu"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+msgid "Add drop-shadow"
+msgstr "Amestar solombra base"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+msgid "Shadow X offset"
+msgstr "Solombra offset X"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+msgid "Shadow Y offset"
+msgstr "Solombra offset Y"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Add background"
+msgstr "Amestar fondu"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+msgid "Se_t Colormap..."
+msgstr "Afi_tar Mapa Colores..."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr ""
+"Camudar el mapa de colores d'una imaxe a los colores especificaos na paleta."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+msgid "Palette"
+msgstr "Paleta"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+msgid "Rounded R_ectangle..."
+msgstr "R_eutángulu Redondeáu..."
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+msgid "Round the corners of the current selection"
+msgstr "Redondear les esquines de la seleición actual"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+msgid "R_adius (%)"
+msgstr "R_adiu (%)"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+msgid "Co_ncave"
+msgstr "Có_ncavu"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+msgid "To _Brush..."
+msgstr "A _Paleta..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+msgid "Convert a selection to a brush"
+msgstr "Convertir una seleición en paleta"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+msgid "To _Image"
+msgstr "A _Imaxe"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+msgid "Convert a selection to an image"
+msgstr "Convertir una seleición n'imaxe"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+msgid "To _Pattern..."
+msgstr "A _Patrón..."
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+msgid "Convert a selection to a pattern"
+msgstr "Convertir una seleición en patrón"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:245
+msgid "_Slide..."
+msgstr "_Diapositiva…"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:246
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr ""
+"Amestar un marcu como'l d'una película diapositiva, furacos de rueda dentao "
+"y etiquetes a una imaxe"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:253
+msgid "Text"
+msgstr "Testu"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:254
+msgid "Number"
+msgstr "Númberu"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:255
+msgid "Font"
+msgstr "Fonte"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:256
+msgid "Font color"
+msgstr "Color fonte"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+msgid "_Spinning Globe..."
+msgstr "Globu _xiratoriu…"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+msgid ""
+"Create an animation by mapping the current image onto a spinning sphere"
+msgstr ""
+"Crear una animación proyeutando la imaxe actual sobro una esfera xiratoria"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+msgid "Frames"
+msgstr "Marcos"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+msgid "Turn from left to right"
+msgstr "Pasar dende manzorga a drecha"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+msgid "Transparent background"
+msgstr "Fondu trasparente"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "Indiz a n colores (0 = permanez RGB)"
+
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:272
+msgid "_Sphere..."
+msgstr "E_sfera"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+msgid "_Tileable Blur..."
+msgstr "Desenfoque en_llosable…"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr ""
+"Desenfocar los berbesos d'una imaxe pal resultáu forme un mosaicu con "
+"facilidá"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+msgid "Radius"
+msgstr "Radiu"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:77
+msgid "Blur vertically"
+msgstr "Desenfocar verticalmente"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:78
+msgid "Blur horizontally"
+msgstr "Desenfocar horizontalmente"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Blur type"
+msgstr "Tipu de desenfoque"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "IIR"
+msgstr "IIR"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "RLE"
+msgstr "RLE"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+msgid "Mask size"
+msgstr "Tamañu mázcara"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+msgid "Mask opacity"
+msgstr "Mázcara opacidá"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+msgid "_Waves..."
+msgstr "_Ondes..."
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+"Crear una imaxe multicapa con un efeutu como si una piedra toviere cayío "
+"sobro la imaxe actual"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+msgid "Amplitude"
+msgstr "Amplitú"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+msgid "Wavelength"
+msgstr "Llonxitú d'onda"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+msgid "Invert direction"
+msgstr "Direición inversa"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:397
+msgid "_Weave..."
+msgstr "_Ondular…"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:398
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+"Cria una capa nueva enllena d'un efeutu onda pa usala como overlay o mapa de"
+" relieve"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:405
+msgid "Ribbon width"
+msgstr "Anchor del llazu"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:406
+msgid "Ribbon spacing"
+msgstr "Espaciu ente llazos"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:407
+msgid "Shadow darkness"
+msgstr "Escuridá de la solombra"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:408
+msgid "Shadow depth"
+msgstr "Profundidá de la solombra"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:409
+msgid "Thread length"
+msgstr "Llonxitú de les frebes"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:410
+msgid "Thread density"
+msgstr "Densidá de frebes"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:411
+msgid "Thread intensity"
+msgstr "Intensidá de les frebes"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+msgid "Shadow"
+msgstr "Solombra"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+msgid "_Xach-Effect..."
+msgstr "_Xach-Effect..."
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr ""
+"Amiesta un sutil efeutu tresllúcidu 3D a la rexón o (tresparencia escoyida)"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+msgid "Highlight X offset"
+msgstr "Desplazamientu X del rellumu"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+msgid "Highlight Y offset"
+msgstr "Desplazamientu Y del rellumu"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+msgid "Highlight color"
+msgstr "Color claru"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+msgid "Highlight opacity"
+msgstr "Opacidá del rellumu"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+msgid "Drop shadow color"
+msgstr "Color de la solombra base"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+msgid "Drop shadow opacity"
+msgstr "Opacidá de la solombra base"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+msgid "Drop shadow blur radius"
+msgstr "Radiu de desenfoque de la solombra base"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+msgid "Drop shadow X offset"
+msgstr "Desplazamientu X de la solombra base"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+msgid "Drop shadow Y offset"
+msgstr "Desplazamientu Y de la solombra base"
