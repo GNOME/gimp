@@ -273,6 +273,8 @@ save_layer (TIFF         *tif,
             gint32        num_pages,
             gint32        orig_image, /* the export function might */
                                       /* have created a duplicate  */
+            gint          origin_x,
+            gint          origin_y,
             gint         *saved_bpp,
             gboolean      out_linear,
             GError      **error)
@@ -675,6 +677,9 @@ save_layer (TIFF         *tif,
 
   gimp_drawable_offsets (layer, &offset_x, &offset_y);
 
+  offset_x -= origin_x;
+  offset_y -= origin_y;
+
   if (offset_x || offset_y)
     {
       TIFFSetField (tif, TIFFTAG_XPOSITION, offset_x / xresolution);
@@ -948,6 +953,8 @@ save_image (GFile                  *file,
   gint      number_of_sub_IFDs  = 1;
   toff_t    sub_IFDs_offsets[1] = { 0UL };
   gint32    num_layers, *layers, current_layer = 0;
+  gint      origin_x = 0, origin_y = 0;
+  gint32    i;
 
   layers = gimp_image_get_layers (image, &num_layers);
 
@@ -1028,11 +1035,23 @@ save_image (GFile                  *file,
   if (tsvals->save_thumbnail)
     TIFFSetField (tif, TIFFTAG_SUBIFD, number_of_sub_IFDs, sub_IFDs_offsets);
 
+  /* calculate the top-left coordinates */
+  for (i = 0; i < num_layers; i++)
+    {
+      gint offset_x, offset_y;
+
+      gimp_drawable_offsets (layers[i], &offset_x, &offset_y);
+
+      origin_x = MIN (origin_x, offset_x);
+      origin_y = MIN (origin_y, offset_y);
+    }
+
   /* write last layer as first page. */
   if (! save_layer (tif,  tsvals, image,
                     layers[num_layers - current_layer - 1],
-                    current_layer, num_layers,
-                    orig_image, saved_bpp, out_linear, error))
+                    current_layer, num_layers, orig_image,
+                    origin_x, origin_y,
+                    saved_bpp, out_linear, error))
     {
       goto out;
     }
@@ -1073,6 +1092,7 @@ save_image (GFile                  *file,
           if (! save_layer (tif,  tsvals, image,
                             layers[num_layers - current_layer - 1],
                             current_layer, num_layers, orig_image,
+                            origin_x, origin_y,
                             &tmp_saved_bpp, out_linear, error))
             {
               goto out;
