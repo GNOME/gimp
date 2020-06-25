@@ -225,12 +225,18 @@ static GList *
 gimp_image_duplicate_layers (GimpImage *image,
                              GimpImage *new_image)
 {
-  GList *new_selected_layers = NULL;
-  GList *selected_layers;
-  GList *list;
-  gint   count;
+  GList         *new_selected_layers = NULL;
+  GList         *selected_paths      = NULL;
+  GList         *selected_layers;
+  GimpItemStack *new_item_stack;
+  GList         *list;
+  gint           count;
 
   selected_layers = gimp_image_get_selected_layers (image);
+
+  for (list = selected_layers; list; list = list->next)
+    selected_paths = g_list_prepend (selected_paths,
+                                     gimp_item_get_path (list->data));
 
   for (list = gimp_image_get_layer_iter (image), count = 0;
        list;
@@ -252,12 +258,16 @@ gimp_image_duplicate_layers (GimpImage *image,
         gimp_object_set_name (GIMP_OBJECT (new_layer->mask),
                               gimp_object_get_name (layer->mask));
 
-      if (g_list_find (selected_layers, layer))
-        new_selected_layers = g_list_prepend (new_selected_layers, new_layer);
-
       gimp_image_add_layer (new_image, new_layer,
                             NULL, count++, FALSE);
     }
+
+  new_item_stack = GIMP_ITEM_STACK (gimp_image_get_layers (new_image));
+  for (list = selected_paths; list; list = list->next)
+    new_selected_layers = g_list_prepend (new_selected_layers,
+                                          gimp_item_stack_get_item_by_path (new_item_stack, list->data));
+
+  g_list_free_full (selected_paths, (GDestroyNotify) g_list_free);
 
   return new_selected_layers;
 }
