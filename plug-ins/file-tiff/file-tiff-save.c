@@ -275,6 +275,8 @@ save_layer (TIFF        *tif,
             gint32       num_pages,
             GimpImage   *orig_image, /* the export function might
                                       * have created a duplicate  */
+            gint          origin_x,
+            gint          origin_y,
             gint        *saved_bpp,
             gboolean     out_linear,
             GError     **error)
@@ -693,6 +695,9 @@ save_layer (TIFF        *tif,
 
   gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offset_x, &offset_y);
 
+  offset_x -= origin_x;
+  offset_y -= origin_y;
+
   if (offset_x || offset_y)
     {
       TIFFSetField (tif, TIFFTAG_XPOSITION, offset_x / xresolution);
@@ -951,6 +956,9 @@ save_image (GFile         *file,
   gint32      num_layers;
   gint32      current_layer       = 0;
   GList      *layers;
+  GList      *iter;
+  gint        origin_x            = 0;
+  gint        origin_y            = 0;
   gint        saved_bpp;
   gchar      *config_comment;
   gboolean    config_save_profile;
@@ -1046,11 +1054,25 @@ save_image (GFile         *file,
   if (config_save_thumbnail)
     TIFFSetField (tif, TIFFTAG_SUBIFD, number_of_sub_IFDs, sub_IFDs_offsets);
 
+  /* calculate the top-left coordinates */
+  for (iter = layers; iter; iter = g_list_next (iter))
+    {
+      GimpDrawable *drawable = iter->data;
+      gint          offset_x, offset_y;
+
+      gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+
+      origin_x = MIN (origin_x, offset_x);
+      origin_y = MIN (origin_y, offset_y);
+    }
+
   /* write last layer as first page. */
   if (! save_layer (tif,  config, space, image,
                     g_list_nth_data (layers, current_layer),
                     current_layer, num_layers,
-                    orig_image, &saved_bpp, out_linear, error))
+                    orig_image,
+                    origin_x, origin_y,
+                    &saved_bpp, out_linear, error))
     {
       goto out;
     }
@@ -1092,6 +1114,7 @@ save_image (GFile         *file,
           if (! save_layer (tif, config, space, image,
                             g_list_nth_data (layers, current_layer),
                             current_layer, num_layers, orig_image,
+                            origin_x, origin_y,
                             &tmp_saved_bpp, out_linear, error))
             {
               goto out;
