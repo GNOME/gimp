@@ -283,6 +283,23 @@ export_add_alpha (GimpImage  *image,
 }
 
 static void
+export_crop_image (GimpImage  *image,
+                   GList     **drawables)
+{
+  gimp_image_crop (image,
+                   gimp_image_width  (image),
+                   gimp_image_height (image),
+                   0, 0);
+}
+
+static void
+export_resize_image (GimpImage  *image,
+                     GList     **drawables)
+{
+  gimp_image_resize_to_layers (image);
+}
+
+static void
 export_void (GimpImage  *image,
              GList     **drawables)
 {
@@ -438,6 +455,15 @@ static ExportAction export_action_add_alpha =
   NULL,
   N_("%s plug-in needs an alpha channel"),
   { N_("Add Alpha Channel"), NULL},
+  0
+};
+
+static ExportAction export_action_crop_or_resize =
+{
+  export_crop_image,
+  export_resize_image,
+  N_("%s plug-in needs to crop the layers to the image bounds"),
+  { N_("Crop Layers"), N_("Resize Image to Layers")},
   0
 };
 
@@ -884,6 +910,43 @@ gimp_export_image (GimpImage               **image,
       GList     *children;
 
       children = gimp_item_list_children (GIMP_ITEM (layer));
+
+      if ((capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS) &&
+          (capabilities & GIMP_EXPORT_NEEDS_CROP))
+        {
+          GeglRectangle image_bounds;
+          gboolean      needs_crop = FALSE;
+
+          image_bounds.x      = 0;
+          image_bounds.y      = 0;
+          image_bounds.width  = gimp_image_width  (*image);
+          image_bounds.height = gimp_image_height (*image);
+
+          for (iter = layers; iter; iter = iter->next)
+            {
+              GimpDrawable  *drawable = iter->data;
+              GeglRectangle  layer_bounds;
+
+              gimp_drawable_offsets (drawable,
+                                     &layer_bounds.x, &layer_bounds.y);
+
+              layer_bounds.width  = gimp_drawable_width  (drawable);
+              layer_bounds.height = gimp_drawable_height (drawable);
+
+              if (! gegl_rectangle_contains (&image_bounds, &layer_bounds))
+                {
+                  needs_crop = TRUE;
+
+                  break;
+                }
+            }
+
+          if (needs_crop)
+            {
+              actions = g_slist_prepend (actions,
+                                         &export_action_crop_or_resize);
+            }
+        }
 
       /* check if layer size != canvas size, opacity != 100%, or offsets != 0 */
       if (g_list_length (layers) == 1       &&
