@@ -1286,7 +1286,7 @@ save_dialog (GimpImage     *image,
   else
     {
       /* If single-layer TIFF, set the toggle insensitive and show it as
-       * unchecked though I don't actually change the tsvals value to
+       * unchecked though I don't actually change the config value to
        * keep storing previously chosen value.
        */
       button = gtk_check_button_new_with_mnemonic (_("Save layers"));
@@ -1295,6 +1295,33 @@ save_dialog (GimpImage     *image,
     }
 
   gtk_grid_attach (GTK_GRID (grid), button, 0, row++, 2, 1);
+
+  frame = gimp_frame_new (NULL);
+  gtk_grid_attach (GTK_GRID (grid), frame, 0, row++, 2, 1);
+  gtk_widget_show (frame);
+
+  if (is_multi_layer)
+    {
+      g_object_bind_property (config, "save-layers",
+                              frame,  "sensitive",
+                              G_BINDING_SYNC_CREATE);
+
+      button = gimp_prop_check_button_new (config, "crop-layers",
+                                           _("Crop layers to image bounds"));
+      gtk_container_add (GTK_CONTAINER (frame), button);
+    }
+  else
+    {
+      /* If single-layer TIFF, set the layers frame insensitive and
+       * show its toggles as unchecked though I don't actually change
+       * the config value to keep storing previously chosen values.
+       */
+      gtk_widget_set_sensitive (frame, FALSE);
+
+      button = gtk_check_button_new_with_mnemonic (_("Crop layers"));
+      gtk_container_add (GTK_CONTAINER (frame), button);
+      gtk_widget_show (button);
+    }
 
   if (has_alpha && ! is_indexed)
     {

@@ -223,6 +223,12 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                  TRUE,
                                  G_PARAM_READWRITE);
 
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "crop-layers",
+                                 "Crop Layers",
+                                 "Crop Layers",
+                                 TRUE,
+                                 G_PARAM_READWRITE);
+
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-exif",
                                  "Save Exif",
                                  "Save Exif",
@@ -373,10 +379,12 @@ tiff_save (GimpProcedure        *procedure,
         GimpExportCapabilities capabilities;
         GimpCompression        compression;
         gboolean               save_layers;
+        gboolean               crop_layers;
 
         g_object_get (config,
                       "compression", &compression,
                       "save-layers", &save_layers,
+                      "crop-layers", &crop_layers,
                       NULL);
 
         if (compression == GIMP_COMPRESSION_CCITTFAX3 ||
@@ -396,7 +404,12 @@ tiff_save (GimpProcedure        *procedure,
           }
 
         if (save_layers && image_is_multi_layer (image))
-          capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+          {
+            capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+
+            if (crop_layers)
+              capabilities |= GIMP_EXPORT_NEEDS_CROP;
+          }
 
         export = gimp_export_image (&image, &n_drawables, &drawables, "TIFF",
                                     capabilities);
