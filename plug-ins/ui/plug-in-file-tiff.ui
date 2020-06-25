@@ -55,6 +55,26 @@
           </packing>
         </child>
         <child>
+          <object class="GimpFrame" id="layers-frame">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkCheckButton" id="crop-layers">
+                <property name="label" translatable="yes">Cr_op layers to image bounds</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="use_underline">True</property>
+                <property name="draw_indicator">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkCheckButton" id="save-alpha">
             <property name="label" translatable="yes">Save color _values from transparent pixels</property>
             <property name="tooltip_text" translatable="yes">Colors are not stored premultiplied by the associated alpha</property>
@@ -67,7 +87,7 @@
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>

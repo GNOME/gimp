@@ -88,7 +88,8 @@ static TiffSaveVals tsvals =
   FALSE,               /*  save iptc           */
   TRUE,                /*  save thumbnail      */
   TRUE,                /*  save profile        */
-  TRUE                 /*  save layer          */
+  TRUE,                /*  save layers         */
+  TRUE                 /*  crop layers         */
 };
 
 static gchar *image_comment = NULL;
@@ -392,7 +393,12 @@ run (const gchar      *name,
                                GIMP_EXPORT_CAN_HANDLE_ALPHA;
 
               if (tsvals.save_layers)
-                capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+                {
+                  capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+
+                  if (tsvals.crop_layers)
+                    capabilities |= GIMP_EXPORT_NEEDS_CROP;
+                }
 
               export = gimp_export_image (&image, &drawable, "TIFF", capabilities);
 

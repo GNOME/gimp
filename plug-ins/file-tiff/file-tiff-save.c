@@ -1271,6 +1271,18 @@ save_dialog (TiffSaveVals  *tsvals,
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals->save_layers);
 
+  frame = GTK_WIDGET (gtk_builder_get_object (builder, "layers-frame"));
+  g_object_bind_property (toggle, "active",
+                          frame,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
+
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "crop-layers"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                tsvals->crop_layers);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals->crop_layers);
+
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);

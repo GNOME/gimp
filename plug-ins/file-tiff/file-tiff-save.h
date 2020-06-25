@@ -34,6 +34,7 @@ typedef struct
   gboolean  save_thumbnail;
   gboolean  save_profile;
   gboolean  save_layers;
+  gboolean  crop_layers;
 } TiffSaveVals;
 
 
