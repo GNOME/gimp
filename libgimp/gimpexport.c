@@ -86,17 +86,33 @@ export_merge (GimpImage  *image,
 
   if (nvisible <= 1)
     {
-      GimpLayer *transp;
+      GimpLayer     *transp;
+      GimpImageType  layer_type;
 
       /* if there is only one (or zero) visible layer, add a new
        * transparent layer that has the same size as the canvas.  The
        * merge that follows will ensure that the offset, opacity and
        * size are correct
        */
+      switch (gimp_image_base_type (image))
+        {
+        case GIMP_RGB:
+          layer_type = GIMP_RGBA_IMAGE;
+          break;
+        case GIMP_GRAY:
+          layer_type = GIMP_GRAYA_IMAGE;
+          break;
+        case GIMP_INDEXED:
+          layer_type = GIMP_INDEXEDA_IMAGE;
+          break;
+        default:
+          /* In case we add a new type in future. */
+          g_return_if_reached ();
+        }
       transp = gimp_layer_new (image, "-",
                                gimp_image_width (image),
                                gimp_image_height (image),
-                               gimp_drawable_type ((*drawables)->data) | 1,
+                               layer_type,
                                100.0, GIMP_LAYER_MODE_NORMAL);
       gimp_image_insert_layer (image, transp, NULL, 1);
       gimp_selection_none (image);
@@ -137,7 +153,7 @@ export_merge (GimpImage  *image,
   /* remove any remaining (invisible) layers */
   for (iter = layers; iter; iter = iter->next)
     {
-      if (iter->data != (*drawables)->data)
+      if (! g_list_find (*drawables, iter->data))
         gimp_image_remove_layer (image, iter->data);
     }
 
