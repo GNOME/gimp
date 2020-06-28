@@ -711,9 +711,10 @@ gimp_tool_button_leave_notify (GtkWidget        *widget,
         {
           if (! tool_button->priv->menu_idle_id)
             {
-              tool_button->priv->menu_idle_id = g_idle_add (
+              tool_button->priv->menu_idle_id = g_idle_add_full (
+                G_PRIORITY_DEFAULT + 1,
                 (GSourceFunc) gimp_tool_button_menu_idle,
-                tool_button);
+                tool_button, NULL);
             }
         }
       else
@@ -948,9 +949,10 @@ gimp_tool_button_menu_leave_notify (GtkMenu          *menu,
       if (tool_button->priv->show_menu_on_hover &&
           ! tool_button->priv->menu_idle_id)
         {
-          tool_button->priv->menu_idle_id = g_idle_add (
+          tool_button->priv->menu_idle_id = g_idle_add_full (
+            G_PRIORITY_DEFAULT + 1,
             (GSourceFunc) gimp_tool_button_menu_idle,
-            tool_button);
+            tool_button, NULL);
         }
     }
 
