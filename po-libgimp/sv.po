@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-16 14:56+0000\n"
-"PO-Revision-Date: 2020-06-16 23:05+0200\n"
+"POT-Creation-Date: 2020-06-28 11:02+0000\n"
+"PO-Revision-Date: 2020-06-29 02:07+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -31,84 +31,84 @@ msgstr "Penselval"
 msgid "_Browse..."
 msgstr "_Bläddra…"
 
-#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:332 ../libgimp/gimpexport.c:368
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Insticksmodulen %s kan inte hantera lager"
 
-#: ../libgimp/gimpexport.c:300 ../libgimp/gimpexport.c:309
-#: ../libgimp/gimpexport.c:318 ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:369
 msgid "Merge Visible Layers"
 msgstr "Sammanfoga synliga lager"
 
-#: ../libgimp/gimpexport.c:308
+#: ../libgimp/gimpexport.c:341
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Insticksmodulen %s kan inte hantera lageravstånd, lagerstorlek eller "
 "lageropacitet"
 
-#: ../libgimp/gimpexport.c:317 ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:350 ../libgimp/gimpexport.c:359
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "Insticksmodulen %s kan endast hantera lager som bildrutor i en animation"
 
-#: ../libgimp/gimpexport.c:318 ../libgimp/gimpexport.c:327
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:360
 msgid "Save as Animation"
 msgstr "Spara som animation"
 
-#: ../libgimp/gimpexport.c:327 ../libgimp/gimpexport.c:336
-#: ../libgimp/gimpexport.c:345 ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:369
+#: ../libgimp/gimpexport.c:378 ../libgimp/gimpexport.c:387
 msgid "Flatten Image"
 msgstr "Platta till bild"
 
-#: ../libgimp/gimpexport.c:344
+#: ../libgimp/gimpexport.c:377
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Insticksmodulen %s kan inte hantera transparens"
 
-#: ../libgimp/gimpexport.c:353
+#: ../libgimp/gimpexport.c:386
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Insticksmodulen %s kan inte hantera transparenta lager"
 
-#: ../libgimp/gimpexport.c:362
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Insticksmodulen %s kan inte hantera lagermasker"
 
-#: ../libgimp/gimpexport.c:363
+#: ../libgimp/gimpexport.c:396
 msgid "Apply Layer Masks"
 msgstr "Applicera lagermask"
 
-#: ../libgimp/gimpexport.c:371
+#: ../libgimp/gimpexport.c:404
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Insticksmodulen %s kan endast hantera RGB-bilder"
 
-#: ../libgimp/gimpexport.c:372 ../libgimp/gimpexport.c:410
-#: ../libgimp/gimpexport.c:419
+#: ../libgimp/gimpexport.c:405 ../libgimp/gimpexport.c:443
+#: ../libgimp/gimpexport.c:452
 msgid "Convert to RGB"
 msgstr "Konvertera till RGB"
 
-#: ../libgimp/gimpexport.c:380
+#: ../libgimp/gimpexport.c:413
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Insticksmodulen %s kan endast hantera gråskalebilder"
 
-#: ../libgimp/gimpexport.c:381 ../libgimp/gimpexport.c:410
-#: ../libgimp/gimpexport.c:431
+#: ../libgimp/gimpexport.c:414 ../libgimp/gimpexport.c:443
+#: ../libgimp/gimpexport.c:464
 msgid "Convert to Grayscale"
 msgstr "Konvertera till gråskala"
 
-#: ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:422
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Insticksmodulen %s kan endast hantera indexerade bilder"
 
-#: ../libgimp/gimpexport.c:390 ../libgimp/gimpexport.c:419
-#: ../libgimp/gimpexport.c:429
+#: ../libgimp/gimpexport.c:423 ../libgimp/gimpexport.c:452
+#: ../libgimp/gimpexport.c:462
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -116,14 +116,14 @@ msgstr ""
 "Konvertera till Indexerat med standardinställningar\n"
 "(Gör det manuellt om du vill finjustera)"
 
-#: ../libgimp/gimpexport.c:399
+#: ../libgimp/gimpexport.c:432
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera bitmappindexerade (tvåfärgsindexerade) "
 "bilder"
 
-#: ../libgimp/gimpexport.c:400
+#: ../libgimp/gimpexport.c:433
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -131,38 +131,51 @@ msgstr ""
 "Konvertera till Indexerat med bitmapp-standardinställningar\n"
 "(Gör det manuellt om du vill finjustera)"
 
-#: ../libgimp/gimpexport.c:409
+#: ../libgimp/gimpexport.c:442
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Insticksmodulen %s kan endast hantera RGB-bilder eller gråskalebilder"
 
-#: ../libgimp/gimpexport.c:418
+#: ../libgimp/gimpexport.c:451
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera RGB-bilder eller indexerade bilder"
 
-#: ../libgimp/gimpexport.c:428
+#: ../libgimp/gimpexport.c:461
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera gråskalebilder eller indexerade bilder"
 
-#: ../libgimp/gimpexport.c:439
+#: ../libgimp/gimpexport.c:472
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Insticksmodulen %s behöver en alfakanal"
 
-#: ../libgimp/gimpexport.c:440
+#: ../libgimp/gimpexport.c:473
 msgid "Add Alpha Channel"
 msgstr "Lägg till alfakanal"
 
-#: ../libgimp/gimpexport.c:499
+#: ../libgimp/gimpexport.c:481
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr "%s-insticksmodulen behöver beskära lagren till bildgränserna"
+
+#: ../libgimp/gimpexport.c:482
+msgid "Crop Layers"
+msgstr "Beskär lager"
+
+#: ../libgimp/gimpexport.c:482
+msgid "Resize Image to Layers"
+msgstr "Ändra storlek på bild till lager"
+
+#: ../libgimp/gimpexport.c:541
 msgid "Confirm Save"
 msgstr "Bekräfta sparande"
 
-#: ../libgimp/gimpexport.c:504 ../libgimp/gimpexport.c:586
-#: ../libgimp/gimpexport.c:1120 ../libgimp/gimpproceduredialog.c:232
+#: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
+#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:232
 #: ../libgimpwidgets/gimpcolorbutton.c:553
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -172,25 +185,25 @@ msgstr "Bekräfta sparande"
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: ../libgimp/gimpexport.c:505
+#: ../libgimp/gimpexport.c:547
 msgid "C_onfirm"
 msgstr "_Bekräfta"
 
-#: ../libgimp/gimpexport.c:581
+#: ../libgimp/gimpexport.c:623
 msgid "Export File"
 msgstr "Exportera fil"
 
-#: ../libgimp/gimpexport.c:585
+#: ../libgimp/gimpexport.c:627
 msgid "_Ignore"
 msgstr "_Ignorera"
 
-#: ../libgimp/gimpexport.c:587 ../libgimp/gimpexport.c:1121
+#: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
 #: ../libgimp/gimpproceduredialog.c:226
 msgid "_Export"
 msgstr "_Exportera"
 
 #. the headline
-#: ../libgimp/gimpexport.c:617
+#: ../libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -199,11 +212,11 @@ msgstr ""
 "Din bild bör exporteras innan den kan sparas som %s av följande anledningar:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:691
+#: ../libgimp/gimpexport.c:733
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen vid export modifierar inte originalbilden."
 
-#: ../libgimp/gimpexport.c:811
+#: ../libgimp/gimpexport.c:853
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -212,7 +225,7 @@ msgstr ""
 "Du kommer att spara en lagermask som %s.\n"
 "Detta kommer inte att spara de synliga lagren."
 
-#: ../libgimp/gimpexport.c:817
+#: ../libgimp/gimpexport.c:859
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -222,7 +235,7 @@ msgstr ""
 "Detta kommer inte att spara de synliga lagren."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1114
+#: ../libgimp/gimpexport.c:1193
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exportera bild som %s"
@@ -392,12 +405,12 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedur matchar din sökning"
 msgstr[1] "%d procedurer matchar din sökning"
 
-#: ../libgimp/gimpprocedure.c:1721
+#: ../libgimp/gimpprocedure.c:1828
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Proceduren ”%s” returnerade inga svarsvärden"
 
-#: ../libgimp/gimpprocedure.c:1813
+#: ../libgimp/gimpprocedure.c:1920
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -406,7 +419,7 @@ msgstr ""
 "Proceduren ”%s” returnerade en felaktig värdetyp för svarsvärdet ”%s” (nr. "
 "%d). Förväntade %s, fick %s."
 
-#: ../libgimp/gimpprocedure.c:1825
+#: ../libgimp/gimpprocedure.c:1932
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -415,7 +428,7 @@ msgstr ""
 "Proceduren ”%s” har anropats med en felaktig värdetyp för argumentet "
 "”%s” (nr. %d). Förväntade %s, fick %s."
 
-#: ../libgimp/gimpprocedure.c:1860
+#: ../libgimp/gimpprocedure.c:1967
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -424,7 +437,7 @@ msgstr ""
 "Proceduren ”%s” returnerade ”%s” som svarsvärde ”%s” (nr. %d, typ %s). Det "
 "här värdet är utanför intervallet."
 
-#: ../libgimp/gimpprocedure.c:1874
+#: ../libgimp/gimpprocedure.c:1981
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -433,13 +446,13 @@ msgstr ""
 "Proceduren ”%s” har anropats med värdet ”%s” för argumentet ”%s” (nr. %d, "
 "typ %s). Det här värdet är utanför intervallet."
 
-#: ../libgimp/gimpprocedure.c:1924
+#: ../libgimp/gimpprocedure.c:2031
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "Proceduren ”%s” returnerade en ogiltig UTF-8-sträng för argumentet ”%s”."
 
-#: ../libgimp/gimpprocedure.c:1934
+#: ../libgimp/gimpprocedure.c:2041
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
