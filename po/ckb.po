@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-12 20:55+0000\n"
-"PO-Revision-Date: 2020-06-09 15:31+0300\n"
+"PO-Revision-Date: 2020-06-29 18:56+0300\n"
 "Language-Team: Central Kurdish <kurdish-ckb@zkurd.org>\n"
 "Language: ckb\n"
 "MIME-Version: 1.0\n"
@@ -828,7 +828,7 @@ msgstr ""
 #: ../app/propgui/gimppropgui-newsprint.c:160
 #: ../app/widgets/gimppickablepopup.c:247
 msgid "Channels"
-msgstr ""
+msgstr "کەناڵەکان"
 
 #: ../app/actions/actions.c:123 ../app/dialogs/convert-indexed-dialog.c:178
 #: ../app/dialogs/dialogs.c:385
@@ -849,7 +849,7 @@ msgstr ""
 
 #: ../app/actions/actions.c:135
 msgid "Debug"
-msgstr ""
+msgstr "هەڵەدۆزی"
 
 #: ../app/actions/actions.c:138
 msgid "Dialogs"
@@ -1386,7 +1386,7 @@ msgstr ""
 #: ../app/actions/channels-actions.c:170
 msgctxt "channels-action"
 msgid "Brown"
-msgstr ""
+msgstr "قاوەیی"
 
 #: ../app/actions/channels-actions.c:171
 msgctxt "channels-action"
@@ -1670,7 +1670,7 @@ msgstr ""
 #: ../app/actions/context-actions.c:68
 msgctxt "context-action"
 msgid "_Shape"
-msgstr ""
+msgstr "_شێوە"
 
 #: ../app/actions/context-actions.c:70
 msgctxt "context-action"
@@ -3050,7 +3050,7 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:764 ../app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
-msgstr ""
+msgstr "بێ ناونیشان"
 
 #: ../app/actions/data-commands.c:216 ../app/actions/documents-commands.c:194
 #: ../app/actions/file-commands.c:530
@@ -4316,7 +4316,7 @@ msgstr ""
 #: ../app/actions/error-console-actions.c:44
 msgctxt "error-console-action"
 msgid "_Clear"
-msgstr ""
+msgstr "_پاککردنەوە"
 
 #: ../app/actions/error-console-actions.c:45
 msgctxt "error-console-action"
@@ -5564,7 +5564,7 @@ msgstr ""
 #: ../app/actions/gradient-editor-actions.c:288
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
-msgstr ""
+msgstr "_جێگیر"
 
 #: ../app/actions/gradient-editor-actions.c:263
 #: ../app/actions/gradient-editor-actions.c:293
@@ -5926,7 +5926,7 @@ msgstr ""
 #: ../app/actions/image-actions.c:58
 msgctxt "image-action"
 msgid "_Image"
-msgstr ""
+msgstr "_وێنە"
 
 #: ../app/actions/image-actions.c:59
 msgctxt "image-action"
@@ -6922,7 +6922,7 @@ msgstr ""
 #: ../app/actions/layers-actions.c:398
 msgctxt "layers-action"
 msgid "Auto"
-msgstr ""
+msgstr "خۆکاری"
 
 #: ../app/actions/layers-actions.c:357
 msgctxt "layers-action"
@@ -7062,7 +7062,7 @@ msgstr ""
 #: ../app/actions/layers-actions.c:461
 msgctxt "layers-action"
 msgid "Brown"
-msgstr ""
+msgstr "قاوەیی"
 
 #: ../app/actions/layers-actions.c:462
 msgctxt "layers-action"
@@ -8467,7 +8467,7 @@ msgstr ""
 #: ../app/actions/tools-actions.c:47
 msgctxt "tools-action"
 msgid "_Tools"
-msgstr ""
+msgstr "_ئامرازەکان"
 
 #: ../app/actions/tools-actions.c:48
 msgctxt "tools-action"
@@ -9183,7 +9183,7 @@ msgstr ""
 #: ../app/actions/vectors-actions.c:223
 msgctxt "vectors-action"
 msgid "Brown"
-msgstr ""
+msgstr "قاوەیی"
 
 #: ../app/actions/vectors-actions.c:224
 msgctxt "vectors-action"
@@ -10131,7 +10131,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:659
 msgctxt "view-action"
 msgid "Scroll left"
-msgstr ""
+msgstr "بجوڵی بۆ چەپ"
 
 #: ../app/actions/view-actions.c:664
 msgctxt "view-action"
@@ -10400,7 +10400,7 @@ msgstr ""
 #: ../app/config/config-enums.c:56
 msgctxt "cursor-format"
 msgid "Black & white"
-msgstr ""
+msgstr "ڕەش & سپی"
 
 #: ../app/config/config-enums.c:57
 msgctxt "cursor-format"
@@ -10505,7 +10505,7 @@ msgstr "ڕاست"
 #: ../app/config/config-enums.c:249
 msgctxt "space-bar-action"
 msgid "No action"
-msgstr ""
+msgstr "هیچ مەکە"
 
 #: ../app/config/config-enums.c:250
 msgctxt "space-bar-action"
@@ -10575,7 +10575,7 @@ msgstr ""
 
 #: ../app/config/gimpdialogconfig.c:307 ../app/core/gimplayer.c:434
 msgid "Layer"
-msgstr ""
+msgstr "چین"
 
 #: ../app/config/gimpdialogconfig.c:407 ../app/core/gimpchannel.c:255
 #: ../app/operations/gimpcurvesconfig.c:119
@@ -10583,12 +10583,12 @@ msgstr ""
 #: ../app/operations/gimpoperationthreshold.c:90
 #: ../app/widgets/gimpchanneltreeview.c:329
 msgid "Channel"
-msgstr ""
+msgstr "کەناڵ"
 
 #: ../app/config/gimpdialogconfig.c:422 ../app/vectors/gimpvectors.c:225
 #: ../app/widgets/gimpvectorstreeview.c:250
 msgid "Path"
-msgstr ""
+msgstr "ڕێڕەو"
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -11416,7 +11416,7 @@ msgstr "وێنە"
 #: ../app/core/core-enums.c:29
 msgctxt "align-reference-type"
 msgid "Selection"
-msgstr ""
+msgstr "بۆ دیاریکردن"
 
 #: ../app/core/core-enums.c:30
 msgctxt "align-reference-type"
@@ -11496,7 +11496,7 @@ msgstr ""
 #: ../app/core/core-enums.c:188
 msgctxt "color-pick-mode"
 msgid "CMYK"
-msgstr ""
+msgstr "‫CMYK"
 
 #: ../app/core/core-enums.c:189
 msgctxt "color-pick-mode"
@@ -11651,7 +11651,7 @@ msgstr "قەبارە"
 #: ../app/core/core-enums.c:575
 msgctxt "dynamics-output-type"
 msgid "Angle"
-msgstr ""
+msgstr "گۆشە"
 
 #: ../app/core/core-enums.c:576
 msgctxt "dynamics-output-type"
@@ -11676,7 +11676,7 @@ msgstr ""
 #: ../app/core/core-enums.c:580
 msgctxt "dynamics-output-type"
 msgid "Spacing"
-msgstr ""
+msgstr "بۆشای جێهێشتن"
 
 #: ../app/core/core-enums.c:581
 msgctxt "dynamics-output-type"
@@ -11716,7 +11716,7 @@ msgstr ""
 #: ../app/core/core-enums.c:672
 msgctxt "gradient-color"
 msgid "Fixed"
-msgstr ""
+msgstr "جێگیر"
 
 #: ../app/core/core-enums.c:673
 msgctxt "gradient-color"
@@ -11745,7 +11745,7 @@ msgstr ""
 #: ../app/core/core-enums.c:681
 msgctxt "gradient-color"
 msgid "Background color"
-msgstr ""
+msgstr "ڕەنگی پاشبنەما"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
@@ -11799,7 +11799,7 @@ msgstr ""
 #: ../app/core/core-enums.c:807
 msgctxt "histogram-channel"
 msgid "RGB"
-msgstr ""
+msgstr "‫RGB"
 
 #: ../app/core/core-enums.c:838
 msgctxt "item-set"
@@ -12065,7 +12065,7 @@ msgstr "دەق"
 #: ../app/core/core-enums.c:1230 ../app/core/gimpdrawable-transform.c:720
 msgctxt "undo-type"
 msgid "Transform"
-msgstr ""
+msgstr "گۆڕین"
 
 #: ../app/core/core-enums.c:1231 ../app/core/core-enums.c:1285
 msgctxt "undo-type"
@@ -12290,7 +12290,7 @@ msgstr ""
 #: ../app/core/core-enums.c:1325
 msgctxt "view-size"
 msgid "Tiny"
-msgstr ""
+msgstr "ورد"
 
 #: ../app/core/core-enums.c:1326
 msgctxt "view-size"
@@ -12993,7 +12993,7 @@ msgstr "پاشبنەما"
 
 #: ../app/core/gimpcontext.c:673 ../app/core/gimpgrid.c:101
 msgid "Background color"
-msgstr ""
+msgstr "ڕەنگی پاشبنەما"
 
 #: ../app/core/gimpcontext.c:679 ../app/core/gimpcontext.c:680
 #: ../app/operations/gimpoperationsettings.c:100
@@ -14525,7 +14525,7 @@ msgstr "لێدوان"
 
 #: ../app/core/gimptemplate.c:236
 msgid "Filename"
-msgstr ""
+msgstr "ناوی پەڕگە"
 
 #. Translators: this is a noun
 #: ../app/core/gimptoolgroup.c:264
@@ -14586,12 +14586,12 @@ msgstr "وێنەخاڵەکان"
 #: ../app/core/gimpunit.c:64
 msgctxt "unit-singular"
 msgid "inch"
-msgstr ""
+msgstr "ئینچ"
 
 #: ../app/core/gimpunit.c:64
 msgctxt "unit-plural"
 msgid "inches"
-msgstr ""
+msgstr "ئینچ"
 
 #: ../app/core/gimpunit.c:67
 msgctxt "unit-singular"
@@ -14606,12 +14606,12 @@ msgstr ""
 #: ../app/core/gimpunit.c:71
 msgctxt "unit-singular"
 msgid "point"
-msgstr ""
+msgstr "خاڵ"
 
 #: ../app/core/gimpunit.c:71
 msgctxt "unit-plural"
 msgid "points"
-msgstr ""
+msgstr "خاڵەکان"
 
 #: ../app/core/gimpunit.c:74
 msgctxt "unit-singular"
@@ -14980,7 +14980,7 @@ msgstr ""
 
 #: ../app/dialogs/dialogs.c:365
 msgid "History"
-msgstr ""
+msgstr "مێژوو"
 
 #: ../app/dialogs/dialogs.c:368
 msgid "Image Templates"
@@ -14993,7 +14993,7 @@ msgstr ""
 #. Selection Bounding Box
 #: ../app/dialogs/dialogs.c:393 ../app/display/gimpcursorview.c:261
 msgid "Selection"
-msgstr ""
+msgstr "بۆ دیاریکردن"
 
 #: ../app/dialogs/dialogs.c:393
 msgid "Selection Editor"
@@ -15286,7 +15286,7 @@ msgstr ""
 
 #: ../app/dialogs/item-options-dialog.c:262
 msgid "_Visible"
-msgstr ""
+msgstr "_بینراو"
 
 #: ../app/dialogs/item-options-dialog.c:271
 msgid "_Linked"
@@ -15469,11 +15469,11 @@ msgstr "نووسەر:"
 
 #: ../app/dialogs/module-dialog.c:510
 msgid "Version:"
-msgstr ""
+msgstr "وەشان:"
 
 #: ../app/dialogs/module-dialog.c:511
 msgid "Date:"
-msgstr ""
+msgstr "بەروار:"
 
 #: ../app/dialogs/module-dialog.c:512
 msgid "Copyright:"
@@ -15525,7 +15525,7 @@ msgstr ""
 #. The "Import" frame
 #: ../app/dialogs/palette-import-dialog.c:295
 msgid "Import Options"
-msgstr ""
+msgstr "هەڵبژاردەکان بهێنە"
 
 #: ../app/dialogs/palette-import-dialog.c:309
 msgid "New import"
@@ -15768,7 +15768,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:1257
 #: ../app/dialogs/preferences-dialog.c:1258
 msgid "Debugging"
-msgstr ""
+msgstr "هەڵەدۆزی"
 
 #: ../app/dialogs/preferences-dialog.c:1265
 msgid ""
@@ -16197,7 +16197,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:1893
 #: ../app/dialogs/preferences-dialog.c:1928
 msgid "Theme"
-msgstr ""
+msgstr "ڕووکار"
 
 #: ../app/dialogs/preferences-dialog.c:1898
 msgid "Select Theme"
@@ -17224,7 +17224,7 @@ msgstr "وێنە پاشەکەوت بکە"
 
 #: ../app/dialogs/quit-dialog.c:591
 msgid "Save as"
-msgstr ""
+msgstr "پاشەکەوتکردن وەک"
 
 #: ../app/dialogs/resize-dialog.c:142
 msgid "Canvas Size"
@@ -17259,13 +17259,13 @@ msgstr ""
 #: ../app/tools/gimptransform3dtool.c:271
 #: ../app/tools/gimptransform3dtool.c:383
 msgid "_X:"
-msgstr ""
+msgstr "‫_X:"
 
 #: ../app/dialogs/resize-dialog.c:253 ../app/tools/gimpoffsettool.c:485
 #: ../app/tools/gimptransform3dtool.c:272
 #: ../app/tools/gimptransform3dtool.c:388
 msgid "_Y:"
-msgstr ""
+msgstr "‫_Y:"
 
 #: ../app/dialogs/resize-dialog.c:270
 msgid "C_enter"
@@ -17435,7 +17435,7 @@ msgstr ""
 #: ../app/display/display-enums.c:88
 msgctxt "compass-orientation"
 msgid "Auto"
-msgstr ""
+msgstr "خۆکاری"
 
 #: ../app/display/display-enums.c:89
 msgctxt "compass-orientation"
@@ -17774,7 +17774,7 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:187
 msgid "Zoom:"
-msgstr ""
+msgstr "زووم"
 
 #: ../app/display/gimpdisplayshell-title.c:290
 msgid "(modified)"
@@ -17791,7 +17791,7 @@ msgstr ""
 #: ../app/widgets/gimpbuffersourcebox.c:296 ../app/widgets/gimpdeviceinfo.c:916
 #: ../app/widgets/gimpdeviceinfo.c:941
 msgid "(none)"
-msgstr ""
+msgstr "<نیە>"
 
 #: ../app/display/gimpdisplayshell-tool-events.c:1566
 #, c-format
@@ -18286,7 +18286,7 @@ msgstr ""
 #: ../app/gegl/gimp-babl.c:200 ../app/gegl/gimp-babl.c:201
 #: ../app/plug-in/gimppluginprocedure.c:1011
 msgid "RGB"
-msgstr ""
+msgstr "‫RGB"
 
 #: ../app/gegl/gimp-babl.c:203 ../app/gegl/gimp-babl.c:204
 #: ../app/gegl/gimp-babl.c:205 ../app/gegl/gimp-babl.c:206
@@ -18311,7 +18311,7 @@ msgstr ""
 #: ../app/gegl/gimp-babl.c:238 ../app/gegl/gimp-babl.c:239
 #: ../app/plug-in/gimppluginprocedure.c:1029
 msgid "Grayscale"
-msgstr ""
+msgstr "خۆڵەمێشی"
 
 #: ../app/gegl/gimp-babl.c:241 ../app/gegl/gimp-babl.c:242
 #: ../app/gegl/gimp-babl.c:243 ../app/gegl/gimp-babl.c:244
@@ -18390,7 +18390,7 @@ msgstr ""
 #: ../app/operations/operations-enums.c:25
 msgctxt "layer-color-space"
 msgid "Auto"
-msgstr ""
+msgstr "خۆکاری"
 
 #: ../app/operations/operations-enums.c:26
 msgctxt "layer-color-space"
@@ -18410,7 +18410,7 @@ msgstr ""
 #: ../app/operations/operations-enums.c:59
 msgctxt "layer-composite-mode"
 msgid "Auto"
-msgstr ""
+msgstr "خۆکاری"
 
 #: ../app/operations/operations-enums.c:60
 msgctxt "layer-composite-mode"
@@ -18729,7 +18729,7 @@ msgstr ""
 #: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
 msgid "Normal"
-msgstr ""
+msgstr "ئاسایی"
 
 #: ../app/operations/operations-enums.c:248
 msgctxt "layer-mode"
@@ -18944,7 +18944,7 @@ msgstr ""
 #: ../app/operations/gimphuesaturationconfig.c:94
 #: ../app/paint/gimpdodgeburnoptions.c:79
 msgid "Range"
-msgstr ""
+msgstr "بوار"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:97
 #: ../app/operations/gimphuesaturationconfig.c:95
@@ -19133,7 +19133,7 @@ msgstr ""
 #: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:124
 #: ../app/widgets/gimplayertreeview.c:271
 msgid "Mode"
-msgstr ""
+msgstr "دۆج"
 
 #: ../app/operations/gimpoperationdesaturate.c:92
 msgid "Choose shade of gray based on"
@@ -19347,7 +19347,7 @@ msgstr ""
 #: ../app/paint/gimppaintoptions.c:217 ../app/tools/gimptransform3dtool.c:322
 #: ../app/tools/gimptransform3dtool.c:423 ../app/widgets/gimpbrusheditor.c:195
 msgid "Angle"
-msgstr ""
+msgstr "گۆشە"
 
 #: ../app/paint/gimpinkoptions.c:100 ../app/widgets/gimpdynamicseditor.c:164
 #: ../app/widgets/gimpdynamicsoutputeditor.c:73
@@ -19421,7 +19421,7 @@ msgstr ""
 #: ../app/widgets/gimpbrusheditor.c:205
 #: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:176
 msgid "Spacing"
-msgstr ""
+msgstr "بۆشای جێهێشتن"
 
 #: ../app/paint/gimppaintoptions.c:238
 msgid "Force"
@@ -19650,7 +19650,7 @@ msgstr ""
 #: ../app/paint/paint-enums.c:86
 msgctxt "source-align-mode"
 msgid "Fixed"
-msgstr ""
+msgstr "جێگیر"
 
 #: ../app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
@@ -20733,7 +20733,7 @@ msgstr ""
 #: ../app/propgui/gimppropgui-hue-saturation.c:137
 #: ../app/propgui/gimppropgui-newsprint.c:95
 msgid "Cyan"
-msgstr ""
+msgstr "شینی ئاسمانی"
 
 #: ../app/propgui/gimppropgui-color-balance.c:116
 #: ../app/propgui/gimppropgui-hue-saturation.c:134
@@ -20745,7 +20745,7 @@ msgstr "سور"
 #: ../app/propgui/gimppropgui-hue-saturation.c:139
 #: ../app/propgui/gimppropgui-newsprint.c:95
 msgid "Magenta"
-msgstr ""
+msgstr "سوری ئەرخەوانی"
 
 #: ../app/propgui/gimppropgui-color-balance.c:120
 #: ../app/propgui/gimppropgui-hue-saturation.c:136
@@ -20775,7 +20775,7 @@ msgstr ""
 
 #: ../app/propgui/gimppropgui-color-rotate.c:124
 msgid "Clockwise"
-msgstr ""
+msgstr "ئاڕاستەی میلی کاتژمێر"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:127
 msgid "Invert Range"
@@ -20835,7 +20835,7 @@ msgstr ""
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:98
 msgid "Other Options"
-msgstr ""
+msgstr "هەڵبژاردەی تر"
 
 #: ../app/propgui/gimppropgui-generic.c:185
 msgid "Pick coordinates from the image"
@@ -20851,27 +20851,27 @@ msgstr ""
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:134
 msgid "_R"
-msgstr ""
+msgstr "‫_R"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:135
 msgid "_Y"
-msgstr ""
+msgstr "‫_Y"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:136
 msgid "_G"
-msgstr ""
+msgstr "‫_G"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:137
 msgid "_C"
-msgstr ""
+msgstr "‫_C"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:138
 msgid "_B"
-msgstr ""
+msgstr "‫_B"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:139
 msgid "_M"
-msgstr ""
+msgstr "‫_M"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:149
 msgid "Select Primary Color to Adjust"
@@ -20915,12 +20915,12 @@ msgstr ""
 
 #: ../app/propgui/gimppropgui-newsprint.c:92
 msgid "White"
-msgstr ""
+msgstr "سپی"
 
 #: ../app/propgui/gimppropgui-newsprint.c:93
 #: ../app/propgui/gimppropgui-newsprint.c:95
 msgid "Black"
-msgstr ""
+msgstr "ڕەش"
 
 #: ../app/propgui/gimppropgui-newsprint.c:236
 msgid "_Lock patterns"
@@ -21167,7 +21167,7 @@ msgstr ""
 #: ../app/text/text-enums.c:24
 msgctxt "text-box-mode"
 msgid "Fixed"
-msgstr ""
+msgstr "جێگیر"
 
 #: ../app/tools/gimpairbrushtool.c:68
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
@@ -21682,7 +21682,7 @@ msgstr ""
 
 #: ../app/tools/gimpcroptool.c:119
 msgid "Crop"
-msgstr ""
+msgstr "بڕین"
 
 #: ../app/tools/gimpcroptool.c:120
 msgid "Crop Tool: Remove edge areas from image or layer"
@@ -21898,7 +21898,7 @@ msgstr ""
 
 #: ../app/tools/gimpfilteroptions.c:72
 msgid "_Preview"
-msgstr ""
+msgstr "_پێشبینین"
 
 #: ../app/tools/gimpfilteroptions.c:79
 msgid "Split _view"
@@ -22261,7 +22261,7 @@ msgstr ""
 #: ../app/tools/gimpgradienttool-editor.c:1340
 #: ../app/tools/gimptextoptions.c:604
 msgid "Color:"
-msgstr ""
+msgstr "ڕەنگ:"
 
 #: ../app/tools/gimpgradienttool-editor.c:1347
 msgid "Change Endpoint Color"
@@ -22272,7 +22272,7 @@ msgstr ""
 #: ../app/tools/gimpgradienttool-editor.c:1481
 #: ../app/tools/gimprectangleoptions.c:1000
 msgid "Position:"
-msgstr ""
+msgstr "شوێن:"
 
 #. the color labels
 #: ../app/tools/gimpgradienttool-editor.c:1403
@@ -22689,7 +22689,7 @@ msgstr ""
 
 #: ../app/tools/gimpmeasuretool.c:766
 msgid "Distance:"
-msgstr ""
+msgstr "دووری:"
 
 #: ../app/tools/gimpmoveoptions.c:137
 msgid "Move selection"
@@ -23060,7 +23060,7 @@ msgstr ""
 
 #: ../app/tools/gimprectangleoptions.c:862
 msgid "Fixed"
-msgstr ""
+msgstr "جێگیر"
 
 #: ../app/tools/gimprectangleoptions.c:1010 ../app/tools/gimptextoptions.c:565
 msgid "Size:"
@@ -23164,7 +23164,7 @@ msgstr ""
 
 #: ../app/tools/gimprotatetool.c:283
 msgid "_Angle:"
-msgstr ""
+msgstr "_گۆشە:"
 
 #: ../app/tools/gimprotatetool.c:302
 msgid "Center _X:"
@@ -23370,7 +23370,7 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:168
 msgid "Justify"
-msgstr ""
+msgstr "ڕێکردنەوە"
 
 #: ../app/tools/gimptextoptions.c:169
 msgid "Text alignment"
@@ -23436,7 +23436,7 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:658
 msgid "Language:"
-msgstr ""
+msgstr "زمان:"
 
 #: ../app/tools/gimptexttool.c:214
 msgid "Text"
@@ -23556,7 +23556,7 @@ msgstr ""
 #: ../app/tools/gimptransformgridoptions.c:148
 #: ../app/tools/gimptransformgridoptions.c:487
 msgid "Guides"
-msgstr ""
+msgstr "ڕێنماییەکان"
 
 #: ../app/tools/gimptransformgridoptions.c:157
 msgid "Size of a grid cell for variable number of composition guides"
@@ -23675,7 +23675,7 @@ msgstr ""
 
 #: ../app/tools/gimptransformgridoptions.c:609
 msgid "Lock"
-msgstr ""
+msgstr "داخستن"
 
 #: ../app/tools/gimptransformgridoptions.c:610
 msgid "Lock pivot position to canvas"
@@ -23800,7 +23800,7 @@ msgstr ""
 
 #: ../app/tools/gimptransformtool.c:109
 msgid "Transform"
-msgstr ""
+msgstr "گۆڕین"
 
 #: ../app/tools/gimptransformtool.c:110
 msgid "Transforming"
@@ -23915,7 +23915,7 @@ msgstr ""
 
 #: ../app/tools/gimpwarpoptions.c:85 ../app/tools/gimpwarpoptions.c:86
 msgid "Behavior"
-msgstr ""
+msgstr "ڕەفتار"
 
 #: ../app/tools/gimpwarpoptions.c:94
 msgid "Effect Size"
@@ -24114,17 +24114,17 @@ msgstr ""
 #: ../app/tools/tools-enums.c:121
 msgctxt "transform-type"
 msgid "Layer"
-msgstr ""
+msgstr "چین"
 
 #: ../app/tools/tools-enums.c:122
 msgctxt "transform-type"
 msgid "Selection"
-msgstr ""
+msgstr "بۆ دیاریکردن"
 
 #: ../app/tools/tools-enums.c:123
 msgctxt "transform-type"
 msgid "Path"
-msgstr ""
+msgstr "ڕێڕەو"
 
 #: ../app/tools/tools-enums.c:124
 msgctxt "transform-type"
@@ -24154,7 +24154,7 @@ msgstr "ڕەنگ"
 #: ../app/tools/tools-enums.c:248
 msgctxt "matting-preview-mode"
 msgid "Grayscale"
-msgstr ""
+msgstr "خۆڵەمێشی"
 
 #: ../app/tools/tools-enums.c:277
 msgctxt "3-dtrasnform-lens-mode"
@@ -24427,7 +24427,7 @@ msgstr ""
 
 #: ../app/widgets/gimpclipboard.c:427
 msgid "Clipboard"
-msgstr ""
+msgstr "بۆردی لەبەرگرتنەوە"
 
 #: ../app/widgets/gimpcolordialog.c:246
 msgid "Add the current color to the color history"
@@ -25182,7 +25182,7 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:466
 msgctxt "dashboard-variable"
 msgid "Maximum"
-msgstr ""
+msgstr "زۆرترین"
 
 #: ../app/widgets/gimpdashboard.c:467
 msgid "Maximal tile cache occupied size"
@@ -25200,7 +25200,7 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:485 ../app/widgets/gimpdashboard.c:611
 msgctxt "dashboard-variable"
 msgid "Compression"
-msgstr ""
+msgstr "پەستاوتن"
 
 #: ../app/widgets/gimpdashboard.c:486
 msgid "Tile cache compression ratio"
@@ -25596,7 +25596,7 @@ msgstr ""
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:368
 msgid "Source:"
-msgstr ""
+msgstr "سەرچاوە"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:373
 msgid "Vendor ID:"
@@ -25622,7 +25622,7 @@ msgstr ""
 #: ../app/widgets/gimpdeviceinfoeditor.c:619
 #, c-format
 msgid "none"
-msgstr ""
+msgstr "هیچ"
 
 #. e.g. "Pressure Curve" for mapping input device axes
 #: ../app/widgets/gimpdeviceinfoeditor.c:453
@@ -25660,7 +25660,7 @@ msgstr ""
 
 #: ../app/widgets/gimpdnd-xds.c:223
 msgid "File Exists"
-msgstr ""
+msgstr "پەڕگە بوونی هەیە"
 
 #: ../app/widgets/gimpdnd-xds.c:229
 msgid "_Replace"
@@ -25704,7 +25704,7 @@ msgstr ""
 #. Auto button
 #: ../app/widgets/gimpdockwindow.c:382
 msgid "Auto"
-msgstr ""
+msgstr "خۆکاری"
 
 #: ../app/widgets/gimpdockwindow.c:393
 msgid ""
@@ -26066,7 +26066,7 @@ msgstr ""
 
 #: ../app/widgets/gimpimagepropview.c:114
 msgid "Resolution:"
-msgstr ""
+msgstr "وردی نیشاندانی شاشە"
 
 #: ../app/widgets/gimpimagepropview.c:117
 msgid "Color space:"
@@ -26201,7 +26201,7 @@ msgstr ""
 
 #: ../app/widgets/gimpprogressdialog.c:229
 msgid "Progress"
-msgstr ""
+msgstr "کار"
 
 #: ../app/widgets/gimpsamplepointeditor.c:161
 msgid ""
@@ -26466,15 +26466,15 @@ msgstr ""
 
 #: ../app/widgets/gimptextstyleeditor.c:331
 msgid "Bold"
-msgstr ""
+msgstr "قەڵەو"
 
 #: ../app/widgets/gimptextstyleeditor.c:334
 msgid "Italic"
-msgstr ""
+msgstr "لار"
 
 #: ../app/widgets/gimptextstyleeditor.c:337
 msgid "Underline"
-msgstr ""
+msgstr "ژێرهێڵ"
 
 #: ../app/widgets/gimptextstyleeditor.c:340
 msgid "Strikethrough"
@@ -26895,7 +26895,7 @@ msgstr ""
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "round"
-msgstr ""
+msgstr "خولاوە"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
 #: ../data/tags/gimp-tags-default.xml.in.h:3
