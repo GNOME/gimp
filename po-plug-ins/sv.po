@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-18 09:11+0000\n"
-"PO-Revision-Date: 2020-06-19 01:13+0200\n"
+"POT-Creation-Date: 2020-06-28 11:02+0000\n"
+"PO-Revision-Date: 2020-06-29 02:03+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -66,7 +66,7 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/tile-small.c:425 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:704 ../plug-ins/common/warp.c:467
 #: ../plug-ins/common/wavelet-decompose.c:388 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:1877 ../plug-ins/flame/flame.c:513
+#: ../plug-ins/file-tiff/file-tiff-load.c:1935 ../plug-ins/flame/flame.c:513
 #: ../plug-ins/flame/flame.c:689 ../plug-ins/flame/flame.c:1013
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:565
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1640
@@ -313,7 +313,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:1971 ../plug-ins/file-sgi/sgi.c:424
-#: ../plug-ins/file-tiff/file-tiff-load.c:1039
+#: ../plug-ins/file-tiff/file-tiff-load.c:1050
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1323 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -873,8 +873,8 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
 #: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
 #: ../plug-ins/file-jpeg/jpeg-save.c:340 ../plug-ins/file-psd/psd-save.c:1753
-#: ../plug-ins/file-tiff/file-tiff-save.c:979
-#: ../plug-ins/file-tiff/file-tiff-save.c:1082 ../plug-ins/flame/flame.c:482
+#: ../plug-ins/file-tiff/file-tiff-save.c:987
+#: ../plug-ins/file-tiff/file-tiff-save.c:1104 ../plug-ins/flame/flame.c:482
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1547
 #: ../plug-ins/gfig/gfig.c:827 ../plug-ins/ifs-compose/ifs-compose.c:2395
 #: ../plug-ins/lighting/lighting-ui.c:1239
@@ -1840,7 +1840,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/file-psd/psd-load.c:141
 #: ../plug-ins/file-raw/file-darktable.c:419
 #: ../plug-ins/file-raw/file-rawtherapee.c:345 ../plug-ins/file-sgi/sgi.c:330
-#: ../plug-ins/file-tiff/file-tiff-load.c:158
+#: ../plug-ins/file-tiff/file-tiff-load.c:167
 #, c-format
 msgid "Opening '%s'"
 msgstr "Öppnar ”%s”"
@@ -1923,7 +1923,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
 #: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
 #: ../plug-ins/file-jpeg/jpeg-save.c:293 ../plug-ins/file-psd/psd-save.c:1716
-#: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:969
+#: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:977
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exporterar ”%s”"
@@ -2885,7 +2885,7 @@ msgid "Import from PDF"
 msgstr "Importera från PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1042 ../plug-ins/common/file-ps.c:3551
-#: ../plug-ins/file-tiff/file-tiff-load.c:1878
+#: ../plug-ins/file-tiff/file-tiff-load.c:1936
 #: ../plug-ins/metadata/metadata-editor.c:5665
 msgid "_Import"
 msgstr "_Importera"
@@ -3018,7 +3018,7 @@ msgstr "Lager som sidor (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1315
 #: ../plug-ins/common/file-pdf-save.c:1388
 #: ../plug-ins/common/file-pdf-save.c:1486 ../plug-ins/common/file-ps.c:2036
-#: ../plug-ins/file-tiff/file-tiff-load.c:1041
+#: ../plug-ins/file-tiff/file-tiff-load.c:1052
 #, c-format
 msgid "Page %d"
 msgstr "Sida %d"
@@ -3155,22 +3155,22 @@ msgid "Save E_xif data"
 msgstr "Spara E_xif-data"
 
 #: ../plug-ins/common/file-png.c:2282
-#: ../plug-ins/file-tiff/file-tiff-save.c:1295
+#: ../plug-ins/file-tiff/file-tiff-save.c:1345
 msgid "Save XMP data"
 msgstr "Spara XMP-data"
 
 #: ../plug-ins/common/file-png.c:2286
-#: ../plug-ins/file-tiff/file-tiff-save.c:1299
+#: ../plug-ins/file-tiff/file-tiff-save.c:1349
 msgid "Save IPTC data"
 msgstr "Spara IPTC-data"
 
 #: ../plug-ins/common/file-png.c:2290
-#: ../plug-ins/file-tiff/file-tiff-save.c:1303
+#: ../plug-ins/file-tiff/file-tiff-save.c:1353
 msgid "Save thumbnail"
 msgstr "Spara miniatyrbild"
 
 #: ../plug-ins/common/file-png.c:2294
-#: ../plug-ins/file-tiff/file-tiff-save.c:1308
+#: ../plug-ins/file-tiff/file-tiff-save.c:1358
 msgid "Save color profile"
 msgstr "Spara färgprofil"
 
@@ -6218,7 +6218,7 @@ msgid "Export Image as DDS"
 msgstr "Exportera bild som DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1987
-#: ../plug-ins/file-tiff/file-tiff-save.c:1225
+#: ../plug-ins/file-tiff/file-tiff-save.c:1248
 msgid "_Compression:"
 msgstr "_Komprimering:"
 
@@ -6475,7 +6475,7 @@ msgid "File size: unknown"
 msgstr "Filstorlek: okänd"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:835
-#: ../plug-ins/file-tiff/file-tiff-save.c:1215
+#: ../plug-ins/file-tiff/file-tiff-save.c:1238
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -6529,7 +6529,7 @@ msgstr "Spara _miniatyrbild"
 # src/sidebar.c:107
 #. Comment
 #: ../plug-ins/file-jpeg/jpeg-save.c:1014
-#: ../plug-ins/file-tiff/file-tiff-save.c:1312
+#: ../plug-ins/file-tiff/file-tiff-save.c:1362
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -6935,19 +6935,19 @@ msgstr "Komprimerings_typ:"
 msgid "TIFF image"
 msgstr "TIFF-bild"
 
-#: ../plug-ins/file-tiff/file-tiff.c:419
+#: ../plug-ins/file-tiff/file-tiff.c:432
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 "Alternativet ”Spara lager” inte inställt vid försök att exportera flera "
 "lager."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:177
+#: ../plug-ins/file-tiff/file-tiff-load.c:186
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF ”%s” innehåller inga kataloger"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:247
+#: ../plug-ins/file-tiff/file-tiff-load.c:256
 msgid "Extra channels with unspecified data."
 msgstr "Extra kanaler med ospecificerade data."
 
@@ -6958,20 +6958,20 @@ msgstr "Extra kanaler med ospecificerade data."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:263
+#: ../plug-ins/file-tiff/file-tiff-load.c:272
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF följer ej specifikation: extra kanaler utan ”ExtraSamples”-fält."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:809
+#: ../plug-ins/file-tiff/file-tiff-load.c:820
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-av-%d-sidor"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1078
+#: ../plug-ins/file-tiff/file-tiff-load.c:1089
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1873
+#: ../plug-ins/file-tiff/file-tiff-load.c:1931
 msgid "Import from TIFF"
 msgstr "Importera från TIFF"
 
@@ -6979,27 +6979,27 @@ msgstr "Importera från TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:1926
+#: ../plug-ins/file-tiff/file-tiff-load.c:1984
 msgid "_Keep empty space around imported layers"
 msgstr "_Behåll tomt utrymme runt importerade lager"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1943
+#: ../plug-ins/file-tiff/file-tiff-load.c:2001
 msgid "Process extra channel as:"
 msgstr "Bearbeta extra kanal som:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1946
+#: ../plug-ins/file-tiff/file-tiff-load.c:2004
 msgid "_Non-premultiplied alpha"
 msgstr "_Ej förmultiplicerad alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1947
+#: ../plug-ins/file-tiff/file-tiff-load.c:2005
 msgid "Pre_multiplied alpha"
 msgstr "För_multiplicerad alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1948
+#: ../plug-ins/file-tiff/file-tiff-load.c:2006
 msgid "Channe_l"
 msgstr "Kana_l"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:612
+#: ../plug-ins/file-tiff/file-tiff-save.c:614
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7007,16 +7007,16 @@ msgstr ""
 "Endast monokroma bilder kan komprimeras med ”CCITT Group 4” eller ”CCITT "
 "Group 3”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:626
+#: ../plug-ins/file-tiff/file-tiff-save.c:628
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Indexerade bilder kan inte komprimeras med ”JPEG”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:759
+#: ../plug-ins/file-tiff/file-tiff-save.c:764
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Misslyckades med skrivning av en scanlinje på rad %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:996
+#: ../plug-ins/file-tiff/file-tiff-save.c:1004
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7024,57 +7024,65 @@ msgstr ""
 "TIFF-formatet stöder endast kommentarer i\n"
 "7-bitars ASCII. Ingen kommentar sparad."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1106
+#: ../plug-ins/file-tiff/file-tiff-save.c:1129
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Att skriva sidor med olika bitdjup är konstigt."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1196
+#: ../plug-ins/file-tiff/file-tiff-save.c:1219
 msgid "Export Image as TIFF"
 msgstr "Exportera bild som TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1211
+#: ../plug-ins/file-tiff/file-tiff-save.c:1234
 #: ../plug-ins/metadata/metadata-tags.c:176
 #: ../plug-ins/metadata/metadata-tags.c:188
 #: ../plug-ins/metadata/metadata-tags.c:219
 msgid "None"
 msgstr "Ingen"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1212
+#: ../plug-ins/file-tiff/file-tiff-save.c:1235
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1213
+#: ../plug-ins/file-tiff/file-tiff-save.c:1236
 msgid "Pack Bits"
 msgstr "Packa bitar"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1214
+#: ../plug-ins/file-tiff/file-tiff-save.c:1237
 msgid "Deflate"
 msgstr "Packa ihop"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1216
+#: ../plug-ins/file-tiff/file-tiff-save.c:1239
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3-fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1217
+#: ../plug-ins/file-tiff/file-tiff-save.c:1240
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4-fax"
 
 #. If single-layer TIFF, set the toggle insensitive and show it as
-#. * unchecked though I don't actually change the tsvals value to
+#. * unchecked though I don't actually change the config value to
 #. * keep storing previously chosen value.
 #.
-#: ../plug-ins/file-tiff/file-tiff-save.c:1261
-#: ../plug-ins/file-tiff/file-tiff-save.c:1269
+#: ../plug-ins/file-tiff/file-tiff-save.c:1284
+#: ../plug-ins/file-tiff/file-tiff-save.c:1292
 msgid "Save layers"
 msgstr "Spara lager"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1279
-#: ../plug-ins/file-tiff/file-tiff-save.c:1283
+#: ../plug-ins/file-tiff/file-tiff-save.c:1310
+msgid "Crop layers to image bounds"
+msgstr "Beskär lager till bildgränser"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:1321
+msgid "Crop layers"
+msgstr "Beskär lager"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:1329
+#: ../plug-ins/file-tiff/file-tiff-save.c:1333
 msgid "Save color values from transparent pixels"
 msgstr "Spara färgvärden från transparenta bildpunkter"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1291
+#: ../plug-ins/file-tiff/file-tiff-save.c:1341
 msgid "Save Exif data"
 msgstr "Spara Exif-data"
 
