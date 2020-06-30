@@ -1468,11 +1468,19 @@ image_merge_down_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), image, 0, error))
         {
-          layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
-                                         progress, error);
+          GList *merge_layers = g_list_prepend (NULL, merge_layer);
+          GList *layers;
 
-          if (! layer)
+          layers = gimp_image_merge_down (image, merge_layers, context,
+                                          merge_type, progress, error);
+          g_list_free (merge_layers);
+
+          if (! layers)
             success = FALSE;
+          else
+            layer = layers->data;
+
+          g_list_free (layers);
         }
       else
         success = FALSE;

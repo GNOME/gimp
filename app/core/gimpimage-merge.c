@@ -264,86 +264,98 @@ gimp_image_flatten (GimpImage     *image,
   return NULL;
 }
 
-GimpLayer *
+GList *
 gimp_image_merge_down (GimpImage      *image,
-                       GimpLayer      *current_layer,
+                       GList          *layers,
                        GimpContext    *context,
                        GimpMergeType   merge_type,
                        GimpProgress   *progress,
                        GError        **error)
 {
   GimpLayer   *layer;
+  GList       *merged_layers = NULL;
   GList       *list;
-  GList       *layer_list = NULL;
-  GSList      *merge_list = NULL;
+  GList       *merge_lists   = NULL;
+  GSList      *merge_list;
   const gchar *undo_desc;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_LAYER (current_layer), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (current_layer)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (gimp_layer_is_floating_sel (current_layer))
+  for (list = layers; list; list = list->next)
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("Cannot merge down a floating selection."));
-      return NULL;
-    }
+      GList  *list2;
+      GList  *layer_list = NULL;
 
-  if (! gimp_item_get_visible (GIMP_ITEM (current_layer)))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("Cannot merge down an invisible layer."));
-      return NULL;
-    }
+      g_return_val_if_fail (GIMP_IS_LAYER (list->data), NULL);
+      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (list->data)), NULL);
 
-  for (list = gimp_item_get_container_iter (GIMP_ITEM (current_layer));
-       list;
-       list = g_list_next (list))
-    {
-      layer = list->data;
-
-      if (layer == current_layer)
-        break;
-    }
-
-  for (layer_list = g_list_next (list);
-       layer_list;
-       layer_list = g_list_next (layer_list))
-    {
-      layer = layer_list->data;
-
-      if (gimp_item_get_visible (GIMP_ITEM (layer)))
+      if (gimp_layer_is_floating_sel (list->data))
         {
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
-            {
-              g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                                   _("Cannot merge down to a layer group."));
-              return NULL;
-            }
-
-          if (gimp_item_is_content_locked (GIMP_ITEM (layer)))
-            {
-              g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                                   _("The layer to merge down to is locked."));
-              return NULL;
-            }
-
-          merge_list = g_slist_append (NULL, layer);
-          break;
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("Cannot merge down a floating selection."));
+          return NULL;
         }
-    }
 
-  if (! merge_list)
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("There is no visible layer to merge down to."));
-      return NULL;
-    }
+      if (! gimp_item_get_visible (GIMP_ITEM (list->data)))
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("Cannot merge down an invisible layer."));
+          return NULL;
+        }
 
-  merge_list = g_slist_prepend (merge_list, current_layer);
+      for (list2 = gimp_item_get_container_iter (GIMP_ITEM (list->data));
+           list2;
+           list2 = g_list_next (list2))
+        {
+          layer = list2->data;
+
+          if (layer == list->data)
+            break;
+        }
+
+      merge_list = NULL;
+
+      for (layer_list = g_list_next (list2);
+           layer_list;
+           layer_list = g_list_next (layer_list))
+        {
+          layer = layer_list->data;
+
+          if (gimp_item_get_visible (GIMP_ITEM (layer)))
+            {
+              if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+                {
+                  g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                       _("Cannot merge down to a layer group."));
+                  return NULL;
+                }
+
+              if (gimp_item_is_content_locked (GIMP_ITEM (layer)))
+                {
+                  g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                       _("The layer to merge down to is locked."));
+                  return NULL;
+                }
+
+              merge_list = g_slist_append (NULL, layer);
+              break;
+            }
+        }
+
+      if (! merge_list)
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("There is no visible layer to merge down to."));
+          return NULL;
+        }
+
+      merge_list = g_slist_prepend (merge_list, list->data);
+
+      merge_lists = g_list_prepend (merge_lists, merge_list);
+    }
 
   undo_desc = C_("undo-type", "Merge Down");
 
@@ -353,17 +365,23 @@ gimp_image_merge_down (GimpImage      *image,
                                GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
                                undo_desc);
 
-  layer = gimp_image_merge_layers (image,
-                                   gimp_item_get_container (GIMP_ITEM (current_layer)),
-                                   merge_list, context, merge_type,
-                                   undo_desc, progress);
-  g_slist_free (merge_list);
+  for (list = merge_lists; list; list = list->next)
+    {
+      merge_list = list->data;
+      layer = gimp_image_merge_layers (image,
+                                       gimp_item_get_container (merge_list->data),
+                                       merge_list, context, merge_type,
+                                       undo_desc, progress);
+      merged_layers = g_list_prepend (merged_layers, layer);
+    }
+
+  g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
 
   gimp_image_undo_group_end (image);
 
   gimp_unset_busy (image->gimp);
 
-  return layer;
+  return merged_layers;
 }
 
 GimpLayer *

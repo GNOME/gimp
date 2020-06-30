@@ -822,14 +822,28 @@ layers_merge_down_cmd_callback (GimpAction *action,
                                 gpointer    data)
 {
   GimpImage   *image;
-  GimpLayer   *layer;
+  GList       *layers;
   GimpDisplay *display;
-  return_if_no_layer (image, layer, data);
+  GError      *error = NULL;
+
+  return_if_no_layers (image, layers, data);
   return_if_no_display (display, data);
 
-  gimp_image_merge_down (image, layer, action_data_get_context (data),
-                         GIMP_EXPAND_AS_NECESSARY,
-                         GIMP_PROGRESS (display), NULL);
+  layers = gimp_image_merge_down (image, layers, action_data_get_context (data),
+                                  GIMP_EXPAND_AS_NECESSARY,
+                                  GIMP_PROGRESS (display), &error);
+
+  if (error)
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (display), GIMP_MESSAGE_WARNING,
+                            error->message);
+      g_clear_error (&error);
+      return;
+    }
+  gimp_image_set_selected_layers (image, layers);
+  g_list_free (layers);
+
   gimp_image_flush (image);
 }
 

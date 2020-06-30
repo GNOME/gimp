@@ -173,7 +173,7 @@ static const GimpActionEntry layers_actions[] =
 
   { "layers-merge-down", GIMP_ICON_LAYER_MERGE_DOWN,
     NC_("layers-action", "Merge Do_wn"), NULL,
-    NC_("layers-action", "Merge this layer with the first visible layer below it"),
+    NC_("layers-action", "Merge these layers with the first visible layer below each"),
     layers_merge_down_cmd_callback,
     GIMP_HELP_LAYER_MERGE_DOWN },
 
@@ -182,7 +182,7 @@ static const GimpActionEntry layers_actions[] =
    */
   { "layers-merge-down-button", GIMP_ICON_LAYER_MERGE_DOWN,
     NC_("layers-action", "Merge Do_wn"), NULL,
-    NC_("layers-action", "Merge this layer with the first visible layer below it"),
+    NC_("layers-action", "Merge these layers with the first visible layer below each"),
     layers_merge_down_cmd_callback,
     GIMP_HELP_LAYER_MERGE_DOWN },
 
@@ -774,14 +774,12 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       lock_alpha     = TRUE;
   gboolean       can_lock_alpha = FALSE;
   gboolean       text_layer     = FALSE;
-  gboolean       visible        = FALSE;
   gboolean       writable       = FALSE;
   gboolean       movable        = FALSE;
   gboolean       children       = FALSE;
   gboolean       bs_mutable     = FALSE; /* At least 1 selected layers' blend space is mutable.     */
   gboolean       cs_mutable     = FALSE; /* At least 1 selected layers' composite space is mutable. */
   gboolean       cm_mutable     = FALSE; /* At least 1 selected layers' composite mode is mutable.  */
-  GList         *next_visible   = NULL;
   gboolean       next_mode      = TRUE;
   gboolean       prev_mode      = TRUE;
   gboolean       last_mode      = FALSE;
@@ -795,6 +793,8 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       have_prev      = FALSE; /* At least 1 selected layer has a previous sibling. */
   gboolean       have_next      = FALSE; /* At least 1 selected layer has a next sibling.     */
 
+  gboolean       all_visible        = TRUE;
+  gboolean       all_next_visible   = TRUE;
   gboolean       all_masks_shown    = TRUE;
   gboolean       all_masks_disabled = TRUE;
 
@@ -872,11 +872,33 @@ layers_actions_update (GimpActionGroup *group,
 
           if (iter2)
             {
+              GList *next_visible;
+
               if (g_list_previous (iter2))
                 have_prev = TRUE;
 
               if (g_list_next (iter2))
                 have_next = TRUE;
+
+              for (next_visible = g_list_next (iter2);
+                   next_visible;
+                   next_visible = g_list_next (next_visible))
+                {
+                  if (gimp_item_get_visible (next_visible->data))
+                    {
+                      /*  "next_visible" is actually "next_visible" and
+                       *  "writable" and "not group"
+                       */
+                      if (gimp_item_is_content_locked (next_visible->data) ||
+                          gimp_viewable_get_children (next_visible->data))
+                        next_visible = NULL;
+
+                      break;
+                    }
+                }
+
+              if (! next_visible)
+                all_next_visible = FALSE;
             }
 
           if (gimp_layer_mode_is_blend_space_mutable (mode))
@@ -886,23 +908,25 @@ layers_actions_update (GimpActionGroup *group,
           if (gimp_layer_mode_is_composite_mode_mutable (mode))
             cm_mutable = TRUE;
 
-          if (have_masks && have_no_masks        &&
-              have_groups && have_no_groups      &&
-              have_writable && ! all_masks_shown &&
-              ! all_masks_disabled               &&
-              ! lock_alpha && can_lock_alpha     &&
-              ! prev_mode && ! next_mode         &&
-              have_prev && have_next             &&
-              bs_mutable && cs_mutable && cm_mutable)
+          if (! gimp_item_get_visible (iter->data))
+            all_visible = FALSE;
+
+          if (have_masks && have_no_masks            &&
+              have_groups && have_no_groups          &&
+              have_writable && ! all_masks_shown     &&
+              ! all_masks_disabled                   &&
+              ! lock_alpha && can_lock_alpha         &&
+              ! prev_mode && ! next_mode             &&
+              have_prev && have_next                 &&
+              bs_mutable && cs_mutable && cm_mutable &&
+              ! all_visible && ! all_next_visible)
             break;
         }
 
       if (n_layers == 1)
         {
           /* Special unique layer case. */
-          const gchar   *action = NULL;
-          GList         *layer_list;
-          GList         *list;
+          const gchar *action = NULL;
 
           layer  = layers->data;
           switch (gimp_layer_get_blend_space (layer))
@@ -953,36 +977,11 @@ layers_actions_update (GimpActionGroup *group,
 
           mask           = gimp_layer_get_mask (layer);
           alpha          = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
-          visible        = gimp_item_get_visible (GIMP_ITEM (layer));
           writable       = ! gimp_item_is_content_locked (GIMP_ITEM (layer));
           movable        = ! gimp_item_is_position_locked (GIMP_ITEM (layer));
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
             children = TRUE;
-
-          layer_list = gimp_item_get_container_iter (GIMP_ITEM (layer));
-
-          list = g_list_find (layer_list, layer);
-
-          if (list)
-            {
-              for (next_visible = g_list_next (list);
-                   next_visible;
-                   next_visible = g_list_next (next_visible))
-                {
-                  if (gimp_item_get_visible (next_visible->data))
-                    {
-                      /*  "next_visible" is actually "next_visible" and
-                       *  "writable" and "not group"
-                       */
-                      if (gimp_item_is_content_locked (next_visible->data) ||
-                          gimp_viewable_get_children (next_visible->data))
-                        next_visible = NULL;
-
-                      break;
-                    }
-                }
-            }
 
           text_layer = gimp_item_is_text_layer (GIMP_ITEM (layer));
         }
@@ -1037,9 +1036,9 @@ layers_actions_update (GimpActionGroup *group,
 
   SET_VISIBLE   ("layers-anchor",            fs && !ac);
   SET_VISIBLE   ("layers-merge-down",        !fs);
-  SET_SENSITIVE ("layers-merge-down",        layer && !fs && !ac && visible && next_visible);
+  SET_SENSITIVE ("layers-merge-down",        n_layers > 0 && !fs && !ac && all_visible && all_next_visible);
   SET_VISIBLE   ("layers-merge-down-button", !fs);
-  SET_SENSITIVE ("layers-merge-down-button", layer && !fs && !ac);
+  SET_SENSITIVE ("layers-merge-down-button", n_layers > 0 && !fs && !ac);
   SET_VISIBLE   ("layers-merge-group",       have_groups);
   SET_SENSITIVE ("layers-merge-group",       n_layers && !fs && !ac && have_groups);
   SET_SENSITIVE ("layers-merge-layers",      n_layers > 0 && !fs && !ac);
