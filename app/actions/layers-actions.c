@@ -235,8 +235,8 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_RESIZE },
 
   { "layers-resize-to-image", GIMP_ICON_LAYER_TO_IMAGESIZE,
-    NC_("layers-action", "Layer to _Image Size"), NULL,
-    NC_("layers-action", "Resize the layer to the size of the image"),
+    NC_("layers-action", "Layers to _Image Size"), NULL,
+    NC_("layers-action", "Resize the layers to the size of the image"),
     layers_resize_to_image_cmd_callback,
     GIMP_HELP_LAYER_RESIZE_TO_IMAGE },
 
@@ -797,6 +797,8 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       all_next_visible   = TRUE;
   gboolean       all_masks_shown    = TRUE;
   gboolean       all_masks_disabled = TRUE;
+  gboolean       all_writable       = TRUE;
+  gboolean       all_movable        = TRUE;
 
   gint           n_layers       = 0;
 
@@ -843,6 +845,11 @@ layers_actions_update (GimpActionGroup *group,
 
           if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
             have_writable = TRUE;
+          else
+            all_writable  = FALSE;
+
+          if (gimp_item_is_position_locked (GIMP_ITEM (iter->data)))
+            all_movable = FALSE;
 
           if (gimp_layer_can_lock_alpha (iter->data))
             {
@@ -913,7 +920,9 @@ layers_actions_update (GimpActionGroup *group,
 
           if (have_masks && have_no_masks            &&
               have_groups && have_no_groups          &&
-              have_writable && ! all_masks_shown     &&
+              have_writable && ! all_writable        &&
+              ! all_movable                          &&
+              ! all_masks_shown                      &&
               ! all_masks_disabled                   &&
               ! lock_alpha && can_lock_alpha         &&
               ! prev_mode && ! next_mode             &&
@@ -1049,7 +1058,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-along-vectors", text_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          writable && movable && !ac);
-  SET_SENSITIVE ("layers-resize-to-image", writable && movable && !ac);
+  SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac);
   SET_SENSITIVE ("layers-scale",           writable && movable && !ac);
 
   SET_SENSITIVE ("layers-crop-to-selection", writable && movable && sel);

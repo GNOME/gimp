@@ -1107,12 +1107,21 @@ layers_resize_to_image_cmd_callback (GimpAction *action,
                                      gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  return_if_no_layers (image, layers, data);
 
-  gimp_layer_resize_to_image (layer,
-                              action_data_get_context (data),
-                              GIMP_FILL_TRANSPARENT);
+  if (g_list_length (layers) > 1)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                 _("Layers to Image Size"));
+  for (iter = layers; iter; iter = iter->next)
+    gimp_layer_resize_to_image (iter->data,
+                                action_data_get_context (data),
+                                GIMP_FILL_TRANSPARENT);
+
+  if (g_list_length (layers) > 1)
+    gimp_image_undo_group_end (image);
+
   gimp_image_flush (image);
 }
 
