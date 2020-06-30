@@ -272,11 +272,11 @@ gimp_image_merge_down (GimpImage      *image,
                        GimpProgress   *progress,
                        GError        **error)
 {
-  GimpLayer   *layer;
   GList       *merged_layers = NULL;
-  GList       *list;
   GList       *merge_lists   = NULL;
-  GSList      *merge_list;
+  GSList      *merge_list    = NULL;
+  GimpLayer   *layer;
+  GList       *list;
   const gchar *undo_desc;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -284,10 +284,10 @@ gimp_image_merge_down (GimpImage      *image,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  for (list = layers; list; list = list->next)
+  layers = g_list_copy (layers);
+  while ((list = layers))
     {
-      GList  *list2;
-      GList  *layer_list = NULL;
+      GList *list2;
 
       g_return_val_if_fail (GIMP_IS_LAYER (list->data), NULL);
       g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (list->data)), NULL);
@@ -296,6 +296,8 @@ gimp_image_merge_down (GimpImage      *image,
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                _("Cannot merge down a floating selection."));
+          g_list_free (layers);
+          g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
           return NULL;
         }
 
@@ -303,6 +305,8 @@ gimp_image_merge_down (GimpImage      *image,
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                _("Cannot merge down an invisible layer."));
+          g_list_free (layers);
+          g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
           return NULL;
         }
 
@@ -310,19 +314,16 @@ gimp_image_merge_down (GimpImage      *image,
            list2;
            list2 = g_list_next (list2))
         {
-          layer = list2->data;
-
-          if (layer == list->data)
+          if (list2->data == list->data)
             break;
         }
 
-      merge_list = NULL;
-
-      for (layer_list = g_list_next (list2);
-           layer_list;
-           layer_list = g_list_next (layer_list))
+      layer = NULL;
+      for (list2 = g_list_next (list2);
+           list2;
+           list2 = g_list_next (list2))
         {
-          layer = layer_list->data;
+          layer = list2->data;
 
           if (gimp_item_get_visible (GIMP_ITEM (layer)))
             {
@@ -330,6 +331,8 @@ gimp_image_merge_down (GimpImage      *image,
                 {
                   g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                        _("Cannot merge down to a layer group."));
+                  g_list_free (layers);
+                  g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
                   return NULL;
                 }
 
@@ -337,24 +340,43 @@ gimp_image_merge_down (GimpImage      *image,
                 {
                   g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                        _("The layer to merge down to is locked."));
+                  g_list_free (layers);
+                  g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
                   return NULL;
                 }
 
-              merge_list = g_slist_append (NULL, layer);
               break;
             }
+
+          layer = NULL;
         }
 
-      if (! merge_list)
+      if (! layer)
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                _("There is no visible layer to merge down to."));
+          g_list_free (layers);
+          g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
           return NULL;
         }
 
-      merge_list = g_slist_prepend (merge_list, list->data);
+      merge_list = g_slist_append (merge_list, list->data);
+      layers     = g_list_delete_link (layers, layers);
 
+      if ((list = g_list_find (layers, layer)))
+        {
+          /* The next item is itself in the merge down list. Continue
+           * filling the same merge list instead of starting a new one.
+           */
+          layers = g_list_delete_link (layers, list);
+          layers = g_list_prepend (layers, layer);
+
+          continue;
+        }
+
+      merge_list  = g_slist_append (merge_list, layer);
       merge_lists = g_list_prepend (merge_lists, merge_list);
+      merge_list  = NULL;
     }
 
   undo_desc = C_("undo-type", "Merge Down");
