@@ -307,8 +307,6 @@ gimp_drawable_get_buffer (GimpDrawable *drawable)
  *
  * Returns: (transfer full): The #GeglBuffer.
  *
- * See Also: gimp_drawable_get_shadow_buffer()
- *
  * Since: 2.10
  */
 GeglBuffer *
