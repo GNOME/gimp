@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-16 14:56+0000\n"
-"PO-Revision-Date: 2020-06-21 17:56+0200\n"
+"POT-Creation-Date: 2020-06-30 23:02+0000\n"
+"PO-Revision-Date: 2020-07-01 11:49+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -6643,7 +6643,7 @@ msgstr "Vänder"
 msgid "Rotating"
 msgstr "Roterar"
 
-#: ../app/actions/image-commands.c:867 ../app/actions/layers-commands.c:1169
+#: ../app/actions/image-commands.c:867 ../app/actions/layers-commands.c:1192
 msgid "Cannot crop because the current selection is empty."
 msgstr "Kan inte beskära eftersom den aktuella markeringen är tom."
 
@@ -6688,7 +6688,7 @@ msgid "Scale Image"
 msgstr "Skala bild"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2430
+#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2453
 #: ../app/dialogs/preferences-dialog.c:1688
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/item-transform-cmds.c:640
 #: ../app/pdb/layer-cmds.c:410 ../app/tools/gimpscaletool.c:122
@@ -6833,7 +6833,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Redigera lagrets namn"
 
-#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:1012
+#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:1020
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Nytt lager…"
@@ -6843,7 +6843,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Skapa ett nytt lager och lägg till det till bilden"
 
-#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:1013
+#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:1021
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Nytt lager"
@@ -6950,8 +6950,8 @@ msgstr "Sammanfoga _nedåt"
 
 #: ../app/actions/layers-actions.c:176 ../app/actions/layers-actions.c:185
 msgctxt "layers-action"
-msgid "Merge this layer with the first visible layer below it"
-msgstr "Sammanfoga det här lagret med första synliga lager under det"
+msgid "Merge these layers with the first visible layer below each"
+msgstr "Sammanfoga de här lagren med första synliga lager under varje"
 
 #: ../app/actions/layers-actions.c:190
 msgctxt "layers-action"
@@ -7035,13 +7035,13 @@ msgstr "Justera lagrets dimensioner"
 
 #: ../app/actions/layers-actions.c:238
 msgctxt "layers-action"
-msgid "Layer to _Image Size"
-msgstr "Lagerstorlek som _bilden"
+msgid "Layers to _Image Size"
+msgstr "Lager till _bildstorlek"
 
 #: ../app/actions/layers-actions.c:239
 msgctxt "layers-action"
-msgid "Resize the layer to the size of the image"
-msgstr "Ändra storlek på lagret till storleken för bilden"
+msgid "Resize the layers to the size of the image"
+msgstr "Ändra storlek på lagren till storleken för bilden"
 
 #: ../app/actions/layers-actions.c:244
 msgctxt "layers-action"
@@ -7566,12 +7566,12 @@ msgstr "Genväg: "
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-Klicka på miniatyrbild i dockningsbara lager"
 
-#: ../app/actions/layers-actions.c:1007 ../app/actions/layers-actions.c:1008
+#: ../app/actions/layers-actions.c:1015 ../app/actions/layers-actions.c:1016
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Till _nytt lager"
 
-#: ../app/actions/layers-commands.c:266 ../app/actions/layers-commands.c:2272
+#: ../app/actions/layers-commands.c:266 ../app/actions/layers-commands.c:2295
 msgid "Layer Attributes"
 msgstr "Lagerattribut"
 
@@ -7594,7 +7594,7 @@ msgid_plural "Create %d New Layers"
 msgstr[0] "Skapa ett nytt lager"
 msgstr[1] "Skapa %d nya lager"
 
-#: ../app/actions/layers-commands.c:424 ../app/actions/layers-commands.c:2158
+#: ../app/actions/layers-commands.c:424 ../app/actions/layers-commands.c:2181
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Nytt lager"
@@ -7638,148 +7638,152 @@ msgstr[1] "Sänk lager till nederst"
 msgid "Duplicate layers"
 msgstr "Duplicera lager"
 
-#: ../app/actions/layers-commands.c:871
+#: ../app/actions/layers-commands.c:885
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "Sammanfoga %d lagergrupper"
 
-#: ../app/actions/layers-commands.c:931
+#: ../app/actions/layers-commands.c:945
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Ta bort %d lager"
 
-#: ../app/actions/layers-commands.c:1072
+#: ../app/actions/layers-commands.c:1086
 msgid "Set Layer Boundary Size"
 msgstr "Ställ in storlek på lagergräns"
 
-#: ../app/actions/layers-commands.c:1136
+#: ../app/actions/layers-commands.c:1116
+msgid "Layers to Image Size"
+msgstr "Lager till bildstorlek"
+
+#: ../app/actions/layers-commands.c:1159
 msgid "Scale Layer"
 msgstr "Skala lager"
 
-#: ../app/actions/layers-commands.c:1179
+#: ../app/actions/layers-commands.c:1202
 msgid "Crop Layer to Selection"
 msgstr "Beskär lager till markering"
 
-#: ../app/actions/layers-commands.c:1210
+#: ../app/actions/layers-commands.c:1233
 msgid "Crop Layer to Content"
 msgstr "Beskär lager till innehåll"
 
-#: ../app/actions/layers-commands.c:1223
+#: ../app/actions/layers-commands.c:1246
 msgid "Cannot crop because the active layer has no content."
 msgstr "Kan inte beskära eftersom det aktiva lagret inte har något innehåll."
 
-#: ../app/actions/layers-commands.c:1230
+#: ../app/actions/layers-commands.c:1253
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Kan inte beskära eftersom det aktiva lagret redan är beskuret till "
 "innehållet."
 
-#: ../app/actions/layers-commands.c:1338 ../app/actions/layers-commands.c:2365
+#: ../app/actions/layers-commands.c:1361 ../app/actions/layers-commands.c:2388
 msgid "Add Layer Masks"
 msgstr "Lägg till lagermasker"
 
-#: ../app/actions/layers-commands.c:1390
+#: ../app/actions/layers-commands.c:1413
 msgid "Apply Layer Masks"
 msgstr "Tillämpa lagermasker"
 
-#: ../app/actions/layers-commands.c:1394
+#: ../app/actions/layers-commands.c:1417
 msgid "Delete Layer Masks"
 msgstr "Ta bort lagermasker"
 
-#: ../app/actions/layers-commands.c:1478
+#: ../app/actions/layers-commands.c:1501
 msgid "Show Layer Masks"
 msgstr "Visa lagermasker"
 
-#: ../app/actions/layers-commands.c:1525
+#: ../app/actions/layers-commands.c:1548
 msgid "Disable Layer Masks"
 msgstr "Inaktivera lagermasker"
 
-#: ../app/actions/layers-commands.c:1564
+#: ../app/actions/layers-commands.c:1587
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Masker till markering"
 
-#: ../app/actions/layers-commands.c:1568
+#: ../app/actions/layers-commands.c:1591
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Lägg till masker till markering"
 
-#: ../app/actions/layers-commands.c:1572
+#: ../app/actions/layers-commands.c:1595
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Ta bort masker från markering"
 
-#: ../app/actions/layers-commands.c:1576
+#: ../app/actions/layers-commands.c:1599
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Snitt mellan masker och markering"
 
-#: ../app/actions/layers-commands.c:1636 ../app/core/gimpchannel-select.c:421
+#: ../app/actions/layers-commands.c:1659 ../app/core/gimpchannel-select.c:421
 #: ../app/core/gimplayer.c:442
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfakanal till markering"
 
-#: ../app/actions/layers-commands.c:1640
+#: ../app/actions/layers-commands.c:1663
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Lägg till alfakanal till markering"
 
-#: ../app/actions/layers-commands.c:1644
+#: ../app/actions/layers-commands.c:1667
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Ta bort alfakanal från markering"
 
-#: ../app/actions/layers-commands.c:1648
+#: ../app/actions/layers-commands.c:1671
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Snitt mellan alfakanal och markering"
 
-#: ../app/actions/layers-commands.c:1659
+#: ../app/actions/layers-commands.c:1682
 msgid "Empty Selection"
 msgstr "Tom markering"
 
-#: ../app/actions/layers-commands.c:1689 ../app/actions/layers-commands.c:1733
+#: ../app/actions/layers-commands.c:1712 ../app/actions/layers-commands.c:1756
 #: ../app/widgets/gimplayertreeview.c:1177
 msgid "Set layers opacity"
 msgstr "Ställ in lagrens opacitet"
 
-#: ../app/actions/layers-commands.c:1803
+#: ../app/actions/layers-commands.c:1826
 msgid "Set layers' blend space"
 msgstr "Ställ in lagrens toningsrymd"
 
-#: ../app/actions/layers-commands.c:1856
+#: ../app/actions/layers-commands.c:1879
 msgid "Set layers' composite space"
 msgstr "Ställ in lagrens kompositrymd"
 
-#: ../app/actions/layers-commands.c:1909
+#: ../app/actions/layers-commands.c:1932
 msgid "Set layers' composite mode"
 msgstr "Ställ in lagrens kompositläge"
 
-#: ../app/actions/layers-commands.c:1978 ../app/widgets/gimpitemtreeview.c:1683
+#: ../app/actions/layers-commands.c:2001 ../app/widgets/gimpitemtreeview.c:1683
 msgid "Lock content"
 msgstr "Lås innehåll"
 
-#: ../app/actions/layers-commands.c:1980 ../app/widgets/gimpitemtreeview.c:1685
+#: ../app/actions/layers-commands.c:2003 ../app/widgets/gimpitemtreeview.c:1685
 msgid "Unlock content"
 msgstr "Lås upp innehåll"
 
-#: ../app/actions/layers-commands.c:2027 ../app/widgets/gimpitemtreeview.c:1749
+#: ../app/actions/layers-commands.c:2050 ../app/widgets/gimpitemtreeview.c:1749
 msgid "Lock position"
 msgstr "Lås position"
 
-#: ../app/actions/layers-commands.c:2029 ../app/widgets/gimpitemtreeview.c:1751
+#: ../app/actions/layers-commands.c:2052 ../app/widgets/gimpitemtreeview.c:1751
 msgid "Unlock position"
 msgstr "Lås upp position"
 
-#: ../app/actions/layers-commands.c:2079
+#: ../app/actions/layers-commands.c:2102
 #: ../app/widgets/gimplayertreeview.c:1122
 msgid "Lock alpha channels"
 msgstr "Lås alfakanaler"
 
-#: ../app/actions/layers-commands.c:2079
+#: ../app/actions/layers-commands.c:2102
 #: ../app/widgets/gimplayertreeview.c:1122
 msgid "Unlock alpha channels"
 msgstr "Lås upp alfakanaler"
@@ -14434,42 +14438,42 @@ msgstr "Platta ut bilden"
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Kan inte platta ut en bild utan synliga lager."
 
-#: ../app/core/gimpimage-merge.c:291
+#: ../app/core/gimpimage-merge.c:298
 msgid "Cannot merge down a floating selection."
 msgstr "Kan inte sammanfoga en flytande markering nedåt."
 
-#: ../app/core/gimpimage-merge.c:298
+#: ../app/core/gimpimage-merge.c:307
 msgid "Cannot merge down an invisible layer."
 msgstr "Kan inte sammanfoga osynligt lager nedåt."
 
-#: ../app/core/gimpimage-merge.c:323
+#: ../app/core/gimpimage-merge.c:333
 msgid "Cannot merge down to a layer group."
 msgstr "Kan inte sammanfoga nedåt till en lagergrupp."
 
-#: ../app/core/gimpimage-merge.c:330
+#: ../app/core/gimpimage-merge.c:342
 msgid "The layer to merge down to is locked."
 msgstr "Lagret för att sammanfoga nedåt är låst."
 
-#: ../app/core/gimpimage-merge.c:342
+#: ../app/core/gimpimage-merge.c:357
 msgid "There is no visible layer to merge down to."
 msgstr "Det finns inget synligt lager att sammanfoga neråt till."
 
-#: ../app/core/gimpimage-merge.c:348
+#: ../app/core/gimpimage-merge.c:382
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Sammanfoga nedåt"
 
-#: ../app/core/gimpimage-merge.c:383
+#: ../app/core/gimpimage-merge.c:423
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Sammanfoga lagergrupp"
 
-#: ../app/core/gimpimage-merge.c:459
+#: ../app/core/gimpimage-merge.c:499
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Sammanfoga synliga banor"
 
-#: ../app/core/gimpimage-merge.c:495
+#: ../app/core/gimpimage-merge.c:535
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Det finns inte tillräckligt många synliga banor för att sammanfoga. Det "
@@ -18666,7 +18670,7 @@ msgstr "Lager valt: ”%s”"
 msgid "pixels"
 msgstr "bildpunkter"
 
-#: ../app/display/gimpstatusbar.c:428
+#: ../app/display/gimpstatusbar.c:447
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Avbryt <i>%s</i>"
@@ -21064,7 +21068,7 @@ msgid ""
 msgstr ""
 "Proceduren ”%s” har anropats med en ogiltig UTF-8-sträng för argumentet ”%s”."
 
-#: ../app/pdb/image-cmds.c:2390
+#: ../app/pdb/image-cmds.c:2398
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -27891,22 +27895,22 @@ msgstr "%s (prova %s, %s)"
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (prova %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1727
+#: ../app/widgets/gimpwidgets-utils.c:1728
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Inbyggd gråskala (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1734
+#: ../app/widgets/gimpwidgets-utils.c:1735
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Inbyggd RGB (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1754
+#: ../app/widgets/gimpwidgets-utils.c:1755
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Föredragen gråskala (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1763
+#: ../app/widgets/gimpwidgets-utils.c:1764
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Föredragen RGB (%s)"
