@@ -8095,7 +8095,7 @@ msgstr "Selecciona-ho tot"
 #: ../app/actions/select-actions.c:56
 msgctxt "select-action"
 msgid "_None"
-msgstr "_Cap"
+msgstr "_Res"
 
 #: ../app/actions/select-actions.c:57
 msgctxt "select-action"
@@ -10511,7 +10511,7 @@ msgstr "Desplaça una pàgina cap amunt"
 #: ../app/actions/view-actions.c:713
 msgctxt "view-action"
 msgid "Scroll page down"
-msgstr "Desplaça una pàgina cap abaix"
+msgstr "Desplaça una pàgina cap avall"
 
 #: ../app/actions/view-actions.c:944
 #, c-format
