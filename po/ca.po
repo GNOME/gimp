@@ -8274,7 +8274,7 @@ msgstr "Selecciona-ho tot"
 #: ../app/actions/select-actions.c:56
 msgctxt "select-action"
 msgid "_None"
-msgstr "_Cap"
+msgstr "_Res"
 
 #: ../app/actions/select-actions.c:57
 msgctxt "select-action"
@@ -10690,7 +10690,7 @@ msgstr "Desplaça una pàgina cap amunt"
 #: ../app/actions/view-actions.c:712
 msgctxt "view-action"
 msgid "Scroll page down"
-msgstr "Desplaça una pàgina cap abaix"
+msgstr "Desplaça una pàgina cap avall"
 
 #: ../app/actions/view-actions.c:943
 #, c-format
@@ -22568,7 +22568,7 @@ msgstr "No es poden omplir múltiples capes. Seleccioneu-ne només una."
 #: ../app/tools/gimpthresholdtool.c:160
 #: ../app/tools/gimptransformgridtool.c:355
 msgid "No selected drawables."
-msgstr "No hi ha dibuixables seleccionats"
+msgstr "No hi ha dibuixables seleccionats."
 
 #: ../app/tools/gimpbucketfilltool.c:587 ../app/tools/gimpcagetool.c:257
 #: ../app/tools/gimpforegroundselecttool.c:307
@@ -22876,7 +22876,7 @@ msgstr "No hi ha capes seleccionades per escapçar."
 
 #: ../app/tools/gimpcroptool.c:468
 msgid "All selected layers' pixels are locked."
-msgstr "Tots els píxels de les capes seleccionats estan bloquejats"
+msgstr "Tots els píxels de les capes seleccionats estan bloquejats."
 
 #: ../app/tools/gimpcroptool.c:473
 #, c-format
