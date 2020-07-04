@@ -14569,7 +14569,7 @@ msgstr "Baxar GIMP %s revisión %d (asoleyada el %s)\n"
 #: ../app/dialogs/about-dialog.c:365
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
-msgstr "Comentariu d'asoleyamientu</u>: <i>%s</i>"
+msgstr "<u>Comentariu d'asoleyamientu</u>: <i>%s</i>"
 
 #: ../app/dialogs/about-dialog.c:370
 #, c-format
