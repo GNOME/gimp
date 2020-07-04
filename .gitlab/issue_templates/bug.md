@@ -19,9 +19,9 @@ Is the bug reproducible? [Always / Randomly / Happened only once ]
 
 Reproduction steps:
 
-1.
-2.
-3.
+1. 
+2. 
+3. 
 
 …
 
