@@ -57,7 +57,6 @@ option('gtk-doc',           type: 'boolean', value: true,   description: 'Build 
 option('gtk-doc-app',       type: 'boolean', value: false,  description: 'Build developer documentation for app')
 
 option('linux-input',       type: 'feature', value: 'auto', description: 'Linux input event controller module')
-option('poppler',           type: 'boolean', value: true,   description: 'Poppler support')
 option('vec-icons',         type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')
 
 option('javascript',        type: 'combo',   value:'error', description: 'Install Javascript plug-ins',

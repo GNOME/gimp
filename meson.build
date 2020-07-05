@@ -781,14 +781,10 @@ conf.set('HAVE_WEBKIT', webkit.found())
 
 poppler_minver = '0.69.0'
 poppler_data_minver = '0.4.9'
-if get_option('poppler')
-  poppler = [
-    dependency('poppler-glib', version: '>='+poppler_minver),
-    dependency('poppler-data', version: '>='+poppler_data_minver),
-  ]
-else
-  poppler = no_dep
-endif
+poppler = [
+  dependency('poppler-glib', version: '>='+poppler_minver),
+  dependency('poppler-data', version: '>='+poppler_data_minver),
+]
 
 cairopdf_minver = '1.12.2'
 cairopdf = dependency('cairo-pdf', version: '>='+cairopdf_minver,
