@@ -613,17 +613,11 @@ conf.set('HAVE_X11_XMU_WINUTIL_H',
   x11_target and cc.has_header('X11/Xmu/WinUtil.h'))
 
 
+have_print = get_option('print')
+
 # Features requiring x11
 
 have_doc_shooter= x11_target
-
-if get_option('print').disabled()
-  have_print = false
-elif get_option('print').enabled() and not x11_target
-  error('Printing requires x libs')
-else
-  have_print = x11_target
-endif
 
 if get_option('screenshot').disabled()
   have_screenshot = false
