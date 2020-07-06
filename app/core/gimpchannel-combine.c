@@ -549,15 +549,28 @@ gimp_channel_combine_items (GimpChannel    *mask,
   if (! channel)
     {
       channel = gimp_channel_new (image,
-                                      gimp_image_get_width (image),
-                                      gimp_image_get_height (image),
-                                      NULL, NULL);
+                                  gimp_image_get_width (image),
+                                  gimp_image_get_height (image),
+                                  NULL, NULL);
       gimp_channel_clear (channel, NULL, FALSE);
 
       if (g_list_length (layers) == 1)
-        gimp_channel_combine_buffer (channel,
-                                     gimp_drawable_get_buffer (GIMP_DRAWABLE (layers->data)),
-                                     GIMP_CHANNEL_OP_REPLACE, 0, 0);
+        {
+          if (gimp_drawable_has_alpha (layers->data))
+            {
+              GimpChannel *alpha;
+
+              alpha = gimp_channel_new_from_alpha (image,
+                                                   layers->data, NULL, NULL);
+              gimp_channel_combine_mask (channel, alpha,
+                                         GIMP_CHANNEL_OP_REPLACE, 0, 0);
+              g_object_unref (alpha);
+            }
+          else
+            {
+              gimp_channel_all (channel, FALSE);
+            }
+        }
     }
 
   for (iter = items; iter; iter = iter->next)
