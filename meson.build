@@ -65,7 +65,7 @@ conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 conf.set_quoted('GIMP_VERSION', gimp_version)
 
 stable = (gimp_app_version_minor % 2 == 0)
-conf.set10('GIMP_UNSTABLE', not stable)
+conf.set('GIMP_UNSTABLE', stable ? false : 1)
 
 versionconfig = configuration_data()
 versionconfig.set('GIMP_FULL_NAME',     full_name)
