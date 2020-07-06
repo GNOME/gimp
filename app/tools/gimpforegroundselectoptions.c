@@ -119,7 +119,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                          _("Engine"),
                          _("Matting engine to use"),
                          GIMP_TYPE_MATTING_ENGINE,
-                         GIMP_MATTING_ENGINE_GLOBAL,
+                         GIMP_MATTING_ENGINE_LEVIN,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT  (object_class, PROP_LEVELS,
