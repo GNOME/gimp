@@ -1349,6 +1349,17 @@ class SpyroWindow():
             self.scale.set_sensitive(val)
             self.spin.set_sensitive(val)
 
+    def on_adj_changed(self, widget):
+        self.adj_changed = True
+
+    def on_adj_release(self, widget, event, callback):
+        # Force update to accommodate manually typing numbers into the entry.
+        if isinstance(widget, Gtk.SpinButton):
+            widget.update()
+        if self.adj_changed:
+            callback(widget)
+        self.adj_changed = False
+
     def __init__(self, img, layer):
 
         def add_horizontal_separator(vbox):
@@ -1392,7 +1403,10 @@ class SpyroWindow():
             spin.set_width_chars(5)
             table.attach(spin, col, row, 1, 1)
             spin.show()
-            adj.connect("value_changed", callback)
+            adj.connect("value_changed", self.on_adj_changed)
+            spin.connect("button_release_event", self.on_adj_release, callback)
+            spin.connect("activate", self.on_adj_release, None, callback)
+            spin.connect("focus_out_event", self.on_adj_release, callback)
             return spin
 
         def hscale_in_table(adj, table, row, callback, digits=0, col=1, cols=1):
@@ -1400,10 +1414,6 @@ class SpyroWindow():
             scale = Gtk.Scale.new(Gtk.Orientation.HORIZONTAL, adj)
             scale.set_size_request(150, -1)
             scale.set_digits(digits)
-            # TODO: gtk_range_set_update_policy() has been removed in
-            # GTK+3. If we want updates to happen when button is
-            # released, we must implement this ourselves.
-            #scale.set_update_policy(Gtk.UPDATE_DISCONTINUOUS)
             scale.set_hexpand(True)
             scale.set_halign(Gtk.Align.FILL)
             table.attach(scale, col, row, cols, 1)
@@ -1417,7 +1427,11 @@ class SpyroWindow():
             table.attach(spin, col + cols, row, 1, 1)
             spin.show()
 
-            adj.connect("value_changed", callback)
+            adj.connect("value_changed", self.on_adj_changed)
+            scale.connect("button_release_event", self.on_adj_release, callback)
+            spin.connect("button_release_event", self.on_adj_release, callback)
+            spin.connect("activate", self.on_adj_release, None, callback)
+            spin.connect("focus_out_event", self.on_adj_release, callback)
 
             return self.MyScale(scale, spin)
 
@@ -1425,6 +1439,8 @@ class SpyroWindow():
             adj = Gtk.Adjustment.new(val, -180.0, 180.0, 1.0, 10.0, 0.0)
             myscale = hscale_in_table(adj, table, row, callback, digits=1)
             myscale.scale.add_mark(0.0, Gtk.PositionType.BOTTOM, None)
+            myscale.spin.set_max_length(6)
+            myscale.spin.set_width_chars(6)
             return adj, myscale
 
         def set_combo_in_table(txt_list, table, row, callback):
@@ -1812,6 +1828,8 @@ class SpyroWindow():
         self.idle_task = None
         self.enable_incremental_drawing = True
 
+        self.adj_changed = False
+
         # Draw pattern of the current settings.
         self.start_new_incremental_drawing()
 
@@ -1828,6 +1846,13 @@ class SpyroWindow():
             print("Unhandled response: " + str(response_id))
         #GTK_RESPONSE_APPLY
         #GTK_RESPONSE_HELP
+
+    def clear_idle_task(self):
+        if self.idle_task:
+            GLib.source_remove(self.idle_task)
+            # Close the undo group in the likely case the idle task left it open.
+            self.img.undo_group_end()
+            self.idle_task = None
 
     # Callbacks for closing the plugin
 
@@ -1858,8 +1883,7 @@ class SpyroWindow():
                 Gtk.main_quit()
         else:
             # If there is an incremental drawing taking place, lets stop it.
-            if self.idle_task:
-                GLib.source_remove(self.idle_task)
+            self.clear_idle_task()
 
             if self.spyro_layer in self.img.list_layers():
                 self.img.remove_layer(self.spyro_layer)
@@ -1877,7 +1901,7 @@ class SpyroWindow():
 
                 while self.engine.has_more_strokes():
                     yield True
-                    self.draw_next_chunk(undo_group=False, tool=tool)
+                    self.draw_next_chunk(tool=tool)
 
                 self.img.undo_group_end()
 
@@ -1887,19 +1911,18 @@ class SpyroWindow():
                 yield False
 
             tool = SaveToPathTool(self.img) if self.p.save_option == SAVE_AS_PATH else None
-
             task = draw_full(tool)
             GLib.idle_add(task.__next__)
 
     def cancel_window(self, widget, what=None):
-
-        # Note that once we call Gtk.main_quit, the idle task is stopped automatically.
+        self.clear_idle_task()
 
         # We want to delete the temporary layer, but as a precaution, lets ask first,
         # maybe it was already deleted by the user.
         if self.spyro_layer in self.img.list_layers():
             self.img.remove_layer(self.spyro_layer)
             Gimp.displays_flush()
+
         Gtk.main_quit()
 
     def update_view(self):
@@ -2058,9 +2081,10 @@ class SpyroWindow():
 
     def doughnut_changed(self, widget, hole, width):
         self.doughnut_hole_adj.set_value(hole)
+        self.p.doughnut_hole = hole
         self.doughnut_width_adj.set_value(width)
-        # We don't need to redraw, because the callbacks of the doughnut hole and
-        # width spinners will be triggered by the above lines.
+        self.p.doughnut_width = width
+        self.redraw()
 
     # Callbacks: Fixed gear
 
@@ -2133,16 +2157,12 @@ class SpyroWindow():
 
     # Incremental drawing.
 
-    def draw_next_chunk(self, undo_group=True, tool=None):
+    def draw_next_chunk(self, tool=None):
         """ Incremental drawing """
 
         t = time.time()
 
-        if undo_group:
-            self.img.undo_group_start()
         chunk_size = self.engine.draw_next_chunk(self.drawing_layer, tool=tool)
-        if undo_group:
-            self.img.undo_group_end()
 
         draw_time = time.time() - t
         self.engine.report_time(draw_time)
@@ -2166,18 +2186,18 @@ class SpyroWindow():
             self.progress_start()
             yield True
             self.engine.reset_incremental()
+
+            self.img.undo_group_start()
             while self.engine.has_more_strokes():
                 yield True
                 self.draw_next_chunk()
+            self.img.undo_group_end()
 
             self.idle_task = None
             yield False
 
-        # Remove old idle task if exists.
-        if self.idle_task:
-            GLib.source_remove(self.idle_task)
-
         # Start new idle task to perform incremental drawing in the background.
+        self.clear_idle_task()
         task = incremental_drawing()
         self.idle_task = GLib.idle_add(task.__next__)
 
