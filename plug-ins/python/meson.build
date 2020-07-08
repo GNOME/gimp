@@ -1,4 +1,6 @@
-if have_python
+if not have_python
+  subdir_done()
+endif
 
 plugins = [
   { 'name': 'colorxhtml' },
@@ -37,18 +39,14 @@ endforeach
 
 
 if python.found()
-  custom_target('pygimp.interp',
+  python_config = configuration_data()
+  python_config.set('PYTHON_PATH', python.path())
+
+  configure_file(
+    input : 'pygimp.interp.in',
     output: 'pygimp.interp',
-    command: [ 'echo',
-      'python=@0@\n'          .format(python.path()),
-      'python3=@0@\n'         .format(python.path()),
-      '/usr/bin/python=@0@\n' .format(python.path()),
-      ':Python:E::py::python3:'
-    ],
-    capture: true,
+    configuration: python_config,
     install: true,
     install_dir: gimpplugindir / 'interpreters',
   )
-endif
-
 endif
