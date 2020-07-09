@@ -553,14 +553,28 @@ validate_header (dds_header_t *hdr)
       return 0;
     }
 
-  if ((hdr->flags & DDSD_PITCH) == (hdr->flags & DDSD_LINEARSIZE))
+  if (hdr->pixelfmt.flags & DDPF_FOURCC)
     {
-      //g_message ("Warning: DDSD_PITCH or DDSD_LINEARSIZE is not set.\n");
-      if (hdr->pixelfmt.flags & DDPF_FOURCC)
-        hdr->flags |= DDSD_LINEARSIZE;
-      else
-        hdr->flags |= DDSD_PITCH;
+      if (hdr->flags & DDSD_PITCH)
+        {
+          g_message ("Warning: DDSD_PITCH is incorrectly set for DDPF_FOURCC!");
+          hdr->flags &= DDSD_PITCH;
+        }
+      if (! (hdr->flags & DDSD_LINEARSIZE))
+        {
+          g_message ("Warning: DDSD_LINEARSIZE is incorrectly not set for DDPF_FOURCC!");
+          hdr->flags |= DDSD_LINEARSIZE;
+        }
     }
+  else
+    {
+      if (! (hdr->flags & DDSD_PITCH))
+        {
+          g_message ("Warning: DDSD_PITCH is not set!");
+          hdr->flags |= DDSD_PITCH;
+        }
+    }
+
   /*
      if ((hdr->pixelfmt.flags & DDPF_FOURCC) ==
      (hdr->pixelfmt.flags & DDPF_RGB))
@@ -1101,12 +1115,6 @@ load_layer (FILE            *fp,
   else if (hdr->pixelfmt.flags & DDPF_FOURCC)
     {
       unsigned char *dst;
-
-      if (!(hdr->flags & DDSD_LINEARSIZE))
-        {
-          g_message ("Image marked as compressed, but DDSD_LINEARSIZE is not set.\n");
-          return 0;
-        }
 
       dst = g_malloc (width * height * d->gimp_bpp);
       memset (dst, 0, width * height * d->gimp_bpp);
