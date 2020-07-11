@@ -1920,7 +1920,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
       return;
 
     case FILL_COLOR:
-      fill_type = GIMP_FILL_FOREGROUND;
+      fill_type = GIMP_FILL_BACKGROUND;
       break;
 
     case FILL_PATTERN:
