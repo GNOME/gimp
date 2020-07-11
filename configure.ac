@@ -1779,7 +1779,7 @@ if test "x$with_webp" != xno; then
 fi
 
 if test "x$have_webp" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/x-webp"
+  MIME_TYPES="$MIME_TYPES;image/webp;image/x-webp"
 fi
 
 AM_CONDITIONAL(HAVE_WEBP, test "x$have_webp" = xyes)
