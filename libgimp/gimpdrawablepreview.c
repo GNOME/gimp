@@ -162,6 +162,8 @@ gimp_drawable_preview_init (GimpDrawablePreview *preview)
   g_object_set (GIMP_PREVIEW (preview)->area,
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
+                "check-custom-color1", gimp_check_custom_color1 (),
+                "check-custom-color2", gimp_check_custom_color2 (),
                 NULL);
 }
 

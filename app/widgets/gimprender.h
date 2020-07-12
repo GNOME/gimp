@@ -22,8 +22,8 @@
 void            gimp_render_init              (Gimp *gimp);
 void            gimp_render_exit              (Gimp *gimp);
 
-const GimpRGB * gimp_render_light_check_color (void);
-const GimpRGB * gimp_render_dark_check_color  (void);
+const GimpRGB * gimp_render_check_color1 (void);
+const GimpRGB * gimp_render_check_color2  (void);
 
 
 #endif /* __GIMP_RENDER_H__ */
