@@ -2440,6 +2440,7 @@ if test "x$with_vala" = xno; then
   warning_vala="
 WARNING: you disabled the installation of core Vala plug-ins. This
          is discouraged as it won't provide the full GIMP experience."
+  AM_CONDITIONAL(ENABLE_VAPIGEN, test "x$enable_vala" = "xyes")
 else
   VAPIGEN_CHECK($VALA_REQUIRED_VERSION)
   with_vala="yes"
