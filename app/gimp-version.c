@@ -220,6 +220,7 @@ gimp_version (gboolean be_verbose,
     {
       gchar *verbose_info;
       gchar *lib_versions;
+      gchar *flatpak_info = NULL;
 
       lib_versions = gimp_library_versions (localized);
       verbose_info = g_strdup_printf ("git-describe: %s\n"
@@ -234,9 +235,22 @@ gimp_version (gboolean be_verbose,
                                       lib_versions);
       g_free (lib_versions);
 
-      temp = g_strconcat (version, verbose_info, NULL);
+      /* This file should be available at root path in a flatpak
+       * environment. Just add its contents to the verbose output if it
+       * exists. Silently ignore otherwise.
+       */
+      if (g_file_get_contents ("/.flatpak-info", &flatpak_info, NULL, NULL))
+        {
+          temp = g_strdup_printf ("\n# Flatpak info #\n%s",
+                                  flatpak_info);
+          g_free (flatpak_info);
+          flatpak_info = temp;
+        }
+      temp = g_strconcat (version, verbose_info, flatpak_info, NULL);
       g_free (version);
       g_free (verbose_info);
+      g_free (flatpak_info);
+
       version = temp;
     }
 
