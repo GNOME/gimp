@@ -12959,7 +12959,7 @@ msgstr "Не удалось выполнить процесс-потомок “
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "tips-locale:ru"
+msgstr "tags-locale:ru"
 
 #: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:414
 #, c-format

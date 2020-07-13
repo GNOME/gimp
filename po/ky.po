@@ -7195,7 +7195,7 @@ msgstr ""
 #.
 #: ../app/core/gimp-tags.c:88
 msgid "tags-locale:C"
-msgstr ""
+msgstr "tags-locale:ky"
 
 #: ../app/core/gimp-user-install.c:173
 #, c-format
@@ -10143,7 +10143,7 @@ msgstr "Көбүрөөк билүү"
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr ""
+msgstr "tips-locale:ky"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"

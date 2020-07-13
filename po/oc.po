@@ -7510,7 +7510,7 @@ msgstr "PP cap a Transparent"
 #.
 #: ../app/core/gimp-tags.c:88
 msgid "tags-locale:C"
-msgstr "tags-locala:fr"
+msgstr "tags-locale:oc"
 
 #: ../app/core/gimp-user-install.c:203
 #, c-format
@@ -10690,7 +10690,7 @@ msgstr "Ne saber mai"
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "tips-locala:fr"
+msgstr "tips-locale:oc"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"

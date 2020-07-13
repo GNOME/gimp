@@ -12718,7 +12718,7 @@ msgstr "Izvajanje podrejenega procesa »%s« je spodletelo (%s)"
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "tips-locale:sl"
+msgstr "tags-locale:sl"
 
 #: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:386
 #, c-format

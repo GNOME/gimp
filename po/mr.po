@@ -12484,7 +12484,7 @@ msgstr "चाईल्ड प्रोसेस “%s” (%s) अंमला�
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "टॅग्स-लोकल :सी"
+msgstr "tags-locale:mr"
 
 #: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:357
 #, c-format
@@ -17231,7 +17231,7 @@ msgstr "अधिक जाणून घ्या"
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "टिपा-भाषांसाठी:सी"
+msgstr "tips-locale:mr"
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"

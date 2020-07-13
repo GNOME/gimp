@@ -9670,9 +9670,8 @@ msgstr ""
 #. * that would be "tags-locale:lt".
 #.
 #: ../app/core/gimp-tags.c:88
-#, fuzzy
 msgid "tags-locale:C"
-msgstr "tips-locale:C"
+msgstr "tags-locale:kn"
 
 #: ../app/core/gimptemplate.c:132
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -11377,7 +11376,7 @@ msgstr "ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ"
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "tips-locale:C"
+msgstr "tips-locale:kn"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"

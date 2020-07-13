@@ -12613,7 +12613,7 @@ msgstr ""
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "tags-locale:C"
+msgstr "tags-locale:ko"
 
 #: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:311
 #, c-format

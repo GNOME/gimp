@@ -12561,7 +12561,7 @@ msgstr "Ezin izan da “%s” prozesu haurra exekutatu (%s)"
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "tips-locale:eu"
+msgstr "tags-locale:eu"
 
 #: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:414
 #, c-format

@@ -9335,7 +9335,7 @@ msgstr "ਅਤੀਤ ਸਾਫ਼ ਕਰੋ(_C)"
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "tips-locale:pa"
+msgstr "tags-locale:pa"
 
 #: ../app/core/gimp-user-install.c:209
 #, c-format
