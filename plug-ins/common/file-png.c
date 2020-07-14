@@ -1679,6 +1679,24 @@ save_image (GFile        *file,
       background.green = green;
       background.blue = blue;
       background.gray = gimp_rgb_luminance_uchar (&color);
+
+      if (type == GIMP_INDEXED_IMAGE || type == GIMP_INDEXEDA_IMAGE)
+        {
+          png_color *p = pngg.palette;
+
+          for(i = 0; i < pngg.num_palette; i++)
+            {
+              if (background.red == p->red &&
+                  background.green == p->green &&
+                  background.blue == p->blue)
+                {
+                  background.index = i;
+                  break;
+                }
+              p++;
+            }
+        }
+
       png_set_bKGD (pp, info, &background);
     }
 
