@@ -1,0 +1,277 @@
+
+Porting GimpFu Plugins to Gimp 3 and Python 3
+
+Lloyd Konneker, February 2020
+
+
+About
+-----
+
+This document is for authors of Gimp plugins that use Python and GimpFu .
+When this document says "you" or "author" it means a person writing
+a plugin for Gimp using the Python language and importing the gimpfu package.
+
+It describes the changes you must make to plugin Python source
+so the plugin will run in Gimp 3.
+
+This is for plugins written in Python using GimpFu.
+In other words, if you import any of these modules:
+   - gimpfu
+   - gimp
+   - gimpenums
+
+This document talks in the present tense, but much is not implemented yet.
+As of this writing, the document is a specification for what should be implemented.
+This document may contain many mistakes,
+and is not sanctioned by the Gimp organization.
+
+
+Quickstart
+----------
+
+The document "GIMP Python Documentation" is still mostly effective.
+It is NOT effective towards the end,
+where it talks about tiles, pixel regions, and the gimpplugin module.
+"GIMP Python Documentation" mostly describes
+what this document calls 'GimpFu', i.e. the gimpfu module.
+
+(Tiles and pixel regions are obsolete and there is not yet a GimpFu adaption,
+because few plugins used those objects.
+You can use Python and GI to use GEGL buffers.)
+
+(gimpplugin refers to a more complete API that the GimpFu API simplifies.
+The phrases  "PyGimp" or "Gimp Python" sometimes refer to both API's.
+
+
+Changes required by Python 3
+----------------------------
+
+All plugins in Gimp 3 run under Python 3.
+Python 3 has a very few syntax changes from Python 2.
+In such cases, you must change your code.
+See elsewhere for a guide to porting Python 2 code to Python 3.
+
+Briefly, if your plugin throws an exception at run time,
+and the errant line of code does not appear to involve Gimp objects,
+you might suspect that you need to make syntax changes.
+
+Syntax
+======
+
+Python3 syntax changed for a few language constructs.
+
+Examples:
+
+    except ValueError, e:    =>      except ValueError as e:
+
+    print Foo => print(Foo)
+
+
+Standard module API
+===================
+
+Some standard modules changed API from Python 2 to Python 3
+
+Examples:
+    import gettext  # standard module
+    gettext.install("gimp20-python", gimp.locale_directory, unicode=True) =>
+         gettext.install("gimp30-python", gimp.locale_directory)
+
+
+
+Obsolete Modules
+-----------------------
+
+Some modules part of PyGimp v2 are obsolete :
+    gimpshelf
+    gimpui
+    gimpcolor
+
+To use GimpFu you only need to import the gimpfu module,
+which then imports any other modules it needs.
+Loosely speaking, that has always been the case for GimpFu.
+
+
+
+gimpshelf
+=========
+
+The gimpshelf module was primarily used to persist plugin settings
+within a Gimp session
+(so that the values appearing in a plugin dialog were persistent,
+and so that "Filter>Repeat Last" executed the plugin with prior choices.)
+
+1) Plugins using the gimpfu module.
+
+The gimpfu module will continue to persist settings
+(just not using gimpshelf module anymore.)
+
+2) Plugins that did not use the gimpfu module
+and used gimpshelf to persist plugin settings.
+
+You will need to recode to use GI to the new Gimp mechanism for persisting plugin settings.
+See example code in a Python plugin that has already been ported to Gimp 3.
+For example see gimp/plugins/goat-exercises/goat-exercise-py3.py
+(TODO does it persist settings?)
+
+2) In a few cases, you might have used gimpshelf module for other purposes.
+
+You will need to use GI as above, or find some other mechanism for persisting.
+
+
+gimpui
+======
+
+The gimpui module was used when a plugin implemented its own GUI,
+and needed GTK widgets provided by Gimp (in libgimpui), such as a color picker widget.
+
+GimpFu (and Gimp) will create a dialog automatically for most plugins.
+
+If your plugin did implement GUI using the gimpui module,
+you will need to recode to use GI to the Gimp objects that implement GUI.
+
+
+gimpcolor
+=========
+
+The gimpcolor module let you define and manipulate colors in colorspaces.
+Most plugins do not use it.
+The gimpcolor module is obsolete.
+
+Both in v2 and v3 you can use 3-tuples and strings as colors.
+However, in v3, you can only use such colors as arguments to the PDB (alias 'pdb'),
+not the Gimp library (alias 'gimp'.)
+For example:
+   gimp.set_foreground((0,255,0)) => pdb.gimp_set_foreground((0,255,0))
+   ( OR gimp_context_set_foreground(), the v3 name.)
+(TODO can this restriction be eased?)
+
+
+Gimp model Changes
+------------------
+
+The model of Channel in Gimp v3 is expanded from v2.
+
+Some procedures, like gimp-threshold have been replaced e.g. gimp-drawable-threshold
+and require a new "channel" parameter.
+
+TODO other model changes
+
+
+Gimp Menu Path Names
+--------------------
+
+A plugin declares a MenuItem name and a MenuPath name
+
+Gimp v3 allows menu paths:
+<Image>", "<Layers>", "<Channels>", "<Vectors>", "<Colormap>", "<Brushes>",
+"<Dynamics>", "<MyPaintBrushes>", "<Gradients>", "<Palettes>", "<Patterns>", "<ToolPresets>", "<Fonts>" or "<Buffers>"
+
+But <Filters> also works.  And <Filters/Foo>
+
+Note that e.g. Layers is not the "Layer" menu in the menubar, but the popup menu in Gimp's "Layers" dockable dialog.
+Use RMB to popup the menu.
+
+
+The gimp and pdb aliases
+------------------------
+
+The symbols 'gimp' and 'pdb' are still supported in v3.
+They support all the methods defined by  the "GIMP Python Documentation",
+plus all the functions defined on the Gimp and Gimp.PDB classes
+(in some document generated from the Gimp .gir files.)
+
+(They are distinct from the 'Gimp' and 'Gimp.PDB' symbols,
+which are defined when you use GI directly.)
+
+
+The GimpFu classes
+------------------
+
+The classes Image, Layer, etc. are still supported in v3,
+and they have the same methods defined by the "GIMP Python Documentation",
+plus all the methods that the underlying Gimp classes have.
+
+(You use the capitalized class names as constructors in the gimp namespace:
+e.g.  foo = gimp.Layer(...)
+Note that using GI, the constructors for Gimp classes are different
+e.g. foo = Gimp.Layer.new(...)  .
+)
+
+
+
+Enums
+-----
+
+In short, GimpFu v3 supports most the enums of v2.  You need to change little.
+
+GimpFu v2 and v3 define enums to be used with Gimp.
+They are all caps, e.g. FILL_TRANSPARENT.
+
+Their spelling does not always correspond to the spelling used in the Gimp API.
+For example, Gimp defines BACKGROUND but GimpFu defines BACKGROUND_FILL.
+New code should use the Gimp enums instead of the enums defined by GimpFu.
+For example, use Gimp.FillType.BACKGROUND.
+You can use a mix of both.
+
+GimpFu v2 defined deprecatated enums TRUE and FALSE for use with Gimp.
+GimpFu v3 does not, they are obsolete, use True and False instead.
+
+A few enums defined by GimpFu v2 are still defined by v3, but only for backward compatibility,
+that is they are deprecated and new code should not use them.
+E.g. Instead of BG_BUCKET_FILL, use BACKROUND_FILL
+E.g. FILL_TRANSPARENT => TRANSPARENT_FILL or Gimp.FillType.TRANSPARENT
+
+
+PDB
+---
+
+In v2, PDB procedures often accepted -1 for optional parameters,
+and Python authors could use None for the parameter.
+
+GimpFu v3 still supports that.
+Use of -1 is deprecated, meaning not recommended for new code.  Use None instead.
+
+PDB procedure docs say to use NULL for optional parameters, but that is for the C language.
+In Python, use None.
+
+
+GimpFu packaging
+----------------
+
+How GimpFu is packaged is irrelevant to most authors,
+but the knowledge may aid debugging.
+
+In v2, gimpfu was many .py files in the same directory, each file a Python module.
+
+In v3, GimpFu is a package, a directory with a __init__.py file, and submodules.
+The top directory is in PYTHONPATH when Gimp runs a plugin.
+
+You can import a specific submodule using absolute paths like:
+from gui.dialog import *
+This refers to .../plug-ins/gimpfu/gui/dialog.py
+
+
+Miscellaneous changes
+---------------------
+
+Use 'pdb.foo()', not 'gimp.pdb.foo()'.  'pdb' is not in the 'gimp' namespace.
+
+The pdb object cannot be accessed using index notation:
+pdb['gimp-edit-fill']()    =>    pdb.gimp-edit-fill()
+
+The attributes of Gimpfu objects can still be accessed using property notation
+without parens
+e.g. timg.width
+(Note that using GI, Gimp object properties are accessed using getter call notation
+e.g. timg.width() )
+
+
+
+Rewriting a plugin without GimpFu
+---------------------------------
+
+It is possible to rewrite a plugin without using GimpFu,
+using just Python and GI.
+
+See examples in  2.99/plug-ins/python
