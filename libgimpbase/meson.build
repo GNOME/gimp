@@ -110,6 +110,7 @@ libgimpbase = library('gimpbase-' + gimp_api_version,
   c_args: [
     '-DG_LOG_DOMAIN="LibGimpBase"',
     '-DGIMP_BASE_COMPILATION',
+    cpu_exts_defines,
   ],
   vs_module_defs: 'gimpbase.def',
   install: true,
