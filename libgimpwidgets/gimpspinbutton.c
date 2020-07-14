@@ -21,8 +21,11 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -63,6 +66,8 @@ struct _GimpSpinButtonPrivate
 
 static gboolean   gimp_spin_button_scroll    (GtkWidget      *widget,
                                               GdkEventScroll *event);
+static gboolean   gimp_spin_button_key_press (GtkWidget      *widget,
+                                              GdkEventKey    *event);
 static gboolean   gimp_spin_button_focus_in  (GtkWidget      *widget,
                                               GdkEventFocus  *event);
 static gboolean   gimp_spin_button_focus_out (GtkWidget      *widget,
@@ -91,6 +96,7 @@ gimp_spin_button_class_init (GimpSpinButtonClass *klass)
   GtkSpinButtonClass *spin_button_class = GTK_SPIN_BUTTON_CLASS (klass);
 
   widget_class->scroll_event    = gimp_spin_button_scroll;
+  widget_class->key_press_event = gimp_spin_button_key_press;
   widget_class->focus_in_event  = gimp_spin_button_focus_in;
   widget_class->focus_out_event = gimp_spin_button_focus_out;
 
@@ -151,6 +157,52 @@ gimp_spin_button_scroll (GtkWidget      *widget,
     }
 
   return GTK_WIDGET_CLASS (parent_class)->scroll_event (widget, event);
+}
+
+static gboolean
+gimp_spin_button_key_press (GtkWidget   *widget,
+                            GdkEventKey *event)
+{
+  switch (event->keyval)
+    {
+      case GDK_KEY_Return:
+      case GDK_KEY_KP_Enter:
+      case GDK_KEY_ISO_Enter:
+      case GDK_KEY_Escape:
+        {
+          GtkEntry      *entry       = GTK_ENTRY (widget);
+          GtkSpinButton *spin_button = GTK_SPIN_BUTTON (widget);
+          gchar         *text;
+          gboolean       changed;
+
+          text = g_strdup (gtk_entry_get_text (entry));
+
+          if (event->keyval == GDK_KEY_Escape)
+            {
+              gtk_spin_button_set_value (
+                spin_button,
+                gtk_spin_button_get_value (spin_button));
+            }
+          else
+            {
+              gtk_spin_button_update (spin_button);
+            }
+
+          changed = strcmp (gtk_entry_get_text (entry), text);
+
+          g_free (text);
+
+          if (changed)
+            {
+              gtk_editable_set_position (GTK_EDITABLE (widget), -1);
+
+              return TRUE;
+            }
+        }
+        break;
+    }
+
+  return GTK_WIDGET_CLASS (parent_class)->key_press_event (widget, event);
 }
 
 static gboolean
