@@ -1,0 +1,46 @@
+# Check for bash
+[ -z "$BASH_VERSION" ] && return
+
+
+__gimp()
+{
+    COMPREPLY=()
+    local current="${COMP_WORDS[COMP_CWORD]}"
+    local prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    # GIMP options
+    #
+    # Note that we don't specify short options here, since they're quite unintuitive
+    options="--version --license --verbose --new-instance --as-new --no-interface --no-data --no-fonts --no-splash --no-shm --no-cpu-accel --session --gimprc --system-gimprc --batch --batch-interpreter --console-messages --pdb-compat-mode --stack-trace-mode --debug-handlers --g-fatal-warnings --dump-gimprc --dump-gimprc-system --dump-gimprc-manpage --dump-pdb-procedures-deprecated --show-playground --show-debug-menu"
+
+    #
+    # Different completions for specific options
+    #
+    case "${prev}" in
+        # G_OPTION_FILENAME
+        gimprc|session|system-gimprc)
+            COMPREPLY=( $(compgen -f -- ${current}) )
+            return 0
+            ;;
+        batch)
+            # FIXME
+            # local commads=$(gimp --LIST_COMMANDS)
+            # COMPREPLY=( $(compgen -f -- ${current}) )
+            return 0
+            ;;
+        batch-interpreter)
+            # FIXME
+            # local interpreters=$(gimp --LIST_INTERPRETERS)
+            # COMPREPLY=( $(compgen -f -- ${current}) )
+            return 0
+            ;;
+        *)
+        ;;
+    esac
+
+   # Default: complete with either an option "-W" or a filename "-f"
+   COMPREPLY=($(compgen -W "${options}" -f -- ${current}))
+   return 0
+}
+
+complete -F __gimp gimp
