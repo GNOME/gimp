@@ -973,8 +973,6 @@ save_image (GFile                  *file,
       goto out;
     }
 
-  TIFFSetField (tif, TIFFTAG_DOCUMENTNAME, g_file_get_path (file));
-
   /* The TIFF spec explicitly says ASCII for the image description. */
   if (image_comment)
     {
