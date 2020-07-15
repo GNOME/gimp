@@ -930,10 +930,12 @@ else
   always_install = get_option('python') == 'always'
 
   python = pythonmod.find_installation('python3', required: false)
+  python_version = python.language_version() + '.0'
+  message('Found Python @0@'.format(python_version))
 
   python_found = (
     python.found() and
-    python.language_version().version_compare('>='+python3_minver)
+    python_version.version_compare(python3_minver)
   )
   if python_found
     pygobject_found = run_command(
@@ -949,16 +951,16 @@ else
 
   if (not python_found) and (not always_install)
     error('''
-    Python >=@0@ or PyGObject was not found.
+    Python @0@ or PyGObject was not found.
     Note that you may install the Python plug-ins even if you have no Python
     interpreter at build-time by passing the configure option -Dpython=always.
-    Just make sure that a Python >=@0@ interpreter is available at run-time.
+    Just make sure that a Python @0@ interpreter is available at run-time.
     '''.format(python3_minver))
   endif
 
   if (not python_found) and (always_install)
     python_warning = '''
-    Python >=@0@ or PyGObject was not found.
+    Python @0@ or PyGObject was not found.
     Python plug-ins will be installed anyway but you should make sure that
     a compatible Python interpreter is available at installation, otherwise
     installed plug-ins won't be usable.
