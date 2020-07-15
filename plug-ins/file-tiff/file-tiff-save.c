@@ -989,8 +989,6 @@ save_image (GFile         *file,
       goto out;
     }
 
-  TIFFSetField (tif, TIFFTAG_DOCUMENTNAME, g_file_get_path (file));
-
   if (config_comment && *config_comment)
     {
       const gchar *c = config_comment;
