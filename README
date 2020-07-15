@@ -1,7 +1,6 @@
-                   ------------------------------
-                   GNU Image Manipulation Program
-                      2.99 Development Branch
-                   ------------------------------
+GNU Image Manipulation Program
+===========================
+This is version 2.99 of the GNU Image Manipulation Program.
 
 This is an unstable development release, an intermediate state on the
 way to the next stable release: GIMP 3. GIMP 2.99 may or may not do what
@@ -16,8 +15,8 @@ If you want to hack on GIMP, please read the file HACKING. For
 detailed installation instructions, see the file INSTALL.
 
 
-1. Web Resources
-================
+Web Resources
+----------------
 
 GIMP's home page is at:
 
@@ -34,8 +33,8 @@ The latest version of GIMP can be found at:
 	https://www.gimp.org/downloads/
 
 
-2. Mailing Lists
-================
+Mailing Lists
+----------------
 
 We have several mailing lists dedicated to GIMP user and development
 discussion.  There is more info at
@@ -54,8 +53,8 @@ want to help with GUI design, the gimp-gui list is where you want to
 subscribe.
 
 
-3. IRC
-======
+IRC
+----------------
 
 And finally, for the real junkies, there is an IRC channel devoted to
 GIMP. On GIMPNet (a private free software oriented network) there is
@@ -67,8 +66,8 @@ servers are:
 	irc.eu.gimp.org:6667
 
 
-4. Customizing
-==============
+Customizing
+----------------
 
 The look of GIMP's interface can be customized like any other GTK+ app
 by editing files in `${XDG_CONFIG_HOME}/gtk-3.0/` (settings.ini and
@@ -85,11 +84,11 @@ the keybindings to any of your choice by editing:
 
 Have fun,
 
-  Spencer Kimball
-  Peter Mattis
-  Federico Mena
-  Manish Singh
-  Sven Neumann
-  Michael Natterer
-  Dave Neary
-  Martin Nordholts
+- Spencer Kimball
+- Peter Mattis
+- Federico Mena
+- Manish Singh
+- Sven Neumann
+- Michael Natterer
+- Dave Neary
+- Martin Nordholts
