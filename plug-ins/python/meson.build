@@ -40,10 +40,11 @@ if python.found()
   custom_target('pygimp.interp',
     output: 'pygimp.interp',
     command: [ 'echo',
-      'python=@0@\n'          .format(python.path()),
-      'python3=@0@\n'         .format(python.path()),
-      '/usr/bin/python=@0@\n' .format(python.path()),
-      ':Python:E::py::python3:'
+      ( 'python=@0@\n'
+      + 'python3=@0@\n'
+      + '/usr/bin/python=@0@\n'
+      + ':Python:E::py::python3:'
+      ).format(python.path()),
     ],
     capture: true,
     install: true,
