@@ -873,7 +873,7 @@ save_image (GFile         *file,
       if (config_use_rle)
         {
           if (! print (output, error,
-                       "%u] =\n",
+                       "%u + 1] =\n",
                        (guint) (img_buffer_end - img_buffer)))
             goto fail;
         }
