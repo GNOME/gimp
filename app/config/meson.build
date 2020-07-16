@@ -1,7 +1,7 @@
 
 appconfigenums = custom_target('config-enums.c',
-  input : [ 'config-enums.h', ],
-  output: [ 'config-enums.c', ],
+  input : 'config-enums.h',
+  output: 'config-enums.c',
   command: [
     gimp_mkenums,
     '--fhead','#include "config.h"\n'

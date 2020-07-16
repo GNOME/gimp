@@ -1,7 +1,8 @@
 
+gimpconfigenums_header = files('gimpconfigenums.h')
 gimpconfigenums = custom_target('gimpconfigenums.c',
-  input : [ 'gimpconfigenums.h', ],
-  output: [ 'gimpconfigenums.c', ],
+  input : gimpconfigenums_header,
+  output: 'gimpconfigenums.c',
   command: [
     gimp_mkenums,
     '--fhead','#include "config.h"\n'
