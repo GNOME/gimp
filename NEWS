@@ -8,6 +8,53 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.20 to GIMP 2.10.22
+=====================================================
+
+Core:
+
+  - Verbose version information (`gimp-2-10 -v` on command line, or
+    debug output) now displays Flatpak related information when
+    available. This is especially useful for debugging (such as the
+    exact Flatpak build hash, the runtime version, the installed
+    Flatpak extensions, permissions, etc.).
+  - OpenCL settings has now been moved to the Playground tab in
+    Preferences.
+  - On stable builds, "Playground" tab is now visible in Preferences if
+    any of the experimental feature has been enabled, even without the
+    CLI option `--show-playground`.
+
+Tools:
+
+  - Make "gegl:matting-levin" default engine of Foreground Select tool
+    (when present, as it is an optional feature) as it performs a lot
+    better.
+
+User interface:
+
+  - In GimpSpinButton, don't propagate Enter key-press events if
+    updating the spin-button's value in response changes the entered
+    text. This prevents confirming dialogs when hitting Enter after
+    entering a math expression in size entries, updating their value
+    instead.
+    Likewise, don't propagate Escape key-press events if a new value was
+    entered, and restore the original value instead.
+
+Plug-ins:
+
+  - Add a new GIMP_EXPORT_NEEDS_CROP export capability, which causes
+    gimp_export_image() to crop the exported image content to the image
+    bounds; this is useful for formats that support layers, but have no
+    concept of global image bounds, hence cropping is the only way to
+    enforce the image bounds.
+    When showing the export dialog, give an option to either crop the
+    layers to the image bounds, or to resize the image to fit the
+    layers.
+  - In file-tiff, add an option to crop the layers to the image bounds
+    when exporting individual layers (using GIMP_EXPORT_NEEDS_CROP added
+    in the previous commit), since TIFF has no concept of global image
+    bounds otherwise. Cropping is enabled by default.
+
 Overview of Changes from GIMP 2.10.18 to GIMP 2.10.20
 =====================================================
 
