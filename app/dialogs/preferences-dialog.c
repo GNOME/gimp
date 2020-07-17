@@ -1196,20 +1196,6 @@ prefs_dialog_new (Gimp       *gimp,
                          GTK_GRID (grid), 5, size_group);
 #endif /* ENABLE_MP */
 
-  /*  Hardware Acceleration  */
-  vbox2 = prefs_frame_new (_("Hardware Acceleration"), GTK_CONTAINER (vbox),
-                           FALSE);
-
-  prefs_check_button_add (object, "use-opencl",
-                          _("Use O_penCL"),
-                          GTK_BOX (vbox2));
-
-  hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
-                             _("OpenCL drivers and support are experimental, "
-                               "expect slowdowns and possible crashes "
-                               "(please report)."));
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-
   /*  Internet access  */
 #ifdef CHECK_UPDATE
   vbox2 = prefs_frame_new (_("Network access"), GTK_CONTAINER (vbox),
@@ -1631,8 +1617,23 @@ prefs_dialog_new (Gimp       *gimp,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
+      /*  Hardware Acceleration  */
+      vbox2 = prefs_frame_new (_("Hardware Acceleration"), GTK_CONTAINER (vbox),
+                               FALSE);
+
+      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+                                 _("OpenCL drivers and support are experimental, "
+                                   "expect slowdowns and possible crashes "
+                                   "(please report)."));
+      gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
+      prefs_check_button_add (object, "use-opencl",
+                              _("Use O_penCL"),
+                              GTK_BOX (vbox2));
+
+      /*  Very unstable tools  */
       vbox2 = prefs_frame_new (_("Insane Options"),
-                               GTK_CONTAINER (vbox), TRUE);
+                               GTK_CONTAINER (vbox), FALSE);
 
       button = prefs_check_button_add (object, "playground-npd-tool",
                                        _("_N-Point Deformation tool"),
