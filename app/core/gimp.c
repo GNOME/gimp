@@ -777,6 +777,34 @@ gimp_load_config (Gimp  *gimp,
   g_signal_connect_object (gimp->edit_config, "notify",
                            G_CALLBACK (gimp_edit_config_notify),
                            gimp->config, 0);
+
+  if (! gimp->show_playground)
+    {
+      gboolean    use_opencl;
+      gboolean    use_npd_tool;
+      gboolean    use_seamless_clone_tool;
+
+      /* Playground preferences is shown by default for unstable
+       * versions and if the associated CLI option was set. Additionally
+       * we want to show it if any of the playground options had been
+       * enabled. Otherwise you might end up getting blocked with a
+       * playground feature and forget where you can even disable it.
+       *
+       * Also we check this once at start when loading config, and not
+       * inside preferences-dialog.c because we don't want to end up
+       * with inconsistent behavior where you open once the Preferences,
+       * deactivate features, then back to preferences and the tab is
+       * gone.
+       */
+
+      g_object_get (gimp->edit_config,
+                    "use-opencl",                     &use_opencl,
+                    "playground-npd-tool",            &use_npd_tool,
+                    "playground-seamless-clone-tool", &use_seamless_clone_tool,
+                    NULL);
+      if (use_opencl || use_npd_tool || use_seamless_clone_tool)
+        gimp->show_playground = TRUE;
+    }
 }
 
 void
