@@ -192,7 +192,7 @@ svg_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_INT (procedure, "height",
                          "Height",
                          "Height (in pixels) to load the SVG in. "
-                         "(0 for original heght, a negative width to "
+                         "(0 for original height, a negative height to "
                          "specify a maximum height)",
                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                          GIMP_PARAM_READWRITE);
