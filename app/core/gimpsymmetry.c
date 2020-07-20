@@ -504,7 +504,7 @@ gimp_symmetry_to_parasite (const GimpSymmetry *sym)
 
   parasite_name = gimp_symmetry_parasite_name (G_TYPE_FROM_INSTANCE (sym));
 
-  parasite = gimp_config_serialize_to_parasite (GIMP_CONFIG (sym),
+  parasite = gimp_config_serialize_to_parasite ((GimpConfig *) sym,
                                                 parasite_name,
                                                 GIMP_PARASITE_PERSISTENT,
                                                 NULL);
