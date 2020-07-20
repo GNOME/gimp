@@ -62,6 +62,7 @@ struct _GimpLinkPrivate
   GFileMonitor *monitor;
 
   gboolean      broken;
+  guint         idle_changed_source;
 };
 
 static void       gimp_link_finalize       (GObject           *object);
@@ -79,6 +80,7 @@ static void       gimp_link_file_changed   (GFileMonitor      *monitor,
                                             GFile             *other_file,
                                             GFileMonitorEvent  event_type,
                                             GimpLink          *link);
+static gboolean   gimp_link_emit_changed   (gpointer           data);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpLink, gimp_link, GIMP_TYPE_OBJECT)
 
@@ -122,6 +124,8 @@ gimp_link_init (GimpLink *link)
   link->p->file    = NULL;
   link->p->monitor = NULL;
   link->p->broken  = TRUE;
+
+  link->p->idle_changed_source = 0;
 }
 
 static void
@@ -206,12 +210,18 @@ gimp_link_file_changed (GFileMonitor      *monitor,
   switch (event_type)
     {
     case G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT:
+      if (link->p->idle_changed_source == 0)
+        link->p->idle_changed_source = g_idle_add_full (G_PRIORITY_LOW,
+                                                        gimp_link_emit_changed,
+                                                        link, NULL);
+      break;
     case G_FILE_MONITOR_EVENT_CREATED:
       g_signal_emit (link, link_signals[CHANGED], 0);
       break;
     case G_FILE_MONITOR_EVENT_DELETED:
       link->p->broken = TRUE;
       break;
+
     default:
       /* No need to signal for changes where nothing can be done anyway.
        * In particular a file deletion, the link is broken, yet we don't
@@ -222,6 +232,17 @@ gimp_link_file_changed (GFileMonitor      *monitor,
       break;
     }
 
+}
+
+static gboolean
+gimp_link_emit_changed (gpointer data)
+{
+  GimpLink *link = GIMP_LINK (data);
+
+  g_signal_emit (link, link_signals[CHANGED], 0);
+  link->p->idle_changed_source = 0;
+
+  return G_SOURCE_REMOVE;
 }
 
 /*  public functions  */
