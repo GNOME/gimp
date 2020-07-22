@@ -54,6 +54,10 @@ Plug-ins:
     when exporting individual layers (using GIMP_EXPORT_NEEDS_CROP added
     in the previous commit), since TIFF has no concept of global image
     bounds otherwise. Cropping is enabled by default.
+  - Content type `image/webp` is now recognized (and not only
+    `image/x-webp` as both seem to be in used and this format is
+    unfortunately not yet listed in IANA media types (so various content
+    types are in use, no clear standard apparently).
 
 Overview of Changes from GIMP 2.10.18 to GIMP 2.10.20
 =====================================================
