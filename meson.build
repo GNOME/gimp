@@ -723,7 +723,10 @@ foreach lib : webp_libs
 endforeach
 
 if webp_found
-  MIMEtypes += 'image/x-webp'
+  MIMEtypes += [
+    'image/x-webp',
+    'image/webp'
+  ]
 endif
 
 libheif_minver = '1.3.2'
