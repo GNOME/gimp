@@ -389,7 +389,7 @@ dds_load (GimpProcedure        *procedure,
   gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   status = read_dds (file, &image, run_mode == GIMP_RUN_INTERACTIVE,
-                     procedure, G_OBJECT (config));
+                     procedure, G_OBJECT (config), &error);
 
   gimp_procedure_config_end_run (config, status);
   g_object_unref (config);
