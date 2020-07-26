@@ -58,6 +58,11 @@ Plug-ins:
     `image/x-webp` as both seem to be in used and this format is
     unfortunately not yet listed in IANA media types (so various content
     types are in use, no clear standard apparently).
+  - TIFF export will not override "DocumentName" metadata tag anymore.
+  - DSD import is now a bit more permissive, allowing to load some files
+    with invalid header flags regarding compression, while we are able
+    to know the right compression from other flags. This allows to
+    recover invalid DDS files exported by other software.
 
 Overview of Changes from GIMP 2.10.18 to GIMP 2.10.20
 =====================================================
