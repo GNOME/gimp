@@ -97,6 +97,26 @@ file_open_image (Gimp                *gimp,
 
   *status = GIMP_PDB_EXECUTION_ERROR;
 
+  if (! g_file_is_native (file) &&
+      ! file_remote_mount_file (gimp, file, progress, &my_error))
+    {
+      if (my_error)
+        {
+          g_printerr ("%s: mounting remote volume failed, trying to download"
+                      "the file: %s\n",
+                      G_STRFUNC, my_error->message);
+          g_clear_error (&my_error);
+
+          mounted = FALSE;
+        }
+      else
+        {
+          *status = GIMP_PDB_CANCEL;
+
+          return NULL;
+        }
+    }
+
   /* FIXME enable these tests for remote files again, needs testing */
   if (g_file_is_native (file) &&
       g_file_query_exists (file, NULL))
@@ -136,43 +156,14 @@ file_open_image (Gimp                *gimp,
                                                           GIMP_FILE_PROCEDURE_GROUP_OPEN,
                                                           file, error);
 
-  if (! file_proc)
-    {
-      /*  don't bail out on remote files, they might need to be
-       *  downloaded for magic matching
-       */
-      if (g_file_is_native (file))
-        return NULL;
-
-      g_clear_error (error);
-    }
-
-  if (! g_file_is_native (file) &&
-      ! file_remote_mount_file (gimp, file, progress, &my_error))
-    {
-      if (my_error)
-        {
-          g_printerr ("%s: mounting remote volume failed, trying to download"
-                      "the file: %s\n",
-                      G_STRFUNC, my_error->message);
-          g_clear_error (&my_error);
-
-          mounted = FALSE;
-        }
-      else
-        {
-          *status = GIMP_PDB_CANCEL;
-
-          return NULL;
-        }
-    }
-
   if (! file_proc || ! file_proc->handles_uri || ! mounted)
     {
       gchar *my_path = g_file_get_path (file);
 
       if (! my_path)
         {
+          g_clear_error (error);
+
           local_file = file_remote_download_image (gimp, file, progress,
                                                    &my_error);
 
@@ -193,31 +184,26 @@ file_open_image (Gimp                *gimp,
             file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
                                                                   GIMP_FILE_PROCEDURE_GROUP_OPEN,
                                                                   local_file, error);
-
-          if (! file_proc)
-            {
-              g_file_delete (local_file, NULL, NULL);
-              g_object_unref (local_file);
-
-              return NULL;
-            }
-
-          if (file_proc->handles_uri)
-            path = g_file_get_uri (local_file);
-          else
-            path = g_file_get_path (local_file);
         }
 
       g_free (my_path);
     }
 
-  if (! path)
+  if (! file_proc)
     {
-      if (file_proc->handles_uri)
-        path = g_file_get_uri (file);
-      else
-        path = g_file_get_path (file);
+      if (local_file)
+        {
+          g_file_delete (local_file, NULL, NULL);
+          g_object_unref (local_file);
+        }
+
+      return NULL;
     }
+
+  if (file_proc->handles_uri)
+    path = g_file_get_uri (local_file ? local_file : file);
+  else
+    path = g_file_get_path (local_file ? local_file : file);
 
   entered_uri = g_file_get_uri (entered_file);
 
