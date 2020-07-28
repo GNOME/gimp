@@ -18,7 +18,7 @@ deps-debian/testing:
     paths:
     - _pacman_cache
   artifacts:
-    expire_in: 1 week
+    expire_in: 1 hour
     when: always
     paths:
     - "${INSTALL_DIR}"
@@ -141,3 +141,16 @@ gimp-debian/testing-autotools:
         --disable-python
     - make -j "$(nproc)"
     - make check
+
+gimp-debian/testing-autotools-distcheck:
+  extends: .gimp-debian/testing-base
+  script:
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh
+        --prefix="${INSTALL_PREFIX}"
+        --enable-debug
+        --disable-python
+    - make -j "$(nproc)"
+    - make distcheck
+  allow_failure: true
