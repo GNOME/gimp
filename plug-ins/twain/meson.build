@@ -1,4 +1,6 @@
-if platform_windows
+if not platform_windows
+  subdir_done()
+endif
 
 plugin_name = 'twain'
 
@@ -31,5 +33,3 @@ twain = executable(plugin_name,
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,
 )
-
-endif
