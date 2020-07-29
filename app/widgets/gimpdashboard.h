@@ -29,6 +29,7 @@ struct _GimpDashboardLogParams
 {
   gint     sample_frequency;
   gboolean backtrace;
+  gboolean progressive;
 };
 
 

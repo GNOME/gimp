@@ -98,6 +98,7 @@
 #define LOG_SAMPLE_FREQUENCY_MAX       1000 /* samples per second */
 #define LOG_DEFAULT_SAMPLE_FREQUENCY   10 /* samples per second */
 #define LOG_DEFAULT_BACKTRACE          TRUE
+#define LOG_DEFAULT_PROGRESSIVE        FALSE
 
 
 typedef enum
@@ -433,7 +434,11 @@ static void       gimp_dashboard_log_sample                     (GimpDashboard  
 static void       gimp_dashboard_log_update_highlight           (GimpDashboard       *dashboard);
 static void       gimp_dashboard_log_update_n_markers           (GimpDashboard       *dashboard);
 
-static void       gimp_dashboard_log_write_address_map          (GimpAsync           *async,
+static void       gimp_dashboard_log_write_address_map          (GimpDashboard       *dashboard,
+                                                                 guintptr            *addresses,
+                                                                 gint                 n_addresses,
+                                                                 GimpAsync           *async);
+static void       gimp_dashboard_log_write_global_address_map   (GimpAsync           *async,
                                                                  GimpDashboard       *dashboard);
 
 static gboolean   gimp_dashboard_field_use_meter_underlay       (Group                group,
@@ -3526,6 +3531,7 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
 {
   GimpDashboardPrivate *priv      = dashboard->priv;
   GimpBacktrace        *backtrace = NULL;
+  GArray               *addresses = NULL;
   gboolean              empty     = TRUE;
   Variable              variable;
 
@@ -3844,7 +3850,18 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                                              "<frame address=\"0x%llx\" />\n",
                                              (unsigned long long) address);
 
-                  g_hash_table_add (priv->log_addresses, (gpointer) address);
+                  if (g_hash_table_add (priv->log_addresses,
+                                        (gpointer) address) &&
+                      priv->log_params.progressive)
+                    {
+                      if (! addresses)
+                        {
+                          addresses = g_array_new (FALSE, FALSE,
+                                                   sizeof (guintptr));
+                        }
+
+                      g_array_append_val (addresses, address);
+                    }
                 }
 
               gimp_dashboard_log_printf (dashboard,
@@ -3886,6 +3903,19 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
       gimp_dashboard_log_printf (dashboard,
                                  "</sample>\n");
     }
+
+  if (addresses)
+    {
+      gimp_dashboard_log_write_address_map (dashboard,
+                                            (guintptr *) addresses->data,
+                                            addresses->len,
+                                            NULL);
+
+      g_array_free (addresses, TRUE);
+    }
+
+  if (priv->log_params.progressive)
+    g_output_stream_flush (priv->log_output, NULL, NULL);
 
   #undef NONEMPTY
 
@@ -3934,34 +3964,17 @@ gimp_dashboard_log_compare_addresses (gconstpointer a1,
 }
 
 static void
-gimp_dashboard_log_write_address_map (GimpAsync     *async,
-                                      GimpDashboard *dashboard)
+gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
+                                      guintptr      *addresses,
+                                      gint           n_addresses,
+                                      GimpAsync     *async)
 {
-  GimpDashboardPrivate     *priv = dashboard->priv;
-  GimpBacktraceAddressInfo  infos[2];
-  guintptr                 *addresses;
-  gint                      n_addresses;
-  GList                    *iter;
-  gint                      i;
-  gint                      n;
-
-  n_addresses = g_hash_table_size (priv->log_addresses);
+  GimpBacktraceAddressInfo infos[2];
+  gint                     i;
+  gint                     n;
 
   if (n_addresses == 0)
-    {
-      gimp_async_finish (async, NULL);
-
-      return;
-    }
-
-  addresses = g_new (guintptr, n_addresses);
-
-  for (iter = g_hash_table_get_keys (priv->log_addresses), i = 0;
-       iter;
-       iter = g_list_next (iter), i++)
-    {
-      addresses[i] = (guintptr) iter->data;
-    }
+    return;
 
   qsort (addresses, n_addresses, sizeof (guintptr),
          gimp_dashboard_log_compare_addresses);
@@ -3977,7 +3990,7 @@ gimp_dashboard_log_write_address_map (GimpAsync     *async,
       GimpBacktraceAddressInfo       *info      = &infos[n       % 2];
       const GimpBacktraceAddressInfo *prev_info = &infos[(n + 1) % 2];
 
-      if (gimp_async_is_canceled (async))
+      if (async && gimp_async_is_canceled (async))
         break;
 
       if (gimp_backtrace_get_address_info (addresses[i], info))
@@ -4114,11 +4127,41 @@ gimp_dashboard_log_write_address_map (GimpAsync     *async,
         }
     }
 
-  g_free (addresses);
-
   gimp_dashboard_log_printf (dashboard,
                              "\n"
                              "</address-map>\n");
+}
+
+static void
+gimp_dashboard_log_write_global_address_map (GimpAsync     *async,
+                                             GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv = dashboard->priv;
+  gint                  n_addresses;
+
+  n_addresses = g_hash_table_size (priv->log_addresses);
+
+  if (n_addresses > 0)
+    {
+      guintptr *addresses;
+      GList    *iter;
+      gint      i;
+
+      addresses = g_new (guintptr, n_addresses);
+
+      for (iter = g_hash_table_get_keys (priv->log_addresses), i = 0;
+           iter;
+           iter = g_list_next (iter), i++)
+        {
+          addresses[i] = (guintptr) iter->data;
+        }
+
+      gimp_dashboard_log_write_address_map (dashboard,
+                                            addresses, n_addresses,
+                                            async);
+
+      g_free (addresses);
+    }
 
   gimp_async_finish (async, NULL);
 }
@@ -4306,11 +4349,26 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
         atoi (g_getenv ("GIMP_PERFORMANCE_LOG_BACKTRACE")) ? 1 : 0;
     }
 
+  if (g_getenv ("GIMP_PERFORMANCE_LOG_PROGRESSIVE"))
+    {
+      priv->log_params.progressive =
+        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_BACKTRACE")) ? 1 : 0;
+    }
+
   priv->log_params.sample_frequency = CLAMP (priv->log_params.sample_frequency,
                                              LOG_SAMPLE_FREQUENCY_MIN,
                                              LOG_SAMPLE_FREQUENCY_MAX);
 
   g_mutex_lock (&priv->mutex);
+
+  if (priv->log_params.progressive     &&
+      g_file_query_exists (file, NULL) &&
+      ! g_file_delete (file, NULL, error))
+    {
+      g_mutex_unlock (&priv->mutex);
+
+      return FALSE;
+    }
 
   priv->log_output = G_OUTPUT_STREAM (g_file_replace (file,
                                       NULL, FALSE, G_FILE_CREATE_NONE, NULL,
@@ -4345,9 +4403,11 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
                              "<params>\n"
                              "<sample-frequency>%d</sample-frequency>\n"
                              "<backtrace>%d</backtrace>\n"
+                             "<progressive>%d</progressive>\n"
                              "</params>\n",
                              priv->log_params.sample_frequency,
-                             has_backtrace);
+                             has_backtrace,
+                             priv->log_params.progressive);
 
   gimp_dashboard_log_printf (dashboard,
                              "\n"
@@ -4555,12 +4615,13 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
                              "</samples>\n");
 
 
-  if (g_hash_table_size (priv->log_addresses) > 0)
+  if (! priv->log_params.progressive &&
+      g_hash_table_size (priv->log_addresses) > 0)
     {
       GimpAsync *async;
 
       async = gimp_parallel_run_async_independent (
-        (GimpRunAsyncFunc) gimp_dashboard_log_write_address_map,
+        (GimpRunAsyncFunc) gimp_dashboard_log_write_global_address_map,
         dashboard);
 
       gimp_wait (priv->gimp, GIMP_WAITABLE (async),
@@ -4634,6 +4695,7 @@ gimp_dashboard_log_get_default_params (GimpDashboard *dashboard)
   {
     .sample_frequency = LOG_DEFAULT_SAMPLE_FREQUENCY,
     .backtrace        = LOG_DEFAULT_BACKTRACE,
+    .progressive      = LOG_DEFAULT_PROGRESSIVE
   };
 
   g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), NULL);
