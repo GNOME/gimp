@@ -42,6 +42,8 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitemtree.h"
+#include "gimpobjectqueue.h"
+#include "gimpprogress.h"
 
 #include "gimplink.h"
 #include "gimplinklayer.h"
@@ -90,6 +92,13 @@ static gboolean   gimp_link_layer_rename         (GimpItem          *item,
                                                   const gchar       *new_name,
                                                   const gchar       *undo_desc,
                                                   GError           **error);
+static void       gimp_link_layer_scale          (GimpItem              *item,
+                                                  gint                   new_width,
+                                                  gint                   new_height,
+                                                  gint                   new_offset_x,
+                                                  gint                   new_offset_y,
+                                                  GimpInterpolationType  interpolation_type,
+                                                  GimpProgress          *progress);
 
 static void       gimp_link_layer_set_buffer     (GimpDrawable      *drawable,
                                                   gboolean           push_undo,
@@ -146,6 +155,7 @@ gimp_link_layer_class_init (GimpLinkLayerClass *klass)
 
   item_class->duplicate             = gimp_link_layer_duplicate;
   item_class->rename                = gimp_link_layer_rename;
+  item_class->scale                 = gimp_link_layer_scale;
 
   item_class->rename_desc           = _("Rename Link Layer");
   item_class->translate_desc        = _("Move Link Layer");
@@ -304,6 +314,68 @@ gimp_link_layer_rename (GimpItem     *item,
     }
 
   return FALSE;
+}
+
+static void
+gimp_link_layer_scale (GimpItem              *item,
+                       gint                   new_width,
+                       gint                   new_height,
+                       gint                   new_offset_x,
+                       gint                   new_offset_y,
+                       GimpInterpolationType  interpolation_type,
+                       GimpProgress          *progress)
+{
+  GimpLinkLayer   *link_layer = GIMP_LINK_LAYER (item);
+  GimpLayer       *layer      = GIMP_LAYER (item);
+  GimpObjectQueue *queue      = NULL;
+
+  if (progress && layer->mask)
+    {
+      GimpLayerMask *mask;
+
+      queue    = gimp_object_queue_new (progress);
+      progress = GIMP_PROGRESS (queue);
+
+      /* temporarily set layer->mask to NULL, so that its size won't be counted
+       * when pushing the layer to the queue.
+       */
+      mask        = layer->mask;
+      layer->mask = NULL;
+
+      gimp_object_queue_push (queue, layer);
+      gimp_object_queue_push (queue, mask);
+
+      layer->mask = mask;
+    }
+
+  if (queue)
+    gimp_object_queue_pop (queue);
+
+  if (link_layer->p->modified || ! gimp_link_is_vector (link_layer->p->link))
+    {
+      GIMP_ITEM_CLASS (parent_class)->scale (GIMP_ITEM (layer),
+                                             new_width, new_height,
+                                             new_offset_x, new_offset_y,
+                                             interpolation_type, progress);
+    }
+  else
+    {
+      gimp_link_set_size (link_layer->p->link, new_width, new_height);
+      gimp_link_layer_render (link_layer);
+    }
+
+  if (layer->mask)
+    {
+      if (queue)
+        gimp_object_queue_pop (queue);
+
+      gimp_item_scale (GIMP_ITEM (layer->mask),
+                       new_width, new_height,
+                       new_offset_x, new_offset_y,
+                       interpolation_type, progress);
+    }
+
+  g_clear_object (&queue);
 }
 
 static void

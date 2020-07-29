@@ -2389,6 +2389,7 @@ layers_new_callback (GtkWidget              *dialog,
         {
           if (link)
             {
+              gimp_link_set_size (link, layer_width, layer_height);
               layer = gimp_link_layer_new (image, link);
 
               if (layer_mode != gimp_layer_get_mode (layer))

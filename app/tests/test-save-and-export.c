@@ -122,6 +122,7 @@ opened_xcf_file_files (gconstpointer data)
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,
+                           NULL, /* file_proc_handles_vector */
                            &status,
                            NULL /*mime_type*/,
                            NULL /*error*/);
@@ -163,6 +164,7 @@ imported_file_files (gconstpointer data)
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,
+                           NULL, /* file_proc_handles_vector */
                            &status,
                            NULL /*mime_type*/,
                            NULL /*error*/);
@@ -212,6 +214,7 @@ saved_imported_file_files (gconstpointer data)
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,
+                           NULL, /* file_proc_handles_vector */
                            &status,
                            NULL /*mime_type*/,
                            NULL /*error*/);
@@ -320,6 +323,7 @@ clear_import_file_after_export (gconstpointer data)
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,
+                           NULL, /* file_proc_handles_vector */
                            &status,
                            NULL /*mime_type*/,
                            NULL /*error*/);
