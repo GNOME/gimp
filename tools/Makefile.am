@@ -100,6 +100,7 @@ EXTRA_DIST = \
 	gimp-mkenums			\
 	gimppath2svg.py			\
 	mnemonic-clashes		\
+	performance-log-close-tags.py	\
 	performance-log-coalesce.py	\
 	performance-log-deduce.py	\
 	performance-log-expand.py	\
