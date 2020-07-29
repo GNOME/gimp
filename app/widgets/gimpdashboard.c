@@ -4352,7 +4352,7 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
   if (g_getenv ("GIMP_PERFORMANCE_LOG_PROGRESSIVE"))
     {
       priv->log_params.progressive =
-        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_BACKTRACE")) ? 1 : 0;
+        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_PROGRESSIVE")) ? 1 : 0;
     }
 
   priv->log_params.sample_frequency = CLAMP (priv->log_params.sample_frequency,
