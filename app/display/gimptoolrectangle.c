@@ -3737,14 +3737,26 @@ gimp_tool_rectangle_get_constraints (GimpToolRectangle       *rectangle,
     case GIMP_RECTANGLE_CONSTRAIN_DRAWABLE:
       if (image)
         {
-          GimpItem *item = GIMP_ITEM (gimp_image_get_active_drawable (image));
+          GList *items = gimp_image_get_selected_drawables (image);
+          GList *iter;
 
-          if (item)
+          /* Min and max constraints are respectively the smallest and
+           * highest drawable coordinates.
+           */
+          for (iter = items; iter; iter = iter->next)
             {
-              gimp_item_get_offset (item, min_x, min_y);
-              *max_x = *min_x + gimp_item_get_width  (item);
-              *max_y = *min_y + gimp_item_get_height (item);
+              gint item_min_x;
+              gint item_min_y;
+
+              gimp_item_get_offset (iter->data, &item_min_x, &item_min_y);
+
+              *min_x = MIN (*min_x, item_min_x);
+              *min_y = MIN (*min_y, item_min_y);
+              *max_x = MAX (*max_x, item_min_x + gimp_item_get_width  (iter->data));
+              *max_y = MAX (*max_y, item_min_y + gimp_item_get_height (iter->data));
             }
+
+          g_list_free (items);
         }
       break;
 
@@ -4035,17 +4047,35 @@ gimp_tool_rectangle_constraint_size_set (GimpToolRectangle *rectangle,
         {
         case GIMP_RECTANGLE_CONSTRAIN_DRAWABLE:
           {
-            GimpItem *item = GIMP_ITEM (gimp_image_get_active_layer (image));
+            GList *items = gimp_image_get_selected_layers (image);
+            GList *iter;
 
-            if (! item)
+            width  = 0.0;
+            height = 0.0;
+            for (iter = items; iter; iter = iter->next)
               {
-                width  = 1.0;
-                height = 1.0;
+                if (width == 0.0 || height == 0.0)
+                  {
+                    width  = gimp_item_get_width  (iter->data);
+                    height = gimp_item_get_height (iter->data);
+                  }
+                else if (width  != gimp_item_get_width  (iter->data) ||
+                         height != gimp_item_get_height (iter->data))
+                  {
+                    width  = 0.0;
+                    height = 0.0;
+                    break;
+                  }
               }
-            else
+
+            /* Set constraint to the selected layers' dimensions if all
+             * selected layers have the same dimension. Otherwise set to
+             * image dimensions.
+             */
+            if (width == 0.0 || height == 0.0)
               {
-                width  = gimp_item_get_width  (item);
-                height = gimp_item_get_height (item);
+                width  = gimp_image_get_width  (image);
+                height = gimp_image_get_height (image);
               }
           }
           break;
@@ -4180,15 +4210,10 @@ gimp_tool_rectangle_auto_shrink (GimpToolRectangle *rectangle,
   GimpToolRectanglePrivate *private;
   GimpDisplayShell         *shell;
   GimpImage                *image;
-  GimpPickable             *pickable;
-  gint                      offset_x = 0;
-  gint                      offset_y = 0;
-  gint                      x1, y1;
-  gint                      x2, y2;
-  gint                      shrunk_x;
-  gint                      shrunk_y;
-  gint                      shrunk_width;
-  gint                      shrunk_height;
+  GList                    *pickables = NULL;
+  GList                    *iter;
+  gdouble                   new_x1, new_y1;
+  gdouble                   new_x2, new_y2;
 
   g_return_if_fail (GIMP_IS_TOOL_RECTANGLE (rectangle));
 
@@ -4198,58 +4223,84 @@ gimp_tool_rectangle_auto_shrink (GimpToolRectangle *rectangle,
   image = gimp_display_get_image (shell->display);
 
   if (shrink_merged)
-    {
-      pickable = GIMP_PICKABLE (image);
-
-      x1 = private->x1;
-      y1 = private->y1;
-      x2 = private->x2;
-      y2 = private->y2;
-    }
+    pickables = g_list_prepend (NULL, image);
   else
+    pickables = gimp_image_get_selected_drawables (image);
+
+  if (! pickables)
+    return;
+
+  new_x1 = new_y1 = G_MAXINT;
+  new_x2 = new_y2 = G_MININT;
+  for (iter = pickables; iter; iter = iter->next)
     {
-      pickable = GIMP_PICKABLE (gimp_image_get_active_drawable (image));
+      gint x1, y1;
+      gint x2, y2;
+      gint offset_x = 0;
+      gint offset_y = 0;
+      gint shrunk_x;
+      gint shrunk_y;
+      gint shrunk_width;
+      gint shrunk_height;
 
-      if (! pickable)
-        return;
+      if (GIMP_IS_IMAGE (iter->data))
+        {
+          x1 = private->x1;
+          y1 = private->y1;
+          x2 = private->x2;
+          y2 = private->y2;
+        }
+      else
+        {
+          gimp_item_get_offset (GIMP_ITEM (iter->data), &offset_x, &offset_y);
 
-      gimp_item_get_offset (GIMP_ITEM (pickable), &offset_x, &offset_y);
+          x1 = private->x1 - offset_x;
+          y1 = private->y1 - offset_y;
+          x2 = private->x2 - offset_x;
+          y2 = private->y2 - offset_y;
+        }
 
-      x1 = private->x1 - offset_x;
-      y1 = private->y1 - offset_y;
-      x2 = private->x2 - offset_x;
-      y2 = private->y2 - offset_y;
+      switch (gimp_pickable_auto_shrink (iter->data,
+                                         x1, y1, x2 - x1, y2 - y1,
+                                         &shrunk_x,
+                                         &shrunk_y,
+                                         &shrunk_width,
+                                         &shrunk_height))
+        {
+        case GIMP_AUTO_SHRINK_SHRINK:
+            {
+              new_x1 = MIN (new_x1, offset_x + shrunk_x);
+              new_y1 = MIN (new_y1, offset_y + shrunk_y);
+              new_x2 = MAX (new_x2, offset_x + shrunk_x + shrunk_width);
+              new_y2 = MAX (new_y2, offset_y + shrunk_y + shrunk_height);
+            }
+          break;
+
+        default:
+          break;
+        }
     }
 
-  switch (gimp_pickable_auto_shrink (pickable,
-                                     x1, y1, x2 - x1, y2 - y1,
-                                     &shrunk_x,
-                                     &shrunk_y,
-                                     &shrunk_width,
-                                     &shrunk_height))
+  if (new_x1 != G_MAXINT && new_y1 != G_MAXINT &&
+      new_x2 != G_MININT && new_y2 != G_MININT)
     {
-    case GIMP_AUTO_SHRINK_SHRINK:
-      {
-        GimpRectangleFunction original_function = private->function;
+      GimpRectangleFunction original_function = private->function;
 
-        private->function = GIMP_TOOL_RECTANGLE_AUTO_SHRINK;
+      private->function = GIMP_TOOL_RECTANGLE_AUTO_SHRINK;
 
-        private->x1 = offset_x + shrunk_x;
-        private->y1 = offset_y + shrunk_y;
-        private->x2 = offset_x + shrunk_x + shrunk_width;
-        private->y2 = offset_y + shrunk_y + shrunk_height;
+      private->x1 = new_x1;
+      private->y1 = new_y1;
+      private->x2 = new_x2;
+      private->y2 = new_y2;
 
-        gimp_tool_rectangle_update_int_rect (rectangle);
+      gimp_tool_rectangle_update_int_rect (rectangle);
 
-        gimp_tool_rectangle_change_complete (rectangle);
+      gimp_tool_rectangle_change_complete (rectangle);
 
-        private->function = original_function;
+      private->function = original_function;
 
-        gimp_tool_rectangle_update_options (rectangle);
-      }
-      break;
-
-    default:
-      break;
+      gimp_tool_rectangle_update_options (rectangle);
     }
+
+  g_list_free (pickables);
 }
