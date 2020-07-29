@@ -109,6 +109,7 @@ EXTRA_DIST = \
 	gimppath2svg.py			\
 	svg-contrast.c			\
 	mnemonic-clashes		\
+	performance-log-close-tags.py	\
 	performance-log-coalesce.py	\
 	performance-log-deduce.py	\
 	performance-log-expand.py	\
