@@ -291,6 +291,8 @@ typedef struct _GimpToggleActionEntry        GimpToggleActionEntry;
 
 typedef struct _GimpDialogFactoryEntry       GimpDialogFactoryEntry;
 
+typedef struct _GimpDashboardLogParams       GimpDashboardLogParams;
+
 
 /*  function types  */
 

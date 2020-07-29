@@ -37,15 +37,25 @@
 #include "gimp-intl.h"
 
 
+typedef struct
+{
+  GFile                  *folder;
+  GimpDashboardLogParams  params;
+} DashboardLogDialogInfo;
+
+
 /*  local function prototypes  */
 
-static void   dashboard_log_record_response     (GtkWidget     *dialog,
-                                                 int            response_id,
-                                                 GimpDashboard *dashboard);
+static void                     dashboard_log_record_response      (GtkWidget              *dialog,
+                                                                    int                     response_id,
+                                                                    GimpDashboard          *dashboard);
 
-static void   dashboard_log_add_marker_response (GtkWidget     *dialog,
-                                                 const gchar   *description,
-                                                 GimpDashboard *dashboard);
+static void                     dashboard_log_add_marker_response  (GtkWidget              *dialog,
+                                                                    const gchar            *description,
+                                                                    GimpDashboard          *dashboard);
+
+static DashboardLogDialogInfo * dashboard_log_dialog_info_new      (GimpDashboard          *dashboard);
+static void                     dashboard_log_dialog_info_free     (DashboardLogDialogInfo *info);
 
 
 /*  public functions */
@@ -94,8 +104,13 @@ dashboard_log_record_cmd_callback (GimpAction *action,
 
       if (! dialog)
         {
-          GtkFileFilter *filter;
-          GFile         *folder;
+          GtkFileFilter          *filter;
+          DashboardLogDialogInfo *info;
+          GtkWidget              *hbox;
+          GtkWidget              *hbox2;
+          GtkWidget              *label;
+          GtkWidget              *spinbutton;
+          GtkWidget              *toggle;
 
           dialog = gtk_file_chooser_dialog_new (
             "Record Performance Log", NULL, GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -134,17 +149,68 @@ dashboard_log_record_cmd_callback (GimpAction *action,
 
           gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
 
-          folder = g_object_get_data (G_OBJECT (dashboard),
-                                      "gimp-dashboard-log-record-folder");
+          info = g_object_get_data (G_OBJECT (dashboard),
+                                    "gimp-dashboard-log-dialog-info");
 
-          if (folder)
+          if (! info)
+            {
+              info = dashboard_log_dialog_info_new (dashboard);
+
+              g_object_set_data_full (
+                G_OBJECT (dashboard),
+                "gimp-dashboard-log-dialog-info", info,
+                (GDestroyNotify) dashboard_log_dialog_info_free);
+            }
+
+          if (info->folder)
             {
               gtk_file_chooser_set_current_folder_file (
-                GTK_FILE_CHOOSER (dialog), folder, NULL);
+                GTK_FILE_CHOOSER (dialog), info->folder, NULL);
             }
 
           gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
                                              "gimp-performance.log");
+
+          hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 16);
+          gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), hbox);
+          gtk_widget_show (hbox);
+
+          hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
+          gimp_help_set_help_data (hbox2, _("Log samples per second"), NULL);
+          gtk_box_pack_start (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
+          gtk_widget_show (hbox2);
+
+          label = gtk_label_new_with_mnemonic (_("Sample fre_quency:"));
+          gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+          gtk_widget_show (label);
+
+          spinbutton = gimp_spin_button_new_with_range (1, 1000, 1);
+          gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
+          gtk_widget_show (spinbutton);
+
+          gtk_spin_button_set_value (GTK_SPIN_BUTTON (spinbutton),
+                                     info->params.sample_frequency);
+
+          g_signal_connect (gtk_spin_button_get_adjustment (
+                              GTK_SPIN_BUTTON (spinbutton)),
+                            "value-changed",
+                            G_CALLBACK (gimp_int_adjustment_update),
+                            &info->params.sample_frequency);
+
+          gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+
+          toggle = gtk_check_button_new_with_mnemonic (_("_Backtrace"));
+          gimp_help_set_help_data (toggle, _("Include backtraces in log"),
+                                   NULL);
+          gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+          gtk_widget_show (toggle);
+
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                        info->params.backtrace);
+
+          g_signal_connect (toggle, "toggled",
+                            G_CALLBACK (gimp_toggle_button_update),
+                            &info->params.backtrace);
 
           g_signal_connect (dialog, "response",
                             G_CALLBACK (dashboard_log_record_response),
@@ -253,15 +319,22 @@ dashboard_log_record_response (GtkWidget     *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GFile  *file  = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
-      GError *error = NULL;
+      GFile                  *file;
+      DashboardLogDialogInfo *info;
+      GError                 *error = NULL;
 
-      g_object_set_data_full (G_OBJECT (dashboard),
-                              "gimp-dashboard-log-record-folder",
-                              g_file_get_parent (file),
-                              g_object_unref);
+      file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_dashboard_log_start_recording (dashboard, file, &error))
+      info = g_object_get_data (G_OBJECT (dashboard),
+                                "gimp-dashboard-log-dialog-info");
+
+      g_return_if_fail (info != NULL);
+
+      g_set_object (&info->folder, g_file_get_parent (file));
+
+      if (! gimp_dashboard_log_start_recording (dashboard,
+                                                file, &info->params,
+                                                &error))
         {
           gimp_message_literal (
             gimp_editor_get_ui_manager (GIMP_EDITOR (dashboard))->gimp,
@@ -282,4 +355,23 @@ dashboard_log_add_marker_response (GtkWidget     *dialog,
                                    GimpDashboard *dashboard)
 {
   gimp_dashboard_log_add_marker (dashboard, description);
+}
+
+static DashboardLogDialogInfo *
+dashboard_log_dialog_info_new (GimpDashboard *dashboard)
+{
+  DashboardLogDialogInfo *info = g_slice_new (DashboardLogDialogInfo);
+
+  info->folder = NULL;
+  info->params = *gimp_dashboard_log_get_default_params (dashboard);
+
+  return info;
+}
+
+static void
+dashboard_log_dialog_info_free (DashboardLogDialogInfo *info)
+{
+  g_clear_object (&info->folder);
+
+  g_slice_free (DashboardLogDialogInfo, info);
 }
