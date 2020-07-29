@@ -370,6 +370,9 @@ gimp_backtrace_new (gboolean include_current_thread)
   DWORD          tid;
   gint           i;
 
+  if (! initialized)
+    return NULL;
+
   g_mutex_lock (&mutex);
 
   if (! gimp_backtrace_enumerate_threads ())
