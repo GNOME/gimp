@@ -63,6 +63,10 @@ struct _GimpLinkPrivate
 
   gboolean      broken;
   guint         idle_changed_source;
+
+  gboolean      is_vector;
+  gint          width;
+  gint          height;
 };
 
 static void       gimp_link_finalize       (GObject           *object);
@@ -124,6 +128,8 @@ gimp_link_init (GimpLink *link)
   link->p->file    = NULL;
   link->p->monitor = NULL;
   link->p->broken  = TRUE;
+  link->p->width   = 0;
+  link->p->height  = 0;
 
   link->p->idle_changed_source = 0;
 }
@@ -178,13 +184,17 @@ gimp_link_set_property (GObject      *object,
     case PROP_FILE:
       if (link->p->file)
         g_object_unref (link->p->file);
-      link->p->file = g_value_dup_object (value);
       if (link->p->monitor)
         g_object_unref (link->p->monitor);
+
+      link->p->is_vector = FALSE;
+      link->p->file = g_value_dup_object (value);
+
       if (link->p->file)
         {
-          gchar *basename = g_file_get_basename (link->p->file);
+          gchar *basename;
 
+          basename = g_file_get_basename (link->p->file);
           link->p->monitor = g_file_monitor_file (link->p->file, G_FILE_MONITOR_NONE, NULL, NULL);
           g_signal_connect (link->p->monitor, "changed",
                             G_CALLBACK (gimp_link_file_changed),
@@ -319,6 +329,30 @@ gimp_link_duplicate (GimpLink  *link)
   return gimp_link_new (link->p->gimp, link->p->file);
 }
 
+void
+gimp_link_set_size (GimpLink *link,
+                    gint      width,
+                    gint      height)
+{
+  link->p->width  = width;
+  link->p->height = height;
+}
+
+void
+gimp_link_get_size (GimpLink *link,
+                    gint     *width,
+                    gint     *height)
+{
+  *width  = link->p->width;
+  *height = link->p->height;
+}
+
+gboolean
+gimp_link_is_vector (GimpLink *link)
+{
+  return link->p->is_vector;
+}
+
 GeglBuffer *
 gimp_link_get_buffer (GimpLink      *link,
                       GimpProgress  *progress,
@@ -343,6 +377,7 @@ gimp_link_get_buffer (GimpLink      *link,
                                 * GUI), but not for every re-render.
                                 */
                                GIMP_RUN_NONINTERACTIVE,
+                               &link->p->is_vector,
                                &status, &mime_type, error);
 
       if (image && status == GIMP_PDB_SUCCESS)

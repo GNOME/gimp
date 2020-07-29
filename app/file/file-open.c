@@ -76,6 +76,7 @@ file_open_image (Gimp                *gimp,
                  gboolean             as_new,
                  GimpPlugInProcedure *file_proc,
                  GimpRunMode          run_mode,
+                 gboolean            *file_proc_handles_vector,
                  GimpPDBStatusType   *status,
                  const gchar        **mime_type,
                  GError             **error)
@@ -209,6 +210,9 @@ file_open_image (Gimp                *gimp,
 
       return NULL;
     }
+
+  if (file_proc_handles_vector)
+    *file_proc_handles_vector = file_proc->handles_vector;
 
   if (progress)
     g_object_add_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
@@ -534,6 +538,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
                            as_new,
                            file_proc,
                            run_mode,
+                           NULL,
                            status,
                            &mime_type,
                            error);
@@ -636,7 +641,7 @@ file_open_layers (Gimp                *gimp,
                                FALSE,
                                file_proc,
                                run_mode,
-                               status, &mime_type, error);
+                               NULL, status, &mime_type, error);
 
   if (new_image)
     {

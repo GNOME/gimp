@@ -29,6 +29,7 @@ GimpImage * file_open_image                 (Gimp                *gimp,
                                              gboolean             as_new,
                                              GimpPlugInProcedure *file_proc,
                                              GimpRunMode          run_mode,
+                                             gboolean            *file_proc_handles_vector,
                                              GimpPDBStatusType   *status,
                                              const gchar        **mime_type,
                                              GError             **error);

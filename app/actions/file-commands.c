@@ -843,7 +843,7 @@ file_revert_confirm_response (GtkWidget   *dialog,
                                    GIMP_PROGRESS (display),
                                    file, 0, 0, FALSE, NULL,
                                    GIMP_RUN_INTERACTIVE,
-                                   &status, NULL, &error);
+                                   NULL, &status, NULL, &error);
 
       if (new_image)
         {

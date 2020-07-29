@@ -64,9 +64,14 @@ gboolean     gimp_link_is_broken   (GimpLink       *link,
                                     gboolean        recheck);
 GimpLink   * gimp_link_duplicate   (GimpLink       *link);
 
+void         gimp_link_set_size    (GimpLink       *link,
+                                    gint            width,
+                                    gint            height);
 void         gimp_link_get_size    (GimpLink       *link,
                                     gint           *width,
                                     gint           *height);
+gboolean     gimp_link_is_vector   (GimpLink       *link);
+
 GeglBuffer * gimp_link_get_buffer  (GimpLink       *link,
                                     GimpProgress   *progress,
                                     GError        **error);

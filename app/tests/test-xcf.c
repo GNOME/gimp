@@ -282,6 +282,7 @@ gimp_test_load_image (Gimp  *gimp,
                            FALSE /*as_new*/,
                            proc,
                            GIMP_RUN_NONINTERACTIVE,
+                           NULL, /* file_proc_handles_vector */
                            &unused /*status*/,
                            NULL /*mime_type*/,
                            NULL /*error*/);

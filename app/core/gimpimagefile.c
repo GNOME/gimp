@@ -551,7 +551,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
                                        private->file, size, size,
                                        FALSE, NULL,
                                        GIMP_RUN_NONINTERACTIVE,
-                                       &status, &mime_type, error);
+                                       NULL, &status, &mime_type, error);
 
               if (image)
                 gimp_thumbnail_set_info_from_image (private->thumbnail,
