@@ -25,6 +25,13 @@
 #include "gimpeditor.h"
 
 
+struct _GimpDashboardLogParams
+{
+  gint     sample_frequency;
+  gboolean backtrace;
+};
+
+
 #define GIMP_TYPE_DASHBOARD            (gimp_dashboard_get_type ())
 #define GIMP_DASHBOARD(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DASHBOARD, GimpDashboard))
 #define GIMP_DASHBOARD_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DASHBOARD, GimpDashboardClass))
@@ -56,10 +63,12 @@ GtkWidget                    * gimp_dashboard_new                        (Gimp  
 
 gboolean                       gimp_dashboard_log_start_recording        (GimpDashboard                 *dashboard,
                                                                           GFile                         *file,
+                                                                          const GimpDashboardLogParams  *params,
                                                                           GError                       **error);
 gboolean                       gimp_dashboard_log_stop_recording         (GimpDashboard                 *dashboard,
                                                                           GError                       **error);
 gboolean                       gimp_dashboard_log_is_recording           (GimpDashboard                 *dashboard);
+const GimpDashboardLogParams * gimp_dashboard_log_get_default_params     (GimpDashboard                 *dashboard);
 void                           gimp_dashboard_log_add_marker             (GimpDashboard                 *dashboard,
                                                                           const gchar                   *description);
 

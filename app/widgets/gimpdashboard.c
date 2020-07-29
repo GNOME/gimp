@@ -94,7 +94,10 @@
 #define CPU_ACTIVE_OFF                 /* individual cpu usage is below */ 0.25
 
 #define LOG_VERSION                    1
-#define LOG_SAMPLE_FREQUENCY           10 /* samples per second */
+#define LOG_SAMPLE_FREQUENCY_MIN       1 /* samples per second */
+#define LOG_SAMPLE_FREQUENCY_MAX       1000 /* samples per second */
+#define LOG_DEFAULT_SAMPLE_FREQUENCY   10 /* samples per second */
+#define LOG_DEFAULT_BACKTRACE          TRUE
 
 
 typedef enum
@@ -311,12 +314,11 @@ struct _GimpDashboardPrivate
 
   GOutputStream                *log_output;
   GError                       *log_error;
+  GimpDashboardLogParams        log_params;
   gint64                        log_start_time;
-  gint                          log_sample_frequency;
   gint                          log_n_samples;
   gint                          log_n_markers;
   VariableData                  log_variables[N_VARIABLES];
-  gboolean                      log_include_backtrace;
   GimpBacktrace                *log_backtrace;
   GHashTable                   *log_addresses;
 
@@ -1757,9 +1759,14 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
       update_interval = priv->update_interval * G_TIME_SPAN_SECOND / 1000;
 
       if (priv->log_output)
-        sample_interval = G_TIME_SPAN_SECOND / priv->log_sample_frequency;
+        {
+          sample_interval = G_TIME_SPAN_SECOND /
+                            priv->log_params.sample_frequency;
+        }
       else
-        sample_interval = update_interval;
+        {
+          sample_interval = update_interval;
+        }
 
       end_time = last_sample_time + sample_interval;
 
@@ -3650,7 +3657,7 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                                  "</vars>\n");
     }
 
-  if (priv->log_include_backtrace)
+  if (priv->log_params.backtrace)
     backtrace = gimp_backtrace_new (FALSE);
 
   if (backtrace)
@@ -4257,9 +4264,10 @@ gimp_dashboard_new (Gimp            *gimp,
 }
 
 gboolean
-gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
-                                    GFile          *file,
-                                    GError        **error)
+gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
+                                    GFile                         *file,
+                                    const GimpDashboardLogParams  *params,
+                                    GError                       **error)
 {
   GimpDashboardPrivate  *priv;
   GimpUIManager         *ui_manager;
@@ -4281,6 +4289,27 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
 
   g_return_val_if_fail (! gimp_dashboard_log_is_recording (dashboard), FALSE);
 
+  if (! params)
+    params = gimp_dashboard_log_get_default_params (dashboard);
+
+  priv->log_params = *params;
+
+  if (g_getenv ("GIMP_PERFORMANCE_LOG_SAMPLE_FREQUENCY"))
+    {
+      priv->log_params.sample_frequency =
+        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_SAMPLE_FREQUENCY"));
+    }
+
+  if (g_getenv ("GIMP_PERFORMANCE_LOG_BACKTRACE"))
+    {
+      priv->log_params.backtrace =
+        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_BACKTRACE")) ? 1 : 0;
+    }
+
+  priv->log_params.sample_frequency = CLAMP (priv->log_params.sample_frequency,
+                                             LOG_SAMPLE_FREQUENCY_MIN,
+                                             LOG_SAMPLE_FREQUENCY_MAX);
+
   g_mutex_lock (&priv->mutex);
 
   priv->log_output = G_OUTPUT_STREAM (g_file_replace (file,
@@ -4294,28 +4323,14 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
       return FALSE;
     }
 
-  priv->log_error             = NULL;
-  priv->log_start_time        = g_get_monotonic_time ();
-  priv->log_sample_frequency  = LOG_SAMPLE_FREQUENCY;
-  priv->log_n_samples         = 0;
-  priv->log_n_markers         = 0;
-  priv->log_include_backtrace = TRUE;
-  priv->log_backtrace         = NULL;
-  priv->log_addresses         = g_hash_table_new (NULL, NULL);
+  priv->log_error      = NULL;
+  priv->log_start_time = g_get_monotonic_time ();
+  priv->log_n_samples  = 0;
+  priv->log_n_markers  = 0;
+  priv->log_backtrace  = NULL;
+  priv->log_addresses  = g_hash_table_new (NULL, NULL);
 
-  if (g_getenv ("GIMP_PERFORMANCE_LOG_SAMPLE_FREQUENCY"))
-    {
-      priv->log_sample_frequency =
-        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_SAMPLE_FREQUENCY"));
-
-      priv->log_sample_frequency = CLAMP (priv->log_sample_frequency,
-                                          1, 1000);
-    }
-
-  if (g_getenv ("GIMP_PERFORMANCE_LOG_NO_BACKTRACE"))
-    priv->log_include_backtrace = FALSE;
-
-  if (priv->log_include_backtrace)
+  if (priv->log_params.backtrace)
     has_backtrace = gimp_backtrace_start ();
   else
     has_backtrace = FALSE;
@@ -4331,7 +4346,7 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
                              "<sample-frequency>%d</sample-frequency>\n"
                              "<backtrace>%d</backtrace>\n"
                              "</params>\n",
-                             priv->log_sample_frequency,
+                             priv->log_params.sample_frequency,
                              has_backtrace);
 
   gimp_dashboard_log_printf (dashboard,
@@ -4558,7 +4573,7 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
                              "\n"
                              "</gimp-performance-log>\n");
 
-  if (priv->log_include_backtrace)
+  if (priv->log_params.backtrace)
     gimp_backtrace_stop ();
 
   if (! priv->log_error)
@@ -4610,6 +4625,20 @@ gimp_dashboard_log_is_recording (GimpDashboard *dashboard)
   priv = dashboard->priv;
 
   return priv->log_output != NULL;
+}
+
+const GimpDashboardLogParams *
+gimp_dashboard_log_get_default_params (GimpDashboard *dashboard)
+{
+  static const GimpDashboardLogParams default_params =
+  {
+    .sample_frequency = LOG_DEFAULT_SAMPLE_FREQUENCY,
+    .backtrace        = LOG_DEFAULT_BACKTRACE,
+  };
+
+  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), NULL);
+
+  return &default_params;
 }
 
 void
