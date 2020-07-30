@@ -124,9 +124,9 @@ otherwise.
 
     GIMP normally defers certain information to the end of the log, in order to
     minimize the cost of recording.
-    If the log can't be cleanly finished -- for example, if GIMP crashes or
-    freezes while recording the log -- this information will be missing,
-    rendering the log of limited use.
+    If the log can't be cleanly finished—for example, if GIMP crashes or
+    freezes while recording the log—this information will be missing, rendering
+    the log of limited use.
     In situations like these, a progressive log should be recorded; progressive
     logs include all relevant information at each sample, allowing them to be
     terminated at any time.
