@@ -526,8 +526,10 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_ITEM_SCALE,            /*< desc="Scale item"                     >*/
   GIMP_UNDO_GROUP_ITEM_RESIZE,           /*< desc="Resize item"                    >*/
   GIMP_UNDO_GROUP_LAYER_ADD,             /*< desc="Add layer"                      >*/
+  GIMP_UNDO_GROUP_LAYER_ADD_ALPHA,       /*< desc="Add alpha channel"              >*/
   GIMP_UNDO_GROUP_LAYER_ADD_MASK,        /*< desc="Add layer mask"                 >*/
   GIMP_UNDO_GROUP_LAYER_APPLY_MASK,      /*< desc="Apply layer mask"               >*/
+  GIMP_UNDO_GROUP_LAYER_REMOVE_ALPHA,    /*< desc="Remove alpha channel"           >*/
   GIMP_UNDO_GROUP_LAYER_LOCK_ALPHA,      /*< desc="Lock/Unlock alpha channels"     >*/
   GIMP_UNDO_GROUP_LAYER_OPACITY,         /*< desc="Set layers opacity"             >*/
   GIMP_UNDO_GROUP_LAYER_MODE,            /*< desc="Set layers mode"                >*/

@@ -769,14 +769,12 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       fs             = FALSE;    /*  floating sel           */
   gboolean       ac             = FALSE;    /*  active channel         */
   gboolean       sel            = FALSE;
-  gboolean       alpha          = FALSE;    /*  alpha channel present  */
   gboolean       indexed        = FALSE;    /*  is indexed             */
   gboolean       lock_alpha     = TRUE;
   gboolean       can_lock_alpha = FALSE;
   gboolean       text_layer     = FALSE;
   gboolean       writable       = FALSE;
   gboolean       movable        = FALSE;
-  gboolean       children       = FALSE;
   gboolean       bs_mutable     = FALSE; /* At least 1 selected layers' blend space is mutable.     */
   gboolean       cs_mutable     = FALSE; /* At least 1 selected layers' composite space is mutable. */
   gboolean       cm_mutable     = FALSE; /* At least 1 selected layers' composite mode is mutable.  */
@@ -792,6 +790,8 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       have_writable  = FALSE; /* At least 1 selected layer has no contents lock.   */
   gboolean       have_prev      = FALSE; /* At least 1 selected layer has a previous sibling. */
   gboolean       have_next      = FALSE; /* At least 1 selected layer has a next sibling.     */
+  gboolean       have_alpha     = FALSE; /* At least 1 selected layer has an alpha channel.   */
+  gboolean       have_no_alpha  = FALSE; /* At least 1 selected layer has no alpha channel.   */
 
   gboolean       all_visible        = TRUE;
   gboolean       all_next_visible   = TRUE;
@@ -918,6 +918,11 @@ layers_actions_update (GimpActionGroup *group,
           if (! gimp_item_get_visible (iter->data))
             all_visible = FALSE;
 
+          if (gimp_drawable_has_alpha (iter->data))
+            have_alpha    = TRUE;
+          else
+            have_no_alpha = TRUE;
+
           if (have_masks && have_no_masks            &&
               have_groups && have_no_groups          &&
               have_writable && ! all_writable        &&
@@ -928,7 +933,8 @@ layers_actions_update (GimpActionGroup *group,
               ! prev_mode && ! next_mode             &&
               have_prev && have_next                 &&
               bs_mutable && cs_mutable && cm_mutable &&
-              ! all_visible && ! all_next_visible)
+              ! all_visible && ! all_next_visible    &&
+              have_alpha && have_no_alpha)
             break;
         }
 
@@ -985,12 +991,8 @@ layers_actions_update (GimpActionGroup *group,
           gimp_action_group_set_action_active (group, action, TRUE);
 
           mask           = gimp_layer_get_mask (layer);
-          alpha          = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
           writable       = ! gimp_item_is_content_locked (GIMP_ITEM (layer));
           movable        = ! gimp_item_is_position_locked (GIMP_ITEM (layer));
-
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
-            children = TRUE;
 
           text_layer = gimp_item_is_text_layer (GIMP_ITEM (layer));
         }
@@ -1064,8 +1066,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-crop-to-selection", all_writable && all_movable && sel);
   SET_SENSITIVE ("layers-crop-to-content",   all_writable && all_movable);
 
-  SET_SENSITIVE ("layers-alpha-add",    writable && !children && !fs && !alpha);
-  SET_SENSITIVE ("layers-alpha-remove", writable && !children && !fs &&  alpha);
+  SET_SENSITIVE ("layers-alpha-add",    all_writable && have_no_groups && !fs && have_no_alpha);
+  SET_SENSITIVE ("layers-alpha-remove", all_writable && have_no_groups && !fs && have_alpha);
 
   SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);

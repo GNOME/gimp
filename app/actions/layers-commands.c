@@ -1651,14 +1651,19 @@ layers_alpha_add_cmd_callback (GimpAction *action,
                                gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  return_if_no_layers (image, layers, data);
 
-  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    {
-      gimp_layer_add_alpha (layer);
-      gimp_image_flush (image);
-    }
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD_ALPHA,
+                               _("Add Alpha Channel"));
+
+  for (iter = layers; iter; iter = iter->next)
+    if (! gimp_drawable_has_alpha (iter->data))
+      gimp_layer_add_alpha (iter->data);
+
+  gimp_image_undo_group_end (image);
+  gimp_image_flush (image);
 }
 
 void
@@ -1667,14 +1672,19 @@ layers_alpha_remove_cmd_callback (GimpAction *action,
                                   gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  return_if_no_layers (image, layers, data);
 
-  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    {
-      gimp_layer_remove_alpha (layer, action_data_get_context (data));
-      gimp_image_flush (image);
-    }
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD_ALPHA,
+                               _("Remove Alpha Channel"));
+
+  for (iter = layers; iter; iter = iter->next)
+    if (gimp_drawable_has_alpha (iter->data))
+      gimp_layer_remove_alpha (iter->data, action_data_get_context (data));
+
+  gimp_image_undo_group_end (image);
+  gimp_image_flush (image);
 }
 
 void
