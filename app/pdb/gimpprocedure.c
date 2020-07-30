@@ -492,6 +492,12 @@ gimp_procedure_execute (GimpProcedure   *procedure,
     {
       return_vals = gimp_procedure_get_return_values (procedure, FALSE,
                                                       pdb_error);
+      if (! error)
+        /* If we can't properly propagate the error, at least print it
+         * to standard error stream. This makes debugging easier.
+         */
+        g_printerr ("%s failed to validate arguments: %s\n", G_STRFUNC, pdb_error->message);
+
       g_propagate_error (error, pdb_error);
 
       return return_vals;
