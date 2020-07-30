@@ -92,6 +92,7 @@ static GimpStackTraceMode   stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
 static gchar               *full_prog_name    = NULL;
 static gchar               *backtrace_file    = NULL;
 static gchar               *backup_path       = NULL;
+static GFile               *backup_file       = NULL;
 static guint                log_domain_handler_ids[G_N_ELEMENTS (log_domains)];
 static guint                gegl_handler_id   = 0;
 static guint                global_handler_id = 0;
@@ -151,6 +152,8 @@ errors_init (Gimp               *gimp,
   backup_path = g_build_filename (gimp_directory (), "backups",
                                   "backup-XXX.xcf", NULL);
 
+  backup_file = g_file_new_for_path (backup_path);
+
   for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
     log_domain_handler_ids[i] = g_log_set_handler (log_domains[i],
                                                    G_LOG_LEVEL_WARNING |
@@ -187,6 +190,8 @@ errors_exit (void)
     g_free (full_prog_name);
   if (backup_path)
     g_free (backup_path);
+  if (backup_file)
+    g_object_unref (backup_file);
 }
 
 GList *
@@ -496,8 +501,9 @@ gimp_eek (const gchar *reason,
                                               GIMP_TYPE_IMAGE,        image,
                                               G_TYPE_INT,             0,
                                               GIMP_TYPE_OBJECT_ARRAY, NULL,
-                                              G_TYPE_FILE,            g_file_new_for_path (backup_path),
+                                              G_TYPE_FILE,            backup_file,
                                               G_TYPE_NONE);
+          g_rename (g_file_peek_path (backup_file), backup_path);
           i++;
         }
     }
