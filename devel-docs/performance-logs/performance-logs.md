@@ -107,7 +107,7 @@ the file-selection dialog.
 There should normally be no reason to change the parameters, unless noted
 otherwise.
 
-![Performance-log parameters](log-parameters.png)
+![Performance-log parameters](performance-log-parameters.png)
 
   - *Sample Frequency:*
     The number of program-state samples per second.
