@@ -11,6 +11,7 @@ report performance-related issues.
 
   - [1. Recording Performance Logs](#1-recording-performance-logs)
     - [1.1. Event Markers](#11-event-markers)
+    - [1.2. Log Parameters](#12-log-parameters)
   - [2. Reporting Performance-Related Issues](#2-reporting-performance-related-issues)
   - [3. What Information is Contained in the Log?](#3-what-information-is-contained-in-the-log)
   - [4. Viewing Performance Logs](#4-viewing-performance-logs)
@@ -33,7 +34,6 @@ report performance-related issues.
       - [4.3.1. Searching Samples](#431-searching-samples)
     - [4.4. History Navigation](#44-history-navigation)
     - [4.5. Environment Variables](#45-environment-variables)
-  - [5. Performance-Log Parameters](#5-performance-log-parameters)
 
 ## 1. Recording Performance Logs
 
@@ -69,6 +69,11 @@ At this point, GIMP will perform any necessary final steps, which may take a
 while (usually, no more than a few seconds).
 At the end of this process, the log is ready.
 
+*Note:*
+In situations where you can't cleanly stop recording the log, such as
+when GIMP crashes or freezes in the middle of the process, make sure to record
+a *progressive* log, as described in [section *1.2*](#12-log-parameters).
+
 ### 1.1. Event Markers
 
 When the recorded task is made up of multiple steps, it is useful to have an
@@ -95,6 +100,39 @@ number (this is especially useful for empty event markers.)
 The number of the next event marker (the one that will be added when the button
 is clicked) is displayed on the *Add Marker* button.
 
+### 1.2. Log Parameters
+
+When creating a performance log, several parameters can be set at the bottom of
+the file-selection dialog.
+There should normally be no reason to change the parameters, unless noted
+otherwise.
+
+![Performance-log parameters](log-parameters.png)
+
+  - *Sample Frequency:*
+    The number of program-state samples per second.
+    Higher values improve the resolution of the log, while making the recording
+    itself more expensive.
+
+  - *Backtrace:*
+    Whether or not to include backtraces in the log.
+    Backtraces capture the code-paths taken while recording the log, and should
+    normally be included.
+
+  - *Progressive:*
+    Whether or not to record a progressive log.
+
+    GIMP normally defers certain information to the end of the log, in order to
+    minimize the cost of recording.
+    If the log can't be cleanly finished -- for example, if GIMP crashes or
+    freezes while recording the log -- this information will be missing,
+    rendering the log of limited use.
+    In situations like these, a progressive log should be recorded; progressive
+    logs include all relevant information at each sample, allowing them to be
+    terminated at any time.
+
+    Progressive logs may incur a higher overhead while recording.
+
 ## 2. Reporting Performance-Related Issues
 
 ![Reporting a performance-related issue](new-performance-issue.png)
@@ -119,7 +157,7 @@ also be very helpful.
 
 The log consists mainly of a series of periodic *samples* of the program state.
 (The default sampling rate is 10 samples per second; see
-[section *5*](#5-performance-log-parameters) for a way to modify this value.)
+[section *1.2*](#12-log-parameters) for a way to modify this value.)
 Each sample contains the values of all the *instrumentation variables*
 displayed in the Dashboard.
 Additionally, on supported platforms, each sample contains a full *program
@@ -234,7 +272,7 @@ associated with any sample, including:
 
   - *Log Parameters*:
     Various parameters relating to the performance log itself.
-    See [section *5*](#5-performance-log-parameters) for more information.
+    See [section *1.2*](#12-log-parameters) for more information.
 
   - *GIMP Version*:
     Verbose GIMP version information, as reported by `gimp -v`.
@@ -606,6 +644,7 @@ The following environment variables are used by the viewer:
     If the variable is not defined, a default text editor is used.
 
 ## 5. Performance-Log Parameters
+
 
 A number of parameters affect performance-log generation.
 They may be currently specified as environment variables for GIMP:

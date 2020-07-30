@@ -4,6 +4,7 @@ EXTRA_DIST = \
 	dashboard-add-marker.png	\
 	dashboard-start-recording.png	\
 	dashboard-stop-recording.png	\
+	performance-log-parameters.png	\
 	new-performance-issue.png	\
 	performance-log-viewer.png	\
 	performance-logs.md
