@@ -118,6 +118,55 @@ flatpak update --commit=<hash-of-build> org.gimp.GIMP
 
 Then just run your older GIMP!
 
+## Debugging on flatpak
+
+If you want to inspect the sandbox environment, you can do so by
+specifying a custom shell instead of the GIMP binary with the following
+command:
+
+```
+flatpak run --command=bash org.gimp.GIMP
+```
+
+This will run the exact same environment as the flatpak, which should
+also be identical on all machines.
+
+Alternatively you can run the GIMP Flatpak using the GNOME SDK as
+runtime (instead of the .Platform) with the `--devel` option. In
+particular, it gives you access to a few additional debug tools, such as
+`gdb`. Therefore running GIMP with --devel will give better stacktrace,
+or you can run explicitly GIMP inside GDB.
+
+Additionally to install debug symbols in the sandbox, run:
+
+```
+flatpak install flathub org.gimp.GIMP.Debug
+flatpak install flathub org.gnome.Sdk.Debug
+```
+
+Finally even with reporter trace without debug symbols (yet debug
+symbols installed on your side), if you make sure you use exactly the
+same flatpak commit as the reporter (see `Testing older GIMP versions`
+section), you are ensured to use the same binaries. Hence you can trace
+back the code line from an offset.
+
+For instance, say that your trace has this output:
+
+```
+gimp-2.10(file_open_image+0x4e8)[0x5637e0574738]
+```
+
+Here is how you can find the proper code line in the Flatpak (provided
+you use the right flatpak commit):
+
+```
+$ flatpak install flathub org.gimp.GIMP.Debug org.gnome.Sdk.Debug
+$ flatpak run --devel --command=bash org.gimp.GIMP
+(flatpak) $ gdb /app/bin/gimp-2.10
+(gdb) info line *(file_open_image+0x4e8)
+Line 216 of "file-open.c" starts at address 0x4d5738 <file_open_image+1256> and ends at 0x4d5747 <file_open_image+1271>.
+```
+
 ## Debugging icons ##
 
 See file `devel-docs/icons.txt` to learn more about our icons, and in
