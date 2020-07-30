@@ -643,22 +643,4 @@ The following environment variables are used by the viewer:
     and line number, respectively.
     If the variable is not defined, a default text editor is used.
 
-## 5. Performance-Log Parameters
-
-
-A number of parameters affect performance-log generation.
-They may be currently specified as environment variables for GIMP:
-
-  - *`sample-frequency`*:
-    The log's sampling frequency, in samples per second.
-    The default value is 10 samples per second, but it can be changed using the
-    `GIMP_PERFORMANCE_LOG_SAMPLE_FREQUENCY` environment variable.
-
-  - *`backtrace`*:
-    Specifies whether backtraces are included in the log.
-    By default, backtraces are included on supported platforms (currently,
-    Linux and Windows).
-    Backtraces may be suppressed by defining the
-    `GIMP_PERFORMANCE_LOG_NO_BACKTRACE` environment variable.
-
 [new-performance-issue]: https://gitlab.gnome.org/GNOME/gimp/issues/new?issuable_template=performance
