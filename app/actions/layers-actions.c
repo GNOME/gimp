@@ -773,8 +773,6 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       lock_alpha     = TRUE;
   gboolean       can_lock_alpha = FALSE;
   gboolean       text_layer     = FALSE;
-  gboolean       writable       = FALSE;
-  gboolean       movable        = FALSE;
   gboolean       bs_mutable     = FALSE; /* At least 1 selected layers' blend space is mutable.     */
   gboolean       cs_mutable     = FALSE; /* At least 1 selected layers' composite space is mutable. */
   gboolean       cm_mutable     = FALSE; /* At least 1 selected layers' composite mode is mutable.  */
@@ -990,9 +988,7 @@ layers_actions_update (GimpActionGroup *group,
 
           gimp_action_group_set_action_active (group, action, TRUE);
 
-          mask           = gimp_layer_get_mask (layer);
-          writable       = ! gimp_item_is_content_locked (GIMP_ITEM (layer));
-          movable        = ! gimp_item_is_position_locked (GIMP_ITEM (layer));
+          mask       = gimp_layer_get_mask (layer);
 
           text_layer = gimp_item_is_text_layer (GIMP_ITEM (layer));
         }
@@ -1059,9 +1055,9 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-to-vectors",    text_layer && !ac);
   SET_VISIBLE   ("layers-text-along-vectors", text_layer && !ac);
 
-  SET_SENSITIVE ("layers-resize",          writable && movable && !ac);
+  SET_SENSITIVE ("layers-resize",          n_layers == 1 && all_writable && all_movable && !ac);
   SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac);
-  SET_SENSITIVE ("layers-scale",           writable && movable && !ac);
+  SET_SENSITIVE ("layers-scale",           n_layers == 1 && all_writable && all_movable && !ac);
 
   SET_SENSITIVE ("layers-crop-to-selection", all_writable && all_movable && sel);
   SET_SENSITIVE ("layers-crop-to-content",   all_writable && all_movable);

@@ -1061,12 +1061,17 @@ layers_resize_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GimpLayer *layer;
+  GList     *layers;
   GtkWidget *widget;
   GtkWidget *dialog;
-  return_if_no_layer (image, layer, data);
+  return_if_no_layers (image, layers, data);
   return_if_no_widget (widget, data);
 
 #define RESIZE_DIALOG_KEY "gimp-resize-dialog"
+
+  g_return_if_fail (g_list_length (layers) == 1);
+
+  layer = layers->data;
 
   dialog = dialogs_get_dialog (G_OBJECT (layer), RESIZE_DIALOG_KEY);
 
@@ -1131,13 +1136,18 @@ layers_scale_cmd_callback (GimpAction *action,
                            gpointer    data)
 {
   GimpImage *image;
+  GList     *layers;
   GimpLayer *layer;
   GtkWidget *widget;
   GtkWidget *dialog;
-  return_if_no_layer (image, layer, data);
+  return_if_no_layers (image, layers, data);
   return_if_no_widget (widget, data);
 
 #define SCALE_DIALOG_KEY "gimp-scale-dialog"
+
+  g_return_if_fail (g_list_length (layers) == 1);
+
+  layer = layers->data;
 
   dialog = dialogs_get_dialog (G_OBJECT (layer), SCALE_DIALOG_KEY);
 
