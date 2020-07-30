@@ -765,7 +765,6 @@ layers_actions_update (GimpActionGroup *group,
   GList         *layers         = NULL;
   GList         *iter           = NULL;
   GimpLayer     *layer          = NULL;
-  GimpLayerMask *mask           = NULL;     /*  layer mask             */
   gboolean       fs             = FALSE;    /*  floating sel           */
   gboolean       ac             = FALSE;    /*  active channel         */
   gboolean       sel            = FALSE;
@@ -988,8 +987,6 @@ layers_actions_update (GimpActionGroup *group,
 
           gimp_action_group_set_action_active (group, action, TRUE);
 
-          mask       = gimp_layer_get_mask (layer);
-
           text_layer = gimp_item_is_text_layer (GIMP_ITEM (layer));
         }
     }
@@ -1093,7 +1090,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-mask-show",    n_layers > 0 && !fs && !ac && have_masks);
   SET_SENSITIVE ("layers-mask-disable", n_layers > 0 && !fs && !ac && have_masks);
 
-  SET_ACTIVE ("layers-mask-edit",    mask && gimp_layer_get_edit_mask (layer));
+  SET_ACTIVE ("layers-mask-edit",    n_layers == 1 && have_masks && gimp_layer_get_edit_mask (layers->data));
   SET_ACTIVE ("layers-mask-show",    all_masks_shown);
   SET_ACTIVE ("layers-mask-disable", all_masks_disabled);
 

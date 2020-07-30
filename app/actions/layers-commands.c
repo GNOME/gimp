@@ -1502,16 +1502,19 @@ layers_mask_edit_cmd_callback (GimpAction *action,
                                gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  gboolean   active = g_variant_get_boolean (value);
+  return_if_no_layers (image, layers, data);
 
-  if (gimp_layer_get_mask (layer))
-    {
-      gboolean active = g_variant_get_boolean (value);
+  /* Multiple-layer selection cannot edit masks. */
+  active = active && (g_list_length (layers) == 1);
 
-      gimp_layer_set_edit_mask (layer, active);
-      gimp_image_flush (image);
-    }
+  for (iter = layers; iter; iter = iter->next)
+    if (gimp_layer_get_mask (iter->data))
+      gimp_layer_set_edit_mask (iter->data, active);
+
+  gimp_image_flush (image);
 }
 
 void
