@@ -248,13 +248,13 @@ static const GimpActionEntry layers_actions[] =
 
   { "layers-crop-to-selection", GIMP_ICON_TOOL_CROP,
     NC_("layers-action", "_Crop to Selection"), NULL,
-    NC_("layers-action", "Crop the layer to the extents of the selection"),
+    NC_("layers-action", "Crop the layers to the extents of the selection"),
     layers_crop_to_selection_cmd_callback,
     GIMP_HELP_LAYER_CROP },
 
   { "layers-crop-to-content", GIMP_ICON_TOOL_CROP,
     NC_("layers-action", "Crop to C_ontent"), NULL,
-    NC_("layers-action", "Crop the layer to the extents of its content (remove empty borders from the layer)"),
+    NC_("layers-action", "Crop the layers to the extents of their content (remove empty borders from the layer)"),
     layers_crop_to_content_cmd_callback,
     GIMP_HELP_LAYER_CROP },
 
@@ -1061,8 +1061,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac);
   SET_SENSITIVE ("layers-scale",           writable && movable && !ac);
 
-  SET_SENSITIVE ("layers-crop-to-selection", writable && movable && sel);
-  SET_SENSITIVE ("layers-crop-to-content",   writable && movable);
+  SET_SENSITIVE ("layers-crop-to-selection", all_writable && all_movable && sel);
+  SET_SENSITIVE ("layers-crop-to-content",   all_writable && all_movable);
 
   SET_SENSITIVE ("layers-alpha-add",    writable && !children && !fs && !alpha);
   SET_SENSITIVE ("layers-alpha-remove", writable && !children && !fs &&  alpha);

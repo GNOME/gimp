@@ -1176,12 +1176,13 @@ layers_crop_to_selection_cmd_callback (GimpAction *action,
                                        gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
+  GList     *layers;
+  GList     *iter;
   GtkWidget *widget;
+  gchar     *desc;
   gint       x, y;
   gint       width, height;
-  gint       off_x, off_y;
-  return_if_no_layer (image, layer, data);
+  return_if_no_layers (image, layers, data);
   return_if_no_widget (widget, data);
 
   if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
@@ -1194,16 +1195,25 @@ layers_crop_to_selection_cmd_callback (GimpAction *action,
       return;
     }
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-  off_x -= x;
-  off_y -= y;
+  desc = g_strdup_printf (ngettext ("Crop Layer to Selection",
+                                    "Crop %d Layers to Selection",
+                                    g_list_length (layers)),
+                          g_list_length (layers));
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE, desc);
+  g_free (desc);
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                               _("Crop Layer to Selection"));
+  for (iter = layers; iter; iter = iter->next)
+    {
+      gint off_x, off_y;
 
-  gimp_item_resize (GIMP_ITEM (layer),
-                    action_data_get_context (data), GIMP_FILL_TRANSPARENT,
-                    width, height, off_x, off_y);
+      gimp_item_get_offset (GIMP_ITEM (iter->data), &off_x, &off_y);
+      off_x -= x;
+      off_y -= y;
+
+      gimp_item_resize (GIMP_ITEM (iter->data),
+                        action_data_get_context (data), GIMP_FILL_TRANSPARENT,
+                        width, height, off_x, off_y);
+    }
 
   gimp_image_undo_group_end (image);
   gimp_image_flush (image);
@@ -1215,45 +1225,74 @@ layers_crop_to_content_cmd_callback (GimpAction *action,
                                      gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
+  GList     *layers;
+  GList     *iter;
   GtkWidget *widget;
+  gchar     *desc;
   gint       x, y;
   gint       width, height;
-  return_if_no_layer (image, layer, data);
+  gint       n_croppable = 0;
+  return_if_no_layers (image, layers, data);
   return_if_no_widget (widget, data);
 
-  switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (layer),
-                                     0, 0,
-                                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                                     gimp_item_get_height (GIMP_ITEM (layer)),
-                                     &x, &y, &width, &height))
+  for (iter = layers; iter; iter = iter->next)
     {
-    case GIMP_AUTO_SHRINK_SHRINK:
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                                   _("Crop Layer to Content"));
+      switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (iter->data),
+                                         0, 0,
+                                         gimp_item_get_width  (iter->data),
+                                         gimp_item_get_height (iter->data),
+                                         &x, &y, &width, &height))
+        {
+        case GIMP_AUTO_SHRINK_SHRINK:
+          n_croppable++;
+          break;
 
-      gimp_item_resize (GIMP_ITEM (layer),
-                        action_data_get_context (data), GIMP_FILL_TRANSPARENT,
-                        width, height, -x, -y);
-
-      gimp_image_undo_group_end (image);
-      gimp_image_flush (image);
-      break;
-
-    case GIMP_AUTO_SHRINK_EMPTY:
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_INFO,
-                            _("Cannot crop because the active layer "
-                              "has no content."));
-      break;
-
-    case GIMP_AUTO_SHRINK_UNSHRINKABLE:
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_INFO,
-                            _("Cannot crop because the active layer "
-                              "is already cropped to its content."));
-      break;
+        case GIMP_AUTO_SHRINK_EMPTY:
+          /* Cannot crop because the layer has no content. */
+        case GIMP_AUTO_SHRINK_UNSHRINKABLE:
+          /* Cannot crop because the active layer is already cropped to
+           * its content. */
+          break;
+        }
     }
+
+  if (n_croppable == 0)
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_INFO,
+                            _("Cannot crop because none of the selected"
+                              " layers have content or they are already"
+                              " cropped to their content."));
+      return;
+    }
+
+  desc = g_strdup_printf (ngettext ("Crop Layer to Content",
+                                    "Crop %d Layers to Content",
+                                    n_croppable),
+                          n_croppable);
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE, desc);
+  g_free (desc);
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (iter->data),
+                                         0, 0,
+                                         gimp_item_get_width  (iter->data),
+                                         gimp_item_get_height (iter->data),
+                                         &x, &y, &width, &height))
+        {
+        case GIMP_AUTO_SHRINK_SHRINK:
+          gimp_item_resize (iter->data,
+                            action_data_get_context (data), GIMP_FILL_TRANSPARENT,
+                            width, height, -x, -y);
+
+          break;
+        default:
+          break;
+        }
+    }
+  gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
 }
 
 void
