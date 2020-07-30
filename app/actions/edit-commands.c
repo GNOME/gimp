@@ -482,15 +482,28 @@ edit_clear_cmd_callback (GimpAction *action,
                          GVariant   *value,
                          gpointer    data)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  return_if_no_drawable (image, drawable, data);
+  GimpImage *image;
+  GList     *drawables;
+  GList     *iter;
 
-  if (! check_drawable_alpha (drawable, data))
-    return;
+  return_if_no_drawables (image, drawables, data);
 
-  gimp_drawable_edit_clear (drawable, action_data_get_context (data));
+  for (iter = drawables; iter; iter = iter->next)
+    /* Return if any has a locked alpha. */
+    if (! check_drawable_alpha (iter->data, data))
+      return;
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
+                               _("Clear"));
+
+  for (iter = drawables; iter; iter = iter->next)
+    if (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)) &&
+        ! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
+      gimp_drawable_edit_clear (iter->data, action_data_get_context (data));
+
+  gimp_image_undo_group_end (image);
   gimp_image_flush (image);
+  g_list_free (drawables);
 }
 
 void

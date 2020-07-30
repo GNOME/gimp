@@ -295,10 +295,27 @@ edit_actions_update (GimpActionGroup *group,
   gboolean      children     = FALSE;
   gboolean      undo_enabled = FALSE;
 
+  gboolean      have_no_groups = FALSE; /* At least 1 selected layer is not a group.         */
+  gboolean      have_writable  = FALSE; /* At least 1 selected layer has no contents lock.   */
+
   if (image)
     {
+      GList *iter;
+
       drawables = gimp_image_get_selected_drawables (image);
       drawable = gimp_image_get_active_drawable (image);
+
+      for (iter = drawables; iter; iter = iter->next)
+        {
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+            have_no_groups = TRUE;
+
+          if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
+            have_writable = TRUE;
+
+          if (have_no_groups && have_writable)
+            break;
+        }
 
       if (drawable)
         {
@@ -372,7 +389,7 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-named-copy-visible", drawable);
   /*             "edit-named-paste" is always active */
 
-  SET_SENSITIVE ("edit-clear",              writable && !children);
+  SET_SENSITIVE ("edit-clear",              have_writable && have_no_groups);
   SET_SENSITIVE ("edit-fill-fg",            writable && !children);
   SET_SENSITIVE ("edit-fill-bg",            writable && !children);
   SET_SENSITIVE ("edit-fill-pattern",       writable && !children);
