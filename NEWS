@@ -64,6 +64,27 @@ Plug-ins:
     to know the right compression from other flags. This allows to
     recover invalid DDS files exported by other software.
 
+Debugging:
+
+  - Add progressive performance logs: progressive logs contain complete
+    information after each recorded sample, by writing partial address
+    maps at each sample, containing all new addresses introduced by the
+    sample.
+    This allows recording complete logs even in cases where they can't
+    be properly terminated, such as when GIMP crashes or freezes in the
+    middle of the log.
+    Progressive logs are disabled by default, since they potentially
+    increase the sampling cost. They can be enabled through a toggle
+    in the log file-dialog, or through GIMP_PERFORMANCE_LOG_PROGRESSIVE
+    environment variable.
+    Performance log viewer can now process progressive performance logs
+    too.
+  - Allow controlling performance-log parameters through the UI.
+
+Build:
+
+  - new `distcheck` step in Continuous Integration.
+
 Overview of Changes from GIMP 2.10.18 to GIMP 2.10.20
 =====================================================
 
