@@ -171,11 +171,11 @@ dashboard_log_record_cmd_callback (GimpAction *action,
           gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
                                              "gimp-performance.log");
 
-          hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 16);
+          hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
           gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), hbox);
           gtk_widget_show (hbox);
 
-          hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
+          hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
           gimp_help_set_help_data (hbox2, _("Log samples per second"), NULL);
           gtk_box_pack_start (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
           gtk_widget_show (hbox2);
