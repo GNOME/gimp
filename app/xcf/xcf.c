@@ -154,7 +154,7 @@ xcf_init (Gimp *gimp)
                                g_param_spec_int ("n-drawables",
                                                  "Num drawables",
                                                  "Number of drawables",
-                                                 1, G_MAXINT, 1,
+                                                 0, G_MAXINT, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_object_array ("drawables",
