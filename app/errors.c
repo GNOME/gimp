@@ -474,12 +474,9 @@ gimp_eek (const gchar *reason,
       for (; iter && i < 1000; iter = iter->next)
         {
           GimpImage *image = iter->data;
-          GimpItem  *item;
 
           if (! gimp_image_is_dirty (image))
             continue;
-
-          item = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
           /* This is a trick because we want to avoid any memory
            * allocation when the process is abnormally terminated.
@@ -495,11 +492,11 @@ gimp_eek (const gchar *reason,
                                               gimp_get_user_context (the_errors_gimp),
                                               NULL, NULL,
                                               "gimp-xcf-save",
-                                              GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
-                                              GIMP_TYPE_IMAGE,    image,
-                                              GIMP_TYPE_DRAWABLE, item,
-                                              G_TYPE_STRING,      backup_path,
-                                              G_TYPE_STRING,      backup_path,
+                                              GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
+                                              GIMP_TYPE_IMAGE,        image,
+                                              G_TYPE_INT,             0,
+                                              GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                              G_TYPE_FILE,            g_file_new_for_path (backup_path),
                                               G_TYPE_NONE);
           i++;
         }
