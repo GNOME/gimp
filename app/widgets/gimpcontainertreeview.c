@@ -1589,7 +1589,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                           gtk_widget_error_bell (widget);
                         }
                     }
-                  else if (! toggled_cell && bevent->type == GDK_BUTTON_RELEASE &&
+                  else if (! toggled_cell &&
                            ! (bevent->state & gimp_get_all_modifiers_mask ()))
                     {
                       /* Only activate if we're not in a toggled cell
