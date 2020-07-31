@@ -287,12 +287,9 @@ edit_actions_update (GimpActionGroup *group,
 {
   GimpImage    *image        = action_data_get_image (data);
   GimpDisplay  *display      = action_data_get_display (data);
-  GimpDrawable *drawable     = NULL;
   GList        *drawables    = NULL;
   gchar        *undo_name    = NULL;
   gchar        *redo_name    = NULL;
-  gboolean      writable     = FALSE;
-  gboolean      children     = FALSE;
   gboolean      undo_enabled = FALSE;
 
   gboolean      have_no_groups = FALSE; /* At least 1 selected layer is not a group.         */
@@ -303,7 +300,6 @@ edit_actions_update (GimpActionGroup *group,
       GList *iter;
 
       drawables = gimp_image_get_selected_drawables (image);
-      drawable = gimp_image_get_active_drawable (image);
 
       for (iter = drawables; iter; iter = iter->next)
         {
@@ -315,14 +311,6 @@ edit_actions_update (GimpActionGroup *group,
 
           if (have_no_groups && have_writable)
             break;
-        }
-
-      if (drawable)
-        {
-          writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawable));
-
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-            children = TRUE;
         }
 
       undo_enabled = gimp_image_undo_is_enabled (image);
@@ -374,7 +362,7 @@ edit_actions_update (GimpActionGroup *group,
   g_free (undo_name);
   g_free (redo_name);
 
-  SET_SENSITIVE ("edit-cut",                         writable && !children);
+  SET_SENSITIVE ("edit-cut",                         have_writable && have_no_groups);
   SET_SENSITIVE ("edit-copy",                        drawables);
   SET_SENSITIVE ("edit-copy-visible",                image);
   /*             "edit-paste" is always active */
@@ -384,9 +372,9 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-paste-as-new-layer",          image);
   SET_SENSITIVE ("edit-paste-as-new-layer-in-place", image);
 
-  SET_SENSITIVE ("edit-named-cut",          writable && !children);
-  SET_SENSITIVE ("edit-named-copy",         drawable);
-  SET_SENSITIVE ("edit-named-copy-visible", drawable);
+  SET_SENSITIVE ("edit-named-cut",          have_writable && have_no_groups);
+  SET_SENSITIVE ("edit-named-copy",         drawables);
+  SET_SENSITIVE ("edit-named-copy-visible", drawables);
   /*             "edit-named-paste" is always active */
 
   SET_SENSITIVE ("edit-clear",              have_writable && have_no_groups);
