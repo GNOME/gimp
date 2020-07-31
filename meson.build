@@ -619,14 +619,6 @@ have_print = get_option('print')
 
 have_doc_shooter= x11_target
 
-if get_option('screenshot').disabled()
-  have_screenshot = false
-elif get_option('screenshot').enabled() and not x11_target
-  error('Printing requires x libs')
-else
-  have_screenshot = x11_target
-endif
-
 ################################################################################
 # Plugins (optional dependencies)
 

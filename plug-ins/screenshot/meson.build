@@ -1,4 +1,4 @@
-if have_screenshot
+plugin_name = 'screenshot'
 
 plugin_sources = [
   'screenshot-freedesktop.c',
@@ -24,5 +24,3 @@ screenshot = executable('screenshot',
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,
 )
-
-endif

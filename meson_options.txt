@@ -43,7 +43,6 @@ option('mng',               type: 'feature', value: 'auto', description: 'Mng su
 option('openexr',           type: 'feature', value: 'auto', description: 'Openexr support')
 option('png',               type: 'feature', value: 'auto', description: 'PNG support')
 option('print',             type: 'boolean', value: true,   description: 'Print support')
-option('screenshot',        type: 'feature', value: 'auto', description: 'Screensh')
 option('tiff',              type: 'feature', value: 'auto', description: 'TIFF support')
 option('vala-plugins',      type: 'feature', value: 'auto', description: 'Build VAPI and Vala plugins')
 option('webkit',            type: 'feature', value: 'auto', description: 'Help browser and webpage plugins')
