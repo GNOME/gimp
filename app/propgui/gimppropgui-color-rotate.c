@@ -146,6 +146,8 @@ gimp_prop_angle_range_box_new (GObject     *config,
                     G_CALLBACK (select_all_clicked),
                     dial);
 
+  gtk_widget_show (main_hbox);
+
   return main_hbox;
 }
 

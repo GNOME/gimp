@@ -949,6 +949,8 @@ gimp_prop_angle_range_dial_new (GObject     *config,
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 
+  gtk_widget_show (dial);
+
   return dial;
 }
 
@@ -1062,6 +1064,8 @@ gimp_prop_range_new (GObject     *config,
 
   if (sorted)
     gimp_gtk_adjustment_chain (adjustment1, adjustment2);
+
+  gtk_widget_show (vbox);
 
   return vbox;
 }
