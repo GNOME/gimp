@@ -512,11 +512,12 @@ edit_fill_cmd_callback (GimpAction *action,
                         gpointer    data)
 {
   GimpImage       *image;
-  GimpDrawable    *drawable;
+  GList           *drawables;
+  GList           *iter;
   GimpFillType     fill_type;
   GimpFillOptions *options;
   GError          *error = NULL;
-  return_if_no_drawable (image, drawable, data);
+  return_if_no_drawables (image, drawables, data);
 
   fill_type = (GimpFillType) g_variant_get_int32 (value);
 
@@ -526,7 +527,13 @@ edit_fill_cmd_callback (GimpAction *action,
                                           action_data_get_context (data),
                                           fill_type, &error))
     {
-      gimp_drawable_edit_fill (drawable, options, NULL);
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
+                                   gimp_fill_options_get_undo_desc (options));
+
+      for (iter = drawables; iter; iter = iter->next)
+        gimp_drawable_edit_fill (iter->data, options, NULL);
+
+      gimp_image_undo_group_end (image);
       gimp_image_flush (image);
     }
   else

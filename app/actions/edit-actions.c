@@ -390,9 +390,9 @@ edit_actions_update (GimpActionGroup *group,
   /*             "edit-named-paste" is always active */
 
   SET_SENSITIVE ("edit-clear",              have_writable && have_no_groups);
-  SET_SENSITIVE ("edit-fill-fg",            writable && !children);
-  SET_SENSITIVE ("edit-fill-bg",            writable && !children);
-  SET_SENSITIVE ("edit-fill-pattern",       writable && !children);
+  SET_SENSITIVE ("edit-fill-fg",            have_writable && have_no_groups);
+  SET_SENSITIVE ("edit-fill-bg",            have_writable && have_no_groups);
+  SET_SENSITIVE ("edit-fill-pattern",       have_writable && have_no_groups);
 
 #undef SET_LABEL
 #undef SET_SENSITIVE
