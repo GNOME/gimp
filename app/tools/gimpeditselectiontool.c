@@ -980,13 +980,15 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
   GimpUndo          *undo;
   gboolean           push_undo      = TRUE;
   GimpImage         *image          = gimp_display_get_image (display);
-  GimpItem          *item           = NULL;
+  GimpItem          *active_item    = NULL;
+  GList             *selected_items = NULL;
   GimpTranslateMode  edit_mode      = GIMP_TRANSLATE_MODE_MASK;
   GimpUndoType       undo_type      = GIMP_UNDO_GROUP_MASK;
   const gchar       *undo_desc      = NULL;
   GdkModifierType    extend_mask    = gimp_get_extend_selection_mask ();
   const gchar       *null_message   = NULL;
   const gchar       *locked_message = NULL;
+  GList             *iter;
   gint               velocity;
 
   /* bail out early if it is not an arrow key event */
@@ -1047,20 +1049,20 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
   switch (translate_type)
     {
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      item = GIMP_ITEM (gimp_image_get_mask (image));
+      active_item = GIMP_ITEM (gimp_image_get_mask (image));
 
-      if (gimp_channel_is_empty (GIMP_CHANNEL (item)))
-        item = NULL;
+      if (gimp_channel_is_empty (GIMP_CHANNEL (active_item)))
+        active_item = NULL;
 
       edit_mode = GIMP_TRANSLATE_MODE_MASK;
       undo_type = GIMP_UNDO_GROUP_MASK;
 
-      if (! item)
+      if (! active_item)
         {
           /* cannot happen, don't translate this message */
           null_message = "There is no selection to move.";
         }
-      else if (gimp_item_is_position_locked (item))
+      else if (gimp_item_is_position_locked (active_item))
         {
           /* cannot happen, don't translate this message */
           locked_message = "The selection's position is locked.";
@@ -1068,73 +1070,78 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      item = GIMP_ITEM (gimp_image_get_active_vectors (image));
+      active_item = GIMP_ITEM (gimp_image_get_active_vectors (image));
 
       edit_mode = GIMP_TRANSLATE_MODE_VECTORS;
       undo_type = GIMP_UNDO_GROUP_ITEM_DISPLACE;
 
-      if (! item)
+      if (! active_item)
         {
           null_message = _("There is no path to move.");
         }
-      else if (gimp_item_is_position_locked (item))
+      else if (gimp_item_is_position_locked (active_item))
         {
           locked_message = _("The active path's position is locked.");
         }
       break;
 
     case GIMP_TRANSFORM_TYPE_LAYER:
-      item = GIMP_ITEM (gimp_image_get_active_drawable (image));
+      selected_items = gimp_image_get_selected_drawables (image);
 
       undo_type = GIMP_UNDO_GROUP_ITEM_DISPLACE;
 
-      if (! item)
+      if (! selected_items)
         {
           null_message = _("There is no layer to move.");
         }
-      else if (GIMP_IS_LAYER_MASK (item))
+      else if (GIMP_IS_LAYER_MASK (selected_items->data))
         {
           edit_mode = GIMP_TRANSLATE_MODE_LAYER_MASK;
 
-          if (gimp_item_is_position_locked (item))
+          if (gimp_item_is_position_locked (selected_items->data))
             {
               locked_message = _("The active layer's position is locked.");
             }
-          else if (gimp_item_is_content_locked (item))
+          else if (gimp_item_is_content_locked (selected_items->data))
             {
               locked_message = _("The active layer's pixels are locked.");
             }
         }
-      else if (GIMP_IS_CHANNEL (item))
+      else if (GIMP_IS_CHANNEL (selected_items->data))
         {
+          gint n_items = 0;
+
           edit_mode = GIMP_TRANSLATE_MODE_CHANNEL;
 
-          if (gimp_item_is_position_locked (item))
-            {
-              locked_message = _("The active channel's position is locked.");
-            }
-          else if (gimp_item_is_content_locked (item))
-            {
-              locked_message = _("The active channel's pixels are locked.");
-            }
+          for (iter = selected_items; iter; iter = iter->next)
+            if (! gimp_item_is_position_locked (iter->data) &&
+                ! gimp_item_is_content_locked (iter->data))
+              n_items++;
+
+          if (n_items == 0)
+            locked_message = _("All selected channels' positions or pixels are locked.");
         }
-      else if (gimp_layer_is_floating_sel (GIMP_LAYER (item)))
+      else if (gimp_layer_is_floating_sel (selected_items->data))
         {
           edit_mode = GIMP_TRANSLATE_MODE_FLOATING_SEL;
 
-          if (gimp_item_is_position_locked (item))
+          if (gimp_item_is_position_locked (selected_items->data))
             {
               locked_message = _("The active layer's position is locked.");
             }
         }
       else
         {
+          gint n_items = 0;
+
           edit_mode = GIMP_TRANSLATE_MODE_LAYER;
 
-          if (gimp_item_is_position_locked (item))
-            {
-              locked_message = _("The active layer's position is locked.");
-            }
+          for (iter = selected_items; iter; iter = iter->next)
+            if (! gimp_item_is_position_locked (iter->data))
+              n_items++;
+
+          if (n_items == 0)
+            locked_message = _("All selected layers' positions are locked.");
         }
 
       break;
@@ -1143,7 +1150,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
       g_return_val_if_reached (FALSE);
     }
 
-  if (! item)
+  if (! active_item && ! selected_items)
     {
       gimp_tool_message_literal (tool, display, null_message);
       if (type_box)
@@ -1153,12 +1160,21 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
   else if (locked_message)
     {
       gimp_tool_message_literal (tool, display, locked_message);
-      gimp_tools_blink_lock_box (display->gimp, item);
+      gimp_tools_blink_lock_box (display->gimp,
+                                 active_item ? active_item : selected_items->data);
+      g_list_free (selected_items);
       return TRUE;
     }
 
   if (inc_x == 0 && inc_y == 0)
-    return TRUE;
+    {
+      g_list_free (selected_items);
+      return TRUE;
+    }
+  else if (! selected_items)
+    {
+      selected_items = g_list_prepend (NULL, active_item);
+    }
 
   switch (edit_mode)
     {
@@ -1167,22 +1183,27 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
       break;
 
     default:
-      undo_desc = GIMP_ITEM_GET_CLASS (item)->translate_desc;
+      undo_desc = GIMP_ITEM_GET_CLASS (selected_items->data)->translate_desc;
       break;
     }
 
   /* compress undo */
   undo = gimp_image_undo_can_compress (image, GIMP_TYPE_UNDO_STACK, undo_type);
 
-  if (undo                                                         &&
+  if (undo &&
       g_object_get_data (G_OBJECT (undo),
                          "edit-selection-tool") == (gpointer) tool &&
       g_object_get_data (G_OBJECT (undo),
-                         "edit-selection-item") == (gpointer) item &&
-      g_object_get_data (G_OBJECT (undo),
                          "edit-selection-type") == GINT_TO_POINTER (edit_mode))
     {
-      push_undo = FALSE;
+      GList *undo_items;
+
+      undo_items = g_object_get_data (G_OBJECT (undo), "edit-selection-items");
+
+      if (gimp_image_equal_selected_drawables (image, undo_items))
+        {
+          push_undo = FALSE;
+        }
     }
 
   if (push_undo)
@@ -1197,8 +1218,9 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
             {
               g_object_set_data (G_OBJECT (undo), "edit-selection-tool",
                                  tool);
-              g_object_set_data (G_OBJECT (undo), "edit-selection-item",
-                                 item);
+              g_object_set_data_full (G_OBJECT (undo), "edit-selection-items",
+                                      g_list_copy (selected_items),
+                                      (GDestroyNotify) g_list_free);
               g_object_set_data (G_OBJECT (undo), "edit-selection-type",
                                  GINT_TO_POINTER (edit_mode));
             }
@@ -1209,7 +1231,8 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
     {
     case GIMP_TRANSLATE_MODE_LAYER_MASK:
     case GIMP_TRANSLATE_MODE_MASK:
-      gimp_item_translate (item, inc_x, inc_y, push_undo);
+      for (iter = selected_items; iter; iter = iter->next)
+        gimp_item_translate (iter->data, inc_x, inc_y, push_undo);
       break;
 
     case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
@@ -1220,18 +1243,16 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
     case GIMP_TRANSLATE_MODE_VECTORS:
     case GIMP_TRANSLATE_MODE_CHANNEL:
     case GIMP_TRANSLATE_MODE_LAYER:
-      if (gimp_item_get_linked (item))
-        {
-          gimp_item_linked_translate (item, inc_x, inc_y, push_undo);
-        }
-      else
-        {
-          gimp_item_translate (item, inc_x, inc_y, push_undo);
-        }
+      for (iter = selected_items; iter; iter = iter->next)
+        if (gimp_item_get_linked (iter->data))
+          gimp_item_linked_translate (iter->data, inc_x, inc_y, push_undo);
+        else
+          gimp_item_translate (iter->data, inc_x, inc_y, push_undo);
       break;
 
     case GIMP_TRANSLATE_MODE_FLOATING_SEL:
-      gimp_item_translate (item, inc_x, inc_y, push_undo);
+      for (iter = selected_items; iter; iter = iter->next)
+        gimp_item_translate (iter->data, inc_x, inc_y, push_undo);
       break;
     }
 
@@ -1242,6 +1263,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
                                gimp_get_user_context (display->gimp));
 
   gimp_image_flush (image);
+  g_list_free (selected_items);
 
   return TRUE;
 }
