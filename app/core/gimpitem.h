@@ -302,7 +302,7 @@ gboolean        gimp_item_fill               (GimpItem           *item,
                                               GimpProgress       *progress,
                                               GError            **error);
 gboolean        gimp_item_stroke             (GimpItem           *item,
-                                              GimpDrawable       *drawable,
+                                              GList              *drawables,
                                               GimpContext        *context,
                                               GimpStrokeOptions  *stroke_options,
                                               GimpPaintOptions   *paint_options,

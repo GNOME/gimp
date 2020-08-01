@@ -132,7 +132,7 @@ static const GimpActionEntry select_actions[] =
     GIMP_HELP_SELECTION_STROKE },
 
   { "select-stroke-last-values", GIMP_ICON_SELECTION_STROKE,
-    NC_("select-action", "_Stroke Selection"), NULL,
+    NC_("select-action", "_Stroke Selection with last values"), NULL,
     NC_("select-action", "Stroke the selection with last used values"),
     select_stroke_last_vals_cmd_callback,
     GIMP_HELP_SELECTION_STROKE }
@@ -210,8 +210,8 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-save",               image && !fs);
   SET_SENSITIVE ("select-fill",               drawables && all_writable && no_groups && sel);
   SET_SENSITIVE ("select-fill-last-values",   drawables && all_writable && no_groups && sel);
-  SET_SENSITIVE ("select-stroke",             writable && !children && sel);
-  SET_SENSITIVE ("select-stroke-last-values", writable && !children && sel);
+  SET_SENSITIVE ("select-stroke",             drawables && all_writable && no_groups && sel);
+  SET_SENSITIVE ("select-stroke-last-values", drawables && all_writable && no_groups && sel);
 
 #undef SET_SENSITIVE
 

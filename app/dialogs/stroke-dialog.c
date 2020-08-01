@@ -52,7 +52,7 @@ typedef struct _StrokeDialog StrokeDialog;
 struct _StrokeDialog
 {
   GimpItem           *item;
-  GimpDrawable       *drawable;
+  GList              *drawables;
   GimpContext        *context;
   GimpStrokeOptions  *options;
   GimpStrokeCallback  callback;
@@ -74,7 +74,7 @@ static void  stroke_dialog_response (GtkWidget    *dialog,
 
 GtkWidget *
 stroke_dialog_new (GimpItem           *item,
-                   GimpDrawable       *drawable,
+                   GList              *drawables,
                    GimpContext        *context,
                    const gchar        *title,
                    const gchar        *icon_name,
@@ -95,7 +95,7 @@ stroke_dialog_new (GimpItem           *item,
   GtkWidget    *frame;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (drawables, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
@@ -107,7 +107,7 @@ stroke_dialog_new (GimpItem           *item,
   private = g_slice_new0 (StrokeDialog);
 
   private->item      = item;
-  private->drawable  = drawable;
+  private->drawables = g_list_copy (drawables);
   private->context   = context;
   private->options   = gimp_stroke_options_new (context->gimp, context, TRUE);
   private->callback  = callback;
@@ -255,6 +255,7 @@ static void
 stroke_dialog_free (StrokeDialog *private)
 {
   g_object_unref (private->options);
+  g_list_free (private->drawables);
 
   g_slice_free (StrokeDialog, private);
 }
@@ -281,7 +282,7 @@ stroke_dialog_response (GtkWidget    *dialog,
     case GTK_RESPONSE_OK:
       private->callback (dialog,
                          private->item,
-                         private->drawable,
+                         private->drawables,
                          private->context,
                          private->options,
                          private->user_data);

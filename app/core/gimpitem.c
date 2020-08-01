@@ -1824,7 +1824,7 @@ gimp_item_fill (GimpItem        *item,
 
 gboolean
 gimp_item_stroke (GimpItem          *item,
-                  GimpDrawable      *drawable,
+                  GList             *drawables,
                   GimpContext       *context,
                   GimpStrokeOptions *stroke_options,
                   GimpPaintOptions  *paint_options,
@@ -1833,12 +1833,11 @@ gimp_item_stroke (GimpItem          *item,
                   GError           **error)
 {
   GimpItemClass *item_class;
+  GList         *iter;
   gboolean       retval = FALSE;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (stroke_options), FALSE);
   g_return_val_if_fail (paint_options == NULL ||
@@ -1847,6 +1846,12 @@ gimp_item_stroke (GimpItem          *item,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   item_class = GIMP_ITEM_GET_CLASS (item);
+
+  for (iter = drawables; iter; iter = iter->next)
+    {
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), FALSE);
+      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)), FALSE);
+    }
 
   if (item_class->stroke)
     {
@@ -1858,8 +1863,13 @@ gimp_item_stroke (GimpItem          *item,
         gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
                                      item_class->stroke_desc);
 
-      retval = item_class->stroke (item, drawable, stroke_options, push_undo,
-                                   progress, error);
+      for (iter = drawables; iter; iter = iter->next)
+        {
+          retval = item_class->stroke (item, iter->data, stroke_options, push_undo,
+                                       progress, error);
+          if (! retval)
+            break;
+        }
 
       if (push_undo)
         gimp_image_undo_group_end (image);
