@@ -176,7 +176,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                                  const gchar      *format)
 {
   GimpImage    *image;
-  GimpDrawable *drawable;
+  GimpDrawable *drawable = NULL;
+  GList        *drawables;
   gint          num, denom;
   gint          i = 0;
 
@@ -190,7 +191,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
       return 0;
     }
 
-  drawable = gimp_image_get_active_drawable (image);
+  /* GIMP window title only take single selected layer into account so
+   * far (not sure how we could have multi-layer concept there, except
+   * wanting never-ending window titles!).
+   * When multiple drawables are selected, we just display nothing.
+   */
+  drawables = gimp_image_get_selected_drawables (image);
+  if (g_list_length (drawables) == 1)
+    drawable = drawables->data;
+  g_list_free (drawables);
 
   gimp_zoom_model_get_fraction (shell->zoom, &num, &denom);
 
