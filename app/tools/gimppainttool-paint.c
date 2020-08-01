@@ -231,6 +231,7 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
   GimpDisplayShell *shell;
   GimpImage        *image;
   GimpDrawable     *drawable;
+  GList            *drawables;
   GimpCoords        curr_coords;
   gint              off_x, off_y;
 
@@ -246,10 +247,14 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
   core          = paint_tool->core;
   shell         = gimp_display_get_shell (display);
   image         = gimp_display_get_image (display);
-  drawable      = gimp_image_get_active_drawable (image);
+  drawables     = gimp_image_get_selected_drawables (image);
+
+  g_return_val_if_fail (g_list_length (drawables) == 1, FALSE);
 
   curr_coords = *coords;
 
+  drawable = drawables->data;
+  g_list_free (drawables);
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   curr_coords.x -= off_x;
