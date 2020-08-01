@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-08-01 11:17+0000\n"
-"PO-Revision-Date: 2020-08-01 14:24+0300\n"
+"POT-Creation-Date: 2020-08-01 12:02+0000\n"
+"PO-Revision-Date: 2020-08-01 16:06+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -6807,13 +6807,14 @@ msgstr "Вилучити це зображення"
 
 #: ../app/actions/items-commands.c:204 ../app/actions/items-commands.c:250
 #: ../app/tools/gimpvectortool.c:737
-#| msgid "There are no selected layers or channels to cut from."
 msgid "There are no selected layers or channels to fill."
 msgstr "Немає позначених шарів або каналів для заповнення."
 
-#: ../app/actions/items-commands.c:291 ../app/actions/items-commands.c:336
-msgid "There is no active layer or channel to stroke to."
-msgstr "Немає активного шару чи каналу для обведення."
+#: ../app/actions/items-commands.c:291 ../app/actions/items-commands.c:337
+#: ../app/tools/gimpvectortool.c:811
+#| msgid "There are no selected layers or channels to cut from."
+msgid "There are no selected layers or channels to stroke to."
+msgstr "Немає позначених шарів або каналів для обведення."
 
 #: ../app/actions/layers-actions.c:52
 msgctxt "layers-action"
@@ -8454,8 +8455,6 @@ msgid "Fill the selection outline"
 msgstr "Заповнити контур позначеного"
 
 #: ../app/actions/select-actions.c:123
-#| msgctxt "select-action"
-#| msgid "Fill the selection outline with last used values"
 msgctxt "select-action"
 msgid "_Fill Selection Outline with last values"
 msgstr "За_повнити контур позначеного за останніми значеннями"
@@ -8476,9 +8475,11 @@ msgid "Paint along the selection outline"
 msgstr "Обвести позначене вказаним типом лінії"
 
 #: ../app/actions/select-actions.c:135
+#| msgctxt "select-action"
+#| msgid "Stroke the selection with last used values"
 msgctxt "select-action"
-msgid "_Stroke Selection"
-msgstr "_Обвести позначену ділянку"
+msgid "_Stroke Selection with last values"
+msgstr "_Обвести позначене з останніми значеннями"
 
 #: ../app/actions/select-actions.c:136
 msgctxt "select-action"
@@ -14697,17 +14698,17 @@ msgstr[3] "%d шар"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не вдалось відкрити файл мініатюри «%s»: %s"
 
-#: ../app/core/gimpitem.c:2171
+#: ../app/core/gimpitem.c:2181
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Додати шум"
 
-#: ../app/core/gimpitem.c:2181
+#: ../app/core/gimpitem.c:2191
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Додати шум до об'єкта"
 
-#: ../app/core/gimpitem.c:2232 ../app/core/gimpitem.c:2239
+#: ../app/core/gimpitem.c:2242 ../app/core/gimpitem.c:2249
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Вилучити шум з об'єкта"
@@ -25175,10 +25176,6 @@ msgstr "Контури: створення та редагування конт�
 msgid "Pat_hs"
 msgstr "Кон_тури"
 
-#: ../app/tools/gimpvectortool.c:811
-msgid "There is no active layer or channel to stroke to"
-msgstr "Немає активного шару або каналу для обведення"
-
 #: ../app/tools/gimpwarpoptions.c:85 ../app/tools/gimpwarpoptions.c:86
 msgid "Behavior"
 msgstr "Поведінка"
@@ -28270,6 +28267,16 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid "There is no active layer or channel to stroke to."
+#~ msgstr "Немає активного шару чи каналу для обведення."
+
+#~ msgctxt "select-action"
+#~ msgid "_Stroke Selection"
+#~ msgstr "_Обвести позначену ділянку"
+
+#~ msgid "There is no active layer or channel to stroke to"
+#~ msgstr "Немає активного шару або каналу для обведення"
 
 #~ msgid "There is no active layer or channel to fill."
 #~ msgstr "Немає активного шару чи каналу для заповнення."
