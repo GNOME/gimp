@@ -343,7 +343,8 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
                              const gchar      *undo_desc)
 {
   GimpImage    *image = gimp_display_get_image (shell->display);
-  GimpDrawable *drawable;
+  GList        *drawables;
+  GList        *iter;
 
   if (shell->display->gimp->busy)
     return;
@@ -351,46 +352,55 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
   if (! image)
     return;
 
-  drawable = gimp_image_get_active_drawable (image);
+  drawables = gimp_image_get_selected_drawables (image);
 
-  if (! drawable)
+  if (! drawables)
     return;
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+  for (iter = drawables; iter; iter = iter->next)
     {
-      gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
-                            GIMP_MESSAGE_ERROR,
-                            _("Cannot modify the pixels of layer groups."));
-      return;
+      if (gimp_viewable_get_children (iter->data))
+        {
+          gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
+                                GIMP_MESSAGE_ERROR,
+                                _("Cannot modify the pixels of layer groups."));
+          return;
+        }
+
+      if (gimp_item_is_content_locked (iter->data))
+        {
+          gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
+                                GIMP_MESSAGE_ERROR,
+                                _("A selected layer's pixels are locked."));
+          return;
+        }
     }
 
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT, undo_desc);
+
+  for (iter = drawables; iter; iter = iter->next)
     {
-      gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
-                            GIMP_MESSAGE_ERROR,
-                            _("The active layer's pixels are locked."));
-      return;
+      /* FIXME: there should be a virtual method for this that the
+       *        GimpTextLayer can override.
+       */
+      if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_SOLID &&
+          gimp_item_is_text_layer (iter->data))
+        {
+          GimpRGB color;
+
+          gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+
+          gimp_text_layer_set (iter->data, NULL,
+                               "color", &color,
+                               NULL);
+        }
+      else
+        {
+          gimp_drawable_edit_fill (iter->data, options, undo_desc);
+        }
     }
 
-  /* FIXME: there should be a virtual method for this that the
-   *        GimpTextLayer can override.
-   */
-  if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_SOLID &&
-      gimp_item_is_text_layer (GIMP_ITEM (drawable)))
-    {
-      GimpRGB color;
-
-      gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-
-      gimp_text_layer_set (GIMP_TEXT_LAYER (drawable), NULL,
-                           "color", &color,
-                           NULL);
-    }
-  else
-    {
-      gimp_drawable_edit_fill (drawable, options, undo_desc);
-    }
-
+  gimp_image_undo_group_end (image);
   gimp_display_shell_dnd_flush (shell, image);
 }
 
@@ -445,9 +455,10 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
                                 GimpViewable *viewable,
                                 gpointer      data)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = gimp_display_get_image (shell->display);
-  GimpDrawable     *drawable;
+  GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *image    = gimp_display_get_image (shell->display);
+  GimpDrawable     *drawable = NULL;
+  GList            *drawables;
   GimpBuffer       *buffer;
   GimpPasteType     paste_type;
   gint              x, y, width, height;
@@ -470,7 +481,10 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   paste_type = GIMP_PASTE_TYPE_FLOATING;
 
-  drawable = gimp_image_get_active_drawable (image);
+  drawables = gimp_image_get_selected_drawables (image);
+  if (g_list_length (drawables) == 1)
+    drawable = drawables->data;
+  g_list_free (drawables);
 
   if (drawable)
     {
