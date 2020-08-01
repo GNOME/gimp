@@ -29,7 +29,10 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-new.h"
 #include "core/gimpitem.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-contiguous-region.h"
@@ -95,12 +98,14 @@ static GeglBuffer *
 gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                     GimpDisplay          *display)
 {
-  GimpTool                *tool        = GIMP_TOOL (region_select);
-  GimpSelectionOptions    *sel_options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpRegionSelectOptions *options     = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
-  GimpImage               *image       = gimp_display_get_image (display);
-  GimpDrawable            *drawable    = gimp_image_get_active_drawable (image);
+  GimpTool                *tool         = GIMP_TOOL (region_select);
+  GimpSelectionOptions    *sel_options  = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpRegionSelectOptions *options      = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
+  GimpImage               *image        = gimp_display_get_image (display);
+  GimpImage               *select_image = NULL;
+  GList                   *drawables    = gimp_image_get_selected_drawables (image);
   GimpPickable            *pickable;
+  GeglBuffer              *mask         = NULL;
   GimpRGB                  srgb;
   gint                     x, y;
 
@@ -109,20 +114,32 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
 
   if (! options->sample_merged)
     {
-      gint off_x, off_y;
+      if (g_list_length (drawables) == 1)
+        {
+          gint off_x, off_y;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (drawables->data, &off_x, &off_y);
 
-      x -= off_x;
-      y -= off_y;
+          x -= off_x;
+          y -= off_y;
 
-      pickable = GIMP_PICKABLE (drawable);
+          pickable = GIMP_PICKABLE (drawables->data);
+        }
+      else
+        {
+          select_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE);
+          gimp_container_remove (image->gimp->images, GIMP_OBJECT (select_image));
+
+          pickable = GIMP_PICKABLE (select_image);
+          gimp_pickable_flush (pickable);
+        }
     }
   else
     {
       pickable = GIMP_PICKABLE (image);
     }
 
+  g_list_free (drawables);
   gimp_pickable_flush (pickable);
 
   if (gimp_pickable_get_color_at (pickable, x, y, &srgb))
@@ -131,7 +148,7 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
 
       gimp_pickable_srgb_to_image_color (pickable, &srgb, &color);
 
-      return gimp_pickable_contiguous_region_by_color (pickable,
+      mask = gimp_pickable_contiguous_region_by_color (pickable,
                                                        sel_options->antialias,
                                                        options->threshold / 255.0,
                                                        options->select_transparent,
@@ -139,5 +156,8 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                                        &color);
     }
 
-  return NULL;
+  if (select_image)
+    g_object_unref (select_image);
+
+  return mask;
 }
