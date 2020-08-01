@@ -301,6 +301,7 @@ drawable_edit_stroke_selection_invoker (GimpProcedure         *procedure,
           GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpStrokeOptions *options;
           GimpPaintOptions  *paint_options;
+          GList             *drawables = g_list_prepend (NULL, drawable);
 
           options = gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
 
@@ -309,10 +310,11 @@ drawable_edit_stroke_selection_invoker (GimpProcedure         *procedure,
           paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
 
           success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                                      drawable, context, options, paint_options,
+                                      drawables, context, options, paint_options,
                                       TRUE, progress, error);
 
           g_object_unref (paint_options);
+          g_list_free (drawables);
         }
       else
         success = FALSE;
@@ -348,6 +350,7 @@ drawable_edit_stroke_item_invoker (GimpProcedure         *procedure,
         {
           GimpStrokeOptions *options;
           GimpPaintOptions  *paint_options;
+          GList             *drawables = g_list_prepend (NULL, drawable);
 
           options = gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
 
@@ -355,11 +358,12 @@ drawable_edit_stroke_item_invoker (GimpProcedure         *procedure,
             gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
           paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
 
-          success = gimp_item_stroke (item, drawable,
+          success = gimp_item_stroke (item, drawables,
                                       context, options, paint_options,
                                       TRUE, progress, error);
 
           g_object_unref (paint_options);
+          g_list_free (drawables);
         }
       else
         success = FALSE;
