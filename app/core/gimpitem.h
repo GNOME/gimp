@@ -296,7 +296,7 @@ GimpTransformResize   gimp_item_get_clip     (GimpItem           *item,
                                               GimpTransformResize clip_result);
 
 gboolean        gimp_item_fill               (GimpItem           *item,
-                                              GimpDrawable       *drawable,
+                                              GList              *drawables,
                                               GimpFillOptions    *fill_options,
                                               gboolean            push_undo,
                                               GimpProgress       *progress,

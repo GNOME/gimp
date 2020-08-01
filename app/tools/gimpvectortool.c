@@ -133,7 +133,7 @@ static void     gimp_vector_tool_fill_vectors    (GimpVectorTool        *vector_
                                                   GtkWidget             *button);
 static void     gimp_vector_tool_fill_callback   (GtkWidget             *dialog,
                                                   GimpItem              *item,
-                                                  GimpDrawable          *drawable,
+                                                  GList                 *drawables,
                                                   GimpContext           *context,
                                                   GimpFillOptions       *options,
                                                   gpointer               data);
@@ -718,7 +718,7 @@ gimp_vector_tool_fill_vectors (GimpVectorTool *vector_tool,
 {
   GimpDialogConfig *config;
   GimpImage        *image;
-  GimpDrawable     *drawable;
+  GList            *drawables;
   GtkWidget        *dialog;
 
   if (! vector_tool->vectors)
@@ -728,18 +728,18 @@ gimp_vector_tool_fill_vectors (GimpVectorTool *vector_tool,
 
   config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  drawable = gimp_image_get_active_drawable (image);
+  drawables = gimp_image_get_selected_drawables (image);
 
-  if (! drawable)
+  if (! drawables)
     {
       gimp_tool_message (GIMP_TOOL (vector_tool),
                          GIMP_TOOL (vector_tool)->display,
-                         _("There is no active layer or channel to fill"));
+                         _("There are no selected layers or channels to fill."));
       return;
     }
 
   dialog = fill_dialog_new (GIMP_ITEM (vector_tool->vectors),
-                            drawable,
+                            drawables,
                             GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (vector_tool)),
                             _("Fill Path"),
                             GIMP_ICON_TOOL_BUCKET_FILL,
@@ -749,12 +749,14 @@ gimp_vector_tool_fill_vectors (GimpVectorTool *vector_tool,
                             gimp_vector_tool_fill_callback,
                             vector_tool);
   gtk_widget_show (dialog);
+
+  g_list_free (drawables);
 }
 
 static void
 gimp_vector_tool_fill_callback (GtkWidget       *dialog,
                                 GimpItem        *item,
-                                GimpDrawable    *drawable,
+                                GList           *drawables,
                                 GimpContext     *context,
                                 GimpFillOptions *options,
                                 gpointer         data)
@@ -766,7 +768,7 @@ gimp_vector_tool_fill_callback (GtkWidget       *dialog,
   gimp_config_sync (G_OBJECT (options),
                     G_OBJECT (config->fill_options), 0);
 
-  if (! gimp_item_fill (item, drawable, options,
+  if (! gimp_item_fill (item, drawables, options,
                         TRUE, NULL, &error))
     {
       gimp_message_literal (context->gimp,

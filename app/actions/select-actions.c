@@ -120,7 +120,7 @@ static const GimpActionEntry select_actions[] =
     GIMP_HELP_SELECTION_FILL },
 
   { "select-fill-last-values", GIMP_ICON_TOOL_BUCKET_FILL,
-    NC_("select-action", "_Fill Selection Outline"), NULL,
+    NC_("select-action", "_Fill Selection Outline with last values"), NULL,
     NC_("select-action", "Fill the selection outline with last used values"),
     select_fill_last_vals_cmd_callback,
     GIMP_HELP_SELECTION_FILL },
@@ -158,9 +158,27 @@ select_actions_update (GimpActionGroup *group,
   gboolean      writable = FALSE;
   gboolean      children = FALSE;
 
+  GList        *drawables    = NULL;
+  GList        *iter;
+  gboolean      all_writable = TRUE;
+  gboolean      no_groups    = TRUE;
+
   if (image)
     {
       drawable = gimp_image_get_active_drawable (image);
+      drawables = gimp_image_get_selected_drawables (image);
+
+      for (iter = drawables; iter; iter = iter->next)
+        {
+          if (gimp_item_is_content_locked (iter->data))
+            all_writable = FALSE;
+
+          if (gimp_viewable_get_children (iter->data))
+            no_groups = FALSE;
+
+          if (! all_writable && ! no_groups)
+            break;
+        }
 
       if (drawable)
         {
@@ -190,10 +208,12 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-flood",   image && sel);
 
   SET_SENSITIVE ("select-save",               image && !fs);
-  SET_SENSITIVE ("select-fill",               writable && !children && sel);
-  SET_SENSITIVE ("select-fill-last-values",   writable && !children && sel);
+  SET_SENSITIVE ("select-fill",               drawables && all_writable && no_groups && sel);
+  SET_SENSITIVE ("select-fill-last-values",   drawables && all_writable && no_groups && sel);
   SET_SENSITIVE ("select-stroke",             writable && !children && sel);
   SET_SENSITIVE ("select-stroke-last-values", writable && !children && sel);
 
 #undef SET_SENSITIVE
+
+  g_list_free (drawables);
 }

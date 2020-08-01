@@ -47,7 +47,7 @@
 
 static void   items_fill_callback   (GtkWidget         *dialog,
                                      GimpItem          *item,
-                                     GimpDrawable      *drawable,
+                                     GList             *drawables,
                                      GimpContext       *context,
                                      GimpFillOptions   *options,
                                      gpointer           user_data);
@@ -190,18 +190,18 @@ items_fill_cmd_callback (GimpAction  *action,
                          const gchar *dialog_help_id,
                          gpointer     data)
 {
-  GimpDrawable *drawable;
+  GList        *drawables;
   GtkWidget    *dialog;
   GtkWidget    *widget;
   return_if_no_widget (widget, data);
 
-  drawable = gimp_image_get_active_drawable (image);
+  drawables = gimp_image_get_selected_drawables (image);
 
-  if (! drawable)
+  if (! drawables)
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("There is no active layer or channel to fill."));
+                            _("There are no selected layers or channels to fill."));
       return;
     }
 
@@ -212,7 +212,7 @@ items_fill_cmd_callback (GimpAction  *action,
       GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
       dialog = fill_dialog_new (item,
-                                drawable,
+                                drawables,
                                 action_data_get_context (data),
                                 dialog_title,
                                 dialog_icon_name,
@@ -226,6 +226,7 @@ items_fill_cmd_callback (GimpAction  *action,
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
+  g_list_free (drawables);
 }
 
 void
@@ -234,25 +235,25 @@ items_fill_last_vals_cmd_callback (GimpAction *action,
                                    GimpItem   *item,
                                    gpointer    data)
 {
-  GimpDrawable     *drawable;
+  GList            *drawables;
   GimpDialogConfig *config;
   GtkWidget        *widget;
   GError           *error = NULL;
   return_if_no_widget (widget, data);
 
-  drawable = gimp_image_get_active_drawable (image);
+  drawables = gimp_image_get_selected_drawables (image);
 
-  if (! drawable)
+  if (! drawables)
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("There is no active layer or channel to fill."));
+                            _("There are no selected layers or channels to fill."));
       return;
     }
 
   config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  if (! gimp_item_fill (item, drawable,
+  if (! gimp_item_fill (item, drawables,
                         config->fill_options, TRUE, NULL, &error))
     {
       gimp_message_literal (image->gimp, G_OBJECT (widget),
@@ -263,6 +264,7 @@ items_fill_last_vals_cmd_callback (GimpAction *action,
     {
       gimp_image_flush (image);
     }
+  g_list_free (drawables);
 }
 
 void
@@ -358,7 +360,7 @@ items_stroke_last_vals_cmd_callback (GimpAction *action,
 static void
 items_fill_callback (GtkWidget       *dialog,
                      GimpItem        *item,
-                     GimpDrawable    *drawable,
+                     GList           *drawables,
                      GimpContext     *context,
                      GimpFillOptions *options,
                      gpointer         user_data)
@@ -370,7 +372,7 @@ items_fill_callback (GtkWidget       *dialog,
   gimp_config_sync (G_OBJECT (options),
                     G_OBJECT (config->fill_options), 0);
 
-  if (! gimp_item_fill (item, drawable, options, TRUE, NULL, &error))
+  if (! gimp_item_fill (item, drawables, options, TRUE, NULL, &error))
     {
       gimp_message_literal (context->gimp,
                             G_OBJECT (dialog),

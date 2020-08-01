@@ -1775,24 +1775,29 @@ gimp_item_get_clip (GimpItem            *item,
 
 gboolean
 gimp_item_fill (GimpItem        *item,
-                GimpDrawable    *drawable,
+                GList           *drawables,
                 GimpFillOptions *fill_options,
                 gboolean         push_undo,
                 GimpProgress    *progress,
                 GError         **error)
 {
   GimpItemClass *item_class;
+  GList         *iter;
   gboolean       retval = FALSE;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (fill_options), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   item_class = GIMP_ITEM_GET_CLASS (item);
+
+  for (iter = drawables; iter; iter = iter->next)
+    {
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), FALSE);
+      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)), FALSE);
+    }
 
   if (item_class->fill)
     {
@@ -1802,8 +1807,13 @@ gimp_item_fill (GimpItem        *item,
         gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
                                      item_class->fill_desc);
 
-      retval = item_class->fill (item, drawable, fill_options, push_undo,
-                                 progress, error);
+      for (iter = drawables; iter; iter = iter->next)
+        {
+          retval = item_class->fill (item, iter->data, fill_options,
+                                     push_undo, progress, error);
+          if (! retval)
+            break;
+        }
 
       if (push_undo)
         gimp_image_undo_group_end (image);

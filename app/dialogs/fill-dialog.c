@@ -47,7 +47,7 @@ typedef struct _FillDialog FillDialog;
 struct _FillDialog
 {
   GimpItem         *item;
-  GimpDrawable     *drawable;
+  GList            *drawables;
   GimpContext      *context;
   GimpFillOptions  *options;
   GimpFillCallback  callback;
@@ -67,7 +67,7 @@ static void  fill_dialog_response (GtkWidget  *dialog,
 
 GtkWidget *
 fill_dialog_new (GimpItem         *item,
-                 GimpDrawable     *drawable,
+                 GList            *drawables,
                  GimpContext      *context,
                  const gchar      *title,
                  const gchar      *icon_name,
@@ -83,7 +83,7 @@ fill_dialog_new (GimpItem         *item,
   GtkWidget  *fill_editor;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (drawables, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
@@ -94,7 +94,7 @@ fill_dialog_new (GimpItem         *item,
   private = g_slice_new0 (FillDialog);
 
   private->item      = item;
-  private->drawable  = drawable;
+  private->drawables = g_list_copy (drawables);
   private->context   = context;
   private->options   = gimp_fill_options_new (context->gimp, context, TRUE);
   private->callback  = callback;
@@ -152,6 +152,7 @@ static void
 fill_dialog_free (FillDialog *private)
 {
   g_object_unref (private->options);
+  g_list_free (private->drawables);
 
   g_slice_free (FillDialog, private);
 }
@@ -170,7 +171,7 @@ fill_dialog_response (GtkWidget  *dialog,
     case GTK_RESPONSE_OK:
       private->callback (dialog,
                          private->item,
-                         private->drawable,
+                         private->drawables,
                          private->context,
                          private->options,
                          private->user_data);
