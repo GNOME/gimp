@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-07-30 19:19+0000\n"
-"PO-Revision-Date: 2020-07-30 23:14+0300\n"
+"POT-Creation-Date: 2020-08-01 11:17+0000\n"
+"PO-Revision-Date: 2020-08-01 14:24+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4501,21 +4501,21 @@ msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Заповнити позначену ділянку активною текстурою"
 
-#: ../app/actions/edit-actions.c:346 ../app/actions/edit-actions.c:348
+#: ../app/actions/edit-actions.c:334 ../app/actions/edit-actions.c:336
 #, c-format
 msgid "_Undo %s"
 msgstr "_Скасувати «%s»"
 
-#: ../app/actions/edit-actions.c:352 ../app/actions/edit-actions.c:354
+#: ../app/actions/edit-actions.c:340 ../app/actions/edit-actions.c:342
 #, c-format
 msgid "_Redo %s"
 msgstr "Пове_рнути «%s»"
 
-#: ../app/actions/edit-actions.c:365
+#: ../app/actions/edit-actions.c:353
 msgid "_Undo"
 msgstr "_Скасувати"
 
-#: ../app/actions/edit-actions.c:366
+#: ../app/actions/edit-actions.c:354
 msgid "_Redo"
 msgstr "Пове_рнути"
 
@@ -4548,7 +4548,7 @@ msgstr "Шар скопійовано в буфер обміну."
 msgid "Copied pixels to the clipboard."
 msgstr "Пікселі скопійовано в буфер обміну."
 
-#: ../app/actions/edit-commands.c:392 ../app/actions/edit-commands.c:650
+#: ../app/actions/edit-commands.c:392 ../app/actions/edit-commands.c:669
 #: ../app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "У буфері обміну нічого немає."
@@ -4571,33 +4571,31 @@ msgid "Copy Visible Named "
 msgstr "Копіювати видиме з назвою"
 
 #: ../app/actions/edit-commands.c:497
-#| msgctxt "text-editor-action"
-#| msgid "Clear"
 msgid "Clear"
 msgstr "Очистити"
 
-#: ../app/actions/edit-commands.c:560
+#: ../app/actions/edit-commands.c:568
 msgid "A selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
-#: ../app/actions/edit-commands.c:619 ../app/display/gimpdisplayshell-dnd.c:481
+#: ../app/actions/edit-commands.c:638 ../app/display/gimpdisplayshell-dnd.c:481
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Вставлено як новий шар, тому що ціль є групою шарів."
 
-#: ../app/actions/edit-commands.c:626 ../app/display/gimpdisplayshell-dnd.c:490
+#: ../app/actions/edit-commands.c:645 ../app/display/gimpdisplayshell-dnd.c:490
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Вставлено як новий шар, бо цільові пікселі заблоковано."
 
-#: ../app/actions/edit-commands.c:667
+#: ../app/actions/edit-commands.c:686
 msgid "There are no selected layers or channels to cut from."
 msgstr "Немає позначених шарів або каналів для вирізання."
 
-#: ../app/actions/edit-commands.c:672 ../app/actions/edit-commands.c:705
-#: ../app/actions/edit-commands.c:730
+#: ../app/actions/edit-commands.c:691 ../app/actions/edit-commands.c:724
+#: ../app/actions/edit-commands.c:749
 msgid "(Unnamed Buffer)"
 msgstr "(Буфер без назви)"
 
-#: ../app/actions/edit-commands.c:700
+#: ../app/actions/edit-commands.c:719
 msgid "There are no selected layers or channels to copy from."
 msgstr "Немає позначених шарів або каналів для копіювання."
 
@@ -6720,7 +6718,7 @@ msgstr "Віддзеркалення"
 msgid "Rotating"
 msgstr "Обертання"
 
-#: ../app/actions/image-commands.c:867 ../app/actions/layers-commands.c:1193
+#: ../app/actions/image-commands.c:867 ../app/actions/layers-commands.c:1203
 msgid "Cannot crop because the current selection is empty."
 msgstr "Не вдалось кадрувати, бо позначена ділянка порожня."
 
@@ -6765,7 +6763,7 @@ msgid "Scale Image"
 msgstr "Зміна розміру зображення"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2502
+#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2515
 #: ../app/dialogs/preferences-dialog.c:1689
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/item-transform-cmds.c:640
 #: ../app/pdb/layer-cmds.c:410 ../app/tools/gimpscaletool.c:122
@@ -6807,11 +6805,13 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Вилучити це зображення"
 
-#: ../app/actions/items-commands.c:204 ../app/actions/items-commands.c:249
-msgid "There is no active layer or channel to fill."
-msgstr "Немає активного шару чи каналу для заповнення."
+#: ../app/actions/items-commands.c:204 ../app/actions/items-commands.c:250
+#: ../app/tools/gimpvectortool.c:737
+#| msgid "There are no selected layers or channels to cut from."
+msgid "There are no selected layers or channels to fill."
+msgstr "Немає позначених шарів або каналів для заповнення."
 
-#: ../app/actions/items-commands.c:289 ../app/actions/items-commands.c:334
+#: ../app/actions/items-commands.c:291 ../app/actions/items-commands.c:336
 msgid "There is no active layer or channel to stroke to."
 msgstr "Немає активного шару чи каналу для обведення."
 
@@ -6910,7 +6910,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Змінити назву шару"
 
-#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:1022
+#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:1015
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Створити шар…"
@@ -6920,7 +6920,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Створити новий шар та додати його до зображення"
 
-#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:1023
+#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:1016
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Створити шар"
@@ -7643,12 +7643,12 @@ msgstr "Скорочення: "
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-Натисніть на мініатюру у пришвартованих шарах"
 
-#: ../app/actions/layers-actions.c:1017 ../app/actions/layers-actions.c:1018
+#: ../app/actions/layers-actions.c:1010 ../app/actions/layers-actions.c:1011
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "У _новий шар"
 
-#: ../app/actions/layers-commands.c:266 ../app/actions/layers-commands.c:2344
+#: ../app/actions/layers-commands.c:266 ../app/actions/layers-commands.c:2357
 msgid "Layer Attributes"
 msgstr "Ознаки шару"
 
@@ -7675,7 +7675,7 @@ msgstr[1] "Створення %d нових шарів"
 msgstr[2] "Створення %d нових шарів"
 msgstr[3] "Створення нового шару"
 
-#: ../app/actions/layers-commands.c:424 ../app/actions/layers-commands.c:2230
+#: ../app/actions/layers-commands.c:424 ../app/actions/layers-commands.c:2243
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Нові шари"
@@ -7743,19 +7743,19 @@ msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Вилучення %d шарів"
 
-#: ../app/actions/layers-commands.c:1086
+#: ../app/actions/layers-commands.c:1091
 msgid "Set Layer Boundary Size"
 msgstr "Встановлення меж шару"
 
-#: ../app/actions/layers-commands.c:1116
+#: ../app/actions/layers-commands.c:1121
 msgid "Layers to Image Size"
 msgstr "Шари до розміру зображення"
 
-#: ../app/actions/layers-commands.c:1159
+#: ../app/actions/layers-commands.c:1169
 msgid "Scale Layer"
 msgstr "Масштабування шару"
 
-#: ../app/actions/layers-commands.c:1198
+#: ../app/actions/layers-commands.c:1208
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
@@ -7764,7 +7764,7 @@ msgstr[1] "Обрізати %d шари до позначеного"
 msgstr[2] "Обрізати %d шарів до позначеного"
 msgstr[3] "Обрізати шар до позначеного"
 
-#: ../app/actions/layers-commands.c:1263
+#: ../app/actions/layers-commands.c:1273
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7772,7 +7772,7 @@ msgstr ""
 "Обрізання неможливе оскільки жоден із позначених шарів не містить даних або "
 "через те, що шари вже обрізано до вмісту."
 
-#: ../app/actions/layers-commands.c:1269
+#: ../app/actions/layers-commands.c:1279
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
@@ -7781,122 +7781,118 @@ msgstr[1] "Обрізати %d шари до вмісту"
 msgstr[2] "Обрізати %d шарів до вмісту"
 msgstr[3] "Обрізати шар до вмісту"
 
-#: ../app/actions/layers-commands.c:1400 ../app/actions/layers-commands.c:2437
+#: ../app/actions/layers-commands.c:1410 ../app/actions/layers-commands.c:2450
 msgid "Add Layer Masks"
 msgstr "Додавання масок шарів"
 
-#: ../app/actions/layers-commands.c:1452
+#: ../app/actions/layers-commands.c:1462
 msgid "Apply Layer Masks"
 msgstr "Застосувати маски шару"
 
-#: ../app/actions/layers-commands.c:1456
+#: ../app/actions/layers-commands.c:1466
 msgid "Delete Layer Masks"
 msgstr "Вилучити маски шарів"
 
-#: ../app/actions/layers-commands.c:1540
+#: ../app/actions/layers-commands.c:1553
 msgid "Show Layer Masks"
 msgstr "Показати маски шарів"
 
-#: ../app/actions/layers-commands.c:1587
+#: ../app/actions/layers-commands.c:1600
 msgid "Disable Layer Masks"
 msgstr "Вимкнути маски шарів"
 
-#: ../app/actions/layers-commands.c:1626
+#: ../app/actions/layers-commands.c:1639
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Маски → Позначене"
 
-#: ../app/actions/layers-commands.c:1630
+#: ../app/actions/layers-commands.c:1643
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Додавання масок до позначеного"
 
-#: ../app/actions/layers-commands.c:1634
+#: ../app/actions/layers-commands.c:1647
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Віднімання масок від позначеного"
 
-#: ../app/actions/layers-commands.c:1638
+#: ../app/actions/layers-commands.c:1651
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Перетин масок із позначеним"
 
-#: ../app/actions/layers-commands.c:1659
-#| msgctxt "undo-type"
-#| msgid "Add Alpha Channel"
+#: ../app/actions/layers-commands.c:1672
 msgid "Add Alpha Channel"
 msgstr "Додати канал альфи"
 
-#: ../app/actions/layers-commands.c:1680
-#| msgctxt "undo-type"
-#| msgid "Remove Alpha Channel"
+#: ../app/actions/layers-commands.c:1693
 msgid "Remove Alpha Channel"
 msgstr "Вилучити канал альфи"
 
-#: ../app/actions/layers-commands.c:1708 ../app/core/gimpchannel-select.c:421
+#: ../app/actions/layers-commands.c:1721 ../app/core/gimpchannel-select.c:421
 #: ../app/core/gimplayer.c:442
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Альфа на вибір"
 
-#: ../app/actions/layers-commands.c:1712
+#: ../app/actions/layers-commands.c:1725
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Додавання альфи до позначеного"
 
-#: ../app/actions/layers-commands.c:1716
+#: ../app/actions/layers-commands.c:1729
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Віднімання альфи від позначеного"
 
-#: ../app/actions/layers-commands.c:1720
+#: ../app/actions/layers-commands.c:1733
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Перетин альфи з позначеним"
 
-#: ../app/actions/layers-commands.c:1731
+#: ../app/actions/layers-commands.c:1744
 msgid "Empty Selection"
 msgstr "Спорожнити позначене"
 
-#: ../app/actions/layers-commands.c:1761 ../app/actions/layers-commands.c:1805
+#: ../app/actions/layers-commands.c:1774 ../app/actions/layers-commands.c:1818
 #: ../app/widgets/gimplayertreeview.c:1177
 msgid "Set layers opacity"
 msgstr "Зміна непрозорості шарів"
 
-#: ../app/actions/layers-commands.c:1875
+#: ../app/actions/layers-commands.c:1888
 msgid "Set layers' blend space"
 msgstr "Встановити простір змішування шарів"
 
-#: ../app/actions/layers-commands.c:1928
+#: ../app/actions/layers-commands.c:1941
 msgid "Set layers' composite space"
 msgstr "Встановити простір композиції шарів"
 
-#: ../app/actions/layers-commands.c:1981
+#: ../app/actions/layers-commands.c:1994
 msgid "Set layers' composite mode"
 msgstr "Встановити режим композиції шарів"
 
-#: ../app/actions/layers-commands.c:2050 ../app/widgets/gimpitemtreeview.c:1683
+#: ../app/actions/layers-commands.c:2063 ../app/widgets/gimpitemtreeview.c:1683
 msgid "Lock content"
 msgstr "Заблокувати вміст"
 
-#: ../app/actions/layers-commands.c:2052 ../app/widgets/gimpitemtreeview.c:1685
+#: ../app/actions/layers-commands.c:2065 ../app/widgets/gimpitemtreeview.c:1685
 msgid "Unlock content"
 msgstr "Розблокувати вміст"
 
-#: ../app/actions/layers-commands.c:2099 ../app/widgets/gimpitemtreeview.c:1749
+#: ../app/actions/layers-commands.c:2112 ../app/widgets/gimpitemtreeview.c:1749
 msgid "Lock position"
 msgstr "Заблокувати позицію"
 
-#: ../app/actions/layers-commands.c:2101 ../app/widgets/gimpitemtreeview.c:1751
+#: ../app/actions/layers-commands.c:2114 ../app/widgets/gimpitemtreeview.c:1751
 msgid "Unlock position"
 msgstr "Розблокувати позицію"
 
-#: ../app/actions/layers-commands.c:2151
+#: ../app/actions/layers-commands.c:2164
 #: ../app/widgets/gimplayertreeview.c:1122
 msgid "Lock alpha channels"
 msgstr "Заблокувати альфа-канали"
 
-#: ../app/actions/layers-commands.c:2151
+#: ../app/actions/layers-commands.c:2164
 #: ../app/widgets/gimplayertreeview.c:1122
 msgid "Unlock alpha channels"
 msgstr "Розблокувати альфа-канали"
@@ -8458,9 +8454,11 @@ msgid "Fill the selection outline"
 msgstr "Заповнити контур позначеного"
 
 #: ../app/actions/select-actions.c:123
+#| msgctxt "select-action"
+#| msgid "Fill the selection outline with last used values"
 msgctxt "select-action"
-msgid "_Fill Selection Outline"
-msgstr "За_повнити контур позначеного"
+msgid "_Fill Selection Outline with last values"
+msgstr "За_повнити контур позначеного за останніми значеннями"
 
 #: ../app/actions/select-actions.c:124
 msgctxt "select-action"
@@ -9950,7 +9948,7 @@ msgid "Fill Path"
 msgstr "Заповнити контур"
 
 #: ../app/actions/vectors-commands.c:470 ../app/tools/gimpvectoroptions.c:209
-#: ../app/tools/gimpvectortool.c:816
+#: ../app/tools/gimpvectortool.c:818
 msgid "Stroke Path"
 msgstr "Обведення за контуром"
 
@@ -14699,17 +14697,17 @@ msgstr[3] "%d шар"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не вдалось відкрити файл мініатюри «%s»: %s"
 
-#: ../app/core/gimpitem.c:2161
+#: ../app/core/gimpitem.c:2171
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Додати шум"
 
-#: ../app/core/gimpitem.c:2171
+#: ../app/core/gimpitem.c:2181
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Додати шум до об'єкта"
 
-#: ../app/core/gimpitem.c:2222 ../app/core/gimpitem.c:2229
+#: ../app/core/gimpitem.c:2232 ../app/core/gimpitem.c:2239
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Вилучити шум з об'єкта"
@@ -21896,15 +21894,15 @@ msgstr "Інвертувати діапазон"
 msgid "Select All"
 msgstr "Вибрати все"
 
-#: ../app/propgui/gimppropgui-color-rotate.c:209
+#: ../app/propgui/gimppropgui-color-rotate.c:211
 msgid "Source Range"
 msgstr "Діапазон джерел"
 
-#: ../app/propgui/gimppropgui-color-rotate.c:219
+#: ../app/propgui/gimppropgui-color-rotate.c:221
 msgid "Destination Range"
 msgstr "Діапазон призначень"
 
-#: ../app/propgui/gimppropgui-color-rotate.c:229
+#: ../app/propgui/gimppropgui-color-rotate.c:231
 msgid "Gray Handling"
 msgstr "Управління сірим"
 
@@ -25177,11 +25175,7 @@ msgstr "Контури: створення та редагування конт�
 msgid "Pat_hs"
 msgstr "Кон_тури"
 
-#: ../app/tools/gimpvectortool.c:737
-msgid "There is no active layer or channel to fill"
-msgstr "Немає активного шару чи каналу для заповнення"
-
-#: ../app/tools/gimpvectortool.c:809
+#: ../app/tools/gimpvectortool.c:811
 msgid "There is no active layer or channel to stroke to"
 msgstr "Немає активного шару або каналу для обведення"
 
@@ -28276,3 +28270,13 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid "There is no active layer or channel to fill."
+#~ msgstr "Немає активного шару чи каналу для заповнення."
+
+#~ msgctxt "select-action"
+#~ msgid "_Fill Selection Outline"
+#~ msgstr "За_повнити контур позначеного"
+
+#~ msgid "There is no active layer or channel to fill"
+#~ msgstr "Немає активного шару чи каналу для заповнення"
