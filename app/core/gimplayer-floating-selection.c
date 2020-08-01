@@ -69,7 +69,13 @@ floating_sel_attach (GimpLayer    *layer,
        *  to the drawable
        */
       if (drawable == (GimpDrawable *) floating_sel)
-        drawable = gimp_image_get_active_drawable (image);
+        {
+          GList *drawables = gimp_image_get_selected_drawables (image);
+
+          g_return_if_fail (g_list_length (drawables) == 1);
+          drawable = drawables->data;
+          g_list_free (drawables);
+        }
     }
 
   gimp_layer_set_lock_alpha (layer, TRUE, FALSE);
