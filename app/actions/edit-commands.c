@@ -543,6 +543,7 @@ edit_fill_cmd_callback (GimpAction *action,
       g_clear_error (&error);
     }
 
+  g_list_free (drawables);
   g_object_unref (options);
 }
 
@@ -610,10 +611,21 @@ edit_paste (GimpDisplay   *display,
 
   if (paste)
     {
-      GimpDisplayShell *shell    = gimp_display_get_shell (display);
-      GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
+      GimpDisplayShell *shell     = gimp_display_get_shell (display);
+      GList            *drawables = gimp_image_get_selected_drawables (image);
+      GimpDrawable     *drawable  = NULL;
       gint              x, y;
       gint              width, height;
+
+      /* Paste on multiple selection is probably wrong right now (though
+       * I guess it can be argued). For now we just default to the same
+       * as pasting with no selected drawable, which will just create a
+       * new drawable.
+       */
+      if (g_list_length (drawables) == 1)
+        drawable = drawables->data;
+
+      g_list_free (drawables);
 
       if (drawable                                &&
           paste_type != GIMP_PASTE_TYPE_NEW_LAYER &&
