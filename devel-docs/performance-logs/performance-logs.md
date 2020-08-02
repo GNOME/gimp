@@ -119,6 +119,11 @@ otherwise.
     Backtraces capture the code-paths taken while recording the log, and should
     normally be included.
 
+  - *Messages:*
+    Whether or not to include diagnostic messages in the log.
+    Diagnostic messages indicate errors and unexpected conditions, and should
+    normally be included.
+
   - *Progressive:*
     Whether or not to record a progressive log.
 
