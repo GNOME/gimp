@@ -212,9 +212,24 @@ dashboard_log_record_cmd_callback (GimpAction *action,
                             G_CALLBACK (gimp_toggle_button_update),
                             &info->params.backtrace);
 
+          toggle = gtk_check_button_new_with_mnemonic (_("_Messages"));
+          gimp_help_set_help_data (toggle,
+                                   _("Include diagnostic messages in log"),
+                                   NULL);
+          gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+          gtk_widget_show (toggle);
+
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                        info->params.messages);
+
+          g_signal_connect (toggle, "toggled",
+                            G_CALLBACK (gimp_toggle_button_update),
+                            &info->params.messages);
+
           toggle = gtk_check_button_new_with_mnemonic (_("Progressi_ve"));
-          gimp_help_set_help_data (toggle, _("Produce complete log "
-                                             "even if not properly terminated"),
+          gimp_help_set_help_data (toggle,
+                                   _("Produce complete log "
+                                     "even if not properly terminated"),
                                    NULL);
           gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
           gtk_widget_show (toggle);
