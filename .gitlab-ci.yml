@@ -119,6 +119,9 @@ deps-debian/testing:
         meson
         mypaint-brushes
         poppler-data
+        python2
+        python-dev
+        wget
         xauth
         xvfb
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
@@ -145,12 +148,42 @@ gimp-debian/testing-autotools:
 gimp-debian/testing-autotools-distcheck:
   extends: .gimp-debian/testing-base
   script:
+    # Building pygtk2 as it is not available in Debian testing anymore.
+    - cd build/gitlab-ci
+    - wget https://cairographics.org/releases/py2cairo-1.10.0.tar.bz2
+    - wget https://download.gnome.org/sources/pygobject/2.28/pygobject-2.28.7.tar.xz
+    - wget https://download.gnome.org/sources/pygtk/2.24/pygtk-2.24.0.tar.gz
+    - sha256sum -c deps.sha256sum
+    - export PYTHON=/usr/bin/python2
+    # py2cairo
+    - tar xjf py2cairo-1.10.0.tar.bz2
+    - cd py2cairo-1.10.0/
+    - libtoolize --force
+    - aclocal
+    - autoheader
+    - automake --force-missing --add-missing --foreign
+    - autoconf
+    - ./configure --prefix="${INSTALL_PREFIX}" && make && make install
+    - cd ..
+    # pygobject
+    - tar xf pygobject-2.28.7.tar.xz
+    - cd pygobject-2.28.7/
+    - ./configure --prefix="${INSTALL_PREFIX}" && make && make install
+    - cd ..
+    # pygtk
+    - tar xzf pygtk-2.24.0.tar.gz
+    - cd pygtk-2.24.0/
+    - patch -p1 < ../pygtk-Drop-the-PangoFont-find_shaper-virtual-method.patch
+    - ./configure --prefix="${INSTALL_PREFIX}" && make && make install
+    - cd ../../..
+    # Actual build.
     - mkdir _build
     - cd _build
     - ../autogen.sh
         --prefix="${INSTALL_PREFIX}"
         --enable-debug
         --disable-python
+        --enable-gtk-doc
     - make -j "$(nproc)"
     - make distcheck
   allow_failure: true

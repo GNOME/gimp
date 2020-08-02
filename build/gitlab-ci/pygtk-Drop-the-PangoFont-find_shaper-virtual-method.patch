@@ -1,0 +1,39 @@
+From 877164b6b70780468a31d8211f29421b6f34b0c8 Mon Sep 17 00:00:00 2001
+From: Mathieu Bridon <bochecha@daitauha.fr>
+Date: Thu, 24 Oct 2019 22:58:36 +0200
+Subject: [PATCH] Drop the PangoFont find_shaper virtual method
+
+This API has been removed from Pango 1.44.6, because it was completely
+unused by anything.
+
+However, PyGTK tries to bind everything, even unused API.
+
+Removing this from PyGTK means we can build it against the latest Pango
+again.
+---
+ pango.defs | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/pango.defs b/pango.defs
+index 2a79ecc..862667a 100644
+--- a/pango.defs
++++ b/pango.defs
+@@ -1391,15 +1391,6 @@
+   )
+ )
+ 
+-(define-virtual find_shaper
+-  (of-object "PangoFont")
+-  (return-type "PangoEngineShape*")
+-  (parameters
+-    '("PangoLanguage*" "lang")
+-    '("guint32" "ch")
+-  )
+-)
+-
+ (define-virtual get_glyph_extents
+   (of-object "PangoFont")
+   (return-type "none")
+-- 
+2.21.0
+
