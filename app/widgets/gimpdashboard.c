@@ -81,6 +81,7 @@
 #include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
+#include "gimp-log.h"
 #include "gimp-version.h"
 
 
@@ -99,6 +100,7 @@
 #define LOG_SAMPLE_FREQUENCY_MAX       1000 /* samples per second */
 #define LOG_DEFAULT_SAMPLE_FREQUENCY   10 /* samples per second */
 #define LOG_DEFAULT_BACKTRACE          TRUE
+#define LOG_DEFAULT_MESSAGES           TRUE
 #define LOG_DEFAULT_PROGRESSIVE        FALSE
 
 
@@ -323,6 +325,7 @@ struct _GimpDashboardPrivate
   VariableData                  log_variables[N_VARIABLES];
   GimpBacktrace                *log_backtrace;
   GHashTable                   *log_addresses;
+  GimpLogHandler                log_log_handler;
 
   GimpHighlightableButton      *log_record_button;
   GtkLabel                     *log_add_marker_label;
@@ -437,7 +440,10 @@ static gboolean   gimp_dashboard_log_print_escaped              (GimpDashboard  
                                                                  const gchar         *string);
 static gint64     gimp_dashboard_log_time                       (GimpDashboard       *dashboard);
 static void       gimp_dashboard_log_sample                     (GimpDashboard       *dashboard,
-                                                                 gboolean             variables_changed);
+                                                                 gboolean             variables_changed,
+                                                                 gboolean             include_current_thread);
+static void       gimp_dashboard_log_add_marker_unlocked        (GimpDashboard       *dashboard,
+                                                                 const gchar         *description);
 static void       gimp_dashboard_log_update_highlight           (GimpDashboard       *dashboard);
 static void       gimp_dashboard_log_update_n_markers           (GimpDashboard       *dashboard);
 
@@ -446,6 +452,10 @@ static void       gimp_dashboard_log_write_address_map          (GimpDashboard  
                                                                  gint                 n_addresses,
                                                                  GimpAsync           *async);
 static void       gimp_dashboard_log_write_global_address_map   (GimpAsync           *async,
+                                                                 GimpDashboard       *dashboard);
+static void       gimp_dashboard_log_log_func                   (const gchar         *log_domain,
+                                                                 GLogLevelFlags       log_levels,
+                                                                 const gchar         *message,
                                                                  GimpDashboard       *dashboard);
 
 static gboolean   gimp_dashboard_field_use_meter_underlay       (Group                group,
@@ -1815,7 +1825,7 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
 
           /* log sample */
           if (priv->log_output)
-            gimp_dashboard_log_sample (dashboard, variables_changed);
+            gimp_dashboard_log_sample (dashboard, variables_changed, FALSE);
 
           /* update gui */
           if (priv->update_now   ||
@@ -3557,7 +3567,8 @@ gimp_dashboard_log_time (GimpDashboard *dashboard)
 
 static void
 gimp_dashboard_log_sample (GimpDashboard *dashboard,
-                           gboolean       variables_changed)
+                           gboolean       variables_changed,
+                           gboolean       include_current_thread)
 {
   GimpDashboardPrivate *priv      = dashboard->priv;
   GimpBacktrace        *backtrace = NULL;
@@ -3694,7 +3705,7 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
     }
 
   if (priv->log_params.backtrace)
-    backtrace = gimp_backtrace_new (FALSE);
+    backtrace = gimp_backtrace_new (include_current_thread);
 
   if (backtrace)
     {
@@ -3953,6 +3964,38 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
 }
 
 static void
+gimp_dashboard_log_add_marker_unlocked (GimpDashboard *dashboard,
+                                        const gchar   *description)
+{
+  GimpDashboardPrivate *priv = dashboard->priv;
+
+  priv->log_n_markers++;
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<marker id=\"%d\" t=\"%lld\"",
+                             priv->log_n_markers,
+                             (long long) gimp_dashboard_log_time (dashboard));
+
+  if (description && description[0])
+    {
+      gimp_dashboard_log_printf (dashboard,
+                                 ">\n");
+      gimp_dashboard_log_print_escaped (dashboard, description);
+      gimp_dashboard_log_printf (dashboard,
+                                 "\n"
+                                 "</marker>\n");
+    }
+  else
+    {
+      gimp_dashboard_log_printf (dashboard,
+                                 " />\n");
+    }
+
+  gimp_dashboard_log_update_n_markers (dashboard);
+}
+
+static void
 gimp_dashboard_log_update_highlight (GimpDashboard *dashboard)
 {
   GimpDashboardPrivate *priv = dashboard->priv;
@@ -4191,6 +4234,40 @@ gimp_dashboard_log_write_global_address_map (GimpAsync     *async,
   gimp_async_finish (async, NULL);
 }
 
+static void
+gimp_dashboard_log_log_func (const gchar    *log_domain,
+                             GLogLevelFlags  log_levels,
+                             const gchar    *message,
+                             GimpDashboard  *dashboard)
+{
+  GimpDashboardPrivate *priv      = dashboard->priv;
+  const gchar          *log_level = NULL;
+  gchar                *description;
+
+  g_mutex_lock (&priv->mutex);
+
+  switch (log_levels & G_LOG_LEVEL_MASK)
+    {
+    case G_LOG_LEVEL_ERROR:    log_level = "ERROR";    break;
+    case G_LOG_LEVEL_CRITICAL: log_level = "CRITICAL"; break;
+    case G_LOG_LEVEL_WARNING:  log_level = "WARNING";  break;
+    case G_LOG_LEVEL_MESSAGE:  log_level = "MESSAGE";  break;
+    case G_LOG_LEVEL_INFO:     log_level = "INFO";     break;
+    case G_LOG_LEVEL_DEBUG:    log_level = "DEBUG";    break;
+    default:                   log_level = "UNKNOWN";  break;
+    }
+
+  description = g_strdup_printf ("[%s] %s: %s", log_domain, log_level, message);
+
+  gimp_dashboard_log_add_marker_unlocked (dashboard, description);
+
+  gimp_dashboard_log_sample (dashboard, FALSE, TRUE);
+
+  g_free (description);
+
+  g_mutex_unlock (&priv->mutex);
+}
+
 static gboolean
 gimp_dashboard_field_use_meter_underlay (Group group,
                                          gint  field)
@@ -4374,6 +4451,12 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
         atoi (g_getenv ("GIMP_PERFORMANCE_LOG_BACKTRACE")) ? 1 : 0;
     }
 
+  if (g_getenv ("GIMP_PERFORMANCE_LOG_MESSAGES"))
+    {
+      priv->log_params.messages =
+        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_MESSAGES")) ? 1 : 0;
+    }
+
   if (g_getenv ("GIMP_PERFORMANCE_LOG_PROGRESSIVE"))
     {
       priv->log_params.progressive =
@@ -4428,10 +4511,12 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
                              "<params>\n"
                              "<sample-frequency>%d</sample-frequency>\n"
                              "<backtrace>%d</backtrace>\n"
+                             "<messages>%d</messages>\n"
                              "<progressive>%d</progressive>\n"
                              "</params>\n",
                              priv->log_params.sample_frequency,
                              has_backtrace,
+                             priv->log_params.messages,
                              priv->log_params.progressive);
 
   gimp_dashboard_log_printf (dashboard,
@@ -4599,6 +4684,15 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
 
   gimp_dashboard_reset_unlocked (dashboard);
 
+  if (priv->log_params.messages)
+    {
+      priv->log_log_handler = gimp_log_set_handler (
+        TRUE,
+        G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION,
+        (GLogFunc) gimp_dashboard_log_log_func,
+        dashboard);
+    }
+
   priv->update_now = TRUE;
   g_cond_signal (&priv->cond);
 
@@ -4634,6 +4728,13 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
     return TRUE;
 
   g_mutex_lock (&priv->mutex);
+
+  if (priv->log_log_handler)
+    {
+      gimp_log_remove_handler (priv->log_log_handler);
+
+      priv->log_log_handler = 0;
+    }
 
   gimp_dashboard_log_printf (dashboard,
                              "\n"
@@ -4720,6 +4821,7 @@ gimp_dashboard_log_get_default_params (GimpDashboard *dashboard)
   {
     .sample_frequency = LOG_DEFAULT_SAMPLE_FREQUENCY,
     .backtrace        = LOG_DEFAULT_BACKTRACE,
+    .messages         = LOG_DEFAULT_MESSAGES,
     .progressive      = LOG_DEFAULT_PROGRESSIVE
   };
 
@@ -4741,32 +4843,9 @@ gimp_dashboard_log_add_marker (GimpDashboard *dashboard,
 
   g_mutex_lock (&priv->mutex);
 
-  priv->log_n_markers++;
-
-  gimp_dashboard_log_printf (dashboard,
-                             "\n"
-                             "<marker id=\"%d\" t=\"%lld\"",
-                             priv->log_n_markers,
-                             (long long) gimp_dashboard_log_time (dashboard));
-
-  if (description && description[0])
-    {
-      gimp_dashboard_log_printf (dashboard,
-                                 ">\n");
-      gimp_dashboard_log_print_escaped (dashboard, description);
-      gimp_dashboard_log_printf (dashboard,
-                                 "\n"
-                                 "</marker>\n");
-    }
-  else
-    {
-      gimp_dashboard_log_printf (dashboard,
-                                 " />\n");
-    }
+  gimp_dashboard_log_add_marker_unlocked (dashboard, description);
 
   g_mutex_unlock (&priv->mutex);
-
-  gimp_dashboard_log_update_n_markers (dashboard);
 }
 
 void
