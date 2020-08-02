@@ -46,6 +46,7 @@
 #include "pdb/gimppdb.h"
 
 #include "errors.h"
+#include "gimp-log.h"
 
 #ifdef G_OS_WIN32
 #include <windows.h>
@@ -53,48 +54,14 @@
 
 /*  private variables  */
 
-static const gchar * const log_domains[] =
-{
-  "Gimp",
-  "Gimp-Actions",
-  "Gimp-Base",
-  "Gimp-Composite",
-  "Gimp-Config",
-  "Gimp-Core",
-  "Gimp-Dialogs",
-  "Gimp-Display",
-  "Gimp-File",
-  "Gimp-GEGL",
-  "Gimp-GUI",
-  "Gimp-Menus",
-  "Gimp-Operations",
-  "Gimp-PDB",
-  "Gimp-Paint",
-  "Gimp-Paint-Funcs",
-  "Gimp-Plug-In",
-  "Gimp-Text",
-  "Gimp-Tools",
-  "Gimp-Vectors",
-  "Gimp-Widgets",
-  "Gimp-XCF",
-  "LibGimpBase",
-  "LibGimpColor",
-  "LibGimpConfig",
-  "LibGimpMath",
-  "LibGimpModule",
-  "LibGimpThumb",
-  "LibGimpWidgets"
-};
-
-static Gimp                *the_errors_gimp   = NULL;
-static gboolean             use_debug_handler = FALSE;
-static GimpStackTraceMode   stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
-static gchar               *full_prog_name    = NULL;
-static gchar               *backtrace_file    = NULL;
-static gchar               *backup_path       = NULL;
-static guint                log_domain_handler_ids[G_N_ELEMENTS (log_domains)];
-static guint                gegl_handler_id   = 0;
-static guint                global_handler_id = 0;
+static Gimp                *the_errors_gimp    = NULL;
+static gboolean             use_debug_handler  = FALSE;
+static GimpStackTraceMode   stack_trace_mode   = GIMP_STACK_TRACE_QUERY;
+static gchar               *full_prog_name     = NULL;
+static gchar               *backtrace_file     = NULL;
+static gchar               *backup_path        = NULL;
+static GimpLogHandler       log_domain_handler = 0;
+static guint                global_handler_id  = 0;
 
 
 /*  local function prototypes  */
@@ -122,8 +89,6 @@ errors_init (Gimp               *gimp,
              GimpStackTraceMode  _stack_trace_mode,
              const gchar        *_backtrace_file)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (_full_prog_name != NULL);
   g_return_if_fail (full_prog_name == NULL);
@@ -151,18 +116,12 @@ errors_init (Gimp               *gimp,
   backup_path = g_build_filename (gimp_directory (), "backups",
                                   "backup-XXX.xcf", NULL);
 
-  for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
-    log_domain_handler_ids[i] = g_log_set_handler (log_domains[i],
-                                                   G_LOG_LEVEL_WARNING |
-                                                   G_LOG_LEVEL_MESSAGE |
-                                                   G_LOG_LEVEL_CRITICAL,
-                                                   gimp_message_log_func, gimp);
+  log_domain_handler = gimp_log_set_handler (FALSE,
+                                             G_LOG_LEVEL_WARNING |
+                                             G_LOG_LEVEL_MESSAGE |
+                                             G_LOG_LEVEL_CRITICAL,
+                                             gimp_message_log_func, gimp);
 
-  gegl_handler_id   = g_log_set_handler ("GEGL",
-                                         G_LOG_LEVEL_WARNING |
-                                         G_LOG_LEVEL_MESSAGE |
-                                         G_LOG_LEVEL_CRITICAL,
-                                         gimp_message_log_func, gimp);
   global_handler_id = g_log_set_handler (NULL,
                                          G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
                                          gimp_error_log_func, gimp);
@@ -171,13 +130,19 @@ errors_init (Gimp               *gimp,
 void
 errors_exit (void)
 {
-  gint i;
+  if (log_domain_handler)
+    {
+      gimp_log_remove_handler (log_domain_handler);
 
-  for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
-    g_log_remove_handler (log_domains[i], log_domain_handler_ids[i]);
+      log_domain_handler = 0;
+    }
 
-  g_log_remove_handler ("GEGL", gegl_handler_id);
-  g_log_remove_handler (NULL, global_handler_id);
+  if (global_handler_id)
+    {
+      g_log_remove_handler (NULL, global_handler_id);
+
+      global_handler_id = 0;
+    }
 
   the_errors_gimp = NULL;
 

@@ -48,6 +48,41 @@ static const GDebugKey log_keys[] =
   { "xcf",                GIMP_LOG_XCF                }
 };
 
+static const gchar * const log_domains[] =
+{
+  "Gimp",
+  "Gimp-Actions",
+  "Gimp-Base",
+  "Gimp-Composite",
+  "Gimp-Config",
+  "Gimp-Core",
+  "Gimp-Dialogs",
+  "Gimp-Display",
+  "Gimp-File",
+  "Gimp-GEGL",
+  "Gimp-GUI",
+  "Gimp-Menus",
+  "Gimp-Operations",
+  "Gimp-PDB",
+  "Gimp-Paint",
+  "Gimp-Paint-Funcs",
+  "Gimp-Plug-In",
+  "Gimp-Text",
+  "Gimp-Tools",
+  "Gimp-Vectors",
+  "Gimp-Widgets",
+  "Gimp-XCF",
+  "LibGimpBase",
+  "LibGimpColor",
+  "LibGimpConfig",
+  "LibGimpMath",
+  "LibGimpModule",
+  "LibGimpThumb",
+  "LibGimpWidgets",
+  "GEGL",
+  NULL
+};
+
 
 GimpLogFlags gimp_log_flags = 0;
 
@@ -138,4 +173,47 @@ gimp_logv (GimpLogFlags  flags,
          "%s(%d): %s", function, line, message);
 
   g_free (message);
+}
+
+GimpLogHandler
+gimp_log_set_handler (gboolean       global,
+                      GLogLevelFlags log_levels,
+                      GLogFunc       log_func,
+                      gpointer       user_data)
+{
+  GimpLogHandler handler;
+  gint           n;
+  gint           i;
+
+  g_return_val_if_fail (log_func != NULL, NULL);
+
+  n = G_N_ELEMENTS (log_domains) - (global ? 1 : 0);
+
+  handler = g_new (guint, n + 1);
+
+  handler[0] = n;
+
+  for (i = 0; i < n; i++)
+    {
+      handler[i + 1] = g_log_set_handler (log_domains[i], log_levels,
+                                          log_func, user_data);
+    }
+
+  return handler;
+}
+
+void
+gimp_log_remove_handler (GimpLogHandler handler)
+{
+  gint n;
+  gint i;
+
+  g_return_if_fail (handler != NULL);
+
+  n = handler[0];
+
+  for (i = 0; i < n; i++)
+    g_log_remove_handler (log_domains[i], handler[i + 1]);
+
+  g_free (handler);
 }
