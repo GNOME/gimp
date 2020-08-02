@@ -19,6 +19,9 @@
 #define __GIMP_LOG_H__
 
 
+typedef guint *GimpLogHandler;
+
+
 typedef enum
 {
   GIMP_LOG_TOOL_EVENTS        = 1 << 0,
@@ -49,17 +52,23 @@ typedef enum
 extern GimpLogFlags gimp_log_flags;
 
 
-void   gimp_log_init (void);
-void   gimp_log      (GimpLogFlags  flags,
-                      const gchar  *function,
-                      gint          line,
-                      const gchar  *format,
-                      ...) G_GNUC_PRINTF (4, 5);
-void   gimp_logv     (GimpLogFlags  flags,
-                      const gchar  *function,
-                      gint          line,
-                      const gchar  *format,
-                      va_list       args) G_GNUC_PRINTF (4, 0);
+void             gimp_log_init           (void);
+void             gimp_log                (GimpLogFlags    flags,
+                                          const gchar    *function,
+                                          gint            line,
+                                          const gchar    *format,
+                                          ...) G_GNUC_PRINTF (4, 5);
+void             gimp_logv               (GimpLogFlags    flags,
+                                          const gchar    *function,
+                                          gint            line,
+                                          const gchar    *format,
+                                          va_list         args) G_GNUC_PRINTF (4, 0);
+
+GimpLogHandler   gimp_log_set_handler    (gboolean        global,
+                                          GLogLevelFlags  log_levels,
+                                          GLogFunc        log_func,
+                                          gpointer        user_data);
+void             gimp_log_remove_handler (GimpLogHandler  handler);
 
 
 #ifdef G_HAVE_ISO_VARARGS
