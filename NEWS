@@ -13,7 +13,7 @@ Overview of Changes from GIMP 2.10.20 to GIMP 2.10.22
 
 Core:
 
-  - Verbose version information (`gimp-2-10 -v` on command line, or
+  - Verbose version information (`gimp-2.10 -v` on command line, or
     debug output) now displays Flatpak related information when
     available. This is especially useful for debugging (such as the
     exact Flatpak build hash, the runtime version, the installed
@@ -21,14 +21,14 @@ Core:
   - OpenCL settings has now been moved to the Playground tab in
     Preferences.
   - On stable builds, "Playground" tab is now visible in Preferences if
-    any of the experimental feature has been enabled, even without the
+    any of the experimental features has been enabled, even without the
     CLI option `--show-playground`.
 
 Tools:
 
-  - Make "gegl:matting-levin" default engine of Foreground Select tool
-    (when present, as it is an optional feature) as it performs a lot
-    better.
+  - "gegl:matting-levin" now the default engine of Foreground Select
+    tool (when present, as it is an optional feature) as it performs a
+    lot better.
 
 User interface:
 
@@ -59,7 +59,7 @@ Plug-ins:
     unfortunately not yet listed in IANA media types (so various content
     types are in use, no clear standard apparently).
   - TIFF export will not override "DocumentName" metadata tag anymore.
-  - DSD import is now a bit more permissive, allowing to load some files
+  - DDS import is now a bit more permissive, allowing to load some files
     with invalid header flags regarding compression, while we are able
     to know the right compression from other flags. This allows to
     recover invalid DDS files exported by other software.
