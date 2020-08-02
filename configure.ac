@@ -2295,6 +2295,16 @@ m4_define([pycheck_error], [
       *** passing --disable-python to configure (but then you will not be able
       *** to use scripts for GIMP that are written in Python)."])
 
+# pygtk-codegen-2.0 and the defsdir are used for the `dist` target,
+# regardless of whether Python is enabled or not. Their absence don't
+# break simple builds but we still check them.
+AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
+
+AC_MSG_CHECKING(for pygtk defs)
+PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
+AC_SUBST(PYGTK_DEFSDIR)
+AC_MSG_RESULT($PYGTK_DEFSDIR)
+
 if test "x$enable_python" != xno; then
   enable_python="yes"
   # check for Python
@@ -2323,15 +2333,9 @@ if test "x$enable_python" != xno; then
   PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version,,
                     [pycheck_error([PyGTK pygtk_required_version or newer], [it])])
 
-  AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
   if test "x$PYGTK_CODEGEN" = xno; then
      pycheck_error([pygtk-codegen-2.0 script], [it])
   fi
-
-  AC_MSG_CHECKING(for pygtk defs)
-  PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
-  AC_SUBST(PYGTK_DEFSDIR)
-  AC_MSG_RESULT($PYGTK_DEFSDIR)
 
   PKG_CHECK_MODULES(PYCAIRO, pycairo >= pycairo_required_version,,
                     [pycheck_error([PyCairo pycairo_required_version or newer], [it])])
