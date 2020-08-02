@@ -100,7 +100,7 @@ void UnLoadMagnificationLibrary(void);
 BOOL LoadMagnificationLibrary(void);
 
 
-void UnLoadMagnificationLibrary()
+void UnLoadMagnificationLibrary(void)
 {
   if (!magnificationLibrary) return;
   FreeLibrary(magnificationLibrary);
@@ -108,7 +108,7 @@ void UnLoadMagnificationLibrary()
 
 
 
-BOOL LoadMagnificationLibrary()
+BOOL LoadMagnificationLibrary(void)
 {
   if (magnificationLibrary) return TRUE;
 
