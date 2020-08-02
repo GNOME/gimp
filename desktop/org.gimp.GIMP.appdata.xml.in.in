@@ -73,6 +73,31 @@
   </provides>
 
   <releases>
+    <release version="2.10.22" date="TODO">
+      <url type="details">https://www.gimp.org/news/2020/08/TODO/gimp-2-10-22-released/</url>
+      <description>
+        <_p>
+          Mostly a bug-fix release with some maintenance updates:
+        </_p>
+        <ul>
+          <_li>
+            Foreground Select tool default engine is now Matting Levin
+          </_li>
+          <_li>
+            Various file plug-in fixes for PSD, TIFF, WebP, DDS…
+          </_li>
+          <_li>
+            New progressive performance logs and dashboard updates
+          </_li>
+          <_li>
+            OpenCL settings moved to Playground preferences
+          </_li>
+          <_li>
+            Verbose debug now shows Flatpak info when relevant
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.20" date="2020-06-07">
       <url type="details">https://www.gimp.org/news/2020/06/07/gimp-2-10-20-released/</url>
       <description>
