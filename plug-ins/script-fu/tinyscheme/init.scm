@@ -606,7 +606,7 @@
 
 (define (close-port p)
      (cond
-          ((input-output-port? p) (close-input-port (close-output-port p)))
+          ((input-output-port? p) (close-input-port p) (close-output-port p))
           ((input-port? p) (close-input-port p))
           ((output-port? p) (close-output-port p))
           (else (throw "Not a port" p))))
@@ -681,7 +681,7 @@
 ;; SRFI-0
 ;; COND-EXPAND
 ;; Implemented as a macro
-(define *features* '(srfi-0))
+(define *features* '(srfi-0 tinyscheme))
 
 (define-macro (cond-expand . cond-action-list)
   (cond-expand-runtime cond-action-list))

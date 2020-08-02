@@ -1,4 +1,4 @@
-/* T I N Y S C H E M E    1 . 4 1
+/* T I N Y S C H E M E    1 . 4 2
  *   Dimitrios Souflis (dsouflis@acm.org)
  *   Based on MiniScheme (original credits follow)
  * (MINISCM)               coded by Atsushi Moriwaki (11/5/1989)
@@ -97,7 +97,7 @@ ts_output_string (TsOutputType  type,
  *  Basic memory allocation units
  */
 
-#define banner "TinyScheme 1.41 (with UTF-8 support)"
+#define banner "TinyScheme 1.42 (with UTF-8 support)"
 
 #include <string.h>
 #include <stdlib.h>
@@ -3143,7 +3143,7 @@ static pointer opexe_1(scheme *sc, enum scheme_opcodes op) {
                if(!sc->code) {
                     Error_0(sc,"syntax error in cond");
                }
-               if(car(sc->code)==sc->FEED_TO) {
+               if(!sc->code || car(sc->code)==sc->FEED_TO) {
                     if(!is_pair(cdr(sc->code))) {
                          Error_0(sc,"syntax error in cond");
                     }
@@ -5102,6 +5102,11 @@ void scheme_load_file(scheme *sc, FILE *fin)
 { scheme_load_named_file(sc,fin,0); }
 
 void scheme_load_named_file(scheme *sc, FILE *fin, const char *filename) {
+  if (fin == NULL)
+  {
+    fprintf(stderr,"File pointer can not be NULL when loading a file\n");
+    return;
+  }
   dump_stack_reset(sc);
   sc->envir = sc->global_env;
   sc->file_i=0;

@@ -1,6 +1,21 @@
 Change Log
 ----------
 
+Version 1.42
+    Other changes:
+        - Fixed segfault crash caused by invalid syntax to cond  (PG)
+        - Fixed a bug in the close-port routine in init.scm
+        - Fixed possible crash loading file due to uninitialized variable  (MP)
+        - Don't use snprintf() in atom2str to return some fixed strings  (KC/MP)
+        - Added "tinyscheme" to the features list  (JaW)
+        - Added Sconstruct to allow building using scons  (AG)
+        - Fixed function prototype for scheme_init_new  (JuW)
+        - Make various limits configurable  (JuW)
+
+    Contributors:
+        Kevin Cozens, Mauro Persano, Pedro Gimeno, James Woodcock, Atanu Ghosh,
+        and Justus Winter.
+
 Version 1.41
     Bugs fixed:
         #3020389 - Added makefile section for Mac OS X  (SL)
@@ -9,7 +24,7 @@ Version 1.41
         #3394882 - Added missing #if in opdefines.h around get and put  (DC)
         #3395547 - Fix for the modulo procedure  (DC)
         #3400290 - Optimized append to make it an O(n) operation  (DC)
-        #3493926 - Corrected flag used when building shared files on OSX (J)
+        #3493926 - Corrected flag used when building shared files on OSX  (J)
 
     R5RS related changes:
         #2866196 - Parser does not handle delimiters correctly
@@ -30,7 +45,7 @@ Version 1.41
 
     Contributors:
         Kevin Cozens, Gordon McNutt, Doug Currie, Sean Long, Tim Cas, Joey,
-        and Richard Copley, and CMarinier.
+        Richard Copley, and CMarinier.
 
 Version 1.40
     Bugs fixed:
