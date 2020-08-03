@@ -144,6 +144,22 @@ gimp-debian/testing-autotools:
     - make -j "$(nproc)"
     - make check
 
+gimp-debian/testing-autotools-distcheck:
+  extends: .gimp-debian/testing-base
+  script:
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh
+        --prefix="${INSTALL_PREFIX}"
+        --enable-debug
+        --with-python=force
+        --with-javascript=force
+        --with-lua=force
+        --enable-gtk-doc
+    - make -j "$(nproc)"
+    - make distcheck
+  allow_failure: true
+
 gimp-debian/testing-meson:
   extends: .gimp-debian/testing-base
   script:
