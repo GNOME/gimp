@@ -89,7 +89,7 @@ EXTRA_DIST = \
 	gtk-doc.make
 
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+AM_DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --with-python=force --with-javascript=force --with-lua=force
 
 
 check-defs:
