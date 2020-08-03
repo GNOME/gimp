@@ -836,6 +836,7 @@ EXPORTS
 	gimp_vectors_stroke_get_points
 	gimp_vectors_stroke_interpolate
 	gimp_vectors_stroke_new_from_points
+	gimp_vectors_stroke_reverse
 	gimp_vectors_stroke_rotate
 	gimp_vectors_stroke_scale
 	gimp_vectors_stroke_translate
