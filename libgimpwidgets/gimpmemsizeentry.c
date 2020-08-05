@@ -259,12 +259,7 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
     }
 
   if (shift != entry->shift)
-    {
-      entry->shift = shift;
-      entry->value = value;
-
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (entry->menu), shift);
-    }
+    gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (entry->menu), shift);
 
 #if _MSC_VER < 1300
 #  define CAST (gint64)
