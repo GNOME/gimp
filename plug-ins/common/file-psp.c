@@ -903,13 +903,8 @@ read_creator_block (FILE      *f,
               g_free (string);
               return -1;
             }
-          if (string[length - 1] != '\0')
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Creator keyword data not nul-terminated"));
-              g_free (string);
-              return -1;
-            }
+          /* PSP does not zero terminate strings */
+          string[length] = '\0';
           switch (keyword)
             {
             case PSP_CRTR_FLD_TITLE:
