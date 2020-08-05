@@ -39,6 +39,10 @@ User interface:
     instead.
     Likewise, don't propagate Escape key-press events if a new value was
     entered, and restore the original value instead.
+  - GimpMemSizeEntry improved to show appropriate binary prefixes
+    (kibibyte, mebibyte and gibibyte) instead of decimal ones, to round
+    properly when using higher units, and to not lose accuracy when
+    possible when displaying in higher units.
 
 Plug-ins:
 
