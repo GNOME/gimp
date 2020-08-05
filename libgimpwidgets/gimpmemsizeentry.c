@@ -73,6 +73,8 @@ static void  gimp_memsize_entry_adj_callback  (GtkAdjustment    *adj,
 static void  gimp_memsize_entry_unit_callback (GtkWidget        *widget,
                                                GimpMemsizeEntry *entry);
 
+static guint64 gimp_memsize_entry_get_rounded_value (GimpMemsizeEntry *entry,
+                                                     guint64           value);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpMemsizeEntry, gimp_memsize_entry, GTK_TYPE_BOX)
 
@@ -113,7 +115,11 @@ gimp_memsize_entry_adj_callback (GtkAdjustment    *adj,
   GimpMemsizeEntryPrivate *private = GET_PRIVATE (entry);
   guint64                  size    = gtk_adjustment_get_value (adj);
 
-  private->value = size << private->shift;
+  if (gimp_memsize_entry_get_rounded_value (entry, private->value) != size)
+    /* Do not allow losing accuracy if the converted/displayed value
+     * stays the same.
+     */
+    private->value = size << private->shift;
 
   g_signal_emit (entry, gimp_memsize_entry_signals[VALUE_CHANGED], 0);
 }
@@ -138,7 +144,7 @@ gimp_memsize_entry_unit_callback (GtkWidget        *widget,
       private->shift = shift;
 
       gtk_adjustment_configure (private->adjustment,
-                                CAST private->value >> shift,
+                                gimp_memsize_entry_get_rounded_value (entry, private->value),
                                 CAST private->lower >> shift,
                                 CAST private->upper >> shift,
                                 gtk_adjustment_get_step_increment (private->adjustment),
@@ -147,6 +153,36 @@ gimp_memsize_entry_unit_callback (GtkWidget        *widget,
     }
 
 #undef CAST
+}
+
+/**
+ * gimp_memsize_entry_get_rounded_value:
+ * @entry: #GimpMemsizeEntry whose set unit is used.
+ * @value: value to convert to @entry unit, and rounded.
+ *
+ * Returns: the proper integer value to be displayed for current unit.
+ *          This value has been appropriately rounded to the nearest
+ *          integer, away from zero.
+ */
+static guint64
+gimp_memsize_entry_get_rounded_value (GimpMemsizeEntry *entry,
+                                      guint64           value)
+{
+  GimpMemsizeEntryPrivate *private = GET_PRIVATE (entry);
+  guint64                  converted;
+
+#if _MSC_VER < 1300
+#  define CAST (gint64)
+#else
+#  define CAST
+#endif
+
+  converted = (CAST value >> private->shift) +
+              ((CAST private->value >> (private->shift - 1)) & 1);
+
+#undef CAST
+
+  return converted;
 }
 
 
@@ -194,7 +230,8 @@ gimp_memsize_entry_new (guint64  value,
   private->upper = upper;
   private->shift = shift;
 
-  private->adjustment = gtk_adjustment_new (CAST (value >> shift),
+  private->adjustment = gtk_adjustment_new (gimp_memsize_entry_get_rounded_value (entry,
+                                                                                  private->value),
                                             CAST (lower >> shift),
                                             CAST (upper >> shift),
                                             1, 8, 0);
@@ -212,10 +249,10 @@ gimp_memsize_entry_new (guint64  value,
                     G_CALLBACK (gimp_memsize_entry_adj_callback),
                     entry);
 
-  private->menu = gimp_int_combo_box_new (_("Kilobytes"), 10,
-                                        _("Megabytes"), 20,
-                                        _("Gigabytes"), 30,
-                                        NULL);
+  private->menu = gimp_int_combo_box_new (_("Kibibyte"), 10,
+                                          _("Mebibyte"), 20,
+                                          _("Gibibyte"), 30,
+                                          NULL);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->menu), shift);
 
@@ -260,13 +297,8 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
   if (shift != private->shift)
     gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->menu), shift);
 
-#if _MSC_VER < 1300
-#  define CAST (gint64)
-#else
-#  define CAST
-#endif
-
-  gtk_adjustment_set_value (private->adjustment, CAST (value >> shift));
+  gtk_adjustment_set_value (private->adjustment,
+                            (gdouble) gimp_memsize_entry_get_rounded_value (entry, value));
 
 #undef CASE
 }
