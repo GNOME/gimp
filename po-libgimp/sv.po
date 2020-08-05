@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-28 11:02+0000\n"
-"PO-Revision-Date: 2020-06-29 02:07+0200\n"
+"POT-Creation-Date: 2020-08-05 12:37+0000\n"
+"PO-Revision-Date: 2020-08-05 23:58+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -2151,17 +2151,17 @@ msgstr "Tryck på F1 för mer hjälp"
 msgid "(Empty)"
 msgstr "(Tom)"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:215
-msgid "Kilobytes"
-msgstr "kilobyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:252
+msgid "Kibibyte"
+msgstr "kibibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:216
-msgid "Megabytes"
-msgstr "megabyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:253
+msgid "Mebibyte"
+msgstr "mebibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:217
-msgid "Gigabytes"
-msgstr "gigabyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:254
+msgid "Gibibyte"
+msgstr "gibibyte"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:283
