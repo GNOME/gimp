@@ -1339,16 +1339,7 @@ read_channel_data (FILE        *f,
     case PSP_COMP_NONE:
       if (bytespp == 1)
         {
-          if ((width % 4) == 0)
-            fread (pixels[0], height * width, 1, f);
-          else
-            {
-              for (y = 0; y < height; y++)
-                {
-                  fread (pixels[y], width, 1, f);
-                  fseek (f, 4 - (width % 4), SEEK_CUR);
-                }
-            }
+          fread (pixels[0], height * width, 1, f);
         }
       else
         {
@@ -1358,8 +1349,8 @@ read_channel_data (FILE        *f,
               guchar *p, *q;
 
               fread (buf, width, 1, f);
-              if (width % 4)
-                fseek (f, 4 - (width % 4), SEEK_CUR);
+              /* Contrary to what the PSP specification seems to suggest
+                 scanlines are not stored on a 4-byte boundary. */
               p = buf;
               q = pixels[y] + offset;
               for (i = 0; i < width; i++)
