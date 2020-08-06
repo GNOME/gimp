@@ -173,6 +173,7 @@ gimp-debian/testing-autotools:
     - ../autogen.sh
         --prefix="${INSTALL_PREFIX}"
         --enable-debug
+        --enable-gtk-doc
     - make -j "$(nproc)"
     - make check
   needs: ["deps-debian/testing"]
