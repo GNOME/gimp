@@ -101,30 +101,6 @@ deps-debian/testing:
     - ./configure --prefix="${INSTALL_PREFIX}" && make && make install
 
 .gimp-debian/testing-base:
-  stage: gimp
-  dependencies:
-    - deps-debian/testing
-  artifacts:
-    expire_in: 1 week
-    when: always
-    name: "app-build-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
-    paths:
-    - _build
-    - "${INSTALL_DIR}"
-    - compile
-    - config.guess
-    - config.h.in
-    - config.sub
-    - configure
-    - depcomp
-    - gtk-doc.make
-    - install-sh
-    - INSTALL
-    - ltmain.sh
-    - missing
-    - po
-    - py-compile
-    - test-driver
   before_script:
     - apt-get update
     - apt-get install -y --no-install-recommends
@@ -180,10 +156,17 @@ deps-debian/testing:
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
     - export PATH="${INSTALL_PREFIX}/bin:$PATH"
-  needs: ["deps-debian/testing"]
 
 gimp-debian/testing-autotools:
+  stage: gimp
   extends: .gimp-debian/testing-base
+  dependencies:
+    - deps-debian/testing
+  artifacts:
+    expire_in: 1 week
+    when: always
+    name: "app-build-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    untracked: true
   script:
     - mkdir _build
     - cd _build
@@ -192,72 +175,19 @@ gimp-debian/testing-autotools:
         --enable-debug
     - make -j "$(nproc)"
     - make check
+  needs: ["deps-debian/testing"]
 
 distcheck:
+  stage: distribution
+  extends: .gimp-debian/testing-base
   dependencies:
     - gimp-debian/testing-autotools
-  stage: distribution
   artifacts:
     expire_in: 1 week
     when: always
     name: "app-dist-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     paths:
     - _build
-  before_script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends
-        at-spi2-core
-        build-essential
-        desktop-file-utils
-        ffmpeg
-        hicolor-icon-theme
-        ghostscript
-        git
-        glib-networking
-        gobject-introspection
-        gtk-doc-tools
-        intltool
-        iso-codes
-        libappstream-glib-dev
-        libbz2-dev
-        libdbus-glib-1-dev
-        libexif-dev
-        libgexiv2-dev
-        libgirepository1.0-dev
-        libgtk2.0-bin
-        libgtk2.0-dev
-        libgudev-1.0-dev
-        libjson-glib-dev
-        liblcms2-dev
-        liblzma-dev
-        libmng-dev
-        libmypaint-dev
-        libopenexr-dev
-        libpoppler-glib-dev
-        libraw19
-        librsvg2-dev
-        libspiro-dev
-        libtiff-dev
-        libtool
-        libumfpack5
-        libwebp-dev
-        libwmf-dev
-        libxmu-dev
-        libxpm-dev
-        meson
-        mypaint-brushes
-        poppler-data
-        python2
-        python-dev
-        xauth
-        xvfb
-    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
-    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
-    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/share/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
-    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
-    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - export PATH="${INSTALL_PREFIX}/bin:$PATH"
   script:
     - cd _build
     - make distcheck
