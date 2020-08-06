@@ -75,7 +75,7 @@
     _OP_DEF(opexe_2, "-",                              1,  INF_ARG, TST_NUMBER,                      OP_SUB              )
     _OP_DEF(opexe_2, "*",                              0,  INF_ARG, TST_NUMBER,                      OP_MUL              )
     _OP_DEF(opexe_2, "/",                              1,  INF_ARG, TST_NUMBER,                      OP_DIV              )
-    _OP_DEF(opexe_2, "quotient",                       1,  INF_ARG, TST_INTEGER,                     OP_INTDIV           )
+    _OP_DEF(opexe_2, "quotient",                       2,  2,       TST_INTEGER,                     OP_INTDIV           )
     _OP_DEF(opexe_2, "remainder",                      2,  2,       TST_INTEGER,                     OP_REM              )
     _OP_DEF(opexe_2, "modulo",                         2,  2,       TST_INTEGER,                     OP_MOD              )
     _OP_DEF(opexe_2, "car",                            1,  1,       TST_PAIR,                        OP_CAR              )

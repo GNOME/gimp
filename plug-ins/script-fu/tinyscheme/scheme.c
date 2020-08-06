@@ -500,10 +500,14 @@ static num num_rem(num a, num b) {
      }
  } else if (res < 0) {
      if (e1 > 0) {
-        res += labs(e2);
+         res += labs(e2);
      }
  }
- ret.value.ivalue=res;
+ if (ret.is_fixnum) {
+     ret.value.ivalue = res;
+ } else {
+     ret.value.rvalue = res;
+ }
  return ret;
 }
 
@@ -515,10 +519,14 @@ static num num_mod(num a, num b) {
  e2=num_ivalue(b);
  res=e1%e2;
  /* modulo should have same sign as second operand */
- if ((res < 0) != (e2 < 0) && res) { /* if their sign is different... */
-   res+=e2;
+ if (res * e2 < 0) {
+    res += e2;
  }
- ret.value.ivalue=res;
+ if (ret.is_fixnum) {
+     ret.value.ivalue = res;
+ } else {
+     ret.value.rvalue = res;
+ }
  return ret;
 }
 
@@ -3464,26 +3472,20 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
        s_return(sc,mk_number(sc, v));
 
      case OP_INTDIV:        /* quotient */
-          if(cdr(sc->args)==sc->NIL) {
-               x=sc->args;
-               v=num_one;
-          } else {
-               x = cdr(sc->args);
-               v = nvalue(car(sc->args));
-          }
-          for (; x != sc->NIL; x = cdr(x)) {
-               if (ivalue(car(x)) != 0)
-                    v=num_intdiv(v,nvalue(car(x)));
-               else {
-                    Error_0(sc,"quotient: division by zero");
-               }
+          v = nvalue(car(sc->args));
+          x = cadr(sc->args);
+          if (ivalue(x) != 0)
+               v=num_intdiv(v,nvalue(x));
+          else {
+               Error_0(sc,"quotient: division by zero");
           }
           s_return(sc,mk_number(sc, v));
 
      case OP_REM:        /* remainder */
           v = nvalue(car(sc->args));
-          if (ivalue(cadr(sc->args)) != 0)
-               v=num_rem(v,nvalue(cadr(sc->args)));
+          x = cadr(sc->args);
+          if (ivalue(x) != 0)
+               v=num_rem(v,nvalue(x));
           else {
                Error_0(sc,"remainder: division by zero");
           }
@@ -3491,8 +3493,9 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
 
      case OP_MOD:        /* modulo */
           v = nvalue(car(sc->args));
-          if (ivalue(cadr(sc->args)) != 0)
-               v=num_mod(v,nvalue(cadr(sc->args)));
+          x = cadr(sc->args);
+          if (ivalue(x) != 0)
+               v=num_mod(v,nvalue(x));
           else {
                Error_0(sc,"modulo: division by zero");
           }
