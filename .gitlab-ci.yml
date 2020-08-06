@@ -71,9 +71,9 @@ build-image-win32:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win32-latest --cache=true --cache-ttl=120h
 
 
-## GNU/Linux 64-bit CIs ##
+## GNU/Linux 64-bit CIs (Debian testing) ##
 
-deps-debian/testing:
+deps-debian:
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   cache:
@@ -105,11 +105,11 @@ deps-debian/testing:
     - ninja -C _build install
   needs: ["build-image"]
 
-.gimp-debian/testing-base:
+.gimp-debian-base:
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   dependencies:
-    - deps-debian/testing
+    - deps-debian
   cache:
     paths:
     - apt-cache
@@ -128,10 +128,10 @@ deps-debian/testing:
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
     - export PATH="${INSTALL_PREFIX}/bin:$PATH"
-  needs: ["deps-debian/testing"]
+  needs: ["deps-debian"]
 
-gimp-debian/testing-autotools:
-  extends: .gimp-debian/testing-base
+gimp-autotools-debian:
+  extends: .gimp-debian-base
   script:
     - mkdir _build
     - cd _build
@@ -144,8 +144,8 @@ gimp-debian/testing-autotools:
     - make -j "$(nproc)"
     - make check
 
-gimp-debian/testing-autotools-distcheck:
-  extends: .gimp-debian/testing-base
+gimp-distcheck-debian:
+  extends: .gimp-debian-base
   script:
     - mkdir _build
     - cd _build
@@ -160,8 +160,8 @@ gimp-debian/testing-autotools-distcheck:
     - make distcheck
   allow_failure: true
 
-gimp-debian/testing-meson:
-  extends: .gimp-debian/testing-base
+gimp-meson-debian:
+  extends: .gimp-debian-base
   script:
     - meson _build
       --prefix="${INSTALL_PREFIX}"
@@ -171,8 +171,8 @@ gimp-debian/testing-meson:
     - ninja -C _build
     - ninja -C _build test
 
-gimp-debian/testing-clang:
-  extends: .gimp-debian/testing-base
+gimp-clang-debian:
+  extends: .gimp-debian-base
   variables:
     CC: "clang"
     CXX: "clang++"
