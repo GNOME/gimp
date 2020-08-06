@@ -5289,7 +5289,7 @@ int MacTS_main(int argc, char **argv) {
 int main(int argc, char **argv) {
 #endif
   scheme sc;
-  FILE *fin;
+  FILE *fin = NULL;
   char *file_name=InitFile;
   int retcode;
   int isfile=1;
