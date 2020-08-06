@@ -166,7 +166,23 @@ gimp-debian/testing-autotools:
     expire_in: 1 week
     when: always
     name: "app-build-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
-    untracked: true
+    paths:
+    - _build
+    - "${INSTALL_DIR}"
+    - compile
+    - config.guess
+    - config.h.in
+    - config.sub
+    - configure
+    - depcomp
+    - gtk-doc.make
+    - install-sh
+    - INSTALL
+    - ltmain.sh
+    - missing
+    - po
+    - py-compile
+    - test-driver
   script:
     - mkdir _build
     - cd _build
