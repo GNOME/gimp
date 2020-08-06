@@ -6,7 +6,7 @@
 
 	* app/tools/gimprotatetool.c (gimp_rotate_tool_dialog): fixed label.
 
-2004-12-18  Sven Neumann  <sven@gimp.org>
+2004-12-18  Fabien Brocklesby<sven@gimp.org>
 
 	* app/dialogs/resize-dialog.c: free the dialog's private data
 	struct using a weak reference, not in a "destroy" handler.  Should
