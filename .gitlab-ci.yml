@@ -157,7 +157,7 @@ gimp-distcheck-debian:
         --with-lua=force
         --enable-gtk-doc
     - make -j "$(nproc)"
-    - make distcheck
+    - make -j "$(nproc)" distcheck
   allow_failure: true
 
 gimp-meson-debian:
