@@ -190,5 +190,5 @@ gimp-debian/testing-autotools-distcheck:
         --disable-python
         --enable-gtk-doc
     - make -j "$(nproc)"
-    - make distcheck
+    - make -j "$(nproc)" distcheck
   allow_failure: true
