@@ -1,7 +1,7 @@
 # Turkish translation for GIMP
 #
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Copyright (C) 2002-2019 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2002-2020 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Fatih Demir <kabalak@gtranslator.org>, 2001.
@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-18 15:20+0000\n"
+"POT-Creation-Date: 2020-08-06 14:38+0000\n"
 "PO-Revision-Date: 2020-05-19 14:37+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -77,9 +77,9 @@ msgstr "Görünür Katmanları Hizala"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1276 ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddsread.c:1284 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:1850 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:1908 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -135,7 +135,7 @@ msgstr "_İptal"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1277 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1285 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -461,11 +461,11 @@ msgstr "_Dikey"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:1960 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1033
+#: ../plug-ins/file-tiff/file-tiff-load.c:1044
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:310 ../plug-ins/twain/twain.c:604
+#: ../plug-ins/screenshot/screenshot-win32.c:310 ../plug-ins/twain/twain.c:646
 msgid "Background"
 msgstr "Artalan"
 
@@ -1058,8 +1058,8 @@ msgstr "CML Gezgini Parametrelerini Kaydet"
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
 #: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1726
-#: ../plug-ins/file-tiff/file-tiff-save.c:964
-#: ../plug-ins/file-tiff/file-tiff-save.c:1064 ../plug-ins/flame/flame.c:450
+#: ../plug-ins/file-tiff/file-tiff-save.c:971
+#: ../plug-ins/file-tiff/file-tiff-save.c:1081 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -2167,7 +2167,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:170
+#: ../plug-ins/file-tiff/file-tiff-load.c:179
 #, c-format
 msgid "Opening '%s'"
 msgstr "'%s' açılıyor"
@@ -2251,7 +2251,7 @@ msgstr "'%s': dosya sonu ya da palet verisi okunurken hata"
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1697
-#: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:954
+#: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:961
 #, c-format
 msgid "Exporting '%s'"
 msgstr "'%s' dışa aktarılıyor"
@@ -2656,7 +2656,7 @@ msgstr "_Kalite:"
 #. Color profile
 #: ../plug-ins/common/file-heif.c:1274 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:387
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save color _profile"
 msgstr "Renk _profilini kaydet"
 
@@ -3138,7 +3138,7 @@ msgid "Import from PDF"
 msgstr "PDF dosyasından içe aktar"
 
 #: ../plug-ins/common/file-pdf-load.c:1265 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:1851
+#: ../plug-ins/file-tiff/file-tiff-load.c:1909
 #: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "İçe _Aktar"
@@ -3259,7 +3259,7 @@ msgstr "Katmanlar sayfa olarak (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1035
+#: ../plug-ins/file-tiff/file-tiff-load.c:1046
 #, c-format
 msgid "Page %d"
 msgstr "Sayfa %d"
@@ -3360,13 +3360,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "'%s' dışa aktarılırken hata oluştu. Görüntü dışa aktarılamadı."
 
 #: ../plug-ins/common/file-png.c:2416 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1140
+#: ../plug-ins/file-tiff/file-tiff-save.c:1158
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "'%s' UI dosyası yüklenirken hata: %s"
 
 #: ../plug-ins/common/file-png.c:2417 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1141
+#: ../plug-ins/file-tiff/file-tiff-save.c:1159
 msgid "Unknown error"
 msgstr "Bilinmeyen hata"
 
@@ -6629,15 +6629,15 @@ msgstr "YCoCg Çözümle (ölçeklenmiş)"
 msgid "Decode Alpha exponent"
 msgstr "Alfa katsayılarını çözümle"
 
-#: ../plug-ins/file-dds/ddsread.c:1274
+#: ../plug-ins/file-dds/ddsread.c:1282
 msgid "Load DDS"
 msgstr "DDS Yükle"
 
-#: ../plug-ins/file-dds/ddsread.c:1293
+#: ../plug-ins/file-dds/ddsread.c:1301
 msgid "_Load mipmaps"
 msgstr "_Mipmapları yükle"
 
-#: ../plug-ins/file-dds/ddsread.c:1300
+#: ../plug-ins/file-dds/ddsread.c:1308
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Algılandığında, YCoCg/AExp görüntülerini kendiliğinden çözümle"
 
@@ -6931,17 +6931,17 @@ msgstr "_Exif verisini kaydet"
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:932
 #: ../plug-ins/file-webp/file-webp-dialog.c:377
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "Save _XMP data"
 msgstr "_XMP verisini kaydet"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:946
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "Save _IPTC data"
 msgstr "_IPTC verisini kaydet"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:960
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
 msgid "Save _thumbnail"
 msgstr "_Küçük resmi kaydet"
 
@@ -7336,17 +7336,17 @@ msgstr ""
 "_Agresif RLE\n"
 "(SGI tarafından desteklenmiyor)"
 
-#: ../plug-ins/file-tiff/file-tiff.c:139 ../plug-ins/file-tiff/file-tiff.c:161
-#: ../plug-ins/file-tiff/file-tiff.c:179
+#: ../plug-ins/file-tiff/file-tiff.c:140 ../plug-ins/file-tiff/file-tiff.c:162
+#: ../plug-ins/file-tiff/file-tiff.c:180
 msgid "TIFF image"
 msgstr "TIFF görüntüsü"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:189
+#: ../plug-ins/file-tiff/file-tiff-load.c:198
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF '%s' her hangi bir dizin içermiyor"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:259
+#: ../plug-ins/file-tiff/file-tiff-load.c:268
 msgid "Extra channels with unspecified data."
 msgstr "Belirtilmemiş verili ek kanallar."
 
@@ -7357,21 +7357,21 @@ msgstr "Belirtilmemiş verili ek kanallar."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:275
+#: ../plug-ins/file-tiff/file-tiff-load.c:284
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr ""
 "Standarda uygun olmayan TIFF: 'ExtraSamples' alanı olmayan ek kanallar."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:822
+#: ../plug-ins/file-tiff/file-tiff-load.c:833
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s sayfanın %d %d si"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1066
+#: ../plug-ins/file-tiff/file-tiff-load.c:1077
 msgid "TIFF Channel"
 msgstr "TIFF Kanalı"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1846
+#: ../plug-ins/file-tiff/file-tiff-load.c:1904
 msgid "Import from TIFF"
 msgstr "TIFF dosyasından içe aktar"
 
@@ -7379,27 +7379,27 @@ msgstr "TIFF dosyasından içe aktar"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:1899
+#: ../plug-ins/file-tiff/file-tiff-load.c:1957
 msgid "_Keep empty space around imported layers"
 msgstr "İçe a_ktarılan katmanlar etrafındaki boş alanı koru"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1916
+#: ../plug-ins/file-tiff/file-tiff-load.c:1974
 msgid "Process extra channel as:"
 msgstr "Ek kanalı şöyle işle:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1919
+#: ../plug-ins/file-tiff/file-tiff-load.c:1977
 msgid "_Non-premultiplied alpha"
 msgstr "Önceden çoğaltılmış _olmayan alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1920
+#: ../plug-ins/file-tiff/file-tiff-load.c:1978
 msgid "Pre_multiplied alpha"
 msgstr "Önceden çoğaltılmış _alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1921
+#: ../plug-ins/file-tiff/file-tiff-load.c:1979
 msgid "Channe_l"
 msgstr "Kana_l"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:594
+#: ../plug-ins/file-tiff/file-tiff-save.c:596
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7407,16 +7407,16 @@ msgstr ""
 "Yalnızca tek renkli görüntüler \"CCITT Grup 4\" ya da \"CCITT Grup 3\" ile "
 "sıkıştırılabilirler."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:608
+#: ../plug-ins/file-tiff/file-tiff-save.c:610
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "İndeksli görüntüler \"JPEG\" ile sıkıştırılamaz."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:741
+#: ../plug-ins/file-tiff/file-tiff-save.c:746
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "%d satırı üzerine bir tarama çizgisi yazılamadı"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:981
+#: ../plug-ins/file-tiff/file-tiff-save.c:986
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7424,46 +7424,46 @@ msgstr ""
 "TIFF biçimi, yorumları yalnızca 7bit ASCII kodlamasında destekler.\n"
 "Hiçbir yorum kaydedilmedi."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1086
+#: ../plug-ins/file-tiff/file-tiff-save.c:1104
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Sayfaları farklı bit derinliği ile yazmak garip."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1130
+#: ../plug-ins/file-tiff/file-tiff-save.c:1148
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1156
+#: ../plug-ins/file-tiff/file-tiff-save.c:1174
 msgid "Compression"
 msgstr "Sıkıştırma"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1160
+#: ../plug-ins/file-tiff/file-tiff-save.c:1178
 msgid "_None"
 msgstr "_Hiçbiri"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1161
+#: ../plug-ins/file-tiff/file-tiff-save.c:1179
 msgid "_LZW"
 msgstr "_LZW"
 
 # Algoritma adı, çevirmeye gerek yok
-#: ../plug-ins/file-tiff/file-tiff-save.c:1162
+#: ../plug-ins/file-tiff/file-tiff-save.c:1180
 msgid "_Pack Bits"
 msgstr "_PackBits"
 
 # Algoritma adı, çevirmeye gerek yok
-#: ../plug-ins/file-tiff/file-tiff-save.c:1163
+#: ../plug-ins/file-tiff/file-tiff-save.c:1181
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1164
+#: ../plug-ins/file-tiff/file-tiff-save.c:1182
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1165
+#: ../plug-ins/file-tiff/file-tiff-save.c:1183
 msgid "CCITT Group _3 fax"
 msgstr "CCITT Grup _3 faks"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1166
+#: ../plug-ins/file-tiff/file-tiff-save.c:1184
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Grup _4 faks"
 
@@ -9330,7 +9330,7 @@ msgid "Save comme_nt"
 msgstr "_Yorumu kaydet"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
 msgid "Save color _values from transparent pixels"
 msgstr "Saydam piksellerden renk _değerlerini kaydet"
 
@@ -9423,16 +9423,20 @@ msgstr "_B, G, R, X (BMP biçemi)"
 msgid "Save _layers"
 msgstr "_Katmanları kaydet"
 
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+msgid "Cr_op layers to image bounds"
+msgstr "_Katmanları görüntü sınırlamalarına kırp"
+
 # premultiple için GEGL dosyasındaki "Önceden Çoğaltılmış" çevirisi esas alınmıştır.
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
 msgid "Colors are not stored premultiplied by the associated alpha"
 msgstr "Renkler, ilişkili alfa tarafından önceden çoğaltılmış olarak saklanmaz"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "<b>Comment</b>"
 msgstr "<b>Yorum</b>"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "S_ave Exif data"
 msgstr "_Exif verisini kaydet"
 
@@ -12578,12 +12582,12 @@ msgstr ""
 msgid "Capture an image from a TWAIN datasource"
 msgstr "TWAIN veri kaynağından bir görüntü al"
 
-#: ../plug-ins/twain/twain.c:363
+#: ../plug-ins/twain/twain.c:362
 msgid "_Scanner/Camera..."
 msgstr "_Tarayıcı/Kamera..."
 
 #. Initialize our progress dialog
-#: ../plug-ins/twain/twain.c:506
+#: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 
