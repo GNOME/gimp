@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="16"
    height="16"
    viewBox="0 0 4.2333333 4.2333335"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="gimp-color-space-perceptual.svg">
+   inkscape:version="1.1-dev (f20c49d54e, 2020-07-31)"
+   sodipodi:docname="gimp-color-space-non-linear-symbolic.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -26,17 +24,17 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="32"
-     inkscape:cx="15.263674"
-     inkscape:cy="6.9396371"
+     inkscape:cx="15.265625"
+     inkscape:cy="6.9375"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="true"
      units="px"
-     inkscape:window-width="1920"
-     inkscape:window-height="1136"
+     inkscape:window-width="1280"
+     inkscape:window-height="660"
      inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-y="23"
      inkscape:window-maximized="1"
      inkscape:snap-bbox="true"
      inkscape:bbox-paths="true"
@@ -62,7 +60,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -75,16 +73,16 @@
        id="gimp-color-space-perceptual">
       <path
          id="rect814"
-         transform="matrix(0.26458334,0,0,0.26458334,0,292.76665)"
-         d="M 1,1 V 15 H 15 V 1 Z M 2,2 H 14 V 14 H 2 Z"
          style="color:#000000;overflow:visible;opacity:1;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"
-         inkscape:connector-curvature="0" />
-      <path
-         sodipodi:nodetypes="cc"
-         inkscape:connector-curvature="0"
-         id="path819"
-         d="m 0.52916668,296.47082 c 0.33769803,-1.99099 1.48398662,-2.91672 3.17500012,-3.175"
-         style="fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+         d="M 1 1 L 1 15 L 15 15 L 15 1 L 1 1 z M 2 2 L 11.603516 2 C 9.3248421 2.627241 7.3431158 3.6529635 5.7363281 5.1777344 C 4.0318605 6.7951994 2.7724266 8.9716926 2 11.740234 L 2 2 z M 14 2.5058594 L 14 14 L 2.5097656 14 C 3.1406875 10.360079 4.4916118 7.7473621 6.4296875 5.9082031 C 8.3657998 4.0709074 10.911783 2.989276 14 2.5058594 z "
+         transform="matrix(0.26458334,0,0,0.26458334,0,292.76665)" />
+      <g
+         id="g78">
+        <path
+           style="color:#000000;fill:none;fill-rule:evenodd;stroke-width:0.264583px"
+           d="m 0.52916668,296.47082 c 0.33769803,-1.99099 1.48398662,-2.91672 3.17500012,-3.175"
+           id="path80" />
+      </g>
     </g>
   </g>
 </svg>
