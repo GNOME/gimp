@@ -5,6 +5,7 @@ stages:
   - dependencies
   - gimp
   - analysis
+  - distribution
 
 variables:
   GIT_DEPTH: "1"
@@ -158,7 +159,6 @@ gimp-distcheck-debian:
         --enable-gtk-doc
     - make -j "$(nproc)"
     - make -j "$(nproc)" distcheck
-  allow_failure: true
 
 gimp-meson-debian:
   extends: .gimp-debian-base
@@ -329,3 +329,19 @@ cppcheck:
     paths:
       - report
   needs: []
+
+## Ready-to-distribute ##
+
+sources:
+  stage: distribution
+  dependencies:
+    - gimp-distcheck-debian
+  artifacts:
+    when: always
+    paths:
+    - gimp-*.tar.*
+    - SHA256SUMS
+  script:
+    - mv _build/gimp-*.tar.* .
+    - sha256sum gimp-*.tar.* > SHA256SUMS
+  needs: ["gimp-distcheck-debian"]
