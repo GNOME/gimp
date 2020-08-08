@@ -1452,7 +1452,7 @@ layers_mask_apply_cmd_callback (GimpAction *action,
         break;
     }
   if (iter == NULL)
-    /* No layers or none have applyable masks. */
+    /* No layers or none have applicable masks. */
     return;
 
   switch (mode)
@@ -2146,7 +2146,7 @@ layers_lock_alpha_cmd_callback (GimpAction *action,
         {
           /* Similar trick as in layers_mask_show_cmd_callback().
            * When unlocking, we expect all selected layers to be locked,
-           * otherwise SET_ACTIVE() calles in layers-actions.c will
+           * otherwise SET_ACTIVE() calls in layers-actions.c will
            * trigger lock updates.
            */
           if (! lock_alpha && ! gimp_layer_get_lock_alpha (iter->data))
