@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-25 15:38+0000\n"
-"PO-Revision-Date: 2020-06-25 22:23+0300\n"
+"POT-Creation-Date: 2020-08-08 08:10+0000\n"
+"PO-Revision-Date: 2020-08-08 15:48+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -176,8 +176,6 @@ msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "Для роботи додатка %s потрібно обрізати шари до меж зображення"
 
 #: ../libgimp/gimpexport.c:445
-#| msgctxt "page-selector-target"
-#| msgid "Layers"
 msgid "Crop Layers"
 msgstr "Обрізати шари"
 
@@ -2141,17 +2139,20 @@ msgstr "Пере_творити"
 msgid "_Shear"
 msgstr "Н_ахилити"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
-msgid "Kilobytes"
-msgstr "Кілобайти"
+#: ../libgimpwidgets/gimpmemsizeentry.c:256
+#| msgid "Kilobytes"
+msgid "Kibibyte"
+msgstr "Кібібайт"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
-msgid "Megabytes"
-msgstr "Мегабайти"
+#: ../libgimpwidgets/gimpmemsizeentry.c:257
+#| msgid "Megabytes"
+msgid "Mebibyte"
+msgstr "Мебібайт"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
-msgid "Gigabytes"
-msgstr "Гігабайти"
+#: ../libgimpwidgets/gimpmemsizeentry.c:258
+#| msgid "Gigabytes"
+msgid "Gibibyte"
+msgstr "Гібібайт"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:270
