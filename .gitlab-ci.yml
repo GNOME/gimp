@@ -3,6 +3,7 @@ image: debian:testing
 stages:
   - dependencies
   - gimp
+  - distribution
 
 variables:
   GIT_DEPTH: "1"
@@ -192,3 +193,19 @@ gimp-debian/testing-autotools-distcheck:
     - make -j "$(nproc)"
     - make -j "$(nproc)" distcheck
   allow_failure: true
+
+## Ready-to-distribute ##
+
+sources:
+  stage: distribution
+  dependencies:
+    - gimp-debian/testing-autotools-distcheck
+  artifacts:
+    when: always
+    paths:
+    - gimp-*.tar.*
+    - SHA256SUMS
+  script:
+    - mv _build/gimp-*.tar.* .
+    - sha256sum gimp-*.tar.* > SHA256SUMS
+  needs: ["gimp-debian/testing-autotools-distcheck"]
