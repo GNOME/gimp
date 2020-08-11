@@ -694,6 +694,8 @@ splash_image_pick_from_dirs (GList    *dirs,
                 g_object_unref (child);
               g_object_unref (info);
             }
+
+          g_object_unref (enumerator);
         }
     }
 
