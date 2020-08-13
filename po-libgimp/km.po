@@ -1,21 +1,19 @@
 # translation of km.po to Khmer
-# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007, 2008.
-# Auk Piseth <piseth_dv@khmeros.info>, 2006.
-# Eng Vannak <evannak@khmeros.info>, 2006.
+# Lors Housann<lorshousunny@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2007-08-14 17:45+0100\n"
-"PO-Revision-Date: 2020-08-12 14:57+0700\n"
-"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer <en@li.org>\n"
-"Language: km\n"
+"POT-Creation-Date: 2012-05-06 03:28+0200\n"
+"PO-Revision-Date: 2020-08-11 17:17+0700\n"
+"Last-Translator: Lors Housann <lorshousunny@gmail.com>\n"
+"Language-Team: Koompi Apps Localization Language: km\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 2.3.1\n"
+"Language: km\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
