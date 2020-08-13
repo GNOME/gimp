@@ -1,311 +1,744 @@
 # translation of km.po to Khmer
-# Khoem Sokhem <khoemsokhem@khmeros.info>, 2007, 2008.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Lors Housann<lorshousunny@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2007-04-19 20:19+0100\n"
-"PO-Revision-Date: 2008-08-25 10:24+0700\n"
-"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer <en@li.org>\n"
-"Language: km\n"
+"POT-Creation-Date: 2012-05-06 03:28+0200\n"
+"PO-Revision-Date: 2020-08-10 10:16+0700\n"
+"Last-Translator: Lors Housann <lorshousunny@gmail.com>\n"
+"Language-Team: Koompi Apps LocalizationLanguage: km\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Poedit 2.3.1\n"
+"Language: km\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:335
+#: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
-msgstr "បាត់បង់​ព័ត៌មាន​ករណី​លើកលែង"
+msgstr "ពករណីលើកលែងបាត់"
 
-#: ../plug-ins/pygimp/gimpfu.py:344
+#: ../plug-ins/pygimp/gimpfu.py:404
 #, python-format
-msgid "An error occured running %s"
-msgstr "កំហុស​មួយ​បាន​កើត​ឡើង​ខណៈពេល​កំពុង​រត់ %s"
+msgid "An error occurred running %s"
+msgstr "កំហុសមួយបានកើតឡើងដែលកំពុងដំណើរការ %s បាន"
 
-#: ../plug-ins/pygimp/gimpfu.py:355
+#: ../plug-ins/pygimp/gimpfu.py:415
 msgid "_More Information"
-msgstr "ព័ត៌មាន​បន្ថែម"
+msgstr "_ព័ត៌មាន​បន្ថែម"
 
-#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
-#: ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
+#: ../plug-ins/pygimp/gimpfu.py:546
 msgid "No"
-msgstr "ទេ"
+msgstr "គ្មាន"
 
-#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
 msgid "Yes"
-msgstr "បាទ/ចាស"
+msgstr "បាទ"
 
-#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
-msgstr "ជម្រើស​ឯកសារ Python-Fu"
+msgstr "ជ្រើសឯកសារពស់ថ្លាន់-ហ្វូ"
 
-#: ../plug-ins/pygimp/gimpfu.py:528
+#: ../plug-ins/pygimp/gimpfu.py:648
 msgid "Python-Fu Folder Selection"
-msgstr "ជម្រើស​ថត Python-Fu"
+msgstr "ការជ្រើសថតពស់ថ្លាន់-ហ្វូ"
 
-#: ../plug-ins/pygimp/gimpfu.py:618
+#: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr "ការ​បញ្ចូល​មិន​ត្រឹមត្រូវ​សម្រាប់ '%s'"
+msgstr "ការបញ្ចូលមិនត្រឹមត្រូវសម្រាប់ '%s'"
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:176
 msgid "Python-Fu Color Selection"
-msgstr "ជម្រើស​ពណ៌ Python-Fu"
+msgstr "ការជ្រើសរើសពស់ថ្លាន់-ហ្វូល័រ"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
-msgstr "រក្សាទុក​ជា​ XHTML ដែល​មាន​ពណ៌"
+msgstr "រក្សាទុកជា XHTML ក្រហមឆ្អៅ"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
-msgstr "រក្សាទុក​ជា​ XHTML ដែល​មាន​ពណ៌"
+msgstr "រក្សាទុកជាការប្ដូរ XHTML ក្រហមឆ្អៅ"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
-msgstr "XHTML ដែល​មាន​ពណ៌"
+msgstr "ពណ៌ XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Character _source"
-msgstr "ប្រភព​តួអក្សរ"
+msgstr "_ប្រភព តួអក្សរ"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
-msgstr "កូដ​ប្រភព"
+msgstr "ប្រភព​កូដ"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
-msgstr "ឯកសារ​អត្ថបទ"
+msgstr "ឯកសារអត្ថបទ"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "ប្រអប់ធាតុ"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
-msgstr "_ឯកសារ​ត្រូវ​អាន ឬ​តួអក្សរ​ត្រូវ​ប្រើ"
+msgstr "_ឯកសារអានឬតួអក្សរដែលការប្រើប្រាស់"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
-msgstr "ទំហំ​ពុម្ពអក្សរ​គិត​ជា​ភីកសែល"
+msgstr "ទំហំ ពុម្ពអក្សរ ជាភីកសែល"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
-msgstr "_សរសេរ​ជាំ​ឯកសារ CSS ដោយ​ឡែក"
+msgstr "_សរសេរ ឯកសារ CSS ដាច់ដោយឡែកមួយ"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
-msgid "Python Console"
-msgstr "កុងសូល​ Python"
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+msgid "Gradient to use"
+msgstr "ជម្រាលការប្រើប្រាស់"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
-msgid "_Browse..."
-msgstr "_រក​មើល..."
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+msgid "File Name"
+msgstr "ឈ្មោះ​ឯកសារ"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
-msgid "Python Procedure Browser"
-msgstr "កម្មវិធី​រុករក​បែបបទ​របស់ Python"
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr "ការនាំចេញទៅកាន់អ៊ីស្តូក្រាមរូបភាពជាឯកសារអត្ថបទ (ជា CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "មិន​អាច​បើក '%s' ដើម្បី​សរសេរ ៖ %s"
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+msgid "_Export histogram..."
+msgstr "_នាំចេញអ៊ីស្តូក្រាម ..."
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "មិន​អាច​សរសេរ​ទៅ​កាន់ '%s': %s"
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+msgid "_Image"
+msgstr "_ រូបភាព"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-msgid "Save Python-Fu Console Output"
-msgstr "រក្សា​ទុក​លទ្ធផល​របស់កុងសូល Python-Fu"
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+msgid "_Drawable"
+msgstr "_អាចគូរបាន"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "កម្មវិធីបកប្រែ Gimp-Python អន្តរសកម្ម"
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+msgid "Histogram _File"
+msgstr "ឯកសារអ៊ីស្តូក្រាម"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
-msgid "_Console"
-msgstr "_កុងសូល"
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+msgid "_Bucket Size"
+msgstr "_ទំហំដាក់ធុង"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
-msgid "Add a layer of fog"
-msgstr "បន្ថែម​ស្រទាប់​របស់​អ័ព្ទ"
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+msgid "Sample _Average"
+msgstr "_គំរូមធ្យម"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+msgid "Output format"
+msgstr "ទ្រង់ទ្រាយលទ្ធផល"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+msgid "Pixel count"
+msgstr "ចំនួនភីកសែល"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+msgid "Normalized"
+msgstr "ប្រក្រតី"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+msgid "Percent"
+msgstr "ភាគរយ"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "Add a layer of fog"
+msgstr "បន្ថែមស្រទាប់នៃអ័ព្ទ"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Fog..."
-msgstr "_អ័ព្ទ..."
+msgstr "_អ័ព្ទ ..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "_Layer name"
-msgstr "_ឈ្មោះ​ស្រទាប់"
+msgstr "_ឈ្មោះស្រទាប់"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Clouds"
 msgstr "ពពក"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:60
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "_Fog color"
-msgstr "_ពណ៌​អ័ព្ទ"
+msgstr "_ពណ៌អ័ព្ទ"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:68
 msgid "_Turbulence"
-msgstr "_គួច"
+msgstr "_ភាពច្របូកច្របល់"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:69
 msgid "Op_acity"
-msgstr "ស្រអាប់"
+msgstr "ភាពស្រអាប់"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
-msgstr "អុហ្វសិត​ពណ៌​នៅ​ក្នុងក្ដារ​"
+msgstr "អុហ្វសិតណ៍ក្នុងក្ដារលាយមួយ"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
-msgstr "_អុហ្វសិត​ក្ដារ..."
+msgstr "_បិទសំណុំក្តារលាយ ..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+msgid "Palette"
+msgstr "ក្ដារលាយ"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
-msgid "Palette"
-msgstr "ក្ដារ"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 msgid "Off_set"
-msgstr "អុហ្វសិត"
+msgstr "បិទសំណុំ"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Red"
+msgstr "ក្រហម"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Green"
+msgstr "បៃតង"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Blue"
+msgstr "ខៀវ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+msgid "Luma (Y)"
+msgstr "លូម៉ា​​ (Y)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Hue"
+msgstr "ពណ៌លាំ ៗ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Saturation"
+msgstr "តិត្ថិភាព"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Value"
+msgstr "តម្លៃ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+msgid "Saturation (HSL)"
+msgstr "តិត្ថិភាព (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+msgid "Lightness (HSL)"
+msgstr "ពន្លឺ (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
+msgid "Index"
+msgstr "សន្ទស្សន៍"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
+msgid "Random"
+msgstr "ចៃដន្យ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
+msgid "Lightness (LAB)"
+msgstr "ពន្លឺ (បន្ទប់)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+msgid "A-color"
+msgstr "A-color"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+msgid "B-color"
+msgstr "B-color"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
+msgid "Chroma (LCHab)"
+msgstr "ច្រូម៉ា (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
+msgid "Hue (LCHab)"
+msgstr "ពណ៌លាំ ៗ (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
 msgid "Sort the colors in a palette"
-msgstr "តម្រៀប​ពណ៌​នៅ​ក្នុង​ក្ដារ"
+msgstr "តម្រៀបណ៍ក្នុងក្ដារលាយមួយ"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
 msgid "_Sort Palette..."
-msgstr "_តម្រៀប​ក្ដារ..."
+msgstr "_តម្រៀបក្តារលាយ ..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "Color _model"
-msgstr "ម៉ូដែល​ពណ៌"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
+msgid "Se_lections"
+msgstr "ការជ្រើសរើស"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "RGB"
-msgstr "RGB"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+msgid "All"
+msgstr "ទាំងអស់"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
-msgid "HSV"
-msgstr "HSV"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+msgid "Slice / Array"
+msgstr "ចំណែក / អារេ"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+msgid "Autoslice (fg->bg)"
+msgstr "អូតូលីស (fg-> bg)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+msgid "Partitioned"
+msgstr "ភាគថាស"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+msgid "Slice _expression"
+msgstr "ចំណែកកន្សោម"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Channel to _sort"
-msgstr "ឆានែល​ត្រូវ​តម្រៀប"
+msgstr "ឆានែលដើម្បីតម្រៀប"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Red or Hue"
-msgstr "ក្រហម ឬពណ៌លាំៗ"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Green or Saturation"
-msgstr "បៃតង ឬ​តិត្ថិភាព​"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
-msgid "Blue or Value"
-msgstr "ខៀវ ឬ​តម្លៃ"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
 msgid "_Ascending"
 msgstr "_ឡើង"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+msgid "Secondary Channel to s_ort"
+msgstr "ឆានែលអនុវិទ្យាល័យដើម្បីតម្រៀប"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+msgid "_Quantization"
+msgstr "_បរិមាណ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+msgid "_Partitioning channel"
+msgstr "ការបែងចែកឆានែល"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+msgid "Partition q_uantization"
+msgstr "បរិមាណភាគថាស"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "បង្កើត​ពណ៌​ជម្រាល​ដដែល ដោយ​ប្រើ​ពណ៌​ពី​ក្ដារ"
+msgstr "បង្កើតជម្រាលធ្វើឡើងវិញដោយការប្រើណ៍ពីក្ដារលាយ"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
-msgstr "ក្ដារ​ត្រូវ​បង្កើត​ពណ៌​ជម្រាល​ដដែល"
+msgstr "ក្ដារលាយទៅធ្វើម្តងទៀតជម្រាល"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
-msgstr "បង្កើត​ពណ៌​ជម្រាល ដោយ​ប្រើ​ពណ៌​ពី​ក្ដារ"
+msgstr "បង្កើតជម្រាលណ៍ពីក្ដារលាយដោយប្រើប្រាស់មួយ"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
-msgstr "ក្ដារ​ត្រូវ​បង្កើត​ពណ៌​ជម្រាល"
+msgstr "ក្ដារលាយទៅជាជម្រាល"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "ចំណិត"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "កាត់​រូបភាព​ជា​មួយ​នឹង​បន្ទាត់​មគ្គុទ្ទេសក៍ បង្កើត​រូបភាព និង​តារាង HTML ដែល​បានច្រឹប​"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
-msgid "_Slice..."
-msgstr "_ចំណិត..."
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
-msgid "Path for HTML export"
-msgstr "ផ្លូវ​សម្រាប់​នាំចេញ HTML"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
-msgid "Filename for export"
-msgstr "ឈ្មោះ​ឯកសារ​សម្រាប់​នាំចេញ"
+msgstr "កាត់រូបភាពតាមបណ្តោយមគ្គុទេសក៍ការរបស់ខ្លួនបានបង្កើតរូបភាពនិងតារាង HTML មួយកំណាត់"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
-msgid "Image name prefix"
-msgstr "បុព្វបទ​ឈ្មោះ​រូបភាព"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
-msgid "Image format"
-msgstr "ទ្រង់ទ្រាយ​រូបភាព"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
-msgid "Separate image folder"
-msgstr "បំបែក​ថត​រូបភាព"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
-msgid "Folder for image export"
-msgstr "ថត​សម្រាប់​នាំចេញ​រូបភាព"
+msgid "_Slice..."
+msgstr "_ចំណិត ..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Space between table elements"
-msgstr "ចន្លោះ​រវាង​ធាតុ​តារាង"
+msgid "Path for HTML export"
+msgstr "ផ្លូវសម្រាប់ការនាំចេញ HTML"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+msgid "Filename for export"
+msgstr "ឈ្មោះឯកសារសម្រាប់ការនាំចេញ"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javascript សម្រាប់​ដាក់កណ្ដុរ​លើ ហើយ​ចុច"
+msgid "Image name prefix"
+msgstr "បុព្វបទឈ្មោះរូបភាព"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+msgid "Image format"
+msgstr "ទ្រង់ទ្រាយរូបភាព"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Separate image folder"
+msgstr "ដោយឡែកការថតរូបភាព"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+msgid "Folder for image export"
+msgstr "ថតសម្រាប់ការនាំចេញរូបភាព"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
+msgid "Space between table elements"
+msgstr "គម្លាតរវាងធាតុតារាង"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javascript សម្រាប់ onmouseover និងចុច"
+
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
-msgstr "រំលង​ចលនា​សម្រាប់​ក្បាល​តារាង"
+msgstr "រំលងចលនាសម្រាប់មួកតារាង"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+msgid "Python Console"
+msgstr "ពស់ថ្លាន់កុងសូល"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+msgid "_Browse..."
+msgstr "_រុករក ..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:154
+msgid "Python Procedure Browser"
+msgstr "កម្មវិធីរុករកនីតិវិធីពស់ថ្លាន់"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "មិនអាចបើក '%s' ដើម្បីសរសេរ: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:198
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "មិនអាចសរសេរទៅ  '%s': %s បាន"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:206
+msgid "Save Python-Fu Console Output"
+msgstr "ទិន្នផលរក្សាទុក ផាយតុន បាន-ហ្វូកុងសូល"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:232
+msgid "Interactive GIMP Python interpreter"
+msgstr "អ្នកបកប្រែអន្តរកម្ម GIMP ផាយតុន"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:237
+msgid "_Console"
+msgstr "_ កុងសូល"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "បន្ថែម​ការ​ដាក់​​ស្រមោល​​ទៅ​ស្រទាប់ ហើយ​ជា​ជម្រើស​ធ្វើ​ឲ្យ​វា​ទេរ"
+msgstr "បន្ថែមទម្លាក់ស្រមោលទៅស្រទាប់មួយ, និងស្រេចចិត្តជ្រុងទេរវា"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
-msgstr "_ដាក់​ស្រមោល ហើយ​ធ្វើ​ឲ្យ​ទេរ..."
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
-msgid "_Shadow blur"
-msgstr "_ស្រមោល​ព្រាលៗ"
+msgstr "_Drop ស្រមោលនិងជ្រុងបញ្ឆិត ..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "_Bevel"
-msgstr "_ធ្វើ​ឲ្យ​ទេរ"
+msgid "_Shadow blur"
+msgstr "_ស្រមោលព្រិល"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "_Drop shadow"
-msgstr "_ដាក់​ស្រមោល"
+msgid "_Bevel"
+msgstr "_Bevel"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "Drop shadow _X displacement"
-msgstr "ដាក់​ស្រមោល​ការ​ជំនួស _X"
+msgid "_Drop shadow"
+msgstr "_ស្រមោលទម្លាក់"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow _Y displacement"
-msgstr "ដាក់​ស្រមោលការ​ជំនួស _Y"
+msgid "Drop shadow _X displacement"
+msgstr "ទម្លាក់ស្រមោលទីលំនៅ X"
 
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _Y displacement"
+msgstr "ការធ្លាក់ចុះការផ្លាស់ Y ស្រមោល"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:43
+msgid "Spyro Layer"
+msgstr "ស្រទាប់ Spyros"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:89
+msgid "Circle"
+msgstr "រង្វង់"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
+msgid "Polygon-Star"
+msgstr "ពហុកោណ-តារា"
+
+#. Sine wave on a circle ring.
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:834
+msgid "Sine"
+msgstr "ស៊ីនុស"
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:151
+msgid "Bumps"
+msgstr "រលាក់"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:256
+msgid "Rack"
+msgstr "Rack"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
+msgid "Frame"
+msgstr "ស៊ុម"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
+msgid "Selection"
+msgstr "ការជ្រើស"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:479
+msgid "Pencil"
+msgstr "ខ្មៅដៃ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:495
+msgid "AirBrush"
+msgstr "ជក់ខ្យល់"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:555
+msgid "Preview"
+msgstr "មើលជាមុន"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:560
+msgid "Stroke"
+msgstr "ជំងឺដាច់សរសៃឈាមខួរក្បាល"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:588
+msgid "PaintBrush"
+msgstr "ជក់"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:590
+msgid "Ink"
+msgstr "ទឹកថ្នាំ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:591
+msgid "MyPaintBrush"
+msgstr "ជក់ថ្នាំលាបរបស់ខ្ញុំ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:820
+msgid "Spyrograph"
+msgstr "Spyrograph"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:827
+msgid "Epitrochoid"
+msgstr "Epitrochoid"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:854
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1098
+msgid "Curve Type"
+msgstr "ខ្សែកោងប្រភេទ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1099
+msgid "An Epitrochoid pattern is when the moving gear is on the outside of the fixed gear."
+msgstr "លំនាំមួយ Epitrochoid គឺនៅពេលដែលឧបករណ៍ការផ្លាស់ប្តូរគឺនៅលើនៅខាងក្រៅនៃឧបករណ៍ជួសជុលនេះ។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
+msgid "Tool"
+msgstr "ឧបករណ៍"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
+msgid "The tool with which to draw the pattern.The Preview tool just draws quickly."
+msgstr "ឧបករណ៍ជាមួយនឹងការដែលឱ្យចូលទៅឧបករណ៍ លំនាំ។មើលជាមុនគ្រាន់តែគូរយ៉ាងឆាប់រហ័ស។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
+msgid "Long Gradient"
+msgstr "ឡុងជម្រាល"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1112
+msgid "When unchecked, the current tool settings will be used. When checked, will use a long gradient to match the length of the pattern, based on current gradient and repeat mode from the gradient tool settings."
+msgstr "ពេលដោះធីកការកំណត់ឧបករណ៍បច្ចុប្បន្ននឹងត្រូវបានប្រើ។ ពេលធីកវានឹងប្រើពេលយូរដើម្បីផ្គូផ្គងជម្រាលប្រវែងនៃគំរូដែលមានមូលដ្ឋាននៅលើជម្រាលបច្ចុប្បន្ននិងរបៀបម្តងទៀតពីការកំណត់ឧបករណ៍ជម្រាល។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
+msgid "Specify pattern using one of the following tabs:"
+msgstr "បញ្ជាក់លំនាំប្រើប្រាស់មួយនៃផ្ទាំងដូចខាងក្រោម:"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
+msgid "The pattern is specified only by the active tab. Toy Kit is similar to Gears, but it uses gears and hole numbers which are found in toy kits. If you follow the instructions from the toy kit manuals, results should be similar."
+msgstr "លំនាំនេះត្រូវបានបញ្ជាក់តែប៉ុណ្ណោះដោយផ្ទាំងសកម្ម។ ប្រដាប់ក្មេងលេងគឺស្រដៀងគ្នាទៅនឹងកញ្ចប់ឧបករណ៍, ប៉ុន្តែវាប្រើឧបករណ៍នេសាទនិងលេខរន្ធដែលត្រូវបានរកឃើញនៅក្នុងការអប់ប្រដាប់ក្មេងលេង។ បើសិនជាអ្នកធ្វើតាមការណែនាំពីសៀវភៅដៃឧបករណ៍ប្រដាប់ក្មេងលេង, លទ្ធផលគួរជាស្រដៀងគ្នា។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
+msgid "Number of teeth of fixed gear. The size of the fixed gear is proportional to the number of teeth."
+msgstr "ចំនួននៃធ្មេញនៃឧបករណ៍ជួសជុល។ ទំហំនៃឧបករណ៍ជួសជុលនេះគឺសមាមាត្រទៅនឹងចំនួននៃធ្មេញ។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
+msgid "Fixed Gear Teeth"
+msgstr "ធ្មេញត្រៀមលក្ខណៈថេរ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
+msgid "Number of teeth of moving gear. The size of the moving gear is proportional to the number of teeth."
+msgstr "ចំនួននៃការផ្លាស់ប្តូរនៃធ្មេញឧបករណ៍។ ទំហំនៃការផ្លាស់ប្តូរនេះឧបករណ៍នេះគឺសមាមាត្រទៅនឹងចំនួននៃធ្មេញ។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
+msgid "Moving Gear Teeth"
+msgstr "ការផ្លាស់ប្តូរធ្មេញត្រៀមលក្ខណៈ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
+msgid "Hole percent"
+msgstr "ប្រហោងភាគរយ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1176
+msgid "How far is the hole from the center of the moving gear. 100% means that the hole is at the gear's edge."
+msgstr "តើឆ្ងាយរន្ធពីកណ្តាលនៃការផ្លាស់ប្តូរនេះឧបករណ៍នេះគឺ។ 100% មានន័យថារន្ធនៅគែមឧបករណ៍នេះ។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
+msgid "Hole Number"
+msgstr "លេខរន្ធ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1198
+msgid "Hole #1 is at the edge of the gear. The maximum hole number is near the center. The maximum hole number is different for each gear."
+msgstr "រន្ធ #1 គឺនៅគែមនៃឧបករណ៍នេះ។ នេះជាចំនួនខ្ពស់បំផុតគឺនៅជិតរន្ធកណ្តាល។ នេះជាចំនួនអតិបរមាគឺខុសគ្នារន្ធសម្រាប់ឧបករណ៍នីមួយ។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
+msgid "Toy Kit"
+msgstr "ប្រដាប់ក្មេងលេងកញ្ចប់"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
+msgid "Gears"
+msgstr "ការប្រើឧបករណ៍នេសាទ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+msgid "Rotation"
+msgstr "ការបង្វិល"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1225
+msgid "Rotation of the pattern, in degrees. The starting position of the moving gear in the fixed gear."
+msgstr "ការបង្វិលលំនាំដឺក្រេ។ ទីតាំងចាប់ផ្ដើមនៃការផ្លាស់ប្តូរនេះនៅក្នុងឧបករណ៍ឧបករណ៍ថេរ។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
+msgid "Shape"
+msgstr "រូបរាង"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1249
+msgid "The shape of the fixed gear to be used inside current selection. Rack is a long round-edged shape provided in the toy kits. Frame hugs the boundaries of the rectangular selection, use hole=100 in Gear notation to touch boundary. Selection will hug boundaries of current selection - try something non-rectangular."
+msgstr "រូបរាងរបស់ឧបករណ៍ជួសជុលនេះត្រូវបានប្រើនៅខាងក្នុងដើម្បីជ្រើសរើសបច្ចុប្បន្ន។ rack ជារាងយូរមកជុំទៅទៀតបានផ្តល់ជូនក្នុងឧបករណ៍ក្មេងលេងនេះ។ ឱបស៊ុមព្រំដែននៃការជ្រើសរើសចតុកោណ, ការប្រើប្រាស់រន្ធ = 100 នៅក្នុងការកំណត់ការប៉ះព្រំដែនត្រៀមលក្ខណៈ។ ការជ្រើសរើសនឹងអោបរបស់ជម្រើសបច្ចុប្បន្នព្រំដែន - ព្យាយាមអ្វីមួយដែលមិនមែនជាចតុកោណ។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+msgid "Sides"
+msgstr "ភាគី"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+msgid "Number of sides of the shape."
+msgstr "ចំនួននៃជ្រុងនៃរាង។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+msgid "Morph"
+msgstr "ប្តូ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr "ប្តូថេររូបរាងស្ពឺ។ មានតែមួយចំនួននៃរាងប៉ះពាល់ដល់ការ។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "ការបង្វិលនៃឧបករណ៍ថេរ, ដឺក្រេ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+msgid "Margin (px)"
+msgstr "រឹម (ភិចសែល)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+msgid "Margin from edge of selection."
+msgstr "រឹមពីគែមនៃការជ្រើសរើស។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1288
+msgid "Make width and height equal"
+msgstr "ទទឹងនិងកម្ពស់ស្មើធ្វើឱ្យ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1290
+msgid "When unchecked, the pattern will fill the current image or selection. When checked, the pattern will have same width and height, and will be centered."
+msgstr "ពេលដោះធីកលំនាំនឹងបំពេញរូបភាពបច្ចុប្បន្នឬជ្រើស។ នៅពេលដែលបានធីកលំនាំនឹងមានទទឹងដូចគ្នានិងកម្ពស់, ហើយនឹងត្រូវបានកណ្តាល។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
+msgid "Redraw"
+msgstr "គូរ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
+msgid "If you change the settings of a tool, change color, or change the selection, press this to preview how the pattern looks."
+msgstr "ប្រសិនបើអ្នកផ្លាស់ប្ដូរការកំណត់របស់ឧបករណ៍មួយ, ការផ្លាស់ប្តូរណ៍ឬផ្លាស់ប្តូរការជ្រើសចុចនេះដើម្បីមើលជាមុនអំពីរបៀបដែលមើលទៅលំនាំ។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
+msgid "Reset"
+msgstr "កំណត់ឡើងវិញ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
+msgid "Cancel"
+msgstr "បោះបង់"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
+msgid "OK"
+msgstr "យល់ព្រម"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
+msgid ""
+"Keep\n"
+"Layer"
+msgstr ""
+"រក្សា\n"
+"ស្រទាប់"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1323
+msgid "If checked, then once OK is pressed, the spyro layer is kept, and the plugin exits quickly. If unchecked, the spyro layer is deleted, and the pattern is redrawn on the layer that was active when the plugin was launched."
+msgstr "ប្រសិនបើបានធីកហើយបន្ទាប់មកចុចយល់ព្រមនៅពេលដែលស្រទាប់ Spyros ត្រូវបានរក្សាទុកនិងការចេញកម្មវិធីជំនួយយ៉ាងឆាប់រហ័ស។ ប្រសិនបើបានធីកស្រទាប់ Spyros ត្រូវបានលុបបានទេហើយគំរូនេះត្រូវបាន រៀបចំឡើងវិញ នៅលើស្រទាប់ដែលសកម្មពេលកម្មវិធីជំនួយត្រូវបានបង្កើតឡើងផងដែរ។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
+msgid "Spyrogimp"
+msgstr "Spyrogimp"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr "គូរដោយប្រើការកំណត់ឧបករណ៍ spyrographs បច្ចុប្បន្ននិងការជ្រើសរើស។"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
+msgid "Curve Pattern"
+msgstr "លំនាំខ្សែកោង"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
+msgid "Fixed Gear"
+msgstr "ត្រៀមលក្ខណៈថេរ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
+msgid "Size"
+msgstr "ទំហំ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1650
+msgid "Rendering Pattern"
+msgstr "លំនាំការបង្ហាញ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1662
+msgid "Please wait : Rendering Pattern"
+msgstr "សូមរង់ចាំ: លំនាំការបង្ហាញ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1771
+msgid "Spyrogimp..."
+msgstr "Spyrogimp ..."
+
+#~ msgid "Color _model"
+#~ msgstr "_model color"
+
+#~ msgid "RGB"
+#~ msgstr "RGB"
+
+#~ msgid "HSV"
+#~ msgstr "HSV"
+
+#~ msgid "Red or Hue"
+#~ msgstr "ក្រហមឬការហ្វេ"
+
+#~ msgid "Blue or Value"
+#~ msgstr "ខៀវឬតម្លៃ"
+
+#~ msgid "Create a new brush with characters from a text sequence"
+#~ msgstr "បង្កើតជក់ថ្មីជាមួយតួអក្សរពីលំដាប់អត្ថបទ"
+
+#~ msgid "New Brush from _Text..."
+#~ msgstr "ជក់ថ្មីពី _Text ..."
+
+#~ msgid "Font"
+#~ msgstr "ពុម្ពអក្សរ"
+
+#~ msgid "Pixel Size"
+#~ msgstr "ទំហំភីកសែល"
+
+#~ msgid "Text"
+#~ msgstr "អត្ថបទ"
+
+#, fuzzy
+#~ msgid "Gimp-Python Console"
+#~ msgstr "gimp-Python បានកុងសូល"

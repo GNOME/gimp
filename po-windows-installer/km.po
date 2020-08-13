@@ -1,0 +1,319 @@
+# translation of km.po to Khmer
+# Lors Housann<lorshousunny@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: km\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2012-05-06 03:28+0200\n"
+"PO-Revision-Date: 2020-08-09 22:46+0700\n"
+"Last-Translator: Lors Housann <lorshousunny@gmail.com>\n"
+"Language-Team: Koompi Apps LocalizationLanguage: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.3.1\n"
+"Language: km\n"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:1
+msgid "License Agreement"
+msgstr "កិច្ចព្រមព្រៀងអាជ្ញាបណ្ណ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:2
+msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr "ការរៀបចំសាងសង់ឡើងដោយ Jernej Simonèiè, jernej-gimp@ena.si"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:3
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgstr "កំណែនៃប្រភេទឯកសាររូបភាព GIMP នេះតម្រូវឱ្យប្រព័ន្ធប្រតិបត្តិការ Windows 7 ឬកំណែថ្មីរបស់ប្រព័ន្ធប្រតិបត្តិការ Windows ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:4
+msgid "Development version"
+msgstr "កំណែអភិវឌ្ឍន៍"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:6
+#, no-c-format
+msgid "This is a development version of GIMP where some features may not be finished, or it may be unstable.%nThis version of GIMP is not intended for day-to-day work as it may be unstable, and you could lose your work.%nIf you encounter any problems, first verify that they haven't already been fixed in GIT before you contact the developers or report it in GIMP gitlab:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with installation anyway?"
+msgstr "នេះគឺជាកំណែអភិវឌ្ឍន៍របស់ប្រភេទឯកសាររូបភាព GIMP ដែលជាកន្លែងដែលលក្ខណៈពិសេសមួយចំនួនអាចនឹងមិនត្រូវបានបញ្ចប់ឬវាអាចនឹងមិនស្ថិតស្ថេរ។ កំណែ %​n នេះនៃប្រភេទឯកសាររូបភាព GIMP មិនមានបំណងសម្រាប់ការងារមួយថ្ងៃទៅមួយថ្ងៃដូចដែលវាអាចនឹងមិនស្ថិតស្ថេរហើយអ្នកអាចបាត់បង់ការងាររបស់អ្នក។ %n ប្រសិនបើអ្នកជួបប្រទះបញ្ហាណាមួយជាលើកដំបូងបញ្ជាក់ថាពួកគេមិនត្រូវបានកំណត់រួចហើយនៅក្នុងហ្គីមុនពេលដែលអ្នកទាក់ទងអ្នកអភិវឌ្ឍន៍ឬរាយការណ៍ពីវានៅក្នុង gitlab ប្រភេទឯកសាររូបភាព GIMP gitlab:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%n​តើអ្នកមានបំណងចង់បន្តការទោះយ៉ាងណាការដំឡើង?"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:7
+msgid "&Continue"
+msgstr "&បន្ត"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:8
+msgid "Exit"
+msgstr "ចេញពី"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:9
+msgid "This version of GIMP requires a processor that supports SSE instructions."
+msgstr "កំណែនៃប្រភេទឯកសាររូបភាព GIMP នេះតម្រូវឱ្យដំណើរការដែលគាំទ្រការណែនាំ SSE មួយ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:10
+msgid "Display settings problem"
+msgstr "បង្ហាញការកំណត់បញ្ហា"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:11
+msgid "Setup has detected that your Windows is not running in 32 bits-per-pixel display mode. This has been known to cause stability problems with GIMP, so it's recommended to change the display colour depth to 32BPP before continuing."
+msgstr "បានរកឃើញថាការដំឡើងប្រព័ន្ធប្រតិបត្តិការ Windows របស់អ្នកមិនត្រូវរត់នៅក្នុងរបៀបបង្ហាញប៊ីត 32 ក្នុងមួយភីកសែល-។ នេះត្រូវបានគេស្គាល់ថាបង្កឱ្យមានបញ្ហាស្ថិរភាពជាមួយ GIMP, ដូច្នេះវាបានផ្ដល់អនុសាសន៍ដើម្បីផ្លាស់ប្តូរណ៍បង្ហាញទៅជម្រៅមុនពេលបន្ត 32BPP ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:12
+msgid "E&xit"
+msgstr "ចាកចេញ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:13
+msgid "GIMP is now ready to be installed. Click the Install now button to install using the default settings, or click the Customize button if you'd like to have more control over what gets installed."
+msgstr "ឥឡូវ GIMP ត្រៀមខ្លួនជាស្រេចដើម្បីត្រូវបានដំឡើង។ ចុចប៊ូតុង Install ដើម្បីដំឡើងការប្រើប្រាស់បច្ចុប្បន្នការកំណត់លំនាំដើមឬចុចប៊ូតុងប្តូរតាមបំណងប្រសិនបើអ្នកចង់ឱ្យមានការត្រួតពិនិត្យបន្ថែមលើអ្វីដែលត្រូវបានដំឡើង។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:14
+msgid "&Install"
+msgstr "&ដំឡើង"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:15
+msgid "&Customize"
+msgstr "&ប្តូរតាមបំណង"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:16
+msgid "Compact installation"
+msgstr "ការដំឡើងបង្រួម"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:17
+msgid "Custom installation"
+msgstr "ការដំឡើងផ្ទាល់ខ្លួន"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:18
+msgid "Full installation"
+msgstr "ការដំឡើងពេញ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:19
+msgid "Description"
+msgstr "សង្ខេប"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:20
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:21
+msgid "GIMP and all default plug-ins"
+msgstr "GIMP និងកម្មវិធីជំនួយទាំងអស់លំនាំដើម"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:22
+msgid "Run-time libraries"
+msgstr "បណ្ណាល័យពេលរត់"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:23
+msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+msgstr "បណ្ណាល័យពេលរត់ដែលត្រូវបានប្រើដោយ GIMP រួមទាំងការ GTK + ពេលរត់បរិស្ថាន"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:24
+msgid "Debug symbols"
+msgstr "និមិត្តសញ្ញាបំបាត់កំហុស"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:25
+msgid "Include information to help with debugging GIMP"
+msgstr "បញ្ចូលពដើម្បីជំនួយជាមួយបំបាត់កំហុសប្រភេទឯកសាររូបភាព GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:26
+msgid "MS-Windows engine for GTK+"
+msgstr "ម៉ាស៊ីនប្រព័ន្ធប្រតិបត្តិការ Windows សម្រាប់ MS-GTK +"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:27
+msgid "Native Windows look for GIMP"
+msgstr "ការមើលប្រព័ន្ធប្រតិបត្តិការ Windows ដើមសម្រាប់ប្រភេទឯកសាររូបភាព GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:28
+msgid "Support for old plug-ins"
+msgstr "ការគាំទ្រសម្រាប់កម្មវិធីជំនួយដែលមានអាយុ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:29
+msgid "Install libraries needed by old third-party plug-ins"
+msgstr "ដំឡើងបណ្ណាល័យត្រូវការដោយភាគីទីបីអាយុកម្មវិធីជំនួយ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:30
+msgid "Translations"
+msgstr "ការបកប្រែ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:31
+msgid "Python scripting"
+msgstr "ស្គ្រីប ផាយតុន"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:32
+msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgstr "អនុញ្ញាតឱ្យអ្នកប្រើកម្មវិធីជំនួយរបស់ GIMP សរសេរក្នុងភាសាស្គ្រីបផាយតុន។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:33
+msgid "MyPaint brushes"
+msgstr "ជក់ការផាត់ពណ៌របស់ខ្ញុំ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:34
+msgid "Install the default set of MyPaint brushes"
+msgstr "ដំឡើងសំណុំលំនាំដើមនៃជក់ការផាត់ពណ៌របស់ខ្ញុំ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:35
+msgid "PostScript support"
+msgstr "ការគាំទ្រផតស្គ្រីប"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:36
+msgid "Allow GIMP to load PostScript files"
+msgstr "អនុញ្ញាតឱ្យ GIMP ផ្ទុកឯកសារផុសស្គីប"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:37
+msgid "Support for 32-bit plug-ins"
+msgstr "ការគាំទ្រសម្រាប់ 32 ប៊ីតកម្មវិធីជំនួយ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:39
+#, no-c-format
+msgid "Include files necessary for using 32-bit plug-ins.%nRequired for Python support."
+msgstr "រួមបញ្ចូលឯកសារចាំបាច់សម្រាប់ការប្រើ 32 ប៊ីតកម្មវិធីជំនួយ។ %n​ Required សម្រាប់ការគាំទ្រផាយតុន។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:40
+msgid "Additional icons:"
+msgstr "រូបតំណាងបន្ថែម:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:41
+msgid "Create a &desktop icon"
+msgstr "បង្កើតរូបតំណាងផ្ទៃតុ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:42
+msgid "Create a &Quick Launch icon"
+msgstr "បង្កើតរូបតំណាងមួយដែលចាប់ផ្ដើមរហ័ស"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:43
+msgid "Remove previous GIMP version"
+msgstr "យកកំណែ GIMP មុន"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:45
+#, no-c-format
+msgid "There was a problem updating GIMP's environment in %1. If you get any errors loading the plug-ins, try uninstalling and re-installing GIMP."
+msgstr "មានបញ្ហាក្នុងការធ្វើឱ្យទាន់សម័យក្នុងបរិយាកាសប្រភេទឯកសាររូបភាព GIMP​ %1 មួយ។ ប្រសិនបើអ្នកទទួលកំហុសណាមួយផ្ទុកកម្មវិធីជំនួយព្យាយាមលុបនិងដំឡើង GIMP ឡើងវិញ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:46
+msgid "Error extracting temporary data."
+msgstr "កំហុសក្នុងការទាញយកទិន្នន័យបណ្តោះអាសន្ន។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:47
+msgid "Error updating Python interpreter info."
+msgstr "កំហុសក្នុងការធ្វើបច្ចុប្បន្នភាពព័ត៌មានកម្មវិធីបកប្រែផាយតុនបាន។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:48
+msgid "Error updating MyPaint brushes info."
+msgstr "កំហុសក្នុងការធ្វើបច្ចុប្បន្នភាព័ត៌មានជក់ការផាត់ពណ៌របស់។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:50
+#, no-c-format
+msgid "There was an error updating %1."
+msgstr "មានកំហុសក្នុងការធ្វើឱ្យទាន់សម័យ​ %1 ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:52
+#, no-c-format
+msgid "There was an error updating GIMP's configuration file %1."
+msgstr "មានកំហុសក្នុងការធ្វើឱ្យទាន់សម័យក្នុងឯកសារកំណត់រចនាសម្ព័ន្ធប្រភេទឯកសាររូបភាព GIMP របស់​ %1 ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:53
+msgid "Edit with GIMP"
+msgstr "កែសម្រួលជាមួយ GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:54
+msgid "Select file associations"
+msgstr "ជ្រើសទំនាក់ទំនងឯកសារ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:55
+msgid "Extensions:"
+msgstr "ផ្នែកបន្ថែម:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:56
+msgid "Select the file types you wish to associate with GIMP"
+msgstr "ជ្រើសប្រភេទឯកសារដែលអ្នកចង់ភ្ជាប់ជាមួយប្រភេទឯកសាររូបភាព GIMP ទៅ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:57
+msgid "This will make selected files open in GIMP when you double-click them in Explorer."
+msgstr "នេះនឹងធ្វើឱ្យឯកសារដែលបានជ្រើសបើកចំហនៅក្នុង GIMP ពេលអ្នកចុចទ្វេដងលើពួកគេនៅក្នុងកម្មវិធីរុករក។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:58
+msgid "Select &All"
+msgstr "ជ្រើស​យក​ទាំងអស់"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:59
+msgid "Unselect &All"
+msgstr "មិនជ្រើសទាំងអស់"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:60
+msgid "Select &Unused"
+msgstr "ជ្រើសនិងមិនប្រើ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:61
+msgid "File types to associate with GIMP:"
+msgstr "ប្រភេទឯកសារដែលបានភ្ជាប់ជាមួយប្រភេទឯកសាររូបភាព GIMP ទៅ:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:62
+msgid "Removing previous version of GIMP:"
+msgstr "ការដោះកំណែមុនរបស់ឯកសាររូបភាព GIMP:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:64
+#, no-c-format
+msgid "GIMP %1 cannot be installed over your currently installed GIMP version, and the automatic uninstall of old version has failed.%n%nPlease remove the previous version of GIMP yourself before installing this version in %2, or choose a Custom install, and select a different installation folder.%n%nThe Setup will now exit."
+msgstr "GIMP​​ %1 មិនអាចត្រូវបានដំឡើងនៅលើកំណែប្រភេទឯកសាររូបភាព GIMP ដែលបានដំឡើងបច្ចុប្បន្នរបស់អ្នកនិងមិនដំឡើងដោយស្វ័យប្រវត្តិនៃកំណែចាស់បានបរាជ័យ។ %n%n​​​ សូមយកកំណែមុនរបស់ឯកសាររូបភាព GIMP ខ្លួនឯងមុនពេលដំឡើងកំណែនេះនៅក្នុង​​ %2 ឬជ្រើសផ្ទាល់ខ្លួនជាមួយការដំឡើងនិងជ្រើស ការដំឡើង។ %n%n​ ការដំឡើងដំណើរការផ្សេងគ្នានឹងពេលនេះចេញ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:66
+#, no-c-format
+msgid "GIMP %1 cannot be installed over your currently installed GIMP version, and Setup couldn't determine how to remove the old version automatically.%n%nPlease remove the previous version of GIMP and any add-ons yourself before installing this version in %2, or choose a Custom install, and select a different installation folder.%n%nThe Setup will now exit."
+msgstr "GIMP​ %1 មិនអាចត្រូវបានដំឡើងនៅលើកំណែប្រភេទឯកសាររូបភាព GIMP ដែលបានដំឡើងបច្ចុប្បន្នរបស់អ្នកនិងការដំឡើងមិនអាចកំណត់របៀបដើម្បីយកកំណែចាស់ដោយស្វ័យប្រវត្តិ។ %n%n​សូមយកកំណែមុនរបស់ឯកសាររូបភាព GIMP និងណាមួយបន្ថែមកម្មវិធីជំនួយខាងក្នុងខ្លួនឯងមុនពេលដំឡើងកំណែនេះនៅក្នុង​ %2 ឬជ្រើសរើសយកការដំឡើងផ្ទាល់ខ្លួន, ហើយជ្រើសថតការដំឡើងមួយផ្សេង។ %n%​ការដំឡើងដំណើរការនឹងឥឡូវចេញ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:68
+#, no-c-format
+msgid "Previous GIMP version was removed successfully, but Windows has to be restarted before the Setup can continue.%n%nAfter restarting your computer, Setup will continue next time an administrator logs in."
+msgstr "កំណែប្រភេទឯកសាររូបភាព GIMP មុនត្រូវបានយកចេញដោយជោគជ័យ, ប៉ុន្តែប្រព័ន្ធប្រតិបត្តិការ Windows មានការចាប់ផ្ដើមឡើងវិញមុនពេលដំឡើងអាចបន្ត។ %n%n​ បន្ទាប់ពីចាប់ផ្ដើមកុំព្យូទ័ររបស់អ្នក, ការដំឡើងនឹងបន្តនៅពេលក្រោយនៅក្នុងការគ្រប់គ្រងកំណត់ហេតុ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:70
+#, no-c-format
+msgid "There was an error restarting the Setup. (%1)"
+msgstr "មានកំហុសក្នុងការចាប់ផ្ដើមការដំឡើងនេះគឺ។ (%1)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:71
+msgid "Cleaning up old files..."
+msgstr "ការសម្អាតឯកសារចាស់ ..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:73
+#, no-c-format
+msgid "Remember: GIMP is Free Software.%n%nPlease visit"
+msgstr "សូមចងចាំ: ប្រភេទឯកសាររូបភាព GIMP គឺជាផ្នែកទន់សេរី។%n%n​​ សូមទស្សនកិច្ចសូម។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:74
+msgid "for free updates."
+msgstr "សម្រាប់ការធ្វើឱ្យទាន់សម័យដោយឥតគិតថ្លៃ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:75
+msgid "Setting up file associations..."
+msgstr "ការបង្កើតឯកសារដែលចូលរួម ..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:76
+msgid "Setting up environment for GIMP Python extension..."
+msgstr "ការបង្កើតបរិយាកាសសម្រាប់ផ្នែកបន្ថែមប្រភេទឯកសាររូបភាព GIMP ផាយតុន..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:77
+msgid "Setting up MyPaint brushes..."
+msgstr "ការបង្កើតជក់ការផាត់ពណ៌របស់ខ្ញុំ..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:78
+msgid "Setting up GIMP environment..."
+msgstr "ការបង្កើតបរិស្ថាន GIMP ..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:79
+msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+msgstr "រៀបចំការកំណត់រចនាសម្ព័ន្ធប្រភេទឯកសាររូបភាព GIMP សម្រាប់ 32 ប៊ីតកម្មវិធីជំនួយនៅក្នុងការគាំទ្រ ..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:80
+msgid "Launch GIMP"
+msgstr "ការចាប់ផ្តើម GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:81
+msgid "Removing add-on"
+msgstr "បន្ថែមលើការដោះ"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:83
+#, no-c-format
+msgid "Internal error (%1)."
+msgstr "កំហុសខាងក្នុង (%1) ។"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:84
+msgid "GIMP does not appear to be installed in the selected directory. Continue anyway?"
+msgstr "GIMP ទំនងជាមិនត្រូវបានដំឡើងក្នុងថតដែលបានជ្រើស។ បន្តឬ?"
