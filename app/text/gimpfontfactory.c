@@ -273,6 +273,7 @@ gimp_font_factory_load_async_callback (GimpAsync       *async,
 
       gimp_font_factory_load_names (container, PANGO_FONT_MAP (fontmap), context);
       g_object_unref (context);
+      FcConfigDestroy (config);
     }
 
   gimp_container_thaw (container);
@@ -312,11 +313,15 @@ gimp_font_factory_load (GimpFontFactory  *factory,
 
   fonts_conf = gimp_directory_file (CONF_FNAME, NULL);
   if (! gimp_font_factory_load_fonts_conf (config, fonts_conf))
-    return;
+    g_printerr ("%s: failed to read '%s'.\n",
+                G_STRFUNC, g_file_peek_path (fonts_conf));
+  g_object_unref (fonts_conf);
 
   fonts_conf = gimp_sysconf_directory_file (CONF_FNAME, NULL);
   if (! gimp_font_factory_load_fonts_conf (config, fonts_conf))
-    return;
+    g_printerr ("%s: failed to read '%s'.\n",
+                G_STRFUNC, g_file_peek_path (fonts_conf));
+  g_object_unref (fonts_conf);
 
   path = gimp_data_factory_get_data_path (GIMP_DATA_FACTORY (factory));
   if (! path)
@@ -356,13 +361,9 @@ gimp_font_factory_load_fonts_conf (FcConfig *config,
   gboolean  ret  = TRUE;
 
   if (! FcConfigParseAndLoad (config, (const guchar *) path, FcFalse))
-    {
-      FcConfigDestroy (config);
-      ret = FALSE;
-    }
+    ret = FALSE;
 
   g_free (path);
-  g_object_unref (fonts_conf);
 
   return ret;
 }
