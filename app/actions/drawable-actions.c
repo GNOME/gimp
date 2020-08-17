@@ -161,8 +161,8 @@ drawable_actions_update (GimpActionGroup *group,
   GimpDrawable *drawable     = NULL;
   GList        *drawables    = NULL;
   gboolean      has_visible  = FALSE;
+  gboolean      has_linked   = FALSE;
   gboolean      is_rgb       = FALSE;
-  gboolean      linked       = FALSE;
   gboolean      locked       = FALSE;
   gboolean      can_lock     = FALSE;
   gboolean      locked_pos   = FALSE;
@@ -184,7 +184,10 @@ drawable_actions_update (GimpActionGroup *group,
           if (gimp_item_get_visible (iter->data))
             has_visible = TRUE;
 
-          if (has_visible)
+          if (gimp_item_get_linked (iter->data))
+            has_linked = TRUE;
+
+          if (has_visible && has_linked)
             break;
         }
 
@@ -199,7 +202,6 @@ drawable_actions_update (GimpActionGroup *group,
           else
             item = GIMP_ITEM (drawable);
 
-          linked        = gimp_item_get_linked (item);
           locked        = gimp_item_get_lock_content (item);
           can_lock      = gimp_item_can_lock_content (item);
           writable      = ! gimp_item_is_content_locked (item);
@@ -221,12 +223,12 @@ drawable_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("drawable-levels-stretch", writable && !children && is_rgb);
 
   SET_SENSITIVE ("drawable-visible",       drawables);
-  SET_SENSITIVE ("drawable-linked",        drawable);
+  SET_SENSITIVE ("drawable-linked",        drawables);
   SET_SENSITIVE ("drawable-lock-content",  can_lock);
   SET_SENSITIVE ("drawable-lock-position", can_lock_pos);
 
   SET_ACTIVE ("drawable-visible",       has_visible);
-  SET_ACTIVE ("drawable-linked",        linked);
+  SET_ACTIVE ("drawable-linked",        has_linked);
   SET_ACTIVE ("drawable-lock-content",  locked);
   SET_ACTIVE ("drawable-lock-position", locked_pos);
 
