@@ -137,7 +137,7 @@ void   gimp_channel_select_fuzzy        (GimpChannel         *channel,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y);
 void   gimp_channel_select_by_color     (GimpChannel         *channel,
-                                         GimpDrawable        *drawable,
+                                         GList               *drawables,
                                          gboolean             sample_merged,
                                          const GimpRGB       *color,
                                          gfloat               threshold,

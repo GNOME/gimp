@@ -73,7 +73,8 @@ image_select_color_invoker (GimpProcedure         *procedure,
       if (pdb_context->sample_merged ||
           gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, 0, error))
         {
-          gimp_channel_select_by_color (gimp_image_get_mask (image), drawable,
+          GList *drawables = g_list_prepend (NULL, drawable);
+          gimp_channel_select_by_color (gimp_image_get_mask (image), drawables,
                                         pdb_context->sample_merged,
                                         &color,
                                         pdb_context->sample_threshold,
@@ -84,6 +85,7 @@ image_select_color_invoker (GimpProcedure         *procedure,
                                         pdb_context->feather,
                                         pdb_context->feather_radius_x,
                                         pdb_context->feather_radius_y);
+          g_list_free (drawables);
         }
       else
         success = FALSE;
