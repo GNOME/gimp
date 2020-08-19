@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-07-26 11:42+0000\n"
-"PO-Revision-Date: 2020-07-26 15:44+0300\n"
+"POT-Creation-Date: 2020-08-19 09:22+0000\n"
+"PO-Revision-Date: 2020-08-19 23:19+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.07.70\n"
+"X-Generator: Lokalize 20.11.70\n"
 
 #: ../plug-ins/common/align-layers.c:190
 msgid "Align Visi_ble Layers..."
@@ -894,7 +894,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1412
 #: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:691
 #: ../plug-ins/common/file-ps.c:1148 ../plug-ins/common/file-ps.c:3500
-#: ../plug-ins/common/file-psp.c:1929 ../plug-ins/common/file-psp.c:1983
+#: ../plug-ins/common/file-psp.c:1976 ../plug-ins/common/file-psp.c:2030
 #: ../plug-ins/common/file-raw-data.c:437
 #: ../plug-ins/common/file-raw-data.c:1234 ../plug-ins/common/file-sunras.c:458
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
@@ -3538,111 +3538,113 @@ msgstr "Неправильний заголовок блока в %ld"
 msgid "Invalid block header"
 msgstr "Неправильний заголовок блока"
 
-#: ../plug-ins/common/file-psp.c:991
+#: ../plug-ins/common/file-psp.c:920
 #, c-format
 msgid "Seek error: %s"
 msgstr "Помилка пошуку: %s"
 
-#: ../plug-ins/common/file-psp.c:1029
+#: ../plug-ins/common/file-psp.c:1025
 #, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Помилка зчитування сегменту ключового слова розробника"
 
-#: ../plug-ins/common/file-psp.c:1035
+#: ../plug-ins/common/file-psp.c:1031
 #, c-format
 msgid "Invalid keyword chunk header"
 msgstr "Хибний заголовок сегменту ключового слова"
 
-#: ../plug-ins/common/file-psp.c:1050 ../plug-ins/common/file-psp.c:1082
+#: ../plug-ins/common/file-psp.c:1046 ../plug-ins/common/file-psp.c:1073
 #, c-format
 msgid "Error reading creator keyword data"
 msgstr "Помилка зчитування даних ключового слова розробника"
 
-#: ../plug-ins/common/file-psp.c:1057
-#, c-format
-msgid "Creator keyword data not nul-terminated"
-msgstr "Дані ключового слова розробника не закінчуються нулем"
-
-#: ../plug-ins/common/file-psp.c:1433 ../plug-ins/common/file-psp.c:1447
+#: ../plug-ins/common/file-psp.c:1415 ../plug-ins/common/file-psp.c:1429
 #, c-format
 msgid "zlib error"
 msgstr "Помилка zlib"
 
-#: ../plug-ins/common/file-psp.c:1513
+#: ../plug-ins/common/file-psp.c:1500
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Хибний підблок шару %s, має бути LAYER"
 
-#: ../plug-ins/common/file-psp.c:1545 ../plug-ins/common/file-psp.c:1576
+#: ../plug-ins/common/file-psp.c:1529 ../plug-ins/common/file-psp.c:1599
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Помилка зчитування інформаційного сегменту шару"
 
-#: ../plug-ins/common/file-psp.c:1610
+#: ../plug-ins/common/file-psp.c:1543
+#, c-format
+#| msgid "Error reading layer information chunk"
+msgid "Error reading layer extension information"
+msgstr "Помилка зчитування даних щодо розширення шару"
+
+#: ../plug-ins/common/file-psp.c:1558
+#, c-format
+#| msgid "Error reading layer information chunk"
+msgid "Error reading layer information"
+msgstr "Помилка зчитування даних щодо шару"
+
+#: ../plug-ins/common/file-psp.c:1638
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Хибні розміри шару: %dx%d"
 
-#: ../plug-ins/common/file-psp.c:1663
+#: ../plug-ins/common/file-psp.c:1691
 #, c-format
 msgid "Error creating layer"
 msgstr "Помилка при створенні шару"
 
-#: ../plug-ins/common/file-psp.c:1714
+#: ../plug-ins/common/file-psp.c:1738
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Хибний підблок %s шару, має бути CHANNEL"
 
-#: ../plug-ins/common/file-psp.c:1730
+#: ../plug-ins/common/file-psp.c:1754
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Помилка читання фрагменту інформації каналу"
 
-#: ../plug-ins/common/file-psp.c:1742
-#, c-format
-msgid "Invalid bitmap type %d in channel information chunk"
-msgstr "Хибний тип растру %d у фрагменті інформації каналу"
-
-#: ../plug-ins/common/file-psp.c:1750
+#: ../plug-ins/common/file-psp.c:1777
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Хибний тип каналу %d у фрагменті інформації каналу"
 
-#: ../plug-ins/common/file-psp.c:1830
+#: ../plug-ins/common/file-psp.c:1877
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Помилка при фрагменту даних тюбика"
 
-#: ../plug-ins/common/file-psp.c:1940
+#: ../plug-ins/common/file-psp.c:1987
 #, c-format
 msgid "Error reading file header."
 msgstr "Помилка при читанні заголовка файлу."
 
-#: ../plug-ins/common/file-psp.c:1947
+#: ../plug-ins/common/file-psp.c:1994
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Хибна сигнатура файлу."
 
-#: ../plug-ins/common/file-psp.c:1965
+#: ../plug-ins/common/file-psp.c:2012
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Непідтримувана версія формату файлу PSP %d.%d."
 
-#: ../plug-ins/common/file-psp.c:1985
+#: ../plug-ins/common/file-psp.c:2032
 msgid "invalid block size"
 msgstr "хибний розмір блока"
 
-#: ../plug-ins/common/file-psp.c:1994
+#: ../plug-ins/common/file-psp.c:2041
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Повторний блок загальних атрибутів зображення."
 
-#: ../plug-ins/common/file-psp.c:2024
+#: ../plug-ins/common/file-psp.c:2071
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Відсутній блок загальних атрибутів зображення."
 
-#: ../plug-ins/common/file-psp.c:2115
+#: ../plug-ins/common/file-psp.c:2162
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
@@ -6225,13 +6227,11 @@ msgstr "Декодувати Alpha exponent"
 
 #: ../plug-ins/file-dds/ddsread.c:305
 #, c-format
-#| msgid "Can't create a new image"
 msgid "Could not allocate a new image."
 msgstr "Не вдалося розмістити нове зображення."
 
 #: ../plug-ins/file-dds/ddsread.c:318
 #, c-format
-#| msgid "Error reading file"
 msgid "Error reading palette."
 msgstr "Помилка під час спроби читання палітри."
 
@@ -6242,7 +6242,6 @@ msgstr "Некоректна контрольна сума у форматі DOS
 
 #: ../plug-ins/file-dds/ddsread.c:689
 #, c-format
-#| msgid "Invalid block header at %ld"
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Некоректне значення бітів на піксель для даних RGB: %d"
 
@@ -6253,13 +6252,11 @@ msgstr "Некоректне значення бітів на піксель д�
 
 #: ../plug-ins/file-dds/ddsread.c:750
 #, c-format
-#| msgid "Invalid file."
 msgid "Invalid pixel format."
 msgstr "Некоректний піксельний формат."
 
 #: ../plug-ins/file-dds/ddsread.c:919
 #, c-format
-#| msgid "Unsupported file format version: %d"
 msgid "Unsupported DXGI format (%d)"
 msgstr "Непідтримуваний формат DXGI (%d)"
 
@@ -12143,3 +12140,9 @@ msgstr "_Сканер/Камера..."
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Creator keyword data not nul-terminated"
+#~ msgstr "Дані ключового слова розробника не закінчуються нулем"
+
+#~ msgid "Invalid bitmap type %d in channel information chunk"
+#~ msgstr "Хибний тип растру %d у фрагменті інформації каналу"
