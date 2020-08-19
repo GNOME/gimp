@@ -93,7 +93,7 @@ endif
 
 if libheif.found()
   common_plugins_list += { 'name': 'file-heif',
-    'deps': [ gtk3, gegl, libheif, ],
+    'deps': [ gtk3, gegl, libheif, gexiv2, lcms, ],
   }
 endif
 

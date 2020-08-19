@@ -774,10 +774,12 @@ file_heif_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEXIV2_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(LIBHEIF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
+	$(LCMS_LIBS)		\
 	$(file_heif_RC)
 
 file_html_table_SOURCES = \
