@@ -5367,12 +5367,12 @@ msgstr "_Laberint..."
 #: ../app/actions/filters-actions.c:458
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
-msgstr "Difuminació mitjana de la c_urvatura..."
+msgstr "Difuminació mediana de la c_urvatura..."
 
 #: ../app/actions/filters-actions.c:463
 msgctxt "filters-action"
 msgid "_Median Blur..."
-msgstr "_Difuminació mitjana..."
+msgstr "_Difuminació mediana..."
 
 #: ../app/actions/filters-actions.c:468
 msgctxt "filters-action"
