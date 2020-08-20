@@ -758,16 +758,34 @@ read_block_header (FILE     *f,
   return GUINT16_FROM_LE (id);
 }
 
+static gint
+try_fseek (FILE    *f,
+           glong    pos,
+           gint     whence,
+           GError **error)
+{
+  if (fseek (f, pos, whence) < 0)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Seek error: %s"), g_strerror (errno));
+      fclose (f);
+      return -1;
+    }
+  return 0;
+}
+
 /* Read the PSP_IMAGE_BLOCK */
 static gint
 read_general_image_attribute_block (FILE     *f,
                                     guint     init_len,
                                     guint     total_len,
-                                    PSPimage *ia)
+                                    PSPimage *ia,
+                                    GError  **error)
 {
   gchar buf[6];
   guint64 res;
   gchar graphics_content[4];
+  long chunk_start;
 
   if (init_len < 38 || total_len < 38)
     {
@@ -775,17 +793,10 @@ read_general_image_attribute_block (FILE     *f,
       return -1;
     }
 
-  if (psp_ver_major >= 4)
-    {
-      /* TODO: This causes the chunk size to be ignored. Better verify if it is
-       *       valid since it might create read offset problems with the
-       *       "expansion field" (which follows after the "graphics content" and
-       *       is of unknown size).
-       */
-      fseek (f, 4, SEEK_CUR);
-    }
-
-  if (fread (&ia->width, 4, 1, f) < 1
+  chunk_start = ftell (f);
+  if ((psp_ver_major >= 4
+      && (fread (&init_len, 4, 1, f) < 1 || (init_len = GUINT32_FROM_LE (init_len) < 42)))
+      || fread (&ia->width, 4, 1, f) < 1
       || fread (&ia->height, 4, 1, f) < 1
       || fread (&res, 8, 1, f) < 1
       || fread (&ia->metric, 1, 1, f) < 1
@@ -796,7 +807,8 @@ read_general_image_attribute_block (FILE     *f,
       || fread (buf, 4, 1, f) < 1 /* Skip total image size */
       || fread (&ia->active_layer, 4, 1, f) < 1
       || fread (&ia->layer_count, 2, 1, f) < 1
-      || (psp_ver_major >= 4 && fread (graphics_content, 4, 1, f) < 1))
+      || (psp_ver_major >= 4 && fread (graphics_content, 4, 1, f) < 1)
+      || try_fseek (f, chunk_start + init_len, SEEK_SET, error) < 0)
     {
       g_message ("Error reading general image attribute block");
       return -1;
@@ -828,24 +840,6 @@ read_general_image_attribute_block (FILE     *f,
 
   return 0;
 }
-
-static gint
-try_fseek (FILE    *f,
-           glong    pos,
-           gint     whence,
-           GError **error)
-{
-  if (fseek (f, pos, whence) < 0)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Seek error: %s"), g_strerror (errno));
-      fclose (f);
-      return -1;
-    }
-  return 0;
-}
-
-
 
 static gint
 read_creator_block (FILE      *f,
@@ -1317,14 +1311,16 @@ read_layer_block (FILE      *f,
 {
   gint i;
   long block_start, sub_block_start, channel_start;
+  long layer_extension_start;
   gint sub_id;
   guint32 sub_init_len, sub_total_len;
+  guint32 chunk_len, layer_extension_len;
   gchar *name = NULL;
   guint16 namelen;
   guchar type, opacity, blend_mode, visibility, transparency_protected;
   guchar link_group_id, mask_linked, mask_disabled;
   guint32 image_rect[4], saved_image_rect[4], mask_rect[4], saved_mask_rect[4];
-  gboolean null_layer = FALSE;
+  gboolean null_layer, can_handle_layer;
   guint16 bitmap_count, channel_count;
   GimpImageType drawable_type;
   guint32 layer_ID = 0;
@@ -1340,6 +1336,9 @@ read_layer_block (FILE      *f,
 
   while (ftell (f) < block_start + total_len)
     {
+      null_layer = FALSE;
+      can_handle_layer = FALSE;
+
       /* Read the layer sub-block header */
       sub_id = read_block_header (f, &sub_init_len, &sub_total_len, error);
       if (sub_id == -1)
@@ -1358,7 +1357,7 @@ read_layer_block (FILE      *f,
       /* Read layer information chunk */
       if (psp_ver_major >= 4)
         {
-          if (fseek (f, 4, SEEK_CUR) < 0
+          if (fread (&chunk_len, 4, 1, f) < 1
               || fread (&namelen, 2, 1, f) < 1
               || ((namelen = GUINT16_FROM_LE (namelen)) && FALSE)
               || (name = g_malloc (namelen + 1)) == NULL
@@ -1374,10 +1373,7 @@ read_layer_block (FILE      *f,
               || fread (&mask_rect, 16, 1, f) < 1
               || fread (&saved_mask_rect, 16, 1, f) < 1
               || fread (&mask_linked, 1, 1, f) < 1
-              || fread (&mask_disabled, 1, 1, f) < 1
-              || fseek (f, 47, SEEK_CUR) < 0
-              || fread (&bitmap_count, 2, 1, f) < 1
-              || fread (&channel_count, 2, 1, f) < 1)
+              || fread (&mask_disabled, 1, 1, f) < 1)
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Error reading layer information chunk"));
@@ -1386,7 +1382,46 @@ read_layer_block (FILE      *f,
             }
 
           name[namelen] = 0;
-          type = PSP_LAYER_NORMAL; /* ??? */
+          chunk_len = GUINT32_FROM_LE (chunk_len);
+
+          /* Skip remainder of layer info and read layer extension length */
+          layer_extension_start = sub_block_start + chunk_len;
+          if (fseek(f, layer_extension_start, SEEK_SET) < 0
+              || fread(&layer_extension_len, 4, 1, f) < 1)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading layer extension information"));
+              g_free (name);
+              return -1;
+            }
+          layer_extension_len = GUINT32_FROM_LE (layer_extension_len);
+          switch (type)
+            {
+            case keGLTFloatingRasterSelection:
+              g_message ("Floating selection restored as normal layer (%s)", name);
+            case keGLTRaster:
+              can_handle_layer = TRUE;
+              if (fread (&bitmap_count, 2, 1, f) < 1
+                  || fread (&channel_count, 2, 1, f) < 1)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                              _("Error reading layer information"));
+                  g_free (name);
+                  return -1;
+                }
+              break;
+            default:
+              bitmap_count = 0;
+              channel_count = 0;
+              g_message ("Unsupported layer type %d (%s)", type, name);
+              break;
+            }
+
+          if (try_fseek (f, layer_extension_start + layer_extension_len, SEEK_SET, error) < 0)
+            {
+              g_free (name);
+              return -1;
+            }
         }
       else
         {
@@ -1415,10 +1450,15 @@ read_layer_block (FILE      *f,
               g_free (name);
               return -1;
             }
+          if (type == PSP_LAYER_FLOATING_SELECTION)
+            g_message ("Floating selection restored as normal layer");
+          type = keGLTRaster;
+          can_handle_layer = TRUE;
+          if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET, error) < 0)
+            {
+              return -1;
+            }
         }
-
-      if (type == PSP_LAYER_FLOATING_SELECTION)
-        g_message ("Floating selection restored as normal layer");
 
       swab_rect (image_rect);
       swab_rect (saved_image_rect);
@@ -1515,118 +1555,137 @@ read_layer_block (FILE      *f,
 
       gimp_layer_set_lock_alpha (layer_ID, transparency_protected);
 
-      if (psp_ver_major < 4)
-        if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET, error) < 0)
-          {
-            return -1;
-          }
-
-      pixel = g_malloc0 (height * width * bytespp);
-      if (null_layer)
+      if (can_handle_layer)
         {
-          pixels = NULL;
+          pixel = g_malloc0 (height * width * bytespp);
+          if (null_layer)
+            {
+              pixels = NULL;
+            }
+          else
+            {
+              pixels = g_new (guchar *, height);
+              for (i = 0; i < height; i++)
+                pixels[i] = pixel + width * bytespp * i;
+            }
+
+          buffer = gimp_drawable_get_buffer (layer_ID);
+
+          /* Read the layer channel sub-blocks */
+          while (ftell (f) < sub_block_start + sub_total_len)
+            {
+              sub_id = read_block_header (f, &channel_init_len,
+                                          &channel_total_len, error);
+              if (sub_id == -1)
+                {
+                  gimp_image_delete (image_ID);
+                  return -1;
+                }
+
+              if (sub_id != PSP_CHANNEL_BLOCK)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                              _("Invalid layer sub-block %s, should be CHANNEL"),
+                              block_name (sub_id));
+                  return -1;
+                }
+
+              channel_start = ftell (f);
+              chunk_len = channel_init_len; /* init chunk_len for psp_ver_major == 3 */
+              if ((psp_ver_major >= 4
+                  && (fread (&chunk_len, 4, 1, f) < 1
+                  || ((chunk_len = GUINT32_FROM_LE (chunk_len)) < 16)))
+                  || fread (&compressed_len, 4, 1, f) < 1
+                  || fread (&uncompressed_len, 4, 1, f) < 1
+                  || fread (&bitmap_type, 2, 1, f) < 1
+                  || fread (&channel_type, 2, 1, f) < 1)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                              _("Error reading channel information chunk"));
+                  return -1;
+                }
+
+              compressed_len = GUINT32_FROM_LE (compressed_len);
+              uncompressed_len = GUINT32_FROM_LE (uncompressed_len);
+              bitmap_type = GUINT16_FROM_LE (bitmap_type);
+              channel_type = GUINT16_FROM_LE (channel_type);
+
+              if (bitmap_type > PSP_DIB_USER_MASK)
+                {
+                  g_message ("Conversion of bitmap type %d is not supported.", bitmap_type);
+                }
+              else if (bitmap_type == PSP_DIB_USER_MASK)
+                {
+                  /* FIXME: Add as layer mask */
+                  g_message ("Conversion of layer mask is not supported");
+                }
+              else
+                {
+                  if (channel_type > PSP_CHANNEL_BLUE)
+                    {
+                      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                  _("Invalid channel type %d in channel information chunk"),
+                                  channel_type);
+                      return -1;
+                    }
+
+                  IFDBG(2) g_message ("channel: %s %s %d (%d) bytes %d bytespp",
+                                      bitmap_type_name (bitmap_type),
+                                      channel_type_name (channel_type),
+                                      uncompressed_len, compressed_len,
+                                      bytespp);
+
+                  if (bitmap_type == PSP_DIB_TRANS_MASK)
+                    offset = 3;
+                  else
+                    offset = channel_type - PSP_CHANNEL_RED;
+
+                  if (!null_layer)
+                    {
+                      if (try_fseek (f, channel_start + chunk_len, SEEK_SET, error) < 0)
+                        {
+                          return -1;
+                        }
+
+                      if (read_channel_data (f, ia, pixels, bytespp, offset,
+                                            buffer, compressed_len, error) == -1)
+                        {
+                          return -1;
+                        }
+                    }
+                }
+              if (try_fseek (f, channel_start + channel_total_len, SEEK_SET, error) < 0)
+                {
+                  return -1;
+                }
+            }
+
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                          NULL, pixel, GEGL_AUTO_ROWSTRIDE);
+
+          g_object_unref (buffer);
+
+          g_free (pixels);
+          g_free (pixel);
+          if (psp_ver_major >= 4)
+            {
+              if (try_fseek (f, sub_block_start + sub_total_len, SEEK_SET, error) < 0)
+                {
+                  return -1;
+                }
+            }
         }
       else
         {
-          pixels = g_new (guchar *, height);
-          for (i = 0; i < height; i++)
-            pixels[i] = pixel + width * bytespp * i;
-        }
-
-      buffer = gimp_drawable_get_buffer (layer_ID);
-
-      /* Read the layer channel sub-blocks */
-      while (ftell (f) < sub_block_start + sub_total_len)
-        {
-          sub_id = read_block_header (f, &channel_init_len,
-                                      &channel_total_len, error);
-          if (sub_id == -1)
+          /* Can't handle this type of layer, skip the data so we can read the next layer. */
+          if (psp_ver_major >= 4)
             {
-              gimp_image_delete (image_ID);
-              return -1;
-            }
-
-          if (sub_id != PSP_CHANNEL_BLOCK)
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Invalid layer sub-block %s, should be CHANNEL"),
-                           block_name (sub_id));
-              return -1;
-            }
-
-          channel_start = ftell (f);
-
-          if (psp_ver_major == 4)
-            fseek (f, 4, SEEK_CUR); /* Unknown field */
-
-          if (fread (&compressed_len, 4, 1, f) < 1
-              || fread (&uncompressed_len, 4, 1, f) < 1
-              || fread (&bitmap_type, 2, 1, f) < 1
-              || fread (&channel_type, 2, 1, f) < 1)
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Error reading channel information chunk"));
-              return -1;
-            }
-
-          compressed_len = GUINT32_FROM_LE (compressed_len);
-          uncompressed_len = GUINT32_FROM_LE (uncompressed_len);
-          bitmap_type = GUINT16_FROM_LE (bitmap_type);
-          channel_type = GUINT16_FROM_LE (channel_type);
-
-          if (bitmap_type > PSP_DIB_USER_MASK)
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Invalid bitmap type %d in channel information chunk"),
-                           bitmap_type);
-              return -1;
-            }
-
-          if (channel_type > PSP_CHANNEL_BLUE)
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Invalid channel type %d in channel information chunk"),
-                           channel_type);
-              return -1;
-            }
-
-          IFDBG(2) g_message ("channel: %s %s %d (%d) bytes %d bytespp",
-                              bitmap_type_name (bitmap_type),
-                              channel_type_name (channel_type),
-                              uncompressed_len, compressed_len,
-                              bytespp);
-
-          if (bitmap_type == PSP_DIB_TRANS_MASK)
-            offset = 3;
-          else
-            offset = channel_type - PSP_CHANNEL_RED;
-
-          if (psp_ver_major < 4)
-            if (try_fseek (f, channel_start + channel_init_len, SEEK_SET, error) < 0)
-              {
-                return -1;
-              }
-
-          if (!null_layer)
-            if (read_channel_data (f, ia, pixels, bytespp, offset,
-                                   buffer, compressed_len, error) == -1)
-              {
-                return -1;
-              }
-
-          if (try_fseek (f, channel_start + channel_total_len, SEEK_SET, error) < 0)
-            {
-              return -1;
+              if (try_fseek (f, sub_block_start + sub_total_len, SEEK_SET, error) < 0)
+                {
+                  return -1;
+                }
             }
         }
-
-      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
-                       NULL, pixel, GEGL_AUTO_ROWSTRIDE);
-
-      g_object_unref (buffer);
-
-      g_free (pixels);
-      g_free (pixel);
     }
 
   if (try_fseek (f, block_start + total_len, SEEK_SET, error) < 0)
@@ -1823,7 +1882,7 @@ load_image (const gchar  *filename,
               goto error;
             }
           if (read_general_image_attribute_block (f, block_init_len,
-                                                  block_total_len, &ia) == -1)
+                                                  block_total_len, &ia, error) == -1)
             {
               goto error;
             }
