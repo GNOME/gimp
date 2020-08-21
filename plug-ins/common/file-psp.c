@@ -1496,7 +1496,7 @@ read_layer_block (FILE      *f,
          name,
          image_rect[2] - image_rect[0], image_rect[3] - image_rect[1],
          width, height,
-         saved_image_rect[0], saved_image_rect[1],
+         image_rect[0]+saved_image_rect[0], image_rect[1]+saved_image_rect[1],
          opacity, blend_mode_name (blend_mode),
          bitmap_count, channel_count);
 
@@ -1546,9 +1546,9 @@ read_layer_block (FILE      *f,
 
       gimp_image_insert_layer (image_ID, layer_ID, -1, -1);
 
-      if (saved_image_rect[0] != 0 || saved_image_rect[1] != 0)
+      if (image_rect[0] != 0 || image_rect[1] != 0 || saved_image_rect[0] != 0 || saved_image_rect[1] != 0)
         gimp_layer_set_offsets (layer_ID,
-                                saved_image_rect[0], saved_image_rect[1]);
+                                image_rect[0] + saved_image_rect[0], image_rect[1] + saved_image_rect[1]);
 
       if (!visibility)
         gimp_item_set_visible (layer_ID, FALSE);
