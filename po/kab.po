@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-08-11 18:54+0000\n"
-"PO-Revision-Date: 2020-08-15 13:47+0100\n"
+"PO-Revision-Date: 2020-08-22 14:14+0100\n"
 "Last-Translator: Yacine Bouklif <yacinebouklif@gmail.com>\n"
 "Language-Team: \n"
 "Language: kab\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -132,11 +132,11 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Tools are now grouped in the toolbox by default"
-msgstr ""
+msgstr "Ifecka ttusgerwen tura  s lexṣas di tenkult n yifecka"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "Sliders now use a compact style with improved user interaction"
-msgstr ""
+msgstr "Timaccagin sseqdacent tura aɣanib akussim susedmer n useqdac iwenɛen"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "Vastly improved user experience for the transformation preview"
@@ -174,6 +174,8 @@ msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
 msgstr ""
+"Umuɣ Tamuɣli: tanefrunt tamaynutt \"Sken akk\" tessekan ipiksilen beṛṛa n "
+"tlisa n teɣzut n usuneɣ"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
@@ -182,34 +184,41 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr ""
+"Afecku n tefrayt n uɣawas amezwaru: askar n tmuɣli amaynut \"Tafesna n "
+"umelliɣdi\""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
+"Afecku n tefrayt n uɣawas amezwaru: amefray ini/tiḍullest i tmuɣli \"Ini\""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Free Select tool: improved copy-paste interaction"
-msgstr ""
+msgstr "Afecku n tefrayt tilellit: tasedmert ittuwenɛen i wenɣal d usenṭeḍ"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "Transform tools: new Image transform type to transform the whole image"
-msgstr ""
+msgstr "Ifecka n ubeddel: abeddel amaynut n tugna i webeddel n tugna meṛṛa"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr ""
+"Ismenyafen: iɣewwaren imaynuten \"Sireg asiẓreg n tissiyin ur nettban ara\""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "HEIF import/export: color profile support"
-msgstr ""
+msgstr "Taktert/asifeḍ HEIF: tadhelt n ulegdis n yini"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
+"Asifeḍ PDF: tissiyin n weḍris deg yigrawen zemrent tura ad ttusifḍent am "
+"uḍris"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr ""
+"Taktert TIFF: yessutur tura amek ara ddun yibuda TIFF ur d-yettunefken ara"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
@@ -232,7 +241,7 @@ msgstr "Tiddin n tissi di TIFF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Discovery of user-installed fonts in Windows"
-msgstr ""
+msgstr "Tagrut n tsefsa isbedd useqdac di Windows"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "Incremental mode in the Dodge/Burn tool"
@@ -324,13 +333,15 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "New preference to choose the default export file type"
-msgstr ""
+msgstr "Ismenyafen imaynuten i wefran n wanaw n lexṣaṣ n usifeḍ n ufaylu"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
 msgstr ""
+"Tanefrunt tamaynutt i wesifeḍ n PNG, JPEG akked TIFF s ulegdis n yini; yalas "
+"ssifeḍ PSD s ulegdis n yini"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "New DDS format loading/exporting plug-in"
@@ -384,7 +395,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
-msgstr ""
+msgstr "Tastayt tamaynutt \"Amtiweg amecṭuḥ\" (gegl:stereographic-projection)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "New \"Long Shadow\" filter"
@@ -642,7 +653,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid "Improved compatibility with Photoshop .psd files"
-msgstr ""
+msgstr "Amṣada ittuwenɛen akked yifuyla .psd n Photoshop"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid "New support for password-protected PDF"
@@ -658,7 +669,7 @@ msgstr "Ifuyla imenanen i GIMP"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.in.h:2
 msgid "Patterns, gradients, and other extra files for GIMP"
-msgstr ""
+msgstr "Udlifen, ifesnawen, akked yifuyla-nniḍen i GIMP"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -708,6 +719,8 @@ msgid ""
 "A new version of GIMP (%s) was released.\n"
 "It is recommended to update."
 msgstr ""
+"Lqem amaynut n GIMP (%s) yeffeɣ-d.\n"
+"Aleqqem yettusemter."
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:185
 #, c-format
@@ -761,7 +774,7 @@ msgstr "Ur seqdac ara takatut yettwabḍan gar GIMP akked izeɣzaf"
 
 #: ../app/main.c:214
 msgid "Do not use special CPU acceleration functions"
-msgstr ""
+msgstr "Ur sseqdac ara tiwuriwin tuzzigin n usɣiwel n CPU"
 
 #: ../app/main.c:219
 msgid "Use an alternate sessionrc file"
@@ -769,11 +782,11 @@ msgstr ""
 
 #: ../app/main.c:224
 msgid "Use an alternate user gimprc file"
-msgstr ""
+msgstr "Seqdec afaylu gimprc amlellay n useqdac"
 
 #: ../app/main.c:229
 msgid "Use an alternate system gimprc file"
-msgstr ""
+msgstr "Seqdec afaylu gimprc amlellay n unagraw"
 
 #: ../app/main.c:234
 msgid "Batch command to run (can be used multiple times)"
@@ -785,17 +798,17 @@ msgstr ""
 
 #: ../app/main.c:244
 msgid "Send messages to console instead of using a dialog"
-msgstr ""
+msgstr "Azen tanaḍin ɣer tdiwent deg umḍiq n useqdec n udiwenni"
 
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:250
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr ""
+msgstr "Askar n umṣada PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:256
 msgid "Debug in case of a crash (never|query|always)"
-msgstr ""
+msgstr "Seɣti ma yella-d uɣelluy (never|query|always)"
 
 #: ../app/main.c:261
 msgid "Enable non-fatal debugging signal handlers"
@@ -807,7 +820,7 @@ msgstr "Ad yerr icaɣliyen merra d iẓegẓanen"
 
 #: ../app/main.c:271
 msgid "Output a gimprc file with default settings"
-msgstr ""
+msgstr "Suffeɣ afaylu gimprc s iɣewwaren n lexṣas"
 
 #: ../app/main.c:287
 msgid "Output a sorted list of deprecated procedures in the PDB"
@@ -819,7 +832,7 @@ msgstr ""
 
 #: ../app/main.c:297
 msgid "Show an image submenu with debug actions"
-msgstr ""
+msgstr "Sken umuɣ anaddaw n tugna s tigawin n useɣti"
 
 #: ../app/main.c:578
 msgid "[FILE|URI...]"
@@ -830,6 +843,8 @@ msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
+"GIMP ur yezmir ara ad iwennez agrudem udlif n useqdac.\n"
+"Tḥeqqeq belli yella useɣwer iwulmen i twennaḍt-inek (m) n ubeqqeḍ."
 
 #: ../app/main.c:615
 msgid "Another GIMP instance is already running."
@@ -837,16 +852,18 @@ msgstr "Ala tetteddu yakan tummant-nniḍen n GIMP."
 
 #: ../app/main.c:706
 msgid "GIMP output. Type any character to close this window."
-msgstr ""
+msgstr "Tuffɣa n GIMP. Aru asekkil menwala iwakken ad tmedleḍ asfaylu-agi."
 
 #: ../app/main.c:707
 #, c-format
 msgid "(Type any character to close this window)\n"
-msgstr ""
+msgstr "(Aru asekkil menwala iwakken ad tmedleḍ asfaylu-agi)\n"
 
 #: ../app/main.c:724
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
+"Tuffɣa n GIMP. Tzemreḍ ad tesimẓiyeḍ asfaylu-agi, maca ur tezmireḍ ara ad t-"
+"tmedleḍ."
 
 #: ../app/sanity.c:562
 #, c-format
@@ -855,6 +872,10 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
+"Asettengel n yisem n ufaylu ittusɣewren ur yezmir ara ad ittuselket ɣer "
+"UTF-8: %s\n"
+"\n"
+"Ttxil-k (m) senqed azal n umutti n twennaḍt G_FILENAME_ENCODING."
 
 #: ../app/sanity.c:581
 #, c-format
@@ -870,7 +891,7 @@ msgstr ""
 #: ../app/actions/actions.c:112 ../app/dialogs/dialogs.c:423
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
-msgstr "Amaẓrag n tesrekna"
+msgstr "Amaẓrag n umfezzu"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:115 ../app/core/gimp-data-factories.c:356
@@ -929,7 +950,7 @@ msgstr "Amazray n isemliyen"
 
 #: ../app/actions/actions.c:151
 msgid "Drawable"
-msgstr ""
+msgstr "Taɣawsa tudlift"
 
 #: ../app/actions/actions.c:154 ../app/dialogs/dialogs.c:341
 msgid "Paint Dynamics"
@@ -976,12 +997,12 @@ msgstr "Tafesna n yini"
 #: ../app/actions/actions.c:181 ../app/core/gimp-data-factories.c:397
 #: ../app/dialogs/dialogs.c:362 ../app/dialogs/preferences-dialog.c:3266
 msgid "Tool Presets"
-msgstr ""
+msgstr "Iɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/actions.c:184 ../app/dialogs/dialogs.c:439
 #: ../app/widgets/gimptoolpreseteditor.c:96
 msgid "Tool Preset Editor"
-msgstr ""
+msgstr "Amaẓrag n yiɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/actions.c:187
 msgid "Help"
@@ -1005,7 +1026,7 @@ msgstr "Tissiyin"
 #: ../app/actions/actions.c:199 ../app/core/gimp-data-factories.c:366
 #: ../app/dialogs/dialogs.c:344 ../app/dialogs/preferences-dialog.c:3272
 msgid "MyPaint Brushes"
-msgstr "Tiserkniwin n MyPaint"
+msgstr "Imfezza n MyPaint"
 
 #: ../app/actions/actions.c:202 ../app/dialogs/dialogs.c:435
 #: ../app/widgets/gimppaletteeditor.c:155
@@ -1097,57 +1118,57 @@ msgstr ""
 #: ../app/actions/brush-editor-actions.c:43
 msgctxt "brush-editor-action"
 msgid "Brush Editor Menu"
-msgstr "Umuɣ n umaẓrag n tserkna"
+msgstr "Umuɣ n umaẓrag n umfezzu"
 
 #: ../app/actions/brush-editor-actions.c:50
 msgctxt "brush-editor-action"
 msgid "Edit Active Brush"
-msgstr "Ẓreg taserkna turmidt"
+msgstr "Ẓreg amfezzu urmid"
 
 #: ../app/actions/brushes-actions.c:43
 msgctxt "brushes-action"
 msgid "Brushes Menu"
-msgstr "Umuɣ n tserkniwin"
+msgstr "Umuɣ n yimfezza"
 
 #: ../app/actions/brushes-actions.c:47
 msgctxt "brushes-action"
 msgid "_Open Brush as Image"
-msgstr "_Ldi taserkna am tugna"
+msgstr "_Ldi amfezzu am tugna"
 
 #: ../app/actions/brushes-actions.c:48
 msgctxt "brushes-action"
 msgid "Open brush as image"
-msgstr "Ldi taserkna am tugna"
+msgstr "Ldi amfezzu am tugna"
 
 #: ../app/actions/brushes-actions.c:53
 msgctxt "brushes-action"
 msgid "_New Brush"
-msgstr "Tsrekna ta_maynutt"
+msgstr "Amfezzu a_maynut"
 
 #: ../app/actions/brushes-actions.c:54
 msgctxt "brushes-action"
 msgid "Create a new brush"
-msgstr "Snulfu-d Tsrekna tamaynutt"
+msgstr "Snulfu-d amfezzu amaynut"
 
 #: ../app/actions/brushes-actions.c:59
 msgctxt "brushes-action"
 msgid "D_uplicate Brush"
-msgstr "Sisleg tasrekna"
+msgstr "Sisleg amfezzu"
 
 #: ../app/actions/brushes-actions.c:60
 msgctxt "brushes-action"
 msgid "Duplicate this brush"
-msgstr "Sisleg tasrekna-agi"
+msgstr "Sisleg amfezzu-agi"
 
 #: ../app/actions/brushes-actions.c:65
 msgctxt "brushes-action"
 msgid "Copy Brush _Location"
-msgstr "Nɣel adig n tesrekna"
+msgstr "Nɣel adig n umfezzu"
 
 #: ../app/actions/brushes-actions.c:66
 msgctxt "brushes-action"
 msgid "Copy brush file location to clipboard"
-msgstr "Nɣel adig n ufaylu n tesrekna ɣer tecfawit"
+msgstr "Nɣel adig n ufaylu n umfezzu ɣer tecfawit"
 
 #: ../app/actions/brushes-actions.c:71
 msgctxt "brushes-action"
@@ -1157,37 +1178,37 @@ msgstr "Sken deg umsefrak n yi_fuyla"
 #: ../app/actions/brushes-actions.c:72
 msgctxt "brushes-action"
 msgid "Show brush file location in the file manager"
-msgstr "Sken adig n ufaylu n tesrekna deg umsefrak n yifuyla"
+msgstr "Sken adig n ufaylu n umfezzu deg umsefrak n yifuyla"
 
 #: ../app/actions/brushes-actions.c:77
 msgctxt "brushes-action"
 msgid "_Delete Brush"
-msgstr "_Kkes tasrekna"
+msgstr "_Kkes amfezzu"
 
 #: ../app/actions/brushes-actions.c:78
 msgctxt "brushes-action"
 msgid "Delete this brush"
-msgstr "Kkes tasrekna-agi"
+msgstr "Kkes amfezzu-agi"
 
 #: ../app/actions/brushes-actions.c:83
 msgctxt "brushes-action"
 msgid "_Refresh Brushes"
-msgstr "_Sismeḍ tisrekniwin"
+msgstr "_Sismeḍ imfezza"
 
 #: ../app/actions/brushes-actions.c:84
 msgctxt "brushes-action"
 msgid "Refresh brushes"
-msgstr "Sismeḍ tisrekniwin"
+msgstr "Sismeḍ imfezza"
 
 #: ../app/actions/brushes-actions.c:92
 msgctxt "brushes-action"
 msgid "_Edit Brush..."
-msgstr "_Ẓreg tasrekna..."
+msgstr "_Ẓreg amfezzu..."
 
 #: ../app/actions/brushes-actions.c:93
 msgctxt "brushes-action"
 msgid "Edit this brush"
-msgstr "Ẓreg tasrekna-agi"
+msgstr "Ẓreg amfezzu-agi"
 
 #: ../app/actions/buffers-actions.c:42
 msgctxt "buffers-action"
@@ -1708,7 +1729,7 @@ msgstr "A_fecku"
 #: ../app/actions/context-actions.c:57
 msgctxt "context-action"
 msgid "_Brush"
-msgstr "T_srekna"
+msgstr "A_mfezzu"
 
 #: ../app/actions/context-actions.c:59
 msgctxt "context-action"
@@ -2723,37 +2744,37 @@ msgstr "Aqqar n umfezzu (Amaẓrag): sali s wassaɣ"
 #: ../app/actions/context-actions.c:965
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set"
-msgstr ""
+msgstr "Tiqumam n umfezzu (Amaẓrag): Seɣwer"
 
 #: ../app/actions/context-actions.c:969
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set to Minimum"
-msgstr ""
+msgstr "Tiqumam n umfezzu (Amaẓrag): Seɣwer s adday"
 
 #: ../app/actions/context-actions.c:973
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set to Maximum"
-msgstr ""
+msgstr "Tiqumam n umfezzu (Amaẓrag): Seɣwer s afellay"
 
 #: ../app/actions/context-actions.c:977
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Decrease by 1"
-msgstr ""
+msgstr "Tiqumam n umfezzu (Amaẓrag): Sider s 1"
 
 #: ../app/actions/context-actions.c:981
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Increase by 1"
-msgstr ""
+msgstr "Tiqumam n umfezzu (Amaẓrag): sali s 1"
 
 #: ../app/actions/context-actions.c:985
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Decrease by 4"
-msgstr ""
+msgstr "Tiqumam n umfezzu (Amaẓrag): Sider s 4"
 
 #: ../app/actions/context-actions.c:989
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Increase by 4"
-msgstr ""
+msgstr "Tiqumam n umfezzu (Amaẓrag): sali s 4"
 
 #: ../app/actions/context-actions.c:997
 msgctxt "context-action"
@@ -3406,12 +3427,12 @@ msgstr "Ldi amaẓrag n tpaliḍt"
 #: ../app/actions/dialogs-actions.c:197
 msgctxt "dialogs-action"
 msgid "Tool Pre_sets"
-msgstr ""
+msgstr "Iɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/dialogs-actions.c:198
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr ""
+msgstr "Ldi adiwenni n yiɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/dialogs-actions.c:203
 msgctxt "dialogs-action"
@@ -3592,7 +3613,7 @@ msgstr "_Ddu ɣer ugil"
 #: ../app/actions/dock-actions.c:50
 msgctxt "dock-action"
 msgid "Close Dock"
-msgstr ""
+msgstr "Mdel asfaylu"
 
 #: ../app/actions/dock-actions.c:55
 msgctxt "dock-action"
@@ -3886,33 +3907,33 @@ msgstr ""
 #: ../app/actions/drawable-actions.c:60
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Visibility"
-msgstr ""
+msgstr "Sermed/sens tawalit n tɣawsa tudlift"
 
 #: ../app/actions/drawable-actions.c:66
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Linked State"
-msgstr ""
+msgstr "Sermed/sens addad yurzen n tɣawsa tudlift"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/drawable-actions.c:72
 msgctxt "drawable-action"
 msgid "L_ock Pixels of Drawable"
-msgstr ""
+msgstr "Sekkeṛ ipiksilen n tɣawsa tudlift"
 
 #: ../app/actions/drawable-actions.c:74
 msgctxt "drawable-action"
 msgid "Keep the pixels on this drawable from being modified"
-msgstr ""
+msgstr "Mesten abeddel n yipiksilen di tɣasa-agi tudlift"
 
 #: ../app/actions/drawable-actions.c:80
 msgctxt "drawable-action"
 msgid "L_ock Position of Drawable"
-msgstr ""
+msgstr "Sekkeṛ ideg n tɣawsa tudlift"
 
 #: ../app/actions/drawable-actions.c:82
 msgctxt "drawable-action"
 msgid "Keep the position on this drawable from being modified"
-msgstr ""
+msgstr "Mesten abeddel n yipiksilen di tɣasa-agi tudlift"
 
 #: ../app/actions/drawable-actions.c:91
 msgctxt "drawable-action"
@@ -3922,7 +3943,7 @@ msgstr "Tuzzya ta_glawant"
 #: ../app/actions/drawable-actions.c:92
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
-msgstr ""
+msgstr "Tti taɣawsa tudlift s wudem aglawan"
 
 #: ../app/actions/drawable-actions.c:97
 msgctxt "drawable-action"
@@ -3932,7 +3953,7 @@ msgstr "Tuzzya s i_beddi"
 #: ../app/actions/drawable-actions.c:98
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
-msgstr ""
+msgstr "Tti taɣawsa tudlift s wudem ubdid"
 
 #: ../app/actions/drawable-actions.c:106
 msgctxt "drawable-action"
@@ -3942,7 +3963,7 @@ msgstr "Tuzzya tasragant 90°"
 #: ../app/actions/drawable-actions.c:107
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the right"
-msgstr ""
+msgstr "Zzi taɣawsa tudlift s 90 n tfesniwin ɣer yefus"
 
 #: ../app/actions/drawable-actions.c:112
 msgctxt "drawable-action"
@@ -3962,7 +3983,7 @@ msgstr "Tuzzya _mgal asrag s 90°"
 #: ../app/actions/drawable-actions.c:119
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
-msgstr ""
+msgstr "Zzi taɣawsa tudlift s 90 n tfesniwin ɣer zelmaḍ"
 
 #: ../app/actions/drawable-commands.c:78
 msgid "White Balance operates only on RGB color layers."
@@ -5167,7 +5188,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "Tawant n t_iɣmi..."
+msgstr "Tiɣmi-tawant..."
 
 #: ../app/actions/filters-actions.c:403
 msgctxt "filters-action"
@@ -7803,7 +7824,7 @@ msgstr "Snulfu-d anekcum amaynut seg yini n ugilal"
 
 #: ../app/actions/palette-editor-actions.c:89
 msgid "Zoom _In"
-msgstr ""
+msgstr "Simẓi"
 
 #: ../app/actions/palette-editor-actions.c:95
 msgid "Zoom _Out"
@@ -7811,7 +7832,7 @@ msgstr "_Semẓi"
 
 #: ../app/actions/palette-editor-actions.c:101
 msgid "Zoom _All"
-msgstr ""
+msgstr "Simɣur akk"
 
 #: ../app/actions/palettes-actions.c:44
 msgctxt "palettes-action"
@@ -8054,12 +8075,12 @@ msgstr "_Swel ini akked tiḍullest..."
 #: ../app/actions/quick-mask-actions.c:55
 msgctxt "quick-mask-action"
 msgid "Toggle _Quick Mask"
-msgstr ""
+msgstr "Sermed/sens tagelmust taruradt"
 
 #: ../app/actions/quick-mask-actions.c:56
 msgctxt "quick-mask-action"
 msgid "Toggle Quick Mask on/off"
-msgstr ""
+msgstr "Sermed/sens tagelmust taruradt"
 
 #: ../app/actions/quick-mask-actions.c:65
 msgctxt "quick-mask-action"
@@ -8069,7 +8090,7 @@ msgstr "Ffer timennaḍin yettwa_fernen"
 #: ../app/actions/quick-mask-actions.c:70
 msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
-msgstr ""
+msgstr "Ferr timennaḍin ur nettwafren ara"
 
 #: ../app/actions/quick-mask-commands.c:127
 msgid "Quick Mask Attributes"
@@ -8090,7 +8111,7 @@ msgstr "Tiḍullest n t_gelmust:"
 #: ../app/actions/sample-points-actions.c:40
 msgctxt "sample-points-action"
 msgid "Sample Point Menu"
-msgstr ""
+msgstr "Umuɣ n tneqqiḍin n ulemmec"
 
 #: ../app/actions/sample-points-actions.c:47
 msgctxt "sample-points-action"
@@ -8155,7 +8176,7 @@ msgstr "Snulfu-d tafrayt yettifliwen"
 #: ../app/actions/select-actions.c:74
 msgctxt "select-action"
 msgid "Fea_ther..."
-msgstr ""
+msgstr "Silwiɣ..."
 
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
@@ -8225,7 +8246,7 @@ msgstr "Sekles tafrayt deg ubadu"
 #: ../app/actions/select-actions.c:117
 msgctxt "select-action"
 msgid "_Fill Selection Outline..."
-msgstr ""
+msgstr "Aččar azizdew n tefrayt..."
 
 #: ../app/actions/select-actions.c:118
 msgctxt "select-action"
@@ -8245,7 +8266,7 @@ msgstr ""
 #: ../app/actions/select-actions.c:129
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr ""
+msgstr "Suneɣ tafrayt..."
 
 #: ../app/actions/select-actions.c:130
 msgctxt "select-action"
@@ -8279,6 +8300,7 @@ msgstr ""
 #: ../app/actions/select-commands.c:182
 msgid "When feathering, act as if selected areas continued outside the image."
 msgstr ""
+"Mi ara tsilwiɣeḍ, eg amzun timnaḍin yettwafernen kemmelent ɣer beṛṛa n tugna."
 
 #: ../app/actions/select-commands.c:241
 msgid "Shrink Selection"
@@ -8318,11 +8340,11 @@ msgstr ""
 
 #: ../app/actions/select-commands.c:455
 msgid "Fill Selection Outline"
-msgstr ""
+msgstr "Aččar azizdew n tefrayt"
 
 #: ../app/actions/select-commands.c:486
 msgid "Stroke Selection"
-msgstr ""
+msgstr "Suneɣ tafrayt"
 
 #: ../app/actions/templates-actions.c:42
 msgctxt "templates-action"
@@ -8614,27 +8636,27 @@ msgstr "Umuɣ n tnefrunin n ifecku"
 #: ../app/actions/tool-options-actions.c:62
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
-msgstr ""
+msgstr "Sekles iɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/tool-options-actions.c:66
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
-msgstr ""
+msgstr "Err-d iɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/tool-options-actions.c:70
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
-msgstr ""
+msgstr "Ẓreg iɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/tool-options-actions.c:74
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
-msgstr ""
+msgstr "Kkes iɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/tool-options-actions.c:78
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr ""
+msgstr "Aseɣwer uzwir amaynut n yifecka..."
 
 #: ../app/actions/tool-options-actions.c:83
 msgctxt "tool-options-action"
@@ -8663,77 +8685,79 @@ msgstr "Ales awennez n tnefrunin merra n ufecku"
 #: ../app/actions/tool-options-commands.c:227
 msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
+"D tidet tebɣiḍ ad talseḍ awennez n tnefrunin n ufecku ɣer wazalen n lexṣas ?"
 
 #: ../app/actions/tool-preset-editor-actions.c:44
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
-msgstr ""
+msgstr "Umuɣ n umaẓrag n useɣwer uzwir"
 
 #: ../app/actions/tool-preset-editor-actions.c:48
 msgctxt "tool-preset-editor-action"
 msgid "_Save Tool Options to Preset"
-msgstr ""
+msgstr "Sekles tinefrunin n ufecku deg useɣwer uzwir"
 
 #: ../app/actions/tool-preset-editor-actions.c:49
 msgctxt "tool-preset-editor-action"
 msgid "Save the active tool options to this tool preset"
-msgstr ""
+msgstr "Sekles tinefrunin n ufecku urmid deg useɣwer-agi uzwir"
 
 #: ../app/actions/tool-preset-editor-actions.c:55
 msgctxt "tool-preset-editor-action"
 msgid "_Restore Tool Preset"
-msgstr ""
+msgstr "Err-d iɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/tool-preset-editor-actions.c:56
 msgctxt "tool-preset-editor-action"
 msgid "Restore this tool preset"
-msgstr ""
+msgstr "Err-d iɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/tool-preset-editor-actions.c:65
 msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
-msgstr ""
+msgstr "Ẓreg aseɣwer uzwir n ufecku urmid"
 
 #: ../app/actions/tool-preset-editor-commands.c:65
 #: ../app/actions/tool-presets-commands.c:68
 #, c-format
 msgid "Can't save '%s' tool options to an existing '%s' tool preset."
 msgstr ""
+"Ulamek asekles n tnefrunin n ufecku '%s' deg useɣwer uzwir '%s' yellan."
 
 #: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
-msgstr ""
+msgstr "Umuɣ n yiɣewwaren uzwiren n yifecka"
 
 #: ../app/actions/tool-presets-actions.c:50
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
-msgstr ""
+msgstr "Aseɣwer uzwir amaynut n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:51
 msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
-msgstr ""
+msgstr "Snulfu-d aseɣwer uzwir amaynut n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:56
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
-msgstr ""
+msgstr "Sisleg aseɣwer uzwir amaynut n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:57
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
-msgstr ""
+msgstr "Sisleg aseɣwer-agi uzwir n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:62
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
-msgstr ""
+msgstr "Nɣel ideg n useɣwer uzwir n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:63
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
-msgstr ""
+msgstr "Nɣel ideg n ufaylu n useɣwer uzwir n ufecku ɣer tecfawit"
 
 #: ../app/actions/tool-presets-actions.c:68
 msgctxt "tool-presets-action"
@@ -8743,57 +8767,57 @@ msgstr "Sken deg umsefrak n yi_fuyla"
 #: ../app/actions/tool-presets-actions.c:69
 msgctxt "tool-presets-action"
 msgid "Show tool preset file location in the file manager"
-msgstr ""
+msgstr "Sken ideg n ufaylu n useɣwer uzwir n ufecku deg umsefrak n yifuyla"
 
 #: ../app/actions/tool-presets-actions.c:74
 msgctxt "tool-presets-action"
 msgid "_Save Tool Options to Preset"
-msgstr ""
+msgstr "Sekles tinefrunin n useɣwer uzwir n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:75
 msgctxt "tool-presets-action"
 msgid "Save the active tool options to this tool preset"
-msgstr ""
+msgstr "Sekles tinefrunin n ufecku urmid deg useɣwer uzwir n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:81
 msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
-msgstr ""
+msgstr "Err-d iɣewwaren uzwiren n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:82
 msgctxt "tool-presets-action"
 msgid "Restore this tool preset"
-msgstr ""
+msgstr "Err-d iɣewwaren uzwiren n ufecku-agi"
 
 #: ../app/actions/tool-presets-actions.c:87
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
-msgstr ""
+msgstr "Kkes iɣewwaren uzwiren n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:88
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
-msgstr ""
+msgstr "Kkes iɣewwaren uzwiren n ufecku-agi"
 
 #: ../app/actions/tool-presets-actions.c:93
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
-msgstr ""
+msgstr "Sismeḍ iɣewwaren uzwiren n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:94
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
-msgstr ""
+msgstr "Sismeḍ iɣewwaren uzwiren n ufecku"
 
 #: ../app/actions/tool-presets-actions.c:102
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
-msgstr ""
+msgstr "Ẓreg aseɣwer uzwir n ufecku..."
 
 #: ../app/actions/tool-presets-actions.c:103
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
-msgstr ""
+msgstr "Ẓreg aseɣwer uzwir n ufecku-agi"
 
 #: ../app/actions/tools-actions.c:47
 msgctxt "tools-action"
@@ -8848,72 +8872,72 @@ msgstr "Zzi tugna s teɣmert tagacurant"
 #: ../app/actions/tools-actions.c:158
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
-msgstr ""
+msgstr "Atug n umfezzu: Seɣwer"
 
 #: ../app/actions/tools-actions.c:162
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Minimum"
-msgstr ""
+msgstr "Atug n umfezzu: Seɣwer s adday"
 
 #: ../app/actions/tools-actions.c:166
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Maximum"
-msgstr ""
+msgstr "Atug n umfezzu: Seɣwer s afellay"
 
 #: ../app/actions/tools-actions.c:170
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 1"
-msgstr ""
+msgstr "Atug n umfezzu: Sider s 1"
 
 #: ../app/actions/tools-actions.c:174
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 1"
-msgstr ""
+msgstr "Atug n umfezzu: Sali s 1"
 
 #: ../app/actions/tools-actions.c:178
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 10"
-msgstr ""
+msgstr "Atug n umfezzu: Sider s 10"
 
 #: ../app/actions/tools-actions.c:182
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 10"
-msgstr ""
+msgstr "Atug n umfezzu: Sader s 10"
 
 #: ../app/actions/tools-actions.c:190
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set"
-msgstr ""
+msgstr "Aktum n umfezzu: Seɣwer"
 
 #: ../app/actions/tools-actions.c:194
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Minimum"
-msgstr ""
+msgstr "Aktum n umfezzu: Seɣwer s adday"
 
 #: ../app/actions/tools-actions.c:198
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Maximum"
-msgstr ""
+msgstr "Aktum n umfezzu: Seɣwer s afellay"
 
 #: ../app/actions/tools-actions.c:202
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 1"
-msgstr ""
+msgstr "Aktum n umfezzu: Sader s 1"
 
 #: ../app/actions/tools-actions.c:206
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 1"
-msgstr ""
+msgstr "Aktum n umfezzu: Sider s 1"
 
 #: ../app/actions/tools-actions.c:210
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 10"
-msgstr ""
+msgstr "Aktum n umfezzu: Sader s 10"
 
 #: ../app/actions/tools-actions.c:214
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
-msgstr ""
+msgstr "Aktum n umfezzu: Sali s 10"
 
 #: ../app/actions/tools-actions.c:271
 msgctxt "tools-action"
@@ -9433,7 +9457,7 @@ msgstr "Aččar abrid s wazalen ineggura"
 #: ../app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
-msgstr ""
+msgstr "Suneɣ abrid..."
 
 #: ../app/actions/vectors-actions.c:132
 msgctxt "vectors-action"
@@ -9443,7 +9467,7 @@ msgstr "Klu ɣef teɣzi n ubrid"
 #: ../app/actions/vectors-actions.c:137
 msgctxt "vectors-action"
 msgid "Stro_ke Path"
-msgstr ""
+msgstr "Suneɣ abrid"
 
 #: ../app/actions/vectors-actions.c:138
 msgctxt "vectors-action"
@@ -9735,7 +9759,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:71
 msgctxt "view-action"
 msgid "_Flip & Rotate"
-msgstr ""
+msgstr "Tuttya akked tuzzya"
 
 #: ../app/actions/view-actions.c:72
 msgctxt "view-action"
@@ -9815,7 +9839,7 @@ msgstr "Sgaddi assaɣ n zoom iwakken ad ittwaseqdec usfaylu merra"
 #: ../app/actions/view-actions.c:118
 msgctxt "view-action"
 msgid "Zoom to _Selection"
-msgstr ""
+msgstr "Simɣur alama d tafrayt"
 
 #: ../app/actions/view-actions.c:119
 msgctxt "view-action"
@@ -9825,12 +9849,12 @@ msgstr "Sgaddi assaɣ n zoom iwakken tafrayt ad taččar wesfaylu"
 #: ../app/actions/view-actions.c:124
 msgctxt "view-action"
 msgid "Re_vert Zoom"
-msgstr ""
+msgstr "Tti asemɣer"
 
 #: ../app/actions/view-actions.c:125
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
-msgstr ""
+msgstr "Err-d aswir n usemɣer uzwir"
 
 #: ../app/actions/view-actions.c:130
 msgctxt "view-action"
@@ -10122,7 +10146,7 @@ msgstr "Senfel tamuɣli n wegdil aččuran"
 #: ../app/actions/view-actions.c:335
 msgctxt "view-zoom-action"
 msgid "Set zoom factor"
-msgstr ""
+msgstr "Sbadu ameskar n usemɣer"
 
 #: ../app/actions/view-actions.c:340
 msgctxt "view-zoom-action"
@@ -10147,7 +10171,7 @@ msgstr "Simẓi"
 #: ../app/actions/view-actions.c:356
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
-msgstr ""
+msgstr "Semɣer"
 
 #: ../app/actions/view-actions.c:357 ../app/actions/view-actions.c:369
 msgctxt "view-zoom-action"
@@ -10182,42 +10206,42 @@ msgstr ""
 #: ../app/actions/view-actions.c:388 ../app/actions/view-actions.c:394
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
-msgstr ""
+msgstr "Zoom 16:1"
 
 #: ../app/actions/view-actions.c:399 ../app/actions/view-actions.c:405
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
-msgstr ""
+msgstr "_8:1  (800%)"
 
 #: ../app/actions/view-actions.c:400 ../app/actions/view-actions.c:406
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
-msgstr ""
+msgstr "Zoom 8:1"
 
 #: ../app/actions/view-actions.c:411 ../app/actions/view-actions.c:417
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
-msgstr ""
+msgstr "_4:1  (400%)"
 
 #: ../app/actions/view-actions.c:412 ../app/actions/view-actions.c:418
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
-msgstr ""
+msgstr "Zoom 4:1"
 
 #: ../app/actions/view-actions.c:423 ../app/actions/view-actions.c:429
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
-msgstr ""
+msgstr "_2:1  (200%)"
 
 #: ../app/actions/view-actions.c:424 ../app/actions/view-actions.c:430
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
-msgstr ""
+msgstr "Zoom 2:1"
 
 #: ../app/actions/view-actions.c:435 ../app/actions/view-actions.c:441
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
-msgstr ""
+msgstr "_1:1  (100%)"
 
 #: ../app/actions/view-actions.c:436 ../app/actions/view-actions.c:442
 msgctxt "view-zoom-action"
@@ -10227,42 +10251,42 @@ msgstr "Zoom 1:1"
 #: ../app/actions/view-actions.c:447
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
-msgstr ""
+msgstr "1:_2  (50%)"
 
 #: ../app/actions/view-actions.c:448
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
-msgstr ""
+msgstr "Zoom 1:2"
 
 #: ../app/actions/view-actions.c:453
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
-msgstr ""
+msgstr "1:_4  (25%)"
 
 #: ../app/actions/view-actions.c:454
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
-msgstr ""
+msgstr "Zoom 1:4"
 
 #: ../app/actions/view-actions.c:459
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
-msgstr ""
+msgstr "1:_8  (12.5%)"
 
 #: ../app/actions/view-actions.c:460
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
-msgstr ""
+msgstr "Zoom 1:8"
 
 #: ../app/actions/view-actions.c:465
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
-msgstr ""
+msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:466
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
-msgstr ""
+msgstr "Zoom 1:16"
 
 #: ../app/actions/view-actions.c:471
 msgctxt "view-zoom-action"
@@ -10297,7 +10321,7 @@ msgstr "Zzi tamuɣli s tibeddi"
 #: ../app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
-msgstr ""
+msgstr "Ales awennez n tuttya akked tuzzya"
 
 #: ../app/actions/view-actions.c:504
 msgctxt "view-action"
@@ -10502,12 +10526,12 @@ msgstr ""
 #: ../app/actions/view-actions.c:669
 msgctxt "view-action"
 msgid "Scroll page left"
-msgstr ""
+msgstr "Drurem asebter ɣer zelmaḍ"
 
 #: ../app/actions/view-actions.c:674
 msgctxt "view-action"
 msgid "Scroll page right"
-msgstr ""
+msgstr "Drurem asebter ɣer yefus"
 
 #: ../app/actions/view-actions.c:682
 msgctxt "view-action"
@@ -10537,12 +10561,12 @@ msgstr ""
 #: ../app/actions/view-actions.c:707
 msgctxt "view-action"
 msgid "Scroll page up"
-msgstr ""
+msgstr "Drurem asebter d asawen"
 
 #: ../app/actions/view-actions.c:712
 msgctxt "view-action"
 msgid "Scroll page down"
-msgstr ""
+msgstr "Drurem asebter d akessar"
 
 #: ../app/actions/view-actions.c:943
 #, c-format
@@ -10584,7 +10608,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:1181
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
-msgstr ""
+msgstr "_Tti %s& zzi (%d°)"
 
 #: ../app/actions/view-commands.c:1123
 msgid "Set Canvas Padding Color"
@@ -11637,7 +11661,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:631
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
-msgstr ""
+msgstr "Sbadu aqar n lexṣas i udiwenni 'Silwiɣ tafrayt'."
 
 #: ../app/config/gimprc-blurbs.h:634
 msgid ""
@@ -12099,7 +12123,7 @@ msgstr ""
 #: ../app/core/core-enums.c:677
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
-msgstr ""
+msgstr "Ini n uɣawas amezwaru (tafrawant)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
@@ -13248,7 +13272,7 @@ msgstr ""
 #: ../app/core/gimpchannel.c:260
 msgctxt "undo-type"
 msgid "Flip Channel"
-msgstr ""
+msgstr "Tti abadu"
 
 #: ../app/core/gimpchannel.c:261
 msgctxt "undo-type"
@@ -13433,7 +13457,7 @@ msgstr "Tasefsit"
 
 #: ../app/core/gimpcontext.c:745 ../app/core/gimpcontext.c:746
 msgid "Tool Preset"
-msgstr ""
+msgstr "Aseɣwer uzwir n ufecku"
 
 #: ../app/core/gimpdatafactory.c:369 ../app/core/gimpdatafactory.c:403
 #: ../app/core/gimpdatafactory.c:743 ../app/core/gimpdatafactory.c:774
@@ -13568,7 +13592,7 @@ msgstr "Iswiren"
 #: ../app/core/gimpdrawable-offset.c:79
 msgctxt "undo-type"
 msgid "Offset Drawable"
-msgstr ""
+msgstr "Asekḥer n tɣawsa tudlift"
 
 #: ../app/core/gimpdrawable-stroke.c:111
 #: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:699
@@ -14382,7 +14406,7 @@ msgstr "Snes tagelmust n tissi"
 #: ../app/core/gimplayer.c:2207
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
-msgstr ""
+msgstr "Kkes tagelmust n tissi"
 
 #: ../app/core/gimplayer.c:2314
 msgctxt "undo-type"
@@ -14626,7 +14650,7 @@ msgstr "Ačar tafrayt"
 #: ../app/core/gimpselection.c:175
 msgctxt "undo-type"
 msgid "Stroke Selection"
-msgstr ""
+msgstr "Suneɣ tafrayt"
 
 #: ../app/core/gimpselection.c:192
 msgctxt "undo-type"
@@ -14957,7 +14981,7 @@ msgstr ""
 
 #: ../app/core/gimptoolpreset.c:164
 msgid "Apply stored brush"
-msgstr "Snes tasrekna yettwaskelsen"
+msgstr "Snes amfezzu yettwaskelsen"
 
 #: ../app/core/gimptoolpreset.c:171
 msgid "Apply stored dynamics"
@@ -14965,7 +14989,7 @@ msgstr ""
 
 #: ../app/core/gimptoolpreset.c:178
 msgid "Apply stored MyPaint brush"
-msgstr "Snes tasrekna n MyPaint yettwaskelsen"
+msgstr "Snes amfezzu n MyPaint yettwaskelsen"
 
 #: ../app/core/gimptoolpreset.c:185
 msgid "Apply stored pattern"
@@ -14985,7 +15009,7 @@ msgstr "Snes tasefsit yettwaskelsen"
 
 #: ../app/core/gimptoolpreset-load.c:64
 msgid "Tool preset file is corrupt."
-msgstr ""
+msgstr "Afaylu n useɣwer uzwir n ufecku yerreẓ."
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
@@ -16672,7 +16696,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2140
 msgid "Show _foreground & background color"
-msgstr ""
+msgstr "Sken ini n uɣawas amezwaru akked yini nugilal"
 
 #: ../app/dialogs/preferences-dialog.c:2144
 msgid "Show active _brush, pattern & gradient"
@@ -17261,7 +17285,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2974
 msgid "Show drawable size"
-msgstr ""
+msgstr "Sken tiddi n tɣawsa tudlift"
 
 #: ../app/dialogs/preferences-dialog.c:2987
 msgid "Image Title Format"
@@ -17428,15 +17452,15 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:3266
 msgid "Tool Preset Folders"
-msgstr ""
+msgstr "Ikaramen n useɣwer uzwir n ufecku"
 
 #: ../app/dialogs/preferences-dialog.c:3269
 msgid "Reset Tool Preset _Folders"
-msgstr ""
+msgstr "Aeles awennez n yikaramen n useɣwer uzwir n ufecku"
 
 #: ../app/dialogs/preferences-dialog.c:3270
 msgid "Select Tool Preset Folders"
-msgstr ""
+msgstr "Fren ikaramen n useɣwer n ufecku"
 
 #: ../app/dialogs/preferences-dialog.c:3272
 msgid "MyPaint Brush Folders"
@@ -17745,11 +17769,11 @@ msgstr ""
 
 #: ../app/dialogs/stroke-dialog.c:122
 msgid "Choose Stroke Style"
-msgstr ""
+msgstr "Fren aɣanib n usuneɣ"
 
 #: ../app/dialogs/stroke-dialog.c:129
 msgid "_Stroke"
-msgstr ""
+msgstr "Suneɣ"
 
 #: ../app/dialogs/stroke-dialog.c:230
 msgid "P_aint tool:"
@@ -18432,7 +18456,7 @@ msgstr ""
 
 #: ../app/display/gimptoolpath.c:637
 msgid "Add Stroke"
-msgstr ""
+msgstr "Rnu unuɣ"
 
 #: ../app/display/gimptoolpath.c:661
 msgid "Add Anchor"
@@ -20186,6 +20210,7 @@ msgstr ""
 #: ../app/pdb/edit-cmds.c:449
 msgid "All specified drawables must belong to the same image."
 msgstr ""
+"Akk tiɣawsiwin tudlifin i d-ittunefken isefk ad ttekkint ɣer yiwet n tugna."
 
 #: ../app/pdb/floating-sel-cmds.c:69
 msgid "Cannot remove this layer because it is not a floating selection."
@@ -20773,7 +20798,7 @@ msgstr ""
 #: ../app/pdb/plug-in-compat-cmds.c:2319
 msgctxt "undo-type"
 msgid "Lens Distortion"
-msgstr ""
+msgstr "Azlag n tniltit"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2359
 msgctxt "undo-type"
@@ -21006,7 +21031,7 @@ msgstr ""
 
 #: ../app/pdb/vectors-cmds.c:586 ../app/pdb/vectors-cmds.c:635
 msgid "Flip path stroke"
-msgstr ""
+msgstr "Tti unuɣ n ubrid"
 
 #: ../app/pdb/vectors-cmds.c:766 ../app/pdb/vectors-cmds.c:890
 #: ../app/pdb/vectors-cmds.c:1120
@@ -21923,7 +21948,7 @@ msgstr "D awezɣi taččart n waṭas n tissiyin. Fren kan yiwet n tissi."
 #: ../app/tools/gimpthresholdtool.c:160
 #: ../app/tools/gimptransformgridtool.c:355
 msgid "No selected drawables."
-msgstr ""
+msgstr "Ulac tiɣawsiwin tudlifin yettwafernen."
 
 #: ../app/tools/gimpbucketfilltool.c:587 ../app/tools/gimpcagetool.c:257
 #: ../app/tools/gimpforegroundselecttool.c:307
@@ -21947,12 +21972,12 @@ msgstr ""
 #: ../app/tools/gimpbucketfilltool.c:786 ../app/tools/gimpbucketfilltool.c:924
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:492
 msgid "Click in any image to pick the background color"
-msgstr ""
+msgstr "Ssit ɣef kra n tugna iwakken ad d-tawiḍ ini n ugulal"
 
 #: ../app/tools/gimpbucketfilltool.c:793 ../app/tools/gimpbucketfilltool.c:933
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:486
 msgid "Click in any image to pick the foreground color"
-msgstr ""
+msgstr "Ssit ɣef kra n tugna iwakken ad d-tawiḍ ini n uɣawas amezwaru"
 
 #: ../app/tools/gimpbycolorselecttool.c:70
 msgid "Select by Color"
@@ -22244,7 +22269,7 @@ msgstr "I_zligen..."
 #: ../app/tools/gimplevelstool.c:208 ../app/tools/gimpoffsettool.c:187
 #: ../app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
-msgstr ""
+msgstr "Ulamek abeddel n waṭas n tɣawsiwin tudlifin. Fren kan yiwet."
 
 #: ../app/tools/gimpcurvestool.c:411
 msgid "Click to add a control point"
@@ -22416,7 +22441,7 @@ msgstr "Sit iwakken ad tekkseḍ afaylu"
 #: ../app/tools/gimperasertool.c:107
 #, c-format
 msgid "%s to pick a background color"
-msgstr ""
+msgstr "%s iwakken ad d-tawiḍ ini n ugilal"
 
 #. the anti_erase toggle
 #: ../app/tools/gimperasertool.c:166
@@ -22488,7 +22513,7 @@ msgstr ""
 
 #: ../app/tools/gimpfiltertool-settings.c:100
 msgid "Pre_sets:"
-msgstr ""
+msgstr "Iɣewwaren uzwiren:"
 
 #: ../app/tools/gimpfiltertool-settings.c:248
 #, c-format
@@ -22778,11 +22803,11 @@ msgstr ""
 
 #: ../app/tools/gimpgradienttool.c:257
 msgid "Cannot paint on multiple drawables. Select only one."
-msgstr ""
+msgstr "Ulamek taklut ɣef waṭas n tɣawsiwin tudlifin. Fren kan yiwet."
 
 #: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimpwarptool.c:776
 msgid "No active drawables."
-msgstr ""
+msgstr "Ulac aṭas n tɣawsiwin tudlifin."
 
 #: ../app/tools/gimpgradienttool.c:297
 msgid "No gradient available for use with this tool."
@@ -23372,7 +23397,7 @@ msgstr "Asekḥer: "
 
 #: ../app/tools/gimpoffsettool.c:432
 msgid "Click-Drag to offset drawable"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tsekḥereḍ taɣawsa tudlift"
 
 #: ../app/tools/gimpoffsettool.c:514
 msgid "By width/_2, height/2"
@@ -23397,7 +23422,7 @@ msgstr ""
 
 #: ../app/tools/gimpoffsettool.c:553
 msgid "Fill with _background color"
-msgstr ""
+msgstr "Aččar s yini n ugilal"
 
 #: ../app/tools/gimpoffsettool.c:556
 msgid "Make _transparent"
@@ -26008,7 +26033,7 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:877
 msgctxt "dashboard-group"
 msgid "CPU"
-msgstr ""
+msgstr "CPU"
 
 #: ../app/widgets/gimpdashboard.c:878
 msgid "CPU usage"
@@ -26314,7 +26339,7 @@ msgstr "Agacuṛan"
 #: ../app/widgets/gimpdynamicseditor.c:167
 #: ../app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Fade"
-msgstr ""
+msgstr "Tifsit"
 
 #: ../app/widgets/gimpdynamicseditor.c:180
 msgid "Mapping matrix"
@@ -26393,7 +26418,7 @@ msgstr "_Amzay"
 
 #: ../app/widgets/gimpgradienteditor.c:585
 msgid "Left Endpoint Color"
-msgstr ""
+msgstr "Ini n yixef azelmaḍ"
 
 #: ../app/widgets/gimpgradienteditor.c:587
 msgid "Gradient Segment's Left Endpoint Color"
@@ -26401,7 +26426,7 @@ msgstr ""
 
 #: ../app/widgets/gimpgradienteditor.c:630
 msgid "Right Endpoint Color"
-msgstr ""
+msgstr "Ini n yixef ayfus"
 
 #: ../app/widgets/gimpgradienteditor.c:632
 msgid "Gradient Segment's Right Endpoint Color"
@@ -26435,7 +26460,7 @@ msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 #: ../app/widgets/gimpgradienteditor.c:1254
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr ""
+msgstr "Tifawit: %0.1f    Tiḍullest: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:1286
 #, c-format
@@ -26454,7 +26479,7 @@ msgstr "Ini n ugilal ittusbadu ɣer:"
 #: ../app/widgets/gimpgradienteditor.c:1598
 #, c-format
 msgid "%s-Drag: move & compress"
-msgstr ""
+msgstr "%s-Zuɣer: smutti & skussem"
 
 #: ../app/widgets/gimpgradienteditor.c:1542
 msgid "Drag: move"
@@ -26571,6 +26596,8 @@ msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
 msgstr ""
+"Tzemreḍ daɣen ad tesbeddeḍ akemmus n tallelt neɣ ad tbeddeleḍ inurafen-inek "
+"iwakken ad tesqedceḍ tallelt ɣef uzeḍḍa."
 
 #: ../app/widgets/gimphelp.c:847
 msgid "Read _Online"
@@ -26594,7 +26621,7 @@ msgstr "Ipiksilen:"
 
 #: ../app/widgets/gimphistogrameditor.c:137
 msgid "Count:"
-msgstr ""
+msgstr "Amiḍan:"
 
 #: ../app/widgets/gimphistogrameditor.c:138
 msgid "Percentile:"
@@ -26634,6 +26661,8 @@ msgid ""
 "Replace the current image comment with the default comment set in "
 "Edit→Preferences→Default Image."
 msgstr ""
+"Semselsi awennit n tugna tamirant s uwennit n lexṣas yettusbadun di "
+"Ẓreg→Ismenyafen→Tugna n lexṣas."
 
 #: ../app/widgets/gimpimagepropview.c:108
 msgid "Size in pixels:"
@@ -26850,15 +26879,15 @@ msgstr "UTF-8 armeɣtu"
 
 #: ../app/widgets/gimpsettingsbox.c:298
 msgid "Pick a preset from the list"
-msgstr ""
+msgstr "Awi-d aseɣwer uzwir si tebdart"
 
 #: ../app/widgets/gimpsettingsbox.c:322
 msgid "Save the current settings as named preset"
-msgstr ""
+msgstr "Sekles iɣewaren uzwiren imiranen deg useɣwer uzwir s yisem"
 
 #: ../app/widgets/gimpsettingsbox.c:340
 msgid "Manage presets"
-msgstr ""
+msgstr "Sefrek iɣewwaren uzwiren"
 
 #: ../app/widgets/gimpsettingsbox.c:353
 msgid "_Import Current Settings from File..."
@@ -26870,15 +26899,15 @@ msgstr "_Sifeḍ iɣewaren imiranen dufaylu..."
 
 #: ../app/widgets/gimpsettingsbox.c:364
 msgid "_Manage Saved Presets..."
-msgstr ""
+msgstr "Sefrek iɣewwaren uzwiren ittwaskelsen..."
 
 #: ../app/widgets/gimpsettingsbox.c:585
 msgid "Save Settings as Named Preset"
-msgstr ""
+msgstr "Sekles iɣewaren deg useɣwer uzwir s yisem"
 
 #: ../app/widgets/gimpsettingsbox.c:588
 msgid "Enter a name for the preset"
-msgstr ""
+msgstr "Sekcem isem i useɣwer uzwir"
 
 #: ../app/widgets/gimpsettingsbox.c:589
 msgid "Saved Settings"
@@ -26886,19 +26915,19 @@ msgstr "Iɣewwaren yettwakelsen"
 
 #: ../app/widgets/gimpsettingsbox.c:631
 msgid "Manage Saved Presets"
-msgstr ""
+msgstr "Sefrek iɣewwaren uzwiren ittwaskelsen"
 
 #: ../app/widgets/gimpsettingseditor.c:192
 msgid "Import presets from a file"
-msgstr ""
+msgstr "Kter iɣewwaren uzwiren seg ufaylu"
 
 #: ../app/widgets/gimpsettingseditor.c:201
 msgid "Export the selected presets to a file"
-msgstr ""
+msgstr "Sifeḍ iɣewwaren uzwiren yettwafernen ɣer ufaylu"
 
 #: ../app/widgets/gimpsettingseditor.c:210
 msgid "Delete the selected preset"
-msgstr ""
+msgstr "Kkes iɣewwaren uzwiren yettwafernen"
 
 #: ../app/widgets/gimpsizebox.c:455
 #, c-format
@@ -27202,20 +27231,20 @@ msgstr "Ales awennez n yifecka akked twalit"
 
 #: ../app/widgets/gimptooloptionseditor.c:195
 msgid "Save Tool Preset..."
-msgstr ""
+msgstr "Sekles iɣewwaren uzwiren n ufecku..."
 
 #: ../app/widgets/gimptooloptionseditor.c:204
 msgid "Restore Tool Preset..."
-msgstr ""
+msgstr "Err-d iɣewwaren uzwiren n ufecku..."
 
 #: ../app/widgets/gimptooloptionseditor.c:213
 msgid "Delete Tool Preset..."
-msgstr ""
+msgstr "Kkes iɣewwaren uzwiren n ufecku..."
 
 #: ../app/widgets/gimptoolpreseteditor.c:291
 #, c-format
 msgid "%s Preset"
-msgstr ""
+msgstr "Aseɣwer uzwir %s"
 
 #: ../app/widgets/gimpuimanager.c:917
 msgid "Your GIMP installation is incomplete:"
