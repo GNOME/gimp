@@ -1316,6 +1316,7 @@ read_layer_block (FILE      *f,
   guint32 sub_init_len, sub_total_len;
   guint32 chunk_len, layer_extension_len;
   gchar *name = NULL;
+  gchar *layer_name = NULL;
   guint16 namelen;
   guchar type, opacity, blend_mode, visibility, transparency_protected;
   guchar link_group_id, mask_linked, mask_disabled;
@@ -1382,6 +1383,8 @@ read_layer_block (FILE      *f,
             }
 
           name[namelen] = 0;
+          layer_name = g_convert (name, -1, "utf-8", "iso8859-1", NULL, NULL, NULL);
+          g_free (name);
           chunk_len = GUINT32_FROM_LE (chunk_len);
 
           /* Skip remainder of layer info and read layer extension length */
@@ -1391,14 +1394,14 @@ read_layer_block (FILE      *f,
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Error reading layer extension information"));
-              g_free (name);
+              g_free (layer_name);
               return -1;
             }
           layer_extension_len = GUINT32_FROM_LE (layer_extension_len);
           switch (type)
             {
             case keGLTFloatingRasterSelection:
-              g_message ("Floating selection restored as normal layer (%s)", name);
+              g_message ("Floating selection restored as normal layer (%s)", layer_name);
             case keGLTRaster:
               can_handle_layer = TRUE;
               if (fread (&bitmap_count, 2, 1, f) < 1
@@ -1406,20 +1409,20 @@ read_layer_block (FILE      *f,
                 {
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                               _("Error reading layer information"));
-                  g_free (name);
+                  g_free (layer_name);
                   return -1;
                 }
               break;
             default:
               bitmap_count = 0;
               channel_count = 0;
-              g_message ("Unsupported layer type %d (%s)", type, name);
+              g_message ("Unsupported layer type %d (%s)", type, layer_name);
               break;
             }
 
           if (try_fseek (f, layer_extension_start + layer_extension_len, SEEK_SET, error) < 0)
             {
-              g_free (name);
+              g_free (layer_name);
               return -1;
             }
         }
@@ -1450,12 +1453,15 @@ read_layer_block (FILE      *f,
               g_free (name);
               return -1;
             }
+          layer_name = g_convert (name, -1, "utf-8", "iso8859-1", NULL, NULL, NULL);
+          g_free (name);
           if (type == PSP_LAYER_FLOATING_SELECTION)
             g_message ("Floating selection restored as normal layer");
           type = keGLTRaster;
           can_handle_layer = TRUE;
           if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET, error) < 0)
             {
+              g_free (layer_name);
               return -1;
             }
         }
@@ -1472,7 +1478,7 @@ read_layer_block (FILE      *f,
         {
           g_message ("Unsupported PSP layer blend mode %s "
                      "for layer %s, setting layer invisible",
-                     blend_mode_name (blend_mode), name);
+                     blend_mode_name (blend_mode), layer_name);
           layer_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
           visibility = FALSE;
         }
@@ -1487,13 +1493,14 @@ read_layer_block (FILE      *f,
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Invalid layer dimensions: %dx%d"),
                        width, height);
+          g_free (layer_name);
           return -1;
         }
 
       IFDBG(2) g_message
         ("layer: %s %dx%d (%dx%d) @%d,%d opacity %d blend_mode %s "
          "%d bitmaps %d channels",
-         name,
+         layer_name,
          image_rect[2] - image_rect[0], image_rect[3] - image_rect[1],
          width, height,
          image_rect[0]+saved_image_rect[0], image_rect[1]+saved_image_rect[1],
@@ -1530,19 +1537,18 @@ read_layer_block (FILE      *f,
         else
           drawable_type = GIMP_RGBA_IMAGE, bytespp = 4;
 
-      layer_ID = gimp_layer_new (image_ID, name,
+      layer_ID = gimp_layer_new (image_ID, layer_name,
                                  width, height,
                                  drawable_type,
                                  100.0 * opacity / 255.0,
                                  layer_mode);
+      g_free (layer_name);
       if (layer_ID == -1)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error creating layer"));
           return -1;
         }
-
-      g_free (name);
 
       gimp_image_insert_layer (image_ID, layer_ID, -1, -1);
 
