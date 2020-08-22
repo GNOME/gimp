@@ -1406,6 +1406,11 @@ if cc_version == ''
   # compiler. Just save its name and version.
   cc_version = cc.get_id() + ' ' + cc.version()
 else
+  if platform_windows
+    # On Windows the CC_VERSION string can contain backslashes in paths,
+    # specifically in COLLECT_GCC. Replace by slashes.
+    cc_version = '/'.join(cc_version.split('\\'))
+  endif
   # See also: https://github.com/mesonbuild/meson/pull/6179
   cc_version = '\\n'.join(cc_version.split('\n'))
 endif
