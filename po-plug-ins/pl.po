@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-28 12:54+0200\n"
-"PO-Revision-Date: 2020-06-28 12:55+0200\n"
+"POT-Creation-Date: 2020-08-22 13:58+0200\n"
+"PO-Revision-Date: 2020-08-22 13:59+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -71,7 +71,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1276 ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddsread.c:1284 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:1908 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -129,7 +129,7 @@ msgstr "_Anuluj"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1277 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1285 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -1052,7 +1052,7 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
 #: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1726
 #: ../plug-ins/file-tiff/file-tiff-save.c:971
-#: ../plug-ins/file-tiff/file-tiff-save.c:1083 ../plug-ins/flame/flame.c:450
+#: ../plug-ins/file-tiff/file-tiff-save.c:1081 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -1075,7 +1075,7 @@ msgstr "Wczytanie parametrów przeglądarki CML"
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3348
-#: ../plug-ins/common/file-psp.c:1771 ../plug-ins/common/file-psp.c:1825
+#: ../plug-ins/common/file-psp.c:1816 ../plug-ins/common/file-psp.c:1870
 #: ../plug-ins/common/file-raw-data.c:477
 #: ../plug-ins/common/file-raw-data.c:1303 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
@@ -3356,13 +3356,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Błąd podczas eksportowania pliku „%s”. Nie można wyeksportować obrazu."
 
 #: ../plug-ins/common/file-png.c:2416 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1160
+#: ../plug-ins/file-tiff/file-tiff-save.c:1158
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku interfejsu użytkownika „%s”: %s"
 
 #: ../plug-ins/common/file-png.c:2417 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1161
+#: ../plug-ins/file-tiff/file-tiff-save.c:1159
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
@@ -3663,111 +3663,111 @@ msgstr "Nieprawidłowy nagłówek bloku w %ld"
 msgid "Invalid block header"
 msgstr "Nieprawidłowy nagłówek bloku"
 
-#: ../plug-ins/common/file-psp.c:841
+#: ../plug-ins/common/file-psp.c:770
 #, c-format
 msgid "Seek error: %s"
 msgstr "Błąd przewijania: %s"
 
-#: ../plug-ins/common/file-psp.c:881
+#: ../plug-ins/common/file-psp.c:875
 #, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Błąd podczas odczytywania fragmentu słowa kluczowego twórcy"
 
-#: ../plug-ins/common/file-psp.c:887
+#: ../plug-ins/common/file-psp.c:881
 #, c-format
 msgid "Invalid keyword chunk header"
 msgstr "Nieprawidłowy nagłówek fragmentu słowa kluczowego"
 
-#: ../plug-ins/common/file-psp.c:902 ../plug-ins/common/file-psp.c:934
+#: ../plug-ins/common/file-psp.c:896 ../plug-ins/common/file-psp.c:923
 #, c-format
 msgid "Error reading creator keyword data"
 msgstr "Błąd podczas odczytywania danych słowa kluczowego twórcy"
 
-#: ../plug-ins/common/file-psp.c:909
-#, c-format
-msgid "Creator keyword data not nul-terminated"
-msgstr "Dane słowa kluczowego twórcy nie kończą się „nul”"
-
-#: ../plug-ins/common/file-psp.c:1285 ../plug-ins/common/file-psp.c:1299
+#: ../plug-ins/common/file-psp.c:1265 ../plug-ins/common/file-psp.c:1279
 #, c-format
 msgid "zlib error"
 msgstr "Błąd biblioteki zlib"
 
-#: ../plug-ins/common/file-psp.c:1365
+#: ../plug-ins/common/file-psp.c:1350
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Nieprawidłowy podblok %s warstwy, powinien wynosić „LAYER”"
 
-#: ../plug-ins/common/file-psp.c:1397 ../plug-ins/common/file-psp.c:1428
+#: ../plug-ins/common/file-psp.c:1379 ../plug-ins/common/file-psp.c:1449
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Błąd podczas odczytywania fragmentu informacji o warstwie"
 
-#: ../plug-ins/common/file-psp.c:1462
+#: ../plug-ins/common/file-psp.c:1393
+#, c-format
+msgid "Error reading layer extension information"
+msgstr "Błąd podczas odczytywania informacji o rozszerzeniu warstwy"
+
+#: ../plug-ins/common/file-psp.c:1408
+#, c-format
+msgid "Error reading layer information"
+msgstr "Błąd podczas odczytywania informacji o warstwie"
+
+#: ../plug-ins/common/file-psp.c:1488
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Nieprawidłowe wymiary warstwy: %d×%d"
 
-#: ../plug-ins/common/file-psp.c:1515
+#: ../plug-ins/common/file-psp.c:1541
 #, c-format
 msgid "Error creating layer"
 msgstr "Błąd podczas tworzenia warstwy"
 
-#: ../plug-ins/common/file-psp.c:1566
+#: ../plug-ins/common/file-psp.c:1588
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Nieprawidłowy podblok %s warstwy, powinien wynosić „CHANNEL”"
 
-#: ../plug-ins/common/file-psp.c:1582
+#: ../plug-ins/common/file-psp.c:1604
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Błąd podczas odczytywania fragmentu informacji o kanale"
 
-#: ../plug-ins/common/file-psp.c:1594
-#, c-format
-msgid "Invalid bitmap type %d in channel information chunk"
-msgstr "Nieprawidłowy typ bitmapy %d we fragmencie informacji o kanale"
-
-#: ../plug-ins/common/file-psp.c:1602
+#: ../plug-ins/common/file-psp.c:1627
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Nieprawidłowy typ kanału %d we fragmencie informacji o kanale"
 
-#: ../plug-ins/common/file-psp.c:1682
+#: ../plug-ins/common/file-psp.c:1727
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Błąd podczas odczytywania fragmentu danych o rurze"
 
-#: ../plug-ins/common/file-psp.c:1782
+#: ../plug-ins/common/file-psp.c:1827
 #, c-format
 msgid "Error reading file header."
 msgstr "Błąd podczas odczytywania nagłówka pliku."
 
-#: ../plug-ins/common/file-psp.c:1789
+#: ../plug-ins/common/file-psp.c:1834
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Niepoprawny podpis pliku."
 
-#: ../plug-ins/common/file-psp.c:1807
+#: ../plug-ins/common/file-psp.c:1852
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Nieobsługiwana wersja formatu pliku PSP %d.%d."
 
-#: ../plug-ins/common/file-psp.c:1827
+#: ../plug-ins/common/file-psp.c:1872
 msgid "invalid block size"
 msgstr "nieprawidłowy rozmiar bloku"
 
-#: ../plug-ins/common/file-psp.c:1836
+#: ../plug-ins/common/file-psp.c:1881
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Podwójny blok ogólnych atrybutów obrazu."
 
-#: ../plug-ins/common/file-psp.c:1866
+#: ../plug-ins/common/file-psp.c:1911
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Brak bloku ogólnych atrybutów obrazu."
 
-#: ../plug-ins/common/file-psp.c:1955
+#: ../plug-ins/common/file-psp.c:2000
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Eksportowanie nie jest jeszcze zaimplementowane."
@@ -6639,15 +6639,15 @@ msgstr "Dekodowanie YCoCg (przeskalowane)"
 msgid "Decode Alpha exponent"
 msgstr "Dekodowanie wykładnika alfy"
 
-#: ../plug-ins/file-dds/ddsread.c:1274
+#: ../plug-ins/file-dds/ddsread.c:1282
 msgid "Load DDS"
 msgstr "Wczytanie pliku DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1293
+#: ../plug-ins/file-dds/ddsread.c:1301
 msgid "_Load mipmaps"
 msgstr "_Wczytanie mipmap"
 
-#: ../plug-ins/file-dds/ddsread.c:1300
+#: ../plug-ins/file-dds/ddsread.c:1308
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Automatyczne dekodowanie obrazów YCoCg/AExp po wykryciu"
 
@@ -7430,7 +7430,7 @@ msgstr "Indeksowane obrazy nie mogą być kompresowane za pomocą „JPEG”."
 msgid "Failed a scanline write on row %d"
 msgstr "Zapisanie scanline w rzędzie %d się nie powiodło"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:988
+#: ../plug-ins/file-tiff/file-tiff-save.c:986
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7439,44 +7439,44 @@ msgstr ""
 "zapisane w 7-bitowym kodowaniu ASCII.\n"
 "Komentarz nie został zapisany."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1106
+#: ../plug-ins/file-tiff/file-tiff-save.c:1104
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Zapisywanie stron o różnych głębiach bitowych jest dziwne."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1150
+#: ../plug-ins/file-tiff/file-tiff-save.c:1148
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1176
+#: ../plug-ins/file-tiff/file-tiff-save.c:1174
 msgid "Compression"
 msgstr "Kompresja"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1180
+#: ../plug-ins/file-tiff/file-tiff-save.c:1178
 msgid "_None"
 msgstr "_Brak"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1181
+#: ../plug-ins/file-tiff/file-tiff-save.c:1179
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1182
+#: ../plug-ins/file-tiff/file-tiff-save.c:1180
 msgid "_Pack Bits"
 msgstr "_Kompresowanie bitów"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1183
+#: ../plug-ins/file-tiff/file-tiff-save.c:1181
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1184
+#: ../plug-ins/file-tiff/file-tiff-save.c:1182
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1185
+#: ../plug-ins/file-tiff/file-tiff-save.c:1183
 msgid "CCITT Group _3 fax"
 msgstr "Faks CCITT Group _3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1186
+#: ../plug-ins/file-tiff/file-tiff-save.c:1184
 msgid "CCITT Group _4 fax"
 msgstr "Faks CCITT Group _4"
 
