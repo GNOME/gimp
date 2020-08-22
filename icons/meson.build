@@ -1638,12 +1638,9 @@ themes = [
   'Color',
   # 'Legacy',
   'Symbolic',
+  'hicolor'
 ]
 
 foreach theme : themes
   subdir(theme)
 endforeach
-
-install_data('index.theme',
-  install_dir: gimpiconsdir / 'hicolor',
-)

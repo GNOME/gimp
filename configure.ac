@@ -3090,6 +3090,7 @@ icons/Makefile
 icons/Color/Makefile
 icons/Legacy/Makefile
 icons/Symbolic/Makefile
+icons/hicolor/Makefile
 themes/Makefile
 themes/System/Makefile
 data/Makefile
