@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-08-11 18:54+0000\n"
-"PO-Revision-Date: 2020-08-22 14:14+0100\n"
+"PO-Revision-Date: 2020-08-22 21:31+0100\n"
 "Last-Translator: Yacine Bouklif <yacinebouklif@gmail.com>\n"
 "Language-Team: \n"
 "Language: kab\n"
@@ -1769,7 +1769,7 @@ msgstr "Ti_qamumin"
 #: ../app/actions/context-actions.c:74
 msgctxt "context-action"
 msgid "_Hardness"
-msgstr ""
+msgstr "Taɣert"
 
 #: ../app/actions/context-actions.c:76
 msgctxt "context-action"
@@ -2909,7 +2909,7 @@ msgstr "Umuɣ n telɣut n uṛeccam"
 #: ../app/actions/cursor-info-actions.c:48
 msgctxt "cursor-info-action"
 msgid "_Sample Merged"
-msgstr ""
+msgstr "Alemmec imezdin"
 
 #: ../app/actions/cursor-info-actions.c:49
 msgctxt "cursor-info-action"
@@ -2985,6 +2985,7 @@ msgstr "Alɣu ɣef tallunt n usemsekkel tamecṭuḥt"
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
 msgstr ""
+"Sali-d tafelwit n tedbelt ticki tallunt n usemmeskel teqreb ɣer talast-is"
 
 #: ../app/actions/dashboard-actions.c:89
 msgctxt "dashboard-update-interval"
@@ -3113,7 +3114,7 @@ msgstr ""
 
 #: ../app/actions/dashboard-commands.c:183
 msgid "Sample fre_quency:"
-msgstr ""
+msgstr "Asnagar n ulemmec:"
 
 #: ../app/actions/dashboard-commands.c:202
 msgid "_Backtrace"
@@ -3257,12 +3258,12 @@ msgstr "Ldi tankult n udiwenni n tfelwit n yiniten"
 #: ../app/actions/dialogs-actions.c:95
 msgctxt "dialogs-action"
 msgid "Histogra_m"
-msgstr ""
+msgstr "Amazrudlif"
 
 #: ../app/actions/dialogs-actions.c:96
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
-msgstr ""
+msgstr "Ldi adiwenni n umazrudlif"
 
 #: ../app/actions/dialogs-actions.c:101
 msgctxt "dialogs-action"
@@ -16783,15 +16784,16 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2255
 msgid "Colormap:"
-msgstr ""
+msgstr "Tapaliḍt n yiniten:"
 
 #: ../app/dialogs/preferences-dialog.c:2258
 msgid "Maximum number of colors:"
-msgstr ""
+msgstr "Amḍan afellay n yiniten:"
 
 #: ../app/dialogs/preferences-dialog.c:2262
 msgid "Remove unused and duplicate colors from colormap"
 msgstr ""
+"Kkes initen ur nettwaseqdac ara akked yiniten usligen si tpaliḍt n yiniten"
 
 #: ../app/dialogs/preferences-dialog.c:2268
 msgid "Color dithering:"
@@ -16807,7 +16809,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2284
 msgid "Keep recent settings:"
-msgstr ""
+msgstr "Eǧǧ iɣewwaren n melmi kan:"
 
 #: ../app/dialogs/preferences-dialog.c:2288
 msgid "Default to the last used settings"
@@ -16815,34 +16817,34 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2291
 msgid "Show advanced color options"
-msgstr ""
+msgstr "Sken tinefrunin tinaẓiyin n yini"
 
 #. Canvas Size Dialog
 #: ../app/dialogs/preferences-dialog.c:2295
 msgid "Canvas Size Dialog"
-msgstr ""
+msgstr "Adiwenni n tiddi n teɣzut n usuneɣ"
 
 #: ../app/dialogs/preferences-dialog.c:2300
 #: ../app/dialogs/preferences-dialog.c:2329
 msgid "Fill with:"
-msgstr ""
+msgstr "Aččar s:"
 
 #: ../app/dialogs/preferences-dialog.c:2303
 msgid "Resize layers:"
-msgstr ""
+msgstr "Ales tiddi n tissiyin:"
 
 #: ../app/dialogs/preferences-dialog.c:2307
 msgid "Resize text layers"
-msgstr ""
+msgstr "Ales tiddi n tissiyin n uḍris"
 
 #. New Layer Dialog
 #: ../app/dialogs/preferences-dialog.c:2311
 msgid "New Layer Dialog"
-msgstr ""
+msgstr "Adiwenni n tissi tamaynutt"
 
 #: ../app/dialogs/preferences-dialog.c:2316
 msgid "Layer name:"
-msgstr ""
+msgstr "Isem n tissi:"
 
 #: ../app/dialogs/preferences-dialog.c:2320
 msgid "Fill type:"
@@ -16877,24 +16879,24 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2357
 msgid "Merge within active groups only"
-msgstr ""
+msgstr "Smezdi akked ugraw urmid kan"
 
 #: ../app/dialogs/preferences-dialog.c:2360
 msgid "Discard invisible layers"
-msgstr ""
+msgstr "Sinef tissiyin yettbanen"
 
 #. New Channel Dialog
 #: ../app/dialogs/preferences-dialog.c:2364
 msgid "New Channel Dialog"
-msgstr ""
+msgstr "Tankult n udiwenni Abadu amaynut"
 
 #: ../app/dialogs/preferences-dialog.c:2369
 msgid "Channel name:"
-msgstr ""
+msgstr "Isem n ubadu:"
 
 #: ../app/dialogs/preferences-dialog.c:2373
 msgid "Color and opacity:"
-msgstr ""
+msgstr "Ini akked tiḍullest:"
 
 #: ../app/dialogs/preferences-dialog.c:2374
 msgid "Default New Channel Color and Opacity"
@@ -16903,28 +16905,28 @@ msgstr ""
 #. New Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2379
 msgid "New Path Dialog"
-msgstr ""
+msgstr "Tankult n udiwenni Abrid amaynut"
 
 #: ../app/dialogs/preferences-dialog.c:2384
 msgid "Path name:"
-msgstr ""
+msgstr "Isem n ubrid:"
 
 #. Export Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2388
 msgid "Export Paths Dialog"
-msgstr ""
+msgstr "Tankult n udiwenni Sifeḍ iberdan"
 
 #: ../app/dialogs/preferences-dialog.c:2393
 msgid "Export folder:"
-msgstr ""
+msgstr "Akaram n usifeḍ:"
 
 #: ../app/dialogs/preferences-dialog.c:2394
 msgid "Select Default Folder for Exporting Paths"
-msgstr ""
+msgstr "Fren akaram n lexṣas i usifeḍ n yiberdan"
 
 #: ../app/dialogs/preferences-dialog.c:2398
 msgid "Export the active path only"
-msgstr ""
+msgstr "Sifeḍ abrid urmid kan"
 
 #. Import Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2402
@@ -16933,7 +16935,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2407
 msgid "Import folder:"
-msgstr ""
+msgstr "Akaram n tektert:"
 
 #: ../app/dialogs/preferences-dialog.c:2408
 msgid "Select Default Folder for Importing Paths"
@@ -16941,7 +16943,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2412
 msgid "Merge imported paths"
-msgstr ""
+msgstr "Smezdi iberdan yettwaketren"
 
 #: ../app/dialogs/preferences-dialog.c:2415
 msgid "Scale imported paths"
@@ -16960,34 +16962,34 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:2450
 #: ../app/dialogs/preferences-dialog.c:2467
 msgid "Selected areas continue outside the image"
-msgstr ""
+msgstr "Timnaḍin yettwafernen ad kemmelent beṛṛa n tugna"
 
 #. Grow Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2432
 msgid "Grow Selection Dialog"
-msgstr ""
+msgstr "Tankult n udiwenni Simɣur tafrayt"
 
 #: ../app/dialogs/preferences-dialog.c:2437
 msgid "Grow radius:"
-msgstr ""
+msgstr "Simɣur aqqar:"
 
 #. Shrink Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2441
 msgid "Shrink Selection Dialog"
-msgstr ""
+msgstr "Tankult n udiwenni Simẓi tafrayt"
 
 #: ../app/dialogs/preferences-dialog.c:2446
 msgid "Shrink radius:"
-msgstr ""
+msgstr "Simẓi aqqar:"
 
 #. Border Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2454
 msgid "Border Selection Dialog"
-msgstr ""
+msgstr "Tankult n udiwenni Tafrayt n yiri"
 
 #: ../app/dialogs/preferences-dialog.c:2459
 msgid "Border radius:"
-msgstr ""
+msgstr "Aqqar n yiri:"
 
 #: ../app/dialogs/preferences-dialog.c:2463
 msgid "Border style:"
@@ -16996,37 +16998,37 @@ msgstr "Aɣanib n yiri:"
 #. Fill Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2471
 msgid "Fill Selection Outline & Fill Path Dialogs"
-msgstr ""
+msgstr "Tinkulin n udiwenni Aččar azizdew akked Aččar abrid"
 
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2480
 msgid "Stroke Selection & Stroke Path Dialogs"
-msgstr ""
+msgstr "Tinkulin n udiwenni Suneɣ tafrayt akked Suneɣ abrid"
 
 #: ../app/dialogs/preferences-dialog.c:2503
 #: ../app/dialogs/preferences-dialog.c:2504
 msgid "Help System"
-msgstr ""
+msgstr "Anagraw n tallelt"
 
 #: ../app/dialogs/preferences-dialog.c:2515
 msgid "Show help _buttons"
-msgstr ""
+msgstr "Sken tiqeffalin n tallelt"
 
 #: ../app/dialogs/preferences-dialog.c:2520
 msgid "Use the online version"
-msgstr ""
+msgstr "Seqdec lqem ɣef internet"
 
 #: ../app/dialogs/preferences-dialog.c:2521
 msgid "Use a locally installed copy"
-msgstr ""
+msgstr "Seqdec tanɣelt yettwsbedden deg uselkim"
 
 #: ../app/dialogs/preferences-dialog.c:2522
 msgid "U_ser manual:"
-msgstr ""
+msgstr "Awfusan n useqdac:"
 
 #: ../app/dialogs/preferences-dialog.c:2533
 msgid "User interface language"
-msgstr ""
+msgstr "Tutlayt n ugrudem n useqdac"
 
 #. If there is no webkit available, assume we are on a platform
 #. *  that doesn't use the help browser, so don't bother showing
@@ -17034,34 +17036,36 @@ msgstr ""
 #.
 #: ../app/dialogs/preferences-dialog.c:2592
 msgid "Help Browser"
-msgstr ""
+msgstr "Iminig n tallelt"
 
 #: ../app/dialogs/preferences-dialog.c:2599
 msgid "H_elp browser to use:"
-msgstr ""
+msgstr "Iminig n tallelt ara yettwasqedcen:"
 
 #: ../app/dialogs/preferences-dialog.c:2605
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
 msgstr ""
+"Iminig n tallelt n GIMP yettban-d ur yettwasbedd ara. Ad yettwseqdec iminig "
+"n web deg umḍiq-is."
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2622
 msgid "Action Search"
-msgstr ""
+msgstr "Anadi n tigawt"
 
 #: ../app/dialogs/preferences-dialog.c:2626
 msgid "Show _unavailable actions"
-msgstr ""
+msgstr "Sken tigawin ur newjid ara"
 
 #: ../app/dialogs/preferences-dialog.c:2629
 msgid "_Maximum History Size:"
-msgstr ""
+msgstr "Tiddi tafellayt n umazray:"
 
 #: ../app/dialogs/preferences-dialog.c:2633
 msgid "C_lear Action History"
-msgstr ""
+msgstr "Sfeḍ amazray n tigawin"
 
 #: ../app/dialogs/preferences-dialog.c:2647
 #: ../app/dialogs/preferences-dialog.c:2648
@@ -17119,11 +17123,11 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:2719
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
-msgstr ""
+msgstr "_Detect automatically (currently %d × %d ppi)"
 
 #: ../app/dialogs/preferences-dialog.c:2737
 msgid "_Enter manually"
-msgstr ""
+msgstr "Sekcem s ufus"
 
 #: ../app/dialogs/preferences-dialog.c:2752
 msgid "C_alibrate..."
@@ -17132,7 +17136,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:2782
 #: ../app/dialogs/preferences-dialog.c:2783
 msgid "Window Management"
-msgstr ""
+msgstr "Asefrek n yisfuyla"
 
 #: ../app/dialogs/preferences-dialog.c:2788
 msgid "Window Manager Hints"
@@ -17148,41 +17152,41 @@ msgstr "Asaḍas"
 
 #: ../app/dialogs/preferences-dialog.c:2801
 msgid "Activate the _focused image"
-msgstr ""
+msgstr "Sermed tugna yewwin asaḍas"
 
 #. Window Positions
 #: ../app/dialogs/preferences-dialog.c:2805
 msgid "Window Positions"
-msgstr ""
+msgstr "Idegan n yisfuyla"
 
 #: ../app/dialogs/preferences-dialog.c:2808
 msgid "_Save window positions on exit"
-msgstr ""
+msgstr "Sekles idegan n yisfuyla mi ara teffeɣeḍ"
 
 #: ../app/dialogs/preferences-dialog.c:2811
 msgid "Open windows on the same _monitor they were open before"
-msgstr ""
+msgstr "Ldi isfuyla deg umsefrak ideg ldin weqbel"
 
 #: ../app/dialogs/preferences-dialog.c:2815
 msgid "Save Window Positions _Now"
-msgstr ""
+msgstr "Sekles idegan n yisfuyla tura"
 
 #: ../app/dialogs/preferences-dialog.c:2822
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr ""
+msgstr "Ales awennez n yidegan n yisfuyla ɣer wazalen n lexṣas"
 
 #: ../app/dialogs/preferences-dialog.c:2837
 #: ../app/dialogs/preferences-dialog.c:2838
 msgid "Image Windows"
-msgstr ""
+msgstr "Isfuyla n tugna"
 
 #: ../app/dialogs/preferences-dialog.c:2849
 msgid "Use \"Show _all\" by default"
-msgstr ""
+msgstr "Seqdec s lexṣas \"Sken akk\""
 
 #: ../app/dialogs/preferences-dialog.c:2853
 msgid "Use \"_Dot for dot\" by default"
-msgstr ""
+msgstr "Seqdec s lexṣas \"Tanqiḍt s tenqiḍt\""
 
 #: ../app/dialogs/preferences-dialog.c:2859
 msgid "Marching ants s_peed:"
@@ -17191,15 +17195,15 @@ msgstr ""
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2863
 msgid "Zoom & Resize Behavior"
-msgstr ""
+msgstr "Tikli n usemɣer akked walus n tiddi"
 
 #: ../app/dialogs/preferences-dialog.c:2867
 msgid "Resize window on _zoom"
-msgstr ""
+msgstr "Ales tiddi n usfaylu mi ara yettusemɣer"
 
 #: ../app/dialogs/preferences-dialog.c:2870
 msgid "Resize window on image _size change"
-msgstr ""
+msgstr "Ales tiddi n usfaylu mi ara tbeddel tiddi n tugna"
 
 #: ../app/dialogs/preferences-dialog.c:2876
 msgid "Show entire image"
@@ -17207,7 +17211,7 @@ msgstr "Sken tugna tummidt"
 
 #: ../app/dialogs/preferences-dialog.c:2878
 msgid "Initial zoom _ratio:"
-msgstr ""
+msgstr "Asaɣ n usemɣer n tazwara:"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2882
@@ -17216,16 +17220,16 @@ msgstr "Afeggag n tallunt"
 
 #: ../app/dialogs/preferences-dialog.c:2888
 msgid "_While space bar is pressed:"
-msgstr ""
+msgstr "Mi tettwassed tqeffalt n tallunt:"
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:2892
 msgid "Mouse Pointers"
-msgstr ""
+msgstr "Iṛeccamen n umumed"
 
 #: ../app/dialogs/preferences-dialog.c:2896
 msgid "Show _brush outline"
-msgstr ""
+msgstr "Sken azizdew n umfezzu"
 
 #: ../app/dialogs/preferences-dialog.c:2904
 msgid "S_nap brush outline to stroke"
@@ -17233,11 +17237,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2908
 msgid "Show pointer for paint _tools"
-msgstr ""
+msgstr "Sken aṛeccam i yifecka n teklut"
 
 #: ../app/dialogs/preferences-dialog.c:2914
 msgid "Pointer _mode:"
-msgstr ""
+msgstr "Askar n uṛeccam:"
 
 #: ../app/dialogs/preferences-dialog.c:2917
 msgid "Pointer _handedness:"
@@ -17245,23 +17249,23 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2928
 msgid "Image Window Appearance"
-msgstr ""
+msgstr "Timeẓriwt n usfaylu n tugna"
 
 #: ../app/dialogs/preferences-dialog.c:2936
 msgid "Default Appearance in Normal Mode"
-msgstr ""
+msgstr "Timeẓriwt n lexṣas deg uskar amagnu"
 
 #: ../app/dialogs/preferences-dialog.c:2941
 msgid "Default Appearance in Fullscreen Mode"
-msgstr ""
+msgstr "Timeẓriwt n lexṣas deg uskar n ugdil aččuran"
 
 #: ../app/dialogs/preferences-dialog.c:2950
 msgid "Image Title & Statusbar Format"
-msgstr ""
+msgstr "Amasal n uzwel akked ufeggag n waddad n tugna"
 
 #: ../app/dialogs/preferences-dialog.c:2951
 msgid "Title & Status"
-msgstr ""
+msgstr "Azwel akked waddad"
 
 #: ../app/dialogs/preferences-dialog.c:2969
 msgid "Current format"
@@ -17273,15 +17277,15 @@ msgstr "Amasal n lexṣas"
 
 #: ../app/dialogs/preferences-dialog.c:2971
 msgid "Show zoom percentage"
-msgstr ""
+msgstr "Sken afmiḍi n usemɣer"
 
 #: ../app/dialogs/preferences-dialog.c:2972
 msgid "Show zoom ratio"
-msgstr ""
+msgstr "Sken assaɣ n usemɣer"
 
 #: ../app/dialogs/preferences-dialog.c:2973
 msgid "Show image size"
-msgstr ""
+msgstr "Sken tiddi n tugna"
 
 #: ../app/dialogs/preferences-dialog.c:2974
 msgid "Show drawable size"
@@ -17289,11 +17293,11 @@ msgstr "Sken tiddi n tɣawsa tudlift"
 
 #: ../app/dialogs/preferences-dialog.c:2987
 msgid "Image Title Format"
-msgstr ""
+msgstr "Amasal n uzwel n tugna"
 
 #: ../app/dialogs/preferences-dialog.c:2989
 msgid "Image Statusbar Format"
-msgstr ""
+msgstr "Amasal n ufeggag n waddad n tugna"
 
 #: ../app/dialogs/preferences-dialog.c:3073
 msgid "Image Window Snapping Behavior"
@@ -17305,11 +17309,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:3081
 msgid "Default Behavior in Normal Mode"
-msgstr ""
+msgstr "Tikli n lexṣas deg uskar amagnu"
 
 #: ../app/dialogs/preferences-dialog.c:3085
 msgid "Default Behavior in Fullscreen Mode"
-msgstr ""
+msgstr "Tikli n lexṣas deg uskar n ugdil aččuran"
 
 #: ../app/dialogs/preferences-dialog.c:3094
 msgid "_Snapping distance:"
@@ -17318,7 +17322,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:3103
 #: ../app/dialogs/preferences-dialog.c:3104
 msgid "Input Devices"
-msgstr ""
+msgstr "Ibenkan n unekcum"
 
 #. Extended Input Devices
 #: ../app/dialogs/preferences-dialog.c:3110
@@ -17327,7 +17331,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:3114
 msgid "S_hare tool and tool options between input devices"
-msgstr ""
+msgstr "Bḍu ifecka akked tnefrunin n yifecka gar yibenkan n unekcum"
 
 #: ../app/dialogs/preferences-dialog.c:3118
 msgid "Configure E_xtended Input Devices..."
@@ -17335,23 +17339,23 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:3125
 msgid "_Save input device settings on exit"
-msgstr ""
+msgstr "Sekles iɣewwaren n yibenkan n unekcum mi ara teffeḍ"
 
 #: ../app/dialogs/preferences-dialog.c:3129
 msgid "Save Input Device Settings _Now"
-msgstr ""
+msgstr "Sekles iɣewwaren n yibenkan n unekcum tura"
 
 #: ../app/dialogs/preferences-dialog.c:3136
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr ""
+msgstr "Ales awennez n yiɣewwaren n yibenkan n tuffɣa ɣer wazalen n lexṣas"
 
 #: ../app/dialogs/preferences-dialog.c:3151
 msgid "Additional Input Controllers"
-msgstr ""
+msgstr "Isenqaden n unekcum nniḍen"
 
 #: ../app/dialogs/preferences-dialog.c:3152
 msgid "Input Controllers"
-msgstr ""
+msgstr "Isenqaden n unekcum"
 
 #: ../app/dialogs/preferences-dialog.c:3167
 #: ../app/dialogs/preferences-dialog.c:3168
@@ -17360,95 +17364,95 @@ msgstr "Ikaramen"
 
 #: ../app/dialogs/preferences-dialog.c:3175
 msgid "Reset _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen"
 
 #: ../app/dialogs/preferences-dialog.c:3191
 msgid "_Temporary folder:"
-msgstr ""
+msgstr "Akaram akudan:"
 
 #: ../app/dialogs/preferences-dialog.c:3192
 msgid "Select Folder for Temporary Files"
-msgstr ""
+msgstr "Fren akaram i yifuyla ikudanen"
 
 #: ../app/dialogs/preferences-dialog.c:3196
 msgid "_Swap folder:"
-msgstr ""
+msgstr "Akaram n usemmeskel:"
 
 #: ../app/dialogs/preferences-dialog.c:3197
 msgid "Select Swap Folder"
-msgstr ""
+msgstr "Fren akaram n usemmeskel"
 
 #: ../app/dialogs/preferences-dialog.c:3230
 msgid "Brush Folders"
-msgstr ""
+msgstr "Ikaramen n yimfezza"
 
 #: ../app/dialogs/preferences-dialog.c:3233
 msgid "Reset Brush _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n yimfezza"
 
 #: ../app/dialogs/preferences-dialog.c:3234
 msgid "Select Brush Folders"
-msgstr ""
+msgstr "Fren ikaramen n yimfezza"
 
 #: ../app/dialogs/preferences-dialog.c:3236
 msgid "Dynamics Folders"
-msgstr ""
+msgstr "Ikaramen ismussanen"
 
 #: ../app/dialogs/preferences-dialog.c:3239
 msgid "Reset Dynamics _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen ismussanen"
 
 #: ../app/dialogs/preferences-dialog.c:3240
 msgid "Select Dynamics Folders"
-msgstr ""
+msgstr "Fren ikaramen ismussanen"
 
 #: ../app/dialogs/preferences-dialog.c:3242
 msgid "Pattern Folders"
-msgstr ""
+msgstr "Ikaramen n wudlifen"
 
 #: ../app/dialogs/preferences-dialog.c:3245
 msgid "Reset Pattern _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n wudlifen"
 
 #: ../app/dialogs/preferences-dialog.c:3246
 msgid "Select Pattern Folders"
-msgstr ""
+msgstr "Fren ikaramen n wudlifen"
 
 #: ../app/dialogs/preferences-dialog.c:3248
 msgid "Palette Folders"
-msgstr ""
+msgstr "Ikaramen n tpaliḍin"
 
 #: ../app/dialogs/preferences-dialog.c:3251
 msgid "Reset Palette _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n tpaliḍin"
 
 #: ../app/dialogs/preferences-dialog.c:3252
 msgid "Select Palette Folders"
-msgstr ""
+msgstr "Fren ikaramen n tpaliḍin"
 
 #: ../app/dialogs/preferences-dialog.c:3254
 msgid "Gradient Folders"
-msgstr ""
+msgstr "Ikaramen n yifesnawen"
 
 #: ../app/dialogs/preferences-dialog.c:3257
 msgid "Reset Gradient _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n yifesnawen"
 
 #: ../app/dialogs/preferences-dialog.c:3258
 msgid "Select Gradient Folders"
-msgstr ""
+msgstr "Fren ikaramen n yifesnawen"
 
 #: ../app/dialogs/preferences-dialog.c:3260
 msgid "Font Folders"
-msgstr ""
+msgstr "Ikaramen n tsefsa"
 
 #: ../app/dialogs/preferences-dialog.c:3263
 msgid "Reset Font _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n tsefsa"
 
 #: ../app/dialogs/preferences-dialog.c:3264
 msgid "Select Font Folders"
-msgstr ""
+msgstr "Fren ikaramen n tsefsa"
 
 #: ../app/dialogs/preferences-dialog.c:3266
 msgid "Tool Preset Folders"
@@ -17464,27 +17468,27 @@ msgstr "Fren ikaramen n useɣwer n ufecku"
 
 #: ../app/dialogs/preferences-dialog.c:3272
 msgid "MyPaint Brush Folders"
-msgstr ""
+msgstr "Ikaramen n yimfezza n MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:3275
 msgid "Reset MyPaint Brush _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n yimfezza n MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:3276
 msgid "Select MyPaint Brush Folders"
-msgstr ""
+msgstr "Fren ikaramen n yimfezza n MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:3278
 msgid "Plug-in Folders"
-msgstr ""
+msgstr "Ikaramen n yiseɣzaf"
 
 #: ../app/dialogs/preferences-dialog.c:3281
 msgid "Reset plug-in _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n yiseɣzaf"
 
 #: ../app/dialogs/preferences-dialog.c:3282
 msgid "Select plug-in Folders"
-msgstr ""
+msgstr "Fren ikaramen n yiseɣzaf"
 
 #: ../app/dialogs/preferences-dialog.c:3284
 msgid "Scripts"
@@ -17492,43 +17496,43 @@ msgstr "Iskripten"
 
 #: ../app/dialogs/preferences-dialog.c:3284
 msgid "Script-Fu Folders"
-msgstr ""
+msgstr "Ikaramen n Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:3287
 msgid "Reset Script-Fu _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:3288
 msgid "Select Script-Fu Folders"
-msgstr ""
+msgstr "Fren ikaramen n Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:3290
 msgid "Module Folders"
-msgstr ""
+msgstr "Ikaramen n yizegrar"
 
 #: ../app/dialogs/preferences-dialog.c:3293
 msgid "Reset Module _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n yizegrar"
 
 #: ../app/dialogs/preferences-dialog.c:3294
 msgid "Select Module Folders"
-msgstr ""
+msgstr "Fren ikaramen n yizegrar"
 
 #: ../app/dialogs/preferences-dialog.c:3296
 msgid "Interpreters"
-msgstr ""
+msgstr "Imsuɣalen"
 
 #: ../app/dialogs/preferences-dialog.c:3296
 msgid "Interpreter Folders"
-msgstr ""
+msgstr "Ikaramen n yimsuɣal"
 
 #: ../app/dialogs/preferences-dialog.c:3299
 msgid "Reset Interpreter _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n yimsuɣal"
 
 #: ../app/dialogs/preferences-dialog.c:3300
 msgid "Select Interpreter Folders"
-msgstr ""
+msgstr "Fren ikaramen n yimsuɣal"
 
 #: ../app/dialogs/preferences-dialog.c:3302
 msgid "Environment"
@@ -17536,15 +17540,15 @@ msgstr "Tawennaḍt"
 
 #: ../app/dialogs/preferences-dialog.c:3302
 msgid "Environment Folders"
-msgstr ""
+msgstr "Ikaramen n twennaḍt"
 
 #: ../app/dialogs/preferences-dialog.c:3305
 msgid "Reset Environment _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n twennaḍt"
 
 #: ../app/dialogs/preferences-dialog.c:3306
 msgid "Select Environment Folders"
-msgstr ""
+msgstr "Fren yikaramen n twennaḍt"
 
 #: ../app/dialogs/preferences-dialog.c:3308
 msgid "Themes"
@@ -17552,31 +17556,31 @@ msgstr "Isental"
 
 #: ../app/dialogs/preferences-dialog.c:3308
 msgid "Theme Folders"
-msgstr ""
+msgstr "Ikaramen n yisental"
 
 #: ../app/dialogs/preferences-dialog.c:3311
 msgid "Reset Theme _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n yisental"
 
 #: ../app/dialogs/preferences-dialog.c:3312
 msgid "Select Theme Folders"
-msgstr ""
+msgstr "Fren ikaramen n yisental"
 
 #: ../app/dialogs/preferences-dialog.c:3314
 msgid "Icon Themes"
-msgstr ""
+msgstr "Isental n tignitin"
 
 #: ../app/dialogs/preferences-dialog.c:3314
 msgid "Icon Theme Folders"
-msgstr ""
+msgstr "Ikaramen n tignitin n yisental"
 
 #: ../app/dialogs/preferences-dialog.c:3317
 msgid "Reset Icon Theme _Folders"
-msgstr ""
+msgstr "Ales awennez n yikaramen n tignitin n yisental"
 
 #: ../app/dialogs/preferences-dialog.c:3318
 msgid "Select Icon Theme Folders"
-msgstr ""
+msgstr "Fren ikaramen n tignitin n yisental"
 
 #: ../app/dialogs/print-size-dialog.c:144
 msgid "Print Size"
@@ -17643,7 +17647,7 @@ msgstr "Sit ɣef %s iwakken ad teffɣeḍ."
 #: ../app/dialogs/quit-dialog.c:360
 #, c-format
 msgid "Press %s to close all images."
-msgstr ""
+msgstr "Ssed %s iwakken ad tmedleḍ akk tugniwin"
 
 #: ../app/dialogs/quit-dialog.c:364 ../app/dialogs/user-install-dialog.c:89
 msgid "_Quit"
@@ -17656,21 +17660,22 @@ msgstr "M_del"
 #: ../app/dialogs/quit-dialog.c:388
 #, c-format
 msgid "Press %s to discard all changes and quit."
-msgstr ""
+msgstr "Ssed %s iwakken ad tḍeqqereḍ akk ibeddilen yerna ad teffɣeḍ."
 
 #: ../app/dialogs/quit-dialog.c:391
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr ""
+"Ssed %s iwakken ad tḍeqqereḍ akk ibeddilen yerna ad tmedleḍ akk tugniwin."
 
 #: ../app/dialogs/quit-dialog.c:399 ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
-msgstr ""
+msgstr "Ḍeqqer akk ibeddilen"
 
 #: ../app/dialogs/quit-dialog.c:486
 #, c-format
 msgid "Exported to %s"
-msgstr ""
+msgstr "Yettusifeḍ ɣer %s"
 
 #: ../app/dialogs/quit-dialog.c:589
 msgid "Save this image"
@@ -17682,19 +17687,19 @@ msgstr "Sekles am"
 
 #: ../app/dialogs/resize-dialog.c:142
 msgid "Canvas Size"
-msgstr ""
+msgstr "Tiddi n teɣzut n usuneɣ"
 
 #: ../app/dialogs/resize-dialog.c:154 ../app/dialogs/scale-dialog.c:114
 msgid "Layer Size"
-msgstr ""
+msgstr "Tiddi n tissi"
 
 #: ../app/dialogs/resize-dialog.c:155
 msgid "Fill With"
-msgstr ""
+msgstr "Aččar s"
 
 #: ../app/dialogs/resize-dialog.c:184
 msgid "Re_set"
-msgstr ""
+msgstr "Ales awennez"
 
 #: ../app/dialogs/resize-dialog.c:186
 msgid "_Resize"
@@ -17727,15 +17732,15 @@ msgstr "_Slemmes"
 
 #: ../app/dialogs/resize-dialog.c:321
 msgid "Resize _layers:"
-msgstr ""
+msgstr "Aes tiddi n tissiyin:"
 
 #: ../app/dialogs/resize-dialog.c:369
 msgid "Resize _text layers"
-msgstr ""
+msgstr "Ales tiddi n tissiyin n uḍris"
 
 #: ../app/dialogs/resize-dialog.c:380
 msgid "Resizing text layers will make them uneditable"
-msgstr ""
+msgstr "Alus n tiddi n tissiyin n uḍris ad yerr asentel ur yettwaẓrag ara"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:67
 msgid "Calibrate Monitor Resolution"
@@ -17747,7 +17752,7 @@ msgstr ""
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:145
 msgid "_Horizontal:"
-msgstr ""
+msgstr "Aglawan:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:150
 msgid "_Vertical:"
@@ -17765,7 +17770,7 @@ msgstr "Taɣara"
 
 #: ../app/dialogs/scale-dialog.c:193
 msgid "I_nterpolation:"
-msgstr ""
+msgstr "Asenteḍ:"
 
 #: ../app/dialogs/stroke-dialog.c:122
 msgid "Choose Stroke Style"
@@ -17777,7 +17782,7 @@ msgstr "Suneɣ"
 
 #: ../app/dialogs/stroke-dialog.c:230
 msgid "P_aint tool:"
-msgstr ""
+msgstr "Afecku n teklut:"
 
 #: ../app/dialogs/stroke-dialog.c:244
 msgid "_Emulate brush dynamics"
@@ -17785,32 +17790,32 @@ msgstr ""
 
 #: ../app/dialogs/tips-dialog.c:88
 msgid "The GIMP tips file is empty!"
-msgstr ""
+msgstr "Afaylu n txidas n GIMP d ilem!"
 
 #: ../app/dialogs/tips-dialog.c:92
 msgid "The GIMP tips file appears to be missing!"
-msgstr ""
+msgstr "Afaylu n txidas n GIMP yettban-d ulac-it!"
 
 #: ../app/dialogs/tips-dialog.c:94
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr ""
+msgstr "Isefk ad yili ufaylu s yisem '%s'. Ttxil-k senqed asbeddi-inek."
 
 #: ../app/dialogs/tips-dialog.c:100
 msgid "The GIMP tips file could not be parsed!"
-msgstr ""
+msgstr "Afaylu n txidas n GIMP ulamek ara yettwaɣer akken iwata!"
 
 #: ../app/dialogs/tips-dialog.c:128
 msgid "GIMP Tip of the Day"
-msgstr ""
+msgstr "Tixidest n GIMP n wass"
 
 #: ../app/dialogs/tips-dialog.c:134
 msgid "_Previous Tip"
-msgstr ""
+msgstr "Tixidest tuzwirt"
 
 #: ../app/dialogs/tips-dialog.c:140
 msgid "_Next Tip"
-msgstr ""
+msgstr "Tixidest tuḍfirt"
 
 #. a link to the related section in the user manual
 #: ../app/dialogs/tips-dialog.c:194
@@ -17828,35 +17833,35 @@ msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"
-msgstr ""
+msgstr "Asbeddi n useqdac n GIMP"
 
 #: ../app/dialogs/user-install-dialog.c:94
 msgid "User installation failed!"
-msgstr ""
+msgstr "Asbeddi n useqdac ur yeddi ara!"
 
 #: ../app/dialogs/user-install-dialog.c:96
 msgid "The GIMP user installation failed; see the log for details."
-msgstr ""
+msgstr "Asbeddi n useqdac n GIMP ur yeddi ara; wali aɣmis i telqayt."
 
 #: ../app/dialogs/user-install-dialog.c:99
 msgid "Installation Log"
-msgstr ""
+msgstr "Aɣmis n usbeddi"
 
 #: ../app/dialogs/vectors-export-dialog.c:80
 msgid "Export Path to SVG"
-msgstr ""
+msgstr "Sifeḍ abrid ɣer SVG"
 
 #: ../app/dialogs/vectors-export-dialog.c:121
 msgid "Export the active path"
-msgstr ""
+msgstr "Sifeḍ abrid urmid"
 
 #: ../app/dialogs/vectors-export-dialog.c:122
 msgid "Export all paths from this image"
-msgstr ""
+msgstr "Sifeḍ akk iberdan si tugna-agi"
 
 #: ../app/dialogs/vectors-import-dialog.c:85
 msgid "Import Paths from SVG"
-msgstr ""
+msgstr "Kter iberdan si SVG"
 
 #: ../app/dialogs/vectors-import-dialog.c:124
 msgid "All files (*.*)"
@@ -17868,7 +17873,7 @@ msgstr ""
 
 #: ../app/dialogs/vectors-import-dialog.c:140
 msgid "_Merge imported paths"
-msgstr ""
+msgstr "Smezdi iberdan yettwketren"
 
 #: ../app/dialogs/vectors-import-dialog.c:150
 msgid "_Scale imported paths to fit image"
@@ -17876,15 +17881,15 @@ msgstr ""
 
 #: ../app/dialogs/vectors-options-dialog.c:106
 msgid "Path _name:"
-msgstr ""
+msgstr "Isem n ubrid:"
 
 #: ../app/dialogs/vectors-options-dialog.c:108
 msgid "Lock path _strokes"
-msgstr ""
+msgstr "Sekker unuɣen n ubrid"
 
 #: ../app/dialogs/vectors-options-dialog.c:109
 msgid "Lock path _position"
-msgstr ""
+msgstr "Sekkeṛ ideg n ubrid"
 
 #: ../app/display/display-enums.c:88
 msgctxt "compass-orientation"
@@ -17904,7 +17909,7 @@ msgstr "Ubdid"
 #: ../app/display/display-enums.c:155
 msgctxt "guides-type"
 msgid "No guides"
-msgstr ""
+msgstr "Ulac imniren"
 
 #: ../app/display/display-enums.c:156
 msgctxt "guides-type"
@@ -17929,7 +17934,7 @@ msgstr ""
 #: ../app/display/display-enums.c:160
 msgctxt "guides-type"
 msgid "Diagonal lines"
-msgstr ""
+msgstr "Izirigen ubdisen"
 
 #: ../app/display/display-enums.c:161
 msgctxt "guides-type"
@@ -18043,20 +18048,20 @@ msgstr "Addef ɣer wumuɣ n tugna"
 
 #: ../app/display/gimpdisplayshell.c:629
 msgid "Zoom image when window size changes"
-msgstr ""
+msgstr "Simɣur tugna ticki tbeddel tiddi n usfaylu"
 
 #: ../app/display/gimpdisplayshell.c:658
 msgid "Toggle Quick Mask"
-msgstr ""
+msgstr "Sermed/sens tagelmust taruradt"
 
 #: ../app/display/gimpdisplayshell.c:673
 msgid "Navigate the image display"
-msgstr ""
+msgstr "Snirem deg ubeqqeḍ n tugna"
 
 #: ../app/display/gimpdisplayshell.c:726 ../app/display/gimpdisplayshell.c:1403
 #: ../app/widgets/gimptoolbox.c:236
 msgid "Drop image files here to open them"
-msgstr ""
+msgstr "Sers dagi ifuyla n tugniwin iwakken ad ten-teldiḍ"
 
 #: ../app/display/gimpdisplayshell-callbacks.c:647
 #, c-format
@@ -18073,7 +18078,7 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-close.c:266
 #, c-format
 msgid "Close %s"
-msgstr ""
+msgstr "Mdel %s"
 
 #: ../app/display/gimpdisplayshell-close.c:178
 msgid "Save _As"
@@ -18082,12 +18087,12 @@ msgstr "Sekles _am"
 #: ../app/display/gimpdisplayshell-close.c:214
 #, c-format
 msgid "Press %s to discard all changes and close the image."
-msgstr ""
+msgstr "Ssed %s iwakken ad tḍeggereḍ akk ibeddilen yerna ad tmedleḍ tugna."
 
 #: ../app/display/gimpdisplayshell-close.c:274
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr ""
+msgstr "Ad teskelseḍ ibeddilen n tugna '%s' send ad tmedleḍ ?"
 
 #: ../app/display/gimpdisplayshell-close.c:307
 #, c-format
@@ -18095,7 +18100,9 @@ msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
+"Ma yella ur teskelseḍ ara tugna, ibeddilen n usrag aneggaru ad ruḥen."
 msgstr[1] ""
+"Ma yella ur teskelseḍ ara tugna, ibeddilen n %d n yisragen ineggura ad ruḥen."
 
 #: ../app/display/gimpdisplayshell-close.c:318
 #, c-format
@@ -18106,7 +18113,11 @@ msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
 msgstr[0] ""
+"Ma yella ur teskelseḍ ara tugna, ibeddilen n usrag aneggaru akked %d n "
+"tseddidt ad ruḥen."
 msgstr[1] ""
+"Ma yella ur teskelseḍ ara tugna, ibeddilen n usrag aneggaru akked %d n "
+"tseddidin ad ruḥen."
 
 #: ../app/display/gimpdisplayshell-close.c:330
 #, c-format
@@ -18114,22 +18125,25 @@ msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
+"Ma yella ur teskelseḍ ara tugna, ibeddilen n tseddidt taneggarut ad ruḥen."
 msgstr[1] ""
+"Ma yella ur teskelseḍ ara tugna, ibeddilen n %d n tseddidin tineggura ad "
+"ruḥen."
 
 #: ../app/display/gimpdisplayshell-close.c:348
 #, c-format
 msgid "The image has been exported to '%s'."
-msgstr ""
+msgstr "Tugna tettwasifeḍ ɣer '%s'."
 
 #: ../app/display/gimpdisplayshell-dnd.c:249
 #: ../app/display/gimpdisplayshell-dnd.c:708
 #: ../app/display/gimpdisplayshell-dnd.c:767
 msgid "Drop New Layer"
-msgstr ""
+msgstr "Sers tissi tamaynutt"
 
 #: ../app/display/gimpdisplayshell-dnd.c:292
 msgid "Drop New Path"
-msgstr ""
+msgstr "Sers abrid amaynut"
 
 #: ../app/display/gimpdisplayshell-dnd.c:366
 #: ../app/tools/gimpbucketfilltool.c:579 ../app/tools/gimpcagetool.c:240
@@ -18137,7 +18151,7 @@ msgstr ""
 #: ../app/tools/gimpselectiontool.c:569
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
-msgstr ""
+msgstr "Ulamek abeddel n yipiksilen n ugraw n tissiyin."
 
 #: ../app/display/gimpdisplayshell-dnd.c:374 ../app/tools/gimpfiltertool.c:315
 #: ../app/tools/gimptransformtool.c:682
@@ -18149,20 +18163,20 @@ msgstr "Ipiksilen n tissiyin yettwafernen sekkeṛen."
 #: ../app/widgets/gimpdrawabletreeview.c:377
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
-msgstr ""
+msgstr "Sers udlif di tissi"
 
 #: ../app/display/gimpdisplayshell-dnd.c:446
 #: ../app/widgets/gimpdrawabletreeview.c:296
 #: ../app/widgets/gimpdrawabletreeview.c:397
 msgctxt "undo-type"
 msgid "Drop color to layer"
-msgstr ""
+msgstr "Sers ini di tissi"
 
 #: ../app/display/gimpdisplayshell-dnd.c:598
 #: ../app/widgets/gimpitemtreeview.c:1309
 #: ../app/widgets/gimplayertreeview.c:816
 msgid "Drop layers"
-msgstr ""
+msgstr "Sers tissiyin"
 
 #: ../app/display/gimpdisplayshell-dnd.c:741
 #: ../app/display/gimpdisplayshell-dnd.c:758
@@ -18172,25 +18186,25 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:79
 msgid "Color Display Filters"
-msgstr ""
+msgstr "tastayt n ubeqqeḍ n yini"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:82
 msgid "Configure Color Display Filters"
-msgstr ""
+msgstr "Seɣwer tastayt n ubeqqeḍ n yini"
 
 #: ../app/display/gimpdisplayshell-handlers.c:946
 #, c-format
 msgid "Image saved to '%s'"
-msgstr ""
+msgstr "Tugna tettwasekles di '%s'"
 
 #: ../app/display/gimpdisplayshell-handlers.c:959
 #, c-format
 msgid "Image exported to '%s'"
-msgstr ""
+msgstr "Tugna tettwasifeḍ di '%s'"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:135
 msgid "Layer Select"
-msgstr ""
+msgstr "Tafrayt n tissi"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:276
 msgid "Layer Selection Moved Down"
@@ -18202,11 +18216,11 @@ msgstr "Tafrayt n tissi tmutti d asawen"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:114
 msgid "Rotate View"
-msgstr ""
+msgstr "Zzi tamuɣli"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:116
 msgid "Select Rotation Angle"
-msgstr ""
+msgstr "Fren tiɣmert n tuzzya"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
 #: ../app/tools/gimpmeasuretool.c:794
@@ -18219,15 +18233,15 @@ msgstr "tifesniwin"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:115
 msgid "Zoom Ratio"
-msgstr ""
+msgstr "Assaɣ n usemɣer"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:117
 msgid "Select Zoom Ratio"
-msgstr ""
+msgstr "Fren assaɣ n usemɣer"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:162
 msgid "Zoom ratio:"
-msgstr ""
+msgstr "Assaɣ n usemɣer:"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:187
 msgid "Zoom:"
@@ -18264,35 +18278,35 @@ msgstr "ipiksilen"
 #: ../app/display/gimpstatusbar.c:447
 #, c-format
 msgid "Cancel <i>%s</i>"
-msgstr ""
+msgstr "Sefsex <i>%s</i>"
 
 #: ../app/display/gimptoolcompass.c:847
 msgid "Click to place vertical and horizontal guides"
-msgstr ""
+msgstr "Ssit iwakken ad tserseḍ imniren ubdiden akked iglawanen"
 
 #: ../app/display/gimptoolcompass.c:855
 msgid "Click to place a horizontal guide"
-msgstr ""
+msgstr "Ssit iwakken ad tserseḍ amnir aglawan"
 
 #: ../app/display/gimptoolcompass.c:863
 msgid "Click to place a vertical guide"
-msgstr ""
+msgstr "Ssit iwakken ad tserseḍ amnir ubdid"
 
 #: ../app/display/gimptoolcompass.c:871
 msgid "Click-Drag to add a new point"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad ternuḍ tanqiḍt tamaynutt"
 
 #: ../app/display/gimptoolcompass.c:882 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ tanqiḍt-agi"
 
 #: ../app/display/gimptoolcompass.c:899
 msgid "Click-Drag to move all points"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ akk tinqiḍin"
 
 #: ../app/display/gimptoolfocus.c:1117
 msgid "Click-Drag to change the midpoint"
-msgstr ""
+msgstr "Sit-zuɣer iwakken ad tbeddeleḍ tanqiḍt n tlemmast"
 
 #: ../app/display/gimptoolfocus.c:1119
 msgid "Click-Drag to resize the limit"
@@ -18301,7 +18315,7 @@ msgstr "Sit-zuɣer iwakken ad tbeddeleḍ tiddi n talast"
 #: ../app/display/gimptoolfocus.c:1121 ../app/display/gimptoolfocus.c:1134
 #, c-format
 msgid "%s to resize the focus"
-msgstr ""
+msgstr "%s iwakken ad tbeddeleḍ tiddi n usaḍas"
 
 #: ../app/display/gimptoolfocus.c:1126 ../app/display/gimptoolfocus.c:1139
 msgid "Click-Drag to resize the focus"
@@ -18323,21 +18337,21 @@ msgstr "Sit-zuɣer iwakken ad teziḍ asaḍas"
 #: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:662
 #, c-format
 msgid "%s for constrained angles"
-msgstr ""
+msgstr "%s iwakken ad tḥettemeḍ tiɣemmar"
 
 #: ../app/display/gimptoolgyroscope.c:714
 msgid "Click-Drag to zoom"
-msgstr ""
+msgstr "Sit-zuɣer iwakken ad tsimɣureḍ"
 
 #: ../app/display/gimptoolgyroscope.c:718
 #, c-format
 msgid "%s for constrained steps"
-msgstr ""
+msgstr "%s iwakken ad tḥettemeḍ isurifen"
 
 #: ../app/display/gimptoolgyroscope.c:725
 #: ../app/display/gimptooltransformgrid.c:1841
 msgid "Click-Drag to rotate"
-msgstr ""
+msgstr "Sit-zuɣer iwakken ad tezziḍ"
 
 #: ../app/display/gimptoolgyroscope.c:734
 msgid "Click-Drag to pan"
@@ -18346,22 +18360,22 @@ msgstr ""
 #: ../app/display/gimptoolgyroscope.c:740
 #, c-format
 msgid "%s to rotate"
-msgstr ""
+msgstr "%s iwakken ad tezziḍ"
 
 #: ../app/display/gimptoolgyroscope.c:741
 #, c-format
 msgid "%s for a constrained axis"
-msgstr ""
+msgstr "%s iwakken ad tḥettemeḍ igellusen"
 
 #: ../app/display/gimptoolgyroscope.c:742
 #, c-format
 msgid "%s to zoom"
-msgstr ""
+msgstr "%s iwakken ad tsimɣureḍ"
 
 #: ../app/display/gimptoolhandlegrid.c:865
 #: ../app/display/gimptooltransformgrid.c:1832
 msgid "Click-Drag to move"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ"
 
 #: ../app/display/gimptoolhandlegrid.c:868
 msgid "Click-Drag to rotate and scale"
@@ -18374,19 +18388,19 @@ msgstr ""
 #: ../app/display/gimptoolhandlegrid.c:874
 #: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to change perspective"
-msgstr ""
+msgstr "Sit-zuɣer iwakken ad tbeddeleḍ amnad"
 
 #: ../app/display/gimptoolhandlegrid.c:885
 msgid "Click to add a handle"
-msgstr ""
+msgstr "Ssit iwakken ad ternuḍ tafettust"
 
 #: ../app/display/gimptoolhandlegrid.c:891
 msgid "Click-Drag to move this handle"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ tafettust-agi"
 
 #: ../app/display/gimptoolhandlegrid.c:896
 msgid "Click-Drag to remove this handle"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tekkseḍ tafettust-agi"
 
 #: ../app/display/gimptoolline.c:345 ../app/display/gimptoolline.c:504
 msgid "Line: "
@@ -18394,49 +18408,51 @@ msgstr "Izirig: "
 
 #: ../app/display/gimptoolline.c:1551
 msgid "Click-Drag to move the endpoint"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ tanqiḍt n yixef"
 
 #: ../app/display/gimptoolline.c:1564
 msgid "Release to remove the slider"
-msgstr ""
+msgstr "Serreḥ iwakken ad tekkseḍ tamaccagt"
 
 #: ../app/display/gimptoolline.c:1568
 #, c-format
 msgid "%s for constrained values"
-msgstr ""
+msgstr "%s iwakken ad tḥettemeḍ azalen"
 
 #: ../app/display/gimptoolline.c:1578
 msgid "Click-Drag to move the slider; drag away to remove the slider"
 msgstr ""
+"Ssit, zuɣer iwakken ad tesmuttiḍ tamaccagt; zuɣer-it ɣer berra n usfaylu "
+"iwakken ad t-tekkseḍ"
 
 #: ../app/display/gimptoolline.c:1583
 msgid "Click-Drag to move or remove the slider"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ neɣ ad tekkseḍ tamaccagt"
 
 #: ../app/display/gimptoolline.c:1588
 msgid "Click-Drag to move the slider"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ tamaccagt"
 
 #: ../app/display/gimptoolline.c:1599
 msgid "Click-Drag away to remove the slider"
-msgstr ""
+msgstr "Ssit, zuɣer ɣer berra n usfaylu iwakken ad tekkseḍ tamaccagt"
 
 #: ../app/display/gimptoolline.c:1603
 msgid "Click-Drag to remove the slider"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tekkseḍ tamaccagt"
 
 #: ../app/display/gimptoolline.c:1614
 msgid "Click or Click-Drag to add a new slider"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad ternuḍ tamaccagt tamaynutt"
 
 #: ../app/display/gimptoolline.c:1620
 msgid "Click-Drag to move the line"
-msgstr ""
+msgstr "Sit-zuɣer iwakken ad tesmuttiḍ izirig"
 
 #: ../app/display/gimptoolline.c:1632
 #, c-format
 msgid "%s to move the whole line"
-msgstr ""
+msgstr "%s iwakken ad tekkseḍ izirig meṛṛa"
 
 #: ../app/display/gimptoolpath.c:278 ../app/tools/gimpvectoroptions.c:72
 msgid "Edit Mode"
@@ -18452,7 +18468,7 @@ msgstr ""
 
 #: ../app/display/gimptoolpath.c:549
 msgid "The active path is locked."
-msgstr ""
+msgstr "Abrid urmid isekkeṛ."
 
 #: ../app/display/gimptoolpath.c:637
 msgid "Add Stroke"
@@ -18469,7 +18485,7 @@ msgstr "Ger tamdeyt"
 
 #: ../app/display/gimptoolpath.c:714
 msgid "Drag Handle"
-msgstr ""
+msgstr "Zuɣer tafettust"
 
 #: ../app/display/gimptoolpath.c:745
 msgid "Drag Anchor"
@@ -18485,7 +18501,7 @@ msgstr "Zuɣer azlig"
 
 #: ../app/display/gimptoolpath.c:814
 msgid "Connect Strokes"
-msgstr ""
+msgstr "Qqen unuɣen"
 
 #: ../app/display/gimptoolpath.c:846
 msgid "Drag Path"
@@ -18533,11 +18549,11 @@ msgstr ""
 
 #: ../app/display/gimptoolpath.c:1629
 msgid "Click-Drag to move the handle around"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ tafettust"
 
 #: ../app/display/gimptoolpath.c:1636
 msgid "Click-Drag to move the handles around symmetrically"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ tifettusin s ujjur"
 
 #: ../app/display/gimptoolpath.c:1651
 msgid "Click-Drag to change the shape of the curve"
@@ -18546,15 +18562,15 @@ msgstr "Sit-zuɣer iwakken ad tbeddeleḍ talɣa n uzlig"
 #: ../app/display/gimptoolpath.c:1654
 #, c-format
 msgid "%s: symmetrical"
-msgstr ""
+msgstr "%s: s ujjur"
 
 #: ../app/display/gimptoolpath.c:1659
 msgid "Click-Drag to move the component around"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ isger"
 
 #: ../app/display/gimptoolpath.c:1667
 msgid "Click-Drag to move the path around"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ abrid"
 
 #: ../app/display/gimptoolpath.c:1671
 msgid "Click-Drag to insert an anchor on the path"
@@ -18570,7 +18586,7 @@ msgstr ""
 
 #: ../app/display/gimptoolpath.c:1688
 msgid "Click to open up the path"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad teldiḍ abrid"
 
 #: ../app/display/gimptoolpath.c:1692
 msgid "Click to make this node angular"
@@ -18578,7 +18594,7 @@ msgstr ""
 
 #: ../app/display/gimptoolpath.c:1696
 msgid "Clicking here does nothing, try clicking on path elements."
-msgstr ""
+msgstr "Asiti dagi ur ixeddem acemmek, eɛreḍ ad tsiteḍ ɣef yiferdisen n ubrid."
 
 #: ../app/display/gimptoolpath.c:1904 ../app/display/gimptoolpath.c:2014
 msgid "Delete Anchors"
@@ -18590,7 +18606,7 @@ msgstr ""
 
 #: ../app/display/gimptoolpolygon.c:891
 msgid "Click to close shape"
-msgstr ""
+msgstr "Ssit iwakken ad tmedleḍ talɣa"
 
 #: ../app/display/gimptoolpolygon.c:895
 msgid "Click-Drag to move segment vertex"
@@ -18612,15 +18628,15 @@ msgstr ""
 #: ../app/display/gimptoolrectangle.c:874
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
-msgstr ""
+msgstr "Asrem: "
 
 #: ../app/display/gimptoolrectangle.c:2138
 msgid "Position: "
-msgstr ""
+msgstr "Ideg: "
 
 #: ../app/display/gimptooltransform3dgrid.c:632
 msgid "Click-Drag to move the vanishing point"
-msgstr ""
+msgstr "Ssit, zuɣer iwakken ad tesmuttiḍ tanqiḍt"
 
 #: ../app/display/gimptooltransformgrid.c:1825
 #: ../app/display/gimptooltransformgrid.c:1830
@@ -18633,7 +18649,7 @@ msgstr ""
 
 #: ../app/display/gimptooltransformgrid.c:1839
 msgid "Click-Drag to shear"
-msgstr ""
+msgstr "Sit-zuɣer iwakken ad tgezmeḍ"
 
 #: ../app/file/file-open.c:136 ../app/file/file-save.c:140
 msgid "Not a regular file"
@@ -18655,30 +18671,30 @@ msgstr "Asiɣzef %s igguma ad ildi tugna"
 
 #: ../app/file/file-open.c:638
 msgid "Image doesn't contain any layers"
-msgstr ""
+msgstr "Tugna ur tesɛi ara kra n tissiyin"
 
 #: ../app/file/file-open.c:696
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr ""
+msgstr "Alday n '%s' ur yeddi ara: %s"
 
 #: ../app/file/file-remote.c:113
 msgid "Mounting remote volume"
-msgstr ""
+msgstr "Aserkeb n ubleɣ anmeggag"
 
 #: ../app/file/file-remote.c:289
 msgid "Opening remote file"
-msgstr ""
+msgstr "Alday n ufaylu anmeggag"
 
 #: ../app/file/file-remote.c:355
 #, c-format
 msgid "Downloading image (%s of %s)"
-msgstr ""
+msgstr "Asider n tugna (%s seg %s)"
 
 #: ../app/file/file-remote.c:359
 #, c-format
 msgid "Uploading image (%s of %s)"
-msgstr ""
+msgstr "Asili n tugna (%s seg %s)"
 
 #: ../app/file/file-remote.c:382
 #, c-format
@@ -18688,15 +18704,15 @@ msgstr ""
 #: ../app/file/file-remote.c:386
 #, c-format
 msgid "Uploaded %s of image data"
-msgstr ""
+msgstr "Asili n %s n yisefka n tugna"
 
 #: ../app/file/file-save.c:113
 msgid "There is no active layer to save"
-msgstr ""
+msgstr "Ulac dagi tissi turmidt ara teskelseḍ"
 
 #: ../app/file/file-save.c:133
 msgid "Failed to get file information"
-msgstr ""
+msgstr "Aggay n ufaylu n telɣut ur yeddi ara"
 
 #: ../app/file/file-save.c:307
 #, c-format
@@ -18748,23 +18764,23 @@ msgstr ""
 #: ../app/file-data/file-data-gex.c:321 ../app/file-data/file-data-gex.c:456
 #, c-format
 msgid "Invalid GIMP extension '%s': %s"
-msgstr ""
+msgstr "Asiɣzef n GIMP armeɣtu '%s': %s"
 
 #: ../app/file-data/file-data.c:61 ../app/file-data/file-data.c:118
 msgid "GIMP brush"
-msgstr ""
+msgstr "Amfezzu n GIMP."
 
 #: ../app/file-data/file-data.c:196 ../app/file-data/file-data.c:250
 msgid "GIMP brush (animated)"
-msgstr ""
+msgstr "Amfessu n GIMP (yettemwwiwil)"
 
 #: ../app/file-data/file-data.c:340 ../app/file-data/file-data.c:393
 msgid "GIMP pattern"
-msgstr ""
+msgstr "Udlif n GIMP"
 
 #: ../app/file-data/file-data.c:465
 msgid "GIMP extension"
-msgstr ""
+msgstr "Asiɣzef n GIMP"
 
 #: ../app/gegl/gimp-babl.c:184 ../app/gegl/gimp-babl.c:185
 #: ../app/gegl/gimp-babl.c:186 ../app/gegl/gimp-babl.c:187
@@ -18826,7 +18842,7 @@ msgstr ""
 #: ../app/gegl/gimp-babl.c:274 ../app/gegl/gimp-babl.c:275
 #: ../app/gegl/gimp-babl.c:276 ../app/gegl/gimp-babl.c:277
 msgid "Red component"
-msgstr ""
+msgstr "Isger azeggaɣ"
 
 #: ../app/gegl/gimp-babl.c:279 ../app/gegl/gimp-babl.c:280
 #: ../app/gegl/gimp-babl.c:281 ../app/gegl/gimp-babl.c:282
@@ -18838,7 +18854,7 @@ msgstr ""
 #: ../app/gegl/gimp-babl.c:293 ../app/gegl/gimp-babl.c:294
 #: ../app/gegl/gimp-babl.c:295 ../app/gegl/gimp-babl.c:296
 msgid "Green component"
-msgstr ""
+msgstr "Isger azegzaw"
 
 #: ../app/gegl/gimp-babl.c:298 ../app/gegl/gimp-babl.c:299
 #: ../app/gegl/gimp-babl.c:300 ../app/gegl/gimp-babl.c:301
@@ -18850,7 +18866,7 @@ msgstr ""
 #: ../app/gegl/gimp-babl.c:312 ../app/gegl/gimp-babl.c:313
 #: ../app/gegl/gimp-babl.c:314 ../app/gegl/gimp-babl.c:315
 msgid "Blue component"
-msgstr ""
+msgstr "Isger anili"
 
 #: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
 #: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
@@ -19265,22 +19281,22 @@ msgstr ""
 #: ../app/operations/operations-enums.c:256
 msgctxt "layer-mode"
 msgid "HSV Hue"
-msgstr ""
+msgstr "Tiɣmi HSV"
 
 #: ../app/operations/operations-enums.c:257
 msgctxt "layer-mode"
 msgid "HSV Saturation"
-msgstr ""
+msgstr "Tawant HSV"
 
 #: ../app/operations/operations-enums.c:258
 msgctxt "layer-mode"
 msgid "HSL Color"
-msgstr ""
+msgstr "Ini HSL"
 
 #: ../app/operations/operations-enums.c:259
 msgctxt "layer-mode"
 msgid "HSV Value"
-msgstr ""
+msgstr "Azal HSV"
 
 #: ../app/operations/operations-enums.c:260
 msgctxt "layer-mode"
@@ -19563,7 +19579,7 @@ msgstr ""
 
 #: ../app/operations/gimplevelsconfig.c:865
 msgid "not a GIMP Levels file"
-msgstr ""
+msgstr "mačči d afaylu n yiswiren n GIMP"
 
 #: ../app/operations/gimplevelsconfig.c:940
 msgid "parse error"
@@ -19571,7 +19587,7 @@ msgstr ""
 
 #: ../app/operations/gimplevelsconfig.c:975
 msgid "Writing levels file failed: "
-msgstr ""
+msgstr "Tira n ufaylu n yiswiren ur teddi ara:"
 
 #: ../app/operations/gimpoperationbrightnesscontrast.c:65
 #: ../app/tools/gimpbrightnesscontrasttool.c:98
@@ -22998,7 +23014,7 @@ msgstr ""
 
 #: ../app/tools/gimphistogramoptions.c:64
 msgid "Histogram Scale"
-msgstr ""
+msgstr "Taskala n umazrudlif"
 
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:55
@@ -23145,7 +23161,7 @@ msgstr ""
 
 #: ../app/tools/gimplevelstool.c:1011 ../app/tools/gimpthresholdtool.c:429
 msgid "Calculating histogram..."
-msgstr ""
+msgstr "Asiḍen n umazrudlif..."
 
 #: ../app/tools/gimpmagnifyoptions.c:84
 msgid "Auto-resize window"
@@ -26629,7 +26645,7 @@ msgstr ""
 
 #: ../app/widgets/gimphistogrameditor.c:164
 msgid "Histogram channel"
-msgstr ""
+msgstr "Abadu n umazrudlif"
 
 #: ../app/widgets/gimpiconpicker.c:241
 msgid "From File..."
@@ -27382,12 +27398,12 @@ msgstr "Rnu ɣer tpaliḍt"
 #: ../app/widgets/widgets-enums.c:176
 msgctxt "histogram-scale"
 msgid "Linear histogram"
-msgstr ""
+msgstr "Amazrudlif imzireg"
 
 #: ../app/widgets/widgets-enums.c:177
 msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
-msgstr ""
+msgstr "Amazrudlif alugaritman"
 
 #: ../app/widgets/widgets-enums.c:211
 msgctxt "tab-style"
