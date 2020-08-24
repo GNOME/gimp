@@ -87,6 +87,9 @@ struct _GimpSpinScalePrivate
   gboolean         pointer_warp;
   gint             pointer_warp_x;
   gint             pointer_warp_start_x;
+
+  gint             change_value_idle_id;
+  gdouble          change_value_idle_value;
 };
 
 #define GET_PRIVATE(obj) ((GimpSpinScalePrivate *) gimp_spin_scale_get_instance_private ((GimpSpinScale *) (obj)))
@@ -103,6 +106,7 @@ static void       gimp_spin_scale_get_property      (GObject          *object,
                                                      GValue           *value,
                                                      GParamSpec       *pspec);
 
+static void       gimp_spin_scale_map               (GtkWidget        *widget);
 static void       gimp_spin_scale_size_request      (GtkWidget        *widget,
                                                      GtkRequisition   *requisition);
 static void       gimp_spin_scale_style_set         (GtkWidget        *widget,
@@ -155,6 +159,7 @@ gimp_spin_scale_class_init (GimpSpinScaleClass *klass)
   object_class->set_property         = gimp_spin_scale_set_property;
   object_class->get_property         = gimp_spin_scale_get_property;
 
+  widget_class->map                  = gimp_spin_scale_map;
   widget_class->size_request         = gimp_spin_scale_size_request;
   widget_class->style_set            = gimp_spin_scale_style_set;
   widget_class->expose_event         = gimp_spin_scale_expose;
@@ -212,6 +217,19 @@ gimp_spin_scale_dispose (GObject *object)
 
   g_clear_object (&private->layout);
 
+  if (private->change_value_idle_id)
+    {
+      GtkAdjustment *adjustment;
+
+      adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (object));
+
+      g_source_remove (private->change_value_idle_id);
+
+      private->change_value_idle_id = 0;
+
+      gtk_adjustment_set_value (adjustment, private->change_value_idle_value);
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -264,6 +282,36 @@ gimp_spin_scale_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+gimp_spin_scale_map (GtkWidget *widget)
+{
+  GdkWindow *window;
+
+  GTK_WIDGET_CLASS (parent_class)->map (widget);
+
+  window = gtk_entry_get_text_window (GTK_ENTRY (widget));
+
+  if (window)
+    {
+      /* as per 2020, motion hints seem to be broken, at least on X: calling
+       * gdk_event_request_motions() doesn't seem to generate further motion
+       * events, causing motion events to be discarded, especially if the spin-
+       * scale is tied to some costly operation, such as projection
+       * invalidation, which blocks the main thread.
+       *
+       * to fix this, we simply avoid motion hints for the widget, and use an
+       * idle for setting the spin-scale value in response to motion events, as
+       * a form of ad-hoc motion compression.
+       *
+       * note that this isn't necessary with gtk3, which does its own motion
+       * compression.
+       */
+      gdk_window_set_events (window,
+                             gdk_window_get_events (window) &
+                             ~GDK_POINTER_MOTION_HINT_MASK);
     }
 }
 
@@ -715,10 +763,26 @@ gimp_spin_scale_get_limits (GimpSpinScale *scale,
     }
 }
 
+static gboolean
+gimp_spin_scale_change_value_idle (GimpSpinScale *scale)
+{
+  GimpSpinScalePrivate *private = GET_PRIVATE (scale);
+  GtkAdjustment        *adjustment;
+
+  private->change_value_idle_id = 0;
+
+  adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (scale));
+
+  gtk_adjustment_set_value (adjustment, private->change_value_idle_value);
+
+  return G_SOURCE_REMOVE;
+}
+
 static void
 gimp_spin_scale_change_value (GtkWidget *widget,
                               gdouble    x,
-                              guint      state)
+                              guint      state,
+                              gboolean   now)
 {
   GimpSpinScalePrivate *private     = GET_PRIVATE (widget);
   GtkSpinButton        *spin_button = GTK_SPIN_BUTTON (widget);
@@ -794,7 +858,26 @@ gimp_spin_scale_change_value (GtkWidget *widget,
   if (private->constrain_drag)
     value = rint (value);
 
-  gtk_adjustment_set_value (adjustment, value);
+  if (now)
+    {
+      if (private->change_value_idle_id)
+        {
+          g_source_remove (private->change_value_idle_id);
+
+          private->change_value_idle_id = 0;
+        }
+
+      gtk_adjustment_set_value (adjustment, value);
+    }
+  else if (! private->change_value_idle_id)
+    {
+      private->change_value_idle_value = value;
+
+      private->change_value_idle_id = g_idle_add_full (
+        G_PRIORITY_DEFAULT + 1,
+        (GSourceFunc) gimp_spin_scale_change_value_idle,
+        widget, NULL);
+    }
 }
 
 static gboolean
@@ -821,7 +904,7 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
           gtk_widget_grab_focus (widget);
 
-          gimp_spin_scale_change_value (widget, event->x, event->state);
+          gimp_spin_scale_change_value (widget, event->x, event->state, TRUE);
 
           return TRUE;
 
@@ -863,7 +946,7 @@ gimp_spin_scale_button_release (GtkWidget      *widget,
        * gimp_spin_scale_motion_notify().
        */
       if (! private->pointer_warp)
-        gimp_spin_scale_change_value (widget, event->x, event->state);
+        gimp_spin_scale_change_value (widget, event->x, event->state, TRUE);
 
       if (private->relative_change)
         {
@@ -953,7 +1036,10 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
             private->start_x = private->pointer_warp_start_x;
         }
 
-      gimp_spin_scale_change_value (widget, event->x, event->state);
+      /* change the value in an idle, as a form of motion compression, since we
+       * don't use motion hints.  see the comment in gimp_spin_scale_map().
+       */
+      gimp_spin_scale_change_value (widget, event->x, event->state, FALSE);
 
       if (private->relative_change)
         {
