@@ -2008,29 +2008,28 @@ AC_SUBST(FILE_PDF_SAVE)
 AC_ARG_WITH(wmf, [  --without-wmf           build without WMF support])
 
 have_libwmf=no
-if test "x$with_wmf" != xno; then
-  AC_PATH_PROG(WMF_CONFIG, libwmf-config, no)
-  if test "x$WMF_CONFIG" != "xno" ; then
-    have_libwmf=yes
-    AC_MSG_CHECKING(for libwmf >= wmf_required_version)
-    wmf_version=`$WMF_CONFIG --version`
-    if expr $wmf_version \>= wmf_required_version >/dev/null; then
-      AC_MSG_RESULT([yes (version $wmf_version)])
-      FILE_WMF='file-wmf$(EXEEXT)'
-      WMF_LIBS=`$WMF_CONFIG --libs`
-      WMF_CFLAGS=`$WMF_CONFIG --cflags`
-    else
-      have_libwmf=yes
-      PKG_CHECK_MODULES(WMF, libwmf >= wmf_required_version,
-                        FILE_WMF='file-wmf$(EXEEXT)',
-                        have_libwmf="no (libwmf not found)")
-   fi
-  else
-    have_libwmf="no (libwmf not found)"
-  fi
-fi
+AS_IF([test "x$with_wmf" != xno], [
+  PKG_CHECK_MODULES([WMF], libwmf >= wmf_required_version,
+                    [have_libwmf=yes], [have_libwmf="no (libwmf not found)"])
+
+  AS_IF([test "x$have_libwmf" != xyes], [
+    # No pkg-config; try falling back to the traditional -config script
+    AC_PATH_PROG([WMF_CONFIG], [libwmf-config], [no])
+    AS_IF([test "x$WMF_CONFIG" != xno], [
+      AC_MSG_CHECKING(for libwmf >= wmf_required_version using $WMF_CONFIG)
+      wmf_version=`$WMF_CONFIG --version`
+      AS_IF(expr $wmf_version \>= wmf_required_version >/dev/null, [
+        AC_MSG_RESULT([yes (version $wmf_version)])
+        have_libwmf=yes
+        WMF_LIBS=`$WMF_CONFIG --libs`
+        WMF_CFLAGS=`$WMF_CONFIG --cflags`
+      ])
+    ])
+  ])
+])
 
 if test "x$have_libwmf" = xyes; then
+  FILE_WMF='file-wmf$(EXEEXT)'
   MIME_TYPES="$MIME_TYPES;image/x-wmf"
 fi
 
