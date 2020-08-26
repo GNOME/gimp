@@ -1452,6 +1452,40 @@ read_channel_data (FILE        *f,
   return 0;
 }
 
+static gboolean
+read_raster_layer_info (FILE      *f,
+                        long       layer_extension_start,
+                        guint16   *bitmap_count,
+                        guint16   *channel_count,
+                        GError   **error)
+{
+  guint32 layer_extension_len;
+
+  if (fseek (f, layer_extension_start, SEEK_SET) < 0
+      || fread (&layer_extension_len, 4, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading layer extension information"));
+      return FALSE;
+    }
+
+    layer_extension_len = GUINT32_FROM_LE (layer_extension_len);
+
+    if (fread (bitmap_count, 2, 1, f) < 1
+        || fread (channel_count, 2, 1, f) < 1)
+      {
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Error reading layer extension information"));
+        return FALSE;
+      }
+    if (try_fseek (f, layer_extension_start + layer_extension_len, SEEK_SET, error) < 0)
+      {
+        return FALSE;
+      }
+
+  return TRUE;
+}
+
 static GimpLayer *
 read_layer_block (FILE      *f,
                   GimpImage *image,
@@ -1464,7 +1498,7 @@ read_layer_block (FILE      *f,
   long layer_extension_start;
   gint sub_id;
   guint32 sub_init_len, sub_total_len;
-  guint32 chunk_len, layer_extension_len;
+  guint32 chunk_len;
   gchar *name = NULL;
   gchar *layer_name = NULL;
   guint16 namelen;
@@ -1537,45 +1571,30 @@ read_layer_block (FILE      *f,
           name[namelen] = 0;
           layer_name = g_convert (name, -1, "utf-8", "iso8859-1", NULL, NULL, NULL);
           g_free (name);
-          chunk_len = GUINT32_FROM_LE (chunk_len);
 
-          /* Skip remainder of layer info and read layer extension length */
+          chunk_len = GUINT32_FROM_LE (chunk_len);
           layer_extension_start = sub_block_start + chunk_len;
-          if (fseek(f, layer_extension_start, SEEK_SET) < 0
-              || fread(&layer_extension_len, 4, 1, f) < 1)
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Error reading layer extension information"));
-              g_free (layer_name);
-              return NULL;
-            }
-          layer_extension_len = GUINT32_FROM_LE (layer_extension_len);
+
           switch (type)
             {
             case keGLTFloatingRasterSelection:
               g_message ("Floating selection restored as normal layer (%s)", layer_name);
             case keGLTRaster:
-              can_handle_layer = TRUE;
-              if (fread (&bitmap_count, 2, 1, f) < 1
-                  || fread (&channel_count, 2, 1, f) < 1)
+              if (! read_raster_layer_info (f, layer_extension_start,
+                                            &bitmap_count,
+                                            &channel_count,
+                                            error))
                 {
-                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                              _("Error reading layer information"));
                   g_free (layer_name);
                   return NULL;
                 }
+              can_handle_layer = TRUE;
               break;
             default:
               bitmap_count = 0;
               channel_count = 0;
               g_message ("Unsupported layer type %d (%s)", type, layer_name);
               break;
-            }
-
-          if (try_fseek (f, layer_extension_start + layer_extension_len, SEEK_SET, error) < 0)
-            {
-              g_free (layer_name);
-              return NULL;
             }
         }
       else
