@@ -129,7 +129,7 @@ query (void)
   gimp_register_magic_load_handler (LOAD_PROC,
                                     "jpg,jpeg,jpe",
                                     "",
-                                    "6,string,JFIF,6,string,Exif");
+                                    "0,string,\xff\xd8\xff");
 
   gimp_install_procedure (LOAD_THUMB_PROC,
                           "Loads a thumbnail from a JPEG image",
