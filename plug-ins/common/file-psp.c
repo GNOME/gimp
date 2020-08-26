@@ -636,7 +636,7 @@ psp_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-psp");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
-                                          "psp,tub,pspimage");
+                                          "psp,tub,pspimage,psptube");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,Paint\\040Shop\\040Pro\\040Image\\040File\n\032");
     }
@@ -1920,6 +1920,7 @@ read_tube_block (FILE      *f,
   guchar             name[514];
   guint32            step_size, column_count, row_count, cell_count;
   guint32            placement_mode, selection_mode;
+  guint32            chunk_len;
   gint               i;
   GimpPixPipeParams  params;
   GimpParasite      *pipe_parasite;
@@ -1927,21 +1928,42 @@ read_tube_block (FILE      *f,
 
   gimp_pixpipe_params_init (&params);
 
-  if (fread (&version, 2, 1, f) < 1
-      || fread (name, 513, 1, f) < 1
-      || fread (&step_size, 4, 1, f) < 1
-      || fread (&column_count, 4, 1, f) < 1
-      || fread (&row_count, 4, 1, f) < 1
-      || fread (&cell_count, 4, 1, f) < 1
-      || fread (&placement_mode, 4, 1, f) < 1
-      || fread (&selection_mode, 4, 1, f) < 1)
+  if (psp_ver_major >= 4)
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Error reading tube data chunk"));
-      return -1;
+      name[0] = 0;
+      if (fread (&chunk_len, 4, 1, f) < 1
+          || fread (&version, 2, 1, f) < 1
+          || fread (&step_size, 4, 1, f) < 1
+          || fread (&column_count, 4, 1, f) < 1
+          || fread (&row_count, 4, 1, f) < 1
+          || fread (&cell_count, 4, 1, f) < 1
+          || fread (&placement_mode, 4, 1, f) < 1
+          || fread (&selection_mode, 4, 1, f) < 1)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading tube data chunk"));
+          return -1;
+        }
+    }
+  else
+    {
+      chunk_len = 0;
+      if (fread (&version, 2, 1, f) < 1
+          || fread (name, 513, 1, f) < 1
+          || fread (&step_size, 4, 1, f) < 1
+          || fread (&column_count, 4, 1, f) < 1
+          || fread (&row_count, 4, 1, f) < 1
+          || fread (&cell_count, 4, 1, f) < 1
+          || fread (&placement_mode, 4, 1, f) < 1
+          || fread (&selection_mode, 4, 1, f) < 1)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading tube data chunk"));
+          return -1;
+        }
+      name[513] = 0;
     }
 
-  name[513] = 0;
   version = GUINT16_FROM_LE (version);
   params.step = GUINT32_FROM_LE (step_size);
   params.cols = GUINT32_FROM_LE (column_count);
