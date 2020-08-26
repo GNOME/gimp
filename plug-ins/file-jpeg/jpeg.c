@@ -148,7 +148,7 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "jpg,jpeg,jpe");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
-                                      "6,string,JFIF,6,string,Exif");
+                                      "0,string,\xff\xd8\xff");
 
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
