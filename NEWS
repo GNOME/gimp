@@ -67,6 +67,7 @@ Plug-ins:
     with invalid header flags regarding compression, while we are able
     to know the right compression from other flags. This allows to
     recover invalid DDS files exported by other software.
+  - JPEG detection improved to be more generic and reliable.
 
 Debugging:
 
