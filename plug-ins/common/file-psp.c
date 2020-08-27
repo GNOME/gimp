@@ -1197,21 +1197,21 @@ gimp_layer_mode_from_psp_blend_mode (PSPBlendModes mode)
       return GIMP_LAYER_MODE_BURN_LEGACY;
 
     case PSP_BLEND_EXCLUSION:
-      return -1;                /* ??? */
-
-    case PSP_BLEND_ADJUST:
-      return -1;                /* ??? */
+      return GIMP_LAYER_MODE_EXCLUSION;
 
     case PSP_BLEND_TRUE_HUE:
-      return -1;                /* ??? */
+      return GIMP_LAYER_MODE_HSV_HUE;
 
     case PSP_BLEND_TRUE_SATURATION:
-      return -1;                /* ??? */
+      return GIMP_LAYER_MODE_HSV_SATURATION;
 
     case PSP_BLEND_TRUE_COLOR:
-      return -1;                /* ??? */
+      return GIMP_LAYER_MODE_HSL_COLOR;
 
     case PSP_BLEND_TRUE_LIGHTNESS:
+      return GIMP_LAYER_MODE_HSV_VALUE;
+
+    case PSP_BLEND_ADJUST:
       return -1;                /* ??? */
     }
   return -1;
@@ -1238,13 +1238,20 @@ blend_mode_name (PSPBlendModes mode)
     "DIFFERENCE",
     "DODGE",
     "BURN",
-    "EXCLUSION"
+    "EXCLUSION",
+    "TRUE HUE",
+    "TRUE SATURATION",
+    "TRUE COLOR",
+    "TRUE LIGHTNESS",
+    /* ADJUST should always be the last one. */
+    "ADJUST"
   };
   static gchar *err_name = NULL;
 
-  /* TODO: what about PSP_BLEND_ADJUST? */
-  if (mode >= 0 && mode <= PSP_BLEND_EXCLUSION)
+  if (mode >= 0 && mode <= PSP_BLEND_TRUE_LIGHTNESS)
     return blend_mode_names[mode];
+  else if (mode == PSP_BLEND_ADJUST)
+    return blend_mode_names[PSP_BLEND_TRUE_LIGHTNESS+1];
 
   g_free (err_name);
   err_name = g_strdup_printf ("unknown layer blend mode %d", mode);
