@@ -90,6 +90,22 @@ Build:
 
   - new `distcheck` step in Continuous Integration.
 
+Bug fixes:
+
+  #5208, #5232, #5226, #5275, #5274, #5069, #5357, #4536, #2874, #5472,
+  #4328, #5530, #5584
+
+Translation updates:
+
+  - Basque, Catalan, Chinese (China), Croatian, Danish, German, Italian,
+    Japanese, Kazakh, Polish, Spanish, Swedish, Turkish, Ukrainian
+
+Translators: 
+
+  - Alan01, Anders Jonsson, Asier Sarasua Garmendia, Baurzhan Muftakhidinov,
+    Boyuan Yang, Jordi Mas, Marco Ciampa, milotype, Rodrigo Lledó Milanca,
+    Piotr Drąg, Sabri Ünal, sicklylife, Tim Sabsch, Yuri Chornoivan
+
 Overview of Changes from GIMP 2.10.18 to GIMP 2.10.20
 =====================================================
 
