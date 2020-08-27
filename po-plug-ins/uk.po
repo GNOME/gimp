@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-08-19 09:22+0000\n"
-"PO-Revision-Date: 2020-08-19 23:19+0300\n"
+"POT-Creation-Date: 2020-08-27 10:05+0000\n"
+"PO-Revision-Date: 2020-08-27 15:53+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -47,7 +47,7 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/common/curve-bend.c:1189 ../plug-ins/common/curve-bend.c:1963
 #: ../plug-ins/common/curve-bend.c:1998 ../plug-ins/common/depth-merge.c:710
 #: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
-#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:1101
+#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:1863
 #: ../plug-ins/common/file-jp2-load.c:976
 #: ../plug-ins/common/file-pdf-load.c:645
 #: ../plug-ins/common/file-pdf-load.c:1041
@@ -107,7 +107,7 @@ msgstr "_Скасувати"
 #: ../plug-ins/common/colormap-remap.c:656 ../plug-ins/common/compose.c:1147
 #: ../plug-ins/common/contrast-retinex.c:326
 #: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/depth-merge.c:711
-#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:1102
+#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:1864
 #: ../plug-ins/common/file-pdf-load.c:646 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1321
 #: ../plug-ins/common/grid.c:738 ../plug-ins/common/hot.c:657
@@ -894,7 +894,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1412
 #: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:691
 #: ../plug-ins/common/file-ps.c:1148 ../plug-ins/common/file-ps.c:3500
-#: ../plug-ins/common/file-psp.c:1976 ../plug-ins/common/file-psp.c:2030
+#: ../plug-ins/common/file-psp.c:2039 ../plug-ins/common/file-psp.c:2089
 #: ../plug-ins/common/file-raw-data.c:437
 #: ../plug-ins/common/file-raw-data.c:1234 ../plug-ins/common/file-sunras.c:458
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
@@ -1831,7 +1831,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #: ../plug-ins/common/file-cel.c:398 ../plug-ins/common/file-dicom.c:366
 #: ../plug-ins/common/file-gegl.c:345 ../plug-ins/common/file-gif-load.c:397
-#: ../plug-ins/common/file-heif.c:373 ../plug-ins/common/file-jp2-load.c:1085
+#: ../plug-ins/common/file-heif.c:720 ../plug-ins/common/file-jp2-load.c:1085
 #: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:801
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:681
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
@@ -1919,7 +1919,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
-#: ../plug-ins/common/file-heif.c:719 ../plug-ins/common/file-html-table.c:361
+#: ../plug-ins/common/file-heif.c:1308 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
 #: ../plug-ins/common/file-png.c:1438 ../plug-ins/common/file-pnm.c:1336
 #: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
@@ -2322,15 +2322,15 @@ msgstr "Заголовок програми на С"
 msgid "Header plug-in does not support multiple layers."
 msgstr "У додатку заголовків не передбачено підтримки декількох шарів."
 
-#: ../plug-ins/common/file-heif.c:129 ../plug-ins/common/file-heif.c:169
+#: ../plug-ins/common/file-heif.c:147 ../plug-ins/common/file-heif.c:199
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:132
+#: ../plug-ins/common/file-heif.c:150
 msgid "Loads HEIF images"
 msgstr "Завантаження зображень HEIF"
 
-#: ../plug-ins/common/file-heif.c:133
+#: ../plug-ins/common/file-heif.c:151
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2338,72 +2338,72 @@ msgstr ""
 "Завантажити зображення, збережене у форматі HEIF (High Efficiency Image File "
 "Format). Типові розширення файлів формату HEIF - .heif, .heic."
 
-#: ../plug-ins/common/file-heif.c:172
+#: ../plug-ins/common/file-heif.c:202
 msgid "Exports HEIF images"
 msgstr "Експортує зображення HEIF"
 
-#: ../plug-ins/common/file-heif.c:173
+#: ../plug-ins/common/file-heif.c:203
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Зберегти зображення у форматі HEIF (High Efficiency Image File Format)."
 
-#: ../plug-ins/common/file-heif.c:290
+#: ../plug-ins/common/file-heif.c:377 ../plug-ins/common/file-heif.c:457
 #, c-format
 msgid "HEIF format does not support multiple layers."
 msgstr "Для формату HEIF не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-heif.c:403 ../plug-ins/common/file-heif.c:436
-#: ../plug-ins/common/file-heif.c:477 ../plug-ins/common/file-heif.c:495
+#: ../plug-ins/common/file-heif.c:760 ../plug-ins/common/file-heif.c:793
+#: ../plug-ins/common/file-heif.c:834 ../plug-ins/common/file-heif.c:896
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Не вдалось завантажити зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:425
+#: ../plug-ins/common/file-heif.c:782
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Не вдалось завантажити зображення HEIF: вхідний файл не містить придатних "
 "для читання зображень"
 
-#: ../plug-ins/common/file-heif.c:558
+#: ../plug-ins/common/file-heif.c:1023
 msgid "image content"
 msgstr "вміст зображення"
 
-#: ../plug-ins/common/file-heif.c:837
+#: ../plug-ins/common/file-heif.c:1356 ../plug-ins/common/file-heif.c:1588
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Не вдалось закодувати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:866
+#: ../plug-ins/common/file-heif.c:1625
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Не вдалось записати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:952
+#: ../plug-ins/common/file-heif.c:1714
 msgid "primary"
 msgstr "основне"
 
-#: ../plug-ins/common/file-heif.c:1097
+#: ../plug-ins/common/file-heif.c:1859
 msgid "Load HEIF Image"
 msgstr "Завантажити зображення HEIF"
 
-#: ../plug-ins/common/file-heif.c:1111
+#: ../plug-ins/common/file-heif.c:1873
 msgid "Select Image"
 msgstr "Виберіть зображення"
 
-#: ../plug-ins/common/file-heif.c:1247
+#: ../plug-ins/common/file-heif.c:2016
 msgid "Export Image as HEIF"
 msgstr "Експортувати зображення як HEIF"
 
-#: ../plug-ins/common/file-heif.c:1260
+#: ../plug-ins/common/file-heif.c:2029
 #: ../plug-ins/file-webp/file-webp-dialog.c:119
 msgid "_Lossless"
 msgstr "_Без втрат"
 
-#: ../plug-ins/common/file-heif.c:1275
+#: ../plug-ins/common/file-heif.c:2044
 msgid "_Quality"
 msgstr "Я_кість"
 
-#: ../plug-ins/common/file-heif.c:1281 ../plug-ins/file-jpeg/jpeg-save.c:1001
+#: ../plug-ins/common/file-heif.c:2099 ../plug-ins/file-jpeg/jpeg-save.c:1001
 #: ../plug-ins/file-webp/file-webp-dialog.c:305
 msgid "Save color _profile"
 msgstr "Зберегти _профіль кольорів"
@@ -3563,88 +3563,88 @@ msgstr "Помилка зчитування даних ключового сло
 msgid "zlib error"
 msgstr "Помилка zlib"
 
-#: ../plug-ins/common/file-psp.c:1500
+#: ../plug-ins/common/file-psp.c:1470 ../plug-ins/common/file-psp.c:1504
+#: ../plug-ins/common/file-psp.c:1514
+#, c-format
+msgid "Error reading layer extension information"
+msgstr "Помилка зчитування даних щодо розширення шару"
+
+#: ../plug-ins/common/file-psp.c:1491
+#, c-format
+#| msgid "Error reading layer information"
+msgid "Error reading block information"
+msgstr "Помилка зчитування блокових даних"
+
+#: ../plug-ins/common/file-psp.c:1571
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Хибний підблок шару %s, має бути LAYER"
 
-#: ../plug-ins/common/file-psp.c:1529 ../plug-ins/common/file-psp.c:1599
+#: ../plug-ins/common/file-psp.c:1602 ../plug-ins/common/file-psp.c:1659
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Помилка зчитування інформаційного сегменту шару"
 
-#: ../plug-ins/common/file-psp.c:1543
-#, c-format
-#| msgid "Error reading layer information chunk"
-msgid "Error reading layer extension information"
-msgstr "Помилка зчитування даних щодо розширення шару"
-
-#: ../plug-ins/common/file-psp.c:1558
-#, c-format
-#| msgid "Error reading layer information chunk"
-msgid "Error reading layer information"
-msgstr "Помилка зчитування даних щодо шару"
-
-#: ../plug-ins/common/file-psp.c:1638
+#: ../plug-ins/common/file-psp.c:1701
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Хибні розміри шару: %dx%d"
 
-#: ../plug-ins/common/file-psp.c:1691
+#: ../plug-ins/common/file-psp.c:1756
 #, c-format
 msgid "Error creating layer"
 msgstr "Помилка при створенні шару"
 
-#: ../plug-ins/common/file-psp.c:1738
+#: ../plug-ins/common/file-psp.c:1801
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Хибний підблок %s шару, має бути CHANNEL"
 
-#: ../plug-ins/common/file-psp.c:1754
+#: ../plug-ins/common/file-psp.c:1817
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Помилка читання фрагменту інформації каналу"
 
-#: ../plug-ins/common/file-psp.c:1777
+#: ../plug-ins/common/file-psp.c:1840
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Хибний тип каналу %d у фрагменті інформації каналу"
 
-#: ../plug-ins/common/file-psp.c:1877
+#: ../plug-ins/common/file-psp.c:1940
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Помилка при фрагменту даних тюбика"
 
-#: ../plug-ins/common/file-psp.c:1987
+#: ../plug-ins/common/file-psp.c:2050
 #, c-format
 msgid "Error reading file header."
 msgstr "Помилка при читанні заголовка файлу."
 
-#: ../plug-ins/common/file-psp.c:1994
+#: ../plug-ins/common/file-psp.c:2057
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Хибна сигнатура файлу."
 
-#: ../plug-ins/common/file-psp.c:2012
+#: ../plug-ins/common/file-psp.c:2071
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Непідтримувана версія формату файлу PSP %d.%d."
 
-#: ../plug-ins/common/file-psp.c:2032
+#: ../plug-ins/common/file-psp.c:2091
 msgid "invalid block size"
 msgstr "хибний розмір блока"
 
-#: ../plug-ins/common/file-psp.c:2041
+#: ../plug-ins/common/file-psp.c:2100
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Повторний блок загальних атрибутів зображення."
 
-#: ../plug-ins/common/file-psp.c:2071
+#: ../plug-ins/common/file-psp.c:2130
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Відсутній блок загальних атрибутів зображення."
 
-#: ../plug-ins/common/file-psp.c:2162
+#: ../plug-ins/common/file-psp.c:2221
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
