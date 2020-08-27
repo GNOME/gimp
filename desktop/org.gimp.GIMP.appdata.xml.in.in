@@ -79,8 +79,9 @@
           GIMP 2.10.22 is mainly a bug fix release. Notable changes:
         </_p>
         <ul>
-          <li>
-            AVIF import and export, with support for 10/12-bit images, NCLX color profiles, and metadata reading.
+          <_li>
+            AVIF import and export, with support for 10/12-bit images,
+            NCLX color profiles, and metadata reading.
           </_li>
           <_li>
             The option enabling OpenCL support has been moved to the
