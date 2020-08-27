@@ -72,6 +72,30 @@
   </provides>
 
   <releases>
+    <release version="2.10.22" date="2020-08-30">
+      <url type="details">https://www.gimp.org/news/2020/08/23/gimp-2-10-22-released/</url>
+      <description>
+        <_p>
+          GIMP 2.10.22 is mainly a bug fix release. Notable changes:
+        </_p>
+        <ul>
+          <li>
+            AVIF import and export, with support for 10/12-bit images, NCLX color profiles, and metadata reading.
+          </_li>
+          <_li>
+            The option enabling OpenCL support has been moved to the
+            Playground tab in Preferences.
+          </_li>
+          <_li>
+            Matting Levin is now the default engine of Foreground Select
+            tool as it performs a lot better.
+          </_li>
+          <_li>
+            Over XX bugfixes
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.20" date="2020-06-07">
       <url type="details">https://www.gimp.org/news/2020/06/07/gimp-2-10-20-released/</url>
       <description>
