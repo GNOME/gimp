@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-08-11 18:54+0000\n"
-"PO-Revision-Date: 2020-08-22 21:31+0100\n"
+"PO-Revision-Date: 2020-08-27 22:44+0100\n"
 "Last-Translator: Yacine Bouklif <yacinebouklif@gmail.com>\n"
 "Language-Team: \n"
 "Language: kab\n"
@@ -3313,7 +3313,7 @@ msgstr "Tinqiḍin n u_lemmec"
 #: ../app/actions/dialogs-actions.c:126
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
-msgstr ""
+msgstr "Ldi tankult n udiwenni Tinqiḍin n ulemmec"
 
 #: ../app/actions/dialogs-actions.c:131
 msgctxt "dialogs-action"
@@ -3884,6 +3884,8 @@ msgid ""
 "Clearing the document history will permanently remove all images from the "
 "recent documents list."
 msgstr ""
+"Ma tsefḍeḍ amazray n yisemliyen ad ttwakksent tugniwin i lebda si tebdart n "
+"yisemliyen n melmi kan."
 
 #: ../app/actions/drawable-actions.c:45
 msgctxt "drawable-action"
@@ -3898,12 +3900,12 @@ msgstr "Aselhu awurman n umyeẓli"
 #: ../app/actions/drawable-actions.c:51
 msgctxt "drawable-action"
 msgid "_White Balance"
-msgstr ""
+msgstr "Awliwel n yimellalen"
 
 #: ../app/actions/drawable-actions.c:52
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
-msgstr ""
+msgstr "Aseɣti awurman n uwliwel n yimellalen"
 
 #: ../app/actions/drawable-actions.c:60
 msgctxt "drawable-action"
@@ -3974,7 +3976,7 @@ msgstr "Tuzzya s _180°"
 #: ../app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
 msgid "Turn drawable upside-down"
-msgstr ""
+msgstr "Tti taɣawsa tudlift"
 
 #: ../app/actions/drawable-actions.c:118
 msgctxt "drawable-action"
@@ -3988,7 +3990,7 @@ msgstr "Zzi taɣawsa tudlift s 90 n tfesniwin ɣer zelmaḍ"
 
 #: ../app/actions/drawable-commands.c:78
 msgid "White Balance operates only on RGB color layers."
-msgstr ""
+msgstr "Awliwel n yimellalen itteddu kan ɣef tissiyin n yiniten RGB"
 
 #: ../app/actions/dynamics-actions.c:43
 msgctxt "dynamics-action"
@@ -4023,7 +4025,7 @@ msgstr "Nɣel a_dig n tikli"
 #: ../app/actions/dynamics-actions.c:60
 msgctxt "dynamics-action"
 msgid "Copy dynamics file location to clipboard"
-msgstr ""
+msgstr "Nɣel ideg n ufaylu n usmussu ɣer tecfawit"
 
 #: ../app/actions/dynamics-actions.c:65
 msgctxt "dynamics-action"
@@ -4033,47 +4035,47 @@ msgstr "Sken deg umsefrak n yi_fuyla"
 #: ../app/actions/dynamics-actions.c:66
 msgctxt "dynamics-action"
 msgid "Show dynamics file location in the file manager"
-msgstr ""
+msgstr "Sken ideg n ufaylu n usmussu deg umsefrak n yifuyla"
 
 #: ../app/actions/dynamics-actions.c:71
 msgctxt "dynamics-action"
 msgid "_Delete Dynamics"
-msgstr ""
+msgstr "Kkes asmussu"
 
 #: ../app/actions/dynamics-actions.c:72
 msgctxt "dynamics-action"
 msgid "Delete this dynamics"
-msgstr ""
+msgstr "Kkes asmussu-agi"
 
 #: ../app/actions/dynamics-actions.c:77
 msgctxt "dynamics-action"
 msgid "_Refresh Dynamics"
-msgstr ""
+msgstr "Sismeḍ asmussu"
 
 #: ../app/actions/dynamics-actions.c:78
 msgctxt "dynamics-action"
 msgid "Refresh dynamics"
-msgstr ""
+msgstr "Sismeḍ asmussu"
 
 #: ../app/actions/dynamics-actions.c:86
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr ""
+msgstr "Ẓreg asmussu..."
 
 #: ../app/actions/dynamics-actions.c:87
 msgctxt "dynamics-action"
 msgid "Edit this dynamics"
-msgstr ""
+msgstr "Ẓreg asmussu-agi"
 
 #: ../app/actions/dynamics-editor-actions.c:43
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
-msgstr ""
+msgstr "Umuɣ amaẓrag n usmussu n umfezzu"
 
 #: ../app/actions/dynamics-editor-actions.c:51
 msgctxt "dynamics-editor-action"
 msgid "Edit Active Dynamics"
-msgstr ""
+msgstr "Ẓreg asmussu urmid"
 
 #: ../app/actions/edit-actions.c:65
 msgctxt "edit-action"
@@ -4118,7 +4120,7 @@ msgstr "Err-d tamhelt taneggarut yettwasfesxen"
 #: ../app/actions/edit-actions.c:86
 msgctxt "edit-action"
 msgid "Strong Undo"
-msgstr ""
+msgstr "Asefsex yettwaḥettmen"
 
 #: ../app/actions/edit-actions.c:87
 msgctxt "edit-action"
@@ -4128,7 +4130,7 @@ msgstr ""
 #: ../app/actions/edit-actions.c:92
 msgctxt "edit-action"
 msgid "Strong Redo"
-msgstr ""
+msgstr "Tiririt yettwaḥettmen"
 
 #: ../app/actions/edit-actions.c:94
 msgctxt "edit-action"
@@ -4199,7 +4201,7 @@ msgstr ""
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
-msgstr ""
+msgstr "Smutti ipiksilen yettwafernen ɣer tecfawit s yisem"
 
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
@@ -4209,7 +4211,7 @@ msgstr ""
 #: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
-msgstr ""
+msgstr "Nɣel ipiksilen yettwafernen ɣer tecfawit s yisem"
 
 #. GIMP_ICON_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:147
@@ -4367,7 +4369,7 @@ msgstr "D tidet ad tsefḍeḍ amazray n usefsex ?"
 #: ../app/actions/edit-commands.c:199
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
-msgstr ""
+msgstr "Ma tsefḍeḍ amazray n usefsex n tugna-agi ad d-trebḥeḍ %s n tkatut."
 
 #: ../app/actions/edit-commands.c:242
 msgid "Cut layer to the clipboard."
@@ -4397,7 +4399,7 @@ msgstr ""
 #: ../app/actions/edit-commands.c:411 ../app/actions/edit-commands.c:433
 #: ../app/actions/edit-commands.c:455
 msgid "Enter a name for this buffer"
-msgstr ""
+msgstr "Sekcem isem i tecfawit-agi"
 
 #: ../app/actions/edit-commands.c:430
 msgid "Copy Named"
@@ -4495,7 +4497,7 @@ msgstr "Tu_ccḍiwin"
 #: ../app/actions/error-console-actions.c:79
 msgctxt "error-console-action"
 msgid "Highlight error console on errors"
-msgstr ""
+msgstr "Sebrureq tadiwent n tuccḍiwin ticki tella tuccḍa"
 
 #: ../app/actions/error-console-actions.c:85
 msgctxt "error-console-action"
@@ -4505,7 +4507,7 @@ msgstr "Alɣuten"
 #: ../app/actions/error-console-actions.c:86
 msgctxt "error-console-action"
 msgid "Highlight error console on warnings"
-msgstr ""
+msgstr "Sebrureq tadiwent n tuccḍiwin ticki yella ucaɣli"
 
 #: ../app/actions/error-console-actions.c:92
 msgctxt "error-console-action"
@@ -4515,7 +4517,7 @@ msgstr "I_znan"
 #: ../app/actions/error-console-actions.c:93
 msgctxt "error-console-action"
 msgid "Highlight error console on messages"
-msgstr ""
+msgstr "Sebrureq tadiwent n tuccḍiwin ticki yella yizen"
 
 #: ../app/actions/error-console-commands.c:88
 msgid "Cannot save. Nothing is selected."
@@ -4790,6 +4792,8 @@ msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
+"Ma terriḍ tugna s addad yettwaskelsen deg uḍebsi, ad tesruḥeḍ aṭas n "
+"yisallan, akked telɣut n usefsex."
 
 #: ../app/actions/file-commands.c:791
 msgid "(Unnamed Template)"
@@ -5874,7 +5878,7 @@ msgstr "Zzi tafrayt"
 
 #: ../app/actions/gradient-editor-actions.c:813
 msgid "_Replicate Selection..."
-msgstr ""
+msgstr "Sisleg tafrayt..."
 
 #: ../app/actions/gradient-editor-actions.c:815
 msgid "Split Segments at _Midpoints"
@@ -5921,12 +5925,16 @@ msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
 msgstr ""
+"Fren amḍan n tikkal\n"
+"ara yettusisleg yiɣil yettwafernen."
 
 #: ../app/actions/gradient-editor-commands.c:434
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
 msgstr ""
+"Fren amḍan n tikkal\n"
+"ara tettusisleg tefrayt."
 
 #: ../app/actions/gradient-editor-commands.c:502
 msgid "Split Segment Uniformly"
@@ -6028,12 +6036,12 @@ msgstr "Kkes tafesna-agi n yini"
 #: ../app/actions/gradients-actions.c:84
 msgctxt "gradients-action"
 msgid "_Refresh Gradients"
-msgstr ""
+msgstr "Sismeḍ ifesnawen"
 
 #: ../app/actions/gradients-actions.c:85
 msgctxt "gradients-action"
 msgid "Refresh gradients"
-msgstr ""
+msgstr "Sismeḍ ifesnawen"
 
 #: ../app/actions/gradients-actions.c:93
 msgctxt "gradients-action"
@@ -6088,7 +6096,7 @@ msgstr "A_skar"
 #: ../app/actions/image-actions.c:60
 msgctxt "image-action"
 msgid "_Encoding"
-msgstr ""
+msgstr "Asettengel"
 
 #: ../app/actions/image-actions.c:62
 msgctxt "image-action"
@@ -6607,7 +6615,7 @@ msgstr "_Sali timuɣliwin"
 #: ../app/actions/images-actions.c:48
 msgctxt "images-action"
 msgid "Raise this image's displays"
-msgstr ""
+msgstr "Err ibeqqiḍen n tugna-agi s aɣawas amezwaru"
 
 #: ../app/actions/images-actions.c:53
 msgctxt "images-action"
@@ -6807,7 +6815,7 @@ msgstr "Sali tissi-agi s yiwen n usurif deg usettef n tissiyin"
 #: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
 msgid "Layer to _Top"
-msgstr ""
+msgstr "Tissi uksawen"
 
 #: ../app/actions/layers-actions.c:152
 msgctxt "layers-action"
@@ -6847,7 +6855,7 @@ msgstr "Semdey tissi yettifliwen"
 #: ../app/actions/layers-actions.c:175 ../app/actions/layers-actions.c:184
 msgctxt "layers-action"
 msgid "Merge Do_wn"
-msgstr ""
+msgstr "Smezdi d akessar"
 
 #: ../app/actions/layers-actions.c:176 ../app/actions/layers-actions.c:185
 msgctxt "layers-action"
@@ -6897,7 +6905,7 @@ msgstr "Smezdi akk tissiyin ɣer yiwet yerna kkes tafrawant"
 #: ../app/actions/layers-actions.c:214
 msgctxt "layers-action"
 msgid "_Discard Text Information"
-msgstr ""
+msgstr "Ḍegger talɣut n uḍris"
 
 #: ../app/actions/layers-actions.c:215
 msgctxt "layers-action"
@@ -6927,7 +6935,7 @@ msgstr ""
 #: ../app/actions/layers-actions.c:232
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
-msgstr ""
+msgstr "Tiddi n yiran n tissi..."
 
 #: ../app/actions/layers-actions.c:233
 msgctxt "layers-action"
@@ -6937,7 +6945,7 @@ msgstr "Sgaddi tisekta n tissi"
 #: ../app/actions/layers-actions.c:238
 msgctxt "layers-action"
 msgid "Layers to _Image Size"
-msgstr ""
+msgstr "Tissiyin s tiddi n tugna"
 
 #: ../app/actions/layers-actions.c:239
 msgctxt "layers-action"
@@ -7041,7 +7049,7 @@ msgstr "_Sens tagelmust n tissi"
 #: ../app/actions/layers-actions.c:315
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
-msgstr ""
+msgstr "Ḍeqqer isemda n tgelmust n tissi"
 
 #: ../app/actions/layers-actions.c:321
 msgctxt "layers-action"
@@ -8197,12 +8205,12 @@ msgstr ""
 #: ../app/actions/select-actions.c:87
 msgctxt "select-action"
 msgid "S_hrink..."
-msgstr ""
+msgstr "Senqes..."
 
 #: ../app/actions/select-actions.c:88
 msgctxt "select-action"
 msgid "Contract the selection"
-msgstr ""
+msgstr "Sekmec tafrayt"
 
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
@@ -8252,7 +8260,7 @@ msgstr "Aččar azizdew n tefrayt..."
 #: ../app/actions/select-actions.c:118
 msgctxt "select-action"
 msgid "Fill the selection outline"
-msgstr ""
+msgstr "Aččar azizdew n tefrayt"
 
 #: ../app/actions/select-actions.c:123
 msgctxt "select-action"
@@ -8262,7 +8270,7 @@ msgstr "Aččar azizdew n tefrayt s wazalen ineggura"
 #: ../app/actions/select-actions.c:124
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
-msgstr ""
+msgstr "Aččar azizdew n tefrayt s wazalen ineggura yettwasqedcen"
 
 #: ../app/actions/select-actions.c:129
 msgctxt "select-action"
@@ -8272,7 +8280,7 @@ msgstr "Suneɣ tafrayt..."
 #: ../app/actions/select-actions.c:130
 msgctxt "select-action"
 msgid "Paint along the selection outline"
-msgstr ""
+msgstr "Klu ɣef teɣzi n uzuzdew n tzefrayt"
 
 #: ../app/actions/select-actions.c:135
 msgctxt "select-action"
@@ -8282,7 +8290,7 @@ msgstr "Suneɣ tafrayt s wazalen ineggura"
 #: ../app/actions/select-actions.c:136
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
-msgstr ""
+msgstr "Suneɣ azizdew n tefrayt s wazalen ineggura yettwasqedcen"
 
 #: ../app/actions/select-commands.c:165
 msgid "Feather Selection"
@@ -8296,7 +8304,7 @@ msgstr "Silweɣ tafrayt s"
 #: ../app/actions/select-commands.c:179 ../app/actions/select-commands.c:256
 #: ../app/actions/select-commands.c:386
 msgid "_Selected areas continue outside the image"
-msgstr ""
+msgstr "Timnaḍin yettwafernen ad kemmelent beṛṛa n tugna"
 
 #: ../app/actions/select-commands.c:182
 msgid "When feathering, act as if selected areas continued outside the image."
@@ -8309,11 +8317,12 @@ msgstr "Simecṭuḥ tafrayt"
 
 #: ../app/actions/select-commands.c:245
 msgid "Shrink selection by"
-msgstr ""
+msgstr "Senqes i tefrayt s"
 
 #: ../app/actions/select-commands.c:259
 msgid "When shrinking, act as if selected areas continued outside the image."
 msgstr ""
+"Mi ara tsenqseḍ, eg amzun timennaḍin yettwafernen kemmelent berra n tugna."
 
 #: ../app/actions/select-commands.c:305
 msgid "Grow Selection"
@@ -8428,7 +8437,7 @@ msgstr "_Kkes"
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr ""
+msgstr "D tidet tebɣiḍ ad tekkseḍ taneɣruft '%s' si tebdart akked uḍebsi ?"
 
 #: ../app/actions/text-editor-actions.c:44
 msgctxt "text-editor-action"
@@ -9755,7 +9764,7 @@ msgstr "Ta_muɣli"
 #: ../app/actions/view-actions.c:70
 msgctxt "view-action"
 msgid "_Zoom"
-msgstr ""
+msgstr "Simɣur"
 
 #: ../app/actions/view-actions.c:71
 msgctxt "view-action"
@@ -10502,17 +10511,17 @@ msgstr ""
 #: ../app/actions/view-actions.c:644
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
-msgstr ""
+msgstr "Seɣwer asekḥer n udrurem aglawan"
 
 #: ../app/actions/view-actions.c:649
 msgctxt "view-action"
 msgid "Scroll to left border"
-msgstr ""
+msgstr "Drurem arma d iri azelmaḍ"
 
 #: ../app/actions/view-actions.c:654
 msgctxt "view-action"
 msgid "Scroll to right border"
-msgstr ""
+msgstr "Drurem arma d iri ayefus"
 
 #: ../app/actions/view-actions.c:659
 msgctxt "view-action"
@@ -10522,7 +10531,7 @@ msgstr "Sedrurem d akessar"
 #: ../app/actions/view-actions.c:664
 msgctxt "view-action"
 msgid "Scroll right"
-msgstr ""
+msgstr "Adrurem ayefus"
 
 #: ../app/actions/view-actions.c:669
 msgctxt "view-action"
@@ -10537,27 +10546,27 @@ msgstr "Drurem asebter ɣer yefus"
 #: ../app/actions/view-actions.c:682
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
-msgstr ""
+msgstr "Seɣwer asekḥer n udrurem ubdid"
 
 #: ../app/actions/view-actions.c:687
 msgctxt "view-action"
 msgid "Scroll to top border"
-msgstr ""
+msgstr "Drurem arma d iri n ufella"
 
 #: ../app/actions/view-actions.c:692
 msgctxt "view-action"
 msgid "Scroll to bottom border"
-msgstr ""
+msgstr "Drurem arma d iri n wadda"
 
 #: ../app/actions/view-actions.c:697
 msgctxt "view-action"
 msgid "Scroll up"
-msgstr ""
+msgstr "Drurem d asawen"
 
 #: ../app/actions/view-actions.c:702
 msgctxt "view-action"
 msgid "Scroll down"
-msgstr ""
+msgstr "Drurem d akessar"
 
 #: ../app/actions/view-actions.c:707
 msgctxt "view-action"
@@ -10627,7 +10636,7 @@ msgstr "Agdil %s"
 #: ../app/actions/window-actions.c:195
 #, c-format
 msgid "Move this window to screen %s"
-msgstr ""
+msgstr "Smutti asfaylu-agi s agdil %s"
 
 #: ../app/actions/window-commands.c:78 ../app/dialogs/extensions-dialog.c:79
 #: ../app/dialogs/file-save-dialog.c:638 ../app/dialogs/grid-dialog.c:103
@@ -10711,12 +10720,12 @@ msgstr "Ticki yermed, ad yettwasken ufeggag n waccaren n tugna."
 #: ../app/actions/windows-actions.c:141
 msgctxt "windows-action"
 msgid "Single-Window _Mode"
-msgstr ""
+msgstr "Askar n yiwen n usfaylu"
 
 #: ../app/actions/windows-actions.c:142
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
-msgstr ""
+msgstr "Mi yermed, GIMP ad yeqel s askar n yiwen n usfaylu."
 
 #: ../app/actions/windows-actions.c:151
 msgctxt "windows-tabs-position-action"
@@ -14362,11 +14371,11 @@ msgstr "Sider tissi d akessar"
 
 #: ../app/core/gimplayer.c:448
 msgid "Layer cannot be raised higher."
-msgstr ""
+msgstr "Tissi ur tezmir ara ad tali ugar."
 
 #: ../app/core/gimplayer.c:449
 msgid "Layer cannot be lowered more."
-msgstr ""
+msgstr "Tissi ur tezmir ara ad tader ugar."
 
 #: ../app/core/gimplayer.c:741 ../app/core/gimplayer.c:2002
 #: ../app/core/gimplayermask.c:288
@@ -14380,14 +14389,17 @@ msgid ""
 "Floating Selection\n"
 "(%s)"
 msgstr ""
+"Tafrayt yettifliwen\n"
+"(%s)"
 
 #: ../app/core/gimplayer.c:1903
 msgid "Unable to add a layer mask since the layer already has one."
-msgstr ""
+msgstr "Ulamek timerna n tgelmust n tissi acku tissi tesɛa yakan tagelmust."
 
 #: ../app/core/gimplayer.c:1914
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
+"Ulamek timerna n tgelmust n tissi s tiddi yemgarraden ɣef tiddi n tissi."
 
 #: ../app/core/gimplayer.c:1920
 msgctxt "undo-type"
@@ -17647,7 +17659,7 @@ msgstr "Sit ɣef %s iwakken ad teffɣeḍ."
 #: ../app/dialogs/quit-dialog.c:360
 #, c-format
 msgid "Press %s to close all images."
-msgstr "Ssed %s iwakken ad tmedleḍ akk tugniwin"
+msgstr "Ssed %s iwakken ad tmedleḍ akk tugniwin."
 
 #: ../app/dialogs/quit-dialog.c:364 ../app/dialogs/user-install-dialog.c:89
 msgid "_Quit"
@@ -18186,7 +18198,7 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:79
 msgid "Color Display Filters"
-msgstr "tastayt n ubeqqeḍ n yini"
+msgstr "Tastayt n ubeqqeḍ n yini"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:82
 msgid "Configure Color Display Filters"
@@ -18768,7 +18780,7 @@ msgstr "Asiɣzef n GIMP armeɣtu '%s': %s"
 
 #: ../app/file-data/file-data.c:61 ../app/file-data/file-data.c:118
 msgid "GIMP brush"
-msgstr "Amfezzu n GIMP."
+msgstr "Amfezzu n GIMP"
 
 #: ../app/file-data/file-data.c:196 ../app/file-data/file-data.c:250
 msgid "GIMP brush (animated)"
@@ -19587,7 +19599,7 @@ msgstr ""
 
 #: ../app/operations/gimplevelsconfig.c:975
 msgid "Writing levels file failed: "
-msgstr "Tira n ufaylu n yiswiren ur teddi ara:"
+msgstr "Tira n ufaylu n yiswiren ur teddi ara: "
 
 #: ../app/operations/gimpoperationbrightnesscontrast.c:65
 #: ../app/tools/gimpbrightnesscontrasttool.c:98
