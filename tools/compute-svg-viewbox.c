@@ -21,15 +21,16 @@
 
 int main (int argc, char **argv)
 {
-  RsvgHandle        *handle;
-  RsvgPositionData   position_data;
-  RsvgDimensionData  dimension;
+  RsvgHandle    *handle;
+  RsvgRectangle  viewport = { 0.0, 0.0, 16.0, 16.0 };
+  RsvgRectangle  out_ink_rect;
+  RsvgRectangle  out_logical_rect;
 
-  gchar             *endptr;
-  gchar             *path;
-  gchar             *id;
-  gint               prev_x;
-  gint               prev_y;
+  gchar         *endptr;
+  gchar         *path;
+  gchar         *id;
+  gint           prev_x;
+  gint           prev_y;
 
   if (argc != 5)
     {
@@ -66,18 +67,18 @@ int main (int argc, char **argv)
       return 1;
     }
 
-  rsvg_handle_get_position_sub (handle, &position_data, id);
-  rsvg_handle_get_dimensions_sub (handle, &dimension, id);
-  if (dimension.width != dimension.height)
+  rsvg_handle_get_geometry_for_layer (handle, id, &viewport, &out_ink_rect, &out_logical_rect, NULL);
+
+  if (out_ink_rect.width != out_ink_rect.height)
     {
       /* Right now, we are constraining all objects into square objects. */
-      fprintf (stderr, "WARNING: object \"%s\" has unexpected size %dx%d [pos: (%d, %d)].\n",
-               id, dimension.width, dimension.height,
-               position_data.x, position_data.y);
+      fprintf (stderr, "WARNING: object \"%s\" has unexpected size %fx%f [pos: (%f, %f)].\n",
+               id, out_ink_rect.width, out_ink_rect.height,
+               out_ink_rect.x, out_ink_rect.y);
     }
-  printf ("viewBox=\"%d %d %d %d\"",
-          position_data.x + prev_x, position_data.y + prev_y,
-          dimension.width, dimension.height);
+  printf ("viewBox=\"%f %f %f %f\"",
+          out_ink_rect.x + prev_x, out_ink_rect.y + prev_y,
+          out_ink_rect.width, out_ink_rect.height);
 
   g_object_unref (handle);
   g_free (id);

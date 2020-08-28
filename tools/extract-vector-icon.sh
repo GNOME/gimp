@@ -31,7 +31,7 @@ if [ "$#" != 2 ]; then
   fi
 fi
 
-# The script is run from $(top_builddir)/icons/Symbolic/
+# The script is run from $(top_builddir)/icons/*/
 compute_viewbox="$(pwd)/../../tools/compute-svg-viewbox"
 source="$1"
 id="$2"

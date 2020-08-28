@@ -58,6 +58,8 @@ if ENABLE_VECTOR_ICONS
 # Build tools which must be built for the host platform.
 #all-local: compute-svg-viewbox$(BUILD_EXEEXT)
 
+#noinst_PROGRAMS = compute-svg-viewbox
+
 #DISTCLEANFILES = compute-svg-viewbox$(BUILD_EXEEXT)
 endif
 
