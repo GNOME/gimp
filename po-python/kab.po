@@ -1,0 +1,599 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2020-08-27 16:42+0000\n"
+"PO-Revision-Date: 2020-08-29 17:37+0100\n"
+"Language: kab\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Last-Translator: Yacine Bouklif <yacinebouklif@gmail.com>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.4.1\n"
+
+#: ../plug-ins/python/colorxhtml.py:89
+msgid "Save as colored HTML text..."
+msgstr "Sekles am uḍris HTML s yiniten..."
+
+#: ../plug-ins/python/colorxhtml.py:94
+msgid "Read characters from file..."
+msgstr "Ɣer isekkilen seg ufaylu..."
+
+#: ../plug-ins/python/colorxhtml.py:113
+msgid "Characters"
+msgstr "Isekkilen"
+
+#: ../plug-ins/python/colorxhtml.py:114
+msgid "Characters that will be used as colored pixels. "
+msgstr "Isekkilen ara yettwasqedcen am ipiksilen urqimen. "
+
+#: ../plug-ins/python/colorxhtml.py:123
+msgid "Characters or file location"
+msgstr "Ideg n yisekkilen neɣ n ufaylu"
+
+#: ../plug-ins/python/colorxhtml.py:129
+msgid "Read characters from file"
+msgstr "Ɣer isekkilen seg ufaylu"
+
+#: ../plug-ins/python/colorxhtml.py:132
+msgid ""
+"If set, the Characters text entry will be used as a file name, from which "
+"the characters will be read. Otherwise, the characters in the text entry "
+"will be used to render the image."
+msgstr ""
+
+#: ../plug-ins/python/colorxhtml.py:138
+msgid "Choose file"
+msgstr "Fren afaylu"
+
+#: ../plug-ins/python/colorxhtml.py:145
+msgid "Font Size(px)"
+msgstr "Tiddi n tsefsit (px)"
+
+#: ../plug-ins/python/colorxhtml.py:157
+msgid "Write separate CSS file"
+msgstr "Aru afaylu CSS ubriz"
+
+#: ../plug-ins/python/colorxhtml.py:210
+msgid "Saving as colored XHTML"
+msgstr "Sekles am XHTML s yiniten"
+
+#: ../plug-ins/python/colorxhtml.py:280 ../plug-ins/python/colorxhtml.py:281
+msgid "_Read characters from file, if true, or use text entry"
+msgstr ""
+
+#: ../plug-ins/python/colorxhtml.py:285 ../plug-ins/python/colorxhtml.py:286
+msgid "_File to read or characters to use"
+msgstr "Afaylu ara yettwaɣren neɣ isekkilen ara yettwasqedcen"
+
+#: ../plug-ins/python/colorxhtml.py:290 ../plug-ins/python/colorxhtml.py:291
+msgid "Fo_nt size in pixels"
+msgstr "Tiddi n tsefsit s ipiksilen"
+
+#: ../plug-ins/python/colorxhtml.py:295 ../plug-ins/python/colorxhtml.py:296
+msgid "_Write a separate CSS file"
+msgstr "Aru afaylu CSS ubriz"
+
+#: ../plug-ins/python/colorxhtml.py:315
+msgid "Save as colored HTML text"
+msgstr "Sekles am uḍris HTML s yiniten"
+
+#: ../plug-ins/python/colorxhtml.py:318
+msgid "Colored HTML text"
+msgstr "Aḍris HTML s yiniten"
+
+#: ../plug-ins/python/foggify.py:82 ../plug-ins/python/foggify.py:83
+msgid "Layer name"
+msgstr "Isem n tissi"
+
+#: ../plug-ins/python/foggify.py:84
+msgid "Clouds"
+msgstr "Asigna"
+
+#: ../plug-ins/python/foggify.py:87 ../plug-ins/python/foggify.py:88
+msgid "Fog color"
+msgstr "Ini n wagu"
+
+#: ../plug-ins/python/foggify.py:91 ../plug-ins/python/foggify.py:92
+msgid "Turbulence"
+msgstr "Aluɣu"
+
+#: ../plug-ins/python/foggify.py:96 ../plug-ins/python/foggify.py:97
+msgid "Opacity"
+msgstr "Tiḍullest"
+
+#: ../plug-ins/python/foggify.py:114
+msgid "Add a layer of fog"
+msgstr "Rnu tissi n wagu"
+
+#: ../plug-ins/python/foggify.py:117
+msgid "_Fog..."
+msgstr "Agu..."
+
+#: ../plug-ins/python/gradients-save-as-css.py:81
+msgid "CSS file..."
+msgstr "Afaylu CSS..."
+
+#: ../plug-ins/python/gradients-save-as-css.py:144
+msgid "Gradient to use"
+msgstr "Afesnaw ara yettwasqedcen"
+
+#: ../plug-ins/python/gradients-save-as-css.py:147
+msgid "File"
+msgstr "Afaylu"
+
+#: ../plug-ins/python/palette-offset.py:46
+#: ../plug-ins/python/palette-offset.py:47
+#: ../plug-ins/python/palette-to-gradient.py:103
+msgid "Palette"
+msgstr "Tapaliḍt"
+
+#: ../plug-ins/python/palette-offset.py:58
+msgid "Off_set"
+msgstr "Asekḥer"
+
+#: ../plug-ins/python/palette-offset.py:59
+msgid "Offset"
+msgstr "Asekḥer"
+
+#: ../plug-ins/python/palette-offset.py:92
+msgid "_Offset Palette..."
+msgstr "Asekḥer n tpaliḍt..."
+
+#: ../plug-ins/python/palette-offset.py:93
+msgid "Offset the colors in a palette"
+msgstr "Sekḥer initen di tpaliḍt"
+
+#: ../plug-ins/python/palette-offset.py:141
+msgid "Offset Palette..."
+msgstr "Asekḥer n tpaliḍt..."
+
+#: ../plug-ins/python/palette-to-gradient.py:139
+msgid "Palette to _Gradient"
+msgstr "Tapaliḍt s afesnaw"
+
+#: ../plug-ins/python/palette-to-gradient.py:140
+msgid "Create a gradient using colors from the palette"
+msgstr "Snulfu-d afesnaw s yiniten n tpaliḍt"
+
+#: ../plug-ins/python/palette-to-gradient.py:144
+msgid "Palette to _Repeating Gradient"
+msgstr "Tapaliḍt s afesnaw yettalsen"
+
+#: ../plug-ins/python/palette-to-gradient.py:145
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Snulfu-d afesnaw yettalsen s yiniten n tpaliḍt"
+
+#: ../plug-ins/python/py-slice.py:74
+msgid "Slice"
+msgstr "Tacerrunt"
+
+#: ../plug-ins/python/py-slice.py:439 ../plug-ins/python/py-slice.py:440
+msgid "Path for HTML export"
+msgstr "Abrid i wesifeḍ n HTML"
+
+#: ../plug-ins/python/py-slice.py:444 ../plug-ins/python/py-slice.py:445
+msgid "Filename for export"
+msgstr "Isem n ufaylu i wesifeḍ"
+
+#: ../plug-ins/python/py-slice.py:449 ../plug-ins/python/py-slice.py:450
+msgid "Image name prefix"
+msgstr "Azwir n yisem n tugna"
+
+#: ../plug-ins/python/py-slice.py:454 ../plug-ins/python/py-slice.py:455
+msgid "Image format (gif, jpg, png)"
+msgstr "Amasal n tugna (gif, jpg, png)"
+
+#: ../plug-ins/python/py-slice.py:459 ../plug-ins/python/py-slice.py:460
+msgid "Separate image folder"
+msgstr "Brez akaram n tugna"
+
+#: ../plug-ins/python/py-slice.py:464 ../plug-ins/python/py-slice.py:465
+msgid "Folder for image export"
+msgstr "Akaram i wesifeḍ n tugna"
+
+#: ../plug-ins/python/py-slice.py:469 ../plug-ins/python/py-slice.py:470
+msgid "Space between table elements"
+msgstr "Tallunt gar yiferdisen n tfelwit"
+
+#: ../plug-ins/python/py-slice.py:474 ../plug-ins/python/py-slice.py:475
+msgid "Javascript for onmouseover and clicked"
+msgstr ""
+
+#: ../plug-ins/python/py-slice.py:480 ../plug-ins/python/py-slice.py:481
+msgid "Skip animation for table caps"
+msgstr "Zeggel asmussu i yiran n tfelwit"
+
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/python/py-slice.py:501
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+
+#: ../plug-ins/python/py-slice.py:510
+msgid "_Slice..."
+msgstr "Tacerrunt..."
+
+#: ../plug-ins/python/python-console/python-console.py:75
+msgid "Python Console"
+msgstr "Tadiwent n Python"
+
+#: ../plug-ins/python/python-console/python-console.py:79
+msgid "_Browse..."
+msgstr "Snirem..."
+
+#: ../plug-ins/python/python-console/python-console.py:179
+msgid "Python Procedure Browser"
+msgstr ""
+
+#: ../plug-ins/python/python-console/python-console.py:207
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "D awezɣi alday n '%s' i tira: %s"
+
+#: ../plug-ins/python/python-console/python-console.py:222
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Ulamek tira di '%s': %s"
+
+#: ../plug-ins/python/python-console/python-console.py:231
+msgid "Save Python-Fu Console Output"
+msgstr "Sekles tuffɣa n tdiwent n Python-Fu"
+
+#: ../plug-ins/python/python-console/python-console.py:280
+msgid "Python _Console"
+msgstr "Tadiwent n Python"
+
+#: ../plug-ins/python/python-console/python-console.py:281
+msgid "Interactive GIMP Python interpreter"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:62
+msgid "Spyro Layer"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:63
+msgid "Spyro Path"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:73
+msgid "As New Layer"
+msgstr "Am tissi tamaynutt"
+
+#: ../plug-ins/python/spyro-plus.py:74
+msgid "Redraw on last active layer"
+msgstr "Ales asuneɣ ɣef tissi turmidt"
+
+#: ../plug-ins/python/spyro-plus.py:75
+msgid "As Path"
+msgstr "Am ubrid"
+
+#: ../plug-ins/python/spyro-plus.py:123
+msgid "Circle"
+msgstr "Tawinest"
+
+#: ../plug-ins/python/spyro-plus.py:159
+msgid "Polygon-Star"
+msgstr ""
+
+#. Sine wave on a circle ring.
+#: ../plug-ins/python/spyro-plus.py:175 ../plug-ins/python/spyro-plus.py:998
+msgid "Sine"
+msgstr ""
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/python/spyro-plus.py:185
+msgid "Bumps"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:290
+msgid "Rack"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:334
+msgid "Frame"
+msgstr "Akatar"
+
+#: ../plug-ins/python/spyro-plus.py:447
+msgid "Selection"
+msgstr "Tafrayt"
+
+#: ../plug-ins/python/spyro-plus.py:534
+msgid "Pencil"
+msgstr "Akeryun"
+
+#: ../plug-ins/python/spyro-plus.py:550
+msgid "AirBrush"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:610
+msgid "Preview"
+msgstr "Taskant"
+
+#: ../plug-ins/python/spyro-plus.py:615
+msgid "Stroke"
+msgstr "Suneɣ"
+
+#: ../plug-ins/python/spyro-plus.py:662
+msgid "PaintBrush"
+msgstr "Amfezwi"
+
+#: ../plug-ins/python/spyro-plus.py:664
+msgid "Ink"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:665
+msgid "MyPaintBrush"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:984
+msgid "Spyrograph"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:991
+msgid "Epitrochoid"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1018
+msgid "Lissajous"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1449
+msgid "Curve Type"
+msgstr "Anaw n uzlig"
+
+#: ../plug-ins/python/spyro-plus.py:1450
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1455
+msgid "Tool"
+msgstr "Afecku"
+
+#: ../plug-ins/python/spyro-plus.py:1456
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr ""
+"Afecku s wayes ar tsunɣeḍ udlif. Afecku n tedlayt kan i yessunuɣen s tɣawla."
+
+#: ../plug-ins/python/spyro-plus.py:1461
+msgid "Long Gradient"
+msgstr "Afesnaw aɣezfan"
+
+#: ../plug-ins/python/spyro-plus.py:1463
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1483
+msgid "Specify pattern using one of the following tabs:"
+msgstr "Efk-d udlif s tfelwin-agi:"
+
+#: ../plug-ins/python/spyro-plus.py:1485
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1509
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1512 ../plug-ins/python/spyro-plus.py:1540
+msgid "Fixed Gear Teeth"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1520
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1523 ../plug-ins/python/spyro-plus.py:1545
+msgid "Moving Gear Teeth"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1528
+msgid "Hole percent"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1529
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1550
+msgid "Hole Number"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1551
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1562
+msgid "Flower Petals"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1563
+msgid "The number of petals in the pattern."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1568
+msgid "Petal Skip"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1569
+msgid "The number of petals to advance for drawing the next petal."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1574
+msgid "Hole Radius(%)"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1575
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1596
+msgid "Width(%)"
+msgstr "Tehri(%)"
+
+#: ../plug-ins/python/spyro-plus.py:1597
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1608
+msgid "Visual"
+msgstr "Ameẓran"
+
+#: ../plug-ins/python/spyro-plus.py:1614
+msgid "Toy Kit"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1620
+msgid "Gears"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1633 ../plug-ins/python/spyro-plus.py:1677
+msgid "Rotation"
+msgstr "Tuzzya"
+
+#: ../plug-ins/python/spyro-plus.py:1634
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1657
+msgid "Shape"
+msgstr "Talɣa"
+
+#: ../plug-ins/python/spyro-plus.py:1658
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1667
+msgid "Sides"
+msgstr "Idisan"
+
+#: ../plug-ins/python/spyro-plus.py:1667
+msgid "Number of sides of the shape."
+msgstr "Amḍan n yidisan n talɣa."
+
+#: ../plug-ins/python/spyro-plus.py:1672
+msgid "Morph"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1672
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1677
+msgid "Rotation of the fixed gear, in degrees"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1692
+msgid "Margin (px)"
+msgstr "Tama (px)"
+
+#: ../plug-ins/python/spyro-plus.py:1692
+msgid "Margin from edge of selection."
+msgstr "Tama seg umder n tefrayt."
+
+#: ../plug-ins/python/spyro-plus.py:1697
+msgid "Make width and height equal"
+msgstr "Err tehri akked teɣzi kifkif"
+
+#: ../plug-ins/python/spyro-plus.py:1699
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1714
+msgid "Re_draw"
+msgstr "Ales asuneɣ"
+
+#: ../plug-ins/python/spyro-plus.py:1716
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+"Ma tbeddeleḍ iɣewwaren n ufecku, ini, neɣ tafrayt, ssed wagi iwakken ad "
+"twaliḍ amek yettban wudlif."
+
+#: ../plug-ins/python/spyro-plus.py:1719
+msgid "_Reset"
+msgstr "A_les awennez"
+
+#: ../plug-ins/python/spyro-plus.py:1727
+msgid "Save"
+msgstr "Sekles"
+
+#: ../plug-ins/python/spyro-plus.py:1728
+msgid ""
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr ""
+"Fren ma yella ad teskelseḍ tissi tamaynutt, ad talseḍ asuneɣ n tissi "
+"turmidt, neɣ ad teskelseḍ abrid"
+
+#: ../plug-ins/python/spyro-plus.py:1742
+msgid "Spyrogimp"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1751 ../plug-ins/python/spyro-plus.py:2284
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1764
+msgid "Curve Pattern"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1767
+msgid "Fixed Gear"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1770
+msgid "Size"
+msgstr "Tiddi"
+
+#: ../plug-ins/python/spyro-plus.py:2118
+msgid "Rendering Pattern"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:2130
+msgid "Please wait : Rendering Pattern"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:2288
+msgid "Spyrogimp..."
+msgstr ""
