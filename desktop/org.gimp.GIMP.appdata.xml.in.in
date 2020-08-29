@@ -80,19 +80,15 @@
         </_p>
         <ul>
           <_li>
-            AVIF import and export, with support for 10/12-bit images,
-            NCLX color profiles, and metadata reading.
-          </_li>
-          <_li>
             The option enabling OpenCL support has been moved to the
-            Playground tab in Preferences.
+            Playground tab in Preferences
           </_li>
           <_li>
             Matting Levin is now the default engine of Foreground Select
-            tool as it performs a lot better.
+            tool as it performs a lot better
           </_li>
           <_li>
-            Over XX bugfixes
+            13 bug fixes
           </_li>
         </ul>
       </description>
