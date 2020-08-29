@@ -6,22 +6,22 @@
 # Mingye Wang <arthur200126@gmail.com>, 2015
 # YunQiang Su <wzssyqa@gmail.com>, 2011
 # kappa8086 <kappa8086@gmail.com>, 2008
-# lumingzh <lumingzh@qq.com>, 2019.
+# lumingzh <lumingzh@qq.com>, 2019-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-07 02:45+0000\n"
-"PO-Revision-Date: 2020-03-13 14:51+0800\n"
+"POT-Creation-Date: 2020-08-06 11:26+0000\n"
+"PO-Revision-Date: 2020-08-06 20:54+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.3\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Gtranslator 3.36.0\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:176
 msgid "Brush Selection"
@@ -32,81 +32,81 @@ msgstr "笔刷选择"
 msgid "_Browse..."
 msgstr "浏览(_B)…"
 
-#: ../libgimp/gimpexport.c:293 ../libgimp/gimpexport.c:329
+#: ../libgimp/gimpexport.c:332 ../libgimp/gimpexport.c:368
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s 插件无法处理图层"
 
-#: ../libgimp/gimpexport.c:294 ../libgimp/gimpexport.c:303
-#: ../libgimp/gimpexport.c:312 ../libgimp/gimpexport.c:330
+#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:369
 msgid "Merge Visible Layers"
 msgstr "合并可见图层"
 
-#: ../libgimp/gimpexport.c:302
+#: ../libgimp/gimpexport.c:341
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s 插件无法处理图层位移、大小或不透明度"
 
-#: ../libgimp/gimpexport.c:311 ../libgimp/gimpexport.c:320
+#: ../libgimp/gimpexport.c:350 ../libgimp/gimpexport.c:359
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s 插件只能以动画的帧的方式处理图层"
 
-#: ../libgimp/gimpexport.c:312 ../libgimp/gimpexport.c:321
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:360
 msgid "Save as Animation"
 msgstr "以动画储存"
 
-#: ../libgimp/gimpexport.c:321 ../libgimp/gimpexport.c:330
-#: ../libgimp/gimpexport.c:339 ../libgimp/gimpexport.c:348
+#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:369
+#: ../libgimp/gimpexport.c:378 ../libgimp/gimpexport.c:387
 msgid "Flatten Image"
 msgstr "平整图像"
 
-#: ../libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:377
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s 插件无法处理透明度"
 
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:386
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "%s 插件无法处理透明图层"
 
-#: ../libgimp/gimpexport.c:356
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s 插件无法处理图层蒙板"
 
-#: ../libgimp/gimpexport.c:357
+#: ../libgimp/gimpexport.c:396
 msgid "Apply Layer Masks"
 msgstr "应用图层蒙板"
 
-#: ../libgimp/gimpexport.c:365
+#: ../libgimp/gimpexport.c:404
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s 插件只能处理 RGB 图像"
 
-#: ../libgimp/gimpexport.c:366 ../libgimp/gimpexport.c:404
-#: ../libgimp/gimpexport.c:413
+#: ../libgimp/gimpexport.c:405 ../libgimp/gimpexport.c:443
+#: ../libgimp/gimpexport.c:452
 msgid "Convert to RGB"
 msgstr "转换到 RGB"
 
-#: ../libgimp/gimpexport.c:374
+#: ../libgimp/gimpexport.c:413
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s 插件只能处理灰度图像"
 
-#: ../libgimp/gimpexport.c:375 ../libgimp/gimpexport.c:404
-#: ../libgimp/gimpexport.c:425
+#: ../libgimp/gimpexport.c:414 ../libgimp/gimpexport.c:443
+#: ../libgimp/gimpexport.c:464
 msgid "Convert to Grayscale"
 msgstr "转换到灰度"
 
-#: ../libgimp/gimpexport.c:383
+#: ../libgimp/gimpexport.c:422
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s 插件只能处理带有索引的图像"
 
-#: ../libgimp/gimpexport.c:384 ../libgimp/gimpexport.c:413
-#: ../libgimp/gimpexport.c:423
+#: ../libgimp/gimpexport.c:423 ../libgimp/gimpexport.c:452
+#: ../libgimp/gimpexport.c:462
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -114,12 +114,12 @@ msgstr ""
 "使用默认的设置转换到索引\n"
 "(如需调节请手动转换)"
 
-#: ../libgimp/gimpexport.c:393
+#: ../libgimp/gimpexport.c:432
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "%s 插件只能处理双色索引的图像"
 
-#: ../libgimp/gimpexport.c:394
+#: ../libgimp/gimpexport.c:433
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -127,64 +127,79 @@ msgstr ""
 "使用默认的位图设置转换到索引\n"
 "（如需调节请手动转换）"
 
-#: ../libgimp/gimpexport.c:403
+#: ../libgimp/gimpexport.c:442
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s 插件只能处理 RGB 或灰度图像"
 
-#: ../libgimp/gimpexport.c:412
+#: ../libgimp/gimpexport.c:451
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s 插件只能处理 RGB 或带索引的图像"
 
-#: ../libgimp/gimpexport.c:422
+#: ../libgimp/gimpexport.c:461
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s 插件只能处理灰度或带索引的图像"
 
-#: ../libgimp/gimpexport.c:433
+#: ../libgimp/gimpexport.c:472
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s 插件需要一个 alpha 通道"
 
-#: ../libgimp/gimpexport.c:434
+#: ../libgimp/gimpexport.c:473
 msgid "Add Alpha Channel"
 msgstr "添加 Alpha 通道"
 
-#: ../libgimp/gimpexport.c:493
+#: ../libgimp/gimpexport.c:481
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr "%s 插件需要剪裁图层至图像边界"
+
+#: ../libgimp/gimpexport.c:482
+#| msgctxt "page-selector-target"
+#| msgid "Layers"
+msgid "Crop Layers"
+msgstr "剪裁图层"
+
+#: ../libgimp/gimpexport.c:482
+msgid "Resize Image to Layers"
+msgstr "缩放图像至图层大小"
+
+#: ../libgimp/gimpexport.c:541
 msgid "Confirm Save"
 msgstr "确认保存"
 
-#: ../libgimp/gimpexport.c:498 ../libgimp/gimpexport.c:580
-#: ../libgimp/gimpexport.c:1080 ../libgimp/gimpproceduredialog.c:232
-#: ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
+#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:232
+#: ../libgimpwidgets/gimpcolorbutton.c:553
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
-#: ../libgimpwidgets/gimpfileentry.c:437 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: ../libgimp/gimpexport.c:499
+#: ../libgimp/gimpexport.c:547
 msgid "C_onfirm"
 msgstr "确认(_O)"
 
-#: ../libgimp/gimpexport.c:575
+#: ../libgimp/gimpexport.c:623
 msgid "Export File"
 msgstr "导出文件"
 
-#: ../libgimp/gimpexport.c:579
+#: ../libgimp/gimpexport.c:627
 msgid "_Ignore"
 msgstr "忽略(_I)"
 
-#: ../libgimp/gimpexport.c:581 ../libgimp/gimpexport.c:1081
+#: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
 #: ../libgimp/gimpproceduredialog.c:226
 msgid "_Export"
 msgstr "导出(_E)"
 
 #. the headline
-#: ../libgimp/gimpexport.c:611
+#: ../libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -192,11 +207,11 @@ msgid ""
 msgstr "您的图像在保存为 %s 之前应该先进行导出，因为："
 
 #. the footline
-#: ../libgimp/gimpexport.c:685
+#: ../libgimp/gimpexport.c:733
 msgid "The export conversion won't modify your original image."
 msgstr "导出转换不会改变您原来的图像。"
 
-#: ../libgimp/gimpexport.c:789
+#: ../libgimp/gimpexport.c:853
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -205,7 +220,7 @@ msgstr ""
 "您将要把图层蒙板保存为 %s。\n"
 "这将不会保存可见的图层。"
 
-#: ../libgimp/gimpexport.c:795
+#: ../libgimp/gimpexport.c:859
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -215,7 +230,7 @@ msgstr ""
 "这将不会保存可见的图层。"
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1074
+#: ../libgimp/gimpexport.c:1193
 #, c-format
 msgid "Export Image as %s"
 msgstr "导出图像为 %s"
@@ -297,105 +312,105 @@ msgstr "调用错误"
 msgid "cancelled"
 msgstr "已取消"
 
-#: ../libgimp/gimpprocbrowserdialog.c:164
+#: ../libgimp/gimpprocbrowserdialog.c:162
 msgid "by name"
 msgstr "按名称"
 
-#: ../libgimp/gimpprocbrowserdialog.c:165
+#: ../libgimp/gimpprocbrowserdialog.c:163
 msgid "by description"
 msgstr "按描述"
 
-#: ../libgimp/gimpprocbrowserdialog.c:166
+#: ../libgimp/gimpprocbrowserdialog.c:164
 msgid "by help"
 msgstr "按帮助"
 
-#: ../libgimp/gimpprocbrowserdialog.c:167
+#: ../libgimp/gimpprocbrowserdialog.c:165
 msgid "by authors"
 msgstr "按作者"
 
-#: ../libgimp/gimpprocbrowserdialog.c:168
+#: ../libgimp/gimpprocbrowserdialog.c:166
 msgid "by copyright"
 msgstr "按版权"
 
-#: ../libgimp/gimpprocbrowserdialog.c:169
+#: ../libgimp/gimpprocbrowserdialog.c:167
 msgid "by date"
 msgstr "按日期"
 
-#: ../libgimp/gimpprocbrowserdialog.c:170
+#: ../libgimp/gimpprocbrowserdialog.c:168
 msgid "by type"
 msgstr "按类型"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:371
-#: ../libgimp/gimpprocbrowserdialog.c:527 ../libgimpwidgets/gimpbrowser.c:168
+#: ../libgimp/gimpprocbrowserdialog.c:369
+#: ../libgimp/gimpprocbrowserdialog.c:525 ../libgimpwidgets/gimpbrowser.c:168
 msgid "No matches"
 msgstr "无匹配"
 
-#: ../libgimp/gimpprocbrowserdialog.c:374
+#: ../libgimp/gimpprocbrowserdialog.c:372
 msgid "Search term invalid or incomplete"
 msgstr "搜索条件无效或不完整"
 
-#: ../libgimp/gimpprocbrowserdialog.c:383
+#: ../libgimp/gimpprocbrowserdialog.c:381
 msgid "Searching"
 msgstr "搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:395
+#: ../libgimp/gimpprocbrowserdialog.c:393
 msgid "Searching by name"
 msgstr "按名称搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:416
+#: ../libgimp/gimpprocbrowserdialog.c:414
 msgid "Searching by description"
 msgstr "按描述搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:424
+#: ../libgimp/gimpprocbrowserdialog.c:422
 msgid "Searching by help"
 msgstr "按帮助搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:432
+#: ../libgimp/gimpprocbrowserdialog.c:430
 msgid "Searching by authors"
 msgstr "按作者搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:440
+#: ../libgimp/gimpprocbrowserdialog.c:438
 msgid "Searching by copyright"
 msgstr "按版权搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:448
+#: ../libgimp/gimpprocbrowserdialog.c:446
 msgid "Searching by date"
 msgstr "按日期搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:456
+#: ../libgimp/gimpprocbrowserdialog.c:454
 msgid "Searching by type"
 msgstr "按类型搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:467
+#: ../libgimp/gimpprocbrowserdialog.c:465
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d 个过程"
 
-#: ../libgimp/gimpprocbrowserdialog.c:476
+#: ../libgimp/gimpprocbrowserdialog.c:474
 msgid "No matches for your query"
 msgstr "您的查询无匹配项"
 
-#: ../libgimp/gimpprocbrowserdialog.c:480
+#: ../libgimp/gimpprocbrowserdialog.c:478
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d 个过程与您的查询相匹配"
 
-#: ../libgimp/gimpprocedure.c:1721
+#: ../libgimp/gimpprocedure.c:1828
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "“%s”过程无返回值"
 
-#: ../libgimp/gimpprocedure.c:1813
+#: ../libgimp/gimpprocedure.c:1920
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "“%s”过程返回了错误的值类型用于返回值“%s” (#%d) 。需要 %s，但获得 %s。"
 
-#: ../libgimp/gimpprocedure.c:1825
+#: ../libgimp/gimpprocedure.c:1932
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -403,26 +418,26 @@ msgid ""
 msgstr ""
 "调用“%s”过程使用了错误的值类型用于参数“%s” (#%d) 。需要 %s，但获得 %s。"
 
-#: ../libgimp/gimpprocedure.c:1860
+#: ../libgimp/gimpprocedure.c:1967
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "“%s”过程返回了“%s”作为返回值“%s”（#%d，%s 类型）。此值超出范围。"
 
-#: ../libgimp/gimpprocedure.c:1874
+#: ../libgimp/gimpprocedure.c:1981
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "“%s”过程使用了“%s”值用于“%s”参数（#%d，%s 类型）。此值超出范围。"
 
-#: ../libgimp/gimpprocedure.c:1924
+#: ../libgimp/gimpprocedure.c:2031
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "“%s”过程为参数“%s”返回了一个无效的 UTF-8 字符串。"
 
-#: ../libgimp/gimpprocedure.c:1934
+#: ../libgimp/gimpprocedure.c:2041
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -434,14 +449,14 @@ msgstr "调用“%s”过程时为参数“%s”使用了无效的 UTF-8 字符�
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: ../libgimp/gimpproceduredialog.c:228 ../libgimpwidgets/gimpcolorbutton.c:555
-#: ../libgimpwidgets/gimpfileentry.c:438 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimp/gimpproceduredialog.c:228 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimpwidgets/gimpfileentry.c:437 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "确定(_O)"
 
-#: ../libgimp/gimpproceduredialog.c:231 ../libgimpwidgets/gimpcolorbutton.c:553
+#: ../libgimp/gimpproceduredialog.c:231 ../libgimpwidgets/gimpcolorbutton.c:552
 msgid "_Reset"
 msgstr "重置(_R)"
 
@@ -461,39 +476,39 @@ msgstr "重置为初始值(_I)"
 msgid "Reset to _Factory Defaults"
 msgstr "重置为出厂默认值(_F)"
 
-#: ../libgimp/gimpprocview.c:175
+#: ../libgimp/gimpprocview.c:176
 msgid "Image types:"
 msgstr "图像类型："
 
-#: ../libgimp/gimpprocview.c:178
+#: ../libgimp/gimpprocview.c:179
 msgid "Menu label:"
 msgstr "菜单标签："
 
-#: ../libgimp/gimpprocview.c:186
+#: ../libgimp/gimpprocview.c:187
 msgid "Menu path:"
 msgstr "菜单路径："
 
-#: ../libgimp/gimpprocview.c:201
+#: ../libgimp/gimpprocview.c:202
 msgid "Parameters"
 msgstr "参数"
 
-#: ../libgimp/gimpprocview.c:215
+#: ../libgimp/gimpprocview.c:216
 msgid "Return Values"
 msgstr "返回值"
 
-#: ../libgimp/gimpprocview.c:230
+#: ../libgimp/gimpprocview.c:231
 msgid "Additional Information"
 msgstr "附加信息"
 
-#: ../libgimp/gimpprocview.c:262
+#: ../libgimp/gimpprocview.c:263
 msgid "Authors:"
 msgstr "作者："
 
-#: ../libgimp/gimpprocview.c:265
+#: ../libgimp/gimpprocview.c:266
 msgid "Date:"
 msgstr "日期："
 
-#: ../libgimp/gimpprocview.c:268
+#: ../libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "版权："
 
@@ -1865,8 +1880,8 @@ msgstr "%2$s 的值 “%1$ld” 无效"
 msgid "while parsing token '%s': %s"
 msgstr "解析 “%s” 时：%s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:662
-#: ../libgimpconfig/gimpconfig-iface.c:675 ../libgimpconfig/gimpscanner.c:779
+#: ../libgimpconfig/gimpconfig-iface.c:665
+#: ../libgimpconfig/gimpconfig-iface.c:678 ../libgimpconfig/gimpscanner.c:779
 #: ../libgimpconfig/gimpscanner.c:861
 #: ../libgimpwidgets/gimpcolorprofilestore.c:682
 msgid "fatal parse error"
@@ -1918,26 +1933,26 @@ msgstr "期待布尔值为 “yes” 或 “no”，但得到 “%s”"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "解析 “%s” 第 %d 行时出错：%s"
 
-#: ../libgimpmodule/gimpmodule.c:173 ../libgimpmodule/gimpmodule.c:191
-#: ../libgimpmodule/gimpmodule.c:452 ../libgimpmodule/gimpmodule.c:475
-#: ../libgimpmodule/gimpmodule.c:525
+#: ../libgimpmodule/gimpmodule.c:172 ../libgimpmodule/gimpmodule.c:190
+#: ../libgimpmodule/gimpmodule.c:451 ../libgimpmodule/gimpmodule.c:474
+#: ../libgimpmodule/gimpmodule.c:524
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "模块“%s”加载错误：%s"
 
-#: ../libgimpmodule/gimpmoduledb.c:503
+#: ../libgimpmodule/gimpmoduledb.c:500
 msgid "Module error"
 msgstr "模块错误"
 
-#: ../libgimpmodule/gimpmoduledb.c:504
+#: ../libgimpmodule/gimpmoduledb.c:501
 msgid "Loaded"
 msgstr "已加载"
 
-#: ../libgimpmodule/gimpmoduledb.c:505
+#: ../libgimpmodule/gimpmoduledb.c:502
 msgid "Load failed"
 msgstr "加载失败"
 
-#: ../libgimpmodule/gimpmoduledb.c:506
+#: ../libgimpmodule/gimpmoduledb.c:503
 msgid "Not loaded"
 msgstr "未加载"
 
@@ -1985,7 +2000,7 @@ msgstr "黑(_K)"
 msgid "_White"
 msgstr "白(_W)"
 
-#: ../libgimpwidgets/gimpcolorhexentry.c:135
+#: ../libgimpwidgets/gimpcolorhexentry.c:134
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -2004,7 +2019,7 @@ msgid "_Save"
 msgstr "保存(_S)"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:346
-#: ../libgimpwidgets/gimppatheditor.c:269
+#: ../libgimpwidgets/gimppatheditor.c:267
 msgid "Folder"
 msgstr "文件夹"
 
@@ -2049,48 +2064,48 @@ msgstr "LCh"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../libgimpwidgets/gimpcolorselection.c:250
+#: ../libgimpwidgets/gimpcolorselection.c:249
 msgid "Current:"
 msgstr "当前："
 
-#: ../libgimpwidgets/gimpcolorselection.c:259
+#: ../libgimpwidgets/gimpcolorselection.c:258
 msgid "Old:"
 msgstr "旧的："
 
-#: ../libgimpwidgets/gimpcolorselection.c:346
+#: ../libgimpwidgets/gimpcolorselection.c:345
 msgid "HTML _notation:"
 msgstr "HTML 标记(_N)："
 
-#: ../libgimpwidgets/gimpfileentry.c:154
+#: ../libgimpwidgets/gimpfileentry.c:153
 msgid "Show file location in the file manager"
 msgstr "在文件管理器中显示文件的位置"
 
-#: ../libgimpwidgets/gimpfileentry.c:225
+#: ../libgimpwidgets/gimpfileentry.c:224
 msgid "Open a file selector to browse your folders"
 msgstr "打开一个文件选择器以浏览您的文件夹"
 
-#: ../libgimpwidgets/gimpfileentry.c:226
+#: ../libgimpwidgets/gimpfileentry.c:225
 msgid "Open a file selector to browse your files"
 msgstr "打开一个文件选择器以浏览您的文件"
 
-#: ../libgimpwidgets/gimpfileentry.c:238
+#: ../libgimpwidgets/gimpfileentry.c:237
 msgid "Indicates whether or not the folder exists"
 msgstr "提示文件夹是否存在"
 
-#: ../libgimpwidgets/gimpfileentry.c:239
+#: ../libgimpwidgets/gimpfileentry.c:238
 msgid "Indicates whether or not the file exists"
 msgstr "提示文件是否存在"
 
-#: ../libgimpwidgets/gimpfileentry.c:399
+#: ../libgimpwidgets/gimpfileentry.c:398
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "无法在文件管理器中查看文件：%s"
 
-#: ../libgimpwidgets/gimpfileentry.c:426
+#: ../libgimpwidgets/gimpfileentry.c:425
 msgid "Select Folder"
 msgstr "选择文件夹"
 
-#: ../libgimpwidgets/gimpfileentry.c:428
+#: ../libgimpwidgets/gimpfileentry.c:427
 msgid "Select File"
 msgstr "选择文件"
 
@@ -2105,81 +2120,84 @@ msgstr "按 F1 以获得更多帮助"
 msgid "(Empty)"
 msgstr "（空）"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:216
-msgid "Kilobytes"
-msgstr "KB"
+#: ../libgimpwidgets/gimpmemsizeentry.c:252
+#| msgid "Kilobytes"
+msgid "Kibibyte"
+msgstr "KiB"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:217
-msgid "Megabytes"
-msgstr "MB"
+#: ../libgimpwidgets/gimpmemsizeentry.c:253
+#| msgid "Megabytes"
+msgid "Mebibyte"
+msgstr "MiB"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:218
-msgid "Gigabytes"
-msgstr "GB"
+#: ../libgimpwidgets/gimpmemsizeentry.c:254
+#| msgid "Gigabytes"
+msgid "Gibibyte"
+msgstr "GiB"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:285
-#: ../libgimpwidgets/gimppageselector.c:1081
+#: ../libgimpwidgets/gimppageselector.c:283
+#: ../libgimpwidgets/gimppageselector.c:1079
 msgid "Nothing selected"
 msgstr "未选中"
 
-#: ../libgimpwidgets/gimppageselector.c:303
+#: ../libgimpwidgets/gimppageselector.c:301
 msgid "Select _All"
 msgstr "全部选中(_A)"
 
-#: ../libgimpwidgets/gimppageselector.c:323
+#: ../libgimpwidgets/gimppageselector.c:321
 msgid "Select _range:"
 msgstr "选择范围(_R)："
 
-#: ../libgimpwidgets/gimppageselector.c:335
+#: ../libgimpwidgets/gimppageselector.c:333
 msgid "Open _pages as"
 msgstr "打开页面为(_P)"
 
-#: ../libgimpwidgets/gimppageselector.c:463
-#: ../libgimpwidgets/gimppageselector.c:661
+#: ../libgimpwidgets/gimppageselector.c:461
+#: ../libgimpwidgets/gimppageselector.c:659
 #, c-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: ../libgimpwidgets/gimppageselector.c:1086
+#: ../libgimpwidgets/gimppageselector.c:1084
 msgid "One page selected"
 msgstr "已选中一页"
 
-#: ../libgimpwidgets/gimppageselector.c:1093
-#: ../libgimpwidgets/gimppageselector.c:1097
+#: ../libgimpwidgets/gimppageselector.c:1091
+#: ../libgimpwidgets/gimppageselector.c:1095
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "已选中 %d 页"
 
-#: ../libgimpwidgets/gimppatheditor.c:180
+#: ../libgimpwidgets/gimppatheditor.c:178
 msgid "Add a new folder"
 msgstr "添加新文件夹"
 
-#: ../libgimpwidgets/gimppatheditor.c:198
+#: ../libgimpwidgets/gimppatheditor.c:196
 msgid "Move the selected folder up"
 msgstr "上移选中文件夹"
 
-#: ../libgimpwidgets/gimppatheditor.c:216
+#: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Move the selected folder down"
 msgstr "下移选中文件夹"
 
-#: ../libgimpwidgets/gimppatheditor.c:234
+#: ../libgimpwidgets/gimppatheditor.c:232
 msgid "Remove the selected folder from the list"
 msgstr "从列表中删除选中文件夹"
 
-#: ../libgimpwidgets/gimppatheditor.c:260
+#: ../libgimpwidgets/gimppatheditor.c:258
 msgid "Writable"
 msgstr "可写"
 
-#: ../libgimpwidgets/gimppickbutton.c:116
+#: ../libgimpwidgets/gimppickbutton.c:115
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr "点击滴管，然后点击您的屏幕上任何位置的颜色即可选取该颜色。"
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:283
+#: ../libgimpwidgets/gimppreview.c:282
 msgid "_Preview"
 msgstr "预览(_P)"
 
@@ -2197,21 +2215,21 @@ msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "此文本输入区域限制为 %d 个字符。"
 
-#: ../libgimpwidgets/gimpwidgets.c:258
+#: ../libgimpwidgets/gimpwidgets.c:259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr "使用这个值作为随机数生成种子 - 这将允许您重复一个指定的“随机”操作"
 
-#: ../libgimpwidgets/gimpwidgets.c:262
+#: ../libgimpwidgets/gimpwidgets.c:263
 msgid "_New Seed"
 msgstr "新种子(_N)"
 
-#: ../libgimpwidgets/gimpwidgets.c:278
+#: ../libgimpwidgets/gimpwidgets.c:279
 msgid "Seed random number generator with a generated random number"
 msgstr "以生成的随机数作为随机数生成器的种子"
 
-#: ../libgimpwidgets/gimpwidgets.c:282
+#: ../libgimpwidgets/gimpwidgets.c:283
 msgid "_Randomize"
 msgstr "随机(_R)"
 
