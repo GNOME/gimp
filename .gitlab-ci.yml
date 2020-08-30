@@ -142,7 +142,7 @@ deps-debian/testing:
         libmypaint-dev
         libopenexr-dev
         libpoppler-glib-dev
-        libraw19
+        libraw20
         librsvg2-dev
         libspiro-dev
         libtiff-dev
