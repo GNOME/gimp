@@ -68,6 +68,12 @@ Plug-ins:
     to know the right compression from other flags. This allows to
     recover invalid DDS files exported by other software.
   - JPEG detection improved to be more generic and reliable.
+  - Multiple improvements in the PSP plug-in:
+    - fix wrong layer offset of layers,
+    - fix reading layer names with high bit ASCII characters,
+    - improve reader stability by always using the block/chunk length,
+    - fix incorrect loading of PSP images with uncompressed channel data,
+    - fix reading of creator block data of PSP images.
 
 Debugging:
 
@@ -92,8 +98,8 @@ Build:
 
 Bug fixes:
 
-  #5208, #5232, #5226, #5275, #5274, #5069, #5357, #4536, #2874, #5472,
-  #4328, #5530, #5584
+    #2874, #4328, #4536, #5069, #5208, #5219, #5226, #5232, #5274, #5275,
+    #5357, #5472, #5530, #5584
 
 Translation updates:
 
