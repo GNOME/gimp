@@ -1360,9 +1360,11 @@ read_layer_block (FILE      *f,
         {
           if (fread (&chunk_len, 4, 1, f) < 1
               || fread (&namelen, 2, 1, f) < 1
-              || ((namelen = GUINT16_FROM_LE (namelen)) && FALSE)
+              /* A zero length layer name is apparently valid. To not get a warning for
+                 namelen < 0 always being false we use this more complicated comparison. */
+              || ((namelen = GUINT16_FROM_LE (namelen)) && (FALSE || namelen == 0))
               || (name = g_malloc (namelen + 1)) == NULL
-              || fread (name, namelen, 1, f) < 1
+              || (namelen > 0 && fread (name, namelen, 1, f) < 1)
               || fread (&type, 1, 1, f) < 1
               || fread (&image_rect, 16, 1, f) < 1
               || fread (&saved_image_rect, 16, 1, f) < 1
