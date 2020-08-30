@@ -1309,7 +1309,9 @@ read_raster_layer_info (FILE      *f,
                         guint16   *channel_count,
                         GError   **error)
 {
-  guint32 layer_extension_len;
+  long    block_start;
+  guint32 layer_extension_len, block_len;
+  gint    block_id;
 
   if (fseek (f, layer_extension_start, SEEK_SET) < 0
       || fread (&layer_extension_len, 4, 1, f) < 1)
@@ -1319,6 +1321,40 @@ read_raster_layer_info (FILE      *f,
       return FALSE;
     }
 
+    /* Newer versions of PSP have an extra block here for raster layers
+       with block id = 0x21. Most likely this was to fix an oversight in
+       the specification since vector and adjustment layers already were
+       using a similar extension block since file version 4.
+       The old chunk with bitmap_count and channel_count starts after this block.
+       We do not know starting from which version this change was implemented
+       but most likely version 9 (could also be version 10) so we can't test
+       based on version number only.
+       Although this is kind of a hack we can safely test for the block starting
+       code since the layer_extension_len here is always a small number.
+      */
+    if (psp_ver_major > 8 && memcmp (&layer_extension_len, "~BK\0", 4) == 0)
+      {
+        if (fread (&block_id, 2, 1, f) < 1
+            || fread (&block_len, 4, 1, f) < 1)
+          {
+            g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                         _("Error reading block information"));
+            return FALSE;
+          }
+        block_id = GUINT16_FROM_LE (block_id);
+        block_len = GUINT32_FROM_LE (block_len);
+
+        block_start = ftell (f);
+        layer_extension_start = block_start + block_len;
+
+        if (fseek (f, layer_extension_start, SEEK_SET) < 0
+            || fread (&layer_extension_len, 4, 1, f) < 1)
+          {
+            g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                         _("Error reading layer extension information"));
+            return FALSE;
+          }
+      }
     layer_extension_len = GUINT32_FROM_LE (layer_extension_len);
 
     if (fread (bitmap_count, 2, 1, f) < 1
