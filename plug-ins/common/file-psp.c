@@ -1865,15 +1865,11 @@ load_image (const gchar  *filename,
   psp_ver_major = GUINT16_FROM_LE (psp_ver_major);
   psp_ver_minor = GUINT16_FROM_LE (psp_ver_minor);
 
-  /* I only have the documentation for file format version 3.0,
-   * but PSP 6 writes version 4.0. Let's hope it's backwards compatible.
-   * Earlier versions probably don't have all the fields I expect
-   * so don't accept those.
+  /* We don't have the documentation for file format versions before 3.0,
+   * but newer versions should be mostly backwards compatible so that
+   * we can still read the image and skip unknown parts safely.
    */
-  if (psp_ver_major != 3 &&
-      psp_ver_major != 4 &&
-      psp_ver_major != 5 &&
-      psp_ver_major != 6)
+  if (psp_ver_major < 3)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unsupported PSP file format version %d.%d."),
