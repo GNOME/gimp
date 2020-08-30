@@ -54,20 +54,25 @@ Plug-ins:
     When showing the export dialog, give an option to either crop the
     layers to the image bounds, or to resize the image to fit the
     layers.
-  - In file-tiff, add an option to crop the layers to the image bounds
-    when exporting individual layers (using GIMP_EXPORT_NEEDS_CROP added
-    in the previous commit), since TIFF has no concept of global image
-    bounds otherwise. Cropping is enabled by default.
   - Content type `image/webp` is now recognized (and not only
     `image/x-webp` as both seem to be in used and this format is
     unfortunately not yet listed in IANA media types (so various content
     types are in use, no clear standard apparently).
-  - TIFF export will not override "DocumentName" metadata tag anymore.
   - DDS import is now a bit more permissive, allowing to load some files
     with invalid header flags regarding compression, while we are able
     to know the right compression from other flags. This allows to
     recover invalid DDS files exported by other software.
   - JPEG detection improved to be more generic and reliable.
+  - TIFF support improvements:
+    - Add an option to crop the layers to the image bounds when exporting
+      individual layers (using GIMP_EXPORT_NEEDS_CROP), since TIFF has no
+      concept of global image bounds otherwise. Cropping is enabled
+      by default.
+    - TIFF export will not override "DocumentName" metadata tag anymore.
+    - Stop writing file paths into TIFF DocumentNames as file paths can
+      contain confidential information such as usernames and directory
+      structures, making the previous behaviour a potential privacy and
+      security risk.
   - Multiple improvements in the PSP plug-in:
     - fix wrong layer offset of layers,
     - fix reading layer names with high bit ASCII characters,
@@ -105,6 +110,12 @@ Translation updates:
 
   - Basque, Catalan, Chinese (China), Croatian, Danish, German, Italian,
     Japanese, Kazakh, Polish, Spanish, Swedish, Turkish, Ukrainian
+
+Developers/contributors:
+
+  - David A. Russo, Elad Shahar, Ell, Jacob Boerema, Jehan Pages, Liam Quin,
+    lillolollo, luz.paz, Michael Natterer, Michael Schumacher, Øyvind Kolås,
+    Peter Oliver, Simon McVittie
 
 Translators: 
 
