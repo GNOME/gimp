@@ -1812,7 +1812,7 @@ class SpyroWindow():
 
         # Make a new GIMP layer to draw on
         self.spyro_layer = Gimp.Layer.new(img, layer_name, img.width(), img.height(),
-                                          layer.type(), 100, Gimp.LayerMode.NORMAL)
+                                          layer.type_with_alpha(), 100, Gimp.LayerMode.NORMAL)
         img.insert_layer(self.spyro_layer, None, 0)
         self.drawing_layer = self.spyro_layer
 
