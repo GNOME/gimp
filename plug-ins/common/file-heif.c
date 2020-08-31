@@ -1293,7 +1293,7 @@ save_image (GFile                        *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "cannot allocate heif_context");
-      return NULL;
+      return FALSE;
     }
 
   g_object_get (config,
