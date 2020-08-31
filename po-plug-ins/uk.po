@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-08-22 07:37+0000\n"
-"PO-Revision-Date: 2020-08-22 12:09+0300\n"
+"POT-Creation-Date: 2020-08-31 12:13+0000\n"
+"PO-Revision-Date: 2020-08-31 15:18+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -1077,7 +1077,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3348
-#: ../plug-ins/common/file-psp.c:1816 ../plug-ins/common/file-psp.c:1870
+#: ../plug-ins/common/file-psp.c:1879 ../plug-ins/common/file-psp.c:1929
 #: ../plug-ins/common/file-raw-data.c:477
 #: ../plug-ins/common/file-raw-data.c:1303 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
@@ -3694,88 +3694,88 @@ msgstr "Помилка зчитування даних ключового сло
 msgid "zlib error"
 msgstr "Помилка zlib"
 
-#: ../plug-ins/common/file-psp.c:1350
+#: ../plug-ins/common/file-psp.c:1320 ../plug-ins/common/file-psp.c:1354
+#: ../plug-ins/common/file-psp.c:1364
+#, c-format
+msgid "Error reading layer extension information"
+msgstr "Помилка зчитування даних щодо розширення шару"
+
+#: ../plug-ins/common/file-psp.c:1341
+#, c-format
+#| msgid "Error reading layer information"
+msgid "Error reading block information"
+msgstr "Помилка зчитування даних щодо блоку"
+
+#: ../plug-ins/common/file-psp.c:1421
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Хибний підблок шару %s, має бути LAYER"
 
-#: ../plug-ins/common/file-psp.c:1379 ../plug-ins/common/file-psp.c:1449
+#: ../plug-ins/common/file-psp.c:1452 ../plug-ins/common/file-psp.c:1509
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Помилка зчитування інформаційного сегменту шару"
 
-#: ../plug-ins/common/file-psp.c:1393
-#, c-format
-#| msgid "Error reading layer information chunk"
-msgid "Error reading layer extension information"
-msgstr "Помилка зчитування даних щодо розширення шару"
-
-#: ../plug-ins/common/file-psp.c:1408
-#, c-format
-#| msgid "Error reading layer information chunk"
-msgid "Error reading layer information"
-msgstr "Помилка зчитування даних щодо шару"
-
-#: ../plug-ins/common/file-psp.c:1488
+#: ../plug-ins/common/file-psp.c:1551
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Хибні розміри шару: %dx%d"
 
-#: ../plug-ins/common/file-psp.c:1541
+#: ../plug-ins/common/file-psp.c:1606
 #, c-format
 msgid "Error creating layer"
 msgstr "Помилка при створенні шару"
 
-#: ../plug-ins/common/file-psp.c:1588
+#: ../plug-ins/common/file-psp.c:1651
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Хибний підблок %s шару, має бути CHANNEL"
 
-#: ../plug-ins/common/file-psp.c:1604
+#: ../plug-ins/common/file-psp.c:1667
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Помилка читання фрагменту інформації каналу"
 
-#: ../plug-ins/common/file-psp.c:1627
+#: ../plug-ins/common/file-psp.c:1690
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Хибний тип каналу %d у фрагменті інформації каналу"
 
-#: ../plug-ins/common/file-psp.c:1727
+#: ../plug-ins/common/file-psp.c:1790
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Помилка при фрагменту даних тюбика"
 
-#: ../plug-ins/common/file-psp.c:1827
+#: ../plug-ins/common/file-psp.c:1890
 #, c-format
 msgid "Error reading file header."
 msgstr "Помилка при читанні заголовка файлу."
 
-#: ../plug-ins/common/file-psp.c:1834
+#: ../plug-ins/common/file-psp.c:1897
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Хибна сигнатура файлу."
 
-#: ../plug-ins/common/file-psp.c:1852
+#: ../plug-ins/common/file-psp.c:1911
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Непідтримувана версія формату файлу PSP %d.%d."
 
-#: ../plug-ins/common/file-psp.c:1872
+#: ../plug-ins/common/file-psp.c:1931
 msgid "invalid block size"
 msgstr "хибний розмір блока"
 
-#: ../plug-ins/common/file-psp.c:1881
+#: ../plug-ins/common/file-psp.c:1940
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Повторний блок загальних атрибутів зображення."
 
-#: ../plug-ins/common/file-psp.c:1911
+#: ../plug-ins/common/file-psp.c:1970
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Відсутній блок загальних атрибутів зображення."
 
-#: ../plug-ins/common/file-psp.c:2000
+#: ../plug-ins/common/file-psp.c:2059
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
