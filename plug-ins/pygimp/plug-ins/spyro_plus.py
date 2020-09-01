@@ -1373,6 +1373,8 @@ class SpyroWindow(gtk.Window):
             adj = gtk.Adjustment(val, -180.0, 180.0, 1.0)
             myscale = hscale_in_table(adj, table, row, callback, digits=1)
             myscale.scale.add_mark(0.0, gtk.POS_BOTTOM, None)
+            myscale.spin.set_max_length(6)
+            myscale.spin.set_width_chars(6)
             return adj, myscale
 
         def set_combo_in_table(txt_list, table, row, callback):
@@ -1755,6 +1757,13 @@ class SpyroWindow(gtk.Window):
 
     # Callbacks for closing the plugin
 
+    def clear_idle_task(self):
+        if self.idle_task:
+            gobject.source_remove(self.idle_task)
+            # Close the undo group in the likely case the idle task left it open.
+            self.img.undo_group_end()
+            self.idle_task = None
+
     def ok_window(self, widget):
         """ Called when clicking on the 'close' button. """
 
@@ -1782,8 +1791,7 @@ class SpyroWindow(gtk.Window):
                 gtk.main_quit()
         else:
             # If there is an incremental drawing taking place, lets stop it.
-            if self.idle_task:
-                gobject.source_remove(self.idle_task)
+            self.clear_idle_task()
 
             if self.spyro_layer in self.img.layers:
                 self.img.remove_layer(self.spyro_layer)
@@ -1801,7 +1809,7 @@ class SpyroWindow(gtk.Window):
 
                 while self.engine.has_more_strokes():
                     yield True
-                    self.draw_next_chunk(undo_group=False, tool=tool)
+                    self.draw_next_chunk(tool=tool)
 
                 self.img.undo_group_end()
 
@@ -1815,8 +1823,7 @@ class SpyroWindow(gtk.Window):
             gobject.idle_add(task.next)
 
     def cancel_window(self, widget, what=None):
-
-        # Note that once we call gtk.main_quit, the idle task is stopped automatically.
+        self.clear_idle_task()
 
         # We want to delete the temporary layer, but as a precaution, lets ask first,
         # maybe it was already deleted by the user.
@@ -2055,16 +2062,12 @@ class SpyroWindow(gtk.Window):
 
     # Incremental drawing.
 
-    def draw_next_chunk(self, undo_group=True, tool=None):
+    def draw_next_chunk(self, tool=None):
         """ Incremental drawing """
 
         t = time.time()
 
-        if undo_group:
-            self.img.undo_group_start()
         chunk_size = self.engine.draw_next_chunk(self.drawing_layer, tool=tool)
-        if undo_group:
-            self.img.undo_group_end()
 
         draw_time = time.time() - t
         self.engine.report_time(draw_time)
@@ -2088,18 +2091,18 @@ class SpyroWindow(gtk.Window):
             self.progress_start()
             yield True
             self.engine.reset_incremental()
+
+            self.img.undo_group_start()
             while self.engine.has_more_strokes():
                 yield True
                 self.draw_next_chunk()
+            self.img.undo_group_end()
 
             self.idle_task = None
             yield False
 
-        # Remove old idle task if exists.
-        if self.idle_task:
-            gobject.source_remove(self.idle_task)
-
         # Start new idle task to perform incremental drawing in the background.
+        self.clear_idle_task()
         task = incremental_drawing()
         self.idle_task = gobject.idle_add(task.next)
 
