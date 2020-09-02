@@ -26,7 +26,6 @@
 #include "gimp-gegl-types.h"
 
 #include "core/gimpchunkiterator.h"
-#include "core/gimpmarshal.h"
 
 #include "gimp-gegl-loops.h"
 #include "gimp-gegl-utils.h"

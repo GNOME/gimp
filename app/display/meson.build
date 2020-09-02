@@ -107,7 +107,7 @@ libappdisplay_sources = [
   appdisplayenums,
   gitversion_h,
 
-  appcoremarshal,
+  appcoremarshal[1],
 ]
 
 libappdisplay = static_library('appdisplay',

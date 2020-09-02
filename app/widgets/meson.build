@@ -236,7 +236,7 @@ libappwidgets_sources = [
   'gimpwindowstrategy.c',
   appwidgetsenums,
 
-  appcoremarshal,
+  appcoremarshal[1],
 ]
 
 

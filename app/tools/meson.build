@@ -130,7 +130,7 @@ libapptools_sources = [
   'tool_manager.c',
   apptoolsenums,
 
-  appcoremarshal,
+  appcoremarshal[1],
 ]
 
 libapptools = static_library('apptools',
