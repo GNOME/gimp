@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-22 13:58+0200\n"
-"PO-Revision-Date: 2020-08-22 13:59+0200\n"
+"POT-Creation-Date: 2020-09-05 12:35+0200\n"
+"PO-Revision-Date: 2020-09-05 12:37+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1075,7 +1075,7 @@ msgstr "Wczytanie parametrów przeglądarki CML"
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3348
-#: ../plug-ins/common/file-psp.c:1816 ../plug-ins/common/file-psp.c:1870
+#: ../plug-ins/common/file-psp.c:1908 ../plug-ins/common/file-psp.c:1958
 #: ../plug-ins/common/file-raw-data.c:477
 #: ../plug-ins/common/file-raw-data.c:1303 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
@@ -3683,91 +3683,92 @@ msgstr "Nieprawidłowy nagłówek fragmentu słowa kluczowego"
 msgid "Error reading creator keyword data"
 msgstr "Błąd podczas odczytywania danych słowa kluczowego twórcy"
 
-#: ../plug-ins/common/file-psp.c:1265 ../plug-ins/common/file-psp.c:1279
+#: ../plug-ins/common/file-psp.c:1272 ../plug-ins/common/file-psp.c:1286
 #, c-format
 msgid "zlib error"
 msgstr "Błąd biblioteki zlib"
 
-#: ../plug-ins/common/file-psp.c:1350
-#, c-format
-msgid "Invalid layer sub-block %s, should be LAYER"
-msgstr "Nieprawidłowy podblok %s warstwy, powinien wynosić „LAYER”"
-
-#: ../plug-ins/common/file-psp.c:1379 ../plug-ins/common/file-psp.c:1449
-#, c-format
-msgid "Error reading layer information chunk"
-msgstr "Błąd podczas odczytywania fragmentu informacji o warstwie"
-
-#: ../plug-ins/common/file-psp.c:1393
+#: ../plug-ins/common/file-psp.c:1327 ../plug-ins/common/file-psp.c:1361
+#: ../plug-ins/common/file-psp.c:1371
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Błąd podczas odczytywania informacji o rozszerzeniu warstwy"
 
-#: ../plug-ins/common/file-psp.c:1408
+#: ../plug-ins/common/file-psp.c:1348
 #, c-format
-msgid "Error reading layer information"
-msgstr "Błąd podczas odczytywania informacji o warstwie"
+msgid "Error reading block information"
+msgstr "Błąd podczas odczytywania informacji o bloku"
 
-#: ../plug-ins/common/file-psp.c:1488
+#: ../plug-ins/common/file-psp.c:1428
+#, c-format
+msgid "Invalid layer sub-block %s, should be LAYER"
+msgstr "Nieprawidłowy podblok %s warstwy, powinien wynosić „LAYER”"
+
+#: ../plug-ins/common/file-psp.c:1459 ../plug-ins/common/file-psp.c:1516
+#, c-format
+msgid "Error reading layer information chunk"
+msgstr "Błąd podczas odczytywania fragmentu informacji o warstwie"
+
+#: ../plug-ins/common/file-psp.c:1558
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Nieprawidłowe wymiary warstwy: %d×%d"
 
-#: ../plug-ins/common/file-psp.c:1541
+#: ../plug-ins/common/file-psp.c:1613
 #, c-format
 msgid "Error creating layer"
 msgstr "Błąd podczas tworzenia warstwy"
 
-#: ../plug-ins/common/file-psp.c:1588
+#: ../plug-ins/common/file-psp.c:1658
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Nieprawidłowy podblok %s warstwy, powinien wynosić „CHANNEL”"
 
-#: ../plug-ins/common/file-psp.c:1604
+#: ../plug-ins/common/file-psp.c:1674
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Błąd podczas odczytywania fragmentu informacji o kanale"
 
-#: ../plug-ins/common/file-psp.c:1627
+#: ../plug-ins/common/file-psp.c:1697
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Nieprawidłowy typ kanału %d we fragmencie informacji o kanale"
 
-#: ../plug-ins/common/file-psp.c:1727
+#: ../plug-ins/common/file-psp.c:1801 ../plug-ins/common/file-psp.c:1818
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Błąd podczas odczytywania fragmentu danych o rurze"
 
-#: ../plug-ins/common/file-psp.c:1827
+#: ../plug-ins/common/file-psp.c:1919
 #, c-format
 msgid "Error reading file header."
 msgstr "Błąd podczas odczytywania nagłówka pliku."
 
-#: ../plug-ins/common/file-psp.c:1834
+#: ../plug-ins/common/file-psp.c:1926
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Niepoprawny podpis pliku."
 
-#: ../plug-ins/common/file-psp.c:1852
+#: ../plug-ins/common/file-psp.c:1940
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Nieobsługiwana wersja formatu pliku PSP %d.%d."
 
-#: ../plug-ins/common/file-psp.c:1872
+#: ../plug-ins/common/file-psp.c:1960
 msgid "invalid block size"
 msgstr "nieprawidłowy rozmiar bloku"
 
-#: ../plug-ins/common/file-psp.c:1881
+#: ../plug-ins/common/file-psp.c:1969
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Podwójny blok ogólnych atrybutów obrazu."
 
-#: ../plug-ins/common/file-psp.c:1911
+#: ../plug-ins/common/file-psp.c:1999
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Brak bloku ogólnych atrybutów obrazu."
 
-#: ../plug-ins/common/file-psp.c:2000
+#: ../plug-ins/common/file-psp.c:2088
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Eksportowanie nie jest jeszcze zaimplementowane."
