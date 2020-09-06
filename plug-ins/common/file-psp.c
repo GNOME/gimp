@@ -789,7 +789,8 @@ read_general_image_attribute_block (FILE     *f,
 
   if (init_len < 38 || total_len < 38)
     {
-      g_message ("Invalid general image attribute chunk size");
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Invalid general image attribute chunk size."));
       return -1;
     }
 
@@ -810,7 +811,8 @@ read_general_image_attribute_block (FILE     *f,
       || (psp_ver_major >= 4 && fread (graphics_content, 4, 1, f) < 1)
       || try_fseek (f, chunk_start + init_len, SEEK_SET, error) < 0)
     {
-      g_message ("Error reading general image attribute block");
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading general image attribute block."));
       return -1;
     }
   ia->width = GUINT32_FROM_LE (ia->width);
@@ -824,14 +826,16 @@ read_general_image_attribute_block (FILE     *f,
   ia->compression = GUINT16_FROM_LE (ia->compression);
   if (ia->compression > PSP_COMP_LZ77)
     {
-      g_message ("Unknown compression type %d", ia->compression);
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unknown compression type %d"), ia->compression);
       return -1;
     }
 
   ia->depth = GUINT16_FROM_LE (ia->depth);
   if (ia->depth != 24)
     {
-      g_message ("Unsupported bit depth %d", ia->depth);
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unsupported bit depth %d"), ia->depth);
       return -1;
     }
 
