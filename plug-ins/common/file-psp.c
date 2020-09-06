@@ -1166,6 +1166,31 @@ blend_mode_name (PSPBlendModes mode)
 }
 
 static const gchar *
+layer_type_name (PSPLayerTypePSP6 type)
+{
+  static const gchar *layer_type_names[] =
+  {
+    "Undefined",
+    "Raster",
+    "Floating Raster Selection",
+    "Vector",
+    "Adjustment",
+    "Group",
+    "Mask",
+    "Art Media",
+  };
+  static gchar *err_name = NULL;
+
+  if (type >= 0 && type <= keGLTArtMedia)
+    return layer_type_names[type];
+
+  g_free (err_name);
+  err_name = g_strdup_printf ("unknown layer type %d", type);
+
+  return err_name;
+}
+
+static const gchar *
 bitmap_type_name (gint type)
 {
   static const gchar *bitmap_type_names[] =
@@ -1542,7 +1567,7 @@ read_layer_block (FILE      *f,
             default:
               bitmap_count = 0;
               channel_count = 0;
-              g_message ("Unsupported layer type %d (%s)", type, layer_name);
+              g_message ("Unsupported layer type %s (%s)", layer_type_name(type), layer_name);
               break;
             }
         }
