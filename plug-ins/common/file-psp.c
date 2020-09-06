@@ -149,6 +149,12 @@ typedef enum {
   PSP_GROUP_EXTENSION_BLOCK,            /* Group Layer Block (sub) (since PSP8) */
   PSP_MASK_EXTENSION_BLOCK,             /* Mask Layer Block (sub) (since PSP8) */
   PSP_BRUSH_BLOCK,                      /* Brush Data Block (main) (since PSP8) */
+  PSP_ART_MEDIA_BLOCK,                  /* Art Media Layer Block (main) (since PSP9) */
+  PSP_ART_MEDIA_MAP_BLOCK,              /* Art Media Layer map data Block (main) (since PSP9) */
+  PSP_ART_MEDIA_TILE_BLOCK,             /* Art Media Layer map tile Block(main) (since PSP9) */
+  PSP_ART_MEDIA_TEXTURE_BLOCK,          /* AM Layer map texture Block (main) (since PSP9) */
+  PSP_COLORPROFILE_BLOCK,               /* ICC Color profile block (since PSP10) */
+  PSP_RASTER_EXTENSION_BLOCK,           /* Assumed name based on usage, probably since PSP11 */
 } PSPBlockID;
 
 /* Bitmap type.
@@ -183,8 +189,12 @@ typedef enum {
   keGCRasterLayers     = 0x00000001,    /* At least one raster layer */
   keGCVectorLayers     = 0x00000002,    /* At least one vector layer */
   keGCAdjustmentLayers = 0x00000004,    /* At least one adjustment layer */
+  keGCGroupLayers      = 0x00000008,    /* at least one group layer */
+  keGCMaskLayers       = 0x00000010,    /* at least one mask layer */
+  keGCArtMediaLayers   = 0x00000020,    /* at least one art media layer */
 
   /* Additional attributes */
+  keGCMergedCache            = 0x00800000,      /* merged cache (composite image) */
   keGCThumbnail              = 0x01000000,      /* Has a thumbnail */
   keGCThumbnailTransparency  = 0x02000000,      /* Thumbnail transp. */
   keGCComposite              = 0x04000000,      /* Has a composite image */
@@ -322,6 +332,21 @@ typedef enum {
   keTextAlignmentRight          /* Right text alignment */
 } PSPTextAlignment;
 
+/* Text antialias modes. */
+typedef enum {
+  keNoAntialias = 0,            /* Antialias off */
+  keSharpAntialias,             /* Sharp */
+  keSmoothAntialias             /* Smooth */
+} PSPAntialiasMode;
+
+/* Text flow types */
+typedef enum {
+  keTFHorizontalDown = 0,       /* Horizontal then down */
+  keTFVerticalLeft,             /* Vertical then left */
+  keTFVerticalRight,            /* Vertical then right */
+  keTFHorizontalUp              /* Horizontal then up */
+} PSPTextFlow;
+
 /* Paint style types. (since PSP6)
  */
 typedef enum {
@@ -435,6 +460,7 @@ typedef enum {
   PSP_XDATA_GRID,               /* Image grid information (since PSP7) */
   PSP_XDATA_GUIDE,              /* Image guide information (since PSP7) */
   PSP_XDATA_EXIF,               /* Image Exif information (since PSP8) */
+  PSP_XDATA_IPTC,               /* Image IPTC information (since PSP10) */
 } PSPExtendedDataID;
 
 /* Creator field types.
@@ -487,8 +513,19 @@ typedef enum {
   keGLTFloatingRasterSelection, /* Floating selection (raster layer) */
   keGLTVector,                  /* Vector layer */
   keGLTAdjustment,              /* Adjustment layer */
-  keGLTMask                     /* Mask layer (since PSP8) */
+  keGLTGroup,                   /* Group layer (since PSP8) */
+  keGLTMask,                    /* Mask layer (since PSP8) */
+  keGLTArtMedia                 /* Art media layer (since PSP9) */
 } PSPLayerTypePSP6;
+
+/* Art media layer map types (since PSP7) */
+typedef enum {
+keArtMediaColorMap = 0,
+keArtMediaBumpMap,
+keArtMediaShininessMap,
+keArtMediaReflectivityMap,
+keArtMediaDrynessMap
+} PSPArtMediaMapType;
 
 
 /* Truth values.
@@ -841,10 +878,25 @@ block_name (gint id)
     "COMPOSITE_IMAGE_BANK_BLOCK",
     "COMPOSITE_ATTRIBUTES_BLOCK",
     "JPEG_BLOCK",
-  };
+    "LINESTYLE_BLOCK",
+    "TABLE_BANK_BLOCK",
+    "TABLE_BLOCK",
+    "PAPER_BLOCK",
+    "PATTERN_BLOCK",
+    "GRADIENT_BLOCK",
+    "GROUP_EXTENSION_BLOCK",
+    "MASK_EXTENSION_BLOCK",
+    "BRUSH_BLOCK",
+    "ART_MEDIA_BLOCK",
+    "ART_MEDIA_MAP_BLOCK",
+    "ART_MEDIA_TILE_BLOCK",
+    "ART_MEDIA_TEXTURE_BLOCK",
+    "COLORPROFILE_BLOCK",
+    "RASTER_EXTENSION_BLOCK",
+};
   static gchar *err_name = NULL;
 
-  if (id >= 0 && id <= PSP_JPEG_BLOCK)
+  if (id >= 0 && id <= PSP_RASTER_EXTENSION_BLOCK)
     return block_names[id];
 
   g_free (err_name);
@@ -2199,6 +2251,21 @@ load_image (GFile   *file,
             case PSP_COMPOSITE_IMAGE_BANK_BLOCK:
               break;            /* Not yet implemented */
 
+            case PSP_TABLE_BANK_BLOCK:
+              break;            /* Not yet implemented */
+
+            case PSP_BRUSH_BLOCK:
+              break;            /* Not yet implemented */
+
+            case PSP_ART_MEDIA_BLOCK:
+            case PSP_ART_MEDIA_MAP_BLOCK:
+            case PSP_ART_MEDIA_TILE_BLOCK:
+            case PSP_ART_MEDIA_TEXTURE_BLOCK:
+              break;            /* Not yet implemented */
+
+            case PSP_COLORPROFILE_BLOCK:
+              break;            /* Not yet implemented */
+
             case PSP_LAYER_BLOCK:
             case PSP_CHANNEL_BLOCK:
             case PSP_ALPHA_CHANNEL_BLOCK:
@@ -2208,6 +2275,14 @@ load_image (GFile   *file,
             case PSP_PAINTSTYLE_BLOCK:
             case PSP_COMPOSITE_ATTRIBUTES_BLOCK:
             case PSP_JPEG_BLOCK:
+            case PSP_LINESTYLE_BLOCK:
+            case PSP_TABLE_BLOCK:
+            case PSP_PAPER_BLOCK:
+            case PSP_PATTERN_BLOCK:
+            case PSP_GRADIENT_BLOCK:
+            case PSP_GROUP_EXTENSION_BLOCK:
+            case PSP_MASK_EXTENSION_BLOCK:
+            case PSP_RASTER_EXTENSION_BLOCK:
               g_message ("Sub-block %s should not occur "
                          "at main level of file",
                          block_name (id));
