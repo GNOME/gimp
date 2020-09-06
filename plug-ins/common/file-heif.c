@@ -19,6 +19,8 @@
 #include "config.h"
 
 #include <libheif/heif.h>
+#include <lcms2.h>
+#include <gexiv2/gexiv2.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -118,7 +120,12 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_load_handler (LOAD_PROC, "heic,heif", "");
+  gimp_register_load_handler (LOAD_PROC,
+                              "heic,heif"
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+                              ",avif"
+#endif
+                              , "");
   gimp_register_file_handler_mime (LOAD_PROC, "image/heif");
   gimp_register_file_handler_uri (LOAD_PROC);
   /* HEIF is an ISOBMFF format whose "brand" (the value after "ftyp")
@@ -132,7 +139,11 @@ query (void)
                                     "4,string,ftyphevc,4,string,ftypheim,"
                                     "4,string,ftypheis,4,string,ftyphevm,"
                                     "4,string,ftyphevs,4,string,ftypmif1,"
-                                    "4,string,ftypmsf1");
+                                    "4,string,ftypmsf1"
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+                                    ",4,string,ftypavif"
+#endif
+                                   );
 
   gimp_install_procedure (SAVE_PROC,
                           _("Exports HEIF images"),
@@ -339,6 +350,180 @@ get_file_size (GFile   *file,
   return size;
 }
 
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+static void
+heifplugin_color_profile_set_tag (cmsHPROFILE      profile,
+                                  cmsTagSignature  sig,
+                                  const gchar     *tag)
+{
+  cmsMLU *mlu;
+
+  mlu = cmsMLUalloc (NULL, 1);
+  cmsMLUsetASCII (mlu, "en", "US", tag);
+  cmsWriteTag (profile, sig, mlu);
+  cmsMLUfree (mlu);
+}
+
+static GimpColorProfile *
+nclx_to_gimp_profile (const struct heif_color_profile_nclx *nclx)
+{
+  const gchar *primaries_name = "";
+  const gchar *trc_name = "";
+  cmsHPROFILE profile = NULL;
+  cmsCIExyY whitepoint;
+  cmsCIExyYTRIPLE primaries;
+  cmsToneCurve *curve[3];
+
+  cmsFloat64Number srgb_parameters[5] =
+  { 2.4, 1.0 / 1.055,  0.055 / 1.055, 1.0 / 12.92, 0.04045 };
+
+  cmsFloat64Number rec709_parameters[5] =
+  { 2.2, 1.0 / 1.099,  0.099 / 1.099, 1.0 / 4.5, 0.081 };
+
+  if (nclx == NULL)
+    {
+      return NULL;
+    }
+
+  if (nclx->color_primaries == heif_color_primaries_unspecified)
+    {
+      return NULL;
+    }
+
+  if (nclx->color_primaries == heif_color_primaries_ITU_R_BT_709_5)
+    {
+      if (nclx->transfer_characteristics == heif_transfer_characteristic_IEC_61966_2_1)
+        {
+          return gimp_color_profile_new_rgb_srgb();
+        }
+
+      if (nclx->transfer_characteristics == heif_transfer_characteristic_linear)
+        {
+          return gimp_color_profile_new_rgb_srgb_linear();
+        }
+    }
+
+  whitepoint.x = nclx->color_primary_white_x;
+  whitepoint.y = nclx->color_primary_white_y;
+  whitepoint.Y = 1.0f;
+
+  primaries.Red.x = nclx->color_primary_red_x;
+  primaries.Red.y = nclx->color_primary_red_y;
+  primaries.Red.Y = 1.0f;
+
+  primaries.Green.x = nclx->color_primary_green_x;
+  primaries.Green.y = nclx->color_primary_green_y;
+  primaries.Green.Y = 1.0f;
+
+  primaries.Blue.x = nclx->color_primary_blue_x;
+  primaries.Blue.y = nclx->color_primary_blue_y;
+  primaries.Blue.Y = 1.0f;
+
+  switch (nclx->color_primaries)
+    {
+    case heif_color_primaries_ITU_R_BT_709_5:
+      primaries_name = "BT.709";
+      break;
+    case   heif_color_primaries_ITU_R_BT_470_6_System_M:
+      primaries_name = "BT.470-6 System M";
+      break;
+    case heif_color_primaries_ITU_R_BT_470_6_System_B_G:
+      primaries_name = "BT.470-6 System BG";
+      break;
+    case heif_color_primaries_ITU_R_BT_601_6:
+      primaries_name = "BT.601";
+      break;
+    case heif_color_primaries_SMPTE_240M:
+      primaries_name = "SMPTE 240M";
+      break;
+    case 8:
+      primaries_name = "Generic film";
+      break;
+    case 9:
+      primaries_name = "BT.2020";
+      break;
+    case 10:
+      primaries_name = "XYZ";
+      break;
+    case 11:
+      primaries_name = "SMPTE RP 431-2";
+      break;
+    case 12:
+      primaries_name = "SMPTE EG 432-1 (DCI P3)";
+      break;
+    case 22:
+      primaries_name = "EBU Tech. 3213-E";
+      break;
+    default:
+      g_warning ("%s: Unsupported color_primaries value %d.",
+                 G_STRFUNC, nclx->color_primaries);
+      return NULL;
+      break;
+    }
+
+  switch (nclx->transfer_characteristics)
+    {
+    case heif_transfer_characteristic_ITU_R_BT_709_5:
+      curve[0] = curve[1] = curve[2] = cmsBuildParametricToneCurve (NULL, 4,
+                                                                    rec709_parameters);
+      profile = cmsCreateRGBProfile (&whitepoint, &primaries, curve);
+      cmsFreeToneCurve (curve[0]);
+      trc_name = "Rec709 RGB";
+      break;
+    case heif_transfer_characteristic_ITU_R_BT_470_6_System_M:
+      curve[0] = curve[1] = curve[2] = cmsBuildGamma (NULL, 2.2f);
+      profile = cmsCreateRGBProfile (&whitepoint, &primaries, curve);
+      cmsFreeToneCurve (curve[0]);
+      trc_name = "Gamma2.2 RGB";
+      break;
+    case heif_transfer_characteristic_ITU_R_BT_470_6_System_B_G:
+      curve[0] = curve[1] = curve[2] = cmsBuildGamma (NULL, 2.8f);
+      profile = cmsCreateRGBProfile (&whitepoint, &primaries, curve);
+      cmsFreeToneCurve (curve[0]);
+      trc_name = "Gamma2.8 RGB";
+      break;
+    case heif_transfer_characteristic_linear:
+      curve[0] = curve[1] = curve[2] = cmsBuildGamma (NULL, 1.0f);
+      profile = cmsCreateRGBProfile (&whitepoint, &primaries, curve);
+      cmsFreeToneCurve (curve[0]);
+      trc_name = "linear RGB";
+      break;
+    case heif_transfer_characteristic_IEC_61966_2_1:
+      /* same as default */
+    default:
+      curve[0] = curve[1] = curve[2] = cmsBuildParametricToneCurve (NULL, 4,
+                                                                    srgb_parameters);
+      profile = cmsCreateRGBProfile (&whitepoint, &primaries, curve);
+      cmsFreeToneCurve (curve[0]);
+      trc_name = "sRGB-TRC RGB";
+      break;
+    }
+
+  if (profile)
+    {
+      GimpColorProfile *new_profile;
+      gchar *description = g_strdup_printf ("%s %s", primaries_name, trc_name);
+
+      heifplugin_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
+                                        description);
+      heifplugin_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
+                                        "GIMP");
+      heifplugin_color_profile_set_tag (profile, cmsSigDeviceModelDescTag,
+                                        description);
+      heifplugin_color_profile_set_tag (profile, cmsSigCopyrightTag,
+                                        "Public Domain");
+
+      new_profile = gimp_color_profile_new_from_lcms_profile (profile, NULL);
+
+      cmsCloseProfile (profile);
+      g_free (description);
+      return new_profile;
+  }
+
+  return NULL;
+}
+#endif
+
 gint32
 load_image (GFile     *file,
             gboolean   interactive,
@@ -365,6 +550,11 @@ load_image (GFile     *file,
   const Babl               *format;
   const guint8             *data;
   gint                      stride;
+  gint                      bit_depth;
+  enum                      heif_chroma chroma;
+  GimpPrecision             precision;
+  gboolean                  load_linear;
+  const char               *encoding;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              g_file_get_parse_name (file));
@@ -391,6 +581,14 @@ load_image (GFile     *file,
   gimp_progress_update (0.25);
 
   ctx = heif_context_alloc ();
+  if (!ctx)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "cannot allocate heif_context");
+      g_free (file_buffer);
+      g_object_unref (input);
+      return -1;
+    }
 
   err = heif_context_read_from_memory (ctx, file_buffer, file_size, NULL);
   if (err.code)
@@ -477,24 +675,68 @@ load_image (GFile     *file,
 
   has_alpha = heif_image_handle_has_alpha_channel (handle);
 
+  bit_depth = heif_image_handle_get_luma_bits_per_pixel (handle);
+  if (bit_depth < 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Input image has undefined bit-depth");
+      heif_image_handle_release (handle);
+      heif_context_free (ctx);
+
+      return -1;
+    }
+
+  if (bit_depth == 8)
+    {
+      if (has_alpha)
+        {
+          chroma = heif_chroma_interleaved_RGBA;
+        }
+      else
+        {
+          chroma = heif_chroma_interleaved_RGB;
+        }
+    }
+  else /* high bit depth */
+    {
+#if ( G_BYTE_ORDER == G_LITTLE_ENDIAN )
+      if (has_alpha)
+        {
+          chroma = heif_chroma_interleaved_RRGGBBAA_LE;
+        }
+      else
+        {
+          chroma = heif_chroma_interleaved_RRGGBB_LE;
+        }
+#else
+      if (has_alpha)
+        {
+          chroma = heif_chroma_interleaved_RRGGBBAA_BE;
+        }
+      else
+        {
+          chroma = heif_chroma_interleaved_RRGGBB_BE;
+        }
+#endif
+    }
+
   err = heif_decode_image (handle,
                            &img,
                            heif_colorspace_RGB,
-                           has_alpha ? heif_chroma_interleaved_RGBA :
-                           heif_chroma_interleaved_RGB,
+                           chroma,
                            NULL);
   if (err.code)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Loading HEIF image failed: %s"),
                    err.message);
-     heif_image_handle_release (handle);
-     heif_context_free (ctx);
+      heif_image_handle_release (handle);
+      heif_context_free (ctx);
 
-     return -1;
+      return -1;
     }
 
-#ifdef HAVE_LIBHEIF_1_4_0
+#if LIBHEIF_HAVE_VERSION(1,4,0)
   switch (heif_image_handle_get_color_profile_type (handle))
     {
     case heif_color_profile_type_not_present:
@@ -522,16 +764,31 @@ load_image (GFile     *file,
           g_free (profile_data);
         }
       break;
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+    case heif_color_profile_type_nclx:
+      {
+        struct heif_color_profile_nclx *nclx = NULL;
 
+        err = heif_image_handle_get_nclx_color_profile (handle, &nclx);
+        if (err.code)
+          {
+            g_warning ("%s: NCLX profile loading failed and discarded.",
+                       G_STRFUNC);
+          }
+        else
+          {
+            profile = nclx_to_gimp_profile (nclx);
+            heif_nclx_color_profile_free (nclx);
+          }
+      }
+      break;
+#endif
     default:
-      /* heif_color_profile_type_nclx (what is that?) and any future
-       * profile type which we don't support in GIMP (yet).
-       */
       g_warning ("%s: unknown color profile type has been discarded.",
                  G_STRFUNC);
       break;
     }
-#endif /* HAVE_LIBHEIF_1_4_0 */
+#endif /* LIBHEIF_HAVE_VERSION(1,4,0) */
 
   gimp_progress_update (0.75);
 
@@ -542,11 +799,60 @@ load_image (GFile     *file,
    * (converting it to RGB)
    */
 
-  image_ID = gimp_image_new (width, height, GIMP_RGB);
+  if (profile)
+    {
+      load_linear = gimp_color_profile_is_linear (profile);
+    }
+  else
+    {
+      load_linear = FALSE;
+    }
+
+  if (load_linear)
+    {
+      if (bit_depth == 8)
+        {
+          precision = GIMP_PRECISION_U8_LINEAR;
+          encoding = has_alpha ? "RGBA u8" : "RGB u8";
+        }
+      else
+        {
+          precision = GIMP_PRECISION_U16_LINEAR;
+          encoding = has_alpha ? "RGBA u16" : "RGB u16";
+        }
+    }
+  else /* non-linear profiles */
+    {
+      if (bit_depth == 8)
+        {
+          precision = GIMP_PRECISION_U8_GAMMA;
+          encoding = has_alpha ? "R'G'B'A u8" : "R'G'B' u8";
+        }
+      else
+        {
+          precision = GIMP_PRECISION_U16_GAMMA;
+          encoding = has_alpha ? "R'G'B'A u16" : "R'G'B' u16";
+        }
+    }
+
+  image_ID = gimp_image_new_with_precision (width, height, GIMP_RGB, precision);
   gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
   if (profile)
-    gimp_image_set_color_profile (image_ID, profile);
+    {
+      if (gimp_color_profile_is_rgb (profile))
+        {
+          gimp_image_set_color_profile (image_ID, profile);
+        }
+      else if (gimp_color_profile_is_gray (profile))
+        {
+          g_warning ("Gray ICC profile was not applied to the imported image.");
+        }
+      else
+        {
+          g_warning ("ICC profile was not applied to the imported image.");
+        }
+    }
 
   layer_ID = gimp_layer_new (image_ID,
                              _("image content"),
@@ -559,19 +865,86 @@ load_image (GFile     *file,
 
   buffer = gimp_drawable_get_buffer (layer_ID);
 
-  if (has_alpha)
-    format = babl_format_with_space ("R'G'B'A u8",
-                                     gegl_buffer_get_format (buffer));
-  else
-    format = babl_format_with_space ("R'G'B' u8",
-                                     gegl_buffer_get_format (buffer));
-
   data = heif_image_get_plane_readonly (img, heif_channel_interleaved,
                                         &stride);
 
-  gegl_buffer_set (buffer,
-                   GEGL_RECTANGLE (0, 0, width, height),
-                   0, format, data, stride);
+  format = babl_format_with_space (encoding,
+                                   gegl_buffer_get_format (buffer));
+
+  if (bit_depth == 8)
+    {
+      gegl_buffer_set (buffer,
+                       GEGL_RECTANGLE (0, 0, width, height),
+                       0, format, data, stride);
+    }
+  else /* high bit depth */
+    {
+      uint16_t       *data16;
+      const uint16_t *src16;
+      uint16_t       *dest16;
+      gint            x, y, rowentries;
+      int             tmp_pixelval;
+
+      if (has_alpha)
+        {
+          rowentries = width * 4;
+        }
+      else /* no alpha */
+        {
+          rowentries = width * 3;
+        }
+
+      data16 = g_malloc_n (height, rowentries * 2);
+      dest16 = data16;
+
+      switch (bit_depth)
+        {
+        case 10:
+          for (y = 0; y < height; y++)
+            {
+              src16 = (const uint16_t *) (y * stride + data);
+              for (x = 0; x < rowentries; x++)
+                {
+                  tmp_pixelval = (int) ( ( (float) (0x03ff & (*src16)) / 1023.0f) * 65535.0f + 0.5f);
+                  *dest16 = CLAMP (tmp_pixelval, 0, 65535);
+                  dest16++;
+                  src16++;
+                }
+            }
+          break;
+        case 12:
+          for (y = 0; y < height; y++)
+            {
+              src16 = (const uint16_t *) (y * stride + data);
+              for (x = 0; x < rowentries; x++)
+                {
+                  tmp_pixelval = (int) ( ( (float) (0x0fff & (*src16))  / 4095.0f) * 65535.0f + 0.5f);
+                  *dest16 = CLAMP (tmp_pixelval, 0, 65535);
+                  dest16++;
+                  src16++;
+                }
+            }
+          break;
+        default:
+          for (y = 0; y < height; y++)
+            {
+              src16 = (const uint16_t *) (y * stride + data);
+              for (x = 0; x < rowentries; x++)
+                {
+                  *dest16 = *src16;
+                  dest16++;
+                  src16++;
+                }
+            }
+          break;
+        }
+
+      gegl_buffer_set (buffer,
+                       GEGL_RECTANGLE (0, 0, width, height),
+                       0, format, data16, GEGL_AUTO_ROWSTRIDE);
+
+      g_free (data16);
+    }
 
   g_object_unref (buffer);
 
@@ -603,37 +976,79 @@ load_image (GFile     *file,
 
     n_metadata =
       heif_image_handle_get_list_of_metadata_block_IDs (handle,
-                                                        "XMP",
+                                                        "mime",
                                                         &metadata_id, 1);
     if (n_metadata > 0)
       {
-        xmp_data_size = heif_image_handle_get_metadata_size (handle,
-                                                             metadata_id);
-        xmp_data = g_alloca (xmp_data_size);
-
-        err = heif_image_handle_get_metadata (handle, metadata_id, xmp_data);
-        if (err.code != 0)
+        if (g_strcmp0 (
+              heif_image_handle_get_metadata_content_type (handle, metadata_id),
+              "application/rdf+xml") == 0)
           {
-            xmp_data      = NULL;
-            xmp_data_size = 0;
+            xmp_data_size = heif_image_handle_get_metadata_size (handle,
+                            metadata_id);
+            xmp_data = g_alloca (xmp_data_size);
+
+            err = heif_image_handle_get_metadata (handle, metadata_id, xmp_data);
+            if (err.code != 0)
+              {
+                xmp_data      = NULL;
+                xmp_data_size = 0;
+              }
           }
       }
 
     if (exif_data || xmp_data)
       {
         GimpMetadata          *metadata = gimp_metadata_new ();
-        GimpMetadataLoadFlags  flags    = GIMP_METADATA_LOAD_ALL;
+        GimpMetadataLoadFlags  flags    = GIMP_METADATA_LOAD_COMMENT | GIMP_METADATA_LOAD_RESOLUTION;
 
         if (exif_data)
-          gimp_metadata_set_from_exif (metadata,
-                                       exif_data, exif_data_size, NULL);
+          {
+            const guint8 tiffHeaderBE[4] = { 'M', 'M', 0, 42 };
+            const guint8 tiffHeaderLE[4] = { 'I', 'I', 42, 0 };
+            GExiv2Metadata *exif_metadata = GEXIV2_METADATA (metadata);
+            const guint8 *tiffheader = exif_data;
+            glong new_exif_size = exif_data_size;
+
+            while (new_exif_size >= 4)  /*Searching for TIFF Header*/
+              {
+                if (tiffheader[0] == tiffHeaderBE[0] && tiffheader[1] == tiffHeaderBE[1] &&
+                    tiffheader[2] == tiffHeaderBE[2] && tiffheader[2] == tiffHeaderBE[2])
+                  {
+                    break;
+                  }
+                if (tiffheader[0] == tiffHeaderLE[0] && tiffheader[1] == tiffHeaderLE[1] &&
+                    tiffheader[2] == tiffHeaderLE[2] && tiffheader[2] == tiffHeaderLE[2])
+                  {
+                    break;
+                  }
+                new_exif_size--;
+                tiffheader++;
+              }
+
+            if (new_exif_size > 4)   /* TIFF header + some data found*/
+              {
+                if (! gexiv2_metadata_open_buf (exif_metadata, tiffheader, new_exif_size, error))
+                  {
+                    g_printerr ("%s: Failed to set EXIF metadata: %s\n", G_STRFUNC, (*error)->message);
+                    g_clear_error (error);
+                  }
+              }
+            else
+              {
+                g_printerr ("%s: EXIF metadata not set\n", G_STRFUNC);
+              }
+          }
+
 
         if (xmp_data)
-          gimp_metadata_set_from_xmp (metadata,
-                                      xmp_data, xmp_data_size, NULL);
-
-        if (profile)
-          flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+          {
+            if (!gimp_metadata_set_from_xmp (metadata, xmp_data, xmp_data_size, error))
+              {
+                g_printerr ("%s: Failed to set XMP metadata: %s\n", G_STRFUNC, (*error)->message);
+                g_clear_error (error);
+              }
+          }
 
         gimp_image_metadata_load_finish (image_ID, "image/heif",
                                          metadata, flags,
@@ -664,7 +1079,7 @@ write_callback (struct heif_context *ctx,
   struct heif_error  heif_error;
 
   heif_error.code    = heif_error_Ok;
-  heif_error.subcode = heif_error_Ok;
+  heif_error.subcode = heif_suberror_Unspecified;
   heif_error.message = "";
 
   if (! g_output_stream_write_all (output, data, size, NULL, NULL, &error))
@@ -700,6 +1115,13 @@ save_image (GFile             *file,
   gboolean                  has_alpha;
   gboolean                  out_linear = FALSE;
 
+  if (!context)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "cannot allocate heif_context");
+      return FALSE;
+    }
+
   gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
@@ -715,7 +1137,16 @@ save_image (GFile             *file,
                            heif_chroma_interleaved_RGB,
                            &image);
 
-#ifdef HAVE_LIBHEIF_1_4_0
+  if (err.code != 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Encoding HEIF image failed: %s"),
+                   err.message);
+      heif_context_free (context);
+      return FALSE;
+    }
+
+#if LIBHEIF_HAVE_VERSION(1,4,0)
   if (params->save_profile)
     {
       GimpColorProfile *profile = NULL;
@@ -764,7 +1195,24 @@ save_image (GFile             *file,
 
       g_object_unref (profile);
     }
-#endif /* HAVE_LIBHEIF_1_4_0 */
+  else
+    {
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+      /* We save as sRGB */
+      struct heif_color_profile_nclx nclx_profile;
+
+      nclx_profile.color_primaries = heif_color_primaries_ITU_R_BT_709_5;
+      nclx_profile.transfer_characteristics = heif_transfer_characteristic_IEC_61966_2_1;
+      nclx_profile.matrix_coefficients = heif_matrix_coefficients_ITU_R_BT_601_6;
+      nclx_profile.full_range_flag = 1;
+
+      heif_image_set_nclx_color_profile (image, &nclx_profile);
+
+      space = babl_space ("sRGB");
+      out_linear = FALSE;
+#endif
+    }
+#endif /* LIBHEIF_HAVE_VERSION(1,4,0) */
 
   if (! space)
     space = gimp_drawable_get_format (drawable_ID);
@@ -806,6 +1254,15 @@ save_image (GFile             *file,
                                              heif_compression_HEVC,
                                              &encoder);
 
+  if (err.code != 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Unable to find suitable HEIF encoder");
+      heif_image_release (image);
+      heif_context_free (context);
+      return FALSE;
+    }
+
   heif_encoder_set_lossy_quality (encoder, params->quality);
   heif_encoder_set_lossless (encoder, params->lossless);
   /* heif_encoder_set_logging_level (encoder, logging_level); */
@@ -820,6 +1277,9 @@ save_image (GFile             *file,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Encoding HEIF image failed: %s"),
                    err.message);
+      heif_encoder_release (encoder);
+      heif_image_release (image);
+      heif_context_free (context);
       return FALSE;
     }
 
@@ -834,7 +1294,12 @@ save_image (GFile             *file,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
                                             NULL, error));
   if (! output)
-    return FALSE;
+    {
+      heif_encoder_release (encoder);
+      heif_image_release (image);
+      heif_context_free (context);
+      return FALSE;
+    }
 
   err = heif_context_write (context, &writer, output);
 
@@ -849,15 +1314,18 @@ save_image (GFile             *file,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Writing HEIF image failed: %s"),
                    err.message);
+
+      heif_encoder_release (encoder);
+      heif_image_release (image);
+      heif_context_free (context);
       return FALSE;
     }
 
   g_object_unref (output);
 
-  heif_context_free (context);
-  heif_image_release (image);
-
   heif_encoder_release (encoder);
+  heif_image_release (image);
+  heif_context_free (context);
 
   gimp_progress_update (1.0);
 
@@ -1233,7 +1701,7 @@ save_dialog (SaveParams *params)
   GtkWidget *label;
   GtkWidget *lossless_button;
   GtkWidget *frame;
-#ifdef HAVE_LIBHEIF_1_4_0
+#if LIBHEIF_HAVE_VERSION(1,4,0)
   GtkWidget *profile_button;
 #endif
   GtkWidget *quality_slider;
@@ -1270,7 +1738,7 @@ save_dialog (SaveParams *params)
                     G_CALLBACK (save_dialog_lossless_button_toggled),
                     hbox);
 
-#ifdef HAVE_LIBHEIF_1_4_0
+#if LIBHEIF_HAVE_VERSION(1,4,0)
   profile_button = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (profile_button),
                                 params->save_profile);
