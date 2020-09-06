@@ -8,316 +8,657 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2012-09-23 21:56+0000\n"
-"PO-Revision-Date: 2012-09-24 18:43+0700\n"
+"POT-Creation-Date: 2020-05-26 14:00+0000\n"
+"PO-Revision-Date: 2020-09-06 16:25+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: INDONESIAN <gnome@i15n.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.3\n"
+"X-Generator: Poedit 2.4.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
-msgid "Missing exception information"
-msgstr "Kehilangan informasi eksepsi"
+#: ../plug-ins/python/colorxhtml.py:89
+msgid "Save as colored HTML text..."
+msgstr "Simpan sebagai teks HTML berwarna..."
 
-#: ../plug-ins/pygimp/gimpfu.py:403
-#, python-format
-msgid "An error occurred running %s"
-msgstr "Terjadi kesalahan saat menjalankan %s"
+#: ../plug-ins/python/colorxhtml.py:94
+msgid "Read characters from file..."
+msgstr "Baca karakter dari berkas..."
 
-#: ../plug-ins/pygimp/gimpfu.py:414
-msgid "_More Information"
-msgstr "_Informasi Lainnya"
+#: ../plug-ins/python/colorxhtml.py:113
+msgid "Characters"
+msgstr "Karakter"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
-msgid "No"
-msgstr "Tidak"
+#: ../plug-ins/python/colorxhtml.py:114
+msgid "Characters that will be used as colored pixels. "
+msgstr "Karakter yang akan digunakan sebagai piksel berwarna. "
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
-msgid "Yes"
-msgstr "Ya"
+#: ../plug-ins/python/colorxhtml.py:123
+msgid "Characters or file location"
+msgstr "Lokasi berkas atau karakter"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
-msgid "Python-Fu File Selection"
-msgstr "Pilihan File Python-Fu"
+#: ../plug-ins/python/colorxhtml.py:129
+msgid "Read characters from file"
+msgstr "Baca karakter dari berkas"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
-msgid "Python-Fu Folder Selection"
-msgstr "Pilihan Folder Python-Fu"
+#: ../plug-ins/python/colorxhtml.py:132
+msgid ""
+"If set, the Characters text entry will be used as a file name, from which "
+"the characters will be read. Otherwise, the characters in the text entry "
+"will be used to render the image."
+msgstr ""
+"Jika diatur, entri teks Karakter akan digunakan sebagai nama berkas, dari "
+"mana karakter akan dibaca. Jika tidak, karakter dalam entri teks akan "
+"digunakan untuk merender gambar."
 
-#: ../plug-ins/pygimp/gimpfu.py:696
-#, python-format
-msgid "Invalid input for '%s'"
-msgstr "Masukan yang tidak sah untuk '%s'"
+#: ../plug-ins/python/colorxhtml.py:138
+msgid "Choose file"
+msgstr "Pilih berkas"
 
-#: ../plug-ins/pygimp/gimpui.py:176
-msgid "Python-Fu Color Selection"
-msgstr "Pilihan Warna Python-Fu"
+#: ../plug-ins/python/colorxhtml.py:145
+msgid "Font Size(px)"
+msgstr "Ukuran Fonta(px)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/python/colorxhtml.py:157
+msgid "Write separate CSS file"
+msgstr "Tulis berkas CSS terpisah"
+
+#: ../plug-ins/python/colorxhtml.py:210
 msgid "Saving as colored XHTML"
 msgstr "Simpan sebagai XHTML berwarna"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
-msgid "Save as colored XHTML"
-msgstr "Simpan sebagai XHTML berwarna"
+#: ../plug-ins/python/colorxhtml.py:280 ../plug-ins/python/colorxhtml.py:281
+msgid "_Read characters from file, if true, or use text entry"
+msgstr ""
+"Baca ka_rakter dari berkas, jika berisi true, atau menggunakan entri teks"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
-msgid "Colored XHTML"
-msgstr "XHTML Berwarna"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Character _source"
-msgstr "_Sumber karakter"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Source code"
-msgstr "Kode sumber"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
-msgid "Text file"
-msgstr "File teks"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
-msgid "Entry box"
-msgstr "Kotak entri"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/python/colorxhtml.py:285 ../plug-ins/python/colorxhtml.py:286
 msgid "_File to read or characters to use"
 msgstr "_File untuk dibaca atau karakter untuk digunakan"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/python/colorxhtml.py:290 ../plug-ins/python/colorxhtml.py:291
 msgid "Fo_nt size in pixels"
 msgstr "Ukuran fo_nt dalam piksel"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/python/colorxhtml.py:295 ../plug-ins/python/colorxhtml.py:296
 msgid "_Write a separate CSS file"
 msgstr "_Tulis file CSS terpisah"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
-msgid "Gradient to use"
-msgstr "Gradien yang dipakai"
+#: ../plug-ins/python/colorxhtml.py:315
+msgid "Save as colored HTML text"
+msgstr "Simpan sebagai teks HTML berwarna"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
-msgid "File Name"
-msgstr "Nama Berkas"
+#: ../plug-ins/python/colorxhtml.py:318
+msgid "Colored HTML text"
+msgstr "Teks HTML berwarna"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
-msgid "Add a layer of fog"
-msgstr "Tambahkan lapisan kabut"
+#: ../plug-ins/python/foggify.py:82 ../plug-ins/python/foggify.py:83
+msgid "Layer name"
+msgstr "Nama lapisan"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "_Fog..."
-msgstr "_Kabut..."
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "_Layer name"
-msgstr "_Nama lapisan"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/python/foggify.py:84
 msgid "Clouds"
 msgstr "Awan"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
-msgid "_Fog color"
-msgstr "_Warna kabut"
+#: ../plug-ins/python/foggify.py:87 ../plug-ins/python/foggify.py:88
+msgid "Fog color"
+msgstr "Warna kabut"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
-msgid "_Turbulence"
-msgstr "_Turbulensi"
+#: ../plug-ins/python/foggify.py:91 ../plug-ins/python/foggify.py:92
+msgid "Turbulence"
+msgstr "Turbulensi"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
-msgid "Op_acity"
-msgstr "Ke_pekatan"
+#: ../plug-ins/python/foggify.py:96 ../plug-ins/python/foggify.py:97
+msgid "Opacity"
+msgstr "Kelegapan"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
-msgid "Offset the colors in a palette"
-msgstr "Offset-kan warna dalam palet"
+#: ../plug-ins/python/foggify.py:114
+msgid "Add a layer of fog"
+msgstr "Tambahkan lapisan kabut"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
-msgid "_Offset Palette..."
-msgstr "_Offset-kan Palet..."
+#: ../plug-ins/python/foggify.py:117
+msgid "_Fog..."
+msgstr "_Kabut..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: ../plug-ins/python/gradients-save-as-css.py:81
+msgid "CSS file..."
+msgstr "Berkas CSS..."
+
+#: ../plug-ins/python/gradients-save-as-css.py:144
+msgid "Gradient to use"
+msgstr "Gradien yang dipakai"
+
+#: ../plug-ins/python/gradients-save-as-css.py:147
+msgid "File"
+msgstr "Berkas"
+
+#: ../plug-ins/python/palette-offset.py:44
+#: ../plug-ins/python/palette-offset.py:45
+#: ../plug-ins/python/palette-to-gradient.py:103
 msgid "Palette"
 msgstr "Palet"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/python/palette-offset.py:56
 msgid "Off_set"
 msgstr "Off_set"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
-msgid "Sort the colors in a palette"
-msgstr "Sortir warna dalam palet"
+#: ../plug-ins/python/palette-offset.py:57
+msgid "Offset"
+msgstr "Ofset"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
-msgid "_Sort Palette..."
-msgstr "_Sortir Palet..."
+#: ../plug-ins/python/palette-offset.py:90
+msgid "_Offset Palette..."
+msgstr "_Offset-kan Palet..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-msgid "Color _model"
-msgstr "_Model warna"
+#: ../plug-ins/python/palette-offset.py:91
+msgid "Offset the colors in a palette"
+msgstr "Offset-kan warna dalam palet"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "RGB"
-msgstr "RGB"
+#: ../plug-ins/python/palette-offset.py:139
+msgid "Offset Palette..."
+msgstr "Palet Ofset..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "HSV"
-msgstr "HSV"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
-msgid "Channel to _sort"
-msgstr "Kanal yang akan _disortir"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Red or Hue"
-msgstr "Merah atau Rona"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Green or Saturation"
-msgstr "Hijau atau Saturasi"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Blue or Value"
-msgstr "Biru atau Nilai"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
-msgid "_Ascending"
-msgstr "_Menaik"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
-msgid "Create a repeating gradient using colors from the palette"
-msgstr "Buat gradien berulang dengan menggunakan warna dari palet"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-msgid "Palette to _Repeating Gradient"
-msgstr "Palet ke _Gradien Berulang"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
-msgid "Create a gradient using colors from the palette"
-msgstr "Buat gradien dengan menggunakan warna dari palet"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/python/palette-to-gradient.py:139
 msgid "Palette to _Gradient"
 msgstr "Palet ke _Gradien"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
+#: ../plug-ins/python/palette-to-gradient.py:140
+msgid "Create a gradient using colors from the palette"
+msgstr "Buat gradien dengan menggunakan warna dari palet"
+
+#: ../plug-ins/python/palette-to-gradient.py:144
+msgid "Palette to _Repeating Gradient"
+msgstr "Palet ke _Gradien Berulang"
+
+#: ../plug-ins/python/palette-to-gradient.py:145
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Buat gradien berulang dengan menggunakan warna dari palet"
+
+#: ../plug-ins/python/py-slice.py:74
 msgid "Slice"
 msgstr "Iris"
 
+#: ../plug-ins/python/py-slice.py:439 ../plug-ins/python/py-slice.py:440
+msgid "Path for HTML export"
+msgstr "Lokasi untuk ekspor HTML"
+
+#: ../plug-ins/python/py-slice.py:444 ../plug-ins/python/py-slice.py:445
+msgid "Filename for export"
+msgstr "Nama file yang akan diekspor"
+
+#: ../plug-ins/python/py-slice.py:449 ../plug-ins/python/py-slice.py:450
+msgid "Image name prefix"
+msgstr "Awalan nama gambar"
+
+#: ../plug-ins/python/py-slice.py:454 ../plug-ins/python/py-slice.py:455
+msgid "Image format (gif, jpg, png)"
+msgstr "Format gambar (gif, jpg, png)"
+
+#: ../plug-ins/python/py-slice.py:459 ../plug-ins/python/py-slice.py:460
+msgid "Separate image folder"
+msgstr "Pisahkan folder gambar"
+
+#: ../plug-ins/python/py-slice.py:464 ../plug-ins/python/py-slice.py:465
+msgid "Folder for image export"
+msgstr "Folder untuk ekspor gambar"
+
+#: ../plug-ins/python/py-slice.py:469 ../plug-ins/python/py-slice.py:470
+msgid "Space between table elements"
+msgstr "Spasi di antara elemen tabel"
+
+#: ../plug-ins/python/py-slice.py:474 ../plug-ins/python/py-slice.py:475
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javascript untuk onmouseover dan klik"
+
+#: ../plug-ins/python/py-slice.py:480 ../plug-ins/python/py-slice.py:481
+msgid "Skip animation for table caps"
+msgstr "Lompati animasi untuk cap tabel"
+
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/python/py-slice.py:501
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "Memotong gambar mengikuti panduan, membuat kutipan tabel HTML dan gambar"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/python/py-slice.py:510
 msgid "_Slice..."
 msgstr "Iri_s..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
-msgid "Path for HTML export"
-msgstr "Lokasi untuk ekspor HTML"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Filename for export"
-msgstr "Nama file yang akan diekspor"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
-msgid "Image name prefix"
-msgstr "Awalan nama gambar"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Image format"
-msgstr "Format gambar"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Separate image folder"
-msgstr "Pisahkan folder gambar"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
-msgid "Folder for image export"
-msgstr "Folder untuk ekspor gambar"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
-msgid "Space between table elements"
-msgstr "Spasi di antara elemen tabel"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javascript untuk onmouseover dan klik"
-
-#. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
-msgid "Skip animation for table caps"
-msgstr "Lompati animasi untuk cap tabel"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/python/python-console/python-console.py:75
 msgid "Python Console"
 msgstr "Konsol Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/python/python-console/python-console.py:79
 msgid "_Browse..."
 msgstr "_Jelajahi..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/python/python-console/python-console.py:179
 msgid "Python Procedure Browser"
 msgstr "Browser Prosedur Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/python/python-console/python-console.py:207
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Tidak dapat membuka '%s' untuk menulis: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/python/python-console/python-console.py:222
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Tidak dapat menulis ke '%s': %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/python/python-console/python-console.py:231
 msgid "Save Python-Fu Console Output"
 msgstr "Simpan Keluaran Konsol  Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#: ../plug-ins/python/python-console/python-console.py:280
+msgid "Python _Console"
+msgstr "_Konsol Python"
+
+#: ../plug-ins/python/python-console/python-console.py:281
 msgid "Interactive GIMP Python interpreter"
 msgstr "Penerjemah Python GIMP Interaktif"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
-msgid "_Console"
-msgstr "_Konsol"
+#: ../plug-ins/python/spyro-plus.py:60
+msgid "Spyro Layer"
+msgstr "Lapisan Spyro"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
-msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Tambahkan bayangan jatuh ke lapisan, dan dapat dibuat bevel"
+#: ../plug-ins/python/spyro-plus.py:61
+msgid "Spyro Path"
+msgstr "Path Spyro"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
-msgid "_Drop Shadow and Bevel..."
-msgstr "_Bayangan Jatuh dan Bevel..."
+#: ../plug-ins/python/spyro-plus.py:71
+msgid "As New Layer"
+msgstr "Sebagai Lapisan Baru"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "_Shadow blur"
-msgstr "_Bayangan buram"
+#: ../plug-ins/python/spyro-plus.py:72
+msgid "Redraw on last active layer"
+msgstr "Menggambar ulang pada lapisan aktif terakhir"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "_Bevel"
-msgstr "_Bevel"
+#: ../plug-ins/python/spyro-plus.py:73
+msgid "As Path"
+msgstr "Sebagai Path"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "_Drop shadow"
-msgstr "_Bayangan jatuh"
+#: ../plug-ins/python/spyro-plus.py:121
+msgid "Circle"
+msgstr "Lingkaran"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow _X displacement"
-msgstr "Pemindahan _X bayangan jatuh"
+#: ../plug-ins/python/spyro-plus.py:157
+msgid "Polygon-Star"
+msgstr "Poligon-Bintang"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
-msgid "Drop shadow _Y displacement"
-msgstr "Pemindahan _Y bayangan jatuh"
+#. Sine wave on a circle ring.
+#: ../plug-ins/python/spyro-plus.py:173 ../plug-ins/python/spyro-plus.py:996
+msgid "Sine"
+msgstr "Sinus"
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/python/spyro-plus.py:183
+msgid "Bumps"
+msgstr "Benjolan"
+
+#: ../plug-ins/python/spyro-plus.py:288
+msgid "Rack"
+msgstr "Rak"
+
+#: ../plug-ins/python/spyro-plus.py:332
+msgid "Frame"
+msgstr "Bingkai"
+
+#: ../plug-ins/python/spyro-plus.py:445
+msgid "Selection"
+msgstr "Pilihan"
+
+#: ../plug-ins/python/spyro-plus.py:532
+msgid "Pencil"
+msgstr "Pensil"
+
+#: ../plug-ins/python/spyro-plus.py:548
+msgid "AirBrush"
+msgstr "AirBrush"
+
+#: ../plug-ins/python/spyro-plus.py:608
+msgid "Preview"
+msgstr "Pratinjau"
+
+#: ../plug-ins/python/spyro-plus.py:613
+msgid "Stroke"
+msgstr "Goresan"
+
+#: ../plug-ins/python/spyro-plus.py:660
+msgid "PaintBrush"
+msgstr "PaintBrush"
+
+#: ../plug-ins/python/spyro-plus.py:662
+msgid "Ink"
+msgstr "Tinta"
+
+#: ../plug-ins/python/spyro-plus.py:663
+msgid "MyPaintBrush"
+msgstr "MyPaintBrush"
+
+#: ../plug-ins/python/spyro-plus.py:982
+msgid "Spyrograph"
+msgstr "Spyrograph"
+
+#: ../plug-ins/python/spyro-plus.py:989
+msgid "Epitrochoid"
+msgstr "Epitrochoid"
+
+#: ../plug-ins/python/spyro-plus.py:1016
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/python/spyro-plus.py:1447
+msgid "Curve Type"
+msgstr "Jenis Kurva"
+
+#: ../plug-ins/python/spyro-plus.py:1448
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+"Pola Epitrochoid adalah ketika gigi bergerak berada di bagian luar gigi "
+"tetap."
+
+#: ../plug-ins/python/spyro-plus.py:1453
+msgid "Tool"
+msgstr "Perkakas"
+
+#: ../plug-ins/python/spyro-plus.py:1454
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr ""
+"Alat yang digunakan untuk menggambar pola. Alat Pratinjau hanya menggambar "
+"dengan cepat."
+
+#: ../plug-ins/python/spyro-plus.py:1459
+msgid "Long Gradient"
+msgstr "Gradien Panjang"
+
+#: ../plug-ins/python/spyro-plus.py:1461
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+"Ketika tidak dicentang, pengaturan alat saat ini akan digunakan. Ketika "
+"dicentang, akan menggunakan gradien panjang untuk mencocokkan panjang pola, "
+"berdasarkan gradien saat ini dan mode pengulangan dari pengaturan alat "
+"gradien."
+
+#: ../plug-ins/python/spyro-plus.py:1481
+msgid "Specify pattern using one of the following tabs:"
+msgstr "Tentukan pola menggunakan salah satu tab berikut:"
+
+#: ../plug-ins/python/spyro-plus.py:1483
+#, fuzzy
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"Pola ini ditentukan hanya oleh tab aktif. Toy Kit mirip dengan Gears, tetapi "
+"menggunakan gigi dan nomor lubang yang ditemukan dalam kit mainan. Jika Anda "
+"mengikuti petunjuk dari manual kit mainan, hasilnya harus serupa."
+
+#: ../plug-ins/python/spyro-plus.py:1507
+#, fuzzy
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+"Jumlah gigi gigi tetap. Ukuran gigi tetap sebanding dengan jumlah gigi."
+
+#: ../plug-ins/python/spyro-plus.py:1510 ../plug-ins/python/spyro-plus.py:1538
+#, fuzzy
+msgid "Fixed Gear Teeth"
+msgstr "Gigi Gigi Tetap"
+
+#: ../plug-ins/python/spyro-plus.py:1518
+#, fuzzy
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+"Jumlah gigi gigi bergerak. Ukuran gigi bergerak sebanding dengan jumlah gigi."
+
+#: ../plug-ins/python/spyro-plus.py:1521 ../plug-ins/python/spyro-plus.py:1543
+#, fuzzy
+msgid "Moving Gear Teeth"
+msgstr "Gigi Bergerak Gigi"
+
+#: ../plug-ins/python/spyro-plus.py:1526
+#, fuzzy
+msgid "Hole percent"
+msgstr "Persen lubang"
+
+#: ../plug-ins/python/spyro-plus.py:1527
+#, fuzzy
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+"Seberapa jauh lubang dari pusat gigi bergerak. 100% berarti bahwa lubang "
+"berada di tepi gigi."
+
+#: ../plug-ins/python/spyro-plus.py:1548
+msgid "Hole Number"
+msgstr "Nomor Lubang"
+
+#: ../plug-ins/python/spyro-plus.py:1549
+#, fuzzy
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"Lubang #1 berada di tepi gigi. Nomor lubang maksimum berada di dekat pusat. "
+"Jumlah lubang maksimum berbeda untuk setiap gigi."
+
+#: ../plug-ins/python/spyro-plus.py:1560
+msgid "Flower Petals"
+msgstr "Kelopak Bunga"
+
+#: ../plug-ins/python/spyro-plus.py:1561
+#, fuzzy
+msgid "The number of petals in the pattern."
+msgstr "Jumlah kelopak dalam pola."
+
+#: ../plug-ins/python/spyro-plus.py:1566
+#, fuzzy
+msgid "Petal Skip"
+msgstr "Daun Loncat"
+
+#: ../plug-ins/python/spyro-plus.py:1567
+#, fuzzy
+msgid "The number of petals to advance for drawing the next petal."
+msgstr "Jumlah kelopak untuk maju untuk menggambar kelopak berikutnya."
+
+#: ../plug-ins/python/spyro-plus.py:1572
+#, fuzzy
+msgid "Hole Radius(%)"
+msgstr "Radius Lubang(%)"
+
+#: ../plug-ins/python/spyro-plus.py:1573
+#, fuzzy
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+"Jari-jari lubang di tengah pola di mana tidak ada yang akan ditarik. "
+"Diberikan sebagai persentase dari ukuran pola. Nilai 0 tidak akan "
+"menghasilkan lubang. Nilai 99 akan menghasilkan garis tipis di tepi."
+
+#: ../plug-ins/python/spyro-plus.py:1594
+#, fuzzy
+msgid "Width(%)"
+msgstr "_Lebar:"
+
+#: ../plug-ins/python/spyro-plus.py:1595
+#, fuzzy
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+"Lebar pola sebagai persentase dari ukuran pola. Nilai 1 hanya akan "
+"menggambar pola tipis. Nilai 100 akan mengisi seluruh gigi tetap."
+
+#: ../plug-ins/python/spyro-plus.py:1606
+msgid "Visual"
+msgstr "Visual"
+
+#: ../plug-ins/python/spyro-plus.py:1612
+#, fuzzy
+msgid "Toy Kit"
+msgstr "Mainan Kit"
+
+#: ../plug-ins/python/spyro-plus.py:1618
+#, fuzzy
+msgid "Gears"
+msgstr "Gears"
+
+#: ../plug-ins/python/spyro-plus.py:1631 ../plug-ins/python/spyro-plus.py:1675
+msgid "Rotation"
+msgstr "Rotasi"
+
+#: ../plug-ins/python/spyro-plus.py:1632
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr "Rotasi pola, dalam derajat. Posisi awal gigi bergerak di gigi tetap."
+
+#: ../plug-ins/python/spyro-plus.py:1655
+msgid "Shape"
+msgstr "Bentuk"
+
+#: ../plug-ins/python/spyro-plus.py:1656
+#, fuzzy
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+"Bentuk gigi tetap yang akan digunakan dalam seleksi saat ini. Rack adalah "
+"bentuk bulat panjang yang disediakan dalam kit mainan. Bingkai memeluk batas-"
+"batas pemilihan persegi panjang, gunakan hole=100 dalam notasi Gear untuk "
+"menyentuh batas. Seleksi akan memeluk batas-batas seleksi saat ini - mencoba "
+"sesuatu yang tidak persegi panjang."
+
+#: ../plug-ins/python/spyro-plus.py:1665
+msgid "Sides"
+msgstr "Sisi"
+
+#: ../plug-ins/python/spyro-plus.py:1665
+#, fuzzy
+msgid "Number of sides of the shape."
+msgstr "Jumlah sisi bentuk."
+
+#: ../plug-ins/python/spyro-plus.py:1670
+#, fuzzy
+msgid "Morph"
+msgstr "Morph"
+
+#: ../plug-ins/python/spyro-plus.py:1670
+#, fuzzy
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr "Bentuk gigi tetap morf. Hanya mempengaruhi beberapa bentuk."
+
+#: ../plug-ins/python/spyro-plus.py:1675
+#, fuzzy
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "Rotasi gigi tetap, dalam derajat"
+
+#: ../plug-ins/python/spyro-plus.py:1690
+msgid "Margin (px)"
+msgstr "Margin (px)"
+
+#: ../plug-ins/python/spyro-plus.py:1690
+msgid "Margin from edge of selection."
+msgstr "Margin dari tepi seleksi."
+
+#: ../plug-ins/python/spyro-plus.py:1695
+msgid "Make width and height equal"
+msgstr "Membuat lebar dan tinggi sama"
+
+#: ../plug-ins/python/spyro-plus.py:1697
+#, fuzzy
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+"Ketika tidak dicentang, pola akan mengisi gambar atau pilihan saat ini. "
+"Ketika diperiksa, pola akan memiliki lebar dan tinggi yang sama, dan akan "
+"pusat."
+
+#: ../plug-ins/python/spyro-plus.py:1712
+msgid "Re_draw"
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1714
+#, fuzzy
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+"Jika Anda mengubah pengaturan alat, mengubah warna, atau mengubah pilihan, "
+"tekan ini untuk melihat pratinjau tampilan pola."
+
+#: ../plug-ins/python/spyro-plus.py:1717
+msgid "_Reset"
+msgstr "_Reset"
+
+#: ../plug-ins/python/spyro-plus.py:1725
+msgid "Save"
+msgstr "Simpan"
+
+#: ../plug-ins/python/spyro-plus.py:1726
+#, fuzzy
+msgid ""
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr ""
+"Pilih apakah akan menyimpan sebagai layer baru, menggambar ulang pada layer "
+"aktif terakhir, atau simpan ke path"
+
+#: ../plug-ins/python/spyro-plus.py:1740
+#, fuzzy
+msgid "Spyrogimp"
+msgstr "Spyrogimp (Di dekat Spyrogimp)"
+
+#: ../plug-ins/python/spyro-plus.py:1749 ../plug-ins/python/spyro-plus.py:2282
+#, fuzzy
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr ""
+"Menggambar spyrographs menggunakan pengaturan alat saat ini dan seleksi."
+
+#: ../plug-ins/python/spyro-plus.py:1762
+msgid "Curve Pattern"
+msgstr "Pola Kurva"
+
+#: ../plug-ins/python/spyro-plus.py:1765
+msgid "Fixed Gear"
+msgstr "Gigi Tetap"
+
+#: ../plug-ins/python/spyro-plus.py:1768
+msgid "Size"
+msgstr "Ukuran"
+
+#: ../plug-ins/python/spyro-plus.py:2116
+#, fuzzy
+msgid "Rendering Pattern"
+msgstr "Pola Rendering"
+
+#: ../plug-ins/python/spyro-plus.py:2128
+#, fuzzy
+msgid "Please wait : Rendering Pattern"
+msgstr "Silakan tunggu : Rendering Pola"
+
+#: ../plug-ins/python/spyro-plus.py:2286
+msgid "Spyrogimp..."
+msgstr "Spyrogimp..."
