@@ -10,43 +10,43 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006, 2007, 2008, 2009, 2011.
 #
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2015, 2016, 2018.
 # Rodrigo <rodhos92@gmail.com>, 2018.
 # Rodrigo Lledó <rodhos92@gmail.com>, 2019.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-06-30 13:20+0000\n"
-"PO-Revision-Date: 2019-07-03 13:31+0200\n"
-"Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
-"Language: es\n"
+"POT-Creation-Date: 2020-09-06 16:38+0000\n"
+"PO-Revision-Date: 2020-09-07 09:16+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: Gtranslator 3.32.0\n"
+"X-Generator: Gtranslator 3.36.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1267
+#: ../libgimp/gimp.c:1265
 msgid "success"
 msgstr "éxito"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1271
+#: ../libgimp/gimp.c:1269
 msgid "execution error"
 msgstr "error de ejecución"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1275
+#: ../libgimp/gimp.c:1273
 msgid "calling error"
 msgstr "error en la llamada"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1279
+#: ../libgimp/gimp.c:1277
 msgid "cancelled"
 msgstr "cancelado"
 
@@ -54,90 +54,89 @@ msgstr "cancelado"
 msgid "Brush Selection"
 msgstr "Selección de pincel"
 
-#: ../libgimp/gimpbrushselectbutton.c:925
-#: ../libgimp/gimppatternselectbutton.c:723
+#: ../libgimp/gimpbrushselectbutton.c:920
+#: ../libgimp/gimppatternselectbutton.c:718
 msgid "_Browse..."
 msgstr "E_xaminar…"
 
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "El complemento %s no puede manejar capas"
 
-#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
-#: ../libgimp/gimpexport.c:289 ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
 msgid "Merge Visible Layers"
 msgstr "Combinar las capas visibles"
 
-#: ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:304
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "El complemento %s no puede manejar desplazamientos de capas, tamaño ni "
 "opacidad"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:297
+#: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "El complemento %s sólo puede manejar capas como fotogramas de animación"
 
-#: ../libgimp/gimpexport.c:289 ../libgimp/gimpexport.c:298
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
 msgid "Save as Animation"
 msgstr "Guardar como animación"
 
-#: ../libgimp/gimpexport.c:298 ../libgimp/gimpexport.c:307
-#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:323 ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:341 ../libgimp/gimpexport.c:350
 msgid "Flatten Image"
 msgstr "Aplanar imagen"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:340
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "El complemento %s no puede manejar transparencia"
 
-#: ../libgimp/gimpexport.c:324
+#: ../libgimp/gimpexport.c:349
 #, c-format
-#| msgid "%s plug-in can't handle transparency"
 msgid "%s plug-in can't handle transparent layers"
 msgstr "El complemento %s no puede manejar capas transparentes"
 
-#: ../libgimp/gimpexport.c:333
+#: ../libgimp/gimpexport.c:358
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "El complemento %s no puede manejar máscaras de capa"
 
-#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:359
 msgid "Apply Layer Masks"
 msgstr "Aplicar las máscaras de capa"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:367
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "El complemento %s sólo puede manejar imágenes RGB"
 
-#: ../libgimp/gimpexport.c:343 ../libgimp/gimpexport.c:381
-#: ../libgimp/gimpexport.c:390
+#: ../libgimp/gimpexport.c:368 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:415
 msgid "Convert to RGB"
 msgstr "Convertir a RGB"
 
-#: ../libgimp/gimpexport.c:351
+#: ../libgimp/gimpexport.c:376
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "El complemento %s sólo puede manejar imágenes en tonos de gris"
 
-#: ../libgimp/gimpexport.c:352 ../libgimp/gimpexport.c:381
-#: ../libgimp/gimpexport.c:402
+#: ../libgimp/gimpexport.c:377 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:427
 msgid "Convert to Grayscale"
 msgstr "Convertir a tonos de gris"
 
-#: ../libgimp/gimpexport.c:360
+#: ../libgimp/gimpexport.c:385
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "El complemento %s sólo puede manejar imágenes indexadas"
 
-#: ../libgimp/gimpexport.c:361 ../libgimp/gimpexport.c:390
-#: ../libgimp/gimpexport.c:400
+#: ../libgimp/gimpexport.c:386 ../libgimp/gimpexport.c:415
+#: ../libgimp/gimpexport.c:425
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -145,14 +144,14 @@ msgstr ""
 "Convertir a indexada usando ajustes predefinidos\n"
 "(Hágalo manualmente para afinar el resultado)"
 
-#: ../libgimp/gimpexport.c:370
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "El complemento %s sólo puede manejar imágenes de mapas de bits indexados (de "
 "dos colores)"
 
-#: ../libgimp/gimpexport.c:371
+#: ../libgimp/gimpexport.c:396
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -160,63 +159,79 @@ msgstr ""
 "Convertir a indexada usando ajustes predefinidos de mapa de bits\n"
 "(Hágalo manualmente para afinar el resultado)"
 
-#: ../libgimp/gimpexport.c:380
+#: ../libgimp/gimpexport.c:405
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "El complemento %s sólo puede manejar imágenes RGB o de tonos de gris"
 
-#: ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:414
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "El complemento %s sólo puede manejar imágenes RGB o indexadas"
 
-#: ../libgimp/gimpexport.c:399
+#: ../libgimp/gimpexport.c:424
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "El complemento %s sólo puede manejar imágenes indexadas o de tonos de gris"
 
-#: ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "El complemento %s necesita un canal alfa"
 
-#: ../libgimp/gimpexport.c:411
+#: ../libgimp/gimpexport.c:436
 msgid "Add Alpha Channel"
 msgstr "Añadir canal alfa"
 
-#: ../libgimp/gimpexport.c:470
+#: ../libgimp/gimpexport.c:444
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr ""
+"El complemento %s necesita recortar las capas a los límites de la imagen"
+
+#: ../libgimp/gimpexport.c:445
+#| msgctxt "page-selector-target"
+#| msgid "Layers"
+msgid "Crop Layers"
+msgstr "Recortar capas"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Resize Image to Layers"
+msgstr "Redimensionar imagen a las capas"
+
+#: ../libgimp/gimpexport.c:504
 msgid "Confirm Save"
 msgstr "Confirmar guardar"
 
-#: ../libgimp/gimpexport.c:475 ../libgimp/gimpexport.c:557
-#: ../libgimp/gimpexport.c:1055 ../libgimpwidgets/gimpcolorbutton.c:549
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
+#: ../libgimp/gimpexport.c:509 ../libgimp/gimpexport.c:591
+#: ../libgimp/gimpexport.c:1125 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
 #: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
 #: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:492
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../libgimp/gimpexport.c:476
+#: ../libgimp/gimpexport.c:510
 msgid "C_onfirm"
 msgstr "C_onfirmar"
 
-#: ../libgimp/gimpexport.c:552
+#: ../libgimp/gimpexport.c:586
 msgid "Export File"
 msgstr "Exportar archivo"
 
-#: ../libgimp/gimpexport.c:556
+#: ../libgimp/gimpexport.c:590
 msgid "_Ignore"
 msgstr "_Ignorar"
 
-#: ../libgimp/gimpexport.c:558 ../libgimp/gimpexport.c:1056
+#: ../libgimp/gimpexport.c:592 ../libgimp/gimpexport.c:1126
 msgid "_Export"
 msgstr "_Exportar"
 
 #. the headline
-#: ../libgimp/gimpexport.c:588
+#: ../libgimp/gimpexport.c:622
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -226,11 +241,11 @@ msgstr ""
 "siguientes razones:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:662
+#: ../libgimp/gimpexport.c:696
 msgid "The export conversion won't modify your original image."
 msgstr "La conversión de exportación no modificará su imagen original."
 
-#: ../libgimp/gimpexport.c:766
+#: ../libgimp/gimpexport.c:800
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -239,7 +254,7 @@ msgstr ""
 "Va a guardar una máscara de capa como %s.\n"
 "Esto no guardará las capas visibles."
 
-#: ../libgimp/gimpexport.c:772
+#: ../libgimp/gimpexport.c:806
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -249,9 +264,8 @@ msgstr ""
 "Esto no guardará las capas visibles."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1049
+#: ../libgimp/gimpexport.c:1119
 #, c-format
-#| msgid "Export Image as "
 msgid "Export Image as %s"
 msgstr "Exportar imagen como %s"
 
@@ -1801,29 +1815,29 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "el valor para el elemento %s no es una cadena UTF-8 válida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:466
+#: ../libgimpconfig/gimpconfig-deserialize.c:473
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "se esperaba «yes» o «no» para la señal booleana %s, se obtuvo «%s»"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:568
+#: ../libgimpconfig/gimpconfig-deserialize.c:588
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "valor inválido «%s» para la señal %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:583
+#: ../libgimpconfig/gimpconfig-deserialize.c:603
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "valor inválido «%ld» para la señal %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:652
+#: ../libgimpconfig/gimpconfig-deserialize.c:672
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "mientras se analizaba la señal «%s»: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:682
-#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:743
-#: ../libgimpconfig/gimpscanner.c:825
+#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:756
+#: ../libgimpconfig/gimpscanner.c:838
 #: ../libgimpwidgets/gimpcolorprofilestore.c:710
 msgid "fatal parse error"
 msgstr "Error fatal de análisis"
@@ -1864,36 +1878,36 @@ msgid "invalid UTF-8 string"
 msgstr "cadena UTF-8 inválida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:618
+#: ../libgimpconfig/gimpscanner.c:631
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "se esperaba «yes» o «no» para la señal booleana, se obtuvo «%s»"
 
-#: ../libgimpconfig/gimpscanner.c:852
+#: ../libgimpconfig/gimpscanner.c:865
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Ha ocurrido un error al analizar «%s» en la línea %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
-#: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
-#: ../libgimpmodule/gimpmodule.c:442
+#: ../libgimpmodule/gimpmodule.c:148 ../libgimpmodule/gimpmodule.c:166
+#: ../libgimpmodule/gimpmodule.c:275 ../libgimpmodule/gimpmodule.c:302
+#: ../libgimpmodule/gimpmodule.c:428
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Error en la carga del módulo «%s»: %s"
 
-#: ../libgimpmodule/gimpmodule.c:384
+#: ../libgimpmodule/gimpmodule.c:370
 msgid "Module error"
 msgstr "Error del módulo"
 
-#: ../libgimpmodule/gimpmodule.c:385
+#: ../libgimpmodule/gimpmodule.c:371
 msgid "Loaded"
 msgstr "Cargado"
 
-#: ../libgimpmodule/gimpmodule.c:386
+#: ../libgimpmodule/gimpmodule.c:372
 msgid "Load failed"
 msgstr "La carga falló"
 
-#: ../libgimpmodule/gimpmodule.c:387
+#: ../libgimpmodule/gimpmodule.c:373
 msgid "Not loaded"
 msgstr "No cargado"
 
@@ -1912,12 +1926,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "No se ha podido crear la carpeta de miniaturas «%s»."
 
-#: ../libgimpthumb/gimpthumbnail.c:508
+#: ../libgimpthumb/gimpthumbnail.c:479
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "La minatura no tiene etiqueta Thumb::URI"
 
-#: ../libgimpthumb/gimpthumbnail.c:905
+#: ../libgimpthumb/gimpthumbnail.c:876
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "No se ha podido crear la miniatura para %s: %s"
@@ -1961,28 +1975,28 @@ msgstr ""
 "Notación hexadecimal del color como la usada en HTML y CSS. También se "
 "admiten nombres de colores CSS."
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:98
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
 msgstr "Todos los archivos (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:103
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Perfil de color ICC (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:164
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:174
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:336
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:345
 #: ../libgimpwidgets/gimppatheditor.c:270
 msgid "Folder"
 msgstr "Carpeta"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:341
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:350
 msgid "Not a regular file."
 msgstr "No es un archivo regular."
 
@@ -1995,11 +2009,11 @@ msgctxt "profile"
 msgid "None"
 msgstr "Ninguno"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:159
+#: ../libgimpwidgets/gimpcolorprofileview.c:168
 msgid "Manufacturer: "
 msgstr "Fabricante:"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:171
+#: ../libgimpwidgets/gimpcolorprofileview.c:180
 msgid "Copyright: "
 msgstr "Copyright: "
 
@@ -2141,17 +2155,20 @@ msgstr "_Transformar"
 msgid "_Shear"
 msgstr "_Cizallar"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
-msgid "Kilobytes"
-msgstr "Kilobytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:256
+#| msgid "Kilobytes"
+msgid "Kibibyte"
+msgstr "Kibibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
-msgid "Megabytes"
-msgstr "Megabytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:257
+#| msgid "Megabytes"
+msgid "Mebibyte"
+msgstr "Mebibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
-msgid "Gigabytes"
-msgstr "Gigabytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:258
+#| msgid "Gigabytes"
+msgid "Gibibyte"
+msgstr "Gibibyte"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:270
