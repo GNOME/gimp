@@ -6,6 +6,7 @@
 # - Win32 crossbuilds (rare usefulness)
 # - Linux CLang (rare usefulness)
 # - cppcheck (static code analysis)
+# - Flatpak build
 # Releases ($CI_COMMIT_TAG != null) should run only:
 # - Linux autotools (distcheck source tarball)
 # - Win 32/64 native builds (Windows installer creation)
@@ -22,6 +23,8 @@
 # - GIMP_CI_WIN_INSTALLER: trigger both native MSYS2 builds then creates Windows installer.
 # - GIMP_CI_SOURCES: trigger the autotools/gcc build and the source tarball job.
 # - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
+
+include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
 
 image: debian:testing
 
@@ -539,6 +542,30 @@ gimp-win32:
       - _build/
       - gimp-prefix/
 
+
+## Linux Flatpak nightly CI ##
+
+## To learn more about the CI, go to https://gitlab.gnome.org/GNOME/Initiatives/-/wikis/DevOps-with-Flatpak
+
+flatpak:
+  extends: .flatpak
+  stage: gimp
+  needs: []
+  when: always
+  only:
+    - schedules
+  variables:
+    GIT_SUBMODULE_STRATEGY: normal
+
+    # Replace with your manifest path
+    MANIFEST_PATH: "build/flatpak/org.gimp.GIMP-nightly.json"
+    RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
+    # Replace with your application name, as written in the manifest
+    FLATPAK_MODULE: "gimp"
+    APP_ID: "org.gimp.GIMP"
+    BUNDLE: "gimp-git.flatpak"
+
+
 cppcheck:
   rules:
     # Custom builds only (web GUI, API or schedules).
@@ -778,3 +805,12 @@ win32-nightly:
         python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
       done
   needs: ["gimp-win32", "deps-win64"]
+
+flatpak-nightly:
+  extends: '.publish_nightly'
+  stage: distribution
+  only:
+    - schedules
+  needs: ["flatpak"]
+  dependencies:
+    - 'flatpak'
