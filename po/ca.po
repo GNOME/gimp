@@ -491,7 +491,7 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
-"Compatibilitat amb PSD: es poden importar imatges pre-composades d'una "
+"Compatibilitat amb PSD: es poden importar imatges precompostes d'una "
 "imatge PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
@@ -22168,7 +22168,7 @@ msgstr "Llavor nova"
 
 #: ../app/propgui/gimppropgui-vignette.c:183
 msgid "Vignette: "
-msgstr "Vinyeta"
+msgstr "Vinyeta: "
 
 #: ../app/propgui/gimppropgui.c:393
 msgid "Pick color from the image"
@@ -24219,8 +24219,7 @@ msgstr ""
 #: ../app/tools/gimpperspectivetool.c:86
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
 msgstr ""
-"Eina Perspectiva: deforma la capa, selecció o camí definint una nova capsa "
-"contenidora"
+"Eina Perspectiva: canvia la perspectiva de la capa, la selecció o el camí"
 
 #: ../app/tools/gimpperspectivetool.c:88
 msgid "_Perspective"
@@ -24658,7 +24657,7 @@ msgstr "Ajusta l'espaiat entre lletres"
 
 #: ../app/tools/gimptextoptions.c:200
 msgid "Box"
-msgstr "Capsa"
+msgstr "Caixa"
 
 #: ../app/tools/gimptextoptions.c:201
 msgid ""
@@ -24690,7 +24689,7 @@ msgstr "Justifica:"
 
 #: ../app/tools/gimptextoptions.c:641
 msgid "Box:"
-msgstr "Capsa:"
+msgstr "Caixa:"
 
 #: ../app/tools/gimptextoptions.c:658
 msgid "Language:"
