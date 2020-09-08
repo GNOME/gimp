@@ -322,7 +322,7 @@ gimp_update_check (GimpCoreConfig *config)
   else
     gimp_versions = g_file_new_for_uri ("https://testing.gimp.org/gimp_versions.json");
 #else
-  gimp_versions = g_file_new_for_uri ("https://gimp.org/gimp_versions.json");
+  gimp_versions = g_file_new_for_uri ("https://www.gimp.org/gimp_versions.json");
 #endif
   g_file_load_contents_async (gimp_versions, NULL, gimp_check_updates_callback, config);
   g_object_unref (gimp_versions);
