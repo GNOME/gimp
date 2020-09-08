@@ -550,8 +550,8 @@ load_image (GFile     *file,
   const Babl               *format;
   const guint8             *data;
   gint                      stride;
-  gint                      bit_depth;
-  enum                      heif_chroma chroma;
+  gint                      bit_depth = 8;
+  enum heif_chroma          chroma    = heif_chroma_interleaved_RGB;
   GimpPrecision             precision;
   gboolean                  load_linear;
   const char               *encoding;
@@ -675,6 +675,7 @@ load_image (GFile     *file,
 
   has_alpha = heif_image_handle_has_alpha_channel (handle);
 
+#if LIBHEIF_HAVE_VERSION(1,8,0)
   bit_depth = heif_image_handle_get_luma_bits_per_pixel (handle);
   if (bit_depth < 0)
     {
@@ -685,6 +686,7 @@ load_image (GFile     *file,
 
       return -1;
     }
+#endif
 
   if (bit_depth == 8)
     {
@@ -699,6 +701,7 @@ load_image (GFile     *file,
     }
   else /* high bit depth */
     {
+#if LIBHEIF_HAVE_VERSION(1,8,0)
 #if ( G_BYTE_ORDER == G_LITTLE_ENDIAN )
       if (has_alpha)
         {
@@ -717,6 +720,7 @@ load_image (GFile     *file,
         {
           chroma = heif_chroma_interleaved_RRGGBB_BE;
         }
+#endif
 #endif
     }
 
