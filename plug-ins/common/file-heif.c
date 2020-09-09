@@ -30,6 +30,7 @@
 
 #define LOAD_PROC      "file-heif-load"
 #define SAVE_PROC      "file-heif-save"
+#define SAVE_PROC_AV1  "file-heif-av1-save"
 #define PLUG_IN_BINARY "file-heif"
 
 
@@ -40,6 +41,7 @@ struct _SaveParams
   gint     quality;
   gboolean lossless;
   gboolean save_profile;
+  gint     save_bit_depth;
 };
 
 
@@ -55,15 +57,17 @@ static void       run            (const gchar          *name,
 static gint32     load_image     (GFile               *file,
                                   gboolean             interactive,
                                   GError              **error);
-static gboolean   save_image     (GFile                *file,
-                                  gint32                image_ID,
-                                  gint32                drawable_ID,
-                                  const SaveParams     *params,
-                                  GError              **error);
+static gboolean   save_image     (GFile                        *file,
+                                  gint32                        image_ID,
+                                  gint32                        drawable_ID,
+                                  const SaveParams             *params,
+                                  GError                      **error,
+                                  enum heif_compression_format  compression);
 
 static gboolean   load_dialog    (struct heif_context  *heif,
                                   uint32_t             *selected_image);
-static gboolean   save_dialog    (SaveParams           *params);
+static gboolean   save_dialog    (SaveParams           *params,
+                                  gint32                image_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -126,15 +130,23 @@ query (void)
                               ",avif"
 #endif
                               , "");
-  gimp_register_file_handler_mime (LOAD_PROC, "image/heif");
+  gimp_register_file_handler_mime (LOAD_PROC,
+                                   "image/heif"
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+                                   ",image/avif"
+#endif
+                                  );
   gimp_register_file_handler_uri (LOAD_PROC);
   /* HEIF is an ISOBMFF format whose "brand" (the value after "ftyp")
    * can be of various values.
    * See also: https://gitlab.gnome.org/GNOME/gimp/issues/2209
    */
   gimp_register_magic_load_handler (LOAD_PROC,
-                                    "heif,heic",
-                                    "",
+                                    "heif,heic"
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+                                    ",avif"
+#endif
+                                    , "",
                                     "4,string,ftypheic,4,string,ftypheix,"
                                     "4,string,ftyphevc,4,string,ftypheim,"
                                     "4,string,ftypheis,4,string,ftyphevm,"
@@ -161,6 +173,24 @@ query (void)
   gimp_register_save_handler (SAVE_PROC, "heic,heif", "");
   gimp_register_file_handler_mime (SAVE_PROC, "image/heif");
   gimp_register_file_handler_uri (SAVE_PROC);
+
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+  gimp_install_procedure (SAVE_PROC_AV1,
+                          "Exports AVIF images",
+                          "Save image in AV1 Image File Format (AVIF)",
+                          "Daniel Novomesky <dnovomesky@gmail.com>",
+                          "Daniel Novomesky <dnovomesky@gmail.com>",
+                          "2020",
+                          "HEIF/AVIF",
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args), 0,
+                          save_args, NULL);
+
+  gimp_register_save_handler (SAVE_PROC_AV1, "avif", "");
+  gimp_register_file_handler_mime (SAVE_PROC_AV1, "image/avif");
+  gimp_register_file_handler_uri (SAVE_PROC_AV1);
+#endif
 }
 
 #define LOAD_HEIF_CANCEL -2
@@ -242,6 +272,7 @@ run (const gchar      *name,
       params.lossless     = FALSE;
       params.quality      = 50;
       params.save_profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
+      params.save_bit_depth = 8;
 
       switch (run_mode)
         {
@@ -268,7 +299,7 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
           gimp_get_data (SAVE_PROC, &params);
 
-          if (! save_dialog (&params))
+          if (! save_dialog (&params, image_ID))
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -296,13 +327,16 @@ run (const gchar      *name,
 
           if (save_image (file, image_ID, drawable_ID,
                           &params,
-                          &error))
+                          &error,
+                          heif_compression_HEVC))
             {
+              /* Exiv2 doesn't support HEIC format yet, following code doesn't work
               if (metadata)
                 gimp_image_metadata_save_finish (image_ID,
                                                  "image/heif",
                                                  metadata, metadata_flags,
                                                  file, NULL);
+              */
               gimp_set_data (SAVE_PROC, &params, sizeof (params));
             }
           else
@@ -314,6 +348,93 @@ run (const gchar      *name,
 
       g_clear_object (&metadata);
     }
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+  else if (strcmp (name, SAVE_PROC_AV1) == 0)
+    {
+      gint32                 image_ID    = param[1].data.d_int32;
+      gint32                 drawable_ID = param[2].data.d_int32;
+      GimpExportReturn       export      = GIMP_EXPORT_CANCEL;
+      SaveParams             params;
+      GimpMetadata          *metadata = NULL;
+      GimpMetadataSaveFlags  metadata_flags;
+
+      metadata = gimp_image_metadata_save_prepare (image_ID,
+                                                   "image/avif",
+                                                   &metadata_flags);
+
+      params.lossless     = FALSE;
+      params.quality      = 50;
+      params.save_profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
+      params.save_bit_depth = 8;
+
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          export = gimp_export_image (&image_ID, &drawable_ID, "AVIF",
+                                      GIMP_EXPORT_CAN_HANDLE_RGB |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
+
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              g_clear_object (&metadata);
+              return;
+            }
+          break;
+
+        default:
+          break;
+        }
+
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+          gimp_get_data (SAVE_PROC_AV1, &params);
+
+          if (! save_dialog (&params, image_ID))
+            status = GIMP_PDB_CANCEL;
+          break;
+
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_get_data (SAVE_PROC_AV1, &params);
+          break;
+
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the arguments are there!  */
+          if (n_params != 7)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              params.quality  = (param[5].data.d_int32);
+              params.lossless = (param[6].data.d_int32);
+            }
+          break;
+        }
+
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          GFile *file = g_file_new_for_uri (param[3].data.d_string);
+
+          if (save_image (file, image_ID, drawable_ID,
+                          &params,
+                          &error,
+                          heif_compression_AV1))
+            {
+              gimp_set_data (SAVE_PROC_AV1, &params, sizeof (params));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+          g_object_unref (file);
+        }
+
+      g_clear_object (&metadata);
+    }
+#endif
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
@@ -1096,11 +1217,12 @@ write_callback (struct heif_context *ctx,
 }
 
 static gboolean
-save_image (GFile             *file,
-            gint32             image_ID,
-            gint32             drawable_ID,
-            const SaveParams  *params,
-            GError           **error)
+save_image (GFile                        *file,
+            gint32                        image_ID,
+            gint32                        drawable_ID,
+            const SaveParams             *params,
+            GError                      **error,
+            enum heif_compression_format  compression)
 {
   struct heif_image        *image   = NULL;
   struct heif_context      *context = heif_context_alloc ();
@@ -1110,6 +1232,7 @@ save_image (GFile             *file,
   struct heif_error         err;
   GOutputStream            *output;
   GeglBuffer               *buffer;
+  const gchar              *encoding;
   const Babl               *format;
   const Babl               *space   = NULL;
   guint8                   *data;
@@ -1134,12 +1257,44 @@ save_image (GFile             *file,
 
   has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
-  err = heif_image_create (width, height,
-                           heif_colorspace_RGB,
-                           has_alpha ?
-                           heif_chroma_interleaved_RGBA :
-                           heif_chroma_interleaved_RGB,
-                           &image);
+  switch (params->save_bit_depth)
+    {
+    case 8:
+      err = heif_image_create (width, height,
+                               heif_colorspace_RGB,
+                               has_alpha ?
+                               heif_chroma_interleaved_RGBA :
+                               heif_chroma_interleaved_RGB,
+                               &image);
+      break;
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+    case 10:
+    case 12:
+#if ( G_BYTE_ORDER == G_LITTLE_ENDIAN )
+      err = heif_image_create (width, height,
+                               heif_colorspace_RGB,
+                               has_alpha ?
+                               heif_chroma_interleaved_RRGGBBAA_LE :
+                               heif_chroma_interleaved_RRGGBB_LE,
+                               &image);
+#else
+      err = heif_image_create (width, height,
+                               heif_colorspace_RGB,
+                               has_alpha ?
+                               heif_chroma_interleaved_RRGGBBAA_BE :
+                               heif_chroma_interleaved_RRGGBB_BE,
+                               &image);
+#endif
+      break;
+#endif
+    default:
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Unsupported bit depth: %d",
+                   params->save_bit_depth);
+      heif_context_free (context);
+      return FALSE;
+      break;
+    }
 
   if (err.code != 0)
     {
@@ -1221,41 +1376,138 @@ save_image (GFile             *file,
   if (! space)
     space = gimp_drawable_get_format (drawable_ID);
 
-  heif_image_add_plane (image, heif_channel_interleaved,
-                        width, height, has_alpha ? 32 : 24);
-
-  data = heif_image_get_plane (image, heif_channel_interleaved, &stride);
-
-  buffer = gimp_drawable_get_buffer (drawable_ID);
-
-  if (has_alpha)
+  if (params->save_bit_depth > 8)
     {
-      if (out_linear)
-        format = babl_format ("RGBA u8");
-      else
-        format = babl_format ("R'G'B'A u8");
+      uint16_t       *data16;
+      const uint16_t *src16;
+      uint16_t       *dest16;
+      gint            x, y, rowentries;
+      int             tmp_pixelval;
+
+      if (has_alpha)
+        {
+          rowentries = width * 4;
+
+          if (out_linear)
+            encoding = "RGBA u16";
+          else
+            encoding = "R'G'B'A u16";
+        }
+      else /* no alpha */
+        {
+          rowentries = width * 3;
+
+          if (out_linear)
+            encoding = "RGB u16";
+          else
+            encoding = "R'G'B' u16";
+        }
+
+      data16 = g_malloc_n (height, rowentries * 2);
+      src16 = data16;
+
+      format = babl_format_with_space (encoding, space);
+
+      buffer = gimp_drawable_get_buffer (drawable_ID);
+
+      gegl_buffer_get (buffer,
+                       GEGL_RECTANGLE (0, 0, width, height),
+                       1.0, format, data16, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      g_object_unref (buffer);
+
+      heif_image_add_plane (image, heif_channel_interleaved,
+                            width, height, params->save_bit_depth);
+
+      data = heif_image_get_plane (image, heif_channel_interleaved, &stride);
+
+      switch (params->save_bit_depth)
+        {
+        case 10:
+          for (y = 0; y < height; y++)
+            {
+              dest16 = (uint16_t *) (y * stride + data);
+              for (x = 0; x < rowentries; x++)
+                {
+                  tmp_pixelval = (int) ( ( (float) (*src16) / 65535.0f) * 1023.0f + 0.5f);
+                  *dest16 = CLAMP (tmp_pixelval, 0, 1023);
+                  dest16++;
+                  src16++;
+                }
+            }
+          break;
+        case 12:
+          for (y = 0; y < height; y++)
+            {
+              dest16 = (uint16_t *) (y * stride + data);
+              for (x = 0; x < rowentries; x++)
+                {
+                  tmp_pixelval = (int) ( ( (float) (*src16) / 65535.0f) * 4095.0f + 0.5f);
+                  *dest16 = CLAMP (tmp_pixelval, 0, 4095);
+                  dest16++;
+                  src16++;
+                }
+            }
+          break;
+        default:
+          for (y = 0; y < height; y++)
+            {
+              dest16 = (uint16_t *) (y * stride + data);
+              for (x = 0; x < rowentries; x++)
+                {
+                  *dest16 = *src16;
+                  dest16++;
+                  src16++;
+                }
+            }
+          break;
+        }
+      g_free (data16);
     }
-  else
+  else /* save_bit_depth == 8 */
     {
-      if (out_linear)
-        format = babl_format ("RGB u8");
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+      heif_image_add_plane (image, heif_channel_interleaved,
+                            width, height, 8);
+#else
+      /* old style settings */
+      heif_image_add_plane (image, heif_channel_interleaved,
+                            width, height, has_alpha ? 32 : 24);
+#endif
+
+      data = heif_image_get_plane (image, heif_channel_interleaved, &stride);
+
+      buffer = gimp_drawable_get_buffer (drawable_ID);
+
+      if (has_alpha)
+        {
+          if (out_linear)
+            encoding = "RGBA u8";
+          else
+            encoding = "R'G'B'A u8";
+        }
       else
-        format = babl_format ("R'G'B' u8");
+        {
+          if (out_linear)
+            encoding = "RGB u8";
+          else
+            encoding = "R'G'B' u8";
+        }
+      format = babl_format_with_space (encoding, space);
+
+      gegl_buffer_get (buffer,
+                       GEGL_RECTANGLE (0, 0, width, height),
+                       1.0, format, data, stride, GEGL_ABYSS_NONE);
+
+      g_object_unref (buffer);
     }
-  format = babl_format_with_space (babl_format_get_encoding (format), space);
-
-  gegl_buffer_get (buffer,
-                   GEGL_RECTANGLE (0, 0, width, height),
-                   1.0, format, data, stride, GEGL_ABYSS_NONE);
-
-  g_object_unref (buffer);
 
   gimp_progress_update (0.33);
 
   /*  encode to HEIF file  */
 
   err = heif_context_get_encoder_for_format (context,
-                                             heif_compression_HEVC,
+                                             compression,
                                              &encoder);
 
   if (err.code != 0)
@@ -1697,7 +1949,8 @@ save_dialog_lossless_button_toggled (GtkToggleButton *source,
 }
 
 gboolean
-save_dialog (SaveParams *params)
+save_dialog (SaveParams *params,
+             gint32      image_ID)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -1709,6 +1962,11 @@ save_dialog (SaveParams *params)
   GtkWidget *profile_button;
 #endif
   GtkWidget *quality_slider;
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+  GtkWidget *table;
+  GtkWidget *label2;
+  GtkWidget *combo;
+#endif
   gboolean   run = FALSE;
 
   dialog = gimp_export_dialog_new (_("HEIF"), PLUG_IN_BINARY, SAVE_PROC);
@@ -1742,6 +2000,47 @@ save_dialog (SaveParams *params)
                     G_CALLBACK (save_dialog_lossless_button_toggled),
                     hbox);
 
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+  switch (gimp_image_get_precision (image_ID))
+    {
+    case GIMP_PRECISION_U8_LINEAR:
+    case GIMP_PRECISION_U8_GAMMA:
+      /* image is 8bit depth */
+      params->save_bit_depth = 8;
+      break;
+    default:
+      /* high bit depth */
+      if (params->save_bit_depth < 12)
+        {
+          params->save_bit_depth = 10;
+        }
+      else if (params->save_bit_depth > 12)
+        {
+          params->save_bit_depth = 12;
+        }
+      break;
+    }
+
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  label2 = gtk_label_new ("Bit depth: ");
+  gtk_label_set_xalign (GTK_LABEL (label2), 0.0);
+  gtk_table_attach (GTK_TABLE (table), label2, 0, 1, 0, 1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label2);
+
+  combo = gimp_int_combo_box_new ("8 bit/channel", 8,
+                                  "10 bit/channel (HDR)", 10,
+                                  "12 bit/channel (HDR)", 12,
+                                  NULL);
+  gtk_table_attach (GTK_TABLE (table), combo, 1, 2, 0, 1,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_widget_show (combo);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), params->save_bit_depth);
+#endif
+
 #if LIBHEIF_HAVE_VERSION(1,4,0)
   profile_button = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (profile_button),
@@ -1760,6 +2059,9 @@ save_dialog (SaveParams *params)
     {
       params->quality  = gtk_range_get_value (GTK_RANGE (quality_slider));
       params->lossless = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (lossless_button));
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+      gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &params->save_bit_depth);
+#endif
     }
 
   gtk_widget_destroy (dialog);
