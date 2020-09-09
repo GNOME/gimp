@@ -547,14 +547,17 @@ typedef gboolean PSP_BOOLEAN;
  */
 typedef struct
 {
-  guint32 width, height;
-  gdouble resolution;
-  guchar metric;
-  guint16 compression;
-  guint16 depth;
-  guchar grayscale;
-  guint32 active_layer;
-  guint16 layer_count;
+  guint32           width, height;
+  gdouble           resolution;
+  guchar            metric;
+  guint16           compression;
+  guint16           depth;
+  guchar            grayscale;
+  guint32           active_layer;
+  guint16           layer_count;
+  guint16           bytes_per_sample;
+  GimpImageBaseType base_type;
+  GimpPrecision     precision;
 } PSPimage;
 
 
@@ -1034,7 +1037,55 @@ read_general_image_attribute_block (FILE     *f,
     }
 
   ia->depth = GUINT16_FROM_LE (ia->depth);
-  if (ia->depth != 24)
+  switch (ia->depth)
+    {
+      case 24:
+      case 48:
+        ia->base_type = GIMP_RGB;
+        if (ia->depth == 24)
+          ia->precision = GIMP_PRECISION_U8_NON_LINEAR;
+        else
+          ia->precision = GIMP_PRECISION_U16_NON_LINEAR;
+        break;
+
+      case 1:
+      case 4:
+      case 8:
+      case 16:
+        if (ia->grayscale && ia->depth >= 8)
+          {
+            ia->base_type = GIMP_GRAY;
+            if (ia->depth == 8)
+              ia->precision = GIMP_PRECISION_U8_NON_LINEAR;
+            else
+              ia->precision = GIMP_PRECISION_U16_NON_LINEAR;
+          }
+        else if (ia->depth <= 8 && ! ia->grayscale)
+          {
+            ia->base_type = GIMP_INDEXED;
+            ia->precision = GIMP_PRECISION_U8_NON_LINEAR;
+          }
+        else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Unsupported bit depth %d"), ia->depth);
+          return -1;
+        }
+        break;
+
+      default:
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Unsupported bit depth %d"), ia->depth);
+        return -1;
+        break;
+    }
+
+    if (ia->precision == GIMP_PRECISION_U16_NON_LINEAR)
+      ia->bytes_per_sample = 2;
+    else
+      ia->bytes_per_sample = 1;
+
+  if (ia->base_type != GIMP_RGB)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unsupported bit depth %d"), ia->depth);
@@ -1418,31 +1469,55 @@ read_channel_data (FILE        *f,
   guchar runcount, byte;
   z_stream zstream;
 
+  g_assert (ia->bytes_per_sample <= 2);
+
   switch (ia->compression)
     {
     case PSP_COMP_NONE:
       if (bytespp == 1)
         {
-          fread (pixels[0], height * width, 1, f);
+          fread (pixels[0], height * width * ia->bytes_per_sample, 1, f);
         }
       else
         {
-          buf = g_malloc (width);
-          for (y = 0; y < height; y++)
+          buf = g_malloc (width * ia->bytes_per_sample);
+          if (ia->bytes_per_sample == 1)
             {
-              guchar *p, *q;
-
-              fread (buf, width, 1, f);
-              /* Contrary to what the PSP specification seems to suggest
-                 scanlines are not stored on a 4-byte boundary. */
-              p = buf;
-              q = pixels[y] + offset;
-              for (i = 0; i < width; i++)
+              for (y = 0; y < height; y++)
                 {
-                  *q = *p++;
-                  q += bytespp;
+                  guchar *p, *q;
+
+                  fread (buf, width, 1, f);
+                  /* Contrary to what the PSP specification seems to suggest
+                    scanlines are not stored on a 4-byte boundary. */
+                  p = buf;
+                  q = pixels[y] + offset;
+                  for (i = 0; i < width; i++)
+                    {
+                      *q = *p++;
+                      q += bytespp;
+                    }
                 }
             }
+          else if (ia->bytes_per_sample == 2)
+            {
+              for (y = 0; y < height; y++)
+                {
+                  guint16 *p, *q;
+
+                  fread (buf, width * ia->bytes_per_sample, 1, f);
+                  /* Contrary to what the PSP specification seems to suggest
+                    scanlines are not stored on a 4-byte boundary. */
+                  p = (guint16 *) buf;
+                  q = (guint16 *) (pixels[y] + offset);
+                  for (i = 0; i < width; i++)
+                    {
+                      *q = GUINT16_FROM_LE (*p++);
+                      q += bytespp / 2;
+                    }
+                }
+            }
+
           g_free (buf);
         }
       break;
@@ -1467,14 +1542,18 @@ read_channel_data (FILE        *f,
               fread (buf, runcount, 1, f);
 
             /* prevent buffer overflow for bogus data */
-            runcount = MIN (runcount, (endq - q) / bytespp);
+            if (runcount > (endq - q) / bytespp + ia->bytes_per_sample - 1)
+              {
+                g_printerr ("Buffer overflow decompressing RLE data.\n");
+                break;
+              }
 
             if (bytespp == 1)
               {
                 memmove (q, buf, runcount);
                 q += runcount;
               }
-            else
+            else if (ia->bytes_per_sample == 1)
               {
                 guchar *p = buf;
 
@@ -1483,6 +1562,18 @@ read_channel_data (FILE        *f,
                     *q = *p++;
                     q += bytespp;
                   }
+              }
+            else if (ia->bytes_per_sample == 2)
+              {
+                guint16 *p = (guint16 *) buf;
+                guint16 *r = (guint16 *) q;
+
+                for (i = 0; i < runcount / 2; i++)
+                  {
+                    *r = GUINT16_FROM_LE (*p++);
+                    r += bytespp / 2;
+                  }
+                q = (guchar *) r;
               }
           }
         g_free (buf);
@@ -1507,10 +1598,10 @@ read_channel_data (FILE        *f,
         zstream.next_out = pixels[0];
       else
         {
-          buf2 = g_malloc (npixels);
+          buf2 = g_malloc (npixels * ia->bytes_per_sample);
           zstream.next_out = buf2;
         }
-      zstream.avail_out = npixels;
+      zstream.avail_out = npixels * ia->bytes_per_sample;
       if (inflate (&zstream, Z_FINISH) != Z_STREAM_END)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -1523,16 +1614,32 @@ read_channel_data (FILE        *f,
 
       if (bytespp > 1)
         {
-          guchar *p, *q;
-
-          p = buf2;
-          q = pixels[0] + offset;
-          for (i = 0; i < npixels; i++)
+          if (ia->bytes_per_sample == 1)
             {
-              *q = *p++;
-              q += bytespp;
+              guchar *p, *q;
+
+              p = buf2;
+              q = pixels[0] + offset;
+              for (i = 0; i < npixels; i++)
+                {
+                  *q = *p++;
+                  q += bytespp;
+                }
+              g_free (buf2);
             }
-          g_free (buf2);
+          else if (ia->bytes_per_sample == 2)
+            {
+              guint16 *p, *q;
+
+              p = (guint16 *) buf2;
+              q = (guint16 *) (pixels[0] + offset);
+              for (i = 0; i < npixels; i++)
+                {
+                  *q = GUINT16_FROM_LE (*p++);
+                  q += bytespp / 2;
+                }
+              g_free (buf2);
+            }
         }
       break;
     }
@@ -1831,6 +1938,7 @@ read_layer_block (FILE      *f,
           drawable_type = GIMP_RGB_IMAGE, bytespp = 3;
         else
           drawable_type = GIMP_RGBA_IMAGE, bytespp = 4;
+      bytespp *= ia->bytes_per_sample;
 
       layer = gimp_layer_new (image, layer_name,
                               width, height,
@@ -1937,9 +2045,9 @@ read_layer_block (FILE      *f,
                                       bytespp);
 
                   if (bitmap_type == PSP_DIB_TRANS_MASK)
-                    offset = 3;
+                    offset = bytespp - ia->bytes_per_sample;
                   else
-                    offset = channel_type - PSP_CHANNEL_RED;
+                    offset = (channel_type - PSP_CHANNEL_RED) * ia->bytes_per_sample;
 
                   if (!null_layer)
                     {
@@ -2221,8 +2329,8 @@ load_image (GFile   *file,
                               ia.width, ia.height,
                               compression_name (ia.compression));
 
-          image = gimp_image_new (ia.width, ia.height,
-                                  ia.grayscale ? GIMP_GRAY : GIMP_RGB);
+          image = gimp_image_new_with_precision (ia.width, ia.height,
+                                                 ia.base_type, ia.precision);
           if (! image)
             {
               goto error;
