@@ -1085,10 +1085,10 @@ read_general_image_attribute_block (FILE     *f,
     else
       ia->bytes_per_sample = 1;
 
-  if (ia->base_type != GIMP_RGB)
+  if (ia->base_type == GIMP_INDEXED)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Unsupported bit depth %d"), ia->depth);
+                   _("Indexed images are not supported"));
       return -1;
     }
 
@@ -1928,16 +1928,21 @@ read_layer_block (FILE      *f,
           null_layer = TRUE;
         }
 
-      if (ia->grayscale)
-        if (!null_layer && bitmap_count == 1)
-          drawable_type = GIMP_GRAY_IMAGE, bytespp = 1;
-        else
-          drawable_type = GIMP_GRAYA_IMAGE, bytespp = 1;
-      else
-        if (!null_layer && bitmap_count == 1)
+      if (ia->base_type == GIMP_RGB)
+        if (bitmap_count == 1)
           drawable_type = GIMP_RGB_IMAGE, bytespp = 3;
         else
           drawable_type = GIMP_RGBA_IMAGE, bytespp = 4;
+      else if (ia->base_type == GIMP_GRAY)
+        if (bitmap_count == 1)
+          drawable_type = GIMP_GRAY_IMAGE, bytespp = 1;
+        else
+          drawable_type = GIMP_GRAYA_IMAGE, bytespp = 2;
+      else
+        if (bitmap_count == 1)
+          drawable_type = GIMP_INDEXED_IMAGE, bytespp = 1;
+        else
+          drawable_type = GIMP_INDEXEDA_IMAGE, bytespp = 2;
       bytespp *= ia->bytes_per_sample;
 
       layer = gimp_layer_new (image, layer_name,
