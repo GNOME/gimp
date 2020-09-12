@@ -1360,6 +1360,7 @@ save_image (GFile                        *file,
       /* We save as sRGB */
       struct heif_color_profile_nclx nclx_profile;
 
+      nclx_profile.version = 1;
       nclx_profile.color_primaries = heif_color_primaries_ITU_R_BT_709_5;
       nclx_profile.transfer_characteristics = heif_transfer_characteristic_IEC_61966_2_1;
       nclx_profile.matrix_coefficients = heif_matrix_coefficients_ITU_R_BT_601_6;
@@ -2022,18 +2023,19 @@ save_dialog (SaveParams *params,
     }
 
   table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label2 = gtk_label_new ("Bit depth: ");
+  label2 = gtk_label_new (_("Bit depth:"));
   gtk_label_set_xalign (GTK_LABEL (label2), 0.0);
   gtk_table_attach (GTK_TABLE (table), label2, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label2);
 
-  combo = gimp_int_combo_box_new ("8 bit/channel", 8,
-                                  "10 bit/channel (HDR)", 10,
-                                  "12 bit/channel (HDR)", 12,
+  combo = gimp_int_combo_box_new (_("8 bit/channel"), 8,
+                                  _("10 bit/channel (HDR)"), 10,
+                                  _("12 bit/channel (HDR)"), 12,
                                   NULL);
   gtk_table_attach (GTK_TABLE (table), combo, 1, 2, 0, 1,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
