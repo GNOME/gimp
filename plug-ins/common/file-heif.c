@@ -1420,6 +1420,7 @@ save_image (GFile                        *file,
       /* We save as sRGB */
       struct heif_color_profile_nclx nclx_profile;
 
+      nclx_profile.version = 1;
       nclx_profile.color_primaries = heif_color_primaries_ITU_R_BT_709_5;
       nclx_profile.transfer_characteristics = heif_transfer_characteristic_IEC_61966_2_1;
       nclx_profile.matrix_coefficients = heif_matrix_coefficients_ITU_R_BT_601_6;
@@ -2087,16 +2088,16 @@ save_dialog (GimpProcedure *procedure,
   gtk_box_pack_start (GTK_BOX (main_vbox), grid2, FALSE, FALSE, 0);
   gtk_widget_show (grid2);
 
-  store = gimp_int_store_new ("8 bit/channel",    8,
-                              "10 bit/channel (HDR)",  10,
-                              "12 bit/channel (HDR)", 12,
+  store = gimp_int_store_new (_("8 bit/channel"),         8,
+                              _("10 bit/channel (HDR)"), 10,
+                              _("12 bit/channel (HDR)"), 12,
                               NULL);
 
   combo = gimp_prop_int_combo_box_new (config, "save-bit-depth",
                                        GIMP_INT_STORE (store));
   g_object_unref (store);
   gimp_grid_attach_aligned (GTK_GRID (grid2), 0, 1,
-                            "Bit depth:", 0.0, 0.5,
+                            _("Bit depth:"), 0.0, 0.5,
                             combo, 2);
 #endif
 
