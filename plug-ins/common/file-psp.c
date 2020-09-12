@@ -1085,13 +1085,6 @@ read_general_image_attribute_block (FILE     *f,
     else
       ia->bytes_per_sample = 1;
 
-  if (ia->base_type == GIMP_INDEXED)
-    {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Indexed images are not supported"));
-      return -1;
-    }
-
   ia->active_layer = GUINT32_FROM_LE (ia->active_layer);
   ia->layer_count = GUINT16_FROM_LE (ia->layer_count);
 
@@ -1237,6 +1230,84 @@ read_creator_block (FILE      *f,
     }
 
   g_string_free (comment, FALSE);
+
+  return 0;
+}
+
+static gint
+read_color_block (FILE      *f,
+                  GimpImage *image,
+                  guint      total_len,
+                  PSPimage  *ia,
+                  GError   **error)
+{
+  long     block_start;
+  guint32  chunk_len, entry_count, pal_size;
+  guint32  color_palette_entries;
+  guchar  *color_palette;
+
+  block_start = ftell (f);
+
+  if (psp_ver_major >= 4)
+    {
+      if (fread (&chunk_len, 4, 1, f) < 1
+          || fread (&entry_count, 4, 1, f) < 1)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading color block"));
+          return -1;
+        }
+
+      chunk_len = GUINT32_FROM_LE (chunk_len);
+
+      if (try_fseek (f, block_start + chunk_len, SEEK_SET, error) < 0)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading color block"));
+          return -1;
+        }
+    }
+  else
+    {
+      if (fread (&entry_count, 4, 1, f) < 1)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading color block"));
+          return -1;
+        }
+    }
+
+  color_palette_entries = GUINT32_FROM_LE (entry_count);
+  /* psp color palette entries are stored as RGBA so 4 bytes per entry
+     where the fourth bytes is always zero */
+  pal_size = color_palette_entries * 4;
+  color_palette = g_malloc (pal_size);
+  if (fread (color_palette, pal_size, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading color palette"));
+      return -1;
+    }
+  else
+    {
+      guchar *tmpmap;
+      gint    i;
+
+      /* Convert to BGR palette */
+      tmpmap = g_malloc (3 * color_palette_entries);
+      for (i = 0; i < color_palette_entries; ++i)
+        {
+          tmpmap[i*3  ] = color_palette[i*4+2];
+          tmpmap[i*3+1] = color_palette[i*4+1];
+          tmpmap[i*3+2] = color_palette[i*4];
+        }
+
+      memcpy (color_palette, tmpmap, color_palette_entries * 3);
+      g_free (tmpmap);
+
+      gimp_image_set_colormap (image, color_palette, color_palette_entries);
+      g_free (color_palette);
+    }
 
   return 0;
 }
@@ -1450,6 +1521,41 @@ psp_zfree (void *opaque,
   g_free (ptr);
 }
 
+static void
+upscale_indexed_sub_8 (FILE    *f,
+                       gint     width,
+                       gint     height,
+                       gint     bpp,
+                       guchar  *buf)
+{
+  gint     x, y, b, line_width;
+  gint     bpp_zero_based = bpp - 1;
+  gint     current_bit = 0;
+  guchar  *tmpbuf, *buf_start, *src;
+
+  /* Scanlines for 1 and 4 bit only end on a 4-byte boundary. */
+  line_width = (((width * bpp + 7) / 8) + bpp_zero_based) / 4 * 4;
+  buf_start = g_malloc0 (width * height);
+  tmpbuf = buf_start;
+
+  for (y = 0; y < height; tmpbuf += width, ++y)
+    {
+      src = buf + y * line_width;
+      for (x = 0; x < width; ++x)
+        {
+          for (b = 0; b < bpp; b++)
+            {
+              current_bit = bpp * x + b;
+              if (src[current_bit / 8] & (128 >> (current_bit % 8)))
+                tmpbuf[x] += (1 << (bpp_zero_based - b));
+            }
+        }
+    }
+
+  memcpy (buf, buf_start, width * height);
+  g_free (buf_start);
+}
+
 static int
 read_channel_data (FILE        *f,
                    PSPimage    *ia,
@@ -1460,7 +1566,7 @@ read_channel_data (FILE        *f,
                    guint32      compressed_len,
                    GError     **error)
 {
-  gint i, y;
+  gint i, y, line_width;
   gint width = gegl_buffer_get_width (buffer);
   gint height = gegl_buffer_get_height (buffer);
   gint npixels = width * height;
@@ -1471,16 +1577,26 @@ read_channel_data (FILE        *f,
 
   g_assert (ia->bytes_per_sample <= 2);
 
+  if (ia->depth < 8)
+    {
+      /* Scanlines for 1 and 4 bit only end on a 4-byte boundary. */
+      line_width = (((width * ia->depth + 7) / 8) + ia->depth - 1) / 4 * 4;
+    }
+  else
+    {
+      line_width = width * ia->bytes_per_sample;
+    }
+
   switch (ia->compression)
     {
     case PSP_COMP_NONE:
       if (bytespp == 1)
         {
-          fread (pixels[0], height * width * ia->bytes_per_sample, 1, f);
+          fread (pixels[0], height * line_width, 1, f);
         }
       else
         {
-          buf = g_malloc (width * ia->bytes_per_sample);
+          buf = g_malloc (line_width);
           if (ia->bytes_per_sample == 1)
             {
               for (y = 0; y < height; y++)
@@ -1527,7 +1643,11 @@ read_channel_data (FILE        *f,
         guchar *q, *endq;
 
         q = pixels[0] + offset;
-        endq = q + npixels * bytespp;
+        if (ia->depth >= 8)
+          endq = q + npixels * bytespp;
+        else
+          endq = q + line_width * height;
+
         buf = g_malloc (127);
         while (q < endq)
           {
@@ -1642,6 +1762,12 @@ read_channel_data (FILE        *f,
             }
         }
       break;
+    }
+
+  if (ia->base_type == GIMP_INDEXED && ia->depth < 8)
+    {
+      /* We need to convert 1 and 4 bit to 8 bit indexed */
+      upscale_indexed_sub_8 (f, width, height, ia->depth, pixels[0]);
     }
 
   return 0;
@@ -2049,7 +2175,7 @@ read_layer_block (FILE      *f,
                                       uncompressed_len, compressed_len,
                                       bytespp);
 
-                  if (bitmap_type == PSP_DIB_TRANS_MASK)
+                  if (bitmap_type == PSP_DIB_TRANS_MASK || channel_type == PSP_CHANNEL_COMPOSITE)
                     offset = bytespp - ia->bytes_per_sample;
                   else
                     offset = (channel_type - PSP_CHANNEL_RED) * ia->bytes_per_sample;
@@ -2362,7 +2488,9 @@ load_image (GFile   *file,
               break;
 
             case PSP_COLOR_BLOCK:
-              break;            /* Not yet implemented */
+              if (read_color_block (f, image, block_total_len, &ia, error) == -1)
+                goto error;
+              break;
 
             case PSP_LAYER_START_BLOCK:
               if (! read_layer_block (f, image, block_total_len, &ia, error))
