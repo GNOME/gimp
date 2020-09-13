@@ -119,6 +119,7 @@ libgimp_introspectable_headers = \
 	../libgimp/gimpgradientselect.h		\
 	../libgimp/gimpimage.h			\
 	../libgimp/gimpimagecolorprofile.h	\
+	../libgimp/gimpimagemetadata.h		\
 	../libgimp/gimpimageprocedure.h		\
 	../libgimp/gimpitem.h			\
 	../libgimp/gimplayer.h			\
@@ -152,6 +153,7 @@ libgimp_introspectable = \
 	../libgimp/gimpgradientselect.c		\
 	../libgimp/gimpimage.c			\
 	../libgimp/gimpimagecolorprofile.c	\
+	../libgimp/gimpimagemetadata.c		\
 	../libgimp/gimpimagemetadata-save.c	\
 	../libgimp/gimpimageprocedure.c		\
 	../libgimp/gimpitem.c			\
@@ -181,7 +183,7 @@ libgimpui_introspectable_headers = \
 	../libgimp/gimpfontselectbutton.h	\
 	../libgimp/gimpgradientselectbutton.h	\
 	../libgimp/gimpimagecombobox.h		\
-	../libgimp/gimpimagemetadata.h		\
+	../libgimp/gimpimagemetadata-interactive.h	\
 	../libgimp/gimpitemcombobox.h		\
 	../libgimp/gimppaletteselectbutton.h	\
 	../libgimp/gimppatternselectbutton.h	\
@@ -202,7 +204,7 @@ libgimpui_introspectable = \
 	../libgimp/gimpfontselectbutton.c	\
 	../libgimp/gimpgradientselectbutton.c	\
 	../libgimp/gimpimagecombobox.c		\
-	../libgimp/gimpimagemetadata.c		\
+	../libgimp/gimpimagemetadata-interactive.c	\
 	../libgimp/gimpitemcombobox.c		\
 	../libgimp/gimppaletteselectbutton.c	\
 	../libgimp/gimppatternselectbutton.c	\

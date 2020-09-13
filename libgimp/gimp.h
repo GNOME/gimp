@@ -45,6 +45,7 @@
 #include <libgimp/gimpgradientselect.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimpimagecolorprofile.h>
+#include <libgimp/gimpimagemetadata.h>
 #include <libgimp/gimpimageprocedure.h>
 #include <libgimp/gimpitem.h>
 #include <libgimp/gimplayer.h>

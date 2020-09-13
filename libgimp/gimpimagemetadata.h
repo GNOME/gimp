@@ -18,9 +18,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimpui.h> can be included directly."
+#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
+#error "Only <libgimp/gimp.h> can be included directly."
 #endif
+
 
 #ifndef __GIMP_IMAGE_METADATA_H__
 #define __GIMP_IMAGE_METADATA_H__
@@ -34,11 +35,10 @@ GimpMetadata * gimp_image_metadata_load_prepare   (GimpImage             *image,
                                                    const gchar           *mime_type,
                                                    GFile                 *file,
                                                    GError               **error);
-void           gimp_image_metadata_load_finish    (GimpImage             *image,
-                                                   const gchar           *mime_type,
-                                                   GimpMetadata          *metadata,
-                                                   GimpMetadataLoadFlags  flags,
-                                                   gboolean               interactive);
+void           gimp_image_metadata_load_finish_batch (GimpImage             *image,
+                                                      const gchar           *mime_type,
+                                                      GimpMetadata          *metadata,
+                                                      GimpMetadataLoadFlags  flags);
 
 GimpMetadata * gimp_image_metadata_save_prepare   (GimpImage             *image,
                                                    const gchar           *mime_type,
