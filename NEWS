@@ -63,6 +63,11 @@ Plug-ins:
     to know the right compression from other flags. This allows to
     recover invalid DDS files exported by other software.
   - JPEG detection improved to be more generic and reliable.
+  - HEIF support improvements:
+    - AVIF importing and exporting added (requires libheif 1.8.0+)
+    - 10/12-bit importing and exporting now available for HEIC/AVIF
+    - NCLX color profile import (link with LittleCMS)
+    - Metadata support when importing
   - TIFF support improvements:
     - Add an option to crop the layers to the image bounds when exporting
       individual layers (using GIMP_EXPORT_NEEDS_CROP), since TIFF has no
@@ -75,12 +80,14 @@ Plug-ins:
       security risk.
   - Multiple improvements in the PSP plug-in:
     - support reading raster layers of PSP version > 6,
+    - support reading 16-bit integer PSP files,
+    - support reading grayscale and indexed PSP files,
+    - support PSP images with zero-length layer names,
     - fix wrong layer offset of layers,
     - fix reading layer names with high bit ASCII characters,
-    - improve reader stability by always using the block/chunk length,
     - fix incorrect loading of PSP images with uncompressed channel data,
     - fix reading of creator block data of PSP images,
-    - support PSP images with zero-length layer names.
+    - improve reader stability by always using the block/chunk length.
   - Spyrogimp now works on Grayscale images and clutters less the undo
     history.
 
@@ -108,24 +115,25 @@ Build:
 Bug fixes:
 
     #2874, #4328, #4536, #5069, #5208, #5219, #5226, #5232, #5274, #5275,
-    #5357, #5472, #5530, #5584
+    #5357, #5472, #5530, #5584, #4816, #5043, #5623
 
 Translation updates:
 
   - Basque, Catalan, Chinese (China), Croatian, Danish, German, Italian,
-    Japanese, Kazakh, Polish, Spanish, Swedish, Turkish, Ukrainian
+    Japanese, Kazakh, Polish, Russian, Spanish, Swedish, Turkish, Ukrainian
 
 Developers/contributors:
 
-  - David A. Russo, Elad Shahar, Ell, Jacob Boerema, Jehan Pages, Liam Quin,
-    lillolollo, luz.paz, Michael Natterer, Michael Schumacher, Øyvind Kolås,
-    Peter Oliver, Simon McVittie
+  - Daniel a Simona Novomeská, David A. Russo, Elad Shahar, Ell, Jacob Boerema,
+    Jehan Pages, Liam Quin, lillolollo, luz.paz, Michael Natterer, Michael
+    Schumacher, Øyvind Kolås, Peter Oliver, Simon McVittie
 
 Translators: 
 
-  - Alan01, Anders Jonsson, Asier Sarasua Garmendia, Baurzhan Muftakhidinov,
-    Boyuan Yang, Jordi Mas, Marco Ciampa, milotype, Rodrigo Lledó Milanca,
-    Piotr Drąg, Sabri Ünal, sicklylife, Tim Sabsch, Yuri Chornoivan
+  - Alan01, Alexandre Prokoudine, Anders Jonsson, Asier Sarasua Garmendia,
+    Baurzhan Muftakhidinov, Boyuan Yang, Daniel Mustieles García, Jordi Mas,
+    Marco Ciampa, milotype, Rodrigo Lledó Milanca, Piotr Drąg, Sabri Ünal,
+    sicklylife, Stephan Woidowski, Tim Sabsch, Yuri Chornoivan
 
 Overview of Changes from GIMP 2.10.18 to GIMP 2.10.20
 =====================================================
