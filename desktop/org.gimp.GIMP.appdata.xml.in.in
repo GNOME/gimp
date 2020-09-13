@@ -84,6 +84,9 @@
             AVIF importing and exporting
           </_li>
           <_li>
+            Multiple improvements in Corel PaintShop Pro support
+          </_li>
+          <_li>
             The option enabling OpenCL support has been moved to the
             Playground tab in Preferences
           </_li>
