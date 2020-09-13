@@ -435,6 +435,7 @@ libgimpui_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(libgimpmodule)	\
+	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
 	$(GEXIV2_LIBS)		\
 	$(RT_LIBS)
