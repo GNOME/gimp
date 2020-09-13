@@ -26,8 +26,6 @@ EXPORTS
 	gimp_image_combo_box_get_type
 	gimp_image_combo_box_new
 	gimp_image_metadata_load_finish
-	gimp_image_metadata_load_prepare
-	gimp_image_metadata_load_thumbnail
 	gimp_layer_combo_box_get_type
 	gimp_layer_combo_box_new
 	gimp_palette_select_button_get_palette

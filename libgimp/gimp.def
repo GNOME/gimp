@@ -441,6 +441,9 @@ EXPORTS
 	gimp_image_merge_down
 	gimp_image_merge_layer_group
 	gimp_image_merge_visible_layers
+	gimp_image_metadata_load_finish_batch
+	gimp_image_metadata_load_prepare
+	gimp_image_metadata_load_thumbnail
 	gimp_image_metadata_save_finish
 	gimp_image_metadata_save_prepare
 	gimp_image_new
