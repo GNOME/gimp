@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-09-12 14:02+0000\n"
-"PO-Revision-Date: 2020-09-12 17:47+0300\n"
+"POT-Creation-Date: 2020-09-12 21:26+0000\n"
+"PO-Revision-Date: 2020-09-13 08:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -47,7 +47,7 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/common/curve-bend.c:1189 ../plug-ins/common/curve-bend.c:1963
 #: ../plug-ins/common/curve-bend.c:1998 ../plug-ins/common/depth-merge.c:710
 #: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
-#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:1869
+#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:1870
 #: ../plug-ins/common/file-jp2-load.c:976
 #: ../plug-ins/common/file-pdf-load.c:645
 #: ../plug-ins/common/file-pdf-load.c:1041
@@ -107,7 +107,7 @@ msgstr "_Скасувати"
 #: ../plug-ins/common/colormap-remap.c:656 ../plug-ins/common/compose.c:1147
 #: ../plug-ins/common/contrast-retinex.c:326
 #: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/depth-merge.c:711
-#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:1870
+#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:1871
 #: ../plug-ins/common/file-pdf-load.c:646 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1321
 #: ../plug-ins/common/grid.c:738 ../plug-ins/common/hot.c:657
@@ -2368,42 +2368,59 @@ msgstr ""
 msgid "image content"
 msgstr "вміст зображення"
 
-#: ../plug-ins/common/file-heif.c:1362 ../plug-ins/common/file-heif.c:1594
+#: ../plug-ins/common/file-heif.c:1362 ../plug-ins/common/file-heif.c:1595
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Не вдалось закодувати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1631
+#: ../plug-ins/common/file-heif.c:1632
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Не вдалось записати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1720
+#: ../plug-ins/common/file-heif.c:1721
 msgid "primary"
 msgstr "основне"
 
-#: ../plug-ins/common/file-heif.c:1865
+#: ../plug-ins/common/file-heif.c:1866
 msgid "Load HEIF Image"
 msgstr "Завантажити зображення HEIF"
 
-#: ../plug-ins/common/file-heif.c:1879
+#: ../plug-ins/common/file-heif.c:1880
 msgid "Select Image"
 msgstr "Виберіть зображення"
 
-#: ../plug-ins/common/file-heif.c:2022
+#: ../plug-ins/common/file-heif.c:2023
 msgid "Export Image as HEIF"
 msgstr "Експортувати зображення як HEIF"
 
-#: ../plug-ins/common/file-heif.c:2035
+#: ../plug-ins/common/file-heif.c:2036
 #: ../plug-ins/file-webp/file-webp-dialog.c:119
 msgid "_Lossless"
 msgstr "_Без втрат"
 
-#: ../plug-ins/common/file-heif.c:2050
+#: ../plug-ins/common/file-heif.c:2051
 msgid "_Quality"
 msgstr "Я_кість"
 
-#: ../plug-ins/common/file-heif.c:2105 ../plug-ins/file-jpeg/jpeg-save.c:1001
+#: ../plug-ins/common/file-heif.c:2091
+msgid "8 bit/channel"
+msgstr "8 біт/канал"
+
+#: ../plug-ins/common/file-heif.c:2092
+msgid "10 bit/channel (HDR)"
+msgstr "10 біт/канал (HDR)"
+
+#: ../plug-ins/common/file-heif.c:2093
+msgid "12 bit/channel (HDR)"
+msgstr "12 біт/канал (HDR)"
+
+#: ../plug-ins/common/file-heif.c:2100
+#| msgid "_Max depth:"
+msgid "Bit depth:"
+msgstr "Бітова глибина:"
+
+#: ../plug-ins/common/file-heif.c:2106 ../plug-ins/file-jpeg/jpeg-save.c:1001
 #: ../plug-ins/file-webp/file-webp-dialog.c:305
 msgid "Save color _profile"
 msgstr "Зберегти _профіль кольорів"
@@ -3545,25 +3562,21 @@ msgstr "Помилка пошуку: %s"
 
 #: ../plug-ins/common/file-psp.c:998
 #, c-format
-#| msgid "Duplicate General Image Attributes block."
 msgid "Invalid general image attribute chunk size."
 msgstr "Некоректний розмір фрагмента загальних атрибутів зображення."
 
 #: ../plug-ins/common/file-psp.c:1020
 #, c-format
-#| msgid "Missing General Image Attributes block."
 msgid "Error reading general image attribute block."
 msgstr "Помилка під час читання блоку загальних атрибутів зображення."
 
 #: ../plug-ins/common/file-psp.c:1035
 #, c-format
-#| msgid "Unsupported compression mode: %d"
 msgid "Unknown compression type %d"
 msgstr "Невідомий тип стискання %d"
 
 #: ../plug-ins/common/file-psp.c:1071 ../plug-ins/common/file-psp.c:1078
 #, c-format
-#| msgid "Unsupported bit depth: %d"
 msgid "Unsupported bit depth %d"
 msgstr "Непідтримувана розрядність на канал: %d"
 
@@ -3585,13 +3598,11 @@ msgstr "Помилка зчитування даних ключового сло
 #: ../plug-ins/common/file-psp.c:1257 ../plug-ins/common/file-psp.c:1266
 #: ../plug-ins/common/file-psp.c:1275
 #, c-format
-#| msgid "Error reading block header"
 msgid "Error reading color block"
 msgstr "Помилка під час читання блоку кольорів"
 
 #: ../plug-ins/common/file-psp.c:1288
 #, c-format
-#| msgid "Error reading palette."
 msgid "Error reading color palette"
 msgstr "Помилка під час читання палітри кольорів"
 
