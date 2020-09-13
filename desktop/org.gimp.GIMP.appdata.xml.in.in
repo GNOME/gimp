@@ -80,6 +80,10 @@
         </_p>
         <ul>
           <_li>
+            HEIF support improvements: optional exporting with high bit depth,
+            AVIF importing and exporting
+          </_li>
+          <_li>
             The option enabling OpenCL support has been moved to the
             Playground tab in Preferences
           </_li>
