@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-09-13 08:57+0000\n"
-"PO-Revision-Date: 2020-09-13 12:43+0300\n"
+"POT-Creation-Date: 2020-09-14 07:29+0000\n"
+"PO-Revision-Date: 2020-09-14 12:11+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.11.70\n"
+"X-Generator: Lokalize 20.03.70\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -109,8 +109,9 @@ msgstr ""
 "переднього плану, оскільки він працює набагато краще"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
-msgid "13 bug fixes"
-msgstr "Виправлено 13 вад"
+#| msgid "13 bug fixes"
+msgid "Various bug fixes"
+msgstr "Виправлено різноманітні вади"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
