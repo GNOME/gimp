@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-09-13 01:42+0000\n"
-"PO-Revision-Date: 2020-09-13 08:54+0300\n"
+"POT-Creation-Date: 2020-09-14 09:07+0000\n"
+"PO-Revision-Date: 2020-09-14 12:10+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.11.70\n"
+"X-Generator: Lokalize 20.03.70\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -2637,18 +2637,15 @@ msgstr "Виберіть зображення"
 msgid "HEIF"
 msgstr "HEIF"
 
-#. Create the lossless checkbox
 #: ../plug-ins/common/file-heif.c:1983
-#: ../plug-ins/file-webp/file-webp-dialog.c:125
-msgid "_Lossless"
-msgstr "_Без втрат"
+msgid "Nearly _lossless (YUV420 format)"
+msgstr "Майже _без втрат (формат YUV420)"
 
 #: ../plug-ins/common/file-heif.c:1987 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Якість:"
 
 #: ../plug-ins/common/file-heif.c:2030
-#| msgid "_Max depth:"
 msgid "Bit depth:"
 msgstr "Бітова глибина:"
 
@@ -7544,6 +7541,11 @@ msgstr "(всі кадри і ключові кадри)"
 #: ../plug-ins/file-webp/file-webp-dialog.c:108
 msgid "WebP"
 msgstr "WebP"
+
+#. Create the lossless checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:125
+msgid "_Lossless"
+msgstr "_Без втрат"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:141
 msgid "Image _quality:"
