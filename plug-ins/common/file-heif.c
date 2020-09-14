@@ -1980,7 +1980,7 @@ save_dialog (SaveParams *params,
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  lossless_button = gtk_check_button_new_with_mnemonic (_("_Lossless"));
+  lossless_button = gtk_check_button_new_with_mnemonic (_("Nearly _lossless (YUV420 format)"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), lossless_button);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
