@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-13 14:00+0200\n"
-"PO-Revision-Date: 2020-09-13 14:05+0200\n"
+"POT-Creation-Date: 2020-09-14 18:01+0200\n"
+"PO-Revision-Date: 2020-09-14 18:02+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2637,11 +2637,9 @@ msgstr "Wybór obrazu"
 msgid "HEIF"
 msgstr "HEIF"
 
-#. Create the lossless checkbox
 #: ../plug-ins/common/file-heif.c:1983
-#: ../plug-ins/file-webp/file-webp-dialog.c:125
-msgid "_Lossless"
-msgstr "_Bezstratne"
+msgid "Nearly _lossless (YUV420 format)"
+msgstr "_Prawie bezstratne (format YUV420)"
 
 #: ../plug-ins/common/file-heif.c:1987 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
@@ -7544,6 +7542,11 @@ msgstr "(wszystkie klatki są kluczowe)"
 #: ../plug-ins/file-webp/file-webp-dialog.c:108
 msgid "WebP"
 msgstr "WebP"
+
+#. Create the lossless checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:125
+msgid "_Lossless"
+msgstr "_Bezstratne"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:141
 msgid "Image _quality:"
