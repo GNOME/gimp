@@ -52,7 +52,7 @@ deps-debian/testing:
         meson
         python2
         python3
-        python-dev
+        python2-dev
         valac
         wget
     - apt-get install -y --reinstall ca-certificates
@@ -156,7 +156,7 @@ deps-debian/testing:
         mypaint-brushes
         poppler-data
         python2
-        python-dev
+        python2-dev
         xauth
         xvfb
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
