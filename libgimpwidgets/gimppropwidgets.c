@@ -119,7 +119,7 @@ gimp_prop_check_button_new (GObject     *config,
 
   blurb = g_param_spec_get_blurb (param_spec);
   if (blurb)
-	gimp_help_set_help_data (button, blurb, NULL);
+    gimp_help_set_help_data (button, blurb, NULL);
 
   g_object_bind_property (config, property_name,
                           button, "active",
@@ -389,8 +389,8 @@ gimp_prop_int_combo_box_new (GObject      *config,
                              const gchar  *property_name,
                              GimpIntStore *store)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *combo_box;
+  GParamSpec  *param_spec;
+  GtkWidget   *combo_box;
   const gchar *blurb;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
@@ -408,7 +408,7 @@ gimp_prop_int_combo_box_new (GObject      *config,
 
   blurb = g_param_spec_get_blurb (param_spec);
   if (blurb)
-	gimp_help_set_help_data (combo_box, blurb, NULL);
+    gimp_help_set_help_data (combo_box, blurb, NULL);
 
   g_object_bind_property (config, property_name,
                           combo_box, "active",
@@ -1982,8 +1982,8 @@ GtkWidget *
 gimp_prop_label_new (GObject     *config,
                      const gchar *property_name)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *label;
+  GParamSpec  *param_spec;
+  GtkWidget   *label;
   const gchar *blurb;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
@@ -1999,7 +1999,7 @@ gimp_prop_label_new (GObject     *config,
 
   blurb = g_param_spec_get_blurb (param_spec);
   if (blurb)
-	gimp_help_set_help_data (label, blurb, NULL);
+    gimp_help_set_help_data (label, blurb, NULL);
 
   g_object_bind_property (config, property_name,
                           label, "label",
@@ -3960,7 +3960,7 @@ gimp_prop_icon_image_new (GObject     *config,
 
   blurb = g_param_spec_get_blurb (param_spec);
   if (blurb)
-	gimp_help_set_help_data (image, blurb, NULL);
+    gimp_help_set_help_data (image, blurb, NULL);
 
   g_object_bind_property (config, property_name,
                           image, "icon-name",
