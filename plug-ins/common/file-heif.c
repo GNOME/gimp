@@ -21,6 +21,7 @@
 #include <libheif/heif.h>
 #include <lcms2.h>
 #include <gexiv2/gexiv2.h>
+#include <sys/time.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -33,6 +34,11 @@
 #define SAVE_PROC_AV1  "file-heif-av1-save"
 #define PLUG_IN_BINARY "file-heif"
 
+typedef struct
+{
+  gchar *tag;
+  gint  type;
+} XmpStructs;
 
 typedef struct _Heif      Heif;
 typedef struct _HeifClass HeifClass;
@@ -91,7 +97,8 @@ static gboolean         save_image            (GFile                        *fil
                                                GimpDrawable                 *drawable,
                                                GObject                      *config,
                                                GError                      **error,
-                                               enum heif_compression_format  compression);
+                                               enum heif_compression_format  compression,
+                                               GimpMetadata                 *metadata);
 
 static gboolean         load_dialog           (struct heif_context  *heif,
                                                uint32_t             *selected_image);
@@ -238,6 +245,18 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                          "Bit depth of exported image",
                          8, 12, 8,
                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
+                             "Save Exif",
+                             "Toggle saving Exif data",
+                             gimp_export_exif (),
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
+                             "Save XMP",
+                             "Toggle saving XMP data",
+                             gimp_export_xmp (),
+                             G_PARAM_READWRITE);
     }
 #if LIBHEIF_HAVE_VERSION(1,8,0)
   else if (! strcmp (name, SAVE_PROC_AV1))
@@ -289,6 +308,18 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                          "Bit depth of exported image",
                          8, 12, 8,
                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
+                             "Save Exif",
+                             "Toggle saving Exif data",
+                             gimp_export_exif (),
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
+                             "Save XMP",
+                             "Toggle saving XMP data",
+                             gimp_export_xmp (),
+                             G_PARAM_READWRITE);
     }
 #endif
   return procedure;
@@ -342,14 +373,15 @@ heif_save (GimpProcedure        *procedure,
   GimpProcedureConfig *config;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GimpMetadata        *metadata;
   GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode,
-                                      args, "image/heif");
+  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+                                                 args, "image/heif");
 
   switch (run_mode)
     {
@@ -390,7 +422,7 @@ heif_save (GimpProcedure        *procedure,
   if (status == GIMP_PDB_SUCCESS)
     {
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
-                        &error, heif_compression_HEVC))
+                        &error, heif_compression_HEVC, metadata))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -422,14 +454,15 @@ heif_av1_save (GimpProcedure        *procedure,
   GimpProcedureConfig *config;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GimpMetadata        *metadata;
   GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode,
-                                      args, "image/avif");
+  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+                                                 args, "image/avif");
 
   switch (run_mode)
     {
@@ -470,7 +503,7 @@ heif_av1_save (GimpProcedure        *procedure,
   if (status == GIMP_PDB_SUCCESS)
     {
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
-                        &error, heif_compression_AV1))
+                        &error, heif_compression_AV1, metadata))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -1240,6 +1273,30 @@ load_image (GFile              *file,
   return image;
 }
 
+static void
+heifplugin_image_metadata_copy_tag (GExiv2Metadata *src,
+                                    GExiv2Metadata *dest,
+                                    const gchar    *tag)
+{
+  gchar **values = gexiv2_metadata_get_tag_multiple (src, tag);
+
+  if (values)
+    {
+      gexiv2_metadata_set_tag_multiple (dest, tag, (const gchar **) values);
+      g_strfreev (values);
+    }
+  else
+    {
+      gchar *value = gexiv2_metadata_get_tag_string (src, tag);
+
+      if (value)
+        {
+          gexiv2_metadata_set_tag_string (dest, tag, value);
+          g_free (value);
+        }
+    }
+}
+
 static struct heif_error
 write_callback (struct heif_context *ctx,
                 const void          *data,
@@ -1269,7 +1326,8 @@ save_image (GFile                        *file,
             GimpDrawable                 *drawable,
             GObject                      *config,
             GError                      **error,
-            enum heif_compression_format  compression)
+            enum heif_compression_format  compression,
+            GimpMetadata                 *metadata)
 {
   struct heif_image        *h_image = NULL;
   struct heif_context      *context = heif_context_alloc ();
@@ -1292,6 +1350,10 @@ save_image (GFile                        *file,
   gint                      quality;
   gboolean                  save_profile;
   gint                      save_bit_depth = 8;
+#if GEXIV2_CHECK_VERSION(0, 12, 2)
+  gboolean                  save_exif = FALSE;
+#endif
+  gboolean                  save_xmp = FALSE;
 
   if (!context)
     {
@@ -1307,6 +1369,10 @@ save_image (GFile                        *file,
                 "save-bit-depth",     &save_bit_depth,
 #endif
                 "save-color-profile", &save_profile,
+#if GEXIV2_CHECK_VERSION(0, 12, 2)
+                "save-exif", &save_exif,
+#endif
+                "save-xmp", &save_xmp,
                 NULL);
 
   gimp_progress_init_printf (_("Exporting '%s'"),
@@ -1598,6 +1664,174 @@ save_image (GFile                        *file,
       heif_image_release (h_image);
       heif_context_free (context);
       return FALSE;
+    }
+
+  /*  EXIF metadata  */
+#if GEXIV2_CHECK_VERSION(0, 12, 2)
+  if (save_exif && metadata)
+    {
+      if (gexiv2_metadata_get_supports_exif (GEXIV2_METADATA (metadata)) &&
+          gexiv2_metadata_has_exif (GEXIV2_METADATA (metadata)))
+        {
+          GimpMetadata   *new_exif_metadata = gimp_metadata_new ();
+          GExiv2Metadata *new_gexiv2metadata = GEXIV2_METADATA (new_exif_metadata);
+          GBytes         *raw_exif_data;
+          gchar         **exif_data = gexiv2_metadata_get_exif_tags (GEXIV2_METADATA (metadata));
+          guint           i;
+
+          gexiv2_metadata_clear_exif (new_gexiv2metadata);
+
+          for (i = 0; exif_data[i] != NULL; i++)
+            {
+              if (! gexiv2_metadata_has_tag (new_gexiv2metadata, exif_data[i]) &&
+                  gimp_metadata_is_tag_supported (exif_data[i], "image/heif"))
+                {
+                  heifplugin_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+                                                      new_gexiv2metadata,
+                                                      exif_data[i]);
+                }
+            }
+
+          g_strfreev (exif_data);
+
+          raw_exif_data = gexiv2_metadata_get_exif_data (new_gexiv2metadata, GEXIV2_BYTE_ORDER_LITTLE, error);
+          if (raw_exif_data)
+            {
+              gsize exif_size = 0;
+              gconstpointer exif_buffer = g_bytes_get_data (raw_exif_data, &exif_size);
+
+              if (exif_size >= 4)
+                {
+                  err = heif_context_add_exif_metadata (context, handle,
+                                                        exif_buffer, exif_size);
+                  if (err.code != 0)
+                    {
+                      g_printerr ("Failed to save EXIF metadata: %s", err.message);
+                    }
+                }
+              g_bytes_unref (raw_exif_data);
+            }
+          else
+            {
+              if (error && *error)
+                {
+                  g_printerr ("%s: error preparing EXIF metadata: %s",
+                              G_STRFUNC, (*error)->message);
+                  g_clear_error (error);
+                }
+            }
+
+          g_object_unref (new_exif_metadata);
+        }
+    }
+#endif
+
+  /*  XMP metadata  */
+  if (save_xmp && metadata)
+    {
+      if (gexiv2_metadata_get_supports_xmp (GEXIV2_METADATA (metadata)) &&
+          gexiv2_metadata_has_xmp (GEXIV2_METADATA (metadata)))
+        {
+          GimpMetadata   *new_metadata = gimp_metadata_new ();
+          GExiv2Metadata *new_g2metadata = GEXIV2_METADATA (new_metadata);
+          guint           i;
+
+          static const XmpStructs structlist[] =
+          {
+            { "Xmp.iptcExt.LocationCreated", GEXIV2_STRUCTURE_XA_BAG },
+            { "Xmp.iptcExt.LocationShown",   GEXIV2_STRUCTURE_XA_BAG },
+            { "Xmp.iptcExt.ArtworkOrObject", GEXIV2_STRUCTURE_XA_BAG },
+            { "Xmp.iptcExt.RegistryId",      GEXIV2_STRUCTURE_XA_BAG },
+            { "Xmp.xmpMM.History",           GEXIV2_STRUCTURE_XA_SEQ },
+            { "Xmp.plus.ImageSupplier",      GEXIV2_STRUCTURE_XA_SEQ },
+            { "Xmp.plus.ImageCreator",       GEXIV2_STRUCTURE_XA_SEQ },
+            { "Xmp.plus.CopyrightOwner",     GEXIV2_STRUCTURE_XA_SEQ },
+            { "Xmp.plus.Licensor",           GEXIV2_STRUCTURE_XA_SEQ }
+          };
+
+          gchar         **xmp_data;
+          struct timeval  timer_usec;
+          gint64          timestamp_usec;
+          gchar           ts[128];
+          gchar          *xmp_packet;
+
+          gexiv2_metadata_clear_xmp (new_g2metadata);
+
+          gettimeofday (&timer_usec, NULL);
+          timestamp_usec = ( (gint64) timer_usec.tv_sec) * 1000000ll +
+                             (gint64) timer_usec.tv_usec;
+          g_snprintf (ts, sizeof (ts), "%" G_GINT64_FORMAT, timestamp_usec);
+
+          gimp_metadata_add_xmp_history (metadata, "");
+
+          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                          "Xmp.GIMP.TimeStamp",
+                                          ts);
+
+          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                          "Xmp.xmp.CreatorTool",
+                                          "GIMP");
+
+          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                          "Xmp.GIMP.Version",
+                                          GIMP_VERSION);
+
+          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                          "Xmp.GIMP.API",
+                                          GIMP_API_VERSION);
+          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                          "Xmp.GIMP.Platform",
+#if defined(_WIN32) || defined(__CYGWIN__) || defined(__MINGW32__)
+                                          "Windows"
+#elif defined(__linux__)
+                                          "Linux"
+#elif defined(__APPLE__) && defined(__MACH__)
+                                          "Mac OS"
+#elif defined(unix) || defined(__unix__) || defined(__unix)
+                                          "Unix"
+#else
+                                          "Unknown"
+#endif
+                                         );
+
+
+          xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
+
+          /* Patch necessary structures */
+          for (i = 0; i < (gint) G_N_ELEMENTS (structlist); i++)
+            {
+              gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (new_g2metadata),
+                                                  structlist[i].tag,
+                                                  structlist[i].type);
+            }
+
+          for (i = 0; xmp_data[i] != NULL; i++)
+            {
+              if (! gexiv2_metadata_has_tag (new_g2metadata, xmp_data[i]) &&
+                  gimp_metadata_is_tag_supported (xmp_data[i], "image/heif"))
+                {
+                  heifplugin_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+                                                      new_g2metadata,
+                                                      xmp_data[i]);
+                }
+            }
+
+          g_strfreev (xmp_data);
+
+          xmp_packet = gexiv2_metadata_generate_xmp_packet (new_g2metadata, GEXIV2_USE_COMPACT_FORMAT | GEXIV2_OMIT_ALL_FORMATTING, 0);
+          if (xmp_packet)
+            {
+              int xmp_size = strlen (xmp_packet);
+              if (xmp_size > 0)
+                {
+                  heif_context_add_XMP_metadata (context, handle,
+                                                 xmp_packet, xmp_size);
+                }
+              g_free (xmp_packet);
+            }
+
+          g_object_unref (new_metadata);
+        }
     }
 
   heif_image_handle_release (handle);
@@ -2106,6 +2340,18 @@ save_dialog (GimpProcedure *procedure,
                                        _("Save color _profile"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
 #endif
+
+  /* Save EXIF data */
+#if GEXIV2_CHECK_VERSION(0, 12, 2)
+  button = gimp_prop_check_button_new (config, "save-exif",
+                                       _("_Save Exif data"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+#endif
+
+  /* XMP metadata */
+  button = gimp_prop_check_button_new (config, "save-xmp",
+                                       _("Save _XMP data"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
 
   gtk_widget_show (dialog);
 
