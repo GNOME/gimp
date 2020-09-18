@@ -2307,9 +2307,9 @@ save_dialog (GimpProcedure *procedure,
       break;
     default:
       /* high bit depth */
-      if (save_bit_depth < 10)
+      if (save_bit_depth < 12)
         {
-          save_bit_depth = 10;
+          save_bit_depth = 12;
           g_object_set (config,
                         "save-bit-depth", save_bit_depth,
                         NULL);
