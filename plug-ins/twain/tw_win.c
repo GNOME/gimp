@@ -40,7 +40,6 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 int twainMessageLoop(pTW_SESSION);
 int TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession);
 
-extern GimpPlugInInfo PLUG_IN_INFO;
 extern pTW_SESSION initializeTwain ();
 #ifdef _DEBUG
 extern void setRunMode(char *argv[]);
@@ -253,77 +252,15 @@ LogLastWinError(void)
 	LocalFree( lpMsgBuf );
 }
 
-void twainQuitApplication ()
+void twainQuitApplication (void)
 {
   PostQuitMessage (0);
 }
 
 
 /******************************************************************
- * Win32 entry point and setup...
+ * Win32 setup...
  ******************************************************************/
-
-/*
- * WinMain
- *
- * The standard gimp entry point won't quite cut it for
- * this plug-in.  This plug-in requires creation of a
- * standard Win32 window (hidden) in order to receive
- * and process window messages on behalf of the TWAIN
- * datasource.
- */
-int APIENTRY
-WinMain(HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR     lpCmdLine,
-	int       nCmdShow)
-{
-
-  /*
-   * Normally, we would do all of the Windows-ish set up of
-   * the window classes and stuff here in WinMain.  But,
-   * the only time we really need the window and message
-   * queues is during the plug-in run.  So, all of that will
-   * be done during run().  This avoids all of the Windows
-   * setup stuff for the query().  Stash the instance handle now
-   * so it is available from the run() procedure.
-   */
-  hInst = hInstance;
-
-#ifdef _DEBUG
-  /* When in debug version, we allow different run modes...
-   * make sure that it is correctly set.
-   */
-  setRunMode(__argv);
-#endif /* _DEBUG */
-
-  /*
-   * Now, call gimp_main_legacy... This is what the MAIN() macro
-   * would usually do.
-   */
-  return gimp_main_legacy(&PLUG_IN_INFO, __argc, __argv);
-}
-
-/*
- * main
- *
- * allow to build as console app as well
- */
-int main (int argc, char *argv[])
-{
-#ifdef _DEBUG
-  /* When in debug version, we allow different run modes...
-   * make sure that it is correctly set.
-   */
-  setRunMode(__argv);
-#endif /* _DEBUG */
-
-  /*
-   * Now, call gimp_main_legacy... This is what the MAIN() macro
-   * would usually do.
-   */
-  return gimp_main_legacy(&PLUG_IN_INFO, __argc, __argv);
-}
 
 /*
  * InitApplication
@@ -403,10 +340,15 @@ InitInstance(HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession)
  * operate.
  */
 int
-twainMain()
+twainMain (void)
 {
   /* Initialize the twain information */
   pTW_SESSION twSession = initializeTwain();
+
+  /* Since we are not using our own WinMain anymore where we
+     could get hInst we get it here using GetModuleHandle. */
+  if (!hInst)
+    hInst = GetModuleHandle(NULL);
 
   /* Perform instance initialization */
   if (!InitApplication(hInst))

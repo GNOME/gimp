@@ -31,7 +31,4 @@
 #define DUMP_NAME "DTWAIN.EXE"
 #define READDUMP_NAME "RTWAIN.EXE"
 
-/* Windows uses separate entry point */
-#define TWAIN_ALTERNATE_MAIN
-
 #endif

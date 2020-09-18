@@ -84,9 +84,9 @@
  */
 #define PLUG_IN_NAME        "twain-acquire"
 #define PLUG_IN_DESCRIPTION N_("Capture an image from a TWAIN datasource")
-#define PLUG_IN_HELP        "This plug-in will capture an image from a TWAIN datasource"
+#define PLUG_IN_HELP        N_("This plug-in will capture an image from a TWAIN datasource")
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@home.com)"
-#define PLUG_IN_COPYRIGHT   "Craig Setera"
+#define PLUG_IN_COPYRIGHT   "Copyright 2004 by Craig Setera"
 #define PLUG_IN_VERSION     "v0.6 (07/22/2004)"
 
 #ifdef _DEBUG
@@ -126,23 +126,102 @@ int  endTransferCallback   (int               completionState,
 void postTransferCallback  (int               pendingCount,
                             void             *clientData);
 
-static void query (void);
-static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
 
+typedef struct _Twain      Twain;
+typedef struct _TwainClass TwainClass;
 
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Twain
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  GimpPlugIn      parent_instance;
 };
 
-extern void set_gimp_PLUG_IN_INFO_PTR (GimpPlugInInfo *);
+struct _TwainClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define TWAIN_TYPE  (twain_get_type ())
+#define TWAIN (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TWAIN_TYPE, Twain))
+
+GType                   twain_get_type         (void) G_GNUC_CONST;
+
+static GList          * twain_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * twain_create_procedure (GimpPlugIn           *plug_in,
+                                                const gchar          *name);
+
+static GimpValueArray * twain_run              (GimpProcedure        *procedure,
+                                                GimpRunMode           run_mode,
+                                                GimpImage            *image,
+                                                GimpDrawable         *drawable,
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
+
+G_DEFINE_TYPE (Twain, twain, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (TWAIN_TYPE)
+
+static void
+twain_class_init (TwainClass *klass)
+{
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+
+  plug_in_class->query_procedures = twain_query_procedures;
+  plug_in_class->create_procedure = twain_create_procedure;
+}
+
+static void
+twain_init (Twain *twain)
+{
+}
+
+static GList *
+twain_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_NAME));
+}
+
+static GimpProcedure *
+twain_create_procedure (GimpPlugIn  *plug_in,
+                        const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_NAME))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            twain_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Scanner/Camera..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
+
+      gimp_procedure_set_documentation (procedure,
+                                        PLUG_IN_DESCRIPTION,
+                                        PLUG_IN_HELP,
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      PLUG_IN_AUTHOR,
+                                      PLUG_IN_COPYRIGHT,
+                                      PLUG_IN_VERSION);
+
+      GIMP_PROC_VAL_INT (procedure, "image-count",
+                         "Number of acquired images",
+                         "Number of acquired images",
+                         0, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_OBJECT_ARRAY (procedure, "images",
+                                  "Array of acquired images",
+                                  "Array of acquired images",
+                                  GIMP_TYPE_IMAGE,
+                                  G_PARAM_READWRITE);
+     }
+
+  return procedure;
+}
 
 /* Data structure holding data between runs */
 /* Currently unused... Eventually may be used
@@ -205,21 +284,21 @@ setRunMode (char *argv[])
   if (!_stricmp (exeName, DUMP_NAME))
     twain_run_mode = RUN_DUMP;
 
-  if (!_stricmp (exeName, RUNDUMP_NAME))
+  if (!_stricmp (exeName, READDUMP_NAME))
     twain_run_mode = RUN_READDUMP;
 }
 #endif /* _DEBUG */
 
-#ifndef TWAIN_ALTERNATE_MAIN
-MAIN ()
-#endif
 
 int
 scanImage (void)
 {
 #ifdef _DEBUG
   if (twain_run_mode == RUN_READDUMP)
-    return readDumpedImage (twSession);
+    {
+      readDumpedImage (twSession);
+      return 0;
+    }
   else
 #endif /* _DEBUG */
     return getImage (twSession);
@@ -287,93 +366,9 @@ initializeTwain (void)
  * GIMP Plug-in entry points
  ******************************************************************/
 
-/*
- * Plug-in Parameter definitions
- */
-#define NUMBER_IN_ARGS 1
-#define IN_ARGS { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" }
-#define NUMBER_OUT_ARGS 2
-#define OUT_ARGS \
-	{ GIMP_PDB_INT32, "image-count", "Number of acquired images" }, \
-	{ GIMP_PDB_INT32ARRAY, "image-ids", "Array of acquired image identifiers" }
-
-
-/*
- * query
- *
- * The plug-in is being queried.  Install our procedure for
- * acquiring.
- */
-static void
-query (void)
-{
-  static const GimpParamDef args[] = { IN_ARGS };
-  static const GimpParamDef return_vals[] = { OUT_ARGS };
-
-#ifdef _DEBUG
-  if (twain_run_mode == RUN_DUMP)
-    {
-      /* the installation of the plugin */
-      gimp_install_procedure (PLUG_IN_D_NAME,
-                              PLUG_IN_DESCRIPTION,
-                              PLUG_IN_HELP,
-                              PLUG_IN_AUTHOR,
-                              PLUG_IN_COPYRIGHT,
-                              PLUG_IN_VERSION,
-                              "TWAIN (Dump)...",
-                              NULL,
-                              GIMP_PLUGIN,
-                              NUMBER_IN_ARGS,
-                              NUMBER_OUT_ARGS,
-                              args,
-                              return_vals);
-
-      gimp_plugin_menu_register (PLUG_IN_D_NAME, "<Image>/File/Create/Acquire");
-    }
-  else if (twain_run_mode == RUN_READDUMP)
-    {
-      /* the installation of the plugin */
-      gimp_install_procedure (PLUG_IN_R_NAME,
-                              PLUG_IN_DESCRIPTION,
-                              PLUG_IN_HELP,
-                              PLUG_IN_AUTHOR,
-                              PLUG_IN_COPYRIGHT,
-                              PLUG_IN_VERSION,
-                              "TWAIN (Read)...",
-                              NULL,
-                              GIMP_PLUGIN,
-                              NUMBER_IN_ARGS,
-                              NUMBER_OUT_ARGS,
-                              args,
-                              return_vals);
-
-      gimp_plugin_menu_register (PLUG_IN_R_NAME, "<Image>/File/Create/Acquire");
-    }
-  else
-#endif /* _DEBUG */
-    {
-      /* the installation of the plugin */
-      gimp_install_procedure (PLUG_IN_NAME,
-                              PLUG_IN_DESCRIPTION,
-                              PLUG_IN_HELP,
-                              PLUG_IN_AUTHOR,
-                              PLUG_IN_COPYRIGHT,
-                              PLUG_IN_VERSION,
-                              N_("_Scanner/Camera..."),
-                              NULL,
-                              GIMP_PLUGIN,
-                              NUMBER_IN_ARGS,
-                              NUMBER_OUT_ARGS,
-                              args,
-                              return_vals);
-
-      gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/File/Create/Acquire");
-    }
-}
-
-
 /* Return values storage */
-static GimpParam values[3];
+static GList *image_list  = NULL;
+static gint   image_count = 0;
 
 /*
  * run
@@ -381,23 +376,24 @@ static GimpParam values[3];
  * The plug-in is being requested to run.
  * Capture an image from a TWAIN datasource
  */
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+static GimpValueArray *
+twain_run (GimpProcedure        *procedure,
+           GimpRunMode           run_mode,
+           GimpImage            *image,
+           GimpDrawable         *drawable,
+           const GimpValueArray *args,
+           gpointer              run_data)
 {
-  GimpRunMode run_mode = param[0].data.d_int32;
-
   /* Initialize the return values
    * Always return at least the status to the caller.
    */
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType   status      = GIMP_PDB_SUCCESS;
+  GimpValueArray     *return_vals = NULL;
+  GimpImage         **images;
+  GList              *list;
+  gint                num_images;
+  gint                i;
 
-  *nreturn_vals = 1;
-  *return_vals = values;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -408,15 +404,9 @@ run (const gchar      *name,
    */
   if (! twainIsAvailable ())
     {
-      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-      return;
+      return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
-
-  /* Set up the rest of the return parameters */
-  values[1].type         = GIMP_PDB_INT32;
-  values[1].data.d_int32 = 0;
-  values[2].type              = GIMP_PDB_INT32ARRAY;
-  values[2].data.d_int32array = g_new (gint32, MAX_IMAGES);
 
   /* How are we running today? */
   switch (run_mode)
@@ -432,8 +422,8 @@ run (const gchar      *name,
       /* Currently, we don't do non-interactive calls.
        * Bail if someone tries to call us non-interactively
        */
-      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-      return;
+      return gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR,
+                                               NULL);
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Retrieve values from the last run...
@@ -447,13 +437,13 @@ run (const gchar      *name,
     }
 
   /* Have we succeeded so far? */
-  if (values[0].data.d_status == GIMP_PDB_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     twainMain ();
 
   /* Check to make sure we got at least one valid
    * image.
    */
-  if (values[1].data.d_int32 > 0)
+  if (image_count > 0)
     {
       /* An image was captured from the TWAIN
        * datasource.  Do final Interactive
@@ -465,12 +455,30 @@ run (const gchar      *name,
           gimp_set_data (PLUG_IN_NAME, &twainvals, sizeof (TwainValues));
         }
 
+      num_images = g_list_length (image_list);
+      images     = g_new (GimpImage *, num_images);
+
+      for (list = image_list, i = 0;
+           list;
+           list = g_list_next (list), i++)
+        {
+          images[i] = g_object_ref (list->data);
+        }
+
+      g_list_free (image_list);
+
       /* Set return values */
-      *nreturn_vals = 3;
+      return_vals = gimp_procedure_new_return_values (procedure, status,
+                                                      NULL);
+      GIMP_VALUES_SET_INT           (return_vals, 1, num_images);
+      GIMP_VALUES_TAKE_OBJECT_ARRAY (return_vals, 2, GIMP_TYPE_IMAGE, images, num_images);
+
+      return return_vals;
     }
   else
     {
-      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+      return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
 }
 
@@ -913,9 +921,8 @@ endTransferCallback (int   completionState,
   if (completionState == TWRC_XFERDONE)
     {
       /* We have a completed image transfer */
-      values[2].type = GIMP_PDB_INT32ARRAY;
-      values[2].data.d_int32array[values[1].data.d_int32++] =
-        gimp_image_get_id (theClientData->image);
+      image_list = g_list_append (image_list, theClientData->image);
+      image_count++;
 
       /* Display the image */
       LogMessage ("Displaying image %d\n",
@@ -930,7 +937,7 @@ endTransferCallback (int   completionState,
     }
 
   /* Shut down if we have received all of the possible images */
-  return (values[1].data.d_int32 < MAX_IMAGES);
+  return (image_count < MAX_IMAGES);
 }
 
 /*

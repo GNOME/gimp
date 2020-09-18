@@ -46,8 +46,8 @@
                                  for 1.8 Specification JMH
 \* ======================================================================== */
 
-#ifndef TWAIN
-#define TWAIN
+#ifndef TWAIN_H
+#define TWAIN_H
 
 /*  SDH - 02/08/95 - TWUNK */
 /*  Force 32-bit twain to use same packing of twain structures as existing */
@@ -1816,4 +1816,4 @@ typedef TW_UINT16 (*DSENTRYPROC)(pTW_IDENTITY,
 #else   /* WIN32 */
 #endif  /* WIN32 */
 
-#endif  /* TWAIN */
+#endif  /* TWAIN_H */
