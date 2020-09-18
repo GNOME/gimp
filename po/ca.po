@@ -9368,7 +9368,7 @@ msgstr "Mou el camí al capda_vall"
 #: ../app/actions/vectors-actions.c:114
 msgctxt "vectors-action"
 msgid "Lower this path to the bottom"
-msgstr "Mou el camí fins al capdavall de la llista"
+msgstr "Baixa aquest camí fins a la part inferior"
 
 #: ../app/actions/vectors-actions.c:119
 msgctxt "vectors-action"
@@ -22073,9 +22073,7 @@ msgstr "Llindar blanc i negre"
 #: ../app/tools/gimpbucketfilloptions.c:174
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
-msgstr ""
-"Selecciona tots els colors semblants que no superin aquest llindar de "
-"diferència"
+msgstr "Diferència màxima de color"
 
 #: ../app/tools/gimpbucketfilloptions.c:181
 msgid "Source image for line art computation"
@@ -24151,7 +24149,7 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:154
 msgid "The text language may have an effect on the way the text is rendered."
-msgstr "La manera en què es renderitza el text depèn de l'idioma."
+msgstr "La manera en què es renderitza el text pot dependre de l'idioma."
 
 #: ../app/tools/gimptextoptions.c:168
 msgid "Justify"
