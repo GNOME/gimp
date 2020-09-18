@@ -3547,7 +3547,7 @@ msgstr "_Porta-retalls del GIMP"
 #: ../app/actions/dialogs-actions.c:210
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "Mostra el diàleg del porta-retalls del GIMP"
+msgstr "Mostra el diàleg de les memòries intermèdies amb nom"
 
 #: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
@@ -4312,7 +4312,7 @@ msgstr "Re_talla i anomena..."
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
-msgstr "Mou els píxels seleccionats al porta-retalls del GIMP"
+msgstr "Mou els píxels seleccionats a una memòria intermèdia amb nom"
 
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
@@ -4322,7 +4322,7 @@ msgstr "_Copia i anomena..."
 #: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Copia els píxels seleccionats al porta-retalls del GIMP"
+msgstr "Copia els píxels seleccionats a una memòria intermèdia amb nom"
 
 #  GIMP_STOCK_COPY_VISIBLE,
 #. GIMP_ICON_COPY_VISIBLE,
@@ -4334,7 +4334,7 @@ msgstr "Copia l'objecte _visible..."
 #: ../app/actions/edit-actions.c:149
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
-msgstr "Copia de la regió seleccionada tot el que està visible"
+msgstr "Copia de la regió seleccionada tot el que està visible a una memòria intermèdia amb nom"
 
 #: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
@@ -4344,7 +4344,7 @@ msgstr "_Enganxa l'objecte amb nom..."
 #: ../app/actions/edit-actions.c:155
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
-msgstr "Enganxa el contingut del porta-retalls del GIMP"
+msgstr "Enganxa el contingut d'una memòria intermèdia amb nom"
 
 #: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
@@ -20894,7 +20894,7 @@ msgstr "Un nom buit no és vàlid"
 #: ../app/pdb/gimppdb-utils.c:394
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "No s'ha trobat l'objecte «%s»"
+msgstr "No s'ha trobat la memòria intermèdia amb nom «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:413
 msgid "Invalid empty paint method name"
