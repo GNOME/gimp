@@ -696,7 +696,7 @@ cancelPendingTransfers(pTW_SESSION twSession)
 static int
 endImageTransfer(pTW_SESSION twSession, int *pendingCount)
 {
-  gboolean continueTransfers;
+  gboolean continueTransfers = FALSE;
   int exitCode = twSession->twRC;
 
   /* Have now exited the transfer for some reason... Figure out
@@ -712,6 +712,10 @@ endImageTransfer(pTW_SESSION twSession, int *pendingCount)
   case TWRC_FAILURE:
     LogMessage("Failure received\n");
     *pendingCount = endPendingTransfer(twSession);
+    break;
+
+  default:
+    *pendingCount = 0;
     break;
   }
 
