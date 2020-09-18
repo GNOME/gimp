@@ -411,7 +411,7 @@ gimp_prop_int_combo_box_new (GObject      *config,
     gimp_help_set_help_data (combo_box, blurb, NULL);
 
   g_object_bind_property (config, property_name,
-                          combo_box, "active",
+                          combo_box, "value",
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
   return combo_box;

@@ -48,7 +48,8 @@ enum
   PROP_0,
   PROP_ELLIPSIZE,
   PROP_LABEL,
-  PROP_LAYOUT
+  PROP_LAYOUT,
+  PROP_VALUE
 };
 
 
@@ -148,6 +149,21 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
                                                       GIMP_TYPE_INT_COMBO_BOX_LAYOUT,
                                                       GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED,
                                                       GIMP_PARAM_READWRITE));
+
+  /**
+   * GimpIntComboBox:value:
+   *
+   * The active value (different from the "active" property of
+   * GtkComboBox which is the active index).
+   *
+   * Since: 3.0
+   */
+  g_object_class_install_property (object_class, PROP_VALUE,
+                                   g_param_spec_int ("value",
+                                                     "Value",
+                                                     "Value of active item",
+                                                     G_MININT, G_MAXINT, 0,
+                                                     GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -217,6 +233,10 @@ gimp_int_combo_box_set_property (GObject      *object,
       gimp_int_combo_box_set_layout (GIMP_INT_COMBO_BOX (object),
                                      g_value_get_enum (value));
       break;
+    case PROP_VALUE:
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (object),
+                                     g_value_get_int (value));
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -243,6 +263,14 @@ gimp_int_combo_box_get_property (GObject    *object,
     case PROP_LAYOUT:
       g_value_set_enum (value, priv->layout);
       break;
+    case PROP_VALUE:
+      {
+        gint v;
+
+        gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (object), &v);
+        g_value_set_int (value, v);
+      }
+    break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
