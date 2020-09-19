@@ -159,6 +159,11 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
     {
       gimp_image_metadata_rotate_query (image_ID, mime_type,
                                         metadata, interactive);
+      /* Drop the orientation metadata in all cases, whether you rotated
+       * or not. See commit 8dcf258ffc on master.
+       */
+      gexiv2_metadata_set_orientation (GEXIV2_METADATA (metadata),
+                                       GEXIV2_ORIENTATION_NORMAL);
     }
 
   if (flags & GIMP_METADATA_LOAD_COLORSPACE)
