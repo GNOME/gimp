@@ -105,8 +105,8 @@ remap_query_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
-  return g_list_append (list, g_strdup (PLUG_IN_PROC_REMAP));
-  return g_list_append (list, g_strdup (PLUG_IN_PROC_SWAP));
+  list = g_list_prepend (list, g_strdup (PLUG_IN_PROC_REMAP));
+  list = g_list_prepend (list, g_strdup (PLUG_IN_PROC_SWAP));
 
   return list;
 }
