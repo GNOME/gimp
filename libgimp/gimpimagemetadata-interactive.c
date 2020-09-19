@@ -85,7 +85,25 @@ gimp_image_metadata_load_finish (GimpImage             *image,
         {
           if (! gimp_image_metadata_rotate_query (image, mime_type,
                                                   metadata))
-            flags &= ~GIMP_METADATA_LOAD_ORIENTATION;
+            {
+              /* If one explicitly asks not to rotate the image, just
+               * drop the "Orientation" metadata because that's how one
+               * wants to see the image.
+               *
+               * Note that there might be special cases where one wants
+               * to keep the pixel as-is while keeping rotation through
+               * metadata. But we don't have good enough metadata
+               * support for this yet, in particular we don't honor the
+               * orientation metadata when viewing the image. So this
+               * only ends up in unexpected exports with rotation
+               * because people forgot there was such metadata set and
+               * stored by GIMP. If maybe some day we have code to honor
+               * orientation while viewing an image, then we can do this
+               * a bit cleverer.
+               */
+              gexiv2_metadata_set_orientation (GEXIV2_METADATA (metadata),
+                                               GEXIV2_ORIENTATION_NORMAL);
+            }
         }
     }
 
