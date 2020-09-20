@@ -7949,7 +7949,7 @@ msgstr "Color nou des del _fons"
 #: ../app/actions/palette-editor-actions.c:81
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the background color"
-msgstr "Crea un color nou com el del fons"
+msgstr "Crea una entrada nova a partir del color de fons"
 
 #: ../app/actions/palette-editor-actions.c:89
 msgid "Zoom _In"
