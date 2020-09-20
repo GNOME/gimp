@@ -446,7 +446,7 @@ else
     nsversion: gimp_api_version,
     namespace: 'GimpUi',
     identifier_prefix: 'Gimp',
-    symbol_prefix: 'gimp',
+    symbol_prefix: [ 'gimp_ui', 'gimp' ],
     export_packages: 'gimp-ui-' + gimp_api_version,
     header: 'libgimp/gimpui.h',
     includes: [ libgimp_gir_includes, libgimp_gir[0] ],

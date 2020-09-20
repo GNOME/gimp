@@ -197,7 +197,7 @@ def run(procedure, run_mode, image, layer, args, data):
         #config.set_property("output_format", output_format)
         config.begin_run(image, run_mode, args)
 
-        GimpUi.ui_init("histogram-export.py")
+        GimpUi.init("histogram-export.py")
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
         dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
                              title=_("Histogram Export..."))

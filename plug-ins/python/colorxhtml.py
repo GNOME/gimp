@@ -82,7 +82,7 @@ def save_colorxhtml(procedure, run_mode, image, drawable, file, args, data):
         gi.require_version('Gtk', '3.0')
         from gi.repository import Gtk
 
-        Gimp.ui_init ("colorxhtml.py")
+        Gimp.init ("colorxhtml.py")
 
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
         dialog = Gtk.Dialog(use_header_bar=use_header_bar,

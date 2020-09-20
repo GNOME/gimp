@@ -1805,7 +1805,7 @@ class SpyroWindow():
         self.drawing_layer = self.spyro_layer
 
         # Create the UI.
-        GimpUi.ui_init(sys.argv[0])
+        GimpUi.init(sys.argv[0])
         create_ui()
         self.update_view()   # Update UI to reflect the parameter values.
 

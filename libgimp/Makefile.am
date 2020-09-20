@@ -332,7 +332,7 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
 
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_SCANNERFLAGS = \
 	--identifier-prefix Gimp	\
-	--symbol-prefix gimp	\
+	--symbol-prefix gimp		\
 	--c-include="libgimp/gimp.h"
 
 ### Second GIR: GimpUi
@@ -385,7 +385,8 @@ GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
 
 GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_SCANNERFLAGS = \
 	--identifier-prefix Gimp	\
-	--symbol-prefix gimp	\
+	--symbol-prefix=gimp_ui		\
+	--symbol-prefix=gimp		\
 	--include-uninstalled=Gimp-@GIMP_API_VERSION@.gir	\
 	--c-include="libgimp/gimpui.h"
 
