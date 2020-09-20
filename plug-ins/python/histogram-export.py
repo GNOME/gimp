@@ -42,6 +42,8 @@ import sys
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
+gi.require_version('GimpUi', '3.0')
+from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -130,12 +132,13 @@ def histogram_export(procedure, img, drw, gio_file,
 
                 row = [start_range]
                 for channel in channels_gimp:
-                    args = Gimp.ValueArray.new(4)
-                    args.insert(0, GObject.Value(Gimp.Drawable, drw))
-                    args.insert(1, GObject.Value(Gimp.HistogramChannel, channel))
-                    args.insert(2, GObject.Value(GObject.TYPE_DOUBLE, float(start_range)))
-                    args.insert(3, GObject.Value(GObject.TYPE_DOUBLE, float(min(start_range + bucket_size, 1.0))))
-                    result = Gimp.get_pdb().run_procedure('gimp-drawable-histogram', args)
+                    result = Gimp.get_pdb().run_procedure('gimp-drawable-histogram',
+                                                          [ GObject.Value(Gimp.Drawable, drw),
+                                                            GObject.Value(Gimp.HistogramChannel, channel),
+                                                            GObject.Value(GObject.TYPE_DOUBLE,
+                                                                          float(start_range)),
+                                                            GObject.Value(GObject.TYPE_DOUBLE,
+                                                                          float(min(start_range + bucket_size, 1.0))) ])
 
                     if output_format == output_format_enum.pixel_count:
                         count = int(result.index(5))
@@ -194,9 +197,9 @@ def run(procedure, run_mode, image, layer, args, data):
         #config.set_property("output_format", output_format)
         config.begin_run(image, run_mode, args)
 
-        Gimp.ui_init("histogram-export.py")
+        GimpUi.ui_init("histogram-export.py")
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-        dialog = Gimp.Dialog(use_header_bar=use_header_bar,
+        dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
                              title=_("Histogram Export..."))
         dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
         dialog.add_button("_OK", Gtk.ResponseType.OK)
@@ -247,12 +250,12 @@ def run(procedure, run_mode, image, layer, args, data):
         label = Gtk.Label.new_with_mnemonic(_("_Bucket Size"))
         grid.attach(label, 0, 1, 1, 1)
         label.show()
-        spin = Gimp.prop_spin_button_new(config, "bucket_size", step_increment=0.001, page_increment=0.1, digits=3)
+        spin = GimpUi.prop_spin_button_new(config, "bucket_size", step_increment=0.001, page_increment=0.1, digits=3)
         grid.attach(spin, 1, 1, 1, 1)
         spin.show()
 
         # Sample average parameter
-        spin = Gimp.prop_check_button_new(config, "sample_average", _("Sample _Average"))
+        spin = GimpUi.prop_check_button_new(config, "sample_average", _("Sample _Average"))
         spin.set_tooltip_text(_("If checked, the histogram is generated from merging all visible layers."
                                 " Otherwise, the histogram is only for the current layer."))
         grid.attach(spin, 1, 2, 1, 1)
@@ -262,7 +265,7 @@ def run(procedure, run_mode, image, layer, args, data):
         label = Gtk.Label.new_with_mnemonic(_("_Output Format"))
         grid.attach(label, 0, 3, 1, 1)
         label.show()
-        combo = Gimp.prop_string_combo_box_new(config, "output_format", output_format_enum.get_tree_model(), 0, 1)
+        combo = GimpUi.prop_string_combo_box_new(config, "output_format", output_format_enum.get_tree_model(), 0, 1)
         grid.attach(combo, 1, 3, 1, 1)
         combo.show()
 
