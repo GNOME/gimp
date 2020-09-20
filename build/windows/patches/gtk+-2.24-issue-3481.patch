@@ -1,0 +1,38 @@
+diff --git a/gdk/win32/gdkselection-win32.c b/gdk/win32/gdkselection-win32.c
+index 0553b98d3c..0396a5a6b9 100644
+--- a/gdk/win32/gdkselection-win32.c
++++ b/gdk/win32/gdkselection-win32.c
+@@ -743,6 +743,7 @@ gdk_selection_convert (GdkWindow *requestor,
+     }
+   else if (selection == GDK_SELECTION_CLIPBOARD)
+     {
++      gchar *target_name;
+       gchar *mapped_target_name;
+       UINT fmt = 0;
+
+@@ -750,6 +751,7 @@ gdk_selection_convert (GdkWindow *requestor,
+        return;
+
+       mapped_target_name = get_mapped_gdk_atom_name (target);
++      target_name = gdk_atom_name (target);
+
+       /* Check if it's available. We could simply call
+        * GetClipboardData (RegisterClipboardFormat (targetname)), but
+@@ -762,7 +764,8 @@ gdk_selection_convert (GdkWindow *requestor,
+           char sFormat[80];
+
+           if (GetClipboardFormatName (fmt, sFormat, 80) > 0 && 
+-              strcmp (sFormat, mapped_target_name) == 0)
++              (strcmp (sFormat, mapped_target_name) == 0 ||
++               strcmp (sFormat, target_name) == 0))
+             {
+               if ((hdata = GetClipboardData (fmt)) != NULL)
+                {
+@@ -784,6 +787,7 @@ gdk_selection_convert (GdkWindow *requestor,
+                 }
+             }
+         }
++      g_free (target_name);
+       g_free (mapped_target_name);
+       API_CALL (CloseClipboard, ());
+     }
