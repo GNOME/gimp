@@ -44,6 +44,11 @@ app_tests = [
   'xcf',
 ]
 
+cmd = run_command('create_test_env.sh')
+if cmd.returncode() != 0
+ error(cmd.stderr().strip())
+endif
+
 foreach test_name : app_tests
   test_exe = executable(test_name,
     'test-@0@.c'.format(test_name),
@@ -64,5 +69,3 @@ foreach test_name : app_tests
   )
 
 endforeach
-
-run_target('create_test_env', command: find_program('create_test_env.sh'))
