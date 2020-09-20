@@ -94,6 +94,9 @@ Plug-ins:
     - improve reader stability by always using the block/chunk length.
   - Spyrogimp now works on Grayscale images and clutters less the undo
     history.
+  - "Orientation" metadata is now reset whether you accepted to rotate
+    the image or not when importing an image.
+  - XPM does not export a "None" (transparent) color when unused.
 
 Debugging:
 
