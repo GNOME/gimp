@@ -3053,10 +3053,6 @@ plug-ins/map-object/Makefile
 plug-ins/metadata/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
-]
-dnl plug-ins/pygimp/Makefile
-dnl plug-ins/pygimp/plug-ins/Makefile
-[
 plug-ins/python/Makefile
 plug-ins/python/python-console/Makefile
 plug-ins/screenshot/Makefile

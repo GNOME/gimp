@@ -3,18 +3,15 @@
 
 [encoding: UTF-8]
 
-#plug-ins/pygimp/gimpfu.py
-#plug-ins/pygimp/gimpui.py
-
-#plug-ins/pygimp/plug-ins/histogram-export.py
-#plug-ins/pygimp/plug-ins/palette-sort.py
-#plug-ins/pygimp/plug-ins/shadow_bevel.py
-
+plug-ins/python/benchmark-foreground-extract.py
 plug-ins/python/colorxhtml.py
 plug-ins/python/foggify.py
 plug-ins/python/gradients-save-as-css.py
+plug-ins/python/histogram-export.py
 plug-ins/python/palette-offset.py
+plug-ins/python/palette-sort.py
 plug-ins/python/palette-to-gradient.py
 plug-ins/python/py-slice.py
 plug-ins/python/python-console/python-console.py
+plug-ins/python/python-eval.py
 plug-ins/python/spyro-plus.py

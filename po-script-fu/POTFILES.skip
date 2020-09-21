@@ -46,7 +46,6 @@ plug-ins/map-object
 plug-ins/metadata
 plug-ins/pagecurl
 plug-ins/print
-plug-ins/pygimp
 plug-ins/python
 plug-ins/screenshot
 plug-ins/script-fu/scripts/contactsheet.scm

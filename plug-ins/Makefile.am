@@ -13,7 +13,6 @@ print = print
 endif
 
 if BUILD_PYTHON
-pygimp = pygimp
 python = python
 endif
 
@@ -27,7 +26,6 @@ endif
 
 SUBDIRS = \
 	script-fu		\
-##	$(pygimp)		\
 	file-bmp		\
 	$(file_darktable)	\
 	file-dds		\
