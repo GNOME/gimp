@@ -19,8 +19,6 @@ plugins = [
 if not stable
   plugins += [
     { 'name': 'benchmark-foreground-extract' }
-    # { 'name': 'shadow_bevel', },
-    # { 'name': 'sphere', },
   ]
 endif
 

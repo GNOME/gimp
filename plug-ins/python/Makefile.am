@@ -39,8 +39,6 @@ spyro_plus_SCRIPTS = spyro-plus.py
 if GIMP_UNSTABLE
 benchmark_foreground_extractdir = $(gimpplugindir)/plug-ins/benchmark-foreground-extract
 benchmark_foreground_extract_SCRIPTS = benchmark-foreground-extract.py
-##	shadow_bevel.py
-##	sphere.py
 endif
 
 EXTRA_DIST = \
