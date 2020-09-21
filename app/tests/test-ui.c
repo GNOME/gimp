@@ -143,31 +143,6 @@ tool_options_editor_updates (gconstpointer data)
                    tool_info->help_id);
 }
 
-static GtkWidget *
-gimp_ui_get_dialog (const gchar *identifier)
-{
-  GtkWidget *result = NULL;
-  GList     *iter;
-
-  for (iter = gimp_dialog_factory_get_open_dialogs (gimp_dialog_factory_get_singleton ());
-       iter;
-       iter = g_list_next (iter))
-    {
-      GtkWidget *dialog = GTK_WIDGET (iter->data);
-      GimpDialogFactoryEntry *entry = NULL;
-
-      gimp_dialog_factory_from_widget (dialog, &entry);
-
-      if (strcmp (entry->identifier, identifier) == 0)
-        {
-          result = dialog;
-          break;
-        }
-    }
-
-  return result;
-}
-
 static void
 create_new_image_via_dialog (gconstpointer data)
 {
