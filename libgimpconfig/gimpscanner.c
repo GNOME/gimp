@@ -594,22 +594,17 @@ gimp_scanner_parse_float (GimpScanner *scanner,
     }
   else if (g_scanner_peek_next_token (scanner) == G_TOKEN_INT)
     {
-      /* use a temp value because for whatever reason writing
+      /* v_int is unsigned so we need to cast to
        *
-       * *dest = -scanner->value.v_int;
-       *
-       * fails.
+       * gint64 first for negative values.
        */
-      gint64 int_value;
 
       g_scanner_get_next_token (scanner);
 
       if (negate)
-        int_value = -scanner->value.v_int;
+        *dest = - (gint64) scanner->value.v_int;
       else
-        int_value = scanner->value.v_int;
-
-      *dest = int_value;
+        *dest = scanner->value.v_int;
 
       return TRUE;
     }
