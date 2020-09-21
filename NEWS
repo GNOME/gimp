@@ -122,12 +122,13 @@ Build:
 Bug fixes:
 
     #2874, #4328, #4536, #5069, #5208, #5219, #5226, #5232, #5274, #5275,
-    #5357, #5472, #5530, #5584, #4816, #5043, #5623
+    #5357, #5472, #5530, #5584, #4816, #5043, #5623, #2275, #4560, #3481
 
 Translation updates:
 
-  - Basque, Catalan, Chinese (China), Croatian, Danish, German, Italian,
-    Japanese, Kazakh, Polish, Russian, Spanish, Swedish, Turkish, Ukrainian
+  - Basque, Catalan, Chinese (China), Croatian, Danish, French, German,
+    Italian, Japanese, Kazakh, Polish, Russian, Spanish, Swedish, Turkish,
+    Ukrainian
 
 Developers/contributors:
 
@@ -138,9 +139,10 @@ Developers/contributors:
 Translators: 
 
   - Alan01, Alexandre Prokoudine, Anders Jonsson, Asier Sarasua Garmendia,
-    Baurzhan Muftakhidinov, Boyuan Yang, Daniel Mustieles García, Jordi Mas,
-    Marco Ciampa, milotype, Rodrigo Lledó Milanca, Piotr Drąg, Sabri Ünal,
-    sicklylife, Stephan Woidowski, Tim Sabsch, Yuri Chornoivan
+    Baurzhan Muftakhidinov, Boyuan Yang, Christian Kirbach, Daniel Mustieles
+    García, Jordi Mas, Julien Hardelin, Marco Ciampa, milotype, Rodrigo Lledó
+    Milanca, Piotr Drąg, Sabri Ünal, sicklylife, Stephan Woidowski, Tim Sabsch,
+    Yuri Chornoivan
 
 Overview of Changes from GIMP 2.10.18 to GIMP 2.10.20
 =====================================================
