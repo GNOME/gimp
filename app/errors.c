@@ -232,8 +232,9 @@ gimp_message_log_func (const gchar    *log_domain,
    * we need to keep the log domain information for third party
    * messages.
    */
-  if (! g_str_has_prefix (log_domain, "Gimp") &&
-      ! g_str_has_prefix (log_domain, "LibGimp"))
+  if (! log_domain ||
+      (! g_str_has_prefix (log_domain, "Gimp") &&
+       ! g_str_has_prefix (log_domain, "LibGimp")))
     msg_domain = log_domain;
 
   /* If debug policy requires it, WARNING and CRITICAL errors must be
