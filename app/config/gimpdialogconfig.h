@@ -44,7 +44,8 @@ struct _GimpDialogConfig
 {
   GimpGuiConfig             parent_instance;
 
-  GimpColorProfilePolicy    color_profile_policy;
+  GimpColorProfilePolicy     color_profile_policy;
+  GimpMetadataRotationPolicy metadata_rotation_policy;
 
   gchar                    *color_profile_path;
 

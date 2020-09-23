@@ -67,6 +67,7 @@ libappdialogs_a_sources = \
 	layer-options-dialog.h		\
 	lebl-dialog.c			\
 	lebl-dialog.h			\
+	metadata-rotation-import-dialog.c \
 	module-dialog.c			\
 	module-dialog.h			\
 	palette-import-dialog.c		\

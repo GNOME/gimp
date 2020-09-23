@@ -236,7 +236,6 @@ psd_load (GimpProcedure        *procedure,
   GimpValueArray *return_vals;
   gboolean        resolution_loaded = FALSE;
   gboolean        profile_loaded    = FALSE;
-  gboolean        interactive;
   GimpImage      *image;
   GimpMetadata   *metadata;
   GError         *error = NULL;
@@ -249,10 +248,8 @@ psd_load (GimpProcedure        *procedure,
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
-      interactive = TRUE;
       break;
     default:
-      interactive = FALSE;
       break;
     }
 
@@ -281,8 +278,7 @@ psd_load (GimpProcedure        *procedure,
         flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
       gimp_image_metadata_load_finish (image, "image/x-psd",
-                                       metadata, flags,
-                                       interactive);
+                                       metadata, flags);
 
       g_object_unref (metadata);
     }

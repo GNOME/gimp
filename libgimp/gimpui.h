@@ -36,7 +36,6 @@
 #include <libgimp/gimpfontselectbutton.h>
 #include <libgimp/gimpgradientselectbutton.h>
 #include <libgimp/gimpimagecombobox.h>
-#include <libgimp/gimpimagemetadata-interactive.h>
 #include <libgimp/gimpitemcombobox.h>
 #include <libgimp/gimppaletteselectbutton.h>
 #include <libgimp/gimppatternselectbutton.h>

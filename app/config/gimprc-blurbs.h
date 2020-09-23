@@ -281,6 +281,9 @@ _("Speed of marching ants in the selection outline.  This value is in " \
 _("GIMP will warn the user if an attempt is made to create an image that " \
   "would take more memory than the size specified here.")
 
+#define METADATA_ROTATION_POLICY_BLURB \
+_("How to handle \"Orientation\" metadata when opening a file.")
+
 #define MODULE_PATH_BLURB \
 "Sets the module search path."
 

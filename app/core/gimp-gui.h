@@ -103,6 +103,12 @@ struct _GimpGui
                                              GimpColorRenderingIntent *intent,
                                              gboolean            *bpc,
                                              gboolean            *dont_ask);
+
+  GimpMetadataRotationPolicy
+                 (* query_rotation_policy)  (Gimp                *gimp,
+                                             GimpImage           *image,
+                                             GimpContext         *context,
+                                             gboolean            *dont_ask);
 };
 
 
@@ -194,6 +200,12 @@ GimpColorProfilePolicy
                                             GimpColorProfile   **dest_profile,
                                             GimpColorRenderingIntent *intent,
                                             gboolean            *bpc,
+                                            gboolean            *dont_ask);
+
+GimpMetadataRotationPolicy
+               gimp_query_rotation_policy  (Gimp                *gimp,
+                                            GimpImage           *image,
+                                            GimpContext         *context,
                                             gboolean            *dont_ask);
 
 

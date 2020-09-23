@@ -35,10 +35,10 @@ GimpMetadata * gimp_image_metadata_load_prepare   (GimpImage             *image,
                                                    const gchar           *mime_type,
                                                    GFile                 *file,
                                                    GError               **error);
-void           gimp_image_metadata_load_finish_batch (GimpImage             *image,
-                                                      const gchar           *mime_type,
-                                                      GimpMetadata          *metadata,
-                                                      GimpMetadataLoadFlags  flags);
+void           gimp_image_metadata_load_finish    (GimpImage             *image,
+                                                   const gchar           *mime_type,
+                                                   GimpMetadata          *metadata,
+                                                   GimpMetadataLoadFlags  flags);
 
 GimpMetadata * gimp_image_metadata_save_prepare   (GimpImage             *image,
                                                    const gchar           *mime_type,

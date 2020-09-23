@@ -31,6 +31,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-convert-precision.h"
+#include "core/gimpimage-rotate.h"
 #include "core/gimplayer.h"
 #include "core/gimpprogress.h"
 
@@ -100,6 +101,7 @@ file_import_image (GimpImage    *image,
     }
 
   gimp_image_import_color_profile (image, context, progress, interactive);
+  gimp_image_import_rotation_metadata (image, context, progress, interactive);
 
   /* Remember the import source */
   gimp_image_set_imported_file (image, file);

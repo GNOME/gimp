@@ -382,8 +382,7 @@ png_load (GimpProcedure        *procedure,
         flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
       gimp_image_metadata_load_finish (image, "image/png",
-                                       metadata, flags,
-                                       interactive);
+                                       metadata, flags);
 
       g_object_unref (metadata);
     }

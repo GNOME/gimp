@@ -100,6 +100,7 @@
 #include "menus/menus.h"
 
 #include "dialogs/color-profile-import-dialog.h"
+#include "dialogs/metadata-rotation-import-dialog.h"
 
 #include "gui.h"
 #include "gui-message.h"
@@ -179,6 +180,11 @@ static GimpColorProfilePolicy
                                                   GimpColorRenderingIntent *intent,
                                                   gboolean            *bpc,
                                                   gboolean            *dont_ask);
+static GimpMetadataRotationPolicy
+                      gui_query_rotation_policy  (Gimp                *gimp,
+                                                  GimpImage           *image,
+                                                  GimpContext         *context,
+                                                  gboolean            *dont_ask);
 
 
 /*  public functions  */
@@ -214,6 +220,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.recent_list_load       = gui_recent_list_load;
   gimp->gui.get_mount_operation    = gui_get_mount_operation;
   gimp->gui.query_profile_policy   = gui_query_profile_policy;
+  gimp->gui.query_rotation_policy  = gui_query_rotation_policy;
 }
 
 
@@ -905,4 +912,14 @@ gui_query_profile_policy (Gimp                      *gimp,
                                           dest_profile,
                                           intent, bpc,
                                           dont_ask);
+}
+
+static GimpMetadataRotationPolicy
+gui_query_rotation_policy (Gimp        *gimp,
+                           GimpImage   *image,
+                           GimpContext *context,
+                           gboolean    *dont_ask)
+{
+  return metadata_rotation_import_dialog_run (image, context,
+                                              NULL, dont_ask);
 }

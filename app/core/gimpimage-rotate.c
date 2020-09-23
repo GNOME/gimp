@@ -19,8 +19,11 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+#include <gexiv2/gexiv2.h>
 
 #include "core-types.h"
+
+#include "config/gimpdialogconfig.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -29,6 +32,8 @@
 #include "gimpcontext.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
+#include "gimpimage-flip.h"
+#include "gimpimage-metadata.h"
 #include "gimpimage-rotate.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-sample-points.h"
@@ -41,16 +46,23 @@
 #include "gimpsamplepoint.h"
 
 
-static void  gimp_image_rotate_item_offset   (GimpImage        *image,
-                                              GimpRotationType  rotate_type,
-                                              GimpItem         *item,
-                                              gint              off_x,
-                                              gint              off_y);
-static void  gimp_image_rotate_guides        (GimpImage        *image,
-                                              GimpRotationType  rotate_type);
-static void  gimp_image_rotate_sample_points (GimpImage        *image,
-                                              GimpRotationType  rotate_type);
+static void  gimp_image_rotate_item_offset   (GimpImage         *image,
+                                              GimpRotationType   rotate_type,
+                                              GimpItem          *item,
+                                              gint               off_x,
+                                              gint               off_y);
+static void  gimp_image_rotate_guides        (GimpImage         *image,
+                                              GimpRotationType   rotate_type);
+static void  gimp_image_rotate_sample_points (GimpImage         *image,
+                                              GimpRotationType   rotate_type);
 
+static void  gimp_image_metadata_rotate      (GimpImage         *image,
+                                              GimpContext       *context,
+                                              GExiv2Orientation  orientation,
+                                              GimpProgress      *progress);
+
+
+/* Public Functions */
 
 void
 gimp_image_rotate (GimpImage        *image,
@@ -214,6 +226,59 @@ gimp_image_rotate (GimpImage        *image,
   gimp_unset_busy (image->gimp);
 }
 
+void
+gimp_image_import_rotation_metadata (GimpImage    *image,
+                                     GimpContext  *context,
+                                     GimpProgress *progress,
+                                     gboolean      interactive)
+{
+  GimpMetadata *metadata;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+
+  metadata = gimp_image_get_metadata (image);
+
+  if (metadata)
+    {
+      GimpMetadataRotationPolicy policy;
+
+      policy = GIMP_DIALOG_CONFIG (image->gimp->config)->metadata_rotation_policy;
+      if (policy == GIMP_METADATA_ROTATION_POLICY_ASK)
+        {
+          if (interactive)
+            {
+              gboolean dont_ask = FALSE;
+
+              policy = gimp_query_rotation_policy (image->gimp, image,
+                                                   context, &dont_ask);
+
+              if (dont_ask)
+                {
+                  g_object_set (G_OBJECT (image->gimp->config),
+                                "metadata-rotation-policy", policy,
+                                NULL);
+                }
+            }
+          else
+            {
+              policy = GIMP_METADATA_ROTATION_POLICY_ROTATE;
+            }
+        }
+
+      if (policy == GIMP_METADATA_ROTATION_POLICY_ROTATE)
+        gimp_image_metadata_rotate (image, context,
+                                    gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata)),
+                                    progress);
+
+      gexiv2_metadata_set_orientation (GEXIV2_METADATA (metadata),
+                                       GEXIV2_ORIENTATION_NORMAL);
+    }
+}
+
+
+/* Private Functions */
 
 static void
 gimp_image_rotate_item_offset (GimpImage        *image,
@@ -373,5 +438,52 @@ gimp_image_rotate_sample_points (GimpImage        *image,
                                           gimp_image_get_width (image) - old_x);
           break;
         }
+    }
+}
+
+static void
+gimp_image_metadata_rotate (GimpImage         *image,
+                            GimpContext       *context,
+                            GExiv2Orientation  orientation,
+                            GimpProgress      *progress)
+{
+  switch (orientation)
+    {
+    case GEXIV2_ORIENTATION_UNSPECIFIED:
+    case GEXIV2_ORIENTATION_NORMAL:  /* standard orientation, do nothing */
+      break;
+
+    case GEXIV2_ORIENTATION_HFLIP:
+      gimp_image_flip (image, context, GIMP_ORIENTATION_HORIZONTAL, progress);
+      break;
+
+    case GEXIV2_ORIENTATION_ROT_180:
+      gimp_image_rotate (image, context, GIMP_ROTATE_180, progress);
+      break;
+
+    case GEXIV2_ORIENTATION_VFLIP:
+      gimp_image_flip (image, context, GIMP_ORIENTATION_VERTICAL, progress);
+      break;
+
+    case GEXIV2_ORIENTATION_ROT_90_HFLIP:  /* flipped diagonally around '\' */
+      gimp_image_rotate (image, context, GIMP_ROTATE_90, progress);
+      gimp_image_flip (image, context, GIMP_ORIENTATION_HORIZONTAL, progress);
+      break;
+
+    case GEXIV2_ORIENTATION_ROT_90:  /* 90 CW */
+      gimp_image_rotate (image, context, GIMP_ROTATE_90, progress);
+      break;
+
+    case GEXIV2_ORIENTATION_ROT_90_VFLIP:  /* flipped diagonally around '/' */
+      gimp_image_rotate (image, context, GIMP_ROTATE_90, progress);
+      gimp_image_flip (image, context, GIMP_ORIENTATION_VERTICAL, progress);
+      break;
+
+    case GEXIV2_ORIENTATION_ROT_270:  /* 90 CCW */
+      gimp_image_rotate (image, context, GIMP_ROTATE_270, progress);
+      break;
+
+    default: /* shouldn't happen */
+      break;
     }
 }

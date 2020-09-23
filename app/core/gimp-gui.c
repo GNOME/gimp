@@ -65,6 +65,7 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.recent_list_load       = NULL;
   gimp->gui.get_mount_operation    = NULL;
   gimp->gui.query_profile_policy   = NULL;
+  gimp->gui.query_rotation_policy  = NULL;
 }
 
 void
@@ -535,4 +536,20 @@ gimp_query_profile_policy (Gimp                      *gimp,
                                            dont_ask);
 
   return GIMP_COLOR_PROFILE_POLICY_KEEP;
+}
+
+GimpMetadataRotationPolicy
+gimp_query_rotation_policy (Gimp        *gimp,
+                            GimpImage   *image,
+                            GimpContext *context,
+                            gboolean    *dont_ask)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_METADATA_ROTATION_POLICY_ROTATE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_METADATA_ROTATION_POLICY_ROTATE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_METADATA_ROTATION_POLICY_ROTATE);
+
+  if (gimp->gui.query_rotation_policy)
+    return gimp->gui.query_rotation_policy (gimp, image, context, dont_ask);
+
+  return GIMP_METADATA_ROTATION_POLICY_ROTATE;
 }

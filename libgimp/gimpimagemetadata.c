@@ -51,8 +51,7 @@ static void        gimp_image_metadata_rotate        (GimpImage         *image,
  * @error:     Return location for error
  *
  * Loads and returns metadata from @file to be passed into
- * gimp_image_metadata_load_finish() or
- * gimp_image_metadata_load_finish_batch().
+ * gimp_image_metadata_load_finish().
  *
  * Returns: (transfer full): The file's metadata.
  *
@@ -82,7 +81,7 @@ gimp_image_metadata_load_prepare (GimpImage    *image,
 }
 
 /**
- * gimp_image_metadata_load_finish_batch:
+ * gimp_image_metadata_load_finish:
  * @image:       The image
  * @mime_type:   The loaded file's mime-type
  * @metadata:    The metadata to set on the image
@@ -92,24 +91,13 @@ gimp_image_metadata_load_prepare (GimpImage    *image,
  * gimp_image_metadata_load_prepare() to the image, taking into account
  * the passed @flags.
  *
- * Some metadata may involve some image changes and are better asked for
- * confirmation. For instance the orientation metadata may be wrong at
- * times (because it depends usually on camera sensors and the rotated
- * image may not be what one expects). If the related flag is set (i.e.
- * GIMP_METADATA_LOAD_ORIENTATION for orientation), then the change will
- * be automatically executed (i.e. the image will be rotated) without
- * any human interaction.
- *
- * If you wish such edit to be queried interactively with dialogs, use
- * gimp_image_metadata_load_finish() instead, from libgimpui.
- *
  * Since: 3.0
  */
 void
-gimp_image_metadata_load_finish_batch (GimpImage             *image,
-                                       const gchar           *mime_type,
-                                       GimpMetadata          *metadata,
-                                       GimpMetadataLoadFlags  flags)
+gimp_image_metadata_load_finish (GimpImage             *image,
+                                 const gchar           *mime_type,
+                                 GimpMetadata          *metadata,
+                                 GimpMetadataLoadFlags  flags)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (mime_type != NULL);
@@ -153,13 +141,10 @@ gimp_image_metadata_load_finish_batch (GimpImage             *image,
         }
     }
 
-  if (flags & GIMP_METADATA_LOAD_ORIENTATION)
+  if (! (flags & GIMP_METADATA_LOAD_ORIENTATION))
     {
-      gimp_image_metadata_rotate (image,
-                                  gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata)));
-
       gexiv2_metadata_set_orientation (GEXIV2_METADATA (metadata),
-                                       GEXIV2_ORIENTATION_NORMAL);
+                                       GEXIV2_ORIENTATION_UNSPECIFIED);
     }
 
   if (flags & GIMP_METADATA_LOAD_COLORSPACE)

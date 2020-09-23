@@ -920,6 +920,37 @@ gimp_message_severity_get_type (void)
 }
 
 GType
+gimp_metadata_rotation_policy_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_METADATA_ROTATION_POLICY_ASK, "GIMP_METADATA_ROTATION_POLICY_ASK", "ask" },
+    { GIMP_METADATA_ROTATION_POLICY_KEEP, "GIMP_METADATA_ROTATION_POLICY_KEEP", "keep" },
+    { GIMP_METADATA_ROTATION_POLICY_ROTATE, "GIMP_METADATA_ROTATION_POLICY_ROTATE", "rotate" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_METADATA_ROTATION_POLICY_ASK, NC_("metadata-rotation-policy", "Ask what to do"), NULL },
+    { GIMP_METADATA_ROTATION_POLICY_KEEP, NC_("metadata-rotation-policy", "Discard metadata without rotating"), NULL },
+    { GIMP_METADATA_ROTATION_POLICY_ROTATE, NC_("metadata-rotation-policy", "Rotate the image then discard metadata"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpMetadataRotationPolicy", values);
+      gimp_type_set_translation_context (type, "metadata-rotation-policy");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_paste_type_get_type (void)
 {
   static const GEnumValue values[] =

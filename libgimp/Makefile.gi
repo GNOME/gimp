@@ -183,7 +183,6 @@ libgimpui_introspectable_headers = \
 	../libgimp/gimpfontselectbutton.h	\
 	../libgimp/gimpgradientselectbutton.h	\
 	../libgimp/gimpimagecombobox.h		\
-	../libgimp/gimpimagemetadata-interactive.h	\
 	../libgimp/gimpitemcombobox.h		\
 	../libgimp/gimppaletteselectbutton.h	\
 	../libgimp/gimppatternselectbutton.h	\
@@ -204,7 +203,6 @@ libgimpui_introspectable = \
 	../libgimp/gimpfontselectbutton.c	\
 	../libgimp/gimpgradientselectbutton.c	\
 	../libgimp/gimpimagecombobox.c		\
-	../libgimp/gimpimagemetadata-interactive.c	\
 	../libgimp/gimpitemcombobox.c		\
 	../libgimp/gimppaletteselectbutton.c	\
 	../libgimp/gimppatternselectbutton.c	\

@@ -274,7 +274,6 @@ jpeg_load (GimpProcedure        *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  gboolean        interactive;
   gboolean        resolution_loaded = FALSE;
   GError         *error             = NULL;
 
@@ -289,11 +288,9 @@ jpeg_load (GimpProcedure        *procedure,
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
-      interactive = TRUE;
       break;
 
     default:
-      interactive = FALSE;
       break;
     }
 
@@ -315,8 +312,7 @@ jpeg_load (GimpProcedure        *procedure,
             flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
           gimp_image_metadata_load_finish (image, "image/jpeg",
-                                           metadata, flags,
-                                           interactive);
+                                           metadata, flags);
 
           g_object_unref (metadata);
         }

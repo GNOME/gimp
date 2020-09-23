@@ -47,6 +47,7 @@ enum
   PROP_GIMP,
 
   PROP_COLOR_PROFILE_POLICY,
+  PROP_METADATA_ROTATION_POLICY,
 
   PROP_COLOR_PROFILE_PATH,
 
@@ -174,6 +175,14 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          COLOR_PROFILE_POLICY_BLURB,
                          GIMP_TYPE_COLOR_PROFILE_POLICY,
                          GIMP_COLOR_PROFILE_POLICY_ASK,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_METADATA_ROTATION_POLICY,
+                         "metadata-rotation-policy",
+                         "Metadata rotation policy",
+                         METADATA_ROTATION_POLICY_BLURB,
+                         GIMP_TYPE_METADATA_ROTATION_POLICY,
+                         GIMP_METADATA_ROTATION_POLICY_ASK,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_PATH (object_class, PROP_COLOR_PROFILE_PATH,
@@ -604,6 +613,9 @@ gimp_dialog_config_set_property (GObject      *object,
     case PROP_COLOR_PROFILE_POLICY:
       config->color_profile_policy = g_value_get_enum (value);
       break;
+    case PROP_METADATA_ROTATION_POLICY:
+      config->metadata_rotation_policy = g_value_get_enum (value);
+      break;
 
     case PROP_COLOR_PROFILE_PATH:
       if (config->color_profile_path)
@@ -803,6 +815,9 @@ gimp_dialog_config_get_property (GObject    *object,
 
     case PROP_COLOR_PROFILE_POLICY:
       g_value_set_enum (value, config->color_profile_policy);
+      break;
+    case PROP_METADATA_ROTATION_POLICY:
+      g_value_set_enum (value, config->metadata_rotation_policy);
       break;
 
     case PROP_COLOR_PROFILE_PATH:

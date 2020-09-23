@@ -1518,6 +1518,9 @@ prefs_dialog_new (Gimp       *gimp,
   button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
                                      _("Color _profile policy:"),
                                      GTK_GRID (grid), 0, size_group);
+  button = prefs_enum_combo_box_add (object, "metadata-rotation-policy", 0, 0,
+                                     _("Metadata _rotation policy:"),
+                                     GTK_GRID (grid), 1, size_group);
 
   /*  Export Policies  */
   vbox2 = prefs_frame_new (_("Export Policies"),

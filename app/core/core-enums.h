@@ -419,6 +419,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpMessageSeverity;
 
 
+#define GIMP_TYPE_METADATA_ROTATION_POLICY (gimp_metadata_rotation_policy_get_type ())
+
+GType gimp_metadata_rotation_policy_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_METADATA_ROTATION_POLICY_ASK,    /*< desc="Ask what to do"                         >*/
+  GIMP_METADATA_ROTATION_POLICY_KEEP,   /*< desc="Discard metadata without rotating"      >*/
+  GIMP_METADATA_ROTATION_POLICY_ROTATE  /*< desc="Rotate the image then discard metadata" >*/
+} GimpMetadataRotationPolicy;
+
+
 #define GIMP_TYPE_PASTE_TYPE (gimp_paste_type_get_type ())
 
 GType gimp_paste_type_get_type (void) G_GNUC_CONST;

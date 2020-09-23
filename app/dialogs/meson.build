@@ -25,6 +25,7 @@ libappdialogs_sources = [
   'layer-add-mask-dialog.c',
   'layer-options-dialog.c',
   'lebl-dialog.c',
+  'metadata-rotation-import-dialog.c',
   'module-dialog.c',
   'palette-import-dialog.c',
   'preferences-dialog-utils.c',

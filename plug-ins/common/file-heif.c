@@ -1252,8 +1252,7 @@ load_image (GFile              *file,
           }
 
         gimp_image_metadata_load_finish (image, "image/heif",
-                                         metadata, flags,
-                                         interactive);
+                                         metadata, flags);
       }
   }
 

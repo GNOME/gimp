@@ -285,8 +285,7 @@ load_image (GFile    *file,
             flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
           gimp_image_metadata_load_finish (image, "image/webp",
-                                           metadata, flags,
-                                           interactive);
+                                           metadata, flags);
           g_object_unref (metadata);
         }
 
