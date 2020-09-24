@@ -230,6 +230,7 @@ app/dialogs/keyboard-shortcuts-dialog.c
 app/dialogs/layer-add-mask-dialog.c
 app/dialogs/layer-options-dialog.c
 app/dialogs/lebl-dialog.c
+app/dialogs/metadata-rotation-import-dialog.c
 app/dialogs/module-dialog.c
 app/dialogs/palette-import-dialog.c
 app/dialogs/preferences-dialog.c

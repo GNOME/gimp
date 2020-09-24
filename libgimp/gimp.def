@@ -441,7 +441,7 @@ EXPORTS
 	gimp_image_merge_down
 	gimp_image_merge_layer_group
 	gimp_image_merge_visible_layers
-	gimp_image_metadata_load_finish_batch
+	gimp_image_metadata_load_finish
 	gimp_image_metadata_load_prepare
 	gimp_image_metadata_load_thumbnail
 	gimp_image_metadata_save_finish
@@ -450,6 +450,8 @@ EXPORTS
 	gimp_image_new_with_precision
 	gimp_image_pick_color
 	gimp_image_pick_correlate_layer
+	gimp_image_policy_color_profile
+	gimp_image_policy_rotate
 	gimp_image_procedure_get_type
 	gimp_image_procedure_new
 	gimp_image_raise_item
