@@ -195,6 +195,10 @@ GimpParasite*            gimp_image_get_parasite               (GimpImage       
                                                                 const gchar         *name);
 gchar**                  gimp_image_get_parasite_list          (GimpImage           *image,
                                                                 gint                *num_parasites);
+gboolean                 gimp_image_policy_rotate              (GimpImage           *image,
+                                                                gboolean             interactive);
+gboolean                 gimp_image_policy_color_profile       (GimpImage           *image,
+                                                                gboolean             interactive);
 
 
 G_END_DECLS

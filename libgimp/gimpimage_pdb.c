@@ -3422,3 +3422,104 @@ gimp_image_get_parasite_list (GimpImage *image,
 
   return parasites;
 }
+
+/**
+ * gimp_image_policy_rotate:
+ * @image: The image.
+ * @interactive: Querying the user through a dialog is a possibility.
+ *
+ * Execute the \"Orientation\" metadata policy.
+ *
+ * Process the image according to the rotation policy as set in
+ * Preferences. If GIMP is running as a GUI and interactive is TRUE, a
+ * dialog may be presented to the user depending on the set policy.
+ * Otherwise, if the policy does not mandate the action to perform, the
+ * image will be rotated following the Orientation metadata.
+ * If you wish absolutely to rotate a loaded image following the
+ * Orientation metadata, do not use this function and process the
+ * metadata yourself. Indeed even with `interactive` to FALSE, user
+ * settings may leave the image unrotated.
+ * Finally it is unnecessary to call this function in a format load
+ * procedure because this is called automatically by the core code when
+ * loading any image. You should only call this function explicitly
+ * when loading an image through a PDB call.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_image_policy_rotate (GimpImage *image,
+                          gboolean   interactive)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_BOOLEAN, interactive,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-policy-rotate",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_policy_color_profile:
+ * @image: The image.
+ * @interactive: Querying the user through a dialog is a possibility.
+ *
+ * Execute the color profile conversion policy.
+ *
+ * Process the image according to the color profile policy as set in
+ * Preferences. If GIMP is running as a GUI and interactive is TRUE, a
+ * dialog may be presented to the user depending on the set policy.
+ * Otherwise, if the policy does not mandate the conversion to perform,
+ * the conversion to the builtin RGB or grayscale profile will happen.
+ * This function should be used only if you want to follow user
+ * settings. If you wish to keep to convert to a specific profile, call
+ * preferrably gimp_image_convert_color_profile(). And if you wish to
+ * leave whatever profile an image has, do not call any of these
+ * functions.
+ * Finally it is unnecessary to call this function in a format load
+ * procedure because this is called automatically by the core code when
+ * loading any image. You should only call this function explicitly
+ * when loading an image through a PDB call.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_image_policy_color_profile (GimpImage *image,
+                                 gboolean   interactive)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_BOOLEAN, interactive,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-policy-color-profile",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}

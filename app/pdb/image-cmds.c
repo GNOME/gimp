@@ -38,12 +38,14 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgrouplayer.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-metadata.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimage-pick-item.h"
+#include "core/gimpimage-rotate.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimplayer.h"
@@ -2819,6 +2821,54 @@ image_get_parasite_list_invoker (GimpProcedure         *procedure,
   return return_vals;
 }
 
+static GimpValueArray *
+image_policy_rotate_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gboolean interactive;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  interactive = g_value_get_boolean (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_image_import_rotation_metadata (image, context, progress, interactive);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_policy_color_profile_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gboolean interactive;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  interactive = g_value_get_boolean (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_image_import_color_profile (image, context, progress, interactive);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_image_procs (GimpPDB *pdb)
 {
@@ -5531,6 +5581,68 @@ register_image_procs (GimpPDB *pdb)
                                                                  "parasites",
                                                                  "The names of currently attached parasites",
                                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-policy-rotate
+   */
+  procedure = gimp_procedure_new (image_policy_rotate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-policy-rotate");
+  gimp_procedure_set_static_help (procedure,
+                                  "Execute the \"Orientation\" metadata policy.",
+                                  "Process the image according to the rotation policy as set in Preferences. If GIMP is running as a GUI and interactive is TRUE, a dialog may be presented to the user depending on the set policy. Otherwise, if the policy does not mandate the action to perform, the image will be rotated following the Orientation metadata.\n"
+                                     "If you wish absolutely to rotate a loaded image following the Orientation metadata, do not use this function and process the metadata yourself. Indeed even with `interactive` to FALSE, user settings may leave the image unrotated.\n"
+                                     "Finally it is unnecessary to call this function in a format load procedure because this is called automatically by the core code when loading any image. You should only call this function explicitly when loading an image through a PDB call.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2020");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("interactive",
+                                                     "interactive",
+                                                     "Querying the user through a dialog is a possibility",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-policy-color-profile
+   */
+  procedure = gimp_procedure_new (image_policy_color_profile_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-policy-color-profile");
+  gimp_procedure_set_static_help (procedure,
+                                  "Execute the color profile conversion policy.",
+                                  "Process the image according to the color profile policy as set in Preferences. If GIMP is running as a GUI and interactive is TRUE, a dialog may be presented to the user depending on the set policy. Otherwise, if the policy does not mandate the conversion to perform, the conversion to the builtin RGB or grayscale profile will happen.\n"
+                                     "This function should be used only if you want to follow user settings. If you wish to keep to convert to a specific profile, call preferrably 'gimp-image-convert-color-profile'. And if you wish to leave whatever profile an image has, do not call any of these functions.\n"
+                                     "Finally it is unnecessary to call this function in a format load procedure because this is called automatically by the core code when loading any image. You should only call this function explicitly when loading an image through a PDB call.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2020");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("interactive",
+                                                     "interactive",
+                                                     "Querying the user through a dialog is a possibility",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }
