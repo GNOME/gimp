@@ -1166,6 +1166,7 @@ prefs_dialog_new (Gimp       *gimp,
                                   GIMP_HELP_PREFS_SYSTEM_RESOURCES,
                                   NULL,
                                   &top_iter);
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -1664,6 +1665,7 @@ prefs_dialog_new (Gimp       *gimp,
                                   GIMP_HELP_PREFS_TOOL_OPTIONS,
                                   NULL,
                                   &top_iter);
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -1794,6 +1796,7 @@ prefs_dialog_new (Gimp       *gimp,
                                   GIMP_HELP_PREFS_DEFAULT_GRID,
                                   &top_iter,
                                   &child_iter);
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
 
   /*  Grid  */
   editor = gimp_grid_editor_new (core_config->default_grid,
@@ -1814,6 +1817,7 @@ prefs_dialog_new (Gimp       *gimp,
                                   GIMP_HELP_PREFS_INTERFACE,
                                   NULL,
                                   &top_iter);
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
 
   /*  Language  */
 
@@ -2683,6 +2687,7 @@ prefs_dialog_new (Gimp       *gimp,
                                   GIMP_HELP_PREFS_DISPLAY,
                                   &top_iter,
                                   &child_iter);
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -2862,6 +2867,7 @@ prefs_dialog_new (Gimp       *gimp,
                                   GIMP_HELP_PREFS_IMAGE_WINDOW,
                                   NULL,
                                   &top_iter);
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -2953,6 +2959,8 @@ prefs_dialog_new (Gimp       *gimp,
                                   GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
                                   &top_iter,
                                   &child_iter);
+
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
 
   prefs_display_options_frame_add (gimp,
                                    G_OBJECT (display_config->default_view),
