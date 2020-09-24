@@ -5623,8 +5623,9 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-policy-color-profile");
   gimp_procedure_set_static_help (procedure,
                                   "Execute the color profile conversion policy.",
-                                  "Process the image according to the color profile policy as set in Preferences. If GIMP is running as a GUI and interactive is TRUE, a dialog may be presented to the user depending on the set policy. Otherwise, if the policy does not mandate the conversion to perform, the conversion to the builtin RGB or grayscale profile will happen.\n"
-                                     "This function should be used only if you want to follow user settings. If you wish to keep to convert to a specific profile, call preferrably 'gimp-image-convert-color-profile'. And if you wish to leave whatever profile an image has, do not call any of these functions.\n"
+                                  "Process the image according to the color profile policy as set in Preferences.\n"
+                                     "If GIMP is running as a GUI and interactive is TRUE, a dialog may be presented to the user depending on the policy. Otherwise, if the policy does not mandate the conversion to perform, the conversion to the preferred RGB or grayscale profile will happen, defaulting to built-in profiles if no preferred profiles were set in `Preferences`.\n"
+                                     "This function should be used only if you want to follow user settings. If you intend to convert to a specific profile, call preferrably 'gimp-image-convert-color-profile'. And if you wish to leave whatever profile an image has, do not call any of these functions.\n"
                                      "Finally it is unnecessary to call this function in a format load procedure because this is called automatically by the core code when loading any image. You should only call this function explicitly when loading an image through a PDB call.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,

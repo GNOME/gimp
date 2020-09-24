@@ -210,7 +210,8 @@ gimp_color_profile_policy_get_type (void)
   {
     { GIMP_COLOR_PROFILE_POLICY_ASK, "GIMP_COLOR_PROFILE_POLICY_ASK", "ask" },
     { GIMP_COLOR_PROFILE_POLICY_KEEP, "GIMP_COLOR_PROFILE_POLICY_KEEP", "keep" },
-    { GIMP_COLOR_PROFILE_POLICY_CONVERT, "GIMP_COLOR_PROFILE_POLICY_CONVERT", "convert" },
+    { GIMP_COLOR_PROFILE_POLICY_CONVERT_BUILTIN, "GIMP_COLOR_PROFILE_POLICY_CONVERT_BUILTIN", "convert-builtin" },
+    { GIMP_COLOR_PROFILE_POLICY_CONVERT_PREFERRED, "GIMP_COLOR_PROFILE_POLICY_CONVERT_PREFERRED", "convert-preferred" },
     { 0, NULL, NULL }
   };
 
@@ -218,7 +219,8 @@ gimp_color_profile_policy_get_type (void)
   {
     { GIMP_COLOR_PROFILE_POLICY_ASK, NC_("color-profile-policy", "Ask what to do"), NULL },
     { GIMP_COLOR_PROFILE_POLICY_KEEP, NC_("color-profile-policy", "Keep embedded profile"), NULL },
-    { GIMP_COLOR_PROFILE_POLICY_CONVERT, NC_("color-profile-policy", "Convert to built-in sRGB or grayscale profile"), NULL },
+    { GIMP_COLOR_PROFILE_POLICY_CONVERT_BUILTIN, NC_("color-profile-policy", "Convert to built-in sRGB or grayscale profile"), NULL },
+    { GIMP_COLOR_PROFILE_POLICY_CONVERT_PREFERRED, NC_("color-profile-policy", "Convert to preferred sRGB or grayscale profile (defaulting to built-in)"), NULL },
     { 0, NULL, NULL }
   };
 

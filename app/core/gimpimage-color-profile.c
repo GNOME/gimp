@@ -609,12 +609,25 @@ gimp_image_import_color_profile (GimpImage    *image,
             }
         }
 
-      if (policy == GIMP_COLOR_PROFILE_POLICY_CONVERT)
+      if (policy == GIMP_COLOR_PROFILE_POLICY_CONVERT_PREFERRED ||
+          policy == GIMP_COLOR_PROFILE_POLICY_CONVERT_BUILTIN)
         {
           if (! dest_profile)
             {
-              dest_profile = gimp_image_get_builtin_color_profile (image);
-              g_object_ref (dest_profile);
+              if (policy == GIMP_COLOR_PROFILE_POLICY_CONVERT_PREFERRED)
+                {
+                  if (gimp_image_get_base_type (image) == GIMP_GRAY)
+                    dest_profile = gimp_color_config_get_gray_color_profile (image->gimp->config->color_management, NULL);
+                  else
+                    dest_profile = gimp_color_config_get_rgb_color_profile (image->gimp->config->color_management, NULL);
+                }
+
+              if (! dest_profile)
+                {
+                  /* Built-in policy or no preferred profile set. */
+                  dest_profile = gimp_image_get_builtin_color_profile (image);
+                  g_object_ref (dest_profile);
+                }
             }
 
           gimp_image_convert_color_profile (image, dest_profile,

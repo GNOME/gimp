@@ -28,9 +28,12 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
+
+#include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -60,12 +63,15 @@ color_profile_import_dialog_run (GimpImage                 *image,
   GtkWidget              *dialog;
   GtkWidget              *main_vbox;
   GtkWidget              *vbox;
+  GtkWidget              *stack;
+  GtkWidget              *switcher;
   GtkWidget              *frame;
   GtkWidget              *label;
   GtkWidget              *intent_combo;
   GtkWidget              *bpc_toggle;
   GtkWidget              *dont_ask_toggle;
   GimpColorProfile       *src_profile;
+  GimpColorProfile       *pref_profile = NULL;
   GimpColorProfilePolicy  policy;
   const gchar            *title;
   const gchar            *frame_title;
@@ -84,11 +90,19 @@ color_profile_import_dialog_run (GimpImage                 *image,
     {
       title       = _("Convert to Grayscale Working Space?");
       frame_title = _("Convert the image to the built-in grayscale color profile?");
+
+      pref_profile = gimp_color_config_get_gray_color_profile (image->gimp->config->color_management, NULL);
+      if (pref_profile && gimp_color_profile_is_equal (pref_profile, *dest_profile))
+        g_clear_object (&pref_profile);
     }
   else
     {
       title       = _("Convert to RGB Working Space?");
       frame_title = _("Convert the image to the built-in sRGB color profile?");
+
+      pref_profile = gimp_color_config_get_rgb_color_profile (image->gimp->config->color_management, NULL);
+      if (pref_profile && gimp_color_profile_is_equal (pref_profile, *dest_profile))
+        g_clear_object (&pref_profile);
     }
 
   dialog =
@@ -130,13 +144,40 @@ color_profile_import_dialog_run (GimpImage                 *image,
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
 
+  switcher = gtk_stack_switcher_new ();
+
+  stack = gtk_stack_new ();
+  gtk_stack_switcher_set_stack (GTK_STACK_SWITCHER (switcher), GTK_STACK (stack));
+  gtk_box_pack_start (GTK_BOX (main_vbox), stack, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), switcher, FALSE, FALSE, 0);
+  gtk_widget_show (stack);
+
   frame = gimp_frame_new (frame_title);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_stack_add_titled (GTK_STACK (stack), frame, "builtin", "Built-in Profile");
   gtk_widget_show (frame);
 
   label = gimp_color_profile_label_new (*dest_profile);
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
+
+  if (pref_profile)
+    {
+      if (gimp_image_get_base_type (image) == GIMP_GRAY)
+        frame_title  = _("Convert the image to the preferred grayscale color profile?");
+      else
+        frame_title = _("Convert the image to the preferred sRGB color profile?");
+
+      frame = gimp_frame_new (frame_title);
+      gtk_stack_add_titled (GTK_STACK (stack), frame, "preferred", "Preferred Profile");
+      gtk_widget_show (frame);
+
+      label = gimp_color_profile_label_new (pref_profile);
+      gtk_container_add (GTK_CONTAINER (frame), label);
+      gtk_widget_show (label);
+
+      gtk_widget_show (switcher);
+      gtk_stack_set_visible_child_name (GTK_STACK (stack), "preferred");
+    }
 
   if (intent && bpc)
     {
@@ -191,8 +232,17 @@ color_profile_import_dialog_run (GimpImage                 *image,
   switch (gtk_dialog_run (GTK_DIALOG (dialog)))
     {
     case GTK_RESPONSE_OK:
-      policy = GIMP_COLOR_PROFILE_POLICY_CONVERT;
-      g_object_ref (*dest_profile);
+      if (g_strcmp0 (gtk_stack_get_visible_child_name (GTK_STACK (stack)),
+                     "builtin") == 0)
+        {
+          policy = GIMP_COLOR_PROFILE_POLICY_CONVERT_BUILTIN;
+          g_object_ref (*dest_profile);
+        }
+      else
+        {
+          policy = GIMP_COLOR_PROFILE_POLICY_CONVERT_PREFERRED;
+          *dest_profile = g_object_ref (pref_profile);
+        }
       break;
 
     default:
@@ -211,6 +261,7 @@ color_profile_import_dialog_run (GimpImage                 *image,
     *dont_ask = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dont_ask_toggle));
 
   gtk_widget_destroy (dialog);
+  g_clear_object (&pref_profile);
 
   return policy;
 }

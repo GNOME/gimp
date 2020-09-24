@@ -3481,12 +3481,15 @@ gimp_image_policy_rotate (GimpImage *image,
  * Execute the color profile conversion policy.
  *
  * Process the image according to the color profile policy as set in
- * Preferences. If GIMP is running as a GUI and interactive is TRUE, a
- * dialog may be presented to the user depending on the set policy.
- * Otherwise, if the policy does not mandate the conversion to perform,
- * the conversion to the builtin RGB or grayscale profile will happen.
+ * Preferences.
+ * If GIMP is running as a GUI and interactive is TRUE, a dialog may be
+ * presented to the user depending on the policy. Otherwise, if the
+ * policy does not mandate the conversion to perform, the conversion to
+ * the preferred RGB or grayscale profile will happen, defaulting to
+ * built-in profiles if no preferred profiles were set in
+ * `Preferences`.
  * This function should be used only if you want to follow user
- * settings. If you wish to keep to convert to a specific profile, call
+ * settings. If you intend to convert to a specific profile, call
  * preferrably gimp_image_convert_color_profile(). And if you wish to
  * leave whatever profile an image has, do not call any of these
  * functions.
