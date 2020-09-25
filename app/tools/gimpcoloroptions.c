@@ -69,7 +69,7 @@ gimp_color_options_class_init (GimpColorOptionsClass *klass)
                             _("Sample merged"),
                             _("Use merged color value from "
                               "all composited visible layers"),
-                            FALSE,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
