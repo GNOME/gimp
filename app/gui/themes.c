@@ -290,18 +290,15 @@ themes_apply_theme (Gimp          *gimp,
           if (g_file_query_exists (file, NULL))
             {
               gchar *path;
-              gchar *esc_path;
 
-              path     = g_file_get_path (file);
-              esc_path = g_strescape (path, NULL);
-              g_free (path);
+              path = g_file_get_uri (file);
 
               g_output_stream_printf (
                 output, NULL, NULL, &error,
                 "@import url(\"%s\");\n",
-                esc_path);
+                path);
 
-              g_free (esc_path);
+              g_free (path);
             }
         }
 
