@@ -186,11 +186,6 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
   GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
   GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
 
-  /*  the sample merged toggle button  */
-  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
   /*  the pick FG/BG frame  */
   str = g_strdup_printf (_("Pick Target  (%s)"),
                          gimp_get_mod_string (toggle_mask));
