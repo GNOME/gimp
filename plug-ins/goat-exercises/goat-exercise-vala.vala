@@ -47,7 +47,7 @@ public class Goat : Gimp.PlugIn {
                                 PLUG_IN_PROC);
     procedure.add_menu_path("<Image>/Filters/Development/Goat exercises/");
     procedure.set_attribution("Niels De Graef", "Niels De Graef", "2020");
-    procedure.set_icon_name(Gimp.ICON_GEGL);
+    procedure.set_icon_name(GimpUi.ICON_GEGL);
 
     return procedure;
   }
@@ -58,14 +58,14 @@ public class Goat : Gimp.PlugIn {
                              Gimp.Drawable drawable,
                              Gimp.ValueArray args) {
     if (run_mode == Gimp.RunMode.INTERACTIVE) {
-      Gimp.ui_init(PLUG_IN_BINARY);
+      GimpUi.init(PLUG_IN_BINARY);
 
       var dialog =
-          new Gimp.Dialog(_("Exercise a goat (Vala)"),
+          new GimpUi.Dialog(_("Exercise a goat (Vala)"),
                           PLUG_IN_ROLE,
                           null,
                           Gtk.DialogFlags.USE_HEADER_BAR,
-                          Gimp.standard_help_func,
+                          GimpUi.standard_help_func,
                           PLUG_IN_PROC,
                           _("_Cancel"), Gtk.ResponseType.CANCEL,
                           _("_Source"), Gtk.ResponseType.APPLY,

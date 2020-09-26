@@ -1,3 +1,5 @@
+GimpUi name="GimpUi"
+
 // Extra metadata for Vala, to deal with
 // annotations that GIR can't handle.
 //
