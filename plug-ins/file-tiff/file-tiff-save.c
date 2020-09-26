@@ -947,7 +947,7 @@ save_image (GFile         *file,
             GimpMetadata  *metadata,
             GError       **error)
 {
-  TIFF       *tif;
+  TIFF       *tif = NULL;
   const Babl *space               = NULL;
   gboolean    status              = FALSE;
   gboolean    out_linear          = FALSE;
@@ -1133,6 +1133,9 @@ save_image (GFile         *file,
         }
     }
 
+  status = TRUE;
+
+out:
   /* close the file for good */
   if (tif)
     {
@@ -1142,9 +1145,6 @@ save_image (GFile         *file,
 
   gimp_progress_update (1.0);
 
-  status = TRUE;
-
-out:
   g_list_free (layers);
   return status;
 }
