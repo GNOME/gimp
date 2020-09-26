@@ -947,7 +947,7 @@ save_image (GFile                  *file,
             GimpMetadataSaveFlags   metadata_flags,
             GError                **error)
 {
-  TIFF     *tif;
+  TIFF     *tif = NULL;
   gboolean  status              = FALSE;
   gboolean  out_linear          = FALSE;
   gint      number_of_sub_IFDs  = 1;
@@ -1109,6 +1109,9 @@ save_image (GFile                  *file,
         }
     }
 
+  status = TRUE;
+
+out:
   /* close the file for good */
   if (tif)
     {
@@ -1118,9 +1121,6 @@ save_image (GFile                  *file,
 
   gimp_progress_update (1.0);
 
-  status = TRUE;
-
-out:
   return status;
 }
 
