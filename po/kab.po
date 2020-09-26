@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-08-11 18:54+0000\n"
-"PO-Revision-Date: 2020-08-27 22:44+0100\n"
+"POT-Creation-Date: 2020-09-26 06:07+0000\n"
+"PO-Revision-Date: 2020-09-26 20:26+0100\n"
 "Last-Translator: Yacine Bouklif <yacinebouklif@gmail.com>\n"
 "Language-Team: \n"
 "Language: kab\n"
@@ -61,23 +61,24 @@ msgstr "Asiẓreg n tewlafin di GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid "Mostly a bug-fix release with some maintenance updates:"
-msgstr ""
+msgstr "Lqem s tuget n yiseɣtiyen n ibugen akked kra n ileqman n tneṭṭuft:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "Foreground Select tool default engine is now Matting Levin"
 msgstr ""
+"Amsedday n lexṣas n ufecku n wefran n uɣawas amezwaru tura d Matting Levin"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Various file plug-in fixes for PSD, TIFF, WebP, DDS…"
-msgstr ""
+msgstr "Aṭas n yiseɣtiyen n ufaylu n uzegrir i PSD, TIFF, WebP, DDS…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "New progressive performance logs and dashboard updates"
-msgstr ""
+msgstr "Aɣmis amaynut n temellit s usfari akked yileqman n tfelwit n tedbelt"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "OpenCL settings moved to Playground preferences"
-msgstr ""
+msgstr "Iɣewwaren n OpenCL muttin ɣer yiɣewwaren n Playground"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Verbose debug now shows Flatpak info when relevant"
@@ -88,40 +89,50 @@ msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
 msgstr ""
+"GIMP 2.10.20 yusa-d s twuriwin timaynutin akked yiseɣtiyen imaqranen n "
+"ibugen. Ibeddilen yettbanen:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Tool groups now expand on hover rather than click by default"
-msgstr ""
+msgstr "Igrawen n yifecka fettin tura s usrifeg n tɣerdayt mačči s ussiti"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
 msgstr ""
+"Aɣẓaẓ ur netthuddu yara yewjed tura s uɣẓaẓ n teɣzut n usuneɣ deg umḍiq n "
+"yipikselen"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
 msgstr ""
+"Tadhelt n PSD tif tin n zik: asifeḍ n yifuyla n 16-ibiten yewjed tura, "
+"taɣuri/tira n yibuda deg umizzwer iwatan"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "On-canvas controls for the Vignette filter"
-msgstr ""
+msgstr "Isenqaden n testayt n tebzimt ɣef teɣzut n usuneɣ"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
+"Tistayin timaynutin: tajeǧǧigt, aluɣu s uaḍes, aluɣu n tniltit, aluɣu ameskil"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Over 30 bugfixes"
-msgstr ""
+msgstr "Ugar n 30 n iseɣtiyen n ibugen"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
 msgstr ""
+"GIMP 2.10.18 iseɣti kra n ibugen iweɛren, iskecm-d tadhelt taḥerfit i "
+"yifuyla CMYK PSD, daɣen yerna acali n umyeẓli-afellay i tignit n usentel "
+"azamulan."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid ""
@@ -129,6 +140,9 @@ msgid ""
 "transformations in 3D space, new release checker, and the usual amount of "
 "bug fixes. Notable improvements:"
 msgstr ""
+"GIMP 2.10.16 yefka-d aṭas n yiweniɛen imeqranen i usishel n useqdec, afecku "
+"amaynut i weselket di tallunt 3D, asenqad n yileqman imaynuten, akked "
+"yiseɣtiten n ibugen. Iwenniɛen yetbanen:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Tools are now grouped in the toolbox by default"
@@ -140,15 +154,17 @@ msgstr "Timaccagin sseqdacent tura aɣanib akussim susedmer n useqdac iwenɛen"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "Vastly improved user experience for the transformation preview"
-msgstr ""
+msgstr "Awenneɣ n termit n useqdac i tmuɣli n uselket"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
+"Tiɣezza inettun tura ad ttusebrurqent mi ara tzuɣreḍ tankult n udiwenni "
+"inettun"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid "New 3D Transform tool to rotate and pan items"
-msgstr ""
+msgstr "Afecku amaynut n uselket 3D i tuzzya akked tuttya n yiferdisen"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "Much smoother brush outline motion on the canvas"
@@ -156,11 +172,13 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "Consolidated user interface for merging down and anchoring layers"
-msgstr ""
+msgstr "Agrudem n useqdac yettuwenneɛ i wesmezdi akked usenttu n tissiyin"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
+"Asenqed n ileqman iwakken ad selɣun aseqdac ticki wejden ileqman imaynuten n "
+"lqem akked usbedday"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
@@ -168,6 +186,8 @@ msgid ""
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
 "has a few noteworthy improvements:"
 msgstr ""
+"GIMP 2.10.14 i tikkelt-nniḍen d lqem n useɣti n ibugen, ad yerr GIMP yeǧhedd "
+"ugar. Aṭas n testayin qqlent ɣer GEGL. Daɣen yesɛa kra n uwenneɛ yettbanen:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
@@ -179,7 +199,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
-msgstr ""
+msgstr "Tistayin: Tanefrunt n wegzam tamaynutt i tulsa n tsekta n tissi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
@@ -233,7 +253,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "A few enhancements specific to the Curves tool"
-msgstr ""
+msgstr "Kra n uwenneɛ i ufecku n yizligen"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Layer support in TIFF"
@@ -249,29 +269,36 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Free Select tool creates preliminary selection"
-msgstr ""
+msgstr "Afecku n tefrayt tilellit i wesnulfu n tefrayt tuzwirt"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
 msgstr ""
+"GIMP 2.10.10 d aleqqem ameqran s waṭas n twuriwin timaynutin akked useɣti n "
+"ibugen. Ibeddien yettbanen:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
 msgstr ""
+"Afecku Abelyun n taččart: tifin n taččart s yizirig n tẓuri i tɣezza imedlen "
+"akken iwata yerna sɛant izirigen n tẓuri"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
+"Afecku Abelyun n taččart yezmer tura ad d-yelqeḍ ini s tɣawla s Ctrl+click"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
+"Afecku Abelyun n taččart ad yesireg tuṭṭfa n tɣerdayt mi ara taččareḍ initen "
+"ittemcabin neɣ s tifin n yizirigen n tẓuri"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "Scale tool scales around center even when using numeric input"
@@ -895,7 +922,7 @@ msgstr "Amaẓrag n umfezzu"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:115 ../app/core/gimp-data-factories.c:356
-#: ../app/dialogs/dialogs.c:338 ../app/dialogs/preferences-dialog.c:3230
+#: ../app/dialogs/dialogs.c:338 ../app/dialogs/preferences-dialog.c:3244
 msgid "Brushes"
 msgstr "Imfezza"
 
@@ -944,7 +971,7 @@ msgstr "Ittusemday"
 
 #. Document History
 #: ../app/actions/actions.c:148 ../app/dialogs/dialogs.c:365
-#: ../app/dialogs/preferences-dialog.c:1223
+#: ../app/dialogs/preferences-dialog.c:1225
 msgid "Document History"
 msgstr "Amazray n isemliyen"
 
@@ -979,7 +1006,7 @@ msgstr "Tistayin"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:172 ../app/core/gimp-data-factories.c:390
-#: ../app/dialogs/dialogs.c:356 ../app/dialogs/preferences-dialog.c:3260
+#: ../app/dialogs/dialogs.c:356 ../app/dialogs/preferences-dialog.c:3274
 msgid "Fonts"
 msgstr "Tisefsa"
 
@@ -990,12 +1017,12 @@ msgstr "Amaẓrag n tfesna n yini"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:178 ../app/core/gimp-data-factories.c:381
-#: ../app/dialogs/dialogs.c:350 ../app/dialogs/preferences-dialog.c:3254
+#: ../app/dialogs/dialogs.c:350 ../app/dialogs/preferences-dialog.c:3268
 msgid "Gradients"
 msgstr "Tafesna n yini"
 
 #: ../app/actions/actions.c:181 ../app/core/gimp-data-factories.c:397
-#: ../app/dialogs/dialogs.c:362 ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/dialogs.c:362 ../app/dialogs/preferences-dialog.c:3280
 msgid "Tool Presets"
 msgstr "Iɣewwaren uzwiren n yifecka"
 
@@ -1024,7 +1051,7 @@ msgstr "Tissiyin"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:199 ../app/core/gimp-data-factories.c:366
-#: ../app/dialogs/dialogs.c:344 ../app/dialogs/preferences-dialog.c:3272
+#: ../app/dialogs/dialogs.c:344 ../app/dialogs/preferences-dialog.c:3286
 msgid "MyPaint Brushes"
 msgstr "Imfezza n MyPaint"
 
@@ -1035,23 +1062,23 @@ msgstr "Amaẓrag n tpaliḍt"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:205 ../app/core/gimp-data-factories.c:376
-#: ../app/dialogs/dialogs.c:353 ../app/dialogs/preferences-dialog.c:3248
+#: ../app/dialogs/dialogs.c:353 ../app/dialogs/preferences-dialog.c:3262
 msgid "Palettes"
 msgstr "Tipaliḍin"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:208 ../app/core/gimp-data-factories.c:371
-#: ../app/dialogs/dialogs.c:347 ../app/dialogs/preferences-dialog.c:3242
+#: ../app/dialogs/dialogs.c:347 ../app/dialogs/preferences-dialog.c:3256
 msgid "Patterns"
 msgstr "Udlifen"
 
-#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3278
+#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3292
 msgid "Plug-ins"
 msgstr "Isiɣzaf"
 
 #. Quick Mask Color
 #: ../app/actions/actions.c:214 ../app/core/gimpchannel.c:359
-#: ../app/dialogs/preferences-dialog.c:1768
+#: ../app/dialogs/preferences-dialog.c:1776
 msgid "Quick Mask"
 msgstr "Tagelmust taruradt"
 
@@ -3990,7 +4017,7 @@ msgstr "Zzi taɣawsa tudlift s 90 n tfesniwin ɣer zelmaḍ"
 
 #: ../app/actions/drawable-commands.c:78
 msgid "White Balance operates only on RGB color layers."
-msgstr "Awliwel n yimellalen itteddu kan ɣef tissiyin n yiniten RGB"
+msgstr "Awliwel n yimellalen itteddu kan ɣef tissiyin n yiniten RGB."
 
 #: ../app/actions/dynamics-actions.c:43
 msgctxt "dynamics-action"
@@ -6371,32 +6398,32 @@ msgstr "Selket tugna ɣer yiniten s umatar"
 #: ../app/actions/image-actions.c:211
 msgctxt "image-convert-action"
 msgid "8 bit integer"
-msgstr ""
+msgstr "8 ibiten ummid"
 
 #: ../app/actions/image-actions.c:213
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
-msgstr ""
+msgstr "Selket tugna ɣer 8 ibiten ummid"
 
 #: ../app/actions/image-actions.c:217
 msgctxt "image-convert-action"
 msgid "16 bit integer"
-msgstr ""
+msgstr "16 ibiten ummid"
 
 #: ../app/actions/image-actions.c:219
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
-msgstr ""
+msgstr "Selket tugna ɣer 16 ibiten ummid"
 
 #: ../app/actions/image-actions.c:223
 msgctxt "image-convert-action"
 msgid "32 bit integer"
-msgstr ""
+msgstr "32 ibiten ummid"
 
 #: ../app/actions/image-actions.c:225
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
-msgstr ""
+msgstr "Selket tugna ɣer 32 ibiten ummid"
 
 #: ../app/actions/image-actions.c:229
 msgctxt "image-convert-action"
@@ -6596,7 +6623,7 @@ msgstr "Alles tisekta n tugna"
 
 #. Scaling
 #: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2515
-#: ../app/dialogs/preferences-dialog.c:1689
+#: ../app/dialogs/preferences-dialog.c:1697
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/item-transform-cmds.c:640
 #: ../app/pdb/layer-cmds.c:410 ../app/tools/gimpscaletool.c:122
 msgid "Scaling"
@@ -6660,12 +6687,12 @@ msgstr ""
 #: ../app/actions/layers-actions.c:60
 msgctxt "layers-action"
 msgid "Composite Space"
-msgstr ""
+msgstr "Tallunt tamuddist"
 
 #: ../app/actions/layers-actions.c:64
 msgctxt "layers-action"
 msgid "Composite Mode"
-msgstr ""
+msgstr "Askar amuddis"
 
 #: ../app/actions/layers-actions.c:68
 msgctxt "layers-action"
@@ -7116,22 +7143,22 @@ msgstr ""
 #: ../app/actions/layers-actions.c:378
 msgctxt "layers-action"
 msgid "Layer Composite Space: Auto"
-msgstr ""
+msgstr "Tallunt tamuddist n tissi: awurman"
 
 #: ../app/actions/layers-actions.c:384
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (linear)"
-msgstr ""
+msgstr "Tallunt tamuddist n tissi: RGB (imzireg)"
 
 #: ../app/actions/layers-actions.c:390
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (perceptual)"
-msgstr ""
+msgstr "Tallunt tamuddist n tissi: RGB"
 
 #: ../app/actions/layers-actions.c:399
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
-msgstr ""
+msgstr "Askar amuddis n tissi: awurman"
 
 #: ../app/actions/layers-actions.c:404
 msgctxt "layers-action"
@@ -7141,27 +7168,27 @@ msgstr "Tadukli"
 #: ../app/actions/layers-actions.c:405
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Union"
-msgstr ""
+msgstr "Askar amuddis n tissi: taddukli"
 
 #: ../app/actions/layers-actions.c:410
 msgctxt "layers-action"
 msgid "Clip to Backdrop"
-msgstr ""
+msgstr "Senṭeḍ s abeḥnuq n deffir"
 
 #: ../app/actions/layers-actions.c:411
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Backdrop"
-msgstr ""
+msgstr "Askar amuddis n tissi: senṭeḍ s abeḥnuq n deffir"
 
 #: ../app/actions/layers-actions.c:416
 msgctxt "layers-action"
 msgid "Clip to Layer"
-msgstr ""
+msgstr "Senṭeḍ ɣer tissi"
 
 #: ../app/actions/layers-actions.c:417
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Layer"
-msgstr ""
+msgstr "Askar amuddis n tissi: senṭeḍ ɣer tissi"
 
 #: ../app/actions/layers-actions.c:422
 msgctxt "layers-action"
@@ -7171,7 +7198,7 @@ msgstr "Tanemlilt"
 #: ../app/actions/layers-actions.c:423
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Intersection"
-msgstr ""
+msgstr "Askar amuddis n tissi: anmideg"
 
 #: ../app/actions/layers-actions.c:431
 msgctxt "layers-action"
@@ -7331,7 +7358,7 @@ msgstr "A_lfa ɣer tefrayt"
 #: ../app/actions/layers-actions.c:532
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
-msgstr ""
+msgstr "Semselsi tafrayt s ubadu alfa n tissi"
 
 #: ../app/actions/layers-actions.c:537
 msgctxt "layers-action"
@@ -7351,7 +7378,7 @@ msgstr "_Sukkes-d Alfa si tefrayt"
 #: ../app/actions/layers-actions.c:546
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr ""
+msgstr "Sukks-d abadu alfa n tissi si tefrayt tamirant"
 
 #: ../app/actions/layers-actions.c:551
 msgctxt "layers-action"
@@ -7361,7 +7388,7 @@ msgstr "Se_nmideg Alfa akked tefrayt"
 #: ../app/actions/layers-actions.c:553
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr ""
+msgstr "Senmideg abadu alfa n tissi si tefrayt tamirant"
 
 #: ../app/actions/layers-actions.c:561
 msgctxt "layers-action"
@@ -7638,7 +7665,7 @@ msgstr "Rnu abadu alfa"
 msgid "Remove Alpha Channel"
 msgstr "Kkes abadu alfa"
 
-#: ../app/actions/layers-commands.c:1721 ../app/core/gimpchannel-select.c:421
+#: ../app/actions/layers-commands.c:1721 ../app/core/gimpchannel-select.c:425
 #: ../app/core/gimplayer.c:442
 msgctxt "undo-type"
 msgid "Alpha to Selection"
@@ -7674,11 +7701,11 @@ msgstr ""
 
 #: ../app/actions/layers-commands.c:1941
 msgid "Set layers' composite space"
-msgstr ""
+msgstr "Sbadu tallunt tamuddist n tissi"
 
 #: ../app/actions/layers-commands.c:1994
 msgid "Set layers' composite mode"
-msgstr ""
+msgstr "Sbadu askar amuddis n tissi"
 
 #: ../app/actions/layers-commands.c:2063 ../app/widgets/gimpitemtreeview.c:1683
 msgid "Lock content"
@@ -8125,7 +8152,7 @@ msgstr "Umuɣ n tneqqiḍin n ulemmec"
 #: ../app/actions/sample-points-actions.c:47
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
-msgstr ""
+msgstr "Alemmec imezdin"
 
 #: ../app/actions/sample-points-actions.c:49
 msgctxt "sample-points-action"
@@ -8190,7 +8217,7 @@ msgstr "Silwiɣ..."
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
-msgstr ""
+msgstr "Sluɣ iri n tefrayt akked ad yefsi s wemzay"
 
 #: ../app/actions/select-actions.c:81
 msgctxt "select-action"
@@ -8200,7 +8227,7 @@ msgstr "Se_msed"
 #: ../app/actions/select-actions.c:82
 msgctxt "select-action"
 msgid "Remove fuzziness from the selection"
-msgstr ""
+msgstr "Kkes tamewẓit si tefrayt"
 
 #: ../app/actions/select-actions.c:87
 msgctxt "select-action"
@@ -8334,11 +8361,11 @@ msgstr "Simɣur tafrayt s"
 
 #: ../app/actions/select-commands.c:358
 msgid "Border Selection"
-msgstr ""
+msgstr "Tafrayt n yiri"
 
 #: ../app/actions/select-commands.c:362
 msgid "Border selection by"
-msgstr ""
+msgstr "Tafrayt n yiri s"
 
 #: ../app/actions/select-commands.c:375
 msgid "Border style"
@@ -8487,7 +8514,7 @@ msgstr ""
 #: ../app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "Ubdid, seg uyefus s azelmaḍ (taɣda ixelḍen)"
 
 #: ../app/actions/text-editor-actions.c:77
 msgctxt "text-editor-action"
@@ -8497,7 +8524,7 @@ msgstr ""
 #: ../app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "Ubdid, seg uyefus s azelmaḍ (taɣda s ibeddi)"
 
 #: ../app/actions/text-editor-actions.c:83
 msgctxt "text-editor-action"
@@ -8507,7 +8534,7 @@ msgstr ""
 #: ../app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "Ubdid, seg uzelmaḍ s ayefus (taɣda ixelḍen)"
 
 #: ../app/actions/text-editor-actions.c:89
 msgctxt "text-editor-action"
@@ -8517,12 +8544,12 @@ msgstr ""
 #: ../app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "Ubdid, seg uzelmaḍ s ayefus (taɣda s ibeddi)"
 
 #: ../app/actions/text-editor-commands.c:61
 #: ../app/actions/text-tool-commands.c:119
 msgid "Open Text File (UTF-8)"
-msgstr ""
+msgstr "Ldi afaylu aḍris (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:66
 #: ../app/actions/text-tool-commands.c:124
@@ -8541,7 +8568,7 @@ msgstr "_Ldi"
 #: ../app/widgets/gimptextbuffer.c:1663
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr ""
+msgstr "D awezɣi alday n '%s' i tɣuri: %s"
 
 #: ../app/actions/text-tool-actions.c:50
 msgctxt "text-tool-action"
@@ -8596,7 +8623,7 @@ msgstr "A_brid seg uḍris"
 #: ../app/actions/text-tool-actions.c:91
 msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
-msgstr ""
+msgstr "Snulfu-d abrid seg yiran n uḍris amiran"
 
 #: ../app/actions/text-tool-actions.c:96
 msgctxt "text-tool-action"
@@ -8606,7 +8633,7 @@ msgstr "Aḍris i_zazedwen abrid"
 #: ../app/actions/text-tool-actions.c:98
 msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
-msgstr ""
+msgstr "Zleg aḍris ɣef teɣzi n ubrid urmid"
 
 #: ../app/actions/text-tool-actions.c:106
 msgctxt "text-tool-action"
@@ -8621,22 +8648,22 @@ msgstr "Seg uyeffus s azelmaḍ"
 #: ../app/actions/text-tool-actions.c:116
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "Ubdid, seg uyefus s azelmaḍ (taɣda ixelḍen)"
 
 #: ../app/actions/text-tool-actions.c:121
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "Ubdid, seg uyefus s azelmaḍ (taɣda s ibeddi)"
 
 #: ../app/actions/text-tool-actions.c:126
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "Ubdid, seg uzelmaḍ s ayefus (taɣda ixelḍen)"
 
 #: ../app/actions/text-tool-actions.c:131
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "Ubdid, seg uzelmaḍ s ayefus (taɣda s ibeddi)"
 
 #: ../app/actions/tool-options-actions.c:58
 msgctxt "tool-options-action"
@@ -9142,7 +9169,7 @@ msgstr "Tiɣmert n ufecku: sali s 15°"
 #: ../app/actions/tools-actions.c:435
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease Relative"
-msgstr ""
+msgstr "Tiɣmert n ufecku: senqes s wassaɣ"
 
 #: ../app/actions/tools-actions.c:439
 msgctxt "tools-action"
@@ -9302,7 +9329,7 @@ msgstr "Lǧehd n ufecku: sali s wassaɣ"
 #: ../app/actions/vector-toolpath-actions.c:45
 msgctxt "vector-toolpath-action"
 msgid "Vector Toolpath Menu"
-msgstr ""
+msgstr "Umuɣ n ufecku Aḍris"
 
 #: ../app/actions/vector-toolpath-actions.c:49
 msgctxt "vector-toolpath-action"
@@ -9312,7 +9339,7 @@ msgstr "_Kkes tamdeyt"
 #: ../app/actions/vector-toolpath-actions.c:53
 msgctxt "vector-toolpath-action"
 msgid "Shift S_tart"
-msgstr ""
+msgstr "Tazwara n usekḥeṛ"
 
 #: ../app/actions/vector-toolpath-actions.c:58
 msgctxt "vector-toolpath-action"
@@ -9327,7 +9354,7 @@ msgstr "Kkes _iɣil"
 #: ../app/actions/vector-toolpath-actions.c:66
 msgctxt "vector-toolpath-action"
 msgid "_Reverse Stroke"
-msgstr ""
+msgstr "Tti asuneɣ"
 
 #: ../app/actions/vectors-actions.c:46
 msgctxt "vectors-action"
@@ -9512,13 +9539,13 @@ msgstr "Senfel ta_walit n ubrid"
 #: ../app/actions/vectors-actions.c:172
 msgctxt "vectors-action"
 msgid "Toggle Path _Linked State"
-msgstr ""
+msgstr "Sermed/sens addad n useɣwen yurzen"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
 msgctxt "vectors-action"
 msgid "L_ock Strokes of Path"
-msgstr ""
+msgstr "Sekkeṛ unuɣen n ubrid"
 
 #: ../app/actions/vectors-actions.c:184
 msgctxt "vectors-action"
@@ -9663,7 +9690,7 @@ msgstr "Ta_nmidegt akked tefrayt"
 #: ../app/actions/vectors-actions.c:275
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
-msgstr ""
+msgstr "Senmideg abrid akked tefrayt"
 
 #: ../app/actions/vectors-actions.c:283
 msgctxt "vectors-action"
@@ -9774,7 +9801,7 @@ msgstr "Tuttya akked tuzzya"
 #: ../app/actions/view-actions.c:72
 msgctxt "view-action"
 msgid "_Padding Color"
-msgstr ""
+msgstr "Ini n udeffes"
 
 #: ../app/actions/view-actions.c:75
 msgctxt "view-action"
@@ -9954,12 +9981,12 @@ msgstr "Tan_qiḍt s tenqiḍt"
 #: ../app/actions/view-actions.c:185
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
-msgstr ""
+msgstr "Apiksel ɣef ugdil ittuneḥsab d apiksel n tugna"
 
 #: ../app/actions/view-actions.c:191
 msgctxt "view-action"
 msgid "_Color-Manage this View"
-msgstr ""
+msgstr "Asefrek n yiniten n tmuɣli-agi"
 
 #: ../app/actions/view-actions.c:192
 msgctxt "view-action"
@@ -9969,7 +9996,7 @@ msgstr "Seqdec asefrek n yini i tmuɣli-agi"
 #: ../app/actions/view-actions.c:198
 msgctxt "view-action"
 msgid "_Proof Colors"
-msgstr ""
+msgstr "Initen n useɣti"
 
 #: ../app/actions/view-actions.c:199
 msgctxt "view-action"
@@ -10071,7 +10098,7 @@ msgstr "Senṭeḍ ɣer yi_mniren"
 #: ../app/actions/view-actions.c:270
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
-msgstr ""
+msgstr "Reyyec timehlin n yifecka ɣer imniren"
 
 #: ../app/actions/view-actions.c:276
 msgctxt "view-action"
@@ -10081,7 +10108,7 @@ msgstr "Senṭeḍ ɣer uferrug"
 #: ../app/actions/view-actions.c:277
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
-msgstr ""
+msgstr "Reyyec timehlin n yifecka ɣer tferrugt"
 
 #: ../app/actions/view-actions.c:283
 msgctxt "view-action"
@@ -10091,7 +10118,7 @@ msgstr "Senṭeḍ s imedran n te_ɣzut n usuneɣ"
 #: ../app/actions/view-actions.c:284
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
-msgstr ""
+msgstr "Reyyec timehlin n yifecka ɣer imedran n teɣzut n usuneɣ"
 
 #: ../app/actions/view-actions.c:290
 msgctxt "view-action"
@@ -10101,7 +10128,7 @@ msgstr "Senṭeḍ s _abrid urmid"
 #: ../app/actions/view-actions.c:291
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
-msgstr ""
+msgstr "Reyyec timehlin n yifecka ɣer ebrid urmid"
 
 #: ../app/actions/view-actions.c:297
 msgctxt "view-action"
@@ -10201,17 +10228,17 @@ msgstr "Semɣer"
 #: ../app/actions/view-actions.c:374
 msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
-msgstr ""
+msgstr "Simẓi aṭas"
 
 #: ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
-msgstr ""
+msgstr "Simɣur aṭas"
 
 #: ../app/actions/view-actions.c:387 ../app/actions/view-actions.c:393
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
-msgstr ""
+msgstr "1_6:1  (1600%)"
 
 #: ../app/actions/view-actions.c:388 ../app/actions/view-actions.c:394
 msgctxt "view-zoom-action"
@@ -10301,12 +10328,12 @@ msgstr "Zoom 1:16"
 #: ../app/actions/view-actions.c:471
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr ""
+msgstr "Amuskir-nniḍen n usemɣer..."
 
 #: ../app/actions/view-actions.c:472
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
-msgstr ""
+msgstr "Sbadu amuskir yugnen n usemɣer"
 
 #: ../app/actions/view-actions.c:480
 msgctxt "view-action"
@@ -10366,7 +10393,7 @@ msgstr "Tuzzya s _180°"
 #: ../app/actions/view-actions.c:525
 msgctxt "view-action"
 msgid "Turn the view upside-down"
-msgstr ""
+msgstr "Tti abeqqeḍ"
 
 #: ../app/actions/view-actions.c:530
 msgctxt "view-action"
@@ -10496,17 +10523,17 @@ msgstr "Am wakken yella deg yi_menyafen"
 #: ../app/actions/view-actions.c:625
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
-msgstr ""
+msgstr "Ales awennez n yiniten n taččart ɣer wid yellan deg yismenyifen"
 
 #: ../app/actions/view-actions.c:633
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
-msgstr ""
+msgstr "Eǧǧ taččart deg uskar Sken akk"
 
 #: ../app/actions/view-actions.c:635
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
-msgstr ""
+msgstr "Eǧǧ taččart n teɣzut n usuneɣ ticki yermed Tamuɣli -> Sken akk"
 
 #: ../app/actions/view-actions.c:644
 msgctxt "view-action"
@@ -10581,11 +10608,11 @@ msgstr "Drurem asebter d akessar"
 #: ../app/actions/view-actions.c:943
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
-msgstr ""
+msgstr "Asemɣer yezrin (%d%%)"
 
 #: ../app/actions/view-actions.c:951
 msgid "Re_vert Zoom"
-msgstr ""
+msgstr "Tti asemɣer"
 
 #: ../app/actions/view-actions.c:1131
 #, c-format
@@ -10595,7 +10622,7 @@ msgstr "Wa_yeḍ (%s)..."
 #: ../app/actions/view-actions.c:1140
 #, c-format
 msgid "_Zoom (%s)"
-msgstr ""
+msgstr "Asemɣer (%s)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
@@ -10622,11 +10649,11 @@ msgstr "_Tti %s& zzi (%d°)"
 
 #: ../app/actions/view-commands.c:1123
 msgid "Set Canvas Padding Color"
-msgstr ""
+msgstr "Sbadu ini n taččart n teɣzut n usuneɣ"
 
 #: ../app/actions/view-commands.c:1125
 msgid "Set Custom Canvas Padding Color"
-msgstr ""
+msgstr "Sbadu ini yugnen n taččart n teɣzut n usuneɣ"
 
 #: ../app/actions/window-actions.c:193
 #, c-format
@@ -10664,7 +10691,7 @@ msgstr "I_sfuyla"
 #: ../app/actions/windows-actions.c:104
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
-msgstr ""
+msgstr "Igrawen n yisfuyla imedlen melmi kan"
 
 #: ../app/actions/windows-actions.c:106
 msgctxt "windows-action"
@@ -10926,7 +10953,7 @@ msgstr ""
 #: ../app/config/config-enums.c:282
 msgctxt "window-hint"
 msgid "Keep above"
-msgstr ""
+msgstr "Eǧǧ nnig"
 
 #: ../app/config/config-enums.c:310
 msgctxt "zoom-quality"
@@ -10946,7 +10973,7 @@ msgstr "D awezɣi alday n '%s' i tira: %s"
 #: ../app/config/gimpconfig-file.c:116
 #, c-format
 msgid "Error parsing '%%s': line longer than %s characters."
-msgstr ""
+msgstr "Tuccḍa di tesleḍ n '%%s': izirig iɛedda %s n yisekkilen."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
 #: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:326
@@ -10968,12 +10995,14 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
+"Tella-d tuccḍa di tesleḍt n ufaylu '%s' inek. Azalen n lexṣas ad "
+"ttwasqedcen. Aḥraz n twila-inek yenulfa-d di '%s'."
 
-#: ../app/config/gimpdialogconfig.c:307 ../app/core/gimplayer.c:434
+#: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:434
 msgid "Layer"
 msgstr "Tissi"
 
-#: ../app/config/gimpdialogconfig.c:407 ../app/core/gimpchannel.c:255
+#: ../app/config/gimpdialogconfig.c:416 ../app/core/gimpchannel.c:255
 #: ../app/operations/gimpcurvesconfig.c:119
 #: ../app/operations/gimplevelsconfig.c:124
 #: ../app/operations/gimpoperationthreshold.c:90
@@ -10981,7 +11010,7 @@ msgstr "Tissi"
 msgid "Channel"
 msgstr "Abadu"
 
-#: ../app/config/gimpdialogconfig.c:422 ../app/vectors/gimpvectors.c:225
+#: ../app/config/gimpdialogconfig.c:431 ../app/vectors/gimpvectors.c:225
 #: ../app/widgets/gimpvectorstreeview.c:252
 msgid "Path"
 msgstr "Abrid"
@@ -11006,21 +11035,25 @@ msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
 msgstr ""
+"Ad isadu ini n taččart n teɣzut n usuneɣ yettwasqedcen ma yella askar n "
+"taččart yettusbadu ɣer yini yugnen."
 
 #: ../app/config/gimprc-blurbs.h:37
 msgid ""
 "Specifies whether to keep the canvas padding when \"View -> Show All\" is "
 "enabled."
 msgstr ""
+"Immal ma yella taččart n teɣzut n usuneɣ ad teqqim ticki yermed \"Tamuɣli -> "
+"Sken akk\"."
 
 #: ../app/config/gimprc-blurbs.h:41
 msgid "Specifies how the area around the image should be drawn."
-msgstr ""
+msgstr "Immal amek i dyewwi ad tettwasuneɣ teɣut i d-yezzin i tugna."
 
 #: ../app/config/gimprc-blurbs.h:44
 msgid ""
 "Check for availability of GIMP updates through background internet queries."
-msgstr ""
+msgstr "Nadi ma wejden ileqman n GIMP s tuttriwin n internet deg ugilal."
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
@@ -11235,240 +11268,244 @@ msgid ""
 "take more memory than the size specified here."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:291
+#: ../app/config/gimprc-blurbs.h:285
+msgid "How to handle \"Orientation\" metadata when opening a file."
+msgstr ""
+
+#: ../app/config/gimprc-blurbs.h:294
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:296
+#: ../app/config/gimprc-blurbs.h:299
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:301
+#: ../app/config/gimprc-blurbs.h:304
 msgid "When enabled, non-visible layers can be edited as normal."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:304
+#: ../app/config/gimprc-blurbs.h:307
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:313
+#: ../app/config/gimprc-blurbs.h:316
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:317
+#: ../app/config/gimprc-blurbs.h:320
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:339
+#: ../app/config/gimprc-blurbs.h:342
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:344
+#: ../app/config/gimprc-blurbs.h:347
 msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:348
+#: ../app/config/gimprc-blurbs.h:351
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:352
+#: ../app/config/gimprc-blurbs.h:355
 msgid "Sets the default quick mask color."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:355
+#: ../app/config/gimprc-blurbs.h:358
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
 "mode."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:360
+#: ../app/config/gimprc-blurbs.h:363
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:365
+#: ../app/config/gimprc-blurbs.h:368
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:368
+#: ../app/config/gimprc-blurbs.h:371
 msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:373
+#: ../app/config/gimprc-blurbs.h:376
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:377
+#: ../app/config/gimprc-blurbs.h:380
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:382
+#: ../app/config/gimprc-blurbs.h:385
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:386
+#: ../app/config/gimprc-blurbs.h:389
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:389
+#: ../app/config/gimprc-blurbs.h:392
 msgid "Save the tool options when GIMP exits."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:395
+#: ../app/config/gimprc-blurbs.h:398
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:399
+#: ../app/config/gimprc-blurbs.h:402
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:403
+#: ../app/config/gimprc-blurbs.h:406
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:408
+#: ../app/config/gimprc-blurbs.h:411
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:412
+#: ../app/config/gimprc-blurbs.h:415
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:416
+#: ../app/config/gimprc-blurbs.h:419
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:420
+#: ../app/config/gimprc-blurbs.h:423
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:424
+#: ../app/config/gimprc-blurbs.h:427
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:428
+#: ../app/config/gimprc-blurbs.h:431
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:432
+#: ../app/config/gimprc-blurbs.h:435
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:436
+#: ../app/config/gimprc-blurbs.h:439
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:440
+#: ../app/config/gimprc-blurbs.h:443
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:444
+#: ../app/config/gimprc-blurbs.h:447
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:448
+#: ../app/config/gimprc-blurbs.h:451
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:452
+#: ../app/config/gimprc-blurbs.h:455
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:455
+#: ../app/config/gimprc-blurbs.h:458
 msgid "Use GIMP in a single-window mode."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:458
+#: ../app/config/gimprc-blurbs.h:461
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:461
+#: ../app/config/gimprc-blurbs.h:464
 msgid "Show the image tabs bar in single window mode."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:464
+#: ../app/config/gimprc-blurbs.h:467
 msgid "Enable the N-Point Deformation tool."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:467
+#: ../app/config/gimprc-blurbs.h:470
 msgid "Enable the Handle Transform tool."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:470
+#: ../app/config/gimprc-blurbs.h:473
 msgid "Enable symmetry on painting."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:473
+#: ../app/config/gimprc-blurbs.h:476
 msgid "Enable the MyPaint Brush tool."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:476
+#: ../app/config/gimprc-blurbs.h:479
 msgid "Enable the Seamless Clone tool."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:479
+#: ../app/config/gimprc-blurbs.h:482
 msgid "What to do when the space bar is pressed in the image window."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:482
+#: ../app/config/gimprc-blurbs.h:485
 msgid "The compression method used for tile data stored in the swap file."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:485
+#: ../app/config/gimprc-blurbs.h:488
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -11478,21 +11515,21 @@ msgid ""
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:494
+#: ../app/config/gimprc-blurbs.h:497
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:498
+#: ../app/config/gimprc-blurbs.h:501
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:501
+#: ../app/config/gimprc-blurbs.h:504
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:504
+#: ../app/config/gimprc-blurbs.h:507
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -11500,224 +11537,224 @@ msgid ""
 "shared by other users."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:510
+#: ../app/config/gimprc-blurbs.h:513
 msgid "The name of the theme to use."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:519
+#: ../app/config/gimprc-blurbs.h:522
 msgid "When enabled, symbolic icons will be preferred if available."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:525
+#: ../app/config/gimprc-blurbs.h:528
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:528
+#: ../app/config/gimprc-blurbs.h:531
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:532
+#: ../app/config/gimprc-blurbs.h:535
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:535
+#: ../app/config/gimprc-blurbs.h:538
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:538
+#: ../app/config/gimprc-blurbs.h:541
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:541
+#: ../app/config/gimprc-blurbs.h:544
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:544
+#: ../app/config/gimprc-blurbs.h:547
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:547
+#: ../app/config/gimprc-blurbs.h:550
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:550
+#: ../app/config/gimprc-blurbs.h:553
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:553
+#: ../app/config/gimprc-blurbs.h:556
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:556
+#: ../app/config/gimprc-blurbs.h:559
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:559
+#: ../app/config/gimprc-blurbs.h:562
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:562
+#: ../app/config/gimprc-blurbs.h:565
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:565
+#: ../app/config/gimprc-blurbs.h:568
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:568
+#: ../app/config/gimprc-blurbs.h:571
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:571
+#: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:574
+#: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:577
+#: ../app/config/gimprc-blurbs.h:580
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:580
+#: ../app/config/gimprc-blurbs.h:583
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:583
+#: ../app/config/gimprc-blurbs.h:586
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:586
+#: ../app/config/gimprc-blurbs.h:589
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:589
+#: ../app/config/gimprc-blurbs.h:592
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:592
+#: ../app/config/gimprc-blurbs.h:595
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:595
+#: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:598
-msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
-msgstr ""
-
 #: ../app/config/gimprc-blurbs.h:601
-msgid ""
-"Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
+msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:604
 msgid ""
-"Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
+"Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:607
-msgid "Sets the default channel name for the 'New Channel' dialog."
+msgid ""
+"Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:610
-msgid "Sets the default color and opacity for the 'New Channel' dialog."
+msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:613
-msgid "Sets the default path name for the 'New Path' dialog."
+msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:616
-msgid "Sets the default folder path for the 'Export Path' dialog."
+msgid "Sets the default path name for the 'New Path' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:619
+msgid "Sets the default folder path for the 'Export Path' dialog."
+msgstr ""
+
+#: ../app/config/gimprc-blurbs.h:622
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:622
+#: ../app/config/gimprc-blurbs.h:625
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:625
+#: ../app/config/gimprc-blurbs.h:628
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:628
+#: ../app/config/gimprc-blurbs.h:631
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:631
+#: ../app/config/gimprc-blurbs.h:634
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr "Sbadu aqar n lexṣas i udiwenni 'Silwiɣ tafrayt'."
 
-#: ../app/config/gimprc-blurbs.h:634
+#: ../app/config/gimprc-blurbs.h:637
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:638
+#: ../app/config/gimprc-blurbs.h:641
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:641
+#: ../app/config/gimprc-blurbs.h:644
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:644
+#: ../app/config/gimprc-blurbs.h:647
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:648
+#: ../app/config/gimprc-blurbs.h:651
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:651
+#: ../app/config/gimprc-blurbs.h:654
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:655
+#: ../app/config/gimprc-blurbs.h:658
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:664
+#: ../app/config/gimprc-blurbs.h:667
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:667
+#: ../app/config/gimprc-blurbs.h:670
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:671
+#: ../app/config/gimprc-blurbs.h:674
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -11725,70 +11762,70 @@ msgid ""
 "you may want to set this to a higher value."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:677
+#: ../app/config/gimprc-blurbs.h:680
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:680
+#: ../app/config/gimprc-blurbs.h:683
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:683
+#: ../app/config/gimprc-blurbs.h:686
 msgid "Use a single toolbox button for grouped tools."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:686
+#: ../app/config/gimprc-blurbs.h:689
 msgid "Show the currently active image in the toolbox."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:689
+#: ../app/config/gimprc-blurbs.h:692
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:692
+#: ../app/config/gimprc-blurbs.h:695
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:695
+#: ../app/config/gimprc-blurbs.h:698
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:698
+#: ../app/config/gimprc-blurbs.h:701
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:702
+#: ../app/config/gimprc-blurbs.h:705
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:706
+#: ../app/config/gimprc-blurbs.h:709
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:711
+#: ../app/config/gimprc-blurbs.h:714
 msgid "Sets the size of the previews in the Undo History."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:714
+#: ../app/config/gimprc-blurbs.h:717
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:717
+#: ../app/config/gimprc-blurbs.h:720
 msgid "When enabled, uses OpenCL for some operations."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:735
+#: ../app/config/gimprc-blurbs.h:738
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:738
+#: ../app/config/gimprc-blurbs.h:741
 msgid "The maximum number of actions saved in history."
 msgstr ""
 
@@ -11851,7 +11888,7 @@ msgstr ""
 #: ../app/core/core-enums.c:145
 msgctxt "channel-border-style"
 msgid "Hard"
-msgstr ""
+msgstr "Ẓẓay"
 
 #: ../app/core/core-enums.c:146
 msgctxt "channel-border-style"
@@ -11908,866 +11945,886 @@ msgctxt "color-pick-mode"
 msgid "CIE Yu'v'"
 msgstr ""
 
-#: ../app/core/core-enums.c:219
+#: ../app/core/core-enums.c:220
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Steqsi d acu ara tgeḍ"
 
-#: ../app/core/core-enums.c:220
+#: ../app/core/core-enums.c:221
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Ḥrez alegdis usliɣ"
 
-#: ../app/core/core-enums.c:221
+#: ../app/core/core-enums.c:222
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
 msgstr ""
 
-#: ../app/core/core-enums.c:315
-msgctxt "convert-dither-type"
-msgid "None"
-msgstr "Ula yiwen"
-
-#: ../app/core/core-enums.c:316
-msgctxt "convert-dither-type"
-msgid "Floyd-Steinberg (normal)"
+#: ../app/core/core-enums.c:223
+msgctxt "color-profile-policy"
+msgid "Convert to preferred sRGB or grayscale profile (defaulting to built-in)"
 msgstr ""
 
 #: ../app/core/core-enums.c:317
 msgctxt "convert-dither-type"
+msgid "None"
+msgstr "Ula yiwen"
+
+#: ../app/core/core-enums.c:318
+msgctxt "convert-dither-type"
+msgid "Floyd-Steinberg (normal)"
+msgstr ""
+
+#: ../app/core/core-enums.c:319
+msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (reduced color bleeding)"
 msgstr ""
 
-#: ../app/core/core-enums.c:318
+#: ../app/core/core-enums.c:320
 msgctxt "convert-dither-type"
 msgid "Positioned"
 msgstr ""
 
-#: ../app/core/core-enums.c:377
+#: ../app/core/core-enums.c:379
 msgctxt "curve-point-type"
 msgid "Smooth"
 msgstr "Mzi"
 
-#: ../app/core/core-enums.c:378
+#: ../app/core/core-enums.c:380
 msgctxt "curve-point-type"
 msgid "Corner"
 msgstr "Tiɣmert"
 
-#: ../app/core/core-enums.c:406
+#: ../app/core/core-enums.c:408
 msgctxt "curve-type"
 msgid "Smooth"
 msgstr "Mzi"
 
-#: ../app/core/core-enums.c:407
+#: ../app/core/core-enums.c:409
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "Suneɣ s ufus ilelli"
 
-#: ../app/core/core-enums.c:444
+#: ../app/core/core-enums.c:446
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Sagen"
 
-#: ../app/core/core-enums.c:445
+#: ../app/core/core-enums.c:447
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Ajerriḍ"
 
-#: ../app/core/core-enums.c:446
+#: ../app/core/core-enums.c:448
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Tijerriḍin tiɣezfanin"
 
-#: ../app/core/core-enums.c:447
+#: ../app/core/core-enums.c:449
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Tijerriḍin tilemmasin"
 
-#: ../app/core/core-enums.c:448
+#: ../app/core/core-enums.c:450
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Tijerriḍin tiwezlanin"
 
-#: ../app/core/core-enums.c:449
+#: ../app/core/core-enums.c:451
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Tinqiḍin i ittwazuzren"
 
-#: ../app/core/core-enums.c:450
+#: ../app/core/core-enums.c:452
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Tinqiḍin timagnutin"
 
-#: ../app/core/core-enums.c:451
+#: ../app/core/core-enums.c:453
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Tinqiḍin yesseden"
 
-#: ../app/core/core-enums.c:452
+#: ../app/core/core-enums.c:454
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr ""
 
-#: ../app/core/core-enums.c:453
+#: ../app/core/core-enums.c:455
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Tajerriḍ, tanqiḍt"
 
-#: ../app/core/core-enums.c:454
+#: ../app/core/core-enums.c:456
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Tajerriḍ, tanqiḍt, tanqiḍt"
 
-#: ../app/core/core-enums.c:484
+#: ../app/core/core-enums.c:486
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
 msgstr "Seɣti ilɣa, tuccḍiwin iweɛren akked iɣelluyen"
 
-#: ../app/core/core-enums.c:485
+#: ../app/core/core-enums.c:487
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
 msgstr "Seɣti tuccḍiwin iweɛren akked iɣelluyen"
 
-#: ../app/core/core-enums.c:486
+#: ../app/core/core-enums.c:488
 msgctxt "debug-policy"
 msgid "Debug crashes only"
 msgstr "Seɣti kan iɣelluyen"
 
-#: ../app/core/core-enums.c:487
+#: ../app/core/core-enums.c:489
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
 msgstr "Werǧin ad tseɣtiḍ GIMP"
 
-#: ../app/core/core-enums.c:573
+#: ../app/core/core-enums.c:575
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Tiḍullest"
 
-#: ../app/core/core-enums.c:574
+#: ../app/core/core-enums.c:576
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Tiddi"
 
-#: ../app/core/core-enums.c:575
+#: ../app/core/core-enums.c:577
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Tiɣmert"
 
-#: ../app/core/core-enums.c:576
+#: ../app/core/core-enums.c:578
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Ini"
 
-#: ../app/core/core-enums.c:577
+#: ../app/core/core-enums.c:579
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr ""
 
-#: ../app/core/core-enums.c:578
+#: ../app/core/core-enums.c:580
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Lǧehd"
 
-#: ../app/core/core-enums.c:579
+#: ../app/core/core-enums.c:581
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Atug n tmeẓriwt"
 
-#: ../app/core/core-enums.c:580
+#: ../app/core/core-enums.c:582
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Tallunt"
 
-#: ../app/core/core-enums.c:581
+#: ../app/core/core-enums.c:583
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Atug"
 
-#: ../app/core/core-enums.c:582
+#: ../app/core/core-enums.c:584
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr ""
 
-#: ../app/core/core-enums.c:583
+#: ../app/core/core-enums.c:585
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr ""
 
-#: ../app/core/core-enums.c:611
+#: ../app/core/core-enums.c:613
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "Ini amsari"
 
-#: ../app/core/core-enums.c:612
+#: ../app/core/core-enums.c:614
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Udlif"
 
-#: ../app/core/core-enums.c:640
+#: ../app/core/core-enums.c:642
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Seqdec tafrayt am unekcum"
 
-#: ../app/core/core-enums.c:641
+#: ../app/core/core-enums.c:643
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Seqdec tissi meṛṛa am unekcum"
 
-#: ../app/core/core-enums.c:672
+#: ../app/core/core-enums.c:674
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "Usbiḍ"
 
-#: ../app/core/core-enums.c:673
+#: ../app/core/core-enums.c:675
 msgctxt "gradient-color"
 msgid "Foreground color"
 msgstr "Ini n uɣawas amezwaru"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
-#: ../app/core/core-enums.c:676
+#: ../app/core/core-enums.c:678
 msgctxt "gradient-color"
 msgid "FG"
 msgstr ""
 
-#: ../app/core/core-enums.c:677
+#: ../app/core/core-enums.c:679
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
 msgstr "Ini n uɣawas amezwaru (tafrawant)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
-#: ../app/core/core-enums.c:680
+#: ../app/core/core-enums.c:682
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr ""
 
-#: ../app/core/core-enums.c:681
+#: ../app/core/core-enums.c:683
 msgctxt "gradient-color"
 msgid "Background color"
 msgstr "Ini n ugilal"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
-#: ../app/core/core-enums.c:684
+#: ../app/core/core-enums.c:686
 msgctxt "gradient-color"
 msgid "BG"
 msgstr ""
 
-#: ../app/core/core-enums.c:685
+#: ../app/core/core-enums.c:687
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
 msgstr "Ini n ugilal (Afrawan)"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
-#: ../app/core/core-enums.c:688
+#: ../app/core/core-enums.c:690
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr ""
 
-#: ../app/core/core-enums.c:801
+#: ../app/core/core-enums.c:803
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "Azal"
 
-#: ../app/core/core-enums.c:802
+#: ../app/core/core-enums.c:804
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "Azeggaɣ"
 
-#: ../app/core/core-enums.c:803
+#: ../app/core/core-enums.c:805
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "Azegzaw"
 
-#: ../app/core/core-enums.c:804
+#: ../app/core/core-enums.c:806
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "Anili"
 
-#: ../app/core/core-enums.c:805
+#: ../app/core/core-enums.c:807
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../app/core/core-enums.c:806
+#: ../app/core/core-enums.c:808
 msgctxt "histogram-channel"
 msgid "Luminance"
 msgstr ""
 
-#: ../app/core/core-enums.c:807
+#: ../app/core/core-enums.c:809
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../app/core/core-enums.c:838
+#: ../app/core/core-enums.c:840
 msgctxt "item-set"
 msgid "None"
 msgstr "Ula yiwen"
 
-#: ../app/core/core-enums.c:839
+#: ../app/core/core-enums.c:841
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Akk tissiyin"
 
-#: ../app/core/core-enums.c:840
+#: ../app/core/core-enums.c:842
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr ""
 
-#: ../app/core/core-enums.c:841
+#: ../app/core/core-enums.c:843
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Akk tissiyin yettbanen"
 
-#: ../app/core/core-enums.c:842
+#: ../app/core/core-enums.c:844
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr ""
 
-#: ../app/core/core-enums.c:870
+#: ../app/core/core-enums.c:872
 msgctxt "matting-engine"
 msgid "Matting Global"
 msgstr ""
 
-#: ../app/core/core-enums.c:871
+#: ../app/core/core-enums.c:873
 msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr ""
 
-#: ../app/core/core-enums.c:902
+#: ../app/core/core-enums.c:904
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Izen"
 
-#: ../app/core/core-enums.c:903
+#: ../app/core/core-enums.c:905
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Asmigel"
 
-#: ../app/core/core-enums.c:904
+#: ../app/core/core-enums.c:906
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Tuccḍa"
 
-#: ../app/core/core-enums.c:905
+#: ../app/core/core-enums.c:907
 msgctxt "message-severity"
 msgid "WARNING"
 msgstr ""
 
-#: ../app/core/core-enums.c:906
+#: ../app/core/core-enums.c:908
 msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr ""
 
-#: ../app/core/core-enums.c:972
+#: ../app/core/core-enums.c:937
+msgctxt "metadata-rotation-policy"
+msgid "Ask what to do"
+msgstr "Steqsi d acu ara tgeḍ"
+
+#: ../app/core/core-enums.c:938
+msgctxt "metadata-rotation-policy"
+msgid "Discard metadata without rotating"
+msgstr ""
+
+#: ../app/core/core-enums.c:939
+msgctxt "metadata-rotation-policy"
+msgid "Rotate the image then discard metadata"
+msgstr ""
+
+#: ../app/core/core-enums.c:1005
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Ulac tinfulin"
 
-#: ../app/core/core-enums.c:973
+#: ../app/core/core-enums.c:1006
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Amagnu (128x128)"
 
-#: ../app/core/core-enums.c:974
+#: ../app/core/core-enums.c:1007
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Ameqran (256x256)"
 
-#: ../app/core/core-enums.c:1003
+#: ../app/core/core-enums.c:1036
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "Imzireg"
 
-#: ../app/core/core-enums.c:1004
+#: ../app/core/core-enums.c:1037
 msgctxt "trc-type"
 msgid "Non-Linear"
 msgstr "Mačči-d-imzireg"
 
-#: ../app/core/core-enums.c:1005
+#: ../app/core/core-enums.c:1038
 msgctxt "trc-type"
 msgid "Perceptual"
 msgstr ""
 
-#: ../app/core/core-enums.c:1203
+#: ../app/core/core-enums.c:1236
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<armeɣtu>>"
 
-#: ../app/core/core-enums.c:1204
+#: ../app/core/core-enums.c:1237
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr ""
 
-#: ../app/core/core-enums.c:1205
+#: ../app/core/core-enums.c:1238
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr ""
 
-#: ../app/core/core-enums.c:1206
+#: ../app/core/core-enums.c:1239
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Zzi tugna"
 
-#: ../app/core/core-enums.c:1207
+#: ../app/core/core-enums.c:1240
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Zzi tugna"
 
-#: ../app/core/core-enums.c:1208
+#: ../app/core/core-enums.c:1241
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Selket tugna"
 
-#: ../app/core/core-enums.c:1209
+#: ../app/core/core-enums.c:1242
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Ɣeẓ tugna"
 
-#: ../app/core/core-enums.c:1210
+#: ../app/core/core-enums.c:1243
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Selket tugna"
 
-#: ../app/core/core-enums.c:1211
+#: ../app/core/core-enums.c:1244
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Kkes aferdis n wumuɣ"
 
-#: ../app/core/core-enums.c:1212 ../app/core/core-enums.c:1264
+#: ../app/core/core-enums.c:1245 ../app/core/core-enums.c:1297
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr ""
 
-#: ../app/core/core-enums.c:1213
+#: ../app/core/core-enums.c:1246
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Smezdi tissiyin"
 
-#: ../app/core/core-enums.c:1214
+#: ../app/core/core-enums.c:1247
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Smezdi iberdan"
 
-#: ../app/core/core-enums.c:1215
+#: ../app/core/core-enums.c:1248
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Tagelmust taruradt"
 
-#: ../app/core/core-enums.c:1216 ../app/core/core-enums.c:1254
+#: ../app/core/core-enums.c:1249 ../app/core/core-enums.c:1287
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Aferrug"
 
-#: ../app/core/core-enums.c:1217 ../app/core/core-enums.c:1258
+#: ../app/core/core-enums.c:1250 ../app/core/core-enums.c:1291
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Amnir"
 
-#: ../app/core/core-enums.c:1218 ../app/core/core-enums.c:1259
+#: ../app/core/core-enums.c:1251 ../app/core/core-enums.c:1292
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Tanqiḍt n ulemmec"
 
-#: ../app/core/core-enums.c:1219 ../app/core/core-enums.c:1260
+#: ../app/core/core-enums.c:1252 ../app/core/core-enums.c:1293
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Tissi/abrid"
 
-#: ../app/core/core-enums.c:1220 ../app/core/core-enums.c:1261
+#: ../app/core/core-enums.c:1253 ../app/core/core-enums.c:1294
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Abeddel n tissi/abadu"
 
-#: ../app/core/core-enums.c:1221 ../app/core/core-enums.c:1263
+#: ../app/core/core-enums.c:1254 ../app/core/core-enums.c:1296
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Tagelmust n tefrayt"
 
-#: ../app/core/core-enums.c:1222 ../app/core/core-enums.c:1267
+#: ../app/core/core-enums.c:1255 ../app/core/core-enums.c:1300
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Tawalit n uferdis"
 
-#: ../app/core/core-enums.c:1223 ../app/core/core-enums.c:1268
+#: ../app/core/core-enums.c:1256 ../app/core/core-enums.c:1301
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr ""
 
-#: ../app/core/core-enums.c:1224
+#: ../app/core/core-enums.c:1257
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Sekkeṛ/kkes asekkeṛ i wegbur"
 
-#: ../app/core/core-enums.c:1225 ../app/core/core-enums.c:1271
+#: ../app/core/core-enums.c:1258 ../app/core/core-enums.c:1304
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Sekkeṛ/kkes asekkeṛ ideg"
 
-#: ../app/core/core-enums.c:1226
+#: ../app/core/core-enums.c:1259
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Iraten n uferdis"
 
-#: ../app/core/core-enums.c:1227 ../app/core/core-enums.c:1266
+#: ../app/core/core-enums.c:1260 ../app/core/core-enums.c:1299
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Smutti aferdis"
 
-#: ../app/core/core-enums.c:1228
+#: ../app/core/core-enums.c:1261
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr ""
 
-#: ../app/core/core-enums.c:1229
+#: ../app/core/core-enums.c:1262
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr ""
 
-#: ../app/core/core-enums.c:1230
+#: ../app/core/core-enums.c:1263
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Rnu tissi"
 
-#: ../app/core/core-enums.c:1231
+#: ../app/core/core-enums.c:1264
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Rnu abadu alfa"
 
-#: ../app/core/core-enums.c:1232 ../app/core/core-enums.c:1287
+#: ../app/core/core-enums.c:1265 ../app/core/core-enums.c:1320
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Rnu tagelmust n tissi"
 
-#: ../app/core/core-enums.c:1233 ../app/core/core-enums.c:1289
+#: ../app/core/core-enums.c:1266 ../app/core/core-enums.c:1322
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Snes tagelmust n tissi"
 
-#: ../app/core/core-enums.c:1234
+#: ../app/core/core-enums.c:1267
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Kkes abadu alfa"
 
-#: ../app/core/core-enums.c:1235
+#: ../app/core/core-enums.c:1268
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Sekkeṛ/kkes asekkeṛ i yibuda alfa"
 
-#: ../app/core/core-enums.c:1236
+#: ../app/core/core-enums.c:1269
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Sbadu tiḍullest n tissi"
 
-#: ../app/core/core-enums.c:1237
+#: ../app/core/core-enums.c:1270
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Sbadu askar n tissi"
 
-#: ../app/core/core-enums.c:1238 ../app/core/core-enums.c:1297
+#: ../app/core/core-enums.c:1271 ../app/core/core-enums.c:1330
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Tafrayt yettifliwen ɣer tissi"
 
-#: ../app/core/core-enums.c:1239
+#: ../app/core/core-enums.c:1272
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Tafrayt yettifliwen"
 
-#: ../app/core/core-enums.c:1240
+#: ../app/core/core-enums.c:1273
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Semdey tafrayt yettifliwen"
 
-#: ../app/core/core-enums.c:1241 ../app/core/gimp-edit.c:549
+#: ../app/core/core-enums.c:1274 ../app/core/gimp-edit.c:549
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Senteḍ"
 
-#: ../app/core/core-enums.c:1242 ../app/core/gimp-edit.c:789
+#: ../app/core/core-enums.c:1275 ../app/core/gimp-edit.c:789
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Gzem"
 
-#: ../app/core/core-enums.c:1243
+#: ../app/core/core-enums.c:1276
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Aḍris"
 
-#: ../app/core/core-enums.c:1244 ../app/core/gimpdrawable-transform.c:721
+#: ../app/core/core-enums.c:1277 ../app/core/gimpdrawable-transform.c:721
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Selket"
 
-#: ../app/core/core-enums.c:1245 ../app/core/core-enums.c:1299
+#: ../app/core/core-enums.c:1278 ../app/core/core-enums.c:1332
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Klu"
 
-#: ../app/core/core-enums.c:1246 ../app/core/core-enums.c:1302
+#: ../app/core/core-enums.c:1279 ../app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr ""
 
-#: ../app/core/core-enums.c:1247 ../app/core/core-enums.c:1303
+#: ../app/core/core-enums.c:1280 ../app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr ""
 
-#: ../app/core/core-enums.c:1248
+#: ../app/core/core-enums.c:1281
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Kter iberdan"
 
-#: ../app/core/core-enums.c:1249
+#: ../app/core/core-enums.c:1282
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Asiɣzef"
 
-#: ../app/core/core-enums.c:1250
+#: ../app/core/core-enums.c:1283
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Anaw n tugna"
 
-#: ../app/core/core-enums.c:1251
+#: ../app/core/core-enums.c:1284
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr ""
 
-#: ../app/core/core-enums.c:1252
+#: ../app/core/core-enums.c:1285
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Tiddi n tugna"
 
-#: ../app/core/core-enums.c:1253
+#: ../app/core/core-enums.c:1286
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Abeddel n tbadut n tugna"
 
-#: ../app/core/core-enums.c:1255
+#: ../app/core/core-enums.c:1288
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr ""
 
-#: ../app/core/core-enums.c:1256
+#: ../app/core/core-enums.c:1289
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr ""
 
-#: ../app/core/core-enums.c:1257
+#: ../app/core/core-enums.c:1290
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr ""
 
-#: ../app/core/core-enums.c:1262
+#: ../app/core/core-enums.c:1295
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "Amasal n tissi/abadu"
 
-#: ../app/core/core-enums.c:1265
+#: ../app/core/core-enums.c:1298
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Beddel isem n uferdis"
 
-#: ../app/core/core-enums.c:1269
+#: ../app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Ticreḍt n yini n uferdis"
 
-#: ../app/core/core-enums.c:1270
+#: ../app/core/core-enums.c:1303
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Sekkeṛ/kkes asekkeṛ agbur"
 
-#: ../app/core/core-enums.c:1272
+#: ../app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Tissi tamaynutt"
 
-#: ../app/core/core-enums.c:1273
+#: ../app/core/core-enums.c:1306
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Kkes tissi"
 
-#: ../app/core/core-enums.c:1274
+#: ../app/core/core-enums.c:1307
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Sbadu askar n tissi"
 
-#: ../app/core/core-enums.c:1275
+#: ../app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Sbadu tiḍullest n tissi"
 
-#: ../app/core/core-enums.c:1276
+#: ../app/core/core-enums.c:1309
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Sekkeṛ/kkes asekkeṛ abadu alfa"
 
-#: ../app/core/core-enums.c:1277
+#: ../app/core/core-enums.c:1310
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr ""
 
-#: ../app/core/core-enums.c:1278
+#: ../app/core/core-enums.c:1311
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr ""
 
-#: ../app/core/core-enums.c:1279
+#: ../app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr ""
 
-#: ../app/core/core-enums.c:1280
+#: ../app/core/core-enums.c:1313
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr ""
 
-#: ../app/core/core-enums.c:1281
+#: ../app/core/core-enums.c:1314
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Sekker abeddel n ugraw n tissi"
 
-#: ../app/core/core-enums.c:1282
+#: ../app/core/core-enums.c:1315
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Fak abeddel n ugraw n tissi"
 
-#: ../app/core/core-enums.c:1283
+#: ../app/core/core-enums.c:1316
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Selket agraw n tisssiyin"
 
-#: ../app/core/core-enums.c:1284
+#: ../app/core/core-enums.c:1317
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Tissi n uḍris"
 
-#: ../app/core/core-enums.c:1285
+#: ../app/core/core-enums.c:1318
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Abeddel n tissi n uḍris"
 
-#: ../app/core/core-enums.c:1286
+#: ../app/core/core-enums.c:1319
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Selket tissi n uḍris"
 
-#: ../app/core/core-enums.c:1288
+#: ../app/core/core-enums.c:1321
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Kkes tagelmust n tissi"
 
-#: ../app/core/core-enums.c:1290
+#: ../app/core/core-enums.c:1323
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Sken tagelmust n tissi"
 
-#: ../app/core/core-enums.c:1291
+#: ../app/core/core-enums.c:1324
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Abadu amaynut"
 
-#: ../app/core/core-enums.c:1292
+#: ../app/core/core-enums.c:1325
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Kkes abadu"
 
-#: ../app/core/core-enums.c:1293
+#: ../app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Ini n ubadu"
 
-#: ../app/core/core-enums.c:1294
+#: ../app/core/core-enums.c:1327
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Abrid amaynut"
 
-#: ../app/core/core-enums.c:1295
+#: ../app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Kkes abrid"
 
-#: ../app/core/core-enums.c:1296
+#: ../app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Abeddel n ubrid"
 
-#: ../app/core/core-enums.c:1298
+#: ../app/core/core-enums.c:1331
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Selket aferrug"
 
-#: ../app/core/core-enums.c:1300
+#: ../app/core/core-enums.c:1333
 msgctxt "undo-type"
 msgid "Ink"
 msgstr ""
 
-#: ../app/core/core-enums.c:1301
+#: ../app/core/core-enums.c:1334
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Fren agilal"
 
-#: ../app/core/core-enums.c:1304
+#: ../app/core/core-enums.c:1337
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr ""
 
-#: ../app/core/core-enums.c:1339
+#: ../app/core/core-enums.c:1372
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Arqaq"
 
-#: ../app/core/core-enums.c:1340
+#: ../app/core/core-enums.c:1373
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Meẓẓi aṭas"
 
-#: ../app/core/core-enums.c:1341
+#: ../app/core/core-enums.c:1374
 msgctxt "view-size"
 msgid "Small"
 msgstr "Amecṭuḥ"
 
-#: ../app/core/core-enums.c:1342
+#: ../app/core/core-enums.c:1375
 msgctxt "view-size"
 msgid "Medium"
 msgstr "D alemmas"
 
-#: ../app/core/core-enums.c:1343
+#: ../app/core/core-enums.c:1376
 msgctxt "view-size"
 msgid "Large"
 msgstr "Ameqran"
 
-#: ../app/core/core-enums.c:1344
+#: ../app/core/core-enums.c:1377
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Meqqer aṭas"
 
-#: ../app/core/core-enums.c:1345
+#: ../app/core/core-enums.c:1378
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Meqqer"
 
-#: ../app/core/core-enums.c:1346
+#: ../app/core/core-enums.c:1379
 msgctxt "view-size"
 msgid "Enormous"
 msgstr ""
 
-#: ../app/core/core-enums.c:1347
+#: ../app/core/core-enums.c:1380
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr ""
 
-#: ../app/core/core-enums.c:1375
+#: ../app/core/core-enums.c:1408
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Beqqeḍ am tebdart"
 
-#: ../app/core/core-enums.c:1376
+#: ../app/core/core-enums.c:1409
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Beqqeḍ am uferrug"
@@ -12792,7 +12849,7 @@ msgid "Parasites"
 msgstr ""
 
 #. initialize the module list
-#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3290
+#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3304
 msgid "Modules"
 msgstr "Izegriren"
 
@@ -12815,7 +12872,7 @@ msgstr ""
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:703
-#: ../app/dialogs/preferences-dialog.c:3236
+#: ../app/dialogs/preferences-dialog.c:3250
 #: ../app/tools/gimppaintoptions-gui.c:218
 msgid "Dynamics"
 msgstr ""
@@ -12953,7 +13010,7 @@ msgstr ""
 #. * some operation to finish.  The %s argument is a message describing
 #. * the operation.
 #.
-#: ../app/core/gimp-gui.c:208
+#: ../app/core/gimp-gui.c:209
 #, c-format
 msgid "Please wait: %s\n"
 msgstr "Ttxil-k arǧu: %s\n"
@@ -13223,38 +13280,38 @@ msgstr ""
 msgid "Fatal parse error in brush file '%s': Inconsistent parameters."
 msgstr ""
 
-#: ../app/core/gimpchannel-select.c:66
+#: ../app/core/gimpchannel-select.c:70
 msgctxt "undo-type"
 msgid "Rectangle Select"
 msgstr "Tafrayt s usrem"
 
-#: ../app/core/gimpchannel-select.c:114
+#: ../app/core/gimpchannel-select.c:118
 msgctxt "undo-type"
 msgid "Ellipse Select"
 msgstr "Tafrayt s teglayt"
 
-#: ../app/core/gimpchannel-select.c:165
+#: ../app/core/gimpchannel-select.c:169
 msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Tafrayt s usrem imdewwer"
 
-#: ../app/core/gimpchannel-select.c:460
+#: ../app/core/gimpchannel-select.c:464
 #, c-format
 msgctxt "undo-type"
 msgid "%s Channel to Selection"
 msgstr "Abadu %s ɣer tefrayt"
 
-#: ../app/core/gimpchannel-select.c:511
+#: ../app/core/gimpchannel-select.c:515
 msgctxt "undo-type"
 msgid "Fuzzy Select"
 msgstr ""
 
-#: ../app/core/gimpchannel-select.c:559
+#: ../app/core/gimpchannel-select.c:581
 msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "Fren s yini"
 
-#: ../app/core/gimpchannel-select.c:598
+#: ../app/core/gimpchannel-select.c:624
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr ""
@@ -14221,8 +14278,8 @@ msgstr "Alles tisekta n tugna"
 msgid "Can't undo %s"
 msgstr ""
 
-#: ../app/core/gimpimagefile.c:744 ../app/dialogs/preferences-dialog.c:1934
-#: ../app/dialogs/preferences-dialog.c:2044
+#: ../app/core/gimpimagefile.c:744 ../app/dialogs/preferences-dialog.c:1944
+#: ../app/dialogs/preferences-dialog.c:2054
 msgid "Folder"
 msgstr "Akaram"
 
@@ -15202,7 +15259,7 @@ msgstr "Selket tugna ɣer ulegdis n yini"
 #: ../app/dialogs/color-profile-dialog.c:155
 #: ../app/dialogs/color-profile-dialog.c:173
 #: ../app/dialogs/color-profile-dialog.c:191
-#: ../app/dialogs/color-profile-import-dialog.c:105
+#: ../app/dialogs/color-profile-import-dialog.c:119
 #: ../app/dialogs/convert-indexed-dialog.c:143
 #: ../app/dialogs/convert-precision-dialog.c:147
 msgid "C_onvert"
@@ -15256,12 +15313,12 @@ msgid "Profile _details"
 msgstr "Ta_lqayt n ulegdis"
 
 #: ../app/dialogs/color-profile-dialog.c:290
-#: ../app/dialogs/color-profile-import-dialog.c:160
+#: ../app/dialogs/color-profile-import-dialog.c:201
 msgid "_Rendering Intent:"
 msgstr ""
 
 #: ../app/dialogs/color-profile-dialog.c:306
-#: ../app/dialogs/color-profile-import-dialog.c:176
+#: ../app/dialogs/color-profile-import-dialog.c:217
 msgid "_Black Point Compensation"
 msgstr "Aɣram n tenqiḍt ta_berkant"
 
@@ -15276,36 +15333,45 @@ msgctxt "profile"
 msgid "None"
 msgstr "Ula yiwen"
 
-#: ../app/dialogs/color-profile-import-dialog.c:85
+#: ../app/dialogs/color-profile-import-dialog.c:91
 msgid "Convert to Grayscale Working Space?"
 msgstr "Selket ɣer tallunt n umahil s iswiren n umelliɣdi ?"
 
-#: ../app/dialogs/color-profile-import-dialog.c:86
+#: ../app/dialogs/color-profile-import-dialog.c:92
 msgid "Convert the image to the built-in grayscale color profile?"
 msgstr ""
 
-#: ../app/dialogs/color-profile-import-dialog.c:90
+#: ../app/dialogs/color-profile-import-dialog.c:100
 msgid "Convert to RGB Working Space?"
 msgstr "Selket ɣer tallunt n umahil s RGB ?"
 
-#: ../app/dialogs/color-profile-import-dialog.c:91
+#: ../app/dialogs/color-profile-import-dialog.c:101
 msgid "Convert the image to the built-in sRGB color profile?"
 msgstr ""
 
-#: ../app/dialogs/color-profile-import-dialog.c:99
+#: ../app/dialogs/color-profile-import-dialog.c:113
 msgid "Import the image from a color profile"
 msgstr "Kter tugna seg ulegdis n yini"
 
-#: ../app/dialogs/color-profile-import-dialog.c:104
+#: ../app/dialogs/color-profile-import-dialog.c:118
 msgid "_Keep"
 msgstr "_Eǧǧ"
 
-#: ../app/dialogs/color-profile-import-dialog.c:122
+#: ../app/dialogs/color-profile-import-dialog.c:136
 #, c-format
 msgid "The image '%s' has an embedded color profile"
 msgstr ""
 
-#: ../app/dialogs/color-profile-import-dialog.c:185
+#: ../app/dialogs/color-profile-import-dialog.c:166
+msgid "Convert the image to the preferred grayscale color profile?"
+msgstr "Selket tugna ɣer ulegdis anuraf n yini s teskala n umelliɣdi ?"
+
+#: ../app/dialogs/color-profile-import-dialog.c:168
+msgid "Convert the image to the preferred sRGB color profile?"
+msgstr "Selket tugna ɣer ulegdis anuraf n yini n sRGB ?"
+
+#: ../app/dialogs/color-profile-import-dialog.c:226
+#: ../app/dialogs/metadata-rotation-import-dialog.c:218
 msgid "_Don't ask me again"
 msgstr "_Ur yi-d-steqssay ara tikkelt-nniḍen"
 
@@ -15643,7 +15709,7 @@ msgid "Create a New Image"
 msgstr "Snulfu-d tugna tamaynutt"
 
 #: ../app/dialogs/image-new-dialog.c:138
-#: ../app/dialogs/preferences-dialog.c:1751
+#: ../app/dialogs/preferences-dialog.c:1759
 msgid "_Template:"
 msgstr "Ta_neɣruft:"
 
@@ -15905,6 +15971,36 @@ msgstr ""
 msgid "Killer GEGLs from Outer Space"
 msgstr ""
 
+#: ../app/dialogs/metadata-rotation-import-dialog.c:96
+#, c-format
+msgid "Rotate %s?"
+msgstr "Zzi %s?"
+
+#: ../app/dialogs/metadata-rotation-import-dialog.c:101
+msgid "_Keep Original"
+msgstr ""
+
+#: ../app/dialogs/metadata-rotation-import-dialog.c:102
+#: ../app/tools/gimprotatetool.c:104
+msgid "_Rotate"
+msgstr "_Zzi"
+
+#: ../app/dialogs/metadata-rotation-import-dialog.c:161
+msgid "Original"
+msgstr "N tazwara"
+
+#: ../app/dialogs/metadata-rotation-import-dialog.c:177
+msgid "Rotated"
+msgstr "Yezzi"
+
+#: ../app/dialogs/metadata-rotation-import-dialog.c:194
+msgid "This image contains Exif orientation metadata."
+msgstr ""
+
+#: ../app/dialogs/metadata-rotation-import-dialog.c:209
+msgid "Would you like to rotate the image?"
+msgstr "Tebɣiḍ ad tzziḍ tugna ?"
+
 #: ../app/dialogs/module-dialog.c:129
 msgid "Module Manager"
 msgstr "Amsefrak n uzegrir"
@@ -15963,7 +16059,7 @@ msgid "Select Source"
 msgstr "Fren aɣbalu"
 
 #: ../app/dialogs/palette-import-dialog.c:211
-#: ../app/dialogs/preferences-dialog.c:1714
+#: ../app/dialogs/preferences-dialog.c:1722
 msgid "_Gradient"
 msgstr "S t_fesniwin"
 
@@ -16072,12 +16168,12 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:849
-#: ../app/dialogs/preferences-dialog.c:2565
+#: ../app/dialogs/preferences-dialog.c:2575
 msgid "There's a local installation of the user manual."
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:854
-#: ../app/dialogs/preferences-dialog.c:2571
+#: ../app/dialogs/preferences-dialog.c:2581
 msgid "The user manual is not installed locally."
 msgstr ""
 
@@ -16162,259 +16258,263 @@ msgstr "Imenyafen"
 msgid "System Resources"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1171
+#: ../app/dialogs/preferences-dialog.c:1172
 msgid "Resource Consumption"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1177
+#: ../app/dialogs/preferences-dialog.c:1178
 msgid "Minimal number of _undo levels:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1180
+#: ../app/dialogs/preferences-dialog.c:1181
 msgid "Maximum undo _memory:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1183
+#: ../app/dialogs/preferences-dialog.c:1184
 msgid "Tile cache _size:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1186
+#: ../app/dialogs/preferences-dialog.c:1187
 msgid "Maximum _new image size:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1190
+#: ../app/dialogs/preferences-dialog.c:1191
 msgid "S_wap compression:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1195
+#: ../app/dialogs/preferences-dialog.c:1196
 msgid "Number of _threads to use:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1201
+#: ../app/dialogs/preferences-dialog.c:1202
 msgid "Network access"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1205
+#: ../app/dialogs/preferences-dialog.c:1206
 msgid "Check for updates (requires internet)"
 msgstr ""
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1210
+#: ../app/dialogs/preferences-dialog.c:1212
 msgid "Image Thumbnails"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1215
+#: ../app/dialogs/preferences-dialog.c:1217
 msgid "Size of _thumbnails:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1219
+#: ../app/dialogs/preferences-dialog.c:1221
 msgid "Maximum _filesize for thumbnailing:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1226
+#: ../app/dialogs/preferences-dialog.c:1228
 msgid "_Keep record of used files in the Recent Documents list"
 msgstr ""
 
 #. TODO: icon needed.
-#: ../app/dialogs/preferences-dialog.c:1243
-#: ../app/dialogs/preferences-dialog.c:1244
+#: ../app/dialogs/preferences-dialog.c:1246
+#: ../app/dialogs/preferences-dialog.c:1247
 msgid "Debugging"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1251
+#: ../app/dialogs/preferences-dialog.c:1254
 msgid ""
 "We hope you will never need these settings, but as all software, GIMP has "
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
 "bugs."
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1260
+#: ../app/dialogs/preferences-dialog.c:1263
 msgid "Bug Reporting"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1266
+#: ../app/dialogs/preferences-dialog.c:1269
 msgid "Debug _policy:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1278
+#: ../app/dialogs/preferences-dialog.c:1281
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1282
+#: ../app/dialogs/preferences-dialog.c:1285
 msgid ""
 "This feature is more efficient with \"gdb\" or \"lldb\" installed on your "
 "system."
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1295
-#: ../app/dialogs/preferences-dialog.c:1296
+#: ../app/dialogs/preferences-dialog.c:1298
+#: ../app/dialogs/preferences-dialog.c:1299
 msgid "Color Management"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1305
+#: ../app/dialogs/preferences-dialog.c:1308
 msgid "R_eset Color Management"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1328
+#: ../app/dialogs/preferences-dialog.c:1331
 msgid "Image display _mode:"
 msgstr ""
 
 #. Color Managed Display
-#: ../app/dialogs/preferences-dialog.c:1332
+#: ../app/dialogs/preferences-dialog.c:1335
 msgid "Color Managed Display"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1341
+#: ../app/dialogs/preferences-dialog.c:1344
 msgid "Select Monitor Color Profile"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1342
+#: ../app/dialogs/preferences-dialog.c:1345
 msgid "_Monitor profile:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1348
+#: ../app/dialogs/preferences-dialog.c:1351
 msgid "_Try to use the system monitor profile"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1355
+#: ../app/dialogs/preferences-dialog.c:1358
 msgid "_Rendering intent:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1360
+#: ../app/dialogs/preferences-dialog.c:1363
 msgid "Use _black point compensation"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1366
-#: ../app/dialogs/preferences-dialog.c:1400 ../app/paint/gimpinkoptions.c:94
+#: ../app/dialogs/preferences-dialog.c:1369
+#: ../app/dialogs/preferences-dialog.c:1403 ../app/paint/gimpinkoptions.c:94
 msgid "Speed"
 msgstr "Arured"
 
-#: ../app/dialogs/preferences-dialog.c:1367
-#: ../app/dialogs/preferences-dialog.c:1401
+#: ../app/dialogs/preferences-dialog.c:1370
+#: ../app/dialogs/preferences-dialog.c:1404
 msgid "Precision / Color Fidelity"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1368
+#: ../app/dialogs/preferences-dialog.c:1371
 msgid "_Optimize image display for:"
 msgstr ""
 
 #. Print Simulation (Soft-proofing)
-#: ../app/dialogs/preferences-dialog.c:1372
+#: ../app/dialogs/preferences-dialog.c:1375
 msgid "Soft-Proofing"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1382
+#: ../app/dialogs/preferences-dialog.c:1385
 msgid "Select Soft-Proofing Color Profile"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1383
+#: ../app/dialogs/preferences-dialog.c:1386
 msgid "_Soft-proofing profile:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1389
+#: ../app/dialogs/preferences-dialog.c:1392
 msgid "Re_ndering intent:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1394
+#: ../app/dialogs/preferences-dialog.c:1397
 msgid "Use black _point compensation"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1402
+#: ../app/dialogs/preferences-dialog.c:1405
 msgid "O_ptimize soft-proofing for:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1411
+#: ../app/dialogs/preferences-dialog.c:1414
 msgid "Mar_k out of gamut colors"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1415
+#: ../app/dialogs/preferences-dialog.c:1418
 msgid "Select Warning Color"
 msgstr ""
 
 #. Preferred profiles
-#: ../app/dialogs/preferences-dialog.c:1425
+#: ../app/dialogs/preferences-dialog.c:1428
 msgid "Preferred Profiles"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1434
+#: ../app/dialogs/preferences-dialog.c:1437
 msgid "Select Preferred RGB Color Profile"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1435
+#: ../app/dialogs/preferences-dialog.c:1438
 msgid "_RGB profile:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1442
+#: ../app/dialogs/preferences-dialog.c:1445
 msgid "Select Preferred Grayscale Color Profile"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1443
+#: ../app/dialogs/preferences-dialog.c:1446
 msgid "_Grayscale profile:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1450
+#: ../app/dialogs/preferences-dialog.c:1453
 msgid "Select CMYK Color Profile"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1451
+#: ../app/dialogs/preferences-dialog.c:1454
 msgid "_CMYK profile:"
 msgstr ""
 
 #. Policies
-#: ../app/dialogs/preferences-dialog.c:1456
+#: ../app/dialogs/preferences-dialog.c:1459
 msgid "Policies"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1461
+#: ../app/dialogs/preferences-dialog.c:1464
 msgid "_File Open behaviour:"
 msgstr ""
 
 #. Filter Dialogs
-#: ../app/dialogs/preferences-dialog.c:1465
-#: ../app/dialogs/preferences-dialog.c:2279
+#: ../app/dialogs/preferences-dialog.c:1468
+#: ../app/dialogs/preferences-dialog.c:2289
 msgid "Filter Dialogs"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1469
+#: ../app/dialogs/preferences-dialog.c:1472
 msgid "Show _advanced color options"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1483
-#: ../app/dialogs/preferences-dialog.c:1484
+#: ../app/dialogs/preferences-dialog.c:1486
+#: ../app/dialogs/preferences-dialog.c:1487
 msgid "Image Import & Export"
 msgstr ""
 
 #. Import Policies
-#: ../app/dialogs/preferences-dialog.c:1494
+#: ../app/dialogs/preferences-dialog.c:1497
 msgid "Import Policies"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1498
+#: ../app/dialogs/preferences-dialog.c:1501
 msgid "Promote imported images to _floating point precision"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1507
+#: ../app/dialogs/preferences-dialog.c:1510
 msgid "_Dither images when promoting to floating point"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1512
+#: ../app/dialogs/preferences-dialog.c:1515
 msgid "_Add an alpha channel to imported images"
 msgstr "_Rnu abadu alfa i tugniwin yettwaketren"
 
-#: ../app/dialogs/preferences-dialog.c:1517
+#: ../app/dialogs/preferences-dialog.c:1520
 msgid "Color _profile policy:"
 msgstr ""
 
+#: ../app/dialogs/preferences-dialog.c:1523
+msgid "Metadata _rotation policy:"
+msgstr ""
+
 #. Export Policies
-#: ../app/dialogs/preferences-dialog.c:1521
+#: ../app/dialogs/preferences-dialog.c:1527
 msgid "Export Policies"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1525
+#: ../app/dialogs/preferences-dialog.c:1531
 msgid "Export the i_mage's color profile by default"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1528
+#: ../app/dialogs/preferences-dialog.c:1534
 msgid "Export the image's comment by default"
 msgstr ""
 
@@ -16423,7 +16523,7 @@ msgstr ""
 #. * It determines how file export
 #. * plug-ins handle Exif by default.
 #.
-#: ../app/dialogs/preferences-dialog.c:1536
+#: ../app/dialogs/preferences-dialog.c:1542
 msgid "Export _Exif metadata by default when available"
 msgstr ""
 
@@ -16432,7 +16532,7 @@ msgstr ""
 #. * It determines how file export
 #. * plug-ins handle XMP by default.
 #.
-#: ../app/dialogs/preferences-dialog.c:1544
+#: ../app/dialogs/preferences-dialog.c:1550
 msgid "Export _XMP metadata by default when available"
 msgstr ""
 
@@ -16441,37 +16541,37 @@ msgstr ""
 #. * It determines how file export
 #. * plug-ins handle IPTC by default.
 #.
-#: ../app/dialogs/preferences-dialog.c:1552
+#: ../app/dialogs/preferences-dialog.c:1558
 msgid "Export _IPTC metadata by default when available"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1555
+#: ../app/dialogs/preferences-dialog.c:1561
 msgid "Metadata can contain sensitive information."
 msgstr ""
 
 #. Export File Type
-#: ../app/dialogs/preferences-dialog.c:1559
+#: ../app/dialogs/preferences-dialog.c:1565
 msgid "Export File Type"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1563
+#: ../app/dialogs/preferences-dialog.c:1569
 msgid "Default export file t_ype:"
 msgstr ""
 
 #. Raw Image Importer
-#: ../app/dialogs/preferences-dialog.c:1567
+#: ../app/dialogs/preferences-dialog.c:1573
 msgid "Raw Image Importer"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1603
+#: ../app/dialogs/preferences-dialog.c:1609
 msgid "Experimental Playground"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1604
+#: ../app/dialogs/preferences-dialog.c:1610
 msgid "Playground"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1611
+#: ../app/dialogs/preferences-dialog.c:1617
 msgid ""
 "These features are unfinished, buggy and may crash GIMP. It is unadvised to "
 "use them unless you really know what you are doing or you intend to "
@@ -16479,35 +16579,35 @@ msgid ""
 msgstr ""
 
 #. Hardware Acceleration
-#: ../app/dialogs/preferences-dialog.c:1621
+#: ../app/dialogs/preferences-dialog.c:1627
 msgid "Hardware Acceleration"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1625
+#: ../app/dialogs/preferences-dialog.c:1631
 msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1631
+#: ../app/dialogs/preferences-dialog.c:1637
 msgid "Use O_penCL"
 msgstr ""
 
 #. Very unstable tools
-#: ../app/dialogs/preferences-dialog.c:1635
+#: ../app/dialogs/preferences-dialog.c:1642
 msgid "Insane Options"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1639
+#: ../app/dialogs/preferences-dialog.c:1646
 msgid "_N-Point Deformation tool"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1642
+#: ../app/dialogs/preferences-dialog.c:1649
 msgid "_Seamless Clone tool"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1652
-#: ../app/dialogs/preferences-dialog.c:1653
+#: ../app/dialogs/preferences-dialog.c:1659
+#: ../app/dialogs/preferences-dialog.c:1660
 msgctxt "preferences"
 msgid "Tool Options"
 msgstr "Tinefrunin n ufecku"
@@ -16515,530 +16615,530 @@ msgstr "Tinefrunin n ufecku"
 #. General
 #. Snapping Distance
 #. general device information
-#: ../app/dialogs/preferences-dialog.c:1661
-#: ../app/dialogs/preferences-dialog.c:2512
-#: ../app/dialogs/preferences-dialog.c:2846
-#: ../app/dialogs/preferences-dialog.c:3089
+#: ../app/dialogs/preferences-dialog.c:1669
+#: ../app/dialogs/preferences-dialog.c:2522
+#: ../app/dialogs/preferences-dialog.c:2858
+#: ../app/dialogs/preferences-dialog.c:3103
 #: ../app/widgets/gimpcontrollereditor.c:188
 #: ../app/widgets/gimpdeviceinfoeditor.c:282
 msgid "General"
 msgstr "Amatu"
 
-#: ../app/dialogs/preferences-dialog.c:1664
+#: ../app/dialogs/preferences-dialog.c:1672
 msgid "Allow _editing on non-visible layers"
 msgstr "Sireg asiẓreg ɣef tissiyin ur nettban ara"
 
-#: ../app/dialogs/preferences-dialog.c:1668
+#: ../app/dialogs/preferences-dialog.c:1676
 msgid "_Save tool options on exit"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1672
+#: ../app/dialogs/preferences-dialog.c:1680
 msgid "Save Tool Options _Now"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1679
+#: ../app/dialogs/preferences-dialog.c:1687
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1693
+#: ../app/dialogs/preferences-dialog.c:1701
 msgid "Default _interpolation:"
 msgstr ""
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1701
+#: ../app/dialogs/preferences-dialog.c:1709
 msgid "Paint Options Shared Between Tools"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1705
+#: ../app/dialogs/preferences-dialog.c:1713
 msgid "_Brush"
 msgstr "A_mfezzu"
 
-#: ../app/dialogs/preferences-dialog.c:1708
+#: ../app/dialogs/preferences-dialog.c:1716
 msgid "_Dynamics"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1711
+#: ../app/dialogs/preferences-dialog.c:1719
 msgid "_Pattern"
 msgstr "_Udlif"
 
 #. Move Tool
-#: ../app/dialogs/preferences-dialog.c:1718
+#: ../app/dialogs/preferences-dialog.c:1726
 msgid "Move Tool"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1722
+#: ../app/dialogs/preferences-dialog.c:1730
 msgid "Set _layer or path as active"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1734
+#: ../app/dialogs/preferences-dialog.c:1742
 msgid "Default New Image"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1735
+#: ../app/dialogs/preferences-dialog.c:1743
 msgid "Default Image"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1772
+#: ../app/dialogs/preferences-dialog.c:1780
 msgid "Quick Mask color:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1773
+#: ../app/dialogs/preferences-dialog.c:1781
 msgid "Set the default Quick Mask color"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1783
+#: ../app/dialogs/preferences-dialog.c:1791
 msgid "Default Image Grid"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1784
+#: ../app/dialogs/preferences-dialog.c:1792
 msgid "Default Grid"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1803
+#: ../app/dialogs/preferences-dialog.c:1812
 msgid "User Interface"
 msgstr "Agrudem n useqdac"
 
-#: ../app/dialogs/preferences-dialog.c:1804
+#: ../app/dialogs/preferences-dialog.c:1813
 msgid "Interface"
 msgstr "Agrudem"
 
-#: ../app/dialogs/preferences-dialog.c:1813 ../app/tools/gimptextoptions.c:153
+#: ../app/dialogs/preferences-dialog.c:1823 ../app/tools/gimptextoptions.c:153
 msgid "Language"
 msgstr "Tutlayt"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1819
+#: ../app/dialogs/preferences-dialog.c:1829
 msgid "Previews"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1822
+#: ../app/dialogs/preferences-dialog.c:1832
 msgid "_Enable layer & channel previews"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1830
+#: ../app/dialogs/preferences-dialog.c:1840
 msgid "Enable layer _group previews"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1836
+#: ../app/dialogs/preferences-dialog.c:1846
 msgid "_Default layer & channel preview size:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1839
+#: ../app/dialogs/preferences-dialog.c:1849
 msgid "_Undo preview size:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1842
+#: ../app/dialogs/preferences-dialog.c:1852
 msgid "Na_vigation preview size:"
 msgstr ""
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1846
+#: ../app/dialogs/preferences-dialog.c:1856
 msgid "Keyboard Shortcuts"
 msgstr "Inegzumen n unasiw"
 
-#: ../app/dialogs/preferences-dialog.c:1850
+#: ../app/dialogs/preferences-dialog.c:1860
 msgid "_Use dynamic keyboard shortcuts"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1854
+#: ../app/dialogs/preferences-dialog.c:1864
 msgid "Configure _Keyboard Shortcuts..."
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1861
+#: ../app/dialogs/preferences-dialog.c:1871
 msgid "_Save keyboard shortcuts on exit"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1865
+#: ../app/dialogs/preferences-dialog.c:1875
 msgid "Save Keyboard Shortcuts _Now"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1872
+#: ../app/dialogs/preferences-dialog.c:1882
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1881
+#: ../app/dialogs/preferences-dialog.c:1891
 msgid "Remove _All Keyboard Shortcuts"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1893
-#: ../app/dialogs/preferences-dialog.c:1894
-#: ../app/dialogs/preferences-dialog.c:1929
+#: ../app/dialogs/preferences-dialog.c:1903
+#: ../app/dialogs/preferences-dialog.c:1904
+#: ../app/dialogs/preferences-dialog.c:1939
 msgid "Theme"
 msgstr "Asentel"
 
-#: ../app/dialogs/preferences-dialog.c:1899
+#: ../app/dialogs/preferences-dialog.c:1909
 msgid "Select Theme"
 msgstr "Fern asentel"
 
-#: ../app/dialogs/preferences-dialog.c:1977
+#: ../app/dialogs/preferences-dialog.c:1987
 msgid "Use dark theme variant if available"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1985
+#: ../app/dialogs/preferences-dialog.c:1995
 msgid "Reload C_urrent Theme"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1997
-#: ../app/dialogs/preferences-dialog.c:1998
-#: ../app/dialogs/preferences-dialog.c:2039
+#: ../app/dialogs/preferences-dialog.c:2007
+#: ../app/dialogs/preferences-dialog.c:2008
+#: ../app/dialogs/preferences-dialog.c:2049
 msgid "Icon Theme"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2003
+#: ../app/dialogs/preferences-dialog.c:2013
 msgid "Select an Icon Theme"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2113
+#: ../app/dialogs/preferences-dialog.c:2123
 msgid "Use symbolic icons if available"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2123
-#: ../app/dialogs/preferences-dialog.c:2124 ../app/widgets/gimptoolbox.c:440
+#: ../app/dialogs/preferences-dialog.c:2133
+#: ../app/dialogs/preferences-dialog.c:2134 ../app/widgets/gimptoolbox.c:440
 msgid "Toolbox"
 msgstr "Tankult n ifecka"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:2132
-#: ../app/dialogs/preferences-dialog.c:2929 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2142
+#: ../app/dialogs/preferences-dialog.c:2941 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Timeẓriwt"
 
-#: ../app/dialogs/preferences-dialog.c:2136
+#: ../app/dialogs/preferences-dialog.c:2146
 msgid "Show GIMP _logo (drag-and-drop target)"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2140
+#: ../app/dialogs/preferences-dialog.c:2150
 msgid "Show _foreground & background color"
 msgstr "Sken ini n uɣawas amezwaru akked yini nugilal"
 
-#: ../app/dialogs/preferences-dialog.c:2144
+#: ../app/dialogs/preferences-dialog.c:2154
 msgid "Show active _brush, pattern & gradient"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2148
+#: ../app/dialogs/preferences-dialog.c:2158
 msgid "Show active _image"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2157
+#: ../app/dialogs/preferences-dialog.c:2167
 msgid "Use tool _groups"
 msgstr ""
 
 #. Tool Editor
-#: ../app/dialogs/preferences-dialog.c:2164
+#: ../app/dialogs/preferences-dialog.c:2174
 msgid "Tools Configuration"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2179
-#: ../app/dialogs/preferences-dialog.c:2180
+#: ../app/dialogs/preferences-dialog.c:2189
+#: ../app/dialogs/preferences-dialog.c:2190
 msgid "Dialog Defaults"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2189
+#: ../app/dialogs/preferences-dialog.c:2199
 msgid "Reset Dialog _Defaults"
 msgstr ""
 
 #. Color profile import dialog
-#: ../app/dialogs/preferences-dialog.c:2197
+#: ../app/dialogs/preferences-dialog.c:2207
 msgid "Color Profile Import Dialog"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2202
+#: ../app/dialogs/preferences-dialog.c:2212
 msgid "Color profile policy:"
 msgstr ""
 
 #. All color profile chooser dialogs
-#: ../app/dialogs/preferences-dialog.c:2206
+#: ../app/dialogs/preferences-dialog.c:2216
 msgid "Color Profile File Dialogs"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2211
+#: ../app/dialogs/preferences-dialog.c:2221
 msgid "Profile folder:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2212
+#: ../app/dialogs/preferences-dialog.c:2222
 msgid "Select Default Folder for Color Profiles"
 msgstr ""
 
 #. Convert to Color Profile Dialog
-#: ../app/dialogs/preferences-dialog.c:2216
+#: ../app/dialogs/preferences-dialog.c:2226
 msgid "Convert to Color Profile Dialog"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2221
+#: ../app/dialogs/preferences-dialog.c:2231
 msgid "Rendering intent:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2225
+#: ../app/dialogs/preferences-dialog.c:2235
 msgid "Black point compensation"
 msgstr ""
 
 #. Convert Precision Dialog
-#: ../app/dialogs/preferences-dialog.c:2229
+#: ../app/dialogs/preferences-dialog.c:2239
 msgid "Precision Conversion Dialog"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2236
+#: ../app/dialogs/preferences-dialog.c:2246
 msgid "Dither layers:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2241
+#: ../app/dialogs/preferences-dialog.c:2251
 msgid "Dither text layers:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2246
+#: ../app/dialogs/preferences-dialog.c:2256
 msgid "Dither channels/masks:"
 msgstr ""
 
 #. Convert Indexed Dialog
-#: ../app/dialogs/preferences-dialog.c:2250
+#: ../app/dialogs/preferences-dialog.c:2260
 msgid "Indexed Conversion Dialog"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2255
+#: ../app/dialogs/preferences-dialog.c:2265
 msgid "Colormap:"
 msgstr "Tapaliḍt n yiniten:"
 
-#: ../app/dialogs/preferences-dialog.c:2258
+#: ../app/dialogs/preferences-dialog.c:2268
 msgid "Maximum number of colors:"
 msgstr "Amḍan afellay n yiniten:"
 
-#: ../app/dialogs/preferences-dialog.c:2262
+#: ../app/dialogs/preferences-dialog.c:2272
 msgid "Remove unused and duplicate colors from colormap"
 msgstr ""
 "Kkes initen ur nettwaseqdac ara akked yiniten usligen si tpaliḍt n yiniten"
 
-#: ../app/dialogs/preferences-dialog.c:2268
+#: ../app/dialogs/preferences-dialog.c:2278
 msgid "Color dithering:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2272
+#: ../app/dialogs/preferences-dialog.c:2282
 msgid "Enable dithering of transparency"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2275
+#: ../app/dialogs/preferences-dialog.c:2285
 msgid "Enable dithering of text layers"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2284
+#: ../app/dialogs/preferences-dialog.c:2294
 msgid "Keep recent settings:"
 msgstr "Eǧǧ iɣewwaren n melmi kan:"
 
-#: ../app/dialogs/preferences-dialog.c:2288
+#: ../app/dialogs/preferences-dialog.c:2298
 msgid "Default to the last used settings"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2291
+#: ../app/dialogs/preferences-dialog.c:2301
 msgid "Show advanced color options"
 msgstr "Sken tinefrunin tinaẓiyin n yini"
 
 #. Canvas Size Dialog
-#: ../app/dialogs/preferences-dialog.c:2295
+#: ../app/dialogs/preferences-dialog.c:2305
 msgid "Canvas Size Dialog"
 msgstr "Adiwenni n tiddi n teɣzut n usuneɣ"
 
-#: ../app/dialogs/preferences-dialog.c:2300
-#: ../app/dialogs/preferences-dialog.c:2329
+#: ../app/dialogs/preferences-dialog.c:2310
+#: ../app/dialogs/preferences-dialog.c:2339
 msgid "Fill with:"
 msgstr "Aččar s:"
 
-#: ../app/dialogs/preferences-dialog.c:2303
+#: ../app/dialogs/preferences-dialog.c:2313
 msgid "Resize layers:"
 msgstr "Ales tiddi n tissiyin:"
 
-#: ../app/dialogs/preferences-dialog.c:2307
+#: ../app/dialogs/preferences-dialog.c:2317
 msgid "Resize text layers"
 msgstr "Ales tiddi n tissiyin n uḍris"
 
 #. New Layer Dialog
-#: ../app/dialogs/preferences-dialog.c:2311
+#: ../app/dialogs/preferences-dialog.c:2321
 msgid "New Layer Dialog"
 msgstr "Adiwenni n tissi tamaynutt"
 
-#: ../app/dialogs/preferences-dialog.c:2316
+#: ../app/dialogs/preferences-dialog.c:2326
 msgid "Layer name:"
 msgstr "Isem n tissi:"
 
-#: ../app/dialogs/preferences-dialog.c:2320
+#: ../app/dialogs/preferences-dialog.c:2330
 msgid "Fill type:"
 msgstr ""
 
 #. Layer Boundary Size Dialog
-#: ../app/dialogs/preferences-dialog.c:2324
+#: ../app/dialogs/preferences-dialog.c:2334
 msgid "Layer Boundary Size Dialog"
 msgstr ""
 
 #. Add Layer Mask Dialog
-#: ../app/dialogs/preferences-dialog.c:2333
+#: ../app/dialogs/preferences-dialog.c:2343
 msgid "Add Layer Mask Dialog"
 msgstr "Tankult n udiwenni \"Rnu tagelmust n tissi\""
 
-#: ../app/dialogs/preferences-dialog.c:2338
+#: ../app/dialogs/preferences-dialog.c:2348
 msgid "Layer mask type:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2342
+#: ../app/dialogs/preferences-dialog.c:2352
 msgid "Invert mask"
 msgstr ""
 
 #. Merge Layers Dialog
-#: ../app/dialogs/preferences-dialog.c:2346
+#: ../app/dialogs/preferences-dialog.c:2356
 msgid "Merge Layers Dialog"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2353
+#: ../app/dialogs/preferences-dialog.c:2363
 msgid "Merged layer size:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2357
+#: ../app/dialogs/preferences-dialog.c:2367
 msgid "Merge within active groups only"
 msgstr "Smezdi akked ugraw urmid kan"
 
-#: ../app/dialogs/preferences-dialog.c:2360
+#: ../app/dialogs/preferences-dialog.c:2370
 msgid "Discard invisible layers"
 msgstr "Sinef tissiyin yettbanen"
 
 #. New Channel Dialog
-#: ../app/dialogs/preferences-dialog.c:2364
+#: ../app/dialogs/preferences-dialog.c:2374
 msgid "New Channel Dialog"
 msgstr "Tankult n udiwenni Abadu amaynut"
 
-#: ../app/dialogs/preferences-dialog.c:2369
+#: ../app/dialogs/preferences-dialog.c:2379
 msgid "Channel name:"
 msgstr "Isem n ubadu:"
 
-#: ../app/dialogs/preferences-dialog.c:2373
+#: ../app/dialogs/preferences-dialog.c:2383
 msgid "Color and opacity:"
 msgstr "Ini akked tiḍullest:"
 
-#: ../app/dialogs/preferences-dialog.c:2374
+#: ../app/dialogs/preferences-dialog.c:2384
 msgid "Default New Channel Color and Opacity"
 msgstr ""
 
 #. New Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2379
+#: ../app/dialogs/preferences-dialog.c:2389
 msgid "New Path Dialog"
 msgstr "Tankult n udiwenni Abrid amaynut"
 
-#: ../app/dialogs/preferences-dialog.c:2384
+#: ../app/dialogs/preferences-dialog.c:2394
 msgid "Path name:"
 msgstr "Isem n ubrid:"
 
 #. Export Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2388
+#: ../app/dialogs/preferences-dialog.c:2398
 msgid "Export Paths Dialog"
 msgstr "Tankult n udiwenni Sifeḍ iberdan"
 
-#: ../app/dialogs/preferences-dialog.c:2393
+#: ../app/dialogs/preferences-dialog.c:2403
 msgid "Export folder:"
 msgstr "Akaram n usifeḍ:"
 
-#: ../app/dialogs/preferences-dialog.c:2394
+#: ../app/dialogs/preferences-dialog.c:2404
 msgid "Select Default Folder for Exporting Paths"
 msgstr "Fren akaram n lexṣas i usifeḍ n yiberdan"
 
-#: ../app/dialogs/preferences-dialog.c:2398
+#: ../app/dialogs/preferences-dialog.c:2408
 msgid "Export the active path only"
 msgstr "Sifeḍ abrid urmid kan"
 
 #. Import Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2402
+#: ../app/dialogs/preferences-dialog.c:2412
 msgid "Import Paths Dialog"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2407
+#: ../app/dialogs/preferences-dialog.c:2417
 msgid "Import folder:"
 msgstr "Akaram n tektert:"
 
-#: ../app/dialogs/preferences-dialog.c:2408
+#: ../app/dialogs/preferences-dialog.c:2418
 msgid "Select Default Folder for Importing Paths"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2412
+#: ../app/dialogs/preferences-dialog.c:2422
 msgid "Merge imported paths"
 msgstr "Smezdi iberdan yettwaketren"
 
-#: ../app/dialogs/preferences-dialog.c:2415
+#: ../app/dialogs/preferences-dialog.c:2425
 msgid "Scale imported paths"
 msgstr ""
 
 #. Feather Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2419
+#: ../app/dialogs/preferences-dialog.c:2429
 msgid "Feather Selection Dialog"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2424
+#: ../app/dialogs/preferences-dialog.c:2434
 msgid "Feather radius:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2428
-#: ../app/dialogs/preferences-dialog.c:2450
-#: ../app/dialogs/preferences-dialog.c:2467
+#: ../app/dialogs/preferences-dialog.c:2438
+#: ../app/dialogs/preferences-dialog.c:2460
+#: ../app/dialogs/preferences-dialog.c:2477
 msgid "Selected areas continue outside the image"
 msgstr "Timnaḍin yettwafernen ad kemmelent beṛṛa n tugna"
 
 #. Grow Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2432
+#: ../app/dialogs/preferences-dialog.c:2442
 msgid "Grow Selection Dialog"
 msgstr "Tankult n udiwenni Simɣur tafrayt"
 
-#: ../app/dialogs/preferences-dialog.c:2437
+#: ../app/dialogs/preferences-dialog.c:2447
 msgid "Grow radius:"
 msgstr "Simɣur aqqar:"
 
 #. Shrink Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2441
+#: ../app/dialogs/preferences-dialog.c:2451
 msgid "Shrink Selection Dialog"
 msgstr "Tankult n udiwenni Simẓi tafrayt"
 
-#: ../app/dialogs/preferences-dialog.c:2446
+#: ../app/dialogs/preferences-dialog.c:2456
 msgid "Shrink radius:"
 msgstr "Simẓi aqqar:"
 
 #. Border Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2454
+#: ../app/dialogs/preferences-dialog.c:2464
 msgid "Border Selection Dialog"
 msgstr "Tankult n udiwenni Tafrayt n yiri"
 
-#: ../app/dialogs/preferences-dialog.c:2459
+#: ../app/dialogs/preferences-dialog.c:2469
 msgid "Border radius:"
 msgstr "Aqqar n yiri:"
 
-#: ../app/dialogs/preferences-dialog.c:2463
+#: ../app/dialogs/preferences-dialog.c:2473
 msgid "Border style:"
 msgstr "Aɣanib n yiri:"
 
 #. Fill Options Dialog
-#: ../app/dialogs/preferences-dialog.c:2471
+#: ../app/dialogs/preferences-dialog.c:2481
 msgid "Fill Selection Outline & Fill Path Dialogs"
 msgstr "Tinkulin n udiwenni Aččar azizdew akked Aččar abrid"
 
 #. Stroke Options Dialog
-#: ../app/dialogs/preferences-dialog.c:2480
+#: ../app/dialogs/preferences-dialog.c:2490
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "Tinkulin n udiwenni Suneɣ tafrayt akked Suneɣ abrid"
 
-#: ../app/dialogs/preferences-dialog.c:2503
-#: ../app/dialogs/preferences-dialog.c:2504
+#: ../app/dialogs/preferences-dialog.c:2513
+#: ../app/dialogs/preferences-dialog.c:2514
 msgid "Help System"
 msgstr "Anagraw n tallelt"
 
-#: ../app/dialogs/preferences-dialog.c:2515
+#: ../app/dialogs/preferences-dialog.c:2525
 msgid "Show help _buttons"
 msgstr "Sken tiqeffalin n tallelt"
 
-#: ../app/dialogs/preferences-dialog.c:2520
+#: ../app/dialogs/preferences-dialog.c:2530
 msgid "Use the online version"
 msgstr "Seqdec lqem ɣef internet"
 
-#: ../app/dialogs/preferences-dialog.c:2521
+#: ../app/dialogs/preferences-dialog.c:2531
 msgid "Use a locally installed copy"
 msgstr "Seqdec tanɣelt yettwsbedden deg uselkim"
 
-#: ../app/dialogs/preferences-dialog.c:2522
+#: ../app/dialogs/preferences-dialog.c:2532
 msgid "U_ser manual:"
 msgstr "Awfusan n useqdac:"
 
-#: ../app/dialogs/preferences-dialog.c:2533
+#: ../app/dialogs/preferences-dialog.c:2543
 msgid "User interface language"
 msgstr "Tutlayt n ugrudem n useqdac"
 
@@ -17046,15 +17146,15 @@ msgstr "Tutlayt n ugrudem n useqdac"
 #. *  that doesn't use the help browser, so don't bother showing
 #. *  the combo.
 #.
-#: ../app/dialogs/preferences-dialog.c:2592
+#: ../app/dialogs/preferences-dialog.c:2602
 msgid "Help Browser"
 msgstr "Iminig n tallelt"
 
-#: ../app/dialogs/preferences-dialog.c:2599
+#: ../app/dialogs/preferences-dialog.c:2609
 msgid "H_elp browser to use:"
 msgstr "Iminig n tallelt ara yettwasqedcen:"
 
-#: ../app/dialogs/preferences-dialog.c:2605
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
@@ -17063,534 +17163,534 @@ msgstr ""
 "n web deg umḍiq-is."
 
 #. Action Search
-#: ../app/dialogs/preferences-dialog.c:2622
+#: ../app/dialogs/preferences-dialog.c:2632
 msgid "Action Search"
 msgstr "Anadi n tigawt"
 
-#: ../app/dialogs/preferences-dialog.c:2626
+#: ../app/dialogs/preferences-dialog.c:2636
 msgid "Show _unavailable actions"
 msgstr "Sken tigawin ur newjid ara"
 
-#: ../app/dialogs/preferences-dialog.c:2629
+#: ../app/dialogs/preferences-dialog.c:2639
 msgid "_Maximum History Size:"
 msgstr "Tiddi tafellayt n umazray:"
 
-#: ../app/dialogs/preferences-dialog.c:2633
+#: ../app/dialogs/preferences-dialog.c:2643
 msgid "C_lear Action History"
 msgstr "Sfeḍ amazray n tigawin"
 
-#: ../app/dialogs/preferences-dialog.c:2647
-#: ../app/dialogs/preferences-dialog.c:2648
+#: ../app/dialogs/preferences-dialog.c:2657
+#: ../app/dialogs/preferences-dialog.c:2658
 msgid "Display"
 msgstr "Beqqeḍ"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2656
+#: ../app/dialogs/preferences-dialog.c:2667
 msgid "Transparency"
 msgstr "Tafrawant"
 
-#: ../app/dialogs/preferences-dialog.c:2660
+#: ../app/dialogs/preferences-dialog.c:2671
 msgid "_Check style:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2663
+#: ../app/dialogs/preferences-dialog.c:2674
 msgid "Check _size:"
 msgstr ""
 
 #. Zoom Quality
-#: ../app/dialogs/preferences-dialog.c:2667
+#: ../app/dialogs/preferences-dialog.c:2678
 msgid "Zoom Quality"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2671
+#: ../app/dialogs/preferences-dialog.c:2682
 msgid "_Zoom quality:"
 msgstr "Taɣara n _zoom:"
 
 #. Monitor Resolution
-#: ../app/dialogs/preferences-dialog.c:2675
+#: ../app/dialogs/preferences-dialog.c:2686
 msgid "Monitor Resolution"
 msgstr "Tabadut n ugdil"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2679 ../app/display/gimpcursorview.c:211
+#: ../app/dialogs/preferences-dialog.c:2690 ../app/display/gimpcursorview.c:211
 #: ../app/widgets/gimpgrideditor.c:202 ../app/widgets/gimpgrideditor.c:237
 msgid "Pixels"
 msgstr "Ipiksilen"
 
-#: ../app/dialogs/preferences-dialog.c:2697 ../app/widgets/gimpgrideditor.c:198
+#: ../app/dialogs/preferences-dialog.c:2708 ../app/widgets/gimpgrideditor.c:198
 #: ../app/widgets/gimpgrideditor.c:233
 msgid "Horizontal"
 msgstr "Aglawan"
 
-#: ../app/dialogs/preferences-dialog.c:2699 ../app/widgets/gimpgrideditor.c:200
+#: ../app/dialogs/preferences-dialog.c:2710 ../app/widgets/gimpgrideditor.c:200
 #: ../app/widgets/gimpgrideditor.c:235
 msgid "Vertical"
 msgstr "Ubdid"
 
-#: ../app/dialogs/preferences-dialog.c:2701
+#: ../app/dialogs/preferences-dialog.c:2712
 #: ../app/widgets/gimpimagepropview.c:453
 msgid "ppi"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2719
+#: ../app/dialogs/preferences-dialog.c:2730
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Detect automatically (currently %d × %d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2737
+#: ../app/dialogs/preferences-dialog.c:2748
 msgid "_Enter manually"
 msgstr "Sekcem s ufus"
 
-#: ../app/dialogs/preferences-dialog.c:2752
+#: ../app/dialogs/preferences-dialog.c:2763
 msgid "C_alibrate..."
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2782
-#: ../app/dialogs/preferences-dialog.c:2783
+#: ../app/dialogs/preferences-dialog.c:2793
+#: ../app/dialogs/preferences-dialog.c:2794
 msgid "Window Management"
 msgstr "Asefrek n yisfuyla"
 
-#: ../app/dialogs/preferences-dialog.c:2788
+#: ../app/dialogs/preferences-dialog.c:2799
 msgid "Window Manager Hints"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2794
+#: ../app/dialogs/preferences-dialog.c:2805
 msgid "Hint for _docks and toolbox:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2797
+#: ../app/dialogs/preferences-dialog.c:2808
 msgid "Focus"
 msgstr "Asaḍas"
 
-#: ../app/dialogs/preferences-dialog.c:2801
+#: ../app/dialogs/preferences-dialog.c:2812
 msgid "Activate the _focused image"
 msgstr "Sermed tugna yewwin asaḍas"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2805
+#: ../app/dialogs/preferences-dialog.c:2816
 msgid "Window Positions"
 msgstr "Idegan n yisfuyla"
 
-#: ../app/dialogs/preferences-dialog.c:2808
+#: ../app/dialogs/preferences-dialog.c:2819
 msgid "_Save window positions on exit"
 msgstr "Sekles idegan n yisfuyla mi ara teffeɣeḍ"
 
-#: ../app/dialogs/preferences-dialog.c:2811
+#: ../app/dialogs/preferences-dialog.c:2822
 msgid "Open windows on the same _monitor they were open before"
 msgstr "Ldi isfuyla deg umsefrak ideg ldin weqbel"
 
-#: ../app/dialogs/preferences-dialog.c:2815
+#: ../app/dialogs/preferences-dialog.c:2826
 msgid "Save Window Positions _Now"
 msgstr "Sekles idegan n yisfuyla tura"
 
-#: ../app/dialogs/preferences-dialog.c:2822
+#: ../app/dialogs/preferences-dialog.c:2833
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "Ales awennez n yidegan n yisfuyla ɣer wazalen n lexṣas"
 
-#: ../app/dialogs/preferences-dialog.c:2837
-#: ../app/dialogs/preferences-dialog.c:2838
+#: ../app/dialogs/preferences-dialog.c:2848
+#: ../app/dialogs/preferences-dialog.c:2849
 msgid "Image Windows"
 msgstr "Isfuyla n tugna"
 
-#: ../app/dialogs/preferences-dialog.c:2849
+#: ../app/dialogs/preferences-dialog.c:2861
 msgid "Use \"Show _all\" by default"
 msgstr "Seqdec s lexṣas \"Sken akk\""
 
-#: ../app/dialogs/preferences-dialog.c:2853
+#: ../app/dialogs/preferences-dialog.c:2865
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Seqdec s lexṣas \"Tanqiḍt s tenqiḍt\""
 
-#: ../app/dialogs/preferences-dialog.c:2859
+#: ../app/dialogs/preferences-dialog.c:2871
 msgid "Marching ants s_peed:"
 msgstr ""
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2863
+#: ../app/dialogs/preferences-dialog.c:2875
 msgid "Zoom & Resize Behavior"
 msgstr "Tikli n usemɣer akked walus n tiddi"
 
-#: ../app/dialogs/preferences-dialog.c:2867
+#: ../app/dialogs/preferences-dialog.c:2879
 msgid "Resize window on _zoom"
 msgstr "Ales tiddi n usfaylu mi ara yettusemɣer"
 
-#: ../app/dialogs/preferences-dialog.c:2870
+#: ../app/dialogs/preferences-dialog.c:2882
 msgid "Resize window on image _size change"
 msgstr "Ales tiddi n usfaylu mi ara tbeddel tiddi n tugna"
 
-#: ../app/dialogs/preferences-dialog.c:2876
+#: ../app/dialogs/preferences-dialog.c:2888
 msgid "Show entire image"
 msgstr "Sken tugna tummidt"
 
-#: ../app/dialogs/preferences-dialog.c:2878
+#: ../app/dialogs/preferences-dialog.c:2890
 msgid "Initial zoom _ratio:"
 msgstr "Asaɣ n usemɣer n tazwara:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2882
+#: ../app/dialogs/preferences-dialog.c:2894
 msgid "Space Bar"
 msgstr "Afeggag n tallunt"
 
-#: ../app/dialogs/preferences-dialog.c:2888
+#: ../app/dialogs/preferences-dialog.c:2900
 msgid "_While space bar is pressed:"
 msgstr "Mi tettwassed tqeffalt n tallunt:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2892
+#: ../app/dialogs/preferences-dialog.c:2904
 msgid "Mouse Pointers"
 msgstr "Iṛeccamen n umumed"
 
-#: ../app/dialogs/preferences-dialog.c:2896
+#: ../app/dialogs/preferences-dialog.c:2908
 msgid "Show _brush outline"
 msgstr "Sken azizdew n umfezzu"
 
-#: ../app/dialogs/preferences-dialog.c:2904
+#: ../app/dialogs/preferences-dialog.c:2916
 msgid "S_nap brush outline to stroke"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2908
+#: ../app/dialogs/preferences-dialog.c:2920
 msgid "Show pointer for paint _tools"
 msgstr "Sken aṛeccam i yifecka n teklut"
 
-#: ../app/dialogs/preferences-dialog.c:2914
+#: ../app/dialogs/preferences-dialog.c:2926
 msgid "Pointer _mode:"
 msgstr "Askar n uṛeccam:"
 
-#: ../app/dialogs/preferences-dialog.c:2917
+#: ../app/dialogs/preferences-dialog.c:2929
 msgid "Pointer _handedness:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2928
+#: ../app/dialogs/preferences-dialog.c:2940
 msgid "Image Window Appearance"
 msgstr "Timeẓriwt n usfaylu n tugna"
 
-#: ../app/dialogs/preferences-dialog.c:2936
+#: ../app/dialogs/preferences-dialog.c:2950
 msgid "Default Appearance in Normal Mode"
 msgstr "Timeẓriwt n lexṣas deg uskar amagnu"
 
-#: ../app/dialogs/preferences-dialog.c:2941
+#: ../app/dialogs/preferences-dialog.c:2955
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Timeẓriwt n lexṣas deg uskar n ugdil aččuran"
 
-#: ../app/dialogs/preferences-dialog.c:2950
+#: ../app/dialogs/preferences-dialog.c:2964
 msgid "Image Title & Statusbar Format"
 msgstr "Amasal n uzwel akked ufeggag n waddad n tugna"
 
-#: ../app/dialogs/preferences-dialog.c:2951
+#: ../app/dialogs/preferences-dialog.c:2965
 msgid "Title & Status"
 msgstr "Azwel akked waddad"
 
-#: ../app/dialogs/preferences-dialog.c:2969
+#: ../app/dialogs/preferences-dialog.c:2983
 msgid "Current format"
 msgstr "Amasal amiran"
 
-#: ../app/dialogs/preferences-dialog.c:2970
+#: ../app/dialogs/preferences-dialog.c:2984
 msgid "Default format"
 msgstr "Amasal n lexṣas"
 
-#: ../app/dialogs/preferences-dialog.c:2971
+#: ../app/dialogs/preferences-dialog.c:2985
 msgid "Show zoom percentage"
 msgstr "Sken afmiḍi n usemɣer"
 
-#: ../app/dialogs/preferences-dialog.c:2972
+#: ../app/dialogs/preferences-dialog.c:2986
 msgid "Show zoom ratio"
 msgstr "Sken assaɣ n usemɣer"
 
-#: ../app/dialogs/preferences-dialog.c:2973
+#: ../app/dialogs/preferences-dialog.c:2987
 msgid "Show image size"
 msgstr "Sken tiddi n tugna"
 
-#: ../app/dialogs/preferences-dialog.c:2974
+#: ../app/dialogs/preferences-dialog.c:2988
 msgid "Show drawable size"
 msgstr "Sken tiddi n tɣawsa tudlift"
 
-#: ../app/dialogs/preferences-dialog.c:2987
+#: ../app/dialogs/preferences-dialog.c:3001
 msgid "Image Title Format"
 msgstr "Amasal n uzwel n tugna"
 
-#: ../app/dialogs/preferences-dialog.c:2989
+#: ../app/dialogs/preferences-dialog.c:3003
 msgid "Image Statusbar Format"
 msgstr "Amasal n ufeggag n waddad n tugna"
 
-#: ../app/dialogs/preferences-dialog.c:3073
+#: ../app/dialogs/preferences-dialog.c:3087
 msgid "Image Window Snapping Behavior"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:3074
+#: ../app/dialogs/preferences-dialog.c:3088
 msgid "Snapping"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:3081
+#: ../app/dialogs/preferences-dialog.c:3095
 msgid "Default Behavior in Normal Mode"
 msgstr "Tikli n lexṣas deg uskar amagnu"
 
-#: ../app/dialogs/preferences-dialog.c:3085
+#: ../app/dialogs/preferences-dialog.c:3099
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Tikli n lexṣas deg uskar n ugdil aččuran"
 
-#: ../app/dialogs/preferences-dialog.c:3094
+#: ../app/dialogs/preferences-dialog.c:3108
 msgid "_Snapping distance:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:3103
-#: ../app/dialogs/preferences-dialog.c:3104
+#: ../app/dialogs/preferences-dialog.c:3117
+#: ../app/dialogs/preferences-dialog.c:3118
 msgid "Input Devices"
 msgstr "Ibenkan n unekcum"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:3110
+#: ../app/dialogs/preferences-dialog.c:3124
 msgid "Extended Input Devices"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:3114
+#: ../app/dialogs/preferences-dialog.c:3128
 msgid "S_hare tool and tool options between input devices"
 msgstr "Bḍu ifecka akked tnefrunin n yifecka gar yibenkan n unekcum"
 
-#: ../app/dialogs/preferences-dialog.c:3118
+#: ../app/dialogs/preferences-dialog.c:3132
 msgid "Configure E_xtended Input Devices..."
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:3125
+#: ../app/dialogs/preferences-dialog.c:3139
 msgid "_Save input device settings on exit"
 msgstr "Sekles iɣewwaren n yibenkan n unekcum mi ara teffeḍ"
 
-#: ../app/dialogs/preferences-dialog.c:3129
+#: ../app/dialogs/preferences-dialog.c:3143
 msgid "Save Input Device Settings _Now"
 msgstr "Sekles iɣewwaren n yibenkan n unekcum tura"
 
-#: ../app/dialogs/preferences-dialog.c:3136
+#: ../app/dialogs/preferences-dialog.c:3150
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "Ales awennez n yiɣewwaren n yibenkan n tuffɣa ɣer wazalen n lexṣas"
 
-#: ../app/dialogs/preferences-dialog.c:3151
+#: ../app/dialogs/preferences-dialog.c:3165
 msgid "Additional Input Controllers"
 msgstr "Isenqaden n unekcum nniḍen"
 
-#: ../app/dialogs/preferences-dialog.c:3152
+#: ../app/dialogs/preferences-dialog.c:3166
 msgid "Input Controllers"
 msgstr "Isenqaden n unekcum"
 
-#: ../app/dialogs/preferences-dialog.c:3167
-#: ../app/dialogs/preferences-dialog.c:3168
+#: ../app/dialogs/preferences-dialog.c:3181
+#: ../app/dialogs/preferences-dialog.c:3182
 msgid "Folders"
 msgstr "Ikaramen"
 
-#: ../app/dialogs/preferences-dialog.c:3175
+#: ../app/dialogs/preferences-dialog.c:3189
 msgid "Reset _Folders"
 msgstr "Ales awennez n yikaramen"
 
-#: ../app/dialogs/preferences-dialog.c:3191
+#: ../app/dialogs/preferences-dialog.c:3205
 msgid "_Temporary folder:"
 msgstr "Akaram akudan:"
 
-#: ../app/dialogs/preferences-dialog.c:3192
+#: ../app/dialogs/preferences-dialog.c:3206
 msgid "Select Folder for Temporary Files"
 msgstr "Fren akaram i yifuyla ikudanen"
 
-#: ../app/dialogs/preferences-dialog.c:3196
+#: ../app/dialogs/preferences-dialog.c:3210
 msgid "_Swap folder:"
 msgstr "Akaram n usemmeskel:"
 
-#: ../app/dialogs/preferences-dialog.c:3197
+#: ../app/dialogs/preferences-dialog.c:3211
 msgid "Select Swap Folder"
 msgstr "Fren akaram n usemmeskel"
 
-#: ../app/dialogs/preferences-dialog.c:3230
+#: ../app/dialogs/preferences-dialog.c:3244
 msgid "Brush Folders"
 msgstr "Ikaramen n yimfezza"
 
-#: ../app/dialogs/preferences-dialog.c:3233
+#: ../app/dialogs/preferences-dialog.c:3247
 msgid "Reset Brush _Folders"
 msgstr "Ales awennez n yikaramen n yimfezza"
 
-#: ../app/dialogs/preferences-dialog.c:3234
+#: ../app/dialogs/preferences-dialog.c:3248
 msgid "Select Brush Folders"
 msgstr "Fren ikaramen n yimfezza"
 
-#: ../app/dialogs/preferences-dialog.c:3236
+#: ../app/dialogs/preferences-dialog.c:3250
 msgid "Dynamics Folders"
 msgstr "Ikaramen ismussanen"
 
-#: ../app/dialogs/preferences-dialog.c:3239
+#: ../app/dialogs/preferences-dialog.c:3253
 msgid "Reset Dynamics _Folders"
 msgstr "Ales awennez n yikaramen ismussanen"
 
-#: ../app/dialogs/preferences-dialog.c:3240
+#: ../app/dialogs/preferences-dialog.c:3254
 msgid "Select Dynamics Folders"
 msgstr "Fren ikaramen ismussanen"
 
-#: ../app/dialogs/preferences-dialog.c:3242
+#: ../app/dialogs/preferences-dialog.c:3256
 msgid "Pattern Folders"
 msgstr "Ikaramen n wudlifen"
 
-#: ../app/dialogs/preferences-dialog.c:3245
+#: ../app/dialogs/preferences-dialog.c:3259
 msgid "Reset Pattern _Folders"
 msgstr "Ales awennez n yikaramen n wudlifen"
 
-#: ../app/dialogs/preferences-dialog.c:3246
+#: ../app/dialogs/preferences-dialog.c:3260
 msgid "Select Pattern Folders"
 msgstr "Fren ikaramen n wudlifen"
 
-#: ../app/dialogs/preferences-dialog.c:3248
+#: ../app/dialogs/preferences-dialog.c:3262
 msgid "Palette Folders"
 msgstr "Ikaramen n tpaliḍin"
 
-#: ../app/dialogs/preferences-dialog.c:3251
+#: ../app/dialogs/preferences-dialog.c:3265
 msgid "Reset Palette _Folders"
 msgstr "Ales awennez n yikaramen n tpaliḍin"
 
-#: ../app/dialogs/preferences-dialog.c:3252
+#: ../app/dialogs/preferences-dialog.c:3266
 msgid "Select Palette Folders"
 msgstr "Fren ikaramen n tpaliḍin"
 
-#: ../app/dialogs/preferences-dialog.c:3254
+#: ../app/dialogs/preferences-dialog.c:3268
 msgid "Gradient Folders"
 msgstr "Ikaramen n yifesnawen"
 
-#: ../app/dialogs/preferences-dialog.c:3257
+#: ../app/dialogs/preferences-dialog.c:3271
 msgid "Reset Gradient _Folders"
 msgstr "Ales awennez n yikaramen n yifesnawen"
 
-#: ../app/dialogs/preferences-dialog.c:3258
+#: ../app/dialogs/preferences-dialog.c:3272
 msgid "Select Gradient Folders"
 msgstr "Fren ikaramen n yifesnawen"
 
-#: ../app/dialogs/preferences-dialog.c:3260
+#: ../app/dialogs/preferences-dialog.c:3274
 msgid "Font Folders"
 msgstr "Ikaramen n tsefsa"
 
-#: ../app/dialogs/preferences-dialog.c:3263
+#: ../app/dialogs/preferences-dialog.c:3277
 msgid "Reset Font _Folders"
 msgstr "Ales awennez n yikaramen n tsefsa"
 
-#: ../app/dialogs/preferences-dialog.c:3264
+#: ../app/dialogs/preferences-dialog.c:3278
 msgid "Select Font Folders"
 msgstr "Fren ikaramen n tsefsa"
 
-#: ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/preferences-dialog.c:3280
 msgid "Tool Preset Folders"
 msgstr "Ikaramen n useɣwer uzwir n ufecku"
 
-#: ../app/dialogs/preferences-dialog.c:3269
+#: ../app/dialogs/preferences-dialog.c:3283
 msgid "Reset Tool Preset _Folders"
 msgstr "Aeles awennez n yikaramen n useɣwer uzwir n ufecku"
 
-#: ../app/dialogs/preferences-dialog.c:3270
+#: ../app/dialogs/preferences-dialog.c:3284
 msgid "Select Tool Preset Folders"
 msgstr "Fren ikaramen n useɣwer n ufecku"
 
-#: ../app/dialogs/preferences-dialog.c:3272
+#: ../app/dialogs/preferences-dialog.c:3286
 msgid "MyPaint Brush Folders"
 msgstr "Ikaramen n yimfezza n MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3275
+#: ../app/dialogs/preferences-dialog.c:3289
 msgid "Reset MyPaint Brush _Folders"
 msgstr "Ales awennez n yikaramen n yimfezza n MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3276
+#: ../app/dialogs/preferences-dialog.c:3290
 msgid "Select MyPaint Brush Folders"
 msgstr "Fren ikaramen n yimfezza n MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3278
+#: ../app/dialogs/preferences-dialog.c:3292
 msgid "Plug-in Folders"
 msgstr "Ikaramen n yiseɣzaf"
 
-#: ../app/dialogs/preferences-dialog.c:3281
+#: ../app/dialogs/preferences-dialog.c:3295
 msgid "Reset plug-in _Folders"
 msgstr "Ales awennez n yikaramen n yiseɣzaf"
 
-#: ../app/dialogs/preferences-dialog.c:3282
+#: ../app/dialogs/preferences-dialog.c:3296
 msgid "Select plug-in Folders"
 msgstr "Fren ikaramen n yiseɣzaf"
 
-#: ../app/dialogs/preferences-dialog.c:3284
+#: ../app/dialogs/preferences-dialog.c:3298
 msgid "Scripts"
 msgstr "Iskripten"
 
-#: ../app/dialogs/preferences-dialog.c:3284
+#: ../app/dialogs/preferences-dialog.c:3298
 msgid "Script-Fu Folders"
 msgstr "Ikaramen n Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3287
+#: ../app/dialogs/preferences-dialog.c:3301
 msgid "Reset Script-Fu _Folders"
 msgstr "Ales awennez n yikaramen n Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3288
+#: ../app/dialogs/preferences-dialog.c:3302
 msgid "Select Script-Fu Folders"
 msgstr "Fren ikaramen n Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3290
+#: ../app/dialogs/preferences-dialog.c:3304
 msgid "Module Folders"
 msgstr "Ikaramen n yizegrar"
 
-#: ../app/dialogs/preferences-dialog.c:3293
+#: ../app/dialogs/preferences-dialog.c:3307
 msgid "Reset Module _Folders"
 msgstr "Ales awennez n yikaramen n yizegrar"
 
-#: ../app/dialogs/preferences-dialog.c:3294
+#: ../app/dialogs/preferences-dialog.c:3308
 msgid "Select Module Folders"
 msgstr "Fren ikaramen n yizegrar"
 
-#: ../app/dialogs/preferences-dialog.c:3296
+#: ../app/dialogs/preferences-dialog.c:3310
 msgid "Interpreters"
 msgstr "Imsuɣalen"
 
-#: ../app/dialogs/preferences-dialog.c:3296
+#: ../app/dialogs/preferences-dialog.c:3310
 msgid "Interpreter Folders"
 msgstr "Ikaramen n yimsuɣal"
 
-#: ../app/dialogs/preferences-dialog.c:3299
+#: ../app/dialogs/preferences-dialog.c:3313
 msgid "Reset Interpreter _Folders"
 msgstr "Ales awennez n yikaramen n yimsuɣal"
 
-#: ../app/dialogs/preferences-dialog.c:3300
+#: ../app/dialogs/preferences-dialog.c:3314
 msgid "Select Interpreter Folders"
 msgstr "Fren ikaramen n yimsuɣal"
 
-#: ../app/dialogs/preferences-dialog.c:3302
+#: ../app/dialogs/preferences-dialog.c:3316
 msgid "Environment"
 msgstr "Tawennaḍt"
 
-#: ../app/dialogs/preferences-dialog.c:3302
+#: ../app/dialogs/preferences-dialog.c:3316
 msgid "Environment Folders"
 msgstr "Ikaramen n twennaḍt"
 
-#: ../app/dialogs/preferences-dialog.c:3305
+#: ../app/dialogs/preferences-dialog.c:3319
 msgid "Reset Environment _Folders"
 msgstr "Ales awennez n yikaramen n twennaḍt"
 
-#: ../app/dialogs/preferences-dialog.c:3306
+#: ../app/dialogs/preferences-dialog.c:3320
 msgid "Select Environment Folders"
 msgstr "Fren yikaramen n twennaḍt"
 
-#: ../app/dialogs/preferences-dialog.c:3308
+#: ../app/dialogs/preferences-dialog.c:3322
 msgid "Themes"
 msgstr "Isental"
 
-#: ../app/dialogs/preferences-dialog.c:3308
+#: ../app/dialogs/preferences-dialog.c:3322
 msgid "Theme Folders"
 msgstr "Ikaramen n yisental"
 
-#: ../app/dialogs/preferences-dialog.c:3311
+#: ../app/dialogs/preferences-dialog.c:3325
 msgid "Reset Theme _Folders"
 msgstr "Ales awennez n yikaramen n yisental"
 
-#: ../app/dialogs/preferences-dialog.c:3312
+#: ../app/dialogs/preferences-dialog.c:3326
 msgid "Select Theme Folders"
 msgstr "Fren ikaramen n yisental"
 
-#: ../app/dialogs/preferences-dialog.c:3314
+#: ../app/dialogs/preferences-dialog.c:3328
 msgid "Icon Themes"
 msgstr "Isental n tignitin"
 
-#: ../app/dialogs/preferences-dialog.c:3314
+#: ../app/dialogs/preferences-dialog.c:3328
 msgid "Icon Theme Folders"
 msgstr "Ikaramen n tignitin n yisental"
 
-#: ../app/dialogs/preferences-dialog.c:3317
+#: ../app/dialogs/preferences-dialog.c:3331
 msgid "Reset Icon Theme _Folders"
 msgstr "Ales awennez n yikaramen n tignitin n yisental"
 
-#: ../app/dialogs/preferences-dialog.c:3318
+#: ../app/dialogs/preferences-dialog.c:3332
 msgid "Select Icon Theme Folders"
 msgstr "Fren ikaramen n tignitin n yisental"
 
@@ -18052,7 +18152,7 @@ msgstr "H"
 
 #: ../app/display/gimpcursorview.c:337
 msgid "_Sample Merged"
-msgstr ""
+msgstr "Alemmec imezdin"
 
 #: ../app/display/gimpdisplayshell.c:509
 msgid "Access the image menu"
@@ -19228,7 +19328,7 @@ msgstr "Tiririt"
 #: ../app/operations/operations-enums.c:243
 msgctxt "layer-mode"
 msgid "LCh Hue"
-msgstr ""
+msgstr "Tiɣmi LCh"
 
 #: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode"
@@ -19243,7 +19343,7 @@ msgstr ""
 #: ../app/operations/operations-enums.c:246
 msgctxt "layer-mode"
 msgid "LCh Lightness"
-msgstr ""
+msgstr "Tifawit LCh"
 
 #: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
@@ -20638,12 +20738,12 @@ msgid ""
 "'%s'."
 msgstr ""
 
-#: ../app/pdb/image-cmds.c:2398
+#: ../app/pdb/image-cmds.c:2400
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 
-#: ../app/pdb/image-select-cmds.c:302 ../app/tools/gimpfreeselecttool.c:105
+#: ../app/pdb/image-select-cmds.c:304 ../app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "Tafrayt tilellit"
 
@@ -20986,7 +21086,7 @@ msgstr "Tavidyut"
 #: ../app/pdb/plug-in-compat-cmds.c:4442
 msgctxt "undo-type"
 msgid "Value Invert"
-msgstr ""
+msgstr "Tuttya n wazal"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4549
 msgctxt "undo-type"
@@ -21118,7 +21218,7 @@ msgstr ""
 
 #: ../app/plug-in/gimpplugin-progress.c:337
 msgid "Cancelled"
-msgstr ""
+msgstr "Ittwasefsex"
 
 #: ../app/plug-in/gimppluginmanager.c:238
 msgid "Plug-in Interpreters"
@@ -21619,7 +21719,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: ../app/text/gimpfontfactory.c:398
+#: ../app/text/gimpfontfactory.c:399
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -21736,7 +21836,7 @@ msgstr ""
 
 #: ../app/tools/gimpalignoptions.c:279
 msgid "Align"
-msgstr ""
+msgstr "Reyyec"
 
 #: ../app/tools/gimpalignoptions.c:298
 msgid "Align left edge of target"
@@ -23502,7 +23602,7 @@ msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:222
 msgid "Edit this dynamics"
-msgstr ""
+msgstr "Ẓreg asmussu-agi"
 
 #: ../app/tools/gimppaintoptions-gui.c:318
 msgid "Fade Options"
@@ -23747,10 +23847,6 @@ msgstr "Zzi"
 msgid "Rotate Tool: Rotate the layer, selection or path"
 msgstr ""
 
-#: ../app/tools/gimprotatetool.c:104
-msgid "_Rotate"
-msgstr "_Zzi"
-
 #: ../app/tools/gimprotatetool.c:132
 msgid "R_otate"
 msgstr "Tuzzya"
@@ -23975,7 +24071,7 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:168
 msgid "Justify"
-msgstr ""
+msgstr "Ṣeggem"
 
 #: ../app/tools/gimptextoptions.c:169
 msgid "Text alignment"
