@@ -149,6 +149,7 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *scale;
 
@@ -159,6 +160,10 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_expanding_frame_new (config, "sample-average", NULL,
                                          scale, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+
+  /* The Sample merged checkbox. */
+  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   return vbox;
 }

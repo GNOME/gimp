@@ -806,21 +806,13 @@ gimp_filter_tool_pick_color (GimpColorTool     *color_tool,
 {
   GimpTool       *tool        = GIMP_TOOL (color_tool);
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
-  gint            off_x, off_y;
   gboolean        picked;
 
   g_return_val_if_fail (g_list_length (tool->drawables) == 1, FALSE);
 
-  gimp_item_get_offset (GIMP_ITEM (tool->drawables->data), &off_x, &off_y);
-
-  *sample_format = gimp_drawable_get_format (tool->drawables->data);
-
-  picked = gimp_pickable_pick_color (GIMP_PICKABLE (tool->drawables->data),
-                                     coords->x - off_x,
-                                     coords->y - off_y,
-                                     color_tool->options->sample_average,
-                                     color_tool->options->average_radius,
-                                     pixel, color);
+  picked = GIMP_COLOR_TOOL_CLASS (parent_class)->pick (color_tool, coords,
+                                                       display, sample_format,
+                                                       pixel, color);
 
   if (! picked && filter_tool->pick_abyss)
     {
