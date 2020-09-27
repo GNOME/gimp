@@ -631,6 +631,8 @@ symbolic_vector_scalable = [
   'scalable/gimp-convert-rgb-symbolic.svg',
   'scalable/gimp-cursor-symbolic.svg',
   'scalable/gimp-curve-free-symbolic.svg',
+  'scalable/gimp-curve-point-corner-symbolic.svg',
+  'scalable/gimp-curve-point-smooth-symbolic.svg',
   'scalable/gimp-curve-smooth-symbolic.svg',
   'scalable/gimp-dashboard-symbolic.svg',
   'scalable/gimp-default-colors-symbolic.svg',
