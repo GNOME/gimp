@@ -3409,16 +3409,9 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           x=car(sc->args);
           s_return(sc, mk_real(sc, ceil(rvalue(x))));
 
-     case OP_TRUNCATE : {
-          double rvalue_of_x ;
+     case OP_TRUNCATE:
           x=car(sc->args);
-          rvalue_of_x = rvalue(x) ;
-          if (rvalue_of_x > 0) {
-            s_return(sc, mk_real(sc, floor(rvalue_of_x)));
-          } else {
-            s_return(sc, mk_real(sc, ceil(rvalue_of_x)));
-          }
-     }
+          s_return(sc, mk_real(sc, trunc(rvalue(x))));
 
      case OP_ROUND:
         x=car(sc->args);
