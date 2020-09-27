@@ -1211,6 +1211,7 @@ static pointer mk_atom(scheme *sc, char *q) {
                }
                else if ((c == 'e') || (c == 'E')) {
                        if(!has_fp_exp) {
+                          has_fp_exp = 1;
                           has_dec_point = 1; /* decimal point illegal
                                                 from now on */
                           p++;
