@@ -29,6 +29,12 @@ Tools:
   - "gegl:matting-levin" now the default engine of Foreground Select
     tool (when present, as it is an optional feature) as it performs a
     lot better.
+  - GEGL operations now display a "Sample merged" checkbox in Tool
+    Options. This will be used when the operation allows to pick a color
+    (hence one can pick from the edited layer or from visible data).
+  - "Sample merged" now defaults to being activated in Color Picker and
+    GEGL tools as it seems the less confusing for beginners who don't
+    know of the option yet (according to a small poll we ran).
 
 User interface:
 
@@ -43,6 +49,8 @@ User interface:
     (kibibyte, mebibyte and gibibyte) instead of decimal ones, to round
     properly when using higher units, and to not lose accuracy when
     possible when displaying in higher units.
+  - Several of the biggest pages of the Preferences dialog are now
+    scrollable, allowing the dialog to fit on smaller displays.
 
 Plug-ins:
 
@@ -81,6 +89,8 @@ Plug-ins:
       contain confidential information such as usernames and directory
       structures, making the previous behaviour a potential privacy and
       security risk.
+    - Fix a file descriptor leak case which may have prevented a file
+      from being opened on Windows.
   - Multiple improvements in the PSP import plug-in:
     - support reading raster layers of PSP version > 6,
     - support reading 16-bit integer PSP files,
@@ -97,6 +107,8 @@ Plug-ins:
   - "Orientation" metadata is now reset whether you accepted to rotate
     the image or not when importing an image.
   - XPM does not export a "None" (transparent) color when unused.
+  - BMP always include color masks when exporting BMP with color space
+    info, as mandated by BITMAPV5HEADER specification.
 
 Debugging:
 
