@@ -1943,7 +1943,9 @@ static INLINE int is_one_of(char *s, gunichar c) {
 /* skip white characters */
 static INLINE int skipspace(scheme *sc) {
      gunichar c;
+#if SHOW_ERROR_LINE
      int curr_line = 0;
+#endif
      do {
          c=inchar(sc);
 #if SHOW_ERROR_LINE
