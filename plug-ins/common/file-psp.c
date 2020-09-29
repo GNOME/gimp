@@ -1806,19 +1806,16 @@ read_lz77_channel (FILE        *f,
 }
 
 static int
-read_channel_data (FILE        *f,
-                   PSPimage    *ia,
-                   guchar     **pixels,
-                   guint        bytespp,
-                   guint        offset,
-                   GeglBuffer  *buffer,
-                   guint32      compressed_len,
-                   GError     **error)
+read_channel_data (FILE      *f,
+                   PSPimage  *ia,
+                   guchar   **pixels,
+                   gint       width,          /* width of layer or mask channel */
+                   gint       height,         /* height of layer or mask channel */
+                   guint      bytespp,
+                   guint      offset,
+                   guint32    compressed_len,
+                   GError   **error)
 {
-  /* width, height below are the layer/channel dimensions,
-     not necessarily the same as the image dimensions. */
-  gint width  = gegl_buffer_get_width (buffer);
-  gint height = gegl_buffer_get_height (buffer);
   gint decompress_result = 0;
   gint line_width;
 
@@ -1939,6 +1936,89 @@ read_raster_layer_info (FILE      *f,
   return TRUE;
 }
 
+static const Babl*
+get_mask_format (PSPimage *ia)
+{
+  const Babl *format = NULL;
+
+  switch (ia->depth)
+    {
+    case 48:
+      format = babl_format ("Y u16");
+      break;
+
+    case 8:
+    case 24:
+      format = babl_format ("Y u8");
+      break;
+
+    default:
+      break;
+    }
+
+  return format;
+}
+
+static gboolean
+read_layer_mask (FILE          *f,
+                 GimpLayer     *layer,
+                 GeglRectangle *mask_rect,       /* dimensions of mask data */
+                 GeglRectangle *layer_mask_rect, /* part of mask inside the layer boundaries */
+                 PSPimage      *ia,
+                 gboolean       mask_disabled,
+                 guint32        compressed_len,
+                 GError       **error)
+{
+  GimpLayerMask *mask;
+  GeglBuffer    *buffer;
+  guchar       **pixels, *pixel;
+  gint           i;
+
+  if (! (ia->base_type == GIMP_RGB || ia->base_type == GIMP_GRAY))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Invalid image base type for layer mask."));
+      return FALSE;
+    }
+
+  if (layer_mask_rect->height > 0 && layer_mask_rect->width > 0)
+    {
+      pixel = g_malloc0 (mask_rect->height * mask_rect->width * ia->bytes_per_sample);
+      pixels = g_new (guchar *, mask_rect->height);
+
+      for (i = 0; i < mask_rect->height; i++)
+        pixels[i] = pixel + mask_rect->width * ia->bytes_per_sample * i;
+
+      /* Mask is a grayscale layer which means bytes per sample is the same
+         as bytes per pixel. */
+      if (read_channel_data (f, ia, pixels, mask_rect->width, mask_rect->height,
+                             ia->bytes_per_sample, 0,
+                             compressed_len, error) == -1)
+        {
+          g_free (pixels);
+          g_free (pixel);
+          return FALSE;
+        }
+
+      mask = gimp_layer_create_mask (layer, GIMP_ADD_MASK_WHITE);
+      gimp_layer_add_mask (layer, mask);
+      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+      gegl_buffer_set (buffer, mask_rect,
+                       0, get_mask_format (ia),
+                       pixel +
+                         ((layer_mask_rect->y - mask_rect->y) * mask_rect->width +
+                         (layer_mask_rect->x - mask_rect->x)) * ia->bytes_per_sample,
+                       mask_rect->width * ia->bytes_per_sample);
+      gimp_layer_set_apply_mask (layer, ! mask_disabled);
+
+      g_object_unref (buffer);
+      g_free (pixels);
+      g_free (pixel);
+    }
+
+  return TRUE;
+}
+
 static GimpLayer *
 read_layer_block (FILE      *f,
                   GimpImage *image,
@@ -1969,6 +2049,7 @@ read_layer_block (FILE      *f,
   gint width, height, bytespp, offset;
   guchar **pixels, *pixel;
   GeglBuffer *buffer;
+  GeglRectangle mask_data_rect, layer_mask_rect;
 
   block_start = ftell (f);
 
@@ -2252,8 +2333,22 @@ read_layer_block (FILE      *f,
                 }
               else if (bitmap_type == PSP_DIB_USER_MASK)
                 {
-                  /* FIXME: Add as layer mask */
-                  g_message ("Conversion of layer mask is not supported");
+                  /* Set dimensions of layer mask. */
+                  mask_data_rect.x = mask_rect[0] + saved_mask_rect[0];
+                  mask_data_rect.y = mask_rect[1] + saved_mask_rect[1];
+                  mask_data_rect.width = saved_mask_rect[2] - saved_mask_rect[0];
+                  mask_data_rect.height = saved_mask_rect[3] - saved_mask_rect[1];
+                  /* Crop mask to layer boundaries. */
+                  if (gegl_rectangle_intersect (&layer_mask_rect,
+                                                GEGL_RECTANGLE (0, 0, width, height),
+                                                &mask_data_rect))
+                    {
+                      if (! read_layer_mask (f, layer, &mask_data_rect, &layer_mask_rect, ia,
+                                             mask_disabled, compressed_len, error))
+                        {
+                          g_message ("Reading layer mask failed.");
+                        }
+                    }
                 }
               else
                 {
@@ -2283,8 +2378,8 @@ read_layer_block (FILE      *f,
                           return NULL;
                         }
 
-                      if (read_channel_data (f, ia, pixels, bytespp, offset,
-                                            buffer, compressed_len, error) == -1)
+                      if (read_channel_data (f, ia, pixels, width, height, bytespp,
+                                             offset, compressed_len, error) == -1)
                         {
                           return NULL;
                         }
