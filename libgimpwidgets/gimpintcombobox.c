@@ -80,6 +80,9 @@ static void  gimp_int_combo_box_get_property (GObject         *object,
                                               GValue          *value,
                                               GParamSpec      *pspec);
 
+static void  gimp_int_combo_box_changed      (GtkComboBox     *combo_box,
+                                              gpointer         user_data);
+
 static void  gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box);
 static void  gimp_int_combo_box_data_func    (GtkCellLayout   *layout,
                                               GtkCellRenderer *cell,
@@ -179,6 +182,10 @@ gimp_int_combo_box_init (GimpIntComboBox *combo_box)
   g_object_unref (store);
 
   priv->layout = GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED;
+
+  g_signal_connect (combo_box, "changed",
+                    G_CALLBACK (gimp_int_combo_box_changed),
+                    NULL);
 }
 
 static void
@@ -463,8 +470,8 @@ gimp_int_combo_box_append (GimpIntComboBox *combo_box,
  * Looks up the item that belongs to the given @value and makes it the
  * selected item in the @combo_box.
  *
- * Returns: %TRUE on success or %FALSE if there was no item for
- *               this value.
+ * Returns: %TRUE on success (value changed or not) or %FALSE if there
+ *          was no item for this value.
  *
  * Since: 2.2
  **/
@@ -474,12 +481,21 @@ gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
+  gint          current_value;
 
   g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), FALSE);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  if (gimp_int_store_lookup_by_value (model, value, &iter))
+  if (gimp_int_combo_box_get_active (combo_box, &current_value) &&
+      value == current_value)
+    {
+      /* Guard for identical value to not loop forever between
+       * GimpIntComboBox "value" and GtkComboBox "active" properties.
+       */
+      return TRUE;
+    }
+  else if (gimp_int_store_lookup_by_value (model, value, &iter))
     {
       gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
       return TRUE;
@@ -794,6 +810,17 @@ gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,
 
 
 /*  private functions  */
+
+static void
+gimp_int_combo_box_changed (GtkComboBox *combo_box,
+                            gpointer     user_data)
+{
+  gint value;
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo_box),
+                                 &value);
+  g_object_set (combo_box, "value", value, NULL);
+}
 
 static void
 gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
