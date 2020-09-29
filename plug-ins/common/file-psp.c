@@ -1557,6 +1557,255 @@ upscale_indexed_sub_8 (FILE    *f,
 }
 
 static int
+read_uncompressed_channel (FILE        *f,
+                           guchar     **pixels,
+                           gint         line_width, /* width in bytes of one scanline */
+                           gint         height,
+                           guint        bytespp,    /* bytes per pixel */
+                           guint        bytesps,    /* bytes per sample */
+                           guint        offset,
+                           GError     **error)
+{
+  guchar *buf;
+  gint    y, i;
+
+  if (bytespp == 1)
+    {
+      if (fread (pixels[0], height * line_width, 1, f) < 1)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading channel"));
+          return -1;
+        }
+    }
+  else
+    {
+      buf = g_malloc (line_width);
+      if (bytesps == 1)
+        {
+          for (y = 0; y < height; y++)
+            {
+              guchar *p, *q;
+
+              if (fread (buf, line_width, 1, f) < 1)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Error reading channel"));
+                  return -1;
+                }
+              /* Contrary to what the PSP specification seems to suggest
+                 scanlines are not stored on a 4-byte boundary. */
+              p = buf;
+              q = pixels[y] + offset;
+              for (i = 0; i < line_width; i++)
+                {
+                  *q = *p++;
+                  q += bytespp;
+                }
+            }
+        }
+      else if (bytesps == 2)
+        {
+          for (y = 0; y < height; y++)
+            {
+              guint16 *p, *q;
+              gint     width = line_width / 2;
+
+              if (fread (buf, line_width, 1, f) < 1)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Error reading channel"));
+                  return -1;
+                }
+              /* Contrary to what the PSP specification seems to suggest
+                 scanlines are not stored on a 4-byte boundary. */
+              p = (guint16 *) buf;
+              q = (guint16 *) (pixels[y] + offset);
+              for (i = 0; i < width; i++)
+                {
+                  *q = GUINT16_FROM_LE (*p++);
+                  q += bytespp / 2;
+                }
+            }
+        }
+
+      g_free (buf);
+    }
+  return 0;
+}
+
+static int
+read_rle_channel (FILE        *f,
+                  guchar     **pixels,
+                  gint         line_width, /* width in bytes of one scanline */
+                  gint         height,
+                  guint        bytespp,    /* bytes per pixel */
+                  guint        bytesps,    /* bytes per sample */
+                  guint        offset,
+                  GError     **error)
+{
+  gint    i;
+  guchar *q, *endq;
+  guchar *buf;
+  guchar  runcount, byte;
+
+  q = pixels[0] + offset;
+  endq = q + line_width / bytesps * height * bytespp;
+
+  buf = g_malloc (127);
+  while (q < endq)
+    {
+      if (fread (&runcount, 1, 1, f) < 1)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading channel"));
+          return -1;
+        }
+      if (runcount > 128)
+        {
+          runcount -= 128;
+          if (fread (&byte, 1, 1, f) < 1)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading channel"));
+              return -1;
+            }
+          memset (buf, byte, runcount);
+        }
+      else if (fread (buf, runcount, 1, f) < 1)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading channel"));
+          return -1;
+        }
+
+      /* prevent buffer overflow for bogus data */
+      if (runcount > (endq - q) / bytespp + bytesps)
+        {
+          g_printerr ("Buffer overflow decompressing RLE data.\n");
+          break;
+        }
+
+      if (bytespp == 1)
+        {
+          memmove (q, buf, runcount);
+          q += runcount;
+        }
+      else if (bytesps == 1)
+        {
+          guchar *p = buf;
+
+          for (i = 0; i < runcount; i++)
+            {
+              *q = *p++;
+              q += bytespp;
+            }
+        }
+      else if (bytesps == 2)
+        {
+          guint16 *p = (guint16 *) buf;
+          guint16 *r = (guint16 *) q;
+
+          for (i = 0; i < runcount / 2; i++)
+            {
+              *r = GUINT16_FROM_LE (*p++);
+              r += bytespp / 2;
+            }
+          q = (guchar *) r;
+        }
+    }
+  g_free (buf);
+  return 0;
+}
+
+static int
+read_lz77_channel (FILE        *f,
+                   guchar     **pixels,
+                   gint         line_width,     /* width in bytes of one scanline */
+                   gint         height,
+                   guint        bytespp,        /* bytes per pixel */
+                   guint        bytesps,        /* bytes per sample */
+                   guint        offset,
+                   guint32      compressed_len, /* length of compressed data */
+                   GError     **error)
+{
+  guint32  npixels, nbytes;
+  gint     i;
+  guchar  *buf, *buf2;
+  z_stream zstream;
+
+  nbytes = line_width * height;
+  npixels = nbytes / bytesps;
+
+  buf = g_malloc (compressed_len);
+  if (fread (buf, compressed_len, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading channel"));
+      return -1;
+    }
+  zstream.next_in = buf;
+  zstream.avail_in = compressed_len;
+  zstream.zalloc = psp_zalloc;
+  zstream.zfree = psp_zfree;
+  zstream.opaque = f;
+  if (inflateInit (&zstream) != Z_OK)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("zlib error"));
+      return -1;
+    }
+  if (bytespp == 1)
+    zstream.next_out = pixels[0];
+  else
+    {
+      buf2 = g_malloc (nbytes);
+      zstream.next_out = buf2;
+    }
+  zstream.avail_out = nbytes;
+  if (inflate (&zstream, Z_FINISH) != Z_STREAM_END)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("zlib error"));
+      inflateEnd (&zstream);
+      return -1;
+    }
+  inflateEnd (&zstream);
+  g_free (buf);
+
+  if (bytespp > 1)
+    {
+      if (bytesps == 1)
+        {
+          guchar *p, *q;
+
+          p = buf2;
+          q = pixels[0] + offset;
+          for (i = 0; i < npixels; i++)
+            {
+              *q = *p++;
+              q += bytespp;
+            }
+          g_free (buf2);
+        }
+      else if (bytesps == 2)
+        {
+          guint16 *p, *q;
+
+          p = (guint16 *) buf2;
+          q = (guint16 *) (pixels[0] + offset);
+          for (i = 0; i < npixels; i++)
+            {
+              *q = GUINT16_FROM_LE (*p++);
+              q += bytespp / 2;
+            }
+          g_free (buf2);
+        }
+    }
+  return 0;
+}
+
+static int
 read_channel_data (FILE        *f,
                    PSPimage    *ia,
                    guchar     **pixels,
@@ -1566,19 +1815,18 @@ read_channel_data (FILE        *f,
                    guint32      compressed_len,
                    GError     **error)
 {
-  gint i, y, line_width;
-  gint width = gegl_buffer_get_width (buffer);
+  /* width, height below are the layer/channel dimensions,
+     not necessarily the same as the image dimensions. */
+  gint width  = gegl_buffer_get_width (buffer);
   gint height = gegl_buffer_get_height (buffer);
-  gint npixels = width * height;
-  guchar *buf;
-  guchar *buf2 = NULL;  /* please the compiler */
-  guchar runcount, byte;
-  z_stream zstream;
+  gint decompress_result = 0;
+  gint line_width;
 
   g_assert (ia->bytes_per_sample <= 2);
 
   if (ia->depth < 8)
     {
+      /* Note that bytespp is assumed to be set to 1 for depth < 8. */
       /* Scanlines for 1 and 4 bit only end on a 4-byte boundary. */
       line_width = (((width * ia->depth + 7) / 8) + ia->depth - 1) / 4 * 4;
     }
@@ -1590,187 +1838,35 @@ read_channel_data (FILE        *f,
   switch (ia->compression)
     {
     case PSP_COMP_NONE:
-      if (bytespp == 1)
-        {
-          fread (pixels[0], height * line_width, 1, f);
-        }
-      else
-        {
-          buf = g_malloc (line_width);
-          if (ia->bytes_per_sample == 1)
-            {
-              for (y = 0; y < height; y++)
-                {
-                  guchar *p, *q;
-
-                  fread (buf, width, 1, f);
-                  /* Contrary to what the PSP specification seems to suggest
-                    scanlines are not stored on a 4-byte boundary. */
-                  p = buf;
-                  q = pixels[y] + offset;
-                  for (i = 0; i < width; i++)
-                    {
-                      *q = *p++;
-                      q += bytespp;
-                    }
-                }
-            }
-          else if (ia->bytes_per_sample == 2)
-            {
-              for (y = 0; y < height; y++)
-                {
-                  guint16 *p, *q;
-
-                  fread (buf, width * ia->bytes_per_sample, 1, f);
-                  /* Contrary to what the PSP specification seems to suggest
-                    scanlines are not stored on a 4-byte boundary. */
-                  p = (guint16 *) buf;
-                  q = (guint16 *) (pixels[y] + offset);
-                  for (i = 0; i < width; i++)
-                    {
-                      *q = GUINT16_FROM_LE (*p++);
-                      q += bytespp / 2;
-                    }
-                }
-            }
-
-          g_free (buf);
-        }
+      decompress_result = read_uncompressed_channel (f, pixels, line_width, height,
+                                                     bytespp, ia->bytes_per_sample,
+                                                     offset, error);
       break;
 
     case PSP_COMP_RLE:
-      {
-        guchar *q, *endq;
-
-        q = pixels[0] + offset;
-        if (ia->depth >= 8)
-          endq = q + npixels * bytespp;
-        else
-          endq = q + line_width * height;
-
-        buf = g_malloc (127);
-        while (q < endq)
-          {
-            fread (&runcount, 1, 1, f);
-            if (runcount > 128)
-              {
-                runcount -= 128;
-                fread (&byte, 1, 1, f);
-                memset (buf, byte, runcount);
-              }
-            else
-              fread (buf, runcount, 1, f);
-
-            /* prevent buffer overflow for bogus data */
-            if (runcount > (endq - q) / bytespp + ia->bytes_per_sample - 1)
-              {
-                g_printerr ("Buffer overflow decompressing RLE data.\n");
-                break;
-              }
-
-            if (bytespp == 1)
-              {
-                memmove (q, buf, runcount);
-                q += runcount;
-              }
-            else if (ia->bytes_per_sample == 1)
-              {
-                guchar *p = buf;
-
-                for (i = 0; i < runcount; i++)
-                  {
-                    *q = *p++;
-                    q += bytespp;
-                  }
-              }
-            else if (ia->bytes_per_sample == 2)
-              {
-                guint16 *p = (guint16 *) buf;
-                guint16 *r = (guint16 *) q;
-
-                for (i = 0; i < runcount / 2; i++)
-                  {
-                    *r = GUINT16_FROM_LE (*p++);
-                    r += bytespp / 2;
-                  }
-                q = (guchar *) r;
-              }
-          }
-        g_free (buf);
-      }
+      decompress_result = read_rle_channel (f, pixels, line_width, height,
+                                            bytespp, ia->bytes_per_sample,
+                                            offset, error);
       break;
 
     case PSP_COMP_LZ77:
-      buf = g_malloc (compressed_len);
-      fread (buf, compressed_len, 1, f);
-      zstream.next_in = buf;
-      zstream.avail_in = compressed_len;
-      zstream.zalloc = psp_zalloc;
-      zstream.zfree = psp_zfree;
-      zstream.opaque = f;
-      if (inflateInit (&zstream) != Z_OK)
-        {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("zlib error"));
-          return -1;
-        }
-      if (bytespp == 1)
-        zstream.next_out = pixels[0];
-      else
-        {
-          buf2 = g_malloc (npixels * ia->bytes_per_sample);
-          zstream.next_out = buf2;
-        }
-      zstream.avail_out = npixels * ia->bytes_per_sample;
-      if (inflate (&zstream, Z_FINISH) != Z_STREAM_END)
-        {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("zlib error"));
-          inflateEnd (&zstream);
-          return -1;
-        }
-      inflateEnd (&zstream);
-      g_free (buf);
+      decompress_result = read_lz77_channel (f, pixels, line_width, height,
+                                             bytespp, ia->bytes_per_sample,
+                                             offset, compressed_len, error);
+      break;
 
-      if (bytespp > 1)
-        {
-          if (ia->bytes_per_sample == 1)
-            {
-              guchar *p, *q;
-
-              p = buf2;
-              q = pixels[0] + offset;
-              for (i = 0; i < npixels; i++)
-                {
-                  *q = *p++;
-                  q += bytespp;
-                }
-              g_free (buf2);
-            }
-          else if (ia->bytes_per_sample == 2)
-            {
-              guint16 *p, *q;
-
-              p = (guint16 *) buf2;
-              q = (guint16 *) (pixels[0] + offset);
-              for (i = 0; i < npixels; i++)
-                {
-                  *q = GUINT16_FROM_LE (*p++);
-                  q += bytespp / 2;
-                }
-              g_free (buf2);
-            }
-        }
+    default:
+      decompress_result = -1;
       break;
     }
 
-  if (ia->base_type == GIMP_INDEXED && ia->depth < 8)
+  if (decompress_result == 0 && ia->base_type == GIMP_INDEXED && ia->depth < 8)
     {
       /* We need to convert 1 and 4 bit to 8 bit indexed */
       upscale_indexed_sub_8 (f, width, height, ia->depth, pixels[0]);
     }
 
-  return 0;
+  return decompress_result;
 }
 
 static gboolean
