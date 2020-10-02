@@ -42,3 +42,16 @@ crossroad install appstream-glib              \
                   openexr ilmbase             \
                   poppler poppler-data        \
                   xpm-nox
+
+if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
+    # Generate the loaders.cache file for GUI image support.
+    # Note: this is mostly for distribution so I initially wanted to
+    # have these in "win64-nightly" job but "win32-nightly" also
+    # requires the same file (and I fail to install wine32) whereas
+    # Gitlab "needs" field requires jobs to be from a prior stage. So I
+    # generate this here, with dependencies.
+    wine ${CROSSROAD_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll > ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+    sed -i "s&$CROSSROAD_PREFIX/&&" ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+    sed -i '/.dll\"/s*/*\\\\*g' ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+    echo CROSSROAD PREFIX IS: $CROSSROAD_PREFIX
+fi

@@ -201,6 +201,9 @@ deps-win64:
     - .cache/crossroad/
     - apt-cache
   before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends wine wine64
+
     - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
@@ -360,7 +363,6 @@ win64-nightly:
     - apt-get install -y --no-install-recommends
                       python3 binutils-mingw-w64-x86-64 file
                       libglib2.0-bin
-                      wine wine64
 
     # Package ressources.
     - mkdir -p ${GIMP_DISTRIB}
@@ -388,11 +390,6 @@ win64-nightly:
     - cp -fr ${GIMP_PREFIX}/lib/gegl-0.4 ${GIMP_DISTRIB}/lib/
     - cp -fr ${GIMP_PREFIX}/lib/babl-0.1 ${GIMP_DISTRIB}/lib/
     - cp -fr ${GIMP_PREFIX}/lib/girepository-1.0 ${GIMP_DISTRIB}/lib/
-
-    # Generate the loaders.cache file for GUI image support.
-    - wine ${GIMP_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll > ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
-    - sed -i "s&[A-Z]:.*/gimp/$GIMP_DISTRIB/&&" ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
-    - sed -i '/.dll"/s*/*\\\\*g' ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 
     # Generate share/glib-2.0/schemas/gschemas.compiled
     - glib-compile-schemas --targetdir=${GIMP_DISTRIB}/share/glib-2.0/schemas ${GIMP_DISTRIB}/share/glib-2.0/schemas
@@ -427,9 +424,11 @@ win32-nightly:
   stage: distribution
   dependencies:
     - gimp-win32
+    - deps-win64
   variables:
     GIMP_PREFIX: "gimp-prefix"
     GIMP_DISTRIB: "gimp-w32"
+    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   artifacts:
     when: always
     paths:
@@ -468,9 +467,9 @@ win32-nightly:
     - cp -fr ${GIMP_PREFIX}/lib/girepository-1.0 ${GIMP_DISTRIB}/lib/
 
     # I fail to install wine32 inside the Gitlab runner. So instead, I
-    # just reuse the loaders.cache generated in the win64-nightly job as
+    # just reuse the loaders.cache generated in the deps-win64 job as
     # they should be the same (text format).
-    - cp gimp-w64/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+    - cp ${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 
     # Generate share/glib-2.0/schemas/gschemas.compiled
     - glib-compile-schemas --targetdir=${GIMP_DISTRIB}/share/glib-2.0/schemas ${GIMP_DISTRIB}/share/glib-2.0/schemas
@@ -499,4 +498,4 @@ win32-nightly:
     - for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/plug-ins/*/*.exe; do
         python3 build/windows/crossbuild-gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
       done
-  needs: ["gimp-win32", "win64-nightly"]
+  needs: ["gimp-win32", "deps-win64"]
