@@ -357,7 +357,7 @@ win64-nightly:
     - gimp-w64
   script:
     - apt-get update
-    - apt-get install -y --no-install-recommends python3 binutils-mingw-w64-x86-64
+    - apt-get install -y --no-install-recommends python3 binutils-mingw-w64-x86-64 file
 
     # Package ressources.
     - mkdir -p ${GIMP_DISTRIB}
@@ -427,7 +427,7 @@ win32-nightly:
     - gimp-w32
   script:
     - apt-get update
-    - apt-get install -y --no-install-recommends python3 binutils-mingw-w64-i686
+    - apt-get install -y --no-install-recommends python3 binutils-mingw-w64-i686 file
 
     # Package ressources.
     - mkdir -p ${GIMP_DISTRIB}

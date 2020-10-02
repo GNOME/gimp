@@ -62,8 +62,20 @@ def main():
 def recursive(filename):
   # Check if DLL exist in /bin folder, if true extract depencies too.
   if os.path.exists(filename):
-    result = subprocess.run(
-        ['x86_64-w64-mingw32-objdump', '-p', filename], stdout=subprocess.PIPE)
+    objdump = None
+
+    result = subprocess.run(['file', filename], stdout=subprocess.PIPE)
+    file_type = result.stdout.decode('utf-8')
+    if 'PE32+' in file_type:
+      objdump = 'x86_64-w64-mingw32-objdump'
+    elif 'PE32' in file_type:
+      objdump = 'i686-w64-mingw32-objdump'
+
+    if objdump is None:
+      sys.stderr.write('File type of {} unknown: {}\n'.format(filename, file_type))
+      sys.exit(os.EX_UNAVAILABLE)
+
+    result = subprocess.run([objdump, '-p', filename], stdout=subprocess.PIPE)
     out = result.stdout.decode('utf-8')
     # Parse lines with DLL Name instead of lib*.dll directly
     items = re.findall(r"DLL Name: \S+.dll", out, re.MULTILINE)
