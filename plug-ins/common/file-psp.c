@@ -2286,8 +2286,6 @@ read_layer_block (FILE      *f,
                 pixels[i] = pixel + width * bytespp * i;
             }
 
-          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-
           /* Read the layer channel sub-blocks */
           while (ftell (f) < sub_block_start + sub_total_len)
             {
@@ -2391,9 +2389,9 @@ read_layer_block (FILE      *f,
                 }
             }
 
+          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
           gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                           NULL, pixel, GEGL_AUTO_ROWSTRIDE);
-
           g_object_unref (buffer);
 
           g_free (pixels);
