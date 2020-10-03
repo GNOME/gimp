@@ -117,7 +117,7 @@ deps-debian:
   artifacts:
     expire_in: 1 days
     when: always
-    name: "app-build-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    name: "app-build-${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     paths:
     - _build
     #- "${INSTALL_DIR}"
@@ -213,7 +213,7 @@ deps-win64:
     - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
     expire_in: 2 hours
     paths:
@@ -245,7 +245,7 @@ gimp-win64:
       crossroad w64 gimp --run="-"
   needs: ["deps-win64"]
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
     expire_in: 1 day
     paths:
@@ -274,7 +274,7 @@ deps-win32:
     - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w32 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
     expire_in: 2 hours
     paths:
@@ -306,7 +306,7 @@ gimp-win32:
       crossroad w32 gimp --run="-"
   needs: ["deps-win32"]
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
     expire_in: 1 day
     paths:
@@ -324,7 +324,7 @@ cppcheck:
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     expire_in: 1 week
     when: always
     paths:
@@ -338,6 +338,7 @@ sources:
   dependencies:
     - gimp-distcheck-debian
   artifacts:
+    name: "GIMP-sources-${CI_COMMIT_SHORT_SHA}"
     when: always
     paths:
     - gimp-*.tar.*
@@ -355,6 +356,7 @@ win64-nightly:
     GIMP_PREFIX: "gimp-prefix"
     GIMP_DISTRIB: "gimp-w64"
   artifacts:
+    name: "GIMP-Win64-CI-${CI_COMMIT_SHORT_SHA}"
     when: always
     paths:
     - gimp-w64
@@ -430,6 +432,7 @@ win32-nightly:
     GIMP_DISTRIB: "gimp-w32"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   artifacts:
+    name: "GIMP-Win32-${CI_COMMIT_SHORT_SHA}"
     when: always
     paths:
     - gimp-w32

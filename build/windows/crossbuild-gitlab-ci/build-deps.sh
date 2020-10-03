@@ -43,6 +43,11 @@ crossroad install appstream-glib              \
                   poppler poppler-data        \
                   xpm-nox
 
+if [ $? -ne 0 ]; then
+  echo "Installation of pre-built dependencies failed.";
+  exit 1;
+fi
+
 if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
     # Generate the loaders.cache file for GUI image support.
     # Note: this is mostly for distribution so I initially wanted to
@@ -53,5 +58,4 @@ if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
     wine ${CROSSROAD_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll > ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
     sed -i "s&$CROSSROAD_PREFIX/&&" ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
     sed -i '/.dll\"/s*/*\\\\*g' ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
-    echo CROSSROAD PREFIX IS: $CROSSROAD_PREFIX
 fi
