@@ -2253,7 +2253,8 @@ save_dialog (GimpProcedure *procedure,
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as HEIF"));
+                                      g_strcmp0 (gimp_procedure_get_name (procedure), SAVE_PROC_AV1) == 0 ?
+                                      _("Export Image as AVIF") : _("Export Image as HEIF"));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
