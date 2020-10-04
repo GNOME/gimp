@@ -67,7 +67,8 @@ static gboolean   save_image     (GFile                        *file,
 static gboolean   load_dialog    (struct heif_context  *heif,
                                   uint32_t             *selected_image);
 static gboolean   save_dialog    (SaveParams           *params,
-                                  gint32                image_ID);
+                                  gint32                image_ID,
+                                  const gchar          *procname);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -299,7 +300,7 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
           gimp_get_data (SAVE_PROC, &params);
 
-          if (! save_dialog (&params, image_ID))
+          if (! save_dialog (&params, image_ID, name))
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -392,7 +393,7 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
           gimp_get_data (SAVE_PROC_AV1, &params);
 
-          if (! save_dialog (&params, image_ID))
+          if (! save_dialog (&params, image_ID, name))
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -1950,8 +1951,9 @@ save_dialog_lossless_button_toggled (GtkToggleButton *source,
 }
 
 gboolean
-save_dialog (SaveParams *params,
-             gint32      image_ID)
+save_dialog (SaveParams  *params,
+             gint32       image_ID,
+             const gchar *procname)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -1970,7 +1972,9 @@ save_dialog (SaveParams *params,
 #endif
   gboolean   run = FALSE;
 
-  dialog = gimp_export_dialog_new (_("HEIF"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_export_dialog_new (g_strcmp0 (procname, SAVE_PROC_AV1) == 0?
+                                   "AVIF" : "HEIF",
+                                   PLUG_IN_BINARY, procname);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
