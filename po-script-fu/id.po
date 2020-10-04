@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2014-05-03 22:00+1200\n"
-"PO-Revision-Date: 2012-09-24 18:39+0700\n"
+"POT-Creation-Date: 2020-05-26 14:47+0000\n"
+"PO-Revision-Date: 2020-10-04 16:02+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -17,81 +17,119 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.5.3\n"
+"X-Generator: Poedit 2.4.1\n"
 
+# df
 #: ../plug-ins/script-fu/script-fu.c:111
+#, fuzzy
 msgid "Interactive console for Script-Fu development"
 msgstr "Konsol interaktif bagi pengembangan Script-Fu"
 
+# df
 #: ../plug-ins/script-fu/script-fu.c:117
+#, fuzzy
 msgid "_Console"
 msgstr "_Konsol"
 
+# df
 #: ../plug-ins/script-fu/script-fu.c:141
+#, fuzzy
 msgid "Server for remote Script-Fu operation"
 msgstr "Server bagi operasi Script-Fu remote"
 
+# df
 #: ../plug-ins/script-fu/script-fu.c:151
+#, fuzzy
 msgid "_Start Server..."
-msgstr "Mulai _Server…"
+msgstr "Mulai _Server..."
 
-#: ../plug-ins/script-fu/script-fu.c:307
+# df
+#: ../plug-ins/script-fu/script-fu.c:306
+#, fuzzy
 msgid "_GIMP Online"
 msgstr "_GIMP Daring"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+# df
+#: ../plug-ins/script-fu/script-fu.c:307
+#, fuzzy
 msgid "_User Manual"
-msgstr "Man_ual Pengguna"
+msgstr "Manual Pengg_una"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+# df
+#: ../plug-ins/script-fu/script-fu.c:310
+#, fuzzy
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+# df
+#: ../plug-ins/script-fu/script-fu.c:312
+#, fuzzy
 msgid "_Test"
 msgstr "_Tes"
 
-#: ../plug-ins/script-fu/script-fu.c:316
+# df
+#: ../plug-ins/script-fu/script-fu.c:315
+#, fuzzy
 msgid "_Buttons"
 msgstr "Tom_bol"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+# df
+#: ../plug-ins/script-fu/script-fu.c:317
+#, fuzzy
 msgid "_Logos"
 msgstr "_Logo"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+# df
+#: ../plug-ins/script-fu/script-fu.c:319
+#, fuzzy
 msgid "_Patterns"
 msgstr "_Pola"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+# df
+#: ../plug-ins/script-fu/script-fu.c:322
+#, fuzzy
 msgid "_Web Page Themes"
 msgstr "Tema Halaman _Web"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+# df
+#: ../plug-ins/script-fu/script-fu.c:324
+#, fuzzy
 msgid "_Alien Glow"
 msgstr "Pendar Mahluk _Asing"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+# df
+#: ../plug-ins/script-fu/script-fu.c:326
+#, fuzzy
 msgid "_Beveled Pattern"
 msgstr "Pola _Belah Ketupat"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+# df
+#: ../plug-ins/script-fu/script-fu.c:328
+#, fuzzy
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:332
+# df
+#: ../plug-ins/script-fu/script-fu.c:331
+#, fuzzy
 msgid "Alpha to _Logo"
 msgstr "Alfa ke _Logo"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+# df
+#: ../plug-ins/script-fu/script-fu.c:334
+#, fuzzy
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Baca ulang semua skrip Script-Fu yang tersedia"
 
-#: ../plug-ins/script-fu/script-fu.c:340
+# df
+#: ../plug-ins/script-fu/script-fu.c:339
+#, fuzzy
 msgid "_Refresh Scripts"
 msgstr "Sega_rkan Skrip"
 
-#: ../plug-ins/script-fu/script-fu.c:363
+# df
+#: ../plug-ins/script-fu/script-fu.c:362
+#, fuzzy
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -99,671 +137,924 @@ msgstr ""
 "Anda tak dapat memakai \"Segarkan Skrip\" ketika kotak dialog Script-Fu "
 "terbuka. Mohon tutup semua jendela Script-Fu dan coba lagi."
 
-#: ../plug-ins/script-fu/script-fu-console.c:130
-#: ../plug-ins/script-fu/script-fu-console.c:197
+# df
+#: ../plug-ins/script-fu/script-fu-console.c:127
+#: ../plug-ins/script-fu/script-fu-console.c:194
+#, fuzzy
 msgid "Script-Fu Console"
 msgstr "Konsol Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:193
+#: ../plug-ins/script-fu/script-fu-console.c:132
+#: ../plug-ins/script-fu/script-fu-console.c:293
+#, fuzzy
+msgid "_Save"
+msgstr "_Simpan"
+
+#: ../plug-ins/script-fu/script-fu-console.c:133
+#, fuzzy
+msgid "C_lear"
+msgstr "C_lear"
+
+#: ../plug-ins/script-fu/script-fu-console.c:134
+#: ../plug-ins/script-fu/script-fu-console.c:371
+#, fuzzy
+msgid "_Close"
+msgstr "_Tutup"
+
+# df
+#: ../plug-ins/script-fu/script-fu-console.c:190
+#, fuzzy
 msgid "Welcome to TinyScheme"
 msgstr "Selamat datang ke TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:199
+# df
+#: ../plug-ins/script-fu/script-fu-console.c:196
+#, fuzzy
 msgid "Interactive Scheme Development"
 msgstr "Pengembangan Scheme Interaktif"
 
-#: ../plug-ins/script-fu/script-fu-console.c:235
+# df
+#: ../plug-ins/script-fu/script-fu-console.c:232
+#, fuzzy
 msgid "_Browse..."
-msgstr "_Jelajahi…"
+msgstr "Ram_ban..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:293
+# df
+#: ../plug-ins/script-fu/script-fu-console.c:288
+#, fuzzy
 msgid "Save Script-Fu Console Output"
 msgstr "Simpan Keluaran Konsol Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:340
-#, c-format
+#: ../plug-ins/script-fu/script-fu-console.c:292
+#: ../plug-ins/script-fu/script-fu-interface.c:236
+#: ../plug-ins/script-fu/script-fu-server.c:839
+#, fuzzy
+msgid "_Cancel"
+msgstr "Ba_tal"
+
+# df
+#: ../plug-ins/script-fu/script-fu-console.c:337
+#, fuzzy, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Tidak dapat membuka '%s' untuk menulis: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:369
+# df
+#: ../plug-ins/script-fu/script-fu-console.c:366
+#, fuzzy
 msgid "Script-Fu Procedure Browser"
 msgstr "Peramban Prosedur Script-Fu"
 
+#: ../plug-ins/script-fu/script-fu-console.c:370
+#, fuzzy
+msgid "_Apply"
+msgstr "Ter_apkan"
+
+# df
 #: ../plug-ins/script-fu/script-fu-eval.c:60
+#, fuzzy
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Mode evaluasi Script-Fu hanya mengijinkan pemanggilan non interaktif"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:200
+#, fuzzy
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu tak bisa memroses dua skrip pada saat yang sama."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
-#, c-format
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:202
+#, fuzzy, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Anda tengah menjalankan skrip \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:226
-#, c-format
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:228
+#, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:235
+#, fuzzy
+msgid "_Reset"
+msgstr "_Reset"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:237
+#, fuzzy
+msgid "_OK"
+msgstr "_OK"
+
+# df
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:290
-#, c-format
+#: ../plug-ins/script-fu/script-fu-interface.c:291
+#, fuzzy, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:337
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:341
+#, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Pemilihan Warna Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:446
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:457
+#, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Pemilihan Berkas Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:460
+#, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Pemilihan Folder Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:473
+#, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Pemilihan Fonta Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:481
+#, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Pemilihan Palet Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:490
+#, fuzzy
 msgid "Script-Fu Pattern Selection"
 msgstr "Pemilihan Pola Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:499
+#, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Pemilihan Gradien Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:508
+#, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Pemilihan Kuas Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:840
-#, c-format
+# df
+#: ../plug-ins/script-fu/script-fu-interface.c:877
+#, fuzzy, c-format
 msgid "Error while executing %s:"
 msgstr "Galat saat mengeksekusi %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:146
+# df
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
+#, fuzzy
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Terlalu sedikit argumen pada pemanggilan 'script-fu-register'"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:605
-#, c-format
+# df
+#: ../plug-ins/script-fu/script-fu-scripts.c:648
+#, fuzzy, c-format
 msgid "Error while loading %s:"
 msgstr "Galat saat memuat %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:827
+# df
+#: ../plug-ins/script-fu/script-fu-server.c:835
+#, fuzzy
 msgid "Script-Fu Server Options"
 msgstr "Opsi Server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+# df
+#: ../plug-ins/script-fu/script-fu-server.c:840
+#, fuzzy
 msgid "_Start Server"
 msgstr "Mulai _Server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:865
+#: ../plug-ins/script-fu/script-fu-server.c:873
+#, fuzzy
 msgid "Listen on IP:"
 msgstr ""
+"Seperti yang diharapkan, aplikasi SSH dan Exim4 tercantum. Perhatikan bahwa "
+"tidak semua aplikasi mendengarkan pada semua alamat IP; karena Exim4 ini "
+"hanya dapat diakses pada antarmuka loopback <literal>lo</literal>, itu hanya "
+"muncul selama analisis <literal>localhost</literal> dan tidak ketika "
+"pemindaian <literal>mirtuel</literal> (yang terpetakan ke antarmuka "
+"<literal>eth0</literal> di mesin yang sama)."
 
-#: ../plug-ins/script-fu/script-fu-server.c:872
+# df
+#: ../plug-ins/script-fu/script-fu-server.c:880
+#, fuzzy
 msgid "Server port:"
 msgstr "Port server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:878
+# df
+#: ../plug-ins/script-fu/script-fu-server.c:886
+#, fuzzy
 msgid "Server logfile:"
 msgstr "Berkas log server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:890
+#: ../plug-ins/script-fu/script-fu-server.c:899
+#, fuzzy
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
+"Mendengarkan alamat IP selain 127.0.0.1 (terutama 0.0.0.0) dapat "
+"memungkinkan penyerang untuk mengeksekusi kode sewenang-wenang dari jarak "
+"jauh pada mesin ini."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+#, fuzzy
 msgid "Bumpmap"
-msgstr ""
+msgstr "Peta benjolan"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:189
+#, fuzzy
 msgid "Add B_evel..."
-msgstr ""
+msgstr "Tambah B_evel..."
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:190
+#, fuzzy
 msgid "Add a beveled border to an image"
-msgstr ""
+msgstr "Menambahkan batas miring ke gambar"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:197
+#, fuzzy
 msgid "Thickness"
-msgstr ""
+msgstr "Ketebalan"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:198
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: ../plug-ins/script-fu/scripts/old-photo.scm:104
 #: ../plug-ins/script-fu/scripts/round-corners.scm:143
-#: ../plug-ins/script-fu/scripts/slide.scm:248
+#: ../plug-ins/script-fu/scripts/slide.scm:257
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+#, fuzzy
 msgid "Work on copy"
-msgstr ""
+msgstr "Bekerja pada salinan"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:199
+#, fuzzy
 msgid "Keep bump layer"
-msgstr ""
+msgstr "Pertahankan lapisan benjolan"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:108
+#, fuzzy
 msgid "Border Layer"
-msgstr ""
+msgstr "Lapisan Batas"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:160
+#: ../plug-ins/script-fu/scripts/addborder.scm:162
+#, fuzzy
 msgid "Add _Border..."
-msgstr ""
+msgstr "Tambah _Border..."
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:161
+#: ../plug-ins/script-fu/scripts/addborder.scm:163
+#, fuzzy
 msgid "Add a border around an image"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/addborder.scm:168
-msgid "Border X size"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/addborder.scm:169
-msgid "Border Y size"
-msgstr ""
+msgstr "Menambahkan batas di sekitar gambar"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:170
 #, fuzzy
-msgid "Border color"
-msgstr "Warna Rata"
+msgid "Border X size"
+msgstr "Ukuran X batas"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:171
+#, fuzzy
+msgid "Border Y size"
+msgstr "Ukuran Y batas"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:172
+#, fuzzy
+msgid "Border color"
+msgstr "Warna garis"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:173
+#, fuzzy
 msgid "Delta value on color"
-msgstr ""
+msgstr "Nilai Delta pada warna"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+#, fuzzy
 msgid "Frame"
-msgstr ""
+msgstr "Bingkai"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+#, fuzzy
 msgid "Blend Animation needs at least three source layers"
-msgstr ""
+msgstr "Blend Animation membutuhkan setidaknya tiga lapisan sumber"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+#, fuzzy
 msgid "_Blend..."
-msgstr ""
+msgstr "_Blend..."
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+#, fuzzy
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
 msgstr ""
+"Buat lapisan menengah untuk memadukan dua lapisan atau lebih di atas latar "
+"belakang sebagai animasi"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+#, fuzzy
 msgid "Intermediate frames"
-msgstr ""
+msgstr "Bingkai perantara"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+#, fuzzy
 msgid "Max. blur radius"
-msgstr ""
+msgstr "Max. radius kabur"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+#, fuzzy
 msgid "Looped"
-msgstr ""
+msgstr "Dilingkarkan"
 
 #. --- false form of "if-1"
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:217
+#, fuzzy
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
+"Skrip Burn-In membutuhkan dua lapisan secara total. Lapisan latar depan "
+"dengan transparansi dan lapisan latar belakang."
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
+#, fuzzy
 msgid "B_urn-In..."
-msgstr ""
+msgstr "B_urn-In..."
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:225
+#, fuzzy
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
-msgid "Glow color"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
-msgid "Fadeout"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
-msgid "Fadeout width"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
-msgid "Corona width"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
-msgid "After glow"
-msgstr ""
+"Buat lapisan menengah untuk menghasilkan transisi animasi 'burn-in' antara "
+"dua lapisan"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
-msgid "Add glowing"
-msgstr ""
+#, fuzzy
+msgid "Glow color"
+msgstr "Warna cahaya"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
-msgid "Prepare for GIF"
-msgstr ""
+#, fuzzy
+msgid "Fadeout"
+msgstr "Pudar-pudar"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+#, fuzzy
+msgid "Fadeout width"
+msgstr "Lebar pudar"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
+#, fuzzy
+msgid "Corona width"
+msgstr "Lebar corona"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:236
+#, fuzzy
+msgid "After glow"
+msgstr "Setelah bersinar"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:237
+#, fuzzy
+msgid "Add glowing"
+msgstr "Menambahkan glowing"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:238
+#, fuzzy
+msgid "Prepare for GIF"
+msgstr "Bersiap untuk GIF"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:239
+#, fuzzy
 msgid "Speed (pixels/frame)"
-msgstr ""
+msgstr "Kecepatan (piksel/bingkai)"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+#: ../plug-ins/script-fu/scripts/carve-it.scm:176
+#, fuzzy
 msgid "Carved Surface"
-msgstr ""
+msgstr "Permukaan Berukir"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+#: ../plug-ins/script-fu/scripts/carve-it.scm:177
+#, fuzzy
 msgid "Bevel Shadow"
-msgstr ""
+msgstr "Bayangan Kemiringan"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+#: ../plug-ins/script-fu/scripts/carve-it.scm:178
+#, fuzzy
 msgid "Bevel Highlight"
-msgstr ""
+msgstr "Sorotan Kemiringan"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+#: ../plug-ins/script-fu/scripts/carve-it.scm:179
+#, fuzzy
 msgid "Cast Shadow"
-msgstr ""
+msgstr "Bayangan Pemeran"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+#: ../plug-ins/script-fu/scripts/carve-it.scm:180
+#, fuzzy
 msgid "Inset"
-msgstr ""
+msgstr "Inset"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+#: ../plug-ins/script-fu/scripts/carve-it.scm:192
+#, fuzzy
 msgid "Stencil C_arve..."
-msgstr ""
+msgstr "Stensil C_arve..."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+#: ../plug-ins/script-fu/scripts/carve-it.scm:193
+#, fuzzy
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
+"Gunakan gambar yang ditentukan sebagai stensil untuk mengukir dari gambar "
+"yang ditentukan."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+#: ../plug-ins/script-fu/scripts/carve-it.scm:200
+#, fuzzy
 msgid "Image to carve"
-msgstr ""
+msgstr "Gambar untuk dik mengukir"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+#: ../plug-ins/script-fu/scripts/carve-it.scm:201
+#, fuzzy
 msgid "Carve white areas"
-msgstr ""
+msgstr "Mengukir area putih"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:93
+#, fuzzy
 msgid "Background"
-msgstr ""
+msgstr "Latar belakang"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:94
+#, fuzzy
 msgid "Layer 1"
-msgstr ""
+msgstr "Lapisan 1"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:95
+#, fuzzy
 msgid "Layer 2"
-msgstr ""
+msgstr "Lapisan 2"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:96
+#, fuzzy
 msgid "Layer 3"
-msgstr ""
+msgstr "Lapisan 3"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:97
+#, fuzzy
 msgid "Drop Shadow"
-msgstr ""
+msgstr "Jatuhkan Bayangan"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:217
+#, fuzzy
 msgid "Chrome"
-msgstr ""
+msgstr "Chrome"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:218
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+#, fuzzy
 msgid "Highlight"
-msgstr ""
+msgstr "Sorot"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:232
+#, fuzzy
 msgid "Stencil C_hrome..."
-msgstr ""
+msgstr "Stensil C_hrome..."
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:233
+#, fuzzy
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
+"Menambahkan efek chrome ke bidang yang dipilih (atau alfa) menggunakan "
+"stensil (skala abu-abu) tertentu"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:240
+#, fuzzy
 msgid "Chrome saturation"
-msgstr ""
+msgstr "Saturasi Chrome"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
+#, fuzzy
 msgid "Chrome lightness"
-msgstr ""
+msgstr "Ringannya Chrome"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:242
+#, fuzzy
 msgid "Chrome factor"
-msgstr ""
+msgstr "Faktor Chrome"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:243
+#, fuzzy
 msgid "Environment map"
-msgstr ""
+msgstr "Peta lingkungan"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
+#, fuzzy
 msgid "Highlight balance"
-msgstr ""
+msgstr "Sorot keseimbangan"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:247
+#, fuzzy
 msgid "Chrome balance"
-msgstr ""
+msgstr "Saldo Chrome"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:248
+#, fuzzy
 msgid "Chrome white areas"
-msgstr ""
+msgstr "Area putih Chrome"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:81
+#: ../plug-ins/script-fu/scripts/circuit.scm:74
+#, fuzzy
 msgid "Effect layer"
-msgstr ""
+msgstr "Lapisan efek"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:134
+#: ../plug-ins/script-fu/scripts/circuit.scm:127
+#, fuzzy
 msgid "_Circuit..."
-msgstr ""
+msgstr "_Circuit..."
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:135
+#: ../plug-ins/script-fu/scripts/circuit.scm:128
+#, fuzzy
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
+"Mengisi bidang yang dipilih (atau alfa) dengan jejak seperti yang ada di "
+"papan sirkuit"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:142
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
+#, fuzzy
 msgid "Oilify mask size"
-msgstr ""
+msgstr "Ukuran masker oli"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:143
+#: ../plug-ins/script-fu/scripts/circuit.scm:136
+#, fuzzy
 msgid "Circuit seed"
-msgstr ""
+msgstr "Benih sirkuit"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:144
+#: ../plug-ins/script-fu/scripts/circuit.scm:137
+#, fuzzy
 msgid "No background (only for separate layer)"
-msgstr ""
+msgstr "Tidak ada latar belakang (hanya untuk lapisan terpisah)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:145
+#: ../plug-ins/script-fu/scripts/circuit.scm:138
 #: ../plug-ins/script-fu/scripts/lava.scm:129
 #: ../plug-ins/script-fu/scripts/predator.scm:132
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+#, fuzzy
 msgid "Keep selection"
-msgstr ""
+msgstr "Pertahankan pilihan"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:146
+#: ../plug-ins/script-fu/scripts/circuit.scm:139
 #: ../plug-ins/script-fu/scripts/lava.scm:130
 #: ../plug-ins/script-fu/scripts/predator.scm:133
+#, fuzzy
 msgid "Separate layer"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/clothify.scm:51
-msgid "_Clothify..."
-msgstr ""
+msgstr "Lapisan terpisah"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:52
-msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr ""
+#, fuzzy
+msgid "_Clothify..."
+msgstr "_Clothify..."
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:59
-msgid "Blur X"
-msgstr ""
+#: ../plug-ins/script-fu/scripts/clothify.scm:53
+#, fuzzy
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "Menambahkan tekstur seperti kain ke bidang yang dipilih (atau alfa)"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:60
-msgid "Blur Y"
-msgstr ""
+#, fuzzy
+msgid "Blur X"
+msgstr "Kabur X"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:61
-msgid "Azimuth"
-msgstr ""
+#, fuzzy
+msgid "Blur Y"
+msgstr "Kabur Y"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:62
-msgid "Elevation"
-msgstr ""
+#, fuzzy
+msgid "Azimuth"
+msgstr "Azimut"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:63
+#, fuzzy
+msgid "Elevation"
+msgstr "Elevasi"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:64
+#, fuzzy
 msgid "Depth"
-msgstr ""
+msgstr "Kedalaman"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:36
+#, fuzzy
 msgid "Stain"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/coffee.scm:81
-msgid "_Coffee Stain..."
-msgstr ""
+msgstr "Noda"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:82
-msgid "Add realistic looking coffee stains to the image"
-msgstr ""
+#, fuzzy
+msgid "_Coffee Stain..."
+msgstr "_Coffee Noda..."
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:89
-msgid "Stains"
-msgstr ""
+#: ../plug-ins/script-fu/scripts/coffee.scm:83
+#, fuzzy
+msgid "Add realistic looking coffee stains to the image"
+msgstr "Menambahkan noda kopi yang tampak realistis ke gambar"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:90
+#, fuzzy
+msgid "Stains"
+msgstr "Noda"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:91
+#, fuzzy
 msgid "Darken only"
-msgstr ""
+msgstr "Gelapkan saja"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
-msgid "Difference Clouds..."
-msgstr ""
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
+#, fuzzy
+msgid "_Difference Clouds..."
+msgstr "_Difference Awan..."
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
+#, fuzzy
 msgid "Solid noise applied with Difference layer mode"
-msgstr ""
+msgstr "Kebisingan padat diterapkan dengan mode Lapisan perbedaan"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:102
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
+#, fuzzy
 msgid "_Distort..."
-msgstr ""
+msgstr "tapis distorsi"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:103
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
+#, fuzzy
 msgid "Distress the selection"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:110
-msgid "Threshold (bigger 1<-->254 smaller)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:111
-msgid "Spread"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:112
-msgid "Granularity (1 is low)"
-msgstr ""
+msgstr "Marabahaya pilihan"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-msgid "Smooth"
-msgstr ""
+#, fuzzy
+msgid "_Threshold (bigger 1<-->254 smaller)"
+msgstr "_Threshold (lebih besar 1<-->254 lebih kecil)</-->"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
 #, fuzzy
-msgid "Smooth horizontally"
-msgstr "Horisontal"
+msgid "_Spread"
+msgstr ""
+"RAID-5 menjawab masalah asimetri dari RAID-4: blok paritas disebar ke "
+"seluruh N+1 disk, tanpa ada satu disk yang memiliki peran tertentu."
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-msgid "Smooth vertically"
-msgstr ""
+#, fuzzy
+msgid "_Granularity (1 is low)"
+msgstr "_Granularity (1 rendah)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
+#, fuzzy
+msgid "S_mooth"
+msgstr "S_mooth"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
+#, fuzzy
+msgid "Smooth hor_izontally"
+msgstr "Horisontal"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
+#, fuzzy
+msgid "Smooth _vertically"
+msgstr "Horisontal"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
-msgid "_Drop Shadow..."
-msgstr ""
+#, fuzzy
+msgid "_Drop Shadow (legacy)..."
+msgstr "_Drop Bayangan (warisan)..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+#, fuzzy
 msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "Menambahkan bayangan jatuh ke bidang yang dipilih (atau alfa)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+#, fuzzy
 msgid "Offset X"
-msgstr ""
+msgstr "Ofset X:"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+#, fuzzy
 msgid "Offset Y"
-msgstr ""
+msgstr "Ofset Y:"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
 #: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#, fuzzy
 msgid "Blur radius"
-msgstr ""
+msgstr "Radius kabur"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
 #, fuzzy
 msgid "Color"
-msgstr "Warna Rata"
+msgstr "Warna"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+#, fuzzy
 msgid "Opacity"
-msgstr ""
+msgstr "Opasitas"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+#, fuzzy
 msgid "Allow resizing"
-msgstr ""
+msgstr "Perbolehkan peng mengubah ukuran"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
-msgid "_Erase Every Other Row..."
-msgstr ""
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:42
+#, fuzzy
+msgid "_Erase Every Nth Row..."
+msgstr "_Erase Setiap Baris Nth ..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
-msgid "Erase every other row or column"
-msgstr ""
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+#, fuzzy
+msgid "Erase every nth row or column"
+msgstr "Menghapus setiap baris atau kolom ke-n"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 #, fuzzy
 msgid "Rows/cols"
 msgstr "Baris"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+# df
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
+#, fuzzy
 msgid "Rows"
 msgstr "Baris"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
-msgid "Columns"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 #, fuzzy
-msgid "Even/odd"
-msgstr "Genap"
+msgid "Columns"
+msgstr "Kolom"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
-msgid "Even"
-msgstr "Genap"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
-msgid "Odd"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 #, fuzzy
 msgid "Erase/fill"
 msgstr "Hapus"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+# df
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+#, fuzzy
 msgid "Erase"
 msgstr "Hapus"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+#, fuzzy
 msgid "Fill with BG"
-msgstr ""
+msgstr "Isi dengan BG"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+#, fuzzy
+msgid "_Erase Every Other Row..."
+msgstr "_Erase Setiap Baris Lainnya..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+#, fuzzy
+msgid "Erase every other row or column"
+msgstr "Menghapus setiap baris atau kolom lainnya"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+#, fuzzy
+msgid "Even/odd"
+msgstr "Genap"
+
+# df
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+#, fuzzy
+msgid "Even"
+msgstr "Genap"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+#, fuzzy
+msgid "Odd"
+msgstr "Ganjil"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
+#, fuzzy
 msgid "Render _Font Map..."
-msgstr ""
+msgstr "Render _Font Peta..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:153
+#, fuzzy
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
+"Membuat gambar yang diisi dengan pratinjau font yang cocok dengan filter "
+"nama font"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:158
+#, fuzzy
 msgid "_Text"
-msgstr ""
+msgstr "_Teks"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:159
+#, fuzzy
 msgid "Use font _name as text"
-msgstr ""
+msgstr "Menggunakan font _name sebagai teks"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:160
+#, fuzzy
 msgid "_Labels"
-msgstr ""
+msgstr "Label:"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:161
+#, fuzzy
 msgid "_Filter (regexp)"
-msgstr ""
+msgstr "_Filter (regexp)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:162
+#, fuzzy
 msgid "Font _size (pixels)"
-msgstr ""
+msgstr "Font _size (piksel)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:163
+#, fuzzy
 msgid "_Border (pixels)"
-msgstr ""
+msgstr "_Border (piksel)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
+#, fuzzy
 msgid "_Color scheme"
-msgstr ""
+msgstr "Skema warna:"
 
+# df
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
+#, fuzzy
 msgid "Black on white"
 msgstr "Hitam atas putih"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
+#, fuzzy
 msgid "Active colors"
-msgstr ""
+msgstr "Warna aktif"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
+#, fuzzy
 msgid "_Fuzzy Border..."
-msgstr ""
+msgstr "_Fuzzy Perbatasan..."
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
+#, fuzzy
 msgid "Add a jagged, fuzzy border to an image"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
-#: ../plug-ins/script-fu/scripts/old-photo.scm:98
-msgid "Border size"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
-msgid "Blur border"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
-msgid "Granularity (1 is Low)"
-msgstr ""
+msgstr "Menambahkan batas bergerigi dan kabur ke gambar"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
-msgid "Add shadow"
-msgstr ""
+#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+#, fuzzy
+msgid "Border size"
+msgstr "Ukuran batas"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
-msgid "Shadow weight (%)"
-msgstr ""
+#, fuzzy
+msgid "Blur border"
+msgstr "Batas buram"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#, fuzzy
+msgid "Granularity (1 is Low)"
+msgstr "Granularitas (1 rendah)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+#, fuzzy
+msgid "Add shadow"
+msgstr "Menambahkan bayangan"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:162
+#, fuzzy
+msgid "Shadow weight (%)"
+msgstr "Berat bayangan (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:164
+#, fuzzy
 msgid "Flatten image"
-msgstr ""
+msgstr "Gambar rata"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#, fuzzy
 msgid "Using _Paths"
-msgstr ""
+msgstr "Menggunakan _Paths"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:60
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:73
@@ -773,736 +1064,968 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:125
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:138
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#, fuzzy
 msgid "Bookmark to the user manual"
-msgstr ""
+msgstr "Bookmark ke manual pengguna"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#, fuzzy
 msgid "_Preparing your Images for the Web"
-msgstr ""
+msgstr "_Preparing Gambar Anda untuk Web"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#, fuzzy
 msgid "_Working with Digital Camera Photos"
-msgstr ""
+msgstr "_Working dengan Foto Kamera Digital"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#, fuzzy
 msgid "Create, Open and Save _Files"
-msgstr ""
+msgstr "Membuat, Membuka, dan menyimpan _Files"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#, fuzzy
 msgid "_Basic Concepts"
-msgstr ""
+msgstr "Konsep Dasar Hard Disk"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#, fuzzy
 msgid "How to Use _Dialogs"
-msgstr ""
+msgstr "Cara Menggunakan _Dialogs"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#, fuzzy
 msgid "Drawing _Simple Objects"
-msgstr ""
+msgstr "Menggambar _Simple Objek"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#, fuzzy
 msgid "Create and Use _Selections"
-msgstr ""
+msgstr "Membuat dan Menggunakan _Selections"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#, fuzzy
 msgid "_Main Web Site"
 msgstr ""
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the GIMP web site"
-msgstr ""
+"Semua parameter ini didokumentasikan oleh komentar dalam berkas templat. "
+"Secara khusus, parameter <varname>LogFile</varname> dan <varname>LogFormat</"
+"varname> menggambarkan lokasi dan format berkas log dan informasi di "
+"dalamnya; <varname>SiteDomain</varname> dan <varname>HostAliases</varname> "
+"berisi daftar berbagai nama yang dipakai oleh situs web utama."
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-msgid "_Developer Web Site"
-msgstr ""
-
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
+#, fuzzy
+msgid "Bookmark to the GIMP web site"
+msgstr "Bookmark ke situs web GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#, fuzzy
+msgid "_Developer Web Site"
+msgstr "_Developer Web Kami"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#, fuzzy
+msgid "_Roadmap"
+msgstr "_Roadmap"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#, fuzzy
+msgid "Bookmark to the roadmap of GIMP"
+msgstr "Bookmark ke peta jalan GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#, fuzzy
+msgid "_Wiki"
+msgstr "Wiki"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+#, fuzzy
+msgid "Bookmark to the wiki of GIMP"
+msgstr "Bookmark ke wiki GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#, fuzzy
+msgid "_Bug Reports and Feature Requests"
+msgstr "_Bug Laporan dan Permintaan Fitur"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+#, fuzzy
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr "Bookmark ke pelacak bug GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
 #, fuzzy
 msgid "_User Manual Web Site"
 msgstr "Man_ual Pengguna"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Plug-in _Registry"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
-msgid "Custom _Gradient..."
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
-msgid "Create an image filled with an example of the current gradient"
-msgstr ""
-
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:69
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
-msgid "Width"
-msgstr ""
+#, fuzzy
+msgid "Custom _Gradient..."
+msgstr "Kebiasaan _Gradient..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:70
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
-msgid "Height"
-msgstr ""
+#, fuzzy
+msgid "Create an image filled with an example of the current gradient"
+msgstr "Membuat gambar yang diisi dengan contoh gradien saat ini"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:75
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+#, fuzzy
+msgid "Width"
+msgstr "Lebar"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:76
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:197
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#, fuzzy
+msgid "Height"
+msgstr "Tinggi"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:77
+#, fuzzy
 msgid "Gradient reverse"
-msgstr ""
+msgstr "Gradien mundur"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:84
+#, fuzzy
 msgid "_Grid..."
-msgstr ""
+msgstr "_Grid..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:85
+#, fuzzy
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
 msgstr ""
+"Menggambar kisi seperti yang ditentukan oleh daftar lokasi X dan Y "
+"menggunakan kuas saat ini"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:92
+#, fuzzy
 msgid "X divisions"
-msgstr ""
+msgstr "Divisi X"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:93
+#, fuzzy
 msgid "Y divisions"
-msgstr ""
+msgstr "Divisi Y"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#, fuzzy
 msgid "New Guides from _Selection"
-msgstr ""
+msgstr "Panduan Baru dari _Selection"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#, fuzzy
 msgid "Create four guides around the bounding box of the current selection"
-msgstr ""
+msgstr "Membuat empat panduan di sekitar kotak batas pilihan saat ini"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#, fuzzy
 msgid "New Guide (by _Percent)..."
-msgstr ""
+msgstr "Panduan Baru (menurut _Percent)..."
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#, fuzzy
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr ""
+"Menambahkan panduan pada posisi yang ditentukan sebagai persentase dari "
+"ukuran gambar"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-msgid "Direction"
-msgstr ""
+#, fuzzy
+msgid "_Direction"
+msgstr "Arah:"
 
+# df
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#, fuzzy
 msgid "Horizontal"
-msgstr "Horisontal"
+msgstr "Horizontal"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#, fuzzy
 msgid "Vertical"
-msgstr ""
+msgstr "Vertikal"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-msgid "Position (in %)"
-msgstr ""
+#, fuzzy
+msgid "_Position (in %)"
+msgstr "_Posisi:"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
+#, fuzzy
 msgid "New _Guide..."
-msgstr ""
+msgstr "Baru _Guide..."
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
+#, fuzzy
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
+"Menambahkan panduan pada orientasi dan posisi yang ditentukan (dalam piksel)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-msgid "Position"
-msgstr ""
+#, fuzzy
+msgid "_Position"
+msgstr "Posisi:"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+#, fuzzy
 msgid "_Remove all Guides"
-msgstr ""
+msgstr "_Remove semua Panduan"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+#, fuzzy
 msgid "Remove all horizontal and vertical guides"
-msgstr ""
+msgstr "Menghapus semua panduan horizontal dan vertikal"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:117
+#, fuzzy
 msgid "_Lava..."
-msgstr ""
+msgstr "_Lava..."
 
 #: ../plug-ins/script-fu/scripts/lava.scm:118
+#, fuzzy
 msgid "Fill the current selection with lava"
-msgstr ""
+msgstr "Isi pilihan saat ini dengan lava"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:125
+#, fuzzy
 msgid "Seed"
-msgstr ""
+msgstr "Benih"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:126
+#, fuzzy
 msgid "Size"
-msgstr ""
+msgstr "Ukuran"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:127
+#, fuzzy
 msgid "Roughness"
-msgstr ""
+msgstr "Kekasaran"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+#, fuzzy
 msgid "Gradient"
-msgstr ""
+msgstr "Gradien"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:131
+#, fuzzy
 msgid "Use current gradient"
-msgstr ""
+msgstr "Gunakan gradien saat ini"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:106
+#: ../plug-ins/script-fu/scripts/line-nova.scm:108
+#, fuzzy
 msgid "Line _Nova..."
-msgstr ""
+msgstr "Line _Nova..."
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:107
+#: ../plug-ins/script-fu/scripts/line-nova.scm:109
+#, fuzzy
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
 msgstr ""
-
-#: ../plug-ins/script-fu/scripts/line-nova.scm:114
-msgid "Number of lines"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/line-nova.scm:115
-msgid "Sharpness (degrees)"
-msgstr ""
+"Isi lapisan dengan sinar yang keluar dari tengahnya menggunakan warna latar "
+"depan"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Offset radius"
-msgstr ""
+#, fuzzy
+msgid "Number of lines"
+msgstr "Banyaknya baris"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:117
+#, fuzzy
+msgid "Sharpness (degrees)"
+msgstr "Ketajaman (derajat)"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:118
+#, fuzzy
+msgid "Offset radius"
+msgstr "Radius offset"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:119
+#, fuzzy
 msgid "Randomness"
 msgstr ""
+"Pustaka OpenSSL, sebagaimana awalnya disediakan di Debian <emphasis role="
+"\"distribution\">Etch</emphasis>, memiliki masalah yang serius dalam "
+"pembangkit angka acak (RNG). Memang, pengelola Debian telah membuat "
+"perubahan sehingga aplikasi yang menggunakan itu tidak lagi menghasilkan "
+"peringatan ketika dianalisis oleh alat pengujian memori seperti "
+"<command>valgrind</command>. Sayangnya, perubahan ini juga berarti bahwa RNG "
+"hanya mempekerjakan salah satu sumber entropi sesuai dengan nomor proses "
+"(PID) yang 32.000 kemungkinan nilainya tidak menawarkan cukup keacakan. "
+"<ulink type=\"block\" url=\"https://www.debian.org/security/2008/dsa-1571\" /"
+">"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+#, fuzzy
 msgid "_Rectangular..."
-msgstr ""
+msgstr "_Rectangular..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+#, fuzzy
 msgid "Create a rectangular brush"
-msgstr ""
+msgstr "Membuat kuas persegi panjang"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:69
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+#, fuzzy
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:72
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:143
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:198
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:268
+#, fuzzy
 msgid "Spacing"
-msgstr ""
+msgstr "Jarak"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:133
+#, fuzzy
 msgid "Re_ctangular, Feathered..."
-msgstr ""
+msgstr "Re_ctangular, Berbulu..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:134
+#, fuzzy
 msgid "Create a rectangular brush with feathered edges"
-msgstr ""
+msgstr "Buat sikat persegi panjang dengan tepi berbulu"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:142
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:267
+#, fuzzy
 msgid "Feathering"
-msgstr ""
+msgstr "Berbulu"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:189
+#, fuzzy
 msgid "_Elliptical..."
-msgstr ""
+msgstr "_Elliptical..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:190
+#, fuzzy
 msgid "Create an elliptical brush"
-msgstr ""
+msgstr "Membuat kuas elips"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:258
+#, fuzzy
 msgid "Elli_ptical, Feathered..."
-msgstr ""
+msgstr "Elli_ptical, Berbulu..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:259
+#, fuzzy
 msgid "Create an elliptical brush with feathered edges"
-msgstr ""
+msgstr "Buat sikat elips dengan tepi berbulu"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
+#, fuzzy
 msgid "_Old Photo..."
-msgstr ""
+msgstr "_Old Foto..."
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:90
+#, fuzzy
 msgid "Make an image look like an old photo"
-msgstr ""
+msgstr "Membuat gambar terlihat seperti foto lama"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:97
+#, fuzzy
 msgid "Defocus"
-msgstr ""
+msgstr "Defokus"
 
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
 #. and the 'minimum' value.
 #: ../plug-ins/script-fu/scripts/old-photo.scm:102
+#, fuzzy
 msgid "Sepia"
-msgstr ""
+msgstr "Sepia"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:103
+#, fuzzy
 msgid "Mottle"
-msgstr ""
+msgstr "Mottle"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+#: ../plug-ins/script-fu/scripts/palette-export.scm:226
+#, fuzzy
 msgid "Folder for the output file"
-msgstr ""
+msgstr "Folder untuk berkas keluaran"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:236
+#: ../plug-ins/script-fu/scripts/palette-export.scm:227
+#, fuzzy
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
+"Nama berkas yang akan dibuat (jika berkas dengan nama ini sudah ada, maka "
+"berkas tersebut akan diganti)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:244
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+#, fuzzy
 msgid "The filename you entered is not a suitable name for a file."
 msgstr ""
+"Nama berkas yang Anda masukkan bukanlah nama yang cocok untuk sebuah berkas."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:246
+#: ../plug-ins/script-fu/scripts/palette-export.scm:237
+#, fuzzy
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
 msgstr ""
+"Semua karakter dalam nama adalah spasi putih atau karakter yang tidak dapat "
+"muncul dalam nama file."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:274
+#: ../plug-ins/script-fu/scripts/palette-export.scm:265
+#, fuzzy
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
+"Ekspor palet aktif sebagai lembar gaya CSS dengan nama entri warna sebagai "
+"nama kelasnya, dan warna itu sendiri sebagai atribut warna"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:300
+#: ../plug-ins/script-fu/scripts/palette-export.scm:291
+#, fuzzy
 msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr ""
+msgstr "Mengekspor palet aktif sebagai kamus PHP (nama => warna)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:332
+#: ../plug-ins/script-fu/scripts/palette-export.scm:323
+#, fuzzy
 msgid "Export the active palette as a Python dictionary (name: color)"
-msgstr ""
+msgstr "Mengekspor palet aktif sebagai kamus Python (nama: warna)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:361
+#: ../plug-ins/script-fu/scripts/palette-export.scm:352
+#, fuzzy
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr ""
+"Tulis semua warna dalam palet ke file teks, satu nilai heksadesimal per "
+"baris (tanpa nama)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:408
+#: ../plug-ins/script-fu/scripts/palette-export.scm:399
+#, fuzzy
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr ""
+msgstr "Ekspor palet aktif sebagai java.util.Hashtable<String, Color>"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+#, fuzzy
 msgid "There is no image data in the clipboard to paste."
-msgstr ""
+msgstr "Tak ada data citra dalam papan klip untuk ditempelkan."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
+#, fuzzy
 msgid "New _Brush..."
-msgstr ""
+msgstr "Kuas _Baru"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+#, fuzzy
 msgid "Paste the clipboard contents into a new brush"
-msgstr ""
+msgstr "Menempelkan konten clipboard ke dalam kuas baru"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-msgid "Brush name"
-msgstr ""
+#, fuzzy
+msgid "_Brush name"
+msgstr "_Brush nama"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-msgid "File name"
-msgstr ""
+#, fuzzy
+msgid "_File name"
+msgstr "Nama Berkas:"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#, fuzzy
+msgid "_Spacing"
+msgstr "Jarak bari_s"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 #, fuzzy
 msgid "New _Pattern..."
-msgstr "_Pola"
+msgstr "Pola _Baru"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+#, fuzzy
 msgid "Paste the clipboard contents into a new pattern"
-msgstr ""
+msgstr "Menempelkan konten clipboard ke dalam pola baru"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
 #, fuzzy
-msgid "Pattern name"
+msgid "_Pattern name"
 msgstr "_Pola"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+#, fuzzy
 msgid "_Perspective..."
-msgstr ""
+msgstr "_Perspektif"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+#, fuzzy
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "Menambahkan bayangan perspektif ke bidang yang dipilih (atau alfa)"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#, fuzzy
 msgid "Angle"
-msgstr ""
+msgstr "Sudut"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+#, fuzzy
 msgid "Relative distance of horizon"
-msgstr ""
+msgstr "Jarak relatif cakrawala"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+#, fuzzy
 msgid "Relative length of shadow"
-msgstr ""
+msgstr "Panjang bayangan relatif"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+#, fuzzy
 msgid "Interpolation"
-msgstr ""
+msgstr "Interpolasi"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:121
+#, fuzzy
 msgid "_Predator..."
-msgstr ""
+msgstr "_Predator..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm:122
+#, fuzzy
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Menambahkan efek 'Predator' ke wilayah yang dipilih (atau alfa)"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:129
+#, fuzzy
 msgid "Edge amount"
-msgstr ""
+msgstr "Jumlah tepi"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:130
+#, fuzzy
 msgid "Pixelize"
-msgstr ""
+msgstr "Pixelize"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:131
+#, fuzzy
 msgid "Pixel amount"
-msgstr ""
+msgstr "Jumlah piksel"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-msgid "Reverse Layer Order"
-msgstr ""
+#, fuzzy
+msgid "Reverse Layer _Order"
+msgstr "Lapisan Terbalik _Order"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+#, fuzzy
 msgid "Reverse the order of layers in the image"
-msgstr ""
+msgstr "Membalikkan urutan lapisan dalam gambar"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:119
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
+#, fuzzy
 msgid "_Rippling..."
-msgstr ""
+msgstr "_Rippling..."
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:120
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
+#, fuzzy
 msgid ""
-"Create a multi-layer image by adding a ripple effect to the current image"
+"Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
+"Membuat gambar multi-layer dengan menambahkan efek riak ke layer saat ini"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:127
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+#, fuzzy
 msgid "Rippling strength"
-msgstr ""
+msgstr "Kekuatan riak"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:128
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:78
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+#, fuzzy
 msgid "Number of frames"
-msgstr ""
+msgstr "cacah bingkai"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#, fuzzy
 msgid "Edge behavior"
-msgstr ""
+msgstr "Perilaku tepi"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#, fuzzy
 msgid "Wrap"
-msgstr "Genap"
+msgstr "Tekuk"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#, fuzzy
 msgid "Smear"
-msgstr ""
+msgstr "Smear"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#, fuzzy
 msgid "Black"
-msgstr ""
+msgstr "Hitam"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#, fuzzy
 msgid "_Round Corners..."
-msgstr ""
+msgstr "Membuat Round Corners"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#, fuzzy
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
+"Membulatkan sudut gambar dan secara opsional menambahkan bayangan drop dan "
+"latar belakang"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#, fuzzy
 msgid "Edge radius"
-msgstr ""
+msgstr "Radius tepi"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#, fuzzy
 msgid "Add drop-shadow"
-msgstr ""
+msgstr "Tambahkan bayangan-drop"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#, fuzzy
 msgid "Shadow X offset"
-msgstr ""
+msgstr "Offset Bayangan X"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#, fuzzy
 msgid "Shadow Y offset"
-msgstr ""
+msgstr "Bayangan Y offset"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#, fuzzy
 msgid "Add background"
-msgstr ""
+msgstr "Tambah latar belakang"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#, fuzzy
 msgid "Se_t Colormap..."
-msgstr ""
+msgstr "Se_t Colormap..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#, fuzzy
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr ""
+msgstr "Mengubah peta warna gambar menjadi warna dalam palet yang ditentukan."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#, fuzzy
 msgid "Palette"
-msgstr ""
+msgstr "Palet"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:139
+#, fuzzy
 msgid "Rounded R_ectangle..."
-msgstr ""
+msgstr "Bulat R_ectangle..."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:140
+#, fuzzy
 msgid "Round the corners of the current selection"
-msgstr ""
+msgstr "Membulatkan sudut pilihan saat ini"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-msgid "Radius (%)"
-msgstr ""
+#, fuzzy
+msgid "R_adius (%)"
+msgstr "R_adius (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-msgid "Concave"
-msgstr ""
+#, fuzzy
+msgid "Co_ncave"
+msgstr "Co_ncave"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+#, fuzzy
 msgid "To _Brush..."
-msgstr ""
+msgstr "Untuk _Brush..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+#, fuzzy
 msgid "Convert a selection to a brush"
-msgstr ""
+msgstr "Mengonversi pilihan menjadi kuas"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+#, fuzzy
 msgid "To _Image"
-msgstr ""
+msgstr "Tak ada citra!"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+#, fuzzy
 msgid "Convert a selection to an image"
-msgstr ""
+msgstr "Mengonversi pilihan menjadi gambar"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
 #, fuzzy
 msgid "To _Pattern..."
-msgstr "_Pola"
+msgstr "_Pola:"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+#, fuzzy
 msgid "Convert a selection to a pattern"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/slide.scm:236
-msgid "_Slide..."
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/slide.scm:237
-msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/slide.scm:244
-msgid "Text"
-msgstr ""
+msgstr "Mengonversi pilihan menjadi pola"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:245
-msgid "Number"
-msgstr ""
+#, fuzzy
+msgid "_Slide..."
+msgstr "_Slide..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm:246
-msgid "Font"
+#, fuzzy
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr ""
+"Menambahkan bingkai seperti film slide, lubang sprocket, dan label ke gambar"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:247
+#: ../plug-ins/script-fu/scripts/slide.scm:253
+#, fuzzy
+msgid "Text"
+msgstr "Teks"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:254
+#, fuzzy
+msgid "Number"
+msgstr "Nomor"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:255
+#, fuzzy
+msgid "Font"
+msgstr "Fonta"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:256
+#, fuzzy
 msgid "Font color"
-msgstr ""
+msgstr "Warna Font Utama"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+#, fuzzy
 msgid "_Spinning Globe..."
-msgstr ""
+msgstr "_Spinning Bola Dunia..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+#, fuzzy
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr ""
+msgstr "Membuat animasi dengan memetakan gambar saat ini ke lingkup berputar"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+#, fuzzy
 msgid "Frames"
-msgstr ""
+msgstr "Bingkai"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+#, fuzzy
 msgid "Turn from left to right"
-msgstr ""
+msgstr "Belok dari kiri ke kanan"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+#, fuzzy
 msgid "Transparent background"
-msgstr ""
+msgstr "Latar Belakang Transparan:"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+#, fuzzy
 msgid "Index to n colors (0 = remain RGB)"
-msgstr ""
+msgstr "Indeks ke n warna (0 = tetap RGB)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+#, fuzzy
 msgid "Rendering Spyro"
-msgstr ""
+msgstr "Merender Spyro"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
 #, fuzzy
-msgid "_Spyrogimp..."
-msgstr "Spyrograph"
+msgid "_Spyrogimp (older script-fu version)..."
+msgstr "_Spyrogimp (versi script-fu yang lebih lama)..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+#, fuzzy
+msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
 msgstr ""
+"Prosedur ini tidak digunakan lagi! Gunakan 'plug-in-spyrogimp' sebagai "
+"gantinya."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#, fuzzy
 msgid "Type"
-msgstr ""
+msgstr "Tipe"
 
+# df
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#, fuzzy
 msgid "Spyrograph"
 msgstr "Spyrograph"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+#, fuzzy
 msgid "Epitrochoid"
-msgstr ""
+msgstr "Epitrochoid"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+#, fuzzy
 msgid "Lissajous"
-msgstr ""
+msgstr "Lissajous"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#, fuzzy
 msgid "Shape"
-msgstr ""
+msgstr "Membentuk"
 
+# df
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#, fuzzy
 msgid "Circle"
 msgstr "Lingkaran"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+#, fuzzy
 msgid "Triangle"
-msgstr ""
+msgstr "Segitiga"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+#, fuzzy
 msgid "Square"
-msgstr ""
+msgstr "Kotak"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+#, fuzzy
 msgid "Pentagon"
-msgstr ""
+msgstr "Pentagon"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+#, fuzzy
 msgid "Hexagon"
-msgstr ""
+msgstr "Hexagon"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+#, fuzzy
 msgid "Polygon: 7 sides"
-msgstr ""
+msgstr "Polygon: 7 sisi"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+#, fuzzy
 msgid "Polygon: 8 sides"
-msgstr ""
+msgstr "Polygon: 8 sisi"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+#, fuzzy
 msgid "Polygon: 9 sides"
-msgstr ""
+msgstr "Polygon: 9 sisi"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+#, fuzzy
 msgid "Polygon: 10 sides"
-msgstr ""
+msgstr "Polygon: 10 sisi"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+#, fuzzy
 msgid "Outer teeth"
-msgstr ""
+msgstr "Gigi luar"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+#, fuzzy
 msgid "Inner teeth"
-msgstr ""
+msgstr "Gigi bagian dalam"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+#, fuzzy
 msgid "Margin (pixels)"
-msgstr ""
+msgstr "Marjin (piksel)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+#, fuzzy
 msgid "Hole ratio"
-msgstr ""
+msgstr "Rasio lubang"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+#, fuzzy
 msgid "Start angle"
-msgstr ""
+msgstr "Mulai sudut"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#, fuzzy
 msgid "Tool"
-msgstr ""
+msgstr "Perkakas"
 
+# df
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#, fuzzy
 msgid "Pencil"
 msgstr "Pinsil"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+#, fuzzy
 msgid "Brush"
-msgstr ""
+msgstr "Kuas"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+#, fuzzy
 msgid "Airbrush"
-msgstr ""
+msgstr "Airbrush"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#, fuzzy
 msgid "Color method"
-msgstr ""
+msgstr "Metode warna"
 
+# df
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#, fuzzy
 msgid "Solid Color"
 msgstr "Warna Rata"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+#, fuzzy
 msgid "Gradient: Loop Sawtooth"
-msgstr ""
+msgstr "Gradien: Loop Sawtooth"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+#, fuzzy
 msgid "Gradient: Loop Triangle"
-msgstr ""
+msgstr "Gradien: Segitiga Loop"
 
-#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:272
 #, fuzzy
 msgid "_Sphere..."
 msgstr "_Jelajahi…"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:68
+#, fuzzy
 msgid "_Tileable Blur..."
-msgstr ""
+msgstr "_Tileable Kabur..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:69
+#, fuzzy
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr ""
+msgstr "Mengaburkan tepi gambar sehingga hasilnya ubin mulus"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:76
+#, fuzzy
 msgid "Radius"
-msgstr ""
+msgstr "Radius"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:77
+#, fuzzy
 msgid "Blur vertically"
-msgstr ""
+msgstr "Mengaburkan secara vertikal"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:78
 #, fuzzy
@@ -1510,129 +2033,166 @@ msgid "Blur horizontally"
 msgstr "Horisontal"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#, fuzzy
 msgid "Blur type"
-msgstr ""
+msgstr "Tipe blur"
 
+# df
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#, fuzzy
 msgid "IIR"
 msgstr "IIR"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#, fuzzy
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+#, fuzzy
 msgid "Mask size"
-msgstr ""
+msgstr "Ukuran masker"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+#, fuzzy
 msgid "Mask opacity"
-msgstr ""
+msgstr "Opasitas masker"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+#, fuzzy
 msgid "_Waves..."
-msgstr ""
+msgstr "_Waves..."
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+#, fuzzy
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
+"Membuat gambar multi-layer dengan efek seperti batu dilemparkan ke gambar "
+"saat ini"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+#, fuzzy
 msgid "Amplitude"
-msgstr ""
+msgstr "Amplitudo"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+#, fuzzy
 msgid "Wavelength"
-msgstr ""
+msgstr "Panjang gelombang"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+#, fuzzy
 msgid "Invert direction"
-msgstr ""
+msgstr "Membalikkan arah"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:389
+#: ../plug-ins/script-fu/scripts/weave.scm:397
+#, fuzzy
 msgid "_Weave..."
-msgstr ""
+msgstr "Tenunan Hijau"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:390
+#: ../plug-ins/script-fu/scripts/weave.scm:398
+#, fuzzy
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
+"Buat layer baru yang diisi dengan efek tenun untuk digunakan sebagai peta "
+"overlay atau bump"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:397
+#: ../plug-ins/script-fu/scripts/weave.scm:405
+#, fuzzy
 msgid "Ribbon width"
-msgstr ""
+msgstr "Lebar pita"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:398
+#: ../plug-ins/script-fu/scripts/weave.scm:406
+#, fuzzy
 msgid "Ribbon spacing"
-msgstr ""
+msgstr "Penspasian pita"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:399
+#: ../plug-ins/script-fu/scripts/weave.scm:407
+#, fuzzy
 msgid "Shadow darkness"
-msgstr ""
+msgstr "Kegelapan bayangan"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:400
+#: ../plug-ins/script-fu/scripts/weave.scm:408
+#, fuzzy
 msgid "Shadow depth"
-msgstr ""
+msgstr "Kedalaman bayangan"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:401
+#: ../plug-ins/script-fu/scripts/weave.scm:409
+#, fuzzy
 msgid "Thread length"
-msgstr ""
+msgstr "Panjang thread"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:402
+#: ../plug-ins/script-fu/scripts/weave.scm:410
+#, fuzzy
 msgid "Thread density"
-msgstr ""
+msgstr "Kepadatan thread"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:403
+#: ../plug-ins/script-fu/scripts/weave.scm:411
+#, fuzzy
 msgid "Thread intensity"
-msgstr ""
+msgstr "Intensitas thread"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+#, fuzzy
 msgid "Shadow"
-msgstr ""
+msgstr "Bayangan"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+#, fuzzy
 msgid "_Xach-Effect..."
-msgstr ""
+msgstr "_Xach-Efek..."
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+#, fuzzy
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr ""
+"Menambahkan efek 3D tembus cahaya halus ke wilayah yang dipilih (atau alfa)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+#, fuzzy
 msgid "Highlight X offset"
-msgstr ""
+msgstr "Sorot offset X"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+#, fuzzy
 msgid "Highlight Y offset"
-msgstr ""
+msgstr "Sorot offset Y"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+#, fuzzy
 msgid "Highlight color"
-msgstr ""
+msgstr "Warna  highlight "
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+#, fuzzy
 msgid "Highlight opacity"
-msgstr ""
+msgstr "Sorot opasitas"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+#, fuzzy
 msgid "Drop shadow color"
-msgstr ""
+msgstr "Warna bayangan jatuh"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+#, fuzzy
 msgid "Drop shadow opacity"
-msgstr ""
+msgstr "Opasitas bayangan jatuh"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+#, fuzzy
 msgid "Drop shadow blur radius"
-msgstr ""
+msgstr "Jatuhkan radius bayangan kabur"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+#, fuzzy
 msgid "Drop shadow X offset"
-msgstr ""
+msgstr "Jatuhkan bayangan X offset"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+#, fuzzy
 msgid "Drop shadow Y offset"
-msgstr ""
+msgstr "Jatuhkan bayangan Y offset"
