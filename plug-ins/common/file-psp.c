@@ -1928,6 +1928,8 @@ read_raster_layer_info (FILE      *f,
                      _("Error reading layer extension information"));
         return FALSE;
       }
+    *bitmap_count = GUINT16_FROM_LE (*bitmap_count);
+    *channel_count = GUINT16_FROM_LE (*channel_count);
     if (try_fseek (f, layer_extension_start + layer_extension_len, SEEK_SET, error) < 0)
       {
         return FALSE;
@@ -2163,6 +2165,8 @@ read_layer_block (FILE      *f,
           if (type == PSP_LAYER_FLOATING_SELECTION)
             g_message ("Floating selection restored as normal layer");
           type = keGLTRaster;
+          bitmap_count = GUINT16_FROM_LE (bitmap_count);
+          channel_count = GUINT16_FROM_LE (channel_count);
           can_handle_layer = TRUE;
           if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET, error) < 0)
             {
@@ -2175,8 +2179,6 @@ read_layer_block (FILE      *f,
       swab_rect (saved_image_rect);
       swab_rect (mask_rect);
       swab_rect (saved_mask_rect);
-      bitmap_count = GUINT16_FROM_LE (bitmap_count);
-      channel_count = GUINT16_FROM_LE (channel_count);
 
       layer_mode = gimp_layer_mode_from_psp_blend_mode (blend_mode);
       if ((int) layer_mode == -1)
