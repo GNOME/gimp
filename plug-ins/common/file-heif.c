@@ -1139,12 +1139,12 @@ load_image (GFile     *file,
             while (new_exif_size >= 4)  /*Searching for TIFF Header*/
               {
                 if (tiffheader[0] == tiffHeaderBE[0] && tiffheader[1] == tiffHeaderBE[1] &&
-                    tiffheader[2] == tiffHeaderBE[2] && tiffheader[2] == tiffHeaderBE[2])
+                    tiffheader[2] == tiffHeaderBE[2] && tiffheader[3] == tiffHeaderBE[3])
                   {
                     break;
                   }
                 if (tiffheader[0] == tiffHeaderLE[0] && tiffheader[1] == tiffHeaderLE[1] &&
-                    tiffheader[2] == tiffHeaderLE[2] && tiffheader[2] == tiffHeaderLE[2])
+                    tiffheader[2] == tiffHeaderLE[2] && tiffheader[3] == tiffHeaderLE[3])
                   {
                     break;
                   }
