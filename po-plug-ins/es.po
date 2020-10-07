@@ -15,18 +15,18 @@
 #
 # Monica Canizo <kamitdevica@gmail.com>, 2016.
 # Rodrigo <rodhos92@gmail.com>, 2000-2019.
-# Rodrigo Lledó <rodhos92@gmail.com>, 2019-2020.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2020.
+# Rodrigo Lledó <rodhos92@gmail.com>, 2019-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-09-07 07:22+0000\n"
-"PO-Revision-Date: 2020-09-07 09:41+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
-"Language: es_ES\n"
+"POT-Creation-Date: 2020-10-04 18:12+0000\n"
+"PO-Revision-Date: 2020-10-06 13:59+0200\n"
+"Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -63,7 +63,7 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1553
+#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1811
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:698
 #: ../plug-ins/common/file-pdf-load.c:1264
@@ -128,7 +128,7 @@ msgstr "_Cancelar"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1554
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1812
 #: ../plug-ins/common/file-pdf-load.c:699 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -1097,7 +1097,7 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3348
-#: ../plug-ins/common/file-psp.c:1908 ../plug-ins/common/file-psp.c:1958
+#: ../plug-ins/common/file-psp.c:2228 ../plug-ins/common/file-psp.c:2278
 #: ../plug-ins/common/file-raw-data.c:477
 #: ../plug-ins/common/file-raw-data.c:1303 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
@@ -2171,14 +2171,14 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:559 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-heif.c:681 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1035
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
 #: ../plug-ins/common/file-raw-data.c:1296 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1014
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
-#: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
+#: ../plug-ins/common/file-xpm.c:356 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
 #: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
@@ -2260,12 +2260,12 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
-#: ../plug-ins/common/file-heif.c:1125 ../plug-ins/common/file-html-table.c:238
+#: ../plug-ins/common/file-heif.c:1253 ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
 #: ../plug-ins/common/file-png.c:1607 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1213 ../plug-ins/common/file-xbm.c:1040
-#: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/common/file-xpm.c:674 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1697
@@ -2597,12 +2597,12 @@ msgstr "Rangos:"
 msgid "C source code header"
 msgstr "Cabecera de código fuente en C"
 
-#: ../plug-ins/common/file-heif.c:109
+#: ../plug-ins/common/file-heif.c:114
 msgid "Loads HEIF images"
 msgstr "Carga imágenes HEIF"
 
 # ¿En vez de «suffices» quizo decir «suffixes»?
-#: ../plug-ins/common/file-heif.c:110
+#: ../plug-ins/common/file-heif.c:115
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2611,74 +2611,85 @@ msgstr ""
 "alta eficiencia). Las extensiones típicas de los archivos HEIF son .heif y ."
 "heic."
 
-#: ../plug-ins/common/file-heif.c:116 ../plug-ins/common/file-heif.c:155
+#: ../plug-ins/common/file-heif.c:121 ../plug-ins/common/file-heif.c:168
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:149
+#: ../plug-ins/common/file-heif.c:162
 msgid "Exports HEIF images"
 msgstr "Exporta imágenes HEIF"
 
-#: ../plug-ins/common/file-heif.c:150
+#: ../plug-ins/common/file-heif.c:163
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Guarda la imagen en formato HEIF (formato de archivo de imagen de alta "
 "eficiencia)."
 
-#: ../plug-ins/common/file-heif.c:597 ../plug-ins/common/file-heif.c:630
-#: ../plug-ins/common/file-heif.c:669 ../plug-ins/common/file-heif.c:731
+#: ../plug-ins/common/file-heif.c:719 ../plug-ins/common/file-heif.c:752
+#: ../plug-ins/common/file-heif.c:791 ../plug-ins/common/file-heif.c:857
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Falló al cargar la imagen HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:619
+#: ../plug-ins/common/file-heif.c:741
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Falló al cargar la imagen HEIF: el archivo de entrada no contiene imágenes "
 "legibles"
 
-#: ../plug-ins/common/file-heif.c:858
+#: ../plug-ins/common/file-heif.c:984
 msgid "image content"
 msgstr "contenido de la imagen"
 
-#: ../plug-ins/common/file-heif.c:1143 ../plug-ins/common/file-heif.c:1278
+#: ../plug-ins/common/file-heif.c:1303 ../plug-ins/common/file-heif.c:1536
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Falló al codificar la imagen HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1315
+#: ../plug-ins/common/file-heif.c:1573
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Falló al escribir la imagen HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1404
+#: ../plug-ins/common/file-heif.c:1662
 msgid "primary"
 msgstr "primario"
 
-#: ../plug-ins/common/file-heif.c:1549
+#: ../plug-ins/common/file-heif.c:1807
 msgid "Load HEIF Image"
 msgstr "Cargar imagen HEIF"
 
-#: ../plug-ins/common/file-heif.c:1563
+#: ../plug-ins/common/file-heif.c:1821
 msgid "Select Image"
 msgstr "Seleccione imagen"
 
-#: ../plug-ins/common/file-heif.c:1710
-msgid "HEIF"
-msgstr "HEIF"
+#: ../plug-ins/common/file-heif.c:1987
+msgid "Nearly _lossless (YUV420 format)"
+msgstr "Casi _sin pérdida (formato YUV420)"
 
-#. Create the lossless checkbox
-#: ../plug-ins/common/file-heif.c:1720
-#: ../plug-ins/file-webp/file-webp-dialog.c:125
-msgid "_Lossless"
-msgstr "_Sin pérdida"
-
-#: ../plug-ins/common/file-heif.c:1724 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:1991 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "Ca_lidad:"
 
+#: ../plug-ins/common/file-heif.c:2034
+#| msgid "_Max depth:"
+msgid "Bit depth:"
+msgstr "Profundidad de bit:"
+
+#: ../plug-ins/common/file-heif.c:2040
+msgid "8 bit/channel"
+msgstr "8 bit/canal"
+
+#: ../plug-ins/common/file-heif.c:2041
+msgid "10 bit/channel (HDR)"
+msgstr "10 bit/canal (HDR)"
+
+#: ../plug-ins/common/file-heif.c:2042
+msgid "12 bit/channel (HDR)"
+msgstr "12 bit/canal (HDR)"
+
 #. Color profile
-#: ../plug-ins/common/file-heif.c:1742 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2051 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:387
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save color _profile"
@@ -3563,7 +3574,7 @@ msgstr "B/N"
 msgid "Gray"
 msgstr "Gris"
 
-#: ../plug-ins/common/file-ps.c:3540 ../plug-ins/common/file-xpm.c:483
+#: ../plug-ins/common/file-ps.c:3540 ../plug-ins/common/file-xpm.c:485
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
@@ -3664,155 +3675,190 @@ msgstr "Vista p_revia"
 msgid "Preview _size:"
 msgstr "Tamaño de la vi_sta previa:"
 
-#: ../plug-ins/common/file-psp.c:599 ../plug-ins/common/file-psp.c:623
+#: ../plug-ins/common/file-psp.c:639 ../plug-ins/common/file-psp.c:663
 msgid "Paint Shop Pro image"
 msgstr "Imagen de Paint Shop Pro"
 
-#: ../plug-ins/common/file-psp.c:640
+#: ../plug-ins/common/file-psp.c:680
 msgid "PSP"
 msgstr "PSP"
 
 #. file save type
-#: ../plug-ins/common/file-psp.c:643
+#: ../plug-ins/common/file-psp.c:683
 msgid "Data Compression"
 msgstr "Compresión de datos"
 
-#: ../plug-ins/common/file-psp.c:647
+#: ../plug-ins/common/file-psp.c:687
 msgctxt "compression"
 msgid "None"
 msgstr "Ninguna"
 
-#: ../plug-ins/common/file-psp.c:648
+#: ../plug-ins/common/file-psp.c:688
 msgid "RLE"
 msgstr "RLE"
 
-#: ../plug-ins/common/file-psp.c:649
+#: ../plug-ins/common/file-psp.c:689
 msgid "LZ77"
 msgstr "LZ77"
 
-#: ../plug-ins/common/file-psp.c:728
+#: ../plug-ins/common/file-psp.c:783
 #, c-format
 msgid "Error reading block header"
 msgstr "Error al leer la cabecera del bloque"
 
-#: ../plug-ins/common/file-psp.c:735
+#: ../plug-ins/common/file-psp.c:790
 #, c-format
 msgid "Invalid block header at %ld"
 msgstr "Bloque de cabecera no válido en %ld"
 
-#: ../plug-ins/common/file-psp.c:738
+#: ../plug-ins/common/file-psp.c:793
 #, c-format
 msgid "Invalid block header"
 msgstr "Bloque de cabecera no válido"
 
-#: ../plug-ins/common/file-psp.c:770
+#: ../plug-ins/common/file-psp.c:825
 #, c-format
 msgid "Seek error: %s"
 msgstr "Error de búsqueda: %s"
 
-#: ../plug-ins/common/file-psp.c:875
+#: ../plug-ins/common/file-psp.c:848
+#, c-format
+#| msgid "Duplicate General Image Attributes block."
+msgid "Invalid general image attribute chunk size."
+msgstr "El tamaño del bloque de atributo general de imagen no es válido."
+
+#: ../plug-ins/common/file-psp.c:870
+#, c-format
+#| msgid "Missing General Image Attributes block."
+msgid "Error reading general image attribute block."
+msgstr "Error al leer el bloque de atributo general de la imagen."
+
+#: ../plug-ins/common/file-psp.c:885
+#, c-format
+#| msgid "Compression type"
+msgid "Unknown compression type %d"
+msgstr "Tipo de compresión desconocido %d"
+
+#: ../plug-ins/common/file-psp.c:921 ../plug-ins/common/file-psp.c:928
+#, c-format
+#| msgid "Unsupported bit depth: %d"
+msgid "Unsupported bit depth %d"
+msgstr "Profundidad de bit no soportada %d"
+
+#: ../plug-ins/common/file-psp.c:975
 #, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Error al leer la parte de creación de palabra clave"
 
-#: ../plug-ins/common/file-psp.c:881
+#: ../plug-ins/common/file-psp.c:981
 #, c-format
 msgid "Invalid keyword chunk header"
 msgstr "La parte del encabezado sobre la palabra clave no es válida"
 
-#: ../plug-ins/common/file-psp.c:896 ../plug-ins/common/file-psp.c:923
+#: ../plug-ins/common/file-psp.c:996 ../plug-ins/common/file-psp.c:1023
 #, c-format
 msgid "Error reading creator keyword data"
-msgstr "Error al leer el origen de las palabras clave"
+msgstr "Error al leer datos de creación de palabras clave"
 
-#: ../plug-ins/common/file-psp.c:1272 ../plug-ins/common/file-psp.c:1286
+#: ../plug-ins/common/file-psp.c:1107 ../plug-ins/common/file-psp.c:1116
+#: ../plug-ins/common/file-psp.c:1125
+#, c-format
+#| msgid "Error reading block header"
+msgid "Error reading color block"
+msgstr "Error al leer el bloque de color"
+
+#: ../plug-ins/common/file-psp.c:1138
+#, c-format
+#| msgid "Error reading block header"
+msgid "Error reading color palette"
+msgstr "Error al leer la paleta de color"
+
+#: ../plug-ins/common/file-psp.c:1564 ../plug-ins/common/file-psp.c:1578
 #, c-format
 msgid "zlib error"
 msgstr "error de zlib"
 
-#: ../plug-ins/common/file-psp.c:1327 ../plug-ins/common/file-psp.c:1361
-#: ../plug-ins/common/file-psp.c:1371
+#: ../plug-ins/common/file-psp.c:1641 ../plug-ins/common/file-psp.c:1675
+#: ../plug-ins/common/file-psp.c:1685
 #, c-format
-#| msgid "Error reading layer information chunk"
 msgid "Error reading layer extension information"
 msgstr "Error al leer la información de la extensión de la capa"
 
-#: ../plug-ins/common/file-psp.c:1348
+#: ../plug-ins/common/file-psp.c:1662
 #, c-format
-#| msgid "Error reading layer information chunk"
 msgid "Error reading block information"
 msgstr "Error al leer la información del bloque"
 
-#: ../plug-ins/common/file-psp.c:1428
+#: ../plug-ins/common/file-psp.c:1742
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "El sub-bloque de la capa %s no es válido, debería ser CAPA"
 
-#: ../plug-ins/common/file-psp.c:1459 ../plug-ins/common/file-psp.c:1516
+#: ../plug-ins/common/file-psp.c:1773 ../plug-ins/common/file-psp.c:1830
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Error al leer la parte sobre la información de la capa"
 
-#: ../plug-ins/common/file-psp.c:1558
+#: ../plug-ins/common/file-psp.c:1872
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Dimensiones de la capa no válidas: %dx%d"
 
-#: ../plug-ins/common/file-psp.c:1613
+#: ../plug-ins/common/file-psp.c:1933
 #, c-format
 msgid "Error creating layer"
 msgstr "Error al crear la capa"
 
-#: ../plug-ins/common/file-psp.c:1658
+#: ../plug-ins/common/file-psp.c:1978
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "El sub-bloque de la capa %s no es válido, debería ser CANAL"
 
-#: ../plug-ins/common/file-psp.c:1674
+#: ../plug-ins/common/file-psp.c:1994
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Error al leer la parte sobre la información del canal"
 
-#: ../plug-ins/common/file-psp.c:1697
+#: ../plug-ins/common/file-psp.c:2017
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Tipo de canal %d no válido en la parte sobre información del canal"
 
-#: ../plug-ins/common/file-psp.c:1801 ../plug-ins/common/file-psp.c:1818
+#: ../plug-ins/common/file-psp.c:2121 ../plug-ins/common/file-psp.c:2138
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Error al leer la parte sobre datos del tubo"
 
-#: ../plug-ins/common/file-psp.c:1919
+#: ../plug-ins/common/file-psp.c:2239
 #, c-format
 msgid "Error reading file header."
 msgstr "Error al leer la cabecera del archivo."
 
-#: ../plug-ins/common/file-psp.c:1926
+#: ../plug-ins/common/file-psp.c:2246
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Firma del archivo incorrecta."
 
-#: ../plug-ins/common/file-psp.c:1940
+#: ../plug-ins/common/file-psp.c:2260
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "La versión %d.%d del formato de archivo PSP no está soportada."
 
-#: ../plug-ins/common/file-psp.c:1960
+#: ../plug-ins/common/file-psp.c:2280
 msgid "invalid block size"
 msgstr "tamaño de bloque no válido"
 
-#: ../plug-ins/common/file-psp.c:1969
+#: ../plug-ins/common/file-psp.c:2289
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "El bloque general de atributos de imagen está duplicado."
 
-#: ../plug-ins/common/file-psp.c:1999
+#: ../plug-ins/common/file-psp.c:2319
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Falta el bloque general de atributos de imagen."
 
-#: ../plug-ins/common/file-psp.c:2088
+#: ../plug-ins/common/file-psp.c:2433
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Exportar no está todavía implementado."
@@ -4596,29 +4642,29 @@ msgstr ""
 "Lo sentimos, este complemento no puede manejar un cursor que contenga más de "
 "%i tamaños nominales distintos."
 
-#: ../plug-ins/common/file-xpm.c:174 ../plug-ins/common/file-xpm.c:199
+#: ../plug-ins/common/file-xpm.c:176 ../plug-ins/common/file-xpm.c:201
 msgid "X PixMap image"
 msgstr "Imagen X PixMap"
 
-#: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:800
+#: ../plug-ins/common/file-xpm.c:367 ../plug-ins/common/file-xpm.c:823
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Ocurrió un error al abrir el archivo «%s»"
 
-#: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:806
+#: ../plug-ins/common/file-xpm.c:373 ../plug-ins/common/file-xpm.c:829
 msgid "XPM file invalid"
 msgstr "Archivo XPM inválido"
 
-#: ../plug-ins/common/file-xpm.c:653
+#: ../plug-ins/common/file-xpm.c:664
 #, c-format
 msgid "Unsupported drawable type"
 msgstr "Tipo de dibujable no soportado"
 
-#: ../plug-ins/common/file-xpm.c:832
+#: ../plug-ins/common/file-xpm.c:855
 msgid "XPM"
 msgstr "XPM"
 
-#: ../plug-ins/common/file-xpm.c:842
+#: ../plug-ins/common/file-xpm.c:865
 msgid "_Alpha threshold:"
 msgstr "Umbral de _alfa:"
 
@@ -6633,20 +6679,20 @@ msgid "Alpha channel will be ignored."
 msgstr "El canal alfa se ignorará."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-save.c:910
+#: ../plug-ins/file-bmp/bmp-save.c:916
 msgid "_Run-Length Encoded"
 msgstr "Codificación _Run-Lenght"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-save.c:923
+#: ../plug-ins/file-bmp/bmp-save.c:929
 msgid "Co_mpatibility Options"
 msgstr "Opciones de co_mpatibilidad"
 
-#: ../plug-ins/file-bmp/bmp-save.c:933
+#: ../plug-ins/file-bmp/bmp-save.c:939
 msgid "_Do not write color space information"
 msgstr "No escribir la información del espacio _de colores"
 
-#: ../plug-ins/file-bmp/bmp-save.c:935
+#: ../plug-ins/file-bmp/bmp-save.c:941
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -6659,20 +6705,20 @@ msgstr ""
 
 #. Advanced Options
 #. Advanced expander
-#: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:1014
+#: ../plug-ins/file-bmp/bmp-save.c:957 ../plug-ins/file-jpeg/jpeg-save.c:1014
 #: ../plug-ins/file-webp/file-webp-dialog.c:221
 msgid "_Advanced Options"
 msgstr "_Opciones avanzadas"
 
-#: ../plug-ins/file-bmp/bmp-save.c:966
+#: ../plug-ins/file-bmp/bmp-save.c:972
 msgid "16 bits"
 msgstr "16 bits"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1002
+#: ../plug-ins/file-bmp/bmp-save.c:1008
 msgid "24 bits"
 msgstr "24 bits"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1019
+#: ../plug-ins/file-bmp/bmp-save.c:1025
 msgid "32 bits"
 msgstr "32 bits"
 
@@ -7547,6 +7593,11 @@ msgstr "(todos los fotogramas son fotogramas clave)"
 #: ../plug-ins/file-webp/file-webp-dialog.c:108
 msgid "WebP"
 msgstr "WebP"
+
+#. Create the lossless checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:125
+msgid "_Lossless"
+msgstr "_Sin pérdida"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:141
 msgid "Image _quality:"
@@ -9509,7 +9560,6 @@ msgid "Save _layers"
 msgstr "Guardar ca_pas"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
-#| msgid "Could not get layers for image %d"
 msgid "Cr_op layers to image bounds"
 msgstr "Rec_ortar capas a los límites de la imagen"
 
@@ -12681,6 +12731,9 @@ msgstr "_Escáner/Cámara…"
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
+
+#~ msgid "HEIF"
+#~ msgstr "HEIF"
 
 #~ msgid "Creator keyword data not nul-terminated"
 #~ msgstr "Los datos de creación de la palabra clave no terminan en nulo"
