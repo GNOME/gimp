@@ -2263,6 +2263,8 @@ PKG_CHECK_MODULES(JSON_GLIB, json-glib-1.0 >= json_glib_required_version,,
 # Check for python runtime dependencies
 #######################################
 
+GOAT_EXERCISES="goat-exercise-c$BUILD_EXEEXT"
+
 # By default, we want packagers to install Python plug-ins to get the
 # optimum experience. --with-python=yes will check for a Python 3
 # interpreter and PyGObject, and fails without.
@@ -2331,6 +2333,8 @@ if test "x$with_python" = "xyes"; then
     PYBIN_PATH="$PYTHON"
   fi
   AC_SUBST(PYBIN_PATH)
+
+  GOAT_EXERCISES="$GOAT_EXERCISES:goat-exercise-py3.py"
 fi
 AM_CONDITIONAL(HAS_PYTHON_INTERP, test "x$PYBIN_PATH" != "x")
 AM_CONDITIONAL(BUILD_PYTHON, test "x$with_python" != xno)
@@ -2376,6 +2380,10 @@ else
         *** Just make sure that GJS is available at run-time."
     with_javascript="no"
   fi
+fi
+
+if test "x$with_javascript" = "xyes"; then
+  GOAT_EXERCISES="$GOAT_EXERCISES:goat-exercise-gjs.js"
 fi
 
 AM_CONDITIONAL(HAS_JAVASCRIPT_INTERP, test "x$GJS" != "xno")
@@ -2424,6 +2432,10 @@ else
   fi
 fi
 
+if test "x$with_lua" = "xyes"; then
+  GOAT_EXERCISES="$GOAT_EXERCISES:goat-exercise-lua.lua"
+fi
+
 AM_CONDITIONAL(HAS_LUA_INTERP, test "x$LUA" != "xno")
 AM_CONDITIONAL(BUILD_LUA, test "x$with_lua" != xno)
 
@@ -2450,7 +2462,12 @@ else
   fi
 fi
 
+if test "x$with_vala" = "xyes"; then
+  GOAT_EXERCISES="$GOAT_EXERCISES:goat-exercise-vala$BUILD_EXEEXT"
+fi
+
 AM_CONDITIONAL(BUILD_VALA, test "x$with_vala" != xno)
+AC_SUBST(GOAT_EXERCISES)
 
 ###########################################################
 # Some plug-ins don't build on Win32, others are Win32-only
@@ -2862,8 +2879,10 @@ fi
 ##################
 
 # easy way to skip the plug-in build
+GIMP_EXTENSIONS=extensions
 GIMP_PLUGINS=plug-ins
 GIMP_MODULES=modules
+AC_SUBST(GIMP_EXTENSIONS)
 AC_SUBST(GIMP_PLUGINS)
 AC_SUBST(GIMP_MODULES)
 
@@ -3015,6 +3034,9 @@ build/windows/gimp.rc
 build/windows/gimp-plug-ins.rc
 build/windows/installer/Makefile
 build/windows/installer/lang/Makefile
+extensions/Makefile
+extensions/goat-exercises/Makefile
+extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in
 plug-ins/Makefile
 plug-ins/file-bmp/Makefile
 plug-ins/file-dds/Makefile
@@ -3064,7 +3086,6 @@ plug-ins/script-fu/tinyscheme/Makefile
 plug-ins/selection-to-path/Makefile
 plug-ins/twain/Makefile
 plug-ins/common/Makefile
-plug-ins/goat-exercises/Makefile
 modules/Makefile
 devel-docs/Makefile
 devel-docs/version

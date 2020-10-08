@@ -5,6 +5,7 @@ data/tags
 data/tips
 desktop
 desktop/gimp.desktop.in
+extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in
 libgimp
 libgimpbase
 libgimpcolor

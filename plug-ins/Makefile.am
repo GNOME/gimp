@@ -44,7 +44,6 @@ SUBDIRS = \
 	fractal-explorer	\
 	gfig			\
 	gimpressionist		\
-	goat-exercises		\
 	gradient-flare		\
 	help			\
 	$(help_browser)		\

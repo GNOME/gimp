@@ -5,6 +5,7 @@ data/tags
 data/tips
 desktop
 desktop/gimp.desktop.in
+extensions/goat-exercises
 libgimp
 libgimpbase
 libgimpcolor
@@ -35,7 +36,6 @@ plug-ins/flame
 plug-ins/fractal-explorer
 plug-ins/gfig
 plug-ins/gimpressionist
-plug-ins/goat-exercises
 plug-ins/gradient-flare
 plug-ins/help
 plug-ins/help-browser

@@ -193,8 +193,8 @@ goat_run (GimpProcedure        *procedure,
       gtk_widget_set_vexpand (GTK_WIDGET (scrolled), TRUE);
       gtk_widget_show (scrolled);
 
-      path = g_build_filename (gimp_plug_in_directory (), "plug-ins",
-                               PLUG_IN_BINARY, PLUG_IN_SOURCE,
+      path = g_build_filename (gimp_plug_in_directory (), "extensions",
+                               "org.gimp.extension.goat-exercises", PLUG_IN_SOURCE,
                                NULL);
       file = g_file_new_for_path (path);
       g_free (path);

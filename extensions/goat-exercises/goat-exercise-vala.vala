@@ -91,7 +91,7 @@ public class Goat : Gimp.PlugIn {
       label.show();
 
 
-      string file = Path.build_filename(Gimp.PlugIn.directory(), "plug-ins", PLUG_IN_BINARY, PLUG_IN_SOURCE);
+      string file = Path.build_filename(Gimp.PlugIn.directory(), "extensions", "org.gimp.extension.goat-exercises", PLUG_IN_SOURCE);
       string contents;
       try {
         FileUtils.get_contents(file, out contents);

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>org.gimp.extension.goat-exercises</id>
+  <extends>org.gimp.GIMP</extends>
+  <_name>Goat Exercises</_name>
+  <_summary>Official Demo Plug-ins</_summary>
+  <description>
+    <_p>
+    This extension provides a set of basic examples to demonstrate
+    how to create your own plug-ins.
+    Each plug-in does the same thing, except it is developed in a
+    different programming language.
+    They all create a GTK+ dialog with a text view displaying their own code
+    (hence also demonstrating how to package data) and a button which calls
+    a GEGL operation on the active layer.
+    </_p>
+  </description>
+  <url type="homepage">https://gimp.org</url>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <releases>
+   <release version="1.0.0" date="2020-10-08" />
+  </releases>
+  <requires>
+   <id version="2.99.0" compare="ge">org.gimp.GIMP</id>
+  </requires>
+  <metadata>
+   <value key="GIMP::plug-in-path">@GOAT_EXERCISES@</value>
+  </metadata>
+</component>

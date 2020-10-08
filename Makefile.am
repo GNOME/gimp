@@ -35,6 +35,7 @@ SUBDIRS = \
 	app-tools		\
 	$(GIMP_MODULES)		\
 	$(GIMP_PLUGINS)		\
+	$(GIMP_EXTENSIONS)	\
 	etc			\
 	devel-docs		\
 	docs			\

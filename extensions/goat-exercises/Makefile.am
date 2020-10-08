@@ -36,11 +36,13 @@ AM_CPPFLAGS = \
 
 # C version.
 
-goat_exercise_c_libexecdir = $(gimpplugindir)/plug-ins/goat-exercise-c
+goat_exercise_c_libexecdir = $(gimpplugindir)/extensions/org.gimp.extension.goat-exercises
 goat_exercise_c_datadir    = $(goat_exercise_c_libexecdir)
 
 goat_exercise_c_libexec_PROGRAMS = goat-exercise-c
 goat_exercise_c_libexec_DATA = goat-exercise-c.c
+
+PLUG_INS = 'goat-exercise-c$(EXEEXT)'
 
 goat_exercise_c_SOURCES = \
 	goat-exercise-c.c
@@ -64,21 +66,21 @@ goat_exercise_c_LDADD = \
 # Javascript (GJS) version.
 
 if BUILD_JAVASCRIPT
-goat_exercise_gjsdir = $(gimpplugindir)/plug-ins/goat-exercise-gjs
+goat_exercise_gjsdir = $(goat_exercise_c_libexecdir)
 goat_exercise_gjs_SCRIPTS = goat-exercise-gjs.js
 endif
 
 # Lua (lua-jit + LGI) version.
 
 if BUILD_LUA
-goat_exercise_luadir = $(gimpplugindir)/plug-ins/goat-exercise-lua
+goat_exercise_luadir = $(goat_exercise_c_libexecdir)
 goat_exercise_lua_SCRIPTS = goat-exercise-lua.lua
 endif
 
 # Python 3 (pygobject) version.
 
 if BUILD_PYTHON
-goat_exercise_py3dir = $(gimpplugindir)/plug-ins/goat-exercise-py3
+goat_exercise_py3dir = $(goat_exercise_c_libexecdir)
 goat_exercise_py3_SCRIPTS = goat-exercise-py3.py
 endif
 
@@ -86,7 +88,7 @@ endif
 
 if ENABLE_VAPIGEN
 
-goat_exercise_vala_libexecdir = $(gimpplugindir)/plug-ins/goat-exercise-vala
+goat_exercise_vala_libexecdir = $(goat_exercise_c_libexecdir)
 goat_exercise_vala_datadir    = $(goat_exercise_vala_libexecdir)
 
 goat_exercise_vala_libexec_PROGRAMS = goat-exercise-vala
@@ -118,7 +120,20 @@ goat_exercise_vala_VALAFLAGS = \
 
 endif
 
+appstream_in_files = \
+	org.gimp.extension.goat-exercises.metainfo.xml.in
+
+appstream_files = $(appstream_in_files:.xml.in=.xml)
+
+appdatadir = $(goat_exercise_c_libexecdir)
+appdata_DATA = $(appstream_files)
+
+@INTLTOOL_XML_RULE@
+
 EXTRA_DIST = \
 	goat-exercise-gjs.js	\
 	goat-exercise-lua.lua	\
-	goat-exercise-py3.py
+	goat-exercise-py3.py	\
+	$(appstream_in_files)
+
+DISTCLEANFILES = $(appstream_files)

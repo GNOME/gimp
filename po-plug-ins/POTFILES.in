@@ -3,6 +3,10 @@
 
 [encoding: UTF-8]
 
+extensions/goat-exercises/goat-exercise-c.c
+extensions/goat-exercises/goat-exercise-vala.vala
+extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in
+
 plug-ins/common/align-layers.c
 plug-ins/common/animation-optimize.c
 #plug-ins/common/animation-play.c
@@ -141,9 +145,6 @@ plug-ins/gimpressionist/repaint.c
 plug-ins/gimpressionist/size.c
 plug-ins/gimpressionist/sizemap.c
 plug-ins/gimpressionist/utils.c
-plug-ins/goat-exercises/goat-exercise-c.c
-plug-ins/goat-exercises/goat-exercise-py3.py
-plug-ins/goat-exercises/goat-exercise-vala.vala
 [type: gettext/glade]plug-ins/ui/plug-in-metadata-editor.ui
 [type: gettext/glade]plug-ins/ui/plug-in-metadata-viewer.ui
 plug-ins/gradient-flare/gradient-flare.c
