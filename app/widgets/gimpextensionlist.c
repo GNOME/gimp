@@ -212,7 +212,6 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
   GtkWidget *outframe;
   GtkWidget *grid;
   GtkWidget *onoff;
-  GtkWidget *delbutton;
   GtkWidget *image;
 
   if (list->p->contents == GIMP_EXT_LIST_SEARCH                  ||
@@ -295,23 +294,28 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
     }
 
   /* Delete button. */
-  delbutton = gtk_button_new ();
-  g_object_set_data (G_OBJECT (delbutton), "extension", extension);
-  g_signal_connect (delbutton, "clicked",
-                    G_CALLBACK (gimp_extension_list_delete_clicked),
-                    list);
-  gtk_button_set_relief (GTK_BUTTON (delbutton), GTK_RELIEF_NONE);
-  image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
-                                        GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
-  gtk_widget_set_vexpand (delbutton, FALSE);
-  gtk_widget_set_hexpand (delbutton, FALSE);
-  gtk_widget_set_halign (delbutton, GTK_ALIGN_END);
-  gtk_widget_set_valign (delbutton, GTK_ALIGN_START);
-  gtk_container_add (GTK_CONTAINER (delbutton), image);
-  gtk_widget_show (image);
-  gtk_grid_attach (GTK_GRID (grid), delbutton, 2, 0, 1, 1);
-  gtk_widget_show (delbutton);
+  if (! is_system_ext)
+    {
+      GtkWidget *delbutton;
+
+      delbutton = gtk_button_new ();
+      g_object_set_data (G_OBJECT (delbutton), "extension", extension);
+      g_signal_connect (delbutton, "clicked",
+                        G_CALLBACK (gimp_extension_list_delete_clicked),
+                        list);
+      gtk_button_set_relief (GTK_BUTTON (delbutton), GTK_RELIEF_NONE);
+      image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
+                                            GTK_ICON_SIZE_MENU);
+      gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
+      gtk_widget_set_vexpand (delbutton, FALSE);
+      gtk_widget_set_hexpand (delbutton, FALSE);
+      gtk_widget_set_halign (delbutton, GTK_ALIGN_END);
+      gtk_widget_set_valign (delbutton, GTK_ALIGN_START);
+      gtk_container_add (GTK_CONTAINER (delbutton), image);
+      gtk_widget_show (image);
+      gtk_grid_attach (GTK_GRID (grid), delbutton, 2, 0, 1, 1);
+      gtk_widget_show (delbutton);
+    }
 }
 
 static void
