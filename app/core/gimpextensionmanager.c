@@ -571,18 +571,21 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
 
   file = gimp_directory_file ("extensionrc", NULL);
 
-  if (manager->p->gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
-
   processed_ids = NULL;
-  gimp_config_deserialize_file (GIMP_CONFIG (manager),
-                                file, &processed_ids, &error);
-  if (error)
+  if (g_file_query_exists (file, NULL))
     {
-      g_printerr ("Failed to parse '%s': %s\n",
-                  gimp_file_get_utf8_name (file),
-                  error->message);
-      g_error_free (error);
+      if (manager->p->gimp->be_verbose)
+        g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+
+      gimp_config_deserialize_file (GIMP_CONFIG (manager),
+                                    file, &processed_ids, &error);
+      if (error)
+        {
+          g_printerr ("Failed to parse '%s': %s\n",
+                      gimp_file_get_utf8_name (file),
+                      error->message);
+          g_error_free (error);
+        }
     }
   g_object_unref (file);
 
