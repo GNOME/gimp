@@ -89,6 +89,8 @@ static void         gimp_extension_get_property    (GObject        *object,
                                                     GParamSpec     *pspec);
 
 static void         gimp_extension_clean           (GimpExtension  *extension);
+static gint         gimp_extension_file_cmp        (GFile          *a,
+                                                    GFile          *b);
 static GList      * gimp_extension_validate_paths  (GimpExtension  *extension,
                                                     const gchar    *paths,
                                                     gboolean        as_directories,
@@ -723,6 +725,20 @@ gimp_extension_clean (GimpExtension  *extension)
 }
 
 /**
+ * gimp_extension_file_cmp:
+ * @a:
+ * @b:
+ *
+ * A small g_file_equal() wrapper using GCompareFunc signature.
+ */
+static gint
+gimp_extension_file_cmp (GFile *a,
+                         GFile *b)
+{
+  return g_file_equal (a, b) ? 0 : 1;
+}
+
+/**
  * gimp_extension_validate_paths:
  * @extension: the #GimpExtension
  * @path:      A list of directories separated by ':'.
@@ -840,7 +856,7 @@ gimp_extension_validate_paths (GimpExtension  *extension,
         }
 
       g_return_val_if_fail (path != NULL, NULL);
-      if (g_list_find_custom (list, file, (GCompareFunc) g_file_equal))
+      if (g_list_find_custom (list, file, (GCompareFunc) gimp_extension_file_cmp))
         {
           /* Silently ignore duplicate paths. */
           g_object_unref (file);
