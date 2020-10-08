@@ -259,9 +259,9 @@ gimp_extension_manager_deserialize (GimpConfig *config,
                                     gint        nest_level,
                                     gpointer    data)
 {
-  GimpExtensionManager *manager = GIMP_EXTENSION_MANAGER (config);
-  GList                *processed = *(GList**) data;
-  GTokenType            token;
+  GimpExtensionManager  *manager  = GIMP_EXTENSION_MANAGER (config);
+  GList                **processed = (GList**) data;
+  GTokenType             token;
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -348,7 +348,8 @@ gimp_extension_manager_deserialize (GimpConfig *config,
                         if (gimp_extension_run (list->data, &error))
                           {
                             g_hash_table_insert (manager->p->running_extensions,
-                                                 (gpointer) name, list->data);
+                                                 (gpointer) gimp_object_get_name (list->data),
+                                                 list->data);
                           }
                         else
                           {
@@ -363,7 +364,7 @@ gimp_extension_manager_deserialize (GimpConfig *config,
                 /* Save the list of processed extension IDs, whether
                  * active or not.
                  */
-                processed = g_list_prepend (processed, name);
+                *processed = g_list_prepend (*processed, name);
               }
             else
               {
