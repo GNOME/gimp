@@ -1001,7 +1001,7 @@ read_general_image_attribute_block (FILE     *f,
 
   chunk_start = ftell (f);
   if ((psp_ver_major >= 4
-      && (fread (&init_len, 4, 1, f) < 1 || (init_len = GUINT32_FROM_LE (init_len) < 42)))
+      && (fread (&init_len, 4, 1, f) < 1 || ((init_len = GUINT32_FROM_LE (init_len)) < 46)))
       || fread (&ia->width, 4, 1, f) < 1
       || fread (&ia->height, 4, 1, f) < 1
       || fread (&res, 8, 1, f) < 1
