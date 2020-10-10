@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-04 15:51+0000\n"
-"PO-Revision-Date: 2020-10-04 21:01+0300\n"
+"POT-Creation-Date: 2020-10-10 07:17+0000\n"
+"PO-Revision-Date: 2020-10-10 10:35+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -21,22 +21,20 @@ msgstr ""
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.11.70\n"
 
-#: ../plug-ins/common/align-layers.c:190
-msgid "Align Visi_ble Layers..."
-msgstr "Вирівняти _видимі шари..."
+#: ../extensions/goat-exercises/goat-exercise-c.c:111
+msgid "Exercise in _C minor"
+msgstr "Вправа у С_і-мінор"
 
-#: ../plug-ins/common/align-layers.c:194
-msgid "Align all visible layers of the image"
-msgstr "Вирівнювання видимих шарів зображення"
+#: ../extensions/goat-exercises/goat-exercise-c.c:117
+msgid "Exercise a goat in the C language"
+msgstr "Потренувати козу у мові Сі"
 
-#: ../plug-ins/common/align-layers.c:249
-msgid "There are not enough layers to align."
-msgstr "Недостатньо шарів для вирівнювання."
+#: ../extensions/goat-exercises/goat-exercise-c.c:160
+msgid "Exercise a goat (C)"
+msgstr "Потренувати козу (Сі)"
 
-#: ../plug-ins/common/align-layers.c:659
-msgid "Align Visible Layers"
-msgstr "Вирівнювання видимих шарів"
-
+#: ../extensions/goat-exercises/goat-exercise-c.c:164
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:70
 #: ../plug-ins/common/align-layers.c:663 ../plug-ins/common/blinds.c:277
 #: ../plug-ins/common/border-average.c:409 ../plug-ins/common/busy-dialog.c:279
 #: ../plug-ins/common/checkerboard.c:471 ../plug-ins/common/cml-explorer.c:1328
@@ -77,8 +75,6 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/gimpressionist/orientmap.c:528
 #: ../plug-ins/gimpressionist/presets.c:642
 #: ../plug-ins/gimpressionist/sizemap.c:401
-#: ../plug-ins/goat-exercises/goat-exercise-c.c:164
-#: ../plug-ins/goat-exercises/goat-exercise-vala.vala:70
 #: ../plug-ins/gradient-flare/gradient-flare.c:2494
 #: ../plug-ins/gradient-flare/gradient-flare.c:3356
 #: ../plug-ins/gradient-flare/gradient-flare.c:3468
@@ -100,6 +96,71 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/selection-to-path/selection-to-path.c:406
 msgid "_Cancel"
 msgstr "_Скасувати"
+
+#: ../extensions/goat-exercises/goat-exercise-c.c:165
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:71
+msgid "_Source"
+msgstr "_Код"
+
+#: ../extensions/goat-exercises/goat-exercise-c.c:166
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:72
+msgid "_Run"
+msgstr "_Запустити"
+
+#: ../extensions/goat-exercises/goat-exercise-c.c:180
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:86
+#, c-format
+msgid ""
+"This plug-in is an exercise in '%s' to demo plug-in creation.\n"
+"Check out the last version of the source code online by clicking the \"Source"
+"\" button."
+msgstr ""
+"Цей додаток є вправою мовою «%s» для демонстрації можливостей створення "
+"додатків.\n"
+"Ознайомтеся із найсвіжішою версією коду в інтернеті — натисніть кнопку «Код»."
+
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:64
+msgid "Exercise a goat (Vala)"
+msgstr "Потренувати козу (Vala)"
+
+#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:1
+msgid "Goat Exercises"
+msgstr "Вправи з козою"
+
+#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:2
+msgid "Official Demo Plug-ins"
+msgstr "Офіційна демонстрація додатків"
+
+#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:3
+msgid ""
+"This extension provides a set of basic examples to demonstrate how to create "
+"your own plug-ins. Each plug-in does the same thing, except it is developed "
+"in a different programming language. They all create a GTK+ dialog with a "
+"text view displaying their own code (hence also demonstrating how to package "
+"data) and a button which calls a GEGL operation on the active layer."
+msgstr ""
+"До цього розширення включено набір базових прикладів. Воно є демонстрацією"
+" створення ваших власних додатків. Усі додатки виконують ті самі дії, але їх"
+" написано різними мовами програмування. Усі додатки створюють діалогове вікно"
+" GTK+ із панеллю для показу власного коду (отже, демонструють спосіб"
+" пакування даних) та кнопкою, натискання якої викликає дію GEGL над активним"
+" шаром."
+
+#: ../plug-ins/common/align-layers.c:190
+msgid "Align Visi_ble Layers..."
+msgstr "Вирівняти _видимі шари..."
+
+#: ../plug-ins/common/align-layers.c:194
+msgid "Align all visible layers of the image"
+msgstr "Вирівнювання видимих шарів зображення"
+
+#: ../plug-ins/common/align-layers.c:249
+msgid "There are not enough layers to align."
+msgstr "Недостатньо шарів для вирівнювання."
+
+#: ../plug-ins/common/align-layers.c:659
+msgid "Align Visible Layers"
+msgstr "Вирівнювання видимих шарів"
 
 #: ../plug-ins/common/align-layers.c:664 ../plug-ins/common/blinds.c:278
 #: ../plug-ins/common/border-average.c:410
@@ -2391,7 +2452,6 @@ msgid "Select Image"
 msgstr "Виберіть зображення"
 
 #: ../plug-ins/common/file-heif.c:2257
-#| msgid "Export Image as GIF"
 msgid "Export Image as AVIF"
 msgstr "Експортувати зображення як AVIF"
 
@@ -9004,48 +9064,6 @@ msgid ""
 msgstr ""
 "В режимі \"Вороний\" лише найближчий до заданої точки sm-вектор має вплив"
 
-#: ../plug-ins/goat-exercises/goat-exercise-c.c:111
-msgid "Exercise in _C minor"
-msgstr "Вправа у С_і-мінор"
-
-#: ../plug-ins/goat-exercises/goat-exercise-c.c:117
-msgid "Exercise a goat in the C language"
-msgstr "Потренувати козу у мові Сі"
-
-#: ../plug-ins/goat-exercises/goat-exercise-c.c:160
-msgid "Exercise a goat (C)"
-msgstr "Потренувати козу (Сі)"
-
-#: ../plug-ins/goat-exercises/goat-exercise-c.c:165
-#: ../plug-ins/goat-exercises/goat-exercise-vala.vala:71
-msgid "_Source"
-msgstr "_Код"
-
-#: ../plug-ins/goat-exercises/goat-exercise-c.c:166
-#: ../plug-ins/goat-exercises/goat-exercise-vala.vala:72
-msgid "_Run"
-msgstr "_Запустити"
-
-#: ../plug-ins/goat-exercises/goat-exercise-c.c:180
-#: ../plug-ins/goat-exercises/goat-exercise-vala.vala:86
-#, c-format
-msgid ""
-"This plug-in is an exercise in '%s' to demo plug-in creation.\n"
-"Check out the last version of the source code online by clicking the \"Source"
-"\" button."
-msgstr ""
-"Цей додаток є вправою мовою «%s» для демонстрації можливостей створення "
-"додатків.\n"
-"Ознайомтеся із найсвіжішою версією коду в інтернеті — натисніть кнопку «Код»."
-
-#: ../plug-ins/goat-exercises/goat-exercise-py3.py:69
-msgid "Exercise a goat (Python 3)"
-msgstr "Потренувати козу (Python 3)"
-
-#: ../plug-ins/goat-exercises/goat-exercise-vala.vala:64
-msgid "Exercise a goat (Vala)"
-msgstr "Потренувати козу (Vala)"
-
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
 msgstr "Назва документа"
@@ -12198,6 +12216,9 @@ msgstr "_Сканер/Камера..."
 #: ../plug-ins/twain/twain.c:513
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Exercise a goat (Python 3)"
+#~ msgstr "Потренувати козу (Python 3)"
 
 #~ msgid "Creator keyword data not nul-terminated"
 #~ msgstr "Дані ключового слова розробника не закінчуються нулем"
