@@ -128,7 +128,10 @@ appstream_files = $(appstream_in_files:.xml.in=.xml)
 appdatadir = $(goat_exercise_c_libexecdir)
 appdata_DATA = $(appstream_files)
 
-@INTLTOOL_XML_RULE@
+org.gimp.extension.goat-exercises.metainfo.xml: org.gimp.extension.goat-exercises.metainfo.xml.in $(wildcard $(top_srcdir)/po-plug-ins/*.po)
+	$(INTLTOOL_MERGE) $(top_srcdir)/po-plug-ins $< $(@) -x -u -c $(top_builddir)/po-plug-ins/.intltool-merge-cache
+
+.PHONY: org.gimp.extension.goat-exercises.metainfo.xml
 
 EXTRA_DIST = \
 	goat-exercise-gjs.js	\

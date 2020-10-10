@@ -110,7 +110,7 @@ appdatafile = custom_target(appdatafilename,
   output: [ appdatafilename, ],
   command: [
     intltool_merge,
-    po_dir,
+    po_plug_ins_dir,
     '@INPUT@',
     '@OUTPUT@',
     '--xml-style',
