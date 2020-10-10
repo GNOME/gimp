@@ -1998,7 +1998,7 @@ save_dialog (SaveParams  *params,
   gtk_range_set_value (GTK_RANGE (quality_slider), params->quality);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lossless_button),
                                 params->lossless);
-  gtk_widget_set_sensitive (quality_slider, !params->lossless);
+  gtk_widget_set_sensitive (hbox, !params->lossless);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), quality_slider);
 
   g_signal_connect (lossless_button, "toggled",
