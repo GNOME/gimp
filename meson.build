@@ -908,22 +908,9 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 python3_minver = '>=3.6'
 
-if get_option('python') == 'never'
-  python_warning = '''
-    You disabled the installation of core Python plug-ins. This is discouraged
-    as it won't provide the full GIMP experience.
-    Note that you may install the Python plug-ins even if you have no Python
-    interpreter at build-time by passing the configure option -Dpython=always.
-    Just make sure that a Python >=@0@ interpreter is available at run-time.
-  '''.format(python3_minver)
-  warning(python_warning)
-  warnings += python_warning
+have_python = get_option('python')
 
-  have_python = false
-
-else
-  always_install = get_option('python') == 'always'
-
+if have_python
   python = pythonmod.find_installation('python3', required: false)
   message('Found Python @0@'.format(python.language_version()))
 
@@ -944,16 +931,7 @@ else
     python_found = python_found and pygobject_found
   endif
 
-  if (not python_found) and (not always_install)
-    error('''
-    Python @0@ or PyGObject was not found.
-    Note that you may install the Python plug-ins even if you have no Python
-    interpreter at build-time by passing the configure option -Dpython=always.
-    Just make sure that a Python @0@ interpreter is available at run-time.
-    '''.format(python3_minver))
-  endif
-
-  if (not python_found) and (always_install)
+  if not python_found
     python_warning = '''
     Python @0@ or PyGObject was not found.
     Python plug-ins will be installed anyway but you should make sure that
@@ -963,39 +941,14 @@ else
     warning(python_warning)
     warnings += python_warning
   endif
-
-  have_python = python_found or always_install
 endif
 
 ## Javascript
 
-if get_option('javascript') == 'never'
-  js_warning = '''
-    You disabled the installation of core Javascript plug-ins. This is
-    discouraged as it won't provide the full GIMP experience.
-    Note that you may install the Javascript plug-ins even if you have no GJS
-    interpreter at build-time by passing the configure option -Djavascript=always.
-    Just make sure that the GJS interpreter is available at run-time.
-  '''
-  warning(js_warning)
-  warnings += js_warning
-  have_javascript = false
-
-else
-  always_install = get_option('javascript') == 'always'
-
+have_javascript = get_option('javascript')
+if have_javascript
   gjs = find_program('gjs', required: false)
-
-  if (not gjs.found()) and (not always_install)
-    error('''
-    GJS was not found.
-    Note that you may install the Javascript plug-ins even if you have no GJS
-    interpreter at build-time by passing the configure option -Djavascript=always.
-    Just make sure that the GJS interpreter is available at run-time.
-    ''')
-  endif
-
-  if (not gjs.found()) and (always_install)
+  if not gjs.found()
     js_warning = '''
     GJS was not found.
     JavaScript plug-ins will be installed anyway but you should make sure that
@@ -1005,39 +958,14 @@ else
     warning(js_warning)
     warnings += js_warning
   endif
-
-  have_javascript = gjs.found() or always_install
 endif
 
 ## Lua
 
-if get_option('lua') == 'never'
-  lua_warning = '''
-    You disabled the installation of core Lua plug-ins. This is discouraged
-    as it won't provide the full GIMP experience.
-    Note that you may install the Lua plug-ins even if you have no Lua LGI
-    interpreter at build-time by passing the configure option -Dlua=always.
-    Just make sure that the Lua LGI interpreter is available at run-time.
-  '''
-  warning(lua_warning)
-  warnings += lua_warning
-  have_lua = false
-
-else
-  always_install = get_option('lua') == 'always'
-
+have_lua = get_option('lua')
+if have_lua
   lua = find_program('luajit', required: false)
-
-  if (not lua.found()) and (not always_install)
-    error('''
-    Luajit was not found.
-    Note that you may install the Lua plug-ins even if you have no Lua LGI
-    interpreter at build-time by passing the configure option -Dlua=always.
-    Just make sure that the Lua LGI interpreter is available at run-time.
-    ''')
-  endif
-
-  if (not lua.found()) and always_install
+  if not lua.found()
     lua_warning = '''
     Luajit was not found.
     Lua plug-ins will be installed anyway but you should make sure that
@@ -1047,8 +975,6 @@ else
     warning(lua_warning)
     warnings += lua_warning
   endif
-
-  have_lua = lua.found() or always_install
 endif
 
 
@@ -1834,6 +1760,7 @@ final_message = [
 '''  Python 3 plug-ins:   @0@'''.format(have_python),
 '''  Javascript plug-ins: @0@'''.format(have_javascript),
 '''  Lua plug-ins:        @0@'''.format(have_lua),
+'''  Vala plug-ins:       @0@'''.format(have_vala),
 '''  TWAIN (Win32):       @0@'''.format(platform_windows),
 '''  Webpage:             @0@'''.format(webkit.found()),
 '''  WMF:                 @0@'''.format(wmf.found()),

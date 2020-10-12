@@ -44,7 +44,6 @@ option('openexr',           type: 'feature', value: 'auto', description: 'Openex
 option('png',               type: 'feature', value: 'auto', description: 'PNG support')
 option('print',             type: 'boolean', value: true,   description: 'Print support')
 option('tiff',              type: 'feature', value: 'auto', description: 'TIFF support')
-option('vala-plugins',      type: 'feature', value: 'auto', description: 'Build VAPI and Vala plugins')
 option('webkit',            type: 'feature', value: 'auto', description: 'Help browser and webpage plugins')
 option('webp',              type: 'feature', value: 'auto', description: 'Webp support')
 option('wmf',               type: 'feature', value: 'auto', description: 'Wmf support')
@@ -58,12 +57,8 @@ option('gtk-doc-app',       type: 'boolean', value: false,  description: 'Build 
 option('linux-input',       type: 'feature', value: 'auto', description: 'Linux input event controller module')
 option('vec-icons',         type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')
 
-option('javascript',        type: 'combo',   value:'error', description: 'Install Javascript plug-ins',
-  choices: [ 'never', 'always', 'error' ],
-)
-option('lua',               type: 'combo',   value:'error', description: 'Install Lua plug-ins',
-  choices: [ 'never', 'always', 'error' ],
-)
-option('python',            type: 'combo',   value:'error', description: 'Install Python 3 plug-ins',
-  choices: [ 'never', 'always', 'error' ],
-)
+option('vala-plugins',      type: 'feature', value: 'auto', description: 'Build VAPI and Vala plugins')
+
+option('javascript',        type: 'boolean', value: true,   description: 'Install Javascript plug-ins')
+option('lua',               type: 'boolean', value: true,   description: 'Install Lua plug-ins')
+option('python',            type: 'boolean', value: true,   description: 'Install Python 3 plug-ins')

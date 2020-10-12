@@ -139,9 +139,6 @@ gimp-autotools-debian:
     - ../autogen.sh
         --prefix="${INSTALL_PREFIX}"
         --enable-debug
-        --with-python=force
-        --with-javascript=force
-        --with-lua=force
     - make -j "$(nproc)"
     - make check
 
@@ -153,9 +150,6 @@ gimp-distcheck-debian:
     - ../autogen.sh
         --prefix="${INSTALL_PREFIX}"
         --enable-debug
-        --with-python=force
-        --with-javascript=force
-        --with-lua=force
         --enable-gtk-doc
     - make -j "$(nproc)"
     - make -j "$(nproc)" distcheck
@@ -165,9 +159,6 @@ gimp-meson-debian:
   script:
     - meson _build
       --prefix="${INSTALL_PREFIX}"
-      -Dpython=always
-      -Djavascript=always
-      -Dlua=always
     - ninja -C _build
     - ninja -C _build test
 
@@ -182,9 +173,6 @@ gimp-clang-debian:
         clang libomp-dev
     - meson _build
       --prefix="${INSTALL_PREFIX}"
-      -Dpython=always
-      -Djavascript=always
-      -Dlua=always
     - ninja -C _build
     - ninja -C _build test
 
@@ -237,9 +225,7 @@ gimp-win64:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
-              -Dgtk-doc=false
-              -Dpython=always -Dlua=always
-              -Djavascript=always && ninja install &&
+              -Dgtk-doc=false && ninja install &&
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w64 gimp --run="-"
@@ -298,9 +284,7 @@ gimp-win32:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
-              -Dwmf=disabled  -Dgtk-doc=false
-              -Dpython=always -Dlua=always
-              -Djavascript=always && ninja install &&
+              -Dwmf=disabled  -Dgtk-doc=false && ninja install &&
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w32 gimp --run="-"

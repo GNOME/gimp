@@ -2275,21 +2275,11 @@ GOAT_EXERCISES="goat-exercise-c$BUILD_EXEEXT"
 # useful at build time.
 # --with-python=no won't install Python plug-ins. It is discouraged.
 AC_ARG_WITH(python,
-            [  --with-python=no|yes|force install Python 3 plug-ins (default=yes)], ,
+            [  --with-python=no|yes install Python 3 plug-ins (default=yes)], ,
             [with_python=yes])
 
-if test "x$with_python" = xno; then
-  warning_python="
-WARNING: you disabled the installation of core Python plug-ins. This is
-         discouraged as it won't provide the full GIMP experience.
-         Note that you may install the Python plug-ins even if you have
-         no Python interpreter at build-time by passing the configure
-         option --with-python=force.
-         Just make sure that a Python python3_required_version or newer
-         interpreter is available at run-time."
-elif test "x$with_python" = xforce; then
-  with_python="yes"
-  warning_python=
+warning_python=
+if test "x$with_python" = xyes; then
   AM_PATH_PYTHON3(python3_required_version, ,
                   warning_python="Python python3_required_version or newer not found")
   if test "x$warning_python" = "x"; then
@@ -2305,28 +2295,7 @@ WARNING: ${warning_python}
          be usable."
     with_python="yes (see warning below)"
   fi
-else
-  with_python="yes"
-  error_python=
-  AM_PATH_PYTHON3(python3_required_version,,
-                  error_python="- Python python3_required_version or newer not found")
-  if test "x$error_python" = "x"; then
-    AM_PYTHON_CHECK_PYGOBJECT("$PYTHON", , ,
-                              error_python="PyGObject 3.0 not found")
-  fi
-  if test "x$error_python" != "x"; then
-    required_deps="$required_deps
-    $error_python
-        *** Please install Python 3 and PyGObject 3.
-        *** Note that you may install the Python plug-ins even if you have
-        *** no Python interpreter at build-time by passing the configure
-        *** option --with-python=force.
-        *** Just make sure that the Python dependencies are available at run-time."
-    with_python="no"
-  fi
-fi
 
-if test "x$with_python" = "xyes"; then
   if test "x$platform_win32" = "xyes"; then
     PYBIN_PATH="$py_exec_prefix\pythonw.exe"
   else
@@ -2335,7 +2304,10 @@ if test "x$with_python" = "xyes"; then
   AC_SUBST(PYBIN_PATH)
 
   GOAT_EXERCISES="$GOAT_EXERCISES:goat-exercise-py3.py"
+else
+  with_python="no (disabled)"
 fi
+
 AM_CONDITIONAL(HAS_PYTHON_INTERP, test "x$PYBIN_PATH" != "x")
 AM_CONDITIONAL(BUILD_PYTHON, test "x$with_python" != xno)
 
@@ -2344,20 +2316,12 @@ AM_CONDITIONAL(BUILD_PYTHON, test "x$with_python" != xno)
 ###########################################
 
 AC_ARG_WITH(javascript,
-            [  --with-javascript=no|yes|force install JavaScript plug-ins (default=yes)], ,
+            [  --with-javascript=no|yes install JavaScript plug-ins (default=yes)], ,
             [with_javascript=yes])
 
-if test "x$with_javascript" = xno; then
-  warning_javascript="
-WARNING: you disabled the installation of core JavaScript plug-ins. This
-         is discouraged as it won't provide the full GIMP experience.
-         Note that you may install the JavaScript plug-ins even if the
-         GJS interpreter is not installed at build-time by passing the
-         configure option --with-javascript=force.
-         Just make sure that GJS is available at run-time."
-elif test "x$with_javascript" = xforce; then
+warning_javascript=
+if test "x$with_javascript" = xyes; then
   with_javascript="yes"
-  warning_javascript=
   AC_CHECK_PROGS(GJS, gjs, no)
   if test "x$GJS" = xno; then
     warning_javascript="
@@ -2367,23 +2331,10 @@ WARNING: GJS not found.
          installation, otherwise installed plug-ins won't be usable."
     with_javascript="yes (see warning below)"
   fi
-else
-  with_javascript="yes"
-  AC_CHECK_PROGS(GJS, gjs, no)
-  if test "x$GJS" = xno; then
-    required_deps="$required_deps
-    - GJS not found.
-        *** Please install the JavaScript interpreter GJS.
-        *** Note that you may install the JavaScript plug-ins even if
-        *** GJS is not installed at build-time by passing the configure
-        *** option --with-javascript=force.
-        *** Just make sure that GJS is available at run-time."
-    with_javascript="no"
-  fi
-fi
 
-if test "x$with_javascript" = "xyes"; then
   GOAT_EXERCISES="$GOAT_EXERCISES:goat-exercise-gjs.js"
+else
+  with_javascript="no (disabled)"
 fi
 
 AM_CONDITIONAL(HAS_JAVASCRIPT_INTERP, test "x$GJS" != "xno")
@@ -2394,20 +2345,11 @@ AM_CONDITIONAL(BUILD_JAVASCRIPT, test "x$with_javascript" != xno)
 ####################################
 
 AC_ARG_WITH(lua,
-            [  --with-lua=no|yes|force install Lua plug-ins (default=yes)], ,
+            [  --with-lua=no|yes install Lua plug-ins (default=yes)], ,
             [with_lua=yes])
 
-if test "x$with_lua" = xno; then
-  warning_lua="
-WARNING: you disabled the installation of core Lua plug-ins. This
-         is discouraged as it won't provide the full GIMP experience.
-         Note that you may install the Lua plug-ins even if Lua LGI
-         is not installed at build-time by passing the configure option
-         --with-lua=force.
-         Just make sure that it is available at run-time."
-elif test "x$with_lua" = xforce; then
-  with_lua="yes"
-  warning_lua=
+warning_lua=
+if test "x$with_lua" = xyes; then
   AC_CHECK_PROGS(LUA, luajit, no)
   if test "x$LUA" = xno; then
     warning_lua="
@@ -2417,23 +2359,10 @@ WARNING: luajit not found.
          otherwise installed plug-ins won't be usable."
     with_lua="yes (see warning below)"
   fi
-else
-  with_lua="yes"
-  AC_CHECK_PROGS(LUA, luajit, no)
-  if test "x$LUA" = xno; then
-    required_deps="$required_deps
-    - luajit not found.
-        *** Please install the Lua interpreter luajit.
-        *** Note that you may install the Lua plug-ins even if luajit
-        *** is not installed at build-time by passing the configure
-        *** option --with-lua=force.
-        *** Just make sure that luajit and LGI are available at run-time."
-    with_lua="no"
-  fi
-fi
 
-if test "x$with_lua" = "xyes"; then
   GOAT_EXERCISES="$GOAT_EXERCISES:goat-exercise-lua.lua"
+else
+  with_lua="no (disabled)"
 fi
 
 AM_CONDITIONAL(HAS_LUA_INTERP, test "x$LUA" != "xno")
