@@ -96,12 +96,12 @@ msgid ""
 "bug fixes. Notable improvements:"
 msgstr ""
 "El GIMP 2.10.16 proporciona diverses millores principals d'ús, una nova eina "
-"per a les transformacions a l’espai 3D, la nova versió del verificador i la "
-"quantitat habitual de correccions d’errors. Millores notables:"
+"per a les transformacions a l'espai 3D, la nova versió del verificador i la "
+"quantitat habitual de correccions d'errors. Millores notables:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Tools are now grouped in the toolbox by default"
-msgstr "Les eines ara s’agrupen per defecte a la caixa d’eines"
+msgstr "Les eines ara s'agrupen per defecte a la caixa d'eines"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "Sliders now use a compact style with improved user interaction"
@@ -286,7 +286,7 @@ msgid ""
 "transform tool's GUI"
 msgstr ""
 "Afegeix les opcions «Restriccions als tiradors» i «Al voltant del centre» a "
-"la interfície gràfica de l’eina de transformació de perspectiva"
+"la interfície gràfica de l'eina de transformació de perspectiva"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
@@ -610,8 +610,8 @@ msgid ""
 "order to provide a smoother painting experience. Bigger changes are:"
 msgstr ""
 "En aquesta segona versió abans del GIMP 2.10.0, mentre la depuració continua "
-"sent un objectiu primordial, un nou enfocament s’ha posat a la velocitat i "
-"l’optimització per tal d'oferir una experiència de pintura més suau. Els "
+"sent un objectiu primordial, un nou enfocament s'ha posat a la velocitat i "
+"l'optimització per tal d'oferir una experiència de pintura més suau. Els "
 "canvis més grans són:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
@@ -2632,7 +2632,7 @@ msgstr "Selecció d'eines: commuteu a l'últim"
 #: ../app/actions/context-actions.c:737
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Previous"
-msgstr "Selecció d'eines: commuteu a l’anterior"
+msgstr "Selecció d'eines: commuteu a l'anterior"
 
 #: ../app/actions/context-actions.c:741
 msgctxt "context-action"
@@ -2657,7 +2657,7 @@ msgstr "Selecció del pinzell: commuteu a l'últim"
 #: ../app/actions/context-actions.c:761
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Previous"
-msgstr "Selecció de pinzells: commuteu a l’anterior"
+msgstr "Selecció de pinzells: commuteu a l'anterior"
 
 #: ../app/actions/context-actions.c:765
 msgctxt "context-action"
@@ -2667,7 +2667,7 @@ msgstr "Selecció de pinzells: commuteu al següent"
 #: ../app/actions/context-actions.c:773
 msgctxt "context-action"
 msgid "Pattern Selection: Select by Index"
-msgstr "Selecció de patrons: seleccioneu per l’índex"
+msgstr "Selecció de patrons: seleccioneu per l'índex"
 
 #: ../app/actions/context-actions.c:777
 msgctxt "context-action"
@@ -2682,7 +2682,7 @@ msgstr "Selecció del patró: commuteu a l'últim"
 #: ../app/actions/context-actions.c:785
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Previous"
-msgstr "Selecció del patró: commuteu a l’anterior"
+msgstr "Selecció del patró: commuteu a l'anterior"
 
 #: ../app/actions/context-actions.c:789
 msgctxt "context-action"
@@ -2732,7 +2732,7 @@ msgstr "Selecció de degradats: commuteu a l'últim"
 #: ../app/actions/context-actions.c:833
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Previous"
-msgstr "Selecció del degradat: commuteu a l’anterior"
+msgstr "Selecció del degradat: commuteu a l'anterior"
 
 #: ../app/actions/context-actions.c:837
 msgctxt "context-action"
@@ -3709,7 +3709,7 @@ msgstr "Can_via de pantalla"
 #: ../app/actions/dock-actions.c:50
 msgctxt "dock-action"
 msgid "Close Dock"
-msgstr "Tanca l’acoblador"
+msgstr "Tanca l'acoblador"
 
 #: ../app/actions/dock-actions.c:55
 msgctxt "dock-action"
@@ -3835,7 +3835,7 @@ msgstr "E_stat i text"
 #: ../app/actions/dockable-actions.c:125
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
-msgstr "Blo_queja la pestanya de l’acoblador"
+msgstr "Blo_queja la pestanya de l'acoblador"
 
 #: ../app/actions/dockable-actions.c:127
 msgctxt "dockable-action"
@@ -11150,11 +11150,11 @@ msgstr "Especifica com s'ha de dibuixar l'àrea al voltant de la imatge."
 msgid ""
 "Check for availability of GIMP updates through background internet queries."
 msgstr ""
-"Comproveu la disponibilitat d’actualitzacions del GIMP consultant internet."
+"Comproveu la disponibilitat d'actualitzacions del GIMP consultant internet."
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
-msgstr "Marca de temps de la darrera comprovació d’actualització."
+msgstr "Marca de temps de la darrera comprovació d'actualització."
 
 #: ../app/config/gimprc-blurbs.h:53
 msgid "How to handle embedded color profiles when opening a file."
@@ -11562,7 +11562,7 @@ msgstr ""
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr ""
-"Quan està habilitada, el contorn del pinzell s’ajustarà als brins "
+"Quan està habilitada, el contorn del pinzell s'ajustarà als brins "
 "individuals mentre pinta."
 
 #: ../app/config/gimprc-blurbs.h:403
@@ -17184,7 +17184,7 @@ msgstr "Mostra la _imatge activa"
 
 #: ../app/dialogs/preferences-dialog.c:2156
 msgid "Use tool _groups"
-msgstr "Utilitza _grups d’eines"
+msgstr "Utilitza _grups d'eines"
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:2163
@@ -19238,7 +19238,7 @@ msgstr "El camí absolut està prohibit a l'extensió de GIMP «%s»: %s"
 #: ../app/file-data/file-data-gex.c:156
 #, c-format
 msgid "File not allowed in root of GIMP extension '%s': %s"
-msgstr "El fitxer no està permès a l’arrel de l’extensió GIMP  «%s»: %s"
+msgstr "El fitxer no està permès a l'arrel de l'extensió GIMP  «%s»: %s"
 
 #: ../app/file-data/file-data-gex.c:167
 #, c-format
@@ -20572,7 +20572,7 @@ msgstr "Barreja l'espai de colors"
 #: ../app/paint/gimppaintoptions.c:353
 msgid "Which color space to use when blending RGB gradient segments"
 msgstr ""
-"Quin espai de color s’utilitzarà quan es barregin els segments degradats de "
+"Quin espai de color s'utilitzarà quan es barregin els segments degradats de "
 "RGB"
 
 #: ../app/paint/gimppaintoptions.c:423
@@ -20629,7 +20629,7 @@ msgstr "Quantitat de color del pinzell per barrejar"
 #: ../app/paint/gimpsmudgeoptions.c:86
 msgctxt "smudge-tool"
 msgid "No erasing effect"
-msgstr "Sense efectes de l’esborrat"
+msgstr "Sense efectes de l'esborrat"
 
 #: ../app/paint/gimpsmudgeoptions.c:93 ../app/paint/gimpsourceoptions.c:72
 #: ../app/pdb/gimppdbcontext.c:129 ../app/tools/gimpbucketfilloptions.c:135
@@ -24980,7 +24980,7 @@ msgstr "Interacció unificada"
 
 #: ../app/tools/gimptransform3doptions.c:86
 msgid "Combine all interaction modes"
-msgstr "Combina tots els modes d’interacció"
+msgstr "Combina tots els modes d'interacció"
 
 #: ../app/tools/gimptransform3doptions.c:93
 msgid "Constrain transformation to a single axis"
@@ -24988,7 +24988,7 @@ msgstr "Restringeix la transformació a un únic eix"
 
 #: ../app/tools/gimptransform3doptions.c:100
 msgid "Transform along the Z axis"
-msgstr "Transforma al llarg de l’eix Z"
+msgstr "Transforma al llarg de l'eix Z"
 
 #: ../app/tools/gimptransform3doptions.c:107
 msgid "Transform in the local frame of reference"
@@ -24997,7 +24997,7 @@ msgstr "Transforma en el marc de referència local"
 #: ../app/tools/gimptransform3doptions.c:197
 #, c-format
 msgid "Constrain axis (%s)"
-msgstr "Restringeix l’eix (%s)"
+msgstr "Restringeix l'eix (%s)"
 
 #: ../app/tools/gimptransform3doptions.c:206
 #, c-format
@@ -25052,7 +25052,7 @@ msgstr "Z"
 
 #: ../app/tools/gimptransform3dtool.c:439
 msgid "Rotation axis order"
-msgstr "Ordre de l’eix de rotació"
+msgstr "Ordre de l'eix de rotació"
 
 #: ../app/tools/gimptransformoptions.c:94
 msgid "Direction of transformation"
@@ -25367,12 +25367,12 @@ msgstr "Capa activa"
 #: ../app/tools/tools-enums.c:59
 msgctxt "line-art-source"
 msgid "Layer below the active one"
-msgstr "Capa per sota de l’activa"
+msgstr "Capa per sota de l'activa"
 
 #: ../app/tools/tools-enums.c:60
 msgctxt "line-art-source"
 msgid "Layer above the active one"
-msgstr "Capa per damunt de l’activa"
+msgstr "Capa per damunt de l'activa"
 
 #: ../app/tools/tools-enums.c:89
 msgctxt "rect-select-mode"
@@ -26315,7 +26315,7 @@ msgstr "Obre el gestor d'errades"
 
 #: ../app/widgets/gimpcriticaldialog.c:186
 msgid "See bug details"
-msgstr "Mira els detalls de l’error"
+msgstr "Mira els detalls de l'error"
 
 #: ../app/widgets/gimpcriticaldialog.c:205
 msgid "Go to _Download page"
@@ -26557,7 +26557,7 @@ msgstr "Cua encallada"
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
-"El nombre de vegades que l’escriptura a la memòria d'intercanvi ha encallat "
+"El nombre de vegades que l'escriptura a la memòria d'intercanvi ha encallat "
 "degut a una cua plena"
 
 #: ../app/widgets/gimpdashboard.c:556
