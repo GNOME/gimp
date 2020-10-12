@@ -15475,7 +15475,7 @@ msgstr "Comprova les actualitzacions"
 #: ../app/dialogs/about-dialog.c:446
 #, c-format
 msgid "Last checked on %s at %s"
-msgstr "Darrera comprovació de %s a %s"
+msgstr "Darrera comprovació %s a %s"
 
 #: ../app/dialogs/about-dialog.c:748
 msgid "GIMP is brought to you by"
