@@ -135,7 +135,15 @@ static const gchar *unsupported_tags[] =
   "Exif.Image.XPSubject",
   "Exif.Image.DNGVersion",
   "Exif.Image.DNGBackwardVersion",
-  "Exif.Iop"
+  "Exif.Iop",
+  /* FIXME Even though adding the tags below fixes the issue it's not very flexible.
+     It might be better in the long run if there was a way for a user to configure which
+     tags to block or a way for us to detect problems with tags before writing them. */
+  /* Issues #1367, #2253. Offending tag is PreviewOffset but the other Preview tags
+     (PreviewResolution, PreviewLength, PreviewImageBorders) also make no sense because
+     we are not including a Pentax specific preview image. */
+  "Exif.Pentax.Preview",
+  "Exif.PentaxDng.Preview"
 };
 
 static const guint8 minimal_exif[] =
