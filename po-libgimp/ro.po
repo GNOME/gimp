@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-01 20:58+0000\n"
-"PO-Revision-Date: 2020-06-03 17:24+0300\n"
+"POT-Creation-Date: 2020-10-12 20:08+0000\n"
+"PO-Revision-Date: 2020-10-15 18:41+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -47,84 +47,84 @@ msgstr "Selecție de penel"
 msgid "_Browse..."
 msgstr "_Răsfoiește..."
 
-#: ../libgimp/gimpexport.c:278 ../libgimp/gimpexport.c:314
+#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Plugin-ul %s nu poate manipula straturi"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
 msgid "Merge Visible Layers"
 msgstr "Fuzionează straturile vizibile"
 
 # hm ?
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:304
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Plugin-ul %s nu poate manipula decalajele, dimensiunea sau opacitatea de "
 "strat"
 
-#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Plugin-ul %s poate manipula straturi numai sub formă de cadre animate"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
 msgid "Save as Animation"
 msgstr "Salvează ca animație"
 
-#: ../libgimp/gimpexport.c:306 ../libgimp/gimpexport.c:315
-#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:333
+#: ../libgimp/gimpexport.c:323 ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:341 ../libgimp/gimpexport.c:350
 msgid "Flatten Image"
 msgstr "Aplatizează imaginea"
 
-#: ../libgimp/gimpexport.c:323
+#: ../libgimp/gimpexport.c:340
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Plugin-ul %s nu poate manipula transparența"
 
-#: ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:349
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Plugin-ul %s nu poate manipula straturi transparente"
 
-#: ../libgimp/gimpexport.c:341
+#: ../libgimp/gimpexport.c:358
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Plugin-ul %s nu poate manipula măștile de strat"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:359
 msgid "Apply Layer Masks"
 msgstr "Aplică măștile de strat"
 
-#: ../libgimp/gimpexport.c:350
+#: ../libgimp/gimpexport.c:367
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Plugin-ul %s poate manipula numai imagini RGB"
 
-#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:389
-#: ../libgimp/gimpexport.c:398
+#: ../libgimp/gimpexport.c:368 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:415
 msgid "Convert to RGB"
 msgstr "Convertește la RGB"
 
-#: ../libgimp/gimpexport.c:359
+#: ../libgimp/gimpexport.c:376
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Plugin-ul %s poate manipula numai imagini în tonuri de gri"
 
-#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:389
-#: ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:377 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:427
 msgid "Convert to Grayscale"
 msgstr "Convertește la tonuri de gri"
 
-#: ../libgimp/gimpexport.c:368
+#: ../libgimp/gimpexport.c:385
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Plugin-ul %s poate manipula numai imagini indexate"
 
-#: ../libgimp/gimpexport.c:369 ../libgimp/gimpexport.c:398
-#: ../libgimp/gimpexport.c:408
+#: ../libgimp/gimpexport.c:386 ../libgimp/gimpexport.c:415
+#: ../libgimp/gimpexport.c:425
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -132,13 +132,13 @@ msgstr ""
 "Convertește la imagine indexată folosind configurările implicite\n"
 "(trebuie intervenit manual pentru ajustarea rezultatului)"
 
-#: ../libgimp/gimpexport.c:378
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "Plugin-ul %s poate manipula numai imagini bitmap indexate (două culori)"
 
-#: ../libgimp/gimpexport.c:379
+#: ../libgimp/gimpexport.c:396
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -146,37 +146,50 @@ msgstr ""
 "Convertește la indexat folosind configurările implicite\n"
 "(efectuați manual pentru a ajusta rezultatul)"
 
-#: ../libgimp/gimpexport.c:388
+#: ../libgimp/gimpexport.c:405
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Plugin-ul %s poate manipula numai imagini RGB sau în tonuri de gri"
 
-#: ../libgimp/gimpexport.c:397
+#: ../libgimp/gimpexport.c:414
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "Plugin-ul %s poate manipula numai imagini RGB sau indexate"
 
-#: ../libgimp/gimpexport.c:407
+#: ../libgimp/gimpexport.c:424
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Plugin-ul %s poate manipula numai imagini în tonuri de gri sau indexate"
 
-#: ../libgimp/gimpexport.c:418
+#: ../libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Plugin-ul %s necesită un canal alfa"
 
-#: ../libgimp/gimpexport.c:419
+#: ../libgimp/gimpexport.c:436
 msgid "Add Alpha Channel"
 msgstr "Adaugă un canal alfa"
 
-#: ../libgimp/gimpexport.c:478
+#: ../libgimp/gimpexport.c:444
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr "Plugin-ul %s necesită decuparea straturilor la limitele imaginii"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Crop Layers"
+msgstr "Decupează straturile"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Resize Image to Layers"
+msgstr "Redimensionează imaginea la straturi"
+
+#: ../libgimp/gimpexport.c:504
 msgid "Confirm Save"
 msgstr "Confirmă salvarea"
 
-#: ../libgimp/gimpexport.c:483 ../libgimp/gimpexport.c:565
-#: ../libgimp/gimpexport.c:1063 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimp/gimpexport.c:509 ../libgimp/gimpexport.c:591
+#: ../libgimp/gimpexport.c:1125 ../libgimpwidgets/gimpcolorbutton.c:549
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
@@ -185,25 +198,25 @@ msgstr "Confirmă salvarea"
 msgid "_Cancel"
 msgstr "_Renunță"
 
-#: ../libgimp/gimpexport.c:484
+#: ../libgimp/gimpexport.c:510
 msgid "C_onfirm"
 msgstr "C_onfirmă"
 
-#: ../libgimp/gimpexport.c:560
+#: ../libgimp/gimpexport.c:586
 msgid "Export File"
 msgstr "Export de fișier"
 
-#: ../libgimp/gimpexport.c:564
+#: ../libgimp/gimpexport.c:590
 msgid "_Ignore"
 msgstr "_Ignoră"
 
-#: ../libgimp/gimpexport.c:566 ../libgimp/gimpexport.c:1064
+#: ../libgimp/gimpexport.c:592 ../libgimp/gimpexport.c:1126
 msgid "_Export"
 msgstr "_Exportă"
 
 # a fost: din următoarele motive (iar motivele sunt de obicei unul singur)
 #. the headline
-#: ../libgimp/gimpexport.c:596
+#: ../libgimp/gimpexport.c:622
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -213,11 +226,11 @@ msgstr ""
 
 # convertire conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #. the footline
-#: ../libgimp/gimpexport.c:670
+#: ../libgimp/gimpexport.c:696
 msgid "The export conversion won't modify your original image."
 msgstr "Convertirea pentru export nu va modifica imaginea originală."
 
-#: ../libgimp/gimpexport.c:774
+#: ../libgimp/gimpexport.c:800
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -226,7 +239,7 @@ msgstr ""
 "Sunteți pe cale de a salva un strat de mască ca %s.\n"
 "Acest lucru nu va salva straturile vizibile."
 
-#: ../libgimp/gimpexport.c:780
+#: ../libgimp/gimpexport.c:806
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -236,7 +249,7 @@ msgstr ""
 "Acest lucru nu va salva straturile vizibile."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1057
+#: ../libgimp/gimpexport.c:1119
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exportă imaginea ca %s"
@@ -249,44 +262,44 @@ msgstr "Selecție font"
 msgid "Gradient Selection"
 msgstr "Selecție degrade"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:519
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:708
 msgid "Background"
 msgstr "Fundal"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:897
 #, c-format
 msgid "Rotate %s?"
 msgstr "Rotiți %s?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:903
 msgid "_Keep Original"
 msgstr "_Păstrează originalul"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:904 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Rotește"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:945
 msgid "Original"
 msgstr "Original"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:961
 msgid "Rotated"
 msgstr "Rotit"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:979
 msgid "This image contains Exif orientation metadata."
 msgstr "Această imagine conține metadate EXIF de orientare."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:997
 msgid "Would you like to rotate the image?"
 msgstr "Doriți să fie rotită imaginea?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1009
 msgid "_Don't ask me again"
 msgstr "Nu mă mai întraba _din nou"
 
@@ -1464,25 +1477,25 @@ msgstr "Corectiv (înapoi)"
 #: ../libgimpbase/gimpbaseenums.c:1953
 msgctxt "transform-resize"
 msgid "Adjust"
-msgstr "Ajustare"
+msgstr "Ajustează"
 
 # listă drop down după „Decupare:” la opțiunile unor instrumente
 #: ../libgimpbase/gimpbaseenums.c:1954
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr "Decupare"
+msgstr "Decupează"
 
 # listă drop down după „Decupare:” la opțiunile unor instrumente
 #: ../libgimpbase/gimpbaseenums.c:1955
 msgctxt "transform-resize"
 msgid "Crop to result"
-msgstr "Decupare la rezultat"
+msgstr "Decupează la rezultat"
 
 # listă drop down după „Decupare:” la opțiunile unor instrumente
 #: ../libgimpbase/gimpbaseenums.c:1956
 msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr "Decupare cu aspect"
+msgstr "Decupează cu raport de aspect"
 
 #: ../libgimpbase/gimpmetadata.c:878
 #, c-format
@@ -2170,16 +2183,16 @@ msgstr "_Transformă"
 msgid "_Shear"
 msgstr "_Înclină"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
-msgid "Kilobytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:256
+msgid "Kibibyte"
 msgstr "Kibibaiți"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
-msgid "Megabytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:257
+msgid "Mebibyte"
 msgstr "Mebibaiți"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
-msgid "Gigabytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:258
+msgid "Gibibyte"
 msgstr "Gibibaiți"
 
 #. Count label
