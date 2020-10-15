@@ -40,6 +40,21 @@ typedef struct
   gint  type;
 } XmpStructs;
 
+typedef enum _HeifpluginEncoderSpeed
+{
+  HEIFPLUGIN_ENCODER_SPEED_SLOW = 0,
+  HEIFPLUGIN_ENCODER_SPEED_BALANCED = 1,
+  HEIFPLUGIN_ENCODER_SPEED_FASTER = 2
+} HeifpluginEncoderSpeed;
+
+typedef enum _HeifpluginExportFormat
+{
+  HEIFPLUGIN_EXPORT_FORMAT_RGB = 0,
+  HEIFPLUGIN_EXPORT_FORMAT_YUV444 = 1,
+  HEIFPLUGIN_EXPORT_FORMAT_YUV422 = 2,
+  HEIFPLUGIN_EXPORT_FORMAT_YUV420 = 3
+} HeifpluginExportFormat;
+
 typedef struct _Heif      Heif;
 typedef struct _HeifClass HeifClass;
 
@@ -246,6 +261,20 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                          8, 12, 8,
                          G_PARAM_READWRITE);
 
+      GIMP_PROC_ARG_INT (procedure, "pixel-format",
+                         "Pixel format",
+                         "Format of color sub-sampling",
+                         HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
+                         HEIFPLUGIN_EXPORT_FORMAT_YUV420,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "encoder-speed",
+                         "Encoder speed",
+                         "Tradeoff between speed and compression",
+                         HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
+                         HEIFPLUGIN_ENCODER_SPEED_BALANCED,
+                         G_PARAM_READWRITE);
+
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
                              "Save Exif",
                              "Toggle saving Exif data",
@@ -307,6 +336,20 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                          "Bit depth",
                          "Bit depth of exported image",
                          8, 12, 8,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "pixel-format",
+                         "Pixel format",
+                         "Format of color sub-sampling",
+                         HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
+                         HEIFPLUGIN_EXPORT_FORMAT_YUV420,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "encoder-speed",
+                         "Encoder speed",
+                         "Tradeoff between speed and compression",
+                         HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
+                         HEIFPLUGIN_ENCODER_SPEED_BALANCED,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
@@ -1349,6 +1392,15 @@ save_image (GFile                        *file,
   gint                      quality;
   gboolean                  save_profile;
   gint                      save_bit_depth = 8;
+#if LIBHEIF_HAVE_VERSION(1,9,0)
+  HeifpluginExportFormat    pixel_format = HEIFPLUGIN_EXPORT_FORMAT_YUV420;
+#endif
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+  HeifpluginEncoderSpeed    encoder_speed = HEIFPLUGIN_ENCODER_SPEED_BALANCED;
+  const char               *encoder_name;
+  const char               *parameter_value;
+  struct heif_color_profile_nclx nclx_profile;
+#endif
 #if GEXIV2_CHECK_VERSION(0, 12, 2)
   gboolean                  save_exif = FALSE;
 #endif
@@ -1364,8 +1416,12 @@ save_image (GFile                        *file,
   g_object_get (config,
                 "lossless",           &lossless,
                 "quality",            &quality,
+#if LIBHEIF_HAVE_VERSION(1,9,0)
+                "pixel-format",       &pixel_format,
+#endif
 #if LIBHEIF_HAVE_VERSION(1,8,0)
                 "save-bit-depth",     &save_bit_depth,
+                "encoder-speed",      &encoder_speed,
 #endif
                 "save-color-profile", &save_profile,
 #if GEXIV2_CHECK_VERSION(0, 12, 2)
@@ -1464,6 +1520,28 @@ save_image (GFile                        *file,
             }
         }
 
+#if LIBHEIF_HAVE_VERSION(1,9,0)
+      if (pixel_format == HEIFPLUGIN_EXPORT_FORMAT_RGB && save_bit_depth == 8)
+        {
+          nclx_profile.version = 1;
+          nclx_profile.color_primaries = heif_color_primaries_unspecified;
+
+          if (out_linear)
+            {
+              nclx_profile.transfer_characteristics = heif_transfer_characteristic_linear;
+            }
+          else
+            {
+              nclx_profile.transfer_characteristics = heif_transfer_characteristic_unspecified;
+            }
+
+          nclx_profile.matrix_coefficients = heif_matrix_coefficients_RGB_GBR;
+          nclx_profile.full_range_flag = 1;
+
+          heif_image_set_nclx_color_profile (h_image, &nclx_profile);
+        }
+#endif
+
       icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
       heif_image_set_raw_color_profile (h_image, "prof", icc_data, icc_length);
       space = gimp_color_profile_get_space (profile,
@@ -1483,13 +1561,19 @@ save_image (GFile                        *file,
     {
 #if LIBHEIF_HAVE_VERSION(1,8,0)
       /* We save as sRGB */
-      struct heif_color_profile_nclx nclx_profile;
 
       nclx_profile.version = 1;
       nclx_profile.color_primaries = heif_color_primaries_ITU_R_BT_709_5;
       nclx_profile.transfer_characteristics = heif_transfer_characteristic_IEC_61966_2_1;
       nclx_profile.matrix_coefficients = heif_matrix_coefficients_ITU_R_BT_601_6;
       nclx_profile.full_range_flag = 1;
+
+#if LIBHEIF_HAVE_VERSION(1,9,0)
+      if (pixel_format == HEIFPLUGIN_EXPORT_FORMAT_RGB && save_bit_depth == 8)
+        {
+          nclx_profile.matrix_coefficients = heif_matrix_coefficients_RGB_GBR;
+        }
+#endif
 
       heif_image_set_nclx_color_profile (h_image, &nclx_profile);
 
@@ -1643,11 +1727,130 @@ save_image (GFile                        *file,
       heif_image_release (h_image);
       heif_context_free (context);
       return FALSE;
-  }
+    }
 
   heif_encoder_set_lossy_quality (encoder, quality);
   heif_encoder_set_lossless (encoder, lossless);
   /* heif_encoder_set_logging_level (encoder, logging_level); */
+
+#if LIBHEIF_HAVE_VERSION(1,8,0)
+  encoder_name = heif_encoder_get_name (encoder);
+#if LIBHEIF_HAVE_VERSION(1,9,0)
+
+  if (lossless && pixel_format != HEIFPLUGIN_EXPORT_FORMAT_RGB)
+    {
+      /* disable subsampling for lossless */
+      pixel_format = HEIFPLUGIN_EXPORT_FORMAT_YUV444;
+    }
+
+  switch (pixel_format)
+    {
+    case HEIFPLUGIN_EXPORT_FORMAT_RGB:
+      /* same as HEIFPLUGIN_EXPORT_FORMAT_YUV444 */
+    case HEIFPLUGIN_EXPORT_FORMAT_YUV444:
+      parameter_value = "444";
+      break;
+    case HEIFPLUGIN_EXPORT_FORMAT_YUV422:
+      parameter_value = "422";
+      break;
+    default: /* HEIFPLUGIN_EXPORT_FORMAT_YUV420 */
+      parameter_value = "420";
+      break;
+    }
+
+  err = heif_encoder_set_parameter_string (encoder, "chroma", parameter_value);
+  if (err.code != 0)
+    {
+      g_printerr ("Failed to set chroma %s for %s encoder: %s", parameter_value, encoder_name, err.message);
+    }
+#endif
+
+  if (compression == heif_compression_HEVC)
+    {
+      switch (encoder_speed)
+        {
+        case HEIFPLUGIN_ENCODER_SPEED_SLOW:
+          parameter_value = "veryslow";
+          break;
+        case HEIFPLUGIN_ENCODER_SPEED_FASTER:
+          parameter_value = "faster";
+          break;
+        default: /*  HEIFPLUGIN_ENCODER_SPEED_BALANCED */
+          parameter_value = "medium";
+          break;
+        }
+
+      err = heif_encoder_set_parameter_string (encoder, "preset", parameter_value);
+      if (err.code != 0)
+        {
+          g_printerr ("Failed to set preset %s for %s encoder: %s", parameter_value, encoder_name, err.message);
+        }
+
+    }
+  else if (compression == heif_compression_AV1)
+    {
+      int parameter_number;
+
+      parameter_number = g_get_num_processors();
+      parameter_number = CLAMP(parameter_number, 1, 16);
+
+      err = heif_encoder_set_parameter_integer (encoder, "threads", parameter_number);
+      if (err.code != 0)
+        {
+          g_printerr ("Failed to set threads=%d for %s encoder: %s", parameter_number, encoder_name, err.message);
+        }
+
+
+      if (g_ascii_strncasecmp (encoder_name, "AOM", 3) == 0) /* AOMedia AV1 encoder */
+        {
+          switch (encoder_speed)
+            {
+            case HEIFPLUGIN_ENCODER_SPEED_SLOW:
+              parameter_number = 1;
+              break;
+            case HEIFPLUGIN_ENCODER_SPEED_FASTER:
+              parameter_number = 6;
+              break;
+            default: /*  HEIFPLUGIN_ENCODER_SPEED_BALANCED */
+              parameter_number = 4;
+              break;
+            }
+
+          err = heif_encoder_set_parameter_integer (encoder, "speed", parameter_number);
+          if (err.code != 0)
+            {
+              g_printerr ("Failed to set speed=%d for %s encoder: %s", parameter_number, encoder_name, err.message);
+            }
+
+        }
+      else if (g_ascii_strncasecmp (encoder_name, "Rav1e", 5) == 0) /* Rav1e encoder */
+        {
+          switch (encoder_speed)
+            {
+            case HEIFPLUGIN_ENCODER_SPEED_SLOW:
+              parameter_number = 6;
+              break;
+            case HEIFPLUGIN_ENCODER_SPEED_FASTER:
+              parameter_number = 10;
+              break;
+            default: /*  HEIFPLUGIN_ENCODER_SPEED_BALANCED */
+              parameter_number = 8;
+              break;
+            }
+
+          err = heif_encoder_set_parameter_integer (encoder, "speed", parameter_number);
+          if (err.code != 0)
+            {
+              g_printerr ("Failed to set speed=%d for %s encoder: %s", parameter_number, encoder_name, err.message);
+            }
+
+        }
+      else
+        {
+          g_printerr ("Parameters not set, unsupported AV1 encoder: %s", encoder_name);
+        }
+    }
+#endif
 
   err = heif_context_encode_image (context,
                                    h_image,
@@ -2272,6 +2475,7 @@ save_dialog (GimpProcedure *procedure,
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
@@ -2285,6 +2489,20 @@ save_dialog (GimpProcedure *procedure,
                              _("_Quality"),
                              1, 10, 0,
                              FALSE, 0, 0);
+
+#if LIBHEIF_HAVE_VERSION(1,9,0)
+  store = gimp_int_store_new (_("RGB"), HEIFPLUGIN_EXPORT_FORMAT_RGB,
+                              _("YUV444"), HEIFPLUGIN_EXPORT_FORMAT_YUV444,
+                              _("YUV420"), HEIFPLUGIN_EXPORT_FORMAT_YUV420,
+                              NULL);
+
+  combo = gimp_prop_int_combo_box_new (config, "pixel-format",
+                                       GIMP_INT_STORE (store));
+  g_object_unref (store);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("Pixel format:"), 0.0, 0.5,
+                            combo, 2);
+#endif
 
 #if LIBHEIF_HAVE_VERSION(1,8,0)
   g_object_get (config,
@@ -2319,6 +2537,7 @@ save_dialog (GimpProcedure *procedure,
 
   grid2 = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid2), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid2), 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), grid2, FALSE, FALSE, 0);
   gtk_widget_show (grid2);
 
@@ -2332,6 +2551,18 @@ save_dialog (GimpProcedure *procedure,
   g_object_unref (store);
   gimp_grid_attach_aligned (GTK_GRID (grid2), 0, 1,
                             _("Bit depth:"), 0.0, 0.5,
+                            combo, 2);
+
+  store = gimp_int_store_new (_("Slow"), HEIFPLUGIN_ENCODER_SPEED_SLOW,
+                              _("Balanced"), HEIFPLUGIN_ENCODER_SPEED_BALANCED,
+                              _("Fast"), HEIFPLUGIN_ENCODER_SPEED_FASTER,
+                              NULL);
+
+  combo = gimp_prop_int_combo_box_new (config, "encoder-speed",
+                                       GIMP_INT_STORE (store));
+  g_object_unref (store);
+  gimp_grid_attach_aligned (GTK_GRID (grid2), 0, 2,
+                            _("Speed:"), 0.0, 0.5,
                             combo, 2);
 #endif
 
