@@ -670,10 +670,21 @@ jpeg_save (GimpProcedure        *procedure,
           else
             metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
-          gimp_image_metadata_save_finish (orig_image,
-                                           "image/jpeg",
-                                           metadata, metadata_flags,
-                                           file, NULL);
+          if (! gimp_image_metadata_save_finish (orig_image,
+                                                 "image/jpeg",
+                                                 metadata, metadata_flags,
+                                                 file, &error))
+            {
+              if (error)
+                {
+                  /* Even though a failure to write metadata is not enough
+                     reason to say we failed to save the image, we should
+                     still notify the user about the problem. */
+                  g_message ("%s: saving metadata failed: %s",
+                             G_STRFUNC, error->message);
+                  g_error_free (error);
+                }
+            }
         }
     }
 
