@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-08 11:28+0000\n"
-"PO-Revision-Date: 2020-10-09 11:53+0200\n"
+"POT-Creation-Date: 2020-10-09 09:56+0000\n"
+"PO-Revision-Date: 2020-10-16 14:21+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -3751,7 +3751,7 @@ msgstr "_Editor výberu"
 #: ../app/actions/dialogs-actions.c:102
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
-msgstr "Otvorí editor výberu "
+msgstr "Otvorí editor výberu"
 
 #: ../app/actions/dialogs-actions.c:107
 msgctxt "dialogs-action"
@@ -5195,9 +5195,6 @@ msgstr "Uložiť záznam o chybách do súboru"
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
 #: ../app/widgets/gimpsavedialog.c:142 ../app/widgets/gimpsettingsbox.c:728
-#, fuzzy
-#| msgctxt "file-action"
-#| msgid "_Save"
 msgid "_Save"
 msgstr "_Uložiť"
 
@@ -5465,10 +5462,8 @@ msgid "Revert Image"
 msgstr "Vrátiť obrázok"
 
 #: ../app/actions/file-commands.c:425
-#, fuzzy
-#| msgid "Revert"
 msgid "_Revert"
-msgstr "Vrátiť"
+msgstr "V_rátiť"
 
 #: ../app/actions/file-commands.c:443
 #, c-format
@@ -5631,36 +5626,24 @@ msgstr "Vylepšenia _farieb"
 
 # Režim prekryvu vrstvy
 #: ../app/actions/filters-actions.c:115
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "filters-action"
 msgid "L_inear Invert"
-msgstr "Tvrdé svetlo"
+msgstr "L_ineárne invertovanie"
 
 #: ../app/actions/filters-actions.c:120
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "In_vert"
 msgctxt "filters-action"
 msgid "In_vert"
 msgstr "_Invertovať"
 
 #: ../app/actions/filters-actions.c:125
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "_Value Invert"
 msgctxt "filters-action"
 msgid "_Value Invert"
 msgstr "In_vertovanie hodnôt"
 
 #: ../app/actions/filters-actions.c:130
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Stretch Contrast HSV"
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
-msgstr "Roztiahnuť kontrast HSV"
+msgstr "_Roztiahnuť kontrast HSV"
 
 #: ../app/actions/filters-actions.c:138
 msgctxt "filters-action"
@@ -5810,9 +5793,6 @@ msgid "_Desaturate..."
 msgstr "O_dfarbiť..."
 
 #: ../app/actions/filters-actions.c:293
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "Difference of Gaussians..."
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
 msgstr "Gaussov _rozdiel..."
@@ -6063,20 +6043,14 @@ msgstr ""
 
 # filtre pre pridanie šumu
 #: ../app/actions/filters-actions.c:498
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "_Noise"
 msgctxt "filters-action"
 msgid "_Cell Noise..."
-msgstr "_Šum"
+msgstr "_Šum buniek..."
 
 #: ../app/actions/filters-actions.c:503
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "_New..."
 msgctxt "filters-action"
 msgid "_Newsprint..."
-msgstr "_Nový..."
+msgstr "_Novinová tlač..."
 
 # filtre pre pridanie šumu
 #: ../app/actions/filters-actions.c:508
@@ -6088,12 +6062,9 @@ msgid "_CIE lch Noise..."
 msgstr "_Šum"
 
 #: ../app/actions/filters-actions.c:513
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "HSV Noise..."
 msgctxt "filters-action"
 msgid "HS_V Noise..."
-msgstr "HSV šum..."
+msgstr "HS_V šum..."
 
 #: ../app/actions/filters-actions.c:518
 msgctxt "filters-action"
@@ -6150,17 +6121,11 @@ msgid "Sp_read..."
 msgstr "_Rozprestrieť..."
 
 #: ../app/actions/filters-actions.c:563
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Bump Map..."
 msgctxt "filters-action"
 msgid "_Normal Map..."
-msgstr "_Mapa vyvýšenia..."
+msgstr "_Normálna mapa..."
 
 #: ../app/actions/filters-actions.c:568
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "_Offset..."
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "_Posun..."
@@ -6201,11 +6166,9 @@ msgid "_Posterize..."
 msgstr "_Posterizácia..."
 
 #: ../app/actions/filters-actions.c:608
-#, fuzzy
-#| msgid "_Cage Transform"
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
-msgstr "_Transformácia klietkou"
+msgstr "_Rekurzívna transformácia..."
 
 #: ../app/actions/filters-actions.c:613
 msgctxt "filters-action"
@@ -6465,6 +6428,8 @@ msgstr "Prehľadá nainštalované písma"
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
+"Neexistujú posledné nastavenia pre „%s“. Namiesto toho sa zobrazí dialógové "
+"okno filtrov."
 
 # názov ponuky
 #: ../app/actions/gradient-editor-actions.c:46
@@ -6627,7 +6592,7 @@ msgstr "Sférický  (_klesajúci)"
 #: ../app/actions/gradient-editor-actions.c:343
 msgctxt "gradient-editor-blending"
 msgid "S_tep"
-msgstr ""
+msgstr "Kr_ok"
 
 # niečo pri zmiešavacích funkciách
 # PM: ak si našiel kde to je nechaj tu komentár, kde to je a čo to robí
@@ -7520,21 +7485,17 @@ msgstr "Otáča sa"
 # upozornenie
 #: ../app/actions/image-commands.c:870 ../app/actions/layers-commands.c:859
 msgid "Cannot crop because the current selection is empty."
-msgstr "Nie je možné orezať aktuálny výber, pretože je prázdny."
+msgstr "Nedá sa orezať, pretože aktuálny výber je prázdny."
 
 # upozornenie
 #: ../app/actions/image-commands.c:909
-#, fuzzy
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the image has no content."
-msgstr "Nie je možné orezať aktuálny výber, pretože je prázdny."
+msgstr "Nedá sa orezať, pretože obrázok nemá žiadny obsah."
 
 # upozornenie
 #: ../app/actions/image-commands.c:915
-#, fuzzy
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the image is already cropped to its content."
-msgstr "Nie je možné orezať aktuálny výber, pretože je prázdny."
+msgstr "Nedá sa orezať, pretože obrázok je už orezaný podľa obsahu."
 
 #: ../app/actions/image-commands.c:1081
 #, c-format
@@ -7629,10 +7590,8 @@ msgstr "Odstráni tento obrázok"
 
 # upozornenie
 #: ../app/actions/items-commands.c:204 ../app/actions/items-commands.c:249
-#, fuzzy
-#| msgid "There is no active layer or channel to cut from."
 msgid "There is no active layer or channel to fill."
-msgstr "Nie je aktívna vrstva ani kanál na vystrihnutie."
+msgstr "Neexistuje aktívna vrstva alebo kanál na vyplnenie."
 
 #: ../app/actions/items-commands.c:289 ../app/actions/items-commands.c:334
 msgid "There is no active layer or channel to stroke to."
@@ -7720,33 +7679,25 @@ msgid "Layer _Mode"
 msgstr "_Režim vrstvy"
 
 #: ../app/actions/layers-actions.c:89
-#, fuzzy
-#| msgid "Default _interpolation:"
 msgctxt "layers-action"
 msgid "Default Edit Action"
-msgstr "Predvolená _interpolácia:"
+msgstr "Predvolená akcia úpravy"
 
 #: ../app/actions/layers-actions.c:90
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Activate the text tool on this text layer"
 msgctxt "layers-action"
 msgid "Activate the default edit action for this type of layer"
-msgstr "Aktivuje textový nástroj v tejto textovej vrstve"
+msgstr "Aktivuje predvolenú akciu úpravy pre tento typ vrstvy"
 
 #: ../app/actions/layers-actions.c:95
 msgctxt "layers-action"
 msgid "Edit Te_xt on canvas"
-msgstr ""
+msgstr "Upraviť te_xt na plátne"
 
 # tooltip
 #: ../app/actions/layers-actions.c:96
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Turn this text layer into a normal layer"
 msgctxt "layers-action"
 msgid "Edit this text layer content on canvas"
-msgstr "Zmení textovú vrstvu na normálnu vrstvu"
+msgstr "Upraví obsah textovej vrstvy na plátne"
 
 #: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
@@ -7912,21 +7863,15 @@ msgstr "Zlúči všetky viditeľné vrstvy do jednej"
 
 # názov operácie pre Undo
 #: ../app/actions/layers-actions.c:202
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Merge Visible Layers"
 msgctxt "layers-action"
 msgid "Merge _Visible Layers"
-msgstr "Zlúčenie viditeľných vrstiev"
+msgstr "Zlúčiť _viditeľné vrstvy"
 
 # tooltip
 #: ../app/actions/layers-actions.c:203
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Create a new layer with last used values"
 msgctxt "layers-action"
 msgid "Merge all visible layers with last used values"
-msgstr "Vytvorí novú vrstvu s naposledy použitými hodnotami"
+msgstr "Zlúči všetky viditeľné vrstvy s naposledy použitými hodnotami"
 
 #: ../app/actions/layers-actions.c:208
 msgctxt "layers-action"
@@ -8110,38 +8055,26 @@ msgstr "Zruší účinok masky vrstvy"
 
 # tooltip
 #: ../app/actions/layers-actions.c:321
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle visibility"
 msgctxt "layers-action"
 msgid "Toggle Layer _Visibility"
-msgstr "Prepne viditeľnosť"
+msgstr "Prepnúť _viditeľnosť vrstvy"
 
 # tooltip
 #: ../app/actions/layers-actions.c:327
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle the linked state"
 msgctxt "layers-action"
 msgid "Toggle Layer _Linked State"
-msgstr "Prepne previazanosť"
+msgstr "Prepnúť stav _previazanosti vrstvy"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:333
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "L_ock pixels"
 msgctxt "layers-action"
 msgid "L_ock Pixels of Layer"
-msgstr "U_zamknúť pixely"
+msgstr "U_zamknúť pixely vrstvy"
 
 #: ../app/actions/layers-actions.c:339
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "L_ock position of channel"
 msgctxt "layers-action"
 msgid "L_ock Position of Layer"
-msgstr "Uza_mknúť pozíciu kanálu"
+msgstr "Uza_mknúť pozíciu vrstvy"
 
 #: ../app/actions/layers-actions.c:345
 msgctxt "layers-action"
@@ -8168,12 +8101,9 @@ msgid "Layer Blend Space: Auto"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:362 ../app/actions/layers-actions.c:383
-#, fuzzy
-#| msgctxt "color-frame-mode"
-#| msgid "RGB (%)"
 msgctxt "layers-action"
 msgid "RGB (linear)"
-msgstr "RGB (%)"
+msgstr "RGB (lineárne)"
 
 #: ../app/actions/layers-actions.c:363
 msgctxt "layers-action"
@@ -8181,11 +8111,10 @@ msgid "Layer Blend Space: RGB (linear)"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:368 ../app/actions/layers-actions.c:389
-#, fuzzy
 #| msgid "Percentile:"
 msgctxt "layers-action"
 msgid "RGB (perceptual)"
-msgstr "Percentil:"
+msgstr "RGB (perceptuálne)"
 
 #: ../app/actions/layers-actions.c:369
 msgctxt "layers-action"
@@ -8248,11 +8177,9 @@ msgid "Layer Composite Mode: Clip to Layer"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:422
-#, fuzzy
-#| msgid "Iterations"
 msgctxt "layers-action"
 msgid "Intersection"
-msgstr "Iterácie"
+msgstr "Prienik"
 
 #: ../app/actions/layers-actions.c:423
 msgctxt "layers-action"
@@ -8260,99 +8187,74 @@ msgid "Layer Composite Mode: Intersection"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:431
-#, fuzzy
-#| msgid "None"
 msgctxt "layers-action"
 msgid "None"
-msgstr "Žiadne"
+msgstr "Žiadna"
 
 #: ../app/actions/layers-actions.c:432
 msgctxt "layers-action"
 msgid "Layer Color Tag: Clear"
-msgstr ""
+msgstr "Nastaví farebnú značku vrstvy na prázdnu"
 
 #: ../app/actions/layers-actions.c:437
-#, fuzzy
-#| msgid "Blue"
 msgctxt "layers-action"
 msgid "Blue"
 msgstr "Modrá"
 
 #: ../app/actions/layers-actions.c:438
-#, fuzzy
-#| msgid "Color Profile"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Blue"
-msgstr "Profil farieb"
+msgstr "Nastaví farebnú značku vrstvy na modrú"
 
 #: ../app/actions/layers-actions.c:443
-#, fuzzy
-#| msgid "Green"
 msgctxt "layers-action"
 msgid "Green"
 msgstr "Zelená"
 
 #: ../app/actions/layers-actions.c:444
-#, fuzzy
-#| msgid "Color Profile"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Green"
-msgstr "Profil farieb"
+msgstr "Nastaví farebnú značku vrstvy na zelenú"
 
 #: ../app/actions/layers-actions.c:449
-#, fuzzy
-#| msgid "Yellow"
 msgctxt "layers-action"
 msgid "Yellow"
 msgstr "Žltá"
 
 #: ../app/actions/layers-actions.c:450
-#, fuzzy
-#| msgid "Color Profile"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Yellow"
-msgstr "Profil farieb"
+msgstr "Nastaví farebnú značku vrstvy na žltú"
 
 #: ../app/actions/layers-actions.c:455
-#, fuzzy
-#| msgid "Range"
 msgctxt "layers-action"
 msgid "Orange"
-msgstr "Miera"
+msgstr "Oranžová"
 
 #: ../app/actions/layers-actions.c:456
-#, fuzzy
-#| msgctxt "view-zoom-action"
-#| msgid "Set a custom zoom factor"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Orange"
-msgstr "Nastaví vlastnú mierku"
+msgstr "Nastaví farebnú značku vrstvy na oranžovú"
 
 #: ../app/actions/layers-actions.c:461
 msgctxt "layers-action"
 msgid "Brown"
-msgstr ""
+msgstr "Hnedá"
 
 #: ../app/actions/layers-actions.c:462
-#, fuzzy
-#| msgid "Color Profile"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Brown"
-msgstr "Profil farieb"
+msgstr "Nastaví farebnú značku vrstvy na hnedú"
 
 #: ../app/actions/layers-actions.c:467
-#, fuzzy
-#| msgid "Red"
 msgctxt "layers-action"
 msgid "Red"
 msgstr "Červená"
 
 #: ../app/actions/layers-actions.c:468
-#, fuzzy
-#| msgid "Color Profile"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Red"
-msgstr "Profil farieb"
+msgstr "Nastaví farebnú značku vrstvy na červenú"
 
 #: ../app/actions/layers-actions.c:473
 msgctxt "layers-action"
@@ -8360,25 +8262,19 @@ msgid "Violet"
 msgstr "Fialová"
 
 #: ../app/actions/layers-actions.c:474
-#, fuzzy
-#| msgid "Color Profile"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Violet"
-msgstr "Profil farieb"
+msgstr "Nastaví farebnú značku vrstvy na fialovú"
 
 #: ../app/actions/layers-actions.c:479
-#, fuzzy
-#| msgid "Grayscale"
 msgctxt "layers-action"
 msgid "Gray"
-msgstr "Odtiene šedej"
+msgstr "Šedá"
 
 #: ../app/actions/layers-actions.c:480
-#, fuzzy
-#| msgid "Desaturate Tool: Turn colors into shades of gray"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Gray"
-msgstr "Nástroj odfarbiť: Prevedie farby do odtieňov sivej"
+msgstr "Nastaví farebnú značku vrstvy na šedú"
 
 #: ../app/actions/layers-actions.c:488
 msgctxt "layers-action"
@@ -8657,17 +8553,13 @@ msgstr "Orezanie vrstvy podľa obsahu"
 
 # upozornenie
 #: ../app/actions/layers-commands.c:913
-#, fuzzy
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the active layer has no content."
-msgstr "Nie je možné orezať aktuálny výber, pretože je prázdny."
+msgstr "Nedá sa orezať, pretože aktívna vrstva nemá žiadny obsah."
 
 # upozornenie
 #: ../app/actions/layers-commands.c:920
-#, fuzzy
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the active layer is already cropped to its content."
-msgstr "Nie je možné orezať aktuálny výber, pretože je prázdny."
+msgstr "Nedá sa orezať, pretože aktívna vrstva je už orezaná podľa obsahu."
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -8748,11 +8640,9 @@ msgid "_Edit MyPaint Brush..."
 msgstr "_Upraviť štetec aplikácie MyPaint..."
 
 #: ../app/actions/mypaint-brushes-actions.c:87
-#, fuzzy
-#| msgid "MyPaint Brush"
 msgctxt "mypaint-brushes-action"
 msgid "Edit MyPaint brush"
-msgstr "Štetec aplikácie MyPaint"
+msgstr "Upraví štetec aplikácie MyPaint"
 
 # názov ponuky
 #: ../app/actions/palette-editor-actions.c:44
@@ -8928,10 +8818,8 @@ msgstr "Upraví túto paletu"
 
 # titulok dialógového okna
 #: ../app/actions/palettes-commands.c:85
-#, fuzzy
-#| msgid "Merge Palette"
 msgid "Merge Palettes"
-msgstr "Zlúčiť palety"
+msgstr "Zlúčenie paliet"
 
 #: ../app/actions/palettes-commands.c:89
 msgid "Enter a name for the merged palette"
@@ -8939,7 +8827,7 @@ msgstr "Zadajte názov pre zlúčenú paletu"
 
 #: ../app/actions/palettes-commands.c:125
 msgid "There must be at least two palettes selected to merge."
-msgstr ""
+msgstr "Musia byť vybrané aspoň dve palety na zlúčenie."
 
 # názov ponuky
 #: ../app/actions/patterns-actions.c:43
@@ -9836,12 +9724,9 @@ msgstr "_Zobraziť v správcovi súborov"
 
 # tooltip
 #: ../app/actions/tool-presets-actions.c:69
-#, fuzzy
-#| msgctxt "tool-presets-action"
-#| msgid "Copy tool preset file location to clipboard"
 msgctxt "tool-presets-action"
 msgid "Show tool preset file location in the file manager"
-msgstr "Skopíruje cestu k súboru predvolieb nástroja do schránky"
+msgstr "Zobrazí súbor predvoľby nástroja v správcovi súborov"
 
 #: ../app/actions/tool-presets-actions.c:74
 msgctxt "tool-presets-action"
@@ -10412,25 +10297,19 @@ msgstr "Ponuka Cesty"
 
 # netbook page
 #: ../app/actions/vectors-actions.c:50
-#, fuzzy
-#| msgid "Color Management"
 msgctxt "vectors-action"
 msgid "Color Tag"
-msgstr "Správa farieb"
+msgstr "Farebná značka"
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
-#| msgid "MyPaint Brush"
 msgctxt "vectors-action"
 msgid "Edit Pa_th"
-msgstr "Štetec aplikácie MyPaint"
+msgstr "Upraviť _cestu"
 
 #: ../app/actions/vectors-actions.c:55
-#, fuzzy
-#| msgid "Export the active path"
 msgctxt "vectors-action"
 msgid "Edit the active path"
-msgstr "Exportovať aktívnu cestu"
+msgstr "Upraví aktívnu cestu"
 
 #: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
@@ -10537,37 +10416,26 @@ msgid "Lower this path to the bottom"
 msgstr "Presunie túto cestu pod všetky ostatné cesty"
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "_New Path..."
 msgctxt "vectors-action"
 msgid "Fill Pat_h..."
-msgstr "_Nová cesta..."
+msgstr "vyp_lniť cestu..."
 
 # tooltip
 #: ../app/actions/vectors-actions.c:120
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Paint along the path"
 msgctxt "vectors-action"
 msgid "Fill the path"
-msgstr "Kreslí pozdĺž cesty"
+msgstr "Vyplní cestu"
 
 #: ../app/actions/vectors-actions.c:125
-#, fuzzy
-#| msgid "Flip Path"
 msgctxt "vectors-action"
 msgid "Fill Path"
-msgstr "Preklopenie cesty"
+msgstr "Vyplniť cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:126
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Paint along the path with last values"
 msgctxt "vectors-action"
 msgid "Fill the path with last values"
-msgstr "Kreslí pozdĺž cesty s poslednými hodnotami"
+msgstr "Vyplní cestu s poslednými hodnotami"
 
 #: ../app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
@@ -10614,38 +10482,26 @@ msgstr "I_mportovať cestu..."
 
 # tooltip
 #: ../app/actions/vectors-actions.c:166
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle visibility"
 msgctxt "vectors-action"
 msgid "Toggle Path _Visibility"
-msgstr "Prepne viditeľnosť"
+msgstr "Prepnúť _viditeľnosť cesty"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:172
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle the linked state"
 msgctxt "vectors-action"
 msgid "Toggle Path _Linked State"
-msgstr "Prepne previazanosť"
+msgstr "Prepnúť stav _previazanosti cesty"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "L_ock strokes"
 msgctxt "vectors-action"
 msgid "L_ock Strokes of Path"
-msgstr "Uzamknúť _obtiahnutia"
+msgstr "Uzamknúť _obtiahnutia cesty"
 
 #: ../app/actions/vectors-actions.c:184
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "L_ock position of channel"
 msgctxt "vectors-action"
 msgid "L_ock Position of Path"
-msgstr "Uza_mknúť pozíciu kanálu"
+msgstr "Uza_mknúť pozíciu cesty"
 
 #: ../app/actions/vectors-actions.c:193
 #, fuzzy
@@ -10854,71 +10710,47 @@ msgid "Advanced options"
 msgstr "Pokročilé voľby prevodu"
 
 #: ../app/actions/vectors-actions.c:304
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Top Layer"
 msgctxt "vectors-action"
 msgid "Select _Top Path"
-msgstr "Vybrať naj_vyššiu vrstvu"
+msgstr "Vybrať naj_vyššiu cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:305
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the topmost layer"
 msgctxt "vectors-action"
 msgid "Select the topmost path"
-msgstr "Vyberie najvyššiu vrstvu"
+msgstr "Vyberie najvyššiu cestu"
 
 #: ../app/actions/vectors-actions.c:310
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Bottom Layer"
 msgctxt "vectors-action"
 msgid "Select _Bottom Path"
-msgstr "Vybrať naj_nižšiu vrstvu"
+msgstr "Vybrať naj_nižšiu cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:311
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the bottommost layer"
 msgctxt "vectors-action"
 msgid "Select the bottommost path"
-msgstr "Vyberie najnižšiu vrstvu"
+msgstr "Vyberie najnižšiu cestu"
 
 #: ../app/actions/vectors-actions.c:316
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Previous Layer"
 msgctxt "vectors-action"
 msgid "Select _Previous Path"
-msgstr "Vybrať _predchádzajúcu vrstvu"
+msgstr "Vybrať _predchádzajúcu cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:317
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the layer above the current layer"
 msgctxt "vectors-action"
 msgid "Select the path above the current path"
-msgstr "Vyberie vrstvu nad aktuálnou vrstvou"
+msgstr "Vyberie cestu nad aktuálnou cestou"
 
 #: ../app/actions/vectors-actions.c:322
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Next Layer"
 msgctxt "vectors-action"
 msgid "Select _Next Path"
-msgstr "Vybrať _nasledujúcu vrstvu"
+msgstr "Vybrať _nasledujúcu cestu"
 
 #: ../app/actions/vectors-actions.c:323
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the layer below the current layer"
 msgctxt "vectors-action"
 msgid "Select the vector below the current path"
-msgstr "Vyberie vrstvu pod aktuálnou vrstvou"
+msgstr "Vyberie cestu pod aktuálnou cestou"
 
 # titulok dialógového okna
 #: ../app/actions/vectors-commands.c:164 ../app/actions/vectors-commands.c:750
@@ -11152,11 +10984,9 @@ msgid "Connect to another display"
 msgstr "Pripojí sa k ďalšej obrazovke"
 
 #: ../app/actions/view-actions.c:178
-#, fuzzy
-#| msgid "Show _rulers"
 msgctxt "view-action"
 msgid "Show _All"
-msgstr "Zobraziť _pravítka"
+msgstr "Zobraziť _všetko"
 
 #: ../app/actions/view-actions.c:179
 #, fuzzy
@@ -11315,9 +11145,6 @@ msgid "Display the image's color sample points"
 msgstr "Zobrazí farby bodových vzoriek obrázka"
 
 #: ../app/actions/view-actions.c:270
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Sn_ap to Guides"
 msgctxt "view-action"
 msgid "Snap to Gu_ides"
 msgstr "Pri_tiahnuť k vodidlám"
@@ -12006,7 +11833,7 @@ msgstr "Presunie toto okno na obrazovku %s"
 #: ../app/widgets/gimpcontrollereditor.c:663
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: ../app/actions/windows-actions.c:102
 msgctxt "windows-action"
@@ -13718,13 +13545,13 @@ msgstr "Veľmi husté bodkovanie"
 #: ../app/core/core-enums.c:422
 msgctxt "dash-preset"
 msgid "Dash, dot"
-msgstr "Čiarka bodka..."
+msgstr "Čiarka bodka"
 
 # Prednastavenie čiarkovania
 #: ../app/core/core-enums.c:423
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
-msgstr "Čiarka bodka bodka..."
+msgstr "Čiarka, bodka, bodka"
 
 #: ../app/core/core-enums.c:453
 msgctxt "debug-policy"
@@ -17040,45 +16867,41 @@ msgstr "Skupina"
 
 #: ../app/core/gimptoolpreset.c:149
 msgid "Apply stored FG/BG"
-msgstr "Použije uložené popredie/pozadie"
+msgstr "Použiť uložené popredie/pozadie"
 
 #: ../app/core/gimptoolpreset.c:156
-#, fuzzy
-#| msgid "Apply stored pattern"
 msgid "Apply stored opacity/paint mode"
-msgstr "Použije uložený vzor"
+msgstr "Použiť uložený režim krytia/maľovania"
 
 # tooltip
 #: ../app/core/gimptoolpreset.c:163
 msgid "Apply stored brush"
-msgstr "Použije uložený štetec"
+msgstr "Použiť uložený štetec"
 
 #: ../app/core/gimptoolpreset.c:170
 msgid "Apply stored dynamics"
-msgstr "Použije uloženú dynamiku"
+msgstr "Použiť uloženú dynamiku"
 
 # tooltip
 #: ../app/core/gimptoolpreset.c:177
-#, fuzzy
-#| msgid "Apply stored brush"
 msgid "Apply stored MyPaint brush"
-msgstr "Použije uložený štetec"
+msgstr "Použiť uložený štetec aplikácie MyPaint"
 
 #: ../app/core/gimptoolpreset.c:184
 msgid "Apply stored pattern"
-msgstr "Použije uložený vzor"
+msgstr "Použiť uložený vzor"
 
 #: ../app/core/gimptoolpreset.c:191
 msgid "Apply stored palette"
-msgstr "Použije uloženú paletu"
+msgstr "Použiť uloženú paletu"
 
 #: ../app/core/gimptoolpreset.c:198
 msgid "Apply stored gradient"
-msgstr "Použije uložený prechod"
+msgstr "Použiť uložený prechod"
 
 #: ../app/core/gimptoolpreset.c:205
 msgid "Apply stored font"
-msgstr "Použije uložené písmo"
+msgstr "Použiť uložené písmo"
 
 #: ../app/core/gimptoolpreset-load.c:64
 msgid "Tool preset file is corrupt."
@@ -17457,16 +17280,13 @@ msgstr "Konverzia presnosti"
 #: ../app/dialogs/convert-precision-dialog.c:207
 #: ../app/widgets/gimptemplateeditor.c:439
 msgid "Perceptual gamma (sRGB)"
-msgstr ""
+msgstr "Perceptuálna gama (sRGB)"
 
 # Režim prekryvu vrstvy
 #: ../app/dialogs/convert-precision-dialog.c:208
 #: ../app/widgets/gimptemplateeditor.c:438
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgid "Linear light"
-msgstr "Tvrdé svetlo"
+msgstr "Lineárne svetlo"
 
 #: ../app/dialogs/convert-precision-dialog.c:240
 msgid "_Layers:"
@@ -17600,7 +17420,7 @@ msgstr ""
 
 #: ../app/dialogs/file-save-dialog.c:618
 msgid "The given filename cannot be used for exporting"
-msgstr "Požadovaný názov súboru sa nedá použiť pre exportovanie."
+msgstr "Požadovaný názov súboru sa nedá použiť pre exportovanie"
 
 #: ../app/dialogs/file-save-dialog.c:619
 msgid ""
@@ -17617,7 +17437,7 @@ msgstr "Otvorí dialóg s uložením"
 
 #: ../app/dialogs/file-save-dialog.c:626
 msgid "The given filename cannot be used for saving"
-msgstr "Požadovaný názov súboru sa nedá použiť pre uloženie."
+msgstr "Požadovaný názov súboru sa nedá použiť pre uloženie"
 
 #: ../app/dialogs/file-save-dialog.c:627
 msgid ""
@@ -17818,10 +17638,8 @@ msgid "Configure Input Devices"
 msgstr "Nastaviť vstupné zariadenia"
 
 #: ../app/dialogs/item-options-dialog.c:198
-#, fuzzy
-#| msgid "Color:"
 msgid "Color tag:"
-msgstr "Farba:"
+msgstr "Farebná značka:"
 
 #. The switches frame & vbox
 #: ../app/dialogs/item-options-dialog.c:259
@@ -17838,9 +17656,6 @@ msgstr "_Viditeľné"
 
 # PM: je to tlačidlo na prepínanie previazanosti vrstiev, kanálov...
 #: ../app/dialogs/item-options-dialog.c:277
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "_Linked"
 msgid "_Linked"
 msgstr "_Previazané"
 
@@ -18350,10 +18165,8 @@ msgstr "Ponechať _záznam o súbore v zozname Nedávne dokumenty"
 #. TODO: icon needed.
 #: ../app/dialogs/preferences-dialog.c:1249
 #: ../app/dialogs/preferences-dialog.c:1250
-#, fuzzy
-#| msgid "Debug"
 msgid "Debugging"
-msgstr "Ladiť"
+msgstr "Ladenie"
 
 #: ../app/dialogs/preferences-dialog.c:1257
 msgid ""
@@ -18388,10 +18201,8 @@ msgstr "Správa farieb"
 
 # netbook page
 #: ../app/dialogs/preferences-dialog.c:1311
-#, fuzzy
-#| msgid "Color Management"
 msgid "R_eset Color Management"
-msgstr "Správa farieb"
+msgstr "O_bnoviť správu farieb"
 
 #: ../app/dialogs/preferences-dialog.c:1334
 msgid "Image display _mode:"
@@ -18539,11 +18350,8 @@ msgstr "Správanie sa pri otvorení _súboru:"
 #. Filter Dialogs
 #: ../app/dialogs/preferences-dialog.c:1479
 #: ../app/dialogs/preferences-dialog.c:2314
-#, fuzzy
-#| msgctxt "documents-action"
-#| msgid "File Open _Dialog"
 msgid "Filter Dialogs"
-msgstr "_Okno pre otvorenie súboru"
+msgstr "Dialógové okná filtrov"
 
 # tooltip
 #: ../app/dialogs/preferences-dialog.c:1483
@@ -19789,7 +19597,7 @@ msgstr "_Dočasný priečinok:"
 # dialog title
 #: ../app/dialogs/preferences-dialog.c:3224
 msgid "Select Folder for Temporary Files"
-msgstr "Vybrať priečinok pre dočasné súbory."
+msgstr "Vybrať priečinok pre dočasné súbory"
 
 #: ../app/dialogs/preferences-dialog.c:3228
 #, fuzzy
@@ -20829,7 +20637,7 @@ msgstr "Kliknutím a ťahaním presuniete tento bod"
 
 #: ../app/display/gimptoolcompass.c:899
 msgid "Click-Drag to move all points"
-msgstr "Kliknutím a ťahaním posuniete všetky body."
+msgstr "Kliknutím a ťahaním posuniete všetky body"
 
 #: ../app/display/gimptoolfocus.c:1117
 #, fuzzy
@@ -27905,7 +27713,7 @@ msgstr "Pixely aktívnej vrstvy sú uzamknuté."
 
 #: ../app/tools/gimptransformtool.c:702
 msgid "The selection does not intersect with the layer."
-msgstr "Výber sa nepretína s vrstvou. "
+msgstr "Výber sa nepretína s vrstvou."
 
 #: ../app/tools/gimptransformtool.c:709
 #, fuzzy
@@ -28617,7 +28425,7 @@ msgstr "Pridá „%s“ do zoznamu aktívnych filtrov"
 #: ../app/widgets/gimpcolordisplayeditor.c:564
 #, c-format
 msgid "Remove '%s' from the list of active filters"
-msgstr "Odstráni „%s“ zo zoznamu aktívnych filtrov."
+msgstr "Odstráni „%s“ zo zoznamu aktívnych filtrov"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:605
 msgid "No filter selected"
