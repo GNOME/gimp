@@ -249,8 +249,7 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_PATH (object_class, PROP_SIMULATION_PROFILE,
-                         /* FIXME: 3.0: change to simulation-profile */
-                         "printer-profile",
+                         "simulation-profile",
                          _("Simulation profile for soft-proofing"),
                          SIMULATION_PROFILE_BLURB,
                          GIMP_CONFIG_PATH_FILE, NULL,

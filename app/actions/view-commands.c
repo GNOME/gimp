@@ -1240,7 +1240,7 @@ view_softproof_profile_callback (GtkWidget                *dialog,
     path = g_file_get_path (new_file);
 
   g_object_set (color_config,
-                "printer-profile", path,
+                "simulation-profile", path,
                 NULL);
   shell->color_config_set = TRUE;
 

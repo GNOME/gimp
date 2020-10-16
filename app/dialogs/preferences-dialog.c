@@ -1380,7 +1380,7 @@ prefs_dialog_new (Gimp       *gimp,
     row = 0;
 
     prefs_profile_combo_box_add (color_config,
-                                 "printer-profile",
+                                 "simulation-profile",
                                  store,
                                  _("Select Soft-Proofing Color Profile"),
                                  _("_Soft-proofing profile:"),
