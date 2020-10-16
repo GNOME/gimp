@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-10 07:17+0000\n"
-"PO-Revision-Date: 2020-10-10 10:35+0300\n"
+"POT-Creation-Date: 2020-10-15 17:27+0000\n"
+"PO-Revision-Date: 2020-10-16 08:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -45,7 +45,7 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/common/curve-bend.c:1189 ../plug-ins/common/curve-bend.c:1963
 #: ../plug-ins/common/curve-bend.c:1998 ../plug-ins/common/depth-merge.c:710
 #: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
-#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2103
+#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2306
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-pdf-load.c:645
 #: ../plug-ins/common/file-pdf-load.c:1041
@@ -139,12 +139,12 @@ msgid ""
 "text view displaying their own code (hence also demonstrating how to package "
 "data) and a button which calls a GEGL operation on the active layer."
 msgstr ""
-"До цього розширення включено набір базових прикладів. Воно є демонстрацією"
-" створення ваших власних додатків. Усі додатки виконують ті самі дії, але їх"
-" написано різними мовами програмування. Усі додатки створюють діалогове вікно"
-" GTK+ із панеллю для показу власного коду (отже, демонструють спосіб"
-" пакування даних) та кнопкою, натискання якої викликає дію GEGL над активним"
-" шаром."
+"До цього розширення включено набір базових прикладів. Воно є демонстрацією "
+"створення ваших власних додатків. Усі додатки виконують ті самі дії, але їх "
+"написано різними мовами програмування. Усі додатки створюють діалогове вікно "
+"GTK+ із панеллю для показу власного коду (отже, демонструють спосіб "
+"пакування даних) та кнопкою, натискання якої викликає дію GEGL над активним "
+"шаром."
 
 #: ../plug-ins/common/align-layers.c:190
 msgid "Align Visi_ble Layers..."
@@ -168,7 +168,7 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/common/colormap-remap.c:656 ../plug-ins/common/compose.c:1147
 #: ../plug-ins/common/contrast-retinex.c:326
 #: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/depth-merge.c:711
-#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:2104
+#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:2307
 #: ../plug-ins/common/file-pdf-load.c:646 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1321
 #: ../plug-ins/common/grid.c:738 ../plug-ins/common/hot.c:657
@@ -1172,7 +1172,7 @@ msgstr "_Redness cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:191
-#: ../plug-ins/common/file-raw-data.c:1878
+#: ../plug-ins/common/file-heif.c:2494 ../plug-ins/common/file-raw-data.c:1878
 msgid "RGB"
 msgstr "RGB"
 
@@ -1892,7 +1892,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #: ../plug-ins/common/file-cel.c:398 ../plug-ins/common/file-dicom.c:366
 #: ../plug-ins/common/file-gegl.c:345 ../plug-ins/common/file-gif-load.c:397
-#: ../plug-ins/common/file-heif.c:753 ../plug-ins/common/file-jp2-load.c:1084
+#: ../plug-ins/common/file-heif.c:796 ../plug-ins/common/file-jp2-load.c:1084
 #: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:801
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:680
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
@@ -1980,7 +1980,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
-#: ../plug-ins/common/file-heif.c:1377 ../plug-ins/common/file-html-table.c:361
+#: ../plug-ins/common/file-heif.c:1433 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
 #: ../plug-ins/common/file-png.c:1437 ../plug-ins/common/file-pnm.c:1336
 #: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
@@ -2383,15 +2383,15 @@ msgstr "Заголовок програми на С"
 msgid "Header plug-in does not support multiple layers."
 msgstr "У додатку заголовків не передбачено підтримки декількох шарів."
 
-#: ../plug-ins/common/file-heif.c:154 ../plug-ins/common/file-heif.c:206
+#: ../plug-ins/common/file-heif.c:169 ../plug-ins/common/file-heif.c:221
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:157
+#: ../plug-ins/common/file-heif.c:172
 msgid "Loads HEIF images"
 msgstr "Завантаження зображень HEIF"
 
-#: ../plug-ins/common/file-heif.c:158
+#: ../plug-ins/common/file-heif.c:173
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2399,102 +2399,132 @@ msgstr ""
 "Завантажити зображення, збережене у форматі HEIF (High Efficiency Image File "
 "Format). Типові розширення файлів формату HEIF - .heif, .heic."
 
-#: ../plug-ins/common/file-heif.c:209
+#: ../plug-ins/common/file-heif.c:224
 msgid "Exports HEIF images"
 msgstr "Експортує зображення HEIF"
 
-#: ../plug-ins/common/file-heif.c:210
+#: ../plug-ins/common/file-heif.c:225
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Зберегти зображення у форматі HEIF (High Efficiency Image File Format)."
 
-#: ../plug-ins/common/file-heif.c:409 ../plug-ins/common/file-heif.c:490
+#: ../plug-ins/common/file-heif.c:452 ../plug-ins/common/file-heif.c:533
 #, c-format
 msgid "HEIF format does not support multiple layers."
 msgstr "Для формату HEIF не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-heif.c:793 ../plug-ins/common/file-heif.c:826
-#: ../plug-ins/common/file-heif.c:867 ../plug-ins/common/file-heif.c:933
+#: ../plug-ins/common/file-heif.c:836 ../plug-ins/common/file-heif.c:869
+#: ../plug-ins/common/file-heif.c:910 ../plug-ins/common/file-heif.c:976
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Не вдалось завантажити зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:815
+#: ../plug-ins/common/file-heif.c:858
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Не вдалось завантажити зображення HEIF: вхідний файл не містить придатних "
 "для читання зображень"
 
-#: ../plug-ins/common/file-heif.c:1060
+#: ../plug-ins/common/file-heif.c:1103
 msgid "image content"
 msgstr "вміст зображення"
 
-#: ../plug-ins/common/file-heif.c:1427 ../plug-ins/common/file-heif.c:1660
+#: ../plug-ins/common/file-heif.c:1483 ../plug-ins/common/file-heif.c:1863
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Не вдалось закодувати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1865
+#: ../plug-ins/common/file-heif.c:2068
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Не вдалось записати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1954
+#: ../plug-ins/common/file-heif.c:2157
 msgid "primary"
 msgstr "основне"
 
-#: ../plug-ins/common/file-heif.c:2099
+#: ../plug-ins/common/file-heif.c:2302
 msgid "Load HEIF Image"
 msgstr "Завантажити зображення HEIF"
 
-#: ../plug-ins/common/file-heif.c:2113
+#: ../plug-ins/common/file-heif.c:2316
 msgid "Select Image"
 msgstr "Виберіть зображення"
 
-#: ../plug-ins/common/file-heif.c:2257
+#: ../plug-ins/common/file-heif.c:2460
 msgid "Export Image as AVIF"
 msgstr "Експортувати зображення як AVIF"
 
-#: ../plug-ins/common/file-heif.c:2257
+#: ../plug-ins/common/file-heif.c:2460
 msgid "Export Image as HEIF"
 msgstr "Експортувати зображення як HEIF"
 
-#: ../plug-ins/common/file-heif.c:2270
+#: ../plug-ins/common/file-heif.c:2473
 #: ../plug-ins/file-webp/file-webp-dialog.c:119
 msgid "_Lossless"
 msgstr "_Без втрат"
 
-#: ../plug-ins/common/file-heif.c:2285
+#: ../plug-ins/common/file-heif.c:2489
 msgid "_Quality"
 msgstr "Я_кість"
 
-#: ../plug-ins/common/file-heif.c:2325
+#: ../plug-ins/common/file-heif.c:2495
+msgid "YUV444"
+msgstr "YUV444"
+
+#: ../plug-ins/common/file-heif.c:2496
+msgid "YUV420"
+msgstr "YUV420"
+
+#: ../plug-ins/common/file-heif.c:2503
+#| msgid "_Pixel format:"
+msgid "Pixel format:"
+msgstr "Формат пікселів:"
+
+#: ../plug-ins/common/file-heif.c:2544
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2326
+#: ../plug-ins/common/file-heif.c:2545
 msgid "10 bit/channel (HDR)"
 msgstr "10 біт/канал (HDR)"
 
-#: ../plug-ins/common/file-heif.c:2327
+#: ../plug-ins/common/file-heif.c:2546
 msgid "12 bit/channel (HDR)"
 msgstr "12 біт/канал (HDR)"
 
-#: ../plug-ins/common/file-heif.c:2334
+#: ../plug-ins/common/file-heif.c:2553
 msgid "Bit depth:"
 msgstr "Бітова глибина:"
 
-#: ../plug-ins/common/file-heif.c:2340 ../plug-ins/file-jpeg/jpeg-save.c:1001
+#: ../plug-ins/common/file-heif.c:2556
+msgid "Slow"
+msgstr "Повільно"
+
+#: ../plug-ins/common/file-heif.c:2557
+msgid "Balanced"
+msgstr "Збалансовано"
+
+#: ../plug-ins/common/file-heif.c:2558
+msgid "Fast"
+msgstr "Швидко"
+
+#: ../plug-ins/common/file-heif.c:2565
+#| msgid "_Speed:"
+msgid "Speed:"
+msgstr "Швидкість:"
+
+#: ../plug-ins/common/file-heif.c:2571 ../plug-ins/file-jpeg/jpeg-save.c:1001
 #: ../plug-ins/file-webp/file-webp-dialog.c:305
 msgid "Save color _profile"
 msgstr "Зберегти _профіль кольорів"
 
-#: ../plug-ins/common/file-heif.c:2347
+#: ../plug-ins/common/file-heif.c:2578
 #: ../plug-ins/file-webp/file-webp-dialog.c:295
 msgid "_Save Exif data"
 msgstr "З_берегти дані Exif"
 
-#: ../plug-ins/common/file-heif.c:2353 ../plug-ins/file-jpeg/jpeg-save.c:959
+#: ../plug-ins/common/file-heif.c:2584 ../plug-ins/file-jpeg/jpeg-save.c:959
 #: ../plug-ins/file-webp/file-webp-dialog.c:300
 msgid "Save _XMP data"
 msgstr "Зберегти дані _XMP"
