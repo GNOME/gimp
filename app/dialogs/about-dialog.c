@@ -57,7 +57,8 @@ typedef struct
 {
   GtkWidget   *dialog;
 
-  GtkWidget   *update_frame;
+  GtkWidget      *update_frame;
+  GimpCoreConfig *config;
 
   GtkWidget   *anim_area;
   PangoLayout *layout;
@@ -120,6 +121,7 @@ about_dialog_create (GimpCoreConfig *config)
       gchar     *version;
 
       dialog.n_authors = G_N_ELEMENTS (authors) - 1;
+      dialog.config    = config;
 
       pixbuf = about_dialog_load_logo ();
 
@@ -203,6 +205,8 @@ static void
 about_dialog_map (GtkWidget       *widget,
                   GimpAboutDialog *dialog)
 {
+  gimp_update_refresh (dialog->config);
+
   if (dialog->layout && dialog->timer == 0)
     {
       dialog->state    = 0;
@@ -296,6 +300,12 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   GDateTime *datetime;
   gchar     *date;
   gchar     *text;
+
+  if (dialog->update_frame)
+    {
+      gtk_widget_destroy (dialog->update_frame);
+      dialog->update_frame = NULL;
+    }
 
   /* Get the dialog vbox. */
   container = gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog));
@@ -463,6 +473,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   gtk_widget_show (frame);
 
   dialog->update_frame = frame;
+  g_object_add_weak_pointer (G_OBJECT (frame), (gpointer) &dialog->update_frame);
 
   /* Reconstruct the dialog when release info changes. */
   g_signal_connect (config, "notify::last-known-release",
@@ -848,12 +859,6 @@ about_dialog_last_release_changed (GimpCoreConfig   *config,
                                         dialog);
   if (! dialog->dialog)
     return;
-
-  if (dialog->update_frame)
-    {
-      gtk_widget_destroy (dialog->update_frame);
-      dialog->update_frame = NULL;
-    }
 
   about_dialog_add_update (dialog, config);
 }
