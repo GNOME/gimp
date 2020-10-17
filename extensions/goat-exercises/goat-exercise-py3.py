@@ -23,9 +23,15 @@ from gi.repository import Gegl
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
-import sys, os
 
 import gettext
+import os
+import sys
+
+# Set-up localization for your plug-in with your own text domain.
+gettext.bindtextdomain('gimp30-std-plug-ins', Gimp.locale_directory())
+gettext.bind_textdomain_codeset('gimp30-std-plug-ins', 'UTF-8')
+gettext.textdomain('gimp30-std-plug-ins')
 _ = gettext.gettext
 def N_(message): return message
 
@@ -69,9 +75,9 @@ class Goat (Gimp.PlugIn):
                                    title=_("Exercise a goat (Python 3)"),
                                    role="goat-exercise-Python3")
 
-            dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
-            dialog.add_button("_Source", Gtk.ResponseType.APPLY)
-            dialog.add_button("_OK", Gtk.ResponseType.OK)
+            dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+            dialog.add_button(_("_Source"), Gtk.ResponseType.APPLY)
+            dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
 
             geometry = Gdk.Geometry()
             geometry.min_aspect = 0.5
@@ -85,10 +91,10 @@ class Goat (Gimp.PlugIn):
             # XXX We use printf-style string for sharing the localized
             # string. You may just use recommended Python format() or
             # any style you like in your plug-ins.
-            head_text=("This plug-in is an exercise in '%s' to "
-                       "demo plug-in creation.\nCheck out the last "
-                       "version of the source code online by clicking "
-                       "the \"Source\" button." % ("Python 3"))
+            head_text=_("This plug-in is an exercise in '%s' to "
+                        "demo plug-in creation.\nCheck out the last "
+                        "version of the source code online by clicking "
+                        "the \"Source\" button.") % ("Python 3")
             label = Gtk.Label(label=head_text)
             box.pack_start(label, False, False, 1)
             label.show()
