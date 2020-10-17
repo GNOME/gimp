@@ -73,27 +73,42 @@
   </provides>
 
   <releases>
-    <release version="2.10.22" date="TODO">
-      <url type="details">https://www.gimp.org/news/2020/08/TODO/gimp-2-10-22-released/</url>
+    <release version="2.10.22" date="2020-10-04">
+      <url type="details">https://www.gimp.org/news/2020/10/04/gimp-2-10-22-released/</url>
       <description>
         <_p>
-          Mostly a bug-fix release with some maintenance updates:
+          GIMP 2.10.22 is mainly a bug fix release. Notable changes:
         </_p>
         <ul>
           <_li>
-            Foreground Select tool default engine is now Matting Levin
+            HEIF support improvements: optional exporting with high bit depth,
+            AVIF importing and exporting
           </_li>
           <_li>
-            Various file plug-in fixes for PSD, TIFF, WebP, DDS…
+            Multiple improvements in Corel PaintShop Pro support
+          </_li>
+          <_li>
+            "Sample merged" now available in GEGL operation tool options
+          </_li>
+          <_li>
+            "Sample merged" is now enabled by default for color picking
+          </_li>
+          <_li>
+            The option enabling OpenCL support has been moved to the
+            Playground tab in Preferences
+          </_li>
+          <_li>
+            Matting Levin is now the default engine of Foreground Select
+            tool as it performs a lot better
           </_li>
           <_li>
             New progressive performance logs and dashboard updates
           </_li>
           <_li>
-            OpenCL settings moved to Playground preferences
+            Verbose debug now shows Flatpak info when relevant
           </_li>
           <_li>
-            Verbose debug now shows Flatpak info when relevant
+            Various bug fixes
           </_li>
         </ul>
       </description>
