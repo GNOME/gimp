@@ -43,16 +43,16 @@ class Goat (Gimp.PlugIn):
                                        Gimp.PDBProcType.PLUGIN,
                                        self.run, None)
 
-        procedure.set_image_types("*");
+        procedure.set_image_types("*")
 
-        procedure.set_menu_label("Exercise a goat and a python");
-        procedure.set_icon_name(GimpUi.ICON_GEGL);
-        procedure.add_menu_path('<Image>/Filters/Development/Goat exercises/');
+        procedure.set_menu_label("Exercise a goat and a python")
+        procedure.set_icon_name(GimpUi.ICON_GEGL)
+        procedure.add_menu_path('<Image>/Filters/Development/Goat exercises/')
 
         procedure.set_documentation("Exercise a goat in the Python 3 language",
                                     "Takes a goat for a walk in Python 3",
-                                    name);
-        procedure.set_attribution("Jehan", "Jehan", "2019");
+                                    name)
+        procedure.set_attribution("Jehan", "Jehan", "2019")
 
         return procedure
 
@@ -73,10 +73,10 @@ class Goat (Gimp.PlugIn):
             dialog.add_button("_Source", Gtk.ResponseType.APPLY)
             dialog.add_button("_OK", Gtk.ResponseType.OK)
 
-            geometry = Gdk.Geometry();
-            geometry.min_aspect = 0.5;
-            geometry.max_aspect = 1.0;
-            dialog.set_geometry_hints(None, geometry, Gdk.WindowHints.ASPECT);
+            geometry = Gdk.Geometry()
+            geometry.min_aspect = 0.5
+            geometry.max_aspect = 1.0
+            dialog.set_geometry_hints(None, geometry, Gdk.WindowHints.ASPECT)
 
             box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
             dialog.get_content_area().add(box)
@@ -130,9 +130,9 @@ class Goat (Gimp.PlugIn):
                     return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
                                                        GLib.Error())
 
-        intersect, x, y, width, height = drawable.mask_intersect();
+        intersect, x, y, width, height = drawable.mask_intersect()
         if intersect:
-            Gegl.init(None);
+            Gegl.init(None)
 
             buffer = drawable.get_buffer()
             shadow_buffer = drawable.get_shadow_buffer()
