@@ -383,6 +383,7 @@ libgimpui_introspectable_files = [
 ]
 
 if meson.is_cross_build()
+  have_gobject_introspection = false
   gobject_introspection_warning = '\n      '.join(['',
     'GObject Introspection is disabled while cross-compiling because',
     'GI tools do not manage to properly generate introspection data',
@@ -393,6 +394,7 @@ if meson.is_cross_build()
   warning(gobject_introspection_warning)
   warnings += gobject_introspection_warning
 else
+  have_gobject_introspection = true
   libgimp_gir_includes = [
     'Babl-0.1',
     'cairo-1.0',

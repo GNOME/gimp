@@ -42,7 +42,7 @@ install_data(
 
 # Vala version
 
-if have_vala
+if have_vala and have_gobject_introspection
   exe = executable('goat-exercise-vala',
     'goat-exercise-vala.vala',
     include_directories: [ rootInclude, ],
