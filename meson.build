@@ -1718,6 +1718,7 @@ foreach dir : [
     { 'dir': 'libgimpwidgets', 'deps': libgimpwidgets},
     { 'dir': 'icons' },
     { 'dir': 'plug-ins', },
+    { 'dir': 'extensions', },
   ]
   run_target('install-' + dir.get('dir'),
     command: [
