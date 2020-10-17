@@ -69,6 +69,7 @@ def foggify(procedure, run_mode, image, drawable, args, data):
     # apply the clouds to the layer
     fog.remove_mask(Gimp.MaskApplyMode.APPLY)
     fog.set_visible(True)
+    Gimp.displays_flush()
 
     image.undo_group_end()
     Gimp.context_pop()
