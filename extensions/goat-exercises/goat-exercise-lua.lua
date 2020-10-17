@@ -136,7 +136,7 @@ end
 Goat:class('Exercise', Gimp.PlugIn)
 
 function Goat.Exercise:do_query_procedures()
-  return { 'goat-exercise-lua' }
+  return { 'plug-in-goat-exercise-lua' }
 end
 
 function Goat.Exercise:do_create_procedure(name)

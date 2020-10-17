@@ -36,7 +36,7 @@ class Goat (Gimp.PlugIn):
         self.set_translation_domain("gimp30-python",
                                     Gio.file_new_for_path(Gimp.locale_directory()))
 
-        return [ "goat-exercise-python" ]
+        return [ "plug-in-goat-exercise-python" ]
 
     def do_create_procedure(self, name):
         procedure = Gimp.ImageProcedure.new(self, name,
