@@ -42,7 +42,7 @@ const Gio = imports.gi.Gio;
  */
 ARGV.unshift(System.programInvocationName);
 
-let url = "https://gitlab.gnome.org/GNOME/gimp/blob/master/plug-ins/goat-exercises/goat-exercise-gjs.js";
+let url = "https://gitlab.gnome.org/GNOME/gimp/blob/master/extensions/goat-exercises/goat-exercise-gjs.js";
 
 var Goat = GObject.registerClass({
     GTypeName: 'Goat',

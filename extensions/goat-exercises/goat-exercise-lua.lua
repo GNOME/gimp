@@ -88,7 +88,7 @@ function run(procedure, run_mode, image, drawable, args, run_data)
 
     while (true) do
       local response = dialog:run()
-      local url = 'https://gitlab.gnome.org/GNOME/gimp/blob/master/plug-ins/goat-exercises/goat-exercise-lua.lua'
+      local url = 'https://gitlab.gnome.org/GNOME/gimp/blob/master/extensions/goat-exercises/goat-exercise-lua.lua'
 
       if response == Gtk.ResponseType.OK then
         dialog:destroy()

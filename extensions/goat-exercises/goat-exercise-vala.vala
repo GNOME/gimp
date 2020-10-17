@@ -22,7 +22,7 @@ private const string PLUG_IN_PROC = "plug-in-goat-exercise-vala";
 private const string PLUG_IN_ROLE = "goat-exercise-vala";
 private const string PLUG_IN_BINARY = "goat-exercise-vala";
 private const string PLUG_IN_SOURCE = PLUG_IN_BINARY + ".vala";
-private const string URL = "https://gitlab.gnome.org/GNOME/gimp/blob/master/plug-ins/goat-exercises/goat-exercise-vala.vala";
+private const string URL = "https://gitlab.gnome.org/GNOME/gimp/blob/master/extensions/goat-exercises/goat-exercise-vala.vala";
 
 public int main(string[] args) {
   return Gimp.main(typeof(Goat), args);

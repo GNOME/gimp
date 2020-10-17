@@ -32,7 +32,7 @@
 #define PLUG_IN_PROC   "plug-in-goat-exercise-c"
 #define PLUG_IN_ROLE   "goat-exercise-c"
 
-#define GOAT_URI       "https://gitlab.gnome.org/GNOME/gimp/blob/master/plug-ins/goat-exercises/goat-exercise-c.c"
+#define GOAT_URI       "https://gitlab.gnome.org/GNOME/gimp/blob/master/extensions/goat-exercises/goat-exercise-c.c"
 
 
 typedef struct _Goat      Goat;
