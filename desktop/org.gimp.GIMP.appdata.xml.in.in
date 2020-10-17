@@ -73,6 +73,43 @@
   </provides>
 
   <releases>
+    <release version="2.99.2" date="TODO" type="development">
+      <url type="details">https://www.gimp.org/news/2020/TODO/gimp-2-99-2-released/</url>
+      <description>
+        <_p>
+        This is the first development release for GIMP 3.0, whose focus
+        was the port to the GTK+3 toolkit. Noteworthy improvements
+        (though some are still work-in-progress) include:
+        </_p>
+        <ul>
+          <_li>
+            Multi-selection of layers in the Layers dockable
+          </_li>
+          <_li>
+            Proper high pixel density display support
+          </_li>
+          <_li>
+            Improved input device support
+          </_li>
+          <_li>
+            Major plug-in API rewrite
+          </_li>
+          <_li>
+            Plug-in API now available in C/C++, Python 3, Javascript, Lua and Vala
+          </_li>
+          <_li>
+            New manageable extension format
+          </_li>
+          <_li>
+            CSS-based themes and actual symbolic icon theme support
+          </_li>
+          <_li>
+            Wayland support
+          </_li>
+        </ul>
+      </description>
+    </release>
+
     <release version="2.10.22" date="2020-10-04">
       <url type="details">https://www.gimp.org/news/2020/10/04/gimp-2-10-22-released/</url>
       <description>
