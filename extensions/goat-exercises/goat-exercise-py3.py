@@ -29,17 +29,22 @@ import os
 import sys
 
 # Set-up localization for your plug-in with your own text domain.
-gettext.bindtextdomain('gimp30-std-plug-ins', Gimp.locale_directory())
-gettext.bind_textdomain_codeset('gimp30-std-plug-ins', 'UTF-8')
-gettext.textdomain('gimp30-std-plug-ins')
+# This is complementary to the gimp_plug_in_set_translation_domain()
+# which is only useful for the menu entries inside GIMP interface,
+# whereas the below calls are used for localization within the plug-in.
+textdomain = 'gimp30-std-plug-ins'
+gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+gettext.bind_textdomain_codeset(textdomain, 'UTF-8')
+gettext.textdomain(textdomain)
 _ = gettext.gettext
 def N_(message): return message
 
 class Goat (Gimp.PlugIn):
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        # Localization
-        self.set_translation_domain("gimp30-python",
+        # Localization for the menu entries. It has to be called in the
+        # query function only.
+        self.set_translation_domain(textdomain,
                                     Gio.file_new_for_path(Gimp.locale_directory()))
 
         return [ "plug-in-goat-exercise-python" ]
@@ -51,12 +56,12 @@ class Goat (Gimp.PlugIn):
 
         procedure.set_image_types("*")
 
-        procedure.set_menu_label("Exercise a goat and a python")
+        procedure.set_menu_label(N_("Exercise a goat and a python"))
         procedure.set_icon_name(GimpUi.ICON_GEGL)
         procedure.add_menu_path('<Image>/Filters/Development/Goat exercises/')
 
-        procedure.set_documentation("Exercise a goat in the Python 3 language",
-                                    "Takes a goat for a walk in Python 3",
+        procedure.set_documentation(N_("Exercise a goat in the Python 3 language"),
+                                    N_("Takes a goat for a walk in Python 3"),
                                     name)
         procedure.set_attribution("Jehan", "Jehan", "2019")
 
