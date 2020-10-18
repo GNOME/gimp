@@ -3,8 +3,6 @@
 
 [encoding: UTF-8]
 
-extensions/goat-exercises/goat-exercise-py3.py
-
 plug-ins/python/benchmark-foreground-extract.py
 plug-ins/python/colorxhtml.py
 plug-ins/python/foggify.py
