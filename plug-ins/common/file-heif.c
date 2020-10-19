@@ -2542,8 +2542,8 @@ save_dialog (GimpProcedure *procedure,
   gtk_widget_show (grid2);
 
   store = gimp_int_store_new (_("8 bit/channel"),         8,
-                              _("10 bit/channel (HDR)"), 10,
-                              _("12 bit/channel (HDR)"), 12,
+                              _("10 bit/channel"), 10,
+                              _("12 bit/channel"), 12,
                               NULL);
 
   combo = gimp_prop_int_combo_box_new (config, "save-bit-depth",
