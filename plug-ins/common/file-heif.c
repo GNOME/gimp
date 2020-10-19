@@ -2038,8 +2038,8 @@ save_dialog (SaveParams  *params,
   gtk_widget_show (label2);
 
   combo = gimp_int_combo_box_new (_("8 bit/channel"), 8,
-                                  _("10 bit/channel (HDR)"), 10,
-                                  _("12 bit/channel (HDR)"), 12,
+                                  _("10 bit/channel"), 10,
+                                  _("12 bit/channel"), 12,
                                   NULL);
   gtk_table_attach (GTK_TABLE (table), combo, 1, 2, 0, 1,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
