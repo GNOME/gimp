@@ -141,7 +141,7 @@ style "gimp-dark-default-style"
   # Set focus-line to 1
   #
 
-  GtkButton::focus-line_width = 0
+  GtkButton::focus-line_width = 1
   GtkButton::focus-padding = 0
 
   GtkRange::trough-border = 0
