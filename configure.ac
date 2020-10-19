@@ -1792,8 +1792,29 @@ WARNING: libheif version 1.5.0 and 1.5.1 are known to crash when
     ])
 fi
 
+can_import_heic=no
+can_export_heic=no
+can_import_avif=no
+can_export_avif=no
 if test "x$have_libheif" = xyes; then
-  FILE_HEIF='file-heif$(EXEEXT)'
+  can_import_heic=`$PKG_CONFIG --variable=builtin_h265_decoder libheif`
+  can_export_heic=`$PKG_CONFIG --variable=builtin_h265_encoder libheif`
+  if test "x$can_import_heic" = xyes; then
+    MIME_TYPES="$MIME_TYPES;image/heif;image/heic"
+  fi
+  can_import_avif=`$PKG_CONFIG --variable=builtin_avif_decoder libheif`
+  can_export_avif=`$PKG_CONFIG --variable=builtin_avif_encoder libheif`
+  if test "x$can_import_avif" = xyes; then
+    MIME_TYPES="$MIME_TYPES;image/avif"
+  fi
+
+  if test "x$can_import_heic" != xyes && test "x$can_import_avif" != xyes; then
+    have_libheif=no
+    have_libheif_1_4_0=no
+    warning_libheif=""
+  else
+    FILE_HEIF='file-heif$(EXEEXT)'
+  fi
 fi
 
 AC_SUBST(FILE_HEIF)
@@ -1806,11 +1827,6 @@ if test "x$have_libheif_1_4_0" = xyes; then
   if test "x$warning_libheif" != "x"; then
     have_libheif_1_4_0="yes (see warning below)"
   fi
-fi
-
-if test "x$have_libheif" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/heif;image/heic"
-  have_libheif="yes [[profile support: $have_libheif_1_4_0]]"
 fi
 
 
@@ -3160,7 +3176,8 @@ Optional Plug-Ins:
   MNG:                       $have_libmng
   OpenEXR:                   $have_openexr
   WebP:                      $have_webp
-  Heif:                      $have_libheif
+  HEIC:                      import: $can_import_heic - export: $can_export_heic [[profile support: $have_libheif_1_4_0]]
+  AVIF:                      import: $can_import_avif - export: $can_export_avif
   PDF (export):              $have_cairo_pdf
   Print:                     $enable_print
   Python 3 plug-ins:         $with_python
