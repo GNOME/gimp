@@ -91,7 +91,7 @@ if libaa.found()
   }
 endif
 
-if libheif.found()
+if have_heif
   common_plugins_list += { 'name': 'file-heif',
     'deps': [ gtk3, gegl, libheif, gexiv2, lcms, ],
   }

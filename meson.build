@@ -728,22 +728,45 @@ libheif = dependency('libheif', version: '>='+libheif_minver,
 conf.set('HAVE_LIBHEIF_1_4_0', libheif.version().version_compare('>=1.4.0'))
 conf.set('HAVE_LIBHEIF_1_6_0', libheif.version().version_compare('>=1.6.0'))
 
-if libheif.found()
-  MIMEtypes += [
-    'image/heif',
-    'image/heic',
-  ]
-endif
+can_import_heic = 'no'
+can_export_heic = 'no'
+can_import_avif = 'no'
+can_export_avif = 'no'
 
+have_heif = libheif.found()
 libheif_warning=''
-if libheif.version().version_compare('==1.5.0') or libheif.version().version_compare('==1.5.1')
-  libheif_warning='''
+if have_heif
+  have_heif = true
+  can_import_heic = libheif.get_pkgconfig_variable('builtin_h265_decoder')
+  can_export_heic = libheif.get_pkgconfig_variable('builtin_h265_encoder')
+  if can_import_heic == 'yes'
+    MIMEtypes += [
+      'image/heif',
+      'image/heic',
+    ]
+  endif
 
-        libheif version 1.5.0 and 1.5.1 are known to crash when
-        exporting (bug #4185). Please update.
-    '''
-    warning(libheif_warning)
-    warnings += libheif_warning
+  can_import_avif = libheif.get_pkgconfig_variable('builtin_avif_decoder')
+  can_export_avif = libheif.get_pkgconfig_variable('builtin_avif_encoder')
+  if can_import_avif == 'yes'
+    MIMEtypes += [
+      'image/avif'
+    ]
+  endif
+
+  if can_import_heic != 'yes' and can_import_avif != 'yes'
+    have_heif = false
+  endif
+
+  if have_heif and (libheif.version().version_compare('==1.5.0') or libheif.version().version_compare('==1.5.1'))
+    libheif_warning='''
+
+          libheif version 1.5.0 and 1.5.1 are known to crash when
+          exporting (bug #4185). Please update.
+      '''
+      warning(libheif_warning)
+      warnings += libheif_warning
+  endif
 endif
 
 have_vala = add_languages('vala', required: get_option('vala-plugins'))
@@ -1752,10 +1775,12 @@ final_message = [
 '''  MNG:                 @0@'''.format(libmng.found()),
 '''  OpenEXR:             @0@'''.format(openexr.found()),
 '''  WebP:                @0@'''.format(webp_found),
-'''  Heif:                @0@ [profile support: @1@@2@]'''
-                                .format(libheif.found(),
+'''  HEIC:                import: @0@ - export: @1@ [profile support: @2@]@3@'''
+                                .format(can_import_heic, can_export_heic,
                                         libheif.version().version_compare('>=1.4.0'),
-                                       libheif_warning != '' ? ' (see warning below)' : ''),
+                                        libheif_warning != '' ? ' (see warning below)' : ''),
+'''  AVIF:                import: @0@ - export: @1@'''
+                                .format(can_import_avif, can_export_avif),
 '''  PDF (export):        @0@'''.format(cairopdf.found()),
 '''  Print:               @0@'''.format(have_print),
 '''  Python 3 plug-ins:   @0@'''.format(have_python),
