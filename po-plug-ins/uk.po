@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-09-14 09:07+0000\n"
-"PO-Revision-Date: 2020-09-14 12:10+0300\n"
+"POT-Creation-Date: 2020-10-19 18:52+0000\n"
+"PO-Revision-Date: 2020-10-20 09:26+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.03.70\n"
+"X-Generator: Lokalize 20.11.70\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -50,7 +50,7 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1810
+#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1811
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:698
 #: ../plug-ins/common/file-pdf-load.c:1264
@@ -115,7 +115,7 @@ msgstr "_Скасувати"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1811
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1812
 #: ../plug-ins/common/file-pdf-load.c:699 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -2146,14 +2146,14 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:680 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-heif.c:681 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1035
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
 #: ../plug-ins/common/file-raw-data.c:1296 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1014
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
-#: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
+#: ../plug-ins/common/file-xpm.c:356 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
 #: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
@@ -2235,12 +2235,12 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
-#: ../plug-ins/common/file-heif.c:1252 ../plug-ins/common/file-html-table.c:238
+#: ../plug-ins/common/file-heif.c:1253 ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
 #: ../plug-ins/common/file-png.c:1607 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1213 ../plug-ins/common/file-xbm.c:1040
-#: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/common/file-xpm.c:674 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1697
@@ -2570,11 +2570,11 @@ msgstr "Кількість кадрів:"
 msgid "C source code header"
 msgstr "Заголовок програми на С"
 
-#: ../plug-ins/common/file-heif.c:113
+#: ../plug-ins/common/file-heif.c:114
 msgid "Loads HEIF images"
 msgstr "Завантаження зображень HEIF"
 
-#: ../plug-ins/common/file-heif.c:114
+#: ../plug-ins/common/file-heif.c:115
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2582,87 +2582,85 @@ msgstr ""
 "Завантажити зображення, збережене у форматі HEIF (High Efficiency Image File "
 "Format). Типові розширення файлів формату HEIF - .heif, .heic."
 
-#: ../plug-ins/common/file-heif.c:120 ../plug-ins/common/file-heif.c:167
+#: ../plug-ins/common/file-heif.c:121 ../plug-ins/common/file-heif.c:168
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:161
+#: ../plug-ins/common/file-heif.c:162
 msgid "Exports HEIF images"
 msgstr "Експортує зображення HEIF"
 
-#: ../plug-ins/common/file-heif.c:162
+#: ../plug-ins/common/file-heif.c:163
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Зберегти зображення у форматі HEIF (High Efficiency Image File Format)."
 
-#: ../plug-ins/common/file-heif.c:718 ../plug-ins/common/file-heif.c:751
-#: ../plug-ins/common/file-heif.c:790 ../plug-ins/common/file-heif.c:856
+#: ../plug-ins/common/file-heif.c:719 ../plug-ins/common/file-heif.c:752
+#: ../plug-ins/common/file-heif.c:791 ../plug-ins/common/file-heif.c:857
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Не вдалось завантажити зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:740
+#: ../plug-ins/common/file-heif.c:741
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Не вдалось завантажити зображення HEIF: вхідний файл не містить придатних "
 "для читання зображень"
 
-#: ../plug-ins/common/file-heif.c:983
+#: ../plug-ins/common/file-heif.c:984
 msgid "image content"
 msgstr "вміст зображення"
 
-#: ../plug-ins/common/file-heif.c:1302 ../plug-ins/common/file-heif.c:1535
+#: ../plug-ins/common/file-heif.c:1303 ../plug-ins/common/file-heif.c:1536
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Не вдалось закодувати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1572
+#: ../plug-ins/common/file-heif.c:1573
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Не вдалось записати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1661
+#: ../plug-ins/common/file-heif.c:1662
 msgid "primary"
 msgstr "основне"
 
-#: ../plug-ins/common/file-heif.c:1806
+#: ../plug-ins/common/file-heif.c:1807
 msgid "Load HEIF Image"
 msgstr "Завантажити зображення HEIF"
 
-#: ../plug-ins/common/file-heif.c:1820
+#: ../plug-ins/common/file-heif.c:1821
 msgid "Select Image"
 msgstr "Виберіть зображення"
 
-#: ../plug-ins/common/file-heif.c:1973
-msgid "HEIF"
-msgstr "HEIF"
-
-#: ../plug-ins/common/file-heif.c:1983
+#: ../plug-ins/common/file-heif.c:1987
 msgid "Nearly _lossless (YUV420 format)"
 msgstr "Майже _без втрат (формат YUV420)"
 
-#: ../plug-ins/common/file-heif.c:1987 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:1991 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Якість:"
 
-#: ../plug-ins/common/file-heif.c:2030
+#: ../plug-ins/common/file-heif.c:2034
 msgid "Bit depth:"
 msgstr "Бітова глибина:"
 
-#: ../plug-ins/common/file-heif.c:2036
+#: ../plug-ins/common/file-heif.c:2040
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2037
-msgid "10 bit/channel (HDR)"
-msgstr "10 біт/канал (HDR)"
+#: ../plug-ins/common/file-heif.c:2041
+#| msgid "8 bit/channel"
+msgid "10 bit/channel"
+msgstr "10 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2038
-msgid "12 bit/channel (HDR)"
-msgstr "12 біт/канал (HDR)"
+#: ../plug-ins/common/file-heif.c:2042
+#| msgid "8 bit/channel"
+msgid "12 bit/channel"
+msgstr "12 біт/канал"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2047 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2051 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:387
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save color _profile"
@@ -3541,7 +3539,7 @@ msgstr "Ч/Б"
 msgid "Gray"
 msgstr "Сірий"
 
-#: ../plug-ins/common/file-ps.c:3540 ../plug-ins/common/file-xpm.c:483
+#: ../plug-ins/common/file-ps.c:3540 ../plug-ins/common/file-xpm.c:485
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
@@ -4600,29 +4598,29 @@ msgstr ""
 "Це розширення не може обробляти курсори, що мають більше %i різних "
 "номінальних розмірів."
 
-#: ../plug-ins/common/file-xpm.c:174 ../plug-ins/common/file-xpm.c:199
+#: ../plug-ins/common/file-xpm.c:176 ../plug-ins/common/file-xpm.c:201
 msgid "X PixMap image"
 msgstr "Зображення X PixMap"
 
-#: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:800
+#: ../plug-ins/common/file-xpm.c:367 ../plug-ins/common/file-xpm.c:823
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Помилка відкривання файлу «%s»"
 
-#: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:806
+#: ../plug-ins/common/file-xpm.c:373 ../plug-ins/common/file-xpm.c:829
 msgid "XPM file invalid"
 msgstr "Неправильний файл XPM"
 
-#: ../plug-ins/common/file-xpm.c:653
+#: ../plug-ins/common/file-xpm.c:664
 #, c-format
 msgid "Unsupported drawable type"
 msgstr "Непідтримуваний тип малюнка"
 
-#: ../plug-ins/common/file-xpm.c:832
+#: ../plug-ins/common/file-xpm.c:855
 msgid "XPM"
 msgstr "XPM"
 
-#: ../plug-ins/common/file-xpm.c:842
+#: ../plug-ins/common/file-xpm.c:865
 msgid "_Alpha threshold:"
 msgstr "Поріг _альфа-каналу:"
 
@@ -6629,20 +6627,20 @@ msgid "Alpha channel will be ignored."
 msgstr "Альфа-канал буде проігнорований."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-save.c:910
+#: ../plug-ins/file-bmp/bmp-save.c:916
 msgid "_Run-Length Encoded"
 msgstr "_RLE-кодування"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-save.c:923
+#: ../plug-ins/file-bmp/bmp-save.c:929
 msgid "Co_mpatibility Options"
 msgstr "Параметри _сумісності"
 
-#: ../plug-ins/file-bmp/bmp-save.c:933
+#: ../plug-ins/file-bmp/bmp-save.c:939
 msgid "_Do not write color space information"
 msgstr "_Не записувати інформацію про простір кольору"
 
-#: ../plug-ins/file-bmp/bmp-save.c:935
+#: ../plug-ins/file-bmp/bmp-save.c:941
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -6654,20 +6652,20 @@ msgstr ""
 
 #. Advanced Options
 #. Advanced expander
-#: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:1014
+#: ../plug-ins/file-bmp/bmp-save.c:957 ../plug-ins/file-jpeg/jpeg-save.c:1014
 #: ../plug-ins/file-webp/file-webp-dialog.c:221
 msgid "_Advanced Options"
 msgstr "_Додаткові параметри"
 
-#: ../plug-ins/file-bmp/bmp-save.c:966
+#: ../plug-ins/file-bmp/bmp-save.c:972
 msgid "16 bits"
 msgstr "16 біт"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1002
+#: ../plug-ins/file-bmp/bmp-save.c:1008
 msgid "24 bits"
 msgstr "24 біти"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1019
+#: ../plug-ins/file-bmp/bmp-save.c:1025
 msgid "32 bits"
 msgstr "32 біти"
 
@@ -12629,6 +12627,15 @@ msgstr "_Сканер/Камера..."
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "HEIF"
+#~ msgstr "HEIF"
+
+#~ msgid "10 bit/channel (HDR)"
+#~ msgstr "10 біт/канал (HDR)"
+
+#~ msgid "12 bit/channel (HDR)"
+#~ msgstr "12 біт/канал (HDR)"
 
 #~ msgid "Creator keyword data not nul-terminated"
 #~ msgstr "Дані ключового слова розробника не закінчуються нулем"
