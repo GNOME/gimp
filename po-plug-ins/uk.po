@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-18 10:01+0000\n"
-"PO-Revision-Date: 2020-10-19 20:43+0300\n"
+"POT-Creation-Date: 2020-10-19 18:49+0000\n"
+"PO-Revision-Date: 2020-10-20 09:32+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -126,12 +126,10 @@ msgstr ""
 "Ознайомтеся із найсвіжішою версією коду в інтернеті — натисніть кнопку «Код»."
 
 #: ../extensions/goat-exercises/goat-exercise-py3.py:59
-#| msgid "Exercise a goat (Python 3)"
 msgid "Exercise a goat and a python"
 msgstr "Потренувати козу і повправляйтеся у Python"
 
 #: ../extensions/goat-exercises/goat-exercise-py3.py:63
-#| msgid "Exercise a goat in the C language"
 msgid "Exercise a goat in the Python 3 language"
 msgstr "Потренувати козу у мові Python 3"
 
@@ -2510,12 +2508,14 @@ msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
 #: ../plug-ins/common/file-heif.c:2545
-msgid "10 bit/channel (HDR)"
-msgstr "10 біт/канал (HDR)"
+#| msgid "8 bit/channel"
+msgid "10 bit/channel"
+msgstr "10 біт/канал"
 
 #: ../plug-ins/common/file-heif.c:2546
-msgid "12 bit/channel (HDR)"
-msgstr "12 біт/канал (HDR)"
+#| msgid "8 bit/channel"
+msgid "12 bit/channel"
+msgstr "12 біт/канал"
 
 #: ../plug-ins/common/file-heif.c:2553
 msgid "Bit depth:"
@@ -12269,6 +12269,12 @@ msgstr "_Сканер/Камера..."
 #: ../plug-ins/twain/twain.c:513
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "10 bit/channel (HDR)"
+#~ msgstr "10 біт/канал (HDR)"
+
+#~ msgid "12 bit/channel (HDR)"
+#~ msgstr "12 біт/канал (HDR)"
 
 #~ msgid "Creator keyword data not nul-terminated"
 #~ msgstr "Дані ключового слова розробника не закінчуються нулем"
