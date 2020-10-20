@@ -30,6 +30,7 @@
 
 
 #define LOAD_PROC      "file-heif-load"
+#define LOAD_PROC_AV1  "file-heif-av1-load"
 #define SAVE_PROC      "file-heif-save"
 #define SAVE_PROC_AV1  "file-heif-av1-save"
 #define PLUG_IN_BINARY "file-heif"
@@ -146,10 +147,25 @@ heif_query_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
-  list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  if (heif_have_decoder_for_format (heif_compression_HEVC))
+    {
+      list = g_list_append (list, g_strdup (LOAD_PROC));
+    }
+
+  if (heif_have_encoder_for_format (heif_compression_HEVC))
+    {
+      list = g_list_append (list, g_strdup (SAVE_PROC));
+    }
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-  list = g_list_append (list, g_strdup (SAVE_PROC_AV1));
+  if (heif_have_decoder_for_format (heif_compression_AV1))
+    {
+      list = g_list_append (list, g_strdup (LOAD_PROC_AV1));
+    }
+
+  if (heif_have_encoder_for_format (heif_compression_AV1))
+    {
+      list = g_list_append (list, g_strdup (SAVE_PROC_AV1));
+    }
 #endif
   return list;
 }
@@ -183,17 +199,9 @@ heif_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
                                               TRUE);
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
-                                          "image/heif"
-#if LIBHEIF_HAVE_VERSION(1,8,0)
-                                          ",image/avif"
-#endif
-                                         );
+                                          "image/heif");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
-                                          "heif,heic"
-#if LIBHEIF_HAVE_VERSION(1,8,0)
-                                          ",avif"
-#endif
-                                         );
+                                          "heif,heic");
 
       /* HEIF is an ISOBMFF format whose "brand" (the value after "ftyp")
        * can be of various values.
@@ -204,11 +212,7 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                       "4,string,ftyphevc,4,string,ftypheim,"
                                       "4,string,ftypheis,4,string,ftyphevm,"
                                       "4,string,ftyphevs,4,string,ftypmif1,"
-                                      "4,string,ftypmsf1"
-#if LIBHEIF_HAVE_VERSION(1,8,0)
-                                      ",4,string,ftypavif"
-#endif
-                                     );
+                                      "4,string,ftypmsf1");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
@@ -288,19 +292,17 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                              G_PARAM_READWRITE);
     }
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-  else if (! strcmp (name, SAVE_PROC_AV1))
+  else if (! strcmp (name, LOAD_PROC_AV1))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
+      procedure = gimp_load_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           heif_av1_save, NULL, NULL);
-
-      gimp_procedure_set_image_types (procedure, "RGB*");
+                                           heif_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, "HEIF/AVIF");
 
       gimp_procedure_set_documentation (procedure,
-                                        "Exports AVIF images",
-                                        "Save image in AV1 Image File Format (AVIF)",
+                                        _("Loads AVIF images"),
+                                        _("Load image stored in AV1 Image File Format (AVIF)"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Daniel Novomesky <dnovomesky@gmail.com>",
@@ -313,6 +315,39 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                           "image/avif");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "avif");
+
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "4,string,ftypmif1,4,string,ftypavif");
+
+      gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure), 100);
+    }
+  else if (! strcmp (name, SAVE_PROC_AV1))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           heif_av1_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*");
+
+      gimp_procedure_set_menu_label (procedure, "HEIF/AVIF");
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Exports AVIF images"),
+                                        _("Save image in AV1 Image File Format (AVIF)"),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Daniel Novomesky <dnovomesky@gmail.com>",
+                                      "Daniel Novomesky <dnovomesky@gmail.com>",
+                                      "2020");
+
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/avif");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "avif");
+
+      gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure), 100);
 
       GIMP_PROC_ARG_INT (procedure, "quality",
                          "Quality",
