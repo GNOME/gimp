@@ -232,7 +232,7 @@ file_save_invoker (GimpProcedure         *procedure,
   GimpProcedure       *proc;
   gint                 i;
 
-  file = g_value_get_object (gimp_value_array_index (args, 3));
+  file = g_value_get_object (gimp_value_array_index (args, 4));
 
   file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
                                                         GIMP_FILE_PROCEDURE_GROUP_SAVE,
