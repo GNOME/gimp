@@ -283,7 +283,7 @@ HELP
   g_value_transform (gimp_value_array_index (args, 4),
                      gimp_value_array_index (new_args, 4));
 
-  for (i = 4; i < proc->num_args; i++)
+  for (i = 5; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (gimp_value_array_index (new_args, i), "");
 
