@@ -841,25 +841,6 @@ gimp_item_get_parent (GimpItem *item)
   return GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
 }
 
-gboolean
-gimp_item_is_ancestor (GimpItem *item,
-                       GimpItem *ancestor)
-{
-  GimpItem *parent;
-
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
-  g_return_val_if_fail (GIMP_IS_ITEM (ancestor), FALSE);
-
-  parent = item;
-  while ((parent = gimp_item_get_parent (parent)))
-    {
-      if (parent == ancestor)
-        return TRUE;
-    }
-
-  return FALSE;
-}
-
 GimpItemTree *
 gimp_item_get_tree (GimpItem *item)
 {

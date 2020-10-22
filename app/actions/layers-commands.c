@@ -869,7 +869,7 @@ layers_merge_group_cmd_callback (GimpAction *action,
               /* Do not merge a layer when we already merge one of its
                * ancestors.
                */
-              if (gimp_item_is_ancestor (iter->data, iter2->data))
+              if (gimp_viewable_is_ancestor (iter2->data, iter->data))
                 break;
             }
 
@@ -929,7 +929,7 @@ layers_delete_cmd_callback (GimpAction *action,
       for (iter2 = removed_layers; iter2; iter2 = iter2->next)
         {
           if (iter->data != iter2->data &&
-              gimp_item_is_ancestor (iter->data, iter2->data))
+              gimp_viewable_is_ancestor (iter2->data, iter->data))
             {
               removed_layers = g_list_delete_link (removed_layers, iter);
               iter = removed_layers;

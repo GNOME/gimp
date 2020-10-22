@@ -108,7 +108,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
               break;
 
           /* No need to list selected groups if any selected layer is
-           * to-level.
+           * top-level.
            */
           if (iter == NULL)
             {
@@ -120,7 +120,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
                        * other selected layers are its parents.
                        */
                       if (iter->data != iter2->data &&
-                          gimp_item_is_ancestor (iter->data, iter2->data))
+                          gimp_viewable_is_ancestor (iter2->data, iter->data))
                         break;
                     }
                   if (iter2 == NULL &&

@@ -174,8 +174,6 @@ void            gimp_item_unset_removed      (GimpItem           *item);
 gboolean        gimp_item_is_attached        (GimpItem           *item);
 
 GimpItem      * gimp_item_get_parent         (GimpItem           *item);
-gboolean        gimp_item_is_ancestor        (GimpItem           *item,
-                                              GimpItem           *ancestor);
 
 GimpItemTree  * gimp_item_get_tree           (GimpItem           *item);
 GimpContainer * gimp_item_get_container      (GimpItem           *item);
