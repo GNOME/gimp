@@ -1850,12 +1850,17 @@ fi
 AC_SUBST(FILE_HEIF)
 AM_CONDITIONAL(HAVE_LIBHEIF, test "x$have_libheif" = xyes)
 
+have_heif_profile_support=no
 if test "x$have_libheif_1_4_0" = xyes; then
   AC_DEFINE(HAVE_LIBHEIF_1_4_0, 1,
             [Define to 1 if libheif >= 1.4.0 is available])
 
-  if test "x$warning_libheif" != "x"; then
-    have_libheif_1_4_0="yes (see warning below)"
+  if test "x$can_import_heic" = xyes || test "x$can_export_heic" = xyes; then
+    if test "x$warning_libheif" != "x"; then
+      have_heif_profile_support="yes (see warning below)"
+    else
+      have_heif_profile_support=yes
+    fi
   fi
 fi
 
@@ -3143,7 +3148,7 @@ Optional Plug-Ins:
   MNG:                       $have_libmng
   OpenEXR:                   $have_openexr
   WebP:                      $have_webp
-  HEIC:                      import: $can_import_heic - export: $can_export_heic [[profile support: $have_libheif_1_4_0]]
+  HEIC:                      import: $can_import_heic - export: $can_export_heic [[profile support: $have_heif_profile_support]]
   AVIF:                      import: $can_import_avif - export: $can_export_avif
   PDF (export):              $have_cairo_pdf
   Print:                     $enable_print
