@@ -109,6 +109,8 @@ Plug-ins:
   - HEIF export allows selecting color subsampling/pixel format (YUV444,
     YUV420, RGB) and encoder speed (Slow, Balanced, Fast).
     Lossless option delivers visually lossless output.
+  - New "file-heif-av1-load" procedure separate from "file-heif-load"
+    for AVIF only.
 
 API:
 
