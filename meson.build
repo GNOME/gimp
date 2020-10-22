@@ -728,33 +728,33 @@ libheif = dependency('libheif', version: '>='+libheif_minver,
 conf.set('HAVE_LIBHEIF_1_4_0', libheif.version().version_compare('>=1.4.0'))
 conf.set('HAVE_LIBHEIF_1_6_0', libheif.version().version_compare('>=1.6.0'))
 
-can_import_heic = 'no'
-can_export_heic = 'no'
-can_import_avif = 'no'
-can_export_avif = 'no'
+can_import_heic = false
+can_export_heic = false
+can_import_avif = false
+can_export_avif = false
 
 have_heif = libheif.found()
 libheif_warning=''
 if have_heif
   have_heif = true
-  can_import_heic = libheif.get_pkgconfig_variable('builtin_h265_decoder')
-  can_export_heic = libheif.get_pkgconfig_variable('builtin_h265_encoder')
-  if can_import_heic == 'yes'
+  can_import_heic = (libheif.get_pkgconfig_variable('builtin_h265_decoder') == 'yes')
+  can_export_heic = (libheif.get_pkgconfig_variable('builtin_h265_encoder') == 'yes')
+  if can_import_heic
     MIMEtypes += [
       'image/heif',
       'image/heic',
     ]
   endif
 
-  can_import_avif = libheif.get_pkgconfig_variable('builtin_avif_decoder')
-  can_export_avif = libheif.get_pkgconfig_variable('builtin_avif_encoder')
-  if can_import_avif == 'yes'
+  can_import_avif = (libheif.get_pkgconfig_variable('builtin_avif_decoder') == 'yes')
+  can_export_avif = (libheif.get_pkgconfig_variable('builtin_avif_encoder') == 'yes')
+  if can_import_avif
     MIMEtypes += [
       'image/avif'
     ]
   endif
 
-  if can_import_heic != 'yes' and can_import_avif != 'yes'
+  if not can_import_heic and not can_import_avif
     have_heif = false
   endif
 
@@ -1777,6 +1777,7 @@ final_message = [
 '''  WebP:                @0@'''.format(webp_found),
 '''  HEIC:                import: @0@ - export: @1@ [profile support: @2@]@3@'''
                                 .format(can_import_heic, can_export_heic,
+                                        (can_import_heic or can_export_heic) and
                                         libheif.version().version_compare('>=1.4.0'),
                                         libheif_warning != '' ? ' (see warning below)' : ''),
 '''  AVIF:                import: @0@ - export: @1@'''
