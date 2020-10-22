@@ -75,6 +75,10 @@ typedef struct
   gboolean  numbered_list;
   gint      list_num;
   gboolean  unnumbered_list;
+
+  const gchar *lang;
+  GString     *original;
+  gint         foreign_level;
 } ParseState;
 
 
@@ -111,6 +115,9 @@ static void         appstream_text_characters      (GMarkupParseContext  *contex
                                                     gsize                 text_len,
                                                     gpointer              user_data,
                                                     GError              **error);
+static const gchar* gimp_extension_get_tag_lang    (const gchar         **attribute_names,
+                                                    const gchar         **attribute_values);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpExtension, gimp_extension, GIMP_TYPE_OBJECT)
 
@@ -343,10 +350,13 @@ gimp_extension_get_markup_description (GimpExtension *extension)
   GError        *error  = NULL;
   ParseState     state;
 
-  state.level = 0;
-  state.text = g_string_new (NULL);
+  state.level           = 0;
+  state.foreign_level   = -1;
+  state.text            = g_string_new (NULL);
   state.numbered_list   = FALSE;
   state.unnumbered_list = FALSE;
+  state.lang            = g_getenv ("LANGUAGE");
+  state.original        = NULL;
 
   xml_parser  = gimp_xml_parser_new (&appstream_text_parser, &state);
   description = gimp_extension_get_description (extension);
@@ -356,6 +366,14 @@ gimp_extension_get_markup_description (GimpExtension *extension)
       g_printerr ("%s: %s\n", G_STRFUNC, error->message);
       g_error_free (error);
     }
+
+  /* Append possibly last original text without proper localization. */
+  if (state.original)
+    {
+      g_string_append (state.text, state.original->str);
+      g_string_free (state.original, TRUE);
+    }
+
   markup = g_string_free (state.text, FALSE);
   gimp_xml_parser_free (xml_parser);
 
@@ -880,9 +898,46 @@ appstream_text_start_element (GMarkupParseContext  *context,
                               gpointer              user_data,
                               GError              **error)
 {
-  ParseState *state = user_data;
+  ParseState  *state  = user_data;
+  GString     *output = state->text;
+  const gchar *tag_lang;
 
   state->level++;
+
+  if (state->foreign_level >= 0)
+    return;
+
+  tag_lang = gimp_extension_get_tag_lang (attribute_names, attribute_values);
+  if ((state->lang == NULL && tag_lang == NULL) ||
+      g_strcmp0 (tag_lang, state->lang) == 0)
+    {
+      /* Current tag is our current language. */
+      if (state->original)
+        g_string_free (state->original, TRUE);
+      state->original = NULL;
+
+      output = state->text;
+    }
+  else if (tag_lang == NULL)
+    {
+      /* Current tag is the original language (and we want a
+       * localization).
+       */
+      if (state->original)
+        {
+          g_string_append (state->text, state->original->str);
+          g_string_free (state->original, TRUE);
+        }
+      state->original = g_string_new (NULL);
+
+      output = state->original;
+    }
+  else
+    {
+      /* Current tag is an unrelated language */
+      state->foreign_level = state->level;
+      return;
+    }
 
   if ((state->numbered_list || state->unnumbered_list) &&
       (g_strcmp0 (element_name, "ul") == 0 ||
@@ -904,10 +959,10 @@ appstream_text_start_element (GMarkupParseContext  *context,
     {
       state->list_num++;
       if (state->numbered_list)
-        g_string_append_printf (state->text, "\n %d. ",
+        g_string_append_printf (output, "\n %d. ",
                                 state->list_num);
       else if (state->unnumbered_list)
-        g_string_append (state->text, "\n * ");
+        g_string_append (output, "\n * ");
       else
         g_set_error (error, GIMP_ERROR, GIMP_FAILED,
                      _("<li> must be inside <ol> or <ul> tags."));
@@ -931,7 +986,13 @@ appstream_text_end_element (GMarkupParseContext  *context,
 
   if (g_strcmp0 (element_name, "p") == 0)
     {
-      g_string_append (state->text, "\n\n");
+      if (state->foreign_level < 0)
+        {
+          if (state->original)
+            g_string_append (state->original, "\n\n");
+          else
+            g_string_append (state->text, "\n\n");
+        }
     }
   else if (g_strcmp0 (element_name, "ul") == 0 ||
            g_strcmp0 (element_name, "ol") == 0)
@@ -939,6 +1000,9 @@ appstream_text_end_element (GMarkupParseContext  *context,
       state->numbered_list   = FALSE;
       state->unnumbered_list = FALSE;
     }
+
+  if (state->foreign_level > state->level)
+    state->foreign_level = -1;
 }
 
 static void
@@ -950,5 +1014,29 @@ appstream_text_characters (GMarkupParseContext  *context,
 {
   ParseState *state = user_data;
 
-  g_string_append (state->text, text);
+  if (state->foreign_level < 0)
+    {
+      if (state->original)
+        g_string_append (state->original, text);
+      else
+        g_string_append (state->text, text);
+    }
+}
+
+static const gchar *
+gimp_extension_get_tag_lang (const gchar **attribute_names,
+                             const gchar **attribute_values)
+{
+  while (*attribute_names)
+    {
+      if (! strcmp (*attribute_names, "xml:lang"))
+        {
+          return *attribute_values;
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  return NULL;
 }
