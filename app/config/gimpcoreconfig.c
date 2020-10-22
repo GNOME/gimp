@@ -898,6 +898,7 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->import_raw_plug_in);
 
   g_clear_pointer (&core_config->last_known_release, g_free);
+  g_clear_pointer (&core_config->last_release_comment, g_free);
 
   g_clear_object (&core_config->default_image);
   g_clear_object (&core_config->default_grid);
@@ -1112,12 +1113,14 @@ gimp_core_config_set_property (GObject      *object,
       core_config->last_release_timestamp = g_value_get_int64 (value);
       break;
     case PROP_LAST_RELEASE_COMMENT:
+      g_clear_pointer (&core_config->last_release_comment, g_free);
       core_config->last_release_comment = g_value_dup_string (value);
       break;
     case PROP_LAST_REVISION:
       core_config->last_revision = g_value_get_int (value);
       break;
     case PROP_LAST_KNOWN_RELEASE:
+      g_clear_pointer (&core_config->last_known_release, g_free);
       core_config->last_known_release = g_value_dup_string (value);
       break;
     case PROP_SAVE_DOCUMENT_HISTORY:
