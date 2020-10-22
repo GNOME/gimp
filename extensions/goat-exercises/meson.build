@@ -108,6 +108,7 @@ appdatafilein = configure_file(
 appdatafile = custom_target(appdatafilename,
   input : [ appdatafilein, ],
   output: [ appdatafilename, ],
+  depend_files: [ po_plug_ins_dir ],
   command: [
     intltool_merge,
     po_plug_ins_dir,
