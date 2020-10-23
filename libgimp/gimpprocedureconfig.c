@@ -867,13 +867,13 @@ gimp_procedure_config_save_metadata (GimpProcedureConfig *config,
               else
                 config->priv->metadata_flags &= ~prop_flag;
             }
-
-          gimp_image_metadata_save_finish (exported_image,
-                                           config->priv->mime_type,
-                                           config->priv->metadata,
-                                           config->priv->metadata_flags,
-                                           file, NULL);
         }
+
+      gimp_image_metadata_save_finish (exported_image,
+                                       config->priv->mime_type,
+                                       config->priv->metadata,
+                                       config->priv->metadata_flags,
+                                       file, NULL);
 
       config->priv->metadata_saved = TRUE;
     }
