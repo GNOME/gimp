@@ -73,8 +73,8 @@ struct _GimpMetadataClass
  * @short_description: Basic functions for handling #GimpMetadata objects.
  * @see_also: gimp_image_metadata_load_prepare(),
  *            gimp_image_metadata_load_finish(),
- *            gimp_image_metadata_load_prepare(),
- *            gimp_image_metadata_load_finish().
+ *            gimp_image_metadata_save_prepare(),
+ *            gimp_image_metadata_save_finish().
  *
  * Basic functions for handling #GimpMetadata objects.
  **/
