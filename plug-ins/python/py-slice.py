@@ -196,7 +196,7 @@ def slice(image, drawable, image_path, image_basename, image_extension,
     if image_extension == "jpg" and image.base_type() == Gimp.ImageBaseType.INDEXED:
         temp_image.convert_rgb ()
 
-    Gimp.file_save(Gimp.RunMode.NONINTERACTIVE, temp_image, temp_drawable,
+    Gimp.file_save(Gimp.RunMode.NONINTERACTIVE, temp_image, [temp_drawable],
                    Gio.file_new_for_path (filename))
 
     temp_image.delete()
