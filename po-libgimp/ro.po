@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-12 20:08+0000\n"
-"PO-Revision-Date: 2020-10-15 18:41+0300\n"
+"PO-Revision-Date: 2020-10-23 20:59+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -415,7 +415,7 @@ msgstr "Parametri"
 
 #: ../libgimp/gimpprocview.c:186
 msgid "Return Values"
-msgstr "Valori întoarse"
+msgstr "Valori returnate"
 
 #: ../libgimp/gimpprocview.c:199
 msgid "Additional Information"
@@ -2669,19 +2669,19 @@ msgstr "Cursor  Scade %d"
 #: ../modules/controller-dx-dinput.c:514
 #, c-format
 msgid "POV %d X View"
-msgstr "Vedere X a punctului de vedere %d"
+msgstr "Vizualizare X a punctului de vizualizare %d"
 
 # hm ?
 #: ../modules/controller-dx-dinput.c:517
 #, c-format
 msgid "POV %d Y View"
-msgstr "Vedere Y a punctului de vedere %d"
+msgstr "Vizualizare Y a punctului de vizualizare %d"
 
 # hm ?
 #: ../modules/controller-dx-dinput.c:520
 #, c-format
 msgid "POV %d Return"
-msgstr "Revenirea punctului de vedere %d"
+msgstr "Revenire a punctului de vizualizare %d"
 
 #: ../modules/controller-dx-dinput.c:1081
 msgid "DirectInput Events"
