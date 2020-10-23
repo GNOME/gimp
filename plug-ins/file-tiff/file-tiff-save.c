@@ -907,6 +907,8 @@ save_metadata (GFile                 *file,
           && (*tag)[strlen ("Exif.SubImage")] >= '0'
           && (*tag)[strlen ("Exif.SubImage")] <= '9')
         gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), *tag);
+      if (g_str_has_prefix (*tag, "Exif.Thumbnail"))
+        gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), *tag);
     }
 
   gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
