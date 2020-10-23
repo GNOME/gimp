@@ -852,6 +852,10 @@ save_thumbnail (TiffSaveVals *tsvals,
     }
 }
 
+/* FIXME Most of the stuff in save_metadata except the
+ * thumbnail saving should probably be moved to
+ * gimpmetadata.c and gimpmetadata-save.c.
+ */
 static void
 save_metadata (GFile                 *file,
                TiffSaveVals          *tsvals,
@@ -868,12 +872,14 @@ save_metadata (GFile                 *file,
    * we also clear some other tags that were only meaningful
    * for the original imported image.
    */
-  static const gchar *exif_tags_to_remove[] = {
-    "Exif.Image.0x0118",
-    "Exif.Image.0x0119",
-    "Exif.Image.0x011d",
+  static const gchar *exif_tags_to_remove[] =
+  {
+    "Exif.Image.0x0118",  /* MinSampleValue */
+    "Exif.Image.0x0119",  /* MaxSampleValue */
+    "Exif.Image.0x011d",  /* PageName */
     "Exif.Image.Compression",
     "Exif.Image.FillOrder",
+    "Exif.Image.InterColorProfile",
     "Exif.Image.NewSubfileType",
     "Exif.Image.PageNumber",
     "Exif.Image.PhotometricInterpretation",
@@ -897,9 +903,9 @@ save_metadata (GFile                 *file,
   exif_tags = gexiv2_metadata_get_exif_tags (GEXIV2_METADATA(metadata));
   for (char **tag = exif_tags; *tag; tag++)
     {
-      if (g_str_has_prefix (*tag, "Exif.Image")
-          && (*tag)[strlen ("Exif.Image")] >= '0'
-          && (*tag)[strlen ("Exif.Image")] <= '9')
+      if (g_str_has_prefix (*tag, "Exif.SubImage")
+          && (*tag)[strlen ("Exif.SubImage")] >= '0'
+          && (*tag)[strlen ("Exif.SubImage")] <= '9')
         gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), *tag);
     }
 
