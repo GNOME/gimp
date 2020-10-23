@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-10 13:26+0000\n"
-"PO-Revision-Date: 2020-10-21 14:15+0300\n"
+"PO-Revision-Date: 2020-10-23 11:39+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -376,6 +376,7 @@ msgstr ""
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
+"Fișierele de swap și cache nu mai sunt salvate în directorul de configurare"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid ""
@@ -951,7 +952,7 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"Codarea de nume de fișier configurată nu a putut fi convertită la UTF-8: %s\n"
+"Codarea numelui de fișier configurată nu a putut fi convertită la UTF-8: %s\n"
 "\n"
 "Verificați valoarea variabilei de mediu G_FILENAME_ENCODING."
 
@@ -985,7 +986,7 @@ msgstr "Peneluri"
 
 #: ../app/actions/actions.c:117 ../app/dialogs/dialogs.c:358
 msgid "Buffers"
-msgstr "Zone tampon"
+msgstr "Tampoane"
 
 #: ../app/actions/actions.c:120 ../app/dialogs/dialogs.c:376
 #: ../app/propgui/gimppropgui-newsprint.c:160
@@ -1294,89 +1295,88 @@ msgstr "Editează penelul"
 #: ../app/actions/buffers-actions.c:42
 msgctxt "buffers-action"
 msgid "Buffers Menu"
-msgstr "Meniul zonelor tampon"
+msgstr "Meniul tampaonelor"
 
-# hm ? sau memoria tampon ?
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
 msgid "Paste Buffer as _New Image"
-msgstr "Lipește zona tampon ca imagine _nouă"
+msgstr "Lipește tamponul ca imagine _nouă"
 
 #: ../app/actions/buffers-actions.c:47
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
-msgstr "Lipește zona tampon selectată ca imagine nouă"
+msgstr "Lipește tamponul selectat ca imagine nouă"
 
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
-msgstr "Șter_ge zona tampon"
+msgstr "Șter_ge tamponul"
 
 #: ../app/actions/buffers-actions.c:53
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
-msgstr "Șterge zona tampon selectată"
+msgstr "Șterge tamponul selectat"
 
 #: ../app/actions/buffers-actions.c:61
 msgctxt "buffers-action"
 msgid "_Paste Buffer"
-msgstr "Li_pește zona tampon"
+msgstr "Li_pește tamponul"
 
 #: ../app/actions/buffers-actions.c:62
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "Lipește zona tampon selectată"
+msgstr "Lipește tamponul selectat"
 
 #: ../app/actions/buffers-actions.c:67
 msgctxt "buffers-action"
 msgid "Paste Buffer In Pl_ace"
-msgstr "Lipește zona t_ampon în loc"
+msgstr "Lipește t_amponul în loc"
 
 #: ../app/actions/buffers-actions.c:68
 msgctxt "buffers-action"
 msgid "Paste the selected buffer at its original position"
-msgstr "Lipește zona tampon selectată la poziția ei originală"
+msgstr "Lipește tamponul selectat la poziția lui originală"
 
 #: ../app/actions/buffers-actions.c:73
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into The Selection"
-msgstr "L_ipește zona tampon în interiorul selecției"
+msgstr "L_ipește tamponul în interiorul selecției"
 
 #: ../app/actions/buffers-actions.c:74
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "Lipește zona tampon selectată în selecție"
+msgstr "Lipește tamponul selectat în interiorul selecției"
 
 #: ../app/actions/buffers-actions.c:79
 msgctxt "buffers-action"
 msgid "Paste Buffer Into The Selection In Place"
-msgstr "Lipește zona tampon în interiorul selecției în loc"
+msgstr "Lipește tamponul în interiorul selecției în loc"
 
 #: ../app/actions/buffers-actions.c:81
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection at its original position"
 msgstr ""
-"Lipește zona tampon selectată în interiorul selecției la poziția ei originală"
+"Lipește tamponul selectat în interiorul selecției la poziția lui originală"
 
 #: ../app/actions/buffers-actions.c:86
 msgctxt "buffers-action"
 msgid "Paste Buffer as New _Layer"
-msgstr "_Lipește zona tampon ca strat nou"
+msgstr "_Lipește tamponul ca strat nou"
 
 #: ../app/actions/buffers-actions.c:87
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer"
-msgstr "Lipește zona tampon selectată ca strat nou"
+msgstr "Lipește tamponul selectat ca strat nou"
 
 #: ../app/actions/buffers-actions.c:92
 msgctxt "buffers-action"
 msgid "Paste Buffer as New Layer in Place"
-msgstr "Lipește zona tampon ca strat nou în loc"
+msgstr "Lipește tamponul ca strat nou în loc"
 
 #: ../app/actions/buffers-actions.c:94
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
-msgstr "Lipește zona tampon selectată ca strat nou la poziția ei originală"
+msgstr "Lipește tamponul selectat ca strat nou la poziția lui originală"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -3534,12 +3534,12 @@ msgstr "Deschide dialogul de fonturi"
 #: ../app/actions/dialogs-actions.c:209
 msgctxt "dialogs-action"
 msgid "B_uffers"
-msgstr "_Zone tampon"
+msgstr "_Tampoane"
 
 #: ../app/actions/dialogs-actions.c:210
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "Deschide dialogul zonelor de tampon denumite"
+msgstr "Deschide dialogul de tampoane denumite"
 
 #: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
@@ -4181,7 +4181,7 @@ msgstr "Lipește c_a"
 #: ../app/actions/edit-actions.c:67
 msgctxt "edit-action"
 msgid "_Buffer"
-msgstr "_Zonă tampon"
+msgstr "_Tampon"
 
 # a nu se particulariza tipul de operații, poate fi undo dar și redo
 # hm ? sau fără de ?
@@ -4299,7 +4299,7 @@ msgstr "_Taie cu nume..."
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
-msgstr "Mută pixelii selectați într-o zonă tampon denumită"
+msgstr "Mută pixelii selectați într-un tampon denumit"
 
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
@@ -4309,7 +4309,7 @@ msgstr "_Copiază cu nume..."
 #: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Copiază pixelii selectați într-o zonă tampon denumită"
+msgstr "Copiază pixelii selectați într-un tampon denumit"
 
 #. GIMP_ICON_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:147
@@ -4320,17 +4320,17 @@ msgstr "Copiază partea _vizibilă cu nume..."
 #: ../app/actions/edit-actions.c:149
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
-msgstr "Copiază ce este vizibil în zona selectată într-o zonă tampon denumită"
+msgstr "Copiază ce este vizibil în zona selectată într-un tampon denumit"
 
 #: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
 msgid "_Paste Named..."
-msgstr "Li_pește cu numele..."
+msgstr "Li_pește cu nume..."
 
 #: ../app/actions/edit-actions.c:155
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
-msgstr "Lipește conținutul unei zone tampon denumite"
+msgstr "Lipește conținutul unui tampon denumit"
 
 # hm ? sau curăță ? mi-e să nu se înțeleagă că se referă la instrument de curățare, gen curăță de scame
 #: ../app/actions/edit-actions.c:160
@@ -4509,7 +4509,7 @@ msgstr "Taie cu nume"
 #: ../app/actions/edit-commands.c:405 ../app/actions/edit-commands.c:426
 #: ../app/actions/edit-commands.c:447
 msgid "Enter a name for this buffer"
-msgstr "Introduceți un nume pentru această zonă tampon"
+msgstr "Introduceți un nume pentru acest tampon"
 
 #: ../app/actions/edit-commands.c:423
 msgid "Copy Named"
@@ -4517,7 +4517,7 @@ msgstr "Copiază cu nume"
 
 #: ../app/actions/edit-commands.c:444
 msgid "Copy Visible Named "
-msgstr "Copiază partea vizibilă cu nume "
+msgstr "Copiază cu nume partea vizibilă "
 
 #: ../app/actions/edit-commands.c:539 ../app/tools/gimppainttool.c:887
 msgid "The active layer's alpha channel is locked."
@@ -4538,7 +4538,7 @@ msgstr "Nu există niciun strat activ sau canal din care să se poată tăia."
 #: ../app/actions/edit-commands.c:651 ../app/actions/edit-commands.c:683
 #: ../app/actions/edit-commands.c:707
 msgid "(Unnamed Buffer)"
-msgstr "(Zonă tampon nedenumită)"
+msgstr "(Tampon nedenumit)"
 
 #: ../app/actions/edit-commands.c:678
 msgid "There is no active layer or channel to copy from."
@@ -6151,7 +6151,6 @@ msgctxt "gradients-action"
 msgid "Save as _POV-Ray..."
 msgstr "Salvează ca _POV-Ray..."
 
-# hm ? sau ca fișier POV-Ray ?
 #: ../app/actions/gradients-actions.c:73
 msgctxt "gradients-action"
 msgid "Save gradient as POV-Ray"
@@ -6187,7 +6186,6 @@ msgctxt "gradients-action"
 msgid "Edit this gradient"
 msgstr "Editează acest degrade"
 
-# hm ? sau ca fișier POV-Ray ?
 #: ../app/actions/gradients-commands.c:73
 #, c-format
 msgid "Save '%s' as POV-Ray"
@@ -10508,7 +10506,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:645
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
-msgstr ""
+msgstr "Stabilește decalajul de derulare orizontală"
 
 #: ../app/actions/view-actions.c:650
 msgctxt "view-action"
@@ -10543,7 +10541,7 @@ msgstr "Derulează pagina spre dreapta"
 #: ../app/actions/view-actions.c:683
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
-msgstr ""
+msgstr "Stabilește decalajul de derulare verticală"
 
 #: ../app/actions/view-actions.c:688
 msgctxt "view-action"
@@ -10774,6 +10772,8 @@ msgid ""
 "The chosen recent dock contains a toolbox. Please close the currently open "
 "toolbox and try again."
 msgstr ""
+"Andocarea recent aleasă conține o trusă de instrumente. Închideți trusa de "
+"instrumente deschisă în prezent și încercați din nou."
 
 #: ../app/config/config-enums.c:25
 msgctxt "canvas-padding-mode"
@@ -10962,7 +10962,7 @@ msgstr "Arată la survolare"
 #: ../app/config/config-enums.c:319
 msgctxt "tool-group-menu-mode"
 msgid "Show on hover in single column"
-msgstr ""
+msgstr "Arată la survolarea într-o singură coloană"
 
 #: ../app/config/config-enums.c:348
 msgctxt "window-hint"
@@ -10997,7 +10997,7 @@ msgstr "Nu s-a putut deschide „%s” pentru scriere: %s"
 #: ../app/config/gimpconfig-file.c:116
 #, c-format
 msgid "Error parsing '%%s': line longer than %s characters."
-msgstr ""
+msgstr "Eroare la prelucrarea „%%s”: linia este mai lungă de %s de caractere."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
 #: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:402
@@ -11086,7 +11086,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
-msgstr ""
+msgstr "Marca temporală a ultimei verificări de actualizare."
 
 #: ../app/config/gimprc-blurbs.h:53
 msgid "How to handle embedded color profiles when opening a file."
@@ -11216,7 +11216,7 @@ msgstr "Câte setări recente să fie păstrate în instrumentele de filtrare."
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid "Default to the last used settings in filter tools."
-msgstr ""
+msgstr "Implicit la ultimele setări utilizate în instrumentele de filtrare."
 
 #: ../app/config/gimprc-blurbs.h:201
 msgid "Show advanced color options in filter tools."
@@ -11248,7 +11248,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:218
 msgid "Add an alpha channel to all layers of imported images."
-msgstr ""
+msgstr "Adaugă un canal alfa la toate straturile imaginilor importate."
 
 #: ../app/config/gimprc-blurbs.h:221
 msgid "Which plug-in to use for importing raw digital camera files."
@@ -11467,8 +11467,8 @@ msgid ""
 "devices. No tool switching will occur when the input device changes."
 msgstr ""
 "Când opțiunea este activată, aceleași instrumente și opțiuni de instrumente "
-"vor fi folosite pentru toate dispozitivele de introducere. Nu se va schimba "
-"niciun instrument atunci când dispozitivul de intrare se schimbă."
+"vor fi folosite pentru toate dispozitivele de introducere. Nu va avea loc "
+"nicio comutare de instrument atunci când dispozitivul de intrare se schimbă."
 
 #: ../app/config/gimprc-blurbs.h:382
 msgid ""
@@ -11659,8 +11659,12 @@ msgstr "Ce este de făcut când se apasă bara de spațiu în fereastra de imagi
 #: ../app/config/gimprc-blurbs.h:482
 msgid "The compression method used for tile data stored in the swap file."
 msgstr ""
+"Metoda de comprimare folosită pentru datele din dalele stocate în fișierul "
+"swap"
 
-# hm ? dale ?
+# hm ?
+# dale ?
+# fragmente ?
 #: ../app/config/gimprc-blurbs.h:485
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
@@ -11670,15 +11674,14 @@ msgid ""
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Stabilește locația fișierului de memorie virtuală (swap). GIMP folosește o "
-"schemă de alocare de memorie bazată pe dale. Fișierul de memorie virtuală "
-"este folosit pentru a schimba rapid aceste dale de pe disc și la loc pe "
-"disc. Țineți cont de faptul că fișierul de memorie virtuală poate deveni "
-"lesne foarte mare dacă GIMP este folosit cu imagini mari. De asemenea, "
-"activitatea poate deveni oribil de lentă dacă fișierul de memorie virtuală "
-"este creat într-un director care este montat peste NFS. Pentru aceste "
-"motive, ar putea fi de dorit ca fișierul de memorie virtuală să fie pus în „/"
-"tmp”."
+"Stabilește locația fișierului swap. GIMP folosește o schemă de alocare a "
+"memoriei bazată pe dale. Fișierul de memorie virtuală este folosit pentru a "
+"schimba rapid aceste dale de pe disc și la loc pe disc. Țineți cont de "
+"faptul că fișierul de memorie virtuală poate deveni lesne foarte mare dacă "
+"GIMP este folosit cu imagini mari. De asemenea, activitatea poate deveni "
+"oribil de lentă dacă fișierul de memorie virtuală este creat într-un "
+"director care este montat peste NFS. Pentru aceste motive, ar putea fi de "
+"dorit ca fișierul de memorie virtuală să fie pus în „/tmp”."
 
 #: ../app/config/gimprc-blurbs.h:494
 msgid "When enabled, menus can be torn off."
@@ -11943,11 +11946,11 @@ msgid ""
 "images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
 "you may want to set this to a higher value."
 msgstr ""
-"Când cantitatea de date de pixeli depășește această limită, GIMP va începe "
-"să pună dale din imagine în memoria virtuală (swap). Această metodă este "
-"mult mai lentă, dar permite lucrul asupra unor imagini care altfel nu ar "
-"încăpea în memorie. Dacă aveți o grămadă de RAM, ar fi preferabil să "
-"stabiliți limita la o valoare mai mare."
+"Când cantitatea de date pixel depășește această limită, GIMP va începe să "
+"pună dalele de imagine în swap.  Această metodă este mult mai lentă, dar "
+"permite lucrul asupra unor imagini care altfel nu ar încăpea în memorie.  "
+"Dacă aveți o grămadă de RAM, ar fi preferabil să stabiliți limita la o "
+"valoare mai mare."
 
 #: ../app/config/gimprc-blurbs.h:680
 msgid "Show the current foreground and background colors in the toolbox."
@@ -13025,11 +13028,10 @@ msgstr "Dinamică"
 msgid "Color History"
 msgstr "Istoric de culori"
 
-# hm ?
 #. update tag cache
 #: ../app/core/gimp-data-factories.c:396
 msgid "Updating tag cache"
-msgstr "Actualizare cache de taguri"
+msgstr "Actualizare cache de etichete"
 
 #: ../app/core/gimp-edit.c:88
 msgctxt "undo-type"
@@ -13042,7 +13044,7 @@ msgstr "Strat lipit"
 
 #: ../app/core/gimp-edit.c:750
 msgid "Global Buffer"
-msgstr "Zonă tampon globală"
+msgstr "Tampon global"
 
 #: ../app/core/gimp-gradients.c:64
 msgid "Custom"
@@ -13091,12 +13093,12 @@ msgstr "Eroare la salvarea „%s”"
 #: ../app/core/gimp-spawn.c:186
 #, c-format
 msgid "Failed to fork (%s)"
-msgstr ""
+msgstr "Bifurcarea ramurii (fork) a eșuat (%s)"
 
 #: ../app/core/gimp-spawn.c:223
 #, c-format
 msgid "Failed to execute child process “%s” (%s)"
-msgstr ""
+msgstr "Execuția procesului copil „%s” a eșuat (%s)"
 
 #. This is a special string to specify the language identifier to
 #. * look for in the gimp-tags-default.xml file. Please translate the
@@ -13187,12 +13189,12 @@ msgstr ""
 #: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Unsupported brush format"
-msgstr ""
+msgstr "Format neacceptat de penel"
 
 #: ../app/core/gimpbrush-load.c:254
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
-msgstr ""
+msgstr "Date nevalide de antet în „%s”: numele de penel este prea lung: %lu"
 
 #: ../app/core/gimpbrush-load.c:272 ../app/core/gimpbrushgenerated-load.c:126
 #: ../app/core/gimpbrushpipe-load.c:70
@@ -13214,7 +13216,7 @@ msgid ""
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
 "Eroare fatală de prelucrare în fișierul penel:\n"
-"adâncime nesuportată de penel %d.\n"
+"adâncimea %d de penel nu este acceptată.\n"
 "Penelurile GIMP trebuie să fie GRAY sau RGBA."
 
 #: ../app/core/gimpbrush-load.c:519
@@ -13252,6 +13254,8 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr ""
+"Eroare fatală de prelucrare în fișierul penel: metodă de comprimare "
+"necunoscută."
 
 #: ../app/core/gimpbrush-load.c:1059
 #, c-format
@@ -13274,11 +13278,11 @@ msgstr "Spațiere penel"
 
 #: ../app/core/gimpbrushclipboard.c:185
 msgid "Clipboard Mask"
-msgstr ""
+msgstr "Mască de clipboard"
 
 #: ../app/core/gimpbrushclipboard.c:187 ../app/core/gimppatternclipboard.c:163
 msgid "Clipboard Image"
-msgstr ""
+msgstr "Imagine de clipboard"
 
 #: ../app/core/gimpbrushgenerated-load.c:76
 #, c-format
@@ -14034,7 +14038,7 @@ msgstr "Grupurile de straturi au fost adăugate în %s"
 #: ../app/core/gimpimage.c:2691
 #, c-format
 msgid "Masks on layer groups were added in %s"
-msgstr "Măștile de strat pe grupuri de straturi au fost adăugate în %s"
+msgstr "Măștile din grupurile de straturi au fost adăugate în %s"
 
 #: ../app/core/gimpimage.c:2707
 #, c-format
@@ -14731,7 +14735,7 @@ msgstr ""
 #: ../app/core/gimppalette-import.c:212
 #, c-format
 msgid "%s (occurs %u)"
-msgstr ""
+msgstr "%s (apare %u)"
 
 #: ../app/core/gimppalette-import.c:425
 #, c-format
@@ -14832,7 +14836,7 @@ msgid ""
 "Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Adâncime %d nesuportată de model.\n"
+"Adâncimea %d de model nu este acceptată.\n"
 "Modelele GIMP trebuie să fie GRAY sau RGB."
 
 #: ../app/core/gimppattern-load.c:99
@@ -16433,7 +16437,7 @@ msgstr "_Memoria maximă pentru anulări:"
 
 #: ../app/dialogs/preferences-dialog.c:1189
 msgid "Tile cache _size:"
-msgstr "Dimen_siunea cache-ului de dală:"
+msgstr "Dimen_siunea cache a dalelor:"
 
 #: ../app/dialogs/preferences-dialog.c:1192
 msgid "Maximum _new image size:"
@@ -16441,7 +16445,7 @@ msgstr "Dimensiunea maximă a unei imagi _noi:"
 
 #: ../app/dialogs/preferences-dialog.c:1196
 msgid "S_wap compression:"
-msgstr "Comprimarea memoriei virtuale (s_wap):"
+msgstr "Comprimarea s_wap:"
 
 #: ../app/dialogs/preferences-dialog.c:1201
 msgid "Number of _threads to use:"
@@ -16485,8 +16489,8 @@ msgid ""
 "bugs."
 msgstr ""
 "Sperăm că nu veți avea nevoie niciodată de aceste setări, dar, la fel ca "
-"orice alt software, GIMP are erori și pot apărea blocări. Dacă se întâmplă, "
-"ne puteți ajuta raportând erorile."
+"orice alt software, GIMP are erori și pot avea loc blocări. Dacă se "
+"întâmplă, ne puteți ajuta raportând erorile."
 
 #: ../app/dialogs/preferences-dialog.c:1266
 msgid "Bug Reporting"
@@ -17676,11 +17680,11 @@ msgstr "Selectează dosarul pentru fișiere temporare"
 
 #: ../app/dialogs/preferences-dialog.c:3228
 msgid "_Swap folder:"
-msgstr "Do_sar pentru memorie virtuală (swap):"
+msgstr "Dosar pentru _swap:"
 
 #: ../app/dialogs/preferences-dialog.c:3229
 msgid "Select Swap Folder"
-msgstr "Selectează dosarul pentru memoria virtuală (swap)"
+msgstr "Selectează dosarul pentru swap"
 
 #: ../app/dialogs/preferences-dialog.c:3262
 msgid "Brush Folders"
@@ -18107,7 +18111,7 @@ msgstr "Fișierul cu sfaturi GIMP pare că lipsește!"
 #: ../app/dialogs/tips-dialog.c:105
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr "Ar trebui să existe un fișier numit „%s”. Verificați instalarea."
+msgstr "Ar trebui să existe un fișier denumit „%s”. Verificați instalarea."
 
 #: ../app/dialogs/tips-dialog.c:111
 msgid "The GIMP tips file could not be parsed!"
@@ -18511,12 +18515,11 @@ msgstr "Plasează culoarea în strat"
 msgid "Drop layers"
 msgstr "Plasează straturi"
 
-# hm ?
 #: ../app/display/gimpdisplayshell-dnd.c:732
 #: ../app/display/gimpdisplayshell-dnd.c:750
 #: ../app/widgets/gimplayertreeview.c:854 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
-msgstr "Zonă tampon plasată"
+msgstr "Tampon plasat"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:79
 msgid "Color Display Filters"
@@ -18599,7 +18602,7 @@ msgstr "nu este gestionat colorimetric"
 #: ../app/display/gimpdisplayshell-tool-events.c:1603
 #, c-format
 msgid "Layer picked: '%s'"
-msgstr "Strat prelevat: '%s'"
+msgstr "Strat prelevat: „%s”"
 
 #: ../app/display/gimpdisplayshell-utils.c:194
 #: ../app/tools/gimpmeasuretool.c:625 ../app/tools/gimpmeasuretool.c:778
@@ -19897,8 +19900,8 @@ msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
 msgstr ""
-"Calculează un set al tamponului de coeficient pentru tamponul de coordonată "
-"pentru instrumentul de cușcă GIMP"
+"Convertește un set al tamponului de coeficient într-un tampon de coordonate "
+"pentru instrumentul cușcă GIMP"
 
 #: ../app/operations/gimpoperationcagetransform.c:129
 msgid "Fill with plain color"
@@ -20737,7 +20740,7 @@ msgstr "Paleta „%s” nu este redenumibilă"
 
 #: ../app/pdb/gimppdb-utils.c:354
 msgid "Invalid empty font name"
-msgstr "Nume gol de font nevalid"
+msgstr "Nume gol nevalid de font"
 
 #: ../app/pdb/gimppdb-utils.c:363
 #, c-format
@@ -20746,12 +20749,12 @@ msgstr "Fontul „%s” nu a fost găsit"
 
 #: ../app/pdb/gimppdb-utils.c:382
 msgid "Invalid empty buffer name"
-msgstr "Nume gol nevalid de zonă tampon"
+msgstr "Nume gol nevalid de tampon"
 
 #: ../app/pdb/gimppdb-utils.c:392
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "Zona tampon numită „%s” nu a fost găsită"
+msgstr "Tamponul denumit „%s” nu a fost găsit"
 
 #: ../app/pdb/gimppdb-utils.c:411
 msgid "Invalid empty paint method name"
@@ -24344,15 +24347,14 @@ msgid "Click to smudge the line"
 msgstr "Clic pentru a mânji linia"
 
 # tooltip
-# hm ? sau unitatea de măsură ?
 #: ../app/tools/gimptextoptions.c:124
 msgid "Font size unit"
-msgstr "Unitatea pentru dimensiunea fontului"
+msgstr "Unitatea de măsură pentru dimensiunea fontului"
 
 # tooltip
 #: ../app/tools/gimptextoptions.c:129 ../app/tools/gimptextoptions.c:130
 msgid "Font size"
-msgstr "Dimenisunea fontului"
+msgstr "Dimensiunea fontului"
 
 #: ../app/tools/gimptextoptions.c:143
 msgid "Hinting"
@@ -24372,11 +24374,11 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:168
 msgid "Justify"
-msgstr ""
+msgstr "Aliniere"
 
 #: ../app/tools/gimptextoptions.c:169
 msgid "Text alignment"
-msgstr "Aliniere de text"
+msgstr "Alinierea textului"
 
 #: ../app/tools/gimptextoptions.c:176
 msgid "Indentation"
@@ -24543,7 +24545,7 @@ msgstr "Previzualizare compozită"
 
 #: ../app/tools/gimptransformgridoptions.c:120
 msgid "Show preview as part of the image composition"
-msgstr ""
+msgstr "Arată previzualizarea ca parte a compoziției imaginii"
 
 #: ../app/tools/gimptransformgridoptions.c:126
 msgid "Preview linked items"
@@ -24551,15 +24553,15 @@ msgstr "Previzualizează elementele legate"
 
 #: ../app/tools/gimptransformgridoptions.c:127
 msgid "Include linked items in the preview"
-msgstr ""
+msgstr "Include în previzualizare elementele legate"
 
 #: ../app/tools/gimptransformgridoptions.c:133
 msgid "Synchronous preview"
-msgstr ""
+msgstr "Previzualizare sincronă"
 
 #: ../app/tools/gimptransformgridoptions.c:134
 msgid "Render the preview synchronously"
-msgstr ""
+msgstr "Randează previzualizarea în mod sincron"
 
 #: ../app/tools/gimptransformgridoptions.c:140
 msgid "Image opacity"
@@ -25377,7 +25379,7 @@ msgstr "Nu au fost găsite trasee în „%s”"
 
 #: ../app/vectors/gimpvectors-import.c:390
 msgid "No paths found in the buffer"
-msgstr "Nu au fost găsite trasee în zona tampon"
+msgstr "Nu s-au găsit trasee în tampon"
 
 #: ../app/vectors/gimpvectors-import.c:400
 #, c-format
@@ -25938,7 +25940,6 @@ msgstr "Elimină cont_rolerul"
 msgid "Remove Controller '%s'?"
 msgstr "Eliminați controlerul „%s”?"
 
-# hm ? sau mapările ?
 #: ../app/widgets/gimpcontrollerlist.c:581
 msgid ""
 "Removing this controller from the list of active controllers will "
@@ -26051,7 +26052,7 @@ msgstr "Derulează în jos"
 #: ../app/widgets/gimpcontrollerwheel.c:137
 #: ../app/widgets/gimpcontrollerwheel.c:140
 msgid "Scroll Left"
-msgstr "Derulează spre stânga"
+msgstr "Derulează la stânga"
 
 #: ../app/widgets/gimpcontrollerwheel.c:144
 #: ../app/widgets/gimpcontrollerwheel.c:147
@@ -26074,19 +26075,19 @@ msgstr "Evenimente asociate cu rotița de la maus"
 
 #: ../app/widgets/gimpcriticaldialog.c:55
 msgid "Copy Bug Information"
-msgstr ""
+msgstr "Copiază informațiile despre eroare"
 
 #: ../app/widgets/gimpcriticaldialog.c:56
 msgid "Open Bug Tracker"
-msgstr ""
+msgstr "Deschide urmăritorul de erori"
 
 #: ../app/widgets/gimpcriticaldialog.c:185
 msgid "See bug details"
-msgstr ""
+msgstr "Vedeți detaliile erorilor"
 
 #: ../app/widgets/gimpcriticaldialog.c:204
 msgid "Go to _Download page"
-msgstr ""
+msgstr "Accesați pagina de _descărcare"
 
 #. Recommend an update.
 #: ../app/widgets/gimpcriticaldialog.c:209
@@ -26095,36 +26096,40 @@ msgid ""
 "A new version of GIMP (%s) was released on %s.\n"
 "It is recommended to update."
 msgstr ""
+"O nouă versiune GIMP (%s) a fost lansată în data de %s.\n"
+"Este recomandat să actualizați."
 
 #: ../app/widgets/gimpcriticaldialog.c:215
 msgid "You are running an unsupported version!"
-msgstr ""
+msgstr "Rulați o versiune care nu mai este acceptată!"
 
 #: ../app/widgets/gimpcriticaldialog.c:238
 #: ../app/widgets/gimpcriticaldialog.c:588
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
+"Pentru a ne ajuta să îmbunătățim GIMP, puteți raporta eroarea urmând acești "
+"pași simpli:"
 
 #: ../app/widgets/gimpcriticaldialog.c:240
 #: ../app/widgets/gimpcriticaldialog.c:590
 msgid "Copy the bug information to the clipboard by clicking: "
-msgstr ""
+msgstr "Copiați în clipboard informațiile despre eroare dând clic pe: "
 
 #: ../app/widgets/gimpcriticaldialog.c:242
 #: ../app/widgets/gimpcriticaldialog.c:592
 msgid "Open our bug tracker in the browser by clicking: "
-msgstr ""
+msgstr "Deschideți în browser urmăritorul de erori dând clic pe: "
 
 #: ../app/widgets/gimpcriticaldialog.c:244
 #: ../app/widgets/gimpcriticaldialog.c:594
 msgid "Create a login if you don't have one yet."
-msgstr ""
+msgstr "Creați un cont dacă încă nu aveți unul."
 
 #: ../app/widgets/gimpcriticaldialog.c:245
 #: ../app/widgets/gimpcriticaldialog.c:595
 msgid "Paste the clipboard text in a new bug report."
-msgstr ""
+msgstr "Lipiți textul din clipboard într-un raport de erori nou."
 
 #: ../app/widgets/gimpcriticaldialog.c:246
 #: ../app/widgets/gimpcriticaldialog.c:596
@@ -26132,30 +26137,37 @@ msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
 msgstr ""
+"Adăugați informații relevante în limba engleză în raportul de erori, "
+"explicând ce făceați când a apărut această eroare."
 
 #: ../app/widgets/gimpcriticaldialog.c:248
 msgid ""
 "This error may have left GIMP in an inconsistent state. It is advised to "
 "save your work and restart GIMP."
 msgstr ""
+"Este posibil ca această eroare să fi lăsat GIMP într-o stare inconsistentă. "
+"Este recomandat să vă salvați lucrul și să reporniți GIMP."
 
 #: ../app/widgets/gimpcriticaldialog.c:253
 msgid ""
 "You can also close the dialog directly but reporting bugs is the best way to "
 "make your software awesome."
 msgstr ""
+"Puteți de asemenea să închideți dialogul fără a mai face nimic, dar "
+"raportarea erorilor este cea mai bună modalitate de a îmbunătăți acest "
+"program."
 
 #: ../app/widgets/gimpcriticaldialog.c:358
 msgid "The operating system is out of memory or resources."
-msgstr ""
+msgstr "Sistemul de operare nu mai are memorie sau resurse."
 
 #: ../app/widgets/gimpcriticaldialog.c:361
 msgid "The specified file was not found."
-msgstr ""
+msgstr "Fișierul specificat nu a fost găsit."
 
 #: ../app/widgets/gimpcriticaldialog.c:364
 msgid "The specified path was not found."
-msgstr ""
+msgstr "Calea specificată nu a fost găsită."
 
 #: ../app/widgets/gimpcriticaldialog.c:367
 msgid ""
@@ -26168,35 +26180,35 @@ msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:373
 msgid "The file name association is incomplete or invalid."
-msgstr ""
+msgstr "Asocierea numelui de fișier este incompletă sau nevalidă."
 
 #: ../app/widgets/gimpcriticaldialog.c:376
 msgid "DDE transaction busy"
-msgstr ""
+msgstr "Tranzacția DDE este ocupată"
 
 #: ../app/widgets/gimpcriticaldialog.c:379
 msgid "The DDE transaction failed."
-msgstr ""
+msgstr "Tranzacția DDE a eșuat."
 
 #: ../app/widgets/gimpcriticaldialog.c:382
 msgid "The DDE transaction timed out."
-msgstr ""
+msgstr "Tranzacția DDE a expirat."
 
 #: ../app/widgets/gimpcriticaldialog.c:385
 msgid "The specified DLL was not found."
-msgstr ""
+msgstr "DLL-ul specificat nu a fost găsit."
 
 #: ../app/widgets/gimpcriticaldialog.c:388
 msgid "There is no application associated with the given file name extension."
-msgstr ""
+msgstr "Nu există nicio aplicație asociată cu extensia numelui de fișier dată."
 
 #: ../app/widgets/gimpcriticaldialog.c:391
 msgid "There was not enough memory to complete the operation."
-msgstr ""
+msgstr "Nu a fost suficientă memorie pentru a finaliza operația."
 
 #: ../app/widgets/gimpcriticaldialog.c:394
 msgid "A sharing violation occurred."
-msgstr ""
+msgstr "A avut loc o încălcare a partajării."
 
 #: ../app/widgets/gimpcriticaldialog.c:397
 msgid "Unknown Microsoft Windows error."
@@ -26233,29 +26245,29 @@ msgstr "_Repornește GIMP"
 #: ../app/widgets/gimpdashboard.c:480 ../app/widgets/gimpdashboard.c:532
 msgctxt "dashboard-variable"
 msgid "Occupied"
-msgstr ""
+msgstr "Ocupat"
 
 #: ../app/widgets/gimpdashboard.c:481
 msgid "Tile cache occupied size"
-msgstr ""
+msgstr "Dimensiunea ocupată de cache-ul dalelor"
 
 #: ../app/widgets/gimpdashboard.c:490
 msgctxt "dashboard-variable"
 msgid "Maximum"
-msgstr ""
+msgstr "Maxim"
 
 #: ../app/widgets/gimpdashboard.c:491
 msgid "Maximal tile cache occupied size"
-msgstr ""
+msgstr "Dimensiunea maximă ocupată de cache-ul dalelor"
 
 #: ../app/widgets/gimpdashboard.c:500 ../app/widgets/gimpdashboard.c:552
 msgctxt "dashboard-variable"
 msgid "Limit"
-msgstr ""
+msgstr "Limită"
 
 #: ../app/widgets/gimpdashboard.c:501
 msgid "Tile cache size limit"
-msgstr ""
+msgstr "Limita dimensiunii cache a dalelor"
 
 #: ../app/widgets/gimpdashboard.c:509 ../app/widgets/gimpdashboard.c:635
 msgctxt "dashboard-variable"
@@ -26264,20 +26276,20 @@ msgstr "Comprimare"
 
 #: ../app/widgets/gimpdashboard.c:510
 msgid "Tile cache compression ratio"
-msgstr ""
+msgstr "Raportul de comprimare al cache-ului dalelor"
 
 #: ../app/widgets/gimpdashboard.c:519
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
-msgstr ""
+msgstr "Reușită/Eșec"
 
 #: ../app/widgets/gimpdashboard.c:520
 msgid "Tile cache hit/miss ratio"
-msgstr ""
+msgstr "Raportul de reușită/eșec al cache-ului dalelor"
 
 #: ../app/widgets/gimpdashboard.c:533
 msgid "Swap file occupied size"
-msgstr ""
+msgstr "Dimensiunea ocupată de fișierul swap"
 
 #: ../app/widgets/gimpdashboard.c:542 ../app/widgets/gimpdashboard.c:699
 msgctxt "dashboard-variable"
@@ -26286,39 +26298,39 @@ msgstr "Dimensiune"
 
 #: ../app/widgets/gimpdashboard.c:543
 msgid "Swap file size"
-msgstr ""
+msgstr "Dimensiunea fișierului swap"
 
 #: ../app/widgets/gimpdashboard.c:553
 msgid "Swap file size limit"
-msgstr ""
+msgstr "Limita dimensiunii fișierului swap"
 
 #: ../app/widgets/gimpdashboard.c:560
 msgctxt "dashboard-variable"
 msgid "Queued"
-msgstr ""
+msgstr "La coadă"
 
 #: ../app/widgets/gimpdashboard.c:561
 msgid "Size of data queued for writing to the swap"
-msgstr ""
+msgstr "Dimensiunea datelor care așteaptă la coadă la swap"
 
 #: ../app/widgets/gimpdashboard.c:570
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
-msgstr ""
+msgstr "Blocaj la coadă"
 
 #: ../app/widgets/gimpdashboard.c:571
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
-msgstr ""
+msgstr "De câte ori scrierea la swap a fost blocată, din cauza unei cozi pline"
 
 #: ../app/widgets/gimpdashboard.c:580
 msgctxt "dashboard-variable"
 msgid "Queue full"
-msgstr ""
+msgstr "Coadă plină"
 
 #: ../app/widgets/gimpdashboard.c:581
 msgid "Whether the swap queue is full"
-msgstr ""
+msgstr "Dacă coada la swap este plină"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
@@ -26330,16 +26342,16 @@ msgstr "Citire"
 
 #: ../app/widgets/gimpdashboard.c:593
 msgid "Total amount of data read from the swap"
-msgstr ""
+msgstr "Cantitatea totală de date citite din swap"
 
 #: ../app/widgets/gimpdashboard.c:602
 msgctxt "dashboard-variable"
 msgid "Read throughput"
-msgstr ""
+msgstr "Capacitate de citire"
 
 #: ../app/widgets/gimpdashboard.c:603
 msgid "The rate at which data is read from the swap"
-msgstr ""
+msgstr "Rata la care datele sunt citite din swap"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
@@ -26351,20 +26363,20 @@ msgstr "Scriere"
 
 #: ../app/widgets/gimpdashboard.c:616
 msgid "Total amount of data written to the swap"
-msgstr ""
+msgstr "Cantitatea totală de date scrise în swap"
 
 #: ../app/widgets/gimpdashboard.c:625
 msgctxt "dashboard-variable"
 msgid "Write throughput"
-msgstr ""
+msgstr "Capacitate de scriere"
 
 #: ../app/widgets/gimpdashboard.c:626
 msgid "The rate at which data is written to the swap"
-msgstr ""
+msgstr "Rata la care datele sunt scrise în swap"
 
 #: ../app/widgets/gimpdashboard.c:636
 msgid "Swap compression ratio"
-msgstr ""
+msgstr "Raportul de comprimare swap"
 
 #: ../app/widgets/gimpdashboard.c:649
 msgctxt "dashboard-variable"
@@ -26373,9 +26385,8 @@ msgstr "Utilizare"
 
 #: ../app/widgets/gimpdashboard.c:650
 msgid "Total CPU usage"
-msgstr ""
+msgstr "Utilizarea totală a procesorului"
 
-# listă drop down după „Relativ la:” la opțiunile unor instrumente
 #: ../app/widgets/gimpdashboard.c:658 ../app/widgets/gimpdashboard.c:667
 #: ../app/widgets/gimpdashboard.c:729
 msgctxt "dashboard-variable"
@@ -26384,20 +26395,20 @@ msgstr "Activ"
 
 #: ../app/widgets/gimpdashboard.c:659
 msgid "Whether the CPU is active"
-msgstr ""
+msgstr "Dacă procesorul este activ"
 
 #: ../app/widgets/gimpdashboard.c:668
 msgid "Total amount of time the CPU has been active"
-msgstr ""
+msgstr "Perioada totală de timp în care procesorul a fost activ"
 
 #: ../app/widgets/gimpdashboard.c:681
 msgctxt "dashboard-variable"
 msgid "Used"
-msgstr "Folosit"
+msgstr "Utilizat"
 
 #: ../app/widgets/gimpdashboard.c:682
 msgid "Amount of memory used by the process"
-msgstr "Cantitatea de memorie folosită de proces"
+msgstr "Dimensiunea memoriei utilizată de proces"
 
 #: ../app/widgets/gimpdashboard.c:690
 msgctxt "dashboard-variable"
@@ -26406,20 +26417,20 @@ msgstr "Disponibil"
 
 #: ../app/widgets/gimpdashboard.c:691
 msgid "Amount of available physical memory"
-msgstr "Cantitatea de memorie fizică diponibilă"
+msgstr "Dimensiunea memoriei fizice disponibilă"
 
 #: ../app/widgets/gimpdashboard.c:700
 msgid "Physical memory size"
-msgstr "Dimensiune memorie fizică"
+msgstr "Dimensiunea memoriei fizice"
 
 #: ../app/widgets/gimpdashboard.c:711
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
-msgstr ""
+msgstr "Mipmapp"
 
 #: ../app/widgets/gimpdashboard.c:712
 msgid "Total size of processed mipmapped data"
-msgstr ""
+msgstr "Dimensiunea totală a datelor mipmapp procesate"
 
 #: ../app/widgets/gimpdashboard.c:720
 msgctxt "dashboard-variable"
@@ -26428,38 +26439,38 @@ msgstr "Atribuit"
 
 #: ../app/widgets/gimpdashboard.c:721
 msgid "Number of assigned worker threads"
-msgstr ""
+msgstr "Numărul de 'worker threads' atribuite"
 
 #: ../app/widgets/gimpdashboard.c:730
 msgid "Number of active worker threads"
-msgstr ""
+msgstr "Numărul de 'worker threads' active"
 
 #: ../app/widgets/gimpdashboard.c:738
 msgctxt "dashboard-variable"
 msgid "Async"
-msgstr ""
+msgstr "Asincron"
 
 #: ../app/widgets/gimpdashboard.c:739
 msgid "Number of ongoing asynchronous operations"
-msgstr ""
+msgstr "Numărul de operațiuni asincrone în curs"
 
 #: ../app/widgets/gimpdashboard.c:747
 msgctxt "dashboard-variable"
 msgid "Tile"
-msgstr ""
+msgstr "Dale"
 
 #: ../app/widgets/gimpdashboard.c:748
 msgid "Total size of tile memory"
-msgstr ""
+msgstr "Dimensiunea totală de memorie a dalelor"
 
 #: ../app/widgets/gimpdashboard.c:757
 msgctxt "dashboard-variable"
 msgid "Scratch"
-msgstr ""
+msgstr "Scratch"
 
 #: ../app/widgets/gimpdashboard.c:758
 msgid "Total size of scratch memory"
-msgstr ""
+msgstr "Dimensiunea totală a memoriei scratch"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
@@ -26471,34 +26482,34 @@ msgstr "TempBuf"
 
 #: ../app/widgets/gimpdashboard.c:770
 msgid "Total size of temporary buffers"
-msgstr "Dimensiunea totală a memoriei tampon temporară"
+msgstr "Dimensiunea totală a memoriei tampon temporare"
 
 #: ../app/widgets/gimpdashboard.c:782
 msgctxt "dashboard-group"
 msgid "Cache"
-msgstr ""
+msgstr "Cache"
 
 #: ../app/widgets/gimpdashboard.c:783
 msgid "In-memory tile cache"
-msgstr ""
+msgstr "Cache-ul dalelor în memorie"
 
 #: ../app/widgets/gimpdashboard.c:819
 msgctxt "dashboard-group"
 msgid "Swap"
-msgstr ""
+msgstr "Swap"
 
 #: ../app/widgets/gimpdashboard.c:820
 msgid "On-disk tile swap"
-msgstr ""
+msgstr "Swap-ul dalelor pe disc"
 
 #: ../app/widgets/gimpdashboard.c:884
 msgctxt "dashboard-group"
 msgid "CPU"
-msgstr "CPU"
+msgstr "Procesor"
 
 #: ../app/widgets/gimpdashboard.c:885
 msgid "CPU usage"
-msgstr "Utilizare CPU"
+msgstr "Utilizare procesor"
 
 #: ../app/widgets/gimpdashboard.c:920
 msgctxt "dashboard-group"
@@ -26507,7 +26518,7 @@ msgstr "Memorie"
 
 #: ../app/widgets/gimpdashboard.c:921
 msgid "Memory usage"
-msgstr "Utilizare de memorie"
+msgstr "Utilizare memorie"
 
 #: ../app/widgets/gimpdashboard.c:929
 msgctxt "dashboard-variable"
@@ -26517,7 +26528,7 @@ msgstr "Cache"
 #: ../app/widgets/gimpdashboard.c:963
 msgctxt "dashboard-group"
 msgid "Misc"
-msgstr "Misc"
+msgstr "Diverse"
 
 #: ../app/widgets/gimpdashboard.c:964
 msgid "Miscellaneous information"
@@ -26531,7 +26542,7 @@ msgstr "Selectează câmpurile"
 #: ../app/widgets/gimpdashboard.c:3296
 msgctxt "dashboard-value"
 msgid "N/A"
-msgstr ""
+msgstr "Indisponibil"
 
 #: ../app/widgets/gimpdashboard.c:3305 ../app/widgets/gimpdashboard.c:4308
 msgctxt "dashboard-value"
@@ -26565,7 +26576,7 @@ msgstr "%s/s"
 
 #: ../app/widgets/gimpdashboard.c:4376
 msgid "N/A"
-msgstr "N/D"
+msgstr "Indisponibil"
 
 #: ../app/widgets/gimpdashboard.c:4754
 msgid "Resolving symbol information..."
@@ -26687,7 +26698,7 @@ msgstr "Î_nlocuiește"
 #: ../app/widgets/gimpdnd-xds.c:239
 #, c-format
 msgid "A file named '%s' already exists."
-msgstr "Există deja un fișier cu numele „%s”."
+msgstr "Există deja un fișier denumit „%s”."
 
 #: ../app/widgets/gimpdnd-xds.c:243
 msgid "Do you want to replace it with the image you are saving?"
@@ -27013,6 +27024,8 @@ msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr ""
+"Puteți fie să selectați un manual în altă limbă, fie să citiți versiunea "
+"online."
 
 #: ../app/widgets/gimphelp.c:842
 msgid ""
@@ -27346,7 +27359,7 @@ msgstr "Alegeți un preset din listă"
 
 #: ../app/widgets/gimpsettingsbox.c:324
 msgid "Save the current settings as named preset"
-msgstr "Salvează setările curente ca preset denumit"
+msgstr "Salvează setările curente ca presetare denumită"
 
 #: ../app/widgets/gimpsettingsbox.c:342
 msgid "Manage presets"
@@ -27366,7 +27379,7 @@ msgstr "_Gestionare presetări salvate..."
 
 #: ../app/widgets/gimpsettingsbox.c:605
 msgid "Save Settings as Named Preset"
-msgstr "Salvează setările ca preset denumit"
+msgstr "Salvează setările ca presetare denumită"
 
 #: ../app/widgets/gimpsettingsbox.c:608
 msgid "Enter a name for the preset"
@@ -27924,7 +27937,8 @@ msgstr "Deschidere „%s”"
 #: ../app/xcf/xcf.c:325
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Eroare XCF: a fost găsită versiunea %d de fișier XCF nesuportată"
+msgstr ""
+"Eroare XCF: a fost găsită versiunea %d de fișier XCF care nu este acceptată"
 
 #: ../app/xcf/xcf.c:384
 #, c-format
@@ -28018,6 +28032,8 @@ msgstr "Eroare la scrierea XCF: alocarea a %d baiți de memorie a eșuat."
 #, c-format
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
 msgstr ""
+"Eroare la scrierea XCF: biți per canal (BPC) neacceptați la scrierea de "
+"pixel: %d"
 
 #: ../app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
