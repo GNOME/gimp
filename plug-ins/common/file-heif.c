@@ -110,87 +110,102 @@ query (void)
     { GIMP_PDB_INT32,    "lossless", "Use lossless compression (0 = lossy, 1 = lossless)" }
   };
 
-  gimp_install_procedure (LOAD_PROC,
-                          _("Loads HEIF images"),
-                          _("Load image stored in HEIF format (High "
-                            "Efficiency Image File Format). Typical "
-                            "suffices for HEIF files are .heif, .heic."),
-                          "Dirk Farin <farin@struktur.de>",
-                          "Dirk Farin <farin@struktur.de>",
-                          "2018",
-                          _("HEIF/HEIC"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_load_handler (LOAD_PROC,
-                              "heic,heif"
+  if (heif_have_decoder_for_format (heif_compression_HEVC)
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-                              ",avif"
+      || heif_have_decoder_for_format (heif_compression_AV1)
 #endif
-                              , "");
-  gimp_register_file_handler_mime (LOAD_PROC,
-                                   "image/heif"
+     )
+    {
+      GString *extensions = g_string_new (NULL);
+      GString *mimetypes = g_string_new (NULL);
+      GString *magic = g_string_new ("4,string,ftypmif1");
+
+      if (heif_have_decoder_for_format (heif_compression_HEVC))
+        {
+          g_string_append (extensions, "heic,heif");
+          g_string_append (mimetypes, "image/heif");
+          g_string_append (magic, ",4,string,ftypheic,4,string,ftypheix,"
+                                  "4,string,ftyphevc,4,string,ftypheim,"
+                                  "4,string,ftypheis,4,string,ftyphevm,"
+                                  "4,string,ftyphevs,4,string,ftypmsf1");
+        }
+
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-                                   ",image/avif"
+      if (heif_have_decoder_for_format (heif_compression_AV1))
+        {
+          g_string_append_printf (extensions, "%savif", extensions->len ? "," : "");
+          g_string_append_printf (mimetypes, "%simage/avif", mimetypes->len ? "," : "");
+          g_string_append (magic, ",4,string,ftypavif");
+        }
 #endif
-                                  );
-  gimp_register_file_handler_uri (LOAD_PROC);
-  /* HEIF is an ISOBMFF format whose "brand" (the value after "ftyp")
-   * can be of various values.
-   * See also: https://gitlab.gnome.org/GNOME/gimp/issues/2209
-   */
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "heif,heic"
+
+      gimp_install_procedure (LOAD_PROC,
+                              _("Loads HEIF images"),
+                              _("Load image stored in HEIF format (High "
+                                "Efficiency Image File Format). Typical "
+                                "suffices for HEIF files are .heif, .heic."),
+                              "Dirk Farin <farin@struktur.de>",
+                              "Dirk Farin <farin@struktur.de>",
+                              "2018",
+                              _("HEIF/HEIC"),
+                              NULL,
+                              GIMP_PLUGIN,
+                              G_N_ELEMENTS (load_args),
+                              G_N_ELEMENTS (load_return_vals),
+                              load_args, load_return_vals);
+
+      gimp_register_load_handler (LOAD_PROC, extensions->str, "");
+      gimp_register_file_handler_mime (LOAD_PROC, mimetypes->str);
+      gimp_register_file_handler_uri (LOAD_PROC);
+
+      gimp_register_magic_load_handler (LOAD_PROC,
+                                        extensions->str, "",
+                                        magic->str);
+
+      g_string_free (magic, TRUE);
+      g_string_free (mimetypes, TRUE);
+      g_string_free (extensions, TRUE);
+    }
+
+  if (heif_have_encoder_for_format (heif_compression_HEVC))
+    {
+      gimp_install_procedure (SAVE_PROC,
+                              _("Exports HEIF images"),
+                              _("Save image in HEIF format (High Efficiency "
+                              "Image File Format)."),
+                              "Dirk Farin <farin@struktur.de>",
+                              "Dirk Farin <farin@struktur.de>",
+                              "2018",
+                              _("HEIF/HEIC"),
+                              "RGB*",
+                              GIMP_PLUGIN,
+                              G_N_ELEMENTS (save_args), 0,
+                              save_args, NULL);
+
+      gimp_register_save_handler (SAVE_PROC, "heic,heif", "");
+      gimp_register_file_handler_mime (SAVE_PROC, "image/heif");
+      gimp_register_file_handler_uri (SAVE_PROC);
+    }
+
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-                                    ",avif"
-#endif
-                                    , "",
-                                    "4,string,ftypheic,4,string,ftypheix,"
-                                    "4,string,ftyphevc,4,string,ftypheim,"
-                                    "4,string,ftypheis,4,string,ftyphevm,"
-                                    "4,string,ftyphevs,4,string,ftypmif1,"
-                                    "4,string,ftypmsf1"
-#if LIBHEIF_HAVE_VERSION(1,8,0)
-                                    ",4,string,ftypavif"
-#endif
-                                   );
+  if (heif_have_encoder_for_format (heif_compression_AV1))
+    {
+      gimp_install_procedure (SAVE_PROC_AV1,
+                              _("Exports AVIF images"),
+                              _("Save image in AV1 Image File Format (AVIF)"),
+                              "Daniel Novomesky <dnovomesky@gmail.com>",
+                              "Daniel Novomesky <dnovomesky@gmail.com>",
+                              "2020",
+                              "HEIF/AVIF",
+                              "RGB*",
+                              GIMP_PLUGIN,
+                              G_N_ELEMENTS (save_args), 0,
+                              save_args, NULL);
 
-  gimp_install_procedure (SAVE_PROC,
-                          _("Exports HEIF images"),
-                          _("Save image in HEIF format (High Efficiency "
-                            "Image File Format)."),
-                          "Dirk Farin <farin@struktur.de>",
-                          "Dirk Farin <farin@struktur.de>",
-                          "2018",
-                          _("HEIF/HEIC"),
-                          "RGB*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_save_handler (SAVE_PROC, "heic,heif", "");
-  gimp_register_file_handler_mime (SAVE_PROC, "image/heif");
-  gimp_register_file_handler_uri (SAVE_PROC);
-
-#if LIBHEIF_HAVE_VERSION(1,8,0)
-  gimp_install_procedure (SAVE_PROC_AV1,
-                          "Exports AVIF images",
-                          "Save image in AV1 Image File Format (AVIF)",
-                          "Daniel Novomesky <dnovomesky@gmail.com>",
-                          "Daniel Novomesky <dnovomesky@gmail.com>",
-                          "2020",
-                          "HEIF/AVIF",
-                          "RGB*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_save_handler (SAVE_PROC_AV1, "avif", "");
-  gimp_register_file_handler_mime (SAVE_PROC_AV1, "image/avif");
-  gimp_register_file_handler_uri (SAVE_PROC_AV1);
+      gimp_register_save_handler (SAVE_PROC_AV1, "avif", "");
+      gimp_register_file_handler_mime (SAVE_PROC_AV1, "image/avif");
+      gimp_register_file_handler_uri (SAVE_PROC_AV1);
+    }
 #endif
 }
 
@@ -1525,6 +1540,17 @@ save_image (GFile                        *file,
   heif_encoder_set_lossless (encoder, params->lossless);
   /* heif_encoder_set_logging_level (encoder, logging_level); */
 
+#if LIBHEIF_HAVE_VERSION(1,9,0)
+  if (params->lossless && params->save_bit_depth == 8)
+    {
+      err = heif_encoder_set_parameter_string (encoder, "chroma", "444");
+      if (err.code != 0)
+        {
+          g_printerr ("Failed to set chroma=444 for %s encoder: %s", heif_encoder_get_name (encoder), err.message);
+        }
+    }
+#endif
+
   err = heif_context_encode_image (context,
                                    image,
                                    encoder,
@@ -1984,7 +2010,7 @@ save_dialog (SaveParams  *params,
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  lossless_button = gtk_check_button_new_with_mnemonic (_("Nearly _lossless (YUV420 format)"));
+  lossless_button = gtk_check_button_new_with_mnemonic (_("Nearly _lossless"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), lossless_button);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
