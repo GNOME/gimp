@@ -203,8 +203,8 @@ splash_create (Gimp       *gimp,
   g_object_unref (pixbuf);
 
   g_signal_connect_after (splash->area, "draw",
-			  G_CALLBACK (splash_area_draw),
-			  splash);
+                          G_CALLBACK (splash_area_draw),
+                          splash);
 
   /*  add a progress bar  */
   splash->progress = gtk_progress_bar_new ();
