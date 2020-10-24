@@ -1581,7 +1581,7 @@ load_contiguous (TIFF        *tif,
           else if (TIFFReadScanline (tif, buffer, y, 0) == -1)
             {
               /* Error reading scanline, stop loading */
-              g_printerr ("Reading scanline failed. Image may be corrupt at line %d.\n", y);
+              g_message (_("Reading scanline failed. Image may be corrupt at line %d."), y);
               g_free (buffer);
               g_free (bw_buffer);
               return;
@@ -1756,7 +1756,7 @@ load_separate (TIFF        *tif,
                   else if (TIFFReadScanline (tif, buffer, y, compindex) == -1)
                     {
                       /* Error reading scanline, stop loading */
-                      g_printerr ("Reading scanline failed. Image may be corrupt at line %d.\n", y);
+                      g_message (_("Reading scanline failed. Image may be corrupt at line %d."), y);
                       g_free (buffer);
                       g_free (bw_buffer);
                       return;
