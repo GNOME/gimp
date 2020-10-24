@@ -201,7 +201,7 @@ d_paint_spiral (GfigObject *obj)
   ang_grid = 2.0 * G_PI / 180.0;
 
   /* count - */
-  seg_count = abs (obj->type_data * 180.0) + clock_wise * (gint)RINT (offset_angle/ang_grid);
+  seg_count = abs (obj->type_data * 180) + clock_wise * (gint)RINT (offset_angle/ang_grid);
 
   line_pnts = g_new0 (gdouble, 2 * seg_count + 3);
 
