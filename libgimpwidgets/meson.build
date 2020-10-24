@@ -216,7 +216,7 @@ test_eevl = executable('test-eevl',
   'test-eevl.c',
   include_directories: rootInclude,
   dependencies: [
-    glib, gtk3,
+    glib, gtk3, math,
   ],
   c_args: '-DG_LOG_DOMAIN="LibGimpWidgets"',
   link_with: [ libgimpwidgets, ],
