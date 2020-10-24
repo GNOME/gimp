@@ -243,7 +243,8 @@ splash_update (const gchar *text1,
                const gchar *text2,
                gdouble      percentage)
 {
-  GdkRectangle expose = { 0, 0, 0, 0 };
+  static GdkRectangle prev_expose = { 0, 0, 0, 0 };
+  GdkRectangle        expose      = { 0, 0, 0, 0 };
 
   g_return_if_fail (percentage >= 0.0 && percentage <= 1.0);
 
@@ -251,11 +252,14 @@ splash_update (const gchar *text1,
     return;
 
   splash_position_layouts (splash, text1, text2, &expose);
+  gdk_rectangle_union (&expose, &prev_expose, &expose);
 
   if (expose.width > 0 && expose.height > 0)
     gtk_widget_queue_draw_area (splash->area,
                                 expose.x, expose.y,
                                 expose.width, expose.height);
+
+  prev_expose = expose;
 
   if ((text1 == NULL || ! g_strcmp0 (text1, splash->text1)) &&
       (text2 == NULL || ! g_strcmp0 (text2, splash->text2)) &&
@@ -317,9 +321,7 @@ splash_position_layouts (GimpSplash   *splash,
                          GdkRectangle *area)
 {
   PangoRectangle  upper_ink;
-  PangoRectangle  upper_logical;
   PangoRectangle  lower_ink;
-  PangoRectangle  lower_logical;
   gint            text_height = 0;
 
   if (text1)
@@ -332,10 +334,10 @@ splash_position_layouts (GimpSplash   *splash,
 
       pango_layout_set_text (splash->upper, text1, -1);
       pango_layout_get_pixel_extents (splash->upper,
-                                      &upper_ink, &upper_logical);
+                                      &upper_ink, NULL);
 
-      splash->upper_x = (splash->width - upper_logical.width) / 2;
-      text_height += upper_logical.height;
+      splash->upper_x = (splash->width - upper_ink.width) / 2;
+      text_height += upper_ink.height;
     }
 
   if (text2)
@@ -348,10 +350,10 @@ splash_position_layouts (GimpSplash   *splash,
 
       pango_layout_set_text (splash->lower, text2, -1);
       pango_layout_get_pixel_extents (splash->lower,
-                                      &lower_ink, &lower_logical);
+                                      &lower_ink, NULL);
 
-      splash->lower_x = (splash->width - lower_logical.width) / 2;
-      text_height += lower_logical.height;
+      splash->lower_x = (splash->width - lower_ink.width) / 2;
+      text_height += lower_ink.height;
     }
 
   /* For pretty printing, let's say we want at least double space. */
@@ -371,7 +373,7 @@ splash_position_layouts (GimpSplash   *splash,
     {
       splash->upper_y = MIN (splash->height - text_height,
                              splash->height * 13 / 16 -
-                             upper_logical.height / 2);
+                             upper_ink.height / 2);
 
       if (area)
         splash_rectangle_union (area, &upper_ink,
@@ -381,7 +383,7 @@ splash_position_layouts (GimpSplash   *splash,
   if (text2)
     {
       splash->lower_y = ((splash->height + splash->upper_y) / 2 -
-                         lower_logical.height / 2);
+                         lower_ink.height / 2);
 
       if (area)
         splash_rectangle_union (area, &lower_ink,
