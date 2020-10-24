@@ -329,7 +329,12 @@ load_image (GFile        *file,
       gint              gimp_compression = GIMP_COMPRESSION_NONE;
       const gchar      *name;
 
-      TIFFSetDirectory (tif, pages.pages[li]);
+      if (TIFFSetDirectory (tif, pages.pages[li]) == 0)
+        {
+          g_message (_("Couldn't read page %d of %d. Image might be corrupt.\n"),
+                     li+1, pages.n_pages);
+          continue;
+        }
       ilayer = pages.pages[li];
 
       gimp_progress_update (0.0);
@@ -1600,8 +1605,14 @@ load_contiguous (TIFF        *tif,
 
           if (TIFFIsTiled (tif))
             TIFFReadTile (tif, buffer, x, y, 0, 0);
-          else
-            TIFFReadScanline (tif, buffer, y, 0);
+          else if (TIFFReadScanline (tif, buffer, y, 0) == -1)
+            {
+              /* Error reading scanline, stop loading */
+              g_printerr ("Reading scanline failed. Image may be corrupt at line %d.\n", y);
+              g_free (buffer);
+              g_free (bw_buffer);
+              return;
+            }
 
           cols = MIN (image_width  - x, tile_width);
           rows = MIN (image_height - y, tile_height);
@@ -1769,8 +1780,14 @@ load_separate (TIFF        *tif,
 
                   if (TIFFIsTiled (tif))
                     TIFFReadTile (tif, buffer, x, y, 0, compindex);
-                  else
-                    TIFFReadScanline (tif, buffer, y, compindex);
+                  else if (TIFFReadScanline (tif, buffer, y, compindex) == -1)
+                    {
+                      /* Error reading scanline, stop loading */
+                      g_printerr ("Reading scanline failed. Image may be corrupt at line %d.\n", y);
+                      g_free (buffer);
+                      g_free (bw_buffer);
+                      return;
+                    }
 
                   cols = MIN (image_width  - x, tile_width);
                   rows = MIN (image_height - y, tile_height);
