@@ -3,8 +3,9 @@ install_data('index.theme',
 )
 
 generic_icons = [
-  [ 'scalable/actions/', 'scalable/switch-on-symbolic.svg' ],
-  [ 'scalable/actions/', 'scalable/switch-off-symbolic.svg' ]
+  [ 'scalable/actions/', 'scalable/actions/switch-on-symbolic.svg' ],
+  [ 'scalable/actions/', 'scalable/actions/switch-off-symbolic.svg' ],
+  [ 'scalable/status/',  'scalable/status/software-update-available-symbolic.svg' ]
 ]
 
 foreach icon_info : generic_icons
