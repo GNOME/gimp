@@ -21,6 +21,9 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -123,8 +126,34 @@ splash_create (Gimp       *gimp,
 
   gdk_monitor_get_workarea (monitor, &workarea);
 
-  max_width  = workarea.width  / 2;
-  max_height = workarea.height / 2;
+#ifdef GDK_WINDOWING_WAYLAND
+  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+    {
+      /* This is completely extra ugly. Basically we cannot rely on
+       * gdk_monitor_get_workarea() on Wayland because the application
+       * cannot get trustworthy values. Indeed it is supposed to return
+       * a value in "application pixels" not "device pixels", in other
+       * words already inverse-scaled value. It turns out that on
+       * Wayland, under some conditions (but maybe not even all the
+       * time? I'm still unclear if there are conditions where returned
+       * value is properly scaled), it returns the device dimensions.
+       * E.g. on high-density display x2, making a splash for half the
+       * value, we ended up actually with the size of the whole display.
+       * This is why I special-case Wayland with a max of a third of the
+       * work area so that it would end up 2/3 maximum (at least not
+       * filling the screen!).
+       * This is ugly but for now I don't see the right solution. FIXME!
+       * See #5322.
+       */
+      max_width  = workarea.width  / 3;
+      max_height = workarea.height / 3;
+    }
+  else
+#endif
+    {
+      max_width  = workarea.width  / 2;
+      max_height = workarea.height / 2;
+    }
   pixbuf = splash_image_load (gimp, max_width, max_height, be_verbose);
 
   if (! pixbuf)
