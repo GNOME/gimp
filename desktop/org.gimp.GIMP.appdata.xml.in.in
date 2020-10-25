@@ -73,8 +73,8 @@
   </provides>
 
   <releases>
-    <release version="2.99.2" date="TODO" type="development">
-      <url type="details">https://www.gimp.org/news/2020/TODO/gimp-2-99-2-released/</url>
+    <release version="2.99.2" date="2020-10-25" type="development">
+      <url type="details">https://www.gimp.org/news/2020/10/25/gimp-2-99-2-released/</url>
       <description>
         <_p>
         This is the first development release for GIMP 3.0, whose focus
