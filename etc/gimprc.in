@@ -17,7 +17,7 @@
 # some files are likely to remain, so it is best if this folder not be one
 # that is shared by other users.  This is a single folder.
 # 
-# (temp-path "${gimp_dir}/tmp")
+# (temp-path "${gimp_temp_dir}")
 
 # Sets the swap file location. GIMP uses a tile based memory allocation
 # scheme. The swap file is used to quickly and easily swap tiles out to disk
@@ -27,7 +27,12 @@
 # it may be desirable to put your swap file in "/tmp".  This is a single
 # folder.
 # 
-# (swap-path "${gimp_dir}")
+# (swap-path "${gimp_cache_dir}")
+
+# The compression method used for tile data stored in the swap file.  This is
+# a string value.
+# 
+# (swap-compression "fast")
 
 # Sets how many threads GIMP should use for operations that support it.  This
 # is an integer value.
@@ -226,8 +231,8 @@
 #     (width 2001)
 #     (height 1984)
 #     (unit pixels)
-#     (xresolution 300.000000)
-#     (yresolution 300.000000)
+#     (xresolution 300)
+#     (yresolution 300)
 #     (resolution-unit inches)
 #     (image-type rgb)
 #     (precision u8-non-linear)
@@ -239,13 +244,13 @@
 # 
 # (default-grid
 #     (style solid)
-#     (fgcolor (color-rgba 0.000000 0.000000 0.000000 1.000000))
-#     (bgcolor (color-rgba 1.000000 1.000000 1.000000 1.000000))
-#     (xspacing 10.000000)
-#     (yspacing 10.000000)
+#     (fgcolor (color-rgba 0 0 0 1))
+#     (bgcolor (color-rgba 1 1 1 1))
+#     (xspacing 10)
+#     (yspacing 10)
 #     (spacing-unit inches)
-#     (xoffset 0.000000)
-#     (yoffset 0.000000)
+#     (xoffset 0)
+#     (yoffset 0)
 #     (offset-unit inches))
 
 # Sets the minimal number of operations that can be undone. More undo levels
@@ -321,7 +326,7 @@
 #     (simulation-use-black-point-compensation no)
 #     (simulation-optimize yes)
 #     (simulation-gamut-check no)
-#     (out-of-gamut-color (color-rgb 1.000000 0.000000 1.000000)))
+#     (out-of-gamut-color (color-rgb 1 0 1)))
 
 # Keep a permanent record of all opened and saved files in the Recent
 # Documents list.  Possible values are yes and no.
@@ -332,7 +337,7 @@
 # (color-rgba red green blue alpha) with channel values as floats in the
 # range of 0.0 to 1.0.
 # 
-# (quick-mask-color (color-rgba 1.000000 0.000000 0.000000 0.500000))
+# (quick-mask-color (color-rgba 1 0 0 0.5))
 
 # Promote imported images to floating point precision. Does not apply to
 # indexed images.  Possible values are yes and no.
@@ -355,10 +360,19 @@
 # 
 # (import-raw-plug-in "")
 
+# Export file type used by default.  Possible values are png, jpg, ora, psd,
+# pdf, tif, bmp and webp.
+# 
+# (export-file-type png)
+
 # Export the image's color profile by default.  Possible values are yes and
 # no.
 # 
 # (export-color-profile yes)
+
+# Export the image's comment by default.  Possible values are yes and no.
+# 
+# (export-comment yes)
 
 # Export Exif metadata by default.  Possible values are yes and no.
 # 
@@ -376,6 +390,33 @@
 # values are warning, critical, fatal and never.
 # 
 # (debug-policy warning)
+
+# Check for availability of GIMP updates through background internet queries.
+#  Possible values are yes and no.
+# 
+# (check-updates yes)
+
+# Timestamp of the last update check.  (null)
+# 
+# (check-update-timestamp 0)
+
+# The timestamp for the last known release date.  (null)
+# 
+# (last-release-timestamp 0)
+
+# The last known release version of GIMP as queried from official website. 
+# This is a string value.
+# 
+# 
+
+# The timestamp for the last known release date.  This is an integer value.
+# 
+# (last-revision 0)
+
+# The last known release version of GIMP as queried from official website. 
+# This is a string value.
+# 
+# 
 
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.
@@ -411,6 +452,10 @@
 # 
 # (resize-windows-on-resize no)
 
+# Show full image content by default.  Possible values are yes and no.
+# 
+# (default-show-all no)
+
 # When enabled, this will ensure that each pixel of an image gets mapped to a
 # pixel on the screen.  Possible values are yes and no.
 # 
@@ -437,6 +482,11 @@
 # outline.  Possible values are yes and no.
 # 
 # (show-brush-outline yes)
+
+# When enabled, the brush outline will snap to individual dabs while
+# painting.  Possible values are yes and no.
+# 
+# (snap-brush-outline no)
 
 # When enabled, the mouse pointer will be shown over the image while using a
 # paint tool.  Possible values are yes and no.
@@ -526,13 +576,13 @@
 # forces the X server to be queried for both horizontal and vertical
 # resolution information.  This is a float value.
 # 
-# (monitor-xresolution 96.000000)
+# (monitor-xresolution 96)
 
 # Sets the monitor's vertical resolution, in dots per inch.  If set to 0,
 # forces the X server to be queried for both horizontal and vertical
 # resolution information.  This is a float value.
 # 
-# (monitor-yresolution 96.000000)
+# (monitor-yresolution 96)
 
 # When enabled, GIMP will use the monitor resolution from the windowing
 # system.  Possible values are yes and no.
@@ -554,6 +604,7 @@
 #     (show-scrollbars yes)
 #     (show-selection yes)
 #     (show-layer-boundary yes)
+#     (show-canvas-boundary yes)
 #     (show-guides yes)
 #     (show-grid no)
 #     (show-sample-points yes)
@@ -562,7 +613,8 @@
 #     (snap-to-canvas no)
 #     (snap-to-path no)
 #     (padding-mode default)
-#     (padding-color (color-rgb 1.000000 1.000000 1.000000)))
+#     (padding-color (color-rgb 1 1 1))
+#     (padding-in-show-all no))
 
 # Sets the default settings used when an image is viewed in fullscreen mode. 
 # This is a parameter list.
@@ -574,6 +626,7 @@
 #     (show-scrollbars yes)
 #     (show-selection yes)
 #     (show-layer-boundary yes)
+#     (show-canvas-boundary yes)
 #     (show-guides yes)
 #     (show-grid no)
 #     (show-sample-points yes)
@@ -582,7 +635,8 @@
 #     (snap-to-canvas no)
 #     (snap-to-path no)
 #     (padding-mode default)
-#     (padding-color (color-rgb 1.000000 1.000000 1.000000)))
+#     (padding-color (color-rgb 1 1 1))
+#     (padding-in-show-all no))
 
 # When enabled, an image will become the active image when its image window
 # receives the focus. This is useful for window managers using "click to
@@ -604,6 +658,11 @@
 # problems turning it off helps.  Possible values are yes and no.
 # 
 # (use-event-history no)
+
+# When enabled, non-visible layers can be edited as normal.  Possible values
+# are yes and no.
+# 
+# (edit-non-visible no)
 
 # If enabled, the move tool sets the edited layer or path as active.  This
 # used to be the default behaviour in older versions.  Possible values are
@@ -711,6 +770,11 @@
 # 
 # (toolbox-wilber yes)
 
+# Use a single toolbox button for grouped tools.  Possible values are yes and
+# no.
+# 
+# (toolbox-groups yes)
+
 # Sets the theme search path.  This is a colon-separated list of folders to
 # search.
 # 
@@ -801,9 +865,14 @@
 # (playground-seamless-clone-tool no)
 
 # How to handle embedded color profiles when opening a file.  Possible values
-# are ask, keep and convert.
+# are ask, keep, convert-builtin and convert-preferred.
 # 
 # (color-profile-policy ask)
+
+# How to handle "Orientation" metadata when opening a file.  Possible values
+# are ask, keep and rotate.
+# 
+# (metadata-rotation-policy ask)
 
 # Sets the default folder path for all color profile file dialogs.  This is a
 # single filename.
@@ -924,7 +993,7 @@
 # Sets the default opacity for the 'New Layer' dialog.  This is a float
 # value.
 # 
-# (layer-new-opacity 1.000000)
+# (layer-new-opacity 1)
 
 # Sets the default fill type for the 'New Layer' dialog.  Possible values are
 # foreground, background, white, transparent and pattern.
@@ -971,7 +1040,7 @@
 # is specified in the form (color-rgba red green blue alpha) with channel
 # values as floats in the range of 0.0 to 1.0.
 # 
-# (channel-new-color (color-rgba 0.000000 0.000000 0.000000 0.500000))
+# (channel-new-color (color-rgba 0 0 0 0.5))
 
 # Sets the default path name for the 'New Path' dialog.  This is a string
 # value.
@@ -1006,17 +1075,22 @@
 # Sets the default feather radius for the 'Feather Selection' dialog.  This
 # is a float value.
 # 
-# (selection-feather-radius 5.000000)
+# (selection-feather-radius 5)
+
+# Sets the default 'Selected areas continue outside the image' setting for
+# the 'Feather Selection' dialog.  Possible values are yes and no.
+# 
+# (selection-feather-edge-lock yes)
 
 # Sets the default grow radius for the 'Grow Selection' dialog.  This is a
 # float value.
 # 
-# (selection-grow-radius 1.000000)
+# (selection-grow-radius 1)
 
 # Sets the default shrink radius for the 'Shrink Selection' dialog.  This is
 # a float value.
 # 
-# (selection-shrink-radius 1.000000)
+# (selection-shrink-radius 1)
 
 # Sets the default 'Selected areas continue outside the image' setting for
 # the 'Shrink Selection' dialog.  Possible values are yes and no.
@@ -1026,7 +1100,7 @@
 # Sets the default border radius for the 'Border Selection' dialog.  This is
 # a float value.
 # 
-# (selection-border-radius 5.000000)
+# (selection-border-radius 5)
 
 # Sets the default border style for the 'Border Selection' dialog.  Possible
 # values are hard, smooth and feathered.
@@ -1042,7 +1116,9 @@
 # 
 # (fill-options
 #     (style solid)
-#     (antialias yes))
+#     (antialias yes)
+#     (feather no)
+#     (feather-radius 10))
 
 # The default stroke options for the stroke dialogs.  This is a parameter
 # list.
@@ -1050,13 +1126,15 @@
 # (stroke-options
 #     (style solid)
 #     (antialias yes)
+#     (feather no)
+#     (feather-radius 10)
 #     (method line)
-#     (width 6.000000)
+#     (width 6)
 #     (unit pixels)
 #     (cap-style butt)
 #     (join-style miter)
-#     (miter-limit 10.000000)
-#     (dash-offset 0.000000)
+#     (miter-limit 10)
+#     (dash-offset 0)
 #     (dash-info 0)
 #     (emulate-brush-dynamics no))
 

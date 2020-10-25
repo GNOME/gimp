@@ -36,7 +36,7 @@ Either spaces or tabs may be used to separate the name from the value.
 Valid properties and their default values are:
 
 .TP
-(temp-path "${gimp_dir}/tmp")
+(temp-path "${gimp_temp_dir}")
 
 Sets the folder for temporary storage. Files will appear here during the
 course of running GIMP.  Most files will disappear when GIMP exits, but some
@@ -44,7 +44,7 @@ files are likely to remain, so it is best if this folder not be one that is
 shared by other users.  This is a single folder.
 
 .TP
-(swap-path "${gimp_dir}")
+(swap-path "${gimp_cache_dir}")
 
 Sets the swap file location. GIMP uses a tile based memory allocation scheme.
 The swap file is used to quickly and easily swap tiles out to disk and back
@@ -52,6 +52,12 @@ in. Be aware that the swap file can easily get very large if GIMP is used with
 large images. Also, things can get horribly slow if the swap file is created
 on a folder that is mounted over NFS.  For these reasons, it may be desirable
 to put your swap file in "/tmp".  This is a single folder.
+
+.TP
+(swap-compression "fast")
+
+The compression method used for tile data stored in the swap file.  This is a
+string value.
 
 .TP
 (num-processors 1)
@@ -286,8 +292,8 @@ are yes and no.
     (width 2001)
     (height 1984)
     (unit pixels)
-    (xresolution 300.000000)
-    (yresolution 300.000000)
+    (xresolution 300)
+    (yresolution 300)
     (resolution-unit inches)
     (image-type rgb)
     (precision u8-non-linear)
@@ -300,13 +306,13 @@ Sets the default image in the "File/New" dialog.  This is a parameter list.
 .TP
 (default-grid
     (style solid)
-    (fgcolor (color-rgba 0.000000 0.000000 0.000000 1.000000))
-    (bgcolor (color-rgba 1.000000 1.000000 1.000000 1.000000))
-    (xspacing 10.000000)
-    (yspacing 10.000000)
+    (fgcolor (color-rgba 0 0 0 1))
+    (bgcolor (color-rgba 1 1 1 1))
+    (xspacing 10)
+    (yspacing 10)
     (spacing-unit inches)
-    (xoffset 0.000000)
-    (yoffset 0.000000)
+    (xoffset 0)
+    (yoffset 0)
     (offset-unit inches))
 
 Specify a default image grid.  This is a parameter list.
@@ -392,7 +398,7 @@ is specified the size defaults to being specified in kilobytes.
     (simulation-use-black-point-compensation no)
     (simulation-optimize yes)
     (simulation-gamut-check no)
-    (out-of-gamut-color (color-rgb 1.000000 0.000000 1.000000)))
+    (out-of-gamut-color (color-rgb 1 0 1)))
 
 Defines the color management behavior.  This is a parameter list.
 
@@ -403,7 +409,7 @@ Keep a permanent record of all opened and saved files in the Recent Documents
 list.  Possible values are yes and no.
 
 .TP
-(quick-mask-color (color-rgba 1.000000 0.000000 0.000000 0.500000))
+(quick-mask-color (color-rgba 1 0 0 0.5))
 
 Sets the default quick mask color.  The color is specified in the form
 (color-rgba red green blue alpha) with channel values as floats in the range
@@ -435,9 +441,20 @@ Which plug-in to use for importing raw digital camera files.  This is a single
 filename.
 
 .TP
+(export-file-type png)
+
+Export file type used by default.  Possible values are png, jpg, ora, psd,
+pdf, tif, bmp and webp.
+
+.TP
 (export-color-profile yes)
 
 Export the image's color profile by default.  Possible values are yes and no.
+
+.TP
+(export-comment yes)
+
+Export the image's comment by default.  Possible values are yes and no.
 
 .TP
 (export-metadata-exif yes)
@@ -459,6 +476,37 @@ Export IPTC metadata by default.  Possible values are yes and no.
 
 Try generating debug data for bug reporting when appropriate.  Possible values
 are warning, critical, fatal and never.
+
+.TP
+(check-updates yes)
+
+Check for availability of GIMP updates through background internet queries. 
+Possible values are yes and no.
+
+.TP
+(check-update-timestamp 0)
+
+Timestamp of the last update check.  (null)
+
+.TP
+(last-release-timestamp 0)
+
+The timestamp for the last known release date.  (null)
+
+.TP
+
+The last known release version of GIMP as queried from official website.  This
+is a string value.
+
+.TP
+(last-revision 0)
+
+The timestamp for the last known release date.  This is an integer value.
+
+.TP
+
+The last known release version of GIMP as queried from official website.  This
+is a string value.
 
 .TP
 (transparency-size medium-checks)
@@ -500,6 +548,11 @@ physical image size changes. This setting only takes effect in multi-window
 mode.  Possible values are yes and no.
 
 .TP
+(default-show-all no)
+
+Show full image content by default.  Possible values are yes and no.
+
+.TP
 (default-dot-for-dot yes)
 
 When enabled, this will ensure that each pixel of an image gets mapped to a
@@ -530,6 +583,12 @@ values are yes and no.
 
 When enabled, all paint tools will show a preview of the current brush's
 outline.  Possible values are yes and no.
+
+.TP
+(snap-brush-outline no)
+
+When enabled, the brush outline will snap to individual dabs while painting. 
+Possible values are yes and no.
 
 .TP
 (show-paint-tool-cursor yes)
@@ -688,14 +747,14 @@ certain % character sequences are recognised and expanded as follows:
 .br
 
 .TP
-(monitor-xresolution 96.000000)
+(monitor-xresolution 96)
 
 Sets the monitor's horizontal resolution, in dots per inch.  If set to 0,
 forces the X server to be queried for both horizontal and vertical resolution
 information.  This is a float value.
 
 .TP
-(monitor-yresolution 96.000000)
+(monitor-yresolution 96)
 
 Sets the monitor's vertical resolution, in dots per inch.  If set to 0, forces
 the X server to be queried for both horizontal and vertical resolution
@@ -722,6 +781,7 @@ large, extra-large, huge, enormous and gigantic.
     (show-scrollbars yes)
     (show-selection yes)
     (show-layer-boundary yes)
+    (show-canvas-boundary yes)
     (show-guides yes)
     (show-grid no)
     (show-sample-points yes)
@@ -730,7 +790,8 @@ large, extra-large, huge, enormous and gigantic.
     (snap-to-canvas no)
     (snap-to-path no)
     (padding-mode default)
-    (padding-color (color-rgb 1.000000 1.000000 1.000000)))
+    (padding-color (color-rgb 1 1 1))
+    (padding-in-show-all no))
 
 Sets the default settings for the image view.  This is a parameter list.
 
@@ -742,6 +803,7 @@ Sets the default settings for the image view.  This is a parameter list.
     (show-scrollbars yes)
     (show-selection yes)
     (show-layer-boundary yes)
+    (show-canvas-boundary yes)
     (show-guides yes)
     (show-grid no)
     (show-sample-points yes)
@@ -750,7 +812,8 @@ Sets the default settings for the image view.  This is a parameter list.
     (snap-to-canvas no)
     (snap-to-path no)
     (padding-mode default)
-    (padding-color (color-rgb 1.000000 1.000000 1.000000)))
+    (padding-color (color-rgb 1 1 1))
+    (padding-in-show-all no))
 
 Sets the default settings used when an image is viewed in fullscreen mode. 
 This is a parameter list.
@@ -779,6 +842,12 @@ Possible values are low and high.
 
 Bugs in event history buffer are frequent so in case of cursor offset problems
 turning it off helps.  Possible values are yes and no.
+
+.TP
+(edit-non-visible no)
+
+When enabled, non-visible layers can be edited as normal.  Possible values are
+yes and no.
 
 .TP
 (move-tool-changes-active no)
@@ -906,6 +975,12 @@ Show the GIMP mascot at the top of the toolbox.  Possible values are yes and
 no.
 
 .TP
+(toolbox-groups yes)
+
+Use a single toolbox button for grouped tools.  Possible values are yes and
+no.
+
+.TP
 (theme-path "${gimp_dir}/themes:${gimp_data_dir}/themes")
 
 Sets the theme search path.  This is a colon-separated list of folders to
@@ -1015,7 +1090,13 @@ Enable the Seamless Clone tool.  Possible values are yes and no.
 (color-profile-policy ask)
 
 How to handle embedded color profiles when opening a file.  Possible values
-are ask, keep and convert.
+are ask, keep, convert-builtin and convert-preferred.
+
+.TP
+(metadata-rotation-policy ask)
+
+How to handle "Orientation" metadata when opening a file.  Possible values are
+ask, keep and rotate.
 
 .TP
 
@@ -1153,7 +1234,7 @@ Sets the default composite mode for the 'New Layer' dialog.  Possible values
 are auto, union, clip-to-backdrop, clip-to-layer and intersection.
 
 .TP
-(layer-new-opacity 1.000000)
+(layer-new-opacity 1)
 
 Sets the default opacity for the 'New Layer' dialog.  This is a float value.
 
@@ -1207,7 +1288,7 @@ Sets the default channel name for the 'New Channel' dialog.  This is a string
 value.
 
 .TP
-(channel-new-color (color-rgba 0.000000 0.000000 0.000000 0.500000))
+(channel-new-color (color-rgba 0 0 0 0.5))
 
 Sets the default color and opacity for the 'New Channel' dialog.  The color is
 specified in the form (color-rgba red green blue alpha) with channel values as
@@ -1247,19 +1328,25 @@ Sets the default 'Scale imported paths to fit size' state for the 'Import
 Path' dialog.  Possible values are yes and no.
 
 .TP
-(selection-feather-radius 5.000000)
+(selection-feather-radius 5)
 
 Sets the default feather radius for the 'Feather Selection' dialog.  This is a
 float value.
 
 .TP
-(selection-grow-radius 1.000000)
+(selection-feather-edge-lock yes)
+
+Sets the default 'Selected areas continue outside the image' setting for the
+\&'Feather Selection' dialog.  Possible values are yes and no.
+
+.TP
+(selection-grow-radius 1)
 
 Sets the default grow radius for the 'Grow Selection' dialog.  This is a float
 value.
 
 .TP
-(selection-shrink-radius 1.000000)
+(selection-shrink-radius 1)
 
 Sets the default shrink radius for the 'Shrink Selection' dialog.  This is a
 float value.
@@ -1271,7 +1358,7 @@ Sets the default 'Selected areas continue outside the image' setting for the
 \&'Shrink Selection' dialog.  Possible values are yes and no.
 
 .TP
-(selection-border-radius 5.000000)
+(selection-border-radius 5)
 
 Sets the default border radius for the 'Border Selection' dialog.  This is a
 float value.
@@ -1291,7 +1378,9 @@ Sets the default 'Selected areas continue outside the image' setting for the
 .TP
 (fill-options
     (style solid)
-    (antialias yes))
+    (antialias yes)
+    (feather no)
+    (feather-radius 10))
 
 The default fill options for the fill dialogs.  This is a parameter list.
 
@@ -1299,13 +1388,15 @@ The default fill options for the fill dialogs.  This is a parameter list.
 (stroke-options
     (style solid)
     (antialias yes)
+    (feather no)
+    (feather-radius 10)
     (method line)
-    (width 6.000000)
+    (width 6)
     (unit pixels)
     (cap-style butt)
     (join-style miter)
-    (miter-limit 10.000000)
-    (dash-offset 0.000000)
+    (miter-limit 10)
+    (dash-offset 0)
     (dash-info 0)
     (emulate-brush-dynamics no))
 
@@ -1370,6 +1461,14 @@ compiled-in default value @gimpplugindir@.
 Path to configuration files, which is set to the value of the environment
 variable GIMP3_SYSCONFDIR or to the compiled-in default value 
 @gimpsysconfdir@.
+.TP
+.I gimp_cache_dir
+Path to cached files, which is set to the value of the environment
+variable GIMP3_CACHEDIR or to the system default for per-user cached files.
+.TP
+.I gimp_temp_dir
+Path to temporary files, which is set to the value of the environment
+variable GIMP3_TEMPDIR or to the system default for temporary files.
 
 .SH FILES
 .TP
