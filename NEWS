@@ -85,14 +85,6 @@ Plug-ins:
 
   - Major rewrite of the API. So GIMP 2.10.x plug-ins and below must be
     ported to the new API.
-  - Various objects are now proper GObject in the plug-in API, and not
-    just ID integers.
-  - The API is GObject Introspected into 2 modules: Gimp and GimpUi.
-    This means plug-ins can be written in various non-C languages. So
-    far the following languages have been tested and work well: Python
-    3, Lua, Javascript and Vala.
-    (Note: Python 2 is also still working, but considering that this
-    language is end-of-life since 2020, we don't really care).
   - Every introspected binding which we test comes with a "Goat
     Exercise", which is a demo plug-in popping a dialog and showing its
     own source code. It processes a simple "gegl:invert" operation on a
@@ -117,14 +109,18 @@ API:
   - `GimpPDB` is now a class to represent the PDB communication channel
     with GIMP. It is a singleton which exist exactly once per running
     plug-in, hence it is not meant to be manually instanciated and can
-    only be returned by `gimp_get_pdb()`. It is mostly used to look up
-    procedures declared by other plug-ins or by GIMP core and run them.
+    only be returned by gimp_get_pdb(). It is mostly used to look up
+    procedures declared by other plug-ins or by GIMP core, check if a
+    given procedure exist and run the procedures.
   - `GimpPlugIn` is a class which every plug-in should now subclass as a
     way to create their plug-in, and override at least the methods
-    `query_procedures()` and `create_procedure()`. `init_procedures()`
-    and `quit()` can be optionally overrided.
-    The new subclass must be declared to gimp by calling `gimp_main()`
-    to make it available to the core (PDB procedure, menu items, etc.).
+    query_procedures() and create_procedure(). Two other methods
+    (init_procedures() and quit()) can be optionally overrided.
+    The new subclass must be declared to gimp by calling gimp_main() to
+    make it available to the core (PDB procedure, menu items, etc.).
+    A plug-in can obtain its own GimpPlugIn instance with
+    gimp_get_plug_in(). This is a singleton object which belongs to
+    libgimp.
   - Plug-In procedures are now represented by a class `GimpProcedure`.
     * The subclass `GimpFileProcedure` handles file-related procedures,
       and its own subclasses `GimpLoadProcedure` and `GimpSaveProcedure`
@@ -168,14 +164,59 @@ API:
          Some other specific usages have their own subclasses:
         - `GimpLayerMask` subclass is used for a `GimpLayer` mask.
         - `GimpSelection` subclass is used for a `GimpImage` selection.
+  - GimpImage, GimpItem and GimpDisplay (and their various subclasses)
+    represent objects which can be passed through the PDB. They are
+    managed by libgimp and should not be freed by plug-ins.
+  - The PDB-passing classes still have IDs which can be obtained with
+    gimp_image_get_id(), gimp_item_get_id() and gimp_display_get_id()
+    respectively. Conversely you can get back the object with
+    gimp_image_get_by_id(), gimp_item_get_by_id() and
+    gimp_display_get_by_id().
+    Specific variants exist to get back an item object from its ID, such
+    as gimp_layer_get_by_id(), which do additional class verification
+    (other than this, they are similar to gimp_item_get_by_id()).
+    **NOTE**: since objects are managed by libgimp, you are ensured that
+    a `*_get_by_id()` call returns you exactly the same object you had
+    previously for a given object. Consequently you can do pointer
+    comparison of objects to compare images, items or displays during a
+    given run. This will work because objects are unique (these are not
+    several object copies representing the same remote object).
+  - Type validation function which used to work on IDs now work directly
+    with object arguments while new function with added `*_id*` have
+    been created to validate from an object ID instead, GIMP 2.10-style.
+    To verify if an ID exist:
+    * gimp_image_is_valid() / gimp_image_id_is_valid()
+    * gimp_item_is_valid() / gimp_item_id_is_valid()
+    * gimp_display_is_valid() / gimp_display_id_is_valid()
+    To check if GimpItem are from specific subclasses:
+    * gimp_item_is_drawable() / gimp_item_id_is_drawable()
+    * gimp_item_is_layer() / gimp_item_id_is_layer()
+    * gimp_item_is_text_layer() / gimp_item_id_is_text_layer()
+    * gimp_item_is_channel() / gimp_item_id_is_channel()
+    * gimp_item_is_layer_mask() / gimp_item_id_is_layer_mask()
+    * gimp_item_is_selection() / gimp_item_id_is_selection()
+    * gimp_item_is_vectors() / gimp_item_id_is_vectors()
+
+    **NOTE**: since these are GObject classes, you can also use the
+    GObject style macros such as GIMP_IS_LAYER(). Yet these macros do
+    not do any ID verification (which is not a problem anyway in most
+    cases as you got the object from API calls) and will not exist in
+    bindings.
+
+    **IMPORTANT**: using IDs is mostly for internal usage and actually
+    there are very few reasons to ever need to get an object ID from a
+    plug-in. Usually you should rather just work only with the unique
+    object pointers returned by the API.
   - The whole API has been updated to use objects instead of object IDs
-    when relevant. For instance all existing procedures from 2.10 which
-    were called on an image ID are now called on a `GimpImage` object.
+    when relevant. For instance all existing libgimp functions from 2.10
+    which were called on an image ID are now called on a GimpImage
+    object instead.
   - All file paths procedure parameters are now handled by GIO's `GFile`
     which simplify various file handling issues (path formats, encoding,
     etc.) and brings new features (remote access, secure protocol
     support, etc.). We also got rid of the "filename" vs "raw_filename"
-    differenciation in parameters.
+    differenciation in parameters. Hence all libgimp* functions with
+    these parameters have been updated as well.
   - gimp_image_metadata_load_finish() is now fully GUI/GTK-code free.
     The first consequence is that it is not in libgimpui anymore, but in
     libgimp, as it should. The second consequence is that the boolean
@@ -183,7 +224,7 @@ API:
     logics (the part which needed a GUI) has been moved into core and
     will be automatically run when normally loading images from GIMP's
     interface, similarly as to how color profiles was already handled.
-  - 2 new libgimp API: gimp_image_policy_rotate() and
+  - 2 new libgimp functions: gimp_image_policy_rotate() and
     gimp_image_policy_color_profile() are now available to explicitly
     call the Preferences-set policy on an image. This may result in a
     dialog being presented to the user if `interactive` is TRUE and
@@ -196,6 +237,35 @@ API:
     to decide what to do (no conversion, mandatory conversion, or using
     user settings, possibly with a dialog to decide, hence calling these
     functions explicitly).
+  - New function gimp_export_comment() to query the user settings (as
+    set in Preferences) on whether or not a file plug-in should export
+    the image's comment.
+  - Several functions which are returning C-array of objects with a size
+    output argument now also have a GList counterpart (not as
+    replacement, but as additional API):
+    * gimp_get_images() -> gimp_list_images()
+    * gimp_image_get_layers() -> gimp_image_list_layers()
+    * gimp_image_get_selected_layers() -> gimp_image_list_selected_layers()
+    * gimp_image_get_channels() -> gimp_image_list_channels()
+    * gimp_image_get_vectors() -> gimp_image_list_vectors()
+    * gimp_item_get_children() -> gimp_item_list_children()
+  - New function gimp_vectors_stroke_reverse() to reverse a specified
+    stroke in a given GimpVectors.
+  - Function gimp_zoom_preview_get_drawable() which got deprecated since
+    GIMP 2.10.0 and replaced by gimp_zoom_preview_get_drawable_id() is
+    reinstated with the new GimpDrawable class, whereas the newer
+    function got removed.
+    Similarly gimp_zoom_preview_new_from_drawable_id() is replaced by
+    gimp_zoom_preview_new_from_drawable().
+  - Note: there are likely more API changes, unfortunately we haven't
+    kept the NEWS file up-to-start from scratch. The best is to look at
+    the API generated documentation.
+  - The full API is GObject Introspected into 2 modules: Gimp and
+    GimpUi. This means plug-ins can be written in various non-C
+    languages. So far the following languages have been tested and work
+    well: Python 3, Lua, Javascript and Vala.
+    (Note: Python 2 is also working, but considering that this language
+    is end-of-life since 2020, we don't really care).
   - All pygimp specific Python API does not exist anymore. Python will
     use the same API as C plug-ins, introspected through GObject
     Introspection.
