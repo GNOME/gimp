@@ -2,6 +2,7 @@ app
 app-tools
 data
 desktop
+extensions
 libgimp
 libgimpbase
 libgimpcolor

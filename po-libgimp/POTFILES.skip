@@ -4,6 +4,6 @@ build/windows/installer/lang/setup.isl.in
 data/tags
 data/tips
 desktop
-desktop/gimp.desktop.in
+extensions
 plug-ins
 tools
