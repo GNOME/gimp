@@ -62,7 +62,8 @@ User Interface:
       color elements whose SVG style is marked as "!important".
     * Native Wayland support.
     * Various dialogs now use Client-Side decorations and modern GTK+
-      widgets are being used when relevant.
+      widgets are being used when relevant (e.g. GtkSwitch which gives a
+      better feeling of a general "ON/OFF state").
   - Image display rendered faster with a render cache that keeps the
     result of scaling, color management, display filters and shell mask
     (for tools like fuzzy select).
@@ -80,17 +81,27 @@ Devices:
       not needed anymore. Tablets will work out-of-the box;
     * you can safely unplug and replug the same or other input devices
       while GIMP is running.
+  - "Input Devices" dialog improved:
+    * "Save" and "Close" buttons replaced by "OK" (save and exit),
+      "Cancel" (reset and exit) and "Reset" (reset to previous settings
+      but keep the dialog open).
+    * "Keys" list has been discontinued. The "key" concept is
+      associated to "keyboard" devices (a tablet being a "pointing
+      device" with buttons, not keys) so this list was actually useless
+      and only confusing.
 
 Plug-ins:
 
-  - Major rewrite of the API. So GIMP 2.10.x plug-ins and below must be
-    ported to the new API.
+  - Major rewrite of the API (see below). So GIMP 2.10.x plug-ins and
+    below must be ported to the new API.
   - Every introspected binding which we test comes with a "Goat
     Exercise", which is a demo plug-in popping a dialog and showing its
     own source code. It processes a simple "gegl:invert" operation on a
     drawable. All "Goat Exercises" must do the same thing in the same
     way, simply in their respective languages, as documentation/example
     code for a language binding.
+  - The Goat Exercise plug-ins are themselves installed as a GIMP
+    Extension, as a demo for extension creation.
   - Plug-ins must be installed in their own subdirectory in
     `$XDG_CONFIG_HOME/GIMP/2.99/plug-ins/`, thus preventing data mess
     (with plug-ins coming with data and installing it all in the root
@@ -278,14 +289,18 @@ Build:
 
   - New meson build system. Still deemed "experimental" for the time
     being. Packagers are recommended to continue using the autotools
-    build system in order to avoid specific bugs.
+    build system in order to avoid build system-specific bugs.
   - Continuous integration in Gitlab with:
     - an autotools build with GCC on a Debian/testing runner
+    - an autotools distcheck build on a Debian/testing runner
     - a meson build with GCC on a Debian/testing runner
     - a meson build with Clang on a Debian/testing runner
     - a meson cross-build with Mingw-w64 for Windows 32-bit
     - a meson cross-build with Mingw-w64 for Windows 64-bit
     - static code analysis with cppcheck
+    - a source tarball distribution job (tar.bz2 and tar.xz)
+    - a ready-to-run Windows 64-bit test archive
+    - a ready-to-run Windows 32-bit test archive
 
 Known blocker issues:
 
