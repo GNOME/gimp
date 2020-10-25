@@ -114,6 +114,68 @@ Plug-ins:
 
 API:
 
+  - `GimpPDB` is now a class to represent the PDB communication channel
+    with GIMP. It is a singleton which exist exactly once per running
+    plug-in, hence it is not meant to be manually instanciated and can
+    only be returned by `gimp_get_pdb()`. It is mostly used to look up
+    procedures declared by other plug-ins or by GIMP core and run them.
+  - `GimpPlugIn` is a class which every plug-in should now subclass as a
+    way to create their plug-in, and override at least the methods
+    `query_procedures()` and `create_procedure()`. `init_procedures()`
+    and `quit()` can be optionally overrided.
+    The new subclass must be declared to gimp by calling `gimp_main()`
+    to make it available to the core (PDB procedure, menu items, etc.).
+  - Plug-In procedures are now represented by a class `GimpProcedure`.
+    * The subclass `GimpFileProcedure` handles file-related procedures,
+      and its own subclasses `GimpLoadProcedure` and `GimpSaveProcedure`
+      handle load/export procedures (file format support).
+    * The subclass `GimpThumbnailProcedure` for procedures run during
+      the lifetime of the GIMP session each time a plug-in thumbnail
+      procedure is called.
+    * The subclass `GimpImageProcedure` handles `GimpImage`-related
+      procedures, i.e. any procedure which want to work on the opened
+      image (GIMP core will pass through the active image and selected
+      drawables to the plug-in procedure).
+    * Objects of the subclass `GimpPDBProcedure` are not meant to be
+      created or freed by plug-ins, they represent any `GimpProcedure`
+      and are returned by `gimp_pdb_lookup_procedure()` by looking it up
+      by name on the singleton `GimpPDB` object.
+  - `GimpProcedureConfig` is the base class to represent the arguments
+    when running a `GimpProcedure`. It implements the `GimpConfig`
+    interface and will provide proper management of saved settings
+    (including the last used values) and generated GUI using
+    prop_widgets to plug-ins. This is still a work-in-progress.
+    Currently `GimpProcedure` run function is called with a
+    `GimpValueArray` whose values can be transfered into a
+    `GimpProcedureConfig` by calling `gimp_procedure_config_begin_run()`
+    or `gimp_procedure_config_begin_export()`.
+  - `GimpDisplay` is now a class of its own.
+  - `GimpImage` is now a class to represent an opened image.
+  - `GimpItem` is now a class to represent various `GimpImage` items.
+    * `GimpVectors` subclass represents an image path.
+    * `GimpDrawable` subclass represents drawable object but is a
+      simili-abstract class as it won't be a finale object class, which
+      can be so far either a:
+      + `GimpLayer` represents image layers.
+      + `GimpChannel` represents a `GimpImage` channel which is
+         typically in GIMP a named channel which can be added into a
+         `GimpImage` channel stack (the "Channels" dockable in the GUI)
+         with `gimp_image_insert_channel()`. This class is not really
+         used to represent a color space component though this is
+         conceptually the same thing (so maybe some day) and named
+         channel can actually be created from an image color component
+         with `gimp_channel_new_from_component()`.
+         Some other specific usages have their own subclasses:
+        - `GimpLayerMask` subclass is used for a `GimpLayer` mask.
+        - `GimpSelection` subclass is used for a `GimpImage` selection.
+  - The whole API has been updated to use objects instead of object IDs
+    when relevant. For instance all existing procedures from 2.10 which
+    were called on an image ID are now called on a `GimpImage` object.
+  - All file paths procedure parameters are now handled by GIO's `GFile`
+    which simplify various file handling issues (path formats, encoding,
+    etc.) and brings new features (remote access, secure protocol
+    support, etc.). We also got rid of the "filename" vs "raw_filename"
+    differenciation in parameters.
   - gimp_image_metadata_load_finish() is now fully GUI/GTK-code free.
     The first consequence is that it is not in libgimpui anymore, but in
     libgimp, as it should. The second consequence is that the boolean
