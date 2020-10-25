@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-10 13:26+0000\n"
-"PO-Revision-Date: 2020-10-23 11:39+0300\n"
+"PO-Revision-Date: 2020-10-25 22:07+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -545,7 +545,7 @@ msgid ""
 "color-managed"
 msgstr ""
 "Gestionarea culorilor este acum o caracteristică de bază, majoritatea widget-"
-"urilor și zonelor de previzualizare sunt gestionate colorimetric"
+"urilor și zonelor de previzualizare fiind gestionate colorimetric"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid ""
@@ -3039,7 +3039,7 @@ msgstr "_Adaugă un maker..."
 #: ../app/actions/dashboard-actions.c:57
 msgctxt "dashboard-action"
 msgid "Add an event marker to the performance log"
-msgstr ""
+msgstr "Adaugă un marker de evenimente în jurnalul de performanță"
 
 #: ../app/actions/dashboard-actions.c:62
 msgctxt "dashboard-action"
@@ -3049,7 +3049,7 @@ msgstr "_Adaugă un marker gol"
 #: ../app/actions/dashboard-actions.c:63
 msgctxt "dashboard-action"
 msgid "Add an empty event marker to the performance log"
-msgstr ""
+msgstr "Adaugă un marker de evenimente gol în jurnalul de performanță"
 
 #: ../app/actions/dashboard-actions.c:69
 msgctxt "dashboard-action"
@@ -3059,17 +3059,18 @@ msgstr "_Resetează"
 #: ../app/actions/dashboard-actions.c:70
 msgctxt "dashboard-action"
 msgid "Reset cumulative data"
-msgstr ""
+msgstr "Resetează datele cumulative"
 
 #: ../app/actions/dashboard-actions.c:78
 msgctxt "dashboard-action"
 msgid "_Low Swap Space Warning"
-msgstr ""
+msgstr "_Avertizare de spațiu swap redus"
 
 #: ../app/actions/dashboard-actions.c:79
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
 msgstr ""
+"Ridică tabloul de bord când dimensiunea swap-ului se apropie de limita sa"
 
 #: ../app/actions/dashboard-actions.c:89
 msgctxt "dashboard-update-interval"
@@ -3201,11 +3202,11 @@ msgstr "_Frecvență de eșantionare:"
 
 #: ../app/actions/dashboard-commands.c:202
 msgid "_Backtrace"
-msgstr ""
+msgstr "_Urmărire"
 
 #: ../app/actions/dashboard-commands.c:203
 msgid "Include backtraces in log"
-msgstr ""
+msgstr "Include urmărirea în jurnal"
 
 #: ../app/actions/dashboard-commands.c:215
 msgid "_Messages"
@@ -3213,7 +3214,7 @@ msgstr "_Mesaje"
 
 #: ../app/actions/dashboard-commands.c:217
 msgid "Include diagnostic messages in log"
-msgstr ""
+msgstr "Include în jurnal mesaje de diagnostic"
 
 #: ../app/actions/dashboard-commands.c:229
 msgid "Progressi_ve"
@@ -3221,7 +3222,7 @@ msgstr "Progresi_v"
 
 #: ../app/actions/dashboard-commands.c:231
 msgid "Produce complete log even if not properly terminated"
-msgstr ""
+msgstr "Produce un jurnal complet, chiar dacă nu este terminat corect"
 
 #: ../app/actions/dashboard-commands.c:294
 msgid "Add Marker"
@@ -3666,7 +3667,7 @@ msgstr "Caută și e_xecută o comandă"
 #: ../app/actions/dialogs-actions.c:294
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
-msgstr ""
+msgstr "Caută comenzi după cuvinte cheie și execută-le"
 
 #: ../app/actions/dialogs-actions.c:357
 msgid "Tool_box"
@@ -4066,7 +4067,7 @@ msgstr "Rotește _180°"
 #: ../app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
 msgid "Turn drawable upside-down"
-msgstr ""
+msgstr "Întoarce obiectul grafic cu susul în jos"
 
 #: ../app/actions/drawable-actions.c:118
 msgctxt "drawable-action"
@@ -4525,7 +4526,7 @@ msgstr "Canalul alfa al stratului activ este blocat."
 
 #: ../app/actions/edit-commands.c:598 ../app/display/gimpdisplayshell-dnd.c:483
 msgid "Pasted as new layer because the target is a layer group."
-msgstr ""
+msgstr "Lipit ca strat nou deoarece ținta este un grup de straturi."
 
 #: ../app/actions/edit-commands.c:605 ../app/display/gimpdisplayshell-dnd.c:492
 msgid "Pasted as new layer because the target's pixels are locked."
@@ -4602,7 +4603,7 @@ msgstr "_Erori"
 #: ../app/actions/error-console-actions.c:79
 msgctxt "error-console-action"
 msgid "Highlight error console on errors"
-msgstr ""
+msgstr "Evidențiază consola de erori la erori"
 
 #: ../app/actions/error-console-actions.c:85
 msgctxt "error-console-action"
@@ -4612,7 +4613,7 @@ msgstr "_Avertismente"
 #: ../app/actions/error-console-actions.c:86
 msgctxt "error-console-action"
 msgid "Highlight error console on warnings"
-msgstr ""
+msgstr "Evidențiază consola de erori la avertismente"
 
 #: ../app/actions/error-console-actions.c:92
 msgctxt "error-console-action"
@@ -4622,7 +4623,7 @@ msgstr "_Mesaje"
 #: ../app/actions/error-console-actions.c:93
 msgctxt "error-console-action"
 msgid "Highlight error console on messages"
-msgstr ""
+msgstr "Evidențiază consola de erori la mesaje"
 
 #: ../app/actions/error-console-commands.c:88
 msgid "Cannot save. Nothing is selected."
@@ -5055,7 +5056,7 @@ msgstr "In_versare"
 #: ../app/actions/filters-actions.c:125
 msgctxt "filters-action"
 msgid "_Value Invert"
-msgstr "Inversare de _valoare"
+msgstr "Inversare _valorică"
 
 #: ../app/actions/filters-actions.c:130
 msgctxt "filters-action"
@@ -5110,7 +5111,7 @@ msgstr "Î_nflorire..."
 #: ../app/actions/filters-actions.c:198
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
-msgstr "Luminozitate-Cont_rast..."
+msgstr "Luminozitate și cont_rast..."
 
 #: ../app/actions/filters-actions.c:203
 msgctxt "filters-action"
@@ -5561,7 +5562,7 @@ msgstr "_Sepia..."
 #: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr "_Umbre-Evidențieri..."
+msgstr "_Umbre și zone luminoase..."
 
 #: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
@@ -5744,6 +5745,8 @@ msgstr "Scanează din nou fonturile instalate"
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
+"Nu există nicio setare rămasă pentru „%s”, se afișează în schimb dialogul "
+"filtrului."
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgctxt "gradient-editor-action"
@@ -6234,12 +6237,12 @@ msgstr "Pr_ecizie"
 #: ../app/actions/image-actions.c:62
 msgctxt "image-action"
 msgid "_Encoding"
-msgstr ""
+msgstr "Codar_e"
 
 #: ../app/actions/image-actions.c:65
 msgctxt "image-action"
 msgid "Color Ma_nagement"
-msgstr "Gestio_nare culori"
+msgstr "Gestio_nare de culori"
 
 #: ../app/actions/image-actions.c:66
 msgctxt "image-action"
@@ -6380,7 +6383,7 @@ msgstr "Potr_ivește canavaua la selecție"
 #: ../app/actions/image-actions.c:128
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
-msgstr "Redimensionează imaginea la limita selecției"
+msgstr "Redimensionează imaginea la limitele selecției"
 
 #: ../app/actions/image-actions.c:133
 msgctxt "image-action"
@@ -6410,7 +6413,7 @@ msgstr "De_cupează la selecție"
 #: ../app/actions/image-actions.c:146
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
-msgstr "Decupează imaginea urmărind conturul selecției"
+msgstr "Decupează imaginea la limitele selecției"
 
 #: ../app/actions/image-actions.c:151
 msgctxt "image-action"
@@ -6479,8 +6482,8 @@ msgid ""
 "enabled."
 msgstr ""
 "Stabilește dacă imaginea să fie gestionată colorimetric. Dezactivarea "
-"gestionării de culori este echivalentă cu alocarea unui profil de culoare "
-"sRGB încorporat. Este preferabil ca gestionarea de culori să rămână activată."
+"gestionării culorilor este echivalentă cu atribuirea unui profil de culoare "
+"sRGB încorporat. Este preferabil ca gestionarea culorilor să rămână activată."
 
 #: ../app/actions/image-actions.c:196 ../app/actions/image-actions.c:447
 msgctxt "image-convert-action"
@@ -6699,13 +6702,13 @@ msgstr "Nu se poate decupa, deoarece selecția curentă este goală."
 
 #: ../app/actions/image-commands.c:909
 msgid "Cannot crop because the image has no content."
-msgstr ""
+msgstr "Nu se poate decupa deoarece imaginea nu are conținut."
 
 #: ../app/actions/image-commands.c:915
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
+"Nu se poate decupa deoarece imaginea este deja decupată la conținutul ei."
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/actions/image-commands.c:1081
 #, c-format
 msgid "Converting to RGB (%s)"
@@ -6716,12 +6719,10 @@ msgstr "Convertire în RGB (%s)"
 msgid "Converting to grayscale (%s)"
 msgstr "Convertire în tonuri de gri (%s)"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/actions/image-commands.c:1181
 msgid "Converting to indexed colors"
 msgstr "Convertire în culori indexate"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/actions/image-commands.c:1269
 #, c-format
 msgid "Converting image to %s"
@@ -6731,7 +6732,6 @@ msgstr "Convertire de imagine în %s"
 msgid "Assign color profile"
 msgstr "Atribuie profilul de culoare"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/actions/image-commands.c:1346
 #, c-format
 msgid "Converting to '%s'"
@@ -6796,7 +6796,7 @@ msgstr "Șterge această imagine"
 
 #: ../app/actions/items-commands.c:204 ../app/actions/items-commands.c:249
 msgid "There is no active layer or channel to fill."
-msgstr ""
+msgstr "Nu există niciun strat sau canal activ de umplut."
 
 #: ../app/actions/items-commands.c:289 ../app/actions/items-commands.c:334
 msgid "There is no active layer or channel to stroke to."
@@ -7129,7 +7129,7 @@ msgstr "De_cupează la selecție"
 #: ../app/actions/layers-actions.c:251
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
-msgstr "Decupează stratul urmărind conturul selecției"
+msgstr "Decupează stratul la limitele selecției"
 
 #: ../app/actions/layers-actions.c:256
 msgctxt "layers-action"
@@ -7142,6 +7142,8 @@ msgid ""
 "Crop the layer to the extents of its content (remove empty borders from the "
 "layer)"
 msgstr ""
+"Decupează stratul la limitele conținutului acestuia (elimină chenarele goale "
+"din strat)"
 
 #: ../app/actions/layers-actions.c:262 ../app/actions/layers-actions.c:272
 msgctxt "layers-action"
@@ -7667,19 +7669,21 @@ msgstr "Scalare strat"
 
 #: ../app/actions/layers-commands.c:869
 msgid "Crop Layer to Selection"
-msgstr ""
+msgstr "Decupează stratul la selecție"
 
 #: ../app/actions/layers-commands.c:900
 msgid "Crop Layer to Content"
-msgstr ""
+msgstr "Decupează stratul la conținut"
 
 #: ../app/actions/layers-commands.c:913
 msgid "Cannot crop because the active layer has no content."
-msgstr ""
+msgstr "Nu se poate decupa deoarece stratul activ nu are conținut."
 
 #: ../app/actions/layers-commands.c:920
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
+"Nu se poate decupa deoarece stratul activ este deja decupat la conținutul "
+"lui."
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -7881,7 +7885,7 @@ msgstr "Arată în Gestionar de _fișiere"
 #: ../app/actions/palettes-actions.c:79
 msgctxt "palettes-action"
 msgid "Show palette file location in the file manager"
-msgstr ""
+msgstr "Arată locația fișierului paletei în gestionarul de fișiere"
 
 #: ../app/actions/palettes-actions.c:84
 msgctxt "palettes-action"
@@ -8290,7 +8294,7 @@ msgstr "Estompează selecția cu"
 #: ../app/actions/select-commands.c:175 ../app/actions/select-commands.c:251
 #: ../app/actions/select-commands.c:379
 msgid "_Selected areas continue outside the image"
-msgstr ""
+msgstr "Zonele _selectate continuă în afara imaginii"
 
 #: ../app/actions/select-commands.c:178
 msgid "When feathering, act as if selected areas continued outside the image."
@@ -8730,6 +8734,8 @@ msgstr "Editează presetarea instrumentului activ"
 #, c-format
 msgid "Can't save '%s' tool options to an existing '%s' tool preset."
 msgstr ""
+"Nu se pot salva opțiunile instrumentului „%s” într-o presetare existentă a "
+"instrumentului „%s”."
 
 #: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
@@ -8775,6 +8781,7 @@ msgstr "Arată în gestionarul de _fișiere"
 msgctxt "tool-presets-action"
 msgid "Show tool preset file location in the file manager"
 msgstr ""
+"Arată locația fișierului presetării de instrument în gestionarul de fișiere"
 
 #: ../app/actions/tool-presets-actions.c:74
 msgctxt "tool-presets-action"
@@ -9750,7 +9757,7 @@ msgstr "Culoare de um_plere"
 #: ../app/actions/view-actions.c:76
 msgctxt "view-action"
 msgid "_Color Management"
-msgstr "Gestionare _culori"
+msgstr "Gestionare de _culori"
 
 #: ../app/actions/view-actions.c:79
 msgctxt "view-action"
@@ -11091,7 +11098,7 @@ msgstr "Marca temporală a ultimei verificări de actualizare."
 #: ../app/config/gimprc-blurbs.h:53
 msgid "How to handle embedded color profiles when opening a file."
 msgstr ""
-"Cum să fie tratate profilurile de culoare încorporate la deschiderea unui "
+"Cum să fie tratate profilurile de culoare înglobate la deschiderea unui "
 "fișier."
 
 #: ../app/config/gimprc-blurbs.h:56
@@ -11499,7 +11506,6 @@ msgstr ""
 # în varianta de dabs = bloburi
 # în varianta it dabs = trape
 #: ../app/config/gimprc-blurbs.h:399
-#, fuzzy
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr ""
@@ -12152,12 +12158,13 @@ msgstr "Întreabă ce este de făcut"
 #: ../app/core/core-enums.c:189
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
-msgstr "Păstrează profilul încorporat"
+msgstr "Păstrează profilul înglobat"
 
 #: ../app/core/core-enums.c:190
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
-msgstr "Convertește în spațiul de culoare sRGB sau în tonuri de gri încorporat"
+msgstr ""
+"Convertește în profilul de culoare sRGB sau în tonuri de gri încorporat"
 
 #: ../app/core/core-enums.c:284
 msgctxt "convert-dither-type"
@@ -12259,7 +12266,7 @@ msgstr "Liniuță, punct, punct"
 #: ../app/core/core-enums.c:453
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
-msgstr "Depanează avertismentele, erorile critice și blocajele"
+msgstr "Depanează avertismentele, erorile critice și blocările"
 
 #: ../app/core/core-enums.c:454
 msgctxt "debug-policy"
@@ -12527,37 +12534,37 @@ msgstr "<<nevalid>>"
 #: ../app/core/core-enums.c:1134
 msgctxt "undo-type"
 msgid "Scale image"
-msgstr "Scalare de imagine"
+msgstr "Scalare imagine"
 
 #: ../app/core/core-enums.c:1135
 msgctxt "undo-type"
 msgid "Resize image"
-msgstr "Redimensionare de imagine"
+msgstr "Redimensionare imagine"
 
 #: ../app/core/core-enums.c:1136
 msgctxt "undo-type"
 msgid "Flip image"
-msgstr "Întoarcere de imagine"
+msgstr "Întoarcere imagine"
 
 #: ../app/core/core-enums.c:1137
 msgctxt "undo-type"
 msgid "Rotate image"
-msgstr "Rotire de imagine"
+msgstr "Rotire imagine"
 
 #: ../app/core/core-enums.c:1138
 msgctxt "undo-type"
 msgid "Transform image"
-msgstr "Transformare de imagine"
+msgstr "Transformare imagine"
 
 #: ../app/core/core-enums.c:1139
 msgctxt "undo-type"
 msgid "Crop image"
-msgstr "Decupare de imagine"
+msgstr "Decupare imagine"
 
 #: ../app/core/core-enums.c:1140
 msgctxt "undo-type"
 msgid "Convert image"
-msgstr "Convertire de imagine"
+msgstr "Convertire imagine"
 
 #: ../app/core/core-enums.c:1141
 msgctxt "undo-type"
@@ -12577,7 +12584,7 @@ msgstr "Fuzionare de straturi"
 #: ../app/core/core-enums.c:1144
 msgctxt "undo-type"
 msgid "Merge paths"
-msgstr "Fuzionare de trasee"
+msgstr "Fuzionare trasee"
 
 #: ../app/core/core-enums.c:1145
 msgctxt "undo-type"
@@ -12831,7 +12838,6 @@ msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Terminare de transformare a grupului de straturi"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/core/core-enums.c:1205
 msgctxt "undo-type"
 msgid "Convert group layer"
@@ -12847,7 +12853,6 @@ msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Modificare strat de text"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/core/core-enums.c:1208
 msgctxt "undo-type"
 msgid "Convert text layer"
@@ -13417,33 +13422,33 @@ msgstr "Selectează după culoarea indexată"
 #: ../app/core/gimpchannel.c:255
 msgctxt "undo-type"
 msgid "Rename Channel"
-msgstr "Redenumire de canal"
+msgstr "Redenumire canal"
 
 #: ../app/core/gimpchannel.c:256
 msgctxt "undo-type"
 msgid "Move Channel"
-msgstr "Mutare de canal"
+msgstr "Mutare canal"
 
 # hm ? sau canal de scalare ?
 #: ../app/core/gimpchannel.c:257
 msgctxt "undo-type"
 msgid "Scale Channel"
-msgstr "Scalare de canal"
+msgstr "Scalare canal"
 
 #: ../app/core/gimpchannel.c:258
 msgctxt "undo-type"
 msgid "Resize Channel"
-msgstr "Redimensionare de canal"
+msgstr "Redimensionare canal"
 
 #: ../app/core/gimpchannel.c:259
 msgctxt "undo-type"
 msgid "Flip Channel"
-msgstr "Întoarcere de canal"
+msgstr "Întoarcere canal"
 
 #: ../app/core/gimpchannel.c:260
 msgctxt "undo-type"
 msgid "Rotate Channel"
-msgstr "Rotire de canal"
+msgstr "Rotire canal"
 
 #: ../app/core/gimpchannel.c:261 ../app/core/gimpdrawable-transform.c:1037
 msgctxt "undo-type"
@@ -13468,27 +13473,27 @@ msgstr "Canal la Selecție"
 #: ../app/core/gimpchannel.c:265
 msgctxt "undo-type"
 msgid "Reorder Channel"
-msgstr "Reordonare de canal"
+msgstr "Reordonare canal"
 
 #: ../app/core/gimpchannel.c:266
 msgctxt "undo-type"
 msgid "Raise Channel"
-msgstr "Ridicare de canal"
+msgstr "Ridicare canal"
 
 #: ../app/core/gimpchannel.c:267
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
-msgstr "Ridicare de canal sus de tot"
+msgstr "Ridicare canal sus de tot"
 
 #: ../app/core/gimpchannel.c:268
 msgctxt "undo-type"
 msgid "Lower Channel"
-msgstr "Coborâre de canal"
+msgstr "Coborâre canal"
 
 #: ../app/core/gimpchannel.c:269
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
-msgstr "Coborâre de canal jos de tot"
+msgstr "Coborâre canal jos de tot"
 
 #: ../app/core/gimpchannel.c:270
 msgid "Channel cannot be raised higher."
@@ -13511,12 +13516,12 @@ msgstr "Intensificare claritate de canal"
 #: ../app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Clear Channel"
-msgstr "Golire de canal"
+msgstr "Golire canal"
 
 #: ../app/core/gimpchannel.c:294
 msgctxt "undo-type"
 msgid "Invert Channel"
-msgstr "Inversare de canal"
+msgstr "Inversare canal"
 
 #: ../app/core/gimpchannel.c:295
 msgctxt "undo-type"
@@ -14191,18 +14196,15 @@ msgstr "Adăugare culoare la paleta de culori"
 msgid "Cannot convert image: palette is empty."
 msgstr "Nu se poate converti imaginea: paleta este goală."
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/core/gimpimage-convert-indexed.c:806
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Convertire de imagine în culori indexate"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/core/gimpimage-convert-indexed.c:900
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Convertire în culori indexate (etapa 2)"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/core/gimpimage-convert-indexed.c:949
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Convertire în culori indexate (etapa 3)"
@@ -14276,13 +14278,11 @@ msgstr ""
 msgid "Dithering"
 msgstr "Dithering"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/core/gimpimage-convert-type.c:84
 msgctxt "undo-type"
 msgid "Convert Image to RGB"
 msgstr "Convertire de imagine în RGB"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/core/gimpimage-convert-type.c:88
 msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
@@ -14543,7 +14543,7 @@ msgstr "Mutare strat"
 #: ../app/core/gimplayer.c:447
 msgctxt "undo-type"
 msgid "Scale Layer"
-msgstr "Scalare de strat"
+msgstr "Scalare strat"
 
 #: ../app/core/gimplayer.c:448
 msgctxt "undo-type"
@@ -14815,11 +14815,11 @@ msgstr "Nu s-a putut citi antetul din fișierul de paletă „%s”: "
 
 #: ../app/core/gimppalette-load.c:459
 msgid "Premature end of file."
-msgstr ""
+msgstr "Sfârșit prematur al fișierului."
 
 #: ../app/core/gimppalettemru.c:123 ../app/core/gimppalettemru.c:229
 msgid "History Color"
-msgstr ""
+msgstr "Culoare istoric"
 
 #: ../app/core/gimppattern-load.c:60
 msgid "File appears truncated: "
@@ -15172,7 +15172,7 @@ msgstr "Rezoluția verticală a imaginii."
 
 #: ../app/core/gimptemplate.c:174
 msgid "Resolution unit"
-msgstr ""
+msgstr "Unitate de rezoluție"
 
 #. serialized name
 #: ../app/core/gimptemplate.c:181
@@ -15200,8 +15200,8 @@ msgid ""
 "to choosing a built-in sRGB profile. Better leave color management enabled."
 msgstr ""
 "Stabilește dacă imaginea să fie gestionată colorimetric. Dezactivarea "
-"gestionării de culori este echivalentă cu alocarea unui profil sRGB "
-"încorporat. Este preferabil ca gestionarea de culori să rămână activată."
+"gestionării culorilor este echivalentă cu alegerea unui profil sRGB "
+"încorporat. Este preferabil ca gestionarea culorilor să rămână activată."
 
 #: ../app/core/gimptemplate.c:222
 msgid "Color profile"
@@ -15263,7 +15263,7 @@ msgstr "Aplică fontul stocat"
 
 #: ../app/core/gimptoolpreset-load.c:64
 msgid "Tool preset file is corrupt."
-msgstr ""
+msgstr "Fișierul presetării de instrument este corupt."
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
@@ -15361,7 +15361,7 @@ msgstr "Este disponibilă o actualizare!"
 #: ../app/dialogs/about-dialog.c:365
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
-msgstr ""
+msgstr "Descarcă GIMP %s revizia %d (lansat în data de %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
@@ -15373,7 +15373,7 @@ msgstr ""
 #: ../app/dialogs/about-dialog.c:380
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
-msgstr ""
+msgstr "Descarcă GIMP %s (lansat în data de %s)\n"
 
 #: ../app/dialogs/about-dialog.c:405 ../app/dialogs/about-dialog.c:426
 msgid "Check for updates"
@@ -15470,17 +15470,14 @@ msgstr "Convertește la"
 msgid "RGB Conversion"
 msgstr "Convertire RGB"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/dialogs/color-profile-dialog.c:167
 msgid "Convert Image to RGB"
 msgstr "Convertește imaginea în RGB"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/dialogs/color-profile-dialog.c:182
 msgid "Grayscale Conversion"
 msgstr "Convertire în tonuri de gri"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/dialogs/color-profile-dialog.c:185
 msgid "Convert Image to Grayscale"
 msgstr "Convertește imaginea în tonuri de gri"
@@ -15531,23 +15528,28 @@ msgctxt "profile"
 msgid "None"
 msgstr "Fără"
 
+# titlu pe bară
+# fără ? în mod deliberat
 #: ../app/dialogs/color-profile-import-dialog.c:85
 msgid "Convert to Grayscale Working Space?"
-msgstr "Convertește la spațiul de lucru în tonuri de gri?"
+msgstr "Convertire în spațiul de lucru în tonuri de gri"
 
 #: ../app/dialogs/color-profile-import-dialog.c:86
 msgid "Convert the image to the built-in grayscale color profile?"
 msgstr ""
-"Convertește imaginea în profilul de culoare în tonuri de gri încorporat?"
+"Convertiți imaginea în profilul de culoare în tonuri de gri încorporat?"
 
+# titlu pe bară
+# fără ? în mod deliberat
 #: ../app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert to RGB Working Space?"
-msgstr "Convertește la spațiul de lucru RGB?"
+msgstr "Convertire în spațiul de lucru RGB"
 
 #: ../app/dialogs/color-profile-import-dialog.c:91
 msgid "Convert the image to the built-in sRGB color profile?"
-msgstr "Convertește imaginea în profilul de culoare sRGB încorporat?"
+msgstr "Convertiți imaginea în profilul de culoare sRGB încorporat?"
 
+# titlu sub bară
 #: ../app/dialogs/color-profile-import-dialog.c:99
 msgid "Import the image from a color profile"
 msgstr "Importă imaginea dintr-un profil de culoare"
@@ -15559,20 +15561,18 @@ msgstr "Păstrea_ză"
 #: ../app/dialogs/color-profile-import-dialog.c:122
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr "Imaginea „%s” are un profil de culoare încorporat"
+msgstr "Imaginea „%s” are un profil de culoare înglobat"
 
 #: ../app/dialogs/color-profile-import-dialog.c:185
 msgid "_Don't ask me again"
 msgstr "Nu mă mai între_ba"
 
 # titlu pe bară
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
 msgstr "Convertire în culori indexate"
 
 # titlu sub bară
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/dialogs/convert-indexed-dialog.c:137
 msgid "Convert Image to Indexed Colors"
 msgstr "Convertește imaginea în culori indexate"
@@ -15602,7 +15602,6 @@ msgstr "Activează dithering-u_l straturilor de text"
 msgid "Dithering text layers will make them uneditable"
 msgstr ""
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/dialogs/convert-indexed-dialog.c:415
 #: ../app/pdb/image-convert-cmds.c:163
 msgid "Cannot convert to a palette with more than 256 colors."
@@ -15616,7 +15615,7 @@ msgstr "Convertește imaginea în %s"
 
 #: ../app/dialogs/convert-precision-dialog.c:158
 msgid "Encoding Conversion"
-msgstr ""
+msgstr "Conversie de codare"
 
 #: ../app/dialogs/convert-precision-dialog.c:160
 msgid "Precision Conversion"
@@ -15955,7 +15954,7 @@ msgstr "Confirmă scalarea"
 #: ../app/dialogs/image-scale-dialog.c:211 ../app/dialogs/scale-dialog.c:138
 #: ../app/tools/gimpscaletool.c:98 ../app/tools/gimpscaletool.c:123
 msgid "_Scale"
-msgstr "_Scalare"
+msgstr "_Scalează"
 
 #: ../app/dialogs/image-scale-dialog.c:243
 #, c-format
@@ -16513,7 +16512,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:1301
 #: ../app/dialogs/preferences-dialog.c:1302
 msgid "Color Management"
-msgstr "Gestionare culori"
+msgstr "Gestionare de culori"
 
 #: ../app/dialogs/preferences-dialog.c:1311
 msgid "R_eset Color Management"
@@ -16756,7 +16755,7 @@ msgid ""
 "crashes (please report)."
 msgstr ""
 "Driverele și suportul OpenCL sunt experimentale, așteptați‑vă la încetiniri "
-"și posibilele blocări (vă rugăm să raportați)."
+"și posibile blocări (vă rugăm să raportați)."
 
 #: ../app/dialogs/preferences-dialog.c:1642
 msgid "Use O_penCL"
@@ -17037,7 +17036,6 @@ msgstr "Dosar de profil:"
 msgid "Select Default Folder for Color Profiles"
 msgstr "Selectează dosarul implicit pentru profilurile de culoare"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:2251
 msgid "Convert to Color Profile Dialog"
@@ -17069,7 +17067,6 @@ msgid "Dither channels/masks:"
 msgstr "Dithering pentru canale/măști:"
 
 # titlu pe bară
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #. Convert Indexed Dialog
 #: ../app/dialogs/preferences-dialog.c:2285
 msgid "Indexed Conversion Dialog"
@@ -17527,7 +17524,6 @@ msgid "Show _brush outline"
 msgstr "Arată _conturul penelului"
 
 #: ../app/dialogs/preferences-dialog.c:2933
-#, fuzzy
 msgid "S_nap brush outline to stroke"
 msgstr "Acroșează co_nturul penelului la tușă"
 
@@ -17769,7 +17765,7 @@ msgstr "_Resetează dosarele presetărilor de instrumente"
 
 #: ../app/dialogs/preferences-dialog.c:3302
 msgid "Select Tool Preset Folders"
-msgstr "Selectează dosarul presetărilor de instrument"
+msgstr "Selectează dosarul presetării de instrument"
 
 #: ../app/dialogs/preferences-dialog.c:3304
 msgid "MyPaint Brush Folders"
@@ -18842,7 +18838,6 @@ msgstr "Conectare contururi"
 msgid "Drag Path"
 msgstr "Tragere traseu"
 
-# conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../app/display/gimptoolpath.c:812
 msgid "Convert Edge"
 msgstr "Convertire de margine"
@@ -19444,15 +19439,13 @@ msgctxt "layer-mode"
 msgid "Hard light (l)"
 msgstr "Lumină puternică (moștenit)"
 
-# hm ? la Adobe este blândă
-# sau suavă ?
+# inspirat de la Adobe
 #: ../app/operations/operations-enums.c:226
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
-msgstr "Lumină slabă (moștenit)"
+msgstr "Lumină blândă (moștenit)"
 
-# hm ? la Adobe este blândă
-# sau suavă ?
+# inspirat de la Adobe
 #. Translators: this is an abbreviated version of "Soft light (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:229
@@ -19609,12 +19602,11 @@ msgctxt "layer-mode"
 msgid "Hard light"
 msgstr "Lumină puternică"
 
-# hm ? la Adobe este blândă
-# sau suavă ?
+# inspirat de la Adobe
 #: ../app/operations/operations-enums.c:264
 msgctxt "layer-mode"
 msgid "Soft light"
-msgstr "Lumină slabă"
+msgstr "Lumină blândă"
 
 #: ../app/operations/operations-enums.c:265
 msgctxt "layer-mode"
@@ -19805,7 +19797,7 @@ msgstr "Eroare de prelucrare, nu s-au găsit 2 numere întregi"
 
 #: ../app/operations/gimpcurvesconfig.c:687
 msgid "Writing curves file failed: "
-msgstr ""
+msgstr "Scrierea fișierului de curbe a eșuat:"
 
 #: ../app/operations/gimphuesaturationconfig.c:101
 #: ../app/operations/gimphuesaturationconfig.c:102
@@ -19828,7 +19820,6 @@ msgstr "Saturație"
 msgid "Lightness"
 msgstr "Luminozitate"
 
-# a fost: Încălecare
 #: ../app/operations/gimphuesaturationconfig.c:119
 #: ../app/operations/gimphuesaturationconfig.c:120
 msgid "Overlap"
@@ -19837,38 +19828,38 @@ msgstr "Suprapunere"
 #: ../app/operations/gimplevelsconfig.c:122
 #: ../app/operations/gimplevelsconfig.c:123
 msgid "Low Input"
-msgstr ""
+msgstr "Intrare joasă"
 
 #: ../app/operations/gimplevelsconfig.c:128
 #: ../app/operations/gimplevelsconfig.c:129
 msgid "High Input"
-msgstr ""
+msgstr "Intrare înaltă"
 
 #: ../app/operations/gimplevelsconfig.c:134
 msgid "Clamp Input"
-msgstr ""
+msgstr "Limitează intrarea"
 
 #: ../app/operations/gimplevelsconfig.c:135
 msgid "Clamp input values before applying output mapping."
-msgstr ""
+msgstr "Limitează valorile de intrare înaintea aplicării mapării de ieșire."
 
 #: ../app/operations/gimplevelsconfig.c:146
 #: ../app/operations/gimplevelsconfig.c:147
 msgid "Low Output"
-msgstr ""
+msgstr "Ieșire joasă"
 
 #: ../app/operations/gimplevelsconfig.c:152
 #: ../app/operations/gimplevelsconfig.c:153
 msgid "High Output"
-msgstr ""
+msgstr "Ieșire înaltă"
 
 #: ../app/operations/gimplevelsconfig.c:158
 msgid "Clamp Output"
-msgstr ""
+msgstr "Limitează ieșirea"
 
 #: ../app/operations/gimplevelsconfig.c:159
 msgid "Clamp final output values."
-msgstr ""
+msgstr "Limitează valorile de ieșire finale."
 
 #: ../app/operations/gimplevelsconfig.c:846
 msgid "not a GIMP Levels file"
@@ -19880,7 +19871,7 @@ msgstr "eroare de prelucrare"
 
 #: ../app/operations/gimplevelsconfig.c:956
 msgid "Writing levels file failed: "
-msgstr ""
+msgstr "Scrierea fișierului de niveluri a eșuat: "
 
 #: ../app/operations/gimpoperationbrightnesscontrast.c:65
 #: ../app/tools/gimpbrightnesscontrasttool.c:98
@@ -19951,7 +19942,7 @@ msgstr "Ajustează nuanța, saturația și luminozitatea"
 
 #: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:139
 msgid "Adjust color levels"
-msgstr "Ajustează nivelurile de culori"
+msgstr "Ajustează nivelurile de culoare"
 
 #: ../app/operations/gimpoperationoffset.c:118
 #: ../app/tools/gimpoffsettool.c:130
@@ -19968,7 +19959,7 @@ msgstr "Niveluri de posterizare"
 
 #: ../app/operations/gimpoperationsemiflatten.c:84
 msgid "Replace partial transparency with a color"
-msgstr ""
+msgstr "Înlocuiește transparența parțială cu o culoare"
 
 #: ../app/operations/gimpoperationsemiflatten.c:96
 msgid "The color"
@@ -20008,6 +19999,8 @@ msgid ""
 "Make transparency all-or-nothing, by thresholding the alpha channel to a "
 "value"
 msgstr ""
+"Face transparența totul-sau-nimic, prin ajustarea pragului canalului alfa la "
+"o anumită valoare"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:90
 msgid "Value"
@@ -20015,7 +20008,7 @@ msgstr "Valoare"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:91
 msgid "The alpha value"
-msgstr ""
+msgstr "Valoarea alfa"
 
 #. TRANSLATORS: there is no need to translate this in GIMP. This uses
 #. * "gtk20" domain as a special trick to determine language direction,
@@ -20503,7 +20496,7 @@ msgstr "Combinare măști"
 #: ../app/pdb/color-cmds.c:85 ../app/pdb/drawable-color-cmds.c:85
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
-msgstr "Luminozitate-Contrast"
+msgstr "Luminozitate și contrast"
 
 #: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:610
 msgctxt "undo-type"
@@ -21334,7 +21327,7 @@ msgstr "Video"
 #: ../app/pdb/plug-in-compat-cmds.c:4453
 msgctxt "undo-type"
 msgid "Value Invert"
-msgstr "Inversare de valoare"
+msgstr "Inversare valoare"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4560
 msgctxt "undo-type"
@@ -21727,15 +21720,15 @@ msgstr ""
 msgid "Pick coordinates from the image"
 msgstr "Prelevă coordonatele din imagine"
 
-# apare la culori -> nuanță și saturație
-# hm ? principal nu se potrivește nici cu eticheta flotantă și pare că nici cu ce face
+# hm ? principal, „master” nu se potrivește nici cu eticheta flotantă și pare că nici cu ce face
 #: ../app/propgui/gimppropgui-hue-saturation.c:134
 msgid "M_aster"
 msgstr "To_ate"
 
+# preferabil fără „ajustează”
 #: ../app/propgui/gimppropgui-hue-saturation.c:134
 msgid "Adjust all colors"
-msgstr "Ajustează toate culorile"
+msgstr "Toate culorile"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:135
 msgid "_R"
@@ -21763,16 +21756,15 @@ msgstr "_M"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:150
 msgid "Select Primary Color to Adjust"
-msgstr "Selectează culoarea primară de ajustat"
+msgstr "Selectați culoarea primară de ajustat"
 
-# hm ?
 #: ../app/propgui/gimppropgui-hue-saturation.c:236
 msgid "_Overlap"
-msgstr "Î_ncălecare"
+msgstr "_Suprapunere"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:241
 msgid "Adjust Selected Color"
-msgstr "Ajustează culoarea selectată"
+msgstr "Ajustați culoarea selectată"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:251
 msgid "_Hue"
@@ -21853,7 +21845,7 @@ msgstr "Umbre"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:80
 msgid "Highlights"
-msgstr "Evidențieri"
+msgstr "Zone luminoase"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:98
 msgid "Common"
@@ -21869,83 +21861,84 @@ msgstr "Supernovă: "
 
 #: ../app/propgui/gimppropgui-utils.c:71
 msgid "1,700 K – Match flame"
-msgstr ""
+msgstr "1,700 K – Flacără de chibrit"
 
 #: ../app/propgui/gimppropgui-utils.c:72
 msgid "1,850 K – Candle flame, sunset/sunrise"
-msgstr ""
+msgstr "1,850 K – Flacără de lumânare, apus sau răsărit"
 
 #: ../app/propgui/gimppropgui-utils.c:73
 msgid "2,700 K - Soft (or warm) LED lamps"
-msgstr ""
+msgstr "2,700 K - Lampă LED cu lumină blândă (sau caldă)"
 
 #: ../app/propgui/gimppropgui-utils.c:74
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
-msgstr ""
+msgstr "3,000 K – Lampă fluorescentă compactă cu lumină alb blând (sau cald)"
 
 #: ../app/propgui/gimppropgui-utils.c:75
 msgid "3,200 K – Studio lamps, photofloods, etc."
-msgstr ""
+msgstr "3,200 K – Lampă de studio, baie de lumină foto etc."
 
 #: ../app/propgui/gimppropgui-utils.c:76
 msgid "3,300 K – Incandescent lamps"
-msgstr ""
+msgstr "3,300 K – Lampă cu incandescență"
 
 #: ../app/propgui/gimppropgui-utils.c:77
 msgid "3,350 K – Studio \"CP\" light"
-msgstr ""
+msgstr "3,350 K – Lumină „CP” de studio"
 
 #: ../app/propgui/gimppropgui-utils.c:78
 msgid "4,000 K - Cold (daylight) LED lamps"
-msgstr ""
+msgstr "4,000 K - Lampă LED cu lumină rece (lumină de zi)"
 
 #: ../app/propgui/gimppropgui-utils.c:79
 msgid "4,100 K – Moonlight"
-msgstr ""
+msgstr "4,100 K – Clar de lună"
 
 #: ../app/propgui/gimppropgui-utils.c:80
 msgid "5,000 K – D50"
-msgstr ""
+msgstr "5,000 K – D50"
 
 #: ../app/propgui/gimppropgui-utils.c:81
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr ""
+"5,000 K – Lampă fluorescentă compactă cu lumină alb rece (lumină de zi)"
 
 #: ../app/propgui/gimppropgui-utils.c:82
 msgid "5,000 K – Horizon daylight"
-msgstr ""
+msgstr "5,000 K – Lumină de zi la orizont"
 
 #: ../app/propgui/gimppropgui-utils.c:83
 msgid "5,500 K – D55"
-msgstr ""
+msgstr "5,500 K – D55"
 
 #: ../app/propgui/gimppropgui-utils.c:84
 msgid "5,500 K – Vertical daylight, electronic flash"
-msgstr ""
+msgstr "5,500 K – Lumină de zi la verticală, bliț electronic"
 
 #: ../app/propgui/gimppropgui-utils.c:85
 msgid "6,200 K – Xenon short-arc lamp"
-msgstr ""
+msgstr "6,200 K – Lampă cu descărcare în gaz Xenon"
 
 #: ../app/propgui/gimppropgui-utils.c:86
 msgid "6,500 K – D65"
-msgstr ""
+msgstr "6,500 K – D65"
 
 #: ../app/propgui/gimppropgui-utils.c:87
 msgid "6,500 K – Daylight, overcast"
-msgstr ""
+msgstr "6,500 K – Lumină de zi, înnorat"
 
 #: ../app/propgui/gimppropgui-utils.c:88
 msgid "7,500 K – D75"
-msgstr ""
+msgstr "7,500 K – D75"
 
 #: ../app/propgui/gimppropgui-utils.c:89
 msgid "9,300 K"
-msgstr ""
+msgstr "9,300 K"
 
 #: ../app/propgui/gimppropgui-utils.c:104
 msgid "Choose from a list of common color temperatures"
-msgstr ""
+msgstr "Alegeți dintr-o listă de temperaturi de culoare uzuale"
 
 #: ../app/propgui/gimppropgui-utils.c:155
 msgid "New Seed"
@@ -21961,7 +21954,7 @@ msgstr "Prelevă culoarea din imagine"
 
 #: ../app/propgui/gimppropgui.c:549
 msgid "This operation has no editable properties"
-msgstr ""
+msgstr "Această operație nu are proprietăți editabile"
 
 # fără kqwy; a se vedea și http://i18n.ro/Pangrama
 #. This is a so-called pangram; it's supposed to
@@ -22043,6 +22036,8 @@ msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
 msgstr ""
+"Textul nu poate fi randat. Este probabil prea mare. Faceți-l mai scurt sau "
+"să utilizați un font mai mic."
 
 #: ../app/text/gimptextlayer-xcf.c:78
 #, c-format
@@ -22065,6 +22060,8 @@ msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
 msgstr ""
+"Noul aranjament al textului nu poate fi generat. Cel mai probabil, "
+"dimensiunea fontului este prea mare."
 
 # este vorba despre caseta de editare a textului
 #: ../app/text/text-enums.c:23
@@ -22207,11 +22204,11 @@ msgstr "Clic pentru a adăuga acest traseu la listă"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:97
 msgid "Brightness-Contrast"
-msgstr "Luminozitate-Contrast"
+msgstr "Luminozitate și contrast"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:99
 msgid "B_rightness-Contrast..."
-msgstr "Luminozitate-Cont_rast..."
+msgstr "Luminozitate și cont_rast..."
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:161
 msgid "Adjust Brightness and Contrast"
@@ -22894,11 +22891,13 @@ msgstr "Opțiuni de culoare avansate"
 
 #: ../app/tools/gimpfiltertool.c:1158
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
-msgstr ""
+msgstr "Convertește pixelii în sRGB încorporat pentru a aplica filtrul (lent)"
 
 #: ../app/tools/gimpfiltertool.c:1159
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
+"Presupune că pixelii sunt sRGB încorporat (ignoră spațiul de culoare real al "
+"imaginii)"
 
 #: ../app/tools/gimpfiltertool.c:1540 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
@@ -23489,27 +23488,27 @@ msgstr "Nive_luri..."
 
 #: ../app/tools/gimplevelstool.c:276
 msgid "Pick black point for all channels"
-msgstr "Alege punctul de negru pentru toate canalele"
+msgstr "Prelevă punctul de negru pentru toate canalele"
 
 #: ../app/tools/gimplevelstool.c:278
 msgid "Pick black point for the selected channel"
-msgstr ""
+msgstr "Prelevă punctul de negru pentru canalul selectat"
 
 #: ../app/tools/gimplevelstool.c:285
 msgid "Pick gray point for all channels"
-msgstr ""
+msgstr "Prelevă punctul de gri pentru toate canalele"
 
 #: ../app/tools/gimplevelstool.c:287
 msgid "Pick gray point for the selected channel"
-msgstr ""
+msgstr "Prelevă punctul de gri pentru canalul selectat"
 
 #: ../app/tools/gimplevelstool.c:294
 msgid "Pick white point for all channels"
-msgstr ""
+msgstr "Prelevă punctul de alb pentru toate canalele"
 
 #: ../app/tools/gimplevelstool.c:296
 msgid "Pick white point for the selected channel"
-msgstr ""
+msgstr "Prelevă punctul de alb pentru canalul selectat"
 
 #: ../app/tools/gimplevelstool.c:400
 msgid "Adjust levels in linear light"
@@ -23526,7 +23525,7 @@ msgstr "Niveluri de intrare"
 
 #: ../app/tools/gimplevelstool.c:497
 msgid "Clamp _input"
-msgstr ""
+msgstr "Limitează _intrarea"
 
 #. Output levels frame
 #: ../app/tools/gimplevelstool.c:540
@@ -23535,7 +23534,7 @@ msgstr "Niveluri de ieșire"
 
 #: ../app/tools/gimplevelstool.c:588
 msgid "Clamp outpu_t"
-msgstr ""
+msgstr "Limi_tează ieșirea"
 
 #. all channels frame
 #: ../app/tools/gimplevelstool.c:603
@@ -23599,7 +23598,7 @@ msgstr "Orientare"
 
 #: ../app/tools/gimpmeasureoptions.c:72
 msgid "Orientation against which the angle is measured"
-msgstr ""
+msgstr "Orientarea față de care se măsoară unghiul"
 
 #: ../app/tools/gimpmeasureoptions.c:80
 msgid "Open a floating dialog to view details about measurements"
@@ -23750,7 +23749,7 @@ msgstr "Mo de deformare"
 #: ../app/tools/gimpnpointdeformationoptions.c:98
 #: ../app/tools/gimpnpointdeformationoptions.c:99
 msgid "Use weights"
-msgstr ""
+msgstr "Folosește ponderi"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:105
 msgid "Control points influence"
@@ -24983,7 +24982,7 @@ msgstr "Previzualizare de înaltă calitate"
 
 #: ../app/tools/gimpwarpoptions.c:137
 msgid "Use an accurate but slower preview"
-msgstr "Folosește o previzualizare precisă, dar lentă"
+msgstr "Folosește o previzualizare precisă, dar mai lentă"
 
 #: ../app/tools/gimpwarpoptions.c:143
 msgid "Real-time preview"
@@ -24991,7 +24990,7 @@ msgstr "Previzualizare în timp real"
 
 #: ../app/tools/gimpwarpoptions.c:144
 msgid "Render preview in real time (slower)"
-msgstr ""
+msgstr "Randează previzualizarea în timp real (mai lent)"
 
 #: ../app/tools/gimpwarpoptions.c:150
 msgid "During motion"
@@ -25268,12 +25267,12 @@ msgstr "Redenumire de traseu"
 #: ../app/vectors/gimpvectors.c:229
 msgctxt "undo-type"
 msgid "Move Path"
-msgstr "Mutare de traseu"
+msgstr "Mutare traseu"
 
 #: ../app/vectors/gimpvectors.c:230
 msgctxt "undo-type"
 msgid "Scale Path"
-msgstr "Scalare de traseu"
+msgstr "Scalare traseu"
 
 #: ../app/vectors/gimpvectors.c:231
 msgctxt "undo-type"
@@ -25288,7 +25287,7 @@ msgstr "Întoarcere de traseu"
 #: ../app/vectors/gimpvectors.c:233
 msgctxt "undo-type"
 msgid "Rotate Path"
-msgstr "Rotire de traseu"
+msgstr "Rotire traseu"
 
 #: ../app/vectors/gimpvectors.c:234
 msgctxt "undo-type"
@@ -25318,22 +25317,22 @@ msgstr "Reordonare de traseu"
 #: ../app/vectors/gimpvectors.c:239
 msgctxt "undo-type"
 msgid "Raise Path"
-msgstr "Ridicare de traseu"
+msgstr "Ridicare traseu"
 
 #: ../app/vectors/gimpvectors.c:240
 msgctxt "undo-type"
 msgid "Raise Path to Top"
-msgstr "Ridicare de traseu sus de tot"
+msgstr "Ridicare traseu sus de tot"
 
 #: ../app/vectors/gimpvectors.c:241
 msgctxt "undo-type"
 msgid "Lower Path"
-msgstr "Coborâre de traseu"
+msgstr "Coborâre traseu"
 
 #: ../app/vectors/gimpvectors.c:242
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
-msgstr "Coborâre de traseu jos de tot"
+msgstr "Coborâre traseu jos de tot"
 
 #: ../app/vectors/gimpvectors.c:243
 msgid "Path cannot be raised higher."
@@ -27317,7 +27316,7 @@ msgstr ""
 
 #: ../app/widgets/gimpsavedialog.c:326
 msgid "Save this _XCF file with better but slower compression"
-msgstr "Salvează acest fișier _XCF cu o comprimare mai bună dar mai lentă"
+msgstr "Salvează acest fișier _XCF cu o comprimare mai bună, dar mai lentă"
 
 #: ../app/widgets/gimpsavedialog.c:328
 msgid ""
