@@ -53,3 +53,7 @@ GTKDOC_LIBS = \
 
 
 include $(top_srcdir)/gtk-doc.make
+
+# This is a hack. The entire commit must be reverted once
+# this file gets removed by gtk-doc.make
+CLEANFILES += $(DOC_MODULE).actions
