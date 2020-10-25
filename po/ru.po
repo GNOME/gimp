@@ -8,21 +8,22 @@
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Julia Dronova <juliette.tux@gmail.com>, 2019, 2020.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2020.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-22 15:20+0000\n"
-"PO-Revision-Date: 2020-10-23 15:41+0300\n"
-"Last-Translator: Дронова Ю <juliette.tux@gmail.com>\n"
-"Language-Team: English <kde-russian@lists.kde.ru>\n"
+"PO-Revision-Date: 2020-10-25 12:59+0300\n"
+"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
+"Language-Team: русский <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Lokalize 19.12.3\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"X-Generator: Gtranslator 3.36.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -80,9 +81,8 @@ msgid ""
 "to the GTK+3 toolkit. Noteworthy improvements (though some are still work-in-"
 "progress) include:"
 msgstr ""
-"Данный выпуск является первым разрабатываемым выпуском GIMP 3.0, "
-"нацеленным на перенос программы на фреймворк GTK+3. Среди заслуживающих"
-" упоминания "
+"Данный выпуск является первым разрабатываемым выпуском GIMP 3.0, нацеленным "
+"на перенос программы на фреймворк GTK+3. Среди заслуживающих упоминания "
 "улучшений (некоторые из них ещё в процессе разработки):"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
@@ -129,9 +129,8 @@ msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
 msgstr ""
-"улучшения поддержки HEIF: экспорт по желанию с высоким значением глубины"
-" цвета, "
-"импорт и экспорт AVIF"
+"улучшения поддержки HEIF: экспорт по желанию с высоким значением глубины "
+"цвета, импорт и экспорт AVIF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Multiple improvements in Corel PaintShop Pro support"
@@ -140,43 +139,42 @@ msgstr "множественные улучшения в поддержке Core
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
-"в параметрах операций GEGL теперь доступен пункт «Объединить цвета всех слоёв»"
+"в параметрах операций GEGL теперь доступен пункт «Объединить цвета всех "
+"слоёв»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr ""
-"теперь, при выборе цвета, по умолчанию включён параметр «Объединить цвета"
-" всех слоёв»"
+"теперь, при выборе цвета, по умолчанию включён параметр «Объединить цвета "
+"всех слоёв»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
 msgstr ""
-"параметр включения поддержки OpenCL был перемещён во вкладку интерактивного"
-" запуска кода "
-"в «Параметрах»"
+"параметр включения поддержки OpenCL был перемещён во вкладку интерактивного "
+"запуска кода в «Параметрах»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
 msgstr ""
-"для инструмента выделения переднего плана теперь по умолчанию "
-"используется Matting Levin, показывающий гораздо более высокую "
-"производительность"
+"для инструмента выделения переднего плана теперь по умолчанию используется "
+"Matting Levin, показывающий гораздо более высокую производительность"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "New progressive performance logs and dashboard updates"
 msgstr ""
-"Новое последовательное журналирование производительности и "
-"обновления панели мониторинга"
+"Новое последовательное журналирование производительности и обновления панели "
+"мониторинга"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
-"Отладка с подробными сообщениями теперь при необходимости показывает сведения "
-"о Flatpak"
+"Отладка с подробными сообщениями теперь при необходимости показывает "
+"сведения о Flatpak"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Various bug fixes"
@@ -246,11 +244,11 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "Sliders now use a compact style with improved user interaction"
-msgstr ""
+msgstr "Ползунки теперь компактнее, с улучшенным управлением"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "Vastly improved user experience for the transformation preview"
-msgstr ""
+msgstr "Существенно улучшенный предпросмотр трансормации на холсте"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
@@ -265,7 +263,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Much smoother brush outline motion on the canvas"
-msgstr ""
+msgstr "Более плавное движение кисти по холсту"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Consolidated user interface for merging down and anchoring layers"
@@ -274,7 +272,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Update check to notify users that a new release/installer is available"
-msgstr ""
+msgstr "Проверка обновлений: сообщает пользователюо доступности новой версии"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
@@ -288,6 +286,8 @@ msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
 msgstr ""
+"Меню «Вид»: новая команда «Показать всё» показывает пиксели за границей "
+"холста"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
@@ -767,7 +767,6 @@ msgstr ""
 "Светлая и темная темы переписаны с нуля и теперь не содержат прежних проблем"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
-#, fuzzy
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -775,7 +774,7 @@ msgid ""
 msgstr ""
 "Новый элемент управления на холсте, GimpToolGyroscope, который на данный "
 "момент используется для фильтра «Панорамная проекция». Этот виджет "
-"предлагает трёхмерные действия на холсте (вращение вокруг вертикальной оси, )"
+"предлагает трёхмерные действия на холсте (вращение вокруг трех осей)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid ""
@@ -861,9 +860,8 @@ msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr "Поддержка цветовой пипетки и снятия скриншотов в Wayland на KDE Plasma"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
-#, fuzzy
 msgid "Paste in place feature"
-msgstr "Возможность заменяющей вставки"
+msgstr "Вставка под курсор"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid "Many usability improvements"
@@ -1872,7 +1870,7 @@ msgstr "Цвет нового канала"
 #: ../app/widgets/gimplayertreeview.c:867
 #, c-format
 msgid "%s Channel Copy"
-msgstr "Копия канала %s"
+msgstr "Копия %s"
 
 #: ../app/actions/colormap-actions.c:45
 msgctxt "colormap-action"
@@ -25426,7 +25424,7 @@ msgstr "Интервалы между штрихами"
 
 #: ../app/tools/gimpwarpoptions.c:129 ../app/tools/gimpwarpoptions.c:340
 msgid "Abyss policy"
-msgstr "Политика «бездны»"
+msgstr "Пиксели за краем"
 
 #: ../app/tools/gimpwarpoptions.c:130
 msgid "Out-of-bounds sampling behavior"
@@ -25434,7 +25432,7 @@ msgstr "Поведение при выборке данных вне буфер�
 
 #: ../app/tools/gimpwarpoptions.c:137
 msgid "High quality preview"
-msgstr "Высококачественный предварительный просмотр"
+msgstr "Качественный предпросмотр"
 
 #: ../app/tools/gimpwarpoptions.c:138
 msgid "Use an accurate but slower preview"
@@ -25442,7 +25440,7 @@ msgstr "Точный, но более медленный предварител�
 
 #: ../app/tools/gimpwarpoptions.c:144
 msgid "Real-time preview"
-msgstr "Предварительный просмотр в реальном времени"
+msgstr "Предпросмотр в реал. времени"
 
 #: ../app/tools/gimpwarpoptions.c:145
 msgid "Render preview in real time (slower)"
@@ -25483,7 +25481,7 @@ msgstr "Количество кадров анимации"
 #. the stroke frame
 #: ../app/tools/gimpwarpoptions.c:351
 msgid "Stroke"
-msgstr "Обводка"
+msgstr "Мазок"
 
 #. the animation frame
 #: ../app/tools/gimpwarpoptions.c:373
@@ -26877,7 +26875,7 @@ msgstr "Текстурированные данные"
 
 #: ../app/widgets/gimpdashboard.c:705
 msgid "Total size of processed mipmapped data"
-msgstr "Общий объём обработанных текстурированных данных"
+msgstr "Общий объём обработанных мипмапов"
 
 #: ../app/widgets/gimpdashboard.c:713
 msgctxt "dashboard-variable"
@@ -27663,7 +27661,7 @@ msgstr "цветов"
 
 #: ../app/widgets/gimpitemtreeview.c:783
 msgid "Lock:"
-msgstr "Запретить изменения:"
+msgstr "Блокировка:"
 
 #: ../app/widgets/gimpitemtreeview.c:1152
 #, c-format
