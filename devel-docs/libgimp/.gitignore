@@ -1,6 +1,7 @@
 /Makefile
 /Makefile.in
 /deprecated
+/libgimp3.actions
 /libgimp3.args
 /libgimp3.hierarchy
 /libgimp3.interfaces

@@ -1,6 +1,7 @@
 /Makefile
 /Makefile.in
 /deprecated
+/libgimpcolor3.actions
 /libgimpcolor3.args
 /libgimpcolor3-decl.txt
 /libgimpcolor3-decl-list.txt

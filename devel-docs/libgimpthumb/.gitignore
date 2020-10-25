@@ -1,6 +1,7 @@
 /Makefile
 /Makefile.in
 /deprecated
+/libgimpthumb3.actions
 /libgimpthumb3.args
 /libgimpthumb3.hierarchy
 /libgimpthumb3.interfaces

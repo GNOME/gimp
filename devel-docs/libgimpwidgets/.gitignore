@@ -1,6 +1,7 @@
 /Makefile
 /Makefile.in
 /deprecated
+/libgimpwidgets3.actions
 /libgimpwidgets3.args
 /libgimpwidgets3.hierarchy
 /libgimpwidgets3.interfaces

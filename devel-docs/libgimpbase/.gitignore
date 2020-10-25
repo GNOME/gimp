@@ -3,6 +3,7 @@
 /Makefile
 /Makefile.in
 /deprecated
+/libgimpbase3.actions
 /libgimpbase3.args
 /libgimpbase3-decl.txt
 /libgimpbase3-decl-list.txt

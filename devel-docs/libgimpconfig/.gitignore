@@ -1,6 +1,7 @@
 /Makefile
 /Makefile.in
 /deprecated
+/libgimpconfig3.actions
 /libgimpconfig3.args
 /libgimpconfig3-decl.txt
 /libgimpconfig3-decl-list.txt
