@@ -2135,15 +2135,14 @@ fi
 AC_ARG_WITH(linux-input, [  --without-linux-input   don't build linux input event controller module])
 
 have_linux_input="no (linux input support disabled)"
-if test "x$with_linux_input" != "xno"; then
-  AC_CHECK_HEADER(linux/input.h,
-	AC_CHECK_DECL(KEY_OK,
-		have_linux_input=yes,
-		have_linux_input="no (needs Linux 2.6)",
-		[#include <linux/input.h>]))
-fi
+AS_IF([test "x$with_linux_input" != "xno"],
+  [AC_CHECK_HEADER([linux/input.h],
+    [AC_CHECK_DECL([KEY_OK],
+                   [have_linux_input=yes],
+                   [have_linux_input="no (needs Linux 2.6)"],
+                   [#include <linux/input.h>])])])
 
-AM_CONDITIONAL(HAVE_LINUX_INPUT, test "x$have_linux_input" = xyes)
+AM_CONDITIONAL([HAVE_LINUX_INPUT], [test "x$have_linux_input" = xyes])
 
 
 ###############################
