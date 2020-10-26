@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-12 20:08+0000\n"
-"PO-Revision-Date: 2020-10-15 19:35+0300\n"
+"PO-Revision-Date: 2020-10-26 20:14+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -2245,7 +2245,7 @@ msgstr "EOF sau eroare la citirea datelor de imagine"
 #: ../plug-ins/common/file-cel.c:557
 #, c-format
 msgid "Unsupported bit depth (%d)!"
-msgstr "Adâncime de bit nesuportată (%d)!"
+msgstr "Adâncime de bit neacceptată (%d)!"
 
 #: ../plug-ins/common/file-cel.c:642 ../plug-ins/common/file-cel.c:654
 #, c-format
@@ -2490,7 +2490,7 @@ msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Nu se poate exporta „%s”.  Formatul de fișier GIF nu suportă imagini care au "
+"Nu se poate exporta „%s”.  Formatul de fișier GIF nu acceptă imagini care au "
 "mai mult de %d pixeli pe lățime sau înălțime."
 
 #: ../plug-ins/common/file-gif-save.c:773
@@ -2498,7 +2498,7 @@ msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
-"Formatul GIF suportă comentarii numai în codare pe 7 biți ASCII. Nu a fost "
+"Formatul GIF acceptă comentarii numai în codare pe 7 biți ASCII. Nu a fost "
 "salvat niciun comentariu."
 
 #: ../plug-ins/common/file-gif-save.c:838
@@ -2801,7 +2801,7 @@ msgstr "Bifați dacă doriți ca tabelul să aibă titlu."
 
 #: ../plug-ins/common/file-html-table.c:591
 msgid "The text for the table caption."
-msgstr "Textul pentru titlul tabelei."
+msgstr "Textul pentru titlul tabelului."
 
 #: ../plug-ins/common/file-html-table.c:605
 msgid "C_ell content:"
@@ -2822,7 +2822,7 @@ msgstr "C_henar:"
 
 #: ../plug-ins/common/file-html-table.c:636
 msgid "The number of pixels in the table border."
-msgstr "Numărul de pixeli în chenarul tabelei."
+msgstr "Numărul de pixeli în chenarul tabelului."
 
 #: ../plug-ins/common/file-html-table.c:651
 msgid "The width for each table cell.  Can be a number or a percent."
@@ -2884,11 +2884,10 @@ msgstr "YCbCr"
 msgid "xvYCC"
 msgstr "xvYCC"
 
-# hm ?
 #: ../plug-ins/common/file-jp2-load.c:1003
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
-msgstr "Versiune JPEG 2000%s „%s” cu %d componente nesuportată."
+msgstr "Versiunea JPEG 2000%s „%s” cu %d componente nu este acceptată."
 
 #: ../plug-ins/common/file-jp2-load.c:1012
 msgid "Color space:"
@@ -2947,7 +2946,7 @@ msgstr "Nu s-a putut converti imaginea xvYCC JP2 din „%s” la RGB."
 #: ../plug-ins/common/file-jp2-load.c:1265
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
-msgstr "Spațiu de culoare nesuportat în imaginea JP2 „%s”."
+msgstr "Spațiu de culoare neacceptat în imaginea JP2 „%s”."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3097,13 +3096,13 @@ msgstr "„%s” nu este un fișier PCX"
 #: ../plug-ins/file-psd/psd-load.c:315
 #, c-format
 msgid "Unsupported or invalid image width: %d"
-msgstr "Lățime nesuportată sau nevalidă de imagine: %d"
+msgstr "Lățime neacceptată sau nevalidă de imagine: %d"
 
 #: ../plug-ins/common/file-pcx.c:419 ../plug-ins/file-bmp/bmp-load.c:729
 #: ../plug-ins/file-psd/psd-load.c:307
 #, c-format
 msgid "Unsupported or invalid image height: %d"
-msgstr "Înălțime nesuportată sau nevalidă de imagine: %d"
+msgstr "Înălțime neacceptată sau nevalidă de imagine: %d"
 
 #: ../plug-ins/common/file-pcx.c:425
 msgid "Invalid number of bytes per line in PCX header"
@@ -3488,7 +3487,7 @@ msgstr "Fișier nevalid."
 
 #: ../plug-ins/common/file-pnm.c:616
 msgid "File not in a supported format."
-msgstr "Fișierul nu este într-un format suportat."
+msgstr "Fișierul nu este într-un format acceptat."
 
 #: ../plug-ins/common/file-pnm.c:625
 msgid "Invalid X resolution."
@@ -3512,11 +3511,11 @@ msgstr "Factor de scară fals."
 
 #: ../plug-ins/common/file-pnm.c:650
 msgid "Unsupported scale factor."
-msgstr "Factor de scară nesuportat."
+msgstr "Factor de scară neacceptat."
 
 #: ../plug-ins/common/file-pnm.c:661
 msgid "Unsupported maximum value."
-msgstr "Valoare maximă nesuportată."
+msgstr "Valoare maximă neacceptată."
 
 #: ../plug-ins/common/file-pnm.c:1614
 msgid "PNM"
@@ -3773,7 +3772,7 @@ msgstr "Tip de comprimare necunoscut %d"
 #: ../plug-ins/common/file-psp.c:921 ../plug-ins/common/file-psp.c:928
 #, c-format
 msgid "Unsupported bit depth %d"
-msgstr "Adâncime de biți nesuportată %d"
+msgstr "Adâncime de biți neacceptată %d"
 
 #: ../plug-ins/common/file-psp.c:975
 #, c-format
@@ -3871,7 +3870,7 @@ msgstr "Semnătură de fișier incorectă."
 #: ../plug-ins/common/file-psp.c:2260
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
-msgstr "Versiune nesuportată de format de fișier PSP %d.%d."
+msgstr "Versiune neacceptată de format de fișier PSP %d.%d."
 
 #: ../plug-ins/common/file-psp.c:2280
 msgid "invalid block size"
@@ -3925,8 +3924,8 @@ msgid ""
 "SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
 msgstr ""
 "Detectarea automată a spațierii de eșantion a eșuat. „%s” nu pare să fie un "
-"fișier valid HGT sau varianta lui nu este încă suportată. Fișierele HGT "
-"suportate sunt: SRTM-1 și SRTM-3. Dacă cunoașteți varianta, rulați cu "
+"fișier valid HGT sau varianta lui nu este încă acceptată. Fișierele HGT "
+"acceptate sunt: SRTM-1 și SRTM-3. Dacă cunoașteți varianta, rulați cu "
 "argumentul 1 sau 3."
 
 #: ../plug-ins/common/file-raw-data.c:1831
@@ -4083,7 +4082,7 @@ msgstr "Nu s-a putut deschide „%s” ca fișier SUN-raster"
 
 #: ../plug-ins/common/file-sunras.c:457
 msgid "The type of this SUN-rasterfile is not supported"
-msgstr "Tipul acestui fișier SUN-raster nu este suportat"
+msgstr "Tipul acestui fișier SUN-raster nu este acceptat"
 
 #: ../plug-ins/common/file-sunras.c:486
 #, c-format
@@ -4092,7 +4091,7 @@ msgstr "Nu s-au putut citi intrările de culoare din „%s”"
 
 #: ../plug-ins/common/file-sunras.c:495
 msgid "Type of colormap not supported"
-msgstr "Tipul de paletă de culori nu este suportat"
+msgstr "Tipul de paletă de culori nu este acceptat"
 
 #: ../plug-ins/common/file-sunras.c:502 ../plug-ins/common/file-xbm.c:835
 #: ../plug-ins/common/file-xwd.c:525
@@ -4136,7 +4135,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:562
 msgid "This image depth is not supported"
-msgstr "Această adâncime de culoare nu este suportată"
+msgstr "Această adâncime de culoare nu este acceptată"
 
 #: ../plug-ins/common/file-sunras.c:586
 #, c-format
@@ -4632,7 +4631,7 @@ msgstr ""
 "Cursorul a fost exportat cu succes, dar conține unul sau mai multe cadre a "
 "căror lățime sau înălțime este mai mare decât %ipx, o valoare istorică a "
 "dimensiunii maxime pentru cursoarele bitmap X .\n"
-"Este posibil să nu fie suportat de anumite medii."
+"Este posibil să nu fie acceptat de anumite medii."
 
 #: ../plug-ins/common/file-xmc.c:1799
 msgid ""
@@ -4642,7 +4641,7 @@ msgid ""
 "export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
 "Cursorul a fost exportat cu succes, dar conține unul sau mai multe cadre a "
-"căror dimensiune nominală nu este suportată de setările GNOME.\n"
+"căror dimensiune nominală nu este acceptată de setările GNOME.\n"
 "Puteți satisface cerințele prin bifarea opțiunii „Înlocuiește dimensiunea "
 "tuturor cadrelor...” în dialogul de export, altfel cursorul ar putea să nu "
 "apară în setările GNOME."
@@ -4693,7 +4692,7 @@ msgstr "Fișierul XPM nu este valid"
 #: ../plug-ins/common/file-xpm.c:664
 #, c-format
 msgid "Unsupported drawable type"
-msgstr "Tip nesuportat de obiect grafic"
+msgstr "Tip neacceptat de obiect grafic"
 
 #: ../plug-ins/common/file-xpm.c:855
 msgid "XPM"
@@ -4741,7 +4740,7 @@ msgid ""
 "not supported."
 msgstr ""
 "Fișierul XWD %s are formatul %d, adâncimea %d și pixelii per biți %d. "
-"Momentan acest tip nu este suportat."
+"Momentan acest tip nu este acceptat."
 
 #: ../plug-ins/common/file-xwd.c:636
 msgid "Cannot export images with alpha channels."
@@ -6721,7 +6720,7 @@ msgstr "Eroare la citirea antetului de fișier BMP din „%s”"
 #: ../plug-ins/file-bmp/bmp-load.c:381
 #, c-format
 msgid "Unsupported compression (%u) in BMP file from '%s'"
-msgstr "Comprimare nesuportată (%u) în fișierul BMP de la „%s”"
+msgstr "Comprimare neacceptată (%u) în fișierul BMP de la „%s”"
 
 #: ../plug-ins/file-bmp/bmp-load.c:675
 msgid "Unrecognized or invalid BMP compression format."
@@ -6729,7 +6728,7 @@ msgstr "Format de comprimare BMP nerecunoscut sau nevalid."
 
 #: ../plug-ins/file-bmp/bmp-load.c:717
 msgid "Unsupported or invalid bitdepth."
-msgstr "Adâncime de bit nesuportată sau nevalidă."
+msgstr "Adâncime de bit neacceptată sau nevalidă."
 
 #: ../plug-ins/file-bmp/bmp-load.c:885 ../plug-ins/file-bmp/bmp-load.c:928
 #: ../plug-ins/file-bmp/bmp-load.c:982
@@ -7000,7 +6999,7 @@ msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr ""
-"Pictograme și comprimări mari nu sunt suportate de toate programele. "
+"Pictograme și comprimări mari nu sunt acceptate de toate programele. "
 "Aplicațiile mai vechi ar putea să nu deschidă corect acest fișier."
 
 #: ../plug-ins/file-ico/ico-dialog.c:169
@@ -7231,7 +7230,7 @@ msgstr "Fișierul nu este un document Photoshop valid"
 #: ../plug-ins/file-psd/psd-load.c:290
 #, c-format
 msgid "Unsupported file format version: %d"
-msgstr "Versiune nesuportată de format de fișier: %d"
+msgstr "Versiune neacceptată de format de fișier: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:297
 #, c-format
@@ -7241,17 +7240,17 @@ msgstr "Prea multe canale în fișier: %d"
 #: ../plug-ins/file-psd/psd-load.c:324
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
-msgstr "Dimensiune de imagine, nesuportată sau nevalidă: %dx%d"
+msgstr "Dimensiune de imagine, neacceptată sau nevalidă: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:338 ../plug-ins/file-psd/psd-load.c:348
 #, c-format
 msgid "Unsupported color mode: %s"
-msgstr "Mod nesuportat de culoare: %s"
+msgstr "Mod neacceptat de culoare: %s"
 
 #: ../plug-ins/file-psd/psd-load.c:375
 #, c-format
 msgid "Unsupported bit depth: %d"
-msgstr "Adâncime nesuportată de biți: %d"
+msgstr "Adâncime neacceptată de biți: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:409 ../plug-ins/file-psd/psd-load.c:419
 #: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:852
@@ -7267,37 +7266,37 @@ msgstr "Prea multe canale în strat: %d"
 #: ../plug-ins/file-psd/psd-load.c:566
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
-msgstr "Înălțime de strat nesuportată sau nevalidă: %d"
+msgstr "Înălțime de strat neacceptată sau nevalidă: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:574
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
-msgstr "Lățime de strat nesuportată sau nevalidă: %d"
+msgstr "Lățime de strat neacceptată sau nevalidă: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:583
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
-msgstr "Dimensiune de strat nesuportată sau nevalidă: %dx%d"
+msgstr "Dimensiune de strat neacceptată sau nevalidă: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:769
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
-msgstr "Înălțime de mască de strat, nesuportată sau nevalidă: %d"
+msgstr "Înălțime de mască de strat, neacceptată sau nevalidă: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:777
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
-msgstr "Lățime de mască de strat, nesuportată sau nevalidă: %d"
+msgstr "Lățime de mască de strat, neacceptată sau nevalidă: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:786
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
-msgstr "Dimensiune de mască de strat, nesuportată sau nevalidă: %dx%d"
+msgstr "Dimensiune de mască de strat, neacceptată sau nevalidă: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:1417 ../plug-ins/file-psd/psd-load.c:1934
 #, c-format
 msgid "Unsupported compression mode: %d"
-msgstr "Mod de comprimare nesuportat: %d"
+msgstr "Mod de comprimare neacceptat: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:2065
 msgid "Extra"
@@ -7306,7 +7305,7 @@ msgstr "Extra"
 #: ../plug-ins/file-psd/psd-load.c:2243
 #, c-format
 msgid "Unsupported or invalid channel size"
-msgstr "Dimensiune de canal nesuportată sau nevalidă"
+msgstr "Dimensiune de canal neacceptată sau nevalidă"
 
 #: ../plug-ins/file-psd/psd-load.c:2309
 #, c-format
@@ -7324,7 +7323,7 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Nu se poate exporta „%s”. Formatul de fișier PSD nu suportă imagini care "
+"Nu se poate exporta „%s”. Formatul de fișier PSD nu acceptă imagini care "
 "sunt mai late sau mai înalte de 30000 de pixeli."
 
 #: ../plug-ins/file-psd/psd-save.c:1711
@@ -7333,7 +7332,7 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Nu se poate exporta „%s”. Formatul de fișier PSD nu suportă imagini cu "
+"Nu se poate exporta „%s”. Formatul de fișier PSD nu acceptă imagini cu "
 "straturi care sunt mai late sau mai înalte de 30000 de pixeli."
 
 # hm ? sau sfârșit prematur de fișier ?
@@ -7462,7 +7461,7 @@ msgid ""
 msgstr ""
 "Nu este instalat nici un încărcător RAW pentru a deschide fișiere „%s”.\n"
 "\n"
-"În prezent GIMP suportă aceste încărcătoare RAW:\n"
+"În prezent GIMP acceptă aceste încărcătoare RAW:\n"
 "- darktable (http://www.darktable.org/), cel puțin 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), cel puțin 5.2\n"
 "\n"
@@ -7515,7 +7514,7 @@ msgid ""
 "(not supported by SGI)"
 msgstr ""
 "RLE _agresiv\n"
-"(nu este suportat de SGI)"
+"(nu este acceptat de SGI)"
 
 #: ../plug-ins/file-tiff/file-tiff.c:140 ../plug-ins/file-tiff/file-tiff.c:162
 #: ../plug-ins/file-tiff/file-tiff.c:180
@@ -7601,7 +7600,7 @@ msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
-"Formatul TIFF suportă comentarii doar în codare\n"
+"Formatul TIFF acceptă comentarii doar în codare\n"
 "ASCII pe 7 biți. Nu a fost salvat niciun comentariu."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1104
@@ -9505,7 +9504,7 @@ msgstr "Întârzierea între ca_dre acolo unde nu este specificat:"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "GIF supports hundredths of a second precision."
-msgstr "GIF suportă o precizie de o sutime de secundă."
+msgstr "GIF acceptă o precizie de o sutime de secundă."
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
 msgid "_Frame disposal where unspecified:"
