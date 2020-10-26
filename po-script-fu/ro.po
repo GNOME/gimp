@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-28 20:09+0000\n"
-"PO-Revision-Date: 2020-05-30 13:00+0300\n"
+"POT-Creation-Date: 2020-10-25 21:27+0000\n"
+"PO-Revision-Date: 2020-10-26 05:20+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: ../plug-ins/script-fu/script-fu.c:138
 msgid "Script-Fu _Console"
@@ -1465,7 +1465,7 @@ msgstr "_Glob rotitor..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr "Creează o animație prin maparea imaginii curente la o sferă rotitoare"
+msgstr "Creează o animație prin maparea imaginii curente pe o sferă rotitoare"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
 msgid "Frames"
@@ -1641,3 +1641,97 @@ msgstr "Decalajul X al umbrei detașate"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Decalajul Y al umbrei detașate"
+
+#~ msgid "_Console"
+#~ msgstr "_Consolă"
+
+#~ msgid "Rendering Spyro"
+#~ msgstr "Randare Spirograf"
+
+#~ msgid "_Spyrogimp (older script-fu version)..."
+#~ msgstr "_Spyrogimp (versiune script-fu mai veche)..."
+
+#~ msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
+#~ msgstr ""
+#~ "Această procedură este învechită! Folosiți „plug-in-spyrogimp” în loc."
+
+#~ msgid "Type"
+#~ msgstr "Tip"
+
+#~ msgid "Spyrograph"
+#~ msgstr "Spirograf"
+
+#~ msgid "Epitrochoid"
+#~ msgstr "Epitrochoid"
+
+#~ msgid "Lissajous"
+#~ msgstr "Lissajous"
+
+#~ msgid "Shape"
+#~ msgstr "Formă"
+
+#~ msgid "Circle"
+#~ msgstr "Cerc"
+
+#~ msgid "Triangle"
+#~ msgstr "Triunghi"
+
+#~ msgid "Square"
+#~ msgstr "Pătrat"
+
+#~ msgid "Pentagon"
+#~ msgstr "Pentagon"
+
+#~ msgid "Hexagon"
+#~ msgstr "Hexagon"
+
+#~ msgid "Polygon: 7 sides"
+#~ msgstr "Poligon: 7 laturi"
+
+#~ msgid "Polygon: 8 sides"
+#~ msgstr "Poligon: 8 laturi"
+
+#~ msgid "Polygon: 9 sides"
+#~ msgstr "Poligon: 9 laturi"
+
+#~ msgid "Polygon: 10 sides"
+#~ msgstr "Poligon: 10 laturi"
+
+#~ msgid "Outer teeth"
+#~ msgstr "Dinte exterior"
+
+#~ msgid "Inner teeth"
+#~ msgstr "Dinte interior"
+
+#~ msgid "Margin (pixels)"
+#~ msgstr "Margine (pixeli)"
+
+#~ msgid "Hole ratio"
+#~ msgstr "Raportul găurii"
+
+#~ msgid "Start angle"
+#~ msgstr "Unghi de pornire"
+
+#~ msgid "Tool"
+#~ msgstr "Instrument"
+
+#~ msgid "Pencil"
+#~ msgstr "Creion"
+
+#~ msgid "Brush"
+#~ msgstr "Penel"
+
+#~ msgid "Airbrush"
+#~ msgstr "Aerograf"
+
+#~ msgid "Color method"
+#~ msgstr "Metoda colorării"
+
+#~ msgid "Solid Color"
+#~ msgstr "Culoare uniformă"
+
+#~ msgid "Gradient: Loop Sawtooth"
+#~ msgstr "Degrade: dinte de ferăstrău ciclic"
+
+#~ msgid "Gradient: Loop Triangle"
+#~ msgstr "Degrade: triunghi ciclic"
