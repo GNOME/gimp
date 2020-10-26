@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-22 18:45+0000\n"
-"PO-Revision-Date: 2020-10-23 09:54+0300\n"
+"POT-Creation-Date: 2020-10-25 20:46+0000\n"
+"PO-Revision-Date: 2020-10-26 11:42+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -63,7 +63,7 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/common/tile-small.c:425 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:704 ../plug-ins/common/warp.c:467
 #: ../plug-ins/common/wavelet-decompose.c:388 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:1935 ../plug-ins/flame/flame.c:513
+#: ../plug-ins/file-tiff/file-tiff-load.c:1952 ../plug-ins/flame/flame.c:513
 #: ../plug-ins/flame/flame.c:689 ../plug-ins/flame/flame.c:1013
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:565
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1640
@@ -396,7 +396,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:1971 ../plug-ins/file-sgi/sgi.c:424
-#: ../plug-ins/file-tiff/file-tiff-load.c:1050
+#: ../plug-ins/file-tiff/file-tiff-load.c:1055
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1323 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -954,8 +954,8 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
 #: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
 #: ../plug-ins/file-jpeg/jpeg-save.c:340 ../plug-ins/file-psd/psd-save.c:1753
-#: ../plug-ins/file-tiff/file-tiff-save.c:987
-#: ../plug-ins/file-tiff/file-tiff-save.c:1102 ../plug-ins/flame/flame.c:482
+#: ../plug-ins/file-tiff/file-tiff-save.c:994
+#: ../plug-ins/file-tiff/file-tiff-save.c:1109 ../plug-ins/flame/flame.c:482
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1547
 #: ../plug-ins/gfig/gfig.c:827 ../plug-ins/ifs-compose/ifs-compose.c:2395
 #: ../plug-ins/lighting/lighting-ui.c:1239
@@ -2012,7 +2012,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
 #: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
 #: ../plug-ins/file-jpeg/jpeg-save.c:293 ../plug-ins/file-psd/psd-save.c:1716
-#: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:977
+#: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:984
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Експортування «%s»"
@@ -2432,7 +2432,6 @@ msgstr ""
 "Зберегти зображення у форматі HEIF (High Efficiency Image File Format)."
 
 #: ../plug-ins/common/file-heif.c:304
-#| msgid "Loads HEIF images"
 msgid "Loads AVIF images"
 msgstr "Завантаження зображень AVIF"
 
@@ -2442,12 +2441,10 @@ msgstr ""
 "Завантаження зображення, яке збережено у форматі файлів зображень AV1 (AVIF)"
 
 #: ../plug-ins/common/file-heif.c:335
-#| msgid "Exports HEIF images"
 msgid "Exports AVIF images"
 msgstr "Експортує зображення AVIF"
 
 #: ../plug-ins/common/file-heif.c:336
-#| msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Зберегти зображення у форматі файлів зображень AV1 (AVIF)."
 
@@ -3061,7 +3058,7 @@ msgid "Import from PDF"
 msgstr "Імпорт з PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1042 ../plug-ins/common/file-ps.c:3551
-#: ../plug-ins/file-tiff/file-tiff-load.c:1936
+#: ../plug-ins/file-tiff/file-tiff-load.c:1953
 #: ../plug-ins/metadata/metadata-editor.c:5665
 msgid "_Import"
 msgstr "_Імпортувати"
@@ -3194,7 +3191,7 @@ msgstr "Шари як сторінки (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1315
 #: ../plug-ins/common/file-pdf-save.c:1388
 #: ../plug-ins/common/file-pdf-save.c:1486 ../plug-ins/common/file-ps.c:2036
-#: ../plug-ins/file-tiff/file-tiff-load.c:1052
+#: ../plug-ins/file-tiff/file-tiff-load.c:1057
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
@@ -3334,22 +3331,22 @@ msgid "Save E_xif data"
 msgstr "Зберегти д_ані Exif"
 
 #: ../plug-ins/common/file-png.c:2281
-#: ../plug-ins/file-tiff/file-tiff-save.c:1343
+#: ../plug-ins/file-tiff/file-tiff-save.c:1350
 msgid "Save XMP data"
 msgstr "Зберегти дані XMP"
 
 #: ../plug-ins/common/file-png.c:2285
-#: ../plug-ins/file-tiff/file-tiff-save.c:1347
+#: ../plug-ins/file-tiff/file-tiff-save.c:1354
 msgid "Save IPTC data"
 msgstr "Зберегти дані IPTC"
 
 #: ../plug-ins/common/file-png.c:2289
-#: ../plug-ins/file-tiff/file-tiff-save.c:1351
+#: ../plug-ins/file-tiff/file-tiff-save.c:1358
 msgid "Save thumbnail"
 msgstr "Зберегти мініатюру"
 
 #: ../plug-ins/common/file-png.c:2293
-#: ../plug-ins/file-tiff/file-tiff-save.c:1356
+#: ../plug-ins/file-tiff/file-tiff-save.c:1363
 msgid "Save color profile"
 msgstr "Зберегти колірний профіль"
 
@@ -6474,7 +6471,7 @@ msgid "Export Image as DDS"
 msgstr "Експортувати зображення як DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1987
-#: ../plug-ins/file-tiff/file-tiff-save.c:1246
+#: ../plug-ins/file-tiff/file-tiff-save.c:1253
 msgid "_Compression:"
 msgstr "С_тиснення:"
 
@@ -6730,7 +6727,7 @@ msgid "File size: unknown"
 msgstr "Розмір файлу: невідомо"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:835
-#: ../plug-ins/file-tiff/file-tiff-save.c:1236
+#: ../plug-ins/file-tiff/file-tiff-save.c:1243
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -6778,7 +6775,7 @@ msgstr "Зберегти _ескіз"
 
 #. Comment
 #: ../plug-ins/file-jpeg/jpeg-save.c:1014
-#: ../plug-ins/file-tiff/file-tiff-save.c:1360
+#: ../plug-ins/file-tiff/file-tiff-save.c:1367
 msgid "Comment"
 msgstr "Коментар"
 
@@ -7214,16 +7211,31 @@ msgstr "Зайві канали із даними поза специфікац�
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Нестандартний TIFF: зайві канали без поля «ExtraSamples»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:820
+#: ../plug-ins/file-tiff/file-tiff-load.c:334
+#, c-format
+msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
+msgstr ""
+"Не вдалося прочитати сторінку %d з %d. Зображення може бути пошкоджено.\n"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:825
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-з-%d-сторінок"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1089
+#: ../plug-ins/file-tiff/file-tiff-load.c:1094
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1931
+#. Error reading scanline, stop loading
+#: ../plug-ins/file-tiff/file-tiff-load.c:1611
+#: ../plug-ins/file-tiff/file-tiff-load.c:1786
+#, fuzzy, c-format
+msgid "Reading scanline failed. Image may be corrupt at line %d."
+msgstr ""
+"Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
+"Рядок помилки — %d."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1948
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
@@ -7231,23 +7243,23 @@ msgstr "Імпорт TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:1984
+#: ../plug-ins/file-tiff/file-tiff-load.c:2001
 msgid "_Keep empty space around imported layers"
 msgstr "За_лишати порожнє місце навколо імпортованих шарів"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2001
+#: ../plug-ins/file-tiff/file-tiff-load.c:2018
 msgid "Process extra channel as:"
 msgstr "Обробляти зайвий канал як:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2004
+#: ../plug-ins/file-tiff/file-tiff-load.c:2021
 msgid "_Non-premultiplied alpha"
 msgstr "Б_ез попередньо помноженої альфи"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2005
+#: ../plug-ins/file-tiff/file-tiff-load.c:2022
 msgid "Pre_multiplied alpha"
 msgstr "_Попередньо помножена альфа"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2006
+#: ../plug-ins/file-tiff/file-tiff-load.c:2023
 msgid "Channe_l"
 msgstr "_Канал"
 
@@ -7268,7 +7280,7 @@ msgstr "Індексовані зображення не можна стисну
 msgid "Failed a scanline write on row %d"
 msgstr "Не вдалося записати рядок сканування %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1002
+#: ../plug-ins/file-tiff/file-tiff-save.c:1009
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7276,39 +7288,39 @@ msgstr ""
 "Формат TIFF підтримує лише 7-бітні ASCII\n"
 "коментарі. Коментар не збережено."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1127
+#: ../plug-ins/file-tiff/file-tiff-save.c:1134
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Записування сторінок із різною бітовою глибиною є доволі дивною дією."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1217
+#: ../plug-ins/file-tiff/file-tiff-save.c:1224
 msgid "Export Image as TIFF"
 msgstr "Експортувати зображення як TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1232
+#: ../plug-ins/file-tiff/file-tiff-save.c:1239
 #: ../plug-ins/metadata/metadata-tags.c:176
 #: ../plug-ins/metadata/metadata-tags.c:188
 #: ../plug-ins/metadata/metadata-tags.c:219
 msgid "None"
 msgstr "Немає"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1233
+#: ../plug-ins/file-tiff/file-tiff-save.c:1240
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1234
+#: ../plug-ins/file-tiff/file-tiff-save.c:1241
 msgid "Pack Bits"
 msgstr "Упаковані біти"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1235
+#: ../plug-ins/file-tiff/file-tiff-save.c:1242
 msgid "Deflate"
 msgstr "Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1237
+#: ../plug-ins/file-tiff/file-tiff-save.c:1244
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1238
+#: ../plug-ins/file-tiff/file-tiff-save.c:1245
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax"
 
@@ -7316,25 +7328,25 @@ msgstr "CCITT Group 4 fax"
 #. * unchecked though I don't actually change the config value to
 #. * keep storing previously chosen value.
 #.
-#: ../plug-ins/file-tiff/file-tiff-save.c:1282
-#: ../plug-ins/file-tiff/file-tiff-save.c:1290
+#: ../plug-ins/file-tiff/file-tiff-save.c:1289
+#: ../plug-ins/file-tiff/file-tiff-save.c:1297
 msgid "Save layers"
 msgstr "Зберегти шари"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1308
+#: ../plug-ins/file-tiff/file-tiff-save.c:1315
 msgid "Crop layers to image bounds"
 msgstr "Обрізати шари до меж зображення"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1319
+#: ../plug-ins/file-tiff/file-tiff-save.c:1326
 msgid "Crop layers"
 msgstr "Обрізати шари"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1327
-#: ../plug-ins/file-tiff/file-tiff-save.c:1331
+#: ../plug-ins/file-tiff/file-tiff-save.c:1334
+#: ../plug-ins/file-tiff/file-tiff-save.c:1338
 msgid "Save color values from transparent pixels"
 msgstr "Зберігати значення кольору прозорих точок"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1339
+#: ../plug-ins/file-tiff/file-tiff-save.c:1346
 msgid "Save Exif data"
 msgstr "Зберегти дані Exif"
 
