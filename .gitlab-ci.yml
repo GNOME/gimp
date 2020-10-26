@@ -143,8 +143,6 @@ gimp-autotools-debian:
     - make check
 
 gimp-distcheck-debian:
-  # Temporarily allow distcheck failure. See #5790
-  allow_failure: true
   extends: .gimp-debian-base
   script:
     - mkdir _build
