@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-24 22:37+0000\n"
-"PO-Revision-Date: 2020-10-25 06:44+0200\n"
+"POT-Creation-Date: 2020-10-25 20:18+0000\n"
+"PO-Revision-Date: 2020-10-26 11:37+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -50,7 +50,7 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1811
+#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1837
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:698
 #: ../plug-ins/common/file-pdf-load.c:1264
@@ -115,7 +115,7 @@ msgstr "_Скасувати"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1812
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1838
 #: ../plug-ins/common/file-pdf-load.c:699 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -2146,7 +2146,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:681 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-heif.c:696 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1035
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
@@ -2235,7 +2235,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
-#: ../plug-ins/common/file-heif.c:1253 ../plug-ins/common/file-html-table.c:238
+#: ../plug-ins/common/file-heif.c:1268 ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
 #: ../plug-ins/common/file-png.c:1607 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
@@ -2570,11 +2570,11 @@ msgstr "Кількість кадрів:"
 msgid "C source code header"
 msgstr "Заголовок програми на С"
 
-#: ../plug-ins/common/file-heif.c:114
+#: ../plug-ins/common/file-heif.c:143
 msgid "Loads HEIF images"
 msgstr "Завантаження зображень HEIF"
 
-#: ../plug-ins/common/file-heif.c:115
+#: ../plug-ins/common/file-heif.c:144
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2582,83 +2582,94 @@ msgstr ""
 "Завантажити зображення, збережене у форматі HEIF (High Efficiency Image File "
 "Format). Типові розширення файлів формату HEIF - .heif, .heic."
 
-#: ../plug-ins/common/file-heif.c:121 ../plug-ins/common/file-heif.c:168
+#: ../plug-ins/common/file-heif.c:150 ../plug-ins/common/file-heif.c:179
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:162
+#: ../plug-ins/common/file-heif.c:173
 msgid "Exports HEIF images"
 msgstr "Експортує зображення HEIF"
 
-#: ../plug-ins/common/file-heif.c:163
+#: ../plug-ins/common/file-heif.c:174
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Зберегти зображення у форматі HEIF (High Efficiency Image File Format)."
 
-#: ../plug-ins/common/file-heif.c:719 ../plug-ins/common/file-heif.c:752
-#: ../plug-ins/common/file-heif.c:791 ../plug-ins/common/file-heif.c:857
+#: ../plug-ins/common/file-heif.c:194
+#| msgid "Exports HEIF images"
+msgid "Exports AVIF images"
+msgstr "Експортує зображення AVIF"
+
+#: ../plug-ins/common/file-heif.c:195
+#| msgid "Save image in HEIF format (High Efficiency Image File Format)."
+msgid "Save image in AV1 Image File Format (AVIF)"
+msgstr "Зберегти зображення у форматі файлів зображень AV1 (AVIF)"
+
+#: ../plug-ins/common/file-heif.c:734 ../plug-ins/common/file-heif.c:767
+#: ../plug-ins/common/file-heif.c:806 ../plug-ins/common/file-heif.c:872
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Не вдалось завантажити зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:741
+#: ../plug-ins/common/file-heif.c:756
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Не вдалось завантажити зображення HEIF: вхідний файл не містить придатних "
 "для читання зображень"
 
-#: ../plug-ins/common/file-heif.c:984
+#: ../plug-ins/common/file-heif.c:999
 msgid "image content"
 msgstr "вміст зображення"
 
-#: ../plug-ins/common/file-heif.c:1303 ../plug-ins/common/file-heif.c:1536
+#: ../plug-ins/common/file-heif.c:1318 ../plug-ins/common/file-heif.c:1562
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Не вдалось закодувати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1573
+#: ../plug-ins/common/file-heif.c:1599
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Не вдалось записати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1662
+#: ../plug-ins/common/file-heif.c:1688
 msgid "primary"
 msgstr "основне"
 
-#: ../plug-ins/common/file-heif.c:1807
+#: ../plug-ins/common/file-heif.c:1833
 msgid "Load HEIF Image"
 msgstr "Завантажити зображення HEIF"
 
-#: ../plug-ins/common/file-heif.c:1821
+#: ../plug-ins/common/file-heif.c:1847
 msgid "Select Image"
 msgstr "Виберіть зображення"
 
-#: ../plug-ins/common/file-heif.c:1987
-msgid "Nearly _lossless (YUV420 format)"
-msgstr "Майже _без втрат (формат YUV420)"
+#: ../plug-ins/common/file-heif.c:2013
+#| msgid "Nearly _lossless (YUV420 format)"
+msgid "Nearly _lossless"
+msgstr "Майже _без втрат"
 
-#: ../plug-ins/common/file-heif.c:1991 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2017 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Якість:"
 
-#: ../plug-ins/common/file-heif.c:2034
+#: ../plug-ins/common/file-heif.c:2060
 msgid "Bit depth:"
 msgstr "Бітова глибина:"
 
-#: ../plug-ins/common/file-heif.c:2040
+#: ../plug-ins/common/file-heif.c:2066
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2041
+#: ../plug-ins/common/file-heif.c:2067
 msgid "10 bit/channel"
 msgstr "10 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2042
+#: ../plug-ins/common/file-heif.c:2068
 msgid "12 bit/channel"
 msgstr "12 біт/канал"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2051 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2077 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:387
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save color _profile"
@@ -7439,8 +7450,8 @@ msgstr "Канал TIFF"
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
-"Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. Рядок"
-" помилки — %d."
+"Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
+"Рядок помилки — %d."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1921
 msgid "Import from TIFF"
