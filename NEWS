@@ -6,6 +6,17 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 2.99.2 to GIMP 2.99.4
+===================================================
+
+Core:
+
+  - Action search now always show all actions, even inactive ones. In
+    order not to clutter the results, inactive ones are shown after
+    active results (following the same match quality level).
+    Consequently the "Show unavailable actions" checkbox has been
+    removed from the `Preferences > Help System` dialog.
+
 Overview of Changes from GIMP 2.10.x to GIMP 2.99.2
 ===================================================
 
@@ -71,6 +82,10 @@ User Interface:
     dockable) allows to expand/collapse all item groups but the clicked
     one.
   - Compact GimpSpinScale is now the only available version.
+  - Scalable symbolic icons "switch-on", "switch-off" (from GTK
+    repository) and "software-update-available" (from Adwaita
+    repository) are now bundled with GIMP in a "hicolor" overlay so that
+    they are available even if missing from the custom theme.
 
 Devices:
 
