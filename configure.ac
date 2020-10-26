@@ -3014,6 +3014,7 @@ docs/Makefile
 menus/Makefile
 cursors/Makefile
 icons/Makefile
+icons/hicolor/Makefile
 icons/Color/Makefile
 icons/Legacy/Makefile
 icons/Symbolic/Makefile
