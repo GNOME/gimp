@@ -47,7 +47,7 @@ struct _SaveParams
 
 /*  local function prototypes  */
 
-static void       query          (void);
+static void       init           (void);
 static void       run            (const gchar          *name,
                                   gint                  nparams,
                                   const GimpParam      *param,
@@ -73,9 +73,9 @@ static gboolean   save_dialog    (SaveParams           *params,
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init_proc  */
+  init,  /* init_proc  */
   NULL,  /* quit_proc  */
-  query, /* query_proc */
+  NULL,  /* query_proc */
   run,   /* run_proc   */
 };
 
@@ -84,7 +84,7 @@ MAIN ()
 
 
 static void
-query (void)
+init (void)
 {
   static const GimpParamDef load_args[] =
   {
