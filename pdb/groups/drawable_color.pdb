@@ -185,8 +185,8 @@ Modifies the intensity mapping for one channel in the specified
 drawable. The channel can be either an intensity component, or the
 value. The 'values' parameter is an array of doubles which explicitly
 defines how each pixel value in the drawable will be modified.  Use
-the gimp_curves_spline() function to modify intensity levels with
-Catmull Rom splines.
+the gimp_drawable_curves_spline() function to modify intensity levels
+with Catmull Rom splines.
 HELP
 
     &std_pdb_misc;
@@ -242,8 +242,8 @@ Modifies the intensity mapping for one channel in the specified
 drawable. The channel can be either an intensity component, or the
 value. The 'points' parameter is an array of doubles which define a
 set of control points which describe a Catmull Rom spline which yields
-the final intensity curve. Use the gimp_curves_explicit() function to
-explicitly modify intensity levels.
+the final intensity curve. Use the gimp_drawable_curves_explicit()
+function to explicitly modify intensity levels.
 HELP
 
     &std_pdb_misc;

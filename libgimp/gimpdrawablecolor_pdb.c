@@ -195,8 +195,8 @@ gimp_drawable_colorize_hsl (GimpDrawable *drawable,
  * drawable. The channel can be either an intensity component, or the
  * value. The 'values' parameter is an array of doubles which
  * explicitly defines how each pixel value in the drawable will be
- * modified. Use the gimp_curves_spline() function to modify intensity
- * levels with Catmull Rom splines.
+ * modified. Use the gimp_drawable_curves_spline() function to modify
+ * intensity levels with Catmull Rom splines.
  *
  * Returns: TRUE on success.
  *
@@ -245,8 +245,9 @@ gimp_drawable_curves_explicit (GimpDrawable         *drawable,
  * drawable. The channel can be either an intensity component, or the
  * value. The 'points' parameter is an array of doubles which define a
  * set of control points which describe a Catmull Rom spline which
- * yields the final intensity curve. Use the gimp_curves_explicit()
- * function to explicitly modify intensity levels.
+ * yields the final intensity curve. Use the
+ * gimp_drawable_curves_explicit() function to explicitly modify
+ * intensity levels.
  *
  * Returns: TRUE on success.
  *

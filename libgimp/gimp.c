@@ -900,7 +900,7 @@ gimp_user_time (void)
 }
 
 /**
- * gimp_get_icon_theme_dir:
+ * gimp_icon_theme_dir:
  *
  * Returns the directory of the current icon theme.
  *

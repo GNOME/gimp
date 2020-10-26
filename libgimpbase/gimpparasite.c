@@ -43,9 +43,8 @@
  * @title: GimpParasite
  * @short_description: Arbitrary pieces of data which can be attached
  *                     to various GIMP objects.
- * @see_also: gimp_image_parasite_attach(),
- *            gimp_drawable_parasite_attach(), gimp_parasite_attach()
- *            and their related functions.
+ * @see_also: gimp_image_attach_parasite(), gimp_item_attach_parasite(),
+ *            gimp_attach_parasite() and their related functions.
  *
  * Arbitrary pieces of data which can be attached to various GIMP objects.
  **/
