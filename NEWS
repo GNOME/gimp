@@ -262,12 +262,31 @@ API:
     * gimp_item_get_children() -> gimp_item_list_children()
   - New function gimp_vectors_stroke_reverse() to reverse a specified
     stroke in a given GimpVectors.
-  - Function gimp_zoom_preview_get_drawable() which got deprecated since
-    GIMP 2.10.0 and replaced by gimp_zoom_preview_get_drawable_id() is
-    reinstated with the new GimpDrawable class, whereas the newer
-    function got removed.
-    Similarly gimp_zoom_preview_new_from_drawable_id() is replaced by
-    gimp_zoom_preview_new_from_drawable().
+  - In GIMP 2.10, functions gimp_drawable_preview_get_drawable() and
+    gimp_zoom_preview_get_drawable() got deprecated in favor of
+    respectively gimp_drawable_preview_get_drawable_id() and
+    gimp_zoom_preview_get_drawable_id(). The original names have been
+    reinstated and now returns a GimpDrawable object, whereas the newer
+    functions got removed.
+    Similarly gimp_zoom_preview_new_from_drawable_id() and
+    gimp_drawable_preview_new_from_drawable_id() are replaced by
+    respectively gimp_zoom_preview_new_from_drawable() and
+    gimp_drawable_preview_new_from_drawable().
+  - Deprecated functions in GIMP 2.10.x have been removed. To get a list
+    of these function, this file should hopefully map most of them to a
+    replacement equivalent:
+    devel-docs/GIMP3-plug-in-porting-guide/removed_functions.md
+  - gimp_spin_button_new() had some weird compatibility macro to expand
+    to a newer or older signature depending on the number of arguments.
+    Now only the newer signature with 3 arguments is available.
+  - Properties removed from custom widgets:
+    * GimpAspectPreview, GimpDrawablePreview and GimpZoomPreview had a
+      deprecated "drawable" property in favor of "drawable-id" property.
+      The "drawable" property got reinstated (and the "drawable-id"
+      removed) and obviously now stores a GimpDrawable object rather
+      than an integer.
+    * The property "stock-id" was removed from GimpHintBox and
+      GimpCellRendererToggle. Use "icon-name" instead.
   - Note: there are likely more API changes, unfortunately we haven't
     kept the NEWS file up-to-start from scratch. The best is to look at
     the API generated documentation.
