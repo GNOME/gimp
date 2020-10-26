@@ -75,7 +75,7 @@ struct _HeifClass
 
 GType                   heif_get_type         (void) G_GNUC_CONST;
 
-static GList          * heif_query_procedures (GimpPlugIn           *plug_in);
+static GList          * heif_init_procedures  (GimpPlugIn           *plug_in);
 static GimpProcedure  * heif_create_procedure (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
@@ -133,7 +133,7 @@ heif_class_init (HeifClass *klass)
 {
   GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  plug_in_class->query_procedures = heif_query_procedures;
+  plug_in_class->init_procedures  = heif_init_procedures;
   plug_in_class->create_procedure = heif_create_procedure;
 }
 
@@ -143,7 +143,7 @@ heif_init (Heif *heif)
 }
 
 static GList *
-heif_query_procedures (GimpPlugIn *plug_in)
+heif_init_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
