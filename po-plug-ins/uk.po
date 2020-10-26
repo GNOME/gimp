@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-25 20:46+0000\n"
-"PO-Revision-Date: 2020-10-26 11:42+0200\n"
+"PO-Revision-Date: 2020-10-26 11:46+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -7229,7 +7229,7 @@ msgstr "Канал TIFF"
 #. Error reading scanline, stop loading
 #: ../plug-ins/file-tiff/file-tiff-load.c:1611
 #: ../plug-ins/file-tiff/file-tiff-load.c:1786
-#, fuzzy, c-format
+#, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
