@@ -445,7 +445,7 @@ gimp_procedure_config_set_parasite (GimpProcedureConfig *config,
  * If @run_mode is %GIMP_RUN_INTERACTIVE or %GIMP_RUN_WITH_LAST_VALS,
  * the saved values from the procedure's last run() are loaded and set
  * on @config. If @image is not %NULL, the last used values for this
- * image are tried first, and if no image-spesicic values are found
+ * image are tried first, and if no image-specific values are found
  * the globally saved last used values are used. If no saved last used
  * values are found, the procedure's default argument values are used.
  *
@@ -576,8 +576,8 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
  *
  * If the @run_mode passed to gimp_procedure_config_end_run() was
  * %GIMP_RUN_INTERACTIVE, @config is saved as last used values to be
- * used when the procedure runs again. Additionally, the @image passed
- * gimp_procedure_config_begin_run() was not %NULL, @config is
+ * used when the procedure runs again. Additionally, if the #GimpImage
+ * passed to gimp_procedure_config_begin_run() was not %NULL, @config is
  * attached to @image as last used values for this image using a
  * #GimpParasite and gimp_image_attach_parasite().
  *
