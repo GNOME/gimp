@@ -46,6 +46,7 @@
 
 #include "gimp-intl.h"
 
+#define ACTION_SECTION_INACTIVE 7
 
 static void         action_search_history_and_actions      (GimpSearchPopup   *popup,
                                                             const gchar       *keyword,
@@ -95,13 +96,12 @@ action_search_history_and_actions (GimpSearchPopup *popup,
                                                 action_search_match_keyword,
                                                 keyword);
 
-  /* First put on top of the list any matching action of user history. */
+  /* 0. Top result: matching action in run history. */
   for (list = history_actions; list; list = g_list_next (list))
-    {
-      gimp_search_popup_add_result (popup, list->data, 0);
-    }
+    gimp_search_popup_add_result (popup, list->data,
+                                  gimp_action_is_sensitive (list->data) ? 0 : ACTION_SECTION_INACTIVE);
 
-  /* Now check other actions. */
+  /* 1. Then other matching actions. */
   for (list = gimp_ui_manager_get_action_groups (manager);
        list;
        list = g_list_next (list))
@@ -130,9 +130,7 @@ action_search_history_and_actions (GimpSearchPopup *popup,
           if (gimp_action_history_is_blacklisted_action (name))
             continue;
 
-          if (! gimp_action_is_visible (action)    ||
-              (! gimp_action_is_sensitive (action) &&
-               ! GIMP_GUI_CONFIG (gimp->config)->search_show_unavailable))
+          if (! gimp_action_is_visible (action))
             continue;
 
           if (action_search_match_keyword (action, keyword, &section, gimp))
@@ -165,6 +163,44 @@ action_search_history_and_actions (GimpSearchPopup *popup,
   g_list_free_full (history_actions, (GDestroyNotify) g_object_unref);
 }
 
+/**
+ * action_search_match_keyword:
+ * @action: a #GimpAction to be matched.
+ * @keyword: free text keyword to match with @action.
+ * @section: relative section telling "how well" @keyword matched
+ *           @action. The smaller the @section, the better the match. In
+ *           particular this value can be used in the call to
+ *           gimp_search_popup_add_result() to show best matches at the
+ *           top of the list.
+ * @gimp: the #Gimp object. This matters because we will tokenize
+ *        keywords, labels and tooltip by language.
+ *
+ * This function will check if some freely typed text @keyword matches
+ * @action's label or tooltip, using a few algorithms to determine the
+ * best matches (order of words, start of match, and so on).
+ * All text (the user-provided @keyword as well as @actions labels and
+ * tooltips) are unicoded normalized, tokenized and case-folded before
+ * being compared. Comparisons with ASCII alternatives are also
+ * performed, providing even better matches, depending on the user
+ * languages (accounting for variant orthography in natural languages).
+ *
+ * @section will be set to:
+ * - 0 for any @action if @keyword is %NULL (match all).
+ * - 1 for a full initialism.
+ * - 4 for a partial initialism.
+ * - 1 if key tokens are found in the same order in the label and match
+ *   the start of the label.
+ * - 2 if key tokens are found in the label order but don't match the
+ *   start of the label.
+ * - 3 if key tokens are found with a different order from label.
+ * - 5 if @keyword matches the tooltip.
+ * - 6  if @keyword is a mix-match on tooltip and label.
+ * In the end, @section is incremented by %ACTION_SECTION_INACTIVE if
+ * the action is non-sensitive.
+ *
+ * Returns: %TRUE is a match was successful (in which case, @section
+ * will be set as well).
+ */
 static gboolean
 action_search_match_keyword (GimpAction  *action,
                              const gchar *keyword,
@@ -183,9 +219,8 @@ action_search_match_keyword (GimpAction  *action,
        * matches.
        */
       if (section)
-        {
-          *section = 0;
-        }
+        *section = gimp_action_is_sensitive (action) ? 0 : ACTION_SECTION_INACTIVE;
+
       return TRUE;
     }
 
@@ -338,11 +373,11 @@ one_tooltip_matched:
             }
           if (matched && section)
             {
-              /* Matching the tooltip is section 4. We don't go looking
+              /* Matching the tooltip is section 5. We don't go looking
                * for start of string or token order for tooltip match.
                * But if the match is mixed on tooltip and label (there are
                * no match for *only* label or *only* tooltip), this is
-               * section 5. */
+               * section 6. */
               *section = mixed_match ? 6 : 5;
             }
         }
@@ -353,6 +388,9 @@ one_tooltip_matched:
   g_strfreev (key_tokens);
   g_strfreev (label_tokens);
   g_strfreev (label_alternates);
+
+  if (matched && section && ! gimp_action_is_sensitive (action))
+    *section += ACTION_SECTION_INACTIVE;
 
   return matched;
 }

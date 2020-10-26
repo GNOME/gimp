@@ -2632,9 +2632,6 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Action Search"), GTK_CONTAINER (vbox), FALSE);
   grid = prefs_grid_new (GTK_CONTAINER (vbox2));
 
-  prefs_check_button_add (object, "search-show-unavailable-actions",
-                          _("Show _unavailable actions"),
-                          GTK_BOX (vbox2));
   prefs_spin_button_add (object, "action-history-size", 1.0, 10.0, 0,
                          _("_Maximum History Size:"),
                          GTK_GRID (grid), 0, size_group);

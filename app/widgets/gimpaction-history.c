@@ -260,11 +260,19 @@ gimp_action_history_clear (Gimp *gimp)
     gimp_action_history_item_free (item);
 }
 
-/* Search all history actions which match "keyword" with function
- * match_func(action, keyword).
+/**
+ * gimp_action_history_search:
+ * @gimp:
+ * @match_func:
+ * @keyword:
  *
- * @return a list of GtkAction*, to free with:
- * g_list_free_full (result, (GDestroyNotify) g_object_unref);
+ * Search all history #GimpAction which match @keyword with function
+ * @match_func(action, keyword).
+ * It will also return inactive actions, but will discard non-visible
+ * actions.
+ *
+ * returns: a #GList of #GimpAction, which must be freed with
+ *          g_list_free_full (result, (GDestroyNotify) g_object_unref)
  */
 GList *
 gimp_action_history_search (Gimp                *gimp,
@@ -294,9 +302,7 @@ gimp_action_history_search (Gimp                *gimp,
       if (action == NULL)
         continue;
 
-      if (! gimp_action_is_visible (action)    ||
-          (! gimp_action_is_sensitive (action) &&
-           ! config->search_show_unavailable))
+      if (! gimp_action_is_visible (action))
         continue;
 
       if (match_func (action, keyword, NULL, gimp))

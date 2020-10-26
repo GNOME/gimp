@@ -78,7 +78,6 @@ enum
   PROP_SHOW_HELP_BUTTON,
   PROP_HELP_LOCALES,
   PROP_HELP_BROWSER,
-  PROP_SEARCH_SHOW_UNAVAILABLE_ACTIONS,
   PROP_ACTION_HISTORY_SIZE,
   PROP_USER_MANUAL_ONLINE,
   PROP_USER_MANUAL_ONLINE_URI,
@@ -377,13 +376,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                            DEFAULT_USER_MANUAL_ONLINE_URI,
                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SEARCH_SHOW_UNAVAILABLE_ACTIONS,
-                            "search-show-unavailable-actions",
-                            "Show unavailable actions",
-                            SEARCH_SHOW_UNAVAILABLE_BLURB,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_PROP_INT (object_class, PROP_ACTION_HISTORY_SIZE,
                         "action-history-size",
                         "Action history size",
@@ -675,9 +667,6 @@ gimp_gui_config_set_property (GObject      *object,
       g_free (gui_config->user_manual_online_uri);
       gui_config->user_manual_online_uri = g_value_dup_string (value);
       break;
-    case PROP_SEARCH_SHOW_UNAVAILABLE_ACTIONS:
-      gui_config->search_show_unavailable = g_value_get_boolean (value);
-      break;
     case PROP_ACTION_HISTORY_SIZE:
       gui_config->action_history_size = g_value_get_int (value);
       break;
@@ -840,9 +829,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_USER_MANUAL_ONLINE_URI:
       g_value_set_string (value, gui_config->user_manual_online_uri);
-      break;
-    case PROP_SEARCH_SHOW_UNAVAILABLE_ACTIONS:
-      g_value_set_boolean (value, gui_config->search_show_unavailable);
       break;
     case PROP_ACTION_HISTORY_SIZE:
       g_value_set_int (value, gui_config->action_history_size);

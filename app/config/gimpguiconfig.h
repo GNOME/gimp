@@ -75,7 +75,6 @@ struct _GimpGuiConfig
   GimpHelpBrowserType  help_browser;
   gboolean             user_manual_online;
   gchar               *user_manual_online_uri;
-  gboolean             search_show_unavailable;
   gint                 action_history_size;
   GimpWindowHint       dock_window_hint;
   GimpHandedness       cursor_handedness;
