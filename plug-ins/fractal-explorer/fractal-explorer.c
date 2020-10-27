@@ -412,7 +412,7 @@ explorer_run (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      gimp_get_data ("plug_in_fractalexplorer", &wvals);
+      gimp_get_data ("plug-in-fractalexplorer", &wvals);
 
       /* Get information from the dialog */
       if (! explorer_dialog ())
@@ -446,7 +446,7 @@ explorer_run (GimpProcedure        *procedure,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
-      gimp_get_data ("plug_in_fractalexplorer", &wvals);
+      gimp_get_data ("plug-in-fractalexplorer", &wvals);
       make_color_map ();
       break;
 
@@ -472,7 +472,7 @@ explorer_run (GimpProcedure        *procedure,
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_fractalexplorer",
+        gimp_set_data ("plug-in-fractalexplorer",
                        &wvals, sizeof (explorer_vals_t));
     }
 
