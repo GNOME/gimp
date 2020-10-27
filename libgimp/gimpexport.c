@@ -767,7 +767,7 @@ export_dialog (GSList      *actions,
  * gimp_export_image:
  * @image:        Pointer to the image.
  * @n_drawables:  Size of @drawables.
- * @drawables:    Array of pointers to drawables.
+ * @drawables: (array length=n_drawables): Array of pointers to drawables.
  * @format_name:  The (short) name of the image_format (e.g. JPEG or GIF).
  * @capabilities: What can the image_format do?
  *

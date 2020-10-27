@@ -35,7 +35,7 @@ G_BEGIN_DECLS
  * @run_mode:    the #GimpRunMode.
  * @image:       the image to save.
  * @n_drawables: the number of drawables to save.
- * @drawables:   the drawables to save.
+ * @drawables: (array length=n_drawables):   the drawables to save.
  * @file:        the #GFile to save to.
  * @args:        the @procedure's remaining arguments.
  * @run_data: (closure): the run_data given in gimp_save_procedure_new().
