@@ -622,9 +622,9 @@ gimp_path_editor_new_clicked (GtkWidget      *widget,
   gtk_widget_set_sensitive (editor->file_entry, TRUE);
 
   gtk_editable_set_position
-    (GTK_EDITABLE (GIMP_FILE_ENTRY (editor->file_entry)->entry), -1);
+    (GTK_EDITABLE (gimp_file_entry_get_entry (GIMP_FILE_ENTRY (editor->file_entry))), -1);
   gtk_widget_grab_focus
-    (GTK_WIDGET (GIMP_FILE_ENTRY (editor->file_entry)->entry));
+    (gimp_file_entry_get_entry (GIMP_FILE_ENTRY (editor->file_entry)));
 }
 
 static void

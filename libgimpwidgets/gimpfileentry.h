@@ -49,17 +49,6 @@ struct _GimpFileEntry
   GtkBox                parent_instance;
 
   GimpFileEntryPrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  GtkWidget *file_exists;
-  GtkWidget *entry;
-  GtkWidget *browse_button;
-
-  GtkWidget *file_dialog;
-
-  gchar     *title;
-  gboolean   dir_only;
-  gboolean   check_valid;
 };
 
 struct _GimpFileEntryClass
@@ -90,6 +79,8 @@ GtkWidget * gimp_file_entry_new          (const gchar   *title,
 gchar     * gimp_file_entry_get_filename (GimpFileEntry *entry);
 void        gimp_file_entry_set_filename (GimpFileEntry *entry,
                                           const gchar   *filename);
+
+GtkWidget * gimp_file_entry_get_entry    (GimpFileEntry *entry);
 
 
 G_END_DECLS
