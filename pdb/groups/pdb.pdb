@@ -1152,7 +1152,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_is_canonical_procedure (identifier, error))
+  if (gimp_is_canonical_identifier (identifier))
     {
       const guint8 *orig_data;
 
@@ -1165,7 +1165,12 @@ HELP
         success = FALSE;
     }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Data label '%s' is not a canonical identifier"),
+                   identifier);
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -1197,14 +1202,19 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_is_canonical_procedure (identifier, error))
+  if (gimp_is_canonical_identifier (identifier))
     {
       if (! gimp_plug_in_manager_get_data (gimp->plug_in_manager,
                                            identifier, &bytes))
         success = FALSE;
     }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Data label '%s' is not a canonical identifier"),
+                   identifier);
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -1235,13 +1245,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_is_canonical_procedure (identifier, error))
+  if (gimp_is_canonical_identifier (identifier))
     {
       gimp_plug_in_manager_set_data (gimp->plug_in_manager,
                                      identifier, bytes, data);
     }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Data label '%s' is not a canonical identifier"),
+                   identifier);
+      success = FALSE;
+    }
 }
 CODE
     );

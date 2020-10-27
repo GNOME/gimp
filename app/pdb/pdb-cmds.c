@@ -1071,7 +1071,7 @@ pdb_get_data_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_is_canonical_procedure (identifier, error))
+      if (gimp_is_canonical_identifier (identifier))
         {
           const guint8 *orig_data;
 
@@ -1084,7 +1084,12 @@ pdb_get_data_invoker (GimpProcedure         *procedure,
             success = FALSE;
         }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       _("Data label '%s' is not a canonical identifier"),
+                       identifier);
+          success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1116,14 +1121,19 @@ pdb_get_data_size_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_is_canonical_procedure (identifier, error))
+      if (gimp_is_canonical_identifier (identifier))
         {
           if (! gimp_plug_in_manager_get_data (gimp->plug_in_manager,
                                                identifier, &bytes))
             success = FALSE;
         }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       _("Data label '%s' is not a canonical identifier"),
+                       identifier);
+          success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1154,13 +1164,18 @@ pdb_set_data_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_is_canonical_procedure (identifier, error))
+      if (gimp_is_canonical_identifier (identifier))
         {
           gimp_plug_in_manager_set_data (gimp->plug_in_manager,
                                          identifier, bytes, data);
         }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       _("Data label '%s' is not a canonical identifier"),
+                       identifier);
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
