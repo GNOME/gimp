@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-25 21:27+0000\n"
-"PO-Revision-Date: 2020-10-26 01:25+0200\n"
+"POT-Creation-Date: 2020-10-26 19:52+0000\n"
+"PO-Revision-Date: 2020-10-27 14:28+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -595,6 +595,7 @@ msgstr ""
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
+"Pictare, randare și procesare multi-thread și cu accelerare la nivel hardware"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid "Most tools improved, several new transformation tools"
@@ -1019,13 +1020,13 @@ msgstr "Editor de peneluri"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:115 ../app/core/gimp-data-factories.c:356
-#: ../app/dialogs/dialogs.c:338 ../app/dialogs/preferences-dialog.c:3244
+#: ../app/dialogs/dialogs.c:338 ../app/dialogs/preferences-dialog.c:3241
 msgid "Brushes"
 msgstr "Peneluri"
 
 #: ../app/actions/actions.c:118 ../app/dialogs/dialogs.c:359
 msgid "Buffers"
-msgstr "Tampoane"
+msgstr "Tampoane de memorie"
 
 #: ../app/actions/actions.c:121 ../app/dialogs/dialogs.c:377
 #: ../app/propgui/gimppropgui-newsprint.c:160
@@ -1103,7 +1104,7 @@ msgstr "Filtre"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:172 ../app/core/gimp-data-factories.c:390
-#: ../app/dialogs/dialogs.c:356 ../app/dialogs/preferences-dialog.c:3274
+#: ../app/dialogs/dialogs.c:356 ../app/dialogs/preferences-dialog.c:3271
 msgid "Fonts"
 msgstr "Fonturi"
 
@@ -1114,12 +1115,12 @@ msgstr "Editor de degrade"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:178 ../app/core/gimp-data-factories.c:381
-#: ../app/dialogs/dialogs.c:350 ../app/dialogs/preferences-dialog.c:3268
+#: ../app/dialogs/dialogs.c:350 ../app/dialogs/preferences-dialog.c:3265
 msgid "Gradients"
 msgstr "Degradeuri"
 
 #: ../app/actions/actions.c:181 ../app/core/gimp-data-factories.c:397
-#: ../app/dialogs/dialogs.c:362 ../app/dialogs/preferences-dialog.c:3280
+#: ../app/dialogs/dialogs.c:362 ../app/dialogs/preferences-dialog.c:3277
 msgid "Tool Presets"
 msgstr "Presetări de instrument"
 
@@ -1149,7 +1150,7 @@ msgstr "Straturi"
 # constat că MyPaint este lăsat netradus și la de, es, fr, it
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:199 ../app/core/gimp-data-factories.c:366
-#: ../app/dialogs/dialogs.c:344 ../app/dialogs/preferences-dialog.c:3286
+#: ../app/dialogs/dialogs.c:344 ../app/dialogs/preferences-dialog.c:3283
 msgid "MyPaint Brushes"
 msgstr "Peneluri MyPaint"
 
@@ -1160,17 +1161,17 @@ msgstr "Editor de paletă"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:205 ../app/core/gimp-data-factories.c:376
-#: ../app/dialogs/dialogs.c:353 ../app/dialogs/preferences-dialog.c:3262
+#: ../app/dialogs/dialogs.c:353 ../app/dialogs/preferences-dialog.c:3259
 msgid "Palettes"
 msgstr "Palete"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:208 ../app/core/gimp-data-factories.c:371
-#: ../app/dialogs/dialogs.c:347 ../app/dialogs/preferences-dialog.c:3256
+#: ../app/dialogs/dialogs.c:347 ../app/dialogs/preferences-dialog.c:3253
 msgid "Patterns"
 msgstr "Modele"
 
-#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3292
+#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3289
 msgid "Plug-ins"
 msgstr "Plugin-uri"
 
@@ -1338,88 +1339,90 @@ msgstr "Editează penelul"
 #: ../app/actions/buffers-actions.c:42
 msgctxt "buffers-action"
 msgid "Buffers Menu"
-msgstr "Meniul tampaonelor"
+msgstr "Meniul tampoanelor de memorie"
 
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
 msgid "Paste Buffer as _New Image"
-msgstr "Lipește tamponul ca imagine _nouă"
+msgstr "Lipește tamponul de memorie ca imagine _nouă"
 
 #: ../app/actions/buffers-actions.c:47
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
-msgstr "Lipește tamponul selectat ca imagine nouă"
+msgstr "Lipește tamponul de memorie selectat ca imagine nouă"
 
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
-msgstr "Șter_ge tamponul"
+msgstr "Șter_ge tamponul de memorie"
 
 #: ../app/actions/buffers-actions.c:53
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
-msgstr "Șterge tamponul selectat"
+msgstr "Șterge tamponul de memorie selectat"
 
 #: ../app/actions/buffers-actions.c:61
 msgctxt "buffers-action"
 msgid "_Paste Buffer"
-msgstr "Li_pește tamponul"
+msgstr "Li_pește tamponul de memorie"
 
 #: ../app/actions/buffers-actions.c:62
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "Lipește tamponul selectat"
+msgstr "Lipește tamponul de memorie selectat"
 
 #: ../app/actions/buffers-actions.c:67
 msgctxt "buffers-action"
 msgid "Paste Buffer In Pl_ace"
-msgstr "Lipește t_amponul în loc"
+msgstr "Lipește t_amponul de memorie în loc"
 
 #: ../app/actions/buffers-actions.c:68
 msgctxt "buffers-action"
 msgid "Paste the selected buffer at its original position"
-msgstr "Lipește tamponul selectat la poziția lui originală"
+msgstr "Lipește tamponul de memorie selectat la poziția lui originală"
 
 #: ../app/actions/buffers-actions.c:73
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into The Selection"
-msgstr "L_ipește tamponul în interiorul selecției"
+msgstr "L_ipește tamponul de memorie în interiorul selecției"
 
 #: ../app/actions/buffers-actions.c:74
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "Lipește tamponul selectat în interiorul selecției"
+msgstr "Lipește tamponul de memorie selectat în interiorul selecției"
 
 #: ../app/actions/buffers-actions.c:79
 msgctxt "buffers-action"
 msgid "Paste Buffer Into The Selection In Place"
-msgstr "Lipește tamponul în interiorul selecției în loc"
+msgstr "Lipește tamponul de memorie în interiorul selecției în loc"
 
 #: ../app/actions/buffers-actions.c:81
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection at its original position"
 msgstr ""
-"Lipește tamponul selectat în interiorul selecției la poziția lui originală"
+"Lipește tamponul de memorie selectat în interiorul selecției la poziția lui "
+"originală"
 
 #: ../app/actions/buffers-actions.c:86
 msgctxt "buffers-action"
 msgid "Paste Buffer as New _Layer"
-msgstr "_Lipește tamponul ca strat nou"
+msgstr "_Lipește tamponul de memorie ca strat nou"
 
 #: ../app/actions/buffers-actions.c:87
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer"
-msgstr "Lipește tamponul selectat ca strat nou"
+msgstr "Lipește tamponul de memorie selectat ca strat nou"
 
 #: ../app/actions/buffers-actions.c:92
 msgctxt "buffers-action"
 msgid "Paste Buffer as New Layer in Place"
-msgstr "Lipește tamponul ca strat nou în loc"
+msgstr "Lipește tamponul de memorie ca strat nou în loc"
 
 #: ../app/actions/buffers-actions.c:94
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
-msgstr "Lipește tamponul selectat ca strat nou la poziția lui originală"
+msgstr ""
+"Lipește tamponul de memorie selectat ca strat nou la poziția lui originală"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -3113,7 +3116,7 @@ msgstr "_Avertizare de spațiu swap redus"
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
 msgstr ""
-"Ridică tabloul de bord când dimensiunea swap-ului se apropie de limita sa"
+"Ridică tabloul de bord când mărimea memoriei swap se apropie de limita sa"
 
 #: ../app/actions/dashboard-actions.c:89
 msgctxt "dashboard-update-interval"
@@ -3580,12 +3583,12 @@ msgstr "Deschide dialogul de fonturi"
 #: ../app/actions/dialogs-actions.c:209
 msgctxt "dialogs-action"
 msgid "B_uffers"
-msgstr "_Tampoane"
+msgstr "_Tampoane de memorie"
 
 #: ../app/actions/dialogs-actions.c:210
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "Deschide dialogul de tampoane denumite"
+msgstr "Deschide dialogul de tampoane de memorie denumite"
 
 #: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
@@ -3661,12 +3664,12 @@ msgstr "Deschide editorul pentru dispozitivele de intrare"
 #: ../app/actions/dialogs-actions.c:262
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
-msgstr "Scurtături de _tastatură"
+msgstr "Comenzi rapide de la _tastatură"
 
 #: ../app/actions/dialogs-actions.c:263
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
-msgstr "Deschide editorul de scurtături de tastatură"
+msgstr "Deschide editorul de comenzi rapide de la tastatură"
 
 #: ../app/actions/dialogs-actions.c:268
 msgctxt "dialogs-action"
@@ -4232,7 +4235,7 @@ msgstr "Lipește c_a"
 #: ../app/actions/edit-actions.c:67
 msgctxt "edit-action"
 msgid "_Buffer"
-msgstr "_Tampon"
+msgstr "_Tampon de memorie"
 
 # a nu se particulariza tipul de operații, poate fi undo dar și redo
 # hm ? sau fără de ?
@@ -4350,7 +4353,7 @@ msgstr "_Taie cu nume..."
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
-msgstr "Mută pixelii selectați într-un tampon denumit"
+msgstr "Mută pixelii selectați într-un tampon de memorie denumit"
 
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
@@ -4360,7 +4363,7 @@ msgstr "_Copiază cu nume..."
 #: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Copiază pixelii selectați într-un tampon denumit"
+msgstr "Copiază pixelii selectați într-un tampon de memorie denumit"
 
 #. GIMP_ICON_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:147
@@ -4371,7 +4374,8 @@ msgstr "Copiază partea _vizibilă cu nume..."
 #: ../app/actions/edit-actions.c:149
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
-msgstr "Copiază ce este vizibil în zona selectată într-un tampon denumit"
+msgstr ""
+"Copiază ce este vizibil în zona selectată într-un tampon de memorie denumit"
 
 #: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
@@ -4381,7 +4385,7 @@ msgstr "Li_pește cu nume..."
 #: ../app/actions/edit-actions.c:155
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
-msgstr "Lipește conținutul unui tampon denumit"
+msgstr "Lipește conținutul unui tampon de memorie denumit"
 
 # hm ? sau curăță ? mi-e să nu se înțeleagă că se referă la instrument de curățare, gen curăță de scame
 #: ../app/actions/edit-actions.c:160
@@ -4560,7 +4564,7 @@ msgstr "Taie cu nume"
 #: ../app/actions/edit-commands.c:411 ../app/actions/edit-commands.c:433
 #: ../app/actions/edit-commands.c:455
 msgid "Enter a name for this buffer"
-msgstr "Introduceți un nume pentru acest tampon"
+msgstr "Introduceți un nume pentru acest tampon de memorie"
 
 #: ../app/actions/edit-commands.c:430
 msgid "Copy Named"
@@ -4593,7 +4597,7 @@ msgstr ""
 #: ../app/actions/edit-commands.c:691 ../app/actions/edit-commands.c:724
 #: ../app/actions/edit-commands.c:749
 msgid "(Unnamed Buffer)"
-msgstr "(Tampon nedenumit)"
+msgstr "(Tampon de memorie nedenumit)"
 
 #: ../app/actions/edit-commands.c:719
 msgid "There are no selected layers or channels to copy from."
@@ -7672,7 +7676,7 @@ msgstr ""
 #.
 #: ../app/actions/layers-actions.c:661
 msgid "Shortcut: "
-msgstr "Scurtătură: "
+msgstr "Comandă rapidă: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
@@ -10188,13 +10192,13 @@ msgstr "Adaptează fereastra la _imagine"
 #: ../app/actions/view-actions.c:162
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
-msgstr "Reduce fereastra imaginii la dimensiunea de afișare a imaginii"
+msgstr "Reduce fereastra imaginii la dimensiunea afișajului imaginii"
 
 # hm ?
 #: ../app/actions/view-actions.c:167
 msgctxt "view-action"
 msgid "_Open Display..."
-msgstr "_Deschide afișorul..."
+msgstr "_Deschide un afișor..."
 
 #: ../app/actions/view-actions.c:168
 msgctxt "view-action"
@@ -11582,7 +11586,7 @@ msgid ""
 "take more memory than the size specified here."
 msgstr ""
 "GIMP va avertiza utilizatorul dacă se încearcă crearea unei imagini care ar "
-"lua mai multă memorie decât dimensiunea specificată aici."
+"lua mai multă memorie decât mărimea specificată aici."
 
 #: ../app/config/gimprc-blurbs.h:285
 msgid "How to handle \"Orientation\" metadata when opening a file."
@@ -11629,7 +11633,7 @@ msgid ""
 "of the image window."
 msgstr ""
 "Stabilește dimensiunea previzualizării de navigare disponibilă în colțul din "
-"dreapta jos al ferestrei de imagine."
+"dreapta jos al ferestrei imaginii."
 
 #: ../app/config/gimprc-blurbs.h:320
 msgid "Sets how many threads GIMP should use for operations that support it."
@@ -11674,18 +11678,18 @@ msgid ""
 "physical image size changes. This setting only takes effect in multi-window "
 "mode."
 msgstr ""
-"Când opțiunea este activată, fereastra de imagine se va redimensiona singură "
-"în mod automat de fiecare dată când se modifică dimensiunea imaginii fizice. "
-"Această setare are efect numai în modul fereastră multiplă."
+"Când opțiunea este activată, fereastra de imagine se va redimensiona în mod "
+"automat ori de câte ori se modifică dimensiunea imaginii fizice. Această "
+"setare are efect numai în módul cu ferestre multiple."
 
 #: ../app/config/gimprc-blurbs.h:363
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
 msgstr ""
-"Când opțiunea este activată, fereastra de imagine se va redimensiona singură "
-"în mod automat atunci când se strânge sau lărgește zoom-ul asupra "
-"imaginilor. Această setare are efect numai în modul fereastră multiplă."
+"Când opțiunea este activată, fereastra de imagine se va redimensiona în mod "
+"automat ori de câte ori se strânge sau lărgește zoom-ul asupra imaginilor. "
+"Această setare are efect numai în módul cu ferestre multiple."
 
 #: ../app/config/gimprc-blurbs.h:368
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -11907,7 +11911,7 @@ msgstr "Ce este de făcut când se apasă bara de spațiu în fereastra de imagi
 msgid "The compression method used for tile data stored in the swap file."
 msgstr ""
 "Metoda de comprimare folosită pentru datele din dalele stocate în fișierul "
-"swap"
+"swap."
 
 # hm ?
 # dale ?
@@ -11935,17 +11939,17 @@ msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
-"Când opțiunea este activată, puteți schimba scurtăturile de tastatură pentru "
-"elementele de meniu prin apăsarea unei combinații atunci când elementul de "
-"meniu este evidențiat."
+"Când opțiunea este activată, puteți schimba comenzile rapide de la tastatură "
+"pentru elementele de meniu prin apăsarea unei combinații de taste în timp ce "
+"elementul de meniu este evidențiat."
 
 #: ../app/config/gimprc-blurbs.h:501
 msgid "Save changed keyboard shortcuts when GIMP exits."
-msgstr "Salvează scurtăturile de tastatură modificate la ieșirea GIMP."
+msgstr "Salvează comenzile rapide de la tastatură modificate la ieșirea GIMP."
 
 #: ../app/config/gimprc-blurbs.h:504
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Restaurează scurtăturile de tastatură la fiecare pornire GIMP."
+msgstr "Restaurează comenzile rapide de la tastatură la fiecare pornire GIMP."
 
 #: ../app/config/gimprc-blurbs.h:507
 msgid ""
@@ -12719,7 +12723,7 @@ msgstr "Toate straturile"
 #: ../app/core/core-enums.c:842
 msgctxt "item-set"
 msgid "Image-sized layers"
-msgstr "Straturile de dimensiunea imaginii"
+msgstr "Straturile la dimensiunea imaginii"
 
 #: ../app/core/core-enums.c:843
 msgctxt "item-set"
@@ -13069,7 +13073,6 @@ msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Schimbare rezoluție de imagine"
 
-# apare la contextul lui undo
 #: ../app/core/core-enums.c:1288
 msgctxt "undo-type"
 msgid "Change metadata"
@@ -13326,7 +13329,7 @@ msgid "Parasites"
 msgstr "Paraziți"
 
 #. initialize the module list
-#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3304
+#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3301
 msgid "Modules"
 msgstr "Module"
 
@@ -13350,7 +13353,7 @@ msgstr "Ștergerea „%s” a eșuat: %s"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:703
-#: ../app/dialogs/preferences-dialog.c:3250
+#: ../app/dialogs/preferences-dialog.c:3247
 #: ../app/tools/gimppaintoptions-gui.c:218
 msgid "Dynamics"
 msgstr "Dinamică"
@@ -13376,7 +13379,7 @@ msgstr "Strat lipit"
 
 #: ../app/core/gimp-edit.c:806
 msgid "Global Buffer"
-msgstr "Tampon global"
+msgstr "Tampon de memorie global"
 
 #: ../app/core/gimpextension.c:418
 #, c-format
@@ -15782,7 +15785,7 @@ msgstr ""
 "Aceasta este o versiune instabilă de dezvoltare\n"
 "comitere %s"
 
-#: ../app/dialogs/action-search-dialog.c:68
+#: ../app/dialogs/action-search-dialog.c:69
 msgid "Search Actions"
 msgstr "Acțiuni de căutare"
 
@@ -16431,19 +16434,20 @@ msgstr "_Legat"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:63
 msgid "Configure Keyboard Shortcuts"
-msgstr "Configurare scurtături de tastatură"
+msgstr "Configurare comenzi rapide de la tastatură"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
 msgstr ""
-"Pentru a edita o tastă de scurtătură, dați clic pe rândul corespunzător și "
-"tastați un accelerator nou, sau folosiți tasta Backspace pentru a-l șterge."
+"Pentru a edita o tastă de comandă rapidă, dați clic pe rândul corespunzător "
+"și tastați un nou accelerator, sau apăsați tasta 'Backspace' pentru a-l "
+"șterge."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:97
 msgid "S_ave keyboard shortcuts on exit"
-msgstr "S_alvează scurtăturile de tastatură la ieșirea din program"
+msgstr "S_alvează comenzile rapide de la tastatură la ieșirea din program"
 
 # titlu pe bară
 # apare la contextul lui undo
@@ -16766,16 +16770,18 @@ msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"Scurtăturile de tastatură vor fi resetate la valorile implicite la "
+"Comenzile rapide de la tastatură vor fi restabilite la valorile implicite la "
 "următoarea pornire GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:657
 msgid "Remove all Keyboard Shortcuts"
-msgstr "Elimină toate scurtăturile de tastatură"
+msgstr "Elimină toate comenzile rapide de la tastatură"
 
 #: ../app/dialogs/preferences-dialog.c:679
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
-msgstr "Chiar vreți să fie eliminate toate scurtăturile din toate meniurile?"
+msgstr ""
+"Chiar vreți să fie eliminate toate comenzile rapide de la tastatură din "
+"toate meniurile?"
 
 #: ../app/dialogs/preferences-dialog.c:720
 msgid ""
@@ -17264,8 +17270,8 @@ msgstr "Opțiuni de instrument"
 #. general device information
 #: ../app/dialogs/preferences-dialog.c:1669
 #: ../app/dialogs/preferences-dialog.c:2522
-#: ../app/dialogs/preferences-dialog.c:2858
-#: ../app/dialogs/preferences-dialog.c:3103
+#: ../app/dialogs/preferences-dialog.c:2855
+#: ../app/dialogs/preferences-dialog.c:3100
 #: ../app/widgets/gimpcontrollereditor.c:188
 #: ../app/widgets/gimpdeviceinfoeditor.c:282
 msgid "General"
@@ -17382,37 +17388,37 @@ msgstr "An_ulează dimensiunea de previzualizare:"
 
 #: ../app/dialogs/preferences-dialog.c:1852
 msgid "Na_vigation preview size:"
-msgstr "Dimensiune pentru previzuarea de na_vigare:"
+msgstr "Dimensiune pentru previzualizarea de na_vigare:"
 
 # titlu
 #. Keyboard Shortcuts
 #: ../app/dialogs/preferences-dialog.c:1856
 msgid "Keyboard Shortcuts"
-msgstr "Scurtături de tastatură"
+msgstr "Comenzi rapide de la tastatură"
 
 #: ../app/dialogs/preferences-dialog.c:1860
 msgid "_Use dynamic keyboard shortcuts"
-msgstr "Folosește sc_urtături dinamice de tastatură"
+msgstr "Folosește comenzi rapide dinamice de la tastat_ură"
 
 #: ../app/dialogs/preferences-dialog.c:1864
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Configurează scurtăturile de _tastatură..."
+msgstr "Configurează comenzile rapide de la _tastatură..."
 
 #: ../app/dialogs/preferences-dialog.c:1871
 msgid "_Save keyboard shortcuts on exit"
-msgstr "_Salvează scurtăturile de tastatură la ieșirea din program"
+msgstr "_Salvează comenzile rapide de la tastatură la ieșirea din program"
 
 #: ../app/dialogs/preferences-dialog.c:1875
 msgid "Save Keyboard Shortcuts _Now"
-msgstr "Salvează scurtăturile de tastatură _acum"
+msgstr "Salvează comenzile rapide de la tastatură _acum"
 
 #: ../app/dialogs/preferences-dialog.c:1882
 msgid "_Reset Keyboard Shortcuts to Default Values"
-msgstr "_Resetează scurtăturile de tastatură la valorile implicite"
+msgstr "_Restabilește comenzile rapide de la tastatură la valorile implicite"
 
 #: ../app/dialogs/preferences-dialog.c:1891
 msgid "Remove _All Keyboard Shortcuts"
-msgstr "Elimină to_ate scurtăturile de tastatură"
+msgstr "Elimină to_ate comenzile rapide de la tastatură"
 
 # titlu
 #: ../app/dialogs/preferences-dialog.c:1903
@@ -17455,7 +17461,7 @@ msgstr "Trusă de instrumente"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2142
-#: ../app/dialogs/preferences-dialog.c:2941 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2938 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Aspect"
 
@@ -17833,543 +17839,538 @@ msgid "Action Search"
 msgstr "Căutare acțiuni"
 
 #: ../app/dialogs/preferences-dialog.c:2636
-msgid "Show _unavailable actions"
-msgstr "Arată acți_unile indisponibile"
-
-#: ../app/dialogs/preferences-dialog.c:2639
 msgid "_Maximum History Size:"
 msgstr "Dimensiunea _maximă a istoricului:"
 
-#: ../app/dialogs/preferences-dialog.c:2643
+#: ../app/dialogs/preferences-dialog.c:2640
 msgid "C_lear Action History"
 msgstr "Go_lire istoric de acțiuni"
 
-#: ../app/dialogs/preferences-dialog.c:2657
-#: ../app/dialogs/preferences-dialog.c:2658
+#: ../app/dialogs/preferences-dialog.c:2654
+#: ../app/dialogs/preferences-dialog.c:2655
 msgid "Display"
 msgstr "Afișor"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2667
+#: ../app/dialogs/preferences-dialog.c:2664
 msgid "Transparency"
 msgstr "Transparență"
 
-#: ../app/dialogs/preferences-dialog.c:2671
+#: ../app/dialogs/preferences-dialog.c:2668
 msgid "_Check style:"
 msgstr "S_tilul tablei de șah:"
 
-#: ../app/dialogs/preferences-dialog.c:2674
+#: ../app/dialogs/preferences-dialog.c:2671
 msgid "Check _size:"
 msgstr "D_imensiunea tablei de șah:"
 
 #. Zoom Quality
-#: ../app/dialogs/preferences-dialog.c:2678
+#: ../app/dialogs/preferences-dialog.c:2675
 msgid "Zoom Quality"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2682
+#: ../app/dialogs/preferences-dialog.c:2679
 msgid "_Zoom quality:"
 msgstr ""
 
 #. Monitor Resolution
-#: ../app/dialogs/preferences-dialog.c:2686
+#: ../app/dialogs/preferences-dialog.c:2683
 msgid "Monitor Resolution"
 msgstr "Rezoluție monitor"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2690 ../app/display/gimpcursorview.c:211
+#: ../app/dialogs/preferences-dialog.c:2687 ../app/display/gimpcursorview.c:211
 #: ../app/widgets/gimpgrideditor.c:202 ../app/widgets/gimpgrideditor.c:237
 msgid "Pixels"
 msgstr "Pixeli"
 
-#: ../app/dialogs/preferences-dialog.c:2708 ../app/widgets/gimpgrideditor.c:198
+#: ../app/dialogs/preferences-dialog.c:2705 ../app/widgets/gimpgrideditor.c:198
 #: ../app/widgets/gimpgrideditor.c:233
 msgid "Horizontal"
 msgstr "Orizontal"
 
-#: ../app/dialogs/preferences-dialog.c:2710 ../app/widgets/gimpgrideditor.c:200
+#: ../app/dialogs/preferences-dialog.c:2707 ../app/widgets/gimpgrideditor.c:200
 #: ../app/widgets/gimpgrideditor.c:235
 msgid "Vertical"
 msgstr "Vertical"
 
-#: ../app/dialogs/preferences-dialog.c:2712
+#: ../app/dialogs/preferences-dialog.c:2709
 #: ../app/widgets/gimpimagepropview.c:453
 msgid "ppi"
 msgstr "ppi (pixeli per inch)"
 
-#: ../app/dialogs/preferences-dialog.c:2730
+#: ../app/dialogs/preferences-dialog.c:2727
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Detectare automată (curent este %d × %d ppi (pixeli per inch))"
 
 # hm ? sau introduceți manual ?
-#: ../app/dialogs/preferences-dialog.c:2748
+#: ../app/dialogs/preferences-dialog.c:2745
 msgid "_Enter manually"
 msgstr "_Introducere manuală"
 
-#: ../app/dialogs/preferences-dialog.c:2763
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "C_alibrate..."
 msgstr "C_alibrare..."
 
-#: ../app/dialogs/preferences-dialog.c:2793
-#: ../app/dialogs/preferences-dialog.c:2794
+#: ../app/dialogs/preferences-dialog.c:2790
+#: ../app/dialogs/preferences-dialog.c:2791
 msgid "Window Management"
 msgstr "Gestionare ferestre"
 
-#: ../app/dialogs/preferences-dialog.c:2799
+#: ../app/dialogs/preferences-dialog.c:2796
 msgid "Window Manager Hints"
 msgstr "Indicii pentru gestionarul de ferestre"
 
-#: ../app/dialogs/preferences-dialog.c:2805
+#: ../app/dialogs/preferences-dialog.c:2802
 msgid "Hint for _docks and toolbox:"
 msgstr "In_diciu pentru ferestrele andocate și trusa de instrumente:"
 
-#: ../app/dialogs/preferences-dialog.c:2808
+#: ../app/dialogs/preferences-dialog.c:2805
 msgid "Focus"
 msgstr "Focalizare"
 
-#: ../app/dialogs/preferences-dialog.c:2812
+#: ../app/dialogs/preferences-dialog.c:2809
 msgid "Activate the _focused image"
 msgstr "Activează imaginea _focalizată"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2816
+#: ../app/dialogs/preferences-dialog.c:2813
 msgid "Window Positions"
 msgstr "Poziții ferestre"
 
-#: ../app/dialogs/preferences-dialog.c:2819
+#: ../app/dialogs/preferences-dialog.c:2816
 msgid "_Save window positions on exit"
 msgstr "_Salvează pozițiile ferestrelor la ieșire"
 
-#: ../app/dialogs/preferences-dialog.c:2822
+#: ../app/dialogs/preferences-dialog.c:2819
 msgid "Open windows on the same _monitor they were open before"
 msgstr "Deschide ferestrele pe același _monitor în care erau deschise înainte"
 
-#: ../app/dialogs/preferences-dialog.c:2826
+#: ../app/dialogs/preferences-dialog.c:2823
 msgid "Save Window Positions _Now"
 msgstr "Salvează pozițiile ferestrelor _acum"
 
-#: ../app/dialogs/preferences-dialog.c:2833
+#: ../app/dialogs/preferences-dialog.c:2830
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Resetează pozițiile salvate ale ferestrelor la valorile implicite"
 
-#: ../app/dialogs/preferences-dialog.c:2848
-#: ../app/dialogs/preferences-dialog.c:2849
+#: ../app/dialogs/preferences-dialog.c:2845
+#: ../app/dialogs/preferences-dialog.c:2846
 msgid "Image Windows"
 msgstr "Ferestre de imagine"
 
-#: ../app/dialogs/preferences-dialog.c:2861
+#: ../app/dialogs/preferences-dialog.c:2858
 msgid "Use \"Show _all\" by default"
 msgstr "Folosește implicit „_Arată tot”"
 
-#: ../app/dialogs/preferences-dialog.c:2865
+#: ../app/dialogs/preferences-dialog.c:2862
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Folosește implicit „_Punct la punct”"
 
-#: ../app/dialogs/preferences-dialog.c:2871
+#: ../app/dialogs/preferences-dialog.c:2868
 msgid "Marching ants s_peed:"
 msgstr "_Viteza furnicilor în marș:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2875
+#: ../app/dialogs/preferences-dialog.c:2872
 msgid "Zoom & Resize Behavior"
 msgstr "Comportament la zoom și redimensionare"
 
-#: ../app/dialogs/preferences-dialog.c:2879
+#: ../app/dialogs/preferences-dialog.c:2876
 msgid "Resize window on _zoom"
 msgstr "Redimensionează fereastra la _zoom"
 
-#: ../app/dialogs/preferences-dialog.c:2882
+#: ../app/dialogs/preferences-dialog.c:2879
 msgid "Resize window on image _size change"
 msgstr "Redimensionează fereastra la _schimbarea dimensiunii imaginii"
 
-#: ../app/dialogs/preferences-dialog.c:2888
+#: ../app/dialogs/preferences-dialog.c:2885
 msgid "Show entire image"
 msgstr "Arată întreaga imaginea"
 
-#: ../app/dialogs/preferences-dialog.c:2890
+#: ../app/dialogs/preferences-dialog.c:2887
 msgid "Initial zoom _ratio:"
 msgstr "Raportul _inițial de zoom:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2894
+#: ../app/dialogs/preferences-dialog.c:2891
 msgid "Space Bar"
 msgstr "Bară de spațiu"
 
-#: ../app/dialogs/preferences-dialog.c:2900
+#: ../app/dialogs/preferences-dialog.c:2897
 msgid "_While space bar is pressed:"
 msgstr "În timp ce este apăsată _bara de spațiu:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2904
+#: ../app/dialogs/preferences-dialog.c:2901
 msgid "Mouse Pointers"
 msgstr "Indicatori de maus"
 
-#: ../app/dialogs/preferences-dialog.c:2908
+#: ../app/dialogs/preferences-dialog.c:2905
 msgid "Show _brush outline"
 msgstr "Arată _conturul penelului"
 
-#: ../app/dialogs/preferences-dialog.c:2916
+#: ../app/dialogs/preferences-dialog.c:2913
 msgid "S_nap brush outline to stroke"
 msgstr "Acroșează co_nturul penelului la tușă"
 
-#: ../app/dialogs/preferences-dialog.c:2920
+#: ../app/dialogs/preferences-dialog.c:2917
 msgid "Show pointer for paint _tools"
 msgstr "Ara_tă indicatorul pentru instrumentele de pictură"
 
-#: ../app/dialogs/preferences-dialog.c:2926
+#: ../app/dialogs/preferences-dialog.c:2923
 msgid "Pointer _mode:"
 msgstr "_Modul indicatorului:"
 
-#: ../app/dialogs/preferences-dialog.c:2929
+#: ../app/dialogs/preferences-dialog.c:2926
 msgid "Pointer _handedness:"
 msgstr "_Orientarea indicatorului:"
 
 # titlu
-#: ../app/dialogs/preferences-dialog.c:2940
+#: ../app/dialogs/preferences-dialog.c:2937
 msgid "Image Window Appearance"
 msgstr "Aspectul ferestrei de imagine"
 
 # titlu
-#: ../app/dialogs/preferences-dialog.c:2950
+#: ../app/dialogs/preferences-dialog.c:2947
 msgid "Default Appearance in Normal Mode"
 msgstr "Aspect implicit în modul normal"
 
 # titlu
-#: ../app/dialogs/preferences-dialog.c:2955
+#: ../app/dialogs/preferences-dialog.c:2952
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Aspect implicit în modul pe tot ecranul"
 
-#: ../app/dialogs/preferences-dialog.c:2964
+#: ../app/dialogs/preferences-dialog.c:2961
 msgid "Image Title & Statusbar Format"
 msgstr "Formatul titlului de imagine și a barei de stare"
 
-#: ../app/dialogs/preferences-dialog.c:2965
+#: ../app/dialogs/preferences-dialog.c:2962
 msgid "Title & Status"
 msgstr "Titlu și stare"
 
-#: ../app/dialogs/preferences-dialog.c:2983
+#: ../app/dialogs/preferences-dialog.c:2980
 msgid "Current format"
 msgstr "Format curent"
 
-#: ../app/dialogs/preferences-dialog.c:2984
+#: ../app/dialogs/preferences-dialog.c:2981
 msgid "Default format"
 msgstr "Format implicit"
 
-#: ../app/dialogs/preferences-dialog.c:2985
+#: ../app/dialogs/preferences-dialog.c:2982
 msgid "Show zoom percentage"
 msgstr "Arată procentul de zoom"
 
-#: ../app/dialogs/preferences-dialog.c:2986
+#: ../app/dialogs/preferences-dialog.c:2983
 msgid "Show zoom ratio"
 msgstr "Arată raportul de zoom"
 
-#: ../app/dialogs/preferences-dialog.c:2987
+#: ../app/dialogs/preferences-dialog.c:2984
 msgid "Show image size"
 msgstr "Arată dimensiunea imaginii"
 
-#: ../app/dialogs/preferences-dialog.c:2988
+#: ../app/dialogs/preferences-dialog.c:2985
 msgid "Show drawable size"
 msgstr "Arată dimensiunea obiectului grafic"
 
-#: ../app/dialogs/preferences-dialog.c:3001
+#: ../app/dialogs/preferences-dialog.c:2998
 msgid "Image Title Format"
 msgstr "Format de titlu de imagine"
 
-#: ../app/dialogs/preferences-dialog.c:3003
+#: ../app/dialogs/preferences-dialog.c:3000
 msgid "Image Statusbar Format"
 msgstr "Format de bară de stare imagine"
 
 # titlu
-#: ../app/dialogs/preferences-dialog.c:3087
+#: ../app/dialogs/preferences-dialog.c:3084
 msgid "Image Window Snapping Behavior"
 msgstr "Comportamentul de acroșare a ferestrei de imagine"
 
-#: ../app/dialogs/preferences-dialog.c:3088
+#: ../app/dialogs/preferences-dialog.c:3085
 msgid "Snapping"
 msgstr "Acroșare"
 
-#: ../app/dialogs/preferences-dialog.c:3095
+#: ../app/dialogs/preferences-dialog.c:3092
 msgid "Default Behavior in Normal Mode"
 msgstr "Comportament implicit în modul normal"
 
-#: ../app/dialogs/preferences-dialog.c:3099
+#: ../app/dialogs/preferences-dialog.c:3096
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Comportament implicit în modul pe tot ecranul"
 
-#: ../app/dialogs/preferences-dialog.c:3108
+#: ../app/dialogs/preferences-dialog.c:3105
 msgid "_Snapping distance:"
 msgstr "_Distanța de acroșare:"
 
-#: ../app/dialogs/preferences-dialog.c:3117
-#: ../app/dialogs/preferences-dialog.c:3118
+#: ../app/dialogs/preferences-dialog.c:3114
+#: ../app/dialogs/preferences-dialog.c:3115
 msgid "Input Devices"
 msgstr "Dispozitive de intrare"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:3124
+#: ../app/dialogs/preferences-dialog.c:3121
 msgid "Extended Input Devices"
 msgstr "Dispozitive de intrare extinse"
 
-#: ../app/dialogs/preferences-dialog.c:3128
+#: ../app/dialogs/preferences-dialog.c:3125
 msgid "S_hare tool and tool options between input devices"
 msgstr ""
 "_Partajează instrumentul și opțiunile de instrument între dispozitivele de "
 "intrare"
 
-#: ../app/dialogs/preferences-dialog.c:3132
+#: ../app/dialogs/preferences-dialog.c:3129
 msgid "Configure E_xtended Input Devices..."
 msgstr "Configurează dispozitivele de intrare e_xtinse..."
 
-#: ../app/dialogs/preferences-dialog.c:3139
+#: ../app/dialogs/preferences-dialog.c:3136
 msgid "_Save input device settings on exit"
 msgstr "_Salvează setările dispozitivelor de intrare la ieșirea din program"
 
-#: ../app/dialogs/preferences-dialog.c:3143
+#: ../app/dialogs/preferences-dialog.c:3140
 msgid "Save Input Device Settings _Now"
 msgstr "Salvează acum setările dispozitivelor de i_ntrare"
 
-#: ../app/dialogs/preferences-dialog.c:3150
+#: ../app/dialogs/preferences-dialog.c:3147
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr ""
 "_Resetează setările salvate ale dispozitivelor de intrare la valorile lor "
 "implicite"
 
-#: ../app/dialogs/preferences-dialog.c:3165
+#: ../app/dialogs/preferences-dialog.c:3162
 msgid "Additional Input Controllers"
 msgstr "Controlere de intrare adiționale"
 
-#: ../app/dialogs/preferences-dialog.c:3166
+#: ../app/dialogs/preferences-dialog.c:3163
 msgid "Input Controllers"
 msgstr "Controlere de intrare"
 
-#: ../app/dialogs/preferences-dialog.c:3181
-#: ../app/dialogs/preferences-dialog.c:3182
+#: ../app/dialogs/preferences-dialog.c:3178
+#: ../app/dialogs/preferences-dialog.c:3179
 msgid "Folders"
 msgstr "Dosare"
 
-#: ../app/dialogs/preferences-dialog.c:3189
+#: ../app/dialogs/preferences-dialog.c:3186
 msgid "Reset _Folders"
 msgstr "Resetează _dosarele"
 
-#: ../app/dialogs/preferences-dialog.c:3205
+#: ../app/dialogs/preferences-dialog.c:3202
 msgid "_Temporary folder:"
 msgstr "Dosar pentru fișiere _temporare:"
 
-#: ../app/dialogs/preferences-dialog.c:3206
+#: ../app/dialogs/preferences-dialog.c:3203
 msgid "Select Folder for Temporary Files"
 msgstr "Selectează dosarul pentru fișiere temporare"
 
-#: ../app/dialogs/preferences-dialog.c:3210
+#: ../app/dialogs/preferences-dialog.c:3207
 msgid "_Swap folder:"
 msgstr "Dosar pentru _swap:"
 
-#: ../app/dialogs/preferences-dialog.c:3211
+#: ../app/dialogs/preferences-dialog.c:3208
 msgid "Select Swap Folder"
 msgstr "Selectează dosarul pentru swap"
 
-#: ../app/dialogs/preferences-dialog.c:3244
+#: ../app/dialogs/preferences-dialog.c:3241
 msgid "Brush Folders"
 msgstr "Dosare pentru peneluri"
 
-#: ../app/dialogs/preferences-dialog.c:3247
+#: ../app/dialogs/preferences-dialog.c:3244
 msgid "Reset Brush _Folders"
 msgstr "_Resetează dosarele pentru peneluri"
 
-#: ../app/dialogs/preferences-dialog.c:3248
+#: ../app/dialogs/preferences-dialog.c:3245
 msgid "Select Brush Folders"
 msgstr "Selectează dosarele pentru peneluri"
 
-#: ../app/dialogs/preferences-dialog.c:3250
+#: ../app/dialogs/preferences-dialog.c:3247
 msgid "Dynamics Folders"
 msgstr "Dosare pentru dinamică"
 
-#: ../app/dialogs/preferences-dialog.c:3253
+#: ../app/dialogs/preferences-dialog.c:3250
 msgid "Reset Dynamics _Folders"
 msgstr "_Resetează dosarele pentru dinamică"
 
-#: ../app/dialogs/preferences-dialog.c:3254
+#: ../app/dialogs/preferences-dialog.c:3251
 msgid "Select Dynamics Folders"
 msgstr "Selectează dosarele pentru dinamică"
 
-#: ../app/dialogs/preferences-dialog.c:3256
+#: ../app/dialogs/preferences-dialog.c:3253
 msgid "Pattern Folders"
 msgstr "Dosare pentru modele"
 
-#: ../app/dialogs/preferences-dialog.c:3259
+#: ../app/dialogs/preferences-dialog.c:3256
 msgid "Reset Pattern _Folders"
 msgstr "_Resetează dosarele pentru modele"
 
-#: ../app/dialogs/preferences-dialog.c:3260
+#: ../app/dialogs/preferences-dialog.c:3257
 msgid "Select Pattern Folders"
 msgstr "Selectează dosarele pentru modele"
 
-#: ../app/dialogs/preferences-dialog.c:3262
+#: ../app/dialogs/preferences-dialog.c:3259
 msgid "Palette Folders"
 msgstr "Dosare pentru palete"
 
-#: ../app/dialogs/preferences-dialog.c:3265
+#: ../app/dialogs/preferences-dialog.c:3262
 msgid "Reset Palette _Folders"
 msgstr "_Resetează dosarele pentru palete"
 
-#: ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/preferences-dialog.c:3263
 msgid "Select Palette Folders"
 msgstr "Selectează dosarele pentru palete"
 
-#: ../app/dialogs/preferences-dialog.c:3268
+#: ../app/dialogs/preferences-dialog.c:3265
 msgid "Gradient Folders"
 msgstr "Dosare pentru degradeuri"
 
-#: ../app/dialogs/preferences-dialog.c:3271
+#: ../app/dialogs/preferences-dialog.c:3268
 msgid "Reset Gradient _Folders"
 msgstr "_Resetează dosarele pentru degradeuri"
 
-#: ../app/dialogs/preferences-dialog.c:3272
+#: ../app/dialogs/preferences-dialog.c:3269
 msgid "Select Gradient Folders"
 msgstr "Selectează dosarele pentru degradeuri"
 
-#: ../app/dialogs/preferences-dialog.c:3274
+#: ../app/dialogs/preferences-dialog.c:3271
 msgid "Font Folders"
 msgstr "Dosare pentru fonturi"
 
-#: ../app/dialogs/preferences-dialog.c:3277
+#: ../app/dialogs/preferences-dialog.c:3274
 msgid "Reset Font _Folders"
 msgstr "_Resetează dosarele pentru fonturi"
 
-#: ../app/dialogs/preferences-dialog.c:3278
+#: ../app/dialogs/preferences-dialog.c:3275
 msgid "Select Font Folders"
 msgstr "Selectează dosarele pentru fonturi"
 
-#: ../app/dialogs/preferences-dialog.c:3280
+#: ../app/dialogs/preferences-dialog.c:3277
 msgid "Tool Preset Folders"
 msgstr "Dosarele presetărilor de instrument"
 
 # hm ? la singular nu prea are sens
-#: ../app/dialogs/preferences-dialog.c:3283
+#: ../app/dialogs/preferences-dialog.c:3280
 msgid "Reset Tool Preset _Folders"
 msgstr "_Resetează dosarele presetărilor de instrumente"
 
-#: ../app/dialogs/preferences-dialog.c:3284
+#: ../app/dialogs/preferences-dialog.c:3281
 msgid "Select Tool Preset Folders"
 msgstr "Selectează dosarul presetării de instrument"
 
-#: ../app/dialogs/preferences-dialog.c:3286
+#: ../app/dialogs/preferences-dialog.c:3283
 msgid "MyPaint Brush Folders"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:3289
+#: ../app/dialogs/preferences-dialog.c:3286
 msgid "Reset MyPaint Brush _Folders"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:3290
+#: ../app/dialogs/preferences-dialog.c:3287
 msgid "Select MyPaint Brush Folders"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:3292
+#: ../app/dialogs/preferences-dialog.c:3289
 msgid "Plug-in Folders"
 msgstr "Dosare pentru plugin-uri"
 
-#: ../app/dialogs/preferences-dialog.c:3295
+#: ../app/dialogs/preferences-dialog.c:3292
 msgid "Reset plug-in _Folders"
 msgstr "_Resetează dosarele pentru plugin-uri"
 
-#: ../app/dialogs/preferences-dialog.c:3296
+#: ../app/dialogs/preferences-dialog.c:3293
 msgid "Select plug-in Folders"
 msgstr "Selectează dosarele pentru plugin-uri"
 
-#: ../app/dialogs/preferences-dialog.c:3298
+#: ../app/dialogs/preferences-dialog.c:3295
 msgid "Scripts"
 msgstr "Scripturi"
 
-#: ../app/dialogs/preferences-dialog.c:3298
+#: ../app/dialogs/preferences-dialog.c:3295
 msgid "Script-Fu Folders"
 msgstr "Dosare pentru Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3301
+#: ../app/dialogs/preferences-dialog.c:3298
 msgid "Reset Script-Fu _Folders"
 msgstr "_Resetează dosarele pentru Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3302
+#: ../app/dialogs/preferences-dialog.c:3299
 msgid "Select Script-Fu Folders"
 msgstr "Selectează dosarele pentru Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3304
+#: ../app/dialogs/preferences-dialog.c:3301
 msgid "Module Folders"
 msgstr "Dosare pentru module"
 
-#: ../app/dialogs/preferences-dialog.c:3307
+#: ../app/dialogs/preferences-dialog.c:3304
 msgid "Reset Module _Folders"
 msgstr "_Resetează dosarele pentru module"
 
-#: ../app/dialogs/preferences-dialog.c:3308
+#: ../app/dialogs/preferences-dialog.c:3305
 msgid "Select Module Folders"
 msgstr "Selectează dosarele pentru module"
 
-#: ../app/dialogs/preferences-dialog.c:3310
+#: ../app/dialogs/preferences-dialog.c:3307
 msgid "Interpreters"
 msgstr "Interpretoare"
 
-#: ../app/dialogs/preferences-dialog.c:3310
+#: ../app/dialogs/preferences-dialog.c:3307
 msgid "Interpreter Folders"
 msgstr "Dosare pentru interpretoare"
 
-#: ../app/dialogs/preferences-dialog.c:3313
+#: ../app/dialogs/preferences-dialog.c:3310
 msgid "Reset Interpreter _Folders"
 msgstr "_Resetează dosarele pentru interpretoare"
 
-#: ../app/dialogs/preferences-dialog.c:3314
+#: ../app/dialogs/preferences-dialog.c:3311
 msgid "Select Interpreter Folders"
 msgstr "Selectează dosarele pentru interpretoare"
 
-#: ../app/dialogs/preferences-dialog.c:3316
+#: ../app/dialogs/preferences-dialog.c:3313
 msgid "Environment"
 msgstr "Mediu"
 
-#: ../app/dialogs/preferences-dialog.c:3316
+#: ../app/dialogs/preferences-dialog.c:3313
 msgid "Environment Folders"
 msgstr "Dosare pentru mediu"
 
-#: ../app/dialogs/preferences-dialog.c:3319
+#: ../app/dialogs/preferences-dialog.c:3316
 msgid "Reset Environment _Folders"
 msgstr "Resetează dosarele de _mediu"
 
-#: ../app/dialogs/preferences-dialog.c:3320
+#: ../app/dialogs/preferences-dialog.c:3317
 msgid "Select Environment Folders"
 msgstr "Selectează dosarele de mediu"
 
-#: ../app/dialogs/preferences-dialog.c:3322
+#: ../app/dialogs/preferences-dialog.c:3319
 msgid "Themes"
 msgstr "Teme"
 
-#: ../app/dialogs/preferences-dialog.c:3322
+#: ../app/dialogs/preferences-dialog.c:3319
 msgid "Theme Folders"
 msgstr "Dosare pentru teme"
 
-#: ../app/dialogs/preferences-dialog.c:3325
+#: ../app/dialogs/preferences-dialog.c:3322
 msgid "Reset Theme _Folders"
 msgstr "Resetează dosarele de _teme"
 
-#: ../app/dialogs/preferences-dialog.c:3326
+#: ../app/dialogs/preferences-dialog.c:3323
 msgid "Select Theme Folders"
 msgstr "Selectează dosarul de teme"
 
-#: ../app/dialogs/preferences-dialog.c:3328
+#: ../app/dialogs/preferences-dialog.c:3325
 msgid "Icon Themes"
 msgstr "Teme de pictograme"
 
-#: ../app/dialogs/preferences-dialog.c:3328
+#: ../app/dialogs/preferences-dialog.c:3325
 msgid "Icon Theme Folders"
 msgstr "Dosare pentru teme de pictograme"
 
-#: ../app/dialogs/preferences-dialog.c:3331
+#: ../app/dialogs/preferences-dialog.c:3328
 msgid "Reset Icon Theme _Folders"
 msgstr "_Resetează dosarul pentru teme de pictograme"
 
-#: ../app/dialogs/preferences-dialog.c:3332
+#: ../app/dialogs/preferences-dialog.c:3329
 msgid "Select Icon Theme Folders"
 msgstr "Selectează dosarul pentru teme de pictograme"
 
-# apare în dialogul de rezoluție de tipărire
 #: ../app/dialogs/print-size-dialog.c:144
 msgid "Print Size"
 msgstr "Dimensiune de tipărire"
@@ -18483,7 +18484,7 @@ msgstr "Dimensiune de canava"
 
 #: ../app/dialogs/resize-dialog.c:154 ../app/dialogs/scale-dialog.c:114
 msgid "Layer Size"
-msgstr "Dimensiune strat"
+msgstr "Dimensiune de strat"
 
 #: ../app/dialogs/resize-dialog.c:155
 msgid "Fill With"
@@ -18796,6 +18797,7 @@ msgid "Move"
 msgstr "Mutare"
 
 # hm ?
+# a fost: indisponibil
 #: ../app/display/gimpcursorview.c:221 ../app/display/gimpcursorview.c:227
 #: ../app/display/gimpcursorview.c:246 ../app/display/gimpcursorview.c:252
 #: ../app/display/gimpcursorview.c:273 ../app/display/gimpcursorview.c:279
@@ -18805,7 +18807,7 @@ msgstr "Mutare"
 #: ../app/display/gimpcursorview.c:790 ../app/display/gimpcursorview.c:791
 #: ../app/display/gimpcursorview.c:792 ../app/display/gimpcursorview.c:793
 msgid "n/a"
-msgstr "indisponibil"
+msgstr "fără"
 
 #: ../app/display/gimpcursorview.c:224 ../app/display/gimpcursorview.c:249
 #: ../app/display/gimpcursorview.c:276 ../app/tools/gimptransform3dtool.c:435
@@ -18996,7 +18998,7 @@ msgstr "Plasează straturi"
 #: ../app/display/gimpdisplayshell-dnd.c:758
 #: ../app/widgets/gimplayertreeview.c:893 ../app/widgets/gimptoolbox-dnd.c:268
 msgid "Dropped Buffer"
-msgstr "Tampon plasat"
+msgstr "Tampon de memorie plasat"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:79
 msgid "Color Display Filters"
@@ -20354,7 +20356,7 @@ msgstr "Eroare de prelucrare, nu s-au găsit 2 numere întregi"
 
 #: ../app/operations/gimpcurvesconfig.c:706
 msgid "Writing curves file failed: "
-msgstr "Scrierea fișierului de curbe a eșuat:"
+msgstr "Scrierea fișierului de curbe a eșuat: "
 
 #: ../app/operations/gimphuesaturationconfig.c:101
 #: ../app/operations/gimphuesaturationconfig.c:102
@@ -20437,13 +20439,15 @@ msgstr "Ajustează luminozitatea și contrastul"
 
 # hm ?
 #: ../app/operations/gimpoperationcagecoefcalc.c:69
+#, fuzzy
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
 msgstr ""
-"Calculează un set al tamponului de coeficient pentru instrumentul de cușcă "
-"GIMP"
+"Calculează un set al tamponului de memorie de coeficient pentru instrumentul "
+"de cușcă GIMP"
 
 # hm ?
 #: ../app/operations/gimpoperationcagetransform.c:104
+#, fuzzy
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
@@ -21247,12 +21251,12 @@ msgstr "Fontul „%s” nu a fost găsit"
 
 #: ../app/pdb/gimppdb-utils.c:384
 msgid "Invalid empty buffer name"
-msgstr "Nume gol nevalid de tampon"
+msgstr "Nume gol nevalid de tampon de memorie"
 
 #: ../app/pdb/gimppdb-utils.c:394
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "Tamponul denumit „%s” nu a fost găsit"
+msgstr "Tamponul de memorie denumit „%s” nu a fost găsit"
 
 #: ../app/pdb/gimppdb-utils.c:413
 msgid "Invalid empty paint method name"
@@ -21348,7 +21352,7 @@ msgstr ""
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
-"Imaginea „%s” (%d) este de tip „%s”, dar este așteptată o imagine de tip „%s"
+"Imaginea „%s” (%d) este de tip „%s”, dar este așteptată o imagine de tip „%s”"
 
 #: ../app/pdb/gimppdb-utils.c:725
 #, c-format
@@ -21362,7 +21366,7 @@ msgid ""
 "expected"
 msgstr ""
 "Imaginea „%s” (%d) are precizia „%s”, dar este așteptată o imagine cu "
-"precizia „%s"
+"precizia „%s”"
 
 #: ../app/pdb/gimppdb-utils.c:768
 #, c-format
@@ -26006,7 +26010,7 @@ msgstr "Nu au fost găsite trasee în „%s”"
 
 #: ../app/vectors/gimpvectors-import.c:390
 msgid "No paths found in the buffer"
-msgstr "Nu s-au găsit trasee în tampon"
+msgstr "Nu s-au găsit trasee în tamponul de memorie"
 
 #: ../app/vectors/gimpvectors-import.c:400
 #, c-format
@@ -26029,7 +26033,7 @@ msgstr "Acțiune"
 
 #: ../app/widgets/gimpactionview.c:294
 msgid "Shortcut"
-msgstr "Scurtătură"
+msgstr "Comandă rapidă"
 
 #: ../app/widgets/gimpactionview.c:320
 msgid "Name"
@@ -26037,29 +26041,29 @@ msgstr "Nume"
 
 #: ../app/widgets/gimpactionview.c:559 ../app/widgets/gimpactionview.c:800
 msgid "Changing shortcut failed."
-msgstr "Modificarea scurtăturii a eșuat."
+msgstr "Modificarea comenzii rapide a eșuat."
 
 #: ../app/widgets/gimpactionview.c:596
 msgid "Conflicting Shortcuts"
-msgstr "Scurtături în conflict"
+msgstr "Comenzi rapide în conflict"
 
 #: ../app/widgets/gimpactionview.c:602
 msgid "_Reassign Shortcut"
-msgstr "_Reatribuie scurtătura"
+msgstr "_Reatribuie comanda rapidă"
 
 #: ../app/widgets/gimpactionview.c:618
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr "Scurtătura „%s” este deja luată de „%s” din grupul „%s”."
+msgstr "Comanda rapidă „%s” este deja luată de „%s” din grupul „%s”."
 
 #: ../app/widgets/gimpactionview.c:622
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
-msgstr "Reatribuirea scurtăturii va cauza eliminarea acesteia din „%s”."
+msgstr "Reatribuirea comenzii rapide va cauza eliminarea acesteia din „%s”."
 
 #: ../app/widgets/gimpactionview.c:717
 msgid "Invalid shortcut."
-msgstr "Scurtătură nevalidă."
+msgstr "Comandă rapidă nevalidă."
 
 #: ../app/widgets/gimpactionview.c:724 ../app/widgets/gimpactionview.c:828
 msgid "F1 cannot be remapped."
@@ -26072,7 +26076,7 @@ msgstr ""
 
 #: ../app/widgets/gimpactionview.c:836
 msgid "Removing shortcut failed."
-msgstr "Eliminarea scurtăturii a eșuat."
+msgstr "Eliminarea comenzii rapide a eșuat."
 
 #: ../app/widgets/gimpbrusheditor.c:140
 msgid "Shape:"
@@ -26142,11 +26146,13 @@ msgctxt "Coordinates"
 msgid "Y:"
 msgstr "Y:"
 
+# hm ?
+# a fost: indisponibil
 #. TRANSLATORS: n/a for Not Available.
 #: ../app/widgets/gimpcolorframe.c:693 ../app/widgets/gimpcolorframe.c:695
 msgctxt "Coordinates"
 msgid "n/a"
-msgstr "indisponibil"
+msgstr "fără"
 
 #. TRANSLATORS: V for Value (grayscale)
 #: ../app/widgets/gimpcolorframe.c:764
@@ -26309,10 +26315,12 @@ msgctxt "CMYK"
 msgid "K:"
 msgstr "K:"
 
+# hm ?
+# a fost: indisponibil
 #: ../app/widgets/gimpcolorframe.c:1078
 msgctxt "Color value"
 msgid "n/a"
-msgstr "indisponibil"
+msgstr "fără"
 
 # titlu sub bară
 #: ../app/widgets/gimpcolormapeditor.c:234
@@ -26916,20 +26924,20 @@ msgstr "Raportul de reușită/eșec al cache-ului dalelor"
 
 #: ../app/widgets/gimpdashboard.c:526
 msgid "Swap file occupied size"
-msgstr "Dimensiunea ocupată de fișierul swap"
+msgstr "Mărimea ocupată de fișierul de memorie swap"
 
 #: ../app/widgets/gimpdashboard.c:535 ../app/widgets/gimpdashboard.c:692
 msgctxt "dashboard-variable"
 msgid "Size"
-msgstr "Dimensiune"
+msgstr "Mărime"
 
 #: ../app/widgets/gimpdashboard.c:536
 msgid "Swap file size"
-msgstr "Dimensiunea fișierului swap"
+msgstr "Mărimea fișierului de memorie swap"
 
 #: ../app/widgets/gimpdashboard.c:546
 msgid "Swap file size limit"
-msgstr "Limita dimensiunii fișierului swap"
+msgstr "Limita mărimii fișierului swap"
 
 #: ../app/widgets/gimpdashboard.c:553
 msgctxt "dashboard-variable"
@@ -26938,7 +26946,7 @@ msgstr "La coadă"
 
 #: ../app/widgets/gimpdashboard.c:554
 msgid "Size of data queued for writing to the swap"
-msgstr "Dimensiunea datelor care așteaptă la coadă la swap"
+msgstr "Mărimea datelor care așteaptă la coadă la memoria swap"
 
 #: ../app/widgets/gimpdashboard.c:563
 msgctxt "dashboard-variable"
@@ -26948,7 +26956,8 @@ msgstr "Blocaj la coadă"
 #: ../app/widgets/gimpdashboard.c:564
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
-msgstr "De câte ori scrierea la swap a fost blocată, din cauza unei cozi pline"
+msgstr ""
+"De câte ori scrierea memoriei swap a fost blocată, din cauza unei cozi pline"
 
 #: ../app/widgets/gimpdashboard.c:573
 msgctxt "dashboard-variable"
@@ -26957,7 +26966,7 @@ msgstr "Coadă plină"
 
 #: ../app/widgets/gimpdashboard.c:574
 msgid "Whether the swap queue is full"
-msgstr "Dacă coada la swap este plină"
+msgstr "Dacă coada memoriei swap este plină"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
@@ -26969,7 +26978,7 @@ msgstr "Citire"
 
 #: ../app/widgets/gimpdashboard.c:586
 msgid "Total amount of data read from the swap"
-msgstr "Cantitatea totală de date citite din swap"
+msgstr "Cantitatea totală de date citite din memoria swap"
 
 #: ../app/widgets/gimpdashboard.c:595
 msgctxt "dashboard-variable"
@@ -26978,7 +26987,7 @@ msgstr "Capacitate de citire"
 
 #: ../app/widgets/gimpdashboard.c:596
 msgid "The rate at which data is read from the swap"
-msgstr "Rata la care datele sunt citite din swap"
+msgstr "Rata la care datele sunt citite din memoria swap"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
@@ -26990,7 +26999,7 @@ msgstr "Scriere"
 
 #: ../app/widgets/gimpdashboard.c:609
 msgid "Total amount of data written to the swap"
-msgstr "Cantitatea totală de date scrise în swap"
+msgstr "Cantitatea totală de date scrise în memoria swap"
 
 #: ../app/widgets/gimpdashboard.c:618
 msgctxt "dashboard-variable"
@@ -26999,11 +27008,11 @@ msgstr "Capacitate de scriere"
 
 #: ../app/widgets/gimpdashboard.c:619
 msgid "The rate at which data is written to the swap"
-msgstr "Rata la care datele sunt scrise în swap"
+msgstr "Rata la care datele sunt scrise în memoria swap"
 
 #: ../app/widgets/gimpdashboard.c:629
 msgid "Swap compression ratio"
-msgstr "Raportul de comprimare swap"
+msgstr "Raportul de comprimare al memoriei swap"
 
 #: ../app/widgets/gimpdashboard.c:642
 msgctxt "dashboard-variable"
@@ -27035,7 +27044,7 @@ msgstr "Utilizat"
 
 #: ../app/widgets/gimpdashboard.c:675
 msgid "Amount of memory used by the process"
-msgstr "Dimensiunea memoriei utilizată de proces"
+msgstr "Volumul de memorie utilizată de proces"
 
 #: ../app/widgets/gimpdashboard.c:683
 msgctxt "dashboard-variable"
@@ -27057,7 +27066,7 @@ msgstr "Mipmapp"
 
 #: ../app/widgets/gimpdashboard.c:705
 msgid "Total size of processed mipmapped data"
-msgstr "Dimensiunea totală a datelor mipmapp procesate"
+msgstr "Mărimea totală a datelor mipmapp procesate"
 
 #: ../app/widgets/gimpdashboard.c:713
 msgctxt "dashboard-variable"
@@ -27079,7 +27088,7 @@ msgstr "Asincron"
 
 #: ../app/widgets/gimpdashboard.c:732
 msgid "Number of ongoing asynchronous operations"
-msgstr "Numărul de operațiuni asincrone în curs"
+msgstr "Numărul de operații asincrone în curs"
 
 #: ../app/widgets/gimpdashboard.c:740
 msgctxt "dashboard-variable"
@@ -27088,16 +27097,16 @@ msgstr "Dale"
 
 #: ../app/widgets/gimpdashboard.c:741
 msgid "Total size of tile memory"
-msgstr "Dimensiunea totală de memorie a dalelor"
+msgstr "Mărimea totală a memoriei dalelor"
 
 #: ../app/widgets/gimpdashboard.c:750
 msgctxt "dashboard-variable"
 msgid "Scratch"
-msgstr "Scratch"
+msgstr "Memorie scratch"
 
 #: ../app/widgets/gimpdashboard.c:751
 msgid "Total size of scratch memory"
-msgstr "Dimensiunea totală a memoriei scratch"
+msgstr "Mărimea totală a memoriei scratch"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
@@ -27105,16 +27114,16 @@ msgstr "Dimensiunea totală a memoriei scratch"
 #: ../app/widgets/gimpdashboard.c:762
 msgctxt "dashboard-variable"
 msgid "TempBuf"
-msgstr "TempBuf"
+msgstr "Memorie tampon"
 
 #: ../app/widgets/gimpdashboard.c:763
 msgid "Total size of temporary buffers"
-msgstr "Dimensiunea totală a memoriei tampon temporare"
+msgstr "Mărimea totală a memoriei tampon"
 
 #: ../app/widgets/gimpdashboard.c:775
 msgctxt "dashboard-group"
 msgid "Cache"
-msgstr "Cache"
+msgstr "Memorie cache"
 
 #: ../app/widgets/gimpdashboard.c:776
 msgid "In-memory tile cache"
@@ -27123,7 +27132,7 @@ msgstr "Cache-ul dalelor în memorie"
 #: ../app/widgets/gimpdashboard.c:812
 msgctxt "dashboard-group"
 msgid "Swap"
-msgstr "Swap"
+msgstr "Memorie swap"
 
 #: ../app/widgets/gimpdashboard.c:813
 msgid "On-disk tile swap"
@@ -27150,7 +27159,7 @@ msgstr "Utilizare memorie"
 #: ../app/widgets/gimpdashboard.c:922
 msgctxt "dashboard-variable"
 msgid "Cache"
-msgstr "Cache"
+msgstr "Memorie cache"
 
 #: ../app/widgets/gimpdashboard.c:956
 msgctxt "dashboard-group"
@@ -27165,11 +27174,13 @@ msgstr "Informații diverse"
 msgid "Select fields"
 msgstr "Selectează câmpurile"
 
+# hm ?
+# a fost: indisponibil
 #. Tranlators: "N/A" is an abbreviation for "not available"
 #: ../app/widgets/gimpdashboard.c:3266
 msgctxt "dashboard-value"
 msgid "N/A"
-msgstr "Indisponibil"
+msgstr "Fără"
 
 #: ../app/widgets/gimpdashboard.c:3275 ../app/widgets/gimpdashboard.c:4283
 msgctxt "dashboard-value"
@@ -27201,9 +27212,11 @@ msgstr "%g/s"
 msgid "%s/s"
 msgstr "%s/s"
 
+# hm ?
+# a fost: indisponibil
 #: ../app/widgets/gimpdashboard.c:4351
 msgid "N/A"
-msgstr "Indisponibil"
+msgstr "Fără"
 
 #: ../app/widgets/gimpdashboard.c:4729
 msgid "Resolving symbol information..."
@@ -28678,384 +28691,3 @@ msgstr "rotund"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "difuz"
-
-#~ msgctxt "tab-style"
-#~ msgid "Automatic"
-#~ msgstr "Automat"
-
-#~ msgid "There is no active layer or channel to cut from."
-#~ msgstr "Nu există niciun strat activ sau canal din care să se poată tăia."
-
-#~ msgid "There is no active layer or channel to copy from."
-#~ msgstr "Nu există niciun strat activ sau canal din care să se poată copia."
-
-#~ msgctxt "image-action"
-#~ msgid "Pr_ecision"
-#~ msgstr "Pr_ecizie"
-
-#~ msgctxt "image-action"
-#~ msgid "_Enable Color Management"
-#~ msgstr "Activează g_estionarea culorilor"
-
-#~ msgctxt "image-action"
-#~ msgid ""
-#~ "Whether the image is color managed. Disabling color management is "
-#~ "equivalent to assigning a built-in sRGB color profile. Better leave color "
-#~ "management enabled."
-#~ msgstr ""
-#~ "Stabilește dacă imaginea să fie gestionată colorimetric. Dezactivarea "
-#~ "gestionării culorilor este echivalentă cu atribuirea unui profil de "
-#~ "culoare sRGB încorporat. Este preferabil ca gestionarea culorilor să "
-#~ "rămână activată."
-
-#~ msgctxt "image-convert-action"
-#~ msgid "Perceptual gamma (sRGB)"
-#~ msgstr "Gama perceptiv (sRGB)"
-
-#~ msgid "There is no active layer or channel to fill."
-#~ msgstr "Nu există niciun strat sau canal activ de umplut."
-
-#~ msgid "There is no active layer or channel to stroke to."
-#~ msgstr "Nu există niciun strat sau canal activ care să fie conturat."
-
-#~ msgctxt "layers-action"
-#~ msgid "Create a new layer with last used values"
-#~ msgstr "Creează un strat nou cu ultimele valori folosite"
-
-# tooltip descriptiv
-#~ msgctxt "layers-action"
-#~ msgid "Create a duplicate of the layer and add it to the image"
-#~ msgstr "Creează un duplicat al stratului pe care îl adaugă la imagine"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Delete Layer"
-#~ msgstr "Șter_ge stratul"
-
-#~ msgctxt "layers-action"
-#~ msgid "Delete this layer"
-#~ msgstr "Șterge acest strat"
-
-#~ msgctxt "layers-action"
-#~ msgid "Merge this layer with the first visible layer below it"
-#~ msgstr "Fuzionează acest strat cu primul strat vizibil de sub el"
-
-#~ msgctxt "layers-action"
-#~ msgid "Merge Layer Group"
-#~ msgstr "Fuzionează grupul de straturi"
-
-#~ msgctxt "layers-action"
-#~ msgid "Merge the layer group's layers into one normal layer"
-#~ msgstr "Fuzionează straturile grupului într-un singur strat normal"
-
-#~ msgctxt "layers-action"
-#~ msgid "Layer to _Image Size"
-#~ msgstr "Stratul la dimensiunea _imaginii"
-
-#~ msgctxt "layers-action"
-#~ msgid "Resize the layer to the size of the image"
-#~ msgstr "Redimensionează stratul la dimensiunea imaginii"
-
-#~ msgctxt "layers-action"
-#~ msgid "Crop the layer to the extents of the selection"
-#~ msgstr "Decupează stratul la limitele selecției"
-
-#~ msgctxt "layers-action"
-#~ msgid ""
-#~ "Crop the layer to the extents of its content (remove empty borders from "
-#~ "the layer)"
-#~ msgstr ""
-#~ "Decupează stratul la limitele conținutului acestuia (elimină chenarele "
-#~ "goale din strat)"
-
-#~ msgctxt "layers-action"
-#~ msgid "Add La_yer Mask..."
-#~ msgstr "_Adaugă o mască de strat..."
-
-#~ msgctxt "layers-action"
-#~ msgid "Add a mask that allows non-destructive editing of transparency"
-#~ msgstr "Adaugă o mască ce permite editarea nedestructivă a transparenței"
-
-#~ msgctxt "layers-action"
-#~ msgid "Add La_yer Mask"
-#~ msgstr "_Adaugă o mască de strat"
-
-#~ msgctxt "layers-action"
-#~ msgid "Add a mask with last used values"
-#~ msgstr "Adaugă o mască de strat cu ultimele valori folosite"
-
-#~ msgctxt "layers-action"
-#~ msgid "S_how Layer Mask"
-#~ msgstr "_Arată masca de strat"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Disable Layer Mask"
-#~ msgstr "_Dezactivează masca de strat"
-
-#~ msgctxt "layers-action"
-#~ msgid "Remove the layer mask and its effect"
-#~ msgstr "Elimină masca de strat și efectul ei"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Mask to Selection"
-#~ msgstr "_Mască la selecție"
-
-#~ msgctxt "layers-action"
-#~ msgid "Replace the selection with the layer mask"
-#~ msgstr "Înlocuiește selecția cu masca de strat"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Add to Selection"
-#~ msgstr "_Adaugă la selecție"
-
-#~ msgctxt "layers-action"
-#~ msgid "Add the layer mask to the current selection"
-#~ msgstr "Adaugă masca de strat la selecția curentă"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Subtract from Selection"
-#~ msgstr "_Scade din selecție"
-
-#~ msgctxt "layers-action"
-#~ msgid "Subtract the layer mask from the current selection"
-#~ msgstr "Scade masca de strat din selecția curentă"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Intersect with Selection"
-#~ msgstr "_Intersectează cu selecția"
-
-#~ msgctxt "layers-action"
-#~ msgid "Intersect the layer mask with the current selection"
-#~ msgstr "Intersectează masca de strat cu selecția curentă"
-
-#~ msgctxt "layers-action"
-#~ msgid "A_dd to Selection"
-#~ msgstr "A_daugă la selecție"
-
-#~ msgctxt "layers-action"
-#~ msgid "Select _Top Layer"
-#~ msgstr "Selec_tează stratul de sus"
-
-#~ msgctxt "layers-action"
-#~ msgid "Select the topmost layer"
-#~ msgstr "Selectează stratul cel mai de sus"
-
-#~ msgctxt "layers-action"
-#~ msgid "Select _Bottom Layer"
-#~ msgstr "Selectează stratul de _jos"
-
-#~ msgctxt "layers-action"
-#~ msgid "Select the bottommost layer"
-#~ msgstr "Selectează stratul cel mai de jos"
-
-#~ msgctxt "layers-action"
-#~ msgid "Select _Previous Layer"
-#~ msgstr "Selectează stratul _precedent"
-
-#~ msgctxt "layers-action"
-#~ msgid "Select the layer above the current layer"
-#~ msgstr "Selectează stratul de deasupra stratului curent"
-
-#~ msgctxt "layers-action"
-#~ msgid "Select _Next Layer"
-#~ msgstr "Selectează stratul _următor"
-
-#~ msgctxt "layers-action"
-#~ msgid "Select the layer below the current layer"
-#~ msgstr "Selectează stratul de dedesubtul stratului curent"
-
-#~ msgid "Cannot crop because the active layer has no content."
-#~ msgstr "Nu se poate decupa deoarece stratul activ nu are conținut."
-
-#~ msgid ""
-#~ "Cannot crop because the active layer is already cropped to its content."
-#~ msgstr ""
-#~ "Nu se poate decupa deoarece stratul activ este deja decupat la conținutul "
-#~ "lui."
-
-#~ msgctxt "select-action"
-#~ msgid "_Fill Selection Outline"
-#~ msgstr "_Umple conturul selecției"
-
-#~ msgctxt "select-action"
-#~ msgid "_Stroke Selection"
-#~ msgstr "Conturează _selecția"
-
-#~ msgctxt "icon-size"
-#~ msgid "Guess ideal size"
-#~ msgstr "Ghicește dimensiunea ideală"
-
-#~ msgctxt "icon-size"
-#~ msgid "Theme-set size"
-#~ msgstr "Dimensiune stabilită prin temă"
-
-#~ msgctxt "icon-size"
-#~ msgid "Small size"
-#~ msgstr "Dimensiune mică"
-
-#~ msgctxt "icon-size"
-#~ msgid "Medium size"
-#~ msgstr "Dimensiune medie"
-
-#~ msgctxt "icon-size"
-#~ msgid "Large size"
-#~ msgstr "Dimensiune mare"
-
-#~ msgctxt "icon-size"
-#~ msgid "Huge size"
-#~ msgstr "Dimensiune uriașă"
-
-#~ msgctxt "tool-group-menu-mode"
-#~ msgid "Show on click"
-#~ msgstr "Arată la clic"
-
-#~ msgctxt "tool-group-menu-mode"
-#~ msgid "Show on hover"
-#~ msgstr "Arată la survolare"
-
-#~ msgctxt "tool-group-menu-mode"
-#~ msgid "Show on hover in single column"
-#~ msgstr "Arată la survolarea într-o singură coloană"
-
-#~ msgid "Use compact style for sliders."
-#~ msgstr "Folosește stilul commpact pentru glisoare."
-
-#~ msgid "When enabled, menus can be torn off."
-#~ msgstr "Când opțiunea este activată, meniurile pot fi detașate."
-
-#~ msgctxt "undo-type"
-#~ msgid "Change color managed state"
-#~ msgstr "Schimbă starea gestionării colorimetrice"
-
-#~ msgid "Color managed"
-#~ msgstr "Gestionat colorimetric"
-
-#~ msgid ""
-#~ "Whether the image is color managed. Disabling color management is "
-#~ "equivalent to choosing a built-in sRGB profile. Better leave color "
-#~ "management enabled."
-#~ msgstr ""
-#~ "Stabilește dacă imaginea să fie gestionată colorimetric. Dezactivarea "
-#~ "gestionării culorilor este echivalentă cu alegerea unui profil sRGB "
-#~ "încorporat. Este preferabil ca gestionarea culorilor să rămână activată."
-
-#~ msgid "Precision Conversion"
-#~ msgstr "Convertire de precizie"
-
-#~ msgid "Perceptual gamma (sRGB)"
-#~ msgstr "Gama perceptiv (sRGB)"
-
-#~ msgid "Merge within active _group only"
-#~ msgstr "Fuzionează numai cu _grupul activ"
-
-#~ msgid "Use co_mpact sliders"
-#~ msgstr "Folosește glisoare co_mpacte"
-
-#~ msgid "_Menu mode:"
-#~ msgstr "_Mod de meniu:"
-
-#~ msgid "Merge within active group only"
-#~ msgstr "Fuzionează numai în cadrul grupului activ"
-
-#~ msgid "Show _tooltips"
-#~ msgstr "Ara_tă indiciile"
-
-#~ msgid "not color managed"
-#~ msgstr "nu este gestionat colorimetric"
-
-#~ msgid "Color _managed"
-#~ msgstr "Gestionat colori_metric"
-
-#~ msgid "Invert"
-#~ msgstr "Inversare"
-
-#~ msgid "Hue-Saturation"
-#~ msgstr "Nuanță și saturație"
-
-#~ msgid "Set color profile"
-#~ msgstr "Stabilește profilul de culoare"
-
-#~ msgid "Current layer only"
-#~ msgstr "Numai stratul curent"
-
-#~ msgid "Crop only currently selected layer"
-#~ msgstr "Decupează numai stratul selectat curent"
-
-#~ msgid "There is no active layer to crop."
-#~ msgstr "Nu există niciun strat activ din care să se poată decupa."
-
-#~ msgid "Adjust curves in linear light"
-#~ msgstr "Ajustează curbele în lumină liniară"
-
-#~ msgid "Adjust curves perceptually"
-#~ msgstr "Ajustează curbele perceptiv"
-
-#~ msgid "The active channel's position is locked."
-#~ msgstr "Poziția canalului activ este blocată."
-
-#~ msgid "The active channel's pixels are locked."
-#~ msgstr "Pixelii stratului activ sunt blocați."
-
-#~ msgid "Convert pixels to built-in sRGB to apply filter (slow)"
-#~ msgstr ""
-#~ "Convertește pixelii în sRGB încorporat pentru a aplica filtrul (lent)"
-
-#~ msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
-#~ msgstr ""
-#~ "Presupune că pixelii sunt sRGB încorporat (ignoră spațiul de culoare real "
-#~ "al imaginii)"
-
-#~ msgid "Adjust levels in linear light"
-#~ msgstr "Ajustează nivelurile în lumină liniară"
-
-#~ msgid "Adjust levels perceptually"
-#~ msgstr "Ajustează nivelurile perceptiv"
-
-#~ msgid "Move the active layer"
-#~ msgstr "Mută stratul activ"
-
-#~ msgid "There is no active layer or channel to fill"
-#~ msgstr "Nu există niciun strat activ sau canal de umplut"
-
-#~ msgid "There is no active layer or channel to stroke to"
-#~ msgstr "Nu există niciun strat sau canal activ care să fie conturat"
-
-#~ msgid "Keys"
-#~ msgstr "Taste"
-
-#~ msgid "Show values in linear space"
-#~ msgstr "Arată valorile în spațiu liniar"
-
-#~ msgid "Show values in perceptual space"
-#~ msgstr "Arată valorile în spațiu perceptiv"
-
-#~ msgid "Guess icon size from resolution"
-#~ msgstr "Ghicește dimensiunea pictogramelor pe baza rezoluției"
-
-#~ msgid "Use icon size from the theme"
-#~ msgstr "Folosește dimensiunea pictogramelor din temă"
-
-#~ msgid "Custom icon size"
-#~ msgstr "Dimensiune de pictograme particularizată"
-
-#~ msgctxt "icon-size"
-#~ msgid "Small"
-#~ msgstr "Mică"
-
-#~ msgctxt "icon-size"
-#~ msgid "Medium"
-#~ msgstr "Medie"
-
-#~ msgctxt "icon-size"
-#~ msgid "Large"
-#~ msgstr "Mare"
-
-#~ msgctxt "icon-size"
-#~ msgid "Huge"
-#~ msgstr "Imensă"
-
-#~ msgid "Color _manage this image"
-#~ msgstr "Gestionează colori_metric această imagine"
-
-#~ msgctxt "tab-style"
-#~ msgid "Undefined"
-#~ msgstr "Nedefinit"
