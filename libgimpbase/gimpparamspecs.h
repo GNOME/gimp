@@ -80,7 +80,7 @@ G_BEGIN_DECLS
 
 /**
  * GimpArray:
- * @data:        pointer to the array's data.
+ * @data: (array length=length): pointer to the array's data.
  * @length:      length of @data, in bytes.
  * @static_data: whether @data points to statically allocated memory.
  **/
