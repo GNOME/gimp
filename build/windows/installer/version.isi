@@ -19,10 +19,8 @@
 
 #if Int(MINOR) % 2 == 1
  #define DEVEL="-dev"
- //used for setting up file associations
- #define ASSOC_VERSION=MAJOR + "." + MINOR
+ #define DIR_VER=MAJOR + "." + MINOR
 #else
  #define DEVEL=""
- //new setup is incompatible with GIMP 2.6 and older installers
- #define ASSOC_VERSION=MAJOR + ".8"
+ #define DIR_VER=MAJOR + ".0"
 #endif
