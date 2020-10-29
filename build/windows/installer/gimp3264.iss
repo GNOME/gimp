@@ -89,8 +89,9 @@
 	#define DEPS_DIR "W:\msys64-gtk2\opt\comb"
 	#define DDIR32 "mingw32"
 	#define DDIR64 "mingw64"
-	#define PYTHON 
-	#define DEBUG_SYMBOLS 
+	#define PYTHON
+	#define LUA
+	#define DEBUG_SYMBOLS
 	#define NOCOMPRESSION
 #endif
 
@@ -217,10 +218,7 @@ Name: gimp32; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact
 Name: gimp64; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('64')
 
 Name: deps32; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('32')
-Name: deps32\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('32')
-Name: deps32\compat; Description: "{cm:ComponentsCompat}"; Types: full custom; Flags: dontinheritcheck; Check: Check3264('32')
 Name: deps64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('64')
-Name: deps64\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('64')
 
 #ifdef DEBUG_SYMBOLS
 Name: debug; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning
@@ -235,9 +233,11 @@ Name: mypaint; Description: "{cm:ComponentsMyPaint}"; Types: full custom
 #ifdef PYTHON
 Name: py; Description: "{cm:ComponentsPython}"; Types: full custom
 #endif
+#ifdef LUA
+Name: lua; Description: "{cm:ComponentsLua}"; Types: full custom
+#endif
 
 Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flags: checkablealone; Check: Check3264('64')
-Name: gimp32on64\compat; Description: "{cm:ComponentsCompat}"; Types: full custom; Flags: dontinheritcheck; Check: Check3264('64')
 
 [Tasks]
 Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
@@ -251,8 +251,13 @@ Name: "{autodesktop}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{
 ;setup files
 Source: "setup.ini"; Flags: dontcopy
 Source: "windows-installer-intro-small.bmp"; Flags: dontcopy
+#ifndef DEVEL
 Source: "installsplash.bmp"; Flags: dontcopy
 Source: "installsplash_small.bmp"; Flags: dontcopy
+#else
+Source: "installsplash-devel.bmp"; Destname: "installsplash.bmp"; Flags: dontcopy
+Source: "installsplash_small-devel.bmp"; Destname: "installsplash_small.bmp"; Flags: dontcopy
+#endif
 
 #ifndef NOFILES
 ;files common to both 32 and 64-bit versions
@@ -278,7 +283,6 @@ Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data
 
 Source: "{#DEPS_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR32}\etc\gtk-3.0\*"; DestDir: "{app}\etc\gtk-3.0"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-;Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;ghostscript TODO: detect version automatically
 Source: "{#DEPS_DIR32}\share\ghostscript\9.50\lib\*.*"; DestDir: "{app}\share\ghostscript\9.50\lib"; Components: gs and (gimp32 or gimp64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
@@ -288,8 +292,10 @@ Source: "{#DEPS_DIR32}\share\ghostscript\9.50\lib\*.*"; DestDir: "{app}\share\gh
 Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\*.py"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
 
-;luajit looks for these files under bin\
-Source: "{#DEPS_DIR32}\share\lua\5.1\*.*"; DestDir: "{app}\bin\lua"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#ifdef LUA
+Source: "{#DEPS_DIR32}\share\lua\5.1\*.*"; DestDir: "{app}\share\lua\5.1"; Components: lua; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\luajit-2.1.0-beta3\*.*"; DestDir: "{app}\share\luajit-2.1.0-beta3"; Components: lua; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#endif
 
 ;64bit
 #define PLATFORM 64
@@ -547,11 +553,18 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
 ;gegl 0.2
 Type: filesandordirs; Name: "{app}\lib\gegl-0.2"
 ;old icons
+#ifndef DEVEL
 Type: files; Name: "{autoprograms}\GIMP 2.lnk"
 Type: files; Name: "{autodesktop}\GIMP 2.lnk"
+#endif
 ;get previous GIMP icon name from uninstall name in Registry
-Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayVersion|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayVersion')
-Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayVersion|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayVersion')
+#if Defined(DEVEL) && DEVEL != ""
+Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1,DisplayVersion|GIMP {#MAJOR}.{#MINOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1','DisplayVersion')
+Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1,DisplayVersion|GIMP {#MAJOR}.{#MINOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1','DisplayVersion')
+#else
+Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1,DisplayVersion|GIMP {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1','DisplayVersion')
+Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1,DisplayVersion|GIMP {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1','DisplayVersion')
+#endif
 ;32-bit Python
 Type: filesandordirs; Name: "{app}\32\lib\gimp\2.0\python"
 Type: files; Name: "{app}\32\bin\python2w.exe"
@@ -569,6 +582,8 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
+Type: files; Name: "{app}\lib\gimp\{#DIR_VER}\interpreters\lua.interp"
+Type: files; Name: "{app}\lib\gimp\{#DIR_VER}\environ\pygimp.env"
 ;need to clean out all the generated .pyc files
 Type: filesandordirs; Name: "{app}\Python\*"
 
@@ -767,6 +782,7 @@ end;
 procedure PrepareInterp();
 var InterpFile,InterpContent: String;
 begin
+#ifdef PYTHON
 	if IsComponentSelected('py') then
 	begin
 		StatusLabel(CustomMessage('SettingUpPyGimp'),'');
@@ -793,7 +809,11 @@ begin
 		end;
 
 	end;
+#endif
 
+#ifdef LUA
+	if IsComponentSelected('lua') then
+	begin
 		InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\lua.interp');
         DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
 
@@ -801,14 +821,15 @@ begin
 		          'luajit=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
 		          '/usr/bin/luajit=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
 		          '/usr/bin/lua=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
-		          ':Lua:E::lua::lua:'#10;
+		          ':Lua:E::lua::luajit:'#10;
 		
 		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
 		begin
 			DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
 			SuppressibleMsgBox(CustomMessage('ErrorUpdatingPython') + ' (2)',mbInformation,mb_ok,IDOK);
 		end;
-
+	end;
+#endif
 end;
 
 
@@ -1158,7 +1179,7 @@ var i,j: Integer;
 begin
 	DebugMsg('ComponentsListOnClick','');
 
-	Components := ['Gimp','Deps','Debug','GtkWimp','Translations','MyPaint','Python','Ghostscript','Gimp32','Compat'];
+	Components := ['Gimp','Deps','Debug','Translations','MyPaint','Python','Ghostscript','Lua','Gimp32'];
 	ComponentDesc := '';
 	
 	for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do
