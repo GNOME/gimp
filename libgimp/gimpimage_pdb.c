@@ -3385,7 +3385,9 @@ gimp_image_get_parasite (GimpImage   *image,
  *
  * List all parasites.
  *
- * Returns a list of all currently attached parasites.
+ * Returns a list of the names of all currently attached parasites.
+ * These names can later be used to get the actual #GimpParasite with
+ * gimp_image_get_parasite() when needed.
  *
  * Returns: (array length=num_parasites) (element-type gchar*) (transfer full):
  *          The names of currently attached parasites.

@@ -2878,7 +2878,11 @@ CODE
 
 sub image_get_parasite_list {
     $blurb = 'List all parasites.';
-    $help  = 'Returns a list of all currently attached parasites.';
+    $help = <<'HELP';
+Returns a list of the names of all currently attached parasites.
+These names can later be used to get the actual #GimpParasite with
+gimp_image_get_parasite() when needed.
+HELP
 
     &marc_pdb_misc('1999', '2.8');
 
