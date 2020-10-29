@@ -120,11 +120,8 @@ GtkWidget     * gimp_prop_hscale_new              (GObject      *config,
                                                    gdouble       page_increment,
                                                    gint          digits);
 
-GtkAdjustment * gimp_prop_scale_entry_new         (GObject      *config,
+GtkWidget     * gimp_prop_scale_entry_new         (GObject      *config,
                                                    const gchar  *property_name,
-                                                   GtkGrid      *grid,
-                                                   gint          column,
-                                                   gint          row,
                                                    const gchar  *label,
                                                    gdouble       step_increment,
                                                    gdouble       page_increment,
@@ -135,11 +132,8 @@ GtkAdjustment * gimp_prop_scale_entry_new         (GObject      *config,
 
 /*  special form of gimp_prop_scale_entry_new() for GParamDouble  */
 
-GtkAdjustment * gimp_prop_opacity_entry_new       (GObject       *config,
+GtkWidget     * gimp_prop_opacity_entry_new       (GObject       *config,
                                                    const gchar   *property_name,
-                                                   GtkGrid       *grid,
-                                                   gint           column,
-                                                   gint           row,
                                                    const gchar   *label);
 
 

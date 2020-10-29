@@ -70,6 +70,7 @@ typedef struct _GimpPickButton                GimpPickButton;
 typedef struct _GimpPreview                   GimpPreview;
 typedef struct _GimpPreviewArea               GimpPreviewArea;
 typedef struct _GimpRuler                     GimpRuler;
+typedef struct _GimpScaleEntry                GimpScaleEntry;
 typedef struct _GimpScrolledPreview           GimpScrolledPreview;
 typedef struct _GimpSizeEntry                 GimpSizeEntry;
 typedef struct _GimpSpinButton                GimpSpinButton;

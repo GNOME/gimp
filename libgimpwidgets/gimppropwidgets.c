@@ -1462,39 +1462,32 @@ gimp_prop_hscale_new (GObject     *config,
 /**
  * gimp_prop_scale_entry_new:
  * @config:         Object to which property is attached.
- * @property_name:  Name of double property controlled by the spin button.
- * @grid:           The #GtkGrid the widgets will be attached to.
- * @column:         The column to start with.
- * @row:            The row to attach the widgets.
  * @label: (nullable): The text for the #GtkLabel which will appear left of
  *                     the #GtkHScale.
+ * @property_name:  Name of integer or double property controlled by the scale.
  * @step_increment: Step size.
  * @page_increment: Page size.
- * @digits:         Number of digits after decimal point to display.
+ * @digits:         Number of digits after decimal point to display. For
+ *                  integer properties, this will be ignored (always 0).
  * @limit_scale:    %FALSE if the range of possible values of the
  *                  GtkHScale should be the same as of the GtkSpinButton.
  * @lower_limit:    The scale's lower boundary if @scale_limits is %TRUE.
  * @upper_limit:    The scale's upper boundary if @scale_limits is %TRUE.
  *
- * Creates a #libgimpwidgets-gimpscaleentry (slider and spin button)
- * to set and display the value of the specified double property.  See
- * gimp_scale_entry_new() for more information.
+ * Creates a #GimpScaleEntry (slider and spin button) to set and display
+ * the value of a specified int or double property.
+ * See gimp_scale_entry_new() for more information.
+ *
  * If @label is %NULL, the @property_name's nick will be used as label
  * of the returned object.
  *
- * Note that the @scale_limits boolean is the inverse of
- * gimp_scale_entry_new()'s "constrain" parameter.
- *
- * Returns: (transfer full): The #GtkSpinButton's #GtkAdjustment.
+ * Returns: (transfer full): The newly allocated #GimpScaleEntry.
  *
  * Since: 2.4
  */
-GtkAdjustment *
+GtkWidget *
 gimp_prop_scale_entry_new (GObject     *config,
                            const gchar *property_name,
-                           GtkGrid     *grid,
-                           gint         column,
-                           gint         row,
                            const gchar *label,
                            gdouble      step_increment,
                            gdouble      page_increment,
@@ -1503,12 +1496,12 @@ gimp_prop_scale_entry_new (GObject     *config,
                            gdouble      lower_limit,
                            gdouble      upper_limit)
 {
-  GParamSpec    *param_spec;
-  GtkAdjustment *adjustment;
-  const gchar   *tooltip;
-  gdouble        value;
-  gdouble        lower;
-  gdouble        upper;
+  GtkWidget   *widget;
+  GParamSpec  *param_spec;
+  const gchar *tooltip;
+  gdouble      value;
+  gdouble      lower;
+  gdouble      upper;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -1518,45 +1511,30 @@ gimp_prop_scale_entry_new (GObject     *config,
                             param_spec, &value, &lower, &upper, G_STRFUNC))
     return NULL;
 
+  if (G_IS_PARAM_SPEC_INT (param_spec) || G_IS_PARAM_SPEC_UINT (param_spec))
+    digits = 0;
+
   if (! label)
     label = g_param_spec_get_nick (param_spec);
 
+  widget = gimp_scale_entry_new2 (label, value, lower, upper,
+                                  step_increment, page_increment,
+                                  digits);
+  if (limit_scale)
+    {
+      gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (widget),
+                                  lower_limit, upper_limit,
+                                  FALSE);
+    }
+
   tooltip = g_param_spec_get_blurb (param_spec);
+  gimp_help_set_help_data (widget, tooltip, NULL);
 
-  if (! limit_scale)
-    {
-      adjustment = gimp_scale_entry_new (grid, column, row,
-                                         label, -1, -1,
-                                         value, lower, upper,
-                                         step_increment, page_increment,
-                                         digits,
-                                         TRUE, 0.0, 0.0,
-                                         tooltip,
-                                         NULL);
-    }
-  else
-    {
-      adjustment = gimp_scale_entry_new (grid, column, row,
-                                         label, -1, -1,
-                                         value, lower_limit, upper_limit,
-                                         step_increment, page_increment,
-                                         digits,
-                                         FALSE, lower, upper,
-                                         tooltip,
-                                         NULL);
-    }
+  g_object_bind_property (config, property_name,
+                          widget, "value",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
-  set_param_spec (G_OBJECT (adjustment), NULL,  param_spec);
-
-  g_signal_connect (adjustment, "value-changed",
-                    G_CALLBACK (gimp_prop_adjustment_callback),
-                    config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_adjustment_notify),
-                  adjustment);
-
-  return adjustment;
+  return widget;
 }
 
 static void
@@ -1620,9 +1598,6 @@ gimp_prop_widget_set_factor (GtkWidget     *widget,
  * gimp_prop_opacity_entry_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of double property controlled by the spin button.
- * @grid:          The #GtkGrid the widgets will be attached to.
- * @column:        The column to start with.
- * @row:           The row to attach the widgets.
  * @label:         The text for the #GtkLabel which will appear left of the
  *                 #GtkHScale.
  *
@@ -1635,32 +1610,27 @@ gimp_prop_widget_set_factor (GtkWidget     *widget,
  *
  * Since: 2.4
  */
-GtkAdjustment *
+GtkWidget *
 gimp_prop_opacity_entry_new (GObject     *config,
                              const gchar *property_name,
-                             GtkGrid     *grid,
-                             gint         column,
-                             gint         row,
                              const gchar *label)
 {
-  GtkAdjustment *adjustment;
+  GtkWidget *widget;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  adjustment = gimp_prop_scale_entry_new (config, property_name,
-                                          grid, column, row, label,
-                                          0.01, 0.1, 1,
-                                          FALSE, 0.0, 0.0);
+  widget = gimp_prop_scale_entry_new (config, property_name,
+                                      label, 0.01, 0.1, 1,
+                                      FALSE, 0.0, 0.0);
 
-  if (adjustment)
+  if (widget)
     {
-      gimp_prop_widget_set_factor (GIMP_SCALE_ENTRY_SPINBUTTON (adjustment),
-                                   adjustment,
-                                   100.0, 0.0, 0.0, 1);
+      gimp_prop_widget_set_factor (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (widget)),
+                                   NULL, 100.0, 0.0, 0.0, 1);
     }
 
-  return adjustment;
+  return widget;
 }
 
 

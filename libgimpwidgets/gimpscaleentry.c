@@ -31,6 +31,50 @@
 #include "gimpwidgets.h"
 
 
+/**
+ * SECTION: gimpscaleentry
+ * @title: GimpScaleEntry
+ * @short_description: Widget containing a scale, a spin button and a
+ *                     label.
+ *
+ * This widget is a #GtkGrid showing a #GtkSpinButton and a #GtkScale
+ * bound together. It also displays a #GtkLabel which is used as
+ * mnemonic on the #GtkSpinButton.
+ **/
+
+
+enum
+{
+  PROP_0,
+  PROP_LABEL,
+  PROP_VALUE,
+  PROP_LOWER,
+  PROP_UPPER,
+  PROP_STEP_INCREMENT,
+  PROP_PAGE_INCREMENT,
+  PROP_DIGITS,
+};
+
+struct _GimpScaleEntryPrivate
+{
+  GtkWidget *label;
+  GtkWidget *spinbutton;
+  GtkWidget *scale;
+
+  GBinding  *binding;
+};
+
+
+static void   gimp_scale_entry_constructed          (GObject       *object);
+static void   gimp_scale_entry_set_property         (GObject       *object,
+                                                     guint          property_id,
+                                                     const GValue  *value,
+                                                     GParamSpec    *pspec);
+static void   gimp_scale_entry_get_property         (GObject       *object,
+                                                     guint          property_id,
+                                                     GValue        *value,
+                                                     GParamSpec    *pspec);
+
 static gboolean        gimp_scale_entry_linear_to_log (GBinding     *binding,
                                                        const GValue *from_value,
                                                        GValue       *to_value,
@@ -59,6 +103,326 @@ static GtkAdjustment * gimp_scale_entry_new_internal  (gboolean      color_scale
                                                        const gchar  *tooltip,
                                                        const gchar  *help_id);
 
+
+G_DEFINE_TYPE_WITH_PRIVATE (GimpScaleEntry, gimp_scale_entry, GTK_TYPE_GRID)
+
+#define parent_class gimp_scale_entry_parent_class
+
+
+static void
+gimp_scale_entry_class_init (GimpScaleEntryClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->constructed  = gimp_scale_entry_constructed;
+  object_class->set_property = gimp_scale_entry_set_property;
+  object_class->get_property = gimp_scale_entry_get_property;
+
+  /**
+   * GimpScaleEntry:label:
+   *
+   * Since: 3.0
+   **/
+  g_object_class_install_property (object_class, PROP_LABEL,
+                                   g_param_spec_string ("label",
+                                                        "Label text",
+                                                        "The text of the label part of this widget",
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
+
+  /**
+   * GimpScaleEntry:value:
+   *
+   * Since: 3.0
+   **/
+  g_object_class_install_property (object_class, PROP_VALUE,
+                                   g_param_spec_double ("value", NULL,
+                                                        "Current value",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 1.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  /**
+   * GimpScaleEntry:lower:
+   *
+   * Since: 3.0
+   **/
+  g_object_class_install_property (object_class, PROP_LOWER,
+                                   g_param_spec_double ("lower", NULL,
+                                                        "Minimum value",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 1.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  /**
+   * GimpScaleEntry:upper:
+   *
+   * Since: 3.0
+   **/
+  g_object_class_install_property (object_class, PROP_UPPER,
+                                   g_param_spec_double ("upper", NULL,
+                                                        "Max value",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  /**
+   * GimpScaleEntry:step-increment:
+   *
+   * Since: 3.0
+   **/
+  g_object_class_install_property (object_class, PROP_STEP_INCREMENT,
+                                   g_param_spec_double ("step-increment", NULL,
+                                                        "Step increment",
+                                                        G_MINDOUBLE, G_MAXDOUBLE, 1.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  /**
+   * GimpScaleEntry:page-increment:
+   *
+   * Since: 3.0
+   **/
+  g_object_class_install_property (object_class, PROP_PAGE_INCREMENT,
+                                   g_param_spec_double ("page-increment", NULL,
+                                                        "Page increment",
+                                                        G_MINDOUBLE, G_MAXDOUBLE, 10.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  /**
+   * GimpScaleEntry:digits:
+   *
+   * Since: 3.0
+   **/
+  g_object_class_install_property (object_class, PROP_DIGITS,
+                                   g_param_spec_uint ("digits", NULL,
+                                                      "The number of decimal places to display",
+                                                      0, G_MAXUINT, 2,
+                                                      GIMP_PARAM_READWRITE));
+}
+
+static void
+gimp_scale_entry_init (GimpScaleEntry *entry)
+{
+  entry->priv = gimp_scale_entry_get_instance_private (entry);
+}
+
+static void
+gimp_scale_entry_constructed (GObject *object)
+{
+  GimpScaleEntry *entry = GIMP_SCALE_ENTRY (object);
+  GtkAdjustment  *adjustment;
+
+  /* Construction values are a bit random but should be properly
+   * overrided with expected values if the object was created with
+   * gimp_scale_entry_new().
+   */
+
+  entry->priv->label = gtk_label_new_with_mnemonic (NULL);
+  gtk_label_set_xalign (GTK_LABEL (entry->priv->label), 0.0);
+
+  adjustment = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 10.0, 0.0);
+
+  entry->priv->spinbutton = gimp_spin_button_new (adjustment, 2.0, 2.0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (entry->priv->spinbutton), TRUE);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (entry->priv->label), entry->priv->spinbutton);
+
+  entry->priv->scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, adjustment);
+  gtk_scale_set_draw_value (GTK_SCALE (entry->priv->scale), FALSE);
+  gtk_widget_set_hexpand (entry->priv->scale, TRUE);
+
+  gtk_grid_attach (GTK_GRID (entry), entry->priv->label,      0, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (entry), entry->priv->scale,      1, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (entry), entry->priv->spinbutton, 2, 0, 1, 1);
+  gtk_widget_show (entry->priv->label);
+  gtk_widget_show (entry->priv->scale);
+  gtk_widget_show (entry->priv->spinbutton);
+
+  /* This is important to make this object into a property widget. It
+   * will allow config object to bind the "value" property of this
+   * widget, and therefore be updated automatically.
+   */
+  g_object_bind_property (G_OBJECT (adjustment),  "value",
+                          object,                 "value",
+                          G_BINDING_BIDIRECTIONAL |
+                          G_BINDING_SYNC_CREATE);
+}
+
+static void
+gimp_scale_entry_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpScaleEntry *entry = GIMP_SCALE_ENTRY (object);
+
+  switch (property_id)
+    {
+    case PROP_LABEL:
+        {
+          /* This should not happen since the property is **not** set with
+           * G_PARAM_CONSTRUCT, hence the label should exist when the
+           * property is first set.
+           */
+          g_return_if_fail (entry->priv->label);
+
+          gtk_label_set_markup_with_mnemonic (GTK_LABEL (entry->priv->label),
+                                              g_value_get_string (value));
+        }
+      break;
+    case PROP_VALUE:
+        {
+          GtkSpinButton *spinbutton;
+          GtkAdjustment *adj;
+
+          g_return_if_fail (entry->priv->spinbutton);
+
+          /* Set on the spin button, because it might have a bigger
+           * range, hence shows the real value.
+           */
+          spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
+          adj = gtk_spin_button_get_adjustment (spinbutton);
+
+          /* Avoid looping forever since we have bound this widget's
+           * "value" property with the spin button "value" property.
+           */
+          if (gtk_adjustment_get_value (adj) != g_value_get_double (value))
+            gtk_adjustment_set_value (adj, g_value_get_double (value));
+        }
+      break;
+    case PROP_LOWER:
+        {
+          GtkSpinButton *spinbutton;
+          GtkAdjustment *adj;
+
+          g_return_if_fail (entry->priv->spinbutton);
+
+          /* This sets the range only on the spin button which may share
+           * or not its adjustment with the scale.
+           * To change only the scale, see gimp_scale_entry_set_range().
+           */
+          spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
+          adj = gtk_spin_button_get_adjustment (spinbutton);
+          gtk_adjustment_set_lower (adj, g_value_get_double (value));
+        }
+      break;
+    case PROP_UPPER:
+        {
+          GtkSpinButton *spinbutton;
+          GtkAdjustment *adj;
+
+          g_return_if_fail (entry->priv->spinbutton);
+
+          spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
+          adj = gtk_spin_button_get_adjustment (spinbutton);
+          gtk_adjustment_set_upper (adj, g_value_get_double (value));
+        }
+      break;
+    case PROP_STEP_INCREMENT:
+        {
+          GtkSpinButton *spinbutton;
+          GtkAdjustment *adj;
+
+          g_return_if_fail (entry->priv->scale && entry->priv->spinbutton);
+
+          adj = gtk_range_get_adjustment (GTK_RANGE (entry->priv->scale));
+          gtk_adjustment_set_step_increment (adj, g_value_get_double (value));
+
+          spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
+          if (adj != gtk_spin_button_get_adjustment (spinbutton))
+            gtk_adjustment_set_step_increment (gtk_spin_button_get_adjustment (spinbutton), g_value_get_double (value));
+
+          g_object_set (entry->priv->spinbutton,
+                        "climb-rate", g_value_get_double (value),
+                        NULL);
+        }
+      break;
+    case PROP_PAGE_INCREMENT:
+        {
+          GtkSpinButton *spinbutton;
+          GtkAdjustment *adj;
+
+          g_return_if_fail (entry->priv->scale && entry->priv->spinbutton);
+
+          adj = gtk_range_get_adjustment (GTK_RANGE (entry->priv->scale));
+          gtk_adjustment_set_page_increment (adj, g_value_get_double (value));
+
+          spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
+          if (adj != gtk_spin_button_get_adjustment (spinbutton))
+            gtk_adjustment_set_page_increment (gtk_spin_button_get_adjustment (spinbutton), g_value_get_double (value));
+        }
+      break;
+    case PROP_DIGITS:
+        {
+          g_return_if_fail (entry->priv->scale && entry->priv->spinbutton);
+
+          gtk_scale_set_digits (GTK_SCALE (entry->priv->scale),
+                                g_value_get_uint (value));
+          gtk_spin_button_set_digits (GTK_SPIN_BUTTON (entry->priv->spinbutton),
+                                      g_value_get_uint (value));
+        }
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_scale_entry_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GimpScaleEntry *entry      = GIMP_SCALE_ENTRY (object);
+  GtkSpinButton  *spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
+
+  switch (property_id)
+    {
+    case PROP_LABEL:
+      g_value_set_string (value, gtk_label_get_label (GTK_LABEL (entry->priv->label)));
+      break;
+    case PROP_VALUE:
+      g_value_set_double (value, gtk_spin_button_get_value (spinbutton));
+      break;
+    case PROP_LOWER:
+        {
+          GtkAdjustment *adj;
+
+          adj = gtk_spin_button_get_adjustment (spinbutton);
+          g_value_set_double (value, gtk_adjustment_get_lower (adj));
+        }
+      break;
+    case PROP_UPPER:
+        {
+          GtkAdjustment *adj;
+
+          adj = gtk_spin_button_get_adjustment (spinbutton);
+          g_value_set_double (value, gtk_adjustment_get_upper (adj));
+        }
+      break;
+    case PROP_STEP_INCREMENT:
+        {
+          GtkAdjustment *adj;
+
+          adj = gtk_spin_button_get_adjustment (spinbutton);
+          g_value_set_double (value, gtk_adjustment_get_step_increment (adj));
+        }
+      break;
+    case PROP_PAGE_INCREMENT:
+        {
+          GtkAdjustment *adj;
+
+          adj = gtk_spin_button_get_adjustment (spinbutton);
+          g_value_set_double (value, gtk_adjustment_get_page_increment (adj));
+        }
+      break;
+    case PROP_DIGITS:
+      g_value_set_uint (value, gtk_spin_button_get_digits (spinbutton));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
 
 static gboolean
 gimp_scale_entry_linear_to_log (GBinding     *binding,
@@ -207,6 +571,172 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   g_object_set_data (G_OBJECT (spin_adjustment), "binding",    binding);
 
   return spin_adjustment;
+}
+
+/**
+ * gimp_scale_entry_new2:
+ * @text:           The text for the #GtkLabel which will appear left of
+ *                  the #GtkHScale.
+ * @value:          The initial value.
+ * @lower:          The lower boundary.
+ * @upper:          The upper boundary.
+ * @step_increment: The step increment.
+ * @page_increment: The page increment.
+ * @digits:         The number of decimal digits.
+ *
+ * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
+ * attaches them to a 3-column #GtkGrid.
+ *
+ * Returns: (transfer full): The new #GtkScaleEntry.
+ **/
+GtkWidget *
+gimp_scale_entry_new2 (const gchar *text,
+                       gdouble      value,
+                       gdouble      lower,
+                       gdouble      upper,
+                       gdouble      step_increment,
+                       gdouble      page_increment,
+                       guint        digits)
+{
+  GtkWidget *entry;
+
+  entry = g_object_new (GIMP_TYPE_SCALE_ENTRY,
+                        "label",          text,
+                        "value",          value,
+                        "lower",          lower,
+                        "upper",          upper,
+                        "step-increment", step_increment,
+                        "page-increment", page_increment,
+                        "digits",         digits,
+                        NULL);
+
+  return entry;
+}
+
+
+/**
+ * gimp_scale_entry_get_label:
+ * @entry: The #GtkScaleEntry.
+ *
+ * This function returns the #GtkLabel packed in @entry. This can be
+ * useful if you need to customize some aspects of the widget.
+ *
+ * Returns: (transfer none): The new #GtkLabel contained in @entry.
+ **/
+GtkWidget *
+gimp_scale_entry_get_label (GimpScaleEntry *entry)
+{
+  return entry->priv->label;
+}
+
+/**
+ * gimp_scale_entry_get_spin_button:
+ * @entry: The #GtkScaleEntry.
+ *
+ * This function returns the #GtkSpinButton packed in @entry. This can
+ * be useful if you need to customize some aspects of the widget.
+ *
+ * Returns: (transfer none): The new #GtkSpinButton contained in @entry.
+ **/
+GtkWidget *
+gimp_scale_entry_get_spin_button (GimpScaleEntry *entry)
+{
+  return entry->priv->spinbutton;
+}
+
+/**
+ * gimp_scale_entry_get_scale:
+ * @entry: The #GtkScaleEntry.
+ *
+ * This function returns the #GtkScale packed in @entry. This can be
+   * useful if you need to customize some aspects of the widget
+ *
+ * Returns: (transfer none): The new #GtkScale contained in @entry.
+ **/
+GtkWidget *
+gimp_scale_entry_get_scale (GimpScaleEntry *entry)
+{
+  return entry->priv->scale;
+}
+
+/**
+ * gimp_scale_entry_set_range:
+ * @entry:       The #GtkScaleEntry.
+ * @lower:       the lower value for the whole widget if @limit_scale is
+ *               %FALSE, or only for the #GtkScale if %TRUE.
+ * @upper:       the upper value for the whole widget if @limit_scale is
+ *               %FALSE, or only for the #GtkSpinButton if %TRUE.
+ * @limit_scale: Whether the range should only apply to the #GtkScale or
+ *               if it should share its #GtkAdjustement with the
+ *               #GtkScale. If %TRUE, both @lower and @upper must be
+ *               included in current #GtkSpinButton range.
+ *
+ * By default the #GtkSpinButton and #GtkScale will have the same range
+ * (they will even share their GtkAdjustment). In some case, you want to
+ * set a different range. In particular when the finale range is huge,
+ * the #GtkScale might become nearly useless as every tiny slider move
+ * would dramatically update the value. In this case, it is common to
+ * set the #GtkScale to a smaller common range, while the #GtkSpinButton
+ * would allow for the full allowed range.
+ * This function allows this. Obviously the #GtkAdjustment of both
+ * widgets would be synced but if the set value is out of the #GtkScale
+ * range, the slider would simply show at one extreme.
+ *
+ * If @limit_scale is %FALSE though, it would sync back both widgets
+ * range to the new values.
+ **/
+void
+gimp_scale_entry_set_range (GimpScaleEntry *entry,
+                            gdouble         lower,
+                            gdouble         upper,
+                            gboolean        limit_scale)
+{
+  GtkSpinButton *spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
+  GtkAdjustment *spin_adjustment;
+  GtkAdjustment *scale_adjustment;
+
+  spin_adjustment  = gtk_spin_button_get_adjustment (spinbutton);
+  scale_adjustment = gtk_range_get_adjustment (GTK_RANGE (entry->priv->scale));
+
+  if (limit_scale)
+    {
+      g_return_if_fail (lower >= gtk_adjustment_get_lower (spin_adjustment) &&
+                        upper <= gtk_adjustment_get_upper (spin_adjustment));
+
+      if (spin_adjustment == scale_adjustment)
+        {
+          scale_adjustment = gtk_adjustment_new (gtk_adjustment_get_value (spin_adjustment),
+                                                 lower, upper,
+                                                 gtk_adjustment_get_step_increment (spin_adjustment),
+                                                 gtk_adjustment_get_page_increment (spin_adjustment),
+                                                 gtk_adjustment_get_page_size (spin_adjustment));
+          gtk_range_set_adjustment (GTK_RANGE (entry->priv->scale), scale_adjustment);
+
+          entry->priv->binding = g_object_bind_property (G_OBJECT (spin_adjustment),  "value",
+                                                         G_OBJECT (scale_adjustment), "value",
+                                                         G_BINDING_BIDIRECTIONAL |
+                                                         G_BINDING_SYNC_CREATE);
+        }
+      else
+        {
+          gtk_adjustment_set_lower (scale_adjustment, lower);
+          gtk_adjustment_set_upper (scale_adjustment, upper);
+        }
+    }
+  else if (! limit_scale)
+    {
+      if (spin_adjustment != scale_adjustment)
+        {
+          g_clear_object (&entry->priv->binding);
+
+          gtk_range_set_adjustment (GTK_RANGE (entry->priv->scale), spin_adjustment);
+        }
+
+      g_object_set (entry,
+                    "lower", lower,
+                    "upper", upper,
+                    NULL);
+    }
 }
 
 /**
