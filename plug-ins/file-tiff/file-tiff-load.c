@@ -887,6 +887,74 @@ load_image (GFile        *file,
           }
       }
 
+
+      /* Attach GeoTIFF Tags as Parasite, If available */
+      {
+        GimpParasite *parasite    = NULL;
+        void         *geotag_data = NULL;
+        uint32        count       = 0;
+
+        if (TIFFGetField (tif, GEOTIFF_MODELPIXELSCALE, &count, &geotag_data))
+          {
+            parasite = gimp_parasite_new ("Gimp_GeoTIFF_ModelPixelScale",
+                                          GIMP_PARASITE_PERSISTENT,
+                                          (TIFFDataWidth (TIFF_DOUBLE) * count),
+                                          geotag_data);
+            gimp_image_attach_parasite (*image, parasite);
+            gimp_parasite_free (parasite);
+          }
+
+        if (TIFFGetField (tif, GEOTIFF_MODELTIEPOINT, &count, &geotag_data))
+          {
+            parasite = gimp_parasite_new ("Gimp_GeoTIFF_ModelTiePoint",
+                                          GIMP_PARASITE_PERSISTENT,
+                                          (TIFFDataWidth (TIFF_DOUBLE) * count),
+                                          geotag_data);
+            gimp_image_attach_parasite (*image, parasite);
+            gimp_parasite_free (parasite);
+          }
+
+        if (TIFFGetField (tif, GEOTIFF_MODELTRANSFORMATION, &count, &geotag_data))
+          {
+            parasite = gimp_parasite_new ("Gimp_GeoTIFF_ModelTransformation",
+                                          GIMP_PARASITE_PERSISTENT,
+                                          (TIFFDataWidth (TIFF_DOUBLE) * count),
+                                          geotag_data);
+            gimp_image_attach_parasite (*image, parasite);
+            gimp_parasite_free (parasite);
+          }
+
+        if (TIFFGetField (tif, GEOTIFF_KEYDIRECTORY, &count, &geotag_data) )
+          {
+            parasite = gimp_parasite_new ("Gimp_GeoTIFF_KeyDirectory",
+                                          GIMP_PARASITE_PERSISTENT,
+                                          (TIFFDataWidth (TIFF_SHORT) * count),
+                                          geotag_data);
+            gimp_image_attach_parasite (*image, parasite);
+            gimp_parasite_free (parasite);
+          }
+
+        if (TIFFGetField (tif, GEOTIFF_DOUBLEPARAMS, &count, &geotag_data))
+          {
+            parasite = gimp_parasite_new ("Gimp_GeoTIFF_DoubleParams",
+                                          GIMP_PARASITE_PERSISTENT,
+                                          (TIFFDataWidth (TIFF_DOUBLE) * count),
+                                          geotag_data);
+            gimp_image_attach_parasite (*image, parasite);
+            gimp_parasite_free (parasite);
+          }
+
+        if (TIFFGetField (tif, GEOTIFF_ASCIIPARAMS, &count, &geotag_data))
+          {
+            parasite = gimp_parasite_new ("Gimp_GeoTIFF_Asciiparams",
+                                          GIMP_PARASITE_PERSISTENT,
+                                          (TIFFDataWidth (TIFF_ASCII) * count),
+                                          geotag_data);
+            gimp_image_attach_parasite (*image, parasite);
+            gimp_parasite_free (parasite);
+          }
+      }
+
       /* any resolution info in the file? */
       {
         gfloat   xres = 72.0;

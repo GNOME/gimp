@@ -320,10 +320,12 @@ save_layer (TIFF        *tif,
   gint              offset_x, offset_y;
   gint              config_compression;
   gboolean          config_save_transp_pixels;
+  gboolean          config_save_geotiff_tags;
 
   g_object_get (config,
                 "compression",             &config_compression,
                 "save-transparent-pixels", &config_save_transp_pixels,
+                "save-geotiff",            &config_save_geotiff_tags,
                 NULL);
 
   compression = gimp_compression_to_tiff_compression (config_compression);
@@ -769,6 +771,72 @@ save_layer (TIFF        *tif,
       if ((row % 32) == 0)
         gimp_progress_update (progress_base + progress_fraction
                               * (gdouble) row / (gdouble) rows);
+    }
+
+  /* Save GeoTIFF tags to file, if available */
+  if (config_save_geotiff_tags)
+    {
+      GimpParasite *parasite = NULL;
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelPixelScale");
+
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_MODELPIXELSCALE,
+                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelTiePoint");
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_MODELTIEPOINT,
+                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelTransformation");
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_MODELTRANSFORMATION,
+                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_KeyDirectory");
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_KEYDIRECTORY,
+                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_SHORT)),
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_DoubleParams");
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_DOUBLEPARAMS,
+                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_Asciiparams");
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_ASCIIPARAMS,
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
     }
 
   TIFFWriteDirectory (tif);
@@ -1357,6 +1425,10 @@ save_dialog (GimpImage     *image,
   button = gimp_prop_check_button_new (config, "save-thumbnail",
                                        _("Save thumbnail"));
   gtk_grid_attach (GTK_GRID (grid), button, 0, row++, 2, 1);
+
+  button = gimp_prop_check_button_new (config, "save-geotiff",
+                                       _("Save GeoTIFF data"));
+  gtk_grid_attach (GTK_GRID (grid), button, 0 ,row++, 2, 1);
 
 #ifdef TIFFTAG_ICCPROFILE
   button = gimp_prop_check_button_new (config, "save-color-profile",

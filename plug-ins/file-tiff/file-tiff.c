@@ -258,6 +258,12 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                  "Save color profile",
                                  gimp_export_color_profile (),
                                  G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-geotiff",
+                                 "Save GeoTIFF data",
+                                 "Save GeoTIFF data",
+                                 TRUE,
+                                 G_PARAM_READWRITE);
     }
 
   return procedure;

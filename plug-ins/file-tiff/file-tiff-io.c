@@ -46,6 +46,7 @@ typedef struct
   gsize          position;
 } TiffIO;
 
+static TIFFExtendProc parent_extender;
 
 static void      tiff_io_warning       (const gchar *module,
                                         const gchar *fmt,
@@ -64,6 +65,23 @@ static toff_t    tiff_io_seek          (thandle_t    handle,
                                         gint         whence);
 static gint      tiff_io_close         (thandle_t    handle);
 static toff_t    tiff_io_get_file_size (thandle_t    handle);
+static void      register_geotags      (TIFF        *tif);
+
+static void
+register_geotags (TIFF *tif)
+{
+  static gboolean geotifftags_registered = FALSE;
+
+  if (geotifftags_registered)
+    return;
+
+  geotifftags_registered = TRUE;
+
+  TIFFMergeFieldInfo (tif, geotifftags_fieldinfo, (sizeof (geotifftags_fieldinfo) / sizeof (geotifftags_fieldinfo[0])));
+
+  if (parent_extender)
+    (*parent_extender) (tif);
+}
 
 
 static TiffIO tiff_io = { 0, };
@@ -76,6 +94,8 @@ tiff_open (GFile        *file,
 {
   TIFFSetWarningHandler ((TIFFErrorHandler) tiff_io_warning);
   TIFFSetErrorHandler ((TIFFErrorHandler) tiff_io_error);
+
+  parent_extender = TIFFSetTagExtender (register_geotags);
 
   tiff_io.file = file;
 

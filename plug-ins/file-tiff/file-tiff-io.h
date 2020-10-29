@@ -22,6 +22,24 @@
 #ifndef __FILE_TIFF_IO_H__
 #define __FILE_TIFF_IO_H__
 
+/* Adding support for GeoTIFF Tags */
+
+#define GEOTIFF_MODELPIXELSCALE      33550
+#define GEOTIFF_MODELTIEPOINT        33922
+#define GEOTIFF_MODELTRANSFORMATION  34264
+#define GEOTIFF_KEYDIRECTORY         34735
+#define GEOTIFF_DOUBLEPARAMS         34736
+#define GEOTIFF_ASCIIPARAMS          34737
+
+
+static const TIFFFieldInfo geotifftags_fieldinfo[] = {
+  { GEOTIFF_MODELPIXELSCALE,      -1, -1, TIFF_DOUBLE, FIELD_CUSTOM, TRUE, TRUE,  "GeoModelPixelScale" },
+  { GEOTIFF_MODELTIEPOINT,        -1, -1, TIFF_DOUBLE, FIELD_CUSTOM, TRUE, TRUE,  "GeoTiePoints" },
+  { GEOTIFF_MODELTRANSFORMATION,  -1, -1, TIFF_DOUBLE, FIELD_CUSTOM, TRUE, TRUE,  "GeoModelTransformation" },
+  { GEOTIFF_KEYDIRECTORY,         -1, -1, TIFF_SHORT,  FIELD_CUSTOM, TRUE, TRUE,  "GeoKeyDirectory" },
+  { GEOTIFF_DOUBLEPARAMS,         -1, -1, TIFF_DOUBLE, FIELD_CUSTOM, TRUE, TRUE,  "GeoDoubleParams" },
+  { GEOTIFF_ASCIIPARAMS,          -1, -1, TIFF_ASCII,  FIELD_CUSTOM, TRUE, FALSE, "GeoAsciiParams" }
+};
 
 TIFF * tiff_open (GFile        *file,
                   const gchar  *mode,
