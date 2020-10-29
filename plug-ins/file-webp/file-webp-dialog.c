@@ -35,7 +35,7 @@
 static void
 save_dialog_toggle_scale (GObject          *config,
                           const GParamSpec *pspec,
-                          GtkAdjustment    *adjustment)
+                          GtkWidget        *scale)
 {
   gboolean lossless;
 
@@ -43,7 +43,7 @@ save_dialog_toggle_scale (GObject          *config,
                 "lossless", &lossless,
                 NULL);
 
-  gimp_scale_entry_set_sensitive (adjustment, ! lossless);
+  gtk_widget_set_sensitive (scale, ! lossless);
 }
 
 static void
@@ -86,8 +86,8 @@ save_dialog (GimpImage     *image,
   GtkWidget     *toggle;
   GtkListStore  *store;
   GtkWidget     *combo;
-  GtkAdjustment *quality_scale;
-  GtkAdjustment *alpha_quality_scale;
+  GtkWidget     *quality_scale;
+  GtkWidget     *alpha_quality_scale;
   gint32         nlayers;
   gboolean       animation_supported = FALSE;
   gboolean       run;
@@ -122,17 +122,19 @@ save_dialog (GimpImage     *image,
 
   /* Create the slider for image quality */
   quality_scale = gimp_prop_scale_entry_new (config, "quality",
-                                             GTK_GRID (grid), 0, row++,
                                              _("Image _quality:"),
                                              1.0, 10.0, 0,
                                              FALSE, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), quality_scale, 0, row++, 3, 1);
+  gtk_widget_show (quality_scale);
 
   /* Create the slider for alpha channel quality */
   alpha_quality_scale = gimp_prop_scale_entry_new (config, "alpha-quality",
-                                                   GTK_GRID (grid), 0, row++,
                                                    _("Alpha q_uality:"),
                                                    1.0, 10.0, 0,
                                                    FALSE, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), alpha_quality_scale, 0, row++, 3, 1);
+  gtk_widget_show (alpha_quality_scale);
 
   /* Enable and disable the sliders when the lossless option is selected */
   g_signal_connect (config, "notify::lossless",

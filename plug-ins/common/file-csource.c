@@ -959,6 +959,7 @@ save_dialog (GimpProcedure *procedure,
   GtkWidget *grid;
   GtkWidget *entry;
   GtkWidget *toggle;
+  GtkWidget *scale;
   gboolean   run;
 
   dialog = gimp_procedure_dialog_new (procedure,
@@ -1034,17 +1035,11 @@ save_dialog (GimpProcedure *procedure,
 
   /* Max Alpha Value
    */
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  gimp_prop_scale_entry_new (config, "opacity",
-                             GTK_GRID (grid), 0, 0,
-                             _("Op_acity:"),
-                             1, 10, 1,
-                             FALSE, 0, 0);
-
+  scale = gimp_prop_scale_entry_new (config, "opacity",
+                                     _("Op_acity:"), 1, 10, 1,
+                                     FALSE, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 4);
+  gtk_widget_show (scale);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));

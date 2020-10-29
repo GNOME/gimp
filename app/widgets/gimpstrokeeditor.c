@@ -106,6 +106,7 @@ gimp_stroke_editor_constructed (GObject *object)
   GimpEnumStore     *store;
   GEnumClass        *enum_class;
   GEnumValue        *value;
+  GtkWidget         *scale;
   GtkWidget         *box;
   GtkWidget         *size;
   GtkWidget         *label;
@@ -164,11 +165,13 @@ gimp_stroke_editor_constructed (GObject *object)
                             _("_Join style:"), 0.0, 0.5,
                             box, 2);
 
-  gimp_prop_scale_entry_new (G_OBJECT (options), "miter-limit",
-                             GTK_GRID (grid), 0, row++,
-                             _("_Miter limit:"),
-                             1.0, 1.0, 1,
-                             FALSE, 0.0, 0.0);
+  scale = gimp_prop_scale_entry_new (G_OBJECT (options), "miter-limit",
+                                     NULL, 1.0, 1.0, 1,
+                                     FALSE, 0.0, 0.0);
+  gtk_widget_hide (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("_Miter limit:"),
+                            0.0, 0.5, scale, 2);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);

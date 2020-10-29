@@ -889,26 +889,19 @@ save_dialog (GimpProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
-  GtkWidget *grid;
+  GtkWidget *scale;
   gboolean   run;
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as XPM"));
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  scale = gimp_prop_scale_entry_new (config, "threshold",
+                                     NULL, 1, 8, 0,
+                                     FALSE, 0, 0);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      grid, TRUE, TRUE, 0);
-  gtk_widget_show (grid);
-
-  gimp_prop_scale_entry_new (config, "threshold",
-                             GTK_GRID (grid), 0, 0,
-                             _("_Alpha threshold:"),
-                             1, 8, 0,
-                             FALSE, 0, 0);
-
+                      scale, TRUE, TRUE, 6);
+  gtk_widget_show (scale);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));

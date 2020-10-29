@@ -385,6 +385,7 @@ despeckle_dialog (GimpProcedure *procedure,
   GtkWidget *grid;
   GtkWidget *frame;
   GtkWidget *button;
+  GtkWidget *scale;
   gint       filter_type;
   gboolean   run;
 
@@ -456,31 +457,34 @@ despeckle_dialog (GimpProcedure *procedure,
    * Box size (diameter) control...
    */
 
-  gimp_prop_scale_entry_new (config, "radius",
-                             GTK_GRID (grid), 0, 0,
-                             _("_Radius:"),
-                             1, 5, 0,
-                             FALSE, 0, 0);
+  scale = gimp_prop_scale_entry_new (config, "radius",
+                                     _("_Radius:"),
+                                     1, 5, 0,
+                                     FALSE, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 1, 1);
+  gtk_widget_show (scale);
 
   /*
    * Black level control...
    */
 
-  gimp_prop_scale_entry_new (config, "black",
-                             GTK_GRID (grid), 0, 1,
-                             _("_Black level:"),
-                             1, 8, 0,
-                             FALSE, 0, 0);
+  scale = gimp_prop_scale_entry_new (config, "black",
+                                     _("_Black level:"),
+                                     1, 8, 0,
+                                     FALSE, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 1, 1);
+  gtk_widget_show (scale);
 
   /*
    * White level control...
    */
 
-  gimp_prop_scale_entry_new (config, "white",
-                             GTK_GRID (grid), 0, 2,
-                             _("_White level:"),
-                             1, 8, 0,
-                             FALSE, 0, 0);
+  scale = gimp_prop_scale_entry_new (config, "white",
+                                     _("_White level:"),
+                                     1, 8, 0,
+                                     FALSE, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 1, 1);
+  gtk_widget_show (scale);
 
   g_signal_connect_swapped (config, "notify",
                             G_CALLBACK (gimp_preview_invalidate),

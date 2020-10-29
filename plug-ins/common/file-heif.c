@@ -2480,6 +2480,7 @@ save_dialog (GimpProcedure *procedure,
   GtkWidget *main_vbox;
   GtkWidget *grid;
   GtkWidget *button;
+  GtkWidget *scale;
   GtkWidget *frame;
 #if LIBHEIF_HAVE_VERSION(1,8,0)
   GtkWidget *grid2;
@@ -2519,11 +2520,14 @@ save_dialog (GimpProcedure *procedure,
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
-  gimp_prop_scale_entry_new (config, "quality",
-                             GTK_GRID (grid), 0, 1,
-                             _("_Quality"),
-                             1, 10, 0,
-                             FALSE, 0, 0);
+  scale = gimp_prop_scale_entry_new (config, "quality",
+                                     NULL,
+                                     1, 10, 0,
+                                     FALSE, 0, 0);
+  gtk_widget_hide (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("_Quality"),
+                            0.0, 0.5, scale, 2);
 
 #if LIBHEIF_HAVE_VERSION(1,9,0)
   store = gimp_int_store_new (_("RGB"), HEIFPLUGIN_EXPORT_FORMAT_RGB,
