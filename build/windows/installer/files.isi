@@ -22,7 +22,7 @@ Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\{#DIR_VER}\extensions\*.debug"; DestDir: "{
 
 Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\{#DIR_VER}\plug-ins\file-ps\file-ps.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\file-ps"; Components: gs and gimp{#PLATFORM}; Flags: restartreplace ignoreversion uninsrestartdelete
 
-Source: "{#GIMP_DIR}\{#DIR}\lib\girepository-1.0\*.*"; DestDir: "{app}\lib\girepository-1.0"; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\lib\girepository-1.0\*.*"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\lib\girepository-1.0\*.*"; DestDir: "{app}\lib\girepository-1.0"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\*.dll"; DestDir: "{app}\bin"; Excludes: "\bin\libgs*.dll"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
