@@ -50,8 +50,6 @@ static gboolean arithc_supported = TRUE;
 static gboolean arithc_supported = FALSE;
 #endif
 
-#define SCALE_WIDTH         125
-
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
 #define DEFAULT_IJG_QUALITY      90.0
 #define DEFAULT_SMOOTHING        0.0
@@ -100,8 +98,8 @@ typedef struct
   GtkAdjustment *scale_data;            /*for restart markers*/
   gulong         handler_id_restart;
 
-  GtkAdjustment *quality;               /*quality slidebar*/
-  GtkAdjustment *smoothing;             /*smoothing slidebar*/
+  GtkWidget     *quality;               /*quality slidebar*/
+  GtkWidget     *smoothing;             /*smoothing slidebar*/
   GtkWidget     *optimize;              /*optimize toggle*/
   GtkWidget     *arithmetic_coding;     /*arithmetic coding toggle*/
   GtkWidget     *progressive;           /*progressive toggle*/
@@ -119,18 +117,20 @@ typedef struct
 
 static void  make_preview           (void);
 
-static void  save_restart_update    (GtkAdjustment *adjustment,
-                                     GtkWidget     *toggle);
-static void  subsampling_changed    (GtkWidget     *combo,
-                                     GtkAdjustment *entry);
-static void  quality_changed        (GtkAdjustment *scale_entry,
-                                     GtkWidget     *toggle);
-static void  subsampling_changed2   (GtkWidget     *combo,
-                                     GtkWidget     *toggle);
-static void  use_orig_qual_changed  (GtkWidget     *toggle,
-                                     GtkAdjustment *scale_entry);
-static void  use_orig_qual_changed2 (GtkWidget     *toggle,
-                                     GtkWidget     *combo);
+static void  scale_entry_update     (GimpScaleEntry *entry,
+                                     gdouble        *value);
+static void  save_restart_update    (GtkAdjustment  *adjustment,
+                                     GtkWidget      *toggle);
+static void  subsampling_changed    (GtkWidget      *combo,
+                                     GtkWidget      *entry);
+static void  quality_changed        (GimpScaleEntry *scale_entry,
+                                     GtkWidget      *toggle);
+static void  subsampling_changed2   (GtkWidget      *combo,
+                                     GtkWidget      *toggle);
+static void  use_orig_qual_changed  (GtkWidget      *toggle,
+                                     GimpScaleEntry *scale_entry);
+static void  use_orig_qual_changed2 (GtkWidget      *toggle,
+                                     GtkWidget      *combo);
 
 
 static GtkWidget *restart_markers_scale = NULL;
@@ -815,9 +815,7 @@ save_dialog (GimpDrawable *drawable)
   GtkWidget     *dialog;
   GtkWidget     *vbox;
   GtkWidget     *vbox2;
-  GtkAdjustment *entry;
   GtkWidget     *grid;
-  GtkWidget     *grid2;
   GtkWidget     *griddefaults;
   GtkWidget     *expander;
   GtkWidget     *frame;
@@ -853,25 +851,17 @@ save_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox2), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  pg.quality = gimp_scale_entry_new2 (_("_Quality:"), jsvals.quality, 0.0, 100.0, 0);
+  gimp_help_set_help_data (pg.quality, _("JPEG quality parameter"), "file-jpeg-save-quality");
 
-  pg.quality = entry = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                                             _("_Quality:"),
-                                             SCALE_WIDTH, 0, jsvals.quality,
-                                             0.0, 100.0, 1.0, 10.0, 0,
-                                             TRUE, 0.0, 0.0,
-                                             _("JPEG quality parameter"),
-                                             "file-jpeg-save-quality");
-
-  g_signal_connect (entry, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  g_signal_connect (pg.quality, "value-changed",
+                    G_CALLBACK (scale_entry_update),
                     &jsvals.quality);
-  g_signal_connect (entry, "value-changed",
+  g_signal_connect (pg.quality, "value-changed",
                     G_CALLBACK (make_preview),
                     NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), pg.quality, FALSE, FALSE, 0);
+  gtk_widget_show (pg.quality);
 
   /* custom quantization tables - now used also for original quality */
   pg.use_orig_quality = toggle =
@@ -1060,24 +1050,16 @@ save_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  grid2 = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid2), 6);
-  gtk_grid_attach (GTK_GRID (grid), grid2, 2, 0, 4, 1);
-  gtk_widget_show (grid2);
-
-  pg.smoothing = entry = gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
-                                               _("S_moothing:"),
-                                               100, 0, jsvals.smoothing,
-                                               0.0, 1.0, 0.01, 0.1, 2,
-                                               TRUE, 0.0, 0.0,
-                                               NULL,
-                                               "file-jpeg-save-smoothing");
-  g_signal_connect (entry, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  pg.smoothing = gimp_scale_entry_new2 (_("S_moothing:"), jsvals.smoothing, 0.0, 1.0, 2);
+  gimp_help_set_help_data (pg.smoothing, NULL, "file-jpeg-save-smoothing");
+  g_signal_connect (pg.smoothing, "value-changed",
+                    G_CALLBACK (scale_entry_update),
                     &jsvals.smoothing);
-  g_signal_connect (entry, "value-changed",
+  g_signal_connect (pg.smoothing, "value-changed",
                     G_CALLBACK (make_preview),
                     NULL);
+  gtk_grid_attach (GTK_GRID (grid), pg.smoothing, 2, 0, 4, 1);
+  gtk_widget_show (pg.smoothing);
 
   restart_markers_label = gtk_label_new (_("Interval (MCU rows):"));
   gtk_label_set_xalign (GTK_LABEL (restart_markers_label), 1.0);
@@ -1201,7 +1183,7 @@ save_dialog (GimpDrawable *drawable)
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   jsvals.subsmp,
                                   G_CALLBACK (subsampling_changed),
-                                  entry, NULL);
+                                  pg.smoothing, NULL);
       g_signal_connect (pg.subsmp, "changed",
                         G_CALLBACK (subsampling_changed2),
                         pg.use_orig_quality);
@@ -1439,12 +1421,12 @@ load_gui_defaults (JpegSaveGui *pg)
   gtk_adjustment_set_value (restart_markers, jsvals.restart);
   g_signal_handler_unblock (pg->use_restart_markers, pg->handler_id_restart);
 
-  gtk_adjustment_set_value (pg->smoothing, jsvals.smoothing);
+  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (pg->smoothing), jsvals.smoothing);
 
   /* Don't override quality and subsampling setting if we already set it from original */
   if (!jsvals.use_orig_quality)
     {
-      gtk_adjustment_set_value (pg->quality, jsvals.quality);
+      gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (pg->quality), jsvals.quality);
 
       if (gimp_drawable_is_rgb (drawable_global))
         {
@@ -1455,6 +1437,13 @@ load_gui_defaults (JpegSaveGui *pg)
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (pg->dct),
                                  jsvals.dct);
+}
+
+static void
+scale_entry_update (GimpScaleEntry *entry,
+                    gdouble       *value)
+{
+  *value = gimp_scale_entry_get_value (entry);
 }
 
 static void
@@ -1473,8 +1462,8 @@ save_restart_update (GtkAdjustment *adjustment,
 }
 
 static void
-subsampling_changed (GtkWidget     *combo,
-                     GtkAdjustment *entry)
+subsampling_changed (GtkWidget *combo,
+                     GtkWidget *entry)
 {
   gint value;
 
@@ -1483,16 +1472,16 @@ subsampling_changed (GtkWidget     *combo,
   jsvals.subsmp = value;
 
   /*  smoothing is not supported with nonstandard sampling ratios  */
-  gimp_scale_entry_set_sensitive ((gpointer) entry,
-                                  jsvals.subsmp != JPEG_SUBSAMPLING_2x1_1x1_1x1 &&
-                                  jsvals.subsmp != JPEG_SUBSAMPLING_1x2_1x1_1x1);
+  gtk_widget_set_sensitive (entry,
+                            jsvals.subsmp != JPEG_SUBSAMPLING_2x1_1x1_1x1 &&
+                            jsvals.subsmp != JPEG_SUBSAMPLING_1x2_1x1_1x1);
 
   make_preview ();
 }
 
 static void
-quality_changed (GtkAdjustment *scale_entry,
-                 GtkWidget     *toggle)
+quality_changed (GimpScaleEntry *scale_entry,
+                 GtkWidget      *toggle)
 {
   if (jsvals.use_orig_quality)
     {
@@ -1511,13 +1500,13 @@ subsampling_changed2 (GtkWidget *combo,
 }
 
 static void
-use_orig_qual_changed (GtkWidget     *toggle,
-                       GtkAdjustment *scale_entry)
+use_orig_qual_changed (GtkWidget      *toggle,
+                       GimpScaleEntry *scale_entry)
 {
   if (jsvals.use_orig_quality && orig_quality > 0)
     {
       g_signal_handlers_block_by_func (scale_entry, quality_changed, toggle);
-      gtk_adjustment_set_value (scale_entry, orig_quality);
+      gimp_scale_entry_set_value (scale_entry, orig_quality);
       g_signal_handlers_unblock_by_func (scale_entry, quality_changed, toggle);
     }
 }

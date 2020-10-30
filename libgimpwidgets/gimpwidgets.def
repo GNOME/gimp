@@ -374,7 +374,7 @@ EXPORTS
 	gimp_scale_entry_set_increments
 	gimp_scale_entry_set_logarithmic
 	gimp_scale_entry_set_range
-	gimp_scale_entry_set_sensitive
+	gimp_scale_entry_set_value
 	gimp_scroll_adjustment_values
 	gimp_scrolled_preview_freeze
 	gimp_scrolled_preview_get_adjustments

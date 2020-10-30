@@ -70,6 +70,8 @@ GtkWidget     * gimp_scale_entry_new2            (const gchar *text,
                                                   gdouble      upper,
                                                   guint        digits);
 
+void            gimp_scale_entry_set_value       (GimpScaleEntry *entry,
+                                                  gdouble         value);
 gdouble         gimp_scale_entry_get_value       (GimpScaleEntry *entry);
 
 GtkWidget     * gimp_scale_entry_get_label       (GimpScaleEntry *entry);
@@ -169,11 +171,6 @@ GtkAdjustment * gimp_color_scale_entry_new       (GtkGrid     *grid,
                                                   guint        digits,
                                                   const gchar *tooltip,
                                                   const gchar *help_id);
-
-void            gimp_scale_entry_set_sensitive   (GtkAdjustment *adjustment,
-                                                  gboolean       sensitive);
-
-
 
 
 G_END_DECLS

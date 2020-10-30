@@ -665,6 +665,24 @@ gimp_scale_entry_new2 (const gchar *text,
 }
 
 /**
+ * gimp_scale_entry_set_value:
+ * @entry: The #GtkScaleEntry.
+ * @value: A new value.
+ *
+ * This function sets the value shown by @entry.
+ **/
+void
+gimp_scale_entry_set_value (GimpScaleEntry *entry,
+                            gdouble         value)
+{
+  g_return_if_fail (GIMP_IS_SCALE_ENTRY (entry));
+
+  g_object_set (entry,
+                "value", value,
+                NULL);
+}
+
+/**
  * gimp_scale_entry_get_value:
  * @entry: The #GtkScaleEntry.
  *
@@ -1051,34 +1069,4 @@ gimp_color_scale_entry_new (GtkGrid     *grid,
                                         digits,
                                         TRUE, 0.0, 0.0,
                                         tooltip, help_id);
-}
-
-/**
- * gimp_scale_entry_set_sensitive:
- * @adjustment: a #GtkAdjustment returned by gimp_scale_entry_new()
- * @sensitive:  a boolean value with the same semantics as the @sensitive
- *              parameter of gtk_widget_set_sensitive()
- *
- * Sets the sensitivity of the scale_entry's #GtkLabel, #GtkHScale and
- * #GtkSpinButton.
- **/
-void
-gimp_scale_entry_set_sensitive (GtkAdjustment *adjustment,
-                                gboolean       sensitive)
-{
-  GtkWidget *widget;
-
-  g_return_if_fail (GTK_IS_ADJUSTMENT (adjustment));
-
-  widget = GIMP_SCALE_ENTRY_LABEL (adjustment);
-  if (widget)
-    gtk_widget_set_sensitive (widget, sensitive);
-
-  widget = GIMP_SCALE_ENTRY_SCALE (adjustment);
-  if (widget)
-    gtk_widget_set_sensitive (widget, sensitive);
-
-  widget = GIMP_SCALE_ENTRY_SPINBUTTON (adjustment);
-  if (widget)
-    gtk_widget_set_sensitive (widget, sensitive);
 }

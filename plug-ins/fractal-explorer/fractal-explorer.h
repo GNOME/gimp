@@ -7,7 +7,6 @@
  *********************************************************************/
 
 #define PREVIEW_SIZE 256
-#define SCALE_WIDTH  200
 #define ENTRY_WIDTH  60
 #define MAX_LOAD_LINE 256
 #define GR_WIDTH 325
@@ -101,20 +100,20 @@ typedef struct _DialogElements DialogElements;
 struct _DialogElements
 {
   GtkWidget     *type[NUM_TYPES];
-  GtkAdjustment *xmin;
-  GtkAdjustment *xmax;
-  GtkAdjustment *ymin;
-  GtkAdjustment *ymax;
-  GtkAdjustment *iter;
-  GtkAdjustment *cx;
-  GtkAdjustment *cy;
+  GtkWidget     *xmin;
+  GtkWidget     *xmax;
+  GtkWidget     *ymin;
+  GtkWidget     *ymax;
+  GtkWidget     *iter;
+  GtkWidget     *cx;
+  GtkWidget     *cy;
 
-  GtkAdjustment *ncol;
+  GtkWidget     *ncol;
   GtkWidget     *useloglog;
 
-  GtkAdjustment *red;
-  GtkAdjustment *green;
-  GtkAdjustment *blue;
+  GtkWidget     *red;
+  GtkWidget     *green;
+  GtkWidget     *blue;
 
   GtkWidget     *redmode[3];
   GtkWidget     *redinvert;
