@@ -181,6 +181,7 @@ EXPORTS
 	gimp_enum_store_new_with_values
 	gimp_enum_store_new_with_values_valist
 	gimp_enum_store_set_icon_prefix
+	gimp_file_entry_get_entry
 	gimp_file_entry_get_filename
 	gimp_file_entry_get_type
 	gimp_file_entry_new
@@ -362,9 +363,17 @@ EXPORTS
 	gimp_ruler_set_position
 	gimp_ruler_set_range
 	gimp_ruler_set_unit
+	gimp_scale_entry_get_label
 	gimp_scale_entry_get_logarithmic
+	gimp_scale_entry_get_scale
+	gimp_scale_entry_get_spin_button
+	gimp_scale_entry_get_type
+	gimp_scale_entry_get_value
 	gimp_scale_entry_new
+	gimp_scale_entry_new2
+	gimp_scale_entry_set_increments
 	gimp_scale_entry_set_logarithmic
+	gimp_scale_entry_set_range
 	gimp_scale_entry_set_sensitive
 	gimp_scroll_adjustment_values
 	gimp_scrolled_preview_freeze
