@@ -72,6 +72,8 @@ GtkWidget     * gimp_scale_entry_new2            (const gchar *text,
                                                   gdouble      page_increment,
                                                   guint        digits);
 
+gdouble         gimp_scale_entry_get_value       (GimpScaleEntry *entry);
+
 GtkWidget     * gimp_scale_entry_get_label       (GimpScaleEntry *entry);
 GtkWidget     * gimp_scale_entry_get_spin_button (GimpScaleEntry *entry);
 GtkWidget     * gimp_scale_entry_get_scale       (GimpScaleEntry *entry);
@@ -81,6 +83,9 @@ void            gimp_scale_entry_set_range       (GimpScaleEntry *entry,
                                                   gdouble         upper,
                                                   gboolean        limit_scale);
 
+void            gimp_scale_entry_set_logarithmic (GimpScaleEntry *entry,
+                                                  gboolean        logarithmic);
+gboolean        gimp_scale_entry_get_logarithmic (GimpScaleEntry *entry);
 
 /**
  * GIMP_SCALE_ENTRY_LABEL:
@@ -166,9 +171,6 @@ GtkAdjustment * gimp_color_scale_entry_new       (GtkGrid     *grid,
 void            gimp_scale_entry_set_sensitive   (GtkAdjustment *adjustment,
                                                   gboolean       sensitive);
 
-void            gimp_scale_entry_set_logarithmic (GtkAdjustment *adjustment,
-                                                  gboolean       logarithmic);
-gboolean        gimp_scale_entry_get_logarithmic (GtkAdjustment *adjustment);
 
 
 

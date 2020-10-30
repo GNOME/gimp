@@ -80,9 +80,9 @@ struct _ImportDialog
   GtkWidget     *selection_only_toggle;
 
   GtkWidget     *entry;
-  GtkAdjustment *num_colors;
-  GtkAdjustment *columns;
-  GtkAdjustment *threshold;
+  GtkWidget     *num_colors;
+  GtkWidget     *columns;
+  GtkWidget     *threshold;
 
   GtkWidget     *preview;
   GtkWidget     *no_colors_label;
@@ -116,7 +116,7 @@ static void   palette_import_image_callback       (GtkWidget      *widget,
                                                    ImportDialog   *private);
 static void   palette_import_file_callback        (GtkWidget      *widget,
                                                    ImportDialog   *private);
-static void   palette_import_columns_changed      (GtkAdjustment  *adjustment,
+static void   palette_import_columns_changed      (GimpScaleEntry *columns,
                                                    ImportDialog   *private);
 static void   palette_import_image_add            (GimpContainer  *container,
                                                    GimpImage      *image,
@@ -312,12 +312,12 @@ palette_import_dialog_new (GimpContext *context)
                             private->entry, 2);
 
   /*  The # of colors  */
-  private->num_colors = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                                              _("N_umber of colors:"), -1, 5,
-                                              256, 2, 10000, 1, 10, 0,
-                                              TRUE, 0.0, 0.0,
-                                              NULL, NULL);
-  gimp_scale_entry_set_logarithmic (private->num_colors, TRUE);
+  private->num_colors = gimp_scale_entry_new2 (_("N_umber of colors:"),
+                                               256, 2, 10000, 1, 10, 0);
+  gimp_grid_attach_aligned (GTK_GRID (grid), -1, 1,
+                            NULL, 0.0, 0.5,
+                            private->num_colors, 3);
+  gimp_scale_entry_set_logarithmic (GIMP_SCALE_ENTRY (private->num_colors), TRUE);
 
   g_signal_connect_swapped (private->num_colors,
                             "value-changed",
@@ -325,22 +325,22 @@ palette_import_dialog_new (GimpContext *context)
                             private);
 
   /*  The columns  */
-  private->columns = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
-                                           _("C_olumns:"), -1, 5,
-                                           16, 0, 64, 1, 8, 0,
-                                           TRUE, 0.0, 0.0,
-                                           NULL, NULL);
+  private->columns = gimp_scale_entry_new2 (_("C_olumns:"),
+                                           16, 0, 64, 1, 8, 0);
+  gimp_grid_attach_aligned (GTK_GRID (grid), -1, 2,
+                            NULL, 0.0, 0.5,
+                            private->columns, 3);
 
   g_signal_connect (private->columns, "value-changed",
                     G_CALLBACK (palette_import_columns_changed),
                     private);
 
   /*  The interval  */
-  private->threshold = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
-                                             _("I_nterval:"), -1, 5,
-                                             1, 1, 128, 1, 8, 0,
-                                             TRUE, 0.0, 0.0,
-                                             NULL, NULL);
+  private->threshold = gimp_scale_entry_new2 (_("I_nterval:"),
+                                              1, 1, 128, 1, 8, 0);
+  gimp_grid_attach_aligned (GTK_GRID (grid), -1, 3,
+                            NULL, 0.0, 0.5,
+                            private->threshold, 3);
 
   g_signal_connect_swapped (private->threshold, "value-changed",
                             G_CALLBACK (palette_import_make_palette),
@@ -516,8 +516,8 @@ palette_import_image_changed (GimpContext  *context,
 
       gtk_widget_set_sensitive (private->sample_merged_toggle, sensitive);
       gtk_widget_set_sensitive (private->selection_only_toggle, sensitive);
-      gimp_scale_entry_set_sensitive (private->threshold, sensitive);
-      gimp_scale_entry_set_sensitive (private->num_colors, sensitive);
+      gtk_widget_set_sensitive (private->threshold, sensitive);
+      gtk_widget_set_sensitive (private->num_colors, sensitive);
     }
 
   if (private->image)
@@ -627,9 +627,9 @@ palette_import_set_sensitive (ImportDialog *private)
   gtk_widget_set_sensitive (private->selection_only_toggle, image);
   gtk_widget_set_sensitive (private->file_chooser,          file);
 
-  gimp_scale_entry_set_sensitive (private->num_colors, ! file);
-  gimp_scale_entry_set_sensitive (private->columns,    ! file);
-  gimp_scale_entry_set_sensitive (private->threshold,  image);
+  gtk_widget_set_sensitive (private->num_colors, ! file);
+  gtk_widget_set_sensitive (private->columns,    ! file);
+  gtk_widget_set_sensitive (private->threshold,  image);
 }
 
 static void
@@ -711,12 +711,12 @@ palette_import_file_callback (GtkWidget    *widget,
 }
 
 static void
-palette_import_columns_changed (GtkAdjustment *adj,
-                                ImportDialog  *private)
+palette_import_columns_changed (GimpScaleEntry *columns,
+                                ImportDialog   *private)
 {
   if (private->palette)
     gimp_palette_set_columns (private->palette,
-                              ROUND (gtk_adjustment_get_value (adj)));
+                              ROUND (gimp_scale_entry_get_value (columns)));
 }
 
 
@@ -763,9 +763,9 @@ palette_import_make_palette (ImportDialog *private)
   if (! palette_name || ! strlen (palette_name))
     palette_name = _("Untitled");
 
-  n_colors  = ROUND (gtk_adjustment_get_value (private->num_colors));
-  n_columns = ROUND (gtk_adjustment_get_value (private->columns));
-  threshold = ROUND (gtk_adjustment_get_value (private->threshold));
+  n_colors  = ROUND (gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (private->num_colors)));
+  n_columns = ROUND (gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (private->columns)));
+  threshold = ROUND (gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (private->threshold)));
 
   switch (private->import_type)
     {
