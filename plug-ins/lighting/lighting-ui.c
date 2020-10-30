@@ -62,7 +62,7 @@ static void create_main_notebook      (GtkWidget       *container);
 static void toggle_update             (GtkWidget       *widget,
                                        gpointer         data);
 
-static void     distance_update       (GtkAdjustment   *adj,
+static void     distance_update       (GimpScaleEntry       *scale,
                                        gpointer         data);
 
 static gboolean  bumpmap_constrain    (GimpImage       *image,
@@ -116,10 +116,10 @@ toggle_update (GtkWidget *widget,
 
 
 static void
-distance_update (GtkAdjustment *adj,
-                 gpointer   data)
+distance_update (GimpScaleEntry *scale,
+                 gpointer        data)
 {
-  mapvals.viewpoint.z = gtk_adjustment_get_value (adj);
+  mapvals.viewpoint.z = gimp_scale_entry_get_value (scale);
 
   preview_compute ();
   gtk_widget_queue_draw (previewarea);
@@ -301,8 +301,7 @@ create_options_page (void)
   GtkWidget     *frame;
   GtkWidget     *vbox;
   GtkWidget     *toggle;
-  GtkWidget     *grid;
-  GtkAdjustment *adj;
+  GtkWidget     *scale;
 
   page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
@@ -354,20 +353,15 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
                            _("Enable/disable high quality preview"), NULL);
 
-  grid = gtk_grid_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 12);
-  gtk_widget_show (grid);
-
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                              _("Distance:"), 100, 6,
-                              mapvals.viewpoint.z,
-                              0.0, 2.0, 0.01, 0.05,
-                              3, TRUE, 0.0, 0.0,
-                              "Distance of observer from surface",
-                              "plug-in-lighting");
-  g_signal_connect (adj, "value-changed",
+  scale = gimp_scale_entry_new2 (_("Distance:"), mapvals.viewpoint.z, 0.0, 2.0, 3);
+  gimp_help_set_help_data (scale,
+                           "Distance of observer from surface",
+                           "plug-in-lighting");
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (distance_update),
                     NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 12);
+  gtk_widget_show (scale);
 
   gtk_widget_show (page);
 

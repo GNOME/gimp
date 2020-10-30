@@ -44,8 +44,6 @@
 #define PLUG_IN_BINARY "blinds"
 #define PLUG_IN_ROLE   "gimp-blinds"
 
-#define SCALE_WIDTH    150
-
 #define MAX_FANS       100
 
 /* Variables set in dialog box */
@@ -89,6 +87,8 @@ static GimpValueArray * blinds_run              (GimpProcedure        *procedure
                                                  gpointer              run_data);
 
 static gboolean         blinds_dialog           (GimpDrawable         *drawable);
+static void       blinds_scale_entry_update_int (GimpScaleEntry       *entry,
+                                                 gint                 *value);
 
 static void             dialog_update_preview   (GimpDrawable         *drawable,
                                                  GimpPreview          *preview);
@@ -256,17 +256,17 @@ blinds_run (GimpProcedure        *procedure,
 static gboolean
 blinds_dialog (GimpDrawable *drawable)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
-  GtkWidget     *preview;
-  GtkWidget     *hbox;
-  GtkWidget     *frame;
-  GtkWidget     *grid;
-  GtkAdjustment *size_data;
-  GtkWidget     *toggle;
-  GtkWidget     *horizontal;
-  GtkWidget     *vertical;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
+  GtkWidget *hbox;
+  GtkWidget *frame;
+  GtkWidget *grid;
+  GtkWidget *scale;
+  GtkWidget *toggle;
+  GtkWidget *horizontal;
+  GtkWidget *vertical;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -355,29 +355,26 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  size_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                                    _("_Displacement:"), SCALE_WIDTH, 0,
-                                    bvals.angledsp, 1, 90, 1, 15, 0,
-                                    TRUE, 0, 0,
-                                    NULL, NULL);
-  g_signal_connect (size_data, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("_Displacement:"), bvals.angledsp, 1, 90, 0);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (blinds_scale_entry_update_int),
                     &bvals.angledsp);
-  g_signal_connect_swapped (size_data, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 2);
+  gtk_widget_show (scale);
 
-  size_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                                    _("_Number of segments:"), SCALE_WIDTH, 0,
-                                    bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
-                                    TRUE, 0, 0,
-                                    NULL, NULL);
-  g_signal_connect (size_data, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("_Number of segments:"), bvals.numsegs, 1, MAX_FANS, 0);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (blinds_scale_entry_update_int),
                     &bvals.numsegs);
-  g_signal_connect_swapped (size_data, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 2);
+  gtk_widget_show (scale);
 
   gtk_widget_show (dialog);
 
@@ -386,6 +383,13 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static void
+blinds_scale_entry_update_int (GimpScaleEntry *entry,
+                               gint           *value)
+{
+  *value = (gint) gimp_scale_entry_get_value (entry);
 }
 
 static void

@@ -108,8 +108,6 @@ typedef enum
 #define MIN_BLEND_AMOUNT 0
 #define MAX_BLEND_AMOUNT 1.0
 
-#define SCALE_WIDTH 200
-
 #define DRAW_POINT(buffer, bufsize, index)         \
   do                                               \
     {                                              \
@@ -221,7 +219,11 @@ static void     jigsaw             (GimpDrawable *drawable,
 static void     jigsaw_preview     (GimpDrawable *drawable,
                                     GimpPreview  *preview);
 
-static gboolean jigsaw_dialog      (GimpDrawable *drawable);
+static gboolean jigsaw_dialog                    (GimpDrawable        *drawable);
+static void     jigsaw_scale_entry_update_double (GimpScaleEntry      *entry,
+                                                  gdouble             *value);
+static void     jigsaw_scale_entry_update_int    (GimpScaleEntry      *entry,
+                                                  gint                *value);
 
 static void     draw_jigsaw        (guchar    *buffer,
                                     gint       bufsize,
@@ -2460,7 +2462,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   GtkWidget     *rbutton1;
   GtkWidget     *rbutton2;
   GtkWidget     *grid;
-  GtkAdjustment *adj;
+  GtkWidget     *scale;
   gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY);
@@ -2506,35 +2508,33 @@ jigsaw_dialog (GimpDrawable *drawable)
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* xtiles */
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                              _("_Horizontal:"), SCALE_WIDTH, 0,
-                              config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
-                              TRUE, 0, 0,
-                              _("Number of pieces going across"), NULL);
+  scale = gimp_scale_entry_new2 (_("_Horizontal:"), config.x, MIN_XTILES, MAX_XTILES, 0);
+  gimp_help_set_help_data (scale, _("Number of pieces going across"), NULL);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
+  gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
+  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (scale));
   g_object_unref (group);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (jigsaw_scale_entry_update_int),
                     &config.x);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
   /* ytiles */
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                              _("_Vertical:"), SCALE_WIDTH, 0,
-                              config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
-                              TRUE, 0, 0,
-                              _("Number of pieces going down"), NULL);
+  scale = gimp_scale_entry_new2 (_("_Vertical:"), config.y, MIN_YTILES, MAX_YTILES, 0);
+  gimp_help_set_help_data (scale, _("Number of pieces going down"), NULL);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
+  gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
+  gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (jigsaw_scale_entry_update_int),
                     &config.y);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -2550,37 +2550,32 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), grid);
 
   /* number of blending lines */
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                              _("_Bevel width:"), SCALE_WIDTH, 4,
-                              config.blend_lines,
-                              MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
-                              TRUE, 0, 0,
-                              _("Degree of slope of each piece's edge"), NULL);
+  scale = gimp_scale_entry_new2 (_("_Bevel width:"), config.blend_lines, MIN_BLEND_LINES, MAX_BLEND_LINES, 0);
+  gimp_help_set_help_data (scale, _("Degree of slope of each piece's edge"), NULL);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
+  gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
+  gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (jigsaw_scale_entry_update_int),
                     &config.blend_lines);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
   /* blending amount */
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                              _("H_ighlight:"), SCALE_WIDTH, 4,
-                              config.blend_amount,
-                              MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.05, 0.1, 2,
-                              TRUE, 0, 0,
-                              _("The amount of highlighting on the edges "
-                                "of each piece"), NULL);
+  scale = gimp_scale_entry_new2 (_("H_ighlight:"), config.blend_amount, MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 2);
+  gimp_help_set_help_data (scale, _("The amount of highlighting on the edges of each piece"), NULL);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
+  gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
+  gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (jigsaw_scale_entry_update_double),
                     &config.blend_amount);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -2617,4 +2612,18 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static void
+jigsaw_scale_entry_update_double (GimpScaleEntry *entry,
+                                  gdouble        *value)
+{
+  *value = gimp_scale_entry_get_value (entry);
+}
+
+static void
+jigsaw_scale_entry_update_int (GimpScaleEntry *entry,
+                               gint           *value)
+{
+  *value = (gint) gimp_scale_entry_get_value (entry);
 }

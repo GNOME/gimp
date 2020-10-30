@@ -67,7 +67,7 @@ typedef struct
 /* Data to use for the dialog */
 typedef struct
 {
-  GtkAdjustment *advanced_adj[7];
+  GtkWidget     *scales[7];
   GtkTreeModel  *image_list_all;
   GtkTreeModel  *image_list_film;
 } FilmInterface;
@@ -145,6 +145,8 @@ static void         film_font_select_callback (GimpFontSelectButton *button,
                                                gboolean              closing,
                                                gpointer              data);
 
+static void    film_scale_entry_update_double (GimpScaleEntry       *entry,
+                                               gdouble              *value);
 
 G_DEFINE_TYPE (Film, film, GIMP_TYPE_PLUG_IN)
 
@@ -1181,13 +1183,13 @@ create_selection_tab (GtkWidget *notebook,
 static void
 create_advanced_tab (GtkWidget *notebook)
 {
-  GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *grid;
-  GtkWidget     *frame;
-  GtkAdjustment *adj;
-  GtkWidget     *button;
-  gint           row;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *grid;
+  GtkWidget *frame;
+  GtkWidget *scale;
+  GtkWidget *button;
+  gint       row;
 
   frame = gimp_frame_new (_("All Values are Fractions of the Strip Height"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
@@ -1207,88 +1209,74 @@ create_advanced_tab (GtkWidget *notebook)
 
   row = 0;
 
-  filmint.advanced_adj[0] = adj =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                          _("Image _height:"), 0, 0,
-                          filmvals.picture_height,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  filmint.scales[0] = scale =
+    gimp_scale_entry_new2 (_("Image _height:"), filmvals.picture_height, 0.0, 1.0, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.picture_height);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_show (scale);
 
-  filmint.advanced_adj[1] = adj =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                          _("Image spac_ing:"), 0, 0,
-                          filmvals.picture_space,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
-  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 0, 1), 6);
-  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 1, 1), 6);
-  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 2, 1), 6);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  filmint.scales[1] = scale =
+    gimp_scale_entry_new2 (_("Image spac_ing:"), filmvals.picture_space, 0.0, 1.0, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.picture_space);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_scale (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_show (scale);
 
-  filmint.advanced_adj[2] = adj =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                          _("_Hole offset:"), 0, 0,
-                          filmvals.hole_offset,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  filmint.scales[2] = scale =
+    gimp_scale_entry_new2 (_("_Hole offset:"), filmvals.hole_offset, 0.0, 1.0, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.hole_offset);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_show (scale);
 
-  filmint.advanced_adj[3] = adj =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                          _("Ho_le width:"), 0, 0,
-                          filmvals.hole_width,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  filmint.scales[3] = scale =
+    gimp_scale_entry_new2 (_("Ho_le width:"), filmvals.hole_width, 0.0, 1.0, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.hole_width);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_show (scale);
 
-  filmint.advanced_adj[4] = adj =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                          _("Hol_e height:"), 0, 0,
-                          filmvals.hole_height,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  filmint.scales[4] = scale =
+    gimp_scale_entry_new2 (_("Hol_e height:"), filmvals.hole_height, 0.0, 1.0, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.hole_height);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_show (scale);
 
-  filmint.advanced_adj[5] = adj =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                          _("Hole sp_acing:"), 0, 0,
-                          filmvals.hole_space,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
-  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 0, 5), 6);
-  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 1, 5), 6);
-  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 2, 5), 6);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  filmint.scales[5] = scale =
+    gimp_scale_entry_new2 (_("Hole sp_acing:"), filmvals.hole_space, 0.0, 1.0, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.hole_space);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_scale (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_show (scale);
 
-  filmint.advanced_adj[6] = adj =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                          _("_Number height:"), 0, 0,
-                          filmvals.number_height,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  filmint.scales[6] = scale =
+    gimp_scale_entry_new2 (_("_Number height:"), filmvals.number_height, 0.0, 1.0, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.number_height);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_show (scale);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -1387,8 +1375,8 @@ film_reset_callback (GtkWidget *widget,
   gint i;
 
   for (i = 0; i < G_N_ELEMENTS (advanced_defaults) ; i++)
-    gtk_adjustment_set_value (filmint.advanced_adj[i],
-                              advanced_defaults[i]);
+    gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (filmint.scales[i]),
+                                advanced_defaults[i]);
 }
 
 static void
@@ -1400,4 +1388,11 @@ film_font_select_callback (GimpFontSelectButton *button,
   FilmVals *vals = (FilmVals *) data;
 
   g_strlcpy (vals->number_font, name, FONT_LEN);
+}
+
+static void
+film_scale_entry_update_double (GimpScaleEntry *entry,
+                                gdouble       *value)
+{
+  *value = gimp_scale_entry_get_value (entry);
 }

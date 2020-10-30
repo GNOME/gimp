@@ -29,9 +29,6 @@
 #define PLUG_IN_ROLE   "gimp-wavelet-decompose"
 #define PLUG_IN_BINARY "wavelet-decompose"
 
-#define SCALE_WIDTH   120
-#define ENTRY_WIDTH     5
-
 
 typedef struct
 {
@@ -72,9 +69,11 @@ static GimpValueArray * wavelet_run              (GimpProcedure        *procedur
                                                   gpointer              run_data);
 
 static void             wavelet_blur             (GimpDrawable         *drawable,
-                                                  gint              radius);
+                                                  gint                  radius);
 
 static gboolean         wavelet_decompose_dialog (void);
+static void       wavelet_scale_entry_update_int (GimpScaleEntry       *entry,
+                                                  gint                 *value);
 
 
 G_DEFINE_TYPE (Wavelet, wavelet, GIMP_TYPE_PLUG_IN)
@@ -372,12 +371,11 @@ wavelet_blur (GimpDrawable *drawable,
 static gboolean
 wavelet_decompose_dialog (void)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
-  GtkWidget     *grid;
-  GtkWidget     *button;
-  GtkAdjustment *adj;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *button;
+  GtkWidget *scale;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -403,23 +401,14 @@ wavelet_decompose_dialog (void)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
   /* scales */
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                              _("Scales:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              wavelet_params.scales,
-                              1.0, 7.0, 1.0, 1.0, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("Scales:"), wavelet_params.scales, 1.0, 7.0, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 6);
+  gtk_widget_show (scale);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (wavelet_scale_entry_update_int),
                     &wavelet_params.scales);
 
   /* create group layer */
@@ -453,4 +442,11 @@ wavelet_decompose_dialog (void)
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static void
+wavelet_scale_entry_update_int (GimpScaleEntry *entry,
+                                gint           *value)
+{
+  *value = (int) gimp_scale_entry_get_value (entry);
 }

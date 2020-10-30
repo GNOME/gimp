@@ -28,7 +28,6 @@
 #define PLUG_IN_PROC   "plug-in-align-layers"
 #define PLUG_IN_BINARY "align-layers"
 #define PLUG_IN_ROLE   "gimp-align-layers"
-#define SCALE_WIDTH    150
 
 enum
 {
@@ -124,6 +123,8 @@ static void             align_layers_get_align_offsets      (GimpDrawable       
                                                              gint                 *x,
                                                              gint                 *y);
 static gint             align_layers_dialog                 (void);
+static void             align_layers_scale_entry_update_int (GimpScaleEntry       *entry,
+                                                             gint                 *value);
 
 
 G_DEFINE_TYPE (AlignLayers, align_layers, GIMP_TYPE_PLUG_IN)
@@ -647,12 +648,12 @@ align_layers_get_align_offsets (GimpDrawable *drawable,
 static int
 align_layers_dialog (void)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *grid;
-  GtkWidget     *combo;
-  GtkWidget     *toggle;
-  GtkAdjustment *adj;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *grid;
+  GtkWidget *combo;
+  GtkWidget *toggle;
+  GtkWidget *scale;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -741,14 +742,12 @@ align_layers_dialog (void)
                             _("Ver_tical base:"), 0.0, 0.5,
                             combo, 2);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 4,
-                              _("_Grid size:"), SCALE_WIDTH, 0,
-                              VALS.grid_size, 1, 200, 1, 10, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("_Grid size:"), VALS.grid_size, 1, 200, 0);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (align_layers_scale_entry_update_int),
                     &VALS.grid_size);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 4, 3, 1);
+  gtk_widget_show (scale);
 
   toggle = gtk_check_button_new_with_mnemonic
     (_("_Ignore the bottom layer even if visible"));
@@ -778,4 +777,11 @@ align_layers_dialog (void)
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static void
+align_layers_scale_entry_update_int (GimpScaleEntry *entry,
+                                     gint           *value)
+{
+  *value = (gint) gimp_scale_entry_get_value (entry);
 }

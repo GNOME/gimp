@@ -133,8 +133,8 @@ static GimpValueArray * pagecurl_run              (GimpProcedure        *procedu
                                                    const GimpValueArray *args,
                                                    gpointer              run_data);
 
-static void             dialog_scale_update       (GtkAdjustment    *adjustment,
-                                                   gdouble          *value);
+static void             dialog_scale_update       (GimpScaleEntry       *adjustment,
+                                                   gdouble              *value);
 
 static gboolean         dialog                    (void);
 
@@ -414,10 +414,10 @@ inside_circle (gdouble x,
 /********************************************************************/
 
 static void
-dialog_scale_update (GtkAdjustment *adjustment,
-                     gdouble       *value)
+dialog_scale_update (GimpScaleEntry *scale,
+                     gdouble        *value)
 {
-  *value = ((gdouble) gtk_adjustment_get_value (adjustment)) / 100.0;
+  *value = ((gdouble) gimp_scale_entry_get_value (scale)) / 100.0;
 }
 
 static void
@@ -454,15 +454,15 @@ dialog (void)
   /* Missing options: Color-dialogs? / own curl layer ? / transparency
      to original drawable / Warp-curl (unsupported yet) */
 
-  GtkWidget     *dialog;
-  GtkWidget     *hbox;
-  GtkWidget     *vbox;
-  GtkWidget     *grid;
-  GtkWidget     *frame;
-  GtkWidget     *button;
-  GtkWidget     *combo;
-  GtkAdjustment *adjustment;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *grid;
+  GtkWidget *frame;
+  GtkWidget *button;
+  GtkWidget *combo;
+  GtkWidget *scale;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -662,20 +662,12 @@ dialog (void)
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &curl.colors, NULL);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  adjustment = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                                     _("_Opacity:"), 100, 0,
-                                     curl.opacity * 100.0, 0.0, 100.0,
-                                     1.0, 1.0, 0.0,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
-  g_signal_connect (adjustment, "value-changed",
+  scale = gimp_scale_entry_new2 (_("_Opacity:"), curl.opacity * 100.0, 0.0, 100.0, 0.0);
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialog_scale_update),
                     &curl.opacity);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 6);
+  gtk_widget_show (scale);
 
   gtk_widget_show (dialog);
 
