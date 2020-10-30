@@ -445,9 +445,31 @@ gimp_scale_entry_update_steps (GimpScaleEntry *entry)
 
   range = upper - lower;
 
-  if (range <= 1.0)
+  if (range > 0 && range <= 1.0)
     {
-      gimp_scale_entry_set_increments (entry, range / 10.0, range / 100.0);
+      gdouble places = 10.0;
+      gdouble step;
+      gdouble page;
+
+      /* Compute some acceptable step and page increments always in the
+       * format `10**-X` where X is the rounded precision.
+       * So for instance:
+       *  0.8 will have increments 0.01 and 0.1.
+       *  0.3 will have increments 0.001 and 0.01.
+       *  0.06 will also have increments 0.001 and 0.01.
+       */
+      while (range * places < 5.0)
+        places *= 10.0;
+
+
+      step = 0.1 / places;
+      page = 1.0 / places;
+
+      gimp_scale_entry_set_increments (entry, step, page);
+    }
+  else if (range <= 2.0)
+    {
+      gimp_scale_entry_set_increments (entry, 0.01, 0.1);
     }
   else if (range <= 40.0)
     {
@@ -917,7 +939,7 @@ gimp_scale_entry_set_increments (GimpScaleEntry *entry,
   gtk_adjustment_set_page_increment (gtk_range_get_adjustment (scale), page);
   gtk_adjustment_set_page_increment (gtk_spin_button_get_adjustment (spinbutton), page);
 
-  g_object_set (entry,
+  g_object_set (entry->priv->spinbutton,
                 "climb-rate", step,
                 NULL);
 }
