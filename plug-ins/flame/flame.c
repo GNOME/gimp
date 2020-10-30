@@ -42,7 +42,6 @@
 
 #define BUFFER_SIZE       10000
 
-#define SCALE_WIDTH       150
 #define PREVIEW_SIZE      150
 #define EDIT_PREVIEW_SIZE 85
 #define NMUTANTS          9
@@ -104,6 +103,10 @@ static void             combo_callback         (GtkWidget            *widget,
                                                 gpointer              data);
 static void             init_mutants           (void);
 
+static void       flame_scale_entry_update_int (GimpScaleEntry       *entry,
+                                                gint                 *value);
+static void    flame_scale_entry_update_double (GimpScaleEntry       *entry,
+                                                gdouble              *value);
 
 G_DEFINE_TYPE (Flame, flame, GIMP_TYPE_PLUG_IN)
 
@@ -671,16 +674,16 @@ edit_callback (GtkWidget *widget,
 
   if (edit_dialog == NULL)
     {
-      GtkWidget     *main_vbox;
-      GtkWidget     *frame;
-      GtkWidget     *grid;
-      GtkWidget     *vbox;
-      GtkWidget     *hbox;
-      GtkWidget     *button;
-      GtkWidget     *combo;
-      GtkWidget     *label;
-      GtkAdjustment *adj;
-      gint           i, j;
+      GtkWidget *main_vbox;
+      GtkWidget *frame;
+      GtkWidget *grid;
+      GtkWidget *vbox;
+      GtkWidget *hbox;
+      GtkWidget *button;
+      GtkWidget *combo;
+      GtkWidget *label;
+      GtkWidget *scale;
+      gint       i, j;
 
       edit_dialog = gimp_dialog_new (_("Edit Flame"), PLUG_IN_ROLE,
                                      parent, GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -750,24 +753,17 @@ edit_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
-      grid = gtk_grid_new ();
-      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-      gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-      gtk_widget_show(grid);
+      scale = gimp_scale_entry_new2 (_("_Speed:"), pick_speed, 0.05, 0.5, 2);
+      gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
 
-      adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                                  _("_Speed:"), SCALE_WIDTH, 0,
-                                  pick_speed,
-                                  0.05, 0.5, 0.01, 0.1, 2,
-                                  TRUE, 0, 0,
-                                  NULL, NULL);
-
-      g_signal_connect (adj, "value-changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
+      g_signal_connect (scale, "value-changed",
+                        G_CALLBACK (flame_scale_entry_update_double),
                         &pick_speed);
-      g_signal_connect (adj, "value-changed",
+      g_signal_connect (scale, "value-changed",
                         G_CALLBACK (set_edit_preview),
                         NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 6);
+      gtk_widget_show (scale);
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -994,15 +990,15 @@ cmap_constrain (GimpImage *image,
 static gboolean
 flame_dialog (void)
 {
-  GtkWidget     *main_vbox;
-  GtkWidget     *notebook;
-  GtkWidget     *label;
-  GtkWidget     *frame;
-  GtkWidget     *button;
-  GtkWidget     *grid;
-  GtkWidget     *box;
-  GtkAdjustment *adj;
-  gboolean       run;
+  GtkWidget *main_vbox;
+  GtkWidget *notebook;
+  GtkWidget *label;
+  GtkWidget *frame;
+  GtkWidget *button;
+  GtkWidget *grid;
+  GtkWidget *box;
+  GtkWidget *scale;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -1114,83 +1110,71 @@ flame_dialog (void)
   gtk_box_pack_start (GTK_BOX (box), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                              _("_Brightness:"), SCALE_WIDTH, 5,
-                              config.cp.brightness,
-                              0, 5, 0.1, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("_Brightness:"), config.cp.brightness, 0, 5, 2);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (flame_scale_entry_update_double),
                     &config.cp.brightness);
-  g_signal_connect (adj, "value-changed",
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                              _("Co_ntrast:"), SCALE_WIDTH, 5,
-                              config.cp.contrast,
-                              0, 5, 0.1, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("Co_ntrast:"), config.cp.contrast, 0, 5, 2);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (flame_scale_entry_update_double),
                     &config.cp.contrast);
-  g_signal_connect (adj, "value-changed",
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
-                              _("_Gamma:"), SCALE_WIDTH, 5,
-                              config.cp.gamma,
-                              1, 5, 0.1, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 0, 2), 6);
-  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 1, 2), 6);
-  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 2, 2), 6);
+  scale = gimp_scale_entry_new2 (_("_Gamma:"), config.cp.gamma, 1, 5, 2);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (flame_scale_entry_update_double),
                     &config.cp.gamma);
-  g_signal_connect (adj, "value-changed",
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
-                              _("Sample _density:"), SCALE_WIDTH, 5,
-                              config.cp.sample_density,
-                              0.1, 20, 1, 5, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("Sample _density:"), config.cp.sample_density, 0.1, 20, 2);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 5.0);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (flame_scale_entry_update_double),
                     &config.cp.sample_density);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 3, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 4,
-                              _("Spa_tial oversample:"), SCALE_WIDTH, 5,
-                              config.cp.spatial_oversample,
-                              1, 4, 0.01, 0.1, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("Spa_tial oversample:"), config.cp.spatial_oversample, 1, 4, 0);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (flame_scale_entry_update_int),
                     &config.cp.spatial_oversample);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 4, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 5,
-                              _("Spatial _filter radius:"), SCALE_WIDTH, 5,
-                              config.cp.spatial_filter_radius,
-                              0, 4, 0.2, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("Spatial _filter radius:"), config.cp.spatial_filter_radius, 0, 4, 2);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.2, 1.0);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (flame_scale_entry_update_double),
                     &config.cp.spatial_filter_radius);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 5, 3, 1);
+  gtk_widget_show (scale);
 
   {
     GtkWidget *hbox;
@@ -1273,47 +1257,41 @@ flame_dialog (void)
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), grid, label);
   gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                              _("_Zoom:"), SCALE_WIDTH, 0,
-                              config.cp.zoom,
-                              -4, 4, 0.5, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("_Zoom:"), config.cp.zoom, -4, 4, 2);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.5, 1.0);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (flame_scale_entry_update_double),
                     &config.cp.zoom);
-  g_signal_connect (adj, "value-changed",
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                              _("_X:"), SCALE_WIDTH, 0,
-                              config.cp.center[0],
-                              -2, 2, 0.5, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("_X:"), config.cp.center[0], -2, 2, 2);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.5, 1.0);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (flame_scale_entry_update_double),
                     &config.cp.center[0]);
-  g_signal_connect (adj, "value-changed",
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
-                              _("_Y:"), SCALE_WIDTH, 0,
-                              config.cp.center[1],
-                              -2, 2, 0.5, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("_Y:"), config.cp.center[1], -2, 2, 2);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.5, 1.0);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (flame_scale_entry_update_double),
                     &config.cp.center[1]);
-  g_signal_connect (adj, "value-changed",
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
+  gtk_widget_show (scale);
 
   set_flame_preview ();
 
@@ -1324,4 +1302,18 @@ flame_dialog (void)
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static void
+flame_scale_entry_update_int (GimpScaleEntry *entry,
+                              gint           *value)
+{
+  *value = (gint) gimp_scale_entry_get_value (entry);
+}
+
+static void
+flame_scale_entry_update_double (GimpScaleEntry *entry,
+                                 gdouble        *value)
+{
+  *value = gimp_scale_entry_get_value (entry);
 }

@@ -49,7 +49,7 @@ struct _ColorselCmyk
   GimpColorTransform *cmyk2rgb;
 
   GimpCMYK            cmyk;
-  GtkAdjustment      *adj[4];
+  GtkWidget          *scales[4];
   GtkWidget          *name_label;
 
   gboolean            in_destruction;
@@ -71,7 +71,7 @@ static void   colorsel_cmyk_set_color      (GimpColorSelector *selector,
 static void   colorsel_cmyk_set_config     (GimpColorSelector *selector,
                                             GimpColorConfig   *config);
 
-static void   colorsel_cmyk_adj_update     (GtkAdjustment     *adj,
+static void   colorsel_cmyk_scale_update   (GimpScaleEntry    *scale,
                                             ColorselCmyk      *module);
 static void   colorsel_cmyk_config_changed (ColorselCmyk      *module);
 
@@ -168,20 +168,16 @@ colorsel_cmyk_init (ColorselCmyk *module)
 
   for (i = 0; i < 4; i++)
     {
-      module->adj[i] = gimp_scale_entry_new (GTK_GRID (grid), 1, i,
-                                             gettext (cmyk_labels[i]),
-                                             -1, -1,
-                                             0.0,
-                                             0.0, 100.0,
-                                             1.0, 10.0,
-                                             0,
-                                             TRUE, 0.0, 0.0,
-                                             gettext (cmyk_tips[i]),
-                                             NULL);
+      module->scales[i] = gimp_scale_entry_new2 (gettext (cmyk_labels[i]),
+                                                 0.0, 0.0, 100.0, 0);
+      gimp_help_set_help_data (module->scales[i], gettext (cmyk_tips[i]), NULL);
 
-      g_signal_connect (module->adj[i], "value-changed",
-                        G_CALLBACK (colorsel_cmyk_adj_update),
+      g_signal_connect (module->scales[i], "value-changed",
+                        G_CALLBACK (colorsel_cmyk_scale_update),
                         module);
+
+      gtk_grid_attach (GTK_GRID (grid), module->scales[i], 1, i, 3, 1);
+      gtk_widget_show (module->scales[i]);
     }
 
   module->name_label = gtk_label_new (NULL);
@@ -248,14 +244,14 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
 
   for (i = 0; i < 4; i++)
     {
-      g_signal_handlers_block_by_func (module->adj[i],
-                                       colorsel_cmyk_adj_update,
+      g_signal_handlers_block_by_func (module->scales[i],
+                                       colorsel_cmyk_scale_update,
                                        module);
 
-      gtk_adjustment_set_value (module->adj[i], values[i]);
+      gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (module->scales[i]), values[i]);
 
-      g_signal_handlers_unblock_by_func (module->adj[i],
-                                         colorsel_cmyk_adj_update,
+      g_signal_handlers_unblock_by_func (module->scales[i],
+                                         colorsel_cmyk_scale_update,
                                          module);
     }
 }
@@ -285,18 +281,18 @@ colorsel_cmyk_set_config (GimpColorSelector *selector,
 }
 
 static void
-colorsel_cmyk_adj_update (GtkAdjustment *adj,
-                          ColorselCmyk  *module)
+colorsel_cmyk_scale_update (GimpScaleEntry *scale,
+                            ColorselCmyk   *module)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
   gint               i;
   gdouble            value;
 
   for (i = 0; i < 4; i++)
-    if (module->adj[i] == adj)
+    if (GIMP_SCALE_ENTRY (module->scales[i]) == scale)
       break;
 
-  value = gtk_adjustment_get_value (adj) / 100.0;
+  value = gimp_scale_entry_get_value (scale) / 100.0;
 
   switch (i)
     {

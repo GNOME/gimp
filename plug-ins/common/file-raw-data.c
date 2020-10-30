@@ -199,6 +199,8 @@ static gboolean         save_dialog          (GimpImage            *image,
 static void             palette_callback     (GtkFileChooser       *button,
                                               GimpPreviewArea      *preview);
 
+static void  file_raw_scale_entry_update_int (GimpScaleEntry       *entry,
+                                              gint                 *value);
 
 G_DEFINE_TYPE (Raw, raw, GIMP_TYPE_PLUG_IN)
 
@@ -1750,18 +1752,18 @@ static gboolean
 load_dialog (GFile    *file,
              gboolean  is_hgt)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
-  GtkWidget     *preview;
-  GtkWidget     *sw;
-  GtkWidget     *viewport;
-  GtkWidget     *frame;
-  GtkWidget     *grid;
-  GtkWidget     *combo;
-  GtkWidget     *button;
-  GtkAdjustment *adj;
-  goffset        file_size;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
+  GtkWidget *sw;
+  GtkWidget *viewport;
+  GtkWidget *frame;
+  GtkWidget *grid;
+  GtkWidget *combo;
+  GtkWidget *button;
+  GtkWidget *scale;
+  goffset    file_size;
+  gboolean   run;
 
   file_size = get_file_info (file);
 
@@ -1908,52 +1910,47 @@ load_dialog (GFile    *file,
                               G_CALLBACK (preview_update),
                               preview);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                              _("O_ffset:"), -1, 9,
-                              runtime->file_offset, 0, file_size, 1, 1000, 0,
-                              TRUE, 0.0, 0.0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("O_ffset:"), runtime->file_offset, 0, file_size, 0);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1, 1000);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (file_raw_scale_entry_update_int),
                     &runtime->file_offset);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (preview_update),
                             preview);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
+  gtk_widget_show (scale);
 
   if (! is_hgt)
     {
-      adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
-                                  _("_Width:"), -1, 9,
-                                  runtime->image_width, 1, file_size, 1, 10, 0,
-                                  TRUE, 0.0, 0.0,
-                                  NULL, NULL);
+      scale = gimp_scale_entry_new2 (_("_Width:"), runtime->image_width, 1, file_size, 0);
 
-      g_signal_connect (adj, "value-changed",
-                        G_CALLBACK (gimp_int_adjustment_update),
+      g_signal_connect (scale, "value-changed",
+                        G_CALLBACK (file_raw_scale_entry_update_int),
                         &runtime->image_width);
-      g_signal_connect_swapped (adj, "value-changed",
+      g_signal_connect_swapped (scale, "value-changed",
                                 G_CALLBACK (preview_update_size),
                                 preview);
-      g_signal_connect_swapped (adj, "value-changed",
+      g_signal_connect_swapped (scale, "value-changed",
                                 G_CALLBACK (preview_update),
                                 preview);
+      gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
+      gtk_widget_show (scale);
 
-      adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
-                                  _("_Height:"), -1, 9,
-                                  runtime->image_height, 1, file_size, 1, 10, 0,
-                                  TRUE, 0.0, 0.0,
-                                  NULL, NULL);
+      scale = gimp_scale_entry_new2 (_("_Height:"), runtime->image_height, 1, file_size, 0);
 
-      g_signal_connect (adj, "value-changed",
-                        G_CALLBACK (gimp_int_adjustment_update),
+      g_signal_connect (scale, "value-changed",
+                        G_CALLBACK (file_raw_scale_entry_update_int),
                         &runtime->image_height);
-      g_signal_connect_swapped (adj, "value-changed",
+      g_signal_connect_swapped (scale, "value-changed",
                                 G_CALLBACK (preview_update_size),
                                 preview);
-      g_signal_connect_swapped (adj, "value-changed",
+      g_signal_connect_swapped (scale, "value-changed",
                                 G_CALLBACK (preview_update),
                                 preview);
+      gtk_grid_attach (GTK_GRID (grid), scale, 0, 3, 3, 1);
+      gtk_widget_show (scale);
     }
 
 
@@ -1983,18 +1980,17 @@ load_dialog (GFile    *file,
                             G_CALLBACK (palette_update),
                             preview);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                              _("Off_set:"), -1, 0,
-                              runtime->palette_offset, 0, 1 << 24, 1, 768, 0,
-                              TRUE, 0.0, 0.0,
-                              NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("Off_set:"), runtime->palette_offset, 0, 1 << 24, 0);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1, 768);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (file_raw_scale_entry_update_int),
                     &runtime->palette_offset);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (palette_update),
                             preview);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
+  gtk_widget_show (scale);
 
   button = gtk_file_chooser_button_new (_("Select Palette File"),
                                         GTK_FILE_CHOOSER_ACTION_OPEN);
@@ -2080,4 +2076,11 @@ palette_callback (GtkFileChooser  *button,
   palfile = gtk_file_chooser_get_file (button);
 
   palette_update (preview);
+}
+
+static void
+file_raw_scale_entry_update_int (GimpScaleEntry *entry,
+                                 gint           *value)
+{
+  *value = (gint) gimp_scale_entry_get_value (entry);
 }

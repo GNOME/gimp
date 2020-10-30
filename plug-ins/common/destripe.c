@@ -35,7 +35,6 @@
 #define PLUG_IN_BINARY  "destripe"
 #define PLUG_IN_ROLE    "gimp-destripe"
 #define PLUG_IN_VERSION "0.2"
-#define SCALE_WIDTH     140
 #define MAX_AVG         100
 
 
@@ -83,6 +82,8 @@ static void             destripe_preview          (GimpDrawable         *drawabl
                                                    GimpPreview          *preview);
 
 static gboolean         destripe_dialog           (GimpDrawable         *drawable);
+static void       destripe_scale_entry_update_int (GimpScaleEntry       *entry,
+                                                   gint                 *value);
 
 
 G_DEFINE_TYPE (Destripe, destripe, GIMP_TYPE_PLUG_IN)
@@ -446,9 +447,8 @@ destripe_dialog (GimpDrawable *drawable)
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *preview;
-  GtkWidget     *grid;
+  GtkWidget     *scale;
   GtkWidget     *button;
-  GtkAdjustment *adj;
   gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY);
@@ -483,22 +483,15 @@ destripe_dialog (GimpDrawable *drawable)
                             G_CALLBACK (destripe_preview),
                             drawable);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                              _("_Width:"), SCALE_WIDTH, 0,
-                              vals.avg_width, 2, MAX_AVG, 1, 10, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("_Width:"), vals.avg_width, 2, MAX_AVG, 0);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (destripe_scale_entry_update_int),
                     &vals.avg_width);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 6);
+  gtk_widget_show (scale);
 
   button = gtk_check_button_new_with_mnemonic (_("Create _histogram"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
@@ -519,4 +512,11 @@ destripe_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static void
+destripe_scale_entry_update_int (GimpScaleEntry *entry,
+                                 gint           *value)
+{
+  *value = (gint) gimp_scale_entry_get_value (entry);
 }

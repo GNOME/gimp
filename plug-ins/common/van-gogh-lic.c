@@ -91,6 +91,8 @@ static GimpValueArray * lic_run              (GimpProcedure        *procedure,
                                               GimpDrawable         *drawable,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
+static void           lic_scale_entry_update (GimpScaleEntry       *entry,
+                                              gdouble              *value);
 
 
 G_DEFINE_TYPE (Lic, lic, GIMP_TYPE_PLUG_IN)
@@ -686,14 +688,14 @@ effect_image_constrain (GimpImage *image,
 static gboolean
 create_main_dialog (void)
 {
-  GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *frame;
-  GtkWidget     *grid;
-  GtkWidget     *combo;
-  GtkAdjustment *scale_data;
-  gint           row;
-  gboolean       run;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *frame;
+  GtkWidget *grid;
+  GtkWidget *combo;
+  GtkWidget *scale;
+  gint       row;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -783,50 +785,43 @@ create_main_dialog (void)
 
   row = 0;
 
-  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                                     _("_Filter length:"), 0, 6,
-                                     licvals.filtlen, 0.1, 64, 1.0, 8.0, 1,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
-  g_signal_connect (scale_data, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("_Filter length:"), licvals.filtlen, 0.1, 64, 1);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 8.0);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (lic_scale_entry_update),
                     &licvals.filtlen);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_show (scale);
 
-  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                                     _("_Noise magnitude:"), 0, 6,
-                                     licvals.noisemag, 1, 5, 0.1, 1.0, 1,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
-  g_signal_connect (scale_data, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("_Noise magnitude:"), licvals.noisemag, 1, 5, 1);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (lic_scale_entry_update),
                     &licvals.noisemag);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_show (scale);
 
-  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                                     _("In_tegration steps:"), 0, 6,
-                                     licvals.intsteps, 1, 40, 1.0, 5.0, 1,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
-  g_signal_connect (scale_data, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("In_tegration steps:"), licvals.intsteps, 1, 40, 1);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (lic_scale_entry_update),
                     &licvals.intsteps);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_show (scale);
 
-  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                                     _("_Minimum value:"), 0, 6,
-                                     licvals.minv, -100, 0, 1, 10, 1,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
-  g_signal_connect (scale_data, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("_Minimum value:"), licvals.minv, -100, 0, 1);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (lic_scale_entry_update),
                     &licvals.minv);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_show (scale);
 
-  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
-                                     _("M_aximum value:"), 0, 6,
-                                     licvals.maxv, 0, 100, 1, 10, 1,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
-  g_signal_connect (scale_data, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("M_aximum value:"),
+                                      licvals.maxv, 0, 100, 1);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (lic_scale_entry_update),
                     &licvals.maxv);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
+  gtk_widget_show (scale);
 
   gtk_widget_show (dialog);
 
@@ -952,4 +947,11 @@ lic_run (GimpProcedure        *procedure,
     }
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+}
+
+static void
+lic_scale_entry_update (GimpScaleEntry *entry,
+                        gdouble        *value)
+{
+  *value = gimp_scale_entry_get_value (entry);
 }

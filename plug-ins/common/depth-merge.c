@@ -157,8 +157,8 @@ static void      dialogDepthMap1ChangedCallback     (GtkWidget     *widget,
 static void      dialogDepthMap2ChangedCallback     (GtkWidget     *widget,
                                                      DepthMerge    *dm);
 
-static void      dialogValueScaleUpdateCallback     (GtkAdjustment *adjustment,
-                                                     gpointer       data);
+static void      dialogValueScaleUpdateCallback     (GimpScaleEntry *scale,
+                                                     gfloat         *value);
 
 static void      util_fillReducedBuffer             (guchar        *dest,
                                                      const Babl    *dest_format,
@@ -688,15 +688,15 @@ DepthMerge_executeRegion (DepthMerge *dm,
 static gboolean
 DepthMerge_dialog (DepthMerge *dm)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *vbox;
-  GtkWidget     *frame;
-  GtkWidget     *grid;
-  GtkWidget     *hbox;
-  GtkWidget     *label;
-  GtkWidget     *combo;
-  GtkAdjustment *adj;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *grid;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *combo;
+  GtkWidget *scale;
+  gboolean   run;
 
   dm->interface = g_new0 (DepthMergeInterface, 1);
 
@@ -810,45 +810,41 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (combo);
 
   /* Numeric parameters */
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 4,
-                              _("O_verlap:"), 0, 6,
-                              dm->params.overlap, 0, 2, 0.001, 0.01, 3,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
+  scale = gimp_scale_entry_new2 (_("O_verlap:"), dm->params.overlap, 0, 2, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.overlap));
-  g_object_set_data (G_OBJECT (adj), "dm", dm);
+  g_object_set_data (G_OBJECT (scale), "dm", dm);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 4, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 5,
-                              _("O_ffset:"), 0, 6,
-                              dm->params.offset, -1, 1, 0.001, 0.01, 3,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
+  scale = gimp_scale_entry_new2 (_("O_ffset:"), dm->params.offset, -1, 1, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.offset));
-  g_object_set_data (G_OBJECT (adj), "dm", dm);
+  g_object_set_data (G_OBJECT (scale), "dm", dm);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 5, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 6,
-                              _("Sc_ale 1:"), 0, 6,
-                              dm->params.scale1, -1, 1, 0.001, 0.01, 3,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
+  scale = gimp_scale_entry_new2 (_("Sc_ale 1:"), dm->params.scale1, -1, 1, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale1));
-  g_object_set_data (G_OBJECT (adj), "dm", dm);
+  g_object_set_data (G_OBJECT (scale), "dm", dm);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 6, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 7,
-                              _("Sca_le 2:"), 0, 6,
-                              dm->params.scale2, -1, 1, 0.001, 0.01, 3,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
+  scale = gimp_scale_entry_new2 (_("Sca_le 2:"), dm->params.scale2, -1, 1, 3);
+  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale2));
-  g_object_set_data (G_OBJECT (adj), "dm", dm);
+  g_object_set_data (G_OBJECT (scale), "dm", dm);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 7, 3, 1);
+  gtk_widget_show (scale);
 
   dm->interface->active = TRUE;
 
@@ -1052,12 +1048,12 @@ dialogDepthMap2ChangedCallback (GtkWidget  *widget,
 }
 
 static void
-dialogValueScaleUpdateCallback (GtkAdjustment *adjustment,
-                                gpointer       data)
+dialogValueScaleUpdateCallback (GimpScaleEntry *scale,
+                                gfloat         *value)
 {
-  DepthMerge *dm = g_object_get_data (G_OBJECT (adjustment), "dm");
+  DepthMerge *dm = g_object_get_data (G_OBJECT (scale), "dm");
 
-  gimp_float_adjustment_update (adjustment, data);
+  *value = (gfloat) gimp_scale_entry_get_value (scale);
 
   DepthMerge_updatePreview (dm);
 }

@@ -107,6 +107,9 @@ static void             nlfiltRow                 (guchar           *srclast,
                                                    gint              bpp,
                                                    gint              filtno);
 
+static void    nlfilter_scale_entry_update_double (GimpScaleEntry   *entry,
+                                                   gdouble          *value);
+
 
 G_DEFINE_TYPE (Nlfilter, nlfilter, GIMP_TYPE_PLUG_IN)
 
@@ -1079,16 +1082,16 @@ nlfilter_preview (GimpDrawable *drawable,
 static gboolean
 nlfilter_dialog (GimpDrawable *drawable)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
-  GtkWidget     *preview;
-  GtkWidget     *frame;
-  GtkWidget     *alpha_trim;
-  GtkWidget     *opt_est;
-  GtkWidget     *edge_enhance;
-  GtkWidget     *grid;
-  GtkAdjustment *adj;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
+  GtkWidget *frame;
+  GtkWidget *alpha_trim;
+  GtkWidget *opt_est;
+  GtkWidget *edge_enhance;
+  GtkWidget *grid;
+  GtkWidget *scale;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -1154,29 +1157,25 @@ nlfilter_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                              _("A_lpha:"), 0, 0,
-                              nlfvals.alpha, 0.0, 1.0, 0.05, 0.1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("A_lpha:"), nlfvals.alpha, 0.0, 1.0, 2);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (nlfilter_scale_entry_update_double),
                     &nlfvals.alpha);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                              _("_Radius:"), 0, 0,
-                              nlfvals.radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+  scale = gimp_scale_entry_new2 (_("_Radius:"), nlfvals.radius, 1.0 / 3.0, 1.0, 2);
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (nlfilter_scale_entry_update_double),
                     &nlfvals.radius);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
+  gtk_widget_show (scale);
 
   gtk_widget_show (dialog);
 
@@ -1185,4 +1184,11 @@ nlfilter_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static void
+nlfilter_scale_entry_update_double (GimpScaleEntry *entry,
+                                    gdouble        *value)
+{
+  *value = gimp_scale_entry_get_value (entry);
 }

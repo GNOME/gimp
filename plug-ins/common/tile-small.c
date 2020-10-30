@@ -50,7 +50,6 @@
 /***** Magic numbers *****/
 
 #define PREVIEW_SIZE 128
-#define SCALE_WIDTH   80
 
 #define MAX_SEGS       6
 
@@ -116,8 +115,8 @@ static GimpValueArray * tile_run              (GimpProcedure        *procedure,
 
 static gboolean  tileit_dialog          (GimpDrawable  *drawable);
 
-static void      tileit_scale_update    (GtkAdjustment *adjustment,
-                                         gpointer       data);
+static void      tileit_scale_update    (GimpScaleEntry *entry,
+                                         gint           *value);
 
 static void      tileit_exp_update      (GtkWidget     *widget,
                                          gpointer       value);
@@ -404,12 +403,11 @@ tileit_dialog (GimpDrawable *drawable)
   GtkWidget     *vbox;
   GtkWidget     *frame;
   GtkWidget     *grid;
-  GtkWidget     *grid2;
   GtkWidget     *button;
   GtkWidget     *label;
   GtkWidget     *spinbutton;
   GtkAdjustment *adj;
-  GtkAdjustment *scale;
+  GtkWidget     *scale;
   GtkWidget     *toggle;
   GSList        *orientation_group = NULL;
   gboolean       run;
@@ -621,40 +619,26 @@ tileit_dialog (GimpDrawable *drawable)
 
   /* Widget for selecting the Opacity */
 
-  grid2 = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid2), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid2, FALSE, FALSE, 0);
-  gtk_widget_show (grid2);
-
-  scale = gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
-                                _("O_pacity:"), SCALE_WIDTH, -1,
-                                opacity, 0, 100, 1, 10, 0,
-                                TRUE, 0, 0,
-                                NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("O_pacity:"), opacity, 0, 100, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &opacity);
+
+  gtk_widget_show (scale);
+  gtk_widget_set_sensitive (scale, gimp_drawable_has_alpha (drawable));
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 6);
 
   /* Lower frame saying how many segments */
   frame = gimp_frame_new (_("Number of Segments"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  gtk_widget_set_sensitive (grid2, gimp_drawable_has_alpha (drawable));
-
-  scale = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                                "_n²", SCALE_WIDTH, -1,
-                                itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
-                                TRUE, 0, 0,
-                                NULL, NULL);
+  scale = gimp_scale_entry_new2 ("_n²", itvals.numtiles, 2, MAX_SEGS, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &itvals.numtiles);
+  gtk_container_add (GTK_CONTAINER (frame), scale);
+  gtk_widget_show (scale);
 
   gtk_widget_show (dlg);
   dialog_update_preview ();
@@ -874,10 +858,10 @@ tileit_radio_update (GtkWidget *widget,
 
 
 static void
-tileit_scale_update (GtkAdjustment *adjustment,
-                     gpointer       data)
+tileit_scale_update (GimpScaleEntry *scale,
+                     gint           *value)
 {
-  gimp_int_adjustment_update (adjustment, data);
+  *value = RINT (gimp_scale_entry_get_value (scale));
 
   dialog_update_preview ();
 }

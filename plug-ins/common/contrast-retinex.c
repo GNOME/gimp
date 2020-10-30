@@ -31,8 +31,6 @@
 #define MAX_RETINEX_SCALES    8
 #define MIN_GAUSSIAN_SCALE   16
 #define MAX_GAUSSIAN_SCALE  250
-#define SCALE_WIDTH         150
-#define ENTRY_WIDTH           4
 
 
 typedef struct
@@ -125,6 +123,11 @@ static void     gausssmooth                 (gfloat       *in,
                                              gint          size,
                                              gint          rowtride,
                                              gauss3_coefs *c);
+
+static void contrast_retinex_scale_entry_update_int   (GimpScaleEntry *entry,
+                                                       gint           *value);
+static void contrast_retinex_scale_entry_update_float (GimpScaleEntry *entry,
+                                                       gfloat         *value);
 
 /*
  * MSRCR = MultiScale Retinex with Color Restoration
@@ -308,13 +311,13 @@ retinex_run (GimpProcedure        *procedure,
 static gboolean
 retinex_dialog (GimpDrawable *drawable)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
-  GtkWidget     *preview;
-  GtkWidget     *grid;
-  GtkWidget     *combo;
-  GtkAdjustment *adj;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
+  GtkWidget *grid;
+  GtkWidget *combo;
+  GtkWidget *scale;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -371,43 +374,38 @@ retinex_dialog (GimpDrawable *drawable)
                             combo, 2);
   gtk_widget_show (combo);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                              _("_Scale:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              rvals.scale,
-                              MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 1, 1, 0,
-                              TRUE, 0, 0, NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("_Scale:"), rvals.scale, MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 0);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (contrast_retinex_scale_entry_update_int),
                     &rvals.scale);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
-                              _("Scale _division:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              rvals.nscales,
-                              0, MAX_RETINEX_SCALES, 1, 1, 0,
-                              TRUE, 0, 0, NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("Scale _division:"), rvals.nscales, 0, MAX_RETINEX_SCALES, 0);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (contrast_retinex_scale_entry_update_int),
                     &rvals.nscales);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
+  gtk_widget_show (scale);
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
-                              _("Dy_namic:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              rvals.cvar, 0, 4, 0.1, 0.1, 1,
-                              TRUE, 0, 0, NULL, NULL);
+  scale = gimp_scale_entry_new2 (_("Dy_namic:"), rvals.cvar, 0, 4, 1);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_float_adjustment_update),
+  g_signal_connect (scale, "value-changed",
+                    G_CALLBACK (contrast_retinex_scale_entry_update_float),
                     &rvals.cvar);
-  g_signal_connect_swapped (adj, "value-changed",
+  g_signal_connect_swapped (scale, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
+  gtk_grid_attach (GTK_GRID (grid), scale, 0, 3, 3, 1);
+  gtk_widget_show (scale);
 
   gtk_widget_show (dialog);
 
@@ -876,4 +874,18 @@ compute_mean_var (gfloat *src, gfloat *mean, gfloat *var, gint size, gint bytes)
   vsquared /= (gfloat) size; /* mean (x^2) */
   *var = ( vsquared - (*mean * *mean) );
   *var = sqrt(*var); /* var */
+}
+
+static void
+contrast_retinex_scale_entry_update_int (GimpScaleEntry *entry,
+                                         gint           *value)
+{
+  *value = (gint) gimp_scale_entry_get_value (entry);
+}
+
+static void
+contrast_retinex_scale_entry_update_float (GimpScaleEntry *entry,
+                                           gfloat         *value)
+{
+  *value = (gfloat) gimp_scale_entry_get_value (entry);
 }
