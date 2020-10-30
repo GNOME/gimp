@@ -68,8 +68,6 @@ GtkWidget     * gimp_scale_entry_new2            (const gchar *text,
                                                   gdouble      value,
                                                   gdouble      lower,
                                                   gdouble      upper,
-                                                  gdouble      step_increment,
-                                                  gdouble      page_increment,
                                                   guint        digits);
 
 gdouble         gimp_scale_entry_get_value       (GimpScaleEntry *entry);
@@ -86,6 +84,10 @@ void            gimp_scale_entry_set_range       (GimpScaleEntry *entry,
 void            gimp_scale_entry_set_logarithmic (GimpScaleEntry *entry,
                                                   gboolean        logarithmic);
 gboolean        gimp_scale_entry_get_logarithmic (GimpScaleEntry *entry);
+
+void            gimp_scale_entry_set_increments  (GimpScaleEntry *entry,
+                                                  gdouble         step,
+                                                  gdouble         page);
 
 /**
  * GIMP_SCALE_ENTRY_LABEL:

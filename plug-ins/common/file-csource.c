@@ -1035,9 +1035,8 @@ save_dialog (GimpProcedure *procedure,
 
   /* Max Alpha Value
    */
-  scale = gimp_prop_scale_entry_new (config, "opacity",
-                                     _("Op_acity:"), 1, 10, 1,
-                                     FALSE, 0, 0);
+  scale = gimp_prop_scale_entry_new (config, "opacity", _("Op_acity:"),
+                                     1, FALSE, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 4);
   gtk_widget_show (scale);
   gtk_widget_show (dialog);

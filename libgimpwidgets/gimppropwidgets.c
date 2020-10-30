@@ -1465,8 +1465,6 @@ gimp_prop_hscale_new (GObject     *config,
  * @label: (nullable): The text for the #GtkLabel which will appear left of
  *                     the #GtkHScale.
  * @property_name:  Name of integer or double property controlled by the scale.
- * @step_increment: Step size.
- * @page_increment: Page size.
  * @digits:         Number of digits after decimal point to display. For
  *                  integer properties, this will be ignored (always 0).
  * @limit_scale:    %FALSE if the range of possible values of the
@@ -1489,8 +1487,6 @@ GtkWidget *
 gimp_prop_scale_entry_new (GObject     *config,
                            const gchar *property_name,
                            const gchar *label,
-                           gdouble      step_increment,
-                           gdouble      page_increment,
                            gint         digits,
                            gboolean     limit_scale,
                            gdouble      lower_limit,
@@ -1518,7 +1514,6 @@ gimp_prop_scale_entry_new (GObject     *config,
     label = g_param_spec_get_nick (param_spec);
 
   widget = gimp_scale_entry_new2 (label, value, lower, upper,
-                                  step_increment, page_increment,
                                   digits);
   if (limit_scale)
     {
@@ -1621,8 +1616,7 @@ gimp_prop_opacity_entry_new (GObject     *config,
   g_return_val_if_fail (property_name != NULL, NULL);
 
   widget = gimp_prop_scale_entry_new (config, property_name,
-                                      label, 0.01, 0.1, 1,
-                                      FALSE, 0.0, 0.0);
+                                      label, 1, FALSE, 0.0, 0.0);
 
   if (widget)
     {

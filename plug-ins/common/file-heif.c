@@ -2521,9 +2521,7 @@ save_dialog (GimpProcedure *procedure,
                           G_BINDING_INVERT_BOOLEAN);
 
   scale = gimp_prop_scale_entry_new (config, "quality",
-                                     NULL,
-                                     1, 10, 0,
-                                     FALSE, 0, 0);
+                                     NULL, 0, FALSE, 0, 0);
   gtk_widget_hide (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Quality"),

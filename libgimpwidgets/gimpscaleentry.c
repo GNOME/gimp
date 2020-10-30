@@ -55,8 +55,6 @@ enum
   PROP_VALUE,
   PROP_LOWER,
   PROP_UPPER,
-  PROP_STEP_INCREMENT,
-  PROP_PAGE_INCREMENT,
   PROP_DIGITS,
 };
 
@@ -83,6 +81,7 @@ static void   gimp_scale_entry_get_property         (GObject       *object,
                                                      GParamSpec    *pspec);
 
 static void   gimp_scale_entry_update_spin_width    (GimpScaleEntry *entry);
+static void   gimp_scale_entry_update_steps         (GimpScaleEntry *entry);
 
 static gboolean        gimp_scale_entry_linear_to_log (GBinding     *binding,
                                                        const GValue *from_value,
@@ -180,28 +179,6 @@ gimp_scale_entry_class_init (GimpScaleEntryClass *klass)
                                    g_param_spec_double ("upper", NULL,
                                                         "Max value",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
-                                                        GIMP_PARAM_READWRITE));
-
-  /**
-   * GimpScaleEntry:step-increment:
-   *
-   * Since: 3.0
-   **/
-  g_object_class_install_property (object_class, PROP_STEP_INCREMENT,
-                                   g_param_spec_double ("step-increment", NULL,
-                                                        "Step increment",
-                                                        G_MINDOUBLE, G_MAXDOUBLE, 1.0,
-                                                        GIMP_PARAM_READWRITE));
-
-  /**
-   * GimpScaleEntry:page-increment:
-   *
-   * Since: 3.0
-   **/
-  g_object_class_install_property (object_class, PROP_PAGE_INCREMENT,
-                                   g_param_spec_double ("page-increment", NULL,
-                                                        "Page increment",
-                                                        G_MINDOUBLE, G_MAXDOUBLE, 10.0,
                                                         GIMP_PARAM_READWRITE));
 
   /**
@@ -336,6 +313,7 @@ gimp_scale_entry_set_property (GObject      *object,
                                     g_value_get_double (value));
 
           gimp_scale_entry_update_spin_width (entry);
+          gimp_scale_entry_update_steps (entry);
         }
       break;
     case PROP_UPPER:
@@ -343,7 +321,7 @@ gimp_scale_entry_set_property (GObject      *object,
           GtkSpinButton *spinbutton;
           GtkRange      *scale;
 
-          g_return_if_fail (entry->priv->spinbutton);
+          g_return_if_fail (entry->priv->scale && entry->priv->spinbutton);
 
           spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
           scale      = GTK_RANGE (entry->priv->scale);
@@ -353,40 +331,7 @@ gimp_scale_entry_set_property (GObject      *object,
                                     g_value_get_double (value));
 
           gimp_scale_entry_update_spin_width (entry);
-        }
-      break;
-    case PROP_STEP_INCREMENT:
-        {
-          GtkSpinButton *spinbutton;
-          GtkAdjustment *adj;
-
-          g_return_if_fail (entry->priv->scale && entry->priv->spinbutton);
-
-          adj = gtk_range_get_adjustment (GTK_RANGE (entry->priv->scale));
-          gtk_adjustment_set_step_increment (adj, g_value_get_double (value));
-
-          spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
-          if (adj != gtk_spin_button_get_adjustment (spinbutton))
-            gtk_adjustment_set_step_increment (gtk_spin_button_get_adjustment (spinbutton), g_value_get_double (value));
-
-          g_object_set (entry->priv->spinbutton,
-                        "climb-rate", g_value_get_double (value),
-                        NULL);
-        }
-      break;
-    case PROP_PAGE_INCREMENT:
-        {
-          GtkSpinButton *spinbutton;
-          GtkAdjustment *adj;
-
-          g_return_if_fail (entry->priv->scale && entry->priv->spinbutton);
-
-          adj = gtk_range_get_adjustment (GTK_RANGE (entry->priv->scale));
-          gtk_adjustment_set_page_increment (adj, g_value_get_double (value));
-
-          spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
-          if (adj != gtk_spin_button_get_adjustment (spinbutton))
-            gtk_adjustment_set_page_increment (gtk_spin_button_get_adjustment (spinbutton), g_value_get_double (value));
+          gimp_scale_entry_update_steps (entry);
         }
       break;
     case PROP_DIGITS:
@@ -441,22 +386,6 @@ gimp_scale_entry_get_property (GObject    *object,
           g_value_set_double (value, gtk_adjustment_get_upper (adj));
         }
       break;
-    case PROP_STEP_INCREMENT:
-        {
-          GtkAdjustment *adj;
-
-          adj = gtk_spin_button_get_adjustment (spinbutton);
-          g_value_set_double (value, gtk_adjustment_get_step_increment (adj));
-        }
-      break;
-    case PROP_PAGE_INCREMENT:
-        {
-          GtkAdjustment *adj;
-
-          adj = gtk_spin_button_get_adjustment (spinbutton);
-          g_value_set_double (value, gtk_adjustment_get_page_increment (adj));
-        }
-      break;
     case PROP_DIGITS:
       g_value_set_uint (value, gtk_spin_button_get_digits (spinbutton));
       break;
@@ -474,6 +403,8 @@ gimp_scale_entry_update_spin_width (GimpScaleEntry *entry)
   gdouble lower;
   gdouble upper;
   gint    digits;
+
+  g_return_if_fail (GIMP_IS_SCALE_ENTRY (entry));
 
   g_object_get (entry,
                 "lower",  &lower,
@@ -494,6 +425,38 @@ gimp_scale_entry_update_spin_width (GimpScaleEntry *entry)
   width = MIN (10, width);
 
   gtk_entry_set_width_chars (GTK_ENTRY (entry->priv->spinbutton), width);
+}
+
+static void
+gimp_scale_entry_update_steps (GimpScaleEntry *entry)
+{
+  gdouble lower;
+  gdouble upper;
+  gdouble range;
+
+  g_return_if_fail (GIMP_IS_SCALE_ENTRY (entry));
+
+  g_object_get (entry,
+                "lower",  &lower,
+                "upper",  &upper,
+                NULL);
+
+  g_return_if_fail (upper >= lower);
+
+  range = upper - lower;
+
+  if (range <= 1.0)
+    {
+      gimp_scale_entry_set_increments (entry, range / 10.0, range / 100.0);
+    }
+  else if (range <= 40.0)
+    {
+      gimp_scale_entry_set_increments (entry, 1.0, 2.0);
+    }
+  else
+    {
+      gimp_scale_entry_set_increments (entry, 1.0, 10.0);
+    }
 }
 
 static gboolean
@@ -652,8 +615,6 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
  * @value:          The initial value.
  * @lower:          The lower boundary.
  * @upper:          The upper boundary.
- * @step_increment: The step increment.
- * @page_increment: The page increment.
  * @digits:         The number of decimal digits.
  *
  * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
@@ -666,8 +627,6 @@ gimp_scale_entry_new2 (const gchar *text,
                        gdouble      value,
                        gdouble      lower,
                        gdouble      upper,
-                       gdouble      step_increment,
-                       gdouble      page_increment,
                        guint        digits)
 {
   GtkWidget *entry;
@@ -677,8 +636,6 @@ gimp_scale_entry_new2 (const gchar *text,
                         "value",          value,
                         "lower",          lower,
                         "upper",          upper,
-                        "step-increment", step_increment,
-                        "page-increment", page_increment,
                         "digits",         digits,
                         NULL);
 
@@ -776,6 +733,11 @@ gimp_scale_entry_get_scale (GimpScaleEntry *entry)
  *
  * If @limit_scale is %FALSE though, it would sync back both widgets
  * range to the new values.
+ *
+ * Note that the step and page increments are updated when the range is
+ * updated according to some common usage algorithm which should work if
+ * you don't have very specific needs. If you want to customize the step
+ * increments yourself, you may call gimp_scale_entry_set_increments()
  **/
 void
 gimp_scale_entry_set_range (GimpScaleEntry *entry,
@@ -914,6 +876,50 @@ gboolean
 gimp_scale_entry_get_logarithmic (GimpScaleEntry *entry)
 {
   return entry->priv->logarithmic;
+}
+
+/**
+ * gimp_scale_entry_set_increments:
+ * @entry: the #GimpScaleEntry.
+ * @step:  the step increment.
+ * @page:  the page increment.
+ *
+ * Set the step and page increments for both the spin button and the
+ * scale. By default, these increment values are automatically computed
+ * depending on the range based on common usage. So you will likely not
+ * need to run this for most case. Yet if you want specific increments
+ * (which the widget cannot guess), you can call this function. If you
+ * want even more modularity and have different increments on each
+ * widget, use specific functions on gimp_scale_entry_get_spin_button()
+ * and gimp_scale_entry_get_scale().
+ *
+ * Note that there is no `get` function because it could not return
+ * shared values in case you edited each widget separately.
+ * Just use specific functions on the spin button and scale instead if
+ * you need to get existing increments.
+ */
+void
+gimp_scale_entry_set_increments (GimpScaleEntry *entry,
+                                 gdouble         step,
+                                 gdouble         page)
+{
+  GtkSpinButton *spinbutton;
+  GtkRange      *scale;
+
+  g_return_if_fail (entry->priv->scale && entry->priv->spinbutton);
+
+  spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
+  scale      = GTK_RANGE (entry->priv->scale);
+
+  gtk_adjustment_set_step_increment (gtk_range_get_adjustment (scale), step);
+  gtk_adjustment_set_step_increment (gtk_spin_button_get_adjustment (spinbutton), step);
+
+  gtk_adjustment_set_page_increment (gtk_range_get_adjustment (scale), page);
+  gtk_adjustment_set_page_increment (gtk_spin_button_get_adjustment (spinbutton), page);
+
+  g_object_set (entry,
+                "climb-rate", step,
+                NULL);
 }
 
 /**
