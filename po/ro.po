@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-10 13:26+0000\n"
-"PO-Revision-Date: 2020-10-28 04:54+0200\n"
+"PO-Revision-Date: 2020-10-31 22:21+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -1008,7 +1008,7 @@ msgstr "Canale"
 #: ../app/actions/actions.c:123 ../app/dialogs/convert-indexed-dialog.c:178
 #: ../app/dialogs/dialogs.c:384
 msgid "Colormap"
-msgstr "Paletă de culori"
+msgstr "Hartă de culori"
 
 #: ../app/actions/actions.c:126
 msgid "Context"
@@ -1727,7 +1727,7 @@ msgstr "Copie a canalului %s"
 #: ../app/actions/colormap-actions.c:45
 msgctxt "colormap-action"
 msgid "Colormap Menu"
-msgstr "Meniul paletei de culori"
+msgstr "Meniul hărții de culori"
 
 #: ../app/actions/colormap-actions.c:49
 msgctxt "colormap-action"
@@ -1972,72 +1972,72 @@ msgstr "Fundal: omite culoarea următoare din paletă"
 #: ../app/actions/context-actions.c:161
 msgctxt "context-action"
 msgid "Foreground: Set Color From Colormap"
-msgstr "Prim-plan: stabilește culoarea din paleta de culori"
+msgstr "Prim-plan: stabilește culoarea din harta de culori"
 
 #: ../app/actions/context-actions.c:165
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Colormap"
-msgstr "Prim-plan: folosește prima culoare din paleta de culori"
+msgstr "Prim-plan: folosește prima culoare din harta de culori"
 
 #: ../app/actions/context-actions.c:169
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Colormap"
-msgstr "Prim-plan: folosește ultima culoare din paleta de culori"
+msgstr "Prim-plan: folosește ultima culoare din harta de culori"
 
 #: ../app/actions/context-actions.c:173
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Colormap"
-msgstr "Prim-plan: folosește culoarea precedentă din paleta de culori"
+msgstr "Prim-plan: folosește culoarea precedentă din harta de culori"
 
 #: ../app/actions/context-actions.c:177
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Colormap"
-msgstr "Prim-plan: folosește culoarea următoare din paleta de culori"
+msgstr "Prim-plan: folosește culoarea următoare din harta de culori"
 
 #: ../app/actions/context-actions.c:181
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Colormap"
-msgstr "Prim-plan: omite culoarea precedentă din paleta de culori"
+msgstr "Prim-plan: omite culoarea precedentă din harta de culori"
 
 #: ../app/actions/context-actions.c:185
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Colormap"
-msgstr "Prim-plan: omite culoarea următoare din paleta de culori"
+msgstr "Prim-plan: omite culoarea următoare din harta de culori"
 
 #: ../app/actions/context-actions.c:193
 msgctxt "context-action"
 msgid "Background: Set Color From Colormap"
-msgstr "Fundal: stabilește culoarea din paleta de culori"
+msgstr "Fundal: stabilește culoarea din harta de culori"
 
 #: ../app/actions/context-actions.c:197
 msgctxt "context-action"
 msgid "Background: Use First Color From Colormap"
-msgstr "Fundal: folosește prima culoare din paleta de culori"
+msgstr "Fundal: folosește prima culoare din harta de culori"
 
 #: ../app/actions/context-actions.c:201
 msgctxt "context-action"
 msgid "Background: Use Last Color From Colormap"
-msgstr "Fundal: folosește ultima culoare din paleta de culori"
+msgstr "Fundal: folosește ultima culoare din harta de culori"
 
 #: ../app/actions/context-actions.c:205
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Colormap"
-msgstr "Fundal: folosește culoarea precedentă din paleta de culori"
+msgstr "Fundal: folosește culoarea precedentă din harta de culori"
 
 #: ../app/actions/context-actions.c:209
 msgctxt "context-action"
 msgid "Background: Use Next Color From Colormap"
-msgstr "Fundal: folosește culoarea următoare din paleta de culori"
+msgstr "Fundal: folosește culoarea următoare din harta de culori"
 
 #: ../app/actions/context-actions.c:213
 msgctxt "context-action"
 msgid "Background: Skip Back Color From Colormap"
-msgstr "Fundal: omite culoarea precedentă din paleta de culori"
+msgstr "Fundal: omite culoarea precedentă din harta de culori"
 
 #: ../app/actions/context-actions.c:217
 msgctxt "context-action"
 msgid "Background: Skip Forward Color From Colormap"
-msgstr "Fundal: omite culoarea următoare din paleta de culori"
+msgstr "Fundal: omite culoarea următoare din harta de culori"
 
 #: ../app/actions/context-actions.c:225
 msgctxt "context-action"
@@ -3345,12 +3345,12 @@ msgstr "Deschide dialogul de trasee"
 #: ../app/actions/dialogs-actions.c:89
 msgctxt "dialogs-action"
 msgid "Color_map"
-msgstr "_Paletă de culori"
+msgstr "_Hartă de culori"
 
 #: ../app/actions/dialogs-actions.c:90
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
-msgstr "Deschide dialogul paletei de culori"
+msgstr "Deschide dialogul hărții de culori"
 
 #: ../app/actions/dialogs-actions.c:95
 msgctxt "dialogs-action"
@@ -6507,7 +6507,7 @@ msgstr "_RGB"
 #: ../app/actions/image-actions.c:197
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
-msgstr "Convertește imaginea în spațiu de culoare RGB"
+msgstr "Convertește imaginea la spațiul de culoare RGB"
 
 #: ../app/actions/image-actions.c:201 ../app/actions/image-actions.c:449
 msgctxt "image-convert-action"
@@ -6517,7 +6517,7 @@ msgstr "Tonuri de _gri"
 #: ../app/actions/image-actions.c:202
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
-msgstr "Convertește imaginea în tonuri de gri"
+msgstr "Convertește imaginea la tonuri de gri"
 
 #: ../app/actions/image-actions.c:206
 msgctxt "image-convert-action"
@@ -6527,7 +6527,7 @@ msgstr "_Indexat..."
 #: ../app/actions/image-actions.c:207
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
-msgstr "Convertește imaginea în culori indexate"
+msgstr "Convertește imaginea la culori indexate"
 
 #: ../app/actions/image-actions.c:214
 msgctxt "image-convert-action"
@@ -6537,7 +6537,7 @@ msgstr "Întreg pe 8 biți"
 #: ../app/actions/image-actions.c:216
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
-msgstr "Convertește imaginea în întreg pe 8 biți"
+msgstr "Convertește imaginea la întreg pe 8 biți"
 
 #: ../app/actions/image-actions.c:220
 msgctxt "image-convert-action"
@@ -6547,7 +6547,7 @@ msgstr "Întreg pe 16 biți"
 #: ../app/actions/image-actions.c:222
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
-msgstr "Convertește imaginea în întreg pe 16 biți"
+msgstr "Convertește imaginea la întreg pe 16 biți"
 
 #: ../app/actions/image-actions.c:226
 msgctxt "image-convert-action"
@@ -6557,7 +6557,7 @@ msgstr "Întreg pe 32 de biți"
 #: ../app/actions/image-actions.c:228
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
-msgstr "Convertește imaginea în întreg pe 32 de biți"
+msgstr "Convertește imaginea la întreg pe 32 de biți"
 
 #: ../app/actions/image-actions.c:232
 msgctxt "image-convert-action"
@@ -6567,7 +6567,7 @@ msgstr "Virgulă mobilă pe 16 biți"
 #: ../app/actions/image-actions.c:234
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
-msgstr "Convertește imaginea în virgulă mobilă pe 16 biți"
+msgstr "Convertește imaginea la virgulă mobilă pe 16 biți"
 
 #: ../app/actions/image-actions.c:238
 msgctxt "image-convert-action"
@@ -6577,7 +6577,7 @@ msgstr "Virgulă mobilă pe 32 de biți"
 #: ../app/actions/image-actions.c:240
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
-msgstr "Convertește imaginea în virgulă mobilă pe 32 de biți"
+msgstr "Convertește imaginea la virgulă mobilă pe 32 de biți"
 
 #: ../app/actions/image-actions.c:244
 msgctxt "image-convert-action"
@@ -6587,7 +6587,7 @@ msgstr "Virgulă mobilă pe 64 de biți"
 #: ../app/actions/image-actions.c:246
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
-msgstr "Convertește imaginea în virgulă mobilă pe 64 de biți"
+msgstr "Convertește imaginea la virgulă mobilă pe 64 de biți"
 
 #: ../app/actions/image-actions.c:253
 msgctxt "image-convert-action"
@@ -6597,7 +6597,7 @@ msgstr "Gama perceptiv (sRGB)"
 #: ../app/actions/image-actions.c:255
 msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
-msgstr "Convertește imaginea în gama perceptiv (sRGB)"
+msgstr "Convertește imaginea la gama perceptiv (sRGB)"
 
 # hm ? la Adobe este crudă
 #: ../app/actions/image-actions.c:259
@@ -6608,7 +6608,7 @@ msgstr "Lumină liniară"
 #: ../app/actions/image-actions.c:261
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
-msgstr "Convertește imaginea în lumină liniară"
+msgstr "Convertește imaginea la lumină liniară"
 
 #: ../app/actions/image-actions.c:268
 msgctxt "image-action"
@@ -11274,6 +11274,8 @@ msgstr "Adaugă un canal alfa la toate straturile imaginilor importate."
 #: ../app/config/gimprc-blurbs.h:221
 msgid "Which plug-in to use for importing raw digital camera files."
 msgstr ""
+"Care plugin să fie utilizat pentru importul fișierelor brute (RAW) de cameră "
+"digitală."
 
 #: ../app/config/gimprc-blurbs.h:224
 msgid "Export file type used by default."
@@ -11281,7 +11283,7 @@ msgstr "Exportă tipul de fișier folosit în mod implicit."
 
 #: ../app/config/gimprc-blurbs.h:227
 msgid "Export the image's color profile by default."
-msgstr ""
+msgstr "Exportă profilul de culoare al imaginii în mod implicit."
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
@@ -11307,6 +11309,8 @@ msgstr "Exportă metadatele IPTC în mod implicit."
 #: ../app/config/gimprc-blurbs.h:248
 msgid "Try generating debug data for bug reporting when appropriate."
 msgstr ""
+"Încearcă generarea de date de depanare pentru raportarea erorilor atunci "
+"când este cazul."
 
 #: ../app/config/gimprc-blurbs.h:251
 msgid ""
@@ -11330,6 +11334,8 @@ msgstr "Specifică limba care să fie folosită pentru interfața utilizator."
 msgid ""
 "The last known release version of GIMP as queried from official website."
 msgstr ""
+"Ultima versiune de lansare GIMP cunoscută, conform interogării de pe site-ul "
+"web oficial."
 
 #: ../app/config/gimprc-blurbs.h:268
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -11339,11 +11345,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:271
 msgid "The timestamp for the last known release date."
-msgstr ""
+msgstr "Marca temporală pentru data ultimei lansări cunoscute."
 
 #: ../app/config/gimprc-blurbs.h:274
 msgid "The last revision number for the release."
-msgstr ""
+msgstr "Numărul ultimei revizuiri pentru versiunea lansată."
 
 #: ../app/config/gimprc-blurbs.h:277
 msgid ""
@@ -11426,6 +11432,9 @@ msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
 msgstr ""
+"Stabilește dacă GIMP ar trebui să creeze previzualizări ale grupurilor de "
+"straturi. Previzualizările de grup de straturi sunt mai scumpe decât "
+"previzualizările de nivel obișnuite."
 
 # în mod deliberat fără „previzualizările de” din motive de redundanță
 #: ../app/config/gimprc-blurbs.h:348
@@ -11654,7 +11663,7 @@ msgstr "Arată bara filelor de imagine în modul fereastră unică."
 
 #: ../app/config/gimprc-blurbs.h:464
 msgid "Enable the N-Point Deformation tool."
-msgstr ""
+msgstr "Activează instrumentul de deformare N-Point."
 
 #: ../app/config/gimprc-blurbs.h:467
 msgid "Enable the Handle Transform tool."
@@ -11670,7 +11679,7 @@ msgstr "Activează instrumentul penel MyPaint."
 
 #: ../app/config/gimprc-blurbs.h:476
 msgid "Enable the Seamless Clone tool."
-msgstr ""
+msgstr "Activează instrumentul Clonă fără racord."
 
 #: ../app/config/gimprc-blurbs.h:479
 msgid "What to do when the space bar is pressed in the image window."
@@ -11734,7 +11743,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:513
 msgid "The name of the theme to use."
-msgstr ""
+msgstr "Numele temei de utilizat."
 
 #: ../app/config/gimprc-blurbs.h:528
 msgid ""
@@ -11928,16 +11937,22 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:651
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr ""
+"Stabilește raza implicită de chenar pentru dialogul 'Creare chenar din "
+"selecție'."
 
 #: ../app/config/gimprc-blurbs.h:654
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr ""
+"Stabilește setarea implicită de la 'Zonele selectate continuă în afara "
+"imaginii' pentru dialogul 'Creare chenar din selecție'."
 
 #: ../app/config/gimprc-blurbs.h:658
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
+"Stabilește stilul implicit de chenar pentru dialogul 'Creare chenar din "
+"selecție'."
 
 #: ../app/config/gimprc-blurbs.h:667
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -11978,11 +11993,13 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:686
 msgid "Menu mode of grouped tools."
-msgstr ""
+msgstr "Modul de meniu pentru instrumentele grupate."
 
 #: ../app/config/gimprc-blurbs.h:689
 msgid "Use a single toolbox button for grouped tools."
 msgstr ""
+"Folosește un singur buton de trusă de instrumente pentru instrumentele "
+"grupate."
 
 #: ../app/config/gimprc-blurbs.h:692
 msgid "Show the currently active image in the toolbox."
@@ -12778,7 +12795,7 @@ msgstr "Redenumire element"
 #: ../app/core/core-enums.c:1191
 msgctxt "undo-type"
 msgid "Item color tag"
-msgstr ""
+msgstr "Eticheta de culoare a elementului"
 
 #: ../app/core/core-enums.c:1192
 msgctxt "undo-type"
@@ -12838,7 +12855,7 @@ msgstr "Reluare de mască a grupului de straturi"
 #: ../app/core/core-enums.c:1203
 msgctxt "undo-type"
 msgid "Start transforming group layer"
-msgstr ""
+msgstr "Pornire de transformare a grupului de straturi"
 
 #: ../app/core/core-enums.c:1204
 msgctxt "undo-type"
@@ -13284,9 +13301,10 @@ msgstr ""
 "Eroare fatală de prelucrare în fișierul penel: datele de penel comprimate "
 "RLE sunt corupte."
 
+# tooltip
 #: ../app/core/gimpbrush.c:157 ../app/paint/gimppaintoptions.c:225
 msgid "Brush Spacing"
-msgstr "Spațiere penel"
+msgstr "Spațierea penelului"
 
 #: ../app/core/gimpbrushclipboard.c:185
 msgid "Clipboard Mask"
@@ -13346,9 +13364,10 @@ msgstr "Unghi nevalid de penel."
 msgid "In line %d of brush file: "
 msgstr "În linia %d a fișierului penel: "
 
+# tooltip
 #: ../app/core/gimpbrushgenerated.c:135
 msgid "Brush Shape"
-msgstr "Formă penel"
+msgstr "Forma penelului"
 
 #: ../app/core/gimpbrushgenerated.c:143
 msgid "Brush Radius"
@@ -13359,9 +13378,10 @@ msgstr "Rază penel"
 msgid "Brush Spikes"
 msgstr "Vârfuri penel"
 
+# tooltip
 #: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:232
 msgid "Brush Hardness"
-msgstr "Duritate penel"
+msgstr "Duritatea penelului"
 
 # tooltip
 #: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:211
@@ -14177,12 +14197,12 @@ msgstr "Convertire de profil de culoare"
 #: ../app/core/gimpimage-colormap.c:66
 #, c-format
 msgid "Colormap of Image #%d (%s)"
-msgstr "Paleta de culori a imaginii #%d (%s)"
+msgstr "Harta de culori a imaginii #%d (%s)"
 
 #: ../app/core/gimpimage-colormap.c:196
 msgctxt "undo-type"
 msgid "Set Colormap"
-msgstr "Stabilire paletă de culori"
+msgstr "Stabilire hartă de culori"
 
 #: ../app/core/gimpimage-colormap.c:236
 msgctxt "undo-type"
@@ -14197,7 +14217,7 @@ msgstr "Schimbare intrare din paleta de culori"
 #: ../app/core/gimpimage-colormap.c:317
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
-msgstr "Adăugare culoare la paleta de culori"
+msgstr "Adăugare culoare la harta de culori"
 
 #: ../app/core/gimpimage-convert-indexed.c:794
 msgid "Cannot convert image: palette is empty."
@@ -15590,7 +15610,7 @@ msgstr "Numărul _maxim de culori:"
 
 #: ../app/dialogs/convert-indexed-dialog.c:224
 msgid "_Remove unused and duplicate colors from colormap"
-msgstr "Elimină culo_rile nefolosite și duplicate din paleta de culori"
+msgstr "Elimină culo_rile nefolosite și duplicate din harta de culori"
 
 #: ../app/dialogs/convert-indexed-dialog.c:253
 msgid "Color _dithering:"
@@ -17084,7 +17104,7 @@ msgstr "Dialog pentru convertire în culori indexate"
 
 #: ../app/dialogs/preferences-dialog.c:2290
 msgid "Colormap:"
-msgstr "Paletă de culori:"
+msgstr "Hartă de culori:"
 
 #: ../app/dialogs/preferences-dialog.c:2293
 msgid "Maximum number of colors:"
@@ -17092,7 +17112,7 @@ msgstr "Numărul maxim de culori:"
 
 #: ../app/dialogs/preferences-dialog.c:2297
 msgid "Remove unused and duplicate colors from colormap"
-msgstr "Elimină culorile nefolosite și duplicate din paleta de culori"
+msgstr "Elimină culorile nefolosite și duplicate din harta de culori"
 
 #: ../app/dialogs/preferences-dialog.c:2303
 msgid "Color dithering:"
@@ -19719,11 +19739,11 @@ msgctxt "layer-mode"
 msgid "Replace"
 msgstr "Înlocuire"
 
-# hm ? sau anti radiere ?
+# hm ? sau anti-radiere ?
 #: ../app/operations/operations-enums.c:288
 msgctxt "layer-mode"
 msgid "Anti erase"
-msgstr "Anti ștergere"
+msgstr "Anti-ștergere"
 
 #: ../app/operations/operations-enums.c:316
 msgctxt "layer-mode-group"
@@ -19890,20 +19910,17 @@ msgstr "Ajustează luminozitatea și contrastul"
 
 # hm ?
 #: ../app/operations/gimpoperationcagecoefcalc.c:69
-#, fuzzy
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
 msgstr ""
-"Calculează un set al tamponului de memorie de coeficient pentru instrumentul "
-"de cușcă GIMP"
+"Calculează un set de tampon de coeficient pentru instrumentul cușcă GIMP"
 
 # hm ?
 #: ../app/operations/gimpoperationcagetransform.c:104
-#, fuzzy
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
 msgstr ""
-"Convertește un set al tamponului de coeficient într-un tampon de coordonate "
+"Convertește un set de tampon de coeficient într-un tampon de coordonate "
 "pentru instrumentul cușcă GIMP"
 
 #: ../app/operations/gimpoperationcagetransform.c:129
@@ -20029,7 +20046,7 @@ msgstr "Valoarea alfa"
 #.
 #: ../app/gui/gui.c:240
 msgid "default:LTR"
-msgstr ""
+msgstr "default:LTR"
 
 #: ../app/gui/gui.c:330
 msgid "Image Recovery"
@@ -20154,10 +20171,10 @@ msgstr "Expunere"
 msgid "Eraser"
 msgstr "Radieră"
 
-# hm ? sau anti radiere ?
+# hm ? sau anti-radiere ?
 #: ../app/paint/gimperaseroptions.c:66
 msgid "Anti erase"
-msgstr "Anti ștergere"
+msgstr "Anti-ștergere"
 
 # titlu
 #: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:53
@@ -20240,7 +20257,7 @@ msgstr "Fără efect de ștergere"
 
 #: ../app/paint/gimpmybrushoptions.c:115 ../app/paint/gimpsmudgeoptions.c:86
 msgid "Never decrease alpha of existing pixels"
-msgstr "Nu diminua niciodată alfa pixelilor existenți"
+msgstr "Nu diminuează niciodată alfa pixelilor existenți"
 
 #: ../app/paint/gimppaintbrush.c:82 ../app/tools/gimppaintbrushtool.c:57
 msgid "Paintbrush"
@@ -20272,7 +20289,7 @@ msgstr "Forță"
 
 #: ../app/paint/gimppaintoptions.c:239
 msgid "Brush Force"
-msgstr ""
+msgstr "Forța penelului"
 
 #: ../app/paint/gimppaintoptions.c:245
 msgid "Link Size"
@@ -20316,11 +20333,11 @@ msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:280
 msgid "Lock brush to view"
-msgstr ""
+msgstr "Blochează penelul la vizualizare"
 
 #: ../app/paint/gimppaintoptions.c:281
 msgid "Keep brush appearance fixed relative to the view"
-msgstr ""
+msgstr "Menține fix aspectul penelului în raport cu vizualizarea"
 
 #: ../app/paint/gimppaintoptions.c:287
 msgid "Incremental"
@@ -22846,11 +22863,12 @@ msgstr "Clic pentru a șterge linia"
 msgid "%s to pick a background color"
 msgstr "%s pentru a preleva o culoare de fundal"
 
+# hm ? sau anti-radiere ?
 #. the anti_erase toggle
 #: ../app/tools/gimperasertool.c:166
 #, c-format
 msgid "Anti erase  (%s)"
-msgstr "Anti șterge  (%s)"
+msgstr "Anti-ștergere  (%s)"
 
 #: ../app/tools/gimpfilteroptions.c:71
 msgid "_Preview"
@@ -23859,7 +23877,7 @@ msgstr "Instrument de operații: folosește o operație GEGL arbitrară"
 
 #: ../app/tools/gimpoperationtool.c:621
 msgid "Aux\\1 Input"
-msgstr ""
+msgstr "Auxiliar\\1 intrare"
 
 #: ../app/tools/gimppaintbrushtool.c:58
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -23873,22 +23891,27 @@ msgstr "_Pensulă de pictură"
 msgid "Edit this brush"
 msgstr "Editează acest penel"
 
+# tooltip
 #: ../app/tools/gimppaintoptions-gui.c:169
 msgid "Reset size to brush's native size"
 msgstr "Resetează dimensiunea la cea nativă a penelului"
 
+# tooltip
 #: ../app/tools/gimppaintoptions-gui.c:177
 msgid "Reset aspect ratio to brush's native aspect ratio"
 msgstr "Resetează raportul de aspect la cel nativ al penelului"
 
+# tooltip
 #: ../app/tools/gimppaintoptions-gui.c:185
 msgid "Reset angle to brush's native angle"
 msgstr "Resetează unghiul la cel nativ al penelului"
 
+# tooltip
 #: ../app/tools/gimppaintoptions-gui.c:193
 msgid "Reset spacing to brush's native spacing"
 msgstr "Resetează spațierea la cea nativă a penelului"
 
+# tooltip
 #: ../app/tools/gimppaintoptions-gui.c:201
 msgid "Reset hardness to brush's native hardness"
 msgstr "Resetează duritatea la cea nativă a penelului"
@@ -23912,7 +23935,7 @@ msgstr "Opțiuni de culoare"
 
 #: ../app/tools/gimppaintoptions-gui.c:579
 msgid "Link to brush default"
-msgstr ""
+msgstr "Leagă de implicitul a penelului"
 
 #: ../app/tools/gimppainttool.c:175
 msgid "Click to paint"
@@ -23938,7 +23961,7 @@ msgstr "%s pentru o linie dreaptă"
 
 #: ../app/tools/gimppainttool.c:877
 msgid "The active layer does not have an alpha channel."
-msgstr ""
+msgstr "Stratul activ nu are un canal alfa."
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -25713,16 +25736,16 @@ msgstr "Notație HTML:"
 #: ../app/widgets/gimpcolormapeditor.c:401
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Editarea intrării #%d din paleta de culori"
+msgstr "Editarea intrării #%d din harta de culori"
 
 # titlu pe bară
 #: ../app/widgets/gimpcolormapeditor.c:408
 msgid "Edit Colormap Entry"
-msgstr "Editarea intrării din paleta de culori"
+msgstr "Editarea intrării din harta de culori"
 
 #: ../app/widgets/gimpcolormapeditor.c:557
 msgid "Only indexed images have a colormap."
-msgstr "Numai imaginile indexate au paletă de culori."
+msgstr "Numai imaginile indexate au o hartă de culori."
 
 #: ../app/widgets/gimpcompressioncombobox.c:102
 msgctxt "compression"
@@ -26500,6 +26523,7 @@ msgstr "Memorie tampon"
 msgid "Total size of temporary buffers"
 msgstr "Mărimea totală a memoriei tampon"
 
+# titlu
 #: ../app/widgets/gimpdashboard.c:782
 msgctxt "dashboard-group"
 msgid "Cache"
@@ -26539,7 +26563,7 @@ msgstr "Utilizare memorie"
 #: ../app/widgets/gimpdashboard.c:929
 msgctxt "dashboard-variable"
 msgid "Cache"
-msgstr "Memorie cache"
+msgstr "Cache"
 
 #: ../app/widgets/gimpdashboard.c:963
 msgctxt "dashboard-group"
@@ -27286,7 +27310,7 @@ msgstr "Modifică culoarea paletei"
 # hm ? inspirat din fr și it
 #: ../app/widgets/gimppaletteeditor.c:486
 msgid "Edit Color Palette Entry"
-msgstr "Modifică intrarea paletei de culoare"
+msgstr "Modifică intrarea paletei de culori"
 
 # hm ?
 #: ../app/widgets/gimppdbdialog.c:282
@@ -28028,7 +28052,7 @@ msgid ""
 "Substituting grayscale map."
 msgstr ""
 "Avertisment XCF: versiunea 0 a formatului de fișier XCF\n"
-"nu salvează corect paletele de culori indexate.\n"
+"nu salvează corect hărțile de culori indexate.\n"
 "Se va substitui cu o paletă de tonuri de gri."
 
 #: ../app/xcf/xcf-read.c:195
