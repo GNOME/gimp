@@ -471,6 +471,10 @@ gimp_scale_entry_update_steps (GimpScaleEntry *entry)
     {
       gimp_scale_entry_set_increments (entry, 0.01, 0.1);
     }
+  else if (range <= 5.0)
+    {
+      gimp_scale_entry_set_increments (entry, 0.1, 1.0);
+    }
   else if (range <= 40.0)
     {
       gimp_scale_entry_set_increments (entry, 1.0, 2.0);
@@ -642,7 +646,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
  * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
  * attaches them to a 3-column #GtkGrid.
  *
- * Returns: (transfer full): The new #GtkScaleEntry.
+ * Returns: (transfer full): The new #GimpScaleEntry.
  **/
 GtkWidget *
 gimp_scale_entry_new2 (const gchar *text,
@@ -710,11 +714,13 @@ gimp_scale_entry_get_value (GimpScaleEntry *entry)
  * This function returns the #GtkLabel packed in @entry. This can be
  * useful if you need to customize some aspects of the widget.
  *
- * Returns: (transfer none): The new #GtkLabel contained in @entry.
+ * Returns: (transfer none): The #GtkLabel contained in @entry.
  **/
 GtkWidget *
 gimp_scale_entry_get_label (GimpScaleEntry *entry)
 {
+  g_return_val_if_fail (GIMP_IS_SCALE_ENTRY (entry), NULL);
+
   return entry->priv->label;
 }
 
@@ -725,11 +731,13 @@ gimp_scale_entry_get_label (GimpScaleEntry *entry)
  * This function returns the #GtkSpinButton packed in @entry. This can
  * be useful if you need to customize some aspects of the widget.
  *
- * Returns: (transfer none): The new #GtkSpinButton contained in @entry.
+ * Returns: (transfer none): The #GtkSpinButton contained in @entry.
  **/
 GtkWidget *
 gimp_scale_entry_get_spin_button (GimpScaleEntry *entry)
 {
+  g_return_val_if_fail (GIMP_IS_SCALE_ENTRY (entry), NULL);
+
   return entry->priv->spinbutton;
 }
 
@@ -740,11 +748,13 @@ gimp_scale_entry_get_spin_button (GimpScaleEntry *entry)
  * This function returns the #GtkScale packed in @entry. This can be
    * useful if you need to customize some aspects of the widget
  *
- * Returns: (transfer none): The new #GtkScale contained in @entry.
+ * Returns: (transfer none): The #GtkScale contained in @entry.
  **/
 GtkWidget *
 gimp_scale_entry_get_scale (GimpScaleEntry *entry)
 {
+  g_return_val_if_fail (GIMP_IS_SCALE_ENTRY (entry), NULL);
+
   return entry->priv->scale;
 }
 
@@ -785,10 +795,14 @@ gimp_scale_entry_set_range (GimpScaleEntry *entry,
                             gdouble         upper,
                             gboolean        limit_scale)
 {
-  GtkSpinButton *spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
+  GtkSpinButton *spinbutton;
   GtkAdjustment *spin_adjustment;
   GtkAdjustment *scale_adjustment;
 
+  g_return_if_fail (GIMP_IS_SCALE_ENTRY (entry));
+  g_return_if_fail (lower <= upper);
+
+  spinbutton       = GTK_SPIN_BUTTON (entry->priv->spinbutton);
   spin_adjustment  = gtk_spin_button_get_adjustment (spinbutton);
   scale_adjustment = gtk_range_get_adjustment (GTK_RANGE (entry->priv->scale));
 
@@ -915,6 +929,8 @@ gimp_scale_entry_set_logarithmic (GimpScaleEntry *entry,
 gboolean
 gimp_scale_entry_get_logarithmic (GimpScaleEntry *entry)
 {
+  g_return_val_if_fail (GIMP_IS_SCALE_ENTRY (entry), FALSE);
+
   return entry->priv->logarithmic;
 }
 
@@ -945,11 +961,19 @@ gimp_scale_entry_set_increments (GimpScaleEntry *entry,
 {
   GtkSpinButton *spinbutton;
   GtkRange      *scale;
+  gdouble        lower;
+  gdouble        upper;
 
+  g_return_if_fail (GIMP_IS_SCALE_ENTRY (entry));
   g_return_if_fail (entry->priv->scale && entry->priv->spinbutton);
+  g_return_if_fail (step < page);
 
   spinbutton = GTK_SPIN_BUTTON (entry->priv->spinbutton);
   scale      = GTK_RANGE (entry->priv->scale);
+
+  gtk_spin_button_get_range (spinbutton, &lower, &upper);
+  g_return_if_fail (upper >= lower);
+  g_return_if_fail (step < upper - lower && page < upper - lower);
 
   gtk_adjustment_set_step_increment (gtk_range_get_adjustment (scale), step);
   gtk_adjustment_set_step_increment (gtk_spin_button_get_adjustment (spinbutton), step);
@@ -960,66 +984,6 @@ gimp_scale_entry_set_increments (GimpScaleEntry *entry,
   g_object_set (entry->priv->spinbutton,
                 "climb-rate", step,
                 NULL);
-}
-
-/**
- * gimp_scale_entry_new:
- * @grid:                The #GtkGrid the widgets will be attached to.
- * @column:              The column to start with.
- * @row:                 The row to attach the widgets.
- * @text:                The text for the #GtkLabel which will appear
- *                       left of the #GtkHScale.
- * @scale_width:         The minimum horizontal size of the #GtkHScale.
- * @spinbutton_width:    The minimum horizontal size of the #GtkSpinButton.
- * @value:               The initial value.
- * @lower:               The lower boundary.
- * @upper:               The upper boundary.
- * @step_increment:      The step increment.
- * @page_increment:      The page increment.
- * @digits:              The number of decimal digits.
- * @constrain:           %TRUE if the range of possible values of the
- *                       #GtkSpinButton should be the same as of the #GtkHScale.
- * @unconstrained_lower: The spinbutton's lower boundary
- *                       if @constrain == %FALSE.
- * @unconstrained_upper: The spinbutton's upper boundary
- *                       if @constrain == %FALSE.
- * @tooltip:             A tooltip message for the scale and the spinbutton.
- * @help_id:             The widgets' help_id (see gimp_help_set_help_data()).
- *
- * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
- * attaches them to a 3-column #GtkGrid.
- *
- * Returns: (transfer none): The #GtkSpinButton's #GtkAdjustment.
- **/
-GtkAdjustment *
-gimp_scale_entry_new (GtkGrid     *grid,
-                      gint         column,
-                      gint         row,
-                      const gchar *text,
-                      gint         scale_width,
-                      gint         spinbutton_width,
-                      gdouble      value,
-                      gdouble      lower,
-                      gdouble      upper,
-                      gdouble      step_increment,
-                      gdouble      page_increment,
-                      guint        digits,
-                      gboolean     constrain,
-                      gdouble      unconstrained_lower,
-                      gdouble      unconstrained_upper,
-                      const gchar *tooltip,
-                      const gchar *help_id)
-{
-  return gimp_scale_entry_new_internal (FALSE,
-                                        grid, column, row,
-                                        text, scale_width, spinbutton_width,
-                                        value, lower, upper,
-                                        step_increment, page_increment,
-                                        digits,
-                                        constrain,
-                                        unconstrained_lower,
-                                        unconstrained_upper,
-                                        tooltip, help_id);
 }
 
 /**
