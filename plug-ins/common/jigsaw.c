@@ -2513,7 +2513,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (scale));
+  gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
   g_object_unref (group);
 
   g_signal_connect (scale, "value-changed",
