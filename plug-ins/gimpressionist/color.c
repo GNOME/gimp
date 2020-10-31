@@ -30,8 +30,8 @@
 
 #define NUMCOLORRADIO 2
 
-static GtkWidget     *colorradio[NUMCOLORRADIO];
-static GtkAdjustment *colornoiseadjust = NULL;
+static GtkWidget *colorradio[NUMCOLORRADIO];
+static GtkWidget *colornoiseadjust = NULL;
 
 void
 color_restore (void)
@@ -39,8 +39,8 @@ color_restore (void)
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (colorradio[pcvals.color_type]), TRUE);
 
-  gtk_adjustment_set_value (colornoiseadjust,
-                            pcvals.color_noise);
+  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (colornoiseadjust),
+                              pcvals.color_noise);
 }
 
 int
@@ -53,7 +53,7 @@ void
 create_colorpage (GtkNotebook *notebook)
 {
   GtkWidget *vbox;
-  GtkWidget *label, *grid;
+  GtkWidget *label;
   GtkWidget *frame;
 
   label = gtk_label_new_with_mnemonic (_("Co_lor"));
@@ -83,22 +83,17 @@ create_colorpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
   colornoiseadjust =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                          _("Color _noise:"),
-                          100, -1, pcvals.color_noise,
-                          0.0, 100.0, 1.0, 5.0, 0,
-                          TRUE, 0, 0,
-                          _("Adds random noise to the color"),
-                          NULL);
+    gimp_scale_entry_new2 (_("Color _noise:"), pcvals.color_noise, 0.0, 100.0, 0);
+  gimp_help_set_help_data (colornoiseadjust,
+                           _("Adds random noise to the color"),
+                           NULL);
   g_signal_connect (colornoiseadjust, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.color_noise);
+  gtk_box_pack_start (GTK_BOX (vbox), colornoiseadjust, FALSE, FALSE, 6);
+  gtk_widget_show (colornoiseadjust);
+
 
   color_restore ();
 

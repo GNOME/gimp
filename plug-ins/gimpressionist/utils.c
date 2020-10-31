@@ -409,3 +409,16 @@ create_radio_button (GtkWidget    *box,
   return tmpw;
 }
 
+void
+gimpressionist_scale_entry_update_double (GimpScaleEntry *entry,
+                                          gdouble        *value)
+{
+  *value = gimp_scale_entry_get_value (entry);
+}
+
+void
+gimpressionist_scale_entry_update_int (GimpScaleEntry *entry,
+                                       gint           *value)
+{
+  *value = (gint) gimp_scale_entry_get_value (entry);
+}

@@ -28,10 +28,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static GtkWidget     *orient_radio[NUMORIENTRADIO];
-static GtkAdjustment *orient_num_adjust = NULL;
-static GtkAdjustment *orient_first_adjust = NULL;
-static GtkAdjustment *orient_last_adjust = NULL;
+static GtkWidget *orient_radio[NUMORIENTRADIO];
+static GtkWidget *orient_num_adjust   = NULL;
+static GtkWidget *orient_first_adjust = NULL;
+static GtkWidget *orient_last_adjust  = NULL;
 
 
 static void
@@ -49,12 +49,12 @@ void orientation_restore (void)
 {
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orient_radio[pcvals.orient_type]),
                                 TRUE);
-  gtk_adjustment_set_value (orient_num_adjust,
-                            pcvals.orient_num);
-  gtk_adjustment_set_value (orient_first_adjust,
-                            pcvals.orient_first);
-  gtk_adjustment_set_value (orient_last_adjust,
-                            pcvals.orient_last);
+  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (orient_num_adjust),
+                              pcvals.orient_num);
+  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (orient_first_adjust),
+                              pcvals.orient_first);
+  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (orient_last_adjust),
+                              pcvals.orient_last);
 }
 
 static void
@@ -97,40 +97,37 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   orient_num_adjust =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                          _("Directions:"),
-                          150, -1, pcvals.orient_num,
-                          1.0, 30.0, 1.0, 1.0, 0,
-                          TRUE, 0, 0,
-                          _("The number of directions (i.e. brushes) to use"),
-                          NULL);
+    gimp_scale_entry_new2 (_("Directions:"), pcvals.orient_num, 1.0, 30.0, 0);
+  gimp_help_set_help_data (orient_num_adjust,
+                           _("The number of directions (i.e. brushes) to use"),
+                           NULL);
   g_signal_connect (orient_num_adjust, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+                    G_CALLBACK (gimpressionist_scale_entry_update_int),
                     &pcvals.orient_num);
+  gtk_grid_attach (GTK_GRID (grid), orient_num_adjust, 0, 0, 3, 1);
+  gtk_widget_show (orient_num_adjust);
 
   orient_first_adjust =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                          _("Start angle:"),
-                          150, -1, pcvals.orient_first,
-                          0.0, 360.0, 1.0, 10.0, 0,
-                          TRUE, 0, 0,
-                          _("The starting angle of the first brush to create"),
-                          NULL);
+    gimp_scale_entry_new2 (_("Start angle:"), pcvals.orient_first, 0.0, 360.0, 0);
+  gimp_help_set_help_data (orient_first_adjust,
+                           _("The starting angle of the first brush to create"),
+                           NULL);
   g_signal_connect (orient_first_adjust, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.orient_first);
+  gtk_grid_attach (GTK_GRID (grid), orient_first_adjust, 0, 1, 3, 1);
+  gtk_widget_show (orient_first_adjust);
 
   orient_last_adjust =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
-                          _("Angle span:"),
-                          150, -1, pcvals.orient_last,
-                          0.0, 360.0, 1.0, 10.0, 0,
-                          TRUE, 0, 0,
-                          _("The angle span of the first brush to create"),
-                          NULL);
+    gimp_scale_entry_new2 (_("Angle span:"), pcvals.orient_last, 0.0, 360.0, 0);
+  gimp_help_set_help_data (orient_last_adjust,
+                           _("The angle span of the first brush to create"),
+                           NULL);
   g_signal_connect (orient_last_adjust, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.orient_last);
+  gtk_grid_attach (GTK_GRID (grid), orient_last_adjust, 0, 2, 3, 1);
+  gtk_widget_show (orient_last_adjust);
 
   box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box2, FALSE, FALSE, 0);

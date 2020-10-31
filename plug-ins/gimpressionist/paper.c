@@ -31,12 +31,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static GtkWidget     *paper_preview       = NULL;
-static GtkWidget     *paper_invert        = NULL;
-static GtkWidget     *paper_list          = NULL;
-static GtkAdjustment *paper_relief_adjust = NULL;
-static GtkAdjustment *paper_scale_adjust  = NULL;
-static GtkWidget     *paper_overlay       = NULL;
+static GtkWidget *paper_preview       = NULL;
+static GtkWidget *paper_invert        = NULL;
+static GtkWidget *paper_list          = NULL;
+static GtkWidget *paper_relief_adjust = NULL;
+static GtkWidget *paper_scale_adjust  = NULL;
+static GtkWidget *paper_overlay       = NULL;
 
 static void paper_update_preview (void)
 {
@@ -109,8 +109,8 @@ void
 paper_restore (void)
 {
   reselect (paper_list, pcvals.selected_paper);
-  gtk_adjustment_set_value (paper_relief_adjust, pcvals.paper_relief);
-  gtk_adjustment_set_value (paper_scale_adjust, pcvals.paper_scale);
+  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (paper_relief_adjust), pcvals.paper_relief);
+  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (paper_scale_adjust), pcvals.paper_scale);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (paper_invert), pcvals.paper_invert);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (paper_overlay), pcvals.paper_overlay);
 }
@@ -188,28 +188,26 @@ create_paperpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   paper_scale_adjust =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                          _("Scale:"),
-                          150, -1, pcvals.paper_scale,
-                          3.0, 150.0, 1.0, 10.0, 1,
-                          TRUE, 0, 0,
-                          _("Specifies the scale of the texture (in percent of original file)"),
-                          NULL);
+    gimp_scale_entry_new2 (_("Scale:"), pcvals.paper_scale, 3.0, 150.0, 1);
+  gimp_help_set_help_data (paper_scale_adjust,
+                           _("Specifies the scale of the texture (in percent of original file)"),
+                           NULL);
   g_signal_connect (paper_scale_adjust, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.paper_scale);
+  gtk_grid_attach (GTK_GRID (grid), paper_scale_adjust, 0, 0, 3, 1);
+  gtk_widget_show (paper_scale_adjust);
 
   paper_relief_adjust =
-    gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                          _("Relief:"),
-                          150, -1, pcvals.paper_relief,
-                          0.0, 100.0, 1.0, 10.0, 1,
-                          TRUE, 0, 0,
-                          _("Specifies the amount of embossing to apply to the image (in percent)"),
-                          NULL);
+    gimp_scale_entry_new2 (_("Relief:"), pcvals.paper_relief, 0.0, 100.0, 1);
+  gimp_help_set_help_data (paper_relief_adjust,
+                           _("Specifies the amount of embossing to apply to the image (in percent)"),
+                           NULL);
   g_signal_connect (paper_relief_adjust, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.paper_relief);
+  gtk_grid_attach (GTK_GRID (grid), paper_relief_adjust, 0, 1, 3, 1);
+  gtk_widget_show (paper_relief_adjust);
 
 
   if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (paper_store_list), &iter))

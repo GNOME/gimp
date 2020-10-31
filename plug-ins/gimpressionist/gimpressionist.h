@@ -174,6 +174,11 @@ GtkWidget *create_radio_button (GtkWidget *box, int orient_type,
                                 GtkWidget **buttons_array
                                );
 
+void gimpressionist_scale_entry_update_double (GimpScaleEntry *entry,
+                                               gdouble        *value);
+void gimpressionist_scale_entry_update_int    (GimpScaleEntry *entry,
+                                               gint           *value);
+
 #define CLAMP_UP_TO(x, max) (CLAMP((x),(0),(max-1)))
 
 #endif /* #ifndef __GIMPRESSIONIST_H */
