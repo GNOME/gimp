@@ -96,7 +96,6 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
         GObject.Value(GObject.TYPE_STRING, tmp),
     ])
     img = img.index(1)
-    img = Gimp.Image.get_by_id(img)
     # TODO: scaling
     os.remove(tmp)
     os.rmdir(tempdir)
@@ -110,7 +109,10 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
         GObject.Value(GObject.TYPE_INT, 1)
     ])
 
-def save_ora(procedure, run_mode, image, drawable, file, args, data):
+# We would expect the n_drawables parameter to not be there with introspection but
+# currently that isn't working, see issue #5312. Until that is resolved we keep
+# this parameter here or else saving would fail.
+def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, data):
     def write_file_str(zfile, fname, data):
         # work around a permission bug in the zipfile library:
         # http://bugs.python.org/issue3394
@@ -140,9 +142,9 @@ def save_ora(procedure, run_mode, image, drawable, file, args, data):
         Gimp.get_pdb().run_procedure('file-png-save', [
             GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
             GObject.Value(Gimp.Image, image),
-            GObject.Value(Gimp.Drawable, drawable),
-            GObject.Value(GObject.TYPE_STRING, tmp),
-            GObject.Value(GObject.TYPE_STRING, 'tmp.png'),
+            GObject.Value(GObject.TYPE_INT, 1),
+            GObject.Value(Gimp.ObjectArray, Gimp.ObjectArray.new(Gimp.Drawable, [drawable], 1)),
+            GObject.Value(Gio.File, Gio.File.new_for_path(tmp)),
             GObject.Value(GObject.TYPE_BOOLEAN, interlace),
             GObject.Value(GObject.TYPE_INT, compression),
             # write all PNG chunks except oFFs(ets)
@@ -151,8 +153,11 @@ def save_ora(procedure, run_mode, image, drawable, file, args, data):
             GObject.Value(GObject.TYPE_BOOLEAN, False),
             GObject.Value(GObject.TYPE_BOOLEAN, True),
         ])
-        orafile.write(tmp, path)
-        os.remove(tmp)
+        if (os.path.exists(tmp)):
+            orafile.write(tmp, path)
+            os.remove(tmp)
+        else:
+            print("Error removing ", tmp)
 
     def add_layer(parent, x, y, opac, gimp_layer, path, visible=True):
         store_layer(image, gimp_layer, path)
@@ -220,11 +225,7 @@ def save_ora(procedure, run_mode, image, drawable, file, args, data):
             add_layer(parent, x, y, opac, lay, path_name, lay.get_visible())
 
     # save mergedimage
-    thumb = Gimp.get_pdb().run_procedure('gimp-image-duplicate', [
-        GObject.Value(Gimp.Image, image),
-    ])
-    thumb = thumb.index(1)
-    thumb = Gimp.Image.get_by_id(thumb)
+    thumb = image.duplicate()
     thumb_layer = thumb.merge_visible_layers (Gimp.MergeType.CLIP_TO_IMAGE)
     store_layer (thumb, thumb_layer, 'mergedimage.png')
 
@@ -263,7 +264,7 @@ def load_ora(procedure, run_mode, file, args, data):
     stack, w, h = get_image_attributes(orafile)
 
     img = Gimp.Image.new(w, h, Gimp.ImageBaseType.RGB)
-    img.set_filename (file.peek_path())
+    img.set_file (file)
 
     def get_layers(root):
         """iterates over layers and nested stacks"""
@@ -314,10 +315,9 @@ def load_ora(procedure, run_mode, file, args, data):
             gimp_layer = Gimp.get_pdb().run_procedure('gimp-file-load-layer', [
                 GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
                 GObject.Value(Gimp.Image, img),
-                GObject.Value(GObject.TYPE_STRING, tmp),
+                GObject.Value(Gio.File, Gio.File.new_for_path(tmp)),
             ])
             gimp_layer = gimp_layer.index(1)
-            gimp_layer = Gimp.Item.get_by_id(gimp_layer)
             os.remove(tmp)
         gimp_layer.set_name(name)
         gimp_layer.set_mode(layer_mode)
