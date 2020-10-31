@@ -184,9 +184,9 @@ choose_best_brush (ppm_t *p, ppm_t *a, int tx, int ty,
               if ((h = brush->col[(y * brush->width * 3) + x * 3]))
                 {
                   v = h / 255.0;
-                  dev += abs (row[k+0] - r) * v;
-                  dev += abs (row[k+1] - g) * v;
-                  dev += abs (row[k+2] - b) * v;
+                  dev += fabs (row[k+0] - r) * v;
+                  dev += fabs (row[k+1] - g) * v;
+                  dev += fabs (row[k+2] - b) * v;
                   if (img_has_alpha)
                     dev += a->col[(ty + y) * a->width * 3 + (tx + x) * 3] * v;
                 }
