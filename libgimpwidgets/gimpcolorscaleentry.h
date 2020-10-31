@@ -30,38 +30,8 @@
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_COLOR_SCALE_ENTRY            (gimp_color_scale_entry_get_type ())
-#define GIMP_COLOR_SCALE_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_SCALE_ENTRY, GimpColorScaleEntry))
-#define GIMP_COLOR_SCALE_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_SCALE_ENTRY, GimpColorScaleEntryClass))
-#define GIMP_IS_COLOR_SCALE_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_COLOR_SCALE_ENTRY))
-#define GIMP_IS_COLOR_SCALE_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_SCALE_ENTRY))
-#define GIMP_COLOR_SCALE_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SCALE_ENTRY, GimpColorScaleEntryClass))
-
-
-typedef struct _GimpColorScaleEntryPrivate GimpColorScaleEntryPrivate;
-typedef struct _GimpColorScaleEntryClass   GimpColorScaleEntryClass;
-
-struct _GimpColorScaleEntry
-{
-  GimpScaleEntry              parent_instance;
-};
-
-struct _GimpColorScaleEntryClass
-{
-  GimpScaleEntryClass  parent_class;
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
-
-GType           gimp_color_scale_entry_get_type   (void) G_GNUC_CONST;
+#define GIMP_TYPE_COLOR_SCALE_ENTRY (gimp_color_scale_entry_get_type ())
+G_DECLARE_FINAL_TYPE (GimpColorScaleEntry, gimp_color_scale_entry, GIMP, COLOR_SCALE_ENTRY, GimpScaleEntry)
 
 GtkWidget     * gimp_color_scale_entry_new2       (const gchar *text,
                                                    gdouble      value,

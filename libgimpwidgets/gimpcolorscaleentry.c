@@ -41,6 +41,10 @@
  * #GimpColorScale instead of a #GtkScale.
  **/
 
+struct _GimpColorScaleEntry
+{
+  GimpScaleEntry parent_instance;
+};
 
 static GtkWidget * gimp_color_scale_entry_new_range_widget (GtkAdjustment  *adjustment);
 
