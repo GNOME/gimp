@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-12 20:08+0000\n"
-"PO-Revision-Date: 2020-10-26 20:14+0200\n"
+"POT-Creation-Date: 2020-10-31 21:45+0000\n"
+"PO-Revision-Date: 2020-10-31 23:52+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -49,7 +49,7 @@ msgstr "Aliniere straturi vizibile"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1811
+#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1837
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:698
 #: ../plug-ins/common/file-pdf-load.c:1264
@@ -71,7 +71,7 @@ msgstr "Aliniere straturi vizibile"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1284 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:1908 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:1925 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -114,7 +114,7 @@ msgstr "_Renunță"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1812
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1838
 #: ../plug-ins/common/file-pdf-load.c:699 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -466,7 +466,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:1960 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1044
+#: ../plug-ins/file-tiff/file-tiff-load.c:1049
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -1071,8 +1071,8 @@ msgstr "Salvare parametri explorator CML"
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
 #: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1726
-#: ../plug-ins/file-tiff/file-tiff-save.c:971
-#: ../plug-ins/file-tiff/file-tiff-save.c:1081 ../plug-ins/flame/flame.c:450
+#: ../plug-ins/file-tiff/file-tiff-save.c:979
+#: ../plug-ins/file-tiff/file-tiff-save.c:1089 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -1213,16 +1213,16 @@ msgstr "Colorare culoare particularizată"
 
 #: ../plug-ins/common/colormap-remap.c:97
 msgid "Rearrange the colormap"
-msgstr "Rearanjează paleta de culori"
+msgstr "Rearanjează harta de culori"
 
 # apare la contextul lui undo
 #: ../plug-ins/common/colormap-remap.c:104
 msgid "R_earrange Colormap..."
-msgstr "R_earanjare paletă de culori..."
+msgstr "R_earanjare hartă de culori..."
 
 #: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
-msgstr "Interschimbă două culori în paleta de culori"
+msgstr "Interschimbă două culori în harta de culori"
 
 #: ../plug-ins/common/colormap-remap.c:123
 msgid "_Swap Colors"
@@ -1236,7 +1236,7 @@ msgstr "O arie de remapare nevalidă a fost pasată funcției de remapare"
 
 #: ../plug-ins/common/colormap-remap.c:333
 msgid "Rearranging the colormap"
-msgstr "Rearanjare paletă de culori"
+msgstr "Rearanjare hartă de culori"
 
 #: ../plug-ins/common/colormap-remap.c:501
 msgid "Sort on Hue"
@@ -1261,7 +1261,7 @@ msgstr "Resetează ordinea"
 # titlu pe bară
 #: ../plug-ins/common/colormap-remap.c:616
 msgid "Rearrange Colormap"
-msgstr "Rearanjare paletă de culori"
+msgstr "Rearanjare hartă de culori"
 
 #. The Reset button
 #: ../plug-ins/common/colormap-remap.c:620 ../plug-ins/common/curve-bend.c:1538
@@ -1281,7 +1281,7 @@ msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
-"Trageți și plasați culorile pentru a rearanja paleta de culori.  Numerele "
+"Trageți și plasați culorile pentru a rearanja harta de culori.  Numerele "
 "afișate sunt índicii originali. Clic dreapta pentru meniul cu opțiuni de "
 "sortare."
 
@@ -2193,7 +2193,7 @@ msgstr "EOF sau eroare la citirea antetului de imagine"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:681 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-heif.c:696 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1035
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
@@ -2283,7 +2283,7 @@ msgstr "„%s”: EOF sau eroare la citirea datelor de paletă"
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
-#: ../plug-ins/common/file-heif.c:1253 ../plug-ins/common/file-html-table.c:238
+#: ../plug-ins/common/file-heif.c:1268 ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
 #: ../plug-ins/common/file-png.c:1607 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
@@ -2292,7 +2292,7 @@ msgstr "„%s”: EOF sau eroare la citirea datelor de paletă"
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1697
-#: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:961
+#: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:969
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Se exportă „%s”"
@@ -2629,11 +2629,11 @@ msgstr "Ranguri:"
 msgid "C source code header"
 msgstr "Antet de cod sursă C"
 
-#: ../plug-ins/common/file-heif.c:114
+#: ../plug-ins/common/file-heif.c:143
 msgid "Loads HEIF images"
 msgstr "Încarcă imagini HEIF"
 
-#: ../plug-ins/common/file-heif.c:115
+#: ../plug-ins/common/file-heif.c:144
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2641,83 +2641,91 @@ msgstr ""
 "Încarcă imaginea stocată în format HEIF (High Efficiency Image File Format). "
 "Sufixele tipice pentru fișierele HEIF sunt .heif și .heic."
 
-#: ../plug-ins/common/file-heif.c:121 ../plug-ins/common/file-heif.c:168
+#: ../plug-ins/common/file-heif.c:150 ../plug-ins/common/file-heif.c:179
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:162
+#: ../plug-ins/common/file-heif.c:173
 msgid "Exports HEIF images"
 msgstr "Exportă imagini HEIF"
 
-#: ../plug-ins/common/file-heif.c:163
+#: ../plug-ins/common/file-heif.c:174
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "Salvează imaginea în format HEIF (High Efficiency Image File Format)."
 
-#: ../plug-ins/common/file-heif.c:719 ../plug-ins/common/file-heif.c:752
-#: ../plug-ins/common/file-heif.c:791 ../plug-ins/common/file-heif.c:857
+#: ../plug-ins/common/file-heif.c:194
+msgid "Exports AVIF images"
+msgstr "Exportă imagini AVIF"
+
+#: ../plug-ins/common/file-heif.c:195
+msgid "Save image in AV1 Image File Format (AVIF)"
+msgstr "Încarcă imaginea stocată în format de fișier AV1 (AVIF)"
+
+#: ../plug-ins/common/file-heif.c:734 ../plug-ins/common/file-heif.c:767
+#: ../plug-ins/common/file-heif.c:806 ../plug-ins/common/file-heif.c:872
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Încărcarea imaginii HEIF a eșuat: %s"
 
-#: ../plug-ins/common/file-heif.c:741
+#: ../plug-ins/common/file-heif.c:756
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Încărcarea imaginii HEIF a eșuat: fișierul de intrare nu conține imagini "
 "lizibile"
 
-#: ../plug-ins/common/file-heif.c:984
+#: ../plug-ins/common/file-heif.c:999
 msgid "image content"
 msgstr "conținut de imagine"
 
-#: ../plug-ins/common/file-heif.c:1303 ../plug-ins/common/file-heif.c:1536
+#: ../plug-ins/common/file-heif.c:1318 ../plug-ins/common/file-heif.c:1562
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Codarea imaginii HEIF a eșuat: %s"
 
-#: ../plug-ins/common/file-heif.c:1573
+#: ../plug-ins/common/file-heif.c:1599
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Scrierea imaginii HEIF a eșuat: %s"
 
-#: ../plug-ins/common/file-heif.c:1662
+#: ../plug-ins/common/file-heif.c:1688
 msgid "primary"
 msgstr "primar"
 
-#: ../plug-ins/common/file-heif.c:1807
+#: ../plug-ins/common/file-heif.c:1833
 msgid "Load HEIF Image"
 msgstr "Încarcă o imagine HEIF"
 
 # hm ? titlu sau acțiune ?
-#: ../plug-ins/common/file-heif.c:1821
+#: ../plug-ins/common/file-heif.c:1847
 msgid "Select Image"
 msgstr "Selectare imagine"
 
-#: ../plug-ins/common/file-heif.c:1987
-msgid "Nearly _lossless (YUV420 format)"
-msgstr "_Aproape fără pierderi (format YUV420)"
+#: ../plug-ins/common/file-heif.c:2013
+msgid "Nearly _lossless"
+msgstr "_Aproape fără pierderi"
 
-#: ../plug-ins/common/file-heif.c:1991 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2017 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Calitate:"
 
-#: ../plug-ins/common/file-heif.c:2034
+#: ../plug-ins/common/file-heif.c:2060
 msgid "Bit depth:"
 msgstr "Adâncime de biți:"
 
-#: ../plug-ins/common/file-heif.c:2040
+#: ../plug-ins/common/file-heif.c:2066
 msgid "8 bit/channel"
 msgstr "8 biți/canal"
 
-#: ../plug-ins/common/file-heif.c:2041
-msgid "10 bit/channel (HDR)"
-msgstr "10 biți/canal (HDR)"
+#: ../plug-ins/common/file-heif.c:2067
+msgid "10 bit/channel"
+msgstr "10 biți/canal"
 
-#: ../plug-ins/common/file-heif.c:2042
-msgid "12 bit/channel (HDR)"
-msgstr "12 biți/canal (HDR)"
+#: ../plug-ins/common/file-heif.c:2068
+msgid "12 bit/channel"
+msgstr "12 biți/canal"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2051 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2077 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:387
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save color _profile"
@@ -3208,7 +3216,7 @@ msgid "Import from PDF"
 msgstr "Import din PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1265 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:1909
+#: ../plug-ins/file-tiff/file-tiff-load.c:1926
 #: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "_Importă"
@@ -3331,7 +3339,7 @@ msgstr "Straturi ca pagini (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1046
+#: ../plug-ins/file-tiff/file-tiff-load.c:1051
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
@@ -3438,13 +3446,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Eroare la exportarea „%s”. Nu s-a putut exporta imaginea."
 
 #: ../plug-ins/common/file-png.c:2416 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1158
+#: ../plug-ins/file-tiff/file-tiff-save.c:1166
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Eroare la încărcarea fișierului UI „%s”: %s"
 
 #: ../plug-ins/common/file-png.c:2417 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1159
+#: ../plug-ins/file-tiff/file-tiff-save.c:1167
 msgid "Unknown error"
 msgstr "Eroare necunoscută"
 
@@ -4091,7 +4099,7 @@ msgstr "Nu s-au putut citi intrările de culoare din „%s”"
 
 #: ../plug-ins/common/file-sunras.c:495
 msgid "Type of colormap not supported"
-msgstr "Tipul de paletă de culori nu este acceptat"
+msgstr "Tipul de hartă de culori nu este acceptat"
 
 #: ../plug-ins/common/file-sunras.c:502 ../plug-ins/common/file-xbm.c:835
 #: ../plug-ins/common/file-xwd.c:525
@@ -4718,7 +4726,7 @@ msgid ""
 "Illegal number of colormap entries: %ld"
 msgstr ""
 "„%s”:\n"
-"Număr nelegal de intrări în paleta de culori: %ld"
+"Număr nelegal de intrări în harta de culori: %ld"
 
 #: ../plug-ins/common/file-xwd.c:495
 #, c-format
@@ -5713,19 +5721,20 @@ msgstr "Intensificare de claritate"
 
 #: ../plug-ins/common/smooth-palette.c:83
 msgid "Derive a smooth color palette from the image"
-msgstr "Derivează din imagine o paletă netedă de culori"
+msgstr "Derivă din imagine o paletă netedă de culori"
 
 #: ../plug-ins/common/smooth-palette.c:88
 msgid "Smoo_th Palette..."
-msgstr "Ne_tezește paleta..."
+msgstr "Pale_tă netedă..."
 
 #: ../plug-ins/common/smooth-palette.c:179
 msgid "Deriving smooth palette"
-msgstr "Derivează o paletă netedă"
+msgstr "Derivare paletă netedă"
 
+# titlu pe bară
 #: ../plug-ins/common/smooth-palette.c:434
 msgid "Smooth Palette"
-msgstr "Netezire de paletă"
+msgstr "Paletă netedă"
 
 #: ../plug-ins/common/smooth-palette.c:478
 msgid "_Search depth:"
@@ -6698,7 +6707,7 @@ msgstr "Pagină web"
 
 #: ../plug-ins/file-bmp/bmp-load.c:146
 msgid "Bad colormap"
-msgstr "Paletă de culori greșită"
+msgstr "Hartă de culori greșită"
 
 #: ../plug-ins/file-bmp/bmp-load.c:242 ../plug-ins/file-bmp/bmp-load.c:252
 #: ../plug-ins/file-bmp/bmp-load.c:260 ../plug-ins/file-bmp/bmp-load.c:269
@@ -7541,16 +7550,30 @@ msgstr "Canale suplimentare cu date nespecificate."
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF neconform: canale suplimentare fără câmpul 'ExtraSamples'."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:833
+#: ../plug-ins/file-tiff/file-tiff-load.c:346
+#, c-format
+msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
+msgstr "Nu s-a putut citi pagina %d din %d. Imaginea ar putea fi coruptă.\n"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:838
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-din-%d-pagini"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1077
+#: ../plug-ins/file-tiff/file-tiff-load.c:1082
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1904
+#. Error reading scanline, stop loading
+#: ../plug-ins/file-tiff/file-tiff-load.c:1584
+#: ../plug-ins/file-tiff/file-tiff-load.c:1759
+#, c-format
+msgid "Reading scanline failed. Image may be corrupt at line %d."
+msgstr ""
+"Citirea liniei de scanare a eșuat. Este posibil ca imaginea să fie coruptă "
+"la linia %d."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1921
 msgid "Import from TIFF"
 msgstr "Importă din TIFF"
 
@@ -7558,23 +7581,23 @@ msgstr "Importă din TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:1957
+#: ../plug-ins/file-tiff/file-tiff-load.c:1974
 msgid "_Keep empty space around imported layers"
 msgstr "_Păstrează un spațiu gol în jurul straturilor importate"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1974
+#: ../plug-ins/file-tiff/file-tiff-load.c:1991
 msgid "Process extra channel as:"
 msgstr "Procesează canalele suplimentare ca:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1977
+#: ../plug-ins/file-tiff/file-tiff-load.c:1994
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _ne-premultiplicat"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1978
+#: ../plug-ins/file-tiff/file-tiff-load.c:1995
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_multiplicat"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1979
+#: ../plug-ins/file-tiff/file-tiff-load.c:1996
 msgid "Channe_l"
 msgstr "Cana_l"
 
@@ -7595,7 +7618,7 @@ msgstr "Pozele indexate nu pot fi comprimate cu „JPEG”."
 msgid "Failed a scanline write on row %d"
 msgstr "Scrierea unei linii de scanare pe rândul %d a eșuat"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:986
+#: ../plug-ins/file-tiff/file-tiff-save.c:994
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7603,44 +7626,44 @@ msgstr ""
 "Formatul TIFF acceptă comentarii doar în codare\n"
 "ASCII pe 7 biți. Nu a fost salvat niciun comentariu."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1104
+#: ../plug-ins/file-tiff/file-tiff-save.c:1112
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Scrierea paginilor cu diferite adâncimi de biți este ciudată."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1148
+#: ../plug-ins/file-tiff/file-tiff-save.c:1156
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1174
+#: ../plug-ins/file-tiff/file-tiff-save.c:1182
 msgid "Compression"
 msgstr "Comprimare"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1178
+#: ../plug-ins/file-tiff/file-tiff-save.c:1186
 msgid "_None"
 msgstr "_Fără"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1179
+#: ../plug-ins/file-tiff/file-tiff-save.c:1187
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1180
+#: ../plug-ins/file-tiff/file-tiff-save.c:1188
 msgid "_Pack Bits"
 msgstr "_Pack Bits"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1181
+#: ../plug-ins/file-tiff/file-tiff-save.c:1189
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1182
+#: ../plug-ins/file-tiff/file-tiff-save.c:1190
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1183
+#: ../plug-ins/file-tiff/file-tiff-save.c:1191
 msgid "CCITT Group _3 fax"
 msgstr "CCITT Group _3 fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1184
+#: ../plug-ins/file-tiff/file-tiff-save.c:1192
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Group _4 fax"
 
@@ -8020,7 +8043,7 @@ msgstr "Rază _filtru spațial:"
 
 #: ../plug-ins/flame/flame.c:1171
 msgid "Color_map:"
-msgstr "_Paletă de culori:"
+msgstr "_Hartă de culori:"
 
 #: ../plug-ins/flame/flame.c:1213
 msgid "Custom gradient"
@@ -8309,7 +8332,7 @@ msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"Creează o paletă de culori cu opțiunile specificate mai sus (densitate de "
+"Creează o hartă de culori cu opțiunile specificate mai sus (densitate de "
 "culoare, funcție). Rezultatul este vizibil în imaginea previzualizată."
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1147
@@ -8319,7 +8342,7 @@ msgstr "Aplică degradeul activ la imaginea finală"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1159
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
-"Creează o paletă de culori folosind un degrade din editorul de degradeuri"
+"Creează o hartă de culori folosind un degrade din editorul de degradeuri"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1170
 msgid "FractalExplorer Gradient"
