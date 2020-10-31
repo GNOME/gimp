@@ -15522,9 +15522,9 @@ msgstr ""
 " Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007\n"
 " Jordi Jover, jordijn@softcatala.org, 2002\n"
 " Albert F. <lakonfrariadelavila@gmail.com>, 2012, 2013\n"
-" Eulàlia Pagès i Morales <eulaliapages@gmail.com>, 2015-2017\n"
-" Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2018\n"
-"Carles Ferrando Garcia <carles.ferrando@gmail.com>, 2019"
+" Eulàlia Pagès i Morales <eulaliapages@gmail.com>, 2015-2020\n"
+" Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2020\n"
+" Carles Ferrando Garcia <carles.ferrando@gmail.com>, 2019"
 
 #: ../app/dialogs/about-dialog.c:335
 msgid "Update available!"
@@ -15550,7 +15550,7 @@ msgstr "Baixa el GIMP %s (publicat el %s)\n"
 
 #: ../app/dialogs/about-dialog.c:395 ../app/dialogs/about-dialog.c:416
 msgid "Check for updates"
-msgstr "Comproveu les actualitzacions"
+msgstr "Comprova les actualitzacions"
 
 #. Translators: first string is the date in the locale's date
 #. * representation (e.g., 12/31/99), second is the time in the
@@ -15572,7 +15572,7 @@ msgid ""
 "commit %s"
 msgstr ""
 "Aquesta és una versió inestable de desenvolupament\n"
-"«commit» %s"
+"comissió %s"
 
 #: ../app/dialogs/action-search-dialog.c:68
 msgid "Search Actions"
@@ -16661,7 +16661,7 @@ msgstr "Accés a la xarxa"
 
 #: ../app/dialogs/preferences-dialog.c:1219
 msgid "Check for updates (requires internet)"
-msgstr "Comproveu les actualitzacions (cal internet)"
+msgstr "Comprova les actualitzacions (cal internet)"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1224
@@ -16953,7 +16953,7 @@ msgid ""
 msgstr ""
 "Aquestes funcionalitats no estan acabades, són errònies i poden trencar el "
 "GIMP. No es recomana utilitzar-les tret que sapigueu realment el que esteu "
-"fent o intenteu aportar pedaços."
+"fent o intenteu aportar millores."
 
 #: ../app/dialogs/preferences-dialog.c:1634
 msgid "Insane Options"
@@ -17504,7 +17504,7 @@ msgstr "Manual d'u_suari:"
 
 #: ../app/dialogs/preferences-dialog.c:2532
 msgid "User interface language"
-msgstr "Llenguatge de la interfície d'usuari"
+msgstr "Idioma de la interfície d'usuari"
 
 #. If there is no webkit available, assume we are on a platform
 #. *  that doesn't use the help browser, so don't bother showing
@@ -18564,7 +18564,7 @@ msgid ""
 msgstr ""
 "<big>Versió de desenvolupament, no estable</big>\n"
 "\n"
-"<small>commit <tt>%s</tt></small>\n"
+"<small>comissió <tt>%s</tt></small>\n"
 "\n"
 "<small>Proveu els errors en la branca mestra més recent del git\n"
 "abans d'informar-ne.</small>"
@@ -27294,7 +27294,7 @@ msgstr "Falta el manual d'usuari del GIMP"
 #: ../app/widgets/gimphelp.c:809
 msgid "The GIMP user manual is not installed in your language."
 msgstr ""
-"El manual d'usuari del GIMP no està instal·lat en el vostre llenguatge."
+"El manual d'usuari del GIMP no està instal·lat en el vostre idioma."
 
 #: ../app/widgets/gimphelp.c:820
 msgid "Read Selected _Language"
