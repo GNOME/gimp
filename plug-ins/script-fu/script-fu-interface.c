@@ -45,7 +45,6 @@
 #define TEXT_WIDTH           100
 #define COLOR_SAMPLE_WIDTH    60
 #define COLOR_SAMPLE_HEIGHT   15
-#define SLIDER_WIDTH          80
 
 
 typedef struct
@@ -410,19 +409,22 @@ script_fu_interface (SFScript  *script,
           switch (arg->default_value.sfa_adjustment.type)
             {
             case SF_SLIDER:
-              arg->value.sfa_adjustment.adj =
-                gimp_scale_entry_new (GTK_GRID (sf_interface->grid),
-                                      0, row,
-                                      label_text, SLIDER_WIDTH, -1,
-                                      arg->value.sfa_adjustment.value,
-                                      arg->default_value.sfa_adjustment.lower,
-                                      arg->default_value.sfa_adjustment.upper,
-                                      arg->default_value.sfa_adjustment.step,
-                                      arg->default_value.sfa_adjustment.page,
-                                      arg->default_value.sfa_adjustment.digits,
-                                      TRUE, 0.0, 0.0,
-                                      NULL, NULL);
-              gtk_entry_set_activates_default (GIMP_SCALE_ENTRY_SPINBUTTON (arg->value.sfa_adjustment.adj), TRUE);
+                {
+                  GtkWidget *spinbutton;
+
+                  widget = gimp_scale_entry_new2 (label_text,
+                                                  arg->value.sfa_adjustment.value,
+                                                  arg->default_value.sfa_adjustment.lower,
+                                                  arg->default_value.sfa_adjustment.upper,
+                                                  arg->default_value.sfa_adjustment.digits);
+                  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (widget),
+                                                   arg->default_value.sfa_adjustment.step,
+                                                   arg->default_value.sfa_adjustment.page);
+                  spinbutton = gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (widget));
+                  arg->value.sfa_adjustment.adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
+
+                  gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
+                }
               break;
 
             default:
