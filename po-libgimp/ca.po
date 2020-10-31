@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-11-03 11:42+0000\n"
+"POT-Creation-Date: 2020-10-31 10:07+0000\n"
 "PO-Revision-Date: 2019-11-01 21:55+0100\n"
 "Last-Translator: Jordi Mas <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
@@ -56,83 +56,84 @@ msgstr "Selecció del pinzell"
 msgid "_Browse..."
 msgstr "_Navega..."
 
-#: ../libgimp/gimpexport.c:278 ../libgimp/gimpexport.c:314
+#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "El connector %s no pot gestionar capes"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
 msgid "Merge Visible Layers"
 msgstr "Fusiona les capes visibles"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:304
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "El connector %s no pot gestionar desplaçaments de capa, mida o opacitat"
 
-#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
-"El connector %s només pot gestionar les capes com a fotogrames d'una animació"
+"El connector %s només pot gestionar les capes com a fotogrames d'una "
+"animació"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
 msgid "Save as Animation"
 msgstr "Anomena i desa com a animació"
 
-#: ../libgimp/gimpexport.c:306 ../libgimp/gimpexport.c:315
-#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:333
+#: ../libgimp/gimpexport.c:323 ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:341 ../libgimp/gimpexport.c:350
 msgid "Flatten Image"
 msgstr "Aplana la imatge"
 
-#: ../libgimp/gimpexport.c:323
+#: ../libgimp/gimpexport.c:340
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "El connector %s no pot gestionar transparències"
 
-#: ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:349
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "El connector %s no pot gestionar transparències"
 
-#: ../libgimp/gimpexport.c:341
+#: ../libgimp/gimpexport.c:358
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "El connector %s no pot gestionar màscares de capa"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:359
 msgid "Apply Layer Masks"
 msgstr "Aplica les màscares de capa"
 
-#: ../libgimp/gimpexport.c:350
+#: ../libgimp/gimpexport.c:367
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "El connector %s només pot gestionar imatges RGB"
 
-#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:389
-#: ../libgimp/gimpexport.c:398
+#: ../libgimp/gimpexport.c:368 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:415
 msgid "Convert to RGB"
 msgstr "Converteix a RGB"
 
-#: ../libgimp/gimpexport.c:359
+#: ../libgimp/gimpexport.c:376
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "El connector %s només pot gestionar imatges en escala de grisos"
 
-#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:389
-#: ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:377 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:427
 msgid "Convert to Grayscale"
 msgstr "Converteix a escala de grisos"
 
-#: ../libgimp/gimpexport.c:368
+#: ../libgimp/gimpexport.c:385
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "El connector %s només pot gestionar imatges indexades"
 
-#: ../libgimp/gimpexport.c:369 ../libgimp/gimpexport.c:398
-#: ../libgimp/gimpexport.c:408
+#: ../libgimp/gimpexport.c:386 ../libgimp/gimpexport.c:415
+#: ../libgimp/gimpexport.c:425
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -140,14 +141,14 @@ msgstr ""
 "Converteix a indexades amb la configuració predeterminada\n"
 "(Feu-ho de forma manual per a ajustar el resultat)"
 
-#: ../libgimp/gimpexport.c:378
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "El connector %s només pot gestionar els mapes de bits (dos colors) o les "
 "imatges indexades"
 
-#: ../libgimp/gimpexport.c:379
+#: ../libgimp/gimpexport.c:396
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -155,38 +156,51 @@ msgstr ""
 "Converteix a indexat amb la configuració predeterminada\n"
 "(feu-ho de forma manual per a ajustar el resultat)"
 
-#: ../libgimp/gimpexport.c:388
+#: ../libgimp/gimpexport.c:405
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "El connector %s només pot gestionar imatges RGB o en escala de grisos"
 
-#: ../libgimp/gimpexport.c:397
+#: ../libgimp/gimpexport.c:414
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "El connector %s només pot gestionar les imatges RGB o indexades"
 
-#: ../libgimp/gimpexport.c:407
+#: ../libgimp/gimpexport.c:424
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "El connector %s només pot gestionar les imatges en escala de grisos o les "
 "indexades"
 
-#: ../libgimp/gimpexport.c:418
+#: ../libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "El connector %s necessita un canal alfa"
 
-#: ../libgimp/gimpexport.c:419
+#: ../libgimp/gimpexport.c:436
 msgid "Add Alpha Channel"
 msgstr "Afegeix un canal alfa"
 
-#: ../libgimp/gimpexport.c:478
+#: ../libgimp/gimpexport.c:444
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr "el connector %s necessita retallar les capes als límits de la imatge"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Crop Layers"
+msgstr "Retalla capes"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Resize Image to Layers"
+msgstr "Redimensiona la imatge a les capes"
+
+#: ../libgimp/gimpexport.c:504
 msgid "Confirm Save"
 msgstr "Confirmeu què voleu desar"
 
-#: ../libgimp/gimpexport.c:483 ../libgimp/gimpexport.c:565
-#: ../libgimp/gimpexport.c:1063 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimp/gimpexport.c:509 ../libgimp/gimpexport.c:591
+#: ../libgimp/gimpexport.c:1125 ../libgimpwidgets/gimpcolorbutton.c:549
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
@@ -195,38 +209,38 @@ msgstr "Confirmeu què voleu desar"
 msgid "_Cancel"
 msgstr "_Cancel·la"
 
-#: ../libgimp/gimpexport.c:484
+#: ../libgimp/gimpexport.c:510
 msgid "C_onfirm"
 msgstr "C_onfirma"
 
-#: ../libgimp/gimpexport.c:560
+#: ../libgimp/gimpexport.c:586
 msgid "Export File"
 msgstr "Exporta un fitxer"
 
-#: ../libgimp/gimpexport.c:564
+#: ../libgimp/gimpexport.c:590
 msgid "_Ignore"
 msgstr "_Ignora"
 
-#: ../libgimp/gimpexport.c:566 ../libgimp/gimpexport.c:1064
+#: ../libgimp/gimpexport.c:592 ../libgimp/gimpexport.c:1126
 msgid "_Export"
 msgstr "_Exporta"
 
 #. the headline
-#: ../libgimp/gimpexport.c:596
+#: ../libgimp/gimpexport.c:622
 #, c-format
 msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
+"Your image should be exported before it can be saved as %s for the following"
+" reasons:"
 msgstr ""
-"Pels motius següents, heu d'exportar la imatge abans de poder-la desar com a "
-"%s:"
+"Pels motius següents, heu d'exportar la imatge abans de poder-la desar com a"
+" %s:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:670
+#: ../libgimp/gimpexport.c:696
 msgid "The export conversion won't modify your original image."
 msgstr "La conversió de l'exportació no modificarà la imatge original."
 
-#: ../libgimp/gimpexport.c:774
+#: ../libgimp/gimpexport.c:800
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -235,7 +249,7 @@ msgstr ""
 "Ara desareu una màscara de capa com a %s.\n"
 "No es desaran les capes visibles."
 
-#: ../libgimp/gimpexport.c:780
+#: ../libgimp/gimpexport.c:806
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -245,7 +259,7 @@ msgstr ""
 "No es desaran les capes visibles."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1057
+#: ../libgimp/gimpexport.c:1119
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exporta la imatge com a %s"
@@ -258,50 +272,49 @@ msgstr "Selecció de lletra"
 msgid "Gradient Selection"
 msgstr "Selecció del degradat"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:519
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:708
 msgid "Background"
 msgstr "Fons"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:897
 #, c-format
 msgid "Rotate %s?"
 msgstr "Voleu girar %s?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:903
 msgid "_Keep Original"
 msgstr "_Mantén l'original"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:904 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "Gi_ra"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:945
 msgid "Original"
 msgstr "Original"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:961
 msgid "Rotated"
 msgstr "Girat"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:979
 msgid "This image contains Exif orientation metadata."
 msgstr "Aquesta imatge conté metadades d'orientació EXIF."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:997
 msgid "Would you like to rotate the image?"
 msgstr "Us agradaria girar la imatge?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1009
 msgid "_Don't ask me again"
 msgstr "No m'ho tornis a _demanar"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
-#.
 #: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:252
 msgid "(Empty)"
 msgstr "(Buit)"
@@ -825,7 +838,8 @@ msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (to antihorari)"
 
-#. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
+#. Translators: this is an abbreviated version of "HSV (counter-clockwise
+#. hue)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:680
 msgctxt "gradient-segment-color"
@@ -964,7 +978,8 @@ msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "Espiral (antihorari)"
 
-#. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
+#. Translators: this is an abbreviated version of "Spiral (counter-
+#. clockwise)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:788
 msgctxt "gradient-type"
@@ -1461,39 +1476,39 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Escapça segons l'aspecte"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:886
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Les metadades només es poden carregar des de fitxers locals"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
+#: ../libgimpbase/gimpmetadata.c:900 ../libgimpbase/gimpmetadata.c:970
 #, c-format
 msgid "Conversion of the filename to system codepage failed."
 msgstr ""
-"La conversió del nom del fitxer a la codificació de la pàgina del sistema ha "
-"fallat."
+"La conversió del nom del fitxer a la codificació de la pàgina del sistema ha"
+" fallat."
 
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:957
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Les metadades només es poden desar a fitxers locals"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1019
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Les dades EXIF no són vàlides."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1048
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "L'anàlisi de les dades EXIF ha fallat."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1098
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "L'anàlisi de les dades IPTC ha fallat."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1146
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "L'anàlisi de les dades XMP ha fallat."
@@ -1618,8 +1633,8 @@ msgid ""
 "fallback."
 msgstr ""
 "Si es marca l'opció, el GIMP intentarà fer servir el perfil de color del "
-"sistema. El perfil configurat del monitor només es faria servir com a última "
-"opció."
+"sistema. El perfil configurat del monitor només es faria servir com a última"
+" opció."
 
 #: ../libgimpconfig/gimpcolorconfig.c:63
 msgid ""
@@ -1631,11 +1646,11 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
-"The preferred grayscale working space color profile. It will be offered next "
-"to the built-in grayscale profile when a color profile can be chosen."
+"The preferred grayscale working space color profile. It will be offered next"
+" to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
-"El perfil preferit del color del lloc de treball en escala de grisos. Estarà "
-"al costat del perfil en escala de grisos creat, quan un perfil del color "
+"El perfil preferit del color del lloc de treball en escala de grisos. Estarà"
+" al costat del perfil en escala de grisos creat, quan un perfil del color "
 "pugui ser elegit."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
@@ -1645,8 +1660,8 @@ msgstr "El perfil de color CMYK emprat per convertir entre RGB i CMYK."
 #: ../libgimpconfig/gimpcolorconfig.c:74
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
-"some other color space, including soft-proofing to a printer or other output "
-"device profile. "
+"some other color space, including soft-proofing to a printer or other output"
+" device profile. "
 msgstr ""
 "El perfil del color que s'utilitza per a les proves en pantalla va des de "
 "l'espai del color de la imatge a algun altre espai del color, incloent-hi "
@@ -1674,7 +1689,8 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
-"When disabled, image display might be of better quality at the cost of speed."
+"When disabled, image display might be of better quality at the cost of "
+"speed."
 msgstr ""
 "Quan es desactiva, la visualització de la imatge podria ser de millor "
 "qualitat a costa de la velocitat."
@@ -1682,8 +1698,8 @@ msgstr ""
 #: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
-"simulation device (usually your monitor). Try them all and choose what looks "
-"the best. "
+"simulation device (usually your monitor). Try them all and choose what looks"
+" the best. "
 msgstr ""
 "Com es converteixen els colors des de l'espai del color de la imatge pel "
 "dispositiu de simulació de sortida (en general el monitor). Proveu-los tots "
@@ -1698,7 +1714,8 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
-"When disabled, soft-proofing might be of better quality at the cost of speed."
+"When disabled, soft-proofing might be of better quality at the cost of "
+"speed."
 msgstr ""
 "Quan es desactiva, les proves en pantalla podrien ser de millor qualitat a "
 "costa de la velocitat."
@@ -1713,7 +1730,8 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
-msgstr "El color utilitzat per a marcar els colors que estan fora de la gamma."
+msgstr ""
+"El color utilitzat per a marcar els colors que estan fora de la gamma."
 
 #: ../libgimpconfig/gimpcolorconfig.c:198
 msgid "Mode of operation"
@@ -1953,8 +1971,8 @@ msgstr "_D'acord"
 
 #: ../libgimpwidgets/gimpcolorhexentry.c:118
 msgid ""
-"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
-"CSS color names."
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts"
+" CSS color names."
 msgstr ""
 "Notació hexadecimal utilitzada en l'HTML i el CSS. També permet utilitzar "
 "els noms de colors del CSS."
@@ -2138,17 +2156,17 @@ msgstr "_Transforma"
 msgid "_Shear"
 msgstr "I_nclina"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
-msgid "Kilobytes"
-msgstr "KiloBytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:256
+msgid "Kibibyte"
+msgstr "Kibibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
-msgid "Megabytes"
-msgstr "MegaBytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:257
+msgid "Mebibyte"
+msgstr "Mebibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
-msgid "Gigabytes"
-msgstr "GigaBytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:258
+msgid "Gibibyte"
+msgstr "Gibibyte"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:270
@@ -2214,8 +2232,8 @@ msgstr ""
 "Feu clic en el comptagotes, després feu clic en un color a la pantalla per "
 "seleccionar-lo."
 
-#  toggle button to (des)activate the instant preview
 #. toggle button to (de)activate the instant preview
+#  toggle button to (des)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:293
 msgid "_Preview"
 msgstr "_Previsualitza"
@@ -2544,11 +2562,13 @@ msgstr "Botó %d prem"
 msgid "Button %d Release"
 msgstr "Botó %d allibera"
 
-#: ../modules/controller-dx-dinput.c:442 ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:442
+#: ../modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "Moviment X esquerra"
 
-#: ../modules/controller-dx-dinput.c:445 ../modules/controller-linux-input.c:91
+#: ../modules/controller-dx-dinput.c:445
+#: ../modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "Moviment X dreta"
 
@@ -2560,11 +2580,13 @@ msgstr "Moviment Y allunya"
 msgid "Y Move Near"
 msgstr "Moviment Y apropa"
 
-#: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:460
+#: ../modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Moviment Z amunt"
 
-#: ../modules/controller-dx-dinput.c:463 ../modules/controller-linux-input.c:95
+#: ../modules/controller-dx-dinput.c:463
+#: ../modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Moviment Z avall"
 
@@ -2576,7 +2598,8 @@ msgstr "Eix X cap enfora"
 msgid "X Axis Tilt Near"
 msgstr "Eix Y cap endavant"
 
-#: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:478
+#: ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Eix Y cap a la dreta"
 
@@ -3020,11 +3043,11 @@ msgstr "Contrast"
 #~ msgstr "Gestió del color"
 
 #~ msgid ""
-#~ "This filter takes its configuration from the Color Management section in "
-#~ "the Preferences dialog."
+#~ "This filter takes its configuration from the Color Management section in the"
+#~ " Preferences dialog."
 #~ msgstr ""
-#~ "Aquest filtre pren la seva configuració de la secció de «Gestió del "
-#~ "color» en el diàleg de «Preferències»."
+#~ "Aquest filtre pren la seva configuració de la secció de «Gestió del color» "
+#~ "en el diàleg de «Preferències»."
 
 #~ msgid "Mode of operation:"
 #~ msgstr "Mode d'operació:"
@@ -3101,15 +3124,14 @@ msgstr "Contrast"
 #~ msgstr "Cap"
 
 #~ msgid "The color profile used for simulating a printed version (softproof)."
-#~ msgstr ""
-#~ "El perfil de color emprat per simular una versió impresa (softproof)."
+#~ msgstr "El perfil de color emprat per simular una versió impresa (softproof)."
 
 #~ msgid "Sets how colors are mapped for your display."
 #~ msgstr "Estableix com estan mapats els colors en la vostra pantalla."
 
 #~ msgid ""
-#~ "Sets how colors are converted from RGB working space to the print "
-#~ "simulation device."
+#~ "Sets how colors are converted from RGB working space to the print simulation"
+#~ " device."
 #~ msgstr ""
 #~ "Estableix com es converteixen els colors RGB de l'espai de treball al "
 #~ "dispositiu de simulació d'impressió."

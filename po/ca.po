@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-04 18:12+0000\n"
+"POT-Creation-Date: 2020-10-31 10:07+0000\n"
 "PO-Revision-Date: 2020-05-21 20:31+0200\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
@@ -91,8 +91,8 @@ msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
 msgstr ""
-"Millores en la compatibilitat amb HEIF: exportació opcional amb profunditat de bits alta, "
-"importació i exportació de AVIF"
+"Millores en la compatibilitat amb HEIF: exportació opcional amb profunditat "
+"de bits alta, importació i exportació de AVIF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Multiple improvements in Corel PaintShop Pro support"
@@ -101,8 +101,8 @@ msgstr "Millores múltiples en el suport Corel PaintShop Pro"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
-"«Fusionat d'exemples» ara està disponible a les opcions de l'eina "
-"d'operació GEGL"
+"«Fusionat d'exemples» ara està disponible a les opcions de l'eina d'operació"
+" GEGL"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "\"Sample merged\" is now enabled by default for color picking"
@@ -150,7 +150,9 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Tool groups now expand on hover rather than click by default"
-msgstr "Els grups d'eines ara per defecte s'expandeixen en passar per sobre en comptes de fer clic"
+msgstr ""
+"Els grups d'eines ara per defecte s'expandeixen en passar per sobre en "
+"comptes de fer clic"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid ""
@@ -165,8 +167,8 @@ msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing"
 " channels in the right order"
 msgstr ""
-"Millor suport PSD per exportar fitxers de 16 bits, així com, "
-"llegir/escriure canals en l'ordre correcte"
+"Millor suport PSD per exportar fitxers de 16 bits, així com, llegir/escriure"
+" canals en l'ordre correcte"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "On-canvas controls for the Vignette filter"
@@ -175,7 +177,8 @@ msgstr "Controls al llenç per al filtre Vinyeta"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
-"Filtres nous: Floriment, Difuminat centrat, Difuminat amb lent, Difuminat variable"
+"Filtres nous: Floriment, Difuminat centrat, Difuminat amb lent, Difuminat "
+"variable"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "Over 30 bugfixes"
@@ -916,7 +919,7 @@ msgstr ""
 "\n"
 "Heu d'haver rebut una còpia de la llicència GNU General Public License juntament amb el GIMP; si no és així, consulteu: https://www.gnu.org/licenses/"
 
-#: ../app/gimp-update.c:261
+#: ../app/gimp-update.c:385
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -12093,7 +12096,7 @@ msgstr "Mostra la imatge activa a la caixa d'eines."
 
 #: ../app/config/gimprc-blurbs.h:695
 msgid "Show the GIMP mascot at the top of the toolbox."
-msgstr ""
+msgstr "Mostra la mascota del GIMP a la part superior de la caixa d'eines."
 
 #: ../app/config/gimprc-blurbs.h:698
 msgid "Sets the manner in which transparency is displayed in images."
@@ -15415,22 +15418,22 @@ msgstr "percentatge"
 #. Translators: the %s is GIMP version, the %d is the
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
-#: ../app/dialogs/about-dialog.c:132
+#: ../app/dialogs/about-dialog.c:134
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revisió %d)"
 
-#: ../app/dialogs/about-dialog.c:140
+#: ../app/dialogs/about-dialog.c:142
 msgid "About GIMP"
 msgstr "Quant al GIMP"
 
-#: ../app/dialogs/about-dialog.c:149
+#: ../app/dialogs/about-dialog.c:151
 msgid "Visit the GIMP website"
 msgstr "Visiteu el web del GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:155
+#: ../app/dialogs/about-dialog.c:157
 msgid "translator-credits"
 msgstr ""
 "Softcatalà - www.softcatala.org\n"
@@ -15443,45 +15446,45 @@ msgstr ""
 " Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2018\n"
 "Carles Ferrando Garcia <carles.ferrando@gmail.com>, 2019"
 
-#: ../app/dialogs/about-dialog.c:345
+#: ../app/dialogs/about-dialog.c:355
 msgid "Update available!"
 msgstr "Actualització disponible!"
 
 #. This is actually a new revision of current version.
-#: ../app/dialogs/about-dialog.c:365
+#: ../app/dialogs/about-dialog.c:375
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Baixeu la %s revisió %d del GIMP (publicada a %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: ../app/dialogs/about-dialog.c:375
+#: ../app/dialogs/about-dialog.c:385
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Comentari de publicació</u>: <i>%s</i>"
 
-#: ../app/dialogs/about-dialog.c:380
+#: ../app/dialogs/about-dialog.c:390
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Baixeu el GIMP %s (publicat el %s)\n"
 
-#: ../app/dialogs/about-dialog.c:405 ../app/dialogs/about-dialog.c:426
+#: ../app/dialogs/about-dialog.c:415 ../app/dialogs/about-dialog.c:436
 msgid "Check for updates"
 msgstr "Comprova les actualitzacions"
 
 #. Translators: first string is the date in the locale's date
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
-#: ../app/dialogs/about-dialog.c:446
+#: ../app/dialogs/about-dialog.c:456
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Darrera comprovació %s a les %s"
 
-#: ../app/dialogs/about-dialog.c:748
+#: ../app/dialogs/about-dialog.c:759
 msgid "GIMP is brought to you by"
 msgstr "El GIMP ha estat desenvolupat per"
 
-#: ../app/dialogs/about-dialog.c:824
+#: ../app/dialogs/about-dialog.c:835
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -21702,7 +21705,7 @@ msgstr "Altres opcions"
 
 #: ../app/propgui/gimppropgui-focus-blur.c:199
 msgid "Geometry Options"
-msgstr ""
+msgstr "Opcions de geometria"
 
 #: ../app/propgui/gimppropgui-focus-blur.c:226
 msgid "Focus Blur: "
@@ -27994,4 +27997,3 @@ msgstr "arrodonit"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "difús"
-
