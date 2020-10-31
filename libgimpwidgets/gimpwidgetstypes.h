@@ -47,6 +47,7 @@ typedef struct _GimpColorProfileComboBox      GimpColorProfileComboBox;
 typedef struct _GimpColorProfileStore         GimpColorProfileStore;
 typedef struct _GimpColorProfileView          GimpColorProfileView;
 typedef struct _GimpColorScale                GimpColorScale;
+typedef struct _GimpColorScaleEntry           GimpColorScaleEntry;
 typedef struct _GimpColorScales               GimpColorScales;
 typedef struct _GimpColorSelector             GimpColorSelector;
 typedef struct _GimpColorSelect               GimpColorSelect;

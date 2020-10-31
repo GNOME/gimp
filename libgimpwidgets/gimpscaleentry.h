@@ -4,6 +4,7 @@
  * gimpscaleentry.h
  * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>,
  *               2008 Bill Skaggs <weskaggs@primate.ucdavis.edu>
+ *               2020 Jehan
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -49,7 +50,13 @@ struct _GimpScaleEntry
 
 struct _GimpScaleEntryClass
 {
-  GtkGridClass  parent_class;
+  GtkGridClass       parent_class;
+
+  /*  Signals        */
+  void            (* value_changed)    (GimpScaleEntry *entry);
+
+  /*  Class methods  */
+  GtkWidget     * (* new_range_widget) (GtkAdjustment  *adjustment);
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
@@ -76,7 +83,7 @@ gdouble         gimp_scale_entry_get_value       (GimpScaleEntry *entry);
 
 GtkWidget     * gimp_scale_entry_get_label       (GimpScaleEntry *entry);
 GtkWidget     * gimp_scale_entry_get_spin_button (GimpScaleEntry *entry);
-GtkWidget     * gimp_scale_entry_get_scale       (GimpScaleEntry *entry);
+GtkWidget     * gimp_scale_entry_get_range       (GimpScaleEntry *entry);
 
 void            gimp_scale_entry_set_range       (GimpScaleEntry *entry,
                                                   gdouble         lower,

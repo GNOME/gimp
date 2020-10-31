@@ -3,6 +3,7 @@
  *
  * gimpscaleentry.c
  * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2020 Jehan
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -128,13 +129,15 @@ gimp_scale_entry_class_init (GimpScaleEntryClass *klass)
     g_signal_new ("value-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpSizeEntryClass, value_changed),
+                  G_STRUCT_OFFSET (GimpScaleEntryClass, value_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->constructed  = gimp_scale_entry_constructed;
   object_class->set_property = gimp_scale_entry_set_property;
   object_class->get_property = gimp_scale_entry_get_property;
+
+  klass->new_range_widget    = NULL;
 
   /**
    * GimpScaleEntry:label:
@@ -202,9 +205,10 @@ gimp_scale_entry_init (GimpScaleEntry *entry)
 static void
 gimp_scale_entry_constructed (GObject *object)
 {
-  GimpScaleEntry *entry = GIMP_SCALE_ENTRY (object);
-  GtkAdjustment  *spin_adjustment;
-  GtkAdjustment  *scale_adjustment;
+  GimpScaleEntryClass *klass;
+  GimpScaleEntry      *entry = GIMP_SCALE_ENTRY (object);
+  GtkAdjustment       *spin_adjustment;
+  GtkAdjustment       *scale_adjustment;
 
   /* Construction values are a bit random but should be properly
    * overrided with expected values if the object was created with
@@ -225,8 +229,19 @@ gimp_scale_entry_constructed (GObject *object)
   /* Scale */
   scale_adjustment = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 10.0, 0.0);
 
-  entry->priv->scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adjustment);
-  gtk_scale_set_draw_value (GTK_SCALE (entry->priv->scale), FALSE);
+  klass = GIMP_SCALE_ENTRY_GET_CLASS (entry);
+  if (klass->new_range_widget)
+    {
+      entry->priv->scale = klass->new_range_widget (scale_adjustment);
+      g_return_if_fail (GTK_IS_RANGE (entry->priv->scale));
+      g_return_if_fail (scale_adjustment == gtk_range_get_adjustment (GTK_RANGE (entry->priv->scale)));
+    }
+  else
+    {
+      entry->priv->scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adjustment);
+      gtk_scale_set_draw_value (GTK_SCALE (entry->priv->scale), FALSE);
+    }
+
   gtk_widget_set_hexpand (entry->priv->scale, TRUE);
 
   gtk_grid_attach (GTK_GRID (entry), entry->priv->label,      0, 0, 1, 1);
@@ -338,8 +353,13 @@ gimp_scale_entry_set_property (GObject      *object,
         {
           g_return_if_fail (entry->priv->scale && entry->priv->spinbutton);
 
-          gtk_scale_set_digits (GTK_SCALE (entry->priv->scale),
-                                g_value_get_uint (value));
+          if (GTK_IS_SCALE (entry->priv->scale))
+            /* Subclasses may set this to any GtkRange, in particular it
+             * may not be a subclass of GtkScale.
+             */
+            gtk_scale_set_digits (GTK_SCALE (entry->priv->scale),
+                                  g_value_get_uint (value));
+
           gtk_spin_button_set_digits (GTK_SPIN_BUTTON (entry->priv->spinbutton),
                                       g_value_get_uint (value));
 
@@ -742,16 +762,20 @@ gimp_scale_entry_get_spin_button (GimpScaleEntry *entry)
 }
 
 /**
- * gimp_scale_entry_get_scale:
+ * gimp_scale_entry_get_range:
  * @entry: The #GtkScaleEntry.
  *
- * This function returns the #GtkScale packed in @entry. This can be
-   * useful if you need to customize some aspects of the widget
+ * This function returns the #GtkRange packed in @entry. This can be
+ * useful if you need to customize some aspects of the widget
  *
- * Returns: (transfer none): The #GtkScale contained in @entry.
+ * By default, it is a #GtkScale, but it can be any other type of
+ * #GtkRange if a subclass overrided the new_range_widget() protected
+ * method.
+ *
+ * Returns: (transfer none): The #GtkRange contained in @entry.
  **/
 GtkWidget *
-gimp_scale_entry_get_scale (GimpScaleEntry *entry)
+gimp_scale_entry_get_range (GimpScaleEntry *entry)
 {
   g_return_val_if_fail (GIMP_IS_SCALE_ENTRY (entry), NULL);
 
@@ -947,7 +971,7 @@ gimp_scale_entry_get_logarithmic (GimpScaleEntry *entry)
  * (which the widget cannot guess), you can call this function. If you
  * want even more modularity and have different increments on each
  * widget, use specific functions on gimp_scale_entry_get_spin_button()
- * and gimp_scale_entry_get_scale().
+ * and gimp_scale_entry_get_range().
  *
  * Note that there is no `get` function because it could not return
  * shared values in case you edited each widget separately.

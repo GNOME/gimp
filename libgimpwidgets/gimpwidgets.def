@@ -52,6 +52,8 @@ EXPORTS
 	gimp_color_button_set_title
 	gimp_color_button_set_type
 	gimp_color_button_set_update
+	gimp_color_scale_entry_get_type
+	gimp_color_scale_entry_new2
 	gimp_color_display_changed
 	gimp_color_display_clone
 	gimp_color_display_configure
@@ -365,7 +367,7 @@ EXPORTS
 	gimp_ruler_set_unit
 	gimp_scale_entry_get_label
 	gimp_scale_entry_get_logarithmic
-	gimp_scale_entry_get_scale
+	gimp_scale_entry_get_range
 	gimp_scale_entry_get_spin_button
 	gimp_scale_entry_get_type
 	gimp_scale_entry_get_value

@@ -17,6 +17,7 @@ libgimpwidgets_introspectable_headers =	\
 	../libgimpwidgets/gimpcolorprofilestore.h   		\
 	../libgimpwidgets/gimpcolorprofileview.h    		\
 ##	../libgimpwidgets/gimpcolorscale.h
+	../libgimpwidgets/gimpcolorscaleentry.h	       		\
 ##	../libgimpwidgets/gimpcolorscales.h
 ##	../libgimpwidgets/gimpcolorselect.h
 	../libgimpwidgets/gimpcolorselection.h      		\
@@ -77,6 +78,7 @@ libgimpwidgets_introspectable =	\
 	../libgimpwidgets/gimpcolorprofilestore.c		\
 	../libgimpwidgets/gimpcolorprofileview.c		\
 ##	../libgimpwidgets/gimpcolorscale.c
+	../libgimpwidgets/gimpcolorscaleentry.c	       		\
 ##	../libgimpwidgets/gimpcolorscales.c
 ##	../libgimpwidgets/gimpcolorselect.c
 	../libgimpwidgets/gimpcolorselection.c		\

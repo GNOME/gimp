@@ -44,6 +44,7 @@
 #include <libgimpwidgets/gimpcolorprofilestore.h>
 #include <libgimpwidgets/gimpcolorprofileview.h>
 #include <libgimpwidgets/gimpcolorscale.h>
+#include <libgimpwidgets/gimpcolorscaleentry.h>
 #include <libgimpwidgets/gimpcolorscales.h>
 #include <libgimpwidgets/gimpcolorselector.h>
 #include <libgimpwidgets/gimpcolorselect.h>

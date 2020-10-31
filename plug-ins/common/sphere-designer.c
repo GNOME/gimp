@@ -2888,7 +2888,7 @@ makewindow (void)
   scalezscale = gimp_scale_entry_new2 (_("Scale Z:"), 1.0, 0.0, 10.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scalezscale), 0.1, 1.0);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scalezscale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_scale(GIMP_SCALE_ENTRY (scalezscale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scalezscale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scalezscale)), 6);
   g_signal_connect (scalezscale, "value-changed",
                     G_CALLBACK (getscales),
@@ -2912,7 +2912,7 @@ makewindow (void)
 
   rotzscale = gimp_scale_entry_new2 (_("Rotate Z:"), 0.0, 0.0, 360.0, 1);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (rotzscale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_scale (GIMP_SCALE_ENTRY (rotzscale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (rotzscale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (rotzscale)), 6);
   g_signal_connect (rotzscale, "value-changed",
                     G_CALLBACK (getscales),

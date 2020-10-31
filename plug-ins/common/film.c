@@ -1226,7 +1226,7 @@ create_advanced_tab (GtkWidget *notebook)
                     &filmvals.picture_space);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_scale (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale)), 6);
   gtk_widget_show (scale);
 
@@ -1265,7 +1265,7 @@ create_advanced_tab (GtkWidget *notebook)
                     &filmvals.hole_space);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_scale (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale)), 6);
   gtk_widget_show (scale);
 
