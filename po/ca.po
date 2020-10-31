@@ -15546,7 +15546,7 @@ msgstr "<u>Comentari de publicació</u>: <i>%s</i>"
 #: ../app/dialogs/about-dialog.c:370
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
-msgstr "Baixa el GIMP %s (publicat a %s)\n"
+msgstr "Baixa el GIMP %s (publicat el %s)\n"
 
 #: ../app/dialogs/about-dialog.c:395 ../app/dialogs/about-dialog.c:416
 msgid "Check for updates"
@@ -15559,7 +15559,7 @@ msgstr "Comproveu les actualitzacions"
 #: ../app/dialogs/about-dialog.c:435
 #, c-format
 msgid "Last checked on %s at %s"
-msgstr "Darrera comprovació %s a %s"
+msgstr "Darrera comprovació %s a les %s"
 
 #: ../app/dialogs/about-dialog.c:662
 msgid "GIMP is brought to you by"
