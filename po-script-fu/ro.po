@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-08 11:48+0000\n"
-"PO-Revision-Date: 2020-05-17 22:25+0300\n"
+"PO-Revision-Date: 2020-10-31 23:40+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -1384,12 +1384,12 @@ msgstr "Adaugă un fundal"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
-msgstr "S_tabilește paleta de culori..."
+msgstr "S_tabilește harta de culori..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
-"Schimbă paleta de culori a unei imagini în culorile dintr-o paletă "
+"Schimbă harta de culori a unei imagini la culorile dintr-o paletă "
 "specificată."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
@@ -1468,7 +1468,7 @@ msgstr "_Glob rotitor..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr "Creează o animație prin maparea imaginii curente la o sferă rotitoare"
+msgstr "Creează o animație prin maparea imaginii curente pe o sferă rotitoare"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
 msgid "Frames"
