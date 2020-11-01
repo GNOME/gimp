@@ -42,8 +42,6 @@ Build:
 
 Installer:
 
-  - Various updates to adapt to the GIMP 2.99/3 build.
-  - Lua made optional.
   - New Slovak translation.
 
 Translations:
