@@ -81,40 +81,6 @@ void            gimp_scale_entry_set_increments  (GimpScaleEntry *entry,
                                                   gdouble         step,
                                                   gdouble         page);
 
-/**
- * GIMP_SCALE_ENTRY_SCALE:
- * @adj: The #GtkAdjustment returned by gimp_scale_entry_new().
- *
- * Returns: the scale_entry's #GtkHScale.
- **/
-#define GIMP_SCALE_ENTRY_SCALE(adj) \
-        (g_object_get_data (G_OBJECT (adj), "scale"))
-
-/**
- * GIMP_SCALE_ENTRY_SPINBUTTON:
- * @adj: The #GtkAdjustment returned by gimp_scale_entry_new().
- *
- * Returns: the scale_entry's #GtkSpinButton.
- **/
-#define GIMP_SCALE_ENTRY_SPINBUTTON(adj) \
-        (g_object_get_data (G_OBJECT (adj), "spinbutton"))
-
-
-GtkAdjustment * gimp_color_scale_entry_new       (GtkGrid     *grid,
-                                                  gint         column,
-                                                  gint         row,
-                                                  const gchar *text,
-                                                  gint         scale_width,
-                                                  gint         spinbutton_width,
-                                                  gdouble      value,
-                                                  gdouble      lower,
-                                                  gdouble      upper,
-                                                  gdouble      step_increment,
-                                                  gdouble      page_increment,
-                                                  guint        digits,
-                                                  const gchar *tooltip,
-                                                  const gchar *help_id);
-
 
 G_END_DECLS
 

@@ -82,7 +82,7 @@ gimp_color_scale_entry_new_range_widget (GtkAdjustment  *adjustment)
 }
 
 /**
- * gimp_color_scale_entry_new2:
+ * gimp_color_scale_entry_new:
  * @text:           The text for the #GtkLabel.
  * @value:          The initial value.
  * @lower:          The lower boundary.
@@ -92,11 +92,11 @@ gimp_color_scale_entry_new_range_widget (GtkAdjustment  *adjustment)
  * Returns: (transfer full): The new #GimpColorScale widget.
  **/
 GtkWidget *
-gimp_color_scale_entry_new2 (const gchar *text,
-                             gdouble      value,
-                             gdouble      lower,
-                             gdouble      upper,
-                             guint        digits)
+gimp_color_scale_entry_new (const gchar *text,
+                            gdouble      value,
+                            gdouble      lower,
+                            gdouble      upper,
+                            guint        digits)
 {
   GtkWidget *entry;
 

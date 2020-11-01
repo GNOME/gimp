@@ -101,7 +101,6 @@ EXPORTS
 	gimp_color_profile_view_set_profile
 	gimp_color_scale_entry_get_type
 	gimp_color_scale_entry_new
-	gimp_color_scale_entry_new2
 	gimp_color_scale_get_type
 	gimp_color_scale_new
 	gimp_color_scale_set_channel

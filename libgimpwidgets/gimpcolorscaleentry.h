@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 #define GIMP_TYPE_COLOR_SCALE_ENTRY (gimp_color_scale_entry_get_type ())
 G_DECLARE_FINAL_TYPE (GimpColorScaleEntry, gimp_color_scale_entry, GIMP, COLOR_SCALE_ENTRY, GimpScaleEntry)
 
-GtkWidget     * gimp_color_scale_entry_new2       (const gchar *text,
+GtkWidget     * gimp_color_scale_entry_new        (const gchar *text,
                                                    gdouble      value,
                                                    gdouble      lower,
                                                    gdouble      upper,

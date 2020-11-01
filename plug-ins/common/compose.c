@@ -103,8 +103,7 @@ typedef struct
   GtkWidget    *channel_label[MAX_COMPOSE_IMAGES];        /* The labels to change */
   GtkWidget    *channel_icon[MAX_COMPOSE_IMAGES];         /* The icons  */
   GtkWidget    *channel_menu[MAX_COMPOSE_IMAGES];         /* The menus */
-  GtkWidget    *color_scales[MAX_COMPOSE_IMAGES];         /* The values color scales */
-  GtkWidget    *color_spins[MAX_COMPOSE_IMAGES];          /* The values spin buttons */
+  GtkWidget    *scales[MAX_COMPOSE_IMAGES];               /* The values color scales */
 
   ComposeInput  selected[MAX_COMPOSE_IMAGES];             /* Image Ids or mask values from menus */
 
@@ -180,7 +179,7 @@ static gboolean    check_gray             (GimpImage       *image,
 static void        combo_callback         (GimpIntComboBox *cbox,
                                            gpointer         data);
 
-static void        scale_callback         (GtkAdjustment   *adj,
+static void        scale_callback         (GimpScaleEntry  *scale,
                                            ComposeInput    *input);
 
 static void        check_response         (GtkWidget       *dialog,
@@ -332,7 +331,6 @@ static ComposeInterface composeint =
   { NULL },  /* Icon Widgets */
   { NULL },  /* Menu Widgets */
   { NULL },  /* Color Scale Widgets */
-  { NULL },  /* Color Spin Widgets */
   {{ 0, }},  /* Image Ids or mask values from menus */
   0          /* Compose type */
 };
@@ -1225,12 +1223,12 @@ compose_dialog (const gchar  *compose_type,
 
   for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
     {
-      GtkWidget     *image;
-      GtkWidget     *label;
-      GtkWidget     *combo;
-      GtkAdjustment *scale;
-      GtkTreeIter    iter;
-      GtkTreeModel  *model;
+      GtkWidget    *image;
+      GtkWidget    *label;
+      GtkWidget    *combo;
+      GtkWidget    *scale;
+      GtkTreeIter   iter;
+      GtkTreeModel *model;
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_grid_attach (GTK_GRID (grid), hbox, 0, j, 1, 1);
@@ -1277,15 +1275,12 @@ compose_dialog (const gchar  *compose_type,
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-      scale = gimp_color_scale_entry_new (GTK_GRID (grid), 2, j, NULL,
-                                          100, 4,
-                                          255.0, 0.0, 255.0, 1.0, 10.0, 0,
-                                          NULL, NULL);
-      composeint.color_scales[j] = GIMP_SCALE_ENTRY_SCALE (scale);
-      composeint.color_spins[j]  = GIMP_SCALE_ENTRY_SPINBUTTON (scale);
+      scale = gimp_color_scale_entry_new (NULL, 255.0, 0.0, 255.0, 0);
+      gtk_grid_attach (GTK_GRID (grid), scale, 2, j, 3, 1);
+      gtk_widget_show (scale);
+      composeint.scales[j] = scale;
 
-      gtk_widget_set_sensitive (composeint.color_scales[j], FALSE);
-      gtk_widget_set_sensitive (composeint.color_spins[j],  FALSE);
+      gtk_widget_set_sensitive (scale, FALSE);
 
       g_signal_connect (scale, "value-changed",
                         G_CALLBACK (scale_callback),
@@ -1407,17 +1402,15 @@ combo_callback (GimpIntComboBox *widget,
 
   if (id == -1)
     {
-      gtk_widget_set_sensitive (composeint.color_scales[n], TRUE);
-      gtk_widget_set_sensitive (composeint.color_spins[n],  TRUE);
+      gtk_widget_set_sensitive (composeint.scales[n], TRUE);
 
       composeint.selected[n].is_object = FALSE;
       composeint.selected[n].comp.val  =
-        gtk_range_get_value (GTK_RANGE (composeint.color_scales[n]));
+        gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (composeint.scales[n]));
     }
   else
     {
-      gtk_widget_set_sensitive (composeint.color_scales[n], FALSE);
-      gtk_widget_set_sensitive (composeint.color_spins[n],  FALSE);
+      gtk_widget_set_sensitive (composeint.scales[n], FALSE);
 
       composeint.selected[n].is_object   = TRUE;
       composeint.selected[n].comp.object = gimp_drawable_get_by_id (id);
@@ -1425,10 +1418,10 @@ combo_callback (GimpIntComboBox *widget,
 }
 
 static void
-scale_callback (GtkAdjustment *adj,
-                ComposeInput  *input)
+scale_callback (GimpScaleEntry *scale,
+                ComposeInput   *input)
 {
-  input->comp.val = gtk_adjustment_get_value (adj);
+  input->comp.val = gimp_scale_entry_get_value (scale);
 }
 
 static void
@@ -1472,7 +1465,6 @@ type_combo_callback (GimpIntComboBox *combo,
       gtk_widget_set_sensitive (composeint.channel_menu[3], combo4);
 
       scale4 = combo4 && !composeint.selected[3].is_object;
-      gtk_widget_set_sensitive (composeint.color_scales[3], scale4);
-      gtk_widget_set_sensitive (composeint.color_spins[3], scale4);
+      gtk_widget_set_sensitive (composeint.scales[3], scale4);
     }
 }

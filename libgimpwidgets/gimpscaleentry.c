@@ -25,7 +25,6 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 
@@ -61,56 +60,39 @@ enum
 
 typedef struct _GimpScaleEntryPrivate
 {
-  GtkWidget *label;
-  GtkWidget *spinbutton;
-  GtkWidget *scale;
+  GtkWidget     *label;
+  GtkWidget     *spinbutton;
+  GtkWidget     *scale;
 
-  GBinding  *binding;
+  GBinding      *binding;
 
-  gboolean   logarithmic;
+  GtkAdjustment *spin_adjustment;
+
+  gboolean       logarithmic;
 } GimpScaleEntryPrivate;
 
 
-static void   gimp_scale_entry_constructed          (GObject       *object);
-static void   gimp_scale_entry_set_property         (GObject       *object,
-                                                     guint          property_id,
-                                                     const GValue  *value,
-                                                     GParamSpec    *pspec);
-static void   gimp_scale_entry_get_property         (GObject       *object,
-                                                     guint          property_id,
-                                                     GValue        *value,
-                                                     GParamSpec    *pspec);
+static void       gimp_scale_entry_constructed       (GObject       *object);
+static void       gimp_scale_entry_set_property      (GObject       *object,
+                                                      guint          property_id,
+                                                      const GValue  *value,
+                                                      GParamSpec    *pspec);
+static void       gimp_scale_entry_get_property      (GObject       *object,
+                                                      guint          property_id,
+                                                      GValue        *value,
+                                                      GParamSpec    *pspec);
 
-static void   gimp_scale_entry_update_spin_width    (GimpScaleEntry *entry);
-static void   gimp_scale_entry_update_steps         (GimpScaleEntry *entry);
+static void       gimp_scale_entry_update_spin_width (GimpScaleEntry *entry);
+static void       gimp_scale_entry_update_steps      (GimpScaleEntry *entry);
 
-static gboolean        gimp_scale_entry_linear_to_log (GBinding     *binding,
-                                                       const GValue *from_value,
-                                                       GValue       *to_value,
-                                                       gpointer      user_data);
-static gboolean        gimp_scale_entry_log_to_linear (GBinding     *binding,
-                                                       const GValue *from_value,
-                                                       GValue       *to_value,
-                                                       gpointer      user_data);
-
-static GtkAdjustment * gimp_scale_entry_new_internal  (gboolean      color_scale,
-                                                       GtkGrid      *grid,
-                                                       gint          column,
-                                                       gint          row,
-                                                       const gchar  *text,
-                                                       gint          scale_width,
-                                                       gint          spinbutton_width,
-                                                       gdouble       value,
-                                                       gdouble       lower,
-                                                       gdouble       upper,
-                                                       gdouble       step_increment,
-                                                       gdouble       page_increment,
-                                                       guint         digits,
-                                                       gboolean      constrain,
-                                                       gdouble       unconstrained_lower,
-                                                       gdouble       unconstrained_upper,
-                                                       const gchar  *tooltip,
-                                                       const gchar  *help_id);
+static gboolean   gimp_scale_entry_linear_to_log     (GBinding     *binding,
+                                                      const GValue *from_value,
+                                                      GValue       *to_value,
+                                                      gpointer      user_data);
+static gboolean   gimp_scale_entry_log_to_linear     (GBinding     *binding,
+                                                      const GValue *from_value,
+                                                      GValue       *to_value,
+                                                      gpointer      user_data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpScaleEntry, gimp_scale_entry, GTK_TYPE_GRID)
@@ -165,16 +147,25 @@ gimp_scale_entry_class_init (GimpScaleEntryClass *klass)
   /**
    * GimpScaleEntry:lower:
    *
+   * The lower bound of the widget. If the spin button and the scale
+   * widgets have different limits (see gimp_scale_entry_set_range()),
+   * this corresponds to the spin button lower value.
+   *
    * Since: 3.0
    **/
   g_object_class_install_property (object_class, PROP_LOWER,
                                    g_param_spec_double ("lower", NULL,
                                                         "Minimum value",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 1.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
   /**
    * GimpScaleEntry:upper:
+   *
+   * The upper bound of the widget. If the spin button and the scale
+   * widgets have different limits (see gimp_scale_entry_set_range()),
+   * this corresponds to the spin button upper value.
    *
    * Since: 3.0
    **/
@@ -182,7 +173,8 @@ gimp_scale_entry_class_init (GimpScaleEntryClass *klass)
                                    g_param_spec_double ("upper", NULL,
                                                         "Max value",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
   /**
    * GimpScaleEntry:digits:
@@ -199,6 +191,15 @@ gimp_scale_entry_class_init (GimpScaleEntryClass *klass)
 static void
 gimp_scale_entry_init (GimpScaleEntry *entry)
 {
+  GimpScaleEntryPrivate *priv  = gimp_scale_entry_get_instance_private (entry);
+
+  /* The main adjustment (the scale adjustment in particular might be
+   * smaller). We want it to exist at init so that construction
+   * properties can apply (default values are bogus but should be
+   * properly overrided with expected values if the object was created
+   * with gimp_scale_entry_new().
+   */
+  priv->spin_adjustment = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 10.0, 0.0);
 }
 
 static void
@@ -207,27 +208,24 @@ gimp_scale_entry_constructed (GObject *object)
   GimpScaleEntryClass   *klass;
   GimpScaleEntry        *entry = GIMP_SCALE_ENTRY (object);
   GimpScaleEntryPrivate *priv  = gimp_scale_entry_get_instance_private (entry);
-  GtkAdjustment         *spin_adjustment;
   GtkAdjustment         *scale_adjustment;
-
-  /* Construction values are a bit random but should be properly
-   * overrided with expected values if the object was created with
-   * gimp_scale_entry_new().
-   */
 
   /* Label */
   priv->label = gtk_label_new_with_mnemonic (NULL);
   gtk_label_set_xalign (GTK_LABEL (priv->label), 0.0);
 
   /* Spin button */
-  spin_adjustment = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 10.0, 0.0);
-
-  priv->spinbutton = gimp_spin_button_new (spin_adjustment, 2.0, 2.0);
+  priv->spinbutton = gimp_spin_button_new (priv->spin_adjustment, 2.0, 2.0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (priv->spinbutton), TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (priv->label), priv->spinbutton);
 
   /* Scale */
-  scale_adjustment = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 10.0, 0.0);
+  scale_adjustment = gtk_adjustment_new (gtk_adjustment_get_value (priv->spin_adjustment),
+                                         gtk_adjustment_get_lower (priv->spin_adjustment),
+                                         gtk_adjustment_get_upper (priv->spin_adjustment),
+                                         gtk_adjustment_get_step_increment (priv->spin_adjustment),
+                                         gtk_adjustment_get_page_increment (priv->spin_adjustment),
+                                         gtk_adjustment_get_page_size (priv->spin_adjustment));
 
   klass = GIMP_SCALE_ENTRY_GET_CLASS (entry);
   if (klass->new_range_widget)
@@ -251,7 +249,7 @@ gimp_scale_entry_constructed (GObject *object)
   gtk_widget_show (priv->scale);
   gtk_widget_show (priv->spinbutton);
 
-  priv->binding = g_object_bind_property (G_OBJECT (spin_adjustment),  "value",
+  priv->binding = g_object_bind_property (G_OBJECT (priv->spin_adjustment),  "value",
                                           G_OBJECT (scale_adjustment), "value",
                                           G_BINDING_BIDIRECTIONAL |
                                           G_BINDING_SYNC_CREATE);
@@ -260,10 +258,13 @@ gimp_scale_entry_constructed (GObject *object)
    * will allow config object to bind the "value" property of this
    * widget, and therefore be updated automatically.
    */
-  g_object_bind_property (G_OBJECT (spin_adjustment), "value",
+  g_object_bind_property (G_OBJECT (priv->spin_adjustment), "value",
                           object,                     "value",
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
+
+  gimp_scale_entry_update_spin_width (entry);
+  gimp_scale_entry_update_steps (entry);
 }
 
 static void
@@ -313,41 +314,39 @@ gimp_scale_entry_set_property (GObject      *object,
       break;
     case PROP_LOWER:
         {
-          GtkSpinButton *spinbutton;
-          GtkRange      *scale;
-
-          g_return_if_fail (priv->spinbutton);
-
-          /* This sets the range for both the spin button and the scale.
-           * To change only the scale, see gimp_scale_entry_set_range().
-           */
-          spinbutton = GTK_SPIN_BUTTON (priv->spinbutton);
-          scale      = GTK_RANGE (priv->scale);
-          gtk_adjustment_set_lower (gtk_spin_button_get_adjustment (spinbutton),
-                                    g_value_get_double (value));
-          gtk_adjustment_set_lower (gtk_range_get_adjustment (scale),
+          gtk_adjustment_set_lower (priv->spin_adjustment,
                                     g_value_get_double (value));
 
-          gimp_scale_entry_update_spin_width (entry);
-          gimp_scale_entry_update_steps (entry);
+          if (priv->scale)
+            {
+              GtkRange *scale = GTK_RANGE (priv->scale);
+
+              /* If the widget does not exist, it means this is a
+               * pre-constructed property setting.
+               */
+              gtk_adjustment_set_lower (gtk_range_get_adjustment (scale),
+                                        g_value_get_double (value));
+
+              gimp_scale_entry_update_spin_width (entry);
+              gimp_scale_entry_update_steps (entry);
+            }
         }
       break;
     case PROP_UPPER:
         {
-          GtkSpinButton *spinbutton;
-          GtkRange      *scale;
-
-          g_return_if_fail (priv->scale && priv->spinbutton);
-
-          spinbutton = GTK_SPIN_BUTTON (priv->spinbutton);
-          scale      = GTK_RANGE (priv->scale);
-          gtk_adjustment_set_upper (gtk_spin_button_get_adjustment (spinbutton),
-                                    g_value_get_double (value));
-          gtk_adjustment_set_upper (gtk_range_get_adjustment (scale),
+          gtk_adjustment_set_upper (priv->spin_adjustment,
                                     g_value_get_double (value));
 
-          gimp_scale_entry_update_spin_width (entry);
-          gimp_scale_entry_update_steps (entry);
+          if (priv->scale)
+            {
+              GtkRange *scale = GTK_RANGE (priv->scale);
+
+              gtk_adjustment_set_upper (gtk_range_get_adjustment (scale),
+                                        g_value_get_double (value));
+
+              gimp_scale_entry_update_spin_width (entry);
+              gimp_scale_entry_update_steps (entry);
+            }
         }
       break;
     case PROP_DIGITS:
@@ -550,112 +549,7 @@ gimp_scale_entry_log_to_linear (GBinding     *binding,
   return TRUE;
 }
 
-static GtkAdjustment *
-gimp_scale_entry_new_internal (gboolean     color_scale,
-                               GtkGrid     *grid,
-                               gint         column,
-                               gint         row,
-                               const gchar *text,
-                               gint         scale_width,
-                               gint         spinbutton_width,
-                               gdouble      value,
-                               gdouble      lower,
-                               gdouble      upper,
-                               gdouble      step_increment,
-                               gdouble      page_increment,
-                               guint        digits,
-                               gboolean     constrain,
-                               gdouble      unconstrained_lower,
-                               gdouble      unconstrained_upper,
-                               const gchar *tooltip,
-                               const gchar *help_id)
-{
-  GtkWidget     *label;
-  GtkWidget     *scale;
-  GtkWidget     *spinbutton;
-  GtkAdjustment *scale_adjustment;
-  GtkAdjustment *spin_adjustment;
-  GBinding      *binding;
-
-  label = gtk_label_new_with_mnemonic (text);
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_widget_show (label);
-
-  scale_adjustment = gtk_adjustment_new (value, lower, upper,
-                                         step_increment, page_increment, 0.0);
-
-  if (! constrain &&
-      unconstrained_lower <= lower &&
-      unconstrained_upper >= upper)
-    {
-      spin_adjustment = gtk_adjustment_new (value,
-                                            unconstrained_lower,
-                                            unconstrained_upper,
-                                            step_increment, page_increment, 0.0);
-    }
-  else
-    {
-      spin_adjustment = gtk_adjustment_new (value, lower, upper,
-                                            step_increment, page_increment, 0.0);
-    }
-
-  binding = g_object_bind_property (G_OBJECT (spin_adjustment),  "value",
-                                    G_OBJECT (scale_adjustment), "value",
-                                    G_BINDING_BIDIRECTIONAL |
-                                    G_BINDING_SYNC_CREATE);
-
-  spinbutton = gimp_spin_button_new (spin_adjustment, step_increment, digits);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_show (spinbutton);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-
-  if (spinbutton_width > 0)
-    {
-      if (spinbutton_width < 17)
-        gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), spinbutton_width);
-      else
-        gtk_widget_set_size_request (spinbutton, spinbutton_width, -1);
-    }
-
-  if (color_scale)
-    {
-      scale = gimp_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
-                                    GIMP_COLOR_SELECTOR_VALUE);
-
-      gtk_range_set_adjustment (GTK_RANGE (scale), scale_adjustment);
-    }
-  else
-    {
-      scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adjustment);
-      gtk_scale_set_digits (GTK_SCALE (scale), digits);
-      gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-    }
-
-  if (scale_width > 0)
-    gtk_widget_set_size_request (scale, scale_width, -1);
-  gtk_widget_show (scale);
-
-  gtk_widget_set_hexpand (scale, TRUE);
-
-  gtk_grid_attach (grid, label,      column,     row, 1, 1);
-  gtk_grid_attach (grid, scale,      column + 1, row, 1, 1);
-  gtk_grid_attach (grid, spinbutton, column + 2, row, 1, 1);
-
-  if (tooltip || help_id)
-    {
-      gimp_help_set_help_data (label, tooltip, help_id);
-      gimp_help_set_help_data (scale, tooltip, help_id);
-      gimp_help_set_help_data (spinbutton, tooltip, help_id);
-    }
-
-  g_object_set_data (G_OBJECT (spin_adjustment), "label",      label);
-  g_object_set_data (G_OBJECT (spin_adjustment), "scale",      scale);
-  g_object_set_data (G_OBJECT (spin_adjustment), "spinbutton", spinbutton);
-  g_object_set_data (G_OBJECT (spin_adjustment), "binding",    binding);
-
-  return spin_adjustment;
-}
+/* Public functions */
 
 /**
  * gimp_scale_entry_new2:
@@ -1024,53 +918,4 @@ gimp_scale_entry_set_increments (GimpScaleEntry *entry,
   g_object_set (priv->spinbutton,
                 "climb-rate", step,
                 NULL);
-}
-
-/**
- * gimp_color_scale_entry_new:
- * @grid:                The #GtkGrid the widgets will be attached to.
- * @column:              The column to start with.
- * @row:                 The row to attach the widgets.
- * @text:                The text for the #GtkLabel which will appear
- *                       left of the #GtkHScale.
- * @scale_width:         The minimum horizontal size of the #GtkHScale.
- * @spinbutton_width:    The minimum horizontal size of the #GtkSpinButton.
- * @value:               The initial value.
- * @lower:               The lower boundary.
- * @upper:               The upper boundary.
- * @step_increment:      The step increment.
- * @page_increment:      The page increment.
- * @digits:              The number of decimal digits.
- * @tooltip:             A tooltip message for the scale and the spinbutton.
- * @help_id:             The widgets' help_id (see gimp_help_set_help_data()).
- *
- * This function creates a #GtkLabel, a #GimpColorScale and a
- * #GtkSpinButton and attaches them to a 3-column #GtkGrid.
- *
- * Returns: (transfer none): The #GtkSpinButton's #GtkAdjustment.
- **/
-GtkAdjustment *
-gimp_color_scale_entry_new (GtkGrid     *grid,
-                            gint         column,
-                            gint         row,
-                            const gchar *text,
-                            gint         scale_width,
-                            gint         spinbutton_width,
-                            gdouble      value,
-                            gdouble      lower,
-                            gdouble      upper,
-                            gdouble      step_increment,
-                            gdouble      page_increment,
-                            guint        digits,
-                            const gchar *tooltip,
-                            const gchar *help_id)
-{
-  return gimp_scale_entry_new_internal (TRUE,
-                                        grid, column, row,
-                                        text, scale_width, spinbutton_width,
-                                        value, lower, upper,
-                                        step_increment, page_increment,
-                                        digits,
-                                        TRUE, 0.0, 0.0,
-                                        tooltip, help_id);
 }

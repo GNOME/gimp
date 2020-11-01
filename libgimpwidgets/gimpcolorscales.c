@@ -113,7 +113,6 @@ struct _GimpColorScales
 
   GtkWidget         *dummy_u8_toggle;
   GtkWidget         *toggles[14];
-  GtkAdjustment     *adjustments[14];
   GtkWidget         *scales[14];
 };
 
@@ -157,7 +156,7 @@ static void   gimp_color_scales_update_scales  (GimpColorScales   *scales,
                                                 gint               skip);
 static void   gimp_color_scales_toggle_changed (GtkWidget         *widget,
                                                 GimpColorScales   *scales);
-static void   gimp_color_scales_scale_changed  (GtkAdjustment     *adjustment,
+static void   gimp_color_scales_scale_changed  (GtkWidget         *scale,
                                                 GimpColorScales   *scales);
 static void   gimp_color_scales_toggle_lch_hsv (GtkToggleButton   *toggle,
                                                 GimpColorScales   *scales);
@@ -308,39 +307,36 @@ create_group (GimpColorScales           *scales,
 
       gtk_size_group_add_widget (size_group0, scales->toggles[i]);
 
-      scales->adjustments[i] =
-        gimp_color_scale_entry_new (GTK_GRID (grid), 1, row,
-                                    gettext (enum_desc->value_desc),
-                                    -1, -1,
+      scales->scales[i] =
+        gimp_color_scale_entry_new (gettext (enum_desc->value_desc),
                                     scale_defs[i].default_value,
-                                    scale_defs[i].scale_min_value,
-                                    scale_defs[i].scale_max_value,
-                                    1.0,
-                                    scale_defs[i].scale_inc,
-                                    1,
-                                    gettext (enum_desc->value_help),
-                                    NULL);
+                                    scale_defs[i].spin_min_value,
+                                    scale_defs[i].spin_max_value,
+                                    1);
+      gtk_grid_attach (GTK_GRID (grid), scales->scales[i], 1, row, 3, 1);
+      gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scales->scales[i]),
+                                       1.0, scale_defs[i].scale_inc);
+      gimp_help_set_help_data (scales->scales[i],
+                               gettext (enum_desc->value_help),
+                               NULL);
+      gtk_widget_show (scales->scales[i]);
 
-      gtk_adjustment_configure (scales->adjustments[i],
-                                scale_defs[i].default_value,
-                                scale_defs[i].spin_min_value,
-                                scale_defs[i].spin_max_value,
-                                1.0,
-                                scale_defs[i].scale_inc,
-                                0);
+      gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scales->scales[i]),
+                                  scale_defs[i].scale_min_value,
+                                  scale_defs[i].scale_max_value,
+                                  TRUE);
 
-      scales->scales[i] = GIMP_SCALE_ENTRY_SCALE (scales->adjustments[i]);
       g_object_add_weak_pointer (G_OBJECT (scales->scales[i]),
                                  (gpointer) &scales->scales[i]);
 
-      gimp_color_scale_set_channel (GIMP_COLOR_SCALE (scales->scales[i]),
+      gimp_color_scale_set_channel (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))),
                                     enum_value);
       gtk_size_group_add_widget (size_group1, scales->scales[i]);
 
       gtk_size_group_add_widget (size_group2,
-                                 GIMP_SCALE_ENTRY_SPINBUTTON (scales->adjustments[i]));
+                                 gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scales->scales[i])));
 
-      g_signal_connect (scales->adjustments[i], "value-changed",
+      g_signal_connect (scales->scales[i], "value-changed",
                         G_CALLBACK (gimp_color_scales_scale_changed),
                         scales);
     }
@@ -610,7 +606,7 @@ gimp_color_scales_set_config (GimpColorSelector *selector,
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
     {
       if (scales->scales[i])
-        gimp_color_scale_set_color_config (GIMP_COLOR_SCALE (scales->scales[i]),
+        gimp_color_scale_set_color_config (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))),
                                            config);
     }
 }
@@ -711,18 +707,18 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
     {
       if (i != skip)
         {
-          g_signal_handlers_block_by_func (scales->adjustments[i],
+          g_signal_handlers_block_by_func (scales->scales[i],
                                            gimp_color_scales_scale_changed,
                                            scales);
 
-          gtk_adjustment_set_value (scales->adjustments[i], values[i]);
+          gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (scales->scales[i]), values[i]);
 
-          g_signal_handlers_unblock_by_func (scales->adjustments[i],
+          g_signal_handlers_unblock_by_func (scales->scales[i],
                                              gimp_color_scales_scale_changed,
                                              scales);
         }
 
-      gimp_color_scale_set_color (GIMP_COLOR_SCALE (scales->scales[i]),
+      gimp_color_scale_set_color (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))),
                                   &selector->rgb, &selector->hsv);
     }
 }
@@ -757,16 +753,16 @@ gimp_color_scales_toggle_changed (GtkWidget       *widget,
 }
 
 static void
-gimp_color_scales_scale_changed (GtkAdjustment   *adjustment,
+gimp_color_scales_scale_changed (GtkWidget       *scale,
                                  GimpColorScales *scales)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
-  gdouble            value    = gtk_adjustment_get_value (adjustment);
+  gdouble            value    = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (scale));
   GimpLCH            lch;
   gint               i;
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
-    if (scales->adjustments[i] == adjustment)
+    if (scales->scales[i] == scale)
       break;
 
   switch (i)
