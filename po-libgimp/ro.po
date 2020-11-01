@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-12 20:08+0000\n"
-"PO-Revision-Date: 2020-10-27 14:15+0200\n"
+"PO-Revision-Date: 2020-11-01 15:46+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -1209,7 +1209,7 @@ msgstr "Întreg liniar pe 8 biți"
 #: ../libgimpbase/gimpbaseenums.c:1468
 msgctxt "precision"
 msgid "8-bit gamma integer"
-msgstr "Întreg gama pe 8 biți"
+msgstr "Întreg gamma pe 8 biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1469
 msgctxt "precision"
@@ -1219,7 +1219,7 @@ msgstr "Întreg liniar pe 16 biți"
 #: ../libgimpbase/gimpbaseenums.c:1470
 msgctxt "precision"
 msgid "16-bit gamma integer"
-msgstr "Întreg gama pe 16 biți"
+msgstr "Întreg gamma pe 16 biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1471
 msgctxt "precision"
@@ -1229,7 +1229,7 @@ msgstr "Întreg liniar pe 32 de biți"
 #: ../libgimpbase/gimpbaseenums.c:1472
 msgctxt "precision"
 msgid "32-bit gamma integer"
-msgstr "Întreg gama pe 32 de biți"
+msgstr "Întreg gamma pe 32 de biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1473
 msgctxt "precision"
@@ -1239,7 +1239,7 @@ msgstr "Virgulă mobilă liniară pe 16 biți"
 #: ../libgimpbase/gimpbaseenums.c:1474
 msgctxt "precision"
 msgid "16-bit gamma floating point"
-msgstr "Virgulă mobilă gama pe 16 biți"
+msgstr "Virgulă mobilă gamma pe 16 biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1475
 msgctxt "precision"
@@ -1249,7 +1249,7 @@ msgstr "Virgulă mobilă liniară pe 32 de biți"
 #: ../libgimpbase/gimpbaseenums.c:1476
 msgctxt "precision"
 msgid "32-bit gamma floating point"
-msgstr "Virgulă mobilă gama pe 32 de biți"
+msgstr "Virgulă mobilă gamma pe 32 de biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1477
 msgctxt "precision"
@@ -1259,7 +1259,7 @@ msgstr "Virgulă mobilă liniară pe 64 de biți"
 #: ../libgimpbase/gimpbaseenums.c:1478
 msgctxt "precision"
 msgid "64-bit gamma floating point"
-msgstr "Virgulă mobilă gama pe 64 de biți"
+msgstr "Virgulă mobilă gamma pe 64 de biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1547
 msgctxt "repeat-mode"
@@ -3020,11 +3020,11 @@ msgstr "Vedere deficitară la culori"
 
 #: ../modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
-msgstr "Filtru gama de afișare a culorii"
+msgstr "Filtru gamma de afișare a culorii"
 
 #: ../modules/display-filter-gamma.c:123 ../modules/display-filter-gamma.c:128
 msgid "Gamma"
-msgstr "Gama"
+msgstr "Gamma"
 
 #: ../modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
