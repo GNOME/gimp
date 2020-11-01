@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-31 21:45+0000\n"
-"PO-Revision-Date: 2020-10-31 23:52+0200\n"
+"PO-Revision-Date: 2020-11-01 23:33+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -1144,19 +1144,19 @@ msgstr "Analizează setul de culori în imagine"
 
 #: ../plug-ins/common/color-cube-analyze.c:112
 msgid "Colorcube A_nalysis..."
-msgstr "A_nalizează spațiul de culoare..."
+msgstr "A_naliză de colorimetrie..."
 
 #: ../plug-ins/common/color-cube-analyze.c:200
 #: ../plug-ins/common/color-cube-analyze.c:360
 msgid "Colorcube Analysis"
-msgstr "Analiză de spațiu de culoare"
+msgstr "Analiză de colorimetrie"
 
 #. output results
 #: ../plug-ins/common/color-cube-analyze.c:388
 #: ../plug-ins/imagemap/imap_cmd_guides.c:229
 #, c-format
 msgid "Image dimensions: %d × %d"
-msgstr "Dimensiuni imagine: %d × %d"
+msgstr "Dimensiunile imaginii: %d × %d"
 
 #: ../plug-ins/common/color-cube-analyze.c:391
 msgid "No colors"
@@ -1169,7 +1169,7 @@ msgstr "Numai o culoare unică"
 #: ../plug-ins/common/color-cube-analyze.c:395
 #, c-format
 msgid "Number of unique colors: %d"
-msgstr "Număr de culori unice: %d"
+msgstr "Numărul de culori unice: %d"
 
 #: ../plug-ins/common/color-enhance.c:68
 msgid "Stretch color saturation to cover maximum possible range"
@@ -2980,7 +2980,7 @@ msgstr "Salvează _culoarea de fundal"
 
 #: ../plug-ins/common/file-mng.c:1378
 msgid "Save _gamma"
-msgstr "Salvează _gama"
+msgstr "Salvează _gamma"
 
 #: ../plug-ins/common/file-mng.c:1388
 msgid "Save resolution"
@@ -6872,7 +6872,7 @@ msgstr "_Mod de întoarcere de la capăt:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2140
 msgid "Appl_y gamma correction"
-msgstr "_Aplică corecție de gama"
+msgstr "_Aplică corecție de gamma"
 
 #: ../plug-ins/file-dds/ddswrite.c:2154
 msgid "Use s_RGB colorspace"
@@ -6880,7 +6880,7 @@ msgstr "Folosește un spațiu de culoare s_RGB"
 
 #: ../plug-ins/file-dds/ddswrite.c:2173 ../plug-ins/flame/flame.c:1116
 msgid "_Gamma:"
-msgstr "_Gama:"
+msgstr "_Gamma:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2183
 msgid "Preserve alpha _test coverage"
@@ -8863,11 +8863,11 @@ msgstr "_Penel"
 
 #: ../plug-ins/gimpressionist/brush.c:569
 msgid "Gamma:"
-msgstr "Gama:"
+msgstr "Gamma:"
 
 #: ../plug-ins/gimpressionist/brush.c:587
 msgid "Changes the gamma (brightness) of the selected brush"
-msgstr "Modifică gama (luminozitatea) penelului selectat"
+msgstr "Modifică gamma (luminozitatea) penelului selectat"
 
 #: ../plug-ins/gimpressionist/brush.c:595
 #: ../plug-ins/metadata/metadata-editor.c:570
@@ -9551,7 +9551,7 @@ msgstr "Întrețesere (Adam_7)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:3
 msgid "Save gamma"
-msgstr "Salvează gama"
+msgstr "Salvează gamma"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:4
 msgid "Save layer o_ffset"
