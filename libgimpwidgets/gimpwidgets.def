@@ -371,9 +371,9 @@ EXPORTS
 	gimp_scale_entry_get_type
 	gimp_scale_entry_get_value
 	gimp_scale_entry_new
+	gimp_scale_entry_set_bounds
 	gimp_scale_entry_set_increments
 	gimp_scale_entry_set_logarithmic
-	gimp_scale_entry_set_range
 	gimp_scale_entry_set_value
 	gimp_scroll_adjustment_values
 	gimp_scrolled_preview_freeze

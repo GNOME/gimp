@@ -148,7 +148,7 @@ gimp_scale_entry_class_init (GimpScaleEntryClass *klass)
    * GimpScaleEntry:lower:
    *
    * The lower bound of the widget. If the spin button and the scale
-   * widgets have different limits (see gimp_scale_entry_set_range()),
+   * widgets have different limits (see gimp_scale_entry_set_bounds()),
    * this corresponds to the spin button lower value.
    *
    * Since: 3.0
@@ -164,7 +164,7 @@ gimp_scale_entry_class_init (GimpScaleEntryClass *klass)
    * GimpScaleEntry:upper:
    *
    * The upper bound of the widget. If the spin button and the scale
-   * widgets have different limits (see gimp_scale_entry_set_range()),
+   * widgets have different limits (see gimp_scale_entry_set_bounds()),
    * this corresponds to the spin button upper value.
    *
    * Since: 3.0
@@ -686,7 +686,7 @@ gimp_scale_entry_get_range (GimpScaleEntry *entry)
 }
 
 /**
- * gimp_scale_entry_set_range:
+ * gimp_scale_entry_set_bounds:
  * @entry:       The #GtkScaleEntry.
  * @lower:       the lower value for the whole widget if @limit_scale is
  *               %FALSE, or only for the #GtkScale if %TRUE.
@@ -717,10 +717,10 @@ gimp_scale_entry_get_range (GimpScaleEntry *entry)
  * increments yourself, you may call gimp_scale_entry_set_increments()
  **/
 void
-gimp_scale_entry_set_range (GimpScaleEntry *entry,
-                            gdouble         lower,
-                            gdouble         upper,
-                            gboolean        limit_scale)
+gimp_scale_entry_set_bounds (GimpScaleEntry *entry,
+                             gdouble         lower,
+                             gdouble         upper,
+                             gboolean        limit_scale)
 {
   GimpScaleEntryPrivate *priv;
   GtkSpinButton         *spinbutton;

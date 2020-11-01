@@ -1516,9 +1516,9 @@ gimp_prop_scale_entry_new (GObject     *config,
   widget = gimp_scale_entry_new (label, value, lower, upper, digits);
   if (limit_scale)
     {
-      gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (widget),
-                                  lower_limit, upper_limit,
-                                  FALSE);
+      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (widget),
+                                   lower_limit, upper_limit,
+                                   FALSE);
     }
 
   tooltip = g_param_spec_get_blurb (param_spec);

@@ -68,7 +68,7 @@ GtkWidget     * gimp_scale_entry_get_label       (GimpScaleEntry *entry);
 GtkWidget     * gimp_scale_entry_get_spin_button (GimpScaleEntry *entry);
 GtkWidget     * gimp_scale_entry_get_range       (GimpScaleEntry *entry);
 
-void            gimp_scale_entry_set_range       (GimpScaleEntry *entry,
+void            gimp_scale_entry_set_bounds      (GimpScaleEntry *entry,
                                                   gdouble         lower,
                                                   gdouble         upper,
                                                   gboolean        limit_scale);

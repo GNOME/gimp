@@ -2899,7 +2899,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   row = 0;
 
   scale = gimp_scale_entry_new (_("_Radius:"), pvals.radius, 0.0, GIMP_MAX_IMAGE_SIZE, 1);
-  gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 0.0, gimp_drawable_width (drawable) / 2, TRUE);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0.0, gimp_drawable_width (drawable) / 2, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.radius);
@@ -2943,7 +2943,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Vector _length:"), pvals.vlength, 1, GIMP_MAX_IMAGE_SIZE, 1);
-  gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 1, 1000, TRUE);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1, 1000, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.vlength);
@@ -3718,7 +3718,7 @@ ed_make_page_glow (GFlareEditor *ed,
   row = 0;
 
   scale = gimp_scale_entry_new (_("Size (%):"), gflare->glow_size, 0.0, G_MAXINT, 1);
-  gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 0.0, 200.0, TRUE);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0.0, 200.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->glow_size);
@@ -3820,7 +3820,7 @@ ed_make_page_rays (GFlareEditor *ed,
   row = 0;
 
   scale = gimp_scale_entry_new (_("Size (%):"), gflare->rays_size, 0.0, G_MAXINT, 1);
-  gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 0.0, 200.0, TRUE);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0.0, 200.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->rays_size);
@@ -3853,7 +3853,7 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("# of Spikes:"), gflare->rays_nspikes, 1, G_MAXINT, 0);
-  gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 1.0, 300.0, TRUE);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1.0, 300.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_int),
                     &gflare->rays_nspikes);
@@ -3864,7 +3864,7 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Spike thickness:"), gflare->rays_thickness, 1.0, GIMP_MAX_IMAGE_SIZE, 1);
-  gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 1.0, 100.0, TRUE);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1.0, 100.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->rays_thickness);
@@ -3951,7 +3951,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   row = 0;
 
   scale = gimp_scale_entry_new (_("Size (%):"), gflare->sflare_size, 0.0, G_MAXINT, 1);
-  gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 1.0, 200.0, TRUE);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1.0, 200.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->sflare_size);

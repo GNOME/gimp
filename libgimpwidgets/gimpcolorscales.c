@@ -321,10 +321,10 @@ create_group (GimpColorScales           *scales,
                                NULL);
       gtk_widget_show (scales->scales[i]);
 
-      gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scales->scales[i]),
-                                  scale_defs[i].scale_min_value,
-                                  scale_defs[i].scale_max_value,
-                                  TRUE);
+      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scales->scales[i]),
+                                   scale_defs[i].scale_min_value,
+                                   scale_defs[i].scale_max_value,
+                                   TRUE);
 
       g_object_add_weak_pointer (G_OBJECT (scales->scales[i]),
                                  (gpointer) &scales->scales[i]);
