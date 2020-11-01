@@ -728,7 +728,7 @@ explorer_dialog (void)
   gtk_widget_show (vbox2);
 
   elements->xmin =
-    gimp_scale_entry_new2 (_("Left:"), wvals.xmin, -3, 3, 5);
+    gimp_scale_entry_new (_("Left:"), wvals.xmin, -3, 3, 5);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->xmin), 0.001, 0.01);
   g_signal_connect (elements->xmin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
@@ -737,7 +737,7 @@ explorer_dialog (void)
   gtk_widget_show (elements->xmin);
 
   elements->xmax =
-    gimp_scale_entry_new2 (_("Right:"), wvals.xmax, -3, 3, 5);
+    gimp_scale_entry_new (_("Right:"), wvals.xmax, -3, 3, 5);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->xmax), 0.001, 0.01);
   g_signal_connect (elements->xmax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
@@ -746,7 +746,7 @@ explorer_dialog (void)
   gtk_widget_show (elements->xmax);
 
   elements->ymin =
-    gimp_scale_entry_new2 (_("Top:"), wvals.ymin, -3, 3, 5);
+    gimp_scale_entry_new (_("Top:"), wvals.ymin, -3, 3, 5);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->ymin), 0.001, 0.01);
   g_signal_connect (elements->ymin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
@@ -755,7 +755,7 @@ explorer_dialog (void)
   gtk_widget_show (elements->ymin);
 
   elements->ymax =
-    gimp_scale_entry_new2 (_("Bottom:"), wvals.ymax, -3, 3, 5);
+    gimp_scale_entry_new (_("Bottom:"), wvals.ymax, -3, 3, 5);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->ymax), 0.001, 0.01);
   g_signal_connect (elements->ymax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
@@ -764,7 +764,7 @@ explorer_dialog (void)
   gtk_widget_show (elements->ymax);
 
   elements->iter =
-    gimp_scale_entry_new2 (_("Iterations:"), wvals.iter, 1, 1000, 0);
+    gimp_scale_entry_new (_("Iterations:"), wvals.iter, 1, 1000, 0);
   gimp_help_set_help_data (elements->iter,
                            _("The higher the number of iterations, "
                              "the more details will be calculated"),
@@ -776,7 +776,7 @@ explorer_dialog (void)
   gtk_widget_show (elements->iter);
 
   elements->cx =
-    gimp_scale_entry_new2 (_("CX:"), wvals.cx, -2.5, 2.5, 5);
+    gimp_scale_entry_new (_("CX:"), wvals.cx, -2.5, 2.5, 5);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->cx), 0.001, 0.01);
   gimp_help_set_help_data (elements->cx,
                            _("Changes aspect of fractal"), NULL);
@@ -787,7 +787,7 @@ explorer_dialog (void)
   gtk_widget_show (elements->cx);
 
   elements->cy =
-    gimp_scale_entry_new2 (_("CY:"), wvals.cy, -2.5, 2.5, 5);
+    gimp_scale_entry_new (_("CY:"), wvals.cy, -2.5, 2.5, 5);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->cy), 0.001, 0.01);
   gimp_help_set_help_data (elements->cy,
                            _("Changes aspect of fractal"), NULL);
@@ -917,7 +917,7 @@ explorer_dialog (void)
   gtk_widget_show (grid);
 
   elements->ncol =
-    gimp_scale_entry_new2 (_("Number of colors:"), wvals.ncolors, 2, MAXNCOLORS, 0);
+    gimp_scale_entry_new (_("Number of colors:"), wvals.ncolors, 2, MAXNCOLORS, 0);
   gimp_help_set_help_data (elements->ncol,
                            _("Change the number of colors in the mapping"),
                            NULL);
@@ -948,7 +948,7 @@ explorer_dialog (void)
   gtk_widget_show (grid);
 
   elements->red =
-    gimp_scale_entry_new2 (_("Red:"), wvals.redstretch, 0, 1, 2);
+    gimp_scale_entry_new (_("Red:"), wvals.redstretch, 0, 1, 2);
   gimp_help_set_help_data (elements->red,
                            _("Change the intensity of the red channel"), NULL);
   g_signal_connect (elements->red, "value-changed",
@@ -958,7 +958,7 @@ explorer_dialog (void)
   gtk_widget_show (elements->red);
 
   elements->green =
-    gimp_scale_entry_new2 (_("Green:"), wvals.greenstretch, 0, 1, 2);
+    gimp_scale_entry_new (_("Green:"), wvals.greenstretch, 0, 1, 2);
   gimp_help_set_help_data (elements->green,
                            _("Change the intensity of the green channel"), NULL);
   g_signal_connect (elements->green, "value-changed",
@@ -968,7 +968,7 @@ explorer_dialog (void)
   gtk_widget_show (elements->green);
 
   elements->blue =
-    gimp_scale_entry_new2 (_("Blue:"), wvals.bluestretch, 0, 1, 2);
+    gimp_scale_entry_new (_("Blue:"), wvals.bluestretch, 0, 1, 2);
   gimp_help_set_help_data (elements->blue,
                            _("Change the intensity of the blue channel"), NULL);
   g_signal_connect (elements->blue, "value-changed",

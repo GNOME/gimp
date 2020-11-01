@@ -1513,8 +1513,7 @@ gimp_prop_scale_entry_new (GObject     *config,
   if (! label)
     label = g_param_spec_get_nick (param_spec);
 
-  widget = gimp_scale_entry_new2 (label, value, lower, upper,
-                                  digits);
+  widget = gimp_scale_entry_new (label, value, lower, upper, digits);
   if (limit_scale)
     {
       gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (widget),

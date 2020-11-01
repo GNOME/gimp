@@ -610,7 +610,7 @@ create_brushpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   brush_aspect_scale =
-    gimp_scale_entry_new2 (_("Aspect ratio:"), pcvals.brush_aspect, -1.0, 1.0, 2);
+    gimp_scale_entry_new (_("Aspect ratio:"), pcvals.brush_aspect, -1.0, 1.0, 2);
   gimp_help_set_help_data (brush_aspect_scale,
                            _("Specifies the aspect ratio of the brush"),
                            NULL);
@@ -623,7 +623,7 @@ create_brushpage (GtkNotebook *notebook)
   gtk_widget_show (brush_aspect_scale);
 
   brush_relief_scale =
-    gimp_scale_entry_new2 (_("Relief:"), pcvals.brush_relief, 0.0, 100.0, 1);
+    gimp_scale_entry_new (_("Relief:"), pcvals.brush_relief, 0.0, 100.0, 1);
   gimp_help_set_help_data (brush_relief_scale,
                            _("Specifies the amount of embossing to apply to the image (in percent)"),
                            NULL);

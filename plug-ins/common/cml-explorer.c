@@ -1482,14 +1482,14 @@ CML_explorer_dialog (void)
       gtk_size_group_add_widget (group, label);
       g_object_unref (group);
 
-      scale = gimp_scale_entry_new2 (_("Zoom scale:"), VALS.scale, 1, 10, 0);
+      scale = gimp_scale_entry_new (_("Zoom scale:"), VALS.scale, 1, 10, 0);
       gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
       CML_explorer_int_entry_init (&widget_pointers[3][1],
                                    scale, &VALS.scale);
       gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
       gtk_widget_show (scale);
 
-      scale = gimp_scale_entry_new2 (_("Start offset:"), VALS.start_offset, 0, 100, 0);
+      scale = gimp_scale_entry_new (_("Start offset:"), VALS.start_offset, 0, 100, 0);
       gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
       CML_explorer_int_entry_init (&widget_pointers[3][2],
                                    scale, &VALS.start_offset);
@@ -1507,7 +1507,7 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), grid);
       gtk_widget_show (grid);
 
-      scale = gimp_scale_entry_new2 (_("Seed:"), VALS.seed, 0, (guint32) -1, 0);
+      scale = gimp_scale_entry_new (_("Seed:"), VALS.seed, 0, (guint32) -1, 0);
       gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
       CML_explorer_int_entry_init (&widget_pointers[3][3],
                                    scale, &VALS.seed);
@@ -1743,35 +1743,35 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   gtk_widget_show (toggle);
   index++;
 
-  scale = gimp_scale_entry_new2 (_("Mod. rate:"), param->mod_rate, 0.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("Mod. rate:"), param->mod_rate, 0.0, 1.0, 2);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->mod_rate);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new2 (_("Env. sensitivity:"), param->env_sensitivity, 0.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("Env. sensitivity:"), param->env_sensitivity, 0.0, 1.0, 2);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->env_sensitivity);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new2 (_("Diffusion dist.:"), param->diffusion_dist, 2, 10, 0);
+  scale = gimp_scale_entry_new (_("Diffusion dist.:"), param->diffusion_dist, 2, 10, 0);
   CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
                                scale, &param->diffusion_dist);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new2 (_("# of subranges:"), param->range_num, 1, 10, 0);
+  scale = gimp_scale_entry_new (_("# of subranges:"), param->range_num, 1, 10, 0);
   CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
                                scale, &param->range_num);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new2 (_("P(ower factor):"), param->power, 0.0, 10.0, 2);
+  scale = gimp_scale_entry_new (_("P(ower factor):"), param->power, 0.0, 10.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->power);
@@ -1779,7 +1779,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new2 (_("Parameter k:"), param->parameter_k, 0.0, 10.0, 2);
+  scale = gimp_scale_entry_new (_("Parameter k:"), param->parameter_k, 0.0, 10.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->parameter_k);
@@ -1787,14 +1787,14 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new2 (_("Range low:"), param->range_l, 0.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("Range low:"), param->range_l, 0.0, 1.0, 2);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->range_l);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new2 (_("Range high:"), param->range_h, 0.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("Range high:"), param->range_h, 0.0, 1.0, 2);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->range_h);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
@@ -1847,7 +1847,7 @@ CML_dialog_advanced_panel_new (void)
 
       index = 0;
 
-      scale = gimp_scale_entry_new2 (_("Ch. sensitivity:"), param->ch_sensitivity, 0.0, 1.0, 2);
+      scale = gimp_scale_entry_new (_("Ch. sensitivity:"), param->ch_sensitivity, 0.0, 1.0, 2);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
                                                                   widget_offset],
                                       scale, &param->ch_sensitivity);
@@ -1855,7 +1855,7 @@ CML_dialog_advanced_panel_new (void)
       gtk_widget_show (scale);
       index++;
 
-      scale = gimp_scale_entry_new2 (_("Mutation rate:"), param->mutation_rate, 0.0, 1.0, 2);
+      scale = gimp_scale_entry_new (_("Mutation rate:"), param->mutation_rate, 0.0, 1.0, 2);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
                                                                   widget_offset],
                                       scale, &param->mutation_rate);
@@ -1863,7 +1863,7 @@ CML_dialog_advanced_panel_new (void)
       gtk_widget_show (scale);
       index++;
 
-      scale = gimp_scale_entry_new2 (_("Mutation dist.:"), param->mutation_dist, 0.0, 1.0, 2);
+      scale = gimp_scale_entry_new (_("Mutation dist.:"), param->mutation_dist, 0.0, 1.0, 2);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
                                                                   widget_offset],
                                       scale, &param->mutation_dist);

@@ -742,7 +742,7 @@ align_layers_dialog (void)
                             _("Ver_tical base:"), 0.0, 0.5,
                             combo, 2);
 
-  scale = gimp_scale_entry_new2 (_("_Grid size:"), VALS.grid_size, 1, 200, 0);
+  scale = gimp_scale_entry_new (_("_Grid size:"), VALS.grid_size, 1, 200, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (align_layers_scale_entry_update_int),
                     &VALS.grid_size);

@@ -2825,7 +2825,7 @@ makewindow (void)
                     G_CALLBACK (color2_changed),
                     NULL);
 
-  scalescale = gimp_scale_entry_new2 (_("Scale:"), 1.0, 0.0, 10.0, 1);
+  scalescale = gimp_scale_entry_new (_("Scale:"), 1.0, 0.0, 10.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scalescale), 0.1, 1.0);
   g_signal_connect (scalescale, "value-changed",
                     G_CALLBACK (getscales),
@@ -2833,7 +2833,7 @@ makewindow (void)
   gtk_grid_attach (GTK_GRID (grid), scalescale, 0, 3, 3, 1);
   gtk_widget_show (scalescale);
 
-  turbulencescale = gimp_scale_entry_new2 (_("Turbulence:"), 1.0, 0.0, 10.0, 1);
+  turbulencescale = gimp_scale_entry_new (_("Turbulence:"), 1.0, 0.0, 10.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (turbulencescale), 0.1, 1.0);
   g_signal_connect (turbulencescale, "value-changed",
                     G_CALLBACK (getscales),
@@ -2841,14 +2841,14 @@ makewindow (void)
   gtk_grid_attach (GTK_GRID (grid), turbulencescale, 0, 4, 3, 1);
   gtk_widget_show (turbulencescale);
 
-  amountscale = gimp_scale_entry_new2 (_("Amount:"), 1.0, 0.0, 1.0, 2);
+  amountscale = gimp_scale_entry_new (_("Amount:"), 1.0, 0.0, 1.0, 2);
   g_signal_connect (amountscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), amountscale, 0, 5, 3, 1);
   gtk_widget_show (amountscale);
 
-  expscale = gimp_scale_entry_new2 (_("Exp.:"), 1.0, 0.0, 1.0, 2);
+  expscale = gimp_scale_entry_new (_("Exp.:"), 1.0, 0.0, 1.0, 2);
   g_signal_connect (expscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
@@ -2869,7 +2869,7 @@ makewindow (void)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  scalexscale = gimp_scale_entry_new2 (_("Scale X:"), 1.0, 0.0, 10.0, 2);
+  scalexscale = gimp_scale_entry_new (_("Scale X:"), 1.0, 0.0, 10.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scalexscale), 0.1, 1.0);
   g_signal_connect (scalexscale, "value-changed",
                     G_CALLBACK (getscales),
@@ -2877,7 +2877,7 @@ makewindow (void)
   gtk_grid_attach (GTK_GRID (grid), scalexscale, 0, 0, 3, 1);
   gtk_widget_show (scalexscale);
 
-  scaleyscale = gimp_scale_entry_new2 (_("Scale Y:"), 1.0, 0.0, 10.0, 2);
+  scaleyscale = gimp_scale_entry_new (_("Scale Y:"), 1.0, 0.0, 10.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scaleyscale), 0.1, 1.0);
   g_signal_connect (scaleyscale, "value-changed",
                     G_CALLBACK (getscales),
@@ -2885,7 +2885,7 @@ makewindow (void)
   gtk_grid_attach (GTK_GRID (grid), scaleyscale, 0, 1, 3, 1);
   gtk_widget_show (scaleyscale);
 
-  scalezscale = gimp_scale_entry_new2 (_("Scale Z:"), 1.0, 0.0, 10.0, 2);
+  scalezscale = gimp_scale_entry_new (_("Scale Z:"), 1.0, 0.0, 10.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scalezscale), 0.1, 1.0);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scalezscale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scalezscale)), 6);
@@ -2896,21 +2896,21 @@ makewindow (void)
   gtk_grid_attach (GTK_GRID (grid), scalezscale, 0, 2, 3, 1);
   gtk_widget_show (scalezscale);
 
-  rotxscale = gimp_scale_entry_new2 (_("Rotate X:"), 0.0, 0.0, 360.0, 1);
+  rotxscale = gimp_scale_entry_new (_("Rotate X:"), 0.0, 0.0, 360.0, 1);
   g_signal_connect (rotxscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), rotxscale, 0, 3, 3, 1);
   gtk_widget_show (rotxscale);
 
-  rotyscale = gimp_scale_entry_new2 (_("Rotate Y:"), 0.0, 0.0, 360.0, 1);
+  rotyscale = gimp_scale_entry_new (_("Rotate Y:"), 0.0, 0.0, 360.0, 1);
   g_signal_connect (rotyscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), rotyscale, 0, 4, 3, 1);
   gtk_widget_show (rotyscale);
 
-  rotzscale = gimp_scale_entry_new2 (_("Rotate Z:"), 0.0, 0.0, 360.0, 1);
+  rotzscale = gimp_scale_entry_new (_("Rotate Z:"), 0.0, 0.0, 360.0, 1);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (rotzscale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (rotzscale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (rotzscale)), 6);
@@ -2920,7 +2920,7 @@ makewindow (void)
   gtk_grid_attach (GTK_GRID (grid), rotzscale, 0, 5, 3, 1);
   gtk_widget_show (rotzscale);
 
-  posxscale = gimp_scale_entry_new2 (_("Position X:"), 0.0, -20.0, 20.0, 1);
+  posxscale = gimp_scale_entry_new (_("Position X:"), 0.0, -20.0, 20.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (posxscale), 0.1, 1.0);
   g_signal_connect (posxscale, "value-changed",
                     G_CALLBACK (getscales),
@@ -2928,7 +2928,7 @@ makewindow (void)
   gtk_grid_attach (GTK_GRID (grid), posxscale, 0, 6, 3, 1);
   gtk_widget_show (posxscale);
 
-  posyscale = gimp_scale_entry_new2 (_("Position Y:"), 0.0, -20.0, 20.0, 1);
+  posyscale = gimp_scale_entry_new (_("Position Y:"), 0.0, -20.0, 20.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (posyscale), 0.1, 1.0);
   g_signal_connect (posyscale, "value-changed",
                     G_CALLBACK (getscales),
@@ -2936,7 +2936,7 @@ makewindow (void)
   gtk_grid_attach (GTK_GRID (grid), posyscale, 0, 7, 3, 1);
   gtk_widget_show (posyscale);
 
-  poszscale = gimp_scale_entry_new2 (_("Position Z:"), 0.0, -20.0, 20.0, 1);
+  poszscale = gimp_scale_entry_new (_("Position Z:"), 0.0, -20.0, 20.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (poszscale), 0.1, 1.0);
   g_signal_connect (poszscale, "value-changed",
                     G_CALLBACK (getscales),

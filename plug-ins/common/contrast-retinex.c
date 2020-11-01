@@ -374,7 +374,7 @@ retinex_dialog (GimpDrawable *drawable)
                             combo, 2);
   gtk_widget_show (combo);
 
-  scale = gimp_scale_entry_new2 (_("_Scale:"), rvals.scale, MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 0);
+  scale = gimp_scale_entry_new (_("_Scale:"), rvals.scale, MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 0);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (contrast_retinex_scale_entry_update_int),
@@ -385,7 +385,7 @@ retinex_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Scale _division:"), rvals.nscales, 0, MAX_RETINEX_SCALES, 0);
+  scale = gimp_scale_entry_new (_("Scale _division:"), rvals.nscales, 0, MAX_RETINEX_SCALES, 0);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (contrast_retinex_scale_entry_update_int),
@@ -396,7 +396,7 @@ retinex_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Dy_namic:"), rvals.cvar, 0, 4, 1);
+  scale = gimp_scale_entry_new (_("Dy_namic:"), rvals.cvar, 0, 4, 1);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (contrast_retinex_scale_entry_update_float),

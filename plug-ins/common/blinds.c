@@ -355,7 +355,7 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("_Displacement:"), bvals.angledsp, 1, 90, 0);
+  scale = gimp_scale_entry_new (_("_Displacement:"), bvals.angledsp, 1, 90, 0);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (blinds_scale_entry_update_int),
@@ -366,7 +366,7 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 2);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_Number of segments:"), bvals.numsegs, 1, MAX_FANS, 0);
+  scale = gimp_scale_entry_new (_("_Number of segments:"), bvals.numsegs, 1, MAX_FANS, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (blinds_scale_entry_update_int),
                     &bvals.numsegs);

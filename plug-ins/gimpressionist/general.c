@@ -235,7 +235,7 @@ create_generalpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   general_dark_edge_scale =
-    gimp_scale_entry_new2 (_("Edge darken:"), pcvals.general_dark_edge, 0.0, 1.0, 2);
+    gimp_scale_entry_new (_("Edge darken:"), pcvals.general_dark_edge, 0.0, 1.0, 2);
   gimp_help_set_help_data (general_dark_edge_scale,
                            _("How much to \"darken\" the edges of each brush stroke"),
                            NULL);
@@ -243,7 +243,7 @@ create_generalpage (GtkNotebook *notebook)
   gtk_widget_show (general_dark_edge_scale);
 
   general_shadow_scale =
-    gimp_scale_entry_new2 (_("Shadow darken:"), pcvals.general_shadow_darkness, 0.0, 99.0, 2);
+    gimp_scale_entry_new (_("Shadow darken:"), pcvals.general_shadow_darkness, 0.0, 99.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (general_shadow_scale), 0.1, 1.0);
   gimp_help_set_help_data (general_shadow_scale,
                            _("How much to \"darken\" the drop shadow"),
@@ -252,7 +252,7 @@ create_generalpage (GtkNotebook *notebook)
   gtk_widget_show (general_shadow_scale);
 
   general_shadow_depth =
-    gimp_scale_entry_new2 (_("Shadow depth:"), pcvals.general_shadow_depth, 0, 99, 0);
+    gimp_scale_entry_new (_("Shadow depth:"), pcvals.general_shadow_depth, 0, 99, 0);
   gimp_help_set_help_data (general_shadow_depth,
                            _("The depth of the drop shadow, i.e. how far apart from the object it should be"),
                            NULL);
@@ -260,7 +260,7 @@ create_generalpage (GtkNotebook *notebook)
   gtk_widget_show (general_shadow_depth);
 
   general_shadow_blur =
-    gimp_scale_entry_new2 (_("Shadow blur:"), pcvals.general_shadow_blur, 0, 99, 0);
+    gimp_scale_entry_new (_("Shadow blur:"), pcvals.general_shadow_blur, 0, 99, 0);
   gimp_help_set_help_data (general_shadow_blur,
                            _("How much to blur the drop shadow"),
                            NULL);
@@ -268,7 +268,7 @@ create_generalpage (GtkNotebook *notebook)
   gtk_widget_show (general_shadow_blur);
 
   dev_thresh_scale =
-    gimp_scale_entry_new2 (_("Deviation threshold:"), pcvals.devthresh, 0.0, 1.0, 2);
+    gimp_scale_entry_new (_("Deviation threshold:"), pcvals.devthresh, 0.0, 1.0, 2);
   gimp_help_set_help_data (dev_thresh_scale,
                            _("A bailout-value for adaptive selections"),
                            NULL);

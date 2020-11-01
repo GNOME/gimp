@@ -431,7 +431,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("Luminosity _threshold:"), svals.lum_threshold, 0.0, 0.1, 3);
+  scale = gimp_scale_entry_new (_("Luminosity _threshold:"), svals.lum_threshold, 0.0, 0.1, 3);
   gimp_help_set_help_data (scale, _("Adjust the luminosity threshold"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
@@ -442,7 +442,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("F_lare intensity:"), svals.flare_inten, 0.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("F_lare intensity:"), svals.flare_inten, 0.0, 1.0, 2);
   gimp_help_set_help_data (scale, _("Adjust the flare intensity"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
@@ -453,7 +453,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_Spike length:"), svals.spike_len, 1, 100, 0);
+  scale = gimp_scale_entry_new (_("_Spike length:"), svals.spike_len, 1, 100, 0);
   gimp_help_set_help_data (scale, _("Adjust the spike length"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
@@ -464,7 +464,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Sp_ike points:"), svals.spike_pts, 0, 16, 0);
+  scale = gimp_scale_entry_new (_("Sp_ike points:"), svals.spike_pts, 0, 16, 0);
   gimp_help_set_help_data (scale, _("Adjust the number of spikes"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
@@ -475,7 +475,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 3, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Spi_ke angle (-1: random):"), svals.spike_angle, -1, 360, 0);
+  scale = gimp_scale_entry_new (_("Spi_ke angle (-1: random):"), svals.spike_angle, -1, 360, 0);
   gimp_help_set_help_data (scale, _("Adjust the spike angle "
                                     "(-1 causes a random angle to be chosen)"), NULL);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
@@ -488,7 +488,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 4, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Spik_e density:"), svals.density, 0.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("Spik_e density:"), svals.density, 0.0, 1.0, 2);
   gimp_help_set_help_data (scale, _("Adjust the spike density"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
@@ -499,7 +499,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 5, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Tr_ansparency:"), svals.transparency, 0.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("Tr_ansparency:"), svals.transparency, 0.0, 1.0, 2);
   gimp_help_set_help_data (scale, _("Adjust the opacity of the spikes"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
@@ -510,7 +510,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 6, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_Random hue:"), svals.random_hue, 0.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("_Random hue:"), svals.random_hue, 0.0, 1.0, 2);
   gimp_help_set_help_data (scale, _("Adjust how much the hue should be changed randomly"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
@@ -521,7 +521,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 7, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Rando_m saturation:"), svals.random_saturation, 0.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("Rando_m saturation:"), svals.random_saturation, 0.0, 1.0, 2);
   gimp_help_set_help_data (scale, _("Adjust how much the saturation should be changed randomly"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),

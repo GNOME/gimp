@@ -505,7 +505,7 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (grid2);
 
   sizadjust =
-    gimp_scale_entry_new2 (_("_Size:"), 50.0, 0.0, 100.0, 1);
+    gimp_scale_entry_new (_("_Size:"), 50.0, 0.0, 100.0, 1);
   gimp_help_set_help_data (sizadjust,
                            _("Change the angle of the selected smvector"),
                            NULL);
@@ -515,7 +515,7 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (sizadjust);
 
   smstradjust =
-    gimp_scale_entry_new2 (_("S_trength:"), 1.0, 0.1, 5.0, 1);
+    gimp_scale_entry_new (_("S_trength:"), 1.0, 0.1, 5.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (smstradjust), 0.1, 0.5);
   gimp_help_set_help_data (smstradjust,
                            _("Change the strength of the selected smvector"),
@@ -526,7 +526,7 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (smstradjust);
 
   smstrexpadjust =
-    gimp_scale_entry_new2 (_("St_rength exp.:"), 1.0, 0.1, 10.9, 1);
+    gimp_scale_entry_new (_("St_rength exp.:"), 1.0, 0.1, 10.9, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (smstradjust), 0.1, 0.5);
   gimp_help_set_help_data (smstrexpadjust,
                            _("Change the exponent of the strength"),

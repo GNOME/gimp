@@ -403,7 +403,7 @@ wavelet_decompose_dialog (void)
 
   /* scales */
 
-  scale = gimp_scale_entry_new2 (_("Scales:"), wavelet_params.scales, 1.0, 7.0, 0);
+  scale = gimp_scale_entry_new (_("Scales:"), wavelet_params.scales, 1.0, 7.0, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 6);
   gtk_widget_show (scale);
 

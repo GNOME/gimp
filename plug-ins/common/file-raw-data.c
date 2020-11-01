@@ -1910,7 +1910,7 @@ load_dialog (GFile    *file,
                               G_CALLBACK (preview_update),
                               preview);
 
-  scale = gimp_scale_entry_new2 (_("O_ffset:"), runtime->file_offset, 0, file_size, 0);
+  scale = gimp_scale_entry_new (_("O_ffset:"), runtime->file_offset, 0, file_size, 0);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1, 1000);
 
   g_signal_connect (scale, "value-changed",
@@ -1924,7 +1924,7 @@ load_dialog (GFile    *file,
 
   if (! is_hgt)
     {
-      scale = gimp_scale_entry_new2 (_("_Width:"), runtime->image_width, 1, file_size, 0);
+      scale = gimp_scale_entry_new (_("_Width:"), runtime->image_width, 1, file_size, 0);
 
       g_signal_connect (scale, "value-changed",
                         G_CALLBACK (file_raw_scale_entry_update_int),
@@ -1938,7 +1938,7 @@ load_dialog (GFile    *file,
       gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
       gtk_widget_show (scale);
 
-      scale = gimp_scale_entry_new2 (_("_Height:"), runtime->image_height, 1, file_size, 0);
+      scale = gimp_scale_entry_new (_("_Height:"), runtime->image_height, 1, file_size, 0);
 
       g_signal_connect (scale, "value-changed",
                         G_CALLBACK (file_raw_scale_entry_update_int),
@@ -1980,7 +1980,7 @@ load_dialog (GFile    *file,
                             G_CALLBACK (palette_update),
                             preview);
 
-  scale = gimp_scale_entry_new2 (_("Off_set:"), runtime->palette_offset, 0, 1 << 24, 0);
+  scale = gimp_scale_entry_new (_("Off_set:"), runtime->palette_offset, 0, 1 << 24, 0);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1, 768);
 
   g_signal_connect (scale, "value-changed",

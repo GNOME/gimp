@@ -665,7 +665,7 @@ create_orientmap_dialog (GtkWidget *parent)
   gtk_widget_show (grid2);
 
   angle_adjust =
-    gimp_scale_entry_new2 (_("A_ngle:"), 0.0, 0.0, 360.0, 1);
+    gimp_scale_entry_new (_("A_ngle:"), 0.0, 0.0, 360.0, 1);
   gimp_help_set_help_data (angle_adjust,
                            _("Change the angle of the selected vector"),
                            NULL);
@@ -675,7 +675,7 @@ create_orientmap_dialog (GtkWidget *parent)
   gtk_widget_show (angle_adjust);
 
   angle_offset_adjust =
-    gimp_scale_entry_new2 (_("Ang_le offset:"), 0.0, 0.0, 360.0, 1);
+    gimp_scale_entry_new (_("Ang_le offset:"), 0.0, 0.0, 360.0, 1);
   gimp_help_set_help_data (angle_offset_adjust,
                            _("Offset all vectors with a given angle"),
                            NULL);
@@ -685,7 +685,7 @@ create_orientmap_dialog (GtkWidget *parent)
   gtk_widget_show (angle_offset_adjust);
 
   strength_adjust =
-    gimp_scale_entry_new2 (_("_Strength:"), 1.0, 0.1, 5.0, 1);
+    gimp_scale_entry_new (_("_Strength:"), 1.0, 0.1, 5.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (strength_adjust), 0.1, 1.0);
   gimp_help_set_help_data (strength_adjust,
                            _("Change the strength of the selected vector"),
@@ -696,7 +696,7 @@ create_orientmap_dialog (GtkWidget *parent)
   gtk_widget_show (strength_adjust);
 
   orient_map_str_exp_adjust =
-    gimp_scale_entry_new2 (_("S_trength exp.:"), 1.0, 0.1, 10.9, 1);
+    gimp_scale_entry_new (_("S_trength exp.:"), 1.0, 0.1, 10.9, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (orient_map_str_exp_adjust), 0.1, 1.0);
   gimp_help_set_help_data (orient_map_str_exp_adjust,
                            _("Change the exponent of the strength"),

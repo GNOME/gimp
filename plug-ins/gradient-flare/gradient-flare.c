@@ -2898,7 +2898,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
   row = 0;
 
-  scale = gimp_scale_entry_new2 (_("_Radius:"), pvals.radius, 0.0, GIMP_MAX_IMAGE_SIZE, 1);
+  scale = gimp_scale_entry_new (_("_Radius:"), pvals.radius, 0.0, GIMP_MAX_IMAGE_SIZE, 1);
   gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 0.0, gimp_drawable_width (drawable) / 2, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -2909,7 +2909,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Ro_tation:"), pvals.rotation, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("Ro_tation:"), pvals.rotation, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -2920,7 +2920,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_Hue rotation:"), pvals.hue, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("_Hue rotation:"), pvals.hue, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -2931,7 +2931,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Vector _angle:"), pvals.vangle, 0.0, 359.0, 1);
+  scale = gimp_scale_entry_new (_("Vector _angle:"), pvals.vangle, 0.0, 359.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -2942,7 +2942,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Vector _length:"), pvals.vlength, 1, GIMP_MAX_IMAGE_SIZE, 1);
+  scale = gimp_scale_entry_new (_("Vector _length:"), pvals.vlength, 1, GIMP_MAX_IMAGE_SIZE, 1);
   gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 1, 1000, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -2983,14 +2983,14 @@ dlg_make_page_settings (GFlareDialog *dlg,
                           asup_grid, "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  scale = gimp_scale_entry_new2 (_("_Max depth:"), pvals.asupsample_max_depth, 1.0, 10.0, 0);
+  scale = gimp_scale_entry_new (_("_Max depth:"), pvals.asupsample_max_depth, 1.0, 10.0, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_int),
                     &pvals.asupsample_max_depth);
   gtk_grid_attach (GTK_GRID (asup_grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_Threshold"), pvals.asupsample_threshold, 0.0, 4.0, 2);
+  scale = gimp_scale_entry_new (_("_Threshold"), pvals.asupsample_threshold, 0.0, 4.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -3586,7 +3586,7 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("Opacity:"), gflare->glow_opacity, 0.0, 100.0, 1);
+  scale = gimp_scale_entry_new (_("Opacity:"), gflare->glow_opacity, 0.0, 100.0, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->glow_opacity);
@@ -3612,7 +3612,7 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("Opacity:"), gflare->rays_opacity, 0.0, 100.0, 1);
+  scale = gimp_scale_entry_new (_("Opacity:"), gflare->rays_opacity, 0.0, 100.0, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->rays_opacity);
@@ -3638,7 +3638,7 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("Opacity:"), gflare->sflare_opacity, 0.0, 100.0, 1);
+  scale = gimp_scale_entry_new (_("Opacity:"), gflare->sflare_opacity, 0.0, 100.0, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->sflare_opacity);
@@ -3717,7 +3717,7 @@ ed_make_page_glow (GFlareEditor *ed,
 
   row = 0;
 
-  scale = gimp_scale_entry_new2 (_("Size (%):"), gflare->glow_size, 0.0, G_MAXINT, 1);
+  scale = gimp_scale_entry_new (_("Size (%):"), gflare->glow_size, 0.0, G_MAXINT, 1);
   gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 0.0, 200.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -3728,7 +3728,7 @@ ed_make_page_glow (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Rotation:"), gflare->glow_rotation, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("Rotation:"), gflare->glow_rotation, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -3739,7 +3739,7 @@ ed_make_page_glow (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Hue rotation:"), gflare->glow_hue, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->glow_hue, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -3819,7 +3819,7 @@ ed_make_page_rays (GFlareEditor *ed,
 
   row = 0;
 
-  scale = gimp_scale_entry_new2 (_("Size (%):"), gflare->rays_size, 0.0, G_MAXINT, 1);
+  scale = gimp_scale_entry_new (_("Size (%):"), gflare->rays_size, 0.0, G_MAXINT, 1);
   gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 0.0, 200.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -3830,7 +3830,7 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Rotation:"), gflare->rays_rotation, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("Rotation:"), gflare->rays_rotation, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -3841,7 +3841,7 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Hue rotation:"), gflare->rays_hue, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->rays_hue, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -3852,7 +3852,7 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("# of Spikes:"), gflare->rays_nspikes, 1, G_MAXINT, 0);
+  scale = gimp_scale_entry_new (_("# of Spikes:"), gflare->rays_nspikes, 1, G_MAXINT, 0);
   gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 1.0, 300.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_int),
@@ -3863,7 +3863,7 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Spike thickness:"), gflare->rays_thickness, 1.0, GIMP_MAX_IMAGE_SIZE, 1);
+  scale = gimp_scale_entry_new (_("Spike thickness:"), gflare->rays_thickness, 1.0, GIMP_MAX_IMAGE_SIZE, 1);
   gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 1.0, 100.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -3950,7 +3950,7 @@ ed_make_page_sflare (GFlareEditor *ed,
 
   row = 0;
 
-  scale = gimp_scale_entry_new2 (_("Size (%):"), gflare->sflare_size, 0.0, G_MAXINT, 1);
+  scale = gimp_scale_entry_new (_("Size (%):"), gflare->sflare_size, 0.0, G_MAXINT, 1);
   gimp_scale_entry_set_range (GIMP_SCALE_ENTRY (scale), 1.0, 200.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -3961,7 +3961,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Rotation:"), gflare->sflare_rotation, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("Rotation:"), gflare->sflare_rotation, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
@@ -3972,7 +3972,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Hue rotation:"), gflare->sflare_hue, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->sflare_hue, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),

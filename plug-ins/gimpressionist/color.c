@@ -84,7 +84,7 @@ create_colorpage (GtkNotebook *notebook)
   gtk_widget_show (frame);
 
   colornoiseadjust =
-    gimp_scale_entry_new2 (_("Color _noise:"), pcvals.color_noise, 0.0, 100.0, 0);
+    gimp_scale_entry_new (_("Color _noise:"), pcvals.color_noise, 0.0, 100.0, 0);
   gimp_help_set_help_data (colornoiseadjust,
                            _("Adds random noise to the color"),
                            NULL);

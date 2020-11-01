@@ -753,7 +753,7 @@ edit_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
-      scale = gimp_scale_entry_new2 (_("_Speed:"), pick_speed, 0.05, 0.5, 2);
+      scale = gimp_scale_entry_new (_("_Speed:"), pick_speed, 0.05, 0.5, 2);
       gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
 
       g_signal_connect (scale, "value-changed",
@@ -1110,7 +1110,7 @@ flame_dialog (void)
   gtk_box_pack_start (GTK_BOX (box), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("_Brightness:"), config.cp.brightness, 0, 5, 2);
+  scale = gimp_scale_entry_new (_("_Brightness:"), config.cp.brightness, 0, 5, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
 
   g_signal_connect (scale, "value-changed",
@@ -1122,7 +1122,7 @@ flame_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Co_ntrast:"), config.cp.contrast, 0, 5, 2);
+  scale = gimp_scale_entry_new (_("Co_ntrast:"), config.cp.contrast, 0, 5, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
 
   g_signal_connect (scale, "value-changed",
@@ -1134,7 +1134,7 @@ flame_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_Gamma:"), config.cp.gamma, 1, 5, 2);
+  scale = gimp_scale_entry_new (_("_Gamma:"), config.cp.gamma, 1, 5, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
@@ -1149,7 +1149,7 @@ flame_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Sample _density:"), config.cp.sample_density, 0.1, 20, 2);
+  scale = gimp_scale_entry_new (_("Sample _density:"), config.cp.sample_density, 0.1, 20, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 5.0);
 
   g_signal_connect (scale, "value-changed",
@@ -1158,7 +1158,7 @@ flame_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 3, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Spa_tial oversample:"), config.cp.spatial_oversample, 1, 4, 0);
+  scale = gimp_scale_entry_new (_("Spa_tial oversample:"), config.cp.spatial_oversample, 1, 4, 0);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
 
   g_signal_connect (scale, "value-changed",
@@ -1167,7 +1167,7 @@ flame_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 4, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Spatial _filter radius:"), config.cp.spatial_filter_radius, 0, 4, 2);
+  scale = gimp_scale_entry_new (_("Spatial _filter radius:"), config.cp.spatial_filter_radius, 0, 4, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.2, 1.0);
 
   g_signal_connect (scale, "value-changed",
@@ -1257,7 +1257,7 @@ flame_dialog (void)
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), grid, label);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("_Zoom:"), config.cp.zoom, -4, 4, 2);
+  scale = gimp_scale_entry_new (_("_Zoom:"), config.cp.zoom, -4, 4, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.5, 1.0);
 
   g_signal_connect (scale, "value-changed",
@@ -1269,7 +1269,7 @@ flame_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_X:"), config.cp.center[0], -2, 2, 2);
+  scale = gimp_scale_entry_new (_("_X:"), config.cp.center[0], -2, 2, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.5, 1.0);
 
   g_signal_connect (scale, "value-changed",
@@ -1281,7 +1281,7 @@ flame_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_Y:"), config.cp.center[1], -2, 2, 2);
+  scale = gimp_scale_entry_new (_("_Y:"), config.cp.center[1], -2, 2, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.5, 1.0);
 
   g_signal_connect (scale, "value-changed",

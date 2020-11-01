@@ -851,7 +851,7 @@ save_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
-  pg.quality = gimp_scale_entry_new2 (_("_Quality:"), jsvals.quality, 0.0, 100.0, 0);
+  pg.quality = gimp_scale_entry_new (_("_Quality:"), jsvals.quality, 0.0, 100.0, 0);
   gimp_help_set_help_data (pg.quality, _("JPEG quality parameter"), "file-jpeg-save-quality");
 
   g_signal_connect (pg.quality, "value-changed",
@@ -1050,7 +1050,7 @@ save_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  pg.smoothing = gimp_scale_entry_new2 (_("S_moothing:"), jsvals.smoothing, 0.0, 1.0, 2);
+  pg.smoothing = gimp_scale_entry_new (_("S_moothing:"), jsvals.smoothing, 0.0, 1.0, 2);
   gimp_help_set_help_data (pg.smoothing, NULL, "file-jpeg-save-smoothing");
   g_signal_connect (pg.smoothing, "value-changed",
                     G_CALLBACK (scale_entry_update),

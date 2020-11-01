@@ -557,7 +557,7 @@ create_options_page (void)
                           grid,   "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  scale = gimp_scale_entry_new2 (_("_Depth:"), mapvals.maxdepth, 1.0, 5.0, 1);
+  scale = gimp_scale_entry_new (_("_Depth:"), mapvals.maxdepth, 1.0, 5.0, 1);
   gimp_help_set_help_data (scale, _("Antialiasing quality. Higher is better, "
                                     "but slower"), NULL);
   g_signal_connect (scale, "value-changed",
@@ -974,7 +974,7 @@ create_orientation_page (void)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("X:"), mapvals.position.x, -1.0, 2.0, 5);
+  scale = gimp_scale_entry_new (_("X:"), mapvals.position.x, -1.0, 2.0, 5);
   gimp_help_set_help_data (scale, _("Object X position in XYZ space"), NULL);
   spinbutton = gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale));
   gtk_size_group_add_widget (group, spinbutton);
@@ -986,7 +986,7 @@ create_orientation_page (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Y:"), mapvals.position.y, -1.0, 2.0, 5);
+  scale = gimp_scale_entry_new (_("Y:"), mapvals.position.y, -1.0, 2.0, 5);
   gimp_help_set_help_data (scale, _("Object Y position in XYZ space"), NULL);
   spinbutton = gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale));
   gtk_size_group_add_widget (group, spinbutton);
@@ -998,7 +998,7 @@ create_orientation_page (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Z:"), mapvals.position.z, -1.0, 2.0, 5);
+  scale = gimp_scale_entry_new (_("Z:"), mapvals.position.z, -1.0, 2.0, 5);
   gimp_help_set_help_data (scale, _("Object Z position in XYZ space"), NULL);
   spinbutton = gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale));
   gtk_size_group_add_widget (group, spinbutton);
@@ -1020,7 +1020,7 @@ create_orientation_page (void)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("X:"), mapvals.alpha, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("X:"), mapvals.alpha, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   gimp_help_set_help_data (scale, _("Rotation angle about X axis"), NULL);
   gtk_size_group_add_widget (group, gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale)));
@@ -1031,7 +1031,7 @@ create_orientation_page (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Y:"), mapvals.beta, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("Y:"), mapvals.beta, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   gimp_help_set_help_data (scale, _("Rotation angle about Y axis"), NULL);
   gtk_size_group_add_widget (group, gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale)));
@@ -1042,7 +1042,7 @@ create_orientation_page (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Z:"), mapvals.gamma, -180.0, 180.0, 1);
+  scale = gimp_scale_entry_new (_("Z:"), mapvals.gamma, -180.0, 180.0, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
   gimp_help_set_help_data (scale, _("Rotation angle about Z axis"), NULL);
   gtk_size_group_add_widget (group, gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale)));
@@ -1118,7 +1118,7 @@ create_box_page (void)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("Scale X:"), mapvals.scale.x, 0.0, 5.0, 2);
+  scale = gimp_scale_entry_new (_("Scale X:"), mapvals.scale.x, 0.0, 5.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
   gimp_help_set_help_data (scale, _("X scale (size)"), NULL);
   spinbutton = gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale));
@@ -1130,7 +1130,7 @@ create_box_page (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Y:"), mapvals.scale.y, 0.0, 5.0, 2);
+  scale = gimp_scale_entry_new (_("Y:"), mapvals.scale.y, 0.0, 5.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
   gimp_help_set_help_data (scale, _("Y scale (size)"), NULL);
   spinbutton = gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale));
@@ -1142,7 +1142,7 @@ create_box_page (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("Z:"), mapvals.scale.z, 0.0, 5.0, 2);
+  scale = gimp_scale_entry_new (_("Z:"), mapvals.scale.z, 0.0, 5.0, 2);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
   gimp_help_set_help_data (scale, _("Z scale (size)"), NULL);
   spinbutton = gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale));
@@ -1214,7 +1214,7 @@ create_cylinder_page (void)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("R_adius:"), mapvals.cylinder_radius, 0.0, 2.0, 2);
+  scale = gimp_scale_entry_new (_("R_adius:"), mapvals.cylinder_radius, 0.0, 2.0, 2);
   gimp_help_set_help_data (scale, _("Cylinder radius"), NULL);
   gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
   spinbutton = gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale));
@@ -1226,7 +1226,7 @@ create_cylinder_page (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("L_ength:"), mapvals.cylinder_length, 0.0, 2.0, 2);
+  scale = gimp_scale_entry_new (_("L_ength:"), mapvals.cylinder_length, 0.0, 2.0, 2);
   gimp_help_set_help_data (scale, _("Cylinder length"), NULL);
   gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
   spinbutton = gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale));

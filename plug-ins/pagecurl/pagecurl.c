@@ -662,7 +662,7 @@ dialog (void)
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &curl.colors, NULL);
 
-  scale = gimp_scale_entry_new2 (_("_Opacity:"), curl.opacity * 100.0, 0.0, 100.0, 0.0);
+  scale = gimp_scale_entry_new (_("_Opacity:"), curl.opacity * 100.0, 0.0, 100.0, 0.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialog_scale_update),
                     &curl.opacity);

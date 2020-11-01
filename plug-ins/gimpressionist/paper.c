@@ -188,7 +188,7 @@ create_paperpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   paper_scale_adjust =
-    gimp_scale_entry_new2 (_("Scale:"), pcvals.paper_scale, 3.0, 150.0, 1);
+    gimp_scale_entry_new (_("Scale:"), pcvals.paper_scale, 3.0, 150.0, 1);
   gimp_help_set_help_data (paper_scale_adjust,
                            _("Specifies the scale of the texture (in percent of original file)"),
                            NULL);
@@ -199,7 +199,7 @@ create_paperpage (GtkNotebook *notebook)
   gtk_widget_show (paper_scale_adjust);
 
   paper_relief_adjust =
-    gimp_scale_entry_new2 (_("Relief:"), pcvals.paper_relief, 0.0, 100.0, 1);
+    gimp_scale_entry_new (_("Relief:"), pcvals.paper_relief, 0.0, 100.0, 1);
   gimp_help_set_help_data (paper_relief_adjust,
                            _("Specifies the amount of embossing to apply to the image (in percent)"),
                            NULL);

@@ -104,7 +104,7 @@ create_sizepage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   sizenumadjust =
-    gimp_scale_entry_new2 (_("Size variants:"), pcvals.size_num, 1.0, 30.0, 0);
+    gimp_scale_entry_new (_("Size variants:"), pcvals.size_num, 1.0, 30.0, 0);
   gimp_help_set_help_data (sizenumadjust,
                            _("The number of sizes of brushes to use"),
                            NULL);
@@ -115,7 +115,7 @@ create_sizepage (GtkNotebook *notebook)
   gtk_widget_show (sizenumadjust);
 
   sizefirstadjust =
-    gimp_scale_entry_new2 (_("Minimum size:"), pcvals.size_first, 0.0, 360.0, 0);
+    gimp_scale_entry_new (_("Minimum size:"), pcvals.size_first, 0.0, 360.0, 0);
   gimp_help_set_help_data (sizefirstadjust,
                            _("The smallest brush to create"),
                            NULL);
@@ -126,7 +126,7 @@ create_sizepage (GtkNotebook *notebook)
   gtk_widget_show (sizefirstadjust);
 
   sizelastadjust =
-    gimp_scale_entry_new2 (_("Maximum size:"), pcvals.size_last, 0.0, 360.0, 0);
+    gimp_scale_entry_new (_("Maximum size:"), pcvals.size_last, 0.0, 360.0, 0);
   gimp_help_set_help_data (sizelastadjust,
                            _("The largest brush to create"),
                            NULL);

@@ -370,7 +370,7 @@ EXPORTS
 	gimp_scale_entry_get_spin_button
 	gimp_scale_entry_get_type
 	gimp_scale_entry_get_value
-	gimp_scale_entry_new2
+	gimp_scale_entry_new
 	gimp_scale_entry_set_increments
 	gimp_scale_entry_set_logarithmic
 	gimp_scale_entry_set_range

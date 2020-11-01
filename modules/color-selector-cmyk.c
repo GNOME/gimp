@@ -168,8 +168,8 @@ colorsel_cmyk_init (ColorselCmyk *module)
 
   for (i = 0; i < 4; i++)
     {
-      module->scales[i] = gimp_scale_entry_new2 (gettext (cmyk_labels[i]),
-                                                 0.0, 0.0, 100.0, 0);
+      module->scales[i] = gimp_scale_entry_new (gettext (cmyk_labels[i]),
+                                                0.0, 0.0, 100.0, 0);
       gimp_help_set_help_data (module->scales[i], gettext (cmyk_tips[i]), NULL);
 
       g_signal_connect (module->scales[i], "value-changed",

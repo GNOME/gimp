@@ -353,7 +353,7 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
                            _("Enable/disable high quality preview"), NULL);
 
-  scale = gimp_scale_entry_new2 (_("Distance:"), mapvals.viewpoint.z, 0.0, 2.0, 3);
+  scale = gimp_scale_entry_new (_("Distance:"), mapvals.viewpoint.z, 0.0, 2.0, 3);
   gimp_help_set_help_data (scale,
                            "Distance of observer from surface",
                            "plug-in-lighting");

@@ -110,7 +110,7 @@ create_placementpage (GtkNotebook *notebook)
                                 pcvals.placement_center);
 
   brush_density_adjust =
-    gimp_scale_entry_new2 (_("Stroke _density:"), pcvals.brush_density, 1.0, 50.0, 0);
+    gimp_scale_entry_new (_("Stroke _density:"), pcvals.brush_density, 1.0, 50.0, 0);
   gimp_help_set_help_data (brush_density_adjust,
                            _("The relative density of the brush strokes"),
                            NULL);

@@ -2508,7 +2508,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* xtiles */
-  scale = gimp_scale_entry_new2 (_("_Horizontal:"), config.x, MIN_XTILES, MAX_XTILES, 0);
+  scale = gimp_scale_entry_new (_("_Horizontal:"), config.x, MIN_XTILES, MAX_XTILES, 0);
   gimp_help_set_help_data (scale, _("Number of pieces going across"), NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
@@ -2524,7 +2524,7 @@ jigsaw_dialog (GimpDrawable *drawable)
                             preview);
 
   /* ytiles */
-  scale = gimp_scale_entry_new2 (_("_Vertical:"), config.y, MIN_YTILES, MAX_YTILES, 0);
+  scale = gimp_scale_entry_new (_("_Vertical:"), config.y, MIN_YTILES, MAX_YTILES, 0);
   gimp_help_set_help_data (scale, _("Number of pieces going down"), NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
@@ -2550,7 +2550,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), grid);
 
   /* number of blending lines */
-  scale = gimp_scale_entry_new2 (_("_Bevel width:"), config.blend_lines, MIN_BLEND_LINES, MAX_BLEND_LINES, 0);
+  scale = gimp_scale_entry_new (_("_Bevel width:"), config.blend_lines, MIN_BLEND_LINES, MAX_BLEND_LINES, 0);
   gimp_help_set_help_data (scale, _("Degree of slope of each piece's edge"), NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
@@ -2565,7 +2565,7 @@ jigsaw_dialog (GimpDrawable *drawable)
                             preview);
 
   /* blending amount */
-  scale = gimp_scale_entry_new2 (_("H_ighlight:"), config.blend_amount, MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 2);
+  scale = gimp_scale_entry_new (_("H_ighlight:"), config.blend_amount, MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 2);
   gimp_help_set_help_data (scale, _("The amount of highlighting on the edges of each piece"), NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);

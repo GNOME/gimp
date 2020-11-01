@@ -619,7 +619,7 @@ tileit_dialog (GimpDrawable *drawable)
 
   /* Widget for selecting the Opacity */
 
-  scale = gimp_scale_entry_new2 (_("O_pacity:"), opacity, 0, 100, 0);
+  scale = gimp_scale_entry_new (_("O_pacity:"), opacity, 0, 100, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &opacity);
@@ -633,7 +633,7 @@ tileit_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  scale = gimp_scale_entry_new2 ("_n²", itvals.numtiles, 2, MAX_SEGS, 0);
+  scale = gimp_scale_entry_new ("_n²", itvals.numtiles, 2, MAX_SEGS, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &itvals.numtiles);

@@ -483,7 +483,7 @@ destripe_dialog (GimpDrawable *drawable)
                             G_CALLBACK (destripe_preview),
                             drawable);
 
-  scale = gimp_scale_entry_new2 (_("_Width:"), vals.avg_width, 2, MAX_AVG, 0);
+  scale = gimp_scale_entry_new (_("_Width:"), vals.avg_width, 2, MAX_AVG, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (destripe_scale_entry_update_int),
                     &vals.avg_width);

@@ -54,7 +54,7 @@ struct _GimpScaleEntryClass
   void (* _gimp_reserved8) (void);
 };
 
-GtkWidget     * gimp_scale_entry_new2            (const gchar *text,
+GtkWidget     * gimp_scale_entry_new             (const gchar *text,
                                                   gdouble      value,
                                                   gdouble      lower,
                                                   gdouble      upper,

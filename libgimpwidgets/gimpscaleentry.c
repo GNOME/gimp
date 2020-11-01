@@ -552,7 +552,7 @@ gimp_scale_entry_log_to_linear (GBinding     *binding,
 /* Public functions */
 
 /**
- * gimp_scale_entry_new2:
+ * gimp_scale_entry_new:
  * @text:           The text for the #GtkLabel which will appear left of
  *                  the #GtkHScale.
  * @value:          The initial value.
@@ -566,7 +566,7 @@ gimp_scale_entry_log_to_linear (GBinding     *binding,
  * Returns: (transfer full): The new #GimpScaleEntry.
  **/
 GtkWidget *
-gimp_scale_entry_new2 (const gchar *text,
+gimp_scale_entry_new  (const gchar *text,
                        gdouble      value,
                        gdouble      lower,
                        gdouble      upper,

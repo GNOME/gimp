@@ -1157,7 +1157,7 @@ nlfilter_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new2 (_("A_lpha:"), nlfvals.alpha, 0.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("A_lpha:"), nlfvals.alpha, 0.0, 1.0, 2);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (nlfilter_scale_entry_update_double),
                     &nlfvals.alpha);
@@ -1167,7 +1167,7 @@ nlfilter_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_Radius:"), nlfvals.radius, 1.0 / 3.0, 1.0, 2);
+  scale = gimp_scale_entry_new (_("_Radius:"), nlfvals.radius, 1.0 / 3.0, 1.0, 2);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (nlfilter_scale_entry_update_double),
                     &nlfvals.radius);

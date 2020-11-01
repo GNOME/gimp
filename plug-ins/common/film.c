@@ -1210,7 +1210,7 @@ create_advanced_tab (GtkWidget *notebook)
   row = 0;
 
   filmint.scales[0] = scale =
-    gimp_scale_entry_new2 (_("Image _height:"), filmvals.picture_height, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("Image _height:"), filmvals.picture_height, 0.0, 1.0, 3);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
@@ -1219,7 +1219,7 @@ create_advanced_tab (GtkWidget *notebook)
   gtk_widget_show (scale);
 
   filmint.scales[1] = scale =
-    gimp_scale_entry_new2 (_("Image spac_ing:"), filmvals.picture_space, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("Image spac_ing:"), filmvals.picture_space, 0.0, 1.0, 3);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
@@ -1231,7 +1231,7 @@ create_advanced_tab (GtkWidget *notebook)
   gtk_widget_show (scale);
 
   filmint.scales[2] = scale =
-    gimp_scale_entry_new2 (_("_Hole offset:"), filmvals.hole_offset, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("_Hole offset:"), filmvals.hole_offset, 0.0, 1.0, 3);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
@@ -1240,7 +1240,7 @@ create_advanced_tab (GtkWidget *notebook)
   gtk_widget_show (scale);
 
   filmint.scales[3] = scale =
-    gimp_scale_entry_new2 (_("Ho_le width:"), filmvals.hole_width, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("Ho_le width:"), filmvals.hole_width, 0.0, 1.0, 3);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
@@ -1249,7 +1249,7 @@ create_advanced_tab (GtkWidget *notebook)
   gtk_widget_show (scale);
 
   filmint.scales[4] = scale =
-    gimp_scale_entry_new2 (_("Hol_e height:"), filmvals.hole_height, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("Hol_e height:"), filmvals.hole_height, 0.0, 1.0, 3);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
@@ -1258,7 +1258,7 @@ create_advanced_tab (GtkWidget *notebook)
   gtk_widget_show (scale);
 
   filmint.scales[5] = scale =
-    gimp_scale_entry_new2 (_("Hole sp_acing:"), filmvals.hole_space, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("Hole sp_acing:"), filmvals.hole_space, 0.0, 1.0, 3);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
@@ -1270,7 +1270,7 @@ create_advanced_tab (GtkWidget *notebook)
   gtk_widget_show (scale);
 
   filmint.scales[6] = scale =
-    gimp_scale_entry_new2 (_("_Number height:"), filmvals.number_height, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("_Number height:"), filmvals.number_height, 0.0, 1.0, 3);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),

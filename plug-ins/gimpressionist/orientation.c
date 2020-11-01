@@ -97,7 +97,7 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   orient_num_adjust =
-    gimp_scale_entry_new2 (_("Directions:"), pcvals.orient_num, 1.0, 30.0, 0);
+    gimp_scale_entry_new (_("Directions:"), pcvals.orient_num, 1.0, 30.0, 0);
   gimp_help_set_help_data (orient_num_adjust,
                            _("The number of directions (i.e. brushes) to use"),
                            NULL);
@@ -108,7 +108,7 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (orient_num_adjust);
 
   orient_first_adjust =
-    gimp_scale_entry_new2 (_("Start angle:"), pcvals.orient_first, 0.0, 360.0, 0);
+    gimp_scale_entry_new (_("Start angle:"), pcvals.orient_first, 0.0, 360.0, 0);
   gimp_help_set_help_data (orient_first_adjust,
                            _("The starting angle of the first brush to create"),
                            NULL);
@@ -119,7 +119,7 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (orient_first_adjust);
 
   orient_last_adjust =
-    gimp_scale_entry_new2 (_("Angle span:"), pcvals.orient_last, 0.0, 360.0, 0);
+    gimp_scale_entry_new (_("Angle span:"), pcvals.orient_last, 0.0, 360.0, 0);
   gimp_help_set_help_data (orient_last_adjust,
                            _("The angle span of the first brush to create"),
                            NULL);

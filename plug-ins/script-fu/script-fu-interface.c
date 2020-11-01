@@ -412,11 +412,11 @@ script_fu_interface (SFScript  *script,
                 {
                   GtkWidget *spinbutton;
 
-                  widget = gimp_scale_entry_new2 (label_text,
-                                                  arg->value.sfa_adjustment.value,
-                                                  arg->default_value.sfa_adjustment.lower,
-                                                  arg->default_value.sfa_adjustment.upper,
-                                                  arg->default_value.sfa_adjustment.digits);
+                  widget = gimp_scale_entry_new (label_text,
+                                                 arg->value.sfa_adjustment.value,
+                                                 arg->default_value.sfa_adjustment.lower,
+                                                 arg->default_value.sfa_adjustment.upper,
+                                                 arg->default_value.sfa_adjustment.digits);
                   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (widget),
                                                    arg->default_value.sfa_adjustment.step,
                                                    arg->default_value.sfa_adjustment.page);

@@ -785,7 +785,7 @@ create_main_dialog (void)
 
   row = 0;
 
-  scale = gimp_scale_entry_new2 (_("_Filter length:"), licvals.filtlen, 0.1, 64, 1);
+  scale = gimp_scale_entry_new (_("_Filter length:"), licvals.filtlen, 0.1, 64, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 8.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
@@ -793,7 +793,7 @@ create_main_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_Noise magnitude:"), licvals.noisemag, 1, 5, 1);
+  scale = gimp_scale_entry_new (_("_Noise magnitude:"), licvals.noisemag, 1, 5, 1);
   gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
@@ -801,21 +801,21 @@ create_main_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("In_tegration steps:"), licvals.intsteps, 1, 40, 1);
+  scale = gimp_scale_entry_new (_("In_tegration steps:"), licvals.intsteps, 1, 40, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
                     &licvals.intsteps);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("_Minimum value:"), licvals.minv, -100, 0, 1);
+  scale = gimp_scale_entry_new (_("_Minimum value:"), licvals.minv, -100, 0, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
                     &licvals.minv);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new2 (_("M_aximum value:"),
+  scale = gimp_scale_entry_new (_("M_aximum value:"),
                                       licvals.maxv, 0, 100, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
