@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-15 15:46+0000\n"
-"PO-Revision-Date: 2020-10-15 19:41+0300\n"
+"PO-Revision-Date: 2020-11-01 01:57+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -130,13 +130,14 @@ msgstr "_Fișier de histogramă"
 msgid "_Bucket Size"
 msgstr "Dimensiunea _găleții"
 
+# în original pare a fi greșit
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
 msgid "Sample _Average"
-msgstr "Eș_antionare medie"
+msgstr "Eș_antionare fuzionată"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Output format"
-msgstr "Formatul de ieșire"
+msgstr "Format de ieșire"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Pixel count"
