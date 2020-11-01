@@ -8,6 +8,49 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.22 to GIMP 2.10.24
+=====================================================
+
+Core:
+
+  - Ignore Pentax and PentaxDng metadata at export because they are
+    unsupported.
+
+Plug-ins:
+
+  - JPEG export will better advertize when metadata export fails,
+    possibly with relevant error message. Image export would not fail,
+    but at least we make the person aware metadata is not properly
+    exported.
+  - Removes the "HDR" mention on HEIF 10/12-bit export because high bit
+    depth does not necessarily means HDR.
+  - Runtime detection of HEIC and AVIF file formats (depending on
+    available encoders and decoders), which allows afterwards update of
+    the dependency, but also allows usage for a single format (e.g. for
+    distributions which want to support only AVIF).
+  - More robust TIFF import and export:
+    * Better handling of Exif.Thumbnail.* tags on export.
+    * Import now ignores TIFF pages with invalid directory (rather than
+      freezing and output an error to warn of possible data loss.
+
+Build:
+
+  - Some configure fixes for autoconf-2.70 support.
+  - Adwaita's legacy "software-update-available" icon is now bundled
+    with GIMP to handle the possibility of them being absent from your
+    system theme (typically it was missing on our Windows build).
+
+Installer:
+
+  - Various updates to adapt to the GIMP 2.99/3 build.
+  - Lua made optional.
+  - New Slovak translation.
+
+Translations:
+
+  - Kabyle translation added (still empty on gimp-2-10 at writing time).
+
+
 Overview of Changes from GIMP 2.10.20 to GIMP 2.10.22
 =====================================================
 
