@@ -17,6 +17,39 @@ Core:
     Consequently the "Show unavailable actions" checkbox has been
     removed from the `Preferences > Help System` dialog.
 
+API:
+
+  - GimpFileEntry public variables were made private and a new function
+    has been added: gimp_file_entry_get_entry().
+  - New GimpScaleEntry and GimpColorScaleEntry widget classes and new
+    relevant API for these objects, replacing the former functions
+    creating various widgets and attaching them to a GtkGrid. This makes
+    for easier to use and less constrained GUI functions (with a lot
+    less arguments, as we try now to smartly generate appropriate
+    defaults for many options; gimp_scale_entry_new() in particular went
+    down from 17 arguments to 5), also better introspectability for
+    bindings, and finally it will be useful for automatic dialog
+    generation for plug-ins.
+
+Plug-ins:
+
+  - GeoTIFF tag support added (recognized and stored into image
+    parasites at import, then exported back when TIFF format is used)
+    with appropriate "Save GeoTIFF data" checkbox (checked by default)
+    to disable GeoTIFF metadata export when not desired.
+
+Installer:
+
+  - Various updates to adapt to the GIMP 2.99/3 build.
+  - Lua made optional.
+
+Devel docs:
+
+  - Documentation to port GIMP 2.10 plug-ins to GIMP 3.0 has been
+    started in `devel-docs/GIMP3-plug-in-porting-guide/`. It is also
+    visible directly on out Gitlab instance with visual styling:
+    https://gitlab.gnome.org/GNOME/gimp/-/tree/master/devel-docs/GIMP3-plug-in-porting-guide
+
 Overview of Changes from GIMP 2.10.x to GIMP 2.99.2
 ===================================================
 
