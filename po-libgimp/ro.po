@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-25 21:27+0000\n"
-"PO-Revision-Date: 2020-10-26 12:56+0200\n"
+"PO-Revision-Date: 2020-11-02 00:27+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -2995,11 +2995,11 @@ msgstr "Vedere deficitară la culori"
 
 #: ../modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
-msgstr "Filtru gama de afișare a culorii"
+msgstr "Filtru gamma de afișare a culorii"
 
 #: ../modules/display-filter-gamma.c:123 ../modules/display-filter-gamma.c:128
 msgid "Gamma"
-msgstr "Gama"
+msgstr "Gamma"
 
 #: ../modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
@@ -3012,164 +3012,3 @@ msgstr "Cicli de contrast"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Contrast"
-
-#~ msgid "GIMP 2.10"
-#~ msgstr "GIMP 2.10"
-
-#, c-format
-#~ msgid "Rotate %s?"
-#~ msgstr "Rotiți %s?"
-
-#~ msgid "_Keep Original"
-#~ msgstr "_Păstrează originalul"
-
-#~ msgid "_Rotate"
-#~ msgstr "_Rotește"
-
-#~ msgid "Original"
-#~ msgstr "Original"
-
-#~ msgid "Rotated"
-#~ msgstr "Rotit"
-
-#~ msgid "This image contains Exif orientation metadata."
-#~ msgstr "Această imagine conține metadate EXIF de orientare."
-
-#~ msgid "Would you like to rotate the image?"
-#~ msgstr "Doriți să fie rotită imaginea?"
-
-#~ msgid "_Don't ask me again"
-#~ msgstr "Nu mă mai întraba _din nou"
-
-#~ msgid "by author"
-#~ msgstr "după autor"
-
-#~ msgid "Searching by author"
-#~ msgstr "Căutare după autor"
-
-#~ msgid "Author:"
-#~ msgstr "Autor:"
-
-#~ msgctxt "blend-mode"
-#~ msgid "FG to BG (RGB)"
-#~ msgstr "Prim-plan la fundal (RGB)"
-
-#~ msgctxt "blend-mode"
-#~ msgid "FG to BG (HSV)"
-#~ msgstr "Prim-plan la fundal (HSV)"
-
-#~ msgctxt "blend-mode"
-#~ msgid "FG to transparent"
-#~ msgstr "Prim-plan la transparent"
-
-#~ msgctxt "blend-mode"
-#~ msgid "Custom gradient"
-#~ msgstr "Degrade personalizat"
-
-# imperativ pentru consecvență în cadrul aceluiași meniu
-#~ msgctxt "bucket-fill-mode"
-#~ msgid "FG color fill"
-#~ msgstr "Umple cu culoarea de prim-plan"
-
-# imperativ pentru consecvență în cadrul aceluiași meniu
-#~ msgctxt "bucket-fill-mode"
-#~ msgid "BG color fill"
-#~ msgstr "Umple cu culoarea de fundal"
-
-# imperativ pentru consecvență în cadrul aceluiași meniu
-#~ msgctxt "bucket-fill-mode"
-#~ msgid "Pattern fill"
-#~ msgstr "Umple cu un model"
-
-#~ msgctxt "icon-type"
-#~ msgid "Inline pixbuf"
-#~ msgstr "Inline pixbuf"
-
-#~ msgctxt "precision"
-#~ msgid "8-bit gamma integer"
-#~ msgstr "Întreg gama pe 8 biți"
-
-#~ msgctxt "precision"
-#~ msgid "16-bit gamma integer"
-#~ msgstr "Întreg gama pe 16 biți"
-
-#~ msgctxt "precision"
-#~ msgid "32-bit gamma integer"
-#~ msgstr "Întreg gama pe 32 de biți"
-
-#~ msgctxt "precision"
-#~ msgid "16-bit gamma floating point"
-#~ msgstr "Virgulă mobilă gama pe 16 biți"
-
-#~ msgctxt "precision"
-#~ msgid "32-bit gamma floating point"
-#~ msgstr "Virgulă mobilă gama pe 32 de biți"
-
-#~ msgctxt "precision"
-#~ msgid "64-bit gamma floating point"
-#~ msgstr "Virgulă mobilă gama pe 64 de biți"
-
-#~ msgid "_Help"
-#~ msgstr "A_jutor"
-
-#~ msgid "Anchor"
-#~ msgstr "Ancoră"
-
-#~ msgid "C_enter"
-#~ msgstr "C_entrează"
-
-#~ msgid "_Duplicate"
-#~ msgstr "_Duplică"
-
-#~ msgid "Linked"
-#~ msgstr "Legat"
-
-#~ msgid "Paste as New"
-#~ msgstr "Lipește ca nou"
-
-#~ msgid "Paste Into"
-#~ msgstr "Lipește în"
-
-#~ msgid "Visible"
-#~ msgstr "Vizibil"
-
-# buton de acțiune în fereastra de stroke path
-#~ msgid "_Stroke"
-#~ msgstr "Con_turează"
-
-#~ msgid "L_etter Spacing"
-#~ msgstr "Spați_ere între litere"
-
-#~ msgid "L_ine Spacing"
-#~ msgstr "Spaț_iere între rânduri"
-
-#~ msgid "Re_size"
-#~ msgstr "Redimen_sionează"
-
-#~ msgid "_Scale"
-#~ msgstr "_Scalează"
-
-#~ msgid "Cr_op"
-#~ msgstr "_Decupează"
-
-#~ msgid "_Select"
-#~ msgstr "_Selectează"
-
-#~ msgid "_Transform"
-#~ msgstr "_Transformă"
-
-#~ msgid "_Shear"
-#~ msgstr "_Înclină"
-
-# valabil la unitățile de măsură de afișate ca drop-down menu
-#~ msgid "More..."
-#~ msgstr "Mai multe..."
-
-#~ msgid "Unit Selection"
-#~ msgstr "Selecție unitate de măsură"
-
-#~ msgid "Unit"
-#~ msgstr "Unitate de măsură"
-
-#~ msgid "Factor"
-#~ msgstr "Factor"
