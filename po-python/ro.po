@@ -529,7 +529,7 @@ msgstr "Previzualizare"
 
 #: ../plug-ins/python/spyro-plus.py:603
 msgid "Stroke"
-msgstr "Tușă"
+msgstr "Contur"
 
 #: ../plug-ins/python/spyro-plus.py:650
 msgid "PaintBrush"
