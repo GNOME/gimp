@@ -1381,12 +1381,12 @@ msgstr "Adaugă un fundal"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
-msgstr "S_tabilește paleta de culori..."
+msgstr "S_tabilește harta de culori..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
-"Schimbă paleta de culori a unei imagini în culorile dintr-o paletă "
+"Schimbă harta de culori a unei imagini la culorile dintr-o paletă "
 "specificată."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
