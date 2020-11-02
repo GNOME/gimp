@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-25 21:27+0000\n"
-"PO-Revision-Date: 2020-10-26 14:23+0200\n"
+"PO-Revision-Date: 2020-11-02 03:02+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -1055,11 +1055,11 @@ msgstr "Eroare: încărcarea parametrilor a eșuat"
 # apare la contextul lui undo
 #: ../plug-ins/common/colormap-remap.c:128
 msgid "R_earrange Colormap..."
-msgstr "R_earanjare paletă de culori..."
+msgstr "R_earanjare hartă de culori..."
 
 #: ../plug-ins/common/colormap-remap.c:134
 msgid "Rearrange the colormap"
-msgstr "Rearanjează paleta de culori"
+msgstr "Rearanjează harta de culori"
 
 #: ../plug-ins/common/colormap-remap.c:164
 msgid "_Swap Colors"
@@ -1067,7 +1067,7 @@ msgstr "Inter_schimbă culorile"
 
 #: ../plug-ins/common/colormap-remap.c:168
 msgid "Swap two colors in the colormap"
-msgstr "Interschimbă două culori în paleta de culori"
+msgstr "Interschimbă două culori în harta de culori"
 
 #: ../plug-ins/common/colormap-remap.c:324
 #: ../plug-ins/common/colormap-remap.c:335
@@ -1077,7 +1077,7 @@ msgstr "O arie de remapare nevalidă a fost pasată funcției de remapare"
 
 #: ../plug-ins/common/colormap-remap.c:370
 msgid "Rearranging the colormap"
-msgstr "Rearanjare paletă de culori"
+msgstr "Rearanjare hartă de culori"
 
 #: ../plug-ins/common/colormap-remap.c:538
 msgid "Sort on Hue"
@@ -1102,7 +1102,7 @@ msgstr "Resetează ordinea"
 # titlu pe bară
 #: ../plug-ins/common/colormap-remap.c:650
 msgid "Rearrange Colormap"
-msgstr "Rearanjare paletă de culori"
+msgstr "Rearanjare hartă de culori"
 
 #. The Reset button
 #: ../plug-ins/common/colormap-remap.c:654 ../plug-ins/common/curve-bend.c:1432
@@ -1121,7 +1121,7 @@ msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
-"Trageți și plasați culorile pentru a rearanja paleta de culori.  Numerele "
+"Trageți și plasați culorile pentru a rearanja harta de culori.  Numerele "
 "afișate sunt índicii originali. Clic dreapta pentru meniul cu opțiuni de "
 "sortare."
 
@@ -1399,6 +1399,7 @@ msgstr "Înalt"
 msgid "_Level:"
 msgstr "_Nivel:"
 
+# hm ? sau scalează ?
 #: ../plug-ins/common/contrast-retinex.c:375
 msgid "_Scale:"
 msgstr "_Scară:"
@@ -2229,7 +2230,7 @@ msgstr "Acesta nu este un fișier GIF"
 
 #: ../plug-ins/common/file-gif-load.c:464
 msgid "Non-square pixels.  Image might look squashed."
-msgstr "Pixelii nu sunt pătrați.  Imaginea ar putea arăta strivită."
+msgstr "Pixelii nu sunt pătrați.  Este posibil ca imaginea să pară strivită."
 
 #: ../plug-ins/common/file-gif-load.c:1039
 #, c-format
@@ -2790,11 +2791,10 @@ msgstr "YCbCr"
 msgid "xvYCC"
 msgstr "xvYCC"
 
-# hm ?
 #: ../plug-ins/common/file-jp2-load.c:1017
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
-msgstr "Versiune JPEG 2000%s „%s” cu %d componente neacceptată."
+msgstr "Versiunea JPEG 2000%s „%s” cu %d componente nu este acceptată."
 
 #: ../plug-ins/common/file-jp2-load.c:1026
 msgid "Color space:"
@@ -2887,7 +2887,7 @@ msgstr "Salvează _culoarea de fundal"
 
 #: ../plug-ins/common/file-mng.c:1626 ../plug-ins/common/file-png.c:2243
 msgid "Save _gamma"
-msgstr "Salvează _gama"
+msgstr "Salvează _gamma"
 
 #: ../plug-ins/common/file-mng.c:1630
 msgid "Save resolution"
@@ -4142,7 +4142,7 @@ msgstr "Nu s-au putut citi intrările de culoare din „%s”"
 
 #: ../plug-ins/common/file-sunras.c:517
 msgid "Type of colormap not supported"
-msgstr "Tipul de paletă de culori nu este acceptat"
+msgstr "Tipul de hartă de culori nu este acceptat"
 
 #: ../plug-ins/common/file-sunras.c:524 ../plug-ins/common/file-xbm.c:835
 #: ../plug-ins/common/file-xwd.c:554
@@ -4748,7 +4748,7 @@ msgid ""
 "Illegal number of colormap entries: %ld"
 msgstr ""
 "„%s”:\n"
-"Număr nelegal de intrări în paleta de culori: %ld"
+"Număr nelegal de intrări în harta de culori: %ld"
 
 #: ../plug-ins/common/file-xwd.c:524
 #, c-format
@@ -5425,19 +5425,20 @@ msgstr "Remapează colorarea"
 
 #: ../plug-ins/common/smooth-palette.c:129
 msgid "Smoo_th Palette..."
-msgstr "Ne_tezește paleta..."
+msgstr "Pale_tă netedă..."
 
 #: ../plug-ins/common/smooth-palette.c:133
 msgid "Derive a smooth color palette from the image"
-msgstr "Derivează din imagine o paletă netedă de culori"
+msgstr "Derivă din imagine o paletă netedă de culori"
 
 #: ../plug-ins/common/smooth-palette.c:224
 msgid "Deriving smooth palette"
-msgstr "Derivează o paletă netedă"
+msgstr "Derivare paletă netedă"
 
+# titlu pe bară
 #: ../plug-ins/common/smooth-palette.c:484
 msgid "Smooth Palette"
-msgstr "Netezire de paletă"
+msgstr "Paletă netedă"
 
 #: ../plug-ins/common/smooth-palette.c:527
 msgid "_Search depth:"
@@ -6393,7 +6394,7 @@ msgstr "Descărcare pagină web %s"
 
 #: ../plug-ins/file-bmp/bmp-load.c:146
 msgid "Bad colormap"
-msgstr "Paletă de culori greșită"
+msgstr "Hartă de culori greșită"
 
 #: ../plug-ins/file-bmp/bmp-load.c:245 ../plug-ins/file-bmp/bmp-load.c:255
 #: ../plug-ins/file-bmp/bmp-load.c:263 ../plug-ins/file-bmp/bmp-load.c:272
@@ -6612,7 +6613,7 @@ msgstr "_Mod de întoarcere de la capăt:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2111
 msgid "Appl_y gamma correction"
-msgstr "_Aplică corecție de gama"
+msgstr "_Aplică corecție de gamma"
 
 #: ../plug-ins/file-dds/ddswrite.c:2115
 msgid "Use s_RGB colorspace"
@@ -6620,7 +6621,7 @@ msgstr "Folosește un spațiu de culoare s_RGB"
 
 #: ../plug-ins/file-dds/ddswrite.c:2121 ../plug-ins/flame/flame.c:1146
 msgid "_Gamma:"
-msgstr "_Gama:"
+msgstr "_Gamma:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2126
 msgid "Preserve alpha _test coverage"
@@ -7229,7 +7230,7 @@ msgid ""
 msgstr ""
 "Nu este instalat nici un încărcător RAW pentru a deschide fișiere „%s”.\n"
 "\n"
-"În prezent GIMP acceptă aceste programe de încărcare RAW:\n"
+"În prezent GIMP acceptă aceste încărcătoare RAW:\n"
 "- darktable (http://www.darktable.org/), cel puțin 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), cel puțin 5.2\n"
 "\n"
@@ -7824,7 +7825,7 @@ msgstr "Rază _filtru spațial:"
 
 #: ../plug-ins/flame/flame.c:1204
 msgid "Color_map:"
-msgstr "_Paletă de culori:"
+msgstr "_Hartă de culori:"
 
 #: ../plug-ins/flame/flame.c:1246
 msgid "Custom gradient"
@@ -8130,7 +8131,7 @@ msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"Creează o paletă de culori cu opțiunile specificate mai sus (densitate de "
+"Creează o hartă de culori cu opțiunile specificate mai sus (densitate de "
 "culoare, funcție). Rezultatul este vizibil în imaginea previzualizată."
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1146
@@ -8140,7 +8141,7 @@ msgstr "Aplică degradeul activ la imaginea finală"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1158
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
-"Creează o paletă de culori folosind un degrade din editorul de degradeuri"
+"Creează o hartă de culori folosind un degrade din editorul de degradeuri"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1169
 msgid "FractalExplorer Gradient"
@@ -8657,11 +8658,11 @@ msgstr "_Penel"
 
 #: ../plug-ins/gimpressionist/brush.c:558
 msgid "Gamma:"
-msgstr "Gama:"
+msgstr "Gamma:"
 
 #: ../plug-ins/gimpressionist/brush.c:576
 msgid "Changes the gamma (brightness) of the selected brush"
-msgstr "Modifică gama (luminozitatea) penelului selectat"
+msgstr "Modifică gamma (luminozitatea) penelului selectat"
 
 #: ../plug-ins/gimpressionist/brush.c:584
 #: ../plug-ins/metadata/metadata-editor.c:586
@@ -10486,7 +10487,7 @@ msgstr "_URL de bază:"
 #: ../plug-ins/imagemap/imap_cmd_guides.c:229
 #, c-format
 msgid "Image dimensions: %d × %d"
-msgstr "Dimensiuni imagine: %d × %d"
+msgstr "Dimensiunile imaginii: %d × %d"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:235
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
