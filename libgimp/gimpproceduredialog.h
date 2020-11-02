@@ -64,13 +64,24 @@ struct _GimpProcedureDialogClass
 };
 
 
-GType       gimp_procedure_dialog_get_type (void) G_GNUC_CONST;
+GType       gimp_procedure_dialog_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_procedure_dialog_new      (GimpProcedure       *procedure,
-                                            GimpProcedureConfig *config,
-                                            const gchar         *title);
+GtkWidget * gimp_procedure_dialog_new           (GimpProcedure       *procedure,
+                                                 GimpProcedureConfig *config,
+                                                 const gchar         *title);
 
-gboolean    gimp_procedure_dialog_run      (GimpProcedureDialog *dialog);
+GtkWidget * gimp_procedure_dialog_get_widget    (GimpProcedureDialog *dialog,
+                                                 const gchar         *property,
+                                                 GType                widget_type);
+
+void        gimp_procedure_dialog_populate      (GimpProcedureDialog *dialog,
+                                                 const gchar         *first_property,
+                                                 ...);
+void        gimp_procedure_dialog_populate_list (GimpProcedureDialog *dialog,
+                                                 GList               *properties);
+
+
+gboolean    gimp_procedure_dialog_run           (GimpProcedureDialog *dialog);
 
 
 G_END_DECLS

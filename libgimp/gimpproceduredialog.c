@@ -3,6 +3,7 @@
  *
  * gimpproceduredialog.c
  * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2020 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,6 +52,8 @@ struct _GimpProcedureDialogPrivate
   GimpProcedureConfig *initial_config;
 
   GtkWidget           *reset_popover;
+
+  GHashTable          *widgets;
 };
 
 
@@ -72,6 +75,11 @@ static void   gimp_procedure_dialog_load_defaults (GtkWidget           *button,
                                                    GimpProcedureDialog *dialog);
 static void   gimp_procedure_dialog_save_defaults (GtkWidget           *button,
                                                    GimpProcedureDialog *dialog);
+
+static void   gimp_procedure_dialog_estimate_increments (gdouble        lower,
+                                                         gdouble        upper,
+                                                         gdouble       *step,
+                                                         gdouble       *page);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedureDialog, gimp_procedure_dialog,
@@ -113,6 +121,8 @@ static void
 gimp_procedure_dialog_init (GimpProcedureDialog *dialog)
 {
   dialog->priv = gimp_procedure_dialog_get_instance_private (dialog);
+
+  dialog->priv->widgets = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
 }
 
 static void
@@ -125,6 +135,13 @@ gimp_procedure_dialog_dispose (GObject *object)
   g_clear_object (&dialog->priv->initial_config);
 
   g_clear_pointer (&dialog->priv->reset_popover, gtk_widget_destroy);
+  g_clear_pointer (&dialog->priv->widgets, g_hash_table_unref);
+
+  if (dialog->priv->widgets)
+    {
+      g_hash_table_destroy (dialog->priv->widgets);
+      dialog->priv->widgets = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -268,6 +285,243 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
   return GTK_WIDGET (dialog);
 }
 
+/**
+ * gimp_procedure_dialog_get_widget:
+ * @dialog: the associated #GimpProcedureDialog.
+ * @property: name of the property to build a dialog for. It must be a
+ *            property of the #GimpProcedure @dialog has been created
+ *            for.
+ * @widget_type: alternative widget type. %G_TYPE_NONE will create the
+ *               default type of widget for the associated property
+ *               type.
+ *
+ * Creates a new property #GtkWidget for @property according to the
+ * property type. For instance by default a %G_TYPE_PARAM_BOOLEAN
+ * property will be represented by a #GtkCheckButton.
+ * Alternative @widget_type are possible, such as a %G_TYPE_SWITCH for a
+ * %G_TYPE_PARAM_BOOLEAN property. If the @widget_type is not
+ * supported, the function will fail. To keep the default, set to
+ * %G_TYPE_NONE).
+ * If a widget has already been created for this procedure, it will be
+ * returned instead (even if with a different @widget_type).
+ *
+ * Returns: (transfer none): the #GtkWidget representing @property. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
+                                  const gchar         *property,
+                                  GType                widget_type)
+{
+  GtkWidget  *widget = NULL;
+  GParamSpec *pspec;
+
+  g_return_val_if_fail (property != NULL, NULL);
+
+  /* First check if it already exists. */
+  widget = g_hash_table_lookup (dialog->priv->widgets, property);
+
+  if (widget)
+    return widget;
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                        property);
+  if (! pspec)
+    {
+      g_warning ("%s: parameter %s does not exist.",
+                 G_STRFUNC, property);
+      return NULL;
+    }
+
+  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_BOOLEAN)
+    {
+      if (widget_type == G_TYPE_NONE || widget_type == GTK_TYPE_CHECK_BUTTON)
+        widget = gimp_prop_check_button_new (G_OBJECT (dialog->priv->config),
+                                             property,
+                                             _(g_param_spec_get_nick (pspec)));
+      else if (widget_type == GTK_TYPE_SWITCH)
+          widget = gimp_prop_switch_new (G_OBJECT (dialog->priv->config),
+                                         property,
+                                         _(g_param_spec_get_nick (pspec)),
+                                         NULL, NULL);
+    }
+  else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)
+    {
+      if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_SCALE_ENTRY)
+        {
+          widget = gimp_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
+                                              property,
+                                              _(g_param_spec_get_nick (pspec)),
+                                              0, FALSE, 0.0, 0.0);
+        }
+      else if (widget_type == GIMP_TYPE_SPIN_BUTTON)
+        {
+          GParamSpecInt *pspecint = (GParamSpecInt *) pspec;
+          gdouble        step     = 0.0;
+          gdouble        page     = 0.0;
+
+          gimp_procedure_dialog_estimate_increments (pspecint->minimum,
+                                                     pspecint->maximum,
+                                                     &step, &page);
+          widget = gimp_prop_spin_button_new (G_OBJECT (dialog->priv->config),
+                                              property, step, page, 0);
+        }
+    }
+  else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING)
+    {
+      widget = gimp_prop_entry_new (G_OBJECT (dialog->priv->config),
+                                    property, -1);
+    }
+  else
+    {
+      g_warning ("%s: parameter %s has non supported type %s",
+                 G_STRFUNC, property, G_PARAM_SPEC_TYPE_NAME (pspec));
+      return NULL;
+    }
+
+  if (! widget)
+    {
+      g_warning ("%s: widget type %s not supported for parameter '%s' of type %s",
+                 G_STRFUNC, G_OBJECT_TYPE_NAME (widget_type),
+                 property, G_PARAM_SPEC_TYPE_NAME (pspec));
+      return NULL;
+    }
+
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
+
+  return widget;
+}
+
+/**
+ * gimp_procedure_dialog_populate:
+ * @dialog: the #GimpProcedureDialog.
+ * @first_property: the first property name.
+ * @...: a %NULL-terminated list of other property names.
+ *
+ * Populated @dialog with the widgets corresponding to every listed
+ * properties. If the list is empty, @dialog will be filled by the whole
+ * list of properties of the associated #GimpProcedure, in the defined
+ * order:
+ * |[<!-- language="C" -->
+ * gimp_procedure_dialog_populate (dialog, NULL);
+ * ]|
+ * Nevertheless if you only wish to display a partial list of
+ * properties, or if you wish to change the display order, then you have
+ * to give an explicit list:
+ * |[<!-- language="C" -->
+ * gimp_procedure_dialog_populate (dialog, "property-1", "property-1", NULL);
+ * ]|
+ * You do not have gimp_procedure_dialog_get_widget() before calling
+ * this function unless you want a given property to be represented by
+ * an alternative widget type.
+ */
+void
+gimp_procedure_dialog_populate (GimpProcedureDialog *dialog,
+                                const gchar         *first_property,
+                                ...)
+{
+  const gchar *prop_name = first_property;
+  GList       *list      = NULL;
+  va_list      va_args;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog));
+
+  if (first_property)
+    {
+      va_start (va_args, first_property);
+
+      do
+        list = g_list_prepend (list, (gpointer) prop_name);
+      while ((prop_name = va_arg (va_args, const gchar *)));
+
+      va_end (va_args);
+    }
+
+  list = g_list_reverse (list);
+  gimp_procedure_dialog_populate_list (dialog, list);
+  if (list)
+    g_list_free (list);
+}
+
+/**
+ * gimp_procedure_dialog_populate_list: (rename-to gimp_procedure_dialog_populate)
+ * @dialog: the #GimpProcedureDialog.
+ * @properties: (nullable) (element-type gchar*): the list of property names.
+ *
+ * Populated @dialog with the widgets corresponding to every listed
+ * properties. If the list is %NULL, @dialog will be filled by the whole
+ * list of properties of the associated #GimpProcedure, in the defined
+ * order:
+ * |[<!-- language="C" -->
+ * gimp_procedure_dialog_populate_list (dialog, NULL);
+ * ]|
+ * Nevertheless if you only wish to display a partial list of
+ * properties, or if you wish to change the display order, then you have
+ * to give an explicit list:
+ * You do not have gimp_procedure_dialog_get_widget() before calling
+ * this function unless you want a given property to be represented by
+ * an alternative widget type.
+ */
+void
+gimp_procedure_dialog_populate_list (GimpProcedureDialog *dialog,
+                                     GList               *properties)
+{
+  GtkWidget *content_area;
+  GList     *iter;
+  gboolean   free_properties = FALSE;
+
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+
+  if (! properties)
+    {
+      GParamSpec **pspecs;
+      guint        n_pspecs;
+      gint         i;
+
+      pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                               &n_pspecs);
+
+      for (i = 0; i < n_pspecs; i++)
+        {
+          const gchar *prop_name;
+          GParamSpec  *pspec = pspecs[i];
+
+          /*  skip our own properties  */
+          if (pspec->owner_type == GIMP_TYPE_PROCEDURE_CONFIG)
+            continue;
+
+          prop_name  = g_param_spec_get_name (pspec);
+          properties = g_list_prepend (properties, (gpointer) prop_name);
+        }
+
+      properties = g_list_reverse (properties);
+
+      if (properties)
+        free_properties = TRUE;
+    }
+
+  for (iter = properties; iter; iter = iter->next)
+    {
+      GtkWidget *widget;
+
+      widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
+      if (widget)
+        {
+          /* Reference the widget because the hash table will
+           * unreference it anyway when getting destroyed so we don't
+           * want to give the only reference to the parent widget.
+           */
+          g_object_ref (widget);
+          gtk_box_pack_start (GTK_BOX (content_area), widget, TRUE, TRUE, 0);
+          gtk_widget_show (widget);
+        }
+    }
+
+  if (free_properties)
+    g_list_free (properties);
+}
+
 gboolean
 gimp_procedure_dialog_run (GimpProcedureDialog *dialog)
 {
@@ -378,5 +632,80 @@ gimp_procedure_dialog_save_defaults (GtkWidget           *button,
       g_printerr ("Saving default values to disk failed: %s\n",
                   error->message);
       g_clear_error (&error);
+    }
+}
+
+/**
+ * gimp_procedure_dialog_estimate_increments:
+ * @lower:
+ * @upper:
+ * @step:
+ * @page:
+ *
+ * Though sometimes you might want to specify step and page increments
+ * on widgets explicitly, sometimes you are fine with just anything
+ * which doesn't give you absurd values. This procedure just tries to
+ * return such sensible increment values.
+ */
+static void
+gimp_procedure_dialog_estimate_increments (gdouble  lower,
+                                           gdouble  upper,
+                                           gdouble *step,
+                                           gdouble *page)
+{
+  gdouble range;
+
+  g_return_if_fail (upper >= lower);
+  g_return_if_fail (step || page);
+
+  range = upper - lower;
+
+  if (range > 0 && range <= 1.0)
+    {
+      gdouble places = 10.0;
+
+      /* Compute some acceptable step and page increments always in the
+       * format `10**-X` where X is the rounded precision.
+       * So for instance:
+       *  0.8 will have increments 0.01 and 0.1.
+       *  0.3 will have increments 0.001 and 0.01.
+       *  0.06 will also have increments 0.001 and 0.01.
+       */
+      while (range * places < 5.0)
+        places *= 10.0;
+
+
+      if (step)
+        *step = 0.1 / places;
+      if (page)
+        *page = 1.0 / places;
+    }
+  else if (range <= 2.0)
+    {
+      if (step)
+        *step = 0.01;
+      if (page)
+        *page = 0.1;
+    }
+  else if (range <= 5.0)
+    {
+      if (step)
+        *step = 0.1;
+      if (page)
+        *page = 1.0;
+    }
+  else if (range <= 40.0)
+    {
+      if (step)
+        *step = 1.0;
+      if (page)
+        *page = 2.0;
+    }
+  else
+    {
+      if (step)
+        *step = 1.0;
+      if (page)
+        *page = 10.0;
     }
 }

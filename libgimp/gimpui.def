@@ -40,7 +40,10 @@ EXPORTS
 	gimp_proc_browser_dialog_new
 	gimp_proc_view_new
 	gimp_procedure_dialog_get_type
+	gimp_procedure_dialog_get_widget
 	gimp_procedure_dialog_new
+	gimp_procedure_dialog_populate
+	gimp_procedure_dialog_populate_list
 	gimp_procedure_dialog_run
 	gimp_progress_bar_get_type
 	gimp_progress_bar_new
