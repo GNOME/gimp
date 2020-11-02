@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-31 21:45+0000\n"
-"PO-Revision-Date: 2020-11-01 23:33+0200\n"
+"POT-Creation-Date: 2020-11-01 22:07+0000\n"
+"PO-Revision-Date: 2020-11-02 03:35+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -2449,7 +2449,7 @@ msgstr "Acesta nu este un fișier GIF"
 
 #: ../plug-ins/common/file-gif-load.c:419
 msgid "Non-square pixels.  Image might look squashed."
-msgstr "Pixelii nu sunt pătrați.  Imaginea ar putea arăta strivită."
+msgstr "Pixelii nu sunt pătrați.  Este posibil ca imaginea să pară strivită."
 
 #: ../plug-ins/common/file-gif-load.c:994
 #, c-format
@@ -2659,7 +2659,7 @@ msgstr "Exportă imagini AVIF"
 
 #: ../plug-ins/common/file-heif.c:195
 msgid "Save image in AV1 Image File Format (AVIF)"
-msgstr "Încarcă imaginea stocată în format de fișier AV1 (AVIF)"
+msgstr "Salvează imaginea în format de fișier AV1 (AVIF)"
 
 #: ../plug-ins/common/file-heif.c:734 ../plug-ins/common/file-heif.c:767
 #: ../plug-ins/common/file-heif.c:806 ../plug-ins/common/file-heif.c:872
@@ -3775,12 +3775,12 @@ msgstr "Eroare la citirea blocului de atribut general al imaginii."
 #: ../plug-ins/common/file-psp.c:885
 #, c-format
 msgid "Unknown compression type %d"
-msgstr "Tip de comprimare necunoscut %d"
+msgstr "Tip de comprimare necunoscut: %d"
 
 #: ../plug-ins/common/file-psp.c:921 ../plug-ins/common/file-psp.c:928
 #, c-format
 msgid "Unsupported bit depth %d"
-msgstr "Adâncime de biți neacceptată %d"
+msgstr "Adâncime de biți neacceptată: %d"
 
 #: ../plug-ins/common/file-psp.c:975
 #, c-format
@@ -5236,7 +5236,7 @@ msgstr "Ghilotină"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
-msgstr "Găsește și corectează pixeli care ar putea fi exagerat de luminoși"
+msgstr "Găsește și corectează pixelii care ar putea fi exagerat de luminoși"
 
 #: ../plug-ins/common/hot.c:217
 msgid "_Hot..."
