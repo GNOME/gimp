@@ -32,6 +32,10 @@ Plug-ins:
     * Better handling of Exif.Thumbnail.* tags on export.
     * Import now ignores TIFF pages with invalid directory (rather than
       freezing and output an error to warn of possible data loss.
+  - GeoTIFF tag support added (recognized and stored into image
+    parasites at import, then exported back when TIFF format is used)
+    with appropriate "Save GeoTIFF data" checkbox (checked by default)
+    to disable GeoTIFF metadata export when not desired.
 
 Build:
 
