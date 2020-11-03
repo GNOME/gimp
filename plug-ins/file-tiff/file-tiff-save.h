@@ -31,6 +31,7 @@ typedef struct
   gboolean  save_exif;
   gboolean  save_xmp;
   gboolean  save_iptc;
+  gboolean  save_geotiff;
   gboolean  save_thumbnail;
   gboolean  save_profile;
   gboolean  save_layers;

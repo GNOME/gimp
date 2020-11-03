@@ -86,6 +86,7 @@ static TiffSaveVals tsvals =
   FALSE,               /*  save exif           */
   FALSE,               /*  save xmp            */
   FALSE,               /*  save iptc           */
+  TRUE,                /*  save geotiff        */
   TRUE,                /*  save thumbnail      */
   TRUE,                /*  save profile        */
   TRUE,                /*  save layers         */
@@ -286,6 +287,7 @@ run (const gchar      *name,
       tsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
       tsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
       tsvals.save_profile   = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
+      tsvals.save_geotiff   = TRUE;
 
       parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
       if (parasite)

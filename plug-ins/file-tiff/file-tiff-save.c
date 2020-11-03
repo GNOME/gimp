@@ -753,6 +753,72 @@ save_layer (TIFF         *tif,
                               * (gdouble) row / (gdouble) rows);
     }
 
+  /* Save GeoTIFF tags to file, if available */
+  if (tsvals->save_geotiff)
+    {
+      GimpParasite *parasite = NULL;
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelPixelScale");
+
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_MODELPIXELSCALE,
+                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelTiePoint");
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_MODELTIEPOINT,
+                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelTransformation");
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_MODELTRANSFORMATION,
+                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_KeyDirectory");
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_KEYDIRECTORY,
+                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_SHORT)),
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_DoubleParams");
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_DOUBLEPARAMS,
+                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_Asciiparams");
+      if (parasite)
+        {
+          TIFFSetField (tif,
+                        GEOTIFF_ASCIIPARAMS,
+                        gimp_parasite_data (parasite));
+          gimp_parasite_free (parasite);
+        }
+    }
+
   TIFFWriteDirectory (tif);
 
   gimp_progress_update (progress_base + progress_fraction);
@@ -1251,6 +1317,13 @@ save_dialog (TiffSaveVals  *tsvals,
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals->save_iptc);
+
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-geotiff"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                tsvals->save_geotiff);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals->save_geotiff);
 
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-thumbnail"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
