@@ -31,13 +31,6 @@ API:
     bindings, and finally it will be useful for automatic dialog
     generation for plug-ins.
 
-Plug-ins:
-
-  - GeoTIFF tag support added (recognized and stored into image
-    parasites at import, then exported back when TIFF format is used)
-    with appropriate "Save GeoTIFF data" checkbox (checked by default)
-    to disable GeoTIFF metadata export when not desired.
-
 Installer:
 
   - Various updates to adapt to the GIMP 2.99/3 build.
