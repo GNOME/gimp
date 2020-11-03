@@ -382,7 +382,7 @@ pattern_to_attrs (const gchar *text,
 
   while (TRUE)
     {
-      while (*p && *q && *q != '_')
+      while (*p && q && *q != '_')
         {
           p = g_utf8_next_char (p);
           q++;
