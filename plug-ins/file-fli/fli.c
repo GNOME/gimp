@@ -884,8 +884,8 @@ fli_write_lc (FILE          *f,
       while (xc < fli_header->width)
         {
           sc = 0;
-          while ((linebuf[xc] == old_linebuf[xc]) &&
-                 (xc < fli_header->width)         &&
+          while ((xc < fli_header->width)         &&
+                 (linebuf[xc] == old_linebuf[xc]) &&
                  (sc < 255))
             {
               xc++;

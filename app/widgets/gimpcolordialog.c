@@ -608,7 +608,6 @@ gimp_color_dialog_colormap_add_activate (GimpColorDialog *dialog)
       GimpContext *user_context = viewable_dialog->context->gimp->user_context;
       GimpRGB      color;
 
-      user_context = viewable_dialog->context->gimp->user_context;
       gimp_context_get_foreground (user_context, &color);
 
       gimp_image_add_colormap_entry (dialog->active_image, &color);
