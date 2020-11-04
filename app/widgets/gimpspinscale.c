@@ -818,6 +818,10 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
       return TRUE;
 
+    case TARGET_NUMBER:
+      gtk_widget_grab_focus (widget);
+      return TRUE;
+
     default:
       break;
     }
