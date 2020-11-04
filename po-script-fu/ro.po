@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-08 11:48+0000\n"
-"PO-Revision-Date: 2020-10-31 23:40+0200\n"
+"PO-Revision-Date: 2020-11-04 14:38+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -140,7 +140,7 @@ msgstr "Salvează ieșirea consolei Script-Fu"
 #: ../plug-ins/script-fu/script-fu-interface.c:236
 #: ../plug-ins/script-fu/script-fu-server.c:839
 msgid "_Cancel"
-msgstr "_Renunță"
+msgstr "_Anulează"
 
 #: ../plug-ins/script-fu/script-fu-console.c:337
 #, c-format
