@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-11-01 22:07+0000\n"
-"PO-Revision-Date: 2020-11-02 03:35+0200\n"
+"PO-Revision-Date: 2020-11-04 15:06+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -104,7 +104,7 @@ msgstr "Aliniere straturi vizibile"
 #: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
-msgstr "_Renunță"
+msgstr "_Anulează"
 
 #: ../plug-ins/common/align-layers.c:631 ../plug-ins/common/blinds.c:226
 #: ../plug-ins/common/border-average.c:363 ../plug-ins/common/cartoon.c:814
@@ -2534,7 +2534,7 @@ msgid ""
 "of the layers to the image borders, or cancel this export."
 msgstr ""
 "Formatul de fișier GIF nu permite acest lucru.  Puteți alege ca toate "
-"straturile să fie decupate la marginile imaginii, sau să renunțați la acest "
+"straturile să fie decupate la marginile imaginii, sau să anulați acest "
 "export."
 
 #: ../plug-ins/common/file-gif-save.c:1235
@@ -9557,10 +9557,9 @@ msgstr "Salvează gamma"
 msgid "Save layer o_ffset"
 msgstr "Salvează _decalajul de strat"
 
-# accelerator pe r este deja pe butonul renunță
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
 msgid "Save _resolution"
-msgstr "Salvează re_zoluția"
+msgstr "Salvează _rezoluția"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
 msgid "Save comme_nt"
@@ -9571,11 +9570,10 @@ msgstr "Salvează come_ntariul"
 msgid "Save color _values from transparent pixels"
 msgstr "Salvează _valorile de culoare din pixelii transparenți"
 
-# accelerator pe a este deja pe butonul ajutor
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:7
 msgid "S_ave Defaults"
-msgstr "Salvează ca valori _implicite"
+msgstr "S_alvează ca valori implicite"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
 msgid "Save Exif data"
@@ -11099,10 +11097,9 @@ msgstr "<Neintitulat>"
 msgid "Some data has been changed!"
 msgstr "Anumite date au fost modificate!"
 
-# hm ? sau aruncați ?
 #: ../plug-ins/imagemap/imap_main.c:625
 msgid "Do you really want to discard your changes?"
-msgstr "Sigur vreți să renunțați la toate modificările făcute?"
+msgstr "Sigur vreți să abandonați modificările făcute?"
 
 #: ../plug-ins/imagemap/imap_main.c:837
 #, c-format
@@ -11260,7 +11257,7 @@ msgstr "Creează ghidaje..."
 
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "_Help"
-msgstr "_Ajutor"
+msgstr "A_jutor"
 
 #: ../plug-ins/imagemap/imap_menu.c:214
 msgid "_Contents"
