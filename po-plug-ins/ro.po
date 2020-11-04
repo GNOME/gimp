@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-11-02 01:26+0000\n"
-"PO-Revision-Date: 2020-11-02 03:45+0200\n"
+"PO-Revision-Date: 2020-11-04 15:02+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -98,7 +98,7 @@ msgstr "Exercitează o capră (C)"
 #: ../plug-ins/pagecurl/pagecurl.c:473 ../plug-ins/screenshot/screenshot.c:529
 #: ../plug-ins/selection-to-path/selection-to-path.c:406
 msgid "_Cancel"
-msgstr "_Renunță"
+msgstr "_Anulează"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:165
 #: ../extensions/goat-exercises/goat-exercise-py3.py:84
@@ -2331,7 +2331,7 @@ msgid ""
 "of the layers to the image borders, or cancel this export."
 msgstr ""
 "Formatul de fișier GIF nu permite acest lucru.  Puteți alege ca toate "
-"straturile să fie decupate la marginile imaginii, sau să renunțați la acest "
+"straturile să fie decupate la marginile imaginii, sau să anulați acest "
 "export."
 
 #: ../plug-ins/common/file-gif-save.c:1168
@@ -3381,10 +3381,9 @@ msgstr "Întrețesere (Adam_7)"
 msgid "Save layer o_ffset"
 msgstr "Salvează _decalajul de strat"
 
-# accelerator pe r este deja pe butonul renunță
 #: ../plug-ins/common/file-png.c:2252
 msgid "Save _resolution"
-msgstr "Salvează re_zoluția"
+msgstr "Salvează _rezoluția"
 
 #: ../plug-ins/common/file-png.c:2260
 msgid "Save color _values from transparent pixels"
@@ -10736,10 +10735,9 @@ msgstr "<Neintitulat>"
 msgid "Some data has been changed!"
 msgstr "Anumite date au fost modificate!"
 
-# hm ? sau aruncați ?
 #: ../plug-ins/imagemap/imap_main.c:664
 msgid "Do you really want to discard your changes?"
-msgstr "Sigur vreți să renunțați la toate modificările făcute?"
+msgstr "Sigur vreți să abandonați modificările făcute?"
 
 #: ../plug-ins/imagemap/imap_main.c:876
 #, c-format
@@ -10897,7 +10895,7 @@ msgstr "Creează ghidaje..."
 
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "_Help"
-msgstr "_Ajutor"
+msgstr "A_jutor"
 
 #: ../plug-ins/imagemap/imap_menu.c:214
 msgid "_Contents"
