@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-12 20:08+0000\n"
-"PO-Revision-Date: 2020-11-01 15:46+0200\n"
+"PO-Revision-Date: 2020-11-04 14:34+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -196,7 +196,7 @@ msgstr "Confirmă salvarea"
 #: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
 #: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:492
 msgid "_Cancel"
-msgstr "_Renunță"
+msgstr "_Anulează"
 
 #: ../libgimp/gimpexport.c:510
 msgid "C_onfirm"
