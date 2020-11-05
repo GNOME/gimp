@@ -34,6 +34,8 @@ libgimpwidgets_introspectable_headers =	\
 	../libgimpwidgets/gimpicons.h	       		\
 	../libgimpwidgets/gimpintcombobox.h	       		\
 	../libgimpwidgets/gimpintstore.h	       		\
+	../libgimpwidgets/gimplabeled.h				\
+	../libgimpwidgets/gimplabelspin.h			\
 	../libgimpwidgets/gimpmemsizeentry.h	       		\
 	../libgimpwidgets/gimpnumberpairentry.h     		\
 	../libgimpwidgets/gimpoffsetarea.h	       		\
@@ -95,6 +97,8 @@ libgimpwidgets_introspectable =	\
 	../libgimpwidgets/gimpicons.c			\
 	../libgimpwidgets/gimpintcombobox.c			\
 	../libgimpwidgets/gimpintstore.c			\
+	../libgimpwidgets/gimplabeled.c				\
+	../libgimpwidgets/gimplabelspin.c			\
 	../libgimpwidgets/gimpmemsizeentry.c			\
 	../libgimpwidgets/gimpnumberpairentry.c		\
 	../libgimpwidgets/gimpoffsetarea.c			\

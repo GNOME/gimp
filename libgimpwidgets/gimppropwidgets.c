@@ -1396,6 +1396,51 @@ gimp_prop_spin_button_new (GObject     *config,
 }
 
 /**
+ * gimp_prop_label_spin_new:
+ * @config:            Object to which property is attached.
+ * @digits:            Number of digits after decimal point to display.
+ *
+ * Creates a #GimpLabelSpin to set and display the value of the
+ * specified double property.
+ *
+ * Returns: (transfer full): A new #libgimpwidgets-gimpspinbutton.
+ *
+ * Since: 2.4
+ */
+GtkWidget *
+gimp_prop_label_spin_new (GObject     *config,
+                          const gchar *property_name,
+                          gint         digits)
+{
+  const gchar   *label;
+  GParamSpec    *param_spec;
+  GtkWidget     *widget;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
+
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  if (! get_numeric_values (config,
+                            param_spec, &value, &lower, &upper, G_STRFUNC))
+    return NULL;
+
+  if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    digits = 0;
+
+  label = g_param_spec_get_nick (param_spec);
+  widget = gimp_label_spin_new (label, value, lower, upper, digits);
+
+  g_object_bind_property (config, property_name,
+                          widget, "value",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+  return widget;
+}
+
+/**
  * gimp_prop_hscale_new:
  * @config:         Object to which property is attached.
  * @property_name:  Name of integer or double property controlled by the scale.
