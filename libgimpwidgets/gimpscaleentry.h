@@ -25,17 +25,19 @@
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#include <libgimpwidgets/gimplabelspin.h>
+
 #ifndef __GIMP_SCALE_ENTRY_H__
 #define __GIMP_SCALE_ENTRY_H__
 
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_SCALE_ENTRY (gimp_scale_entry_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpScaleEntry, gimp_scale_entry, GIMP, SCALE_ENTRY, GtkGrid)
+G_DECLARE_DERIVABLE_TYPE (GimpScaleEntry, gimp_scale_entry, GIMP, SCALE_ENTRY, GimpLabelSpin)
 
 struct _GimpScaleEntryClass
 {
-  GtkGridClass       parent_class;
+  GimpLabelSpinClass parent_class;
 
   /*  Signals        */
   void            (* value_changed)    (GimpScaleEntry *entry);
@@ -60,12 +62,6 @@ GtkWidget     * gimp_scale_entry_new             (const gchar *text,
                                                   gdouble      upper,
                                                   guint        digits);
 
-void            gimp_scale_entry_set_value       (GimpScaleEntry *entry,
-                                                  gdouble         value);
-gdouble         gimp_scale_entry_get_value       (GimpScaleEntry *entry);
-
-GtkWidget     * gimp_scale_entry_get_label       (GimpScaleEntry *entry);
-GtkWidget     * gimp_scale_entry_get_spin_button (GimpScaleEntry *entry);
 GtkWidget     * gimp_scale_entry_get_range       (GimpScaleEntry *entry);
 
 void            gimp_scale_entry_set_bounds      (GimpScaleEntry *entry,
@@ -76,10 +72,6 @@ void            gimp_scale_entry_set_bounds      (GimpScaleEntry *entry,
 void            gimp_scale_entry_set_logarithmic (GimpScaleEntry *entry,
                                                   gboolean        logarithmic);
 gboolean        gimp_scale_entry_get_logarithmic (GimpScaleEntry *entry);
-
-void            gimp_scale_entry_set_increments  (GimpScaleEntry *entry,
-                                                  gdouble         step,
-                                                  gdouble         page);
 
 
 G_END_DECLS
