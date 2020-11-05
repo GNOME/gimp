@@ -4,7 +4,7 @@ These functions have been removed from GIMP 3. Most of them were deprecated
 since GIMP 2.10.x or older versions. As we bump the major version, it is time
 to start with a clean slate.
 
-Below is a correspondance table with replacement function. The replacement is
+Below is a correspondence table with replacement function. The replacement is
 not necessarily a direct search-and-replace equivalent. Some may have different
 parameters, and in some case, it may require to think a bit about how things
 work to reproduce the same functionality. Nevertheless everything which was

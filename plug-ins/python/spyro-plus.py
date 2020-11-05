@@ -1156,7 +1156,7 @@ RIGHT_MARGIN = 2
 TOTAL_MARGIN = CIRCLE_CENTER_X + RIGHT_MARGIN
 
 # A widget for displaying and setting the pattern of a spirograph, using a "doughnut" as
-# a visual metaphore.  This widget replaces two scale widgets.
+# a visual metaphor.  This widget replaces two scale widgets.
 class DoughnutWidget(Gtk.DrawingArea):
     __gtype_name__ = 'DoughnutWidget'
 

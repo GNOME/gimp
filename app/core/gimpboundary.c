@@ -59,7 +59,7 @@ static GimpBoundary * gimp_boundary_new        (const GeglRectangle *region);
 static GimpBoundSeg * gimp_boundary_free       (GimpBoundary        *boundary,
                                                 gboolean             free_segs);
 
-static void           gimp_boundary_add_seg    (GimpBoundary        *bounrady,
+static void           gimp_boundary_add_seg    (GimpBoundary        *boundary,
                                                 gint                 x1,
                                                 gint                 y1,
                                                 gint                 x2,

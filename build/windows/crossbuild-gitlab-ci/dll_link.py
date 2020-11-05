@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 ################################################################################
-# Small python script to retrieve DLL depencies with objdump
+# Small python script to retrieve DLL dependencies with objdump
 ################################################################################
 
 ################################################################################
@@ -9,9 +9,9 @@
 #
 # python3 dll_link.py /path/to/run.exe /winenv/ /path/install
 #
-# In this case, the DLL depencies for executable run.exe will be extracted and
-# copied into /path/install/bin folder. To copy the DLL, the root path to
-# Windows environnement should be passed, here /winenv/.
+# In this case, the DLL dependencies for executable run.exe will be extracted
+# and copied into /path/install/bin folder. To copy the DLL, the root path to
+# Windows environnment should be passed, here /winenv/.
 
 import argparse
 import os

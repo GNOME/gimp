@@ -450,7 +450,7 @@ gimp_transform_matrix_generic (GimpMatrix3       *matrix,
   g_return_val_if_fail (output_points != NULL, FALSE);
 
   /* find the matrix that transforms 'input_points' to 'output_points', whose
-   * (3, 3) coeffcient is 1, by solving a system of linear equations whose
+   * (3, 3) coefficient is 1, by solving a system of linear equations whose
    * solution is the remaining 8 coefficients.
    */
   for (i = 0; i < 4; i++)

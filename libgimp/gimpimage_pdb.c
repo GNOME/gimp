@@ -3492,7 +3492,7 @@ gimp_image_policy_rotate (GimpImage *image,
  * `Preferences`.
  * This function should be used only if you want to follow user
  * settings. If you intend to convert to a specific profile, call
- * preferrably gimp_image_convert_color_profile(). And if you wish to
+ * preferably gimp_image_convert_color_profile(). And if you wish to
  * leave whatever profile an image has, do not call any of these
  * functions.
  * Finally it is unnecessary to call this function in a format load

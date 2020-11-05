@@ -1576,7 +1576,7 @@ get_layer_color (GimpLayer *layer,
   GimpRGB col;
   gdouble red, green, blue, alpha;
   gdouble dev, devSum;
-  gdouble median, pixels, count, precentile;
+  gdouble median, pixels, count, percentile;
 
   devSum = 0;
   red = 0;
@@ -1599,17 +1599,17 @@ get_layer_color (GimpLayer *layer,
 
       gimp_drawable_histogram (GIMP_DRAWABLE (layer),
                                GIMP_HISTOGRAM_RED, 0.0, 1.0,
-                               &red, &dev, &median, &pixels, &count, &precentile);
+                               &red, &dev, &median, &pixels, &count, &percentile);
       devSum += dev;
 
       gimp_drawable_histogram (GIMP_DRAWABLE (layer),
                                GIMP_HISTOGRAM_GREEN, 0.0, 1.0,
-                               &green, &dev, &median, &pixels, &count, &precentile);
+                               &green, &dev, &median, &pixels, &count, &percentile);
       devSum += dev;
 
       gimp_drawable_histogram (GIMP_DRAWABLE (layer),
                                GIMP_HISTOGRAM_BLUE, 0.0, 1.0,
-                               &blue, &dev, &median, &pixels, &count, &precentile);
+                               &blue, &dev, &median, &pixels, &count, &percentile);
       devSum += dev;
     }
   else
@@ -1618,7 +1618,7 @@ get_layer_color (GimpLayer *layer,
 
       gimp_drawable_histogram (GIMP_DRAWABLE (layer),
                                GIMP_HISTOGRAM_VALUE, 0.0, 1.0,
-                               &red, &dev, &median, &pixels, &count, &precentile);
+                               &red, &dev, &median, &pixels, &count, &percentile);
       devSum += dev;
       green = red;
       blue = red;
@@ -1627,7 +1627,7 @@ get_layer_color (GimpLayer *layer,
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     gimp_drawable_histogram (GIMP_DRAWABLE (layer),
                              GIMP_HISTOGRAM_ALPHA, 0.0, 1.0,
-                             &alpha, &dev, &median, &pixels, &count, &precentile);
+                             &alpha, &dev, &median, &pixels, &count, &percentile);
   else
     alpha = 255;
 

@@ -1303,7 +1303,7 @@ load_default_hotspot (GimpImage     *image,
 
   if (/* if we cannot load hotspot correctly */
       ! get_hotspot_from_parasite (image, &hot_spot_x, &hot_spot_y) ||
-      /* or hostspot is out of range */
+      /* or hotspot is out of range */
       ! pix_in_region (hot_spot_x, hot_spot_y, hotspot_range))
     {
       /* then use top left point of hotspot_range as fallback. */

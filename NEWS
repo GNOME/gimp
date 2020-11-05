@@ -194,7 +194,7 @@ API:
   - `GimpPlugIn` is a class which every plug-in should now subclass as a
     way to create their plug-in, and override at least the methods
     query_procedures() and create_procedure(). Two other methods
-    (init_procedures() and quit()) can be optionally overrided.
+    (init_procedures() and quit()) can be optionally overridden.
     The new subclass must be declared to gimp by calling gimp_main() to
     make it available to the core (PDB procedure, menu items, etc.).
     A plug-in can obtain its own GimpPlugIn instance with

@@ -2397,7 +2397,7 @@ gimp_image_set_imported_file (GimpImage *image,
        * use higher default resolution, or explicitly chosen templates),
        * imported files have a more backward-compatible value.
        *
-       * 72 PPI is traditionnally the default value when none other had
+       * 72 PPI is traditionally the default value when none other had
        * been explicitly set (for instance it is the default when no
        * resolution metadata was set in Exif version 2.32, and below,
        * standard). This historical value will only ever apply to loaded

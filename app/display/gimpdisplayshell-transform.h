@@ -62,7 +62,7 @@ void  gimp_display_shell_zoom_segments                 (GimpDisplayShell   *shel
 
 
 /*  rotate: functions to transform from unrotated and unflipped but
- *  zoomed display space to rotated and filpped display space and back
+ *  zoomed display space to rotated and flipped display space and back
  */
 
 void  gimp_display_shell_rotate_coords                 (GimpDisplayShell   *shell,

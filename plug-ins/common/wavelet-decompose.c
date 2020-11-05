@@ -142,7 +142,7 @@ wavelet_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "create-group",
-                             "Create grooup",
+                             "Create group",
                              "Create a layer group to store the "
                              "decomposition",
                              TRUE,

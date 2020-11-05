@@ -160,7 +160,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILTER_TOOL_SHOW_COLOR_OPTIONS,
                             "filter-tool-show-color-options",
-                            "Show avanced color options in filters",
+                            "Show advanced color options in filters",
                             FILTER_TOOL_SHOW_COLOR_OPTIONS_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);

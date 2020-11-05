@@ -373,7 +373,7 @@ gimp_backtrace_stop (void)
   if (n_initializations == 0 && initialized)
     {
       if (sigaction (BACKTRACE_SIGNAL, &orig_action, NULL) < 0)
-        g_warning ("failed to restore origianl backtrace signal handler");
+        g_warning ("failed to restore original backtrace signal handler");
 
       initialized = FALSE;
     }

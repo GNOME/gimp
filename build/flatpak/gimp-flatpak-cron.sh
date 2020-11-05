@@ -69,7 +69,7 @@ flatpak_build_branch() {
   mkdir -p ${INSTALLDIR}
 
   # Use ccache to improve build speed. Clean previous build directories.
-  # Keep build dirs for later debugging if ever any build issue arised.
+  # Keep build dirs for later debugging if ever any build issue arises.
   BUILD_OPTIONS="--ccache --force-clean --keep-build-dirs --jobs=1"
 
   SKIP=""

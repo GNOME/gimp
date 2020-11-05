@@ -3482,7 +3482,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
               color2 = &quantobj->cmap[pixval2];
 
-              /* now figure out the relative probabilites of choosing
+              /* now figure out the relative probabilities of choosing
                  either of our candidates. */
 #define DISTP(R1,G1,B1,R2,G2,B2,D) do {D = sqrt( 30*SQR((R1)-(R2)) + \
                                                  59*SQR((G1)-(G2)) + \

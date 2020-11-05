@@ -1482,7 +1482,7 @@ gimp_tool_transform_grid_motion (GimpToolWidget   *widget,
 
       /* when the keep aspect transformation constraint is enabled,
        * the translation shall only be along the diagonal that runs
-       * trough this corner point.
+       * through this corner point.
        */
       if (private->constrain_scale)
         {
@@ -1726,7 +1726,7 @@ gimp_tool_transform_grid_motion (GimpToolWidget   *widget,
           /* when the constrain transformation constraint is enabled,
            * the translation shall only be either along the side
            * angles of the two sides that run to this corner point, or
-           * along the diagonal that runs trough this corner point.
+           * along the diagonal that runs through this corner point.
            */
           GimpVector2 proj[4];
           gdouble     rej[4];

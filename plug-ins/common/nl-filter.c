@@ -398,7 +398,7 @@ nlfiltRow (guchar *srclast, guchar *srcthis, guchar *srcnext, guchar *dst,
 /* the pixel in question needs to be read. Given this, we only */
 /* need 3 or 4 weightings per hexagon, as follows: */
 /*                  _ _                         */
-/* Virtical hex:   |_|_|  1 2                   */
+/* Vertical hex:   |_|_|  1 2                   */
 /*                 |X|_|  0 3                   */
 /*                                       _      */
 /*              _                      _|_|   1 */
@@ -512,10 +512,10 @@ nlfiltInit (gdouble alpha, gdouble radius, FilterType filter)
       gdouble tabscale,mtabscale;
       gdouble v0,v1,v2,v3,m0,m1,m2,h0,h1,h2,h3;
 
-          /* horizontal offset of virtical hex centers */
+          /* horizontal offset of vertical hex centers */
       hexhoff = radius/2;
 
-          /* vertical offset of virtical hex centers */
+          /* vertical offset of vertical hex centers */
       hexvoff = 3.0 * radius/sqrt(12.0);
 
           /*

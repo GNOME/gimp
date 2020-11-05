@@ -307,7 +307,7 @@ gimp_scale_entry_new  (const gchar *text,
  * useful if you need to customize some aspects of the widget
  *
  * By default, it is a #GtkScale, but it can be any other type of
- * #GtkRange if a subclass overrided the new_range_widget() protected
+ * #GtkRange if a subclass overrode the new_range_widget() protected
  * method.
  *
  * Returns: (transfer none): The #GtkRange contained in @entry.

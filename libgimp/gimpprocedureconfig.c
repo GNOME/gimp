@@ -461,7 +461,7 @@ gimp_procedure_config_set_parasite (GimpProcedureConfig *config,
  * String properties are set to the value of the image parasite if
  * @run_mode is %GIMP_RUN_INTERACTIVE or %GIMP_RUN_WITH_LAST_VALS, or
  * if the corresponding argument is an auxiliary argument. As a
- * special case, a propery named "gimp-comment" will default to
+ * special case, a property named "gimp-comment" will default to
  * gimp_get_default_comment() if there is no "gimp-comment" parasite.
  *
  * After calling this function, the @args passed to run() should be

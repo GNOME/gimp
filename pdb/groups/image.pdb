@@ -3033,7 +3033,7 @@ preferred RGB or grayscale profile will happen, defaulting to built-in
 profiles if no preferred profiles were set in `Preferences`.
 
 This function should be used only if you want to follow user settings.
-If you intend to convert to a specific profile, call preferrably
+If you intend to convert to a specific profile, call preferably
 gimp_image_convert_color_profile(). And if you wish to leave whatever
 profile an image has, do not call any of these functions.
 

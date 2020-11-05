@@ -101,7 +101,7 @@ static const LayerModeMapping layer_mode_map[] =
   { "Hue",           "hue ", GIMP_LAYER_MODE_HSV_HUE,               FALSE },
   { "Hue",           "hue ", GIMP_LAYER_MODE_HSV_HUE_LEGACY,        FALSE },
 
-  /* Stauration (ps3) */
+  /* Saturation (ps3) */
   { "Saturation",    "sat ", GIMP_LAYER_MODE_LCH_CHROMA,            FALSE },
   { "Saturation",    "sat ", GIMP_LAYER_MODE_HSV_SATURATION,        FALSE },
   { "Saturation",    "sat ", GIMP_LAYER_MODE_HSV_SATURATION_LEGACY, FALSE },
