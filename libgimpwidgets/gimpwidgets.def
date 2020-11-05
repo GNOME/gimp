@@ -227,6 +227,16 @@ EXPORTS
 	gimp_int_store_new
 	gimp_int_store_new_valist
 	gimp_label_set_attributes
+	gimp_label_spin_get_spin_button
+	gimp_label_spin_get_type
+	gimp_label_spin_get_value
+	gimp_label_spin_new
+	gimp_label_spin_set_increments
+	gimp_label_spin_set_value
+	gimp_labeled_get_label
+	gimp_labeled_get_text
+	gimp_labeled_get_type
+	gimp_labeled_set_text
 	gimp_memsize_entry_get_spinbutton
 	gimp_memsize_entry_get_type
 	gimp_memsize_entry_get_value
@@ -336,6 +346,7 @@ EXPORTS
 	gimp_prop_int_radio_box_new
 	gimp_prop_int_radio_frame_new
 	gimp_prop_label_new
+	gimp_prop_label_spin_new
 	gimp_prop_memsize_entry_new
 	gimp_prop_opacity_entry_new
 	gimp_prop_path_editor_new
@@ -364,17 +375,12 @@ EXPORTS
 	gimp_ruler_set_position
 	gimp_ruler_set_range
 	gimp_ruler_set_unit
-	gimp_scale_entry_get_label
 	gimp_scale_entry_get_logarithmic
 	gimp_scale_entry_get_range
-	gimp_scale_entry_get_spin_button
 	gimp_scale_entry_get_type
-	gimp_scale_entry_get_value
 	gimp_scale_entry_new
 	gimp_scale_entry_set_bounds
-	gimp_scale_entry_set_increments
 	gimp_scale_entry_set_logarithmic
-	gimp_scale_entry_set_value
 	gimp_scroll_adjustment_values
 	gimp_scrolled_preview_freeze
 	gimp_scrolled_preview_get_adjustments
