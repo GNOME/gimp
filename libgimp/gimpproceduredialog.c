@@ -54,6 +54,7 @@ struct _GimpProcedureDialogPrivate
   GtkWidget           *reset_popover;
 
   GHashTable          *widgets;
+  GtkSizeGroup        *label_group;
 };
 
 
@@ -122,7 +123,8 @@ gimp_procedure_dialog_init (GimpProcedureDialog *dialog)
 {
   dialog->priv = gimp_procedure_dialog_get_instance_private (dialog);
 
-  dialog->priv->widgets = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+  dialog->priv->widgets     = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+  dialog->priv->label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 }
 
 static void
@@ -142,6 +144,7 @@ gimp_procedure_dialog_dispose (GObject *object)
       g_hash_table_destroy (dialog->priv->widgets);
       dialog->priv->widgets = NULL;
     }
+  g_clear_object (&dialog->priv->label_group);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -210,6 +213,7 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
   gboolean     use_header_bar;
   GtkWidget   *hbox;
   GtkWidget   *button;
+  GtkWidget   *content_area;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
@@ -258,12 +262,18 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
+  /* Main content area. */
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+  gtk_container_set_border_width (GTK_CONTAINER (content_area), 12);
+  gtk_box_set_spacing (GTK_BOX (content_area), 3);
+
+  /* Bottom box buttons with small additional padding. */
   hbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_set_spacing (GTK_BOX (hbox), 6);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_START);
-  gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                    hbox, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (content_area), hbox, FALSE, FALSE, 0);
+  gtk_container_child_set (GTK_CONTAINER (content_area), hbox,
+                           "padding", 3, NULL);
   gtk_widget_show (hbox);
 
   button = gtk_button_new_with_mnemonic (_("_Load Defaults"));
@@ -348,7 +358,12 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     }
   else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)
     {
-      if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_SCALE_ENTRY)
+      if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_SPIN)
+        {
+          widget = gimp_prop_label_spin_new (G_OBJECT (dialog->priv->config),
+                                             property, 0);
+        }
+      else if (widget_type == GIMP_TYPE_SCALE_ENTRY)
         {
           widget = gimp_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
                                               property,
@@ -357,6 +372,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
         }
       else if (widget_type == GIMP_TYPE_SPIN_BUTTON)
         {
+          /* Just some spin button without label. */
           GParamSpecInt *pspecint = (GParamSpecInt *) pspec;
           gdouble        step     = 0.0;
           gdouble        page     = 0.0;
@@ -386,6 +402,12 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                  G_STRFUNC, G_OBJECT_TYPE_NAME (widget_type),
                  property, G_PARAM_SPEC_TYPE_NAME (pspec));
       return NULL;
+    }
+  else if (GIMP_IS_LABELED (widget))
+    {
+      GtkWidget *label = gimp_labeled_get_label (GIMP_LABELED (widget));
+
+      gtk_size_group_add_widget (dialog->priv->label_group, label);
     }
 
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
