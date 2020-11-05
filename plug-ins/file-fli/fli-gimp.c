@@ -949,8 +949,6 @@ save_dialog (GimpImage     *image,
              GObject       *config)
 {
   GtkWidget *dialog;
-  GtkWidget *grid;
-  GtkWidget *spinbutton;
   gint       n_frames;
   gboolean   run;
 
@@ -964,31 +962,18 @@ save_dialog (GimpImage     *image,
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as FLI Animation"));
-
-  grid = gtk_grid_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
   /*
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
    * But for now you can set a start- and a end-frame:
    */
 
-  spinbutton = gimp_prop_spin_button_new (config, "from-frame",
-                                          1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            C_("frame-range", "_From:"), 0.0, 0.5,
-                            spinbutton, 1);
-
-  spinbutton = gimp_prop_spin_button_new (config, "to-frame",
-                                          1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            C_("frame-range", "_To:"), 0.0, 0.5,
-                            spinbutton, 1);
+  gimp_labeled_set_text (GIMP_LABELED (gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                                         "from-frame", GIMP_TYPE_LABEL_SPIN)),
+                         "_From:");
+  gimp_labeled_set_text (GIMP_LABELED (gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                                         "to-frame", GIMP_TYPE_LABEL_SPIN)),
+                         "_To:");
+  gimp_procedure_dialog_populate (GIMP_PROCEDURE_DIALOG (dialog), NULL);
 
   gtk_widget_show (dialog);
 
