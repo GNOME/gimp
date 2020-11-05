@@ -220,9 +220,9 @@ static void     jigsaw_preview     (GimpDrawable *drawable,
                                     GimpPreview  *preview);
 
 static gboolean jigsaw_dialog                    (GimpDrawable        *drawable);
-static void     jigsaw_scale_entry_update_double (GimpScaleEntry      *entry,
+static void     jigsaw_scale_entry_update_double (GimpLabelSpin       *entry,
                                                   gdouble             *value);
-static void     jigsaw_scale_entry_update_int    (GimpScaleEntry      *entry,
+static void     jigsaw_scale_entry_update_int    (GimpLabelSpin       *entry,
                                                   gint                *value);
 
 static void     draw_jigsaw        (guchar    *buffer,
@@ -2513,7 +2513,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
   g_object_unref (group);
 
   g_signal_connect (scale, "value-changed",
@@ -2529,7 +2529,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (jigsaw_scale_entry_update_int),
@@ -2555,7 +2555,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (jigsaw_scale_entry_update_int),
@@ -2570,7 +2570,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (jigsaw_scale_entry_update_double),
@@ -2615,15 +2615,15 @@ jigsaw_dialog (GimpDrawable *drawable)
 }
 
 static void
-jigsaw_scale_entry_update_double (GimpScaleEntry *entry,
-                                  gdouble        *value)
+jigsaw_scale_entry_update_double (GimpLabelSpin *entry,
+                                  gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }
 
 static void
-jigsaw_scale_entry_update_int (GimpScaleEntry *entry,
-                               gint           *value)
+jigsaw_scale_entry_update_int (GimpLabelSpin *entry,
+                               gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (entry);
+  *value = (gint) gimp_label_spin_get_value (entry);
 }

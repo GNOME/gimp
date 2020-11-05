@@ -40,8 +40,8 @@
 
 static GSList * adjust_widgets = NULL;
 
-void scale_entry_update_double (GimpScaleEntry *entry,
-                                gdouble        *value);
+void scale_entry_update_double (GimpLabelSpin *entry,
+                                gdouble       *value);
 
 /* Reset to recommended defaults */
 void
@@ -69,8 +69,8 @@ reset_adv_dialog (void)
         }
       else if (GIMP_IS_SCALE_ENTRY (widget))
         {
-          gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (widget),
-                                      *value);
+          gimp_label_spin_set_value (GIMP_LABEL_SPIN (widget),
+                                     *value);
         }
       else
         g_warning ("Internal widget list error");
@@ -380,8 +380,8 @@ dialog_create_selection_area (SELVALS *sels)
 }
 
 void
-scale_entry_update_double (GimpScaleEntry *entry,
-                           gdouble        *value)
+scale_entry_update_double (GimpLabelSpin *entry,
+                           gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }

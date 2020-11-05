@@ -71,7 +71,7 @@ static void   colorsel_cmyk_set_color      (GimpColorSelector *selector,
 static void   colorsel_cmyk_set_config     (GimpColorSelector *selector,
                                             GimpColorConfig   *config);
 
-static void   colorsel_cmyk_scale_update   (GimpScaleEntry    *scale,
+static void   colorsel_cmyk_scale_update   (GimpLabelSpin     *scale,
                                             ColorselCmyk      *module);
 static void   colorsel_cmyk_config_changed (ColorselCmyk      *module);
 
@@ -248,7 +248,7 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
                                        colorsel_cmyk_scale_update,
                                        module);
 
-      gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (module->scales[i]), values[i]);
+      gimp_label_spin_set_value (GIMP_LABEL_SPIN (module->scales[i]), values[i]);
 
       g_signal_handlers_unblock_by_func (module->scales[i],
                                          colorsel_cmyk_scale_update,
@@ -281,18 +281,18 @@ colorsel_cmyk_set_config (GimpColorSelector *selector,
 }
 
 static void
-colorsel_cmyk_scale_update (GimpScaleEntry *scale,
-                            ColorselCmyk   *module)
+colorsel_cmyk_scale_update (GimpLabelSpin *scale,
+                            ColorselCmyk  *module)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
   gint               i;
   gdouble            value;
 
   for (i = 0; i < 4; i++)
-    if (GIMP_SCALE_ENTRY (module->scales[i]) == scale)
+    if (GIMP_LABEL_SPIN (module->scales[i]) == scale)
       break;
 
-  value = gimp_scale_entry_get_value (scale) / 100.0;
+  value = gimp_label_spin_get_value (scale) / 100.0;
 
   switch (i)
     {

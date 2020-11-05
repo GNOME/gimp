@@ -410,15 +410,15 @@ create_radio_button (GtkWidget    *box,
 }
 
 void
-gimpressionist_scale_entry_update_double (GimpScaleEntry *entry,
-                                          gdouble        *value)
+gimpressionist_scale_entry_update_double (GimpLabelSpin *entry,
+                                          gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }
 
 void
-gimpressionist_scale_entry_update_int (GimpScaleEntry *entry,
-                                       gint           *value)
+gimpressionist_scale_entry_update_int (GimpLabelSpin *entry,
+                                       gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (entry);
+  *value = (gint) gimp_label_spin_get_value (entry);
 }

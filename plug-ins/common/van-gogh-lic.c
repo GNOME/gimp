@@ -91,7 +91,7 @@ static GimpValueArray * lic_run              (GimpProcedure        *procedure,
                                               GimpDrawable         *drawable,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
-static void           lic_scale_entry_update (GimpScaleEntry       *entry,
+static void           lic_scale_entry_update (GimpLabelSpin        *entry,
                                               gdouble              *value);
 
 
@@ -786,7 +786,7 @@ create_main_dialog (void)
   row = 0;
 
   scale = gimp_scale_entry_new (_("_Filter length:"), licvals.filtlen, 0.1, 64, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 8.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 8.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
                     &licvals.filtlen);
@@ -794,7 +794,7 @@ create_main_dialog (void)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("_Noise magnitude:"), licvals.noisemag, 1, 5, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
                     &licvals.noisemag);
@@ -950,8 +950,8 @@ lic_run (GimpProcedure        *procedure,
 }
 
 static void
-lic_scale_entry_update (GimpScaleEntry *entry,
-                        gdouble        *value)
+lic_scale_entry_update (GimpLabelSpin *entry,
+                        gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }

@@ -116,7 +116,7 @@ static void   palette_import_image_callback       (GtkWidget      *widget,
                                                    ImportDialog   *private);
 static void   palette_import_file_callback        (GtkWidget      *widget,
                                                    ImportDialog   *private);
-static void   palette_import_columns_changed      (GimpScaleEntry *columns,
+static void   palette_import_columns_changed      (GimpLabelSpin  *columns,
                                                    ImportDialog   *private);
 static void   palette_import_image_add            (GimpContainer  *container,
                                                    GimpImage      *image,
@@ -709,12 +709,12 @@ palette_import_file_callback (GtkWidget    *widget,
 }
 
 static void
-palette_import_columns_changed (GimpScaleEntry *columns,
-                                ImportDialog   *private)
+palette_import_columns_changed (GimpLabelSpin *columns,
+                                ImportDialog  *private)
 {
   if (private->palette)
     gimp_palette_set_columns (private->palette,
-                              ROUND (gimp_scale_entry_get_value (columns)));
+                              ROUND (gimp_label_spin_get_value (columns)));
 }
 
 
@@ -761,9 +761,9 @@ palette_import_make_palette (ImportDialog *private)
   if (! palette_name || ! strlen (palette_name))
     palette_name = _("Untitled");
 
-  n_colors  = ROUND (gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (private->num_colors)));
-  n_columns = ROUND (gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (private->columns)));
-  threshold = ROUND (gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (private->threshold)));
+  n_colors  = ROUND (gimp_label_spin_get_value (GIMP_LABEL_SPIN (private->num_colors)));
+  n_columns = ROUND (gimp_label_spin_get_value (GIMP_LABEL_SPIN (private->columns)));
+  threshold = ROUND (gimp_label_spin_get_value (GIMP_LABEL_SPIN (private->threshold)));
 
   switch (private->import_type)
     {

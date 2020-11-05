@@ -107,7 +107,7 @@ static void             nlfiltRow                 (guchar           *srclast,
                                                    gint              bpp,
                                                    gint              filtno);
 
-static void    nlfilter_scale_entry_update_double (GimpScaleEntry   *entry,
+static void    nlfilter_scale_entry_update_double (GimpLabelSpin    *entry,
                                                    gdouble          *value);
 
 
@@ -1187,8 +1187,8 @@ nlfilter_dialog (GimpDrawable *drawable)
 }
 
 static void
-nlfilter_scale_entry_update_double (GimpScaleEntry *entry,
-                                    gdouble        *value)
+nlfilter_scale_entry_update_double (GimpLabelSpin *entry,
+                                    gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }

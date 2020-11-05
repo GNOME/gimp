@@ -133,7 +133,7 @@ static GimpValueArray * pagecurl_run              (GimpProcedure        *procedu
                                                    const GimpValueArray *args,
                                                    gpointer              run_data);
 
-static void             dialog_scale_update       (GimpScaleEntry       *adjustment,
+static void             dialog_scale_update       (GimpLabelSpin        *spin,
                                                    gdouble              *value);
 
 static gboolean         dialog                    (void);
@@ -414,10 +414,10 @@ inside_circle (gdouble x,
 /********************************************************************/
 
 static void
-dialog_scale_update (GimpScaleEntry *scale,
-                     gdouble        *value)
+dialog_scale_update (GimpLabelSpin *scale,
+                     gdouble       *value)
 {
-  *value = ((gdouble) gimp_scale_entry_get_value (scale)) / 100.0;
+  *value = ((gdouble) gimp_label_spin_get_value (scale)) / 100.0;
 }
 
 static void

@@ -115,7 +115,7 @@ static GimpValueArray * tile_run              (GimpProcedure        *procedure,
 
 static gboolean  tileit_dialog          (GimpDrawable  *drawable);
 
-static void      tileit_scale_update    (GimpScaleEntry *entry,
+static void      tileit_scale_update    (GimpLabelSpin  *entry,
                                          gint           *value);
 
 static void      tileit_exp_update      (GtkWidget     *widget,
@@ -858,10 +858,10 @@ tileit_radio_update (GtkWidget *widget,
 
 
 static void
-tileit_scale_update (GimpScaleEntry *scale,
-                     gint           *value)
+tileit_scale_update (GimpLabelSpin *scale,
+                     gint          *value)
 {
-  *value = RINT (gimp_scale_entry_get_value (scale));
+  *value = RINT (gimp_label_spin_get_value (scale));
 
   dialog_update_preview ();
 }

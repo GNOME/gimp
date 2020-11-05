@@ -39,8 +39,8 @@ color_restore (void)
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (colorradio[pcvals.color_type]), TRUE);
 
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (colornoiseadjust),
-                              pcvals.color_noise);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (colornoiseadjust),
+                             pcvals.color_noise);
 }
 
 int

@@ -55,8 +55,8 @@ brush_restore (void)
 {
   reselect (brush_list, pcvals.selected_brush);
   gtk_adjustment_set_value (brush_gamma_adjust, pcvals.brushgamma);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (brush_relief_scale), pcvals.brush_relief);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (brush_aspect_scale), pcvals.brush_aspect);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (brush_relief_scale), pcvals.brush_relief);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (brush_aspect_scale), pcvals.brush_aspect);
 }
 
 void
@@ -147,7 +147,7 @@ brushdmenuselect (GtkWidget *widget,
     }
 
   gtk_adjustment_set_value (brush_gamma_adjust, 1.0);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (brush_aspect_scale), 0.0);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (brush_aspect_scale), 0.0);
 
   if (! gimp_drawable_mask_intersect (drawable, &x1, &y1, &w, &h))
     return;
@@ -387,7 +387,7 @@ update_brush_preview (const gchar *fn)
           gammatable[i] = i;
 
       newheight = p.height *
-        pow (10, gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (brush_aspect_scale)));
+        pow (10, gimp_label_spin_get_value (GIMP_LABEL_SPIN (brush_aspect_scale)));
 
       sc = p.width > newheight ? p.width : newheight;
       sc = 100.0 / sc;
@@ -463,7 +463,7 @@ brush_select (GtkTreeSelection *selection, gboolean force)
 
       brush_dont_update = TRUE;
       gtk_adjustment_set_value (brush_gamma_adjust, 1.0);
-      gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (brush_aspect_scale), 0.0);
+      gimp_label_spin_set_value (GIMP_LABEL_SPIN (brush_aspect_scale), 0.0);
       brush_dont_update = FALSE;
 
       if (brush)
@@ -500,8 +500,8 @@ brush_preview_size_allocate (GtkWidget *preview)
 }
 
 static void
-brush_aspect_adjust_cb (GimpScaleEntry *scale,
-                        gdouble        *value)
+brush_aspect_adjust_cb (GimpLabelSpin *scale,
+                        gdouble       *value)
 {
   gimpressionist_scale_entry_update_double (scale, value);
   update_brush_preview (pcvals.selected_brush);
@@ -615,7 +615,7 @@ create_brushpage (GtkNotebook *notebook)
                            _("Specifies the aspect ratio of the brush"),
                            NULL);
   gtk_size_group_add_widget (group,
-                             gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (brush_aspect_scale)));
+                             gimp_labeled_get_label (GIMP_LABELED (brush_aspect_scale)));
   g_signal_connect (brush_aspect_scale, "value-changed",
                     G_CALLBACK (brush_aspect_adjust_cb),
                     &pcvals.brush_aspect);
@@ -628,7 +628,7 @@ create_brushpage (GtkNotebook *notebook)
                            _("Specifies the amount of embossing to apply to the image (in percent)"),
                            NULL);
   gtk_size_group_add_widget (group,
-                             gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (brush_relief_scale)));
+                             gimp_labeled_get_label (GIMP_LABELED (brush_relief_scale)));
   g_signal_connect (brush_relief_scale, "value-changed",
                     G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.brush_relief);

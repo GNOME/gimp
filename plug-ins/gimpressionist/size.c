@@ -58,12 +58,12 @@ void
 size_restore (void)
 {
   size_type_restore ();
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (sizenumadjust),
-                              pcvals.size_num);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (sizefirstadjust),
-                              pcvals.size_first);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (sizelastadjust),
-                              pcvals.size_last);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (sizenumadjust),
+                             pcvals.size_num);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (sizefirstadjust),
+                             pcvals.size_first);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (sizelastadjust),
+                             pcvals.size_last);
 }
 
 static void

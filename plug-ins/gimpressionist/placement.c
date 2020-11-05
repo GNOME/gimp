@@ -41,8 +41,8 @@ place_restore (void)
     (GTK_TOGGLE_BUTTON (placement_radio[pcvals.place_type]), TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (placement_center),
                                 pcvals.placement_center);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (brush_density_adjust),
-                              pcvals.brush_density);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (brush_density_adjust),
+                             pcvals.brush_density);
 }
 
 int

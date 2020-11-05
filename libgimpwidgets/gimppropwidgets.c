@@ -1664,7 +1664,7 @@ gimp_prop_opacity_entry_new (GObject     *config,
 
   if (widget)
     {
-      gimp_prop_widget_set_factor (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (widget)),
+      gimp_prop_widget_set_factor (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (widget)),
                                    NULL, 100.0, 0.0, 0.0, 1);
     }
 

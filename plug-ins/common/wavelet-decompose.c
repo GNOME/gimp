@@ -72,7 +72,7 @@ static void             wavelet_blur             (GimpDrawable         *drawable
                                                   gint                  radius);
 
 static gboolean         wavelet_decompose_dialog (void);
-static void       wavelet_scale_entry_update_int (GimpScaleEntry       *entry,
+static void       wavelet_scale_entry_update_int (GimpLabelSpin        *entry,
                                                   gint                 *value);
 
 
@@ -445,8 +445,8 @@ wavelet_decompose_dialog (void)
 }
 
 static void
-wavelet_scale_entry_update_int (GimpScaleEntry *entry,
-                                gint           *value)
+wavelet_scale_entry_update_int (GimpLabelSpin *entry,
+                                gint          *value)
 {
-  *value = (int) gimp_scale_entry_get_value (entry);
+  *value = (int) gimp_label_spin_get_value (entry);
 }

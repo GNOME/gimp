@@ -417,10 +417,10 @@ script_fu_interface (SFScript  *script,
                                                  arg->default_value.sfa_adjustment.lower,
                                                  arg->default_value.sfa_adjustment.upper,
                                                  arg->default_value.sfa_adjustment.digits);
-                  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (widget),
-                                                   arg->default_value.sfa_adjustment.step,
-                                                   arg->default_value.sfa_adjustment.page);
-                  spinbutton = gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (widget));
+                  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (widget),
+                                                  arg->default_value.sfa_adjustment.step,
+                                                  arg->default_value.sfa_adjustment.page);
+                  spinbutton = gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (widget));
                   arg->value.sfa_adjustment.adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
 
                   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);

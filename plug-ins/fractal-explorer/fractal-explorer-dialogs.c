@@ -269,10 +269,10 @@ explorer_radio_update  (GtkWidget *widget,
 }
 
 static void
-explorer_double_adjustment_update (GimpScaleEntry *entry,
-                                   gdouble        *value)
+explorer_double_adjustment_update (GimpLabelSpin *entry,
+                                   gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 
   set_cmap_preview ();
   dialog_update_preview ();
@@ -729,7 +729,7 @@ explorer_dialog (void)
 
   elements->xmin =
     gimp_scale_entry_new (_("Left:"), wvals.xmin, -3, 3, 5);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->xmin), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->xmin), 0.001, 0.01);
   g_signal_connect (elements->xmin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmin);
@@ -738,7 +738,7 @@ explorer_dialog (void)
 
   elements->xmax =
     gimp_scale_entry_new (_("Right:"), wvals.xmax, -3, 3, 5);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->xmax), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->xmax), 0.001, 0.01);
   g_signal_connect (elements->xmax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmax);
@@ -747,7 +747,7 @@ explorer_dialog (void)
 
   elements->ymin =
     gimp_scale_entry_new (_("Top:"), wvals.ymin, -3, 3, 5);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->ymin), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->ymin), 0.001, 0.01);
   g_signal_connect (elements->ymin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymin);
@@ -756,7 +756,7 @@ explorer_dialog (void)
 
   elements->ymax =
     gimp_scale_entry_new (_("Bottom:"), wvals.ymax, -3, 3, 5);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->ymax), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->ymax), 0.001, 0.01);
   g_signal_connect (elements->ymax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymax);
@@ -777,7 +777,7 @@ explorer_dialog (void)
 
   elements->cx =
     gimp_scale_entry_new (_("CX:"), wvals.cx, -2.5, 2.5, 5);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->cx), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->cx), 0.001, 0.01);
   gimp_help_set_help_data (elements->cx,
                            _("Changes aspect of fractal"), NULL);
   g_signal_connect (elements->cx, "value-changed",
@@ -788,7 +788,7 @@ explorer_dialog (void)
 
   elements->cy =
     gimp_scale_entry_new (_("CY:"), wvals.cy, -2.5, 2.5, 5);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (elements->cy), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->cy), 0.001, 0.01);
   gimp_help_set_help_data (elements->cy,
                            _("Changes aspect of fractal"), NULL);
   g_signal_connect (elements->cy, "value-changed",
@@ -1441,17 +1441,17 @@ dialog_change_scale (void)
 {
   ready_now = FALSE;
 
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (elements->xmin),  wvals.xmin);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (elements->xmax),  wvals.xmax);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (elements->ymin),  wvals.ymin);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (elements->ymax),  wvals.ymax);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (elements->iter),  wvals.iter);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (elements->cx),    wvals.cx);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (elements->cy),    wvals.cy);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->xmin),  wvals.xmin);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->xmax),  wvals.xmax);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->ymin),  wvals.ymin);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->ymax),  wvals.ymax);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->iter),  wvals.iter);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->cx),    wvals.cx);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->cy),    wvals.cy);
 
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (elements->red),   wvals.redstretch);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (elements->green), wvals.greenstretch);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (elements->blue),  wvals.bluestretch);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->red),   wvals.redstretch);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->green), wvals.greenstretch);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->blue),  wvals.bluestretch);
 
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (elements->type[wvals.fractaltype]), TRUE);

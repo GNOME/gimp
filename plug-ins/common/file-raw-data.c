@@ -199,7 +199,7 @@ static gboolean         save_dialog          (GimpImage            *image,
 static void             palette_callback     (GtkFileChooser       *button,
                                               GimpPreviewArea      *preview);
 
-static void  file_raw_scale_entry_update_int (GimpScaleEntry       *entry,
+static void  file_raw_scale_entry_update_int (GimpLabelSpin        *entry,
                                               gint                 *value);
 
 G_DEFINE_TYPE (Raw, raw, GIMP_TYPE_PLUG_IN)
@@ -1911,7 +1911,7 @@ load_dialog (GFile    *file,
                               preview);
 
   scale = gimp_scale_entry_new (_("O_ffset:"), runtime->file_offset, 0, file_size, 0);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1, 1000);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1, 1000);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (file_raw_scale_entry_update_int),
@@ -1981,7 +1981,7 @@ load_dialog (GFile    *file,
                             preview);
 
   scale = gimp_scale_entry_new (_("Off_set:"), runtime->palette_offset, 0, 1 << 24, 0);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1, 768);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1, 768);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (file_raw_scale_entry_update_int),
@@ -2079,8 +2079,8 @@ palette_callback (GtkFileChooser  *button,
 }
 
 static void
-file_raw_scale_entry_update_int (GimpScaleEntry *entry,
-                                 gint           *value)
+file_raw_scale_entry_update_int (GimpLabelSpin *entry,
+                                 gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (entry);
+  *value = (gint) gimp_label_spin_get_value (entry);
 }

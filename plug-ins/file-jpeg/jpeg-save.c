@@ -117,7 +117,7 @@ typedef struct
 
 static void  make_preview           (void);
 
-static void  scale_entry_update     (GimpScaleEntry *entry,
+static void  scale_entry_update     (GimpLabelSpin  *entry,
                                      gdouble        *value);
 static void  save_restart_update    (GtkAdjustment  *adjustment,
                                      GtkWidget      *toggle);
@@ -128,7 +128,7 @@ static void  quality_changed        (GimpScaleEntry *scale_entry,
 static void  subsampling_changed2   (GtkWidget      *combo,
                                      GtkWidget      *toggle);
 static void  use_orig_qual_changed  (GtkWidget      *toggle,
-                                     GimpScaleEntry *scale_entry);
+                                     GimpLabelSpin  *scale_entry);
 static void  use_orig_qual_changed2 (GtkWidget      *toggle,
                                      GtkWidget      *combo);
 
@@ -1421,12 +1421,12 @@ load_gui_defaults (JpegSaveGui *pg)
   gtk_adjustment_set_value (restart_markers, jsvals.restart);
   g_signal_handler_unblock (pg->use_restart_markers, pg->handler_id_restart);
 
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (pg->smoothing), jsvals.smoothing);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (pg->smoothing), jsvals.smoothing);
 
   /* Don't override quality and subsampling setting if we already set it from original */
   if (!jsvals.use_orig_quality)
     {
-      gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (pg->quality), jsvals.quality);
+      gimp_label_spin_set_value (GIMP_LABEL_SPIN (pg->quality), jsvals.quality);
 
       if (gimp_drawable_is_rgb (drawable_global))
         {
@@ -1440,10 +1440,10 @@ load_gui_defaults (JpegSaveGui *pg)
 }
 
 static void
-scale_entry_update (GimpScaleEntry *entry,
+scale_entry_update (GimpLabelSpin *entry,
                     gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }
 
 static void
@@ -1500,13 +1500,13 @@ subsampling_changed2 (GtkWidget *combo,
 }
 
 static void
-use_orig_qual_changed (GtkWidget      *toggle,
-                       GimpScaleEntry *scale_entry)
+use_orig_qual_changed (GtkWidget     *toggle,
+                       GimpLabelSpin *scale_entry)
 {
   if (jsvals.use_orig_quality && orig_quality > 0)
     {
       g_signal_handlers_block_by_func (scale_entry, quality_changed, toggle);
-      gimp_scale_entry_set_value (scale_entry, orig_quality);
+      gimp_label_spin_set_value (scale_entry, orig_quality);
       g_signal_handlers_unblock_by_func (scale_entry, quality_changed, toggle);
     }
 }

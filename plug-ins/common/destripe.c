@@ -82,7 +82,7 @@ static void             destripe_preview          (GimpDrawable         *drawabl
                                                    GimpPreview          *preview);
 
 static gboolean         destripe_dialog           (GimpDrawable         *drawable);
-static void       destripe_scale_entry_update_int (GimpScaleEntry       *entry,
+static void       destripe_scale_entry_update_int (GimpLabelSpin        *entry,
                                                    gint                 *value);
 
 
@@ -515,8 +515,8 @@ destripe_dialog (GimpDrawable *drawable)
 }
 
 static void
-destripe_scale_entry_update_int (GimpScaleEntry *entry,
-                                 gint           *value)
+destripe_scale_entry_update_int (GimpLabelSpin *entry,
+                                 gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (entry);
+  *value = (gint) gimp_label_spin_get_value (entry);
 }

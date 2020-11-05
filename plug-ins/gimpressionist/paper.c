@@ -109,8 +109,8 @@ void
 paper_restore (void)
 {
   reselect (paper_list, pcvals.selected_paper);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (paper_relief_adjust), pcvals.paper_relief);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (paper_scale_adjust), pcvals.paper_scale);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (paper_relief_adjust), pcvals.paper_relief);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (paper_scale_adjust), pcvals.paper_scale);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (paper_invert), pcvals.paper_invert);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (paper_overlay), pcvals.paper_overlay);
 }

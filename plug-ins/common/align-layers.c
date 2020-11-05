@@ -123,7 +123,7 @@ static void             align_layers_get_align_offsets      (GimpDrawable       
                                                              gint                 *x,
                                                              gint                 *y);
 static gint             align_layers_dialog                 (void);
-static void             align_layers_scale_entry_update_int (GimpScaleEntry       *entry,
+static void             align_layers_scale_entry_update_int (GimpLabelSpin        *entry,
                                                              gint                 *value);
 
 
@@ -780,8 +780,8 @@ align_layers_dialog (void)
 }
 
 static void
-align_layers_scale_entry_update_int (GimpScaleEntry *entry,
-                                     gint           *value)
+align_layers_scale_entry_update_int (GimpLabelSpin *entry,
+                                     gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (entry);
+  *value = (gint) gimp_label_spin_get_value (entry);
 }

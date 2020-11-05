@@ -662,9 +662,9 @@ static void gradient_get_values_real_external   (const gchar *gradient_name,
 static GradientCacheItem *gradient_cache_lookup (const gchar *name,
                                                  gboolean    *found);
 static void gradient_cache_zorch                (void);
-static void gradient_scale_entry_update_double  (GimpScaleEntry *entry,
+static void gradient_scale_entry_update_double  (GimpLabelSpin  *entry,
                                                  gdouble        *value);
-static void gradient_scale_entry_update_int     (GimpScaleEntry *entry,
+static void gradient_scale_entry_update_int     (GimpLabelSpin  *entry,
                                                  gint           *value);
 
 
@@ -2910,7 +2910,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Ro_tation:"), pvals.rotation, -180.0, 180.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.rotation);
@@ -2921,7 +2921,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("_Hue rotation:"), pvals.hue, -180.0, 180.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.hue);
@@ -2932,7 +2932,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Vector _angle:"), pvals.vangle, 0.0, 359.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.vangle);
@@ -2991,7 +2991,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("_Threshold"), pvals.asupsample_threshold, 0.0, 4.0, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.01, 0.1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.asupsample_threshold);
@@ -3729,7 +3729,7 @@ ed_make_page_glow (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Rotation:"), gflare->glow_rotation, -180.0, 180.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->glow_rotation);
@@ -3740,7 +3740,7 @@ ed_make_page_glow (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->glow_hue, -180.0, 180.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->glow_hue);
@@ -3831,7 +3831,7 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Rotation:"), gflare->rays_rotation, -180.0, 180.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->rays_rotation);
@@ -3842,7 +3842,7 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->rays_hue, -180.0, 180.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->rays_hue);
@@ -3962,7 +3962,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Rotation:"), gflare->sflare_rotation, -180.0, 180.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->sflare_rotation);
@@ -3973,7 +3973,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->sflare_hue, -180.0, 180.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->sflare_hue);
@@ -5136,17 +5136,17 @@ gradient_cache_zorch (void)
 }
 
 static void
-gradient_scale_entry_update_double (GimpScaleEntry *entry,
-                                    gdouble        *value)
+gradient_scale_entry_update_double (GimpLabelSpin *entry,
+                                    gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }
 
 static void
-gradient_scale_entry_update_int (GimpScaleEntry *entry,
-                                 gint           *value)
+gradient_scale_entry_update_int (GimpLabelSpin *entry,
+                                 gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (entry);
+  *value = (gint) gimp_label_spin_get_value (entry);
 }
 
 #ifdef DEBUG

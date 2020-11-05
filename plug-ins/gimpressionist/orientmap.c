@@ -80,8 +80,8 @@ double get_direction (double x, double y, int from)
     {
       n = num_vectors;
       vec = vector;
-      angoff = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (angle_offset_adjust));
-      strexp = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (orient_map_str_exp_adjust));
+      angoff = gimp_label_spin_get_value (GIMP_LABEL_SPIN (angle_offset_adjust));
+      strexp = gimp_label_spin_get_value (GIMP_LABEL_SPIN (orient_map_str_exp_adjust));
       voronoi = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (orient_voronoi));
     }
   else
@@ -286,8 +286,8 @@ update_slides (void)
   gint type;
 
   adjignore = TRUE;
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (angle_adjust), vector[selectedvector].dir);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (strength_adjust), vector[selectedvector].str);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (angle_adjust), vector[selectedvector].dir);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (strength_adjust), vector[selectedvector].str);
   type = vector[selectedvector].type;
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vector_types[type]), TRUE);
   adjignore = FALSE;
@@ -388,7 +388,7 @@ angle_adjust_move_callback (GtkWidget *w, gpointer data)
 {
   if (adjignore)
     return;
-  vector[selectedvector].dir = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (angle_adjust));
+  vector[selectedvector].dir = gimp_label_spin_get_value (GIMP_LABEL_SPIN (angle_adjust));
   vector[selectedvector].dx =
     sin (gimp_deg_to_rad (vector[selectedvector].dir));
   vector[selectedvector].dy =
@@ -402,7 +402,7 @@ strength_adjust_move_callback (GtkWidget *w, gpointer data)
 {
   if (adjignore)
     return;
-  vector[selectedvector].str = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (strength_adjust));
+  vector[selectedvector].str = gimp_label_spin_get_value (GIMP_LABEL_SPIN (strength_adjust));
   update_vector_prev ();
   update_orient_map_preview_prev ();
 }
@@ -453,8 +453,8 @@ orient_map_response (GtkWidget *widget,
           pcvals.orient_vectors[i] = vector[i];
 
         pcvals.num_orient_vectors = num_vectors;
-        pcvals.orient_strength_exponent  = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (orient_map_str_exp_adjust));
-        pcvals.orient_angle_offset  = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (angle_offset_adjust));
+        pcvals.orient_strength_exponent  = gimp_label_spin_get_value (GIMP_LABEL_SPIN (orient_map_str_exp_adjust));
+        pcvals.orient_angle_offset  = gimp_label_spin_get_value (GIMP_LABEL_SPIN (angle_offset_adjust));
         pcvals.orient_voronoi = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (orient_voronoi));
       }
     };
@@ -490,10 +490,10 @@ update_orientmap_dialog (void)
 
   init_vectors ();
 
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (orient_map_str_exp_adjust),
-                              pcvals.orient_strength_exponent);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (angle_offset_adjust),
-                              pcvals.orient_angle_offset);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (orient_map_str_exp_adjust),
+                             pcvals.orient_strength_exponent);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (angle_offset_adjust),
+                             pcvals.orient_angle_offset);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orient_voronoi),
                                 pcvals.orient_voronoi);
 
@@ -686,7 +686,7 @@ create_orientmap_dialog (GtkWidget *parent)
 
   strength_adjust =
     gimp_scale_entry_new (_("_Strength:"), 1.0, 0.1, 5.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (strength_adjust), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (strength_adjust), 0.1, 1.0);
   gimp_help_set_help_data (strength_adjust,
                            _("Change the strength of the selected vector"),
                            NULL);
@@ -697,7 +697,7 @@ create_orientmap_dialog (GtkWidget *parent)
 
   orient_map_str_exp_adjust =
     gimp_scale_entry_new (_("S_trength exp.:"), 1.0, 0.1, 10.9, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (orient_map_str_exp_adjust), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (orient_map_str_exp_adjust), 0.1, 1.0);
   gimp_help_set_help_data (orient_map_str_exp_adjust,
                            _("Change the exponent of the strength"),
                            NULL);

@@ -179,7 +179,7 @@ static gboolean    check_gray             (GimpImage       *image,
 static void        combo_callback         (GimpIntComboBox *cbox,
                                            gpointer         data);
 
-static void        scale_callback         (GimpScaleEntry  *scale,
+static void        scale_callback         (GimpLabelSpin   *scale,
                                            ComposeInput    *input);
 
 static void        check_response         (GtkWidget       *dialog,
@@ -1406,7 +1406,7 @@ combo_callback (GimpIntComboBox *widget,
 
       composeint.selected[n].is_object = FALSE;
       composeint.selected[n].comp.val  =
-        gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (composeint.scales[n]));
+        gimp_label_spin_get_value (GIMP_LABEL_SPIN (composeint.scales[n]));
     }
   else
     {
@@ -1418,10 +1418,10 @@ combo_callback (GimpIntComboBox *widget,
 }
 
 static void
-scale_callback (GimpScaleEntry *scale,
-                ComposeInput   *input)
+scale_callback (GimpLabelSpin *scale,
+                ComposeInput  *input)
 {
-  input->comp.val = gimp_scale_entry_get_value (scale);
+  input->comp.val = gimp_label_spin_get_value (scale);
 }
 
 static void

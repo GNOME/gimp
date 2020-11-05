@@ -145,7 +145,7 @@ static void         film_font_select_callback (GimpFontSelectButton *button,
                                                gboolean              closing,
                                                gpointer              data);
 
-static void    film_scale_entry_update_double (GimpScaleEntry       *entry,
+static void    film_scale_entry_update_double (GimpLabelSpin        *entry,
                                                gdouble              *value);
 
 G_DEFINE_TYPE (Film, film, GIMP_TYPE_PLUG_IN)
@@ -1211,7 +1211,7 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.scales[0] = scale =
     gimp_scale_entry_new (_("Image _height:"), filmvals.picture_height, 0.0, 1.0, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.picture_height);
@@ -1220,19 +1220,19 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.scales[1] = scale =
     gimp_scale_entry_new (_("Image spac_ing:"), filmvals.picture_space, 0.0, 1.0, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.picture_space);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (scale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (scale)), 6);
   gtk_widget_show (scale);
 
   filmint.scales[2] = scale =
     gimp_scale_entry_new (_("_Hole offset:"), filmvals.hole_offset, 0.0, 1.0, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.hole_offset);
@@ -1241,7 +1241,7 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.scales[3] = scale =
     gimp_scale_entry_new (_("Ho_le width:"), filmvals.hole_width, 0.0, 1.0, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.hole_width);
@@ -1250,7 +1250,7 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.scales[4] = scale =
     gimp_scale_entry_new (_("Hol_e height:"), filmvals.hole_height, 0.0, 1.0, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.hole_height);
@@ -1259,19 +1259,19 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.scales[5] = scale =
     gimp_scale_entry_new (_("Hole sp_acing:"), filmvals.hole_space, 0.0, 1.0, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.hole_space);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (scale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (scale)), 6);
   gtk_widget_show (scale);
 
   filmint.scales[6] = scale =
     gimp_scale_entry_new (_("_Number height:"), filmvals.number_height, 0.0, 1.0, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
                     &filmvals.number_height);
@@ -1375,8 +1375,8 @@ film_reset_callback (GtkWidget *widget,
   gint i;
 
   for (i = 0; i < G_N_ELEMENTS (advanced_defaults) ; i++)
-    gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (filmint.scales[i]),
-                                advanced_defaults[i]);
+    gimp_label_spin_set_value (GIMP_LABEL_SPIN (filmint.scales[i]),
+                               advanced_defaults[i]);
 }
 
 static void
@@ -1391,8 +1391,8 @@ film_font_select_callback (GimpFontSelectButton *button,
 }
 
 static void
-film_scale_entry_update_double (GimpScaleEntry *entry,
+film_scale_entry_update_double (GimpLabelSpin *entry,
                                 gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }

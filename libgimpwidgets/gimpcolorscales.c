@@ -314,8 +314,8 @@ create_group (GimpColorScales           *scales,
                                     scale_defs[i].spin_max_value,
                                     1);
       gtk_grid_attach (GTK_GRID (grid), scales->scales[i], 1, row, 3, 1);
-      gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scales->scales[i]),
-                                       1.0, scale_defs[i].scale_inc);
+      gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scales->scales[i]),
+                                      1.0, scale_defs[i].scale_inc);
       gimp_help_set_help_data (scales->scales[i],
                                gettext (enum_desc->value_help),
                                NULL);
@@ -334,7 +334,7 @@ create_group (GimpColorScales           *scales,
       gtk_size_group_add_widget (size_group1, scales->scales[i]);
 
       gtk_size_group_add_widget (size_group2,
-                                 gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scales->scales[i])));
+                                 gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (scales->scales[i])));
 
       g_signal_connect (scales->scales[i], "value-changed",
                         G_CALLBACK (gimp_color_scales_scale_changed),
@@ -711,7 +711,7 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
                                            gimp_color_scales_scale_changed,
                                            scales);
 
-          gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (scales->scales[i]), values[i]);
+          gimp_label_spin_set_value (GIMP_LABEL_SPIN (scales->scales[i]), values[i]);
 
           g_signal_handlers_unblock_by_func (scales->scales[i],
                                              gimp_color_scales_scale_changed,
@@ -757,7 +757,7 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
                                  GimpColorScales *scales)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
-  gdouble            value    = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (scale));
+  gdouble            value    = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scale));
   GimpLCH            lch;
   gint               i;
 

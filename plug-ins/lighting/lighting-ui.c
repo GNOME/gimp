@@ -62,7 +62,7 @@ static void create_main_notebook      (GtkWidget       *container);
 static void toggle_update             (GtkWidget       *widget,
                                        gpointer         data);
 
-static void     distance_update       (GimpScaleEntry       *scale,
+static void     distance_update       (GimpLabelSpin   *scale,
                                        gpointer         data);
 
 static gboolean  bumpmap_constrain    (GimpImage       *image,
@@ -116,10 +116,10 @@ toggle_update (GtkWidget *widget,
 
 
 static void
-distance_update (GimpScaleEntry *scale,
-                 gpointer        data)
+distance_update (GimpLabelSpin *scale,
+                 gpointer       data)
 {
-  mapvals.viewpoint.z = gimp_scale_entry_get_value (scale);
+  mapvals.viewpoint.z = gimp_label_spin_get_value (scale);
 
   preview_compute ();
   gtk_widget_queue_draw (previewarea);

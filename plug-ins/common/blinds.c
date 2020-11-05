@@ -87,7 +87,7 @@ static GimpValueArray * blinds_run              (GimpProcedure        *procedure
                                                  gpointer              run_data);
 
 static gboolean         blinds_dialog           (GimpDrawable         *drawable);
-static void       blinds_scale_entry_update_int (GimpScaleEntry       *entry,
+static void       blinds_scale_entry_update_int (GimpLabelSpin        *entry,
                                                  gint                 *value);
 
 static void             dialog_update_preview   (GimpDrawable         *drawable,
@@ -356,7 +356,7 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_widget_show (grid);
 
   scale = gimp_scale_entry_new (_("_Displacement:"), bvals.angledsp, 1, 90, 0);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (blinds_scale_entry_update_int),
                     &bvals.angledsp);
@@ -386,10 +386,10 @@ blinds_dialog (GimpDrawable *drawable)
 }
 
 static void
-blinds_scale_entry_update_int (GimpScaleEntry *entry,
-                               gint           *value)
+blinds_scale_entry_update_int (GimpLabelSpin *entry,
+                               gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (entry);
+  *value = (gint) gimp_label_spin_get_value (entry);
 }
 
 static void

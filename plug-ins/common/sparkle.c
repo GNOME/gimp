@@ -99,7 +99,7 @@ static GimpValueArray * sparkle_run              (GimpProcedure        *procedur
                                                   gpointer              run_data);
 
 static gboolean         sparkle_dialog           (GimpDrawable         *drawable);
-static void    sparkle_scale_entry_update_double (GimpScaleEntry       *entry,
+static void    sparkle_scale_entry_update_double (GimpLabelSpin        *entry,
                                                   gdouble              *value);
 
 
@@ -478,7 +478,7 @@ sparkle_dialog (GimpDrawable *drawable)
   scale = gimp_scale_entry_new (_("Spi_ke angle (-1: random):"), svals.spike_angle, -1, 360, 0);
   gimp_help_set_help_data (scale, _("Adjust the spike angle "
                                     "(-1 causes a random angle to be chosen)"), NULL);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 1.0, 15.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
                     &svals.spike_angle);
@@ -623,10 +623,10 @@ sparkle_dialog (GimpDrawable *drawable)
 }
 
 static void
-sparkle_scale_entry_update_double (GimpScaleEntry *entry,
-                                   gdouble        *value)
+sparkle_scale_entry_update_double (GimpLabelSpin *entry,
+                                   gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }
 
 

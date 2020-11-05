@@ -124,10 +124,10 @@ static void     gausssmooth                 (gfloat       *in,
                                              gint          rowtride,
                                              gauss3_coefs *c);
 
-static void contrast_retinex_scale_entry_update_int   (GimpScaleEntry *entry,
-                                                       gint           *value);
-static void contrast_retinex_scale_entry_update_float (GimpScaleEntry *entry,
-                                                       gfloat         *value);
+static void contrast_retinex_scale_entry_update_int   (GimpLabelSpin *entry,
+                                                       gint          *value);
+static void contrast_retinex_scale_entry_update_float (GimpLabelSpin *entry,
+                                                       gfloat        *value);
 
 /*
  * MSRCR = MultiScale Retinex with Color Restoration
@@ -877,15 +877,15 @@ compute_mean_var (gfloat *src, gfloat *mean, gfloat *var, gint size, gint bytes)
 }
 
 static void
-contrast_retinex_scale_entry_update_int (GimpScaleEntry *entry,
-                                         gint           *value)
+contrast_retinex_scale_entry_update_int (GimpLabelSpin *entry,
+                                         gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (entry);
+  *value = (gint) gimp_label_spin_get_value (entry);
 }
 
 static void
-contrast_retinex_scale_entry_update_float (GimpScaleEntry *entry,
-                                           gfloat         *value)
+contrast_retinex_scale_entry_update_float (GimpLabelSpin *entry,
+                                           gfloat        *value)
 {
-  *value = (gfloat) gimp_scale_entry_get_value (entry);
+  *value = (gfloat) gimp_label_spin_get_value (entry);
 }

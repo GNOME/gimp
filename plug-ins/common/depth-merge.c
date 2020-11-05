@@ -157,7 +157,7 @@ static void      dialogDepthMap1ChangedCallback     (GtkWidget     *widget,
 static void      dialogDepthMap2ChangedCallback     (GtkWidget     *widget,
                                                      DepthMerge    *dm);
 
-static void      dialogValueScaleUpdateCallback     (GimpScaleEntry *scale,
+static void      dialogValueScaleUpdateCallback     (GimpLabelSpin  *scale,
                                                      gfloat         *value);
 
 static void      util_fillReducedBuffer             (guchar        *dest,
@@ -811,7 +811,7 @@ DepthMerge_dialog (DepthMerge *dm)
 
   /* Numeric parameters */
   scale = gimp_scale_entry_new (_("O_verlap:"), dm->params.overlap, 0, 2, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.overlap));
@@ -820,7 +820,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("O_ffset:"), dm->params.offset, -1, 1, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.offset));
@@ -829,7 +829,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Sc_ale 1:"), dm->params.scale1, -1, 1, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale1));
@@ -838,7 +838,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Sca_le 2:"), dm->params.scale2, -1, 1, 3);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.001, 0.01);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale2));
@@ -1048,12 +1048,12 @@ dialogDepthMap2ChangedCallback (GtkWidget  *widget,
 }
 
 static void
-dialogValueScaleUpdateCallback (GimpScaleEntry *scale,
-                                gfloat         *value)
+dialogValueScaleUpdateCallback (GimpLabelSpin *scale,
+                                gfloat        *value)
 {
   DepthMerge *dm = g_object_get_data (G_OBJECT (scale), "dm");
 
-  *value = (gfloat) gimp_scale_entry_get_value (scale);
+  *value = (gfloat) gimp_label_spin_get_value (scale);
 
   DepthMerge_updatePreview (dm);
 }

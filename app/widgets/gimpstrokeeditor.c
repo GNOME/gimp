@@ -167,7 +167,7 @@ gimp_stroke_editor_constructed (GObject *object)
 
   scale = gimp_prop_scale_entry_new (G_OBJECT (options), "miter-limit",
                                      NULL, 1, FALSE, 0.0, 0.0);
-  gtk_widget_hide (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+  gtk_widget_hide (gimp_labeled_get_label (GIMP_LABELED (scale)));
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Miter limit:"),
                             0.0, 0.5, scale, 2);

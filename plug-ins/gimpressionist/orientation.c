@@ -49,12 +49,12 @@ void orientation_restore (void)
 {
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orient_radio[pcvals.orient_type]),
                                 TRUE);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (orient_num_adjust),
-                              pcvals.orient_num);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (orient_first_adjust),
-                              pcvals.orient_first);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (orient_last_adjust),
-                              pcvals.orient_last);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (orient_num_adjust),
+                             pcvals.orient_num);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (orient_first_adjust),
+                             pcvals.orient_first);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (orient_last_adjust),
+                             pcvals.orient_last);
 }
 
 static void

@@ -1483,14 +1483,14 @@ CML_explorer_dialog (void)
       g_object_unref (group);
 
       scale = gimp_scale_entry_new (_("Zoom scale:"), VALS.scale, 1, 10, 0);
-      gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+      gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
       CML_explorer_int_entry_init (&widget_pointers[3][1],
                                    scale, &VALS.scale);
       gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
       gtk_widget_show (scale);
 
       scale = gimp_scale_entry_new (_("Start offset:"), VALS.start_offset, 0, 100, 0);
-      gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+      gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
       CML_explorer_int_entry_init (&widget_pointers[3][2],
                                    scale, &VALS.start_offset);
       gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
@@ -1508,7 +1508,7 @@ CML_explorer_dialog (void)
       gtk_widget_show (grid);
 
       scale = gimp_scale_entry_new (_("Seed:"), VALS.seed, 0, (guint32) -1, 0);
-      gtk_size_group_add_widget (group, gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+      gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
       CML_explorer_int_entry_init (&widget_pointers[3][3],
                                    scale, &VALS.seed);
       gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
@@ -1772,7 +1772,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   scale = gimp_scale_entry_new (_("P(ower factor):"), param->power, 0.0, 10.0, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->power);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
@@ -1780,7 +1780,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   scale = gimp_scale_entry_new (_("Parameter k:"), param->parameter_k, 0.0, 10.0, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->parameter_k);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
@@ -2534,10 +2534,10 @@ CML_explorer_toggle_entry_init (WidgetEntry *widget_entry,
 /*  int adjustment functions  */
 
 static void
-CML_explorer_int_adjustment_update (GimpScaleEntry *scale,
-                                    gint           *value)
+CML_explorer_int_adjustment_update (GimpLabelSpin *scale,
+                                    gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (scale);
+  *value = (gint) gimp_label_spin_get_value (scale);
 
   preview_update ();
 }
@@ -2545,9 +2545,9 @@ CML_explorer_int_adjustment_update (GimpScaleEntry *scale,
 static void
 CML_explorer_int_entry_change_value (WidgetEntry *widget_entry)
 {
-  GimpScaleEntry *scale = GIMP_SCALE_ENTRY (widget_entry->widget);
+  GimpLabelSpin *scale = GIMP_LABEL_SPIN (widget_entry->widget);
 
-  gimp_scale_entry_set_value (scale, *(gint *) (widget_entry->value));
+  gimp_label_spin_set_value (scale, *(gint *) (widget_entry->value));
 }
 
 static void
@@ -2567,10 +2567,10 @@ CML_explorer_int_entry_init (WidgetEntry *widget_entry,
 /*  double adjustment functions  */
 
 static void
-CML_explorer_double_adjustment_update (GimpScaleEntry *scale,
-                                       gdouble        *value)
+CML_explorer_double_adjustment_update (GimpLabelSpin *scale,
+                                       gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (scale);
+  *value = gimp_label_spin_get_value (scale);
 
   preview_update ();
 }
@@ -2578,9 +2578,9 @@ CML_explorer_double_adjustment_update (GimpScaleEntry *scale,
 static void
 CML_explorer_double_entry_change_value (WidgetEntry *widget_entry)
 {
-  GimpScaleEntry *scale = GIMP_SCALE_ENTRY (widget_entry->widget);
+  GimpLabelSpin *scale = GIMP_LABEL_SPIN (widget_entry->widget);
 
-  gimp_scale_entry_set_value (scale, *(gdouble *) (widget_entry->value));
+  gimp_label_spin_set_value (scale, *(gdouble *) (widget_entry->value));
 }
 
 static void

@@ -103,9 +103,9 @@ static void             combo_callback         (GtkWidget            *widget,
                                                 gpointer              data);
 static void             init_mutants           (void);
 
-static void       flame_scale_entry_update_int (GimpScaleEntry       *entry,
+static void       flame_scale_entry_update_int (GimpLabelSpin        *entry,
                                                 gint                 *value);
-static void    flame_scale_entry_update_double (GimpScaleEntry       *entry,
+static void    flame_scale_entry_update_double (GimpLabelSpin        *entry,
                                                 gdouble              *value);
 
 G_DEFINE_TYPE (Flame, flame, GIMP_TYPE_PLUG_IN)
@@ -754,7 +754,7 @@ edit_callback (GtkWidget *widget,
       gtk_widget_show (vbox);
 
       scale = gimp_scale_entry_new (_("_Speed:"), pick_speed, 0.05, 0.5, 2);
-      gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
+      gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.01, 0.1);
 
       g_signal_connect (scale, "value-changed",
                         G_CALLBACK (flame_scale_entry_update_double),
@@ -1111,7 +1111,7 @@ flame_dialog (void)
   gtk_widget_show (grid);
 
   scale = gimp_scale_entry_new (_("_Brightness:"), config.cp.brightness, 0, 5, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (flame_scale_entry_update_double),
@@ -1123,7 +1123,7 @@ flame_dialog (void)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Co_ntrast:"), config.cp.contrast, 0, 5, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (flame_scale_entry_update_double),
@@ -1135,10 +1135,10 @@ flame_dialog (void)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("_Gamma:"), config.cp.gamma, 1, 5, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 1.0);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)), 6);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
+  gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scale)), 6);
+  gtk_widget_set_margin_bottom (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (scale)), 6);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (flame_scale_entry_update_double),
@@ -1150,7 +1150,7 @@ flame_dialog (void)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Sample _density:"), config.cp.sample_density, 0.1, 20, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.1, 5.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 5.0);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (flame_scale_entry_update_double),
@@ -1159,7 +1159,7 @@ flame_dialog (void)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Spa_tial oversample:"), config.cp.spatial_oversample, 1, 4, 0);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.01, 0.1);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.01, 0.1);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (flame_scale_entry_update_int),
@@ -1168,7 +1168,7 @@ flame_dialog (void)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("Spatial _filter radius:"), config.cp.spatial_filter_radius, 0, 4, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.2, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.2, 1.0);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (flame_scale_entry_update_double),
@@ -1258,7 +1258,7 @@ flame_dialog (void)
   gtk_widget_show (grid);
 
   scale = gimp_scale_entry_new (_("_Zoom:"), config.cp.zoom, -4, 4, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.5, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.5, 1.0);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (flame_scale_entry_update_double),
@@ -1270,7 +1270,7 @@ flame_dialog (void)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("_X:"), config.cp.center[0], -2, 2, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.5, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.5, 1.0);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (flame_scale_entry_update_double),
@@ -1282,7 +1282,7 @@ flame_dialog (void)
   gtk_widget_show (scale);
 
   scale = gimp_scale_entry_new (_("_Y:"), config.cp.center[1], -2, 2, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scale), 0.5, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.5, 1.0);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (flame_scale_entry_update_double),
@@ -1305,15 +1305,15 @@ flame_dialog (void)
 }
 
 static void
-flame_scale_entry_update_int (GimpScaleEntry *entry,
-                              gint           *value)
+flame_scale_entry_update_int (GimpLabelSpin *entry,
+                              gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (entry);
+  *value = (gint) gimp_label_spin_get_value (entry);
 }
 
 static void
-flame_scale_entry_update_double (GimpScaleEntry *entry,
-                                 gdouble        *value)
+flame_scale_entry_update_double (GimpLabelSpin *entry,
+                                 gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }

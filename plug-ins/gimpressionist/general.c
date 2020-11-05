@@ -62,13 +62,13 @@ void
 general_store (void)
 {
   pcvals.general_paint_edges = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_paint_edges));
-  pcvals.general_dark_edge = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (general_dark_edge_scale));
+  pcvals.general_dark_edge = gimp_label_spin_get_value (GIMP_LABEL_SPIN (general_dark_edge_scale));
   pcvals.general_tileable = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_tileable));
   pcvals.general_drop_shadow = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_drop_shadow));
-  pcvals.general_shadow_darkness = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (general_shadow_scale));
-  pcvals.general_shadow_depth = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (general_shadow_depth));
-  pcvals.general_shadow_blur = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (general_shadow_blur));
-  pcvals.devthresh = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (dev_thresh_scale));
+  pcvals.general_shadow_darkness = gimp_label_spin_get_value (GIMP_LABEL_SPIN (general_shadow_scale));
+  pcvals.general_shadow_depth = gimp_label_spin_get_value (GIMP_LABEL_SPIN (general_shadow_depth));
+  pcvals.general_shadow_blur = gimp_label_spin_get_value (GIMP_LABEL_SPIN (general_shadow_blur));
+  pcvals.devthresh = gimp_label_spin_get_value (GIMP_LABEL_SPIN (dev_thresh_scale));
 }
 
 int
@@ -86,22 +86,22 @@ general_restore (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_paint_edges),
                                 pcvals.general_paint_edges);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (general_dark_edge_scale),
-                            pcvals.general_dark_edge);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (general_shadow_scale),
-                            pcvals.general_shadow_darkness);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (general_dark_edge_scale),
+                             pcvals.general_dark_edge);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (general_shadow_scale),
+                             pcvals.general_shadow_darkness);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_drop_shadow),
                                 pcvals.general_drop_shadow);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (general_shadow_depth),
-                            pcvals.general_shadow_depth);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (general_shadow_blur),
-                            pcvals.general_shadow_blur);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (general_shadow_depth),
+                             pcvals.general_shadow_depth);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (general_shadow_blur),
+                             pcvals.general_shadow_blur);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_tileable),
                                 pcvals.general_tileable);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (general_color_button),
                                &pcvals.color);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (dev_thresh_scale),
-                            pcvals.devthresh);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (dev_thresh_scale),
+                             pcvals.devthresh);
 }
 
 static void
@@ -244,7 +244,7 @@ create_generalpage (GtkNotebook *notebook)
 
   general_shadow_scale =
     gimp_scale_entry_new (_("Shadow darken:"), pcvals.general_shadow_darkness, 0.0, 99.0, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (general_shadow_scale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (general_shadow_scale), 0.1, 1.0);
   gimp_help_set_help_data (general_shadow_scale,
                            _("How much to \"darken\" the drop shadow"),
                            NULL);

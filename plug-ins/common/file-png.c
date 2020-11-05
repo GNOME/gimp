@@ -2326,7 +2326,7 @@ save_dialog (GimpImage     *image,
   /* Compression level scale */
   scale = gimp_prop_scale_entry_new (config, "compression",
                                      NULL, 0, FALSE, 0, 0);
-  gtk_widget_hide (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scale)));
+  gtk_widget_hide (gimp_labeled_get_label (GIMP_LABELED (scale)));
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Co_mpression level:"),
                             0.0, 0.5, scale, 2);

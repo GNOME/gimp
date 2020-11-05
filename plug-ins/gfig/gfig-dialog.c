@@ -191,9 +191,9 @@ static void     toggle_obj_type              (GtkRadioAction *action,
 
 static GtkUIManager *create_ui_manager       (GtkWidget *window);
 
-static void   gfig_scale_entry_update_double (GimpScaleEntry *entry,
+static void   gfig_scale_entry_update_double (GimpLabelSpin  *entry,
                                               gdouble        *value);
-static void   gfig_scale_entry_update_int    (GimpScaleEntry *entry,
+static void   gfig_scale_entry_update_int    (GimpLabelSpin  *entry,
                                               gint           *value);
 
 
@@ -1556,20 +1556,20 @@ options_update (GFigObj *old_obj)
   if (selvals.opts.gridspacing != gfig_context->current_obj->opts.gridspacing)
     {
       if (gfig_opt_widget.gridspacing)
-        gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (gfig_opt_widget.gridspacing),
-                                  gfig_context->current_obj->opts.gridspacing);
+        gimp_label_spin_set_value (GIMP_LABEL_SPIN (gfig_opt_widget.gridspacing),
+                                   gfig_context->current_obj->opts.gridspacing);
     }
   if (selvals.opts.grid_sectors_desired != gfig_context->current_obj->opts.grid_sectors_desired)
     {
       if (gfig_opt_widget.grid_sectors_desired)
-        gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (gfig_opt_widget.grid_sectors_desired),
-                                  gfig_context->current_obj->opts.grid_sectors_desired);
+        gimp_label_spin_set_value (GIMP_LABEL_SPIN (gfig_opt_widget.grid_sectors_desired),
+                                   gfig_context->current_obj->opts.grid_sectors_desired);
     }
   if (selvals.opts.grid_radius_interval != gfig_context->current_obj->opts.grid_radius_interval)
     {
       if (gfig_opt_widget.grid_radius_interval)
-        gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (gfig_opt_widget.grid_radius_interval),
-                                  gfig_context->current_obj->opts.grid_radius_interval);
+        gimp_label_spin_set_value (GIMP_LABEL_SPIN (gfig_opt_widget.grid_radius_interval),
+                                   gfig_context->current_obj->opts.grid_radius_interval);
     }
   if (selvals.opts.gridtype != gfig_context->current_obj->opts.gridtype)
     {
@@ -2187,15 +2187,15 @@ gfig_draw_line (gint x0, gint y0, gint x1, gint y1, cairo_t *cr)
 }
 
 static void
-gfig_scale_entry_update_double (GimpScaleEntry *entry,
-                                gdouble        *value)
+gfig_scale_entry_update_double (GimpLabelSpin *entry,
+                                gdouble       *value)
 {
-  *value = gimp_scale_entry_get_value (entry);
+  *value = gimp_label_spin_get_value (entry);
 }
 
 static void
-gfig_scale_entry_update_int (GimpScaleEntry *entry,
-                             gint           *value)
+gfig_scale_entry_update_int (GimpLabelSpin *entry,
+                             gint          *value)
 {
-  *value = (gint) gimp_scale_entry_get_value (entry);
+  *value = (gint) gimp_label_spin_get_value (entry);
 }

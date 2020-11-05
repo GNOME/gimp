@@ -1899,24 +1899,24 @@ setvals (texture *t)
     return;
 
   noupdate = TRUE;
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (amountscale), t->amount);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (amountscale), t->amount);
 
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (scalescale), t->oscale);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (scalescale), t->oscale);
 
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (scalexscale), t->scale.x);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (scaleyscale), t->scale.y);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (scalezscale), t->scale.z);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (scalexscale), t->scale.x);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (scaleyscale), t->scale.y);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (scalezscale), t->scale.z);
 
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (rotxscale), t->rotate.x);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (rotyscale), t->rotate.y);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (rotzscale), t->rotate.z);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (rotxscale), t->rotate.x);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (rotyscale), t->rotate.y);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (rotzscale), t->rotate.z);
 
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (posxscale), t->translate.x);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (posyscale), t->translate.y);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (poszscale), t->translate.z);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (posxscale), t->translate.x);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (posyscale), t->translate.y);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (poszscale), t->translate.z);
 
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (turbulencescale), t->turbulence.x);
-  gimp_scale_entry_set_value (GIMP_SCALE_ENTRY (expscale), t->exp);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (turbulencescale), t->turbulence.x);
+  gimp_label_spin_set_value (GIMP_LABEL_SPIN (expscale), t->exp);
 
   drawcolor1 (NULL);
   drawcolor2 (NULL);
@@ -2444,25 +2444,25 @@ getscales (GtkWidget *widget,
   if (!t)
     return;
 
-  t->amount = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (amountscale));
-  t->exp = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (expscale));
+  t->amount = gimp_label_spin_get_value (GIMP_LABEL_SPIN (amountscale));
+  t->exp = gimp_label_spin_get_value (GIMP_LABEL_SPIN (expscale));
 
-  f = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (turbulencescale));
+  f = gimp_label_spin_get_value (GIMP_LABEL_SPIN (turbulencescale));
   vset (&t->turbulence, f, f, f);
 
-  t->oscale = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (scalescale));
+  t->oscale = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scalescale));
 
-  t->scale.x = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (scalexscale));
-  t->scale.y = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (scaleyscale));
-  t->scale.z = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (scalezscale));
+  t->scale.x = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scalexscale));
+  t->scale.y = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scaleyscale));
+  t->scale.z = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scalezscale));
 
-  t->rotate.x = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (rotxscale));
-  t->rotate.y = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (rotyscale));
-  t->rotate.z = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (rotzscale));
+  t->rotate.x = gimp_label_spin_get_value (GIMP_LABEL_SPIN (rotxscale));
+  t->rotate.y = gimp_label_spin_get_value (GIMP_LABEL_SPIN (rotyscale));
+  t->rotate.z = gimp_label_spin_get_value (GIMP_LABEL_SPIN (rotzscale));
 
-  t->translate.x = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (posxscale));
-  t->translate.y = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (posyscale));
-  t->translate.z = gimp_scale_entry_get_value (GIMP_SCALE_ENTRY (poszscale));
+  t->translate.x = gimp_label_spin_get_value (GIMP_LABEL_SPIN (posxscale));
+  t->translate.y = gimp_label_spin_get_value (GIMP_LABEL_SPIN (posyscale));
+  t->translate.z = gimp_label_spin_get_value (GIMP_LABEL_SPIN (poszscale));
 
   restartrender ();
 }
@@ -2826,7 +2826,7 @@ makewindow (void)
                     NULL);
 
   scalescale = gimp_scale_entry_new (_("Scale:"), 1.0, 0.0, 10.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scalescale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scalescale), 0.1, 1.0);
   g_signal_connect (scalescale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
@@ -2834,7 +2834,7 @@ makewindow (void)
   gtk_widget_show (scalescale);
 
   turbulencescale = gimp_scale_entry_new (_("Turbulence:"), 1.0, 0.0, 10.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (turbulencescale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (turbulencescale), 0.1, 1.0);
   g_signal_connect (turbulencescale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
@@ -2870,7 +2870,7 @@ makewindow (void)
   gtk_widget_show (grid);
 
   scalexscale = gimp_scale_entry_new (_("Scale X:"), 1.0, 0.0, 10.0, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scalexscale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scalexscale), 0.1, 1.0);
   g_signal_connect (scalexscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
@@ -2878,7 +2878,7 @@ makewindow (void)
   gtk_widget_show (scalexscale);
 
   scaleyscale = gimp_scale_entry_new (_("Scale Y:"), 1.0, 0.0, 10.0, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scaleyscale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scaleyscale), 0.1, 1.0);
   g_signal_connect (scaleyscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
@@ -2886,10 +2886,10 @@ makewindow (void)
   gtk_widget_show (scaleyscale);
 
   scalezscale = gimp_scale_entry_new (_("Scale Z:"), 1.0, 0.0, 10.0, 2);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (scalezscale), 0.1, 1.0);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (scalezscale)), 6);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scalezscale), 0.1, 1.0);
+  gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (scalezscale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scalezscale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (scalezscale)), 6);
+  gtk_widget_set_margin_bottom (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (scalezscale)), 6);
   g_signal_connect (scalezscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
@@ -2911,9 +2911,9 @@ makewindow (void)
   gtk_widget_show (rotyscale);
 
   rotzscale = gimp_scale_entry_new (_("Rotate Z:"), 0.0, 0.0, 360.0, 1);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_label (GIMP_SCALE_ENTRY (rotzscale)), 6);
+  gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (rotzscale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (rotzscale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_spin_button (GIMP_SCALE_ENTRY (rotzscale)), 6);
+  gtk_widget_set_margin_bottom (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (rotzscale)), 6);
   g_signal_connect (rotzscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
@@ -2921,7 +2921,7 @@ makewindow (void)
   gtk_widget_show (rotzscale);
 
   posxscale = gimp_scale_entry_new (_("Position X:"), 0.0, -20.0, 20.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (posxscale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (posxscale), 0.1, 1.0);
   g_signal_connect (posxscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
@@ -2929,7 +2929,7 @@ makewindow (void)
   gtk_widget_show (posxscale);
 
   posyscale = gimp_scale_entry_new (_("Position Y:"), 0.0, -20.0, 20.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (posyscale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (posyscale), 0.1, 1.0);
   g_signal_connect (posyscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
@@ -2937,7 +2937,7 @@ makewindow (void)
   gtk_widget_show (posyscale);
 
   poszscale = gimp_scale_entry_new (_("Position Z:"), 0.0, -20.0, 20.0, 1);
-  gimp_scale_entry_set_increments (GIMP_SCALE_ENTRY (poszscale), 0.1, 1.0);
+  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (poszscale), 0.1, 1.0);
   g_signal_connect (poszscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
