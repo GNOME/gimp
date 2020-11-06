@@ -19,9 +19,22 @@
     "desktop-file-name-prefix": "(Nightly) ",
     "cleanup": ["/include", "/lib/pkgconfig", "/share/pkgconfig",
                 "/share/aclocal", "/man", "/share/man", "/share/gtk-doc",
-                "/share/vala", "*.la", "*.a", "/bin/wmf*", "/bin/libwmf-*",
-                "/bin/pygtk*", "/bin/pygobject*", "/bin/pygobject-codegen-2.0"],
+                "/share/vala", "*.la", "*.a" ],
     "modules": [
+        {
+            "name": "meson",
+            "buildsystem": "simple",
+            "config-opts": [ "-Dintrospection=false" ],
+            "cleanup": ["*"],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/mesonbuild/meson/releases/download/0.54.0/meson-0.54.0.tar.gz",
+                    "sha256": "dde5726d778112acbd4a67bb3633ab2ee75d33d1e879a6283a7b4a44c3363c27"
+                }
+            ],
+            "build-commands": [ "python3 setup.py install --prefix=/app" ]
+        },
         {
             "name": "gexiv2",
             "modules": [
@@ -33,19 +46,31 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://exiv2.org/builds/exiv2-0.27.2-Source.tar.gz",
-                            "sha256": "2652f56b912711327baff6dc0c90960818211cf7ab79bb5e1eb59320b78d153f"
+                            "url": "https://exiv2.org/builds/exiv2-0.27.3-Source.tar.gz",
+                            "sha256": "a79f5613812aa21755d578a297874fb59a85101e793edc64ec2c6bd994e3e778"
+                        },
+                        {
+                            "type": "patch",
+                            "path": "patches/exiv2-0001-Properly-detect-availability-of-flags-in-cmake-compi.patch"
+                        },
+                        {
+                            "type": "patch",
+                            "path": "patches/exiv2-0002-fix_solaris_stack_protection_0.27.patch"
+                        },
+                        {
+                            "type": "patch",
+                            "path": "patches/exiv2-0003-Use-check_cxx_compiler_flags-instead-of-C-version.patch"
                         }
                     ]
                 }
             ],
             "buildsystem": "meson",
-            "config-opts": [ "-D=introspection=false" ],
+            "config-opts": [ "-Dintrospection=false", "-Dlibdir=lib" ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.12/gexiv2-0.12.0.tar.xz",
-                    "sha256": "58f539b0386f36300b76f3afea3a508de4914b27e78f58ee4d142486a42f926a"
+                    "url": "https://download.gnome.org/sources/gexiv2/0.12/gexiv2-0.12.1.tar.xz",
+                    "sha256": "8aeafd59653ea88f6b78cb03780ee9fd61a2f993070c5f0d0976bed93ac2bd77"
                 }
             ]
         },
@@ -106,8 +131,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-0.87.0.tar.xz",
-                    "sha256": "6f602b9c24c2d05780be93e7306201012e41459f289b8279a27a79431ad4150e"
+                    "url": "https://poppler.freedesktop.org/poppler-20.10.0.tar.xz",
+                    "sha256": "434ecbbb539c1a75955030a1c9b24c7b58200b7f68d2e4269e29acf2f8f13336"
                 }
             ]
         },
@@ -160,12 +185,12 @@
             "config-opts": [ "--disable-cups" ],
             "make-args": [ "so" ],
             "make-install-args": [ "soinstall" ],
-            "cleanup": [ "/bin", "/share/man", "/share/doc/" ],
+            "cleanup": [ "/bin", "/share/man", "/share/doc" ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs952/ghostscript-9.52.tar.xz",
-                    "sha512": "4c4a33884e1138bad553eee61fac1a72158297ad5c2ce46a4b36150848dea8158affaf2b902f4ff03e4f72ebc8154c198b618112624f409230a610b7648faa67"
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9533/ghostscript-9.53.3.tar.gz",
+                    "sha512": "c142ef9d83896aa8fd18c8e412220fe8f4950614be00d327d27ab051fe85e16524bf2ee00f46c2aca7a352ce47bc3acf2c4de0f7bbea7e4c55474b8af6cdc0a6"
                 },
                 {
                     "type": "shell",
@@ -182,12 +207,14 @@
             ]
         },
         {
-            "name": "json-c",
+            /* Copy of "shared-modules/intltool/intltool-0.51.json" (avoiding submodules on dev repo). */
+            "name": "intltool",
+            "cleanup": [ "*" ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/json-c/json-c/archive/json-c-0.13.1-20180305.tar.gz",
-                    "sha256": "5d867baeb7f540abe8f3265ac18ed7a24f91fe3c5f4fd99ac3caba0708511b90"
+                    "url": "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz",
+                    "sha256": "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd"
                 }
             ]
         },
@@ -197,8 +224,21 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/mypaint/libmypaint/releases/download/v1.5.1/libmypaint-1.5.1.tar.xz",
-                    "sha256": "aef8150a0c84ce2ff6fb24de8d5ffc564845d006f8bad7ed84ee32ed1dd90c2b"
+                    "url": "https://github.com/mypaint/libmypaint/releases/download/v1.6.1/libmypaint-1.6.1.tar.xz",
+                    "sha256": "741754f293f6b7668f941506da07cd7725629a793108bb31633fb6c3eae5315f"
+                }
+            ],
+            "modules": [
+                {
+                    "name": "json-c",
+                    "buildsystem": "cmake-ninja",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/json-c/json-c/archive/json-c-0.15-20200726.tar.gz",
+                            "sha256": "4ba9a090a42cf1e12b84c64e4464bb6fb893666841d5843cc5bef90774028882"
+                        }
+                    ]
                 }
             ]
         },
@@ -248,7 +288,7 @@
         {
             "name" : "libheif",
             "config-opts": [ "--disable-gdk-pixbuf" ],
-            "cleanup": [ "/bin" ],
+            "cleanup": [ "/bin", "/share/thumbnailers" ],
             "modules": [
                 {
                     "name": "libde265",
@@ -257,24 +297,119 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.5/libde265-1.0.5.tar.gz",
-                            "sha256": "e3f277d8903408615a5cc34718b391b83c97c646faea4f41da93bac5ee08a87f"
+                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.7/libde265-1.0.7.tar.gz",
+                            "sha256": "eac6b56fcda95b0fe0123849c96c8759d832ec9baded2c9c0a5b5faeffb59005"
+                        }
+                    ]
+                },
+                {
+                    "name": "libx265",
+                    "buildsystem": "cmake",
+                    "subdir": "source",
+                    "config-opts": [ "-DEXTRA_LIB='libx265-10.a;libx265-12.a'",
+                                     "-DEXTRA_LINK_FLAGS=-L.",
+                                     "-DLINKED_10BIT=ON", "-DLINKED_12BIT=ON" ],
+                    "cleanup": [ "/bin" ],
+                    "sources": [
+                        {
+                            "type": "git",
+                            "url": "https://github.com/videolan/x265.git",
+                            "tag": "3.4",
+                            "commit": "07295ba7ab551bb9c1580fdaee3200f1b45711b7"
+                        },
+                        {
+                            "type": "shell",
+                            "commands": [
+                                            "ln -s ${FLATPAK_DEST}/lib/libx265-10.a",
+                                            "ln -s ${FLATPAK_DEST}/lib/libx265-12.a",
+                                            "rm -fr ${FLATPAK_DEST}/lib/libx265.so*"
+                                        ]
+                        }
+                    ],
+                    "modules": [
+                        {
+                            "name": "libx265-10bpc",
+                            "buildsystem": "cmake",
+                            "subdir": "source",
+                            "config-opts": [ "-DHIGH_BIT_DEPTH=ON", "-DEXPORT_C_API=OFF",
+                                             "-DENABLE_SHARED=OFF", "-DENABLE_CLI=OFF",
+                                             "-DENABLE_ASSEMBLY=OFF" ],
+                            "sources": [
+                                {
+                                    "type": "git",
+                                    "url": "https://github.com/videolan/x265.git",
+                                    "tag": "3.4",
+                                    "commit": "07295ba7ab551bb9c1580fdaee3200f1b45711b7"
+                                }
+                            ],
+                            "post-install": [
+                                    "mv ${FLATPAK_DEST}/lib/libx265.a ${FLATPAK_DEST}/lib/libx265-10.a"
+                                ]
+                        },
+                        {
+                            "name": "libx265-12bpc",
+                            "buildsystem": "cmake",
+                            "subdir": "source",
+                            "config-opts": [ "-DHIGH_BIT_DEPTH=ON", "-DEXPORT_C_API=OFF",
+                                             "-DENABLE_SHARED=OFF", "-DENABLE_CLI=OFF",
+                                             "-DENABLE_ASSEMBLY=OFF", "-DMAIN12=ON" ],
+                            "sources": [
+                                {
+                                    "type": "git",
+                                    "url": "https://github.com/videolan/x265.git",
+                                    "tag": "3.4",
+                                    "commit": "07295ba7ab551bb9c1580fdaee3200f1b45711b7"
+                                }
+                            ],
+                            "post-install": [
+                                    "mv ${FLATPAK_DEST}/lib/libx265.a ${FLATPAK_DEST}/lib/libx265-12.a"
+                                ]
                         }
                     ]
                 }
             ],
             "sources" : [
                 {
-                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.6.2/libheif-1.6.2.tar.gz",
-                    "sha256" : "bb229e855621deb374f61bee95c4642f60c2a2496bded35df3d3c42cc6d8eefc",
+                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.9.1/libheif-1.9.1.tar.gz",
+                    "sha256" : "5f65ca2bd2510eed4e13bdca123131c64067e9dd809213d7aef4dc5e37948bca",
                     "type" : "archive"
                 }
             ]
         },
         {
+            "name": "luajit",
+            "no-autogen": true,
+            "cleanup": [ "/lib/*.a", "/include", "/lib/pkgconfig", "/share/man" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://luajit.org/download/LuaJIT-2.1.0-beta3.tar.gz",
+                    "sha256": "1ad2e34b111c802f9d0cdf019e986909123237a28c746b21295b63c9e785d9c3"
+                },
+                {
+                    "type": "shell",
+                    "commands": [ "sed -i 's|/usr/local|/app|' ./Makefile" ]
+                }
+            ],
+            "post-install": [
+                "ln -s /app/bin/luajit-2.1.0-beta3 /app/bin/luajit"
+            ]
+        },
+        {
+            "name": "lua-lgi",
+            "buildsystem": "meson",
+            "sources": [
+            {
+                "type": "git",
+                "url": "https://github.com/pavouk/lgi.git",
+                "commit": "c21f35fccae87fd4e3625d4c878f584b7255d6f6"
+            }
+            ]
+        },
+        {
             "name": "babl",
             "buildsystem": "meson",
-            "config-opts": [ "-Dwith-docs=false" ],
+            "config-opts": [ "-Dwith-docs=false", "-Dlibdir=lib" ],
             "sources": [
                 {
                     "type": "git",
@@ -286,7 +421,7 @@
         {
             "name": "gegl",
             "buildsystem": "meson",
-            "config-opts": [ "-Ddocs=false" ],
+            "config-opts": [ "-Ddocs=false", "-Dlibdir=lib" ],
             "cleanup": [ "/bin" ],
             "sources": [
                 {
@@ -300,10 +435,9 @@
             "name": "gimp",
             "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html",
                              "--with-icc-directory=/run/host/usr/share/color/icc/",
-                             "--with-lua=force", "--with-python=force", "--with-javascript=force",
-                             "--with-build-id=org.gimp.GIMP.flatpak.stable",
+                             "--with-build-id=org.gimp.GIMP.flatpak.nightly",
                              "--disable-check-update" ],
-            "cleanup": [ "/bin/gimptool-3.0", "/bin/gimp-console-2.99" ],
+            "cleanup": [ "/bin/gimptool-2.99", "/bin/gimp-console-2.99" ],
             "sources": [
                 {
                     "type": "git",
@@ -316,14 +450,6 @@
                         "xsltproc -o desktop/org.gimp.GIMP.appdata.xml.in.in build/flatpak/remove-future-appdata-release.xslt desktop/org.gimp.GIMP.appdata.xml.in.in"
                     ]
                 }
-            ],
-	    "post-install": [
-                "rm -fr /app/include /app/lib/pkgconfig /app/share/pkgconfig",
-                "rm -fr /app/share/gtk-doc/ /app/share/man/",
-                "rm -fr /app/lib/*.la /app/lib/*.a",
-                "rm -fr /app/share/ghostscript/9.26/doc/",
-                "rm -fr /app/bin/wmf* /app/bin/libwmf-*",
-                "rm -fr /app/bin/pygtk* /app/bin/pygobject* /app/bin/pygobject-codegen-2.0"
             ]
         }
     ]
