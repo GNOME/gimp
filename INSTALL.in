@@ -551,3 +551,14 @@ Makefile(s), the header file containing system-dependent definitions
 The file `configure.ac' is used as a template to create `configure' by
 a program called `autoconf'.  You will only need it if you want to
 regenerate `configure' using a newer version of `autoconf'.
+
+More autotools commands
+=======================
+
+GIMP uses the autotools build system which follows the GNU coding
+standards. In particular all usual standard targets are obviously
+supported (e.g. `make uninstall` for uninstalling) as well as common
+variables and options, cross-compilation host and target, etc.
+
+If you wish to know more, please refer to GNU documentation:
+https://www.gnu.org/prep/standards/html_node/Managing-Releases.html
