@@ -192,10 +192,11 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
 static void
 gimp_chain_button_init (GimpChainButton *button)
 {
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  GimpChainButtonPrivate *private;
 
   button->priv = gimp_chain_button_get_instance_private (button);
 
+  private           = GET_PRIVATE (button);
   private->position = GIMP_CHAIN_TOP;
   private->active   = FALSE;
   private->image    = gtk_image_new ();
