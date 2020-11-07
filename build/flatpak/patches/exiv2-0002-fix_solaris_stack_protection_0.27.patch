@@ -1,0 +1,25 @@
+From 0005edf2f97537af47af966829d73a4b120a86e0 Mon Sep 17 00:00:00 2001
+From: Robin Mills <robin@clanmills.com>
+Date: Wed, 9 Sep 2020 17:23:02 +0100
+Subject: [PATCH] fix_solaris_stack_protection_0.27
+
+---
+ cmake/compilerFlags.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/compilerFlags.cmake b/cmake/compilerFlags.cmake
+index 28472e4a..63075421 100644
+--- a/cmake/compilerFlags.cmake
++++ b/cmake/compilerFlags.cmake
+@@ -24,7 +24,7 @@ if ( MINGW OR UNIX OR MSYS ) # MINGW, Linux, APPLE, CYGWIN
+ 
+     if (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
+         # This fails under Fedora - MinGW - Gcc 8.3
+-        if (NOT MINGW)
++        if (NOT (MINGW OR CMAKE_HOST_SOLARIS))
+             check_c_compiler_flag(-fstack-clash-protection HAS_FSTACK_CLASH_PROTECTION)
+             check_c_compiler_flag(-fcf-protection HAS_FCF_PROTECTION)
+             check_c_compiler_flag(-fstack-protector-strong HAS_FSTACK_PROTECTOR_STRONG)
+-- 
+2.25.4
+

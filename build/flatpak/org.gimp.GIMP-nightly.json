@@ -2,7 +2,7 @@
     "app-id": "org.gimp.GIMP",
     "branch": "master",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "3.36",
+    "runtime-version": "master",
     "sdk": "org.gnome.Sdk",
     "command": "gimp-2.99",
     "separate-locales": false,
@@ -207,7 +207,7 @@
             ]
         },
         {
-            /* Copy of "shared-modules/intltool/intltool-0.51.json" (avoiding submodules on dev repo). */
+            /* Copy from shared-modules to avoid submodules on dev repo. */
             "name": "intltool",
             "cleanup": [ "*" ],
             "sources": [
@@ -407,6 +407,16 @@
             ]
         },
         {
+            "name": "xmu",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://xorg.freedesktop.org/releases/individual/lib/libXmu-1.1.3.tar.bz2",
+                    "sha256": "9c343225e7c3dc0904f2122b562278da5fed639b1b5e880d25111561bac5b731"
+                }
+            ]
+        },
+        {
             "name": "babl",
             "buildsystem": "meson",
             "config-opts": [ "-Dwith-docs=false", "-Dlibdir=lib" ],
@@ -433,11 +443,12 @@
         },
         {
             "name": "gimp",
-            "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html",
-                             "--with-icc-directory=/run/host/usr/share/color/icc/",
-                             "--with-build-id=org.gimp.GIMP.flatpak.nightly",
-                             "--disable-check-update" ],
+            "config-opts": [ "-Dgtk-doc=false",
+                             "-Dicc-directory=/run/host/usr/share/color/icc/",
+                             "-Dbuild-id=org.gimp.GIMP.flatpak.nightly",
+                             "-Dcheck-update=false" ],
             "cleanup": [ "/bin/gimptool-2.99", "/bin/gimp-console-2.99" ],
+            "buildsystem": "meson",
             "sources": [
                 {
                     "type": "git",
