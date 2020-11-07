@@ -84,6 +84,8 @@ libapptools_sources = [
   'gimpoperationtool.c',
   'gimppaintbrushtool.c',
   'gimppaintoptions-gui.c',
+  'gimppaintselectoptions.c',
+  'gimppaintselecttool.c',
   'gimppainttool-paint.c',
   'gimppainttool.c',
   'gimppenciltool.c',

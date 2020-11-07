@@ -478,6 +478,9 @@ _("Enable the MyPaint Brush tool.")
 #define PLAYGROUND_SEAMLESS_CLONE_TOOL_BLURB \
 _("Enable the Seamless Clone tool.")
 
+#define PLAYGROUND_PAINT_SELECT_TOOL_BLURB \
+_("Enable the Paint Select tool.")
+
 #define SPACE_BAR_ACTION_BLURB \
 _("What to do when the space bar is pressed in the image window.")
 

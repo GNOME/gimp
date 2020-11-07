@@ -337,6 +337,23 @@ gimp_warp_behavior_get_type (void)
   return type;
 }
 
+GType
+gimp_paint_select_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_PAINT_SELECT_MODE_ADD, "GIMP_PAINT_SELECT_MODE_ADD", "add" },
+    { GIMP_PAINT_SELECT_MODE_SUBTRACT, "GIMP_PAINT_SELECT_MODE_SUBTRACT", "subtract" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_PAINT_SELECT_MODE_ADD, NC_("paint-select-mode", "Add to selection"), NULL },
+    { GIMP_PAINT_SELECT_MODE_SUBTRACT, NC_("paint-select-mode", "Subtract from selection"), NULL },
+    { 0, NULL, NULL }
+};
+
 
 /* Generated data ends here */
 

@@ -152,6 +152,10 @@ libapptools_a_sources = \
 	gimppaintbrushtool.h		\
 	gimppaintoptions-gui.c		\
 	gimppaintoptions-gui.h		\
+	gimppaintselectoptions.c	\
+	gimppaintselectoptions.h	\
+	gimppaintselecttool.c		\
+	gimppaintselecttool.h		\
 	gimppainttool.c			\
 	gimppainttool.h			\
 	gimppainttool-paint.c		\

@@ -643,6 +643,7 @@
         <menuitem action="tools-fuzzy-select" />
         <menuitem action="tools-by-color-select" />
         <menuitem action="tools-iscissors" />
+        <menuitem action="tools-paint-select" />
       </menu>
       <menu action="tools-paint-menu" name="Paint Tools">
         <menuitem action="tools-bucket-fill" />

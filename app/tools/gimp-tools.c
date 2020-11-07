@@ -75,6 +75,7 @@
 #include "gimpnpointdeformationtool.h"
 #include "gimpoffsettool.h"
 #include "gimppaintbrushtool.h"
+#include "gimppaintselecttool.h"
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"
 #include "gimpperspectivetool.h"
@@ -140,6 +141,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_by_color_select_tool_register,
     gimp_iscissors_tool_register,
     gimp_foreground_select_tool_register,
+    gimp_paint_select_tool_register,
 
     /*  path tool */
 

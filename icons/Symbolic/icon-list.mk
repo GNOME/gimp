@@ -311,6 +311,7 @@ scalable_images = \
 	scalable/gimp-tool-offset-symbolic.svg				\
 	scalable/gimp-tool-options-symbolic.svg				\
 	scalable/gimp-tool-paintbrush-symbolic.svg			\
+	scalable/gimp-tool-paint-select-symbolic.svg		\
 	scalable/gimp-tool-path-symbolic.svg				\
 	scalable/gimp-tool-pencil-symbolic.svg				\
 	scalable/gimp-tool-perspective-clone-symbolic.svg		\
@@ -491,6 +492,7 @@ vector24_images = \
 	24/gimp-tool-offset-symbolic.svg				\
 	24/gimp-tool-options-symbolic.svg				\
 	24/gimp-tool-paintbrush-symbolic.svg				\
+	24/gimp-tool-paint-select-symbolic.svg			\
 	24/gimp-tool-path-symbolic.svg					\
 	24/gimp-tool-pencil-symbolic.svg					\
 	24/gimp-tool-perspective-symbolic.svg				\

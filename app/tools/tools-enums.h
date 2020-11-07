@@ -166,6 +166,16 @@ typedef enum
 } GimpWarpBehavior;
 
 
+#define GIMP_TYPE_PAINT_SELECT_MODE (gimp_paint_select_mode_get_type ())
+
+GType gimp_paint_select_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_PAINT_SELECT_MODE_ADD,      /*< desc="Add to selection" >*/
+  GIMP_PAINT_SELECT_MODE_SUBTRACT, /*< desc="Subtract from selection" >*/
+} GimpPaintSelectMode;
+
 /*
  * non-registered enums; register them if needed
  */
