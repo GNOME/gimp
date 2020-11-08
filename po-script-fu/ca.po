@@ -306,7 +306,7 @@ msgstr "Vora de la capa"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:162
 msgid "Add _Border..."
-msgstr "_Afegix una vora… ..."
+msgstr "_Afegeix una vora..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:163
 msgid "Add a border around an image"
@@ -347,7 +347,7 @@ msgid ""
 "an animation"
 msgstr ""
 "Crea capes intermèdies per superposar i fondre dues o més capes damunt d'un "
-"fons per animació."
+"fons per animació"
 
 # Quim: nombre de imatges que es posen entre mig de dos fotogrames per fer una transició en Blend animation
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:236
@@ -421,7 +421,7 @@ msgstr "Superfície Esculpida"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:177
 msgid "Bevel Shadow"
-msgstr "Ombra bisellada "
+msgstr "Ombra bisellada"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:178
 msgid "Bevel Highlight"
@@ -429,7 +429,7 @@ msgstr "Ressaltat bisellat"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:179
 msgid "Cast Shadow"
-msgstr "Ombra "
+msgstr "Ombra projectada"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:180
 msgid "Inset"
@@ -844,7 +844,7 @@ msgstr "Marcador per al manual d'usuari"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
-msgstr "_Prepara les vostres imatges per al web"
+msgstr "_Prepara les imatges per al web"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
@@ -967,7 +967,7 @@ msgstr "Noves guies des de la _selecció"
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
 msgstr ""
-"Fes quatre guies al voltant de la capsa contenidora de la selecció actual"
+"Fes quatre guies al voltant de la caixa contenidora de la selecció actual"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
@@ -1037,7 +1037,7 @@ msgstr "Mida"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:127
 msgid "Roughness"
-msgstr "Rugositat "
+msgstr "Rugositat"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
 msgid "Gradient"
@@ -1546,7 +1546,7 @@ msgid ""
 "bump map"
 msgstr ""
 "Fes una capa nova plena d'un efecte de teixit que s'utilitzi com a mapa de "
-"relleu o superposició "
+"relleu o superposició"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
