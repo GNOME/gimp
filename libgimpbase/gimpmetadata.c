@@ -655,12 +655,20 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
       if (value)
         {
           GExiv2Metadata  *g2_metadata = GEXIV2_METADATA (parse_data->metadata);
+          GError          *error       = NULL;
           gchar          **values;
 
-          values = gexiv2_metadata_get_tag_multiple (g2_metadata,
-                                                     parse_data->name);
+          values = gexiv2_metadata_try_get_tag_multiple (g2_metadata,
+                                                         parse_data->name,
+                                                         &error);
 
-          if (values)
+          if (error)
+            {
+              g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+              g_clear_error (&error);
+              g_strfreev (values);
+            }
+          else if (values)
             {
               guint length = g_strv_length (values);
 
@@ -1643,9 +1651,18 @@ gimp_metadata_copy_tag (GExiv2Metadata *src,
                         GExiv2Metadata *dest,
                         const gchar    *tag)
 {
-  gchar **values = gexiv2_metadata_get_tag_multiple (src, tag);
+  gchar  **values;
+  GError  *error = NULL;
 
-  if (values)
+  values = gexiv2_metadata_try_get_tag_multiple (src, tag, &error);
+
+  if (error)
+    {
+      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+      g_clear_error (&error);
+      g_strfreev (values);
+    }
+  else if (values)
     {
       gexiv2_metadata_set_tag_multiple (dest, tag, (const gchar **) values);
       g_strfreev (values);
