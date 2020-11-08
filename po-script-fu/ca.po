@@ -348,7 +348,7 @@ msgid ""
 "an animation"
 msgstr ""
 "Crea capes intermèdies per superposar i fondre dues o més capes damunt d'un "
-"fons per animació."
+"fons per animació"
 
 # Quim: nombre de imatges que es posen entre mig de dos fotogrames per fer una transició en Blend animation
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:236
@@ -422,7 +422,7 @@ msgstr "Superfície Esculpida"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:177
 msgid "Bevel Shadow"
-msgstr "Ombra bisellada "
+msgstr "Ombra bisellada"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:178
 msgid "Bevel Highlight"
@@ -430,7 +430,7 @@ msgstr "Ressaltat bisellat"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:179
 msgid "Cast Shadow"
-msgstr "Ombra "
+msgstr "Ombra projectada"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:180
 msgid "Inset"
@@ -846,7 +846,7 @@ msgstr "Marcador per al manual d'usuari"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
-msgstr "_Prepara les vostres imatges per al web"
+msgstr "_Prepara les imatges per al web"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
@@ -1039,7 +1039,7 @@ msgstr "Mida"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:127
 msgid "Roughness"
-msgstr "Rugositat "
+msgstr "Rugositat"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
@@ -1672,7 +1672,7 @@ msgid ""
 "bump map"
 msgstr ""
 "Fes una capa nova plena d'un efecte de teixit que s'utilitzi com a mapa de "
-"relleu o superposició "
+"relleu o superposició"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
