@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-10 13:26+0000\n"
-"PO-Revision-Date: 2020-11-01 23:26+0200\n"
+"PO-Revision-Date: 2020-11-09 21:10+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -319,6 +319,9 @@ msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
 msgstr ""
+"Instrumentul de umplere cu găleata: opțiune nouă „Umple prin detectarea "
+"desenului din linii” pentru zonele de desene din linie care nu se închid "
+"perfect"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
@@ -329,6 +332,8 @@ msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
+"Instrumentul de umplere cu găleata permite menținerea mausului la umplerea "
+"„culorilor similare” și „prin detectarea desenului din linii”"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Scale tool scales around center even when using numeric input"
@@ -1118,7 +1123,6 @@ msgstr "Imagini"
 msgid "Layers"
 msgstr "Straturi"
 
-# constat că MyPaint este lăsat netradus și la de, es, fr, it
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:198 ../app/core/gimp-data-factories.c:359
 #: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:3304
@@ -11118,8 +11122,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
 msgstr ""
-"Stabilește calea implicită a dosarului pentru toate dialogurile de fișiere "
-"ale profilurilor de culoare."
+"Stabilește calea implicită a dosarului pentru toate casetele de dialog ale "
+"fișierelor de profil de culoare."
 
 #: ../app/config/gimprc-blurbs.h:59
 msgid "Use compact style for sliders."
@@ -11274,8 +11278,8 @@ msgstr "Adaugă un canal alfa la toate straturile imaginilor importate."
 #: ../app/config/gimprc-blurbs.h:221
 msgid "Which plug-in to use for importing raw digital camera files."
 msgstr ""
-"Care plugin să fie utilizat pentru importul fișierelor brute (RAW) de cameră "
-"digitală."
+"Care plugin să fie utilizat pentru importul fișierelor brute (RAW) de "
+"imagini foto digitale."
 
 #: ../app/config/gimprc-blurbs.h:224
 msgid "Export file type used by default."
@@ -11749,8 +11753,8 @@ msgstr "Numele temei de utilizat."
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
-"Stabilește intenția de randare implicită pentru dialogul 'Convertește în "
-"profil de culoare'."
+"Stabilește intenția de randare implicită pentru dialogul 'Convertește într-"
+"un profil de culoare'."
 
 #: ../app/config/gimprc-blurbs.h:531
 msgid ""
@@ -11758,23 +11762,29 @@ msgid ""
 "Profile' dialog."
 msgstr ""
 "Stabilește starea implicită de la 'Compensare punct de negru' pentru "
-"dialogul 'Convertește în profil de culoare'."
+"dialogul 'Convertește într-un profil de culoare'."
 
 #: ../app/config/gimprc-blurbs.h:535
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"Stabilește metoda implicită de dithering a stratului pentru dialogul de "
+"convertire a preciziei."
 
 #: ../app/config/gimprc-blurbs.h:538
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
+"Stabilește metoda implicită de dithering a stratului de text pentru dialogul "
+"de convertire a preciziei."
 
 #: ../app/config/gimprc-blurbs.h:541
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"Stabilește metoda implicită de dithering a canalului pentru dialogul de "
+"convertire a preciziei."
 
 #: ../app/config/gimprc-blurbs.h:544
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
@@ -14717,35 +14727,37 @@ msgstr ""
 
 #: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:188
 msgid "Line art detection threshold"
-msgstr ""
+msgstr "Prag de detecție a desenului din linii"
 
 #: ../app/core/gimplineart.c:346 ../app/tools/gimpbucketfilloptions.c:189
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
+"Pragul pentru detectarea conturului (valorile mai mari vor include mai mulți "
+"pixeli)"
 
 #: ../app/core/gimplineart.c:352 ../app/tools/gimpbucketfilloptions.c:195
 msgid "Maximum growing size"
-msgstr ""
+msgstr "Mărime maximă de creștere"
 
 #: ../app/core/gimplineart.c:353 ../app/tools/gimpbucketfilloptions.c:196
 msgid "Maximum number of pixels grown under the line art"
-msgstr ""
+msgstr "Numărul maxim de pixeli crescuți sub desenul din linii"
 
 #: ../app/core/gimplineart.c:359
 msgid "Maximum curved closing length"
-msgstr ""
+msgstr "Lungime maximă de închidere curbată"
 
 #: ../app/core/gimplineart.c:360
 msgid "Maximum curved length (in pixels) to close the line art"
-msgstr ""
+msgstr "Lungimea maximă curbată (în pixeli) pentru a închide desenul din linii"
 
 #: ../app/core/gimplineart.c:366
 msgid "Maximum straight closing length"
-msgstr ""
+msgstr "Lungime maximă de închidere dreaptă"
 
 #: ../app/core/gimplineart.c:367
 msgid "Maximum straight length (in pixels) to close the line art"
-msgstr ""
+msgstr "Lungimea maximă dreaptă (în pixeli) pentru a închide desenul din linii"
 
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
@@ -14755,7 +14767,7 @@ msgstr "Fișierul de penel MyBrush este nejustificat de mare, se omite."
 #: ../app/core/gimpmybrush-load.c:93
 #, c-format
 msgid "Failed to deserialize MyPaint brush."
-msgstr ""
+msgstr "Deserializarea penelului MyPaint a eșuat."
 
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
@@ -14909,7 +14921,7 @@ msgstr "Umplere de selecție"
 #: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
 msgid "Stroke Selection"
-msgstr "Conturare selecție"
+msgstr "Conturare de selecție"
 
 #: ../app/core/gimpselection.c:190
 msgctxt "undo-type"
@@ -17047,7 +17059,7 @@ msgstr "Resetează opțiunile de _dialog la valorile implicite"
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:2232
 msgid "Color Profile Import Dialog"
-msgstr "Dialog pentru import de profil de culoare"
+msgstr "Dialog pentru importul de profil de culoare"
 
 #: ../app/dialogs/preferences-dialog.c:2237
 msgid "Color profile policy:"
@@ -17056,11 +17068,11 @@ msgstr "Politica profilului de culoare:"
 #. All color profile chooser dialogs
 #: ../app/dialogs/preferences-dialog.c:2241
 msgid "Color Profile File Dialogs"
-msgstr "Dialoguri pentru fișier de profil de culoare"
+msgstr "Dialoguri pentru profilul de culoare"
 
 #: ../app/dialogs/preferences-dialog.c:2246
 msgid "Profile folder:"
-msgstr "Dosar de profil:"
+msgstr "Dosarul de profil:"
 
 #: ../app/dialogs/preferences-dialog.c:2247
 msgid "Select Default Folder for Color Profiles"
@@ -17069,7 +17081,7 @@ msgstr "Selectează dosarul implicit pentru profilurile de culoare"
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:2251
 msgid "Convert to Color Profile Dialog"
-msgstr "Dialog pentru convertire în profil de culoare"
+msgstr "Dialog pentru convertirea într-un profil de culoare"
 
 #: ../app/dialogs/preferences-dialog.c:2256
 msgid "Rendering intent:"
@@ -17082,7 +17094,7 @@ msgstr "Compensare punct de negru"
 #. Convert Precision Dialog
 #: ../app/dialogs/preferences-dialog.c:2264
 msgid "Precision Conversion Dialog"
-msgstr "Dialog pentru convertire de precizie"
+msgstr "Dialog pentru convertirea preciziei"
 
 #: ../app/dialogs/preferences-dialog.c:2271
 msgid "Dither layers:"
@@ -17322,12 +17334,12 @@ msgstr "Stil de chenar:"
 #. Fill Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2506
 msgid "Fill Selection Outline & Fill Path Dialogs"
-msgstr ""
+msgstr "Dialoguri pentru umplerea conturului selecției și umplerea traseului"
 
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2515
 msgid "Stroke Selection & Stroke Path Dialogs"
-msgstr ""
+msgstr "Dialoguri pentru conturarea selecției și conturarea traseului"
 
 # titlu
 #: ../app/dialogs/preferences-dialog.c:2538
@@ -17396,7 +17408,7 @@ msgstr "Dimensiunea _maximă a istoricului:"
 
 #: ../app/dialogs/preferences-dialog.c:2671
 msgid "C_lear Action History"
-msgstr "Go_lire istoric de acțiuni"
+msgstr "Go_lește istoricul acțiunilor"
 
 #: ../app/dialogs/preferences-dialog.c:2685
 #: ../app/dialogs/preferences-dialog.c:2686
@@ -17458,7 +17470,7 @@ msgstr "C_alibrare..."
 #: ../app/dialogs/preferences-dialog.c:2810
 #: ../app/dialogs/preferences-dialog.c:2811
 msgid "Window Management"
-msgstr "Gestionare ferestre"
+msgstr "Gestionare de ferestre"
 
 #: ../app/dialogs/preferences-dialog.c:2816
 msgid "Window Manager Hints"
@@ -17529,7 +17541,7 @@ msgstr "Redimensionează fereastra la _schimbarea dimensiunii imaginii"
 
 #: ../app/dialogs/preferences-dialog.c:2905
 msgid "Show entire image"
-msgstr "Arată întreaga imaginea"
+msgstr "Arată întreaga imagine"
 
 #: ../app/dialogs/preferences-dialog.c:2907
 msgid "Initial zoom _ratio:"
@@ -17799,15 +17811,15 @@ msgstr "Selectează dosarul presetării de instrument"
 
 #: ../app/dialogs/preferences-dialog.c:3304
 msgid "MyPaint Brush Folders"
-msgstr ""
+msgstr "Dosare de penel MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:3307
 msgid "Reset MyPaint Brush _Folders"
-msgstr ""
+msgstr "_Restabilește dosarele de penel MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:3308
 msgid "Select MyPaint Brush Folders"
-msgstr ""
+msgstr "Selectează dosarele de penel MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:3310
 msgid "Plug-in Folders"
@@ -18745,7 +18757,7 @@ msgstr "Clic-și-trageți pentru a roti și a scala"
 
 #: ../app/display/gimptoolhandlegrid.c:871
 msgid "Click-Drag to shear and scale"
-msgstr "Clic-și-trageți pentru a tunde și a scala"
+msgstr "Clic-și-trageți pentru a înclina și a scala"
 
 #: ../app/display/gimptoolhandlegrid.c:874
 #: ../app/display/gimptooltransformgrid.c:1820
@@ -21974,7 +21986,7 @@ msgstr "Sămânță nouă"
 
 #: ../app/propgui/gimppropgui-vignette.c:183
 msgid "Vignette: "
-msgstr ""
+msgstr "Vinietă: "
 
 #: ../app/propgui/gimppropgui.c:393
 msgid "Pick color from the image"
@@ -22011,7 +22023,7 @@ msgstr "Adăugare strat de text"
 
 #: ../app/text/gimptext-parasite.c:101
 msgid "Empty text parasite"
-msgstr ""
+msgstr "Parazit de text gol"
 
 #: ../app/text/gimptextlayer.c:155
 msgid "Text Layer"
@@ -22173,7 +22185,7 @@ msgstr "Distribuie marginile din dreapta ale țintelor"
 
 #: ../app/tools/gimpalignoptions.c:354
 msgid "Distribute targets evenly in the horizontal"
-msgstr ""
+msgstr "Distribuie țintele în mod egal pe orizontală"
 
 #: ../app/tools/gimpalignoptions.c:362
 msgid "Distribute top edges of targets"
@@ -22189,7 +22201,7 @@ msgstr "Distribuie marginile de jos ale țintelor"
 
 #: ../app/tools/gimpalignoptions.c:374
 msgid "Distribute targets evenly in the vertical"
-msgstr ""
+msgstr "Distribuie țintele în mod egal pe verticală"
 
 #: ../app/tools/gimpaligntool.c:124
 msgid "Alignment Tool: Align or arrange layers and other objects"
@@ -22279,7 +22291,7 @@ msgstr "Stabilește zona de umplere pe baza tuturor straturilor vizibile"
 #: ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
-msgstr ""
+msgstr "Tratează pixelii vecini diagonal ca fiind conectați"
 
 #: ../app/tools/gimpbucketfilloptions.c:150
 msgid ""
@@ -22287,6 +22299,9 @@ msgid ""
 "or on line  art borders. Disable antialiasing to fill the entire area "
 "uniformly."
 msgstr ""
+"Bazează opacitatea de umplere pe diferența de culoare de la pixelul asupra "
+"căruia se dă clic (a se vedea pragul) sau pe chenarele desenului din linii. "
+"Dezactivați antialiasul pentru a umple uniform întreaga zonă."
 
 #: ../app/tools/gimpbucketfilloptions.c:173
 #: ../app/tools/gimpgradientoptions.c:121
@@ -22302,15 +22317,17 @@ msgstr "Diferență maximă de culoare"
 
 #: ../app/tools/gimpbucketfilloptions.c:181
 msgid "Source image for line art computation"
-msgstr ""
+msgstr "Imaginea sursă pentru calculul desenului din linii"
 
 #: ../app/tools/gimpbucketfilloptions.c:202
 msgid "Maximum gap length"
-msgstr ""
+msgstr "Lungimea maximă a spațiului liber"
 
 #: ../app/tools/gimpbucketfilloptions.c:203
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr ""
+"Lungimea maximă a spațiului liber (în pixeli) în desenul din linii care "
+"poate fi închis"
 
 # a fost: umplere pe bază de
 #: ../app/tools/gimpbucketfilloptions.c:209
@@ -22337,11 +22354,11 @@ msgstr "Zonele afectate  (%s)"
 #. Similar color frame
 #: ../app/tools/gimpbucketfilloptions.c:431
 msgid "Finding Similar Colors"
-msgstr "Determinarea culorior similare"
+msgstr "Determinarea culorilor similare"
 
 #: ../app/tools/gimpbucketfilloptions.c:485
 msgid "Line Art Detection"
-msgstr "Detectarea artei din linii"
+msgstr "Detectarea desenului din linii"
 
 #: ../app/tools/gimpbucketfilloptions.c:495
 msgid "(computing...)"
@@ -22373,7 +22390,7 @@ msgstr "Stratul activ nu este vizibil."
 
 #: ../app/tools/gimpbucketfilltool.c:578
 msgid "No valid line art source selected."
-msgstr ""
+msgstr "Nu a fost selectată nicio sursă validă de desen din linii."
 
 #: ../app/tools/gimpbucketfilltool.c:761 ../app/tools/gimpbucketfilltool.c:894
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:468
@@ -22584,7 +22601,6 @@ msgstr "%s pentru a atenua claritatea"
 msgid "Convolve Type  (%s)"
 msgstr "Tip de convoluție  (%s)"
 
-# checkbox în panoul de selecție
 #: ../app/tools/gimpcropoptions.c:79
 #: ../app/tools/gimprectangleselectoptions.c:79
 msgid "Highlight"
@@ -22595,16 +22611,15 @@ msgstr "Evidențiază"
 msgid "Dim everything outside selection"
 msgstr "Întunecă totul în afara selecției"
 
-# checkbox în panoul de selecție
 #: ../app/tools/gimpcropoptions.c:87
 #: ../app/tools/gimprectangleselectoptions.c:87
 msgid "Highlight opacity"
-msgstr "Evidențiază opacitatea"
+msgstr "Opacitatea evidențierii"
 
 #: ../app/tools/gimpcropoptions.c:88
 #: ../app/tools/gimprectangleselectoptions.c:88
 msgid "How much to dim everything outside selection"
-msgstr ""
+msgstr "Cât de mult să fie întunecat totul în afara selecției"
 
 #: ../app/tools/gimpcropoptions.c:94
 msgid "Current layer only"
@@ -24325,16 +24340,16 @@ msgstr ""
 
 #: ../app/tools/gimpsheartool.c:90
 msgid "S_hear"
-msgstr "Î_nclinare"
+msgstr "În_clinare"
 
 #: ../app/tools/gimpsheartool.c:111
 msgctxt "undo-type"
 msgid "Shear"
-msgstr "Tundere"
+msgstr "Înclinare"
 
 #: ../app/tools/gimpsheartool.c:113
 msgid "_Shear"
-msgstr "_Tunde"
+msgstr "În_clină"
 
 #: ../app/tools/gimpsheartool.c:163
 #, c-format
@@ -24357,11 +24372,11 @@ msgstr "Înclinare orizontală cu %-3.3g, verticală cu %-3.3g"
 
 #: ../app/tools/gimpsheartool.c:191
 msgid "Shear magnitude _X"
-msgstr "Magnitudine de tundere _X"
+msgstr "Magnit. de înclinare _X"
 
 #: ../app/tools/gimpsheartool.c:202
 msgid "Shear magnitude _Y"
-msgstr "Magnitudine de tundere _Y"
+msgstr "Magnit. de înclinare _Y"
 
 #: ../app/tools/gimpsmudgetool.c:56
 msgid "Smudge Tool: Smudge selectively using a brush"
@@ -24598,7 +24613,7 @@ msgstr "Randează previzualizarea în mod sincron"
 
 #: ../app/tools/gimptransformgridoptions.c:140
 msgid "Image opacity"
-msgstr "Opacitate imagine"
+msgstr "Opacitatea imaginii"
 
 #: ../app/tools/gimptransformgridoptions.c:141
 msgid "Opacity of the preview image"
@@ -24665,10 +24680,11 @@ msgstr "Transformă în jurul punctului central"
 msgid "Constrain (%s)"
 msgstr "Constrângere (%s)"
 
+# tooltip la transformarea 3d
 #: ../app/tools/gimptransformgridoptions.c:591
 #: ../app/tools/gimptransform3dtool.c:335
 msgid "Move"
-msgstr "Mută"
+msgstr "Mutare"
 
 #: ../app/tools/gimptransformgridoptions.c:592
 #, c-format
@@ -24717,17 +24733,17 @@ msgstr ""
 
 #: ../app/tools/gimptransformgridoptions.c:612
 msgid "Pivot"
-msgstr ""
+msgstr "Pivot"
 
 #: ../app/tools/gimptransformgridoptions.c:613
 #, c-format
 msgid "Snap (%s)"
-msgstr ""
+msgstr "Acroșare (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:614
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
-msgstr ""
+msgstr "Acroșează pivotul la colțuri și centru (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:615
 msgid "Lock"
@@ -24735,7 +24751,7 @@ msgstr "Blochează"
 
 #: ../app/tools/gimptransformgridoptions.c:616
 msgid "Lock pivot position to canvas"
-msgstr ""
+msgstr "Blochează poziția pivotului la canava"
 
 #: ../app/tools/gimptransformgridtool.c:294
 #: ../app/tools/gimptransformtool.c:435
@@ -24745,7 +24761,7 @@ msgstr "_Transformă"
 #: ../app/tools/gimptransformgridtool.c:575
 #: ../app/tools/gimptransformgridtool.c:587
 msgid "Transform Step"
-msgstr ""
+msgstr "Treaptă de transformare"
 
 #: ../app/tools/gimptransformgridtool.c:982
 #, c-format
@@ -24782,7 +24798,7 @@ msgstr "Transformă în lungul axei Z"
 
 #: ../app/tools/gimptransform3doptions.c:107
 msgid "Transform in the local frame of reference"
-msgstr ""
+msgstr "Transformă în cadrul local al referinței"
 
 #: ../app/tools/gimptransform3doptions.c:197
 #, c-format
@@ -24797,7 +24813,7 @@ msgstr "Axă Z (%s)"
 #: ../app/tools/gimptransform3doptions.c:215
 #, c-format
 msgid "Local frame (%s)"
-msgstr ""
+msgstr "Cadru local (%s)"
 
 #: ../app/tools/gimptransform3dtool.c:115
 msgid "3D Transform"
@@ -24812,7 +24828,7 @@ msgstr ""
 
 #: ../app/tools/gimptransform3dtool.c:117
 msgid "_3D Transform"
-msgstr "Transformă _3D"
+msgstr "Transformare _3D"
 
 #: ../app/tools/gimptransform3dtool.c:140
 msgctxt "undo-type"
@@ -24825,7 +24841,7 @@ msgstr "Transformare 3D"
 
 #: ../app/tools/gimptransform3dtool.c:237
 msgid "Camera"
-msgstr ""
+msgstr "Obiectiv foto"
 
 #. vanishing-point frame
 #: ../app/tools/gimptransform3dtool.c:245
@@ -24871,7 +24887,7 @@ msgstr "Confirmați transformarea"
 
 #: ../app/tools/gimptransformtool.c:447
 msgid "Transformation creates a very large item."
-msgstr ""
+msgstr "Transformarea creează un element foarte mare."
 
 #: ../app/tools/gimptransformtool.c:452
 #, c-format
@@ -24879,15 +24895,17 @@ msgid ""
 "Applying the transformation will result in an item that is over %g times "
 "larger than the image."
 msgstr ""
+"Aplicarea transformării va avea ca rezultat un element care este de peste %g "
+"ori mai mare decât imaginea."
 
 #: ../app/tools/gimptransformtool.c:460
 msgid "Transformation creates a very large image."
-msgstr ""
+msgstr "Transformarea creează o imagine foarte mare."
 
 #: ../app/tools/gimptransformtool.c:465
 #, c-format
 msgid "Applying the transformation will enlarge the image by a factor of %g."
-msgstr ""
+msgstr "Aplicarea transformării va mări imaginea cu un factor de %g."
 
 #: ../app/tools/gimptransformtool.c:679
 msgid "There is no layer to transform."
@@ -24895,11 +24913,11 @@ msgstr "Nu există niciun strat de transformat."
 
 #: ../app/tools/gimptransformtool.c:688
 msgid "The active layer's position and size are locked."
-msgstr ""
+msgstr "Poziția și dimensiunea stratului activ sunt blocate."
 
 #: ../app/tools/gimptransformtool.c:702
 msgid "The selection does not intersect with the layer."
-msgstr ""
+msgstr "Selecția nu se intersectează cu stratul."
 
 #: ../app/tools/gimptransformtool.c:709
 msgid "There is no selection to transform."
@@ -24915,11 +24933,11 @@ msgstr "Contururile traseului activ sunt blocate."
 
 #: ../app/tools/gimptransformtool.c:735
 msgid "The active path has no strokes."
-msgstr ""
+msgstr "Traseul activ nu are contururi."
 
 #: ../app/tools/gimptransformtool.c:809
 msgid "The current transform is invalid"
-msgstr ""
+msgstr "Transformarea curentă nu este validă"
 
 #: ../app/tools/gimpunifiedtransformtool.c:89
 msgid "Unified Transform"
@@ -25000,7 +25018,7 @@ msgstr "Intensitatea efectului"
 
 #: ../app/tools/gimpwarpoptions.c:114
 msgid "Stroke Spacing"
-msgstr ""
+msgstr "Spațiere de contur"
 
 #: ../app/tools/gimpwarpoptions.c:128 ../app/tools/gimpwarpoptions.c:345
 msgid "Abyss policy"
@@ -25141,7 +25159,7 @@ msgstr "Umple culorile similare"
 #: ../app/tools/tools-enums.c:27
 msgctxt "bucket-fill-area"
 msgid "Fill by line art detection"
-msgstr "Umple prin detectarea artei din linii"
+msgstr "Umple prin detectarea desenului din linii"
 
 #: ../app/tools/tools-enums.c:57
 msgctxt "line-art-source"
@@ -25231,31 +25249,31 @@ msgstr "Tonuri de gri"
 #: ../app/tools/tools-enums.c:277
 msgctxt "3-dtrasnform-lens-mode"
 msgid "Focal length"
-msgstr "Lungime focală"
+msgstr "Distanță focală"
 
 #: ../app/tools/tools-enums.c:278
 msgctxt "3-dtrasnform-lens-mode"
 msgid "Field of view (relative to image)"
-msgstr ""
+msgstr "Câmp vizual (relativ la imagine)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to image)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:281
 msgctxt "3-dtrasnform-lens-mode"
 msgid "FOV (image)"
-msgstr "FOV (imagine)"
+msgstr "Câmp vizual (imagine)"
 
 #: ../app/tools/tools-enums.c:282
 msgctxt "3-dtrasnform-lens-mode"
 msgid "Field of view (relative to item)"
-msgstr ""
+msgstr "Câmp vizual (relativ la element)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to item)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:285
 msgctxt "3-dtrasnform-lens-mode"
 msgid "FOV (item)"
-msgstr ""
+msgstr "Câmp vizual (element)"
 
 # tooltip la pictogramele de după „Blochează:” la opțiunile unor panouri andocate
 #: ../app/tools/tools-enums.c:318
