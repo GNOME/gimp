@@ -40,7 +40,8 @@ GimpLayerColorSpace        gimp_layer_mode_get_composite_space        (GimpLayer
 GimpLayerCompositeMode     gimp_layer_mode_get_composite_mode         (GimpLayerMode           mode);
 GimpLayerCompositeMode     gimp_layer_mode_get_paint_composite_mode   (GimpLayerMode           mode);
 
-const gchar              * gimp_layer_mode_get_operation              (GimpLayerMode           mode);
+const gchar              * gimp_layer_mode_get_operation_name         (GimpLayerMode           mode);
+GeglOperation            * gimp_layer_mode_get_operation              (GimpLayerMode           mode);
 
 GimpLayerModeFunc          gimp_layer_mode_get_function               (GimpLayerMode           mode);
 GimpLayerModeBlendFunc     gimp_layer_mode_get_blend_function         (GimpLayerMode           mode);

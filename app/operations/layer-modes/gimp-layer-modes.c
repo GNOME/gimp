@@ -1255,7 +1255,7 @@ gimp_layer_mode_get_paint_composite_mode (GimpLayerMode mode)
 }
 
 const gchar *
-gimp_layer_mode_get_operation (GimpLayerMode mode)
+gimp_layer_mode_get_operation_name (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
 
@@ -1263,6 +1263,27 @@ gimp_layer_mode_get_operation (GimpLayerMode mode)
     return "gimp:layer-mode";
 
   return info->op_name;
+}
+
+GeglOperation *
+gimp_layer_mode_get_operation (GimpLayerMode mode)
+{
+  const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
+  GeglNode                *node;
+  GeglOperation           *operation;
+
+  if (! info)
+    info = layer_mode_infos;
+
+  node = gegl_node_new_child (NULL,
+                              "operation", info->op_name,
+                              NULL);
+
+  operation = gegl_node_get_gegl_operation (node);
+  g_object_ref (operation);
+  g_object_unref (node);
+
+  return operation;
 }
 
 GimpLayerModeFunc

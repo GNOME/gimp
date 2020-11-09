@@ -1876,28 +1876,42 @@ struct DoLayerBlend : Base
 
   static constexpr gint max_n_iterators = Base::max_n_iterators + 2;
 
-  const Babl             *iterator_format;
-  GimpOperationLayerMode  layer_mode;
+  const Babl                     *iterator_format;
+  GimpOperationLayerMode         *layer_mode = NULL;
+  const GimpPaintCoreLoopsParams *params;
 
   explicit
   DoLayerBlend (const GimpPaintCoreLoopsParams *params) :
-    Base (params)
+    Base (params), params(params)
   {
-    layer_mode.layer_mode      = params->paint_mode;
-    layer_mode.opacity         = params->image_opacity;
-    layer_mode.function        = gimp_layer_mode_get_function (params->paint_mode);
-    layer_mode.blend_function  = gimp_layer_mode_get_blend_function (params->paint_mode);
-    layer_mode.blend_space     = gimp_layer_mode_get_blend_space (params->paint_mode);
-    layer_mode.composite_space = gimp_layer_mode_get_composite_space (params->paint_mode);
-    layer_mode.composite_mode  = gimp_layer_mode_get_paint_composite_mode (params->paint_mode);
+    layer_mode = GIMP_OPERATION_LAYER_MODE (gimp_layer_mode_get_operation (params->paint_mode));
+    layer_mode->layer_mode      = params->paint_mode;
+    layer_mode->opacity         = params->image_opacity;
+    layer_mode->function        = gimp_layer_mode_get_function (params->paint_mode);
+    layer_mode->blend_function  = gimp_layer_mode_get_blend_function (params->paint_mode);
+    layer_mode->blend_space     = gimp_layer_mode_get_blend_space (params->paint_mode);
+    layer_mode->composite_space = gimp_layer_mode_get_composite_space (params->paint_mode);
+    layer_mode->composite_mode  = gimp_layer_mode_get_paint_composite_mode (params->paint_mode);
 
     iterator_format = gimp_layer_mode_get_format (params->paint_mode,
-                                                  layer_mode.blend_space,
-                                                  layer_mode.composite_space,
-                                                  layer_mode.composite_mode,
+                                                  layer_mode->blend_space,
+                                                  layer_mode->composite_space,
+                                                  layer_mode->composite_mode,
                                                   gimp_temp_buf_get_format (params->paint_buf));
 
     g_return_if_fail (gimp_temp_buf_get_format (params->paint_buf) == iterator_format);
+  }
+
+  DoLayerBlend (const DoLayerBlend &algorithm) :
+    Base (algorithm.params), params(algorithm.params)
+  {
+    layer_mode = GIMP_OPERATION_LAYER_MODE (g_object_ref (algorithm.layer_mode));
+    iterator_format = algorithm.iterator_format;
+  }
+
+  ~DoLayerBlend ()
+  {
+    g_clear_object (&layer_mode);
   }
 
   template <class Derived>
@@ -2006,14 +2020,14 @@ struct DoLayerBlend : Base
 
     state->process_roi.y = y;
 
-    layer_mode.function ((GeglOperation*) &layer_mode,
-                         state->in_pixel,
-                         state->paint_pixel,
-                         mask_pixel,
-                         out_pixel,
-                         rect->width,
-                         &state->process_roi,
-                         0);
+    layer_mode->function ((GeglOperation*) layer_mode,
+                          state->in_pixel,
+                          state->paint_pixel,
+                          mask_pixel,
+                          out_pixel,
+                          rect->width,
+                          &state->process_roi,
+                          0);
 
     state->in_pixel     += rect->width * 4;
     state->paint_pixel  += this->paint_stride;

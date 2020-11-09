@@ -204,7 +204,7 @@ gimp_gegl_mode_node_set_mode (GeglNode               *node,
    * all its properties
    */
   gegl_node_set (node,
-                 "operation",       gimp_layer_mode_get_operation (mode),
+                 "operation",       gimp_layer_mode_get_operation_name (mode),
                  "layer-mode",      mode,
                  "opacity",         opacity,
                  "blend-space",     blend_space,
