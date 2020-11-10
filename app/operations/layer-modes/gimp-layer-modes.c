@@ -1131,7 +1131,16 @@ gimp_layer_modes_exit (void)
   gint i;
 
   for (i = 0; i < G_N_ELEMENTS (layer_mode_infos); i++)
-    g_clear_object (&ops[i]);
+    {
+      if (ops[i])
+        {
+          GeglNode *node;
+
+          node = ops[i]->node;
+          g_object_unref (node);
+          ops[i] = NULL;
+        }
+    }
 }
 
 static const GimpLayerModeInfo *
@@ -1305,11 +1314,19 @@ gimp_layer_mode_get_operation (GimpLayerMode mode)
                                   NULL);
 
       operation = gegl_node_get_gegl_operation (node);
-
-      g_object_ref (operation);
-      g_object_unref (node);
-
       ops[mode] = operation;
+
+      if (GIMP_IS_OPERATION_LAYER_MODE (operation))
+        {
+          GimpOperationLayerMode *layer_mode = GIMP_OPERATION_LAYER_MODE (operation);
+
+          layer_mode->layer_mode      = mode;
+          layer_mode->function        = GIMP_OPERATION_LAYER_MODE_GET_CLASS (operation)->process;
+          layer_mode->blend_function  = gimp_layer_mode_get_blend_function (mode);
+          layer_mode->blend_space     = gimp_layer_mode_get_blend_space (mode);
+          layer_mode->composite_space = gimp_layer_mode_get_composite_space (mode);
+          layer_mode->composite_mode  = gimp_layer_mode_get_paint_composite_mode (mode);
+        }
     }
 
   return ops[mode];

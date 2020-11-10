@@ -117,6 +117,9 @@ static gboolean        process_last_node                             (GeglOperat
                                                                       const GeglRectangle *roi,
                                                                       gint                 level);
 
+static void            gimp_operation_layer_mode_cache_fishes        (GimpOperationLayerMode *op,
+                                                                      const Babl             *preferred_format);
+
 
 G_DEFINE_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
                GEGL_TYPE_OPERATION_POINT_COMPOSER3)
@@ -341,48 +344,13 @@ gimp_operation_layer_mode_prepare (GeglOperation *operation)
 
   self->has_mask = mask_extent && ! gegl_rectangle_is_empty (mask_extent);
 
+  gimp_operation_layer_mode_cache_fishes (self, preferred_format);
+
   format = gimp_layer_mode_get_format (self->layer_mode,
                                        self->blend_space,
                                        self->composite_space,
                                        self->composite_mode,
                                        preferred_format);
-  if (self->cached_fish_format != format)
-    {
-      self->cached_fish_format = format;
-
-      self->space_fish
-        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1]
-        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1] =
-          babl_fish (babl_format_with_space ("RGBA float", format),
-                     babl_format_with_space ("R'G'B'A float", format));
-      self->space_fish
-        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1]
-        /* to   */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1] =
-          babl_fish (babl_format_with_space ("RGBA float", format),
-                     babl_format_with_space ("CIE Lab alpha float", format));
-
-      self->space_fish
-        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1]
-        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1] =
-          babl_fish (babl_format_with_space("R'G'B'A float", format),
-                     babl_format_with_space ( "RGBA float", format));
-      self->space_fish
-        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1]
-        /* to   */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1] =
-          babl_fish (babl_format_with_space("R'G'B'A float", format),
-                     babl_format_with_space ( "CIE Lab alpha float", format));
-
-      self->space_fish
-        /* from */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1]
-        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1] =
-          babl_fish (babl_format_with_space("CIE Lab alpha float", format),
-                     babl_format_with_space ( "RGBA float", format));
-      self->space_fish
-        /* from */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1]
-        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1] =
-          babl_fish (babl_format_with_space("CIE Lab alpha float", format),
-                     babl_format_with_space ( "R'G'B'A float", format));
-    }
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);
@@ -692,6 +660,10 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
       gimp_assert (composite_space >= 1 && composite_space < 4);
       gimp_assert (blend_space     >= 1 && blend_space     < 4);
 
+      /* Make sure the cache is set up from the start as the
+       * operation's prepare() method may have not been run yet.
+       */
+      gimp_operation_layer_mode_cache_fishes (layer_mode, NULL);
       composite_to_blend_fish = layer_mode->space_fish [composite_space - 1]
                                                        [blend_space     - 1];
 
@@ -899,6 +871,68 @@ process_last_node (GeglOperation       *operation,
     }
 
   return TRUE;
+}
+
+static void
+gimp_operation_layer_mode_cache_fishes (GimpOperationLayerMode *op,
+                                        const Babl             *preferred_format)
+{
+  const Babl *format;
+
+  if (! preferred_format)
+    {
+      const GeglRectangle *input_extent;
+
+      input_extent = gegl_operation_source_get_bounding_box (GEGL_OPERATION (op), "input");
+
+      if (input_extent && ! gegl_rectangle_is_empty (input_extent))
+        preferred_format = gegl_operation_get_source_format (GEGL_OPERATION (op), "input");
+      else
+        preferred_format = gegl_operation_get_source_format (GEGL_OPERATION (op), "aux");
+    }
+
+  format = gimp_layer_mode_get_format (op->layer_mode,
+                                       op->blend_space,
+                                       op->composite_space,
+                                       op->composite_mode,
+                                       preferred_format);
+  if (op->cached_fish_format != format)
+    {
+      op->cached_fish_format = format;
+
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1] =
+          babl_fish (babl_format_with_space ("RGBA float", format),
+                     babl_format_with_space ("R'G'B'A float", format));
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1] =
+          babl_fish (babl_format_with_space ("RGBA float", format),
+                     babl_format_with_space ("CIE Lab alpha float", format));
+
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1] =
+          babl_fish (babl_format_with_space("R'G'B'A float", format),
+                     babl_format_with_space ( "RGBA float", format));
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1] =
+          babl_fish (babl_format_with_space("R'G'B'A float", format),
+                     babl_format_with_space ( "CIE Lab alpha float", format));
+
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1] =
+          babl_fish (babl_format_with_space("CIE Lab alpha float", format),
+                     babl_format_with_space ( "RGBA float", format));
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1] =
+          babl_fish (babl_format_with_space("CIE Lab alpha float", format),
+                     babl_format_with_space ( "R'G'B'A float", format));
+    }
 }
 
 
