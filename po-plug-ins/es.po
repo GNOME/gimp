@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-04 18:12+0000\n"
-"PO-Revision-Date: 2020-10-06 13:59+0200\n"
+"POT-Creation-Date: 2020-11-07 19:24+0000\n"
+"PO-Revision-Date: 2020-11-08 17:32+0100\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -63,7 +63,7 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1811
+#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1837
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:698
 #: ../plug-ins/common/file-pdf-load.c:1264
@@ -85,7 +85,7 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1284 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:1908 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:1992 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -128,7 +128,7 @@ msgstr "_Cancelar"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1812
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1838
 #: ../plug-ins/common/file-pdf-load.c:699 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -468,7 +468,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:1960 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1044
+#: ../plug-ins/file-tiff/file-tiff-load.c:1116
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -1073,8 +1073,8 @@ msgstr "Guardar los parámetros del Examinador CML"
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
 #: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1726
-#: ../plug-ins/file-tiff/file-tiff-save.c:971
-#: ../plug-ins/file-tiff/file-tiff-save.c:1081 ../plug-ins/flame/flame.c:450
+#: ../plug-ins/file-tiff/file-tiff-save.c:1045
+#: ../plug-ins/file-tiff/file-tiff-save.c:1155 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -2171,7 +2171,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:681 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-heif.c:696 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1035
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
@@ -2260,7 +2260,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
-#: ../plug-ins/common/file-heif.c:1253 ../plug-ins/common/file-html-table.c:238
+#: ../plug-ins/common/file-heif.c:1268 ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
 #: ../plug-ins/common/file-png.c:1607 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
@@ -2269,7 +2269,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1697
-#: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:961
+#: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:1035
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exportando «%s»"
@@ -2597,12 +2597,12 @@ msgstr "Rangos:"
 msgid "C source code header"
 msgstr "Cabecera de código fuente en C"
 
-#: ../plug-ins/common/file-heif.c:114
+#: ../plug-ins/common/file-heif.c:143
 msgid "Loads HEIF images"
 msgstr "Carga imágenes HEIF"
 
 # ¿En vez de «suffices» quizo decir «suffixes»?
-#: ../plug-ins/common/file-heif.c:115
+#: ../plug-ins/common/file-heif.c:144
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2611,85 +2611,97 @@ msgstr ""
 "alta eficiencia). Las extensiones típicas de los archivos HEIF son .heif y ."
 "heic."
 
-#: ../plug-ins/common/file-heif.c:121 ../plug-ins/common/file-heif.c:168
+#: ../plug-ins/common/file-heif.c:150 ../plug-ins/common/file-heif.c:179
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:162
+#: ../plug-ins/common/file-heif.c:173
 msgid "Exports HEIF images"
 msgstr "Exporta imágenes HEIF"
 
-#: ../plug-ins/common/file-heif.c:163
+#: ../plug-ins/common/file-heif.c:174
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Guarda la imagen en formato HEIF (formato de archivo de imagen de alta "
 "eficiencia)."
 
-#: ../plug-ins/common/file-heif.c:719 ../plug-ins/common/file-heif.c:752
-#: ../plug-ins/common/file-heif.c:791 ../plug-ins/common/file-heif.c:857
+#: ../plug-ins/common/file-heif.c:194
+#| msgid "Exports HEIF images"
+msgid "Exports AVIF images"
+msgstr "Exporta imágenes AVIF"
+
+#: ../plug-ins/common/file-heif.c:195
+#| msgid "Save image in HEIF format (High Efficiency Image File Format)."
+msgid "Save image in AV1 Image File Format (AVIF)"
+msgstr "Guarda la imagen en formato de archivo de imagen AV1 (AVIF)"
+
+#: ../plug-ins/common/file-heif.c:734 ../plug-ins/common/file-heif.c:767
+#: ../plug-ins/common/file-heif.c:806 ../plug-ins/common/file-heif.c:872
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Falló al cargar la imagen HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:741
+#: ../plug-ins/common/file-heif.c:756
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Falló al cargar la imagen HEIF: el archivo de entrada no contiene imágenes "
 "legibles"
 
-#: ../plug-ins/common/file-heif.c:984
+#: ../plug-ins/common/file-heif.c:999
 msgid "image content"
 msgstr "contenido de la imagen"
 
-#: ../plug-ins/common/file-heif.c:1303 ../plug-ins/common/file-heif.c:1536
+#: ../plug-ins/common/file-heif.c:1318 ../plug-ins/common/file-heif.c:1562
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Falló al codificar la imagen HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1573
+#: ../plug-ins/common/file-heif.c:1599
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Falló al escribir la imagen HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1662
+#: ../plug-ins/common/file-heif.c:1688
 msgid "primary"
 msgstr "primario"
 
-#: ../plug-ins/common/file-heif.c:1807
+#: ../plug-ins/common/file-heif.c:1833
 msgid "Load HEIF Image"
 msgstr "Cargar imagen HEIF"
 
-#: ../plug-ins/common/file-heif.c:1821
+#: ../plug-ins/common/file-heif.c:1847
 msgid "Select Image"
 msgstr "Seleccione imagen"
 
-#: ../plug-ins/common/file-heif.c:1987
-msgid "Nearly _lossless (YUV420 format)"
-msgstr "Casi _sin pérdida (formato YUV420)"
+#: ../plug-ins/common/file-heif.c:2013
+#| msgid "Nearly _lossless (YUV420 format)"
+msgid "Nearly _lossless"
+msgstr "Casi _sin pérdida"
 
-#: ../plug-ins/common/file-heif.c:1991 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2017 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "Ca_lidad:"
 
-#: ../plug-ins/common/file-heif.c:2034
-#| msgid "_Max depth:"
+#: ../plug-ins/common/file-heif.c:2060
 msgid "Bit depth:"
 msgstr "Profundidad de bit:"
 
-#: ../plug-ins/common/file-heif.c:2040
+#: ../plug-ins/common/file-heif.c:2066
 msgid "8 bit/channel"
 msgstr "8 bit/canal"
 
-#: ../plug-ins/common/file-heif.c:2041
-msgid "10 bit/channel (HDR)"
-msgstr "10 bit/canal (HDR)"
+#: ../plug-ins/common/file-heif.c:2067
+#| msgid "8 bit/channel"
+msgid "10 bit/channel"
+msgstr "10 bit/canal"
 
-#: ../plug-ins/common/file-heif.c:2042
-msgid "12 bit/channel (HDR)"
-msgstr "12 bit/canal (HDR)"
+#: ../plug-ins/common/file-heif.c:2068
+#| msgid "8 bit/channel"
+msgid "12 bit/channel"
+msgstr "12 bit/canal"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2051 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2077 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:387
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save color _profile"
@@ -3179,7 +3191,7 @@ msgid "Import from PDF"
 msgstr "Importar desde PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1265 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:1909
+#: ../plug-ins/file-tiff/file-tiff-load.c:1993
 #: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "_Importar"
@@ -3303,7 +3315,7 @@ msgstr "Capas como páginas (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1046
+#: ../plug-ins/file-tiff/file-tiff-load.c:1118
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
@@ -3407,13 +3419,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Error al exportar «%s». No se pudo exportar la imagen."
 
 #: ../plug-ins/common/file-png.c:2416 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1158
+#: ../plug-ins/file-tiff/file-tiff-save.c:1232
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Ocurrió un error al cargar el archivo de IU «%s»: %s"
 
 #: ../plug-ins/common/file-png.c:2417 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1159
+#: ../plug-ins/file-tiff/file-tiff-save.c:1233
 msgid "Unknown error"
 msgstr "Error desconocido"
 
@@ -3723,25 +3735,21 @@ msgstr "Error de búsqueda: %s"
 
 #: ../plug-ins/common/file-psp.c:848
 #, c-format
-#| msgid "Duplicate General Image Attributes block."
 msgid "Invalid general image attribute chunk size."
 msgstr "El tamaño del bloque de atributo general de imagen no es válido."
 
 #: ../plug-ins/common/file-psp.c:870
 #, c-format
-#| msgid "Missing General Image Attributes block."
 msgid "Error reading general image attribute block."
 msgstr "Error al leer el bloque de atributo general de la imagen."
 
 #: ../plug-ins/common/file-psp.c:885
 #, c-format
-#| msgid "Compression type"
 msgid "Unknown compression type %d"
 msgstr "Tipo de compresión desconocido %d"
 
 #: ../plug-ins/common/file-psp.c:921 ../plug-ins/common/file-psp.c:928
 #, c-format
-#| msgid "Unsupported bit depth: %d"
 msgid "Unsupported bit depth %d"
 msgstr "Profundidad de bit no soportada %d"
 
@@ -3763,13 +3771,11 @@ msgstr "Error al leer datos de creación de palabras clave"
 #: ../plug-ins/common/file-psp.c:1107 ../plug-ins/common/file-psp.c:1116
 #: ../plug-ins/common/file-psp.c:1125
 #, c-format
-#| msgid "Error reading block header"
 msgid "Error reading color block"
 msgstr "Error al leer el bloque de color"
 
 #: ../plug-ins/common/file-psp.c:1138
 #, c-format
-#| msgid "Error reading block header"
 msgid "Error reading color palette"
 msgstr "Error al leer la paleta de color"
 
@@ -7449,8 +7455,8 @@ msgstr ""
 "RLE _agresivo\n"
 "(No soportado por SGI)"
 
-#: ../plug-ins/file-tiff/file-tiff.c:140 ../plug-ins/file-tiff/file-tiff.c:162
-#: ../plug-ins/file-tiff/file-tiff.c:180
+#: ../plug-ins/file-tiff/file-tiff.c:141 ../plug-ins/file-tiff/file-tiff.c:163
+#: ../plug-ins/file-tiff/file-tiff.c:181
 msgid "TIFF image"
 msgstr "Imagen TIFF"
 
@@ -7474,16 +7480,30 @@ msgstr "Canales adicionales con datos sin especificar."
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF no conforme: canales adicionales sin el campo «ExtraSamples»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:833
+#: ../plug-ins/file-tiff/file-tiff-load.c:346
+#, c-format
+msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
+msgstr ""
+"No se pudo leer la página %d de %d. Puede que la imagen esté corrupta.\n"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:838
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-de-%d-páginas"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1077
+#: ../plug-ins/file-tiff/file-tiff-load.c:1149
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1904
+#. Error reading scanline, stop loading
+#: ../plug-ins/file-tiff/file-tiff-load.c:1651
+#: ../plug-ins/file-tiff/file-tiff-load.c:1826
+#, c-format
+msgid "Reading scanline failed. Image may be corrupt at line %d."
+msgstr ""
+"Falló al leer la scanline. Puede que la imagen esté corrupta en la línea %d."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1988
 msgid "Import from TIFF"
 msgstr "Importar desde TIFF"
 
@@ -7491,23 +7511,23 @@ msgstr "Importar desde TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:1957
+#: ../plug-ins/file-tiff/file-tiff-load.c:2041
 msgid "_Keep empty space around imported layers"
 msgstr "_Mantener espacio vacío alrededor de capas importadas"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1974
+#: ../plug-ins/file-tiff/file-tiff-load.c:2058
 msgid "Process extra channel as:"
 msgstr "Procesar canal adicional como:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1977
+#: ../plug-ins/file-tiff/file-tiff-load.c:2061
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _no premultiplicado"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1978
+#: ../plug-ins/file-tiff/file-tiff-load.c:2062
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_multiplicado"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1979
+#: ../plug-ins/file-tiff/file-tiff-load.c:2063
 msgid "Channe_l"
 msgstr "Cana_l"
 
@@ -7528,7 +7548,7 @@ msgstr "Las imágenes indexadas no se pueden comprimir con «JPEG»."
 msgid "Failed a scanline write on row %d"
 msgstr "Ha fallado un trazo de la imagen por lícnea escrita en la fila %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:986
+#: ../plug-ins/file-tiff/file-tiff-save.c:1060
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7536,44 +7556,44 @@ msgstr ""
 "El formato TIFF sólo soporta comentarios en \n"
 "codificación ASCII de 7 bits. No se guardará ningún comentario."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1104
+#: ../plug-ins/file-tiff/file-tiff-save.c:1178
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Escribir páginas con distinta profundidad de bit es extraño."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1148
+#: ../plug-ins/file-tiff/file-tiff-save.c:1222
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1174
+#: ../plug-ins/file-tiff/file-tiff-save.c:1248
 msgid "Compression"
 msgstr "Compresión"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1178
+#: ../plug-ins/file-tiff/file-tiff-save.c:1252
 msgid "_None"
 msgstr "_Ninguno"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1179
+#: ../plug-ins/file-tiff/file-tiff-save.c:1253
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1180
+#: ../plug-ins/file-tiff/file-tiff-save.c:1254
 msgid "_Pack Bits"
 msgstr "_Paquetes de bits"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1181
+#: ../plug-ins/file-tiff/file-tiff-save.c:1255
 msgid "_Deflate"
 msgstr "_Desinflar"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1182
+#: ../plug-ins/file-tiff/file-tiff-save.c:1256
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1183
+#: ../plug-ins/file-tiff/file-tiff-save.c:1257
 msgid "CCITT Group _3 fax"
 msgstr "Fax CCITT grupo _3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1184
+#: ../plug-ins/file-tiff/file-tiff-save.c:1258
 msgid "CCITT Group _4 fax"
 msgstr "Fax CCITT grupo _4"
 
@@ -9574,6 +9594,11 @@ msgstr "<b>Comentario</b>"
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "S_ave Exif data"
 msgstr "Gu_ardar los datos Exif"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
+#| msgid "Save _IPTC data"
+msgid "Save _GeoTIFF data"
+msgstr "Guardar los datos _GeoTIFF"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -12731,6 +12756,12 @@ msgstr "_Escáner/Cámara…"
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
+
+#~ msgid "10 bit/channel (HDR)"
+#~ msgstr "10 bit/canal (HDR)"
+
+#~ msgid "12 bit/channel (HDR)"
+#~ msgstr "12 bit/canal (HDR)"
 
 #~ msgid "HEIF"
 #~ msgstr "HEIF"
