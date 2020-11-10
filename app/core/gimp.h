@@ -60,6 +60,7 @@ struct _Gimp
   GimpGui                 gui;         /* gui vtable */
 
   gboolean                restored;    /* becomes TRUE in gimp_restore() */
+  gboolean                initialized; /* Fully initialized (only set once at start). */
 
   gint                    busy;
   guint                   busy_idle_id;

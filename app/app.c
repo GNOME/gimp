@@ -346,6 +346,9 @@ app_run (const gchar         *full_prog_name,
                           G_CALLBACK (app_exit_after_callback),
                           &run_loop);
 
+  /* The software is now fully loaded and ready to be used. */
+  gimp->initialized = TRUE;
+
 #ifndef GIMP_CONSOLE_COMPILATION
   if (run_loop && ! no_interface)
     {
