@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-07 19:25+0000\n"
-"PO-Revision-Date: 2020-11-08 19:00+0100\n"
+"POT-Creation-Date: 2020-11-10 09:28+0000\n"
+"PO-Revision-Date: 2020-11-10 13:31+0100\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -55,7 +55,7 @@ msgstr ""
 "podría perder su trabajo.%nSi encuentra algún problema, primero verifique "
 "que no haya sido corregido en GIT antes de ponerse en contacto con los "
 "desarrolladores o informar de ello en la página gitlab de GIMP:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%n¿Quiere ¿Continuar con la instalación "
+"gitlab.gnome.org/GNOME/gimp/issues%n%n¿Quiere continuar con la instalación "
 "de todos modos?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
@@ -183,12 +183,10 @@ msgstr ""
 "Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
-#| msgid "Python scripting"
 msgid "Lua scripting"
 msgstr "Lua scripting"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:34
-#| msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr ""
 "Le permite usar complementos de GIMP escritos en el lenguaje interpretado "
