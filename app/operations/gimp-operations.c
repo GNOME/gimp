@@ -223,3 +223,11 @@ gimp_operations_init (Gimp *gimp)
   set_settings_folder (GIMP_TYPE_LEVELS_CONFIG,
                        "levels");
 }
+
+void
+gimp_operations_exit (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp_layer_modes_exit ();
+}

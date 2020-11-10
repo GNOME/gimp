@@ -22,6 +22,7 @@
 
 
 void   gimp_operations_init (Gimp *gimp);
+void   gimp_operations_exit (Gimp *gimp);
 
 
 #endif /* __GIMP_OPERATIONS_H__ */

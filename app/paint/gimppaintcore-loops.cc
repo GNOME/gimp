@@ -1876,13 +1876,12 @@ struct DoLayerBlend : Base
 
   static constexpr gint max_n_iterators = Base::max_n_iterators + 2;
 
-  const Babl                     *iterator_format;
-  GimpOperationLayerMode         *layer_mode = NULL;
-  const GimpPaintCoreLoopsParams *params;
+  const Babl             *iterator_format;
+  GimpOperationLayerMode *layer_mode = NULL;
 
   explicit
   DoLayerBlend (const GimpPaintCoreLoopsParams *params) :
-    Base (params), params(params)
+    Base (params)
   {
     layer_mode = GIMP_OPERATION_LAYER_MODE (gimp_layer_mode_get_operation (params->paint_mode));
     layer_mode->layer_mode      = params->paint_mode;
@@ -1900,18 +1899,6 @@ struct DoLayerBlend : Base
                                                   gimp_temp_buf_get_format (params->paint_buf));
 
     g_return_if_fail (gimp_temp_buf_get_format (params->paint_buf) == iterator_format);
-  }
-
-  DoLayerBlend (const DoLayerBlend &algorithm) :
-    Base (algorithm.params), params(algorithm.params)
-  {
-    layer_mode = GIMP_OPERATION_LAYER_MODE (g_object_ref (algorithm.layer_mode));
-    iterator_format = algorithm.iterator_format;
-  }
-
-  ~DoLayerBlend ()
-  {
-    g_clear_object (&layer_mode);
   }
 
   template <class Derived>

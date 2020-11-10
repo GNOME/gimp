@@ -1110,6 +1110,7 @@ static const GimpLayerMode layer_mode_groups[][2] =
   }
 };
 
+static GeglOperation *ops[G_N_ELEMENTS (layer_mode_infos)] = { 0 };
 
 /*  public functions  */
 
@@ -1122,6 +1123,15 @@ gimp_layer_modes_init (void)
     {
       gimp_assert ((GimpLayerMode) i == layer_mode_infos[i].layer_mode);
     }
+}
+
+void
+gimp_layer_modes_exit (void)
+{
+  gint i;
+
+  for (i = 0; i < G_N_ELEMENTS (layer_mode_infos); i++)
+    g_clear_object (&ops[i]);
 }
 
 static const GimpLayerModeInfo *
@@ -1265,55 +1275,54 @@ gimp_layer_mode_get_operation_name (GimpLayerMode mode)
   return info->op_name;
 }
 
+/**
+ * gimp_layer_mode_get_operation:
+ * @mode:
+ *
+ * Returns: a #GeglOperation for @mode which may be reused and must not
+ *          be freed.
+ */
 GeglOperation *
 gimp_layer_mode_get_operation (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  GeglNode                *node;
-  GeglOperation           *operation;
+  const gchar             *op_name;
 
-  if (! info)
-    info = layer_mode_infos;
-
-  node = gegl_node_new_child (NULL,
-                              "operation", info->op_name,
-                              NULL);
-
-  operation = gegl_node_get_gegl_operation (node);
-  g_object_ref (operation);
-  g_object_unref (node);
-
-  return operation;
-}
-
-GimpLayerModeFunc
-gimp_layer_mode_get_function (GimpLayerMode mode)
-{
-  const GimpLayerModeInfo  *info = gimp_layer_mode_info (mode);
-  static GimpLayerModeFunc  funcs[G_N_ELEMENTS (layer_mode_infos)];
+  op_name = gimp_layer_mode_get_operation_name (mode);
 
   if (! info)
     info = layer_mode_infos;
 
   mode = info - layer_mode_infos;
 
-  if (! funcs[mode])
+  if (! ops[mode])
     {
       GeglNode      *node;
       GeglOperation *operation;
 
       node = gegl_node_new_child (NULL,
-                                  "operation", info->op_name,
+                                  "operation", op_name,
                                   NULL);
 
       operation = gegl_node_get_gegl_operation (node);
 
-      funcs[mode] = GIMP_OPERATION_LAYER_MODE_GET_CLASS (operation)->process;
-
+      g_object_ref (operation);
       g_object_unref (node);
+
+      ops[mode] = operation;
     }
 
-  return funcs[mode];
+  return ops[mode];
+}
+
+GimpLayerModeFunc
+gimp_layer_mode_get_function (GimpLayerMode mode)
+{
+  GeglOperation *operation;
+
+  operation = gimp_layer_mode_get_operation (mode);
+
+  return GIMP_OPERATION_LAYER_MODE_GET_CLASS (operation)->process;
 }
 
 GimpLayerModeBlendFunc

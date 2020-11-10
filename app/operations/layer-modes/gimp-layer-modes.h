@@ -24,6 +24,7 @@
 
 
 void                       gimp_layer_modes_init                      (void);
+void                       gimp_layer_modes_exit                      (void);
 
 gboolean                   gimp_layer_mode_is_legacy                  (GimpLayerMode           mode);
 
