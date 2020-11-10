@@ -346,9 +346,6 @@ app_run (const gchar         *full_prog_name,
                           G_CALLBACK (app_exit_after_callback),
                           &run_loop);
 
-  /* The software is now fully loaded and ready to be used. */
-  gimp->initialized = TRUE;
-
 #ifndef GIMP_CONSOLE_COMPILATION
   if (run_loop && ! no_interface)
     {
@@ -425,6 +422,12 @@ app_run (const gchar         *full_prog_name,
             }
         }
     }
+
+  /* The software is now fully loaded and ready to be used and get
+   * external input.
+   */
+  gimp->initialized = TRUE;
+
   if (font_error)
     {
       gimp_message_literal (gimp, NULL,

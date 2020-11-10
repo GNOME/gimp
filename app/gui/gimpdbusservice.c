@@ -147,6 +147,7 @@ gimp_dbus_service_dispose (GObject *object)
     {
       g_source_remove (g_source_get_id (service->source));
       service->source = NULL;
+      service->timeout_source = FALSE;
     }
 
   while (! g_queue_is_empty (service->queue))
@@ -269,6 +270,7 @@ gimp_dbus_service_queue_open (GimpDBusService *service,
   if (! service->source)
     {
       service->source = g_idle_source_new ();
+      service->timeout_source = FALSE;
 
       g_source_set_priority (service->source, G_PRIORITY_LOW);
       g_source_set_callback (service->source,
@@ -302,6 +304,7 @@ gimp_dbus_service_queue_batch (GimpDBusService *service,
   if (! service->source)
     {
       service->source = g_idle_source_new ();
+      service->timeout_source = FALSE;
 
       g_source_set_priority (service->source, G_PRIORITY_LOW);
       g_source_set_callback (service->source,
@@ -329,9 +332,35 @@ gimp_dbus_service_process_idle (GimpDBusService *service)
   IdleData *data;
 
   if (! service->gimp->initialized || ! service->gimp->restored)
-    return TRUE;
+    {
+      if (! service->timeout_source)
+        {
+          /* We are probably starting the program. No need to spam GIMP with
+           * an idle handler (which might make GIMP slower to start even
+           * with low priority).
+           * Instead let's add a timeout of half a second.
+           */
+          service->source = g_timeout_source_new (500);
+          service->timeout_source = TRUE;
 
-  data = g_queue_pop_tail (service->queue);
+          g_source_set_priority (service->source, G_PRIORITY_LOW);
+          g_source_set_callback (service->source,
+                                 (GSourceFunc) gimp_dbus_service_process_idle,
+                                 service,
+                                 NULL);
+          g_source_attach (service->source, NULL);
+          g_source_unref (service->source);
+
+          return G_SOURCE_REMOVE;
+        }
+      else
+        {
+          return G_SOURCE_CONTINUE;
+        }
+    }
+
+  /* Process data as a FIFO. */
+  data = g_queue_pop_head (service->queue);
 
   if (data)
     {
@@ -349,12 +378,33 @@ gimp_dbus_service_process_idle (GimpDBusService *service)
 
       gimp_dbus_service_idle_data_free (data);
 
-      return TRUE;
+      if (service->timeout_source)
+        {
+          /* Now GIMP is fully functional and can respond quickly to
+           * DBus calls. Switch to a usual idle source.
+           */
+          service->source = g_idle_source_new ();
+          service->timeout_source = FALSE;
+
+          g_source_set_priority (service->source, G_PRIORITY_LOW);
+          g_source_set_callback (service->source,
+                                 (GSourceFunc) gimp_dbus_service_process_idle,
+                                 service,
+                                 NULL);
+          g_source_attach (service->source, NULL);
+          g_source_unref (service->source);
+
+          return G_SOURCE_REMOVE;
+        }
+      else
+        {
+          return G_SOURCE_CONTINUE;
+        }
     }
 
   service->source = NULL;
 
-  return FALSE;
+  return G_SOURCE_REMOVE;
 }
 
 static IdleData *

@@ -49,9 +49,10 @@ struct _GimpDBusService
 {
   GimpDBusServiceUISkeleton  parent_instance;
 
-  Gimp    *gimp;
-  GQueue  *queue;
-  GSource *source;
+  Gimp     *gimp;
+  GQueue   *queue;
+  GSource  *source;
+  gboolean  timeout_source;
 };
 
 struct _GimpDBusServiceClass
