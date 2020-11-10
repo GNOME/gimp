@@ -11,6 +11,7 @@ cd ..
 
 # GEGL
 
+crossroad update
 crossroad install cairo json-glib && \
 git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git && cd gegl && \
 crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib && \
@@ -26,6 +27,7 @@ if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
   LIBMNG="libmng"
 fi
 
+crossroad update
 crossroad install appstream-glib              \
                   atk                         \
                   drmingw                     \
