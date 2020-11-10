@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-07 19:24+0000\n"
-"PO-Revision-Date: 2020-11-08 17:32+0100\n"
+"POT-Creation-Date: 2020-11-10 09:30+0000\n"
+"PO-Revision-Date: 2020-11-10 14:11+0100\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -2626,12 +2626,10 @@ msgstr ""
 "eficiencia)."
 
 #: ../plug-ins/common/file-heif.c:194
-#| msgid "Exports HEIF images"
 msgid "Exports AVIF images"
 msgstr "Exporta imágenes AVIF"
 
 #: ../plug-ins/common/file-heif.c:195
-#| msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Guarda la imagen en formato de archivo de imagen AV1 (AVIF)"
 
@@ -2674,7 +2672,6 @@ msgid "Select Image"
 msgstr "Seleccione imagen"
 
 #: ../plug-ins/common/file-heif.c:2013
-#| msgid "Nearly _lossless (YUV420 format)"
 msgid "Nearly _lossless"
 msgstr "Casi _sin pérdida"
 
@@ -2691,12 +2688,10 @@ msgid "8 bit/channel"
 msgstr "8 bit/canal"
 
 #: ../plug-ins/common/file-heif.c:2067
-#| msgid "8 bit/channel"
 msgid "10 bit/channel"
 msgstr "10 bit/canal"
 
 #: ../plug-ins/common/file-heif.c:2068
-#| msgid "8 bit/channel"
 msgid "12 bit/channel"
 msgstr "12 bit/canal"
 
@@ -7501,7 +7496,8 @@ msgstr "Canal TIFF"
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
-"Falló al leer la scanline. Puede que la imagen esté corrupta en la línea %d."
+"Falló al leer la línea de exploración. Puede que la imagen esté corrupta en "
+"la línea %d."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1988
 msgid "Import from TIFF"
@@ -7546,7 +7542,7 @@ msgstr "Las imágenes indexadas no se pueden comprimir con «JPEG»."
 #: ../plug-ins/file-tiff/file-tiff-save.c:746
 #, c-format
 msgid "Failed a scanline write on row %d"
-msgstr "Ha fallado un trazo de la imagen por lícnea escrita en la fila %d"
+msgstr "Ha fallado la escritura de la línea de exploración en la fila %d"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1060
 msgid ""
@@ -9596,7 +9592,6 @@ msgid "S_ave Exif data"
 msgstr "Gu_ardar los datos Exif"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
-#| msgid "Save _IPTC data"
 msgid "Save _GeoTIFF data"
 msgstr "Guardar los datos _GeoTIFF"
 
