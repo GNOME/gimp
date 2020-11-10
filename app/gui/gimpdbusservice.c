@@ -328,14 +328,13 @@ gimp_dbus_service_process_idle (GimpDBusService *service)
 {
   IdleData *data;
 
-  if (! service->gimp->restored)
+  if (! service->gimp->initialized || ! service->gimp->restored)
     return TRUE;
 
   data = g_queue_pop_tail (service->queue);
 
   if (data)
     {
-
       if (data->file)
         file_open_from_command_line (service->gimp, data->file, data->as_new,
                                      NULL /* FIXME monitor */);
