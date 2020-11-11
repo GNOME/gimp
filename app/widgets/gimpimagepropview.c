@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -413,6 +414,7 @@ static void
 gimp_image_prop_view_update (GimpImagePropView *view)
 {
   GimpImage         *image = view->image;
+  GimpColorProfile  *profile;
   GimpImageBaseType  type;
   GimpPrecision      precision;
   GimpUnit           unit;
@@ -457,9 +459,8 @@ gimp_image_prop_view_update (GimpImagePropView *view)
               unit == GIMP_UNIT_INCH ? _("ppi") : format_buf);
   gtk_label_set_text (GTK_LABEL (view->resolution_label), buf);
 
-  /*  color type  */
+  /*  color space  */
   type = gimp_image_get_base_type (image);
-
   gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE, type,
                        NULL, NULL, &desc, NULL);
 
@@ -467,7 +468,9 @@ gimp_image_prop_view_update (GimpImagePropView *view)
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      g_snprintf (buf, sizeof (buf), "%s", desc);
+      profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+      g_snprintf (buf, sizeof (buf), "%s: %s", desc,
+                  gimp_color_profile_get_label (profile));
       break;
     case GIMP_INDEXED:
       g_snprintf (buf, sizeof (buf),
