@@ -15,6 +15,11 @@ Core:
 
   - Ignore Pentax and PentaxDng metadata at export because they are
     unsupported.
+  - DBus calls (remote file open, typically with double click on file
+    browser; and remote command run) are now processed after all command
+    line files (in case of calls during startup) and in the call order
+    (FIFO) for consistency. Some timeout has also been added to not spam
+    the core process with non-processable DBus calls during startup.
 
 Plug-ins:
 
