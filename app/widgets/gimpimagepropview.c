@@ -73,6 +73,8 @@ static void        gimp_image_prop_view_undo_event   (GimpImage         *image,
                                                       GimpImagePropView *view);
 static void        gimp_image_prop_view_update       (GimpImagePropView *view);
 static void        gimp_image_prop_view_file_update  (GimpImagePropView *view);
+static void        gimp_image_prop_view_realize      (GimpImagePropView *view,
+                                                      gpointer           user_data);
 
 
 G_DEFINE_TYPE (GimpImagePropView, gimp_image_prop_view, GTK_TYPE_TABLE)
@@ -129,6 +131,8 @@ gimp_image_prop_view_init (GimpImagePropView *view)
 
   gtk_label_set_ellipsize (GTK_LABEL (view->filename_label),
                            PANGO_ELLIPSIZE_MIDDLE);
+  /* See gimp_image_prop_view_realize(). */
+  gtk_label_set_max_width_chars (GTK_LABEL (view->filename_label), 25);
 
   view->filesize_label =
     gimp_image_prop_view_add_label (table, row++, _("File Size:"));
@@ -161,6 +165,9 @@ gimp_image_prop_view_init (GimpImagePropView *view)
   view->vectors_label =
     gimp_image_prop_view_add_label (table, row++, _("Number of paths:"));
 
+  g_signal_connect (view, "realize",
+                    G_CALLBACK (gimp_image_prop_view_realize),
+                    NULL);
 }
 
 static void
@@ -309,6 +316,9 @@ gimp_image_prop_view_label_set_filename (GtkWidget *label,
     {
       gtk_label_set_text (GTK_LABEL (label),
                           gimp_file_get_utf8_name (file));
+      /* In case the label is ellipsized. */
+      gtk_widget_set_tooltip_text (GTK_WIDGET (label),
+                                   gimp_file_get_utf8_name (file));
     }
   else
     {
@@ -480,6 +490,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
     }
 
   gtk_label_set_text (GTK_LABEL (view->colorspace_label), buf);
+  gtk_label_set_line_wrap (GTK_LABEL (view->colorspace_label), TRUE);
 
   /*  precision  */
   precision = gimp_image_get_precision (image);
@@ -534,4 +545,19 @@ gimp_image_prop_view_file_update (GimpImagePropView *view)
 
   /*  filetype  */
   gimp_image_prop_view_label_set_filetype (view->filetype_label, image);
+}
+
+static void
+gimp_image_prop_view_realize (GimpImagePropView *view,
+                              gpointer           user_data)
+{
+  /* Ugly trick to avoid extra-wide dialog at construction because of
+   * overlong file path. Basically I give a reasonnable max size at
+   * construction (if the path is longer, it is just ellipsized per set
+   * rules), then once the widget is realized, I remove the max size,
+   * allowing the widget to grow wider if ever the dialog were
+   * manually resized (we don't want to keep the label short and
+   * ellipsized if the dialog is explicitly made to have enough place).
+   */
+  gtk_label_set_max_width_chars (GTK_LABEL (view->filename_label), -1);
 }
