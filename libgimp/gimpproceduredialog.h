@@ -76,6 +76,9 @@ GtkWidget * gimp_procedure_dialog_get_widget        (GimpProcedureDialog *dialog
 GtkWidget * gimp_procedure_dialog_get_int_combo     (GimpProcedureDialog *dialog,
                                                      const gchar         *property,
                                                      GimpIntStore        *store);
+GtkWidget * gimp_procedure_dialog_get_label         (GimpProcedureDialog *dialog,
+                                                     const gchar         *label_id,
+                                                     const gchar         *text);
 
 GtkWidget * gimp_procedure_dialog_fill_flowbox      (GimpProcedureDialog *dialog,
                                                      const gchar         *container_id,
@@ -84,6 +87,12 @@ GtkWidget * gimp_procedure_dialog_fill_flowbox      (GimpProcedureDialog *dialog
 GtkWidget * gimp_procedure_dialog_fill_flowbox_list (GimpProcedureDialog *dialog,
                                                      const gchar         *container_id,
                                                      GList               *properties);
+
+GtkWidget * gimp_procedure_dialog_fill_frame        (GimpProcedureDialog *dialog,
+                                                     const gchar         *container_id,
+                                                     const gchar         *title_id,
+                                                     gboolean             invert_title,
+                                                     const gchar         *contents_id);
 
 void        gimp_procedure_dialog_fill              (GimpProcedureDialog *dialog,
                                                      const gchar         *first_property,

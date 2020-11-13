@@ -393,8 +393,20 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     }
   else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING)
     {
-      widget = gimp_prop_entry_new (G_OBJECT (dialog->priv->config),
-                                    property, -1);
+      if (widget_type == G_TYPE_NONE || widget_type == GTK_TYPE_TEXT_VIEW)
+        {
+          GtkTextBuffer *buffer;
+
+          buffer = gimp_prop_text_buffer_new (G_OBJECT (dialog->priv->config),
+                                              property, -1);
+          widget = gtk_text_view_new_with_buffer (buffer);
+          g_object_unref (buffer);
+        }
+      else if (widget_type == GTK_TYPE_ENTRY)
+        {
+          widget = gimp_prop_entry_new (G_OBJECT (dialog->priv->config),
+                                        property, -1);
+        }
     }
   else
     {
@@ -495,6 +507,55 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
 
   return widget;
+}
+
+/**
+ * gimp_procedure_dialog_get_label:
+ * @dialog:   the #GimpProcedureDialog.
+ * @label_id: the label for the #GtkLabel.
+ * @text:     the text for the label.
+ *
+ * Creates a new #GtkLabel with @text. It can be useful for packing
+ * textual information in between property settings.
+ *
+ * The @label_id must be a unique ID which is neither the name of a
+ * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * the ID of any previously created label or container. This ID can
+ * later be used together with property names to be packed in other
+ * containers or inside @dialog itself.
+ *
+ * Returns: (transfer none): the #GtkWidget representing @label_id. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
+                                 const gchar         *label_id,
+                                 const gchar         *text)
+{
+  GtkWidget *label;
+
+  g_return_val_if_fail (label_id != NULL, NULL);
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                    label_id))
+    {
+      g_warning ("%s: label identifier '%s' cannot be an existing property name.",
+                 G_STRFUNC, label_id);
+      return NULL;
+    }
+
+  if ((label = g_hash_table_lookup (dialog->priv->widgets, label_id)))
+    {
+      g_warning ("%s: label identifier '%s' was already configured.",
+                 G_STRFUNC, label_id);
+      return label;
+    }
+
+  label = gtk_label_new (text);
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (label_id), label);
+
+  return label;
 }
 
 /**
@@ -794,6 +855,107 @@ gimp_procedure_dialog_fill_flowbox_list (GimpProcedureDialog *dialog,
   g_hash_table_insert (dialog->priv->widgets, g_strdup (container_id), flowbox);
 
   return flowbox;
+}
+
+
+/**
+ * gimp_procedure_dialog_fill_frame:
+ * @dialog:        the #GimpProcedureDialog.
+ * @container_id:  a container identifier.
+ * @title_id: (nullable): the identifier for the title widget.
+ * @invert_title:  whether to use the opposite value of @title_id if it
+ *                 represents a boolean widget.
+ * @contents_id: (nullable): the identifier for the contents.
+ *
+ * Creates a new #GtkFrame and packs @title_id as its title and
+ * @contents_id as its child.
+ * If @title_id represents a boolean property, its value will be used to
+ * renders @contents_id sensitive or not. If @invert_title is TRUE, then
+ * sensitivity binding is inverted.
+ *
+ * The @container_id must be a unique ID which is neither the name of a
+ * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * the ID of any previously created container. This ID can later be used
+ * together with property names to be packed in other containers or
+ * inside @dialog itself.
+ *
+ * Returns: (transfer none): the #GtkWidget representing @container_id. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
+                                  const gchar         *container_id,
+                                  const gchar         *title_id,
+                                  gboolean             invert_title,
+                                  const gchar         *contents_id)
+{
+  GtkWidget *frame;
+  GtkWidget *contents = NULL;
+  GtkWidget *title    = NULL;
+
+  g_return_val_if_fail (container_id != NULL, NULL);
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                    container_id))
+    {
+      g_warning ("%s: frame identifier '%s' cannot be an existing property name.",
+                 G_STRFUNC, container_id);
+      return NULL;
+    }
+
+  if ((frame = g_hash_table_lookup (dialog->priv->widgets, container_id)))
+    {
+      g_warning ("%s: frame identifier '%s' was already configured.",
+                 G_STRFUNC, container_id);
+      return frame;
+    }
+
+  frame = gtk_frame_new (NULL);
+
+  if (contents_id)
+    {
+      contents = gimp_procedure_dialog_get_widget (dialog, contents_id, G_TYPE_NONE);
+      if (! contents)
+        {
+          g_warning ("%s: no property or configured widget with identifier '%s'.",
+                     G_STRFUNC, contents_id);
+          return frame;
+        }
+
+      gtk_container_add (GTK_CONTAINER (frame), contents);
+      gtk_widget_show (contents);
+    }
+
+  if (title_id)
+    {
+      title = gimp_procedure_dialog_get_widget (dialog, title_id, G_TYPE_NONE);
+      if (! title)
+        {
+          g_warning ("%s: no property or configured widget with identifier '%s'.",
+                     G_STRFUNC, title_id);
+          return frame;
+        }
+
+      gtk_frame_set_label_widget (GTK_FRAME (frame), title);
+      gtk_widget_show (title);
+
+      if (contents && (GTK_IS_CHECK_BUTTON (title) || GTK_IS_SWITCH (title)))
+        {
+          GBindingFlags flags = G_BINDING_SYNC_CREATE;
+
+          if (invert_title)
+            flags |= G_BINDING_INVERT_BOOLEAN;
+
+          g_object_bind_property (title,    "active",
+                                  contents, "sensitive",
+                                  flags);
+        }
+    }
+
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (container_id), frame);
+
+  return frame;
 }
 
 /**
