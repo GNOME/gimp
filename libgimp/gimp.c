@@ -1131,6 +1131,7 @@ _gimp_config (GPConfig *config)
   _export_exif          = config->export_exif      ? TRUE : FALSE;
   _export_xmp           = config->export_xmp       ? TRUE : FALSE;
   _export_iptc          = config->export_iptc      ? TRUE : FALSE;
+  _export_comment       = config->export_comment;
   _default_display_id   = config->default_display_id;
   _wm_class             = g_strdup (config->wm_class);
   _display_name         = g_strdup (config->display_name);
