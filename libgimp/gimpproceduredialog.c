@@ -325,6 +325,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                   GType                widget_type)
 {
   GtkWidget  *widget = NULL;
+  GtkWidget  *label  = NULL;
   GParamSpec *pspec;
 
   g_return_val_if_fail (property != NULL, NULL);
@@ -351,10 +352,10 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                              property,
                                              _(g_param_spec_get_nick (pspec)));
       else if (widget_type == GTK_TYPE_SWITCH)
-          widget = gimp_prop_switch_new (G_OBJECT (dialog->priv->config),
-                                         property,
-                                         _(g_param_spec_get_nick (pspec)),
-                                         NULL, NULL);
+        widget = gimp_prop_switch_new (G_OBJECT (dialog->priv->config),
+                                       property,
+                                       _(g_param_spec_get_nick (pspec)),
+                                       &label, NULL);
     }
   else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)
     {
@@ -403,9 +404,10 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                  property, G_PARAM_SPEC_TYPE_NAME (pspec));
       return NULL;
     }
-  else if (GIMP_IS_LABELED (widget))
+  else if (GIMP_IS_LABELED (widget) || label)
     {
-      GtkWidget *label = gimp_labeled_get_label (GIMP_LABELED (widget));
+      if (! label)
+        label = gimp_labeled_get_label (GIMP_LABELED (widget));
 
       gtk_size_group_add_widget (dialog->priv->label_group, label);
     }
