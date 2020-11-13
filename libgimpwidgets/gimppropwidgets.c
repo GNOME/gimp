@@ -336,6 +336,7 @@ gimp_prop_switch_new (GObject     *config,
   gtk_widget_show (pswitch);
 
   plabel = gtk_label_new_with_mnemonic (label);
+  gtk_label_set_xalign (GTK_LABEL (plabel), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (plabel), pswitch);
   gimp_help_set_help_data (plabel, tooltip, NULL);
   gtk_widget_show (plabel);
