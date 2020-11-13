@@ -973,7 +973,7 @@ save_dialog (GimpImage     *image,
   gimp_labeled_set_text (GIMP_LABELED (gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                                                          "to-frame", GIMP_TYPE_LABEL_SPIN)),
                          "_To:");
-  gimp_procedure_dialog_populate (GIMP_PROCEDURE_DIALOG (dialog), NULL);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
 
   gtk_widget_show (dialog);
 
