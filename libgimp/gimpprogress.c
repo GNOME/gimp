@@ -120,13 +120,13 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
                         G_PARAM_READWRITE);
 
   GIMP_PROC_ARG_DOUBLE (procedure, "value",
-                        "Vakue",
+                        "Value",
                         "The progress value",
                         0.0, 1.0, 0.0,
                         G_PARAM_READWRITE);
 
   GIMP_PROC_VAL_DOUBLE (procedure, "value",
-                        "Vakue",
+                        "Value",
                         "The progress value",
                         0.0, 1.0, 0.0,
                         G_PARAM_READWRITE);
