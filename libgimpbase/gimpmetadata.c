@@ -285,21 +285,22 @@ void
 gimp_metadata_add_xmp_history (GimpMetadata *metadata,
                                gchar        *state_status)
 {
-  time_t now;
-  struct tm* now_tm;
-  char timestr[256];
-  char tzstr[7];
-  gchar  iid_data[256];
-  gchar  strdata[1024];
-  gchar  tagstr[1024];
-  gchar *uuid;
-  gchar *did;
-  gchar *odid;
-  gint   id_count;
-  gint   found;
-  gint   lastfound;
-  gint count;
-  int ii;
+  time_t     now;
+  struct tm *now_tm;
+  gchar     *tmp;
+  char       timestr[256];
+  char       tzstr[7];
+  gchar      iid_data[256];
+  gchar      strdata[1024];
+  gchar      tagstr[1024];
+  gchar     *uuid;
+  gchar     *did;
+  gchar     *odid;
+  gint       id_count;
+  gint       found;
+  gint       lastfound;
+  gint       count;
+  int        ii;
 
   static const gchar *tags[] =
   {
@@ -436,11 +437,10 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
 
   /* get current time and timezone string */
   strftime (timestr, 256, "%Y-%m-%dT%H:%M:%S", now_tm);
-  g_snprintf (timestr, sizeof (timestr), "%s%s",
-              timestr, tzstr);
-
+  tmp = g_strdup_printf ("%s%s", timestr, tzstr);
   gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
-                                  tagstr, timestr);
+                                  tagstr, tmp);
+  g_free (tmp);
 
   memset (tagstr, 0, sizeof (tagstr));
   memset (strdata, 0, sizeof (strdata));
