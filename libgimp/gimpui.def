@@ -39,11 +39,16 @@ EXPORTS
 	gimp_proc_browser_dialog_get_type
 	gimp_proc_browser_dialog_new
 	gimp_proc_view_new
+	gimp_procedure_dialog_fill
+	gimp_procedure_dialog_fill_flowbox
+	gimp_procedure_dialog_fill_flowbox_list
+	gimp_procedure_dialog_fill_frame
+	gimp_procedure_dialog_fill_list
+	gimp_procedure_dialog_get_int_combo
+	gimp_procedure_dialog_get_label
 	gimp_procedure_dialog_get_type
 	gimp_procedure_dialog_get_widget
 	gimp_procedure_dialog_new
-	gimp_procedure_dialog_populate
-	gimp_procedure_dialog_populate_list
 	gimp_procedure_dialog_run
 	gimp_progress_bar_get_type
 	gimp_progress_bar_new
