@@ -389,6 +389,7 @@ gimp_font_get_sample_string (PangoContext         *context,
 {
   PangoFont        *font;
   hb_face_t        *hb_face;
+  hb_font_t        *hb_font;
   FT_Face           face;
   TT_OS2           *os2;
   PangoOTTableType  tt;
@@ -672,8 +673,28 @@ gimp_font_get_sample_string (PangoContext         *context,
 
   g_return_val_if_fail (PANGO_IS_FC_FONT (font), "Aa");
 
-  face = pango_fc_font_lock_face (PANGO_FC_FONT (font));
+  hb_font = pango_font_get_hb_font (font);
+  g_return_val_if_fail (hb_font != NULL, "Aa");
+
+  /* These are needed to set hb_font to the right internal format, which
+   * can only work if the font is not immutable. Hence we make a copy.
+   */
+  hb_font = hb_font_create_sub_font (hb_font);
+  hb_ft_font_set_funcs (hb_font);
+  /* TODO: use hb_ft_font_lock_face/hb_ft_font_unlock_face() when we
+   * bump to harfbuzz >= 2.6.5.
+   */
+  face = hb_ft_font_get_face (hb_font);
+
+  /* Are there actual cases where this function could return NULL while
+   * it's not a bug in the code?
+   * For instance if the font file is broken, we don't want to return a
+   * CRITICAL, but properly address the issue (removing the font with a
+   * warning or whatnot).
+   * See #5922.
+   */
   g_return_val_if_fail (face != NULL, "Aa");
+
   hb_face = hb_ft_face_create (face, NULL);
 
   /* First check what script(s), if any, the font has GSUB or GPOS
@@ -753,8 +774,7 @@ gimp_font_get_sample_string (PangoContext         *context,
         }
     }
 
-  pango_fc_font_unlock_face (PANGO_FC_FONT (font));
-
+  hb_font_destroy (hb_font);
   g_object_unref (font);
 
   if (n_ot_alts > 2)
