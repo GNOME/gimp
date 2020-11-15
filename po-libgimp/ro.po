@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-12 20:08+0000\n"
-"PO-Revision-Date: 2020-11-04 14:34+0200\n"
+"PO-Revision-Date: 2020-11-15 14:12+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -1456,7 +1456,7 @@ msgstr "Tonuri întunecate"
 #: ../libgimpbase/gimpbaseenums.c:1891
 msgctxt "transfer-mode"
 msgid "Midtones"
-msgstr "Tonuri de mijloc"
+msgstr "Tonuri medii"
 
 #: ../libgimpbase/gimpbaseenums.c:1892
 msgctxt "transfer-mode"
