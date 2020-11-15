@@ -480,8 +480,10 @@ gimp_image_prop_view_update (GimpImagePropView *view)
       break;
     case GIMP_INDEXED:
       g_snprintf (buf, sizeof (buf),
-                  "%s (%d %s)", desc, gimp_image_get_colormap_size (image),
-                  _("colors"));
+                  ngettext ("Indexed color (monochrome)",
+                            "Indexed color (%d colors)",
+                            gimp_image_get_colormap_size (image)),
+                  gimp_image_get_colormap_size (image));
       break;
     }
 
