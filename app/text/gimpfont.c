@@ -351,14 +351,14 @@ gimp_font_get_standard (void)
 
 
 static inline gboolean
-gimp_font_covers_string (PangoFcFont *font,
+gimp_font_covers_string (PangoFont   *font,
                          const gchar *sample)
 {
   const gchar *p;
 
   for (p = sample; *p; p = g_utf8_next_char (p))
     {
-      if (! pango_fc_font_has_char (font, g_utf8_get_char (p)))
+      if (! pango_font_has_char (font, g_utf8_get_char (p)))
         return FALSE;
     }
 
@@ -733,8 +733,7 @@ gimp_font_get_sample_string (PangoContext         *context,
 #define TAG(s) FT_MAKE_TAG (s[0], s[1], s[2], s[3])
 
                   if (slist[j] == TAG (scripts[i].script) &&
-                      gimp_font_covers_string (PANGO_FC_FONT (font),
-                                               scripts[i].sample))
+                      gimp_font_covers_string (font, scripts[i].sample))
                     {
                       ot_alts[n_ot_alts++] = i;
                       DEBUGPRINT (("%.4s ", scripts[i].script));
@@ -765,8 +764,7 @@ gimp_font_get_sample_string (PangoContext         *context,
         {
           if (scripts[i].bit >= 0 &&
               (&os2->ulUnicodeRange1)[scripts[i].bit/32] & (1 << (scripts[i].bit % 32)) &&
-              gimp_font_covers_string (PANGO_FC_FONT (font),
-                                       scripts[i].sample))
+              gimp_font_covers_string (font, scripts[i].sample))
             {
               sr_alts[n_sr_alts++] = i;
               DEBUGPRINT (("%.4s ", scripts[i].script));

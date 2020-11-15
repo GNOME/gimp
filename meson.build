@@ -371,7 +371,7 @@ gmodule           = dependency('gmodule-no-export-2.0')
 
 gtk3_minver       = '3.16.10'
 gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
-harfbuzz_minver   = '0.9.19'
+harfbuzz_minver   = '1.0.5'
 harfbuzz          = dependency('harfbuzz',           version: '>='+harfbuzz_minver)
 json_glib         = dependency('json-glib-1.0',      version: '>=1.2.6')
 lcms_minver       = '2.8'
@@ -399,7 +399,7 @@ endif
 
 conf.set_quoted('MYPAINT_BRUSHES_DIR', mypaint_brushes_dir)
 
-pangocairo_minver = '1.42.0'
+pangocairo_minver = '1.44.0'
 pangocairo        = dependency('pangocairo',         version: '>='+pangocairo_minver)
 pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
 rsvg_minver       = '2.40.6'
