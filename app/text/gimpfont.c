@@ -425,12 +425,40 @@ gimp_font_get_sample_string (PangoContext         *context,
     gint         bit;
     const gchar *sample;
   } scripts[] = {
-    /* Han is first because fonts that support it presumably are primarily
-     * designed for it.
+    /* CJK are first because fonts that support these characters
+     * presumably are primarily designed for it.
+     *
+     * Though not a universal rules, most fonts targetting Korean will
+     * also have the ideographs as they were used historically (and
+     * still in some cases). As for Japanese, ideographs are still
+     * definitely used daily. After all the block is called "*CJK*
+     * (Chinese-Japanese-Korean) Unified Ideographs". So let's give the
+     * Chinese representation less priority towards finding
+     * Korean/Japanese targetting.
+     * Then we prioritize Korean because many fonts for Korean also
+     * design Hiragana/Katakana blocks. On the other hand, I could see
+     * very few (none so far) Japanese fonts designing also Hangul
+     * characters. So if we see both Hiragana and Hangul, we can assume
+     * this is a font for Korean market, whereas Hiragana only is for
+     * Japanese.
+     * XXX: of course we could probably come with a better algorithm to
+     * determine the target language. Probably looking at more than the
+     * existence of a single block would help (since some languages are
+     * spread on several blocks).
      */
     {
-      "hani",                   /* Han Ideographic */
-      59,
+      "hang",                   /* Korean alphabet (Hangul)   */
+      56,                       /* Hangul Syllables block     */
+      "\355\225\234"            /* U+D55C HANGUL SYLLABLE HAN */
+    },
+    {
+      "japa",                   /* Japanese                   */
+      49,                       /* Hiragana block             */
+      "\343\201\202"            /* U+3042 HIRAGANA LETTER A   */
+    },
+    {
+      "hani",                   /* Han Ideographic            */
+      59,                       /* CJK Unified Ideographs     */
       "\346\260\270"            /* U+6C38 "forever". Ed Trager says
                                  * this is a "pan-stroke" often used
                                  * in teaching Chinese calligraphy. It
@@ -576,13 +604,6 @@ gimp_font_get_sample_string (PangoContext         *context,
       "\341\202\240\341\203\200" /* U+10A0 GEORGIAN CAPITAL LETTER AN
                                   * U+10D0 GEORGIAN LETTER AN
                                   */
-    },
-    {
-      "hang",                   /* Hangul */
-      28,
-      "\341\204\200\341\204\201"/* U+1100 HANGUL CHOSEONG KIYEOK
-                                 * U+1101 HANGUL CHOSEONG SSANGKIYEOK
-                                 */
     },
     {
       "ethi",                   /* Ethiopic */
