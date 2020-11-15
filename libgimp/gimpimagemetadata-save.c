@@ -91,6 +91,7 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
       gdouble             xres;
       gdouble             yres;
       gchar               buffer[32];
+      gchar              *str;
       GExiv2Metadata     *g2metadata = GEXIV2_METADATA (metadata);
 
       image_width  = gimp_image_width  (image);
@@ -184,25 +185,17 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
           ! gexiv2_metadata_has_iptc (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_IPTC;
 
-      g_snprintf (buffer, sizeof (buffer),
-                  "%d-%d-%d",
-                  g_date_time_get_year (datetime),
-                  g_date_time_get_month (datetime),
-                  g_date_time_get_day_of_month (datetime));
+      str = g_date_time_format (datetime, "%Y-%m-%d");
       gexiv2_metadata_set_tag_string (g2metadata,
                                       "Iptc.Application2.DateCreated",
-                                      buffer);
+                                      str);
+      g_free (str);
 
-      g_snprintf (buffer, sizeof (buffer),
-                  "%02d:%02d:%02d-%02d:%02d",
-                  g_date_time_get_hour (datetime),
-                  g_date_time_get_minute (datetime),
-                  g_date_time_get_second (datetime),
-                  g_date_time_get_hour (datetime),
-                  g_date_time_get_minute (datetime));
+      str = g_date_time_format (datetime, "%H:%M:%S%:z");
       gexiv2_metadata_set_tag_string (g2metadata,
                                       "Iptc.Application2.TimeCreated",
-                                      buffer);
+                                      str);
+      g_free (str);
 
       g_date_time_unref (datetime);
 
