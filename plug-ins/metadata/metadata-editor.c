@@ -5066,7 +5066,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                               creatorContactInfoTags[i].tag);
                 }
             }
-          else if (! strcmp ("multi", default_metadata_tags[i].mode))
+          else if (! strcmp ("multi", creatorContactInfoTags[i].mode))
             {
               GtkTextView   *text_view = GTK_TEXT_VIEW (object);
               GtkTextBuffer *buffer;
