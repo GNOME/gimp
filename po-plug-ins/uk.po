@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-01 13:34+0000\n"
-"PO-Revision-Date: 2020-11-01 18:03+0200\n"
+"POT-Creation-Date: 2020-11-16 15:27+0000\n"
+"PO-Revision-Date: 2020-11-16 20:31+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -63,7 +63,7 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/common/tile-small.c:423 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:706 ../plug-ins/common/warp.c:467
 #: ../plug-ins/common/wavelet-decompose.c:386 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:2020 ../plug-ins/flame/flame.c:516
+#: ../plug-ins/file-tiff/file-tiff-load.c:2057 ../plug-ins/flame/flame.c:516
 #: ../plug-ins/flame/flame.c:692 ../plug-ins/flame/flame.c:1009
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
@@ -396,7 +396,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:1971 ../plug-ins/file-sgi/sgi.c:424
-#: ../plug-ins/file-tiff/file-tiff-load.c:1123
+#: ../plug-ins/file-tiff/file-tiff-load.c:1150
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -3061,7 +3061,7 @@ msgid "Import from PDF"
 msgstr "Імпорт з PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1042 ../plug-ins/common/file-ps.c:3551
-#: ../plug-ins/file-tiff/file-tiff-load.c:2021
+#: ../plug-ins/file-tiff/file-tiff-load.c:2058
 #: ../plug-ins/metadata/metadata-editor.c:5665
 msgid "_Import"
 msgstr "_Імпортувати"
@@ -3194,7 +3194,7 @@ msgstr "Шари як сторінки (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1315
 #: ../plug-ins/common/file-pdf-save.c:1388
 #: ../plug-ins/common/file-pdf-save.c:1486 ../plug-ins/common/file-ps.c:2036
-#: ../plug-ins/file-tiff/file-tiff-load.c:1125
+#: ../plug-ins/file-tiff/file-tiff-load.c:1152
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
@@ -6632,17 +6632,17 @@ msgstr "Можна експортувати лише індексовані та
 msgid "Open FLIC Animation"
 msgstr "Відкрити анімацію FLIC"
 
-#: ../plug-ins/file-fli/fli-gimp.c:928 ../plug-ins/file-fli/fli-gimp.c:984
+#: ../plug-ins/file-fli/fli-gimp.c:928
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_Від:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:934 ../plug-ins/file-fli/fli-gimp.c:990
+#: ../plug-ins/file-fli/fli-gimp.c:934
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Кому:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:966
+#: ../plug-ins/file-fli/fli-gimp.c:964
 msgid "Export Image as FLI Animation"
 msgstr "Експортувати зображення як анімацію FLI"
 
@@ -7196,12 +7196,30 @@ msgstr ""
 "Під час спроби експортування декількох шарів не було позначено пункт "
 "«Зберегти шари»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:186
+#: ../plug-ins/file-tiff/file-tiff-load.c:200
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF «%s» не містить каталоги"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:256
+#: ../plug-ins/file-tiff/file-tiff-load.c:207
+#, c-format
+msgid ""
+"TIFF '%s' directory count by header failed though there seems to be %d page. "
+"Attempting to load the file with this assumption."
+msgid_plural ""
+"TIFF '%s' directory count by header failed though there seem to be %d pages. "
+"Attempting to load the file with this assumption."
+msgstr[0] ""
+"Не вдалося виконати облік каталогу TIFF «%s» за заголовком, хоча, здається,"
+" маємо %d сторінку. Буде виконано спробу завантажити файл із цим припущенням."
+msgstr[1] ""
+"Не вдалося виконати облік каталогу TIFF «%s» за заголовком, хоча, здається,"
+" маємо %d сторінки. Буде виконано спробу завантажити файл із цим припущенням."
+msgstr[2] ""
+"Не вдалося виконати облік каталогу TIFF «%s» за заголовком, хоча, здається,"
+" маємо %d сторінок. Буде виконано спробу завантажити файл із цим припущенням."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:283
 msgid "Extra channels with unspecified data."
 msgstr "Зайві канали із даними поза специфікацією."
 
@@ -7212,35 +7230,41 @@ msgstr "Зайві канали із даними поза специфікац�
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:272
+#: ../plug-ins/file-tiff/file-tiff-load.c:299
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Нестандартний TIFF: зайві канали без поля «ExtraSamples»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:334
+#: ../plug-ins/file-tiff/file-tiff-load.c:361
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Не вдалося прочитати сторінку %d з %d. Зображення може бути пошкоджено.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:825
+#: ../plug-ins/file-tiff/file-tiff-load.c:852
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-з-%d-сторінок"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1162
+#: ../plug-ins/file-tiff/file-tiff-load.c:1189
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
+#: ../plug-ins/file-tiff/file-tiff-load.c:1341
+#, c-format
+msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
+msgstr ""
+"Не вдалося прочитати дані з TIFF «%s». Ймовірно, вміст файла пошкоджено."
+
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1679
-#: ../plug-ins/file-tiff/file-tiff-load.c:1854
+#: ../plug-ins/file-tiff/file-tiff-load.c:1716
+#: ../plug-ins/file-tiff/file-tiff-load.c:1891
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
 "Рядок помилки — %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2016
+#: ../plug-ins/file-tiff/file-tiff-load.c:2053
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
@@ -7248,23 +7272,23 @@ msgstr "Імпорт TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2069
+#: ../plug-ins/file-tiff/file-tiff-load.c:2106
 msgid "_Keep empty space around imported layers"
 msgstr "За_лишати порожнє місце навколо імпортованих шарів"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2086
+#: ../plug-ins/file-tiff/file-tiff-load.c:2123
 msgid "Process extra channel as:"
 msgstr "Обробляти зайвий канал як:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2089
+#: ../plug-ins/file-tiff/file-tiff-load.c:2126
 msgid "_Non-premultiplied alpha"
 msgstr "Б_ез попередньо помноженої альфи"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2090
+#: ../plug-ins/file-tiff/file-tiff-load.c:2127
 msgid "Pre_multiplied alpha"
 msgstr "_Попередньо помножена альфа"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2091
+#: ../plug-ins/file-tiff/file-tiff-load.c:2128
 msgid "Channe_l"
 msgstr "_Канал"
 
@@ -7356,7 +7380,6 @@ msgid "Save Exif data"
 msgstr "Зберегти дані Exif"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1430
-#| msgid "Save IPTC data"
 msgid "Save GeoTIFF data"
 msgstr "Зберегти дані GeoTIFF"
 
