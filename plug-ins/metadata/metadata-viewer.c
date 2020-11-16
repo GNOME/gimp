@@ -109,6 +109,9 @@ static void      metadata_dialog_append_tags      (GExiv2Metadata  *metadata,
 static gchar   * metadata_dialog_format_tag_value (GExiv2Metadata  *metadata,
                                                    const gchar     *tag,
                                                    gboolean         truncate);
+static gchar   * metadata_format_string_value     (const gchar     *value,
+                                                   gboolean         truncate);
+static inline gboolean metadata_tag_is_string     (const gchar     *tag);
 
 
 G_DEFINE_TYPE (Metadata, metadata, GIMP_TYPE_PLUG_IN)
@@ -317,6 +320,51 @@ metadata_dialog_set_metadata (GExiv2Metadata *metadata,
   g_strfreev (tags);
 }
 
+static gchar *
+metadata_format_string_value (const gchar *value,
+                              gboolean     truncate)
+{
+  glong  size;
+  gchar *result;
+
+  size = g_utf8_strlen (value, -1);
+
+  if (! truncate || size <= TAG_VALUE_MAX_SIZE)
+    {
+      result = g_strdup(value);
+    }
+  else
+    {
+      gchar   *value_utf8_trunc;
+      GString *str;
+
+      value_utf8_trunc = g_utf8_substring (value, 0, TAG_VALUE_MAX_SIZE);
+      str = g_string_new (value_utf8_trunc);
+
+      g_free (value_utf8_trunc);
+
+      g_string_append (str, "... ");
+      g_string_append_printf (str,
+                              _("(%lu more character(s))"),
+                              size - TAG_VALUE_MAX_SIZE);
+
+      result = g_string_free (str, FALSE);
+    }
+  return result;
+}
+
+static inline gboolean
+metadata_tag_is_string (const gchar *tag)
+{
+  const gchar *tag_type;
+
+  tag_type = gexiv2_metadata_get_tag_type (tag);
+
+  return (g_strcmp0 (tag_type, "Byte")      != 0 &&
+          g_strcmp0 (tag_type, "Undefined") != 0 &&
+          g_strcmp0 (tag_type, NULL)        != 0);
+}
+
 static void
 metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                              gchar          **tags,
@@ -350,51 +398,19 @@ metadata_dialog_format_tag_value (GExiv2Metadata *metadata,
                                   const gchar    *tag,
                                   gboolean        truncate)
 {
-  const gchar *tag_type;
   gchar       *result;
 
-  tag_type = gexiv2_metadata_get_tag_type (tag);
-
-  if (g_strcmp0 (tag_type, "Byte")      != 0 &&
-      g_strcmp0 (tag_type, "Undefined") != 0 &&
-      g_strcmp0 (tag_type, NULL)        != 0)
+  if (metadata_tag_is_string(tag))
     {
       gchar *value;
       gchar *value_utf8;
-      glong  size;
 
       value      = gexiv2_metadata_get_tag_interpreted_string (metadata, tag);
       value_utf8 = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
 
       g_free (value);
 
-      size = g_utf8_strlen (value_utf8, -1);
-
-      if (! truncate || size <= TAG_VALUE_MAX_SIZE)
-        {
-          result = value_utf8;
-        }
-      else
-        {
-          gchar   *value_utf8_trunc;
-          GString *str;
-
-          value_utf8_trunc = g_utf8_substring (value_utf8,
-                                               0, TAG_VALUE_MAX_SIZE);
-
-          g_free (value_utf8);
-
-          str = g_string_new (value_utf8_trunc);
-
-          g_free (value_utf8_trunc);
-
-          g_string_append (str, "... ");
-          g_string_append_printf (str,
-                                  _("(%lu more character(s))"),
-                                  size - TAG_VALUE_MAX_SIZE);
-
-          result = g_string_free (str, FALSE);
-        }
+      result = metadata_format_string_value (value_utf8, truncate);
     }
   else
     {
