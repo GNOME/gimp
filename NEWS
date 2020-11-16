@@ -16,6 +16,18 @@ Core:
     active results (following the same match quality level).
     Consequently the "Show unavailable actions" checkbox has been
     removed from the `Preferences > Help System` dialog.
+  - Improve sample text logics for CJK fonts, showing different
+    sample characters for Korean and Japanese, making detection
+    at-a-glance of such fonts easier.
+
+User Interface:
+
+  - GimpSpinScale will grab focus when starting to edit the entry, and
+    in particular the current number will be fully selected (because
+    often we want to just type down a completely different number
+    accurately). Also when giving focus to the entry with the cursor
+    (middle click), it doesn't click on the scale (i.e. value doesn't
+    change).
 
 API:
 
@@ -30,6 +42,15 @@ API:
     down from 17 arguments to 5), also better introspectability for
     bindings, and finally it will be useful for automatic dialog
     generation for plug-ins.
+  - New GimpLabeled class and subclasses: GimpLabelSpin,
+    GimpLabelIntWidget.
+  - Several new functions for GimpProcedureDialog for automatic dialog
+    generation based on input arguments. Though not mandatory, the
+    various functions allow to organize better the widgets.
+
+Plug-ins:
+
+  - file-fli updated to new dialog generation API.
 
 Installer:
 
@@ -42,6 +63,12 @@ Devel docs:
     started in `devel-docs/GIMP3-plug-in-porting-guide/`. It is also
     visible directly on out Gitlab instance with visual styling:
     https://gitlab.gnome.org/GNOME/gimp/-/tree/master/devel-docs/GIMP3-plug-in-porting-guide
+
+Build:
+
+  - Bumping minimum harfbuzz version to 1.0.5 for hb_ft_font_set_funcs().
+  - Bumping minimum pango version to 1.44.0 for pango_font_has_char().
+
 
 Overview of Changes from GIMP 2.10.x to GIMP 2.99.2
 ===================================================
