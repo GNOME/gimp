@@ -74,6 +74,8 @@ static void gpsaltsys_combo_callback            (GtkComboBoxText      *combo,
 static void remove_substring                    (const gchar          *string,
                                                  const gchar          *substring);
 
+static gchar * clean_xmp_string                 (const gchar          *value);
+
 gboolean hasCreatorTagData                      (GtkBuilder           *builder);
 gboolean hasLocationCreationTagData             (GtkBuilder           *builder);
 gboolean hasImageSupplierTagData                (GtkBuilder           *builder);
@@ -614,6 +616,47 @@ remove_substring (const gchar *string,
           memmove (p, p + strlen (substring), strlen (p + strlen (substring)) + 1);
         }
     }
+}
+
+static gchar *
+clean_xmp_string (const gchar *value)
+{
+  gchar *value_clean;
+  gchar *value_utf8;
+
+  value_clean = g_strdup (value);
+
+  if (strstr (value_clean, lang_default) != NULL)
+    {
+      remove_substring (value_clean, lang_default);
+      if (strstr (value_clean, " ") != NULL)
+        {
+          remove_substring (value_clean, " ");
+        }
+    }
+
+  if (strstr (value_clean, bag_default) != NULL)
+    {
+      remove_substring (value_clean, bag_default);
+      if (strstr (value_clean, " ") != NULL)
+        {
+          remove_substring (value_clean, " ");
+        }
+    }
+
+  if (strstr (value_clean, seq_default) != NULL)
+    {
+      remove_substring (value_clean, seq_default);
+      if (strstr (value_clean, " ") != NULL)
+        {
+          remove_substring (value_clean, " ");
+        }
+    }
+
+  value_utf8 = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+  g_free (value_clean);
+
+  return value_utf8;
 }
 
 static gint
@@ -1761,39 +1804,9 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
       if (value)
         {
-          gchar *value_clean;
           gchar *value_utf;
 
-          value_clean = g_strdup (value);
-
-          if (strstr (value_clean, lang_default) != NULL)
-            {
-              remove_substring (value_clean, lang_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          if (strstr (value_clean, bag_default) != NULL)
-            {
-              remove_substring (value_clean, bag_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          if (strstr (value_clean, seq_default) != NULL)
-            {
-              remove_substring (value_clean, seq_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+          value_utf = clean_xmp_string (value);
 
           if (! strcmp ("single", imageSupplierInfoTags[i].mode))
             {
@@ -1821,39 +1834,9 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
       if (value)
         {
-          gchar *value_clean;
           gchar *value_utf;
 
-          value_clean = g_strdup (value);
-
-          if (strstr (value_clean, lang_default) != NULL)
-            {
-              remove_substring (value_clean, lang_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          if (strstr (value_clean, bag_default) != NULL)
-            {
-              remove_substring (value_clean, bag_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          if (strstr (value_clean, seq_default) != NULL)
-            {
-              remove_substring (value_clean, seq_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+          value_utf = clean_xmp_string (value);
 
           if (! strcmp ("single", locationCreationInfoTags[i].mode))
             {
@@ -1875,39 +1858,9 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
       if (value)
         {
-          gchar *value_clean;
           gchar *value_utf;
 
-          value_clean = g_strdup (value);
-
-          if (strstr (value_clean, lang_default) != NULL)
-            {
-              remove_substring (value_clean, lang_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          if (strstr (value_clean, bag_default) != NULL)
-            {
-              remove_substring (value_clean, bag_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          if (strstr (value_clean, seq_default) != NULL)
-            {
-              remove_substring (value_clean, seq_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+          value_utf = clean_xmp_string (value);
 
           if (! strcmp ("single", creatorContactInfoTags[i].mode))
             {
@@ -1948,49 +1901,19 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
       if (value)
         {
-          gchar *value_clean;
           gchar *value_utf;
 
-          value_clean = g_strdup (value);
-
-          if (strstr (value_clean, lang_default) != NULL)
-            {
-              remove_substring (value_clean, lang_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          if (strstr (value_clean, bag_default) != NULL)
-            {
-              remove_substring (value_clean, bag_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
-
-          if (strstr (value_clean, seq_default) != NULL)
-            {
-              remove_substring (value_clean, seq_default);
-              if (strstr (value_clean, " ") != NULL)
-                {
-                  remove_substring (value_clean, " ");
-                }
-            }
+          value_utf = clean_xmp_string (value);
 
           if (! strcmp ("Exif.GPSInfo.GPSAltitude",
                         default_metadata_tags[i].tag) &&
-              value_clean)
+              value_utf)
             {
               gchar *new_value_clean[2];
 
-              new_value_clean[0] = strtok (value_clean, " ");
-              strcpy (value_clean, new_value_clean[0]);
+              new_value_clean[0] = strtok (value_utf, " ");
+              strcpy (value_utf, new_value_clean[0]);
             }
-
-          value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
 
           if (! strcmp ("single", default_metadata_tags[i].mode))
             {
