@@ -185,10 +185,33 @@ load_image (GFile        *file,
        * It seems we might be able to rescue some data even though the
        * TIFF is possibly syntactically wrong.
        */
-      pages.n_pages = 1;
-      g_message (_("TIFF '%s' does not contain any directories."
-                   " Attempting to load the file assuming 1 page."),
-                 gimp_file_get_utf8_name (file));
+
+      /* libtiff says max number of directory is 65535. */
+      for (li = 0; li < 65536; li++)
+        {
+          if (TIFFSetDirectory (tif, li) == 0)
+            break;
+        }
+      pages.n_pages = li;
+      if (pages.n_pages == 0)
+        {
+          TIFFClose (tif);
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("TIFF '%s' does not contain any directories"),
+                       gimp_file_get_utf8_name (file));
+
+          return GIMP_PDB_EXECUTION_ERROR;
+        }
+
+      TIFFSetDirectory (tif, 0);
+      g_message (ngettext ("TIFF '%s' directory count by header failed "
+                           "though there seems to be %d page."
+                           " Attempting to load the file with this assumption.",
+                           "TIFF '%s' directory count by header failed "
+                           "though there seem to be %d pages."
+                           " Attempting to load the file with this assumption.",
+                           pages.n_pages),
+                 gimp_file_get_utf8_name (file), pages.n_pages);
     }
 
   pages.pages = NULL;
@@ -217,7 +240,9 @@ load_image (GFile        *file,
           gushort  extra;
           gushort *extra_types;
 
-          TIFFSetDirectory (tif, li);
+          if (TIFFSetDirectory (tif, li) == 0)
+            continue;
+
           TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLESPERPIXEL, &spp);
           if (! TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
             {
@@ -1309,6 +1334,16 @@ load_image (GFile        *file,
     }
   else
     {
+      if (! (*image))
+        {
+          TIFFClose (tif);
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("No data could be read from TIFF '%s'. The file is probably corrupted."),
+                       gimp_file_get_utf8_name (file));
+
+          return GIMP_PDB_EXECUTION_ERROR;
+        }
+
       if (pages.keep_empty_space)
         {
           /* unfortunately we have no idea about empty space
