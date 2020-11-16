@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-31 23:09+0000\n"
-"PO-Revision-Date: 2020-11-01 09:26+0200\n"
+"POT-Creation-Date: 2020-11-16 00:06+0000\n"
+"PO-Revision-Date: 2020-11-16 09:22+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -14819,7 +14819,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Можливо, файл попереднього перегляду застарів)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:821 ../app/widgets/gimpimagepropview.c:425
+#: ../app/core/gimpimagefile.c:821 ../app/widgets/gimpimagepropview.c:437
 #: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:658
 #, c-format
 msgid "%d × %d pixel"
@@ -15363,7 +15363,7 @@ msgid "Emulate brush dynamics"
 msgstr "Імітувати динаміку пензля"
 
 #. no undo (or redo) steps available
-#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:395
+#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:406
 #: ../app/widgets/gimpsymmetryeditor.c:166
 msgid "None"
 msgstr "Немає"
@@ -17798,7 +17798,7 @@ msgid "Vertical"
 msgstr "Вертикальне"
 
 #: ../app/dialogs/preferences-dialog.c:2709
-#: ../app/widgets/gimpimagepropview.c:453
+#: ../app/widgets/gimpimagepropview.c:465
 msgid "ppi"
 msgstr "ppi"
 
@@ -21417,7 +21417,6 @@ msgstr "2D перетворення"
 #: ../app/pdb/pdb-cmds.c:1089 ../app/pdb/pdb-cmds.c:1133
 #: ../app/pdb/pdb-cmds.c:1175
 #, c-format
-#| msgid "Procedure name '%s' is not a canonical identifier"
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Мітка даних «%s» не є канонічним ідентифікатором"
 
@@ -27543,80 +27542,86 @@ msgstr ""
 "Замінити поточний коментар до зображення на вказаний у параметрах програми "
 "типовий (Зміни→Параметри→Зображення типово)."
 
-#: ../app/widgets/gimpimagepropview.c:108
+#: ../app/widgets/gimpimagepropview.c:111
 msgid "Size in pixels:"
 msgstr "Розмір у точках:"
 
-#: ../app/widgets/gimpimagepropview.c:111
+#: ../app/widgets/gimpimagepropview.c:114
 msgid "Print size:"
 msgstr "Розмір при друкуванні:"
 
-#: ../app/widgets/gimpimagepropview.c:114
+#: ../app/widgets/gimpimagepropview.c:117
 msgid "Resolution:"
 msgstr "Роздільність:"
 
-#: ../app/widgets/gimpimagepropview.c:117
+#: ../app/widgets/gimpimagepropview.c:120
 msgid "Color space:"
 msgstr "Колірний простір:"
 
-#: ../app/widgets/gimpimagepropview.c:120
+#: ../app/widgets/gimpimagepropview.c:123
 msgid "Precision:"
 msgstr "Точність:"
 
-#: ../app/widgets/gimpimagepropview.c:125
+#: ../app/widgets/gimpimagepropview.c:128
 msgid "File Name:"
 msgstr "Назва файла:"
 
-#: ../app/widgets/gimpimagepropview.c:131
+#: ../app/widgets/gimpimagepropview.c:136
 msgid "File Size:"
 msgstr "Розмір файла:"
 
-#: ../app/widgets/gimpimagepropview.c:134
+#: ../app/widgets/gimpimagepropview.c:139
 msgid "File Type:"
 msgstr "Тип файла:"
 
-#: ../app/widgets/gimpimagepropview.c:139
+#: ../app/widgets/gimpimagepropview.c:144
 msgid "Size in memory:"
 msgstr "Розмір у пам'яті:"
 
-#: ../app/widgets/gimpimagepropview.c:142
+#: ../app/widgets/gimpimagepropview.c:147
 msgid "Undo steps:"
 msgstr "Кількість скасувань:"
 
-#: ../app/widgets/gimpimagepropview.c:145
+#: ../app/widgets/gimpimagepropview.c:150
 msgid "Redo steps:"
 msgstr "Кількість повторів:"
 
-#: ../app/widgets/gimpimagepropview.c:150
+#: ../app/widgets/gimpimagepropview.c:155
 msgid "Number of pixels:"
 msgstr "Кількість точок:"
 
-#: ../app/widgets/gimpimagepropview.c:153
+#: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of layers:"
 msgstr "Кількість шарів:"
 
-#: ../app/widgets/gimpimagepropview.c:156
+#: ../app/widgets/gimpimagepropview.c:161
 msgid "Number of channels:"
 msgstr "Кількість каналів:"
 
-#: ../app/widgets/gimpimagepropview.c:159
+#: ../app/widgets/gimpimagepropview.c:164
 msgid "Number of paths:"
 msgstr "Кількість контурів:"
 
-#: ../app/widgets/gimpimagepropview.c:448
+#: ../app/widgets/gimpimagepropview.c:460
 #: ../app/widgets/gimptemplateeditor.c:341
 #, c-format
 msgid "pixels/%s"
 msgstr "точок/%s"
 
-#: ../app/widgets/gimpimagepropview.c:450
+#: ../app/widgets/gimpimagepropview.c:462
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:471
-msgid "colors"
-msgstr "кольорів"
+#: ../app/widgets/gimpimagepropview.c:483
+#, c-format
+#| msgid "Indexed Color Conversion"
+msgid "Indexed color (monochrome)"
+msgid_plural "Indexed color (%d colors)"
+msgstr[0] "Індексований колір (%d колір)"
+msgstr[1] "Індексований колір (%d кольори)"
+msgstr[2] "Індексований колір (%d кольорів)"
+msgstr[3] "Індексований колір (монохромний)"
 
 #: ../app/widgets/gimpitemtreeview.c:783
 msgid "Lock:"
@@ -28448,6 +28453,9 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid "colors"
+#~ msgstr "кольорів"
 
 #~ msgid "Show _unavailable actions"
 #~ msgstr "Показувати _недоступні дії"
