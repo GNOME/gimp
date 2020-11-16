@@ -181,12 +181,14 @@ load_image (GFile        *file,
   pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
   if (pages.n_pages == 0)
     {
-      TIFFClose (tif);
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("TIFF '%s' does not contain any directories"),
-                   gimp_file_get_utf8_name (file));
-
-      return GIMP_PDB_EXECUTION_ERROR;
+      /* See #5837.
+       * It seems we might be able to rescue some data even though the
+       * TIFF is possibly syntactically wrong.
+       */
+      pages.n_pages = 1;
+      g_message (_("TIFF '%s' does not contain any directories."
+                   " Attempting to load the file assuming 1 page."),
+                 gimp_file_get_utf8_name (file));
     }
 
   pages.pages = NULL;
