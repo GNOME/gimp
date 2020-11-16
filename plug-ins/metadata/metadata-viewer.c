@@ -105,7 +105,8 @@ static void      metadata_dialog_append_tags      (GExiv2Metadata  *metadata,
                                                    gchar          **tags,
                                                    GtkListStore    *store,
                                                    gint             tag_column,
-                                                   gint             value_column);
+                                                   gint             value_column,
+                                                   gboolean         load_iptc);
 static gchar   * metadata_dialog_format_tag_value (GExiv2Metadata  *metadata,
                                                    const gchar     *tag,
                                                    gboolean         truncate);
@@ -299,7 +300,7 @@ metadata_dialog_set_metadata (GExiv2Metadata *metadata,
   tags  = gexiv2_metadata_get_exif_tags (metadata);
   store = GTK_LIST_STORE (gtk_builder_get_object (builder, "exif-liststore"));
 
-  metadata_dialog_append_tags (metadata, tags, store, C_EXIF_TAG, C_EXIF_VALUE);
+  metadata_dialog_append_tags (metadata, tags, store, C_EXIF_TAG, C_EXIF_VALUE, FALSE);
 
   g_strfreev (tags);
 
@@ -307,7 +308,7 @@ metadata_dialog_set_metadata (GExiv2Metadata *metadata,
   tags  = gexiv2_metadata_get_xmp_tags (metadata);
   store = GTK_LIST_STORE (gtk_builder_get_object (builder, "xmp-liststore"));
 
-  metadata_dialog_append_tags (metadata, tags, store, C_XMP_TAG, C_XMP_VALUE);
+  metadata_dialog_append_tags (metadata, tags, store, C_XMP_TAG, C_XMP_VALUE, FALSE);
 
   g_strfreev (tags);
 
@@ -315,7 +316,7 @@ metadata_dialog_set_metadata (GExiv2Metadata *metadata,
   tags  = gexiv2_metadata_get_iptc_tags (metadata);
   store = GTK_LIST_STORE (gtk_builder_get_object (builder, "iptc-liststore"));
 
-  metadata_dialog_append_tags (metadata, tags, store, C_IPTC_TAG, C_IPTC_VALUE);
+  metadata_dialog_append_tags (metadata, tags, store, C_IPTC_TAG, C_IPTC_VALUE, TRUE);
 
   g_strfreev (tags);
 }
@@ -370,26 +371,71 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                              gchar          **tags,
                              GtkListStore    *store,
                              gint             tag_column,
-                             gint             value_column)
+                             gint             value_column,
+                             gboolean         load_iptc)
 {
   GtkTreeIter  iter;
   const gchar *tag;
+  const gchar *last_tag = NULL;
 
   while ((tag = *tags++))
     {
-      gchar       *value;
+      gchar  *value;
+      gchar **values;
 
-      gtk_list_store_append (store, &iter);
+      /* We need special handling for iptc tags like "Keywords" which
+       * can appear multiple times. For now assuming that this can
+       * only happen for iptc tags of String and related types.
+       * See also: https://exiv2.org/iptc.html which only lists
+       * one Date type as repeatable (Iptc.Application2.ReferenceDate),
+       * and Date is handled here as string.
+       */
+      if (load_iptc && metadata_tag_is_string (tag))
+        {
+          if (last_tag && ! strcmp (tag, last_tag))
+            {
+              continue;
+            }
+          last_tag = tag;
 
-      value = metadata_dialog_format_tag_value (metadata, tag,
-                                                /* truncate = */ TRUE);
+          values = gexiv2_metadata_get_tag_multiple (GEXIV2_METADATA (metadata),
+                                                     tag);
 
-      gtk_list_store_set (store, &iter,
-                          tag_column,   tag,
-                          value_column, value,
-                          -1);
+          if (values)
+            {
+              gint i;
 
-      g_free (value);
+              for (i = 0; values[i] != NULL; i++)
+                {
+                  gtk_list_store_append (store, &iter);
+
+                  value = metadata_format_string_value (values[i], /* truncate = */ TRUE);
+
+                  gtk_list_store_set (store, &iter,
+                                      tag_column,   tag,
+                                      value_column, value,
+                                      -1);
+
+                  g_free (value);
+                }
+
+              g_strfreev (values);
+            }
+
+        }
+      else
+        {
+          value = metadata_dialog_format_tag_value (metadata, tag,
+                                                    /* truncate = */ TRUE);
+
+          gtk_list_store_append (store, &iter);
+          gtk_list_store_set (store, &iter,
+                              tag_column,   tag,
+                              value_column, value,
+                              -1);
+
+          g_free (value);
+        }
     }
 }
 
