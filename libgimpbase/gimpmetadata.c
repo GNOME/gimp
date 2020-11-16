@@ -838,14 +838,35 @@ gimp_metadata_serialize (GimpMetadata *metadata)
 
   if (iptc_data)
     {
-      for (i = 0; iptc_data[i] != NULL; i++)
-        {
-          value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
-                                                  iptc_data[i]);
-          escaped = gimp_metadata_escape (iptc_data[i], value, &base64);
-          g_free (value);
+      gchar **iptc_tags = iptc_data;
+      gchar  *last_tag  = NULL;
 
-          gimp_metadata_append_tag (string, iptc_data[i], escaped, base64);
+      while (*iptc_tags)
+        {
+          gchar **values;
+
+          if (last_tag && ! strcmp (*iptc_tags, last_tag))
+            {
+              iptc_tags++;
+              continue;
+            }
+          last_tag = *iptc_tags;
+
+          values = gexiv2_metadata_get_tag_multiple (GEXIV2_METADATA (metadata),
+                                                     *iptc_tags);
+
+          if (values)
+            {
+              for (i = 0; values[i] != NULL; i++)
+                {
+                  escaped = gimp_metadata_escape (*iptc_tags, values[i], &base64);
+                  gimp_metadata_append_tag (string, *iptc_tags, escaped, base64);
+                }
+
+              g_strfreev (values);
+            }
+
+          iptc_tags++;
         }
 
       g_strfreev (iptc_data);
