@@ -648,17 +648,12 @@ MIMEtypes = [
 
 
 
-libtiff = dependency('libtiff-4', required: get_option('tiff'))
-if libtiff.found()
-  MIMEtypes += 'image/tiff'
-endif
+libtiff = dependency('libtiff-4')
+MIMEtypes += 'image/tiff'
 
 
-libjpeg = dependency('libjpeg', required: get_option('jpeg'))
-conf.set('HAVE_LIBJPEG', libjpeg.found())
-if libjpeg.found()
-  MIMEtypes += 'image/jpeg'
-endif
+libjpeg = dependency('libjpeg')
+MIMEtypes += 'image/jpeg'
 
 
 zlib = dependency('zlib')
