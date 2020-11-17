@@ -1910,8 +1910,50 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
           index = default_metadata_tags[i].other_tag_index;
           if (index > -1)
             {
-              value = gexiv2_metadata_get_tag_interpreted_string (metadata,
-                                                                  equivalent_metadata_tags[index].tag);
+              gchar **values;
+
+              /* These are all IPTC tags some of which can appear multiple times so
+               * we will use get_tag_multiple. Also IPTC most commonly uses UTF-8
+               * not current locale so get_tag_interpreted was wrong anyway.
+               * FIXME For now lets interpret as UTF-8 and in the future read
+               * and interpret based on the CharacterSet tag.
+               */
+              values = gexiv2_metadata_get_tag_multiple (metadata,
+                                                         equivalent_metadata_tags[index].tag);
+
+              if (values)
+                {
+                  gint     i;
+                  GString *str = NULL;
+
+                  for (i = 0; values[i] != NULL; i++)
+                    {
+                      if (values[i][0] != '\0')
+                        {
+                          if (! str)
+                            {
+                              str = g_string_new (values[i]);
+                            }
+                          else
+                            {
+                              if (! strcmp ("multi", equivalent_metadata_tags[index].mode))
+                                {
+                                  g_string_append (str, "\n");
+                                }
+                              else
+                                {
+                                  g_string_append (str, ", ");
+                                }
+                              g_string_append (str, values[i]);
+                            }
+                        }
+                    }
+
+                  if (str)
+                    {
+                      value = g_string_free (str, FALSE);
+                    }
+                }
             }
         }
 
