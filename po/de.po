@@ -21,9 +21,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-26 19:32+0000\n"
-"PO-Revision-Date: 2020-10-26 23:05+0100\n"
-"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
+"POT-Creation-Date: 2020-11-17 02:59+0000\n"
+"PO-Revision-Date: 2020-11-17 17:04+0100\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -3466,7 +3466,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2256
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
-#: ../app/dialogs/palette-import-dialog.c:764 ../app/widgets/gimpdnd-xds.c:87
+#: ../app/dialogs/palette-import-dialog.c:762 ../app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Unbenannt"
 
@@ -15230,7 +15230,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Vorschau könnte veraltet sein)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:821 ../app/widgets/gimpimagepropview.c:425
+#: ../app/core/gimpimagefile.c:821 ../app/widgets/gimpimagepropview.c:437
 #: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:658
 #, c-format
 msgid "%d × %d pixel"
@@ -15792,7 +15792,7 @@ msgid "Emulate brush dynamics"
 msgstr "Pinseldynamik emulieren"
 
 #. no undo (or redo) steps available
-#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:395
+#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:406
 #: ../app/widgets/gimpsymmetryeditor.c:166
 msgid "None"
 msgstr "Keine"
@@ -16078,10 +16078,11 @@ msgctxt "unit-singular"
 msgid "point"
 msgstr "Punkt"
 
+# https://de.wikipedia.org/wiki/Text_(Schriftma%C3%9F)
 #: ../app/core/gimpunit.c:71
 msgctxt "unit-plural"
 msgid "points"
-msgstr "Punkte"
+msgstr "Punkt"
 
 #: ../app/core/gimpunit.c:74
 msgctxt "unit-singular"
@@ -17126,29 +17127,32 @@ msgstr "Neu importiert"
 msgid "Palette _name:"
 msgstr "Paletten_name:"
 
-#: ../app/dialogs/palette-import-dialog.c:316
+#. The # of colors
+#: ../app/dialogs/palette-import-dialog.c:315
 msgid "N_umber of colors:"
 msgstr "_Anzahl der Farben:"
 
-#: ../app/dialogs/palette-import-dialog.c:329
+#. The columns
+#: ../app/dialogs/palette-import-dialog.c:328
 msgid "C_olumns:"
 msgstr "_Spalten:"
 
-#: ../app/dialogs/palette-import-dialog.c:340
+#. The interval
+#: ../app/dialogs/palette-import-dialog.c:338
 msgid "I_nterval:"
 msgstr "I_ntervall:"
 
 #. The "Preview" frame
-#: ../app/dialogs/palette-import-dialog.c:351
+#: ../app/dialogs/palette-import-dialog.c:349
 #: ../app/tools/gimpforegroundselecttool.c:1316
 msgid "Preview"
 msgstr "Vorschau"
 
-#: ../app/dialogs/palette-import-dialog.c:369
+#: ../app/dialogs/palette-import-dialog.c:367
 msgid "The selected source contains no colors."
 msgstr "Die ausgewählte Quelle enthält keine Farben."
 
-#: ../app/dialogs/palette-import-dialog.c:454
+#: ../app/dialogs/palette-import-dialog.c:452
 msgid "There is no palette to import."
 msgstr "Es gibt keine Palette zum Importieren."
 
@@ -18291,7 +18295,7 @@ msgid "Vertical"
 msgstr "Vertikal"
 
 #: ../app/dialogs/preferences-dialog.c:2709
-#: ../app/widgets/gimpimagepropview.c:453
+#: ../app/widgets/gimpimagepropview.c:465
 msgid "ppi"
 msgstr "PPI"
 
@@ -21940,6 +21944,13 @@ msgstr "2D Transformation"
 #: ../app/pdb/item-transform-cmds.c:967
 msgid "2D Transforming"
 msgstr "2D Transformation"
+
+#: ../app/pdb/pdb-cmds.c:1089 ../app/pdb/pdb-cmds.c:1133
+#: ../app/pdb/pdb-cmds.c:1175
+#, fuzzy, c-format
+#| msgid "Procedure '%s' not found"
+msgid "Data label '%s' is not a canonical identifier"
+msgstr "Prozedur »%s« wurde nicht gefunden"
 
 #: ../app/pdb/plug-in-compat-cmds.c:270
 msgctxt "undo-type"
@@ -28128,80 +28139,84 @@ msgstr ""
 "Den aktuellen Bildkommentar durch den voreingestellten aus "
 "Bearbeiten→Einstellungen→Vorgabebild ersetzen"
 
-#: ../app/widgets/gimpimagepropview.c:108
+#: ../app/widgets/gimpimagepropview.c:111
 msgid "Size in pixels:"
 msgstr "Größe in Pixel:"
 
-#: ../app/widgets/gimpimagepropview.c:111
+#: ../app/widgets/gimpimagepropview.c:114
 msgid "Print size:"
 msgstr "Druckgröße:"
 
-#: ../app/widgets/gimpimagepropview.c:114
+#: ../app/widgets/gimpimagepropview.c:117
 msgid "Resolution:"
 msgstr "Auflösung:"
 
-#: ../app/widgets/gimpimagepropview.c:117
+#: ../app/widgets/gimpimagepropview.c:120
 msgid "Color space:"
 msgstr "Farbraum:"
 
-#: ../app/widgets/gimpimagepropview.c:120
+#: ../app/widgets/gimpimagepropview.c:123
 msgid "Precision:"
 msgstr "Genauigkeit:"
 
-#: ../app/widgets/gimpimagepropview.c:125
+#: ../app/widgets/gimpimagepropview.c:128
 msgid "File Name:"
 msgstr "Dateiname:"
 
-#: ../app/widgets/gimpimagepropview.c:131
+#: ../app/widgets/gimpimagepropview.c:136
 msgid "File Size:"
 msgstr "Dateigröße:"
 
-#: ../app/widgets/gimpimagepropview.c:134
+#: ../app/widgets/gimpimagepropview.c:139
 msgid "File Type:"
 msgstr "Dateityp:"
 
-#: ../app/widgets/gimpimagepropview.c:139
+#: ../app/widgets/gimpimagepropview.c:144
 msgid "Size in memory:"
 msgstr "Größe im Speicher:"
 
-#: ../app/widgets/gimpimagepropview.c:142
+#: ../app/widgets/gimpimagepropview.c:147
 msgid "Undo steps:"
 msgstr "Schritte rückgängig:"
 
-#: ../app/widgets/gimpimagepropview.c:145
+#: ../app/widgets/gimpimagepropview.c:150
 msgid "Redo steps:"
 msgstr "Schritte wiederholen:"
 
-#: ../app/widgets/gimpimagepropview.c:150
+#: ../app/widgets/gimpimagepropview.c:155
 msgid "Number of pixels:"
 msgstr "Pixelanzahl:"
 
-#: ../app/widgets/gimpimagepropview.c:153
+#: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of layers:"
 msgstr "Ebenenanzahl:"
 
-#: ../app/widgets/gimpimagepropview.c:156
+#: ../app/widgets/gimpimagepropview.c:161
 msgid "Number of channels:"
 msgstr "Kanalanzahl:"
 
-#: ../app/widgets/gimpimagepropview.c:159
+#: ../app/widgets/gimpimagepropview.c:164
 msgid "Number of paths:"
 msgstr "Pfadanzahl:"
 
-#: ../app/widgets/gimpimagepropview.c:448
+#: ../app/widgets/gimpimagepropview.c:460
 #: ../app/widgets/gimptemplateeditor.c:341
 #, c-format
 msgid "pixels/%s"
 msgstr "Pixel/%s"
 
-#: ../app/widgets/gimpimagepropview.c:450
+#: ../app/widgets/gimpimagepropview.c:462
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:471
-msgid "colors"
-msgstr "Farben"
+#: ../app/widgets/gimpimagepropview.c:483
+#, fuzzy, c-format
+#| msgid "Indexed Color Conversion"
+msgid "Indexed color (monochrome)"
+msgid_plural "Indexed color (%d colors)"
+msgstr[0] "Indizierte Farbumwandlung"
+msgstr[1] "Indizierte Farbumwandlung"
 
 #: ../app/widgets/gimpitemtreeview.c:783
 msgid "Lock:"
@@ -28417,32 +28432,32 @@ msgstr "%d × %d PPI"
 msgid "%d ppi"
 msgstr "%d PPI"
 
-#: ../app/widgets/gimpstrokeeditor.c:130
+#: ../app/widgets/gimpstrokeeditor.c:131
 msgid "Line width:"
 msgstr "Linienbreite:"
 
-#: ../app/widgets/gimpstrokeeditor.c:141
+#: ../app/widgets/gimpstrokeeditor.c:142
 msgid "_Line Style"
 msgstr "Linien_stil"
 
-#: ../app/widgets/gimpstrokeeditor.c:158
+#: ../app/widgets/gimpstrokeeditor.c:159
 msgid "_Cap style:"
 msgstr "_Aufsatzstil:"
 
-#: ../app/widgets/gimpstrokeeditor.c:164
+#: ../app/widgets/gimpstrokeeditor.c:165
 msgid "_Join style:"
 msgstr "_Verbindungsstil:"
 
-#: ../app/widgets/gimpstrokeeditor.c:169
+#: ../app/widgets/gimpstrokeeditor.c:172
 msgid "_Miter limit:"
 msgstr "_Gehrungslimit:"
 
-#: ../app/widgets/gimpstrokeeditor.c:176
+#: ../app/widgets/gimpstrokeeditor.c:178
 msgid "Dash pattern:"
 msgstr "Strichmuster:"
 
 # CHECK
-#: ../app/widgets/gimpstrokeeditor.c:243
+#: ../app/widgets/gimpstrokeeditor.c:245
 msgid "Dash _preset:"
 msgstr "_Vordefinierter Strich:"
 
@@ -29046,6 +29061,9 @@ msgstr "Rund"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "unscharf"
+
+#~ msgid "colors"
+#~ msgstr "Farben"
 
 #, fuzzy
 #~| msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
