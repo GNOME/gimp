@@ -45,9 +45,12 @@ header files installed.
        https://gitlab.gnome.org/GNOME/babl.git
        https://gitlab.gnome.org/GNOME/gegl.git
 
-     Note: install GEGL with libumfpack (SuiteSparse) for alternative Matting
-     engine "gegl:matting-levin" and OpenEXR library for OpenEXR format
-     support.
+     GEGL must be built with Cairo support, i.e. -Dcairo=enabled option (required
+     for some mandatory operations such as "gegl:npd").
+
+     Optional: build GEGL with libumfpack (SuiteSparse) (`-Dumfpack=enabled`)
+     for alternative Matting engine "gegl:matting-levin" and OpenEXR library
+     (`-Dopenexr=enabled`) for OpenEXR format support.
 
   4. You need to have installed GTK+ version @GTK_REQUIRED_VERSION@ or newer.
      GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
