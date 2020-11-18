@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.6\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-12-23 23:39+0000\n"
-"PO-Revision-Date: 2017-12-24 19:11+0100\n"
+"PO-Revision-Date: 2017-12-25 18:06+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: српски <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -108,7 +108,7 @@ msgid ""
 "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A "
 "PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with GIMP. If not, see: https://www.gnu.org/licenses/"
+"You should have received a copy of the GNU General Public License along with GIMP. If not, see: http://www.gnu.org/licenses/"
 msgstr ""
 "Гимп је слободан софтвер; можете га расподелити и/или га мењати под условима Гнуове опште јавне лиценце како је објављује Задужбина Слободног Софтвера; било "
 "издања 3 те лиценце, било (према вашем избору) било којег новијег издања.\n"
@@ -116,7 +116,7 @@ msgstr ""
 "Гимп се дели у нади да ће бити користан, али БЕЗ ИКАКВЕ ГАРАНЦИЈЕ; чак и без примењене гаранције ТРЖИШНЕ ВРЕДНОСТИ или ПРИЛАГОЂЕНОСТИ ОДРЕЂЕНОЈ НАМЕНИ.  "
 "Погледајте Гнуову општу јавну лиценцу за више детаља.\n"
 "\n"
-"Требали сте да примите примерак Гнуове опште јавне лиценце уз Гимп.  Уколико нисте, идите на „https://www.gnu.org/licenses/“."
+"Требали сте да примите примерак Гнуове опште јавне лиценце уз Гимп.  Уколико нисте, идите на „http://www.gnu.org/licenses/“."
 
 #: ../app/main.c:160
 msgid "Show version information and exit"
@@ -4205,7 +4205,7 @@ msgid "_Dilate"
 msgstr "_Дилатирај"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "filters-action"
+msgctxt "drawable-action"
 msgid "Grow lighter areas of the image"
 msgstr "Појачај светлије делове слике"
 
@@ -4215,7 +4215,7 @@ msgid "_Erode"
 msgstr "_Еродирај"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "filters-action"
+msgctxt "drawable-action"
 msgid "Grow darker areas of the image"
 msgstr "Појачај тамније делове слике"
 
@@ -6895,10 +6895,8 @@ msgid "Edit this palette"
 msgstr "Уређује палету"
 
 #: ../app/actions/palettes-commands.c:83
-#, fuzzy
-#| msgid "Merge Palette"
 msgid "Merge Palettes"
-msgstr "Споји палету"
+msgstr "Споји палете"
 
 #: ../app/actions/palettes-commands.c:87
 msgid "Enter a name for the merged palette"
@@ -6906,7 +6904,7 @@ msgstr "Унесите назив за састављену палету"
 
 #: ../app/actions/palettes-commands.c:123
 msgid "There must be at least two palettes selected to merge."
-msgstr ""
+msgstr "За спајање морате изабрати бар две палете."
 
 #: ../app/actions/patterns-actions.c:43
 msgctxt "patterns-action"
@@ -7011,10 +7009,8 @@ msgstr "Вратите све филтере"
 #: ../app/dialogs/image-new-dialog.c:105 ../app/dialogs/preferences-dialog.c:287 ../app/dialogs/preferences-dialog.c:1094 ../app/dialogs/print-size-dialog.c:123
 #: ../app/dialogs/scale-dialog.c:136 ../app/dialogs/stroke-dialog.c:127 ../app/display/gimpdisplayshell-rotate-dialog.c:121 ../app/tools/gimpfiltertool.c:320
 #: ../app/tools/gimptransformtool.c:1174 ../app/widgets/gimpcolordialog.c:109
-#, fuzzy
-#| msgid "_Reset Curve"
 msgid "_Reset"
-msgstr "Врати _криву"
+msgstr "_Врати"
 
 #: ../app/actions/plug-in-commands.c:195
 msgid "Do you really want to reset all filters to default values?"
@@ -7370,9 +7366,6 @@ msgid "Delete Template"
 msgstr "Обриши шаблон"
 
 #: ../app/actions/templates-commands.c:245 ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:509
-#, fuzzy
-#| msgctxt "text-tool-action"
-#| msgid "_Delete"
 msgid "_Delete"
 msgstr "_Обриши"
 
@@ -7427,11 +7420,8 @@ msgstr "Отворите текстуалну датотеку (УТФ-8)"
 
 #: ../app/actions/text-editor-commands.c:65 ../app/actions/text-tool-commands.c:119 ../app/dialogs/file-open-location-dialog.c:81
 #: ../app/dialogs/vectors-import-dialog.c:89 ../app/widgets/gimpiconpicker.c:489 ../app/widgets/gimpopendialog.c:69 ../app/widgets/gimpsettingsbox.c:736
-#, fuzzy
-#| msgctxt "text-editor-action"
-#| msgid "Open"
 msgid "_Open"
-msgstr "Отвори"
+msgstr "_Отвори"
 
 #: ../app/actions/text-editor-commands.c:139 ../app/actions/text-tool-commands.c:209 ../app/config/gimpconfig-file.c:71 ../app/core/gimppalette-import.c:510
 #: ../app/plug-in/gimpenvirontable.c:289 ../app/plug-in/gimpinterpreterdb.c:233 ../app/tools/gimpfiltertool-settings.c:170 ../app/widgets/gimptextbuffer.c:1647
@@ -9055,17 +9045,17 @@ msgstr "Пребацује на приказ преко целог екрана"
 #, fuzzy
 #| msgctxt "view-zoom-action"
 #| msgid "Set a custom zoom factor"
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Set zoom factor"
 msgstr "Омогућава да подесите произвољан чинилац увећавања"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom out as far as possible"
 msgstr ""
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom in as far as possible"
 msgstr ""
 
@@ -9102,14 +9092,14 @@ msgstr "Увећај приказ"
 #: ../app/actions/view-actions.c:354
 #, fuzzy
 #| msgid "Zoom out"
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom out a lot"
 msgstr "Умањите приказ"
 
 #: ../app/actions/view-actions.c:359
 #, fuzzy
 #| msgid "Zoom in"
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom in a lot"
 msgstr "Увећајте приказ"
 
