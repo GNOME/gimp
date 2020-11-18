@@ -1878,95 +1878,119 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < numele; i++)
     {
       GtkWidget *widget;
+      gint       index;
 
       widget = builder_get_widget (builder, default_metadata_tags[i].tag);
 
       value = gexiv2_metadata_get_tag_interpreted_string (metadata,
                                                           default_metadata_tags[i].tag);
 
-      if (! value || value[0] == '\0')
+      if (value)
         {
-          gint index;
+          gchar *value_utf8 = clean_xmp_string (value);
 
-          if (value)
-            g_free (value);
+          g_free (value);
 
-          index = default_metadata_tags[i].other_tag_index;
-          if (index > -1)
+          if (value_utf8 && value_utf8[0] != '\0')
             {
-              gchar **values;
+              value = g_strdup (value_utf8);
+            }
+          else
+            {
+              value = NULL;
+            }
 
-              /* These are all IPTC tags some of which can appear multiple times so
-               * we will use get_tag_multiple. Also IPTC most commonly uses UTF-8
-               * not current locale so get_tag_interpreted was wrong anyway.
-               * FIXME For now lets interpret as UTF-8 and in the future read
-               * and interpret based on the CharacterSet tag.
-               */
-              values = gexiv2_metadata_get_tag_multiple (metadata,
-                                                         equivalent_metadata_tags[index].tag);
+          g_free (value_utf8);
+        }
 
-              if (values)
+      index = default_metadata_tags[i].other_tag_index;
+      if (index > -1)
+        {
+          gchar **values;
+
+          /* These are all IPTC tags some of which can appear multiple times so
+            * we will use get_tag_multiple. Also IPTC most commonly uses UTF-8
+            * not current locale so get_tag_interpreted was wrong anyway.
+            * FIXME For now lets interpret as UTF-8 and in the future read
+            * and interpret based on the CharacterSet tag.
+            */
+          values = gexiv2_metadata_get_tag_multiple (metadata,
+                                                     equivalent_metadata_tags[index].tag);
+
+          if (values)
+            {
+              gint     i;
+              GString *str = NULL;
+
+              for (i = 0; values[i] != NULL; i++)
                 {
-                  gint     i;
-                  GString *str = NULL;
-
-                  for (i = 0; values[i] != NULL; i++)
+                  if (values[i][0] != '\0')
                     {
-                      if (values[i][0] != '\0')
+                      if (! str)
                         {
-                          if (! str)
+                          str = g_string_new (values[i]);
+                        }
+                      else
+                        {
+                          if (! strcmp ("multi", equivalent_metadata_tags[index].mode))
                             {
-                              str = g_string_new (values[i]);
+                              g_string_append (str, "\n");
                             }
                           else
                             {
-                              if (! strcmp ("multi", equivalent_metadata_tags[index].mode))
-                                {
-                                  g_string_append (str, "\n");
-                                }
-                              else
-                                {
-                                  g_string_append (str, ", ");
-                                }
-                              g_string_append (str, values[i]);
+                              g_string_append (str, ", ");
                             }
+                          g_string_append (str, values[i]);
                         }
                     }
+                }
 
-                  if (str)
+              if (str)
+                {
+                  /* If we got values from both Xmp and Iptc then compare those
+                    * values and if they are different concatenate them. Usually they
+                    * should be the same in which case we won't duplicate the string.
+                    */
+                  if (value && strcmp (value, str->str))
                     {
-                      value = g_string_free (str, FALSE);
+                      if (! strcmp ("multi", equivalent_metadata_tags[index].mode))
+                        {
+                          g_string_prepend (str, "\n");
+                        }
+                      else
+                        {
+                          g_string_prepend (str, ", ");
+                        }
+                      g_string_prepend (str, value);
+                      g_free (value);
                     }
+                  value = g_string_free (str, FALSE);
                 }
             }
         }
 
       if (value)
         {
-          gchar *value_utf;
-
-          value_utf = clean_xmp_string (value);
-
           if (! strcmp ("Exif.GPSInfo.GPSAltitude",
                         default_metadata_tags[i].tag) &&
-              value_utf)
+              value)
             {
               gchar *new_value_clean[2];
 
-              new_value_clean[0] = strtok (value_utf, " ");
-              strcpy (value_utf, new_value_clean[0]);
+              new_value_clean[0] = strtok (value, " ");
+              strcpy (value, new_value_clean[0]);
             }
 
           if (! strcmp ("single", default_metadata_tags[i].mode))
             {
-              gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
+              gtk_entry_set_text (GTK_ENTRY (widget), value);
             }
           else if (! strcmp ("multi", default_metadata_tags[i].mode))
             {
               GtkTextBuffer *buffer;
 
               buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
-              gtk_text_buffer_set_text (buffer, value_utf, -1);
+              gtk_text_buffer_set_text (buffer, value, -1);
             }
           else if (!strcmp ("list", default_metadata_tags[i].mode))
             {
