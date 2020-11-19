@@ -224,43 +224,43 @@ png_create_procedure (GimpPlugIn  *plug_in,
                                           "png");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "interlaced",
-                             "Interlaced",
+                             "_Interlacing (Adam7)",
                              "Use Adam7 interlacing?",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "compression",
-                         "Compression",
+                         "Co_mpression level",
                          "Deflate Compression factor (0..9)",
                          0, 9, 9,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
-                             "bKGD",
+                             "Save _background color",
                              "Write bKGD chunk?",
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "gama",
-                             "gAMA",
+                             "Save _gamma",
                              "Write gAMA chunk?",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "offs",
-                             "oFFs",
+                             "Save layer o_ffset",
                              "Write oFFs chunk?",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
-                             "pHYs",
+                             "Save _resolution",
                              "Write pHYs chunk?",
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "time",
-                             "tIME",
+                             "Save creation _time",
                              "Write tIME chunk?",
                              TRUE,
                              G_PARAM_READWRITE);
@@ -281,32 +281,32 @@ png_create_procedure (GimpPlugIn  *plug_in,
                                         GIMP_ARGUMENT_SYNC_PARASITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent",
-                             "Save transparent",
+                             "Save color _values from transparent pixels",
                              "Preserve color of transparent pixels?",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_INT (procedure, "format",
-                             "Format",
+                             "_Pixel format",
                              "PNG export format",
                              PNG_FORMAT_AUTO, PNG_FORMAT_GRAYA16,
                              PNG_FORMAT_AUTO,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-exif",
-                                 "Save Exif",
+                                 "Save Exif data",
                                  "Save Exif",
                                  gimp_export_exif (),
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-xmp",
-                                 "Save XMP",
+                                 "Save XMP data",
                                  "Save XMP",
                                  gimp_export_xmp (),
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-iptc",
-                                 "Save IPTC",
+                                 "Save IPTC data",
                                  "Save IPTC",
                                  gimp_export_iptc (),
                                  G_PARAM_READWRITE);
@@ -318,7 +318,7 @@ png_create_procedure (GimpPlugIn  *plug_in,
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                                 "Save profile",
+                                 "Save color profile",
                                  "Save color profile",
                                  gimp_export_color_profile (),
                                  G_PARAM_READWRITE);
@@ -2201,110 +2201,17 @@ save_dialog (GimpImage     *image,
              gboolean       alpha)
 {
   GtkWidget    *dialog;
-  GtkWidget    *main_vbox;
-  GtkWidget    *grid;
-  GtkWidget    *button;
   GtkListStore *store;
-  GtkWidget    *combo;
-  GtkWidget    *scale;
-  GimpParasite *parasite;
-  gint          col;
-  gint          row;
+  GtkWidget    *flowbox;
   gboolean      run;
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as PNG"));
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "compression", GIMP_TYPE_SCALE_ENTRY);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  /* Toggles */
-  col = 0;
-  row = 0;
-
-  button = gimp_prop_check_button_new (config, "interlaced",
-                                       _("_Interlacing (Adam7)"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  button = gimp_prop_check_button_new (config, "bkgd",
-                                       _("Save _background color"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  button = gimp_prop_check_button_new (config, "gama",
-                                       _("Save _gamma"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  button = gimp_prop_check_button_new (config, "offs",
-                                       _("Save layer o_ffset"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  button = gimp_prop_check_button_new (config, "phys",
-                                       _("Save _resolution"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  button = gimp_prop_check_button_new (config, "time",
-                                       _("Save creation _time"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  button = gimp_prop_check_button_new (config, "save-transparent",
-                                       _("Save color _values from "
-                                         "transparent pixels"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 2, 1);
-
-  gtk_widget_set_sensitive (button, alpha);
-
-  col = 1;
-  row = 0;
-
-  button = gimp_prop_check_button_new (config, "save-comment",
-                                       _("Save comme_nt"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  parasite = gimp_image_get_parasite (image, "gimp-comment");
-  gtk_widget_set_sensitive (button, parasite != NULL);
-  gimp_parasite_free (parasite);
-
-  button = gimp_prop_check_button_new (config, "save-exif",
-                                       _("Save E_xif data"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  button = gimp_prop_check_button_new (config, "save-xmp",
-                                       _("Save XMP data"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  button = gimp_prop_check_button_new (config, "save-iptc",
-                                       _("Save IPTC data"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  button = gimp_prop_check_button_new (config, "save-thumbnail",
-                                       _("Save thumbnail"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-  button = gimp_prop_check_button_new (config, "save-color-profile",
-                                       _("Save color profile"));
-  gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-
-#if !defined(PNG_iCCP_SUPPORTED)
-  gtk_widget_hide (button);
-#endif
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  /* Pixel format combo */
   store = gimp_int_store_new (_("Automatic"),    PNG_FORMAT_AUTO,
                               _("8 bpc RGB"),    PNG_FORMAT_RGB8,
                               _("8 bpc GRAY"),   PNG_FORMAT_GRAY8,
@@ -2315,21 +2222,34 @@ save_dialog (GimpImage     *image,
                               _("16 bpc RGBA"),  PNG_FORMAT_RGBA16,
                               _("16 bpc GRAYA"), PNG_FORMAT_GRAYA16,
                               NULL);
-  combo = gimp_prop_int_combo_box_new (config, "format",
-                                       GIMP_INT_STORE (store));
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "format", GIMP_INT_STORE (store));
   g_object_unref (store);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_Pixel format:"), 0.0, 0.5,
-                            combo, 2);
+  gtk_widget_set_sensitive (gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                              "save-transparent",
+                                                              G_TYPE_NONE),
+                            alpha);
+  flowbox = gimp_procedure_dialog_fill_flowbox (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "main-options",
+                                                "interlaced", "bkgd", "gama", "offs",
+                                                "phys", "time", "save-transparent", "save-exif",
+                                                "save-xmp", "save-iptc", "save-thumbnail",
+#if defined(PNG_iCCP_SUPPORTED)
+                                                "save-color-profile",
+#endif
+                                                NULL);
+  gtk_flow_box_set_min_children_per_line (GTK_FLOW_BOX (flowbox), 2);
+  gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (flowbox), 2);
 
-  /* Compression level scale */
-  scale = gimp_prop_scale_entry_new (config, "compression",
-                                     NULL, 0, FALSE, 0, 0);
-  gtk_widget_hide (gimp_labeled_get_label (GIMP_LABELED (scale)));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("Co_mpression level:"),
-                            0.0, 0.5, scale, 2);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "comment-frame", "save-comment", FALSE,
+                                    "gimp-comment");
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "main-options", "format",
+                              "compression", "comment-frame",
+                              NULL);
 
   gtk_widget_show (dialog);
 
