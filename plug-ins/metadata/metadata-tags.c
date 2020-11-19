@@ -35,8 +35,8 @@ const metadata_tag default_metadata_tags[] =
   { "Xmp.dc.description",                        "multi",  14,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  2
   { "Xmp.dc.subject",                            "multi",  15,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, //  3
   { "Xmp.dc.rights",                             "single", 17,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  4
-  { "Xmp.photoshop.AuthorsPosition",             "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  5
-  { "Xmp.photoshop.CaptionWriter",               "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  6
+  { "Xmp.photoshop.AuthorsPosition",             "single", 19,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  5
+  { "Xmp.photoshop.CaptionWriter",               "single", 21,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  6
   { "Xmp.xmp.Rating",                            "combo",  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, //  7
   { "Xmp.xmpRights.Marked",                      "combo",  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, //  8
   { "Xmp.xmpRights.WebStatement",                "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  9
@@ -48,13 +48,15 @@ const metadata_tag default_metadata_tags[] =
   { "Xmp.photoshop.Instructions",                "multi",   2,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 13
   { "Xmp.iptc.IntellectualGenre",                "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 14
   { "Xmp.iptc.Scene",                            "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 15
-  { "Xmp.iptc.Location",                         "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 16
-  { "Xmp.iptc.CountryCode",                      "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 17
+  { "Xmp.iptc.Location",                         "single", 18,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 16
+  { "Xmp.iptc.CountryCode",                      "single", 20,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 17
   { "Xmp.iptc.SubjectCode",                      "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 18
   { "Xmp.xmpRights.UsageTerms",                  "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 19
   { "Xmp.photoshop.City",                        "single",  5,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 20
   { "Xmp.photoshop.State",                       "single",  6,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 21
   { "Xmp.photoshop.Country",                     "single",  7,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 22
+  /* Xmp.photoshop.CaptionWriter here is a duplicate of #6 above. We keep it here to not have
+   * to renumber the tag references. It seems it is not used on the IPTC tab. */
   { "Xmp.photoshop.CaptionWriter",               "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 23
   { "Xmp.photoshop.Credit",                      "single",  8,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 24
   { "Xmp.photoshop.Source",                      "single",  9,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 25
@@ -151,7 +153,11 @@ const metadata_tag equivalent_metadata_tags[] =
   { "Iptc.Application2.Caption",                 "multi",   2,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 14
   { "Iptc.Application2.Keywords",                "multi",   3,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 15
   { "Iptc.Application2.ObjectName",              "single",  0,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 16
-  { "Iptc.Application2.Copyright",               "single",  4,  TAG_TYPE_IPTC, GIMP_XMP_NONE }  // 17
+  { "Iptc.Application2.Copyright",               "single",  4,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 17
+  { "Iptc.Application2.LocationName",            "multi",  16,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 18
+  { "Iptc.Application2.BylineTitle",             "multi",   5,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 19
+  { "Iptc.Application2.CountryCode",             "single", 17,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 20
+  { "Iptc.Application2.Writer",                  "multi",   6,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 21
 };
 const gint n_equivalent_metadata_tags = G_N_ELEMENTS (equivalent_metadata_tags);
 
