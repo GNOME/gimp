@@ -653,7 +653,15 @@ clean_xmp_string (const gchar *value)
         }
     }
 
-  value_utf8 = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+  if (! g_utf8_validate (value_clean, -1, NULL))
+    {
+      value_utf8 = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+    }
+  else
+    {
+      value_utf8 = g_strdup (value_clean);
+    }
+
   g_free (value_clean);
 
   return value_utf8;
