@@ -5309,6 +5309,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
             }
           else
             {
+              gint         index;
               const gchar *text_value = gtk_entry_get_text (entry);
 
               if (default_metadata_tags[i].xmp_type == GIMP_XMP_TEXT ||
@@ -5357,6 +5358,20 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                   default_metadata_tags[i].tag);
                     }
                 }
+
+              index = default_metadata_tags[i].other_tag_index;
+              if (index > -1)
+                {
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             equivalent_metadata_tags[index].tag);
+                  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                                                        equivalent_metadata_tags[index].tag,
+                                                        text_value))
+                    {
+                      g_printerr ("failed to set tag [%s]\n",
+                                  equivalent_metadata_tags[index].tag);
+                    }
+                }
             }
         }
 
@@ -5369,6 +5384,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           GtkTextIter    start;
           GtkTextIter    end;
           gchar         *text;
+          gint           index;
 
           buffer = gtk_text_view_get_buffer (text_view);
           gtk_text_buffer_get_start_iter (buffer, &start);
@@ -5422,6 +5438,25 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                               default_metadata_tags[i].tag);
                 }
             }
+
+            index = default_metadata_tags[i].other_tag_index;
+            if (index > -1)
+              {
+                gchar **multi;
+
+                gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                           equivalent_metadata_tags[index].tag);
+                multi = g_strsplit (text, "\n", 0);
+                if (! gexiv2_metadata_set_tag_multiple (GEXIV2_METADATA (g_metadata),
+                                                        equivalent_metadata_tags[index].tag,
+                                                        (const gchar **) multi))
+                  {
+                    g_printerr ("failed to set tag [%s]\n",
+                                equivalent_metadata_tags[index].tag);
+                  }
+
+                g_strfreev (multi);
+              }
 
           if (text)
             g_free (text);
