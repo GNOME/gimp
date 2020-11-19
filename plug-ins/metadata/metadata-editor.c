@@ -5492,7 +5492,56 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           combo = GTK_COMBO_BOX_TEXT (object);
           value = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
-          if (! strcmp ("Xmp.xmp.Rating", default_metadata_tags[i].tag))
+          if (! strcmp ("Xmp.photoshop.Urgency", default_metadata_tags[i].tag))
+            {
+              /* IPTC tab - Urgency */
+              if (value == 0)
+                {
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             "Iptc.Application2.Urgency");
+                }
+              else
+                {
+                  gchar *save;
+
+                  save = g_strdup_printf ("%d", value);
+
+                  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                                                  default_metadata_tags[i].tag,
+                                                  save);
+                  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                                                  "Iptc.Application2.Urgency",
+                                                  save);
+                  g_free (save);
+                }
+            }
+          else if (! strcmp ("Xmp.xmpRights.Marked",
+                             default_metadata_tags[i].tag))
+            {
+              /* Description tab - Copyright Status */
+              if (value == 0)
+                {
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
+                }
+              else
+                {
+                  gchar *save_value;
+
+                  if (value == 1)
+                    save_value = g_strdup_printf ("%s", "True");
+                  else /* (value == 2) */
+                    save_value = g_strdup_printf ("%s", "False");
+
+                  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                                                  default_metadata_tags[i].tag,
+                                                  save_value);
+                  g_free (save_value);
+                }
+            }
+          else if (! strcmp ("Xmp.xmp.Rating", default_metadata_tags[i].tag))
             {
               if (value == 0)
                 {
