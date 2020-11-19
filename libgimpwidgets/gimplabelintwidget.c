@@ -144,6 +144,9 @@ gimp_label_int_widget_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
+  gtk_grid_set_column_spacing (GTK_GRID (widget), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (widget), 6);
+
   /* This is important to make this object into a property widget. It
    * will allow config object to bind the "value" property of this
    * widget, and therefore be updated automatically.

@@ -139,11 +139,6 @@ gimp_procedure_dialog_dispose (GObject *object)
   g_clear_pointer (&dialog->priv->reset_popover, gtk_widget_destroy);
   g_clear_pointer (&dialog->priv->widgets, g_hash_table_unref);
 
-  if (dialog->priv->widgets)
-    {
-      g_hash_table_destroy (dialog->priv->widgets);
-      dialog->priv->widgets = NULL;
-    }
   g_clear_object (&dialog->priv->label_group);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -400,6 +395,10 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           buffer = gimp_prop_text_buffer_new (G_OBJECT (dialog->priv->config),
                                               property, -1);
           widget = gtk_text_view_new_with_buffer (buffer);
+          gtk_text_view_set_top_margin (GTK_TEXT_VIEW (widget), 3);
+          gtk_text_view_set_bottom_margin (GTK_TEXT_VIEW (widget), 3);
+          gtk_text_view_set_left_margin (GTK_TEXT_VIEW (widget), 3);
+          gtk_text_view_set_right_margin (GTK_TEXT_VIEW (widget), 3);
           g_object_unref (buffer);
         }
       else if (widget_type == GTK_TYPE_ENTRY)
@@ -911,7 +910,7 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
       return frame;
     }
 
-  frame = gtk_frame_new (NULL);
+  frame = gimp_frame_new (NULL);
 
   if (contents_id)
     {
@@ -923,6 +922,7 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
           return frame;
         }
 
+      g_object_ref (contents);
       gtk_container_add (GTK_CONTAINER (frame), contents);
       gtk_widget_show (contents);
     }
@@ -937,6 +937,7 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
           return frame;
         }
 
+      g_object_ref (title);
       gtk_frame_set_label_widget (GTK_FRAME (frame), title);
       gtk_widget_show (title);
 
