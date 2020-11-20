@@ -391,6 +391,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
       if (widget_type == G_TYPE_NONE || widget_type == GTK_TYPE_TEXT_VIEW)
         {
           GtkTextBuffer *buffer;
+          const gchar   *tooltip;
 
           buffer = gimp_prop_text_buffer_new (G_OBJECT (dialog->priv->config),
                                               property, -1);
@@ -400,6 +401,10 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           gtk_text_view_set_left_margin (GTK_TEXT_VIEW (widget), 3);
           gtk_text_view_set_right_margin (GTK_TEXT_VIEW (widget), 3);
           g_object_unref (buffer);
+
+          tooltip = g_param_spec_get_blurb (pspec);
+          if (tooltip)
+            gimp_help_set_help_data (widget, tooltip, NULL);
         }
       else if (widget_type == GTK_TYPE_ENTRY)
         {
