@@ -253,3 +253,15 @@ gimp_label_int_widget_new (const gchar *text,
 
   return int_widget;
 }
+
+GtkWidget *
+gimp_label_int_widget_get_widget (GimpLabelIntWidget *widget)
+{
+  GimpLabelIntWidgetPrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_LABEL_INT_WIDGET (widget), NULL);
+
+  priv = gimp_label_int_widget_get_instance_private (widget);
+
+  return priv->widget;
+}

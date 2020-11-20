@@ -51,8 +51,10 @@ struct _GimpLabelIntWidgetClass
   void (* _gimp_reserved8) (void);
 };
 
-GtkWidget  * gimp_label_int_widget_new       (const gchar   *text,
-                                              GtkWidget     *widget);
+GtkWidget  * gimp_label_int_widget_new        (const gchar        *text,
+                                               GtkWidget          *widget);
+
+GtkWidget  * gimp_label_int_widget_get_widget (GimpLabelIntWidget *widget);
 
 
 G_END_DECLS
