@@ -87,7 +87,8 @@ static void       metadata_dialog_append_tags      (GExiv2Metadata  *metadata,
                                                     gchar          **tags,
                                                     GtkListStore    *store,
                                                     gint             tag_column,
-                                                    gint             value_column);
+                                                    gint             value_column,
+                                                    gboolean         load_iptc);
 static gchar    * metadata_dialog_format_tag_value (GExiv2Metadata  *metadata,
                                                     const gchar     *tag,
                                                     gboolean         truncate);
