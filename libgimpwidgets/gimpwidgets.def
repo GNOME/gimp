@@ -227,6 +227,7 @@ EXPORTS
 	gimp_int_store_new
 	gimp_int_store_new_valist
 	gimp_label_int_widget_get_type
+	gimp_label_int_widget_get_widget
 	gimp_label_int_widget_new
 	gimp_label_set_attributes
 	gimp_label_spin_get_spin_button
