@@ -54,6 +54,8 @@ struct _GimpProcedureDialogPrivate
   GtkWidget           *reset_popover;
 
   GHashTable          *widgets;
+  GHashTable          *mnemonics;
+  GHashTable          *core_mnemonics;
   GtkSizeGroup        *label_group;
 };
 
@@ -82,6 +84,10 @@ static void   gimp_procedure_dialog_estimate_increments (gdouble        lower,
                                                          gdouble       *step,
                                                          gdouble       *page);
 
+static gboolean gimp_procedure_dialog_check_mnemonic    (GimpProcedureDialog *dialog,
+                                                         GtkWidget           *widget,
+                                                         const gchar         *id,
+                                                         const gchar         *core_id);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedureDialog, gimp_procedure_dialog,
                             GIMP_TYPE_DIALOG)
@@ -124,6 +130,8 @@ gimp_procedure_dialog_init (GimpProcedureDialog *dialog)
   dialog->priv = gimp_procedure_dialog_get_instance_private (dialog);
 
   dialog->priv->widgets     = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+  dialog->priv->mnemonics   = g_hash_table_new_full (g_direct_hash, NULL, NULL, g_free);
+  dialog->priv->core_mnemonics = g_hash_table_new_full (g_direct_hash, NULL, NULL, g_free);
   dialog->priv->label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 }
 
@@ -137,7 +145,10 @@ gimp_procedure_dialog_dispose (GObject *object)
   g_clear_object (&dialog->priv->initial_config);
 
   g_clear_pointer (&dialog->priv->reset_popover, gtk_widget_destroy);
-  g_clear_pointer (&dialog->priv->widgets, g_hash_table_unref);
+
+  g_clear_pointer (&dialog->priv->widgets, g_hash_table_destroy);
+  g_clear_pointer (&dialog->priv->mnemonics, g_hash_table_destroy);
+  g_clear_pointer (&dialog->priv->core_mnemonics, g_hash_table_destroy);
 
   g_clear_object (&dialog->priv->label_group);
 
@@ -243,11 +254,15 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
   else
     ok_label = _("_OK");
 
-  gimp_dialog_add_buttons (GIMP_DIALOG (dialog),
-                           _("_Reset"),  RESPONSE_RESET,
-                           _("_Cancel"), GTK_RESPONSE_CANCEL,
-                           ok_label,     GTK_RESPONSE_OK,
-                            NULL);
+  button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
+                                   _("_Reset"), RESPONSE_RESET);
+  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "reset");
+  button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
+                                   _("_Cancel"), GTK_RESPONSE_CANCEL);
+  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "cancel");
+  button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
+                                   ok_label, GTK_RESPONSE_OK);
+  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "ok");
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                             GTK_RESPONSE_OK,
@@ -272,6 +287,7 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
   gtk_widget_show (hbox);
 
   button = gtk_button_new_with_mnemonic (_("_Load Defaults"));
+  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "load-defaults");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -280,6 +296,7 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
                     dialog);
 
   button = gtk_button_new_with_mnemonic (_("_Save Defaults"));
+  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "save-defaults");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -422,7 +439,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
   if (! widget)
     {
       g_warning ("%s: widget type %s not supported for parameter '%s' of type %s",
-                 G_STRFUNC, G_OBJECT_TYPE_NAME (widget_type),
+                 G_STRFUNC, g_type_name (widget_type),
                  property, G_PARAM_SPEC_TYPE_NAME (pspec));
       return NULL;
     }
@@ -434,6 +451,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
       gtk_size_group_add_widget (dialog->priv->label_group, label);
     }
 
+  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
 
   return widget;
@@ -508,6 +526,7 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
       gtk_size_group_add_widget (dialog->priv->label_group, label);
     }
 
+  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
 
   return widget;
@@ -1159,4 +1178,74 @@ gimp_procedure_dialog_estimate_increments (gdouble  lower,
       if (page)
         *page = 10.0;
     }
+}
+
+static gboolean
+gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
+                                      GtkWidget           *widget,
+                                      const gchar         *id,
+                                      const gchar         *core_id)
+{
+  GtkWidget *label    = NULL;
+  gchar     *duplicate;
+  gboolean   success  = TRUE;
+  guint      mnemonic = GDK_KEY_VoidSymbol;
+
+  g_return_val_if_fail ((id && ! core_id) || (core_id && ! id), FALSE);
+
+  if (GIMP_IS_LABELED (widget))
+    {
+      label = gimp_labeled_get_label (GIMP_LABELED (widget));
+    }
+  else if (g_type_is_a (G_OBJECT_TYPE (widget), GTK_TYPE_LABEL))
+    {
+      label = widget;
+    }
+  else if (g_type_is_a (G_OBJECT_TYPE (widget), GTK_TYPE_BUTTON))
+    {
+      label = gtk_bin_get_child (GTK_BIN (widget));
+      if (! label || ! g_type_is_a (G_OBJECT_TYPE (label), GTK_TYPE_LABEL))
+        label = NULL;
+    }
+
+  if (label                                                          &&
+      (mnemonic = gtk_label_get_mnemonic_keyval (GTK_LABEL (label))) &&
+      mnemonic != GDK_KEY_VoidSymbol)
+    {
+      duplicate = g_hash_table_lookup (dialog->priv->core_mnemonics, GINT_TO_POINTER (mnemonic));
+      if (duplicate && g_strcmp0 (duplicate, id ? id : core_id) != 0)
+        {
+          g_printerr ("Procedure '%s': duplicate mnemonic %s for label of property %s and dialog button %s\n",
+                      gimp_procedure_get_name (dialog->priv->procedure),
+                      gdk_keyval_name (mnemonic), id, duplicate);
+          success = FALSE;
+        }
+
+      if (success)
+        {
+          duplicate = g_hash_table_lookup (dialog->priv->mnemonics, GINT_TO_POINTER (mnemonic));
+          if (duplicate && g_strcmp0 (duplicate, id ? id : core_id) != 0)
+            {
+              g_printerr ("Procedure '%s': duplicate mnemonic %s for label of properties %s and %s\n",
+                          gimp_procedure_get_name (dialog->priv->procedure),
+                          gdk_keyval_name (mnemonic), id, duplicate);
+              success = FALSE;
+            }
+          else if (! duplicate)
+            {
+              if (id)
+                g_hash_table_insert (dialog->priv->mnemonics, GINT_TO_POINTER (mnemonic), g_strdup (id));
+              else
+                g_hash_table_insert (dialog->priv->core_mnemonics, GINT_TO_POINTER (mnemonic), g_strdup (core_id));
+            }
+        }
+    }
+  else
+    {
+      g_printerr ("Procedure '%s': no mnemonic for property %s\n",
+                  gimp_procedure_get_name (dialog->priv->procedure), id);
+      success = FALSE;
+    }
+
+  return success;
 }
