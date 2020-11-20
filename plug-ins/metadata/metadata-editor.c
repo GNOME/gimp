@@ -4355,6 +4355,98 @@ set_tag_string (GimpMetadata *metadata,
     }
 }
 
+static void
+set_gps_longitude_latitude (GimpMetadata *metadata,
+                            const gchar  *tag,
+                            const gchar  *value)
+{
+  const gchar  delimiters_dms[] = " deg'\"";
+  gchar        lng_lat[256];
+  gchar       *s    = g_strdup (value);
+  gchar       *str1 = NULL;
+  gchar       *str2 = NULL;
+  gchar       *str3 = NULL;
+
+  if (s && strstr (s, "."))
+    {
+      gdouble degs;
+      gint    deg;
+      gint    min;
+      gint    sec;
+
+      degs = atof (s);
+      if (degs < 0)
+        degs *= -1;
+      deg = (gint) degs;
+      min = (gint) ((degs - deg) * 60.f);
+      sec = (gint) ((degs - (float) deg - (float) (min / 60.f)) * 60.f * 60.f);
+      str1 = malloc (256);
+      str2 = malloc (256);
+      str3 = malloc (256);
+      g_sprintf (str1, "%d", deg);
+      g_sprintf (str2, "%d", min);
+      g_sprintf (str3, "%d", sec);
+    }
+  else if (s)
+    {
+      str1 = strtok (s, delimiters_dms);
+      str2 = strtok (NULL, delimiters_dms);
+      str3 = strtok (NULL, delimiters_dms);
+    }
+
+  if (str1)
+    {
+      strcpy (lng_lat, str1);
+      strcat (lng_lat, "/1");
+    }
+  else
+    {
+      strcpy (lng_lat, "0/1");
+    }
+
+  if (str2)
+    {
+      strcat (lng_lat, " ");
+      strcat (lng_lat, str2);
+      strcat (lng_lat, "/1");
+    }
+  else
+    {
+      strcat (lng_lat, " ");
+      strcat (lng_lat, "0/1");
+    }
+
+  if (str3)
+    {
+      strcat (lng_lat, " ");
+      strcat (lng_lat, str3);
+      strcat (lng_lat, "/1");
+    }
+  else
+    {
+      strcat (lng_lat, " ");
+      strcat (lng_lat, "0/1");
+    }
+
+  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                        tag,
+                                        lng_lat))
+    {
+      g_printerr ("failed to set tag [%s]\n",
+                  tag);
+    }
+
+  if (s && strstr (s, "."))
+    {
+      free (str1);
+      free (str2);
+      free (str3);
+    }
+
+  free (s);
+
+}
+
 void
 metadata_editor_write_callback (GtkWidget  *dialog,
                                 GtkBuilder *builder,
@@ -5135,174 +5227,13 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           gchar    *value_entry = g_strdup (gtk_entry_get_text (entry));
 
           if (! strcmp ("Exif.GPSInfo.GPSLongitude",
+                        default_metadata_tags[i].tag) ||
+              ! strcmp ("Exif.GPSInfo.GPSLatitude",
                         default_metadata_tags[i].tag))
             {
-              const gchar  delimiters_dms[] = " deg'\"";
-              gchar        lng[256];
-              gchar       *s    = g_strdup (value_entry);
-              gchar       *str1 = NULL;
-              gchar       *str2 = NULL;
-              gchar       *str3 = NULL;
-
-              if (s && strstr (s, "."))
-                {
-                  gdouble degs;
-                  gint    deg;
-                  gint    min;
-                  gint    sec;
-
-                  degs = atof (s);
-                  if (degs < 0)
-                    degs *= -1;
-                  deg = (gint) degs;
-                  min = (gint) ((degs - deg) * 60.f);
-                  sec = (gint) ((degs - (float) deg - (float) (min / 60.f)) * 60.f * 60.f);
-                  str1 = malloc (256);
-                  str2 = malloc (256);
-                  str3 = malloc (256);
-                  g_sprintf (str1, "%d", deg);
-                  g_sprintf (str2, "%d", min);
-                  g_sprintf (str3, "%d", sec);
-                }
-              else if (s)
-                {
-                  str1 = strtok (s, delimiters_dms);
-                  str2 = strtok (NULL, delimiters_dms);
-                  str3 = strtok (NULL, delimiters_dms);
-                }
-
-              if (str1)
-                {
-                  strcpy (lng, str1);
-                  strcat (lng, "/1");
-                }
-              else
-                {
-                  strcpy (lng, "0/1");
-                }
-
-              if (str2)
-                {
-                  strcat (lng, " ");
-                  strcat (lng, str2);
-                  strcat (lng, "/1");
-                }
-              else
-                {
-                  strcat (lng, " ");
-                  strcat (lng, "0/1");
-                }
-
-              if (str3)
-                {
-                  strcat (lng, " ");
-                  strcat (lng, str3);
-                  strcat (lng, "/1");
-                }
-              else
-                {
-                  strcat (lng, " ");
-                  strcat (lng, "0/1");
-                }
-
-              if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                    default_metadata_tags[i].tag,
-                                                    lng))
-                {
-                  g_printerr ("failed to set tag [%s]\n",
-                              default_metadata_tags[i].tag);
-                }
-
-              if (s && strstr (s, "."))
-                {
-                  free (str1);
-                  free (str2);
-                  free (str3);
-                }
-
-              free (s);
-            }
-          else if (! strcmp ("Exif.GPSInfo.GPSLatitude",
-                             default_metadata_tags[i].tag))
-            {
-              const gchar  delimiters_dms[] = " deg'\"";
-              gchar        lat[256];
-              gchar       *s    = g_strdup (value_entry);
-              gchar       *str1 = NULL;
-              gchar       *str2 = NULL;
-              gchar       *str3 = NULL;
-
-              if (s && strstr (s, "."))
-                {
-                  gdouble degs;
-                  gint    deg;
-                  gint    min;
-                  gint    sec;
-
-                  degs = atof (s);
-                  if (degs < 0)
-                    degs *= -1;
-                  deg = (gint) (degs);
-                  min = (gint) ((degs - deg) * 60.f);
-                  sec = (gint) ((degs - (float) deg - (float) (min / 60.f)) * 60.f * 60.f);
-                  str1 = malloc (256);
-                  str2 = malloc (256);
-                  str3 = malloc (256);
-                  g_sprintf (str1, "%d", deg);
-                  g_sprintf (str2, "%d", min);
-                  g_sprintf (str3, "%d", sec);
-                }
-              else if (s)
-                {
-                  str1 = strtok (s, delimiters_dms);
-                  str2 = strtok (NULL, delimiters_dms);
-                  str3 = strtok (NULL, delimiters_dms);
-                }
-
-              if (str1)
-                {
-                  strcpy (lat, str1);
-                  strcat (lat, "/1");
-                }
-              else
-                {
-                  strcpy (lat, "0/1");
-                }
-
-              if (str2)
-                {
-                  strcat (lat, " ");
-                  strcat (lat, str2);
-                  strcat (lat, "/1");
-                }
-              else
-                {
-                  strcat (lat, " ");
-                  strcat (lat, "0/1");
-                }
-
-              if (str3)
-                {
-                  strcat (lat, " ");
-                  strcat (lat, str3);
-                  strcat (lat, "/1");
-                }
-              else
-                {
-                  strcat (lat, " ");
-                  strcat (lat, "0/1");
-                }
-
-              if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                    default_metadata_tags[i].tag,
-                                                    lat))
-                {
-                  g_printerr ("failed to set tag [%s]\n",
-                              default_metadata_tags[i].tag);
-                }
-
-              if (s)
-                free (s);
+              set_gps_longitude_latitude (g_metadata,
+                                          default_metadata_tags[i].tag,
+                                          value_entry);
             }
           else if (! strcmp ("Exif.GPSInfo.GPSAltitude",
                              default_metadata_tags[i].tag))
