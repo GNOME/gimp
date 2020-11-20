@@ -202,7 +202,7 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent-pixels",
-                             "Save transparent pixels",
+                             "Save color values from transparent pixels",
                              "Keep the color data masked by an alpha channel "
                              "intact (do not store premultiplied components)",
                              TRUE,
@@ -230,19 +230,19 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-exif",
-                                 "Save Exif",
+                                 "Save Exif data",
                                  "Save Exif",
                                  gimp_export_exif (),
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-xmp",
-                                 "Save XMP",
+                                 "Save XMP data",
                                  "Save XMP",
                                  gimp_export_xmp (),
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-iptc",
-                                 "Save IPTC",
+                                 "Save IPTC data",
                                  "Save IPTC",
                                  gimp_export_iptc (),
                                  G_PARAM_READWRITE);
@@ -254,7 +254,7 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                                 "Save profile",
+                                 "Save color profile",
                                  "Save color profile",
                                  gimp_export_color_profile (),
                                  G_PARAM_READWRITE);

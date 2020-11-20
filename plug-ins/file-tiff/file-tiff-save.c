@@ -1276,32 +1276,16 @@ save_dialog (GimpImage     *image,
              gboolean       is_multi_layer)
 {
   GtkWidget       *dialog;
-  GtkWidget       *main_vbox;
-  GtkWidget       *grid;
   GtkListStore    *store;
   GtkWidget       *combo;
-  GtkWidget       *button;
   GtkWidget       *frame;
-  GtkWidget       *entry;
+  GtkWidget       *flowbox;
   GimpCompression  compression;
-  gint             row = 0;
   gboolean         run;
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as TIFF"));
-
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
 
   store =
     gimp_int_store_new (_("None"),              GIMP_COMPRESSION_NONE,
@@ -1312,22 +1296,59 @@ save_dialog (GimpImage     *image,
                         _("CCITT Group 3 fax"), GIMP_COMPRESSION_CCITTFAX3,
                         _("CCITT Group 4 fax"), GIMP_COMPRESSION_CCITTFAX4,
                         NULL);
-
-  combo = gimp_prop_int_combo_box_new (config, "compression",
-                                       GIMP_INT_STORE (store));
+  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "compression", GIMP_INT_STORE (store));
   g_object_unref (store);
-
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
-                            _("_Compression:"), 0.0, 0.5,
-                            combo, 1);
-
+  combo = gimp_label_int_widget_get_widget (combo);
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
                                       combo_sensitivity_func,
                                       combo, NULL);
-
   combo_set_item_sensitive (combo, GIMP_COMPRESSION_CCITTFAX3, is_monochrome);
   combo_set_item_sensitive (combo, GIMP_COMPRESSION_CCITTFAX4, is_monochrome);
   combo_set_item_sensitive (combo, GIMP_COMPRESSION_JPEG,      ! is_indexed);
+
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "layers-frame", "save-layers", FALSE,
+                                            "crop-layers");
+  /* TODO: if single-layer TIFF, set the toggle insensitive and show it
+   * as unchecked though I don't actually change the config value to
+   * keep storing previously chosen value.
+   * This used to be so before. We probably need to add some logics in
+   * the GimpProcedureDialog generation for such case.
+   */
+  gtk_widget_set_sensitive (frame, is_multi_layer);
+  /* TODO: same for "save-transparent-pixels", we probably want to show
+   * it unchecked even though it doesn't matter for processing.
+   */
+  gtk_widget_set_sensitive (gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                              "save-transparent-pixels",
+                                                              G_TYPE_NONE),
+                            has_alpha && ! is_indexed);
+
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "comment-label", "Comment");
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "comment-frame", "comment-label", FALSE,
+                                    "gimp-comment");
+
+  flowbox = gimp_procedure_dialog_fill_flowbox (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "metadata-box",
+                                                "save-exif", "save-xmp", "save-iptc",
+                                                "save-geotiff", "save-thumbnail",
+#ifdef TIFFTAG_ICCPROFILE
+                                                "save-color-profile",
+#endif
+                                                NULL);
+  gtk_flow_box_set_min_children_per_line (GTK_FLOW_BOX (flowbox), 2);
+  gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (flowbox), 2);
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "compression",
+                              "layers-frame",
+                              "save-transparent-pixels",
+                              "metadata-box",
+                              "comment-frame",
+                              NULL);
 
   g_object_get (config,
                 "compression", &compression,
@@ -1350,99 +1371,6 @@ save_dialog (GimpImage     *image,
   g_object_set (config,
                 "compression", compression,
                 NULL);
-
-  if (is_multi_layer)
-    {
-      button = gimp_prop_check_button_new (config, "save-layers",
-                                           _("Save layers"));
-    }
-  else
-    {
-      /* If single-layer TIFF, set the toggle insensitive and show it as
-       * unchecked though I don't actually change the config value to
-       * keep storing previously chosen value.
-       */
-      button = gtk_check_button_new_with_mnemonic (_("Save layers"));
-      gtk_widget_set_sensitive (button, FALSE);
-      gtk_widget_show (button);
-    }
-
-  gtk_grid_attach (GTK_GRID (grid), button, 0, row++, 2, 1);
-
-  frame = gimp_frame_new (NULL);
-  gtk_grid_attach (GTK_GRID (grid), frame, 0, row++, 2, 1);
-  gtk_widget_show (frame);
-
-  if (is_multi_layer)
-    {
-      g_object_bind_property (config, "save-layers",
-                              frame,  "sensitive",
-                              G_BINDING_SYNC_CREATE);
-
-      button = gimp_prop_check_button_new (config, "crop-layers",
-                                           _("Crop layers to image bounds"));
-      gtk_container_add (GTK_CONTAINER (frame), button);
-    }
-  else
-    {
-      /* If single-layer TIFF, set the layers frame insensitive and
-       * show its toggles as unchecked though I don't actually change
-       * the config value to keep storing previously chosen values.
-       */
-      gtk_widget_set_sensitive (frame, FALSE);
-
-      button = gtk_check_button_new_with_mnemonic (_("Crop layers"));
-      gtk_container_add (GTK_CONTAINER (frame), button);
-      gtk_widget_show (button);
-    }
-
-  if (has_alpha && ! is_indexed)
-    {
-      button = gimp_prop_check_button_new (config, "save-transparent-pixels",
-                                           _("Save color values from transparent pixels"));
-    }
-  else
-    {
-      button = gtk_check_button_new_with_mnemonic (_("Save color values from transparent pixels"));
-      gtk_widget_set_sensitive (button, FALSE);
-      gtk_widget_show (button);
-    }
-
-  gtk_grid_attach (GTK_GRID (grid), button, 0, row++, 2, 1);
-
-  button = gimp_prop_check_button_new (config, "save-exif",
-                                       _("Save Exif data"));
-  gtk_grid_attach (GTK_GRID (grid), button, 0, row++, 2, 1);
-
-  button = gimp_prop_check_button_new (config, "save-xmp",
-                                       _("Save XMP data"));
-  gtk_grid_attach (GTK_GRID (grid), button, 0, row++, 2, 1);
-
-  button = gimp_prop_check_button_new (config, "save-iptc",
-                                       _("Save IPTC data"));
-  gtk_grid_attach (GTK_GRID (grid), button, 0, row++, 2, 1);
-
-  button = gimp_prop_check_button_new (config, "save-thumbnail",
-                                       _("Save thumbnail"));
-  gtk_grid_attach (GTK_GRID (grid), button, 0, row++, 2, 1);
-
-  button = gimp_prop_check_button_new (config, "save-geotiff",
-                                       _("Save GeoTIFF data"));
-  gtk_grid_attach (GTK_GRID (grid), button, 0 ,row++, 2, 1);
-
-#ifdef TIFFTAG_ICCPROFILE
-  button = gimp_prop_check_button_new (config, "save-color-profile",
-                                       _("Save color profile"));
-  gtk_grid_attach (GTK_GRID (grid), button, 0, row++, 2, 1);
-#endif
-
-  frame = gimp_frame_new (_("Comment"));
-  gtk_grid_attach (GTK_GRID (grid), frame, 0, row++, 2, 1);
-  gtk_widget_show (frame);
-
-  entry = gimp_prop_entry_new (config, "gimp-comment", -1);
-  gtk_container_add (GTK_CONTAINER (frame), entry);
-  gtk_widget_show (entry);
 
   gtk_widget_show (dialog);
 
