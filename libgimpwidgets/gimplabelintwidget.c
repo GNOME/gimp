@@ -254,6 +254,12 @@ gimp_label_int_widget_new (const gchar *text,
   return int_widget;
 }
 
+/**
+ * gimp_label_int_widget_get_widget:
+ * @widget: the #GimpLabelIntWidget.
+ *
+ * Returns: (transfer none): The new #GtkWidget packed next to the label.
+ **/
 GtkWidget *
 gimp_label_int_widget_get_widget (GimpLabelIntWidget *widget)
 {
