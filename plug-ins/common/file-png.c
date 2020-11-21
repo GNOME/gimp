@@ -237,48 +237,33 @@ png_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
                              "Save _background color",
-                             "Write bKGD chunk?",
+                             "Write bKGD chunk (PNG metadata)",
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "gama",
                              "Save _gamma",
-                             "Write gAMA chunk?",
+                             "Write gAMA chunk (PNG metadata)",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "offs",
                              "Save layer o_ffset",
-                             "Write oFFs chunk?",
+                             "Write oFFs chunk (PNG metadata)",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
                              "Save _resolution",
-                             "Write pHYs chunk?",
+                             "Write pHYs chunk (PNG metadata)",
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "time",
                              "Save creation _time",
-                             "Write tIME chunk?",
+                             "Write tIME chunk (PNG metadata)",
                              TRUE,
                              G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-comment",
-                             "Save comment",
-                             "Write comment?",
-                             gimp_export_comment (),
-                             G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
-                                "Comment",
-                                "Image comment",
-                                gimp_get_default_comment (),
-                                G_PARAM_READWRITE);
-
-      gimp_procedure_set_argument_sync (procedure, "gimp-comment",
-                                        GIMP_ARGUMENT_SYNC_PARASITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent",
                              "Save color _values from transparent pixels",
@@ -293,35 +278,14 @@ png_create_procedure (GimpPlugIn  *plug_in,
                              PNG_FORMAT_AUTO,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-exif",
-                                 "Save Exif data",
-                                 "Save Exif",
-                                 gimp_export_exif (),
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-xmp",
-                                 "Save XMP data",
-                                 "Save XMP",
-                                 gimp_export_xmp (),
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-iptc",
-                                 "Save IPTC data",
-                                 "Save IPTC",
-                                 gimp_export_iptc (),
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-thumbnail",
-                                 "Save thumbnail",
-                                 "Save thumbnail",
-                                 TRUE,
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                                 "Save color profile",
-                                 "Save color profile",
-                                 gimp_export_color_profile (),
-                                 G_PARAM_READWRITE);
+      gimp_save_procedure_set_support_exif      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_iptc      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_xmp       (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+#if defined(PNG_iCCP_SUPPORTED)
+      gimp_save_procedure_set_support_profile   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+#endif
+      gimp_save_procedure_set_support_thumbnail (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_comment   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
     }
 
   return procedure;
@@ -1273,10 +1237,6 @@ save_image (GFile        *file,
   gboolean        save_transp_pixels;
   gint            compression_level;
   PngExportFormat export_format;
-  gboolean        save_exif;
-  gboolean        save_xmp;
-  gboolean        save_iptc;
-  gboolean        save_thumbnail;
   gboolean        save_profile;
 
 #if !defined(PNG_iCCP_SUPPORTED)
@@ -1297,10 +1257,6 @@ save_image (GFile        *file,
                 "save-transparent",   &save_transp_pixels,
                 "compression",        &compression_level,
                 "format",             &export_format,
-                "save-exif",          &save_exif,
-                "save-xmp",           &save_xmp,
-                "save-iptc",          &save_iptc,
-                "save-thumbnail",     &save_thumbnail,
                 "save-color-profile", &save_profile,
                 NULL);
 
@@ -2202,12 +2158,11 @@ save_dialog (GimpImage     *image,
 {
   GtkWidget    *dialog;
   GtkListStore *store;
-  GtkWidget    *flowbox;
   gboolean      run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as PNG"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           _("Export Image as PNG"));
 
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                     "compression", GIMP_TYPE_SCALE_ENTRY);
@@ -2230,30 +2185,20 @@ save_dialog (GimpImage     *image,
                                                               "save-transparent",
                                                               G_TYPE_NONE),
                             alpha);
-  flowbox = gimp_procedure_dialog_fill_flowbox (GIMP_PROCEDURE_DIALOG (dialog),
-                                                "main-options",
-                                                "interlaced", "bkgd", "gama", "offs",
-                                                "phys", "time", "save-transparent", "save-exif",
-                                                "save-xmp", "save-iptc", "save-thumbnail",
-#if defined(PNG_iCCP_SUPPORTED)
-                                                "save-color-profile",
-#endif
-                                                NULL);
-  gtk_flow_box_set_min_children_per_line (GTK_FLOW_BOX (flowbox), 2);
-  gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (flowbox), 2);
 
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "comment-frame", "save-comment", FALSE,
-                                    "gimp-comment");
-
+  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "bkgd");
+  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "gama");
+  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "offs");
+  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "phys");
+  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "time");
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "main-options", "format",
-                              "compression", "comment-frame",
+                              "format", "compression",
+                              "interlaced", "save-transparent",
                               NULL);
 
-  gtk_widget_show (dialog);
-
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
 
   return run;
 }
