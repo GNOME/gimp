@@ -208,15 +208,6 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
-                                "Comment",
-                                "Image comment",
-                                gimp_get_default_comment (),
-                                G_PARAM_READWRITE);
-
-      gimp_procedure_set_argument_sync (procedure, "gimp-comment",
-                                        GIMP_ARGUMENT_SYNC_PARASITE);
-
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-layers",
                                  "Save Layers",
                                  "Save Layers",
@@ -229,41 +220,20 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                  TRUE,
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-exif",
-                                 "Save Exif data",
-                                 "Save Exif",
-                                 gimp_export_exif (),
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-xmp",
-                                 "Save XMP data",
-                                 "Save XMP",
-                                 gimp_export_xmp (),
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-iptc",
-                                 "Save IPTC data",
-                                 "Save IPTC",
-                                 gimp_export_iptc (),
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-thumbnail",
-                                 "Save thumbnail",
-                                 "Save thumbnail",
-                                 TRUE,
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                                 "Save color profile",
-                                 "Save color profile",
-                                 gimp_export_color_profile (),
-                                 G_PARAM_READWRITE);
-
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-geotiff",
                                  "Save GeoTIFF data",
                                  "Save GeoTIFF data",
                                  TRUE,
                                  G_PARAM_READWRITE);
+
+      gimp_save_procedure_set_support_exif      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_iptc      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_xmp       (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+#ifdef TIFFTAG_ICCPROFILE
+      gimp_save_procedure_set_support_profile   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+#endif
+      gimp_save_procedure_set_support_thumbnail (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_comment   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
     }
 
   return procedure;

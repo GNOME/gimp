@@ -1279,13 +1279,12 @@ save_dialog (GimpImage     *image,
   GtkListStore    *store;
   GtkWidget       *combo;
   GtkWidget       *frame;
-  GtkWidget       *flowbox;
   GimpCompression  compression;
   gboolean         run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as TIFF"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           _("Export Image as TIFF"));
 
   store =
     gimp_int_store_new (_("None"),              GIMP_COMPRESSION_NONE,
@@ -1299,7 +1298,7 @@ save_dialog (GimpImage     *image,
   combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                                "compression", GIMP_INT_STORE (store));
   g_object_unref (store);
-  combo = gimp_label_int_widget_get_widget (combo);
+  combo = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (combo));
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
                                       combo_sensitivity_func,
                                       combo, NULL);
@@ -1325,29 +1324,12 @@ save_dialog (GimpImage     *image,
                                                               G_TYPE_NONE),
                             has_alpha && ! is_indexed);
 
-  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "comment-label", "Comment");
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "comment-frame", "comment-label", FALSE,
-                                    "gimp-comment");
-
-  flowbox = gimp_procedure_dialog_fill_flowbox (GIMP_PROCEDURE_DIALOG (dialog),
-                                                "metadata-box",
-                                                "save-exif", "save-xmp", "save-iptc",
-                                                "save-geotiff", "save-thumbnail",
-#ifdef TIFFTAG_ICCPROFILE
-                                                "save-color-profile",
-#endif
-                                                NULL);
-  gtk_flow_box_set_min_children_per_line (GTK_FLOW_BOX (flowbox), 2);
-  gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (flowbox), 2);
+  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "save-geotiff");
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "compression",
                               "layers-frame",
                               "save-transparent-pixels",
-                              "metadata-box",
-                              "comment-frame",
                               NULL);
 
   g_object_get (config,
