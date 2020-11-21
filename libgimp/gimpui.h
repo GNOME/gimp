@@ -43,6 +43,7 @@
 #include <libgimp/gimpproceduredialog.h>
 #include <libgimp/gimpprocview.h>
 #include <libgimp/gimpprogressbar.h>
+#include <libgimp/gimpsaveproceduredialog.h>
 #include <libgimp/gimpselectbutton.h>
 #include <libgimp/gimpzoompreview.h>
 

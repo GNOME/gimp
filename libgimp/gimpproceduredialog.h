@@ -52,6 +52,11 @@ struct _GimpProcedureDialogClass
 {
   GimpDialogClass  parent_class;
 
+  void             (* fill_list) (GimpProcedureDialog *dialog,
+                                  GimpProcedure       *procedure,
+                                  GimpProcedureConfig *config,
+                                  GList               *properties);
+
   /* Padding for future expansion */
   void (*_gimp_reserved1) (void);
   void (*_gimp_reserved2) (void);

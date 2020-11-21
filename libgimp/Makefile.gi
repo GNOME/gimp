@@ -190,6 +190,7 @@ libgimpui_introspectable_headers = \
 	../libgimp/gimpproceduredialog.h	\
 	../libgimp/gimpprocview.h		\
 	../libgimp/gimpprogressbar.h		\
+	../libgimp/gimpsaveproceduredialog.h	\
 	../libgimp/gimpselectbutton.h		\
 	../libgimp/gimpzoompreview.h
 
@@ -209,6 +210,7 @@ libgimpui_introspectable = \
 	../libgimp/gimpprocbrowserdialog.c	\
 	../libgimp/gimpproceduredialog.c	\
 	../libgimp/gimpprocview.c		\
+	../libgimp/gimpsaveproceduredialog.c	\
 	../libgimp/gimpprogressbar.c		\
 	../libgimp/gimpselectbutton.c		\
 	../libgimp/gimpzoompreview.c

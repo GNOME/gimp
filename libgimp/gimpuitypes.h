@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 
 
 typedef struct _GimpProcedureDialog      GimpProcedureDialog;
+typedef struct _GimpSaveProcedureDialog  GimpSaveProcedureDialog;
 
 typedef struct _GimpAspectPreview        GimpAspectPreview;
 typedef struct _GimpDrawablePreview      GimpDrawablePreview;

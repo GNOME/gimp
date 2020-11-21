@@ -91,6 +91,26 @@ GimpProcedure * gimp_save_procedure_new      (GimpPlugIn      *plug_in,
                                               gpointer         run_data,
                                               GDestroyNotify   run_data_destroy);
 
+void            gimp_save_procedure_set_support_exif      (GimpSaveProcedure *procedure,
+                                                           gboolean           supports);
+void            gimp_save_procedure_set_support_iptc      (GimpSaveProcedure *procedure,
+                                                           gboolean           supports);
+void            gimp_save_procedure_set_support_xmp       (GimpSaveProcedure *procedure,
+                                                           gboolean           supports);
+void            gimp_save_procedure_set_support_profile   (GimpSaveProcedure *procedure,
+                                                           gboolean           supports);
+void            gimp_save_procedure_set_support_thumbnail (GimpSaveProcedure *procedure,
+                                                           gboolean           supports);
+void            gimp_save_procedure_set_support_comment   (GimpSaveProcedure *procedure,
+                                                            gboolean           supports);
+
+gboolean        gimp_save_procedure_get_support_exif      (GimpSaveProcedure *procedure);
+gboolean        gimp_save_procedure_get_support_iptc      (GimpSaveProcedure *procedure);
+gboolean        gimp_save_procedure_get_support_xmp       (GimpSaveProcedure *procedure);
+gboolean        gimp_save_procedure_get_support_profile   (GimpSaveProcedure *procedure);
+gboolean        gimp_save_procedure_get_support_thumbnail (GimpSaveProcedure *procedure);
+gboolean        gimp_save_procedure_get_support_comment   (GimpSaveProcedure *procedure);
+
 
 G_END_DECLS
 

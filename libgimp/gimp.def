@@ -759,8 +759,20 @@ EXPORTS
 	gimp_progress_uninstall
 	gimp_progress_update
 	gimp_quit
+	gimp_save_procedure_get_support_comment
+	gimp_save_procedure_get_support_exif
+	gimp_save_procedure_get_support_iptc
+	gimp_save_procedure_get_support_profile
+	gimp_save_procedure_get_support_thumbnail
+	gimp_save_procedure_get_support_xmp
 	gimp_save_procedure_get_type
 	gimp_save_procedure_new
+	gimp_save_procedure_set_support_comment
+	gimp_save_procedure_set_support_exif
+	gimp_save_procedure_set_support_iptc
+	gimp_save_procedure_set_support_profile
+	gimp_save_procedure_set_support_thumbnail
+	gimp_save_procedure_set_support_xmp
 	gimp_selection_all
 	gimp_selection_border
 	gimp_selection_bounds
