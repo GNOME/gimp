@@ -108,14 +108,6 @@
 
 
 static void   gimp_close        (void);
-static void   gimp_message_func (const gchar    *log_domain,
-                                 GLogLevelFlags  log_level,
-                                 const gchar    *message,
-                                 gpointer        data);
-static void   gimp_fatal_func   (const gchar    *log_domain,
-                                 GLogLevelFlags  flags,
-                                 const gchar    *message,
-                                 gpointer        data);
 
 
 #ifdef G_OS_WIN32
@@ -506,54 +498,7 @@ gimp_main (GType  plug_in_type,
   bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
 #endif
 
-  /*  set handler both for the "LibGimp" and "" domains  */
-  {
-    const gchar * const log_domains[] =
-    {
-      "LibGimp",
-      "LibGimpBase",
-      "LibGimpColor",
-      "LibGimpConfig",
-      "LibGimpMath",
-      "LibGimpModule",
-      "LibGimpThumb",
-      "LibGimpWidgets"
-    };
-    gint i;
-
-    for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
-      g_log_set_handler (log_domains[i],
-                         G_LOG_LEVEL_MESSAGE,
-                         gimp_message_func,
-                         NULL);
-
-    g_log_set_handler (NULL,
-                       G_LOG_LEVEL_MESSAGE,
-                       gimp_message_func,
-                       NULL);
-  }
-
-  if (_gimp_debug_flags () & GIMP_DEBUG_FATAL_WARNINGS)
-    {
-      GLogLevelFlags fatal_mask;
-
-      fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
-      fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
-      g_log_set_always_fatal (fatal_mask);
-
-      g_log_set_handler (NULL,
-                         G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL |
-                         G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-                         gimp_fatal_func,
-                         NULL);
-    }
-  else
-    {
-      g_log_set_handler (NULL,
-                         G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-                         gimp_fatal_func,
-                         NULL);
-    }
+  _gimp_debug_configure (stack_trace_mode);
 
   PLUG_IN = g_object_new (plug_in_type,
                           "read-channel",  read_channel,
@@ -564,7 +509,7 @@ gimp_main (GType  plug_in_type,
 
   if (strcmp (argv[ARG_MODE], "-query") == 0)
     {
-      if (_gimp_debug_flags () & GIMP_DEBUG_QUERY)
+      if (_gimp_get_debug_flags () & GIMP_DEBUG_QUERY)
         _gimp_debug_stop ();
 
       _gimp_plug_in_query (PLUG_IN);
@@ -576,7 +521,7 @@ gimp_main (GType  plug_in_type,
 
   if (strcmp (argv[ARG_MODE], "-init") == 0)
     {
-      if (_gimp_debug_flags () & GIMP_DEBUG_INIT)
+      if (_gimp_get_debug_flags () & GIMP_DEBUG_INIT)
         _gimp_debug_stop ();
 
       _gimp_plug_in_init (PLUG_IN);
@@ -586,9 +531,9 @@ gimp_main (GType  plug_in_type,
       return EXIT_SUCCESS;
     }
 
-  if (_gimp_debug_flags () & GIMP_DEBUG_RUN)
+  if (_gimp_get_debug_flags () & GIMP_DEBUG_RUN)
     _gimp_debug_stop ();
-  else if (_gimp_debug_flags () & GIMP_DEBUG_PID)
+  else if (_gimp_get_debug_flags () & GIMP_DEBUG_PID)
     g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Here I am!");
 
   _gimp_plug_in_run (PLUG_IN);
@@ -953,7 +898,7 @@ gimp_get_progname (void)
 static void
 gimp_close (void)
 {
-  if (_gimp_debug_flags () & GIMP_DEBUG_QUIT)
+  if (_gimp_get_debug_flags () & GIMP_DEBUG_QUIT)
     _gimp_debug_stop ();
 
   _gimp_plug_in_quit (PLUG_IN);
@@ -966,76 +911,8 @@ gimp_close (void)
   g_clear_object (&PLUG_IN);
 }
 
-static void
-gimp_message_func (const gchar    *log_domain,
-                   GLogLevelFlags  log_level,
-                   const gchar    *message,
-                   gpointer        data)
-{
-  gimp_message (message);
-}
 
-static void
-gimp_fatal_func (const gchar    *log_domain,
-                 GLogLevelFlags  flags,
-                 const gchar    *message,
-                 gpointer        data)
-{
-  const gchar *level;
 
-  switch (flags & G_LOG_LEVEL_MASK)
-    {
-    case G_LOG_LEVEL_WARNING:
-      level = "WARNING";
-      break;
-    case G_LOG_LEVEL_CRITICAL:
-      level = "CRITICAL";
-      break;
-    case G_LOG_LEVEL_ERROR:
-      level = "ERROR";
-      break;
-    default:
-      level = "FATAL";
-      break;
-    }
-
-  g_printerr ("%s: %s: %s\n",
-              progname, level, message);
-
-#ifndef G_OS_WIN32
-  switch (stack_trace_mode)
-    {
-    case GIMP_STACK_TRACE_NEVER:
-      break;
-
-    case GIMP_STACK_TRACE_QUERY:
-        {
-          sigset_t sigset;
-
-          sigemptyset (&sigset);
-          sigprocmask (SIG_SETMASK, &sigset, NULL);
-          gimp_stack_trace_query (progname);
-        }
-      break;
-
-    case GIMP_STACK_TRACE_ALWAYS:
-        {
-          sigset_t sigset;
-
-          sigemptyset (&sigset);
-          sigprocmask (SIG_SETMASK, &sigset, NULL);
-          gimp_stack_trace_print (progname, stdout, NULL);
-        }
-      break;
-    }
-#endif /* ! G_OS_WIN32 */
-
-  /* Do not end with gimp_quit().
-   * We want the plug-in to continue its normal crash course, otherwise
-   * we won't get the "Plug-in crashed" error in GIMP.
-   */
-  exit (EXIT_FAILURE);
-}
 
 #ifdef G_OS_WIN32
 
@@ -1043,7 +920,7 @@ gimp_fatal_func (const gchar    *log_domain,
 static LONG WINAPI
 gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
 {
-  g_printerr ("%s: fatal error\n", progname);
+  g_printerr ("Plugin signal handler: %s: fatal error\n", progname);
 
   SetUnhandledExceptionFilter (_prevExceptionFilter);
 

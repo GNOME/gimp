@@ -32,14 +32,14 @@ typedef enum
   GIMP_DEBUG_INIT           = 1 << 3,
   GIMP_DEBUG_RUN            = 1 << 4,
   GIMP_DEBUG_QUIT           = 1 << 5,
+  GIMP_DEBUG_FATAL_CRITICALS = 1 << 6,
 
-  GIMP_DEBUG_DEFAULT        = (GIMP_DEBUG_RUN | GIMP_DEBUG_FATAL_WARNINGS)
 } GimpDebugFlag;
 
 
 void   _gimp_debug_init  (const gchar *basename);
-
-guint  _gimp_debug_flags (void);
+void   _gimp_debug_configure (GimpStackTraceMode stack_trace_mode);
+guint  _gimp_get_debug_flags (void);
 void   _gimp_debug_stop  (void);
 
 
