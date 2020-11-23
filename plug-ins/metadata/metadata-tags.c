@@ -265,7 +265,7 @@ const gint n_dicom = G_N_ELEMENTS (dicom);
 /* GPS Altitude Ref */
 const gchar *gpsaltref[] =
 {
-  N_("Unknown"), N_("Above Sea Level"), N_("Below Sea Level")
+  N_("Unknown"), N_("Above sea level"), N_("Below sea level")
 };
 const gint n_gpsaltref = G_N_ELEMENTS (gpsaltref);
 
@@ -286,7 +286,7 @@ const gint n_gpslngref = G_N_ELEMENTS (gpslngref);
 /* GPS Measurement System */
 const gchar *gpsaltsys[] =
 {
-  "M", "FT"
+  "m", "ft"
 };
 const gint n_gpsaltsys = G_N_ELEMENTS (gpsaltsys);
 
