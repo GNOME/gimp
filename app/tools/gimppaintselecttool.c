@@ -113,7 +113,8 @@ static void   gimp_paint_select_tool_cursor_update       (GimpTool         *tool
 static void   gimp_paint_select_tool_draw                (GimpDrawTool     *draw_tool);
 
 static void   gimp_paint_select_tool_halt                 (GimpPaintSelectTool *ps_tool);
-static void   gimp_paint_select_tool_update_image_mask   (GimpPaintSelectTool *ps_tool);
+static void   gimp_paint_select_tool_update_image_mask   (GimpPaintSelectTool *ps_tool,
+                                                          GimpPaintSelectMode  mode);
 static void   gimp_paint_select_tool_init_buffers        (GimpPaintSelectTool  *ps_tool,
                                                           GimpImage            *image,
                                                           GimpDrawable         *drawable);
@@ -432,7 +433,7 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
               g_printerr ("processing graph takes %.3f s\n", g_timer_elapsed (timer, NULL));
               g_timer_destroy (timer);
 
-              gimp_paint_select_tool_update_image_mask (ps_tool);
+              gimp_paint_select_tool_update_image_mask (ps_tool, options->mode);
             }
 
           gimp_tool_control_activate (tool->control);
@@ -529,20 +530,27 @@ gimp_paint_select_tool_halt (GimpPaintSelectTool *ps_tool)
 }
 
 static void
-gimp_paint_select_tool_update_image_mask (GimpPaintSelectTool *ps_tool)
+gimp_paint_select_tool_update_image_mask (GimpPaintSelectTool *ps_tool,
+                                          GimpPaintSelectMode  mode)
 {
   GimpTool  *tool = GIMP_TOOL (ps_tool);
+  GimpChannelOps op;
 
   if (tool->display)
     {
       GimpImage *image = gimp_display_get_image (tool->display);
+
+      if (mode == GIMP_PAINT_SELECT_MODE_ADD)
+        op = GIMP_CHANNEL_OP_ADD;
+      else
+        op = GIMP_CHANNEL_OP_SUBTRACT;
 
       gimp_channel_select_buffer (gimp_image_get_mask (image),
                                   C_("command", "Paint Select"),
                                   ps_tool->result_mask,
                                   0, /* x offset */
                                   0, /* y offset */
-                                  GIMP_CHANNEL_OP_REPLACE,
+                                  op,
                                   FALSE,
                                   0,
                                   0);
