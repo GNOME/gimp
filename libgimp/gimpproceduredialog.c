@@ -88,12 +88,18 @@ static void   gimp_procedure_dialog_save_defaults (GtkWidget           *button,
 static void   gimp_procedure_dialog_estimate_increments (gdouble        lower,
                                                          gdouble        upper,
                                                          gdouble       *step,
-                                                         gdouble       *page);
+                                                         gdouble       *page,
+                                                         gint          *digits);
 
 static gboolean gimp_procedure_dialog_check_mnemonic    (GimpProcedureDialog *dialog,
                                                          GtkWidget           *widget,
                                                          const gchar         *id,
                                                          const gchar         *core_id);
+static GtkWidget *
+              gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
+                                                         const gchar         *container_id,
+                                                         GtkContainer        *container,
+                                                         GList               *properties);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedureDialog, gimp_procedure_dialog,
                             GIMP_TYPE_DIALOG)
@@ -427,32 +433,48 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                        _(g_param_spec_get_nick (pspec)),
                                        &label, NULL);
     }
-  else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)
+  else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT ||
+           G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE)
     {
+      gdouble minimum;
+      gdouble maximum;
+      gdouble step   = 0.0;
+      gdouble page   = 0.0;
+      gint    digits = 0;
+
+      if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)
+        {
+          GParamSpecInt *pspecint = (GParamSpecInt *) pspec;
+
+          minimum = (gdouble) pspecint->minimum;
+          maximum = (gdouble) pspecint->maximum;
+        }
+      else /* G_TYPE_PARAM_DOUBLE */
+        {
+          GParamSpecDouble *pspecdouble = (GParamSpecDouble *) pspec;
+
+          minimum = pspecdouble->minimum;
+          maximum = pspecdouble->maximum;
+        }
+      gimp_procedure_dialog_estimate_increments (minimum, maximum, &step, &page, &digits);
+
       if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_SPIN)
         {
           widget = gimp_prop_label_spin_new (G_OBJECT (dialog->priv->config),
-                                             property, 0);
+                                             property, digits);
         }
       else if (widget_type == GIMP_TYPE_SCALE_ENTRY)
         {
           widget = gimp_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
                                               property,
                                               _(g_param_spec_get_nick (pspec)),
-                                              0, FALSE, 0.0, 0.0);
+                                              digits, FALSE, 0.0, 0.0);
         }
       else if (widget_type == GIMP_TYPE_SPIN_BUTTON)
         {
           /* Just some spin button without label. */
-          GParamSpecInt *pspecint = (GParamSpecInt *) pspec;
-          gdouble        step     = 0.0;
-          gdouble        page     = 0.0;
-
-          gimp_procedure_dialog_estimate_increments (pspecint->minimum,
-                                                     pspecint->maximum,
-                                                     &step, &page);
           widget = gimp_prop_spin_button_new (G_OBJECT (dialog->priv->config),
-                                              property, step, page, 0);
+                                              property, step, page, digits);
         }
     }
   else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING)
@@ -756,6 +778,98 @@ gimp_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
 }
 
 /**
+ * gimp_procedure_dialog_fill_box:
+ * @dialog:         the #GimpProcedureDialog.
+ * @container_id:   a container identifier.
+ * @first_property: the first property name.
+ * @...:            a %NULL-terminated list of other property names.
+ *
+ * Creates and populates a new #GtkBox with widgets corresponding to
+ * every listed properties. If the list is empty, the created box will
+ * be filled by the whole list of properties of the associated
+ * #GimpProcedure, in the defined order. This is similar of how
+ * gimp_procedure_dialog_fill() works except that it creates a new
+ * widget which is not inside @dialog itself.
+ *
+ * The @container_id must be a unique ID which is neither the name of a
+ * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * the ID of any previously created container. This ID can later be used
+ * together with property names to be packed in other containers or
+ * inside @dialog itself.
+ *
+ * Returns: (transfer none): the #GtkBox representing @property. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_fill_box (GimpProcedureDialog *dialog,
+                                const gchar         *container_id,
+                                const gchar         *first_property,
+                                ...)
+{
+  const gchar *prop_name = first_property;
+  GtkWidget   *box;
+  GList       *list      = NULL;
+  va_list      va_args;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (container_id != NULL, NULL);
+
+  if (first_property)
+    {
+      va_start (va_args, first_property);
+
+      do
+        list = g_list_prepend (list, (gpointer) prop_name);
+      while ((prop_name = va_arg (va_args, const gchar *)));
+
+      va_end (va_args);
+    }
+
+  list = g_list_reverse (list);
+  box = gimp_procedure_dialog_fill_box_list (dialog, container_id, list);
+  if (list)
+    g_list_free (list);
+
+  return box;
+}
+
+/**
+ * gimp_procedure_dialog_fill_box_list: (rename-to gimp_procedure_dialog_fill_box)
+ * @dialog:        the #GimpProcedureDialog.
+ * @container_id:  a container identifier.
+ * @properties: (nullable) (element-type gchar*): the list of property names.
+ *
+ * Creates and populates a new #GtkBox with widgets corresponding to
+ * every listed @properties. If the list is empty, the created box will
+ * be filled by the whole list of properties of the associated
+ * #GimpProcedure, in the defined order. This is similar of how
+ * gimp_procedure_dialog_fill() works except that it creates a new
+ * widget which is not inside @dialog itself.
+ *
+ * The @container_id must be a unique ID which is neither the name of a
+ * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * the ID of any previously created container. This ID can later be used
+ * together with property names to be packed in other containers or
+ * inside @dialog itself.
+ *
+ * Returns: (transfer none): the #GtkBox representing @property. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_fill_box_list (GimpProcedureDialog *dialog,
+                                     const gchar         *container_id,
+                                     GList               *properties)
+{
+  g_return_val_if_fail (container_id != NULL, NULL);
+
+  return gimp_procedure_dialog_fill_container_list (dialog, container_id,
+                                                    GTK_CONTAINER (gtk_box_new (GTK_ORIENTATION_VERTICAL, 2)),
+                                                    properties);
+}
+
+/**
  * gimp_procedure_dialog_fill_flowbox:
  * @dialog:         the #GimpProcedureDialog.
  * @container_id:   a container identifier.
@@ -840,80 +954,11 @@ gimp_procedure_dialog_fill_flowbox_list (GimpProcedureDialog *dialog,
                                          const gchar         *container_id,
                                          GList               *properties)
 {
-  GtkWidget *flowbox;
-  GList     *iter;
-  gboolean   free_properties = FALSE;
-
   g_return_val_if_fail (container_id != NULL, NULL);
 
-  if (g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
-                                    container_id))
-    {
-      g_warning ("%s: container identifier '%s' cannot be an existing property name.",
-                 G_STRFUNC, container_id);
-      return NULL;
-    }
-
-  if ((flowbox = g_hash_table_lookup (dialog->priv->widgets, container_id)))
-    {
-      g_warning ("%s: container identifier '%s' was already configured.",
-                 G_STRFUNC, container_id);
-      return flowbox;
-    }
-
-  flowbox = gtk_flow_box_new ();
-
-  if (! properties)
-    {
-      GParamSpec **pspecs;
-      guint        n_pspecs;
-      gint         i;
-
-      pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (dialog->priv->config),
-                                               &n_pspecs);
-
-      for (i = 0; i < n_pspecs; i++)
-        {
-          const gchar *prop_name;
-          GParamSpec  *pspec = pspecs[i];
-
-          /*  skip our own properties  */
-          if (pspec->owner_type == GIMP_TYPE_PROCEDURE_CONFIG)
-            continue;
-
-          prop_name  = g_param_spec_get_name (pspec);
-          properties = g_list_prepend (properties, (gpointer) prop_name);
-        }
-
-      properties = g_list_reverse (properties);
-
-      if (properties)
-        free_properties = TRUE;
-    }
-
-  for (iter = properties; iter; iter = iter->next)
-    {
-      GtkWidget *widget;
-
-      widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
-      if (widget)
-        {
-          /* Reference the widget because the hash table will
-           * unreference it anyway when getting destroyed so we don't
-           * want to give the only reference to the parent widget.
-           */
-          g_object_ref (widget);
-          gtk_container_add (GTK_CONTAINER (flowbox), widget);
-          gtk_widget_show (widget);
-        }
-    }
-
-  if (free_properties)
-    g_list_free (properties);
-
-  g_hash_table_insert (dialog->priv->widgets, g_strdup (container_id), flowbox);
-
-  return flowbox;
+  return gimp_procedure_dialog_fill_container_list (dialog, container_id,
+                                                    GTK_CONTAINER (gtk_flow_box_new ()),
+                                                    properties);
 }
 
 
@@ -1157,18 +1202,22 @@ static void
 gimp_procedure_dialog_estimate_increments (gdouble  lower,
                                            gdouble  upper,
                                            gdouble *step,
-                                           gdouble *page)
+                                           gdouble *page,
+                                           gint    *digits)
 {
   gdouble range;
 
   g_return_if_fail (upper >= lower);
-  g_return_if_fail (step || page);
+  g_return_if_fail (step || page || digits);
 
   range = upper - lower;
 
   if (range > 0 && range <= 1.0)
     {
       gdouble places = 10.0;
+
+      if (digits)
+        *digits = 3;
 
       /* Compute some acceptable step and page increments always in the
        * format `10**-X` where X is the rounded precision.
@@ -1178,7 +1227,11 @@ gimp_procedure_dialog_estimate_increments (gdouble  lower,
        *  0.06 will also have increments 0.001 and 0.01.
        */
       while (range * places < 5.0)
-        places *= 10.0;
+        {
+          places *= 10.0;
+          if (digits)
+            (*digits)++;
+        }
 
 
       if (step)
@@ -1192,6 +1245,9 @@ gimp_procedure_dialog_estimate_increments (gdouble  lower,
         *step = 0.01;
       if (page)
         *page = 0.1;
+
+      if (digits)
+        *digits = 3;
     }
   else if (range <= 5.0)
     {
@@ -1199,6 +1255,8 @@ gimp_procedure_dialog_estimate_increments (gdouble  lower,
         *step = 0.1;
       if (page)
         *page = 1.0;
+      if (digits)
+        *digits = 2;
     }
   else if (range <= 40.0)
     {
@@ -1206,6 +1264,8 @@ gimp_procedure_dialog_estimate_increments (gdouble  lower,
         *step = 1.0;
       if (page)
         *page = 2.0;
+      if (digits)
+        *digits = 2;
     }
   else
     {
@@ -1213,6 +1273,8 @@ gimp_procedure_dialog_estimate_increments (gdouble  lower,
         *step = 1.0;
       if (page)
         *page = 10.0;
+      if (digits)
+        *digits = 1;
     }
 }
 
@@ -1284,4 +1346,105 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
     }
 
   return success;
+}
+
+/**
+ * gimp_procedure_dialog_fill_container_list:
+ * @dialog:
+ * @container_id:
+ * @container: (transfer full):
+ * @properties:
+ *
+ * A generic function to be used by various publich functions
+ * gimp_procedure_dialog_fill_*_list(). Note in particular that
+ * @container is taken over by this function which may return it or not.
+ * @container is assumed to be a floating GtkContainer (i.e. newly
+ * created widget without a parent yet).
+ * If the object returns a different object (because @container_id
+ * already represents another widget) or %NULL, the function takes care
+ * of freeing @container. Calling code must therefore not reuse the
+ * pointer anymore.
+ */
+static GtkWidget *
+gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
+                                           const gchar         *container_id,
+                                           GtkContainer        *container,
+                                           GList               *properties)
+{
+  GList    *iter;
+  gboolean  free_properties = FALSE;
+
+  g_return_val_if_fail (container_id != NULL, NULL);
+  g_return_val_if_fail (GTK_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (g_object_is_floating (G_OBJECT (container)), NULL);
+
+  g_object_ref_sink (container);
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                    container_id))
+    {
+      g_warning ("%s: container identifier '%s' cannot be an existing property name.",
+                 G_STRFUNC, container_id);
+      g_object_unref (container);
+      return NULL;
+    }
+
+  if (g_hash_table_lookup (dialog->priv->widgets, container_id))
+    {
+      g_warning ("%s: container identifier '%s' was already configured.",
+                 G_STRFUNC, container_id);
+      g_object_unref (container);
+      return g_hash_table_lookup (dialog->priv->widgets, container_id);
+    }
+
+  if (! properties)
+    {
+      GParamSpec **pspecs;
+      guint        n_pspecs;
+      gint         i;
+
+      pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                               &n_pspecs);
+
+      for (i = 0; i < n_pspecs; i++)
+        {
+          const gchar *prop_name;
+          GParamSpec  *pspec = pspecs[i];
+
+          /*  skip our own properties  */
+          if (pspec->owner_type == GIMP_TYPE_PROCEDURE_CONFIG)
+            continue;
+
+          prop_name  = g_param_spec_get_name (pspec);
+          properties = g_list_prepend (properties, (gpointer) prop_name);
+        }
+
+      properties = g_list_reverse (properties);
+
+      if (properties)
+        free_properties = TRUE;
+    }
+
+  for (iter = properties; iter; iter = iter->next)
+    {
+      GtkWidget *widget;
+
+      widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
+      if (widget)
+        {
+          /* Reference the widget because the hash table will
+           * unreference it anyway when getting destroyed so we don't
+           * want to give the only reference to the parent widget.
+           */
+          g_object_ref (widget);
+          gtk_container_add (container, widget);
+          gtk_widget_show (widget);
+        }
+    }
+
+  if (free_properties)
+    g_list_free (properties);
+
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (container_id), container);
+
+  return GTK_WIDGET (container);
 }

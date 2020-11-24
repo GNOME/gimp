@@ -85,6 +85,13 @@ GtkWidget * gimp_procedure_dialog_get_label         (GimpProcedureDialog *dialog
                                                      const gchar         *label_id,
                                                      const gchar         *text);
 
+GtkWidget * gimp_procedure_dialog_fill_box          (GimpProcedureDialog *dialog,
+                                                     const gchar         *container_id,
+                                                     const gchar         *first_property,
+                                                     ...);
+GtkWidget * gimp_procedure_dialog_fill_box_list     (GimpProcedureDialog *dialog,
+                                                     const gchar         *container_id,
+                                                     GList               *properties);
 GtkWidget * gimp_procedure_dialog_fill_flowbox      (GimpProcedureDialog *dialog,
                                                      const gchar         *container_id,
                                                      const gchar         *first_property,
