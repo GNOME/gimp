@@ -352,7 +352,19 @@ gimp_paint_select_mode_get_type (void)
     { GIMP_PAINT_SELECT_MODE_ADD, NC_("paint-select-mode", "Add to selection"), NULL },
     { GIMP_PAINT_SELECT_MODE_SUBTRACT, NC_("paint-select-mode", "Subtract from selection"), NULL },
     { 0, NULL, NULL }
-};
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpPaintSelectMode", values);
+      gimp_type_set_translation_context (type, "paint-select-mode");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
 
 
 /* Generated data ends here */

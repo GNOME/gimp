@@ -1651,6 +1651,18 @@ prefs_dialog_new (Gimp       *gimp,
       button = prefs_check_button_add (object, "playground-paint-select-tool",
                                        _("_Paint Select tool"),
                                        GTK_BOX (vbox2));
+      if (! gegl_has_operation ("gegl:paint-select"))
+        {
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
+          gtk_widget_set_sensitive (button, FALSE);
+          /* The tooltip is not translated on purpose. By the time it
+           * hits stable release, I sure hope this won't be considered
+           * an optional operation anymore. The info is still useful for
+           * dev-release testers, but no need to bother translators with
+           * a temporary string otherwise.
+           */
+          gimp_help_set_help_data (button, "Missing GEGL operation 'gegl:paint-select'.", NULL);
+        }
     }
 
 
