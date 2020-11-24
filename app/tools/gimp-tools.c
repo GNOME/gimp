@@ -753,7 +753,8 @@ gimp_tools_register (GType                   tool_type,
 
   /* hack to not require experimental tools to be present in toolrc */
   if (tool_type == GIMP_TYPE_N_POINT_DEFORMATION_TOOL ||
-      tool_type == GIMP_TYPE_SEAMLESS_CLONE_TOOL)
+      tool_type == GIMP_TYPE_SEAMLESS_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_PAINT_SELECT_TOOL)
     {
       tool_info->experimental = TRUE;
     }
