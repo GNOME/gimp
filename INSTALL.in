@@ -48,9 +48,15 @@ header files installed.
      GEGL must be built with Cairo support, i.e. -Dcairo=enabled option (required
      for some mandatory operations such as "gegl:npd").
 
-     Optional: build GEGL with libumfpack (SuiteSparse) (`-Dumfpack=enabled`)
-     for alternative Matting engine "gegl:matting-levin" and OpenEXR library
-     (`-Dopenexr=enabled`) for OpenEXR format support.
+     Optional:
+
+     - build GEGL with libumfpack (SuiteSparse) (`-Dumfpack=enabled`)
+       for alternative Matting engine "gegl:matting-levin" and OpenEXR
+       library (`-Dopenexr=enabled`) for OpenEXR format support.
+     - build GEGL with maxflow (https://github.com/gerddie/maxflow) and
+       the option -Dworkshop=true in order to be able to select the
+       experimental Paint Select tool in the Playground (operation
+       "gegl:paint-select" is needed).
 
   4. You need to have installed GTK+ version @GTK_REQUIRED_VERSION@ or newer.
      GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
