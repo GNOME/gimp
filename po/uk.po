@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-11-24 11:11+0000\n"
-"PO-Revision-Date: 2020-11-24 20:57+0200\n"
+"PO-Revision-Date: 2020-11-24 21:02+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -11884,7 +11884,7 @@ msgstr "Увімкнути інструмент «Безшовний клон».
 #: ../app/config/gimprc-blurbs.h:482
 #| msgid "Enable the MyPaint Brush tool."
 msgid "Enable the Paint Select tool."
-msgstr "Увімкнути інструмент «Вибір фарби»."
+msgstr "Увімкнути інструмент «Малювання позначеного»."
 
 #: ../app/config/gimprc-blurbs.h:485
 msgid "What to do when the space bar is pressed in the image window."
@@ -17189,7 +17189,7 @@ msgstr "Інструмент _безшовного клонування"
 #: ../app/dialogs/preferences-dialog.c:1652
 #| msgid "P_aint tool:"
 msgid "_Paint Select tool"
-msgstr "Інструмент «_Вибір фарби»"
+msgstr "Інструмент «_Малювання позначеного»"
 
 #: ../app/dialogs/preferences-dialog.c:1662
 #: ../app/dialogs/preferences-dialog.c:1663
