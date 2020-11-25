@@ -1523,6 +1523,8 @@ gimp_prop_hscale_new (GObject     *config,
  * @factor:         Optional multiplier to convert @property_name's
  *                  range into the #GimpScaleEntry's range. The common
  *                  usage is to set 1.0.
+ *                  For non-double properties, no other values than 1.0
+ *                  are acceptable.
  * @limit_scale:    %FALSE if the range of possible values of the
  *                  GtkHScale should be the same as of the GtkSpinButton.
  * @lower_limit:    The scale's lower boundary if @scale_limits is %TRUE.
@@ -1560,16 +1562,18 @@ gimp_prop_scale_entry_new (GObject     *config,
   GtkWidget   *widget;
   GParamSpec  *param_spec;
   const gchar *tooltip;
-  gdouble     *user_data;
   gdouble      value;
   gdouble      lower;
   gdouble      upper;
+  gint         digits = -1;
 
   g_return_val_if_fail (factor != 0.0, NULL);
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
     return NULL;
+
+  g_return_val_if_fail (G_IS_PARAM_SPEC_DOUBLE (param_spec) || factor == 1.0, NULL);
 
   if (! get_numeric_values (config,
                             param_spec, &value, &lower, &upper, G_STRFUNC))
@@ -1578,7 +1582,10 @@ gimp_prop_scale_entry_new (GObject     *config,
   if (! label)
     label = g_param_spec_get_nick (param_spec);
 
-  widget = gimp_scale_entry_new (label, value, lower * factor, upper * factor, -1);
+  if (G_IS_PARAM_SPEC_INT (param_spec) || G_IS_PARAM_SPEC_UINT (param_spec))
+    digits = 0;
+
+  widget = gimp_scale_entry_new (label, value, lower * factor, upper * factor, digits);
   if (limit_scale)
     gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (widget),
                                  lower_limit, upper_limit,
@@ -1587,17 +1594,29 @@ gimp_prop_scale_entry_new (GObject     *config,
   tooltip = g_param_spec_get_blurb (param_spec);
   gimp_help_set_help_data (widget, tooltip, NULL);
 
-  user_data = g_new0 (gdouble, 1);
-  *user_data = factor;
-  /* With @factor == 1.0, this is equivalent to a
-   * g_object_bind_property().
-   */
-  g_object_bind_property_full (config, property_name,
-                               widget, "value",
-                               G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE,
-                               gimp_prop_widget_double_to_factor,
-                               gimp_prop_widget_double_from_factor,
-                               user_data, (GDestroyNotify) g_free);
+  if (factor != 1.0)
+    {
+      gdouble *user_data;
+
+      user_data = g_new0 (gdouble, 1);
+      *user_data = factor;
+      /* With @factor == 1.0, this is equivalent to a
+       * g_object_bind_property().
+       */
+      g_object_bind_property_full (config, property_name,
+                                   widget, "value",
+                                   G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE,
+                                   gimp_prop_widget_double_to_factor,
+                                   gimp_prop_widget_double_from_factor,
+                                   user_data, (GDestroyNotify) g_free);
+    }
+  else
+    {
+      g_object_bind_property (config, property_name,
+                              widget, "value",
+                              G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+    }
 
   return widget;
 }

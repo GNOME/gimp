@@ -462,7 +462,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           widget = gimp_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
                                               property,
                                               _(g_param_spec_get_nick (pspec)),
-                                              digits, FALSE, 0.0, 0.0);
+                                              1.0, FALSE, 0.0, 0.0);
         }
       else if (widget_type == GIMP_TYPE_SPIN_BUTTON)
         {
