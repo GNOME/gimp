@@ -81,6 +81,9 @@ GtkWidget * gimp_procedure_dialog_get_widget        (GimpProcedureDialog *dialog
 GtkWidget * gimp_procedure_dialog_get_int_combo     (GimpProcedureDialog *dialog,
                                                      const gchar         *property,
                                                      GimpIntStore        *store);
+GtkWidget * gimp_procedure_dialog_get_scale_entry   (GimpProcedureDialog *dialog,
+                                                     const gchar         *property,
+                                                     gdouble              factor);
 GtkWidget * gimp_procedure_dialog_get_label         (GimpProcedureDialog *dialog,
                                                      const gchar         *label_id,
                                                      const gchar         *text);

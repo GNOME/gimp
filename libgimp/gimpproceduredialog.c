@@ -601,6 +601,71 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
 }
 
 /**
+ * gimp_procedure_dialog_get_scale_entry:
+ * @dialog:   the associated #GimpProcedureDialog.
+ * @property: name of the int property to build a combo for. It must be
+ *            a property of the #GimpProcedure @dialog has been created
+ *            for.
+ * @factor:   a display factor for the range shown by the widget.
+ *
+ * Creates a new #GimpScaleEntry for @property which must necessarily be
+ * an integer or double property.
+ * This can be used instead of gimp_procedure_dialog_get_widget() in
+ * particular if you want to tweak the display factor. A typical example
+ * is showing a [0.0, 1.0] range as [0.0, 100.0] instead (@factor = 100.0).
+ *
+ * If a widget has already been created for this procedure, it will be
+ * returned instead (whatever its actual widget type).
+ *
+ * Returns: (transfer none): the #GtkWidget representing @property. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_get_scale_entry (GimpProcedureDialog *dialog,
+                                       const gchar         *property,
+                                       gdouble              factor)
+{
+  GtkWidget  *widget = NULL;
+  GParamSpec *pspec;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (property != NULL, NULL);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                        property);
+
+  if (! pspec)
+    {
+      g_warning ("%s: parameter %s does not exist.",
+                 G_STRFUNC, property);
+      return NULL;
+    }
+
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT ||
+                        G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE, NULL);
+
+  /* First check if it already exists. */
+  widget = g_hash_table_lookup (dialog->priv->widgets, property);
+
+  if (widget)
+    return widget;
+
+  widget = gimp_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
+                                      property,
+                                      _(g_param_spec_get_nick (pspec)),
+                                      factor, FALSE, 0.0, 0.0);
+
+  gtk_size_group_add_widget (dialog->priv->label_group,
+                             gimp_labeled_get_label (GIMP_LABELED (widget)));
+
+  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
+
+  return widget;
+}
+
+/**
  * gimp_procedure_dialog_get_label:
  * @dialog:   the #GimpProcedureDialog.
  * @label_id: the label for the #GtkLabel.
