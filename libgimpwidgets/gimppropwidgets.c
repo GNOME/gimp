@@ -1513,6 +1513,8 @@ gimp_prop_hscale_new (GObject     *config,
  * @property_name:  Name of integer or double property controlled by the scale.
  * @digits:         Number of digits after decimal point to display. For
  *                  integer properties, this will be ignored (always 0).
+ *                  If set to -1, a reasonable value will be
+ *                  approximated depending on @property_name's range.
  * @limit_scale:    %FALSE if the range of possible values of the
  *                  GtkHScale should be the same as of the GtkSpinButton.
  * @lower_limit:    The scale's lower boundary if @scale_limits is %TRUE.

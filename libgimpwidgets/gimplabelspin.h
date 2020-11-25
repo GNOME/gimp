@@ -55,7 +55,7 @@ GtkWidget  * gimp_label_spin_new             (const gchar   *text,
                                               gdouble        value,
                                               gdouble        lower,
                                               gdouble        upper,
-                                              guint          digits);
+                                              gint           digits);
 
 void         gimp_label_spin_set_value       (GimpLabelSpin *spin,
                                               gdouble        value);

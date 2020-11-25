@@ -82,6 +82,12 @@ gboolean              gimp_stack_trace_print         (const gchar       *prog_na
                                                       gchar            **trace);
 void                  gimp_stack_trace_query         (const gchar       *prog_name);
 
+void                  gimp_range_estimate_settings   (gdouble            lower,
+                                                      gdouble            upper,
+                                                      gdouble           *step,
+                                                      gdouble           *page,
+                                                      gint              *digits);
+
 
 G_END_DECLS
 

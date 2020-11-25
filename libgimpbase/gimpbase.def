@@ -159,6 +159,7 @@ EXPORTS
 	gimp_plug_in_directory_file
 	gimp_precision_get_type
 	gimp_progress_command_get_type
+	gimp_range_estimate_settings
 	gimp_rectangle_intersect
 	gimp_rectangle_union
 	gimp_repeat_mode_get_type

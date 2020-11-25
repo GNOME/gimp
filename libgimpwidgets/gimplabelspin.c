@@ -60,6 +60,8 @@ typedef struct _GimpLabelSpinPrivate
 
   GtkWidget     *spinbutton;
   GtkAdjustment *spin_adjustment;
+
+  gint           digits;
 } GimpLabelSpinPrivate;
 
 static void        gimp_label_spin_constructed       (GObject       *object);
@@ -78,8 +80,11 @@ static GtkWidget * gimp_label_spin_populate          (GimpLabeled   *spin,
                                                       gint          *width,
                                                       gint          *height);
 
-static void        gimp_label_spin_update_spin_width (GimpLabelSpin *spin);
-static void        gimp_label_spin_update_increments (GimpLabelSpin *spin);
+static void        gimp_label_spin_update_spin_width (GimpLabelSpin *spin,
+                                                      gdouble        lower,
+                                                      gdouble        upper,
+                                                      guint          digits);
+static void        gimp_label_spin_update_settings   (GimpLabelSpin *spin);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpLabelSpin, gimp_label_spin, GIMP_TYPE_LABELED)
 
@@ -151,15 +156,16 @@ gimp_label_spin_class_init (GimpLabelSpinClass *klass)
   /**
    * GimpLabelSpin:digits:
    *
-   * The number of decimal places to display.
+   * The number of decimal places to display. If -1, then the number is
+   * estimated.
    *
    * Since: 3.0
    **/
   g_object_class_install_property (object_class, PROP_DIGITS,
-                                   g_param_spec_uint ("digits", NULL,
-                                                      "The number of decimal places to display",
-                                                      0, G_MAXUINT, 2,
-                                                      GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("digits", NULL,
+                                                     "The number of decimal places to display",
+                                                     -1, G_MAXINT, -1,
+                                                     GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -195,8 +201,7 @@ gimp_label_spin_constructed (GObject *object)
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 
-  gimp_label_spin_update_spin_width (spin);
-  gimp_label_spin_update_increments (spin);
+  gimp_label_spin_update_settings (spin);
 }
 
 static void
@@ -224,8 +229,7 @@ gimp_label_spin_set_property (GObject      *object,
                                 g_value_get_double (value));
       if (priv->spinbutton)
         {
-          gimp_label_spin_update_spin_width (spin);
-          gimp_label_spin_update_increments (spin);
+          gimp_label_spin_update_settings (spin);
         }
       break;
     case PROP_UPPER:
@@ -233,18 +237,14 @@ gimp_label_spin_set_property (GObject      *object,
                                 g_value_get_double (value));
       if (priv->spinbutton)
         {
-          gimp_label_spin_update_spin_width (spin);
-          gimp_label_spin_update_increments (spin);
+          gimp_label_spin_update_settings (spin);
         }
       break;
     case PROP_DIGITS:
       if (priv->spinbutton)
         {
-          gtk_spin_button_set_digits (GTK_SPIN_BUTTON (priv->spinbutton),
-                                      g_value_get_uint (value));
-
-          gimp_label_spin_update_spin_width (spin);
-          gimp_label_spin_update_increments (spin);
+          priv->digits = g_value_get_int (value);
+          gimp_label_spin_update_settings (spin);
         }
       break;
 
@@ -305,21 +305,15 @@ gimp_label_spin_populate (GimpLabeled *labeled,
 }
 
 static void
-gimp_label_spin_update_spin_width (GimpLabelSpin *spin)
+gimp_label_spin_update_spin_width (GimpLabelSpin *spin,
+                                   gdouble        lower,
+                                   gdouble        upper,
+                                   guint          digits)
 {
   GimpLabelSpinPrivate *priv = gimp_label_spin_get_instance_private (spin);
   gint                  width = 0;
-  gdouble               lower;
-  gdouble               upper;
-  gint                  digits;
 
   g_return_if_fail (GIMP_IS_LABEL_SPIN (spin));
-
-  g_object_get (spin,
-                "lower",  &lower,
-                "upper",  &upper,
-                "digits", &digits,
-                NULL);
 
   /* Necessary size to display the max/min integer values, with optional
    * negative sign.
@@ -337,11 +331,14 @@ gimp_label_spin_update_spin_width (GimpLabelSpin *spin)
 }
 
 static void
-gimp_label_spin_update_increments (GimpLabelSpin *spin)
+gimp_label_spin_update_settings (GimpLabelSpin *spin)
 {
-  gdouble lower;
-  gdouble upper;
-  gdouble range;
+  GimpLabelSpinPrivate *priv = gimp_label_spin_get_instance_private (spin);
+  gdouble               lower;
+  gdouble               upper;
+  gdouble               step;
+  gdouble               page;
+  gint                  digits = priv->digits;
 
   g_return_if_fail (GIMP_IS_LABEL_SPIN (spin));
 
@@ -352,46 +349,11 @@ gimp_label_spin_update_increments (GimpLabelSpin *spin)
 
   g_return_if_fail (upper >= lower);
 
-  range = upper - lower;
-
-  if (range > 0 && range <= 1.0)
-    {
-      gdouble places = 10.0;
-      gdouble step;
-      gdouble page;
-
-      /* Compute some acceptable step and page increments always in the
-       * format `10**-X` where X is the rounded precision.
-       * So for instance:
-       *  0.8 will have increments 0.01 and 0.1.
-       *  0.3 will have increments 0.001 and 0.01.
-       *  0.06 will also have increments 0.001 and 0.01.
-       */
-      while (range * places < 5.0)
-        places *= 10.0;
-
-
-      step = 0.1 / places;
-      page = 1.0 / places;
-
-      gimp_label_spin_set_increments (spin, step, page);
-    }
-  else if (range <= 2.0)
-    {
-      gimp_label_spin_set_increments (spin, 0.01, 0.1);
-    }
-  else if (range <= 5.0)
-    {
-      gimp_label_spin_set_increments (spin, 0.1, 1.0);
-    }
-  else if (range <= 40.0)
-    {
-      gimp_label_spin_set_increments (spin, 1.0, 2.0);
-    }
-  else
-    {
-      gimp_label_spin_set_increments (spin, 1.0, 10.0);
-    }
+  gimp_range_estimate_settings (lower, upper, &step, &page,
+                                digits < 0 ? &digits: NULL);
+  gimp_label_spin_set_increments (spin, step, page);
+  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (priv->spinbutton), (guint) digits);
+  gimp_label_spin_update_spin_width (spin, lower, upper, (guint) digits);
 }
 
 
@@ -406,6 +368,12 @@ gimp_label_spin_update_increments (GimpLabelSpin *spin)
  * @upper:  The upper boundary.
  * @digits: The number of decimal digits.
  *
+ * Suitable increment values are estimated based on the [@lower, @upper]
+ * range.
+ * If @digits is -1, then it will also be estimated based on the same
+ * range. Digits estimation will always be at least 1, so if you want to
+ * show integer values only, set 0 explicitly.
+ *
  * Returns: (transfer full): The new #GimpLabelSpin widget.
  **/
 GtkWidget *
@@ -413,9 +381,12 @@ gimp_label_spin_new (const gchar *text,
                      gdouble      value,
                      gdouble      lower,
                      gdouble      upper,
-                     guint        digits)
+                     gint         digits)
 {
   GtkWidget *labeled;
+
+  g_return_val_if_fail (upper >= lower, NULL);
+  g_return_val_if_fail (digits >= -1, NULL);
 
   labeled = g_object_new (GIMP_TYPE_LABEL_SPIN,
                           "label",  text,

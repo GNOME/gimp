@@ -85,12 +85,6 @@ static void   gimp_procedure_dialog_load_defaults (GtkWidget           *button,
 static void   gimp_procedure_dialog_save_defaults (GtkWidget           *button,
                                                    GimpProcedureDialog *dialog);
 
-static void   gimp_procedure_dialog_estimate_increments (gdouble        lower,
-                                                         gdouble        upper,
-                                                         gdouble       *step,
-                                                         gdouble       *page,
-                                                         gint          *digits);
-
 static gboolean gimp_procedure_dialog_check_mnemonic    (GimpProcedureDialog *dialog,
                                                          GtkWidget           *widget,
                                                          const gchar         *id,
@@ -456,7 +450,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           minimum = pspecdouble->minimum;
           maximum = pspecdouble->maximum;
         }
-      gimp_procedure_dialog_estimate_increments (minimum, maximum, &step, &page, &digits);
+      gimp_range_estimate_settings (minimum, maximum, &step, &page, &digits);
 
       if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_SPIN)
         {
@@ -1183,98 +1177,6 @@ gimp_procedure_dialog_save_defaults (GtkWidget           *button,
       g_printerr ("Saving default values to disk failed: %s\n",
                   error->message);
       g_clear_error (&error);
-    }
-}
-
-/**
- * gimp_procedure_dialog_estimate_increments:
- * @lower:
- * @upper:
- * @step:
- * @page:
- *
- * Though sometimes you might want to specify step and page increments
- * on widgets explicitly, sometimes you are fine with just anything
- * which doesn't give you absurd values. This procedure just tries to
- * return such sensible increment values.
- */
-static void
-gimp_procedure_dialog_estimate_increments (gdouble  lower,
-                                           gdouble  upper,
-                                           gdouble *step,
-                                           gdouble *page,
-                                           gint    *digits)
-{
-  gdouble range;
-
-  g_return_if_fail (upper >= lower);
-  g_return_if_fail (step || page || digits);
-
-  range = upper - lower;
-
-  if (range > 0 && range <= 1.0)
-    {
-      gdouble places = 10.0;
-
-      if (digits)
-        *digits = 3;
-
-      /* Compute some acceptable step and page increments always in the
-       * format `10**-X` where X is the rounded precision.
-       * So for instance:
-       *  0.8 will have increments 0.01 and 0.1.
-       *  0.3 will have increments 0.001 and 0.01.
-       *  0.06 will also have increments 0.001 and 0.01.
-       */
-      while (range * places < 5.0)
-        {
-          places *= 10.0;
-          if (digits)
-            (*digits)++;
-        }
-
-
-      if (step)
-        *step = 0.1 / places;
-      if (page)
-        *page = 1.0 / places;
-    }
-  else if (range <= 2.0)
-    {
-      if (step)
-        *step = 0.01;
-      if (page)
-        *page = 0.1;
-
-      if (digits)
-        *digits = 3;
-    }
-  else if (range <= 5.0)
-    {
-      if (step)
-        *step = 0.1;
-      if (page)
-        *page = 1.0;
-      if (digits)
-        *digits = 2;
-    }
-  else if (range <= 40.0)
-    {
-      if (step)
-        *step = 1.0;
-      if (page)
-        *page = 2.0;
-      if (digits)
-        *digits = 2;
-    }
-  else
-    {
-      if (step)
-        *step = 1.0;
-      if (page)
-        *page = 10.0;
-      if (digits)
-        *digits = 1;
     }
 }
 

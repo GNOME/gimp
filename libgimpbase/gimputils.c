@@ -1521,6 +1521,109 @@ gimp_stack_trace_query (const gchar *prog_name)
 #endif
 }
 
+/**
+ * gimp_range_estimate_settings:
+ * @lower: the lower value.
+ * @upper: the higher value.
+ * @step: (out) (optional): the proposed step increment.
+ * @page: (out) (optional): the proposed page increment.
+ * @digits: (out) (optional): the proposed decimal places precision.
+ *
+ * This function proposes reasonable settings for increments and display
+ * digits. These can be used for instance on #GtkRange or other widgets
+ * using a #GtkAdjustment typically.
+ * Note that it will never return @digits with value 0. If you know that
+ * your input needs to display integer values, there is no need to set
+ * @digits.
+ *
+ * There is no universal answer to the best increments and number of
+ * decimal places. It often depends on context of what the value is
+ * meant to represent. This function only tries to provide sensible
+ * generic values which can be used when it doesn't matter too much or
+ * for generated GUI for instance. If you know exactly how you want to
+ * show and interact with a given range, you don't have to use this
+ * function.
+ */
+void
+gimp_range_estimate_settings (gdouble  lower,
+                              gdouble  upper,
+                              gdouble *step,
+                              gdouble *page,
+                              gint    *digits)
+{
+  gdouble range;
+
+  g_return_if_fail (upper >= lower);
+  g_return_if_fail (step || page || digits);
+
+  range = upper - lower;
+
+  if (range > 0 && range <= 1.0)
+    {
+      gdouble places = 10.0;
+
+      if (digits)
+        *digits = 3;
+
+      /* Compute some acceptable step and page increments always in the
+       * format `10**-X` where X is the rounded precision.
+       * So for instance:
+       *  0.8 will have increments 0.01 and 0.1.
+       *  0.3 will have increments 0.001 and 0.01.
+       *  0.06 will also have increments 0.001 and 0.01.
+       */
+      while (range * places < 5.0)
+        {
+          places *= 10.0;
+          if (digits)
+            (*digits)++;
+        }
+
+
+      if (step)
+        *step = 0.1 / places;
+      if (page)
+        *page = 1.0 / places;
+    }
+  else if (range <= 2.0)
+    {
+      if (step)
+        *step = 0.01;
+      if (page)
+        *page = 0.1;
+
+      if (digits)
+        *digits = 3;
+    }
+  else if (range <= 5.0)
+    {
+      if (step)
+        *step = 0.1;
+      if (page)
+        *page = 1.0;
+      if (digits)
+        *digits = 2;
+    }
+  else if (range <= 40.0)
+    {
+      if (step)
+        *step = 1.0;
+      if (page)
+        *page = 2.0;
+      if (digits)
+        *digits = 2;
+    }
+  else
+    {
+      if (step)
+        *step = 1.0;
+      if (page)
+        *page = 10.0;
+      if (digits)
+        *digits = 1;
+    }
+}
+
 
 /* Private functions. */
 
