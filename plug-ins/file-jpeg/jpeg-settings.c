@@ -208,7 +208,7 @@ jpeg_restore_original_settings (GimpImage       *image,
                 *num_quant_tables = -1;
 
               /* the current plug-in can only use subsampling for YCbCr (3) */
-              *subsmp = -1;
+              *subsmp = JPEG_SUBSAMPLING_1x1_1x1_1x1;
               if (num_components == 3)
                 {
                   h[0] = *src++;
@@ -240,7 +240,7 @@ jpeg_restore_original_settings (GimpImage       *image,
     }
 
   *quality = -1;
-  *subsmp = -1;
+  *subsmp = JPEG_SUBSAMPLING_1x1_1x1_1x1;
   *num_quant_tables = 0;
 
   return FALSE;

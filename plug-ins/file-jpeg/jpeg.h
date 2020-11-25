@@ -56,10 +56,6 @@ extern GimpLayer *      preview_layer;
 extern gboolean         undo_touched;
 extern gboolean         load_interactive;
 extern GimpDisplay     *display;
-extern gchar           *image_comment;
-extern gint             orig_quality;
-extern JpegSubsampling  orig_subsmp;
-extern gint             num_quant_tables;
 
 
 void      destroy_preview               (void);

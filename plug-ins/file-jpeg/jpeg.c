@@ -84,14 +84,9 @@ GIMP_MAIN (JPEG_TYPE)
 
 
 gboolean         undo_touched      = FALSE;
-gchar           *image_comment     = NULL;
 GimpDisplay     *display           = NULL;
-JpegSaveVals     jsvals            = { 0, };
 GimpImage       *orig_image_global = NULL;
 GimpDrawable    *drawable_global   = NULL;
-gint             orig_quality      = 0;
-JpegSubsampling  orig_subsmp       = JPEG_SUBSAMPLING_2x2_1x1_1x1;;
-gint             num_quant_tables  = 0;
 
 
 static void
@@ -201,13 +196,13 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
        */
       GIMP_PROC_ARG_DOUBLE (procedure, "quality",
                             "Quality",
-                            "Quality of saved image",
+                            "Quality of exported image",
                             0.0, 1.0, 0.9,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "smoothing",
-                            "Smoothing",
-                            "Smoothing factor for saved image",
+                            "S_moothing",
+                            "Smoothing factor for exported image",
                             0.0, 1.0, 0.0,
                             G_PARAM_READWRITE);
 
@@ -218,19 +213,13 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "progressive",
-                             "Progressive",
+                             "_Progressive",
                              "Create progressive JPEG images",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "comment",
-                            "Comment",
-                            "Image comment",
-                            gimp_get_default_comment (),
-                            G_PARAM_READWRITE);
-
       GIMP_PROC_ARG_INT (procedure, "sub-sampling",
-                         "Sub-sampling",
+                         _("Su_bsampling"),
                          "Sub-sampling type { 0 == 4:2:0 (chroma quartered), "
                          "1 == 4:2:2 Horizontal (chroma halved), "
                          "2 == 4:4:4 (best quality), "
@@ -248,18 +237,66 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "restart",
-                         "Restart",
+                         _("Interval (MCU rows):"),
                          "Interval of restart markers "
                          "(in MCU rows, 0 = no restart markers)",
                          0, 64, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "dct",
-                         "DCT",
+                         _("_DCT method"),
                          "DCT method to use { INTEGER (0), FIXED (1), "
                          "FLOAT (2) }",
                          0, 2, 0,
                          G_PARAM_READWRITE);
+
+      /* Some auxiliary arguments mostly for interactive usage. */
+
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-original-quality",
+                                 "_Use quality settings from original image",
+                                 "If the original image was loaded from a JPEG "
+                                 "file using non-standard quality settings "
+                                 "(quantization tables), enable this option to "
+                                 "get almost the same quality and file size.",
+                                 FALSE,
+                                 G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_INT (procedure, "original-quality",
+                             NULL, NULL,
+                             -1, 100, -1,
+                             G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_INT (procedure, "original-sub-sampling",
+                             NULL, NULL,
+                             JPEG_SUBSAMPLING_2x2_1x1_1x1,
+                             JPEG_SUBSAMPLING_1x2_1x1_1x1,
+                             JPEG_SUBSAMPLING_2x2_1x1_1x1,
+                             G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_INT (procedure, "original-num-quant-tables",
+                             NULL, NULL,
+                             -1, 4, -1,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "show-preview",
+                                 "Sho_w preview in image window",
+                                 "Creates a temporary layer with an export preview",
+                                 FALSE,
+                                 G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-arithmetic-coding",
+                                 "Use arithmetic _coding",
+                                 _("Older software may have trouble opening "
+                                   "arithmetic-coded images"),
+                                 FALSE,
+                                 G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-restart",
+                                 _("Use _restart markers"),
+                                 NULL, FALSE,
+                                 G_PARAM_READWRITE);
+
+      gimp_save_procedure_set_support_exif      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_iptc      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_xmp       (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_profile   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_thumbnail (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_comment   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
     }
 
   return procedure;
@@ -385,16 +422,22 @@ jpeg_save (GimpProcedure        *procedure,
            gpointer              run_data)
 {
   GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
-  GimpParasite          *parasite;
+  GimpProcedureConfig   *config;
   GimpMetadata          *metadata;
-  GimpMetadataSaveFlags  metadata_flags;
   GimpImage             *orig_image;
   GimpExportReturn       export = GIMP_EXPORT_CANCEL;
   GError                *error  = NULL;
 
+  gint                   orig_num_quant_tables = -1;
+  gint                   orig_quality          = -1;
+  JpegSubsampling        orig_subsmp           = JPEG_SUBSAMPLING_2x2_1x1_1x1;
+
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
+  config = gimp_procedure_create_config (procedure);
+  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+                                                 args, "image/jpeg");
   preview_image = NULL;
   preview_layer = NULL;
 
@@ -453,118 +496,77 @@ jpeg_save (GimpProcedure        *procedure,
                                                error);
     }
 
-  /* Initialize with hardcoded defaults */
-  load_defaults ();
-
-  /* Override the defaults with preferences. */
-  metadata = gimp_image_metadata_save_prepare (orig_image,
-                                               "image/jpeg",
-                                               &metadata_flags);
-  jsvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
-  jsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
-  jsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
-  jsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
-  jsvals.save_profile   = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
-
-  parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
-  if (parasite)
-    {
-      image_comment = g_strndup (gimp_parasite_data (parasite),
-                                 gimp_parasite_data_size (parasite));
-      gimp_parasite_free (parasite);
-    }
-
   /* Override preferences from JPG export defaults (if saved). */
-  load_parasite ();
 
   switch (run_mode)
     {
     case GIMP_RUN_NONINTERACTIVE:
-      g_free (image_comment);
-
-      jsvals.quality     = GIMP_VALUES_GET_DOUBLE  (args, 0) * 100.0;
-      jsvals.smoothing   = GIMP_VALUES_GET_DOUBLE  (args, 1);
-      jsvals.optimize    = GIMP_VALUES_GET_BOOLEAN (args, 2);
-      jsvals.progressive = GIMP_VALUES_GET_BOOLEAN (args, 3);
-      image_comment      = GIMP_VALUES_DUP_STRING  (args, 4);
-      jsvals.subsmp      = GIMP_VALUES_GET_DOUBLE  (args, 5);
-      jsvals.baseline    = GIMP_VALUES_GET_DOUBLE  (args, 6);
-      jsvals.restart     = GIMP_VALUES_GET_DOUBLE  (args, 7);
-      jsvals.dct         = GIMP_VALUES_GET_DOUBLE  (args, 8);
-      jsvals.preview     = FALSE;
+      g_object_set (config, "show-preview", FALSE, NULL);
       break;
 
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      /* restore the values found when loading the file (if available) */
-      jpeg_restore_original_settings (orig_image,
-                                      &orig_quality,
-                                      &orig_subsmp,
-                                      &num_quant_tables);
-
-      /* load up the previously used values (if file was saved once) */
-      parasite = gimp_image_get_parasite (orig_image,
-                                          "jpeg-save-options");
-      if (parasite)
         {
-          const JpegSaveVals *save_vals = gimp_parasite_data (parasite);
+          /* restore the values found when loading the file (if available) */
+          gdouble dquality;
+          gint    quality;
+          gint    subsmp;
 
-          jsvals.quality          = save_vals->quality;
-          jsvals.smoothing        = save_vals->smoothing;
-          jsvals.optimize         = save_vals->optimize;
-          jsvals.progressive      = save_vals->progressive;
-          jsvals.baseline         = save_vals->baseline;
-          jsvals.subsmp           = save_vals->subsmp;
-          jsvals.restart          = save_vals->restart;
-          jsvals.dct              = save_vals->dct;
-          jsvals.preview          = save_vals->preview;
-          jsvals.save_exif        = save_vals->save_exif;
-          jsvals.save_thumbnail   = save_vals->save_thumbnail;
-          jsvals.save_xmp         = save_vals->save_xmp;
-          jsvals.save_iptc        = save_vals->save_iptc;
-          jsvals.use_orig_quality = save_vals->use_orig_quality;
+          jpeg_restore_original_settings (orig_image,
+                                          &orig_quality,
+                                          &orig_subsmp,
+                                          &orig_num_quant_tables);
 
-          gimp_parasite_free (parasite);
-        }
-      else
-        {
-          /* We are called with GIMP_RUN_WITH_LAST_VALS but this image
-           * doesn't have a "jpeg-save-options" parasite. It's better
-           * to prompt the user with a dialog now so that she has
-           * control over the JPEG encoding parameters.
-           */
-          run_mode = GIMP_RUN_INTERACTIVE;
+          g_object_get (config,
+                        "quality",      &dquality,
+                        "sub-sampling", &subsmp,
+                        NULL);
+
+          quality = (gint) (dquality * 100.0);
 
           /* If this image was loaded from a JPEG file and has not
            * been saved yet, try to use some of the settings from the
            * original file if they are better than the default values.
            */
-          if (orig_quality > jsvals.quality)
+          if (orig_quality > quality)
             {
-              jsvals.quality = orig_quality;
+              quality = orig_quality;
+              dquality = (gdouble) quality / 100.0;
+              g_object_set (config, "quality", dquality, NULL);
             }
 
-          /* Skip changing subsampling to original if we already have
-           * best setting or if original have worst setting
-           */
-          if (!(jsvals.subsmp == JPEG_SUBSAMPLING_1x1_1x1_1x1 ||
-                orig_subsmp == JPEG_SUBSAMPLING_2x2_1x1_1x1))
+          if (orig_quality > 0)
             {
-              jsvals.subsmp = orig_subsmp;
-            }
+              /* Skip changing subsampling to original if we already have
+               * best setting or if original have worst setting
+               */
+              if (!(subsmp == JPEG_SUBSAMPLING_1x1_1x1_1x1 ||
+                    orig_subsmp == JPEG_SUBSAMPLING_2x2_1x1_1x1))
+                {
+                  subsmp = orig_subsmp;
+                  g_object_set (config, "sub-sampling", orig_subsmp, NULL);
+                }
 
-          if (orig_quality == jsvals.quality &&
-              orig_subsmp == jsvals.subsmp)
-            {
-              jsvals.use_orig_quality = TRUE;
+              if (orig_quality == quality && orig_subsmp == subsmp)
+                {
+                  g_object_set (config, "use-original-quality", TRUE, NULL);
+                }
             }
         }
       break;
     }
+  g_object_set (config,
+                "original-sub-sampling",     orig_subsmp,
+                "original-quality",          orig_quality,
+                "original-num-quant-tables", orig_num_quant_tables,
+                NULL);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (jsvals.preview)
+      gboolean show_preview = FALSE;
+
+      g_object_get (config, "show-preview", &show_preview, NULL);
+      if (show_preview)
         {
           /* we freeze undo saving so that we can avoid sucking up
            * tile cache with our unneeded preview steps. */
@@ -579,7 +581,7 @@ jpeg_save (GimpProcedure        *procedure,
       drawable_global   = drawables[0];
 
       /*  First acquire information with a dialog  */
-      if (! save_dialog (drawables[0]))
+      if (! save_dialog (procedure, config, drawables[0]))
         {
           status = GIMP_PDB_CANCEL;
         }
@@ -596,7 +598,8 @@ jpeg_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawables[0], orig_image, FALSE,
+      if (! save_image (file, config,
+                        image, drawables[0], orig_image, FALSE,
                         &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -618,78 +621,12 @@ jpeg_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      /* pw - now we need to change the defaults to be whatever was
-       * used to save this image.  Dump the old parasites and add new
-       * ones.
-       */
-
-      gimp_image_detach_parasite (orig_image, "gimp-comment");
-      if (image_comment && strlen (image_comment))
-        {
-          parasite = gimp_parasite_new ("gimp-comment",
-                                        GIMP_PARASITE_PERSISTENT,
-                                        strlen (image_comment) + 1,
-                                        image_comment);
-          gimp_image_attach_parasite (orig_image, parasite);
-          gimp_parasite_free (parasite);
-        }
-
-      parasite = gimp_parasite_new ("jpeg-save-options",
-                                    0, sizeof (jsvals), &jsvals);
-      gimp_image_attach_parasite (orig_image, parasite);
-      gimp_parasite_free (parasite);
-
-      /* write metadata */
-
       if (metadata)
-        {
-          gimp_metadata_set_bits_per_sample (metadata, 8);
-
-          if (jsvals.save_exif)
-            metadata_flags |= GIMP_METADATA_SAVE_EXIF;
-          else
-            metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
-
-          if (jsvals.save_xmp)
-            metadata_flags |= GIMP_METADATA_SAVE_XMP;
-          else
-            metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
-
-          if (jsvals.save_iptc)
-            metadata_flags |= GIMP_METADATA_SAVE_IPTC;
-          else
-            metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
-
-          if (jsvals.save_thumbnail)
-            metadata_flags |= GIMP_METADATA_SAVE_THUMBNAIL;
-          else
-            metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
-
-          if (jsvals.save_profile)
-            metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
-          else
-            metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
-
-          if (! gimp_image_metadata_save_finish (orig_image,
-                                                 "image/jpeg",
-                                                 metadata, metadata_flags,
-                                                 file, &error))
-            {
-              if (error)
-                {
-                  /* Even though a failure to write metadata is not enough
-                     reason to say we failed to save the image, we should
-                     still notify the user about the problem. */
-                  g_message ("%s: saving metadata failed: %s",
-                             G_STRFUNC, error->message);
-                  g_error_free (error);
-                }
-            }
-        }
+        gimp_metadata_set_bits_per_sample (metadata, 8);
     }
 
-  if (metadata)
-    g_object_unref (metadata);
+  gimp_procedure_config_end_export (config, image, file, status);
+  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

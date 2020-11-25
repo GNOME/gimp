@@ -18,40 +18,20 @@
 #ifndef __JPEG_SAVE_H__
 #define __JPEG_SAVE_H__
 
-typedef struct
-{
-  gdouble          quality;
-  gdouble          smoothing;
-  gboolean         optimize;
-  gboolean         arithmetic_coding;
-  gboolean         progressive;
-  gboolean         baseline;
-  JpegSubsampling  subsmp;
-  gint             restart;
-  gint             dct;
-  gboolean         preview;
-  gboolean         save_exif;
-  gboolean         save_xmp;
-  gboolean         save_iptc;
-  gboolean         save_thumbnail;
-  gboolean         save_profile;
-  gboolean         use_orig_quality;
-} JpegSaveVals;
-
-extern JpegSaveVals     jsvals;
 
 extern GimpImage       *orig_image_global;
 extern GimpDrawable    *drawable_global;
 
 
-gboolean    save_image         (GFile         *file,
-                                GimpImage     *image,
-                                GimpDrawable  *drawable,
-                                GimpImage     *orig_image,
-                                gboolean       preview,
-                                GError       **error);
-gboolean    save_dialog        (GimpDrawable  *drawable);
-void        load_defaults      (void);
-void        load_parasite      (void);
+gboolean    save_image         (GFile                *file,
+                                GimpProcedureConfig *config,
+                                GimpImage            *image,
+                                GimpDrawable         *drawable,
+                                GimpImage            *orig_image,
+                                gboolean              preview,
+                                GError              **error);
+gboolean    save_dialog        (GimpProcedure        *procedure,
+                                GimpProcedureConfig  *config,
+                                GimpDrawable         *drawable);
 
 #endif /* __JPEG_SAVE_H__ */
