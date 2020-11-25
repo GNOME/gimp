@@ -896,7 +896,7 @@ save_dialog (GimpProcedure *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as XPM"));
 
-  scale = gimp_prop_scale_entry_new (config, "threshold", NULL, 0, FALSE, 0, 0);
+  scale = gimp_prop_scale_entry_new (config, "threshold", NULL, 1.0, FALSE, 0, 0);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       scale, TRUE, TRUE, 6);
   gtk_widget_show (scale);

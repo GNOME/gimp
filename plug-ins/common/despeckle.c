@@ -459,7 +459,7 @@ despeckle_dialog (GimpProcedure *procedure,
 
   scale = gimp_prop_scale_entry_new (config, "radius",
                                      _("_Radius:"),
-                                     0, FALSE, 0, 0);
+                                     1.0, FALSE, 0, 0);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 1, 1);
   gtk_widget_show (scale);
 
@@ -469,7 +469,7 @@ despeckle_dialog (GimpProcedure *procedure,
 
   scale = gimp_prop_scale_entry_new (config, "black",
                                      _("_Black level:"),
-                                     0, FALSE, 0, 0);
+                                     1.0, FALSE, 0, 0);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 1, 1);
   gtk_widget_show (scale);
 
@@ -479,7 +479,7 @@ despeckle_dialog (GimpProcedure *procedure,
 
   scale = gimp_prop_scale_entry_new (config, "white",
                                      _("_White level:"),
-                                     0, FALSE, 0, 0);
+                                     1.0, FALSE, 0, 0);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 1, 1);
   gtk_widget_show (scale);
 

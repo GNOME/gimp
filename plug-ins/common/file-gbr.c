@@ -318,7 +318,7 @@ save_dialog (GimpProcedure *procedure,
                             entry, 2);
 
   scale = gimp_prop_scale_entry_new (config, "spacing",
-                                     NULL, 0, FALSE, 0, 0);
+                                     NULL, 1.0, FALSE, 0, 0);
   gtk_widget_hide (gimp_labeled_get_label (GIMP_LABELED (scale)));
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Spacing:"), 0.0, 0.5, scale, 4);

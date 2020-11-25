@@ -123,14 +123,14 @@ save_dialog (GimpImage     *image,
   /* Create the slider for image quality */
   quality_scale = gimp_prop_scale_entry_new (config, "quality",
                                              _("Image _quality:"),
-                                             0, FALSE, 0, 0);
+                                             1.0, FALSE, 0, 0);
   gtk_grid_attach (GTK_GRID (grid), quality_scale, 0, row++, 3, 1);
   gtk_widget_show (quality_scale);
 
   /* Create the slider for alpha channel quality */
   alpha_quality_scale = gimp_prop_scale_entry_new (config, "alpha-quality",
                                                    _("Alpha q_uality:"),
-                                                   0, FALSE, 0, 0);
+                                                   1.0, FALSE, 0, 0);
   gtk_grid_attach (GTK_GRID (grid), alpha_quality_scale, 0, row++, 3, 1);
   gtk_widget_show (alpha_quality_scale);
 

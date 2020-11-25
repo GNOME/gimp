@@ -234,6 +234,7 @@ EXPORTS
 	gimp_label_spin_get_type
 	gimp_label_spin_get_value
 	gimp_label_spin_new
+	gimp_label_spin_set_digits
 	gimp_label_spin_set_increments
 	gimp_label_spin_set_value
 	gimp_labeled_get_label
@@ -351,7 +352,6 @@ EXPORTS
 	gimp_prop_label_new
 	gimp_prop_label_spin_new
 	gimp_prop_memsize_entry_new
-	gimp_prop_opacity_entry_new
 	gimp_prop_path_editor_new
 	gimp_prop_pointer_combo_box_new
 	gimp_prop_scale_entry_new

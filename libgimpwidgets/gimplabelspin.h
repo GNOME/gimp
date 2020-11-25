@@ -64,6 +64,8 @@ gdouble      gimp_label_spin_get_value       (GimpLabelSpin *spin);
 void         gimp_label_spin_set_increments  (GimpLabelSpin *spin,
                                               gdouble        step,
                                               gdouble        page);
+void         gimp_label_spin_set_digits      (GimpLabelSpin *spin,
+                                              gint           digits);
 
 GtkWidget  * gimp_label_spin_get_spin_button (GimpLabelSpin *spin);
 

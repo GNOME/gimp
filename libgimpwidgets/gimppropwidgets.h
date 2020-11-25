@@ -128,16 +128,10 @@ GtkWidget     * gimp_prop_hscale_new              (GObject      *config,
 GtkWidget     * gimp_prop_scale_entry_new         (GObject      *config,
                                                    const gchar  *property_name,
                                                    const gchar  *label,
-                                                   gint          digits,
+                                                   gdouble       factor,
                                                    gboolean      limit_scale,
                                                    gdouble       lower_limit,
                                                    gdouble       upper_limit);
-
-/*  special form of gimp_prop_scale_entry_new() for GParamDouble  */
-
-GtkWidget     * gimp_prop_opacity_entry_new       (GObject       *config,
-                                                   const gchar   *property_name,
-                                                   const gchar   *label);
 
 
 /*  GimpParamMemsize  */

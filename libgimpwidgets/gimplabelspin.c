@@ -480,6 +480,27 @@ gimp_label_spin_set_increments (GimpLabelSpin *spin,
 }
 
 /**
+ * gimp_label_spin_set_digits:
+ * @spin: the #GimpLabelSpin.
+ * @digits: the number of decimal places to display.
+ *
+ * Set the number of decimal place to display in the @spin's entry.
+ * If @digits is -1, then it will also be estimated based on @spin's
+ * range. Digits estimation will always be at least 1, so if you want to
+ * show integer values only, set 0 explicitly.
+ */
+void
+gimp_label_spin_set_digits (GimpLabelSpin *spin,
+                            gint           digits)
+{
+  g_return_if_fail (GIMP_IS_LABEL_SPIN (spin));
+
+  g_object_set (spin,
+                "digits", digits,
+                NULL);
+}
+
+/**
  * gimp_label_spin_get_spin_button:
  * @spin: The #GimpLabelSpin
  *

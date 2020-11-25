@@ -74,6 +74,15 @@ static void         connect_notify     (GObject     *config,
                                         GCallback    callback,
                                         gpointer     callback_data);
 
+static gboolean gimp_prop_widget_double_to_factor   (GBinding     *binding,
+                                                     const GValue *from_value,
+                                                     GValue       *to_value,
+                                                     gpointer      user_data);
+static gboolean gimp_prop_widget_double_from_factor (GBinding     *binding,
+                                                     const GValue *from_value,
+                                                     GValue       *to_value,
+                                                     gpointer      user_data);
+
 
 /******************/
 /*  check button  */
@@ -1511,21 +1520,29 @@ gimp_prop_hscale_new (GObject     *config,
  * @label: (nullable): The text for the #GtkLabel which will appear left of
  *                     the #GtkHScale.
  * @property_name:  Name of integer or double property controlled by the scale.
- * @digits:         Number of digits after decimal point to display. For
- *                  integer properties, this will be ignored (always 0).
- *                  If set to -1, a reasonable value will be
- *                  approximated depending on @property_name's range.
+ * @factor:         Optional multiplier to convert @property_name's
+ *                  range into the #GimpScaleEntry's range. The common
+ *                  usage is to set 1.0.
  * @limit_scale:    %FALSE if the range of possible values of the
  *                  GtkHScale should be the same as of the GtkSpinButton.
  * @lower_limit:    The scale's lower boundary if @scale_limits is %TRUE.
  * @upper_limit:    The scale's upper boundary if @scale_limits is %TRUE.
  *
  * Creates a #GimpScaleEntry (slider and spin button) to set and display
- * the value of a specified int or double property.
- * See gimp_scale_entry_new() for more information.
+ * the value of a specified int or double property with sensible default
+ * settings depending on the range (decimal places, increments, etc.).
+ * These settings can be overridden by the relevant widget methods.
  *
  * If @label is %NULL, the @property_name's nick will be used as label
  * of the returned object.
+ *
+ * If @factor is not 1.0, the widget's range will be computed based of
+ * @property_name's range multiplied by @factor. A typical usage would
+ * be to display a [0.0, 1.0] range as [0.0, 100.0] by setting 100.0 as
+ * @factor.
+ *
+ * See gimp_scale_entry_set_bounds() for more information on
+ * @limit_scale, @lower_limit and @upper_limit.
  *
  * Returns: (transfer full): The newly allocated #GimpScaleEntry.
  *
@@ -1535,7 +1552,7 @@ GtkWidget *
 gimp_prop_scale_entry_new (GObject     *config,
                            const gchar *property_name,
                            const gchar *label,
-                           gint         digits,
+                           gdouble      factor,
                            gboolean     limit_scale,
                            gdouble      lower_limit,
                            gdouble      upper_limit)
@@ -1543,9 +1560,12 @@ gimp_prop_scale_entry_new (GObject     *config,
   GtkWidget   *widget;
   GParamSpec  *param_spec;
   const gchar *tooltip;
+  gdouble     *user_data;
   gdouble      value;
   gdouble      lower;
   gdouble      upper;
+
+  g_return_val_if_fail (factor != 0.0, NULL);
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -1555,121 +1575,29 @@ gimp_prop_scale_entry_new (GObject     *config,
                             param_spec, &value, &lower, &upper, G_STRFUNC))
     return NULL;
 
-  if (G_IS_PARAM_SPEC_INT (param_spec) || G_IS_PARAM_SPEC_UINT (param_spec))
-    digits = 0;
-
   if (! label)
     label = g_param_spec_get_nick (param_spec);
 
-  widget = gimp_scale_entry_new (label, value, lower, upper, digits);
+  widget = gimp_scale_entry_new (label, value, lower * factor, upper * factor, -1);
   if (limit_scale)
-    {
-      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (widget),
-                                   lower_limit, upper_limit,
-                                   FALSE);
-    }
+    gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (widget),
+                                 lower_limit, upper_limit,
+                                 FALSE);
 
   tooltip = g_param_spec_get_blurb (param_spec);
   gimp_help_set_help_data (widget, tooltip, NULL);
 
-  g_object_bind_property (config, property_name,
-                          widget, "value",
-                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
-
-  return widget;
-}
-
-static void
-gimp_prop_widget_set_factor (GtkWidget     *widget,
-                             GtkAdjustment *adjustment,
-                             gdouble        factor,
-                             gdouble        step_increment,
-                             gdouble        page_increment,
-                             gint           digits)
-{
-  gdouble *factor_store;
-  gdouble  old_factor = 1.0;
-  gdouble  f;
-
-  g_return_if_fail (widget == NULL || GTK_IS_SPIN_BUTTON (widget));
-  g_return_if_fail (widget != NULL || GTK_IS_ADJUSTMENT (adjustment));
-  g_return_if_fail (factor != 0.0);
-  g_return_if_fail (digits >= 0);
-
-  if (! adjustment)
-    adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
-
-  g_return_if_fail (get_param_spec (G_OBJECT (adjustment)) != NULL);
-
-  factor_store = g_object_get_data (G_OBJECT (adjustment),
-                                    "gimp-prop-adjustment-factor");
-  if (factor_store)
-    {
-      old_factor = *factor_store;
-    }
-  else
-    {
-      factor_store = g_new (gdouble, 1);
-      g_object_set_data_full (G_OBJECT (adjustment),
-                              "gimp-prop-adjustment-factor",
-                              factor_store, (GDestroyNotify) g_free);
-    }
-
-  *factor_store = factor;
-
-  f = factor / old_factor;
-
-  if (step_increment <= 0)
-    step_increment = f * gtk_adjustment_get_step_increment (adjustment);
-
-  if (page_increment <= 0)
-    page_increment = f * gtk_adjustment_get_page_increment (adjustment);
-
-  gtk_adjustment_configure (adjustment,
-                            f * gtk_adjustment_get_value (adjustment),
-                            f * gtk_adjustment_get_lower (adjustment),
-                            f * gtk_adjustment_get_upper (adjustment),
-                            step_increment,
-                            page_increment,
-                            f * gtk_adjustment_get_page_size (adjustment));
-
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (widget), digits);
-}
-
-/**
- * gimp_prop_opacity_entry_new:
- * @config:        Object to which property is attached.
- * @property_name: Name of double property controlled by the spin button.
- * @label:         The text for the #GtkLabel which will appear left of the
- *                 #GtkHScale.
- *
- * Creates a #libgimpwidgets-gimpscaleentry (slider and spin button)
- * to set and display the value of the specified double property,
- * which should represent an "opacity" variable with range 0 to 100.
- * See gimp_scale_entry_new() for more information.
- *
- * Returns: (transfer full): The #GtkSpinButton's #GtkAdjustment.
- *
- * Since: 2.4
- */
-GtkWidget *
-gimp_prop_opacity_entry_new (GObject     *config,
-                             const gchar *property_name,
-                             const gchar *label)
-{
-  GtkWidget *widget;
-
-  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
-  g_return_val_if_fail (property_name != NULL, NULL);
-
-  widget = gimp_prop_scale_entry_new (config, property_name,
-                                      label, 1, FALSE, 0.0, 0.0);
-
-  if (widget)
-    {
-      gimp_prop_widget_set_factor (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (widget)),
-                                   NULL, 100.0, 0.0, 0.0, 1);
-    }
+  user_data = g_new0 (gdouble, 1);
+  *user_data = factor;
+  /* With @factor == 1.0, this is equivalent to a
+   * g_object_bind_property().
+   */
+  g_object_bind_property_full (config, property_name,
+                               widget, "value",
+                               G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE,
+                               gimp_prop_widget_double_to_factor,
+                               gimp_prop_widget_double_from_factor,
+                               user_data, (GDestroyNotify) g_free);
 
   return widget;
 }
@@ -4279,4 +4207,33 @@ connect_notify (GObject     *config,
   g_signal_connect_object (config, notify_name, callback, callback_data, 0);
 
   g_free (notify_name);
+}
+
+
+static gboolean
+gimp_prop_widget_double_to_factor (GBinding     *binding,
+                                   const GValue *from_value,
+                                   GValue       *to_value,
+                                   gpointer      user_data)
+{
+  gdouble *factor = (gdouble*) user_data;
+  gdouble  val    = g_value_get_double (from_value);
+
+  g_value_set_double (to_value, val * (*factor));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_prop_widget_double_from_factor (GBinding     *binding,
+                                     const GValue *from_value,
+                                     GValue       *to_value,
+                                     gpointer      user_data)
+{
+  gdouble *factor = (gdouble*) user_data;
+  gdouble val     = g_value_get_double (from_value);
+
+  g_value_set_double (to_value, val / (*factor));
+
+  return TRUE;
 }
