@@ -3,9 +3,9 @@ image: debian:testing
 stages:
   - prepare
   - dependencies
-#  - gimp
-#  - analysis
-#  - distribution
+  - gimp
+  - analysis
+  - distribution
 
 variables:
   GIT_DEPTH: "1"
