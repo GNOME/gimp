@@ -5449,6 +5449,7 @@ gimp_image_remove_vectors (GimpImage   *image,
   gimp_item_start_move (GIMP_ITEM (vectors), push_undo);
 
   selected_vectors = gimp_image_get_selected_vectors (image);
+  selected_vectors = g_list_copy (selected_vectors);
 
   if (push_undo)
     gimp_image_undo_push_vectors_remove (image, C_("undo-type", "Remove Path"), vectors,
@@ -5469,6 +5470,8 @@ gimp_image_remove_vectors (GimpImage   *image,
     {
       gimp_image_set_selected_vectors (image, new_selected);
     }
+
+  g_list_free (selected_vectors);
 
   gimp_item_end_move (GIMP_ITEM (vectors), push_undo);
 
