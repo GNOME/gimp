@@ -580,9 +580,15 @@ gimp_channel_combine_items (GimpChannel    *mask,
   for (iter = items; iter; iter = iter->next)
     {
       if (! GIMP_IS_LAYER (iter->data))
-        gimp_channel_combine_buffer (channel,
-                                     gimp_drawable_get_buffer (GIMP_DRAWABLE (iter->data)),
-                                     GIMP_CHANNEL_OP_ADD, 0, 0);
+        {
+          gint offset_x;
+          gint offset_y;
+
+          gimp_item_get_offset (iter->data, &offset_x, &offset_y);
+          gimp_channel_combine_buffer (channel,
+                                       gimp_drawable_get_buffer (GIMP_DRAWABLE (iter->data)),
+                                       GIMP_CHANNEL_OP_ADD, offset_x, offset_y);
+        }
     }
 
   gimp_channel_combine_buffer (mask,
