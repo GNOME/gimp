@@ -1480,7 +1480,7 @@ layers_mask_apply_cmd_callback (GimpAction *action,
         {
           if (mode == GIMP_MASK_APPLY &&
               (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)) ||
-               ! gimp_item_is_content_locked (GIMP_ITEM (iter->data))))
+               gimp_item_is_content_locked (GIMP_ITEM (iter->data))))
             /* Layer groups cannot apply masks. Neither can
              * content-locked layers.
              */
