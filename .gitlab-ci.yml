@@ -215,6 +215,7 @@ deps-win64:
     paths:
       - .local/
       - _deps/
+      - /usr/local/lib/crossroad/
   needs: ["build-image-win64"]
 
 gimp-win64:
