@@ -9771,7 +9771,7 @@ msgstr "Mou el camí al capdamun_t"
 #: ../app/actions/vectors-actions.c:102
 msgctxt "vectors-action"
 msgid "Raise this path to the top"
-msgstr "Mou el camí fins al capdamunt de la llista"
+msgstr "Mou aquest camí capdamunt"
 
 #: ../app/actions/vectors-actions.c:107
 msgctxt "vectors-action"
@@ -21136,7 +21136,7 @@ msgstr "El pinzell «%s» no és un pinzell generat"
 
 #: ../app/pdb/gimppdb-utils.c:157
 msgid "Invalid empty paint dynamics name"
-msgstr "No és vàlid deixar buit el nom de la dinàmica"
+msgstr "No és vàlid deixar buit el nom de la dinàmica de pintura"
 
 #: ../app/pdb/gimppdb-utils.c:166
 #, c-format
@@ -24593,7 +24593,7 @@ msgstr "Utilitza totes les capes visibles per encongir la selecció"
 #: ../app/tools/gimprectangleoptions.c:102
 #: ../app/tools/gimptransformgridoptions.c:149
 msgid "Composition guides such as rule of thirds"
-msgstr "Composició de les guies estil un de cada tres"
+msgstr "Guies de composició com ara un de cada tres"
 
 #: ../app/tools/gimprectangleoptions.c:111
 msgid "X coordinate of top left corner"

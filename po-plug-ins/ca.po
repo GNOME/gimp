@@ -5412,7 +5412,7 @@ msgstr "To aleato_ri:"
 
 #: ../plug-ins/common/sparkle.c:514
 msgid "Adjust how much the hue should be changed randomly"
-msgstr "Ajusta com canvia aleatòriament el to del color"
+msgstr "Ajusta quant canvia aleatòriament el to del color"
 
 #: ../plug-ins/common/sparkle.c:524
 msgid "Rando_m saturation:"
@@ -5420,7 +5420,7 @@ msgstr "Saturació a_leatòria:"
 
 #: ../plug-ins/common/sparkle.c:525
 msgid "Adjust how much the saturation should be changed randomly"
-msgstr "Ajusta com canvia aleatòriament la saturació del color"
+msgstr "Ajusta quant canvia aleatòriament la saturació del color"
 
 #: ../plug-ins/common/sparkle.c:543
 msgid "_Preserve luminosity"
@@ -6291,7 +6291,7 @@ msgstr "Format de compressió BMP no reconegut o invàlid."
 
 #: ../plug-ins/file-bmp/bmp-load.c:720
 msgid "Unsupported or invalid bitdepth."
-msgstr "Els bits per píxels no són vàlids o compatibles."
+msgstr "La profunditat de bits no és vàlida o compatible."
 
 #: ../plug-ins/file-bmp/bmp-load.c:888 ../plug-ins/file-bmp/bmp-load.c:931
 #: ../plug-ins/file-bmp/bmp-load.c:985
