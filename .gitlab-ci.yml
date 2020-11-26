@@ -52,7 +52,8 @@ build-image-win64:
     # install crossroad
     - echo "RUN pip3 install zstandard" >> Dockerfile
     - echo "RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git" >> Dockerfile
-    - echo "RUN cd crossroad && ./setup.py install --prefix=`pwd`/../.local" >> Dockerfile
+    - echo "RUN cd crossroad && ./setup.py install --prefix=/usr/local && cd .." >> Dockerfile
+    - echo "RUN PATH=/usr/local/bin:$PATH\" crossroad install lcms2 cairo json-glib " >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
 
@@ -194,8 +195,19 @@ deps-win64:
     - apt-cache
   before_script:
   script:
-    - export PATH="`pwd`/.local/bin:$PATH"
-    - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
+    - export PATH="/usr/local/bin:$PATH"
+    #    - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
+    - mkdir _deps && cd _deps
+    - git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git
+    - git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git
+    - cd babl
+    - crossroad meson _build/ -Denable-gir=false -Dlibdir=lib
+    - ninja -C _build install
+    - cd ..
+    - cd gegl
+    - crossroad meson _build/ -Denable-gir=false -Dlibdir=lib
+    - ninja -C _build install
+    - cd ..
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
