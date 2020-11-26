@@ -53,7 +53,7 @@ build-image-win64:
     - echo "RUN pip3 install zstandard" >> Dockerfile
     - echo "RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git" >> Dockerfile
     - echo "RUN cd crossroad && ./setup.py install --prefix=/usr/local && cd .." >> Dockerfile
-    - echo "RUN echo 'export XDG_CACHE_HOME=/usr/local/lib && crossroad source msys2 && crossroad install lcms2 cairo json-glib' | XDG_CACHE_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
+    - echo "RUN echo 'export XDG_DATA_HOME=/usr/local/lib && crossroad source msys2 && crossroad install lcms2 cairo json-glib' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
 
@@ -201,11 +201,11 @@ deps-win64:
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git
     - cd babl
-    - echo 'crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | XDG_CACHE_HOME=/usr/local/lib crossroad w64 gimp --run="-"
+    - echo 'crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run="-"
     - ninja -C _build install
     - cd ..
     - cd gegl
-    - echo 'crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | XDG_CACHE_HOME=/usr/local/lib crossroad w64 gimp --run="-"
+    - echo 'crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run="-"
     - ninja -C _build install
     - cd ..
   artifacts:
@@ -215,7 +215,7 @@ deps-win64:
     paths:
       - .local/
       - _deps/
-      - /usr/local/lib/crossroad/
+      - /usr/local/lib/
   needs: ["build-image-win64"]
 
 gimp-win64:
