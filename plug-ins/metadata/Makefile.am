@@ -40,7 +40,9 @@ metadata_editor_SOURCES = \
 	metadata-xml.h
 
 metadata_viewer_SOURCES = \
-	metadata-viewer.c
+	metadata-viewer.c	\
+	metadata-tags.c		\
+	metadata-tags.h
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\

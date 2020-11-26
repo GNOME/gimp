@@ -43,6 +43,7 @@ plugin_name = 'metadata-viewer'
 
 plugin_sources = [
   'metadata-viewer.c',
+  'metadata-tags.c',
 ]
 
 if platform_windows
@@ -65,9 +66,7 @@ if platform_windows
 endif
 
 executable(plugin_name,
-  [
-    'metadata-viewer.c',
-  ],
+  plugin_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
     gtk3, gegl, gexiv2,

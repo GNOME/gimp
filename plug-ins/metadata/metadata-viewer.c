@@ -30,6 +30,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "metadata-tags.h"
 
 #define PLUG_IN_PROC   "plug-in-metadata-viewer"
 #define PLUG_IN_BINARY "metadata-viewer"
@@ -107,6 +108,18 @@ static void      metadata_dialog_append_tags      (GExiv2Metadata  *metadata,
                                                    gint             tag_column,
                                                    gint             value_column,
                                                    gboolean         load_iptc);
+static void metadata_dialog_add_tag               (GtkListStore    *store,
+                                                   GtkTreeIter      iter,
+                                                   gint             tag_column,
+                                                   gint             value_column,
+                                                   const gchar     *tag,
+                                                   const gchar     *value);
+static void metadata_dialog_add_translated_tag    (GExiv2Metadata  *metadata,
+                                                   GtkListStore    *store,
+                                                   GtkTreeIter      iter,
+                                                   gint             tag_column,
+                                                   gint             value_column,
+                                                   const gchar     *tag);
 static gchar   * metadata_dialog_format_tag_value (GExiv2Metadata  *metadata,
                                                    const gchar     *tag,
                                                    gboolean         truncate);
@@ -367,6 +380,40 @@ metadata_tag_is_string (const gchar *tag)
 }
 
 static void
+metadata_dialog_add_tag (GtkListStore    *store,
+                         GtkTreeIter      iter,
+                         gint             tag_column,
+                         gint             value_column,
+                         const gchar     *tag,
+                         const gchar     *value)
+{
+  if (value)
+    {
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter,
+                          tag_column,   tag,
+                          value_column, value,
+                          -1);
+    }
+}
+
+static void
+metadata_dialog_add_translated_tag (GExiv2Metadata  *metadata,
+                                    GtkListStore    *store,
+                                    GtkTreeIter      iter,
+                                    gint             tag_column,
+                                    gint             value_column,
+                                    const gchar     *tag)
+{
+  gchar *value;
+
+  value = gexiv2_metadata_get_tag_interpreted_string (metadata, tag);
+  metadata_dialog_add_tag (store, iter, tag_column, value_column,
+                           tag, gettext (value));
+  g_free (value);
+}
+
+static void
 metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                              gchar          **tags,
                              GtkListStore    *store,
@@ -377,6 +424,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
   GtkTreeIter  iter;
   const gchar *tag;
   const gchar *last_tag = NULL;
+  gboolean     gps_done = FALSE;
 
   while ((tag = *tags++))
     {
@@ -421,19 +469,95 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
 
               g_strfreev (values);
             }
+        }
+      else if (! strcmp ("Exif.GPSInfo.GPSLongitude",    tag) ||
+               ! strcmp ("Exif.GPSInfo.GPSLongitudeRef", tag) ||
+               ! strcmp ("Exif.GPSInfo.GPSLatitude",     tag) ||
+               ! strcmp ("Exif.GPSInfo.GPSLatitudeRef",  tag) ||
+               ! strcmp ("Exif.GPSInfo.GPSAltitude",     tag) ||
+               ! strcmp ("Exif.GPSInfo.GPSAltitudeRef",  tag))
+        {
+          /* We need special handling for some of the GPS tags to
+           * be able to show better values than the default. */
+          if (! gps_done)
+            {
+              gdouble  lng, lat, alt;
+              gchar   *str;
+              gchar  *value;
 
+              if (gexiv2_metadata_get_gps_longitude (GEXIV2_METADATA (metadata),
+                                                     &lng))
+                {
+                  str = metadata_format_gps_longitude_latitude (lng);
+                  metadata_dialog_add_tag (store, iter,
+                                           tag_column, value_column,
+                                           "Exif.GPSInfo.GPSLongitude",
+                                           str);
+                  g_free (str);
+                }
+              metadata_dialog_add_translated_tag (metadata, store, iter,
+                                                  tag_column, value_column,
+                                                  "Exif.GPSInfo.GPSLongitudeRef");
+
+              if (gexiv2_metadata_get_gps_latitude (GEXIV2_METADATA (metadata),
+                                                    &lat))
+                {
+                  str = metadata_format_gps_longitude_latitude (lat);
+                  metadata_dialog_add_tag (store, iter,
+                                           tag_column, value_column,
+                                           "Exif.GPSInfo.GPSLatitude",
+                                           str);
+                  g_free (str);
+                }
+              metadata_dialog_add_translated_tag (metadata, store, iter,
+                                                  tag_column, value_column,
+                                                  "Exif.GPSInfo.GPSLatitudeRef");
+
+              if (gexiv2_metadata_get_gps_altitude (GEXIV2_METADATA (metadata),
+                                                    &alt))
+                {
+                  gchar *str2, *str3;
+
+                  str  = metadata_format_gps_altitude (alt, TRUE,  _(" meter"));
+                  str2 = metadata_format_gps_altitude (alt, FALSE, _(" feet"));
+                  str3 = g_strdup_printf ("%s (%s)", str, str2);
+                  metadata_dialog_add_tag (store, iter,
+                                           tag_column, value_column,
+                                           "Exif.GPSInfo.GPSAltitude",
+                                           str3);
+                  g_free (str);
+                  g_free (str2);
+                  g_free (str3);
+                  value = gexiv2_metadata_get_tag_string (metadata,
+                                                          "Exif.GPSInfo.GPSAltitudeRef");
+
+                  if (value)
+                    {
+                      gint index;
+
+                      if (value[0] == '0')
+                        index = 1;
+                      else if (value[0] == '1')
+                        index = 2;
+                      else
+                        index = 0;
+                      metadata_dialog_add_tag (store, iter,
+                                              tag_column, value_column,
+                                              "Exif.GPSInfo.GPSAltitudeRef",
+                                              gettext (gpsaltref[index]));
+                      g_free (value);
+                    }
+                }
+              gps_done = TRUE;
+            }
         }
       else
         {
           value = metadata_dialog_format_tag_value (metadata, tag,
                                                     /* truncate = */ TRUE);
-
-          gtk_list_store_append (store, &iter);
-          gtk_list_store_set (store, &iter,
-                              tag_column,   tag,
-                              value_column, value,
-                              -1);
-
+          metadata_dialog_add_tag (store, iter,
+                                   tag_column, value_column,
+                                   tag, value);
           g_free (value);
         }
     }
