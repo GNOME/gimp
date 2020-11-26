@@ -52,8 +52,7 @@ build-image-win64:
     # install crossroad
     - echo "RUN pip3 install zstandard" >> Dockerfile
     - echo "RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git" >> Dockerfile
-    - echo "RUN cd crossroad" >> Dockerfile
-    - echo "RUN ./setup.py install --prefix=`pwd`/../.local" >> Dockerfile
+    - echo "RUN cd crossroad && ./setup.py install --prefix=`pwd`/../.local" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
 
