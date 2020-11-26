@@ -183,6 +183,12 @@ gimp_procedure_dialog_constructed (GObject *object)
   button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
                                    ok_label, GTK_RESPONSE_OK);
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "ok");
+  /* OK button is the default action and has focus from start.
+   * This allows to just accept quickly whatever default values.
+   */
+  gtk_widget_set_can_default (button, TRUE);
+  gtk_widget_grab_focus (button);
+  gtk_widget_grab_default (button);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                             GTK_RESPONSE_OK,
