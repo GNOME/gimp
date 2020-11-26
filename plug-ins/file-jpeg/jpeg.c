@@ -195,7 +195,7 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
        * settings
        */
       GIMP_PROC_ARG_DOUBLE (procedure, "quality",
-                            "Quality",
+                            "_Quality",
                             "Quality of exported image",
                             0.0, 1.0, 0.9,
                             G_PARAM_READWRITE);
@@ -207,7 +207,7 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "optimize",
-                             "Optimize",
+                             "Optimi_ze",
                              "Use optimized tables during Huffman coding",
                              TRUE,
                              G_PARAM_READWRITE);
@@ -237,7 +237,7 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "restart",
-                         _("Interval (MCU rows):"),
+                         _("Inter_val (MCU rows):"),
                          "Interval of restart markers "
                          "(in MCU rows, 0 = no restart markers)",
                          0, 64, 0,
@@ -281,13 +281,13 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                                  FALSE,
                                  G_PARAM_READWRITE);
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-arithmetic-coding",
-                                 "Use arithmetic _coding",
+                                 "Use _arithmetic coding",
                                  _("Older software may have trouble opening "
                                    "arithmetic-coded images"),
                                  FALSE,
                                  G_PARAM_READWRITE);
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-restart",
-                                 _("Use _restart markers"),
+                                 _("Use restart mar_kers"),
                                  NULL, FALSE,
                                  G_PARAM_READWRITE);
 

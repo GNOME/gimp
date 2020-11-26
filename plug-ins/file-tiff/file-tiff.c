@@ -194,7 +194,7 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                           "tif,tiff");
 
       GIMP_PROC_ARG_INT (procedure, "compression",
-                         "Compression",
+                         "Co_mpression",
                          "Compression type: { NONE (0), LZW (1), PACKBITS (2), "
                          "DEFLATE (3), JPEG (4), CCITT G3 Fax (5), "
                          "CCITT G4 Fax (6) }",
@@ -202,26 +202,26 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent-pixels",
-                             "Save color values from transparent pixels",
+                             "Save color _values from transparent pixels",
                              "Keep the color data masked by an alpha channel "
                              "intact (do not store premultiplied components)",
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-layers",
-                                 "Save Layers",
+                                 "Save La_yers",
                                  "Save Layers",
                                  TRUE,
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "crop-layers",
-                                 "Crop Layers",
+                                 "Crop L_ayers",
                                  "Crop Layers",
                                  TRUE,
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-geotiff",
-                                 "Save GeoTIFF data",
+                                 "Save _GeoTIFF data",
                                  "Save GeoTIFF data",
                                  TRUE,
                                  G_PARAM_READWRITE);

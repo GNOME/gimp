@@ -254,7 +254,7 @@ png_create_procedure (GimpPlugIn  *plug_in,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
-                             "Save _resolution",
+                             "Save resol_ution",
                              "Write pHYs chunk (PNG metadata)",
                              TRUE,
                              G_PARAM_READWRITE);

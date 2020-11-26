@@ -400,38 +400,38 @@ gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
 
   if (save_procedure->priv->supports_exif)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-exif",
-                               "Save Exif",
+                               "Save _Exif",
                                "Save Exif (Exchangeable image file format) metadata",
                                gimp_export_exif (),
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_iptc)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-iptc",
-                               "Save IPTC",
+                               "Save _IPTC",
                                "Save IPTC (International Press Telecommunications Council) metadata",
                                gimp_export_iptc (),
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_xmp)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-xmp",
-                               "Save XMP",
+                               "Save _XMP",
                                "Save XMP (Extensible Metadata Platform) metadata",
                                gimp_export_xmp (),
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_profile)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                               "Save color profile",
+                               "Save color _profile",
                                "Save the ICC color profile as metadata",
                                gimp_export_color_profile (),
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_thumbnail)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-thumbnail",
-                               "Save thumbnail",
+                               "Save _thumbnail",
                                "Save a smaller representation of the image as metadata",
                                TRUE,
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_comment)
     {
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
-                                 "Save comment",
+                                 "Save c_omment",
                                  "Save a comment as metadata",
                                  gimp_export_comment (),
                                  G_PARAM_READWRITE);
