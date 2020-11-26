@@ -412,3 +412,43 @@ const gchar *locationcreated[] =
 };
 const gint n_locationcreated = G_N_ELEMENTS (locationcreated);
 #endif
+
+
+gchar *
+metadata_format_gps_longitude_latitude (const gdouble value)
+{
+  gint     deg, min;
+  gdouble  sec;
+  gdouble  gps_value = value;
+
+  if (gps_value < 0.f)
+    gps_value *= -1.f;
+
+  deg = (gint) gps_value;
+  min = (gint) ((gps_value - (gdouble) deg) * 60.f);
+  sec = ((gps_value - (gdouble) deg - (gdouble) (min / 60.f)) * 60.f * 60.f);
+
+  return g_strdup_printf ("%ddeg %d' %.3f\"", deg, min, sec);
+}
+
+/*
+ * use_meter: True return meters, False return feet
+ * measurement_symbol: Should be "m", "ft", or empty string (not NULL)
+ */
+gchar *
+metadata_format_gps_altitude (const gdouble  value,
+                              gboolean       use_meter,
+                              gchar         *measurement_symbol)
+{
+  gdouble  gps_value = value;
+
+  if (gps_value < 0.f)
+    gps_value *= -1.f;
+
+  if (! use_meter)
+    {
+      gps_value *= 3.28;
+    }
+
+  return g_strdup_printf ("%.2f%s", gps_value, measurement_symbol);
+}

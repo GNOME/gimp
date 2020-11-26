@@ -233,4 +233,10 @@ extern const gchar *locationcreated[];
 extern const gint   n_locationcreated;
 #endif
 
+
+gchar * metadata_format_gps_longitude_latitude (const gdouble  value);
+gchar * metadata_format_gps_altitude           (const gdouble  value,
+                                                gboolean       use_meter,
+                                                gchar         *measurement_symbol);
+
 #endif /* __METADATA_TAGS_H__ */
