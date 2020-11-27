@@ -208,6 +208,7 @@ deps-win64:
     - echo 'crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run="-"
     - ninja -C _build install
     - cd ..
+    - ls -lR /usr/local/lib/
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
