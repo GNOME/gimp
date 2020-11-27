@@ -201,7 +201,7 @@ deps-win64:
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git
     - cd babl
-    - echo 'crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run="-"
+    - echo 'XDG_DATA_HOME=/usr/local/lib crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run="-"
     - ninja -C _build install
     - cd ..
     - cd gegl
@@ -215,7 +215,6 @@ deps-win64:
     paths:
       - .local/
       - _deps/
-      - /usr/local/lib/
   needs: ["build-image-win64"]
 
 gimp-win64:
