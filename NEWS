@@ -29,6 +29,11 @@ User Interface:
     (middle click), it doesn't click on the scale (i.e. value doesn't
     change).
 
+Tools:
+
+  - New Paint Select tool in the playground. This is a tool prototype
+    which would hopefully end up as a quick binary selection tool.
+
 API:
 
   - GimpFileEntry public variables were made private and a new function
@@ -47,10 +52,29 @@ API:
   - Several new functions for GimpProcedureDialog for automatic dialog
     generation based on input arguments. Though not mandatory, the
     various functions allow to organize better the widgets.
+  - The GimpProcedureDialog class will now check that mnemonics are
+    present on every option, and also that there is no duplicate
+    mnemonics. It will print messages on stderr if any of these test
+    fails (so that it won't bother users but developers and translators
+    should be able to get feedback about missing/duplicate mnemonics).
+  - GimpSaveProcedure now has generic metadata support (with an API so
+    that an export procedure can declare whether it supports given
+    metadata types or contents).
+    Combined with a new subclass GimpSaveProcedureDialog (child of
+    GimpProcedureDialog), this ensures that:
+    * If a format supports a given metadata, they will always have an
+      auxiliary argument with the same name across plug-ins.
+    * The label and tooltips will also be always the same in the GUI.
+    * Order of metadata widgets will also stay consistent.
+    * The widgets will work the same (no more "Comment" text view
+      missing in one plug-in but present in another, or with an entry
+      here, and a text view there, and so on).
 
 Plug-ins:
 
-  - file-fli updated to new dialog generation API.
+  - file-fli, file-tiff, file-jpeg and file-png updated to new dialog
+    generation API. In the most complicated case (file-jpeg), this
+    shaved 600 lines out of the plug-in code.
 
 Installer:
 
