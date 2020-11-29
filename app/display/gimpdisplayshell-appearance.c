@@ -171,6 +171,8 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
   gtk_widget_set_visible (shell->origin, show);
   gtk_widget_set_visible (shell->hrule, show);
   gtk_widget_set_visible (shell->vrule, show);
+  gtk_widget_set_visible (shell->quick_mask_button, show);
+  gtk_widget_set_visible (shell->zoom_button, show);
 
   gimp_display_shell_set_action_active (shell, "view-show-rulers", show);
 }

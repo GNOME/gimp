@@ -1691,6 +1691,18 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
                              G_CALLBACK (gimp_image_window_shell_size_allocate),
                              data, (GClosureNotify) g_free,
                              G_CONNECT_AFTER);
+      /*
+       * XXX Asking a resize should not be necessary and should happen
+       * automatically with the translate coordinates. And it does, but
+       * sometimes only after some further event (like clicking on shell
+       * widgets). Until such event happens, the shell look broken, for
+       * instance with rulers and canvas overlapping and misaligned
+       * ruler values.
+       * So I queue a resize explicitly to force the correct shell
+       * visualization immediately.
+       * See also #5813.
+       */
+      gtk_widget_queue_resize (GTK_WIDGET (shell));
     }
 }
 
