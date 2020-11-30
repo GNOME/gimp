@@ -4340,6 +4340,13 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
  */
 
 static void
+set_tag_failed (const gchar *tag)
+{
+  g_log ("", G_LOG_LEVEL_MESSAGE,
+         _("Failed to set metadata tag %s"), tag);
+}
+
+static void
 set_tag_string (GimpMetadata *metadata,
                 const gchar  *name,
                 const gchar  *value)
@@ -4353,7 +4360,7 @@ set_tag_string (GimpMetadata *metadata,
   if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
                                         name, value))
     {
-      g_printerr ("metadata-editor: failed to set tag [%s]\n", name);
+      set_tag_failed (name);
     }
 }
 
@@ -5152,8 +5159,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                             creatorContactInfoHeader.header,
                                             "type=\"Struct\""))
         {
-          g_printerr ("failed to set tag [%s]\n",
-                      creatorContactInfoTags[i].tag);
+          set_tag_failed (creatorContactInfoTags[i].tag);
         }
 
       for (i = 0; i < creatorContactInfoHeader.size; i++)
@@ -5169,8 +5175,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                     creatorContactInfoTags[i].tag,
                                                     gtk_entry_get_text (entry)))
                 {
-                  g_printerr ("failed to set tag [%s]\n",
-                              creatorContactInfoTags[i].tag);
+                  set_tag_failed (creatorContactInfoTags[i].tag);
                 }
             }
           else if (! strcmp ("multi", creatorContactInfoTags[i].mode))
@@ -5191,8 +5196,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                     creatorContactInfoTags[i].tag,
                                                     text))
                 {
-                  g_printerr ("failed to set tag [%s]\n",
-                              creatorContactInfoTags[i].tag);
+                  set_tag_failed (creatorContactInfoTags[i].tag);
                 }
 
               g_free (text);
@@ -5260,8 +5264,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                     default_metadata_tags[i].tag,
                                                     alt_str))
                 {
-                  g_printerr ("failed to set tag [%s]\n",
-                              default_metadata_tags[i].tag);
+                  set_tag_failed (default_metadata_tags[i].tag);
                 }
             }
           else
@@ -5281,8 +5284,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                         default_metadata_tags[i].tag,
                                                         text_value))
                     {
-                      g_printerr ("failed to set tag [%s]\n",
-                                  default_metadata_tags[i].tag);
+                      set_tag_failed (default_metadata_tags[i].tag);
                     }
                 }
               else if (default_metadata_tags[i].xmp_type == GIMP_XMP_BAG)
@@ -5296,8 +5298,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                         default_metadata_tags[i].tag,
                                                         text_value))
                     {
-                      g_printerr ("failed to set tag [%s]\n",
-                                  default_metadata_tags[i].tag);
+                      set_tag_failed (default_metadata_tags[i].tag);
                     }
                 }
               else if (default_metadata_tags[i].xmp_type == GIMP_XMP_SEQ)
@@ -5311,8 +5312,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                         default_metadata_tags[i].tag,
                                                         text_value))
                     {
-                      g_printerr ("failed to set tag [%s]\n",
-                                  default_metadata_tags[i].tag);
+                      set_tag_failed (default_metadata_tags[i].tag);
                     }
                 }
 
@@ -5325,8 +5325,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                         equivalent_metadata_tags[index].tag,
                                                         text_value))
                     {
-                      g_printerr ("failed to set tag [%s]\n",
-                                  equivalent_metadata_tags[index].tag);
+                      set_tag_failed (equivalent_metadata_tags[index].tag);
                     }
                 }
             }
@@ -5361,8 +5360,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                     default_metadata_tags[i].tag,
                                                     text))
                 {
-                  g_printerr ("failed to set tag [%s]\n",
-                              default_metadata_tags[i].tag);
+                  set_tag_failed (default_metadata_tags[i].tag);
                 }
             }
           else if (default_metadata_tags[i].xmp_type == GIMP_XMP_BAG)
@@ -5376,8 +5374,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                     default_metadata_tags[i].tag,
                                                     text))
                 {
-                  g_printerr ("failed to set tag [%s]\n",
-                              default_metadata_tags[i].tag);
+                  set_tag_failed (default_metadata_tags[i].tag);
                 }
             }
           else if (default_metadata_tags[i].xmp_type == GIMP_XMP_SEQ)
@@ -5391,8 +5388,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                     default_metadata_tags[i].tag,
                                                     text))
                 {
-                  g_printerr ("failed to set tag [%s]\n",
-                              default_metadata_tags[i].tag);
+                  set_tag_failed (default_metadata_tags[i].tag);
                 }
             }
 
@@ -5408,8 +5404,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                         equivalent_metadata_tags[index].tag,
                                                         (const gchar **) multi))
                   {
-                    g_printerr ("failed to set tag [%s]\n",
-                                equivalent_metadata_tags[index].tag);
+                    set_tag_failed (equivalent_metadata_tags[index].tag);
                   }
 
                 g_strfreev (multi);
@@ -5516,8 +5511,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                         default_metadata_tags[i].tag,
                                                         "male"))
                     {
-                      g_printerr ("failed to set tag [%s]\n",
-                                  default_metadata_tags[i].tag);
+                      set_tag_failed (default_metadata_tags[i].tag);
                     }
                   break;
 
@@ -5526,8 +5520,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                         default_metadata_tags[i].tag,
                                                         "female"))
                     {
-                      g_printerr ("failed to set tag [%s]\n",
-                                  default_metadata_tags[i].tag);
+                      set_tag_failed (default_metadata_tags[i].tag);
                     }
                   break;
 
@@ -5536,8 +5529,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                         default_metadata_tags[i].tag,
                                                         "other"))
                     {
-                      g_printerr ("failed to set tag [%s]\n",
-                                  default_metadata_tags[i].tag);
+                      set_tag_failed (default_metadata_tags[i].tag);
                     }
                   break;
                 }
