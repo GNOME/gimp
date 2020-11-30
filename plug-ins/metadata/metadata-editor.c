@@ -1546,6 +1546,28 @@ licensor_add_callback (GtkWidget *widget,
   list_row_add_callback (widget, data, "Xmp.plus.Licensor");
 }
 
+const gchar *gpstooltips[] =
+{
+    N_ ("Enter or edit GPS value here.\n"
+        "Valid values consist of 1, 2 or 3 numbers "
+        "(degrees, minutes, seconds), see the following examples:\n"
+        "10deg 15' 20\", or 10\u00b0 15' 20\", or 10:15:20.45, or "
+        "10 15 20, or 10 15.30, or 10.45\n"
+        "Delete all text to remove the current value."),
+    N_ ("Enter or edit GPS altitude value here.\n"
+        "A valid value consists of one number:\n"
+        "e.g. 100, or 12.24\n"
+        "Depending on the selected measurement type "
+        "the value should be entered in meter (m) "
+        "or feet (ft)\n"
+        "Delete all text to remove the current value.")
+};
+
+enum
+{
+  GPS_LONG_LAT_TOOLTIP,
+  GPS_ALTITUDE_TOOLTIP,
+};
 
 /* Set dialog display settings and data */
 
@@ -1890,6 +1912,55 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
       widget = builder_get_widget (builder, default_metadata_tags[i].tag);
 
+      if (! strcmp ("Exif.GPSInfo.GPSLongitude",
+                    default_metadata_tags[i].tag))
+        {
+          gdouble  gps_value;
+          gchar   *str;
+
+          if (gexiv2_metadata_get_gps_longitude (metadata, &gps_value))
+            {
+              str = metadata_format_gps_longitude_latitude (gps_value);
+              gtk_entry_set_text (GTK_ENTRY (widget), str);
+              g_free (str);
+            }
+          gtk_widget_set_tooltip_text (widget,
+                                       gettext (gpstooltips[GPS_LONG_LAT_TOOLTIP]));
+          continue;
+        }
+      else if (! strcmp ("Exif.GPSInfo.GPSLatitude",
+                         default_metadata_tags[i].tag))
+        {
+          gdouble  gps_value;
+          gchar   *str;
+
+          if (gexiv2_metadata_get_gps_latitude (metadata, &gps_value))
+            {
+              str = metadata_format_gps_longitude_latitude (gps_value);
+              gtk_entry_set_text (GTK_ENTRY (widget), str);
+              g_free (str);
+            }
+          gtk_widget_set_tooltip_text (widget,
+                                       gettext (gpstooltips[GPS_LONG_LAT_TOOLTIP]));
+          continue;
+        }
+      else if (! strcmp ("Exif.GPSInfo.GPSAltitude",
+                        default_metadata_tags[i].tag))
+        {
+          gdouble  gps_value;
+          gchar   *str;
+
+          if (gexiv2_metadata_get_gps_altitude (metadata, &gps_value))
+            {
+              str = metadata_format_gps_altitude (gps_value, TRUE, "");
+              gtk_entry_set_text (GTK_ENTRY (widget), str);
+              g_free (str);
+            }
+          gtk_widget_set_tooltip_text (widget,
+                                       gettext (gpstooltips[GPS_ALTITUDE_TOOLTIP]));
+          continue;
+        }
+
       value = gexiv2_metadata_get_tag_interpreted_string (metadata,
                                                           default_metadata_tags[i].tag);
 
@@ -1979,16 +2050,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
       if (value)
         {
-          if (! strcmp ("Exif.GPSInfo.GPSAltitude",
-                        default_metadata_tags[i].tag) &&
-              value)
-            {
-              gchar *new_value_clean[2];
-
-              new_value_clean[0] = strtok (value, " ");
-              strcpy (value, new_value_clean[0]);
-            }
-
           if (! strcmp ("single", default_metadata_tags[i].mode))
             {
               gtk_entry_set_text (GTK_ENTRY (widget), value);
@@ -5746,7 +5807,7 @@ gpsaltsys_combo_callback (GtkComboBoxText *combo,
   GtkWidget  *entry;
   GtkBuilder *builder;
   gint32      selection;
-  gchar        alt_str[256];
+  gchar       alt_str[256];
   double      alt_d;
 
   builder = data;
