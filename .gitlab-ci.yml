@@ -53,7 +53,10 @@ build-image-win64:
     - echo "RUN pip3 install zstandard" >> Dockerfile
     - echo "RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git" >> Dockerfile
     - echo "RUN cd crossroad && ./setup.py install --prefix=/usr/local && cd .." >> Dockerfile
+    # install babl and GEGL dependencies with crossroad
     - echo "RUN echo 'export XDG_DATA_HOME=/usr/local/lib && crossroad source msys2 && crossroad install lcms2 cairo json-glib' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
+    # install GIMP dependencies with crossroad
+    - echo "RUN echo 'export XDG_DATA_HOME=/usr/local/lib && crossroad source msys2 && crossroad install appstream-glib atk drmingw gexiv2 glib2 json-c ghostscript iso-codes libheif libmng libmypaint mypaint-brushes libwebp libwmf openexr ilmbase poppler poppler-data xpm-nox' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
 
