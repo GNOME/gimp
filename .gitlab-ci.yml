@@ -324,6 +324,7 @@ sources:
   artifacts:
     name: "GIMP-sources-${CI_COMMIT_SHORT_SHA}"
     when: always
+    expire_in: 2 days
     paths:
     - gimp-*.tar.*
     - SHA256SUMS
@@ -342,6 +343,7 @@ win64-nightly:
   artifacts:
     name: "GIMP-Win64-CI-${CI_COMMIT_SHORT_SHA}"
     when: always
+    expire_in: 2 days
     paths:
     - gimp-w64
   script:
@@ -418,6 +420,7 @@ win32-nightly:
   artifacts:
     name: "GIMP-Win32-${CI_COMMIT_SHORT_SHA}"
     when: always
+    expire_in: 2 days
     paths:
     - gimp-w32
   script:
