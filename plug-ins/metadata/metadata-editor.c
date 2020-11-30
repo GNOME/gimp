@@ -5768,7 +5768,7 @@ gpsaltsys_combo_callback (GtkComboBoxText *combo,
           alt_d = atof (gtk_entry_get_text (GTK_ENTRY (entry)));
           alt_d = (alt_d * (12 * 2.54)) / 100;
 
-          g_snprintf (alt_str, sizeof (alt_str), "%2f", (float)alt_d);
+          g_snprintf (alt_str, sizeof (alt_str), "%.2f", (float)alt_d);
 
           gtk_entry_set_text (GTK_ENTRY (entry), alt_str);
         }
@@ -5780,7 +5780,7 @@ gpsaltsys_combo_callback (GtkComboBoxText *combo,
           alt_d = atof (gtk_entry_get_text (GTK_ENTRY (entry)));
           alt_d = alt_d * 3.28;
 
-          g_snprintf (alt_str, sizeof (alt_str), "%2f", (float)alt_d);
+          g_snprintf (alt_str, sizeof (alt_str), "%.2f", (float)alt_d);
 
           gtk_entry_set_text (GTK_ENTRY (entry), alt_str);
         }
