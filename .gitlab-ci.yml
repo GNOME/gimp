@@ -188,7 +188,7 @@ deps-win64:
   image: $CI_REGISTRY_IMAGE:build-win64-latest
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
-    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
+    XDG_DATA_HOME:  "/usr/local/lib/"
   cache:
     paths:
     - .cache/crossroad/
@@ -201,14 +201,13 @@ deps-win64:
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git
     - cd babl
-    - echo 'XDG_DATA_HOME=/usr/local/lib crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run="-"
-    - ninja -C _build install
+    - echo 'crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | crossroad w64 gimp --run="-"
+    - echo 'ninja -C _build install' | crossroad w64 gimp --run="-"
     - cd ..
     - cd gegl
-    - echo 'crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run="-"
-    - ninja -C _build install
+    - echo 'crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | crossroad w64 gimp --run="-"
+    - echo 'ninja -C _build install' | crossroad w64 gimp --run="-"
     - cd ..
-    - ls -lR /usr/local/lib/
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
@@ -225,7 +224,7 @@ gimp-win64:
     - deps-win64
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
-    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
+    XDG_DATA_HOME:  "/usr/local/lib/"
   cache:
     paths:
     - .cache/crossroad/
@@ -233,11 +232,9 @@ gimp-win64:
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
-    - echo 'crossroad meson ..
-              -Dgtk-doc=false && ninja install &&
-            cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
-            ' |
-      crossroad w64 gimp --run="-"
+    - echo 'crossroad meson .. -Dgtk-doc=false' | crossroad w64 gimp --run="-"
+    - echo 'ninja install' | crossroad w64 gimp --run="-"
+    - echo 'cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/' | crossroad w64 gimp --run="-"
   needs: ["deps-win64"]
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
