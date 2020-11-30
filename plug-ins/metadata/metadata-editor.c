@@ -396,6 +396,8 @@ static const gchar *bag_default = "type=\"Bag\"";
 
 metadata_editor meta_args;
 
+#define ME_LOG_DOMAIN "metadata-editor"
+
 
 static void
 metadata_class_init (MetadataClass *klass)
@@ -4430,91 +4432,78 @@ set_gps_longitude_latitude (GimpMetadata *metadata,
                             const gchar  *tag,
                             const gchar  *value)
 {
-  const gchar  delimiters_dms[] = " deg'\"";
+  /* \u00b0 - degree symbol */
+  const gchar  delimiters_dms[] = " deg'\":\u00b0";
   gchar        lng_lat[256];
   gchar       *s    = g_strdup (value);
   gchar       *str1 = NULL;
   gchar       *str2 = NULL;
   gchar       *str3 = NULL;
+  gdouble      val  = 0.f;
+  gint         degrees, minutes;
+  gdouble      seconds;
+  gboolean     remove_val = FALSE;
 
-  if (s && strstr (s, "."))
-    {
-      gdouble degs;
-      gint    deg;
-      gint    min;
-      gint    sec;
+  g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "set_gps_longitude_latitude - Tag %s, Input value: %s", tag, value);
 
-      degs = atof (s);
-      if (degs < 0)
-        degs *= -1;
-      deg = (gint) degs;
-      min = (gint) ((degs - deg) * 60.f);
-      sec = (gint) ((degs - (float) deg - (float) (min / 60.f)) * 60.f * 60.f);
-      str1 = malloc (256);
-      str2 = malloc (256);
-      str3 = malloc (256);
-      g_sprintf (str1, "%d", deg);
-      g_sprintf (str2, "%d", min);
-      g_sprintf (str3, "%d", sec);
-    }
-  else if (s)
+  if (s && s[0] != '\0')
     {
       str1 = strtok (s, delimiters_dms);
       str2 = strtok (NULL, delimiters_dms);
       str3 = strtok (NULL, delimiters_dms);
+
+      g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "String split into: %s - %s - %s", str1, str2, str3);
     }
 
-  if (str1)
+  g_free (s);
+
+  if (str1 && str2 && str3)
     {
-      strcpy (lng_lat, str1);
-      strcat (lng_lat, "/1");
+      /* Assuming degrees, minutes, seconds */
+      degrees = g_ascii_strtoll (str1, NULL, 10);
+      minutes = g_ascii_strtoll (str2, NULL, 10);
+      seconds = g_ascii_strtod (str3, NULL);
+    }
+  else if (str1 && str2)
+    {
+      /* Assuming degrees, minutes */
+      gdouble min;
+
+      degrees = g_ascii_strtoll (str1, NULL, 10);
+      min = g_ascii_strtod (str2, NULL);
+      minutes = (gint) min;
+      seconds = (min - (gdouble) minutes) * 60.f;
+    }
+  else if (str1)
+    {
+      /* Assuming degrees only */
+      val = g_ascii_strtod (str1, NULL);
+      degrees = (gint) val;
+      minutes = (gint) ((val - (gdouble) degrees) * 60.f);
+      seconds = ((val - (gdouble) degrees - (gdouble) (minutes / 60.f)) * 60.f * 60.f);
+    }
+  else
+    remove_val = TRUE;
+
+  if (!remove_val)
+    {
+      g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Converted values: %d - %d - %f", degrees, minutes, seconds);
+      g_snprintf (lng_lat, sizeof (lng_lat),
+                  "%d/1 %d/1 %d/1000",
+                  abs (degrees), abs (minutes), abs ((gint) (seconds * 1000.f)));
+      g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Tag: %s, output string: %s", tag, lng_lat);
+
+      if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                            tag, lng_lat))
+        {
+          set_tag_failed (tag);
+        }
     }
   else
     {
-      strcpy (lng_lat, "0/1");
+      gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), tag);
+      g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_INFO, "Removed tag %s (no value).", tag);
     }
-
-  if (str2)
-    {
-      strcat (lng_lat, " ");
-      strcat (lng_lat, str2);
-      strcat (lng_lat, "/1");
-    }
-  else
-    {
-      strcat (lng_lat, " ");
-      strcat (lng_lat, "0/1");
-    }
-
-  if (str3)
-    {
-      strcat (lng_lat, " ");
-      strcat (lng_lat, str3);
-      strcat (lng_lat, "/1");
-    }
-  else
-    {
-      strcat (lng_lat, " ");
-      strcat (lng_lat, "0/1");
-    }
-
-  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
-                                        tag,
-                                        lng_lat))
-    {
-      g_printerr ("failed to set tag [%s]\n",
-                  tag);
-    }
-
-  if (s && strstr (s, "."))
-    {
-      free (str1);
-      free (str2);
-      free (str3);
-    }
-
-  free (s);
-
 }
 
 void
@@ -5316,10 +5305,11 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
               alt_d = atof (gtk_entry_get_text (entry));
               if (msr == 1)
-                alt_d = (alt_d * 12 * 2.54) / 100;
-              alt_d *= 10.f;
+                alt_d = (alt_d * 12 * 2.54);
+              else
+                alt_d *= 100.f;
 
-              g_snprintf (alt_str, sizeof (alt_str), "%d/10", (gint) alt_d);
+              g_snprintf (alt_str, sizeof (alt_str), "%d/100", (gint) alt_d);
 
               if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
                                                     default_metadata_tags[i].tag,
