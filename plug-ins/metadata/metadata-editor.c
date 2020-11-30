@@ -3298,14 +3298,16 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                           for (types = 0; types < 6; types++)
                             {
-                              if (! strcmp (tagdata[item][3],
+                              if (tagdata[item][3] &&
+                                  ! strcmp (tagdata[item][3],
                                             phone_types[types].data))
                                 {
                                   strcpy (type1,
                                           gettext (phone_types[types].display));
                                 }
 
-                              if (! strcmp (tagdata[item][5],
+                              if (tagdata[item][5] &&
+                                  ! strcmp (tagdata[item][5],
                                             phone_types[types].data))
                                 {
                                   strcpy (type2,
