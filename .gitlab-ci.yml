@@ -205,7 +205,7 @@ deps-win64:
     - echo 'ninja -C _build install' | crossroad w64 gimp --run="-"
     - cd ..
     - cd gegl
-    - echo 'crossroad meson _build/ -Denable-gir=false -Dlibdir=lib' | crossroad w64 gimp --run="-"
+    - echo 'crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib' | crossroad w64 gimp --run="-"
     - echo 'ninja -C _build install' | crossroad w64 gimp --run="-"
     - cd ..
   artifacts:
