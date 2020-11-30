@@ -202,6 +202,7 @@ sources:
     - gimp-debian/testing-autotools-distcheck
   artifacts:
     when: always
+    expire_in: 2 days
     paths:
     - gimp-*.tar.*
     - SHA256SUMS
