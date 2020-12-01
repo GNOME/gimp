@@ -5161,11 +5161,11 @@ metadata_editor_write_callback (GtkWidget  *dialog,
             {
               for (types = 0; types < 6; types++)
                 {
-                  g_print ("%d %s %s\n", types, tag_data,
+                  g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "%d %s %s", types, tag_data,
                            gettext (phone_types[types].display));
                   if (! strcmp (tag_data, gettext (phone_types[types].display)))
                     {
-                      g_print ("%d %s \n", types, phone_types[types].data);
+                      g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "%d %s", types, phone_types[types].data);
                       strcpy (type2, phone_types[types].data);
                       break;
                     }
