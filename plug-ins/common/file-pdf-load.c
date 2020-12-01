@@ -520,9 +520,7 @@ pdf_load (GimpProcedure        *procedure,
   g_free (pages.pages);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
-                                             error);
+    return gimp_procedure_new_return_values (procedure, status, error);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
