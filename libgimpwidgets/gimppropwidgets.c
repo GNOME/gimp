@@ -1940,9 +1940,10 @@ GtkWidget *
 gimp_prop_label_new (GObject     *config,
                      const gchar *property_name)
 {
-  GParamSpec  *param_spec;
-  GtkWidget   *label;
-  const gchar *blurb;
+  GParamSpec    *param_spec;
+  GtkWidget     *label;
+  const gchar   *blurb;
+  GBindingFlags  flags = G_BINDING_SYNC_CREATE;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
@@ -1959,9 +1960,15 @@ gimp_prop_label_new (GObject     *config,
   if (blurb)
     gimp_help_set_help_data (label, blurb, NULL);
 
+  /* As labels are read-only widgets, allow read-only properties (though
+   * we still keep possibility for bidirectional binding, which can be
+   * useful even with labels).
+   */
+  if (param_spec->flags & G_PARAM_WRITABLE)
+    flags |= G_BINDING_BIDIRECTIONAL;
+
   g_object_bind_property (config, property_name,
-                          label, "label",
-                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+                          label, "label", flags);
 
   return label;
 }
