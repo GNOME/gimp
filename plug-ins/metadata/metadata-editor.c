@@ -75,7 +75,8 @@ static GimpValueArray * metadata_run              (GimpProcedure        *procedu
                                                    gpointer              run_data);
 
 static gboolean metadata_editor_dialog           (GimpImage           *image,
-                                                  GimpMetadata        *metadata);
+                                                  GimpMetadata        *metadata,
+                                                  GError             **error);
 
 static void metadata_dialog_editor_set_metadata  (GExiv2Metadata      *metadata,
                                                   GtkBuilder          *builder);
@@ -473,6 +474,7 @@ metadata_run (GimpProcedure        *procedure,
 {
   GimpImage    *image;
   GimpMetadata *metadata;
+  GError       *error  = NULL;
 
   INIT_I18N ();
 
@@ -493,9 +495,10 @@ metadata_run (GimpProcedure        *procedure,
       gimp_image_set_metadata (image, metadata);
     }
 
-  metadata_editor_dialog (image, metadata);
-
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  if (metadata_editor_dialog (image, metadata, &error))
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  else
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, error);
 }
 
 
@@ -514,8 +517,9 @@ builder_get_widget (GtkBuilder  *builder,
 }
 
 static gboolean
-metadata_editor_dialog (GimpImage    *image,
-                        GimpMetadata *g_metadata)
+metadata_editor_dialog (GimpImage     *image,
+                        GimpMetadata  *g_metadata,
+                        GError       **error)
 {
   GtkBuilder     *builder;
   GtkWidget      *dialog;
@@ -526,7 +530,7 @@ metadata_editor_dialog (GimpImage    *image,
   gchar          *ui_file;
   gchar          *title;
   gchar          *name;
-  GError         *error = NULL;
+  GError         *local_error = NULL;
   gboolean        run;
 
   metadata = GEXIV2_METADATA (g_metadata);
@@ -542,13 +546,14 @@ metadata_editor_dialog (GimpImage    *image,
   ui_file = g_build_filename (gimp_data_directory (),
                               "ui", "plug-ins", "plug-in-metadata-editor.ui", NULL);
 
-  if (! gtk_builder_add_from_file (builder, ui_file, &error))
+  if (! gtk_builder_add_from_file (builder, ui_file, &local_error))
     {
-      g_printerr ("Error occurred while loading UI file!\n");
-      g_printerr ("Message: %s\n", error->message);
-      g_clear_error (&error);
-      if (ui_file)
-        g_free (ui_file);
+      if (! local_error)
+        local_error = g_error_new_literal (G_FILE_ERROR, 0,
+                                           _("Error loading metadata-editor dialog."));
+      g_propagate_error (error, local_error);
+
+      g_free (ui_file);
       g_object_unref (builder);
       return FALSE;
     }
@@ -798,12 +803,11 @@ on_date_button_clicked (GtkButton *widget,
 
   if (! gtk_builder_add_from_file (builder, ui_file, &error))
     {
-      g_printerr ("Error occurred while loading UI file!\n");
-      if (error != NULL)
-        {
-          g_printerr ("Message: %s\n", error->message);
-          g_clear_error (&error);
-        }
+      g_log ("", G_LOG_LEVEL_MESSAGE,
+             _("Error loading calendar. %s"),
+             error ? error->message : "");
+      g_clear_error (&error);
+
       if (ui_file)
         g_free (ui_file);
       g_object_unref (builder);
