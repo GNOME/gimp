@@ -214,11 +214,11 @@ deps-win64:
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git
     - cd babl
-    - echo "crossroad meson _build/ -Denable-gir=false -Dlibdir=lib -Dprefix=$PREFIX" | crossroad w64 gimp --run="-"
+    - echo "crossroad meson _build/ -Denable-gir=false -Dlibdir=lib --prefix=$PREFIX" | crossroad w64 gimp --run="-"
     - echo 'ninja -C _build install' | crossroad w64 gimp --run="-"
     - cd ..
     - cd gegl
-    - echo "crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib' -Dprefix=$PREFIX" | crossroad w64 gimp --run="-"
+    - echo "crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib' --prefix=$PREFIX" | crossroad w64 gimp --run="-"
     - echo 'ninja -C _build install' | crossroad w64 gimp --run="-"
     - cd ..
   artifacts:
