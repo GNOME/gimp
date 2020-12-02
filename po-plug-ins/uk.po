@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-26 00:40+0000\n"
-"PO-Revision-Date: 2020-11-26 09:53+0200\n"
+"POT-Creation-Date: 2020-12-01 19:57+0000\n"
+"PO-Revision-Date: 2020-12-02 09:34+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -89,10 +89,10 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/lighting/lighting-ui.c:1163
 #: ../plug-ins/lighting/lighting-ui.c:1307
 #: ../plug-ins/map-object/map-object-ui.c:1317
-#: ../plug-ins/metadata/metadata-editor.c:565
-#: ../plug-ins/metadata/metadata-editor.c:832
-#: ../plug-ins/metadata/metadata-editor.c:5745
-#: ../plug-ins/metadata/metadata-editor.c:5780
+#: ../plug-ins/metadata/metadata-editor.c:572
+#: ../plug-ins/metadata/metadata-editor.c:838
+#: ../plug-ins/metadata/metadata-editor.c:5725
+#: ../plug-ins/metadata/metadata-editor.c:5760
 #: ../plug-ins/pagecurl/pagecurl.c:473 ../plug-ins/screenshot/screenshot.c:529
 #: ../plug-ins/selection-to-path/selection-to-path.c:406
 msgid "_Cancel"
@@ -931,7 +931,7 @@ msgstr "Графік поточних параметрів"
 #: ../plug-ins/gfig/gfig-dialog.c:1397
 #: ../plug-ins/ifs-compose/ifs-compose.c:1184
 #: ../plug-ins/imagemap/imap_menu.c:156
-#: ../plug-ins/metadata/metadata-viewer.c:264
+#: ../plug-ins/metadata/metadata-viewer.c:283
 msgid "_Close"
 msgstr "З_акрити"
 
@@ -3062,7 +3062,7 @@ msgstr "Імпорт з PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1042 ../plug-ins/common/file-ps.c:3551
 #: ../plug-ins/file-tiff/file-tiff-load.c:2058
-#: ../plug-ins/metadata/metadata-editor.c:5746
+#: ../plug-ins/metadata/metadata-editor.c:5726
 msgid "_Import"
 msgstr "_Імпортувати"
 
@@ -6678,7 +6678,6 @@ msgid "File size: unknown"
 msgstr "Розмір файлу: невідомо"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:800
-#| msgid "Export Image as PNG"
 msgid "Export Image as JPEG"
 msgstr "Експортувати зображення як JPEG"
 
@@ -6721,17 +6720,14 @@ msgid "JPEG image"
 msgstr "Перегляд JPEG"
 
 #: ../plug-ins/file-jpeg/jpeg.c:222
-#| msgid "Su_bsampling:"
 msgid "Su_bsampling"
 msgstr "С_убдискретизація"
 
 #: ../plug-ins/file-jpeg/jpeg.c:240
-#| msgid "Interval (MCU rows):"
 msgid "Inter_val (MCU rows):"
 msgstr "І_нтервал (рядки MCU):"
 
 #: ../plug-ins/file-jpeg/jpeg.c:247
-#| msgid "_DCT method:"
 msgid "_DCT method"
 msgstr "Метод _DCT"
 
@@ -6742,7 +6738,6 @@ msgstr ""
 "зображень"
 
 #: ../plug-ins/file-jpeg/jpeg.c:290
-#| msgid "Use _restart markers"
 msgid "Use restart mar_kers"
 msgstr "Використовувати _маркери перезапуску"
 
@@ -8416,7 +8411,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Змінити гаму (яскравість) вибраного пензля"
 
 #: ../plug-ins/gimpressionist/brush.c:585
-#: ../plug-ins/metadata/metadata-editor.c:588
+#: ../plug-ins/metadata/metadata-editor.c:595
 msgid "Select:"
 msgstr "Вибір:"
 
@@ -11392,52 +11387,100 @@ msgstr "Показати _каркас"
 msgid "Update preview _live"
 msgstr "Оновити перегляд _живих"
 
-#: ../plug-ins/metadata/metadata-editor.c:434
+#: ../plug-ins/metadata/metadata-editor.c:437
 msgid "_Edit Metadata"
 msgstr "З_мінити метадані"
 
-#: ../plug-ins/metadata/metadata-editor.c:438
+#: ../plug-ins/metadata/metadata-editor.c:441
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Редагування метаданих (IPTC, EXIF, XMP)"
 
-#: ../plug-ins/metadata/metadata-editor.c:557
+#: ../plug-ins/metadata/metadata-editor.c:553
+msgid "Error loading metadata-editor dialog."
+msgstr "Помилка під час завантаження вікна редактора метаданих."
+
+#: ../plug-ins/metadata/metadata-editor.c:564
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Редактор метаданих: %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:566
+#: ../plug-ins/metadata/metadata-editor.c:573
 msgid "_Write Metadata"
 msgstr "За_писати метадані"
 
-#: ../plug-ins/metadata/metadata-editor.c:590
+#: ../plug-ins/metadata/metadata-editor.c:597
 msgid "Import metadata"
 msgstr "Імпорт метаданих"
 
-#: ../plug-ins/metadata/metadata-editor.c:592
+#: ../plug-ins/metadata/metadata-editor.c:599
 msgid "Export metadata"
 msgstr "Експортувати метадані"
 
-#: ../plug-ins/metadata/metadata-editor.c:829
+#: ../plug-ins/metadata/metadata-editor.c:807
+#, c-format
+#| msgid "Error loading PSD file: %s"
+msgid "Error loading calendar. %s"
+msgstr "Помилка під час завантаження календаря. %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:835
 msgid "Calendar Date:"
 msgstr "Календарна дата:"
 
-#: ../plug-ins/metadata/metadata-editor.c:833
+#: ../plug-ins/metadata/metadata-editor.c:839
 msgid "Set Date"
 msgstr "Задайте дату"
 
-#: ../plug-ins/metadata/metadata-editor.c:1687
+#: ../plug-ins/metadata/metadata-editor.c:1573
+msgid ""
+"Enter or edit GPS value here.\n"
+"Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
+"the following examples:\n"
+"10deg 15' 20\", or 10° 15' 20\", or 10:15:20.45, or 10 15 20, or 10 15.30, "
+"or 10.45\n"
+"Delete all text to remove the current value."
+msgstr ""
+"Тут можна ввести або редагувати значення GPS.\n"
+"Коректні значення складаються з 1, 2 або 3 чисел (градусів, мінут, секунд),"
+" див. такі приклади:\n"
+"10deg 15' 20\", або 10° 15' 20\", або 10:15:20.45, або 10 15 20, або 10"
+" 15.30, або 10.45\n"
+"Вилучіть увесь текст, щоб вилучити поточне значення."
+
+#: ../plug-ins/metadata/metadata-editor.c:1579
+msgid ""
+"Enter or edit GPS altitude value here.\n"
+"A valid value consists of one number:\n"
+"e.g. 100, or 12.24\n"
+"Depending on the selected measurement type the value should be entered in "
+"meter (m) or feet (ft)\n"
+"Delete all text to remove the current value."
+msgstr ""
+"Тут можна ввести або змінити значення висоти GPS.\n"
+"Коректне значення складається з одного числа, приклад:\n"
+"100 або 12.24\n"
+"Залежно від вибраного типу вимірювань, значення слід вводити у метрах (м) або"
+" футах (фут)\n"
+"Щоб вилучити поточне значення, витріть увесь текст."
+
+#: ../plug-ins/metadata/metadata-editor.c:1715
 msgid "Unrated"
 msgstr "Без рейтингу"
 
-#: ../plug-ins/metadata/metadata-editor.c:5742
+#: ../plug-ins/metadata/metadata-editor.c:4413
+#, c-format
+#| msgid "Failed to decompress data"
+msgid "Failed to set metadata tag %s"
+msgstr "Не вдалося встановити мітку метаданих %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:5722
 msgid "Import Metadata File"
 msgstr "Імпорт файлу метаданих"
 
-#: ../plug-ins/metadata/metadata-editor.c:5777
+#: ../plug-ins/metadata/metadata-editor.c:5757
 msgid "Export Metadata File"
 msgstr "Експорт файлу метаданих"
 
-#: ../plug-ins/metadata/metadata-editor.c:5781
+#: ../plug-ins/metadata/metadata-editor.c:5761
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -11609,11 +11652,13 @@ msgid "Other"
 msgstr "Інше"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-msgid "Above Sea Level"
+#| msgid "Above Sea Level"
+msgid "Above sea level"
 msgstr "Над рівнем моря"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-msgid "Below Sea Level"
+#| msgid "Below Sea Level"
+msgid "Below sea level"
 msgstr "Під рівнем моря"
 
 #: ../plug-ins/metadata/metadata-tags.c:275
@@ -11632,25 +11677,38 @@ msgstr "Схід"
 msgid "West"
 msgstr "Захід"
 
-#: ../plug-ins/metadata/metadata-viewer.c:157
+#: ../plug-ins/metadata/metadata-viewer.c:171
 msgid "_View Metadata"
 msgstr "По_казати метадані"
 
-#: ../plug-ins/metadata/metadata-viewer.c:161
+#: ../plug-ins/metadata/metadata-viewer.c:175
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Показати метадані (Exif, IPTC, XMP)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:257
+#: ../plug-ins/metadata/metadata-viewer.c:265
+msgid "Error loading metadata-viewer dialog."
+msgstr "Помилка під час завантаження вікна переглядача метаданих."
+
+#: ../plug-ins/metadata/metadata-viewer.c:276
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Оглядач метаданих: %s"
 
-#: ../plug-ins/metadata/metadata-viewer.c:349
+#: ../plug-ins/metadata/metadata-viewer.c:368
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu більше символів)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:494
+#: ../plug-ins/metadata/metadata-viewer.c:527
+#| msgid "Parameters"
+msgid " meter"
+msgstr " метр"
+
+#: ../plug-ins/metadata/metadata-viewer.c:528
+msgid " feet"
+msgstr " футів"
+
+#: ../plug-ins/metadata/metadata-viewer.c:624
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu більше байт)"
