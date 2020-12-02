@@ -121,7 +121,6 @@ const GimpPlugInInfo PLUG_IN_INFO =
 /*  functions  */
 
 MAIN ()
-static void metadata_dialog_add_tag               (GtkListStore    *store,
 
 static void
 query (void)
@@ -156,7 +155,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[1];
+  static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GError            *error  = NULL;
 
