@@ -1130,19 +1130,23 @@ load_image (const gchar  *filename,
       gint offset_x = png_get_x_offset_pixels (pp, info);
       gint offset_y = png_get_y_offset_pixels (pp, info);
 
-      if (! interactive)
+      if (offset_x != 0 ||
+          offset_y != 0)
         {
-          gimp_layer_set_offsets (layer, offset_x, offset_y);
-        }
-      else if (offsets_dialog (offset_x, offset_y))
-        {
-          gimp_layer_set_offsets (layer, offset_x, offset_y);
-
-          if (abs (offset_x) > width ||
-              abs (offset_y) > height)
+          if (! interactive)
             {
-              g_message (_("The PNG file specifies an offset that caused "
-                           "the layer to be positioned outside the image."));
+              gimp_layer_set_offsets (layer, offset_x, offset_y);
+            }
+          else if (offsets_dialog (offset_x, offset_y))
+            {
+              gimp_layer_set_offsets (layer, offset_x, offset_y);
+
+              if (abs (offset_x) > width ||
+                  abs (offset_y) > height)
+                {
+                  g_message (_("The PNG file specifies an offset that caused "
+                               "the layer to be positioned outside the image."));
+                }
             }
         }
     }
