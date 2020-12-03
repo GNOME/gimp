@@ -27,8 +27,7 @@ build-image:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:testing" > Dockerfile
-    - echo "RUN apt-get update" >> Dockerfile
-    - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
+    - echo "RUN apt-get update && apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "at-spi2-core build-essential desktop-file-utils ffmpeg ghostscript git glib-networking gobject-introspection graphviz graphviz-dev gtk-doc-tools hicolor-icon-theme intltool iso-codes libappstream-glib-dev libbz2-dev libdbus-glib-1-dev libexif-dev libgexiv2-dev libgirepository1.0-dev libgtk-3-bin libgtk-3-dev libgudev-1.0-dev libjson-glib-dev liblcms2-dev liblzma-dev libmng-dev libmypaint-dev libopenexr-dev libpoppler-glib-dev libraw-dev libraw20 librsvg2-dev libspiro-dev libsuitesparse-dev libtiff-dev libtiff5-dev libtool libumfpack5 libwebp-dev libwmf-dev libxmu-dev libxpm-dev luajit meson mypaint-brushes poppler-data python3 valac xauth xvfb" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
@@ -46,7 +45,7 @@ build-image-win64:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:testing" > Dockerfile
-#    - echo "RUN apt-get update" >> Dockerfile
+    # always run apt-get update and apt-get install in the same cachable layer
     - echo "RUN apt-get update && apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "build-essential cpio g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 git intltool libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm wine wine64 xsltproc" >> Dockerfile
     # install crossroad
@@ -73,7 +72,6 @@ build-image-win32:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:testing" > Dockerfile
-#    - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get update && apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "build-essential cpio g++-mingw-w64-i686 gcc-mingw-w64-i686 git intltool libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm wine xsltproc" >> Dockerfile
 
@@ -209,7 +207,6 @@ deps-win64:
   before_script:
   script:
     - export PATH="/usr/local/bin:$PATH"
-    #    - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
     - mkdir _deps && cd _deps
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git
@@ -264,20 +261,26 @@ deps-win32:
   image: $CI_REGISTRY_IMAGE:build-win32-latest
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
-    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
+    XDG_DATA_HOME:  "/usr/local/lib/"
+    PREFIX:         "$CI_PROJECT_DIR/.local/"
   cache:
     paths:
     - .cache/crossroad/
     - apt-cache
   before_script:
-    - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
-    - cd crossroad
-    - ./setup.py install --prefix=`pwd`/../.local
-    - cd ..
-    - pip3 install zstandard
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
-    - crossroad w32 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
+    - mkdir _deps && cd _deps
+    - git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git
+    - git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git
+    - cd babl
+    - echo "crossroad meson _build/ -Denable-gir=false -Dlibdir=lib --prefix=$PREFIX" | crossroad w32 gimp --run="-"
+    - echo 'ninja -C _build install' | crossroad w32 gimp --run="-"
+    - cd ..
+    - cd gegl
+    - echo "crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib' --prefix=$PREFIX" | crossroad w32 gimp --run="-"
+    - echo 'ninja -C _build install' | crossroad 32 gimp --run="-"
+    - cd ..
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
