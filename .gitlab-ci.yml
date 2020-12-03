@@ -46,8 +46,8 @@ build-image-win64:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:testing" > Dockerfile
-    - echo "RUN apt-get update" >> Dockerfile
-    - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
+#    - echo "RUN apt-get update" >> Dockerfile
+    - echo "RUN apt-get update && apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "build-essential cpio g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 git intltool libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm wine wine64 xsltproc" >> Dockerfile
     # install crossroad
     - echo "RUN pip3 install zstandard" >> Dockerfile
@@ -73,8 +73,8 @@ build-image-win32:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:testing" > Dockerfile
-    - echo "RUN apt-get update" >> Dockerfile
-    - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
+#    - echo "RUN apt-get update" >> Dockerfile
+    - echo "RUN apt-get update && apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "build-essential cpio g++-mingw-w64-i686 gcc-mingw-w64-i686 git intltool libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm wine xsltproc" >> Dockerfile
 
     # install crossroad
