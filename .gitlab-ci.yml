@@ -241,7 +241,7 @@ gimp-win64:
     XDG_DATA_HOME:  "/usr/local/lib/"
     PREFIX:         "$CI_PROJECT_DIR/.local"
     GIMP_PREFIX:    "$PREFIX/gimp-prefix"
-   cache:
+  cache:
     paths:
     - .cache/crossroad/
     - apt-cache
