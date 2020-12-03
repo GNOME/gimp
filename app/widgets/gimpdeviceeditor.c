@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpfilteredcontainer.h"
 #include "core/gimplist.h"
 #include "core/gimpmarshal.h"
 
@@ -204,12 +205,42 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_widget_show (private->stack);
 }
 
+static gboolean
+gimp_device_editor_filter (GimpObject *object,
+                           gpointer    user_data)
+{
+  GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
+
+  /* In the device editor, we filter out virtual devices (useless from a
+   * configuration standpoint) as well as the xtest API device.
+   * They only leave you wondering what you should do with them and
+   * should be ignored.
+   * We show device info with no actual associated device. These will
+   * simply be shown as grayed out and represent older physical devices
+   * which may simply be unplugged right now (but it's nice to show it
+   * in the list and can be manually deleted).
+   */
+
+  return ((! info->device || gdk_device_get_device_type (info->device) != GDK_DEVICE_TYPE_MASTER) &&
+          /* Technically only a useful check on X11 but I could also
+           * imagine for instance a devicerc used on X11 then Wayland
+           * and it would be useless to show there the now absent XTEST
+           * device. So we run this name comparison all the time (the
+           * name is so specific that no real device ever would have
+           * this name; and this is the only way available to recognize
+           * this XTEST device which is meant to look like any other
+           * device).
+           */
+          g_strcmp0 (gimp_object_get_name (info), "Virtual core XTEST pointer") != 0);
+}
+
 static void
 gimp_device_editor_constructed (GObject *object)
 {
   GimpDeviceEditor        *editor  = GIMP_DEVICE_EDITOR (object);
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
   GimpContainer           *devices;
+  GimpContainer           *filtered;
   GimpContext             *context;
   GList                   *list;
 
@@ -218,6 +249,7 @@ gimp_device_editor_constructed (GObject *object)
   gimp_assert (GIMP_IS_GIMP (private->gimp));
 
   devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
+  filtered = gimp_filtered_container_new (devices, gimp_device_editor_filter, NULL);
 
   /*  connect to "remove" before the container view does so we can get
    *  the stack child stored in its model
@@ -227,7 +259,7 @@ gimp_device_editor_constructed (GObject *object)
                     editor);
 
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (private->treeview),
-                                     devices);
+                                     filtered);
 
   context = gimp_context_new (private->gimp, "device-editor-list", NULL);
   gimp_container_view_set_context (GIMP_CONTAINER_VIEW (private->treeview),
@@ -249,6 +281,8 @@ gimp_device_editor_constructed (GObject *object)
     {
       gimp_device_editor_add_device (devices, list->data, editor);
     }
+
+  g_object_unref (devices);
 }
 
 static void
