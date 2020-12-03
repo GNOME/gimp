@@ -206,7 +206,7 @@ deps-win64:
     - apt-cache
   before_script:
     - export PATH="$PREFIX/bin:$PATH"
-    - export PKG_CONFIG_PATH="$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
+    - export CROSSROAD_PKG_CONFIG_PATH="$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
     - export LD_LIBRARY_PATH="$PREFIX/lib/:$PREFIX/lib:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="$PREFIX/share/:$XDG_DATA_DIRS"
   script:
@@ -273,7 +273,7 @@ deps-win32:
     - apt-cache
   before_script:
     - export PATH="$PREFIX/bin:$PATH"
-    - export PKG_CONFIG_PATH="$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
+    - export CROSSROAD_PKG_CONFIG_PATH="$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
     - export LD_LIBRARY_PATH="$PREFIX/lib/:$PREFIX/lib:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="$PREFIX/share/:$XDG_DATA_DIRS"
   script:
