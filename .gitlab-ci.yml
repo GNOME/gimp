@@ -197,9 +197,13 @@ deps-win64:
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-win64-latest
   variables:
-    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
-    XDG_DATA_HOME:  "/usr/local/lib/"
-    PREFIX:         "$CI_PROJECT_DIR/.local/"
+    XDG_CACHE_HOME:  "$CI_PROJECT_DIR/.cache/"
+    XDG_DATA_HOME:   "/usr/local/lib/"
+    PREFIX:          "$CI_PROJECT_DIR/.local/"
+    PATH:            "$PREFIX/bin:$PATH"
+    PKG_CONFIG_PATH: "$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
+    LD_LIBRARY_PATH: "$PREFIX/lib/:$PREFIX/lib:$LD_LIBRARY_PATH"
+    XDG_DATA_DIRS:   "$PREFIX/share/:$XDG_DATA_DIRS"
   cache:
     paths:
     - .cache/crossroad/
@@ -260,9 +264,13 @@ deps-win32:
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-win32-latest
   variables:
-    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
-    XDG_DATA_HOME:  "/usr/local/lib/"
-    PREFIX:         "$CI_PROJECT_DIR/.local/"
+    XDG_CACHE_HOME:  "$CI_PROJECT_DIR/.cache/"
+    XDG_DATA_HOME:   "/usr/local/lib/"
+    PREFIX:          "$CI_PROJECT_DIR/.local/"
+    PATH:            "$PREFIX/bin:$PATH"
+    PKG_CONFIG_PATH: "$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
+    LD_LIBRARY_PATH: "$PREFIX/lib/:$PREFIX/lib:$LD_LIBRARY_PATH"
+    XDG_DATA_DIRS:   "$PREFIX/share/:$XDG_DATA_DIRS"
   cache:
     paths:
     - .cache/crossroad/
