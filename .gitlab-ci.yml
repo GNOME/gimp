@@ -248,7 +248,6 @@ gimp-win64:
   before_script:
     - export PATH="$PREFIX/bin:$PATH"
     - export CROSSROAD_PKG_CONFIG_PATH="$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$CROSSROAD_PKG_CONFIG_PATH"
-    - export PKG_CONFIG_PATH="$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
     - export LD_LIBRARY_PATH="$PREFIX/lib/:$PREFIX/lib:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="$PREFIX/share/:$XDG_DATA_DIRS"
   script:
@@ -321,7 +320,6 @@ gimp-win32:
   before_script:
     - export PATH="$PREFIX/bin:$PATH"
     - export CROSSROAD_PKG_CONFIG_PATH="$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$CROSSROAD_PKG_CONFIG_PATH"
-    - export PKG_CONFIG_PATH="$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
     - export LD_LIBRARY_PATH="$PREFIX/lib/:$PREFIX/lib:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="$PREFIX/share/:$XDG_DATA_DIRS"
   script:
