@@ -56,6 +56,7 @@ struct _GimpDeviceInfo
   GdkInputMode    mode;
   gint            n_axes;
   GdkAxisUse     *axes;
+  gchar         **axes_names;
   gint            n_keys;
   GimpDeviceKey  *keys;
 

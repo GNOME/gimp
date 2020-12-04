@@ -209,6 +209,7 @@ gimp_device_info_init (GimpDeviceInfo *info)
 
   info->mode           = GDK_MODE_DISABLED;
   info->pressure_curve = GIMP_CURVE (gimp_curve_new ("pressure curve"));
+  info->axes_names     = NULL;
 
   g_signal_connect (info, "notify::name",
                     G_CALLBACK (gimp_device_info_guess_icon),
@@ -227,7 +228,9 @@ gimp_device_info_constructed (GObject *object)
 
   if (info->device)
     {
-      gint i;
+      GList *axes;
+      GList *iter;
+      gint   i;
 
       g_object_set_data (G_OBJECT (info->device), GIMP_DEVICE_INFO_DATA_KEY,
                          info);
@@ -237,10 +240,17 @@ gimp_device_info_constructed (GObject *object)
 
       info->mode = gdk_device_get_mode (info->device);
 
-      info->n_axes = gdk_device_get_n_axes (info->device);
-      info->axes = g_new0 (GdkAxisUse, info->n_axes);
-      for (i = 0; i < info->n_axes; i++)
-        info->axes[i] = gdk_device_get_axis_use (info->device, i);
+      axes = gdk_device_list_axes (info->device);
+      info->n_axes = g_list_length (axes);
+
+      info->axes       = g_new0 (GdkAxisUse, info->n_axes);
+      info->axes_names = g_new0 (gchar *, info->n_axes + 1);
+      for (i = 0, iter = axes; i < info->n_axes; i++, iter = iter->next)
+        {
+          info->axes[i] = gdk_device_get_axis_use (info->device, i);
+          info->axes_names[i] = gdk_atom_name (iter->data);
+        }
+      g_list_free (axes);
 
       info->n_keys = gdk_device_get_n_keys (info->device);
       info->keys = g_new0 (GimpDeviceKey, info->n_keys);
@@ -258,6 +268,7 @@ gimp_device_info_finalize (GObject *object)
 
   g_clear_pointer (&info->axes, g_free);
   g_clear_pointer (&info->keys, g_free);
+  g_strfreev (info->axes_names);
 
   g_clear_object (&info->pressure_curve);
 
