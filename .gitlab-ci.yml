@@ -324,6 +324,7 @@ gimp-win32:
     - export LD_LIBRARY_PATH="$PREFIX/lib/:$PREFIX/lib:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="$PREFIX/share/:$XDG_DATA_DIRS"
   script:
+    - echo 'pkg-config --debug --list-all > $PREFIX/pkgconfig.txt 2>&1'  | crossroad w32 gimp --run="-"
     - echo 'crossroad meson _build -Dwmf=disabled  -Dgtk-doc=false --prefix=$PREFIX' | crossroad w32 gimp --run="-"
     - echo 'ninja -C _build install' | crossroad w32 gimp --run="-"
 #            cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
