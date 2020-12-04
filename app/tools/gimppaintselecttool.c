@@ -426,8 +426,8 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
 
               gimp_paint_select_tool_update_image_mask (ps_tool,
                                                         result,
-                                                        0,
-                                                        0,
+                                                        ps_tool->drawable_off_x,
+                                                        ps_tool->drawable_off_y,
                                                         options->mode);
               g_object_unref (result);
             }
@@ -567,11 +567,15 @@ gimp_paint_select_tool_init_buffers (GimpPaintSelectTool  *ps_tool,
   g_return_if_fail (ps_tool->trimap == NULL);
   g_return_if_fail (ps_tool->drawable == NULL);
 
+  gimp_item_get_offset (GIMP_ITEM (drawable),
+                        &ps_tool->drawable_off_x,
+                        &ps_tool->drawable_off_y);
+
   ps_tool->drawable = gimp_drawable_get_buffer (drawable);
 
   channel = gimp_image_get_mask (image);
   ps_tool->image_mask = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
-  ps_tool->trimap = gegl_buffer_new (gegl_buffer_get_extent (ps_tool->image_mask),
+  ps_tool->trimap = gegl_buffer_new (gegl_buffer_get_extent (ps_tool->drawable),
                                      babl_format ("Y float"));
   gegl_buffer_set_color (ps_tool->trimap, NULL, grey);
 
@@ -615,7 +619,8 @@ gimp_paint_select_tool_paint_scribble (GimpPaintSelectTool  *ps_tool)
 
   gint  size   = options->stroke_width;
   gint  radius = size / 2;
-  GeglRectangle  square = {0, 0, size, size};
+  GeglRectangle  trimap_area;
+  GeglRectangle  mask_area;
 
   GeglBufferIterator  *iter;
   gfloat scribble_value;
@@ -643,15 +648,20 @@ gimp_paint_select_tool_paint_scribble (GimpPaintSelectTool  *ps_tool)
                                    babl_format ("Y float"),
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
 
-  square = *gegl_buffer_get_extent (ps_tool->scribble);
-  square.x = ps_tool->last_pos.x - radius;
-  square.y = ps_tool->last_pos.y - radius;
+  mask_area = *gegl_buffer_get_extent (ps_tool->scribble);
+  mask_area.x = ps_tool->last_pos.x - radius;
+  mask_area.y = ps_tool->last_pos.y - radius;
 
-  gegl_buffer_iterator_add (iter, ps_tool->trimap, &square, 0,
+  gegl_rectangle_copy (&trimap_area, &mask_area);
+
+  trimap_area.x = mask_area.x - ps_tool->drawable_off_x;
+  trimap_area.y = mask_area.y - ps_tool->drawable_off_y;
+
+  gegl_buffer_iterator_add (iter, ps_tool->trimap, &trimap_area, 0,
                             babl_format ("Y float"),
                             GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
-  gegl_buffer_iterator_add (iter, ps_tool->image_mask, &square, 0,
+  gegl_buffer_iterator_add (iter, ps_tool->image_mask, &mask_area, 0,
                             babl_format ("Y float"),
                             GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
@@ -684,23 +694,42 @@ gimp_paint_select_tool_paint_scribble (GimpPaintSelectTool  *ps_tool)
 static void
 gimp_paint_select_tool_create_graph (GimpPaintSelectTool  *ps_tool)
 {
-  GimpTool    *tool = GIMP_TOOL (ps_tool);
-  GimpImage   *image = gimp_display_get_image (tool->display);
-  GimpChannel *channel = gimp_image_get_mask (image);
   GeglNode  *t;         /* trimap */
   GeglNode  *m;         /* mask   */
   GeglNode  *d;         /* drawable */
+  GeglNode  *crop;
+  GeglNode  *translate = NULL;
+  
 
   ps_tool->graph = gegl_node_new ();
 
   m = gegl_node_new_child (ps_tool->graph,
                            "operation", "gegl:buffer-source",
-                           "buffer", gimp_drawable_get_buffer (GIMP_DRAWABLE(channel)),
+                           "buffer", ps_tool->image_mask,
                            NULL);
+
+  crop = gegl_node_new_child (ps_tool->graph,
+                              "operation", "gegl:crop",
+                              "x", (gdouble) ps_tool->drawable_off_x,
+                              "y", (gdouble) ps_tool->drawable_off_y,
+                              "width", (gdouble) gegl_buffer_get_width (ps_tool->drawable),
+                              "height", (gdouble) gegl_buffer_get_height (ps_tool->drawable),
+                              NULL);
+
+  if (ps_tool->drawable_off_x || ps_tool->drawable_off_y)
+    {
+      translate = gegl_node_new_child (ps_tool->graph,
+                                       "operation", "gegl:translate",
+                                       "x", -1.0 * ps_tool->drawable_off_x,
+                                       "y", -1.0 * ps_tool->drawable_off_y,
+                                       NULL);
+    }
+
   d = gegl_node_new_child (ps_tool->graph,
                            "operation", "gegl:buffer-source",
                            "buffer", ps_tool->drawable,
                            NULL);
+
 
   t = gegl_node_new_child (ps_tool->graph,
                            "operation", "gegl:buffer-source",
@@ -715,7 +744,14 @@ gimp_paint_select_tool_create_graph (GimpPaintSelectTool  *ps_tool)
                                             "operation", "gegl:buffer-sink",
                                              NULL);
 
-  gegl_node_link_many (m, ps_tool->ps_node, ps_tool->render_node, NULL);
+  
+  gegl_node_link (m, crop);
+
+  if (translate)
+    gegl_node_link_many (crop, translate, ps_tool->ps_node, ps_tool->render_node, NULL);
+  else
+    gegl_node_link_many (crop, ps_tool->ps_node, ps_tool->render_node, NULL);
+
   gegl_node_connect_to (d, "output", ps_tool->ps_node, "aux");
   gegl_node_connect_to (t, "output", ps_tool->ps_node, "aux2");
 }

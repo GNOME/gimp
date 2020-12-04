@@ -44,6 +44,9 @@ struct _GimpPaintSelectTool
   GeglBuffer            *drawable;
   GeglBuffer            *scribble;
 
+  gint                   drawable_off_x;
+  gint                   drawable_off_y;
+
   GeglNode              *graph;
   GeglNode              *ps_node;
   GeglNode              *render_node;
