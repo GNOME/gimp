@@ -251,10 +251,10 @@ gimp-win64:
     - export LD_LIBRARY_PATH="$PREFIX/lib/:$PREFIX/lib:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="$PREFIX/share/:$XDG_DATA_DIRS"
   script:
+    - echo 'pkg-config --debug --list-all > $PREFIX/pkgconfig.txt 2>&1'  | crossroad w64 gimp --run="-"
     - echo 'crossroad meson _build -Dgtk-doc=false --prefix=$PREFIX' | crossroad w64 gimp --run="-"
     - echo 'ninja -C _build install' | crossroad w64 gimp --run="-"
     #    - echo 'cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/' | crossroad w64 gimp --run="-"
-    - echo 'pkg-config --debug --list-all > $PREFIX/pkgconfig.txt 2>&1'  | crossroad w64 gimp --run="-"
   needs: ["deps-win64"]
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
