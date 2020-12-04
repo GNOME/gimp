@@ -41,7 +41,6 @@ struct _GimpPaintSelectTool
 
   GeglBuffer            *trimap;
   GeglBuffer            *image_mask;
-  GeglBuffer            *result_mask;
   GeglBuffer            *drawable;
   GeglBuffer            *scribble;
 

@@ -114,6 +114,9 @@ static void   gimp_paint_select_tool_draw                (GimpDrawTool     *draw
 
 static void   gimp_paint_select_tool_halt                 (GimpPaintSelectTool *ps_tool);
 static void   gimp_paint_select_tool_update_image_mask   (GimpPaintSelectTool *ps_tool,
+                                                          GeglBuffer          *buffer,
+                                                          gint                 offset_x,
+                                                          gint                 offset_y,
                                                           GimpPaintSelectMode  mode);
 static void   gimp_paint_select_tool_init_buffers        (GimpPaintSelectTool  *ps_tool,
                                                           GimpImage            *image,
@@ -194,7 +197,6 @@ gimp_paint_select_tool_init (GimpPaintSelectTool *ps_tool)
                                          GIMP_CURSOR_MODIFIER_PLUS);
   gimp_tool_control_set_action_size (tool->control,
                                      "tools/tools-paint-select-brush-size-set");
-  ps_tool->result_mask = NULL;
   ps_tool->image_mask  = NULL;
   ps_tool->trimap      = NULL;
   ps_tool->drawable    = NULL;
@@ -226,30 +228,16 @@ gimp_paint_select_tool_button_press (GimpTool            *tool,
 
   if (gimp_paint_select_tool_paint_scribble (ps_tool))
     {
-      if (tool->display)
-        {
-          GimpPaintSelectOptions *options = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (ps_tool);
-          GimpImage *image = gimp_display_get_image (tool->display);
-          GimpChannelOps op;
-          gint x_offset = ps_tool->last_pos.x - options->stroke_width / 2;
-          gint y_offset = ps_tool->last_pos.y - options->stroke_width / 2;
+      GimpPaintSelectOptions *options = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (ps_tool);
 
-          if (options->mode == GIMP_PAINT_SELECT_MODE_ADD)
-            op = GIMP_CHANNEL_OP_ADD;
-          else
-            op = GIMP_CHANNEL_OP_SUBTRACT;
+      gint offset_x = ps_tool->last_pos.x - options->stroke_width / 2;
+      gint offset_y = ps_tool->last_pos.y - options->stroke_width / 2;
 
-          gimp_channel_select_buffer (gimp_image_get_mask (image),
-                                      C_("command", "Paint Select"),
-                                      ps_tool->scribble,
-                                      x_offset,
-                                      y_offset,
-                                      op,
-                                      FALSE,
-                                      0,
-                                      0);
-          gimp_image_flush (image);
-        }
+      gimp_paint_select_tool_update_image_mask (ps_tool,
+                                                ps_tool->scribble,
+                                                offset_x,
+                                                offset_y,
+                                                options->mode);
     }
 
   if (! gimp_draw_tool_is_active (draw_tool))
@@ -416,6 +404,7 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
           if (gimp_paint_select_tool_paint_scribble (ps_tool))
             {
               GimpPaintSelectOptions *options = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (ps_tool);
+              GeglBuffer  *result;
               GTimer *timer = g_timer_new ();
 
               if (options->mode == GIMP_PAINT_SELECT_MODE_ADD)
@@ -427,13 +416,20 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
                   gegl_node_set (ps_tool->ps_node, "mode", 1, NULL);
                 }
 
+              gegl_node_set (ps_tool->render_node, "buffer", &result, NULL);
+
               g_timer_start (timer);
               gegl_node_process (ps_tool->render_node);
               g_timer_stop (timer);
               g_printerr ("processing graph takes %.3f s\n", g_timer_elapsed (timer, NULL));
               g_timer_destroy (timer);
 
-              gimp_paint_select_tool_update_image_mask (ps_tool, options->mode);
+              gimp_paint_select_tool_update_image_mask (ps_tool,
+                                                        result,
+                                                        0,
+                                                        0,
+                                                        options->mode);
+              g_object_unref (result);
             }
 
           gimp_tool_control_activate (tool->control);
@@ -511,7 +507,6 @@ gimp_paint_select_tool_halt (GimpPaintSelectTool *ps_tool)
   GimpTool     *tool = GIMP_TOOL (ps_tool);
 
   g_clear_object (&ps_tool->trimap);
-  g_clear_object (&ps_tool->result_mask);
   g_clear_object (&ps_tool->graph);
   g_clear_object (&ps_tool->scribble);
 
@@ -531,6 +526,9 @@ gimp_paint_select_tool_halt (GimpPaintSelectTool *ps_tool)
 
 static void
 gimp_paint_select_tool_update_image_mask (GimpPaintSelectTool *ps_tool,
+                                          GeglBuffer          *buffer,
+                                          gint                 offset_x,
+                                          gint                 offset_y,
                                           GimpPaintSelectMode  mode)
 {
   GimpTool  *tool = GIMP_TOOL (ps_tool);
@@ -547,17 +545,15 @@ gimp_paint_select_tool_update_image_mask (GimpPaintSelectTool *ps_tool,
 
       gimp_channel_select_buffer (gimp_image_get_mask (image),
                                   C_("command", "Paint Select"),
-                                  ps_tool->result_mask,
-                                  0, /* x offset */
-                                  0, /* y offset */
+                                  buffer,
+                                  offset_x,
+                                  offset_y,
                                   op,
                                   FALSE,
                                   0,
                                   0);
       gimp_image_flush (image);
     }
-
-  g_clear_object (&ps_tool->result_mask);
 }
 
 static void
@@ -568,7 +564,6 @@ gimp_paint_select_tool_init_buffers (GimpPaintSelectTool  *ps_tool,
   GimpChannel  *channel;
   GeglColor    *grey = gegl_color_new ("#888");
 
-  g_return_if_fail (ps_tool->result_mask == NULL);
   g_return_if_fail (ps_tool->trimap == NULL);
   g_return_if_fail (ps_tool->drawable == NULL);
 
@@ -718,7 +713,6 @@ gimp_paint_select_tool_create_graph (GimpPaintSelectTool  *ps_tool)
 
   ps_tool->render_node = gegl_node_new_child (ps_tool->graph,
                                             "operation", "gegl:buffer-sink",
-                                             "buffer",  &ps_tool->result_mask,
                                              NULL);
 
   gegl_node_link_many (m, ps_tool->ps_node, ps_tool->render_node, NULL);
