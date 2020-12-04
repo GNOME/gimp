@@ -43,6 +43,7 @@ enum
   PROP_0,
   PROP_MODE,
   PROP_STROKE_WIDTH,
+  PROP_SHOW_SCRIBBLES,
 };
 
 
@@ -83,6 +84,13 @@ gimp_paint_select_options_class_init (GimpPaintSelectOptionsClass *klass)
                          _("Size of the brush used for refinements"),
                          1, 6000, 50,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN  (object_class, PROP_SHOW_SCRIBBLES,
+                         "show-scribbles",
+                         _("Show scribbles"),
+                         _("Show scribbles"),
+                         FALSE,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -108,6 +116,10 @@ gimp_paint_select_options_set_property (GObject      *object,
       options->stroke_width = g_value_get_int (value);
       break;
 
+    case PROP_SHOW_SCRIBBLES:
+      options->show_scribbles = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -130,6 +142,10 @@ gimp_paint_select_options_get_property (GObject    *object,
 
     case PROP_STROKE_WIDTH:
       g_value_set_int (value, options->stroke_width);
+      break;
+
+    case PROP_SHOW_SCRIBBLES:
+      g_value_set_boolean (value, options->show_scribbles);
       break;
 
     default:
@@ -183,6 +199,11 @@ gimp_paint_select_options_gui (GimpToolOptions *tool_options)
 
   gimp_help_set_help_data (button,
                            _("Reset stroke width native size"), NULL);
+
+  /* show scribbles */
+  button = gimp_prop_check_button_new (config, "show-scribbles", "Show scribbles");
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   return vbox;
 }

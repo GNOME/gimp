@@ -124,6 +124,7 @@ static void   gimp_paint_select_tool_init_buffers        (GimpPaintSelectTool  *
 static void   gimp_paint_select_tool_init_scribble       (GimpPaintSelectTool  *ps_tool);
 static void   gimp_paint_select_tool_create_graph        (GimpPaintSelectTool  *ps_tool);
 static gboolean gimp_paint_select_tool_paint_scribble    (GimpPaintSelectTool  *ps_tool);
+static void gimp_paint_select_tool_toggle_scribbles_visibility (GimpPaintSelectTool  *ps_tool);
 
 static gfloat euclidean_distance                         (gint                  x1,
                                                           gint                  y1,
@@ -499,6 +500,10 @@ gimp_paint_select_tool_options_notify (GimpTool         *tool,
       g_object_unref (ps_tool->scribble);
       ps_tool->scribble = NULL;
     }
+  else if (! strcmp (pspec->name, "show-scribbles"))
+    {
+      gimp_paint_select_tool_toggle_scribbles_visibility (ps_tool);
+    }
 }
 
 static void
@@ -517,7 +522,11 @@ gimp_paint_select_tool_halt (GimpPaintSelectTool *ps_tool)
   ps_tool->image_mask = NULL;
 
   if (tool->display)
-    gimp_image_flush (gimp_display_get_image (tool->display));
+    {
+      gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
+                                   NULL, 0, 0, NULL, FALSE);
+      gimp_image_flush (gimp_display_get_image (tool->display));
+    }
 
   tool->display   = NULL;
   g_list_free (tool->drawables);
@@ -688,6 +697,8 @@ gimp_paint_select_tool_paint_scribble (GimpPaintSelectTool  *ps_tool)
         }
     }
 
+  gimp_paint_select_tool_toggle_scribbles_visibility (ps_tool);
+
   return overlap;
 }
 
@@ -754,6 +765,29 @@ gimp_paint_select_tool_create_graph (GimpPaintSelectTool  *ps_tool)
 
   gegl_node_connect_to (d, "output", ps_tool->ps_node, "aux");
   gegl_node_connect_to (t, "output", ps_tool->ps_node, "aux2");
+}
+
+static void
+gimp_paint_select_tool_toggle_scribbles_visibility (GimpPaintSelectTool  *ps_tool)
+{
+  GimpTool  *tool = GIMP_TOOL (ps_tool);
+  GimpPaintSelectOptions  *options = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (tool);
+
+  if (options->show_scribbles)
+    {
+      const GimpRGB black = {0.0, 0.0, 0.0, 1.0};
+      gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
+                                   ps_tool->trimap,
+                                   ps_tool->drawable_off_x,
+                                   ps_tool->drawable_off_y,
+                                   &black,
+                                   TRUE);
+    }
+  else
+    {
+      gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
+                                   NULL, 0, 0, NULL, FALSE);
+    }
 }
 
 static gfloat

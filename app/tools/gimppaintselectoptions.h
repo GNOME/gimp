@@ -40,6 +40,7 @@ struct _GimpPaintSelectOptions
 
   GimpPaintSelectMode    mode;
   gint                   stroke_width;
+  gboolean               show_scribbles;
 };
 
 struct _GimpPaintSelectOptionsClass
