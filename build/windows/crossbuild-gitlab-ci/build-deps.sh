@@ -11,7 +11,7 @@ cd ..
 
 # GEGL
 
-crossroad install cairo json-glib && \
+crossroad install cairo graphviz json-glib && \
 git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git && cd gegl && \
 crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib && \
 ninja -C _build install || exit 1
