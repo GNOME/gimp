@@ -58,9 +58,9 @@ build-image-win64:
     - echo "RUN echo 'export XDG_DATA_HOME=/usr/local/lib && crossroad source msys2 && crossroad install appstream-glib atk drmingw gexiv2 glib2 json-c ghostscript iso-codes libheif libmng libmypaint mypaint-brushes libwebp libwmf openexr ilmbase poppler poppler-data xpm-nox' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
 
     # create gdk-pixbuf loaders.cache
-    - echo "RUN echo 'wine ${CROSSROAD_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll > ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
-    - echo "RUN echo 'sed -i \"s&$CROSSROAD_PREFIX/&&\" ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
-    - echo "RUN echo 'sed -i \"/.dll\"/s*/*\\\\*g\" ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
+#    - echo "RUN echo 'wine ${CROSSROAD_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll > ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
+#    - echo "RUN echo 'sed -i \"s&$CROSSROAD_PREFIX/&&\" ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
+#    - echo "RUN echo 'sed -i \"/.dll\"/s*/*\\\\*g\" ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
 
@@ -257,6 +257,7 @@ gimp-win64:
     - export XDG_DATA_DIRS="$PREFIX/share/:$XDG_DATA_DIRS"
   script:
     - mkdir _build
+    - ls -lR /usr/local > _build/usrlocal.txt
     - echo 'pkg-config --debug --list-all > _build/pkgconfig.txt 2>&1'  | crossroad w64 gimp --run="-"
     - echo 'crossroad meson _build -Dgtk-doc=false --prefix=$PREFIX' | crossroad w64 gimp --run="-"
     - echo 'ninja -C _build install' | crossroad w64 gimp --run="-"
