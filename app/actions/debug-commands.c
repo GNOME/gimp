@@ -325,8 +325,7 @@ debug_show_image_graph (GimpImage *source_image)
   GimpImage  *new_image;
   GeglNode   *introspect;
   GeglNode   *sink;
-  GeglBuffer *buffer;
-  gchar      *new_name;
+  GeglBuffer *buffer = NULL;
 
   image_graph = gimp_projectable_get_graph (GIMP_PROJECTABLE (source_image));
 
@@ -344,16 +343,25 @@ debug_show_image_graph (GimpImage *source_image)
   gegl_node_link_many (introspect, sink, NULL);
   gegl_node_process (sink);
 
-  new_name = g_strdup_printf ("%s GEGL graph",
-                              gimp_image_get_display_name (source_image));
+  if (buffer)
+    {
+      gchar *new_name;
 
-  new_image = gimp_create_image_from_buffer (source_image->gimp,
-                                             buffer, new_name);
-  gimp_image_set_file (new_image, g_file_new_for_uri (new_name));
+      /* This should not happen but "gegl:introspect" is a bit fickle as
+       * it uses an external binary `dot`. Prevent useless crashes.
+       * I don't output a warning when buffer is NULL because anyway
+       * GEGL will output one itself.
+       */
+      new_name = g_strdup_printf ("%s GEGL graph",
+                                  gimp_image_get_display_name (source_image));
 
-  g_free (new_name);
+      new_image = gimp_create_image_from_buffer (source_image->gimp,
+                                                 buffer, new_name);
+      gimp_image_set_file (new_image, g_file_new_for_uri (new_name));
 
-  g_object_unref (buffer);
+      g_free (new_name);
+      g_object_unref (buffer);
+    }
 
   g_object_unref (sink);
   g_object_unref (introspect);
