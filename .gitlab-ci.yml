@@ -37,6 +37,7 @@ build-image-win64:
   stage: prepare
   variables:
     GIT_STRATEGY: none
+    XDG_DATA_HOME: "/usr/local/lib"
   cache: {}
   image:
     name: gcr.io/kaniko-project/executor:debug
@@ -67,7 +68,7 @@ build-image-win64:
     - echo "RUN echo 'sed -i \"s&${XDG_DATA_HOME}/crossroad/roads/w64/gimp/&&\" \\ " >> Dockerfile
     - echo "${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | \\" >> Dockerfile
     - echo "XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
-    - echo "RUN echo 'sed -i \"/.dll\"/s*/*\\\\*g\" ${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | \\" >> Dockerfile
+    - echo "RUN echo 'sed -i \"/.dll\"/s*/*\\\\*g\" ${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | \\" >> Dockerfile$CROSSROAD_PREFIX/
     - echo "XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
