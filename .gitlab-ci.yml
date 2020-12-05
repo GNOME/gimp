@@ -284,7 +284,7 @@ gimp-win32:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
-              -Dwmf=disabled  -Dgtk-doc=false && ninja install &&
+              -Dwmf=disabled  -Dmng=disabled -Dgtk-doc=false && ninja install &&
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w32 gimp --run="-"
