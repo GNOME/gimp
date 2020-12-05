@@ -21,9 +21,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-17 16:01+0000\n"
-"PO-Revision-Date: 2020-11-18 16:38+0100\n"
-"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
+"POT-Creation-Date: 2020-11-20 02:55+0000\n"
+"PO-Revision-Date: 2020-11-21 18:41+0100\n"
+"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -411,7 +411,7 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
-"Parametrische Pinsel nutzen nun 32-Bit-Fließkommazahlen, um Posterisierung "
+"Parametrische Pinsel nutzen nun 32-Bit-Gleitkommazahlen, um Posterisierung "
 "zu vermeiden"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
@@ -6680,32 +6680,32 @@ msgstr "Das Bild in 32-Bit Ganzzahl umwandeln (linearer Farbraum)"
 #: ../app/actions/image-actions.c:232
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
-msgstr "16-Bit Fließkommazahl"
+msgstr "16-Bit Gleitkommazahl"
 
 #: ../app/actions/image-actions.c:234
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
-msgstr "Das Bild in 16-Bit Fließkommazahl umwandeln (linearer Farbraum)"
+msgstr "Das Bild in 16-Bit Gleitkommazahl umwandeln (linearer Farbraum)"
 
 #: ../app/actions/image-actions.c:238
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
-msgstr "32-Bit Fließkommazahl"
+msgstr "32-Bit Gleitkommazahl"
 
 #: ../app/actions/image-actions.c:240
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
-msgstr "Das Bild in 32-Bit Fließkommazahl umwandeln (linearer Farbraum)"
+msgstr "Das Bild in 32-Bit Gleitkommazahl umwandeln (linearer Farbraum)"
 
 #: ../app/actions/image-actions.c:244
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
-msgstr "64-Bit Fließkommazahl"
+msgstr "64-Bit Gleitkommazahl"
 
 #: ../app/actions/image-actions.c:246
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
-msgstr "Das Bild in 64-Bit Fließkommazahl umwandeln (linearer Farbraum)"
+msgstr "Das Bild in 64-Bit Gleitkommazahl umwandeln (linearer Farbraum)"
 
 #: ../app/actions/image-actions.c:253
 msgctxt "image-convert-action"
@@ -11332,7 +11332,7 @@ msgid ""
 "Promote imported images to floating point precision. Does not apply to "
 "indexed images."
 msgstr ""
-"Importierte Bilder in Fließkomma-Präzision umwandeln. Dies wirkt sich auf "
+"Importierte Bilder in Gleitkomma-Präzision umwandeln. Dies wirkt sich auf "
 "indizierte Bilder nicht aus."
 
 #: ../app/config/gimprc-blurbs.h:214
@@ -11340,7 +11340,7 @@ msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
 msgstr ""
-"Beim Umwandeln importierter Bilder in Fließkomma-Präzision minimales "
+"Beim Umwandeln importierter Bilder in Gleitkomma-Präzision minimales "
 "Rauschen hinzufügen, um die Farbwerte etwas mehr zu verteilen."
 
 #: ../app/config/gimprc-blurbs.h:218
@@ -14371,32 +14371,32 @@ msgstr "Bild in 32-Bit-Ganzzahl umwandeln (Gamma-Farbraum)"
 #: ../app/core/gimpimage-convert-precision.c:95
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear floating point"
-msgstr "Bild in 16-Bit-Fließkommazahl umwandeln (linearer Farbraum)"
+msgstr "Bild in 16-Bit-Gleitkommazahl umwandeln (linearer Farbraum)"
 
 #: ../app/core/gimpimage-convert-precision.c:98
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma floating point"
-msgstr "Bild in 16-Bit-Fließkommazahl umwandeln (Gamma-Farbraum)"
+msgstr "Bild in 16-Bit-Gleitkommazahl umwandeln (Gamma-Farbraum)"
 
 #: ../app/core/gimpimage-convert-precision.c:101
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear floating point"
-msgstr "Bild in 32-Bit-Fließkommazahl umwandeln (linearer Farbraum)"
+msgstr "Bild in 32-Bit-Gleitkommazahl umwandeln (linearer Farbraum)"
 
 #: ../app/core/gimpimage-convert-precision.c:104
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma floating point"
-msgstr "Bild in 32-Bit-Fließkommazahl umwandeln (Gamma-Farbraum)"
+msgstr "Bild in 32-Bit-Gleitkommazahl umwandeln (Gamma-Farbraum)"
 
 #: ../app/core/gimpimage-convert-precision.c:107
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit linear floating point"
-msgstr "Bild in 64-Bit-Fließkommazahl umwandeln (linearer Farbraum)"
+msgstr "Bild in 64-Bit-Gleitkommazahl umwandeln (linearer Farbraum)"
 
 #: ../app/core/gimpimage-convert-precision.c:110
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit gamma floating point"
-msgstr "Bild in 64-Bit-Fließkommazahl umwandeln (Gamma-Farbraum)"
+msgstr "Bild in 64-Bit-Gleitkommazahl umwandeln (Gamma-Farbraum)"
 
 #. dithering
 #: ../app/core/gimpimage-convert-precision.c:268
@@ -16793,12 +16793,12 @@ msgstr "Importregeln"
 
 #: ../app/dialogs/preferences-dialog.c:1512
 msgid "Promote imported images to _floating point precision"
-msgstr "Importierte Bilder in Fließkomma-Präzision umwandeln"
+msgstr "Importierte Bilder in Gleitkomma-Präzision umwandeln"
 
 #: ../app/dialogs/preferences-dialog.c:1521
 msgid "_Dither images when promoting to floating point"
 msgstr ""
-"Beim Umwandeln importierter Bilder in Fließkomma-Präzision _Dithering "
+"Beim Umwandeln importierter Bilder in Gleitkomma-Präzision _Dithering "
 "anwenden"
 
 #: ../app/dialogs/preferences-dialog.c:1526
