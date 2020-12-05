@@ -65,7 +65,7 @@ build-image-win64:
     - echo "${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' |     \\" >> Dockerfile
     - echo "XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
     - echo "RUN echo 'sed -i \"s&${XDG_DATA_HOME}/crossroad/roads/w64/gimp/&&\" \\ " >> Dockerfile
-    - echo "${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' |" >> Dockerfile
+    - echo "${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | \\" >> Dockerfile
     - echo "XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
     - echo "RUN echo 'sed -i \"/.dll\"/s*/*\\\\*g\" ${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | \\" >> Dockerfile
     - echo "XDG_DATA_HOME=/usr/local/lib crossroad w64 gimp --run='-'" >> Dockerfile
