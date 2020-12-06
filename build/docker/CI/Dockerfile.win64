@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # install crossroad
 RUN pip3 install zstandard
-RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
+RUN git clone --depth=1 git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
 RUN cd crossroad && ./setup.py install --prefix=/usr/local && cd ..
 
 # install babl and GEGL dependencies with crossroad
