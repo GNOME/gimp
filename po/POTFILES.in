@@ -484,6 +484,8 @@ app/tools/gimpoffsettool.c
 app/tools/gimpoperationtool.c
 app/tools/gimppaintbrushtool.c
 app/tools/gimppaintoptions-gui.c
+app/tools/gimppaintselectoptions.c
+app/tools/gimppaintselecttool.c
 app/tools/gimppainttool.c
 app/tools/gimppenciltool.c
 app/tools/gimpperspectiveclonetool.c
