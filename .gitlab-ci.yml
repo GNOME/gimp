@@ -36,7 +36,6 @@ build-image:
 build-image-win64:
   stage: prepare
   variables:
-    GIT_STRATEGY: none
     XDG_DATA_HOME: "/usr/local/lib"
   cache: {}
   image:
