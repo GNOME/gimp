@@ -1641,7 +1641,7 @@ CML_explorer_dialog (void)
       gtk_size_group_add_widget (group, label);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-                                gtk_label_new_with_mnemonic (_("_Misc Ops.")));
+                                gtk_label_new_with_mnemonic (_("_Misc")));
     }
   }
 
