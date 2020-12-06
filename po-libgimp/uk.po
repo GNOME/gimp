@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-08-08 08:31+0000\n"
-"PO-Revision-Date: 2020-08-08 15:54+0300\n"
+"POT-Creation-Date: 2020-12-06 12:06+0000\n"
+"PO-Revision-Date: 2020-12-06 14:44+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.07.70\n"
+"X-Generator: Lokalize 20.11.70\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:176
 msgid "Brush Selection"
@@ -167,11 +167,11 @@ msgid "Confirm Save"
 msgstr "Підтвердження збереження"
 
 #: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
-#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:232
+#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:181
 #: ../libgimpwidgets/gimpcolorbutton.c:553
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
-#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpfileentry.c:466 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_Cancel"
@@ -190,7 +190,7 @@ msgid "_Ignore"
 msgstr "_Ігнорувати"
 
 #: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
-#: ../libgimp/gimpproceduredialog.c:226
+#: ../libgimp/gimpproceduredialog.c:173
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -241,46 +241,13 @@ msgstr "Вибір шрифту"
 msgid "Gradient Selection"
 msgstr "Вибір градієнта"
 
-#: ../libgimp/gimpimagemetadata.c:253
+#: ../libgimp/gimpimagemetadata.c:239
 msgid "Background"
 msgstr "Тло"
 
-#: ../libgimp/gimpimagemetadata.c:442
-#, c-format
-msgid "Rotate %s?"
-msgstr "Повернути %s?"
-
-#: ../libgimp/gimpimagemetadata.c:448
-msgid "_Keep Original"
-msgstr "Зберегти _оригінал"
-
-#: ../libgimp/gimpimagemetadata.c:449
-msgid "_Rotate"
-msgstr "Пов_ернути"
-
-#: ../libgimp/gimpimagemetadata.c:490
-msgid "Original"
-msgstr "Оригінал"
-
-#: ../libgimp/gimpimagemetadata.c:506
-msgid "Rotated"
-msgstr "Повернуто"
-
-#: ../libgimp/gimpimagemetadata.c:524
-msgid "This image contains Exif orientation metadata."
-msgstr "Це зображення містить метадані Exif про орієнтацію."
-
-#: ../libgimp/gimpimagemetadata.c:542
-msgid "Would you like to rotate the image?"
-msgstr "Повернути зображення?"
-
-#: ../libgimp/gimpimagemetadata.c:554
-msgid "_Don't ask me again"
-msgstr "_Більше не запитувати"
-
-#: ../libgimp/gimpimagemetadata-save.c:378
-msgid "GIMP 2.10"
-msgstr "GIMP 2.10"
+#: ../libgimp/gimpimagemetadata-save.c:371 ../modules/controller-midi.c:426
+msgid "GIMP"
+msgstr "GIMP"
 
 #: ../libgimp/gimppaletteselectbutton.c:135
 msgid "Palette Selection"
@@ -291,22 +258,22 @@ msgid "Pattern Selection"
 msgstr "Вибір текстури"
 
 #. procedure executed successfully
-#: ../libgimp/gimppdb.c:485
+#: ../libgimp/gimppdb.c:518
 msgid "success"
 msgstr "успішно"
 
 #. procedure execution failed
-#: ../libgimp/gimppdb.c:489
+#: ../libgimp/gimppdb.c:522
 msgid "execution error"
 msgstr "помилка при виконанні"
 
 #. procedure called incorrectly
-#: ../libgimp/gimppdb.c:493
+#: ../libgimp/gimppdb.c:526
 msgid "calling error"
 msgstr "помилка виклику"
 
 #. procedure execution cancelled
-#: ../libgimp/gimppdb.c:497
+#: ../libgimp/gimppdb.c:530
 msgid "cancelled"
 msgstr "скасовано"
 
@@ -454,35 +421,35 @@ msgid ""
 msgstr ""
 "Процедуру «%s» було викликано з некоректним рядком UTF-8 для аргументу «%s»."
 
-#: ../libgimp/gimpproceduredialog.c:224
+#: ../libgimp/gimpproceduredialog.c:171
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Відкрити"
 
-#: ../libgimp/gimpproceduredialog.c:228 ../libgimpwidgets/gimpcolorbutton.c:554
-#: ../libgimpwidgets/gimpfileentry.c:437 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimp/gimpproceduredialog.c:175 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimpwidgets/gimpfileentry.c:467 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Гаразд"
 
-#: ../libgimp/gimpproceduredialog.c:231 ../libgimpwidgets/gimpcolorbutton.c:552
+#: ../libgimp/gimpproceduredialog.c:178 ../libgimpwidgets/gimpcolorbutton.c:552
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: ../libgimp/gimpproceduredialog.c:252
+#: ../libgimp/gimpproceduredialog.c:215
 msgid "_Load Defaults"
 msgstr "За_вантажити початкові параметри"
 
-#: ../libgimp/gimpproceduredialog.c:260
+#: ../libgimp/gimpproceduredialog.c:224
 msgid "_Save Defaults"
 msgstr "З_берегти типові"
 
-#: ../libgimp/gimpproceduredialog.c:298
+#: ../libgimp/gimpproceduredialog.c:1168
 msgid "Reset to _Initial Values"
 msgstr "Повернути до по_чаткових значень"
 
-#: ../libgimp/gimpproceduredialog.c:307
+#: ../libgimp/gimpproceduredialog.c:1177
 msgid "Reset to _Factory Defaults"
 msgstr "Повернути до стандартних _початкових значень"
 
@@ -521,6 +488,10 @@ msgstr "Дата:"
 #: ../libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Авторські права:"
+
+#: ../libgimp/gimpsaveproceduredialog.c:142
+msgid "Metadata"
+msgstr "Метадані"
 
 #: ../libgimp/gimpunitcache.c:54
 msgid "percent"
@@ -1552,37 +1523,37 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Пропорційна"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:907
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Метадані можна завантажувати лише з локальних файлів"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
+#: ../libgimpbase/gimpmetadata.c:921 ../libgimpbase/gimpmetadata.c:991
 #, c-format
 msgid "Conversion of the filename to system codepage failed."
 msgstr "Не вдалось перетворити назву файлу в системне кодування."
 
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:978
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Метадані можна записувати лише в локальні файли"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1040
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Неправильний розмір даних Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1069
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Не вдалось розібрати дані Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1119
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Не вдалось розібрати дані IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1167
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Не вдалось розібрати дані XMP."
@@ -1828,56 +1799,56 @@ msgstr "Профіль монітора"
 msgid "Use the system monitor profile"
 msgstr "Використати системний профіль монітора"
 
-#: ../libgimpconfig/gimpcolorconfig.c:254
+#: ../libgimpconfig/gimpcolorconfig.c:253
 msgid "Simulation profile for soft-proofing"
 msgstr "Профіль імітації для екранної кольоропроби"
 
-#: ../libgimpconfig/gimpcolorconfig.c:261
+#: ../libgimpconfig/gimpcolorconfig.c:260
 msgid "Display rendering intent"
 msgstr "Ціль відтворення кольорів на дисплеї"
 
-#: ../libgimpconfig/gimpcolorconfig.c:269
+#: ../libgimpconfig/gimpcolorconfig.c:268
 msgid "Use black point compensation for the display"
 msgstr "Використати для монітора компенсацію чорної точки"
 
-#: ../libgimpconfig/gimpcolorconfig.c:276
+#: ../libgimpconfig/gimpcolorconfig.c:275
 msgid "Optimize display color transformations"
 msgstr "Оптимізувати перетворення кольорів для дисплея"
 
-#: ../libgimpconfig/gimpcolorconfig.c:283
+#: ../libgimpconfig/gimpcolorconfig.c:282
 msgid "Soft-proofing rendering intent"
 msgstr "Відтворення кольорів для друку"
 
-#: ../libgimpconfig/gimpcolorconfig.c:291
+#: ../libgimpconfig/gimpcolorconfig.c:290
 msgid "Use black point compensation for soft-proofing"
 msgstr "Використати компенсацію чорної точки для екранної кольоропроби"
 
-#: ../libgimpconfig/gimpcolorconfig.c:298
+#: ../libgimpconfig/gimpcolorconfig.c:297
 msgid "Optimize soft-proofing color transformations"
 msgstr "Оптимізувати перетворення кольорів екранної кольоропроби"
 
-#: ../libgimpconfig/gimpcolorconfig.c:305
+#: ../libgimpconfig/gimpcolorconfig.c:304
 msgid "Mark out of gamut colors"
 msgstr "Позначати кольори поза гамою"
 
-#: ../libgimpconfig/gimpcolorconfig.c:312
+#: ../libgimpconfig/gimpcolorconfig.c:311
 msgid "Out of gamut warning color"
 msgstr "Колір для попередження про гаму"
 
-#: ../libgimpconfig/gimpcolorconfig.c:662
-#: ../libgimpconfig/gimpcolorconfig.c:855
+#: ../libgimpconfig/gimpcolorconfig.c:661
+#: ../libgimpconfig/gimpcolorconfig.c:854
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Колірний профіль '%s' не для колірного простору RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:706
-#: ../libgimpconfig/gimpcolorconfig.c:905
+#: ../libgimpconfig/gimpcolorconfig.c:705
+#: ../libgimpconfig/gimpcolorconfig.c:904
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Колірний профіль '%s' не для колірного простору GRAY."
 
-#: ../libgimpconfig/gimpcolorconfig.c:750
-#: ../libgimpconfig/gimpcolorconfig.c:955
+#: ../libgimpconfig/gimpcolorconfig.c:749
+#: ../libgimpconfig/gimpcolorconfig.c:954
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Колірний профіль '%s' не для колірного простору CMYK."
@@ -1909,8 +1880,8 @@ msgid "while parsing token '%s': %s"
 msgstr "при синтаксичному розборі маркера '%s': %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:665
-#: ../libgimpconfig/gimpconfig-iface.c:678 ../libgimpconfig/gimpscanner.c:779
-#: ../libgimpconfig/gimpscanner.c:861
+#: ../libgimpconfig/gimpconfig-iface.c:678 ../libgimpconfig/gimpscanner.c:774
+#: ../libgimpconfig/gimpscanner.c:856
 #: ../libgimpwidgets/gimpcolorprofilestore.c:682
 msgid "fatal parse error"
 msgstr "критична помилка при синтаксичному розборі"
@@ -1951,12 +1922,12 @@ msgid "invalid UTF-8 string"
 msgstr "неправильний рядок UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:654
+#: ../libgimpconfig/gimpscanner.c:649
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "очікувалось «yes» або «no» для булевого маркера, одержано «%s»"
 
-#: ../libgimpconfig/gimpscanner.c:888
+#: ../libgimpconfig/gimpscanner.c:883
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Помилка при синтаксичному розборі '%s' у рядку %d: %s"
@@ -2074,23 +2045,23 @@ msgstr "Виробник:"
 msgid "Copyright: "
 msgstr "Авторські права:"
 
-#: ../libgimpwidgets/gimpcolorscales.c:206
+#: ../libgimpwidgets/gimpcolorscales.c:205
 msgid "Scales"
 msgstr "Шкала"
 
-#: ../libgimpwidgets/gimpcolorscales.c:438
+#: ../libgimpwidgets/gimpcolorscales.c:434
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:440
+#: ../libgimpwidgets/gimpcolorscales.c:436
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:461
+#: ../libgimpwidgets/gimpcolorscales.c:457
 msgid "LCh"
 msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:463
+#: ../libgimpwidgets/gimpcolorscales.c:459
 msgid "HSV"
 msgstr "HSV"
 
@@ -2106,36 +2077,36 @@ msgstr "Старий:"
 msgid "HTML _notation:"
 msgstr "_Нотація HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:153
+#: ../libgimpwidgets/gimpfileentry.c:167
 msgid "Show file location in the file manager"
 msgstr "Показати розташування файлу в оглядачі"
 
-#: ../libgimpwidgets/gimpfileentry.c:224
+#: ../libgimpwidgets/gimpfileentry.c:238
 msgid "Open a file selector to browse your folders"
 msgstr "Відкрийте діалог для перегляду тек"
 
-#: ../libgimpwidgets/gimpfileentry.c:225
+#: ../libgimpwidgets/gimpfileentry.c:239
 msgid "Open a file selector to browse your files"
 msgstr "Відкрийте діалог для перегляду файлів"
 
-#: ../libgimpwidgets/gimpfileentry.c:237
+#: ../libgimpwidgets/gimpfileentry.c:251
 msgid "Indicates whether or not the folder exists"
 msgstr "Показує, чи існує тека"
 
-#: ../libgimpwidgets/gimpfileentry.c:238
+#: ../libgimpwidgets/gimpfileentry.c:252
 msgid "Indicates whether or not the file exists"
 msgstr "Показує, чи існує файл"
 
-#: ../libgimpwidgets/gimpfileentry.c:398
+#: ../libgimpwidgets/gimpfileentry.c:428
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Неможливо показати файл в оглядачі: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:425
+#: ../libgimpwidgets/gimpfileentry.c:455
 msgid "Select Folder"
 msgstr "Вибір теки"
 
-#: ../libgimpwidgets/gimpfileentry.c:427
+#: ../libgimpwidgets/gimpfileentry.c:457
 msgid "Select File"
 msgstr "Вибір файлу"
 
@@ -2151,17 +2122,14 @@ msgid "(Empty)"
 msgstr "(Немає)"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:252
-#| msgid "Kilobytes"
 msgid "Kibibyte"
 msgstr "Кібібайт"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:253
-#| msgid "Megabytes"
 msgid "Mebibyte"
 msgstr "Мебібайт"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:254
-#| msgid "Gigabytes"
 msgid "Gibibyte"
 msgstr "Гібібайт"
 
@@ -2243,7 +2211,7 @@ msgstr "Розмір клітинок"
 msgid "Check Style"
 msgstr "Стиль клітинок"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2279
+#: ../libgimpwidgets/gimppropwidgets.c:2199
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2483,11 +2451,11 @@ msgstr "Жовтий"
 msgid "Black"
 msgstr "Чорний"
 
-#: ../modules/color-selector-cmyk.c:372
+#: ../modules/color-selector-cmyk.c:368
 msgid "Profile: (none)"
 msgstr ": (немає)"
 
-#: ../modules/color-selector-cmyk.c:384
+#: ../modules/color-selector-cmyk.c:380
 #, c-format
 msgid "Profile: %s"
 msgstr "Профіль: %s"
@@ -2841,10 +2809,6 @@ msgstr "Контролер %03d"
 msgid "MIDI Events"
 msgstr "Події MIDI"
 
-#: ../modules/controller-midi.c:426
-msgid "GIMP"
-msgstr "GIMP"
-
 #: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "Контролер вхідних подій MIDI"
@@ -2993,6 +2957,33 @@ msgstr "Цикли контрастності"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Контрастність"
+
+#~ msgid "Rotate %s?"
+#~ msgstr "Повернути %s?"
+
+#~ msgid "_Keep Original"
+#~ msgstr "Зберегти _оригінал"
+
+#~ msgid "_Rotate"
+#~ msgstr "Пов_ернути"
+
+#~ msgid "Original"
+#~ msgstr "Оригінал"
+
+#~ msgid "Rotated"
+#~ msgstr "Повернуто"
+
+#~ msgid "This image contains Exif orientation metadata."
+#~ msgstr "Це зображення містить метадані Exif про орієнтацію."
+
+#~ msgid "Would you like to rotate the image?"
+#~ msgstr "Повернути зображення?"
+
+#~ msgid "_Don't ask me again"
+#~ msgstr "_Більше не запитувати"
+
+#~ msgid "GIMP 2.10"
+#~ msgstr "GIMP 2.10"
 
 #~ msgctxt "blend-mode"
 #~ msgid "FG to BG (RGB)"
