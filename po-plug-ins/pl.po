@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-22 13:40+0100\n"
-"PO-Revision-Date: 2020-11-22 13:42+0100\n"
+"POT-Creation-Date: 2020-12-06 13:01+0100\n"
+"PO-Revision-Date: 2020-12-06 13:02+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -99,10 +99,10 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/lighting/lighting-ui.c:1162
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
-#: ../plug-ins/metadata/metadata-editor.c:549
-#: ../plug-ins/metadata/metadata-editor.c:816
-#: ../plug-ins/metadata/metadata-editor.c:5729
-#: ../plug-ins/metadata/metadata-editor.c:5764
+#: ../plug-ins/metadata/metadata-editor.c:564
+#: ../plug-ins/metadata/metadata-editor.c:830
+#: ../plug-ins/metadata/metadata-editor.c:5717
+#: ../plug-ins/metadata/metadata-editor.c:5752
 #: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -1028,7 +1028,7 @@ msgstr "Wykres bieżących ustawień"
 #: ../plug-ins/gfig/gfig-dialog.c:1394
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
 #: ../plug-ins/imagemap/imap_menu.c:156
-#: ../plug-ins/metadata/metadata-viewer.c:228
+#: ../plug-ins/metadata/metadata-viewer.c:255
 msgid "_Close"
 msgstr "Za_mknij"
 
@@ -1043,7 +1043,7 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
-#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1614
+#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1504
@@ -2236,7 +2236,7 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
 #: ../plug-ins/common/file-heif.c:1268 ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
-#: ../plug-ins/common/file-png.c:1607 ../plug-ins/common/file-pnm.c:1249
+#: ../plug-ins/common/file-png.c:1611 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1213 ../plug-ins/common/file-xbm.c:1040
 #: ../plug-ins/common/file-xpm.c:674 ../plug-ins/common/file-xwd.c:652
@@ -2896,7 +2896,7 @@ msgstr "Nieobsługiwana przestrzeń kolorów w obrazie JP2 „%s”."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2341
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2345
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Nie można bezstratnie zapisać przezroczystości, zapisano zamiast tego krycie."
@@ -2930,7 +2930,7 @@ msgid "Save creation _time"
 msgstr "Zapisanie czasu _utworzenia"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1418 ../plug-ins/common/file-png.c:2399
+#: ../plug-ins/common/file-mng.c:1418 ../plug-ins/common/file-png.c:2403
 msgid "PNG"
 msgstr "PNG"
 
@@ -3151,7 +3151,7 @@ msgstr "Import z PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1265 ../plug-ins/common/file-ps.c:3399
 #: ../plug-ins/file-tiff/file-tiff-load.c:2030
-#: ../plug-ins/metadata/metadata-editor.c:5730
+#: ../plug-ins/metadata/metadata-editor.c:5718
 msgid "_Import"
 msgstr "Zai_mportuj"
 
@@ -3327,7 +3327,7 @@ msgstr "Nieznany model kolorów w pliku PNG „%s”."
 msgid "Could not create new image for '%s': %s"
 msgstr "Nie można utworzyć nowego obrazu dla „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:1144
+#: ../plug-ins/common/file-png.c:1147
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3335,19 +3335,19 @@ msgstr ""
 "Plik PNG określa przesunięcie, które powoduje umieszczenie zawartości "
 "warstwy poza obrazem."
 
-#: ../plug-ins/common/file-png.c:1404
+#: ../plug-ins/common/file-png.c:1408
 msgid "Apply PNG Offset"
 msgstr "Zastosowanie przesunięcia PNG"
 
-#: ../plug-ins/common/file-png.c:1408
+#: ../plug-ins/common/file-png.c:1412
 msgid "Ignore PNG offset"
 msgstr "Ignorowanie przesunięcia PNG"
 
-#: ../plug-ins/common/file-png.c:1409
+#: ../plug-ins/common/file-png.c:1413
 msgid "Apply PNG offset to layer"
 msgstr "Zastosowanie przesunięcia PNG do warstwy"
 
-#: ../plug-ins/common/file-png.c:1434
+#: ../plug-ins/common/file-png.c:1438
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3356,30 +3356,30 @@ msgstr ""
 "Importowany obraz PNG określa przesunięcie %d, %d. Zastosować to "
 "przesunięcie do warstwy?"
 
-#: ../plug-ins/common/file-png.c:1573
+#: ../plug-ins/common/file-png.c:1577
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Błąd podczas tworzenia struktur zapisu PNG podczas eksportowania „%s”."
 
-#: ../plug-ins/common/file-png.c:1582
+#: ../plug-ins/common/file-png.c:1586
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Błąd podczas eksportowania pliku „%s”. Nie można utworzyć struktury "
 "informacji nagłówka PNG."
 
-#: ../plug-ins/common/file-png.c:1590
+#: ../plug-ins/common/file-png.c:1594
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Błąd podczas eksportowania pliku „%s”. Nie można wyeksportować obrazu."
 
-#: ../plug-ins/common/file-png.c:2416 ../plug-ins/common/file-raw-data.c:2131
+#: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2131
 #: ../plug-ins/file-tiff/file-tiff-save.c:1232
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku interfejsu użytkownika „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:2417 ../plug-ins/common/file-raw-data.c:2132
+#: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2132
 #: ../plug-ins/file-tiff/file-tiff-save.c:1233
 msgid "Unknown error"
 msgstr "Nieznany błąd"
@@ -6706,7 +6706,7 @@ msgid "Export as DDS"
 msgstr "Eksport jako DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1957
-#: ../plug-ins/metadata/metadata-editor.c:5765
+#: ../plug-ins/metadata/metadata-editor.c:5753
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
@@ -8753,7 +8753,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Zmienia wartość gamma (jasność) wybranego pędzla"
 
 #: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/metadata/metadata-editor.c:572
+#: ../plug-ins/metadata/metadata-editor.c:587
 msgid "Select:"
 msgstr "Wybór:"
 
@@ -11914,48 +11914,94 @@ msgstr "Wyświetlanie _szkieletu podglądu"
 msgid "Update preview _live"
 msgstr "_Odświeżanie podgląd na żywo"
 
-#: ../plug-ins/metadata/metadata-editor.c:410
+#: ../plug-ins/metadata/metadata-editor.c:413
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Modyfikuje metadane (IPTC, Exif, XMP)"
 
-#: ../plug-ins/metadata/metadata-editor.c:418
+#: ../plug-ins/metadata/metadata-editor.c:421
 msgid "_Edit Metadata"
 msgstr "_Modyfikuj metadane"
 
-#: ../plug-ins/metadata/metadata-editor.c:541
+#: ../plug-ins/metadata/metadata-editor.c:545
+msgid "Error loading metadata-editor dialog."
+msgstr "Błąd podczas wczytywania okna edytora metadanych."
+
+#: ../plug-ins/metadata/metadata-editor.c:556
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Edytor metadanych: %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:550
+#: ../plug-ins/metadata/metadata-editor.c:565
 msgid "_Write Metadata"
 msgstr "_Zapisz metadane"
 
-#: ../plug-ins/metadata/metadata-editor.c:574
+#: ../plug-ins/metadata/metadata-editor.c:589
 msgid "Import metadata"
 msgstr "Import metadanych"
 
-#: ../plug-ins/metadata/metadata-editor.c:576
+#: ../plug-ins/metadata/metadata-editor.c:591
 msgid "Export metadata"
 msgstr "Eksport metadanych"
 
-#: ../plug-ins/metadata/metadata-editor.c:813
+#: ../plug-ins/metadata/metadata-editor.c:799
+#, c-format
+msgid "Error loading calendar. %s"
+msgstr "Błąd podczas wczytywania kalendarza. %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:827
 msgid "Calendar Date:"
 msgstr "Data kalendarzowa:"
 
-#: ../plug-ins/metadata/metadata-editor.c:817
+#: ../plug-ins/metadata/metadata-editor.c:831
 msgid "Set Date"
 msgstr "Ustaw datę"
 
-#: ../plug-ins/metadata/metadata-editor.c:1671
+#: ../plug-ins/metadata/metadata-editor.c:1565
+msgid ""
+"Enter or edit GPS value here.\n"
+"Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
+"the following examples:\n"
+"10deg 15' 20\", or 10° 15' 20\", or 10:15:20.45, or 10 15 20, or 10 15.30, "
+"or 10.45\n"
+"Delete all text to remove the current value."
+msgstr ""
+"Tutaj można wpisać lub zmienić wartość GPS.\n"
+"Prawidłowe wartości składają się z 1, 2 lub 3 liczb (stopnie, minuty, "
+"sekundy), na przykład:\n"
+"10deg 15' 20\" lub 10° 15' 20\" lub 10:15:20.45 lub 10 15 20 lub 10 15,30 "
+"lub 10,45\n"
+"Usunięcie całego tekstu usunie obecną wartość."
+
+#: ../plug-ins/metadata/metadata-editor.c:1571
+msgid ""
+"Enter or edit GPS altitude value here.\n"
+"A valid value consists of one number:\n"
+"e.g. 100, or 12.24\n"
+"Depending on the selected measurement type the value should be entered in "
+"meter (m) or feet (ft)\n"
+"Delete all text to remove the current value."
+msgstr ""
+"Tutaj można wpisać lub zmienić wartość wysokości GPS.\n"
+"Prawidłowa wartość składa się z jednej liczby:\n"
+"np. 100 lub 12,24\n"
+"W zależności od wybranego typu miary należy wpisać wartość w metrach (m) lub "
+"stopach (ft)\n"
+"Usunięcie całego tekstu usunie obecną wartość."
+
+#: ../plug-ins/metadata/metadata-editor.c:1707
 msgid "Unrated"
 msgstr "Bez oceny"
 
-#: ../plug-ins/metadata/metadata-editor.c:5726
+#: ../plug-ins/metadata/metadata-editor.c:4405
+#, c-format
+msgid "Failed to set metadata tag %s"
+msgstr "Ustawienie etykiety metadanych %s się nie powiodło"
+
+#: ../plug-ins/metadata/metadata-editor.c:5714
 msgid "Import Metadata File"
 msgstr "Import pliku metadanych"
 
-#: ../plug-ins/metadata/metadata-editor.c:5761
+#: ../plug-ins/metadata/metadata-editor.c:5749
 msgid "Export Metadata File"
 msgstr "Eksport pliku metadanych"
 
@@ -12133,11 +12179,11 @@ msgid "Other"
 msgstr "Inne"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-msgid "Above Sea Level"
+msgid "Above sea level"
 msgstr "Nad poziomem morza"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-msgid "Below Sea Level"
+msgid "Below sea level"
 msgstr "Pod poziomem morza"
 
 #: ../plug-ins/metadata/metadata-tags.c:275
@@ -12156,25 +12202,37 @@ msgstr "Wschód"
 msgid "West"
 msgstr "Zachód"
 
-#: ../plug-ins/metadata/metadata-viewer.c:121
+#: ../plug-ins/metadata/metadata-viewer.c:135
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Wyświetla metadane (Exif, IPTC, XMP)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:128
+#: ../plug-ins/metadata/metadata-viewer.c:142
 msgid "_View Metadata"
 msgstr "_Wyświetl metadane"
 
-#: ../plug-ins/metadata/metadata-viewer.c:221
+#: ../plug-ins/metadata/metadata-viewer.c:237
+msgid "Error loading metadata-viewer dialog."
+msgstr "Błąd podczas wczytywania okna przeglądarki metadanych."
+
+#: ../plug-ins/metadata/metadata-viewer.c:248
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Przeglądarka metadanych: %s"
 
-#: ../plug-ins/metadata/metadata-viewer.c:313
+#: ../plug-ins/metadata/metadata-viewer.c:340
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(więcej znaków: %lu)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:458
+#: ../plug-ins/metadata/metadata-viewer.c:499
+msgid " meter"
+msgstr " m"
+
+#: ../plug-ins/metadata/metadata-viewer.c:500
+msgid " feet"
+msgstr " ft"
+
+#: ../plug-ins/metadata/metadata-viewer.c:596
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(więcej bajtów: %llu)"
