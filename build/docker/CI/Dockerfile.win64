@@ -33,7 +33,7 @@ RUN echo 'export XDG_DATA_HOME=$XDG_DATA_HOME && \
 
 # loaders.cache cleanup
 # remove the absolute part of the paths
-RUN sed -i 's&${XDG_DATA_HOME}/crossroad/roads/w64/gimp/&&' \
+RUN sed -i "s&${XDG_DATA_HOME}/crossroad/roads/w64/gimp/&&" \
     ${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 
 # replace / by \ in lines which match '.dll"'
