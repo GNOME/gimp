@@ -1,0 +1,41 @@
+FROM debian:testing
+ARG XDG_DATA_HOME
+
+# always run apt-get update and apt-get install in the same cachable layer
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential cpio g++-mingw-w64-i686 gcc-mingw-w64-i686 git intltool \
+    libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils \
+    python3-docutils python3-pip rpm wine xsltproc
+
+# install crossroad
+RUN pip3 install zstandard
+RUN git clone --depth=1 git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
+RUN cd crossroad && ./setup.py install --prefix=/usr/local && cd ..
+
+# install babl and GEGL dependencies with crossroad
+RUN echo 'export XDG_DATA_HOME=$XDG_DATA_HOME && \
+    crossroad source msys2 && crossroad install cairo graphviz json-glib lcms2' | \
+    XDG_DATA_HOME=$XDG_DATA_HOME crossroad w32 gimp --run='-'
+
+# install GIMP dependencies with crossroad
+RUN echo 'export XDG_DATA_HOME=$XDG_DATA_HOME && crossroad source msys2 && \
+    crossroad install appstream-glib atk drmingw gexiv2 glib2 json-c ghostscript iso-codes \
+    libheif libmng libmypaint mypaint-brushes libwebp libwmf openexr ilmbase poppler poppler-data xpm-nox' | \
+    XDG_DATA_HOME=$XDG_DATA_HOME crossroad w32 gimp --run='-'
+
+# create gdk-pixbuf loaders.cache
+RUN echo 'export XDG_DATA_HOME=$XDG_DATA_HOME && \
+    export CROSSROAD_PREFIX=${XDG_DATA_HOME}/crossroad/roads/w32/gimp && \
+    wine ${XDG_DATA_HOME}/crossroad/roads/w32/gimp/bin/gdk-pixbuf-query-loaders.exe \
+    ${XDG_DATA_HOME}/crossroad/roads/w32/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll  > \
+    ${XDG_DATA_HOME}/crossroad/roads/w32/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache' | \
+    XDG_DATA_HOME=$XDG_DATA_HOME crossroad w32 gimp --run='-'
+
+# loaders.cache cleanup
+# remove the absolute part of the paths
+RUN sed -i 's&${XDG_DATA_HOME}/crossroad/roads/w32/gimp/&&' \
+    ${XDG_DATA_HOME}/crossroad/roads/w32/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+
+# replace / by \ in lines which match '.dll"'
+RUN sed -i '/.dll"/s*/*\\*g' \
+    ${XDG_DATA_HOME}/crossroad/roads/w32/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
