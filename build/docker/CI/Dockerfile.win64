@@ -24,7 +24,7 @@ RUN echo 'export XDG_DATA_HOME=$XDG_DATA_HOME && crossroad source msys2 && \
     XDG_DATA_HOME=$XDG_DATA_HOME crossroad w64 gimp --run='-'
 
 # create gdk-pixbuf loaders.cache
-RUN echo 'export XDG_DATA_HOME=/usr/local/lib && \
+RUN echo 'export XDG_DATA_HOME=$XDG_DATA_HOME && \
     export CROSSROAD_PREFIX=${XDG_DATA_HOME}/crossroad/roads/w64/gimp && \
     wine ${XDG_DATA_HOME}/crossroad/roads/w64/gimp/bin/gdk-pixbuf-query-loaders.exe \
     ${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll  > \
