@@ -5,7 +5,7 @@ ARG XDG_DATA_HOME
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential cpio g++-mingw-w64-i686 gcc-mingw-w64-i686 git intltool \
     libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils \
-    python3-docutils python3-pip rpm wine xsltproc
+    python3-docutils python3-pip rpm wine wine32 xsltproc
 
 # install crossroad
 RUN pip3 install zstandard
