@@ -1,4 +1,4 @@
-FROM debian:testing
+FROM i386/debian:testing
 ARG XDG_DATA_HOME
 
 # always run apt-get update and apt-get install in the same cachable layer
