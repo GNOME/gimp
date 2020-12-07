@@ -14,7 +14,7 @@ RUN cd crossroad && ./setup.py install --prefix=/usr/local && cd ..
 
 # install babl and GEGL dependencies with crossroad
 RUN echo 'export XDG_DATA_HOME=$XDG_DATA_HOME && \
-    crossroad source msys2 && crossroad install lcms2 cairo json-glib' | \
+    crossroad source msys2 && crossroad install cairo graphviz json-glib lcms2' | \
     XDG_DATA_HOME=$XDG_DATA_HOME crossroad w64 gimp --run='-'
 
 # install GIMP dependencies with crossroad
