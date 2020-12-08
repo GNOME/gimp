@@ -204,7 +204,7 @@ gimp_device_info_editor_constructed (GObject *object)
       GdkAxisUse   use       = i + 1;
       gboolean     has_curve = FALSE;
 
-      if (private->info->device)
+      if (gimp_device_info_get_device (private->info, NULL))
         {
           if (gimp_device_info_ignore_axis (private->info, i))
             /* Some axis are apparently returned by the driver, yet

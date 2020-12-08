@@ -209,7 +209,8 @@ static gboolean
 gimp_device_editor_filter (GimpObject *object,
                            gpointer    user_data)
 {
-  GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
+  GimpDeviceInfo *info   = GIMP_DEVICE_INFO (object);
+  GdkDevice      *device = gimp_device_info_get_device (info, NULL);
 
   /* In the device editor, we filter out virtual devices (useless from a
    * configuration standpoint) as well as the xtest API device.
@@ -221,7 +222,7 @@ gimp_device_editor_filter (GimpObject *object,
    * in the list and can be manually deleted).
    */
 
-  return ((! info->device || gdk_device_get_device_type (info->device) != GDK_DEVICE_TYPE_MASTER) &&
+  return ((! device || gdk_device_get_device_type (device) != GDK_DEVICE_TYPE_MASTER) &&
           /* Technically only a useful check on X11 but I could also
            * imagine for instance a devicerc used on X11 then Wayland
            * and it would be useless to show there the now absent XTEST

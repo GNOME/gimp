@@ -269,6 +269,8 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                GimpDeviceStatus *status)
 {
   GimpDeviceStatusEntry *entry;
+  GdkDisplay            *display;
+
   GClosure              *closure;
   GParamSpec            *pspec;
   GtkWidget             *vbox;
@@ -312,13 +314,13 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the device name  */
 
-  if (device_info->display == NULL ||
-      device_info->display == gdk_display_get_default ())
+  gimp_device_info_get_device (device_info, &display);
+  if (display == NULL || display == gdk_display_get_default ())
     name = g_strdup (gimp_object_get_name (device_info));
   else
     name = g_strdup_printf ("%s (%s)",
                             gimp_object_get_name (device_info),
-                            gdk_display_get_name (device_info->display));
+                            gdk_display_get_name (display));
 
   label = gtk_label_new (name);
   g_free (name);

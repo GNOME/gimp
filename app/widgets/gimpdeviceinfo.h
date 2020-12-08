@@ -42,27 +42,14 @@ struct _GimpDeviceKey
 #define GIMP_DEVICE_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DEVICE_INFO, GimpDeviceInfoClass))
 
 
-typedef struct _GimpDeviceInfoClass GimpDeviceInfoClass;
+typedef struct _GimpDeviceInfoPrivate GimpDeviceInfoPrivate;
+typedef struct _GimpDeviceInfoClass   GimpDeviceInfoClass;
 
 struct _GimpDeviceInfo
 {
   GimpToolPreset  parent_instance;
 
-  GdkDevice      *device;
-  GdkDisplay     *display;
-
-  /*  either "device" or the options below are set  */
-
-  GdkInputMode    mode;
-  gint            n_axes;
-  GdkAxisUse     *axes;
-  gchar         **axes_names;
-  gint            n_keys;
-  GimpDeviceKey  *keys;
-
-  /*  curves  */
-
-  GimpCurve      *pressure_curve;
+  GimpDeviceInfoPrivate *priv;
 };
 
 struct _GimpDeviceInfoClass
