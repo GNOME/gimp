@@ -126,6 +126,8 @@ static void   gimp_device_info_guess_icon   (GimpDeviceInfo *info);
 static void   gimp_device_info_tool_changed (GdkDevice      *device,
                                              GdkDeviceTool  *tool,
                                              GimpDeviceInfo *info);
+static void gimp_device_info_device_changed (GdkDevice      *device,
+                                             GimpDeviceInfo *info);
 
 static void   gimp_device_info_updated      (GimpDeviceInfo *info);
 
@@ -306,7 +308,18 @@ gimp_device_info_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_DEVICE:
+      /* Nothing to disconnect, it's G_PARAM_CONSTRUCT_ONLY. */
       info->priv->device = g_value_get_object (value);
+
+      if (info->priv->device)
+        {
+          g_signal_connect_object (info->priv->device, "tool-changed",
+                                   G_CALLBACK (gimp_device_info_tool_changed),
+                                   G_OBJECT (info), 0);
+          g_signal_connect_object (info->priv->device, "changed",
+                                   G_CALLBACK (gimp_device_info_device_changed),
+                                   G_OBJECT (info), 0);
+        }
       break;
 
     case PROP_DISPLAY:
@@ -329,7 +342,9 @@ gimp_device_info_set_property (GObject      *object,
 
             if (device)
               {
-                if (info->priv->n_axes != 0 && info->priv->n_axes != n_device_values)
+                if (info->priv->n_axes != 0                                       &&
+                    gdk_device_get_device_type (device) != GDK_DEVICE_TYPE_MASTER &&
+                    info->priv->n_axes != n_device_values)
                   g_printerr ("%s: stored 'num-axes' for device '%s' doesn't match "
                               "number of axes present in device\n",
                               G_STRFUNC, gdk_device_get_name (device));
@@ -589,6 +604,16 @@ gimp_device_info_tool_changed (GdkDevice      *device,
 }
 
 static void
+gimp_device_info_device_changed (GdkDevice      *device,
+                                 GimpDeviceInfo *info)
+{
+  /* Number of axes or keys can change on virtual devices when the
+   * physical device changes.
+   */
+  gimp_device_info_updated (info);
+}
+
+static void
 gimp_device_info_updated (GimpDeviceInfo *info)
 {
   g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
@@ -780,15 +805,23 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
       g_signal_handlers_disconnect_by_func (info->priv->device,
                                             gimp_device_info_tool_changed,
                                             info);
+      g_signal_handlers_disconnect_by_func (info->priv->device,
+                                            gimp_device_info_device_changed,
+                                            info);
     }
   mode = gimp_device_info_get_mode (info);
 
   info->priv->device  = device;
   info->priv->display = display;
   if (info->priv->device)
-    g_signal_connect_object (info->priv->device, "tool-changed",
-                             G_CALLBACK (gimp_device_info_tool_changed),
-                             G_OBJECT (info), 0);
+    {
+      g_signal_connect_object (info->priv->device, "tool-changed",
+                               G_CALLBACK (gimp_device_info_tool_changed),
+                               G_OBJECT (info), 0);
+      g_signal_connect_object (info->priv->device, "changed",
+                               G_CALLBACK (gimp_device_info_device_changed),
+                               G_OBJECT (info), 0);
+    }
 
   gimp_device_info_updated (info);
   /* The info existed from a previous run. Restore its mode. */
