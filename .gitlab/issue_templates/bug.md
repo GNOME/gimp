@@ -4,7 +4,7 @@ GIMP version:
 either in the last stable version of GIMP or on updated development code
 (master branch).-->
 
-Operating System: <!--[Windows? macOS? Linux?] (write it after the > symbol) --> 
+Operating System: <!--[Windows? macOS? Linux? All?] (write it after the > symbol) -->
 
 Package: <!--[flatpak? Installer from gimp.org? If another installer, tell us where from] (write it after the > symbol)-->
 
