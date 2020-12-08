@@ -126,27 +126,6 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceInfoEditor, gimp_device_info_editor,
 #define parent_class gimp_device_info_editor_parent_class
 
 
-static const gchar *const axis_use_strings[] =
-{
-  N_("X"),
-  N_("Y"),
-  N_("Pressure"),
-  N_("X tilt"),
-  N_("Y tilt"),
-  /* Wheel as in mouse or input device wheel.
-   * Some pens would use the same axis for their rotation feature.
-   * See bug 791455.
-   * Yet GTK+ has a different axis since v. 3.22.
-   * TODO: this should be actually tested with a device having such
-   * feature.
-   */
-  N_("Wheel"),
-  N_("Distance"),
-  N_("Rotation"),
-  N_("Slider")
-};
-
-
 static void
 gimp_device_info_editor_class_init (GimpDeviceInfoEditorClass *klass)
 {
@@ -227,21 +206,17 @@ gimp_device_info_editor_constructed (GObject *object)
 
       if (private->info->device)
         {
-          use = gimp_device_info_get_axis_use (private->info, i);
-          if (use == GDK_AXIS_IGNORE)
-            /* Some axis are apparently returned by the driver, yet with use
-             * IGNORE. We just pass these.
+          if (gimp_device_info_ignore_axis (private->info, i))
+            /* Some axis are apparently returned by the driver, yet
+             * should be ignored. We just pass these.
              */
             continue;
 
-          axis_name = private->info->axes_names[i];
+          use = gimp_device_info_get_axis_use (private->info, i);
           has_curve = (gimp_device_info_get_curve (private->info, use) != NULL);
         }
-      else
-        {
-          axis_name = axis_use_strings[i];
-        }
 
+      axis_name = gimp_device_info_get_axis_name (private->info, i);
       gtk_list_store_insert_with_values (private->axis_store,
                                          /* Set the initially selected
                                           * axis to an axis with curve
@@ -402,7 +377,8 @@ gimp_device_info_editor_constructed (GObject *object)
           gchar     *title;
 
           /* e.g. "Pressure Curve" for mapping input device axes */
-          title = g_strdup_printf (_("%s Curve"), gettext (axis_use_strings[i - 1]));
+          title = g_strdup_printf (_("%s Curve"),
+                                   gettext (gimp_device_info_get_axis_name (private->info, i - 1)));
 
           frame = gimp_frame_new (title);
           gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook), frame, NULL);
@@ -475,7 +451,7 @@ gimp_device_info_editor_constructed (GObject *object)
               gchar     *string;
 
               string = g_strdup_printf (_("The axis '%s' has no curve"),
-                                        gettext (axis_use_strings[i - 1]));
+                                        gettext (gimp_device_info_get_axis_name (private->info, i - 1)));
 
               label = gtk_label_new (string);
               gtk_container_add (GTK_CONTAINER (frame), label);

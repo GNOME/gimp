@@ -104,6 +104,10 @@ guint64           gimp_device_info_get_tool_serial      (GimpDeviceInfo  *info);
 guint64           gimp_device_info_get_tool_hardware_id (GimpDeviceInfo  *info);
 
 gint             gimp_device_info_get_n_axes            (GimpDeviceInfo  *info);
+gboolean         gimp_device_info_ignore_axis           (GimpDeviceInfo  *info,
+                                                         gint             axis);
+const gchar    * gimp_device_info_get_axis_name         (GimpDeviceInfo  *info,
+                                                         gint             axis);
 GdkAxisUse       gimp_device_info_get_axis_use          (GimpDeviceInfo  *info,
                                                          gint             axis);
 void             gimp_device_info_set_axis_use          (GimpDeviceInfo  *info,
