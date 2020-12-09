@@ -4,7 +4,7 @@ ARG XDG_DATA_HOME
 # always run apt-get update and apt-get install in the same cachable layer
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential cpio g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 git intltool \
-    libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils \
+    libgdk-pixbuf-2.0-0 libgdk-pixbuf-2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils \
     python3-docutils python3-pip rpm wine wine64 xsltproc
 
 # install crossroad
