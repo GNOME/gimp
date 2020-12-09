@@ -28,6 +28,7 @@ deps-debian/testing:
   before_script:
     - apt-get update
     - apt-get install -y --no-install-recommends
+        appstream-util
         autoconf
         automake
         build-essential
@@ -35,10 +36,14 @@ deps-debian/testing:
         ffmpeg
         graphviz
         gobject-introspection
+        libaa-dev
+        libavif-dev
         libjson-glib-dev
         libgexiv2-dev
         libgirepository1.0-dev
+        libgs-dev
         libgtk2.0-dev
+        libheif-dev
         liblcms2-dev
         libopenexr-dev
         libraw-dev
