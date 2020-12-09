@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-01 19:57+0000\n"
-"PO-Revision-Date: 2020-12-02 09:34+0200\n"
+"POT-Creation-Date: 2020-12-09 11:33+0000\n"
+"PO-Revision-Date: 2020-12-09 17:48+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -48,8 +48,8 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
 #: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2341
 #: ../plug-ins/common/file-jp2-load.c:975
-#: ../plug-ins/common/file-pdf-load.c:645
-#: ../plug-ins/common/file-pdf-load.c:1041
+#: ../plug-ins/common/file-pdf-load.c:643
+#: ../plug-ins/common/file-pdf-load.c:1039
 #: ../plug-ins/common/file-pdf-save.c:1152 ../plug-ins/common/file-ps.c:3550
 #: ../plug-ins/common/file-raw-data.c:1776 ../plug-ins/common/file-svg.c:679
 #: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1308
@@ -149,7 +149,7 @@ msgstr "Потренувати козу (Python 3)"
 #: ../plug-ins/common/contrast-retinex.c:329
 #: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/depth-merge.c:711
 #: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:2342
-#: ../plug-ins/common/file-pdf-load.c:646 ../plug-ins/common/file-svg.c:680
+#: ../plug-ins/common/file-pdf-load.c:644 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1309
 #: ../plug-ins/common/grid.c:738 ../plug-ins/common/hot.c:657
 #: ../plug-ins/common/jigsaw.c:2475 ../plug-ins/common/nl-filter.c:1103
@@ -851,8 +851,9 @@ msgid "Source channel in file:"
 msgstr "Вихідний канал у файлі:"
 
 #: ../plug-ins/common/cml-explorer.c:1644
-msgid "_Misc Ops."
-msgstr "_Різне"
+#| msgid "_Misc Ops."
+msgid "_Misc"
+msgstr "І_нше"
 
 #: ../plug-ins/common/cml-explorer.c:1703
 msgid "Function type:"
@@ -946,7 +947,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/common/cml-explorer.c:2145 ../plug-ins/common/curve-bend.c:805
 #: ../plug-ins/common/file-dicom.c:1408 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
-#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1403
+#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1407
 #: ../plug-ins/common/file-raw-data.c:1117
 #: ../plug-ins/common/file-raw-data.c:1147 ../plug-ins/common/file-sunras.c:641
 #: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
@@ -1917,7 +1918,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/common/file-cel.c:398 ../plug-ins/common/file-dicom.c:366
 #: ../plug-ins/common/file-gegl.c:345 ../plug-ins/common/file-gif-load.c:397
 #: ../plug-ins/common/file-heif.c:831 ../plug-ins/common/file-jp2-load.c:1084
-#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:801
+#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:799
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:644
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
 #: ../plug-ins/common/file-raw-data.c:1226 ../plug-ins/common/file-sunras.c:448
@@ -2006,7 +2007,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
 #: ../plug-ins/common/file-heif.c:1468 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
-#: ../plug-ins/common/file-png.c:1393 ../plug-ins/common/file-pnm.c:1336
+#: ../plug-ins/common/file-png.c:1397 ../plug-ins/common/file-pnm.c:1336
 #: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
 #: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1049
 #: ../plug-ins/common/file-xpm.c:710 ../plug-ins/common/file-xwd.c:678
@@ -2817,7 +2818,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2131
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2135
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
@@ -3029,66 +3030,66 @@ msgstr[1] ""
 msgstr[2] ""
 "Документ PDF «%1$s» має %3$d сторінок. Сторінка %2$d за межами діапазону."
 
-#: ../plug-ins/common/file-pdf-load.c:632
+#: ../plug-ins/common/file-pdf-load.c:630
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF захищено паролем; введіть пароль:"
 
-#: ../plug-ins/common/file-pdf-load.c:642
+#: ../plug-ins/common/file-pdf-load.c:640
 msgid "Encrypted PDF"
 msgstr "Шифрований PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:669
+#: ../plug-ins/common/file-pdf-load.c:667
 msgid "Wrong password! Please input the right one:"
 msgstr "Хибний пароль! Введіть правильний:"
 
-#: ../plug-ins/common/file-pdf-load.c:687
+#: ../plug-ins/common/file-pdf-load.c:685
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Не вдалось завантажити «%s»: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:839
+#: ../plug-ins/common/file-pdf-load.c:837
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:841 ../plug-ins/common/file-ps.c:1237
+#: ../plug-ins/common/file-pdf-load.c:839 ../plug-ins/common/file-ps.c:1237
 #, c-format
 msgid "%s-pages"
 msgstr "%s-сторінок"
 
-#: ../plug-ins/common/file-pdf-load.c:1037
+#: ../plug-ins/common/file-pdf-load.c:1035
 msgid "Import from PDF"
 msgstr "Імпорт з PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1042 ../plug-ins/common/file-ps.c:3551
+#: ../plug-ins/common/file-pdf-load.c:1040 ../plug-ins/common/file-ps.c:3551
 #: ../plug-ins/file-tiff/file-tiff-load.c:2058
 #: ../plug-ins/metadata/metadata-editor.c:5726
 msgid "_Import"
 msgstr "_Імпортувати"
 
-#: ../plug-ins/common/file-pdf-load.c:1074
+#: ../plug-ins/common/file-pdf-load.c:1072
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Помилка при отриманні числа сторінок з даного PDF-файлу."
 
-#: ../plug-ins/common/file-pdf-load.c:1120
+#: ../plug-ins/common/file-pdf-load.c:1118
 msgid "_Width (pixels):"
 msgstr "_Ширина (у точках):"
 
-#: ../plug-ins/common/file-pdf-load.c:1121
+#: ../plug-ins/common/file-pdf-load.c:1119
 msgid "_Height (pixels):"
 msgstr "_Висота (у точках):"
 
-#: ../plug-ins/common/file-pdf-load.c:1123
+#: ../plug-ins/common/file-pdf-load.c:1121
 msgid "_Resolution:"
 msgstr "_Роздільна здатність:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1134
+#: ../plug-ins/common/file-pdf-load.c:1132
 msgid "Use _Anti-aliasing"
 msgstr "_Застосувати згладжування"
 
-#: ../plug-ins/common/file-pdf-load.c:1402
-#: ../plug-ins/common/file-pdf-load.c:1403 ../plug-ins/common/file-svg.c:857
+#: ../plug-ins/common/file-pdf-load.c:1400
+#: ../plug-ins/common/file-pdf-load.c:1401 ../plug-ins/common/file-svg.c:857
 #: ../plug-ins/common/file-wmf.c:725 ../plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
@@ -3259,7 +3260,7 @@ msgstr "Невідома модель кольорів у PNG файлі «%s».
 msgid "Could not create new image for '%s': %s"
 msgstr "Неможливо створити нове зображення для «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:883
+#: ../plug-ins/common/file-png.c:886
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3267,19 +3268,19 @@ msgstr ""
 "У файлі формату PNG вказано зсув, який призводить до розташування шару за "
 "межами зображення."
 
-#: ../plug-ins/common/file-png.c:1117
+#: ../plug-ins/common/file-png.c:1121
 msgid "Apply PNG Offset"
 msgstr "Застосувати зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1121
+#: ../plug-ins/common/file-png.c:1125
 msgid "Ignore PNG offset"
 msgstr "Знехтувати зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1122
+#: ../plug-ins/common/file-png.c:1126
 msgid "Apply PNG offset to layer"
 msgstr "Застосувати до шару зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1147
+#: ../plug-ins/common/file-png.c:1151
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3288,60 +3289,60 @@ msgstr ""
 "Зображення формату PNG, яке ви імпортуєте, має зміщення %d, %d. Застосувати "
 "це зміщення до шару?"
 
-#: ../plug-ins/common/file-png.c:1359
+#: ../plug-ins/common/file-png.c:1363
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
-#: ../plug-ins/common/file-png.c:1368
+#: ../plug-ins/common/file-png.c:1372
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: ../plug-ins/common/file-png.c:1376
+#: ../plug-ins/common/file-png.c:1380
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
-#: ../plug-ins/common/file-png.c:2165
+#: ../plug-ins/common/file-png.c:2169
 msgid "Export Image as PNG"
 msgstr "Експортувати зображення як PNG"
 
-#: ../plug-ins/common/file-png.c:2170 ../plug-ins/common/file-ps.c:3693
+#: ../plug-ins/common/file-png.c:2174 ../plug-ins/common/file-ps.c:3693
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: ../plug-ins/common/file-png.c:2171
+#: ../plug-ins/common/file-png.c:2175
 msgid "8 bpc RGB"
 msgstr "8 біт/кан RGB"
 
-#: ../plug-ins/common/file-png.c:2172
+#: ../plug-ins/common/file-png.c:2176
 msgid "8 bpc GRAY"
 msgstr "8 біт/кан GRAY"
 
-#: ../plug-ins/common/file-png.c:2173
+#: ../plug-ins/common/file-png.c:2177
 msgid "8 bpc RGBA"
 msgstr "8 біт/кан RGBA"
 
-#: ../plug-ins/common/file-png.c:2174
+#: ../plug-ins/common/file-png.c:2178
 msgid "8 bpc GRAYA"
 msgstr "8 біт/кан GRAYA"
 
-#: ../plug-ins/common/file-png.c:2175
+#: ../plug-ins/common/file-png.c:2179
 msgid "16 bpc RGB"
 msgstr "16 біт/кан RGB"
 
-#: ../plug-ins/common/file-png.c:2176
+#: ../plug-ins/common/file-png.c:2180
 msgid "16 bpc GRAY"
 msgstr "16 біт/кан GRAY"
 
-#: ../plug-ins/common/file-png.c:2177
+#: ../plug-ins/common/file-png.c:2181
 msgid "16 bpc RGBA"
 msgstr "16 біт/кан RGBA"
 
-#: ../plug-ins/common/file-png.c:2178
+#: ../plug-ins/common/file-png.c:2182
 msgid "16 bpc GRAYA"
 msgstr "16 біт/кан GRAYA"
 
@@ -11418,7 +11419,6 @@ msgstr "Експортувати метадані"
 
 #: ../plug-ins/metadata/metadata-editor.c:807
 #, c-format
-#| msgid "Error loading PSD file: %s"
 msgid "Error loading calendar. %s"
 msgstr "Помилка під час завантаження календаря. %s"
 
@@ -11440,10 +11440,10 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 "Тут можна ввести або редагувати значення GPS.\n"
-"Коректні значення складаються з 1, 2 або 3 чисел (градусів, мінут, секунд),"
-" див. такі приклади:\n"
-"10deg 15' 20\", або 10° 15' 20\", або 10:15:20.45, або 10 15 20, або 10"
-" 15.30, або 10.45\n"
+"Коректні значення складаються з 1, 2 або 3 чисел (градусів, мінут, секунд), "
+"див. такі приклади:\n"
+"10deg 15' 20\", або 10° 15' 20\", або 10:15:20.45, або 10 15 20, або 10 "
+"15.30, або 10.45\n"
 "Вилучіть увесь текст, щоб вилучити поточне значення."
 
 #: ../plug-ins/metadata/metadata-editor.c:1579
@@ -11458,8 +11458,8 @@ msgstr ""
 "Тут можна ввести або змінити значення висоти GPS.\n"
 "Коректне значення складається з одного числа, приклад:\n"
 "100 або 12.24\n"
-"Залежно від вибраного типу вимірювань, значення слід вводити у метрах (м) або"
-" футах (фут)\n"
+"Залежно від вибраного типу вимірювань, значення слід вводити у метрах (м) "
+"або футах (фут)\n"
 "Щоб вилучити поточне значення, витріть увесь текст."
 
 #: ../plug-ins/metadata/metadata-editor.c:1715
@@ -11468,7 +11468,6 @@ msgstr "Без рейтингу"
 
 #: ../plug-ins/metadata/metadata-editor.c:4413
 #, c-format
-#| msgid "Failed to decompress data"
 msgid "Failed to set metadata tag %s"
 msgstr "Не вдалося встановити мітку метаданих %s"
 
@@ -11652,12 +11651,10 @@ msgid "Other"
 msgstr "Інше"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#| msgid "Above Sea Level"
 msgid "Above sea level"
 msgstr "Над рівнем моря"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#| msgid "Below Sea Level"
 msgid "Below sea level"
 msgstr "Під рівнем моря"
 
@@ -11700,7 +11697,6 @@ msgid "(%lu more character(s))"
 msgstr "(%lu більше символів)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:527
-#| msgid "Parameters"
 msgid " meter"
 msgstr " метр"
 
