@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-26 00:40+0000\n"
-"PO-Revision-Date: 2020-11-25 12:03+0100\n"
+"POT-Creation-Date: 2020-12-09 11:33+0000\n"
+"PO-Revision-Date: 2020-12-04 21:26+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -52,8 +52,8 @@ msgstr "Entrena una cabra (C)"
 #: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
 #: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2341
 #: ../plug-ins/common/file-jp2-load.c:975
-#: ../plug-ins/common/file-pdf-load.c:645
-#: ../plug-ins/common/file-pdf-load.c:1041
+#: ../plug-ins/common/file-pdf-load.c:643
+#: ../plug-ins/common/file-pdf-load.c:1039
 #: ../plug-ins/common/file-pdf-save.c:1152 ../plug-ins/common/file-ps.c:3550
 #: ../plug-ins/common/file-raw-data.c:1776 ../plug-ins/common/file-svg.c:679
 #: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1308
@@ -93,10 +93,10 @@ msgstr "Entrena una cabra (C)"
 #: ../plug-ins/lighting/lighting-ui.c:1163
 #: ../plug-ins/lighting/lighting-ui.c:1307
 #: ../plug-ins/map-object/map-object-ui.c:1317
-#: ../plug-ins/metadata/metadata-editor.c:565
-#: ../plug-ins/metadata/metadata-editor.c:832
-#: ../plug-ins/metadata/metadata-editor.c:5745
-#: ../plug-ins/metadata/metadata-editor.c:5780
+#: ../plug-ins/metadata/metadata-editor.c:572
+#: ../plug-ins/metadata/metadata-editor.c:838
+#: ../plug-ins/metadata/metadata-editor.c:5725
+#: ../plug-ins/metadata/metadata-editor.c:5760
 #: ../plug-ins/pagecurl/pagecurl.c:473 ../plug-ins/screenshot/screenshot.c:529
 #: ../plug-ins/selection-to-path/selection-to-path.c:406
 msgid "_Cancel"
@@ -153,7 +153,7 @@ msgstr "Entrena una cabra (Python 3)"
 #: ../plug-ins/common/contrast-retinex.c:329
 #: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/depth-merge.c:711
 #: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:2342
-#: ../plug-ins/common/file-pdf-load.c:646 ../plug-ins/common/file-svg.c:680
+#: ../plug-ins/common/file-pdf-load.c:644 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1309
 #: ../plug-ins/common/grid.c:738 ../plug-ins/common/hot.c:657
 #: ../plug-ins/common/jigsaw.c:2475 ../plug-ins/common/nl-filter.c:1103
@@ -855,8 +855,8 @@ msgid "Source channel in file:"
 msgstr "Canal d'origen del fitxer:"
 
 #: ../plug-ins/common/cml-explorer.c:1644
-msgid "_Misc Ops."
-msgstr "_Opcions diverses."
+msgid "_Misc"
+msgstr "_Diverses"
 
 #: ../plug-ins/common/cml-explorer.c:1703
 msgid "Function type:"
@@ -935,7 +935,7 @@ msgstr "Graf de les opcions actuals"
 #: ../plug-ins/gfig/gfig-dialog.c:1397
 #: ../plug-ins/ifs-compose/ifs-compose.c:1184
 #: ../plug-ins/imagemap/imap_menu.c:156
-#: ../plug-ins/metadata/metadata-viewer.c:264
+#: ../plug-ins/metadata/metadata-viewer.c:283
 msgid "_Close"
 msgstr "_Tanca"
 
@@ -950,7 +950,7 @@ msgstr "Desa els paràmetres de l'Explorador CML"
 #: ../plug-ins/common/cml-explorer.c:2145 ../plug-ins/common/curve-bend.c:805
 #: ../plug-ins/common/file-dicom.c:1408 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
-#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1403
+#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1407
 #: ../plug-ins/common/file-raw-data.c:1117
 #: ../plug-ins/common/file-raw-data.c:1147 ../plug-ins/common/file-sunras.c:641
 #: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
@@ -1926,7 +1926,7 @@ msgstr ""
 #: ../plug-ins/common/file-cel.c:398 ../plug-ins/common/file-dicom.c:366
 #: ../plug-ins/common/file-gegl.c:345 ../plug-ins/common/file-gif-load.c:397
 #: ../plug-ins/common/file-heif.c:831 ../plug-ins/common/file-jp2-load.c:1084
-#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:801
+#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:799
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:644
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
 #: ../plug-ins/common/file-raw-data.c:1226 ../plug-ins/common/file-sunras.c:448
@@ -2021,7 +2021,7 @@ msgstr ""
 #: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
 #: ../plug-ins/common/file-heif.c:1468 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
-#: ../plug-ins/common/file-png.c:1393 ../plug-ins/common/file-pnm.c:1336
+#: ../plug-ins/common/file-png.c:1397 ../plug-ins/common/file-pnm.c:1336
 #: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
 #: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1049
 #: ../plug-ins/common/file-xpm.c:710 ../plug-ins/common/file-xwd.c:678
@@ -2828,7 +2828,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2131
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2135
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "No s'ha pogut desar la transparència sense pèrdues. Es desarà l'opacitat."
@@ -3039,66 +3039,66 @@ msgstr[0] ""
 msgstr[1] ""
 "El document PDF '%1$s' té %3$d pàgines. La pàgina %2$d està fora de l'abast."
 
-#: ../plug-ins/common/file-pdf-load.c:632
+#: ../plug-ins/common/file-pdf-load.c:630
 msgid "PDF is password protected, please input the password:"
 msgstr "El PDF està protegit per contrasenya, introduïu la contrasenya:"
 
-#: ../plug-ins/common/file-pdf-load.c:642
+#: ../plug-ins/common/file-pdf-load.c:640
 msgid "Encrypted PDF"
 msgstr "PDF xifrat"
 
-#: ../plug-ins/common/file-pdf-load.c:669
+#: ../plug-ins/common/file-pdf-load.c:667
 msgid "Wrong password! Please input the right one:"
 msgstr "Contrasenya incorrecta! Introduïu la correcta:"
 
-#: ../plug-ins/common/file-pdf-load.c:687
+#: ../plug-ins/common/file-pdf-load.c:685
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "No s'ha pogut carregar «%s»: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:839
+#: ../plug-ins/common/file-pdf-load.c:837
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:841 ../plug-ins/common/file-ps.c:1237
+#: ../plug-ins/common/file-pdf-load.c:839 ../plug-ins/common/file-ps.c:1237
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pàgines"
 
-#: ../plug-ins/common/file-pdf-load.c:1037
+#: ../plug-ins/common/file-pdf-load.c:1035
 msgid "Import from PDF"
 msgstr "Importa d'un PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1042 ../plug-ins/common/file-ps.c:3551
+#: ../plug-ins/common/file-pdf-load.c:1040 ../plug-ins/common/file-ps.c:3551
 #: ../plug-ins/file-tiff/file-tiff-load.c:2058
-#: ../plug-ins/metadata/metadata-editor.c:5746
+#: ../plug-ins/metadata/metadata-editor.c:5726
 msgid "_Import"
 msgstr "_Importa"
 
-#: ../plug-ins/common/file-pdf-load.c:1074
+#: ../plug-ins/common/file-pdf-load.c:1072
 msgid "Error getting number of pages from the given PDF file."
 msgstr "S'ha produït un error obtenint el nombre de pàgines del fitxer PDF."
 
-#: ../plug-ins/common/file-pdf-load.c:1120
+#: ../plug-ins/common/file-pdf-load.c:1118
 msgid "_Width (pixels):"
 msgstr "A_mplada (píxels):"
 
-#: ../plug-ins/common/file-pdf-load.c:1121
+#: ../plug-ins/common/file-pdf-load.c:1119
 msgid "_Height (pixels):"
 msgstr "A_lçada (píxels):"
 
-#: ../plug-ins/common/file-pdf-load.c:1123
+#: ../plug-ins/common/file-pdf-load.c:1121
 msgid "_Resolution:"
 msgstr "_Resolució:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1134
+#: ../plug-ins/common/file-pdf-load.c:1132
 msgid "Use _Anti-aliasing"
 msgstr "Utilitza _antialiàsing"
 
-#: ../plug-ins/common/file-pdf-load.c:1402
-#: ../plug-ins/common/file-pdf-load.c:1403 ../plug-ins/common/file-svg.c:857
+#: ../plug-ins/common/file-pdf-load.c:1400
+#: ../plug-ins/common/file-pdf-load.c:1401 ../plug-ins/common/file-svg.c:857
 #: ../plug-ins/common/file-wmf.c:725 ../plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
@@ -3271,7 +3271,7 @@ msgstr "Es desconeix el model de color del fitxer PNG «%s»."
 msgid "Could not create new image for '%s': %s"
 msgstr "No s'ha pogut crear una imatge nova per a «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:883
+#: ../plug-ins/common/file-png.c:886
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3279,19 +3279,19 @@ msgstr ""
 "El fitxer PNG especifica un desplaçament que ha causat que la capa es "
 "posicioni fora de la imatge."
 
-#: ../plug-ins/common/file-png.c:1117
+#: ../plug-ins/common/file-png.c:1121
 msgid "Apply PNG Offset"
 msgstr "Aplica el desplaçament PNG"
 
-#: ../plug-ins/common/file-png.c:1121
+#: ../plug-ins/common/file-png.c:1125
 msgid "Ignore PNG offset"
 msgstr "Ignora el desplaçament PNG"
 
-#: ../plug-ins/common/file-png.c:1122
+#: ../plug-ins/common/file-png.c:1126
 msgid "Apply PNG offset to layer"
 msgstr "Aplica el desplaçament PNG a la capa"
 
-#: ../plug-ins/common/file-png.c:1147
+#: ../plug-ins/common/file-png.c:1151
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3300,63 +3300,63 @@ msgstr ""
 "La imatge PNG que esteu important té un desplaçament de %d, %d. Voleu "
 "aplicar aquest desplaçament a la capa?"
 
-#: ../plug-ins/common/file-png.c:1359
+#: ../plug-ins/common/file-png.c:1363
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 "S'ha produït un error en l'escriptura de l'estructura del PNG mentre "
 "s'exportava «%s»."
 
-#: ../plug-ins/common/file-png.c:1368
+#: ../plug-ins/common/file-png.c:1372
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "S'ha produït un error en l'exportació de «%s». No s'ha pogut crear "
 "l'estructura d'informació a la capçalera PNG."
 
-#: ../plug-ins/common/file-png.c:1376
+#: ../plug-ins/common/file-png.c:1380
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
 "S'ha produït un error en l'exportació «%s». No s'ha pogut exportar la imatge."
 
-#: ../plug-ins/common/file-png.c:2165
+#: ../plug-ins/common/file-png.c:2169
 msgid "Export Image as PNG"
 msgstr "Exporta imatges com a PNG"
 
-#: ../plug-ins/common/file-png.c:2170 ../plug-ins/common/file-ps.c:3693
+#: ../plug-ins/common/file-png.c:2174 ../plug-ins/common/file-ps.c:3693
 msgid "Automatic"
 msgstr "Automàtic"
 
-#: ../plug-ins/common/file-png.c:2171
+#: ../plug-ins/common/file-png.c:2175
 msgid "8 bpc RGB"
 msgstr "8 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2172
+#: ../plug-ins/common/file-png.c:2176
 msgid "8 bpc GRAY"
 msgstr "8 bpc GRAY"
 
-#: ../plug-ins/common/file-png.c:2173
+#: ../plug-ins/common/file-png.c:2177
 msgid "8 bpc RGBA"
 msgstr "8 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2174
+#: ../plug-ins/common/file-png.c:2178
 msgid "8 bpc GRAYA"
 msgstr "8 bpc GRAYA"
 
-#: ../plug-ins/common/file-png.c:2175
+#: ../plug-ins/common/file-png.c:2179
 msgid "16 bpc RGB"
 msgstr "16 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2176
+#: ../plug-ins/common/file-png.c:2180
 msgid "16 bpc GRAY"
 msgstr "16 bpc GRAY"
 
-#: ../plug-ins/common/file-png.c:2177
+#: ../plug-ins/common/file-png.c:2181
 msgid "16 bpc RGBA"
 msgstr "16 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2178
+#: ../plug-ins/common/file-png.c:2182
 msgid "16 bpc GRAYA"
 msgstr "16 bpc GRAYA"
 
@@ -8437,7 +8437,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Canvia la brillantor del pinzell seleccionat"
 
 #: ../plug-ins/gimpressionist/brush.c:585
-#: ../plug-ins/metadata/metadata-editor.c:588
+#: ../plug-ins/metadata/metadata-editor.c:595
 msgid "Select:"
 msgstr "Selecciona:"
 
@@ -11438,52 +11438,98 @@ msgstr "Mostra el marc amb _filferros"
 msgid "Update preview _live"
 msgstr "Actualitza la previsua_lització"
 
-#: ../plug-ins/metadata/metadata-editor.c:434
+#: ../plug-ins/metadata/metadata-editor.c:437
 msgid "_Edit Metadata"
 msgstr "_Edita les metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:438
+#: ../plug-ins/metadata/metadata-editor.c:441
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Edita les metadades (IPTC, EXIF, XMP)"
 
-#: ../plug-ins/metadata/metadata-editor.c:557
+#: ../plug-ins/metadata/metadata-editor.c:553
+msgid "Error loading metadata-editor dialog."
+msgstr "S'ha produït un error en carregar el diàleg de l'editor de metadades."
+
+#: ../plug-ins/metadata/metadata-editor.c:564
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Editor de metadades: %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:566
+#: ../plug-ins/metadata/metadata-editor.c:573
 msgid "_Write Metadata"
 msgstr "_Escriu les metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:590
+#: ../plug-ins/metadata/metadata-editor.c:597
 msgid "Import metadata"
 msgstr "Importa les metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:592
+#: ../plug-ins/metadata/metadata-editor.c:599
 msgid "Export metadata"
 msgstr "Exporta metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:829
+#: ../plug-ins/metadata/metadata-editor.c:807
+#, c-format
+msgid "Error loading calendar. %s"
+msgstr "S'ha produït un error en carregar el calendari. %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:835
 msgid "Calendar Date:"
 msgstr "Data del calendari:"
 
-#: ../plug-ins/metadata/metadata-editor.c:833
+#: ../plug-ins/metadata/metadata-editor.c:839
 msgid "Set Date"
 msgstr "Estableix la data"
 
-#: ../plug-ins/metadata/metadata-editor.c:1687
+#: ../plug-ins/metadata/metadata-editor.c:1573
+msgid ""
+"Enter or edit GPS value here.\n"
+"Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
+"the following examples:\n"
+"10deg 15' 20\", or 10° 15' 20\", or 10:15:20.45, or 10 15 20, or 10 15.30, "
+"or 10.45\n"
+"Delete all text to remove the current value."
+msgstr ""
+"Introduïu o editeu el valor del GPS aquí.\n"
+"Els valors vàlids consisteixen en 1, 2 o 3 nombres (graus, minuts, segons); "
+"mireu els exemples següents:\n"
+"10graus 15 '20 \", o 10° 15' 20\", o 10: 15:20.45, o 10 15 20, o 10 15.30, o "
+"10.45\n"
+"Suprimiu tot el text per eliminar el valor actual."
+
+#: ../plug-ins/metadata/metadata-editor.c:1579
+msgid ""
+"Enter or edit GPS altitude value here.\n"
+"A valid value consists of one number:\n"
+"e.g. 100, or 12.24\n"
+"Depending on the selected measurement type the value should be entered in "
+"meter (m) or feet (ft)\n"
+"Delete all text to remove the current value."
+msgstr ""
+"Introduïu o editeu el valor de l'altitud del GPS aquí.\n"
+"Un valor vàlid consisteix en un número:\n"
+"per exemple. 100 o 12.24\n"
+"En funció del tipus de mesura seleccionat, el valor s'ha d'introduir en "
+"metres (m) o peus (peus)\n"
+"Suprimiu tot el text per eliminar el valor actual."
+
+#: ../plug-ins/metadata/metadata-editor.c:1715
 msgid "Unrated"
 msgstr "Sense valoració"
 
-#: ../plug-ins/metadata/metadata-editor.c:5742
+#: ../plug-ins/metadata/metadata-editor.c:4413
+#, c-format
+msgid "Failed to set metadata tag %s"
+msgstr "No s'ha pogut establir l'etiqueta de metadades %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:5722
 msgid "Import Metadata File"
 msgstr "Importa el fitxer de metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:5777
+#: ../plug-ins/metadata/metadata-editor.c:5757
 msgid "Export Metadata File"
 msgstr "Exporta el fitxer de metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:5781
+#: ../plug-ins/metadata/metadata-editor.c:5761
 msgid "_Export"
 msgstr "_Exporta"
 
@@ -11655,11 +11701,11 @@ msgid "Other"
 msgstr "Altres"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-msgid "Above Sea Level"
+msgid "Above sea level"
 msgstr "Per sobre el nivell del mar"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-msgid "Below Sea Level"
+msgid "Below sea level"
 msgstr "Per sota el nivell del mar"
 
 #: ../plug-ins/metadata/metadata-tags.c:275
@@ -11678,25 +11724,37 @@ msgstr "Est"
 msgid "West"
 msgstr "Oest"
 
-#: ../plug-ins/metadata/metadata-viewer.c:157
+#: ../plug-ins/metadata/metadata-viewer.c:171
 msgid "_View Metadata"
 msgstr "_Visualitza les metadades"
 
-#: ../plug-ins/metadata/metadata-viewer.c:161
+#: ../plug-ins/metadata/metadata-viewer.c:175
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Visualitza les metadades (Exif, IPTC, XMP)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:257
+#: ../plug-ins/metadata/metadata-viewer.c:265
+msgid "Error loading metadata-viewer dialog."
+msgstr "S'ha produït un error en carregar el diàleg del visor de metadades."
+
+#: ../plug-ins/metadata/metadata-viewer.c:276
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Visualitzador de metadades: %s"
 
-#: ../plug-ins/metadata/metadata-viewer.c:349
+#: ../plug-ins/metadata/metadata-viewer.c:368
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu més caràcter(s))"
 
-#: ../plug-ins/metadata/metadata-viewer.c:494
+#: ../plug-ins/metadata/metadata-viewer.c:527
+msgid " meter"
+msgstr "Metres"
+
+#: ../plug-ins/metadata/metadata-viewer.c:528
+msgid " feet"
+msgstr "Peus"
+
+#: ../plug-ins/metadata/metadata-viewer.c:624
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu més byte(s))"
@@ -12237,3100 +12295,4 @@ msgstr "E_scàner/càmera..."
 msgid "Transferring data from scanner/camera"
 msgstr "S'estan transferint dades de l'escàner/càmera"
 
-#~ msgid "_Quality:"
-#~ msgstr "_Qualitat:"
 
-#~ msgid "JPEG quality parameter"
-#~ msgstr "Paràmetres de qualitat del JPEG"
-
-#~ msgid "_Use quality settings from original image"
-#~ msgstr "Utilitza la configuració de q_ualitat de la imatge original"
-
-#~ msgid ""
-#~ "If the original image was loaded from a JPEG file using non-standard "
-#~ "quality settings (quantization tables), enable this option to get almost "
-#~ "the same quality and file size."
-#~ msgstr ""
-#~ "Si la imatge original s'ha carregat a partir d'un fitxer JPEG utilitzant "
-#~ "una configuració de qualitat no-estàndard (taules de quantificació), "
-#~ "habiliteu aquesta opció per a mantenir com a mínim la mateixa qualitat i "
-#~ "mida de fitxer."
-
-#~ msgid "Sho_w preview in image window"
-#~ msgstr "Mostra la _previsualització en una finestra d'imatge"
-
-#~ msgid "Save _Exif data"
-#~ msgstr "Desa les dades _Exif"
-
-#~ msgid "Save _IPTC data"
-#~ msgstr "Desa les dades _IPTC"
-
-#~ msgid "Save _thumbnail"
-#~ msgstr "Desa la minia_tura"
-
-#~ msgid "Comment"
-#~ msgstr "Comentari"
-
-#~ msgid "S_moothing:"
-#~ msgstr "S_uavitzat:"
-
-#~ msgid "_Optimize"
-#~ msgstr "_Optimitza"
-
-#~ msgid "Use arithmetic _coding"
-#~ msgstr "Utilitzeu la _codificació aritmètica"
-
-#~ msgid "_Progressive"
-#~ msgstr "_Progressiu"
-
-#~ msgid "Sa_ve Defaults"
-#~ msgstr "Desa els _valors per defecte"
-
-#~ msgid "_Interlacing (Adam7)"
-#~ msgstr "_Entrellaçat (Adam7)"
-
-#~ msgid "Save layer o_ffset"
-#~ msgstr "Desa el _desplaçament de la capa"
-
-#~ msgid "Save _resolution"
-#~ msgstr "Desa la _resolució"
-
-#~ msgid "Save color _values from transparent pixels"
-#~ msgstr "Desa els valors dels _colors dels píxels transparents"
-
-#~ msgid "Save comme_nt"
-#~ msgstr "De_sa el comentari"
-
-#~ msgid "Save E_xif data"
-#~ msgstr "Desa les dades E_xif"
-
-#~ msgid "Save XMP data"
-#~ msgstr "Desa les dades XMP"
-
-#~ msgid "Save IPTC data"
-#~ msgstr "Desa les dades IPTC"
-
-#~ msgid "Save thumbnail"
-#~ msgstr "Desa la miniatura"
-
-#~ msgid "Save color profile"
-#~ msgstr "Desa el perfil de color"
-
-#~ msgid "Co_mpression level:"
-#~ msgstr "Nivell de co_mpressió:"
-
-#~ msgid "Creator keyword data not nul-terminated"
-#~ msgstr "Les dades de les paraules clau del creador no s'acaben en NULL"
-
-#~ msgid "Invalid bitmap type %d in channel information chunk"
-#~ msgstr ""
-#~ "El tipus %d mapa de bits no és vàlid al fragment d'informació del canal"
-
-#~ msgid "XMC Options"
-#~ msgstr "Opcions de l'XMC"
-
-#~ msgid "_Use this value only for a frame which size is not specified."
-#~ msgstr ""
-#~ "_Utilitza aquest valor només quan no s'especifiqui la mida del marc."
-
-#~ msgid "_Replace the size of all frames even if it is specified."
-#~ msgstr ""
-#~ "_Reemplaça la mida de tots els marcs encara que estigui especificada."
-
-#~ msgid "_Delay:"
-#~ msgstr "Retar_d:"
-
-#~ msgid "_Use this value only for a frame which delay is not specified."
-#~ msgstr ""
-#~ "_Utilitza aquest valor pel fotograma en el qual no s'ha especificat el "
-#~ "temps de retard."
-
-#~ msgid "_Replace the delay of all frames even if it is specified."
-#~ msgstr ""
-#~ "_Substitueix el retard de tots els fotogrames fins i tot si està "
-#~ "especificat."
-
-#~ msgid ""
-#~ "The part of copyright information that exceeded 65535 characters was "
-#~ "removed."
-#~ msgstr ""
-#~ "S'ha eliminat el fragment de la informació del copyright que superava els "
-#~ "65535 caràcters."
-
-#~ msgid ""
-#~ "The part of license information that exceeded 65535 characters was "
-#~ "removed."
-#~ msgstr ""
-#~ "S'ha eliminat el fragment de la informació de la llicència que superava "
-#~ "els 65535 caràcters."
-
-#~ msgid "Comment is limited to %d characters."
-#~ msgstr "El comentari està limitat a %d caràcters."
-
-#~ msgid ""
-#~ "The parasite \"%s\" is too long for an X cursor comment. It was cut off "
-#~ "to fit."
-#~ msgstr ""
-#~ "El paràsit «%s» és massa llarg pel comentari del cursor X.\n"
-#~ "S'ha suprimit la cadena que sobrepassa."
-
-#~ msgid "_Alpha threshold:"
-#~ msgstr "Llindar _alfa:"
-
-#~ msgid "TIFF"
-#~ msgstr "TIFF"
-
-#~ msgid "Error loading UI file '%s': %s"
-#~ msgstr "No s'ha pogut obrir el fitxer d'interfície d'usuari «%s»: %s"
-
-#~ msgid "Unknown error"
-#~ msgstr "Error desconegut"
-
-#~ msgid "Compression"
-#~ msgstr "Compressió"
-
-#~ msgid "_None"
-#~ msgstr "_Cap"
-
-#~ msgid "_JPEG"
-#~ msgstr "_JPEG"
-
-#~ msgid "Save _layers"
-#~ msgstr "_Desa les capes"
-
-#~ msgid "Colors are not stored premultiplied by the associated alpha"
-#~ msgstr "Els colors no s’emmagatzemen premultiplats per l’alfa associada"
-
-#~ msgid "S_ave Exif data"
-#~ msgstr "Des_a les dades Exif"
-
-#~ msgid "<b>Comment</b>"
-#~ msgstr "<b>Comentari</b>"
-
-#~ msgid "CMY"
-#~ msgstr "CMY"
-
-#~ msgid "cyan-k"
-#~ msgstr "cian-k"
-
-#~ msgid "magenta-k"
-#~ msgstr "magenta-k"
-
-#~ msgid "yellow-k"
-#~ msgstr "groc-k"
-
-#~ msgid "Cyan_K"
-#~ msgstr "Cian_K"
-
-#~ msgid "Magenta_K"
-#~ msgstr "Magenta_K"
-
-#~ msgid "Yellow_K"
-#~ msgstr "Groc_K"
-
-#~ msgid "Text"
-#~ msgstr "Text"
-
-#~ msgid "C-Source"
-#~ msgstr "Codi font"
-
-#~ msgid "GIF"
-#~ msgstr "GIF"
-
-#~ msgid ""
-#~ "Error loading UI file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "No s'ha pogut carregar el fitxer d'interfície d'usuari «%s»:\n"
-#~ "%s"
-
-#~ msgid "The default comment is limited to %d characters."
-#~ msgstr "El comentari per defecte està limitat a %d caràcters."
-
-#~ msgid "MNG"
-#~ msgstr "MNG (PNG animat)"
-
-#~ msgid "PNM"
-#~ msgstr "PNM"
-
-#~ msgid "PSP"
-#~ msgstr "PSP"
-
-#~ msgid "Raw Image"
-#~ msgstr "Imatge en cru"
-
-#~ msgid "TGA"
-#~ msgstr "TGA"
-
-#~ msgid "XBM"
-#~ msgstr "XBM"
-
-#~ msgid "XBM Options"
-#~ msgstr "Opcions de l'XBM"
-
-#~ msgid "Mask File"
-#~ msgstr "Fitxer de màscara"
-
-#~ msgid "GFLI 1.3 - Load framestack"
-#~ msgstr "GFLI 1.3 - carrega la pila de fotogrames"
-
-#~ msgid "GFLI 1.3"
-#~ msgstr "GFLI 1.3"
-
-#~ msgid "I_nterlace"
-#~ msgstr "E_ntrellaçat"
-
-#~ msgid "GIF Options"
-#~ msgstr "Opcions del GIF"
-
-#~ msgid "GIF supports hundredths of a second precision."
-#~ msgstr "El GIF suporta centèsimes (de segon) de precisió."
-
-#~ msgid "10"
-#~ msgstr "10"
-
-#~ msgid "RGB Save Type"
-#~ msgstr "Tipus de desat RGB"
-
-#~ msgid "S_ave Defaults"
-#~ msgstr "Desa els _valors per defecte"
-
-#~ msgid "Simple blur, fast but not very strong"
-#~ msgstr "Difuminació simple, ràpida però no molt forta"
-
-#~ msgid "_Blur"
-#~ msgstr "_Difumina"
-
-#~ msgid "Blurring"
-#~ msgstr "S'està difuminant"
-
-#~ msgid "Simulate a cartoon by enhancing edges"
-#~ msgstr "Simula un còmic realçant les vores amb negre"
-
-#~ msgid "Ca_rtoon (legacy)..."
-#~ msgstr "Cò_mic (antic)..."
-
-#~ msgid "Cartoon"
-#~ msgstr "Còmic"
-
-#~ msgid "_Mask radius:"
-#~ msgstr "Radi de la _màscara:"
-
-#~ msgid "_Percent black:"
-#~ msgstr "_Percentatge de negre:"
-
-#~ msgid "Adding checkerboard"
-#~ msgstr "S'està afegint un tauler d'escacs"
-
-#~ msgid "Analyze the set of colors in the image"
-#~ msgstr "Analitza el conjunt de colors de la imatge"
-
-#~ msgid "Colorcube A_nalysis..."
-#~ msgstr "A_nàlisi del cub de color..."
-
-#~ msgid "Colorcube Analysis"
-#~ msgstr "Anàlisi del cub de color"
-
-#~ msgid "No colors"
-#~ msgstr "Sense colors"
-
-#~ msgid "Only one unique color"
-#~ msgstr "Només un únic color"
-
-#~ msgid "Number of unique colors: %d"
-#~ msgstr "Nombre de colors únics: %d"
-
-#~ msgid "Replace all colors with shades of a specified color"
-#~ msgstr "Substitueix tots els colors amb ombres d'un color específic"
-
-#~ msgid "Colorif_y..."
-#~ msgstr "_Acoloreix..."
-
-#~ msgid "Colorifying"
-#~ msgstr "S'està acolorint"
-
-#~ msgid "Colorify"
-#~ msgstr "Acoloreix"
-
-#~ msgid "Custom color:"
-#~ msgstr "Color personalitzat:"
-
-#~ msgid "Colorify Custom Color"
-#~ msgstr "Acoloreix amb el color personalitzat"
-
-#~ msgid "Stretch brightness values to cover the full range"
-#~ msgstr "Amplia la brillantor de la imatge per cobrir-ne tot el rang"
-
-#~ msgid "_Normalize"
-#~ msgstr "_Normalitza"
-
-#~ msgid "Normalizing"
-#~ msgstr "S'està normalitzant"
-
-#~ msgid "Edge detection with control of edge thickness"
-#~ msgstr "Detecta les vores segons la mida de les vores"
-
-#~ msgid "_Difference of Gaussians (legacy)..."
-#~ msgstr "_Diferència de gaussians (antic)..."
-
-#~ msgid "DoG Edge Detect"
-#~ msgstr "Detecció de vora DoG"
-
-#~ msgid "Smoothing Parameters"
-#~ msgstr "Paràmetres de suavitzat"
-
-#~ msgid "_Radius 1:"
-#~ msgstr "_Radi 1:"
-
-#~ msgid "R_adius 2:"
-#~ msgstr "R_adi 2:"
-
-#~ msgid "Simulate the glowing boundary of a neon light"
-#~ msgstr "Simula la lluentor d'un llum de neó"
-
-#~ msgid "_Neon (legacy)..."
-#~ msgstr "_Neó (antic)..."
-
-#~ msgid "Neon"
-#~ msgstr "Neó"
-
-#~ msgid "Neon Detection"
-#~ msgstr "Detecció de neó"
-
-#~ msgid "_Amount:"
-#~ msgstr "Qu_antitat:"
-
-#~ msgid "Simulate an image created by embossing"
-#~ msgstr "Simula una imatge esculpida sobre la pedra"
-
-#~ msgid "_Emboss (legacy)..."
-#~ msgstr "_Esculpeix (antic)..."
-
-#~ msgid "Emboss"
-#~ msgstr "Esculpeix"
-
-#~ msgid "Function"
-#~ msgstr "Funció"
-
-#~ msgid "_Bumpmap"
-#~ msgstr "_Mapa de relleu"
-
-#~ msgid "_Emboss"
-#~ msgstr "R_elleu"
-
-#~ msgid "_Azimuth:"
-#~ msgstr "_Azimut:"
-
-#~ msgid "E_levation:"
-#~ msgstr "E_levació:"
-
-#~ msgid "Brush"
-#~ msgstr "Pinzell"
-
-#~ msgid "HEIF"
-#~ msgstr "HEIF"
-
-#~ msgid "Quality:"
-#~ msgstr "Qualitat:"
-
-#~ msgid "Save background color"
-#~ msgstr "Desa el color de fons"
-
-#~ msgid "Save creation time"
-#~ msgstr "Desa el moment de creació"
-
-#~ msgid "Pattern"
-#~ msgstr "Patró"
-
-#~ msgid "You must select a file to save!"
-#~ msgstr "Heu de seleccionar un fitxer per desar."
-
-#~ msgid "Raw"
-#~ msgstr "En cru"
-
-#~ msgid "SUNRAS"
-#~ msgstr "SUNRAS"
-
-#~ msgid "RunLength Encoded"
-#~ msgstr "Codificació RunLenght"
-
-#~ msgid "XPM"
-#~ msgstr "XPM"
-
-#~ msgid "Cyan:"
-#~ msgstr "Cian:"
-
-#~ msgid "Yellow:"
-#~ msgstr "Groc:"
-
-#~ msgid "Magenta:"
-#~ msgstr "Magenta:"
-
-#~ msgid "Darker:"
-#~ msgstr "Més fosc:"
-
-#~ msgid "Lighter:"
-#~ msgstr "Més clar:"
-
-#~ msgid "More Sat:"
-#~ msgstr "Més satur.:"
-
-#~ msgid "Less Sat:"
-#~ msgstr "Menys satur.:"
-
-#~ msgid "Current:"
-#~ msgstr "Actual:"
-
-#~ msgid "Interactively modify the image colors"
-#~ msgstr "Modifica els colors de la imatge interactivament"
-
-#~ msgid "_Filter Pack..."
-#~ msgstr "Paquet de _filtres..."
-
-#~ msgid "FP can only be used on RGB images."
-#~ msgstr "El paquet de filtratge només es pot utilitzar en imatges RGB."
-
-#~ msgid "FP can only be run interactively."
-#~ msgstr "El paquet de filtratge només es pot executar de manera interactiva."
-
-#~ msgid "Applying filter pack"
-#~ msgstr "S'està aplicant el paquet de filtratge"
-
-#~ msgid "Original:"
-#~ msgstr "Original:"
-
-#~ msgid "Hue Variations"
-#~ msgstr "Variacions de to"
-
-#~ msgid "Roughness"
-#~ msgstr "Aspror"
-
-#~ msgid "Affected Range"
-#~ msgstr "Rang afectat"
-
-#~ msgid "Sha_dows"
-#~ msgstr "Om_bres"
-
-#~ msgid "_Midtones"
-#~ msgstr "Tons _mitjans"
-
-#~ msgid "H_ighlights"
-#~ msgstr "Re_alçats"
-
-#~ msgid "Windows"
-#~ msgstr "Finestres"
-
-#~ msgid "A_dvanced"
-#~ msgstr "Ava_nçat"
-
-#~ msgid "Value Variations"
-#~ msgstr "Variacions de valor"
-
-#~ msgid "Saturation Variations"
-#~ msgstr "Variacions de saturació"
-
-#~ msgid "Select Pixels By"
-#~ msgstr "Selecciona els píxels per"
-
-#~ msgid "H_ue"
-#~ msgstr "_To"
-
-#~ msgid "Satu_ration"
-#~ msgstr "Satu_ració"
-
-#~ msgid "V_alue"
-#~ msgstr "V_alor"
-
-#~ msgid "Show"
-#~ msgstr "Mostra"
-
-#~ msgid "_Entire image"
-#~ msgstr "Imatg_e sencera"
-
-#~ msgid "Se_lection only"
-#~ msgstr "Només la se_lecció"
-
-#~ msgid "Selec_tion in context"
-#~ msgstr "Selecció en con_text"
-
-#~ msgid "Filter Pack Simulation"
-#~ msgstr "Simulació del paquet de filtres"
-
-#~ msgid "Shadows:"
-#~ msgstr "Ombres:"
-
-#~ msgid "Midtones:"
-#~ msgstr "Tons mitjans:"
-
-#~ msgid "Highlights:"
-#~ msgstr "Ressaltats:"
-
-#~ msgid "Advanced Filter Pack Options"
-#~ msgstr "Opcions avançades del paquet de filtratge"
-
-#~ msgid "Preview Size"
-#~ msgstr "Previsualitza la mida"
-
-#~ msgid "Reduce image to pure red, green, and blue"
-#~ msgstr "Redueix la imatge en colors vermells, verd i blaus purs"
-
-#~ msgid "Maxim_um RGB..."
-#~ msgstr "RGB mà_xim..."
-
-#~ msgid "Can only operate on RGB drawables."
-#~ msgstr "Només funciona en imatges RGB."
-
-#~ msgid "Max RGB"
-#~ msgstr "RGB màxim"
-
-#~ msgid "Maximum RGB Value"
-#~ msgstr "Valor màxim RGB"
-
-#~ msgid "_Hold the maximal channels"
-#~ msgstr "Retén els canals _màxims"
-
-#~ msgid "Ho_ld the minimal channels"
-#~ msgstr "Retén els canals mí_nims"
-
-#~ msgid "Round"
-#~ msgstr "Rodó"
-
-#~ msgid "Line"
-#~ msgstr "Línia"
-
-#~ msgid "PS Square (Euclidean Dot)"
-#~ msgstr "PS quadrat (punt euclidià)"
-
-#~ msgid "PS Diamond"
-#~ msgstr "PS diamant"
-
-#~ msgid "_Grey"
-#~ msgstr "_Gris"
-
-#~ msgid "R_ed"
-#~ msgstr "V_ermell"
-
-#~ msgid "_Green"
-#~ msgstr "V_erd"
-
-#~ msgid "_Blue"
-#~ msgstr "_Blau"
-
-#~ msgid "C_yan"
-#~ msgstr "C_ian"
-
-#~ msgid "Magen_ta"
-#~ msgstr "Magen_ta"
-
-#~ msgid "_Yellow"
-#~ msgstr "Gr_oc"
-
-#~ msgid "Luminance"
-#~ msgstr "Lluminositat"
-
-#~ msgid "Halftone the image to give newspaper-like effect"
-#~ msgstr ""
-#~ "Manipula el to de la imatge per a donar-li una aparença de paper de diari"
-
-#~ msgid "Newsprin_t..."
-#~ msgstr "_Foto de diari..."
-
-#~ msgid "Newsprint"
-#~ msgstr "Paper premsa"
-
-#~ msgid "_Angle:"
-#~ msgstr "_Angle:"
-
-#~ msgid "_Spot function:"
-#~ msgstr "Fun_ció de punt:"
-
-#~ msgid "Resolution"
-#~ msgstr "Resolució"
-
-#~ msgid "_Input SPI:"
-#~ msgstr "Entrada SP_I:"
-
-#~ msgid "O_utput LPI:"
-#~ msgstr "S_ortida LPI:"
-
-#~ msgid "C_ell size:"
-#~ msgstr "Mida de la c_el·la:"
-
-#~ msgid "B_lack pullout (%):"
-#~ msgstr "T_reure negre (%):"
-
-#~ msgid "Separate to:"
-#~ msgstr "Separa a:"
-
-#~ msgid "_RGB"
-#~ msgstr "_RGB"
-
-#~ msgid "C_MYK"
-#~ msgstr "C_MYK"
-
-#~ msgid "I_ntensity"
-#~ msgstr "I_ntensitat"
-
-#~ msgid "_Lock channels"
-#~ msgstr "B_loqueja els canals"
-
-#~ msgid "_Factory Defaults"
-#~ msgstr "Con_figuració original"
-
-#~ msgid "O_versample:"
-#~ msgstr "So_bremostra:"
-
-#~ msgid "Smear colors to simulate an oil painting"
-#~ msgstr "Barreja els colors per simular una pintura a l'oli"
-
-#~ msgid "Oili_fy (legacy)..."
-#~ msgstr "Pintura a l'_oli (antic)..."
-
-#~ msgid "Oil painting"
-#~ msgstr "Pintura a l'oli"
-
-#~ msgid "Oilify"
-#~ msgstr "Aplica la pintura a l'oli"
-
-#~ msgid "_Mask size:"
-#~ msgstr "Mida de la _màscara:"
-
-#~ msgid "Use m_ask-size map:"
-#~ msgstr "Utilitza el mapa de m_agnitud:"
-
-#~ msgid "_Exponent:"
-#~ msgstr "_Exponent:"
-
-#~ msgid "Use e_xponent map:"
-#~ msgstr "Utilitza el mapa d'e_xponent:"
-
-#~ msgid "_Use intensity algorithm"
-#~ msgstr "_Utilitza l'algoritme d'intensitat"
-
-#~ msgid "Simulate color distortion produced by a copy machine"
-#~ msgstr "Simula la distorsió de color que produeix una màquina fotocopiadora"
-
-#~ msgid "_Photocopy (legacy)..."
-#~ msgstr "Fotocò_pia (antic)..."
-
-#~ msgid "Photocopy"
-#~ msgstr "Fotocòpia"
-
-#~ msgid "_Sharpness:"
-#~ msgstr "_Nitidesa:"
-
-#~ msgid "Percent _black:"
-#~ msgstr "Percentatge de _negre:"
-
-#~ msgid "Percent _white:"
-#~ msgstr "Percentatge de _blanc:"
-
-#~ msgid "Make image sharper (less powerful than Unsharp Mask)"
-#~ msgstr ""
-#~ "Realça les vores de la imatge (tot i que és menys potent que emmascarar "
-#~ "les parts borroses)"
-
-#~ msgid "_Sharpen..."
-#~ msgstr "Realça les vore_s..."
-
-#~ msgid "Sharpening"
-#~ msgstr "S'estan realçant les vores"
-
-#~ msgid "Sharpen"
-#~ msgstr "Realça les vores"
-
-#~ msgid "Simulate glow by making highlights intense and fuzzy"
-#~ msgstr "Simula una lluentor fent taques de llum intenses i difoses"
-
-#~ msgid "_Softglow (legacy)..."
-#~ msgstr "Lluentor _suau (antic)..."
-
-#~ msgid "Softglow"
-#~ msgstr "Lluentor suau"
-
-#~ msgid "_Glow radius:"
-#~ msgstr "Radi de la _lluentor:"
-
-#~ msgid "16 bits"
-#~ msgstr "16 bits"
-
-#~ msgid "24 bits"
-#~ msgstr "24 bits"
-
-#~ msgid "32 bits"
-#~ msgstr "32 bits"
-
-#~ msgid "Load DDS"
-#~ msgstr "Carrega DDS"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancel·la"
-
-#~ msgid "OK"
-#~ msgstr "D'acord"
-
-#~ msgid "Format:"
-#~ msgstr "Format:"
-
-#~ msgid "Save:"
-#~ msgstr "Desa:"
-
-#~ msgid "<b>Advanced Options</b>"
-#~ msgstr "<b>Opcions avançades</b>"
-
-#~ msgid "Mipmaps"
-#~ msgstr "Mipmaps"
-
-#~ msgid "Load FITS File"
-#~ msgstr "Carrega un fitxer FITS"
-
-#~ msgctxt "composing"
-#~ msgid "None"
-#~ msgstr "Cap"
-
-#~ msgctxt "frame-range"
-#~ msgid "From:"
-#~ msgstr "Des de:"
-
-#~ msgctxt "frame-range"
-#~ msgid "To:"
-#~ msgstr "A:"
-
-#~ msgid "SGI"
-#~ msgstr "SGI"
-
-#~ msgid "WebP"
-#~ msgstr "WebP"
-
-#~ msgid "Image quality"
-#~ msgstr "Qualitat d'imatge"
-
-#~ msgid "Alpha channel quality"
-#~ msgstr "Qualitat del canal alfa"
-
-#~ msgid "Flame works only on RGB drawables."
-#~ msgstr "La flama només funciona amb el format RGB."
-
-#~ msgid "Create bezier curve"
-#~ msgstr "Crea una corba de Bézier"
-
-#~ msgid "The selection does not intersect the active layer or mask."
-#~ msgstr "L'àrea seleccionada no interseca amb la capa o la màscara actives."
-
-#~ msgid "Save color values from transparent pixels"
-#~ msgstr "Desa els valors dels colors dels píxels transparents"
-
-#~ msgid "Preview a GIMP layer-based animation"
-#~ msgstr "Previsualitza una animació basada en camps de GIMP"
-
-#~ msgid "_Playback..."
-#~ msgstr "Re_produeix..."
-
-#~ msgid "%.1f %%"
-#~ msgstr "%.1f %%"
-
-#~ msgid "Step _back"
-#~ msgstr "Re_cula"
-
-#~ msgid "Step back to previous frame"
-#~ msgstr "Recula al fotograma anterior"
-
-#~ msgid "_Step"
-#~ msgstr "Pa_s a pas"
-
-#~ msgid "Step to next frame"
-#~ msgstr "Avança al següent fotograma pas a pas"
-
-#~ msgid "Rewind the animation"
-#~ msgstr "Rebobina l'animació"
-
-#~ msgid "Reload the image"
-#~ msgstr "Recarrega imatge"
-
-#~ msgid "Increase the speed of the animation"
-#~ msgstr "Augmenta la velocitat de l'animació"
-
-#~ msgid "Decrease the speed of the animation"
-#~ msgstr "Redueix la velocitat de l'animació"
-
-#~ msgid "Reset speed"
-#~ msgstr "Restableix la velocitat"
-
-#~ msgid "Reset the speed of the animation"
-#~ msgstr "Restableix la velocitat de l'animació"
-
-#~ msgid "Start playback"
-#~ msgstr "Inicia la reproducció"
-
-#~ msgid "Detach"
-#~ msgstr "Desacobla"
-
-#~ msgid "Detach the animation from the dialog window"
-#~ msgstr "Desacobla l'animació d'aquesta finestra de diàleg"
-
-#~ msgid "Animation Playback:"
-#~ msgstr "Reproducció de l'animació:"
-
-#~ msgid "%d fps"
-#~ msgstr "%d FPS"
-
-#~ msgid "Default framerate"
-#~ msgstr "Nombre d'imatges per segon per defecte"
-
-#~ msgid "Playback speed"
-#~ msgstr "Velocitat de la reproducció"
-
-#~ msgid "Memory could not be allocated to the frame container."
-#~ msgstr "La memòria no es va poder assignar al marc contenidor."
-
-#~ msgid "Invalid image. Did you close it?"
-#~ msgstr "Imatge no vàlida. La tancareu?"
-
-#~ msgid "Frame %d of %d"
-#~ msgstr "Marc %d de %d"
-
-#~ msgid "Stop playback"
-#~ msgstr "Atura la reproducció"
-
-#~ msgid "Borderaverage"
-#~ msgstr "Vora mitjana"
-
-#~ msgid "Stretch color saturation to cover maximum possible range"
-#~ msgstr "Amplia la saturació del color per cobrir-ne el màxim rang possible"
-
-#~ msgid "_Color Enhance (legacy)"
-#~ msgstr "Millora del _color (antic)"
-
-#~ msgid "Color Enhance"
-#~ msgstr "Millora del color"
-
-#~ msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-#~ msgstr ""
-#~ "Les dades de la capçalera no són vàlides a «%s»: amplada=%lu, alçada=%lu, "
-#~ "bytes=%lu"
-
-#~ msgid "Error in GIMP brush file '%s'"
-#~ msgstr "El fitxer del pinzell del GIMP «%s» està malament"
-
-#~ msgid "Invalid UTF-8 string in brush file '%s'."
-#~ msgstr "S'ha trobat una cadena UTF-8 invàlida al fitxer del pinzell «%s»."
-
-#~ msgid "GIMP brush file appears to be corrupted."
-#~ msgstr "Sembla que el fitxer del pinzell del GIMP està malmès."
-
-#~ msgid "Invalid UTF-8 string in pattern file '%s'."
-#~ msgstr ""
-#~ "S'ha trobat una cadena de text UTF-8 no vàlida al fitxer del patró «%s»."
-
-#~ msgid "Transform image with the Mandelbrot Fractal"
-#~ msgstr "Transforma la imatge amb una fractal Mandelbrot"
-
-#~ msgid "_Fractal Trace (legacy)..."
-#~ msgstr "Composició _fractal (antic)..."
-
-#~ msgid "Fractal Trace"
-#~ msgstr "Composició fractal"
-
-#~ msgid "Outside Type"
-#~ msgstr "Tipus exterior"
-
-#~ msgid "_Wrap"
-#~ msgstr "_Ajusta"
-
-#~ msgid "Mandelbrot Parameters"
-#~ msgstr "Paràmetres de Mandelbrot"
-
-#~ msgid "X_1:"
-#~ msgstr "X_1:"
-
-#~ msgid "X_2:"
-#~ msgstr "X_2:"
-
-#~ msgid "Y_1:"
-#~ msgstr "Y_1:"
-
-#~ msgid "Y_2:"
-#~ msgstr "Y_2:"
-
-#~ msgid "_Guillotine"
-#~ msgstr "_Guillotina"
-
-#~ msgid "The most widely useful method for sharpening an image"
-#~ msgstr "La forma més útil per difuminar o realçar les vores d'una imatge"
-
-#~ msgid "_Unsharp Mask (legacy)..."
-#~ msgstr "_Emmascara les parts borroses (antic)..."
-
-#~ msgid "Merging"
-#~ msgstr "S'està combinant"
-
-#~ msgid "Unsharp Mask"
-#~ msgstr "Emmascara les parts borroses"
-
-#~ msgid "TIFF export cannot handle indexed images with an alpha channel."
-#~ msgstr "L'exportació a FITS no pot gestionar imatges amb canals alfa."
-
-#~ msgid "save Exif data"
-#~ msgstr "Desa les dades Exif"
-
-#~ msgid "save XMP data"
-#~ msgstr "Desa les dades XMP"
-
-#~ msgid "save IPTC data"
-#~ msgstr "Desa les dades IPTC"
-
-#~ msgid "save thumbnail"
-#~ msgstr "desa la miniatura"
-
-#~ msgid ""
-#~ "The image '%s' is in grayscale but does not contain any gray component."
-#~ msgstr ""
-#~ "La imatge «%s» està en escala de grisos però no conté cap component gris."
-
-#~ msgid "The image '%s' is in RGB, but is missing some of the components."
-#~ msgstr ""
-#~ "La imatge «%s» està en mode RGB, però li falta algun dels components."
-
-#~ msgid ""
-#~ "The image '%s' is in the CIEXYZ color space, but there is no code in "
-#~ "place to convert it to RGB."
-#~ msgstr ""
-#~ "La imatge «%s» està en un espai de color CIE XYZ, però no s'ha trobat el "
-#~ "codi per a convertir-la al mode RGB."
-
-#~ msgid ""
-#~ "The image '%s' is in the CIELAB color space, but there is no code in "
-#~ "place to convert it to RGB."
-#~ msgstr ""
-#~ "La imatge «%s» està en un espai de color CIE Lab, però no s'ha trobat el "
-#~ "codi per a convertir-la al mode RGB."
-
-#~ msgid ""
-#~ "The image '%s' is in the YCbCr color space, but there is no code in place "
-#~ "to convert it to RGB."
-#~ msgstr ""
-#~ "La imatge «%s» està en un espai de color YCbCr, però no s'ha trobat el "
-#~ "codi per a convertir-la al mode RGB."
-
-#~ msgid "The image '%s' is in an unknown color space."
-#~ msgstr "La imatge «%s» està en un espai de color desconegut."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' does not have the same size as the "
-#~ "image. This is currently not supported."
-#~ msgstr ""
-#~ "El component d'imatge %d de la imatge «%s» no té la mateixa mida que la "
-#~ "imatge. Això no és compatible actualment."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' does not have both a hstep and vstep."
-#~ msgstr "El component %d de la imatge «%s» no té ni «hstep» ni «vstep»."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' is signed. This is currently not "
-#~ "supported."
-#~ msgstr ""
-#~ "El component d'imatge %d de la imatge «%s» està signat. Això no és "
-#~ "compatible actualment."
-
-#~ msgid "Displace pixels in a ripple pattern"
-#~ msgstr "Desplaça els píxels seguint un patró en forma d'ona"
-
-#~ msgid "_Ripple..."
-#~ msgstr "_Onades del mar..."
-
-#~ msgid "Rippling"
-#~ msgstr "S'estan fent les onades de mar"
-
-#~ msgid "Ripple"
-#~ msgstr "Onades del mar"
-
-#~ msgid "_Retain tilability"
-#~ msgstr "_Retén el mosaic"
-
-#~ msgid "Edges"
-#~ msgstr "Vores"
-
-#~ msgid "_Smear"
-#~ msgstr "_Taca"
-
-#~ msgid "_Blank"
-#~ msgstr "_Espai buit"
-
-#~ msgid "Wave Type"
-#~ msgstr "Tipus d'onada"
-
-#~ msgid "Saw_tooth"
-#~ msgstr "Den_t de serra"
-
-#~ msgid "S_ine"
-#~ msgstr "S_inus"
-
-#~ msgid "_Period:"
-#~ msgstr "_Període:"
-
-#~ msgid "A_mplitude:"
-#~ msgstr "A_mplitud:"
-
-#~ msgid "Phase _shift:"
-#~ msgstr "Desplaçament de _fase:"
-
-#~ msgid "PDF document"
-#~ msgstr "Document PDF"
-
-#~ msgid "Indexed Palette Type"
-#~ msgstr "Tipus de paleta indexada"
-
-#~ msgid "This image has no metadata attached to it."
-#~ msgstr "Aquesta imatge no té metadades adjuntes."
-
-#~ msgid "_Create"
-#~ msgstr "_Crea"
-
-#~ msgid ""
-#~ "Unable to export layer with mode '%s'.  Either the PSD file format or the "
-#~ "export plug-in does not support that, using normal mode instead."
-#~ msgstr ""
-#~ "No s'ha pogut exportar la capa amb mode «%s». O bé el format del fitxer "
-#~ "PSD o bé el connector no ho permeten, haureu d'utilitzar el mode normal."
-
-#~ msgid "Caption"
-#~ msgstr "Títol"
-
-#~ msgid "Captionwriter"
-#~ msgstr "Titular de l'autor"
-
-#~ msgid "Keywords/Categories"
-#~ msgstr "Paraules claus/Categories"
-
-#~ msgid ""
-#~ "Transmission\n"
-#~ "reference"
-#~ msgstr ""
-#~ "Transmissió\n"
-#~ "referència"
-
-#~ msgid "Credits/Origin"
-#~ msgstr "Crèdits/Origen"
-
-#~ msgid "Write IPTC Data"
-#~ msgstr "Escriure dades IPTC"
-
-#~ msgid "Original"
-#~ msgstr "Original"
-
-#~ msgid "Rotated"
-#~ msgstr "Rotat"
-
-#~ msgid "Continuous update"
-#~ msgstr "Actualització contínua"
-
-#~ msgid "Area:"
-#~ msgstr "Àrea:"
-
-#~ msgid "Entire Layer"
-#~ msgstr "Capa sencera"
-
-#~ msgid "Context"
-#~ msgstr "Context"
-
-#~ msgctxt "color-range"
-#~ msgid "From:"
-#~ msgstr "Des de:"
-
-#~ msgctxt "color-range"
-#~ msgid "To:"
-#~ msgstr "A:"
-
-#~ msgctxt "color-rotate"
-#~ msgid "From:"
-#~ msgstr "Des de:"
-
-#~ msgctxt "color-rotate"
-#~ msgid "To:"
-#~ msgstr "A:"
-
-#~ msgid "Hue:"
-#~ msgstr "To:"
-
-#~ msgid "Saturation:"
-#~ msgstr "Saturació:"
-
-#~ msgid "Gray Mode"
-#~ msgstr "Mode gris"
-
-#~ msgid "Treat as this"
-#~ msgstr "Tracta'l com aquest"
-
-#~ msgid "Change to this"
-#~ msgstr "Canvia a aquest"
-
-#~ msgid "Units"
-#~ msgstr "Unitats"
-
-#~ msgid "Radians/Pi"
-#~ msgstr "Radians/Pi"
-
-#~ msgid "Degrees"
-#~ msgstr "Graus"
-
-#~ msgid "Rotate Colors"
-#~ msgstr "Gira els colors"
-
-#~ msgid "Gray Options"
-#~ msgstr "Opcions de gris"
-
-#~ msgid "Switch to Clockwise"
-#~ msgstr "Commuta al sentit horari"
-
-#~ msgid "Switch to C/Clockwise"
-#~ msgstr "Commuta al sentit antihorari"
-
-#~ msgid "Change Order of Arrows"
-#~ msgstr "Canvia l'ordre de les fletxes"
-
-#~ msgid "Replace a range of colors with another"
-#~ msgstr "Substitueix un rang de colors per un altre"
-
-#~ msgid "_Rotate Colors..."
-#~ msgstr "Gi_ra els colors..."
-
-#~ msgid "Rotating the colors"
-#~ msgstr "S'està rotant el mapa de colors"
-
-#~ msgid "_Modify red channel"
-#~ msgstr "_Modifica el canal vermell"
-
-#~ msgid "_Modify hue channel"
-#~ msgstr "_Modifica el canal del to"
-
-#~ msgid "Mo_dify green channel"
-#~ msgstr "Mo_difica el canal verd"
-
-#~ msgid "Mo_dify saturation channel"
-#~ msgstr "Mo_difica el canal saturació"
-
-#~ msgid "Mod_ify blue channel"
-#~ msgstr "Mod_ifica el canal blau"
-
-#~ msgid "Mod_ify luminosity channel"
-#~ msgstr "Mod_ifica el canal lluminositat"
-
-#~ msgid "Red _frequency:"
-#~ msgstr "_Freqüència de vermell:"
-
-#~ msgid "Hue _frequency:"
-#~ msgstr "_Freqüència de to:"
-
-#~ msgid "Green fr_equency:"
-#~ msgstr "Freqüència de v_erd:"
-
-#~ msgid "Saturation fr_equency:"
-#~ msgstr " Fr_eqüència de saturació:"
-
-#~ msgid "Blue freq_uency:"
-#~ msgstr "Freqüència de bla_u:"
-
-#~ msgid "Luminosity freq_uency:"
-#~ msgstr "Freqüència de ll_uminositat:"
-
-#~ msgid "Red _phaseshift:"
-#~ msgstr "Canvi de _fase vermell:"
-
-#~ msgid "Hue _phaseshift:"
-#~ msgstr "Canvi de _fase del to:"
-
-#~ msgid "Green ph_aseshift:"
-#~ msgstr "Canvi de f_ase verd:"
-
-#~ msgid "Saturation ph_aseshift:"
-#~ msgstr "Canvi de f_ase saturació:"
-
-#~ msgid "Blue pha_seshift:"
-#~ msgstr "Canvi de fa_se blau:"
-
-#~ msgid "Luminosity pha_seshift:"
-#~ msgstr "Canvi de fa_se lluminositat:"
-
-#~ msgid "Alter colors in various psychedelic ways"
-#~ msgstr "Altera els colors en diverses formes psicodèliques"
-
-#~ msgid "_Alien Map..."
-#~ msgstr "M_apa estrany..."
-
-#~ msgid "Alien Map: Transforming"
-#~ msgstr "Mapa estrany: s'està transformant"
-
-#~ msgid "Alien Map"
-#~ msgstr "Mapa estrany"
-
-#~ msgid "Number of cycles covering full value range"
-#~ msgstr "Nombre de cicles cobrint tot l'abast de valors"
-
-#~ msgid "Phase angle, range 0-360"
-#~ msgstr "Angle de fase. Abast: 0-360"
-
-#~ msgid "_RGB color model"
-#~ msgstr "Model de color _RGB"
-
-#~ msgid "_HSL color model"
-#~ msgstr "Model de color _HSL"
-
-#~ msgid "Tried to display an invalid layer."
-#~ msgstr "S'ha intentat mostrar una capa no vàlida."
-
-#~ msgid "Antialias using the Scale3X edge-extrapolation algorithm"
-#~ msgstr ""
-#~ "El suavitzat de vores utilitza un algorisme d'extrapolació de vores "
-#~ "Scale3X"
-
-#~ msgid "_Antialias"
-#~ msgstr "Su_avitza les vores"
-
-#~ msgid "Antialiasing..."
-#~ msgstr "S'estan suavitzant les vores..."
-
-#~ msgid "Add a canvas texture to the image"
-#~ msgstr "Afegeix a la imatge una textura en forma tapís"
-
-#~ msgid "_Apply Canvas..."
-#~ msgstr "Efecte t_apís..."
-
-#~ msgid "Applying canvas"
-#~ msgstr "S'està aplicant l'efecte tapís"
-
-#~ msgid "Apply Canvas"
-#~ msgstr "Aplica l'efecte tapís"
-
-#~ msgid "_Top-right"
-#~ msgstr "Superior dre_t"
-
-#~ msgid "Top-_left"
-#~ msgstr "Superior _esquerre"
-
-#~ msgid "_Bottom-left"
-#~ msgstr "_Inferior esquerre"
-
-#~ msgid "Bottom-_right"
-#~ msgstr "Inferior _dret"
-
-#~ msgid "Blur neighboring pixels, but only in low-contrast areas"
-#~ msgstr "Difumina els píxels veïns, però només en les àrees de poc contrast"
-
-#~ msgid "_Selective Gaussian Blur..."
-#~ msgstr "Difuminat gaussià _selectiu..."
-
-#~ msgid "Selective Gaussian Blur"
-#~ msgstr "Difuminat gaussià selectiu"
-
-#~ msgid "_Blur radius:"
-#~ msgstr "Radi de _difuminat:"
-
-#~ msgid "_Max. delta:"
-#~ msgstr "Delta _màxim:"
-
-#~ msgid "Simplest, most commonly used way of blurring"
-#~ msgstr "La forma més senzilla i que més s'utilitza per difuminar"
-
-#~ msgid "_Gaussian Blur..."
-#~ msgstr "Difuminació _gaussiana..."
-
-#~ msgid "Apply a gaussian blur"
-#~ msgstr "Aplica una difuminació gaussiana"
-
-#~ msgid "Gaussian Blur"
-#~ msgstr "Difuminació gaussiana"
-
-#~ msgid "Blur Radius"
-#~ msgstr "Radi de difuminació"
-
-#~ msgid "Blur Method"
-#~ msgstr "Mètode de difuminat"
-
-#~ msgid "_IIR"
-#~ msgstr "_IIR"
-
-#~ msgid "Simulate movement using directional blur"
-#~ msgstr ""
-#~ "Simula una imatge en moviment utilitzant una difuminació direccional"
-
-#~ msgid "_Motion Blur..."
-#~ msgstr "Difuminació de _moviment..."
-
-#~ msgid "Motion blurring"
-#~ msgstr "S'està difuminant amb l'efecte de moviment"
-
-#~ msgid "Motion Blur"
-#~ msgstr "Difuminació de moviment"
-
-#~ msgid "Blur Type"
-#~ msgstr "Tipus de difuminació"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Linear"
-#~ msgstr "_Lineal"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Radial"
-#~ msgstr "_Radial"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Zoom"
-#~ msgstr "_Ampliació"
-
-#~ msgid "Blur Center"
-#~ msgstr "Difumina el centre"
-
-#~ msgid "Blur _outward"
-#~ msgstr "Difumina el _contorn"
-
-#~ msgid "Blur Parameters"
-#~ msgstr "Paràmetres de difuminació"
-
-#~ msgid "Create an embossing effect using a bump map"
-#~ msgstr "Crea un efecte de rugositat utilitzant un mapa de relleu"
-
-#~ msgid "_Bump Map..."
-#~ msgstr "_Mapa de relleu..."
-
-#~ msgid "Bump-mapping"
-#~ msgstr "Mapatge de relleu"
-
-#~ msgid "Bump Map"
-#~ msgstr "Mapa de relleu"
-
-#~ msgid "_Bump map:"
-#~ msgstr "Mapa de r_elleu:"
-
-#~ msgid "_Map type:"
-#~ msgstr "Tipus de _mapa:"
-
-#~ msgid "Co_mpensate for darkening"
-#~ msgstr "Co_mpensa la foscor"
-
-#~ msgid "I_nvert bumpmap"
-#~ msgstr "I_nverteix el mapa de relleu"
-
-#~ msgid "_Tile bumpmap"
-#~ msgstr "_Fes un mosaic del mapa de relleu"
-
-#~ msgid "_Elevation:"
-#~ msgstr "_Elevació:"
-
-#~ msgid ""
-#~ "The offset can be adjusted by dragging the preview using the middle mouse "
-#~ "button."
-#~ msgstr ""
-#~ "El desplaçament es pot ajustar arrossegant la previsualització utilitzant "
-#~ "el botó central del ratolí."
-
-#~ msgid "_Waterlevel:"
-#~ msgstr "_Nivell de l'aigua:"
-
-#~ msgid "A_mbient:"
-#~ msgstr "A_mbient:"
-
-#~ msgid "Alter colors by mixing RGB Channels"
-#~ msgstr "Altera els colors barrejant els canals RGB"
-
-#~ msgid "Channel Mi_xer..."
-#~ msgstr "Me_sclador de canals..."
-
-#~ msgid "Channel Mixer"
-#~ msgstr "Mesclador de canals"
-
-#~ msgid "O_utput channel:"
-#~ msgstr "Canal de s_ortida:"
-
-#~ msgid "_Monochrome"
-#~ msgstr "_Monocrom"
-
-#~ msgid "Preserve _luminosity"
-#~ msgstr "Preserva la _lluminositat"
-
-#~ msgid "Load Channel Mixer Settings"
-#~ msgstr "Carrega els paràmetres del mesclador de canal"
-
-#~ msgid "Save Channel Mixer Settings"
-#~ msgstr "Desa els paràmetres del mesclador de canal"
-
-#~ msgid "Swap one color with another"
-#~ msgstr "Intercanvia un color amb un altre"
-
-#~ msgid "_Color Exchange..."
-#~ msgstr "Substitueix un _color..."
-
-#~ msgid "Color Exchange"
-#~ msgstr "Substitueix un  color"
-
-#~ msgid "Middle-Click Inside Preview to Pick \"From Color\""
-#~ msgstr ""
-#~ "Feu clic amb el botó del mig dins la previsualització per triar «Des del "
-#~ "color»"
-
-#~ msgid "To Color"
-#~ msgstr "Al color"
-
-#~ msgid "From Color"
-#~ msgstr "Des del color"
-
-#~ msgid "Color Exchange: To Color"
-#~ msgstr "Canvi de color: al color"
-
-#~ msgid "Color Exchange: From Color"
-#~ msgstr "Canvi de color: des del color"
-
-#~ msgid "R_ed threshold:"
-#~ msgstr "Llindar v_ermell:"
-
-#~ msgid "G_reen threshold:"
-#~ msgstr "Llindar ve_rd:"
-
-#~ msgid "B_lue threshold:"
-#~ msgstr "Llindar b_lau:"
-
-#~ msgid "Lock _thresholds"
-#~ msgstr "Bloqueja els _llindars"
-
-#~ msgid "Convert a specified color to transparency"
-#~ msgstr "Converteix un color especificat en transparent"
-
-#~ msgid "Color to _Alpha..."
-#~ msgstr "Color a _alfa..."
-
-#~ msgid "Removing color"
-#~ msgstr "S'està suprimint el color"
-
-#~ msgid "Color to Alpha"
-#~ msgstr "Color a alfa"
-
-#~ msgctxt "color-to-alpha"
-#~ msgid "From:"
-#~ msgstr "Des de:"
-
-#~ msgid "Color to Alpha Color Picker"
-#~ msgstr "Color al seleccionador de color alfa"
-
-#~ msgid "to alpha"
-#~ msgstr "a l'alfa"
-
-#~ msgid "_Luma y470f:"
-#~ msgstr "_Luma y470f:"
-
-#~ msgid "_Blueness cb470f:"
-#~ msgstr "_Blavor cb470f:"
-
-#~ msgid "_Redness cr470f:"
-#~ msgstr "Ve_rmellor cr470f:"
-
-#~ msgid "_Luma y709f:"
-#~ msgstr "_Luma y709f:"
-
-#~ msgid "_Blueness cb709f:"
-#~ msgstr "_Blavor cb709f:"
-
-#~ msgid "_Redness cr709f:"
-#~ msgstr "Ve_rmellor cr709f:"
-
-#~ msgid "Image is not a gray image (bpp=%d)"
-#~ msgstr "La imatge no és una imatge grisa (bpp=%d)"
-
-#~ msgid "Stretch image contrast to cover the maximum possible range"
-#~ msgstr ""
-#~ "Amplia el contrast de la imatge per cobrir-ne el màxim rang possible"
-
-#~ msgid "Stretch _HSV"
-#~ msgstr "Amplia _HSV"
-
-#~ msgid "Auto-Stretching HSV"
-#~ msgstr "S'està ampliant el HSV automàticament"
-
-#~ msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-#~ msgstr ""
-#~ "ampliació automàtica _HSV: el mapa de color estava buit. S'està "
-#~ "sortint...\n"
-
-#~ msgid "Stretch contrast to cover the maximum possible range"
-#~ msgstr ""
-#~ "Amplia el contrast de la imatge per cobrir-ne el màxim rang possible"
-
-#~ msgid "_Stretch Contrast"
-#~ msgstr "Amplia el contra_st"
-
-#~ msgid "Auto-stretching contrast"
-#~ msgstr "S'està ampliant el contrast automàticament"
-
-#~ msgid "c_astretch: cmap was NULL!  Quitting...\n"
-#~ msgstr ""
-#~ "_Ampliació del contrast: el mapa de color estava buit. S'està sortint...\n"
-
-#~ msgid "Gr_ey"
-#~ msgstr "_Gris"
-
-#~ msgid "Re_d"
-#~ msgstr "_Vermell"
-
-#~ msgid "_Alpha"
-#~ msgstr "_Alfa"
-
-#~ msgid "E_xtend"
-#~ msgstr "E_stén"
-
-#~ msgid "Cro_p"
-#~ msgstr "Esca_pça"
-
-#~ msgid "Apply a generic 5x5 convolution matrix"
-#~ msgstr "Aplica una matriu de convolució genèrica de 5x5"
-
-#~ msgid "_Convolution Matrix..."
-#~ msgstr "Matriu de _convolució..."
-
-#~ msgid "Convolution does not work on layers smaller than 3x3 pixels."
-#~ msgstr ""
-#~ "La matriu de convolució no funciona en capes més petites de 3x3 píxels."
-
-#~ msgid "Convolution Matrix"
-#~ msgstr "Matriu de convolució"
-
-#~ msgid "Matrix"
-#~ msgstr "Matriu"
-
-#~ msgid "D_ivisor:"
-#~ msgstr "D_ivisor:"
-
-#~ msgid "N_ormalise"
-#~ msgstr "N_ormalitza"
-
-#~ msgid "A_lpha-weighting"
-#~ msgstr "Ponderació a_lfa"
-
-#~ msgid "Border"
-#~ msgstr "Vora"
-
-#~ msgid "Remove empty borders from the image"
-#~ msgstr "Suprimeix les vores buides de la imatge"
-
-#~ msgid "Autocrop Imag_e"
-#~ msgstr "_Escapça la imatge, automàtic"
-
-#~ msgid "Remove empty borders from the layer"
-#~ msgstr "Suprimeix les vores buides de la capa"
-
-#~ msgid "Autocrop Lay_er"
-#~ msgstr "_Escapça la capa, automàtic"
-
-#~ msgid "Cropping"
-#~ msgstr "Escapçat"
-
-#~ msgid "Convert the image into randomly rotated square blobs"
-#~ msgstr ""
-#~ "Converteix la imatge en un conjunt de retalls quadrats girats de forma "
-#~ "aleatòria"
-
-#~ msgid "_Cubism..."
-#~ msgstr "_Cubisme..."
-
-#~ msgid "Cubism"
-#~ msgstr "Cubisme"
-
-#~ msgid "_Tile size:"
-#~ msgstr "Mida del _mosaic:"
-
-#~ msgid "_Use background color"
-#~ msgstr "_Utilitza el color del fons"
-
-#~ msgid "Cubistic transformation"
-#~ msgstr "Transformació cubista"
-
-#~ msgid "hue_l"
-#~ msgstr "to"
-
-#~ msgid "saturation_l"
-#~ msgstr "saturació"
-
-#~ msgid "luma-y470f"
-#~ msgstr "luma-y470f"
-
-#~ msgid "blueness-cb470f"
-#~ msgstr "blavor-cb470f"
-
-#~ msgid "redness-cr470f"
-#~ msgstr "vermellor-cr470f"
-
-#~ msgid "luma-y709f"
-#~ msgstr "luma-y709f"
-
-#~ msgid "blueness-cb709f"
-#~ msgstr "blavor-cb709f"
-
-#~ msgid "redness-cr709f"
-#~ msgstr "vermellor-cr709f"
-
-#~ msgid "Fix images where every other row is missing"
-#~ msgstr "Arregla imatges on falta alguna fila de píxels "
-
-#~ msgid "_Deinterlace..."
-#~ msgstr "_Desentrellaça..."
-
-#~ msgid "Deinterlace"
-#~ msgstr "Desentrellaça"
-
-#~ msgid "Keep o_dd fields"
-#~ msgstr "Conserva els camps _senars"
-
-#~ msgid "Keep _even fields"
-#~ msgstr "Conserva els camps _parells"
-
-#~ msgid "Generate diffraction patterns"
-#~ msgstr "Genera patrons de difracció"
-
-#~ msgid "_Diffraction Patterns..."
-#~ msgstr "Patrons de _difracció..."
-
-#~ msgid "Creating diffraction pattern"
-#~ msgstr "S'està creant un patró de difracció"
-
-#~ msgid "Diffraction Patterns"
-#~ msgstr "Patrons de difracció"
-
-#~ msgid "Frequencies"
-#~ msgstr "Freqüències"
-
-#~ msgid "Contours"
-#~ msgstr "Contorns"
-
-#~ msgid "Sharp Edges"
-#~ msgstr "Realça les vores"
-
-#~ msgid "Sc_attering:"
-#~ msgstr "Dis_persió:"
-
-#~ msgid "Po_larization:"
-#~ msgstr "Po_larització:"
-
-#~ msgid "Other Options"
-#~ msgstr "Altres opcions"
-
-#~ msgid "_X displacement"
-#~ msgstr "Desplaçament en _X"
-
-#~ msgid "_Pinch"
-#~ msgstr "_Enfonsa"
-
-#~ msgid "_Y displacement"
-#~ msgstr "Desplaçament en _Y"
-
-#~ msgid "_Whirl"
-#~ msgstr "_Remolí"
-
-#~ msgid "Displace pixels as indicated by displacement maps"
-#~ msgstr "Desplaça els píxels segons un mapa de desplaçaments"
-
-#~ msgid "_Displace..."
-#~ msgstr "_Desplaça..."
-
-#~ msgid "Displacing"
-#~ msgstr "S'està desplaçant"
-
-#~ msgid "Displace"
-#~ msgstr "Desplaça"
-
-#~ msgid "_X displacement:"
-#~ msgstr "Desplaçament en _X:"
-
-#~ msgid "_Y displacement:"
-#~ msgstr "Desplaçament en _Y:"
-
-#~ msgid "Displacement Mode"
-#~ msgstr "Mode desplaçament"
-
-#~ msgid "_Cartesian"
-#~ msgstr "_Cartesià"
-
-#~ msgid "_Polar"
-#~ msgstr "_Polar"
-
-#~ msgid "Edge Behavior"
-#~ msgstr "Comportament de les vores"
-
-#~ msgid "High-resolution edge detection"
-#~ msgstr "Detecció de vores d'alta resolució"
-
-#~ msgid "_Laplace"
-#~ msgstr "_Laplace"
-
-#~ msgid "Laplace"
-#~ msgstr "Laplace"
-
-#~ msgid "Cleanup"
-#~ msgstr "Neteja"
-
-#~ msgid "Specialized direction-dependent edge detection"
-#~ msgstr "Sistema especialitzat de detecció de vores basat en la direcció"
-
-#~ msgid "_Sobel..."
-#~ msgstr "_Sobel..."
-
-#~ msgid "Sobel Edge Detection"
-#~ msgstr "Detecció de vores Sobel"
-
-#~ msgid "Sobel _horizontally"
-#~ msgstr "Sobel _horitzontal"
-
-#~ msgid "Sobel _vertically"
-#~ msgstr "Sobel _vertical"
-
-#~ msgid "_Keep sign of result (one direction only)"
-#~ msgstr "_Conserva el signe del resultat (només en una direcció)"
-
-#~ msgid "Sobel edge detecting"
-#~ msgstr "Detecció de vores Sobel"
-
-#~ msgid "Several simple methods for detecting edges"
-#~ msgstr "Diversos mètodes senzills per detectar vores"
-
-#~ msgid "_Edge..."
-#~ msgstr "_Vora..."
-
-#~ msgid "Edge detection"
-#~ msgstr "Detecció de vores"
-
-#~ msgid "Edge Detection"
-#~ msgstr "Detecció de vores"
-
-#~ msgid "Sobel"
-#~ msgstr "Sobel"
-
-#~ msgid "Prewitt compass"
-#~ msgstr "Compàs Prewitt"
-
-#~ msgid "Roberts"
-#~ msgstr "Roberts"
-
-#~ msgid "Differential"
-#~ msgstr "Diferencial"
-
-#~ msgid "_Algorithm:"
-#~ msgstr "_Algorisme:"
-
-#~ msgid "A_mount:"
-#~ msgstr "_Quantitat:"
-
-#~ msgid "Simulate an antique engraving"
-#~ msgstr "Simula un gravat antic amb franges negres"
-
-#~ msgid "En_grave..."
-#~ msgstr "_Grava amb franges negres..."
-
-#~ msgid "Engraving"
-#~ msgstr "S'està gravant amb franges negres"
-
-#~ msgid "Engrave"
-#~ msgstr "Grava amb franges negres"
-
-#~ msgid "_Limit line width"
-#~ msgstr "Amplada de la línia _límit"
-
-#~ msgid "GIMP brushes are either GRAYSCALE or RGBA"
-#~ msgstr "Els pinzells del GIMP són en escala de grisos o bé en RGBA"
-
-#~ msgid "Error writing output file."
-#~ msgstr "S'ha produït un error en escriure el fitxer de sortida."
-
-#~ msgid "Error in GIMP brush pipe file."
-#~ msgstr "S'ha produït un error al fitxer conducte del pinzell del GIMP."
-
-#~ msgid "Couldn't load one brush in the pipe, giving up."
-#~ msgstr "No s'ha pogut carregar un pinzell al conducte, renuncieu-hi."
-
-#~ msgid "RGB565"
-#~ msgstr "RGB565"
-
-#~ msgid ""
-#~ "Warning:\n"
-#~ "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
-#~ "bit, so it will be converted for you. Information will be lost because of "
-#~ "this conversion."
-#~ msgstr ""
-#~ "Avís:\n"
-#~ "la imatge que esteu carregant té 16 bits per canal. El GIMP només pot "
-#~ "gestionar-ne de 8 bits, per tant es convertirà automàticament. Es perdrà "
-#~ "informació a causa d'aquesta conversió."
-
-#~ msgid "This plug-in can only handle RGBA image files with 8bit color depth."
-#~ msgstr ""
-#~ "Aquest connector només accepta el format d'imatge RGBA amb una "
-#~ "profunditat de color de 8 bits."
-
-#~ msgid "Error during writing indexed/gray image"
-#~ msgstr "S'ha produït un error es escriure la imatge indexada/grisa"
-
-#~ msgid "Error during writing rgb image"
-#~ msgstr "S'ha produït un error en escriure la imatge rgb"
-
-#~ msgid "Superimpose many altered copies of the image"
-#~ msgstr "Superposa diverses còpies modificades de la imatge"
-
-#~ msgid "_Illusion..."
-#~ msgstr "_Il·lusió òptica..."
-
-#~ msgid "Illusion"
-#~ msgstr "Il·lusió òptica"
-
-#~ msgid "_Divisions:"
-#~ msgstr "_Divisions:"
-
-#~ msgid "Mode _2"
-#~ msgstr "Mode _2"
-
-#~ msgid "Use mouse control to warp image areas"
-#~ msgstr "Utilitza el control del ratolí per deformar àrees de la imatge"
-
-#~ msgid "_IWarp..."
-#~ msgstr "Deforma _interactivament..."
-
-#~ msgid "Warping"
-#~ msgstr "S'estan aplicant les deformacions"
-
-#~ msgid "Warping Frame %d"
-#~ msgstr "S'està deformant el fotograma %d"
-
-#~ msgid "Ping pong"
-#~ msgstr "Ping-pong"
-
-#~ msgid "Region affected by plug-in is empty"
-#~ msgstr "La regió afectada pel connector està buida"
-
-#~ msgid "A_nimate"
-#~ msgstr "A_nima"
-
-#~ msgid "Number of _frames:"
-#~ msgstr "Nombre de _fotogrames:"
-
-#~ msgid "R_everse"
-#~ msgstr "Invert_eix"
-
-#~ msgid "_Ping pong"
-#~ msgstr "_Ping-pong"
-
-#~ msgid "_Animate"
-#~ msgstr "_Anima"
-
-#~ msgid "Deform Mode"
-#~ msgstr "Tipus de deformació"
-
-#~ msgid "_Move"
-#~ msgstr "_Mou"
-
-#~ msgid "_Grow"
-#~ msgstr "_Creix"
-
-#~ msgid "S_wirl CCW"
-#~ msgstr "Arremolina en sentit anti_horari"
-
-#~ msgid "Remo_ve"
-#~ msgstr "Re_staura"
-
-#~ msgid "S_hrink"
-#~ msgstr "_Encongeix"
-
-#~ msgid "Sw_irl CW"
-#~ msgstr "Arremol_ina en sentit horari"
-
-#~ msgid "_Deform radius:"
-#~ msgstr "Varia el ra_di:"
-
-#~ msgid "D_eform amount:"
-#~ msgstr "Varia la _quantitat:"
-
-#~ msgid "_Bilinear"
-#~ msgstr "_Bilineal"
-
-#~ msgid "Adaptive s_upersample"
-#~ msgstr "S_upermostra adaptable"
-
-#~ msgid "Ma_x depth:"
-#~ msgstr "Profunditat mà_xima:"
-
-#~ msgid "Thresho_ld:"
-#~ msgstr "_Llindar:"
-
-#~ msgid "IWarp"
-#~ msgstr "Deforma interactivament"
-
-#~ msgid ""
-#~ "Click and drag in the preview to define the distortions to apply to the "
-#~ "image."
-#~ msgstr ""
-#~ "Feu clic i arrossegueu en la previsualització per definir les distorsions "
-#~ "a aplicar a la imatge."
-
-#~ msgid "Set a color profile on the image"
-#~ msgstr "Defineix un perfil de color en la imatge"
-
-#~ msgid "_Assign Color Profile..."
-#~ msgstr "_Assigna un perfil de color..."
-
-#~ msgid "Assign default RGB Profile"
-#~ msgstr "Assigna el perfil de color RGB per defecte"
-
-#~ msgid "Apply a color profile on the image"
-#~ msgstr "Aplica un perfil de color en la imatge"
-
-#~ msgid "_Convert to Color Profile..."
-#~ msgstr "_Converteix en perfil de color..."
-
-#~ msgid "Convert to default RGB Profile"
-#~ msgstr "Converteix en perfil de color RGB per defecte"
-
-#~ msgid "Image Color Profile Information"
-#~ msgstr "Informació del perfil de color de la imatge"
-
-#~ msgid "Color Profile Information"
-#~ msgstr "Informació del perfil de color"
-
-#~ msgid "Color profile '%s' is not for RGB color space."
-#~ msgstr "El perfil de color «%s» no és per a un espai de color RGB."
-
-#~ msgid "Default RGB working space"
-#~ msgstr "Espai de treball RGB per defecte"
-
-#~ msgid ""
-#~ "Data attached as 'icc-profile' does not appear to be an ICC color profile"
-#~ msgstr ""
-#~ "Les dades adjuntes com a 'perfil-icc' no sembla que siguin un perfil de "
-#~ "color ICC"
-
-#~ msgid "'%s' does not appear to be an ICC color profile"
-#~ msgstr "«%s» no sembla ser un perfil de color ICC"
-
-#~ msgid "Converting from '%s' to '%s'"
-#~ msgstr "S'està convertint de «%s» a «%s»"
-
-#~ msgid "Could not load ICC profile from '%s'"
-#~ msgstr "No s'ha pogut llegir el perfil ICC de «%s»"
-
-#~ msgid "The image '%s' has an embedded color profile:"
-#~ msgstr "La imatge «%s» té un perfil de color associat:"
-
-#~ msgid "Convert the image to the RGB working space (%s)?"
-#~ msgstr "Voleu convertir la imatge en un espai de treball RGB (%s)?"
-
-#~ msgid "Convert to RGB working space?"
-#~ msgstr "Voleu convertir-ho en un espai de treball RGB?"
-
-#~ msgid "_Keep"
-#~ msgstr "Co_nserva"
-
-#~ msgid "_Convert"
-#~ msgstr "_Converteix"
-
-#~ msgid "_Don't ask me again"
-#~ msgstr "_No ho demanis un altre cop"
-
-#~ msgid "Select destination profile"
-#~ msgstr "Selecciona un perfil destinació"
-
-#~ msgid "All files (*.*)"
-#~ msgstr "Tots els fitxers (*.*)"
-
-#~ msgid "ICC color profile (*.icc, *.icm)"
-#~ msgstr "Perfil de color ICC (*.icc, *.icm)"
-
-#~ msgid "RGB workspace (%s)"
-#~ msgstr "Espai de treball RGB (%s)"
-
-#~ msgid "Convert to ICC Color Profile"
-#~ msgstr "Converteix en un perfil de color ICC"
-
-#~ msgid "Assign ICC Color Profile"
-#~ msgstr "Assigna un perfil de color ICC"
-
-#~ msgid "_Assign"
-#~ msgstr "_Assigna"
-
-#~ msgid "Current Color Profile"
-#~ msgstr "Perfil de color actual"
-
-#~ msgid "Convert to"
-#~ msgstr "Converteix en"
-
-#~ msgid "Assign"
-#~ msgstr "Assigna"
-
-#~ msgid "_Rendering Intent:"
-#~ msgstr "P_ropòsit de la composició:"
-
-#~ msgid "_Black Point Compensation"
-#~ msgstr "_Compensació del punt negre"
-
-#~ msgid "Destination profile is not for RGB color space."
-#~ msgstr "El perfil de color destinació no és per a un espai de color RGB."
-
-#~ msgid "Simulate an elliptical lens over the image"
-#~ msgstr "Simula unes lents el·líptiques damunt de la imatge"
-
-#~ msgid "Apply _Lens..."
-#~ msgstr "Aplica la _lent..."
-
-#~ msgid "Applying lens"
-#~ msgstr "S'està aplicant la lent"
-
-#~ msgid "Lens Effect"
-#~ msgstr "Efecte de lent"
-
-#~ msgid "_Keep original surroundings"
-#~ msgstr "_Conserva la resta igual"
-
-#~ msgid "_Set surroundings to index 0"
-#~ msgstr "Calcula la re_sta amb un índex 0"
-
-#~ msgid "_Set surroundings to background color"
-#~ msgstr "Pinta la re_sta amb el color del fons"
-
-#~ msgid "_Make surroundings transparent"
-#~ msgstr "_Fes la resta transparent"
-
-#~ msgid "_Lens refraction index:"
-#~ msgstr "Índex de refracció de la _lent:"
-
-#~ msgid "Corrects lens distortion"
-#~ msgstr "Corregeix la distorsió de les lents"
-
-#~ msgid "Lens Distortion..."
-#~ msgstr "Distorsió de les lents..."
-
-#~ msgid "Lens distortion"
-#~ msgstr "Distorsió de les lents"
-
-#~ msgid "Lens Distortion"
-#~ msgstr "Distorsió de les lents"
-
-#~ msgid "_Main:"
-#~ msgstr "_Principal:"
-
-#~ msgid "_Edge:"
-#~ msgstr "_Vora:"
-
-#~ msgid "_Brighten:"
-#~ msgstr "_Lluentor:"
-
-#~ msgid "_X shift:"
-#~ msgstr "Despl. _X:"
-
-#~ msgid "_Y shift:"
-#~ msgstr "Despl. _Y:"
-
-#~ msgid "Add a lens flare effect"
-#~ msgstr "Afegeix un efecte de punt de llum enlluernador"
-
-#~ msgid "Lens _Flare..."
-#~ msgstr "Llu_m enlluernador..."
-
-#~ msgid "Render lens flare"
-#~ msgstr "Pinta un punt de llum enlluernador"
-
-#~ msgid "Lens Flare"
-#~ msgstr "Llum enlluernador"
-
-#~ msgid "Center of Flare Effect"
-#~ msgstr "Focus del llum enlluernador"
-
-#~ msgid "Show _position"
-#~ msgstr "Mostra la _posició"
-
-#~ msgid "Convert the image into irregular tiles"
-#~ msgstr "Converteix la imatge en peces irregulars d'un mosaic"
-
-#~ msgid "_Mosaic..."
-#~ msgstr "_Mosaic..."
-
-#~ msgid "Finding edges"
-#~ msgstr "S'estan trobant les vores"
-
-#~ msgid "Rendering tiles"
-#~ msgstr "S'estan component els mosaics"
-
-#~ msgid "Mosaic"
-#~ msgstr "Mosaic"
-
-#~ msgid "Squares"
-#~ msgstr "Quadrats"
-
-#~ msgid "Hexagons"
-#~ msgstr "Hexàgons"
-
-#~ msgid "Octagons & squares"
-#~ msgstr "Octàgons i quadrats"
-
-#~ msgid "Triangles"
-#~ msgstr "Triangles"
-
-#~ msgid "_Tiling primitives:"
-#~ msgstr "Formes elemen_tals:"
-
-#~ msgid "Tile _size:"
-#~ msgstr "Mida del mo_saic:"
-
-#~ msgid "Tile _height:"
-#~ msgstr "Alçada del mosai_c:"
-
-#~ msgid "Til_e spacing:"
-#~ msgstr "S_eparació del mosaic:"
-
-#~ msgid "Tile _neatness:"
-#~ msgstr "_Netedat del mosaic:"
-
-#~ msgid "Light _direction:"
-#~ msgstr "_Direcció de la llum:"
-
-#~ msgid "Color _variation:"
-#~ msgstr "_Variació del color:"
-
-#~ msgid "Co_lor averaging"
-#~ msgstr "C_olor mitjà"
-
-#~ msgid "Allo_w tile splitting"
-#~ msgstr "_Permet la divisió dels mosaics"
-
-#~ msgid "_Pitted surfaces"
-#~ msgstr "S_uperfície picada"
-
-#~ msgid "_FG/BG lighting"
-#~ msgstr "_Lluminositat primer pla/fons"
-
-#~ msgid "Randomize hue/saturation/value independently"
-#~ msgstr "Assigna valors aleatoris al to, a la saturació i al valor "
-
-#~ msgid "HSV Noise..."
-#~ msgstr "Soroll HSV..."
-
-#~ msgid "HSV Noise"
-#~ msgstr "Soroll HSV"
-
-#~ msgid "_Holdness:"
-#~ msgstr "_Contenció:"
-
-#~ msgid "H_ue:"
-#~ msgstr "_To:"
-
-#~ msgid "Random Hurl"
-#~ msgstr "Llença aleatòriament"
-
-#~ msgid "Random Pick"
-#~ msgstr "Tria aleatòriament"
-
-#~ msgid "Random Slur"
-#~ msgstr "Barreja aleatòriament"
-
-#~ msgid "Completely randomize a fraction of pixels"
-#~ msgstr "Dispersa aleatòriament un conjunt de píxels"
-
-#~ msgid "Randomly interchange some pixels with neighbors"
-#~ msgstr "Aleatòriament intercanvia alguns píxels amb els seus veïns"
-
-#~ msgid "Randomly slide some pixels downward (similar to melting)"
-#~ msgstr ""
-#~ "Desplaça alguns píxels cap avall aleatòriament  (semblant a una barreja)"
-
-#~ msgid "_Hurl..."
-#~ msgstr "_Llença..."
-
-#~ msgid "_Pick..."
-#~ msgstr "_Tria..."
-
-#~ msgid "_Slur..."
-#~ msgstr "_Barreja..."
-
-#~ msgid "_Random seed:"
-#~ msgstr "Llavo_r aleatòria:"
-
-#~ msgid "R_andomization (%):"
-#~ msgstr "_Aleatorietat (%):"
-
-#~ msgid "Percentage of pixels to be filtered"
-#~ msgstr "Percentatge de píxels que es filtraran"
-
-#~ msgid "R_epeat:"
-#~ msgstr "R_epeteix:"
-
-#~ msgid "Number of times to apply filter"
-#~ msgstr "Nombre de vegades que cal aplicar el filtre"
-
-#~ msgid "Distort colors by random amounts"
-#~ msgstr "Distorsiona els colors aleatòriament"
-
-#~ msgid "_RGB Noise..."
-#~ msgstr "Soroll _RGB..."
-
-#~ msgid "Adding noise"
-#~ msgstr "S'està afegint soroll"
-
-#~ msgid "RGB Noise"
-#~ msgstr "Soroll RGB"
-
-#~ msgid "Co_rrelated noise"
-#~ msgstr "So_roll correlatiu"
-
-#~ msgid "_Independent RGB"
-#~ msgstr "RGB _independent"
-
-#~ msgid "_Gray:"
-#~ msgstr "_Gris:"
-
-#~ msgid "Channel #%d:"
-#~ msgstr "Canal nº %d:"
-
-#~ msgid "Create a random cloud-like texture"
-#~ msgstr "Crea una textura semblant a un núvol de forma aleatòria"
-
-#~ msgid "_Solid Noise..."
-#~ msgstr "Soroll _sòlid..."
-
-#~ msgid "Solid Noise"
-#~ msgstr "Soroll sòlid"
-
-#~ msgid "_Detail:"
-#~ msgstr "_Detall:"
-
-#~ msgid "T_urbulent"
-#~ msgstr "T_urbulent"
-
-#~ msgid "T_ilable"
-#~ msgstr "Mosa_ic"
-
-#~ msgid "_X size:"
-#~ msgstr "Mida _X:"
-
-#~ msgid "_Y size:"
-#~ msgstr "Mida _Y:"
-
-#~ msgid "Move pixels around randomly"
-#~ msgstr "Escampa els píxels de forma aleatòria"
-
-#~ msgid "Sp_read..."
-#~ msgstr "_Escampa..."
-
-#~ msgid "Spreading"
-#~ msgstr "S'està escampant"
-
-#~ msgid "Spread"
-#~ msgstr "Escampa"
-
-#~ msgid "Spread Amount"
-#~ msgstr "Volum escampat"
-
-#~ msgid "Add a starburst to the image"
-#~ msgstr "Afegeix una estrella supernova a la imatge"
-
-#~ msgid "Super_nova..."
-#~ msgstr "Super_nova..."
-
-#~ msgid "Rendering supernova"
-#~ msgstr "S'està renderitzant la supernova"
-
-#~ msgid "Supernova"
-#~ msgstr "Supernova"
-
-#~ msgid "Supernova Color Picker"
-#~ msgstr "Seleccionador de color supernova"
-
-#~ msgid "_Spokes:"
-#~ msgstr "Rajo_s:"
-
-#~ msgid "R_andom hue:"
-#~ msgstr "To _aleatori:"
-
-#~ msgid "Center of Nova"
-#~ msgstr "Centre de la supernova"
-
-#~ msgid "Simplify image into an array of solid-colored squares"
-#~ msgstr "Simplifica la imatge en una quadrícula de punts quadrats monocolor"
-
-#~ msgid "_Pixelize..."
-#~ msgstr "_Pixelitza..."
-
-#~ msgid "Pixelizing"
-#~ msgstr "S'està pixelitzant"
-
-#~ msgid "Pixelize"
-#~ msgstr "Pixelitza"
-
-#~ msgid "Pixel _width:"
-#~ msgstr "Am_plada del píxel:"
-
-#~ msgid "Pixel _height:"
-#~ msgstr "Alçada del pí_xel:"
-
-#~ msgid "Create a random plasma texture"
-#~ msgstr "Crea una textura de plasma aleatòria"
-
-#~ msgid "_Plasma..."
-#~ msgstr "_Plasma..."
-
-#~ msgid "Plasma"
-#~ msgstr "Plasma"
-
-#~ msgid "Random _seed:"
-#~ msgstr "_Llavor aleatòria:"
-
-#~ msgid "T_urbulence:"
-#~ msgstr "T_urbulència:"
-
-#~ msgid "Convert image to or from polar coordinates"
-#~ msgstr "Converteix la imatge a coordenades polars o al revés"
-
-#~ msgid "P_olar Coordinates..."
-#~ msgstr "Coordenades p_olars..."
-
-#~ msgid "Polar coordinates"
-#~ msgstr "Coordenades polars"
-
-#~ msgid "Polar Coordinates"
-#~ msgstr "Coordenades polars"
-
-#~ msgid "Circle _depth in percent:"
-#~ msgstr "Profun_ditat circular en percentatge:"
-
-#~ msgid "Offset _angle:"
-#~ msgstr "_Angle de desplaçament:"
-
-#~ msgid "_Map backwards"
-#~ msgstr "_Mapa enrere"
-
-#~ msgid ""
-#~ "If checked the mapping will begin at the right side, as opposed to "
-#~ "beginning at the left."
-#~ msgstr ""
-#~ "Si es marca l'opció, es començarà el mapat per la banda dreta en comptes "
-#~ "de per l'esquerra."
-
-#~ msgid "Map from _top"
-#~ msgstr "_Mapa des de dalt"
-
-#~ msgid ""
-#~ "If unchecked the mapping will put the bottom row in the middle and the "
-#~ "top row on the outside.  If checked it will be the opposite."
-#~ msgstr ""
-#~ "Si no es marca l'opció, el mapat posarà la fila inferior al mig i la "
-#~ "superior fora dels límits. Si es marca passarà a l'inrevés."
-
-#~ msgid "To _polar"
-#~ msgstr "A _polar"
-
-#~ msgid ""
-#~ "If unchecked the image will be circularly mapped onto a rectangle.  If "
-#~ "checked the image will be mapped onto a circle."
-#~ msgstr ""
-#~ "Si no es marca l'opció, la imatge es maparà circularment dins d'un "
-#~ "rectangle. Si es marca, el mapatge es farà dins un cercle."
-
-#~ msgid "Remove the red eye effect caused by camera flashes"
-#~ msgstr ""
-#~ "Elimina l'efecte dels ulls vermells que causen els flaixos de les càmeres"
-
-#~ msgid "_Red Eye Removal..."
-#~ msgstr "Elimina els _ulls vermells..."
-
-#~ msgid "Red Eye Removal"
-#~ msgstr "Elimina els ulls vermells"
-
-#~ msgid "Threshold for the red eye color to remove."
-#~ msgstr "Valor del color de l'ull vermell que es vol eliminar."
-
-#~ msgid "Manually selecting the eyes may improve the results."
-#~ msgstr "Si seleccioneu els ulls manualment millorarà el resultat."
-
-# era: msgstr "Color a _Alfa"
-#~ msgid "Removing red eye"
-#~ msgstr "S'estan eliminant els ulls vermells"
-
-#~ msgid "You can not rotate the whole image if there's a selection."
-#~ msgstr "No es pot rotar la imatge sencera si hi ha una selecció."
-
-#~ msgid "You can not rotate the whole image if there's a floating selection."
-#~ msgstr "No es pot rotar la imatge sencera si hi ha una selecció flotant."
-
-#~ msgid "Sorry, channels and masks can not be rotated."
-#~ msgstr "Els canals i les màscares no es poden fer rotar."
-
-#~ msgid "Replace partial transparency with the current background color"
-#~ msgstr "Substitueix les transparències parcials amb el color de fons"
-
-#~ msgid "_Semi-Flatten"
-#~ msgstr "_Semiaplana"
-
-#~ msgid "Semi-Flattening"
-#~ msgstr "S'està semiaplanant"
-
-#~ msgid "Shift each row of pixels by a random amount"
-#~ msgstr "Aplica un decalatge a cada fila de píxels de forma aleatòria"
-
-#~ msgid "_Shift..."
-#~ msgstr "De_calatge..."
-
-#~ msgid "Shifting"
-#~ msgstr "S'està decalant"
-
-#~ msgid "Shift"
-#~ msgstr "Decalatge"
-
-#~ msgid "Shift _horizontally"
-#~ msgstr "Decala _horitzontalment"
-
-#~ msgid "Shift _vertically"
-#~ msgstr "Decala _verticalment"
-
-#~ msgid "Shift _amount:"
-#~ msgstr "Qu_antitat de decalatge:"
-
-#~ msgid "Generate complex sinusoidal textures"
-#~ msgstr "Genera textures sinusoïdals complexes"
-
-#~ msgid "_Sinus..."
-#~ msgstr "_Sinus..."
-
-#~ msgid "Sinus: rendering"
-#~ msgstr "Sinus: s'està generant"
-
-#~ msgid "Sinus"
-#~ msgstr "Sinus"
-
-#~ msgid "Drawing Settings"
-#~ msgstr "S'estan dibuixant els paràmetres"
-
-#~ msgid "_X scale:"
-#~ msgstr "Escala _X:"
-
-#~ msgid "_Y scale:"
-#~ msgstr "Escala _Y:"
-
-#~ msgid "Co_mplexity:"
-#~ msgstr "Co_mplexitat:"
-
-#~ msgid "Calculation Settings"
-#~ msgstr "Paràmetres de càlcul"
-
-#~ msgid "R_andom seed:"
-#~ msgstr "Llavor _aleatòria:"
-
-#~ msgid "_Force tiling?"
-#~ msgstr "C_ompon un mosaic"
-
-#~ msgid "_Ideal"
-#~ msgstr "_Ideal"
-
-#~ msgid "_Distorted"
-#~ msgstr "_Distorsionat"
-
-#~ msgid "The colors are white and black."
-#~ msgstr "Els colors són en blanc i negre."
-
-#~ msgid "Bl_ack & white"
-#~ msgstr "Bl_anc i negre"
-
-#~ msgid "_Foreground & background"
-#~ msgstr "Primer pla i _fons"
-
-#~ msgid "C_hoose here:"
-#~ msgstr "Esco_lliu aquí:"
-
-#~ msgid "First color"
-#~ msgstr "Primer color"
-
-#~ msgid "Second color"
-#~ msgstr "Segon color"
-
-#~ msgid "F_irst color:"
-#~ msgstr "Pr_imer color:"
-
-#~ msgid "S_econd color:"
-#~ msgstr "S_egon color:"
-
-#~ msgid "Blend Settings"
-#~ msgstr "Paràmetres del degradat"
-
-#~ msgid "L_inear"
-#~ msgstr "L_ineal"
-
-#~ msgid "Bili_near"
-#~ msgstr "Bili_neal"
-
-#~ msgid "Sin_usoidal"
-#~ msgstr "Sin_usoïdal"
-
-#~ msgid "_Blend"
-#~ msgstr "_Degradat"
-
-#~ msgid "Do _preview"
-#~ msgstr "_Previsualitza"
-
-#~ msgid "Make transparency all-or-nothing"
-#~ msgstr "Fes-lo del tot transparent, sinó opac"
-
-#~ msgid "_Threshold Alpha..."
-#~ msgstr "Llindar _alfa..."
-
-#~ msgid "The layer has its alpha channel locked."
-#~ msgstr "La capa té el canal alfa bloquejat."
-
-#~ msgid "RGBA/GRAYA drawable is not selected."
-#~ msgstr "Cal seleccionar un RGBA/GRAYA."
-
-#~ msgid "Coloring transparency"
-#~ msgstr "Acoloriment de la transparència"
-
-#~ msgid "Threshold Alpha"
-#~ msgstr "Llindar alfa"
-
-#~ msgid "Simulate distortion caused by square glass tiles"
-#~ msgstr "Simula la distorsió causada per un mosaic de vidres quadrats"
-
-#~ msgid "_Glass Tile..."
-#~ msgstr "Mosaic _òptic..."
-
-#~ msgid "Glass Tile"
-#~ msgstr "Mosaic òptic"
-
-#~ msgid "Tile _width:"
-#~ msgstr "Am_plada del mosaic:"
-
-#~ msgid "Paper Tile"
-#~ msgstr "Retalls de paper"
-
-#~ msgid "Division"
-#~ msgstr "Divisió"
-
-#~ msgid "Fractional Pixels"
-#~ msgstr "Píxels fraccionaris"
-
-#~ msgid "_Background"
-#~ msgstr "_Fons"
-
-#~ msgid "_Ignore"
-#~ msgstr "_Ignora"
-
-#~ msgid "_Force"
-#~ msgstr "_Força"
-
-#~ msgid "C_entering"
-#~ msgstr "C_entrat"
-
-#~ msgid "Movement"
-#~ msgstr "Moviment"
-
-#~ msgid "_Max (%):"
-#~ msgstr "_Màxim (%):"
-
-#~ msgid "_Wrap around"
-#~ msgstr "Dóna la _volta"
-
-#~ msgid "Background Type"
-#~ msgstr "Tipus de fons"
-
-#~ msgid "I_nverted image"
-#~ msgstr "Imatge i_nvertida"
-
-#~ msgid "Im_age"
-#~ msgstr "Im_atge"
-
-#~ msgid "Fo_reground color"
-#~ msgstr "Colo_r del primer pla"
-
-#~ msgid "Bac_kground color"
-#~ msgstr "Co_lor del fons"
-
-#~ msgid "S_elect here:"
-#~ msgstr "S_elecciona aquí:"
-
-#~ msgid "Background Color"
-#~ msgstr "Color del fons"
-
-#~ msgid "Cut image into paper tiles, and slide them"
-#~ msgstr "Talla la imatge en trossets de paper, i en fa una tira"
-
-#~ msgid "September 31, 1999"
-#~ msgstr "31 de setembre de 1999"
-
-#~ msgid "_Paper Tile..."
-#~ msgstr "Retalls de _paper..."
-
-#~ msgid "Alters edges to make the image seamlessly tileable"
-#~ msgstr "Altera les vores de la imatge perquè se'n pugui fer un mosaic"
-
-#~ msgid "_Make Seamless"
-#~ msgstr "_Rajola de mosaic"
-
-#~ msgid "Tiler"
-#~ msgstr "Rajola de mosaic"
-
-#~ msgid "Invert the brightness of each pixel"
-#~ msgstr "Inverteix la brillantor de cada píxel"
-
-#~ msgid "_Value Invert"
-#~ msgstr "Inversió de _valor"
-
-#~ msgid "Value Invert"
-#~ msgstr "Inversió de valor"
-
-#~ msgid "More _white (larger value)"
-#~ msgstr "Més _blanc (valor més alt)"
-
-#~ msgid "More blac_k (smaller value)"
-#~ msgstr "Més negre (valor més bai_x)"
-
-#~ msgid "_Middle value to peaks"
-#~ msgstr "Valor _mitjà a pics"
-
-#~ msgid "_Foreground to peaks"
-#~ msgstr "_Primer pla a pics"
-
-#~ msgid "O_nly foreground"
-#~ msgstr "_Només el primer pla"
-
-#~ msgid "Only b_ackground"
-#~ msgstr "Només _el fons"
-
-#~ msgid "Mor_e opaque"
-#~ msgstr "Més opa_c"
-
-#~ msgid "More t_ransparent"
-#~ msgstr "Més t_ransparent"
-
-#~ msgid "Propagate certain colors to neighboring pixels"
-#~ msgstr "Propaga certs colors als píxels veïns"
-
-#~ msgid "_Value Propagate..."
-#~ msgstr "Filtra el _llindar dels colors..."
-
-#~ msgid "Shrink lighter areas of the image"
-#~ msgstr "Erosiona les àrees clares de la imatge"
-
-#~ msgid "E_rode"
-#~ msgstr "E_rosiona"
-
-#~ msgid "Grow lighter areas of the image"
-#~ msgstr "Expandeix les àrees clares de la imatge"
-
-#~ msgid "_Dilate"
-#~ msgstr "_Dilata"
-
-#~ msgid "Value Propagate"
-#~ msgstr "Filtra el llindar dels colors"
-
-#~ msgid "Propagate"
-#~ msgstr "Propaga"
-
-#~ msgid "_Upper threshold:"
-#~ msgstr "Llindar més al_t:"
-
-#~ msgid "_Propagating rate:"
-#~ msgstr "Relació de _propagació:"
-
-#~ msgid "To l_eft"
-#~ msgstr "A l'_esquerra"
-
-#~ msgid "To _right"
-#~ msgstr "A la d_reta"
-
-#~ msgid "To _top"
-#~ msgstr "A dal_t"
-
-#~ msgid "Propagating _alpha channel"
-#~ msgstr "S'està propagant el canal _alfa"
-
-#~ msgid "Propagating value channel"
-#~ msgstr "S'està propagant el canal del valor"
-
-#~ msgid "_Staggered"
-#~ msgstr "_Graonat"
-
-#~ msgid "_Large staggered"
-#~ msgstr "Graons gra_ns"
-
-#~ msgid "S_triped"
-#~ msgstr "Ra_tllat"
-
-#~ msgid "_Wide-striped"
-#~ msgstr "Ratllat am_ple"
-
-#~ msgid "Lo_ng-staggered"
-#~ msgstr "Graons lla_rgs"
-
-#~ msgid "_3x3"
-#~ msgstr "_3x3"
-
-#~ msgid "Larg_e 3x3"
-#~ msgstr "3x3 _gran"
-
-#~ msgid "_Hex"
-#~ msgstr "_Hex"
-
-#~ msgid "_Dots"
-#~ msgstr "_Punts"
-
-#~ msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-#~ msgstr "Simula la distorsió produïda per un monitor de baixa resolució"
-
-#~ msgid "Vi_deo..."
-#~ msgstr "Ví_deo..."
-
-#~ msgid "Video"
-#~ msgstr "Simula imatge de vídeo"
-
-#~ msgid "Video Pattern"
-#~ msgstr "Patró de vídeo"
-
-#~ msgid "_Rotated"
-#~ msgstr "_Girat"
-
-#~ msgid "Distort the image with waves"
-#~ msgstr "Distorsiona la imatge amb onades"
-
-#~ msgid "_Waves..."
-#~ msgstr "Ones _circumcèntriques..."
-
-#~ msgid "_Reflective"
-#~ msgstr "_Reflexiu"
-
-#~ msgid "_Amplitude:"
-#~ msgstr "_Amplitud:"
-
-#~ msgid "_Phase:"
-#~ msgstr "_Fase:"
-
-#~ msgid "_Wavelength:"
-#~ msgstr "Lon_gitud d'ona:"
-
-#~ msgid "Waving"
-#~ msgstr "S'estan fent ones"
-
-#~ msgid "Distort an image by whirling and pinching"
-#~ msgstr "Distorsiona una imatge amb girs i contraccions"
-
-#~ msgid "W_hirl and Pinch..."
-#~ msgstr "_Gira i contrau..."
-
-#~ msgid "Whirling and pinching"
-#~ msgstr "S'està girant i contraient"
-
-#~ msgid "Whirl and Pinch"
-#~ msgstr "Gira i contrau"
-
-#~ msgid "_Whirl angle:"
-#~ msgstr "An_gle de gir:"
-
-#~ msgid "_Pinch amount:"
-#~ msgstr "_Quantitat de contraccions:"
-
-#~ msgid "Smear image to give windblown effect"
-#~ msgstr "Estira la imatge per donar-li un efecte de vent"
-
-#~ msgid "Wi_nd..."
-#~ msgstr "Ve_nt..."
-
-#~ msgid "Rendering blast"
-#~ msgstr "S'està generant una ventada"
-
-#~ msgid "Wind"
-#~ msgstr "Vent"
-
-#~ msgid "Style"
-#~ msgstr "Estil"
-
-#~ msgid "_Wind"
-#~ msgstr "_Vent"
-
-#~ msgid "_Blast"
-#~ msgstr "Ve_ntada"
-
-#~ msgid "_Left"
-#~ msgstr "_Esquerra"
-
-#~ msgid "_Right"
-#~ msgstr "_Dreta"
-
-#~ msgid "Edge Affected"
-#~ msgstr "Vores afectades"
-
-#~ msgid "L_eading"
-#~ msgstr "Clar_es"
-
-#~ msgid "Tr_ailing"
-#~ msgstr "_Fosques"
-
-#~ msgid "Bot_h"
-#~ msgstr "_Totes"
-
-#~ msgid "Higher values restrict the effect to fewer areas of the image"
-#~ msgstr ""
-#~ "Els valors més alts restringeixen l'efecte a menys àrees de la imatge"
-
-#~ msgid "Higher values increase the magnitude of the effect"
-#~ msgstr "Els valors més alts incrementen la magnitud de l'efecte"
-
-#~ msgid "_Keep Orientation"
-#~ msgstr "_Conserva l'orientació"
-
-#~ msgid "According to the EXIF data, this image is rotated."
-#~ msgstr "Segons les dades EXIF, la imatge està girada."
-
-#~ msgid "Would you like GIMP to rotate it into the standard orientation?"
-#~ msgstr ""
-#~ "Voleu que el GIMP giri la imatge i la posi en l'orientació correcta?"
-
-#~ msgid "Downloading image (%s of %s)"
-#~ msgstr "S'està rebent la imatge (%s de %s)"
-
-#~ msgid "Downloaded %s of image data"
-#~ msgstr "S'ha rebut el %s de les dades de la imatge"
-
-#~ msgid "Uploaded %s of image data"
-#~ msgstr "S'ha enviat el %s de les dades de la imatge"
-
-#~ msgid "Connecting to server"
-#~ msgstr "S'està connectant al servidor"
-
-#~ msgid "Could not initialize libcurl"
-#~ msgstr "No s'ha pogut inicialitzar libcurl"
-
-#~ msgid "Downloading %s of image data"
-#~ msgstr "S'està rebent el %s de les dades de la imatge"
-
-#~ msgid "Opening '%s' for reading resulted in %s response code: %ld"
-#~ msgstr ""
-#~ "En obrir «%s» en mode lectura s'ha rebut un codi de resposta %s: %ld"
-
-#~ msgid "wget exited abnormally on URI '%s'"
-#~ msgstr "wget ha retornat un error amb l'URI «%s»"
-
-#~ msgid "(timeout is %d second)"
-#~ msgid_plural "(timeout is %d seconds)"
-#~ msgstr[0] "(cronòmetre: %d segon)"
-#~ msgstr[1] "(cronòmetre: %d segons)"
-
-#  Set up progress display
-#  put up a progress bar
-#  max. rows allocated
-#  column, highest column ever used
-#  -1  assume fsel is not available (and not attached to any drawable)
-#  -1  assume there is no floating selection
-#  Set up progress display
-#  put up a progress bar
-#  max. rows allocated
-#  column, highest column ever used
-#  -1  assume fsel is not available (and not attached to any drawable)
-#  -1  assume there is no floating selection
-#~ msgid "Opening URI"
-#~ msgstr "S'està obrint l'URI"
-
-#~ msgid "A network error occurred: %s"
-#~ msgstr "S'ha produït un error de xarxa: %s"
-
-#~ msgid "Downloading unknown amount of image data"
-#~ msgstr "S'estan descarregant dades d'imatge de mida indeterminada"
-
-#~ msgid "URI"
-#~ msgstr "URI"
-
-#  * gimp_filename_to_utf8 () and g_strerror () return temporary strings
-#  * that need not and should not be freed. So this call is OK.
-#  *
-#~ msgid "Failed to save to temporary file '%s'"
-#~ msgstr "No s'ha pogut desar el fitxer temporal «%s»"
-
-#~ msgid "GIMP compressed XJT image"
-#~ msgstr "Imatge XJT comprimida del GIMP"
-
-#~ msgid "XJT file contains unknown layermode %d"
-#~ msgstr "El fitxer XJT conté un mode de capa %d que és desconegut"
-
-#~ msgid "Warning: unsupported layermode %d saved to XJT"
-#~ msgstr "Avís: s'ha desat a XJT un mode de capa %d que no és permès"
-
-#~ msgid "XJT file contains unknown pathtype %d"
-#~ msgstr "El fitxer XJT conté un tipus de camí %d que és desconegut"
-
-#~ msgid "Warning: unsupported pathtype %d saved to XJT"
-#~ msgstr "Avís: s'ha desat a XJT un tipus de camí %d que no és permès"
-
-#~ msgid "XJT file contains unknown unittype %d"
-#~ msgstr "El fitxer XJT conté un tipus d'unitat %d que no és compatible"
-
-#~ msgid "Warning: unsupported unittype %d saved to XJT"
-#~ msgstr "Avís: s'ha desat a XJT un tipus d'unitat %d que no és permès"
-
-#~ msgid "XJT"
-#~ msgstr "XJT"
-
-#~ msgid "Optimize"
-#~ msgstr "Optimitza"
-
-#~ msgid "Clear transparent"
-#~ msgstr "Neteja la transparència"
-
-#~ msgid "Smoothing:"
-#~ msgstr "Suavitzat:"
-
-#~ msgid "Could not create working folder '%s': %s"
-#~ msgstr "No s'ha pogut crear la carpeta de treball «%s»: %s"
-
-#~ msgid "Error: Could not read XJT property file '%s'."
-#~ msgstr "Error: no s'ha pogut llegir el fitxer de propietats XJT «%s»."
-
-#~ msgid "Error: XJT property file '%s' is empty."
-#~ msgstr "Error: el fitxer de propietats XJT «%s» està buit."
-
-#~ msgid "The name `%s' is used already!"
-#~ msgstr "El nom «%s» ja es troba en ús"
-
-#~ msgid "Constructing maze using Prim's Algorithm"
-#~ msgstr "S'està construint un laberint amb l'algorisme de Prim"
-
-#~ msgid "Constructing tileable maze using Prim's Algorithm"
-#~ msgstr "S'està construint el mosaic laberint amb l'algorisme de Prim"
-
-#~ msgid "Maze"
-#~ msgstr "Laberint"
-
-#~ msgid "Maze Size"
-#~ msgstr "Mida del laberint"
-
-#~ msgid "Pieces:"
-#~ msgstr "Peces:"
-
-#~ msgid "Height (pixels):"
-#~ msgstr "Alçada (píxels):"
-
-#~ msgid "Algorithm"
-#~ msgstr "Algorisme"
-
-#~ msgid "Depth first"
-#~ msgstr "Primer en profunditat"
-
-#~ msgid "Prim's algorithm"
-#~ msgstr "Algorisme de Prim"
-
-#~ msgid ""
-#~ "Selection size is not even.\n"
-#~ "Tileable maze won't work perfectly."
-#~ msgstr ""
-#~ "La mida de la selecció no és correcta.\n"
-#~ "El mosaic fet a partir del laberint no serà perfecte."
-
-#~ msgid "Draw a labyrinth"
-#~ msgstr "Dibuixa un laberint"
-
-#~ msgid "_Maze..."
-#~ msgstr "_Laberint..."
-
-#~ msgid "Drawing maze"
-#~ msgstr "S'està dibuixant el laberint"
-
-#~ msgid "Property"
-#~ msgstr "Propietats"
-
-#~ msgid "Empty"
-#~ msgstr "Buit"
-
-#~ msgid "Camera 1"
-#~ msgstr "Càmera 1"
-
-#~ msgid "Camera 2"
-#~ msgstr "Càmera 2"
-
-#~ msgid "Thumbnail"
-#~ msgstr "Miniatura"
-
-#~ msgid "Import XMP from File"
-#~ msgstr "Importa l'XMP des del fitxer"
-
-#~ msgid "Cannot create file"
-#~ msgstr "No es pot crear el fitxer"
-
-#~ msgid "Some error occurred while saving"
-#~ msgstr "S'ha produït un error en desar"
-
-#~ msgid "Could not close the file"
-#~ msgstr "No s'ha pogut tancar el fitxer"
-
-#~ msgid "Export XMP to File"
-#~ msgstr "Exporta l'XMP al fitxer"
-
-#~ msgid "Image Properties"
-#~ msgstr "Propietats de la imatge"
-
-#~ msgid "_Import XMP..."
-#~ msgstr "_Importa des de l'XMP..."
-
-#~ msgid "_Export XMP..."
-#~ msgstr "_Exporta l'XMP..."
-
-#~ msgid "Propert_ies"
-#~ msgstr "Prop_ietats"
-
-#~ msgid "Error: No XMP packet found"
-#~ msgstr "S'ha produït un error, no s'ha trobat el paquet XMP"
-
-#~ msgid "Error on line %d char %d: %s"
-#~ msgstr "Error en la línia %d caràcter %d: %s"
-
-#~ msgid "Expected text or optional element <%s>, found <%s> instead"
-#~ msgstr ""
-#~ "S'esperava trobar un text o un element opcional <%s>, però s'ha trobat <"
-#~ "%s>"
-
-#~ msgid "Expected element <%s>, found <%s> instead"
-#~ msgstr "S'esperava un element <%s>, però s'ha trobat <%s>"
-
-#~ msgid "Unknown element <%s>"
-#~ msgstr "Element desconegut <%s>"
-
-#~ msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
-#~ msgstr "Atribut desconegut «%s»= «%s» en l'element <%s>"
-
-#~ msgid "Required attribute rdf:about missing in <%s>"
-#~ msgstr "Falta l'atribut obligatori rdf:about en <%s>"
-
-#~ msgid "Nested elements (<%s>) are not allowed in this context"
-#~ msgstr "Els elements imbricats (<%s>) no són permesos en aquest context"
-
-#~ msgid "End of element <%s> not expected in this context"
-#~ msgstr ""
-#~ "No s'esperava trobar el tancament de l'element <%s> en aquest context"
-
-#~ msgid "The current element (<%s>) cannot contain text"
-#~ msgstr "L'element actual (<%s>) no pot contenir text"
-
-#~ msgid "XMP packets must start with <?xpacket begin=...?>"
-#~ msgstr "Els paquets XMP han de començar amb <?xpacket begin=...?>"
-
-#~ msgid "XMP packets must end with <?xpacket end=...?>"
-#~ msgstr "Els paquets XMP han d'acabar <?xpacket end=...?>"
-
-#~ msgid "XMP cannot contain XML comments or processing instructions"
-#~ msgstr "L'XMP no pot contenir comentaris XML ni instruccions de processat"
-
-#~ msgid "Grab"
-#~ msgstr "Captura"
-
-#~ msgid "Grab a single window"
-#~ msgstr "Captura una única finestra"
-
-#~ msgid "Grab the whole screen"
-#~ msgstr "Captura la pantalla sencera"
-
-#~ msgid "after"
-#~ msgstr "després"
-
-#~ msgid "Seconds delay"
-#~ msgstr "Segons de retard"
-
-#~ msgid "Include decorations"
-#~ msgstr "Inclou les decoracions"
-
-#~ msgid "Capture a window or desktop image"
-#~ msgstr "Captura la imatge de la pantalla sencera o d'una finestra "
-
-#~ msgid "_Screen Shot..."
-#~ msgstr "Captura de _pantalla..."
