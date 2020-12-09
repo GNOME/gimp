@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-22 12:44+0000\n"
-"PO-Revision-Date: 2020-11-26 20:03+0100\n"
+"POT-Creation-Date: 2020-12-02 22:23+0000\n"
+"PO-Revision-Date: 2020-12-04 21:19+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -102,10 +102,10 @@ msgstr "Alinea les capes visibles"
 #: ../plug-ins/lighting/lighting-ui.c:1162
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
-#: ../plug-ins/metadata/metadata-editor.c:549
-#: ../plug-ins/metadata/metadata-editor.c:816
-#: ../plug-ins/metadata/metadata-editor.c:5729
-#: ../plug-ins/metadata/metadata-editor.c:5764
+#: ../plug-ins/metadata/metadata-editor.c:564
+#: ../plug-ins/metadata/metadata-editor.c:830
+#: ../plug-ins/metadata/metadata-editor.c:5717
+#: ../plug-ins/metadata/metadata-editor.c:5752
 #: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -1034,7 +1034,7 @@ msgstr "Graf de les opcions actuals"
 #: ../plug-ins/gfig/gfig-dialog.c:1394
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
 #: ../plug-ins/imagemap/imap_menu.c:156
-#: ../plug-ins/metadata/metadata-viewer.c:228
+#: ../plug-ins/metadata/metadata-viewer.c:255
 msgid "_Close"
 msgstr "Tanca"
 
@@ -1049,7 +1049,7 @@ msgstr "Desa els paràmetres de l'Explorador CML"
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
-#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1614
+#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1504
@@ -2253,7 +2253,7 @@ msgstr ""
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
 #: ../plug-ins/common/file-heif.c:1268 ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
-#: ../plug-ins/common/file-png.c:1607 ../plug-ins/common/file-pnm.c:1249
+#: ../plug-ins/common/file-png.c:1611 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1213 ../plug-ins/common/file-xbm.c:1040
 #: ../plug-ins/common/file-xpm.c:674 ../plug-ins/common/file-xwd.c:652
@@ -2915,7 +2915,7 @@ msgstr "Espai de color no compatible en la imatge JP2 «%s»."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2341
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2345
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "No s'ha pogut desar la transparència sense pèrdues. Es desarà l'opacitat."
@@ -2949,7 +2949,7 @@ msgid "Save creation _time"
 msgstr "Desa la da_ta de creació"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1418 ../plug-ins/common/file-png.c:2399
+#: ../plug-ins/common/file-mng.c:1418 ../plug-ins/common/file-png.c:2403
 msgid "PNG"
 msgstr "PNG"
 
@@ -3170,7 +3170,7 @@ msgstr "Importa d'un PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1265 ../plug-ins/common/file-ps.c:3399
 #: ../plug-ins/file-tiff/file-tiff-load.c:2030
-#: ../plug-ins/metadata/metadata-editor.c:5730
+#: ../plug-ins/metadata/metadata-editor.c:5718
 msgid "_Import"
 msgstr "_Importa"
 
@@ -3348,7 +3348,7 @@ msgstr "Es desconeix el model de color del fitxer PNG «%s»."
 msgid "Could not create new image for '%s': %s"
 msgstr "No s'ha pogut crear una imatge nova per a «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:1144
+#: ../plug-ins/common/file-png.c:1147
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3356,19 +3356,19 @@ msgstr ""
 "El fitxer PNG especifica un desplaçament que ha causat que la capa es "
 "posicioni fora de la imatge."
 
-#: ../plug-ins/common/file-png.c:1404
+#: ../plug-ins/common/file-png.c:1408
 msgid "Apply PNG Offset"
 msgstr "Aplica el desplaçament PNG"
 
-#: ../plug-ins/common/file-png.c:1408
+#: ../plug-ins/common/file-png.c:1412
 msgid "Ignore PNG offset"
 msgstr "Ignora el desplaçament PNG"
 
-#: ../plug-ins/common/file-png.c:1409
+#: ../plug-ins/common/file-png.c:1413
 msgid "Apply PNG offset to layer"
 msgstr "Aplica el desplaçament PNG a la capa"
 
-#: ../plug-ins/common/file-png.c:1434
+#: ../plug-ins/common/file-png.c:1438
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3377,33 +3377,33 @@ msgstr ""
 "La imatge PNG que esteu important té un desplaçament de %d, %d. Voleu "
 "aplicar aquest desplaçament a la capa?"
 
-#: ../plug-ins/common/file-png.c:1573
+#: ../plug-ins/common/file-png.c:1577
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 "S'ha produït un error en l'escriptura de l'estructura del PNG mentre "
 "s'exportava «%s»."
 
-#: ../plug-ins/common/file-png.c:1582
+#: ../plug-ins/common/file-png.c:1586
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "S'ha produït un error en l'exportació de «%s». No s'ha pogut crear "
 "l'estructura d'informació a la capçalera PNG."
 
-#: ../plug-ins/common/file-png.c:1590
+#: ../plug-ins/common/file-png.c:1594
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
 "S'ha produït un error en l'exportació «%s». No s'ha pogut exportar la imatge."
 
-#: ../plug-ins/common/file-png.c:2416 ../plug-ins/common/file-raw-data.c:2131
+#: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2131
 #: ../plug-ins/file-tiff/file-tiff-save.c:1232
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "No s'ha pogut obrir el fitxer d'interfície d'usuari «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:2417 ../plug-ins/common/file-raw-data.c:2132
+#: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2132
 #: ../plug-ins/file-tiff/file-tiff-save.c:1233
 msgid "Unknown error"
 msgstr "Error desconegut"
@@ -6739,7 +6739,7 @@ msgid "Export as DDS"
 msgstr "Exporta a DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1957
-#: ../plug-ins/metadata/metadata-editor.c:5765
+#: ../plug-ins/metadata/metadata-editor.c:5753
 msgid "_Export"
 msgstr "_Exporta"
 
@@ -8777,7 +8777,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Canvia la brillantor del pinzell seleccionat"
 
 #: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/metadata/metadata-editor.c:572
+#: ../plug-ins/metadata/metadata-editor.c:587
 msgid "Select:"
 msgstr "Selecciona:"
 
@@ -11943,48 +11943,94 @@ msgstr "Mostra el marc amb _filferros"
 msgid "Update preview _live"
 msgstr "Actualitza la previsua_lització"
 
-#: ../plug-ins/metadata/metadata-editor.c:410
+#: ../plug-ins/metadata/metadata-editor.c:413
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Edita les metadades (IPTC, EXIF, XMP)"
 
-#: ../plug-ins/metadata/metadata-editor.c:418
+#: ../plug-ins/metadata/metadata-editor.c:421
 msgid "_Edit Metadata"
 msgstr "_Edita les metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:541
+#: ../plug-ins/metadata/metadata-editor.c:545
+msgid "Error loading metadata-editor dialog."
+msgstr "S'ha produït un error en carregar el diàleg de l'editor de metadades."
+
+#: ../plug-ins/metadata/metadata-editor.c:556
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Editor de metadades: %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:550
+#: ../plug-ins/metadata/metadata-editor.c:565
 msgid "_Write Metadata"
 msgstr "Escriu les metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:574
+#: ../plug-ins/metadata/metadata-editor.c:589
 msgid "Import metadata"
 msgstr "Importa les metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:576
+#: ../plug-ins/metadata/metadata-editor.c:591
 msgid "Export metadata"
 msgstr "Exporta metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:813
+#: ../plug-ins/metadata/metadata-editor.c:799
+#, c-format
+msgid "Error loading calendar. %s"
+msgstr "S'ha produït un error en carregar el calendari. %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:827
 msgid "Calendar Date:"
 msgstr "Data del calendari:"
 
-#: ../plug-ins/metadata/metadata-editor.c:817
+#: ../plug-ins/metadata/metadata-editor.c:831
 msgid "Set Date"
 msgstr "Estableix la data"
 
-#: ../plug-ins/metadata/metadata-editor.c:1671
+#: ../plug-ins/metadata/metadata-editor.c:1565
+msgid ""
+"Enter or edit GPS value here.\n"
+"Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
+"the following examples:\n"
+"10deg 15' 20\", or 10° 15' 20\", or 10:15:20.45, or 10 15 20, or 10 15.30, "
+"or 10.45\n"
+"Delete all text to remove the current value."
+msgstr ""
+"Introduïu o editeu el valor del GPS aquí.\n"
+"Els valors vàlids consisteixen en 1, 2 o 3 nombres (graus, minuts, segons); "
+"vegeu els exemples següents:\n"
+"10graus 15 '20 \", o 10° 15' 20\", o 10:15:20.45, o 10 15 20, o 10 15.30, o "
+"10.45\n"
+"Suprimiu tot el text per eliminar el valor actual."
+
+#: ../plug-ins/metadata/metadata-editor.c:1571
+msgid ""
+"Enter or edit GPS altitude value here.\n"
+"A valid value consists of one number:\n"
+"e.g. 100, or 12.24\n"
+"Depending on the selected measurement type the value should be entered in "
+"meter (m) or feet (ft)\n"
+"Delete all text to remove the current value."
+msgstr ""
+"Introduïu o editeu el valor de l'altitud del GPS aquí.\n"
+"Un valor vàlid consisteix en un número:\n"
+"per exemple. 100 o 12,24\n"
+"En funció del tipus de mesura seleccionat, el valor s'ha d'introduir en "
+"metres (m) o peus (peus)\n"
+"Suprimiu tot el text per eliminar el valor actual."
+
+#: ../plug-ins/metadata/metadata-editor.c:1707
 msgid "Unrated"
 msgstr "Sense valoració"
 
-#: ../plug-ins/metadata/metadata-editor.c:5726
+#: ../plug-ins/metadata/metadata-editor.c:4405
+#, c-format
+msgid "Failed to set metadata tag %s"
+msgstr "No s'ha pogut establir l'etiqueta de metadades %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:5714
 msgid "Import Metadata File"
 msgstr "Importa el fitxer de metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:5761
+#: ../plug-ins/metadata/metadata-editor.c:5749
 msgid "Export Metadata File"
 msgstr "Exporta el fitxer de metadades"
 
@@ -12162,11 +12208,11 @@ msgid "Other"
 msgstr "Altres"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-msgid "Above Sea Level"
+msgid "Above sea level"
 msgstr "Per sobre el nivell del mar"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-msgid "Below Sea Level"
+msgid "Below sea level"
 msgstr "Per sota el nivell del mar"
 
 #: ../plug-ins/metadata/metadata-tags.c:275
@@ -12185,25 +12231,37 @@ msgstr "Est"
 msgid "West"
 msgstr "Oest"
 
-#: ../plug-ins/metadata/metadata-viewer.c:121
+#: ../plug-ins/metadata/metadata-viewer.c:135
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Visualitza les metadades (Exif, IPTC, XMP)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:128
+#: ../plug-ins/metadata/metadata-viewer.c:142
 msgid "_View Metadata"
 msgstr "_Visualitza les metadades"
 
-#: ../plug-ins/metadata/metadata-viewer.c:221
+#: ../plug-ins/metadata/metadata-viewer.c:237
+msgid "Error loading metadata-viewer dialog."
+msgstr "S'ha produït un error en carregar el diàleg del visor de metadades."
+
+#: ../plug-ins/metadata/metadata-viewer.c:248
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Visualitzador de metadades: %s"
 
-#: ../plug-ins/metadata/metadata-viewer.c:313
+#: ../plug-ins/metadata/metadata-viewer.c:340
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu més caràcter(s))"
 
-#: ../plug-ins/metadata/metadata-viewer.c:458
+#: ../plug-ins/metadata/metadata-viewer.c:499
+msgid " meter"
+msgstr " metres"
+
+#: ../plug-ins/metadata/metadata-viewer.c:500
+msgid " feet"
+msgstr " peus"
+
+#: ../plug-ins/metadata/metadata-viewer.c:596
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu més byte(s))"
