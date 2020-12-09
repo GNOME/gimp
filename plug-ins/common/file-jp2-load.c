@@ -1080,6 +1080,7 @@ load_image (GFile             *file,
   gint               temp;
   gboolean           linear = FALSE;
   unsigned char     *c      = NULL;
+  gint               n_threads;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -1097,6 +1098,20 @@ load_image (GFile             *file,
     }
 
   codec = opj_create_decompress (format);
+  if (! codec)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Failed to initialize decoder for '%s', out of memory?"),
+                   gimp_file_get_utf8_name (file));
+      goto out;
+    }
+
+  n_threads = gimp_get_num_processors ();
+  if (n_threads >= 2 && ! opj_codec_set_threads (codec, n_threads))
+    {
+      g_warning ("Couldn't set number of threads on decoder for '%s'.",
+                 gimp_file_get_utf8_name (file));
+    }
 
   opj_set_default_decoder_parameters (&parameters);
   if (opj_setup_decoder (codec, &parameters) != OPJ_TRUE)
