@@ -114,7 +114,17 @@ static void               load_paths       (TIFF              *tif,
                                             gint               offset_y);
 
 static void               fill_bit2byte    (void);
+static void               fill_2bit2byte   (void);
+static void               fill_4bit2byte   (void);
 static void               convert_bit2byte (const guchar      *src,
+                                            guchar            *dest,
+                                            gint               width,
+                                            gint               height);
+static void              convert_2bit2byte (const guchar      *src,
+                                            guchar            *dest,
+                                            gint               width,
+                                            gint               height);
+static void              convert_4bit2byte (const guchar      *src,
                                             guchar            *dest,
                                             gint               width,
                                             gint               height);
@@ -361,7 +371,7 @@ load_image (GFile        *file,
       gushort          *extra_types;
       ChannelData      *channel = NULL;
       uint16            planar  = PLANARCONFIG_CONTIG;
-      gboolean          is_bw;
+      gboolean          is_bw; /* FIXME Might need to change the name since we use it for palette too now */
       gboolean          is_signed;
       gint              i;
       gboolean          worst_case = FALSE;
@@ -397,6 +407,8 @@ load_image (GFile        *file,
       switch (bps)
         {
         case 1:
+        case 2:
+        case 4:
         case 8:
           if (profile_linear)
             image_precision = GIMP_PRECISION_U8_LINEAR;
@@ -602,13 +614,18 @@ load_image (GFile        *file,
         {
         case PHOTOMETRIC_MINISBLACK:
         case PHOTOMETRIC_MINISWHITE:
-          if (bps == 1 && ! alpha && spp == 1)
+          if ((bps == 1 || bps == 2 || bps == 4) && ! alpha && spp == 1)
             {
               image_type = GIMP_INDEXED;
               layer_type = GIMP_INDEXED_IMAGE;
 
               is_bw = TRUE;
-              fill_bit2byte ();
+              if (bps == 1)
+                fill_bit2byte ();
+              else if (bps == 2)
+                fill_2bit2byte ();
+              else if (bps == 4)
+                fill_4bit2byte ();
             }
           else
             {
@@ -755,6 +772,14 @@ load_image (GFile        *file,
         case PHOTOMETRIC_PALETTE:
           image_type = GIMP_INDEXED;
           layer_type = alpha ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
+
+          is_bw = TRUE;
+          if (bps == 1)
+            fill_bit2byte ();
+          else if (bps == 2)
+            fill_2bit2byte ();
+          else if (bps == 4)
+            fill_4bit2byte ();
           break;
 
         default:
@@ -1075,17 +1100,75 @@ load_image (GFile        *file,
         {
           guchar cmap[768];
 
-          if (is_bw)
+          if (is_bw && photomet != PHOTOMETRIC_PALETTE)
             {
               if (photomet == PHOTOMETRIC_MINISWHITE)
                 {
-                  cmap[0] = cmap[1] = cmap[2] = 255;
-                  cmap[3] = cmap[4] = cmap[5] = 0;
+                  if (bps == 1)
+                    {
+                      cmap[0] = cmap[1] = cmap[2] = 255;
+                      cmap[3] = cmap[4] = cmap[5] = 0;
+                    }
+                  else if (bps == 2)
+                    {
+                      cmap[0] = cmap[1]  = cmap[2]  = 255;
+                      cmap[3] = cmap[4]  = cmap[5]  = 170;
+                      cmap[6] = cmap[7]  = cmap[8]  = 85;
+                      cmap[9] = cmap[10] = cmap[11] = 0;
+                    }
+                  else if (bps == 4)
+                    {
+                      cmap[0]  = cmap[1]  = cmap[2]  = 255;
+                      cmap[3]  = cmap[4]  = cmap[5]  = 238;
+                      cmap[6]  = cmap[7]  = cmap[8]  = 221;
+                      cmap[9]  = cmap[10] = cmap[11] = 204;
+                      cmap[12] = cmap[13] = cmap[14] = 187;
+                      cmap[15] = cmap[16] = cmap[17] = 170;
+                      cmap[18] = cmap[19] = cmap[20] = 153;
+                      cmap[21] = cmap[22] = cmap[23] = 136;
+                      cmap[24] = cmap[25] = cmap[26] = 119;
+                      cmap[27] = cmap[28] = cmap[29] = 102;
+                      cmap[30] = cmap[31] = cmap[32] = 85;
+                      cmap[33] = cmap[34] = cmap[35] = 68;
+                      cmap[36] = cmap[37] = cmap[38] = 51;
+                      cmap[39] = cmap[40] = cmap[41] = 34;
+                      cmap[42] = cmap[43] = cmap[44] = 17;
+                      cmap[45] = cmap[46] = cmap[47] = 0;
+                    }
                 }
               else
                 {
-                  cmap[0] = cmap[1] = cmap[2] = 0;
-                  cmap[3] = cmap[4] = cmap[5] = 255;
+                  if (bps == 1)
+                    {
+                      cmap[0] = cmap[1] = cmap[2] = 0;
+                      cmap[3] = cmap[4] = cmap[5] = 255;
+                    }
+                  else if (bps == 2)
+                    {
+                      cmap[0] = cmap[1]  = cmap[2]  = 0;
+                      cmap[3] = cmap[4]  = cmap[5]  = 85;
+                      cmap[6] = cmap[7]  = cmap[8]  = 170;
+                      cmap[9] = cmap[10] = cmap[11] = 255;
+                    }
+                  else if (bps == 4)
+                    {
+                      cmap[0]  = cmap[1]  = cmap[2]  = 0;
+                      cmap[3]  = cmap[4]  = cmap[5]  = 17;
+                      cmap[6]  = cmap[7]  = cmap[8]  = 34;
+                      cmap[9]  = cmap[10] = cmap[11] = 51;
+                      cmap[12] = cmap[13] = cmap[14] = 68;
+                      cmap[15] = cmap[16] = cmap[17] = 85;
+                      cmap[18] = cmap[19] = cmap[20] = 102;
+                      cmap[21] = cmap[22] = cmap[23] = 119;
+                      cmap[24] = cmap[25] = cmap[26] = 136;
+                      cmap[27] = cmap[28] = cmap[29] = 153;
+                      cmap[30] = cmap[31] = cmap[32] = 170;
+                      cmap[33] = cmap[34] = cmap[35] = 187;
+                      cmap[36] = cmap[37] = cmap[38] = 204;
+                      cmap[39] = cmap[40] = cmap[41] = 221;
+                      cmap[42] = cmap[43] = cmap[44] = 238;
+                      cmap[45] = cmap[46] = cmap[47] = 255;
+                    }
                 }
             }
           else
@@ -1696,7 +1779,12 @@ load_contiguous (TIFF        *tif,
 
           if (is_bw)
             {
-              convert_bit2byte (buffer, bw_buffer, cols, rows);
+              if (bps == 1)
+                convert_bit2byte (buffer, bw_buffer, cols, rows);
+              else if (bps == 2)
+                convert_2bit2byte (buffer, bw_buffer, cols, rows);
+              else if (bps == 4)
+                convert_4bit2byte (buffer, bw_buffer, cols, rows);
             }
           else if (is_signed)
             {
@@ -1871,7 +1959,12 @@ load_separate (TIFF        *tif,
 
                   if (is_bw)
                     {
-                      convert_bit2byte (buffer, bw_buffer, cols, rows);
+                      if (bps == 1)
+                        convert_bit2byte (buffer, bw_buffer, cols, rows);
+                      else if (bps == 2)
+                        convert_2bit2byte (buffer, bw_buffer, cols, rows);
+                      else if (bps == 4)
+                        convert_4bit2byte (buffer, bw_buffer, cols, rows);
                     }
                   else if (is_signed)
                     {
@@ -1928,7 +2021,9 @@ load_separate (TIFF        *tif,
 }
 
 
-static guchar bit2byte[256 * 8];
+static guchar   bit2byte[256 * 8];
+static guchar _2bit2byte[256 * 4];
+static guchar _4bit2byte[256 * 2];
 
 static void
 fill_bit2byte (void)
@@ -1948,6 +2043,54 @@ fill_bit2byte (void)
       *(dest++) = ((j & (1 << i)) != 0);
 
   filled = TRUE;
+}
+
+static void
+fill_2bit2byte (void)
+{
+  static gboolean filled2 = FALSE;
+
+  guchar *dest;
+  gint    i, j;
+
+  if (filled2)
+    return;
+
+  dest = _2bit2byte;
+
+  for (j = 0; j < 256; j++)
+    {
+    for (i = 3; i >= 0; i--)
+      {
+        *(dest++) = ((j & (3 << (2*i))) >> (2*i));
+      }
+    }
+
+  filled2 = TRUE;
+}
+
+static void
+fill_4bit2byte (void)
+{
+  static gboolean filled4 = FALSE;
+
+  guchar *dest;
+  gint    i, j;
+
+  if (filled4)
+    return;
+
+  dest = _4bit2byte;
+
+  for (j = 0; j < 256; j++)
+    {
+    for (i = 1; i >= 0; i--)
+      {
+        *(dest++) = ((j & (15 << (4*i))) >> (4*i));
+      }
+    }
+
+  filled4 = TRUE;
 }
 
 static void
@@ -1973,6 +2116,64 @@ convert_bit2byte (const guchar *src,
       if (x > 0)
         {
           memcpy (dest, bit2byte + *src * 8, x);
+          dest += x;
+          src++;
+        }
+    }
+}
+
+static void
+convert_2bit2byte (const guchar *src,
+                   guchar       *dest,
+                   gint          width,
+                   gint          height)
+{
+  gint y;
+
+  for (y = 0; y < height; y++)
+    {
+      gint x = width;
+
+      while (x >= 4)
+        {
+          memcpy (dest, _2bit2byte + *src * 4, 4);
+          dest += 4;
+          x -= 4;
+          src++;
+        }
+
+      if (x > 0)
+        {
+          memcpy (dest, _2bit2byte + *src * 4, x);
+          dest += x;
+          src++;
+        }
+    }
+}
+
+static void
+convert_4bit2byte (const guchar *src,
+                   guchar       *dest,
+                   gint          width,
+                   gint          height)
+{
+  gint y;
+
+  for (y = 0; y < height; y++)
+    {
+      gint x = width;
+
+      while (x >= 2)
+        {
+          memcpy (dest, _4bit2byte + *src * 2, 2);
+          dest += 2;
+          x -= 2;
+          src++;
+        }
+
+      if (x > 0)
+        {
+          memcpy (dest, _4bit2byte + *src * 2, x);
           dest += x;
           src++;
         }
