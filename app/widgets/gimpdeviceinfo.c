@@ -351,7 +351,7 @@ gimp_device_info_set_property (GObject      *object,
                 n_device_values = MIN (n_device_values,
                                        gdk_device_get_n_axes (device));
               }
-            else if (! info->priv->n_axes)
+            else if (! info->priv->n_axes && n_device_values > 0)
               {
                 info->priv->n_axes     = n_device_values;
                 info->priv->axes_uses  = g_new0 (GdkAxisUse, info->priv->n_axes);
@@ -650,7 +650,17 @@ gimp_device_info_updated (GimpDeviceInfo *info)
         {
           GdkAxisUse use;
 
-          use = (i < old_n_axes) ?  old_uses[i] : gdk_device_get_axis_use (info->priv->device, i);
+          /* Virtual devices are special and just reproduce their actual
+           * physical device at a given moment. We should never try to
+           * reuse the data because we risk to pass device configuration
+           * from one physical device to another.
+           */
+          if (gdk_device_get_device_type (info->priv->device) == GDK_DEVICE_TYPE_MASTER ||
+              i >= old_n_axes)
+            use = gdk_device_get_axis_use (info->priv->device, i);
+          else
+            use = old_uses[i];
+
           gimp_device_info_set_axis_use (info, i, use);
 
           if (iter->data != GDK_NONE)
@@ -670,10 +680,12 @@ gimp_device_info_updated (GimpDeviceInfo *info)
         {
           GimpDeviceKey key;
 
-          if (i < old_n_keys)
-            key = old_keys[i];
-          else
+          if (gdk_device_get_device_type (info->priv->device) == GDK_DEVICE_TYPE_MASTER ||
+              i >= old_n_keys)
             gdk_device_get_key (info->priv->device, i, &key.keyval, &key.modifiers);
+          else
+            key = old_keys[i];
+
           gimp_device_info_set_key (info, i, key.keyval, key.modifiers);
         }
       g_clear_pointer (&old_keys, g_free);
