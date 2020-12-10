@@ -845,22 +845,45 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
 void
 gimp_device_info_set_default_tool (GimpDeviceInfo *info)
 {
+  GimpContainer *tools;
+  GimpToolInfo  *tool_info = NULL;
+
   g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
 
-  if (info->priv->device &&
-      gdk_device_get_source (info->priv->device) == GDK_SOURCE_ERASER)
+  tools     = GIMP_TOOL_PRESET (info)->gimp->tool_info_list;
+  tool_info =
+    GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
+                                                      "gimp-rect-select-tool"));
+
+  if (info->priv->device)
     {
-      GimpContainer *tools = GIMP_TOOL_PRESET (info)->gimp->tool_info_list;
-      GimpToolInfo  *eraser;
+      switch (gdk_device_get_source (info->priv->device))
+        {
+        case GDK_SOURCE_ERASER:
+          tool_info =
+            GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
+                                                              "gimp-eraser-tool"));
+          break;
+        case GDK_SOURCE_PEN:
+          tool_info =
+            GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
+                                                              "gimp-paintbrush-tool"));
+          break;
+        case GDK_SOURCE_TOUCHSCREEN:
+          tool_info =
+            GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
+                                                              "gimp-smudge-tool"));
+          break;
+        default:
+          break;
+        }
+    }
 
-      eraser =
-        GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
-                                                          "gimp-eraser-tool"));
-
-      if (eraser)
-        g_object_set (info,
-                      "tool-options", eraser->tool_options,
-                      NULL);
+  if (tool_info)
+    {
+      g_object_set (info,
+                    "tool-options", tool_info->tool_options,
+                    NULL);
     }
 }
 
