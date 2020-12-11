@@ -17,6 +17,7 @@ DISTCLEANFILES = $(tagsdata_data_files)
 
 
 gimp-tags-default.xml: gimp-tags-default.xml.in $(wildcard $(top_srcdir)/po-tags/*.po)
+	mkdir -p $(top_builddir)/po-tags/
 	$(INTLTOOL_MERGE) $(top_srcdir)/po-tags $< $(@) -x -u -c $(top_builddir)/po-tags/.intltool-merge-cache
 
 
