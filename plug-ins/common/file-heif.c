@@ -1826,7 +1826,7 @@ save_image (GFile                        *file,
     {
       int parameter_number;
 
-      parameter_number = g_get_num_processors();
+      parameter_number = gimp_get_num_processors();
       parameter_number = CLAMP(parameter_number, 1, 16);
 
       err = heif_encoder_set_parameter_integer (encoder, "threads", parameter_number);
