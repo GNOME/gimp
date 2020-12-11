@@ -294,6 +294,7 @@ EXPORTS
 	gimp_get_images
 	gimp_get_module_load_inhibit
 	gimp_get_monitor_resolution
+	gimp_get_num_processors
 	gimp_get_parasite
 	gimp_get_parasite_list
 	gimp_get_pdb

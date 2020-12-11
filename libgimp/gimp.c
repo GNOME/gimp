@@ -145,6 +145,7 @@ static gboolean            _export_comment       = FALSE;
 static gboolean            _export_exif          = FALSE;
 static gboolean            _export_xmp           = FALSE;
 static gboolean            _export_iptc          = FALSE;
+static gint32              _num_processors       = 1;
 static GimpCheckSize       _check_size           = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
 static GimpCheckType       _check_type           = GIMP_CHECK_TYPE_GRAY_CHECKS;
 static gint                _default_display_id   = -1;
@@ -783,6 +784,23 @@ gimp_export_iptc (void)
 }
 
 /**
+ * gimp_get_num_processors:
+ *
+ * Returns the number of threads set explicitly by the user in the
+ * preferences. This information can be used by plug-ins wishing to
+ * follow user settings for multi-threaded implementations.
+ *
+ * Returns: the prefered number of threads to use.
+ *
+ * Since: 3.0
+ **/
+gint32
+gimp_get_num_processors (void)
+{
+  return _num_processors;
+}
+
+/**
  * gimp_check_size:
  *
  * Returns the size of the checkerboard to be used in previews.
@@ -1132,6 +1150,7 @@ _gimp_config (GPConfig *config)
   _export_xmp           = config->export_xmp       ? TRUE : FALSE;
   _export_iptc          = config->export_iptc      ? TRUE : FALSE;
   _export_comment       = config->export_comment;
+  _num_processors       = config->num_processors;
   _default_display_id   = config->default_display_id;
   _wm_class             = g_strdup (config->wm_class);
   _display_name         = g_strdup (config->display_name);
