@@ -164,6 +164,10 @@ clean: mostlyclean
 distclean: clean
 	rm -f Makefile Makefile.in POTFILES stamp-it
 	rm -f *.mo *.msg *.cat *.cat.m *.gmo
+	# Around December of 2020, a possible change on intltool-merge or some
+	# other dependency in Debian testing broke the CI distcheck job, leaving
+	# some lock files. This CLEANFILES rule should be removed once this is
+	# fixed upstream.
 	rm -f .intltool-merge-cache.lock
 
 maintainer-clean: distclean
@@ -228,9 +232,3 @@ stamp-it: Makefile.in.in $(top_builddir)/config.status POTFILES.in
 # Tell versions [3.59,3.63) of GNU make not to export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
-
-# Around December of 2020, a possible change on intltool-merge or some
-# other dependency in Debian testing broke the CI distcheck job, leaving
-# some lock files. This CLEANFILES rule should be removed once this is
-# fixed upstream.
-CLEANFILES = .intltool-merge-cache.lock
