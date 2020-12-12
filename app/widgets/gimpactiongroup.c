@@ -407,7 +407,8 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
       else
         {
           label   = gettext (entries[i].label);
-          tooltip = gettext (entries[i].tooltip);
+          if (entries[i].tooltip)
+            tooltip = gettext (entries[i].tooltip);
         }
 
       action = gimp_action_impl_new (entries[i].name, label, tooltip,
@@ -456,7 +457,8 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
       else
         {
           label   = gettext (entries[i].label);
-          tooltip = gettext (entries[i].tooltip);
+          if (entries[i].tooltip)
+            tooltip = gettext (entries[i].tooltip);
         }
 
       action = gimp_toggle_action_new (entries[i].name, label, tooltip,
@@ -512,7 +514,8 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       else
         {
           label   = gettext (entries[i].label);
-          tooltip = gettext (entries[i].tooltip);
+          if (entries[i].tooltip)
+            tooltip = gettext (entries[i].tooltip);
         }
 
       action = gimp_radio_action_new (entries[i].name, label, tooltip,
@@ -574,7 +577,8 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
       else
         {
           label   = gettext (entries[i].label);
-          tooltip = gettext (entries[i].tooltip);
+          if (entries[i].tooltip)
+            tooltip = gettext (entries[i].tooltip);
         }
 
       action = gimp_enum_action_new (entries[i].name, label, tooltip,
@@ -626,7 +630,8 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
       else
         {
           label   = gettext (entries[i].label);
-          tooltip = gettext (entries[i].tooltip);
+          if (entries[i].tooltip)
+            tooltip = gettext (entries[i].tooltip);
         }
 
       action = gimp_string_action_new (entries[i].name, label, tooltip,
