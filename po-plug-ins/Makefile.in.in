@@ -160,6 +160,7 @@ clean: mostlyclean
 distclean: clean
 	rm -f Makefile Makefile.in POTFILES stamp-it
 	rm -f *.mo *.msg *.cat *.cat.m *.gmo
+	rm -f .intltool-merge-cache.lock
 
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use;"
