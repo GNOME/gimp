@@ -853,7 +853,7 @@ gimp_device_info_set_default_tool (GimpDeviceInfo *info)
   tools     = GIMP_TOOL_PRESET (info)->gimp->tool_info_list;
   tool_info =
     GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
-                                                      "gimp-rect-select-tool"));
+                                                      "gimp-paintbrush-tool"));
 
   if (info->priv->device)
     {
