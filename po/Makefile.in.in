@@ -232,4 +232,4 @@ stamp-it: Makefile.in.in $(top_builddir)/config.status POTFILES.in
 # other dependency in Debian testing broke the CI distcheck job, leaving
 # some lock files. This CLEANFILES rule should be removed once this is
 # fixed upstream.
-CLEANFILES += .intltool-merge-cache.lock
+CLEANFILES = .intltool-merge-cache.lock
