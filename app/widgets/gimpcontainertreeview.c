@@ -1300,12 +1300,13 @@ gimp_container_tree_view_button (GtkWidget             *widget,
       GtkTreeIter               iter;
       gboolean                  handled = TRUE;
       gboolean                  multisel_mode;
+      GdkModifierType           modifiers = (bevent->state & gimp_get_all_modifiers_mask ());
 
       multisel_mode = (gtk_tree_selection_get_mode (tree_view->priv->selection)
                        == GTK_SELECTION_MULTIPLE);
 
-      if (! (bevent->state & (gimp_get_extend_selection_mask () |
-                              gimp_get_modify_selection_mask ())))
+      if (! modifiers ||
+          (modifiers & ~(gimp_get_extend_selection_mask () | gimp_get_modify_selection_mask ())))
         {
           /*  don't chain up for multi-selection handling if none of
            *  the participating modifiers is pressed, we implement
@@ -1503,11 +1504,11 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                                                path_str,
                                                                bevent->state);
 
-                  if (! handled && ! multisel_mode)
+                  if (! handled && ! multisel_mode && ! modifiers)
                     {
                       if (! tree_view->priv->editing_path &&
                           (bevent->type == GDK_BUTTON_RELEASE ||
-                          ! gimp_container_view_is_item_selected (container_view, renderer->viewable)))
+                           ! gimp_container_view_is_item_selected (container_view, renderer->viewable)))
                         /* If we click on currently selected item,
                          * handle simple click on release only for it
                          * to not change a multi-selection in case this
