@@ -1783,12 +1783,13 @@ gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (item_view);
   GtkTreePath           *path;
   GtkTreeIter            iter;
-  gboolean               handled = FALSE;
+  GdkModifierType        modifiers = gimp_get_all_modifiers_mask ();
+  gboolean               handled   = FALSE;
 
   path = gtk_tree_path_new_from_string (path_str);
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path) &&
-      (state & GDK_MOD1_MASK))
+      (state & modifiers) == GDK_MOD1_MASK)
     {
       GimpImage        *image    = gimp_item_tree_view_get_image (item_view);
       GimpViewRenderer *renderer = NULL;
