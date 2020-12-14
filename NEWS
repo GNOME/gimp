@@ -28,11 +28,74 @@ User Interface:
     accurately). Also when giving focus to the entry with the cursor
     (middle click), it doesn't click on the scale (i.e. value doesn't
     change).
+  - Various improvements in the Layers dockable (and similar tree view
+    widgets):
+    * The bigger thumbnail popup on long click (e.g. on a layer or mask
+      thumbnail) does not pop out when any modifier is hold (such as
+      Shift/Ctrl for multi-selection or any other modifier used for
+      alternative actions).
+    * Alternative actions which were available with modifier-clicks on
+      layer or mask thumbnails have been moved to an Alt+ modifier when
+      necessary, in order to not clash with multi-layer selection
+      interaction. In particular:
+      + Ctrl-click on a mask to enable/disable it now moved to
+        Alt-Ctrl-click.
+    * The Shift+click and Ctrl+click actions on a layer thumbnail to add
+      and remove respectively a layer mask have been removed because the
+      much older feature for "Alpha to Selection" already use all the
+      Alt+ modifier combinations.
+    * The alternative Alt+ actions now only operate on the clicked layer
+      and not on the selection unlike the corresponding actions
+      (available through buttons, actions and menus). Also they do not
+      change the selection.  So you can Alt+click a layer for "Alpha to
+      Selection", same as you can Alt+click a mask for showing it
+      without triggering a selection change. This allows these
+      alternative actions to not be redundant of the equivalent actions
+      but complementary with a slightly different targetting behavior.
+    * The various interactions with modifiers now catch the exact
+      modifier combination they require, hence avoiding interaction
+      cases running several actions (e.g. Alt-Ctrl on a layer thumbnail
+      removes the clicked layer's alpha channel from the selection
+      without modifying the selected layer while Ctrl only would modify
+      the selection).
 
 Tools:
 
   - New Paint Select tool in the playground. This is a tool prototype
     which would hopefully end up as a quick binary selection tool.
+  - The new default dynamics is: "Pressure Size". This doesn't change
+    anything for common input devices (mouses, touchpad) yet would allow
+    tablet devices to directly show that pressure input is working on
+    first use. Until now, people would have the impression that tablets
+    are not working (even though GIMP 3 will have hotplug so it is
+    actually working from scratch) just because "Dynamics Off" was the
+    default.
+
+Input Devices:
+
+  - Various improvements to the Input Devices editor:
+    * Do not show virtual devices and XTEST API (Linux/X11) device in
+      the Input Devices editor as they are useless from a configuration
+      standpoint.
+    * Only show the axes returned by GDK instead of the whole
+      list of possible axes, which made no sense.
+    * Show better names for axes, as returned by GDK, for instance a X
+      axis becomes often "Abs X" on a graphics tablet and "Rel X" on a
+      mouse or other devices made to work relatively.
+    * Don't show an empty list for devices with no axes, just don't show
+      the list widget at all.
+    * For each device, select by default the first axis with curve
+      ability, if any, (i.e. the Pressure axis if the device has one) in
+      order to make the dialog directly more useful and usable.
+  - Default tool have been set on different device sources:
+    * Pen devices (tablet styluses main input) now default to the
+      paintbrush tool.
+    * Eraser devices (tablet styluses back input) still defaults to
+      eraser tool.
+    * Touch screen (finger) defaults to Smudge tool.
+    * All other devices defaults to paintbrush (this was already the
+      case, but was broken for as long as I remember, now it should work
+      properly).
 
 API:
 
@@ -69,12 +132,20 @@ API:
     * The widgets will work the same (no more "Comment" text view
       missing in one plug-in but present in another, or with an entry
       here, and a text view there, and so on).
+  - New gimp_get_num_processors() function for plug-ins to be able to
+    set their own multi-threading operations as configured in
+    Preferences.
 
 Plug-ins:
 
   - file-fli, file-tiff, file-jpeg and file-png updated to new dialog
     generation API. In the most complicated case (file-jpeg), this
     shaved 600 lines out of the plug-in code.
+  - file-heif now uses gimp_get_num_processors() instead of
+    g_get_num_processors() (allowing to bypass system thread info).
+  - file-jp2 is now able to decode JPEG2000 files faster with
+    multi-threading, using the thread number settings returned by
+    gimp_get_num_processors().
 
 Installer:
 
