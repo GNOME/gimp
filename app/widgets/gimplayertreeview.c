@@ -31,6 +31,11 @@
 
 #include "widgets-types.h"
 
+#if 0
+/* For mask features in gimp_layer_tree_view_layer_clicked() */
+#include "config/gimpdialogconfig.h"
+#endif
+
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
@@ -1563,8 +1568,7 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
   GtkTreePath           *path      = gtk_tree_path_new_from_string (path_str);
   GtkTreeIter            iter;
 
-  if (gtk_tree_model_get_iter (tree_view->model, &iter, path) &&
-      ! (state & GDK_MOD1_MASK))
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
       GimpUIManager    *ui_manager;
       GimpActionGroup  *group;
@@ -1579,39 +1583,98 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
 
       if (renderer)
         {
-          GimpLayer     *layer = GIMP_LAYER (renderer->viewable);
-          GimpLayerMask *mask  = gimp_layer_get_mask (layer);
+          GimpLayer       *layer     = GIMP_LAYER (renderer->viewable);
+          GimpLayerMask   *mask      = gimp_layer_get_mask (layer);
+          GdkModifierType  modifiers = (state & gimp_get_all_modifiers_mask ());
 
-          if (state & gimp_get_extend_selection_mask ())
+#if 0
+/* This feature has been removed because it clashes with the
+ * multi-selection (Shift/Ctrl are reserved), and we can't move it to
+ * Alt+ because then it would clash with the alpha-to-selection features
+ * (cf. gimp_item_tree_view_item_pre_clicked()).
+ * Just macro-ing them out for now, just in case, but I don't think
+ * there is a chance to revive them as there is no infinite modifiers.
+ */
+          GimpImage       *image;
+
+          image = gimp_item_get_image (GIMP_ITEM (layer));
+
+          if ((modifiers & GDK_MOD1_MASK))
             {
-              if (state & gimp_get_modify_selection_mask ())
+              /* Alternative functions (Alt key or equivalent) when
+               * clicking on a layer preview. The actions happen only on
+               * the clicked layer, not on selected layers.
+               *
+               * Note: Alt-click is already reserved for Alpha to
+               * selection in GimpItemTreeView.
+               */
+              if (modifiers == (GDK_MOD1_MASK | GDK_SHIFT_MASK))
                 {
-                  /* Shift-Control-click apply a layer mask */
-
-                  if (mask)
-                    gimp_ui_manager_activate_action (ui_manager, "layers",
-                                                     "layers-mask-apply");
-                }
-              else
-                {
-                  /* Shift-click add a layer mask with last values */
+                  /* Alt-Shift-click adds a layer mask with last values */
+                  GimpDialogConfig *config;
+                  GimpChannel      *channel = NULL;
 
                   if (! mask)
-                    gimp_ui_manager_activate_action (ui_manager, "layers",
-                                                     "layers-mask-add-last-values");
+                    {
+                      config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+                      if (config->layer_add_mask_type == GIMP_ADD_MASK_CHANNEL)
+                        {
+                          channel = gimp_image_get_active_channel (image);
+
+                          if (! channel)
+                            {
+                              GimpContainer *channels = gimp_image_get_channels (image);
+
+                              channel = GIMP_CHANNEL (gimp_container_get_first_child (channels));
+                            }
+
+                          if (! channel)
+                            {
+                              /* No channel. We cannot perform the add
+                               * mask action. */
+                              g_message (_("No channels to create a layer mask from."));
+                            }
+                        }
+
+                      if (config->layer_add_mask_type != GIMP_ADD_MASK_CHANNEL || channel)
+                        {
+                          mask = gimp_layer_create_mask (layer,
+                                                         config->layer_add_mask_type,
+                                                         channel);
+
+                          if (config->layer_add_mask_invert)
+                            gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
+
+                          gimp_layer_add_mask (layer, mask, TRUE, NULL);
+                          gimp_image_flush (image);
+                        }
+                    }
+                }
+              else if (modifiers == (GDK_MOD1_MASK | GDK_CONTROL_MASK))
+                {
+                  /* Alt-Control-click removes a layer mask */
+                  if (mask)
+                    {
+                      gimp_layer_apply_mask (layer, GIMP_MASK_DISCARD, TRUE);
+                      gimp_image_flush (image);
+                    }
+                }
+              else if (modifiers == (GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK))
+                {
+                  /* Alt-Shift-Control-click applies a layer mask */
+                  if (mask)
+                    {
+                      gimp_layer_apply_mask (layer, GIMP_MASK_APPLY, TRUE);
+                      gimp_image_flush (image);
+                    }
                 }
             }
-          else if (state & gimp_get_modify_selection_mask ())
+          else
+#endif
+          if (! modifiers && mask && gimp_layer_get_edit_mask (layer))
             {
-              /* Control-click remove a layer mask */
-
-              if (mask)
-                gimp_ui_manager_activate_action (ui_manager, "layers",
-                                                 "layers-mask-delete");
-            }
-          else if (mask && gimp_layer_get_edit_mask (layer))
-            {
-              /* other clicks activate the layer */
+              /* Simple clicks (without modifiers) activate the layer */
 
               if (mask)
                 gimp_action_group_set_action_active (group,
