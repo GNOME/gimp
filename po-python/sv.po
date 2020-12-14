@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-26 16:46+0000\n"
-"PO-Revision-Date: 2020-05-27 01:41+0200\n"
+"POT-Creation-Date: 2020-11-22 12:46+0000\n"
+"PO-Revision-Date: 2020-12-14 17:59+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: ../plug-ins/python/colorxhtml.py:89
 msgid "Save as colored HTML text..."
@@ -71,55 +71,55 @@ msgstr "Skriv separat CSS-fil"
 msgid "Saving as colored XHTML"
 msgstr "Sparar som färglagd XHTML"
 
-#: ../plug-ins/python/colorxhtml.py:280 ../plug-ins/python/colorxhtml.py:281
+#: ../plug-ins/python/colorxhtml.py:279 ../plug-ins/python/colorxhtml.py:280
 msgid "_Read characters from file, if true, or use text entry"
 msgstr "_Läs tecken från fil om sant, eller använd textinmatning"
 
-#: ../plug-ins/python/colorxhtml.py:285 ../plug-ins/python/colorxhtml.py:286
+#: ../plug-ins/python/colorxhtml.py:284 ../plug-ins/python/colorxhtml.py:285
 msgid "_File to read or characters to use"
 msgstr "_Fil att läsa eller tecken att använda"
 
-#: ../plug-ins/python/colorxhtml.py:290 ../plug-ins/python/colorxhtml.py:291
+#: ../plug-ins/python/colorxhtml.py:289 ../plug-ins/python/colorxhtml.py:290
 msgid "Fo_nt size in pixels"
 msgstr "Typs_nittsstorlek i bildpunkter"
 
-#: ../plug-ins/python/colorxhtml.py:295 ../plug-ins/python/colorxhtml.py:296
+#: ../plug-ins/python/colorxhtml.py:294 ../plug-ins/python/colorxhtml.py:295
 msgid "_Write a separate CSS file"
 msgstr "Sk_riv en separat CSS-fil"
 
-#: ../plug-ins/python/colorxhtml.py:315
+#: ../plug-ins/python/colorxhtml.py:314
 msgid "Save as colored HTML text"
 msgstr "Spara som färglagd HTML-text"
 
-#: ../plug-ins/python/colorxhtml.py:318
+#: ../plug-ins/python/colorxhtml.py:317
 msgid "Colored HTML text"
 msgstr "Färglagd HTML-text"
 
-#: ../plug-ins/python/foggify.py:82 ../plug-ins/python/foggify.py:83
+#: ../plug-ins/python/foggify.py:83 ../plug-ins/python/foggify.py:84
 msgid "Layer name"
 msgstr "Lagernamn"
 
-#: ../plug-ins/python/foggify.py:84
+#: ../plug-ins/python/foggify.py:85
 msgid "Clouds"
 msgstr "Moln"
 
-#: ../plug-ins/python/foggify.py:87 ../plug-ins/python/foggify.py:88
+#: ../plug-ins/python/foggify.py:88 ../plug-ins/python/foggify.py:89
 msgid "Fog color"
 msgstr "Färg på dimma"
 
-#: ../plug-ins/python/foggify.py:91 ../plug-ins/python/foggify.py:92
+#: ../plug-ins/python/foggify.py:92 ../plug-ins/python/foggify.py:93
 msgid "Turbulence"
 msgstr "Turbulens"
 
-#: ../plug-ins/python/foggify.py:96 ../plug-ins/python/foggify.py:97
+#: ../plug-ins/python/foggify.py:97 ../plug-ins/python/foggify.py:98
 msgid "Opacity"
 msgstr "Opacitet"
 
-#: ../plug-ins/python/foggify.py:114
+#: ../plug-ins/python/foggify.py:115
 msgid "Add a layer of fog"
 msgstr "Lägg till ett lager av dimma"
 
-#: ../plug-ins/python/foggify.py:117
+#: ../plug-ins/python/foggify.py:118
 msgid "_Fog..."
 msgstr "_Dimma…"
 
@@ -135,31 +135,231 @@ msgstr "Gradient att använda"
 msgid "File"
 msgstr "Fil"
 
-#: ../plug-ins/python/palette-offset.py:44
-#: ../plug-ins/python/palette-offset.py:45
+#: ../plug-ins/python/histogram-export.py:94
+msgid "Pixel count"
+msgstr "Antal bildpunkter"
+
+#: ../plug-ins/python/histogram-export.py:95
+msgid "Normalized"
+msgstr "Normaliserad"
+
+#: ../plug-ins/python/histogram-export.py:96
+msgid "Percent"
+msgstr "Procent"
+
+#: ../plug-ins/python/histogram-export.py:166
+msgid "File is either a directory or file name is empty."
+msgstr "Filen är antingen en katalog eller så är filnamnet tomt."
+
+#: ../plug-ins/python/histogram-export.py:169
+msgid "Directory not found."
+msgstr "Katalogen hittades inte."
+
+#: ../plug-ins/python/histogram-export.py:203
+msgid "Histogram Export..."
+msgstr "Histogramexport…"
+
+#: ../plug-ins/python/histogram-export.py:230
+msgid "_File..."
+msgstr "_Fil…"
+
+#: ../plug-ins/python/histogram-export.py:238
+msgid "Choose export file..."
+msgstr "Välj exportfil…"
+
+#: ../plug-ins/python/histogram-export.py:244
+msgid "Histogram Export file..."
+msgstr "Fil för histogramexport…"
+
+#. Bucket size parameter
+#: ../plug-ins/python/histogram-export.py:250
+#: ../plug-ins/python/histogram-export.py:320
+msgid "_Bucket Size"
+msgstr "_Hinkstorlek"
+
+#. Sample average parameter
+#: ../plug-ins/python/histogram-export.py:258
+#: ../plug-ins/python/histogram-export.py:325
+msgid "Sample _Average"
+msgstr "Samplings_medel"
+
+#: ../plug-ins/python/histogram-export.py:259
+msgid ""
+"If checked, the histogram is generated from merging all visible layers. "
+"Otherwise, the histogram is only for the current layer."
+msgstr ""
+"Om ikryssad genereras histogrammet från sammanfogning av alla synliga lager. "
+"Annars är histogrammet bara för det aktuella lagret."
+
+#. Output format parameter
+#: ../plug-ins/python/histogram-export.py:265
+msgid "_Output Format"
+msgstr "_Utmatningsformat"
+
+#: ../plug-ins/python/histogram-export.py:316
+msgid "Histogram _File"
+msgstr "Histogram_fil"
+
+#: ../plug-ins/python/histogram-export.py:330
+msgid "Output format"
+msgstr "Utmatningsformat"
+
+#: ../plug-ins/python/histogram-export.py:351
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr "Exporterar bildens histogram till en textfil (CSV)"
+
+#: ../plug-ins/python/histogram-export.py:354
+msgid "_Export histogram..."
+msgstr "_Exportera histogram…"
+
+#: ../plug-ins/python/palette-offset.py:46
+#: ../plug-ins/python/palette-offset.py:47
+#: ../plug-ins/python/palette-sort.py:340
+#: ../plug-ins/python/palette-sort.py:399
 #: ../plug-ins/python/palette-to-gradient.py:103
 msgid "Palette"
 msgstr "Palett"
 
-#: ../plug-ins/python/palette-offset.py:56
+#: ../plug-ins/python/palette-offset.py:58
 msgid "Off_set"
 msgstr "Po_sition"
 
-#: ../plug-ins/python/palette-offset.py:57
+#: ../plug-ins/python/palette-offset.py:59
 msgid "Offset"
 msgstr "Position"
 
-#: ../plug-ins/python/palette-offset.py:90
+#: ../plug-ins/python/palette-offset.py:92
 msgid "_Offset Palette..."
 msgstr "_Skifta i palett…"
 
-#: ../plug-ins/python/palette-offset.py:91
+#: ../plug-ins/python/palette-offset.py:93
 msgid "Offset the colors in a palette"
 msgstr "Skifta färgerna i en palett"
 
-#: ../plug-ins/python/palette-offset.py:139
+#: ../plug-ins/python/palette-offset.py:141
 msgid "Offset Palette..."
 msgstr "Skifta i palett…"
+
+#: ../plug-ins/python/palette-sort.py:41
+msgid "Red"
+msgstr "Röd"
+
+#: ../plug-ins/python/palette-sort.py:41
+msgid "Green"
+msgstr "Grön"
+
+#: ../plug-ins/python/palette-sort.py:41
+msgid "Blue"
+msgstr "Blå"
+
+#: ../plug-ins/python/palette-sort.py:42
+msgid "Luma (Y)"
+msgstr "Luminans (Y)"
+
+#: ../plug-ins/python/palette-sort.py:43
+msgid "Hue"
+msgstr "Nyans"
+
+#: ../plug-ins/python/palette-sort.py:43
+msgid "Saturation"
+msgstr "Mättnad"
+
+#: ../plug-ins/python/palette-sort.py:43
+msgid "Value"
+msgstr "Intensitet"
+
+#: ../plug-ins/python/palette-sort.py:44
+msgid "Saturation (HSL)"
+msgstr "Mättnad (HSL)"
+
+#: ../plug-ins/python/palette-sort.py:44
+msgid "Lightness (HSL)"
+msgstr "Ljushet (HSL)"
+
+#: ../plug-ins/python/palette-sort.py:45
+msgid "Index"
+msgstr "Index"
+
+#: ../plug-ins/python/palette-sort.py:46
+msgid "Random"
+msgstr "Slumpmässig"
+
+#: ../plug-ins/python/palette-sort.py:91
+msgid "Lightness (LAB)"
+msgstr "Ljushet (LAB)"
+
+#: ../plug-ins/python/palette-sort.py:92
+msgid "A-color"
+msgstr "A-färg"
+
+#: ../plug-ins/python/palette-sort.py:92
+msgid "B-color"
+msgstr "B-färg"
+
+#: ../plug-ins/python/palette-sort.py:93
+msgid "Chroma (LCHab)"
+msgstr "Krominans (LCHab)"
+
+#: ../plug-ins/python/palette-sort.py:94
+msgid "Hue (LCHab)"
+msgstr "Nyans (LCHab)"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "All"
+msgstr "Alla"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "Slice / Array"
+msgstr "Skiva / Vektor"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "Autoslice (fg->bg)"
+msgstr "Autoskivning (förgr->bakgr)"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "Partitioned"
+msgstr "Partitionerad"
+
+#: ../plug-ins/python/palette-sort.py:345
+msgid "Se_lections"
+msgstr "_Markeringar"
+
+#: ../plug-ins/python/palette-sort.py:352
+msgid "Slice _expression"
+msgstr "Skiv_uttryck"
+
+#: ../plug-ins/python/palette-sort.py:359
+msgid "Channel to _sort"
+msgstr "Kanal att _sortera"
+
+#: ../plug-ins/python/palette-sort.py:364
+#: ../plug-ins/python/palette-sort.py:376
+msgid "_Ascending"
+msgstr "_Stigande"
+
+#: ../plug-ins/python/palette-sort.py:371
+msgid "Secondary Channel to s_ort"
+msgstr "Sekundär kanal att s_ortera"
+
+#: ../plug-ins/python/palette-sort.py:381
+msgid "_Quantization"
+msgstr "_Kvantisering"
+
+#: ../plug-ins/python/palette-sort.py:387
+msgid "_Partitioning channel"
+msgstr "_Partitioneringskanal"
+
+#: ../plug-ins/python/palette-sort.py:392
+msgid "Partition q_uantization"
+msgstr "_Kvantisering för partitionering"
+
+#: ../plug-ins/python/palette-sort.py:417
+msgid "_Sort Palette..."
+msgstr "_Sortera palett…"
+
+#: ../plug-ins/python/palette-sort.py:422
+msgid "Sort the colors in a palette"
+msgstr "Sortera färgerna i en palett"
 
 #: ../plug-ins/python/palette-to-gradient.py:139
 msgid "Palette to _Gradient"
@@ -261,101 +461,101 @@ msgstr "Python-_konsol"
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktiv GIMP Python-tolk"
 
-#: ../plug-ins/python/spyro-plus.py:60
+#: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
 msgstr "Spiro-lager"
 
-#: ../plug-ins/python/spyro-plus.py:61
+#: ../plug-ins/python/spyro-plus.py:51
 msgid "Spyro Path"
 msgstr "Spiro-bana"
 
-#: ../plug-ins/python/spyro-plus.py:71
+#: ../plug-ins/python/spyro-plus.py:61
 msgid "As New Layer"
 msgstr "Som nytt lager"
 
-#: ../plug-ins/python/spyro-plus.py:72
+#: ../plug-ins/python/spyro-plus.py:62
 msgid "Redraw on last active layer"
 msgstr "Rita om på senast aktiva lagret"
 
-#: ../plug-ins/python/spyro-plus.py:73
+#: ../plug-ins/python/spyro-plus.py:63
 msgid "As Path"
 msgstr "Som bana"
 
-#: ../plug-ins/python/spyro-plus.py:121
+#: ../plug-ins/python/spyro-plus.py:111
 msgid "Circle"
 msgstr "Cirkel"
 
-#: ../plug-ins/python/spyro-plus.py:157
+#: ../plug-ins/python/spyro-plus.py:147
 msgid "Polygon-Star"
 msgstr "Polygonstjärna"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/python/spyro-plus.py:173 ../plug-ins/python/spyro-plus.py:996
+#: ../plug-ins/python/spyro-plus.py:163 ../plug-ins/python/spyro-plus.py:986
 msgid "Sine"
 msgstr "Sinus"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/python/spyro-plus.py:183
+#: ../plug-ins/python/spyro-plus.py:173
 msgid "Bumps"
 msgstr "Polygonhalvcirklar"
 
-#: ../plug-ins/python/spyro-plus.py:288
+#: ../plug-ins/python/spyro-plus.py:278
 msgid "Rack"
 msgstr "Kuggstång"
 
-#: ../plug-ins/python/spyro-plus.py:332
+#: ../plug-ins/python/spyro-plus.py:322
 msgid "Frame"
 msgstr "Ram"
 
-#: ../plug-ins/python/spyro-plus.py:445
+#: ../plug-ins/python/spyro-plus.py:435
 msgid "Selection"
 msgstr "Markering"
 
-#: ../plug-ins/python/spyro-plus.py:532
+#: ../plug-ins/python/spyro-plus.py:522
 msgid "Pencil"
 msgstr "Penna"
 
-#: ../plug-ins/python/spyro-plus.py:548
+#: ../plug-ins/python/spyro-plus.py:538
 msgid "AirBrush"
 msgstr "Färgspruta"
 
-#: ../plug-ins/python/spyro-plus.py:608
+#: ../plug-ins/python/spyro-plus.py:598
 msgid "Preview"
 msgstr "Förhandsgranskning"
 
-#: ../plug-ins/python/spyro-plus.py:613
+#: ../plug-ins/python/spyro-plus.py:603
 msgid "Stroke"
 msgstr "Streck"
 
-#: ../plug-ins/python/spyro-plus.py:660
+#: ../plug-ins/python/spyro-plus.py:650
 msgid "PaintBrush"
 msgstr "Pensel"
 
-#: ../plug-ins/python/spyro-plus.py:662
+#: ../plug-ins/python/spyro-plus.py:652
 msgid "Ink"
 msgstr "Bläck"
 
-#: ../plug-ins/python/spyro-plus.py:663
+#: ../plug-ins/python/spyro-plus.py:653
 msgid "MyPaintBrush"
 msgstr "MyPaint-pensel"
 
-#: ../plug-ins/python/spyro-plus.py:982
+#: ../plug-ins/python/spyro-plus.py:972
 msgid "Spyrograph"
 msgstr "Spirograf"
 
-#: ../plug-ins/python/spyro-plus.py:989
+#: ../plug-ins/python/spyro-plus.py:979
 msgid "Epitrochoid"
 msgstr "Epitrokoid"
 
-#: ../plug-ins/python/spyro-plus.py:1016
+#: ../plug-ins/python/spyro-plus.py:1006
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/python/spyro-plus.py:1447
+#: ../plug-ins/python/spyro-plus.py:1453
 msgid "Curve Type"
 msgstr "Kurvtyp"
 
-#: ../plug-ins/python/spyro-plus.py:1448
+#: ../plug-ins/python/spyro-plus.py:1454
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -363,22 +563,22 @@ msgstr ""
 "Ett epitrokoidmönster är när det rörliga kugghjulet är på utsidan av det "
 "fasta kugghjulet."
 
-#: ../plug-ins/python/spyro-plus.py:1453
+#: ../plug-ins/python/spyro-plus.py:1459
 msgid "Tool"
 msgstr "Verktyg"
 
-#: ../plug-ins/python/spyro-plus.py:1454
+#: ../plug-ins/python/spyro-plus.py:1460
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Verktyget med vilket mönstret ska ritas. Förhandsgranskningsverktyget ritar "
 "bara snabbt."
 
-#: ../plug-ins/python/spyro-plus.py:1459
+#: ../plug-ins/python/spyro-plus.py:1465
 msgid "Long Gradient"
 msgstr "Lång gradient"
 
-#: ../plug-ins/python/spyro-plus.py:1461
+#: ../plug-ins/python/spyro-plus.py:1467
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -389,11 +589,11 @@ msgstr ""
 "baserat på aktuell gradient och upprepningsläge från "
 "gradientverktygsinställningarna."
 
-#: ../plug-ins/python/spyro-plus.py:1481
+#: ../plug-ins/python/spyro-plus.py:1487
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Ange mönster med en av följande flikar:"
 
-#: ../plug-ins/python/spyro-plus.py:1483
+#: ../plug-ins/python/spyro-plus.py:1489
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -405,7 +605,7 @@ msgstr ""
 "följer instruktionerna från lekuppsättningarnas handböcker bör resultaten "
 "vara liknande."
 
-#: ../plug-ins/python/spyro-plus.py:1507
+#: ../plug-ins/python/spyro-plus.py:1513
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -413,11 +613,11 @@ msgstr ""
 "Antal kuggar för fast kugghjul. Storleken på det fasta kugghjulet är "
 "proportionell till antalet kuggar."
 
-#: ../plug-ins/python/spyro-plus.py:1510 ../plug-ins/python/spyro-plus.py:1538
+#: ../plug-ins/python/spyro-plus.py:1516 ../plug-ins/python/spyro-plus.py:1544
 msgid "Fixed Gear Teeth"
 msgstr "Kuggar i fast kugghjul"
 
-#: ../plug-ins/python/spyro-plus.py:1518
+#: ../plug-ins/python/spyro-plus.py:1524
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -425,15 +625,15 @@ msgstr ""
 "Antal kuggar för rörligt kugghjul. Storleken på det rörliga kugghjulet är "
 "proportionell till antalet kuggar."
 
-#: ../plug-ins/python/spyro-plus.py:1521 ../plug-ins/python/spyro-plus.py:1543
+#: ../plug-ins/python/spyro-plus.py:1527 ../plug-ins/python/spyro-plus.py:1549
 msgid "Moving Gear Teeth"
 msgstr "Kuggar i rörligt kugghjul"
 
-#: ../plug-ins/python/spyro-plus.py:1526
+#: ../plug-ins/python/spyro-plus.py:1532
 msgid "Hole percent"
 msgstr "Hålprocent"
 
-#: ../plug-ins/python/spyro-plus.py:1527
+#: ../plug-ins/python/spyro-plus.py:1533
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -441,11 +641,11 @@ msgstr ""
 "Hur långt hålet är från mitten på det rörliga kugghjulet. 100% betyder att "
 "hålet är på kugghjulets kant."
 
-#: ../plug-ins/python/spyro-plus.py:1548
+#: ../plug-ins/python/spyro-plus.py:1554
 msgid "Hole Number"
 msgstr "Hålnummer"
 
-#: ../plug-ins/python/spyro-plus.py:1549
+#: ../plug-ins/python/spyro-plus.py:1555
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -453,27 +653,27 @@ msgstr ""
 "Hål 1 är på kugghjulets kant. Det maximala hålnumret är nära centrum. Det "
 "maximala hålnumret är olika för varje kugghjul."
 
-#: ../plug-ins/python/spyro-plus.py:1560
+#: ../plug-ins/python/spyro-plus.py:1566
 msgid "Flower Petals"
 msgstr "Blomblad"
 
-#: ../plug-ins/python/spyro-plus.py:1561
+#: ../plug-ins/python/spyro-plus.py:1567
 msgid "The number of petals in the pattern."
 msgstr "Antalet blomblad i mönstret."
 
-#: ../plug-ins/python/spyro-plus.py:1566
+#: ../plug-ins/python/spyro-plus.py:1572
 msgid "Petal Skip"
 msgstr "Blombladshopp"
 
-#: ../plug-ins/python/spyro-plus.py:1567
+#: ../plug-ins/python/spyro-plus.py:1573
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "Antalet blomblad att gå framåt för att rita nästa blomblad."
 
-#: ../plug-ins/python/spyro-plus.py:1572
+#: ../plug-ins/python/spyro-plus.py:1578
 msgid "Hole Radius(%)"
 msgstr "Hålradie(%)"
 
-#: ../plug-ins/python/spyro-plus.py:1573
+#: ../plug-ins/python/spyro-plus.py:1579
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -483,11 +683,11 @@ msgstr ""
 "en procentsats av mönstrets storlek. Ett värde på 0 ger inget hål. Ett värde "
 "på 99 kommer skapa en tunn linje på kanten."
 
-#: ../plug-ins/python/spyro-plus.py:1594
+#: ../plug-ins/python/spyro-plus.py:1600
 msgid "Width(%)"
 msgstr "Bredd(%)"
 
-#: ../plug-ins/python/spyro-plus.py:1595
+#: ../plug-ins/python/spyro-plus.py:1601
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -497,23 +697,23 @@ msgstr ""
 "kommer bara rita ett tunt mönster. Ett värde på 100 kommer att fylla hela "
 "det fasta kugghjulet."
 
-#: ../plug-ins/python/spyro-plus.py:1606
+#: ../plug-ins/python/spyro-plus.py:1612
 msgid "Visual"
 msgstr "Visuellt"
 
-#: ../plug-ins/python/spyro-plus.py:1612
+#: ../plug-ins/python/spyro-plus.py:1618
 msgid "Toy Kit"
 msgstr "Lekuppsättning"
 
-#: ../plug-ins/python/spyro-plus.py:1618
+#: ../plug-ins/python/spyro-plus.py:1624
 msgid "Gears"
 msgstr "Kugghjul"
 
-#: ../plug-ins/python/spyro-plus.py:1631 ../plug-ins/python/spyro-plus.py:1675
+#: ../plug-ins/python/spyro-plus.py:1637 ../plug-ins/python/spyro-plus.py:1681
 msgid "Rotation"
 msgstr "Rotation"
 
-#: ../plug-ins/python/spyro-plus.py:1632
+#: ../plug-ins/python/spyro-plus.py:1638
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -521,11 +721,11 @@ msgstr ""
 "Rotation för mönstret i grader. Startpositionen för det rörliga kugghjulet i "
 "det fasta kugghjulet."
 
-#: ../plug-ins/python/spyro-plus.py:1655
+#: ../plug-ins/python/spyro-plus.py:1661
 msgid "Shape"
 msgstr "Form"
 
-#: ../plug-ins/python/spyro-plus.py:1656
+#: ../plug-ins/python/spyro-plus.py:1662
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -539,39 +739,39 @@ msgstr ""
 "hole=100 i kugghjulsnotation för att röra kanten. Markering kommer följa "
 "kanter för aktuell markering - försök med något icke-rektangulärt."
 
-#: ../plug-ins/python/spyro-plus.py:1665
+#: ../plug-ins/python/spyro-plus.py:1671
 msgid "Sides"
 msgstr "Sidor"
 
-#: ../plug-ins/python/spyro-plus.py:1665
+#: ../plug-ins/python/spyro-plus.py:1671
 msgid "Number of sides of the shape."
 msgstr "Antal sidor på formen."
 
-#: ../plug-ins/python/spyro-plus.py:1670
+#: ../plug-ins/python/spyro-plus.py:1676
 msgid "Morph"
 msgstr "Förändra"
 
-#: ../plug-ins/python/spyro-plus.py:1670
+#: ../plug-ins/python/spyro-plus.py:1676
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Förändra form för fast kugghjul. Påverkar endast några av formerna."
 
-#: ../plug-ins/python/spyro-plus.py:1675
+#: ../plug-ins/python/spyro-plus.py:1681
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Rotation för det fasta kugghjulet i grader"
 
-#: ../plug-ins/python/spyro-plus.py:1690
+#: ../plug-ins/python/spyro-plus.py:1696
 msgid "Margin (px)"
 msgstr "Marginal (px)"
 
-#: ../plug-ins/python/spyro-plus.py:1690
+#: ../plug-ins/python/spyro-plus.py:1696
 msgid "Margin from edge of selection."
 msgstr "Marginal från markeringens kant."
 
-#: ../plug-ins/python/spyro-plus.py:1695
+#: ../plug-ins/python/spyro-plus.py:1701
 msgid "Make width and height equal"
 msgstr "Gör bredd och höjd lika stora"
 
-#: ../plug-ins/python/spyro-plus.py:1697
+#: ../plug-ins/python/spyro-plus.py:1703
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -579,11 +779,11 @@ msgstr ""
 "När omarkerad kommer mönstret att fylla aktuell bild eller markering. När "
 "ikryssad kommer mönstret ha samma höjd som bredd, och kommer att centreras."
 
-#: ../plug-ins/python/spyro-plus.py:1712
+#: ../plug-ins/python/spyro-plus.py:1718
 msgid "Re_draw"
 msgstr "Ri_ta om"
 
-#: ../plug-ins/python/spyro-plus.py:1714
+#: ../plug-ins/python/spyro-plus.py:1720
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -591,15 +791,15 @@ msgstr ""
 "Om du ändrar inställningarna för ett verktyg, ändrar färg, eller ändrar "
 "markeringen, tryck på detta för att förhandsgranska hur mönstret ser ut."
 
-#: ../plug-ins/python/spyro-plus.py:1717
+#: ../plug-ins/python/spyro-plus.py:1723
 msgid "_Reset"
 msgstr "Å_terställ"
 
-#: ../plug-ins/python/spyro-plus.py:1725
+#: ../plug-ins/python/spyro-plus.py:1731
 msgid "Save"
 msgstr "Spara"
 
-#: ../plug-ins/python/spyro-plus.py:1726
+#: ../plug-ins/python/spyro-plus.py:1732
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -607,35 +807,35 @@ msgstr ""
 "Välj om du vill spara som nytt lager, rita om på det senast aktiva lagret, "
 "eller spara till bana"
 
-#: ../plug-ins/python/spyro-plus.py:1740
+#: ../plug-ins/python/spyro-plus.py:1746
 msgid "Spyrogimp"
 msgstr "Spirogimp"
 
-#: ../plug-ins/python/spyro-plus.py:1749 ../plug-ins/python/spyro-plus.py:2282
+#: ../plug-ins/python/spyro-plus.py:1755 ../plug-ins/python/spyro-plus.py:2292
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Rita spirografer med aktuell verktygsinställning och markering."
 
-#: ../plug-ins/python/spyro-plus.py:1762
+#: ../plug-ins/python/spyro-plus.py:1768
 msgid "Curve Pattern"
 msgstr "Kurvmönster"
 
-#: ../plug-ins/python/spyro-plus.py:1765
+#: ../plug-ins/python/spyro-plus.py:1771
 msgid "Fixed Gear"
 msgstr "Fast kugghjul"
 
-#: ../plug-ins/python/spyro-plus.py:1768
+#: ../plug-ins/python/spyro-plus.py:1774
 msgid "Size"
 msgstr "Storlek"
 
-#: ../plug-ins/python/spyro-plus.py:2116
+#: ../plug-ins/python/spyro-plus.py:2130
 msgid "Rendering Pattern"
 msgstr "Renderar mönster"
 
-#: ../plug-ins/python/spyro-plus.py:2128
+#: ../plug-ins/python/spyro-plus.py:2142
 msgid "Please wait : Rendering Pattern"
 msgstr "Vänta : Renderar mönster"
 
-#: ../plug-ins/python/spyro-plus.py:2286
+#: ../plug-ins/python/spyro-plus.py:2296
 msgid "Spyrogimp..."
 msgstr "Spirogimp…"
 
@@ -669,128 +869,11 @@ msgstr "Spirogimp…"
 #~ msgid "Python-Fu Color Selection"
 #~ msgstr "Python-Fu färgval"
 
-#~ msgid "Exports the image histogram to a text file (CSV)"
-#~ msgstr "Exporterar bildens histogram till en textfil (CSV)"
-
-#~ msgid "_Export histogram..."
-#~ msgstr "_Exportera histogram…"
-
 #~ msgid "_Image"
 #~ msgstr "_Bild"
 
 #~ msgid "_Drawable"
 #~ msgstr "_Rityta"
-
-#~ msgid "Histogram _File"
-#~ msgstr "Histogram_fil"
-
-#~ msgid "_Bucket Size"
-#~ msgstr "_Hinkstorlek"
-
-#~ msgid "Sample _Average"
-#~ msgstr "Sampelmedel"
-
-#~ msgid "Output format"
-#~ msgstr "Utmatningsformat"
-
-#~ msgid "Pixel count"
-#~ msgstr "Antal bildpunkter"
-
-#~ msgid "Normalized"
-#~ msgstr "Normaliserad"
-
-#~ msgid "Percent"
-#~ msgstr "Procent"
-
-#~ msgid "Red"
-#~ msgstr "Röd"
-
-#~ msgid "Green"
-#~ msgstr "Grön"
-
-#~ msgid "Blue"
-#~ msgstr "Blå"
-
-#~ msgid "Luma (Y)"
-#~ msgstr "Luminans (Y)"
-
-#~ msgid "Hue"
-#~ msgstr "Nyans"
-
-#~ msgid "Saturation"
-#~ msgstr "Mättnad"
-
-#~ msgid "Value"
-#~ msgstr "Intensitet"
-
-#~ msgid "Saturation (HSL)"
-#~ msgstr "Mättnad (HSL)"
-
-#~ msgid "Lightness (HSL)"
-#~ msgstr "Ljushet (HSL)"
-
-#~ msgid "Index"
-#~ msgstr "Index"
-
-#~ msgid "Random"
-#~ msgstr "Slumpmässig"
-
-#~ msgid "Lightness (LAB)"
-#~ msgstr "Ljushet (LAB)"
-
-#~ msgid "A-color"
-#~ msgstr "A-färg"
-
-#~ msgid "B-color"
-#~ msgstr "B-färg"
-
-#~ msgid "Chroma (LCHab)"
-#~ msgstr "Krominans (LCHab)"
-
-#~ msgid "Hue (LCHab)"
-#~ msgstr "Nyans (LCHab)"
-
-#~ msgid "Sort the colors in a palette"
-#~ msgstr "Sortera färgerna i en palett"
-
-#~ msgid "_Sort Palette..."
-#~ msgstr "_Sortera palett…"
-
-#~ msgid "Se_lections"
-#~ msgstr "_Markeringar"
-
-#~ msgid "All"
-#~ msgstr "Alla"
-
-#~ msgid "Slice / Array"
-#~ msgstr "Skiva / Vektor"
-
-#~ msgid "Autoslice (fg->bg)"
-#~ msgstr "Autoskivning (förgr->bakgr)"
-
-#~ msgid "Partitioned"
-#~ msgstr "Partitionerad"
-
-#~ msgid "Slice _expression"
-#~ msgstr "Skiv_uttryck"
-
-#~ msgid "Channel to _sort"
-#~ msgstr "Kanal att _sortera"
-
-#~ msgid "_Ascending"
-#~ msgstr "_Stigande"
-
-#~ msgid "Secondary Channel to s_ort"
-#~ msgstr "Sekundär kanal att s_ortera"
-
-#~ msgid "_Quantization"
-#~ msgstr "_Kvantisering"
-
-#~ msgid "_Partitioning channel"
-#~ msgstr "_Partitioneringskanal"
-
-#~ msgid "Partition q_uantization"
-#~ msgstr "_Kvantisering för partitionering"
 
 #~ msgid "Add a drop shadow to a layer, and optionally bevel it"
 #~ msgstr ""
