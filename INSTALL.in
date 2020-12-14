@@ -57,6 +57,10 @@ header files installed.
        the option -Dworkshop=true in order to be able to select the
        experimental Paint Select tool in the Playground (operation
        "gegl:paint-select" is needed).
+     - The "Show Image Graph" item in the "Debug" menu (hidden by
+       default on stable release) requires the GEGL operation
+       "gegl:introspect" which is always built but deactivated unless
+       the `dot` tool from graphviz is available (runtime dependency).
 
   4. You need to have installed GTK+ version @GTK_REQUIRED_VERSION@ or newer.
      GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
