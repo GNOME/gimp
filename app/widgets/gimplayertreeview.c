@@ -1652,17 +1652,34 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
 
       if (renderer)
         {
-          GimpLayer *layer = GIMP_LAYER (renderer->viewable);
+          GimpLayer       *layer     = GIMP_LAYER (renderer->viewable);
+          GdkModifierType  modifiers = gimp_get_all_modifiers_mask ();
 
-          if (state & GDK_MOD1_MASK)
-            gimp_action_group_set_action_active (group, "layers-mask-show",
-                                                 ! gimp_layer_get_show_mask (layer));
-          else if (state & gimp_get_toggle_behavior_mask ())
-            gimp_action_group_set_action_active (group, "layers-mask-disable",
-                                                 gimp_layer_get_apply_mask (layer));
+          if ((state & GDK_MOD1_MASK))
+            {
+              GimpImage *image;
+
+              image = gimp_item_get_image (GIMP_ITEM (layer));
+
+              if ((state & modifiers) == GDK_MOD1_MASK)
+                {
+                  /* Alt-click shows/hides a layer mask */
+                  gimp_layer_set_show_mask (layer, ! gimp_layer_get_show_mask (layer), TRUE);
+                  gimp_image_flush (image);
+                }
+              if ((state & modifiers) == (GDK_MOD1_MASK | GDK_CONTROL_MASK))
+                {
+                  /* Alt-Control-click enables/disables a layer mask */
+                  gimp_layer_set_apply_mask (layer, ! gimp_layer_get_apply_mask (layer), TRUE);
+                  gimp_image_flush (image);
+                }
+            }
           else if (! gimp_layer_get_edit_mask (layer))
-            gimp_action_group_set_action_active (group,
-                                                 "layers-mask-edit", TRUE);
+            {
+              /* Simple click selects the mask for edition. */
+              gimp_action_group_set_action_active (group,
+                                                   "layers-mask-edit", TRUE);
+            }
 
           g_object_unref (renderer);
         }
