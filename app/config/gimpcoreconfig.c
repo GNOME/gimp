@@ -52,7 +52,7 @@
 
 
 #define GIMP_DEFAULT_BRUSH         "2. Hardness 050"
-#define GIMP_DEFAULT_DYNAMICS      "Dynamics Off"
+#define GIMP_DEFAULT_DYNAMICS      "Pressure Size"
 #define GIMP_DEFAULT_PATTERN       "Pine"
 #define GIMP_DEFAULT_PALETTE       "Default"
 #define GIMP_DEFAULT_GRADIENT      "FG to BG (RGB)"
