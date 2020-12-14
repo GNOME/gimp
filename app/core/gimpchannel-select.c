@@ -397,6 +397,7 @@ gimp_channel_select_alpha (GimpChannel    *channel,
   GimpItem    *item;
   GimpChannel *add_on;
   gint         off_x, off_y;
+  const gchar *undo_desc = NULL;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
@@ -420,9 +421,25 @@ gimp_channel_select_alpha (GimpChannel    *channel,
       gimp_channel_all (add_on, FALSE);
     }
 
+  switch (op)
+    {
+    case GIMP_CHANNEL_OP_ADD:
+      undo_desc = C_("undo-type", "Add Alpha to Selection");
+      break;
+    case GIMP_CHANNEL_OP_SUBTRACT:
+      undo_desc = C_("undo-type", "Subtract Alpha from Selection");
+      break;
+    case GIMP_CHANNEL_OP_REPLACE:
+      undo_desc = C_("undo-type", "Alpha to Selection");
+      break;
+    case GIMP_CHANNEL_OP_INTERSECT:
+      undo_desc = C_("undo-type", "Intersect Alpha with Selection");
+      break;
+    }
+
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-  gimp_channel_select_channel (channel, C_("undo-type", "Alpha to Selection"), add_on,
+  gimp_channel_select_channel (channel, undo_desc, add_on,
                                off_x, off_y,
                                op, feather,
                                feather_radius_x,
