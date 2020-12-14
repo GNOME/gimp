@@ -20,6 +20,14 @@ Core:
     line files (in case of calls during startup) and in the call order
     (FIFO) for consistency. Some timeout has also been added to not spam
     the core process with non-processable DBus calls during startup.
+  - Display profile name in "Color space" field of Image Properties and
+    improve ellipsis & wrap on dialog fields whose contents' size is not
+    controllable together with better dialog size management.
+
+Libgimp:
+
+  - Various metadata improvements:
+    * Improve reading of iptc tags that appear more than once.
 
 Plug-ins:
 
@@ -36,11 +44,47 @@ Plug-ins:
   - More robust TIFF import and export:
     * Better handling of Exif.Thumbnail.* tags on export.
     * Import now ignores TIFF pages with invalid directory (rather than
-      freezing and output an error to warn of possible data loss.
+      freezing and output an error to warn of possible data loss).
+    * Import attempts to count the directories by reading them when the
+      headers does not announce any directory, which allows to salvage
+      images with improper header. Also if reading of a directory fail,
+      we now output a message to warn of possible data loss.
+    * Fixed loading 2 and 4-bit TIFF images in grayscale and indexed.
   - GeoTIFF tag support added (recognized and stored into image
     parasites at import, then exported back when TIFF format is used)
     with appropriate "Save GeoTIFF data" checkbox (checked by default)
     to disable GeoTIFF metadata export when not desired.
+  - The metadata viewer and editor got a big cleaning and refactoring
+    pass, as well as various fixes and several improvements:
+    * Fix handling of IPTC tags which can appear more than once (such as
+      "Keywords") in both the viewer and editor.
+    * Always read both the IPTC and XMP equivalent tags in the editor,
+      instead of assuming they are necessarily the same.
+    * More IPTC equivalents of XMP tags added:
+      + Iptc.Application2.LocationName <=> Xmp.iptc.Location
+      + Iptc.Application2.BylineTitle <=> Xmp.photoshop.AuthorsPosition
+      + Iptc.Application2.CountryCode <=> Xmp.iptc.CountryCode
+      + Iptc.Application2.Writer <=> Xmp.photoshop.CaptionWriter
+    * The editor now properly saves IPTC tags.
+    * Improve UTF-8 conversion to avoid double string conversion (hence
+      actually breaking encoding).
+    * Use proper unit abbreviations and proper label casing.
+    * GPS data is now properly formatted with better precision and with
+      translatable string parts and tooltips are added to explain how to
+      correctly edit GPS data (latitude, longitude, altitude).
+      Also seconds part of latitude/longitude is now saved with more
+      precision and altitude details now switch from .1m to .10m.
+    * Better error reporting when the editor fails to write a tag, with
+      proper GUI error, so that such error do not go unseen.
+    * Better error handling when closing the editor or viewer too, and
+      improve error handling when the calendar dialog fails.
+    * Use a logging domain for debugging-only messages which pollutes
+      the output.
+    * And more bug fixes.
+  - PNG will now prompt only for layer offset different from zero. Some
+    software were always setting an offset of 0 (e.g.: POV-Ray v3.7) so
+    GIMP would unecessarily prompt the user until now for PNG created by
+    such software.
 
 Build:
 
@@ -55,7 +99,7 @@ Installer:
 
 Translations:
 
-  - Kabyle translation added (still empty on gimp-2-10 at writing time).
+  - Kabyle translation added.
 
 
 Overview of Changes from GIMP 2.10.20 to GIMP 2.10.22
