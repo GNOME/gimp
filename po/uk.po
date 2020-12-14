@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-06 12:05+0000\n"
-"PO-Revision-Date: 2020-12-06 14:48+0200\n"
+"POT-Creation-Date: 2020-12-14 14:20+0000\n"
+"PO-Revision-Date: 2020-12-14 20:03+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1890,7 +1890,7 @@ msgstr "Колір нового каналу"
 #: ../app/actions/channels-commands.c:285 ../app/core/gimpimage-new.c:466
 #: ../app/display/gimpdisplayshell-dnd.c:705
 #: ../app/widgets/gimpchanneltreeview.c:263
-#: ../app/widgets/gimplayertreeview.c:867
+#: ../app/widgets/gimplayertreeview.c:872
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s копія каналу"
@@ -3359,7 +3359,7 @@ msgstr "240 секунд"
 #: ../app/widgets/gimpcolordialog.c:460
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimpcontrollerlist.c:563
-#: ../app/widgets/gimpdeviceeditor.c:525 ../app/widgets/gimpdnd-xds.c:228
+#: ../app/widgets/gimpdeviceeditor.c:526 ../app/widgets/gimpdnd-xds.c:228
 #: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
 #: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:484
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:707
@@ -3424,7 +3424,7 @@ msgstr "Введіть опис позначки"
 #: ../app/dialogs/file-open-location-dialog.c:217
 #: ../app/dialogs/file-open-location-dialog.c:233
 #: ../app/display/gimpdisplayshell-dnd.c:648
-#: ../app/widgets/gimplayertreeview.c:825 ../app/widgets/gimptoolbox.c:673
+#: ../app/widgets/gimplayertreeview.c:830 ../app/widgets/gimptoolbox.c:673
 #: ../app/widgets/gimptoolbox-dnd.c:169
 #, c-format
 msgid ""
@@ -7770,7 +7770,7 @@ msgstr "Зміна ознак шару"
 
 #: ../app/actions/layers-commands.c:338
 #: ../app/widgets/gimpdrawabletreeview.c:350
-#: ../app/widgets/gimplayertreeview.c:944
+#: ../app/widgets/gimplayertreeview.c:949
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Нові шари"
@@ -7941,23 +7941,23 @@ msgstr "Додати канал альфи"
 msgid "Remove Alpha Channel"
 msgstr "Вилучити канал альфи"
 
-#: ../app/actions/layers-commands.c:1721 ../app/core/gimpchannel-select.c:425
+#: ../app/actions/layers-commands.c:1721 ../app/core/gimpchannel-select.c:433
 #: ../app/core/gimplayer.c:442
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Альфа на вибір"
 
-#: ../app/actions/layers-commands.c:1725
+#: ../app/actions/layers-commands.c:1725 ../app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Додавання альфи до позначеного"
 
-#: ../app/actions/layers-commands.c:1729
+#: ../app/actions/layers-commands.c:1729 ../app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Віднімання альфи від позначеного"
 
-#: ../app/actions/layers-commands.c:1733
+#: ../app/actions/layers-commands.c:1733 ../app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Перетин альфи з позначеним"
@@ -7967,7 +7967,7 @@ msgid "Empty Selection"
 msgstr "Спорожнити позначене"
 
 #: ../app/actions/layers-commands.c:1774 ../app/actions/layers-commands.c:1818
-#: ../app/widgets/gimplayertreeview.c:1177
+#: ../app/widgets/gimplayertreeview.c:1182
 msgid "Set layers opacity"
 msgstr "Зміна непрозорості шарів"
 
@@ -8000,12 +8000,12 @@ msgid "Unlock position"
 msgstr "Розблокувати позицію"
 
 #: ../app/actions/layers-commands.c:2164
-#: ../app/widgets/gimplayertreeview.c:1122
+#: ../app/widgets/gimplayertreeview.c:1127
 msgid "Lock alpha channels"
 msgstr "Заблокувати альфа-канали"
 
 #: ../app/actions/layers-commands.c:2164
-#: ../app/widgets/gimplayertreeview.c:1122
+#: ../app/widgets/gimplayertreeview.c:1127
 msgid "Unlock alpha channels"
 msgstr "Розблокувати альфа-канали"
 
@@ -8735,7 +8735,7 @@ msgid "Delete Template"
 msgstr "Вилучити шаблон"
 
 #: ../app/actions/templates-commands.c:249
-#: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:526
+#: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:527
 msgid "_Delete"
 msgstr "Ви_лучити"
 
@@ -13789,23 +13789,23 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Прямокутний закруглений вибір"
 
-#: ../app/core/gimpchannel-select.c:464
+#: ../app/core/gimpchannel-select.c:481
 #, c-format
 msgctxt "undo-type"
 msgid "%s Channel to Selection"
 msgstr "Канал %s на вибір"
 
-#: ../app/core/gimpchannel-select.c:515
+#: ../app/core/gimpchannel-select.c:532
 msgctxt "undo-type"
 msgid "Fuzzy Select"
 msgstr "Непевний вибір"
 
-#: ../app/core/gimpchannel-select.c:581
+#: ../app/core/gimpchannel-select.c:598
 msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "Вибір за кольором"
 
-#: ../app/core/gimpchannel-select.c:624
+#: ../app/core/gimpchannel-select.c:641
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Вибрати за індексованим кольором"
@@ -13973,7 +13973,7 @@ msgstr "Колір тла"
 
 #: ../app/core/gimpcontext.c:679 ../app/core/gimpcontext.c:680
 #: ../app/operations/gimpoperationsettings.c:100
-#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:292
+#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:297
 msgid "Opacity"
 msgstr "Непрозорість"
 
@@ -16423,7 +16423,7 @@ msgid "Layer _name:"
 msgstr "_Назва шару:"
 
 #: ../app/dialogs/layer-options-dialog.c:188
-#: ../app/widgets/gimpdeviceinfoeditor.c:337
+#: ../app/widgets/gimpdeviceinfoeditor.c:312
 msgid "_Mode:"
 msgstr "_Режим:"
 
@@ -17203,7 +17203,7 @@ msgstr "Параметри інструменту"
 #: ../app/dialogs/preferences-dialog.c:2870
 #: ../app/dialogs/preferences-dialog.c:3115
 #: ../app/widgets/gimpcontrollereditor.c:188
-#: ../app/widgets/gimpdeviceinfoeditor.c:323
+#: ../app/widgets/gimpdeviceinfoeditor.c:298
 msgid "General"
 msgstr "Загальне"
 
@@ -18706,13 +18706,13 @@ msgstr "н/д"
 
 #: ../app/display/gimpcursorview.c:224 ../app/display/gimpcursorview.c:249
 #: ../app/display/gimpcursorview.c:276 ../app/tools/gimptransform3dtool.c:435
-#: ../app/widgets/gimpdeviceinfoeditor.c:131
+#: ../app/widgets/gimpdeviceinfo.c:54
 msgid "X"
 msgstr "X"
 
 #: ../app/display/gimpcursorview.c:230 ../app/display/gimpcursorview.c:255
 #: ../app/display/gimpcursorview.c:282 ../app/tools/gimptransform3dtool.c:435
-#: ../app/widgets/gimpdeviceinfoeditor.c:132
+#: ../app/widgets/gimpdeviceinfo.c:55
 msgid "Y"
 msgstr "Y"
 
@@ -18890,13 +18890,13 @@ msgstr "Опустити колір на шар"
 
 #: ../app/display/gimpdisplayshell-dnd.c:598
 #: ../app/widgets/gimpitemtreeview.c:1309
-#: ../app/widgets/gimplayertreeview.c:816
+#: ../app/widgets/gimplayertreeview.c:821
 msgid "Drop layers"
 msgstr "Перемістити шари"
 
 #: ../app/display/gimpdisplayshell-dnd.c:741
 #: ../app/display/gimpdisplayshell-dnd.c:758
-#: ../app/widgets/gimplayertreeview.c:893 ../app/widgets/gimptoolbox-dnd.c:268
+#: ../app/widgets/gimplayertreeview.c:898 ../app/widgets/gimptoolbox-dnd.c:268
 msgid "Dropped Buffer"
 msgstr "Переміщений буфер"
 
@@ -18975,8 +18975,8 @@ msgstr "(не змінено)"
 #: ../app/display/gimpdisplayshell-title.c:383
 #: ../app/widgets/gimpactiongroup.c:976
 #: ../app/widgets/gimpbuffersourcebox.c:166
-#: ../app/widgets/gimpbuffersourcebox.c:296 ../app/widgets/gimpdeviceinfo.c:927
-#: ../app/widgets/gimpdeviceinfo.c:952
+#: ../app/widgets/gimpbuffersourcebox.c:296
+#: ../app/widgets/gimpdeviceinfo.c:1045 ../app/widgets/gimpdeviceinfo.c:1070
 msgid "(none)"
 msgstr "(немає)"
 
@@ -20364,8 +20364,8 @@ msgstr "Перетворити кольори на градації сірого
 #: ../app/operations/gimpoperationsettings.c:92
 #: ../app/tools/gimpfiltertool.c:1136 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimppaintselectoptions.c:74
-#: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:124
-#: ../app/widgets/gimplayertreeview.c:277
+#: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:174
+#: ../app/widgets/gimplayertreeview.c:282
 msgid "Mode"
 msgstr "Режим"
 
@@ -23163,7 +23163,7 @@ msgstr "В_ихід:"
 msgid "T_ype:"
 msgstr "_Тип:"
 
-#: ../app/tools/gimpcurvestool.c:675 ../app/widgets/gimpdeviceinfoeditor.c:452
+#: ../app/tools/gimpcurvestool.c:675 ../app/widgets/gimpdeviceinfoeditor.c:428
 msgid "Curve _type:"
 msgstr "_Тип кривої:"
 
@@ -24354,38 +24354,30 @@ msgid "Link to brush default"
 msgstr "Пов'язати із типовими для пензля"
 
 #: ../app/tools/gimppaintselectoptions.c:75
-#| msgid ""
-#| "Paint over areas to mark color values for inclusion or exclusion from "
-#| "selection"
 msgid ""
 "Paint over areas to mark pixels for inclusion or exclusion from selection"
 msgstr ""
-"Замалювати ділянки, щоб позначити пікселі для включення до позначеного або"
-" виключення з нього"
+"Замалювати ділянки, щоб позначити пікселі для включення до позначеного або "
+"виключення з нього"
 
 #: ../app/tools/gimppaintselectoptions.c:90
 #: ../app/tools/gimppaintselectoptions.c:91
-#| msgid "Show _rulers"
 msgid "Show scribbles"
 msgstr "Показувати грубі мазки"
 
 #: ../app/tools/gimppaintselecttool.c:152
-#| msgid "_Paint Select tool"
 msgid "Paint Select"
 msgstr "Малювання позначеного"
 
 #: ../app/tools/gimppaintselecttool.c:153
-#| msgid "Scale Tool: Scale the layer, selection or path"
 msgid "Paint Select Tool: Scult selection by painting"
 msgstr "Інструмент малювання позначеного: створити позначене малюванням"
 
 #: ../app/tools/gimppaintselecttool.c:154
-#| msgid "_Paint Select tool"
 msgid "P_aint Select"
 msgstr "_Малювання позначеного"
 
 #: ../app/tools/gimppaintselecttool.c:556
-#| msgid "_Paint Select tool"
 msgctxt "command"
 msgid "Paint Select"
 msgstr "Малювання позначеного"
@@ -27057,16 +27049,16 @@ msgstr "%s (лише для читання)"
 msgid "Delete the selected device"
 msgstr "Вилучити позначений пристрій"
 
-#: ../app/widgets/gimpdeviceeditor.c:519
+#: ../app/widgets/gimpdeviceeditor.c:520
 msgid "Delete Device Settings"
 msgstr "Вилучити позначені пристрої"
 
-#: ../app/widgets/gimpdeviceeditor.c:540
+#: ../app/widgets/gimpdeviceeditor.c:541
 #, c-format
 msgid "Delete \"%s\"?"
 msgstr "Вилучити «%s»?"
 
-#: ../app/widgets/gimpdeviceeditor.c:543
+#: ../app/widgets/gimpdeviceeditor.c:544
 msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
@@ -27075,29 +27067,16 @@ msgstr ""
 "Наступного разу, коли приєднаєте цей пристрій, буде використано типові "
 "налаштування.  "
 
-#: ../app/widgets/gimpdeviceinfo.c:199
-msgid "Pressure curve"
-msgstr "Крива натиску"
-
-#: ../app/widgets/gimpdeviceinfo.c:912 ../app/widgets/gimpdeviceinfo.c:937
-msgid "(Device not present)"
-msgstr "(Немає пристрою)"
-
-#: ../app/widgets/gimpdeviceinfo.c:920 ../app/widgets/gimpdeviceinfo.c:945
-msgid "(Virtual device)"
-msgstr "(Віртуальний пристрій)"
-
-#: ../app/widgets/gimpdeviceinfoeditor.c:133
-#: ../app/widgets/gimpdynamicseditor.c:161
+#: ../app/widgets/gimpdeviceinfo.c:56 ../app/widgets/gimpdynamicseditor.c:161
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "Натиск"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:134
+#: ../app/widgets/gimpdeviceinfo.c:57
 msgid "X tilt"
 msgstr "Нахил по X"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:135
+#: ../app/widgets/gimpdeviceinfo.c:58
 msgid "Y tilt"
 msgstr "Нахил по Y"
 
@@ -27108,69 +27087,81 @@ msgstr "Нахил по Y"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: ../app/widgets/gimpdeviceinfoeditor.c:143
+#: ../app/widgets/gimpdeviceinfo.c:66
 msgid "Wheel"
 msgstr "Колесо"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:144
+#: ../app/widgets/gimpdeviceinfo.c:67
 msgid "Distance"
 msgstr "Відстань"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:145
+#: ../app/widgets/gimpdeviceinfo.c:68
 msgid "Rotation"
 msgstr "Обертання"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:146
+#: ../app/widgets/gimpdeviceinfo.c:69
 msgid "Slider"
 msgstr "Повзунок"
 
+#: ../app/widgets/gimpdeviceinfo.c:249
+msgid "Pressure curve"
+msgstr "Крива натиску"
+
+#: ../app/widgets/gimpdeviceinfo.c:1030 ../app/widgets/gimpdeviceinfo.c:1055
+msgid "(Device not present)"
+msgstr "(Немає пристрою)"
+
+#: ../app/widgets/gimpdeviceinfo.c:1038 ../app/widgets/gimpdeviceinfo.c:1063
+msgid "(Virtual device)"
+msgstr "(Віртуальний пристрій)"
+
 #. The list of axes of an input device
-#: ../app/widgets/gimpdeviceinfoeditor.c:263
+#: ../app/widgets/gimpdeviceinfoeditor.c:238
 msgid "Axes"
 msgstr "Осі"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:342
+#: ../app/widgets/gimpdeviceinfoeditor.c:317
 msgid "Source:"
 msgstr "Джерело:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:347
+#: ../app/widgets/gimpdeviceinfoeditor.c:322
 msgid "Vendor ID:"
 msgstr "Ід. виробника:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:352
+#: ../app/widgets/gimpdeviceinfoeditor.c:327
 msgid "Product ID:"
 msgstr "Ід. продукту:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:357
+#: ../app/widgets/gimpdeviceinfoeditor.c:332
 msgid "Tool type:"
 msgstr "Тип засобу:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:362
+#: ../app/widgets/gimpdeviceinfoeditor.c:337
 msgid "Tool serial:"
 msgstr "Серійний номер засобу:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:367
+#: ../app/widgets/gimpdeviceinfoeditor.c:342
 msgid "Tool hardware ID:"
 msgstr "Апаратний ід. засобу:"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:379
-#: ../app/widgets/gimpdeviceinfoeditor.c:696
+#: ../app/widgets/gimpdeviceinfoeditor.c:354
+#: ../app/widgets/gimpdeviceinfoeditor.c:672
 #, c-format
 msgid "none"
 msgstr "немає"
 
 #. e.g. "Pressure Curve" for mapping input device axes
-#: ../app/widgets/gimpdeviceinfoeditor.c:405
+#: ../app/widgets/gimpdeviceinfoeditor.c:380
 #, c-format
 msgid "%s Curve"
 msgstr "Крива %s"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:464
+#: ../app/widgets/gimpdeviceinfoeditor.c:440
 #: ../app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
 msgstr "_Скинути криву"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:477
+#: ../app/widgets/gimpdeviceinfoeditor.c:453
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "У осі %s немає кривої"
@@ -27179,12 +27170,12 @@ msgstr "У осі %s немає кривої"
 msgid "Save device status"
 msgstr "Зберегти стан пристрою"
 
-#: ../app/widgets/gimpdevicestatus.c:558
+#: ../app/widgets/gimpdevicestatus.c:560
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Передній план: %d, %d, %d"
 
-#: ../app/widgets/gimpdevicestatus.c:563
+#: ../app/widgets/gimpdevicestatus.c:565
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Тло: %d, %d, %d"
@@ -27703,13 +27694,20 @@ msgstr "Як у системі"
 msgid "Switch to another group of modes"
 msgstr "Перемкнутися на іншу групу режимів"
 
-#: ../app/widgets/gimplayertreeview.c:317
+#: ../app/widgets/gimplayertreeview.c:322
 msgid "Lock alpha channel"
 msgstr "Замкнути альфа-канал"
 
-#: ../app/widgets/gimplayertreeview.c:1063
+#: ../app/widgets/gimplayertreeview.c:1068
 msgid "Set layers mode"
 msgstr "Встановити режим шарів"
+
+#. No channel. We cannot perform the add
+#. * mask action.
+#: ../app/widgets/gimplayertreeview.c:1636
+#| msgid "Cannot rename layer masks."
+msgid "No channels to create a layer mask from."
+msgstr "Немає каналів, з яких можна було б створити маску шару."
 
 #: ../app/widgets/gimpmessagebox.c:452
 #, c-format
