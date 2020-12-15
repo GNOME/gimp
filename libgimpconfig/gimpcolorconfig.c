@@ -73,7 +73,7 @@
 #define SIMULATION_PROFILE_BLURB \
   _("The color profile to use for soft-proofing from your image's " \
     "color space to some other color space, including " \
-    "soft-proofing to a printer or other output device profile. ")
+    "soft-proofing to a printer or other output device profile.")
 
 #define DISPLAY_RENDERING_INTENT_BLURB \
   _("How colors are converted from your image's color space to your " \
@@ -93,11 +93,11 @@
 #define SIMULATION_RENDERING_INTENT_BLURB \
   _("How colors are converted from your image's color space to the "  \
     "output simulation device (usually your monitor). " \
-    "Try them all and choose what looks the best. ")
+    "Try them all and choose what looks the best.")
 
 #define SIMULATION_USE_BPC_BLURB \
   _("Try with and without black point compensation "\
-    "and choose what looks best. ")
+    "and choose what looks best.")
 
 #define SIMULATION_OPTIMIZE_BLURB \
   _("When disabled, soft-proofing might be of better quality " \
