@@ -842,8 +842,6 @@ gimp_text_tool_get_popup (GimpTool         *tool,
           GimpDisplayShell  *shell = gimp_display_get_shell (tool->display);
           GimpImageWindow   *image_window;
           GimpDialogFactory *dialog_factory;
-          GtkWidget         *im_menu;
-          GList             *children;
 
           image_window   = gimp_display_shell_get_window (shell);
           dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
@@ -852,23 +850,6 @@ gimp_text_tool_get_popup (GimpTool         *tool,
             gimp_menu_factory_manager_new (gimp_dialog_factory_get_menu_factory (dialog_factory),
                                            "<TextTool>",
                                            text_tool);
-
-          im_menu = gimp_ui_manager_get_widget (text_tool->ui_manager,
-                                                "/text-tool-popup/text-tool-input-methods-menu");
-
-          if (GTK_IS_MENU_ITEM (im_menu))
-            im_menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (im_menu));
-
-          /*  hide the generated "empty" item  */
-          children = gtk_container_get_children (GTK_CONTAINER (im_menu));
-          while (children)
-            {
-              gtk_widget_hide (children->data);
-              children = g_list_remove (children, children->data);
-            }
-
-          gtk_im_multicontext_append_menuitems (GTK_IM_MULTICONTEXT (text_tool->im_context),
-                                                GTK_MENU_SHELL (im_menu));
         }
 
       gimp_ui_manager_update (text_tool->ui_manager, text_tool);

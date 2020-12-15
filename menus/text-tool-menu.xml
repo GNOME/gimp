@@ -20,7 +20,5 @@
     <menuitem action="text-tool-direction-ttb-rtl-upright" />
     <menuitem action="text-tool-direction-ttb-ltr" />
     <menuitem action="text-tool-direction-ttb-ltr-upright" />
-    <separator />
-    <menu action="text-tool-input-methods-menu" />
   </popup>
 </ui>

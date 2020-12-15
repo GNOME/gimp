@@ -50,10 +50,6 @@ static const GimpActionEntry text_tool_actions[] =
     NC_("text-tool-action", "Text Tool Menu"), NULL, NULL, NULL,
     NULL },
 
-  { "text-tool-input-methods-menu", NULL,
-    NC_("text-tool-action", "Input _Methods"), NULL, NULL, NULL,
-    NULL },
-
   { "text-tool-cut", GIMP_ICON_EDIT_CUT,
     NC_("text-tool-action", "Cu_t"), NULL, "<primary>X",
     text_tool_cut_cmd_callback,
@@ -150,8 +146,6 @@ text_tool_actions_setup (GimpActionGroup *group)
                                        NULL,
                                        GIMP_TEXT_DIRECTION_LTR,
                                        text_tool_direction_cmd_callback);
-
-  SET_HIDE_EMPTY ("text-tool-input-methods-menu", FALSE);
 }
 
 /* The following code is written on the assumption that this is for a
@@ -174,7 +168,6 @@ text_tool_actions_update (GimpActionGroup *group,
   gboolean          text_layer = FALSE;
   gboolean          text_sel   = FALSE;   /* some text is selected        */
   gboolean          clip       = FALSE;   /* clipboard has text available */
-  gboolean          input_method_menu;
   gboolean          unicode_menu;
   GimpTextDirection direction;
   gint              i;
@@ -195,8 +188,7 @@ text_tool_actions_update (GimpActionGroup *group,
   clip = gtk_clipboard_wait_is_text_available (clipboard);
 
   g_object_get (gtk_widget_get_settings (shell->canvas),
-                "gtk-show-input-method-menu", &input_method_menu,
-                "gtk-show-unicode-menu",      &unicode_menu,
+                "gtk-show-unicode-menu", &unicode_menu,
                 NULL);
 
 #define SET_VISIBLE(action,condition) \
@@ -224,6 +216,4 @@ text_tool_actions_update (GimpActionGroup *group,
           break;
         }
     }
-
-  SET_VISIBLE ("text-tool-input-methods-menu", input_method_menu);
 }
