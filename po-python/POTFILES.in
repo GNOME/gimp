@@ -11,7 +11,6 @@ plug-ins/python/histogram-export.py
 plug-ins/python/palette-offset.py
 plug-ins/python/palette-sort.py
 plug-ins/python/palette-to-gradient.py
-plug-ins/python/py-slice.py
 plug-ins/python/python-console/python-console.py
 plug-ins/python/python-eval.py
 plug-ins/python/spyro-plus.py
