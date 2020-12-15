@@ -11,7 +11,6 @@ plugins = [
   { 'name': 'palette-offset' },
   { 'name': 'palette-sort' },
   { 'name': 'palette-to-gradient' },
-  { 'name': 'py-slice' },
   { 'name': 'python-eval' },
   { 'name': 'spyro-plus' },
 ]

@@ -27,9 +27,6 @@ palette_sort_SCRIPTS = palette-sort.py
 palette_to_gradientdir = $(gimpplugindir)/plug-ins/palette-to-gradient
 palette_to_gradient_SCRIPTS = palette-to-gradient.py
 
-py_slicedir = $(gimpplugindir)/plug-ins/py-slice
-py_slice_SCRIPTS = py-slice.py
-
 python_evaldir = $(gimpplugindir)/plug-ins/python-eval
 python_eval_SCRIPTS = python-eval.py
 
@@ -50,7 +47,6 @@ EXTRA_DIST = \
 	palette-offset.py		\
 	palette-sort.py		\
 	palette-to-gradient.py		\
-	py-slice.py			\
 	python-eval.py			\
 	spyro-plus.py
 
