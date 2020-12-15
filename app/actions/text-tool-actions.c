@@ -168,7 +168,6 @@ text_tool_actions_update (GimpActionGroup *group,
   gboolean          text_layer = FALSE;
   gboolean          text_sel   = FALSE;   /* some text is selected        */
   gboolean          clip       = FALSE;   /* clipboard has text available */
-  gboolean          unicode_menu;
   GimpTextDirection direction;
   gint              i;
 
@@ -186,10 +185,6 @@ text_tool_actions_update (GimpActionGroup *group,
   clipboard = gtk_widget_get_clipboard (shell->canvas,
                                         GDK_SELECTION_CLIPBOARD);
   clip = gtk_clipboard_wait_is_text_available (clipboard);
-
-  g_object_get (gtk_widget_get_settings (shell->canvas),
-                "gtk-show-unicode-menu", &unicode_menu,
-                NULL);
 
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
