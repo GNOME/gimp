@@ -1351,7 +1351,7 @@ save_image (GFile         *file,
   GList           *list;
   GList           *orig_list;
   gchar           *framename;              /* framename of a layer */
-  GeglRectangle    save_rgn;               /* region to save */
+  GeglRectangle    save_rgn = { 0 };       /* region to save */
   gint             layer_xoffset, layer_yoffset;
   /* temporary buffer which store pixel data (guchar * bpp = guint32) */
   guint32          pixelbuf[SQR (MAX_SAVE_DIMENSION)];
