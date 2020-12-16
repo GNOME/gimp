@@ -551,10 +551,10 @@ gimp_spin_scale_event_to_widget_coords (GtkWidget *widget,
 }
 
 static SpinScaleTarget
-gimp_spin_scale_get_target (GtkWidget      *widget,
-                            gdouble         x,
-                            gdouble         y,
-                            GdkEventButton *event)
+gimp_spin_scale_get_target (GtkWidget *widget,
+                            gdouble    x,
+                            gdouble    y,
+                            GdkEvent  *event)
 {
   GdkRectangle text_area;
 
@@ -577,27 +577,37 @@ gimp_spin_scale_get_target (GtkWidget      *widget,
       layout_x -= text_area.x;
       layout_y -= text_area.y;
 
+      if (event->type != GDK_MOTION_NOTIFY)
+        {
+          GdkEventButton *event_button = (GdkEventButton *) event;
+
+          switch (event_button->button)
+            {
+            case 1:
+              if (event_button->state & GDK_SHIFT_MASK)
+                return TARGET_LOWER;
+              else
+                break;
+
+            case 3:
+              return TARGET_LOWER;
+
+            default:
+              return TARGET_NUMBER;
+            }
+        }
+
+      /* For motion events or main button clicks, the target depends on
+       * the position.
+       */
       if (x >= layout_x && x < layout_x + logical.width  &&
-          y >= layout_y && y < layout_y + logical.height &&
-          gtk_widget_has_focus (widget)                  &&
-          gdk_event_triggers_context_menu ((GdkEvent *) event))
+          y >= layout_y && y < layout_y + logical.height)
         {
           return TARGET_NUMBER;
         }
-
-      switch (event->button)
+      else
         {
-        case 1:
-          if (event->state & GDK_SHIFT_MASK)
-            return TARGET_LOWER;
-          else
-            return TARGET_UPPER;
-
-        case 3:
-          return TARGET_LOWER;
-
-        default:
-          return TARGET_NUMBER;
+          return TARGET_UPPER;
         }
     }
 
@@ -636,16 +646,16 @@ gimp_spin_scale_update_cursor (GtkWidget *widget,
 }
 
 static void
-gimp_spin_scale_update_target (GtkWidget      *widget,
-                               GdkWindow      *window,
-                               gdouble         x,
-                               gdouble         y,
-                               GdkEventButton *event)
+gimp_spin_scale_update_target (GtkWidget *widget,
+                               GdkWindow *window,
+                               gdouble    x,
+                               gdouble    y,
+                               GdkEvent  *event)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (widget);
   SpinScaleTarget       target;
 
-  target = gimp_spin_scale_get_target (widget, x, y, event);
+  target = gimp_spin_scale_get_target (widget, x, y, (GdkEvent *) event);
 
   if (target != private->target)
     {
@@ -787,7 +797,7 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
                                           event->x, event->y,
                                           &x, &y);
 
-  gimp_spin_scale_update_target (widget, event->window, x, y, event);
+  gimp_spin_scale_update_target (widget, event->window, x, y, (GdkEvent *) event);
 
   switch (private->target)
     {
@@ -1008,7 +1018,7 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
       private->hover)
     {
       gimp_spin_scale_update_target (widget, event->window,
-                                     x, y, NULL);
+                                     x, y, (GdkEvent *) event);
     }
 
   return FALSE;
