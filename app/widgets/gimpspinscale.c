@@ -598,6 +598,13 @@ gimp_spin_scale_get_target (GtkWidget *widget,
               return TARGET_NUMBER;
             }
         }
+      else
+        {
+          GdkEventMotion *event_motion = (GdkEventMotion *) event;
+
+          if (event_motion->state & GDK_SHIFT_MASK)
+            return TARGET_RELATIVE;
+        }
 
       /* For motion events or main button clicks, the target depends on
        * the position.
