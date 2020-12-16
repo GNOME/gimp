@@ -183,6 +183,7 @@ load_image (GFile        *file,
   gint               min_col          = G_MAXINT;
   gint               max_row          = 0;
   gint               max_col          = 0;
+  GimpColorProfile  *first_profile      = NULL;
   gint               li;
 
   *image = 0;
@@ -393,12 +394,38 @@ load_image (GFile        *file,
       TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLEFORMAT, &sampleformat);
 
       profile = load_profile (tif);
+      if (! profile && first_profile)
+        {
+          profile = first_profile;
+          g_object_ref (profile);
+        }
+
       if (profile)
         {
+          profile_linear = gimp_color_profile_is_linear (profile);
+
+          if (! first_profile)
+            {
+              first_profile = profile;
+              g_object_ref (first_profile);
+
+              if (profile_linear && li > 0 && pages.target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+                g_message (_("This image has a linear color profile but "
+                             "it was not set on the first layer. "
+                             "The layers below layer # %d will be "
+                             "interpreted as non linear."), li+1);
+            }
+          else if (pages.target != GIMP_PAGE_SELECTOR_TARGET_IMAGES &&
+                   ! gimp_color_profile_is_equal (first_profile, profile))
+            {
+              g_message (_("This image has multiple color profiles. "
+                           "We will use the first one. If this leads "
+                           "to incorrect results you should consider "
+                           "loading each layer as a separate image."));
+            }
+
           if (! *image)
             *profile_loaded = TRUE;
-
-          profile_linear = gimp_color_profile_is_linear (profile);
         }
 
       if (bps > 8 && bps != 8 && bps != 16 && bps != 32 && bps != 64)
@@ -901,10 +928,11 @@ load_image (GFile        *file,
         }
 
       /* attach color profile */
-
       if (profile)
         {
-          gimp_image_set_color_profile (*image, profile);
+          if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES || profile == first_profile)
+            gimp_image_set_color_profile (*image, profile);
+
           g_object_unref (profile);
         }
 
@@ -1368,6 +1396,7 @@ load_image (GFile        *file,
 
       gimp_progress_update (1.0);
     }
+  g_clear_object (&first_profile);
 
   if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
     {
