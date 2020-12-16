@@ -49,8 +49,9 @@ typedef enum
 {
   TARGET_NONE,
   TARGET_NUMBER,
-  TARGET_UPPER,
-  TARGET_LOWER
+  TARGET_GRAB,
+  TARGET_GRABBING,
+  TARGET_RELATIVE
 } SpinScaleTarget;
 
 
@@ -568,7 +569,7 @@ gimp_spin_scale_get_target (GtkWidget *widget,
       gint           layout_y;
 
       if (! event)
-        return TARGET_UPPER;
+        return TARGET_GRAB;
 
       gtk_entry_get_layout_offsets (GTK_ENTRY (widget), &layout_x, &layout_y);
       pango_layout_get_pixel_extents (gtk_entry_get_layout (GTK_ENTRY (widget)),
@@ -585,12 +586,13 @@ gimp_spin_scale_get_target (GtkWidget *widget,
             {
             case 1:
               if (event_button->state & GDK_SHIFT_MASK)
-                return TARGET_LOWER;
+                return TARGET_RELATIVE;
               else
+                /* Button 1 target depends on the cursor position. */
                 break;
 
             case 3:
-              return TARGET_LOWER;
+              return TARGET_RELATIVE;
 
             default:
               return TARGET_NUMBER;
@@ -605,9 +607,13 @@ gimp_spin_scale_get_target (GtkWidget *widget,
         {
           return TARGET_NUMBER;
         }
+      else if (event->type == GDK_MOTION_NOTIFY)
+        {
+          return TARGET_GRAB;
+        }
       else
         {
-          return TARGET_UPPER;
+          return TARGET_GRABBING;
         }
     }
 
@@ -625,15 +631,19 @@ gimp_spin_scale_update_cursor (GtkWidget *widget,
   switch (private->target)
     {
     case TARGET_NUMBER:
-      cursor = gdk_cursor_new_for_display (display, GDK_XTERM);
+      cursor = gdk_cursor_new_from_name (display, "text");
       break;
 
-    case TARGET_UPPER:
-      cursor = gdk_cursor_new_for_display (display, GDK_SB_UP_ARROW);
+    case TARGET_GRAB:
+      cursor = gdk_cursor_new_from_name (display, "grab");
       break;
 
-    case TARGET_LOWER:
-      cursor = gdk_cursor_new_for_display (display, GDK_SB_H_DOUBLE_ARROW);
+    case TARGET_GRABBING:
+      cursor = gdk_cursor_new_from_name (display, "grabbing");
+      break;
+
+    case TARGET_RELATIVE:
+      cursor = gdk_cursor_new_from_name (display, "col-resize");
       break;
 
     default:
@@ -801,7 +811,8 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
   switch (private->target)
     {
-    case TARGET_UPPER:
+    case TARGET_GRAB:
+    case TARGET_GRABBING:
       private->changing_value = TRUE;
 
       gtk_widget_grab_focus (widget);
@@ -812,7 +823,7 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
       return TRUE;
 
-    case TARGET_LOWER:
+    case TARGET_RELATIVE:
       private->changing_value = TRUE;
 
       gtk_widget_grab_focus (widget);
