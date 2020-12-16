@@ -22,12 +22,30 @@ Core:
 
 User Interface:
 
-  - GimpSpinScale will grab focus when starting to edit the entry, and
-    in particular the current number will be fully selected (because
-    often we want to just type down a completely different number
-    accurately). Also when giving focus to the entry with the cursor
-    (middle click), it doesn't click on the scale (i.e. value doesn't
-    change).
+  - GimpSpinScale widget improvements:
+    * The widget will grab focus when starting to edit the entry, and
+      in particular the current number will be fully selected (because
+      often we want to just type down a completely different number
+      accurately).
+    * Also when giving focus to the entry with middle click (from
+      anywhere inside the widget), the scale value doesn't change in the
+      same time anymore.
+    * Finally we can now target-click accurately the entry current value
+      to edit the entry (again, without changing the value and selecting
+      existing number fully) with the main button (usually left button).
+      Even though middle click is simpler because we don't have to be
+      accurate (we can middle-click anywhere in the spin scale widget),
+      it is hardly discoverable, whereas clicking a number entry which
+      is meant to be editable is the most common GUI interaction
+      expectation.
+    * To help feature discoverability, when hovering the widget, the
+      cursor will change and show a "grab" cursor when a click would
+      start an absolute edit (the cursor changes to "grabbing" when
+      actually clicking and dragging the scale) or a "text" cursor when
+      a click would focus the number entry. When Shift key is being
+      hold, the cursor is the one for the relative edit, wherever the
+      position over the widget. This should make discovering possible
+      interactions with the widget a lot easier.
   - Various improvements in the Layers dockable (and similar tree view
     widgets):
     * The bigger thumbnail popup on long click (e.g. on a layer or mask
