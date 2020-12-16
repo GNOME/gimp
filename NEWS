@@ -159,8 +159,13 @@ Plug-ins:
   - file-fli, file-tiff, file-jpeg and file-png updated to new dialog
     generation API. In the most complicated case (file-jpeg), this
     shaved 600 lines out of the plug-in code.
-  - file-heif now uses gimp_get_num_processors() instead of
-    g_get_num_processors() (allowing to bypass system thread info).
+  - file-heif:
+    - now uses gimp_get_num_processors() instead of
+      g_get_num_processors() (allowing to bypass system thread info).
+    - Realtime parameter is set for AOM encoder when Fast encoding
+      speed is selected by user.
+    - Ability to set pixel format (YUV444, RGB) is enabled
+      for >= libheif 1.10 to avoid issues in older versions.
   - file-jp2 is now able to decode JPEG2000 files faster with
     multi-threading, using the thread number settings returned by
     gimp_get_num_processors().
