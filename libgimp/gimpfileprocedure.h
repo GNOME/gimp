@@ -56,6 +56,10 @@ struct _GimpFileProcedureClass
 
 GType           gimp_file_procedure_get_type        (void) G_GNUC_CONST;
 
+void            gimp_file_procedure_set_format_name (GimpFileProcedure *procedure,
+                                                     const gchar       *format_name);
+const gchar   * gimp_file_procedure_get_format_name (GimpFileProcedure *procedure);
+
 void            gimp_file_procedure_set_mime_types  (GimpFileProcedure *procedure,
                                                      const gchar       *mime_types);
 const gchar   * gimp_file_procedure_get_mime_types  (GimpFileProcedure *procedure);

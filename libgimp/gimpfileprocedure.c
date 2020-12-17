@@ -26,6 +26,7 @@
 
 struct _GimpFileProcedurePrivate
 {
+  gchar    *format_name;
   gchar    *mime_types;
   gchar    *extensions;
   gchar    *prefixes;
@@ -80,6 +81,7 @@ gimp_file_procedure_finalize (GObject *object)
 {
   GimpFileProcedure *procedure = GIMP_FILE_PROCEDURE (object);
 
+  g_clear_pointer (&procedure->priv->format_name, g_free);
   g_clear_pointer (&procedure->priv->mime_types, g_free);
   g_clear_pointer (&procedure->priv->extensions, g_free);
   g_clear_pointer (&procedure->priv->prefixes,   g_free);
@@ -90,6 +92,55 @@ gimp_file_procedure_finalize (GObject *object)
 
 
 /*  public functions  */
+
+/**
+ * gimp_file_procedure_set_format_name:
+ * @procedure: A #GimpFileProcedure.
+ * @format_name: A public-facing name for the format, e.g. "PNG".
+ *
+ * Associates a format name with a file handler procedure.
+ *
+ * This name can be used for any public-facing strings, such as
+ * graphical interface labels. An example usage would be
+ * %GimpSaveProcedureDialog title looking like "Export Image as %s".
+ *
+ * Note that since the format name is public-facing, it is recommended
+ * to localize it at runtime, for instance through gettext, like:
+ * |[<!-- language="C" -->
+ * gimp_file_procedure_set_format_name (procedure, _("JPEG"));
+ * ]|
+ * Some language would indeed localize even some technical terms or
+ * acronyms, even if sometimes just to rewrite them with the local
+ * writing system.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_file_procedure_set_format_name (GimpFileProcedure *procedure,
+                                     const gchar       *format_name)
+{
+  g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
+
+  g_free (procedure->priv->format_name);
+  procedure->priv->format_name = g_strdup (format_name);
+}
+
+/**
+ * gimp_file_procedure_get_format_name:
+ * @procedure: A #GimpFileProcedure.
+ *
+ * Returns: The procedure's format name as set with
+ *          gimp_file_procedure_set_format_name().
+ *
+ * Since: 3.0
+ **/
+const gchar *
+gimp_file_procedure_get_format_name (GimpFileProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), NULL);
+
+  return procedure->priv->format_name;
+}
 
 /**
  * gimp_file_procedure_set_mime_types:

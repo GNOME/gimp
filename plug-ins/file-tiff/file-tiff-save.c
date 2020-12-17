@@ -1283,8 +1283,7 @@ save_dialog (GimpImage     *image,
   gboolean         run;
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           _("Export Image as TIFF"));
+                                           GIMP_PROCEDURE_CONFIG (config));
 
   store =
     gimp_int_store_new (_("None"),              GIMP_COMPRESSION_NONE,

@@ -186,6 +186,8 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                                       "Spencer Kimball & Peter Mattis",
                                       "1995-2007");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("JPEG"));
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/jpeg");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),

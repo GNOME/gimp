@@ -255,10 +255,11 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
 
 GtkWidget *
 gimp_save_procedure_dialog_new (GimpSaveProcedure   *procedure,
-                                GimpProcedureConfig *config,
-                                const gchar         *title)
+                                GimpProcedureConfig *config)
 {
   GtkWidget   *dialog;
+  gchar       *title;
+  const gchar *format_name;
   const gchar *help_id;
   gboolean     use_header_bar;
 
@@ -266,7 +267,18 @@ gimp_save_procedure_dialog_new (GimpSaveProcedure   *procedure,
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
   g_return_val_if_fail (gimp_procedure_config_get_procedure (config) ==
                         GIMP_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (title != NULL, NULL);
+
+  format_name = gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure));
+  if (! format_name)
+    {
+      g_critical ("%s: no format name set on file procedure '%s'. "
+                  "Set one with gimp_file_procedure_set_format_name()",
+                  G_STRFUNC,
+                  gimp_procedure_get_name (GIMP_PROCEDURE (procedure)));
+      return NULL;
+    }
+  /* TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG". */
+  title = g_strdup_printf (_("Export Image as %s"), format_name);
 
   help_id = gimp_procedure_get_help_id (GIMP_PROCEDURE (procedure));
 
@@ -282,6 +294,7 @@ gimp_save_procedure_dialog_new (GimpSaveProcedure   *procedure,
                          "help-id",        help_id,
                          "use-header-bar", use_header_bar,
                          NULL);
+  g_free (title);
 
   return dialog;
 }

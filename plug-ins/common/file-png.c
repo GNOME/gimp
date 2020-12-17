@@ -218,6 +218,8 @@ png_create_procedure (GimpPlugIn  *plug_in,
                                       "Nick Lamb <njl195@zepler.org.uk>",
                                       PLUG_IN_VERSION);
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("PNG"));
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/png");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -2165,8 +2167,7 @@ save_dialog (GimpImage     *image,
   gboolean      run;
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           _("Export Image as PNG"));
+                                           GIMP_PROCEDURE_CONFIG (config));
 
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                     "compression", GIMP_TYPE_SCALE_ENTRY);

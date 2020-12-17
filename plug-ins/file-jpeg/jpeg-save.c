@@ -796,8 +796,7 @@ save_dialog (GimpProcedure       *procedure,
                 NULL);
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           _("Export Image as JPEG"));
+                                           GIMP_PROCEDURE_CONFIG (config));
 
   /* custom quantization tables - now used also for original quality */
   widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),

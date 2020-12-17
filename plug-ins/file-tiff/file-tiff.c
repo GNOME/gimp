@@ -188,6 +188,8 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
                                               TRUE);
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("TIFF"));
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/tiff");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
