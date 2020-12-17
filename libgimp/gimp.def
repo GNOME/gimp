@@ -263,6 +263,7 @@ EXPORTS
 	gimp_file_load_layer
 	gimp_file_load_layers
 	gimp_file_procedure_get_extensions
+	gimp_file_procedure_get_format_name
 	gimp_file_procedure_get_handles_remote
 	gimp_file_procedure_get_magics
 	gimp_file_procedure_get_mime_types
@@ -270,6 +271,7 @@ EXPORTS
 	gimp_file_procedure_get_priority
 	gimp_file_procedure_get_type
 	gimp_file_procedure_set_extensions
+	gimp_file_procedure_set_format_name
 	gimp_file_procedure_set_handles_remote
 	gimp_file_procedure_set_magics
 	gimp_file_procedure_set_mime_types
