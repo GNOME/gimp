@@ -91,7 +91,6 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
   GtkWidget               *content_area;
   GList                   *properties2 = NULL;
   GList                   *iter;
-  gint                     n_checkboxes;
 
   save_dialog    = GIMP_SAVE_PROCEDURE_DIALOG (dialog);
   save_procedure = GIMP_SAVE_PROCEDURE (procedure);
@@ -124,80 +123,115 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
   GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_list (dialog, procedure, config, properties2);
   g_list_free (properties2);
 
-  n_checkboxes = gimp_save_procedure_get_support_exif      (save_procedure) +
-                 gimp_save_procedure_get_support_iptc      (save_procedure) +
-                 gimp_save_procedure_get_support_xmp       (save_procedure) +
-                 gimp_save_procedure_get_support_profile   (save_procedure) +
-                 gimp_save_procedure_get_support_thumbnail (save_procedure);
 
-  if (n_checkboxes != 0                                          ||
+  if (gimp_save_procedure_get_support_exif      (save_procedure) ||
+      gimp_save_procedure_get_support_iptc      (save_procedure) ||
+      gimp_save_procedure_get_support_xmp       (save_procedure) ||
+      gimp_save_procedure_get_support_profile   (save_procedure) ||
+      gimp_save_procedure_get_support_thumbnail (save_procedure) ||
       g_list_length (save_dialog->priv->additional_metadata) > 0 ||
-      gimp_save_procedure_get_support_comment (save_procedure))
+      gimp_save_procedure_get_support_comment   (save_procedure))
     {
       GtkWidget *frame;
-      GtkWidget *box;
-      GtkWidget *flowbox;
+      GtkWidget *grid;
       GtkWidget *widget;
+      gint       n_metadata;
+      gint       left = 0;
+      gint       top  = 0;
 
       frame = gimp_frame_new (_("Metadata"));
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-      box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
-      gtk_container_add (GTK_CONTAINER (frame), box);
-      gtk_widget_show (box);
 
-      flowbox = gtk_flow_box_new ();
-      if (n_checkboxes + g_list_length (save_dialog->priv->additional_metadata) > 3)
-        {
-          gtk_flow_box_set_min_children_per_line (GTK_FLOW_BOX (flowbox), 2);
-          gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (flowbox), 2);
-        }
-      gtk_box_pack_start (GTK_BOX (box), flowbox, TRUE, TRUE, 0);
-      gtk_widget_show (flowbox);
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_homogeneous (GTK_GRID (grid), TRUE);
+      gtk_widget_set_vexpand (grid, TRUE);
+      gtk_container_add (GTK_CONTAINER (frame), grid);
+      gtk_widget_show (grid);
+
+      /* Line for 3 metadata formats: Exif, IPTC, XMP. */
+      n_metadata = gimp_save_procedure_get_support_exif (save_procedure) +
+                   gimp_save_procedure_get_support_iptc (save_procedure) +
+                   gimp_save_procedure_get_support_xmp  (save_procedure);
 
       if (gimp_save_procedure_get_support_exif (save_procedure))
         {
           widget = gimp_prop_check_button_new (G_OBJECT (config),
                                                "save-exif", NULL);
-          gtk_container_add (GTK_CONTAINER (flowbox), widget);
+          gtk_grid_attach (GTK_GRID (grid), widget,
+                           left, 0, 6 / n_metadata, 1);
+          left += 6 / n_metadata;
+          top   = 1;
           gtk_widget_show (widget);
         }
       if (gimp_save_procedure_get_support_iptc (save_procedure))
         {
           widget = gimp_prop_check_button_new (G_OBJECT (config),
                                                "save-iptc", NULL);
-          gtk_container_add (GTK_CONTAINER (flowbox), widget);
+          gtk_grid_attach (GTK_GRID (grid), widget,
+                           left, 0, 6 / n_metadata, 1);
+          left += 6 / n_metadata;
+          top   = 1;
           gtk_widget_show (widget);
         }
       if (gimp_save_procedure_get_support_xmp (save_procedure))
         {
           widget = gimp_prop_check_button_new (G_OBJECT (config),
                                                "save-xmp", NULL);
-          gtk_container_add (GTK_CONTAINER (flowbox), widget);
+          gtk_grid_attach (GTK_GRID (grid), widget,
+                           left, 0, 6 / n_metadata, 1);
+          left += 6 / n_metadata;
+          top   = 1;
           gtk_widget_show (widget);
         }
+
+      /* Line for specific metadata: profile, thumbnail. */
+      left = 0;
+      n_metadata = gimp_save_procedure_get_support_profile (save_procedure) +
+                   gimp_save_procedure_get_support_thumbnail (save_procedure);
+
       if (gimp_save_procedure_get_support_profile (save_procedure))
         {
           widget = gimp_prop_check_button_new (G_OBJECT (config),
                                                "save-color-profile", NULL);
-          gtk_container_add (GTK_CONTAINER (flowbox), widget);
+          gtk_grid_attach (GTK_GRID (grid), widget,
+                           left, top, 6 / n_metadata, 1);
+          left += 6 / n_metadata;
           gtk_widget_show (widget);
         }
       if (gimp_save_procedure_get_support_thumbnail (save_procedure))
         {
           widget = gimp_prop_check_button_new (G_OBJECT (config),
                                                "save-thumbnail", NULL);
-          gtk_container_add (GTK_CONTAINER (flowbox), widget);
+          gtk_grid_attach (GTK_GRID (grid), widget,
+                           left, top, 6 / n_metadata, 1);
+          left += 6 / n_metadata;
           gtk_widget_show (widget);
         }
+      if (n_metadata > 0)
+        top++;
 
+      /* Custom metadata: 2 items per line. */
+      left = 0;
       for (iter = save_dialog->priv->additional_metadata; iter; iter = iter->next)
         {
           widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
           g_object_ref (widget);
-          gtk_container_add (GTK_CONTAINER (flowbox), widget);
+          gtk_grid_attach (GTK_GRID (grid), widget, left, top, 3, 1);
+          if (left == 0)
+            {
+              left = 3;
+            }
+          else
+            {
+              left = 0;
+              top++;
+            }
           gtk_widget_show (widget);
         }
+      if (left == 3)
+        top++;
 
+      /* Last line for comment field. */
       if (gimp_save_procedure_get_support_comment (save_procedure))
         {
           GtkTextBuffer *buffer;
@@ -233,21 +267,10 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
           gtk_container_add (GTK_CONTAINER (frame2), widget);
           gtk_widget_show (widget);
 
-          /* Why do I put the text view inside a flowbox? This is a
-           * bit ugly as this is only to allow the text view title
-           * checkbox to be aligned with other checkboxes while
-           * still taking double the width. Probably should have I
-           * gone with a GtkGrid on this one.
-           */
-          flowbox = gtk_flow_box_new ();
-          gtk_flow_box_set_min_children_per_line (GTK_FLOW_BOX (flowbox), 1);
-          gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (flowbox), 1);
-          gtk_box_pack_start (GTK_BOX (box), flowbox, TRUE, TRUE, 0);
-          gtk_widget_show (flowbox);
-
-          gtk_container_add (GTK_CONTAINER (flowbox), frame2);
+          gtk_grid_attach (GTK_GRID (grid), frame2, 0, top, 6, 1);
           gtk_widget_show (frame2);
         }
+
       gtk_box_pack_start (GTK_BOX (content_area), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
     }
