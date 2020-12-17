@@ -1540,8 +1540,8 @@ save_image (GFile                        *file,
   heif_encoder_set_lossless (encoder, params->lossless);
   /* heif_encoder_set_logging_level (encoder, logging_level); */
 
-#if LIBHEIF_HAVE_VERSION(1,9,0)
-  if (params->lossless && params->save_bit_depth == 8)
+#if LIBHEIF_HAVE_VERSION(1,10,0)
+  if (params->lossless)
     {
       err = heif_encoder_set_parameter_string (encoder, "chroma", "444");
       if (err.code != 0)
