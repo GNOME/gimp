@@ -410,6 +410,7 @@ gui_message_error_dialog (Gimp                *gimp,
 
   if (dialog)
     {
+      gtk_window_set_keep_above (GTK_WINDOW (dialog), TRUE);
       gimp_error_dialog_add (GIMP_ERROR_DIALOG (dialog),
                              gimp_get_message_icon_name (severity),
                              domain, message);
