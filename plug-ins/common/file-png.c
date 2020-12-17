@@ -2167,7 +2167,8 @@ save_dialog (GimpImage     *image,
   gboolean      run;
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config));
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                     "compression", GIMP_TYPE_SCALE_ENTRY);

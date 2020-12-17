@@ -67,7 +67,8 @@ struct _GimpSaveProcedureDialogClass
 GType       gimp_save_procedure_dialog_get_type          (void) G_GNUC_CONST;
 
 GtkWidget * gimp_save_procedure_dialog_new               (GimpSaveProcedure   *procedure,
-                                                          GimpProcedureConfig *config);
+                                                          GimpProcedureConfig *config,
+                                                          GimpImage           *image);
 
 void        gimp_save_procedure_dialog_add_metadata      (GimpSaveProcedureDialog *dialog,
                                                           const gchar             *property);

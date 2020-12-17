@@ -33,7 +33,11 @@
 
 struct _GimpSaveProcedureDialogPrivate
 {
-  GList *additional_metadata;
+  GList     *additional_metadata;
+  GimpImage *image;
+
+  GThread   *metadata_thread;
+  GMutex     metadata_thread_mutex;
 };
 
 
@@ -43,6 +47,11 @@ static void   gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
                                                     GimpProcedure       *procedure,
                                                     GimpProcedureConfig *config,
                                                     GList               *properties);
+
+static gpointer gimp_save_procedure_dialog_edit_metadata_thread   (gpointer                 data);
+static gboolean gimp_save_procedure_dialog_activate_edit_metadata (GtkLinkButton           *link,
+                                                                   GimpSaveProcedureDialog *dialog);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpSaveProcedureDialog, gimp_save_procedure_dialog, GIMP_TYPE_PROCEDURE_DIALOG)
 
@@ -67,6 +76,9 @@ gimp_save_procedure_dialog_init (GimpSaveProcedureDialog *dialog)
   dialog->priv = gimp_save_procedure_dialog_get_instance_private (dialog);
 
   dialog->priv->additional_metadata = NULL;
+  dialog->priv->image               = NULL;
+  dialog->priv->metadata_thread     = NULL;
+  g_mutex_init (&dialog->priv->metadata_thread_mutex);
 }
 
 static void
@@ -76,6 +88,8 @@ gimp_save_procedure_dialog_dispose (GObject *object)
 
   g_list_free_full (dialog->priv->additional_metadata, g_free);
   dialog->priv->additional_metadata = NULL;
+  g_clear_pointer (&dialog->priv->metadata_thread, g_thread_unref);
+  g_mutex_clear (&dialog->priv->metadata_thread_mutex);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -132,16 +146,45 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       g_list_length (save_dialog->priv->additional_metadata) > 0 ||
       gimp_save_procedure_get_support_comment   (save_procedure))
     {
-      GtkWidget *frame;
-      GtkWidget *grid;
-      GtkWidget *widget;
-      gint       n_metadata;
-      gint       left = 0;
-      gint       top  = 0;
+      GtkWidget      *frame;
+      GtkWidget      *frame_title;
+      GtkWidget      *grid;
+      GtkWidget      *widget;
+      GtkWidget      *label;
+      GtkWidget      *link;
+      PangoAttrList  *attrs;
+      PangoAttribute *attr;
+      gint            n_metadata;
+      gint            left = 0;
+      gint            top  = 0;
 
-      frame = gimp_frame_new (_("Metadata"));
+      frame = gimp_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
 
+      /* Metadata frame title: a label and an edit link. */
+      frame_title = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+
+      label = gtk_label_new (_("Metadata"));
+      attrs = pango_attr_list_new ();
+      attr  = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+      pango_attr_list_insert (attrs, attr);
+      gtk_label_set_attributes (GTK_LABEL (label), attrs);
+      pango_attr_list_unref (attrs);
+      gtk_box_pack_start (GTK_BOX (frame_title), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      link = gtk_link_button_new_with_label (_("Edit Metadata"), _("(edit)"));
+      gtk_link_button_set_visited (GTK_LINK_BUTTON (link), FALSE);
+      g_signal_connect (link, "activate-link",
+                        G_CALLBACK (gimp_save_procedure_dialog_activate_edit_metadata),
+                        dialog);
+      gtk_box_pack_start (GTK_BOX (frame_title), link, FALSE, FALSE, 0);
+      gtk_widget_show (link);
+
+      gtk_frame_set_label_widget (GTK_FRAME (frame), frame_title);
+      gtk_widget_show (frame_title);
+
+      /* Metadata frame contents in a grid.. */
       grid = gtk_grid_new ();
       gtk_grid_set_column_homogeneous (GTK_GRID (grid), TRUE);
       gtk_widget_set_vexpand (grid, TRUE);
@@ -276,9 +319,52 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
     }
 }
 
+static gpointer
+gimp_save_procedure_dialog_edit_metadata_thread (gpointer data)
+{
+  GimpSaveProcedureDialog *dialog = data;
+
+  gimp_pdb_run_procedure (gimp_get_pdb (),    "plug-in-metadata-editor",
+                          GIMP_TYPE_RUN_MODE, GIMP_RUN_INTERACTIVE,
+                          GIMP_TYPE_IMAGE,    dialog->priv->image,
+                          G_TYPE_NONE);
+
+  g_mutex_lock (&dialog->priv->metadata_thread_mutex);
+  g_thread_unref (dialog->priv->metadata_thread);
+  dialog->priv->metadata_thread = NULL;
+  g_mutex_unlock (&dialog->priv->metadata_thread_mutex);
+
+  return NULL;
+}
+
+static gboolean
+gimp_save_procedure_dialog_activate_edit_metadata (GtkLinkButton           *link,
+                                                   GimpSaveProcedureDialog *dialog)
+{
+  gtk_link_button_set_visited (link, TRUE);
+
+  g_mutex_lock (&dialog->priv->metadata_thread_mutex);
+
+  if (! dialog->priv->metadata_thread)
+    /* Only run if not already running. */
+    dialog->priv->metadata_thread = g_thread_try_new ("Edit Metadata",
+                                                      gimp_save_procedure_dialog_edit_metadata_thread,
+                                                      dialog, NULL);
+
+  g_mutex_unlock (&dialog->priv->metadata_thread_mutex);
+
+  /* Stop propagation as the URI is bogus. */
+  return TRUE;
+}
+
+
+/* Public Functions */
+
+
 GtkWidget *
 gimp_save_procedure_dialog_new (GimpSaveProcedure   *procedure,
-                                GimpProcedureConfig *config)
+                                GimpProcedureConfig *config,
+                                GimpImage           *image)
 {
   GtkWidget   *dialog;
   gchar       *title;
@@ -290,6 +376,7 @@ gimp_save_procedure_dialog_new (GimpSaveProcedure   *procedure,
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
   g_return_val_if_fail (gimp_procedure_config_get_procedure (config) ==
                         GIMP_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   format_name = gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure));
   if (! format_name)
@@ -317,6 +404,7 @@ gimp_save_procedure_dialog_new (GimpSaveProcedure   *procedure,
                          "help-id",        help_id,
                          "use-header-bar", use_header_bar,
                          NULL);
+  GIMP_SAVE_PROCEDURE_DIALOG (dialog)->priv->image = image;
   g_free (title);
 
   return dialog;
