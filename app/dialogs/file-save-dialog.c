@@ -188,6 +188,13 @@ file_save_dialog_response (GtkWidget *dialog,
             xcf_compression = GIMP_SAVE_DIALOG (dialog)->compression;
           }
 
+        /* Hide the file dialog while exporting, avoid dialogs piling
+         * up, even more as some formats have preview features, so the
+         * file dialog is just blocking the view.
+         */
+        if  (GIMP_IS_EXPORT_DIALOG (dialog))
+          gtk_widget_hide (dialog);
+
         if (file_save_dialog_save_image (GIMP_PROGRESS (dialog),
                                          gimp,
                                          file_dialog->image,
@@ -241,6 +248,10 @@ file_save_dialog_response (GtkWidget *dialog,
               }
 
             gtk_widget_destroy (dialog);
+          }
+        else
+          {
+            gtk_widget_show (dialog);
           }
 
         g_object_unref (file);
