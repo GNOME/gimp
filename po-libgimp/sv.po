@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-15 15:56+0000\n"
-"PO-Revision-Date: 2020-12-15 19:51+0100\n"
+"POT-Creation-Date: 2020-12-17 18:15+0000\n"
+"PO-Revision-Date: 2020-12-17 22:39+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -235,7 +235,8 @@ msgstr ""
 "Detta kommer inte att spara de synliga lagren."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1193
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:391
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exportera bild som %s"
@@ -495,9 +496,17 @@ msgstr "Datum:"
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../libgimp/gimpsaveproceduredialog.c:142
+#: ../libgimp/gimpsaveproceduredialog.c:167
 msgid "Metadata"
 msgstr "Metadata"
+
+#: ../libgimp/gimpsaveproceduredialog.c:176
+msgid "Edit Metadata"
+msgstr "Redigera metadata"
+
+#: ../libgimp/gimpsaveproceduredialog.c:176
+msgid "(edit)"
+msgstr "(redigera)"
 
 #: ../libgimp/gimpunitcache.c:54
 msgid "percent"
