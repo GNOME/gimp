@@ -569,17 +569,17 @@ metadata_editor_dialog (GimpImage     *image,
                             "gimp-metadata-editor-dialog",
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
-                            _("_Cancel"),        GTK_RESPONSE_NO,
-                            _("_Write Metadata"), GTK_RESPONSE_YES,
+                            _("_Cancel"),         GTK_RESPONSE_CANCEL,
+                            _("_Write Metadata"), GTK_RESPONSE_OK,
                             NULL);
 
   meta_args.dialog = dialog;
 
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-      GTK_RESPONSE_YES,
-      GTK_RESPONSE_NO,
-      -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
@@ -607,7 +607,7 @@ metadata_editor_dialog (GimpImage     *image,
 
   metadata_dialog_editor_set_metadata (metadata, builder);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_YES);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
   if (run)
     {
       metadata_editor_write_callback (dialog, builder, image);
@@ -835,16 +835,16 @@ on_date_button_clicked (GtkButton *widget,
     gtk_dialog_new_with_buttons (_("Calendar Date:"),
                                  NULL,
                                  GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-                                 _("_Cancel"),  GTK_RESPONSE_NO,
-                                 _("Set Date"), GTK_RESPONSE_YES,
+                                 _("_Cancel"),  GTK_RESPONSE_CANCEL,
+                                 _("Set Date"), GTK_RESPONSE_OK,
                                  NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (calendar_dialog),
-                                   GTK_RESPONSE_YES);
+                                   GTK_RESPONSE_OK);
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (calendar_dialog),
-      GTK_RESPONSE_YES,
-      GTK_RESPONSE_NO,
-      -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gimp_window_set_transient (GTK_WINDOW (calendar_dialog));
 
@@ -863,7 +863,7 @@ on_date_button_clicked (GtkButton *widget,
   gtk_calendar_select_day (GTK_CALENDAR (calendar), day);
   gtk_calendar_mark_day (GTK_CALENDAR (calendar), day);
 
-  if (gtk_dialog_run (GTK_DIALOG (calendar_dialog)) == GTK_RESPONSE_YES)
+  if (gtk_dialog_run (GTK_DIALOG (calendar_dialog)) == GTK_RESPONSE_OK)
     {
       gchar date[25];
       gtk_calendar_get_date (GTK_CALENDAR (calendar), &year, &month, &day);
