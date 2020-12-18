@@ -26,6 +26,7 @@ endif
 
 executable(plugin_name,
   plugin_sources,
+  c_args: '-DG_LOG_DOMAIN="file-psd"',
   dependencies: [
     libgimpui_dep,
     libjpeg,
