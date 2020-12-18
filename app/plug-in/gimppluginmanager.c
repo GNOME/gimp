@@ -110,7 +110,7 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
                                    menu_branch_added),
                   NULL, NULL,
                   gimp_marshal_VOID__OBJECT_STRING_STRING,
-                  G_TYPE_NONE, 1,
+                  G_TYPE_NONE, 3,
                   G_TYPE_FILE,
                   G_TYPE_STRING,
                   G_TYPE_STRING);
