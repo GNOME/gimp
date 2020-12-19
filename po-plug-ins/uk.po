@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-02 00:12+0000\n"
-"PO-Revision-Date: 2020-12-02 09:32+0200\n"
+"POT-Creation-Date: 2020-12-18 19:14+0000\n"
+"PO-Revision-Date: 2020-12-19 09:43+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -72,7 +72,7 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1284 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2029 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2259 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -454,7 +454,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:1960 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1143
+#: ../plug-ins/file-tiff/file-tiff-load.c:1254
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -1030,7 +1030,7 @@ msgstr "Графік поточних параметрів"
 #: ../plug-ins/gfig/gfig-dialog.c:1394
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
 #: ../plug-ins/imagemap/imap_menu.c:156
-#: ../plug-ins/metadata/metadata-viewer.c:256
+#: ../plug-ins/metadata/metadata-viewer.c:255
 msgid "_Close"
 msgstr "З_акрити"
 
@@ -1045,7 +1045,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
-#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1614
+#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1504
@@ -2160,7 +2160,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:179
+#: ../plug-ins/file-tiff/file-tiff-load.c:190
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається «%s»"
@@ -2237,7 +2237,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
 #: ../plug-ins/common/file-heif.c:1268 ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
-#: ../plug-ins/common/file-png.c:1607 ../plug-ins/common/file-pnm.c:1249
+#: ../plug-ins/common/file-png.c:1611 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1213 ../plug-ins/common/file-xbm.c:1040
 #: ../plug-ins/common/file-xpm.c:674 ../plug-ins/common/file-xwd.c:652
@@ -2900,7 +2900,7 @@ msgstr "Невідомий колірний простір у зображенн
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2341
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2345
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
@@ -2934,7 +2934,7 @@ msgid "Save creation _time"
 msgstr "Зберегти час _створення"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1418 ../plug-ins/common/file-png.c:2399
+#: ../plug-ins/common/file-mng.c:1418 ../plug-ins/common/file-png.c:2403
 msgid "PNG"
 msgstr "PNG"
 
@@ -3156,7 +3156,7 @@ msgid "Import from PDF"
 msgstr "Імпорт з PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1265 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:2030
+#: ../plug-ins/file-tiff/file-tiff-load.c:2260
 #: ../plug-ins/metadata/metadata-editor.c:5718
 msgid "_Import"
 msgstr "_Імпортувати"
@@ -3277,7 +3277,7 @@ msgstr "Шари як сторінки (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1145
+#: ../plug-ins/file-tiff/file-tiff-load.c:1256
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
@@ -3333,7 +3333,7 @@ msgstr "Невідома модель кольорів у PNG файлі «%s».
 msgid "Could not create new image for '%s': %s"
 msgstr "Неможливо створити нове зображення для «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:1144
+#: ../plug-ins/common/file-png.c:1147
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3341,19 +3341,19 @@ msgstr ""
 "У файлі формату PNG вказано зсув, який призводить до розташування шару за "
 "межами зображення."
 
-#: ../plug-ins/common/file-png.c:1404
+#: ../plug-ins/common/file-png.c:1408
 msgid "Apply PNG Offset"
 msgstr "Застосувати зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1408
+#: ../plug-ins/common/file-png.c:1412
 msgid "Ignore PNG offset"
 msgstr "Знехтувати зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1409
+#: ../plug-ins/common/file-png.c:1413
 msgid "Apply PNG offset to layer"
 msgstr "Застосувати до шару зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1434
+#: ../plug-ins/common/file-png.c:1438
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3362,30 +3362,30 @@ msgstr ""
 "Зображення формату PNG, яке ви імпортуєте, має зміщення %d, %d. Застосувати "
 "це зміщення до шару?"
 
-#: ../plug-ins/common/file-png.c:1573
+#: ../plug-ins/common/file-png.c:1577
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
-#: ../plug-ins/common/file-png.c:1582
+#: ../plug-ins/common/file-png.c:1586
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: ../plug-ins/common/file-png.c:1590
+#: ../plug-ins/common/file-png.c:1594
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
-#: ../plug-ins/common/file-png.c:2416 ../plug-ins/common/file-raw-data.c:2131
+#: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2131
 #: ../plug-ins/file-tiff/file-tiff-save.c:1232
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Помилка при відкритті файлу опису інтерфейсу «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:2417 ../plug-ins/common/file-raw-data.c:2132
+#: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2132
 #: ../plug-ins/file-tiff/file-tiff-save.c:1233
 msgid "Unknown error"
 msgstr "Невідома помилка"
@@ -7406,12 +7406,12 @@ msgstr ""
 msgid "TIFF image"
 msgstr "Зображення TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:212
+#: ../plug-ins/file-tiff/file-tiff-load.c:223
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF «%s» не містить каталоги"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:219
+#: ../plug-ins/file-tiff/file-tiff-load.c:230
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7429,7 +7429,7 @@ msgstr[2] ""
 "Не вдалося виконати облік каталогу TIFF «%s» за заголовком, хоча, здається, "
 "маємо %d сторінок. Буде виконано спробу завантажити файл із цим припущенням."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:295
+#: ../plug-ins/file-tiff/file-tiff-load.c:306
 msgid "Extra channels with unspecified data."
 msgstr "Зайві канали із даними поза специфікацією."
 
@@ -7440,41 +7440,60 @@ msgstr "Зайві канали із даними поза специфікац�
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:311
+#: ../plug-ins/file-tiff/file-tiff-load.c:322
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Нестандартний TIFF: зайві канали без поля «ExtraSamples»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:373
+#: ../plug-ins/file-tiff/file-tiff-load.c:384
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Не вдалося прочитати сторінку %d з %d. Зображення може бути пошкоджено.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:865
+#: ../plug-ins/file-tiff/file-tiff-load.c:413
+#, c-format
+msgid ""
+"This image has a linear color profile but it was not set on the first layer. "
+"The layers below layer # %d will be interpreted as non linear."
+msgstr ""
+"Для цього зображення визначено лінійний колірний профіль, але цей профіль не"
+" встановлено на першому шарі. Шари під шаром %d буде оброблено як нелінійні."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:421
+msgid ""
+"This image has multiple color profiles. We will use the first one. If this "
+"leads to incorrect results you should consider loading each layer as a "
+"separate image."
+msgstr ""
+"Для цього зображення визначено декілька колірних профілів. Ми"
+" використовуватимемо лише перший з них. Якщо це призведе до некоректних"
+" результатів, вам варто завантажити кожен з шарів як окреме зображення."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:917
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-з-%d-сторінок"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1176
+#: ../plug-ins/file-tiff/file-tiff-load.c:1287
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1313
+#: ../plug-ins/file-tiff/file-tiff-load.c:1425
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Не вдалося прочитати дані з TIFF «%s». Ймовірно, вміст файла пошкоджено."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1688
-#: ../plug-ins/file-tiff/file-tiff-load.c:1863
+#: ../plug-ins/file-tiff/file-tiff-load.c:1800
+#: ../plug-ins/file-tiff/file-tiff-load.c:1980
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
 "Рядок помилки — %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2025
+#: ../plug-ins/file-tiff/file-tiff-load.c:2255
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
@@ -7482,23 +7501,23 @@ msgstr "Імпорт TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2078
+#: ../plug-ins/file-tiff/file-tiff-load.c:2308
 msgid "_Keep empty space around imported layers"
 msgstr "За_лишати порожнє місце навколо імпортованих шарів"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2095
+#: ../plug-ins/file-tiff/file-tiff-load.c:2325
 msgid "Process extra channel as:"
 msgstr "Обробляти зайвий канал як:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2098
+#: ../plug-ins/file-tiff/file-tiff-load.c:2328
 msgid "_Non-premultiplied alpha"
 msgstr "Б_ез попередньо помноженої альфи"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2099
+#: ../plug-ins/file-tiff/file-tiff-load.c:2329
 msgid "Pre_multiplied alpha"
 msgstr "_Попередньо помножена альфа"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2100
+#: ../plug-ins/file-tiff/file-tiff-load.c:2330
 msgid "Channe_l"
 msgstr "_Канал"
 
@@ -11919,7 +11938,6 @@ msgstr "Експортувати метадані"
 
 #: ../plug-ins/metadata/metadata-editor.c:799
 #, c-format
-#| msgid "Error loading PSD file: %s"
 msgid "Error loading calendar. %s"
 msgstr "Помилка під час завантаження календаря. %s"
 
@@ -11941,10 +11959,10 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 "Тут можна ввести або редагувати значення GPS.\n"
-"Коректні значення складаються з 1, 2 або 3 чисел (градусів, мінут, секунд),"
-" див. такі приклади:\n"
-"10deg 15' 20\", або 10° 15' 20\", або 10:15:20.45, або 10 15 20, або 10"
-" 15.30, або 10.45\n"
+"Коректні значення складаються з 1, 2 або 3 чисел (градусів, мінут, секунд), "
+"див. такі приклади:\n"
+"10deg 15' 20\", або 10° 15' 20\", або 10:15:20.45, або 10 15 20, або 10 "
+"15.30, або 10.45\n"
 "Вилучіть увесь текст, щоб вилучити поточне значення."
 
 #: ../plug-ins/metadata/metadata-editor.c:1571
@@ -11959,8 +11977,8 @@ msgstr ""
 "Тут можна ввести або змінити значення висоти GPS.\n"
 "Коректне значення складається з одного числа, приклад:\n"
 "100 або 12.24\n"
-"Залежно від вибраного типу вимірювань, значення слід вводити у метрах (м) або"
-" футах (фут)\n"
+"Залежно від вибраного типу вимірювань, значення слід вводити у метрах (м) "
+"або футах (фут)\n"
 "Щоб вилучити поточне значення, витріть увесь текст."
 
 #: ../plug-ins/metadata/metadata-editor.c:1707
@@ -11969,7 +11987,6 @@ msgstr "Без рейтингу"
 
 #: ../plug-ins/metadata/metadata-editor.c:4405
 #, c-format
-#| msgid "Failed to decompress data"
 msgid "Failed to set metadata tag %s"
 msgstr "Не вдалося встановити мітку метаданих %s"
 
@@ -12155,12 +12172,10 @@ msgid "Other"
 msgstr "Інше"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#| msgid "Above Sea Level"
 msgid "Above sea level"
 msgstr "Над рівнем моря"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#| msgid "Below Sea Level"
 msgid "Below sea level"
 msgstr "Під рівнем моря"
 
@@ -12180,38 +12195,37 @@ msgstr "Схід"
 msgid "West"
 msgstr "Захід"
 
-#: ../plug-ins/metadata/metadata-viewer.c:136
+#: ../plug-ins/metadata/metadata-viewer.c:135
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Показати метадані (Exif, IPTC, XMP)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:143
+#: ../plug-ins/metadata/metadata-viewer.c:142
 msgid "_View Metadata"
 msgstr "По_казати метадані"
 
-#: ../plug-ins/metadata/metadata-viewer.c:238
+#: ../plug-ins/metadata/metadata-viewer.c:237
 msgid "Error loading metadata-viewer dialog."
 msgstr "Помилка під час завантаження вікна переглядача метаданих."
 
-#: ../plug-ins/metadata/metadata-viewer.c:249
+#: ../plug-ins/metadata/metadata-viewer.c:248
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Оглядач метаданих: %s"
 
-#: ../plug-ins/metadata/metadata-viewer.c:341
+#: ../plug-ins/metadata/metadata-viewer.c:340
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu більше символів)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:500
-#| msgid "Parameters"
+#: ../plug-ins/metadata/metadata-viewer.c:499
 msgid " meter"
 msgstr " метр"
 
-#: ../plug-ins/metadata/metadata-viewer.c:501
+#: ../plug-ins/metadata/metadata-viewer.c:500
 msgid " feet"
 msgstr " футів"
 
-#: ../plug-ins/metadata/metadata-viewer.c:597
+#: ../plug-ins/metadata/metadata-viewer.c:596
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu більше байт)"
