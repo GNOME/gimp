@@ -139,7 +139,7 @@ typedef enum  /*< pdb-skip >*/
   GIMP_COLOR_PROFILE_POLICY_ASK,               /*< desc="Ask what to do"                                                          >*/
   GIMP_COLOR_PROFILE_POLICY_KEEP,              /*< desc="Keep embedded profile"                                                   >*/
   GIMP_COLOR_PROFILE_POLICY_CONVERT_BUILTIN,   /*< desc="Convert to built-in sRGB or grayscale profile"                           >*/
-  GIMP_COLOR_PROFILE_POLICY_CONVERT_PREFERRED, /*< desc="Convert to preferred sRGB or grayscale profile (defaulting to built-in)" >*/
+  GIMP_COLOR_PROFILE_POLICY_CONVERT_PREFERRED, /*< desc="Convert to preferred RGB or grayscale profile (defaulting to built-in)" >*/
 } GimpColorProfilePolicy;
 
 

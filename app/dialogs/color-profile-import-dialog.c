@@ -165,7 +165,7 @@ color_profile_import_dialog_run (GimpImage                 *image,
       if (gimp_image_get_base_type (image) == GIMP_GRAY)
         frame_title  = _("Convert the image to the preferred grayscale color profile?");
       else
-        frame_title = _("Convert the image to the preferred sRGB color profile?");
+        frame_title = _("Convert the image to the preferred RGB color profile?");
 
       frame = gimp_frame_new (frame_title);
       gtk_stack_add_titled (GTK_STACK (stack), frame, "preferred", "Preferred Profile");
