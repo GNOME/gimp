@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-06 13:01+0100\n"
-"PO-Revision-Date: 2020-12-06 13:02+0100\n"
+"POT-Creation-Date: 2020-12-20 12:40+0100\n"
+"PO-Revision-Date: 2020-12-20 12:42+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -73,7 +73,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1284 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2029 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2259 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -455,7 +455,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:1960 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1143
+#: ../plug-ins/file-tiff/file-tiff-load.c:1254
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -2159,7 +2159,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:179
+#: ../plug-ins/file-tiff/file-tiff-load.c:190
 #, c-format
 msgid "Opening '%s'"
 msgstr "Otwieranie „%s”"
@@ -3150,7 +3150,7 @@ msgid "Import from PDF"
 msgstr "Import z PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1265 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:2030
+#: ../plug-ins/file-tiff/file-tiff-load.c:2260
 #: ../plug-ins/metadata/metadata-editor.c:5718
 msgid "_Import"
 msgstr "Zai_mportuj"
@@ -3271,7 +3271,7 @@ msgstr "Warstwy jako strony (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1145
+#: ../plug-ins/file-tiff/file-tiff-load.c:1256
 #, c-format
 msgid "Page %d"
 msgstr "%d. strona"
@@ -5328,7 +5328,7 @@ msgstr "Pozostawienie mi_nimalnych kanałów"
 
 #: ../plug-ins/common/nl-filter.c:123
 msgid "Nonlinear swiss army knife filter"
-msgstr "Nielinearny, wszechstronny filtr"
+msgstr "Nieliniowy, wszechstronny filtr"
 
 #: ../plug-ins/common/nl-filter.c:129
 msgid "_NL Filter..."
@@ -7404,12 +7404,12 @@ msgstr ""
 msgid "TIFF image"
 msgstr "Obraz TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:212
+#: ../plug-ins/file-tiff/file-tiff-load.c:223
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "Plik TIFF „%s” nie zawiera żadnych katalogów"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:219
+#: ../plug-ins/file-tiff/file-tiff-load.c:230
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7430,7 +7430,7 @@ msgstr[2] ""
 "chociaż wygląda na to, że jest %d stron. Próbowanie wczytania pliku z tym "
 "założeniem."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:295
+#: ../plug-ins/file-tiff/file-tiff-load.c:306
 msgid "Extra channels with unspecified data."
 msgstr "Dodatkowe kanały z nieokreślonymi danymi."
 
@@ -7441,27 +7441,47 @@ msgstr "Dodatkowe kanały z nieokreślonymi danymi."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:311
+#: ../plug-ins/file-tiff/file-tiff-load.c:322
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr ""
 "Plik TIFF niezgodny ze specyfikacją: dodatkowe kanały bez pola "
 "„ExtraSamples”."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:373
+#: ../plug-ins/file-tiff/file-tiff-load.c:384
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Nie można odczytać %d. strony z %d. Obraz może być uszkodzony.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:865
+#: ../plug-ins/file-tiff/file-tiff-load.c:413
+#, c-format
+msgid ""
+"This image has a linear color profile but it was not set on the first layer. "
+"The layers below layer # %d will be interpreted as non linear."
+msgstr ""
+"Ten obraz ma liniowy profil kolorów, ale nie został on ustawiony na "
+"pierwszej warstwie. Warstwy pod %d. warstwą będą interpretowane jako "
+"nieliniowe."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:421
+msgid ""
+"This image has multiple color profiles. We will use the first one. If this "
+"leads to incorrect results you should consider loading each layer as a "
+"separate image."
+msgstr ""
+"Ten obraz ma wiele profilów kolorów. Użyty zostanie pierwszy profil. Jeśli "
+"spowoduje to niepoprawne wyniki, należy rozważyć wczytanie każdej warstwy "
+"jako oddzielny obraz."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:917
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-z-%d-stron"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1176
+#: ../plug-ins/file-tiff/file-tiff-load.c:1287
 msgid "TIFF Channel"
 msgstr "Kanały TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1313
+#: ../plug-ins/file-tiff/file-tiff-load.c:1425
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
@@ -7469,15 +7489,15 @@ msgstr ""
 "uszkodzony."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1688
-#: ../plug-ins/file-tiff/file-tiff-load.c:1863
+#: ../plug-ins/file-tiff/file-tiff-load.c:1800
+#: ../plug-ins/file-tiff/file-tiff-load.c:1980
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Odczytanie scanline się nie powiodło. Obraz może być uszkodzony w %d. "
 "wierszu."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2025
+#: ../plug-ins/file-tiff/file-tiff-load.c:2255
 msgid "Import from TIFF"
 msgstr "Import z pliku TIFF"
 
@@ -7485,23 +7505,23 @@ msgstr "Import z pliku TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2078
+#: ../plug-ins/file-tiff/file-tiff-load.c:2308
 msgid "_Keep empty space around imported layers"
 msgstr "_Zachowanie pustego miejsca wokół zaimportowanych warstw"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2095
+#: ../plug-ins/file-tiff/file-tiff-load.c:2325
 msgid "Process extra channel as:"
 msgstr "Przetwarzanie dodatkowego kanału:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2098
+#: ../plug-ins/file-tiff/file-tiff-load.c:2328
 msgid "_Non-premultiplied alpha"
 msgstr "_Nie jako odwrócone mnożenie alfy"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2099
+#: ../plug-ins/file-tiff/file-tiff-load.c:2329
 msgid "Pre_multiplied alpha"
 msgstr "_Jako odwrócone mnożenie alfy"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2100
+#: ../plug-ins/file-tiff/file-tiff-load.c:2330
 msgid "Channe_l"
 msgstr "_Kanał"
 
