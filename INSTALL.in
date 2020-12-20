@@ -96,19 +96,24 @@ header files installed.
         https://github.com/mypaint/libmypaint
 
      If installing from repository, do not install the master branch!
-     Checkout the tag "v1.3.0" instead, or simply install from a tarball
-     or from your favorite package manager.
-     You may also checkout the "libmypaint-v1" branch, which is the
-     development branch for libmypaint v1.x and has some more recent
-     fixes.
+     Checkout the last tag "v1.y.z" from `libmypaint-v1` branch instead
+     (for instance "v1.6.1" tag at time of writing), or simply install
+     from a tarball or from your favorite package manager.
+
+     In particular, do NOT install tags or release tarballs versionned
+     "v2.y.z". GIMP depends on the version 1 of libmypaint and is
+     incompatible with the version 2 (which is still experimental anyway
+     and has no stable release at time of writing).
 
  11. We also need the mypaint-brushes data package:
 
         https://github.com/mypaint/mypaint-brushes
 
      If installing from repository, install from branch "v1.3.x" or the
-     particular tag "v1.3.0". In particular do not install from master
-     which installs brushes incompatible with GIMP.
+     last tag "v1.y.z" (e.g. "v1.3.1" at time of writing).
+     In particular do NOT install from `master` branch which installs
+     brushes incompatible with GIMP (the `master` branch brushes are
+     targetted to libmypaint upcoming v2, not v1).
 
      Also this is a data packages and therefore it will install the
      pkg-config file inside `$PREFIX/share/pkgconfig/`. If you install
@@ -132,8 +137,8 @@ header files installed.
      the plug-in is mostly useless.
 
  14. GObject Introspection requires the following dependencies to be
-     built and installed with introspection as well: cairo, GdkPixbuf,
-     GEGL, GIO, GLib, GObject and GTK+.
+     built and installed with introspection as well: babl, cairo,
+     GdkPixbuf, GEGL, GIO, GLib, GObject and GTK+.
 
  15. Windows builds can now generate backtrace logs upon a crash.
      The logs will be available in: %APPDATA%\GIMP\@GIMP_APP_VERSION@\CrashLog\
@@ -215,10 +220,8 @@ header files installed.
      Python @PYTHON3_REQUIRED_VERSION@ and PyGObject for Python 3 plug-ins
      GJS for Javascript plug-ins
      LuaJIT and LGI for Lua plug-ins
+     dot for "Show Image Graph" (unstable branches)
 
-Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
-lying around on your system, otherwise configure may fail to find the
-new ones.
 
 
 Generic instructions for configuring and compiling auto-configured
@@ -232,6 +235,14 @@ compilation and installation output is not shown.
   % make                          # build GIMP
   % make install                  # install GIMP
 
+
+Note: if building from repository (not tarballs), you may notice a meson
+build system is also available in the repository. It is not the main
+build system and is not recommended for stable packages as it still has
+several known issues, including build flag errors leading to crashes and
+missing features.
+We only invite contributors to use the meson build if they wish to help
+with debugging.
 
 The `configure' script examines your system, and adapts GIMP to run on
 it. The script has many options, some of which are described in the
