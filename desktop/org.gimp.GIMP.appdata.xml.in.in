@@ -73,6 +73,44 @@
   </provides>
 
   <releases>
+    <release version="2.99.4" date="TODO" type="development">
+      <url type="details">https://www.gimp.org/news/2020/TODO/gimp-2-99-4-released/</url>
+      <description>
+        <_p>
+        This second development release contains various usability and API updates.
+        A new experimental tool makes an entrance in the playground.
+        </_p>
+        <ul>
+          <_li>
+          Many usability improvements on the slider widget
+          </_li>
+          <_li>
+          Usability cleaning in the Layers dockable
+          </_li>
+          <_li>
+          The action search now shows all actions even inactive ones (yet pushed below)
+          </_li>
+          <_li>
+          Fonts targetted for Korean and Japanese language show appropriate characters
+          </_li>
+          <_li>
+          Different default tools depending on pointer device type
+          </_li>
+          <_li>
+          Default dynamics is now "Pressure Size"
+          </_li>
+          <_li>
+          Various usability improvements in the Input Device editor
+          </_li>
+          <_li>
+          New "Paint Select" experimental tool in the playground
+          </_li>
+          <_li>
+          Plug-in API now provides many dialog generation utilities
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.99.2" date="2020-10-25" type="development">
       <url type="details">https://www.gimp.org/news/2020/10/25/gimp-2-99-2-released/</url>
       <description>
