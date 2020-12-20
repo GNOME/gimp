@@ -570,14 +570,17 @@ gimp_image_import_color_profile (GimpImage    *image,
                                  GimpProgress *progress,
                                  gboolean      interactive)
 {
+  GimpColorProfile *profile = NULL;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (gimp_image_get_color_profile (image))
+  if ((profile = gimp_image_get_color_profile (image)))
     {
       GimpColorProfilePolicy     policy;
       GimpColorProfile          *dest_profile = NULL;
+      GimpColorProfile          *pref_profile = NULL;
       GimpColorRenderingIntent   intent;
       gboolean                   bpc;
 
@@ -585,9 +588,23 @@ gimp_image_import_color_profile (GimpImage    *image,
       intent = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
       bpc    = TRUE;
 
+      if (gimp_image_get_base_type (image) == GIMP_GRAY)
+        pref_profile = gimp_color_config_get_gray_color_profile (image->gimp->config->color_management, NULL);
+      else
+        pref_profile = gimp_color_config_get_rgb_color_profile (image->gimp->config->color_management, NULL);
+
       if (policy == GIMP_COLOR_PROFILE_POLICY_ASK)
         {
-          if (interactive)
+          if (gimp_color_profile_is_equal (profile, gimp_image_get_builtin_color_profile (image)) ||
+              (pref_profile && gimp_color_profile_is_equal (pref_profile, profile)))
+            {
+              /* If already using the default profile or the preferred
+               * profile for the image type, no need to ask. Just keep
+               * the profile.
+               */
+              policy = GIMP_COLOR_PROFILE_POLICY_KEEP;
+            }
+          else if (interactive)
             {
               gboolean dont_ask = FALSE;
 
@@ -636,6 +653,8 @@ gimp_image_import_color_profile (GimpImage    *image,
 
           g_object_unref (dest_profile);
         }
+
+      g_clear_object (&pref_profile);
     }
 }
 
