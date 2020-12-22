@@ -168,7 +168,7 @@
 # Specify a default dynamics.  The dynamics is searched for in the specified
 # dynamics path.  This is a string value.
 # 
-# (default-dynamics "Dynamics Off")
+# (default-dynamics "Pressure Size")
 
 # Specify a default MyPaint brush.  This is a string value.
 # 
@@ -825,11 +825,6 @@
 # 
 # (help-browser gimp)
 
-# When enabled, a search of actions will also return inactive actions. 
-# Possible values are yes and no.
-# 
-# (search-show-unavailable-actions no)
-
 # The maximum number of actions saved in history.  This is an integer value.
 # 
 # (action-history-size 100)
@@ -863,6 +858,10 @@
 # Enable the Seamless Clone tool.  Possible values are yes and no.
 # 
 # (playground-seamless-clone-tool no)
+
+# Enable the Paint Select tool.  Possible values are yes and no.
+# 
+# (playground-paint-select-tool no)
 
 # How to handle embedded color profiles when opening a file.  Possible values
 # are ask, keep, convert-builtin and convert-preferred.

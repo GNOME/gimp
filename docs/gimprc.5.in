@@ -215,7 +215,7 @@ Specify a default brush.  The brush is searched for in the specified brush
 path.  This is a string value.
 
 .TP
-(default-dynamics "Dynamics Off")
+(default-dynamics "Pressure Size")
 
 Specify a default dynamics.  The dynamics is searched for in the specified
 dynamics path.  This is a string value.
@@ -1041,12 +1041,6 @@ Sets the browser used by the help system.  Possible values are gimp and
 web-browser.
 
 .TP
-(search-show-unavailable-actions no)
-
-When enabled, a search of actions will also return inactive actions.  Possible
-values are yes and no.
-
-.TP
 (action-history-size 100)
 
 The maximum number of actions saved in history.  This is an integer value.
@@ -1085,6 +1079,11 @@ Enable the N-Point Deformation tool.  Possible values are yes and no.
 (playground-seamless-clone-tool no)
 
 Enable the Seamless Clone tool.  Possible values are yes and no.
+
+.TP
+(playground-paint-select-tool no)
+
+Enable the Paint Select tool.  Possible values are yes and no.
 
 .TP
 (color-profile-policy ask)
