@@ -19,6 +19,15 @@ Core:
   - Improve sample text logics for CJK fonts, showing different
     sample characters for Korean and Japanese, making detection
     at-a-glance of such fonts easier.
+  - With "Ask what to do" color profile policy, profile conversion at
+    image loading is not proposed anymore when the image's profile is
+    the preferred profile set in Preferences for the current image type
+    (currently it would only be discarded if the image's profile was the
+    built-in profile, now GIMP accounts for both cases).
+  - When file loading plug-ins are run, the file chooser dialog is now
+    hidden until the plug-in returns.
+  - GIMP tries to keep error dialogs above to raise awareness when they
+    arrive (not discovered later under other dialogs).
 
 User Interface:
 
@@ -150,6 +159,12 @@ API:
     * The widgets will work the same (no more "Comment" text view
       missing in one plug-in but present in another, or with an entry
       here, and a text view there, and so on).
+    * The metadata frame will show an "(edit)" link which will run the
+      "plug-in-metadata-editor" plug-in. The eventual goal is to move
+      some generic logics to the metadata editor (when it makes sense)
+      and to raise awareness for metadata edition and viewing abilities.
+      This is still a work-in-progress which requires much more
+      improvements in said abilities.
   - New gimp_get_num_processors() function for plug-ins to be able to
     set their own multi-threading operations as configured in
     Preferences.
@@ -169,6 +184,10 @@ Plug-ins:
   - file-jp2 is now able to decode JPEG2000 files faster with
     multi-threading, using the thread number settings returned by
     gimp_get_num_processors().
+  - Improved plug-in debugging helper infrastructure: GIMP_PLUGIN_DEBUG
+    has a new `fatal-criticals` option and better defaults. Developer
+    documentation got some rewritting and debugging code benefited from
+    refactorization.
 
 Installer:
 
@@ -186,6 +205,7 @@ Build:
 
   - Bumping minimum harfbuzz version to 1.0.5 for hb_ft_font_set_funcs().
   - Bumping minimum pango version to 1.44.0 for pango_font_has_char().
+  - Bumping minimum GEGL to version 0.4.28.
 
 
 Overview of Changes from GIMP 2.10.x to GIMP 2.99.2
