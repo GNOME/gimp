@@ -321,11 +321,13 @@ save_layer (TIFF        *tif,
   gint              config_compression;
   gboolean          config_save_transp_pixels;
   gboolean          config_save_geotiff_tags;
+  gboolean          config_save_profile;
 
   g_object_get (config,
                 "compression",             &config_compression,
                 "save-transparent-pixels", &config_save_transp_pixels,
                 "save-geotiff",            &config_save_geotiff_tags,
+                "save-color-profile",      &config_save_profile,
                 NULL);
 
   compression = gimp_compression_to_tiff_compression (config_compression);
@@ -633,6 +635,22 @@ save_layer (TIFF        *tif,
         }
     }
 
+#ifdef TIFFTAG_ICCPROFILE
+  if (config_save_profile)
+    {
+      const guint8     *icc_data;
+      gsize             icc_length;
+      GimpColorProfile *profile;
+
+      profile = gimp_image_get_effective_color_profile (orig_image);
+
+      /* Write the profile to the TIFF file. */
+      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+      TIFFSetField (tif, TIFFTAG_ICCPROFILE, icc_length, icc_data);
+
+      g_object_unref (profile);
+    }
+#endif
 
   /* Set TIFF parameters. */
   if (num_pages > 1)
@@ -1087,12 +1105,9 @@ save_image (GFile         *file,
         TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, config_comment);
     }
 
-#ifdef TIFFTAG_ICCPROFILE
   if (config_save_profile)
     {
       GimpColorProfile *profile;
-      const guint8     *icc_data;
-      gsize             icc_length;
       GError           *error = NULL;
 
       profile = gimp_image_get_effective_color_profile (orig_image);
@@ -1102,10 +1117,6 @@ save_image (GFile         *file,
        * the storage format as fallback.
        */
       out_linear = (gimp_color_profile_is_linear (profile));
-
-      /* Write the profile to the TIFF file. */
-      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
-      TIFFSetField (tif, TIFFTAG_ICCPROFILE, icc_length, icc_data);
 
       space = gimp_color_profile_get_space (profile,
                                             GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
@@ -1121,7 +1132,6 @@ save_image (GFile         *file,
 
       g_object_unref (profile);
     }
-#endif
 
   /* we put the whole file's thumbnail into the first IFD (i.e., page) */
   if (config_save_thumbnail)
