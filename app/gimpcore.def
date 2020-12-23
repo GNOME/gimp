@@ -749,7 +749,6 @@ gimp_user_install_set_log_handler
 gimp_value_array_truncate
 gimp_value_set_drawable
 gimp_value_set_image
-gimp_value_take_stringarray
 
 gimp_brush_clipboard_new
 gimp_guide_get_ID

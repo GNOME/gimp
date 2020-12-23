@@ -52,10 +52,8 @@ HELP
     );
 
     @outargs = (
-	{ name => 'brush_list', type => 'stringarray',
-	  desc => 'The list of brush names',
-	  array => { name => 'num_brushes',
-		     desc => 'The number of brushes in the brush list' } }
+	{ name => 'brush_list', type => 'strv',
+	  desc => 'The list of brush names' }
     );
 
     %invoke = (
@@ -63,7 +61,7 @@ HELP
 	code    => <<'CODE'
 {
   brush_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->brush_factory),
-                                                       filter, &num_brushes);
+                                                       filter);
 }
 CODE
     );

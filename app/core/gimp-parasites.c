@@ -79,18 +79,17 @@ list_func (const gchar    *key,
 }
 
 gchar **
-gimp_parasite_list (Gimp *gimp,
-                    gint *count)
+gimp_parasite_list (Gimp *gimp)
 {
+  gint    count;
   gchar **list;
   gchar **current;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (count != NULL, NULL);
 
-  *count = gimp_parasite_list_length (gimp->parasites);
+  count = gimp_parasite_list_length (gimp->parasites);
 
-  list = current = g_new (gchar *, *count);
+  list = current = g_new0 (gchar *, count + 1);
 
   gimp_parasite_list_foreach (gimp->parasites, (GHFunc) list_func, &current);
 

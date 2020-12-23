@@ -996,20 +996,19 @@ gimp_container_get_name_array_foreach_func (GimpObject   *object,
 }
 
 gchar **
-gimp_container_get_name_array (GimpContainer *container,
-                               gint          *length)
+gimp_container_get_name_array (GimpContainer *container)
 {
   gchar **names;
   gchar **iter;
+  gint length;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (length != NULL, NULL);
 
-  *length = gimp_container_get_n_children (container);
-  if (*length == 0)
+  length = gimp_container_get_n_children (container);
+  if (length == 0)
     return NULL;
 
-  names = iter = g_new (gchar *, *length);
+  names = iter = g_new0 (gchar *, length + 1);
 
   gimp_container_foreach (container,
                           (GFunc) gimp_container_get_name_array_foreach_func,

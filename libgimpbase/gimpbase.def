@@ -119,11 +119,9 @@ EXPORTS
 	gimp_param_spec_object_array
 	gimp_param_spec_parasite
 	gimp_param_spec_rgb_array
-	gimp_param_spec_string_array
 	gimp_param_spec_uint8_array
 	gimp_param_spec_unit
 	gimp_param_spec_value_array
-	gimp_param_string_array_get_type
 	gimp_param_uint8_array_get_type
 	gimp_param_unit_get_type
 	gimp_param_value_array_get_type
@@ -170,10 +168,6 @@ EXPORTS
 	gimp_stack_trace_mode_get_type
 	gimp_stack_trace_print
 	gimp_stack_trace_query
-	gimp_string_array_copy
-	gimp_string_array_free
-	gimp_string_array_get_type
-	gimp_string_array_new
 	gimp_strip_uline
 	gimp_stroke_method_get_type
 	gimp_sysconf_directory
@@ -227,13 +221,11 @@ EXPORTS
 	gimp_value_dup_int32_array
 	gimp_value_dup_object_array
 	gimp_value_dup_rgb_array
-	gimp_value_dup_string_array
 	gimp_value_dup_uint8_array
 	gimp_value_get_float_array
 	gimp_value_get_int32_array
 	gimp_value_get_object_array
 	gimp_value_get_rgb_array
-	gimp_value_get_string_array
 	gimp_value_get_uint8_array
 	gimp_value_set_float_array
 	gimp_value_set_int32_array
@@ -243,15 +235,12 @@ EXPORTS
 	gimp_value_set_static_int32_array
 	gimp_value_set_static_object_array
 	gimp_value_set_static_rgb_array
-	gimp_value_set_static_string_array
 	gimp_value_set_static_uint8_array
-	gimp_value_set_string_array
 	gimp_value_set_uint8_array
 	gimp_value_take_float_array
 	gimp_value_take_int32_array
 	gimp_value_take_object_array
 	gimp_value_take_rgb_array
-	gimp_value_take_string_array
 	gimp_value_take_uint8_array
 	gimp_vectors_stroke_type_get_type
 	gimp_wire_clear_error

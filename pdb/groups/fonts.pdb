@@ -52,10 +52,8 @@ HELP
     );
 
     @outargs = (
-	{ name => 'font_list', type => 'stringarray',
-	  desc => 'The list of font names',
-	  array => { name => 'num_fonts',
-		     desc => 'The number of available fonts' } }
+	{ name => 'font_list', type => 'strv',
+	  desc => 'The list of font names' }
     );
 
     %invoke = (
@@ -68,7 +66,7 @@ HELP
   if (success)
     {
       font_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->font_factory),
-                                                          filter, &num_fonts);
+                                                          filter);
     }
 }
 CODE

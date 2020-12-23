@@ -449,7 +449,6 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
           GIMP_VALUE_HOLDS_UINT8_ARRAY (value)  ||
           GIMP_VALUE_HOLDS_FLOAT_ARRAY (value)  ||
           GIMP_VALUE_HOLDS_RGB_ARRAY (value)    ||
-          GIMP_VALUE_HOLDS_STRING_ARRAY (value) ||
           GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
         {
           /* Array arguments don't have their size information when they
@@ -475,10 +474,6 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
             gimp_value_set_rgb_array (value,
                                       (const GimpRGB *) va_arg (va_args, gpointer),
                                       prev_int_value);
-          else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
-            gimp_value_set_string_array (value,
-                                         (const gchar **) va_arg (va_args, gpointer),
-                                         prev_int_value);
           else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
             gimp_value_set_object_array (value, GIMP_TYPE_ITEM,
                                          va_arg (va_args, gpointer),

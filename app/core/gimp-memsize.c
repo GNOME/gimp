@@ -230,24 +230,17 @@ gimp_g_value_get_memsize (GValue *value)
             memsize += sizeof (GimpArray) +
                        (array->static_data ? 0 : array->length);
         }
-      else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
+      else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
         {
-          GimpArray *array = g_value_get_boxed (value);
+          char **array = g_value_get_boxed (value);
 
           if (array)
             {
-              memsize += sizeof (GimpArray);
+              guint length = g_strv_length (array);
 
-              if (! array->static_data)
-                {
-                  gchar **tmp = (gchar **) array->data;
-                  gint    i;
-
-                  memsize += array->length * sizeof (gchar *);
-
-                  for (i = 0; i < array->length; i++)
-                    memsize += gimp_string_get_memsize (tmp[i]);
-                }
+              memsize += length * sizeof (gchar *);
+              for (gint i = 0; i < length; i++)
+                memsize += gimp_string_get_memsize (array[i]);
             }
         }
       else

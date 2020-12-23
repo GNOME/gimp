@@ -51,10 +51,8 @@ HELP
     );
 
     @outargs = (
-	{ name => 'pattern_list', type => 'stringarray',
-	  desc => 'The list of pattern names',
-	  array => { name => 'num_patterns',
-		     desc => 'The number of patterns in the pattern list' } }
+	{ name => 'pattern_list', type => 'strv',
+	  desc => 'The list of pattern names' }
     );
 
     %invoke = (
@@ -62,7 +60,7 @@ HELP
 	code => <<'CODE'
 {
   pattern_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->pattern_factory),
-                                                         filter, &num_patterns);
+                                                         filter);
 }
 CODE
     );

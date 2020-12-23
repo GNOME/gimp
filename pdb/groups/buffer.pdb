@@ -31,17 +31,15 @@ HELP
     );
 
     @outargs = (
-	{ name => 'buffer_list', type => 'stringarray',
-	  desc => 'The list of buffer names',
-	  array => { name => 'num_buffers',
-		     desc => 'The number of buffers' } }
+	{ name => 'buffer_list', type => 'strv',
+	  desc => 'The list of buffer names' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
   buffer_list = gimp_container_get_filtered_name_array (gimp->named_buffers,
-                                                        filter, &num_buffers);
+                                                        filter);
 }
 CODE
     );

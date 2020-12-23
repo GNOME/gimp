@@ -100,9 +100,9 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
         }
     }
 
-  *procedure_strs = g_new (gchar *, num_plugins);
-  *accel_strs     = g_new (gchar *, num_plugins);
-  *prog_strs      = g_new (gchar *, num_plugins);
+  *procedure_strs = g_new0 (gchar *, num_plugins + 1);
+  *accel_strs     = g_new0 (gchar *, num_plugins + 1);
+  *prog_strs      = g_new0 (gchar *, num_plugins + 1);
   *time_ints      = g_new (gint,    num_plugins);
 
   matched = g_slist_reverse (matched);
@@ -114,7 +114,7 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
       GimpPlugInProcedure *proc = list->data;
 
       (*procedure_strs)[i] = g_strdup (gimp_object_get_name (proc));
-      (*accel_strs)[i]     = NULL;
+      (*accel_strs)[i]     = g_strdup ("");
       (*prog_strs)[i]      = g_file_get_path (proc->file);
       (*time_ints)[i]      = proc->mtime;
     }

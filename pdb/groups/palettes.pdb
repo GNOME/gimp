@@ -51,10 +51,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'palette_list', type => 'stringarray',
-          desc => 'The list of palette names',
-          array => { name => 'num_palettes',
-                     desc => 'The number of palettes in the list' } }
+        { name => 'palette_list', type => 'strv',
+          desc => 'The list of palette names' }
     );
 
     %invoke = (
@@ -62,7 +60,7 @@ HELP
         code    => <<'CODE'
 {
   palette_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->palette_factory),
-                                                         filter, &num_palettes);
+                                                         filter);
 }
 CODE
     );

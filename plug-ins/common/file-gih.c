@@ -253,10 +253,10 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                          1, 4, 1,
                          GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING_ARRAY (procedure, "sel",
-                                  "Sel",
-                                  "Selection modes",
-                                  GIMP_PARAM_READWRITE);
+      GIMP_PROC_ARG_STRV (procedure, "sel",
+                          "Sel",
+                          "Selection modes",
+                          GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -412,7 +412,7 @@ gih_save (GimpProcedure        *procedure,
       else
         {
           const guint8  *rank = GIMP_VALUES_GET_UINT8_ARRAY  (args, 7);
-          const gchar  **sel  = GIMP_VALUES_GET_STRING_ARRAY (args, 9);
+          const gchar  **sel  = GIMP_VALUES_GET_STRV (args, 8);
 
           for (i = 0; i < gihparams.dim; i++)
             {

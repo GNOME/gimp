@@ -29,8 +29,7 @@ void                  gimp_parasite_detach       (Gimp               *gimp,
                                                   const gchar        *name);
 const GimpParasite  * gimp_parasite_find         (Gimp               *gimp,
                                                   const gchar        *name);
-gchar              ** gimp_parasite_list         (Gimp               *gimp,
-                                                  gint               *count);
+gchar              ** gimp_parasite_list         (Gimp               *gimp);
 
 void                  gimp_parasite_shift_parent (GimpParasite       *parasite);
 

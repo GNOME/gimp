@@ -562,12 +562,13 @@ gimp_param_spec_float_array ("$name",
                              $flags)
 CODE
     }
-    elsif ($pdbtype eq 'stringarray') {
+    elsif ($pdbtype eq 'strv') {
 	$pspec = <<CODE;
-gimp_param_spec_string_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              $flags)
+g_param_spec_boxed ("$name",
+                    "$nick",
+                    "$blurb",
+                    G_TYPE_STRV,
+                    $flags)
 CODE
     }
     elsif ($pdbtype eq 'colorarray') {

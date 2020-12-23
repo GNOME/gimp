@@ -243,8 +243,7 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
     {
       gchar  *string;
       gchar **menu_paths;
-      gint    n_menu_paths;
-      gint    i;
+      gchar **path;
 
       string = _gimp_pdb_get_proc_image_types (name);
       if (string)
@@ -260,9 +259,9 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
           g_free (string);
         }
 
-      menu_paths = _gimp_pdb_get_proc_menu_paths (name, &n_menu_paths);
-      for (i = 0; i < n_menu_paths; i++)
-        gimp_procedure_add_menu_path (procedure, menu_paths[i]);
+      menu_paths = _gimp_pdb_get_proc_menu_paths (name);
+      for (path = menu_paths; path && *path; path++)
+        gimp_procedure_add_menu_path (procedure, *path);
       g_strfreev (menu_paths);
     }
 

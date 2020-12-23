@@ -362,6 +362,7 @@ browser_search (GimpBrowser   *gimp_browser,
                 PluginBrowser *browser)
 {
   GimpValueArray *return_vals;
+  const gchar   **procedure_strs;
   gint            num_plugins = 0;
   gchar          *str;
   GtkListStore   *list_store;
@@ -377,7 +378,8 @@ browser_search (GimpBrowser   *gimp_browser,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      num_plugins = GIMP_VALUES_GET_INT (return_vals, 1);
+      procedure_strs = GIMP_VALUES_GET_STRV (return_vals, 1);
+      num_plugins = g_strv_length ((gchar **) procedure_strs);
     }
 
   if (! search_text || strlen (search_text) == 0)
@@ -414,16 +416,14 @@ browser_search (GimpBrowser   *gimp_browser,
     {
       GtkTreeSelection  *sel;
       GtkTreeIter        iter;
-      const gchar      **procedure_strs;
       const gchar      **accel_strs;
       const gchar      **prog_strs;
       const gint        *time_ints;
       gint               i;
 
-      procedure_strs = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 2);
-      accel_strs     = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 4);
-      prog_strs      = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 6);
-      time_ints      = GIMP_VALUES_GET_INT32_ARRAY  (return_vals, 8);
+      accel_strs     = GIMP_VALUES_GET_STRV (return_vals, 2);
+      prog_strs      = GIMP_VALUES_GET_STRV (return_vals, 3);
+      time_ints      = GIMP_VALUES_GET_INT32_ARRAY  (return_vals, 5);
 
       for (i = 0; i < num_plugins; i++)
         {

@@ -4840,7 +4840,8 @@ gradient_get_list (gint *num_gradients)
   gint    i, n;
 
   gradient_cache_flush ();
-  external_gradients = gimp_gradients_get_list (NULL, &external_ngradients);
+  external_gradients = gimp_gradients_get_list (NULL);
+  external_ngradients = g_strv_length (external_gradients);
 
   *num_gradients = G_N_ELEMENTS (internal_gradients) + external_ngradients;
   gradients = g_new (gchar *, *num_gradients);

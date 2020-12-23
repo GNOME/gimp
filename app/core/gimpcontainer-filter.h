@@ -31,8 +31,7 @@ GimpContainer * gimp_container_filter_by_name (GimpContainer        *container,
 
 gchar        ** gimp_container_get_filtered_name_array
                                               (GimpContainer        *container,
-                                               const gchar          *regexp,
-                                               gint                 *length);
+                                               const gchar          *regexp);
 
 
 #endif  /* __GIMP_CONTAINER_FILTER_H__ */

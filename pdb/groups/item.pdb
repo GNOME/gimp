@@ -961,15 +961,14 @@ sub item_get_parasite_list {
     );
 
     @outargs = (
-	{ name => 'parasites', type => 'stringarray',
-	  desc => 'The names of currently attached parasites',
-	  array => { desc => 'The number of attached parasites' } }
+	{ name => 'parasites', type => 'strv',
+	  desc => 'The names of currently attached parasites' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  parasites = gimp_item_parasite_list (item, &num_parasites);
+  parasites = gimp_item_parasite_list (item);
 }
 CODE
     );

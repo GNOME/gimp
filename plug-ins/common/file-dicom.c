@@ -1222,13 +1222,15 @@ dicom_get_elements_list (GimpImage *image)
   GSList        *elements = NULL;
   GimpParasite  *parasite;
   gchar        **parasites = NULL;
-  gint           count = 0;
 
-  parasites = gimp_image_get_parasite_list (image, &count);
+  parasites = gimp_image_get_parasite_list (image);
 
-  if (parasites && count > 0)
+  if (parasites)
     {
-      gint i;
+      guint count;
+      guint i;
+
+      count = g_strv_length (parasites);
 
       for (i = 0; i < count; i++)
         {

@@ -986,7 +986,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
 
           /*  UTT-8 validate all strings  */
           if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING ||
-              G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_STRING_ARRAY)
+              (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_BOXED &&
+               G_PARAM_SPEC_VALUE_TYPE (pspec) == G_TYPE_STRV))
             {
               gboolean valid = TRUE;
 

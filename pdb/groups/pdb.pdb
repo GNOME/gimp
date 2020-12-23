@@ -119,10 +119,8 @@ HELP
     );
 
     @outargs = (
-	{ name  => 'procedure_names', type  => 'stringarray', void_ret => 1,
-	  desc  => 'The list of procedure names',
-	  array => { name  => 'num_matches',
-		     desc  => 'The number of matching procedures' } }
+	{ name  => 'procedure_names', type  => 'strv', void_ret => 1,
+	  desc  => 'The list of procedure names' }
     );
 
     %invoke = (
@@ -131,7 +129,7 @@ HELP
   success = gimp_pdb_query (gimp->pdb,
                             name, blurb, help, authors,
                             copyright, date, proc_type,
-                            &num_matches, &procedure_names,
+                            &procedure_names,
                             error);
 }
 CODE
@@ -598,10 +596,8 @@ HELP
     );
 
     @outargs = (
-	{ name  => 'menu_paths', type => 'stringarray',
-	  desc  => 'The menu paths of the plug-in',
-	  array => { name => 'num_menu_paths',
-		     desc => 'The number of menu paths' } },
+	{ name  => 'menu_paths', type => 'strv',
+	  desc  => 'The menu paths of the plug-in' },
     );
 
     %invoke = (
@@ -614,7 +610,8 @@ HELP
 
       if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
         {
-	  GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (proc);
+          GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (proc);
+          guint num_menu_paths;
 
           num_menu_paths = g_list_length (plug_in_proc->menu_paths);
 

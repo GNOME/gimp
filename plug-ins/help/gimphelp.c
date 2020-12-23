@@ -47,13 +47,14 @@ static GHashTable  *domain_hash = NULL;
 /*  public functions  */
 
 gboolean
-gimp_help_init (gint          num_domain_names,
-                const gchar **domain_names,
-                gint          num_domain_uris,
+gimp_help_init (const gchar **domain_names,
                 const gchar **domain_uris)
 {
   gint i;
+  guint num_domain_names, num_domain_uris;
 
+  num_domain_names = domain_names? g_strv_length ((gchar **) domain_names) : 0;
+  num_domain_uris = domain_uris? g_strv_length ((gchar **) domain_uris) : 0;
   if (num_domain_names != num_domain_uris)
     {
       g_printerr ("help: number of names doesn't match number of URIs.\n");

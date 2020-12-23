@@ -165,7 +165,6 @@ gimp_pdb_query (GimpPDB       *pdb,
                 const gchar   *copyright,
                 const gchar   *date,
                 const gchar   *proc_type,
-                gint          *num_procs,
                 gchar       ***procs,
                 GError       **error)
 {
@@ -180,11 +179,9 @@ gimp_pdb_query (GimpPDB       *pdb,
   g_return_val_if_fail (copyright != NULL, FALSE);
   g_return_val_if_fail (date != NULL, FALSE);
   g_return_val_if_fail (proc_type != NULL, FALSE);
-  g_return_val_if_fail (num_procs != NULL, FALSE);
   g_return_val_if_fail (procs != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  *num_procs = 0;
   *procs     = NULL;
 
   pdb_query.name_regex = g_regex_new (name, PDB_REGEX_FLAGS, 0, error);
@@ -255,7 +252,6 @@ gimp_pdb_query (GimpPDB       *pdb,
 
   if (success)
     {
-      *num_procs = pdb_query.num_procs;
       *procs     = pdb_query.list_of_procs;
     }
 
@@ -316,8 +312,9 @@ gimp_pdb_query_entry (gpointer key,
     {
       pdb_query->num_procs++;
       pdb_query->list_of_procs = g_renew (gchar *, pdb_query->list_of_procs,
-                                          pdb_query->num_procs);
+                                          pdb_query->num_procs + 1);
       pdb_query->list_of_procs[pdb_query->num_procs - 1] = g_strdup (proc_name);
+      pdb_query->list_of_procs[pdb_query->num_procs] = NULL;
     }
 
   gimp_pdb_free_strings (&strings);

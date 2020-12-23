@@ -4070,10 +4070,10 @@ list_func (gchar          *key,
 }
 
 gchar **
-gimp_image_parasite_list (GimpImage *image,
-                          gint      *count)
+gimp_image_parasite_list (GimpImage *image)
 {
   GimpImagePrivate  *private;
+  gint               count;
   gchar            **list;
   gchar            **cur;
 
@@ -4081,8 +4081,8 @@ gimp_image_parasite_list (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  *count = gimp_parasite_list_length (private->parasites);
-  cur = list = g_new (gchar *, *count);
+  count = gimp_parasite_list_length (private->parasites);
+  cur = list = g_new0 (gchar *, count + 1);
 
   gimp_parasite_list_foreach (private->parasites, (GHFunc) list_func, &cur);
 

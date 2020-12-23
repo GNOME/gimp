@@ -108,16 +108,14 @@ HELP
     &simon_pdb_misc('2007', '2.4');
 
     @outargs = (
-        { name => 'paint_methods', type => 'stringarray', void_ret => 1,
-          desc => 'The names of the available paint methods',
-          array => { desc => 'The number of the available paint methods' } }
+        { name => 'paint_methods', type => 'strv', void_ret => 1,
+          desc => 'The names of the available paint methods' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  paint_methods = gimp_container_get_name_array (gimp->paint_info_list,
-                                                 &num_paint_methods);
+  paint_methods = gimp_container_get_name_array (gimp->paint_info_list);
 }
 CODE
     );

@@ -141,23 +141,21 @@ gimp_container_filter_by_name (GimpContainer  *container,
 
 gchar **
 gimp_container_get_filtered_name_array (GimpContainer *container,
-                                        const gchar   *regexp,
-                                        gint          *length)
+                                        const gchar   *regexp)
 {
   GimpContainer *weak;
   GError        *error = NULL;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (length != NULL, NULL);
 
   if (regexp == NULL || strlen (regexp) == 0)
-    return (gimp_container_get_name_array (container, length));
+    return (gimp_container_get_name_array (container));
 
   weak = gimp_container_filter_by_name (container, regexp, &error);
 
   if (weak)
     {
-      gchar **retval = gimp_container_get_name_array (weak, length);
+      gchar **retval = gimp_container_get_name_array (weak);
 
       g_object_unref (weak);
 
@@ -168,7 +166,6 @@ gimp_container_get_filtered_name_array (GimpContainer *container,
       g_warning ("%s", error->message);
       g_error_free (error);
 
-      *length = 0;
       return NULL;
     }
 }

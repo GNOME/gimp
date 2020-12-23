@@ -325,8 +325,7 @@ void            gimp_image_dec_show_all_count    (GimpImage          *image);
 
 const GimpParasite * gimp_image_parasite_find    (GimpImage          *image,
                                                   const gchar        *name);
-gchar        ** gimp_image_parasite_list         (GimpImage          *image,
-                                                  gint               *count);
+gchar        ** gimp_image_parasite_list         (GimpImage          *image);
 gboolean        gimp_image_parasite_validate     (GimpImage          *image,
                                                   const GimpParasite *parasite,
                                                   GError            **error);

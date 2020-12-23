@@ -2261,21 +2261,20 @@ gimp_item_parasite_list_foreach_func (gchar          *name,
 }
 
 gchar **
-gimp_item_parasite_list (GimpItem *item,
-                         gint     *count)
+gimp_item_parasite_list (GimpItem *item)
 {
   GimpItemPrivate  *private;
+  gint              count;
   gchar           **list;
   gchar           **cur;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-  g_return_val_if_fail (count != NULL, NULL);
 
   private = GET_PRIVATE (item);
 
-  *count = gimp_parasite_list_length (private->parasites);
+  count = gimp_parasite_list_length (private->parasites);
 
-  cur = list = g_new (gchar *, *count);
+  cur = list = g_new0 (gchar *, count + 1);
 
   gimp_parasite_list_foreach (private->parasites,
                               (GHFunc) gimp_item_parasite_list_foreach_func,

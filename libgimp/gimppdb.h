@@ -104,8 +104,7 @@ gchar         ** gimp_pdb_query_procedures     (GimpPDB              *pdb,
                                                 const gchar          *authors,
                                                 const gchar          *copyright,
                                                 const gchar          *date,
-                                                const gchar          *proc_type,
-                                                gint                 *num_matches);
+                                                const gchar          *proc_type);
 
 const gchar       * gimp_pdb_get_last_error    (GimpPDB              *pdb);
 GimpPDBStatusType   gimp_pdb_get_last_status   (GimpPDB              *pdb);

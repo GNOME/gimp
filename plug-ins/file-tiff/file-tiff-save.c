@@ -1203,11 +1203,10 @@ save_dialog (GimpImage     *image,
   GimpCompression  compression;
   gboolean         run;
   gboolean         has_geotiff = FALSE;
-  gint             n_parasites;
   gint             i;
 
-  parasites = gimp_image_get_parasite_list (image, &n_parasites);
-  for (i = 0; i < n_parasites; i++)
+  parasites = gimp_image_get_parasite_list (image);
+  for (i = 0; i < g_strv_length (parasites); i++)
     {
       if (g_str_has_prefix (parasites[i], "Gimp_GeoTIFF_"))
         {

@@ -57,7 +57,6 @@ static GimpValueArray * glob_run              (GimpProcedure        *procedure,
 
 static gboolean         glob_match            (const gchar          *pattern,
                                                gboolean              filename_encoding,
-                                               gint                 *num_matches,
                                                gchar              ***matches);
 static gboolean         glob_fnmatch          (const gchar          *pattern,
                                                const gchar          *string);
@@ -135,11 +134,11 @@ glob_create_procedure (GimpPlugIn  *plug_in,
                          0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_STRING_ARRAY (procedure, "files",
-                                  "Files",
-                                  "The list of matching filenames",
-                                  G_PARAM_READWRITE |
-                                  GIMP_PARAM_NO_VALIDATE);
+      GIMP_PROC_VAL_STRV (procedure, "files",
+                          "Files",
+                          "The list of matching filenames",
+                          G_PARAM_READWRITE |
+                          GIMP_PARAM_NO_VALIDATE);
     }
 
   return procedure;
@@ -154,13 +153,11 @@ glob_run (GimpProcedure        *procedure,
   const gchar    *pattern;
   gboolean        filename_encoding;
   gchar         **matches;
-  gint            num_matches;
 
   pattern           = GIMP_VALUES_GET_STRING  (args, 0);
   filename_encoding = GIMP_VALUES_GET_BOOLEAN (args, 1);
 
-  if (! glob_match (pattern, filename_encoding,
-                    &num_matches, &matches))
+  if (! glob_match (pattern, filename_encoding, &matches))
     {
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
@@ -171,8 +168,7 @@ glob_run (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_INT           (return_vals, 0, num_matches);
-  GIMP_VALUES_TAKE_STRING_ARRAY (return_vals, 1, matches, num_matches);
+  GIMP_VALUES_TAKE_STRV (return_vals, 0, matches);
 
   return return_vals;
 }
@@ -180,7 +176,6 @@ glob_run (GimpProcedure        *procedure,
 static gboolean
 glob_match (const gchar   *pattern,
             gboolean       filename_encoding,
-            gint          *num_matches,
             gchar       ***matches)
 {
   GDir        *dir;
@@ -190,10 +185,8 @@ glob_match (const gchar   *pattern,
   gchar       *tmp;
 
   g_return_val_if_fail (pattern != NULL, FALSE);
-  g_return_val_if_fail (num_matches != NULL, FALSE);
   g_return_val_if_fail (matches != NULL, FALSE);
 
-  *num_matches = 0;
   *matches     = NULL;
 
   /*  This is not a complete glob() implementation but rather a very
@@ -262,7 +255,9 @@ glob_match (const gchar   *pattern,
   g_dir_close (dir);
   g_free (dirname);
 
-  *num_matches = array->len;
+  /* NULL-terminator */
+  g_ptr_array_add (array, NULL);
+
   *matches     = (gchar **) g_ptr_array_free (array, FALSE);
 
   return TRUE;

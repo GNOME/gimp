@@ -65,11 +65,11 @@ typedef enum
   GP_PARAM_TYPE_INT,
   GP_PARAM_TYPE_FLOAT,
   GP_PARAM_TYPE_STRING,
+  GP_PARAM_TYPE_STRV,
   GP_PARAM_TYPE_FILE,
   GP_PARAM_TYPE_COLOR,
   GP_PARAM_TYPE_PARASITE,
   GP_PARAM_TYPE_ARRAY,
-  GP_PARAM_TYPE_STRING_ARRAY,
   GP_PARAM_TYPE_ID_ARRAY,
   GP_PARAM_TYPE_PARAM_DEF
 } GPParamType;
@@ -86,12 +86,12 @@ typedef struct _GPParamDefEnum     GPParamDefEnum;
 typedef struct _GPParamDefBoolean  GPParamDefBoolean;
 typedef struct _GPParamDefFloat    GPParamDefFloat;
 typedef struct _GPParamDefString   GPParamDefString;
+typedef struct _GPParamStrv        GPParamStrv;
 typedef struct _GPParamDefColor    GPParamDefColor;
 typedef struct _GPParamDefID       GPParamDefID;
 typedef struct _GPParamDefIDArray  GPParamDefIDArray;
 typedef struct _GPParam            GPParam;
 typedef struct _GPParamArray       GPParamArray;
-typedef struct _GPParamStringArray GPParamStringArray;
 typedef struct _GPParamIDArray     GPParamIDArray;
 typedef struct _GPProcRun          GPProcRun;
 typedef struct _GPProcReturn       GPProcReturn;
@@ -228,12 +228,6 @@ struct _GPParamArray
   guint8  *data;
 };
 
-struct _GPParamStringArray
-{
-  guint32   size;
-  gchar   **data;
-};
-
 struct _GPParamIDArray
 {
   gchar   *type_name;
@@ -251,10 +245,10 @@ struct _GPParam
     gint32              d_int;
     gdouble             d_float;
     gchar              *d_string;
+    gchar             **d_strv;
     GimpRGB             d_color;
     GimpParasite        d_parasite;
     GPParamArray        d_array;
-    GPParamStringArray  d_string_array;
     GPParamIDArray      d_id_array;
     GPParamDef          d_param_def;
   } data;

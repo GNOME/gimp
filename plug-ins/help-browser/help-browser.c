@@ -140,27 +140,15 @@ help_browser_create_procedure (GimpPlugIn  *plug_in,
                           GIMP_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "num-domain-names",
-                         "Num domain names",
-                         "Num domain names",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_STRV (procedure, "domain-names",
+                          "Domain names",
+                          "Domain names",
+                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING_ARRAY (procedure, "domain-names",
-                                  "Domain names",
-                                  "Domain names",
-                                  G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "num-domain-uris",
-                         "Num domain URIs",
-                         "Num domain URIs",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_STRING_ARRAY (procedure, "domain-uris",
-                                  "Domain URIs",
-                                  "Domain URIs",
-                                  G_PARAM_READWRITE);
+      GIMP_PROC_ARG_STRV (procedure, "domain-uris",
+                          "Domain URIs",
+                          "Domain URIs",
+                          G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -173,10 +161,8 @@ help_browser_run (GimpProcedure        *procedure,
 {
   INIT_I18N ();
 
-  if (! gimp_help_init (GIMP_VALUES_GET_INT          (args, 1),
-                        GIMP_VALUES_GET_STRING_ARRAY (args, 2),
-                        GIMP_VALUES_GET_INT          (args, 3),
-                        GIMP_VALUES_GET_STRING_ARRAY (args, 4)))
+  if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 1),
+                        GIMP_VALUES_GET_STRV (args, 2)))
     {
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_CALLING_ERROR,

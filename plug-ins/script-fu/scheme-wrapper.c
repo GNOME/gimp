@@ -458,8 +458,8 @@ ts_init_procedures (scheme   *sc,
 
   proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
                                          ".*", ".*", ".*", ".*",
-                                         ".*", ".*", ".*", ".*",
-                                         &num_procs);
+                                         ".*", ".*", ".*", ".*");
+  num_procs = proc_list ? g_strv_length (proc_list) : 0;
 
   /*  Register each procedure as a scheme func  */
   for (i = 0; i < num_procs; i++)
@@ -700,6 +700,55 @@ script_fu_marshal_procedure_call (scheme   *sc,
               g_value_set_string (&value,
                                   sc->vptr->string_value (sc->vptr->pair_car (a)));
         }
+      else if (G_VALUE_HOLDS (&value, G_TYPE_STRV))
+        {
+          vector = sc->vptr->pair_car (a);  /* vector is pointing to a list */
+          if (! sc->vptr->is_list (sc, vector))
+            return script_type_error (sc, "vector", i, proc_name);
+          else
+            {
+              gchar **array;
+
+              n_elements = sc->vptr->list_length (sc, vector);
+
+              array = g_new0 (gchar *, n_elements + 1);
+
+              for (j = 0; j < n_elements; j++)
+                {
+                  pointer v_element = sc->vptr->pair_car (vector);
+
+                  if (!sc->vptr->is_string (v_element))
+                    {
+                      g_snprintf (error_str, sizeof (error_str),
+                                  "Item %d in vector is not a string (argument %d for function %s)",
+                                  j+1, i+1, proc_name);
+                      g_strfreev (array);
+                      return foreign_error (sc, error_str, vector);
+                    }
+
+                  array[j] = g_strdup (sc->vptr->string_value (v_element));
+
+                  vector = sc->vptr->pair_cdr (vector);
+                }
+
+              g_value_take_boxed (&value, array);
+
+#if DEBUG_MARSHALL
+              {
+                glong count = sc->vptr->list_length ( sc, sc->vptr->pair_car (a) );
+                g_printerr ("      string vector has %ld elements\n", count);
+                if (count > 0)
+                  {
+                    g_printerr ("     ");
+                    for (j = 0; j < count; ++j)
+                      g_printerr (" \"%s\"",
+                                  args[i].data.d_strv[j]);
+                    g_printerr ("\n");
+                  }
+              }
+#endif
+            }
+        }
       else if (GIMP_VALUE_HOLDS_DISPLAY (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
@@ -917,57 +966,6 @@ script_fu_marshal_procedure_call (scheme   *sc,
               gimp_value_take_float_array (&value, array, n_elements);
 
               debug_vector (sc, vector, "%f");
-            }
-        }
-      else if (GIMP_VALUE_HOLDS_STRING_ARRAY (&value))
-        {
-          /* !!!! "vector" is-a list and has different methods than is-a vector */
-          vector = sc->vptr->pair_car (a);
-          if (! sc->vptr->is_list (sc, vector))
-            return script_type_error (sc, "list", i, proc_name);
-          else
-            {
-              gchar **array;
-
-              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
-              if (n_elements > sc->vptr->list_length (sc, vector))
-                {
-                  /* is-a list, can't use script_length_error_in_vector */
-                  g_snprintf (error_str, sizeof (error_str),
-                              "STRING list (argument %d) for function %s has "
-                              "length of %d but expected length of %d",
-                              i+1, proc_name,
-                              sc->vptr->list_length (sc, vector), n_elements);
-                  return script_error (sc, error_str, 0);
-                }
-
-              array = g_new0 (gchar *, n_elements + 1);
-
-              for (j = 0; j < n_elements; j++)
-                {
-                  pointer v_element = sc->vptr->pair_car (vector);
-
-                  if (!sc->vptr->is_string (v_element))
-                    {
-                      g_strfreev (array);
-                      /* is-a list, but can use script_type_error_in_container */
-                      /* Pass remaining suffix of original list to err msg */
-                      return script_type_error_in_container (sc, "string", i, j, proc_name, vector);
-                    }
-
-                  array[j] = g_strdup (sc->vptr->string_value (v_element));
-
-                  vector = sc->vptr->pair_cdr (vector);
-                }
-
-              gimp_value_take_string_array (&value, array, n_elements);
-
-              /* Printing the IN list.
-               * (Alternatively, print the OUT GValue.)
-               * Since we already advanced pointer "vector" into the list,
-               * pass a new pointer to the list.
-               */
-              debug_list (sc, sc->vptr->pair_car (a), "\"%s\"", n_elements);
             }
         }
       else if (GIMP_VALUE_HOLDS_RGB (&value))
@@ -1374,12 +1372,13 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               return_val = sc->vptr->cons (sc, vector, return_val);
             }
-          else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
+          else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
             {
-              gint32         n    = GIMP_VALUES_GET_INT (values, i);
-              const gchar  **v    = gimp_value_get_string_array (value);
+              gint32         n    = 0;
+              const gchar  **v    = g_value_get_boxed (value);
               pointer        list = sc->NIL;
 
+              n = (v)? g_strv_length ((char **) v) : 0;
               for (j = n - 1; j >= 0; j--)
                 {
                   list = sc->vptr->cons (sc,

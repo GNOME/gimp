@@ -47,9 +47,6 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       if (! strcmp (param_def->type_name, "GimpParamFloatArray"))
         return gimp_param_spec_float_array (name, nick, blurb, flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamStringArray"))
-        return gimp_param_spec_string_array (name, nick, blurb, flags);
-
       if (! strcmp (param_def->type_name, "GimpParamRGBArray"))
         return gimp_param_spec_rgb_array (name, nick, blurb, flags);
 
@@ -69,6 +66,11 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
           ! strcmp (param_def->value_type_name, "GimpRGB"))
         /* Unfortunately this type loses default and alpha info. */
         return gimp_param_spec_rgb (name, nick, blurb, TRUE, NULL, flags);
+
+      if (! strcmp (param_def->type_name, "GParamBoxed") &&
+          ! strcmp (param_def->value_type_name, "GStrv"))
+        return g_param_spec_boxed (name, nick, blurb, G_TYPE_STRV, flags);
+
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
@@ -473,6 +475,10 @@ gimp_gp_param_to_value (gpointer        gimp,
     {
       g_value_set_string (value, param->data.d_string);
     }
+  else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
+    {
+      g_value_set_boxed (value, param->data.d_strv);
+    }
   else if (G_VALUE_TYPE (value) == G_TYPE_FILE)
     {
       g_value_take_object (value, (param->data.d_string ?
@@ -508,13 +514,6 @@ gimp_gp_param_to_value (gpointer        gimp,
                                   param->data.d_array.data,
                                   param->data.d_array.size /
                                   sizeof (gdouble));
-    }
-  else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
-    {
-      gimp_value_set_string_array (value,
-                                   (const gchar **)
-                                   param->data.d_string_array.data,
-                                   param->data.d_string_array.size);
     }
   else if (GIMP_VALUE_HOLDS_RGB_ARRAY (value))
     {
@@ -797,28 +796,16 @@ gimp_value_to_gp_param (const GValue *value,
           param->data.d_array.data = NULL;
         }
     }
-  else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
+  else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
     {
-      GimpStringArray *array = g_value_get_boxed (value);
+      char **array = g_value_get_boxed (value);
 
-      param->param_type = GP_PARAM_TYPE_STRING_ARRAY;
+      param->param_type = GP_PARAM_TYPE_STRV;
 
-      if (array)
-        {
-          param->data.d_string_array.size = array->length;
-
-          if (full_copy)
-            param->data.d_string_array.data =
-              gimp_value_dup_string_array (value);
-          else
-            param->data.d_string_array.data =
-              (gchar **) gimp_value_get_string_array (value);
-        }
+      if (full_copy)
+        param->data.d_strv = g_strdupv (array);
       else
-        {
-          param->data.d_string_array.size = 0,
-          param->data.d_string_array.data = NULL;
-        }
+        param->data.d_strv = array;
     }
   else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
     {
@@ -968,18 +955,9 @@ _gimp_gp_params_free (GPParam  *params,
             g_free (params[i].data.d_array.data);
           break;
 
-        case GP_PARAM_TYPE_STRING_ARRAY:
-          if (full_copy                              &&
-              params[i].data.d_string_array.size > 0 &&
-              params[i].data.d_string_array.data)
-            {
-              gint j;
-
-              for (j = 0; j < params[i].data.d_string_array.size; j++)
-                g_free (params[i].data.d_string_array.data[j]);
-
-              g_free (params[i].data.d_string_array.data);
-            }
+        case GP_PARAM_TYPE_STRV:
+          if (full_copy)
+            g_strfreev (params[i].data.d_strv);
           break;
 
         case GP_PARAM_TYPE_ID_ARRAY:

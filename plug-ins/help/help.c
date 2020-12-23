@@ -135,27 +135,15 @@ help_create_procedure (GimpPlugIn  *plug_in,
                                       "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
                                       "1999-2008");
 
-      GIMP_PROC_ARG_INT (procedure, "num-domain-names",
-                         "Num Domain Names",
-                         "Num domain names",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_STRV (procedure, "domain-names",
+                          "Domain Names",
+                          "Domain names",
+                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING_ARRAY (procedure, "domain-names",
-                                  "Domain Names",
-                                  "Domain names",
-                                  G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "num-domain-uris",
-                         "Num Domain URIs",
-                         "Num domain URIs",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_STRING_ARRAY (procedure, "domain-uris",
-                                  "Domain URIs",
-                                  "Domain URIs",
-                                  G_PARAM_READWRITE);
+      GIMP_PROC_ARG_STRV (procedure, "domain-uris",
+                          "Domain URIs",
+                          "Domain URIs",
+                          G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -170,10 +158,8 @@ help_run (GimpProcedure        *procedure,
 
   INIT_I18N ();
 
-  if (! gimp_help_init (GIMP_VALUES_GET_INT          (args, 0),
-                        GIMP_VALUES_GET_STRING_ARRAY (args, 1),
-                        GIMP_VALUES_GET_INT          (args, 2),
-                        GIMP_VALUES_GET_STRING_ARRAY (args, 3)))
+  if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 1),
+                        GIMP_VALUES_GET_STRV (args, 2)))
     {
       status = GIMP_PDB_CALLING_ERROR;
     }

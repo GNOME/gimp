@@ -42,9 +42,7 @@
 /* #define GIMP_HELP_DEBUG */
 
 
-gboolean         gimp_help_init            (gint            n_domain_names,
-                                            const gchar   **domain_names,
-                                            gint            n_domain_uris,
+gboolean         gimp_help_init            (const gchar   **domain_names,
                                             const gchar   **domain_uris);
 void             gimp_help_exit            (void);
 

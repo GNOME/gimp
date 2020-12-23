@@ -30,19 +30,13 @@ sub plug_ins_query {
     );
 
     @outargs = (
-	{ name => 'procedures', type => 'stringarray',
-	  desc => 'The plug-in procedure name',
-	  array => { name => 'num_procedures',
-		     desc => 'The number of matching procedures' } },
-	{ name => 'accelerators', type => 'stringarray',
+	{ name => 'procedures', type => 'strv',
+	  desc => 'The plug-in procedure name' },
+	{ name => 'accelerators', type => 'strv',
 	  desc => 'String representing keyboard accelerator (could be empty
-		   string)',
-	  array => { name => 'num_accelerators',
-		     desc => 'The number of matching procedures' } },
-	{ name => 'locations', type => 'stringarray',
-	  desc => 'Location of the plug-in program',
-	  array => { name => 'num_locations',
-		     desc => 'The number of matching procedures' } },
+		   string)', },
+	{ name => 'locations', type => 'strv',
+	  desc => 'Location of the plug-in program' },
 	{ name => 'install_times', type => 'int32array',
 	  desc => 'Time that the plug-in was installed',
 	  array => { name => 'num_install_times',
@@ -52,15 +46,12 @@ sub plug_ins_query {
     %invoke = (
 	code => <<'CODE'
 {
-  num_procedures = gimp_plug_in_manager_query (gimp->plug_in_manager,
-                                               search_string,
-                                               &procedures,
-                                               &accelerators,
-                                               &locations,
-                                               &install_times);
-  num_accelerators  = num_procedures;
-  num_locations     = num_procedures;
-  num_install_times = num_procedures;
+  num_install_times = gimp_plug_in_manager_query (gimp->plug_in_manager,
+                                                  search_string,
+                                                  &procedures,
+                                                  &accelerators,
+                                                  &locations,
+                                                  &install_times);
 }
 CODE
     );

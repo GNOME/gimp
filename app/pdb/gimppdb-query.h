@@ -30,7 +30,6 @@ gboolean   gimp_pdb_query (GimpPDB       *pdb,
                            const gchar   *copyright,
                            const gchar   *date,
                            const gchar   *proc_type,
-                           gint          *num_procs,
                            gchar       ***procs,
                            GError       **error);
 

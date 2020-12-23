@@ -129,8 +129,7 @@ gint         gimp_container_get_child_index    (GimpContainer           *contain
 GimpObject * gimp_container_get_neighbor_of    (GimpContainer           *container,
                                                 GimpObject              *object);
 
-gchar     ** gimp_container_get_name_array     (GimpContainer           *container,
-                                                gint                    *length);
+gchar     ** gimp_container_get_name_array     (GimpContainer           *container);
 
 GQuark       gimp_container_add_handler        (GimpContainer           *container,
                                                 const gchar             *signame,

@@ -434,34 +434,34 @@ G_BEGIN_DECLS
   gimp_value_take_float_array (gimp_value_array_index (args, n), value, length)
 
 
-/*  string array  */
+/*  string array (strv)  */
 
-#define GIMP_PROC_ARG_STRING_ARRAY(procedure, name, nick, blurb, flags) \
+#define GIMP_PROC_ARG_STRV(procedure, name, nick, blurb, flags) \
   gimp_procedure_add_argument (procedure,\
-                               gimp_param_spec_string_array (name, nick, blurb,\
-                               flags))
+                               g_param_spec_boxed (name, nick, blurb,\
+                               G_TYPE_STRV, flags))
 
-#define GIMP_PROC_AUX_ARG_STRING_ARRAY(procedure, name, nick, blurb, flags) \
+#define GIMP_PROC_AUX_ARG_STRV(procedure, name, nick, blurb, flags) \
   gimp_procedure_add_aux_argument (procedure,\
-                                   gimp_param_spec_string_array (name, nick, blurb,\
-                                   flags))
+                                   g_param_spec_boxed (name, nick, blurb,\
+                                   G_TYPE_STRV, flags))
 
-#define GIMP_PROC_VAL_STRING_ARRAY(procedure, name, nick, blurb, flags) \
+#define GIMP_PROC_VAL_STRV(procedure, name, nick, blurb, flags) \
   gimp_procedure_add_return_value (procedure,\
-                                   gimp_param_spec_string_array (name, nick, blurb,\
-                                   flags))
+                                   g_param_spec_boxed (name, nick, blurb,\
+                                   G_TYPE_STRV, flags))
 
-#define GIMP_VALUES_GET_STRING_ARRAY(args, n) \
-  gimp_value_get_string_array (gimp_value_array_index (args, n))
+#define GIMP_VALUES_GET_STRV(args, n) \
+  g_value_get_boxed (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_DUP_STRING_ARRAY(args, n) \
-  gimp_value_dup_string_array (gimp_value_array_index (args, n))
+#define GIMP_VALUES_DUP_STRV(args, n) \
+  g_value_dup_boxed (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_SET_STRING_ARRAY(args, n, value, length) \
-  gimp_value_set_string_array (gimp_value_array_index (args, n), value, length)
+#define GIMP_VALUES_SET_STRV(args, n, value) \
+  g_value_set_boxed (gimp_value_array_index (args, n), value)
 
-#define GIMP_VALUES_TAKE_STRING_ARRAY(args, n, value, length) \
-  gimp_value_take_string_array (gimp_value_array_index (args, n), value, length)
+#define GIMP_VALUES_TAKE_STRV(args, n, value) \
+  g_value_take_boxed (gimp_value_array_index (args, n), value)
 
 
 /*  rgb array  */

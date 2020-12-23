@@ -176,15 +176,14 @@ sub get_parasite_list {
     &marc_pdb_misc('1999', '2.8');
 
     @outargs = (
-	{ name => 'parasites', type => 'stringarray',
-	  desc => 'The names of currently attached parasites',
-	  array => { desc => 'The number of attached parasites' } }
+	{ name => 'parasites', type => 'strv',
+	  desc => 'The names of currently attached parasites' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  parasites = gimp_parasite_list (gimp, &num_parasites);
+  parasites = gimp_parasite_list (gimp);
 }
 CODE
     );

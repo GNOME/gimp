@@ -160,7 +160,7 @@ sub generate_fun {
         if ($retarg->{type} eq 'string') {
             $retdesc .= "\n *          The returned value must be freed with g_free().";
         }
-        elsif ($retarg->{type} eq 'stringarray') {
+        elsif ($retarg->{type} eq 'strv') {
             $retdesc .= "\n *          The returned value must be freed with g_strfreev().";
         }
         elsif ($retarg->{type} eq 'param') {

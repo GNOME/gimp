@@ -1626,29 +1626,26 @@ _gp_params_read (GIOChannel  *channel,
             }
           break;
 
-        case GP_PARAM_TYPE_STRING_ARRAY:
-          if (! _gimp_wire_read_int32 (channel,
-                                       &(*params)[i].data.d_string_array.size, 1,
-                                       user_data))
-            goto cleanup;
+        case GP_PARAM_TYPE_STRV:
+          {
+            guint32 size;
 
-          (*params)[i].data.d_string_array.data = g_new0 (gchar *,
-                                                          (*params)[i].data.d_array.size);
-
-          if (! _gimp_wire_read_string (channel,
-                                        (*params)[i].data.d_string_array.data,
-                                        (*params)[i].data.d_array.size,
-                                        user_data))
-            {
-              gint j;
-
-              for (j = 0; j < (*params)[i].data.d_array.size; j++)
-                g_free ((*params)[i].data.d_string_array.data[j]);
-              g_free ((*params)[i].data.d_string_array.data);
-              (*params)[i].data.d_string_array.data = NULL;
+            if (! _gimp_wire_read_int32 (channel, &size, 1, user_data))
               goto cleanup;
-            }
-          break;
+
+            (*params)[i].data.d_strv = g_new0 (gchar *, size + 1);
+
+            if (! _gimp_wire_read_string (channel,
+                                          (*params)[i].data.d_strv,
+                                          (int) size,
+                                          user_data))
+              {
+                g_strfreev ((*params)[i].data.d_strv);
+                (*params)[i].data.d_strv = NULL;
+                goto cleanup;
+              }
+            break;
+          }
 
         case GP_PARAM_TYPE_ID_ARRAY:
           if (! _gimp_wire_read_string (channel,
@@ -1794,16 +1791,21 @@ _gp_params_write (GIOChannel *channel,
             return;
           break;
 
-        case GP_PARAM_TYPE_STRING_ARRAY:
-          if (! _gimp_wire_write_int32 (channel,
-                                        &params[i].data.d_string_array.size, 1,
-                                        user_data) ||
-              ! _gimp_wire_write_string (channel,
-                                         params[i].data.d_string_array.data,
-                                         params[i].data.d_string_array.size,
-                                         user_data))
-            return;
-          break;
+        case GP_PARAM_TYPE_STRV:
+          if (params[i].data.d_strv)
+            {
+              gint size = g_strv_length (params[i].data.d_strv);
+
+              if (! _gimp_wire_write_int32 (channel,
+                                            (guint32*) &size, 1,
+                                            user_data) ||
+                  ! _gimp_wire_write_string (channel,
+                                             params[i].data.d_strv,
+                                             size,
+                                             user_data))
+                return;
+              break;
+            }
 
         case GP_PARAM_TYPE_ID_ARRAY:
           if (! _gimp_wire_write_string (channel,
@@ -1883,17 +1885,8 @@ _gp_params_destroy (GPParam *params,
           g_free (params[i].data.d_array.data);
           break;
 
-        case GP_PARAM_TYPE_STRING_ARRAY:
-          if (params[i].data.d_string_array.size > 0 &&
-              params[i].data.d_string_array.data)
-            {
-              gint j;
-
-              for (j = 0; j < params[i].data.d_string_array.size; j++)
-                g_free (params[i].data.d_string_array.data[j]);
-
-              g_free (params[i].data.d_string_array.data);
-            }
+        case GP_PARAM_TYPE_STRV:
+          g_strfreev (params[i].data.d_strv);
           break;
 
         case GP_PARAM_TYPE_ID_ARRAY:

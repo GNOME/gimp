@@ -52,10 +52,8 @@ HELP
     );
 
     @outargs = (
-	{ name => 'dynamics_list', type => 'stringarray',
-	  desc => 'The list of paint dynamics names',
-	  array => { name => 'num_dynamics',
-		     desc => 'The number of available paint dynamics' } }
+	{ name => 'dynamics_list', type => 'strv',
+	  desc => 'The list of paint dynamics names' }
     );
 
     %invoke = (
@@ -63,7 +61,7 @@ HELP
 	code => <<'CODE'
 {
   dynamics_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->dynamics_factory),
-                                                          filter, &num_dynamics);
+                                                          filter);
 }
 CODE
     );
