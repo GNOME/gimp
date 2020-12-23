@@ -122,6 +122,8 @@
        git tag -s GIMP_2_x_y
        git push origin GIMP_2_x_y
 
+     TODO: determine what should be the policy regarding tag signing.
+
  ( ) Bump the version number (past the tagged version) in configure.ac
      to the next odd micro and commit this change. GIT versions always
      have odd micro numbers.
@@ -157,7 +159,8 @@
          this group to correct mistakes and to update the
          0.0_LATEST-IS- file next time.
 
- ( ) Add the new version to the GIMP product on bugzilla.gimp.org.
+ ( ) Add the next version milestone on GIMP's Gitlab:
+     https://gitlab.gnome.org/GNOME/gimp/-/milestones
 
  ( ) Check out or update the 'gimp-web' module, check out its testing
      branch.
