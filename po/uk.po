@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-20 01:23+0000\n"
-"PO-Revision-Date: 2020-12-20 09:42+0200\n"
+"POT-Creation-Date: 2020-12-22 22:43+0000\n"
+"PO-Revision-Date: 2020-12-23 08:46+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -79,19 +79,17 @@ msgid ""
 "This second development release contains various usability and API updates. "
 "A new experimental tool makes an entrance in the playground."
 msgstr ""
-"Цей другий тестовий випуск містить багато різноманітних оновлень, які"
-" пов'язано зі зручністю користування та програмним інтерфейсом. До"
-" «пісочниці» включено новий експериментальний інструмент."
+"Цей другий тестовий випуск містить багато різноманітних оновлень, які "
+"пов'язано зі зручністю користування та програмним інтерфейсом. До "
+"«пісочниці» включено новий експериментальний інструмент."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
-#| msgid "Many usability improvements"
 msgid "Many usability improvements on the slider widget"
 msgstr ""
-"Багато удосконалень у віджеті повзунка, користуватися яким тепер стало"
-" зручніше"
+"Багато удосконалень у віджеті повзунка, користуватися яким тепер стало "
+"зручніше"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
-#| msgid "Multi-selection of layers in the Layers dockable"
 msgid "Usability cleaning in the Layers dockable"
 msgstr "Спрощення користування панеллю «Шари»"
 
@@ -99,21 +97,21 @@ msgstr "Спрощення користування панеллю «Шари»"
 msgid ""
 "The action search now shows all actions even inactive ones (yet pushed below)"
 msgstr ""
-"На панелі пошуку дій реалізовано показ усіх пунктів дій, навіть неактивних"
-" (неактивні показано нижче)"
+"На панелі пошуку дій реалізовано показ усіх пунктів дій, навіть неактивних "
+"(неактивні показано нижче)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
 "Fonts targetted for Korean and Japanese language show appropriate characters"
 msgstr ""
-"Реалізовано показ відповідних символів для шрифтів із корейськими та"
-" японськими ієрогліфами"
+"Реалізовано показ відповідних символів для шрифтів із корейськими та "
+"японськими ієрогліфами"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Different default tools depending on pointer device type"
 msgstr ""
-"Реалізовано використання різних типових інструментів для різних типів"
-" пристроїв керування вказівником"
+"Реалізовано використання різних типових інструментів для різних типів "
+"пристроїв керування вказівником"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Default dynamics is now \"Pressure Size\""
@@ -122,8 +120,8 @@ msgstr "Типовою динамікою у новій версії є «Роз
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Various usability improvements in the Input Device editor"
 msgstr ""
-"Різноманітні пов'язані зі зручністю користування удосконалення у редакторів"
-" пристрою вхідних даних"
+"Різноманітні пов'язані зі зручністю користування удосконалення у редакторів "
+"пристрою вхідних даних"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "New \"Paint Select\" experimental tool in the playground"
@@ -133,8 +131,8 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Plug-in API now provides many dialog generation utilities"
 msgstr ""
-"У новій версії програмного інтерфейсу додатків передбачено багато допоміжних"
-" засобів створення діалогових вікон"
+"У новій версії програмного інтерфейсу додатків передбачено багато допоміжних "
+"засобів створення діалогових вікон"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid ""
@@ -12484,9 +12482,6 @@ msgid "Convert to built-in sRGB or grayscale profile"
 msgstr "Перетворити до профілю вбудованого sRGB або відтінків сірого"
 
 #: ../app/core/core-enums.c:223
-#| msgctxt "color-profile-policy"
-#| msgid ""
-#| "Convert to preferred sRGB or grayscale profile (defaulting to built-in)"
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
 msgstr ""
@@ -15963,7 +15958,6 @@ msgid "Convert the image to the preferred grayscale color profile?"
 msgstr "Перетворити зображення до бажаного профілю у відтінках сірого?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:168
-#| msgid "Convert the image to the preferred sRGB color profile?"
 msgid "Convert the image to the preferred RGB color profile?"
 msgstr "Перетворити зображення до бажаного профілю кольорів RGB?"
 
@@ -19034,7 +19028,7 @@ msgstr "(не змінено)"
 
 #: ../app/display/gimpdisplayshell-title.c:374
 #: ../app/display/gimpdisplayshell-title.c:383
-#: ../app/widgets/gimpactiongroup.c:976
+#: ../app/widgets/gimpactiongroup.c:981
 #: ../app/widgets/gimpbuffersourcebox.c:166
 #: ../app/widgets/gimpbuffersourcebox.c:296
 #: ../app/widgets/gimpdeviceinfo.c:1045 ../app/widgets/gimpdeviceinfo.c:1070
@@ -24431,8 +24425,10 @@ msgid "Paint Select"
 msgstr "Малювання позначеного"
 
 #: ../app/tools/gimppaintselecttool.c:153
-msgid "Paint Select Tool: Scult selection by painting"
-msgstr "Інструмент малювання позначеного: створити позначене малюванням"
+#| msgid "Paint Select Tool: Scult selection by painting"
+msgid "Paint Select Tool: Select objects by painting roughly"
+msgstr ""
+"Інструмент малювання позначеного: позначення об'єктів грубим обмальовуванням"
 
 #: ../app/tools/gimppaintselecttool.c:154
 msgid "P_aint Select"
@@ -25911,7 +25907,7 @@ msgstr "Не вдалось імпортувати з «%s»: %s"
 msgid "_Search:"
 msgstr "З_найти:"
 
-#: ../app/widgets/gimpactiongroup.c:973
+#: ../app/widgets/gimpactiongroup.c:978
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
