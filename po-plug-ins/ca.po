@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-02 22:23+0000\n"
-"PO-Revision-Date: 2020-12-04 21:19+0100\n"
+"POT-Creation-Date: 2020-12-21 20:08+0000\n"
+"PO-Revision-Date: 2020-12-22 21:10+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -76,7 +76,7 @@ msgstr "Alinea les capes visibles"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1284 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2029 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2259 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -457,7 +457,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:1960 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1143
+#: ../plug-ins/file-tiff/file-tiff-load.c:1254
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -2170,7 +2170,7 @@ msgstr ""
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:179
+#: ../plug-ins/file-tiff/file-tiff-load.c:190
 #, c-format
 msgid "Opening '%s'"
 msgstr "S'està obrint «%s»"
@@ -3169,7 +3169,7 @@ msgid "Import from PDF"
 msgstr "Importa d'un PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1265 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:2030
+#: ../plug-ins/file-tiff/file-tiff-load.c:2260
 #: ../plug-ins/metadata/metadata-editor.c:5718
 msgid "_Import"
 msgstr "_Importa"
@@ -3291,7 +3291,7 @@ msgstr "Capes com pàgines  (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1145
+#: ../plug-ins/file-tiff/file-tiff-load.c:1256
 #, c-format
 msgid "Page %d"
 msgstr "Pàgina %d"
@@ -7435,12 +7435,12 @@ msgstr ""
 msgid "TIFF image"
 msgstr "Imatge TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:212
+#: ../plug-ins/file-tiff/file-tiff-load.c:223
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "La imatge TIFF «%s» no conté cap directori"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:219
+#: ../plug-ins/file-tiff/file-tiff-load.c:230
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7455,7 +7455,7 @@ msgstr[1] ""
 "El recompte de directoris TIFF «%s» per capçalera ha fallat, tot i que "
 "sembla ser la pàgina %d. Intentant carregar el fitxer amb aquesta suposició."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:295
+#: ../plug-ins/file-tiff/file-tiff-load.c:306
 msgid "Extra channels with unspecified data."
 msgstr "Canals addicionals amb dades no especificades."
 
@@ -7466,25 +7466,45 @@ msgstr "Canals addicionals amb dades no especificades."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:311
+#: ../plug-ins/file-tiff/file-tiff-load.c:322
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF no conforme: canals addicionals sense camp 'ExtraSamples'."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:373
+#: ../plug-ins/file-tiff/file-tiff-load.c:384
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "No s'ha pogut llegir la pàgina %d de %d. La imatge pot ser corrupta.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:865
+#: ../plug-ins/file-tiff/file-tiff-load.c:413
+#, c-format
+msgid ""
+"This image has a linear color profile but it was not set on the first layer. "
+"The layers below layer # %d will be interpreted as non linear."
+msgstr ""
+"Aquesta imatge té un perfil de color lineal, però no es va configurar a la "
+"primera capa. Les capes per sota de la capa # %d s’interpretaran com a no "
+"lineals."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:421
+msgid ""
+"This image has multiple color profiles. We will use the first one. If this "
+"leads to incorrect results you should consider loading each layer as a "
+"separate image."
+msgstr ""
+"Aquesta imatge té diversos perfils de color. Farem servir el primer. Si això "
+"condueix a resultats incorrectes, hauríeu de considerar la possibilitat de "
+"carregar cada capa com una imatge independent."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:917
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-de-%d-pàgines"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1176
+#: ../plug-ins/file-tiff/file-tiff-load.c:1287
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1313
+#: ../plug-ins/file-tiff/file-tiff-load.c:1425
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
@@ -7492,15 +7512,15 @@ msgstr ""
 "malmès."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1688
-#: ../plug-ins/file-tiff/file-tiff-load.c:1863
+#: ../plug-ins/file-tiff/file-tiff-load.c:1800
+#: ../plug-ins/file-tiff/file-tiff-load.c:1980
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Ha fallat la lectura de la línia d'escaneig. La imatge pot ser corrupta a la "
 "línia %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2025
+#: ../plug-ins/file-tiff/file-tiff-load.c:2255
 msgid "Import from TIFF"
 msgstr "Importa des d'un TIFF"
 
@@ -7508,23 +7528,23 @@ msgstr "Importa des d'un TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2078
+#: ../plug-ins/file-tiff/file-tiff-load.c:2308
 msgid "_Keep empty space around imported layers"
 msgstr "Manté l'espai buit al voltant de les capes importades"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2095
+#: ../plug-ins/file-tiff/file-tiff-load.c:2325
 msgid "Process extra channel as:"
 msgstr "Processa un canal addicional com:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2098
+#: ../plug-ins/file-tiff/file-tiff-load.c:2328
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _no premultiplicada"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2099
+#: ../plug-ins/file-tiff/file-tiff-load.c:2329
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_multiplicada"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2100
+#: ../plug-ins/file-tiff/file-tiff-load.c:2330
 msgid "Channe_l"
 msgstr "Cana_ls"
 
