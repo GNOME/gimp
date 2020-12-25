@@ -799,7 +799,8 @@ gimp_preview_untransform (GimpPreview *preview,
  * gimp_preview_get_frame:
  * @preview: a #GimpPreview widget
  *
- * Returns: (transfer none): a pointer to the #GtkAspectFrame used in the @preview.
+ * Returns: (transfer none) (type GtkAspectFrame): a pointer to the
+ * #GtkAspectFrame used in the @preview.
  *
  * Since: 3.0
  **/
@@ -815,7 +816,8 @@ gimp_preview_get_frame (GimpPreview  *preview)
  * gimp_preview_get_grid:
  * @preview: a #GimpPreview widget
  *
- * Returns: (transfer none): a pointer to the #GtkGrid used in the @preview.
+ * Returns: (transfer none) (type GtkGrid): a pointer to
+ * the #GtkGrid used in the @preview.
  *
  * Since: 3.0
  **/
@@ -836,7 +838,8 @@ gimp_preview_get_grid (GimpPreview  *preview)
  * For example if you want to receive mouse events from the area. In
  * such cases, use gimp_preview_get_area().
  *
- * Returns: (transfer none): a pointer to the #GimpPreviewArea used in the @preview.
+ * Returns: (transfer none) (type GimpPreviewArea): a pointer to the
+ * #GimpPreviewArea used in the @preview.
  *
  * Since: 2.4
  **/
@@ -976,11 +979,12 @@ gimp_preview_get_default_cursor (GimpPreview *preview)
  * gimp_preview_get_controls:
  * @preview: a #GimpPreview widget
  *
- * Gives access to the #GtkHBox at the bottom of the preview that
- * contains the update toggle. Derived widgets can use this function
+ * Gives access to the horizontal #GtkBox at the bottom of the preview
+ * that contains the update toggle. Derived widgets can use this function
  * if they need to add controls to this area.
  *
- * Returns: (transfer none): the #GtkHBox at the bottom of the preview.
+ * Returns: (transfer none) (type GtkBox): the horizontal #GtkBox at the
+ * bottom of the preview.
  *
  * Since: 2.4
  **/

@@ -310,7 +310,7 @@ gimp_scale_entry_new  (const gchar *text,
  * #GtkRange if a subclass overrode the new_range_widget() protected
  * method.
  *
- * Returns: (transfer none): The #GtkRange contained in @entry.
+ * Returns: (transfer none) (type GtkRange): The #GtkRange contained in @entry.
  **/
 GtkWidget *
 gimp_scale_entry_get_range (GimpScaleEntry *entry)

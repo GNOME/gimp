@@ -323,7 +323,7 @@ gimp_memsize_entry_get_value (GimpMemsizeEntry *entry)
  * gimp_memsize_entry_get_spinbutton:
  * @entry: a #GimpMemsizeEntry
  *
- * Returns: (transfer none): the entry's #GtkSpinbutton.
+ * Returns: (transfer none) (type GtkSpinButton): the entry's #GtkSpinbutton.
  *
  * Since: 3.0
  **/

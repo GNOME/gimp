@@ -612,7 +612,7 @@ gimp_color_selection_get_notebook (GimpColorSelection *selection)
  * gimp_color_selection_get_right_vbox:
  * @selection: A #GimpColorSelection widget.
  *
- * Returns: (transfer none): The selection's right #GtkBox which
+ * Returns: (transfer none) (type GtkBox): The selection's right #GtkBox which
  *          contains the color scales.
  *
  * Since: 3.0

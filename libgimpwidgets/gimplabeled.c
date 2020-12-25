@@ -184,7 +184,7 @@ gimp_labeled_get_property (GObject    *object,
  * This function returns the #GtkLabel packed in @labeled. This can be
  * useful if you need to customize some aspects of the widget.
  *
- * Returns: (transfer none): The #GtkLabel contained in @labeled.
+ * Returns: (transfer none) (type GtkLabel): The #GtkLabel contained in @labeled.
  **/
 GtkWidget *
 gimp_labeled_get_label (GimpLabeled *labeled)

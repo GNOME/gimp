@@ -543,7 +543,7 @@ gimp_size_entry_get_n_fields (GimpSizeEntry *gse)
  * gimp_size_entry_get_unit_combo:
  * @gse: a #GimpSizeEntry.
  *
- * Returns: (transfer none): the size entry's #GimpUnitComboBox.
+ * Returns: (transfer none) (type GimpUnitComboBox): the size entry's #GimpUnitComboBox.
  **/
 GtkWidget *
 gimp_size_entry_get_unit_combo (GimpSizeEntry *gse)

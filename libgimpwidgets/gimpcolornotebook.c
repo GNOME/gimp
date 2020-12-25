@@ -552,7 +552,7 @@ gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
  * gimp_color_notebook_get_notebook:
  * @notebook:  A #GimpColorNotebook widget.
  *
- * Returns: (transfer none): The #GtkNotebook inside.
+ * Returns: (transfer none) (type GtkNotebook): The #GtkNotebook inside.
  *
  * Since: 3.0
  **/

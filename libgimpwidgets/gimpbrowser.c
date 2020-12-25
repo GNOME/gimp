@@ -293,7 +293,7 @@ gimp_browser_add_search_types (GimpBrowser *browser,
  * gimp_browser_get_left_vbox:
  * @browser: a #GimpBrowser widget
  *
- * Returns: (transfer none): The left vbox.
+ * Returns: (transfer none) (type GtkBox): The left vbox.
  *
  * Since: 3.0
  **/
@@ -313,7 +313,7 @@ gimp_browser_get_left_vbox (GimpBrowser *browser)
  * gimp_browser_get_right_vbox:
  * @browser: a #GimpBrowser widget
  *
- * Returns: (transfer none): The right vbox.
+ * Returns: (transfer none) (type GtkBox): The right vbox.
  *
  * Since: 3.0
  **/
