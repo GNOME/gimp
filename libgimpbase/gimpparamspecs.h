@@ -314,8 +314,8 @@ void            gimp_value_take_float_array       (GValue        *value,
 
 /**
  * GimpStringArray:
- * @data:        pointer to the array's data.
- * @length:      length of @data, in number of strings.
+ * @data: (array length=length): pointer to the array's data.
+ * @length: length of @data, in number of strings.
  * @static_data: whether @data points to statically allocated memory.
  **/
 typedef struct _GimpStringArray GimpStringArray;
@@ -426,7 +426,7 @@ void            gimp_value_take_rgb_array       (GValue        *value,
 /**
  * GimpObjectArray:
  * @object_type: #GType of the contained objects.
- * @data:        pointer to the array's data.
+ * @data: (array length=length): pointer to the array's data.
  * @length:      length of @data, in number of objects.
  * @static_data: whether @data points to statically allocated memory.
  **/
