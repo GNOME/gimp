@@ -321,7 +321,7 @@ gimp_int_combo_box_new (const gchar *first_label,
 }
 
 /**
- * gimp_int_combo_box_new_valist:
+ * gimp_int_combo_box_new_valist: (skip)
  * @first_label: the label of the first item
  * @first_value: the value of the first item
  * @values: a va_list with more values
@@ -353,9 +353,9 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
 }
 
 /**
- * gimp_int_combo_box_new_array:
+ * gimp_int_combo_box_new_array: (rename-to gimp_int_combo_box_new)
  * @n_values: the number of values
- * @labels:   an array of labels (array length must be @n_values)
+ * @labels: (array length=n_values): an array of labels
  *
  * A variant of gimp_int_combo_box_new() that takes an array of labels.
  * The array indices are used as values.
