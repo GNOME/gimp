@@ -230,8 +230,8 @@ gimp_pattern_select_button_init (GimpPatternSelectButton *button)
 
 /**
  * gimp_pattern_select_button_new:
- * @title:        Title of the dialog to use or %NULL to use the default title.
- * @pattern_name: Initial pattern name or %NULL to use current selection.
+ * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
+ * @pattern_name: (nullable): Initial pattern name or %NULL to use current selection.
  *
  * Creates a new #GtkWidget that completely controls the selection of
  * a pattern.  This widget is suitable for placement in a table in a
@@ -281,7 +281,7 @@ gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *button)
 /**
  * gimp_pattern_select_button_set_pattern:
  * @button: A #GimpPatternSelectButton
- * @pattern_name: Pattern name to set; %NULL means no change.
+ * @pattern_name: (nullable): Pattern name to set; %NULL means no change.
  *
  * Sets the current pattern for the pattern select button.
  *

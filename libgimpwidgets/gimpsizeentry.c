@@ -443,7 +443,7 @@ gimp_size_entry_new (gint                       number_of_fields,
  * gimp_size_entry_add_field:
  * @gse:               The sizeentry you want to add a field to.
  * @value_spinbutton:  The spinbutton to display the field's value.
- * @refval_spinbutton: The spinbutton to display the field's reference value.
+ * @refval_spinbutton: (nullable): The spinbutton to display the field's reference value.
  *
  * Adds an input field to the #GimpSizeEntry.
  *

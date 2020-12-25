@@ -302,9 +302,9 @@ gimp_brush_select_button_init (GimpBrushSelectButton *button)
 
 /**
  * gimp_brush_select_button_new:
- * @title:      Title of the dialog to use or %NULL means to use the default
+ * @title: (nullable): Title of the dialog to use or %NULL means to use the default
  *              title.
- * @brush_name: Initial brush name or %NULL to use current selection.
+ * @brush_name: (nullable): Initial brush name or %NULL to use current selection.
  * @opacity:    Initial opacity. -1 means to use current opacity.
  * @spacing:    Initial spacing. -1 means to use current spacing.
  * @paint_mode: Initial paint mode.  -1 means to use current paint mode.
@@ -381,7 +381,7 @@ gimp_brush_select_button_get_brush (GimpBrushSelectButton *button,
 /**
  * gimp_brush_select_button_set_brush:
  * @button: A #GimpBrushSelectButton
- * @brush_name: Brush name to set; %NULL means no change.
+ * @brush_name: (nullable): Brush name to set; %NULL means no change.
  * @opacity:    Opacity to set. -1.0 means no change.
  * @spacing:    Spacing to set. -1 means no change.
  * @paint_mode: Paint mode to set.  -1 means no change.

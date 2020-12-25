@@ -184,8 +184,8 @@ gimp_font_select_button_init (GimpFontSelectButton *button)
 
 /**
  * gimp_font_select_button_new:
- * @title:     Title of the dialog to use or %NULL to use the default title.
- * @font_name: Initial font name.
+ * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
+ * @font_name: (nullable): Initial font name.
  *
  * Creates a new #GtkWidget that completely controls the selection of
  * a font.  This widget is suitable for placement in a table in a
@@ -235,7 +235,7 @@ gimp_font_select_button_get_font (GimpFontSelectButton *button)
 /**
  * gimp_font_select_button_set_font:
  * @button: A #GimpFontSelectButton
- * @font_name: Font name to set; %NULL means no change.
+ * @font_name: (nullable): Font name to set; %NULL means no change.
  *
  * Sets the current font for the font select button.
  *

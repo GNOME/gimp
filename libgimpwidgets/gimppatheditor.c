@@ -283,7 +283,7 @@ gimp_path_editor_init (GimpPathEditor *editor)
 /**
  * gimp_path_editor_new:
  * @title: The title of the #GtkFileChooser dialog which can be popped up.
- * @path:  The initial search path.
+ * @path: (nullable): The initial search path.
  *
  * Creates a new #GimpPathEditor widget.
  *
@@ -370,7 +370,7 @@ gimp_path_editor_get_path (GimpPathEditor *editor)
  * @path:   The new path to set.
  *
  * The elements of the initial search path must be separated with the
- * #G_SEARCHPATH_SEPARATOR character.
+ * %G_SEARCHPATH_SEPARATOR character.
  **/
 void
 gimp_path_editor_set_path (GimpPathEditor *editor,

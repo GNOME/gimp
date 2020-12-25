@@ -183,8 +183,8 @@ gimp_palette_select_button_init (GimpPaletteSelectButton *button)
 
 /**
  * gimp_palette_select_button_new:
- * @title:        Title of the dialog to use or %NULL to use the default title.
- * @palette_name: Initial palette name.
+ * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
+ * @palette_name: (nullable): Initial palette name.
  *
  * Creates a new #GtkWidget that completely controls the selection of
  * a palette.  This widget is suitable for placement in a table in a
@@ -234,7 +234,7 @@ gimp_palette_select_button_get_palette (GimpPaletteSelectButton *button)
 /**
  * gimp_palette_select_button_set_palette:
  * @button: A #GimpPaletteSelectButton
- * @palette_name: Palette name to set; %NULL means no change.
+ * @palette_name: (nullable): Palette name to set; %NULL means no change.
  *
  * Sets the current palette for the palette select button.
  *

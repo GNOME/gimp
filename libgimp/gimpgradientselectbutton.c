@@ -210,8 +210,8 @@ gimp_gradient_select_button_init (GimpGradientSelectButton *button)
 
 /**
  * gimp_gradient_select_button_new:
- * @title:         Title of the dialog to use or %NULL to use the default title.
- * @gradient_name: Initial gradient name.
+ * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
+ * @gradient_name: (nullable): Initial gradient name.
  *
  * Creates a new #GtkWidget that completely controls the selection of
  * a gradient.  This widget is suitable for placement in a table in a
@@ -261,7 +261,7 @@ gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *button)
 /**
  * gimp_gradient_select_button_set_gradient:
  * @button: A #GimpGradientSelectButton
- * @gradient_name: Gradient name to set.
+ * @gradient_name: (nullable): Gradient name to set.
  *
  * Sets the current gradient for the gradient select button.
  *

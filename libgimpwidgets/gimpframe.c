@@ -216,7 +216,7 @@ gimp_frame_get_label_spacing (GimpFrame *frame)
 
 /**
  * gimp_frame_new:
- * @label: text to set as the frame's title label (or %NULL for no title)
+ * @label: (nullable): text to set as the frame's title label (or %NULL for no title)
  *
  * Creates a #GimpFrame widget. A #GimpFrame is a HIG-compliant
  * variant of #GtkFrame. It doesn't render a frame at all but
