@@ -41,7 +41,7 @@ struct _GimpSaveProcedureDialogPrivate
 };
 
 
-static void   gimp_save_procedure_dialog_dispose   (GObject             *object);
+static void   gimp_save_procedure_dialog_finalize  (GObject             *object);
 
 static void   gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
                                                     GimpProcedure       *procedure,
@@ -66,7 +66,7 @@ gimp_save_procedure_dialog_class_init (GimpSaveProcedureDialogClass *klass)
   object_class      = G_OBJECT_CLASS (klass);
   proc_dialog_class = GIMP_PROCEDURE_DIALOG_CLASS (klass);
 
-  object_class->dispose        = gimp_save_procedure_dialog_dispose;
+  object_class->finalize       = gimp_save_procedure_dialog_finalize;
   proc_dialog_class->fill_list = gimp_save_procedure_dialog_fill_list;
 }
 
@@ -82,16 +82,15 @@ gimp_save_procedure_dialog_init (GimpSaveProcedureDialog *dialog)
 }
 
 static void
-gimp_save_procedure_dialog_dispose (GObject *object)
+gimp_save_procedure_dialog_finalize (GObject *object)
 {
   GimpSaveProcedureDialog *dialog = GIMP_SAVE_PROCEDURE_DIALOG (object);
 
   g_list_free_full (dialog->priv->additional_metadata, g_free);
-  dialog->priv->additional_metadata = NULL;
   g_clear_pointer (&dialog->priv->metadata_thread, g_thread_unref);
   g_mutex_clear (&dialog->priv->metadata_thread_mutex);
 
-  G_OBJECT_CLASS (parent_class)->dispose (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
