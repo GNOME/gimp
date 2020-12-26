@@ -868,20 +868,13 @@ prefs_help_language_change_callback2 (GtkComboBox  *combo,
 }
 
 static void
-prefs_format_string_select_callback (GtkTreeSelection *sel,
-                                     GtkEntry         *entry)
+prefs_format_string_select_callback (GtkListBox    *listbox,
+                                     GtkListBoxRow *row,
+                                     gpointer       user_data)
 {
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
+  GtkEntry *entry = GTK_ENTRY (user_data);
 
-  if (gtk_tree_selection_get_selected (sel, &model, &iter))
-    {
-      GValue val = G_VALUE_INIT;
-
-      gtk_tree_model_get_value (model, &iter, 1, &val);
-      gtk_entry_set_text (entry, g_value_get_string (&val));
-      g_value_unset (&val);
-    }
+  gtk_entry_set_text (entry, g_object_get_data (G_OBJECT (row), "format"));
 }
 
 static void
@@ -3024,11 +3017,10 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (format = 0; format < G_N_ELEMENTS (formats); format++)
       {
-        GtkWidget        *scrolled_win;
-        GtkListStore     *list_store;
-        GtkWidget        *view;
-        GtkTreeSelection *sel;
-        gint              i;
+        GtkWidget     *scrolled_win;
+        GtkWidget     *listbox;
+        GtkSizeGroup  *name_group, *format_group;
+        gint           i;
 
         format_strings[0] = formats[format].current_setting;
         format_strings[1] = formats[format].default_setting;
@@ -3048,43 +3040,52 @@ prefs_dialog_new (Gimp       *gimp,
         gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
         gtk_widget_show (scrolled_win);
 
-        list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+        listbox = gtk_list_box_new ();
+        gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
+                                         GTK_SELECTION_BROWSE);
+        gtk_container_add (GTK_CONTAINER (scrolled_win), listbox);
+        gtk_widget_show (listbox);
 
-        view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
-        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
-        gtk_container_add (GTK_CONTAINER (scrolled_win), view);
-        gtk_widget_show (view);
-
-        g_object_unref (list_store);
-
-        gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 0,
-                                                     NULL,
-                                                     gtk_cell_renderer_text_new (),
-                                                     "text", 0,
-                                                     NULL);
-        gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 1,
-                                                     NULL,
-                                                     gtk_cell_renderer_text_new (),
-                                                     "text", 1,
-                                                     NULL);
-
-        sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+        name_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+        format_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
         for (i = 0; i < G_N_ELEMENTS (format_strings); i++)
           {
-            GtkTreeIter iter;
+            GtkWidget *row;
+            GtkWidget *grid;
+            GtkWidget *name_label, *format_label;
 
-            gtk_list_store_append (list_store, &iter);
-            gtk_list_store_set (list_store, &iter,
-                                0, gettext (format_names[i]),
-                                1, format_strings[i],
-                                -1);
+            row = gtk_list_box_row_new ();
+            g_object_set_data_full (G_OBJECT (row),
+                                    "format",
+                                    g_strdup (format_strings[i]),
+                                    g_free);
+
+            grid = gtk_grid_new ();
+            gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+            gtk_container_add (GTK_CONTAINER (row), grid);
+
+            name_label = gtk_label_new (gettext (format_names[i]));
+            g_object_set (name_label, "xalign", 0.0, "margin", 3, NULL);
+            gtk_size_group_add_widget (name_group, name_label);
+            gtk_grid_attach (GTK_GRID (grid), name_label, 0, 0, 1, 1);
+
+            format_label = gtk_label_new (format_strings[i]);
+            g_object_set (format_label, "xalign", 0.0, "margin", 3, NULL);
+            gtk_size_group_add_widget (format_group, format_label);
+            gtk_grid_attach (GTK_GRID (grid), format_label, 1, 0, 1, 1);
+
+            gtk_widget_show_all (row);
+            gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
 
             if (i == 0)
-              gtk_tree_selection_select_iter (sel, &iter);
+              {
+                gtk_list_box_select_row (GTK_LIST_BOX (listbox),
+                                         GTK_LIST_BOX_ROW (row));
+              }
           }
 
-        g_signal_connect (sel, "changed",
+        g_signal_connect (listbox, "row-selected",
                           G_CALLBACK (prefs_format_string_select_callback),
                           entry);
       }
