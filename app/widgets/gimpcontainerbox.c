@@ -167,7 +167,7 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
 
   sw_style = gtk_widget_get_style_context (box->scrolled_win);
 
-  gtk_style_context_get_border (sw_style, 0, &border);
+  gtk_style_context_get_border (sw_style, gtk_widget_get_state_flags (box->scrolled_win), &border);
 
   border_x += border.left + border.right + scrollbar_width;
   border_y += border.top + border.bottom;

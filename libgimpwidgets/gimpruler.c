@@ -902,7 +902,7 @@ gimp_ruler_size_request (GtkWidget      *widget,
 
   size = 2 + ink_rect.height * 1.7;
 
-  gtk_style_context_get_border (context, 0, &border);
+  gtk_style_context_get_border (context, gtk_widget_get_state_flags (widget), &border);
 
   requisition->width  = border.left + border.right;
   requisition->height = border.top + border.bottom;
@@ -1022,7 +1022,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
     return;
 
   gtk_widget_get_allocation (widget, &allocation);
-  gtk_style_context_get_border (context, 0, &border);
+  gtk_style_context_get_border (context, gtk_widget_get_state_flags (widget), &border);
 
   layout = gimp_ruler_get_layout (widget, "0123456789");
   pango_layout_get_extents (layout, &ink_rect, &logical_rect);
@@ -1215,7 +1215,7 @@ gimp_ruler_get_pos_rect (GimpRuler *ruler,
     return rect;
 
   gtk_widget_get_allocation (widget, &allocation);
-  gtk_style_context_get_border (context, 0, &border);
+  gtk_style_context_get_border (context, gtk_widget_get_state_flags (widget), &border);
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
