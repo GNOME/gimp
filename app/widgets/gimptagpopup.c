@@ -456,11 +456,16 @@ gimp_tag_popup_get_property (GObject    *object,
 GtkWidget *
 gimp_tag_popup_new (GimpComboTagEntry *combo_entry)
 {
+  GtkWidget *toplevel;
+
   g_return_val_if_fail (GIMP_IS_COMBO_TAG_ENTRY (combo_entry), NULL);
 
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (combo_entry));
+
   return g_object_new (GIMP_TYPE_TAG_POPUP,
-                       "type",  GTK_WINDOW_POPUP,
-                       "owner", combo_entry,
+                       "type",          GTK_WINDOW_POPUP,
+                       "owner",         combo_entry,
+                       "transient-for", GTK_IS_WINDOW (toplevel) ? toplevel : NULL,
                        NULL);
 }
 
