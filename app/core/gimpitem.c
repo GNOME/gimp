@@ -75,7 +75,8 @@ enum
   PROP_LINKED,
   PROP_COLOR_TAG,
   PROP_LOCK_CONTENT,
-  PROP_LOCK_POSITION
+  PROP_LOCK_POSITION,
+  N_PROPS
 };
 
 
@@ -175,6 +176,7 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpItem, gimp_item, GIMP_TYPE_FILTER)
 #define parent_class gimp_item_parent_class
 
 static guint gimp_item_signals[LAST_SIGNAL] = { 0 };
+static GParamSpec *gimp_item_props[N_PROPS] = { NULL, };
 
 
 static void
@@ -285,65 +287,56 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->fill_desc                 = NULL;
   klass->stroke_desc               = NULL;
 
-  g_object_class_install_property (object_class, PROP_IMAGE,
-                                   g_param_spec_object ("image", NULL, NULL,
-                                                        GIMP_TYPE_IMAGE,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class, PROP_ID,
-                                   g_param_spec_int ("id", NULL, NULL,
-                                                     0, G_MAXINT, 0,
-                                                     GIMP_PARAM_READABLE));
+  gimp_item_props[PROP_IMAGE] = g_param_spec_object ("image", NULL, NULL,
+                                                     GIMP_TYPE_IMAGE,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT);
+  gimp_item_props[PROP_ID] = g_param_spec_int ("id", NULL, NULL,
+                                               0, G_MAXINT, 0,
+                                               GIMP_PARAM_READABLE);
 
-  g_object_class_install_property (object_class, PROP_WIDTH,
-                                   g_param_spec_int ("width", NULL, NULL,
-                                                     1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                     GIMP_PARAM_READABLE));
+  gimp_item_props[PROP_WIDTH] = g_param_spec_int ("width", NULL, NULL,
+                                                  1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                  GIMP_PARAM_READABLE);
 
-  g_object_class_install_property (object_class, PROP_HEIGHT,
-                                   g_param_spec_int ("height", NULL, NULL,
-                                                     1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                     GIMP_PARAM_READABLE));
+  gimp_item_props[PROP_HEIGHT] = g_param_spec_int ("height", NULL, NULL,
+                                                   1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                   GIMP_PARAM_READABLE);
 
-  g_object_class_install_property (object_class, PROP_OFFSET_X,
-                                   g_param_spec_int ("offset-x", NULL, NULL,
+  gimp_item_props[PROP_OFFSET_X] = g_param_spec_int ("offset-x", NULL, NULL,
                                                      -GIMP_MAX_IMAGE_SIZE,
                                                      GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READABLE));
+                                                     GIMP_PARAM_READABLE);
 
-  g_object_class_install_property (object_class, PROP_OFFSET_Y,
-                                   g_param_spec_int ("offset-y", NULL, NULL,
+  gimp_item_props[PROP_OFFSET_Y] = g_param_spec_int ("offset-y", NULL, NULL,
                                                      -GIMP_MAX_IMAGE_SIZE,
                                                      GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READABLE));
+                                                     GIMP_PARAM_READABLE);
 
-  g_object_class_install_property (object_class, PROP_VISIBLE,
-                                   g_param_spec_boolean ("visible", NULL, NULL,
-                                                         TRUE,
-                                                         GIMP_PARAM_READABLE));
+  gimp_item_props[PROP_VISIBLE] = g_param_spec_boolean ("visible", NULL, NULL,
+                                                        TRUE,
+                                                        GIMP_PARAM_READABLE);
 
-  g_object_class_install_property (object_class, PROP_LINKED,
-                                   g_param_spec_boolean ("linked", NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READABLE));
+  gimp_item_props[PROP_LINKED] = g_param_spec_boolean ("linked", NULL, NULL,
+                                                       FALSE,
+                                                       GIMP_PARAM_READABLE);
 
-  g_object_class_install_property (object_class, PROP_COLOR_TAG,
-                                   g_param_spec_enum ("color-tag", NULL, NULL,
-                                                      GIMP_TYPE_COLOR_TAG,
-                                                      GIMP_COLOR_TAG_NONE,
-                                                      GIMP_PARAM_READABLE));
+  gimp_item_props[PROP_COLOR_TAG] = g_param_spec_enum ("color-tag", NULL, NULL,
+                                                       GIMP_TYPE_COLOR_TAG,
+                                                       GIMP_COLOR_TAG_NONE,
+                                                       GIMP_PARAM_READABLE);
 
-  g_object_class_install_property (object_class, PROP_LOCK_CONTENT,
-                                   g_param_spec_boolean ("lock-content",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READABLE));
+  gimp_item_props[PROP_LOCK_CONTENT] = g_param_spec_boolean ("lock-content",
+                                                             NULL, NULL,
+                                                             FALSE,
+                                                             GIMP_PARAM_READABLE);
 
-  g_object_class_install_property (object_class, PROP_LOCK_POSITION,
-                                   g_param_spec_boolean ("lock-position",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READABLE));
+  gimp_item_props[PROP_LOCK_POSITION] = g_param_spec_boolean ("lock-position",
+                                                              NULL, NULL,
+                                                              FALSE,
+                                                              GIMP_PARAM_READABLE);
+
+  g_object_class_install_properties (object_class, N_PROPS, gimp_item_props);
 }
 
 static void
@@ -646,13 +639,13 @@ gimp_item_real_scale (GimpItem              *item,
   if (private->width != new_width)
     {
       private->width = new_width;
-      g_object_notify (G_OBJECT (item), "width");
+      g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_WIDTH]);
     }
 
   if (private->height != new_height)
     {
       private->height = new_height;
-      g_object_notify (G_OBJECT (item), "height");
+      g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_HEIGHT]);
     }
 
   gimp_item_set_offset (item, new_offset_x, new_offset_y);
@@ -672,13 +665,13 @@ gimp_item_real_resize (GimpItem     *item,
   if (private->width != new_width)
     {
       private->width = new_width;
-      g_object_notify (G_OBJECT (item), "width");
+      g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_WIDTH]);
     }
 
   if (private->height != new_height)
     {
       private->height = new_height;
-      g_object_notify (G_OBJECT (item), "height");
+      g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_HEIGHT]);
     }
 
   gimp_item_set_offset (item,
@@ -1116,13 +1109,15 @@ gimp_item_set_size (GimpItem *item,
       if (private->width != width)
         {
           private->width = width;
-          g_object_notify (G_OBJECT (item), "width");
+          g_object_notify_by_pspec (G_OBJECT (item),
+                                    gimp_item_props[PROP_WIDTH]);
         }
 
       if (private->height != height)
         {
           private->height = height;
-          g_object_notify (G_OBJECT (item), "height");
+          g_object_notify_by_pspec (G_OBJECT (item),
+                                    gimp_item_props[PROP_HEIGHT]);
         }
 
       g_object_thaw_notify (G_OBJECT (item));
@@ -1171,13 +1166,15 @@ gimp_item_set_offset (GimpItem *item,
   if (private->offset_x != offset_x)
     {
       private->offset_x = offset_x;
-      g_object_notify (G_OBJECT (item), "offset-x");
+      g_object_notify_by_pspec (G_OBJECT (item),
+                                gimp_item_props[PROP_OFFSET_X]);
     }
 
   if (private->offset_y != offset_y)
     {
       private->offset_y = offset_y;
-      g_object_notify (G_OBJECT (item), "offset-y");
+      g_object_notify_by_pspec (G_OBJECT (item),
+                                gimp_item_props[PROP_OFFSET_Y]);
     }
 
   for (list = private->offset_nodes; list; list = g_list_next (list))
@@ -1987,7 +1984,7 @@ gimp_item_set_image (GimpItem  *item,
     {
       private->ID = gimp_id_table_insert (image->gimp->item_table, item);
 
-      g_object_notify (G_OBJECT (item), "id");
+      g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_ID]);
     }
 
   if (private->tattoo == 0 || private->image != image)
@@ -1996,7 +1993,7 @@ gimp_item_set_image (GimpItem  *item,
     }
 
   private->image = image;
-  g_object_notify (G_OBJECT (item), "image");
+  g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_IMAGE]);
 
   g_object_thaw_notify (G_OBJECT (item));
 }
@@ -2301,7 +2298,7 @@ gimp_item_set_visible (GimpItem *item,
 
       g_signal_emit (item, gimp_item_signals[VISIBILITY_CHANGED], 0);
 
-      g_object_notify (G_OBJECT (item), "visible");
+      g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_VISIBLE]);
     }
 }
 
@@ -2369,7 +2366,7 @@ gimp_item_set_linked (GimpItem *item,
       if (is_attached && image)
         gimp_image_linked_items_changed (image);
 
-      g_object_notify (G_OBJECT (item), "linked");
+      g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_LINKED]);
     }
 }
 
@@ -2402,7 +2399,8 @@ gimp_item_set_color_tag (GimpItem     *item,
 
       g_signal_emit (item, gimp_item_signals[COLOR_TAG_CHANGED], 0);
 
-      g_object_notify (G_OBJECT (item), "color-tag");
+      g_object_notify_by_pspec (G_OBJECT (item),
+                                gimp_item_props[PROP_COLOR_TAG]);
     }
 }
 
@@ -2458,7 +2456,8 @@ gimp_item_set_lock_content (GimpItem *item,
 
       g_signal_emit (item, gimp_item_signals[LOCK_CONTENT_CHANGED], 0);
 
-      g_object_notify (G_OBJECT (item), "lock-content");
+      g_object_notify_by_pspec (G_OBJECT (item),
+                                gimp_item_props[PROP_LOCK_CONTENT]);
     }
 }
 
@@ -2509,7 +2508,8 @@ gimp_item_set_lock_position (GimpItem *item,
 
       g_signal_emit (item, gimp_item_signals[LOCK_POSITION_CHANGED], 0);
 
-      g_object_notify (G_OBJECT (item), "lock-position");
+      g_object_notify_by_pspec (G_OBJECT (item),
+                                gimp_item_props[PROP_LOCK_POSITION]);
     }
 }
 
