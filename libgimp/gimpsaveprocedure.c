@@ -99,7 +99,7 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
   procedure_class->create_config = gimp_save_procedure_create_config;
 
   /**
-   * GimpSaveProcedure:exif:
+   * GimpSaveProcedure:supports-exif:
    *
    * Whether the save procedure supports EXIF.
    *
@@ -112,7 +112,7 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
                                                     G_PARAM_CONSTRUCT |
                                                     GIMP_PARAM_READWRITE);
   /**
-   * GimpSaveProcedure:iptc:
+   * GimpSaveProcedure:supports-iptc:
    *
    * Whether the save procedure supports IPTC.
    *
@@ -125,7 +125,7 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
                                                     G_PARAM_CONSTRUCT |
                                                     GIMP_PARAM_READWRITE);
   /**
-   * GimpSaveProcedure:xmpp:
+   * GimpSaveProcedure:supports-xmp:
    *
    * Whether the save procedure supports XMP.
    *
@@ -138,7 +138,7 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
                                                    G_PARAM_CONSTRUCT |
                                                    GIMP_PARAM_READWRITE);
   /**
-   * GimpSaveProcedure:profile:
+   * GimpSaveProcedure:supports-profile:
    *
    * Whether the save procedure supports ICC color profiles.
    *
@@ -151,7 +151,7 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
                                                        G_PARAM_CONSTRUCT |
                                                        GIMP_PARAM_READWRITE);
   /**
-   * GimpSaveProcedure:thumbnail:
+   * GimpSaveProcedure:supports-thumbnail:
    *
    * Whether the save procedure supports storing a thumbnail.
    *
@@ -164,7 +164,7 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
                                                          G_PARAM_CONSTRUCT |
                                                          GIMP_PARAM_READWRITE);
   /**
-   * GimpSaveProcedure:comment:
+   * GimpSaveProcedure:supports-comment:
    *
    * Whether the save procedure supports storing a comment.
    *
