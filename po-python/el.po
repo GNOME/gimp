@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 1.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-14 13:52+0000\n"
-"PO-Revision-Date: 2020-05-14 23:23+0300\n"
-"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
+"POT-Creation-Date: 2020-12-25 14:14+0000\n"
+"PO-Revision-Date: 2020-12-29 23:26+0200\n"
+"Last-Translator: dmtrs32@gmail.com <team@lists.gnome.gr>\n"
 "Language-Team: www.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Project-Style: gnome\n"
 
 #: ../plug-ins/python/colorxhtml.py:89
@@ -68,56 +68,56 @@ msgstr "Εγγραφή ξεχωριστού αρχείου CSS"
 msgid "Saving as colored XHTML"
 msgstr "Αποθήκευση ως έγχρωμου XHTML"
 
-#: ../plug-ins/python/colorxhtml.py:280 ../plug-ins/python/colorxhtml.py:281
+#: ../plug-ins/python/colorxhtml.py:279 ../plug-ins/python/colorxhtml.py:280
 msgid "_Read characters from file, if true, or use text entry"
 msgstr ""
 "Α_νάγνωση χαρακτήρων από αρχείο, εάν είναι αληθές, ή χρήση εισόδου κειμένου"
 
-#: ../plug-ins/python/colorxhtml.py:285 ../plug-ins/python/colorxhtml.py:286
+#: ../plug-ins/python/colorxhtml.py:284 ../plug-ins/python/colorxhtml.py:285
 msgid "_File to read or characters to use"
 msgstr "_Αρχείο για ανάγνωση ή χαρακτήρες για χρήση"
 
-#: ../plug-ins/python/colorxhtml.py:290 ../plug-ins/python/colorxhtml.py:291
+#: ../plug-ins/python/colorxhtml.py:289 ../plug-ins/python/colorxhtml.py:290
 msgid "Fo_nt size in pixels"
 msgstr "Μέγεθος γραμματοσειράς σε εικο_νοστοιχεία"
 
-#: ../plug-ins/python/colorxhtml.py:295 ../plug-ins/python/colorxhtml.py:296
+#: ../plug-ins/python/colorxhtml.py:294 ../plug-ins/python/colorxhtml.py:295
 msgid "_Write a separate CSS file"
 msgstr "_Εγγραφή ξεχωριστού αρχείου CSS"
 
-#: ../plug-ins/python/colorxhtml.py:315
+#: ../plug-ins/python/colorxhtml.py:314
 msgid "Save as colored HTML text"
 msgstr "Αποθήκευση ως έγχρωμου κειμένου HTML"
 
-#: ../plug-ins/python/colorxhtml.py:318
+#: ../plug-ins/python/colorxhtml.py:317
 msgid "Colored HTML text"
 msgstr "Έγχρωμο κείμενο HTML"
 
-#: ../plug-ins/python/foggify.py:82 ../plug-ins/python/foggify.py:83
+#: ../plug-ins/python/foggify.py:83 ../plug-ins/python/foggify.py:84
 msgid "Layer name"
 msgstr "Όνομα στρώσης"
 
-#: ../plug-ins/python/foggify.py:84
+#: ../plug-ins/python/foggify.py:85
 msgid "Clouds"
 msgstr "Σύννεφα"
 
-#: ../plug-ins/python/foggify.py:87 ../plug-ins/python/foggify.py:88
+#: ../plug-ins/python/foggify.py:88 ../plug-ins/python/foggify.py:89
 msgid "Fog color"
 msgstr "Χρώμα ομίχλης"
 
-#: ../plug-ins/python/foggify.py:91 ../plug-ins/python/foggify.py:92
+#: ../plug-ins/python/foggify.py:92 ../plug-ins/python/foggify.py:93
 msgid "Turbulence"
 msgstr "Αναταράξεις"
 
-#: ../plug-ins/python/foggify.py:96 ../plug-ins/python/foggify.py:97
+#: ../plug-ins/python/foggify.py:97 ../plug-ins/python/foggify.py:98
 msgid "Opacity"
 msgstr "Αδιαφάνεια"
 
-#: ../plug-ins/python/foggify.py:114
+#: ../plug-ins/python/foggify.py:115
 msgid "Add a layer of fog"
 msgstr "Προσθήκη μιας στρώσης ομίχλης"
 
-#: ../plug-ins/python/foggify.py:117
+#: ../plug-ins/python/foggify.py:118
 msgid "_Fog..."
 msgstr "_Ομίχλη..."
 
@@ -133,31 +133,231 @@ msgstr "Διαβάθμιση για χρήση"
 msgid "File"
 msgstr "Αρχείο"
 
-#: ../plug-ins/python/palette-offset.py:44
-#: ../plug-ins/python/palette-offset.py:45
+#: ../plug-ins/python/histogram-export.py:94
+msgid "Pixel count"
+msgstr "Πλήθος εικονοστοιχείων"
+
+#: ../plug-ins/python/histogram-export.py:95
+msgid "Normalized"
+msgstr "Κανονικοποιημένο"
+
+#: ../plug-ins/python/histogram-export.py:96
+msgid "Percent"
+msgstr "Ποσοστό"
+
+#: ../plug-ins/python/histogram-export.py:166
+msgid "File is either a directory or file name is empty."
+msgstr "Το αρχείο είναι είτε κατάλογος, είτε το όνομα αρχείου είναι κενό."
+
+#: ../plug-ins/python/histogram-export.py:169
+msgid "Directory not found."
+msgstr "Δεν βρέθηκε ο κατάλογος"
+
+#: ../plug-ins/python/histogram-export.py:203
+msgid "Histogram Export..."
+msgstr "Εξαγωγή ιστογράμματος..."
+
+#: ../plug-ins/python/histogram-export.py:230
+msgid "_File..."
+msgstr "_Αρχείο..."
+
+#: ../plug-ins/python/histogram-export.py:238
+msgid "Choose export file..."
+msgstr "Επιλέξτε αρχείο εξαγωγής..."
+
+#: ../plug-ins/python/histogram-export.py:244
+msgid "Histogram Export file..."
+msgstr "Αρχείο εξαγωγής ιστογράμματος..."
+
+#. Bucket size parameter
+#: ../plug-ins/python/histogram-export.py:250
+#: ../plug-ins/python/histogram-export.py:320
+msgid "_Bucket Size"
+msgstr "Μέ_γεθος κουβά"
+
+#. Sample average parameter
+#: ../plug-ins/python/histogram-export.py:258
+#: ../plug-ins/python/histogram-export.py:325
+msgid "Sample _Average"
+msgstr "Μέσος ό_ρος δείγματος"
+
+#: ../plug-ins/python/histogram-export.py:259
+msgid ""
+"If checked, the histogram is generated from merging all visible layers. "
+"Otherwise, the histogram is only for the current layer."
+msgstr ""
+"Εάν σημειωθεί, το ιστόγραμμα δημιουργείται από τη συγχώνευση όλων των ορατών "
+"στρώσεων. Αλλιώς, το ιστόγραμμα είναι μόνο για τη τρέχουσα στρώση."
+
+#. Output format parameter
+#: ../plug-ins/python/histogram-export.py:265
+msgid "_Output Format"
+msgstr "Μορφή ε_ξόδου"
+
+#: ../plug-ins/python/histogram-export.py:316
+msgid "Histogram _File"
+msgstr "_Αρχείο ιστογράμματος"
+
+#: ../plug-ins/python/histogram-export.py:330
+msgid "Output format"
+msgstr "Μορφή εξόδου"
+
+#: ../plug-ins/python/histogram-export.py:351
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr "Εξάγει το ιστόγραμμα εικόνας σε ένα αρχείο κειμένου (CSV)"
+
+#: ../plug-ins/python/histogram-export.py:354
+msgid "_Export histogram..."
+msgstr "_Εξαγωγή ιστογράμματος..."
+
+#: ../plug-ins/python/palette-offset.py:46
+#: ../plug-ins/python/palette-offset.py:47
+#: ../plug-ins/python/palette-sort.py:340
+#: ../plug-ins/python/palette-sort.py:399
 #: ../plug-ins/python/palette-to-gradient.py:103
 msgid "Palette"
 msgstr "Παλέτα"
 
-#: ../plug-ins/python/palette-offset.py:56
+#: ../plug-ins/python/palette-offset.py:58
 msgid "Off_set"
 msgstr "Αντι_στάθμιση"
 
-#: ../plug-ins/python/palette-offset.py:57
+#: ../plug-ins/python/palette-offset.py:59
 msgid "Offset"
 msgstr "Μετατόπιση"
 
-#: ../plug-ins/python/palette-offset.py:90
+#: ../plug-ins/python/palette-offset.py:92
 msgid "_Offset Palette..."
 msgstr "_Αντιστάθμιση παλέτας..."
 
-#: ../plug-ins/python/palette-offset.py:91
+#: ../plug-ins/python/palette-offset.py:93
 msgid "Offset the colors in a palette"
 msgstr "Αντιστάθμιση των χρωμάτων σε μια παλέτα"
 
-#: ../plug-ins/python/palette-offset.py:139
+#: ../plug-ins/python/palette-offset.py:141
 msgid "Offset Palette..."
 msgstr "Μετατόπιση παλέτας..."
+
+#: ../plug-ins/python/palette-sort.py:41
+msgid "Red"
+msgstr "Κόκκινο"
+
+#: ../plug-ins/python/palette-sort.py:41
+msgid "Green"
+msgstr "Πράσινο"
+
+#: ../plug-ins/python/palette-sort.py:41
+msgid "Blue"
+msgstr "Γαλάζιο"
+
+#: ../plug-ins/python/palette-sort.py:42
+msgid "Luma (Y)"
+msgstr "Luma (Y)"
+
+#: ../plug-ins/python/palette-sort.py:43
+msgid "Hue"
+msgstr "Απόχρωση"
+
+#: ../plug-ins/python/palette-sort.py:43
+msgid "Saturation"
+msgstr "Κορεσμός"
+
+#: ../plug-ins/python/palette-sort.py:43
+msgid "Value"
+msgstr "Τιμή"
+
+#: ../plug-ins/python/palette-sort.py:44
+msgid "Saturation (HSL)"
+msgstr "Κορεσμός (HSL)"
+
+#: ../plug-ins/python/palette-sort.py:44
+msgid "Lightness (HSL)"
+msgstr "Φωτεινότητα (HSL)"
+
+#: ../plug-ins/python/palette-sort.py:45
+msgid "Index"
+msgstr "Ευρετήριο"
+
+#: ../plug-ins/python/palette-sort.py:46
+msgid "Random"
+msgstr "Τυχαίο"
+
+#: ../plug-ins/python/palette-sort.py:91
+msgid "Lightness (LAB)"
+msgstr "Φωτεινότητα (LAB)"
+
+#: ../plug-ins/python/palette-sort.py:92
+msgid "A-color"
+msgstr "Χρώμα Α"
+
+#: ../plug-ins/python/palette-sort.py:92
+msgid "B-color"
+msgstr "Χρώμα Β"
+
+#: ../plug-ins/python/palette-sort.py:93
+msgid "Chroma (LCHab)"
+msgstr "Χρώμα (Chroma) (LCHab)"
+
+#: ../plug-ins/python/palette-sort.py:94
+msgid "Hue (LCHab)"
+msgstr "Απόχρωση (LCHab)"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "All"
+msgstr "Όλες"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "Slice / Array"
+msgstr "Τεμαχισμός / Πίνακας"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "Autoslice (fg->bg)"
+msgstr "Αυτόματος τεμαχισμός (προσκήνιο->παρασκήνιο)"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "Partitioned"
+msgstr "Διαμερισμένο"
+
+#: ../plug-ins/python/palette-sort.py:345
+msgid "Se_lections"
+msgstr "Επι_λογές"
+
+#: ../plug-ins/python/palette-sort.py:352
+msgid "Slice _expression"
+msgstr "_Παράσταση τεμαχισμού"
+
+#: ../plug-ins/python/palette-sort.py:359
+msgid "Channel to _sort"
+msgstr "Κανάλι για ταξινόμη_ση"
+
+#: ../plug-ins/python/palette-sort.py:364
+#: ../plug-ins/python/palette-sort.py:376
+msgid "_Ascending"
+msgstr "_Αύξουσα"
+
+#: ../plug-ins/python/palette-sort.py:371
+msgid "Secondary Channel to s_ort"
+msgstr "Δευτερεύον κανάλι για ταξινόμη_ση"
+
+#: ../plug-ins/python/palette-sort.py:381
+msgid "_Quantization"
+msgstr "Κ_βαντισμός"
+
+#: ../plug-ins/python/palette-sort.py:387
+msgid "_Partitioning channel"
+msgstr "Κανάλι κ_ατάτμησης"
+
+#: ../plug-ins/python/palette-sort.py:392
+msgid "Partition q_uantization"
+msgstr "Κβα_ντισμός κατάτμησης"
+
+#: ../plug-ins/python/palette-sort.py:417
+msgid "_Sort Palette..."
+msgstr "Ταξινόμη_ση παλέτας..."
+
+#: ../plug-ins/python/palette-sort.py:422
+msgid "Sort the colors in a palette"
+msgstr "Ταξινόμηση των χρωμάτων σε μια παλέτα"
 
 #: ../plug-ins/python/palette-to-gradient.py:139
 msgid "Palette to _Gradient"
@@ -177,187 +377,136 @@ msgstr ""
 "Δημιουργία μιας επαναλαμβανόμενης διαβάθμισης με χρήση χρωμάτων από την "
 "παλέτα"
 
-#: ../plug-ins/python/py-slice.py:74
-msgid "Slice"
-msgstr "Τεμαχισμός"
-
-#: ../plug-ins/python/py-slice.py:439 ../plug-ins/python/py-slice.py:440
-msgid "Path for HTML export"
-msgstr "Μονοπάτι για εξαγωγή HTML"
-
-#: ../plug-ins/python/py-slice.py:444 ../plug-ins/python/py-slice.py:445
-msgid "Filename for export"
-msgstr "Όνομα αρχείου για εξαγωγή"
-
-#: ../plug-ins/python/py-slice.py:449 ../plug-ins/python/py-slice.py:450
-msgid "Image name prefix"
-msgstr "Πρόθεμα ονόματος εικόνας"
-
-#: ../plug-ins/python/py-slice.py:454 ../plug-ins/python/py-slice.py:455
-msgid "Image format (gif, jpg, png)"
-msgstr "Μορφή εικόνας (gif, jpg, png)"
-
-#: ../plug-ins/python/py-slice.py:459 ../plug-ins/python/py-slice.py:460
-msgid "Separate image folder"
-msgstr "Ξεχωριστός φάκελος εικόνων"
-
-#: ../plug-ins/python/py-slice.py:464 ../plug-ins/python/py-slice.py:465
-msgid "Folder for image export"
-msgstr "Φάκελος για εξαγωγή εικόνων"
-
-#: ../plug-ins/python/py-slice.py:469 ../plug-ins/python/py-slice.py:470
-msgid "Space between table elements"
-msgstr "Κενό μεταξύ των στοιχείων πίνακα"
-
-#: ../plug-ins/python/py-slice.py:474 ../plug-ins/python/py-slice.py:475
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javascript για υπέρπτηση ποντικιού και κλικ"
-
-#: ../plug-ins/python/py-slice.py:480 ../plug-ins/python/py-slice.py:481
-msgid "Skip animation for table caps"
-msgstr "Παράλειψη κίνησης για κεφαλαία πίνακα"
-
-#. table snippet means a small piece of HTML code here
-#: ../plug-ins/python/py-slice.py:501
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Κοπή εικόνας κατά μήκος των οδηγών της, δημιουργία εικόνων και ενός "
-"αποσπάσματος πίνακα HTML"
-
-#: ../plug-ins/python/py-slice.py:510
-msgid "_Slice..."
-msgstr "_Τεμαχισμός..."
-
-#: ../plug-ins/python/python-console/python-console.py:73
+#: ../plug-ins/python/python-console/python-console.py:75
 msgid "Python Console"
 msgstr "Κονσόλα Python"
 
 #
-#: ../plug-ins/python/python-console/python-console.py:77
+#: ../plug-ins/python/python-console/python-console.py:79
 msgid "_Browse..."
 msgstr "_Εξερεύνηση..."
 
-#: ../plug-ins/python/python-console/python-console.py:177
+#: ../plug-ins/python/python-console/python-console.py:179
 msgid "Python Procedure Browser"
 msgstr "Περιηγητής διαδικασίας Python"
 
-#: ../plug-ins/python/python-console/python-console.py:205
+#: ../plug-ins/python/python-console/python-console.py:207
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Αδυναμία ανοίγματος του '%s' για εγγραφή: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:220
+#: ../plug-ins/python/python-console/python-console.py:222
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Αδυναμία εγγραφής στο '%s': %s"
 
-#: ../plug-ins/python/python-console/python-console.py:229
+#: ../plug-ins/python/python-console/python-console.py:231
 msgid "Save Python-Fu Console Output"
 msgstr "Αποθήκευση εξόδου κονσόλας Python-Fu"
 
-#: ../plug-ins/python/python-console/python-console.py:278
-msgid "_Console"
-msgstr "_Κονσόλα"
+#: ../plug-ins/python/python-console/python-console.py:280
+msgid "Python _Console"
+msgstr "_Κονσόλα Python"
 
-#: ../plug-ins/python/python-console/python-console.py:279
+#: ../plug-ins/python/python-console/python-console.py:281
 msgid "Interactive GIMP Python interpreter"
 msgstr "Διερμηνέας διαδραστικού GIMP Python"
 
-#: ../plug-ins/python/spyro-plus.py:60
+#: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
 msgstr "Στρώση σπειρογραφήματος (Spyro)"
 
-#: ../plug-ins/python/spyro-plus.py:61
+#: ../plug-ins/python/spyro-plus.py:51
 msgid "Spyro Path"
 msgstr "Μονοπάτι σπειρογραφήματος"
 
-#: ../plug-ins/python/spyro-plus.py:71
+#: ../plug-ins/python/spyro-plus.py:61
 msgid "As New Layer"
 msgstr "Ως νέα συτρώση"
 
-#: ../plug-ins/python/spyro-plus.py:72
+#: ../plug-ins/python/spyro-plus.py:62
 msgid "Redraw on last active layer"
 msgstr "Επανασχεδίαση στην τελευταία ενεργή στρώση"
 
-#: ../plug-ins/python/spyro-plus.py:73
+#: ../plug-ins/python/spyro-plus.py:63
 msgid "As Path"
 msgstr "Ως μονοπάτι"
 
-#: ../plug-ins/python/spyro-plus.py:121
+#: ../plug-ins/python/spyro-plus.py:111
 msgid "Circle"
 msgstr "Κύκλος"
 
-#: ../plug-ins/python/spyro-plus.py:157
+#: ../plug-ins/python/spyro-plus.py:147
 msgid "Polygon-Star"
 msgstr "Πολύγωνο-Αστέρι"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/python/spyro-plus.py:173 ../plug-ins/python/spyro-plus.py:996
+#: ../plug-ins/python/spyro-plus.py:163 ../plug-ins/python/spyro-plus.py:986
 msgid "Sine"
 msgstr "Ημίτονο"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/python/spyro-plus.py:183
+#: ../plug-ins/python/spyro-plus.py:173
 msgid "Bumps"
 msgstr "Ημικύκλια"
 
-#: ../plug-ins/python/spyro-plus.py:288
+#: ../plug-ins/python/spyro-plus.py:278
 msgid "Rack"
 msgstr "Rack"
 
-#: ../plug-ins/python/spyro-plus.py:332
+#: ../plug-ins/python/spyro-plus.py:322
 msgid "Frame"
 msgstr "Πλαίσιο"
 
-#: ../plug-ins/python/spyro-plus.py:445
+#: ../plug-ins/python/spyro-plus.py:435
 msgid "Selection"
 msgstr "Επιλογή"
 
-#: ../plug-ins/python/spyro-plus.py:532
+#: ../plug-ins/python/spyro-plus.py:522
 msgid "Pencil"
 msgstr "Μολύβι"
 
-#: ../plug-ins/python/spyro-plus.py:548
+#: ../plug-ins/python/spyro-plus.py:538
 msgid "AirBrush"
 msgstr "Αερογράφος"
 
-#: ../plug-ins/python/spyro-plus.py:608
+#: ../plug-ins/python/spyro-plus.py:598
 msgid "Preview"
 msgstr "Προεπισκόπηση"
 
-#: ../plug-ins/python/spyro-plus.py:613
+#: ../plug-ins/python/spyro-plus.py:603
 msgid "Stroke"
 msgstr "Πινελιά"
 
-#: ../plug-ins/python/spyro-plus.py:660
+#: ../plug-ins/python/spyro-plus.py:650
 msgid "PaintBrush"
 msgstr "PaintBrush (Πινέλο βαφής)"
 
-#: ../plug-ins/python/spyro-plus.py:662
+#: ../plug-ins/python/spyro-plus.py:652
 msgid "Ink"
 msgstr "Μελάνι"
 
-#: ../plug-ins/python/spyro-plus.py:663
+#: ../plug-ins/python/spyro-plus.py:653
 msgid "MyPaintBrush"
 msgstr "MyPaintBrush (Το πινέλομου  βαφής)"
 
-#: ../plug-ins/python/spyro-plus.py:982
+#: ../plug-ins/python/spyro-plus.py:972
 msgid "Spyrograph"
 msgstr "Σπειρογράφημα"
 
-#: ../plug-ins/python/spyro-plus.py:989
+#: ../plug-ins/python/spyro-plus.py:979
 msgid "Epitrochoid"
 msgstr "Επιτροχοειδές"
 
-#: ../plug-ins/python/spyro-plus.py:1016
+#: ../plug-ins/python/spyro-plus.py:1006
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/python/spyro-plus.py:1447
+#: ../plug-ins/python/spyro-plus.py:1453
 msgid "Curve Type"
 msgstr "Τύπος καμπύλης"
 
-#: ../plug-ins/python/spyro-plus.py:1448
+#: ../plug-ins/python/spyro-plus.py:1454
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -365,22 +514,22 @@ msgstr ""
 "Επιτροχοειδές μοτίβο είναι όταν το κινούμενο γρανάζι είναι εξωτερικά του "
 "σταθερού γραναζιού."
 
-#: ../plug-ins/python/spyro-plus.py:1453
+#: ../plug-ins/python/spyro-plus.py:1459
 msgid "Tool"
 msgstr "Εργαλείο"
 
-#: ../plug-ins/python/spyro-plus.py:1454
+#: ../plug-ins/python/spyro-plus.py:1460
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Το εργαλείο με το οποίο σχεδιάζεται το μοτίβο. Το εργαλείο προεπισκόπησης "
 "σχεδιάζει απλώς γρήγορα."
 
-#: ../plug-ins/python/spyro-plus.py:1459
+#: ../plug-ins/python/spyro-plus.py:1465
 msgid "Long Gradient"
 msgstr "Επιμήκης διαβάθμιση"
 
-#: ../plug-ins/python/spyro-plus.py:1461
+#: ../plug-ins/python/spyro-plus.py:1467
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -391,11 +540,11 @@ msgstr ""
 "ταιριάζει με το μήκος του μοτίβου, με βάση την τρέχουσα διαβάθμιση και την "
 "κατάσταση επανάληψης από τις ρυθμίσεις του εργαλείου διαβάθμισης."
 
-#: ../plug-ins/python/spyro-plus.py:1481
+#: ../plug-ins/python/spyro-plus.py:1487
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Καθορίστε το μοτίβο χρησιμοποιώντας μία από τις ακόλουθες καρτέλες:"
 
-#: ../plug-ins/python/spyro-plus.py:1483
+#: ../plug-ins/python/spyro-plus.py:1489
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -408,7 +557,7 @@ msgstr ""
 "ακολουθήσετε τις οδηγίες από τα εγχειρίδια του toy kit (πακέτου παιχνιδιών), "
 "τα αποτελέσματα θα είναι παρόμοια."
 
-#: ../plug-ins/python/spyro-plus.py:1507
+#: ../plug-ins/python/spyro-plus.py:1513
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -416,11 +565,11 @@ msgstr ""
 "Αριθμός δοντιών του σταθερού γραναζιού. Το μέγεθος του σταθερού γραναζιού "
 "είναι ανάλογο με τον αριθμό των γραναζιών."
 
-#: ../plug-ins/python/spyro-plus.py:1510 ../plug-ins/python/spyro-plus.py:1538
+#: ../plug-ins/python/spyro-plus.py:1516 ../plug-ins/python/spyro-plus.py:1544
 msgid "Fixed Gear Teeth"
 msgstr "Δόντια σταθερού γραναζιού"
 
-#: ../plug-ins/python/spyro-plus.py:1518
+#: ../plug-ins/python/spyro-plus.py:1524
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -428,15 +577,15 @@ msgstr ""
 "Αριθμός δοντιών κινούμενου γραναζιού. Το μέγεθος του κινούμενου γραναζιού "
 "είναι ανάλογο με τον αριθμό των γραναζιών."
 
-#: ../plug-ins/python/spyro-plus.py:1521 ../plug-ins/python/spyro-plus.py:1543
+#: ../plug-ins/python/spyro-plus.py:1527 ../plug-ins/python/spyro-plus.py:1549
 msgid "Moving Gear Teeth"
 msgstr "Δόντια κινούμενου γραναζιού"
 
-#: ../plug-ins/python/spyro-plus.py:1526
+#: ../plug-ins/python/spyro-plus.py:1532
 msgid "Hole percent"
 msgstr "Ποσοστό οπής"
 
-#: ../plug-ins/python/spyro-plus.py:1527
+#: ../plug-ins/python/spyro-plus.py:1533
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -444,11 +593,11 @@ msgstr ""
 "Πόσα μακριά είναι η οπή από το κέντρο του κινούμενου γραναζιού. 100% "
 "σημαίνει ότι η οπή είναι στο άκρο του γραναζιού."
 
-#: ../plug-ins/python/spyro-plus.py:1548
+#: ../plug-ins/python/spyro-plus.py:1554
 msgid "Hole Number"
 msgstr "Αριθμός οπής"
 
-#: ../plug-ins/python/spyro-plus.py:1549
+#: ../plug-ins/python/spyro-plus.py:1555
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -456,27 +605,27 @@ msgstr ""
 "Η οπή #1 είναι στο άκρο του γραναζιού. Ο μέγιστος αριθμός οπών είναι κοντά "
 "στο κέντρο. Ο μέγιστος αριθμός οπών διαφέρει για κάθε γρανάζι."
 
-#: ../plug-ins/python/spyro-plus.py:1560
+#: ../plug-ins/python/spyro-plus.py:1566
 msgid "Flower Petals"
 msgstr "Πέταλα άνθους"
 
-#: ../plug-ins/python/spyro-plus.py:1561
+#: ../plug-ins/python/spyro-plus.py:1567
 msgid "The number of petals in the pattern."
 msgstr "Ο αριθμός πετάλων στο μοτίβο."
 
-#: ../plug-ins/python/spyro-plus.py:1566
+#: ../plug-ins/python/spyro-plus.py:1572
 msgid "Petal Skip"
 msgstr "Παράλειψη πετάλου"
 
-#: ../plug-ins/python/spyro-plus.py:1567
+#: ../plug-ins/python/spyro-plus.py:1573
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "Ο αριθμός προώθησης των πετάλων για σχεδίαση του επόμενου πετάλου."
 
-#: ../plug-ins/python/spyro-plus.py:1572
+#: ../plug-ins/python/spyro-plus.py:1578
 msgid "Hole Radius(%)"
 msgstr "Ακτίνα οπής (%)"
 
-#: ../plug-ins/python/spyro-plus.py:1573
+#: ../plug-ins/python/spyro-plus.py:1579
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -486,11 +635,11 @@ msgstr ""
 "Δίνεται ως ποσοστό μεγέθους του μοτίβου. Η τιμή 0 δεν θα παράξει καμία οπή. "
 "Η τιμή 99 θα παράξει μια λεπτή γραμμή στην άκρη."
 
-#: ../plug-ins/python/spyro-plus.py:1594
+#: ../plug-ins/python/spyro-plus.py:1600
 msgid "Width(%)"
 msgstr "Πλάτος (%)"
 
-#: ../plug-ins/python/spyro-plus.py:1595
+#: ../plug-ins/python/spyro-plus.py:1601
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -499,23 +648,23 @@ msgstr ""
 "Το πλάτος του μοτίβου ως ποσοστό μεγέθους του μοτίβου. Η τιμή 1 θα σχεδιάσει "
 "απλώς λεπτό μοτίβο. Η τιμή 100 θα; γεμίσει όλο το σταθερό γρανάζι."
 
-#: ../plug-ins/python/spyro-plus.py:1606
+#: ../plug-ins/python/spyro-plus.py:1612
 msgid "Visual"
 msgstr "Οπτικό"
 
-#: ../plug-ins/python/spyro-plus.py:1612
+#: ../plug-ins/python/spyro-plus.py:1618
 msgid "Toy Kit"
 msgstr "Toy Kit (πακέτο παιχνιδιού)"
 
-#: ../plug-ins/python/spyro-plus.py:1618
+#: ../plug-ins/python/spyro-plus.py:1624
 msgid "Gears"
 msgstr "Γρανάζια"
 
-#: ../plug-ins/python/spyro-plus.py:1631 ../plug-ins/python/spyro-plus.py:1675
+#: ../plug-ins/python/spyro-plus.py:1637 ../plug-ins/python/spyro-plus.py:1681
 msgid "Rotation"
 msgstr "Περιστροφή"
 
-#: ../plug-ins/python/spyro-plus.py:1632
+#: ../plug-ins/python/spyro-plus.py:1638
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -523,11 +672,11 @@ msgstr ""
 "Περιστροφή του μοτίβου, σε μοίρες. Η αρχική θέση του κινούμενου γραναζιού "
 "στο σταθερό γρανάζι."
 
-#: ../plug-ins/python/spyro-plus.py:1655
+#: ../plug-ins/python/spyro-plus.py:1661
 msgid "Shape"
 msgstr "Σχήμα"
 
-#: ../plug-ins/python/spyro-plus.py:1656
+#: ../plug-ins/python/spyro-plus.py:1662
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -542,39 +691,39 @@ msgstr ""
 "ακουμπήσετε το όριο. Η επιλογή θα κολλήσει στα όρια της τρέχουσας επιλογής - "
 "δοκιμάστε κάτι μη ορθογώνιο."
 
-#: ../plug-ins/python/spyro-plus.py:1665
+#: ../plug-ins/python/spyro-plus.py:1671
 msgid "Sides"
 msgstr "Πλευρές"
 
-#: ../plug-ins/python/spyro-plus.py:1665
+#: ../plug-ins/python/spyro-plus.py:1671
 msgid "Number of sides of the shape."
 msgstr "Αριθμός πλευρών του σχήματος."
 
-#: ../plug-ins/python/spyro-plus.py:1670
+#: ../plug-ins/python/spyro-plus.py:1676
 msgid "Morph"
 msgstr "Μορφισμός"
 
-#: ../plug-ins/python/spyro-plus.py:1670
+#: ../plug-ins/python/spyro-plus.py:1676
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Σχήμα σταθερού γραναζιού μορφισμός. Επηρεάζει μόνο κάποια σχήματα."
 
-#: ../plug-ins/python/spyro-plus.py:1675
+#: ../plug-ins/python/spyro-plus.py:1681
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Περιστροφή σταθερού γραναζιού, σε μοίρες"
 
-#: ../plug-ins/python/spyro-plus.py:1690
+#: ../plug-ins/python/spyro-plus.py:1696
 msgid "Margin (px)"
 msgstr "Περιθώριο (px)"
 
-#: ../plug-ins/python/spyro-plus.py:1690
+#: ../plug-ins/python/spyro-plus.py:1696
 msgid "Margin from edge of selection."
 msgstr "Περιθώριο από το άκρο της επιλογής."
 
-#: ../plug-ins/python/spyro-plus.py:1695
+#: ../plug-ins/python/spyro-plus.py:1701
 msgid "Make width and height equal"
 msgstr "Δημιουργία ίσου πλάτους και ύψους"
 
-#: ../plug-ins/python/spyro-plus.py:1697
+#: ../plug-ins/python/spyro-plus.py:1703
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -583,11 +732,11 @@ msgstr ""
 "επιλογή. Όταν είναι σημειωμένο, το μοτίβο θα έχει το ίδιο πλάτος και ύψος "
 "και θα κεντράρεται."
 
-#: ../plug-ins/python/spyro-plus.py:1712
+#: ../plug-ins/python/spyro-plus.py:1718
 msgid "Re_draw"
 msgstr "Επα_νασχεδίαση"
 
-#: ../plug-ins/python/spyro-plus.py:1714
+#: ../plug-ins/python/spyro-plus.py:1720
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -595,15 +744,15 @@ msgstr ""
 "Εάν αλλάξετε τις ρυθμίσεις ενός εργαλείου, αλλάξετε χρώμα, ή αλλάξετε την "
 "επιλογή, πατήστε αυτό για να προεπισκοπήσετε πώς φαίνεται το μοτίβο."
 
-#: ../plug-ins/python/spyro-plus.py:1717
+#: ../plug-ins/python/spyro-plus.py:1723
 msgid "_Reset"
 msgstr "Ε_παναφορά"
 
-#: ../plug-ins/python/spyro-plus.py:1725
+#: ../plug-ins/python/spyro-plus.py:1731
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: ../plug-ins/python/spyro-plus.py:1726
+#: ../plug-ins/python/spyro-plus.py:1732
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -611,39 +760,78 @@ msgstr ""
 "Επιλέξτε εάν θα αποθηκευτεί ως νέα στρώση, επανασχεδίαση στην τελευταία "
 "ενεργή στρώση, ή αποθήκευση σε μονοπάτι"
 
-#: ../plug-ins/python/spyro-plus.py:1740
+#: ../plug-ins/python/spyro-plus.py:1746
 msgid "Spyrogimp"
 msgstr "Σπειρογράφημα gimp"
 
-#: ../plug-ins/python/spyro-plus.py:1749 ../plug-ins/python/spyro-plus.py:2282
+#: ../plug-ins/python/spyro-plus.py:1755 ../plug-ins/python/spyro-plus.py:2292
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Σχεδίαση σπειρογραφημάτων χρησιμοποιώντας τις ρυθμίσεις τρέχοντος εργαλείου "
 "και επιλογής."
 
-#: ../plug-ins/python/spyro-plus.py:1762
+#: ../plug-ins/python/spyro-plus.py:1768
 msgid "Curve Pattern"
 msgstr "Μοτίβο καμπύλης"
 
-#: ../plug-ins/python/spyro-plus.py:1765
+#: ../plug-ins/python/spyro-plus.py:1771
 msgid "Fixed Gear"
 msgstr "Σταθερό γρανάζι"
 
-#: ../plug-ins/python/spyro-plus.py:1768
+#: ../plug-ins/python/spyro-plus.py:1774
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: ../plug-ins/python/spyro-plus.py:2116
+#: ../plug-ins/python/spyro-plus.py:2130
 msgid "Rendering Pattern"
 msgstr "Απόδοση μοτίβου"
 
-#: ../plug-ins/python/spyro-plus.py:2128
+#: ../plug-ins/python/spyro-plus.py:2142
 msgid "Please wait : Rendering Pattern"
 msgstr "Παρακαλούμε περιμένετε: Αποδίδεται το μοτίβο"
 
-#: ../plug-ins/python/spyro-plus.py:2286
+#: ../plug-ins/python/spyro-plus.py:2296
 msgid "Spyrogimp..."
 msgstr "Σπειρογράφημα gimp..."
+
+#~ msgid "Slice"
+#~ msgstr "Τεμαχισμός"
+
+#~ msgid "Path for HTML export"
+#~ msgstr "Μονοπάτι για εξαγωγή HTML"
+
+#~ msgid "Filename for export"
+#~ msgstr "Όνομα αρχείου για εξαγωγή"
+
+#~ msgid "Image name prefix"
+#~ msgstr "Πρόθεμα ονόματος εικόνας"
+
+#~ msgid "Image format (gif, jpg, png)"
+#~ msgstr "Μορφή εικόνας (gif, jpg, png)"
+
+#~ msgid "Separate image folder"
+#~ msgstr "Ξεχωριστός φάκελος εικόνων"
+
+#~ msgid "Folder for image export"
+#~ msgstr "Φάκελος για εξαγωγή εικόνων"
+
+#~ msgid "Space between table elements"
+#~ msgstr "Κενό μεταξύ των στοιχείων πίνακα"
+
+#~ msgid "Javascript for onmouseover and clicked"
+#~ msgstr "Javascript για υπέρπτηση ποντικιού και κλικ"
+
+#~ msgid "Skip animation for table caps"
+#~ msgstr "Παράλειψη κίνησης για κεφαλαία πίνακα"
+
+#~ msgid ""
+#~ "Cuts an image along its guides, creates images and a HTML table snippet"
+#~ msgstr ""
+#~ "Κοπή εικόνας κατά μήκος των οδηγών της, δημιουργία εικόνων και ενός "
+#~ "αποσπάσματος πίνακα HTML"
+
+#~ msgid "_Console"
+#~ msgstr "_Κονσόλα"
 
 #~ msgid "Missing exception information"
 #~ msgstr "Έλλειψη πληροφορίας εξαίρεσης"
@@ -678,128 +866,11 @@ msgstr "Σπειρογράφημα gimp..."
 #~ msgid "Entry box"
 #~ msgstr "Πλαίσιο εισόδου"
 
-#~ msgid "Exports the image histogram to a text file (CSV)"
-#~ msgstr "Εξάγει το ιστόγραμμα εικόνας σε ένα αρχείο κειμένου (CSV)"
-
-#~ msgid "_Export histogram..."
-#~ msgstr "_Εξαγωγή ιστογράμματος..."
-
 #~ msgid "_Image"
 #~ msgstr "_Εικόνα"
 
 #~ msgid "_Drawable"
 #~ msgstr "Σ_χέδιο"
-
-#~ msgid "Histogram _File"
-#~ msgstr "_Αρχείο ιστογράμματος"
-
-#~ msgid "_Bucket Size"
-#~ msgstr "Μέ_γεθος κουβά"
-
-#~ msgid "Sample _Average"
-#~ msgstr "Μέσος ό_ρος δείγματος"
-
-#~ msgid "Output format"
-#~ msgstr "Μορφή εξόδου"
-
-#~ msgid "Pixel count"
-#~ msgstr "Πλήθος εικονοστοιχείων"
-
-#~ msgid "Normalized"
-#~ msgstr "Κανονικοποιημένο"
-
-#~ msgid "Percent"
-#~ msgstr "Ποσοστό"
-
-#~ msgid "Red"
-#~ msgstr "Κόκκινο"
-
-#~ msgid "Green"
-#~ msgstr "Πράσινο"
-
-#~ msgid "Blue"
-#~ msgstr "Γαλάζιο"
-
-#~ msgid "Luma (Y)"
-#~ msgstr "Luma (Y)"
-
-#~ msgid "Hue"
-#~ msgstr "Απόχρωση"
-
-#~ msgid "Saturation"
-#~ msgstr "Κορεσμός"
-
-#~ msgid "Value"
-#~ msgstr "Τιμή"
-
-#~ msgid "Saturation (HSL)"
-#~ msgstr "Κορεσμός (HSL)"
-
-#~ msgid "Lightness (HSL)"
-#~ msgstr "Φωτεινότητα (HSL)"
-
-#~ msgid "Index"
-#~ msgstr "Ευρετήριο"
-
-#~ msgid "Random"
-#~ msgstr "Τυχαίο"
-
-#~ msgid "Lightness (LAB)"
-#~ msgstr "Φωτεινότητα (LAB)"
-
-#~ msgid "A-color"
-#~ msgstr "Χρώμα Α"
-
-#~ msgid "B-color"
-#~ msgstr "Χρώμα Β"
-
-#~ msgid "Chroma (LCHab)"
-#~ msgstr "Χρώμα (Chroma) (LCHab)"
-
-#~ msgid "Hue (LCHab)"
-#~ msgstr "Απόχρωση (LCHab)"
-
-#~ msgid "Sort the colors in a palette"
-#~ msgstr "Ταξινόμηση των χρωμάτων σε μια παλέτα"
-
-#~ msgid "_Sort Palette..."
-#~ msgstr "Ταξινόμη_ση παλέτας..."
-
-#~ msgid "Se_lections"
-#~ msgstr "Επι_λογές"
-
-#~ msgid "All"
-#~ msgstr "Όλες"
-
-#~ msgid "Slice / Array"
-#~ msgstr "Τεμαχισμός / Πίνακας"
-
-#~ msgid "Autoslice (fg->bg)"
-#~ msgstr "Αυτόματος τεμαχισμός (προσκήνιο->παρασκήνιο)"
-
-#~ msgid "Partitioned"
-#~ msgstr "Διαμερισμένο"
-
-#~ msgid "Slice _expression"
-#~ msgstr "_Παράσταση τεμαχισμού"
-
-#~ msgid "Channel to _sort"
-#~ msgstr "Κανάλι για ταξινόμη_ση"
-
-#~ msgid "_Ascending"
-#~ msgstr "_Αύξουσα"
-
-#~ msgid "Secondary Channel to s_ort"
-#~ msgstr "Δευτερεύον κανάλι για ταξινόμη_ση"
-
-#~ msgid "_Quantization"
-#~ msgstr "Κ_βαντισμός"
-
-#~ msgid "_Partitioning channel"
-#~ msgstr "Κανάλι κ_ατάτμησης"
-
-#~ msgid "Partition q_uantization"
-#~ msgstr "Κβα_ντισμός κατάτμησης"
 
 #~ msgid "Add a drop shadow to a layer, and optionally bevel it"
 #~ msgstr "Προσθήκη πίπτουσας σκιάς στη στρώση και προαιρετικά λοξότμηση της"
