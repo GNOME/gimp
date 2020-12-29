@@ -219,6 +219,22 @@ GIMP_COLOR_SCALE_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcolorscaleentry</FILE>
+<TITLE>GimpColorScaleEntry</TITLE>
+GimpColorScaleEntry
+gimp_color_scale_entry_new
+<SUBSECTION Standard>
+GimpColorScaleEntryClass
+GIMP_COLOR_SCALE_ENTRY
+GIMP_IS_COLOR_SCALE_ENTRY
+GIMP_TYPE_COLOR_SCALE_ENTRY
+gimp_color_scale_entry_get_type
+GIMP_COLOR_SCALE_ENTRY_CLASS
+GIMP_IS_COLOR_SCALE_ENTRY_CLASS
+GIMP_COLOR_SCALE_ENTRY_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpcolorselection</FILE>
 <TITLE>GimpColorSelection</TITLE>
 GimpColorSelection
@@ -582,6 +598,25 @@ gimp_string_combo_box_get_type
 GIMP_STRING_COMBO_BOX_CLASS
 GIMP_IS_STRING_COMBO_BOX_CLASS
 GIMP_STRING_COMBO_BOX_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimplabeled</FILE>
+<TITLE>GimpLabeled</TITLE>
+GimpLabeled
+gimp_labeled_get_label
+gimp_labeled_set_text
+gimp_labeled_get_text
+<SUBSECTION Standard>
+GimpLabeledClass
+GimpLabeledPrivate
+GIMP_LABELED
+GIMP_IS_LABELED
+GIMP_TYPE_LABELED
+gimp_labeled_get_type
+GIMP_LABELED_CLASS
+GIMP_IS_LABELED_CLASS
+GIMP_LABELED_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -1160,13 +1195,7 @@ GimpWidgetsError
 gimp_int_radio_group_new
 gimp_int_radio_group_set_active
 gimp_spin_button_new
-GIMP_SCALE_ENTRY_LABEL
-GIMP_SCALE_ENTRY_SCALE
-GIMP_SCALE_ENTRY_SCALE_ADJ
-GIMP_SCALE_ENTRY_SPINBUTTON
-GIMP_SCALE_ENTRY_SPINBUTTON_ADJ
 gimp_scale_entry_new
-gimp_scale_entry_set_sensitive
 gimp_scale_entry_set_logarithmic
 gimp_scale_entry_get_logarithmic
 gimp_color_scale_entry_new
@@ -1213,7 +1242,6 @@ gimp_prop_int_radio_frame_new
 gimp_prop_int_radio_box_new
 gimp_prop_label_new
 gimp_prop_memsize_entry_new
-gimp_prop_opacity_entry_new
 gimp_prop_path_editor_new
 gimp_prop_scale_entry_new
 gimp_prop_size_entry_new
