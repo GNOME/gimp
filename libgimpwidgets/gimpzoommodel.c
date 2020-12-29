@@ -58,7 +58,8 @@ enum
   PROP_MINIMUM,
   PROP_MAXIMUM,
   PROP_FRACTION,
-  PROP_PERCENTAGE
+  PROP_PERCENTAGE,
+  N_PROPS
 };
 
 
@@ -83,6 +84,7 @@ static void  gimp_zoom_model_get_property (GObject      *object,
 
 
 static guint zoom_model_signals[LAST_SIGNAL] = { 0, };
+static GParamSpec *object_props[N_PROPS] = { NULL, };
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpZoomModel, gimp_zoom_model, G_TYPE_OBJECT)
 
@@ -121,60 +123,57 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
    *
    * The zoom factor.
    */
-  g_object_class_install_property (object_class, PROP_VALUE,
-                                   g_param_spec_double ("value",
-                                                        "Value",
-                                                        "Zoom factor",
-                                                        ZOOM_MIN, ZOOM_MAX,
-                                                        1.0,
-                                                        GIMP_PARAM_READWRITE));
+  object_props[PROP_VALUE] = g_param_spec_double ("value",
+                                                  "Value",
+                                                  "Zoom factor",
+                                                  ZOOM_MIN, ZOOM_MAX,
+                                                  1.0,
+                                                  GIMP_PARAM_READWRITE);
   /**
    * GimpZoomModel:minimum:
    *
    * The minimum zoom factor.
    */
-  g_object_class_install_property (object_class, PROP_MINIMUM,
-                                   g_param_spec_double ("minimum",
-                                                        "Minimum",
-                                                        "Lower limit for the zoom factor",
-                                                        ZOOM_MIN, ZOOM_MAX,
-                                                        ZOOM_MIN,
-                                                        GIMP_PARAM_READWRITE));
+  object_props[PROP_MINIMUM] = g_param_spec_double ("minimum",
+                                                    "Minimum",
+                                                    "Lower limit for the zoom factor",
+                                                    ZOOM_MIN, ZOOM_MAX,
+                                                    ZOOM_MIN,
+                                                    GIMP_PARAM_READWRITE);
   /**
    * GimpZoomModel:maximum:
    *
    * The maximum zoom factor.
    */
-  g_object_class_install_property (object_class, PROP_MAXIMUM,
-                                   g_param_spec_double ("maximum",
-                                                        "Maximum",
-                                                        "Upper limit for the zoom factor",
-                                                        ZOOM_MIN, ZOOM_MAX,
-                                                        ZOOM_MAX,
-                                                        GIMP_PARAM_READWRITE));
+  object_props[PROP_MAXIMUM] = g_param_spec_double ("maximum",
+                                                    "Maximum",
+                                                    "Upper limit for the zoom factor",
+                                                    ZOOM_MIN, ZOOM_MAX,
+                                                    ZOOM_MAX,
+                                                    GIMP_PARAM_READWRITE);
 
   /**
    * GimpZoomModel:fraction:
    *
    * The zoom factor expressed as a fraction.
    */
-  g_object_class_install_property (object_class, PROP_FRACTION,
-                                   g_param_spec_string ("fraction",
-                                                        "Fraction",
-                                                        "The zoom factor expressed as a fraction",
-                                                        "1:1",
-                                                        GIMP_PARAM_READABLE));
+  object_props[PROP_FRACTION] = g_param_spec_string ("fraction",
+                                                     "Fraction",
+                                                     "The zoom factor expressed as a fraction",
+                                                     "1:1",
+                                                     GIMP_PARAM_READABLE);
   /**
    * GimpZoomModel:percentage:
    *
    * The zoom factor expressed as percentage.
    */
-  g_object_class_install_property (object_class, PROP_PERCENTAGE,
-                                   g_param_spec_string ("percentage",
-                                                        "Percentage",
-                                                        "The zoom factor expressed as a percentage",
-                                                        "100%",
-                                                        GIMP_PARAM_READABLE));
+  object_props[PROP_PERCENTAGE] = g_param_spec_string ("percentage",
+                                                       "Percentage",
+                                                       "The zoom factor expressed as a percentage",
+                                                       "100%",
+                                                       GIMP_PARAM_READABLE);
+
+  g_object_class_install_properties (object_class, N_PROPS, object_props);
 }
 
 static void
@@ -208,9 +207,9 @@ gimp_zoom_model_set_property (GObject      *object,
     case PROP_VALUE:
       priv->value = g_value_get_double (value);
 
-      g_object_notify (object, "value");
-      g_object_notify (object, "fraction");
-      g_object_notify (object, "percentage");
+      g_object_notify_by_pspec (object, object_props[PROP_VALUE]);
+      g_object_notify_by_pspec (object, object_props[PROP_FRACTION]);
+      g_object_notify_by_pspec (object, object_props[PROP_PERCENTAGE]);
       break;
 
     case PROP_MINIMUM:
@@ -230,9 +229,9 @@ gimp_zoom_model_set_property (GObject      *object,
     {
       priv->value = CLAMP (priv->value, priv->minimum, priv->maximum);
 
-      g_object_notify (object, "value");
-      g_object_notify (object, "fraction");
-      g_object_notify (object, "percentage");
+      g_object_notify_by_pspec (object, object_props[PROP_VALUE]);
+      g_object_notify_by_pspec (object, object_props[PROP_FRACTION]);
+      g_object_notify_by_pspec (object, object_props[PROP_PERCENTAGE]);
     }
 
   g_object_thaw_notify (object);
