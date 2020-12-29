@@ -51,8 +51,10 @@ enum
   PROP_LOWER,
   PROP_UPPER,
   PROP_POSITION,
-  PROP_MAX_SIZE
+  PROP_MAX_SIZE,
+  N_PROPS
 };
+static GParamSpec *object_props[N_PROPS] = { NULL, };
 
 
 /* All distances below are in 1/72nd's of an inch. (According to
@@ -190,63 +192,53 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   widget_class->motion_notify_event  = gimp_ruler_motion_notify;
   widget_class->draw                 = gimp_ruler_draw;
 
-  g_object_class_install_property (object_class,
-                                   PROP_ORIENTATION,
-                                   g_param_spec_enum ("orientation",
+  object_props[PROP_ORIENTATION] = g_param_spec_enum ("orientation",
                                                       "Orientation",
                                                       "The orientation of the ruler",
                                                       GTK_TYPE_ORIENTATION,
                                                       GTK_ORIENTATION_HORIZONTAL,
-                                                      GIMP_PARAM_READWRITE));
+                                                      GIMP_PARAM_READWRITE);
 
-  g_object_class_install_property (object_class,
-                                   PROP_UNIT,
-                                   gimp_param_spec_unit ("unit",
-                                                         "Unit",
-                                                         "Unit of ruler",
-                                                         TRUE, TRUE,
-                                                         GIMP_UNIT_PIXEL,
-                                                         GIMP_PARAM_READWRITE));
+  object_props[PROP_UNIT] = gimp_param_spec_unit ("unit",
+                                                  "Unit",
+                                                  "Unit of ruler",
+                                                  TRUE, TRUE,
+                                                  GIMP_UNIT_PIXEL,
+                                                  GIMP_PARAM_READWRITE);
 
-  g_object_class_install_property (object_class,
-                                   PROP_LOWER,
-                                   g_param_spec_double ("lower",
-                                                        "Lower",
-                                                        "Lower limit of ruler",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE,
-                                                        0.0,
-                                                        GIMP_PARAM_READWRITE));
+  object_props[PROP_LOWER] = g_param_spec_double ("lower",
+                                                  "Lower",
+                                                  "Lower limit of ruler",
+                                                  -G_MAXDOUBLE,
+                                                  G_MAXDOUBLE,
+                                                  0.0,
+                                                  GIMP_PARAM_READWRITE);
 
-  g_object_class_install_property (object_class,
-                                   PROP_UPPER,
-                                   g_param_spec_double ("upper",
-                                                        "Upper",
-                                                        "Upper limit of ruler",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE,
-                                                        0.0,
-                                                        GIMP_PARAM_READWRITE));
+  object_props[PROP_UPPER] = g_param_spec_double ("upper",
+                                                  "Upper",
+                                                  "Upper limit of ruler",
+                                                  -G_MAXDOUBLE,
+                                                  G_MAXDOUBLE,
+                                                  0.0,
+                                                  GIMP_PARAM_READWRITE);
 
-  g_object_class_install_property (object_class,
-                                   PROP_POSITION,
-                                   g_param_spec_double ("position",
-                                                        "Position",
-                                                        "Position of mark on the ruler",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE,
-                                                        0.0,
-                                                        GIMP_PARAM_READWRITE));
+  object_props[PROP_POSITION] = g_param_spec_double ("position",
+                                                     "Position",
+                                                     "Position of mark on the ruler",
+                                                     -G_MAXDOUBLE,
+                                                     G_MAXDOUBLE,
+                                                     0.0,
+                                                     GIMP_PARAM_READWRITE);
 
-  g_object_class_install_property (object_class,
-                                   PROP_MAX_SIZE,
-                                   g_param_spec_double ("max-size",
-                                                        "Max Size",
-                                                        "Maximum size of the ruler",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE,
-                                                        0.0,
-                                                        GIMP_PARAM_READWRITE));
+  object_props[PROP_MAX_SIZE] = g_param_spec_double ("max-size",
+                                                     "Max Size",
+                                                     "Maximum size of the ruler",
+                                                     -G_MAXDOUBLE,
+                                                     G_MAXDOUBLE,
+                                                     0.0,
+                                                     GIMP_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, object_props);
 
   gtk_widget_class_set_css_name (widget_class, "GimpRuler");
 }
@@ -605,7 +597,7 @@ gimp_ruler_set_unit (GimpRuler *ruler,
   if (priv->unit != unit)
     {
       priv->unit = unit;
-      g_object_notify (G_OBJECT (ruler), "unit");
+      g_object_notify_by_pspec (G_OBJECT (ruler), object_props[PROP_UNIT]);
 
       priv->backing_store_valid = FALSE;
       gtk_widget_queue_draw (GTK_WIDGET (ruler));
@@ -653,7 +645,7 @@ gimp_ruler_set_position (GimpRuler *ruler,
       gint xdiff, ydiff;
 
       priv->position = position;
-      g_object_notify (G_OBJECT (ruler), "position");
+      g_object_notify_by_pspec (G_OBJECT (ruler), object_props[PROP_POSITION]);
 
       rect = gimp_ruler_get_pos_rect (ruler, priv->position);
 
@@ -735,17 +727,17 @@ gimp_ruler_set_range (GimpRuler *ruler,
   if (priv->lower != lower)
     {
       priv->lower = lower;
-      g_object_notify (G_OBJECT (ruler), "lower");
+      g_object_notify_by_pspec (G_OBJECT (ruler), object_props[PROP_LOWER]);
     }
   if (priv->upper != upper)
     {
       priv->upper = upper;
-      g_object_notify (G_OBJECT (ruler), "upper");
+      g_object_notify_by_pspec (G_OBJECT (ruler), object_props[PROP_UPPER]);
     }
   if (priv->max_size != max_size)
     {
       priv->max_size = max_size;
-      g_object_notify (G_OBJECT (ruler), "max-size");
+      g_object_notify_by_pspec (G_OBJECT (ruler), object_props[PROP_MAX_SIZE]);
     }
   g_object_thaw_notify (G_OBJECT (ruler));
 
