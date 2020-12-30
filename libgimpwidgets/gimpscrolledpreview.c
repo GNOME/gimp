@@ -537,6 +537,7 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
       GtkStyleContext *context = gtk_widget_get_style_context (widget);
+      GtkWidget       *toplevel;
       GtkWidget       *outer;
       GtkWidget       *inner;
       GtkWidget       *area;
@@ -549,6 +550,13 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       gdouble          h, v;
 
       priv->nav_popup = gtk_window_new (GTK_WINDOW_POPUP);
+
+      toplevel = gtk_widget_get_toplevel (GTK_WIDGET (preview));
+      if (GTK_IS_WINDOW (toplevel))
+        {
+          gtk_window_set_transient_for (GTK_WINDOW (priv->nav_popup),
+                                        GTK_WINDOW (toplevel));
+        }
 
       gtk_window_set_screen (GTK_WINDOW (priv->nav_popup),
                              gtk_widget_get_screen (widget));
