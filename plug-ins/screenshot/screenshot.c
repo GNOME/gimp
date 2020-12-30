@@ -44,15 +44,6 @@
 #define PLUG_IN_BINARY "screenshot"
 #define PLUG_IN_ROLE   "gimp-screenshot"
 
-#ifdef __GNUC__
-#ifdef GDK_NATIVE_WINDOW_POINTER
-#if GLIB_SIZEOF_VOID_P != 4
-#warning window_id does not fit in PDB_INT32
-#endif
-#endif
-#endif
-
-
 typedef struct _Screenshot      Screenshot;
 typedef struct _ScreenshotClass ScreenshotClass;
 
