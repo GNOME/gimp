@@ -300,9 +300,22 @@ screenshot_run (GimpProcedure        *procedure,
           shootvals.shoot_type = SHOOT_ROOT;
         }
 
-      /* Get information from the dialog */
-      if (! shoot_dialog (&monitor))
-        status = GIMP_PDB_CANCEL;
+      /* Get information from the dialog. Freedesktop portal comes with
+       * its own dialog.
+       */
+      if (backend != SCREENSHOT_BACKEND_FREEDESKTOP)
+        {
+          if (! shoot_dialog (&monitor))
+            status = GIMP_PDB_CANCEL;
+        }
+      else
+        {
+          /* This is ugly but in reality we have no idea on which monitor
+           * a screenshot was taken from with portals. It's like a
+           * better-than-nothing trick for easy single-display cases.
+           */
+          monitor = gdk_display_get_monitor (gdk_display_get_default (), 0);
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:

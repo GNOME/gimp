@@ -172,19 +172,33 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
       /* Signal got a response. */
       if (*image)
         {
-          GimpColorProfile *profile;
-
-          /* Just assign profile of current monitor. This will work only
-           * as long as this is a single-display setup.
-           * We need to figure out how to do better color management for
-           * portal screenshots.
-           * TODO!
-           */
-          profile = gimp_monitor_get_color_profile (monitor);
-          if (profile)
+          if (! gimp_image_get_color_profile (*image))
             {
-              gimp_image_set_color_profile (*image, profile);
-              g_object_unref (profile);
+              /* The Freedesktop portal does not return a profile, so we
+               * don't have color characterization through the API.
+               * Ideally then, the returned screenshot image would have
+               * embedded profile, but this depends on each desktop
+               * implementation of the portal (and at time of writing,
+               * the GNOME implementation of Freedesktop portal at least
+               * didn't embed a profile with the returned PNG image).
+               *
+               * As a last resort, we assign the profile of current
+               * monitor. This will actually only work if we use the
+               * portal on X11 (because we don't have monitor's profile
+               * access on Wayland AFAIK), and only as long as this is a
+               * single-display setup.
+               *
+               * We need to figure out how to do better color management for
+               * portal screenshots. TODO!
+               */
+              GimpColorProfile *profile;
+
+              profile = gimp_monitor_get_color_profile (monitor);
+              if (profile)
+                {
+                  gimp_image_set_color_profile (*image, profile);
+                  g_object_unref (profile);
+                }
             }
 
           return GIMP_PDB_SUCCESS;
