@@ -235,6 +235,7 @@ screenshot_run (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   run_mode = GIMP_VALUES_GET_ENUM (args, 0);
+  gimp_ui_init (PLUG_IN_BINARY);
 
 #ifdef PLATFORM_OSX
   if (! backend && screenshot_osx_available ())
@@ -510,8 +511,6 @@ shoot_dialog (GdkMonitor **monitor)
   GtkAdjustment *adj;
   gboolean       run;
   GtkWidget     *cursor_toggle = NULL;
-
-  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("Screenshot"), PLUG_IN_ROLE,
                             NULL, 0,

@@ -530,7 +530,8 @@ add_cursor_image (GimpImage  *image,
 gboolean
 screenshot_x11_available (void)
 {
-  return TRUE;
+  return (gdk_display_get_default () &&
+          GDK_IS_X11_DISPLAY (gdk_display_get_default ()));
 }
 
 ScreenshotCapabilities
