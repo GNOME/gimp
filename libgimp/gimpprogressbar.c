@@ -203,7 +203,7 @@ gimp_window_get_native_id (GtkWindow *window)
 
 #ifdef GDK_WINDOWING_WAYLAND
   if (GDK_IS_WAYLAND_WINDOW (surface))
-    g_message ("Getting window ID for progress not supported on Wayland yet");
+    g_debug ("Getting window ID for progress not supported on Wayland yet");
 #endif
 
   return 0;
