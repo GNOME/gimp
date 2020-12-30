@@ -194,6 +194,9 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       n_metadata = gimp_save_procedure_get_support_exif (save_procedure) +
                    gimp_save_procedure_get_support_iptc (save_procedure) +
                    gimp_save_procedure_get_support_xmp  (save_procedure);
+      n_metadata = MAX (n_metadata,
+                        gimp_save_procedure_get_support_profile (save_procedure) +
+                        gimp_save_procedure_get_support_thumbnail (save_procedure));
 
       if (gimp_save_procedure_get_support_exif (save_procedure))
         {
@@ -228,8 +231,6 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
 
       /* Line for specific metadata: profile, thumbnail. */
       left = 0;
-      n_metadata = gimp_save_procedure_get_support_profile (save_procedure) +
-                   gimp_save_procedure_get_support_thumbnail (save_procedure);
 
       if (gimp_save_procedure_get_support_profile (save_procedure))
         {
@@ -252,26 +253,23 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       if (n_metadata > 0)
         top++;
 
-      /* Custom metadata: 2 items per line. */
+      /* Custom metadata: n_metadata items per line. */
       left = 0;
       for (iter = save_dialog->priv->additional_metadata; iter; iter = iter->next)
         {
           widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
           g_object_ref (widget);
-          gtk_grid_attach (GTK_GRID (grid), widget, left, top, 3, 1);
-          if (left == 0)
+          gtk_grid_attach (GTK_GRID (grid), widget, left, top, 6 / n_metadata, 1);
+          left += 6 / n_metadata;
+          if (left >= 6)
             {
-              left = 3;
-            }
-          else
-            {
-              left = 0;
               top++;
+              left = 0;
             }
+
           gtk_widget_show (widget);
         }
-      if (left == 3)
-        top++;
+      top++;
 
       /* Last line for comment field. */
       if (gimp_save_procedure_get_support_comment (save_procedure))
