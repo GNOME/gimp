@@ -31,6 +31,10 @@
 #include <gdk/gdkx.h>
 #endif
 
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif
+
 #include "gimpuitypes.h"
 
 #include "gimp.h"
@@ -179,22 +183,27 @@ gimp_progress_bar_pulse (gpointer user_data)
 static guint32
 gimp_window_get_native_id (GtkWindow *window)
 {
+  GdkWindow *surface;
+
   g_return_val_if_fail (GTK_IS_WINDOW (window), 0);
 
-#ifdef GDK_NATIVE_WINDOW_POINTER
-#ifdef __GNUC__
-#warning gimp_window_get_native() unimplementable for the target windowing system
-#endif
-#endif
+  surface = gtk_widget_get_window (GTK_WIDGET (window));
+  if (!surface) /* aka window is not yet realized */
+    return 0;
 
 #ifdef GDK_WINDOWING_WIN32
-  if (window && gtk_widget_get_realized (GTK_WIDGET (window)))
+  if (GDK_IS_WIN32_WINDOW (surface))
     return GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_X11
-  if (window && gtk_widget_get_realized (GTK_WIDGET (window)))
+  if (GDK_IS_X11_WINDOW (surface))
     return GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
+#endif
+
+#ifdef GDK_WINDOWING_WAYLAND
+  if (GDK_IS_WAYLAND_WINDOW (surface))
+    g_message ("Getting window ID for progress not supported on Wayland yet");
 #endif
 
   return 0;
