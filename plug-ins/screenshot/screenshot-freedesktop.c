@@ -28,6 +28,10 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
+
 #include "screenshot.h"
 #include "screenshot-freedesktop.h"
 
@@ -126,7 +130,24 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
                               GError           **error)
 {
   GVariant *retval;
-  gchar    *opath = NULL;
+  gchar    *opath         = NULL;
+  gchar    *parent_window = NULL;
+
+#ifdef GDK_WINDOWING_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
+      GdkWindow *window;
+
+      window = gimp_ui_get_progress_window ();
+      if (window)
+        {
+          gint id;
+
+          id = GDK_WINDOW_XID (window);
+          parent_window = g_strdup_printf ("x11:0x%x", id);
+        }
+    }
+#endif
 
   if (shootvals->shoot_type != SHOOT_ROOT)
     {
@@ -138,9 +159,10 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
     screenshot_delay (shootvals->screenshot_delay);
 
   retval = g_dbus_proxy_call_sync (proxy, "Screenshot",
-                                   g_variant_new ("(sa{sv})", "", NULL),
+                                   g_variant_new ("(sa{sv})", parent_window ? parent_window : "", NULL),
                                    G_DBUS_CALL_FLAGS_NONE,
                                    -1, NULL, error);
+  g_free (parent_window);
   g_object_unref (proxy);
   proxy = NULL;
   if (retval)
