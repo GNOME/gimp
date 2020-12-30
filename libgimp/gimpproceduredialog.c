@@ -1268,15 +1268,22 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
     {
       label = gimp_labeled_get_label (GIMP_LABELED (widget));
     }
-  else if (g_type_is_a (G_OBJECT_TYPE (widget), GTK_TYPE_LABEL))
+  else
     {
-      label = widget;
-    }
-  else if (g_type_is_a (G_OBJECT_TYPE (widget), GTK_TYPE_BUTTON))
-    {
-      label = gtk_bin_get_child (GTK_BIN (widget));
-      if (! label || ! g_type_is_a (G_OBJECT_TYPE (label), GTK_TYPE_LABEL))
-        label = NULL;
+      GList *labels = gtk_widget_list_mnemonic_labels (widget);
+
+      if (g_list_length (labels) >= 1)
+        {
+          if (g_list_length (labels) > 1)
+            g_printerr ("Procedure '%s': %d mnemonics for property %s. Too much?\n",
+                        gimp_procedure_get_name (dialog->priv->procedure),
+                        g_list_length (labels),
+                        id ? id : core_id);
+
+          label = labels->data;
+        }
+
+      g_list_free (labels);
     }
 
   if (label                                                          &&
@@ -1314,7 +1321,8 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
   else
     {
       g_printerr ("Procedure '%s': no mnemonic for property %s\n",
-                  gimp_procedure_get_name (dialog->priv->procedure), id);
+                  gimp_procedure_get_name (dialog->priv->procedure),
+                  id ? id : core_id);
       success = FALSE;
     }
 
