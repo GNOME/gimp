@@ -38,7 +38,6 @@ scalable_images = \
 	scalable/help-about.svg					\
 	scalable/list-add.svg					\
 	scalable/list-remove.svg				\
-	scalable/media-floppy.svg				\
 	scalable/media-optical.svg				\
 	scalable/media-playback-pause.svg			\
 	scalable/media-playback-start.svg			\
@@ -356,7 +355,6 @@ vector24_images = \
 	24/dialog-question.svg					\
 	24/dialog-warning.svg					\
 	24/document-print.svg					\
-	24/media-floppy.svg 					\
 	24/media-optical.svg					\
 	\
 	24/gtk-select-color.svg					\
@@ -576,7 +574,6 @@ icons16_images = \
 	16/help-about.png					\
 	16/list-add.png						\
 	16/list-remove.png					\
-	16/media-floppy.png					\
 	16/media-optical.png					\
 	16/media-playback-pause.png				\
 	16/media-playback-start.png				\
@@ -901,7 +898,6 @@ icons24_images = \
 	24/document-print.png					\
 	24/format-text-direction-ltr.png			\
 	24/format-text-direction-rtl.png			\
-	24/media-floppy.png					\
 	24/media-optical.png 					\
 	\
 	24/gtk-select-color.png					\

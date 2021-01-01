@@ -39,7 +39,6 @@ color_vector_scalable = [
   'scalable/help-about.svg',
   'scalable/list-add.svg',
   'scalable/list-remove.svg',
-  'scalable/media-floppy.svg',
   'scalable/media-optical.svg',
   'scalable/media-playback-pause.svg',
   'scalable/media-playback-start.svg',
@@ -357,7 +356,6 @@ color_vector_24 = [
   '24/dialog-question.svg',
   '24/dialog-warning.svg',
   '24/document-print.svg',
-  '24/media-floppy.svg',
   '24/media-optical.svg',
 
   '24/gtk-select-color.svg',
@@ -562,7 +560,6 @@ symbolic_vector_scalable = [
   'scalable/help-about-symbolic.svg',
   'scalable/list-add-symbolic.svg',
   'scalable/list-remove-symbolic.svg',
-  'scalable/media-floppy-symbolic.svg',
   'scalable/media-optical-symbolic.svg',
   'scalable/media-playback-pause-symbolic.svg',
   'scalable/media-playback-start-symbolic.svg',
@@ -869,7 +866,6 @@ symbolic_vector_24 = [
   '24/dialog-question-symbolic.svg',
   '24/dialog-warning-symbolic.svg',
   '24/document-print-symbolic.svg',
-  '24/media-floppy-symbolic.svg',
   '24/media-optical-symbolic.svg',
 
   '24/gtk-select-color-symbolic.svg',
@@ -1312,7 +1308,6 @@ bitmap_16 = [
   '16/help-about.png',
   '16/list-add.png',
   '16/list-remove.png',
-  '16/media-floppy.png',
   '16/media-optical.png',
   '16/media-playback-pause.png',
   '16/media-playback-start.png',
@@ -1530,7 +1525,6 @@ bitmap_24 = [
   '24/gimp-warning.png',
   '24/gimp-web.png',
   '24/gtk-select-color.png',
-  '24/media-floppy.png',
   '24/media-optical.png',
 ]
 bitmap_32 = [

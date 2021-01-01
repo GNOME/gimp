@@ -38,7 +38,6 @@ scalable_images = \
 	scalable/help-about-symbolic.svg					\
 	scalable/list-add-symbolic.svg					\
 	scalable/list-remove-symbolic.svg				\
-	scalable/media-floppy-symbolic.svg				\
 	scalable/media-optical-symbolic.svg				\
 	scalable/media-playback-pause-symbolic.svg			\
 	scalable/media-playback-start-symbolic.svg			\
@@ -356,7 +355,6 @@ vector24_images = \
 	24/dialog-question-symbolic.svg					\
 	24/dialog-warning-symbolic.svg					\
 	24/document-print-symbolic.svg					\
-	24/media-floppy-symbolic.svg 					\
 	24/media-optical-symbolic.svg					\
 	\
 	24/gtk-select-color-symbolic.svg					\
@@ -576,7 +574,6 @@ icons16_images = \
 	16/help-about-symbolic.symbolic.png					\
 	16/list-add-symbolic.symbolic.png					\
 	16/list-remove-symbolic.symbolic.png					\
-	16/media-floppy-symbolic.symbolic.png					\
 	16/media-optical-symbolic.symbolic.png					\
 	16/media-playback-pause-symbolic.symbolic.png				\
 	16/media-playback-start-symbolic.symbolic.png				\
@@ -900,7 +897,6 @@ icons24_images = \
 	24/document-print-symbolic.symbolic.png					\
 	24/format-text-direction-ltr-symbolic.symbolic.png			\
 	24/format-text-direction-rtl-symbolic.symbolic.png			\
-	24/media-floppy-symbolic.symbolic.png					\
 	24/media-optical-symbolic.symbolic.png 					\
 	\
 	24/gtk-select-color-symbolic.symbolic.png				\
