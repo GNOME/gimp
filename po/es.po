@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-04 18:12+0000\n"
+"POT-Creation-Date: 2020-12-30 17:33+0000\n"
 "PO-Revision-Date: 2020-10-06 13:48+0200\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -143,7 +143,6 @@ msgstr ""
 "relevante"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
-#| msgid "13 bug fixes"
 msgid "Various bug fixes"
 msgstr "Varias correcciones de errores"
 
@@ -961,7 +960,7 @@ msgstr ""
 "con este programa. Si no ha sido así, consulte <https://www.gnu.org/licenses/"
 ">"
 
-#: ../app/gimp-update.c:261
+#: ../app/gimp-update.c:385
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -14591,7 +14590,7 @@ msgid "(Preview may be out of date)"
 msgstr "(La vista previa podría estar desactualizada)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:429
+#: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:441
 #: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:702
 #, c-format
 msgid "%d × %d pixel"
@@ -15130,7 +15129,7 @@ msgid "Emulate brush dynamics"
 msgstr "Emular las dinámicas del pincel"
 
 #. no undo (or redo) steps available
-#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:399
+#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:410
 #: ../app/widgets/gimpsymmetryeditor.c:165
 msgid "None"
 msgstr "Ninguno"
@@ -15454,22 +15453,22 @@ msgstr "porcentaje"
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: ../app/dialogs/about-dialog.c:132
+#: ../app/dialogs/about-dialog.c:134
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revisión %d)"
 
-#: ../app/dialogs/about-dialog.c:140
+#: ../app/dialogs/about-dialog.c:142
 msgid "About GIMP"
 msgstr "Acerca de GIMP"
 
-#: ../app/dialogs/about-dialog.c:149
+#: ../app/dialogs/about-dialog.c:151
 msgid "Visit the GIMP website"
 msgstr "Visite el sitio web de GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:155
+#: ../app/dialogs/about-dialog.c:157
 msgid "translator-credits"
 msgstr ""
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2015\n"
@@ -15478,29 +15477,29 @@ msgstr ""
 "Pablo G. del Campo\n"
 "Francisco Vila"
 
-#: ../app/dialogs/about-dialog.c:345
+#: ../app/dialogs/about-dialog.c:355
 msgid "Update available!"
 msgstr "¡Actualización disponible!"
 
 #. This is actually a new revision of current version.
-#: ../app/dialogs/about-dialog.c:365
+#: ../app/dialogs/about-dialog.c:375
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Descargue GIMP %s revisión %d (lanzado el %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: ../app/dialogs/about-dialog.c:375
+#: ../app/dialogs/about-dialog.c:385
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Dejar un comentario</u>: <i>%s</i>"
 
-#: ../app/dialogs/about-dialog.c:380
+#: ../app/dialogs/about-dialog.c:390
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Descargar GIMP %s (lanzado el %s)\n"
 
-#: ../app/dialogs/about-dialog.c:405 ../app/dialogs/about-dialog.c:426
+#: ../app/dialogs/about-dialog.c:415 ../app/dialogs/about-dialog.c:436
 msgid "Check for updates"
 msgstr "Buscar actualizaciones"
 
@@ -15508,16 +15507,16 @@ msgstr "Buscar actualizaciones"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: ../app/dialogs/about-dialog.c:446
+#: ../app/dialogs/about-dialog.c:456
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Comprobado por última vez el %s a las %s"
 
-#: ../app/dialogs/about-dialog.c:748
+#: ../app/dialogs/about-dialog.c:759
 msgid "GIMP is brought to you by"
 msgstr "GIMP se ha realizado para usted por"
 
-#: ../app/dialogs/about-dialog.c:824
+#: ../app/dialogs/about-dialog.c:835
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -17501,7 +17500,7 @@ msgid "Vertical"
 msgstr "Vertical"
 
 #: ../app/dialogs/preferences-dialog.c:2731
-#: ../app/widgets/gimpimagepropview.c:457
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppp"
 
@@ -18469,7 +18468,7 @@ msgstr ""
 "<small>commit <tt>%s</tt></small>\n"
 "\n"
 "<small>Revise los errores de la última rama principal de git\n"
-"antes de infomrar sobre ellos.</small>"
+"antes de informar sobre ellos.</small>"
 
 #: ../app/display/gimpdisplayshell-close.c:168
 #: ../app/display/gimpdisplayshell-close.c:266
@@ -27139,78 +27138,78 @@ msgstr ""
 "Sustituir el comentario actual de la imagen por el comentario predeterminado "
 "establecido en Editar→Preferencias→Imagen predeterminada."
 
-#: ../app/widgets/gimpimagepropview.c:110
+#: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
 msgstr "Tamaño en píxeles:"
 
-#: ../app/widgets/gimpimagepropview.c:113
+#: ../app/widgets/gimpimagepropview.c:116
 msgid "Print size:"
 msgstr "Tamaño de la impresión:"
 
-#: ../app/widgets/gimpimagepropview.c:116
+#: ../app/widgets/gimpimagepropview.c:119
 msgid "Resolution:"
 msgstr "Resolución:"
 
-#: ../app/widgets/gimpimagepropview.c:119
+#: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
 msgstr "Espacio de color:"
 
-#: ../app/widgets/gimpimagepropview.c:122
+#: ../app/widgets/gimpimagepropview.c:125
 msgid "Precision:"
 msgstr "Precisión:"
 
-#: ../app/widgets/gimpimagepropview.c:127
+#: ../app/widgets/gimpimagepropview.c:130
 msgid "File Name:"
 msgstr "Nombre de archivo:"
 
-#: ../app/widgets/gimpimagepropview.c:133
+#: ../app/widgets/gimpimagepropview.c:138
 msgid "File Size:"
 msgstr "Tamaño del archivo:"
 
-#: ../app/widgets/gimpimagepropview.c:136
+#: ../app/widgets/gimpimagepropview.c:141
 msgid "File Type:"
 msgstr "Tipo de archivo:"
 
-#: ../app/widgets/gimpimagepropview.c:141
+#: ../app/widgets/gimpimagepropview.c:146
 msgid "Size in memory:"
 msgstr "Tamaño en la memoria:"
 
-#: ../app/widgets/gimpimagepropview.c:144
+#: ../app/widgets/gimpimagepropview.c:149
 msgid "Undo steps:"
 msgstr "Pasos de deshacer:"
 
-#: ../app/widgets/gimpimagepropview.c:147
+#: ../app/widgets/gimpimagepropview.c:152
 msgid "Redo steps:"
 msgstr "Pasos de rehacer:"
 
-#: ../app/widgets/gimpimagepropview.c:152
+#: ../app/widgets/gimpimagepropview.c:157
 msgid "Number of pixels:"
 msgstr "Número de píxeles:"
 
-#: ../app/widgets/gimpimagepropview.c:155
+#: ../app/widgets/gimpimagepropview.c:160
 msgid "Number of layers:"
 msgstr "Número de capas:"
 
-#: ../app/widgets/gimpimagepropview.c:158
+#: ../app/widgets/gimpimagepropview.c:163
 msgid "Number of channels:"
 msgstr "Número de canales:"
 
-#: ../app/widgets/gimpimagepropview.c:161
+#: ../app/widgets/gimpimagepropview.c:166
 msgid "Number of paths:"
 msgstr "Número de rutas:"
 
-#: ../app/widgets/gimpimagepropview.c:452
+#: ../app/widgets/gimpimagepropview.c:464
 #: ../app/widgets/gimptemplateeditor.c:350
 #, c-format
 msgid "pixels/%s"
 msgstr "píxeles/%s"
 
-#: ../app/widgets/gimpimagepropview.c:454
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g x %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:475
+#: ../app/widgets/gimpimagepropview.c:488
 msgid "colors"
 msgstr "colores"
 
