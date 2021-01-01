@@ -690,6 +690,16 @@ gimp_image_window_configure_event (GtkWidget         *widget,
   return TRUE;
 }
 
+static void
+gimp_image_window_update_csd_on_fullscreen (GtkWidget *child,
+                                            gpointer   user_data)
+{
+  gboolean fullscreen = GPOINTER_TO_INT (user_data);
+
+  if (GTK_IS_HEADER_BAR (child))
+    gtk_widget_set_visible (child, !fullscreen);
+}
+
 static gboolean
 gimp_image_window_window_state_event (GtkWidget           *widget,
                                       GdkEventWindowState *event)
@@ -715,6 +725,13 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
       gimp_image_window_suspend_keep_pos (window);
       gimp_display_shell_appearance_update (shell);
       gimp_image_window_resume_keep_pos (window);
+
+      /* When using CSD (for example in Wayland), our title bar stays visible
+       * when going fullscreen by default. There is no getter for it and it's
+       * an internal child, so we use this workaround instead */
+      gtk_container_forall (GTK_CONTAINER (window),
+                            gimp_image_window_update_csd_on_fullscreen,
+                            GINT_TO_POINTER (fullscreen));
     }
 
   if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
