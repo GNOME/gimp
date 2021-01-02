@@ -64,7 +64,8 @@ enum
 {
   PROP_0,
   PROP_TITLE,
-  PROP_PALETTE_NAME
+  PROP_PALETTE_NAME,
+  N_PROPS
 };
 
 
@@ -101,6 +102,7 @@ static GtkWidget * gimp_palette_select_button_create_inside (GimpPaletteSelectBu
 static const GtkTargetEntry target = { "application/x-gimp-palette-name", 0 };
 
 static guint palette_button_signals[LAST_SIGNAL] = { 0 };
+static GParamSpec *palette_button_props[N_PROPS] = { NULL, };
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPaletteSelectButton, gimp_palette_select_button,
@@ -128,13 +130,12 @@ gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_TITLE,
-                                   g_param_spec_string ("title",
-                                                        "Title",
-                                                        "The title to be used for the palette selection popup dialog",
-                                                        _("Palette Selection"),
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+  palette_button_props[PROP_TITLE] = g_param_spec_string ("title",
+                                                          "Title",
+                                                          "The title to be used for the palette selection popup dialog",
+                                                          _("Palette Selection"),
+                                                          GIMP_PARAM_READWRITE |
+                                                          G_PARAM_CONSTRUCT_ONLY);
 
   /**
    * GimpPaletteSelectButton:palette-name:
@@ -143,12 +144,13 @@ gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_PALETTE_NAME,
-                                   g_param_spec_string ("palette-name",
+  palette_button_props[PROP_PALETTE_NAME] = g_param_spec_string ("palette-name",
                                                         "Palette name",
                                                         "The name of the currently selected palette",
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, palette_button_props);
 
   /**
    * GimpPaletteSelectButton::palette-set:
@@ -352,7 +354,7 @@ gimp_palette_select_button_callback (const gchar *palette_name,
 
   g_signal_emit (button, palette_button_signals[PALETTE_SET], 0,
                  palette_name, dialog_closing);
-  g_object_notify (G_OBJECT (button), "palette-name");
+  g_object_notify_by_pspec (G_OBJECT (button), palette_button_props[PROP_PALETTE_NAME]);
 }
 
 static void

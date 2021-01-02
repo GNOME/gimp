@@ -54,7 +54,8 @@ enum
 {
   PROP_0,
   PROP_TITLE,
-  PROP_FONT_NAME
+  PROP_FONT_NAME,
+  N_PROPS
 };
 
 
@@ -102,6 +103,7 @@ static GtkWidget * gimp_font_select_button_create_inside (GimpFontSelectButton *
 static const GtkTargetEntry target = { "application/x-gimp-font-name", 0 };
 
 static guint font_button_signals[LAST_SIGNAL] = { 0 };
+static GParamSpec *font_button_props[N_PROPS] = { NULL, };
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpFontSelectButton, gimp_font_select_button,
@@ -129,13 +131,12 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_TITLE,
-                                   g_param_spec_string ("title",
-                                                        "Title",
-                                                        "The title to be used for the font selection popup dialog",
-                                                        _("Font Selection"),
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+  font_button_props[PROP_TITLE] = g_param_spec_string ("title",
+                                                       "Title",
+                                                       "The title to be used for the font selection popup dialog",
+                                                       _("Font Selection"),
+                                                       GIMP_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT_ONLY);
 
   /**
    * GimpFontSelectButton:font-name:
@@ -144,12 +145,13 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_FONT_NAME,
-                                   g_param_spec_string ("font-name",
-                                                        "Font name",
-                                                        "The name of the currently selected font",
-                                                        "Sans-serif",
-                                                        GIMP_PARAM_READWRITE));
+  font_button_props[PROP_FONT_NAME] = g_param_spec_string ("font-name",
+                                                           "Font name",
+                                                           "The name of the currently selected font",
+                                                           "Sans-serif",
+                                                           GIMP_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, font_button_props);
 
   /**
    * GimpFontSelectButton::font-set:
@@ -352,7 +354,7 @@ gimp_font_select_button_callback (const gchar *font_name,
 
   g_signal_emit (button, font_button_signals[FONT_SET], 0,
                  font_name, dialog_closing);
-  g_object_notify (G_OBJECT (button), "font-name");
+  g_object_notify_by_pspec (G_OBJECT (button), font_button_props[PROP_FONT_NAME]);
 }
 
 static void

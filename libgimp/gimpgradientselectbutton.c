@@ -57,7 +57,8 @@ enum
 {
   PROP_0,
   PROP_TITLE,
-  PROP_GRADIENT_NAME
+  PROP_GRADIENT_NAME,
+  N_PROPS
 };
 
 
@@ -119,6 +120,7 @@ static GtkWidget * gimp_gradient_select_button_create_inside (GimpGradientSelect
 static const GtkTargetEntry target = { "application/x-gimp-gradient-name", 0 };
 
 static guint gradient_button_signals[LAST_SIGNAL] = { 0 };
+static GParamSpec *gradient_button_props[N_PROPS] = { NULL, };
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpGradientSelectButton,
@@ -147,13 +149,12 @@ gimp_gradient_select_button_class_init (GimpGradientSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_TITLE,
-                                   g_param_spec_string ("title",
-                                                        "Title",
-                                                        "The title to be used for the gradient selection popup dialog",
-                                                        _("Gradient Selection"),
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+  gradient_button_props[PROP_TITLE] = g_param_spec_string ("title",
+                                                           "Title",
+                                                           "The title to be used for the gradient selection popup dialog",
+                                                           _("Gradient Selection"),
+                                                           GIMP_PARAM_READWRITE |
+                                                           G_PARAM_CONSTRUCT_ONLY);
 
   /**
    * GimpGradientSelectButton:gradient-name:
@@ -162,12 +163,13 @@ gimp_gradient_select_button_class_init (GimpGradientSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_GRADIENT_NAME,
-                                   g_param_spec_string ("gradient-name",
-                                                        "Gradient name",
-                                                        "The name of the currently selected gradient",
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+  gradient_button_props[PROP_GRADIENT_NAME] = g_param_spec_string ("gradient-name",
+                                                                   "Gradient name",
+                                                                   "The name of the currently selected gradient",
+                                                                   NULL,
+                                                                   GIMP_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, gradient_button_props);
 
   /**
    * GimpGradientSelectButton::gradient-set:
@@ -398,7 +400,7 @@ gimp_gradient_select_button_callback (const gchar   *gradient_name,
 
   g_signal_emit (button, gradient_button_signals[GRADIENT_SET], 0,
                  gradient_name, n_samples, gradient_data, dialog_closing);
-  g_object_notify (G_OBJECT (button), "gradient-name");
+  g_object_notify_by_pspec (G_OBJECT (button), gradient_button_props[PROP_GRADIENT_NAME]);
 }
 
 static void

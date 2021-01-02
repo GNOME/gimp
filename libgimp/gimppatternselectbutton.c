@@ -74,7 +74,8 @@ enum
 {
   PROP_0,
   PROP_TITLE,
-  PROP_PATTERN_NAME
+  PROP_PATTERN_NAME,
+  N_PROPS
 };
 
 
@@ -130,6 +131,7 @@ static GtkWidget * gimp_pattern_select_button_create_inside (GimpPatternSelectBu
 static const GtkTargetEntry target = { "application/x-gimp-pattern-name", 0 };
 
 static guint pattern_button_signals[LAST_SIGNAL] = { 0 };
+static GParamSpec *pattern_button_props[N_PROPS] = { NULL, };
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPatternSelectButton, gimp_pattern_select_button,
@@ -157,13 +159,12 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_TITLE,
-                                   g_param_spec_string ("title",
-                                                        "Title",
-                                                        "The title to be used for the pattern selection popup dialog",
-                                                        _("Pattern Selection"),
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+  pattern_button_props[PROP_TITLE] = g_param_spec_string ("title",
+                                                          "Title",
+                                                          "The title to be used for the pattern selection popup dialog",
+                                                          _("Pattern Selection"),
+                                                          GIMP_PARAM_READWRITE |
+                                                          G_PARAM_CONSTRUCT_ONLY);
 
   /**
    * GimpPatternSelectButton:pattern-name:
@@ -172,12 +173,13 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_PATTERN_NAME,
-                                   g_param_spec_string ("pattern-name",
-                                                        "Pattern name",
-                                                        "The name of the currently selected pattern",
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+  pattern_button_props[PROP_PATTERN_NAME] = g_param_spec_string ("pattern-name",
+                                                                 "Pattern name",
+                                                                 "The name of the currently selected pattern",
+                                                                 NULL,
+                                                                 GIMP_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, pattern_button_props);
 
   /**
    * GimpPatternSelectButton::pattern-set:
@@ -426,7 +428,7 @@ gimp_pattern_select_button_callback (const gchar  *pattern_name,
 
   g_signal_emit (button, pattern_button_signals[PATTERN_SET], 0,
                  pattern_name, width, height, bytes, dialog_closing);
-  g_object_notify (G_OBJECT (button), "pattern-name");
+  g_object_notify_by_pspec (G_OBJECT (button), pattern_button_props[PROP_PATTERN_NAME]);
 }
 
 static void

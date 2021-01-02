@@ -60,7 +60,8 @@ enum
   PROP_BRUSH_NAME,
   PROP_BRUSH_OPACITY,
   PROP_BRUSH_SPACING,
-  PROP_BRUSH_PAINT_MODE
+  PROP_BRUSH_PAINT_MODE,
+  N_PROPS
 };
 
 
@@ -142,6 +143,7 @@ static GtkWidget * gimp_brush_select_button_create_inside (GimpBrushSelectButton
 static const GtkTargetEntry target = { "application/x-gimp-brush-name", 0 };
 
 static guint brush_button_signals[LAST_SIGNAL] = { 0 };
+static GParamSpec *brush_button_props[N_PROPS] = { NULL, };
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpBrushSelectButton, gimp_brush_select_button,
@@ -169,13 +171,12 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_TITLE,
-                                   g_param_spec_string ("title",
+  brush_button_props[PROP_TITLE] = g_param_spec_string ("title",
                                                         "Title",
                                                         "The title to be used for the brush selection popup dialog",
                                                         _("Brush Selection"),
                                                         GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+                                                        G_PARAM_CONSTRUCT_ONLY);
 
   /**
    * GimpBrushSelectButton:brush-name:
@@ -184,12 +185,11 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_BRUSH_NAME,
-                                   g_param_spec_string ("brush-name",
-                                                        "Brush name",
-                                                        "The name of the currently selected brush",
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+  brush_button_props[PROP_BRUSH_NAME] = g_param_spec_string ("brush-name",
+                                                             "Brush name",
+                                                             "The name of the currently selected brush",
+                                                             NULL,
+                                                             GIMP_PARAM_READWRITE);
 
   /**
    * GimpBrushSelectButton:opacity:
@@ -198,12 +198,11 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_BRUSH_OPACITY,
-                                   g_param_spec_double ("brush-opacity",
-                                                        "Brush opacity",
-                                                        "The opacity of the currently selected brush",
-                                                        -1.0, 100.0, -1.0,
-                                                        GIMP_PARAM_READWRITE));
+  brush_button_props[PROP_BRUSH_OPACITY] = g_param_spec_double ("brush-opacity",
+                                                                "Brush opacity",
+                                                                "The opacity of the currently selected brush",
+                                                                -1.0, 100.0, -1.0,
+                                                                GIMP_PARAM_READWRITE);
 
   /**
    * GimpBrushSelectButton:spacing:
@@ -212,12 +211,11 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_BRUSH_SPACING,
-                                   g_param_spec_int ("brush-spacing",
-                                                     "Brush spacing",
-                                                     "The spacing of the currently selected brush",
-                                                     -G_MAXINT, 1000, -1,
-                                                     GIMP_PARAM_READWRITE));
+  brush_button_props[PROP_BRUSH_SPACING] = g_param_spec_int ("brush-spacing",
+                                                             "Brush spacing",
+                                                             "The spacing of the currently selected brush",
+                                                             -G_MAXINT, 1000, -1,
+                                                             GIMP_PARAM_READWRITE);
 
   /**
    * GimpBrushSelectButton:paint-mode:
@@ -226,13 +224,14 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  g_object_class_install_property (object_class, PROP_BRUSH_PAINT_MODE,
-                                   g_param_spec_int ("brush-paint-mode",
-                                                     "Brush paint mode",
-                                                     "The paint mode of the currently selected brush",
-                                                     -1, GIMP_LAYER_MODE_LUMINANCE,
-                                                     -1,
-                                                     GIMP_PARAM_READWRITE));
+  brush_button_props[PROP_BRUSH_PAINT_MODE] = g_param_spec_int ("brush-paint-mode",
+                                                                "Brush paint mode",
+                                                                "The paint mode of the currently selected brush",
+                                                                -1, GIMP_LAYER_MODE_LUMINANCE,
+                                                                -1,
+                                                                GIMP_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, brush_button_props);
 
   /**
    * GimpBrushSelectButton::brush-set:
@@ -592,7 +591,7 @@ gimp_brush_select_button_callback (const gchar   *name,
   g_signal_emit (button, brush_button_signals[BRUSH_SET], 0,
                  name, opacity, spacing, paint_mode, width, height, mask_data,
                  dialog_closing);
-  g_object_notify (G_OBJECT (button), "brush-name");
+  g_object_notify_by_pspec (G_OBJECT (button), brush_button_props[PROP_BRUSH_NAME]);
 }
 
 static void
