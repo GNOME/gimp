@@ -43,6 +43,9 @@ typedef enum _DWMWINDOWATTRIBUTE {
   DWMWA_LAST
 } DWMWINDOWATTRIBUTE;
 
+typedef HRESULT (WINAPI* DWMISCOMPOSITIONENABLED) (BOOL *pfEnabled);
+DWMISCOMPOSITIONENABLED DwmIsCompositionEnabled;
+
 static HMODULE dwmApi = NULL;
 
 void
@@ -62,7 +65,8 @@ LoadRequiredDwmFunctions (void)
   if (! dwmApi) return FALSE;
 
   DwmGetWindowAttribute = (DWMGETWINDOWATTRIBUTE) GetProcAddress (dwmApi, "DwmGetWindowAttribute");
-  if (! DwmGetWindowAttribute)
+  DwmIsCompositionEnabled = (DWMISCOMPOSITIONENABLED) GetProcAddress (dwmApi, "DwmIsCompositionEnabled");
+  if (! (DwmGetWindowAttribute && DwmIsCompositionEnabled))
   {
     UnloadRequiredDwmFunctions ();
     return FALSE;

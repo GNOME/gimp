@@ -106,6 +106,8 @@ static gboolean doCaptureBitBlt                    (HWND            selectedHwnd
 BOOL CALLBACK dialogProc (HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM);
 
+gboolean isDwmCompositionEnabled (void);
+
 /* Data structure holding data between runs */
 typedef struct {
   gint root;
@@ -480,7 +482,7 @@ GetAccurateWindowRect_MonitorEnumProc (HMONITOR hMonitor,
   if (! (*rectScreens))
     *rectScreens = (RECT*) g_malloc (sizeof (RECT)*(rectScreensCount+1));
   else
-    *rectScreens = (RECT*) g_realloc (rectScreens,
+    *rectScreens = (RECT*) g_realloc (*rectScreens,
                                       sizeof (RECT)*(rectScreensCount+1));
 
   if (*rectScreens == NULL)
@@ -516,8 +518,8 @@ GetAccurateWindowRect (HWND hwndTarget,
   /* In this case, we did not got the rect from the dwm api so we try to get the rect with the normal function */
   if (GetWindowRect (hwndTarget, outRect))
     {
-      /* If the window is maximized then we need and can fix the rect variable 
-       * (we need to do this if the rect isn't coming from dwm api) 
+      /* If the window is maximized then we need and can fix the rect variable
+       * (we need to do this if the rect isn't coming from dwm api)
        */
       ZeroMemory (&windowplacment, sizeof (WINDOWPLACEMENT));
       if (GetWindowPlacement (hwndTarget, &windowplacment) && windowplacment.showCmd == SW_SHOWMAXIMIZED)
@@ -578,6 +580,24 @@ GetAccurateWindowRect (HWND hwndTarget,
   return FALSE;
 }
 
+gboolean isDwmCompositionEnabled (void)
+{
+  HRESULT err;
+  BOOL    result;
+
+  if (LoadRequiredDwmFunctions ())
+    {
+      err = DwmIsCompositionEnabled (&result);
+      if (err != S_OK)
+        {
+          return FALSE;
+        }
+      return result;
+    }
+
+  return FALSE;
+}
+
 /*
  * doCapture
  *
@@ -598,6 +618,8 @@ doCapture (HWND selectedHwnd)
   /* Are we capturing a window or the whole screen */
   if (selectedHwnd)
     {
+      gboolean compositionEnabled;
+
       if (! GetAccurateWindowRect (selectedHwnd, &rect))
       /* For some reason it works only if we return here TRUE. strange... */
           return TRUE;
@@ -605,8 +627,9 @@ doCapture (HWND selectedHwnd)
       /* First try to capture the window with the magnification api.
       *  This will solve the bug https://bugzilla.gnome.org/show_bug.cgi?id=793722/
       */
+      compositionEnabled = isDwmCompositionEnabled ();
 
-      if (! doCaptureMagnificationAPI (selectedHwnd, rect))
+      if (! (compositionEnabled && doCaptureMagnificationAPI (selectedHwnd, rect)))
         {
           /* If for some reason this capture method failed then
           *  capture the window with the normal method:
