@@ -1331,10 +1331,11 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
 
 /**
  * gimp_procedure_dialog_fill_container_list:
- * @dialog:
- * @container_id:
- * @container: (transfer full):
- * @properties:
+ * @dialog:        the #GimpProcedureDialog.
+ * @container_id:  a container identifier.
+ * @container: (transfer full): The new container that should be used if none
+ *                              exists yet
+ * @properties: (nullable) (element-type gchar*): the list of property names.
  *
  * A generic function to be used by various publich functions
  * gimp_procedure_dialog_fill_*_list(). Note in particular that
