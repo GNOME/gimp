@@ -1,15 +1,16 @@
 # Japanese translation for gimp-windows-installer
-# Copyright (C) 2018 the gimp authors
+# Copyright (C) 2018-2019, 2021 the gimp authors
 # This file is distributed under the same license as the GIMP package.
 # Kiyotaka Nishibori (as nishbone2016) <ml.nishibori.kiyotaka@gmail.com>, 2018-2019.
+# sicklylife <translation@sicklylife.jp>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-06 12:20+0000\n"
-"PO-Revision-Date:  2019-01-08 19:15+0900\n"
-"Last-Translator: Kiyotaka Nishibori <ml.nishibori.kiyotaka@gmail.com>\n"
+"POT-Creation-Date: 2019-01-07 10:50+0000\n"
+"PO-Revision-Date:  2021-01-03 00:14+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -177,6 +178,12 @@ msgstr "Python スクリプティング"
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr "Python で記述されたプラグインを使用可能にするコンポーネント"
 
+msgid "Lua scripting"
+msgstr "Lua スクリプティング"
+
+msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgstr "Lua で記述されたプラグインを使用可能にするコンポーネント"
+
 #: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "MyPaint brushes"
 msgstr "MyPaint ブラシ"
@@ -195,14 +202,14 @@ msgstr "PostScript ファイルを読み込み可能にするコンポーネン�
 
 #: ../build/windows/installer/lang/setup.isl.in.h:37
 msgid "Support for 32-bit plug-ins"
-msgstr "32ビットプラグインサポート"
+msgstr "32 ビットプラグインサポート"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:39
 #, no-c-format
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
-msgstr "32ビットプラグイン使用のために必要なファイル%nPython のサポートに必須"
+msgstr "32 ビットプラグイン使用のために必要なファイル%nPython のサポートに必須"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:40
 msgid "Additional icons:"
@@ -401,4 +408,4 @@ msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr ""
-"指定されたフォルダーに GIMP がインストールされていません。続行しますか？"
+"指定されたフォルダーに GIMP がインストールされていません。続行しますか?"
