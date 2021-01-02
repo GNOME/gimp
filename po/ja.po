@@ -1,5 +1,5 @@
 # Japanese message table for GIMP 2.0
-# Copyright (C) 1998-2020 Free Software Foundation, Inc.
+# Copyright (C) 1998-2001, 2003-2005, 2008-2012, 2018-2021 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1998-2001, 2004.
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003, 2004.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
@@ -10,14 +10,14 @@
 # Hajime Taira <htaira@redhat.com>, 2018.
 # ONO Yoshio <ohtsuka.yoshio@gmail.com>, 2018.
 # willelz <oyasumi60@gmail.com>, 2018.
-# sicklylife <translation@sicklylife.jp>, 2018-2020.
+# sicklylife <translation@sicklylife.jp>, 2018-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-04 16:54+0000\n"
-"PO-Revision-Date: 2020-01-27 23:00+0900\n"
+"PO-Revision-Date: 2021-01-03 02:02+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -8992,7 +8992,7 @@ msgstr "新しいツールプリセット(_N)..."
 #: ../app/actions/tool-options-actions.c:83
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
-msgstr "ツールオプションをリセット(_E)"
+msgstr "ツールオプションのリセット(_E)"
 
 #: ../app/actions/tool-options-actions.c:84
 msgctxt "tool-options-action"
@@ -9011,7 +9011,7 @@ msgstr "すべてのツールオプションを既定値に戻します"
 
 #: ../app/actions/tool-options-commands.c:203
 msgid "Reset All Tool Options"
-msgstr "すべてのツールオプションをリセット"
+msgstr "すべてのツールオプションのリセット"
 
 #: ../app/actions/tool-options-commands.c:227
 msgid "Do you really want to reset all tool options to default values?"
@@ -10702,7 +10702,7 @@ msgstr "表示を上下反転します (すべてのレイヤーが反転しま�
 #: ../app/actions/view-actions.c:503
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
-msgstr "反転と回転をリセット(_R)"
+msgstr "反転と回転のリセット(_R)"
 
 #: ../app/actions/view-actions.c:505
 msgctxt "view-action"
@@ -11501,6 +11501,7 @@ msgstr "キャンバス周りの表示方法を設定します"
 msgid ""
 "Check for availability of GIMP updates through background internet queries."
 msgstr ""
+"GIMP が更新されているかどうかをインターネットを通じてバックグラウンドで確認します"
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
@@ -11661,11 +11662,8 @@ msgid "Which plug-in to use for importing raw digital camera files."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:224
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgid "Export file type used by default."
-msgstr "サンプルポイントを表示します"
+msgstr "エクスポートするときのデフォルトのファイル形式を指定します。"
 
 #: ../app/config/gimprc-blurbs.h:227
 msgid "Export the image's color profile by default."
@@ -12059,6 +12057,7 @@ msgstr "画像ウィンドウでスペースキーが押されたときの挙動
 #: ../app/config/gimprc-blurbs.h:482
 msgid "The compression method used for tile data stored in the swap file."
 msgstr ""
+"スワップファイル内のタイルデータに対して使用する圧縮方式を指定します"
 
 #: ../app/config/gimprc-blurbs.h:485
 msgid ""
@@ -12386,17 +12385,15 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:689
 msgid "Use a single toolbox button for grouped tools."
-msgstr ""
+msgstr "ツールボックスのアイコンをグループごとにまとめます"
 
 #: ../app/config/gimprc-blurbs.h:692
 msgid "Show the currently active image in the toolbox."
 msgstr "アクティブな画像のサムネイルをツールボックスに表示します"
 
 #: ../app/config/gimprc-blurbs.h:695
-#, fuzzy
-#| msgid "Show the currently active image in the toolbox."
 msgid "Show the GIMP mascot at the top of the toolbox."
-msgstr "アクティブな画像のサムネイルをツールボックスに表示します"
+msgstr "GIMP のマスコットをツールボックスの上部に表示します"
 
 #: ../app/config/gimprc-blurbs.h:698
 msgid "Sets the manner in which transparency is displayed in images."
@@ -12568,7 +12565,7 @@ msgstr ""
 #: ../app/core/core-enums.c:188
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
-msgstr "どうするか確認"
+msgstr "どうするか確認する"
 
 #: ../app/core/core-enums.c:189
 msgctxt "color-profile-policy"
@@ -16300,10 +16297,8 @@ msgstr "場所の入力 (URI):"
 
 #. error should never be NULL, also issue #3093
 #: ../app/dialogs/file-open-location-dialog.c:246
-#, fuzzy
-#| msgid "Invalid UTF-8"
 msgid "Invalid URI"
-msgstr "不適切な UTF-8 文字列"
+msgstr "不適切な URI"
 
 #: ../app/dialogs/file-save-dialog.c:458
 msgid ""
@@ -16995,11 +16990,11 @@ msgstr "使用するスレッドの数(_T):"
 
 #: ../app/dialogs/preferences-dialog.c:1207
 msgid "Network access"
-msgstr ""
+msgstr "ネットワークアクセス"
 
 #: ../app/dialogs/preferences-dialog.c:1211
 msgid "Check for updates (requires internet)"
-msgstr ""
+msgstr "更新を確認する (インターネット接続が必要です)"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1216
@@ -17059,7 +17054,7 @@ msgstr "カラーマネジメント"
 
 #: ../app/dialogs/preferences-dialog.c:1311
 msgid "R_eset Color Management"
-msgstr "カラーマネジメントをリセット(_E)"
+msgstr "カラーマネジメントのリセット(_E)"
 
 #: ../app/dialogs/preferences-dialog.c:1334
 msgid "Image display _mode:"
@@ -17290,6 +17285,8 @@ msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
 msgstr ""
+"OpenCL ドライバーとそのサポートは実験段階です。実行速度の低下やクラッシュの"
+"発生が予想されます (バグ報告にご協力ください)。"
 
 #: ../app/dialogs/preferences-dialog.c:1642
 msgid "Use O_penCL"
@@ -17297,10 +17294,8 @@ msgstr "OpenCL を使用する(_P)"
 
 #. Very unstable tools
 #: ../app/dialogs/preferences-dialog.c:1646
-#, fuzzy
-#| msgid "Fade Options"
 msgid "Insane Options"
-msgstr "フェードのオプション"
+msgstr ""
 
 # 直訳は「ポインター情報」だが、機能内容はポインターが指しているピクセルに関する情報の表示なので、機能を直接的に表す「ピクセル情報」とした
 #: ../app/dialogs/preferences-dialog.c:1650
@@ -17522,7 +17517,7 @@ msgstr "アクティブな画像(_I)"
 
 #: ../app/dialogs/preferences-dialog.c:2169
 msgid "Use tool _groups"
-msgstr ""
+msgstr "ツールボックスのアイコンをグループ化する(_G)"
 
 #: ../app/dialogs/preferences-dialog.c:2192
 #, fuzzy
@@ -26624,17 +26619,17 @@ msgstr "なし"
 #: ../app/widgets/gimpcompressioncombobox.c:114
 msgctxt "compression"
 msgid "Best performance"
-msgstr ""
+msgstr "パフォーマンス優先"
 
 #: ../app/widgets/gimpcompressioncombobox.c:120
 msgctxt "compression"
 msgid "Balanced"
-msgstr ""
+msgstr "中間"
 
 #: ../app/widgets/gimpcompressioncombobox.c:126
 msgctxt "compression"
 msgid "Best compression"
-msgstr ""
+msgstr "圧縮率優先"
 
 #: ../app/widgets/gimpcontainerpopup.c:333
 msgid "Smaller Previews"
@@ -28518,28 +28513,20 @@ msgid "Change Background Color"
 msgstr "背景色の変更"
 
 #: ../app/widgets/gimptoolbox-color-area.c:288
-#, fuzzy
-#| msgid ""
-#| "The active brush.\n"
-#| "Click to open the Brush Dialog."
 msgid ""
 "The active foreground color.\n"
 "Click to open the color selection dialog."
 msgstr ""
-"アクティブなブラシです\n"
-"クリックでブラシダイアログを開きます"
+"アクティブな描画色です\n"
+"クリックで色選択ダイアログを開きます"
 
 #: ../app/widgets/gimptoolbox-color-area.c:293
-#, fuzzy
-#| msgid ""
-#| "The active brush.\n"
-#| "Click to open the Brush Dialog."
 msgid ""
 "The active background color.\n"
 "Click to open the color selection dialog."
 msgstr ""
-"アクティブなブラシです\n"
-"クリックでブラシダイアログを開きます"
+"アクティブな背景色です\n"
+"クリックで色選択ダイアログを開きます"
 
 #: ../app/widgets/gimptoolbox-image-area.c:119
 #: ../app/widgets/gimptoolbox-image-area.c:124
@@ -28579,44 +28566,31 @@ msgstr ""
 
 #: ../app/widgets/gimptoolbutton.c:601
 msgid "Also in group:"
-msgstr ""
+msgstr "同一グループ:"
 
 #: ../app/widgets/gimptooleditor.c:243
-#, fuzzy
-#| msgid "Create a new toolbox"
 msgid "Create a new tool group"
-msgstr "新しいツールボックスを作成します"
+msgstr "新しいツールグループを作成します"
 
 #: ../app/widgets/gimptooleditor.c:250
-#, fuzzy
-#| msgid "Raise this tool"
 msgid "Raise this item"
-msgstr "このツールアイコンを上に移動します"
+msgstr "この項目を上に移動します"
 
 #: ../app/widgets/gimptooleditor.c:251
-#, fuzzy
-#| msgid "Raise this tool to the top"
 msgid "Raise this item to the top"
-msgstr "このツールアイコンを最上段に移動します"
+msgstr "この項目を最上段に移動します"
 
 #: ../app/widgets/gimptooleditor.c:258
-#, fuzzy
-#| msgid "Lower this tool"
 msgid "Lower this item"
-msgstr "このツールアイコンを下に移動します"
+msgstr "この項目を下に移動します"
 
 #: ../app/widgets/gimptooleditor.c:259
-#, fuzzy
-#| msgid "Lower this tool to the bottom"
 msgid "Lower this item to the bottom"
-msgstr "このツールアイコンを最下段に移動します"
+msgstr "この項目を最下段に移動します"
 
 #: ../app/widgets/gimptooleditor.c:266
-#, fuzzy
-#| msgctxt "tool-presets-action"
-#| msgid "Delete this tool preset"
 msgid "Delete this tool group"
-msgstr "このツールプリセットを削除します"
+msgstr "このツールグループを削除します"
 
 #: ../app/widgets/gimptooleditor.c:273
 msgid "Reset tool order and visibility"
