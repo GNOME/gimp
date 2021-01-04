@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-10 13:26+0000\n"
-"PO-Revision-Date: 2020-11-09 21:10+0200\n"
+"PO-Revision-Date: 2020-11-15 15:22+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -3071,12 +3071,12 @@ msgstr "Adaugă un marker de evenimente gol în jurnalul de performanță"
 #: ../app/actions/dashboard-actions.c:69
 msgctxt "dashboard-action"
 msgid "_Reset"
-msgstr "_Resetează"
+msgstr "_Restabilește"
 
 #: ../app/actions/dashboard-actions.c:70
 msgctxt "dashboard-action"
 msgid "Reset cumulative data"
-msgstr "Resetează datele cumulative"
+msgstr "Restabilește datele cumulative"
 
 #: ../app/actions/dashboard-actions.c:78
 msgctxt "dashboard-action"
@@ -5605,7 +5605,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:673
 msgctxt "filters-action"
 msgid "_Softglow..."
-msgstr ""
+msgstr "_Strălucire delicată..."
 
 #: ../app/actions/filters-actions.c:678
 msgctxt "filters-action"
@@ -6596,12 +6596,12 @@ msgstr "Convertește imaginea la virgulă mobilă pe 64 de biți"
 #: ../app/actions/image-actions.c:253
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
-msgstr "Gama perceptiv (sRGB)"
+msgstr "Gamma perceptiv (sRGB)"
 
 #: ../app/actions/image-actions.c:255
 msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
-msgstr "Convertește imaginea la gama perceptiv (sRGB)"
+msgstr "Convertește imaginea la gamma perceptiv (sRGB)"
 
 # hm ? la Adobe este crudă
 #: ../app/actions/image-actions.c:259
@@ -8035,17 +8035,17 @@ msgstr "Editează modelul"
 #: ../app/actions/plug-in-actions.c:84
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
-msgstr "Resetează toate _filtrele"
+msgstr "Restabilește toate _filtrele"
 
 #: ../app/actions/plug-in-actions.c:85
 msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
-msgstr "Resetează toate plugin-urile la setările lor implicite"
+msgstr "Restabilește toate plugin-urile la setările lor implicite"
 
 # titlu pe bară
 #: ../app/actions/plug-in-commands.c:180
 msgid "Reset all Filters"
-msgstr "Resetarea tututror filtrelor"
+msgstr "Restabilirea tuturor filtrelor"
 
 #: ../app/actions/plug-in-commands.c:186
 #: ../app/actions/tool-options-commands.c:211 ../app/dialogs/fill-dialog.c:114
@@ -8059,11 +8059,11 @@ msgstr "Resetarea tututror filtrelor"
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
-msgstr "_Resetează"
+msgstr "_Restabilește"
 
 #: ../app/actions/plug-in-commands.c:200
 msgid "Do you really want to reset all filters to default values?"
-msgstr "Chiar vreți să fie resetate toate filtrele la valorile implicite?"
+msgstr "Chiar vreți să fie restabilite toate filtrele la valorile implicite?"
 
 #: ../app/actions/quick-mask-actions.c:43
 msgctxt "quick-mask-action"
@@ -8687,34 +8687,34 @@ msgstr "Presetare de instrument _nouă..."
 #: ../app/actions/tool-options-actions.c:83
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
-msgstr "R_esetează opțiunile instrumentului"
+msgstr "R_estabilește opțiunile instrumentului"
 
 # tooltip
 #: ../app/actions/tool-options-actions.c:84
 msgctxt "tool-options-action"
 msgid "Reset to default values"
-msgstr "Resetează la valorile implicite"
+msgstr "Restabilește la valorile implicite"
 
 #: ../app/actions/tool-options-actions.c:89
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
-msgstr "Resete_ază toate opțiunile instrumentului"
+msgstr "Restabilește to_ate opțiunile instrumentului"
 
 # tooltip
 #: ../app/actions/tool-options-actions.c:90
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
-msgstr "Resetează toate opțiunile instrumentului"
+msgstr "Restabilește toate opțiunile instrumentului"
 
 # titlu pe bară
 #: ../app/actions/tool-options-commands.c:203
 msgid "Reset All Tool Options"
-msgstr "Resetare pentru toate opțiunile instrumentului"
+msgstr "Restabilire pentru toate opțiunile instrumentului"
 
 #: ../app/actions/tool-options-commands.c:227
 msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
-"Chiar vreți să fie resetate toate opțiunile instrumentului la valorile "
+"Chiar vreți să fie restabilite toate opțiunile instrumentului la valorile "
 "implicite?"
 
 #: ../app/actions/tool-preset-editor-actions.c:44
@@ -9905,7 +9905,7 @@ msgstr "Ca în _preferințe"
 msgctxt "view-action"
 msgid "Reset color management to what's configured in preferences"
 msgstr ""
-"Resetează gestionarea culorilor la cea care este configurată în preferințe"
+"Restabilește gestionarea culorilor la cea care este configurată în preferințe"
 
 #: ../app/actions/view-actions.c:156
 msgctxt "view-action"
@@ -10341,13 +10341,13 @@ msgstr "Întoarce vizualizarea pe verticală"
 #: ../app/actions/view-actions.c:503
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
-msgstr "_Resetează întoarcerea și rotirea"
+msgstr "_Restabilește întoarcerea și rotirea"
 
 #: ../app/actions/view-actions.c:505
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr ""
-"Resetează întoarcerea pe verticală la normal și unghiul de rotire la 0°"
+"Restabilește întoarcerea pe verticală la normal și unghiul de rotire la 0°"
 
 #: ../app/actions/view-actions.c:513
 msgctxt "view-action"
@@ -10514,7 +10514,7 @@ msgstr "Ca în _preferințe"
 #: ../app/actions/view-actions.c:626
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
-msgstr "Resetează culoarea de umplere la cea configurată în preferințe"
+msgstr "Restabilește culoarea de umplere la cea configurată în preferințe"
 
 #: ../app/actions/view-actions.c:634
 msgctxt "view-padding-color"
@@ -10987,7 +10987,7 @@ msgstr "Arată la survolare"
 #: ../app/config/config-enums.c:319
 msgctxt "tool-group-menu-mode"
 msgid "Show on hover in single column"
-msgstr "Arată la survolarea într-o singură coloană"
+msgstr "Arată la survolare într-o singură coloană"
 
 #: ../app/config/config-enums.c:348
 msgctxt "window-hint"
@@ -15227,7 +15227,7 @@ msgstr "Precizie"
 #: ../app/operations/gimplevelsconfig.c:140
 #: ../app/operations/gimplevelsconfig.c:141 ../app/tools/gimplevelstool.c:505
 msgid "Gamma"
-msgstr "Gama"
+msgstr "Gamma"
 
 #: ../app/core/gimptemplate.c:212
 msgid "Color managed"
@@ -15663,7 +15663,7 @@ msgstr "Convertire de precizie"
 #: ../app/dialogs/convert-precision-dialog.c:207
 #: ../app/widgets/gimptemplateeditor.c:439
 msgid "Perceptual gamma (sRGB)"
-msgstr "Gama perceptiv (sRGB)"
+msgstr "Gamma perceptiv (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:208
 #: ../app/widgets/gimptemplateeditor.c:438
@@ -16320,11 +16320,12 @@ msgstr "Nu există nicio paletă de importat."
 # titlu pe bară
 #: ../app/dialogs/preferences-dialog.c:284
 msgid "Reset All Preferences"
-msgstr "Reseterea tuturor preferințelor"
+msgstr "Restabilirea tuturor preferințelor"
 
 #: ../app/dialogs/preferences-dialog.c:302
 msgid "Do you really want to reset all preferences to default values?"
-msgstr "Chiar vreți să fie resetate toate preferințele la valorile implicite?"
+msgstr ""
+"Chiar vreți să fie restabilite toate preferințele la valorile implicite?"
 
 #: ../app/dialogs/preferences-dialog.c:381
 msgid "You will have to restart GIMP for the following changes to take effect:"
@@ -16354,7 +16355,7 @@ msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
-"Configurarea ferestrei va fi resetată la valorile implicite la următoarea "
+"Configurarea ferestrei va fi restabilită la valorile implicite la următoarea "
 "pornire GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:756
@@ -16362,16 +16363,16 @@ msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"Setările dispozitivului de intrare vor fi resetate la valorile implicite la "
-"următoarea pornire GIMP."
+"Setările dispozitivului de intrare vor fi restabilite la valorile implicite "
+"la următoarea pornire GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:798
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
-"Opțiunile instrumentelor vor fi resetate la valorile implicite la următoarea "
-"pornire GIMP."
+"Opțiunile instrumentelor vor fi restabilite la valorile implicite la "
+"următoarea pornire GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:850
 #: ../app/dialogs/preferences-dialog.c:2603
@@ -16558,7 +16559,7 @@ msgstr "Gestionare de culori"
 
 #: ../app/dialogs/preferences-dialog.c:1311
 msgid "R_eset Color Management"
-msgstr "Resetează g_estionarea culorilor"
+msgstr "Restabilește g_estionarea culorilor"
 
 #: ../app/dialogs/preferences-dialog.c:1334
 msgid "Image display _mode:"
@@ -16847,7 +16848,8 @@ msgstr "Salvează opțiunile instrumentelor _acum"
 
 #: ../app/dialogs/preferences-dialog.c:1691
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr "_Resetează opțiunile salvate ale instrumentelor la valorile implicite"
+msgstr ""
+"_Restabilește opțiunile salvate ale instrumentelor la valorile implicite"
 
 #: ../app/dialogs/preferences-dialog.c:1705
 msgid "Default _interpolation:"
@@ -17054,7 +17056,7 @@ msgstr "Opțiuni implicite de dialog"
 
 #: ../app/dialogs/preferences-dialog.c:2224
 msgid "Reset Dialog _Defaults"
-msgstr "Resetează opțiunile de _dialog la valorile implicite"
+msgstr "Restabilește opțiunile de _dialog la valorile implicite"
 
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:2232
@@ -17507,7 +17509,7 @@ msgstr "Salvează pozițiile ferestrelor _acum"
 
 #: ../app/dialogs/preferences-dialog.c:2850
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "_Resetează pozițiile salvate ale ferestrelor la valorile implicite"
+msgstr "_Restabilește pozițiile salvate ale ferestrelor la valorile implicite"
 
 #: ../app/dialogs/preferences-dialog.c:2865
 #: ../app/dialogs/preferences-dialog.c:2866
@@ -17688,7 +17690,7 @@ msgstr "Salvează acum setările dispozitivelor de i_ntrare"
 #: ../app/dialogs/preferences-dialog.c:3168
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr ""
-"_Resetează setările salvate ale dispozitivelor de intrare la valorile lor "
+"_Restabilește setările salvate ale dispozitivelor de intrare la valorile "
 "implicite"
 
 #: ../app/dialogs/preferences-dialog.c:3183
@@ -17706,7 +17708,7 @@ msgstr "Dosare"
 
 #: ../app/dialogs/preferences-dialog.c:3207
 msgid "Reset _Folders"
-msgstr "Resetează _dosarele"
+msgstr "Restabilește _dosarele"
 
 #: ../app/dialogs/preferences-dialog.c:3223
 msgid "_Temporary folder:"
@@ -17730,7 +17732,7 @@ msgstr "Dosare pentru peneluri"
 
 #: ../app/dialogs/preferences-dialog.c:3265
 msgid "Reset Brush _Folders"
-msgstr "_Resetează dosarele pentru peneluri"
+msgstr "_Restabilește dosarele pentru peneluri"
 
 #: ../app/dialogs/preferences-dialog.c:3266
 msgid "Select Brush Folders"
@@ -17742,7 +17744,7 @@ msgstr "Dosare pentru dinamică"
 
 #: ../app/dialogs/preferences-dialog.c:3271
 msgid "Reset Dynamics _Folders"
-msgstr "_Resetează dosarele pentru dinamică"
+msgstr "_Restabilește dosarele pentru dinamică"
 
 #: ../app/dialogs/preferences-dialog.c:3272
 msgid "Select Dynamics Folders"
@@ -17754,7 +17756,7 @@ msgstr "Dosare pentru modele"
 
 #: ../app/dialogs/preferences-dialog.c:3277
 msgid "Reset Pattern _Folders"
-msgstr "_Resetează dosarele pentru modele"
+msgstr "_Restabilește dosarele pentru modele"
 
 #: ../app/dialogs/preferences-dialog.c:3278
 msgid "Select Pattern Folders"
@@ -17766,7 +17768,7 @@ msgstr "Dosare pentru palete"
 
 #: ../app/dialogs/preferences-dialog.c:3283
 msgid "Reset Palette _Folders"
-msgstr "_Resetează dosarele pentru palete"
+msgstr "_Restabilește dosarele pentru palete"
 
 #: ../app/dialogs/preferences-dialog.c:3284
 msgid "Select Palette Folders"
@@ -17778,7 +17780,7 @@ msgstr "Dosare pentru degradeuri"
 
 #: ../app/dialogs/preferences-dialog.c:3289
 msgid "Reset Gradient _Folders"
-msgstr "_Resetează dosarele pentru degradeuri"
+msgstr "_Restabilește dosarele pentru degradeuri"
 
 #: ../app/dialogs/preferences-dialog.c:3290
 msgid "Select Gradient Folders"
@@ -17790,7 +17792,7 @@ msgstr "Dosare pentru fonturi"
 
 #: ../app/dialogs/preferences-dialog.c:3295
 msgid "Reset Font _Folders"
-msgstr "_Resetează dosarele pentru fonturi"
+msgstr "_Restabilește dosarele pentru fonturi"
 
 #: ../app/dialogs/preferences-dialog.c:3296
 msgid "Select Font Folders"
@@ -17798,12 +17800,11 @@ msgstr "Selectează dosarele pentru fonturi"
 
 #: ../app/dialogs/preferences-dialog.c:3298
 msgid "Tool Preset Folders"
-msgstr "Dosarele presetărilor de instrument"
+msgstr "Dosarele presetării de instrument"
 
-# hm ? la singular nu prea are sens
 #: ../app/dialogs/preferences-dialog.c:3301
 msgid "Reset Tool Preset _Folders"
-msgstr "_Resetează dosarele presetărilor de instrumente"
+msgstr "_Restabilește dosarele presetării de instrument"
 
 #: ../app/dialogs/preferences-dialog.c:3302
 msgid "Select Tool Preset Folders"
@@ -17827,7 +17828,7 @@ msgstr "Dosare pentru plugin-uri"
 
 #: ../app/dialogs/preferences-dialog.c:3313
 msgid "Reset plug-in _Folders"
-msgstr "_Resetează dosarele pentru plugin-uri"
+msgstr "_Restabilește dosarele pentru plugin-uri"
 
 #: ../app/dialogs/preferences-dialog.c:3314
 msgid "Select plug-in Folders"
@@ -17843,7 +17844,7 @@ msgstr "Dosare pentru Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:3319
 msgid "Reset Script-Fu _Folders"
-msgstr "_Resetează dosarele pentru Script-Fu"
+msgstr "_Restabilește dosarele pentru Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:3320
 msgid "Select Script-Fu Folders"
@@ -17855,7 +17856,7 @@ msgstr "Dosare pentru module"
 
 #: ../app/dialogs/preferences-dialog.c:3325
 msgid "Reset Module _Folders"
-msgstr "_Resetează dosarele pentru module"
+msgstr "_Restabilește dosarele pentru module"
 
 #: ../app/dialogs/preferences-dialog.c:3326
 msgid "Select Module Folders"
@@ -17871,7 +17872,7 @@ msgstr "Dosare pentru interpretoare"
 
 #: ../app/dialogs/preferences-dialog.c:3331
 msgid "Reset Interpreter _Folders"
-msgstr "_Resetează dosarele pentru interpretoare"
+msgstr "_Restabilește dosarele pentru interpretoare"
 
 #: ../app/dialogs/preferences-dialog.c:3332
 msgid "Select Interpreter Folders"
@@ -17887,7 +17888,7 @@ msgstr "Dosare pentru mediu"
 
 #: ../app/dialogs/preferences-dialog.c:3337
 msgid "Reset Environment _Folders"
-msgstr "Resetează dosarele de _mediu"
+msgstr "_Restabilește dosarele de mediu"
 
 #: ../app/dialogs/preferences-dialog.c:3338
 msgid "Select Environment Folders"
@@ -17903,7 +17904,7 @@ msgstr "Dosare pentru teme"
 
 #: ../app/dialogs/preferences-dialog.c:3343
 msgid "Reset Theme _Folders"
-msgstr "Resetează dosarele de _teme"
+msgstr "_Restabilește dosarele de teme"
 
 #: ../app/dialogs/preferences-dialog.c:3344
 msgid "Select Theme Folders"
@@ -17919,7 +17920,7 @@ msgstr "Dosare pentru teme de pictograme"
 
 #: ../app/dialogs/preferences-dialog.c:3349
 msgid "Reset Icon Theme _Folders"
-msgstr "_Resetează dosarul pentru teme de pictograme"
+msgstr "_Restabilește dosarul pentru teme de pictograme"
 
 #: ../app/dialogs/preferences-dialog.c:3350
 msgid "Select Icon Theme Folders"
@@ -18046,7 +18047,7 @@ msgstr "Umple cu"
 
 #: ../app/dialogs/resize-dialog.c:185
 msgid "Re_set"
-msgstr "Re_setează"
+msgstr "Re_stabilește"
 
 #: ../app/dialogs/resize-dialog.c:187
 msgid "_Resize"
@@ -19471,7 +19472,7 @@ msgstr "Înnegrire (moștenit)"
 #: ../app/operations/operations-enums.c:222
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
-msgstr "Lumină puternică (moștenit)"
+msgstr "Lumină intensă (moștenit)"
 
 # hm ? la Adobe este crudă
 #. Translators: this is an abbreviated version of "Hard light (legacy)".
@@ -19479,21 +19480,19 @@ msgstr "Lumină puternică (moștenit)"
 #: ../app/operations/operations-enums.c:225
 msgctxt "layer-mode"
 msgid "Hard light (l)"
-msgstr "Lumină puternică (moștenit)"
+msgstr "Lumină intensă (moștenit)"
 
-# inspirat de la Adobe
 #: ../app/operations/operations-enums.c:226
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
-msgstr "Lumină blândă (moștenit)"
+msgstr "Lumină delicată (moștenit)"
 
-# inspirat de la Adobe
 #. Translators: this is an abbreviated version of "Soft light (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:229
 msgctxt "layer-mode"
 msgid "Soft light (l)"
-msgstr "Lumină slabă (moștenit)"
+msgstr "Lumină delicată (moștenit)"
 
 #: ../app/operations/operations-enums.c:230
 msgctxt "layer-mode"
@@ -19642,13 +19641,12 @@ msgstr "Înnegrire"
 #: ../app/operations/operations-enums.c:263
 msgctxt "layer-mode"
 msgid "Hard light"
-msgstr "Lumină puternică"
+msgstr "Lumină intensă"
 
-# inspirat de la Adobe
 #: ../app/operations/operations-enums.c:264
 msgctxt "layer-mode"
 msgid "Soft light"
-msgstr "Lumină blândă"
+msgstr "Lumină delicată"
 
 #: ../app/operations/operations-enums.c:265
 msgctxt "layer-mode"
@@ -21678,7 +21676,7 @@ msgstr "Albastru"
 # buton la color balance
 #: ../app/propgui/gimppropgui-color-balance.c:134
 msgid "R_eset Range"
-msgstr "R_esetează intervalul"
+msgstr "R_estabilește intervalul"
 
 #: ../app/propgui/gimppropgui-color-balance.c:144
 msgid "Preserve _luminosity"
@@ -21820,7 +21818,7 @@ msgstr "_Saturație"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:274
 msgid "R_eset Color"
-msgstr "R_esetează culoarea"
+msgstr "R_estabilește culoarea"
 
 #: ../app/propgui/gimppropgui-motion-blur-circular.c:132
 msgid "Circular Motion Blur: "
@@ -21909,11 +21907,11 @@ msgstr "1,850 K – Flacără de lumânare, apus sau răsărit"
 
 #: ../app/propgui/gimppropgui-utils.c:73
 msgid "2,700 K - Soft (or warm) LED lamps"
-msgstr "2,700 K - Lampă LED cu lumină blândă (sau caldă)"
+msgstr "2,700 K - Lampă LED cu lumină delicată (sau caldă)"
 
 #: ../app/propgui/gimppropgui-utils.c:74
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
-msgstr "3,000 K – Lampă fluorescentă compactă cu lumină alb blând (sau cald)"
+msgstr "3,000 K – Lampă fluorescentă compactă cu lumină alb delicat (sau cald)"
 
 #: ../app/propgui/gimppropgui-utils.c:75
 msgid "3,200 K – Studio lamps, photofloods, etc."
@@ -22727,7 +22725,7 @@ msgstr "Ca_nal:"
 
 #: ../app/tools/gimpcurvestool.c:502 ../app/tools/gimplevelstool.c:380
 msgid "R_eset Channel"
-msgstr "R_esetează canalul"
+msgstr "R_estabilește canalul"
 
 #: ../app/tools/gimpcurvestool.c:522
 msgid "Adjust curves in linear light"
@@ -23004,7 +23002,6 @@ msgstr "Răsturnare pe verticală"
 msgid "Draw Mode"
 msgstr "Mod de desenare"
 
-# hm ?
 #: ../app/tools/gimpforegroundselectoptions.c:88
 msgid ""
 "Paint over areas to mark color values for inclusion or exclusion from "
@@ -23024,7 +23021,7 @@ msgstr "Lățime de contur"
 
 #: ../app/tools/gimpforegroundselectoptions.c:105
 msgid "Size of the brush used for refinements"
-msgstr "Dimensiunea penelului folosit pentru retușuri"
+msgstr "Dimensiunea penelului folosit pentru rafinări"
 
 #: ../app/tools/gimpforegroundselectoptions.c:111
 msgid "Preview color"
@@ -23066,7 +23063,7 @@ msgstr "Numărul de iterații de efectuat"
 
 #: ../app/tools/gimpforegroundselectoptions.c:321
 msgid "Reset stroke width native size"
-msgstr "Resetează lățimea conturului la cea nativă"
+msgstr "Restabilește lățimea conturului la cea nativă"
 
 #: ../app/tools/gimpforegroundselecttool.c:193
 msgid "Foreground Select"
@@ -23909,32 +23906,32 @@ msgstr "Editează acest penel"
 # tooltip
 #: ../app/tools/gimppaintoptions-gui.c:169
 msgid "Reset size to brush's native size"
-msgstr "Resetează dimensiunea la cea nativă a penelului"
+msgstr "Restabilește dimensiunea la cea nativă a penelului"
 
 # tooltip
 #: ../app/tools/gimppaintoptions-gui.c:177
 msgid "Reset aspect ratio to brush's native aspect ratio"
-msgstr "Resetează raportul de aspect la cel nativ al penelului"
+msgstr "Restabilește raportul de aspect la cel nativ al penelului"
 
 # tooltip
 #: ../app/tools/gimppaintoptions-gui.c:185
 msgid "Reset angle to brush's native angle"
-msgstr "Resetează unghiul la cel nativ al penelului"
+msgstr "Restabilește unghiul la cel nativ al penelului"
 
 # tooltip
 #: ../app/tools/gimppaintoptions-gui.c:193
 msgid "Reset spacing to brush's native spacing"
-msgstr "Resetează spațierea la cea nativă a penelului"
+msgstr "Restabilește spațierea la cea nativă a penelului"
 
 # tooltip
 #: ../app/tools/gimppaintoptions-gui.c:201
 msgid "Reset hardness to brush's native hardness"
-msgstr "Resetează duritatea la cea nativă a penelului"
+msgstr "Restabilește duritatea la cea nativă a penelului"
 
 # tooltip
 #: ../app/tools/gimppaintoptions-gui.c:209
 msgid "Reset force to default"
-msgstr "Resetează forța la valoarea implicită"
+msgstr "Restabilește forța la valoarea implicită"
 
 #: ../app/tools/gimppaintoptions-gui.c:225
 msgid "Edit this dynamics"
@@ -23949,8 +23946,9 @@ msgid "Color Options"
 msgstr "Opțiuni de culoare"
 
 #: ../app/tools/gimppaintoptions-gui.c:579
+#, fuzzy
 msgid "Link to brush default"
-msgstr "Leagă de implicitul a penelului"
+msgstr "Cuplează cu implicitul penelului"
 
 #: ../app/tools/gimppainttool.c:175
 msgid "Click to paint"
@@ -24250,12 +24248,14 @@ msgstr "Scalare la %d × %d"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:72
 msgid "Refinement scale"
-msgstr ""
+msgstr "Scară de rafinare"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:73
 msgid ""
 "Maximal scale of refinement points to be used for the interpolation mesh"
 msgstr ""
+"Scara maximală a punctelor de rafinare care trebuie folosite pentru plasa de "
+"interpolare"
 
 #: ../app/tools/gimpseamlessclonetool.c:192
 #: ../app/tools/gimpseamlessclonetool.c:753
@@ -24380,7 +24380,7 @@ msgstr "Magnit. de înclinare _Y"
 
 #: ../app/tools/gimpsmudgetool.c:56
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr "Mânjire: mânjește selectiv folosind un penel"
+msgstr "Mânjire: Mânjește selectiv folosind un penel"
 
 #: ../app/tools/gimpsmudgetool.c:57
 msgid "_Smudge"
@@ -25538,7 +25538,7 @@ msgstr "Mută mai jos filtrul selectat"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:336
 msgid "Reset the selected filter to default values"
-msgstr "Resetează filtrul selectat la valorile implicite"
+msgstr "Restabilește filtrul selectat la valorile implicite"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:527
 #, c-format
@@ -26724,7 +26724,7 @@ msgstr "Curbă de %s"
 #: ../app/widgets/gimpdeviceinfoeditor.c:474
 #: ../app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
-msgstr "_Resetează curba"
+msgstr "_Restabilește curba"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:487
 #, c-format
@@ -27540,7 +27540,7 @@ msgstr "_Precizie:"
 
 #: ../app/widgets/gimptemplateeditor.c:441
 msgid "_Gamma:"
-msgstr "_Gama:"
+msgstr "_Gamma:"
 
 #: ../app/widgets/gimptemplateeditor.c:446
 msgid "Color _manage this image"
@@ -27776,7 +27776,7 @@ msgstr "Șterge această grupă de instrumente"
 
 #: ../app/widgets/gimptooleditor.c:273
 msgid "Reset tool order and visibility"
-msgstr "Resetează ordinea și vizibilitatea instrumentelor"
+msgstr "Restabilește ordinea și vizibilitatea instrumentelor"
 
 #: ../app/widgets/gimptooloptionseditor.c:200
 msgid "Save Tool Preset..."
