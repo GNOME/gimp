@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-12-22 22:43+0000\n"
-"PO-Revision-Date: 2021-01-03 02:02+0900\n"
+"PO-Revision-Date: 2021-01-05 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -1515,7 +1515,7 @@ msgstr "チャンネルの追加(_N)"
 #: ../app/actions/channels-actions.c:66
 msgctxt "channels-action"
 msgid "Create a new channel with last used values"
-msgstr "前回と同じ設定値で新しいチャンネルを画像に追加します"
+msgstr "前回の設定で新しいチャンネルを画像に追加します"
 
 #: ../app/actions/channels-actions.c:71
 msgctxt "channels-action"
@@ -4028,7 +4028,7 @@ msgstr "GIMP を上手に使うための Tip 集を表示します"
 #: ../app/actions/dialogs-actions.c:281 ../app/actions/dialogs-actions.c:288
 msgctxt "dialogs-action"
 msgid "About GIMP"
-msgstr "このアプリケーションの情報を表示します"
+msgstr "GIMP について"
 
 #: ../app/actions/dialogs-actions.c:283
 msgctxt "dialogs-action"
@@ -6653,7 +6653,7 @@ msgstr "モード(_M)"
 #: ../app/actions/image-actions.c:60
 msgctxt "image-action"
 msgid "_Encoding"
-msgstr ""
+msgstr "エンコーディング(_E)"
 
 #: ../app/actions/image-actions.c:62
 msgctxt "image-action"
@@ -6733,12 +6733,12 @@ msgstr "この画像の複製を作成します"
 #: ../app/actions/image-actions.c:88
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
-msgstr ""
+msgstr "カラープロファイルの割り当て(_A)..."
 
 #: ../app/actions/image-actions.c:89
 msgctxt "image-action"
 msgid "Set a color profile on the image"
-msgstr ""
+msgstr "画像のカラープロファイルを設定します"
 
 #: ../app/actions/image-actions.c:94
 msgctxt "image-action"
@@ -6850,7 +6850,7 @@ msgstr "可視レイヤーの統合(_L)..."
 #: ../app/actions/image-actions.c:155
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
-msgstr "すべての可視レイヤーを１枚のレイヤーに統合します"
+msgstr "すべての可視レイヤーを 1 枚のレイヤーに統合します"
 
 #: ../app/actions/image-actions.c:160
 msgctxt "image-action"
@@ -6883,11 +6883,9 @@ msgid "Display information about this image"
 msgstr "この画像の情報を表示します"
 
 #: ../app/actions/image-actions.c:181
-#, fuzzy
-#| msgid "_RGB profile:"
 msgctxt "image-action"
 msgid "Use _sRGB Profile"
-msgstr "RGB プロファイル(_R):"
+msgstr "sRGB プロファイルを使用(_S)"
 
 #: ../app/actions/image-actions.c:182
 msgctxt "image-action"
@@ -7001,11 +6999,9 @@ msgid "Convert the image to linear light"
 msgstr "画像をインデックスカラーに変換します"
 
 #: ../app/actions/image-actions.c:256
-#, fuzzy
-#| msgid "Linear"
 msgctxt "image-convert-action"
 msgid "Non-Linear"
-msgstr "線形"
+msgstr "非線形"
 
 #: ../app/actions/image-actions.c:258
 #, fuzzy
@@ -7016,20 +7012,14 @@ msgid "Convert the image to non-linear gamma from the color profile"
 msgstr "画像を RGB カラースペースに変換します"
 
 #: ../app/actions/image-actions.c:262
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Perceptual gamma (sRGB)"
 msgctxt "image-convert-action"
 msgid "Perceptual (sRGB)"
-msgstr "知覚的ガンマ (sRGB)"
+msgstr "知覚的 (sRGB)"
 
 #: ../app/actions/image-actions.c:264
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to grayscale"
 msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
-msgstr "画像をグレースケールに変換します"
+msgstr "画像を知覚的 (sRGB) ガンマに変換します"
 
 #: ../app/actions/image-actions.c:271
 msgctxt "image-action"
@@ -7238,11 +7228,9 @@ msgid "Layers Menu"
 msgstr "レイヤーメニュー"
 
 #: ../app/actions/layers-actions.c:56
-#, fuzzy
-#| msgid "Blend: "
 msgctxt "layers-action"
 msgid "Blend Space"
-msgstr "ブレンド: "
+msgstr "ブレンドスペース"
 
 #: ../app/actions/layers-actions.c:60
 msgctxt "layers-action"
@@ -7354,9 +7342,6 @@ msgid "_New Layer"
 msgstr "新しいレイヤーの追加(_N)"
 
 #: ../app/actions/layers-actions.c:114
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Create a new layer with last used values"
 msgctxt "layers-action"
 msgid "Create new layers with last used values"
 msgstr "前回の設定で新しいレイヤーを追加します"
@@ -7387,27 +7372,19 @@ msgid "D_uplicate Layer"
 msgstr "レイヤーの複製(_U)"
 
 #: ../app/actions/layers-actions.c:134
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Create a duplicate of the layer and add it to the image"
 msgctxt "layers-action"
 msgid "Create duplicates of selected layers and add them to the image"
-msgstr "レイヤーを複製し、画像に追加します"
+msgstr "選択したレイヤーを複製し、画像に追加します"
 
 #: ../app/actions/layers-actions.c:139
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Delete Layer"
 msgctxt "layers-action"
 msgid "_Delete Layers"
 msgstr "レイヤーの削除(_D)"
 
 #: ../app/actions/layers-actions.c:140
-#, fuzzy
-#| msgid "Delete the selected template"
 msgctxt "layers-action"
 msgid "Delete selected layers"
-msgstr "選択したテンプレートを削除"
+msgstr "選択したレイヤーを削除します"
 
 #: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
@@ -7465,28 +7442,19 @@ msgid "Merge Do_wn"
 msgstr "下のレイヤーと統合(_W)"
 
 #: ../app/actions/layers-actions.c:176 ../app/actions/layers-actions.c:185
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Merge this layer with the first visible layer below it"
 msgctxt "layers-action"
 msgid "Merge these layers with the first visible layer below each"
-msgstr "このレイヤーを 直下の可視レイヤーと統合します"
+msgstr "これらのレイヤーを直下の可視レイヤーと統合します"
 
 #: ../app/actions/layers-actions.c:190
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Merge Layer Group"
 msgctxt "layers-action"
 msgid "Merge Layer Groups"
 msgstr "レイヤーグループの統合"
 
 #: ../app/actions/layers-actions.c:191
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Merge the layer group's layers into one normal layer"
 msgctxt "layers-action"
 msgid "Merge the layer groups' layers into one normal layer"
-msgstr "レイヤーグループ中のレイヤーを統合して１枚の通常レイヤーにします"
+msgstr "レイヤーグループ中のレイヤーを統合して 1 枚の通常レイヤーにします"
 
 #: ../app/actions/layers-actions.c:196
 msgctxt "layers-action"
@@ -7496,7 +7464,7 @@ msgstr "可視レイヤーの統合(_V)..."
 #: ../app/actions/layers-actions.c:197
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
-msgstr "すべての可視レイヤーを１枚のレイヤーに統合します"
+msgstr "すべての可視レイヤーを 1 枚のレイヤーに統合します"
 
 #: ../app/actions/layers-actions.c:202
 msgctxt "layers-action"
@@ -7506,7 +7474,7 @@ msgstr "可視レイヤーの統合(_V)"
 #: ../app/actions/layers-actions.c:203
 msgctxt "layers-action"
 msgid "Merge all visible layers with last used values"
-msgstr ""
+msgstr "前回の設定ですべての可視レイヤーを統合します"
 
 #: ../app/actions/layers-actions.c:208
 msgctxt "layers-action"
@@ -7562,17 +7530,11 @@ msgstr ""
 "変更されません)"
 
 #: ../app/actions/layers-actions.c:238
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Layer to _Image Size"
 msgctxt "layers-action"
 msgid "Layers to _Image Size"
 msgstr "レイヤーをキャンバスに合わせる(_I)"
 
 #: ../app/actions/layers-actions.c:239
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Resize the layer to the size of the image"
 msgctxt "layers-action"
 msgid "Resize the layers to the size of the image"
 msgstr "レイヤーサイズをキャンバスサイズと同じ大きさに変更します"
@@ -7595,9 +7557,6 @@ msgid "_Crop to Selection"
 msgstr "選択範囲で切り抜き(_C)"
 
 #: ../app/actions/layers-actions.c:251
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Crop the layer to the extents of the selection"
 msgctxt "layers-action"
 msgid "Crop the layers to the extents of the selection"
 msgstr "選択範囲の大きさでレイヤーを切り抜きます"
@@ -7608,11 +7567,6 @@ msgid "Crop to C_ontent"
 msgstr "内容で切り抜き(_O)"
 
 #: ../app/actions/layers-actions.c:257
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid ""
-#| "Crop the layer to the extents of its content (remove empty borders from "
-#| "the layer)"
 msgctxt "layers-action"
 msgid ""
 "Crop the layers to the extents of their content (remove empty borders from "
@@ -7620,40 +7574,28 @@ msgid ""
 msgstr "内容の大きさでレイヤーを切り抜きます (周りの何もない部分を削除します)"
 
 #: ../app/actions/layers-actions.c:262 ../app/actions/layers-actions.c:272
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Add La_yer Mask..."
 msgctxt "layers-action"
 msgid "Add La_yer Masks..."
 msgstr "レイヤーマスクの追加(_Y)..."
 
 #: ../app/actions/layers-actions.c:264 ../app/actions/layers-actions.c:274
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Add a mask that allows non-destructive editing of transparency"
 msgctxt "layers-action"
 msgid ""
 "Add masks to selected layers that allows non-destructive editing of "
 "transparency"
 msgstr ""
-"レイヤーのアルファチャンネルを擬似的に編集するマスクを追加します (レイヤー本"
-"来の透明度情報は損なわれません)"
+"アルファチャンネルを擬似的に編集するマスクを、選択したレイヤーに追加します ("
+"レイヤー本来の透明度情報は損なわれません)"
 
 #: ../app/actions/layers-actions.c:279
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Add La_yer Mask"
 msgctxt "layers-action"
 msgid "Add La_yer Masks"
 msgstr "レイヤーマスクの追加(_Y)"
 
 #: ../app/actions/layers-actions.c:281
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Create a new path with last used values"
 msgctxt "layers-action"
 msgid "Add mask to selected layers with last used values"
-msgstr "前回の設定値で新しいパスを作成します"
+msgstr "選択したレイヤーに前回の設定でマスクを追加します"
 
 #: ../app/actions/layers-actions.c:286
 msgctxt "layers-action"
@@ -7686,17 +7628,11 @@ msgid "Work on the layer mask"
 msgstr "レイヤーマスクを編集対象にします"
 
 #: ../app/actions/layers-actions.c:308
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "S_how Layer Mask"
 msgctxt "layers-action"
 msgid "S_how Layer Masks"
 msgstr "レイヤーマスクの表示(_H)"
 
 #: ../app/actions/layers-actions.c:314
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Disable Layer Mask"
 msgctxt "layers-action"
 msgid "_Disable Layer Masks"
 msgstr "レイヤーマスクの無効化(_D)"
@@ -7718,20 +7654,14 @@ msgstr "レイヤーの 連結/非連結 を切り替え(_L)"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:333
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "L_ock pixels"
 msgctxt "layers-action"
 msgid "L_ock Pixels of Layer"
-msgstr "ピクセルの保護(_O)"
+msgstr "レイヤーのピクセルの保護(_O)"
 
 #: ../app/actions/layers-actions.c:339
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Reposition channel"
 msgctxt "layers-action"
 msgid "L_ock Position of Layer"
-msgstr "チャンネルの再配置"
+msgstr "レイヤーの位置の保護(_O)"
 
 #: ../app/actions/layers-actions.c:345
 msgctxt "layers-action"
@@ -7752,27 +7682,27 @@ msgstr "自動"
 #: ../app/actions/layers-actions.c:357
 msgctxt "layers-action"
 msgid "Layer Blend Space: Auto"
-msgstr ""
+msgstr "レイヤーのブレンドスペース: 自動"
 
 #: ../app/actions/layers-actions.c:362 ../app/actions/layers-actions.c:383
 msgctxt "layers-action"
 msgid "RGB (linear)"
-msgstr ""
+msgstr "RGB (リニア)"
 
 #: ../app/actions/layers-actions.c:363
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (linear)"
-msgstr ""
+msgstr "レイヤーのブレンドスペース: RGB (リニア)"
 
 #: ../app/actions/layers-actions.c:368 ../app/actions/layers-actions.c:389
 msgctxt "layers-action"
 msgid "RGB (perceptual)"
-msgstr ""
+msgstr "RGB (知覚的)"
 
 #: ../app/actions/layers-actions.c:369
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (perceptual)"
-msgstr ""
+msgstr "レイヤーのブレンドスペース: RGB (知覚的)"
 
 #: ../app/actions/layers-actions.c:378
 msgctxt "layers-action"
@@ -7797,12 +7727,12 @@ msgstr "レイヤーの合成モード: 自動"
 #: ../app/actions/layers-actions.c:404
 msgctxt "layers-action"
 msgid "Union"
-msgstr ""
+msgstr "結合"
 
 #: ../app/actions/layers-actions.c:405
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Union"
-msgstr ""
+msgstr "レイヤーの合成モード: 結合"
 
 #: ../app/actions/layers-actions.c:410
 msgctxt "layers-action"
@@ -7827,12 +7757,12 @@ msgstr ""
 #: ../app/actions/layers-actions.c:422
 msgctxt "layers-action"
 msgid "Intersection"
-msgstr ""
+msgstr "交差"
 
 #: ../app/actions/layers-actions.c:423
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Intersection"
-msgstr ""
+msgstr "レイヤーの合成モード: 交差"
 
 #: ../app/actions/layers-actions.c:431
 msgctxt "layers-action"
@@ -8289,11 +8219,8 @@ msgid_plural "Lower Layers to Bottom"
 msgstr[0] "レイヤーを最背面へ"
 
 #: ../app/actions/layers-commands.c:775
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "D_uplicate Layer"
 msgid "Duplicate layers"
-msgstr "レイヤーの複製(_U)"
+msgstr "レイヤーの複製"
 
 #: ../app/actions/layers-commands.c:885
 #, fuzzy, c-format
@@ -9100,20 +9027,14 @@ msgid "Fill the selection outline"
 msgstr "選択範囲の境界線で塗りつぶします"
 
 #: ../app/actions/select-actions.c:123
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "Stroke the selection with last used values"
 msgctxt "select-action"
 msgid "_Fill Selection Outline with last values"
-msgstr "選択範囲の境界線を前回の設定で描画します"
+msgstr "選択範囲の境界線で塗りつぶす (前回の設定を使用)(_F)"
 
 #: ../app/actions/select-actions.c:124
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "Stroke the selection with last used values"
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
-msgstr "選択範囲の境界線を前回の設定で描画します"
+msgstr "前回の設定を使って選択範囲の境界線で塗りつぶします"
 
 #: ../app/actions/select-actions.c:129
 msgctxt "select-action"
@@ -9126,17 +9047,14 @@ msgid "Paint along the selection outline"
 msgstr "選択範囲の境界線を描画します"
 
 #: ../app/actions/select-actions.c:135
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "Stroke the selection with last used values"
 msgctxt "select-action"
 msgid "_Stroke Selection with last values"
-msgstr "選択範囲の境界線を前回の設定で描画します"
+msgstr "前回の設定で選択範囲の境界線を描画(_S)"
 
 #: ../app/actions/select-actions.c:136
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
-msgstr "選択範囲の境界線を前回の設定で描画します"
+msgstr "前回の設定で選択範囲の境界線を描画します"
 
 #: ../app/actions/select-commands.c:165
 msgid "Feather Selection"
@@ -10264,7 +10182,7 @@ msgstr "前回の設定で新しいパス(_N)"
 #: ../app/actions/vectors-actions.c:73
 msgctxt "vectors-action"
 msgid "Create a new path with last used values"
-msgstr "前回の設定値で新しいパスを作成します"
+msgstr "前回の設定で新しいパスを作成します"
 
 #: ../app/actions/vectors-actions.c:78
 msgctxt "vectors-action"
@@ -10350,12 +10268,9 @@ msgid "Fill Path"
 msgstr "パスで塗りつぶす"
 
 #: ../app/actions/vectors-actions.c:126
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Paint along the path with last values"
 msgctxt "vectors-action"
 msgid "Fill the path with last values"
-msgstr "前回の設定でパスに沿って描画します"
+msgstr "前回の設定を使ってパスで塗りつぶします"
 
 #: ../app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
@@ -10878,7 +10793,7 @@ msgstr "ピクセル等倍(_D)"
 #: ../app/actions/view-actions.c:185
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
-msgstr "画像の １ ピクセルを画面の １ ピクセルで表示します"
+msgstr "画像の 1 ピクセルを画面の 1 ピクセルで表示します"
 
 #: ../app/actions/view-actions.c:191
 #, fuzzy
@@ -12218,7 +12133,7 @@ msgid ""
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
 "[ウィンドウに合わせる] のときは、画像全体がウィンドウ内に表示されるように表示"
-"倍率が調整されます。[１:１] のときは、等倍 (表示倍率 100％) で表示されます。"
+"倍率が調整されます。[1 : 1] のときは、等倍 (表示倍率 100 %) で表示されます。"
 
 #: ../app/config/gimprc-blurbs.h:255
 msgid ""
@@ -12952,7 +12867,7 @@ msgid ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
-"１画像あたりの作業履歴用メモリの大きさを設定します。作業履歴のメモリ使用がこ"
+"1 画像あたりの作業履歴用メモリの大きさを設定します。作業履歴のメモリ使用がこ"
 "の設定値に達するまで、作業履歴は自動的にエントリーされます。\n"
 "この設定に関わらず、[作業履歴の最小エントリー数] に設定された回数までは、作業"
 "履歴はエントリーされます。"
@@ -13514,18 +13429,14 @@ msgid "Large (256x256)"
 msgstr "大 (256x256)"
 
 #: ../app/core/core-enums.c:1036
-#, fuzzy
-#| msgid "Linear"
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "線形"
 
 #: ../app/core/core-enums.c:1037
-#, fuzzy
-#| msgid "Linear"
 msgctxt "trc-type"
 msgid "Non-Linear"
-msgstr "線形"
+msgstr "非線形"
 
 #: ../app/core/core-enums.c:1038
 #, fuzzy
@@ -15312,11 +15223,11 @@ msgstr "オブジェクトを並べる"
 
 #: ../app/core/gimpimage-color-profile.c:120
 msgid "Enable 'Use sRGB Profile'"
-msgstr ""
+msgstr "'sRGB プロファイルを使用' を有効化"
 
 #: ../app/core/gimpimage-color-profile.c:137
 msgid "Disable 'Use sRGB Profile'"
-msgstr ""
+msgstr "'sRGB プロファイルを使用' を無効化"
 
 #: ../app/core/gimpimage-color-profile.c:195
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
@@ -16555,10 +16466,9 @@ msgstr "パーセント"
 #. * For instance: "2.10.18 (revision 2)"
 #.
 #: ../app/dialogs/about-dialog.c:126
-#, fuzzy, c-format
-#| msgid "%s version %s"
+#, c-format
 msgid "%s (revision %d)"
-msgstr "%s ver.%s"
+msgstr "%s (リビジョン %d)"
 
 #: ../app/dialogs/about-dialog.c:134
 msgid "About GIMP"
@@ -16588,33 +16498,30 @@ msgstr ""
 "willelz"
 
 #: ../app/dialogs/about-dialog.c:345
-#, fuzzy
-#| msgctxt "dashboard-variable"
-#| msgid "Available"
 msgid "Update available!"
-msgstr "利用可能"
+msgstr "更新が利用可能です!"
 
 #. This is actually a new revision of current version.
 #: ../app/dialogs/about-dialog.c:365
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
-msgstr ""
+msgstr "GIMP %s リビジョン %d (%s リリース) をダウンロードする\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
 #: ../app/dialogs/about-dialog.c:375
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
-msgstr ""
+msgstr "<u>リリースコメント</u>: <i>%s</i>"
 
 #: ../app/dialogs/about-dialog.c:380
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
-msgstr ""
+msgstr "GIMP %s (%s リリース) をダウンロードする\n"
 
 #: ../app/dialogs/about-dialog.c:405 ../app/dialogs/about-dialog.c:426
 msgid "Check for updates"
-msgstr ""
+msgstr "更新を確認する"
 
 #. Translators: first string is the date in the locale's date
 #. * representation (e.g., 12/31/99), second is the time in the
@@ -16623,7 +16530,7 @@ msgstr ""
 #: ../app/dialogs/about-dialog.c:445
 #, c-format
 msgid "Last checked on %s at %s"
-msgstr ""
+msgstr "最終確認日時: %s %s"
 
 #: ../app/dialogs/about-dialog.c:673
 msgid "GIMP is brought to you by"
@@ -16637,7 +16544,7 @@ msgid ""
 msgstr ""
 "このバージョンは開発途上版です\n"
 "安定した動作は保証されません\n"
-"コミット %s"
+"commit %s"
 
 #: ../app/dialogs/action-search-dialog.c:69
 #, fuzzy
@@ -16849,10 +16756,8 @@ msgid "_Maximum number of colors:"
 msgstr "最大色数(_M):"
 
 #: ../app/dialogs/convert-indexed-dialog.c:223
-#, fuzzy
-#| msgid "_Remove unused colors from colormap"
 msgid "_Remove unused and duplicate colors from colormap"
-msgstr "未使用の色をカラーマップから削除(_R)"
+msgstr "未使用・重複した色をカラーマップから削除する(_R)"
 
 #: ../app/dialogs/convert-indexed-dialog.c:252
 msgid "Color _dithering:"
@@ -16863,15 +16768,13 @@ msgid "Enable dithering of _transparency"
 msgstr "透明部分のディザリングを行う(_T)"
 
 #: ../app/dialogs/convert-indexed-dialog.c:279
-#, fuzzy
-#| msgid "Enable dithering of text layers"
 msgid "Enable dithering of text _layers"
-msgstr "テキストレイヤーのディザリングを行う"
+msgstr "テキストレイヤーのディザリングを行う(_L)"
 
 #: ../app/dialogs/convert-indexed-dialog.c:290
 #: ../app/dialogs/convert-precision-dialog.c:267
 msgid "Dithering text layers will make them uneditable"
-msgstr ""
+msgstr "テキストレイヤーをディザリングすると編集できなくなります"
 
 #: ../app/dialogs/convert-indexed-dialog.c:414
 #: ../app/pdb/image-convert-cmds.c:161
@@ -16903,17 +16806,12 @@ msgid "Linear light"
 msgstr "リニアライト"
 
 #: ../app/dialogs/convert-precision-dialog.c:188
-#, fuzzy
-#| msgid "Linear"
 msgid "Non-Linear"
-msgstr "線形"
+msgstr "非線形"
 
 #: ../app/dialogs/convert-precision-dialog.c:191
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Perceptual gamma (sRGB)"
 msgid "Perceptual (sRGB)"
-msgstr "知覚的ガンマ (sRGB)"
+msgstr "知覚的 (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:228
 msgid "_Layers:"
@@ -17025,7 +16923,7 @@ msgstr "拡張子"
 #: ../app/dialogs/extensions-dialog.c:108
 #: ../app/dialogs/extensions-dialog.c:109
 msgid "Installed Extensions"
-msgstr "インストール済みの拡張機能"
+msgstr "インストール済み拡張機能"
 
 #: ../app/dialogs/extensions-dialog.c:124
 #: ../app/dialogs/extensions-dialog.c:125
@@ -20639,12 +20537,12 @@ msgstr "自動"
 #: ../app/operations/operations-enums.c:26
 msgctxt "layer-color-space"
 msgid "RGB (linear)"
-msgstr ""
+msgstr "RGB (リニア)"
 
 #: ../app/operations/operations-enums.c:27
 msgctxt "layer-color-space"
 msgid "RGB (perceptual)"
-msgstr ""
+msgstr "RGB (知覚的)"
 
 #: ../app/operations/operations-enums.c:28
 msgctxt "layer-color-space"
@@ -20659,25 +20557,19 @@ msgstr "自動"
 #: ../app/operations/operations-enums.c:60
 msgctxt "layer-composite-mode"
 msgid "Union"
-msgstr ""
+msgstr "結合"
 
 #: ../app/operations/operations-enums.c:61
-#, fuzzy
-#| msgid "Click to sharpen"
 msgctxt "layer-composite-mode"
 msgid "Clip to backdrop"
-msgstr "クリック: シャープにします"
+msgstr ""
 
 #: ../app/operations/operations-enums.c:62
-#, fuzzy
-#| msgid "Flip Text Layer"
 msgctxt "layer-composite-mode"
 msgid "Clip to layer"
-msgstr "テキストレイヤーの反転"
+msgstr ""
 
 #: ../app/operations/operations-enums.c:63
-#, fuzzy
-#| msgid "Intersect"
 msgctxt "layer-composite-mode"
 msgid "Intersection"
 msgstr "交差"
