@@ -1137,8 +1137,12 @@ compress_BC5 (unsigned char       *dst,
       y = (i / ((w + 3) >> 2)) << 2;
       p = dst + BLOCK_OFFSET(x, y, w, 16);
       extract_block(src, x, y, w, h, block);
-      encode_alpha_block_BC3(p, block, -2);
-      encode_alpha_block_BC3(p + 8, block, -1);
+      /* Pixels are ordered as BGRA (see write_layer)
+       * First we encode red  -1+3: channel 2;
+       * then we encode green -2+3: channel 1.
+       */
+      encode_alpha_block_BC3(p, block, -1);
+      encode_alpha_block_BC3(p + 8, block, -2);
     }
 }
 
@@ -1506,8 +1510,8 @@ dxt_decompress (unsigned char *dst,
             }
           else if (format == DDS_COMPRESS_BC5)
             {
-              decode_alpha_block_BC3(block, s + 8, width);
-              decode_alpha_block_BC3(block + 1, s, width);
+              decode_alpha_block_BC3(block, s, width);
+              decode_alpha_block_BC3(block + 1, s + 8, width);
               s += 16;
             }
 
