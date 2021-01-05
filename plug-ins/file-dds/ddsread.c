@@ -1211,6 +1211,30 @@ load_layer (FILE             *fp,
       dxt_decompress (dst, buf, format, size, width, height, d->gimp_bpp,
                       hdr->pixelfmt.flags & DDPF_NORMAL);
 
+      if (format == DDS_COMPRESS_BC5 &&
+          hdr->reserved.gimp_dds_special.magic1 == FOURCC ('G','I','M','P') &&
+          hdr->reserved.gimp_dds_special.version > 0 &&
+          hdr->reserved.gimp_dds_special.version <= 199002)
+        {
+          /* GIMP dds plug-in versions before 199002 == 3.9.90 wrote
+           * the red and green channels reversed. We will fix that here.
+           */
+          g_printerr ("Switching incorrect red and green channels in BC5 dds "
+                      "written by an older version of GIMP's dds plug-in.\n");
+
+          for (y = 0; y < height; ++y)
+            for (x = 0; x < width; ++x)
+              {
+                guchar tmpG;
+                guint  pix_width = width * d->gimp_bpp;
+                guint  x_width   = x * d->gimp_bpp;
+
+                tmpG = dst[y * pix_width + x_width];
+                dst[y * pix_width + x_width] = dst[y * pix_width + x_width + 1];
+                dst[y * pix_width + x_width + 1] = tmpG;
+              }
+        }
+
       z = 0;
       for (y = 0, n = 0; y < height; ++y, ++n)
         {
