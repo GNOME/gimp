@@ -1484,7 +1484,7 @@ dxt_decompress (unsigned char *dst,
     {
       for (x = 0; x < width; x += 4)
         {
-          memset(block, 255, 16 * 4);
+          memset(block, 0, 16 * 4);
 
           if (format == DDS_COMPRESS_BC1)
             {
