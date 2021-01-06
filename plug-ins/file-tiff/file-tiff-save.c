@@ -319,12 +319,14 @@ save_layer (TIFF        *tif,
   gushort           save_unit = RESUNIT_INCH;
   gint              offset_x, offset_y;
   gint              config_compression;
+  gchar            *config_comment;
   gboolean          config_save_transp_pixels;
   gboolean          config_save_geotiff_tags;
   gboolean          config_save_profile;
 
   g_object_get (config,
                 "compression",             &config_compression,
+                "gimp-comment",            &config_comment,
                 "save-transparent-pixels", &config_save_transp_pixels,
                 "save-geotiff",            &config_save_geotiff_tags,
                 "save-color-profile",      &config_save_profile,
@@ -653,6 +655,29 @@ save_layer (TIFF        *tif,
 #endif
 
   /* Set TIFF parameters. */
+  if (config_comment && *config_comment)
+    {
+      const gchar *c = config_comment;
+      gint         len;
+
+      /* The TIFF spec explicitly says ASCII for the image description. */
+      for (len = strlen (c); len; c++, len--)
+        {
+          if ((guchar) *c > 127)
+            {
+              g_message (_("The TIFF format only supports comments in\n"
+                           "7bit ASCII encoding. No comment is saved."));
+              g_free (config_comment);
+              config_comment = NULL;
+
+              break;
+            }
+        }
+
+      if (config_comment)
+        TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, config_comment);
+    }
+
   if (num_pages > 1)
     {
       TIFFSetField (tif, TIFFTAG_SUBFILETYPE, FILETYPE_PAGE);
@@ -1053,12 +1078,10 @@ save_image (GFile         *file,
   gint        origin_x            = 0;
   gint        origin_y            = 0;
   gint        saved_bpp;
-  gchar      *config_comment;
   gboolean    config_save_profile;
   gboolean    config_save_thumbnail;
 
   g_object_get (config,
-                "gimp-comment",       &config_comment,
                 "save-color-profile", &config_save_profile,
                 "save-thumbnail",     &config_save_thumbnail,
                 NULL);
@@ -1080,29 +1103,6 @@ save_image (GFile         *file,
                      _("Could not open '%s' for writing: %s"),
                      gimp_file_get_utf8_name (file), g_strerror (errno));
       goto out;
-    }
-
-  if (config_comment && *config_comment)
-    {
-      const gchar *c = config_comment;
-      gint         len;
-
-      /* The TIFF spec explicitly says ASCII for the image description. */
-      for (len = strlen (c); len; c++, len--)
-        {
-          if ((guchar) *c > 127)
-            {
-              g_message (_("The TIFF format only supports comments in\n"
-                           "7bit ASCII encoding. No comment is saved."));
-              g_free (config_comment);
-              config_comment = NULL;
-
-              break;
-            }
-        }
-
-      if (config_comment)
-        TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, config_comment);
     }
 
   if (config_save_profile)
