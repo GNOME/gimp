@@ -153,6 +153,8 @@ gimp_procedure_dialog_constructed (GObject *object)
   const gchar         *ok_label;
   GtkWidget           *hbox;
   GtkWidget           *button;
+  GtkWidget           *widget;
+  GtkWidget           *box;
   GtkWidget           *content_area;
   gchar               *role;
 
@@ -174,9 +176,29 @@ gimp_procedure_dialog_constructed (GObject *object)
   else
     ok_label = _("_OK");
 
-  button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
-                                   _("_Reset"), RESPONSE_RESET);
+  /* Reset button packaged with a down-arrow icon to show it pops up
+   * more choices.
+   */
+  button = gtk_button_new ();
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+
+  widget = gtk_label_new_with_mnemonic (_("_Reset"));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (widget), button);
+  gtk_box_pack_start (GTK_BOX (box), widget, FALSE, FALSE, 1);
+  gtk_widget_show (widget);
+
+  widget = gtk_image_new_from_icon_name (GIMP_ICON_GO_DOWN, GTK_ICON_SIZE_MENU);
+  gtk_box_pack_start (GTK_BOX (box), widget, FALSE, FALSE, 1);
+  gtk_widget_show (widget);
+
+  gtk_container_add (GTK_CONTAINER (button), box);
+  gtk_widget_show (box);
+
+  gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, RESPONSE_RESET);
+  gtk_widget_show (button);
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "reset");
+
+  /* Cancel and OK buttons. */
   button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
                                    _("_Cancel"), GTK_RESPONSE_CANCEL);
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "cancel");
