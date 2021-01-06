@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-12-22 22:43+0000\n"
-"PO-Revision-Date: 2021-01-05 00:00+0900\n"
+"PO-Revision-Date: 2021-01-06 06:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -1274,7 +1274,7 @@ msgstr "ブラシエディターのメニュー"
 #: ../app/actions/brush-editor-actions.c:50
 msgctxt "brush-editor-action"
 msgid "Edit Active Brush"
-msgstr "アクティブなブラシを編集"
+msgstr "アクティブなブラシの編集"
 
 #: ../app/actions/brushes-actions.c:43
 msgctxt "brushes-action"
@@ -1314,7 +1314,7 @@ msgstr "このブラシを複製します"
 #: ../app/actions/brushes-actions.c:65
 msgctxt "brushes-action"
 msgid "Copy Brush _Location"
-msgstr "ブラシの場所をコピー(_L)"
+msgstr "ブラシの場所のコピー(_L)"
 
 #: ../app/actions/brushes-actions.c:66
 msgctxt "brushes-action"
@@ -1807,7 +1807,7 @@ msgstr "チャンネルのプロパティ"
 # 'Attributes' は直訳すると「属性」ではあるが、一般的なユーザーには「プロパティ」の方が理解しやすいと解釈した
 #: ../app/actions/channels-commands.c:118
 msgid "Edit Channel Attributes"
-msgstr "チャンネルプロパティを編集"
+msgstr "チャンネルプロパティの編集"
 
 #: ../app/actions/channels-commands.c:120
 msgid "Edit Channel Color"
@@ -4273,7 +4273,7 @@ msgstr ""
 #: ../app/actions/documents-actions.c:64
 msgctxt "documents-action"
 msgid "Copy Image _Location"
-msgstr "画像の場所をコピー(_L)"
+msgstr "画像の場所のコピー(_L)"
 
 #: ../app/actions/documents-actions.c:65
 msgctxt "documents-action"
@@ -4494,7 +4494,7 @@ msgstr "動的特性を複製します"
 #: ../app/actions/dynamics-actions.c:59
 msgctxt "dynamics-action"
 msgid "Copy Dynamics _Location"
-msgstr "動的特性の場所をコピー(_L)"
+msgstr "動的特性の場所のコピー(_L)"
 
 #: ../app/actions/dynamics-actions.c:60
 msgctxt "dynamics-action"
@@ -4549,7 +4549,7 @@ msgstr "動的特性エディターのメニュー"
 #: ../app/actions/dynamics-editor-actions.c:51
 msgctxt "dynamics-editor-action"
 msgid "Edit Active Dynamics"
-msgstr "現在の動的特性を設定"
+msgstr "現在の動的特性の設定"
 
 #: ../app/actions/edit-actions.c:65
 msgctxt "edit-action"
@@ -4890,11 +4890,8 @@ msgid "Copy Visible Named "
 msgstr "可視部分に名前を付けてコピー"
 
 #: ../app/actions/edit-commands.c:497
-#, fuzzy
-#| msgctxt "text-editor-action"
-#| msgid "Clear"
 msgid "Clear"
-msgstr "テキストを消去"
+msgstr "消去"
 
 #: ../app/actions/edit-commands.c:568
 #, fuzzy
@@ -5094,7 +5091,7 @@ msgstr "場所を開く(_L)..."
 #: ../app/actions/file-actions.c:90
 msgctxt "file-action"
 msgid "Open an image file from a specified location"
-msgstr "画像ファイルの場所を指定(キーボードで入力)して開きます"
+msgstr "画像ファイルの場所を指定 (キーボードで入力) して開きます"
 
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
@@ -5131,7 +5128,7 @@ msgstr "すべての画像ウィンドウを閉じます"
 #: ../app/actions/file-actions.c:113
 msgctxt "file-action"
 msgid "Copy _Image Location"
-msgstr "画像の場所をコピー(_I)"
+msgstr "画像の場所のコピー(_I)"
 
 #: ../app/actions/file-actions.c:114
 msgctxt "file-action"
@@ -5188,7 +5185,7 @@ msgstr ""
 #: ../app/actions/file-actions.c:146
 msgctxt "file-action"
 msgid "Save a Cop_y..."
-msgstr "コピーを保存(_Y)..."
+msgstr "コピーの保存(_Y)..."
 
 #: ../app/actions/file-actions.c:148
 msgctxt "file-action"
@@ -5217,7 +5214,7 @@ msgstr "エクスポート(_X)..."
 #: ../app/actions/file-actions.c:161
 msgctxt "file-action"
 msgid "Export the image"
-msgstr "画像をエクスポート"
+msgstr "画像のエクスポート"
 
 #: ../app/actions/file-actions.c:166
 msgctxt "file-action"
@@ -5284,7 +5281,7 @@ msgstr "画像のコピーを保存"
 
 #: ../app/actions/file-commands.c:379
 msgid "Create New Template"
-msgstr "新しいテンプレートを作成"
+msgstr "新しいテンプレートの作成"
 
 #: ../app/actions/file-commands.c:383
 msgid "Enter a name for this template"
@@ -6108,33 +6105,21 @@ msgid "W_ind..."
 msgstr "風(_I)..."
 
 #: ../app/actions/filters-actions.c:776
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "Re_peat Last"
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "フィルターの再適用(_P)"
 
 #: ../app/actions/filters-actions.c:778
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "Rerun the last used plug-in using the same settings"
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "前回と同じ設定でフィルターを再実行します"
 
 #: ../app/actions/filters-actions.c:783
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "R_e-Show Last"
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "フィルターの再表示(_E)"
 
 #: ../app/actions/filters-actions.c:784
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "Show the last used plug-in dialog again"
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "前回使ったフィルターのダイアログを表示します"
@@ -6553,7 +6538,7 @@ msgstr "このグラデーションを複製します"
 #: ../app/actions/gradients-actions.c:60
 msgctxt "gradients-action"
 msgid "Copy Gradient _Location"
-msgstr "グラデーションファイルの場所をコピー(_L)"
+msgstr "グラデーションファイルの場所のコピー(_L)"
 
 #: ../app/actions/gradients-actions.c:61
 msgctxt "gradients-action"
@@ -6991,12 +6976,9 @@ msgid "Linear light"
 msgstr "リニアライト"
 
 #: ../app/actions/image-actions.c:252
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像をリニアライトに変換します"
 
 #: ../app/actions/image-actions.c:256
 msgctxt "image-convert-action"
@@ -7126,36 +7108,28 @@ msgid "Cannot crop because the image is already cropped to its content."
 msgstr "画像はすでに内容で切り抜かれているので切り抜けません"
 
 #: ../app/actions/image-commands.c:1078
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Convert Image to RGB"
+#, c-format
 msgid "Converting to RGB (%s)"
-msgstr "画像をRGBに変換"
+msgstr ""
 
 #: ../app/actions/image-commands.c:1116
-#, fuzzy, c-format
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to grayscale"
+#, c-format
 msgid "Converting to grayscale (%s)"
-msgstr "画像をグレースケールに変換します"
+msgstr ""
 
 #: ../app/actions/image-commands.c:1178
 msgid "Converting to indexed colors"
 msgstr "インデックスカラーに変換"
 
 #: ../app/actions/image-commands.c:1266
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Convert Image to RGB"
+#, c-format
 msgid "Converting image to %s"
-msgstr "画像をRGBに変換"
+msgstr ""
 
 #: ../app/actions/image-commands.c:1329
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Convert Image to RGB"
+#, c-format
 msgid "Converting to '%s'"
-msgstr "画像をRGBに変換"
+msgstr ""
 
 #: ../app/actions/image-commands.c:1435
 msgid "Change Print Size"
@@ -7870,73 +7844,46 @@ msgid "Delete Layer Mas_k"
 msgstr "レイヤーマスクの削除(_K)"
 
 #: ../app/actions/layers-actions.c:495
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Remove the layer mask and its effect"
 msgctxt "layers-action"
 msgid "Remove layer masks and their effect"
 msgstr "レイヤーマスクを削除します (効果は適用されません)"
 
 #: ../app/actions/layers-actions.c:503
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Mask to Selection"
 msgctxt "layers-action"
 msgid "_Masks to Selection"
 msgstr "マスクを選択範囲に(_M)"
 
 #: ../app/actions/layers-actions.c:504
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Replace the selection with the layer mask"
 msgctxt "layers-action"
 msgid "Replace the selection with the layer masks"
 msgstr "レイヤーマスクから選択範囲を作成します"
 
 #: ../app/actions/layers-actions.c:509
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Mask to Selection"
 msgctxt "layers-action"
 msgid "_Add Masks to Selection"
-msgstr "マスクを選択範囲に(_M)"
+msgstr "マスクを選択範囲に加える(_A)"
 
 #: ../app/actions/layers-actions.c:510
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Add the layer mask to the current selection"
 msgctxt "layers-action"
 msgid "Add the layer masks to the current selection"
 msgstr "選択範囲にレイヤーマスクの範囲を加えます"
 
 #: ../app/actions/layers-actions.c:515
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Subtract from Selection"
 msgctxt "layers-action"
 msgid "_Subtract Masks from Selection"
-msgstr "選択範囲から引く(_S)"
+msgstr "選択範囲からマスクを引く(_S)"
 
 #: ../app/actions/layers-actions.c:516
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Subtract the layer mask from the current selection"
 msgctxt "layers-action"
 msgid "Subtract the layer masks from the current selection"
 msgstr "選択範囲からレイヤーマスクの範囲を引きます"
 
 #: ../app/actions/layers-actions.c:521
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Intersect with Selection"
 msgctxt "layers-action"
 msgid "_Intersect Masks with Selection"
-msgstr "選択範囲との交わり(_I)"
+msgstr "選択範囲とのマスクの交わり(_I)"
 
 #: ../app/actions/layers-actions.c:522
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Intersect the layer mask with the current selection"
 msgctxt "layers-action"
 msgid "Intersect the layer masks with the current selection"
 msgstr "選択範囲とレイヤーマスクの範囲との交差部分を新しい選択範囲にします"
@@ -7991,65 +7938,41 @@ msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "選択範囲とレイヤー不透明部分の範囲との交差部分を新しい選択範囲にします"
 
 #: ../app/actions/layers-actions.c:561
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Top Layer"
 msgctxt "layers-action"
 msgid "Select _Top Layers"
 msgstr "最前面レイヤーの選択(_T)"
 
 #: ../app/actions/layers-actions.c:562
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the topmost layer"
 msgctxt "layers-action"
 msgid "Select the topmost layers"
 msgstr "最前面のレイヤーをアクティブにします"
 
 #: ../app/actions/layers-actions.c:567
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Bottom Layer"
 msgctxt "layers-action"
 msgid "Select _Bottom Layers"
 msgstr "最背面レイヤーの選択(_B)"
 
 #: ../app/actions/layers-actions.c:568
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the bottommost layer"
 msgctxt "layers-action"
 msgid "Select the bottommost layers"
 msgstr "最背面のレイヤーをアクティブにします"
 
 #: ../app/actions/layers-actions.c:573
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Previous Layer"
 msgctxt "layers-action"
 msgid "Select _Previous Layers"
 msgstr "前面レイヤーの選択(_P)"
 
 #: ../app/actions/layers-actions.c:574
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the layer above the current layer"
 msgctxt "layers-action"
 msgid "Select the layers above the current layers"
 msgstr "前面のレイヤーをアクティブにします"
 
 #: ../app/actions/layers-actions.c:579
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Next Layer"
 msgctxt "layers-action"
 msgid "Select _Next Layers"
 msgstr "背面レイヤーの選択(_N)"
 
 #: ../app/actions/layers-actions.c:580
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the layer below the current layer"
 msgctxt "layers-action"
 msgid "Select the layers below the current layers"
 msgstr "背面のレイヤーをアクティブにします"
@@ -8153,67 +8076,46 @@ msgstr "レイヤー名の変更"
 #: ../app/actions/layers-commands.c:338
 #: ../app/widgets/gimpdrawabletreeview.c:350
 #: ../app/widgets/gimplayertreeview.c:949
-#, fuzzy
-#| msgid "New Layer"
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "新しいレイヤー"
 
 #: ../app/actions/layers-commands.c:339
-#, fuzzy, c-format
-#| msgid "Create a New Layer"
+#, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
-msgstr[0] "新しいレイヤーの追加"
+msgstr[0] "%d 個の新しいレイヤーの追加"
 
 #: ../app/actions/layers-commands.c:424 ../app/actions/layers-commands.c:2243
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "New layer"
 msgid "New layer"
 msgid_plural "New layers"
-msgstr[0] "新しいレイヤーの追加"
+msgstr[0] "新しいレイヤー"
 
 #: ../app/actions/layers-commands.c:503
 msgid "Visible"
 msgstr "可視部分コピー"
 
 #: ../app/actions/layers-commands.c:532
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "New Layer _Group"
 msgid "New layer group"
 msgid_plural "New layer groups"
-msgstr[0] "新しいレイヤーグループ(_G)"
+msgstr[0] "新しいレイヤーグループ"
 
 #: ../app/actions/layers-commands.c:640
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Raise Layer"
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "レイヤーを前面へ"
 
 #: ../app/actions/layers-commands.c:674
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Raise Layer to Top"
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "レイヤーを最前面へ"
 
 #: ../app/actions/layers-commands.c:711
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lower Layer"
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "レイヤーを背面へ"
 
 #: ../app/actions/layers-commands.c:748
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lower Layer to Bottom"
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "レイヤーを最背面へ"
@@ -8223,29 +8125,22 @@ msgid "Duplicate layers"
 msgstr "レイヤーの複製"
 
 #: ../app/actions/layers-commands.c:885
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Merge Layer Group"
+#, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
-msgstr "レイヤーグループの統合"
+msgstr "%d 個のレイヤーグループの統合"
 
 #: ../app/actions/layers-commands.c:945
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Remove Layer"
+#, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
-msgstr "レイヤーの削除"
+msgstr "%d 個のレイヤーの削除"
 
 #: ../app/actions/layers-commands.c:1091
 msgid "Set Layer Boundary Size"
 msgstr "レイヤーサイズの変更"
 
 #: ../app/actions/layers-commands.c:1121
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Layer to Image Size"
 msgid "Layers to Image Size"
 msgstr "レイヤーをキャンバスに合わせる"
 
@@ -8254,11 +8149,10 @@ msgid "Scale Layer"
 msgstr "レイヤーの拡大・縮小"
 
 #: ../app/actions/layers-commands.c:1208
-#, fuzzy, c-format
-#| msgid "Crop Layer to Selection"
+#, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
-msgstr[0] "レイヤーを選択範囲で切り抜き"
+msgstr[0] "%d 個のレイヤーを選択範囲で切り抜き"
 
 #: ../app/actions/layers-commands.c:1273
 #, fuzzy
@@ -8270,91 +8164,64 @@ msgid ""
 msgstr "アクティブレイヤーはすでに内容で切り抜きされているので切り抜けません"
 
 #: ../app/actions/layers-commands.c:1279
-#, fuzzy, c-format
-#| msgid "Crop Layer to Content"
+#, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
-msgstr[0] "レイヤーを内容で切り抜き"
+msgstr[0] "%d 個のレイヤーを内容で切り抜き"
 
 #: ../app/actions/layers-commands.c:1410 ../app/actions/layers-commands.c:2450
-#, fuzzy
-#| msgid "Add Layer Mask"
 msgid "Add Layer Masks"
 msgstr "レイヤーマスクの追加"
 
 #: ../app/actions/layers-commands.c:1462
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Apply Layer Mask"
 msgid "Apply Layer Masks"
-msgstr "レイヤーマスクを適用"
+msgstr "レイヤーマスクの適用"
 
 #: ../app/actions/layers-commands.c:1466
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Delete Layer Mask"
 msgid "Delete Layer Masks"
-msgstr "レイヤーマスクを削除"
+msgstr "レイヤーマスクの削除"
 
 #: ../app/actions/layers-commands.c:1553
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Show Layer Mask"
 msgid "Show Layer Masks"
-msgstr "レイヤーマスクを表示"
+msgstr "レイヤーマスクの表示"
 
 #: ../app/actions/layers-commands.c:1600
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Disable Layer Mask"
 msgid "Disable Layer Masks"
-msgstr "レイヤーマスクを無効化"
+msgstr "レイヤーマスクの無効化"
 
 #: ../app/actions/layers-commands.c:1639
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Mask to Selection"
 msgctxt "undo-type"
 msgid "Masks to Selection"
-msgstr "マスクを選択範囲に(_M)"
+msgstr "マスクを選択範囲に"
 
 #: ../app/actions/layers-commands.c:1643
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Mask to Selection"
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
-msgstr "マスクを選択範囲に(_M)"
+msgstr "マスクを選択範囲に加える"
 
 #: ../app/actions/layers-commands.c:1647
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "_Subtract from Selection"
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
-msgstr "選択範囲から引く(_S)"
+msgstr "選択範囲からマスクを引く"
 
 #: ../app/actions/layers-commands.c:1651
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "_Intersect with Selection"
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
-msgstr "選択範囲との交わり(_I)"
+msgstr "選択範囲とのマスクの交わり"
 
 #: ../app/actions/layers-commands.c:1672
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Add Alpha Channel"
 msgid "Add Alpha Channel"
-msgstr "アルファチャンネルを追加"
+msgstr "アルファチャンネルの追加"
 
 #: ../app/actions/layers-commands.c:1693
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Remove Alpha Channel"
 msgid "Remove Alpha Channel"
-msgstr "アルファチャンネルを削除"
+msgstr "アルファチャンネルの削除"
 
 #: ../app/actions/layers-commands.c:1721 ../app/core/gimpchannel-select.c:433
 #: ../app/core/gimplayer.c:442
@@ -8394,74 +8261,46 @@ msgstr "選択範囲"
 
 #: ../app/actions/layers-commands.c:1774 ../app/actions/layers-commands.c:1818
 #: ../app/widgets/gimplayertreeview.c:1182
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgid "Set layers opacity"
 msgstr "レイヤー不透明度の設定"
 
 #: ../app/actions/layers-commands.c:1888
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgid "Set layers' blend space"
-msgstr "レイヤー不透明度の設定"
+msgstr "レイヤーのブレンドスペースの設定"
 
 #: ../app/actions/layers-commands.c:1941
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Layer Composite Space: Auto"
 msgid "Set layers' composite space"
-msgstr "レイヤーの合成色空間: 自動"
+msgstr "レイヤーの合成色空間の設定"
 
 #: ../app/actions/layers-commands.c:1994
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer mode"
 msgid "Set layers' composite mode"
-msgstr "レイヤーモードの設定"
+msgstr "レイヤーの合成モードの設定"
 
 #: ../app/actions/layers-commands.c:2063 ../app/widgets/gimpitemtreeview.c:1683
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock alpha channel"
 msgid "Lock content"
-msgstr "透明保護/保護解除"
+msgstr "内容の保護"
 
 #: ../app/actions/layers-commands.c:2065 ../app/widgets/gimpitemtreeview.c:1685
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock alpha channel"
 msgid "Unlock content"
-msgstr "透明保護/保護解除"
+msgstr "内容の保護解除"
 
 #: ../app/actions/layers-commands.c:2112 ../app/widgets/gimpitemtreeview.c:1749
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "L_ock strokes"
 msgid "Lock position"
-msgstr "境界線を保護(_O)"
+msgstr "位置の保護"
 
 #: ../app/actions/layers-commands.c:2114 ../app/widgets/gimpitemtreeview.c:1751
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock alpha channel"
 msgid "Unlock position"
-msgstr "透明保護/保護解除"
+msgstr "位置の保護解除"
 
 #: ../app/actions/layers-commands.c:2164
 #: ../app/widgets/gimplayertreeview.c:1127
-#, fuzzy
-#| msgid "Lock alpha channel"
 msgid "Lock alpha channels"
-msgstr "透明部分を保護"
+msgstr "透明部分の保護"
 
 #: ../app/actions/layers-commands.c:2164
 #: ../app/widgets/gimplayertreeview.c:1127
-#, fuzzy
-#| msgid "Lock alpha channel"
 msgid "Unlock alpha channels"
-msgstr "透明部分を保護"
+msgstr "透明部分の保護解除"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -8491,7 +8330,7 @@ msgstr "この MyPaint ブラシを複製します"
 #: ../app/actions/mypaint-brushes-actions.c:59
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint Brush _Location"
-msgstr "MyPaint ブラシの場所をコピー(_L)"
+msgstr "MyPaint ブラシの場所のコピー(_L)"
 
 #: ../app/actions/mypaint-brushes-actions.c:60
 msgctxt "mypaint-brushes-action"
@@ -8566,7 +8405,7 @@ msgstr "このエントリーを削除します"
 #: ../app/actions/palette-editor-actions.c:63
 msgctxt "palette-editor-action"
 msgid "Edit Active Palette"
-msgstr "アクティブなパレットを編集"
+msgstr "アクティブなパレットの編集"
 
 #: ../app/actions/palette-editor-actions.c:72
 msgctxt "palette-editor-action"
@@ -8648,7 +8487,7 @@ msgstr "パレットを統合します"
 #: ../app/actions/palettes-actions.c:72
 msgctxt "palettes-action"
 msgid "Copy Palette _Location"
-msgstr "パレットの場所をコピー(_L)"
+msgstr "パレットの場所のコピー(_L)"
 
 #: ../app/actions/palettes-actions.c:73
 msgctxt "palettes-action"
@@ -8750,7 +8589,7 @@ msgstr "このパターンを複製します"
 #: ../app/actions/patterns-actions.c:65
 msgctxt "patterns-action"
 msgid "Copy Pattern _Location"
-msgstr "パターンの場所をコピー(_L)"
+msgstr "パターンの場所のコピー(_L)"
 
 #: ../app/actions/patterns-actions.c:66
 msgctxt "patterns-action"
@@ -8829,7 +8668,7 @@ msgstr "リセット(_R)"
 
 #: ../app/actions/plug-in-commands.c:200
 msgid "Do you really want to reset all filters to default values?"
-msgstr "すべてのフィルター設定を既定値に戻してよろしいですか?"
+msgstr "すべてのフィルター設定を既定値に戻してもよろしいですか?"
 
 #: ../app/actions/quick-mask-actions.c:43
 msgctxt "quick-mask-action"
@@ -8855,12 +8694,12 @@ msgstr "クイックマスクモード/通常モード を切り替えます"
 #: ../app/actions/quick-mask-actions.c:65
 msgctxt "quick-mask-action"
 msgid "Mask _Selected Areas"
-msgstr "選択範囲をマスク(_S)"
+msgstr "選択範囲のマスク(_S)"
 
 #: ../app/actions/quick-mask-actions.c:70
 msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
-msgstr "非選択範囲をマスク(_U)"
+msgstr "非選択範囲のマスク(_U)"
 
 #: ../app/actions/quick-mask-commands.c:127
 msgid "Quick Mask Attributes"
@@ -8919,7 +8758,7 @@ msgstr "キャンバス内のすべてを選択します"
 #: ../app/actions/select-actions.c:56
 msgctxt "select-action"
 msgid "_None"
-msgstr "選択を解除(_N)"
+msgstr "選択の解除(_N)"
 
 #: ../app/actions/select-actions.c:57
 msgctxt "select-action"
@@ -9183,7 +9022,7 @@ msgstr "新規テンプレート"
 
 #: ../app/actions/templates-commands.c:135
 msgid "Create a New Template"
-msgstr "新しいテンプレートを作成"
+msgstr "新しいテンプレートの作成"
 
 #: ../app/actions/templates-commands.c:204
 #: ../app/actions/templates-commands.c:207
@@ -9192,7 +9031,7 @@ msgstr "テンプレートの編集"
 
 #: ../app/actions/templates-commands.c:244
 msgid "Delete Template"
-msgstr "テンプレートを削除"
+msgstr "テンプレートの削除"
 
 #: ../app/actions/templates-commands.c:249
 #: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:527
@@ -9218,7 +9057,7 @@ msgstr "ファイルからテキストを読み込みます"
 #: ../app/actions/text-editor-actions.c:50
 msgctxt "text-editor-action"
 msgid "Clear"
-msgstr "テキストを消去"
+msgstr "テキストの消去"
 
 #: ../app/actions/text-editor-actions.c:51
 msgctxt "text-editor-action"
@@ -9349,7 +9188,7 @@ msgstr "消去(_E)"
 #: ../app/actions/text-tool-actions.c:80
 msgctxt "text-tool-action"
 msgid "Clear all text"
-msgstr "すべてのテキストを消去"
+msgstr "すべてのテキストの消去"
 
 #: ../app/actions/text-tool-actions.c:85
 msgctxt "text-tool-action"
@@ -9458,7 +9297,7 @@ msgstr "すべてのツールオプションのリセット"
 
 #: ../app/actions/tool-options-commands.c:227
 msgid "Do you really want to reset all tool options to default values?"
-msgstr "すべてのツールオプションをリセットしてよろしいですか?"
+msgstr "すべてのツールオプションをリセットしてもよろしいですか?"
 
 #: ../app/actions/tool-preset-editor-actions.c:44
 msgctxt "tool-preset-editor-action"
@@ -9524,7 +9363,7 @@ msgstr "このツールプリセットを複製します"
 #: ../app/actions/tool-presets-actions.c:62
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
-msgstr "ツールプリセットの場所をコピー(_L)"
+msgstr "ツールプリセットの場所のコピー(_L)"
 
 #: ../app/actions/tool-presets-actions.c:63
 msgctxt "tool-presets-action"
@@ -9619,7 +9458,7 @@ msgstr "色ツール(_C)"
 #: ../app/actions/tools-actions.c:57
 msgctxt "tools-action"
 msgid "_By Color"
-msgstr "色域を選択(_B)"
+msgstr "色域の選択(_B)"
 
 #: ../app/actions/tools-actions.c:58
 msgctxt "tools-action"
@@ -10329,7 +10168,7 @@ msgstr "パスの 連結/非連結 を切り替え(_L)"
 #| msgid "L_ock strokes"
 msgctxt "vectors-action"
 msgid "L_ock Strokes of Path"
-msgstr "境界線を保護(_O)"
+msgstr "境界線の保護(_O)"
 
 #: ../app/actions/vectors-actions.c:184
 #, fuzzy
@@ -10566,7 +10405,7 @@ msgstr "パス名の変更"
 
 #: ../app/actions/vectors-commands.c:167
 msgid "Edit Path Attributes"
-msgstr "パス名を変更"
+msgstr "パス名の変更"
 
 #: ../app/actions/vectors-commands.c:206
 msgid "New Path"
@@ -11607,7 +11446,7 @@ msgstr ""
 #: ../app/actions/windows-actions.c:134
 msgctxt "windows-action"
 msgid "_Show Tabs"
-msgstr "タブを表示(_S)"
+msgstr "タブの表示(_S)"
 
 #: ../app/actions/windows-actions.c:135
 msgctxt "windows-action"
@@ -11803,7 +11642,7 @@ msgstr "何もしない"
 #: ../app/config/config-enums.c:250
 msgctxt "space-bar-action"
 msgid "Pan view"
-msgstr "ビューを移動 (パン)"
+msgstr "ビューの移動 (パン)"
 
 #: ../app/config/config-enums.c:251
 msgctxt "space-bar-action"
@@ -12366,7 +12205,7 @@ msgid ""
 "with the \"View->Show Menubar\" command."
 msgstr ""
 "この設定がオンのときは、画像ウィンドウにメニューバーを表示します。\n"
-"([表示] → [メニューバーの表示] で切り替えることもできます。)"
+"([表示] → [メニューバーの表示] で切り替えることもできます)"
 
 #: ../app/config/gimprc-blurbs.h:419
 msgid ""
@@ -12374,7 +12213,7 @@ msgid ""
 "with the \"View->Show Rulers\" command."
 msgstr ""
 "この設定がオンのときは、画像ウィンドウにルーラーを表示します。\n"
-"([表示] → [ルーラーの表示] で切り替えることもできます。)"
+"([表示] → [ルーラーの表示] で切り替えることもできます)"
 
 #: ../app/config/gimprc-blurbs.h:423
 msgid ""
@@ -12382,7 +12221,7 @@ msgid ""
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 "この設定がオンのときは、画像ウィンドウにスクロールバーを表示します。\n"
-"([表示] → [スクロールバーの表示]で切り替えることもできます。)"
+"([表示] → [スクロールバーの表示] で切り替えることもできます)"
 
 #: ../app/config/gimprc-blurbs.h:427
 msgid ""
@@ -12390,7 +12229,7 @@ msgid ""
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 "この設定がオンのときは、画像ウィンドウにステータスバーを表示します。\n"
-"([表示] → [ステータスバーの表示]で切り替えることもできます。)"
+"([表示] → [ステータスバーの表示] で切り替えることもできます)"
 
 #: ../app/config/gimprc-blurbs.h:431
 msgid ""
@@ -12399,7 +12238,7 @@ msgid ""
 msgstr ""
 "この設定がオンのときは、アクティブな選択範囲の周囲に「蟻の行進」アニメーショ"
 "ンを表示します。\n"
-"([表示] → [選択範囲境界線の表示]で切り替えることもできます。)"
+"([表示] → [選択範囲境界線の表示] で切り替えることもできます)"
 
 #: ../app/config/gimprc-blurbs.h:435
 msgid ""
@@ -12407,7 +12246,7 @@ msgid ""
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "この設定がオンのときは、レイヤー境界を表示します。\n"
-"([表示] → [レイヤー境界の表示]で切り替えることもできます。)"
+"([表示] → [レイヤー境界の表示] で切り替えることもできます)"
 
 #: ../app/config/gimprc-blurbs.h:439
 msgid ""
@@ -12415,7 +12254,7 @@ msgid ""
 "toggled with the \"View->Show Canvas Boundary\" command."
 msgstr ""
 "この設定がオンのときは、キャンバス境界を表示します。\n"
-"([表示] → [キャンバス境界の表示]で切り替えることもできます。)"
+"([表示] → [キャンバス境界の表示] で切り替えることもできます)"
 
 #: ../app/config/gimprc-blurbs.h:443
 msgid ""
@@ -12423,7 +12262,7 @@ msgid ""
 "with the \"View->Show Guides\" command."
 msgstr ""
 "この設定がオンのときは、ガイドを表示します。\n"
-"([表示] → [ガイドの表示]で切り替えることもできます。)"
+"([表示] → [ガイドの表示] で切り替えることもできます)"
 
 #: ../app/config/gimprc-blurbs.h:447
 msgid ""
@@ -12431,7 +12270,7 @@ msgid ""
 "the \"View->Show Grid\" command."
 msgstr ""
 "この設定がオンのときは、グリッドを表示します。\n"
-"([表示] → [グリッドの表示]で切り替えることもできます。)"
+"([表示] → [グリッドの表示] で切り替えることもできます)"
 
 #: ../app/config/gimprc-blurbs.h:451
 msgid ""
@@ -12439,7 +12278,7 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "この設定がオンのときは、サンプルポイントを表示します。\n"
-"([表示] → [サンプルポイントの表示]で切り替えることもできます。)"
+"([表示] → [サンプルポイントの表示] で切り替えることもできます)"
 
 #: ../app/config/gimprc-blurbs.h:455
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -12518,7 +12357,7 @@ msgid ""
 msgstr ""
 "スワップファイルの場所を設定します。GIMP はタイルベースのメモリ確保方式を利用"
 "します。スワップファイルはスワップタイルをディスクに書き出したり戻したりする"
-"際に利用されます。\n"
+"ときに利用されます。\n"
 "GIMP で大きな画像を取り扱うと、スワップファイルはすぐに巨大になってしまいま"
 "す。また NFS 経由でマウントされたディレクトリ上にスワップファイルを作成した場"
 "合、非常に動作が遅くなってしまいます。そのため、\"/tmp\" にスワップファイルを"
@@ -13598,7 +13437,7 @@ msgstr "レイヤーの追加"
 #| msgid "Add Alpha Channel"
 msgctxt "undo-type"
 msgid "Add alpha channel"
-msgstr "アルファチャンネルを追加"
+msgstr "アルファチャンネルの追加"
 
 #: ../app/core/core-enums.c:1265 ../app/core/core-enums.c:1320
 msgctxt "undo-type"
@@ -13616,7 +13455,7 @@ msgstr "レイヤーマスクの適用"
 #| msgid "Remove Alpha Channel"
 msgctxt "undo-type"
 msgid "Remove alpha channel"
-msgstr "アルファチャンネルを削除"
+msgstr "アルファチャンネルの削除"
 
 #: ../app/core/core-enums.c:1268
 #, fuzzy
@@ -13835,7 +13674,7 @@ msgstr "変換レイヤー"
 #: ../app/core/core-enums.c:1316
 msgctxt "undo-type"
 msgid "Convert group layer"
-msgstr "グループレイヤーを変換"
+msgstr "グループレイヤーの変換"
 
 #: ../app/core/core-enums.c:1317
 msgctxt "undo-type"
@@ -13853,7 +13692,7 @@ msgstr "テキストレイヤーの変更"
 #| msgid "Convert group layer"
 msgctxt "undo-type"
 msgid "Convert text layer"
-msgstr "グループレイヤーを変換"
+msgstr "グループレイヤーの変換"
 
 #: ../app/core/core-enums.c:1321
 msgctxt "undo-type"
@@ -13888,7 +13727,7 @@ msgstr "新しいパス"
 #: ../app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Delete path"
-msgstr "パスを削除"
+msgstr "パスの削除"
 
 #: ../app/core/core-enums.c:1329
 msgctxt "undo-type"
@@ -13986,7 +13825,7 @@ msgstr "内部プロシージャー"
 #. initialize  the global parasite table
 #: ../app/core/gimp.c:845
 msgid "Looking for data files"
-msgstr "データファイルを検索中"
+msgstr "データファイルの検索中"
 
 #: ../app/core/gimp.c:845
 msgid "Parasites"
@@ -14036,7 +13875,7 @@ msgstr "ファイル履歴の消去(_C)"
 #. update tag cache
 #: ../app/core/gimp-data-factories.c:403
 msgid "Updating tag cache"
-msgstr "タグキャッシュを更新"
+msgstr "タグキャッシュの更新"
 
 #: ../app/core/gimp-edit.c:87
 msgctxt "undo-type"
@@ -14232,7 +14071,7 @@ msgstr "'%2$s' から '%1$s' へファイルをコピー中..."
 #: ../app/core/gimp-user-install.c:434 ../app/core/gimp-user-install.c:460
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "フォルダー '%s' を作成中..."
+msgstr "フォルダー '%s' の作成中..."
 
 #: ../app/core/gimp-user-install.c:445 ../app/core/gimp-user-install.c:471
 #, c-format
@@ -14480,7 +14319,7 @@ msgstr "ファジー選択"
 #: ../app/core/gimpchannel-select.c:598
 msgctxt "undo-type"
 msgid "Select by Color"
-msgstr "色域を選択"
+msgstr "色域の選択"
 
 #: ../app/core/gimpchannel-select.c:641
 #, fuzzy
@@ -14488,7 +14327,7 @@ msgstr "色域を選択"
 #| msgid "Select by Color"
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
-msgstr "色域を選択"
+msgstr "色域の選択"
 
 #: ../app/core/gimpchannel.c:256
 msgctxt "undo-type"
@@ -14498,7 +14337,7 @@ msgstr "チャンネル名の変更"
 #: ../app/core/gimpchannel.c:257
 msgctxt "undo-type"
 msgid "Move Channel"
-msgstr "チャンネルを移動"
+msgstr "チャンネルの移動"
 
 #: ../app/core/gimpchannel.c:258
 msgctxt "undo-type"
@@ -14513,17 +14352,17 @@ msgstr "チャンネルのサイズ変更"
 #: ../app/core/gimpchannel.c:260
 msgctxt "undo-type"
 msgid "Flip Channel"
-msgstr "チャンネルを鏡像反転"
+msgstr "チャンネルの鏡像反転"
 
 #: ../app/core/gimpchannel.c:261
 msgctxt "undo-type"
 msgid "Rotate Channel"
-msgstr "チャンネルを回転"
+msgstr "チャンネルの回転"
 
 #: ../app/core/gimpchannel.c:262 ../app/core/gimpdrawable-transform.c:1049
 msgctxt "undo-type"
 msgid "Transform Channel"
-msgstr "チャンネルを変形"
+msgstr "チャンネルの変形"
 
 #: ../app/core/gimpchannel.c:263 ../app/core/gimpchannel.c:294
 msgctxt "undo-type"
@@ -14586,7 +14425,7 @@ msgstr "チャンネルをシャープに"
 #: ../app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Clear Channel"
-msgstr "チャンネルをクリア"
+msgstr "チャンネルのクリア"
 
 #: ../app/core/gimpchannel.c:295
 msgctxt "undo-type"
@@ -14596,7 +14435,7 @@ msgstr "チャンネルの反転"
 #: ../app/core/gimpchannel.c:296
 msgctxt "undo-type"
 msgid "Border Channel"
-msgstr "チャンネルを縁取り"
+msgstr "チャンネルの縁取り"
 
 #: ../app/core/gimpchannel.c:297
 msgctxt "undo-type"
@@ -14614,7 +14453,7 @@ msgstr "チャンネルの縮小"
 #| msgid "Flip Channel"
 msgctxt "undo-type"
 msgid "Flood Channel"
-msgstr "チャンネルを鏡像反転"
+msgstr "チャンネルの鏡像反転"
 
 #: ../app/core/gimpchannel.c:783
 #, fuzzy
@@ -14877,7 +14716,7 @@ msgstr "回転"
 #: ../app/core/gimpdrawable-transform.c:1047 ../app/core/gimplayer.c:441
 msgctxt "undo-type"
 msgid "Transform Layer"
-msgstr "レイヤーを変形"
+msgstr "レイヤーの変形"
 
 #: ../app/core/gimpdrawable-transform.c:1060
 msgid "Transformation"
@@ -15013,7 +14852,7 @@ msgstr "グリッドの描画色を指定します。"
 msgid ""
 "The background color of the grid; only used in double dashed line style."
 msgstr ""
-"[線種] に \"破線 (2色)\" を指定しているときのグリッドの背景色を指定します。"
+"[線種] に \"破線 (2 色)\" を指定しているときのグリッドの背景色を指定します。"
 
 #: ../app/core/gimpgrid.c:109
 msgid "Spacing X"
@@ -15063,17 +14902,17 @@ msgstr "レイヤーグループ"
 #: ../app/core/gimpgrouplayer.c:289
 msgctxt "undo-type"
 msgid "Rename Layer Group"
-msgstr "レイヤーグループ名を変更"
+msgstr "レイヤーグループ名の変更"
 
 #: ../app/core/gimpgrouplayer.c:290
 msgctxt "undo-type"
 msgid "Move Layer Group"
-msgstr "レイヤーグループを移動"
+msgstr "レイヤーグループの移動"
 
 #: ../app/core/gimpgrouplayer.c:291
 msgctxt "undo-type"
 msgid "Scale Layer Group"
-msgstr "レイヤーグループを拡大・縮小"
+msgstr "レイヤーグループの拡大・縮小"
 
 #: ../app/core/gimpgrouplayer.c:292
 msgctxt "undo-type"
@@ -15083,17 +14922,17 @@ msgstr "レイヤーグループのサイズ変更"
 #: ../app/core/gimpgrouplayer.c:293
 msgctxt "undo-type"
 msgid "Flip Layer Group"
-msgstr "レイヤーグループを鏡像反転"
+msgstr "レイヤーグループの鏡像反転"
 
 #: ../app/core/gimpgrouplayer.c:294
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
-msgstr "レイヤーグループを回転"
+msgstr "レイヤーグループの回転"
 
 #: ../app/core/gimpgrouplayer.c:295
 msgctxt "undo-type"
 msgid "Transform Layer Group"
-msgstr "レイヤーグループを変形"
+msgstr "レイヤーグループの変形"
 
 #: ../app/core/gimpimage.c:669 ../app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
@@ -15199,22 +15038,22 @@ msgstr "フローティング選択範囲の削除"
 #: ../app/core/gimpimage.c:5306
 msgctxt "undo-type"
 msgid "Add Channel"
-msgstr "チャンネルを追加"
+msgstr "チャンネルの追加"
 
 #: ../app/core/gimpimage.c:5336 ../app/core/gimpimage.c:5360
 msgctxt "undo-type"
 msgid "Remove Channel"
-msgstr "チャンネルを削除"
+msgstr "チャンネルの削除"
 
 #: ../app/core/gimpimage.c:5417
 msgctxt "undo-type"
 msgid "Add Path"
-msgstr "パスを追加"
+msgstr "パスの追加"
 
 #: ../app/core/gimpimage.c:5447 ../app/core/gimpimage.c:5455
 msgctxt "undo-type"
 msgid "Remove Path"
-msgstr "パスを削除"
+msgstr "パスの削除"
 
 #: ../app/core/gimpimage-arrange.c:173
 msgctxt "undo-type"
@@ -15223,11 +15062,11 @@ msgstr "オブジェクトを並べる"
 
 #: ../app/core/gimpimage-color-profile.c:120
 msgid "Enable 'Use sRGB Profile'"
-msgstr "'sRGB プロファイルを使用' を有効化"
+msgstr "'sRGB プロファイルを使用' の有効化"
 
 #: ../app/core/gimpimage-color-profile.c:137
 msgid "Disable 'Use sRGB Profile'"
-msgstr "'sRGB プロファイルを使用' を無効化"
+msgstr "'sRGB プロファイルを使用' の無効化"
 
 #: ../app/core/gimpimage-color-profile.c:195
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
@@ -15370,22 +15209,22 @@ msgstr "キャンバスサイズの変更"
 #: ../app/core/gimpimage-guides.c:53
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
-msgstr "水平ガイドを追加"
+msgstr "水平ガイドの追加"
 
 #: ../app/core/gimpimage-guides.c:77
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
-msgstr "垂直ガイドを追加"
+msgstr "垂直ガイドの追加"
 
 #: ../app/core/gimpimage-guides.c:121
 msgctxt "undo-type"
 msgid "Remove Guide"
-msgstr "ガイドを削除"
+msgstr "ガイドの削除"
 
 #: ../app/core/gimpimage-guides.c:151
 msgctxt "undo-type"
 msgid "Move Guide"
-msgstr "ガイドを移動"
+msgstr "ガイドの移動"
 
 #: ../app/core/gimpimage-item-list.c:121
 msgctxt "undo-type"
@@ -15478,17 +15317,17 @@ msgstr "クイックマスク無効"
 #: ../app/core/gimpimage-sample-points.c:52
 msgctxt "undo-type"
 msgid "Add Sample Point"
-msgstr "サンプルポイントを追加 "
+msgstr "サンプルポイントの追加 "
 
 #: ../app/core/gimpimage-sample-points.c:96
 msgctxt "undo-type"
 msgid "Remove Sample Point"
-msgstr "サンプルポイントを削除"
+msgstr "サンプルポイントの削除"
 
 #: ../app/core/gimpimage-sample-points.c:126
 msgctxt "undo-type"
 msgid "Move Sample Point"
-msgstr "サンプルポイントを移動"
+msgstr "サンプルポイントの移動"
 
 #: ../app/core/gimpimage-sample-points.c:146
 #, fuzzy
@@ -15527,7 +15366,7 @@ msgstr "クリックでプレビューを作成"
 
 #: ../app/core/gimpimagefile.c:790
 msgid "Loading preview..."
-msgstr "プレビューを読み込み中..."
+msgstr "プレビューの読み込み中..."
 
 #: ../app/core/gimpimagefile.c:796
 msgid "Preview is out of date"
@@ -15553,7 +15392,7 @@ msgstr[0] "%d × %d ピクセル"
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
-msgstr[0] "%d枚のレイヤー"
+msgstr[0] "%d 枚のレイヤー"
 
 #: ../app/core/gimpimagefile.c:892
 #, c-format
@@ -15565,7 +15404,7 @@ msgstr ""
 #: ../app/core/gimpitem.c:2162
 msgctxt "undo-type"
 msgid "Attach Parasite"
-msgstr "パラサイトを付加"
+msgstr "パラサイトの付加"
 
 #: ../app/core/gimpitem.c:2172
 msgctxt "undo-type"
@@ -15606,12 +15445,12 @@ msgstr "フローティング選択範囲をレイヤーに"
 #: ../app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Rename Layer"
-msgstr "レイヤー名を変更"
+msgstr "レイヤー名の変更"
 
 #: ../app/core/gimplayer.c:436
 msgctxt "undo-type"
 msgid "Move Layer"
-msgstr "レイヤーを移動"
+msgstr "レイヤーの移動"
 
 #: ../app/core/gimplayer.c:437
 msgctxt "undo-type"
@@ -15626,12 +15465,12 @@ msgstr "レイヤーサイズの変更"
 #: ../app/core/gimplayer.c:439
 msgctxt "undo-type"
 msgid "Flip Layer"
-msgstr "レイヤーを鏡像反転"
+msgstr "レイヤーの鏡像反転"
 
 #: ../app/core/gimplayer.c:440
 msgctxt "undo-type"
 msgid "Rotate Layer"
-msgstr "レイヤーを回転"
+msgstr "レイヤーの回転"
 
 #: ../app/core/gimplayer.c:443
 msgctxt "undo-type"
@@ -15705,37 +15544,37 @@ msgstr "アルファチャンネルをマスクに変換"
 #: ../app/core/gimplayer.c:2206
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
-msgstr "レイヤーマスクを適用"
+msgstr "レイヤーマスクの適用"
 
 #: ../app/core/gimplayer.c:2207
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
-msgstr "レイヤーマスクを削除"
+msgstr "レイヤーマスクの削除"
 
 #: ../app/core/gimplayer.c:2314
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
-msgstr "レイヤーマスクを有効化"
+msgstr "レイヤーマスクの有効化"
 
 #: ../app/core/gimplayer.c:2315
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
-msgstr "レイヤーマスクを無効化"
+msgstr "レイヤーマスクの無効化"
 
 #: ../app/core/gimplayer.c:2396
 msgctxt "undo-type"
 msgid "Show Layer Mask"
-msgstr "レイヤーマスクを表示"
+msgstr "レイヤーマスクの表示"
 
 #: ../app/core/gimplayer.c:2475
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
-msgstr "アルファチャンネルを追加"
+msgstr "アルファチャンネルの追加"
 
 #: ../app/core/gimplayer.c:2511
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
-msgstr "アルファチャンネルを削除"
+msgstr "アルファチャンネルの削除"
 
 #: ../app/core/gimplayer.c:2532
 msgctxt "undo-type"
@@ -15743,30 +15582,21 @@ msgid "Layer to Image Size"
 msgstr "レイヤーをキャンバスに合わせる"
 
 #: ../app/core/gimplayer.c:2715
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgid "Set layer's blend space"
-msgstr "レイヤー不透明度の設定"
+msgstr "レイヤーのブレンドスペースの設定"
 
 #: ../app/core/gimplayer.c:2762
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Layer Composite Space: Auto"
 msgid "Set layer's composite space"
-msgstr "レイヤーの合成色空間: 自動"
+msgstr "レイヤーの合成色空間の設定"
 
 #: ../app/core/gimplayer.c:2809
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer mode"
 msgid "Set layer's composite mode"
-msgstr "レイヤーモードの設定"
+msgstr "レイヤーの合成モードの設定"
 
 #: ../app/core/gimplayermask.c:84
 msgctxt "undo-type"
 msgid "Move Layer Mask"
-msgstr "レイヤーマスクを移動"
+msgstr "レイヤーマスクの移動"
 
 #: ../app/core/gimplayermask.c:85
 msgctxt "undo-type"
@@ -15979,7 +15809,7 @@ msgstr ""
 #: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
 msgid "Move Selection"
-msgstr "選択範囲を移動"
+msgstr "選択範囲の移動"
 
 #: ../app/core/gimpselection.c:174
 msgctxt "undo-type"
@@ -16004,7 +15834,7 @@ msgstr "選択範囲の境界を明確化"
 #: ../app/core/gimpselection.c:194
 msgctxt "undo-type"
 msgid "Select None"
-msgstr "選択を解除"
+msgstr "選択の解除"
 
 #: ../app/core/gimpselection.c:195
 msgctxt "undo-type"
@@ -16014,7 +15844,7 @@ msgstr "すべて選択"
 #: ../app/core/gimpselection.c:196
 msgctxt "undo-type"
 msgid "Invert Selection"
-msgstr "選択範囲を反転"
+msgstr "選択範囲の反転"
 
 #: ../app/core/gimpselection.c:197
 msgctxt "undo-type"
@@ -16208,19 +16038,19 @@ msgstr ""
 #, fuzzy
 #| msgid "Save selection"
 msgid "Disable brush reflection"
-msgstr "選択範囲を保存"
+msgstr "選択範囲の保存"
 
 #: ../app/core/gimpsymmetry-mirror.c:160
 #, fuzzy
 #| msgid "Vertical offset for distribution"
 msgid "Vertical axis position"
-msgstr "[並べる] の際の垂直方向のオフセットを指定します"
+msgstr "[並べる] の垂直方向のオフセットを指定します"
 
 #: ../app/core/gimpsymmetry-mirror.c:172
 #, fuzzy
 #| msgid "Horizontal offset for distribution"
 msgid "Horizontal axis position"
-msgstr "[並べる] の際の水平方向のオフセットを指定します"
+msgstr "[並べる] の水平方向のオフセットを指定します"
 
 #: ../app/core/gimpsymmetry-tiling.c:99
 #, fuzzy
@@ -16257,7 +16087,7 @@ msgstr ""
 #| msgctxt "vectors-action"
 #| msgid "L_ock strokes"
 msgid "Max strokes X"
-msgstr "境界線を保護(_O)"
+msgstr "境界線の保護(_O)"
 
 #: ../app/core/gimpsymmetry-tiling.c:141
 #, fuzzy
@@ -16270,7 +16100,7 @@ msgstr "最大色数(_M):"
 #| msgctxt "vectors-action"
 #| msgid "L_ock strokes"
 msgid "Max strokes Y"
-msgstr "境界線を保護(_O)"
+msgstr "境界線の保護(_O)"
 
 #: ../app/core/gimpsymmetry-tiling.c:149
 #, fuzzy
@@ -16352,50 +16182,47 @@ msgstr "ファイル名"
 
 #. Translators: this is a noun
 #: ../app/core/gimptoolgroup.c:264
-#, fuzzy
-#| msgctxt "dashboard-action"
-#| msgid "_Groups"
 msgctxt "tool-item"
 msgid "Group"
-msgstr "グループ(_G)"
+msgstr "グループ"
 
 #: ../app/core/gimptoolpreset.c:150
 msgid "Apply stored FG/BG"
-msgstr "描画色・背景色を適用"
+msgstr "描画色・背景色の適用"
 
 #: ../app/core/gimptoolpreset.c:157
 #, fuzzy
 #| msgid "Apply stored pattern"
 msgid "Apply stored opacity/paint mode"
-msgstr "パターンを適用"
+msgstr "パターンの適用"
 
 #: ../app/core/gimptoolpreset.c:164
 msgid "Apply stored brush"
-msgstr "ブラシを適用"
+msgstr "ブラシの適用"
 
 #: ../app/core/gimptoolpreset.c:171
 msgid "Apply stored dynamics"
-msgstr "動的特性を適用"
+msgstr "動的特性の適用"
 
 #: ../app/core/gimptoolpreset.c:178
 msgid "Apply stored MyPaint brush"
-msgstr "MyPaint ブラシを適用"
+msgstr "MyPaint ブラシの適用"
 
 #: ../app/core/gimptoolpreset.c:185
 msgid "Apply stored pattern"
-msgstr "パターンを適用"
+msgstr "パターンの適用"
 
 #: ../app/core/gimptoolpreset.c:192
 msgid "Apply stored palette"
-msgstr "パレットを適用"
+msgstr "パレットの適用"
 
 #: ../app/core/gimptoolpreset.c:199
 msgid "Apply stored gradient"
-msgstr "グラデーションを適用"
+msgstr "グラデーションの適用"
 
 #: ../app/core/gimptoolpreset.c:206
 msgid "Apply stored font"
-msgstr "フォントを適用"
+msgstr "フォントの適用"
 
 #: ../app/core/gimptoolpreset-load.c:64
 msgid "Tool preset file is corrupt."
@@ -16559,12 +16386,12 @@ msgstr "チャンネル名(_N):"
 #: ../app/dialogs/channel-options-dialog.c:128
 #: ../app/dialogs/layer-options-dialog.c:168
 msgid "Lock _pixels"
-msgstr "すべてのピクセルを保護(_P)"
+msgstr "すべてのピクセルの保護(_P)"
 
 #: ../app/dialogs/channel-options-dialog.c:129
 #: ../app/dialogs/layer-options-dialog.c:169
 msgid "Lock position and _size"
-msgstr "位置とサイズを保護(_S)"
+msgstr "位置とサイズの保護(_S)"
 
 #: ../app/dialogs/channel-options-dialog.c:170
 msgid "Initialize from _selection"
@@ -16627,7 +16454,7 @@ msgstr ""
 #| msgctxt "undo-type"
 #| msgid "Convert Image to RGB"
 msgid "Convert Image to RGB"
-msgstr "画像をRGBに変換"
+msgstr "画像を RGB に変換"
 
 #: ../app/dialogs/color-profile-dialog.c:182
 #, fuzzy
@@ -16757,7 +16584,7 @@ msgstr "最大色数(_M):"
 
 #: ../app/dialogs/convert-indexed-dialog.c:223
 msgid "_Remove unused and duplicate colors from colormap"
-msgstr "未使用・重複した色をカラーマップから削除する(_R)"
+msgstr "未使用・重複した色をカラーマップから削除(_R)"
 
 #: ../app/dialogs/convert-indexed-dialog.c:252
 msgid "Color _dithering:"
@@ -16786,7 +16613,7 @@ msgstr "256 色より多いパレットを変換することはできません�
 #| msgctxt "undo-type"
 #| msgid "Convert Image to RGB"
 msgid "Convert Image to %s"
-msgstr "画像をRGBに変換"
+msgstr "画像を RGB に変換"
 
 #: ../app/dialogs/convert-precision-dialog.c:138
 #, fuzzy
@@ -16905,7 +16732,7 @@ msgstr "ナビゲーション"
 
 #: ../app/dialogs/dialogs.c:411
 msgid "Display Navigation"
-msgstr "ナビゲーションを表示"
+msgstr "ナビゲーションの表示"
 
 #: ../app/dialogs/dialogs.c:417
 msgid "FG/BG"
@@ -17058,7 +16885,7 @@ msgstr "グリッドの調整"
 
 #: ../app/dialogs/grid-dialog.c:96
 msgid "Configure Image Grid"
-msgstr "画像のグリッドを調整"
+msgstr "画像のグリッドの調整"
 
 #: ../app/dialogs/grid-dialog.c:161
 msgid "Grid"
@@ -17092,7 +16919,7 @@ msgstr "不可視レイヤーの削除(_D)"
 
 #: ../app/dialogs/image-new-dialog.c:100
 msgid "Create a New Image"
-msgstr "新しい画像を作成"
+msgstr "新しい画像の作成"
 
 #: ../app/dialogs/image-new-dialog.c:138
 #: ../app/dialogs/preferences-dialog.c:1774
@@ -17189,16 +17016,12 @@ msgid "Configure Input Devices"
 msgstr "入力デバイスの設定"
 
 #: ../app/dialogs/input-devices-dialog.c:114
-#, fuzzy
-#| msgid "Resource configuration"
 msgid "Reset Input Device Configuration"
-msgstr "リソース設定"
+msgstr "入力デバイスの設定のリセット"
 
 #: ../app/dialogs/input-devices-dialog.c:132
-#, fuzzy
-#| msgid "Do you really want to reset all filters to default values?"
 msgid "Do you really want to reset all input devices to default configuration?"
-msgstr "すべてのフィルター設定を既定値に戻してよろしいですか?"
+msgstr "すべての入力デバイス設定を初期設定に戻してもよろしいですか?"
 
 #: ../app/dialogs/item-options-dialog.c:203
 msgid "Color tag:"
@@ -17236,18 +17059,15 @@ msgid "S_ave keyboard shortcuts on exit"
 msgstr "終了時にキーボードショートカットを保存する(_A)"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:105
-#, fuzzy
-#| msgid "Add Layer Mask"
 msgid "Add Layer Mask"
 msgid_plural "Add Layer Masks"
 msgstr[0] "レイヤーマスクの追加"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:107
-#, fuzzy, c-format
-#| msgid "Add a Mask to the Layer"
+#, c-format
 msgid "Add a Mask to the Layer"
 msgid_plural "Add Masks to %d Layers"
-msgstr[0] "レイヤーマスクの追加"
+msgstr[0] "%d 個のレイヤーにマスクを追加"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:120
 msgid "_Add"
@@ -17324,7 +17144,7 @@ msgstr "アクティブなフィルター"
 
 #: ../app/dialogs/layer-options-dialog.c:419
 msgid "Lock _alpha"
-msgstr "透明部分を保護(_A)"
+msgstr "透明部分の保護(_A)"
 
 #: ../app/dialogs/layer-options-dialog.c:431
 msgid "Set name from _text"
@@ -17455,7 +17275,7 @@ msgstr "場所:"
 
 #: ../app/dialogs/palette-import-dialog.c:156
 msgid "Import a New Palette"
-msgstr "新しいパレットをインポート"
+msgstr "新しいパレットのインポート"
 
 #: ../app/dialogs/palette-import-dialog.c:162
 msgid "_Import"
@@ -18189,7 +18009,7 @@ msgstr "キーボードショートカットのリセット(_R)"
 
 #: ../app/dialogs/preferences-dialog.c:1906
 msgid "Remove _All Keyboard Shortcuts"
-msgstr "すべてのキーボードショートカットを消去(_A)"
+msgstr "すべてのキーボードショートカットの消去(_A)"
 
 #: ../app/dialogs/preferences-dialog.c:1918
 #: ../app/dialogs/preferences-dialog.c:1919
@@ -18355,7 +18175,7 @@ msgstr "最近の設定の保存数:"
 
 #: ../app/dialogs/preferences-dialog.c:2313
 msgid "Default to the last used settings"
-msgstr "最後に使用した設定をデフォルトにする"
+msgstr "最後に使用した設定を既定にする"
 
 #: ../app/dialogs/preferences-dialog.c:2316
 msgid "Show advanced color options"
@@ -18722,7 +18542,7 @@ msgstr "画像ウィンドウ"
 
 #: ../app/dialogs/preferences-dialog.c:2873
 msgid "Use \"Show _all\" by default"
-msgstr "\"すべて表示\" をデフォルトにする(_A)"
+msgstr "\"すべて表示\" を既定にする(_A)"
 
 #: ../app/dialogs/preferences-dialog.c:2877
 msgid "Use \"_Dot for dot\" by default"
@@ -18747,7 +18567,7 @@ msgstr "キャンバスサイズ変更時にウィンドウサイズも変更す
 
 #: ../app/dialogs/preferences-dialog.c:2900
 msgid "Show entire image"
-msgstr "画像全体を表示"
+msgstr "画像全体の表示"
 
 #: ../app/dialogs/preferences-dialog.c:2902
 msgid "Initial zoom _ratio:"
@@ -18819,19 +18639,19 @@ msgstr "既定の書式"
 
 #: ../app/dialogs/preferences-dialog.c:2997
 msgid "Show zoom percentage"
-msgstr "表示倍率 (パーセント) を表示"
+msgstr "表示倍率 (パーセント) の表示"
 
 #: ../app/dialogs/preferences-dialog.c:2998
 msgid "Show zoom ratio"
-msgstr "表示倍率 (比率) を表示"
+msgstr "表示倍率 (比率) の表示"
 
 #: ../app/dialogs/preferences-dialog.c:2999
 msgid "Show image size"
-msgstr "キャンバスサイズを表示"
+msgstr "キャンバスサイズの表示"
 
 #: ../app/dialogs/preferences-dialog.c:3000
 msgid "Show drawable size"
-msgstr "描画領域のサイズを表示"
+msgstr "描画領域サイズの表示"
 
 #: ../app/dialogs/preferences-dialog.c:3013
 msgid "Image Title Format"
@@ -19157,7 +18977,7 @@ msgstr "ピクセル/%a"
 
 #: ../app/dialogs/quit-dialog.c:164
 msgid "Quit GIMP"
-msgstr "GIMPを終了します"
+msgstr "GIMP を終了します"
 
 #: ../app/dialogs/quit-dialog.c:164
 msgid "Close All Images"
@@ -19435,13 +19255,11 @@ msgstr "パス名(_N):"
 
 #: ../app/dialogs/vectors-options-dialog.c:108
 msgid "Lock path _strokes"
-msgstr "パスを保護(_S)"
+msgstr "パスの保護(_S)"
 
 #: ../app/dialogs/vectors-options-dialog.c:109
-#, fuzzy
-#| msgid "Lock path strokes"
 msgid "Lock path _position"
-msgstr "パスを保護"
+msgstr "パスの位置の保護(_P)"
 
 #: ../app/display/display-enums.c:88
 msgctxt "compass-orientation"
@@ -19491,12 +19309,12 @@ msgstr "対角線構図"
 #: ../app/display/display-enums.c:161
 msgctxt "guides-type"
 msgid "Number of lines"
-msgstr "グリッド線の数を指定"
+msgstr "グリッド線の数の指定"
 
 #: ../app/display/display-enums.c:162
 msgctxt "guides-type"
 msgid "Line spacing"
-msgstr "グリッド間隔を指定"
+msgstr "グリッド間隔の指定"
 
 #: ../app/display/display-enums.c:383
 msgctxt "rectangle-fixed-rule"
@@ -19697,11 +19515,11 @@ msgstr "画像は '%s' にエクスポートされています。"
 #: ../app/display/gimpdisplayshell-dnd.c:708
 #: ../app/display/gimpdisplayshell-dnd.c:767
 msgid "Drop New Layer"
-msgstr "新しいレイヤーをドロップ"
+msgstr "新しいレイヤーのドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:292
 msgid "Drop New Path"
-msgstr "新しいパスをドロップ"
+msgstr "新しいパスのドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:366
 #: ../app/tools/gimpbucketfilltool.c:579 ../app/tools/gimpcagetool.c:240
@@ -19725,7 +19543,7 @@ msgstr "アクティブレイヤー中のすべてのピクセルが保護され
 #| msgid "Drop New Layer"
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
-msgstr "新しいレイヤーをドロップ"
+msgstr "新しいレイヤーのドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:446
 #: ../app/widgets/gimpdrawabletreeview.c:296
@@ -19734,13 +19552,13 @@ msgstr "新しいレイヤーをドロップ"
 #| msgid "Drop layers"
 msgctxt "undo-type"
 msgid "Drop color to layer"
-msgstr "レイヤーをドロップ"
+msgstr "レイヤーのドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:598
 #: ../app/widgets/gimpitemtreeview.c:1309
 #: ../app/widgets/gimplayertreeview.c:821
 msgid "Drop layers"
-msgstr "レイヤーをドロップ"
+msgstr "レイヤーのドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:741
 #: ../app/display/gimpdisplayshell-dnd.c:758
@@ -19806,7 +19624,7 @@ msgstr "表示倍率"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:117
 msgid "Select Zoom Ratio"
-msgstr "表示倍率を指定"
+msgstr "表示倍率の指定"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:162
 msgid "Zoom ratio:"
@@ -20001,7 +19819,7 @@ msgstr "クリック-ドラッグ: 終端点を移動します"
 #, fuzzy
 #| msgid "%s to move the whole line"
 msgid "Release to remove the slider"
-msgstr "%s-ドラッグ: ベクトルを移動"
+msgstr "%s-ドラッグ: ベクトルの移動"
 
 #: ../app/display/gimptoolline.c:1568
 #, fuzzy, c-format
@@ -20054,7 +19872,7 @@ msgstr "クリック-ドラッグ: このポイントを移動します"
 #: ../app/display/gimptoolline.c:1632
 #, c-format
 msgid "%s to move the whole line"
-msgstr "%s-ドラッグ: ベクトルを移動"
+msgstr "%s-ドラッグ: ベクトルの移動"
 
 #: ../app/display/gimptoolpath.c:278 ../app/tools/gimpvectoroptions.c:72
 msgid "Edit Mode"
@@ -21726,7 +21544,7 @@ msgstr ""
 #| msgctxt "guides-type"
 #| msgid "Line spacing"
 msgid "Link Spacing"
-msgstr "グリッド間隔を指定"
+msgstr "グリッド間隔の指定"
 
 #: ../app/paint/gimppaintoptions.c:267
 #, fuzzy
@@ -21833,7 +21651,7 @@ msgstr "手ブレ補正"
 
 #: ../app/paint/gimppaintoptions.c:424
 msgid "Paint smoother strokes"
-msgstr "フリーハンドで描画する際の手ブレを補正します"
+msgstr "フリーハンドで描画するときの手ブレを補正します"
 
 #: ../app/paint/gimppaintoptions.c:430
 msgid "Depth of smoothing"
@@ -22318,7 +22136,7 @@ msgstr "選択範囲判定時の基準とする要素を指定します"
 #, fuzzy
 #| msgid "Apply Threshold"
 msgid "Sample threshold"
-msgstr "しきい値を適用"
+msgstr "しきい値の適用"
 
 #: ../app/pdb/gimppdbcontext.c:151
 #, fuzzy
@@ -22532,7 +22350,7 @@ msgstr "画像の切り抜き"
 #, fuzzy
 #| msgid "Drop layers"
 msgid "Autocrop layer"
-msgstr "レイヤーをドロップ"
+msgstr "レイヤーのドロップ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:777
 msgctxt "undo-type"
@@ -23269,7 +23087,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Contiguous"
 msgid "Contours"
-msgstr "単一領域を抽出"
+msgstr "単一領域の抽出"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:88
 #, fuzzy
@@ -23334,7 +23152,7 @@ msgstr "_M"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:149
 msgid "Select Primary Color to Adjust"
-msgstr "調整する基準色を選択"
+msgstr "調整する基準色の選択"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:226
 msgid "_Overlap"
@@ -23342,7 +23160,7 @@ msgstr "オーバーラップ(_O)"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:230
 msgid "Adjust Selected Color"
-msgstr "選択した色を調整"
+msgstr "選択した色の調整"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:240
 msgid "_Hue"
@@ -23385,7 +23203,7 @@ msgstr "黒"
 #, fuzzy
 #| msgid "Lock path strokes"
 msgid "_Lock patterns"
-msgstr "パスを保護"
+msgstr "パスの保護"
 
 #: ../app/propgui/gimppropgui-newsprint.c:245
 msgid "Loc_k periods"
@@ -23581,7 +23399,7 @@ msgstr ""
 
 #: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1632
 msgid "Add Text Layer"
-msgstr "テキストレイヤーを追加"
+msgstr "テキストレイヤーの追加"
 
 #: ../app/text/gimptext-parasite.c:89
 #, fuzzy
@@ -23694,11 +23512,11 @@ msgstr "基準とする画像オブジェクトを指定します"
 
 #: ../app/tools/gimpalignoptions.c:98
 msgid "Horizontal offset for distribution"
-msgstr "[並べる] の際の水平方向のオフセットを指定します"
+msgstr "[並べる] の水平方向のオフセットを指定します"
 
 #: ../app/tools/gimpalignoptions.c:105
 msgid "Vertical offset for distribution"
-msgstr "[並べる] の際の垂直方向のオフセットを指定します"
+msgstr "[並べる] の垂直方向のオフセットを指定します"
 
 #: ../app/tools/gimpalignoptions.c:279
 msgid "Align"
@@ -23710,7 +23528,7 @@ msgstr "左揃え"
 
 #: ../app/tools/gimpalignoptions.c:302
 msgid "Align center of target"
-msgstr "中央揃え(水平方向の)"
+msgstr "中央揃え (水平方向の)"
 
 #: ../app/tools/gimpalignoptions.c:306
 msgid "Align right edge of target"
@@ -23722,7 +23540,7 @@ msgstr "上揃え"
 
 #: ../app/tools/gimpalignoptions.c:318
 msgid "Align middle of target"
-msgstr "中央揃え(垂直方向の)"
+msgstr "中央揃え (垂直方向の)"
 
 #: ../app/tools/gimpalignoptions.c:322
 msgid "Align bottom of target"
@@ -23738,7 +23556,7 @@ msgstr "左端を基準に並べる"
 
 #: ../app/tools/gimpalignoptions.c:342
 msgid "Distribute horizontal centers of targets"
-msgstr "中央(水平方向)を基準に並べる"
+msgstr "中央 (水平方向) を基準に並べる"
 
 #: ../app/tools/gimpalignoptions.c:346
 msgid "Distribute right edges of targets"
@@ -23754,7 +23572,7 @@ msgstr "上端を基準に並べる"
 
 #: ../app/tools/gimpalignoptions.c:362
 msgid "Distribute vertical centers of targets"
-msgstr "中央(垂直方向)を基準に並べる"
+msgstr "中央 (垂直方向) を基準に並べる"
 
 #: ../app/tools/gimpalignoptions.c:366
 msgid "Distribute bottoms of targets"
@@ -23991,22 +23809,22 @@ msgstr "クリックされたピクセルの色を描画色に設定します"
 
 #: ../app/tools/gimpbycolorselecttool.c:70
 msgid "Select by Color"
-msgstr "色域を選択"
+msgstr "色域の選択"
 
 #: ../app/tools/gimpbycolorselecttool.c:71
 msgid "Select by Color Tool: Select regions with similar colors"
 msgstr ""
-"[色域を選択]\n"
+"[色域の選択]\n"
 "特定色の領域を選択範囲にします"
 
 #: ../app/tools/gimpbycolorselecttool.c:72
 msgid "_By Color Select"
-msgstr "色域を選択(_B)"
+msgstr "色域の選択(_B)"
 
 #: ../app/tools/gimpbycolorselecttool.c:85
 msgctxt "command"
 msgid "Select by Color"
-msgstr "色域を選択"
+msgstr "色域の選択"
 
 #: ../app/tools/gimpcageoptions.c:78
 msgid ""
@@ -24040,7 +23858,7 @@ msgstr "Enter/Return: 変形を確定します"
 
 #: ../app/tools/gimpcagetool.c:1168
 msgid "Computing Cage Coefficients"
-msgstr "ケージ係数を計算中"
+msgstr "ケージ係数の計算中"
 
 #: ../app/tools/gimpcagetool.c:1301
 msgid "Cage transform"
@@ -24064,7 +23882,7 @@ msgstr "クリック: スタンプ描画します"
 #: ../app/tools/gimpclonetool.c:91 ../app/tools/gimpclonetool.c:96
 #, c-format
 msgid "%s to set a new clone source"
-msgstr "%s-クリック: 新たなスタンプソースを設定"
+msgstr "%s-クリック: 新たなスタンプソースの設定"
 
 #. Translators: the translation of "Click" must be the first word
 #: ../app/tools/gimpclonetool.c:95
@@ -24104,7 +23922,7 @@ msgstr "取得した色をどのように利用するか指定します"
 #: ../app/tools/gimpcolorpickeroptions.c:88
 #: ../app/tools/gimpmeasureoptions.c:80
 msgid "Use info window"
-msgstr "情報ウィンドウを使用"
+msgstr "情報ウィンドウの使用"
 
 #: ../app/tools/gimpcolorpickeroptions.c:89
 msgid ""
@@ -24121,7 +23939,7 @@ msgstr "スポイト対象  (%s)"
 #: ../app/tools/gimpcolorpickeroptions.c:198
 #, c-format
 msgid "Use info window  (%s)"
-msgstr "情報ウィンドウを使用  (%s)"
+msgstr "情報ウィンドウの使用  (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:108
 msgid "Color Picker"
@@ -24243,7 +24061,7 @@ msgstr ""
 
 #: ../app/tools/gimpcropoptions.c:109
 msgid "Allow growing"
-msgstr "拡大を許可"
+msgstr "拡大の許可"
 
 #: ../app/tools/gimpcropoptions.c:110
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
@@ -24292,18 +24110,14 @@ msgid "There are no selected layers to crop."
 msgstr "切り取り元のアクティブレイヤーがありません。"
 
 #: ../app/tools/gimpcroptool.c:468
-#, fuzzy
-#| msgid "The active layer's pixels are locked."
 msgid "All selected layers' pixels are locked."
-msgstr "アクティブレイヤー中のすべてのピクセルが保護されています。"
+msgstr "選択したレイヤー中のすべてのピクセルが保護されています。"
 
 #: ../app/tools/gimpcroptool.c:473
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Resize Layer"
+#, c-format
 msgid "Resize Layer"
 msgid_plural "Resize %d layers"
-msgstr[0] "レイヤーサイズの変更"
+msgstr[0] "%d 個のレイヤーのサイズを変更"
 
 #: ../app/tools/gimpcurvestool.c:154
 msgid "Curves"
@@ -24984,7 +24798,7 @@ msgstr "描画色の変更"
 #| msgctxt "undo-type"
 #| msgid "Delete path"
 msgid "Delete stop"
-msgstr "パスを削除"
+msgstr "パスの削除"
 
 #. the type label
 #: ../app/tools/gimpgradienttool-editor.c:1502
@@ -25038,30 +24852,22 @@ msgid "Gradient Step"
 msgstr "グラデーション"
 
 #: ../app/tools/gimpguidetool.c:191
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Remove Guide"
 msgctxt "undo-type"
 msgid "Remove Guides"
-msgstr "ガイドを削除"
+msgstr "ガイドの削除"
 
 #: ../app/tools/gimpguidetool.c:192
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Move Guide"
 msgctxt "undo-type"
 msgid "Move Guides"
-msgstr "ガイドを移動"
+msgstr "ガイドの移動"
 
 #: ../app/tools/gimpguidetool.c:432
-#, fuzzy
-#| msgid "Remove Guide"
 msgid "Remove Guides"
-msgstr "ガイドを削除"
+msgstr "ガイドの削除"
 
 #: ../app/tools/gimpguidetool.c:433
 msgid "Remove Guide"
-msgstr "ガイドを削除"
+msgstr "ガイドの削除"
 
 #: ../app/tools/gimpguidetool.c:434
 msgid "Cancel Guide"
@@ -25069,17 +24875,15 @@ msgstr "ガイド追加を取り消し"
 
 #: ../app/tools/gimpguidetool.c:471
 msgid "Move Guide: "
-msgstr "ガイドを移動: "
+msgstr "ガイドの移動: "
 
 #: ../app/tools/gimpguidetool.c:481
-#, fuzzy
-#| msgid "Move Guide: "
 msgid "Move Guides: "
-msgstr "ガイドを移動: "
+msgstr "ガイドの移動: "
 
 #: ../app/tools/gimpguidetool.c:492
 msgid "Add Guide: "
-msgstr "ガイドを追加: "
+msgstr "ガイドの追加: "
 
 #: ../app/tools/gimphandletransformoptions.c:74
 #: ../app/tools/gimphandletransformoptions.c:75
@@ -25176,12 +24980,10 @@ msgstr "新規ノード追加時に境界を表示"
 #: ../app/tools/gimpiscissorsoptions.c:71
 msgid "Display future selection segment as you drag a control node"
 msgstr ""
-"新しいコントロールノードを追加する際に、コントロールノードのドラッグに応じて"
+"新しいコントロールノードを追加するときに、コントロールノードのドラッグに応じて"
 "選択範囲の境界線を表示します"
 
 #: ../app/tools/gimpiscissorstool.c:292
-#, fuzzy
-#| msgid "Scissors"
 msgid "Scissors Select"
 msgstr "電脳はさみ"
 
@@ -25427,7 +25229,7 @@ msgstr "%-3.3g° で傾き修正 (垂直方向)"
 
 #: ../app/tools/gimpmeasuretool.c:452
 msgid "Add Guides"
-msgstr "ガイドを追加"
+msgstr "ガイドの追加"
 
 #: ../app/tools/gimpmeasuretool.c:742
 msgid "Measure Distances and Angles"
@@ -25439,7 +25241,7 @@ msgstr "距離:"
 
 #: ../app/tools/gimpmoveoptions.c:137
 msgid "Move selection"
-msgstr "選択範囲を移動"
+msgstr "選択範囲の移動"
 
 #: ../app/tools/gimpmoveoptions.c:147 ../app/tools/gimpmoveoptions.c:210
 #, c-format
@@ -25448,19 +25250,19 @@ msgstr "機能の切り替え  (%s)"
 
 #: ../app/tools/gimpmoveoptions.c:155
 msgid "Pick a layer or guide"
-msgstr "つかんだレイヤーまたはガイドを移動"
+msgstr "つかんだレイヤーまたはガイドの移動"
 
 #: ../app/tools/gimpmoveoptions.c:156
 msgid "Move the selected layers"
-msgstr "選択したレイヤーを移動"
+msgstr "選択したレイヤーの移動"
 
 #: ../app/tools/gimpmoveoptions.c:160
 msgid "Pick a path"
-msgstr "つかんだパスを移動"
+msgstr "つかんだパスの移動"
 
 #: ../app/tools/gimpmoveoptions.c:161
 msgid "Move the active path"
-msgstr "アクティブなパスを移動"
+msgstr "アクティブなパスの移動"
 
 #: ../app/tools/gimpmoveoptions.c:198
 msgid "Move:"
@@ -25801,7 +25603,7 @@ msgstr "Ctrl-クリック: スタンプソースを設定します"
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
 msgstr ""
 "[遠近法]\n"
-"レイヤー、選択範囲、またはパスのいずれかにパース(遠近感)を与えます"
+"レイヤー、選択範囲、またはパスのいずれかにパース (遠近感) を与えます"
 
 #: ../app/tools/gimpperspectivetool.c:88
 msgid "_Perspective"
@@ -25838,11 +25640,11 @@ msgstr "選択範囲作成時に [三分割法] などの構図ガイドを表�
 
 #: ../app/tools/gimprectangleoptions.c:111
 msgid "X coordinate of top left corner"
-msgstr "選択範囲を示す矩形の左上角の x 座標です"
+msgstr "選択範囲を示す矩形の左上角の X 座標です"
 
 #: ../app/tools/gimprectangleoptions.c:121
 msgid "Y coordinate of top left corner"
-msgstr "選択範囲を示す矩形の左上角の y 座標です"
+msgstr "選択範囲を示す矩形の左上角の Y 座標です"
 
 #: ../app/tools/gimprectangleoptions.c:131
 msgid "Width of selection"
@@ -26008,15 +25810,15 @@ msgstr "角度(_A):"
 
 #: ../app/tools/gimprotatetool.c:302
 msgid "Center _X:"
-msgstr "中心の x 座標 (_X):"
+msgstr "中心の X 座標 (_X):"
 
 #: ../app/tools/gimprotatetool.c:312
 msgid "Center _Y:"
-msgstr "中心の y 座標 (_Y):"
+msgstr "中心の Y 座標 (_Y):"
 
 #: ../app/tools/gimpsamplepointtool.c:237
 msgid "Remove Sample Point"
-msgstr "サンプルポイントを削除"
+msgstr "サンプルポイントの削除"
 
 #: ../app/tools/gimpsamplepointtool.c:238
 msgid "Cancel Sample Point"
@@ -26239,7 +26041,7 @@ msgstr "インデント"
 
 #: ../app/tools/gimptextoptions.c:184
 msgid "Line spacing"
-msgstr "行間を指定"
+msgstr "行間の指定"
 
 #: ../app/tools/gimptextoptions.c:185
 msgid "Adjust line spacing"
@@ -26250,7 +26052,7 @@ msgstr "行間隔"
 #| msgctxt "guides-type"
 #| msgid "Line spacing"
 msgid "Letter spacing"
-msgstr "グリッド間隔を指定"
+msgstr "グリッド間隔の指定"
 
 #: ../app/tools/gimptextoptions.c:193
 msgid "Adjust letter spacing"
@@ -26360,7 +26162,7 @@ msgstr "しきい値(_T)..."
 
 #: ../app/tools/gimpthresholdtool.c:212
 msgid "Apply Threshold"
-msgstr "しきい値を適用"
+msgstr "しきい値の適用"
 
 #: ../app/tools/gimpthresholdtool.c:299
 msgid "_Auto"
@@ -26384,7 +26186,7 @@ msgstr ""
 
 #: ../app/tools/gimptransformgridoptions.c:113
 msgid "Show image preview"
-msgstr "プレビューを表示"
+msgstr "プレビューの表示"
 
 #: ../app/tools/gimptransformgridoptions.c:114
 msgid "Show a preview of the transformed image"
@@ -26435,10 +26237,10 @@ msgstr "ガイド"
 #: ../app/tools/gimptransformgridoptions.c:157
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr ""
-"[ガイド] を [グリッド線の数を指定] または [グリッド間隔を指定] に設定している"
+"[ガイド] を [グリッド線の数を指定] または [グリッド間隔の指定] に設定している"
 "とき、ここでの値がグリッドセルの大きさを決定します\n"
 "[グリッド線の数を指定] のときは、値は挿入されるグリッド線の本数を意味します\n"
-"[グリッド間隔を指定] のときは、値はピクセル単位のグリッド間隔を意味しますが、"
+"[グリッド間隔の指定] のときは、値はピクセル単位のグリッド間隔を意味しますが、"
 "実際の間隔は各グリッドセル間で均一になるように調整されます"
 
 #: ../app/tools/gimptransformgridoptions.c:508
@@ -26453,7 +26255,7 @@ msgstr "回転角度を 15 度刻みにします"
 #: ../app/tools/gimptransformgridoptions.c:523
 #, c-format
 msgid "Keep aspect (%s)"
-msgstr "縦横比を維持 (%s)"
+msgstr "縦横比の維持 (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:529
 msgid "Keep the original aspect ratio"
@@ -26472,7 +26274,7 @@ msgstr "中心点を基準にして拡大・縮小します"
 #: ../app/tools/gimptransformgridoptions.c:549
 #, c-format
 msgid "Constrain handles (%s)"
-msgstr "ハンドルを制限 (%s)"
+msgstr "ハンドルの制限 (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:556
 #, c-format
@@ -27018,12 +26820,12 @@ msgstr "自由選択"
 #: ../app/tools/tools-enums.c:90
 msgctxt "rect-select-mode"
 msgid "Fixed size"
-msgstr "サイズを固定"
+msgstr "サイズの固定"
 
 #: ../app/tools/tools-enums.c:91
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
-msgstr "縦横比を固定"
+msgstr "縦横比の固定"
 
 #: ../app/tools/tools-enums.c:121
 msgctxt "transform-type"
@@ -27048,17 +26850,17 @@ msgstr "画像"
 #: ../app/tools/tools-enums.c:217
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
-msgstr "前景を描画"
+msgstr "前景の描画"
 
 #: ../app/tools/tools-enums.c:218
 msgctxt "matting-draw-mode"
 msgid "Draw background"
-msgstr "背景を描画"
+msgstr "背景の描画"
 
 #: ../app/tools/tools-enums.c:219
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
-msgstr "不明部分を描画"
+msgstr "不明部分の描画"
 
 #: ../app/tools/tools-enums.c:247
 msgctxt "matting-preview-mode"
@@ -27140,12 +26942,9 @@ msgid "Smooth warping"
 msgstr "歪みを滑らかに"
 
 #: ../app/tools/tools-enums.c:352
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "_Add to Selection"
 msgctxt "paint-select-mode"
 msgid "Add to selection"
-msgstr "選択範囲に加える(_A)"
+msgstr "選択範囲に加える"
 
 #: ../app/tools/tools-enums.c:353
 #, fuzzy
@@ -27660,7 +27459,7 @@ msgstr "イベント"
 
 #: ../app/widgets/gimpcontrollereditor.c:362
 msgid "_Grab event"
-msgstr "イベントを横取り(_G)"
+msgstr "イベントの横取り(_G)"
 
 #: ../app/widgets/gimpcontrollereditor.c:371
 msgid "Select the next event arriving from the controller"
@@ -27677,7 +27476,7 @@ msgstr "イベントの消去(_C)"
 #: ../app/widgets/gimpcontrollereditor.c:522
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr "'%s' に割り当てられたアクションを削除"
+msgstr "'%s' に割り当てられたアクションの削除"
 
 #: ../app/widgets/gimpcontrollereditor.c:527
 #, c-format
@@ -27698,10 +27497,8 @@ msgid "Enabled"
 msgstr ""
 
 #: ../app/widgets/gimpcontrollerinfo.c:120
-#, fuzzy
-#| msgid "_Grab event"
 msgid "Debug events"
-msgstr "イベントを横取り(_G)"
+msgstr ""
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:69
 #: ../app/widgets/gimpcontrollerkeyboard.c:72
@@ -27975,7 +27772,7 @@ msgstr "マウスホイールのイベント"
 
 #: ../app/widgets/gimpcriticaldialog.c:55
 msgid "Copy Bug Information"
-msgstr "バグ情報をコピー"
+msgstr "バグ情報のコピー"
 
 #: ../app/widgets/gimpcriticaldialog.c:56
 msgid "Open Bug Tracker"
@@ -28690,7 +28487,7 @@ msgstr "すべてのピクセルを保護"
 
 #: ../app/widgets/gimpdrawabletreeview.c:124
 msgid "Lock position and size"
-msgstr "位置とサイズを保護"
+msgstr "位置とサイズの保護"
 
 #: ../app/widgets/gimpdrawabletreeview.c:189
 msgid "Cannot select item while a floating selection is active."
@@ -28747,7 +28544,7 @@ msgstr "%s エラーメッセージ"
 
 #: ../app/widgets/gimpexportdialog.c:71
 msgid "Export Image"
-msgstr "画像をエクスポート"
+msgstr "画像のエクスポート"
 
 #: ../app/widgets/gimpexportdialog.c:74
 msgid "_Export"
@@ -29141,7 +28938,7 @@ msgstr "他のモードのグループに切り替えます"
 
 #: ../app/widgets/gimplayertreeview.c:322
 msgid "Lock alpha channel"
-msgstr "透明部分を保護"
+msgstr "透明部分の保護"
 
 #: ../app/widgets/gimplayertreeview.c:1068
 #, fuzzy
@@ -29529,7 +29326,7 @@ msgstr "サムネイル %d/%d"
 
 #: ../app/widgets/gimpthumbbox.c:713 ../app/widgets/gimpthumbbox.c:723
 msgid "Creating preview..."
-msgstr "プレビューを作成中..."
+msgstr "プレビューの作成中..."
 
 #: ../app/widgets/gimptoolbox-color-area.c:220
 msgid "Change Foreground Color"
@@ -30100,7 +29897,7 @@ msgstr "fuzzy"
 #~ msgstr "レベルの自動調整"
 
 #~ msgid "Move the active layer"
-#~ msgstr "アクティブレイヤーを移動"
+#~ msgstr "アクティブレイヤーの移動"
 
 #, fuzzy
 #~| msgid "There is no active layer or channel to cut from."
@@ -30156,7 +29953,7 @@ msgstr "fuzzy"
 #, fuzzy
 #~| msgid "Save selection"
 #~ msgid "Enable reflection"
-#~ msgstr "選択範囲を保存"
+#~ msgstr "選択範囲の保存"
 
 #~ msgctxt "dialogs-action"
 #~ msgid "Paint Dynamics"
@@ -30229,13 +30026,13 @@ msgstr "fuzzy"
 #~ msgstr "描画モードと不透明度を変更して、前回の作業をやり直します"
 
 #~ msgid "_Fade %s..."
-#~ msgstr "%s をフェード(_F)..."
+#~ msgstr "%s のフェード(_F)..."
 
 #~ msgid "_Fade..."
 #~ msgstr "フェード(_F)..."
 
 #~ msgid "Fade %s"
-#~ msgstr "%s をフェード"
+#~ msgstr "%s のフェード"
 
 #~ msgid "_Fade"
 #~ msgstr "フェード(_F)"
@@ -30537,12 +30334,12 @@ msgstr "fuzzy"
 #~ msgstr ""
 #~ "この設定がオンのときは、位置のヒントに基くのではなく個々のモーションイベン"
 #~ "トに対してマウスの現在位置を X サーバーに問合せるようになります。大きなブ"
-#~ "ラシを用いて描画する際に正確になりますが、多少遅くなります。(お使いの X "
+#~ "ラシを用いて描画するときに正確になりますが、多少遅くなります。(お使いの X "
 #~ "サーバーによっては、逆に速くなる場合もあります。)"
 
 #~ msgctxt "convert-palette-type"
 #~ msgid "Generate optimum palette"
-#~ msgstr "最適パレットを生成"
+#~ msgstr "最適パレットの生成"
 
 #~ msgctxt "convert-palette-type"
 #~ msgid "Use web-optimized palette"
@@ -30769,7 +30566,7 @@ msgstr "fuzzy"
 #~ msgstr "菱形"
 
 #~ msgid "Move Layer"
-#~ msgstr "レイヤーを移動"
+#~ msgstr "レイヤーの移動"
 
 #~ msgid "Plug-In missing (%s)"
 #~ msgstr "プラグインが見つかりません (%s)"
@@ -30839,7 +30636,7 @@ msgstr "fuzzy"
 #~ msgstr "RGB レイヤー以外では脱色できません"
 
 #~ msgid "Move Selection"
-#~ msgstr "選択範囲を移動"
+#~ msgstr "選択範囲の移動"
 
 #~ msgid "Flip Type  (%s)"
 #~ msgstr "反転の向き  (%s)"
@@ -30863,13 +30660,13 @@ msgstr "fuzzy"
 #~ msgstr "レベル設定のエクスポート"
 
 #~ msgid "Pick black point"
-#~ msgstr "黒点を設定"
+#~ msgstr "黒点の設定"
 
 #~ msgid "Pick gray point"
-#~ msgstr "グレー点を設定"
+#~ msgstr "グレー点の設定"
 
 #~ msgid "Pick white point"
-#~ msgstr "白点を設定"
+#~ msgstr "白点の設定"
 
 #~ msgid "Reset angle to zero"
 #~ msgstr "角度を 0 度に戻します"
@@ -31074,7 +30871,7 @@ msgstr "fuzzy"
 #~ msgstr "インデックスレイヤーでは、レベルは使用できません"
 
 #~ msgid "Fixed:"
-#~ msgstr "値を固定"
+#~ msgstr "値の固定"
 
 #~ msgid "Threshold does not operate on indexed layers."
 #~ msgstr "インデックスレイヤーにはしきい値操作はできません。"
@@ -31144,7 +30941,7 @@ msgstr "fuzzy"
 #~ msgstr "どの色で塗りつぶすのかを指定します"
 
 #~ msgid "What to use for calculating an area to fill"
-#~ msgstr "塗りつぶし領域を決定する際に判定対象とする要素を指定します"
+#~ msgstr "塗りつぶし領域を決定するときに判定対象とする要素を指定します"
 
 #~ msgid "How to render preview"
 #~ msgstr "プレビューの表示方法を指定します"
@@ -31224,19 +31021,19 @@ msgstr "fuzzy"
 
 #~ msgctxt "tool-options-action"
 #~ msgid "_Save Options To"
-#~ msgstr "ツールオプションを保存(_S)"
+#~ msgstr "ツールオプションの保存(_S)"
 
 #~ msgctxt "tool-options-action"
 #~ msgid "_Restore Options From"
-#~ msgstr "ツールオプションを読込み(_R)"
+#~ msgstr "ツールオプションの読み込み(_R)"
 
 #~ msgctxt "tool-options-action"
 #~ msgid "Re_name Saved Options"
-#~ msgstr "保存済オプション名を変更(_N)"
+#~ msgstr "保存済オプション名の変更(_N)"
 
 #~ msgctxt "tool-options-action"
 #~ msgid "_Delete Saved Options"
-#~ msgstr "保存済オプションを削除(_D)"
+#~ msgstr "保存済オプションの削除(_D)"
 
 #~ msgctxt "tool-options-action"
 #~ msgid "_New Entry..."
@@ -31516,11 +31313,11 @@ msgstr "fuzzy"
 
 #, fuzzy
 #~ msgid "Flip Group Layer"
-#~ msgstr "レイヤーを反転"
+#~ msgstr "レイヤーの反転"
 
 #, fuzzy
 #~ msgid "Rotate Group Layer"
-#~ msgstr "レイヤーを回転"
+#~ msgstr "レイヤーの回転"
 
 #~ msgid ""
 #~ "Sets the external web browser to be used.  This can be an absolute path "
@@ -31574,7 +31371,7 @@ msgstr "fuzzy"
 #~ msgstr "既に存在しない画像ファイルを指すエントリーを削除します"
 
 #~ msgid "Save error log"
-#~ msgstr "エラーログを保存"
+#~ msgstr "エラーログの保存"
 
 #~ msgid "Rescan font list"
 #~ msgstr "フォント一覧の再スキャン"
@@ -31586,10 +31383,10 @@ msgstr "fuzzy"
 #~ msgstr "すべて選択(_A)"
 
 #~ msgid "select|_None"
-#~ msgstr "選択を解除(_N)"
+#~ msgstr "選択の解除(_N)"
 
 #~ msgid "Edit the selected template"
-#~ msgstr "選択したテンプレートを編集"
+#~ msgstr "選択したテンプレートの編集"
 
 #~ msgid "Raise tool"
 #~ msgstr "このツールアイコンを上に移動します"
@@ -31754,7 +31551,7 @@ msgstr "fuzzy"
 #~ msgstr "ファジー選択"
 
 #~ msgid "command|Select by Color"
-#~ msgstr "色域を選択"
+#~ msgstr "色域の選択"
 
 #~ msgid "command|Bucket Fill"
 #~ msgstr "塗りつぶし"
@@ -31808,7 +31605,7 @@ msgstr "fuzzy"
 #~ msgstr "明るさ-コントラスト設定をファイルから読み込みます"
 
 #~ msgid "Save Brightness-Contrast settings"
-#~ msgstr "明るさ-コントラスト設定を保存"
+#~ msgstr "明るさ-コントラスト設定の保存"
 
 #~ msgid "Save brightness-contrast settings to file"
 #~ msgstr "明るさ-コントラスト設定をファイルに保存します"
@@ -31832,7 +31629,7 @@ msgstr "fuzzy"
 #~ msgstr "着色設定をファイルに保存します"
 
 #~ msgid "Save Curves"
-#~ msgstr "カーブを保存"
+#~ msgstr "カーブの保存"
 
 #~ msgid "Load desaturate settings from file"
 #~ msgstr "脱色設定をファイルから読み込みます"
@@ -31908,13 +31705,13 @@ msgstr "fuzzy"
 #~ msgstr "「その他いろいろ」のドックを開きます"
 
 #~ msgid "Close all Tabs?"
-#~ msgstr "全てのタブを閉じますか?"
+#~ msgstr "すべてのタブを閉じますか?"
 
 #~ msgid "Close all Tabs"
-#~ msgstr "全てのタブを閉じる"
+#~ msgstr "すべてのタブを閉じる"
 
 #~ msgid "Close all tabs?"
-#~ msgstr "全てのタブを閉じますか?"
+#~ msgstr "すべてのタブを閉じますか?"
 
 #~ msgid ""
 #~ "This window has %d tab open. Closing the window will also close all its "
@@ -31933,7 +31730,7 @@ msgstr "fuzzy"
 #~ msgstr "ダイアログ(_D)"
 
 #~ msgid "Create New Doc_k"
-#~ msgstr "新しいドックを作成(_K)"
+#~ msgstr "新しいドックの作成(_K)"
 
 #~ msgid "Other..."
 #~ msgstr "その他..."
@@ -31990,7 +31787,7 @@ msgstr "fuzzy"
 #~ msgstr "ウインドウ内に最大表示(_T)"
 
 #~ msgid "Add Sample_Point"
-#~ msgstr "サンプルポイントを追加(_P)"
+#~ msgstr "サンプルポイントの追加(_P)"
 
 #~ msgid "_Try to obtain the monitor profile from the windowing system"
 #~ msgstr "ウィンドウシステムからのモニタープロファイル取得を試行(_T)"
