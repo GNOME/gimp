@@ -320,6 +320,7 @@ save_layer (TIFF        *tif,
   gint              offset_x, offset_y;
   gint              config_compression;
   gchar            *config_comment;
+  gboolean          config_save_comment;
   gboolean          config_save_transp_pixels;
   gboolean          config_save_geotiff_tags;
   gboolean          config_save_profile;
@@ -327,6 +328,7 @@ save_layer (TIFF        *tif,
   g_object_get (config,
                 "compression",             &config_compression,
                 "gimp-comment",            &config_comment,
+                "save-comment",            &config_save_comment,
                 "save-transparent-pixels", &config_save_transp_pixels,
                 "save-geotiff",            &config_save_geotiff_tags,
                 "save-color-profile",      &config_save_profile,
@@ -655,7 +657,7 @@ save_layer (TIFF        *tif,
 #endif
 
   /* Set TIFF parameters. */
-  if (config_comment && *config_comment)
+  if (config_save_comment && config_comment && *config_comment)
     {
       const gchar *c = config_comment;
       gint         len;
