@@ -136,6 +136,7 @@ EXPORTS
 	gimp_parasite_data_size
 	gimp_parasite_flags
 	gimp_parasite_free
+	gimp_parasite_get_data
 	gimp_parasite_get_type
 	gimp_parasite_has_flag
 	gimp_parasite_is_persistent

@@ -704,6 +704,7 @@ EXPORTS
 	gimp_procedure_config_get_procedure
 	gimp_procedure_config_get_type
 	gimp_procedure_config_get_values
+	gimp_procedure_config_has_default
 	gimp_procedure_config_load_default
 	gimp_procedure_config_load_last
 	gimp_procedure_config_load_parasite
