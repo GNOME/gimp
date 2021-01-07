@@ -664,11 +664,9 @@ ReadImage (FILE                 *fd,
   GimpImageType      image_type;
   guint32            px32;
 
-  if (! (compression == BI_RGB ||
+  if (! (compression == BI_RGB || compression == BI_BITFIELDS ||
       (bpp == 8 && compression == BI_RLE8) ||
-      (bpp == 4 && compression == BI_RLE4) ||
-      (bpp == 16 && compression == BI_BITFIELDS) ||
-      (bpp == 32 && compression == BI_BITFIELDS)))
+      (bpp == 4 && compression == BI_RLE4)))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s",
@@ -694,6 +692,8 @@ ReadImage (FILE                 *fd,
           image_type = GIMP_RGB_IMAGE;
           channels = 3;
         }
+      if (bpp == 24 && compression == BI_BITFIELDS)
+        g_printerr ("Loading BMP with invalid combination of 24 bpp and BI_BITFIELDS compression.\n");
       break;
 
     case 8:
@@ -709,6 +709,9 @@ ReadImage (FILE                 *fd,
           base_type = GIMP_INDEXED;
           image_type = GIMP_INDEXED_IMAGE;
         }
+      if (compression == BI_BITFIELDS)
+        g_printerr ("Loading BMP with invalid combination of %d bpp and BI_BITFIELDS compression.\n",
+                    bpp);
 
       channels = 1;
       break;
@@ -841,7 +844,7 @@ ReadImage (FILE                 *fd,
     case 4:
     case 1:
       {
-        if (compression == 0)
+        if (compression == BI_RGB || compression == BI_BITFIELDS)
           /* no compression */
           {
             while (ReadOK (fd, &v, 1))
