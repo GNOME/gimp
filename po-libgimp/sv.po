@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-17 18:15+0000\n"
-"PO-Revision-Date: 2020-12-17 22:39+0100\n"
+"POT-Creation-Date: 2021-01-07 21:04+0000\n"
+"PO-Revision-Date: 2021-01-07 23:00+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,12 +22,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: ../libgimp/gimpbrushselectbutton.c:176
+#: ../libgimp/gimpbrushselectbutton.c:177
 msgid "Brush Selection"
 msgstr "Penselval"
 
-#: ../libgimp/gimpbrushselectbutton.c:885
-#: ../libgimp/gimppatternselectbutton.c:672
+#: ../libgimp/gimpbrushselectbutton.c:884
+#: ../libgimp/gimppatternselectbutton.c:674
 msgid "_Browse..."
 msgstr "_Bläddra…"
 
@@ -175,7 +175,7 @@ msgid "Confirm Save"
 msgstr "Bekräfta sparande"
 
 #: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
-#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:181
+#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:204
 #: ../libgimpwidgets/gimpcolorbutton.c:553
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -198,7 +198,7 @@ msgid "_Ignore"
 msgstr "_Ignorera"
 
 #: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
-#: ../libgimp/gimpproceduredialog.c:173
+#: ../libgimp/gimpproceduredialog.c:176
 msgid "_Export"
 msgstr "_Exportera"
 
@@ -236,16 +236,16 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:391
+#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:388
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exportera bild som %s"
 
-#: ../libgimp/gimpfontselectbutton.c:136
+#: ../libgimp/gimpfontselectbutton.c:137
 msgid "Font Selection"
 msgstr "Typsnittsval"
 
-#: ../libgimp/gimpgradientselectbutton.c:154
+#: ../libgimp/gimpgradientselectbutton.c:155
 msgid "Gradient Selection"
 msgstr "Gradientval"
 
@@ -257,11 +257,11 @@ msgstr "Bakgrund"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../libgimp/gimppaletteselectbutton.c:135
+#: ../libgimp/gimppaletteselectbutton.c:136
 msgid "Palette Selection"
 msgstr "Palettval"
 
-#: ../libgimp/gimppatternselectbutton.c:164
+#: ../libgimp/gimppatternselectbutton.c:165
 msgid "Pattern Selection"
 msgstr "Mönsterval"
 
@@ -428,35 +428,43 @@ msgid ""
 msgstr ""
 "Proceduren ”%s” har anropats med en ogiltig UTF-8-sträng för argumentet ”%s”."
 
-#: ../libgimp/gimpproceduredialog.c:171
+#: ../libgimp/gimpproceduredialog.c:174
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Öppna"
 
-#: ../libgimp/gimpproceduredialog.c:175 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimp/gimpproceduredialog.c:178 ../libgimpwidgets/gimpcolorbutton.c:554
 #: ../libgimpwidgets/gimpfileentry.c:467 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_OK"
 
-#: ../libgimp/gimpproceduredialog.c:178 ../libgimpwidgets/gimpcolorbutton.c:552
+#: ../libgimp/gimpproceduredialog.c:186 ../libgimpwidgets/gimpcolorbutton.c:552
 msgid "_Reset"
 msgstr "_Återställ"
 
-#: ../libgimp/gimpproceduredialog.c:215
-msgid "_Load Defaults"
-msgstr "_Läs in standardvärden"
+#: ../libgimp/gimpproceduredialog.c:238
+msgid "_Load Saved Settings"
+msgstr "_Läs in sparade inställningar"
 
-#: ../libgimp/gimpproceduredialog.c:224
-msgid "_Save Defaults"
-msgstr "_Spara standardvärden"
+#: ../libgimp/gimpproceduredialog.c:239
+msgid "Load settings saved with \"Save Settings\" button"
+msgstr "Läs in inställningar som sparats med knappen ”Spara inställningar”"
 
-#: ../libgimp/gimpproceduredialog.c:1168
+#: ../libgimp/gimpproceduredialog.c:251
+msgid "_Save Settings"
+msgstr "_Spara inställningar"
+
+#: ../libgimp/gimpproceduredialog.c:252
+msgid "Store current settings for later reuse"
+msgstr "Lagra aktuella inställningar för att använda dem igen senare"
+
+#: ../libgimp/gimpproceduredialog.c:1196
 msgid "Reset to _Initial Values"
 msgstr "Återställ till _ursprungsvärden"
 
-#: ../libgimp/gimpproceduredialog.c:1177
+#: ../libgimp/gimpproceduredialog.c:1205
 msgid "Reset to _Factory Defaults"
 msgstr "Återställ till _fabriksinställningar"
 
@@ -496,15 +504,15 @@ msgstr "Datum:"
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../libgimp/gimpsaveproceduredialog.c:167
+#: ../libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
 msgstr "Metadata"
 
-#: ../libgimp/gimpsaveproceduredialog.c:176
+#: ../libgimp/gimpsaveproceduredialog.c:175
 msgid "Edit Metadata"
 msgstr "Redigera metadata"
 
-#: ../libgimp/gimpsaveproceduredialog.c:176
+#: ../libgimp/gimpsaveproceduredialog.c:175
 msgid "(edit)"
 msgstr "(redigera)"
 
@@ -2961,6 +2969,9 @@ msgstr "Kontrastcykler"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
+
+#~ msgid "_Load Defaults"
+#~ msgstr "_Läs in standardvärden"
 
 #~ msgid "Rotate %s?"
 #~ msgstr "Rotera %s?"
