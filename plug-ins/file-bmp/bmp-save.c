@@ -371,7 +371,11 @@ save_image (const gchar  *filename,
 
   if (BMPSaveData.use_run_length_encoding == 0)
     {
-      if (mask_info_size > 0)
+      /* The Microsoft specification for BITMAPV5HEADER says that
+       * BI_BITFIELDS is valid for 16 and 32-bits per pixel,
+       * Since it doesn't mention 24 bpp or other numbers
+       * use BI_RGB for that. See issue #6114. */
+      if (mask_info_size > 0 && (BitsPerPixel == 16 || BitsPerPixel == 32))
         bitmap_head.biCompr = 3; /* BI_BITFIELDS */
       else
         bitmap_head.biCompr = 0; /* BI_RGB */
