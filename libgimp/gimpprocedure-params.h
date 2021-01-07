@@ -374,36 +374,6 @@ G_BEGIN_DECLS
   gimp_value_take_uint8_array (gimp_value_array_index (args, n), value, length)
 
 
-/*  int16 array  */
-
-#define GIMP_PROC_ARG_INT16_ARRAY(procedure, name, nick, blurb, flags) \
-  gimp_procedure_add_argument (procedure,\
-                               gimp_param_spec_int16_array (name, nick, blurb,\
-                               flags))
-
-#define GIMP_PROC_AUX_ARG_INT16_ARRAY(procedure, name, nick, blurb, flags) \
-  gimp_procedure_add_aux_argument (procedure,\
-                                   gimp_param_spec_int16_array (name, nick, blurb,\
-                                   flags))
-
-#define GIMP_PROC_VAL_INT16_ARRAY(procedure, name, nick, blurb, flags) \
-  gimp_procedure_add_return_value (procedure,\
-                                   gimp_param_spec_int16_array (name, nick, blurb,\
-                                   flags))
-
-#define GIMP_VALUES_GET_INT16_ARRAY(args, n) \
-  gimp_value_get_int16_array (gimp_value_array_index (args, n))
-
-#define GIMP_VALUES_DUP_INT16_ARRAY(args, n) \
-  gimp_value_dup_int16_array (gimp_value_array_index (args, n))
-
-#define GIMP_VALUES_SET_INT16_ARRAY(args, n, value, length) \
-  gimp_value_set_int16_array (gimp_value_array_index (args, n), value, length)
-
-#define GIMP_VALUES_TAKE_INT16_ARRAY(args, n, value, length) \
-  gimp_value_take_int16_array (gimp_value_array_index (args, n), value, length)
-
-
 /*  int32 array  */
 
 #define GIMP_PROC_ARG_INT32_ARRAY(procedure, name, nick, blurb, flags) \

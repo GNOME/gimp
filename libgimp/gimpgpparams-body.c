@@ -41,9 +41,6 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       if (! strcmp (param_def->type_name, "GimpParamInt32Array"))
         return gimp_param_spec_int32_array (name, nick, blurb, flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamInt16Array"))
-        return gimp_param_spec_int16_array (name, nick, blurb, flags);
-
       if (! strcmp (param_def->type_name, "GimpParamUInt8Array"))
         return gimp_param_spec_uint8_array (name, nick, blurb, flags);
 
@@ -492,13 +489,6 @@ gimp_gp_param_to_value (gpointer        gimp,
                                   param->data.d_array.size /
                                   sizeof (gint32));
     }
-  else if (GIMP_VALUE_HOLDS_INT16_ARRAY (value))
-    {
-      gimp_value_set_int16_array (value,
-                                  (gint16 *) param->data.d_array.data,
-                                  param->data.d_array.size /
-                                  sizeof (gint16));
-    }
   else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (value))
     {
       gimp_value_set_uint8_array (value,
@@ -778,7 +768,6 @@ gimp_value_to_gp_param (const GValue *value,
         }
     }
   else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-           GIMP_VALUE_HOLDS_INT16_ARRAY (value) ||
            GIMP_VALUE_HOLDS_UINT8_ARRAY (value) ||
            GIMP_VALUE_HOLDS_FLOAT_ARRAY (value) ||
            GIMP_VALUE_HOLDS_RGB_ARRAY (value))

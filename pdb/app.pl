@@ -546,14 +546,6 @@ gimp_param_spec_int32_array ("$name",
                              $flags)
 CODE
     }
-    elsif ($pdbtype eq 'int16array') {
-	$pspec = <<CODE;
-gimp_param_spec_int16_array ("$name",
-                             "$nick",
-                             "$blurb",
-                             $flags)
-CODE
-    }
     elsif ($pdbtype eq 'int8array') {
 	$pspec = <<CODE;
 gimp_param_spec_uint8_array ("$name",

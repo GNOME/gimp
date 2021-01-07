@@ -64,7 +64,6 @@ EXPORTS
 	gimp_ink_blob_type_get_type
 	gimp_installation_directory
 	gimp_installation_directory_file
-	gimp_int16_array_get_type
 	gimp_int32_array_get_type
 	gimp_interpolation_type_get_type
 	gimp_is_canonical_identifier
@@ -108,7 +107,6 @@ EXPORTS
 	gimp_paint_application_mode_get_type
 	gimp_param_array_get_type
 	gimp_param_float_array_get_type
-	gimp_param_int16_array_get_type
 	gimp_param_int32_array_get_type
 	gimp_param_memsize_get_type
 	gimp_param_object_array_get_type
@@ -116,7 +114,6 @@ EXPORTS
 	gimp_param_rgb_array_get_type
 	gimp_param_spec_array
 	gimp_param_spec_float_array
-	gimp_param_spec_int16_array
 	gimp_param_spec_int32_array
 	gimp_param_spec_memsize
 	gimp_param_spec_object_array
@@ -226,26 +223,22 @@ EXPORTS
 	gimp_value_array_truncate
 	gimp_value_array_unref
 	gimp_value_dup_float_array
-	gimp_value_dup_int16_array
 	gimp_value_dup_int32_array
 	gimp_value_dup_object_array
 	gimp_value_dup_rgb_array
 	gimp_value_dup_string_array
 	gimp_value_dup_uint8_array
 	gimp_value_get_float_array
-	gimp_value_get_int16_array
 	gimp_value_get_int32_array
 	gimp_value_get_object_array
 	gimp_value_get_rgb_array
 	gimp_value_get_string_array
 	gimp_value_get_uint8_array
 	gimp_value_set_float_array
-	gimp_value_set_int16_array
 	gimp_value_set_int32_array
 	gimp_value_set_object_array
 	gimp_value_set_rgb_array
 	gimp_value_set_static_float_array
-	gimp_value_set_static_int16_array
 	gimp_value_set_static_int32_array
 	gimp_value_set_static_object_array
 	gimp_value_set_static_rgb_array
@@ -254,7 +247,6 @@ EXPORTS
 	gimp_value_set_string_array
 	gimp_value_set_uint8_array
 	gimp_value_take_float_array
-	gimp_value_take_int16_array
 	gimp_value_take_int32_array
 	gimp_value_take_object_array
 	gimp_value_take_rgb_array

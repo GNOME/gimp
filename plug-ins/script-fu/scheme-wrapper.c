@@ -921,64 +921,6 @@ script_fu_marshal_procedure_call (scheme   *sc,
 #endif
             }
         }
-      else if (GIMP_VALUE_HOLDS_INT16_ARRAY (&value))
-        {
-          vector = sc->vptr->pair_car (a);
-          if (! sc->vptr->is_vector (vector))
-            success = FALSE;
-
-          if (success)
-            {
-              gint16 *array;
-
-              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
-
-              if (n_elements < 0 ||
-                  n_elements > sc->vptr->vector_length (vector))
-                {
-                  g_snprintf (error_str, sizeof (error_str),
-                              "INT16 vector (argument %d) for function %s has "
-                              "size of %ld but expected size of %d",
-                              i+1, proc_name, sc->vptr->vector_length (vector), n_elements);
-                  return foreign_error (sc, error_str, 0);
-                }
-
-              array = g_new0 (gint16, n_elements);
-
-              for (j = 0; j < n_elements; j++)
-                {
-                  pointer v_element = sc->vptr->vector_elem (vector, j);
-
-                  if (! sc->vptr->is_number (v_element))
-                    {
-                      g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not a number (argument %d for function %s)",
-                                  j+1, i+1, proc_name);
-                      g_free (array);
-                      return foreign_error (sc, error_str, vector);
-                    }
-
-                  array[j] = (gint16) sc->vptr->ivalue (v_element);
-                }
-
-              gimp_value_take_int16_array (&value, array, n_elements);
-
-#if DEBUG_MARSHALL
-              {
-                glong count = sc->vptr->vector_length (vector);
-                g_printerr ("      int16 vector has %ld elements\n", count);
-                if (count > 0)
-                  {
-                    g_printerr ("     ");
-                    for (j = 0; j < count; ++j)
-                      g_printerr (" %ld",
-                                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
-                    g_printerr ("\n");
-                  }
-              }
-#endif
-            }
-        }
       else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
@@ -1541,20 +1483,6 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               gint32        n      = GIMP_VALUES_GET_INT (values, i);
               const gint32 *v      = gimp_value_get_int32_array (value);
-              pointer       vector = sc->vptr->mk_vector (sc, n);
-
-              for (j = 0; j < n; j++)
-                {
-                  sc->vptr->set_vector_elem (vector, j,
-                                             sc->vptr->mk_integer (sc, v[j]));
-                }
-
-              return_val = sc->vptr->cons (sc, vector, return_val);
-            }
-          else if (GIMP_VALUE_HOLDS_INT16_ARRAY (value))
-            {
-              gint32        n      = GIMP_VALUES_GET_INT (values, i);
-              const gint16 *v      = gimp_value_get_int16_array (value);
               pointer       vector = sc->vptr->mk_vector (sc, n);
 
               for (j = 0; j < n; j++)

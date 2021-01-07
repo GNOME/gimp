@@ -295,11 +295,6 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
           copy = gimp_param_spec_uint8_array (name, nick, blurb,
                                               flags);
         }
-      else if (GIMP_IS_PARAM_SPEC_INT16_ARRAY (pspec))
-        {
-          copy = gimp_param_spec_int16_array (name, nick, blurb,
-                                              flags);
-        }
       else if (GIMP_IS_PARAM_SPEC_INT32_ARRAY (pspec))
         {
           copy = gimp_param_spec_int32_array (name, nick, blurb,

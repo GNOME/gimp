@@ -299,12 +299,6 @@ gimp_value_dup_uint8_array
 gimp_value_set_uint8_array
 gimp_value_set_static_uint8_array
 gimp_value_take_uint8_array
-gimp_param_spec_int16_array
-gimp_value_get_int16_array
-gimp_value_dup_int16_array
-gimp_value_set_int16_array
-gimp_value_set_static_int16_array
-gimp_value_take_int16_array
 gimp_param_spec_int32_array
 gimp_value_get_int32_array
 gimp_value_dup_int32_array
@@ -346,7 +340,6 @@ gimp_value_take_object_array
 <SUBSECTION Standard>
 GIMP_IS_PARAM_SPEC_ARRAY
 GIMP_IS_PARAM_SPEC_FLOAT_ARRAY
-GIMP_IS_PARAM_SPEC_INT16_ARRAY
 GIMP_IS_PARAM_SPEC_INT32_ARRAY
 GIMP_IS_PARAM_SPEC_OBJECT_ARRAY
 GIMP_IS_PARAM_SPEC_UINT8_ARRAY
@@ -355,7 +348,6 @@ GIMP_IS_PARAM_SPEC_STRING
 GIMP_IS_PARAM_SPEC_STRING_ARRAY
 GIMP_PARAM_SPEC_ARRAY
 GIMP_PARAM_SPEC_FLOAT_ARRAY
-GIMP_PARAM_SPEC_INT16_ARRAY
 GIMP_PARAM_SPEC_INT32_ARRAY
 GIMP_PARAM_SPEC_OBJECT_ARRAY
 GIMP_PARAM_SPEC_UINT8_ARRAY
@@ -364,13 +356,11 @@ GIMP_PARAM_SPEC_STRING
 GIMP_PARAM_SPEC_STRING_ARRAY
 GIMP_TYPE_ARRAY
 GIMP_TYPE_FLOAT_ARRAY
-GIMP_TYPE_INT16_ARRAY
 GIMP_TYPE_INT32_ARRAY
 GIMP_TYPE_OBJECT_ARRAY
 GIMP_TYPE_UINT8_ARRAY
 GIMP_TYPE_PARAM_ARRAY
 GIMP_TYPE_PARAM_FLOAT_ARRAY
-GIMP_TYPE_PARAM_INT16_ARRAY
 GIMP_TYPE_PARAM_INT32_ARRAY
 GIMP_TYPE_PARAM_OBJECT_ARRAY
 GIMP_TYPE_PARAM_UINT8_ARRAY
@@ -381,7 +371,6 @@ GIMP_TYPE_RGB_ARRAY
 GIMP_TYPE_STRING_ARRAY
 GIMP_VALUE_HOLDS_ARRAY
 GIMP_VALUE_HOLDS_FLOAT_ARRAY
-GIMP_VALUE_HOLDS_INT16_ARRAY
 GIMP_VALUE_HOLDS_INT32_ARRAY
 GIMP_VALUE_HOLDS_OBJECT_ARRAY
 GIMP_VALUE_HOLDS_UINT8_ARRAY
@@ -389,7 +378,6 @@ GIMP_VALUE_HOLDS_RGB_ARRAY
 GIMP_VALUE_HOLDS_STRING_ARRAY
 GimpParamSpecArray
 GimpParamSpecFloatArray
-GimpParamSpecInt16Array
 GimpParamSpecInt32Array
 GimpParamSpecObjectArray
 GimpParamSpecUInt8Array
@@ -397,13 +385,11 @@ GimpParamSpecRGBArray
 GimpParamSpecStringArray
 gimp_array_get_type
 gimp_float_array_get_type
-gimp_int16_array_get_type
 gimp_int32_array_get_type
 gimp_object_array_get_type
 gimp_uint8_array_get_type
 gimp_param_array_get_type
 gimp_param_float_array_get_type
-gimp_param_int16_array_get_type
 gimp_param_int32_array_get_type
 gimp_param_object_array_get_type
 gimp_param_uint8_array_get_type

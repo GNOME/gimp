@@ -730,7 +730,6 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
       GPParamDef *prev_param_def = &proc_install->params[i - 1];
 
       if ((! strcmp (param_def->type_name, "GimpParamInt32Array")     ||
-           ! strcmp (param_def->type_name, "GimpParamInt16Array")     ||
            ! strcmp (param_def->type_name, "GimpParamUInt8Array")     ||
            ! strcmp (param_def->type_name, "GimpParamIntFloatArray")  ||
            ! strcmp (param_def->type_name, "GimpParamIntStringArray") ||
