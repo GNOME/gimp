@@ -909,6 +909,22 @@ gimp_procedure_config_get_file (GimpProcedureConfig *config,
 }
 
 gboolean
+gimp_procedure_config_has_default (GimpProcedureConfig *config)
+{
+  GFile    *file;
+  gboolean  success;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), FALSE);
+
+  file = gimp_procedure_config_get_file (config, ".default");
+
+  success = g_file_query_exists (file, NULL);
+  g_object_unref (file);
+
+  return success;
+}
+
+gboolean
 gimp_procedure_config_load_default (GimpProcedureConfig  *config,
                                     GError              **error)
 {

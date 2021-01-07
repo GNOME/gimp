@@ -52,6 +52,7 @@ struct _GimpProcedureDialogPrivate
   GimpProcedureConfig *initial_config;
 
   GtkWidget           *reset_popover;
+  GtkWidget           *load_settings_button;
 
   GHashTable          *widgets;
   GHashTable          *mnemonics;
@@ -234,7 +235,8 @@ gimp_procedure_dialog_constructed (GObject *object)
                            "padding", 3, NULL);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_mnemonic (_("_Load Defaults"));
+  button = gtk_button_new_with_mnemonic (_("_Load Saved Settings"));
+  gtk_widget_set_tooltip_text (button, _("Load settings saved with \"Save Settings\" button"));
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "load-defaults");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -242,8 +244,12 @@ gimp_procedure_dialog_constructed (GObject *object)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_procedure_dialog_load_defaults),
                     dialog);
+  gtk_widget_set_sensitive (button,
+                            gimp_procedure_config_has_default (dialog->priv->config));
+  dialog->priv->load_settings_button = button;
 
-  button = gtk_button_new_with_mnemonic (_("_Save Defaults"));
+  button = gtk_button_new_with_mnemonic (_("_Save Settings"));
+  gtk_widget_set_tooltip_text (button, _("Store current settings for later reuse"));
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "save-defaults");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -1271,6 +1277,8 @@ gimp_procedure_dialog_save_defaults (GtkWidget           *button,
                   error->message);
       g_clear_error (&error);
     }
+  gtk_widget_set_sensitive (dialog->priv->load_settings_button,
+                            gimp_procedure_config_has_default (dialog->priv->config));
 }
 
 static gboolean

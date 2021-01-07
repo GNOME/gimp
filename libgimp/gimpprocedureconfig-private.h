@@ -23,6 +23,8 @@
 #define __GIMP_PROCEDURE_CONFIG_PRIVATE_H__
 
 
+gboolean   gimp_procedure_config_has_default   (GimpProcedureConfig  *config);
+
 gboolean   gimp_procedure_config_load_default  (GimpProcedureConfig  *config,
                                                 GError              **error);
 gboolean   gimp_procedure_config_save_default  (GimpProcedureConfig  *config,
