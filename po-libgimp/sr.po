@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2015-10-02 05:54+0000\n"
-"PO-Revision-Date: 2015-10-02 11:46+0200\n"
+"POT-Creation-Date: 2021-01-07 21:04+0000\n"
+"PO-Revision-Date: 2021-01-08 01:17+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: српски <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -20,107 +20,92 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Poedit 2.4.2\n"
 
-#. procedure executed successfully
-#: ../libgimp/gimp.c:1167
-msgid "success"
-msgstr "успешно"
-
-#. procedure execution failed
-#: ../libgimp/gimp.c:1171
-msgid "execution error"
-msgstr "грешка при покретању"
-
-#. procedure called incorrectly
-#: ../libgimp/gimp.c:1175
-msgid "calling error"
-msgstr "грешка при позивању"
-
-#. procedure execution cancelled
-#: ../libgimp/gimp.c:1179
-msgid "cancelled"
-msgstr "отказано"
-
-#: ../libgimp/gimpbrushselectbutton.c:179
+#: ../libgimp/gimpbrushselectbutton.c:177
 msgid "Brush Selection"
 msgstr "Избор четкице"
 
-#: ../libgimp/gimpbrushselectbutton.c:928
-#: ../libgimp/gimppatternselectbutton.c:726
+#: ../libgimp/gimpbrushselectbutton.c:884
+#: ../libgimp/gimppatternselectbutton.c:674
 msgid "_Browse..."
 msgstr "_Разгледај..."
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:332 ../libgimp/gimpexport.c:368
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Додатак %s не ради са слојевима"
 
-#: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
-#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:369
 msgid "Merge Visible Layers"
 msgstr "Споји уочљиве слојеве"
 
-#: ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:341
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "Додатак %s не ради са померајем, величином или провидношћу слојева"
 
-#: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:350 ../libgimp/gimpexport.c:359
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Додатак %s ради само са слојевима у виду кадрова за анимације"
 
-#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:360
 msgid "Save as Animation"
 msgstr "Сачувај као анимацију"
 
-#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
-#: ../libgimp/gimpexport.c:289
+#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:369
+#: ../libgimp/gimpexport.c:378 ../libgimp/gimpexport.c:387
 msgid "Flatten Image"
 msgstr "Изравнај слику"
 
-#: ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:377
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Додатак %s не ради на провидним деловима"
 
-#: ../libgimp/gimpexport.c:297
+#: ../libgimp/gimpexport.c:386
+#, c-format
+msgid "%s plug-in can't handle transparent layers"
+msgstr "Додатак %s не ради са провидним слојевима"
+
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Додатак %s не ради на маскама слојева"
 
-#: ../libgimp/gimpexport.c:298
+#: ../libgimp/gimpexport.c:396
 msgid "Apply Layer Masks"
 msgstr "Примени маске слојева"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:404
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "Додатак %s ради само са РГБ сликама"
+msgstr "Додатак %s ради само са RGB сликама"
 
-#: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
-#: ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:405 ../libgimp/gimpexport.c:443
+#: ../libgimp/gimpexport.c:452
 msgid "Convert to RGB"
-msgstr "Преведи у РГБ"
+msgstr "Преведи у RGB"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:413
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Додатак %s ради само са црно-белим сликама"
 
-#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
-#: ../libgimp/gimpexport.c:366
+#: ../libgimp/gimpexport.c:414 ../libgimp/gimpexport.c:443
+#: ../libgimp/gimpexport.c:464
 msgid "Convert to Grayscale"
 msgstr "Преведи у црно-бело"
 
-#: ../libgimp/gimpexport.c:324
+#: ../libgimp/gimpexport.c:422
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Додатак %s ради само са индексираним сликама"
 
-#: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
-#: ../libgimp/gimpexport.c:364
+#: ../libgimp/gimpexport.c:423 ../libgimp/gimpexport.c:452
+#: ../libgimp/gimpexport.c:462
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -128,12 +113,12 @@ msgstr ""
 "Преведи у индексирано са подразумеваним вредностима\n"
 "(Урадите то сами за већу контролу резултата)"
 
-#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:432
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "Додатак %s ради само са битмапираним (две боје) индексираним сликама"
 
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:433
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -141,52 +126,77 @@ msgstr ""
 "Преведи у индексирано са подразумеваним битмап вредностима\n"
 "(Урадите то сами за већу контролу резултата)"
 
-#: ../libgimp/gimpexport.c:344
+#: ../libgimp/gimpexport.c:442
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "Додатак %s ради само са РГБ или црно-белим сликама"
+msgstr "Додатак %s ради само са RGB или црно-белим сликама"
 
-#: ../libgimp/gimpexport.c:353
+#: ../libgimp/gimpexport.c:451
 #, c-format
-msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "Додатак %s ради само са РГБ или индексираним сликама"
+msgid "%s plug-in can only handle RGB or indexed images"
+msgstr "Додатак %s ради само са RGB или индексираним сликама"
 
-#: ../libgimp/gimpexport.c:363
+#: ../libgimp/gimpexport.c:461
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "Додатак %s ради само са црно-белим или индексираним сликама"
 
-#: ../libgimp/gimpexport.c:374
+#: ../libgimp/gimpexport.c:472
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Додатку %s је потребан алфа канал"
 
-#: ../libgimp/gimpexport.c:375
+#: ../libgimp/gimpexport.c:473
 msgid "Add Alpha Channel"
 msgstr "Додај алфа канал"
 
-#: ../libgimp/gimpexport.c:430
+#: ../libgimp/gimpexport.c:481
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr "Додатак %s ће исећи слојеве на величину слике"
+
+#: ../libgimp/gimpexport.c:482
+msgid "Crop Layers"
+msgstr "Исеци слојеве"
+
+#: ../libgimp/gimpexport.c:482
+msgid "Resize Image to Layers"
+msgstr "Промени величину слике на слојеве"
+
+#: ../libgimp/gimpexport.c:541
 msgid "Confirm Save"
 msgstr "Потврди чување"
 
-#: ../libgimp/gimpexport.c:436
-msgid "Confirm"
-msgstr "Потврди"
+#: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
+#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:204
+#: ../libgimpwidgets/gimpcolorbutton.c:553
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
+#: ../libgimpwidgets/gimpfileentry.c:466 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
+#: ../libgimpwidgets/gimpquerybox.c:479
+msgid "_Cancel"
+msgstr "_Откажи"
 
-#: ../libgimp/gimpexport.c:512
+#: ../libgimp/gimpexport.c:547
+msgid "C_onfirm"
+msgstr "_Потврди"
+
+#: ../libgimp/gimpexport.c:623
 msgid "Export File"
 msgstr "Извези датотеку"
 
-#: ../libgimp/gimpexport.c:516
+#: ../libgimp/gimpexport.c:627
 msgid "_Ignore"
 msgstr "_Занемари"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:1013
+#: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
+#: ../libgimp/gimpproceduredialog.c:176
 msgid "_Export"
 msgstr "_Извези"
 
 #. the headline
-#: ../libgimp/gimpexport.c:548
+#: ../libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -196,11 +206,11 @@ msgstr ""
 "разлога:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:622
+#: ../libgimp/gimpexport.c:733
 msgid "The export conversion won't modify your original image."
 msgstr "Превођење при извозу неће изменити оригинални снимак."
 
-#: ../libgimp/gimpexport.c:729
+#: ../libgimp/gimpexport.c:853
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -209,7 +219,7 @@ msgstr ""
 "Сачуваћете маску слоја као %s.\n"
 "Ово неће сачувати видљиве слојеве."
 
-#: ../libgimp/gimpexport.c:735
+#: ../libgimp/gimpexport.c:859
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -218,59 +228,30 @@ msgstr ""
 "Сачуваћете канал (сачувани избор) као %s.\n"
 "Ово неће сачувати видљиве слојеве."
 
-#: ../libgimp/gimpexport.c:1004
-msgid "Export Image as "
-msgstr "Извези слику као "
+#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:388
+#, c-format
+msgid "Export Image as %s"
+msgstr "Извези слику као %s"
 
-#: ../libgimp/gimpfontselectbutton.c:139
+#: ../libgimp/gimpfontselectbutton.c:137
 msgid "Font Selection"
 msgstr "Избор фонта"
 
-#: ../libgimp/gimpgradientselectbutton.c:157
+#: ../libgimp/gimpgradientselectbutton.c:155
 msgid "Gradient Selection"
 msgstr "Избор прелива"
 
-#: ../libgimp/gimpimagemetadata.c:605
+#: ../libgimp/gimpimagemetadata.c:239
 msgid "Background"
 msgstr "Позадина"
 
-#: ../libgimp/gimpimagemetadata.c:796
-#, c-format
-msgid "Rotate %s?"
-msgstr "Да ли да ротирам %s?"
+#: ../libgimp/gimpimagemetadata-save.c:371 ../modules/controller-midi.c:426
+msgid "GIMP"
+msgstr "Гимп"
 
-#: ../libgimp/gimpimagemetadata.c:802
-msgid "_Keep Original"
-msgstr "_Задржи оригинал"
-
-#: ../libgimp/gimpimagemetadata.c:844
-msgid "Original"
-msgstr "Оригинал"
-
-#: ../libgimp/gimpimagemetadata.c:860
-msgid "Rotated"
-msgstr "Ротирана"
-
-#: ../libgimp/gimpimagemetadata.c:878
-msgid "This image contains Exif orientation metadata."
-msgstr "Ова слика садржи Егзиф податке за ротирање слике."
-
-#: ../libgimp/gimpimagemetadata.c:896
-msgid "Would you like to rotate the image?"
-msgstr "Желите ли да ротирате слику?"
-
-#: ../libgimp/gimpimagemetadata.c:908
-msgid "_Don't ask me again"
-msgstr "Н_е питај ме поново"
-
-#. This string appears in an empty menu as in
-#. * "nothing selected and nothing to select"
-#.
-#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:251
-msgid "(Empty)"
-msgstr "(Празно)"
-
-#: ../libgimp/gimppaletteselectbutton.c:139
+#: ../libgimp/gimppaletteselectbutton.c:136
 msgid "Palette Selection"
 msgstr "Избор палете"
 
@@ -278,77 +259,97 @@ msgstr "Избор палете"
 msgid "Pattern Selection"
 msgstr "Избор шаре"
 
-#: ../libgimp/gimpprocbrowserdialog.c:150
+#. procedure executed successfully
+#: ../libgimp/gimppdb.c:518
+msgid "success"
+msgstr "успешно"
+
+#. procedure execution failed
+#: ../libgimp/gimppdb.c:522
+msgid "execution error"
+msgstr "грешка при покретању"
+
+#. procedure called incorrectly
+#: ../libgimp/gimppdb.c:526
+msgid "calling error"
+msgstr "грешка при позивању"
+
+#. procedure execution cancelled
+#: ../libgimp/gimppdb.c:530
+msgid "cancelled"
+msgstr "отказано"
+
+#: ../libgimp/gimpprocbrowserdialog.c:162
 msgid "by name"
 msgstr "по називу"
 
-#: ../libgimp/gimpprocbrowserdialog.c:151
+#: ../libgimp/gimpprocbrowserdialog.c:163
 msgid "by description"
 msgstr "по опису"
 
-#: ../libgimp/gimpprocbrowserdialog.c:152
+#: ../libgimp/gimpprocbrowserdialog.c:164
 msgid "by help"
 msgstr "по помоћи"
 
-#: ../libgimp/gimpprocbrowserdialog.c:153
-msgid "by author"
-msgstr "по аутору"
+#: ../libgimp/gimpprocbrowserdialog.c:165
+msgid "by authors"
+msgstr "по ауторима"
 
-#: ../libgimp/gimpprocbrowserdialog.c:154
+#: ../libgimp/gimpprocbrowserdialog.c:166
 msgid "by copyright"
 msgstr "по лиценци"
 
-#: ../libgimp/gimpprocbrowserdialog.c:155
+#: ../libgimp/gimpprocbrowserdialog.c:167
 msgid "by date"
 msgstr "по датуму"
 
-#: ../libgimp/gimpprocbrowserdialog.c:156
+#: ../libgimp/gimpprocbrowserdialog.c:168
 msgid "by type"
 msgstr "по врсти"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:395
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:140
+#: ../libgimp/gimpprocbrowserdialog.c:369
+#: ../libgimp/gimpprocbrowserdialog.c:525 ../libgimpwidgets/gimpbrowser.c:168
 msgid "No matches"
 msgstr "Нема поклапања"
 
-#: ../libgimp/gimpprocbrowserdialog.c:398
+#: ../libgimp/gimpprocbrowserdialog.c:372
 msgid "Search term invalid or incomplete"
 msgstr "Израз за претрагу је неисправан или некомплетан"
 
-#: ../libgimp/gimpprocbrowserdialog.c:407
+#: ../libgimp/gimpprocbrowserdialog.c:381
 msgid "Searching"
 msgstr "Тражим"
 
-#: ../libgimp/gimpprocbrowserdialog.c:418
+#: ../libgimp/gimpprocbrowserdialog.c:393
 msgid "Searching by name"
 msgstr "Тражим по називу"
 
-#: ../libgimp/gimpprocbrowserdialog.c:439
+#: ../libgimp/gimpprocbrowserdialog.c:414
 msgid "Searching by description"
 msgstr "Тражим по опису"
 
-#: ../libgimp/gimpprocbrowserdialog.c:446
+#: ../libgimp/gimpprocbrowserdialog.c:422
 msgid "Searching by help"
 msgstr "Тражим по помоћи"
 
-#: ../libgimp/gimpprocbrowserdialog.c:453
-msgid "Searching by author"
-msgstr "Тражим по аутору"
+#: ../libgimp/gimpprocbrowserdialog.c:430
+msgid "Searching by authors"
+msgstr "Тражим по ауторима"
 
-#: ../libgimp/gimpprocbrowserdialog.c:460
+#: ../libgimp/gimpprocbrowserdialog.c:438
 msgid "Searching by copyright"
 msgstr "Тражим по ауторском праву"
 
-#: ../libgimp/gimpprocbrowserdialog.c:467
+#: ../libgimp/gimpprocbrowserdialog.c:446
 msgid "Searching by date"
 msgstr "Тражим по датуму"
 
-#: ../libgimp/gimpprocbrowserdialog.c:474
+#: ../libgimp/gimpprocbrowserdialog.c:454
 msgid "Searching by type"
 msgstr "Тражим по врсти"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
+#: ../libgimp/gimpprocbrowserdialog.c:465
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -357,11 +358,11 @@ msgstr[1] "%d процедуре"
 msgstr[2] "%d процедура"
 msgstr[3] "%d процедура"
 
-#: ../libgimp/gimpprocbrowserdialog.c:493
+#: ../libgimp/gimpprocbrowserdialog.c:474
 msgid "No matches for your query"
 msgstr "Ништа се не поклапа са вашим захтевом"
 
-#: ../libgimp/gimpprocbrowserdialog.c:497
+#: ../libgimp/gimpprocbrowserdialog.c:478
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -370,33 +371,151 @@ msgstr[1] "%d процедуре се поклапају са вашим зах�
 msgstr[2] "%d процедура се поклапају са вашим захтевом"
 msgstr[3] "%d процедура се поклапа са вашим захтевом"
 
-#: ../libgimp/gimpprocview.c:173
+#: ../libgimp/gimpprocedure.c:1828
+#, c-format
+msgid "Procedure '%s' returned no return values"
+msgstr "Процедура „%s“ је није вратила вредност"
+
+#: ../libgimp/gimpprocedure.c:1920
+#, c-format
+msgid ""
+"Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
+"Expected %s, got %s."
+msgstr ""
+"Процедура „%s“ је вратила погрешан тип вредности за повратну вредност „%s“ (#"
+"%d). Очекивао са %s, а добио %s."
+
+#: ../libgimp/gimpprocedure.c:1932
+#, c-format
+msgid ""
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
+msgstr ""
+"Процедура „%s“ је позвана са погрешним типом вредности за аргумент „%s“ (#"
+"%d). Очекивао сам %s, а добио %s."
+
+#: ../libgimp/gimpprocedure.c:1967
+#, c-format
+msgid ""
+"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
+"is out of range."
+msgstr ""
+"Процедура „%s“ је вратила „%s“ као повратну вредност „%s“ (#%d, врста %s). "
+"Ова вредност је изван дозвољеног опсега."
+
+#: ../libgimp/gimpprocedure.c:1981
+#, c-format
+msgid ""
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
+msgstr ""
+"Процедура „%s“ је позвана са вредношћу „%s“ за аргумент „%s“ (#%d, врста "
+"%s). Ова вредност је изван дозвољеног опсега."
+
+#: ../libgimp/gimpprocedure.c:2031
+#, c-format
+msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
+msgstr "Процедура „%s“ је вратила неисправан UTF-8 карактер за аргумент „%s“."
+
+#: ../libgimp/gimpprocedure.c:2041
+#, c-format
+msgid ""
+"Procedure '%s' has been called with an invalid UTF-8 string for argument "
+"'%s'."
+msgstr "Процедура „%s“ је позвана са погрешним UTF-8 знаком за аргумент „%s“."
+
+#: ../libgimp/gimpproceduredialog.c:174
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
+msgid "_Open"
+msgstr "_Отвори"
+
+#: ../libgimp/gimpproceduredialog.c:178 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimpwidgets/gimpfileentry.c:467 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
+#: ../libgimpwidgets/gimpquerybox.c:479
+msgid "_OK"
+msgstr "У _реду"
+
+#: ../libgimp/gimpproceduredialog.c:186 ../libgimpwidgets/gimpcolorbutton.c:552
+msgid "_Reset"
+msgstr "_Врати"
+
+#: ../libgimp/gimpproceduredialog.c:238
+msgid "_Load Saved Settings"
+msgstr "_Учитај сачувана подешавања"
+
+#: ../libgimp/gimpproceduredialog.c:239
+msgid "Load settings saved with \"Save Settings\" button"
+msgstr ""
+"Учитава подешавања која су најпре сачувана дугметом „Сачувај подешавања“"
+
+#: ../libgimp/gimpproceduredialog.c:251
+msgid "_Save Settings"
+msgstr "_Сачувај подешавања"
+
+#: ../libgimp/gimpproceduredialog.c:252
+msgid "Store current settings for later reuse"
+msgstr "Чува тренутна подешавања за касније коришћење"
+
+#: ../libgimp/gimpproceduredialog.c:1196
+msgid "Reset to _Initial Values"
+msgstr "Врати на по_четне вредности"
+
+#: ../libgimp/gimpproceduredialog.c:1205
+msgid "Reset to _Factory Defaults"
+msgstr "Врати на _подразуменване вредности"
+
+#: ../libgimp/gimpprocview.c:176
+msgid "Image types:"
+msgstr "Врсте слика:"
+
+#: ../libgimp/gimpprocview.c:179
+msgid "Menu label:"
+msgstr "Натпис менија:"
+
+#: ../libgimp/gimpprocview.c:187
+msgid "Menu path:"
+msgstr "Путања менија:"
+
+#: ../libgimp/gimpprocview.c:202
 msgid "Parameters"
 msgstr "Параметри"
 
-#: ../libgimp/gimpprocview.c:186
+#: ../libgimp/gimpprocview.c:216
 msgid "Return Values"
 msgstr "Повратне вредности"
 
-#: ../libgimp/gimpprocview.c:199
+#: ../libgimp/gimpprocview.c:231
 msgid "Additional Information"
 msgstr "Додатни подаци"
 
-#: ../libgimp/gimpprocview.c:239
-msgid "Author:"
-msgstr "Аутор:"
+#: ../libgimp/gimpprocview.c:263
+msgid "Authors:"
+msgstr "Аутори:"
 
-#: ../libgimp/gimpprocview.c:251
+#: ../libgimp/gimpprocview.c:266
 msgid "Date:"
 msgstr "Датум:"
 
-#: ../libgimp/gimpprocview.c:263
+#: ../libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Лиценца:"
 
+#: ../libgimp/gimpsaveproceduredialog.c:166
+msgid "Metadata"
+msgstr "Метаподаци"
+
+#: ../libgimp/gimpsaveproceduredialog.c:175
+msgid "Edit Metadata"
+msgstr "Уреди метаподатке"
+
+#: ../libgimp/gimpsaveproceduredialog.c:175
+msgid "(edit)"
+msgstr "(уреди)"
+
 #: ../libgimp/gimpunitcache.c:54
 msgid "percent"
-msgstr "посто"
+msgstr "проценат"
 
 #: ../libgimpbase/gimpbaseenums.c:28
 msgctxt "add-mask-type"
@@ -433,814 +552,1137 @@ msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "_Канал"
 
-#: ../libgimpbase/gimpbaseenums.c:65
-msgctxt "blend-mode"
-msgid "FG to BG (RGB)"
-msgstr "Боја четкице у боју позадине (РГБ)"
-
-#: ../libgimpbase/gimpbaseenums.c:66
-msgctxt "blend-mode"
-msgid "FG to BG (HSV)"
-msgstr "Боја четкице у боју позадине (ХСВ)"
-
-#: ../libgimpbase/gimpbaseenums.c:67
-msgctxt "blend-mode"
-msgid "FG to transparent"
-msgstr "Боја четкице у провидност"
-
-#: ../libgimpbase/gimpbaseenums.c:68
-msgctxt "blend-mode"
-msgid "Custom gradient"
-msgstr "Произвољни прелив"
-
-#: ../libgimpbase/gimpbaseenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:64
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Круг"
 
-#: ../libgimpbase/gimpbaseenums.c:99
+#: ../libgimpbase/gimpbaseenums.c:65
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Квадрат"
 
-#: ../libgimpbase/gimpbaseenums.c:100
+#: ../libgimpbase/gimpbaseenums.c:66
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Дијамант"
 
-#: ../libgimpbase/gimpbaseenums.c:130
-msgctxt "bucket-fill-mode"
-msgid "FG color fill"
-msgstr "Попуни бојом четкице"
+#: ../libgimpbase/gimpbaseenums.c:96
+msgctxt "cap-style"
+msgid "Butt"
+msgstr "Равни"
 
-#: ../libgimpbase/gimpbaseenums.c:131
-msgctxt "bucket-fill-mode"
-msgid "BG color fill"
-msgstr "Попуни бојом позадине"
+#: ../libgimpbase/gimpbaseenums.c:97
+msgctxt "cap-style"
+msgid "Round"
+msgstr "Заобљени"
 
-#: ../libgimpbase/gimpbaseenums.c:132
-msgctxt "bucket-fill-mode"
-msgid "Pattern fill"
-msgstr "Попуни шаром"
+#: ../libgimpbase/gimpbaseenums.c:98
+msgctxt "cap-style"
+msgid "Square"
+msgstr "Квадратни"
 
-#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libgimpbase/gimpbaseenums.c:129
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Додај у текући избор"
 
-#: ../libgimpbase/gimpbaseenums.c:164
+#: ../libgimpbase/gimpbaseenums.c:130
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Избаци из текућег избора"
 
-#: ../libgimpbase/gimpbaseenums.c:165
+#: ../libgimpbase/gimpbaseenums.c:131
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Замени текући избор"
 
-#: ../libgimpbase/gimpbaseenums.c:166
+#: ../libgimpbase/gimpbaseenums.c:132
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Пресек са текућим избором"
 
-#: ../libgimpbase/gimpbaseenums.c:199
+#: ../libgimpbase/gimpbaseenums.c:165
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Црвена"
 
-#: ../libgimpbase/gimpbaseenums.c:200
+#: ../libgimpbase/gimpbaseenums.c:166
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Зелена"
 
-#: ../libgimpbase/gimpbaseenums.c:201
+#: ../libgimpbase/gimpbaseenums.c:167
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Плава"
 
-#: ../libgimpbase/gimpbaseenums.c:202
+#: ../libgimpbase/gimpbaseenums.c:168
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Сива"
 
-#: ../libgimpbase/gimpbaseenums.c:203
+#: ../libgimpbase/gimpbaseenums.c:169
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Индексирано"
 
-#: ../libgimpbase/gimpbaseenums.c:204
+#: ../libgimpbase/gimpbaseenums.c:170
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:234
+#: ../libgimpbase/gimpbaseenums.c:200
 msgctxt "check-size"
 msgid "Small"
 msgstr "Мало"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: ../libgimpbase/gimpbaseenums.c:201
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Средње"
 
-#: ../libgimpbase/gimpbaseenums.c:236
+#: ../libgimpbase/gimpbaseenums.c:202
 msgctxt "check-size"
 msgid "Large"
 msgstr "Велико"
 
-#: ../libgimpbase/gimpbaseenums.c:269
+#: ../libgimpbase/gimpbaseenums.c:235
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Светла поља"
 
-#: ../libgimpbase/gimpbaseenums.c:270
+#: ../libgimpbase/gimpbaseenums.c:236
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Средња поља"
 
-#: ../libgimpbase/gimpbaseenums.c:271
+#: ../libgimpbase/gimpbaseenums.c:237
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Тамна поља"
 
-#: ../libgimpbase/gimpbaseenums.c:272
+#: ../libgimpbase/gimpbaseenums.c:238
 msgctxt "check-type"
 msgid "White only"
 msgstr "Само бела"
 
-#: ../libgimpbase/gimpbaseenums.c:273
+#: ../libgimpbase/gimpbaseenums.c:239
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Само сива"
 
-#: ../libgimpbase/gimpbaseenums.c:274
+#: ../libgimpbase/gimpbaseenums.c:240
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Само црна"
 
-#: ../libgimpbase/gimpbaseenums.c:303
+#: ../libgimpbase/gimpbaseenums.c:269
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Слика"
 
-#: ../libgimpbase/gimpbaseenums.c:304
+#: ../libgimpbase/gimpbaseenums.c:270
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Шара"
 
-#: ../libgimpbase/gimpbaseenums.c:337
+#: ../libgimpbase/gimpbaseenums.c:306
+msgctxt "color-tag"
+msgid "None"
+msgstr "Ништа"
+
+#: ../libgimpbase/gimpbaseenums.c:307
+msgctxt "color-tag"
+msgid "Blue"
+msgstr "Плава"
+
+#: ../libgimpbase/gimpbaseenums.c:308
+msgctxt "color-tag"
+msgid "Green"
+msgstr "Зелена"
+
+#: ../libgimpbase/gimpbaseenums.c:309
+msgctxt "color-tag"
+msgid "Yellow"
+msgstr "Жута"
+
+#: ../libgimpbase/gimpbaseenums.c:310
+msgctxt "color-tag"
+msgid "Orange"
+msgstr "Наранџаста"
+
+#: ../libgimpbase/gimpbaseenums.c:311
+msgctxt "color-tag"
+msgid "Brown"
+msgstr "Смеђа"
+
+#: ../libgimpbase/gimpbaseenums.c:312
+msgctxt "color-tag"
+msgid "Red"
+msgstr "Црвена"
+
+#: ../libgimpbase/gimpbaseenums.c:313
+msgctxt "color-tag"
+msgid "Violet"
+msgstr "Љубичаста"
+
+#: ../libgimpbase/gimpbaseenums.c:314
+msgctxt "color-tag"
+msgid "Gray"
+msgstr "Сива"
+
+#: ../libgimpbase/gimpbaseenums.c:347
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "8. битни цели број"
 
-#: ../libgimpbase/gimpbaseenums.c:338
+#: ../libgimpbase/gimpbaseenums.c:348
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "16. битни цели број"
 
-#: ../libgimpbase/gimpbaseenums.c:339
+#: ../libgimpbase/gimpbaseenums.c:349
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "32. битни цели број"
 
-#: ../libgimpbase/gimpbaseenums.c:340
+#: ../libgimpbase/gimpbaseenums.c:350
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "16. битни децимални број"
 
-#: ../libgimpbase/gimpbaseenums.c:341
+#: ../libgimpbase/gimpbaseenums.c:351
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "32. битни децимални број"
 
-#: ../libgimpbase/gimpbaseenums.c:342
+#: ../libgimpbase/gimpbaseenums.c:352
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr "64. битни децимални број"
 
-#: ../libgimpbase/gimpbaseenums.c:373
+#: ../libgimpbase/gimpbaseenums.c:383
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "Направи оптималну палету"
 
-#: ../libgimpbase/gimpbaseenums.c:374
+#: ../libgimpbase/gimpbaseenums.c:384
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Користи палету подешену за веб"
 
-#: ../libgimpbase/gimpbaseenums.c:375
+#: ../libgimpbase/gimpbaseenums.c:385
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Користи црно-белу палету"
 
-#: ../libgimpbase/gimpbaseenums.c:376
+#: ../libgimpbase/gimpbaseenums.c:386
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Користи произвољну палету"
 
-#: ../libgimpbase/gimpbaseenums.c:405
+#: ../libgimpbase/gimpbaseenums.c:415
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Замућење"
 
-#: ../libgimpbase/gimpbaseenums.c:406
+#: ../libgimpbase/gimpbaseenums.c:416
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Оштрење"
 
-#: ../libgimpbase/gimpbaseenums.c:436
+#: ../libgimpbase/gimpbaseenums.c:448
 msgctxt "desaturate-mode"
-msgid "Lightness"
-msgstr "Светлина"
+msgid "Lightness (HSL)"
+msgstr "Светлина (HSL)"
 
-#: ../libgimpbase/gimpbaseenums.c:437
+#: ../libgimpbase/gimpbaseenums.c:449
 msgctxt "desaturate-mode"
-msgid "Luminosity"
+msgid "Luma"
+msgstr "Лума"
+
+#: ../libgimpbase/gimpbaseenums.c:450
+msgctxt "desaturate-mode"
+msgid "Average (HSI Intensity)"
+msgstr "Просек (HSI интензитет)"
+
+#: ../libgimpbase/gimpbaseenums.c:451
+msgctxt "desaturate-mode"
+msgid "Luminance"
 msgstr "Луминанса"
 
-#: ../libgimpbase/gimpbaseenums.c:438
+#: ../libgimpbase/gimpbaseenums.c:452
 msgctxt "desaturate-mode"
-msgid "Average"
-msgstr "Просечно"
+msgid "Value (HSV)"
+msgstr "Вредност (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:467
+#: ../libgimpbase/gimpbaseenums.c:481
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Смакни"
 
-#: ../libgimpbase/gimpbaseenums.c:468
+#: ../libgimpbase/gimpbaseenums.c:482
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Спали"
 
-#: ../libgimpbase/gimpbaseenums.c:500
+#: ../libgimpbase/gimpbaseenums.c:514
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Боја _четкице"
 
-#: ../libgimpbase/gimpbaseenums.c:501
+#: ../libgimpbase/gimpbaseenums.c:515
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Боја _позадине"
 
-#: ../libgimpbase/gimpbaseenums.c:502
+#: ../libgimpbase/gimpbaseenums.c:516
 msgctxt "fill-type"
 msgid "White"
 msgstr "Бела"
 
-#: ../libgimpbase/gimpbaseenums.c:503
+#: ../libgimpbase/gimpbaseenums.c:517
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Провидност"
 
-#: ../libgimpbase/gimpbaseenums.c:504
+#: ../libgimpbase/gimpbaseenums.c:518
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Шара"
 
-#: ../libgimpbase/gimpbaseenums.c:640
+#: ../libgimpbase/gimpbaseenums.c:576
+msgctxt "gradient-blend-color-space"
+msgid "Perceptual RGB"
+msgstr "Чулно РRGB"
+
+#: ../libgimpbase/gimpbaseenums.c:577
+msgctxt "gradient-blend-color-space"
+msgid "Linear RGB"
+msgstr "Линеарно RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:578
+msgctxt "gradient-blend-color-space"
+msgid "CIE Lab"
+msgstr "CIE Lab"
+
+#: ../libgimpbase/gimpbaseenums.c:608
+#| msgctxt "image-type"
+#| msgid "RGB"
+msgctxt "gradient-segment-color"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:609
+msgctxt "gradient-segment-color"
+msgid "HSV (counter-clockwise hue)"
+msgstr "HSV (супротно смеру казаљке)"
+
+#. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:612
+msgctxt "gradient-segment-color"
+msgid "HSV (ccw)"
+msgstr "HSV (лево)"
+
+#: ../libgimpbase/gimpbaseenums.c:613
+msgctxt "gradient-segment-color"
+msgid "HSV (clockwise hue)"
+msgstr "HSV (у смеру казаљке)"
+
+#. Translators: this is an abbreviated version of "HSV (clockwise hue)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:616
+#| msgctxt "gradient-type"
+#| msgid "Spiral (cw)"
+msgctxt "gradient-segment-color"
+msgid "HSV (cw)"
+msgstr "HSV (десно)"
+
+#: ../libgimpbase/gimpbaseenums.c:649
+msgctxt "gradient-segment-type"
+msgid "Linear"
+msgstr "Линијски"
+
+#: ../libgimpbase/gimpbaseenums.c:650
+msgctxt "gradient-segment-type"
+msgid "Curved"
+msgstr "Закривљено"
+
+#: ../libgimpbase/gimpbaseenums.c:651
+msgctxt "gradient-segment-type"
+msgid "Sinusoidal"
+msgstr "Синусоидално"
+
+#: ../libgimpbase/gimpbaseenums.c:652
+msgctxt "gradient-segment-type"
+msgid "Spherical (increasing)"
+msgstr "Сферно (повећање)"
+
+#. Translators: this is an abbreviated version of "Spherical (increasing)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:655
+#| msgctxt "gradient-type"
+#| msgid "Spiral (cw)"
+msgctxt "gradient-segment-type"
+msgid "Spherical (inc)"
+msgstr "Сферно (+)"
+
+#: ../libgimpbase/gimpbaseenums.c:656
+msgctxt "gradient-segment-type"
+msgid "Spherical (decreasing)"
+msgstr "Сферно (смањење)"
+
+#. Translators: this is an abbreviated version of "Spherical (decreasing)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:659
+msgctxt "gradient-segment-type"
+msgid "Spherical (dec)"
+msgstr "Сферно (-)"
+
+#: ../libgimpbase/gimpbaseenums.c:660
+msgctxt "gradient-segment-type"
+msgid "Step"
+msgstr "Корак"
+
+#: ../libgimpbase/gimpbaseenums.c:698
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Линијски"
 
-#: ../libgimpbase/gimpbaseenums.c:641
+#: ../libgimpbase/gimpbaseenums.c:699
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Билинеарно"
 
-#: ../libgimpbase/gimpbaseenums.c:642
+#: ../libgimpbase/gimpbaseenums.c:700
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Кружно"
 
-#: ../libgimpbase/gimpbaseenums.c:643
+#: ../libgimpbase/gimpbaseenums.c:701
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Квадрат"
 
-#: ../libgimpbase/gimpbaseenums.c:644
+#: ../libgimpbase/gimpbaseenums.c:702
 msgctxt "gradient-type"
-msgid "Conical (sym)"
+msgid "Conical (symmetric)"
 msgstr "Конично (симетрично)"
 
-#: ../libgimpbase/gimpbaseenums.c:645
+#. Translators: this is an abbreviated version of "Conical (symmetric)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:705
 msgctxt "gradient-type"
-msgid "Conical (asym)"
+msgid "Conical (sym)"
+msgstr "Конично (сим)"
+
+#: ../libgimpbase/gimpbaseenums.c:706
+msgctxt "gradient-type"
+msgid "Conical (asymmetric)"
 msgstr "Конично (асиметрично)"
 
-#: ../libgimpbase/gimpbaseenums.c:646
+#. Translators: this is an abbreviated version of "Conical (asymmetric)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:709
+msgctxt "gradient-type"
+msgid "Conical (asym)"
+msgstr "Конично (асим)"
+
+#: ../libgimpbase/gimpbaseenums.c:710
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Обликовано (угаоно)"
 
-#: ../libgimpbase/gimpbaseenums.c:647
+#: ../libgimpbase/gimpbaseenums.c:711
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Обликовано (сферично)"
 
-#: ../libgimpbase/gimpbaseenums.c:648
+#: ../libgimpbase/gimpbaseenums.c:712
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Обликовано (помоћу рупица)"
 
-#: ../libgimpbase/gimpbaseenums.c:649
+#: ../libgimpbase/gimpbaseenums.c:713
+msgctxt "gradient-type"
+msgid "Spiral (clockwise)"
+msgstr "Спирала (у смеру казаљке)"
+
+#. Translators: this is an abbreviated version of "Spiral (clockwise)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:716
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
-msgstr "Спирала (удесно)"
+msgstr "Спирала (десна)"
 
-#: ../libgimpbase/gimpbaseenums.c:650
+#: ../libgimpbase/gimpbaseenums.c:717
+msgctxt "gradient-type"
+msgid "Spiral (counter-clockwise)"
+msgstr "Спирала (супротно смеру казаљке)"
+
+#. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:720
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
-msgstr "Спирала (улево)"
+msgstr "Спирала (лева)"
 
-#: ../libgimpbase/gimpbaseenums.c:682
+#: ../libgimpbase/gimpbaseenums.c:752
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Само пресек (тачке)"
 
-#: ../libgimpbase/gimpbaseenums.c:683
+#: ../libgimpbase/gimpbaseenums.c:753
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Само пресек (крстићи)"
 
-#: ../libgimpbase/gimpbaseenums.c:684
+#: ../libgimpbase/gimpbaseenums.c:754
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Цртице"
 
-#: ../libgimpbase/gimpbaseenums.c:685
+#: ../libgimpbase/gimpbaseenums.c:755
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Црно-беле цртице"
 
-#: ../libgimpbase/gimpbaseenums.c:686
+#: ../libgimpbase/gimpbaseenums.c:756
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Пуна линија"
 
-#: ../libgimpbase/gimpbaseenums.c:756
+#: ../libgimpbase/gimpbaseenums.c:826
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "Назив иконице"
 
-# bug: Gtk+ slang
-#: ../libgimpbase/gimpbaseenums.c:757
+#: ../libgimpbase/gimpbaseenums.c:827
 msgctxt "icon-type"
-msgid "Inline pixbuf"
-msgstr "Уграђена слика"
+msgid "Pixbuf"
+msgstr "Сличица"
 
-#: ../libgimpbase/gimpbaseenums.c:758
+#: ../libgimpbase/gimpbaseenums.c:828
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Датотека са сликом"
 
-#: ../libgimpbase/gimpbaseenums.c:788
+#: ../libgimpbase/gimpbaseenums.c:858
 msgctxt "image-base-type"
 msgid "RGB color"
-msgstr "РГБ боја"
+msgstr "RGB боја"
 
-#: ../libgimpbase/gimpbaseenums.c:789
+#: ../libgimpbase/gimpbaseenums.c:859
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Сиви тонови"
 
-#: ../libgimpbase/gimpbaseenums.c:790
+#: ../libgimpbase/gimpbaseenums.c:860
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Индексирана боја"
 
-#: ../libgimpbase/gimpbaseenums.c:823
+#: ../libgimpbase/gimpbaseenums.c:893
 msgctxt "image-type"
 msgid "RGB"
-msgstr "РГБ"
+msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:824
+#: ../libgimpbase/gimpbaseenums.c:894
 msgctxt "image-type"
 msgid "RGB-alpha"
-msgstr "РГБ-провидност"
+msgstr "RGB-алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:825
+#: ../libgimpbase/gimpbaseenums.c:895
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Сиви тонови"
 
-#: ../libgimpbase/gimpbaseenums.c:826
+#: ../libgimpbase/gimpbaseenums.c:896
 msgctxt "image-type"
 msgid "Grayscale-alpha"
-msgstr "Сиви тонови-провидност"
+msgstr "Сиви тонови-алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:827
+#: ../libgimpbase/gimpbaseenums.c:897
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Индексирано"
 
-#: ../libgimpbase/gimpbaseenums.c:828
+#: ../libgimpbase/gimpbaseenums.c:898
 msgctxt "image-type"
 msgid "Indexed-alpha"
-msgstr "Индексирано-провидност"
+msgstr "Индексирано-алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:858
+#: ../libgimpbase/gimpbaseenums.c:928
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Круг"
 
-#: ../libgimpbase/gimpbaseenums.c:859
+#: ../libgimpbase/gimpbaseenums.c:929
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Квадрат"
 
-#: ../libgimpbase/gimpbaseenums.c:860
+#: ../libgimpbase/gimpbaseenums.c:930
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Дијамант"
 
-#: ../libgimpbase/gimpbaseenums.c:892
+#: ../libgimpbase/gimpbaseenums.c:962
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Ниједан"
 
-#: ../libgimpbase/gimpbaseenums.c:893
+#: ../libgimpbase/gimpbaseenums.c:963
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Линијски"
 
-#: ../libgimpbase/gimpbaseenums.c:894
+#: ../libgimpbase/gimpbaseenums.c:964
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Кубично"
 
-#: ../libgimpbase/gimpbaseenums.c:895
+#: ../libgimpbase/gimpbaseenums.c:965
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr "БезОреола"
 
-#: ../libgimpbase/gimpbaseenums.c:896
+#: ../libgimpbase/gimpbaseenums.c:966
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "НизакОреол"
 
-#: ../libgimpbase/gimpbaseenums.c:1052
+#: ../libgimpbase/gimpbaseenums.c:996
+msgctxt "join-style"
+msgid "Miter"
+msgstr "Оштри"
+
+#: ../libgimpbase/gimpbaseenums.c:997
+msgctxt "join-style"
+msgid "Round"
+msgstr "Заобљени"
+
+#: ../libgimpbase/gimpbaseenums.c:998
+msgctxt "join-style"
+msgid "Bevel"
+msgstr "Равни"
+
+#: ../libgimpbase/gimpbaseenums.c:1059
+msgctxt "merge-type"
+msgid "Expanded as necessary"
+msgstr "Проширено ако је неопходно"
+
+#: ../libgimpbase/gimpbaseenums.c:1060
+msgctxt "merge-type"
+msgid "Clipped to image"
+msgstr "Исечено на слику"
+
+#: ../libgimpbase/gimpbaseenums.c:1061
+msgctxt "merge-type"
+msgid "Clipped to bottom layer"
+msgstr "Исечено на доњи слој"
+
+#: ../libgimpbase/gimpbaseenums.c:1062
+msgctxt "merge-type"
+msgid "Flatten"
+msgstr "Изравнај"
+
+#: ../libgimpbase/gimpbaseenums.c:1156
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Положена"
 
-#: ../libgimpbase/gimpbaseenums.c:1053
+#: ../libgimpbase/gimpbaseenums.c:1157
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Усправна"
 
-#: ../libgimpbase/gimpbaseenums.c:1054
+#: ../libgimpbase/gimpbaseenums.c:1158
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Непознато"
 
-#: ../libgimpbase/gimpbaseenums.c:1083
+#: ../libgimpbase/gimpbaseenums.c:1187
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Константно"
 
-#: ../libgimpbase/gimpbaseenums.c:1084
+#: ../libgimpbase/gimpbaseenums.c:1188
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Растуће"
 
-#: ../libgimpbase/gimpbaseenums.c:1217
+#: ../libgimpbase/gimpbaseenums.c:1249
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Унутрашња Гимпова процедура"
 
-#: ../libgimpbase/gimpbaseenums.c:1218
+#: ../libgimpbase/gimpbaseenums.c:1250
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "Гимпов додатак"
 
-#: ../libgimpbase/gimpbaseenums.c:1219
+#: ../libgimpbase/gimpbaseenums.c:1251
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "Гимпово проширење"
 
-#: ../libgimpbase/gimpbaseenums.c:1220
+#: ../libgimpbase/gimpbaseenums.c:1252
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Привремена процедура"
 
-#: ../libgimpbase/gimpbaseenums.c:1295
+#: ../libgimpbase/gimpbaseenums.c:1339
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8. битни линеарни цели број"
 
-#: ../libgimpbase/gimpbaseenums.c:1296
+#: ../libgimpbase/gimpbaseenums.c:1340
 msgctxt "precision"
-msgid "8-bit gamma integer"
-msgstr "8. битни гама цели број"
+msgid "8-bit non-linear integer"
+msgstr "8. битни нелинеарни цели број"
 
-#: ../libgimpbase/gimpbaseenums.c:1297
+#: ../libgimpbase/gimpbaseenums.c:1341
+msgctxt "precision"
+msgid "8-bit perceptual integer"
+msgstr "8. битни чулни цели број"
+
+#: ../libgimpbase/gimpbaseenums.c:1342
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16. битни линеарни цели број"
 
-#: ../libgimpbase/gimpbaseenums.c:1298
+#: ../libgimpbase/gimpbaseenums.c:1343
 msgctxt "precision"
-msgid "16-bit gamma integer"
-msgstr "16. битни гама цели број"
+msgid "16-bit non-linear integer"
+msgstr "16. битни нелинеарни цели број"
 
-#: ../libgimpbase/gimpbaseenums.c:1299
+#: ../libgimpbase/gimpbaseenums.c:1344
+msgctxt "precision"
+msgid "16-bit perceptual integer"
+msgstr "16. битни чулни цели број"
+
+#: ../libgimpbase/gimpbaseenums.c:1345
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32. битни линеарни цели број"
 
-#: ../libgimpbase/gimpbaseenums.c:1300
+#: ../libgimpbase/gimpbaseenums.c:1346
 msgctxt "precision"
-msgid "32-bit gamma integer"
-msgstr "32. битни гама цели број"
+msgid "32-bit non-linear integer"
+msgstr "32. битни нелинеарни цели број"
 
-#: ../libgimpbase/gimpbaseenums.c:1301
+#: ../libgimpbase/gimpbaseenums.c:1347
+msgctxt "precision"
+msgid "32-bit perceptual integer"
+msgstr "32. битни чулни цели број"
+
+#: ../libgimpbase/gimpbaseenums.c:1348
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "16. битни линеарни децимални број"
 
-#: ../libgimpbase/gimpbaseenums.c:1302
+#: ../libgimpbase/gimpbaseenums.c:1349
 msgctxt "precision"
-msgid "16-bit gamma floating point"
-msgstr "16. битни гама децимални број"
+msgid "16-bit non-linear floating point"
+msgstr "16. битни нелинеарни децимални број"
 
-#: ../libgimpbase/gimpbaseenums.c:1303
+#: ../libgimpbase/gimpbaseenums.c:1350
+msgctxt "precision"
+msgid "16-bit perceptual floating point"
+msgstr "16. битни чулни децимални број"
+
+#: ../libgimpbase/gimpbaseenums.c:1351
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "32. битни линеарни децимални број"
 
-#: ../libgimpbase/gimpbaseenums.c:1304
+#: ../libgimpbase/gimpbaseenums.c:1352
 msgctxt "precision"
-msgid "32-bit gamma floating point"
-msgstr "32. битни гама децимални број"
+msgid "32-bit non-linear floating point"
+msgstr "32. битни нелинеарни децимални број"
 
-#: ../libgimpbase/gimpbaseenums.c:1305
+#: ../libgimpbase/gimpbaseenums.c:1353
+msgctxt "precision"
+msgid "32-bit perceptual floating point"
+msgstr "32. битни чулни децимални број"
+
+#: ../libgimpbase/gimpbaseenums.c:1354
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "64. битни линеарни децимални број"
 
-#: ../libgimpbase/gimpbaseenums.c:1306
+#: ../libgimpbase/gimpbaseenums.c:1355
 msgctxt "precision"
-msgid "64-bit gamma floating point"
-msgstr "64. битни гама децимални број"
+msgid "64-bit non-linear floating point"
+msgstr "64. битни нелинеарни децимални број"
 
-#: ../libgimpbase/gimpbaseenums.c:1375
+#: ../libgimpbase/gimpbaseenums.c:1356
+msgctxt "precision"
+msgid "64-bit perceptual floating point"
+msgstr "64. битни чулни децимални број"
+
+#: ../libgimpbase/gimpbaseenums.c:1431
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Ништа (прошири)"
 
-#: ../libgimpbase/gimpbaseenums.c:1376
+#: ../libgimpbase/gimpbaseenums.c:1432
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Тестерасти талас"
 
-#: ../libgimpbase/gimpbaseenums.c:1377
+#: ../libgimpbase/gimpbaseenums.c:1433
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Троугласти талас"
 
-#: ../libgimpbase/gimpbaseenums.c:1378
+#: ../libgimpbase/gimpbaseenums.c:1434
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Скрати"
 
-#: ../libgimpbase/gimpbaseenums.c:1440
+#: ../libgimpbase/gimpbaseenums.c:1496
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Покрени интерактивно"
 
-#: ../libgimpbase/gimpbaseenums.c:1441
+#: ../libgimpbase/gimpbaseenums.c:1497
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Покрени не-интерактивно"
 
-#: ../libgimpbase/gimpbaseenums.c:1442
+#: ../libgimpbase/gimpbaseenums.c:1498
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Покрени са последње коришћеним вредностима"
 
-#: ../libgimpbase/gimpbaseenums.c:1476
+#: ../libgimpbase/gimpbaseenums.c:1536
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Композитно"
 
-#: ../libgimpbase/gimpbaseenums.c:1477
+#: ../libgimpbase/gimpbaseenums.c:1537
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Црвена"
 
-#: ../libgimpbase/gimpbaseenums.c:1478
+#: ../libgimpbase/gimpbaseenums.c:1538
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Зелена"
 
-#: ../libgimpbase/gimpbaseenums.c:1479
+#: ../libgimpbase/gimpbaseenums.c:1539
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Плава"
 
-#: ../libgimpbase/gimpbaseenums.c:1480
+#: ../libgimpbase/gimpbaseenums.c:1540
 msgctxt "select-criterion"
-msgid "Hue"
-msgstr "Нијанса"
+msgid "HSV Hue"
+msgstr "HSV нијанса"
 
-#: ../libgimpbase/gimpbaseenums.c:1481
+#: ../libgimpbase/gimpbaseenums.c:1541
 msgctxt "select-criterion"
-msgid "Saturation"
-msgstr "Засићеност"
+msgid "HSV Saturation"
+msgstr "HSV засићеност"
 
-#: ../libgimpbase/gimpbaseenums.c:1482
+#: ../libgimpbase/gimpbaseenums.c:1542
 msgctxt "select-criterion"
-msgid "Value"
-msgstr "Вредност"
+msgid "HSV Value"
+msgstr "HSV вредност"
 
-#: ../libgimpbase/gimpbaseenums.c:1511
+#: ../libgimpbase/gimpbaseenums.c:1543
+msgctxt "select-criterion"
+msgid "LCh Lightness"
+msgstr "LCh светлина"
+
+#: ../libgimpbase/gimpbaseenums.c:1544
+msgctxt "select-criterion"
+msgid "LCh Chroma"
+msgstr "LCh хроминанса"
+
+#: ../libgimpbase/gimpbaseenums.c:1545
+msgctxt "select-criterion"
+msgid "LCh Hue"
+msgstr "LCh нијанса"
+
+#: ../libgimpbase/gimpbaseenums.c:1546
+msgctxt "select-criterion"
+msgid "Alpha"
+msgstr "Алфа"
+
+#: ../libgimpbase/gimpbaseenums.c:1575
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Пиксели"
 
-#: ../libgimpbase/gimpbaseenums.c:1512
+#: ../libgimpbase/gimpbaseenums.c:1576
 msgctxt "size-type"
 msgid "Points"
 msgstr "Штампарске тачке"
 
-#: ../libgimpbase/gimpbaseenums.c:1573
+#: ../libgimpbase/gimpbaseenums.c:1637
+msgctxt "stroke-method"
+msgid "Stroke line"
+msgstr "Исцртај линију"
+
+#: ../libgimpbase/gimpbaseenums.c:1638
+msgctxt "stroke-method"
+msgid "Stroke with a paint tool"
+msgstr "Исцртај помоћу алата за цртање"
+
+#: ../libgimpbase/gimpbaseenums.c:1671
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "С лева на десно"
 
-#: ../libgimpbase/gimpbaseenums.c:1574
+#: ../libgimpbase/gimpbaseenums.c:1672
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "С десна на лево"
 
-#: ../libgimpbase/gimpbaseenums.c:1605
+#: ../libgimpbase/gimpbaseenums.c:1673
+msgctxt "text-direction"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Усправно, с десна на лево (различито окренуто)"
+
+#: ../libgimpbase/gimpbaseenums.c:1674
+msgctxt "text-direction"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Усправно, с десна на лево (окренуто на горе)"
+
+#: ../libgimpbase/gimpbaseenums.c:1675
+msgctxt "text-direction"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Усправно, с лева на десно (различито окренуто)"
+
+#: ../libgimpbase/gimpbaseenums.c:1676
+msgctxt "text-direction"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Усправно, с лева на десно (окренуто на горе)"
+
+#: ../libgimpbase/gimpbaseenums.c:1707
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Ниједан"
 
-#: ../libgimpbase/gimpbaseenums.c:1606
+#: ../libgimpbase/gimpbaseenums.c:1708
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Мали"
 
-#: ../libgimpbase/gimpbaseenums.c:1607
+#: ../libgimpbase/gimpbaseenums.c:1709
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Средњи"
 
-#: ../libgimpbase/gimpbaseenums.c:1608
+#: ../libgimpbase/gimpbaseenums.c:1710
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Потпуни"
 
-#: ../libgimpbase/gimpbaseenums.c:1639
+#: ../libgimpbase/gimpbaseenums.c:1741
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Поравнање с лева"
 
-#: ../libgimpbase/gimpbaseenums.c:1640
+#: ../libgimpbase/gimpbaseenums.c:1742
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Поравнање с десна"
 
-#: ../libgimpbase/gimpbaseenums.c:1641
+#: ../libgimpbase/gimpbaseenums.c:1743
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Центрирано"
 
-#: ../libgimpbase/gimpbaseenums.c:1642
+#: ../libgimpbase/gimpbaseenums.c:1744
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Попуњено"
 
-#: ../libgimpbase/gimpbaseenums.c:1672
+#: ../libgimpbase/gimpbaseenums.c:1774
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Тамни делови"
 
-#: ../libgimpbase/gimpbaseenums.c:1673
+#: ../libgimpbase/gimpbaseenums.c:1775
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Средњи делови"
 
-#: ../libgimpbase/gimpbaseenums.c:1674
+#: ../libgimpbase/gimpbaseenums.c:1776
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Светли делови"
 
-#: ../libgimpbase/gimpbaseenums.c:1703
+#: ../libgimpbase/gimpbaseenums.c:1805
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Нормално (у напред)"
 
-#: ../libgimpbase/gimpbaseenums.c:1704
+#: ../libgimpbase/gimpbaseenums.c:1806
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Корелативно (у назад)"
 
-#: ../libgimpbase/gimpbaseenums.c:1735
+#: ../libgimpbase/gimpbaseenums.c:1837
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Без исецања"
 
-#: ../libgimpbase/gimpbaseenums.c:1736
+#: ../libgimpbase/gimpbaseenums.c:1838
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Одбаци само ивице"
 
-#: ../libgimpbase/gimpbaseenums.c:1737
+#: ../libgimpbase/gimpbaseenums.c:1839
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Исеци на резултат"
 
-#: ../libgimpbase/gimpbaseenums.c:1738
+#: ../libgimpbase/gimpbaseenums.c:1840
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Исеци у размери"
 
-#: ../libgimpbase/gimpmetadata.c:523
+#: ../libgimpbase/gimpmetadata.c:907
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Могу да учитам метаподатке само из локалне датотеке"
 
-#: ../libgimpbase/gimpmetadata.c:583
+#: ../libgimpbase/gimpmetadata.c:921 ../libgimpbase/gimpmetadata.c:991
+#, c-format
+msgid "Conversion of the filename to system codepage failed."
+msgstr "Није успело претварање назива датотеке у кодну страницу система."
+
+#: ../libgimpbase/gimpmetadata.c:978
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Могу да сачувам метаподатке само у лакалне датотеке"
 
-#: ../libgimpbase/gimpmetadata.c:656
+#: ../libgimpbase/gimpmetadata.c:1040
+#, c-format
+msgid "Invalid Exif data size."
+msgstr "Неисправна величина Exif података."
+
+#: ../libgimpbase/gimpmetadata.c:1069
 #, c-format
 msgid "Parsing Exif data failed."
-msgstr "Не могу да обрадим Exif податке"
+msgstr "Не могу да обрадим Exif податке."
 
-#: ../libgimpbase/gimpmetadata.c:710
+#: ../libgimpbase/gimpmetadata.c:1119
+#, c-format
+#| msgid "Parsing XMP data failed."
+msgid "Parsing IPTC data failed."
+msgstr "Не могу да обрадим IPTC податке."
+
+#: ../libgimpbase/gimpmetadata.c:1167
 #, c-format
 msgid "Parsing XMP data failed."
-msgstr "Не могу да обрадим XMP податке"
+msgstr "Не могу да обрадим XMP податке."
 
-#: ../libgimpbase/gimputils.c:192 ../libgimpbase/gimputils.c:197
+#: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
 msgid "(invalid UTF-8 string)"
 msgstr "(неисправна УТФ-8 ниска)"
 
-#: ../libgimpbase/gimputils.c:367
+#: ../libgimpbase/gimputils.c:394
 msgid "File path is NULL"
 msgstr "Путања до датотеке је NULL"
 
-#: ../libgimpbase/gimputils.c:376 ../libgimpbase/gimputils.c:387
+#: ../libgimpbase/gimputils.c:403 ../libgimpbase/gimputils.c:414
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Не могу да претворим УТФ-8 назив датотеке у шире карактере"
 
-#: ../libgimpbase/gimputils.c:395
+#: ../libgimpbase/gimputils.c:422
 msgid "ILCreateFromPath() failed"
 msgstr "Није успело ILCreateFromPath()"
 
-#: ../libgimpbase/gimputils.c:432
+#: ../libgimpbase/gimputils.c:459
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Не могу да претвотим „%s“ у исправан NSURL."
 
-#: ../libgimpbase/gimputils.c:460
+#: ../libgimpbase/gimputils.c:487
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Није успело повезивање на org.freedesktop.FileManager1: "
 
-#: ../libgimpbase/gimputils.c:484
+#: ../libgimpbase/gimputils.c:511
 msgid "Calling ShowItems failed: "
 msgstr "Није успео позив ShowItems: "
 
-#: ../libgimpcolor/gimpcolorprofile.c:234
+#: ../libgimpcolor/gimpcolorprofile.c:258
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "„%s“ не изгледа као ИЦЦ профил боја"
 
-#: ../libgimpcolor/gimpcolorprofile.c:280
+#: ../libgimpcolor/gimpcolorprofile.c:304
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Ови подаци не изгледају као ИЦЦ профил боја"
 
-#: ../libgimpcolor/gimpcolorprofile.c:337
+#: ../libgimpcolor/gimpcolorprofile.c:361
 msgid "Could not save color profile to memory"
 msgstr "Не могу да сачувам профил боја у меморију"
 
-#: ../libgimpcolor/gimpcolorprofile.c:524
+#: ../libgimpcolor/gimpcolorprofile.c:578
 msgid "(unnamed profile)"
 msgstr "(неименовани профил)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:566
+#: ../libgimpcolor/gimpcolorprofile.c:620
 #, c-format
-#| msgid "Profile: %s"
 msgid "Model: %s"
 msgstr "Модел: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:575
+#: ../libgimpcolor/gimpcolorprofile.c:629
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Произвођач: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:584
+#: ../libgimpcolor/gimpcolorprofile.c:638
 #, c-format
-#| msgid "Copyright:"
 msgid "Copyright: %s"
 msgstr "Лиценца: %s"
+
+#: ../libgimpconfig/gimpconfigenums.c:24
+msgctxt "color-management-mode"
+msgid "No color management"
+msgstr "Без управљања бојама"
+
+#: ../libgimpconfig/gimpconfigenums.c:25
+msgctxt "color-management-mode"
+msgid "Color-managed display"
+msgstr "Калибрисан екран"
+
+#: ../libgimpconfig/gimpconfigenums.c:26
+msgctxt "color-management-mode"
+msgid "Soft-proofing"
+msgstr "Симулација штампе"
+
+#: ../libgimpconfig/gimpconfigenums.c:57
+msgctxt "color-rendering-intent"
+msgid "Perceptual"
+msgstr "Чулно"
+
+# лоше
+# код нас мислим да је „калориметријски“? — д
+#: ../libgimpconfig/gimpconfigenums.c:58
+msgctxt "color-rendering-intent"
+msgid "Relative colorimetric"
+msgstr "Релативно калориметријски"
+
+#: ../libgimpconfig/gimpconfigenums.c:59
+msgctxt "color-rendering-intent"
+msgid "Saturation"
+msgstr "Засићеност"
+
+# гадно
+#: ../libgimpconfig/gimpconfigenums.c:60
+msgctxt "color-rendering-intent"
+msgid "Absolute colorimetric"
+msgstr "Апсолутно калориметријски"
 
 #. *
 #. * SECTION: gimpcolorconfig
@@ -1249,15 +1691,15 @@ msgstr "Лиценца: %s"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:54
-msgid "Mode of operation for color management."
-msgstr "Режим рада са управљањем бојама"
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "How images are displayed on screen."
+msgstr "Како се слике приказују на екрану."
 
-#: ../libgimpconfig/gimpcolorconfig.c:57
+#: ../libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "Профил боја за ваш (примарни) монитор."
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -1267,29 +1709,38 @@ msgstr ""
 "управника прозорима.  Подешени профил монитора се тада користи уколико ова "
 "могућност омане."
 
-#: ../libgimpconfig/gimpcolorconfig.c:65
+#: ../libgimpconfig/gimpcolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
-"Пожељни профил за РГБ радни простор. Он ће бити понуђен заједно са уграђеним "
-"РГБ профилом где год вам програм понуди избор профила."
+"Пожељни профил за RGB радни простор. Он ће бити понуђен заједно са уграђеним "
+"RGB профилом где год вам програм понуди избор профила."
 
-#: ../libgimpconfig/gimpcolorconfig.c:69
-msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "CMYK профил боја за превођење између РГБ и CMYK."
-
-#: ../libgimpconfig/gimpcolorconfig.c:72
+#: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
-"The color profile to use for soft proofing from your image's color space to "
-"some other color space, including soft proofing to a printer or other output "
-"device profile. "
+"The preferred grayscale working space color profile. It will be offered next "
+"to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
-"Профил боја који се користи за приказ боја слике у неком другом окружењу "
-"боја, укључујући приказ слике каква ће бити одштампана на штампачу или "
-"приказана на неком другом уређају."
+"Пожељни профил боја за радни простор у сивим тоновима. Он ће бити понуђен "
+"заједно са уграђеним профилом у сивим тоновима где год вам програм понуди "
+"избор профила."
 
-#: ../libgimpconfig/gimpcolorconfig.c:77
+#: ../libgimpconfig/gimpcolorconfig.c:71
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "CMYK профил боја за превођење између RGB и CMYK."
+
+#: ../libgimpconfig/gimpcolorconfig.c:74
+msgid ""
+"The color profile to use for soft-proofing from your image's color space to "
+"some other color space, including soft-proofing to a printer or other output "
+"device profile."
+msgstr ""
+"Профил боја који се користи за симулацију штампе боја слике у неком другом "
+"окружењу боја, укључујући симулацију штампе на штампач или друге излазне "
+"уређаје."
+
+#: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1299,191 +1750,239 @@ msgstr ""
 "Одређује како се боје претварају из окружења боја слике у окружење боја "
 "крајњег уређаја за приказ. Релативно колориметријски је обично најбољи "
 "избор. Осим ако не користите LUT профил за монитор (већина монитора су "
-"матрице), озбор перцептивног приказа ће вам заправо дати релативни "
-"колориметријски приказ."
+"матрице), избор чулног приказа ће вам заправо дати релативни колориметријски "
+"приказ."
 
-#: ../libgimpconfig/gimpcolorconfig.c:84
+#: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
-"Do use black point compensation (unless you know you have a reason not to). "
+"Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
-"Користи компензацију црне тачке (осним уколико немате разлога да је не "
+"Користи компензацију црне тачке (осим уколико знате да има разлога да је не "
 "користите)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:88
+#: ../libgimpconfig/gimpcolorconfig.c:90
+msgid ""
+"When disabled, image display might be of better quality at the cost of speed."
+msgstr ""
+"Када је онемогућено, приказ слике ће бити бољег квалитета на уштрб брзине."
+
+#: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
-"the best. "
+"the best."
 msgstr ""
 "Одређује како се боје претварају из окружења боја слике у окружење боја "
 "крајњег уређаја (обично монитора). Испробајте их све и одаберите оно што вам "
-"највише одговара."
+"изгледа најбоље."
 
-#: ../libgimpconfig/gimpcolorconfig.c:93
+#: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
-"Try with and without black point compensation and choose what looks best. "
+"Try with and without black point compensation and choose what looks best."
 msgstr ""
-"Пробајте приказ са и без компензације црне тачке и одаберите оно што вам "
-"највише одговара."
+"Пробајте приказ са и без компензације црне тачке и одаберите оно што најбоље "
+"изгледа."
 
-#: ../libgimpconfig/gimpcolorconfig.c:97
+#: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
-"When enabled, the print simulation will mark colors which can not be "
+"When disabled, soft-proofing might be of better quality at the cost of speed."
+msgstr ""
+"Када је онемогућено, симулација штампе ће бити квалитетнија на уштрб брзине "
+"приказа."
+
+#: ../libgimpconfig/gimpcolorconfig.c:107
+msgid ""
+"When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Уколико укључите ову могућност, опонашање штампе ће означити боје које неће "
-"бити приказане у циљном окружењу боја."
+"Уколико укључите ову могућност, опонашање штампе ће означити боје које се не "
+"могу приказати у циљном окружењу боја."
 
-#: ../libgimpconfig/gimpcolorconfig.c:101
+#: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Боја за означавање боја које се налазе ван гамута."
 
-#: ../libgimpconfig/gimpcolorconfig.c:408
-#: ../libgimpconfig/gimpcolorconfig.c:511
-#, c-format
-#| msgid "Color proof filter using ICC color profile"
-msgid "Color profile '%s' is not for RGB color space."
-msgstr "Профил боје „%s“ није у РГБ радном простору."
+#: ../libgimpconfig/gimpcolorconfig.c:210
+msgid "Mode of operation"
+msgstr "Режим рада"
 
-#: ../libgimpconfig/gimpcolorconfig.c:439
-#: ../libgimpconfig/gimpcolorconfig.c:552
+#: ../libgimpconfig/gimpcolorconfig.c:218
+msgid "Preferred RGB profile"
+msgstr "Омиљени RGB профил"
+
+#: ../libgimpconfig/gimpcolorconfig.c:225
+msgid "Preferred grayscale profile"
+msgstr "Омиљени профил за сиве тонове"
+
+#: ../libgimpconfig/gimpcolorconfig.c:232
+#| msgid "Monitor profile:"
+msgid "CMYK profile"
+msgstr "CMYK профил"
+
+#: ../libgimpconfig/gimpcolorconfig.c:239
+msgid "Monitor profile"
+msgstr "Профил за монитор"
+
+#: ../libgimpconfig/gimpcolorconfig.c:246
+msgid "Use the system monitor profile"
+msgstr "Профил монитора из оперативног система"
+
+#: ../libgimpconfig/gimpcolorconfig.c:253
+msgid "Simulation profile for soft-proofing"
+msgstr "Профил за опонашање штампе"
+
+#: ../libgimpconfig/gimpcolorconfig.c:260
+msgid "Display rendering intent"
+msgstr "Намера исцртавања на екрану"
+
+#: ../libgimpconfig/gimpcolorconfig.c:268
+msgid "Use black point compensation for the display"
+msgstr "Користи компензацију црне тачке за екран"
+
+#: ../libgimpconfig/gimpcolorconfig.c:275
+msgid "Optimize display color transformations"
+msgstr "Оптимизуј претварање боја на екрану"
+
+#: ../libgimpconfig/gimpcolorconfig.c:282
+msgid "Soft-proofing rendering intent"
+msgstr "Намера изцртавања за опонашање штампе"
+
+#: ../libgimpconfig/gimpcolorconfig.c:290
+msgid "Use black point compensation for soft-proofing"
+msgstr "Користи компензацију црне тачке за опонашање штампе"
+
+#: ../libgimpconfig/gimpcolorconfig.c:297
+msgid "Optimize soft-proofing color transformations"
+msgstr "Оптимизуј претварање боје за опонашање штампе"
+
+#: ../libgimpconfig/gimpcolorconfig.c:304
+msgid "Mark out of gamut colors"
+msgstr "Издвоји из палете боја"
+
+#: ../libgimpconfig/gimpcolorconfig.c:311
+msgid "Out of gamut warning color"
+msgstr "Боја упозеорења за боје изван палете"
+
+#: ../libgimpconfig/gimpcolorconfig.c:661
+#: ../libgimpconfig/gimpcolorconfig.c:854
 #, c-format
-#| msgid "Color proof filter using ICC color profile"
+msgid "Color profile '%s' is not for RGB color space."
+msgstr "Профил боје „%s“ није у RGB радном простору."
+
+#: ../libgimpconfig/gimpcolorconfig.c:705
+#: ../libgimpconfig/gimpcolorconfig.c:904
+#, c-format
+msgid "Color profile '%s' is not for GRAY color space."
+msgstr "Профил боје „%s“ није у RGB радном простору."
+
+#: ../libgimpconfig/gimpcolorconfig.c:749
+#: ../libgimpconfig/gimpcolorconfig.c:954
+#, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Профил боје „%s“ није у ЦМИК радном простору."
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:24
-msgctxt "color-management-mode"
-msgid "No color management"
-msgstr "Без управљања бојама"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:25
-msgctxt "color-management-mode"
-msgid "Color managed display"
-msgstr "Калибрисан екран"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:26
-msgctxt "color-management-mode"
-msgid "Print simulation"
-msgstr "Опонашање штампе"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57
-msgctxt "color-rendering-intent"
-msgid "Perceptual"
-msgstr "Чулно"
-
-# лоше
-# код нас мислим да је „калориметријски“? — д
-#: ../libgimpconfig/gimpcolorconfig-enums.c:58
-msgctxt "color-rendering-intent"
-msgid "Relative colorimetric"
-msgstr "Релативно калориметријски"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59
-msgctxt "color-rendering-intent"
-msgid "Saturation"
-msgstr "Засићеност"
-
-# гадно
-#: ../libgimpconfig/gimpcolorconfig-enums.c:60
-msgctxt "color-rendering-intent"
-msgid "Absolute colorimetric"
-msgstr "Апсолутно калориметријски"
-
-#: ../libgimpconfig/gimpconfig-deserialize.c:110
+#: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "вредност за израз %s није исправна UTF-8 реч"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:452
+#: ../libgimpconfig/gimpconfig-deserialize.c:473
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "очекиван је одговор типа „да“ или „не“ за логички израз  %s, а добијен је "
 "„ %s“"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:526
+#: ../libgimpconfig/gimpconfig-deserialize.c:588
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неисправна вредност „%s“ за  израз %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:541
+#: ../libgimpconfig/gimpconfig-deserialize.c:603
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неисправна вредност „%ld“ за израз %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:610
+#: ../libgimpconfig/gimpconfig-deserialize.c:672
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "приликом обраде израза „%s“: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:658
-#: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
-#: ../libgimpconfig/gimpscanner.c:816
-#: ../libgimpwidgets/gimpcolorprofilestore.c:703
+#: ../libgimpconfig/gimpconfig-iface.c:665
+#: ../libgimpconfig/gimpconfig-iface.c:678 ../libgimpconfig/gimpscanner.c:774
+#: ../libgimpconfig/gimpscanner.c:856
+#: ../libgimpwidgets/gimpcolorprofilestore.c:682
 msgid "fatal parse error"
 msgstr "кобна грешка при обради"
 
-#: ../libgimpconfig/gimpconfig-path.c:439
+#: ../libgimpconfig/gimpconfig-path.c:506
+msgid "File has no path representation"
+msgstr "Датотека нема путању за представљање"
+
+#: ../libgimpconfig/gimpconfig-path.c:593
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Не могу да повећам ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:88
-#: ../libgimpconfig/gimpconfigwriter.c:658
+#: ../libgimpconfig/gimpconfigwriter.c:95
+#: ../libgimpconfig/gimpconfigwriter.c:725
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Грешка при упису у „%s“: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:184
+#: ../libgimpconfig/gimpconfigwriter.c:153
 #, c-format
-#| msgid "Could not create temporary file for '%s': "
+msgid "Could not create directory '%s' for '%s': "
+msgstr "Не могу да да направим директоријум „%s“ за „%s“: "
+
+#: ../libgimpconfig/gimpconfigwriter.c:169
+#, c-format
 msgid "Could not create temporary file for '%s': "
 msgstr "Не могу да да направим привремену датотеку за „%s“ "
 
-#: ../libgimpconfig/gimpconfigwriter.c:761
+#: ../libgimpconfig/gimpconfigwriter.c:835
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Грешка при упису „%s“: %s"
 
-#: ../libgimpconfig/gimpscanner.c:408
+#: ../libgimpconfig/gimpscanner.c:422
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "неисправна UTF-8 реч"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:606
+#: ../libgimpconfig/gimpscanner.c:649
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr ""
 "очекиван је одговор типа „да“ или „не“ за логички израз, а добијен је „%s“"
 
-#: ../libgimpconfig/gimpscanner.c:843
+#: ../libgimpconfig/gimpscanner.c:883
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Грешка при обради „%s“ у %d. реду: %s"
 
-#: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
-#: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
-#: ../libgimpmodule/gimpmodule.c:442
+#: ../libgimpmodule/gimpmodule.c:172 ../libgimpmodule/gimpmodule.c:190
+#: ../libgimpmodule/gimpmodule.c:451 ../libgimpmodule/gimpmodule.c:474
+#: ../libgimpmodule/gimpmodule.c:524
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Грешка при учитавању модула „%s“: %s"
 
-#: ../libgimpmodule/gimpmodule.c:384
+#: ../libgimpmodule/gimpmoduledb.c:500
 msgid "Module error"
 msgstr "Грешка модула"
 
-#: ../libgimpmodule/gimpmodule.c:385
+#: ../libgimpmodule/gimpmoduledb.c:501
 msgid "Loaded"
 msgstr "Учитан"
 
-#: ../libgimpmodule/gimpmodule.c:386
+#: ../libgimpmodule/gimpmoduledb.c:502
 msgid "Load failed"
 msgstr "Неуспелo учитавање"
 
-#: ../libgimpmodule/gimpmodule.c:387
+#: ../libgimpmodule/gimpmoduledb.c:503
 msgid "Not loaded"
 msgstr "Није учитано"
 
@@ -1501,84 +2000,37 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Неуспешно прављење директоријума са прегледима „%s“."
 
-#: ../libgimpthumb/gimpthumbnail.c:508
+#: ../libgimpthumb/gimpthumbnail.c:479
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Умањени прикази не садрже Thumb::URI ознаку"
 
-#: ../libgimpthumb/gimpthumbnail.c:905
+#: ../libgimpthumb/gimpthumbnail.c:876
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Не могу да направим умањени приказ за %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:113
+#: ../libgimpwidgets/gimpbrowser.c:141
 msgid "_Search:"
 msgstr "_Тражи:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:136
+#: ../libgimpwidgets/gimpcolorbutton.c:152
 msgid "_Foreground Color"
 msgstr "Боја _четкице"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:140
+#: ../libgimpwidgets/gimpcolorbutton.c:156
 msgid "_Background Color"
 msgstr "Боја _позадине"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:144
+#: ../libgimpwidgets/gimpcolorbutton.c:160
 msgid "Blac_k"
 msgstr "_Црна"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:148
+#: ../libgimpwidgets/gimpcolorbutton.c:164
 msgid "_White"
 msgstr "Б_ела"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:104
-msgid "All files (*.*)"
-msgstr "Све датотеке (*.*)"
-
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:109
-msgid "ICC color profile (*.icc, *.icm)"
-msgstr "ICC профили боја (*.icc, *.icm)"
-
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:216
-#: ../libgimpwidgets/gimppatheditor.c:248
-msgid "Folder"
-msgstr "Директоријум"
-
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:221
-msgid "Not a regular file."
-msgstr "Није уобичајена датотека."
-
-#: ../libgimpwidgets/gimpcolorprofilestore.c:145
-msgid "Select color profile from disk..."
-msgstr "Изабери профил боја са диска..."
-
-#: ../libgimpwidgets/gimpcolorprofilestore.c:317
-msgctxt "profile"
-msgid "None"
-msgstr "Није изабран"
-
-#: ../libgimpwidgets/gimpcolorprofileview.c:174
-msgid "Manufacturer: "
-msgstr "Произвођач:"
-
-#: ../libgimpwidgets/gimpcolorprofileview.c:186
-#| msgid "Copyright:"
-msgid "Copyright: "
-msgstr "Лиценца:"
-
-#: ../libgimpwidgets/gimpcolorscales.c:109
-msgid "Scales"
-msgstr "Размере"
-
-#: ../libgimpwidgets/gimpcolorselection.c:221
-msgid "Current:"
-msgstr "Текућа:"
-
-#: ../libgimpwidgets/gimpcolorselection.c:230
-msgid "Old:"
-msgstr "Стара:"
-
-#: ../libgimpwidgets/gimpcolorselection.c:315
+#: ../libgimpwidgets/gimpcolorhexentry.c:134
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1586,81 +2038,162 @@ msgstr ""
 "Хексадекадни запис боја какав се користи у ХТМЛ-у и ЦСС-у.  Ово поље "
 "прихвата и ЦСС имена боја."
 
-#: ../libgimpwidgets/gimpcolorselection.c:321
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:108
+msgid "All files (*.*)"
+msgstr "Све датотеке (*.*)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:113
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC профили боја (*.icc, *.icm)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:174
+msgid "_Save"
+msgstr "_Сачувај"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:346
+#: ../libgimpwidgets/gimppatheditor.c:267
+msgid "Folder"
+msgstr "Директоријум"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:351
+msgid "Not a regular file."
+msgstr "Није уобичајена датотека."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:158
+msgid "Select color profile from disk..."
+msgstr "Изабери профил боја са диска..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:287
+msgctxt "profile"
+msgid "None"
+msgstr "Није изабран"
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:168
+msgid "Manufacturer: "
+msgstr "Произвођач: "
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:180
+msgid "Copyright: "
+msgstr "Лиценца: "
+
+#: ../libgimpwidgets/gimpcolorscales.c:205
+msgid "Scales"
+msgstr "Размере"
+
+#: ../libgimpwidgets/gimpcolorscales.c:434
+msgid "0..100"
+msgstr "чулни"
+
+#: ../libgimpwidgets/gimpcolorscales.c:436
+msgid "0..255"
+msgstr "чулни"
+
+#: ../libgimpwidgets/gimpcolorscales.c:457
+msgid "LCh"
+msgstr "LCh"
+
+#: ../libgimpwidgets/gimpcolorscales.c:459
+msgid "HSV"
+msgstr "HSV"
+
+#: ../libgimpwidgets/gimpcolorselection.c:249
+msgid "Current:"
+msgstr "Текућа:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:258
+msgid "Old:"
+msgstr "Стара:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:345
 msgid "HTML _notation:"
 msgstr "ХТМЛ _запис:"
 
-#: ../libgimpwidgets/gimpfileentry.c:150
+#: ../libgimpwidgets/gimpfileentry.c:167
 msgid "Show file location in the file manager"
 msgstr "Приказује путању до датотеке у управнику датотека"
 
-#: ../libgimpwidgets/gimpfileentry.c:227
+#: ../libgimpwidgets/gimpfileentry.c:238
 msgid "Open a file selector to browse your folders"
 msgstr "Отвара изборник датотека за разгледање фасцикли"
 
-#: ../libgimpwidgets/gimpfileentry.c:228
+#: ../libgimpwidgets/gimpfileentry.c:239
 msgid "Open a file selector to browse your files"
 msgstr "Отвара изборник датотека за разгледање датотека"
 
-#: ../libgimpwidgets/gimpfileentry.c:395
+#: ../libgimpwidgets/gimpfileentry.c:251
+msgid "Indicates whether or not the folder exists"
+msgstr "Показује да ли фасцикла постоји"
+
+#: ../libgimpwidgets/gimpfileentry.c:252
+msgid "Indicates whether or not the file exists"
+msgstr "Показује да ли датотека постоји"
+
+#: ../libgimpwidgets/gimpfileentry.c:428
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Не могу да прикажем датотеку у управнику датотека: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:422
+#: ../libgimpwidgets/gimpfileentry.c:455
 msgid "Select Folder"
 msgstr "Изаберите фасциклу"
 
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libgimpwidgets/gimpfileentry.c:457
 msgid "Select File"
 msgstr "Изаберите датотеку"
 
-#: ../libgimpwidgets/gimphelpui.c:433
+#: ../libgimpwidgets/gimphelpui.c:384
 msgid "Press F1 for more help"
 msgstr "Притисните F1 за додатну помоћ"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:223
-msgid "Kilobytes"
+#. This string appears in an empty menu as in
+#. * "nothing selected and nothing to select"
+#.
+#: ../libgimpwidgets/gimpintstore.c:255
+msgid "(Empty)"
+msgstr "(Празно)"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:252
+msgid "Kibibyte"
 msgstr "килобајта"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:224
-msgid "Megabytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:253
+msgid "Mebibyte"
 msgstr "мегабајта"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:225
-msgid "Gigabytes"
+#: ../libgimpwidgets/gimpmemsizeentry.c:254
+msgid "Gibibyte"
 msgstr "гигабајта"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:270
-#: ../libgimpwidgets/gimppageselector.c:1067
+#: ../libgimpwidgets/gimppageselector.c:283
+#: ../libgimpwidgets/gimppageselector.c:1079
 msgid "Nothing selected"
 msgstr "Ништа није изабрано"
 
-#: ../libgimpwidgets/gimppageselector.c:288
+#: ../libgimpwidgets/gimppageselector.c:301
 msgid "Select _All"
 msgstr "Изабери _све"
 
-#: ../libgimpwidgets/gimppageselector.c:308
+#: ../libgimpwidgets/gimppageselector.c:321
 msgid "Select _range:"
 msgstr "Изабери _опсег:"
 
-#: ../libgimpwidgets/gimppageselector.c:320
+#: ../libgimpwidgets/gimppageselector.c:333
 msgid "Open _pages as"
 msgstr "Отвори с_транице као"
 
-#: ../libgimpwidgets/gimppageselector.c:449
-#: ../libgimpwidgets/gimppageselector.c:647
+#: ../libgimpwidgets/gimppageselector.c:461
+#: ../libgimpwidgets/gimppageselector.c:659
 #, c-format
 msgid "Page %d"
 msgstr "Страница %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1072
+#: ../libgimpwidgets/gimppageselector.c:1084
 msgid "One page selected"
 msgstr "Изабрана је једна страница"
 
-#: ../libgimpwidgets/gimppageselector.c:1079
-#: ../libgimpwidgets/gimppageselector.c:1083
+#: ../libgimpwidgets/gimppageselector.c:1091
+#: ../libgimpwidgets/gimppageselector.c:1095
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1669,11 +2202,27 @@ msgstr[1] "Изабране су %d странице"
 msgstr[2] "Изабране је свих %d страница"
 msgstr[3] "Изабрана је %d страница"
 
-#: ../libgimpwidgets/gimppatheditor.c:239
+#: ../libgimpwidgets/gimppatheditor.c:178
+msgid "Add a new folder"
+msgstr "Додај нову фасцилку"
+
+#: ../libgimpwidgets/gimppatheditor.c:196
+msgid "Move the selected folder up"
+msgstr "Помери изабрану фасциклу навише"
+
+#: ../libgimpwidgets/gimppatheditor.c:214
+msgid "Move the selected folder down"
+msgstr "Помери изабрану фасциклу наниже"
+
+#: ../libgimpwidgets/gimppatheditor.c:232
+msgid "Remove the selected folder from the list"
+msgstr "Уклони изабрану фасциклу са списка"
+
+#: ../libgimpwidgets/gimppatheditor.c:258
 msgid "Writable"
 msgstr "Уписиво"
 
-#: ../libgimpwidgets/gimppickbutton.c:131
+#: ../libgimpwidgets/gimppickbutton.c:115
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1682,19 +2231,19 @@ msgstr ""
 "одаберете ту боју."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:291
+#: ../libgimpwidgets/gimppreview.c:282
 msgid "_Preview"
 msgstr "Пре_глед"
 
-#: ../libgimpwidgets/gimppreviewarea.c:103
+#: ../libgimpwidgets/gimppreviewarea.c:134
 msgid "Check Size"
 msgstr "Величина поља"
 
-#: ../libgimpwidgets/gimppreviewarea.c:110
+#: ../libgimpwidgets/gimppreviewarea.c:142
 msgid "Check Style"
 msgstr "Стил поља"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1971
+#: ../libgimpwidgets/gimppropwidgets.c:2199
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1703,100 +2252,7 @@ msgstr[1] "Ово поље за унос текста је ограничено 
 msgstr[2] "Ово поље за унос текста је ограничено на %d знакова."
 msgstr[3] "Ово поље за унос текста је ограничено на један знак."
 
-#: ../libgimpwidgets/gimpstock.c:60
-msgid "Anchor"
-msgstr "Усидри"
-
-#: ../libgimpwidgets/gimpstock.c:61
-msgid "C_enter"
-msgstr "_Центрирај"
-
-#: ../libgimpwidgets/gimpstock.c:62
-msgid "_Duplicate"
-msgstr "_Дуплирај"
-
-#: ../libgimpwidgets/gimpstock.c:63
-msgid "_Edit"
-msgstr "_Уреди"
-
-#: ../libgimpwidgets/gimpstock.c:64
-msgid "Linked"
-msgstr "Повезано"
-
-#: ../libgimpwidgets/gimpstock.c:65
-msgid "Paste as New"
-msgstr "Убаци као нову слику"
-
-#: ../libgimpwidgets/gimpstock.c:66
-msgid "Paste Into"
-msgstr "Убаци у"
-
-#: ../libgimpwidgets/gimpstock.c:67
-msgid "_Reset"
-msgstr "_Врати"
-
-#: ../libgimpwidgets/gimpstock.c:68
-msgid "Visible"
-msgstr "Видљиво"
-
-#: ../libgimpwidgets/gimpstock.c:107 ../libgimpwidgets/gimpstock.c:111
-msgid "_Stroke"
-msgstr "Ис_цртај"
-
-#: ../libgimpwidgets/gimpstock.c:123
-msgid "L_etter Spacing"
-msgstr "Размак између с_лова"
-
-#: ../libgimpwidgets/gimpstock.c:124
-msgid "L_ine Spacing"
-msgstr "_Размак редова"
-
-#: ../libgimpwidgets/gimpstock.c:140
-msgid "Re_size"
-msgstr "_Промени величину"
-
-#: ../libgimpwidgets/gimpstock.c:141 ../libgimpwidgets/gimpstock.c:276
-msgid "_Scale"
-msgstr "Промени р_азмеру"
-
-#: ../libgimpwidgets/gimpstock.c:248
-msgid "Cr_op"
-msgstr "Исе_ци"
-
-#: ../libgimpwidgets/gimpstock.c:256
-msgid "_Select"
-msgstr "_Изабери"
-
-#: ../libgimpwidgets/gimpstock.c:259 ../libgimpwidgets/gimpstock.c:271
-#: ../libgimpwidgets/gimpstock.c:282
-msgid "_Transform"
-msgstr "_Трансформиши"
-
-#: ../libgimpwidgets/gimpstock.c:275
-msgid "_Rotate"
-msgstr "_Ротирај"
-
-#: ../libgimpwidgets/gimpstock.c:278
-msgid "_Shear"
-msgstr "_Острижи"
-
-#: ../libgimpwidgets/gimpunitmenu.c:265
-msgid "More..."
-msgstr "Даље..."
-
-#: ../libgimpwidgets/gimpunitmenu.c:491
-msgid "Unit Selection"
-msgstr "Избор јединице"
-
-#: ../libgimpwidgets/gimpunitmenu.c:540
-msgid "Unit"
-msgstr "Јединица"
-
-#: ../libgimpwidgets/gimpunitmenu.c:544
-msgid "Factor"
-msgstr "Фактор"
-
-#: ../libgimpwidgets/gimpwidgets.c:521
+#: ../libgimpwidgets/gimpwidgets.c:259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1804,29 +2260,29 @@ msgstr ""
 "Употребите ову вредност као семе случајно генерисаног броја — то ће вам "
 "омогућити да поновите ову „случајну“ радњу"
 
-#: ../libgimpwidgets/gimpwidgets.c:525
+#: ../libgimpwidgets/gimpwidgets.c:263
 msgid "_New Seed"
 msgstr "_Ново семе"
 
-#: ../libgimpwidgets/gimpwidgets.c:538
+#: ../libgimpwidgets/gimpwidgets.c:279
 msgid "Seed random number generator with a generated random number"
 msgstr "Семе случајно генерисаног броја са случајно генерисаним бројем"
 
-#: ../libgimpwidgets/gimpwidgets.c:542
+#: ../libgimpwidgets/gimpwidgets.c:283
 msgid "_Randomize"
 msgstr "_Случајно"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:47
+#: ../libgimpwidgets/gimpwidgets-private.c:50
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Онемогућен"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:48
+#: ../libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "На енрану"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:49
+#: ../libgimpwidgets/gimpwidgets-private.c:52
 msgctxt "input-mode"
 msgid "Window"
 msgstr "У прозору"
@@ -1846,159 +2302,218 @@ msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Положено"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgctxt "color-selector-channel"
 msgid "_H"
-msgstr "_Х"
+msgstr "_Н"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
-msgid "Hue"
-msgstr "Нијанса"
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+msgid "HSV Hue"
+msgstr "HSV нијанса"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_S"
-msgstr "_С"
+msgstr "_З"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
-msgid "Saturation"
-msgstr "Засићеност"
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#| msgid "Saturation"
+msgid "HSV Saturation"
+msgstr "HSV засићеност"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_В"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:128
-msgid "Value"
-msgstr "Вредност"
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#| msgid "Value"
+msgid "HSV Value"
+msgstr "HSV вредност"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
 msgctxt "color-selector-channel"
 msgid "_R"
-msgstr "_Р"
+msgstr "_Ц"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
 msgid "Red"
 msgstr "Црвена"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libgimpwidgets/gimpwidgetsenums.c:133
 msgctxt "color-selector-channel"
 msgid "_G"
-msgstr "_Г"
+msgstr "_З"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libgimpwidgets/gimpwidgetsenums.c:133
 msgid "Green"
 msgstr "Зелена"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libgimpwidgets/gimpwidgetsenums.c:134
 msgctxt "color-selector-channel"
 msgid "_B"
-msgstr "_Б"
+msgstr "_П"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libgimpwidgets/gimpwidgetsenums.c:134
 msgid "Blue"
 msgstr "Плава"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libgimpwidgets/gimpwidgetsenums.c:135
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_А"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libgimpwidgets/gimpwidgetsenums.c:135
 msgid "Alpha"
 msgstr "Алфа"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:161
+#: ../libgimpwidgets/gimpwidgetsenums.c:136
+msgctxt "color-selector-channel"
+msgid "_L"
+msgstr "_С"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#| msgctxt "desaturate-mode"
+#| msgid "Lightness"
+msgid "LCh Lightness"
+msgstr "LCh светлина"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:137
+msgctxt "color-selector-channel"
+msgid "_C"
+msgstr "_Х"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:137
+msgid "LCh Chroma"
+msgstr "LCh хроминанса"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
+msgctxt "color-selector-channel"
+msgid "_h"
+msgstr "_н"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
+msgid "LCh Hue"
+msgstr "LCh нијанса"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgctxt "color-selector-model"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgid "RGB color model"
+msgstr "RGB модел боја"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgctxt "color-selector-model"
+msgid "LCH"
+msgstr "LCH"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgid "CIE LCh color model"
+msgstr "CIE LCh модел боја"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgctxt "color-selector-model"
+msgid "HSV"
+msgstr "HSV"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#| msgid "HSV color wheel"
+msgid "HSV color model"
+msgstr "HSV модел боја"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:231
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Слојеви"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:162
+#: ../libgimpwidgets/gimpwidgetsenums.c:232
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Слике"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:223
+#: ../libgimpwidgets/gimpwidgetsenums.c:293
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Увећај"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:224
+#: ../libgimpwidgets/gimpwidgetsenums.c:294
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Умањи"
 
-#: ../modules/color-selector-cmyk.c:84
+#: ../modules/color-selector-cmyk.c:82
 msgid "CMYK color selector (using color profile)"
 msgstr "Избор CMYK боје (помоћу профила боја)"
 
-#: ../modules/color-selector-cmyk.c:118
+#: ../modules/color-selector-cmyk.c:116
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk.c:140
+#: ../modules/color-selector-cmyk.c:139
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk.c:142
+#: ../modules/color-selector-cmyk.c:141
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk.c:144
+#: ../modules/color-selector-cmyk.c:143
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk.c:146
+#: ../modules/color-selector-cmyk.c:145
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk.c:150
+#: ../modules/color-selector-cmyk.c:149
 msgid "Cyan"
 msgstr "Цијан"
 
-#: ../modules/color-selector-cmyk.c:151
+#: ../modules/color-selector-cmyk.c:150
 msgid "Magenta"
 msgstr "Магента"
 
-#: ../modules/color-selector-cmyk.c:152
+#: ../modules/color-selector-cmyk.c:151
 msgid "Yellow"
 msgstr "Жута"
 
-#: ../modules/color-selector-cmyk.c:153
+#: ../modules/color-selector-cmyk.c:152
 msgid "Black"
 msgstr "Црна"
 
-#: ../modules/color-selector-cmyk.c:374
+#: ../modules/color-selector-cmyk.c:368
 msgid "Profile: (none)"
 msgstr "Профил: (ни један)"
 
-#: ../modules/color-selector-cmyk.c:386
+#: ../modules/color-selector-cmyk.c:380
 #, c-format
 msgid "Profile: %s"
 msgstr "Профил: %s"
 
-#: ../modules/color-selector-water.c:82
+#: ../modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
 msgstr "Избор боје стила водене боје"
 
-#: ../modules/color-selector-water.c:118
+#: ../modules/color-selector-water.c:130
 msgid "Watercolor"
 msgstr "Водена боја"
 
-#: ../modules/color-selector-water.c:188
+#: ../modules/color-selector-water.c:198
 msgid "Pressure"
 msgstr "Притисак"
 
-#: ../modules/color-selector-wheel.c:70
+#: ../modules/color-selector-wheel.c:72
 msgid "HSV color wheel"
 msgstr "ХСВ точак боја"
 
-#: ../modules/color-selector-wheel.c:102
+#: ../modules/color-selector-wheel.c:104
 msgid "Wheel"
 msgstr "Точак"
 
@@ -2335,13 +2850,102 @@ msgstr "Управљач %03d"
 msgid "MIDI Events"
 msgstr "МИДИ догађаји"
 
-#: ../modules/controller-midi.c:426
-msgid "GIMP"
-msgstr "Гимп"
-
 #: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "Гимпов улазни МИДИ управљач"
+
+#: ../modules/display-filter-aces-rrt.c:84
+msgid ""
+"ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
+"display filter, using a luminance-only approximation of the ACES RRT, a pre-"
+"defined filmic look to be used before ODT (display or output space ICC "
+"profile)"
+msgstr ""
+"ACES RRT (RRT = Reference Rendering Transform). Корективни HDR у SDR филтер "
+"екрана у боји, који користи апроксимацију само-луминанса за ACES RRT, "
+"предефинисани изглед као на филму који се користи пре ODT (екран или излазни "
+"ICC профил)"
+
+#: ../modules/display-filter-aces-rrt.c:121
+msgid "Pre-transform change in stops"
+msgstr "Предтрансформациона промена у прекидима"
+
+#: ../modules/display-filter-aces-rrt.c:126
+msgid "Aces RRT"
+msgstr "Приступи RRT"
+
+#: ../modules/display-filter-clip-warning.c:121
+msgid "Clip warning color display filter"
+msgstr "Филтер за приказ упозорења за исечене боје"
+
+#: ../modules/display-filter-clip-warning.c:158
+msgid "Show shadows"
+msgstr "Прикажи сенке"
+
+#: ../modules/display-filter-clip-warning.c:159
+msgid "Show warning for pixels with a negative component"
+msgstr "Приказује упозорење на пикселима са негативним вредностима компоненте"
+
+#: ../modules/display-filter-clip-warning.c:165
+msgid "Shadows color"
+msgstr "Боја за сенке"
+
+#: ../modules/display-filter-clip-warning.c:166
+msgid "Shadows warning color"
+msgstr "Боја за упозорење на сенкама"
+
+#: ../modules/display-filter-clip-warning.c:178
+msgid "Show highlights"
+msgstr "Прикажи пресветљено"
+
+#: ../modules/display-filter-clip-warning.c:179
+msgid "Show warning for pixels with a component greater than one"
+msgstr ""
+"Приказује упозорење на пикселима са вредношћу компоненте већом од један"
+
+#: ../modules/display-filter-clip-warning.c:185
+msgid "Highlights color"
+msgstr "Боја за пресветљено"
+
+#: ../modules/display-filter-clip-warning.c:186
+msgid "Highlights warning color"
+msgstr "Боја за упозорење на пресветљеним деловима"
+
+#: ../modules/display-filter-clip-warning.c:198
+msgid "Show bogus"
+msgstr "Прикажи невидљиво"
+
+#: ../modules/display-filter-clip-warning.c:199
+msgid "Show warning for pixels with an infinite or NaN component"
+msgstr "Прикажи упозорење за пикселе са бесконачним или NaN компонентама"
+
+#: ../modules/display-filter-clip-warning.c:205
+msgid "Bogus color"
+msgstr "Боја за невидљиво"
+
+#: ../modules/display-filter-clip-warning.c:206
+msgid "Bogus warning color"
+msgstr "Боја за упозорење о бојама изван видљивог спектра"
+
+#: ../modules/display-filter-clip-warning.c:218
+msgid "Include alpha component"
+msgstr "Укључи и алфа компоненту"
+
+#: ../modules/display-filter-clip-warning.c:219
+msgid "Include alpha component in the warning"
+msgstr "Укључује и алфа компоненту у упозорење"
+
+#: ../modules/display-filter-clip-warning.c:225
+msgid "Include transparent pixels"
+msgstr "Укључи провидне пикселе"
+
+#: ../modules/display-filter-clip-warning.c:226
+msgid "Include fully transparent pixels in the warning"
+msgstr "Укључује потпуно провидне пикселе у упозорење"
+
+#: ../modules/display-filter-clip-warning.c:230
+msgid "Clip Warning"
+msgstr "Упозорење за одсецање"
 
 #: ../modules/display-filter-color-blind.c:68
 msgid "Protanopia (insensitivity to red)"
@@ -2355,99 +2959,264 @@ msgstr "Деутеранопија (неосетљивост на зелено)"
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Тританопија (неосетљивост на плаво)"
 
-#: ../modules/display-filter-color-blind.c:193
+#: ../modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Филтер за опонашање слепила за боје (Brettel-Vienot-Mollon алгоритам)"
 
-#: ../modules/display-filter-color-blind.c:256
+#: ../modules/display-filter-color-blind.c:253
+msgid "Type"
+msgstr "Врста"
+
+#: ../modules/display-filter-color-blind.c:254
+msgid "Color vision deficiency type"
+msgstr "Врста слепила за боје"
+
+#: ../modules/display-filter-color-blind.c:259
 msgid "Color Deficient Vision"
 msgstr "Поглед оскудних боја"
 
-#: ../modules/display-filter-color-blind.c:417
-msgid "Color _deficiency type:"
-msgstr "Врста _слепила за боје:"
-
-#: ../modules/display-filter-gamma.c:87
+#: ../modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
 msgstr "Екрански филтер гама боја"
 
-#: ../modules/display-filter-gamma.c:127
+#: ../modules/display-filter-gamma.c:123 ../modules/display-filter-gamma.c:128
 msgid "Gamma"
 msgstr "Гама"
 
-#: ../modules/display-filter-gamma.c:224
-msgid "_Gamma:"
-msgstr "_Гама:"
-
-#: ../modules/display-filter-high-contrast.c:87
+#: ../modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
 msgstr "Екрански филтер боја високог контраста"
 
-#: ../modules/display-filter-high-contrast.c:127
+#: ../modules/display-filter-high-contrast.c:123
+msgid "Contrast cycles"
+msgstr "Циклуси контраста"
+
+#: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Контраст"
 
-#: ../modules/display-filter-high-contrast.c:224
-msgid "Contrast c_ycles:"
-msgstr "_Циклуси контраста:"
+#~ msgid "Rotate %s?"
+#~ msgstr "Да ли да ротирам %s?"
 
-#: ../modules/display-filter-lcms.c:102
-msgid "Color management display filter using ICC color profiles"
-msgstr "Филтер за управљање бојом екрана који користи ICC профиле боја"
+#~ msgid "_Keep Original"
+#~ msgstr "_Задржи оригинал"
 
-#: ../modules/display-filter-lcms.c:134
-msgid "Color Management"
-msgstr "Управљање бојама"
+#~ msgid "Original"
+#~ msgstr "Оригинал"
 
-#: ../modules/display-filter-lcms.c:184
-msgid ""
-"This filter takes its configuration from the Color Management section in the "
-"Preferences dialog."
-msgstr "Овај филтер се подешава унутар Гимпових поставки за управљање бојама."
+#~ msgid "Rotated"
+#~ msgstr "Ротирана"
 
-#: ../modules/display-filter-lcms.c:198
-msgid "Mode of operation:"
-msgstr "Режим радње:"
+#~ msgid "This image contains Exif orientation metadata."
+#~ msgstr "Ова слика садржи Егзиф податке за ротирање слике."
 
-#: ../modules/display-filter-lcms.c:205
-msgid "Image profile:"
-msgstr "Профил за слику:"
+#~ msgid "Would you like to rotate the image?"
+#~ msgstr "Желите ли да ротирате слику?"
 
-#: ../modules/display-filter-lcms.c:213
-msgid "Monitor profile:"
-msgstr "Профил за монитор"
+#~ msgid "_Don't ask me again"
+#~ msgstr "Н_е питај ме поново"
 
-#: ../modules/display-filter-lcms.c:221
-msgid "Print simulation profile:"
-msgstr "Профил за опонашање штампе:"
+#~ msgctxt "blend-mode"
+#~ msgid "FG to BG (RGB)"
+#~ msgstr "Боја четкице у боју позадине (РГБ)"
 
-#: ../modules/display-filter-lcms.c:390
-msgid "None"
-msgstr "Ниједан"
+#~ msgctxt "blend-mode"
+#~ msgid "FG to BG (HSV)"
+#~ msgstr "Боја четкице у боју позадине (ХСВ)"
 
-#: ../modules/display-filter-proof.c:93
-msgid "Color proof filter using ICC color profile"
-msgstr "Филтер пробе у боји који користи ICC профил боја"
+#~ msgctxt "blend-mode"
+#~ msgid "FG to transparent"
+#~ msgstr "Боја четкице у провидност"
 
-#: ../modules/display-filter-proof.c:143
-msgid "Color Proof"
-msgstr "Проба у боји"
+#~ msgctxt "blend-mode"
+#~ msgid "Custom gradient"
+#~ msgstr "Произвољни прелив"
 
-#: ../modules/display-filter-proof.c:296
-msgid "Choose an ICC Color Profile"
-msgstr "Изаберите ICC профил боја"
+#~ msgctxt "bucket-fill-mode"
+#~ msgid "FG color fill"
+#~ msgstr "Попуни бојом четкице"
 
-#: ../modules/display-filter-proof.c:316
-msgid "_Profile:"
-msgstr "_Профил:"
+#~ msgctxt "bucket-fill-mode"
+#~ msgid "BG color fill"
+#~ msgstr "Попуни бојом позадине"
 
-#: ../modules/display-filter-proof.c:322
-msgid "_Intent:"
-msgstr "_Намера:"
+#~ msgctxt "bucket-fill-mode"
+#~ msgid "Pattern fill"
+#~ msgstr "Попуни шаром"
 
-#: ../modules/display-filter-proof.c:327
-msgid "_Black Point Compensation"
-msgstr "Замена за _црну тачку"
+#~ msgctxt "desaturate-mode"
+#~ msgid "Average"
+#~ msgstr "Просечно"
+
+# bug: Gtk+ slang
+#~ msgctxt "icon-type"
+#~ msgid "Inline pixbuf"
+#~ msgstr "Уграђена слика"
+
+#~ msgctxt "precision"
+#~ msgid "8-bit gamma integer"
+#~ msgstr "8. битни гама цели број"
+
+#~ msgctxt "precision"
+#~ msgid "16-bit gamma integer"
+#~ msgstr "16. битни гама цели број"
+
+#~ msgctxt "precision"
+#~ msgid "32-bit gamma integer"
+#~ msgstr "32. битни гама цели број"
+
+#~ msgctxt "precision"
+#~ msgid "16-bit gamma floating point"
+#~ msgstr "16. битни гама децимални број"
+
+#~ msgctxt "precision"
+#~ msgid "32-bit gamma floating point"
+#~ msgstr "32. битни гама децимални број"
+
+#~ msgctxt "precision"
+#~ msgid "64-bit gamma floating point"
+#~ msgstr "64. битни гама децимални број"
+
+#~ msgctxt "select-criterion"
+#~ msgid "Hue"
+#~ msgstr "Нијанса"
+
+#~ msgid "Anchor"
+#~ msgstr "Усидри"
+
+#~ msgid "C_enter"
+#~ msgstr "_Центрирај"
+
+#~ msgid "_Duplicate"
+#~ msgstr "_Дуплирај"
+
+#~ msgid "Linked"
+#~ msgstr "Повезано"
+
+#~ msgid "Paste as New"
+#~ msgstr "Убаци као нову слику"
+
+#~ msgid "Paste Into"
+#~ msgstr "Убаци у"
+
+#~ msgid "Visible"
+#~ msgstr "Видљиво"
+
+#~ msgid "_Stroke"
+#~ msgstr "Ис_цртај"
+
+#~ msgid "L_etter Spacing"
+#~ msgstr "Размак између с_лова"
+
+#~ msgid "L_ine Spacing"
+#~ msgstr "_Размак редова"
+
+#~ msgid "Re_size"
+#~ msgstr "_Промени величину"
+
+#~ msgid "_Scale"
+#~ msgstr "Промени р_азмеру"
+
+#~ msgid "Cr_op"
+#~ msgstr "Исе_ци"
+
+#~ msgid "_Select"
+#~ msgstr "_Изабери"
+
+#~ msgid "_Transform"
+#~ msgstr "_Трансформиши"
+
+#~ msgid "_Rotate"
+#~ msgstr "_Ротирај"
+
+#~ msgid "_Shear"
+#~ msgstr "_Острижи"
+
+#~ msgid "More..."
+#~ msgstr "Даље..."
+
+#~ msgid "Unit Selection"
+#~ msgstr "Избор јединице"
+
+#~ msgid "Unit"
+#~ msgstr "Јединица"
+
+#~ msgid "Factor"
+#~ msgstr "Фактор"
+
+#~ msgid "Hue"
+#~ msgstr "Нијанса"
+
+#~ msgid "_Gamma:"
+#~ msgstr "_Гама:"
+
+#~ msgid "Color management display filter using ICC color profiles"
+#~ msgstr "Филтер за управљање бојом екрана који користи ICC профиле боја"
+
+#~ msgid "Color Management"
+#~ msgstr "Управљање бојама"
+
+#~ msgid ""
+#~ "This filter takes its configuration from the Color Management section in "
+#~ "the Preferences dialog."
+#~ msgstr ""
+#~ "Овај филтер се подешава унутар Гимпових поставки за управљање бојама."
+
+#~ msgid "Mode of operation:"
+#~ msgstr "Режим радње:"
+
+#~ msgid "Monitor profile:"
+#~ msgstr "Профил за монитор"
+
+#~ msgid "Print simulation profile:"
+#~ msgstr "Профил за опонашање штампе:"
+
+#~ msgid "Color proof filter using ICC color profile"
+#~ msgstr "Филтер пробе у боји који користи ICC профил боја"
+
+#, fuzzy
+#~| msgid "_Intent:"
+#~ msgid "Intent"
+#~ msgstr "_Намера:"
+
+#, fuzzy
+#~| msgid "_Black Point Compensation"
+#~ msgid "Black point compensation"
+#~ msgstr "Замена за _црну тачку"
+
+#, fuzzy
+#~| msgid "_Profile:"
+#~ msgid "Profile"
+#~ msgstr "_Профил:"
+
+#~ msgid "Color Proof"
+#~ msgstr "Проба у боји"
+
+#~ msgid "Choose an ICC Color Profile"
+#~ msgstr "Изаберите ICC профил боја"
+
+#~ msgid "_Profile:"
+#~ msgstr "_Профил:"
+
+#~ msgid "_Intent:"
+#~ msgstr "_Намера:"
+
+#~ msgid "_Black Point Compensation"
+#~ msgstr "Замена за _црну тачку"
+
+#~ msgctxt "desaturate-mode"
+#~ msgid "Luminosity"
+#~ msgstr "Луминанса"
+
+#~ msgid "Mode of operation for color management."
+#~ msgstr "Режим рада са управљањем бојама"
+
+#~ msgctxt "color-management-mode"
+#~ msgid "Print simulation"
+#~ msgstr "Опонашање штампе"
+
+#~ msgid "_Edit"
+#~ msgstr "_Уреди"
 
 #~ msgid "Sans"
 #~ msgstr "Безсерифни"
