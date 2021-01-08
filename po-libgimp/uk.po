@@ -3,13 +3,13 @@
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2007.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-17 18:15+0000\n"
-"PO-Revision-Date: 2020-12-17 21:55+0200\n"
+"POT-Creation-Date: 2021-01-08 00:20+0000\n"
+"PO-Revision-Date: 2021-01-08 11:13+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -20,12 +20,12 @@ msgstr ""
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.11.70\n"
 
-#: ../libgimp/gimpbrushselectbutton.c:176
+#: ../libgimp/gimpbrushselectbutton.c:177
 msgid "Brush Selection"
 msgstr "Вибір пензля"
 
-#: ../libgimp/gimpbrushselectbutton.c:885
-#: ../libgimp/gimppatternselectbutton.c:672
+#: ../libgimp/gimpbrushselectbutton.c:884
+#: ../libgimp/gimppatternselectbutton.c:674
 msgid "_Browse..."
 msgstr "Ви_брати…"
 
@@ -167,7 +167,7 @@ msgid "Confirm Save"
 msgstr "Підтвердження збереження"
 
 #: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
-#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:181
+#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:204
 #: ../libgimpwidgets/gimpcolorbutton.c:553
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -190,7 +190,7 @@ msgid "_Ignore"
 msgstr "_Ігнорувати"
 
 #: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
-#: ../libgimp/gimpproceduredialog.c:173
+#: ../libgimp/gimpproceduredialog.c:176
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -229,16 +229,16 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:391
+#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:388
 #, c-format
 msgid "Export Image as %s"
 msgstr "Експортувати зображення як %s"
 
-#: ../libgimp/gimpfontselectbutton.c:136
+#: ../libgimp/gimpfontselectbutton.c:137
 msgid "Font Selection"
 msgstr "Вибір шрифту"
 
-#: ../libgimp/gimpgradientselectbutton.c:154
+#: ../libgimp/gimpgradientselectbutton.c:155
 msgid "Gradient Selection"
 msgstr "Вибір градієнта"
 
@@ -250,11 +250,11 @@ msgstr "Тло"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../libgimp/gimppaletteselectbutton.c:135
+#: ../libgimp/gimppaletteselectbutton.c:136
 msgid "Palette Selection"
 msgstr "Вибір палітри"
 
-#: ../libgimp/gimppatternselectbutton.c:164
+#: ../libgimp/gimppatternselectbutton.c:165
 msgid "Pattern Selection"
 msgstr "Вибір текстури"
 
@@ -422,35 +422,47 @@ msgid ""
 msgstr ""
 "Процедуру «%s» було викликано з некоректним рядком UTF-8 для аргументу «%s»."
 
-#: ../libgimp/gimpproceduredialog.c:171
+#: ../libgimp/gimpproceduredialog.c:174
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Відкрити"
 
-#: ../libgimp/gimpproceduredialog.c:175 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimp/gimpproceduredialog.c:178 ../libgimpwidgets/gimpcolorbutton.c:554
 #: ../libgimpwidgets/gimpfileentry.c:467 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Гаразд"
 
-#: ../libgimp/gimpproceduredialog.c:178 ../libgimpwidgets/gimpcolorbutton.c:552
+#: ../libgimp/gimpproceduredialog.c:186 ../libgimpwidgets/gimpcolorbutton.c:552
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: ../libgimp/gimpproceduredialog.c:215
-msgid "_Load Defaults"
-msgstr "За_вантажити початкові параметри"
+#: ../libgimp/gimpproceduredialog.c:238
+msgid "_Load Saved Settings"
+msgstr "З_авантажити збережені параметри"
 
-#: ../libgimp/gimpproceduredialog.c:224
-msgid "_Save Defaults"
-msgstr "З_берегти типові"
+#: ../libgimp/gimpproceduredialog.c:239
+msgid "Load settings saved with \"Save Settings\" button"
+msgstr ""
+"Завантажити параметри, які було збережено за допомогою кнопки «Зберегти"
+" параметри»"
 
-#: ../libgimp/gimpproceduredialog.c:1168
+#: ../libgimp/gimpproceduredialog.c:251
+#| msgid "_Save Defaults"
+msgid "_Save Settings"
+msgstr "З_берегти параметри"
+
+#: ../libgimp/gimpproceduredialog.c:252
+msgid "Store current settings for later reuse"
+msgstr ""
+"Зберегти поточні значення параметрів для подальшого повторного використання"
+
+#: ../libgimp/gimpproceduredialog.c:1196
 msgid "Reset to _Initial Values"
 msgstr "Повернути до по_чаткових значень"
 
-#: ../libgimp/gimpproceduredialog.c:1177
+#: ../libgimp/gimpproceduredialog.c:1205
 msgid "Reset to _Factory Defaults"
 msgstr "Повернути до стандартних _початкових значень"
 
@@ -490,16 +502,15 @@ msgstr "Дата:"
 msgid "Copyright:"
 msgstr "Авторські права:"
 
-#: ../libgimp/gimpsaveproceduredialog.c:167
+#: ../libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
 msgstr "Метадані"
 
-#: ../libgimp/gimpsaveproceduredialog.c:176
-#| msgid "Metadata"
+#: ../libgimp/gimpsaveproceduredialog.c:175
 msgid "Edit Metadata"
 msgstr "Редагувати метадані"
 
-#: ../libgimp/gimpsaveproceduredialog.c:176
+#: ../libgimp/gimpsaveproceduredialog.c:175
 msgid "(edit)"
 msgstr "(редагувати)"
 
@@ -2967,6 +2978,9 @@ msgstr "Цикли контрастності"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Контрастність"
+
+#~ msgid "_Load Defaults"
+#~ msgstr "За_вантажити початкові параметри"
 
 #~ msgid "Rotate %s?"
 #~ msgstr "Повернути %s?"
