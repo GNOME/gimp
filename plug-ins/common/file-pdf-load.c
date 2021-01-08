@@ -197,15 +197,17 @@ typedef struct
   GimpPageSelectorTarget  target;
   gdouble                 resolution;
   gboolean                antialias;
+  gboolean                reverse_order;
   gchar                  *PDF_password;
 } PdfLoadVals;
 
 static PdfLoadVals loadvals =
 {
   GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-  100.00,  /* 100 dpi   */
-  TRUE,
-  NULL
+  100.00,  /* resolution in dpi   */
+  TRUE,    /* antialias */
+  FALSE,   /* reverse_order */
+  NULL     /* pdf_password */
 };
 
 typedef struct
@@ -255,6 +257,7 @@ static GimpImage       * load_image          (PopplerDocument      *doc,
                                               GimpPageSelectorTarget target,
                                               gdouble               resolution,
                                               gboolean              antialias,
+                                              gboolean              reverse_order,
                                               PdfSelectedPages     *pages);
 
 static GimpPDBStatusType load_dialog         (PopplerDocument      *doc,
@@ -354,6 +357,12 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                             NULL,
                             G_PARAM_READWRITE);
 
+      GIMP_PROC_ARG_BOOLEAN (procedure, "reverse-order",
+                             "Load in reverse order",
+                             "Load PDF pages in reverse order",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
       GIMP_PROC_ARG_INT (procedure, "n-pages",
                          "N pages",
                          "Number of pages to load (0 for all)",
@@ -435,6 +444,8 @@ pdf_load (GimpProcedure        *procedure,
                            GIMP_VALUES_GET_STRING (args, 0),
                            run_mode, &error);
 
+      loadvals.reverse_order = GIMP_VALUES_GET_BOOLEAN (args, 1);
+
       if (doc)
         {
           PopplerPage *test_page = poppler_document_get_page (doc, 0);
@@ -452,7 +463,7 @@ pdf_load (GimpProcedure        *procedure,
                * "pages" argument.
                * Not ceiling this value is *not* an error.
                */
-              pages.n_pages = GIMP_VALUES_GET_INT (args, 1);
+              pages.n_pages = GIMP_VALUES_GET_INT (args, 2);
               if (pages.n_pages <= 0)
                 {
                   pages.n_pages = doc_n_pages;
@@ -462,7 +473,7 @@ pdf_load (GimpProcedure        *procedure,
                 }
               else
                 {
-                  const gint32 *p = GIMP_VALUES_GET_INT32_ARRAY (args, 2);
+                  const gint32 *p = GIMP_VALUES_GET_INT32_ARRAY (args, 3);
 
                   pages.pages = g_new (gint, pages.n_pages);
 
@@ -511,6 +522,7 @@ pdf_load (GimpProcedure        *procedure,
                           loadvals.target,
                           loadvals.resolution,
                           loadvals.antialias,
+                          loadvals.reverse_order,
                           &pages);
     }
 
@@ -785,6 +797,7 @@ load_image (PopplerDocument        *doc,
             GimpPageSelectorTarget  target,
             gdouble                 resolution,
             gboolean                antialias,
+            gboolean                reverse_order,
             PdfSelectedPages       *pages)
 {
   GimpImage  *image = NULL;
@@ -792,6 +805,14 @@ load_image (PopplerDocument        *doc,
   gint        i;
   gdouble     scale;
   gdouble     doc_progress = 0;
+  gint        base_index = 0;
+  gint        sign = 1;
+
+  if (reverse_order && pages->n_pages > 0)
+    {
+      base_index = pages->n_pages - 1;
+      sign = -1;
+    }
 
   if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
     images = g_new0 (GimpImage *, pages->n_pages);
@@ -813,8 +834,11 @@ load_image (PopplerDocument        *doc,
       cairo_surface_t *surface;
       gint             width;
       gint             height;
+      gint             page_index;
 
-      page = poppler_document_get_page (doc, pages->pages[i]);
+      page_index = base_index + sign * i;
+
+      page = poppler_document_get_page (doc, pages->pages[page_index]);
 
       poppler_page_get_size (page, &page_width, &page_height);
       width  = page_width  * scale;
@@ -1020,6 +1044,8 @@ load_dialog (PopplerDocument  *doc,
   GtkWidget  *resolution;
   GtkWidget  *antialias;
   GtkWidget  *hbox;
+  GtkWidget  *reverse_order;
+  GtkWidget  *separator;
 
   ThreadData  thread_data;
   GThread    *thread;
@@ -1109,8 +1135,21 @@ load_dialog (PopplerDocument  *doc,
 
   thread = g_thread_new ("thumbnailer", thumbnail_thread, &thread_data);
 
-  /* Resolution */
+  /* "Load in reverse order" toggle button */
+  reverse_order = gtk_check_button_new_with_mnemonic (_("Load in reverse order"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (reverse_order), loadvals.reverse_order);
+  gtk_box_pack_start (GTK_BOX (vbox), reverse_order, FALSE, FALSE, 0);
 
+  g_signal_connect (reverse_order, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update), &loadvals.reverse_order);
+  gtk_widget_show (reverse_order);
+
+  /* Separator */
+  separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
+  gtk_widget_show (separator);
+
+  /* Resolution */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
