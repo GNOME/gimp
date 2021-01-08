@@ -91,14 +91,14 @@ GtkWidget * gimp_procedure_dialog_get_label         (GimpProcedureDialog *dialog
 GtkWidget * gimp_procedure_dialog_fill_box          (GimpProcedureDialog *dialog,
                                                      const gchar         *container_id,
                                                      const gchar         *first_property,
-                                                     ...);
+                                                     ...) G_GNUC_NULL_TERMINATED;
 GtkWidget * gimp_procedure_dialog_fill_box_list     (GimpProcedureDialog *dialog,
                                                      const gchar         *container_id,
                                                      GList               *properties);
 GtkWidget * gimp_procedure_dialog_fill_flowbox      (GimpProcedureDialog *dialog,
                                                      const gchar         *container_id,
                                                      const gchar         *first_property,
-                                                     ...);
+                                                     ...) G_GNUC_NULL_TERMINATED;
 GtkWidget * gimp_procedure_dialog_fill_flowbox_list (GimpProcedureDialog *dialog,
                                                      const gchar         *container_id,
                                                      GList               *properties);
@@ -111,7 +111,7 @@ GtkWidget * gimp_procedure_dialog_fill_frame        (GimpProcedureDialog *dialog
 
 void        gimp_procedure_dialog_fill              (GimpProcedureDialog *dialog,
                                                      const gchar         *first_property,
-                                                     ...);
+                                                     ...) G_GNUC_NULL_TERMINATED;
 void        gimp_procedure_dialog_fill_list         (GimpProcedureDialog *dialog,
                                                      GList               *properties);
 
