@@ -4425,7 +4425,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1163
 msgid "_Auto-Crop all frames"
-msgstr "Esc_apça automàticament tots els marcs."
+msgstr "Esc_apça automàticament tots els marcs"
 
 #: ../plug-ins/common/file-xmc.c:1167
 msgid ""
@@ -6398,7 +6398,7 @@ msgstr "No s'ha pogut assignar una imatge nova."
 #: ../plug-ins/file-dds/ddsread.c:318
 #, c-format
 msgid "Error reading palette."
-msgstr "S'ha produït un error en llegir la paleta"
+msgstr "S'ha produït un error en llegir la paleta."
 
 #: ../plug-ins/file-dds/ddsread.c:615
 #, c-format
@@ -6755,7 +6755,7 @@ msgstr "_Interval (files MCU):"
 
 #: ../plug-ins/file-jpeg/jpeg.c:247
 msgid "_DCT method"
-msgstr "Mètode _DCT:"
+msgstr "Mètode _DCT"
 
 #: ../plug-ins/file-jpeg/jpeg.c:285
 msgid "Older software may have trouble opening arithmetic-coded images"
