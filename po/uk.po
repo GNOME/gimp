@@ -4,13 +4,13 @@
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011, 2012.
 # Andriy Bandura <andriykopanytsia@gmail.com>, 2014.
 # Olexandr Pylypchuk <pilipchukap@rambler.ru>, 2016.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-22 22:43+0000\n"
-"PO-Revision-Date: 2020-12-23 08:46+0200\n"
+"POT-Creation-Date: 2021-01-10 14:35+0000\n"
+"PO-Revision-Date: 2021-01-10 16:54+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -14088,11 +14088,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:442 ../app/core/gimpdatafactory.c:445
-#: ../app/core/gimpitem.c:541 ../app/core/gimpitem.c:544
+#: ../app/core/gimpitem.c:534 ../app/core/gimpitem.c:537
 msgid "copy"
 msgstr "копія"
 
-#: ../app/core/gimpdatafactory.c:454 ../app/core/gimpitem.c:552
+#: ../app/core/gimpdatafactory.c:454 ../app/core/gimpitem.c:545
 #, c-format
 msgid "%s copy"
 msgstr "копія %s"
@@ -14902,17 +14902,17 @@ msgstr[3] "%d шар"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не вдалось відкрити файл мініатюри «%s»: %s"
 
-#: ../app/core/gimpitem.c:2162
+#: ../app/core/gimpitem.c:2159
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Додати шум"
 
-#: ../app/core/gimpitem.c:2172
+#: ../app/core/gimpitem.c:2169
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Додати шум до об'єкта"
 
-#: ../app/core/gimpitem.c:2223 ../app/core/gimpitem.c:2230
+#: ../app/core/gimpitem.c:2220 ../app/core/gimpitem.c:2227
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Вилучити шум з об'єкта"
@@ -22824,8 +22824,7 @@ msgstr "Неможливо заповнити декілька шарів одр
 #: ../app/tools/gimpcurvestool.c:220 ../app/tools/gimpfiltertool.c:296
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimplevelstool.c:210 ../app/tools/gimpoffsettool.c:189
-#: ../app/tools/gimppaintselecttool.c:329 ../app/tools/gimppainttool.c:299
-#: ../app/tools/gimpperspectiveclonetool.c:227
+#: ../app/tools/gimppainttool.c:299 ../app/tools/gimpperspectiveclonetool.c:227
 #: ../app/tools/gimpthresholdtool.c:160
 #: ../app/tools/gimptransformgridtool.c:355
 msgid "No selected drawables."
@@ -22833,7 +22832,7 @@ msgstr "Немає позначених об'єктів малювання."
 
 #: ../app/tools/gimpbucketfilltool.c:587 ../app/tools/gimpcagetool.c:257
 #: ../app/tools/gimpforegroundselecttool.c:307
-#: ../app/tools/gimpgradienttool.c:290 ../app/tools/gimppaintselecttool.c:342
+#: ../app/tools/gimpgradienttool.c:290 ../app/tools/gimppaintselecttool.c:368
 #: ../app/tools/gimppainttool.c:350 ../app/tools/gimpwarptool.c:817
 msgid "The active layer is not visible."
 msgstr "Активний шар - невидимий."
@@ -23543,7 +23542,6 @@ msgid "F_oreground Select"
 msgstr "Вибір _переднього плану"
 
 #: ../app/tools/gimpforegroundselecttool.c:293
-#: ../app/tools/gimppaintselecttool.c:327
 msgid "Cannot select from multiple layers."
 msgstr "Не можна позначати об'єкти з декількох шарів."
 
@@ -23719,7 +23717,8 @@ msgstr ""
 "Неможливо малювати одразу на декількох об'єктах для малювання. Виберіть лише "
 "один об'єкт."
 
-#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimpwarptool.c:776
+#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppaintselecttool.c:340
+#: ../app/tools/gimpwarptool.c:776
 msgid "No active drawables."
 msgstr "Немає активних об'єктів малювання."
 
@@ -24420,21 +24419,32 @@ msgstr ""
 msgid "Show scribbles"
 msgstr "Показувати грубі мазки"
 
-#: ../app/tools/gimppaintselecttool.c:152
+#: ../app/tools/gimppaintselecttool.c:158
 msgid "Paint Select"
 msgstr "Малювання позначеного"
 
-#: ../app/tools/gimppaintselecttool.c:153
-#| msgid "Paint Select Tool: Scult selection by painting"
+#: ../app/tools/gimppaintselecttool.c:159
 msgid "Paint Select Tool: Select objects by painting roughly"
 msgstr ""
 "Інструмент малювання позначеного: позначення об'єктів грубим обмальовуванням"
 
-#: ../app/tools/gimppaintselecttool.c:154
+#: ../app/tools/gimppaintselecttool.c:160
 msgid "P_aint Select"
 msgstr "_Малювання позначеного"
 
-#: ../app/tools/gimppaintselecttool.c:556
+#: ../app/tools/gimppaintselecttool.c:337
+#| msgid "Cannot paint on multiple layers. Select only one layer."
+msgid "Cannot paint select on multiple layers. Select only one layer."
+msgstr ""
+"Не можна малювати позначення на декількох шарах одночасно. Виберіть лише один"
+" шар."
+
+#: ../app/tools/gimppaintselecttool.c:356
+#| msgid "Cannot paint on layer groups."
+msgid "Cannot paint select on layer groups."
+msgstr "Не можна малювати позначення на групах шарів."
+
+#: ../app/tools/gimppaintselecttool.c:607
 msgctxt "command"
 msgid "Paint Select"
 msgstr "Малювання позначеного"
@@ -28308,42 +28318,42 @@ msgstr "Відкрити діалог вибору палітри"
 msgid "Open the font selection dialog"
 msgstr "Відкрити діалог вибору шрифту"
 
-#: ../app/widgets/gimpwidgets-utils.c:609
+#: ../app/widgets/gimpwidgets-utils.c:613
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (спробуйте %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:609
+#: ../app/widgets/gimpwidgets-utils.c:613
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:613
+#: ../app/widgets/gimpwidgets-utils.c:617
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (спробуйте %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:617
+#: ../app/widgets/gimpwidgets-utils.c:621
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (спробуйте %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1728
+#: ../app/widgets/gimpwidgets-utils.c:1736
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Вбудовані відтінки сірого  (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1735
+#: ../app/widgets/gimpwidgets-utils.c:1743
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Вбудований RGB (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1755
+#: ../app/widgets/gimpwidgets-utils.c:1763
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Бажаний відтінків сірого (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1764
+#: ../app/widgets/gimpwidgets-utils.c:1772
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Бажаний RGB (%s)"
