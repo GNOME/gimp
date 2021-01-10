@@ -1,19 +1,19 @@
 # Swedish messages for the GIMP.
-# Copyright © 1999-2020 Free Software Foundation, Inc.
+# Copyright © 1999-2021 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2010, 2011, 2012.
 # Påvel Nicklasson <pavel@frimix.se>, 2014.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021.
 # Sebastian Rasmussen <sebras@gmail.com>, 2017, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-30 11:25+0000\n"
-"PO-Revision-Date: 2020-12-30 18:51+0100\n"
+"POT-Creation-Date: 2021-01-10 14:35+0000\n"
+"PO-Revision-Date: 2021-01-10 22:14+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22726,8 +22726,7 @@ msgstr "Kan inte fylla flera lager. Markera endast ett lager."
 #: ../app/tools/gimpcurvestool.c:220 ../app/tools/gimpfiltertool.c:296
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimplevelstool.c:210 ../app/tools/gimpoffsettool.c:189
-#: ../app/tools/gimppaintselecttool.c:329 ../app/tools/gimppainttool.c:299
-#: ../app/tools/gimpperspectiveclonetool.c:227
+#: ../app/tools/gimppainttool.c:299 ../app/tools/gimpperspectiveclonetool.c:227
 #: ../app/tools/gimpthresholdtool.c:160
 #: ../app/tools/gimptransformgridtool.c:355
 msgid "No selected drawables."
@@ -22735,7 +22734,7 @@ msgstr "Inga markerade ritytor."
 
 #: ../app/tools/gimpbucketfilltool.c:587 ../app/tools/gimpcagetool.c:257
 #: ../app/tools/gimpforegroundselecttool.c:307
-#: ../app/tools/gimpgradienttool.c:290 ../app/tools/gimppaintselecttool.c:342
+#: ../app/tools/gimpgradienttool.c:290 ../app/tools/gimppaintselecttool.c:368
 #: ../app/tools/gimppainttool.c:350 ../app/tools/gimpwarptool.c:817
 msgid "The active layer is not visible."
 msgstr "Det aktiva lagret är inte synligt."
@@ -23434,7 +23433,6 @@ msgid "F_oreground Select"
 msgstr "F_örgrundsmarkering"
 
 #: ../app/tools/gimpforegroundselecttool.c:293
-#: ../app/tools/gimppaintselecttool.c:327
 msgid "Cannot select from multiple layers."
 msgstr "Kan inte markera från flera lager."
 
@@ -23612,7 +23610,8 @@ msgstr "Klicka och dra för att rita en gradient"
 msgid "Cannot paint on multiple drawables. Select only one."
 msgstr "Kan inte måla på flera ritytor. Markera endast en."
 
-#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimpwarptool.c:776
+#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppaintselecttool.c:340
+#: ../app/tools/gimpwarptool.c:776
 msgid "No active drawables."
 msgstr "Inga aktiva ritytor."
 
@@ -24313,19 +24312,27 @@ msgstr ""
 msgid "Show scribbles"
 msgstr "Visa klotter"
 
-#: ../app/tools/gimppaintselecttool.c:152
+#: ../app/tools/gimppaintselecttool.c:158
 msgid "Paint Select"
 msgstr "Målningsmarkering"
 
-#: ../app/tools/gimppaintselecttool.c:153
+#: ../app/tools/gimppaintselecttool.c:159
 msgid "Paint Select Tool: Select objects by painting roughly"
 msgstr "Målningsmarkeringsverktyg: Markera objekt genom ungefärlig målning"
 
-#: ../app/tools/gimppaintselecttool.c:154
+#: ../app/tools/gimppaintselecttool.c:160
 msgid "P_aint Select"
 msgstr "Mål_ningsmarkering"
 
-#: ../app/tools/gimppaintselecttool.c:556
+#: ../app/tools/gimppaintselecttool.c:337
+msgid "Cannot paint select on multiple layers. Select only one layer."
+msgstr "Kan inte målningsmarkera på flera lager. Markera endast ett lager."
+
+#: ../app/tools/gimppaintselecttool.c:356
+msgid "Cannot paint select on layer groups."
+msgstr "Kan inte målningsmarkera på lagergrupper."
+
+#: ../app/tools/gimppaintselecttool.c:607
 msgctxt "command"
 msgid "Paint Select"
 msgstr "Målningsmarkering"
@@ -28922,10 +28929,6 @@ msgstr "luddig"
 #~ msgstr ""
 #~ "Typsnitt läses fortfarande in (detta kan ta ett tag), textfunktioner är "
 #~ "inte ännu tillgängliga."
-
-#, fuzzy
-#~ msgid "press Enter to validate."
-#~ msgstr "tryck på Retur för att validera."
 
 #~ msgid "Opening font directory '%s' failed: %s"
 #~ msgstr "Öppnande av typsnittskatalogen ”%s” misslyckades: %s"
