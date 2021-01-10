@@ -460,10 +460,12 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
               if (options->mode == GIMP_PAINT_SELECT_MODE_ADD)
                 {
                   gegl_node_set (ps_tool->ps_node, "mode", 0, NULL);
+                  gegl_node_set (ps_tool->threshold_node, "value", 0.99, NULL);
                 }
               else
                 {
                   gegl_node_set (ps_tool->ps_node, "mode", 1, NULL);
+                  gegl_node_set (ps_tool->threshold_node, "value", 0.01, NULL);
                 }
 
               gegl_node_set (ps_tool->render_node, "buffer", &result, NULL);
@@ -776,6 +778,10 @@ gimp_paint_select_tool_create_graph (GimpPaintSelectTool  *ps_tool)
                               "height", (gdouble) gegl_buffer_get_height (ps_tool->drawable),
                               NULL);
 
+  ps_tool->threshold_node = gegl_node_new_child (ps_tool->graph,
+                                                 "operation", "gegl:threshold",
+                                                 NULL);
+
   if (ps_tool->drawable_off_x || ps_tool->drawable_off_y)
     {
       translate = gegl_node_new_child (ps_tool->graph,
@@ -805,7 +811,7 @@ gimp_paint_select_tool_create_graph (GimpPaintSelectTool  *ps_tool)
                                              NULL);
 
   
-  gegl_node_link (m, crop);
+  gegl_node_link_many (m, ps_tool->threshold_node, crop, NULL);
 
   if (translate)
     gegl_node_link_many (crop, translate, ps_tool->ps_node, ps_tool->render_node, NULL);

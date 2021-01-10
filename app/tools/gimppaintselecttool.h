@@ -49,6 +49,7 @@ struct _GimpPaintSelectTool
 
   GeglNode              *graph;
   GeglNode              *ps_node;
+  GeglNode              *threshold_node;
   GeglNode              *render_node;
 
   GimpVector2            last_pos;
