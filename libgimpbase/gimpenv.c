@@ -434,6 +434,20 @@ gimp_installation_directory (void)
         g_free (tmp);
         g_free (tmp2);
       }
+    else if (! strcmp (g_path_get_basename (dirname), "plug-ins"))
+      {
+        /*  same for plug-ins in subdirectory, go three levels up from prefix/lib/gimp/x.y  */
+
+        gchar *tmp  = g_path_get_dirname (dirname);
+        gchar *tmp2 = g_path_get_dirname (tmp);
+        gchar *tmp3 = g_path_get_dirname (tmp2);
+
+        toplevel = g_path_get_dirname (tmp3);
+
+        g_free (tmp);
+        g_free (tmp2);
+        g_free (tmp3);
+      }
     else
       {
         /*  if none of the above match, we assume that we are really in a bundle  */
