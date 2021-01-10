@@ -67,69 +67,75 @@
 #include "config/gimpguiconfig.h" /* playground */
 
 
-static gboolean  gimp_paint_select_tool_initialize       (GimpTool         *tool,
-                                                          GimpDisplay      *display,
-                                                          GError          **error);
-  static void   gimp_paint_select_tool_control           (GimpTool         *tool,
-                                                          GimpToolAction    action,
-                                                          GimpDisplay      *display);
-static void   gimp_paint_select_tool_button_press        (GimpTool         *tool,
-                                                          const GimpCoords *coords,
-                                                          guint32           time,
-                                                          GdkModifierType   state,
-                                                          GimpButtonPressType press_type,
-                                                          GimpDisplay      *display);
-static void   gimp_paint_select_tool_button_release      (GimpTool         *tool,
-                                                          const GimpCoords *coords,
-                                                          guint32           time,
-                                                          GdkModifierType   state,
-                                                          GimpButtonReleaseType release_type,
-                                                          GimpDisplay      *display);
-static void   gimp_paint_select_tool_motion             (GimpTool         *tool,
-                                                          const GimpCoords *coords,
-                                                          guint32           time,
-                                                          GdkModifierType   state,
-                                                          GimpDisplay      *display);
-static gboolean  gimp_paint_select_tool_key_press       (GimpTool         *tool,
-                                                          GdkEventKey      *kevent,
-                                                          GimpDisplay      *display);
-static void   gimp_paint_select_tool_modifier_key       (GimpTool         *tool,
-                                                          GdkModifierType   key,
-                                                          gboolean          press,
-                                                          GdkModifierType   state,
-                                                          GimpDisplay      *display);
-static void   gimp_paint_select_tool_oper_update        (GimpTool         *tool,
-                                                          const GimpCoords *coords,
-                                                          GdkModifierType   state,
-                                                          gboolean          proximity,
-                                                          GimpDisplay      *display);
-static void   gimp_paint_select_tool_options_notify     (GimpTool         *tool,
-                                                          GimpToolOptions  *options,
-                                                          const GParamSpec *pspec);
-static void   gimp_paint_select_tool_cursor_update       (GimpTool         *tool,
-                                                          const GimpCoords *coords,
-                                                          GdkModifierType   state,
-                                                          GimpDisplay      *display);
-static void   gimp_paint_select_tool_draw                (GimpDrawTool     *draw_tool);
+static void      gimp_paint_select_tool_control            (GimpTool           *tool,
+                                                            GimpToolAction      action,
+                                                            GimpDisplay        *display);
+static void      gimp_paint_select_tool_button_press       (GimpTool           *tool,
+                                                            const GimpCoords   *coords,
+                                                            guint32             time,
+                                                            GdkModifierType     state,
+                                                            GimpButtonPressType press_type,
+                                                            GimpDisplay          *display);
+static void      gimp_paint_select_tool_button_release     (GimpTool             *tool,
+                                                            const GimpCoords     *coords,
+                                                            guint32               time,
+                                                            GdkModifierType       state,
+                                                            GimpButtonReleaseType release_type,
+                                                            GimpDisplay          *display);
+static void      gimp_paint_select_tool_motion             (GimpTool             *tool,
+                                                            const GimpCoords     *coords,
+                                                            guint32               time,
+                                                            GdkModifierType       state,
+                                                            GimpDisplay          *display);
+static gboolean  gimp_paint_select_tool_key_press          (GimpTool             *tool,
+                                                            GdkEventKey          *kevent,
+                                                            GimpDisplay          *display);
+static void      gimp_paint_select_tool_modifier_key       (GimpTool             *tool,
+                                                            GdkModifierType       key,
+                                                            gboolean              press,
+                                                            GdkModifierType       state,
+                                                            GimpDisplay          *display);
+static void      gimp_paint_select_tool_oper_update        (GimpTool             *tool,
+                                                            const GimpCoords     *coords,
+                                                            GdkModifierType       state,
+                                                            gboolean              proximity,
+                                                            GimpDisplay          *display);
+static void      gimp_paint_select_tool_options_notify     (GimpTool             *tool,
+                                                            GimpToolOptions      *options,
+                                                            const GParamSpec     *pspec);
+static void      gimp_paint_select_tool_cursor_update      (GimpTool             *tool,
+                                                            const GimpCoords     *coords,
+                                                            GdkModifierType       state,
+                                                            GimpDisplay          *display);
+static void      gimp_paint_select_tool_draw               (GimpDrawTool         *draw_tool);
 
-static void   gimp_paint_select_tool_halt                 (GimpPaintSelectTool *ps_tool);
-static void   gimp_paint_select_tool_update_image_mask   (GimpPaintSelectTool *ps_tool,
-                                                          GeglBuffer          *buffer,
-                                                          gint                 offset_x,
-                                                          gint                 offset_y,
-                                                          GimpPaintSelectMode  mode);
-static void   gimp_paint_select_tool_init_buffers        (GimpPaintSelectTool  *ps_tool,
-                                                          GimpImage            *image,
-                                                          GimpDrawable         *drawable);
-static void   gimp_paint_select_tool_init_scribble       (GimpPaintSelectTool  *ps_tool);
-static void   gimp_paint_select_tool_create_graph        (GimpPaintSelectTool  *ps_tool);
-static gboolean gimp_paint_select_tool_paint_scribble    (GimpPaintSelectTool  *ps_tool);
-static void gimp_paint_select_tool_toggle_scribbles_visibility (GimpPaintSelectTool  *ps_tool);
+static void      gimp_paint_select_tool_halt               (GimpPaintSelectTool  *ps_tool);
 
-static gfloat euclidean_distance                         (gint                  x1,
-                                                          gint                  y1,
-                                                          gint                  x2,
-                                                          gint                  y2);
+static void      gimp_paint_select_tool_update_image_mask  (GimpPaintSelectTool  *ps_tool,
+                                                            GeglBuffer           *buffer,
+                                                            gint                  offset_x,
+                                                            gint                  offset_y,
+                                                            GimpPaintSelectMode   mode);
+static void      gimp_paint_select_tool_init_buffers       (GimpPaintSelectTool  *ps_tool,
+                                                            GimpImage            *image,
+                                                            GimpDrawable         *drawable);
+static gboolean  gimp_paint_select_tool_can_paint          (GimpPaintSelectTool  *ps_tool,
+                                                            GimpDisplay          *display,
+                                                            gboolean              show_message);
+static gboolean  gimp_paint_select_tool_start              (GimpPaintSelectTool  *ps_tool,
+                                                            GimpDisplay          *display);
+static void      gimp_paint_select_tool_init_scribble      (GimpPaintSelectTool  *ps_tool);
+
+static void      gimp_paint_select_tool_create_graph       (GimpPaintSelectTool  *ps_tool);
+
+static gboolean  gimp_paint_select_tool_paint_scribble     (GimpPaintSelectTool  *ps_tool);
+
+static void      gimp_paint_select_tool_toggle_scribbles_visibility (GimpPaintSelectTool  *ps_tool);
+
+static gfloat euclidean_distance                           (gint                  x1,
+                                                            gint                  y1,
+                                                            gint                  x2,
+                                                            gint                  y2);
 
 
 G_DEFINE_TYPE (GimpPaintSelectTool, gimp_paint_select_tool,
@@ -167,7 +173,6 @@ gimp_paint_select_tool_class_init (GimpPaintSelectToolClass *klass)
   tool_class->button_release         = gimp_paint_select_tool_button_release;
   tool_class->control                = gimp_paint_select_tool_control;
   tool_class->cursor_update          = gimp_paint_select_tool_cursor_update;
-  tool_class->initialize             = gimp_paint_select_tool_initialize;
   tool_class->key_press              = gimp_paint_select_tool_key_press;
   tool_class->modifier_key           = gimp_paint_select_tool_modifier_key;
   tool_class->motion                 = gimp_paint_select_tool_motion;
@@ -216,13 +221,17 @@ gimp_paint_select_tool_button_press (GimpTool            *tool,
                                      GimpDisplay         *display)
 {
   GimpPaintSelectTool  *ps_tool = GIMP_PAINT_SELECT_TOOL (tool);
-  GimpDrawTool         *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  if (gimp_draw_tool_is_active (draw_tool) && draw_tool->display != display)
-        gimp_draw_tool_stop (draw_tool);
+  if (tool->display && display != tool->display)
+     gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
 
-  gimp_draw_tool_pause (draw_tool);
-  gimp_tool_control_activate (tool->control);
+  if (! tool->display)
+    {
+      if (! gimp_paint_select_tool_start (ps_tool, display))
+        return;
+    }
+
+  g_return_if_fail (g_list_length (tool->drawables) == 1);
 
   ps_tool->last_pos.x = coords->x;
   ps_tool->last_pos.y = coords->y;
@@ -241,10 +250,7 @@ gimp_paint_select_tool_button_press (GimpTool            *tool,
                                                 options->mode);
     }
 
-  if (! gimp_draw_tool_is_active (draw_tool))
-        gimp_draw_tool_start (draw_tool, display);
-
-  gimp_draw_tool_resume (draw_tool);
+  gimp_tool_control_activate (tool->control);
 }
 
 static void
@@ -256,8 +262,10 @@ gimp_paint_select_tool_button_release (GimpTool              *tool,
                                        GimpDisplay           *display)
 {
   GimpDrawTool  *draw_tool = GIMP_DRAW_TOOL (tool);
-  gimp_draw_tool_stop (draw_tool);
+
+  gimp_draw_tool_pause (draw_tool);
   gimp_tool_control_halt (tool->control);
+  gimp_draw_tool_resume (draw_tool);
 }
 
 static void
@@ -310,43 +318,84 @@ gimp_paint_select_tool_cursor_update (GimpTool         *tool,
 }
 
 static gboolean
-gimp_paint_select_tool_initialize (GimpTool     *tool,
-                                   GimpDisplay  *display,
-                                   GError      **error)
+gimp_paint_select_tool_can_paint (GimpPaintSelectTool  *ps_tool,
+                                  GimpDisplay          *display,
+                                  gboolean              show_message)
 {
-  GimpPaintSelectTool *ps_tool    = GIMP_PAINT_SELECT_TOOL (tool);
-  GimpGuiConfig       *config     = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpImage           *image      = gimp_display_get_image (display);
-  GList               *drawables  = gimp_image_get_selected_drawables (image);
-  GimpDrawable        *drawable;
+  GimpTool        *tool      = GIMP_TOOL (ps_tool);
+  GimpGuiConfig   *config    = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage       *image     = gimp_display_get_image (display);
+  GList           *drawables = gimp_image_get_selected_drawables (image);
+  GimpDrawable    *drawable;
 
   if (g_list_length (drawables) != 1)
     {
-      if (g_list_length (drawables) > 1)
-        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                             _("Cannot select from multiple layers."));
-      else
-        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, _("No selected drawables."));
+      if (show_message)
+        {
+          if (g_list_length (drawables) > 1)
+            gimp_tool_message_literal (tool, display,
+                                       _("Cannot paint select on multiple layers. Select only one layer."));
+          else
+            gimp_tool_message_literal (tool, display,
+                                       _("No active drawables."));
+        }
 
       g_list_free (drawables);
+
       return FALSE;
     }
 
   drawable = drawables->data;
   g_list_free (drawables);
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
-      ! config->edit_non_visible)
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer is not visible."));
+      if (show_message)
+        {
+          gimp_tool_message_literal (tool, display,
+                                     _("Cannot paint select on layer groups."));
+        }
+
       return FALSE;
     }
 
-  tool->display = display;
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+      ! config->edit_non_visible)
+    {
+      if (show_message)
+        {
+          gimp_tool_message_literal (tool, display,
+                                     _("The active layer is not visible."));
+        }
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_paint_select_tool_start (GimpPaintSelectTool  *ps_tool,
+                              GimpDisplay          *display)
+{
+  GimpTool      *tool       = GIMP_TOOL (ps_tool);
+  GimpImage     *image      = gimp_display_get_image (display);
+  GimpDrawable  *drawable;
+
+  if (! gimp_paint_select_tool_can_paint (ps_tool, display, TRUE))
+    return FALSE;
+
+  tool->display   = display;
+  g_list_free (tool->drawables);
+  tool->drawables = gimp_image_get_selected_drawables (image);
+
+  drawable = tool->drawables->data;
 
   gimp_paint_select_tool_init_buffers (ps_tool, image, drawable);
   gimp_paint_select_tool_create_graph (ps_tool);
+
+  if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (ps_tool)))
+    gimp_draw_tool_start (GIMP_DRAW_TOOL (ps_tool), display);
 
   return TRUE;
 }
