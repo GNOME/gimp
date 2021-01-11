@@ -1,19 +1,20 @@
 # GIMP plug-ins message translation table
-# Copyright (C) 1999-2010 Free Software Foundation, Inc.
+# Copyright (C) 1999-2012, 2021 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1999-2001.
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000.
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # Ken Okubo <se5k-ookb@asahi-net.or.jp>, 2009
 # Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2012.
+# sicklylife <translation@sicklylife.jp>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-12-18 18:43+0000\n"
-"PO-Revision-Date: 2012-04-05 22:16+0900\n"
-"Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
+"PO-Revision-Date: 2021-01-09 00:00+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -95,10 +96,8 @@ msgstr ""
 #: ../plug-ins/metadata/metadata-editor.c:5760
 #: ../plug-ins/pagecurl/pagecurl.c:473 ../plug-ins/screenshot/screenshot.c:529
 #: ../plug-ins/selection-to-path/selection-to-path.c:406
-#, fuzzy
-#| msgid "Cancel"
 msgid "_Cancel"
-msgstr "取消"
+msgstr "キャンセル(_C)"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:165
 #: ../extensions/goat-exercises/goat-exercise-py3.py:84
@@ -174,10 +173,8 @@ msgstr ""
 #: ../plug-ins/map-object/map-object-ui.c:1318
 #: ../plug-ins/pagecurl/pagecurl.c:474
 #: ../plug-ins/selection-to-path/selection-to-path.c:407
-#, fuzzy
-#| msgid "OK"
 msgid "_OK"
-msgstr "了解"
+msgstr "OK(_O)"
 
 #: ../extensions/goat-exercises/goat-exercise-vala.vala:64
 msgid "Exercise a goat (Vala)"
@@ -458,10 +455,8 @@ msgid "Canceling..."
 msgstr "描画しています..."
 
 #: ../plug-ins/common/checkerboard.c:132
-#, fuzzy
-#| msgid "_Checkerboard..."
 msgid "_Checkerboard (legacy)..."
-msgstr "市松模様(_C)..."
+msgstr "市松模様 (レガシー)(_C)..."
 
 #: ../plug-ins/common/checkerboard.c:137
 msgid "Create a checkerboard pattern"
@@ -743,10 +738,8 @@ msgstr "乱数種"
 #: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
 #: ../plug-ins/lighting/lighting-ui.c:608
 #: ../plug-ins/lighting/lighting-ui.c:1308
-#, fuzzy
-#| msgid "Open"
 msgid "_Open"
-msgstr "開く"
+msgstr "開く(_O)"
 
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1412
@@ -763,10 +756,8 @@ msgstr "開く"
 #: ../plug-ins/ifs-compose/ifs-compose.c:2536
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:601
 #: ../plug-ins/lighting/lighting-ui.c:1164
-#, fuzzy
-#| msgid "Save"
 msgid "_Save"
-msgstr "保存"
+msgstr "保存(_S)"
 
 #: ../plug-ins/common/cml-explorer.c:1431 ../plug-ins/common/van-gogh-lic.c:733
 msgid "_Hue"
@@ -938,10 +929,8 @@ msgstr "現在の設定のグラフ"
 #: ../plug-ins/ifs-compose/ifs-compose.c:1184
 #: ../plug-ins/imagemap/imap_menu.c:156
 #: ../plug-ins/metadata/metadata-viewer.c:283
-#, fuzzy
-#| msgid "Close"
 msgid "_Close"
-msgstr "閉じる"
+msgstr "閉じる(_C)"
 
 #: ../plug-ins/common/cml-explorer.c:2030
 msgid "Warning: the source and the destination are the same channel."
@@ -1092,10 +1081,8 @@ msgstr "カラーマップ変更"
 #: ../plug-ins/gimpressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:781
 #: ../plug-ins/selection-to-path/selection-to-path.c:405
-#, fuzzy
-#| msgid "_Presets"
 msgid "_Reset"
-msgstr "プリセット(_P)"
+msgstr "リセット(_R)"
 
 #: ../plug-ins/common/colormap-remap.c:754
 msgid ""
@@ -1158,38 +1145,28 @@ msgid "_Black:"
 msgstr "黒(_B):"
 
 #: ../plug-ins/common/compose.c:220
-#, fuzzy
-#| msgid "_X:"
 msgid "_L:"
-msgstr "_X:"
+msgstr ""
 
 #: ../plug-ins/common/compose.c:221
-#, fuzzy
-#| msgid "_X:"
 msgid "_A:"
-msgstr "_X:"
+msgstr ""
 
 #: ../plug-ins/common/compose.c:222
-#, fuzzy
-#| msgid "_X:"
 msgid "_B:"
-msgstr "_X:"
+msgstr ""
 
 #: ../plug-ins/common/compose.c:224
-#, fuzzy
-#| msgid "_RLE"
 msgid "_L"
-msgstr "_RLE"
+msgstr ""
 
 #: ../plug-ins/common/compose.c:225
 msgid "_C"
 msgstr ""
 
 #: ../plug-ins/common/compose.c:226
-#, fuzzy
-#| msgid "_Hue"
 msgid "_H"
-msgstr "色相(_H)"
+msgstr ""
 
 #: ../plug-ins/common/compose.c:228
 msgid "_Luma y470:"
@@ -1246,7 +1223,7 @@ msgstr "LAB"
 
 #: ../plug-ins/common/compose.c:284 ../plug-ins/common/decompose.c:217
 msgid "LCH"
-msgstr ""
+msgstr "LCH"
 
 #: ../plug-ins/common/compose.c:291 ../plug-ins/common/decompose.c:219
 msgid "YCbCr_ITU_R470"
@@ -1705,7 +1682,7 @@ msgstr "色相 (HSL)"
 
 #: ../plug-ins/common/decompose.c:206
 msgid "Saturation (HSL)"
-msgstr "彩度(HSL)"
+msgstr "彩度 (HSL)"
 
 #: ../plug-ins/common/decompose.c:207
 msgid "Lightness"
@@ -1893,13 +1870,11 @@ msgstr "アスキーアート"
 #: ../plug-ins/common/file-aa.c:205
 #, c-format
 msgid "ASCII art does not support multiple layers."
-msgstr ""
+msgstr "アスキーアートはマルチレイヤーをサポートしていません。"
 
 #: ../plug-ins/common/file-aa.c:384
-#, fuzzy
-#| msgid "Save as Text"
 msgid "Export Image as Text"
-msgstr "テキスト形式で保存"
+msgstr "画像をテキスト形式でエクスポート"
 
 #: ../plug-ins/common/file-aa.c:392 ../plug-ins/file-dds/ddswrite.c:2014
 msgid "_Format:"
@@ -1914,19 +1889,16 @@ msgid "Load KISS Palette"
 msgstr "KISS パレットの読み込み"
 
 #: ../plug-ins/common/file-cel.c:310
-#, fuzzy, c-format
-#| msgid "The GIF format does not support images larger than %d x %d pixels."
+#, c-format
 msgid "CEL format does not support multiple layers."
-msgstr "GIF 形式は %d × %d ピクセルより大きい画像をサポートしません。"
+msgstr "CEL 形式はマルチレイヤーをサポートしていません。"
 
 #: ../plug-ins/common/file-cel.c:367 ../plug-ins/common/file-cel.c:421
 #: ../plug-ins/common/file-cel.c:442
-#, fuzzy, c-format
-#| msgid "Error while reading '%s': %s"
+#, c-format
 msgid "EOF or error while reading image header"
 msgstr ""
-"'%s' の読み込み中にエラーが発生しました。\n"
-"%s"
+"画像ヘッダーの読み取り中にエラーが発生したか EOF が現れました"
 
 #. Read file pointer
 #. File header
@@ -2003,12 +1975,10 @@ msgstr "新規画像を作成できません"
 
 #: ../plug-ins/common/file-cel.c:534 ../plug-ins/common/file-cel.c:571
 #: ../plug-ins/common/file-cel.c:597
-#, fuzzy, c-format
-#| msgid "Error while reading '%s': %s"
+#, c-format
 msgid "EOF or error while reading image data"
 msgstr ""
-"'%s' の読み込み中にエラーが発生しました。\n"
-"%s"
+"画像データの読み取り中にエラーが発生したか EOF が現れました"
 
 #: ../plug-ins/common/file-cel.c:615
 #, c-format
@@ -2019,12 +1989,12 @@ msgstr "利用できない色数 (%d)!"
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
 msgstr ""
+"'%s': パレットヘッダーの読み取り中にエラーが発生したか EOF が現れました"
 
 #: ../plug-ins/common/file-cel.c:721
-#, fuzzy, c-format
-#| msgid "'%s' is not a PCX file"
+#, c-format
 msgid "'%s': is not a KCF palette file"
-msgstr "'%s' はPCXファイルではありません"
+msgstr "'%s': KCF パレットファイルではありません"
 
 #: ../plug-ins/common/file-cel.c:730
 #, c-format
@@ -2042,6 +2012,7 @@ msgstr "色数:"
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr ""
+"'%s': パレットデータの読み取り中にエラーが発生したか EOF が現れました"
 
 #. init the progress meter
 #.
@@ -2207,10 +2178,8 @@ msgid "_Description:"
 msgstr "説明(_D):"
 
 #: ../plug-ins/common/file-gbr.c:324
-#, fuzzy
-#| msgid "Spacing:"
 msgid "_Spacing:"
-msgstr "間隔:"
+msgstr "間隔(_S):"
 
 #: ../plug-ins/common/file-gegl.c:109
 #, fuzzy
@@ -2379,10 +2348,8 @@ msgid "_Interlace"
 msgstr "インターレース(_I)"
 
 #: ../plug-ins/common/file-gif-save.c:1187
-#, fuzzy
-#| msgid "Save comme_nt"
 msgid "Save c_omment"
-msgstr "コメントを保存(_N)"
+msgstr "コメントの保存(_O)"
 
 #: ../plug-ins/common/file-gif-save.c:1226
 msgid "As _animation"
@@ -2415,24 +2382,20 @@ msgid "One frame per layer (replace)"
 msgstr "レイヤー毎に 1 フレーム (置換)"
 
 #: ../plug-ins/common/file-gif-save.c:1271
-#, fuzzy
-#| msgid "_Frame disposal where unspecified:"
 msgid "_Frame disposal where unspecified"
-msgstr "指定しない場合のフレーム処理(_F): "
+msgstr "指定しない場合のフレーム処理(_F)"
 
 #: ../plug-ins/common/file-gif-save.c:1277
 msgid "_Use delay entered above for all frames"
-msgstr "全フレームのディレイにこの値を使用(_U)"
+msgstr "この値を全フレームのディレイに使用(_U)"
 
 #: ../plug-ins/common/file-gif-save.c:1282
 msgid "U_se disposal entered above for all frames"
-msgstr "全フレームのフレーム処理にこの値を使用(_S)"
+msgstr "この値を全フレームのフレーム処理に使用(_S)"
 
 #: ../plug-ins/common/file-gif-save.c:1290
-#, fuzzy
-#| msgid "Animated GIF Options"
 msgid "Animated GIF"
-msgstr "アニメーション GIF のオプション"
+msgstr "アニメーション GIF"
 
 #: ../plug-ins/common/file-gif-save.c:1294
 #, fuzzy
@@ -2455,26 +2418,20 @@ msgid "Brush Pipe"
 msgstr "パイプブラシ"
 
 #: ../plug-ins/common/file-gih.c:637
-#, fuzzy
-#| msgid "Spacing (percent):"
 msgid "_Spacing (percent):"
-msgstr "間隔 (％):"
+msgstr "間隔 (%)(_S):"
 
 #: ../plug-ins/common/file-gih.c:691
 msgid "Pixels"
 msgstr "ピクセル"
 
 #: ../plug-ins/common/file-gih.c:696
-#, fuzzy
-#| msgid "Cell size:"
 msgid "Ce_ll size:"
-msgstr "セルサイズ:"
+msgstr "セルサイズ(_L):"
 
 #: ../plug-ins/common/file-gih.c:708
-#, fuzzy
-#| msgid "Number of cells:"
 msgid "_Number of cells:"
-msgstr "セル数:"
+msgstr "セル数(_N):"
 
 #: ../plug-ins/common/file-gih.c:733
 msgid " Rows of "
@@ -2497,10 +2454,8 @@ msgid "Display as:"
 msgstr "表示方法:"
 
 #: ../plug-ins/common/file-gih.c:769
-#, fuzzy
-#| msgid "Dimension:"
 msgid "Di_mension:"
-msgstr "次元:"
+msgstr "次元(_M):"
 
 #: ../plug-ins/common/file-gih.c:842
 msgid "Ranks:"
@@ -2620,13 +2575,11 @@ msgstr ""
 #: ../plug-ins/common/file-heif.c:2516
 #: ../plug-ins/file-webp/file-webp-dialog.c:119
 msgid "_Lossless"
-msgstr ""
+msgstr "ロスレス(_L)"
 
 #: ../plug-ins/common/file-heif.c:2534
-#, fuzzy
-#| msgid "_Quality:"
 msgid "_Quality"
-msgstr "品質(_Q):"
+msgstr "品質(_Q)"
 
 #: ../plug-ins/common/file-heif.c:2539
 msgid "YUV444"
@@ -2679,10 +2632,8 @@ msgid "Fast"
 msgstr "再生速度を速く"
 
 #: ../plug-ins/common/file-heif.c:2609
-#, fuzzy
-#| msgid "_Speed:"
 msgid "Speed:"
-msgstr "速度(_S):"
+msgstr "速度:"
 
 #: ../plug-ins/common/file-heif.c:2615
 #: ../plug-ins/file-webp/file-webp-dialog.c:305
@@ -3049,16 +3000,12 @@ msgid "Replace"
 msgstr "置換"
 
 #: ../plug-ins/common/file-mng.c:1675
-#, fuzzy
-#| msgid "Default frame disposal:"
 msgid "Default _frame disposal:"
-msgstr "デフォルトのフレーム配置:"
+msgstr "デフォルトのフレーム配置(_F):"
 
 #: ../plug-ins/common/file-mng.c:1684
-#, fuzzy
-#| msgid "PNG compression level:"
 msgid "_PNG compression level:"
-msgstr "PNG 圧縮レベル:"
+msgstr "PNG 圧縮レベル(_P):"
 
 #: ../plug-ins/common/file-mng.c:1694
 msgid "JPEG compression quality:"
@@ -3073,10 +3020,8 @@ msgid "Animated MNG Options"
 msgstr "動画 MNG オプション"
 
 #: ../plug-ins/common/file-mng.c:1716
-#, fuzzy
-#| msgid "Loop"
 msgid "_Loop"
-msgstr "ループ"
+msgstr "ループ(_L)"
 
 #: ../plug-ins/common/file-mng.c:1723
 msgid "Default frame delay:"
@@ -3275,7 +3220,7 @@ msgstr "ピクセル/%a"
 
 #: ../plug-ins/common/file-pdf-save.c:418
 msgid "_Create multipage PDF..."
-msgstr "PDF (複数ページ)の生成(_C)..."
+msgstr "PDF (複数ページ) の生成(_C)..."
 
 #: ../plug-ins/common/file-pdf-save.c:742
 #, c-format
@@ -3306,24 +3251,18 @@ msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:1037
 #: ../plug-ins/common/file-pdf-save.c:1199
-#, fuzzy
-#| msgid "Omit hidden layers and layers with zero opacity"
 msgid "_Omit hidden layers and layers with zero opacity"
-msgstr "不可視レイヤーと不透明度ゼロのレイヤーは保存しない"
+msgstr "不可視レイヤーと不透明度ゼロのレイヤーは保存しない(_O)"
 
 #: ../plug-ins/common/file-pdf-save.c:1042
 #: ../plug-ins/common/file-pdf-save.c:1204
-#, fuzzy
-#| msgid "Convert bitmaps to vector graphics where possible"
 msgid "Convert _bitmaps to vector graphics where possible"
-msgstr "可能ならばビットマップをベクターグラフィックスに変換する"
+msgstr "可能ならばビットマップをベクターグラフィックスに変換する(_B)"
 
 #: ../plug-ins/common/file-pdf-save.c:1047
 #: ../plug-ins/common/file-pdf-save.c:1209
-#, fuzzy
-#| msgid "Apply layer masks before saving"
 msgid "_Apply layer masks before saving"
-msgstr "保存前にレイヤーマスクを適用する"
+msgstr "保存前にレイヤーマスクを適用する(_A)"
 
 #: ../plug-ins/common/file-pdf-save.c:1051
 #: ../plug-ins/common/file-pdf-save.c:1213
@@ -3628,13 +3567,11 @@ msgstr "データフォーマット"
 
 #: ../plug-ins/common/file-pnm.c:1717
 msgid "_Raw"
-msgstr ""
+msgstr "RAW(_R)"
 
 #: ../plug-ins/common/file-pnm.c:1718
-#, fuzzy
-#| msgid "ASCII"
 msgid "_ASCII"
-msgstr "ASCII"
+msgstr "ASCII(_A)"
 
 #: ../plug-ins/common/file-ps.c:377 ../plug-ins/common/file-ps.c:490
 msgid "PostScript document"
@@ -3801,11 +3738,11 @@ msgstr "出力"
 
 #: ../plug-ins/common/file-ps.c:3917
 msgid "_PostScript level 2"
-msgstr "_PostScript レベル 2"
+msgstr "PostScript レベル 2(_P)"
 
 #: ../plug-ins/common/file-ps.c:3926
 msgid "_Encapsulated PostScript"
-msgstr "_EPS 形式"
+msgstr "EPS 形式(_E)"
 
 #: ../plug-ins/common/file-ps.c:3935
 msgid "P_review"
@@ -3876,10 +3813,9 @@ msgid "Error reading general image attribute block."
 msgstr ""
 
 #: ../plug-ins/common/file-psp.c:1035
-#, fuzzy, c-format
-#| msgid "Compression type"
+#, c-format
 msgid "Unknown compression type %d"
-msgstr "圧縮形式"
+msgstr "%d は不明な圧縮形式です"
 
 #: ../plug-ins/common/file-psp.c:1071 ../plug-ins/common/file-psp.c:1078
 #, fuzzy, c-format
@@ -4195,41 +4131,29 @@ msgstr "Rawデータから画像読み込み"
 
 #. Image type combo
 #: ../plug-ins/common/file-raw-data.c:2041
-#, fuzzy
-#| msgid "Standard (R,G,B)"
 msgid "_Standard (R,G,B)"
-msgstr "標準 (R,G,B)"
+msgstr "標準 (R,G,B)(_S)"
 
 #: ../plug-ins/common/file-raw-data.c:2042
-#, fuzzy
-#| msgid "Planar (RRR,GGG,BBB)"
 msgid "_Planar (RRR,GGG,BBB)"
-msgstr "Planar (RRR,GGG,BBB)"
+msgstr "Planar (RRR,GGG,BBB)(_P)"
 
 #: ../plug-ins/common/file-raw-data.c:2045
-#, fuzzy
-#| msgid "Image Types"
 msgid "Image Type"
 msgstr "画像の種類"
 
 #. Palette type combo
 #: ../plug-ins/common/file-raw-data.c:2051
-#, fuzzy
-#| msgid "R, G, B (normal)"
 msgid "_R, G, B (normal)"
-msgstr "R, G, B (通常)"
+msgstr "R, G, B (通常)(_R)"
 
 #: ../plug-ins/common/file-raw-data.c:2052
-#, fuzzy
-#| msgid "B, G, R, X (BMP style)"
 msgid "_B, G, R, X (BMP style)"
-msgstr "B, G, R, X (BMP スタイル)"
+msgstr "B, G, R, X (BMP スタイル)(_B)"
 
 #: ../plug-ins/common/file-raw-data.c:2055
-#, fuzzy
-#| msgid "_Palette Type:"
 msgid "Palette Type"
-msgstr "パレットの種類(_P):"
+msgstr "パレットの種類"
 
 #: ../plug-ins/common/file-sunras.c:271 ../plug-ins/common/file-sunras.c:297
 msgid "SUN Rasterfile image"
@@ -4320,7 +4244,7 @@ msgstr "不明な画像種は扱えません"
 #: ../plug-ins/common/file-xwd.c:2095 ../plug-ins/common/file-xwd.c:2359
 #: ../plug-ins/file-fits/fits.c:848
 msgid "EOF encountered on reading"
-msgstr "読み込み中に EOF が現れた"
+msgstr "読み取り中に EOF が現れました"
 
 #: ../plug-ins/common/file-sunras.c:1655 ../plug-ins/common/file-sunras.c:1776
 #: ../plug-ins/file-fits/fits.c:1170
@@ -4342,10 +4266,8 @@ msgid "_RunLength Encoded"
 msgstr "RLE エンコード(_R)"
 
 #: ../plug-ins/common/file-sunras.c:1801
-#, fuzzy
-#| msgid "Standard"
 msgid "_Standard"
-msgstr "標準"
+msgstr "標準(_S)"
 
 #: ../plug-ins/common/file-svg.c:156
 msgid "SVG image"
@@ -4422,10 +4344,9 @@ msgid "TarGA image"
 msgstr "TarGA 画像"
 
 #: ../plug-ins/common/file-tga.c:391 ../plug-ins/common/file-xwd.c:442
-#, fuzzy, c-format
-#| msgid "The GIF format does not support images larger than %d x %d pixels."
+#, c-format
 msgid "TGA format does not support multiple layers."
-msgstr "GIF 形式は %d × %d ピクセルより大きい画像をサポートしません。"
+msgstr "TGA 形式はマルチレイヤーをサポートしていません。"
 
 #: ../plug-ins/common/file-tga.c:458
 #, c-format
@@ -4551,17 +4472,15 @@ msgstr "XBM 形式で保存"
 
 #: ../plug-ins/common/file-xbm.c:1263
 msgid "_X10 format bitmap"
-msgstr "_X10 形式ビットマップ"
+msgstr "X10 形式ビットマップ(_X)"
 
 #: ../plug-ins/common/file-xbm.c:1275
 msgid "_Identifier prefix:"
 msgstr "識別子プレフィックス(_I):"
 
 #: ../plug-ins/common/file-xbm.c:1284
-#, fuzzy
-#| msgid "_GIF comment:"
 msgid "_Write comment"
-msgstr "GIF コメント(_G): "
+msgstr "コメントを書き込む(_W)"
 
 #: ../plug-ins/common/file-xbm.c:1295
 msgid ""
@@ -4579,11 +4498,11 @@ msgstr "ホットスポットの値を書き込む(_W)"
 
 #: ../plug-ins/common/file-xbm.c:1337 ../plug-ins/common/file-xmc.c:1139
 msgid "Hot spot _X:"
-msgstr "ホットスポット X(_X):"
+msgstr "ホットスポット _X:"
 
 #: ../plug-ins/common/file-xbm.c:1345 ../plug-ins/common/file-xmc.c:1153
 msgid "Hot spot _Y:"
-msgstr "ホットスポット Y(_Y):"
+msgstr "ホットスポット _Y:"
 
 #: ../plug-ins/common/file-xbm.c:1356
 msgid "W_rite extra mask file"
@@ -4659,8 +4578,6 @@ msgstr ""
 "す。"
 
 #: ../plug-ins/common/file-xmc.c:1163
-#, fuzzy
-#| msgid "_Auto-Crop all frames."
 msgid "_Auto-Crop all frames"
 msgstr "すべてのフレームの自動切り抜き(_A)"
 
@@ -4702,10 +4619,8 @@ msgstr ""
 "り、実際の寸法 (幅と高さ) との関連性はありません。"
 
 #: ../plug-ins/common/file-xmc.c:1203
-#, fuzzy
-#| msgid "_Use delay entered above for all frames"
 msgid "Use size entered above for all frames"
-msgstr "全フレームのディレイにこの値を使用(_U)"
+msgstr "この値を全フレームのサイズに使用"
 
 #: ../plug-ins/common/file-xmc.c:1210
 #, fuzzy
@@ -4720,10 +4635,8 @@ msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "フレーム切り替えまでの時間を指定します。単位はミリ秒です。"
 
 #: ../plug-ins/common/file-xmc.c:1229
-#, fuzzy
-#| msgid "_Use delay entered above for all frames"
 msgid "Use delay entered above for all frames"
-msgstr "全フレームのディレイにこの値を使用(_U)"
+msgstr "全フレームのディレイにこの値を使用"
 
 #: ../plug-ins/common/file-xmc.c:1236
 msgid "_Copyright:"
@@ -4938,10 +4851,9 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/common/file-xwd.c:1792 ../plug-ins/common/file-xwd.c:2192
-#, fuzzy, c-format
-#| msgid "The file is corrupt!"
+#, c-format
 msgid "XWD-file %s is corrupt."
-msgstr "ファイルは壊れています"
+msgstr "XWD ファイル %s は壊れています。"
 
 #: ../plug-ins/common/film.c:228
 msgid "_Filmstrip..."
@@ -4964,10 +4876,8 @@ msgid "On film:"
 msgstr "フィルム上には:"
 
 #: ../plug-ins/common/film.c:975 ../plug-ins/common/unit-editor.c:242
-#, fuzzy
-#| msgid "_Additive"
 msgid "_Add"
-msgstr "付加的(_A)"
+msgstr "追加(_A)"
 
 #: ../plug-ins/common/film.c:975 ../plug-ins/imagemap/imap_polygon.c:529
 msgid "_Remove"
@@ -5067,7 +4977,7 @@ msgstr "番号の高さ(_N):"
 
 #: ../plug-ins/common/film.c:1285
 msgid "Re_set"
-msgstr ""
+msgstr "リセット(_S)"
 
 #: ../plug-ins/common/gradient-map.c:127
 msgid "_Gradient Map"
@@ -5094,10 +5004,8 @@ msgid "Palette Map"
 msgstr "パレットマップしています"
 
 #: ../plug-ins/common/grid.c:168
-#, fuzzy
-#| msgid "_Grid..."
 msgid "_Grid (legacy)..."
-msgstr "グリッド(_G)..."
+msgstr "グリッド (レガシー)(_G)..."
 
 #: ../plug-ins/common/grid.c:173
 msgid "Draw a grid on the image"
@@ -5156,7 +5064,7 @@ msgstr "交点色"
 
 #: ../plug-ins/common/guillotine.c:105
 msgid "Slice Using G_uides"
-msgstr ""
+msgstr "ガイドを使用して切り分け(_U)"
 
 #: ../plug-ins/common/guillotine.c:109
 msgid "Slice the image into subimages using guides"
@@ -5294,7 +5202,7 @@ msgstr "メールで送信(_M)..."
 
 #: ../plug-ins/common/mail.c:201
 msgid "Send the image by email"
-msgstr "画像をEメールで送信します"
+msgstr "画像をメールで送信します"
 
 #: ../plug-ins/common/mail.c:562
 msgid "Send by Email"
@@ -5379,7 +5287,7 @@ msgstr "名前で検索"
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
-msgstr[0] "%d個のプラグイン"
+msgstr[0] "%d 個のプラグイン"
 
 #: ../plug-ins/common/plugin-browser.c:394
 msgid "No matches for your query"
@@ -5389,15 +5297,13 @@ msgstr "該当するプラグインは見つかりませんでした"
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
-msgstr[0] "%d個のプラグインが見つかりました"
+msgstr[0] "%d 個のプラグインが見つかりました"
 
 #: ../plug-ins/common/plugin-browser.c:530
 msgid "No matches"
 msgstr "一致するものがありません"
 
 #: ../plug-ins/common/plugin-browser.c:556
-#, fuzzy
-#| msgid "Plug-In Browser"
 msgid "Plug-in Browser"
 msgstr "プラグインブラウザー"
 
@@ -5444,7 +5350,7 @@ msgstr "プロシージャーブラウザー"
 
 #: ../plug-ins/common/qbist.c:180
 msgid "_Qbist..."
-msgstr "Qビスト(_Q)..."
+msgstr "Q ビスト(_Q)..."
 
 #: ../plug-ins/common/qbist.c:185
 msgid "Generate a huge variety of abstract patterns"
@@ -5472,7 +5378,7 @@ msgstr "G-Qビスト"
 #: ../plug-ins/ifs-compose/ifs-compose.c:1054
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "_Undo"
-msgstr "1 段階戻る(_U)"
+msgstr "元に戻す(_U)"
 
 #: ../plug-ins/common/sample-colorize.c:325
 msgid "_Sample Colorize..."
@@ -5497,9 +5403,8 @@ msgstr "ソース色の取得(_S)"
 #: ../plug-ins/gimpressionist/presets.c:1060
 #: ../plug-ins/gimpressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
-#, fuzzy
 msgid "_Apply"
-msgstr "適用"
+msgstr "適用(_A)"
 
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample-colorize.c:1420
@@ -5521,31 +5426,23 @@ msgstr "グラデーションを使用"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1468
-#, fuzzy
-#| msgid "Show selection"
 msgid "Sho_w selection"
-msgstr "選択範囲を表示する"
+msgstr "選択範囲を表示する(_W)"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1479
-#, fuzzy
-#| msgid "Show color"
 msgid "Show co_lor"
-msgstr "色表示"
+msgstr "色を表示する(_L)"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1494
-#, fuzzy
-#| msgid "Show selection"
 msgid "Show selec_tion"
-msgstr "選択範囲を表示する"
+msgstr "選択範囲を表示する(_T)"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1505
-#, fuzzy
-#| msgid "Show color"
 msgid "Show c_olor"
-msgstr "色表示"
+msgstr "色を表示する(_O)"
 
 #: ../plug-ins/common/sample-colorize.c:1632
 msgid "Input levels:"
@@ -5557,31 +5454,23 @@ msgstr "出力レベル:"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1721
-#, fuzzy
-#| msgid "Hold intensity"
 msgid "Hold _intensity"
-msgstr "強度保持"
+msgstr "強度保持(_I)"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1732
-#, fuzzy
-#| msgid "Original intensity"
 msgid "Original i_ntensity"
-msgstr "オリジナル強度"
+msgstr "オリジナル強度(_N)"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1749
-#, fuzzy
-#| msgid "Use subcolors"
 msgid "Us_e subcolors"
-msgstr "サブカラー"
+msgstr "サブカラー(_E)"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1760
-#, fuzzy
-#| msgid "Smooth samples"
 msgid "S_mooth samples"
-msgstr "なめらかなサンプル"
+msgstr "なめらかなサンプル(_M)"
 
 #: ../plug-ins/common/sample-colorize.c:2639
 msgid "Sample analyze"
@@ -5830,14 +5719,12 @@ msgstr "球面デザイナー"
 #: ../plug-ins/common/sphere-designer.c:2734
 #: ../plug-ins/gradient-flare/gradient-flare.c:3060
 #: ../plug-ins/ifs-compose/ifs-compose.c:1046
-#, fuzzy
 msgid "_New"
-msgstr "新規"
+msgstr "新規(_N)"
 
 #: ../plug-ins/common/sphere-designer.c:2740
-#, fuzzy
 msgid "D_uplicate"
-msgstr "単位を複製"
+msgstr "複製(_U)"
 
 #: ../plug-ins/common/sphere-designer.c:2746
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:852
@@ -5847,9 +5734,8 @@ msgstr "単位を複製"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3346
 #: ../plug-ins/ifs-compose/ifs-compose.c:1050
 #: ../plug-ins/imagemap/imap_menu.c:172
-#, fuzzy
 msgid "_Delete"
-msgstr "削除"
+msgstr "削除(_D)"
 
 #: ../plug-ins/common/sphere-designer.c:2756
 msgid "Properties"
@@ -6169,10 +6055,8 @@ msgstr "単位の定義"
 #: ../plug-ins/common/unit-editor.c:446
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1191
 #: ../plug-ins/gimpressionist/presets.c:1073
-#, fuzzy
-#| msgid "Refresh"
 msgid "_Refresh"
-msgstr "再読み込み"
+msgstr "再読み込み(_R)"
 
 #: ../plug-ins/common/van-gogh-lic.c:629 ../plug-ins/common/van-gogh-lic.c:702
 msgid "Van Gogh (LIC)"
@@ -6240,7 +6124,7 @@ msgstr "最大値(_A):"
 
 #: ../plug-ins/common/van-gogh-lic.c:873
 msgid "_Van Gogh (LIC)..."
-msgstr "ヴァン ゴッホ風(LIC)(_V)..."
+msgstr "ヴァン ゴッホ風 (LIC)(_V)..."
 
 #: ../plug-ins/common/van-gogh-lic.c:877
 msgid "Special effects that nobody understands"
@@ -6500,7 +6384,7 @@ msgstr "ウェブページから画像を生成"
 
 #: ../plug-ins/common/web-page.c:279
 msgid "Cre_ate"
-msgstr ""
+msgstr "生成(_A)"
 
 #: ../plug-ins/common/web-page.c:308
 msgid "Enter location (URI):"
@@ -6616,16 +6500,12 @@ msgstr "RLE エンコード(_R)"
 
 #. Compatibility Options
 #: ../plug-ins/file-bmp/bmp-save.c:988
-#, fuzzy
-#| msgid "Co_mpatibility Options"
 msgid "Compatibility"
-msgstr "互換性のオプション(_M)"
+msgstr "互換性のオプション"
 
 #: ../plug-ins/file-bmp/bmp-save.c:993
-#, fuzzy
-#| msgid "_Do not write color space information"
 msgid "_Write color space information"
-msgstr "色空間の情報を書き込まない(_D)"
+msgstr "色空間の情報を書き込む(_W)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:995
 #, fuzzy
@@ -6742,12 +6622,11 @@ msgstr "非対応のブラシフォーマット"
 #: ../plug-ins/file-dds/ddsread.c:1065 ../plug-ins/file-dds/ddsread.c:1087
 #, c-format
 msgid "Unexpected EOF.\n"
-msgstr ""
+msgstr "予期せず EOF が現れました\n"
 
 #: ../plug-ins/file-dds/ddsread.c:1354
-#, fuzzy
 msgid "Open DDS"
-msgstr "開く"
+msgstr "DDS を開く"
 
 #: ../plug-ins/file-dds/ddsread.c:1363
 #, fuzzy
@@ -6764,20 +6643,16 @@ msgid "Export Image as DDS"
 msgstr ""
 
 #: ../plug-ins/file-dds/ddswrite.c:1987
-#, fuzzy
-#| msgid "Compression"
 msgid "_Compression:"
-msgstr "圧縮方法"
+msgstr "圧縮方法(_C):"
 
 #: ../plug-ins/file-dds/ddswrite.c:1992
 msgid "Use _perceptual error metric"
 msgstr ""
 
 #: ../plug-ins/file-dds/ddswrite.c:2026
-#, fuzzy
-#| msgid "Save"
 msgid "_Save:"
-msgstr "保存"
+msgstr "保存(_S):"
 
 #: ../plug-ins/file-dds/ddswrite.c:2045
 msgid "_Mipmaps:"
@@ -6796,10 +6671,8 @@ msgid "Mipmap Options"
 msgstr "主オプション"
 
 #: ../plug-ins/file-dds/ddswrite.c:2094
-#, fuzzy
-#| msgid "Filter"
 msgid "F_ilter:"
-msgstr "フィルター"
+msgstr "フィルター(_I):"
 
 #: ../plug-ins/file-dds/ddswrite.c:2106
 #, fuzzy
@@ -6892,10 +6765,8 @@ msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS による保存はアルファチャンネルを持った画像を取り扱えません"
 
 #: ../plug-ins/file-fits/fits.c:1194
-#, fuzzy
-#| msgid "Open File"
 msgid "Open FITS File"
-msgstr "ファイルを開く"
+msgstr "FITS ファイルを開く"
 
 #: ../plug-ins/file-fits/fits.c:1202
 msgid "_Black"
@@ -6914,16 +6785,12 @@ msgid "Pixel value scaling"
 msgstr "ピクセル値スケーリング"
 
 #: ../plug-ins/file-fits/fits.c:1212
-#, fuzzy
-#| msgid "By DATAMIN/DATAMAX"
 msgid "By _DATAMIN/DATAMAX"
-msgstr "DATAMIN/DATAMAX で"
+msgstr "DATAMIN/DATAMAX で(_D)"
 
 #: ../plug-ins/file-fits/fits.c:1213
-#, fuzzy
-#| msgid "Automatic"
 msgid "_Automatic"
-msgstr "自動"
+msgstr "自動(_A)"
 
 #: ../plug-ins/file-fits/fits.c:1217
 msgid "Image Composing"
@@ -7111,42 +6978,33 @@ msgid "JPEG"
 msgstr "JPEG 形式"
 
 #: ../plug-ins/file-jpeg/jpeg.c:224
-#, fuzzy
-#| msgid "Su_bsampling:"
 msgid "Su_bsampling"
-msgstr "サブサンプリング(_B):"
+msgstr "サブサンプリング"
 
 #: ../plug-ins/file-jpeg/jpeg.c:242
-#, fuzzy
-#| msgid "Interval (MCU rows):"
 msgid "Inter_val (MCU rows):"
-msgstr "間隔 (MCU 数):"
+msgstr "間隔 (MCU 数)(_V):"
 
 #: ../plug-ins/file-jpeg/jpeg.c:249
-#, fuzzy
-#| msgid "_DCT method:"
 msgid "_DCT method"
-msgstr "DCT 変換方法(_D):"
+msgstr "DCT 変換方法(_D)"
 
 #: ../plug-ins/file-jpeg/jpeg.c:287
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 
 #: ../plug-ins/file-jpeg/jpeg.c:292
-#, fuzzy
-#| msgid "Use _restart markers"
 msgid "Use restart mar_kers"
-msgstr "リスタートマーカー(_R)"
+msgstr "リスタートマーカー(_K)"
 
 #: ../plug-ins/file-jpeg/jpeg.c:462
 msgid "Export Preview"
 msgstr "エクスポートプレビュー"
 
 #: ../plug-ins/file-jpeg/jpeg.c:494
-#, fuzzy, c-format
-#| msgid "The GIF format does not support images larger than %d x %d pixels."
+#, c-format
 msgid "JPEG format does not support multiple layers."
-msgstr "GIF 形式は %d × %d ピクセルより大きい画像をサポートしません。"
+msgstr "JPEG 形式はマルチレイヤーをサポートしていません。"
 
 #: ../plug-ins/file-psd/psd-load.c:237
 #: ../plug-ins/file-psd/psd-thumb-load.c:138
@@ -7463,10 +7321,8 @@ msgstr ""
 "(SGI ではサポートされていない)"
 
 #: ../plug-ins/file-sgi/sgi.c:714
-#, fuzzy
-#| msgid "Compression type"
 msgid "Compression _type:"
-msgstr "圧縮形式"
+msgstr "圧縮形式(_T):"
 
 #: ../plug-ins/file-tiff/file-tiff.c:147 ../plug-ins/file-tiff/file-tiff.c:175
 msgid "TIFF image"
@@ -7578,10 +7434,8 @@ msgid "Pre_multiplied alpha"
 msgstr ""
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2358
-#, fuzzy
-#| msgid "Channels"
 msgid "Channe_l"
-msgstr "チャンネル"
+msgstr "チャンネル(_L)"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:616
 msgid ""
@@ -7622,40 +7476,28 @@ msgid "None"
 msgstr "そのまま"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1291
-#, fuzzy
-#| msgid "_LZW"
 msgid "LZW"
-msgstr "LZW(_L)"
+msgstr "LZW"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1292
-#, fuzzy
-#| msgid "_Pack Bits"
 msgid "Pack Bits"
-msgstr "Pack Bits(_P)"
+msgstr "Pack Bits"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1293
-#, fuzzy
-#| msgid "_Deflate"
 msgid "Deflate"
-msgstr "Deflate(_D)"
+msgstr "Deflate"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1295
-#, fuzzy
-#| msgid "CCITT Group _3 fax"
 msgid "CCITT Group 3 fax"
-msgstr "CCITT Group 3 fax(_3)"
+msgstr "CCITT Group 3 fax"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1296
-#, fuzzy
-#| msgid "CCITT Group _4 fax"
 msgid "CCITT Group 4 fax"
-msgstr "CCITT Group 4 fax(_4)"
+msgstr "CCITT Group 4 fax"
 
 #: ../plug-ins/file-webp/file-webp.c:119 ../plug-ins/file-webp/file-webp.c:146
-#, fuzzy
-#| msgid "PNG image"
 msgid "WebP image"
-msgstr "PNG 画像"
+msgstr "WebP 画像"
 
 #: ../plug-ins/file-webp/file-webp.c:356
 #, c-format
@@ -7664,10 +7506,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:62
-#, fuzzy
-#| msgid "Reset Keyframes"
 msgid "(no keyframes)"
-msgstr "キーフレームリセット"
+msgstr "(キーフレームなし)"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:66
 msgid "(all frames are keyframes)"
@@ -7678,10 +7518,8 @@ msgid "Export Image as WebP"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:125
-#, fuzzy
-#| msgid "Image _title:"
 msgid "Image _quality:"
-msgstr "画像のタイトル(_T):"
+msgstr "画像の品質(_Q):"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:132
 #, fuzzy
@@ -7705,16 +7543,12 @@ msgstr "詳細設定(_A)"
 
 #. Create the top-level animation checkbox expander
 #: ../plug-ins/file-webp/file-webp-dialog.c:189
-#, fuzzy
-#| msgid "As _animation"
 msgid "As A_nimation"
-msgstr "アニメーションとしてエクスポート(_A)"
+msgstr "アニメーションとしてエクスポート(_N)"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:213
-#, fuzzy
-#| msgid "_Loop forever"
 msgid "Loop _forever"
-msgstr "無限ループ(_L)"
+msgstr "無限ループ(_F)"
 
 #. label for 'max key-frame distance' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:224
@@ -7727,22 +7561,17 @@ msgstr ""
 
 #. label for 'delay' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:271
-#, fuzzy
-#| msgid "_Delay between frames where unspecified:"
 msgid "Delay between frames where unspecified:"
-msgstr "指定しない場合のディレイ(_D): "
+msgstr "指定しない場合のディレイ: "
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:288
-#, fuzzy
-#| msgid "_Use delay entered above for all frames"
 msgid "Use _delay entered above for all frames"
-msgstr "全フレームのディレイにこの値を使用(_U)"
+msgstr "この値を全フレームのディレイに使用(_D)"
 
 #: ../plug-ins/file-webp/file-webp-load.c:111
-#, fuzzy, c-format
-#| msgid "Invalid file."
+#, c-format
 msgid "Invalid WebP file '%s'"
-msgstr "不正なファイルです"
+msgstr "'%s' は不正な WebP ファイルです"
 
 #: ../plug-ins/file-webp/file-webp-load.c:210
 #, fuzzy, c-format
@@ -7776,10 +7605,8 @@ msgid "not enough memory to flush bits"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-save.c:105
-#, fuzzy
-#| msgid "Copy parameters"
 msgid "NULL parameter"
-msgstr "コピーパラメーター"
+msgstr "NULL パラメーター"
 
 #: ../plug-ins/file-webp/file-webp-save.c:107
 #, fuzzy
@@ -7817,8 +7644,6 @@ msgid "list terminator"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-save.c:123
-#, fuzzy
-#| msgid "Unknown error"
 msgid "unknown error"
 msgstr "不明なエラーです"
 
@@ -8096,10 +7921,8 @@ msgid "Fractal Explorer"
 msgstr "フラクタルエクスプローラー"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:635
-#, fuzzy
-#| msgid "Realtime preview"
 msgid "Re_altime preview"
-msgstr "プレビュー自動更新"
+msgstr "プレビューの自動更新(_A)"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:643
 msgid "If enabled the preview will be redrawn automatically"
@@ -8116,17 +7939,13 @@ msgstr "サイズ変更"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:667
 #: ../plug-ins/imagemap/imap_menu.c:197
-#, fuzzy
-#| msgid "Zoom In"
 msgid "Zoom _In"
-msgstr "拡大表示"
+msgstr "拡大表示(_I)"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:675
 #: ../plug-ins/imagemap/imap_menu.c:198
-#, fuzzy
-#| msgid "Zoom Out"
 msgid "Zoom _Out"
-msgstr "縮小表示"
+msgstr "縮小表示(_O)"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:692
 msgid "Undo last zoom change"
@@ -8135,10 +7954,8 @@ msgstr "サイズ変更を元に戻します"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:698
 #: ../plug-ins/ifs-compose/ifs-compose.c:1058
 #: ../plug-ins/imagemap/imap_menu.c:164
-#, fuzzy
-#| msgid "Redo"
 msgid "_Redo"
-msgstr "やり直す"
+msgstr "やり直す(_R)"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
 msgid "Redo last zoom change"
@@ -8565,10 +8382,8 @@ msgid "_Grid"
 msgstr "グリッド(_G)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:905
-#, fuzzy
-#| msgid "Preferences..."
 msgid "_Preferences..."
-msgstr "環境設定..."
+msgstr "環境設定(_P)..."
 
 #: ../plug-ins/gfig/gfig-dialog.c:909
 msgid "_Raise"
@@ -8580,59 +8395,47 @@ msgstr "選択オブジェクトを前面に"
 
 #: ../plug-ins/gfig/gfig-dialog.c:913
 msgid "_Lower"
-msgstr "下部境界(_L)"
+msgstr ""
 
 #: ../plug-ins/gfig/gfig-dialog.c:913
 msgid "Lower selected object"
 msgstr "選択オブジェクトを背面に"
 
 #: ../plug-ins/gfig/gfig-dialog.c:917
-#, fuzzy
-#| msgid "pixels from _top"
 msgid "Raise to _top"
-msgstr "ピクセルを上へ(_T)"
+msgstr ""
 
 #: ../plug-ins/gfig/gfig-dialog.c:917
 msgid "Raise selected object to top"
 msgstr "選択オブジェクトを最前面に"
 
 #: ../plug-ins/gfig/gfig-dialog.c:921
-#, fuzzy
-#| msgid "To _bottom"
 msgid "Lower to _bottom"
-msgstr "下へ(_B)"
+msgstr ""
 
 #: ../plug-ins/gfig/gfig-dialog.c:921
 msgid "Lower selected object to bottom"
 msgstr "選択オブジェクトを最背面に"
 
 #: ../plug-ins/gfig/gfig-dialog.c:925
-#, fuzzy
-#| msgctxt "search"
-#| msgid "_Previous"
 msgid "_Previous"
-msgstr "前(_P)"
+msgstr "前へ(_P)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:925
 msgid "Show previous object"
 msgstr "前のオブジェクトを表示"
 
 #: ../plug-ins/gfig/gfig-dialog.c:929
-#, fuzzy
-#| msgctxt "search"
-#| msgid "_Next"
 msgid "_Next"
-msgstr "次(_N)"
+msgstr "次へ(_N)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:929
 msgid "Show next object"
 msgstr "次のオブジェクトを表示"
 
 #: ../plug-ins/gfig/gfig-dialog.c:933
-#, fuzzy
-#| msgid "Show Path"
 msgid "Show _all"
-msgstr "パス表示"
+msgstr "すべて表示(_A)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:933
 msgid "Show all objects"
@@ -8897,10 +8700,8 @@ msgid "Select:"
 msgstr "選択:"
 
 #: ../plug-ins/gimpressionist/brush.c:601
-#, fuzzy
-#| msgid "Save as..."
 msgid "Save _as"
-msgstr "別名で保存..."
+msgstr "名前を付けて保存(_A)..."
 
 #: ../plug-ins/gimpressionist/brush.c:613
 msgid "Aspect ratio:"
@@ -9544,10 +9345,8 @@ msgid "Description"
 msgstr "説明"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:5
-#, fuzzy
-#| msgid "Description _writer:"
 msgid "Description Writer\t"
-msgstr "説明の著者(_W):"
+msgstr "説明の著者\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
 #, fuzzy
@@ -9753,10 +9552,8 @@ msgid "Artwork or Object"
 msgstr "オブジェクトにマップ"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:48
-#, fuzzy
-#| msgid "_Title:"
 msgid "Title"
-msgstr "タイトル(_T):"
+msgstr "タイトル"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:49
 #, fuzzy
@@ -10222,10 +10019,8 @@ msgid "Gradient Flare Editor"
 msgstr "グラデーションフレアエディター"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3457
-#, fuzzy
-#| msgid "Rescan Gradients"
 msgid "_Rescan Gradients"
-msgstr "グラデーション再読み込み"
+msgstr "グラデーションの再読み込み(_R)"
 
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3579
@@ -10413,19 +10208,17 @@ msgstr "検索:"
 #: ../plug-ins/help-browser/dialog.c:1163
 msgctxt "search"
 msgid "_Previous"
-msgstr "前(_P)"
+msgstr "前へ(_P)"
 
 #: ../plug-ins/help-browser/dialog.c:1175
 msgctxt "search"
 msgid "_Next"
-msgstr "次(_N)"
+msgstr "次へ(_N)"
 
 #: ../plug-ins/help-browser/dialog.c:1187
-#, fuzzy
-#| msgid "Close"
 msgctxt "search"
 msgid "_Close"
-msgstr "閉じる"
+msgstr "閉じる(_C)"
 
 #: ../plug-ins/help/gimphelpdomain.c:180
 #, c-format
@@ -10811,7 +10604,7 @@ msgstr "縦の数(_D):"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:210
 msgid "Base _URL:"
-msgstr "基準 _URL:"
+msgstr "基準 URL(_U):"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:229
 #, c-format
@@ -10898,15 +10691,15 @@ msgstr "リンクの種類"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:213
 msgid "_Web Site"
-msgstr "_Web サイト"
+msgstr "ウェブサイト(_W)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "_Ftp Site"
-msgstr "_FTP サイト"
+msgstr "FTP サイト(_F)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "_Gopher"
-msgstr "_Gopher"
+msgstr "Gopher(_G)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:231
 msgid "Ot_her"
@@ -10918,11 +10711,11 @@ msgstr "ファイル(_I)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:243
 msgid "WAI_S"
-msgstr "WAI_S"
+msgstr "WAIS(_S)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:249
 msgid "Tel_net"
-msgstr "Tel_net"
+msgstr "Telnet(_N)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:255
 msgid "e-_mail"
@@ -10934,7 +10727,7 @@ msgstr "この領域がクリックされた場合に使用する URL(_U): (必�
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:263
 msgid "Select HTML file"
-msgstr "HTML ファイル選択"
+msgstr "HTML ファイルの選択"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:272
 msgid "Relati_ve link"
@@ -10962,7 +10755,7 @@ msgstr "プレビュー(_V)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:360
 msgid "_JavaScript"
-msgstr "_JavaScript"
+msgstr "JavaScript(_J)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:459
 msgid "Area Settings"
@@ -11111,10 +10904,8 @@ msgid "Save _As..."
 msgstr "名前を付けて保存(_A)..."
 
 #: ../plug-ins/imagemap/imap_menu.c:158
-#, fuzzy
-#| msgid "Quit"
 msgid "_Quit"
-msgstr "終了"
+msgstr "終了(_Q)"
 
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Undo"
@@ -11126,13 +10917,11 @@ msgstr "やり直す"
 
 #: ../plug-ins/imagemap/imap_menu.c:166
 msgid "Cu_t"
-msgstr ""
+msgstr "切り取り(_T)"
 
 #: ../plug-ins/imagemap/imap_menu.c:170
-#, fuzzy
-#| msgid "Paste"
 msgid "_Paste"
-msgstr "貼り付け"
+msgstr "貼り付け(_P)"
 
 #: ../plug-ins/imagemap/imap_menu.c:176
 msgid "D_eselect All"
@@ -11147,10 +10936,8 @@ msgid "Edit selected area info"
 msgstr "選択した領域情報を編集"
 
 #: ../plug-ins/imagemap/imap_menu.c:182
-#, fuzzy
-#| msgid "Preferences"
 msgid "_Preferences"
-msgstr "設定"
+msgstr "設定(_P)"
 
 #: ../plug-ins/imagemap/imap_menu.c:182
 msgid "Preferences"
@@ -11225,10 +11012,8 @@ msgid "_Contents"
 msgstr "目次(_C)"
 
 #: ../plug-ins/imagemap/imap_menu.c:215
-#, fuzzy
-#| msgid "About"
 msgid "_About"
-msgstr "このプラグインについて"
+msgstr "このプラグインについて(_A)"
 
 #: ../plug-ins/imagemap/imap_menu.c:217
 msgid "_Zoom"
@@ -11418,7 +11203,7 @@ msgstr "作者(_H):"
 
 #: ../plug-ins/imagemap/imap_settings.c:103
 msgid "Default _URL:"
-msgstr "デフォルト _URL:"
+msgstr "既定の URL(_U):"
 
 #: ../plug-ins/imagemap/imap_settings.c:127
 msgid "Map File Format"
@@ -12013,52 +11798,45 @@ msgstr "プレビュー自動更新(_L)"
 
 #: ../plug-ins/metadata/metadata-editor.c:437
 msgid "_Edit Metadata"
-msgstr ""
+msgstr "メタデータの編集(_E)"
 
 #: ../plug-ins/metadata/metadata-editor.c:441
-#, fuzzy
-#| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
-msgstr "EXIF、IPTC、XMP 形式ファイルのメタデータの閲覧と編集を行います"
+msgstr "メタデータ (IPTC, EXIF, XMP) の編集を行います"
 
 #: ../plug-ins/metadata/metadata-editor.c:553
 msgid "Error loading metadata-editor dialog."
-msgstr ""
+msgstr "メタデータエディターダイアログの読み込みエラーです。"
 
 #: ../plug-ins/metadata/metadata-editor.c:564
 #, c-format
 msgid "Metadata Editor: %s"
-msgstr ""
+msgstr "メタデータエディター: %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:573
 msgid "_Write Metadata"
-msgstr ""
+msgstr "メタデータの書き込み(_W)"
 
 #: ../plug-ins/metadata/metadata-editor.c:597
-#, fuzzy
-#| msgid "Import _paths"
 msgid "Import metadata"
-msgstr "パスをインポートする(_P)"
+msgstr "メタデータのインポート"
 
 #: ../plug-ins/metadata/metadata-editor.c:599
 msgid "Export metadata"
-msgstr ""
+msgstr "メタデータのエクスポート"
 
 #: ../plug-ins/metadata/metadata-editor.c:807
-#, fuzzy, c-format
-#| msgid "Error loading PNG file: %s"
+#, c-format
 msgid "Error loading calendar. %s"
-msgstr "PNG形式ファイル読み込み時にエラーが発生しました。 %s"
+msgstr "カレンダーの読み込みエラーです。 %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:835
 msgid "Calendar Date:"
-msgstr ""
+msgstr "カレンダーの日付:"
 
 #: ../plug-ins/metadata/metadata-editor.c:839
-#, fuzzy
-#| msgid "Insertion Date"
 msgid "Set Date"
-msgstr "導入日時"
+msgstr "日付の設定"
 
 #: ../plug-ins/metadata/metadata-editor.c:1573
 msgid ""
@@ -12087,25 +11865,19 @@ msgstr ""
 #: ../plug-ins/metadata/metadata-editor.c:4413
 #, c-format
 msgid "Failed to set metadata tag %s"
-msgstr ""
+msgstr "メタデータタグ %s の設定に失敗しました"
 
 #: ../plug-ins/metadata/metadata-editor.c:5722
-#, fuzzy
-#| msgid "Import XMP from File"
 msgid "Import Metadata File"
-msgstr "XMP をファイルからインポート"
+msgstr "メタデータファイルのインポート"
 
 #: ../plug-ins/metadata/metadata-editor.c:5757
-#, fuzzy
-#| msgid "Export XMP to File"
 msgid "Export Metadata File"
-msgstr "XMP をファイルにエクスポート"
+msgstr "メタデータファイルのエクスポート"
 
 #: ../plug-ins/metadata/metadata-editor.c:5761
-#, fuzzy
-#| msgid "_Import"
 msgid "_Export"
-msgstr "インポート(_I)"
+msgstr "エクスポート(_E)"
 
 #: ../plug-ins/metadata/metadata-tags.c:169
 msgid "Original digital capture of a real life scene"
@@ -12124,10 +11896,8 @@ msgid "Digitized from a print on non-transparent medium"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.c:173
-#, fuzzy
-#| msgid "Create star"
 msgid "Created by software"
-msgstr "星の作成"
+msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.c:183
 #: ../plug-ins/metadata/metadata-tags.c:195
@@ -12226,10 +11996,8 @@ msgstr ""
 #: ../plug-ins/metadata/metadata-tags.c:268
 #: ../plug-ins/metadata/metadata-tags.c:275
 #: ../plug-ins/metadata/metadata-tags.c:282
-#, fuzzy
-#| msgid "Unknown error"
 msgid "Unknown"
-msgstr "不明なエラーです"
+msgstr "不明"
 
 #. DO NOT SAVE
 #: ../plug-ins/metadata/metadata-tags.c:233
@@ -12241,62 +12009,52 @@ msgstr "著作権表示:"
 #. TRUE
 #: ../plug-ins/metadata/metadata-tags.c:234
 msgid "Public Domain"
-msgstr ""
+msgstr "パブリックドメイン"
 
 #: ../plug-ins/metadata/metadata-tags.c:241
 #: ../plug-ins/metadata/metadata-tags.c:258
-#, fuzzy
-#| msgid "Select all"
 msgid "Select a value"
-msgstr "すべてを選択"
+msgstr "値を選択してください"
 
 #: ../plug-ins/metadata/metadata-tags.c:242
 msgid "Work"
-msgstr ""
+msgstr "仕事用"
 
 #: ../plug-ins/metadata/metadata-tags.c:243
 msgid "Cell"
-msgstr ""
+msgstr "携帯"
 
 #: ../plug-ins/metadata/metadata-tags.c:244
-#, fuzzy
-#| msgid "Fan"
 msgid "Fax"
-msgstr "ファン"
+msgstr "FAX"
 
 #: ../plug-ins/metadata/metadata-tags.c:245
 msgid "Home"
-msgstr ""
+msgstr "自宅"
 
 #: ../plug-ins/metadata/metadata-tags.c:246
-#, fuzzy
-#| msgid "Pages:"
 msgid "Pager"
-msgstr "ページ:"
+msgstr "無線"
 
 #: ../plug-ins/metadata/metadata-tags.c:259
 msgid "Male"
-msgstr ""
+msgstr "男性"
 
 #: ../plug-ins/metadata/metadata-tags.c:260
 msgid "Female"
-msgstr ""
+msgstr "女性"
 
 #: ../plug-ins/metadata/metadata-tags.c:261
-#, fuzzy
-#| msgid "_Other:"
 msgid "Other"
-msgstr "その他(_O):"
+msgstr "その他"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
 msgid "Above sea level"
-msgstr ""
+msgstr "海抜"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#, fuzzy
-#| msgid "_Black level:"
 msgid "Below sea level"
-msgstr "黒レベル(_B):"
+msgstr "海面下"
 
 #: ../plug-ins/metadata/metadata-tags.c:275
 msgid "North"
@@ -12316,22 +12074,20 @@ msgstr ""
 
 #: ../plug-ins/metadata/metadata-viewer.c:171
 msgid "_View Metadata"
-msgstr ""
+msgstr "メタデータの表示(_V)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:175
-#, fuzzy
-#| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "View metadata (Exif, IPTC, XMP)"
-msgstr "EXIF、IPTC、XMP 形式ファイルのメタデータの閲覧と編集を行います"
+msgstr "メタデータ (Exif, IPTC, XMP) を閲覧します"
 
 #: ../plug-ins/metadata/metadata-viewer.c:265
 msgid "Error loading metadata-viewer dialog."
-msgstr ""
+msgstr "メタデータビューアーダイアログの読み込みエラーです。"
 
 #: ../plug-ins/metadata/metadata-viewer.c:276
 #, c-format
 msgid "Metadata Viewer: %s"
-msgstr ""
+msgstr "メタデータビューアー: %s"
 
 #: ../plug-ins/metadata/metadata-viewer.c:368
 #, c-format
@@ -12339,14 +12095,12 @@ msgid "(%lu more character(s))"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-viewer.c:527
-#, fuzzy
-#| msgid "Parameters"
 msgid " meter"
-msgstr "パラメーター"
+msgstr " メートル"
 
 #: ../plug-ins/metadata/metadata-viewer.c:528
 msgid " feet"
-msgstr ""
+msgstr " フィート"
 
 #: ../plug-ins/metadata/metadata-viewer.c:624
 #, c-format
@@ -12477,10 +12231,8 @@ msgid "Print the image"
 msgstr "画像を印刷します"
 
 #: ../plug-ins/print/print.c:184
-#, fuzzy
-#| msgid "Page Set_up"
 msgid "Page Set_up..."
-msgstr "ページ設定(_U)"
+msgstr "ページ設定(_U)..."
 
 #: ../plug-ins/print/print.c:189
 msgid "Adjust page size and orientation for printing"
@@ -12526,7 +12278,7 @@ msgstr "単一ウィンドウ(_W)"
 
 #: ../plug-ins/screenshot/screenshot.c:592
 msgid "Include window _decoration"
-msgstr "ウィンドウのデコレーションも含める(_D)"
+msgstr "ウィンドウ装飾を含める(_D)"
 
 #: ../plug-ins/screenshot/screenshot.c:613
 #: ../plug-ins/screenshot/screenshot.c:658
@@ -12546,10 +12298,8 @@ msgid "Delay"
 msgstr "取り込むまでの待ち時間"
 
 #: ../plug-ins/screenshot/screenshot.c:724
-#, fuzzy
-#| msgid "Selection Type:"
 msgid "Selection delay: "
-msgstr "選択種:"
+msgstr "選択の待ち時間:"
 
 #. translators: this is the unit label of a spinbutton
 #: ../plug-ins/screenshot/screenshot.c:740
@@ -12571,14 +12321,12 @@ msgid "At the end of the delay, click in a window to snap it."
 msgstr "待ち時間経過後に取り込みたいウィンドウをクリックしてください"
 
 #: ../plug-ins/screenshot/screenshot.c:783
-#, fuzzy
-#| msgid "Screenshot"
 msgid "Screenshot dela_y: "
-msgstr "スクリーンショット"
+msgstr "スクリーンショットの待ち時間(_Y):"
 
 #: ../plug-ins/screenshot/screenshot.c:811
 msgid "After the delay, the screenshot is taken."
-msgstr "指定した待ち時間の後にスクリーンショットが取り込まれます"
+msgstr "指定した待ち時間の後にスクリーンショットが取り込まれます。"
 
 #: ../plug-ins/screenshot/screenshot.c:813
 msgid "Once the region is selected, it will be captured after this delay."
@@ -12589,26 +12337,20 @@ msgid "Once the window is selected, it will be captured after this delay."
 msgstr ""
 
 #: ../plug-ins/screenshot/screenshot.c:824
-#, fuzzy
-#| msgid "After the delay, the screenshot is taken."
 msgid "After the delay, the active window will be captured."
-msgstr "指定した待ち時間の後にスクリーンショットが取り込まれます"
+msgstr "指定した待ち時間の後にアクティブウィンドウをキャプチャーします。"
 
 #: ../plug-ins/screenshot/screenshot.c:831
-#, fuzzy
-#| msgid "Color fill"
 msgid "Color Profile"
-msgstr "色で塗りつぶす"
+msgstr "カラープロファイル"
 
 #: ../plug-ins/screenshot/screenshot.c:836
 msgid "Tag image with _monitor profile"
-msgstr ""
+msgstr "モニターのプロファイルで画像にタグ付けする(_M)"
 
 #: ../plug-ins/screenshot/screenshot.c:840
-#, fuzzy
-#| msgid "Convert to RGB"
 msgid "Convert image to sR_GB"
-msgstr "RGB 画像に変換:"
+msgstr "画像を sRGB に変換する(_G)"
 
 #: ../plug-ins/screenshot/screenshot-win32.c:297
 msgid "No data captured"
