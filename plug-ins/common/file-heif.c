@@ -1764,6 +1764,13 @@ save_image (GFile                        *file,
       return FALSE;
     }
 
+  /* workaround for a bug in libheif when heif_encoder_set_lossless is not working
+     (known problem with encoding via rav1e) */
+  if (lossless)
+    {
+      quality = 100;
+    }
+
   heif_encoder_set_lossy_quality (encoder, quality);
   heif_encoder_set_lossless (encoder, lossless);
   /* heif_encoder_set_logging_level (encoder, logging_level); */
