@@ -1536,7 +1536,17 @@ save_image (GFile                        *file,
       return FALSE;
     }
 
-  heif_encoder_set_lossy_quality (encoder, params->quality);
+  /* workaround for a bug in libheif when heif_encoder_set_lossless is not working
+     (known problem with encoding via rav1e) */
+  if (params->lossless)
+    {
+      heif_encoder_set_lossy_quality (encoder, 100);
+    }
+  else
+    {
+      heif_encoder_set_lossy_quality (encoder, params->quality);
+    }
+
   heif_encoder_set_lossless (encoder, params->lossless);
   /* heif_encoder_set_logging_level (encoder, logging_level); */
 
