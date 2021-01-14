@@ -107,6 +107,12 @@ static void               load_paths       (TIFF              *tif,
                                             gint               offset_x,
                                             gint               offset_y);
 
+static gboolean   is_non_conformant_tiff   (gushort            photomet,
+                                            gushort            spp);
+static gushort    get_extra_channels_count (gushort            photomet,
+                                            gushort            spp,
+                                            gboolean           alpha);
+
 static void               fill_bit2byte    (void);
 static void               fill_2bit2byte   (void);
 static void               fill_4bit2byte   (void);
@@ -150,6 +156,57 @@ tiff_get_page_name (TIFF *tif)
     }
 
   return NULL;
+}
+
+/* is_non_conformant_tiff assumes TIFFTAG_EXTRASAMPLES was not set */
+static gboolean
+is_non_conformant_tiff (gushort photomet, gushort spp)
+{
+  switch (photomet)
+    {
+    case PHOTOMETRIC_RGB:
+    case PHOTOMETRIC_YCBCR:
+    case PHOTOMETRIC_CIELAB:
+    case PHOTOMETRIC_ICCLAB:
+    case PHOTOMETRIC_ITULAB:
+    case PHOTOMETRIC_LOGLUV:
+      return (spp > 3 || (spp == 2 && photomet != PHOTOMETRIC_RGB));
+      break;
+    case PHOTOMETRIC_SEPARATED:
+      return (spp > 4);
+      break;
+    default:
+      return (spp > 1);
+      break;
+    }
+}
+
+/* get_extra_channels_count returns number of channels excluding
+ * alpha and color channels
+ */
+static gushort
+get_extra_channels_count (gushort photomet, gushort spp, gboolean alpha)
+{
+  switch (photomet)
+    {
+    case PHOTOMETRIC_RGB:
+    case PHOTOMETRIC_YCBCR:
+    case PHOTOMETRIC_CIELAB:
+    case PHOTOMETRIC_ICCLAB:
+    case PHOTOMETRIC_ITULAB:
+    case PHOTOMETRIC_LOGLUV:
+      if (spp >= 3)
+        return spp - 3 - (alpha? 1 : 0);
+      else
+        return spp - 1 - (alpha? 1 : 0);
+      break;
+    case PHOTOMETRIC_SEPARATED:
+      return spp - 4 - (alpha? 1 : 0);
+      break;
+    default:
+      return spp - 1 - (alpha? 1 : 0);
+      break;
+    }
 }
 
 GimpPDBStatusType
@@ -294,11 +351,7 @@ load_image (GFile        *file,
               extra_message = _("Extra channels with unspecified data.");
               break;
             }
-          else if (extra == 0 &&
-                   ((photomet == PHOTOMETRIC_RGB && spp > 3) ||
-                    /* All other color space expect 1 channel (grayscale,
-                     * palette, mask). */
-                    (photomet != PHOTOMETRIC_RGB && spp > 1)))
+          else if (extra == 0 && is_non_conformant_tiff (photomet, spp))
             {
               /* ExtraSamples field not set, yet we have more channels than
                * the PhotometricInterpretation field suggests.
@@ -308,7 +361,6 @@ load_image (GFile        *file,
                * Let's ask what to do with the channel.
                */
               extra_message = _("Non-conformant TIFF: extra channels without 'ExtraSamples' field.");
-              break;
             }
         }
       TIFFSetDirectory (tif, 0);
@@ -587,8 +639,7 @@ load_image (GFile        *file,
         }
       else /* extra == 0 */
         {
-          if ((photomet == PHOTOMETRIC_RGB && spp > 3) ||
-              (photomet != PHOTOMETRIC_RGB && spp > 1))
+          if (is_non_conformant_tiff (photomet, spp))
             {
               if (run_mode != GIMP_RUN_INTERACTIVE)
                 g_message ("File '%s' does not conform to TIFF specification: "
@@ -617,10 +668,7 @@ load_image (GFile        *file,
             }
         }
 
-      if (photomet == PHOTOMETRIC_RGB && spp > 3 + (alpha ? 1 : 0) + extra)
-        extra = spp - 3 - (alpha ? 1 : 0);
-      else if (photomet != PHOTOMETRIC_RGB && spp > 1 + (alpha ? 1 : 0) + extra)
-        extra = spp - 1 - (alpha ? 1 : 0);
+      extra = get_extra_channels_count (photomet, spp, alpha);
 
       is_bw     = FALSE;
       is_signed = sampleformat == SAMPLEFORMAT_INT;
