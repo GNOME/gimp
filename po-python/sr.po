@@ -4,55 +4,55 @@
 # This file is distributed under the same license as the gimp package.
 #
 # Maintainer: Милош Поповић <gpopac@gmail.com>
-# Милош Поповић <gpopac@gmail.com>, 2011, 2015.
+# Милош Поповић <gpopac@gmail.com>, 2011-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2015-09-29 05:56+0000\n"
-"PO-Revision-Date: 2015-10-01 13:54+0200\n"
+"POT-Creation-Date: 2021-01-15 00:31+0000\n"
+"PO-Revision-Date: 2021-01-15 02:33+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
-"Language-Team: српски <gnome-sr@googlegroups.org>\n"
+"Language-Team: Serbian <gnome-sr@googlegroups.com>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2\n"
+"X-Generator: Gtranslator 3.38.0\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
 msgstr "Недостају подаци о изузецима"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pygimp/gimpfu.py:404
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Грешка при покретању %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pygimp/gimpfu.py:415
 msgid "_More Information"
 msgstr "_Додатни подаци"
 
-#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:539
-#: ../plug-ins/pygimp/gimpfu.py:545
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
+#: ../plug-ins/pygimp/gimpfu.py:546
 msgid "No"
 msgstr "Не"
 
-#: ../plug-ins/pygimp/gimpfu.py:537 ../plug-ins/pygimp/gimpfu.py:545
+#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
 msgid "Yes"
 msgstr "Да"
 
-#: ../plug-ins/pygimp/gimpfu.py:598 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Питонов избор датотеке"
 
-#: ../plug-ins/pygimp/gimpfu.py:644
+#: ../plug-ins/pygimp/gimpfu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Питонов избор фасцикле"
 
-#: ../plug-ins/pygimp/gimpfu.py:733
+#: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Није исправан унос за „%s“"
@@ -66,22 +66,26 @@ msgid "Saving as colored XHTML"
 msgstr "Чувам као XHTML у боји"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#| msgid "Saving as colored XHTML"
 msgid "Save as colored XHTML"
 msgstr "Сачувај као XHTML у боји"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#| msgid "Colored HTML text"
 msgid "Colored XHTML"
 msgstr "XHTML у боји"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#| msgid "Characters"
 msgid "Character _source"
-msgstr "_Извор знакова"
+msgstr "И_звор знака"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Изворни код"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#| msgid "Text"
 msgid "Text file"
 msgstr "Текстуална датотека"
 
@@ -106,50 +110,51 @@ msgid "Gradient to use"
 msgstr "Прелив који се користи"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+#| msgid "File"
 msgid "File Name"
-msgstr "Име датотеке"
+msgstr "Назив датотеке"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Извози хистограм слике у текстуалну датотеку (CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
 msgid "_Export histogram..."
-msgstr "Извези _хистограм..."
+msgstr "Извези _хистограм…"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
 msgid "_Image"
 msgstr "_Слика"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "_Drawable"
 msgstr "_Цртљиво"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "Histogram _File"
 msgstr "_Датотека са хистограмом"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
 msgid "_Bucket Size"
 msgstr "Величина _кантице"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
 msgid "Sample _Average"
 msgstr "_Просек узорка"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Output format"
 msgstr "Излазни формат"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Pixel count"
 msgstr "Број пиксела"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "Normalized"
 msgstr "Нормализовано"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
 msgid "Percent"
 msgstr "Проценат"
 
@@ -162,6 +167,7 @@ msgid "_Fog..."
 msgstr "_Магла..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#| msgid "Layer name"
 msgid "_Layer name"
 msgstr "_Назив слоја"
 
@@ -170,14 +176,17 @@ msgid "Clouds"
 msgstr "Облаци"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:67
+#| msgid "Fog color"
 msgid "_Fog color"
 msgstr "_Боја магле"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:68
+#| msgid "Turbulence"
 msgid "_Turbulence"
 msgstr "_Турбуленција"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:69
+#| msgid "Opacity"
 msgid "Op_acity"
 msgstr "_Непровидност"
 
@@ -187,7 +196,7 @@ msgstr "Помера боје у палети"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
-msgstr "_Померај палете..."
+msgstr "_Померај палете…"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
@@ -221,7 +230,6 @@ msgid "Hue"
 msgstr "Нијанса"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-#| msgid "Green or Saturation"
 msgid "Saturation"
 msgstr "Засићеност"
 
@@ -307,7 +315,6 @@ msgid "_Ascending"
 msgstr "_Растуће"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
-#| msgid "Channel to _sort"
 msgid "Secondary Channel to s_ort"
 msgstr "Секундарни канали за _ређање"
 
@@ -344,82 +351,83 @@ msgid "Slice"
 msgstr "Парче"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "Исеца слику по вођицама, правећи слике и исечке за ХТМЛ табелу"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#| msgid "Slice"
 msgid "_Slice..."
-msgstr "_Испарчај..."
+msgstr "_Парче…"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "Путања за извоз ХТМЛ-а"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "Име датотеке за извоз"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "Префикс имена слике"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
 msgstr "Формат слике"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Засебна фасцикла за слику"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Фасцикла за извоз слике"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "Размак измеђи елемената у табели"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "Јаваскрипт за „onmouseover“ и „clicked“"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "Искључи анимацију за ивична поља табеле"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
 msgstr "Питонова конзола"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
 msgstr "_Разгледај..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pygimp/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
 msgstr "Разгледач Питонових процедура"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не могу да отворим „%s“ за упис: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pygimp/plug-ins/python-console.py:198
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Не могу да упишем у „%s“: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
 msgstr "Сачувај излаз Питонове конзоле"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#: ../plug-ins/pygimp/plug-ins/python-console.py:232
 msgid "Interactive GIMP Python interpreter"
 msgstr "Покреће интерактивни интерпретер за Гимпов Питон"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pygimp/plug-ins/python-console.py:237
 msgid "_Console"
 msgstr "_Конзола"
 
@@ -451,6 +459,497 @@ msgstr "По_мерај сенке по X оси"
 msgid "Drop shadow _Y displacement"
 msgstr "Пом_ерај сенке по Y оси"
 
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
+msgid "Spyro Layer"
+msgstr "Спиро слој"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
+msgid "Spyro Path"
+msgstr "Спиро путања"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
+#| msgid "As New Layer"
+msgid ""
+"Save\n"
+"as New Layer"
+msgstr ""
+"Сачувај\n"
+"као нови слој"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:57
+#| msgid "Redraw on last active layer"
+msgid ""
+"Redraw on\n"
+"Active layer"
+msgstr ""
+"Поново исцртај\n"
+"активни слој"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:58
+#| msgid "As Path"
+msgid ""
+"Save\n"
+"as Path"
+msgstr ""
+"Сачувај\n"
+"као путању"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:104
+msgid "Circle"
+msgstr "Круг"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:140
+msgid "Polygon-Star"
+msgstr "Полигон-звезда"
+
+#. Sine wave on a circle ring.
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:156
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:947
+msgid "Sine"
+msgstr "Синус"
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:166
+msgid "Bumps"
+msgstr "Испупчења"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
+msgid "Rack"
+msgstr "Сталак"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
+msgid "Frame"
+msgstr "Оквир"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:404
+msgid "Selection"
+msgstr "Избор"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:494
+msgid "Pencil"
+msgstr "Оловка"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:510
+msgid "AirBrush"
+msgstr "Цпреј"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:570
+msgid "Preview"
+msgstr "Преглед"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:575
+msgid "Stroke"
+msgstr "Потез"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:622
+msgid "PaintBrush"
+msgstr "Четкица"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:624
+msgid "Ink"
+msgstr "Мастило"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:625
+msgid "MyPaintBrush"
+msgstr "МојаЧеткица"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:933
+msgid "Spyrograph"
+msgstr "Спирограф"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:940
+msgid "Epitrochoid"
+msgstr "Епитрохоида"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:967
+msgid "Lissajous"
+msgstr "Лисажова крива"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1397
+msgid "Curve Type"
+msgstr "Врста криве"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1398
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+"Шара у облику епитрохоида се исцртава када помични зупчаник клизи око "
+"фиксног зупчаника."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1403
+msgid "Tool"
+msgstr "Алат"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr "Алат са којим се црта шара. Преглед алата исцртава на брзину."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+msgid "Long Gradient"
+msgstr "Дугачки прелив"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1411
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+"Када није изабрано, користе се тренутне поставке алата. Када је избрано, "
+"користи се дугачки прелив у дужини шаре, на основу тренутног прелива и режим "
+"понављања из поставки алата за преливе."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+msgid "Specify pattern using one of the following tabs:"
+msgstr "Одреди шару уз помоћ једне од следећих картица:"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1433
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"Шара је одређена само активном картицом. Играчке су сличне Зупчаницима, али "
+"користе зупчанике и целе бројеве који се не могу наћи у играчкама.Уколико "
+"пратите упутства из играчке, резултати ће бити слични."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+"Број зубаца фиксног зупчаника. Величина фиксног зупчаника је пропорционална "
+"броју зубаца."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1460
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1486
+msgid "Fixed Gear Teeth"
+msgstr "Зубци фиксног зупчаника"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1466
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+"Број зубаца помичног зупчаника. Величина помичног зупчаника је "
+"пропорционална броју зубаца."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1469
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1491
+msgid "Moving Gear Teeth"
+msgstr "Зубци помичног зупчаника"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
+msgid "Hole percent"
+msgstr "Проценат од рупе"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+"Колико је удаљена рупа од центра помичног зупчаника. 100% значи да је рупа "
+"на ивици зупчаника."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
+msgid "Hole Number"
+msgstr "Број рупе"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"Рупа #1 је на почетку зупчаника. Највећи број рупа је у близини центра. "
+"Највећи број рупе се разликује за сваки зупчаник."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+msgid "Flower Petals"
+msgstr "Латице цвета"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+msgid "The number of petals in the pattern."
+msgstr "Одређује број латица у шари."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
+msgid "Petal Skip"
+msgstr "Прескок латице"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
+msgid "The number of petals to advance for drawing the next petal."
+msgstr "Број латица које се прескачу ради цртања наредне латице."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
+msgid "Hole Radius(%)"
+msgstr "Полупречник рупе (%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+"Полупречник рупе у центру шаре где ништа неће бити нацртано. Даје се као "
+"проценат величине шаре. Вредност 0 неће направити рупу. Вредност 99 ће "
+"направити танку линије на ивици."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
+msgid "Width(%)"
+msgstr "Ширина (%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1534
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+"Ширина шаре као проценат величине шаре. Вредност 1 ће нацртати танку шару. "
+"Вредност 100 ће попунити цео фиксни зупчаник."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
+msgid "Visual"
+msgstr "Визуелно"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
+msgid "Toy Kit"
+msgstr "Играчка"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
+msgid "Gears"
+msgstr "Зупчаници"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1566
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
+msgid "Rotation"
+msgstr "Ротација"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1567
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+"Ротација шаре у степенима. Почетни положај помичног зупчаника у фиксном "
+"зупчанику."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
+msgid "Shape"
+msgstr "Облик"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1591
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+"Облик фиксног зупчаника који се користи унутар тренутног избора. Сталак је "
+"дугачак, са заобљеним ивицама међу играчкама. Оквир належе на границе "
+"правоугаоног избора, користи рупа=100 у зупчанику да би дотакао границе. "
+"Избор ће налећи на границе тренутног избора - пробајте нешто што није "
+"правоугаоник."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
+msgid "Sides"
+msgstr "Странице"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
+msgid "Number of sides of the shape."
+msgstr "Број страница облика."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
+msgid "Morph"
+msgstr "Промена"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr "Мења облик зупчаника. Одређује само неке од облика."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "Ротација фиксног зупчаника у степенима"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
+msgid "Margin (px)"
+msgstr "Маргина (px)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
+msgid "Margin from edge of selection."
+msgstr "Маргина од ивице избора"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+msgid "Make width and height equal"
+msgstr "Иста видина и ширина"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1632
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+"Када није избрано, шара ће бити испуњена тренутном сликом или избором. Када "
+"је укључено, шара ће имати исту ширину и висину и биће у средини."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1656
+msgid "Re_draw"
+msgstr "_Поново исцртај"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+"Уколико промените подешавања алата, промените боју или измените избор, "
+"притисните на овај преглед како изгледа шара."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
+msgid "_Reset"
+msgstr "_Врати"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
+msgid "_Cancel"
+msgstr "_Откажи"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
+msgid "_OK"
+msgstr "_У реду"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1667
+msgid ""
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr ""
+"Изаберите да ли да сачува у нови слој, изцрта у последњем активном слоју или "
+"сачувате као путању"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
+msgid "Spyrogimp"
+msgstr "Спирограф"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr "Цртање спирографом користећи подешавања тренутног алата и избора."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1701
+msgid "Curve Pattern"
+msgstr "Шара кривуље"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1704
+msgid "Fixed Gear"
+msgstr "Фиксни зупчаник"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1707
+msgid "Size"
+msgstr "Величина"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2047
+msgid "Rendering Pattern"
+msgstr "Изцртавам шару"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2059
+msgid "Please wait : Rendering Pattern"
+msgstr "Сачекајте: Исцртавам шару"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
+msgid "Spyrogimp..."
+msgstr "Спирограф…"
+
+#~| msgid "Save as colored XHTML"
+#~ msgid "Save as colored HTML text..."
+#~ msgstr "Сачувај као HTML текст у боји…"
+
+#~ msgid "Read characters from file..."
+#~ msgstr "Учитај знаке из датотеке…"
+
+#~ msgid "Characters that will be used as colored pixels. "
+#~ msgstr "Знаци који ће бити коришћени као пиксели у боји."
+
+#~ msgid "Characters or file location"
+#~ msgstr "Знаци или место датотеке"
+
+#~| msgid "_File to read or characters to use"
+#~ msgid "Read characters from file"
+#~ msgstr "Учитај знаке из датотеке"
+
+#~ msgid ""
+#~ "If set, the Characters text entry will be used as a file name, from which "
+#~ "the characters will be read. Otherwise, the characters in the text entry "
+#~ "will be used to render the image."
+#~ msgstr ""
+#~ "Уколико је постављено, знаковни унос текста ће бити коришћен као назив "
+#~ "датотеке, на основу кога ће знаци бити прочитани. У супротном, знаци у "
+#~ "текстуалном пољу ће бити коришћени за исцртавање слике."
+
+#~| msgid "Text file"
+#~ msgid "Choose file"
+#~ msgstr "Изаберите датотеку"
+
+#~ msgid "Font Size(px)"
+#~ msgstr "Величина фонта (px)"
+
+#~| msgid "_Write a separate CSS file"
+#~ msgid "Write separate CSS file"
+#~ msgstr "Упиши засебну CSS датотеку"
+
+#~ msgid "_Read characters from file, if true, or use text entry"
+#~ msgstr ""
+#~ "_Учитај знаке из датотеке, уколико је тачно или користи текстуални унос"
+
+#~| msgid "Save as colored XHTML"
+#~ msgid "Save as colored HTML text"
+#~ msgstr "Сачувај као HTML текст у боји"
+
+#~| msgid "_Slice..."
+#~ msgid "CSS file..."
+#~ msgstr "CSS датотека…"
+
+#~ msgid "File is either a directory or file name is empty."
+#~ msgstr "Датотека је директоријум или је назив датотеке празан."
+
+#~ msgid "Directory not found."
+#~ msgstr "Директоријум није пронађен."
+
+#~ msgid "Histogram Export..."
+#~ msgstr "Извоз хистограма…"
+
+#~| msgid "_Slice..."
+#~ msgid "_File..."
+#~ msgstr "_Датотека…"
+
+#~ msgid "Choose export file..."
+#~ msgstr "Изаберите датотеку за извоз…"
+
+#~| msgid "Histogram _File"
+#~ msgid "Histogram Export file..."
+#~ msgstr "Извозна датотека за хистограм…"
+
+#~ msgid ""
+#~ "If checked, the histogram is generated from merging all visible layers. "
+#~ "Otherwise, the histogram is only for the current layer."
+#~ msgstr ""
+#~ "Уколико је омогућено, хистограм ће бити направљен спајањем свих видљивих "
+#~ "слојева. У супротном, хистограм ће бити направљен само за тренутни слој."
+
+#~| msgid "Output format"
+#~ msgid "_Output Format"
+#~ msgstr "_Излазни формат"
+
+#~ msgid "Offset"
+#~ msgstr "Померај"
+
+#~| msgid "_Offset Palette..."
+#~ msgid "Offset Palette..."
+#~ msgstr "Померај палете…"
+
+#~| msgid "Python Console"
+#~ msgid "Python _Console"
+#~ msgstr "Питонова _конзола"
+
+#~ msgid "Save"
+#~ msgstr "Сачувај"
+
 #~ msgid "Color _model"
 #~ msgstr "_Модел боја"
 
@@ -477,6 +976,3 @@ msgstr "Пом_ерај сенке по Y оси"
 
 #~ msgid "Pixel Size"
 #~ msgstr "Величина пиксела"
-
-#~ msgid "Text"
-#~ msgstr "Текст"
