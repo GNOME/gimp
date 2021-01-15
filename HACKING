@@ -3,12 +3,16 @@ Requirements
 If you want to hack on the GIMP project, it will make your life easier
 to have the following packages (or newer versions) installed:
 
-    * GNU autoconf 2.54
+    * GNU autoconf 2.54 or over
         - ftp://ftp.gnu.org/gnu/autoconf/
-    * GNU automake 1.9 (automake 1.10 should also work)
+    * GNU automake 1.13 or over
         - ftp://ftp.gnu.org/gnu/automake/
-    * GNU libtool 1.5
+    * GNU libtool 1.5 or over
         - ftp://ftp.gnu.org/gnu/libtool/
+
+Alternatively a build with meson 0.54.0 or over is possible but it is
+not complete yet, hence not usable for packaging (yet usable for
+development).
 
 Fine GNU mirrors are listed at https://www.gnu.org/prep/ftp.html
 Beta software can be found at alpha.gnu.org.
@@ -96,7 +100,10 @@ Patches
 -------
 
 The best way to submit patches is to provide files created with
-git-format-patch.
+git-format-patch. The recommended command for a patch against the
+`master` branch is:
+
+  $ git format-patch origin/master
 
 It is recommended that you file a bug report at
 https://gitlab.gnome.org/GNOME/gimp
@@ -151,6 +158,21 @@ style is enforced.  The GIMP coding style is defined as follows:
         - Function header have the return type on one line, the name
           starting in the first column of the following line. All
           parameters are prototyped and there's a new line for each.
+
+    * Align relevant listing:
+        - In declaration and definition of functions, each parameter
+          should be on a new line and aligned with the first one.
+        - In function calls, if the call is too long and spans on
+          several lines, you should align the parameters with the first
+          one.
+        - Blocks of variable declaration/initialization should align the
+          variable names, allowing quick skimming of the variable list.
+        - Function names in blocks of function declarations should be
+          aligned.
+
+    * Avoid trailing whitespaces. Any editor should have a function to
+      warn of trailing spaces/tabs. By default, git colorization also
+      warns about trailing whitespaces.
 
 The source tree contains local config files which can be used to set the
 right coding style in common editors: `.dir-locals.el` for Emacs,
