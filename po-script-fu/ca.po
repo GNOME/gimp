@@ -149,7 +149,7 @@ msgstr "_Cancel·la"
 #: ../plug-ins/script-fu/script-fu-console.c:325
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "No s'ha pogut obrir «%s» per escriure: %s"
+msgstr "No s'ha pogut obrir «%s» per a escriure: %s"
 
 #: ../plug-ins/script-fu/script-fu-console.c:354
 msgid "Script-Fu Procedure Browser"
@@ -346,7 +346,7 @@ msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
 msgstr ""
-"Crea capes intermèdies per superposar i fondre dues o més capes damunt d'un "
+"Crea capes intermèdies per a superposar i fondre dues o més capes damunt d'un "
 "fons per animació"
 
 # Quim: nombre de imatges que es posen entre mig de dos fotogrames per fer una transició en Blend animation
@@ -380,7 +380,7 @@ msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
-"Crea capes intermèdies per produir una transició animada i cremada entre "
+"Crea capes intermèdies per a produir una transició animada i cremada entre "
 "dues capes"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
@@ -448,7 +448,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:200
 msgid "Image to carve"
-msgstr "Imatge per esculpir"
+msgstr "Imatge per a esculpir"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:201
 msgid "Carve white areas"
@@ -1158,7 +1158,7 @@ msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
-"El nom del fitxer per crear (si és un fitxer amb un nom que ja existeix, "
+"El nom del fitxer per a crear (si és un fitxer amb un nom que ja existeix, "
 "serà reemplaçat)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235

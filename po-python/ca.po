@@ -54,7 +54,7 @@ msgid ""
 msgstr ""
 "Si es defineix, s'utilitzarà l'entrada de text de Caràcters com a nom de "
 "fitxer, a partir del qual es llegiran els caràcters. En cas contrari, "
-"s'utilitzaran els caràcters de l'entrada de text per renderitzar la imatge."
+"s'utilitzaran els caràcters de l'entrada de text per a renderitzar la imatge."
 
 #: ../plug-ins/python/colorxhtml.py:138
 msgid "Choose file"
@@ -445,7 +445,7 @@ msgstr "Navegador de procediments Python"
 #: ../plug-ins/python/python-console/python-console.py:207
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "No s'ha pogut obrir «%s» per escriure: %s"
+msgstr "No s'ha pogut obrir «%s» per a escriure: %s"
 
 #: ../plug-ins/python/python-console/python-console.py:222
 #, python-format
@@ -672,7 +672,7 @@ msgstr "Salta els pètals"
 
 #: ../plug-ins/python/spyro-plus.py:1573
 msgid "The number of petals to advance for drawing the next petal."
-msgstr "El nombre de pètals per avançar i dibuixar el pròxim pètal."
+msgstr "El nombre de pètals per a avançar i dibuixar el pròxim pètal."
 
 #: ../plug-ins/python/spyro-plus.py:1578
 msgid "Hole Radius(%)"
@@ -740,7 +740,7 @@ msgstr ""
 "La forma de l’engranatge fix que s'utilitzarà dins de la selecció actual. El "
 "prestatge és una forma allargada de vores rodones que es proporciona als "
 "kits de joguines. El marc abraça els límits de la selecció rectangular, "
-"utilitzeu el forat = 100 a la notació de l'engranatge per assolir el límit. "
+"utilitzeu el forat = 100 a la notació de l'engranatge per a assolir el límit. "
 "La selecció abraçarà els límits de la selecció actual: proveu alguna cosa "
 "que no sigui rectangular."
 
@@ -797,7 +797,7 @@ msgid ""
 "press this to preview how the pattern looks."
 msgstr ""
 "Si canvieu els paràmetres d'una eina, el color o  la selecció, premeu aquí "
-"per previsualitzar l’aspecte del patró."
+"per a previsualitzar l’aspecte del patró."
 
 #: ../plug-ins/python/spyro-plus.py:1723
 msgid "_Reset"
