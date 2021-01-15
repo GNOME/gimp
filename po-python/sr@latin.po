@@ -4,342 +4,934 @@
 # This file is distributed under the same license as the gimp package.
 #
 # Maintainer: Miloš Popović <gpopac@gmail.com>
-# Miloš Popović <gpopac@gmail.com>, 2011.
+# Miloš Popović <gpopac@gmail.com>, 2011-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2011-08-25 19:40+0000\n"
-"PO-Revision-Date: 2011-08-28 08:41+0200\n"
+"POT-Creation-Date: 2020-12-15 02:11+0000\n"
+"PO-Revision-Date: 2021-01-15 02:29+0100\n"
 "Last-Translator: Miloš Popović <gpopac@gmail.com>\n"
-"Language-Team: Serbian <gnom@prevod.org>\n"
-"Language: sr@latin\n"
+"Language-Team: Serbian <gnome-sr@googlegroups.com>\n"
+"Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4;    plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 :    n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2\n"
+"X-Generator: Gtranslator 3.38.0\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
-msgid "Missing exception information"
-msgstr "Nedostaju podaci o izuzecima"
+#: ../plug-ins/python/colorxhtml.py:89
+#| msgid "Save as colored XHTML"
+msgid "Save as colored HTML text..."
+msgstr "Sačuvaj kao HTML tekst u boji…"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
-#, python-format
-#| msgid "An error occured running %s"
-msgid "An error occurred running %s"
-msgstr "Greška pri radu sa %s"
+#: ../plug-ins/python/colorxhtml.py:94
+msgid "Read characters from file..."
+msgstr "Učitaj znake iz datoteke…"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
-msgid "_More Information"
-msgstr "_Dodatni podaci"
+#: ../plug-ins/python/colorxhtml.py:113
+#| msgid "Character _source"
+msgid "Characters"
+msgstr "Znaci"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
-msgid "No"
-msgstr "Ne"
+#: ../plug-ins/python/colorxhtml.py:114
+msgid "Characters that will be used as colored pixels. "
+msgstr "Znaci koji će biti korišćeni kao pikseli u boji."
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
-msgid "Yes"
-msgstr "Da"
+#: ../plug-ins/python/colorxhtml.py:123
+msgid "Characters or file location"
+msgstr "Znaci ili mesto datoteke"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
-msgid "Python-Fu File Selection"
-msgstr "Pitonov izbor datoteke"
+#: ../plug-ins/python/colorxhtml.py:129
+#| msgid "_File to read or characters to use"
+msgid "Read characters from file"
+msgstr "Učitaj znake iz datoteke"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
-msgid "Python-Fu Folder Selection"
-msgstr "Pitonov izbor fascikle"
+#: ../plug-ins/python/colorxhtml.py:132
+msgid ""
+"If set, the Characters text entry will be used as a file name, from which "
+"the characters will be read. Otherwise, the characters in the text entry "
+"will be used to render the image."
+msgstr ""
+"Ukoliko je postavljeno, znakovni unos teksta će biti korišćen kao naziv "
+"datoteke, na osnovu koga će znaci biti pročitani. U suprotnom, znaci u "
+"tekstualnom polju će biti korišćeni za iscrtavanje slike."
 
-#: ../plug-ins/pygimp/gimpfu.py:696
-#, python-format
-msgid "Invalid input for '%s'"
-msgstr "Nije ispravan unos za „%s“"
+#: ../plug-ins/python/colorxhtml.py:138
+#| msgid "Text file"
+msgid "Choose file"
+msgstr "Izaberite datoteku"
 
-#: ../plug-ins/pygimp/gimpui.py:176
-msgid "Python-Fu Color Selection"
-msgstr "Pitonov izbor boje"
+#: ../plug-ins/python/colorxhtml.py:145
+msgid "Font Size(px)"
+msgstr "Veličina fonta (px)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/python/colorxhtml.py:157
+#| msgid "_Write a separate CSS file"
+msgid "Write separate CSS file"
+msgstr "Upiši zasebnu CSS datoteku"
+
+#: ../plug-ins/python/colorxhtml.py:210
 msgid "Saving as colored XHTML"
 msgstr "Čuvam kao XHTML u boji"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
-msgid "Save as colored XHTML"
-msgstr "Sačuvaj kao XHTML u boji"
+#: ../plug-ins/python/colorxhtml.py:279 ../plug-ins/python/colorxhtml.py:280
+msgid "_Read characters from file, if true, or use text entry"
+msgstr ""
+"_Učitaj znake iz datoteke, ukoliko je tačno ili koristi tekstualni unos"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
-msgid "Colored XHTML"
-msgstr "XHTML u boji"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Character _source"
-msgstr "_Izvor znakova"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Source code"
-msgstr "Izvorni kod"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
-msgid "Text file"
-msgstr "Tekstualna datoteka"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
-msgid "Entry box"
-msgstr "Polje za unos"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/python/colorxhtml.py:284 ../plug-ins/python/colorxhtml.py:285
 msgid "_File to read or characters to use"
 msgstr "_Datoteka za čitanje ili znakovi za upotrebu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/python/colorxhtml.py:289 ../plug-ins/python/colorxhtml.py:290
 msgid "Fo_nt size in pixels"
 msgstr "Veličina _fonta i piksela"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/python/colorxhtml.py:294 ../plug-ins/python/colorxhtml.py:295
 msgid "_Write a separate CSS file"
 msgstr "_Upiši zasebnu CSS datoteku"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
-msgid "Gradient to use"
-msgstr "Preliv koji se koristi"
+#: ../plug-ins/python/colorxhtml.py:314
+#| msgid "Save as colored XHTML"
+msgid "Save as colored HTML text"
+msgstr "Sačuvaj kao HTML tekst u boji"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
-msgid "File Name"
-msgstr "Ime datoteke"
+#: ../plug-ins/python/colorxhtml.py:317
+#| msgid "Colored XHTML"
+msgid "Colored HTML text"
+msgstr "HTML tekst u boji"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
-msgid "Add a layer of fog"
-msgstr "Dodaje sloj sa efektom magle"
+#: ../plug-ins/python/foggify.py:83 ../plug-ins/python/foggify.py:84
+#| msgid "_Layer name"
+msgid "Layer name"
+msgstr "Naziv sloja"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "_Fog..."
-msgstr "_Magla..."
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "_Layer name"
-msgstr "_Naziv sloja"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/python/foggify.py:85
 msgid "Clouds"
 msgstr "Oblaci"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
-msgid "_Fog color"
-msgstr "_Boja magle"
+#: ../plug-ins/python/foggify.py:88 ../plug-ins/python/foggify.py:89
+#| msgid "_Fog color"
+msgid "Fog color"
+msgstr "Boja magle"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
-msgid "_Turbulence"
-msgstr "_Turbulencija"
+#: ../plug-ins/python/foggify.py:92 ../plug-ins/python/foggify.py:93
+#| msgid "_Turbulence"
+msgid "Turbulence"
+msgstr "Turbulencija"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
-msgid "Op_acity"
-msgstr "_Neprovidnost"
+#: ../plug-ins/python/foggify.py:97 ../plug-ins/python/foggify.py:98
+#| msgid "Op_acity"
+msgid "Opacity"
+msgstr "Neprovidnost"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
-msgid "Offset the colors in a palette"
-msgstr "Pomera boje u paleti"
+#: ../plug-ins/python/foggify.py:115
+msgid "Add a layer of fog"
+msgstr "Dodaje sloj sa efektom magle"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
-msgid "_Offset Palette..."
-msgstr "_Pomeraj palete..."
+#: ../plug-ins/python/foggify.py:118
+msgid "_Fog..."
+msgstr "_Magla..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: ../plug-ins/python/gradients-save-as-css.py:81
+#| msgid "_Slice..."
+msgid "CSS file..."
+msgstr "CSS datoteka…"
+
+#: ../plug-ins/python/gradients-save-as-css.py:144
+msgid "Gradient to use"
+msgstr "Preliv koji se koristi"
+
+#: ../plug-ins/python/gradients-save-as-css.py:147
+#| msgid "File Name"
+msgid "File"
+msgstr "Datoteka"
+
+#: ../plug-ins/python/histogram-export.py:94
+msgid "Pixel count"
+msgstr "Broj piksela"
+
+#: ../plug-ins/python/histogram-export.py:95
+msgid "Normalized"
+msgstr "Normalizovano"
+
+#: ../plug-ins/python/histogram-export.py:96
+msgid "Percent"
+msgstr "Procenat"
+
+#: ../plug-ins/python/histogram-export.py:166
+msgid "File is either a directory or file name is empty."
+msgstr "Datoteka je direktorijum ili je naziv datoteke prazan."
+
+#: ../plug-ins/python/histogram-export.py:169
+msgid "Directory not found."
+msgstr "Direktorijum nije pronađen."
+
+#: ../plug-ins/python/histogram-export.py:203
+msgid "Histogram Export..."
+msgstr "Izvoz histograma…"
+
+#: ../plug-ins/python/histogram-export.py:230
+#| msgid "_Slice..."
+msgid "_File..."
+msgstr "_Datoteka…"
+
+#: ../plug-ins/python/histogram-export.py:238
+msgid "Choose export file..."
+msgstr "Izaberite datoteku za izvoz…"
+
+#: ../plug-ins/python/histogram-export.py:244
+#| msgid "Histogram _File"
+msgid "Histogram Export file..."
+msgstr "Izvozna datoteka za histogram…"
+
+#. Bucket size parameter
+#: ../plug-ins/python/histogram-export.py:250
+#: ../plug-ins/python/histogram-export.py:320
+msgid "_Bucket Size"
+msgstr "Veličina _kantice"
+
+#. Sample average parameter
+#: ../plug-ins/python/histogram-export.py:258
+#: ../plug-ins/python/histogram-export.py:325
+msgid "Sample _Average"
+msgstr "_Prosek uzorka"
+
+#: ../plug-ins/python/histogram-export.py:259
+msgid ""
+"If checked, the histogram is generated from merging all visible layers. "
+"Otherwise, the histogram is only for the current layer."
+msgstr ""
+"Ukoliko je omogućeno, histogram će biti napravljen spajanjem svih vidljivih "
+"slojeva. U suprotnom, histogram će biti napravljen samo za trenutni sloj."
+
+#. Output format parameter
+#: ../plug-ins/python/histogram-export.py:265
+#| msgid "Output format"
+msgid "_Output Format"
+msgstr "_Izlazni format"
+
+#: ../plug-ins/python/histogram-export.py:316
+msgid "Histogram _File"
+msgstr "_Datoteka sa histogramom"
+
+#: ../plug-ins/python/histogram-export.py:330
+msgid "Output format"
+msgstr "Izlazni format"
+
+#: ../plug-ins/python/histogram-export.py:351
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr "Izvozi histogram slike u tekstualnu datoteku (CSV)"
+
+#: ../plug-ins/python/histogram-export.py:354
+msgid "_Export histogram..."
+msgstr "Izvezi _histogram…"
+
+#: ../plug-ins/python/palette-offset.py:46
+#: ../plug-ins/python/palette-offset.py:47
+#: ../plug-ins/python/palette-sort.py:340
+#: ../plug-ins/python/palette-sort.py:399
+#: ../plug-ins/python/palette-to-gradient.py:103
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/python/palette-offset.py:58
 msgid "Off_set"
 msgstr "Po_meraj"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
-msgid "Sort the colors in a palette"
-msgstr "Uređuje raspored boja u paleti"
+#: ../plug-ins/python/palette-offset.py:59
+msgid "Offset"
+msgstr "Pomeraj"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
-msgid "_Sort Palette..."
-msgstr "Po_ređaj paletu..."
+#: ../plug-ins/python/palette-offset.py:92
+msgid "_Offset Palette..."
+msgstr "_Pomeraj palete…"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-msgid "Color _model"
-msgstr "_Model boja"
+#: ../plug-ins/python/palette-offset.py:93
+msgid "Offset the colors in a palette"
+msgstr "Pomera boje u paleti"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "RGB"
-msgstr "RGB"
+#: ../plug-ins/python/palette-offset.py:141
+#| msgid "_Offset Palette..."
+msgid "Offset Palette..."
+msgstr "Pomeraj palete…"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "HSV"
-msgstr "HSV"
+#: ../plug-ins/python/palette-sort.py:41
+msgid "Red"
+msgstr "Crvena"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/python/palette-sort.py:41
+msgid "Green"
+msgstr "Zelena"
+
+#: ../plug-ins/python/palette-sort.py:41
+msgid "Blue"
+msgstr "Plava"
+
+#: ../plug-ins/python/palette-sort.py:42
+msgid "Luma (Y)"
+msgstr "Svetlo (Y)"
+
+#: ../plug-ins/python/palette-sort.py:43
+msgid "Hue"
+msgstr "Nijansa"
+
+#: ../plug-ins/python/palette-sort.py:43
+msgid "Saturation"
+msgstr "Zasićenost"
+
+#: ../plug-ins/python/palette-sort.py:43
+msgid "Value"
+msgstr "Vrednost"
+
+#: ../plug-ins/python/palette-sort.py:44
+msgid "Saturation (HSL)"
+msgstr "Zasićenost (HSL)"
+
+#: ../plug-ins/python/palette-sort.py:44
+msgid "Lightness (HSL)"
+msgstr "Svetlina (HSL)"
+
+#: ../plug-ins/python/palette-sort.py:45
+msgid "Index"
+msgstr "Indeks"
+
+#: ../plug-ins/python/palette-sort.py:46
+msgid "Random"
+msgstr "Nasumično"
+
+#: ../plug-ins/python/palette-sort.py:91
+msgid "Lightness (LAB)"
+msgstr "Svetlina (LAB)"
+
+#: ../plug-ins/python/palette-sort.py:92
+msgid "A-color"
+msgstr "Boja A"
+
+#: ../plug-ins/python/palette-sort.py:92
+msgid "B-color"
+msgstr "Boja B"
+
+#: ../plug-ins/python/palette-sort.py:93
+msgid "Chroma (LCHab)"
+msgstr "Hrominansa (LCHab)"
+
+#: ../plug-ins/python/palette-sort.py:94
+msgid "Hue (LCHab)"
+msgstr "Nijansa (LCHab)"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "All"
+msgstr "Ave"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "Slice / Array"
+msgstr "Parče / opseg"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "Autoslice (fg->bg)"
+msgstr "Auto-parče (četkica->pozadina)"
+
+#: ../plug-ins/python/palette-sort.py:328
+msgid "Partitioned"
+msgstr "Podeljeno"
+
+#: ../plug-ins/python/palette-sort.py:345
+msgid "Se_lections"
+msgstr "I_zaberi"
+
+#: ../plug-ins/python/palette-sort.py:352
+msgid "Slice _expression"
+msgstr "_Izraz za odsecanje"
+
+#: ../plug-ins/python/palette-sort.py:359
 msgid "Channel to _sort"
 msgstr "Kanali za _ređanje"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Red or Hue"
-msgstr "Crvena ili nijansa"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Green or Saturation"
-msgstr "Zelena ili zasićenost"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Blue or Value"
-msgstr "Plava ili vrednost"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/python/palette-sort.py:364
+#: ../plug-ins/python/palette-sort.py:376
 msgid "_Ascending"
 msgstr "_Rastuće"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
-msgid "Create a repeating gradient using colors from the palette"
-msgstr "Pravi preliv koji se ponavlja na osnovu boja iz palete"
+#: ../plug-ins/python/palette-sort.py:371
+msgid "Secondary Channel to s_ort"
+msgstr "Sekundarni kanali za _ređanje"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-msgid "Palette to _Repeating Gradient"
-msgstr "Paleta u ponov_ljeni preliv"
+#: ../plug-ins/python/palette-sort.py:381
+msgid "_Quantization"
+msgstr "_Merenje"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
-msgid "Create a gradient using colors from the palette"
-msgstr "Pravi preliv na osnovu boja iz palete"
+#: ../plug-ins/python/palette-sort.py:387
+msgid "_Partitioning channel"
+msgstr "_Deljenje kanala"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/python/palette-sort.py:392
+msgid "Partition q_uantization"
+msgstr "M_erenje podeoka"
+
+#: ../plug-ins/python/palette-sort.py:417
+msgid "_Sort Palette..."
+msgstr "Po_ređaj paletu..."
+
+#: ../plug-ins/python/palette-sort.py:422
+msgid "Sort the colors in a palette"
+msgstr "Raspored boja u paleti"
+
+#: ../plug-ins/python/palette-to-gradient.py:139
 msgid "Palette to _Gradient"
 msgstr "Paleta _u preliv"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
-msgid "Slice"
-msgstr "Parče"
+#: ../plug-ins/python/palette-to-gradient.py:140
+msgid "Create a gradient using colors from the palette"
+msgstr "Pravi preliv na osnovu boja iz palete"
 
-#. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Iseca sliku po vođicama, praveći slike i isečke za HTML tabelu"
+#: ../plug-ins/python/palette-to-gradient.py:144
+msgid "Palette to _Repeating Gradient"
+msgstr "Paleta u ponov_ljeni preliv"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
-msgid "_Slice..."
-msgstr "_Isparčaj..."
+#: ../plug-ins/python/palette-to-gradient.py:145
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Pravi preliv koji se ponavlja na osnovu boja iz palete"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
-msgid "Path for HTML export"
-msgstr "Putanja za izvoz HTML-a"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Filename for export"
-msgstr "Ime datoteke za izvoz"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
-msgid "Image name prefix"
-msgstr "Prefiks imena slike"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Image format"
-msgstr "Format slike"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Separate image folder"
-msgstr "Zasebna fascikla za sliku"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
-msgid "Folder for image export"
-msgstr "Fascikla za izvoz slike"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
-msgid "Space between table elements"
-msgstr "Razmak izmeđi elemenata u tabeli"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javaskript za „onmouseover“ i „clicked“"
-
-#. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
-msgid "Skip animation for table caps"
-msgstr "Isključi animaciju za ivična polja tabele"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/python/python-console/python-console.py:75
 msgid "Python Console"
 msgstr "Pitonova konzola"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/python/python-console/python-console.py:79
 msgid "_Browse..."
 msgstr "_Razgledaj..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/python/python-console/python-console.py:179
 msgid "Python Procedure Browser"
 msgstr "Razgledač Pitonovih procedura"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/python/python-console/python-console.py:207
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Ne mogu da otvorim „%s“ za upis: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/python/python-console/python-console.py:222
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Ne mogu da upišem u „%s“: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/python/python-console/python-console.py:231
 msgid "Save Python-Fu Console Output"
 msgstr "Sačuvaj izlaz Pitonove konzole"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#: ../plug-ins/python/python-console/python-console.py:280
+#| msgid "Python Console"
+msgid "Python _Console"
+msgstr "Pitonova _konzola"
+
+#: ../plug-ins/python/python-console/python-console.py:281
 msgid "Interactive GIMP Python interpreter"
 msgstr "Pokreće interaktivni interpreter za Gimpov Piton"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
-msgid "_Console"
-msgstr "_Konzola"
+#: ../plug-ins/python/spyro-plus.py:50
+msgid "Spyro Layer"
+msgstr "Spiro sloj"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
-msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Dodaje senku na sloj i ispupčenje po želju"
+#: ../plug-ins/python/spyro-plus.py:51
+msgid "Spyro Path"
+msgstr "Spiro putanja"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
-msgid "_Drop Shadow and Bevel..."
-msgstr "_Dodaj senku i ispupčenje..."
+#: ../plug-ins/python/spyro-plus.py:61
+msgid "As New Layer"
+msgstr "Kao novi sloj"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "_Shadow blur"
-msgstr "_Zamućenje senke"
+#: ../plug-ins/python/spyro-plus.py:62
+msgid "Redraw on last active layer"
+msgstr "Ponovo iscrtaj na poslednjem aktivnom sloju"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "_Bevel"
-msgstr "_Ispupčenje"
+#: ../plug-ins/python/spyro-plus.py:63
+msgid "As Path"
+msgstr "Kao putanja"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "_Drop shadow"
-msgstr "D_odaj senku"
+#: ../plug-ins/python/spyro-plus.py:111
+msgid "Circle"
+msgstr "Krug"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow _X displacement"
-msgstr "Po_meraj senke po X osi"
+#: ../plug-ins/python/spyro-plus.py:147
+msgid "Polygon-Star"
+msgstr "Poligon-zvezda"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
-msgid "Drop shadow _Y displacement"
-msgstr "Pom_eraj senke po Y osi"
+#. Sine wave on a circle ring.
+#: ../plug-ins/python/spyro-plus.py:163 ../plug-ins/python/spyro-plus.py:986
+msgid "Sine"
+msgstr "Sinus"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
-msgid "Create a new brush with characters from a text sequence"
-msgstr "Pravi novu četkicu na osnovu slova iz dela teksta"
+#. Semi-circles, based on a polygon
+#: ../plug-ins/python/spyro-plus.py:173
+msgid "Bumps"
+msgstr "Ispupčenja"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
-msgid "New Brush from _Text..."
-msgstr "Nova četkica iz _teksta..."
+#: ../plug-ins/python/spyro-plus.py:278
+msgid "Rack"
+msgstr "Stalak"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
-msgid "Font"
-msgstr "Font"
+#: ../plug-ins/python/spyro-plus.py:322
+msgid "Frame"
+msgstr "Okvir"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
-msgid "Pixel Size"
-msgstr "Veličina piksela"
+#: ../plug-ins/python/spyro-plus.py:435
+#| msgid "Se_lections"
+msgid "Selection"
+msgstr "Izbor"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
-msgid "Text"
-msgstr "Tekst"
+#: ../plug-ins/python/spyro-plus.py:522
+msgid "Pencil"
+msgstr "Olovka"
+
+#: ../plug-ins/python/spyro-plus.py:538
+msgid "AirBrush"
+msgstr "Cprej"
+
+#: ../plug-ins/python/spyro-plus.py:598
+msgid "Preview"
+msgstr "Pregled"
+
+#: ../plug-ins/python/spyro-plus.py:603
+msgid "Stroke"
+msgstr "Potez"
+
+#: ../plug-ins/python/spyro-plus.py:650
+msgid "PaintBrush"
+msgstr "Četkica"
+
+#: ../plug-ins/python/spyro-plus.py:652
+msgid "Ink"
+msgstr "Mastilo"
+
+#: ../plug-ins/python/spyro-plus.py:653
+msgid "MyPaintBrush"
+msgstr "MojaČetkica"
+
+#: ../plug-ins/python/spyro-plus.py:972
+msgid "Spyrograph"
+msgstr "Spirograf"
+
+#: ../plug-ins/python/spyro-plus.py:979
+msgid "Epitrochoid"
+msgstr "Epitrohoida"
+
+#: ../plug-ins/python/spyro-plus.py:1006
+msgid "Lissajous"
+msgstr "Lisažova kriva"
+
+#: ../plug-ins/python/spyro-plus.py:1453
+msgid "Curve Type"
+msgstr "Vrsta krive"
+
+#: ../plug-ins/python/spyro-plus.py:1454
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+"Šara u obliku epitrohoida se iscrtava kada pomični zupčanik klizi oko "
+"fiksnog zupčanika."
+
+#: ../plug-ins/python/spyro-plus.py:1459
+msgid "Tool"
+msgstr "Alat"
+
+#: ../plug-ins/python/spyro-plus.py:1460
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr "Alat sa kojim se crta šara. Pregled alata iscrtava na brzinu."
+
+#: ../plug-ins/python/spyro-plus.py:1465
+#| msgid "Palette to _Gradient"
+msgid "Long Gradient"
+msgstr "Dugački preliv"
+
+#: ../plug-ins/python/spyro-plus.py:1467
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+"Kada nije izabrano, koriste se trenutne postavke alata. Kada je izbrano, "
+"koristi se dugački preliv u dužini šare, na osnovu trenutnog preliva i režim "
+"ponavljanja iz postavki alata za prelive."
+
+#: ../plug-ins/python/spyro-plus.py:1487
+msgid "Specify pattern using one of the following tabs:"
+msgstr "Odredi šaru uz pomoć jedne od sledećih kartica:"
+
+#: ../plug-ins/python/spyro-plus.py:1489
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"Šara je određena samo aktivnom karticom. Igračke su slične Zupčanicima, ali "
+"koriste zupčanike i cele brojeve koji se ne mogu naći u igračkama.Ukoliko "
+"pratite uputstva iz igračke, rezultati će biti slični."
+
+#: ../plug-ins/python/spyro-plus.py:1513
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+"Broj zubaca fiksnog zupčanika. Veličina fiksnog zupčanika je proporcionalna "
+"broju zubaca."
+
+#: ../plug-ins/python/spyro-plus.py:1516 ../plug-ins/python/spyro-plus.py:1544
+msgid "Fixed Gear Teeth"
+msgstr "Zubci fiksnog zupčanika"
+
+#: ../plug-ins/python/spyro-plus.py:1524
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+"Broj zubaca pomičnog zupčanika. Veličina pomičnog zupčanika je "
+"proporcionalna broju zubaca."
+
+#: ../plug-ins/python/spyro-plus.py:1527 ../plug-ins/python/spyro-plus.py:1549
+msgid "Moving Gear Teeth"
+msgstr "Zubci pomičnog zupčanika"
+
+#: ../plug-ins/python/spyro-plus.py:1532
+#| msgid "Percent"
+msgid "Hole percent"
+msgstr "Procenat od rupe"
+
+#: ../plug-ins/python/spyro-plus.py:1533
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+"Koliko je udaljena rupa od centra pomičnog zupčanika. 100% znači da je rupa "
+"na ivici zupčanika."
+
+#: ../plug-ins/python/spyro-plus.py:1554
+#| msgid "File Name"
+msgid "Hole Number"
+msgstr "Broj rupe"
+
+#: ../plug-ins/python/spyro-plus.py:1555
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"Rupa #1 je na početku zupčanika. Najveći broj rupa je u blizini centra. "
+"Najveći broj rupe se razlikuje za svaki zupčanik."
+
+#: ../plug-ins/python/spyro-plus.py:1566
+msgid "Flower Petals"
+msgstr "Latice cveta"
+
+#: ../plug-ins/python/spyro-plus.py:1567
+msgid "The number of petals in the pattern."
+msgstr "Određuje broj latica u šari."
+
+#: ../plug-ins/python/spyro-plus.py:1572
+msgid "Petal Skip"
+msgstr "Preskok latice"
+
+#: ../plug-ins/python/spyro-plus.py:1573
+msgid "The number of petals to advance for drawing the next petal."
+msgstr "Broj latica koje se preskaču radi crtanja naredne latice."
+
+#: ../plug-ins/python/spyro-plus.py:1578
+msgid "Hole Radius(%)"
+msgstr "Poluprečnik rupe (%)"
+
+#: ../plug-ins/python/spyro-plus.py:1579
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+"Poluprečnik rupe u centru šare gde ništa neće biti nacrtano. Daje se kao "
+"procenat veličine šare. Vrednost 0 neće napraviti rupu. Vrednost 99 će "
+"napraviti tanku linije na ivici."
+
+#: ../plug-ins/python/spyro-plus.py:1600
+msgid "Width(%)"
+msgstr "Širina (%)"
+
+#: ../plug-ins/python/spyro-plus.py:1601
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+"Širina šare kao procenat veličine šare. Vrednost 1 će nacrtati tanku šaru. "
+"Vrednost 100 će popuniti ceo fiksni zupčanik."
+
+#: ../plug-ins/python/spyro-plus.py:1612
+msgid "Visual"
+msgstr "Vizuelno"
+
+#: ../plug-ins/python/spyro-plus.py:1618
+msgid "Toy Kit"
+msgstr "Igračka"
+
+#: ../plug-ins/python/spyro-plus.py:1624
+msgid "Gears"
+msgstr "Zupčanici"
+
+#: ../plug-ins/python/spyro-plus.py:1637 ../plug-ins/python/spyro-plus.py:1681
+#| msgid "Saturation"
+msgid "Rotation"
+msgstr "Rotacija"
+
+#: ../plug-ins/python/spyro-plus.py:1638
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+"Rotacija šare u stepenima. Početni položaj pomičnog zupčanika u fiksnom "
+"zupčaniku."
+
+#: ../plug-ins/python/spyro-plus.py:1661
+msgid "Shape"
+msgstr "Oblik"
+
+#: ../plug-ins/python/spyro-plus.py:1662
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+"Oblik fiksnog zupčanika koji se koristi unutar trenutnog izbora. Stalak je "
+"dugačak, sa zaobljenim ivicama među igračkama. Okvir naleže na granice "
+"pravougaonog izbora, koristi rupa=100 u zupčaniku da bi dotakao granice. "
+"Izbor će naleći na granice trenutnog izbora - probajte nešto što nije "
+"pravougaonik."
+
+#: ../plug-ins/python/spyro-plus.py:1671
+msgid "Sides"
+msgstr "Stranice"
+
+#: ../plug-ins/python/spyro-plus.py:1671
+msgid "Number of sides of the shape."
+msgstr "Broj stranica oblika."
+
+#: ../plug-ins/python/spyro-plus.py:1676
+msgid "Morph"
+msgstr "Promena"
+
+#: ../plug-ins/python/spyro-plus.py:1676
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr "Menja oblik zupčanika. Određuje samo neke od oblika."
+
+#: ../plug-ins/python/spyro-plus.py:1681
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "Rotacija fiksnog zupčanika u stepenima"
+
+#: ../plug-ins/python/spyro-plus.py:1696
+msgid "Margin (px)"
+msgstr "Margina (px)"
+
+#: ../plug-ins/python/spyro-plus.py:1696
+msgid "Margin from edge of selection."
+msgstr "Margina od ivice izbora"
+
+#: ../plug-ins/python/spyro-plus.py:1701
+msgid "Make width and height equal"
+msgstr "Ista vidina i širina"
+
+#: ../plug-ins/python/spyro-plus.py:1703
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+"Kada nije izbrano, šara će biti ispunjena trenutnom slikom ili izborom. Kada "
+"je uključeno, šara će imati istu širinu i visinu i biće u sredini."
+
+#: ../plug-ins/python/spyro-plus.py:1718
+msgid "Re_draw"
+msgstr "_Ponovo iscrtaj"
+
+#: ../plug-ins/python/spyro-plus.py:1720
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+"Ukoliko promenite podešavanja alata, promenite boju ili izmenite izbor, "
+"pritisnite na ovaj pregled kako izgleda šara."
+
+#: ../plug-ins/python/spyro-plus.py:1723
+msgid "_Reset"
+msgstr "_Vrati"
+
+#: ../plug-ins/python/spyro-plus.py:1731
+msgid "Save"
+msgstr "Sačuvaj"
+
+#: ../plug-ins/python/spyro-plus.py:1732
+msgid ""
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr ""
+"Izaberite da li da sačuva u novi sloj, izcrta u poslednjem aktivnom sloju ili "
+"sačuvate kao putanju"
+
+#: ../plug-ins/python/spyro-plus.py:1746
+msgid "Spyrogimp"
+msgstr "Spirograf"
+
+#: ../plug-ins/python/spyro-plus.py:1755 ../plug-ins/python/spyro-plus.py:2292
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr "Crtanje spirografom koristeći podešavanja trenutnog alata i izbora."
+
+#: ../plug-ins/python/spyro-plus.py:1768
+msgid "Curve Pattern"
+msgstr "Šara krivulje"
+
+#: ../plug-ins/python/spyro-plus.py:1771
+msgid "Fixed Gear"
+msgstr "Fiksni zupčanik"
+
+#: ../plug-ins/python/spyro-plus.py:1774
+msgid "Size"
+msgstr "Veličina"
+
+#: ../plug-ins/python/spyro-plus.py:2130
+msgid "Rendering Pattern"
+msgstr "Izcrtavam šaru"
+
+#: ../plug-ins/python/spyro-plus.py:2142
+msgid "Please wait : Rendering Pattern"
+msgstr "Sačekajte: Iscrtavam šaru"
+
+#: ../plug-ins/python/spyro-plus.py:2296
+msgid "Spyrogimp..."
+msgstr "Spirograf…"
+
+#~ msgid "Missing exception information"
+#~ msgstr "Nedostaju podaci o izuzecima"
+
+#~ msgid "An error occurred running %s"
+#~ msgstr "Greška pri pokretanju %s"
+
+#~ msgid "_More Information"
+#~ msgstr "_Dodatni podaci"
+
+#~ msgid "No"
+#~ msgstr "Ne"
+
+#~ msgid "Yes"
+#~ msgstr "Da"
+
+#~ msgid "Python-Fu File Selection"
+#~ msgstr "Pitonov izbor datoteke"
+
+#~ msgid "Python-Fu Folder Selection"
+#~ msgstr "Pitonov izbor fascikle"
+
+#~ msgid "Invalid input for '%s'"
+#~ msgstr "Nije ispravan unos za „%s“"
+
+#~ msgid "Python-Fu Color Selection"
+#~ msgstr "Pitonov izbor boje"
+
+#~ msgid "Source code"
+#~ msgstr "Izvorni kod"
+
+#~ msgid "Entry box"
+#~ msgstr "Polje za unos"
+
+#~ msgid "_Image"
+#~ msgstr "_Slika"
+
+#~ msgid "_Drawable"
+#~ msgstr "_Crtljivo"
+
+#~ msgid "Slice"
+#~ msgstr "Parče"
+
+#~ msgid ""
+#~ "Cuts an image along its guides, creates images and a HTML table snippet"
+#~ msgstr "Iseca sliku po vođicama, praveći slike i isečke za HTML tabelu"
+
+#~ msgid "Path for HTML export"
+#~ msgstr "Putanja za izvoz HTML-a"
+
+#~ msgid "Filename for export"
+#~ msgstr "Ime datoteke za izvoz"
+
+#~ msgid "Image name prefix"
+#~ msgstr "Prefiks imena slike"
+
+#~ msgid "Image format"
+#~ msgstr "Format slike"
+
+#~ msgid "Separate image folder"
+#~ msgstr "Zasebna fascikla za sliku"
+
+#~ msgid "Folder for image export"
+#~ msgstr "Fascikla za izvoz slike"
+
+#~ msgid "Space between table elements"
+#~ msgstr "Razmak izmeđi elemenata u tabeli"
+
+#~ msgid "Javascript for onmouseover and clicked"
+#~ msgstr "Javaskript za „onmouseover“ i „clicked“"
+
+#~ msgid "Skip animation for table caps"
+#~ msgstr "Isključi animaciju za ivična polja tabele"
+
+#~ msgid "_Console"
+#~ msgstr "_Konzola"
+
+#~ msgid "Add a drop shadow to a layer, and optionally bevel it"
+#~ msgstr "Dodaje senku na sloj i ispupčenje po želju"
+
+#~ msgid "_Drop Shadow and Bevel..."
+#~ msgstr "_Dodaj senku i ispupčenje..."
+
+#~ msgid "_Shadow blur"
+#~ msgstr "_Zamućenje senke"
+
+#~ msgid "_Bevel"
+#~ msgstr "_Ispupčenje"
+
+#~ msgid "_Drop shadow"
+#~ msgstr "D_odaj senku"
+
+#~ msgid "Drop shadow _X displacement"
+#~ msgstr "Po_meraj senke po X osi"
+
+#~ msgid "Drop shadow _Y displacement"
+#~ msgstr "Pom_eraj senke po Y osi"
+
+#~ msgid "Color _model"
+#~ msgstr "_Model boja"
+
+#~ msgid "RGB"
+#~ msgstr "RGB"
+
+#~ msgid "HSV"
+#~ msgstr "HSV"
+
+#~ msgid "Red or Hue"
+#~ msgstr "Crvena ili nijansa"
+
+#~ msgid "Blue or Value"
+#~ msgstr "Plava ili vrednost"
+
+#~ msgid "Create a new brush with characters from a text sequence"
+#~ msgstr "Pravi novu četkicu na osnovu slova iz dela teksta"
+
+#~ msgid "New Brush from _Text..."
+#~ msgstr "Nova četkica iz _teksta..."
+
+#~ msgid "Font"
+#~ msgstr "Font"
+
+#~ msgid "Pixel Size"
+#~ msgstr "Veličina piksela"
+
+#~ msgid "Text"
+#~ msgstr "Tekst"
