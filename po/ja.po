@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-12-22 22:43+0000\n"
-"PO-Revision-Date: 2021-01-09 00:00+0900\n"
+"PO-Revision-Date: 2021-01-15 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -995,7 +995,7 @@ msgstr "(何かキーを押すとこのウィンドウを閉じます)\n"
 
 #: ../app/main.c:724
 msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr "GIMP:  このウィンドウを閉じないでください (最小化はかまいません)。"
+msgstr "GIMP: このウィンドウを閉じないでください (最小化はかまいません)。"
 
 #: ../app/sanity.c:562
 #, c-format
@@ -5458,7 +5458,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:173
 msgctxt "filters-action"
 msgid "_Alien Map..."
-msgstr ""
+msgstr "エイリアンマップ(_A)..."
 
 #: ../app/actions/filters-actions.c:178
 msgctxt "filters-action"
@@ -6828,7 +6828,7 @@ msgstr "この画像の情報を表示します"
 #: ../app/actions/image-actions.c:181
 msgctxt "image-action"
 msgid "Use _sRGB Profile"
-msgstr "sRGB プロファイルを使用(_S)"
+msgstr "sRGB プロファイルの使用(_S)"
 
 #: ../app/actions/image-actions.c:182
 msgctxt "image-action"
@@ -7025,7 +7025,7 @@ msgstr "カラープロファイルの保存に失敗しました: %s"
 
 #: ../app/actions/image-commands.c:603
 msgid "Save Color Profile"
-msgstr ""
+msgstr "カラープロファイルの保存"
 
 #: ../app/actions/image-commands.c:652
 msgid "Set Image Canvas Size"
@@ -7145,7 +7145,7 @@ msgstr "塗りつぶせる選択レイヤーも選択チャンネルもありま
 #: ../app/actions/items-commands.c:291 ../app/actions/items-commands.c:337
 #: ../app/tools/gimpvectortool.c:811
 msgid "There are no selected layers or channels to stroke to."
-msgstr "ストロークできる選択レイヤーも選択チャンネルもありません。"
+msgstr "ストローク描画できる選択レイヤーも選択チャンネルもありません。"
 
 #: ../app/actions/layers-actions.c:52
 msgctxt "layers-action"
@@ -8170,7 +8170,7 @@ msgstr "選択範囲との透明部分の交わり"
 
 #: ../app/actions/layers-commands.c:1744
 msgid "Empty Selection"
-msgstr ""
+msgstr "空の選択範囲"
 
 #: ../app/actions/layers-commands.c:1774 ../app/actions/layers-commands.c:1818
 #: ../app/widgets/gimplayertreeview.c:1182
@@ -9202,7 +9202,7 @@ msgstr "すべてのツールオプションのリセット"
 
 #: ../app/actions/tool-options-commands.c:227
 msgid "Do you really want to reset all tool options to default values?"
-msgstr "すべてのツールオプションをリセットしてもよろしいですか?"
+msgstr "すべてのツールオプションを規定値に戻してもよろしいですか?"
 
 #: ../app/actions/tool-preset-editor-actions.c:44
 msgctxt "tool-preset-editor-action"
@@ -11221,7 +11221,7 @@ msgstr "下にスクロール"
 #: ../app/actions/view-actions.c:943
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
-msgstr "表示倍率を %d％ に戻す(_V)"
+msgstr "表示倍率を %d%% に戻す(_V)"
 
 #: ../app/actions/view-actions.c:951
 msgid "Re_vert Zoom"
@@ -11620,8 +11620,8 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
-"ファイル '%s' の解析中にエラーが発生しました。デフォルトの値が使用されます。"
-"ユーザー設定のバックアップが '%s' に作成されました。"
+"ファイル '%s' の解析中にエラーが発生しました。規定値を使用します。'%s' にユ"
+"ーザー設定のバックアップを作成しました。"
 
 #: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:434
 msgid "Layer"
@@ -11686,7 +11686,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
-msgstr ""
+msgstr "最終更新確認時のタイムスタンプです"
 
 #: ../app/config/gimprc-blurbs.h:53
 msgid "How to handle embedded color profiles when opening a file."
@@ -11719,10 +11719,8 @@ msgstr ""
 "バーヘッドがあるため、無効にすることもできます。"
 
 #: ../app/config/gimprc-blurbs.h:81
-#, fuzzy
-#| msgid "Export the image's color profile by default."
 msgid "Show full image content by default."
-msgstr "デフォルトで画像のカラープロファイルをエクスポートします。"
+msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:84
 msgid ""
@@ -11800,7 +11798,7 @@ msgstr "フィルターツールのプリセットで選択できる設定の履
 
 #: ../app/config/gimprc-blurbs.h:195
 msgid "Default to the last used settings in filter tools."
-msgstr "フィルターツールで最後に使用した設定をデフォルトにします。"
+msgstr "フィルターツールで最後に使用した設定を既定にします。"
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid "Show advanced color options in filter tools."
@@ -11840,36 +11838,36 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:221
 msgid "Export file type used by default."
-msgstr "エクスポートするときのデフォルトのファイル形式を指定します。"
+msgstr "エクスポートするときの既定のファイル形式を指定します。"
 
 #: ../app/config/gimprc-blurbs.h:224
 msgid "Export the image's color profile by default."
-msgstr "デフォルトで画像のカラープロファイルをエクスポートします。"
+msgstr "画像のカラープロファイルのエクスポートを既定にします。"
 
 #: ../app/config/gimprc-blurbs.h:227
 msgid "Export the image's comment by default."
-msgstr "デフォルトで画像のコメントをエクスポートします。"
+msgstr "画像のコメントのエクスポートを既定にします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
 #.
 #: ../app/config/gimprc-blurbs.h:233
 msgid "Export Exif metadata by default."
-msgstr "デフォルトで Exif メタデータをエクスポートします。"
+msgstr "Exif メタデータのエクスポートを既定にします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle XMP by default.
 #.
 #: ../app/config/gimprc-blurbs.h:239
 msgid "Export XMP metadata by default."
-msgstr "デフォルトで XMP メタデータをエクスポートします。"
+msgstr "XMP メタデータのエクスポートを既定にします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle IPTC by default.
 #.
 #: ../app/config/gimprc-blurbs.h:245
 msgid "Export IPTC metadata by default."
-msgstr "デフォルトで IPTC メタデータをエクスポートします。"
+msgstr "IPTC メタデータのエクスポートを既定にします。"
 
 #: ../app/config/gimprc-blurbs.h:248
 msgid "Try generating debug data for bug reporting when appropriate."
@@ -11898,6 +11896,7 @@ msgstr "表示に使用する言語を指定します。"
 msgid ""
 "The last known release version of GIMP as queried from official website."
 msgstr ""
+"公式ウェブサイトで確認できた、GIMP の既知の最新リリースバージョンです。"
 
 #: ../app/config/gimprc-blurbs.h:268
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -11906,11 +11905,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:271
 msgid "The timestamp for the last known release date."
-msgstr ""
+msgstr "既知の最新リリース日のタイムスタンプです。"
 
 #: ../app/config/gimprc-blurbs.h:274
 msgid "The last revision number for the release."
-msgstr ""
+msgstr "リリースの最新リビジョンです。"
 
 #: ../app/config/gimprc-blurbs.h:277
 msgid ""
@@ -12204,11 +12203,8 @@ msgid "Hide docks and other windows, leaving only image windows."
 msgstr "ドックとダイアログを隠し、画像ウィンドウのみを表示します。"
 
 #: ../app/config/gimprc-blurbs.h:464
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid "When enabled GIMP is in a single-window mode."
 msgid "Show the image tabs bar in single window mode."
-msgstr "この設定がオンのときは、シングルウィンドウモードで表示します"
+msgstr "シングルウィンドウモードで画像タブバーを表示します。"
 
 # 'pointer information' は直訳すれば「ポインター情報」だが、機能内容はポインターが指しているピクセルに関する情報の表示なので、機能を直接的に表す「ピクセル情報」とした
 #: ../app/config/gimprc-blurbs.h:467
@@ -12308,42 +12304,42 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:525
 msgid "When enabled, symbolic icons will be preferred if available."
-msgstr "この設定がオンのときは、Symbolic アイコンを優先的に使用します。"
+msgstr ""
+"この設定がオンのときは、Symbolic アイコンを優先的に使用します (利用可能な場合)。"
 
 #: ../app/config/gimprc-blurbs.h:531
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
-"[カラープロファイルに変換] ダイアログのデフォルトのレンダリングインテントを設"
-"定します。"
+"[カラープロファイルに変換] ダイアログの既定のレンダリングインテントを設定しま"
+"す。"
 
 #: ../app/config/gimprc-blurbs.h:534
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
-"[カラープロファイルに変換] ダイアログの [黒点の補正] をデフォルトで有効にしま"
-"す。"
+"[カラープロファイルに変換] ダイアログの [黒点の補正] を既定で有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:538
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
-"[精度変換] ダイアログのデフォルトのレイヤーのディザリング方法を設定します。"
+"[精度変換] ダイアログのレイヤーの既定のディザリング方法を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:541
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
-"[精度変換] ダイアログのデフォルトのテキストレイヤーのディザリング方法を設定し"
+"[精度変換] ダイアログのテキストレイヤーの既定のディザリング方法を設定し"
 "ます。"
 
 #: ../app/config/gimprc-blurbs.h:544
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
-"[精度変換] ダイアログのデフォルトのチャンネルのディザリング方法を設定します。"
+"[精度変換] ダイアログのチャンネルの既定のディザリング方法を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:547
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
@@ -12391,99 +12387,100 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default layer name for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログのデフォルトのレイヤー名を設定します。"
+msgstr "[新しいレイヤー] ダイアログの既定のレイヤー名を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default mode for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログのデフォルトのモードを設定します。"
+msgstr "[新しいレイヤー] ダイアログの既定のモードを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:580
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
+"[新しいレイヤー] ダイアログの既定のブレンドスペースを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:583
 msgid "Sets the default composite space for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログのデフォルトの合成色空間を設定します。"
+msgstr "[新しいレイヤー] ダイアログの既定の合成色空間を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:586
 msgid "Sets the default composite mode for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログのデフォルトの合成モードを設定します。"
+msgstr "[新しいレイヤー] ダイアログの既定の合成モードを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:589
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログのデフォルトの不透明度を設定します。"
+msgstr "[新しいレイヤー] ダイアログの既定の不透明度を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:592
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログのデフォルトの塗りつぶし形式を設定します。"
+msgstr "[新しいレイヤー] ダイアログの既定の塗りつぶし形式を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:595
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
-"[レイヤーサイズの変更] ダイアログのデフォルトの塗りつぶし形式を設定します。"
+"[レイヤーサイズの変更] ダイアログの既定の塗りつぶし形式を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
-msgstr "[レイヤーマスクの追加] ダイアログのデフォルトのマスクを設定します。"
+msgstr "[レイヤーマスクの追加] ダイアログの既定のマスクを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:601
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
-"[レイヤーマスクの追加] ダイアログの [マスク反転] をデフォルトで有効にします。"
+"[レイヤーマスクの追加] ダイアログの [マスク反転] を既定で有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:604
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
-msgstr "[可視レイヤーの統合] ダイアログのデフォルトの統合形式を設定します。"
+msgstr "[可視レイヤーの統合] ダイアログの既定の統合形式を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:607
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"[可視レイヤーの統合] ダイアログの [アクティブなレイヤーグループ内のみ] をデ"
-"フォルトで有効にします。"
+"[可視レイヤーの統合] ダイアログの [アクティブなレイヤーグループ内のみ] を既"
+"定で有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:610
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"[可視レイヤーの統合] ダイアログの [不可視レイヤーの削除] をデフォルトで有効に"
-"します。"
+"[可視レイヤーの統合] ダイアログの [不可視レイヤーの削除] を既定で有効にします"
+"。"
 
 #: ../app/config/gimprc-blurbs.h:613
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr "[チャンネルの追加] ダイアログのデフォルトのチャンネル名を設定します。"
+msgstr "[チャンネルの追加] ダイアログの既定のチャンネル名を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:616
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr "[チャンネルの追加] ダイアログのデフォルトの色と不透明度を設定します。"
+msgstr "[チャンネルの追加] ダイアログの既定の色と不透明度を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:619
 msgid "Sets the default path name for the 'New Path' dialog."
-msgstr "[新しいパス] のデフォルトのパス名を設定します。"
+msgstr "[新しいパス] の既定のパス名を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:622
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
-"[パスのエクスポート] ダイアログのデフォルトのフォルダーパスを設定します。"
+"[パスのエクスポート] ダイアログの既定のフォルダーパスを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:625
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
-"[パスのエクスポート] ダイアログの [現在のパスをエクスポート] をデフォルトで有"
-"効にします。"
+"[パスのエクスポート] ダイアログの [現在のパスをエクスポート] を既定で有効にし"
+"ます。"
 
 #: ../app/config/gimprc-blurbs.h:628
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr ""
-"[パスのインポート] ダイアログのデフォルトのフォルダーパスを設定します。"
+"[パスのインポート] ダイアログの既定のフォルダーパスを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:631
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
-"[パスのインポート] ダイアログの [インポートしたパスを統合する] をデフォルトで"
-"有効にします。"
+"[パスのインポート] ダイアログの [インポートしたパスを統合する] を既定で有効に"
+"します。"
 
 #: ../app/config/gimprc-blurbs.h:634
 msgid ""
@@ -12491,23 +12488,19 @@ msgid ""
 "Path' dialog."
 msgstr ""
 "[パスのインポート] ダイアログの [インポートしたパスを画像に合わせて拡大または"
-"縮小する] をデフォルトで有効にします。"
+"縮小する] を既定で有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:637
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr "[選択範囲の境界をぼかす] ダイアログの境界の半径の既定値を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:640
-#, fuzzy
-#| msgid ""
-#| "Sets the default 'Selected areas continue outside the image' setting for "
-#| "the 'Border Selection' dialog."
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
 msgstr ""
-"[縁取り選択] ダイアログの [画像の外側も選択範囲として扱う] をデフォルトで有効"
-"にします。"
+"[選択範囲の境界をぼかす] ダイアログの [画像の外側も選択範囲として扱う] を既定"
+"で有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:644
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
@@ -12522,8 +12515,8 @@ msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr ""
-"[選択範囲の縮小] ダイアログの [画像の外側も選択範囲として扱う] をデフォルトで"
-"有効にします。"
+"[選択範囲の縮小] ダイアログの [画像の外側も選択範囲として扱う] を既定で有効に"
+"します。"
 
 #: ../app/config/gimprc-blurbs.h:654
 msgid "Sets the default border radius for the 'Border Selection' dialog."
@@ -12534,12 +12527,12 @@ msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr ""
-"[縁取り選択] ダイアログの [画像の外側も選択範囲として扱う] をデフォルトで有効"
-"にします。"
+"[縁取り選択] ダイアログの [画像の外側も選択範囲として扱う] を既定で有効にしま"
+"す。"
 
 #: ../app/config/gimprc-blurbs.h:661
 msgid "Sets the default border style for the 'Border Selection' dialog."
-msgstr "[縁取り選択] ダイアログのデフォルトの縁取りスタイルを設定します。"
+msgstr "[縁取り選択] ダイアログの既定の縁取りスタイルを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:670
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -12783,7 +12776,7 @@ msgstr "組み込み sRGB またはクレースケールプロファイルに変
 #: ../app/core/core-enums.c:223
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
-msgstr ""
+msgstr "優先 RGB またはグレースケールプロファイルに変換する (既定: 組み込み)"
 
 #: ../app/core/core-enums.c:317
 msgctxt "convert-dither-type"
@@ -13287,20 +13280,14 @@ msgid "Link/Unlink item"
 msgstr "アイテムの連結/連結解除"
 
 #: ../app/core/core-enums.c:1257
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock alpha channel"
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
-msgstr "透明保護/保護解除"
+msgstr "内容の保護/保護解除"
 
 #: ../app/core/core-enums.c:1258 ../app/core/core-enums.c:1304
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock alpha channel"
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
-msgstr "透明保護/保護解除"
+msgstr "位置の保護/保護解除"
 
 #: ../app/core/core-enums.c:1259
 msgctxt "undo-type"
@@ -13453,19 +13440,14 @@ msgid "Change indexed palette"
 msgstr "インデックスパレットの変更"
 
 #: ../app/core/core-enums.c:1290
-#, fuzzy
-#| msgid "Color Profile"
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
-msgstr "カラープロファイル"
+msgstr ""
 
 #: ../app/core/core-enums.c:1295
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Layer/Channel"
 msgctxt "undo-type"
 msgid "Layer/Channel format"
-msgstr "レイヤー/チャンネル"
+msgstr ""
 
 #: ../app/core/core-enums.c:1298
 msgctxt "undo-type"
@@ -13473,19 +13455,14 @@ msgid "Rename item"
 msgstr "アイテム名の変更"
 
 #: ../app/core/core-enums.c:1302
-#, fuzzy
-#| msgid "Delete color"
 msgctxt "undo-type"
 msgid "Item color tag"
-msgstr "色の削除"
+msgstr ""
 
 #: ../app/core/core-enums.c:1303
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock alpha channel"
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
-msgstr "透明保護/保護解除"
+msgstr "内容の保護/保護解除"
 
 #: ../app/core/core-enums.c:1305
 msgctxt "undo-type"
@@ -13558,12 +13535,9 @@ msgid "Text layer modification"
 msgstr "テキストレイヤーの変更"
 
 #: ../app/core/core-enums.c:1319
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Convert group layer"
 msgctxt "undo-type"
 msgid "Convert text layer"
-msgstr "グループレイヤーの変換"
+msgstr "テキストレイヤーの変換"
 
 #: ../app/core/core-enums.c:1321
 msgctxt "undo-type"
@@ -14191,12 +14165,9 @@ msgid "Select by Color"
 msgstr "色域の選択"
 
 #: ../app/core/gimpchannel-select.c:641
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Select by Color"
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
-msgstr "色域の選択"
+msgstr "色域の選択 (インデックスカラー)"
 
 #: ../app/core/gimpchannel.c:256
 msgctxt "undo-type"
@@ -14546,8 +14517,6 @@ msgstr "ストローク描画"
 
 #: ../app/core/gimpdrawable-gradient.c:125
 #: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1083
-#, fuzzy
-#| msgid "Gradient"
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "グラデーション"
@@ -14931,11 +14900,11 @@ msgstr "オブジェクトを並べる"
 
 #: ../app/core/gimpimage-color-profile.c:120
 msgid "Enable 'Use sRGB Profile'"
-msgstr "'sRGB プロファイルを使用' の有効化"
+msgstr "'sRGB プロファイルの使用' の有効化"
 
 #: ../app/core/gimpimage-color-profile.c:137
 msgid "Disable 'Use sRGB Profile'"
-msgstr "'sRGB プロファイルを使用' の無効化"
+msgstr "'sRGB プロファイルの使用' の無効化"
 
 #: ../app/core/gimpimage-color-profile.c:195
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
@@ -14961,40 +14930,29 @@ msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 
 #: ../app/core/gimpimage-color-profile.c:473
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Assigning color profile"
-msgstr "カラープロファイル"
+msgstr "カラープロファイルの割り当て中"
 
 #: ../app/core/gimpimage-color-profile.c:474
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Discarding color profile"
-msgstr "カラープロファイル"
+msgstr "カラープロファイルの破棄中"
 
 #: ../app/core/gimpimage-color-profile.c:478
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Assign color profile"
-msgstr "カラープロファイル"
+msgstr "カラープロファイルの割り当て"
 
 #: ../app/core/gimpimage-color-profile.c:479
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Discard color profile"
-msgstr "カラープロファイル"
+msgstr "カラープロファイルの破棄"
 
 #: ../app/core/gimpimage-color-profile.c:522
-#, fuzzy, c-format
-#| msgid "Revert '%s' to '%s'?"
+#, c-format
 msgid "Converting from '%s' to '%s'"
-msgstr "編集中の画像 '%s' を画像ファイル '%s' の状態に戻しますか?"
+msgstr "'%s' から '%s' に変換中"
 
 #: ../app/core/gimpimage-color-profile.c:527
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Color profile conversion"
-msgstr "カラープロファイル"
+msgstr "カラープロファイルの変換"
 
 #: ../app/core/gimpimage-colormap.c:68
 #, c-format
@@ -15184,7 +15142,7 @@ msgstr "クイックマスク無効"
 #: ../app/core/gimpimage-sample-points.c:52
 msgctxt "undo-type"
 msgid "Add Sample Point"
-msgstr "サンプルポイントの追加 "
+msgstr "サンプルポイントの追加"
 
 #: ../app/core/gimpimage-sample-points.c:96
 msgctxt "undo-type"
@@ -15197,12 +15155,9 @@ msgid "Move Sample Point"
 msgstr "サンプルポイントの移動"
 
 #: ../app/core/gimpimage-sample-points.c:146
-#, fuzzy
-#| msgctxt "sample-points-action"
-#| msgid "Sample Point Menu"
 msgctxt "undo-type"
 msgid "Set Sample Point Pick Mode"
-msgstr "サンプルポイントメニュー"
+msgstr ""
 
 #: ../app/core/gimpimage-scale.c:79
 msgctxt "undo-type"
@@ -15566,8 +15521,7 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"パレット '%s' (%d 行目) 読み込み中: 無効な列数です。デフォルト値を使用しま"
-"す。"
+"パレット '%s' (%d 行目) 読み込み中: 無効な列数です。初期値を使用します。"
 
 #: ../app/core/gimppalette-load.c:155
 #, c-format
@@ -16058,10 +16012,8 @@ msgid "Apply stored FG/BG"
 msgstr "描画色・背景色の適用"
 
 #: ../app/core/gimptoolpreset.c:157
-#, fuzzy
-#| msgid "Apply stored pattern"
 msgid "Apply stored opacity/paint mode"
-msgstr "パターンの適用"
+msgstr "不透明度/描画モードの適用"
 
 #: ../app/core/gimptoolpreset.c:164
 msgid "Apply stored brush"
@@ -16265,37 +16217,28 @@ msgid "Initialize from _selection"
 msgstr "選択範囲で初期化(_S)"
 
 #: ../app/dialogs/color-profile-dialog.c:128
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Assign ICC Color Profile"
-msgstr "カラープロファイル"
+msgstr "ICC カラープロファイルの割り当て"
 
 #: ../app/dialogs/color-profile-dialog.c:131
-#, fuzzy
-#| msgid "Can't apply color profile to grayscale image (%s)"
 msgid "Assign a color profile to the image"
-msgstr "カラープロファイルはグレースケール画像に適用できません (%s)"
+msgstr "カラープロファイルを画像に割り当てます"
 
 #: ../app/dialogs/color-profile-dialog.c:137
 msgid "_Assign"
-msgstr "割当(_A)"
+msgstr "割り当て(_A)"
 
 #: ../app/dialogs/color-profile-dialog.c:140
 msgid "Assign"
-msgstr "割当"
+msgstr "割り当て"
 
 #: ../app/dialogs/color-profile-dialog.c:146
-#, fuzzy
-#| msgid "Select CMYK Color Profile"
 msgid "Convert to ICC Color Profile"
-msgstr "CMYK プロファイルの選択"
+msgstr "ICC カラープロファイルに変換"
 
 #: ../app/dialogs/color-profile-dialog.c:149
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgid "Convert the image to a color profile"
-msgstr "画像を RGB カラースペースに変換します"
+msgstr "画像をカラープロファイルに変換します"
 
 #: ../app/dialogs/color-profile-dialog.c:155
 #: ../app/dialogs/color-profile-dialog.c:173
@@ -16314,40 +16257,27 @@ msgstr "変換"
 
 #: ../app/dialogs/color-profile-dialog.c:164
 msgid "RGB Conversion"
-msgstr ""
+msgstr "RGB 変換"
 
 #: ../app/dialogs/color-profile-dialog.c:167
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Convert Image to RGB"
 msgid "Convert Image to RGB"
-msgstr "画像を RGB に変換"
+msgstr "画像を RGB に変換します"
 
 #: ../app/dialogs/color-profile-dialog.c:182
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgid "Grayscale Conversion"
-msgstr "グレースケール(_G)"
+msgstr "グレースケール変換"
 
 #: ../app/dialogs/color-profile-dialog.c:185
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Grayscale"
 msgid "Convert Image to Grayscale"
-msgstr "画像をグレースケールに変換"
+msgstr "画像をグレースケールに変換します"
 
 #: ../app/dialogs/color-profile-dialog.c:200
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Soft-Proof Profile"
-msgstr "カラープロファイル"
+msgstr "ソフトプルーフプロファイル"
 
 #: ../app/dialogs/color-profile-dialog.c:203
-#, fuzzy
-#| msgid "Select Monitor Color Profile"
 msgid "Select Soft-Proof Profile"
-msgstr "モニタープロファイルの選択"
+msgstr "ソフトプルーフプロファイルの選択"
 
 #: ../app/dialogs/color-profile-dialog.c:209
 #: ../app/tools/gimpforegroundselecttool.c:332
@@ -16355,10 +16285,8 @@ msgid "_Select"
 msgstr "選択(_S)"
 
 #: ../app/dialogs/color-profile-dialog.c:212
-#, fuzzy
-#| msgid "Color Profile"
 msgid "New Color Profile"
-msgstr "カラープロファイル"
+msgstr "新しいカラープロファイル"
 
 #: ../app/dialogs/color-profile-dialog.c:241
 msgid "Current Color Profile"
@@ -16379,10 +16307,8 @@ msgid "_Black Point Compensation"
 msgstr "黒点の補正(_B)"
 
 #: ../app/dialogs/color-profile-dialog.c:386
-#, fuzzy
-#| msgid "Select Printer Color Profile"
 msgid "Select Destination Profile"
-msgstr "シミュレーション対象のプロファイルの選択"
+msgstr ""
 
 #: ../app/dialogs/color-profile-dialog.c:485
 #: ../app/widgets/gimpwidgets-constructors.c:86
@@ -16472,17 +16398,13 @@ msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "256 色より多いパレットを変換することはできません。"
 
 #: ../app/dialogs/convert-precision-dialog.c:135
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Convert Image to RGB"
+#, c-format
 msgid "Convert Image to %s"
-msgstr "画像を RGB に変換"
+msgstr "画像を %s に変換"
 
 #: ../app/dialogs/convert-precision-dialog.c:138
-#, fuzzy
-#| msgid "Precision Conversion"
 msgid "Encoding Conversion"
-msgstr "精度変換"
+msgstr "エンコーディング変換"
 
 #. gamma
 #: ../app/dialogs/convert-precision-dialog.c:176
@@ -16956,10 +16878,8 @@ msgid "_Mode:"
 msgstr "モード(_M):"
 
 #: ../app/dialogs/layer-options-dialog.c:203
-#, fuzzy
-#| msgid "Color space:"
 msgid "_Blend space:"
-msgstr "色空間:"
+msgstr "ブレンドスペース(_B):"
 
 #: ../app/dialogs/layer-options-dialog.c:213
 msgid "Compos_ite space:"
@@ -17218,7 +17138,7 @@ msgstr "設定リセットの確認"
 
 #: ../app/dialogs/preferences-dialog.c:302
 msgid "Do you really want to reset all preferences to default values?"
-msgstr "すべての設定を初期値に戻してもよろしいですか?"
+msgstr "すべての設定を規定値に戻してもよろしいですか?"
 
 #: ../app/dialogs/preferences-dialog.c:381
 msgid "You will have to restart GIMP for the following changes to take effect:"
@@ -17229,8 +17149,8 @@ msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"割り当てられていたキーボードショートカットは、次回 GIMP 起動時にデフォルト値"
-"に戻ります。"
+"割り当てられていたキーボードショートカットは、次回 GIMP 起動時に規定値に戻り"
+"ます。"
 
 #: ../app/dialogs/preferences-dialog.c:657
 msgid "Remove all Keyboard Shortcuts"
@@ -17244,19 +17164,19 @@ msgstr "キーボードショートカットをすべて消去してもよろし
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr "ウィンドウの設定は、次回 GIMP 起動時にデフォルト値に戻ります。"
+msgstr "ウィンドウの設定は、次回 GIMP 起動時に規定値に戻ります。"
 
 #: ../app/dialogs/preferences-dialog.c:755
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
-msgstr "入力デバイスの設定は、次回 GIMP 起動時にデフォルト値に戻ります。"
+msgstr "入力デバイスの設定は、次回 GIMP 起動時に規定値に戻ります。"
 
 #: ../app/dialogs/preferences-dialog.c:797
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
-msgstr "ツールオプションの設定は、次回の GIMP 起動時にデフォルト値に戻ります。"
+msgstr "ツールオプションの設定は、次回の GIMP 起動時に規定値に戻ります。"
 
 #: ../app/dialogs/preferences-dialog.c:849
 #: ../app/dialogs/preferences-dialog.c:2590
@@ -17610,7 +17530,7 @@ msgstr "画像のカラープロファイルをエクスポートする(_M)"
 
 #: ../app/dialogs/preferences-dialog.c:1534
 msgid "Export the image's comment by default"
-msgstr "デフォルトで画像のコメントをエクスポートする"
+msgstr "画像のコメントをエクスポートする"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17650,7 +17570,7 @@ msgstr "エクスポートするファイル形式"
 
 #: ../app/dialogs/preferences-dialog.c:1569
 msgid "Default export file t_ype:"
-msgstr "エクスポートするデフォルトのファイル形式(_Y):"
+msgstr "エクスポートする既定のファイル形式(_Y):"
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1573
@@ -17880,7 +17800,7 @@ msgstr "テーマの選択"
 
 #: ../app/dialogs/preferences-dialog.c:2002
 msgid "Use dark theme variant if available"
-msgstr "ダークテーマを使用する (可能な場合)"
+msgstr "ダークテーマを使用する (利用可能な場合)"
 
 #: ../app/dialogs/preferences-dialog.c:2010
 msgid "Reload C_urrent Theme"
@@ -17898,7 +17818,7 @@ msgstr "アイコンテーマの選択"
 
 #: ../app/dialogs/preferences-dialog.c:2138
 msgid "Use symbolic icons if available"
-msgstr "Symbolic アイコンを使用する (可能な場合)"
+msgstr "Symbolic アイコンを使用する (利用可能な場合)"
 
 #: ../app/dialogs/preferences-dialog.c:2148
 #: ../app/dialogs/preferences-dialog.c:2149 ../app/widgets/gimptoolbox.c:440
@@ -17939,7 +17859,7 @@ msgstr "ツールアイコンの設定"
 #: ../app/dialogs/preferences-dialog.c:2204
 #: ../app/dialogs/preferences-dialog.c:2205
 msgid "Dialog Defaults"
-msgstr "ダイアログのデフォルト設定"
+msgstr "ダイアログの既定の設定"
 
 #: ../app/dialogs/preferences-dialog.c:2214
 msgid "Reset Dialog _Defaults"
@@ -17965,7 +17885,7 @@ msgstr "プロファイルフォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:2237
 msgid "Select Default Folder for Color Profiles"
-msgstr "カラープロファイル用デフォルトフォルダーの選択"
+msgstr "カラープロファイル用の既定のフォルダーの選択"
 
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:2241
@@ -18142,7 +18062,7 @@ msgstr "エクスポートフォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:2419
 msgid "Select Default Folder for Exporting Paths"
-msgstr "パスをエクスポートするデフォルトのフォルダーの選択"
+msgstr "パスをエクスポートする既定のフォルダーの選択"
 
 #: ../app/dialogs/preferences-dialog.c:2423
 msgid "Export the active path only"
@@ -18159,7 +18079,7 @@ msgstr "インポートフォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:2433
 msgid "Select Default Folder for Importing Paths"
-msgstr "パスをインポートするデフォルトのフォルダーの選択"
+msgstr "パスをインポートする既定のフォルダーの選択"
 
 #: ../app/dialogs/preferences-dialog.c:2437
 msgid "Merge imported paths"
@@ -18840,7 +18760,7 @@ msgstr "すべての画像を閉じる"
 
 #: ../app/dialogs/quit-dialog.c:256
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr "このままGIMPを終了すると、画像への変更が破棄されます。"
+msgstr "このまま GIMP を終了すると、画像への変更が破棄されます。"
 
 #: ../app/dialogs/quit-dialog.c:259
 msgid "If you close these images now, changes will be lost."
@@ -19518,7 +19438,7 @@ msgstr "ピクセル"
 #: ../app/display/gimpstatusbar.c:447
 #, c-format
 msgid "Cancel <i>%s</i>"
-msgstr "<i>%s</i> をキャンセル"
+msgstr "<i>%s</i> のキャンセル"
 
 #: ../app/display/gimptoolcompass.c:847
 msgid "Click to place vertical and horizontal guides"
@@ -20258,9 +20178,6 @@ msgid "Normal (l)"
 msgstr "標準 (l)"
 
 #: ../app/operations/operations-enums.c:157
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Dissolve"
 msgctxt "layer-mode"
 msgid "Dissolve"
 msgstr "ディザー合成"
@@ -20353,40 +20270,28 @@ msgid "Subtract (l)"
 msgstr "減算 (l)"
 
 #: ../app/operations/operations-enums.c:186
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Darken only"
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
-msgstr "比較(暗)"
+msgstr "比較 (暗) (レガシー)"
 
 #. Translators: this is an abbreviated version of "Darken only (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:189
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Darken only"
 msgctxt "layer-mode"
 msgid "Darken only (l)"
-msgstr "比較(暗)"
+msgstr "比較 (暗) (l)"
 
 #: ../app/operations/operations-enums.c:190
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Lighten only"
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
-msgstr "比較(明)"
+msgstr "比較 (明) (レガシー)"
 
 #. Translators: this is an abbreviated version of "Lighten only (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:193
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Lighten only"
 msgctxt "layer-mode"
 msgid "Lighten only (l)"
-msgstr "比較(明)"
+msgstr "比較 (明) (l)"
 
 #: ../app/operations/operations-enums.c:194
 msgid "HSV Hue (legacy)"
@@ -20438,7 +20343,7 @@ msgstr "HSV 明度 (l)"
 #: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
-msgstr ""
+msgstr "除算 (レガシー)"
 
 #. Translators: this is an abbreviated version of "Divide (legacy)".
 #. Keep it short.
@@ -20450,104 +20355,74 @@ msgstr "除算 (l)"
 #: ../app/operations/operations-enums.c:214
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
-msgstr ""
+msgstr "覆い焼き (レガシー)"
 
 #. Translators: this is an abbreviated version of "Dodge (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:217
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Dodge"
 msgctxt "layer-mode"
 msgid "Dodge (l)"
-msgstr "覆い焼き"
+msgstr "覆い焼き (l)"
 
 #: ../app/operations/operations-enums.c:218
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
-msgstr ""
+msgstr "焼き込み (レガシー)"
 
 #. Translators: this is an abbreviated version of "Burn (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:221
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Burn"
 msgctxt "layer-mode"
 msgid "Burn (l)"
-msgstr "焼き込み"
+msgstr "焼き込み (l)"
 
 #: ../app/operations/operations-enums.c:222
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
-msgstr "ハードライト"
+msgstr "ハードライト (レガシー)"
 
 #. Translators: this is an abbreviated version of "Hard light (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:225
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "layer-mode"
 msgid "Hard light (l)"
-msgstr "ハードライト"
+msgstr "ハードライト (l)"
 
 #: ../app/operations/operations-enums.c:226
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Soft light"
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
-msgstr "ソフトライト"
+msgstr "ソフトライト (レガシー)"
 
 #. Translators: this is an abbreviated version of "Soft light (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:229
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Soft light"
 msgctxt "layer-mode"
 msgid "Soft light (l)"
-msgstr "ソフトライト"
+msgstr "ソフトライト (l)"
 
 #: ../app/operations/operations-enums.c:230
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Grain extract"
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
-msgstr "微粒取り出し"
+msgstr "微粒取り出し (レガシー)"
 
 #. Translators: this is an abbreviated version of "Grain extract (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:233
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Grain extract"
 msgctxt "layer-mode"
 msgid "Grain extract (l)"
-msgstr "微粒取り出し"
+msgstr "微粒取り出し (l)"
 
 #: ../app/operations/operations-enums.c:234
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Grain merge"
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
-msgstr "微粒結合"
+msgstr "微粒結合 (レガシー)"
 
 #. Translators: this is an abbreviated version of "Grain merge (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:237
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Grain merge"
 msgctxt "layer-mode"
 msgid "Grain merge (l)"
-msgstr "微粒結合"
+msgstr "微粒結合 (l)"
 
 #: ../app/operations/operations-enums.c:238
 msgctxt "layer-mode"
@@ -20804,7 +20679,7 @@ msgstr "逆消しゴム"
 #: ../app/operations/operations-enums.c:316
 msgctxt "layer-mode-group"
 msgid "Default"
-msgstr "デフォルト"
+msgstr "既定"
 
 #: ../app/operations/operations-enums.c:317
 msgctxt "layer-mode-group"
@@ -21460,10 +21335,8 @@ msgstr "フェードの反復スタイルを指定します"
 
 #: ../app/paint/gimppaintoptions.c:352 ../app/tools/gimpgradientoptions.c:282
 #: ../app/tools/gimppaintoptions-gui.c:380
-#, fuzzy
-#| msgid "Blend: "
 msgid "Blend Color Space"
-msgstr "ブレンド: "
+msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:353
 msgid "Which color space to use when blending RGB gradient segments"
@@ -22144,14 +22017,12 @@ msgstr "ガウスぼかし"
 #: ../app/pdb/plug-in-compat-cmds.c:482
 msgctxt "undo-type"
 msgid "Alien Map"
-msgstr ""
+msgstr "エイリアンマップ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:519
-#, fuzzy
-#| msgid "Antialiasing"
 msgctxt "undo-type"
 msgid "Antialias"
-msgstr "なめらかに"
+msgstr "アンチエイリアス"
 
 #: ../app/pdb/plug-in-compat-cmds.c:562
 msgctxt "undo-type"
@@ -22164,17 +22035,12 @@ msgid "Apply Lens"
 msgstr "レンズ効果"
 
 #: ../app/pdb/plug-in-compat-cmds.c:668
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Crop image"
 msgid "Autocrop image"
-msgstr "画像の切り抜き"
+msgstr "画像の自動切り抜き"
 
 #: ../app/pdb/plug-in-compat-cmds.c:730
-#, fuzzy
-#| msgid "Drop layers"
 msgid "Autocrop layer"
-msgstr "レイヤーのドロップ"
+msgstr "レイヤーの自動切り抜き"
 
 #: ../app/pdb/plug-in-compat-cmds.c:777
 msgctxt "undo-type"
@@ -22187,12 +22053,9 @@ msgid "Stretch Contrast"
 msgstr "コントラスト伸長"
 
 #: ../app/pdb/plug-in-compat-cmds.c:974
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "Ca_rtoon..."
 msgctxt "undo-type"
 msgid "Cartoon"
-msgstr "漫画(_R)..."
+msgstr "漫画"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1053
 #, fuzzy
@@ -22256,12 +22119,9 @@ msgid "Edge"
 msgstr "輪郭"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1697
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Emboss..."
 msgctxt "undo-type"
 msgid "Emboss"
-msgstr "エンボス(_E)..."
+msgstr "エンボス"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1740
 msgctxt "undo-type"
@@ -22279,12 +22139,9 @@ msgid "Lens Flare"
 msgstr "レンズフレア"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1926
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Fractal Trace..."
 msgctxt "undo-type"
 msgid "Fractal Trace"
-msgstr "フラクタルトレース(_F)..."
+msgstr "フラクタルトレース"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2110
 msgctxt "undo-type"
@@ -22358,12 +22215,9 @@ msgid "Paper Tile"
 msgstr "紙タイル"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3179
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Photocopy..."
 msgctxt "undo-type"
 msgid "Photocopy"
-msgstr "写真コピー(_P)..."
+msgstr "写真コピー"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3220 ../app/pdb/plug-in-compat-cmds.c:3263
 msgctxt "undo-type"
@@ -22444,12 +22298,9 @@ msgid "Sobel"
 msgstr "ソーベル"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4167
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Softglow..."
 msgctxt "undo-type"
 msgid "Softglow"
-msgstr "柔らかい発光(_S)..."
+msgstr "柔らかい発光"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4228
 msgctxt "undo-type"
@@ -23172,11 +23023,8 @@ msgid "New Seed"
 msgstr "新規パレット"
 
 #: ../app/propgui/gimppropgui-vignette.c:183
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Vignette..."
 msgid "Vignette: "
-msgstr "ビネット(_V)..."
+msgstr "ビネット: "
 
 #: ../app/propgui/gimppropgui.c:393
 msgid "Pick color from the image"
@@ -23834,39 +23682,29 @@ msgstr "選択範囲の外側を暗く表示します"
 
 #: ../app/tools/gimpcropoptions.c:88
 #: ../app/tools/gimprectangleselectoptions.c:88
-#, fuzzy
-#| msgid "Highlight"
 msgid "Highlight opacity"
-msgstr "ハイライト表示"
+msgstr "ハイライトの不透明度"
 
 #: ../app/tools/gimpcropoptions.c:89
 #: ../app/tools/gimprectangleselectoptions.c:89
-#, fuzzy
-#| msgid "Dim everything outside selection"
 msgid "How much to dim everything outside selection"
-msgstr "選択範囲の外側を暗く表示します"
+msgstr "選択範囲の外側をどの程度暗くするかです"
 
 #: ../app/tools/gimpcropoptions.c:95
-#, fuzzy
-#| msgid "Current layer only"
 msgid "Current layers only"
 msgstr "現在のレイヤーのみ"
 
 #: ../app/tools/gimpcropoptions.c:96
-#, fuzzy
-#| msgid "Crop only currently selected layer"
 msgid "Crop only currently selected layers"
 msgstr "アクティブなレイヤーのみを切り抜きます"
 
 #: ../app/tools/gimpcropoptions.c:102
-#, fuzzy
-#| msgid "Select foreground pixels"
 msgid "Delete cropped pixels"
-msgstr "前景ピクセルの選択"
+msgstr "切り抜かれた側のピクセルの削除"
 
 #: ../app/tools/gimpcropoptions.c:103
 msgid "Discard non-locked layer data that falls out of the crop region"
-msgstr ""
+msgstr "切り抜き領域外のロックされていないレイヤーのデータを破棄します"
 
 #: ../app/tools/gimpcropoptions.c:109
 msgid "Allow growing"
@@ -24180,20 +24018,13 @@ msgstr ""
 
 #. The blending-options expander
 #: ../app/tools/gimpfiltertool.c:1113
-#, fuzzy
-#| msgid "Saved Options"
 msgid "Blending Options"
-msgstr "Saved Options"
+msgstr "ブレンディングオプション"
 
-# 表記揺れではない。
-# 非常に高度な設定らしい（設定項目は、多言語への翻訳が許されていない）ので、あえて「高度なオプション」としている。
 #. The Color Options expander
 #: ../app/tools/gimpfiltertool.c:1152
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Advanced options"
 msgid "Advanced Color Options"
-msgstr "高度なオプション"
+msgstr "高度な色オプション"
 
 #: ../app/tools/gimpfiltertool.c:1559 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
@@ -24619,11 +24450,8 @@ msgid "Center midpoint"
 msgstr "センターライン"
 
 #: ../app/tools/gimpgradienttool-editor.c:1618
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "_Left Endpoint"
 msgid "Start Endpoint"
-msgstr "左終端色(_L)"
+msgstr "終端点の開始"
 
 #: ../app/tools/gimpgradienttool-editor.c:1626
 msgid "End Endpoint"
@@ -26034,9 +25862,9 @@ msgstr "ガイド"
 #: ../app/tools/gimptransformgridoptions.c:157
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr ""
-"[ガイド] を [グリッド線の数を指定] または [グリッド間隔の指定] に設定している"
+"[ガイド] を [グリッド線の数の指定] または [グリッド間隔の指定] に設定している"
 "とき、ここでの値がグリッドセルの大きさを決定します\n"
-"[グリッド線の数を指定] のときは、値は挿入されるグリッド線の本数を意味します\n"
+"[グリッド線の数の指定] のときは、値は挿入されるグリッド線の本数を意味します\n"
 "[グリッド間隔の指定] のときは、値はピクセル単位のグリッド間隔を意味しますが、"
 "実際の間隔は各グリッドセル間で均一になるように調整されます"
 
@@ -27562,11 +27390,11 @@ msgstr "バグトラッカーを開く"
 
 #: ../app/widgets/gimpcriticaldialog.c:186
 msgid "See bug details"
-msgstr ""
+msgstr "バグの詳細を確認"
 
 #: ../app/widgets/gimpcriticaldialog.c:205
 msgid "Go to _Download page"
-msgstr ""
+msgstr "ダウンロードページを開く(_D)"
 
 #. Recommend an update.
 #: ../app/widgets/gimpcriticaldialog.c:210
@@ -27575,41 +27403,38 @@ msgid ""
 "A new version of GIMP (%s) was released on %s.\n"
 "It is recommended to update."
 msgstr ""
+"%2$s に GIMP の新しいバージョン (%1$s) がリリースされました。\n"
+"更新してください。"
 
 #: ../app/widgets/gimpcriticaldialog.c:216
 msgid "You are running an unsupported version!"
-msgstr ""
+msgstr "非サポートバージョンを実行しています!"
 
 #: ../app/widgets/gimpcriticaldialog.c:239
 #: ../app/widgets/gimpcriticaldialog.c:589
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
-msgstr ""
+msgstr "次の手順でバグを報告して GIMP の改善にご協力ください:"
 
 #: ../app/widgets/gimpcriticaldialog.c:241
 #: ../app/widgets/gimpcriticaldialog.c:591
-#, fuzzy
-#| msgid "Copy the selected region to the clipboard"
 msgid "Copy the bug information to the clipboard by clicking: "
-msgstr "選択範囲内のレイヤー結合部分をクリップボードにコピーします"
+msgstr "クリックしてバグ情報をクリップボードにコピーします: "
 
 #: ../app/widgets/gimpcriticaldialog.c:243
 #: ../app/widgets/gimpcriticaldialog.c:593
 msgid "Open our bug tracker in the browser by clicking: "
-msgstr ""
+msgstr "クリックしてブラウザーでバグトラッカーを開きます: "
 
 #: ../app/widgets/gimpcriticaldialog.c:245
 #: ../app/widgets/gimpcriticaldialog.c:595
 msgid "Create a login if you don't have one yet."
-msgstr ""
+msgstr "バグ報告するにはサイトにログインする必要があります。"
 
 #: ../app/widgets/gimpcriticaldialog.c:246
 #: ../app/widgets/gimpcriticaldialog.c:596
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste the content of a named buffer"
 msgid "Paste the clipboard text in a new bug report."
-msgstr "名前付きバッファーの中から選択して貼り付けます"
+msgstr "新しいバグとしてクリップボードの文字列を貼り付けます。"
 
 #: ../app/widgets/gimpcriticaldialog.c:247
 #: ../app/widgets/gimpcriticaldialog.c:597
@@ -27617,18 +27442,22 @@ msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
 msgstr ""
+"このエラーが発生したときに行っていた操作の説明を、関連情報として英語で追記"
+"します。"
 
 #: ../app/widgets/gimpcriticaldialog.c:249
 msgid ""
 "This error may have left GIMP in an inconsistent state. It is advised to "
 "save your work and restart GIMP."
 msgstr ""
+"このエラーの影響で GIMP が不整合な状態に陥っている可能性があります。作業内"
+"容を保存して GIMP を再起動することをお勧めします。"
 
 #: ../app/widgets/gimpcriticaldialog.c:254
 msgid ""
 "You can also close the dialog directly but reporting bugs is the best way to "
 "make your software awesome."
-msgstr ""
+msgstr "バグを報告しない場合はダイアログを直接閉じてください。"
 
 #: ../app/widgets/gimpcriticaldialog.c:360
 msgid "The operating system is out of memory or resources."
@@ -28215,7 +28044,7 @@ msgstr "置換(_R)"
 #: ../app/widgets/gimpdnd-xds.c:239
 #, c-format
 msgid "A file named '%s' already exists."
-msgstr "ファイル名 '%s' はすでに存在します"
+msgstr "'%s' はすでに存在します"
 
 #: ../app/widgets/gimpdnd-xds.c:243
 msgid "Do you want to replace it with the image you are saving?"
