@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2021-01-07 21:04+0000\n"
-"PO-Revision-Date: 2021-01-09 00:00+0900\n"
+"PO-Revision-Date: 2021-01-15 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -39,7 +39,7 @@ msgstr "%s はレイヤーを取り扱えません"
 #: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:342
 #: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:369
 msgid "Merge Visible Layers"
-msgstr "可視レイヤー結合"
+msgstr "可視レイヤーの結合"
 
 #: ../libgimp/gimpexport.c:341
 #, c-format
@@ -153,15 +153,15 @@ msgstr "アルファチャンネルの追加"
 #: ../libgimp/gimpexport.c:481
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
-msgstr ""
+msgstr "%s はレイヤーを画像に合わせる必要があります"
 
 #: ../libgimp/gimpexport.c:482
 msgid "Crop Layers"
-msgstr ""
+msgstr "レイヤーの切り抜き"
 
 #: ../libgimp/gimpexport.c:482
 msgid "Resize Image to Layers"
-msgstr ""
+msgstr "画像のサイズをレイヤーに合わせる"
 
 #: ../libgimp/gimpexport.c:541
 msgid "Confirm Save"
@@ -430,19 +430,19 @@ msgstr "リセット(_R)"
 
 #: ../libgimp/gimpproceduredialog.c:238
 msgid "_Load Saved Settings"
-msgstr ""
+msgstr "保存された設定を読み込む(_L)"
 
 #: ../libgimp/gimpproceduredialog.c:239
 msgid "Load settings saved with \"Save Settings\" button"
-msgstr ""
+msgstr "[設定の保存] ボタンで保存した設定を読み込みます"
 
 #: ../libgimp/gimpproceduredialog.c:251
 msgid "_Save Settings"
-msgstr ""
+msgstr "設定の保存(_S)"
 
 #: ../libgimp/gimpproceduredialog.c:252
 msgid "Store current settings for later reuse"
-msgstr ""
+msgstr "いつでも利用できるように現在の設定を保存します"
 
 #: ../libgimp/gimpproceduredialog.c:1196
 msgid "Reset to _Initial Values"
@@ -892,7 +892,7 @@ msgstr "HSV (時計回り)"
 #: ../libgimpbase/gimpbaseenums.c:649
 msgctxt "gradient-segment-type"
 msgid "Linear"
-msgstr ""
+msgstr "線形"
 
 #: ../libgimpbase/gimpbaseenums.c:650
 msgctxt "gradient-segment-type"
@@ -1049,7 +1049,7 @@ msgstr "アイコン名"
 #: ../libgimpbase/gimpbaseenums.c:827
 msgctxt "icon-type"
 msgid "Pixbuf"
-msgstr ""
+msgstr "Pixbuf"
 
 #: ../libgimpbase/gimpbaseenums.c:828
 msgctxt "icon-type"
@@ -1110,7 +1110,7 @@ msgstr "円形"
 
 #: ../libgimpbase/gimpbaseenums.c:929
 # 表記揺れではない
-# これはインクのブラシの形状
+# これはインクブラシの形状
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "四角形"
@@ -1620,7 +1620,6 @@ msgstr "データが ICC カラープロファイルではありません"
 msgid "Could not save color profile to memory"
 msgstr "カラープロファイルをメモリに保存できません"
 
-# 環境設定 [カラーマネジメント] では "RGB プロファイル" となっているため
 #: ../libgimpcolor/gimpcolorprofile.c:578
 msgid "(unnamed profile)"
 msgstr "(名称未設定のプロファイル)"
@@ -1909,7 +1908,7 @@ msgstr ""
 #: ../libgimpconfig/gimpconfigwriter.c:153
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
-msgstr "'%1$s' 用のディレクトリ '%2$s' を作成できません: "
+msgstr "'%2$s' 用のディレクトリ '%1$s' を作成できません: "
 
 #: ../libgimpconfig/gimpconfigwriter.c:169
 #, c-format
@@ -1945,7 +1944,7 @@ msgstr ""
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
-"モジュール '%s' 読み込み中にエラーが発生しました。\n"
+"モジュール '%s' の読み込み中にエラーが発生しました。\n"
 "\n"
 "%s"
 
@@ -3020,7 +3019,7 @@ msgstr "コントラスト"
 
 #~ msgctxt "icon-type"
 #~ msgid "Inline pixbuf"
-#~ msgstr "埋め込み pixbuf"
+#~ msgstr "埋め込み Pixbuf"
 
 #~ msgctxt "repeat-mode"
 #~ msgid "None"
@@ -3164,7 +3163,7 @@ msgstr "コントラスト"
 
 #~ msgid "Color management display filter using ICC color profiles"
 #~ msgstr ""
-#~ "ICCカラープロファイルを用いたカラーマネジメント・ディスプレイフィルター"
+#~ "ICC カラープロファイルを用いたカラーマネジメント・ディスプレイフィルター"
 
 #~ msgid "Color Management"
 #~ msgstr "カラーマネジメント"
@@ -3182,7 +3181,7 @@ msgstr "コントラスト"
 #~ msgstr "色校正"
 
 #~ msgid "Choose an ICC Color Profile"
-#~ msgstr "ICCカラープロファイルの選択"
+#~ msgstr "ICC カラープロファイルの選択"
 
 #~ msgid "_Profile:"
 #~ msgstr "プロファイル(_P):"
@@ -3214,35 +3213,3 @@ msgstr "コントラスト"
 
 #~ msgid "profile|None"
 #~ msgstr "カラープロファイルを指定しない"
-
-#~ msgid "%d Byte"
-#~ msgid_plural "%d Bytes"
-#~ msgstr[0] "%d バイト"
-#~ msgstr[1] "%d バイト"
-
-#~ msgid "%.2f KB"
-#~ msgstr "%.2f KB"
-
-#~ msgid "%.1f KB"
-#~ msgstr "%.1f KB"
-
-#~ msgid "%d KB"
-#~ msgstr "%d KB"
-
-#~ msgid "%.2f MB"
-#~ msgstr "%.2f MB"
-
-#~ msgid "%.1f MB"
-#~ msgstr "%.1f MB"
-
-#~ msgid "%d MB"
-#~ msgstr "%d MB"
-
-#~ msgid "%.2f GB"
-#~ msgstr "%.2f GB"
-
-#~ msgid "%.1f GB"
-#~ msgstr "%.1f GB"
-
-#~ msgid "%d GB"
-#~ msgstr "%d GB"
