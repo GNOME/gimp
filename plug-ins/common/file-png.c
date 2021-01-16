@@ -1714,7 +1714,34 @@ save_image (GFile        *file,
 
       g_object_unref (profile);
     }
+  else
 #endif
+    {
+      /* Be more specific by writing into the file that the image is in
+       * sRGB color space.
+       */
+      GimpColorConfig *config = gimp_get_color_configuration ();
+      int              srgb_intent;
+
+      switch (gimp_color_config_get_display_intent (config))
+        {
+        case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
+          srgb_intent = PNG_sRGB_INTENT_PERCEPTUAL;
+          break;
+        case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+          srgb_intent = PNG_sRGB_INTENT_RELATIVE;
+          break;
+        case GIMP_COLOR_RENDERING_INTENT_SATURATION:
+          srgb_intent = PNG_sRGB_INTENT_SATURATION;
+          break;
+        case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+          srgb_intent = PNG_sRGB_INTENT_ABSOLUTE;
+          break;
+        }
+      png_set_sRGB_gAMA_and_cHRM (pp, info, srgb_intent);
+
+      g_object_unref (config);
+    }
 
 #ifdef PNG_zTXt_SUPPORTED
 /* Small texts are not worth compressing and will be even bigger if compressed.
