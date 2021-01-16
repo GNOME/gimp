@@ -1,19 +1,20 @@
 # Japanese message table for GIMP 2.0
-# Copyright (C) 1998-2005,2008-2010 Free Software Foundation, Inc.
+# Copyright (C) 1998-2005, 2008-2011, 2021 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1998-2001, 2004.
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003, 2004.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
 # Ken Okubo <se5k-ookb@asahi-net.or.jp>, 2009.
 # Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2011.
+# sicklylife <translation@sicklylife.jp>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2021-01-14 17:44+0000\n"
-"PO-Revision-Date: 2011-05-01 00:25+0900\n"
-"Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
+"PO-Revision-Date: 2021-01-15 00:00+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +54,7 @@ msgstr "参照(_B)..."
 #: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "%s プラグインはレイヤーを取り扱えません"
+msgstr "%s はレイヤーを取り扱えません"
 
 #: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
 #: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
@@ -63,12 +64,12 @@ msgstr "可視レイヤーの結合"
 #: ../libgimp/gimpexport.c:304
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "%s プラグインはレイヤーのオフセット、サイズ、透明度を扱えません"
+msgstr "%s はレイヤーのオフセット、サイズ、透明度を取り扱えません"
 
 #: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s プラグインはアニメーションフレームとしてのみレイヤーを取り扱えます"
+msgstr "%s はアニメーションフレームとしてのみレイヤーを取り扱えます"
 
 #: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
 msgid "Save as Animation"
@@ -85,10 +86,9 @@ msgid "%s plug-in can't handle transparency"
 msgstr "%s は透明度情報を取り扱えません"
 
 #: ../libgimp/gimpexport.c:349
-#, fuzzy, c-format
-#| msgid "%s plug-in can't handle transparency"
+#, c-format
 msgid "%s plug-in can't handle transparent layers"
-msgstr "%s は透明度情報を取り扱えません"
+msgstr "%s は透明なレイヤーを取り扱えません"
 
 #: ../libgimp/gimpexport.c:358
 #, c-format
@@ -136,7 +136,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "%s は 2値ビットマップまたはインデックス画像のみ取り扱えます"
+msgstr "%s は 2 値ビットマップまたはインデックス画像のみ取り扱えます"
 
 #: ../libgimp/gimpexport.c:396
 msgid ""
@@ -149,11 +149,10 @@ msgstr ""
 #: ../libgimp/gimpexport.c:405
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "%s は RGBまたはグレースケール画像のみ取り扱えます"
+msgstr "%s は RGB またはグレースケール画像のみ取り扱えます"
 
 #: ../libgimp/gimpexport.c:414
-#, fuzzy, c-format
-#| msgid "%s plug-in  can only handle RGB or indexed images"
+#, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s は RGB またはインデックス画像のみ取り扱えます"
 
@@ -174,18 +173,15 @@ msgstr "アルファチャンネルを追加"
 #: ../libgimp/gimpexport.c:444
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
-msgstr ""
+msgstr "%s はレイヤーを画像に合わせる必要があります"
 
 #: ../libgimp/gimpexport.c:445
-#, fuzzy
-#| msgctxt "page-selector-target"
-#| msgid "Layers"
 msgid "Crop Layers"
-msgstr "レイヤー"
+msgstr "レイヤーの切り抜き"
 
 #: ../libgimp/gimpexport.c:445
 msgid "Resize Image to Layers"
-msgstr ""
+msgstr "画像のサイズをレイヤーに合わせる"
 
 #: ../libgimp/gimpexport.c:504
 msgid "Confirm Save"
@@ -198,16 +194,12 @@ msgstr "保存の確認"
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
 #: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
 #: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:492
-#, fuzzy
-#| msgid "cancelled"
 msgid "_Cancel"
-msgstr "取消"
+msgstr "キャンセル(_C)"
 
 #: ../libgimp/gimpexport.c:510
-#, fuzzy
-#| msgid "Confirm"
 msgid "C_onfirm"
-msgstr "確認"
+msgstr "確認(_O)"
 
 #: ../libgimp/gimpexport.c:586
 msgid "Export File"
@@ -236,7 +228,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:696
 msgid "The export conversion won't modify your original image."
 msgstr ""
-"エクスポートによるファイル形式変換は元画像(ファイル)に影響を与えません。"
+"エクスポートによるファイル形式変換は元画像 (ファイル) に影響を与えません。"
 
 #: ../libgimp/gimpexport.c:800
 #, c-format
@@ -258,10 +250,9 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #: ../libgimp/gimpexport.c:1119
-#, fuzzy, c-format
-#| msgid "Export Image as "
+#, c-format
 msgid "Export Image as %s"
-msgstr "画像をエクスポート: "
+msgstr "画像を %s でエクスポート"
 
 #: ../libgimp/gimpfontselectbutton.c:139
 msgid "Font Selection"
@@ -272,26 +263,21 @@ msgid "Gradient Selection"
 msgstr "グラデーション選択"
 
 #: ../libgimp/gimpimagemetadata.c:519
-#, fuzzy
-#| msgid "GIMP"
 msgid "GIMP 2.10"
-msgstr "GIMP"
+msgstr "GIMP 2.10"
 
 #: ../libgimp/gimpimagemetadata.c:708
-#, fuzzy
-#| msgid "_Background Color"
 msgid "Background"
-msgstr "背景色(_B)"
+msgstr ""
 
 #: ../libgimp/gimpimagemetadata.c:897
-#, fuzzy, c-format
-#| msgid "_Rotate"
+#, c-format
 msgid "Rotate %s?"
-msgstr "回転(_R)"
+msgstr "%s を回転させますか?"
 
 #: ../libgimp/gimpimagemetadata.c:903
 msgid "_Keep Original"
-msgstr ""
+msgstr "オリジナルを維持(_K)"
 
 #: ../libgimp/gimpimagemetadata.c:904 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
@@ -299,25 +285,23 @@ msgstr "回転(_R)"
 
 #: ../libgimp/gimpimagemetadata.c:945
 msgid "Original"
-msgstr ""
+msgstr "オリジナル"
 
 #: ../libgimp/gimpimagemetadata.c:961
-#, fuzzy
-#| msgid "_Rotate"
 msgid "Rotated"
-msgstr "回転(_R)"
+msgstr "回転"
 
 #: ../libgimp/gimpimagemetadata.c:979
 msgid "This image contains Exif orientation metadata."
-msgstr ""
+msgstr "この画像には Exif の Orientation メタデータが含まれています。"
 
 #: ../libgimp/gimpimagemetadata.c:997
 msgid "Would you like to rotate the image?"
-msgstr ""
+msgstr "画像を回転させますか?"
 
 #: ../libgimp/gimpimagemetadata.c:1009
 msgid "_Don't ask me again"
-msgstr ""
+msgstr "次回から確認しない(_D)"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
@@ -452,7 +436,7 @@ msgstr "パーセント"
 #: ../libgimpbase/gimpbaseenums.c:28
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
-msgstr "完全不透明(白)(_W)"
+msgstr "完全不透明 (白)(_W)"
 
 # 色（白 or 黒）よりも透明度(透明 or 不透明）のほうが重要と思い表記順を逆転した
 #: ../libgimpbase/gimpbaseenums.c:29
@@ -508,20 +492,21 @@ msgstr "カスタムグラデーション"
 #: ../libgimpbase/gimpbaseenums.c:98
 msgctxt "brush-generated-shape"
 msgid "Circle"
-msgstr ""
+msgstr "丸みを帯びた先端"
 
 #: ../libgimpbase/gimpbaseenums.c:99
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Square"
+# 表記揺れではない
+# ブラシエディターで [とがりの数] を 4 以外にして確認せよ
 msgctxt "brush-generated-shape"
 msgid "Square"
-msgstr "四角形"
+msgstr "フラットな先端"
 
 #: ../libgimpbase/gimpbaseenums.c:100
+# 表記揺れではない
+# ブラシエディターで [とがりの数] を 4 以上にして確認せよ
 msgctxt "brush-generated-shape"
 msgid "Diamond"
-msgstr ""
+msgstr "とがった先端"
 
 #: ../libgimpbase/gimpbaseenums.c:130
 msgctxt "bucket-fill-mode"
@@ -539,24 +524,19 @@ msgid "Pattern fill"
 msgstr "パターン"
 
 #: ../libgimpbase/gimpbaseenums.c:162
-#, fuzzy
-#| msgid "Button 0"
 msgctxt "cap-style"
 msgid "Butt"
-msgstr "ボタン 0"
+msgstr "端で止める"
 
 #: ../libgimpbase/gimpbaseenums.c:163
 msgctxt "cap-style"
 msgid "Round"
-msgstr ""
+msgstr "端を中心にして丸め"
 
 #: ../libgimpbase/gimpbaseenums.c:164
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Square"
 msgctxt "cap-style"
 msgid "Square"
-msgstr "四角形"
+msgstr "端を中心にして四角形"
 
 #: ../libgimpbase/gimpbaseenums.c:195
 msgctxt "channel-ops"
@@ -664,29 +644,21 @@ msgid "Pattern"
 msgstr "パターン"
 
 #: ../libgimpbase/gimpbaseenums.c:372
-#, fuzzy
-#| msgid "None"
 msgctxt "color-tag"
 msgid "None"
 msgstr "なし"
 
 #: ../libgimpbase/gimpbaseenums.c:373
-#, fuzzy
-#| msgid "Blue"
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "青"
 
 #: ../libgimpbase/gimpbaseenums.c:374
-#, fuzzy
-#| msgid "Green"
 msgctxt "color-tag"
 msgid "Green"
 msgstr "緑"
 
 #: ../libgimpbase/gimpbaseenums.c:375
-#, fuzzy
-#| msgid "Yellow"
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "イエロー"
@@ -694,16 +666,14 @@ msgstr "イエロー"
 #: ../libgimpbase/gimpbaseenums.c:376
 msgctxt "color-tag"
 msgid "Orange"
-msgstr ""
+msgstr "オレンジ"
 
 #: ../libgimpbase/gimpbaseenums.c:377
 msgctxt "color-tag"
 msgid "Brown"
-msgstr ""
+msgstr "ブラウン"
 
 #: ../libgimpbase/gimpbaseenums.c:378
-#, fuzzy
-#| msgid "Red"
 msgctxt "color-tag"
 msgid "Red"
 msgstr "赤"
@@ -711,12 +681,9 @@ msgstr "赤"
 #: ../libgimpbase/gimpbaseenums.c:379
 msgctxt "color-tag"
 msgid "Violet"
-msgstr ""
+msgstr "紫"
 
 #: ../libgimpbase/gimpbaseenums.c:380
-#, fuzzy
-#| msgctxt "channel-type"
-#| msgid "Gray"
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "グレー"
@@ -724,70 +691,67 @@ msgstr "グレー"
 #: ../libgimpbase/gimpbaseenums.c:413
 msgctxt "component-type"
 msgid "8-bit integer"
-msgstr ""
+msgstr "8 bit 整数"
 
 #: ../libgimpbase/gimpbaseenums.c:414
 msgctxt "component-type"
 msgid "16-bit integer"
-msgstr ""
+msgstr "16 bit 整数"
 
 #: ../libgimpbase/gimpbaseenums.c:415
 msgctxt "component-type"
 msgid "32-bit integer"
-msgstr ""
+msgstr "32 bit 整数"
 
 #: ../libgimpbase/gimpbaseenums.c:416
 msgctxt "component-type"
 msgid "16-bit floating point"
-msgstr ""
+msgstr "16 bit 浮動小数点"
 
 #: ../libgimpbase/gimpbaseenums.c:417
 msgctxt "component-type"
 msgid "32-bit floating point"
-msgstr ""
+msgstr "32 bit 浮動小数点"
 
 #: ../libgimpbase/gimpbaseenums.c:418
 msgctxt "component-type"
 msgid "64-bit floating point"
-msgstr ""
+msgstr "64 bit 浮動小数点"
 
 #: ../libgimpbase/gimpbaseenums.c:449
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
-msgstr ""
+msgstr "最適パレットの生成"
 
 #: ../libgimpbase/gimpbaseenums.c:450
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
-msgstr ""
+msgstr "ウェブ用最適化パレットを使用"
 
 #: ../libgimpbase/gimpbaseenums.c:451
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
-msgstr ""
+msgstr "モノクロ 2 階調 (1-bit) パレットを使用"
 
 #: ../libgimpbase/gimpbaseenums.c:452
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
-msgstr ""
+msgstr "カスタムパレットを使用"
 
 #: ../libgimpbase/gimpbaseenums.c:481
 msgctxt "convolve-type"
 msgid "Blur"
-msgstr ""
+msgstr "ぼかし"
 
 #: ../libgimpbase/gimpbaseenums.c:482
 msgctxt "convolve-type"
 msgid "Sharpen"
-msgstr ""
+msgstr "シャープ"
 
 #: ../libgimpbase/gimpbaseenums.c:514
-#, fuzzy
-#| msgctxt "desaturate-mode"
-#| msgid "Lightness"
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
-msgstr "明度"
+msgstr "明度 (HSL)"
 
 #: ../libgimpbase/gimpbaseenums.c:515
 msgctxt "desaturate-mode"
@@ -805,11 +769,9 @@ msgid "Luminance"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:518
-#, fuzzy
-#| msgid "Value"
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
-msgstr "明度"
+msgstr "明度 (HSV)"
 
 #: ../libgimpbase/gimpbaseenums.c:547
 msgctxt "dodge-burn-type"
@@ -822,57 +784,39 @@ msgid "Burn"
 msgstr "焼き込み"
 
 #: ../libgimpbase/gimpbaseenums.c:580
-#, fuzzy
-#| msgid "_Foreground Color"
 msgctxt "fill-type"
 msgid "Foreground color"
-msgstr "描画色(_F)"
+msgstr "描画色"
 
 #: ../libgimpbase/gimpbaseenums.c:581
-#, fuzzy
-#| msgid "_Background Color"
 msgctxt "fill-type"
 msgid "Background color"
-msgstr "背景色(_B)"
+msgstr "背景色"
 
 #: ../libgimpbase/gimpbaseenums.c:582
-#, fuzzy
-#| msgid "_White"
 msgctxt "fill-type"
 msgid "White"
-msgstr "白(_W)"
+msgstr "白"
 
 #: ../libgimpbase/gimpbaseenums.c:583
-#, fuzzy
-#| msgctxt "blend-mode"
-#| msgid "FG to transparent"
 msgctxt "fill-type"
 msgid "Transparency"
-msgstr "描画色から透明"
+msgstr "透明"
 
 #: ../libgimpbase/gimpbaseenums.c:584
-#, fuzzy
-#| msgctxt "clone-type"
-#| msgid "Pattern"
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "パターン"
 
 #: ../libgimpbase/gimpbaseenums.c:644
-#, fuzzy
-#| msgctxt "color-rendering-intent"
-#| msgid "Perceptual"
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
-msgstr "知覚的"
+msgstr "知覚的 RGB"
 
 #: ../libgimpbase/gimpbaseenums.c:645
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Linear"
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
-msgstr "線形"
+msgstr "線形 RGB"
 
 #: ../libgimpbase/gimpbaseenums.c:646
 msgctxt "gradient-blend-color-space"
@@ -880,9 +824,6 @@ msgid "CIE Lab"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:676
-#, fuzzy
-#| msgctxt "image-type"
-#| msgid "RGB"
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
@@ -890,37 +831,28 @@ msgstr "RGB"
 #: ../libgimpbase/gimpbaseenums.c:677
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
-msgstr ""
+msgstr "HSV (色相反時計回り)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:680
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Spiral (ccw)"
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
-msgstr "螺旋 (反時計回り)"
+msgstr "HSV (反時計回り)"
 
 #: ../libgimpbase/gimpbaseenums.c:681
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
-msgstr ""
+msgstr "HSV (色相時計回り)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:684
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Spiral (cw)"
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
-msgstr "螺旋 (時計回り)"
+msgstr "HSV (時計回り)"
 
 #: ../libgimpbase/gimpbaseenums.c:717
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Linear"
 msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "線形"
@@ -938,32 +870,26 @@ msgstr ""
 #: ../libgimpbase/gimpbaseenums.c:720
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
-msgstr ""
+msgstr "球面 (増加)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:723
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Spiral (cw)"
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
-msgstr "螺旋 (時計回り)"
+msgstr "球面 (増加)"
 
 #: ../libgimpbase/gimpbaseenums.c:724
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
-msgstr ""
+msgstr "球面 (減少)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:727
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Spiral (cw)"
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
-msgstr "螺旋 (時計回り)"
+msgstr "球面 (減少)"
 
 #: ../libgimpbase/gimpbaseenums.c:728
 msgctxt "gradient-segment-type"
@@ -991,9 +917,6 @@ msgid "Square"
 msgstr "四角形"
 
 #: ../libgimpbase/gimpbaseenums.c:770
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Conical (sym)"
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
 msgstr "円錐形 (対称)"
@@ -1006,9 +929,6 @@ msgid "Conical (sym)"
 msgstr "円錐形 (対称)"
 
 #: ../libgimpbase/gimpbaseenums.c:774
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Conical (asym)"
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
 msgstr "円錐形 (非対称)"
@@ -1036,12 +956,9 @@ msgid "Shaped (dimpled)"
 msgstr "形状広がり (くぼみ)"
 
 #: ../libgimpbase/gimpbaseenums.c:781
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Spiral (ccw)"
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
-msgstr "螺旋 (反時計回り)"
+msgstr "螺旋 (時計回り)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
@@ -1051,9 +968,6 @@ msgid "Spiral (cw)"
 msgstr "螺旋 (時計回り)"
 
 #: ../libgimpbase/gimpbaseenums.c:785
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Spiral (ccw)"
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "螺旋 (反時計回り)"
@@ -1083,7 +997,7 @@ msgstr "破線"
 #: ../libgimpbase/gimpbaseenums.c:823
 msgctxt "grid-style"
 msgid "Double dashed"
-msgstr "破線 (2色)"
+msgstr "破線 (2 色)"
 
 #: ../libgimpbase/gimpbaseenums.c:824
 msgctxt "grid-style"
@@ -1091,16 +1005,14 @@ msgid "Solid"
 msgstr "実線"
 
 #: ../libgimpbase/gimpbaseenums.c:894
-#, fuzzy
-#| msgid "by name"
 msgctxt "icon-type"
 msgid "Icon name"
-msgstr "名前で"
+msgstr "アイコン名"
 
 #: ../libgimpbase/gimpbaseenums.c:895
 msgctxt "icon-type"
 msgid "Inline pixbuf"
-msgstr "埋め込み pixbuf"
+msgstr "埋め込み Pixbuf"
 
 #: ../libgimpbase/gimpbaseenums.c:896
 msgctxt "icon-type"
@@ -1110,7 +1022,7 @@ msgstr "画像ファイル"
 #: ../libgimpbase/gimpbaseenums.c:926
 msgctxt "image-base-type"
 msgid "RGB color"
-msgstr "RGBカラー"
+msgstr "RGB カラー"
 
 #: ../libgimpbase/gimpbaseenums.c:927
 msgctxt "image-base-type"
@@ -1153,22 +1065,25 @@ msgid "Indexed-alpha"
 msgstr "インデックス-アルファ"
 
 #: ../libgimpbase/gimpbaseenums.c:996
+# 表記揺れではない
+# これはインクブラシの形状
 msgctxt "ink-blob-type"
 msgid "Circle"
-msgstr ""
+msgstr "円形"
 
 #: ../libgimpbase/gimpbaseenums.c:997
-#, fuzzy
-#| msgctxt "gradient-type"
-#| msgid "Square"
+# 表記揺れではない
+# これはインクブラシの形状
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "四角形"
 
 #: ../libgimpbase/gimpbaseenums.c:998
+# 表記揺れではない
+# ここはインクブラシの形状
 msgctxt "ink-blob-type"
 msgid "Diamond"
-msgstr ""
+msgstr "菱形"
 
 #: ../libgimpbase/gimpbaseenums.c:1030
 msgctxt "interpolation-type"
@@ -1198,55 +1113,52 @@ msgstr ""
 #: ../libgimpbase/gimpbaseenums.c:1064
 msgctxt "join-style"
 msgid "Miter"
-msgstr ""
+msgstr "斜め継ぎ"
 
 #: ../libgimpbase/gimpbaseenums.c:1065
 msgctxt "join-style"
 msgid "Round"
-msgstr ""
+msgstr "丸め"
 
 #: ../libgimpbase/gimpbaseenums.c:1066
 msgctxt "join-style"
 msgid "Bevel"
-msgstr ""
+msgstr "面取り"
 
 #: ../libgimpbase/gimpbaseenums.c:1127
 msgctxt "merge-type"
 msgid "Expanded as necessary"
-msgstr ""
+msgstr "対象レイヤーを内包するサイズ"
 
 #: ../libgimpbase/gimpbaseenums.c:1128
 msgctxt "merge-type"
 msgid "Clipped to image"
-msgstr ""
+msgstr "キャンバスサイズ"
 
 #: ../libgimpbase/gimpbaseenums.c:1129
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
-msgstr ""
+msgstr "対象の最背面レイヤーサイズ"
 
 #: ../libgimpbase/gimpbaseenums.c:1130
-#, fuzzy
-#| msgctxt "clone-type"
-#| msgid "Pattern"
 msgctxt "merge-type"
 msgid "Flatten"
-msgstr "パターン"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:1224
 msgctxt "orientation-type"
 msgid "Horizontal"
-msgstr ""
+msgstr "水平"
 
 #: ../libgimpbase/gimpbaseenums.c:1225
 msgctxt "orientation-type"
 msgid "Vertical"
-msgstr ""
+msgstr "垂直"
 
 #: ../libgimpbase/gimpbaseenums.c:1226
 msgctxt "orientation-type"
 msgid "Unknown"
-msgstr ""
+msgstr "不明"
 
 #: ../libgimpbase/gimpbaseenums.c:1255
 msgctxt "paint-application-mode"
@@ -1261,7 +1173,7 @@ msgstr "増加"
 #: ../libgimpbase/gimpbaseenums.c:1389
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
-msgstr "内部GIMPプロシージャー"
+msgstr "内部 GIMP プロシージャー"
 
 #: ../libgimpbase/gimpbaseenums.c:1390
 msgctxt "pdb-proc-type"
@@ -1281,62 +1193,62 @@ msgstr "テンポラリプロシージャー"
 #: ../libgimpbase/gimpbaseenums.c:1467
 msgctxt "precision"
 msgid "8-bit linear integer"
-msgstr ""
+msgstr "8 bit リニア整数"
 
 #: ../libgimpbase/gimpbaseenums.c:1468
 msgctxt "precision"
 msgid "8-bit gamma integer"
-msgstr ""
+msgstr "8 bit ガンマ整数"
 
 #: ../libgimpbase/gimpbaseenums.c:1469
 msgctxt "precision"
 msgid "16-bit linear integer"
-msgstr ""
+msgstr "16 bit リニア整数"
 
 #: ../libgimpbase/gimpbaseenums.c:1470
 msgctxt "precision"
 msgid "16-bit gamma integer"
-msgstr ""
+msgstr "16 bit ガンマ整数"
 
 #: ../libgimpbase/gimpbaseenums.c:1471
 msgctxt "precision"
 msgid "32-bit linear integer"
-msgstr ""
+msgstr "32 bit リニア整数"
 
 #: ../libgimpbase/gimpbaseenums.c:1472
 msgctxt "precision"
 msgid "32-bit gamma integer"
-msgstr ""
+msgstr "32 bit ガンマ整数"
 
 #: ../libgimpbase/gimpbaseenums.c:1473
 msgctxt "precision"
 msgid "16-bit linear floating point"
-msgstr ""
+msgstr "16 bit リニア浮動小数点"
 
 #: ../libgimpbase/gimpbaseenums.c:1474
 msgctxt "precision"
 msgid "16-bit gamma floating point"
-msgstr ""
+msgstr "16 bit ガンマ浮動小数点"
 
 #: ../libgimpbase/gimpbaseenums.c:1475
 msgctxt "precision"
 msgid "32-bit linear floating point"
-msgstr ""
+msgstr "32 bit リニア浮動小数点"
 
 #: ../libgimpbase/gimpbaseenums.c:1476
 msgctxt "precision"
 msgid "32-bit gamma floating point"
-msgstr ""
+msgstr "32 bit ガンマ浮動小数点"
 
 #: ../libgimpbase/gimpbaseenums.c:1477
 msgctxt "precision"
 msgid "64-bit linear floating point"
-msgstr ""
+msgstr "64 bit リニア浮動小数点"
 
 #: ../libgimpbase/gimpbaseenums.c:1478
 msgctxt "precision"
 msgid "64-bit gamma floating point"
-msgstr ""
+msgstr "64 bit ガンマ浮動小数点"
 
 #: ../libgimpbase/gimpbaseenums.c:1547
 msgctxt "repeat-mode"
@@ -1379,22 +1291,16 @@ msgid "Composite"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:1653
-#, fuzzy
-#| msgid "Red"
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "赤"
 
 #: ../libgimpbase/gimpbaseenums.c:1654
-#, fuzzy
-#| msgid "Green"
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "緑"
 
 #: ../libgimpbase/gimpbaseenums.c:1655
-#, fuzzy
-#| msgid "Blue"
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "青"
@@ -1402,46 +1308,37 @@ msgstr "青"
 #: ../libgimpbase/gimpbaseenums.c:1656
 msgctxt "select-criterion"
 msgid "HSV Hue"
-msgstr ""
+msgstr "HSV 色相"
 
 #: ../libgimpbase/gimpbaseenums.c:1657
-#, fuzzy
-#| msgid "Saturation"
 msgctxt "select-criterion"
 msgid "HSV Saturation"
-msgstr "彩度"
+msgstr "HSV 彩度"
 
 #: ../libgimpbase/gimpbaseenums.c:1658
-#, fuzzy
-#| msgid "Value"
 msgctxt "select-criterion"
 msgid "HSV Value"
-msgstr "明度"
+msgstr "HSV 明度"
 
 #: ../libgimpbase/gimpbaseenums.c:1659
-#, fuzzy
-#| msgid "Alpha"
 msgctxt "select-criterion"
 msgid "Alpha"
-msgstr "アルファ値"
+msgstr "アルファ"
 
 #: ../libgimpbase/gimpbaseenums.c:1660
-#, fuzzy
-#| msgctxt "desaturate-mode"
-#| msgid "Lightness"
 msgctxt "select-criterion"
 msgid "LCh Lightness"
-msgstr "明度"
+msgstr "LCh 明度"
 
 #: ../libgimpbase/gimpbaseenums.c:1661
 msgctxt "select-criterion"
 msgid "LCh Chroma"
-msgstr ""
+msgstr "LCh クロマ"
 
 #: ../libgimpbase/gimpbaseenums.c:1662
 msgctxt "select-criterion"
 msgid "LCh Hue"
-msgstr ""
+msgstr "LCh 色相"
 
 #: ../libgimpbase/gimpbaseenums.c:1691
 msgctxt "size-type"
@@ -1454,16 +1351,14 @@ msgid "Points"
 msgstr "ポイント"
 
 #: ../libgimpbase/gimpbaseenums.c:1753
-#, fuzzy
-#| msgid "_Stroke"
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "描画(_S)"
+msgstr "線スタイルを設定して描画"
 
 #: ../libgimpbase/gimpbaseenums.c:1754
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
-msgstr ""
+msgstr "描画ツールを使用"
 
 #: ../libgimpbase/gimpbaseenums.c:1787
 msgctxt "text-direction"
@@ -1478,22 +1373,22 @@ msgstr "右から左"
 #: ../libgimpbase/gimpbaseenums.c:1789
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "縦書き・右から左へ (向きの混在)"
 
 #: ../libgimpbase/gimpbaseenums.c:1790
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "縦書き・右から左へ"
 
 #: ../libgimpbase/gimpbaseenums.c:1791
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "縦書き・左から右へ (向きの混在)"
 
 #: ../libgimpbase/gimpbaseenums.c:1792
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "縦書き・左から右へ"
 
 #: ../libgimpbase/gimpbaseenums.c:1823
 msgctxt "text-hint-style"
@@ -1583,7 +1478,7 @@ msgstr "縦横比で切り抜き"
 #: ../libgimpbase/gimpmetadata.c:907
 #, c-format
 msgid "Can load metadata only from local files"
-msgstr ""
+msgstr "メタデータはローカルファイルからのみ読み込むことができます"
 
 #: ../libgimpbase/gimpmetadata.c:921 ../libgimpbase/gimpmetadata.c:991
 #, c-format
@@ -1593,27 +1488,27 @@ msgstr ""
 #: ../libgimpbase/gimpmetadata.c:978
 #, c-format
 msgid "Can save metadata only to local files"
-msgstr ""
+msgstr "メタデータはローカルファイルにのみ保存できます"
 
 #: ../libgimpbase/gimpmetadata.c:1040
 #, c-format
 msgid "Invalid Exif data size."
-msgstr ""
+msgstr "Exif のデータサイズが不正です。"
 
 #: ../libgimpbase/gimpmetadata.c:1069
 #, c-format
 msgid "Parsing Exif data failed."
-msgstr ""
+msgstr "Exif データの解析に失敗しました。"
 
 #: ../libgimpbase/gimpmetadata.c:1119
 #, c-format
 msgid "Parsing IPTC data failed."
-msgstr ""
+msgstr "IPTC データの解析に失敗しました。"
 
 #: ../libgimpbase/gimpmetadata.c:1167
 #, c-format
 msgid "Parsing XMP data failed."
-msgstr ""
+msgstr "XMP データの解析に失敗しました。"
 
 #: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
 msgid "(invalid UTF-8 string)"
@@ -1621,15 +1516,16 @@ msgstr "(不正な UTF-8 文字列)"
 
 #: ../libgimpbase/gimputils.c:394
 msgid "File path is NULL"
-msgstr ""
+msgstr "ファイルパスが NULL です"
 
 #: ../libgimpbase/gimputils.c:403 ../libgimpbase/gimputils.c:414
 msgid "Error converting UTF-8 filename to wide char"
 msgstr ""
+"UTF-8 ファイル名をワイド文字に変換するときにエラーが発生しました"
 
 #: ../libgimpbase/gimputils.c:422
 msgid "ILCreateFromPath() failed"
-msgstr ""
+msgstr "ILCreateFromPath() に失敗しました"
 
 #: ../libgimpbase/gimputils.c:459
 #, c-format
@@ -1638,51 +1534,43 @@ msgstr ""
 
 #: ../libgimpbase/gimputils.c:487
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
-msgstr ""
+msgstr "org.freedesktop.FileManager1 への接続に失敗しました: "
 
 #: ../libgimpbase/gimputils.c:511
 msgid "Calling ShowItems failed: "
-msgstr ""
+msgstr "ShowItems の呼び出しに失敗しました: "
 
 #: ../libgimpcolor/gimpcolorprofile.c:258
-#, fuzzy, c-format
-#| msgid "Color proof filter using ICC color profile"
+#, c-format
 msgid "'%s' does not appear to be an ICC color profile"
-msgstr "ICCカラープロファイルを用いた色校正"
+msgstr "'%s' は ICC カラープロファイルではありません"
 
 #: ../libgimpcolor/gimpcolorprofile.c:304
-#, fuzzy
-#| msgid "Color proof filter using ICC color profile"
 msgid "Data does not appear to be an ICC color profile"
-msgstr "ICCカラープロファイルを用いた色校正"
+msgstr "データが ICC カラープロファイルではありません"
 
 #: ../libgimpcolor/gimpcolorprofile.c:361
 msgid "Could not save color profile to memory"
-msgstr ""
+msgstr "カラープロファイルをメモリに保存できません"
 
-# 環境設定 [カラーマネジメント] では "RGB プロファイル" となっているため
 #: ../libgimpcolor/gimpcolorprofile.c:578
-#, fuzzy
-#| msgid "Image profile:"
 msgid "(unnamed profile)"
-msgstr "RGB プロファイル:"
+msgstr "(名称未設定のプロファイル)"
 
 #: ../libgimpcolor/gimpcolorprofile.c:620
-#, fuzzy, c-format
-#| msgid "Profile: %s"
+#, c-format
 msgid "Model: %s"
-msgstr "プロファイル: %s"
+msgstr "モデル: %s"
 
 #: ../libgimpcolor/gimpcolorprofile.c:629
 #, c-format
 msgid "Manufacturer: %s"
-msgstr ""
+msgstr "メーカー: %s"
 
 #: ../libgimpcolor/gimpcolorprofile.c:638
-#, fuzzy, c-format
-#| msgid "Copyright:"
+#, c-format
 msgid "Copyright: %s"
-msgstr "著作権者:"
+msgstr "著作権者: %s"
 
 #: ../libgimpconfig/gimpconfigenums.c:24
 msgctxt "color-management-mode"
@@ -1690,17 +1578,14 @@ msgid "No color management"
 msgstr "カラーマネジメントなし"
 
 #: ../libgimpconfig/gimpconfigenums.c:25
-#, fuzzy
-#| msgctxt "color-management-mode"
-#| msgid "Color managed display"
 msgctxt "color-management-mode"
 msgid "Color-managed display"
-msgstr "モニター表示のカラーマネジメント"
+msgstr "カラーマネジメントされたディスプレイ"
 
 #: ../libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
-msgstr ""
+msgstr "ソフトプルーフ"
 
 #: ../libgimpconfig/gimpconfigenums.c:57
 msgctxt "color-rendering-intent"
@@ -1823,36 +1708,28 @@ msgstr ""
 "ここをクリックすると、他のマーキング色に変更できます。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:198
-#, fuzzy
-#| msgid "Mode of operation:"
 msgid "Mode of operation"
-msgstr "操作モード:"
+msgstr "操作モード"
 
 #: ../libgimpconfig/gimpcolorconfig.c:206
 msgid "Preferred RGB profile"
-msgstr ""
+msgstr "優先 RGB プロファイル"
 
 #: ../libgimpconfig/gimpcolorconfig.c:213
 msgid "Preferred grayscale profile"
-msgstr ""
+msgstr "優先グレースケールプロファイル"
 
 #: ../libgimpconfig/gimpcolorconfig.c:220
-#, fuzzy
-#| msgid "Monitor profile:"
 msgid "CMYK profile"
-msgstr "モニタープロファイル:"
+msgstr "CMYK プロファイル"
 
 #: ../libgimpconfig/gimpcolorconfig.c:227
-#, fuzzy
-#| msgid "Monitor profile:"
 msgid "Monitor profile"
-msgstr "モニタープロファイル:"
+msgstr "モニタープロファイル"
 
 #: ../libgimpconfig/gimpcolorconfig.c:234
-#, fuzzy
-#| msgid "Monitor profile:"
 msgid "Use the system monitor profile"
-msgstr "モニタープロファイル:"
+msgstr "システムのモニタープロファイルの使用"
 
 #: ../libgimpconfig/gimpcolorconfig.c:242
 msgid "Simulation profile for soft-proofing"
@@ -1860,13 +1737,11 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:249
 msgid "Display rendering intent"
-msgstr ""
+msgstr "モニター表示のレンダリングインテント"
 
 #: ../libgimpconfig/gimpcolorconfig.c:257
-#, fuzzy
-#| msgid "_Black Point Compensation"
 msgid "Use black point compensation for the display"
-msgstr "黒点を補正する(_B)"
+msgstr "ディスプレイ用の黒点補正の使用"
 
 #: ../libgimpconfig/gimpcolorconfig.c:264
 msgid "Optimize display color transformations"
@@ -1874,11 +1749,11 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:271
 msgid "Soft-proofing rendering intent"
-msgstr ""
+msgstr "ソフトプルーフのレンダリングインテント"
 
 #: ../libgimpconfig/gimpcolorconfig.c:279
 msgid "Use black point compensation for soft-proofing"
-msgstr ""
+msgstr "ソフトプルーフ用の黒点補正の使用"
 
 #: ../libgimpconfig/gimpcolorconfig.c:286
 msgid "Optimize soft-proofing color transformations"
@@ -1894,24 +1769,21 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:657
 #: ../libgimpconfig/gimpcolorconfig.c:841
-#, fuzzy, c-format
-#| msgid "Color proof filter using ICC color profile"
+#, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr "ICCカラープロファイルを用いた色校正"
+msgstr "'%s' は RGB 色空間用のカラープロファイルではありません。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:699
 #: ../libgimpconfig/gimpcolorconfig.c:891
-#, fuzzy, c-format
-#| msgid "Color proof filter using ICC color profile"
+#, c-format
 msgid "Color profile '%s' is not for GRAY color space."
-msgstr "ICCカラープロファイルを用いた色校正"
+msgstr "'%s' は GRAY 色空間用のカラープロファイルではありません。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:741
 #: ../libgimpconfig/gimpcolorconfig.c:941
-#, fuzzy, c-format
-#| msgid "Color proof filter using ICC color profile"
+#, c-format
 msgid "Color profile '%s' is not for CMYK color space."
-msgstr "ICCカラープロファイルを用いた色校正"
+msgstr "'%s' は CMYK 色空間用のカラープロファイルではありません。"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
@@ -1967,29 +1839,19 @@ msgstr ""
 "%s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:183
-#, fuzzy, c-format
-#| msgid "Could not create temporary file for '%s': %s"
+#, c-format
 msgid "Could not create directory '%s' for '%s': "
-msgstr ""
-"'%s' 用の一時ファイル作成に失敗しました。\n"
-"%s"
+msgstr "'%2$s' 用のディレクトリ '%1$s' を作成できません: "
 
 #: ../libgimpconfig/gimpconfigwriter.c:199
-#, fuzzy, c-format
-#| msgid "Could not create temporary file for '%s': %s"
+#, c-format
 msgid "Could not create temporary file for '%s': "
-msgstr ""
-"'%s' 用の一時ファイル作成に失敗しました。\n"
-"%s"
+msgstr "'%s' 用の一時ファイルを作成できません: "
 
 #: ../libgimpconfig/gimpconfigwriter.c:783
-#, fuzzy, c-format
-#| msgid "Error writing to '%s': %s"
+#, c-format
 msgid "Error writing '%s': %s"
-msgstr ""
-"'%s' に書き込み中にエラーが発生しました。\n"
-"\n"
-"%s"
+msgstr "'%s' の書き込みエラー: %s"
 
 #: ../libgimpconfig/gimpscanner.c:409
 #, c-format
@@ -2006,7 +1868,7 @@ msgstr "ブール値 ('yes' または 'no') が要求されるにもかかわら
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr ""
-"'%s'(%d 行目のデータ) の解析中にエラーが発生しました。\n"
+"'%s' (%d 行目のデータ) の解析中にエラーが発生しました。\n"
 "%s"
 
 #: ../libgimpmodule/gimpmodule.c:148 ../libgimpmodule/gimpmodule.c:166
@@ -2015,7 +1877,7 @@ msgstr ""
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
-"モジュール '%s' 読み込み中にエラーが発生しました。\n"
+"モジュール '%s' の読み込み中にエラーが発生しました。\n"
 "\n"
 "%s"
 
@@ -2036,15 +1898,12 @@ msgid "Not loaded"
 msgstr "未読み込み"
 
 #: ../libgimpthumb/gimpthumb-utils.c:153
-#, fuzzy, c-format
-#| msgid ""
-#| "Cannot determine a valid home directory.\n"
-#| "Thumbnails will be stored in the folder for temporary files (%s) instead."
+#, c-format
 msgid ""
 "Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
-"ホームディレクトリが特定できませんでした。\n"
+"サムネイルディレクトリを特定できませんでした。\n"
 "サムネイルは一時フォルダー (%s) に置かれます。"
 
 #: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
@@ -2090,10 +1949,8 @@ msgstr "リセット(_R)"
 #: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:275
 #: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
 #: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:493
-#, fuzzy
-#| msgid "_K"
 msgid "_OK"
-msgstr "_K"
+msgstr "OK(_O)"
 
 #: ../libgimpwidgets/gimpcolorhexentry.c:118
 msgid ""
@@ -2113,11 +1970,11 @@ msgstr "ICC カラープロファイル (*.icc, *.icm)"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
-msgstr ""
+msgstr "保存(_S)"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
-msgstr ""
+msgstr "開く(_O)"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:345
 #: ../libgimpwidgets/gimppatheditor.c:270
@@ -2126,7 +1983,7 @@ msgstr "フォルダー"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:350
 msgid "Not a regular file."
-msgstr ""
+msgstr "通常のファイルではありません。"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:147
 msgid "Select color profile from disk..."
@@ -2139,13 +1996,11 @@ msgstr "使用しない"
 
 #: ../libgimpwidgets/gimpcolorprofileview.c:168
 msgid "Manufacturer: "
-msgstr ""
+msgstr "メーカー: "
 
 #: ../libgimpwidgets/gimpcolorprofileview.c:180
-#, fuzzy
-#| msgid "Copyright:"
 msgid "Copyright: "
-msgstr "著作権者:"
+msgstr "著作権者: "
 
 #: ../libgimpwidgets/gimpcolorscales.c:205
 msgid "Scales"
@@ -2153,19 +2008,19 @@ msgstr "スケール"
 
 #: ../libgimpwidgets/gimpcolorscales.c:437
 msgid "0..100"
-msgstr ""
+msgstr "0..100"
 
 #: ../libgimpwidgets/gimpcolorscales.c:439
 msgid "0..255"
-msgstr ""
+msgstr "0..255"
 
 #: ../libgimpwidgets/gimpcolorscales.c:460
 msgid "LCh"
-msgstr ""
+msgstr "LCh"
 
 #: ../libgimpwidgets/gimpcolorscales.c:462
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: ../libgimpwidgets/gimpcolorselection.c:222
 msgid "Current:"
@@ -2181,11 +2036,11 @@ msgstr "HTML 表記(_N):"
 
 #: ../libgimpwidgets/gimpdialog.c:178
 msgid "_Help"
-msgstr ""
+msgstr "ヘルプ(_H)"
 
 #: ../libgimpwidgets/gimpfileentry.c:152
 msgid "Show file location in the file manager"
-msgstr ""
+msgstr "ファイルマネージャーでファイルの場所を表示します"
 
 #: ../libgimpwidgets/gimpfileentry.c:223
 msgid "Open a file selector to browse your folders"
@@ -2197,16 +2052,16 @@ msgstr "ファイルセレクターでファイルを閲覧します"
 
 #: ../libgimpwidgets/gimpfileentry.c:236
 msgid "Indicates whether or not the folder exists"
-msgstr ""
+msgstr "フォルダーが存在するかどうかを示します"
 
 #: ../libgimpwidgets/gimpfileentry.c:237
 msgid "Indicates whether or not the file exists"
-msgstr ""
+msgstr "ファイルが存在するかどうかを示します"
 
 #: ../libgimpwidgets/gimpfileentry.c:397
 #, c-format
 msgid "Can't show file in file manager: %s"
-msgstr ""
+msgstr "ファイルマネージャーでファイルを表示できません: %s"
 
 #: ../libgimpwidgets/gimpfileentry.c:424
 msgid "Select Folder"
@@ -2218,7 +2073,7 @@ msgstr "ファイル選択"
 
 #: ../libgimpwidgets/gimphelpui.c:433
 msgid "Press F1 for more help"
-msgstr "F1キーでヘルプ表示"
+msgstr "F1 キーでヘルプ表示"
 
 #: ../libgimpwidgets/gimpicons.c:62
 msgid "Anchor"
@@ -2261,10 +2116,8 @@ msgid "L_ine Spacing"
 msgstr "行間隔(_I)"
 
 #: ../libgimpwidgets/gimpicons.c:139
-#, fuzzy
-#| msgid "_Resize"
 msgid "Re_size"
-msgstr "サイズ変更(_R)"
+msgstr "サイズ変更(_S)"
 
 #: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:272
 msgid "_Scale"
@@ -2275,11 +2128,8 @@ msgid "Cr_op"
 msgstr "切り抜き(_O)"
 
 #: ../libgimpwidgets/gimpicons.c:255
-#, fuzzy
-#| msgctxt "add-mask-type"
-#| msgid "_Selection"
 msgid "_Select"
-msgstr "選択範囲(_S)"
+msgstr "選択(_S)"
 
 #: ../libgimpwidgets/gimpicons.c:267
 msgid "_Transform"
@@ -2290,22 +2140,16 @@ msgid "_Shear"
 msgstr "剪断変形(_S)"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:256
-#, fuzzy
-#| msgid "Kilobytes"
 msgid "Kibibyte"
-msgstr "キロバイト"
+msgstr "キビバイト"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:257
-#, fuzzy
-#| msgid "Megabytes"
 msgid "Mebibyte"
-msgstr "メガバイト"
+msgstr "メビバイト"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:258
-#, fuzzy
-#| msgid "Gigabytes"
 msgid "Gibibyte"
-msgstr "ギガバイト"
+msgstr "ギビバイト"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:270
@@ -2329,7 +2173,7 @@ msgstr "ページの展開方法(_P)"
 #: ../libgimpwidgets/gimppageselector.c:646
 #, c-format
 msgid "Page %d"
-msgstr "%dページ"
+msgstr "%d ページ"
 
 #: ../libgimpwidgets/gimppageselector.c:1071
 msgid "One page selected"
@@ -2344,19 +2188,19 @@ msgstr[0] "選択したページ数: %d ページ"
 
 #: ../libgimpwidgets/gimppatheditor.c:181
 msgid "Add a new folder"
-msgstr ""
+msgstr "新しいフォルダーを追加します"
 
 #: ../libgimpwidgets/gimppatheditor.c:199
 msgid "Move the selected folder up"
-msgstr ""
+msgstr "選択したフォルダーを上に移動します"
 
 #: ../libgimpwidgets/gimppatheditor.c:217
 msgid "Move the selected folder down"
-msgstr ""
+msgstr "選択したフォルダーを下に移動します"
 
 #: ../libgimpwidgets/gimppatheditor.c:235
 msgid "Remove the selected folder from the list"
-msgstr ""
+msgstr "選択したフォルダーを一覧から削除します"
 
 #: ../libgimpwidgets/gimppatheditor.c:261
 msgid "Writable"
@@ -2463,7 +2307,7 @@ msgstr "_H"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "HSV Hue"
-msgstr ""
+msgstr "HSV 色相"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
 msgctxt "color-selector-channel"
@@ -2471,10 +2315,8 @@ msgid "_S"
 msgstr "_S"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
-#, fuzzy
-#| msgid "Saturation"
 msgid "HSV Saturation"
-msgstr "彩度"
+msgstr "HSV 彩度"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgctxt "color-selector-channel"
@@ -2482,10 +2324,8 @@ msgid "_V"
 msgstr "_V"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
-#, fuzzy
-#| msgid "Value"
 msgid "HSV Value"
-msgstr "明度"
+msgstr "HSV 明度"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:132
 msgctxt "color-selector-channel"
@@ -2526,69 +2366,56 @@ msgstr "アルファ値"
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
 msgctxt "color-selector-channel"
 msgid "_L"
-msgstr ""
+msgstr "_L"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
-#, fuzzy
-#| msgctxt "desaturate-mode"
-#| msgid "Lightness"
 msgid "LCh Lightness"
-msgstr "明度"
+msgstr "LCh 明度"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
-#, fuzzy
-#| msgid "_C"
 msgctxt "color-selector-channel"
 msgid "_C"
 msgstr "_C"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgid "LCh Chroma"
-msgstr ""
+msgstr "LCh クロマ"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_h"
-msgstr ""
+msgstr "_h"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgid "LCh Hue"
-msgstr ""
+msgstr "LCh 色相"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:168
-#, fuzzy
-#| msgctxt "image-type"
-#| msgid "RGB"
 msgctxt "color-selector-model"
 msgid "RGB"
 msgstr "RGB"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:168
-#, fuzzy
-#| msgctxt "image-base-type"
-#| msgid "RGB color"
 msgid "RGB color model"
-msgstr "RGBカラー"
+msgstr "RGB カラーモデル"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:169
 msgctxt "color-selector-model"
 msgid "LCH"
-msgstr ""
+msgstr "LCH"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:169
 msgid "CIE LCh color model"
-msgstr ""
+msgstr "CIE LCh カラーモデル"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:170
-#, fuzzy
-#| msgid "HSV color wheel"
 msgid "HSV color model"
-msgstr "HSV 色相環"
+msgstr "HSV カラーモデル"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:231
 msgctxt "page-selector-target"
@@ -2741,30 +2568,30 @@ msgstr "Z を下に動かす"
 
 #: ../modules/controller-dx-dinput.c:469
 msgid "X Axis Tilt Away"
-msgstr "X軸を向こうに傾ける"
+msgstr "X 軸を向こうに傾ける"
 
 #: ../modules/controller-dx-dinput.c:472
 msgid "X Axis Tilt Near"
-msgstr "X軸を手前に傾ける"
+msgstr "X 軸を手前に傾ける"
 
 #: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
-msgstr "Y軸を右に傾ける"
+msgstr "Y 軸を右に傾ける"
 
 #: ../modules/controller-dx-dinput.c:481
 #: ../modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
-msgstr "Y軸を左に傾ける"
+msgstr "Y 軸を左に傾ける"
 
 #: ../modules/controller-dx-dinput.c:487
 #: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
-msgstr "Z軸を左に傾ける"
+msgstr "Z 軸を左に傾ける"
 
 #: ../modules/controller-dx-dinput.c:490
 #: ../modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
-msgstr "Z軸を右に傾ける"
+msgstr "Z 軸を右に傾ける"
 
 #: ../modules/controller-dx-dinput.c:501
 #, c-format
@@ -2903,11 +2730,11 @@ msgstr "Y を後に動かす"
 
 #: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
-msgstr "X軸を前に傾ける"
+msgstr "X 軸を前に傾ける"
 
 #: ../modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
-msgstr "X軸を後に傾ける"
+msgstr "X 軸を後に傾ける"
 
 #: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
@@ -3157,10 +2984,8 @@ msgid "High Contrast color display filter"
 msgstr "ハイコントラスト カラー表示フィルター"
 
 #: ../modules/display-filter-high-contrast.c:123
-#, fuzzy
-#| msgid "Contrast c_ycles:"
 msgid "Contrast cycles"
-msgstr "コントラストサイクル(_Y):"
+msgstr "コントラストサイクル"
 
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
