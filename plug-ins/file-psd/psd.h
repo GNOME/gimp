@@ -506,7 +506,9 @@ typedef struct
 {
   gboolean      relative_pos;           /* Mask position recorded relative to layer */
   gboolean      disabled;               /* Mask disabled */
-  gboolean      invert;                 /* Invert mask on blending */
+  gboolean      invert;                 /* Invert mask on blending (obsolete according to online specs) */
+  gboolean      rendered;               /* User mask actually came from rendering other data */
+  gboolean      params_present;         /* User and/or vector masks have parameters applied to them */
 } MaskFlags;
 
 /* PSD Slices */
@@ -545,8 +547,9 @@ typedef struct
   gint32                right;                  /* Layer right */
   guchar                def_color;              /* Default background color */
   guchar                flags;                  /* Layer flags */
-  guchar                extra_def_color;        /* Real default background color */
+  guchar                mask_params;            /* Mask parameters. Only present if bit 4 of flags is set. */
   guchar                extra_flags;            /* Real layer flags */
+  guchar                extra_def_color;        /* Real user mask background */
   MaskFlags             mask_flags;             /* Flags */
 } LayerMask;
 

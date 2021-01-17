@@ -661,6 +661,15 @@ read_layer_info (PSDimage  *img_a,
               return NULL;
             }
           block_len = GUINT32_FROM_BE (block_len);
+          IFDBG(3) g_debug ("Layer mask record size %u", block_len);
+          if (block_len + 4 > block_rem)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Unsupported or invalid mask info size: %d"),
+                           block_len);
+              return NULL;
+            }
+
           block_rem -= (block_len + 4);
           IFDBG(3) g_debug ("Remaining length %d", block_rem);
 
@@ -674,28 +683,28 @@ read_layer_info (PSDimage  *img_a,
           lyr_a[lidx]->layer_mask.right = 0;
           lyr_a[lidx]->layer_mask.def_color = 0;
           lyr_a[lidx]->layer_mask.extra_def_color = 0;
+          lyr_a[lidx]->layer_mask.flags = 0;
+          lyr_a[lidx]->layer_mask.extra_flags = 0;
+          lyr_a[lidx]->layer_mask.mask_params = 0;
           lyr_a[lidx]->layer_mask.mask_flags.relative_pos = FALSE;
           lyr_a[lidx]->layer_mask.mask_flags.disabled = FALSE;
           lyr_a[lidx]->layer_mask.mask_flags.invert = FALSE;
+          lyr_a[lidx]->layer_mask.mask_flags.rendered = FALSE;
+          lyr_a[lidx]->layer_mask.mask_flags.params_present = FALSE;
 
-          switch (block_len)
+          if (block_len > 0)
             {
-            case 0:
-              break;
-
-            case 20:
               if (fread (&lyr_a[lidx]->layer_mask.top, 4, 1, f) < 1
                   || fread (&lyr_a[lidx]->layer_mask.left, 4, 1, f) < 1
                   || fread (&lyr_a[lidx]->layer_mask.bottom, 4, 1, f) < 1
                   || fread (&lyr_a[lidx]->layer_mask.right, 4, 1, f) < 1
                   || fread (&lyr_a[lidx]->layer_mask.def_color, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.flags, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.extra_def_color, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.extra_flags, 1, 1, f) < 1)
+                  || fread (&lyr_a[lidx]->layer_mask.flags, 1, 1, f) < 1)
                 {
                   psd_set_error (feof (f), errno, error);
                   return NULL;
                 }
+
               lyr_a[lidx]->layer_mask.top =
                 GINT32_FROM_BE (lyr_a[lidx]->layer_mask.top);
               lyr_a[lidx]->layer_mask.left =
@@ -710,94 +719,141 @@ read_layer_info (PSDimage  *img_a,
                 lyr_a[lidx]->layer_mask.flags & 2 ? TRUE : FALSE;
               lyr_a[lidx]->layer_mask.mask_flags.invert =
                 lyr_a[lidx]->layer_mask.flags & 4 ? TRUE : FALSE;
-              break;
-            case 36: /* If we have a 36 byte mask record assume second data set is correct */
-              if (fread (&lyr_a[lidx]->layer_mask.top, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.left, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.bottom, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.right, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.def_color, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.flags, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.extra_def_color, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.extra_flags, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask_extra.top, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask_extra.left, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask_extra.bottom, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask_extra.right, 4, 1, f) < 1)
+              lyr_a[lidx]->layer_mask.mask_flags.rendered =
+                lyr_a[lidx]->layer_mask.flags & 8 ? TRUE : FALSE;
+              lyr_a[lidx]->layer_mask.mask_flags.params_present =
+                lyr_a[lidx]->layer_mask.flags & 16 ? TRUE : FALSE;
+              IFDBG(3)
                 {
-                  psd_set_error (feof (f), errno, error);
+                  if (lyr_a[lidx]->layer_mask.flags &  32) g_debug ("Layer mask flags bit 5 set.");
+                  if (lyr_a[lidx]->layer_mask.flags &  64) g_debug ("Layer mask flags bit 6 set.");
+                  if (lyr_a[lidx]->layer_mask.flags & 128) g_debug ("Layer mask flags bit 7 set.");
+                }
+
+              block_len -= 18;
+
+              /* According to psd-tools this part comes before reading the
+               * mask parameters. However if all mask parameter flags are
+               * set the size of that would also be more than 18. I'm not
+               * sure if all those flags could be set at the same time or
+               * how to distinguish them. */
+              if (block_len >= 18)
+                {
+                  if (fread (&lyr_a[lidx]->layer_mask.extra_flags, 1, 1, f) < 1
+                      || fread (&lyr_a[lidx]->layer_mask.extra_def_color, 1, 1, f) < 1
+                      || fread (&lyr_a[lidx]->layer_mask_extra.top, 4, 1, f) < 1
+                      || fread (&lyr_a[lidx]->layer_mask_extra.left, 4, 1, f) < 1
+                      || fread (&lyr_a[lidx]->layer_mask_extra.bottom, 4, 1, f) < 1
+                      || fread (&lyr_a[lidx]->layer_mask_extra.right, 4, 1, f) < 1)
+                    {
+                      psd_set_error (feof (f), errno, error);
+                      return NULL;
+                    }
+                  block_len -= 18;
+
+                  lyr_a[lidx]->layer_mask_extra.top =
+                    GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.top);
+                  lyr_a[lidx]->layer_mask_extra.left =
+                    GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.left);
+                  lyr_a[lidx]->layer_mask_extra.bottom =
+                    GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.bottom);
+                  lyr_a[lidx]->layer_mask_extra.right =
+                    GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.right);
+
+                  IFDBG(2) g_debug ("Rect enclosing Layer mask %d %d %d %d",
+                                    lyr_a[lidx]->layer_mask_extra.left,
+                                    lyr_a[lidx]->layer_mask_extra.top,
+                                    lyr_a[lidx]->layer_mask_extra.right,
+                                    lyr_a[lidx]->layer_mask_extra.bottom);
+                }
+
+              if (block_len > 2 && lyr_a[lidx]->layer_mask.mask_flags.params_present)
+                {
+                  gint extra_bytes = 0;
+
+                  if (fread (&lyr_a[lidx]->layer_mask.mask_params, 1, 1, f) < 1)
+                    {
+                      psd_set_error (feof (f), errno, error);
+                      return NULL;
+                    }
+                  block_len--;
+                  IFDBG(3) g_debug ("Mask params: %u", lyr_a[lidx]->layer_mask.mask_params);
+
+                  /* FIXME Extra bytes with user/vector mask density and feather follow.
+                   * We currently can't handle that so we will skip it. */
+                  extra_bytes += (lyr_a[lidx]->layer_mask.mask_params & 1 ? 1 : 0);
+                  extra_bytes += (lyr_a[lidx]->layer_mask.mask_params & 2 ? 8 : 0);
+                  extra_bytes += (lyr_a[lidx]->layer_mask.mask_params & 4 ? 1 : 0);
+                  extra_bytes += (lyr_a[lidx]->layer_mask.mask_params & 8 ? 8 : 0);
+                  IFDBG(3) g_debug ("Extra bytes according to mask parameters %d", extra_bytes);
+                  if (fseek (f, extra_bytes, SEEK_CUR) < 0)
+                    {
+                      psd_set_error (feof (f), errno, error);
+                      return NULL;
+                    }
+                  block_len -= extra_bytes;
+                }
+
+              if (block_len > 0)
+                {
+                  /* We have some remaining unknown mask data.
+                   * If size is less than 4 it is most likely padding. */
+                  IFDBG(1)
+                    {
+                      if (block_len > 3)
+                        g_debug ("Skipping %u bytes of unknown layer mask data", block_len);
+                    }
+
+                  if (fseek (f, block_len, SEEK_CUR) < 0)
+                    {
+                      psd_set_error (feof (f), errno, error);
+                      return NULL;
+                    }
+                }
+
+              /* sanity checks */
+              if (lyr_a[lidx]->layer_mask.bottom < lyr_a[lidx]->layer_mask.top ||
+                  lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top > GIMP_MAX_IMAGE_SIZE)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Unsupported or invalid layer mask height: %d"),
+                               lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top);
                   return NULL;
                 }
-              lyr_a[lidx]->layer_mask_extra.top =
-                GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.top);
-              lyr_a[lidx]->layer_mask_extra.left =
-                GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.left);
-              lyr_a[lidx]->layer_mask_extra.bottom =
-                GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.bottom);
-              lyr_a[lidx]->layer_mask_extra.right =
-                GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.right);
-              lyr_a[lidx]->layer_mask.top =
-                GINT32_FROM_BE (lyr_a[lidx]->layer_mask.top);
-              lyr_a[lidx]->layer_mask.left =
-                GINT32_FROM_BE (lyr_a[lidx]->layer_mask.left);
-              lyr_a[lidx]->layer_mask.bottom =
-                GINT32_FROM_BE (lyr_a[lidx]->layer_mask.bottom);
-              lyr_a[lidx]->layer_mask.right =
-                GINT32_FROM_BE (lyr_a[lidx]->layer_mask.right);
-              lyr_a[lidx]->layer_mask.mask_flags.relative_pos =
-                lyr_a[lidx]->layer_mask.flags & 1 ? TRUE : FALSE;
-              lyr_a[lidx]->layer_mask.mask_flags.disabled =
-                lyr_a[lidx]->layer_mask.flags & 2 ? TRUE : FALSE;
-              lyr_a[lidx]->layer_mask.mask_flags.invert =
-                lyr_a[lidx]->layer_mask.flags & 4 ? TRUE : FALSE;
-              break;
-
-            default:
-              IFDBG(1) g_debug ("Unknown layer mask record size ... skipping");
-              if (fseek (f, block_len, SEEK_CUR) < 0)
+              if (lyr_a[lidx]->layer_mask.right < lyr_a[lidx]->layer_mask.left ||
+                  lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left > GIMP_MAX_IMAGE_SIZE)
                 {
-                  psd_set_error (feof (f), errno, error);
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Unsupported or invalid layer mask width: %d"),
+                               lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left);
                   return NULL;
                 }
-            }
 
-          /* sanity checks */
-          if (lyr_a[lidx]->layer_mask.bottom < lyr_a[lidx]->layer_mask.top ||
-              lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top > GIMP_MAX_IMAGE_SIZE)
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Unsupported or invalid layer mask height: %d"),
-                           lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top);
-              return NULL;
-            }
-          if (lyr_a[lidx]->layer_mask.right < lyr_a[lidx]->layer_mask.left ||
-              lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left > GIMP_MAX_IMAGE_SIZE)
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Unsupported or invalid layer mask width: %d"),
-                           lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left);
-              return NULL;
-            }
+              if ((lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left) >
+                  G_MAXINT32 / MAX (lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top, 1))
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Unsupported or invalid layer mask size: %dx%d"),
+                               lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left,
+                               lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top);
+                  return NULL;
+                }
 
-          if ((lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left) >
-              G_MAXINT32 / MAX (lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top, 1))
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Unsupported or invalid layer mask size: %dx%d"),
-                           lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left,
-                           lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top);
-              return NULL;
+              IFDBG(2) g_debug ("Layer mask coords %d %d %d %d",
+                                lyr_a[lidx]->layer_mask.left,
+                                lyr_a[lidx]->layer_mask.top,
+                                lyr_a[lidx]->layer_mask.right,
+                                lyr_a[lidx]->layer_mask.bottom);
+
+              IFDBG(3) g_debug ("Default mask color %d, real color %d",
+                                lyr_a[lidx]->layer_mask.def_color,
+                                lyr_a[lidx]->layer_mask.extra_def_color);
+
+              IFDBG(3) g_debug ("Mask flags %u, real flags %u, mask params %u",
+                                lyr_a[lidx]->layer_mask.flags,
+                                lyr_a[lidx]->layer_mask.extra_flags,
+                                lyr_a[lidx]->layer_mask.mask_params);
             }
-
-          IFDBG(2) g_debug ("Layer mask coords %d %d %d %d",
-                            lyr_a[lidx]->layer_mask.left,
-                            lyr_a[lidx]->layer_mask.top,
-                            lyr_a[lidx]->layer_mask.right,
-                            lyr_a[lidx]->layer_mask.bottom);
-
-          IFDBG(3) g_debug ("Default mask color, %d, %d",
-                            lyr_a[lidx]->layer_mask.def_color,
-                            lyr_a[lidx]->layer_mask.extra_def_color);
 
           /* Layer blending ranges */           /* FIXME  */
           if (fread (&block_len, 4, 1, f) < 1)
