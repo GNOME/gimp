@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-12-22 22:43+0000\n"
-"PO-Revision-Date: 2021-01-15 00:00+0900\n"
+"PO-Revision-Date: 2021-01-17 09:59+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -954,7 +954,7 @@ msgstr "すべての警告を致命的として扱う"
 
 #: ../app/main.c:271
 msgid "Output a gimprc file with default settings"
-msgstr "既定値の gimprc ファイルを出力する"
+msgstr "デフォルト値の gimprc ファイルを出力する"
 
 #: ../app/main.c:287
 msgid "Output a sorted list of deprecated procedures in the PDB"
@@ -1389,28 +1389,19 @@ msgid "Paste the selected buffer"
 msgstr "選択したバッファーを貼り付けます"
 
 #: ../app/actions/buffers-actions.c:67
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste Buffer as _New"
 msgctxt "buffers-action"
 msgid "Paste Buffer In Pl_ace"
-msgstr "バッファーを画像に(_N)"
+msgstr "バッファーを同じ位置に貼り付け(_A)"
 
 #: ../app/actions/buffers-actions.c:68
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste the selected buffer into the selection"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer at its original position"
-msgstr "選択したバッファーを選択範囲内に貼り付けます"
+msgstr "選択したバッファーをコピー元と同じ位置に貼り付けます"
 
 #: ../app/actions/buffers-actions.c:73
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste Buffer _Into"
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into The Selection"
-msgstr "選択範囲内に貼り付け(_I)"
+msgstr "バッファーを選択範囲内に貼り付け(_I)"
 
 #: ../app/actions/buffers-actions.c:74
 msgctxt "buffers-action"
@@ -1418,52 +1409,34 @@ msgid "Paste the selected buffer into the selection"
 msgstr "選択したバッファーを選択範囲内に貼り付けます"
 
 #: ../app/actions/buffers-actions.c:79
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste the selected buffer into the selection"
 msgctxt "buffers-action"
 msgid "Paste Buffer Into The Selection In Place"
-msgstr "選択したバッファーを選択範囲内に貼り付けます"
+msgstr "選択したバッファーを選択範囲内の同じ位置に貼り付け"
 
 #: ../app/actions/buffers-actions.c:81
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste the selected buffer into the selection"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection at its original position"
-msgstr "選択したバッファーを選択範囲内に貼り付けます"
+msgstr "選択したバッファーを選択範囲の中のコピー元と同じ位置に貼り付けます"
 
 #: ../app/actions/buffers-actions.c:86
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste Buffer as _New"
 msgctxt "buffers-action"
 msgid "Paste Buffer as New _Layer"
-msgstr "バッファーを画像に(_N)"
+msgstr "バッファーを新しいレイヤーとして貼り付け(_L)"
 
 #: ../app/actions/buffers-actions.c:87
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste the selected buffer as a new image"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer"
-msgstr "選択したバッファーで画像を生成します"
+msgstr "選択したバッファーでレイヤーを生成します"
 
 #: ../app/actions/buffers-actions.c:92
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste Buffer as _New"
 msgctxt "buffers-action"
 msgid "Paste Buffer as New Layer in Place"
-msgstr "バッファーを画像に(_N)"
+msgstr "バッファーを新しいレイヤーとして同じ位置に貼り付け"
 
 #: ../app/actions/buffers-actions.c:94
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste the selected buffer as a new image"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
-msgstr "選択したバッファーで画像を生成します"
+msgstr "選択したバッファーでコピー元と同じ位置にレイヤーを生成します"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -4963,7 +4936,7 @@ msgstr "エラー(_E)"
 #: ../app/actions/error-console-actions.c:79
 msgctxt "error-console-action"
 msgid "Highlight error console on errors"
-msgstr ""
+msgstr "エラーがあるときにエラーコンソールを明滅させます"
 
 #: ../app/actions/error-console-actions.c:85
 msgctxt "error-console-action"
@@ -4973,7 +4946,7 @@ msgstr "警告(_W)"
 #: ../app/actions/error-console-actions.c:86
 msgctxt "error-console-action"
 msgid "Highlight error console on warnings"
-msgstr ""
+msgstr "警告があるときにエラーコンソールを明滅させます"
 
 #: ../app/actions/error-console-actions.c:92
 msgctxt "error-console-action"
@@ -4983,7 +4956,7 @@ msgstr "メッセージ(_M)"
 #: ../app/actions/error-console-actions.c:93
 msgctxt "error-console-action"
 msgid "Highlight error console on messages"
-msgstr ""
+msgstr "メッセージがあるときにエラーコンソールを明滅させます"
 
 #: ../app/actions/error-console-commands.c:88
 msgid "Cannot save. Nothing is selected."
@@ -7215,7 +7188,7 @@ msgstr "レイヤーモード(_M)"
 #: ../app/actions/layers-actions.c:89
 msgctxt "layers-action"
 msgid "Default Edit Action"
-msgstr "既定の編集操作"
+msgstr "デフォルトの編集操作"
 
 #: ../app/actions/layers-actions.c:90
 msgctxt "layers-action"
@@ -8552,7 +8525,7 @@ msgstr "すべてのフィルターのリセット(_F)"
 #: ../app/actions/plug-in-actions.c:85
 msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
-msgstr "すべてのフィルター設定を既定値に戻します"
+msgstr "すべてのフィルター設定をデフォルト設定に戻します"
 
 #: ../app/actions/plug-in-commands.c:180
 msgid "Reset all Filters"
@@ -8576,7 +8549,7 @@ msgstr "リセット(_R)"
 
 #: ../app/actions/plug-in-commands.c:200
 msgid "Do you really want to reset all filters to default values?"
-msgstr "すべてのフィルター設定を既定値に戻してもよろしいですか?"
+msgstr "すべてのフィルター設定をデフォルト値に戻してもよろしいですか?"
 
 #: ../app/actions/quick-mask-actions.c:43
 msgctxt "quick-mask-action"
@@ -9184,7 +9157,7 @@ msgstr "ツールオプションのリセット(_E)"
 #: ../app/actions/tool-options-actions.c:84
 msgctxt "tool-options-action"
 msgid "Reset to default values"
-msgstr "このツールオプションを既定値に戻します"
+msgstr "このツールオプションをデフォルト値に戻します"
 
 #: ../app/actions/tool-options-actions.c:89
 msgctxt "tool-options-action"
@@ -9194,7 +9167,7 @@ msgstr "すべてのツールオプションのリセット(_A)"
 #: ../app/actions/tool-options-actions.c:90
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
-msgstr "すべてのツールオプションを既定値に戻します"
+msgstr "すべてのツールオプションを元に戻します"
 
 #: ../app/actions/tool-options-commands.c:203
 msgid "Reset All Tool Options"
@@ -9202,7 +9175,7 @@ msgstr "すべてのツールオプションのリセット"
 
 #: ../app/actions/tool-options-commands.c:227
 msgid "Do you really want to reset all tool options to default values?"
-msgstr "すべてのツールオプションを規定値に戻してもよろしいですか?"
+msgstr "すべてのツールオプションをデフォルト値に戻してもよろしいですか?"
 
 #: ../app/actions/tool-preset-editor-actions.c:44
 msgctxt "tool-preset-editor-action"
@@ -9529,7 +9502,7 @@ msgstr ""
 #| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
-msgstr "このツールオプションを既定値に戻します"
+msgstr "このツールオプションをデフォルト値に戻します"
 
 #: ../app/actions/tools-actions.c:323
 msgctxt "tools-action"
@@ -9740,7 +9713,7 @@ msgstr "ツールプリセット"
 #| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set to Default Value"
-msgstr "このツールオプションを既定値に戻します"
+msgstr "このツールオプションをデフォルト値に戻します"
 
 #: ../app/actions/tools-actions.c:499
 msgctxt "tools-action"
@@ -9795,7 +9768,7 @@ msgstr "ツールプリセット"
 #| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Force: Set to Default Value"
-msgstr "このツールオプションを既定値に戻します"
+msgstr "このツールオプションをデフォルト値に戻します"
 
 #: ../app/actions/tools-actions.c:543
 msgctxt "tools-action"
@@ -10479,7 +10452,7 @@ msgstr "このビューに適用するディスプレイフィルターを設定
 #| msgid "As in _Preferences"
 msgctxt "view-action"
 msgid "As in _Preferences"
-msgstr "既定値に戻す(_P)"
+msgstr "デフォルト値に戻す(_P)"
 
 #: ../app/actions/view-actions.c:150
 #, fuzzy
@@ -11108,7 +11081,7 @@ msgstr "キャンバス周りの色を指定します"
 #: ../app/actions/view-actions.c:623
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
-msgstr "既定値に戻す(_P)"
+msgstr "設定値に戻す(_P)"
 
 #: ../app/actions/view-actions.c:625
 msgctxt "view-padding-color"
@@ -11620,8 +11593,8 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
-"ファイル '%s' の解析中にエラーが発生しました。規定値を使用します。'%s' にユ"
-"ーザー設定のバックアップを作成しました。"
+"ファイル '%s' の解析中にエラーが発生しました。デフォルト値を使用します。"
+"'%s' にユーザー設定のバックアップを作成しました。"
 
 #: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:434
 msgid "Layer"
@@ -11697,8 +11670,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
 msgstr ""
-"すべての [カラープロファイルファイル] ダイアログで使用する既定のフォルダーパ"
-"スを設定します。"
+"すべての [カラープロファイルファイル] ダイアログで使用するデフォルトのフォル"
+"ダーパスを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:59
 msgid "Sets the type of mouse pointers to use."
@@ -11715,8 +11688,8 @@ msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
 msgstr ""
-"状況適応型のマウスカーソルは有用です。既定では有効になっています。多少のオー"
-"バーヘッドがあるため、無効にすることもできます。"
+"状況適応型のマウスカーソルは有用です。デフォルトで有効になっています。多少の"
+"オーバーヘッドがあるため、無効にすることもできます。"
 
 #: ../app/config/gimprc-blurbs.h:81
 msgid "Show full image content by default."
@@ -11798,7 +11771,7 @@ msgstr "フィルターツールのプリセットで選択できる設定の履
 
 #: ../app/config/gimprc-blurbs.h:195
 msgid "Default to the last used settings in filter tools."
-msgstr "フィルターツールで最後に使用した設定を既定にします。"
+msgstr "フィルターツールで最後に使用した設定をデフォルトにします。"
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid "Show advanced color options in filter tools."
@@ -11838,36 +11811,36 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:221
 msgid "Export file type used by default."
-msgstr "エクスポートするときの既定のファイル形式を指定します。"
+msgstr "エクスポートするときのデフォルトのファイル形式を指定します。"
 
 #: ../app/config/gimprc-blurbs.h:224
 msgid "Export the image's color profile by default."
-msgstr "画像のカラープロファイルのエクスポートを既定にします。"
+msgstr "デフォルトで画像のカラープロファイルをエクスポートします。"
 
 #: ../app/config/gimprc-blurbs.h:227
 msgid "Export the image's comment by default."
-msgstr "画像のコメントのエクスポートを既定にします。"
+msgstr "デフォルトで画像のコメントをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
 #.
 #: ../app/config/gimprc-blurbs.h:233
 msgid "Export Exif metadata by default."
-msgstr "Exif メタデータのエクスポートを既定にします。"
+msgstr "デフォルトで Exif メタデータをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle XMP by default.
 #.
 #: ../app/config/gimprc-blurbs.h:239
 msgid "Export XMP metadata by default."
-msgstr "XMP メタデータのエクスポートを既定にします。"
+msgstr "デフォルトで XMP メタデータをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle IPTC by default.
 #.
 #: ../app/config/gimprc-blurbs.h:245
 msgid "Export IPTC metadata by default."
-msgstr "IPTC メタデータのエクスポートを既定にします。"
+msgstr "デフォルトで IPTC メタデータをエクスポートします。"
 
 #: ../app/config/gimprc-blurbs.h:248
 msgid "Try generating debug data for bug reporting when appropriate."
@@ -11885,8 +11858,8 @@ msgstr ""
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
-"画像やレイヤーを拡大・縮小・変形するときに利用する補間方法の既定値を設定しま"
-"す。"
+"画像やレイヤーを拡大・縮小・変形するときに利用する補間方法のデフォルト値を設"
+"定します。"
 
 #: ../app/config/gimprc-blurbs.h:262
 msgid "Specifies the language to use for the user interface."
@@ -12311,35 +12284,35 @@ msgstr ""
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
-"[カラープロファイルに変換] ダイアログの既定のレンダリングインテントを設定しま"
-"す。"
+"[カラープロファイルに変換] ダイアログのデフォルトのレンダリングインテントを設"
+"定します。"
 
 #: ../app/config/gimprc-blurbs.h:534
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
-"[カラープロファイルに変換] ダイアログの [黒点の補正] を既定で有効にします。"
+"[カラープロファイルに変換] ダイアログの [黒点の補正] をデフォルトで有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:538
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
-"[精度変換] ダイアログのレイヤーの既定のディザリング方法を設定します。"
+"[精度変換] ダイアログのレイヤーのデフォルトのディザリング方法を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:541
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
-"[精度変換] ダイアログのテキストレイヤーの既定のディザリング方法を設定し"
-"ます。"
+"[精度変換] ダイアログのテキストレイヤーのデフォルトのディザリング方法を"
+"設定します。"
 
 #: ../app/config/gimprc-blurbs.h:544
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
-"[精度変換] ダイアログのチャンネルの既定のディザリング方法を設定します。"
+"[精度変換] ダイアログのチャンネルのデフォルトのディザリング方法を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:547
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
@@ -12387,100 +12360,100 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default layer name for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログの既定のレイヤー名を設定します。"
+msgstr "[新しいレイヤー] ダイアログのデフォルトのレイヤー名を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default mode for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログの既定のモードを設定します。"
+msgstr "[新しいレイヤー] ダイアログのデフォルトのモードを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:580
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
-"[新しいレイヤー] ダイアログの既定のブレンドスペースを設定します。"
+"[新しいレイヤー] ダイアログのデフォルトのブレンドスペースを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:583
 msgid "Sets the default composite space for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログの既定の合成色空間を設定します。"
+msgstr "[新しいレイヤー] ダイアログのデフォルトの合成色空間を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:586
 msgid "Sets the default composite mode for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログの既定の合成モードを設定します。"
+msgstr "[新しいレイヤー] ダイアログのデフォルトの合成モードを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:589
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログの既定の不透明度を設定します。"
+msgstr "[新しいレイヤー] ダイアログのデフォルトの不透明度を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:592
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr "[新しいレイヤー] ダイアログの既定の塗りつぶし形式を設定します。"
+msgstr "[新しいレイヤー] ダイアログのデフォルトの塗りつぶし形式を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:595
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
-"[レイヤーサイズの変更] ダイアログの既定の塗りつぶし形式を設定します。"
+"[レイヤーサイズの変更] ダイアログのデフォルトの塗りつぶし形式を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
-msgstr "[レイヤーマスクの追加] ダイアログの既定のマスクを設定します。"
+msgstr "[レイヤーマスクの追加] ダイアログのデフォルトのマスクを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:601
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
-"[レイヤーマスクの追加] ダイアログの [マスク反転] を既定で有効にします。"
+"[レイヤーマスクの追加] ダイアログの [マスク反転] をデフォルトで有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:604
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
-msgstr "[可視レイヤーの統合] ダイアログの既定の統合形式を設定します。"
+msgstr "[可視レイヤーの統合] ダイアログのデフォルトの統合形式を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:607
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"[可視レイヤーの統合] ダイアログの [アクティブなレイヤーグループ内のみ] を既"
-"定で有効にします。"
+"[可視レイヤーの統合] ダイアログの [アクティブなレイヤーグループ内のみ] をデ"
+"フォルトで有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:610
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"[可視レイヤーの統合] ダイアログの [不可視レイヤーの削除] を既定で有効にします"
-"。"
+"[可視レイヤーの統合] ダイアログの [不可視レイヤーの削除] をデフォルトで有効"
+"にします。"
 
 #: ../app/config/gimprc-blurbs.h:613
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr "[チャンネルの追加] ダイアログの既定のチャンネル名を設定します。"
+msgstr "[チャンネルの追加] ダイアログのデフォルトのチャンネル名を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:616
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr "[チャンネルの追加] ダイアログの既定の色と不透明度を設定します。"
+msgstr "[チャンネルの追加] ダイアログのデフォルトの色と不透明度を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:619
 msgid "Sets the default path name for the 'New Path' dialog."
-msgstr "[新しいパス] の既定のパス名を設定します。"
+msgstr "[新しいパス] のデフォルトのパス名を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:622
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
-"[パスのエクスポート] ダイアログの既定のフォルダーパスを設定します。"
+"[パスのエクスポート] ダイアログのデフォルトのフォルダーパスを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:625
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
-"[パスのエクスポート] ダイアログの [現在のパスをエクスポート] を既定で有効にし"
-"ます。"
+"[パスのエクスポート] ダイアログの [現在のパスをエクスポート] をデフォルトで有"
+"効にします。"
 
 #: ../app/config/gimprc-blurbs.h:628
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr ""
-"[パスのインポート] ダイアログの既定のフォルダーパスを設定します。"
+"[パスのインポート] ダイアログのデフォルトのフォルダーパスを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:631
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
-"[パスのインポート] ダイアログの [インポートしたパスを統合する] を既定で有効に"
-"します。"
+"[パスのインポート] ダイアログの [インポートしたパスを統合する] をデフォルトで"
+"有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:634
 msgid ""
@@ -12488,51 +12461,51 @@ msgid ""
 "Path' dialog."
 msgstr ""
 "[パスのインポート] ダイアログの [インポートしたパスを画像に合わせて拡大または"
-"縮小する] を既定で有効にします。"
+"縮小する] をデフォルトで有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:637
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
-msgstr "[選択範囲の境界をぼかす] ダイアログの境界の半径の既定値を設定します。"
+msgstr "[選択範囲の境界をぼかす] ダイアログの境界の半径のデフォルト値を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:640
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
 msgstr ""
-"[選択範囲の境界をぼかす] ダイアログの [画像の外側も選択範囲として扱う] を既定"
-"で有効にします。"
+"[選択範囲の境界をぼかす] ダイアログの [画像の外側も選択範囲として扱う] をデフ"
+"ォルトで有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:644
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
-msgstr "[選択範囲の拡大] ダイアログの拡大量の既定値を設定します。"
+msgstr "[選択範囲の拡大] ダイアログの拡大量のデフォルト値を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:647
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
-msgstr "[選択範囲の縮小] ダイアログの縮小量の既定値を設定します。"
+msgstr "[選択範囲の縮小] ダイアログの縮小量のデフォルト値を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:650
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr ""
-"[選択範囲の縮小] ダイアログの [画像の外側も選択範囲として扱う] を既定で有効に"
-"します。"
+"[選択範囲の縮小] ダイアログの [画像の外側も選択範囲として扱う] をデフォルトで"
+"有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:654
 msgid "Sets the default border radius for the 'Border Selection' dialog."
-msgstr "[縁取り選択] ダイアログの縁取り半径の既定値を設定します。"
+msgstr "[縁取り選択] ダイアログの縁取り半径のデフォルト値を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:657
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr ""
-"[縁取り選択] ダイアログの [画像の外側も選択範囲として扱う] を既定で有効にしま"
-"す。"
+"[縁取り選択] ダイアログの [画像の外側も選択範囲として扱う] をデフォルトで有効"
+"にします。"
 
 #: ../app/config/gimprc-blurbs.h:661
 msgid "Sets the default border style for the 'Border Selection' dialog."
-msgstr "[縁取り選択] ダイアログの既定の縁取りスタイルを設定します。"
+msgstr "[縁取り選択] ダイアログのデフォルトの縁取りスタイルを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:670
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -12776,7 +12749,7 @@ msgstr "組み込み sRGB またはクレースケールプロファイルに変
 #: ../app/core/core-enums.c:223
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
-msgstr "優先 RGB またはグレースケールプロファイルに変換する (既定: 組み込み)"
+msgstr "優先 RGB またはグレースケールプロファイルに変換する (デフォルト: 組み込み)"
 
 #: ../app/core/core-enums.c:317
 msgctxt "convert-dither-type"
@@ -13682,8 +13655,8 @@ msgstr "モジュール"
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr ""
-"バッチインタープリターが指定されていません。既定のバッチインタープリター "
-"'%s' を使用します。\n"
+"バッチインタープリターが指定されていません。デフォルトのバッチインタープ"
+"リター '%s' を使用します。\n"
 
 #: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:111
 #, c-format
@@ -15521,7 +15494,7 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"パレット '%s' (%d 行目) 読み込み中: 無効な列数です。初期値を使用します。"
+"パレット '%s' (%d 行目) 読み込み中: 無効な列数です。デフォルト値を使用します。"
 
 #: ../app/core/gimppalette-load.c:155
 #, c-format
@@ -16804,7 +16777,7 @@ msgstr "入力デバイス設定のリセット"
 
 #: ../app/dialogs/input-devices-dialog.c:132
 msgid "Do you really want to reset all input devices to default configuration?"
-msgstr "すべての入力デバイス設定を初期設定に戻してもよろしいですか?"
+msgstr "すべての入力デバイス設定をデフォルトに戻してもよろしいですか?"
 
 #: ../app/dialogs/item-options-dialog.c:203
 msgid "Color tag:"
@@ -17138,7 +17111,7 @@ msgstr "設定リセットの確認"
 
 #: ../app/dialogs/preferences-dialog.c:302
 msgid "Do you really want to reset all preferences to default values?"
-msgstr "すべての設定を規定値に戻してもよろしいですか?"
+msgstr "すべての設定をデフォルト値に戻してもよろしいですか?"
 
 #: ../app/dialogs/preferences-dialog.c:381
 msgid "You will have to restart GIMP for the following changes to take effect:"
@@ -17149,8 +17122,8 @@ msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"割り当てられていたキーボードショートカットは、次回 GIMP 起動時に規定値に戻り"
-"ます。"
+"割り当てられていたキーボードショートカットは、次回 GIMP 起動時にデフォルト値"
+"に戻ります。"
 
 #: ../app/dialogs/preferences-dialog.c:657
 msgid "Remove all Keyboard Shortcuts"
@@ -17164,19 +17137,19 @@ msgstr "キーボードショートカットをすべて消去してもよろし
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr "ウィンドウの設定は、次回 GIMP 起動時に規定値に戻ります。"
+msgstr "ウィンドウの設定は、次回 GIMP 起動時にデフォルト値に戻ります。"
 
 #: ../app/dialogs/preferences-dialog.c:755
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
-msgstr "入力デバイスの設定は、次回 GIMP 起動時に規定値に戻ります。"
+msgstr "入力デバイスの設定は、次回 GIMP 起動時にデフォルト値に戻ります。"
 
 #: ../app/dialogs/preferences-dialog.c:797
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
-msgstr "ツールオプションの設定は、次回の GIMP 起動時に規定値に戻ります。"
+msgstr "ツールオプションの設定は、次回の GIMP 起動時にデフォルト値に戻ります。"
 
 #: ../app/dialogs/preferences-dialog.c:849
 #: ../app/dialogs/preferences-dialog.c:2590
@@ -17570,12 +17543,12 @@ msgstr "エクスポートするファイル形式"
 
 #: ../app/dialogs/preferences-dialog.c:1569
 msgid "Default export file t_ype:"
-msgstr "エクスポートする既定のファイル形式(_Y):"
+msgstr "エクスポートするデフォルトのファイル形式(_Y):"
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1573
 msgid "Raw Image Importer"
-msgstr "Raw 画像インポーター"
+msgstr "RAW 画像インポーター"
 
 #: ../app/dialogs/preferences-dialog.c:1609
 msgid "Experimental Playground"
@@ -17670,7 +17643,7 @@ msgstr "ツールオプションのリセット(_R)"
 
 #: ../app/dialogs/preferences-dialog.c:1716
 msgid "Default _interpolation:"
-msgstr "既定の補間方法(_I):"
+msgstr "デフォルトの補間方法(_I):"
 
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1724
@@ -17749,7 +17722,7 @@ msgstr "レイヤーグループのプレビューを表示する(_G)"
 
 #: ../app/dialogs/preferences-dialog.c:1861
 msgid "_Default layer & channel preview size:"
-msgstr "プレビューサイズの既定値(_D):"
+msgstr "プレビューサイズのデフォルト値(_D):"
 
 #: ../app/dialogs/preferences-dialog.c:1864
 msgid "_Undo preview size:"
@@ -17859,11 +17832,11 @@ msgstr "ツールアイコンの設定"
 #: ../app/dialogs/preferences-dialog.c:2204
 #: ../app/dialogs/preferences-dialog.c:2205
 msgid "Dialog Defaults"
-msgstr "ダイアログの既定の設定"
+msgstr "ダイアログのデフォルト設定"
 
 #: ../app/dialogs/preferences-dialog.c:2214
 msgid "Reset Dialog _Defaults"
-msgstr "ダイアログの設定を既定値に戻す(_D)"
+msgstr "ダイアログの設定をデフォルトに戻す(_D)"
 
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:2222
@@ -17885,7 +17858,7 @@ msgstr "プロファイルフォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:2237
 msgid "Select Default Folder for Color Profiles"
-msgstr "カラープロファイル用の既定のフォルダーの選択"
+msgstr "カラープロファイル用のデフォルトフォルダーの選択"
 
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:2241
@@ -17952,7 +17925,7 @@ msgstr "最近の設定の保存数:"
 
 #: ../app/dialogs/preferences-dialog.c:2313
 msgid "Default to the last used settings"
-msgstr "最後に使用した設定を既定にする"
+msgstr "最後に使用した設定をデフォルトにする"
 
 #: ../app/dialogs/preferences-dialog.c:2316
 msgid "Show advanced color options"
@@ -18062,7 +18035,7 @@ msgstr "エクスポートフォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:2419
 msgid "Select Default Folder for Exporting Paths"
-msgstr "パスをエクスポートする既定のフォルダーの選択"
+msgstr "パスをエクスポートするデフォルトフォルダーの選択"
 
 #: ../app/dialogs/preferences-dialog.c:2423
 msgid "Export the active path only"
@@ -18079,7 +18052,7 @@ msgstr "インポートフォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:2433
 msgid "Select Default Folder for Importing Paths"
-msgstr "パスをインポートする既定のフォルダーの選択"
+msgstr "パスをインポートするデフォルトフォルダーの選択"
 
 #: ../app/dialogs/preferences-dialog.c:2437
 msgid "Merge imported paths"
@@ -18319,7 +18292,7 @@ msgstr "画像ウィンドウ"
 
 #: ../app/dialogs/preferences-dialog.c:2873
 msgid "Use \"Show _all\" by default"
-msgstr "\"すべて表示\" を既定にする(_A)"
+msgstr "\"すべて表示\" をデフォルトにする(_A)"
 
 #: ../app/dialogs/preferences-dialog.c:2877
 msgid "Use \"_Dot for dot\" by default"
@@ -18348,7 +18321,7 @@ msgstr "画像全体の表示"
 
 #: ../app/dialogs/preferences-dialog.c:2902
 msgid "Initial zoom _ratio:"
-msgstr "既定の表示倍率(_R):"
+msgstr "初期表示倍率(_R):"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2906
@@ -18410,7 +18383,7 @@ msgstr "現在の書式"
 
 #: ../app/dialogs/preferences-dialog.c:2996
 msgid "Default format"
-msgstr "既定の書式"
+msgstr "デフォルトの書式"
 
 #: ../app/dialogs/preferences-dialog.c:2997
 msgid "Show zoom percentage"
@@ -20679,7 +20652,7 @@ msgstr "逆消しゴム"
 #: ../app/operations/operations-enums.c:316
 msgctxt "layer-mode-group"
 msgid "Default"
-msgstr "既定"
+msgstr "デフォルト"
 
 #: ../app/operations/operations-enums.c:317
 msgctxt "layer-mode-group"
@@ -26797,7 +26770,7 @@ msgstr "選択したフィルターを下に移動"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:337
 msgid "Reset the selected filter to default values"
-msgstr "選択したフィルターの設定を既定値に戻します"
+msgstr "選択したフィルターの設定をデフォルト値に戻します"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:530
 #, c-format
@@ -27910,7 +27883,7 @@ msgid ""
 "The next time this device is plugged, default settings will be used."
 msgstr ""
 "このデバイス用に保存されている設定を削除しようとしています。\n"
-"次回、このデバイスを接続したときには、既定の設定が適用されます。"
+"次回、このデバイスを接続したときには、デフォルトの設定が適用されます。"
 
 #: ../app/widgets/gimpdeviceinfo.c:56 ../app/widgets/gimpdynamicseditor.c:161
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
@@ -28434,7 +28407,7 @@ msgstr "アイコン画像の読み込み"
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
 msgid "Use _default comment"
-msgstr "既定のコメントを使用(_D)"
+msgstr "デフォルトのコメントを使用(_D)"
 
 #: ../app/widgets/gimpimagecommenteditor.c:109
 msgid ""
