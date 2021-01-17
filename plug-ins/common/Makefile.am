@@ -955,6 +955,7 @@ file_png_LDADD = \
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(PNG_LIBS)		\
+	$(LCMS_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_png_RC)

@@ -27,6 +27,7 @@
 #include <errno.h>
 
 #include <glib/gstdio.h>
+#include "lcms2.h"
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -560,6 +561,21 @@ load_color_profile (png_structp   pp,
   return profile;
 }
 
+/* Copied from src/cmsvirt.c in Little-CMS. */
+static cmsToneCurve *
+Build_sRGBGamma (cmsContext ContextID)
+{
+    cmsFloat64Number Parameters[5];
+
+    Parameters[0] = 2.4;
+    Parameters[1] = 1. / 1.055;
+    Parameters[2] = 0.055 / 1.055;
+    Parameters[3] = 1. / 12.92;
+    Parameters[4] = 0.04045;
+
+    return cmsBuildParametricToneCurve (ContextID, 4, Parameters);
+}
+
 /*
  * 'load_image()' - Load a PNG image into a new image window.
  */
@@ -675,6 +691,96 @@ load_image (GFile        *file,
    * a linear RGB profile
    */
   profile = load_color_profile (pp, info, &profile_name);
+
+  if (! profile && ! png_get_valid (pp, info, PNG_INFO_sRGB) &&
+      (png_get_valid (pp, info, PNG_INFO_gAMA) ||
+       png_get_valid (pp, info, PNG_INFO_cHRM)))
+    {
+      /* This is kind of a special case for PNG. If an image has no
+       * profile, and the sRGB chunk is not set, and either gAMA or cHRM
+       * (or ideally both) are set, then we generate a profile from
+       * these data on import. See #3265.
+       */
+      cmsToneCurve    *gamma_curve[3];
+      cmsCIExyY        whitepoint;
+      cmsCIExyYTRIPLE  primaries;
+      cmsHPROFILE      cms_profile = NULL;
+      gdouble          gamma = 1.0 / DEFAULT_GAMMA;
+
+      if (png_get_valid (pp, info, PNG_INFO_gAMA) &&
+          png_get_gAMA (pp, info, &gamma) == PNG_INFO_gAMA)
+        {
+          gamma_curve[0] = gamma_curve[1] = gamma_curve[2] = cmsBuildGamma (NULL, 1.0 / gamma);
+        }
+      else
+        {
+          /* Use the sRGB gamma curve. */
+          gamma_curve[0] = gamma_curve[1] = gamma_curve[2] = Build_sRGBGamma (NULL);
+        }
+
+      if (png_get_valid (pp, info, PNG_INFO_cHRM) &&
+          png_get_cHRM (pp, info, &whitepoint.x, &whitepoint.y,
+                        &primaries.Red.x,   &primaries.Red.y,
+                        &primaries.Green.x, &primaries.Green.y,
+                        &primaries.Blue.x,  &primaries.Blue.y) == PNG_INFO_cHRM)
+        {
+          whitepoint.Y = primaries.Red.Y = primaries.Green.Y = primaries.Blue.Y = 1.0;
+        }
+      else
+        {
+          /* Rec709 primaries and D65 whitepoint as copied from
+           * cmsCreate_sRGBProfileTHR() in Little-CMS.
+           */
+          cmsCIExyY       d65_whitepoint   = { 0.3127, 0.3290, 1.0 };
+          cmsCIExyYTRIPLE rec709_primaries =
+            {
+                {0.6400, 0.3300, 1.0},
+                {0.3000, 0.6000, 1.0},
+                {0.1500, 0.0600, 1.0}
+            };
+
+          memcpy (&whitepoint, &d65_whitepoint, sizeof whitepoint);
+          memcpy (&primaries, &rec709_primaries, sizeof primaries);
+        }
+      cms_profile = cmsCreateRGBProfile (&whitepoint, &primaries, gamma_curve);
+      cmsFreeToneCurve (gamma_curve[0]);
+      g_warn_if_fail (cms_profile != NULL);
+
+      if (cms_profile != NULL)
+        {
+          /* Customize the profile description to show it is generated
+           * from PNG metadata.
+           */
+          gchar      *profile_desc;
+          cmsMLU     *description_mlu;
+          cmsContext  context_id = cmsGetProfileContextID (cms_profile);
+
+          /* Note that I am not trying to localize these strings on purpose
+           * because cmsMLUsetASCII() expects ASCII. Maybe we should move to
+           * using cmsMLUsetWide() if we want the generated profile
+           * descriptions to be localized. XXX
+           */
+          if ((png_get_valid (pp, info, PNG_INFO_gAMA) && png_get_valid (pp, info, PNG_INFO_cHRM)))
+            profile_desc = g_strdup_printf ("Generated RGB profile from PNG's gAMA (gamma %.4f) and cHRM chunks",
+                                            1.0 / gamma);
+          else if (png_get_valid (pp, info, PNG_INFO_gAMA))
+            profile_desc = g_strdup_printf ("Generated RGB profile from PNG's gAMA chunk (gamma %.4f)",
+                                            1.0 / gamma);
+          else
+            profile_desc = g_strdup_printf ("Generated RGB profile from PNG's cHRM chunk");
+
+          description_mlu  = cmsMLUalloc (context_id, 1);
+
+          cmsMLUsetASCII (description_mlu,  "en", "US", profile_desc);
+          cmsWriteTag (cms_profile, cmsSigProfileDescriptionTag, description_mlu);
+
+          profile = gimp_color_profile_new_from_lcms_profile (cms_profile, NULL);
+
+          g_free (profile_desc);
+          cmsMLUfree (description_mlu);
+          cmsCloseProfile (cms_profile);
+        }
+    }
 
   if (profile)
     {

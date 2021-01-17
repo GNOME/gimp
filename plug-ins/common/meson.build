@@ -47,7 +47,7 @@ common_plugins_list = [
   },
   { 'name': 'file-pix', },
   { 'name': 'file-png',
-    'deps': [ gtk3, gegl, libpng, ],
+    'deps': [ gtk3, gegl, libpng, lcms ],
   },
   { 'name': 'file-pnm', },
   { 'name': 'file-psp',
