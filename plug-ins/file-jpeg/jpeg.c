@@ -608,6 +608,15 @@ jpeg_save (GimpProcedure        *procedure,
         }
     }
 
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      if (metadata)
+        gimp_metadata_set_bits_per_sample (metadata, 8);
+    }
+
+  gimp_procedure_config_end_export (config, image, file, status);
+  g_object_unref (config);
+
   if (export == GIMP_EXPORT_EXPORT)
     {
       /* If the image was exported, delete the new display. This also
@@ -620,15 +629,6 @@ jpeg_save (GimpProcedure        *procedure,
 
       g_free (drawables);
     }
-
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      if (metadata)
-        gimp_metadata_set_bits_per_sample (metadata, 8);
-    }
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
