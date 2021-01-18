@@ -253,7 +253,7 @@ static GimpImage       * load_image          (PopplerDocument      *doc,
                                               GFile                *file,
                                               GimpRunMode           run_mode,
                                               GimpPageSelectorTarget target,
-                                              guint32               resolution,
+                                              gdouble               resolution,
                                               gboolean              antialias,
                                               PdfSelectedPages     *pages);
 
@@ -783,7 +783,7 @@ load_image (PopplerDocument        *doc,
             GFile                  *file,
             GimpRunMode             run_mode,
             GimpPageSelectorTarget  target,
-            guint32                 resolution,
+            gdouble                 resolution,
             gboolean                antialias,
             PdfSelectedPages       *pages)
 {
