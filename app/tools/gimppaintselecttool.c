@@ -55,6 +55,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-scroll.h"
 #include "display/gimptoolgui.h"
 
 #include "core/gimptooloptions.h"
@@ -131,6 +132,14 @@ static void      gimp_paint_select_tool_create_graph       (GimpPaintSelectTool 
 static gboolean  gimp_paint_select_tool_paint_scribble     (GimpPaintSelectTool  *ps_tool);
 
 static void      gimp_paint_select_tool_toggle_scribbles_visibility (GimpPaintSelectTool  *ps_tool);
+
+static GeglRectangle gimp_paint_select_tool_get_local_region (GimpDisplay        *display,
+                                                              gint                brush_x,
+                                                              gint                brush_y,
+                                                              gint                drawable_off_x,
+                                                              gint                drawable_off_y,
+                                                              gint                drawable_width,
+                                                              gint                drawable_height);
 
 static gfloat euclidean_distance                           (gint                  x1,
                                                             gint                  y1,
@@ -454,8 +463,16 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
           if (gimp_paint_select_tool_paint_scribble (ps_tool))
             {
               GimpPaintSelectOptions *options = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (ps_tool);
+              GeglRectangle  local_region;
               GeglBuffer  *result;
-              GTimer *timer = g_timer_new ();
+              GTimer      *timer;
+
+              local_region = gimp_paint_select_tool_get_local_region (display,
+                                                       coords->x, coords->y,
+                                                       ps_tool->drawable_off_x,
+                                                       ps_tool->drawable_off_y,
+                                                       ps_tool->drawable_width,
+                                                       ps_tool->drawable_height);
 
               if (options->mode == GIMP_PAINT_SELECT_MODE_ADD)
                 {
@@ -468,12 +485,29 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
                   gegl_node_set (ps_tool->threshold_node, "value", 0.01, NULL);
                 }
 
+              if (local_region.width < ps_tool->drawable_width ||
+                  local_region.height < ps_tool->drawable_height)
+                {
+                  gegl_node_set (ps_tool->ps_node,
+                                 "use_local_region", TRUE,
+                                 "region_x", local_region.x,
+                                 "region_y", local_region.y,
+                                 "region_width", local_region.width,
+                                 "region_height", local_region.height,
+                                 NULL);
+                }
+              else
+                {
+                  gegl_node_set (ps_tool->ps_node,
+                                 "use_local_region", FALSE, NULL);
+                }
+
               gegl_node_set (ps_tool->render_node, "buffer", &result, NULL);
 
-              g_timer_start (timer);
+              timer = g_timer_new ();;
               gegl_node_process (ps_tool->render_node);
               g_timer_stop (timer);
-              g_printerr ("processing graph takes %.3f s\n", g_timer_elapsed (timer, NULL));
+              g_printerr ("processing graph takes %.3f s\n\n", g_timer_elapsed (timer, NULL));
               g_timer_destroy (timer);
 
               gimp_paint_select_tool_update_image_mask (ps_tool,
@@ -630,6 +664,8 @@ gimp_paint_select_tool_init_buffers (GimpPaintSelectTool  *ps_tool,
   gimp_item_get_offset (GIMP_ITEM (drawable),
                         &ps_tool->drawable_off_x,
                         &ps_tool->drawable_off_y);
+  ps_tool->drawable_width  = gimp_item_get_width (GIMP_ITEM (drawable));
+  ps_tool->drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
 
   ps_tool->drawable = gimp_drawable_get_buffer (drawable);
 
@@ -843,6 +879,54 @@ gimp_paint_select_tool_toggle_scribbles_visibility (GimpPaintSelectTool  *ps_too
       gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
                                    NULL, 0, 0, NULL, FALSE);
     }
+}
+
+static GeglRectangle
+gimp_paint_select_tool_get_local_region (GimpDisplay  *display,
+                                         gint          brush_x,
+                                         gint          brush_y,
+                                         gint          drawable_off_x,
+                                         gint          drawable_off_y,
+                                         gint          drawable_width,
+                                         gint          drawable_height)
+{
+  GimpDisplayShell  *shell;
+  GeglRectangle      brush_window;
+  GeglRectangle      drawable_region;
+  GeglRectangle      viewport;
+  GeglRectangle      local_region;
+  gdouble            x, y, w, h;
+
+  shell = gimp_display_get_shell (display);
+  gimp_display_shell_scroll_get_viewport (shell, &x, &y, &w, &h);
+
+  viewport.x      = (gint) x;
+  viewport.y      = (gint) y;
+  viewport.width  = (gint) w;
+  viewport.height = (gint) h;
+
+  brush_window.x      = brush_x - viewport.width / 2;
+  brush_window.y      = brush_y - viewport.height / 2;
+  brush_window.width  = viewport.width;
+  brush_window.height = viewport.height;
+
+  gegl_rectangle_bounding_box (&local_region, &brush_window, &viewport);
+
+  drawable_region.x      = drawable_off_x;
+  drawable_region.y      = drawable_off_y;
+  drawable_region.width  = drawable_width;
+  drawable_region.height = drawable_height;
+
+  gegl_rectangle_intersect (&local_region, &local_region, &drawable_region);
+
+  local_region.x -= drawable_off_x;
+  local_region.y -= drawable_off_y;
+
+  g_printerr ("local region: (%d,%d) %d x %d\n",
+              local_region.x, local_region.y,
+              local_region.width, local_region.height);
+
+  return local_region;
 }
 
 static gfloat

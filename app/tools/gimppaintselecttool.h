@@ -46,6 +46,8 @@ struct _GimpPaintSelectTool
 
   gint                   drawable_off_x;
   gint                   drawable_off_y;
+  gint                   drawable_width;
+  gint                   drawable_height;
 
   GeglNode              *graph;
   GeglNode              *ps_node;
