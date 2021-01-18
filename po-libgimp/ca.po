@@ -1618,7 +1618,7 @@ msgstr "La connexió a org.freedesktop.FileManager1 ha fallat:"
 
 #: ../libgimpbase/gimputils.c:511
 msgid "Calling ShowItems failed: "
-msgstr "Ha fallat la crida per mostrar els articles:"
+msgstr "Ha fallat la crida per a mostrar els articles:"
 
 #: ../libgimpcolor/gimpcolorprofile.c:258
 #, c-format
@@ -1731,7 +1731,7 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "El perfil de color CMYK emprat per convertir entre RGB i CMYK."
+msgstr "El perfil de color CMYK emprat per a convertir entre RGB i CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig.c:74
 msgid ""
@@ -2122,7 +2122,7 @@ msgstr "Obre un gestor de fitxers per a navegar per les vostres carpetes"
 
 #: ../libgimpwidgets/gimpfileentry.c:239
 msgid "Open a file selector to browse your files"
-msgstr "Obre un gestor de fitxers per trobar els teus fitxers"
+msgstr "Obre un gestor de fitxers per a trobar els teus fitxers"
 
 #: ../libgimpwidgets/gimpfileentry.c:251
 msgid "Indicates whether or not the folder exists"
@@ -2228,7 +2228,7 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Feu clic en el comptagotes, després feu clic en un color a la pantalla per "
+"Feu clic en el comptagotes, després feu clic en un color a la pantalla per a "
 "seleccionar-lo."
 
 #. toggle button to (de)activate the instant preview
@@ -2823,7 +2823,7 @@ msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
-"Canal MIDI d'on es rebran els senyals. Poseu-ho a -1 per rebre senyal de "
+"Canal MIDI d'on es rebran els senyals. Poseu-ho a -1 per a rebre senyal de "
 "tots els canals MIDI."
 
 #: ../modules/controller-midi.c:226
@@ -2860,7 +2860,7 @@ msgid ""
 "defined filmic look to be used before ODT (display or output space ICC "
 "profile)"
 msgstr ""
-"ACES RRT (RRT = Reference Rendering Transform). Un filtre de  pantalla de "
+"ACES RRT (RRT = Reference Rendering Transform). Un filtre de pantalla de "
 "prova en color de HDR a SDR que utilitza una aproximació de lluminositat de "
 "l'ACES RRT, un aspecte cinematogràfic predefinit que s’utilitzarà abans "
 "d’ODT (perfil ICC d’espai de sortida o de visualització)"

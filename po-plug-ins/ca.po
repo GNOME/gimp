@@ -125,7 +125,7 @@ msgid ""
 "Check out the last version of the source code online by clicking the \"Source"
 "\" button."
 msgstr ""
-"Aquest connector és un exercici de '%s' per demostrar la creació del "
+"Aquest connector és un exercici de '%s' per a demostrar la creació del "
 "connector.\n"
 "Consulteu la darrera versió del codi font en línia fent clic al botó «Font»."
 
@@ -200,7 +200,7 @@ msgid ""
 "text view displaying their own code (hence also demonstrating how to package "
 "data) and a button which calls a GEGL operation on the active layer."
 msgstr ""
-"Aquesta extensió proporciona un conjunt d’exemples bàsics per demostrar com "
+"Aquesta extensió proporciona un conjunt d’exemples bàsics per a demostrar com "
 "crear els vostres propis connectors. Cada connector fa el mateix, tret que "
 "es desenvolupi en un llenguatge de programació diferent. Tots creen un "
 "diàleg GTK+ amb una visualització de text que mostra el seu propi codi (per "
@@ -217,7 +217,7 @@ msgstr "Alinea les capes visibles de la imatge"
 
 #: ../plug-ins/common/align-layers.c:250
 msgid "There are not enough layers to align."
-msgstr "No hi ha prou capes per alinear."
+msgstr "No hi ha prou capes per a alinear."
 
 #: ../plug-ins/common/align-layers.c:660
 msgid "Align Visible Layers"
@@ -1396,7 +1396,7 @@ msgstr "S'està escapçant en mode Tall intel·ligent"
 
 #: ../plug-ins/common/crop-zealous.c:260
 msgid "Nothing to crop."
-msgstr "Res per escapçar."
+msgstr "Res per a escapçar."
 
 #: ../plug-ins/common/curve-bend.c:426
 msgid "_Curve Bend..."
@@ -3563,7 +3563,7 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
-"Si es marca l'opció, la imatge resultant es reduirà per encaixar en la mida "
+"Si es marca l'opció, la imatge resultant es reduirà per a encaixar en la mida "
 "donada sense canviar la relació d'aspecte."
 
 #. Unit
@@ -3803,7 +3803,7 @@ msgstr "Dades del model d'elevació digital"
 #: ../plug-ins/common/file-raw-data.c:384
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
-msgstr "No s'ha pogut obrir «%s» per verificar-ne la mida: %s"
+msgstr "No s'ha pogut obrir «%s» per a verificar-ne la mida: %s"
 
 #: ../plug-ins/common/file-raw-data.c:464
 #, c-format
@@ -4453,7 +4453,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1203
 msgid "Use size entered above for all frames"
-msgstr "Utilitz la mida introduïda a dalt per a tots els marcs"
+msgstr "Utilitza la mida introduïda a dalt per a tots els marcs"
 
 #: ../plug-ins/common/file-xmc.c:1210
 msgid ""
@@ -8514,7 +8514,7 @@ msgstr "Pinta les vores"
 #: ../plug-ins/gimpressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
-"Seleccioneu-lo per situar tots els traços a l'exterior de les vores de la "
+"Seleccioneu-lo per a situar tots els traços a l'exterior de les vores de la "
 "imatge"
 
 #: ../plug-ins/gimpressionist/general.c:212
@@ -12044,7 +12044,7 @@ msgstr "Cantó envoltat:"
 msgid ""
 "Number of points to consider when determining if a point is a corner or not."
 msgstr ""
-"Nombre de punts per considerar, quan es determina si un punt és un angle o "
+"Nombre de punts per a considerar, quan es determina si un punt és un angle o "
 "no."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:152
@@ -12077,7 +12077,7 @@ msgstr "Filtre alternatiu envoltant:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:181
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Quan es filtra, un segon nombre de punts adjacents per considerar."
+msgstr "Quan es filtra, un segon nombre de punts adjacents per a considerar."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "Filter Epsilon:"
@@ -12116,7 +12116,7 @@ msgstr "Percentatge de filtre:"
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:222
 msgid ""
 "To produce the new point, use the old point plus this times the neighbors."
-msgstr "Per produir el nou punt, utilitzeu el punt antic més els dels costats."
+msgstr "Per a produir el nou punt, utilitzeu el punt antic més els dels costats."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:232
 msgid "Filter Secondary Surround:"
@@ -12127,7 +12127,7 @@ msgid ""
 "Number of adjacent points to consider if 'filter_surround' points defines a "
 "straight line."
 msgstr ""
-"Nombre de punts adjacents per considerar si els punts del «filtre_envoltant» "
+"Nombre de punts adjacents per a considerar si els punts del «filtre_envoltant» "
 "defineixen una línia recta."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:245
@@ -12136,7 +12136,7 @@ msgstr "Filtre envoltant:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:247
 msgid "Number of adjacent points to consider when filtering."
-msgstr "Nombre de punts per considerar quan es filtra."
+msgstr "Nombre de punts per a considerar quan es filtra."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:257
 msgid "Keep Knees"
@@ -12200,7 +12200,7 @@ msgid ""
 msgstr ""
 "Quantitat d'error del qual no té sentit valorar. Això succeeix, per exemple, "
 "quan estem tractant d'encaixar el contorn de la part exterior d'una «O» amb "
-"una sola corba spline. L'encabiment inicial no és prou bo per millorar la "
+"una sola corba spline. L'encabiment inicial no és prou bo per a millorar la "
 "iteració Newton-Raphson. Potser seria millor detectar els casos en què no hi "
 "ha angles."
 
@@ -12223,7 +12223,7 @@ msgid ""
 "Number of points to consider when deciding whether a given point is a better "
 "place to subdivide."
 msgstr ""
-"Nombre de punts per a tenir en compte si un punt donat és bo per subdividir."
+"Nombre de punts per a tenir en compte si un punt donat és bo per a subdividir."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:353
 msgid "Subdivide Threshold:"

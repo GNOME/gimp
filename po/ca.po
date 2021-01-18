@@ -55,7 +55,7 @@ msgid ""
 msgstr ""
 "Té moltes funcionalitats. Pot utilitzar-se com a un programa simple de "
 "pintura, com una aplicació professional de retoc fotogràfic, com un sistema "
-"en línia de processament per lots, per renderitzar imatges de forma massiva, "
+"en línia de processament per lots, per a renderitzar imatges de forma massiva, "
 "per a convertir imatges entre formats, etc."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:5
@@ -315,7 +315,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "New 3D Transform tool to rotate and pan items"
-msgstr "Una nova eina de transformació 3D per girar i desplaçar elements"
+msgstr "Una nova eina de transformació 3D per a girar i desplaçar elements"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Much smoother brush outline motion on the canvas"
@@ -347,7 +347,7 @@ msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
 msgstr ""
-"Menú Visualitza: nova opció «Mostra-ho tot» per revelar píxels fora del "
+"Menú Visualitza: nova opció «Mostra-ho tot» per a revelar píxels fora del "
 "límit del llenç"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
@@ -375,7 +375,7 @@ msgstr "Eina selecció lliure: millora la interacció copia-enganxa"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
-"Eines de transformació: nou tipus de transformació d'imatge per transformar "
+"Eines de transformació: nou tipus de transformació d'imatge per a transformar "
 "tota la imatge"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
@@ -4741,7 +4741,7 @@ msgstr "Píxels que s'han copiat al porta-retalls."
 #: ../app/actions/edit-commands.c:392 ../app/actions/edit-commands.c:669
 #: ../app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
-msgstr "No hi ha cap imatge al porta-retalls per enganxar."
+msgstr "No hi ha cap imatge al porta-retalls per a enganxar."
 
 #: ../app/actions/edit-commands.c:408
 msgid "Cut Named"
@@ -4779,7 +4779,7 @@ msgstr "Enganxat com a capa nova perquè els píxels de destí estan bloquejats.
 
 #: ../app/actions/edit-commands.c:686
 msgid "There are no selected layers or channels to cut from."
-msgstr "No hi ha capes ni canals seleccionats per tallar-los."
+msgstr "No hi ha capes ni canals seleccionats per a tallar-los."
 
 #: ../app/actions/edit-commands.c:691 ../app/actions/edit-commands.c:724
 #: ../app/actions/edit-commands.c:749
@@ -7012,12 +7012,12 @@ msgstr "Suprimeix aquesta imatge"
 #: ../app/actions/items-commands.c:204 ../app/actions/items-commands.c:250
 #: ../app/tools/gimpvectortool.c:737
 msgid "There are no selected layers or channels to fill."
-msgstr "No hi ha capes ni canals seleccionats per omplir."
+msgstr "No hi ha capes ni canals seleccionats per a omplir."
 
 #: ../app/actions/items-commands.c:291 ../app/actions/items-commands.c:337
 #: ../app/tools/gimpvectortool.c:811
 msgid "There are no selected layers or channels to stroke to."
-msgstr "No hi ha capes ni canals seleccionats per traçar."
+msgstr "No hi ha capes ni canals seleccionats per a traçar."
 
 # Quim: no és 'menú de les capes' pel mateix criteri que 'brushes menu'
 #: ../app/actions/layers-actions.c:52
@@ -11410,7 +11410,7 @@ msgid ""
 msgstr ""
 "Si es marca l'opció, una imatge esdevindrà la imatge activa quan la seva "
 "finestra d'imatge rebi el focus. Això és útil amb els gestors de finestres "
-"que utilitzen «fes clic per enfocar»."
+"que utilitzen «fes clic per a enfocar»."
 
 #: ../app/config/gimprc-blurbs.h:23 ../app/config/gimprc-blurbs.h:28
 msgid "Sets the dynamics search path."
@@ -14275,7 +14275,7 @@ msgstr "S'està calculant alfa per als píxels que no es coneixen"
 
 #: ../app/core/gimpdrawable-fill.c:215 ../app/vectors/gimpvectors.c:677
 msgid "Not enough points to fill"
-msgstr "No hi ha prou punts per omplir"
+msgstr "No hi ha prou punts per a omplir"
 
 #: ../app/core/gimpdrawable-fill.c:270
 msgctxt "undo-type"
@@ -14306,7 +14306,7 @@ msgstr "Desplaçament dibuixable"
 #: ../app/core/gimpdrawable-stroke.c:111
 #: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:699
 msgid "Not enough points to stroke"
-msgstr "No hi ha prou punts per traçar"
+msgstr "No hi ha prou punts per a traçar"
 
 #: ../app/core/gimpdrawable-transform.c:808 ../app/tools/gimpfliptool.c:135
 msgctxt "undo-type"
@@ -14877,7 +14877,7 @@ msgstr "La capa que es vol fusionar cap avall està bloquejada."
 
 #: ../app/core/gimpimage-merge.c:357
 msgid "There is no visible layer to merge down to."
-msgstr "No hi ha cap capa visible per fusionar cap avall."
+msgstr "No hi ha cap capa visible per a fusionar cap avall."
 
 #: ../app/core/gimpimage-merge.c:382
 msgctxt "undo-type"
@@ -15452,11 +15452,11 @@ msgstr "Suprimeix els forats"
 
 #: ../app/core/gimpselection.c:308
 msgid "There is no selection to fill."
-msgstr "No hi ha res seleccionat per omplir."
+msgstr "No hi ha res seleccionat per a omplir."
 
 #: ../app/core/gimpselection.c:344
 msgid "There is no selection to stroke."
-msgstr "No hi ha cap selecció per traçar."
+msgstr "No hi ha cap selecció per a traçar."
 
 #: ../app/core/gimpselection.c:750
 msgid "Unable to cut or copy because the selected region is empty."
@@ -16392,7 +16392,7 @@ msgstr "Fusiona les capes"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:95
 msgid "Layers Merge Options"
-msgstr "Opcions per fusionar capes"
+msgstr "Opcions per a fusionar capes"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:101
 msgid "_Merge"
@@ -16683,7 +16683,7 @@ msgstr "Nivell: %s, vides: %s"
 #: ../app/dialogs/lebl-dialog.c:150
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
-"Esquerra/Dreta per a moure, espai per disparar, «p» per a fer una pausa i "
+"Esquerra/Dreta per a moure, espai per a disparar, «p» per a fer una pausa i "
 "«q» per a sortir"
 
 #: ../app/dialogs/lebl-dialog.c:816
@@ -17834,7 +17834,7 @@ msgstr "Les àrees seleccionades continuen fora de la imatge"
 #. Grow Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2457
 msgid "Grow Selection Dialog"
-msgstr "Diàleg per eixamplar la selecció"
+msgstr "Diàleg per a eixamplar la selecció"
 
 #: ../app/dialogs/preferences-dialog.c:2462
 msgid "Grow radius:"
@@ -17934,7 +17934,7 @@ msgstr "_Neteja l'historial d'accions"
 msgid "Display"
 msgstr "Visualització"
 
-# Quim: llista d'opcions per definir com ha de ser el fons de la nova capa
+# Quim: llista d'opcions per a definir com ha de ser el fons de la nova capa
 #. Transparency
 #: ../app/dialogs/preferences-dialog.c:2679
 msgid "Transparency"
@@ -18099,7 +18099,7 @@ msgstr "Mostra el contorn del pin_zell"
 
 #: ../app/dialogs/preferences-dialog.c:2928
 msgid "S_nap brush outline to stroke"
-msgstr "Ajusta el contorn del pi_nzell per traçar"
+msgstr "Ajusta el contorn del pi_nzell per a traçar"
 
 #: ../app/dialogs/preferences-dialog.c:2932
 msgid "Show pointer for paint _tools"
@@ -19185,16 +19185,16 @@ msgstr "Fes clic-i-arrossega per a moure el punt mig"
 
 #: ../app/display/gimptoolfocus.c:1119
 msgid "Click-Drag to resize the limit"
-msgstr "Fes clic-i-arrossega per redimensionar el límit"
+msgstr "Fes clic-i-arrossega per a redimensionar el límit"
 
 #: ../app/display/gimptoolfocus.c:1121 ../app/display/gimptoolfocus.c:1134
 #, c-format
 msgid "%s to resize the focus"
-msgstr "%s per redimensionar el focus"
+msgstr "%s per a redimensionar el focus"
 
 #: ../app/display/gimptoolfocus.c:1126 ../app/display/gimptoolfocus.c:1139
 msgid "Click-Drag to resize the focus"
-msgstr "Fes clic-i-arrossega per redimensionar el focus"
+msgstr "Fes clic-i-arrossega per a redimensionar el focus"
 
 #: ../app/display/gimptoolfocus.c:1133
 msgid "Click-Drag to change the aspect ratio"
@@ -19206,7 +19206,7 @@ msgstr "Fes clic-i-arrossega per a moure el focus"
 
 #: ../app/display/gimptoolfocus.c:1148
 msgid "Click-Drag to rotate the focus"
-msgstr "Fes clic-i-arrossega per girar el focus"
+msgstr "Fes clic-i-arrossega per a girar el focus"
 
 #: ../app/display/gimptoolfocus.c:1149 ../app/display/gimptoolgyroscope.c:729
 #: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:662
@@ -19226,7 +19226,7 @@ msgstr "%s per a passos restringits"
 #: ../app/display/gimptoolgyroscope.c:725
 #: ../app/display/gimptooltransformgrid.c:1841
 msgid "Click-Drag to rotate"
-msgstr "Fes clic-i-arrossega per girar"
+msgstr "Fes clic-i-arrossega per a girar"
 
 #: ../app/display/gimptoolgyroscope.c:734
 msgid "Click-Drag to pan"
@@ -19235,7 +19235,7 @@ msgstr "Fes clic-i-arrossega per a desplaçar"
 #: ../app/display/gimptoolgyroscope.c:740
 #, c-format
 msgid "%s to rotate"
-msgstr "%s per girar"
+msgstr "%s per a girar"
 
 #: ../app/display/gimptoolgyroscope.c:741
 #, c-format
@@ -19254,7 +19254,7 @@ msgstr "Fes clic-i-arrossega per a moure"
 
 #: ../app/display/gimptoolhandlegrid.c:868
 msgid "Click-Drag to rotate and scale"
-msgstr "Fes clic-i-arrossega per girar i ajustar la mida"
+msgstr "Fes clic-i-arrossega per a girar i ajustar la mida"
 
 #: ../app/display/gimptoolhandlegrid.c:871
 msgid "Click-Drag to shear and scale"
@@ -21008,7 +21008,7 @@ msgstr "Flux"
 
 #: ../app/paint/gimpsmudgeoptions.c:80
 msgid "The amount of brush color to blend"
-msgstr "Quantitat de color del pinzell per barrejar"
+msgstr "Quantitat de color del pinzell per a barrejar"
 
 #: ../app/paint/gimpsmudgeoptions.c:86
 msgctxt "smudge-tool"
@@ -22858,7 +22858,7 @@ msgstr "Omple les àrees transparents"
 
 #: ../app/tools/gimpbucketfilloptions.c:128
 msgid "Allow completely transparent regions to be filled"
-msgstr "Deixa regions completament transparents per omplir"
+msgstr "Deixa regions completament transparents per a omplir"
 
 #: ../app/tools/gimpbucketfilloptions.c:136
 msgid "Base filled area on all visible layers"
@@ -22877,7 +22877,7 @@ msgid ""
 msgstr ""
 "Basa l'opacitat del farciment en la diferència de color del píxel on es fa "
 "clic (vegeu el llindar) o en les vores de la línia artística. Desactiveu "
-"l'antialiàsing per omplir tota l'àrea de manera uniforme."
+"l'antialiàsing per a omplir tota l'àrea de manera uniforme."
 
 #: ../app/tools/gimpbucketfilloptions.c:174
 #: ../app/tools/gimpgradientoptions.c:122
@@ -22990,12 +22990,12 @@ msgstr "No hi ha cap font de línia artística vàlida seleccionada."
 #: ../app/tools/gimpbucketfilltool.c:786 ../app/tools/gimpbucketfilltool.c:924
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:492
 msgid "Click in any image to pick the background color"
-msgstr "Feu clic en qualsevol imatge per definir el color de fons"
+msgstr "Feu clic en qualsevol imatge per a definir el color de fons"
 
 #: ../app/tools/gimpbucketfilltool.c:793 ../app/tools/gimpbucketfilltool.c:933
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:486
 msgid "Click in any image to pick the foreground color"
-msgstr "Feu clic en qualsevol imatge per definir el color de primer pla"
+msgstr "Feu clic en qualsevol imatge per a definir el color de primer pla"
 
 #: ../app/tools/gimpbycolorselecttool.c:70
 msgid "Select by Color"
@@ -23069,7 +23069,7 @@ msgstr "Feu clic per clonar"
 #: ../app/tools/gimpclonetool.c:91 ../app/tools/gimpclonetool.c:96
 #, c-format
 msgid "%s to set a new clone source"
-msgstr "%s per definir la imatge a clonar"
+msgstr "%s per a definir la imatge a clonar"
 
 #. Translators: the translation of "Click" must be the first word
 #: ../app/tools/gimpclonetool.c:95
@@ -23266,7 +23266,7 @@ msgstr "Es_capça"
 
 #: ../app/tools/gimpcroptool.c:160
 msgid "Click-Drag to draw a crop rectangle"
-msgstr "Feu clic-i-arrossega per tallar un rectangle"
+msgstr "Feu clic-i-arrossega per a tallar un rectangle"
 
 #: ../app/tools/gimpcroptool.c:280
 msgid "Click or press Enter to crop"
@@ -23481,7 +23481,7 @@ msgstr "Feu clic per a esborrar la línia"
 #: ../app/tools/gimperasertool.c:107
 #, c-format
 msgid "%s to pick a background color"
-msgstr "%s per definir el color de fons"
+msgstr "%s per a definir el color de fons"
 
 #. the anti_erase toggle
 #: ../app/tools/gimperasertool.c:166
@@ -24047,12 +24047,12 @@ msgstr "Feu clic per cicatritzar"
 #: ../app/tools/gimphealtool.c:78 ../app/tools/gimphealtool.c:83
 #, c-format
 msgid "%s to set a new heal source"
-msgstr "%s per definir una imatge nova per curar cicatrius"
+msgstr "%s per a definir una imatge nova per curar cicatrius"
 
 #. Translators: the translation of "Click" must be the first word
 #: ../app/tools/gimphealtool.c:82
 msgid "Click to set a new heal source"
-msgstr "Feu clic per definir la imatge per curar cicatrius"
+msgstr "Feu clic per a definir la imatge per curar cicatrius"
 
 #: ../app/tools/gimphistogramoptions.c:64
 msgid "Histogram Scale"
@@ -25017,11 +25017,11 @@ msgstr "_Empastifa"
 
 #: ../app/tools/gimpsmudgetool.c:79
 msgid "Click to smudge"
-msgstr "Feu clic per empastifar"
+msgstr "Feu clic per a empastifar"
 
 #: ../app/tools/gimpsmudgetool.c:80
 msgid "Click to smudge the line"
-msgstr "Feu clic per empastifar la línia"
+msgstr "Feu clic per a empastifar la línia"
 
 #: ../app/tools/gimptextoptions.c:124
 msgid "Font size unit"
@@ -25528,7 +25528,7 @@ msgstr "Aplicar la transformació engrandirà la imatge pel factor de %g."
 
 #: ../app/tools/gimptransformtool.c:675
 msgid "There is no layer to transform."
-msgstr "No hi ha cap capa per transformar."
+msgstr "No hi ha cap capa per a transformar."
 
 #: ../app/tools/gimptransformtool.c:684
 msgid "A selected layer's position and size are locked."
@@ -25540,11 +25540,11 @@ msgstr "La selecció no interseca amb una capa seleccionada."
 
 #: ../app/tools/gimptransformtool.c:705
 msgid "There is no selection to transform."
-msgstr "No hi ha res seleccionat per transformar."
+msgstr "No hi ha res seleccionat per a transformar."
 
 #: ../app/tools/gimptransformtool.c:720
 msgid "There is no path to transform."
-msgstr "No hi ha cap camí per transformar."
+msgstr "No hi ha cap camí per a transformar."
 
 #: ../app/tools/gimptransformtool.c:727
 msgid "The active path's strokes are locked."
