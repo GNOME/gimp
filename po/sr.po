@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.99\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2021-01-11 04:11+0000\n"
-"PO-Revision-Date: 2021-01-11 23:04+0100\n"
+"PO-Revision-Date: 2021-01-16 14:29+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: Serbian <gnome-sr@googlegroups.com>\n"
 "Language: sr\n"
@@ -1032,7 +1032,7 @@ msgstr "Покреће без корисничког сучеља"
 
 #: ../app/main.c:194
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "Не учитава четкице, преливе, шаре, ..."
+msgstr "Не учитава четкице, преливе, шаре, …"
 
 #: ../app/main.c:199
 msgid "Do not load any fonts"
@@ -1110,7 +1110,7 @@ msgstr "Приказује подмени слике са радњама за т
 
 #: ../app/main.c:578
 msgid "[FILE|URI...]"
-msgstr "[Датотека|Путања...]"
+msgstr "[Датотека|Путања…]"
 
 #: ../app/main.c:596
 msgid ""
@@ -1480,7 +1480,7 @@ msgstr "Освежава све четкице"
 #: ../app/actions/brushes-actions.c:92
 msgctxt "brushes-action"
 msgid "_Edit Brush..."
-msgstr "_Уреди четкицу..."
+msgstr "_Уреди четкицу…"
 
 #: ../app/actions/brushes-actions.c:93
 msgctxt "brushes-action"
@@ -1585,7 +1585,7 @@ msgstr "Ознака у боји"
 #: ../app/actions/channels-actions.c:53
 msgctxt "channels-action"
 msgid "_Edit Channel Attributes..."
-msgstr "_Уреди особине канала..."
+msgstr "_Уреди особине канала…"
 
 #: ../app/actions/channels-actions.c:54
 msgctxt "channels-action"
@@ -1595,7 +1595,7 @@ msgstr "Уређује назив канала, боју и непровидно
 #: ../app/actions/channels-actions.c:59
 msgctxt "channels-action"
 msgid "_New Channel..."
-msgstr "_Нови канал..."
+msgstr "_Нови канал…"
 
 #: ../app/actions/channels-actions.c:60
 msgctxt "channels-action"
@@ -1910,7 +1910,7 @@ msgstr "Изборник мапе боја"
 #: ../app/actions/colormap-actions.c:49
 msgctxt "colormap-action"
 msgid "_Edit Color..."
-msgstr "_Уреди боју..."
+msgstr "_Уреди боју…"
 
 #: ../app/actions/colormap-actions.c:50 ../app/widgets/gimpcolordialog.c:198
 msgctxt "colormap-action"
@@ -3894,7 +3894,7 @@ msgstr "Затвара прикачени прозор"
 #: ../app/actions/dock-actions.c:55
 msgctxt "dock-action"
 msgid "_Open Display..."
-msgstr "_Отвори екран..."
+msgstr "_Отвори екран…"
 
 #: ../app/actions/dock-actions.c:56
 msgctxt "dock-action"
@@ -4335,7 +4335,7 @@ msgstr "Освежава списак динамика цртања"
 #: ../app/actions/dynamics-actions.c:86
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr "_Уреди динамикe..."
+msgstr "_Уреди динамикe…"
 
 #: ../app/actions/dynamics-actions.c:87
 msgctxt "dynamics-action"
@@ -4471,7 +4471,7 @@ msgstr "Нова _слика"
 #: ../app/actions/edit-actions.c:135
 msgctxt "edit-action"
 msgid "Cu_t Named..."
-msgstr "_Исеци именовано..."
+msgstr "_Исеци именовано…"
 
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
@@ -4481,7 +4481,7 @@ msgstr "Премешта изабране пикселе у именовану �
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
 msgid "_Copy Named..."
-msgstr "_Копирај именовано..."
+msgstr "_Копирај именовано…"
 
 #: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
@@ -4492,7 +4492,7 @@ msgstr "Копира изабране пикселе у именовану ме�
 #: ../app/actions/edit-actions.c:147
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
-msgstr "Копирај _видљиво именовано..."
+msgstr "Копирај _видљиво именовано…"
 
 #: ../app/actions/edit-actions.c:149
 msgctxt "edit-action"
@@ -4502,7 +4502,7 @@ msgstr "Копира видљиве делове из изабране обла�
 #: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
 msgid "_Paste Named..."
-msgstr "У_баци именовано..."
+msgstr "У_баци именовано…"
 
 #: ../app/actions/edit-actions.c:155
 msgctxt "edit-action"
@@ -4746,7 +4746,7 @@ msgstr "_Истакни"
 #: ../app/actions/error-console-actions.c:63
 msgctxt "error-console-action"
 msgid "_Save Error Log to File..."
-msgstr "_Сачувај грешке у датотеку..."
+msgstr "_Сачувај грешке у датотеку…"
 
 #: ../app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
@@ -4756,7 +4756,7 @@ msgstr "Записује све поруке са грешкама у датот
 #: ../app/actions/error-console-actions.c:69
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
-msgstr "Сачувај _избор у датотеку..."
+msgstr "Сачувај _избор у датотеку…"
 
 #: ../app/actions/error-console-actions.c:70
 msgctxt "error-console-action"
@@ -4837,7 +4837,7 @@ msgstr "Скорашњ_е слике"
 #: ../app/actions/file-actions.c:77
 msgctxt "file-action"
 msgid "_Open..."
-msgstr "_Отвори..."
+msgstr "_Отвори…"
 
 #: ../app/actions/file-actions.c:78
 msgctxt "file-action"
@@ -4847,7 +4847,7 @@ msgstr "Отвара датотеку са сликом"
 #: ../app/actions/file-actions.c:83
 msgctxt "file-action"
 msgid "Op_en as Layers..."
-msgstr "Отвори као с_лој..."
+msgstr "Отвори као с_лој…"
 
 #: ../app/actions/file-actions.c:84
 msgctxt "file-action"
@@ -4857,7 +4857,7 @@ msgstr "Отвоара датотекe са сликом и поставља и�
 #: ../app/actions/file-actions.c:89
 msgctxt "file-action"
 msgid "Open _Location..."
-msgstr "Отвори _место..."
+msgstr "Отвори _место…"
 
 #: ../app/actions/file-actions.c:90
 msgctxt "file-action"
@@ -4947,7 +4947,7 @@ msgstr "Чува тренутну слику у гимпов формат под
 #: ../app/actions/file-actions.c:146
 msgctxt "file-action"
 msgid "Save a Cop_y..."
-msgstr "Сачувај _копију..."
+msgstr "Сачувај _копију…"
 
 #: ../app/actions/file-actions.c:148
 msgctxt "file-action"
@@ -4961,7 +4961,7 @@ msgstr ""
 #: ../app/actions/file-actions.c:154
 msgctxt "file-action"
 msgid "Save and Close..."
-msgstr "Сачувај и затвори..."
+msgstr "Сачувај и затвори…"
 
 #: ../app/actions/file-actions.c:155
 msgctxt "file-action"
@@ -5361,7 +5361,7 @@ msgstr "_Обезбојавање…"
 #: ../app/actions/filters-actions.c:293
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
-msgstr "Разлика _Гаузијана…"
+msgstr "Разлика _Гауса…"
 
 #: ../app/actions/filters-actions.c:298
 msgctxt "filters-action"
@@ -5436,12 +5436,12 @@ msgstr "_Фрактални траг…"
 #: ../app/actions/filters-actions.c:368
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
-msgstr "_Гаузијаново замућење…"
+msgstr "_Гаусово замућење…"
 
 #: ../app/actions/filters-actions.c:373
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
-msgstr "_Селективно Гаузијаново замућење…"
+msgstr "_Селективно Гаусово замућење…"
 
 #: ../app/actions/filters-actions.c:378
 msgctxt "filters-action"
@@ -5461,17 +5461,17 @@ msgstr "_Филтер високе учесталости…"
 #: ../app/actions/filters-actions.c:393
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "Нијанса-о_бојеност..."
+msgstr "Нијанса-о_бојеност…"
 
 #: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "Нијанса-_засићеност..."
+msgstr "Нијанса-_засићеност…"
 
 #: ../app/actions/filters-actions.c:403
 msgctxt "filters-action"
 msgid "_Illusion..."
-msgstr "_Илузија..."
+msgstr "_Илузија…"
 
 #: ../app/actions/filters-actions.c:408
 msgctxt "filters-action"
@@ -5571,7 +5571,7 @@ msgstr "_Ћелијски шум…"
 #: ../app/actions/filters-actions.c:503
 msgctxt "filters-action"
 msgid "_Newsprint..."
-msgstr "_Новинска штампа..."
+msgstr "_Новинска штампа…"
 
 #: ../app/actions/filters-actions.c:508
 msgctxt "filters-action"
@@ -5596,17 +5596,17 @@ msgstr "_Перлинов шум…"
 #: ../app/actions/filters-actions.c:528
 msgctxt "filters-action"
 msgid "_Pick..."
-msgstr "_Шум по одабраном..."
+msgstr "_Шум по одабраном…"
 
 #: ../app/actions/filters-actions.c:533
 msgctxt "filters-action"
 msgid "_RGB Noise..."
-msgstr "_Снег у RGB каналима..."
+msgstr "_Снег у RGB каналима…"
 
 #: ../app/actions/filters-actions.c:538
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
-msgstr "У_клањање шума..."
+msgstr "У_клањање шума…"
 
 #: ../app/actions/filters-actions.c:543
 msgctxt "filters-action"
@@ -5616,17 +5616,17 @@ msgstr "_Симплексан шум.."
 #: ../app/actions/filters-actions.c:548
 msgctxt "filters-action"
 msgid "_Slur..."
-msgstr "_Топљење..."
+msgstr "_Топљење…"
 
 #: ../app/actions/filters-actions.c:553
 msgctxt "filters-action"
 msgid "_Solid Noise..."
-msgstr "Т_врдокоран шум..."
+msgstr "Т_врдокоран шум…"
 
 #: ../app/actions/filters-actions.c:558
 msgctxt "filters-action"
 msgid "Sp_read..."
-msgstr "Шире_ње..."
+msgstr "Шире_ње…"
 
 #: ../app/actions/filters-actions.c:563
 msgctxt "filters-action"
@@ -5641,37 +5641,37 @@ msgstr "_Померај…"
 #: ../app/actions/filters-actions.c:573
 msgctxt "filters-action"
 msgid "Oili_fy..."
-msgstr "_Уље на платну..."
+msgstr "_Уље на платну…"
 
 #: ../app/actions/filters-actions.c:578
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
-msgstr "Пр_ојекција панораме..."
+msgstr "Пр_ојекција панораме…"
 
 #: ../app/actions/filters-actions.c:583
 msgctxt "filters-action"
 msgid "_Photocopy..."
-msgstr "_Фотокопија..."
+msgstr "_Фотокопија…"
 
 #: ../app/actions/filters-actions.c:588
 msgctxt "filters-action"
 msgid "_Pixelize..."
-msgstr "_Пикселизција..."
+msgstr "_Пикселизција…"
 
 #: ../app/actions/filters-actions.c:593
 msgctxt "filters-action"
 msgid "_Plasma..."
-msgstr "Пла_зма..."
+msgstr "Пла_зма…"
 
 #: ../app/actions/filters-actions.c:598
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
-msgstr "Поларне _координате..."
+msgstr "Поларне _координате…"
 
 #: ../app/actions/filters-actions.c:603
 msgctxt "filters-action"
 msgid "_Posterize..."
-msgstr "_Смањи број боја..."
+msgstr "_Смањи број боја…"
 
 #: ../app/actions/filters-actions.c:608
 msgctxt "filters-action"
@@ -5681,7 +5681,7 @@ msgstr "_Рекурзивни преображај…"
 #: ../app/actions/filters-actions.c:613
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
-msgstr "_Уклањање црвених очију..."
+msgstr "_Уклањање црвених очију…"
 
 #: ../app/actions/filters-actions.c:618
 msgctxt "filters-action"
@@ -5691,12 +5691,12 @@ msgstr "_Рејнхард 2005…"
 #: ../app/actions/filters-actions.c:623
 msgctxt "filters-action"
 msgid "RGB _Clip..."
-msgstr "RGB _исецање..."
+msgstr "RGB _исецање…"
 
 #: ../app/actions/filters-actions.c:628
 msgctxt "filters-action"
 msgid "_Ripple..."
-msgstr "_Таласање..."
+msgstr "_Таласање…"
 
 #: ../app/actions/filters-actions.c:633
 msgctxt "filters-action"
@@ -5706,12 +5706,12 @@ msgstr "_Засићеност…"
 #: ../app/actions/filters-actions.c:638
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
-msgstr "П_олу-изравнање..."
+msgstr "П_олу-изравнање…"
 
 #: ../app/actions/filters-actions.c:643
 msgctxt "filters-action"
 msgid "_Sepia..."
-msgstr "Сепи_ја..."
+msgstr "Сепи_ја…"
 
 #: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
@@ -5721,12 +5721,12 @@ msgstr "_Сенке и светлост…"
 #: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
 msgid "_Shift..."
-msgstr "_Померај..."
+msgstr "_Померај…"
 
 #: ../app/actions/filters-actions.c:658
 msgctxt "filters-action"
 msgid "_Sinus..."
-msgstr "Си_нусоида..."
+msgstr "Си_нусоида…"
 
 #: ../app/actions/filters-actions.c:663
 msgctxt "filters-action"
@@ -5934,12 +5934,12 @@ msgstr "Сачувај боју _десног у"
 #: ../app/actions/gradient-editor-actions.c:67
 msgctxt "gradient-editor-action"
 msgid "L_eft Endpoint's Color..."
-msgstr "Боја _леве крајње тачке..."
+msgstr "Боја _леве крајње тачке…"
 
 #: ../app/actions/gradient-editor-actions.c:72
 msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
-msgstr "Боја _десне крајње тачке..."
+msgstr "Боја _десне крајње тачке…"
 
 #: ../app/actions/gradient-editor-actions.c:112
 msgctxt "gradient-editor-action"
@@ -6114,7 +6114,7 @@ msgstr "_Изврни одломак"
 
 #: ../app/actions/gradient-editor-actions.c:791
 msgid "_Replicate Segment..."
-msgstr "У_двостручи одломак..."
+msgstr "У_двостручи одломак…"
 
 #: ../app/actions/gradient-editor-actions.c:793
 msgid "Split Segment at _Midpoint"
@@ -6122,7 +6122,7 @@ msgstr "Подели одломак по _средини"
 
 #: ../app/actions/gradient-editor-actions.c:795
 msgid "Split Segment _Uniformly..."
-msgstr "Подели одломак _истоветно..."
+msgstr "Подели одломак _истоветно…"
 
 #: ../app/actions/gradient-editor-actions.c:797
 msgid "_Delete Segment"
@@ -6150,7 +6150,7 @@ msgstr "_Изврни избор"
 
 #: ../app/actions/gradient-editor-actions.c:813
 msgid "_Replicate Selection..."
-msgstr "У_двостручи избор..."
+msgstr "У_двостручи избор…"
 
 #: ../app/actions/gradient-editor-actions.c:815
 msgid "Split Segments at _Midpoints"
@@ -6158,7 +6158,7 @@ msgstr "Подели одломке по _средини"
 
 #: ../app/actions/gradient-editor-actions.c:817
 msgid "Split Segments _Uniformly..."
-msgstr "Подели одломке _истоветно..."
+msgstr "Подели одломке _истоветно…"
 
 #: ../app/actions/gradient-editor-actions.c:819
 msgid "_Delete Selection"
@@ -6292,7 +6292,7 @@ msgstr "Приказује датотеку са преливом у управ�
 #: ../app/actions/gradients-actions.c:72
 msgctxt "gradients-action"
 msgid "Save as _POV-Ray..."
-msgstr "Сачувај као _ПОВ-Реј..."
+msgstr "Сачувај као _ПОВ-Реј…"
 
 #: ../app/actions/gradients-actions.c:73
 msgctxt "gradients-action"
@@ -6322,7 +6322,7 @@ msgstr "Освежава списак прелива"
 #: ../app/actions/gradients-actions.c:93
 msgctxt "gradients-action"
 msgid "_Edit Gradient..."
-msgstr "_Уреди прелив..."
+msgstr "_Уреди прелив…"
 
 #: ../app/actions/gradients-actions.c:94
 msgctxt "gradients-action"
@@ -6432,7 +6432,7 @@ msgstr "Уклони _боју"
 #: ../app/actions/image-actions.c:76
 msgctxt "image-action"
 msgid "_New..."
-msgstr "_Нова..."
+msgstr "_Нова…"
 
 #: ../app/actions/image-actions.c:77
 msgctxt "image-action"
@@ -6452,7 +6452,7 @@ msgstr "Прави још једну верзију текуће слике"
 #: ../app/actions/image-actions.c:88
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
-msgstr "_Додели профил боја..."
+msgstr "_Додели профил боја…"
 
 #: ../app/actions/image-actions.c:89
 msgctxt "image-action"
@@ -6462,7 +6462,7 @@ msgstr "Поставља одређени профил боје на слику"
 #: ../app/actions/image-actions.c:94
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
-msgstr "Прет_вори у профил боја..."
+msgstr "Прет_вори у профил боја…"
 
 #: ../app/actions/image-actions.c:95
 msgctxt "image-action"
@@ -6482,7 +6482,7 @@ msgstr "Уклања постојећи профил боје са слику"
 #: ../app/actions/image-actions.c:106
 msgctxt "image-action"
 msgid "_Save Color Profile to File..."
-msgstr "_Сачувај профил боје у датотеку..."
+msgstr "_Сачувај профил боје у датотеку…"
 
 #: ../app/actions/image-actions.c:107
 msgctxt "image-action"
@@ -6492,7 +6492,7 @@ msgstr "Чува профил боје слике у засебну ICC дато
 #: ../app/actions/image-actions.c:112
 msgctxt "image-action"
 msgid "Can_vas Size..."
-msgstr "Ве_личина платна..."
+msgstr "Ве_личина платна…"
 
 #: ../app/actions/image-actions.c:113
 msgctxt "image-action"
@@ -6522,7 +6522,7 @@ msgstr "Мења величину слике на величину текуће�
 #: ../app/actions/image-actions.c:130
 msgctxt "image-action"
 msgid "_Print Size..."
-msgstr "Величина _штампе..."
+msgstr "Величина _штампе…"
 
 #: ../app/actions/image-actions.c:131
 msgctxt "image-action"
@@ -6532,7 +6532,7 @@ msgstr "Прилагођава резолуцију штампе"
 #: ../app/actions/image-actions.c:136
 msgctxt "image-action"
 msgid "_Scale Image..."
-msgstr "_Промени размеру слике..."
+msgstr "_Промени размеру слике…"
 
 #: ../app/actions/image-actions.c:137
 msgctxt "image-action"
@@ -6564,7 +6564,7 @@ msgstr "Исеца слику на величину њеног садржаја 
 #: ../app/actions/image-actions.c:154
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
-msgstr "Споји видљиве с_лојеве..."
+msgstr "Споји видљиве с_лојеве…"
 
 #: ../app/actions/image-actions.c:155
 msgctxt "image-action"
@@ -6584,7 +6584,7 @@ msgstr "Спаја све слојеве у један и уклања пров�
 #: ../app/actions/image-actions.c:166
 msgctxt "image-action"
 msgid "Configure G_rid..."
-msgstr "Подеси _мрежу..."
+msgstr "Подеси _мрежу…"
 
 #: ../app/actions/image-actions.c:167
 msgctxt "image-action"
@@ -6639,7 +6639,7 @@ msgstr "Претвара слику у сиве тонове"
 #: ../app/actions/image-actions.c:203
 msgctxt "image-convert-action"
 msgid "_Indexed..."
-msgstr "_Индексирана..."
+msgstr "_Индексирана…"
 
 #: ../app/actions/image-actions.c:204
 msgctxt "image-convert-action"
@@ -7013,7 +7013,7 @@ msgstr "Уређује садржај овог текстуалног слоја
 #: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
-msgstr "_Уреди својства слоја..."
+msgstr "_Уреди својства слоја…"
 
 #: ../app/actions/layers-actions.c:102
 msgctxt "layers-action"
@@ -7023,7 +7023,7 @@ msgstr "Уређује назив слоја"
 #: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:1015
 msgctxt "layers-action"
 msgid "_New Layer..."
-msgstr "_Нови слој..."
+msgstr "_Нови слој…"
 
 #: ../app/actions/layers-actions.c:108
 msgctxt "layers-action"
@@ -7153,7 +7153,7 @@ msgstr "Спаја слојеве из групе слојева у један �
 #: ../app/actions/layers-actions.c:196
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
-msgstr "Споји _видљиве слојеве..."
+msgstr "Споји _видљиве слојеве…"
 
 #: ../app/actions/layers-actions.c:197
 msgctxt "layers-action"
@@ -7214,7 +7214,7 @@ msgstr "Исцртава текст из текућег слоја уз лини
 #: ../app/actions/layers-actions.c:232
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
-msgstr "Величина _граница слоја..."
+msgstr "Величина _граница слоја…"
 
 #: ../app/actions/layers-actions.c:233
 msgctxt "layers-action"
@@ -7234,7 +7234,7 @@ msgstr "Мења величину слојева на величину слик�
 #: ../app/actions/layers-actions.c:244
 msgctxt "layers-action"
 msgid "_Scale Layer..."
-msgstr "_Размера слоја..."
+msgstr "_Размера слоја…"
 
 #: ../app/actions/layers-actions.c:245
 msgctxt "layers-action"
@@ -8080,7 +8080,7 @@ msgstr "Освежава све МојеЧеткице"
 #: ../app/actions/mypaint-brushes-actions.c:86
 msgctxt "mypaint-brushes-action"
 msgid "_Edit MyPaint Brush..."
-msgstr "_Уреди МојуЧеткицу..."
+msgstr "_Уреди МојуЧеткицу…"
 
 #: ../app/actions/mypaint-brushes-actions.c:87
 msgctxt "mypaint-brushes-action"
@@ -8095,7 +8095,7 @@ msgstr "Изборник уређивача палете"
 #: ../app/actions/palette-editor-actions.c:48
 msgctxt "palette-editor-action"
 msgid "_Edit Color..."
-msgstr "_Уреди боју..."
+msgstr "_Уреди боју…"
 
 #: ../app/actions/palette-editor-actions.c:49
 msgctxt "palette-editor-action"
@@ -8167,7 +8167,7 @@ msgstr "Прави нову палету"
 #: ../app/actions/palettes-actions.c:54
 msgctxt "palettes-action"
 msgid "_Import Palette..."
-msgstr "_Увези палету..."
+msgstr "_Увези палету…"
 
 #: ../app/actions/palettes-actions.c:55
 msgctxt "palettes-action"
@@ -8187,7 +8187,7 @@ msgstr "Удвостручи ову палету"
 #: ../app/actions/palettes-actions.c:66
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
-msgstr "_Споји палете..."
+msgstr "_Споји палете…"
 
 #: ../app/actions/palettes-actions.c:67
 msgctxt "palettes-action"
@@ -8237,7 +8237,7 @@ msgstr "Освежи палете"
 #: ../app/actions/palettes-actions.c:99
 msgctxt "palettes-action"
 msgid "_Edit Palette..."
-msgstr "_Уреди палету..."
+msgstr "_Уреди палету…"
 
 #: ../app/actions/palettes-actions.c:100
 msgctxt "palettes-action"
@@ -8334,7 +8334,7 @@ msgstr "Освежава шаре"
 #: ../app/actions/patterns-actions.c:92
 msgctxt "patterns-action"
 msgid "_Edit Pattern..."
-msgstr "_Уреди шару..."
+msgstr "_Уреди шару…"
 
 #: ../app/actions/patterns-actions.c:93
 msgctxt "patterns-action"
@@ -8383,7 +8383,7 @@ msgstr "Изборник брзе маске"
 #: ../app/actions/quick-mask-actions.c:47
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
-msgstr "_Подеси боју и непровидност..."
+msgstr "_Подеси боју и непровидност…"
 
 #: ../app/actions/quick-mask-actions.c:55
 msgctxt "quick-mask-action"
@@ -8489,7 +8489,7 @@ msgstr "Прави плутајући слој од избора"
 #: ../app/actions/select-actions.c:74
 msgctxt "select-action"
 msgid "Fea_ther..."
-msgstr "Уме_кшај..."
+msgstr "Уме_кшај…"
 
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
@@ -8509,7 +8509,7 @@ msgstr "Уклања замућене ивице из избора"
 #: ../app/actions/select-actions.c:87
 msgctxt "select-action"
 msgid "S_hrink..."
-msgstr "_Скупи..."
+msgstr "_Скупи…"
 
 #: ../app/actions/select-actions.c:88
 msgctxt "select-action"
@@ -8519,7 +8519,7 @@ msgstr "Умањује изабрану површину"
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
-msgstr "Про_шири..."
+msgstr "Про_шири…"
 
 #: ../app/actions/select-actions.c:94
 msgctxt "select-action"
@@ -8529,7 +8529,7 @@ msgstr "Увећава изабрану површину"
 #: ../app/actions/select-actions.c:99
 msgctxt "select-action"
 msgid "Bo_rder..."
-msgstr "_Граница..."
+msgstr "_Граница…"
 
 #: ../app/actions/select-actions.c:100
 msgctxt "select-action"
@@ -8579,7 +8579,7 @@ msgstr "Испуњава спољну ивицу избора вредности
 #: ../app/actions/select-actions.c:129
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr "_Исцртај избор..."
+msgstr "_Исцртај избор…"
 
 #: ../app/actions/select-actions.c:130
 msgctxt "select-action"
@@ -8677,7 +8677,7 @@ msgstr "Прави нову слику на основу изабране шар
 #: ../app/actions/templates-actions.c:52
 msgctxt "templates-action"
 msgid "_New Template..."
-msgstr "_Нови шаблон..."
+msgstr "_Нови шаблон…"
 
 #: ../app/actions/templates-actions.c:53
 msgctxt "templates-action"
@@ -8687,7 +8687,7 @@ msgstr "Прави нови шаблон"
 #: ../app/actions/templates-actions.c:58
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
-msgstr "У_двостручи шаблон..."
+msgstr "У_двостручи шаблон…"
 
 #: ../app/actions/templates-actions.c:59
 msgctxt "templates-action"
@@ -8697,7 +8697,7 @@ msgstr "Удвостручите текући шаблон"
 #: ../app/actions/templates-actions.c:64
 msgctxt "templates-action"
 msgid "_Edit Template..."
-msgstr "_Уреди шаблон..."
+msgstr "_Уреди шаблон…"
 
 #: ../app/actions/templates-actions.c:65
 msgctxt "templates-action"
@@ -8874,7 +8874,7 @@ msgstr "_Обриши"
 #: ../app/actions/text-tool-actions.c:74
 msgctxt "text-tool-action"
 msgid "_Open text file..."
-msgstr "_Отвори текстуалну датотеку..."
+msgstr "_Отвори текстуалну датотеку…"
 
 #: ../app/actions/text-tool-actions.c:79
 msgctxt "text-tool-action"
@@ -8964,7 +8964,7 @@ msgstr "О_бриши подешавање алата"
 #: ../app/actions/tool-options-actions.c:78
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "_Ново подешавање алата..."
+msgstr "_Ново подешавање алата…"
 
 #: ../app/actions/tool-options-actions.c:83
 msgctxt "tool-options-action"
@@ -9119,7 +9119,7 @@ msgstr "Освежава подешавања алата"
 #: ../app/actions/tool-presets-actions.c:102
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
-msgstr "_Уреди подешавање алата..."
+msgstr "_Уреди подешавање алата…"
 
 #: ../app/actions/tool-presets-actions.c:103
 msgctxt "tool-presets-action"
@@ -9164,7 +9164,7 @@ msgstr "Прави избор на основу подручја сличних 
 #: ../app/actions/tools-actions.c:63 ../app/actions/tools-actions.c:69
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
-msgstr "_Произвољно ротирање..."
+msgstr "_Произвољно ротирање…"
 
 #: ../app/actions/tools-actions.c:64
 msgctxt "tools-action"
@@ -9649,7 +9649,7 @@ msgstr "Омогућава измену активне путање"
 #: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
 msgid "_Edit Path Attributes..."
-msgstr "_Уреди особине путање..."
+msgstr "_Уреди особине путање…"
 
 #: ../app/actions/vectors-actions.c:61
 msgctxt "vectors-action"
@@ -9659,12 +9659,12 @@ msgstr "Уредите особине путање"
 #: ../app/actions/vectors-actions.c:66
 msgctxt "vectors-action"
 msgid "_New Path..."
-msgstr "_Нова путања..."
+msgstr "_Нова путања…"
 
 #: ../app/actions/vectors-actions.c:67
 msgctxt "vectors-action"
 msgid "Create a new path..."
-msgstr "Направи нову путању..."
+msgstr "Направи нову путању…"
 
 #: ../app/actions/vectors-actions.c:72
 msgctxt "vectors-action"
@@ -9764,7 +9764,7 @@ msgstr "Испуњава путању вредностима које су по�
 #: ../app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
-msgstr "Исц_ртај путању..."
+msgstr "Исц_ртај путању…"
 
 #: ../app/actions/vectors-actions.c:132
 msgctxt "vectors-action"
@@ -9794,12 +9794,12 @@ msgstr "У_баци путању"
 #: ../app/actions/vectors-actions.c:153
 msgctxt "vectors-action"
 msgid "E_xport Path..."
-msgstr "И_звези путању..."
+msgstr "И_звези путању…"
 
 #: ../app/actions/vectors-actions.c:158
 msgctxt "vectors-action"
 msgid "I_mport Path..."
-msgstr "У_вези путању..."
+msgstr "У_вези путању…"
 
 #: ../app/actions/vectors-actions.c:166
 msgctxt "vectors-action"
@@ -10187,7 +10187,7 @@ msgstr "Приказује прозор прегледа за ову слику"
 #: ../app/actions/view-actions.c:142
 msgctxt "view-action"
 msgid "Display _Filters..."
-msgstr "Прикажи _филтере..."
+msgstr "Прикажи _филтере…"
 
 #: ../app/actions/view-actions.c:143
 msgctxt "view-action"
@@ -10229,7 +10229,7 @@ msgstr "Смањује прозор слике на величину прика�
 #: ../app/actions/view-actions.c:167
 msgctxt "view-action"
 msgid "_Open Display..."
-msgstr "_Отвори екран..."
+msgstr "_Отвори екран…"
 
 #: ../app/actions/view-actions.c:168
 msgctxt "view-action"
@@ -10788,7 +10788,7 @@ msgstr "Користи боју тамних поља"
 #: ../app/actions/view-actions.c:617
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
-msgstr "_Произвољна боја..."
+msgstr "_Произвољна боја…"
 
 #: ../app/actions/view-actions.c:618
 msgctxt "view-padding-color"
@@ -10897,7 +10897,7 @@ msgstr "_Врати увећање"
 #: ../app/actions/view-actions.c:1131
 #, c-format
 msgid "Othe_r (%s)..."
-msgstr "_Друга (%s) ..."
+msgstr "_Друга (%s) …"
 
 #: ../app/actions/view-actions.c:1140
 #, c-format
@@ -13532,12 +13532,12 @@ msgstr ""
 #: ../app/core/gimp-user-install.c:419
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "Копирам датотеку „%s“ из „%s“..."
+msgstr "Копирам датотеку „%s“ из „%s“…"
 
 #: ../app/core/gimp-user-install.c:434 ../app/core/gimp-user-install.c:460
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "Правим директоријум „%s“..."
+msgstr "Правим директоријум „%s“…"
 
 #: ../app/core/gimp-user-install.c:445 ../app/core/gimp-user-install.c:471
 #, c-format
@@ -14796,7 +14796,7 @@ msgstr "Кликните да направите преглед"
 
 #: ../app/core/gimpimagefile.c:790
 msgid "Loading preview..."
-msgstr "Учитавам приказ..."
+msgstr "Учитавам приказ…"
 
 #: ../app/core/gimpimagefile.c:796
 msgid "Preview is out of date"
@@ -17323,7 +17323,7 @@ msgstr "Користи _динамичке пречице тастатуре"
 
 #: ../app/dialogs/preferences-dialog.c:1879
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Подеси пречице _тастатуре..."
+msgstr "Подеси пречице _тастатуре…"
 
 #: ../app/dialogs/preferences-dialog.c:1886
 msgid "_Save keyboard shortcuts on exit"
@@ -17817,7 +17817,7 @@ msgstr "Унеси _ручно"
 
 #: ../app/dialogs/preferences-dialog.c:2775
 msgid "C_alibrate..."
-msgstr "К_алибриши..."
+msgstr "К_алибриши…"
 
 #: ../app/dialogs/preferences-dialog.c:2805
 #: ../app/dialogs/preferences-dialog.c:2806
@@ -18022,7 +18022,7 @@ msgstr "_Дели алате и опције алата између уређа�
 
 #: ../app/dialogs/preferences-dialog.c:3144
 msgid "Configure E_xtended Input Devices..."
-msgstr "Подеси _проширене улазне уређаје..."
+msgstr "Подеси _проширене улазне уређаје…"
 
 #: ../app/dialogs/preferences-dialog.c:3151
 msgid "_Save input device settings on exit"
@@ -21427,7 +21427,7 @@ msgstr "Премештање"
 #: ../app/pdb/plug-in-compat-cmds.c:376
 msgctxt "undo-type"
 msgid "Gaussian Blur"
-msgstr "Гаузијаново замућење"
+msgstr "Гаусово замућење"
 
 #: ../app/pdb/plug-in-compat-cmds.c:482
 msgctxt "undo-type"
@@ -21680,7 +21680,7 @@ msgstr "Додавање шума"
 #: ../app/pdb/plug-in-compat-cmds.c:3881
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
-msgstr "Селективно Гаузијаново замућење"
+msgstr "Селективно Гаусово замућење"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3925
 msgctxt "undo-type"
@@ -22621,7 +22621,7 @@ msgstr "Осветљење-контраст"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:99
 msgid "B_rightness-Contrast..."
-msgstr "_Осветљење-контраст..."
+msgstr "_Осветљење-контраст…"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:167
 msgid "Adjust Brightness and Contrast"
@@ -23095,7 +23095,7 @@ msgstr "Кривуље"
 
 #: ../app/tools/gimpcurvestool.c:156
 msgid "_Curves..."
-msgstr "_Кривуље..."
+msgstr "_Кривуље…"
 
 #: ../app/tools/gimpcurvestool.c:218 ../app/tools/gimpfiltertool.c:294
 #: ../app/tools/gimplevelstool.c:208 ../app/tools/gimpoffsettool.c:187
@@ -23571,7 +23571,7 @@ msgstr "Геглови алати: дозвољава да користите п
 
 #: ../app/tools/gimpgegltool.c:80
 msgid "_GEGL Operation..."
-msgstr "Радње _Гегла..."
+msgstr "Радње _Гегла…"
 
 #. The options vbox
 #: ../app/tools/gimpgegltool.c:497
@@ -23938,7 +23938,7 @@ msgstr "Измени кривуљу маказица"
 
 #: ../app/tools/gimplevelstool.c:140
 msgid "_Levels..."
-msgstr "_Нивои..."
+msgstr "_Нивои…"
 
 #: ../app/tools/gimplevelstool.c:293
 msgid "Pick black point for all channels"
@@ -24976,7 +24976,7 @@ msgstr "Гимпов уређивач текста"
 
 #: ../app/tools/gimpthresholdtool.c:95
 msgid "_Threshold..."
-msgstr "П_раг..."
+msgstr "П_раг…"
 
 #: ../app/tools/gimpthresholdtool.c:212
 msgid "Apply Threshold"
@@ -27560,11 +27560,11 @@ msgstr "Канал хистограма"
 
 #: ../app/widgets/gimpiconpicker.c:241
 msgid "From File..."
-msgstr "Из датотеке..."
+msgstr "Из датотеке…"
 
 #: ../app/widgets/gimpiconpicker.c:250
 msgid "From Named Icons..."
-msgstr "Из именованих иконица..."
+msgstr "Из именованих иконица…"
 
 #: ../app/widgets/gimpiconpicker.c:259
 msgid "Copy Icon to Clipboard"
@@ -28084,7 +28084,7 @@ msgstr "Умањени приказ %d од %d"
 
 #: ../app/widgets/gimpthumbbox.c:713 ../app/widgets/gimpthumbbox.c:723
 msgid "Creating preview..."
-msgstr "Правим преглед..."
+msgstr "Правим преглед…"
 
 #: ../app/widgets/gimptoolbox-color-area.c:220
 msgid "Change Foreground Color"
