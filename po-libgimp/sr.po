@@ -4,23 +4,23 @@
 # This file is distributed under the same license as the gimp-libgimp package.
 #
 # Maintainer: Милош Поповић <gpopac@gmail.com>
-# Милош Поповић <gpopac@gmail.com>, 2011, 2015.
+# Милош Поповић <gpopac@gmail.com>, 2011-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-01-07 21:04+0000\n"
-"PO-Revision-Date: 2021-01-08 01:17+0100\n"
+"POT-Creation-Date: 2021-01-08 00:20+0000\n"
+"PO-Revision-Date: 2021-01-16 21:30+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
-"Language-Team: српски <gnom@prevod.org>\n"
+"Language-Team: Serbian <gnome-sr@googlegroups.com>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Poedit 2.4.2\n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2\n"
+"X-Generator: Gtranslator 3.38.0\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:177
 msgid "Brush Selection"
@@ -868,8 +868,6 @@ msgid "CIE Lab"
 msgstr "CIE Lab"
 
 #: ../libgimpbase/gimpbaseenums.c:608
-#| msgctxt "image-type"
-#| msgid "RGB"
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
@@ -894,8 +892,6 @@ msgstr "HSV (у смеру казаљке)"
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:616
-#| msgctxt "gradient-type"
-#| msgid "Spiral (cw)"
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "HSV (десно)"
@@ -923,8 +919,6 @@ msgstr "Сферно (повећање)"
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:655
-#| msgctxt "gradient-type"
-#| msgid "Spiral (cw)"
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "Сферно (+)"
@@ -1142,7 +1136,7 @@ msgstr "Линијски"
 #: ../libgimpbase/gimpbaseenums.c:964
 msgctxt "interpolation-type"
 msgid "Cubic"
-msgstr "Кубично"
+msgstr "Кубно"
 
 #: ../libgimpbase/gimpbaseenums.c:965
 msgctxt "interpolation-type"
@@ -1576,7 +1570,6 @@ msgstr "Не могу да обрадим Exif податке."
 
 #: ../libgimpbase/gimpmetadata.c:1119
 #, c-format
-#| msgid "Parsing XMP data failed."
 msgid "Parsing IPTC data failed."
 msgstr "Не могу да обрадим IPTC податке."
 
@@ -1800,7 +1793,7 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
-msgstr "Боја за означавање боја које се налазе ван гамута."
+msgstr "Боја за означавање боја које се налазе ван палете."
 
 #: ../libgimpconfig/gimpcolorconfig.c:210
 msgid "Mode of operation"
@@ -1815,7 +1808,6 @@ msgid "Preferred grayscale profile"
 msgstr "Омиљени профил за сиве тонове"
 
 #: ../libgimpconfig/gimpcolorconfig.c:232
-#| msgid "Monitor profile:"
 msgid "CMYK profile"
 msgstr "CMYK профил"
 
@@ -2317,7 +2309,6 @@ msgid "_S"
 msgstr "_З"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
-#| msgid "Saturation"
 msgid "HSV Saturation"
 msgstr "HSV засићеност"
 
@@ -2327,7 +2318,6 @@ msgid "_V"
 msgstr "_В"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
-#| msgid "Value"
 msgid "HSV Value"
 msgstr "HSV вредност"
 
@@ -2373,8 +2363,6 @@ msgid "_L"
 msgstr "_С"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
-#| msgctxt "desaturate-mode"
-#| msgid "Lightness"
 msgid "LCh Lightness"
 msgstr "LCh светлина"
 
@@ -2420,7 +2408,6 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:170
-#| msgid "HSV color wheel"
 msgid "HSV color model"
 msgstr "HSV модел боја"
 
