@@ -421,10 +421,18 @@ load_image (GFile        *file,
 
   if (debug_prints)
     {
+      gchar **environ = g_get_environ ();
+      gint    i;
+
       g_printf ("[%s] trying to call\n", __FILE__);
       for (gchar **iter = argv; *iter; iter++)
         g_printf ("    %s\n", *iter);
       g_printf ("\n");
+
+      g_printf ("## Environment ##\n");
+      for (i = 0; environ[i]; i++)
+        g_printf ("- %s\n", environ[i]);
+      g_strfreev (environ) ;
     }
 
   if (g_spawn_sync (NULL,
@@ -448,10 +456,10 @@ load_image (GFile        *file,
   if (debug_prints)
     {
       if (darktable_stdout && *darktable_stdout)
-        g_printf ("%s\n", darktable_stdout);
+        g_printf ("\n## stdout ##\n%s\n", darktable_stdout);
 
       if (darktable_stderr && *darktable_stderr)
-        g_printf ("%s\n", darktable_stderr);
+        g_printf ("\n## stderr ##\n%s\n", darktable_stderr);
     }
 
   g_free (darktable_stdout);
