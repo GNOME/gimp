@@ -4,13 +4,13 @@
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2010.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
 # Olexandr Pylypchuk <pilipchukap@rambler.ru>, 2018.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-18 18:43+0000\n"
-"PO-Revision-Date: 2020-12-18 20:58+0200\n"
+"POT-Creation-Date: 2021-01-18 06:11+0000\n"
+"PO-Revision-Date: 2021-01-18 12:15+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -63,7 +63,7 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/common/tile-small.c:423 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:706 ../plug-ins/common/warp.c:467
 #: ../plug-ins/common/wavelet-decompose.c:386 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:2287 ../plug-ins/flame/flame.c:516
+#: ../plug-ins/file-tiff/file-tiff-load.c:2335 ../plug-ins/flame/flame.c:516
 #: ../plug-ins/flame/flame.c:692 ../plug-ins/flame/flame.c:1009
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
@@ -93,7 +93,7 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/metadata/metadata-editor.c:838
 #: ../plug-ins/metadata/metadata-editor.c:5725
 #: ../plug-ins/metadata/metadata-editor.c:5760
-#: ../plug-ins/pagecurl/pagecurl.c:473 ../plug-ins/screenshot/screenshot.c:529
+#: ../plug-ins/pagecurl/pagecurl.c:473 ../plug-ins/screenshot/screenshot.c:532
 #: ../plug-ins/selection-to-path/selection-to-path.c:406
 msgid "_Cancel"
 msgstr "_Скасувати"
@@ -391,16 +391,16 @@ msgstr "_Вертикально"
 #: ../plug-ins/common/file-sunras.c:1087 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:797
 #: ../plug-ins/common/smooth-palette.c:309 ../plug-ins/common/tile.c:382
-#: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:275
+#: ../plug-ins/file-bmp/bmp-load.c:740 ../plug-ins/file-exr/file-exr.c:275
 #: ../plug-ins/file-faxg3/faxg3.c:547 ../plug-ins/file-fits/fits.c:564
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:1971 ../plug-ins/file-sgi/sgi.c:424
-#: ../plug-ins/file-tiff/file-tiff-load.c:1261
+#: ../plug-ins/file-psd/psd-load.c:2027 ../plug-ins/file-sgi/sgi.c:424
+#: ../plug-ins/file-tiff/file-tiff-load.c:1309
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:310 ../plug-ins/twain/twain.c:653
+#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:653
 msgid "Background"
 msgstr "Тло"
 
@@ -954,8 +954,8 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
 #: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
 #: ../plug-ins/file-jpeg/jpeg-save.c:317 ../plug-ins/file-psd/psd-save.c:1753
-#: ../plug-ins/file-tiff/file-tiff-save.c:1062
-#: ../plug-ins/file-tiff/file-tiff-save.c:1177 ../plug-ins/flame/flame.c:485
+#: ../plug-ins/file-tiff/file-tiff-save.c:1105
+#: ../plug-ins/file-tiff/file-tiff-save.c:1189 ../plug-ins/flame/flame.c:485
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:827 ../plug-ins/ifs-compose/ifs-compose.c:2395
 #: ../plug-ins/lighting/lighting-ui.c:1233
@@ -1930,7 +1930,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/file-psd/psd-load.c:141
 #: ../plug-ins/file-raw/file-darktable.c:419
 #: ../plug-ins/file-raw/file-rawtherapee.c:345 ../plug-ins/file-sgi/sgi.c:330
-#: ../plug-ins/file-tiff/file-tiff-load.c:178
+#: ../plug-ins/file-tiff/file-tiff-load.c:235
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається «%s»"
@@ -2013,7 +2013,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
 #: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
 #: ../plug-ins/file-jpeg/jpeg-save.c:270 ../plug-ins/file-psd/psd-save.c:1716
-#: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:1052
+#: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:1095
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Експортування «%s»"
@@ -2822,7 +2822,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2137
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2164
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
@@ -2955,13 +2955,13 @@ msgstr "Не вдається зчитати заголовок з «%s»"
 msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
-#: ../plug-ins/common/file-pcx.c:448 ../plug-ins/file-bmp/bmp-load.c:726
+#: ../plug-ins/common/file-pcx.c:448 ../plug-ins/file-bmp/bmp-load.c:729
 #: ../plug-ins/file-psd/psd-load.c:324
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Непідтримувана ширина зображення: %d"
 
-#: ../plug-ins/common/file-pcx.c:454 ../plug-ins/file-bmp/bmp-load.c:732
+#: ../plug-ins/common/file-pcx.c:454 ../plug-ins/file-bmp/bmp-load.c:735
 #: ../plug-ins/file-psd/psd-load.c:316
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -3066,7 +3066,7 @@ msgid "Import from PDF"
 msgstr "Імпорт з PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1040 ../plug-ins/common/file-ps.c:3551
-#: ../plug-ins/file-tiff/file-tiff-load.c:2288
+#: ../plug-ins/file-tiff/file-tiff-load.c:2336
 #: ../plug-ins/metadata/metadata-editor.c:5726
 msgid "_Import"
 msgstr "_Імпортувати"
@@ -3199,7 +3199,7 @@ msgstr "Шари як сторінки (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1315
 #: ../plug-ins/common/file-pdf-save.c:1388
 #: ../plug-ins/common/file-pdf-save.c:1486 ../plug-ins/common/file-ps.c:2036
-#: ../plug-ins/file-tiff/file-tiff-load.c:1263
+#: ../plug-ins/file-tiff/file-tiff-load.c:1311
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
@@ -3310,39 +3310,39 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
-#: ../plug-ins/common/file-png.c:2176 ../plug-ins/common/file-ps.c:3693
+#: ../plug-ins/common/file-png.c:2203 ../plug-ins/common/file-ps.c:3693
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: ../plug-ins/common/file-png.c:2177
+#: ../plug-ins/common/file-png.c:2204
 msgid "8 bpc RGB"
 msgstr "8 біт/кан RGB"
 
-#: ../plug-ins/common/file-png.c:2178
+#: ../plug-ins/common/file-png.c:2205
 msgid "8 bpc GRAY"
 msgstr "8 біт/кан GRAY"
 
-#: ../plug-ins/common/file-png.c:2179
+#: ../plug-ins/common/file-png.c:2206
 msgid "8 bpc RGBA"
 msgstr "8 біт/кан RGBA"
 
-#: ../plug-ins/common/file-png.c:2180
+#: ../plug-ins/common/file-png.c:2207
 msgid "8 bpc GRAYA"
 msgstr "8 біт/кан GRAYA"
 
-#: ../plug-ins/common/file-png.c:2181
+#: ../plug-ins/common/file-png.c:2208
 msgid "16 bpc RGB"
 msgstr "16 біт/кан RGB"
 
-#: ../plug-ins/common/file-png.c:2182
+#: ../plug-ins/common/file-png.c:2209
 msgid "16 bpc GRAY"
 msgstr "16 біт/кан GRAY"
 
-#: ../plug-ins/common/file-png.c:2183
+#: ../plug-ins/common/file-png.c:2210
 msgid "16 bpc RGBA"
 msgstr "16 біт/кан RGBA"
 
-#: ../plug-ins/common/file-png.c:2184
+#: ../plug-ins/common/file-png.c:2211
 msgid "16 bpc GRAYA"
 msgstr "16 біт/кан GRAYA"
 
@@ -6264,16 +6264,16 @@ msgstr "Помилка зчитування заголовку BMP-файлу з
 msgid "Unsupported compression (%u) in BMP file from '%s'"
 msgstr "Непідтримуваний метод стиснення (%u) у файл BMP з «%s»"
 
-#: ../plug-ins/file-bmp/bmp-load.c:678
+#: ../plug-ins/file-bmp/bmp-load.c:676
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Нерозпізнаний чи хибний формат BMP."
 
-#: ../plug-ins/file-bmp/bmp-load.c:720
+#: ../plug-ins/file-bmp/bmp-load.c:723
 msgid "Unsupported or invalid bitdepth."
 msgstr "Непідтримувана чи некоректна розрядність кольорового представлення."
 
-#: ../plug-ins/file-bmp/bmp-load.c:888 ../plug-ins/file-bmp/bmp-load.c:931
-#: ../plug-ins/file-bmp/bmp-load.c:985
+#: ../plug-ins/file-bmp/bmp-load.c:891 ../plug-ins/file-bmp/bmp-load.c:934
+#: ../plug-ins/file-bmp/bmp-load.c:988
 msgid "The bitmap ends unexpectedly."
 msgstr "Дані зображення несподівано закінчились."
 
@@ -6286,24 +6286,24 @@ msgstr ""
 msgid "Alpha channel will be ignored."
 msgstr "Альфа-канал буде проігнорований."
 
-#: ../plug-ins/file-bmp/bmp-save.c:969
+#: ../plug-ins/file-bmp/bmp-save.c:973
 msgid "Export Image as BMP"
 msgstr "Експортувати зображення як BMP"
 
-#: ../plug-ins/file-bmp/bmp-save.c:981
+#: ../plug-ins/file-bmp/bmp-save.c:985
 msgid "_Run-Length Encoded"
 msgstr "_RLE-кодування"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-save.c:988
+#: ../plug-ins/file-bmp/bmp-save.c:992
 msgid "Compatibility"
 msgstr "Сумісність"
 
-#: ../plug-ins/file-bmp/bmp-save.c:993
+#: ../plug-ins/file-bmp/bmp-save.c:997
 msgid "_Write color space information"
 msgstr "З_аписувати інформацію про простір кольору"
 
-#: ../plug-ins/file-bmp/bmp-save.c:995
+#: ../plug-ins/file-bmp/bmp-save.c:999
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Disabling this "
@@ -6314,31 +6314,31 @@ msgstr ""
 "параметра змусить його не записувати цієї інформації у файл."
 
 #. RGB Encoding Pptions
-#: ../plug-ins/file-bmp/bmp-save.c:1004
+#: ../plug-ins/file-bmp/bmp-save.c:1008
 msgid "RGB Encoding"
 msgstr "Кодування RGB"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1011
+#: ../plug-ins/file-bmp/bmp-save.c:1015
 msgid "16 bit (R5 G6 B5)"
 msgstr "16-бітове (R5 G6 B5)"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1012
+#: ../plug-ins/file-bmp/bmp-save.c:1016
 msgid "16 bit (A1 R5 G5 B5)"
 msgstr "16-бітове (A1 R5 G5 B5)"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1013
+#: ../plug-ins/file-bmp/bmp-save.c:1017
 msgid "16 bit (X1 R5 G5 B5)"
 msgstr "16-бітове (X1 R5 G5 B5)"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1014
+#: ../plug-ins/file-bmp/bmp-save.c:1018
 msgid "24 bit (R8 G8 B8)"
 msgstr "24-бітове (R8 G8 B8)"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1015
+#: ../plug-ins/file-bmp/bmp-save.c:1019
 msgid "32 bit (A8 R8 G8 B8)"
 msgstr "32-бітове (A8 R8 G8 B8)"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1016
+#: ../plug-ins/file-bmp/bmp-save.c:1020
 msgid "32 bit (X8 R8 G8 B8)"
 msgstr "32-бітове (X8 R8 G8 B8)"
 
@@ -6407,15 +6407,15 @@ msgstr "Непідтримуваний формат DXGI (%d)"
 msgid "Unexpected EOF.\n"
 msgstr "Неочікуваний кінець файла.\n"
 
-#: ../plug-ins/file-dds/ddsread.c:1354
+#: ../plug-ins/file-dds/ddsread.c:1378
 msgid "Open DDS"
 msgstr "Відкрити DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1363
+#: ../plug-ins/file-dds/ddsread.c:1387
 msgid "_Load mipmaps"
 msgstr "_Завантажити MIP-текстури"
 
-#: ../plug-ins/file-dds/ddsread.c:1367
+#: ../plug-ins/file-dds/ddsread.c:1391
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Автоматично декодувати виявлені зображення YCoCg/AExp"
 
@@ -6716,7 +6716,7 @@ msgstr "З рухомою комою"
 msgid "JPEG image"
 msgstr "Перегляд JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:190 ../plug-ins/file-tiff/file-tiff-save.c:1294
+#: ../plug-ins/file-jpeg/jpeg.c:190 ../plug-ins/file-tiff/file-tiff-save.c:1306
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -6788,7 +6788,7 @@ msgid "Unsupported bit depth: %d"
 msgstr "Непідтримувана розрядність на канал: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:418 ../plug-ins/file-psd/psd-load.c:428
-#: ../plug-ins/file-psd/psd-load.c:639 ../plug-ins/file-psd/psd-load.c:861
+#: ../plug-ins/file-psd/psd-load.c:639 ../plug-ins/file-psd/psd-load.c:917
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Цей файл пошкоджений!"
@@ -6813,36 +6813,42 @@ msgstr "Непідтримувана чи некоректні ширина ша
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір шару: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:778
+#: ../plug-ins/file-psd/psd-load.c:677
+#, c-format
+#| msgid "Unsupported or invalid image size: %dx%d"
+msgid "Unsupported or invalid mask info size: %d"
+msgstr "Непідтримуваний або некоректний розмір відомостей щодо маски: %d"
+
+#: ../plug-ins/file-psd/psd-load.c:828
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Непідтримувана чи некоректна висота маски: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:786
+#: ../plug-ins/file-psd/psd-load.c:836
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Непідтримувана чи хибна ширина маски: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:795
+#: ../plug-ins/file-psd/psd-load.c:845
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1428 ../plug-ins/file-psd/psd-load.c:1945
+#: ../plug-ins/file-psd/psd-load.c:1484 ../plug-ins/file-psd/psd-load.c:2001
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2076
+#: ../plug-ins/file-psd/psd-load.c:2132
 msgid "Extra"
 msgstr "Додатково"
 
-#: ../plug-ins/file-psd/psd-load.c:2254
+#: ../plug-ins/file-psd/psd-load.c:2310
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: ../plug-ins/file-psd/psd-load.c:2320
+#: ../plug-ins/file-psd/psd-load.c:2376
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
@@ -7070,12 +7076,12 @@ msgstr ""
 "Під час спроби експортування декількох шарів не було позначено пункт "
 "«Зберегти шари»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:211
+#: ../plug-ins/file-tiff/file-tiff-load.c:268
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF «%s» не містить каталоги"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:218
+#: ../plug-ins/file-tiff/file-tiff-load.c:275
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7093,7 +7099,7 @@ msgstr[2] ""
 "Не вдалося виконати облік каталогу TIFF «%s» за заголовком, хоча, здається, "
 "маємо %d сторінок. Буде виконано спробу завантажити файл із цим припущенням."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:294
+#: ../plug-ins/file-tiff/file-tiff-load.c:351
 msgid "Extra channels with unspecified data."
 msgstr "Зайві канали із даними поза специфікацією."
 
@@ -7104,60 +7110,60 @@ msgstr "Зайві канали із даними поза специфікац�
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:310
+#: ../plug-ins/file-tiff/file-tiff-load.c:363
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Нестандартний TIFF: зайві канали без поля «ExtraSamples»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:372
+#: ../plug-ins/file-tiff/file-tiff-load.c:424
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Не вдалося прочитати сторінку %d з %d. Зображення може бути пошкоджено.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:401
+#: ../plug-ins/file-tiff/file-tiff-load.c:453
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr ""
-"Для цього зображення визначено лінійний колірний профіль, але цей профіль не"
-" встановлено на першому шарі. Шари під шаром %d буде оброблено як нелінійні."
+"Для цього зображення визначено лінійний колірний профіль, але цей профіль не "
+"встановлено на першому шарі. Шари під шаром %d буде оброблено як нелінійні."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:409
+#: ../plug-ins/file-tiff/file-tiff-load.c:461
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
-"Для цього зображення визначено декілька колірних профілів. Ми"
-" використовуватимемо лише перший з них. Якщо це призведе до некоректних"
-" результатів, вам варто завантажити кожен з шарів як окреме зображення."
+"Для цього зображення визначено декілька колірних профілів. Ми "
+"використовуватимемо лише перший з них. Якщо це призведе до некоректних "
+"результатів, вам варто завантажити кожен з шарів як окреме зображення."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:904
+#: ../plug-ins/file-tiff/file-tiff-load.c:952
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-з-%d-сторінок"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1300
+#: ../plug-ins/file-tiff/file-tiff-load.c:1348
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1453
+#: ../plug-ins/file-tiff/file-tiff-load.c:1501
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Не вдалося прочитати дані з TIFF «%s». Ймовірно, вміст файла пошкоджено."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1828
-#: ../plug-ins/file-tiff/file-tiff-load.c:2008
+#: ../plug-ins/file-tiff/file-tiff-load.c:1876
+#: ../plug-ins/file-tiff/file-tiff-load.c:2056
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
 "Рядок помилки — %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2283
+#: ../plug-ins/file-tiff/file-tiff-load.c:2331
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
@@ -7165,27 +7171,27 @@ msgstr "Імпорт TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2336
+#: ../plug-ins/file-tiff/file-tiff-load.c:2384
 msgid "_Keep empty space around imported layers"
 msgstr "За_лишати порожнє місце навколо імпортованих шарів"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2353
+#: ../plug-ins/file-tiff/file-tiff-load.c:2401
 msgid "Process extra channel as:"
 msgstr "Обробляти зайвий канал як:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2356
+#: ../plug-ins/file-tiff/file-tiff-load.c:2404
 msgid "_Non-premultiplied alpha"
 msgstr "Б_ез попередньо помноженої альфи"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2357
+#: ../plug-ins/file-tiff/file-tiff-load.c:2405
 msgid "Pre_multiplied alpha"
 msgstr "_Попередньо помножена альфа"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2358
+#: ../plug-ins/file-tiff/file-tiff-load.c:2406
 msgid "Channe_l"
 msgstr "_Канал"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:616
+#: ../plug-ins/file-tiff/file-tiff-save.c:622
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7193,16 +7199,11 @@ msgstr ""
 "За допомогою \"CCITT Group 4\" або \"CCITT Group 3\" можна стискати тільки "
 "монохромні зображення."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:630
+#: ../plug-ins/file-tiff/file-tiff-save.c:636
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Індексовані зображення не можна стиснути за допомогою \"JPEG\"."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:766
-#, c-format
-msgid "Failed a scanline write on row %d"
-msgstr "Не вдалося записати рядок сканування %d"
-
-#: ../plug-ins/file-tiff/file-tiff-save.c:1077
+#: ../plug-ins/file-tiff/file-tiff-save.c:670
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7210,35 +7211,40 @@ msgstr ""
 "Формат TIFF підтримує лише 7-бітні ASCII\n"
 "коментарі. Коментар не збережено."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1202
+#: ../plug-ins/file-tiff/file-tiff-save.c:811
+#, c-format
+msgid "Failed a scanline write on row %d"
+msgstr "Не вдалося записати рядок сканування %d"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:1214
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Записування сторінок із різною бітовою глибиною є доволі дивною дією."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1290
+#: ../plug-ins/file-tiff/file-tiff-save.c:1302
 #: ../plug-ins/metadata/metadata-tags.c:182
 #: ../plug-ins/metadata/metadata-tags.c:194
 #: ../plug-ins/metadata/metadata-tags.c:225
 msgid "None"
 msgstr "Немає"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1291
+#: ../plug-ins/file-tiff/file-tiff-save.c:1303
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1292
+#: ../plug-ins/file-tiff/file-tiff-save.c:1304
 msgid "Pack Bits"
 msgstr "Упаковані біти"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1293
+#: ../plug-ins/file-tiff/file-tiff-save.c:1305
 msgid "Deflate"
 msgstr "Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1295
+#: ../plug-ins/file-tiff/file-tiff-save.c:1307
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1296
+#: ../plug-ins/file-tiff/file-tiff-save.c:1308
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax"
 
@@ -11867,109 +11873,109 @@ msgstr "При друкуванні виникла помилка:"
 msgid "Printing"
 msgstr "Друк"
 
-#: ../plug-ins/screenshot/screenshot.c:149
+#: ../plug-ins/screenshot/screenshot.c:140
 msgid "_Screenshot..."
 msgstr "_Знімок екрану..."
 
-#: ../plug-ins/screenshot/screenshot.c:154
+#: ../plug-ins/screenshot/screenshot.c:145
 msgid "Create an image from an area of the screen"
 msgstr "Створити зображення з вказаної частини робочого столу"
 
-#: ../plug-ins/screenshot/screenshot.c:525
+#: ../plug-ins/screenshot/screenshot.c:528
 #: ../plug-ins/screenshot/screenshot-x11.c:427
 msgid "Screenshot"
 msgstr "Знімок екрану"
 
-#: ../plug-ins/screenshot/screenshot.c:530
+#: ../plug-ins/screenshot/screenshot.c:533
 msgid "S_nap"
 msgstr "За_хопити"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:557
+#: ../plug-ins/screenshot/screenshot.c:560
 msgid "Area"
 msgstr "Область"
 
-#: ../plug-ins/screenshot/screenshot.c:569
+#: ../plug-ins/screenshot/screenshot.c:572
 msgid "Take a screenshot of a single _window"
 msgstr "Зняти лише активне _вікно"
 
-#: ../plug-ins/screenshot/screenshot.c:592
+#: ../plug-ins/screenshot/screenshot.c:595
 msgid "Include window _decoration"
 msgstr "Включаючи _рамку вікна"
 
-#: ../plug-ins/screenshot/screenshot.c:613
-#: ../plug-ins/screenshot/screenshot.c:658
+#: ../plug-ins/screenshot/screenshot.c:616
+#: ../plug-ins/screenshot/screenshot.c:661
 msgid "Include _mouse pointer"
 msgstr "Включити вказівник _миші"
 
-#: ../plug-ins/screenshot/screenshot.c:635
+#: ../plug-ins/screenshot/screenshot.c:638
 msgid "Take a screenshot of the entire _screen"
 msgstr "Зняти _весь екран"
 
-#: ../plug-ins/screenshot/screenshot.c:686
+#: ../plug-ins/screenshot/screenshot.c:689
 msgid "Select a _region to grab"
 msgstr "Виберіть _ділянку"
 
-#: ../plug-ins/screenshot/screenshot.c:704
+#: ../plug-ins/screenshot/screenshot.c:707
 msgid "Delay"
 msgstr "Затримка"
 
-#: ../plug-ins/screenshot/screenshot.c:724
+#: ../plug-ins/screenshot/screenshot.c:727
 msgid "Selection delay: "
 msgstr "Затримка вибору: "
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:740
-#: ../plug-ins/screenshot/screenshot.c:800
+#: ../plug-ins/screenshot/screenshot.c:743
+#: ../plug-ins/screenshot/screenshot.c:803
 msgid "seconds"
 msgstr "секунд"
 
-#: ../plug-ins/screenshot/screenshot.c:753
+#: ../plug-ins/screenshot/screenshot.c:756
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr "Після затримки, пересуньте мишу на ділянку для знімку."
 
-#: ../plug-ins/screenshot/screenshot.c:757
+#: ../plug-ins/screenshot/screenshot.c:760
 msgid "Click in a window to snap it after delay."
 msgstr "Клацніть вікно, щоб зробити його знімок після затримки."
 
-#: ../plug-ins/screenshot/screenshot.c:762
+#: ../plug-ins/screenshot/screenshot.c:765
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Після затримки клацніть на вікні для отримання його знімку"
 
-#: ../plug-ins/screenshot/screenshot.c:783
+#: ../plug-ins/screenshot/screenshot.c:786
 msgid "Screenshot dela_y: "
 msgstr "Затримка з_німка екрана: "
 
-#: ../plug-ins/screenshot/screenshot.c:811
+#: ../plug-ins/screenshot/screenshot.c:814
 msgid "After the delay, the screenshot is taken."
 msgstr "Після затримки робиться знімок"
 
-#: ../plug-ins/screenshot/screenshot.c:813
+#: ../plug-ins/screenshot/screenshot.c:816
 msgid "Once the region is selected, it will be captured after this delay."
 msgstr "Коли ділянку вибрано, її знімок буде зроблено після такої затримки."
 
-#: ../plug-ins/screenshot/screenshot.c:818
+#: ../plug-ins/screenshot/screenshot.c:821
 msgid "Once the window is selected, it will be captured after this delay."
 msgstr "Коли вікно вибрано, його знімок буде зроблено після такої затримки."
 
-#: ../plug-ins/screenshot/screenshot.c:824
+#: ../plug-ins/screenshot/screenshot.c:827
 msgid "After the delay, the active window will be captured."
 msgstr "Після затримки буде зроблено знімок активного вікна."
 
-#: ../plug-ins/screenshot/screenshot.c:831
+#: ../plug-ins/screenshot/screenshot.c:834
 msgid "Color Profile"
 msgstr "Колірний профіль"
 
-#: ../plug-ins/screenshot/screenshot.c:836
+#: ../plug-ins/screenshot/screenshot.c:839
 msgid "Tag image with _monitor profile"
 msgstr "Позначити зображення з профілем _монітора"
 
-#: ../plug-ins/screenshot/screenshot.c:840
+#: ../plug-ins/screenshot/screenshot.c:843
 msgid "Convert image to sR_GB"
 msgstr "Перетворити зображення на sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:297
+#: ../plug-ins/screenshot/screenshot-win32.c:299
 msgid "No data captured"
 msgstr "Даних не захоплено"
 
@@ -11985,7 +11991,7 @@ msgstr "Імпорт знімку екрану"
 msgid "Mouse Pointer"
 msgstr "Вказівник миші"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:625
+#: ../plug-ins/screenshot/screenshot-x11.c:626
 msgid "Specified window not found"
 msgstr "Вказане вікно не знайдене"
 
