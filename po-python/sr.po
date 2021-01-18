@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-12-15 02:11+0000\n"
-"PO-Revision-Date: 2021-01-15 02:29+0100\n"
+"PO-Revision-Date: 2021-01-16 14:31+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: Serbian <gnome-sr@googlegroups.com>\n"
 "Language: sr\n"
@@ -134,7 +134,7 @@ msgstr "Додаје слој са ефектом магле"
 
 #: ../plug-ins/python/foggify.py:118
 msgid "_Fog..."
-msgstr "_Магла..."
+msgstr "_Магла…"
 
 #: ../plug-ins/python/gradients-save-as-css.py:81
 #| msgid "_Slice..."
@@ -374,7 +374,7 @@ msgstr "М_ерење подеока"
 
 #: ../plug-ins/python/palette-sort.py:417
 msgid "_Sort Palette..."
-msgstr "По_ређај палету..."
+msgstr "По_ређај палету…"
 
 #: ../plug-ins/python/palette-sort.py:422
 msgid "Sort the colors in a palette"
@@ -402,7 +402,7 @@ msgstr "Питонова конзола"
 
 #: ../plug-ins/python/python-console/python-console.py:79
 msgid "_Browse..."
-msgstr "_Разгледај..."
+msgstr "_Разгледај…"
 
 #: ../plug-ins/python/python-console/python-console.py:179
 msgid "Python Procedure Browser"
