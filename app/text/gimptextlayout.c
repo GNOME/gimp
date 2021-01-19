@@ -701,7 +701,7 @@ gimp_text_get_font_options (GimpText *text)
   cairo_font_options_t *options = cairo_font_options_create ();
 
   cairo_font_options_set_antialias (options, (text->antialias ?
-                                              CAIRO_ANTIALIAS_DEFAULT :
+                                              CAIRO_ANTIALIAS_GRAY :
                                               CAIRO_ANTIALIAS_NONE));
 
   switch (text->hint_style)
