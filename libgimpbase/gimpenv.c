@@ -422,18 +422,6 @@ gimp_installation_directory (void)
 
         toplevel = g_strdup (dirname);
       }
-    else if (! strcmp (basename, "plug-ins"))
-      {
-        /*  same for plug-ins, go three levels up from prefix/lib/gimp/x.y  */
-
-        gchar *tmp  = g_path_get_dirname (dirname);
-        gchar *tmp2 = g_path_get_dirname (tmp);
-
-        toplevel = g_path_get_dirname (tmp2);
-
-        g_free (tmp);
-        g_free (tmp2);
-      }
     else if (! strcmp (g_path_get_basename (dirname), "plug-ins"))
       {
         /*  same for plug-ins in subdirectory, go three levels up from prefix/lib/gimp/x.y  */
