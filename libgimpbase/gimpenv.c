@@ -399,6 +399,7 @@ gimp_installation_directory (void)
     NSAutoreleasePool *pool;
     NSString          *resource_path;
     gchar             *basename;
+    gchar             *basepath;
     gchar             *dirname;
 
     pool = [[NSAutoreleasePool alloc] init];
@@ -406,7 +407,8 @@ gimp_installation_directory (void)
     resource_path = [[NSBundle mainBundle] resourcePath];
 
     basename = g_path_get_basename ([resource_path UTF8String]);
-    dirname  = g_path_get_dirname ([resource_path UTF8String]);
+    basepath = g_path_get_dirname ([resource_path UTF8String]);
+    dirname  = g_path_get_basename (basepath);
 
     if (! strcmp (basename, ".libs"))
       {
@@ -420,13 +422,13 @@ gimp_installation_directory (void)
          *  path is the directory which contains the executable
          */
 
-        toplevel = g_strdup (dirname);
+        toplevel = g_strdup (basepath);
       }
-    else if (! strcmp (g_path_get_basename (dirname), "plug-ins"))
+    else if (! strcmp (dirname, "plug-ins"))
       {
         /*  same for plug-ins in subdirectory, go three levels up from prefix/lib/gimp/x.y  */
 
-        gchar *tmp  = g_path_get_dirname (dirname);
+        gchar *tmp  = g_path_get_dirname (basepath);
         gchar *tmp2 = g_path_get_dirname (tmp);
         gchar *tmp3 = g_path_get_dirname (tmp2);
 
@@ -444,6 +446,7 @@ gimp_installation_directory (void)
       }
 
     g_free (basename);
+    g_free (basepath);
     g_free (dirname);
 
     [pool drain];
