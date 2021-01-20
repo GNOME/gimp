@@ -202,7 +202,7 @@ gimp_vectors_get_strokes (GimpVectors *vectors,
  * gimp_vectors_stroke_get_length:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
- * @precision: The precision used for the approximation.
+ * @precision: The precision used for approximating straight portions of the stroke.
  *
  * Measure the length of the given stroke.
  *

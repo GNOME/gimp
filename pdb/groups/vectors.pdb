@@ -179,8 +179,8 @@ sub vectors_stroke_get_length {
 	  desc => 'The vectors object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-        { name => 'precision', type => 'float',
-          desc => 'The precision used for the approximation' }
+        { name => 'precision', type => '0.0 <= float', default => 0.1,
+          desc => 'The precision used for approximating straight portions of the stroke' }
     );
 
     @outargs = (

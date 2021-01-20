@@ -1499,8 +1499,8 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("precision",
                                                     "precision",
-                                                    "The precision used for the approximation",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    "The precision used for approximating straight portions of the stroke",
+                                                    0.0, G_MAXDOUBLE, 0.1,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("length",
