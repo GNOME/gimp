@@ -52,7 +52,7 @@ gimp_coords_interpolate_bezier (const GimpCoords  bezier_pt[4],
                                 GArray           *ret_params)
 {
   g_return_if_fail (bezier_pt != NULL);
-  g_return_if_fail (precision > 0.0);
+  g_return_if_fail (precision >= 0.0);
   g_return_if_fail (ret_coords != NULL);
 
   gimp_coords_interpolate_bezier_internal (bezier_pt,
@@ -217,7 +217,7 @@ gimp_coords_bezier_is_straight (const GimpCoords bezier_pt[4],
   GimpCoords pt1, pt2;
 
   g_return_val_if_fail (bezier_pt != NULL, FALSE);
-  g_return_val_if_fail (precision > 0.0, FALSE);
+  g_return_val_if_fail (precision >= 0.0, FALSE);
 
   /* calculate the "ideal" positions for the control points */
 
