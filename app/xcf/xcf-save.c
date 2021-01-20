@@ -1629,9 +1629,10 @@ xcf_save_level (XcfInfo     *info,
   /* allocate an offset table so we don't have to seek back after each
    * tile, see bug #686862. allocate ntiles + 1 slots because a zero
    * offset indicates the offset table's end.
+   * Do not use g_alloca since it may cause Stack Overflow on
+   * large images, see issue #6138.
    */
-  offset_table = g_alloca ((ntiles + 1) * sizeof (goffset));
-  memset (offset_table, 0, (ntiles + 1) * sizeof (goffset));
+  offset_table = g_malloc0 ((ntiles + 1) * sizeof (goffset));
   next_offset = offset_table;
 
   /* 'saved_pos' is the offset of the tile offset table  */
@@ -1671,6 +1672,7 @@ xcf_save_level (XcfInfo     *info,
           break;
         case COMPRESS_FRACTAL:
           g_warning ("xcf: fractal compression unimplemented");
+          g_free (offset_table);
           return FALSE;
         }
 
@@ -1681,6 +1683,7 @@ xcf_save_level (XcfInfo     *info,
         {
           g_message ("xcf: invalid tile data length: %" G_GOFFSET_FORMAT,
                      info->cp - offset);
+          g_free (offset_table);
           return FALSE;
         }
 
@@ -1694,6 +1697,8 @@ xcf_save_level (XcfInfo     *info,
 
   /* seek to the end of the file */
   xcf_check_error (xcf_seek_pos (info, offset, error));
+
+  g_free (offset_table);
 
   return TRUE;
 }
