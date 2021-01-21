@@ -1014,6 +1014,9 @@ appstream_util = find_program('appstream-util', required: get_option('appdata-te
 # Check for doc generation tools
 have_gtk_doc = get_option('gtk-doc')
 
+gir_doc_tool = find_program('g-ir-doc-tool', required: false)
+yelp_build   = find_program('yelp-build', required: false)
+
 # Check for vector icons
 have_vector_icons = get_option('vec-icons')
 if have_vector_icons
