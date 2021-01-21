@@ -36,7 +36,7 @@ msgid ""
 "their contents."
 msgstr ""
 "El GIMP utilitza capes per a estructurar la imatge. És com si fos una pila de "
-"diapositives o filtres transparents que es sobreposen i es poden veure tots "
+"diapositives o filtres transparents que se sobreposen i es poden veure tots "
 "els continguts de cada capa."
 
 #: ../data/tips/gimp-tips.xml.in.h:3

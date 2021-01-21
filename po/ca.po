@@ -14569,7 +14569,7 @@ msgstr "Els grups de capes s'han afegit a %s"
 #: ../app/core/gimpimage.c:2767
 #, c-format
 msgid "Masks on layer groups were added in %s"
-msgstr "S'han afegit mascares als grups de capes a %s"
+msgstr "S'han afegit màscares als grups de capes a %s"
 
 #: ../app/core/gimpimage.c:2783
 #, c-format
@@ -17843,7 +17843,7 @@ msgstr "Radi d'eixamplament:"
 #. Shrink Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2466
 msgid "Shrink Selection Dialog"
-msgstr "Diàleg per encongir la selecció"
+msgstr "Diàleg per a encongir la selecció"
 
 #: ../app/dialogs/preferences-dialog.c:2471
 msgid "Shrink radius:"
@@ -19258,7 +19258,7 @@ msgstr "Fes clic-i-arrossega per a girar i ajustar la mida"
 
 #: ../app/display/gimptoolhandlegrid.c:871
 msgid "Click-Drag to shear and scale"
-msgstr "Fes clic-i-arrossega per inclinar i ajustar la mida"
+msgstr "Fes clic-i-arrossega per a inclinar i ajustar la mida"
 
 #: ../app/display/gimptoolhandlegrid.c:874
 #: ../app/display/gimptooltransformgrid.c:1820
@@ -19531,7 +19531,7 @@ msgstr "Feu clic-i-arrossega per a moure el punt"
 
 #: ../app/display/gimptooltransformgrid.c:1839
 msgid "Click-Drag to shear"
-msgstr "Feu clic-i-arrossega per inclinar"
+msgstr "Feu clic-i-arrossega per a inclinar"
 
 #: ../app/file/file-open.c:136 ../app/file/file-save.c:140
 msgid "Not a regular file"
@@ -19779,7 +19779,7 @@ msgid ""
 "to deform the image"
 msgstr ""
 "Deforma la regió contenidora\n"
-"per deformar la imatge"
+"per a deformar la imatge"
 
 #: ../app/operations/operations-enums.c:25
 msgctxt "layer-color-space"
@@ -22793,7 +22793,7 @@ msgstr "_Alinea"
 #: ../app/tools/gimpaligntool.c:541
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
-"Feu clic en la capa, al camí o a la guia o feu clic i arrossega per agafar "
+"Feu clic en la capa, al camí o a la guia o feu clic i arrossega per a agafar "
 "diverses capes"
 
 #: ../app/tools/gimpaligntool.c:549
@@ -23064,7 +23064,7 @@ msgstr "_Clona"
 
 #: ../app/tools/gimpclonetool.c:90 ../app/tools/gimpclonetool.c:93
 msgid "Click to clone"
-msgstr "Feu clic per clonar"
+msgstr "Feu clic per a clonar"
 
 #: ../app/tools/gimpclonetool.c:91 ../app/tools/gimpclonetool.c:96
 #, c-format
@@ -23166,11 +23166,11 @@ msgstr "Dif_umina / ressalta"
 
 #: ../app/tools/gimpconvolvetool.c:181
 msgid "Click to blur"
-msgstr "Feu clic per difuminar"
+msgstr "Feu clic per a difuminar"
 
 #: ../app/tools/gimpconvolvetool.c:182
 msgid "Click to blur the line"
-msgstr "Feu clic per difuminar la línia"
+msgstr "Feu clic per a difuminar la línia"
 
 #: ../app/tools/gimpconvolvetool.c:183
 #, c-format
@@ -23188,7 +23188,7 @@ msgstr "Feu clic per a ressaltar la línia"
 #: ../app/tools/gimpconvolvetool.c:189
 #, c-format
 msgid "%s to blur"
-msgstr "%s per difuminar"
+msgstr "%s per a difuminar"
 
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:213
@@ -23270,7 +23270,7 @@ msgstr "Feu clic-i-arrossega per a tallar un rectangle"
 
 #: ../app/tools/gimpcroptool.c:280
 msgid "Click or press Enter to crop"
-msgstr "Feu clic o premeu la tecla de retorn per escapçar"
+msgstr "Feu clic o premeu la tecla de retorn per a escapçar"
 
 #: ../app/tools/gimpcroptool.c:387
 msgid "Crop to: "
@@ -23278,7 +23278,7 @@ msgstr "Escapça a: "
 
 #: ../app/tools/gimpcroptool.c:457
 msgid "There are no selected layers to crop."
-msgstr "No hi ha capes seleccionades per escapçar."
+msgstr "No hi ha capes seleccionades per a escapçar."
 
 #: ../app/tools/gimpcroptool.c:468
 msgid "All selected layers' pixels are locked."
@@ -23381,29 +23381,29 @@ msgstr "_Ferro roent"
 
 #: ../app/tools/gimpdodgeburntool.c:188
 msgid "Click to dodge"
-msgstr "Feu clic per aclarir"
+msgstr "Feu clic per a aclarir"
 
 #: ../app/tools/gimpdodgeburntool.c:189
 msgid "Click to dodge the line"
-msgstr "Feu clic per aclarir la línia"
+msgstr "Feu clic per a aclarir la línia"
 
 #: ../app/tools/gimpdodgeburntool.c:190
 #, c-format
 msgid "%s to burn"
-msgstr "%s per cremar"
+msgstr "%s per a cremar"
 
 #: ../app/tools/gimpdodgeburntool.c:194
 msgid "Click to burn"
-msgstr "Feu clic per cremar"
+msgstr "Feu clic per a cremar"
 
 #: ../app/tools/gimpdodgeburntool.c:195
 msgid "Click to burn the line"
-msgstr "Feu clic per cremar la línia"
+msgstr "Feu clic per a cremar la línia"
 
 #: ../app/tools/gimpdodgeburntool.c:196
 #, c-format
 msgid "%s to dodge"
-msgstr "%s per aclarir"
+msgstr "%s per a aclarir"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:220
@@ -23623,7 +23623,7 @@ msgstr "Amplada del traç"
 #: ../app/tools/gimpforegroundselectoptions.c:106
 #: ../app/tools/gimppaintselectoptions.c:84
 msgid "Size of the brush used for refinements"
-msgstr "Mida del pinzell utilitzat per concretar la selecció"
+msgstr "Mida del pinzell utilitzat per a concretar la selecció"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Preview color"
@@ -23705,7 +23705,7 @@ msgstr "Resseguiu a mà alçada l'objecte que voleu extreure"
 
 #: ../app/tools/gimpforegroundselecttool.c:631
 msgid "press Enter to refine."
-msgstr "premeu la tecla de retorn per refinar."
+msgstr "premeu la tecla de retorn per a refinar."
 
 #: ../app/tools/gimpforegroundselecttool.c:658
 msgid "Selecting foreground"
@@ -24042,17 +24042,17 @@ msgstr "_Cicatritza"
 
 #: ../app/tools/gimphealtool.c:77 ../app/tools/gimphealtool.c:80
 msgid "Click to heal"
-msgstr "Feu clic per cicatritzar"
+msgstr "Feu clic per a cicatritzar"
 
 #: ../app/tools/gimphealtool.c:78 ../app/tools/gimphealtool.c:83
 #, c-format
 msgid "%s to set a new heal source"
-msgstr "%s per a definir una imatge nova per curar cicatrius"
+msgstr "%s per a definir una imatge nova per a curar cicatrius"
 
 #. Translators: the translation of "Click" must be the first word
 #: ../app/tools/gimphealtool.c:82
 msgid "Click to set a new heal source"
-msgstr "Feu clic per a definir la imatge per curar cicatrius"
+msgstr "Feu clic per a definir la imatge per a curar cicatrius"
 
 #: ../app/tools/gimphistogramoptions.c:64
 msgid "Histogram Scale"
@@ -24590,7 +24590,7 @@ msgstr "Feu clic per pintar"
 
 #: ../app/tools/gimppainttool.c:176
 msgid "Click to draw the line"
-msgstr "Feu clic per pintar la línia"
+msgstr "Feu clic per a pintar la línia"
 
 #: ../app/tools/gimppainttool.c:177
 #, c-format
@@ -24671,7 +24671,7 @@ msgstr "Encongeix a totes les capes"
 
 #: ../app/tools/gimprectangleoptions.c:93
 msgid "Use all visible layers when shrinking the selection"
-msgstr "Utilitza totes les capes visibles per encongir la selecció"
+msgstr "Utilitza totes les capes visibles per a encongir la selecció"
 
 #: ../app/tools/gimprectangleoptions.c:102
 #: ../app/tools/gimptransformgridoptions.c:149
@@ -24926,11 +24926,11 @@ msgstr "Feu clic-i-arrossega per a afegir a la selecció actual"
 
 #: ../app/tools/gimpselectiontool.c:351
 msgid "Click-Drag to subtract from the current selection"
-msgstr "Feu clic-i-arrossega per sostreure de la selecció actual"
+msgstr "Feu clic-i-arrossega per a sostreure de la selecció actual"
 
 #: ../app/tools/gimpselectiontool.c:360
 msgid "Click-Drag to intersect with the current selection"
-msgstr "Feu clic-i-arrossega per intersecar amb la selecció actual"
+msgstr "Feu clic-i-arrossega per a intersecar amb la selecció actual"
 
 #: ../app/tools/gimpselectiontool.c:370
 msgid "Click-Drag to move the selection mask"
@@ -24946,7 +24946,7 @@ msgstr "Feu clic-i-arrossega per a moure una còpia dels píxels seleccionats"
 
 #: ../app/tools/gimpselectiontool.c:386
 msgid "Click to anchor the floating selection"
-msgstr "Feu clic per ancorar la selecció flotant"
+msgstr "Feu clic per a ancorar la selecció flotant"
 
 #: ../app/tools/gimpselectiontool.c:539
 #, c-format
@@ -25733,7 +25733,7 @@ msgstr "Cap guerxura per a suprimir."
 
 #: ../app/tools/gimpwarptool.c:855
 msgid "No warp to smooth."
-msgstr "Cap guerxura per suavitzar."
+msgstr "Cap guerxura per a suavitzar."
 
 #: ../app/tools/gimpwarptool.c:1085
 msgid "Warp transform"

@@ -93,7 +93,7 @@ msgid ""
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"El GIMP ja està llest per ser instal·lat. Cliqueu en el botó Instal·la per "
+"El GIMP ja està llest per a ser instal·lat. Cliqueu en el botó Instal·la per a "
 "instal·lar usant els paràmetres per defecte o cliqueu el botó Personalitza "
 "si us agrada un major control sobre què voleu instal·lar."
 
@@ -144,7 +144,7 @@ msgstr "Símbols de depuració"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:25
 msgid "Include information to help with debugging GIMP"
-msgstr "Inclou informació per ajudar a depurar el GIMP"
+msgstr "Inclou informació per a ajudar a depurar el GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:26
 msgid "MS-Windows engine for GTK+"
@@ -161,7 +161,7 @@ msgstr "Suport per connectors vells"
 #: ../build/windows/installer/lang/setup.isl.in.h:29
 msgid "Install libraries needed by old third-party plug-ins"
 msgstr ""
-"Instal·la les biblioteques necessàries pels connectors vells de terceres "
+"Instal·la les biblioteques necessàries per als connectors vells de terceres "
 "parts"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:30
@@ -204,7 +204,7 @@ msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
 msgstr ""
-"Inclou els fitxers necessaris per usar els connectors de 32-bits."
+"Inclou els fitxers necessaris per a usar els connectors de 32-bits."
 "%nNecessaris pel suport de Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:40
@@ -230,7 +230,7 @@ msgid ""
 "loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr ""
 "S'ha produït un error en actualitzar l'entorn del GIMP en %1. Si teniu "
-"qualsevol en carregar els connectors, proveu a desinstal·lar i tornar a "
+"qualsevol en carregar els connectors, proveu de desinstal·lar i tornar a "
 "instal·lar el GIMP."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:46
@@ -300,7 +300,7 @@ msgstr "Tipus de fitxer a associar amb el GIMP:"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:62
 msgid "Removing previous version of GIMP:"
-msgstr "Removing previous version of GIMP:"
+msgstr "S'està eliminant la versió anterior del GIMP:"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:64
 #, no-c-format

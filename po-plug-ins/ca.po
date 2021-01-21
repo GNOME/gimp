@@ -1736,7 +1736,7 @@ msgid ""
 msgstr ""
 "Els píxels que tinguin el color de primer pla es mostraran en negre en totes "
 "les imatges de sortida. Això es pot utilitzar com a marques de talls que han "
-"de mostrar-se en tots els canals. "
+"de mostrar-se en tots els canals."
 
 #: ../plug-ins/common/depth-merge.c:213
 msgid "_Depth Merge..."
@@ -7001,7 +7001,7 @@ msgid ""
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
-"No hi ha cap carregador RAW instal·lat per a obrir els fitxers '%s'.\n"
+"No hi ha cap carregador RAW instal·lat per a obrir els fitxers «%s».\n"
 "\n"
 "El GIMP, actualment admet aquests carregadors RAW:\n"
 "- darktable (http://www.darktable.org/), almenys 1.7\n"
@@ -7588,11 +7588,11 @@ msgstr "_Densitat de la mostra:"
 
 #: ../plug-ins/flame/flame.c:1161
 msgid "Spa_tial oversample:"
-msgstr "Sobremos_tra espaial:"
+msgstr "Sobremos_tra espacial:"
 
 #: ../plug-ins/flame/flame.c:1170
 msgid "Spatial _filter radius:"
-msgstr "Radi del _filtre espaial:"
+msgstr "Radi del _filtre espacial:"
 
 #: ../plug-ins/flame/flame.c:1188
 msgid "Color_map:"
@@ -9977,7 +9977,7 @@ msgstr "Fractal IFS"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:873
 msgid "Spatial Transformation"
-msgstr "Transformació espaial"
+msgstr "Transformació espacial"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:879
 msgid "Color Transformation"
