@@ -42,7 +42,7 @@ gimp_debug_tool_@GIMP_TOOL_VERSION@_CPPFLAGS = \
 gimp_debug_tool_@GIMP_TOOL_VERSION@_LDADD = \
 	$(libappwidgets)	\
 	$(libapp)		\
-	$(libgimpbase)						\
+	$(libgimpbase)		\
 	$(GIO_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
