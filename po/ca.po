@@ -14128,7 +14128,7 @@ msgstr "Els grups de capes s'han afegit a %s"
 #: ../app/core/gimpimage.c:2691
 #, c-format
 msgid "Masks on layer groups were added in %s"
-msgstr "S'han afegit mascares als grups de capes a %s"
+msgstr "S'han afegit màscares als grups de capes a %s"
 
 #: ../app/core/gimpimage.c:2707
 #, c-format

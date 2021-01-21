@@ -309,7 +309,7 @@ msgstr "Tipus de fitxer a associar amb el GIMP:"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:64
 msgid "Removing previous version of GIMP:"
-msgstr "Removing previous version of GIMP:"
+msgstr "S'està eliminant la versió anterior del GIMP:"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format

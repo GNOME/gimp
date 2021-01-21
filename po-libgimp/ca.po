@@ -871,7 +871,7 @@ msgstr "Corba"
 #: ../libgimpbase/gimpbaseenums.c:719
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
-msgstr "Sinusoïdal"
+msgstr "Sinusoidal"
 
 #: ../libgimpbase/gimpbaseenums.c:720
 msgctxt "gradient-segment-type"

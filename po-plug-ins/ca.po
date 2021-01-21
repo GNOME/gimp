@@ -1904,7 +1904,7 @@ msgid ""
 msgstr ""
 "Els píxels que tinguin el color de primer pla es mostraran en negre en totes "
 "les imatges de sortida. Això es pot utilitzar com a marques de talls que han "
-"de mostrar-se en tots els canals. "
+"de mostrar-se en tots els canals."
 
 #: ../plug-ins/common/depth-merge.c:176
 msgid "Combine two images using depth maps (z-buffers)"
@@ -7978,11 +7978,11 @@ msgstr "_Densitat de la mostra:"
 
 #: ../plug-ins/flame/flame.c:1141
 msgid "Spa_tial oversample:"
-msgstr "Sobremos_tra espaial:"
+msgstr "Sobremos_tra espacial:"
 
 #: ../plug-ins/flame/flame.c:1152
 msgid "Spatial _filter radius:"
-msgstr "Radi del _filtre espaial:"
+msgstr "Radi del _filtre espacial:"
 
 #: ../plug-ins/flame/flame.c:1171
 msgid "Color_map:"
@@ -10540,7 +10540,7 @@ msgstr "Fractal IFS"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:854
 msgid "Spatial Transformation"
-msgstr "Transformació espaial"
+msgstr "Transformació espacial"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:860
 msgid "Color Transformation"
