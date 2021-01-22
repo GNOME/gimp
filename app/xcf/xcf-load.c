@@ -418,10 +418,16 @@ xcf_load_image (Gimp     *gimp,
                                             xmp_length - 10,
                                             &my_error))
             {
+              /* XMP metadata from 2.8.x or earlier can be really messed up.
+               * Let's make the message more user friendly so they will
+               * understand that we can't do anything about it.
+               * See issue #987. */
               gimp_message (gimp, G_OBJECT (info->progress),
                             GIMP_MESSAGE_WARNING,
-                            _("Corrupt 'gimp-metadata' parasite discovered.\n"
-                              "XMP data could not be migrated: %s"),
+                            _("Corrupt XMP metadata saved by an older version of "
+                              "GIMP could not be converted and will be ignored.\n"
+                              "If you don't know what XMP is, you most likely don't "
+                              "need it. Reported error: %s."),
                             my_error->message);
               g_clear_error (&my_error);
             }
