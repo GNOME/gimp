@@ -2043,12 +2043,12 @@ msgstr "Primer pla: usa el color següent de la paleta"
 #: ../app/actions/context-actions.c:117
 msgctxt "context-action"
 msgid "Foreground: Skip Back Palette Color"
-msgstr "Primer pla: vés cap enrere en la paleta de colors"
+msgstr "Primer pla: ves cap enrere en la paleta de colors"
 
 #: ../app/actions/context-actions.c:121
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Palette Color"
-msgstr "Primer pla: vés cap endavant en la paleta de colors"
+msgstr "Primer pla: ves cap endavant en la paleta de colors"
 
 #: ../app/actions/context-actions.c:129
 msgctxt "context-action"
@@ -2078,12 +2078,12 @@ msgstr "Fons: usa el color següent de la paleta"
 #: ../app/actions/context-actions.c:149
 msgctxt "context-action"
 msgid "Background: Skip Back Palette Color"
-msgstr "Fons: vés cap enrere en la paleta de colors"
+msgstr "Fons: ves cap enrere en la paleta de colors"
 
 #: ../app/actions/context-actions.c:153
 msgctxt "context-action"
 msgid "Background: Skip Forward Palette Color"
-msgstr "Fons: vés cap endavant en la paleta de colors"
+msgstr "Fons: ves cap endavant en la paleta de colors"
 
 #: ../app/actions/context-actions.c:161
 msgctxt "context-action"
@@ -2103,22 +2103,22 @@ msgstr "Primer pla: usar l'últim color del mapa de color"
 #: ../app/actions/context-actions.c:173
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Colormap"
-msgstr "Primer pla: vés al color anterior del mapa de color"
+msgstr "Primer pla: ves al color anterior del mapa de color"
 
 #: ../app/actions/context-actions.c:177
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Colormap"
-msgstr "Primer pla: vés al color següent del mapa de color"
+msgstr "Primer pla: ves al color següent del mapa de color"
 
 #: ../app/actions/context-actions.c:181
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Colormap"
-msgstr "Primer pla: vés al color anterior del mapa de color"
+msgstr "Primer pla: ves al color anterior del mapa de color"
 
 #: ../app/actions/context-actions.c:185
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Colormap"
-msgstr "Primer pla: vés al color següent del mapa de color"
+msgstr "Primer pla: ves al color següent del mapa de color"
 
 #: ../app/actions/context-actions.c:193
 msgctxt "context-action"
@@ -2148,12 +2148,12 @@ msgstr "Fons: usa el color següent del mapa de color"
 #: ../app/actions/context-actions.c:213
 msgctxt "context-action"
 msgid "Background: Skip Back Color From Colormap"
-msgstr "Fons: vés un color enrere en el mapa de color"
+msgstr "Fons: ves un color enrere en el mapa de color"
 
 #: ../app/actions/context-actions.c:217
 msgctxt "context-action"
 msgid "Background: Skip Forward Color From Colormap"
-msgstr "Fons: vés un color endavant en el mapa de color"
+msgstr "Fons: ves un color endavant en el mapa de color"
 
 #: ../app/actions/context-actions.c:225
 msgctxt "context-action"
@@ -2188,7 +2188,7 @@ msgstr "Primer pla: salta el color del mostrari"
 #: ../app/actions/context-actions.c:249
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Swatch"
-msgstr "Primer pla: vés un color endavant del mostrari"
+msgstr "Primer pla: ves un color endavant del mostrari"
 
 #: ../app/actions/context-actions.c:257
 msgctxt "context-action"
@@ -2218,12 +2218,12 @@ msgstr "Fons: utilitza el següent color del mostrari"
 #: ../app/actions/context-actions.c:277
 msgctxt "context-action"
 msgid "Background: Skip Color Back From Swatch"
-msgstr "Fons: vés un color enrere del mostrari"
+msgstr "Fons: ves un color enrere del mostrari"
 
 #: ../app/actions/context-actions.c:281
 msgctxt "context-action"
 msgid "Background: Skip Color Forward From Swatch"
-msgstr "Fons: vés un color endavant del mostrari"
+msgstr "Fons: ves un color endavant del mostrari"
 
 #: ../app/actions/context-actions.c:289
 msgctxt "context-action"
@@ -18690,7 +18690,7 @@ msgstr "Feu clic i arrossega per a canviar de mida el focus"
 
 #: ../app/display/gimptoolfocus.c:1133
 msgid "Click-Drag to change the aspect ratio"
-msgstr "Feu clic i arrossega per a canviar la relació d'aspecte "
+msgstr "Feu clic i arrossega per a canviar la relació d'aspecte"
 
 #: ../app/display/gimptoolfocus.c:1144
 msgid "Click-Drag to move the focus"
@@ -19864,7 +19864,7 @@ msgstr "Limita l'entrada"
 
 #: ../app/operations/gimplevelsconfig.c:135
 msgid "Clamp input values before applying output mapping."
-msgstr "Limita els valors d'entrada abans d'aplicar la sortida del mapatge"
+msgstr "Limita els valors d'entrada abans d'aplicar la sortida del mapatge."
 
 #: ../app/operations/gimplevelsconfig.c:146
 #: ../app/operations/gimplevelsconfig.c:147
@@ -19886,7 +19886,7 @@ msgstr "Limita els valors de sortida finals."
 
 #: ../app/operations/gimplevelsconfig.c:846
 msgid "not a GIMP Levels file"
-msgstr "no és un fitxer de nivells del GIMP "
+msgstr "no és un fitxer de nivells del GIMP"
 
 #: ../app/operations/gimplevelsconfig.c:921
 msgid "parse error"
