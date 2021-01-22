@@ -4,13 +4,13 @@
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011, 2012.
 # Andriy Bandura <andriykopanytsia@gmail.com>, 2014.
 # Olexandr Pylypchuk <pilipchukap@rambler.ru>, 2016.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019, 2020.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-04 16:54+0000\n"
-"PO-Revision-Date: 2020-10-04 21:10+0300\n"
+"POT-Creation-Date: 2021-01-22 17:49+0000\n"
+"PO-Revision-Date: 2021-01-22 20:24+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -95,8 +95,8 @@ msgstr "Декілька удосконалень у підтримці Corel Pa
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
-"У новій версії є доступним об'єднання зразків у параметрах дій-інструментів"
-" GEGL"
+"У новій версії є доступним об'єднання зразків у параметрах дій-інструментів "
+"GEGL"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "\"Sample merged\" is now enabled by default for color picking"
@@ -125,8 +125,8 @@ msgstr "Новий прогресивний журнал і оновлення �
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
-"У докладних діагностичних даних нової версії буде показано відповідні дані"
-" щодо Flatpak"
+"У докладних діагностичних даних нової версії буде показано відповідні дані "
+"щодо Flatpak"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Various bug fixes"
@@ -934,7 +934,7 @@ msgstr ""
 "Разом з програмою ви маєте отримати копію Стандартної Суспільної Ліцензії "
 "GNU. Якщо це не так, дивіться https://www.gnu.org/licenses/"
 
-#: ../app/gimp-update.c:261
+#: ../app/gimp-update.c:385
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -14404,7 +14404,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Можливо, файл попереднього перегляду застарів)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:429
+#: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:441
 #: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:702
 #, c-format
 msgid "%d × %d pixel"
@@ -14934,7 +14934,7 @@ msgid "Emulate brush dynamics"
 msgstr "Імітувати динаміку пензля"
 
 #. no undo (or redo) steps available
-#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:399
+#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:410
 #: ../app/widgets/gimpsymmetryeditor.c:165
 msgid "None"
 msgstr "Немає"
@@ -15256,22 +15256,22 @@ msgstr "відсотки"
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: ../app/dialogs/about-dialog.c:132
+#: ../app/dialogs/about-dialog.c:134
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (модифікація %d)"
 
-#: ../app/dialogs/about-dialog.c:140
+#: ../app/dialogs/about-dialog.c:142
 msgid "About GIMP"
 msgstr "Про програму GIMP"
 
-#: ../app/dialogs/about-dialog.c:149
+#: ../app/dialogs/about-dialog.c:151
 msgid "Visit the GIMP website"
 msgstr "Відвідайте сайт GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:155
+#: ../app/dialogs/about-dialog.c:157
 msgid "translator-credits"
 msgstr ""
 "Юрій Сирота\n"
@@ -15279,29 +15279,29 @@ msgstr ""
 "Максим Дзюманенко <dziumanenko@gmail.com>\n"
 "Daniel Korostil <ted.korostiled@gmail.com>"
 
-#: ../app/dialogs/about-dialog.c:345
+#: ../app/dialogs/about-dialog.c:355
 msgid "Update available!"
 msgstr "Маємо оновлення!"
 
 #. This is actually a new revision of current version.
-#: ../app/dialogs/about-dialog.c:365
+#: ../app/dialogs/about-dialog.c:375
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Отримати GIMP %s, модифікація %d (випущено %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: ../app/dialogs/about-dialog.c:375
+#: ../app/dialogs/about-dialog.c:385
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Коментар до випуску</u>: <i>%s</i>"
 
-#: ../app/dialogs/about-dialog.c:380
+#: ../app/dialogs/about-dialog.c:390
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Отримати GIMP %s (випущено %s)\n"
 
-#: ../app/dialogs/about-dialog.c:405 ../app/dialogs/about-dialog.c:426
+#: ../app/dialogs/about-dialog.c:415 ../app/dialogs/about-dialog.c:436
 msgid "Check for updates"
 msgstr "Шукати оновлення"
 
@@ -15309,16 +15309,16 @@ msgstr "Шукати оновлення"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: ../app/dialogs/about-dialog.c:446
+#: ../app/dialogs/about-dialog.c:456
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Остання перевірка — %s о %s"
 
-#: ../app/dialogs/about-dialog.c:748
+#: ../app/dialogs/about-dialog.c:759
 msgid "GIMP is brought to you by"
 msgstr "GIMP створили для вас"
 
-#: ../app/dialogs/about-dialog.c:824
+#: ../app/dialogs/about-dialog.c:835
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -17279,7 +17279,7 @@ msgid "Vertical"
 msgstr "Вертикальне"
 
 #: ../app/dialogs/preferences-dialog.c:2731
-#: ../app/widgets/gimpimagepropview.c:457
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
@@ -26852,78 +26852,78 @@ msgstr ""
 "Замінити поточний коментар до зображення на вказаний у параметрах програми "
 "типовий (Зміни→Параметри→Зображення типово)."
 
-#: ../app/widgets/gimpimagepropview.c:110
+#: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
 msgstr "Розмір у точках:"
 
-#: ../app/widgets/gimpimagepropview.c:113
+#: ../app/widgets/gimpimagepropview.c:116
 msgid "Print size:"
 msgstr "Розмір при друкуванні:"
 
-#: ../app/widgets/gimpimagepropview.c:116
+#: ../app/widgets/gimpimagepropview.c:119
 msgid "Resolution:"
 msgstr "Роздільність:"
 
-#: ../app/widgets/gimpimagepropview.c:119
+#: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
 msgstr "Кольоровий простір:"
 
-#: ../app/widgets/gimpimagepropview.c:122
+#: ../app/widgets/gimpimagepropview.c:125
 msgid "Precision:"
 msgstr "Точність:"
 
-#: ../app/widgets/gimpimagepropview.c:127
+#: ../app/widgets/gimpimagepropview.c:130
 msgid "File Name:"
 msgstr "Назва файла:"
 
-#: ../app/widgets/gimpimagepropview.c:133
+#: ../app/widgets/gimpimagepropview.c:138
 msgid "File Size:"
 msgstr "Розмір файла:"
 
-#: ../app/widgets/gimpimagepropview.c:136
+#: ../app/widgets/gimpimagepropview.c:141
 msgid "File Type:"
 msgstr "Тип файла:"
 
-#: ../app/widgets/gimpimagepropview.c:141
+#: ../app/widgets/gimpimagepropview.c:146
 msgid "Size in memory:"
 msgstr "Розмір у пам'яті:"
 
-#: ../app/widgets/gimpimagepropview.c:144
+#: ../app/widgets/gimpimagepropview.c:149
 msgid "Undo steps:"
 msgstr "Кількість скасувань:"
 
-#: ../app/widgets/gimpimagepropview.c:147
+#: ../app/widgets/gimpimagepropview.c:152
 msgid "Redo steps:"
 msgstr "Кількість повторів:"
 
-#: ../app/widgets/gimpimagepropview.c:152
+#: ../app/widgets/gimpimagepropview.c:157
 msgid "Number of pixels:"
 msgstr "Кількість точок:"
 
-#: ../app/widgets/gimpimagepropview.c:155
+#: ../app/widgets/gimpimagepropview.c:160
 msgid "Number of layers:"
 msgstr "Кількість шарів:"
 
-#: ../app/widgets/gimpimagepropview.c:158
+#: ../app/widgets/gimpimagepropview.c:163
 msgid "Number of channels:"
 msgstr "Кількість каналів:"
 
-#: ../app/widgets/gimpimagepropview.c:161
+#: ../app/widgets/gimpimagepropview.c:166
 msgid "Number of paths:"
 msgstr "Кількість контурів:"
 
-#: ../app/widgets/gimpimagepropview.c:452
+#: ../app/widgets/gimpimagepropview.c:464
 #: ../app/widgets/gimptemplateeditor.c:350
 #, c-format
 msgid "pixels/%s"
 msgstr "точок/%s"
 
-#: ../app/widgets/gimpimagepropview.c:454
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:475
+#: ../app/widgets/gimpimagepropview.c:488
 msgid "colors"
 msgstr "кольорів"
 
@@ -27683,29 +27683,33 @@ msgstr ""
 "Виявлено пошкодження додатка «gimp-metadata».\n"
 "Не вдалося перенести дані XMP."
 
-#: ../app/xcf/xcf-load.c:423
+#: ../app/xcf/xcf-load.c:427
 #, c-format
 msgid ""
-"Corrupt 'gimp-metadata' parasite discovered.\n"
-"XMP data could not be migrated: %s"
+"Corrupt XMP metadata saved by an older version of GIMP could not be "
+"converted and will be ignored.\n"
+"If you don't know what XMP is, you most likely don't need it. Reported "
+"error: %s."
 msgstr ""
-"Виявлено пошкоджені паразитом 'gimp-metadata'.\n"
-"Дані XMP не можна перенести: %s"
+"Пошкоджені метадані XMP, які було збережено у застарілій версії GIMP, не"
+" вдалося перетворити — їх буде проігноровано.\n"
+"Якщо ви нічого не знаєте про XMP, ймовірно, ці дані вам не потрібні."
+" Повідомлення про помилку: %s."
 
-#: ../app/xcf/xcf-load.c:685
+#: ../app/xcf/xcf-load.c:691
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Цей файл XCF зіпсований! Деяку його частину все ж вийшло відновити."
 
-#: ../app/xcf/xcf-load.c:704
+#: ../app/xcf/xcf-load.c:710
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Цей файл XCF пошкоджений! Не вдалось відновити навіть малу його частину!"
 
-#: ../app/xcf/xcf-load.c:795
+#: ../app/xcf/xcf-load.c:801
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -27752,6 +27756,13 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid ""
+#~ "Corrupt 'gimp-metadata' parasite discovered.\n"
+#~ "XMP data could not be migrated: %s"
+#~ msgstr ""
+#~ "Виявлено пошкоджені паразитом 'gimp-metadata'.\n"
+#~ "Дані XMP не можна перенести: %s"
 
 #~ msgid ""
 #~ "AVIF import and export, with support for 10/12-bit images, NCLX color "
