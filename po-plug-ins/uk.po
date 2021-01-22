@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-01-18 06:11+0000\n"
-"PO-Revision-Date: 2021-01-18 12:15+0200\n"
+"POT-Creation-Date: 2021-01-22 11:34+0000\n"
+"PO-Revision-Date: 2021-01-22 20:25+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -46,10 +46,10 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/common/curve-bend.c:1189 ../plug-ins/common/curve-bend.c:1963
 #: ../plug-ins/common/curve-bend.c:1998 ../plug-ins/common/depth-merge.c:710
 #: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
-#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2348
+#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2355
 #: ../plug-ins/common/file-jp2-load.c:975
-#: ../plug-ins/common/file-pdf-load.c:643
-#: ../plug-ins/common/file-pdf-load.c:1039
+#: ../plug-ins/common/file-pdf-load.c:655
+#: ../plug-ins/common/file-pdf-load.c:1065
 #: ../plug-ins/common/file-pdf-save.c:1152 ../plug-ins/common/file-ps.c:3550
 #: ../plug-ins/common/file-raw-data.c:1776 ../plug-ins/common/file-svg.c:679
 #: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1308
@@ -148,8 +148,8 @@ msgstr "Потренувати козу (Python 3)"
 #: ../plug-ins/common/colormap-remap.c:656 ../plug-ins/common/compose.c:1145
 #: ../plug-ins/common/contrast-retinex.c:329
 #: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/depth-merge.c:711
-#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:2349
-#: ../plug-ins/common/file-pdf-load.c:644 ../plug-ins/common/file-svg.c:680
+#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:2356
+#: ../plug-ins/common/file-pdf-load.c:656 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1309
 #: ../plug-ins/common/grid.c:738 ../plug-ins/common/hot.c:657
 #: ../plug-ins/common/jigsaw.c:2475 ../plug-ins/common/nl-filter.c:1103
@@ -386,7 +386,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/common/file-gegl.c:461 ../plug-ins/common/file-gif-load.c:1037
 #: ../plug-ins/common/file-jp2-load.c:1315 ../plug-ins/common/file-pcx.c:483
 #: ../plug-ins/common/file-pcx.c:491 ../plug-ins/common/file-pix.c:424
-#: ../plug-ins/common/file-png.c:838 ../plug-ins/common/file-pnm.c:764
+#: ../plug-ins/common/file-png.c:944 ../plug-ins/common/file-pnm.c:764
 #: ../plug-ins/common/file-raw-data.c:1327
 #: ../plug-ins/common/file-sunras.c:1087 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:797
@@ -946,7 +946,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/common/cml-explorer.c:2145 ../plug-ins/common/curve-bend.c:805
 #: ../plug-ins/common/file-dicom.c:1408 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
-#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1409
+#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1515
 #: ../plug-ins/common/file-raw-data.c:1117
 #: ../plug-ins/common/file-raw-data.c:1147 ../plug-ins/common/file-sunras.c:641
 #: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
@@ -976,7 +976,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-cel.c:355 ../plug-ins/common/file-cel.c:409
 #: ../plug-ins/common/file-cel.c:649 ../plug-ins/common/file-dicom.c:376
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1412
-#: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:656
+#: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:672
 #: ../plug-ins/common/file-ps.c:1148 ../plug-ins/common/file-ps.c:3500
 #: ../plug-ins/common/file-psp.c:2388 ../plug-ins/common/file-psp.c:2438
 #: ../plug-ins/common/file-raw-data.c:439
@@ -1195,7 +1195,7 @@ msgstr "_Redness cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:240 ../plug-ins/common/decompose.c:191
-#: ../plug-ins/common/file-heif.c:2538 ../plug-ins/common/file-raw-data.c:1880
+#: ../plug-ins/common/file-heif.c:2545 ../plug-ins/common/file-raw-data.c:1880
 msgid "RGB"
 msgstr "RGB"
 
@@ -1917,8 +1917,8 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/common/file-cel.c:398 ../plug-ins/common/file-dicom.c:366
 #: ../plug-ins/common/file-gegl.c:345 ../plug-ins/common/file-gif-load.c:397
 #: ../plug-ins/common/file-heif.c:831 ../plug-ins/common/file-jp2-load.c:1085
-#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:799
-#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:646
+#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:820
+#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:662
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
 #: ../plug-ins/common/file-raw-data.c:1226 ../plug-ins/common/file-sunras.c:448
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1035
@@ -2006,7 +2006,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
 #: ../plug-ins/common/file-heif.c:1468 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
-#: ../plug-ins/common/file-png.c:1399 ../plug-ins/common/file-pnm.c:1336
+#: ../plug-ins/common/file-png.c:1505 ../plug-ins/common/file-pnm.c:1336
 #: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
 #: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1049
 #: ../plug-ins/common/file-xpm.c:710 ../plug-ins/common/file-xwd.c:678
@@ -2472,100 +2472,100 @@ msgstr ""
 msgid "image content"
 msgstr "вміст зображення"
 
-#: ../plug-ins/common/file-heif.c:1518 ../plug-ins/common/file-heif.c:1905
+#: ../plug-ins/common/file-heif.c:1518 ../plug-ins/common/file-heif.c:1912
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Не вдалось закодувати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:2110
+#: ../plug-ins/common/file-heif.c:2117
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Не вдалось записати зображення HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:2199
+#: ../plug-ins/common/file-heif.c:2206
 msgid "primary"
 msgstr "основне"
 
-#: ../plug-ins/common/file-heif.c:2344
+#: ../plug-ins/common/file-heif.c:2351
 msgid "Load HEIF Image"
 msgstr "Завантажити зображення HEIF"
 
-#: ../plug-ins/common/file-heif.c:2358
+#: ../plug-ins/common/file-heif.c:2365
 msgid "Select Image"
 msgstr "Виберіть зображення"
 
-#: ../plug-ins/common/file-heif.c:2503
+#: ../plug-ins/common/file-heif.c:2510
 msgid "Export Image as AVIF"
 msgstr "Експортувати зображення як AVIF"
 
-#: ../plug-ins/common/file-heif.c:2503
+#: ../plug-ins/common/file-heif.c:2510
 msgid "Export Image as HEIF"
 msgstr "Експортувати зображення як HEIF"
 
-#: ../plug-ins/common/file-heif.c:2516
+#: ../plug-ins/common/file-heif.c:2523
 #: ../plug-ins/file-webp/file-webp-dialog.c:119
 msgid "_Lossless"
 msgstr "_Без втрат"
 
-#: ../plug-ins/common/file-heif.c:2534
+#: ../plug-ins/common/file-heif.c:2541
 msgid "_Quality"
 msgstr "Я_кість"
 
-#: ../plug-ins/common/file-heif.c:2539
+#: ../plug-ins/common/file-heif.c:2546
 msgid "YUV444"
 msgstr "YUV444"
 
-#: ../plug-ins/common/file-heif.c:2540
+#: ../plug-ins/common/file-heif.c:2547
 msgid "YUV420"
 msgstr "YUV420"
 
-#: ../plug-ins/common/file-heif.c:2547
+#: ../plug-ins/common/file-heif.c:2554
 msgid "Pixel format:"
 msgstr "Формат пікселів:"
 
-#: ../plug-ins/common/file-heif.c:2588
+#: ../plug-ins/common/file-heif.c:2595
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2589
+#: ../plug-ins/common/file-heif.c:2596
 msgid "10 bit/channel"
 msgstr "10 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2590
+#: ../plug-ins/common/file-heif.c:2597
 msgid "12 bit/channel"
 msgstr "12 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2597
+#: ../plug-ins/common/file-heif.c:2604
 msgid "Bit depth:"
 msgstr "Бітова глибина:"
 
-#: ../plug-ins/common/file-heif.c:2600
+#: ../plug-ins/common/file-heif.c:2607
 msgid "Slow"
 msgstr "Повільно"
 
-#: ../plug-ins/common/file-heif.c:2601
+#: ../plug-ins/common/file-heif.c:2608
 msgid "Balanced"
 msgstr "Збалансовано"
 
-#: ../plug-ins/common/file-heif.c:2602
+#: ../plug-ins/common/file-heif.c:2609
 msgid "Fast"
 msgstr "Швидко"
 
-#: ../plug-ins/common/file-heif.c:2609
+#: ../plug-ins/common/file-heif.c:2616
 msgid "Speed:"
 msgstr "Швидкість:"
 
-#: ../plug-ins/common/file-heif.c:2615
+#: ../plug-ins/common/file-heif.c:2622
 #: ../plug-ins/file-webp/file-webp-dialog.c:305
 msgid "Save color _profile"
 msgstr "Зберегти _профіль кольорів"
 
-#: ../plug-ins/common/file-heif.c:2622
+#: ../plug-ins/common/file-heif.c:2629
 #: ../plug-ins/file-webp/file-webp-dialog.c:295
 msgid "_Save Exif data"
 msgstr "З_берегти дані Exif"
 
-#: ../plug-ins/common/file-heif.c:2628
+#: ../plug-ins/common/file-heif.c:2635
 #: ../plug-ins/file-webp/file-webp-dialog.c:300
 msgid "Save _XMP data"
 msgstr "Зберегти дані _XMP"
@@ -2822,7 +2822,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2164
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2270
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
@@ -2851,7 +2851,7 @@ msgstr "Зберегти роздільну здатність"
 msgid "Save creation _time"
 msgstr "Зберегти час _створення"
 
-#: ../plug-ins/common/file-mng.c:1648 ../plug-ins/common/file-png.c:222
+#: ../plug-ins/common/file-mng.c:1648 ../plug-ins/common/file-png.c:223
 msgid "PNG"
 msgstr "PNG"
 
@@ -3013,7 +3013,7 @@ msgstr "Нижня межа знаходиться за припустимими
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:326
+#: ../plug-ins/common/file-pdf-load.c:329
 #: ../plug-ins/common/file-pdf-save.c:353
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
@@ -3023,7 +3023,7 @@ msgstr "Portable Document Format"
 #. * third is number of pages.
 #. * Specify order as in English if needed.
 #.
-#: ../plug-ins/common/file-pdf-load.c:480
+#: ../plug-ins/common/file-pdf-load.c:491
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -3034,66 +3034,72 @@ msgstr[1] ""
 msgstr[2] ""
 "Документ PDF «%1$s» має %3$d сторінок. Сторінка %2$d за межами діапазону."
 
-#: ../plug-ins/common/file-pdf-load.c:630
+#: ../plug-ins/common/file-pdf-load.c:642
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF захищено паролем; введіть пароль:"
 
-#: ../plug-ins/common/file-pdf-load.c:640
+#: ../plug-ins/common/file-pdf-load.c:652
 msgid "Encrypted PDF"
 msgstr "Шифрований PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:667
+#: ../plug-ins/common/file-pdf-load.c:679
 msgid "Wrong password! Please input the right one:"
 msgstr "Хибний пароль! Введіть правильний:"
 
-#: ../plug-ins/common/file-pdf-load.c:685
+#: ../plug-ins/common/file-pdf-load.c:697
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Не вдалось завантажити «%s»: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:837
+#: ../plug-ins/common/file-pdf-load.c:861
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:839 ../plug-ins/common/file-ps.c:1237
+#: ../plug-ins/common/file-pdf-load.c:863 ../plug-ins/common/file-ps.c:1237
 #, c-format
 msgid "%s-pages"
 msgstr "%s-сторінок"
 
-#: ../plug-ins/common/file-pdf-load.c:1035
+#: ../plug-ins/common/file-pdf-load.c:1061
 msgid "Import from PDF"
 msgstr "Імпорт з PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1040 ../plug-ins/common/file-ps.c:3551
+#: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3551
 #: ../plug-ins/file-tiff/file-tiff-load.c:2336
 #: ../plug-ins/metadata/metadata-editor.c:5726
 msgid "_Import"
 msgstr "_Імпортувати"
 
-#: ../plug-ins/common/file-pdf-load.c:1072
+#: ../plug-ins/common/file-pdf-load.c:1098
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Помилка при отриманні числа сторінок з даного PDF-файлу."
 
-#: ../plug-ins/common/file-pdf-load.c:1118
+#. "Load in reverse order" toggle button
+#: ../plug-ins/common/file-pdf-load.c:1139
+#| msgid "Reverse Order"
+msgid "Load in reverse order"
+msgstr "Завантажити у зворотному порядку"
+
+#: ../plug-ins/common/file-pdf-load.c:1157
 msgid "_Width (pixels):"
 msgstr "_Ширина (у точках):"
 
-#: ../plug-ins/common/file-pdf-load.c:1119
+#: ../plug-ins/common/file-pdf-load.c:1158
 msgid "_Height (pixels):"
 msgstr "_Висота (у точках):"
 
-#: ../plug-ins/common/file-pdf-load.c:1121
+#: ../plug-ins/common/file-pdf-load.c:1160
 msgid "_Resolution:"
 msgstr "_Роздільна здатність:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1132
+#: ../plug-ins/common/file-pdf-load.c:1171
 msgid "Use _Anti-aliasing"
 msgstr "_Застосувати згладжування"
 
-#: ../plug-ins/common/file-pdf-load.c:1400
-#: ../plug-ins/common/file-pdf-load.c:1401 ../plug-ins/common/file-svg.c:857
+#: ../plug-ins/common/file-pdf-load.c:1439
+#: ../plug-ins/common/file-pdf-load.c:1440 ../plug-ins/common/file-svg.c:857
 #: ../plug-ins/common/file-wmf.c:725 ../plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
@@ -3223,48 +3229,48 @@ msgstr "Зображення Alias Pix"
 msgid "PIX format does not support multiple layers."
 msgstr "Для формату PIX не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-png.c:176 ../plug-ins/common/file-png.c:206
+#: ../plug-ins/common/file-png.c:177 ../plug-ins/common/file-png.c:207
 msgid "PNG image"
 msgstr "Зображення PNG"
 
-#: ../plug-ins/common/file-png.c:419
+#: ../plug-ins/common/file-png.c:420
 #, c-format
 msgid "PNG format does not support multiple layers."
 msgstr "Для формату PNG не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-png.c:494
+#: ../plug-ins/common/file-png.c:495
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Помилка при завантаженні файла PNG: «%s»\n"
 
-#: ../plug-ins/common/file-png.c:612
+#: ../plug-ins/common/file-png.c:628
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Помилка створення PNG (читання struct) протягом завантаження «%s»."
 
-#: ../plug-ins/common/file-png.c:621
+#: ../plug-ins/common/file-png.c:637
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при читанні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: ../plug-ins/common/file-png.c:629
+#: ../plug-ins/common/file-png.c:645
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Помилка при читанні «%s». Файл пошкоджений?"
 
-#: ../plug-ins/common/file-png.c:790
+#: ../plug-ins/common/file-png.c:896
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Невідома модель кольорів у PNG файлі «%s»."
 
-#: ../plug-ins/common/file-png.c:803 ../plug-ins/file-exr/file-exr.c:256
+#: ../plug-ins/common/file-png.c:909 ../plug-ins/file-exr/file-exr.c:256
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Неможливо створити нове зображення для «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:888
+#: ../plug-ins/common/file-png.c:994
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3272,19 +3278,19 @@ msgstr ""
 "У файлі формату PNG вказано зсув, який призводить до розташування шару за "
 "межами зображення."
 
-#: ../plug-ins/common/file-png.c:1123
+#: ../plug-ins/common/file-png.c:1229
 msgid "Apply PNG Offset"
 msgstr "Застосувати зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1127
+#: ../plug-ins/common/file-png.c:1233
 msgid "Ignore PNG offset"
 msgstr "Знехтувати зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1128
+#: ../plug-ins/common/file-png.c:1234
 msgid "Apply PNG offset to layer"
 msgstr "Застосувати до шару зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1153
+#: ../plug-ins/common/file-png.c:1259
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3293,56 +3299,56 @@ msgstr ""
 "Зображення формату PNG, яке ви імпортуєте, має зміщення %d, %d. Застосувати "
 "це зміщення до шару?"
 
-#: ../plug-ins/common/file-png.c:1365
+#: ../plug-ins/common/file-png.c:1471
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
-#: ../plug-ins/common/file-png.c:1374
+#: ../plug-ins/common/file-png.c:1480
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: ../plug-ins/common/file-png.c:1382
+#: ../plug-ins/common/file-png.c:1488
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
-#: ../plug-ins/common/file-png.c:2203 ../plug-ins/common/file-ps.c:3693
+#: ../plug-ins/common/file-png.c:2309 ../plug-ins/common/file-ps.c:3693
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: ../plug-ins/common/file-png.c:2204
+#: ../plug-ins/common/file-png.c:2310
 msgid "8 bpc RGB"
 msgstr "8 біт/кан RGB"
 
-#: ../plug-ins/common/file-png.c:2205
+#: ../plug-ins/common/file-png.c:2311
 msgid "8 bpc GRAY"
 msgstr "8 біт/кан GRAY"
 
-#: ../plug-ins/common/file-png.c:2206
+#: ../plug-ins/common/file-png.c:2312
 msgid "8 bpc RGBA"
 msgstr "8 біт/кан RGBA"
 
-#: ../plug-ins/common/file-png.c:2207
+#: ../plug-ins/common/file-png.c:2313
 msgid "8 bpc GRAYA"
 msgstr "8 біт/кан GRAYA"
 
-#: ../plug-ins/common/file-png.c:2208
+#: ../plug-ins/common/file-png.c:2314
 msgid "16 bpc RGB"
 msgstr "16 біт/кан RGB"
 
-#: ../plug-ins/common/file-png.c:2209
+#: ../plug-ins/common/file-png.c:2315
 msgid "16 bpc GRAY"
 msgstr "16 біт/кан GRAY"
 
-#: ../plug-ins/common/file-png.c:2210
+#: ../plug-ins/common/file-png.c:2316
 msgid "16 bpc RGBA"
 msgstr "16 біт/кан RGBA"
 
-#: ../plug-ins/common/file-png.c:2211
+#: ../plug-ins/common/file-png.c:2317
 msgid "16 bpc GRAYA"
 msgstr "16 біт/кан GRAYA"
 
@@ -6651,7 +6657,7 @@ msgstr "Значок #%i"
 
 #: ../plug-ins/file-ico/ico-load.c:748 ../plug-ins/file-jpeg/jpeg-load.c:529
 #: ../plug-ins/file-psd/psd-thumb-load.c:80
-#: ../plug-ins/file-raw/file-darktable.c:517
+#: ../plug-ins/file-raw/file-darktable.c:525
 #: ../plug-ins/file-raw/file-rawtherapee.c:465
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -6815,7 +6821,6 @@ msgstr "Непідтримуваний чи некоректний розмір 
 
 #: ../plug-ins/file-psd/psd-load.c:677
 #, c-format
-#| msgid "Unsupported or invalid image size: %dx%d"
 msgid "Unsupported or invalid mask info size: %d"
 msgstr "Непідтримуваний або некоректний розмір відомостей щодо маски: %d"
 
