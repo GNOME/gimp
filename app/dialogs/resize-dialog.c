@@ -26,10 +26,13 @@
 
 #include "dialogs-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimptemplate.h"
 
+#include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpsizebox.h"
 #include "widgets/gimpviewabledialog.h"
@@ -49,6 +52,7 @@ struct _ResizeDialog
 {
   GimpViewable       *viewable;
   GimpContext        *context;
+  GimpContext        *parent_context;
   GimpFillType        fill_type;
   GimpItemSet         layer_set;
   gboolean            resize_text_layers;
@@ -91,6 +95,9 @@ static void   offsets_changed        (GtkWidget    *area,
 static void   offset_center_clicked  (GtkWidget    *widget,
                                       ResizeDialog *private);
 
+static void   template_changed       (GimpContext  *context,
+                                      GimpTemplate *template,
+                                      ResizeDialog *private);
 
 /*  public function  */
 
@@ -119,6 +126,8 @@ resize_dialog_new (GimpViewable       *viewable,
   GtkWidget     *entry;
   GtkWidget     *hbox;
   GtkWidget     *combo;
+  GtkWidget     *label;
+  GtkWidget     *template_selector;
   GtkAdjustment *adjustment;
   GdkPixbuf     *pixbuf;
   GtkSizeGroup  *size_group   = NULL;
@@ -161,8 +170,12 @@ resize_dialog_new (GimpViewable       *viewable,
 
   private = g_slice_new0 (ResizeDialog);
 
+  private->parent_context = context;
+  private->context        = gimp_context_new (context->gimp,
+                                              "resize-dialog",
+                                              context);
+
   private->viewable           = viewable;
-  private->context            = context;
   private->fill_type          = fill_type;
   private->layer_set          = layer_set;
   private->resize_text_layers = resize_text_layers;
@@ -175,6 +188,8 @@ resize_dialog_new (GimpViewable       *viewable,
   private->old_fill_type          = private->fill_type;
   private->old_layer_set          = private->layer_set;
   private->old_resize_text_layers = private->resize_text_layers;
+
+  gimp_context_set_template (private->context, NULL);
 
   dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, viewable), context,
                                      title, role, GIMP_ICON_OBJECT_RESIZE, title,
@@ -208,10 +223,40 @@ resize_dialog_new (GimpViewable       *viewable,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
+  /* template selector */
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new_with_mnemonic (_("_Template:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  template_selector = g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX,
+                                    "container",         context->gimp->templates,
+                                    "context",           private->context,
+                                    "view-size",         16,
+                                    "view-border-width", 0,
+                                    "ellipsize",         PANGO_ELLIPSIZE_NONE,
+                                    "focus-on-click",    FALSE,
+                                    NULL);
+
+  gtk_box_pack_start (GTK_BOX (hbox), template_selector, TRUE, TRUE, 0);
+  gtk_widget_show (template_selector);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), template_selector);
+
+  g_signal_connect (private->context,
+                    "template-changed",
+                    G_CALLBACK (template_changed),
+                    private);
+
+  /* size select frame */
   frame = gimp_frame_new (size_title);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  /* size box */
   gimp_image_get_resolution (image, &xres, &yres);
 
   private->box = g_object_new (GIMP_TYPE_SIZE_BOX,
@@ -392,6 +437,8 @@ resize_dialog_new (GimpViewable       *viewable,
 static void
 resize_dialog_free (ResizeDialog *private)
 {
+  g_object_unref (private->context);
+
   g_slice_free (ResizeDialog, private);
 }
 
@@ -420,7 +467,7 @@ resize_dialog_response (GtkWidget    *dialog,
 
       private->callback (dialog,
                          private->viewable,
-                         private->context,
+                         private->parent_context,
                          width,
                          height,
                          unit,
@@ -461,6 +508,11 @@ resize_dialog_reset (ResizeDialog *private)
   if (private->text_layers_button)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->text_layers_button),
                                   private->old_resize_text_layers);
+
+  gimp_context_set_template (private->context, NULL);
+
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset),
+                            private->old_unit);
 }
 
 static void
@@ -545,4 +597,29 @@ offset_center_clicked (GtkWidget    *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 1, off_y);
 
   g_signal_emit_by_name (private->offset, "value-changed", 0);
+}
+
+static void
+template_changed (GimpContext  *context,
+                  GimpTemplate *template,
+                  ResizeDialog *private)
+{
+  gint     width;
+  gint     height;
+  GimpUnit unit;
+
+  if (! template)
+    return;
+
+  width  = gimp_template_get_width (template);
+  height = gimp_template_get_height (template);
+  unit   = gimp_template_get_unit (template);
+
+  g_object_set (private->box,
+                "width",  width,
+                "height", height,
+                "unit",   unit,
+                NULL);
+
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset), unit);
 }
