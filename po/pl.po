@@ -1,12 +1,12 @@
 # Polish translation for gimp.
-# Copyright © 1999-2020 the gimp authors.
+# Copyright © 1999-2021 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # Paweł Dziekoński, 1999-2000.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
 # Piotr Zaryk <pzaryk@aviary.pl>, 2008.
 # Robert Gomulka <carramba@epf.pl>, 2008.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2020.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2020.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2021.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2021.
 #
 # Terminy:
 #  drawable    - obszar rysowania (warstwa, kanał itp.)
@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-25 09:55+0100\n"
-"PO-Revision-Date: 2020-10-25 10:00+0100\n"
+"POT-Creation-Date: 2021-01-24 13:03+0100\n"
+"PO-Revision-Date: 2021-01-24 13:08+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -14454,7 +14454,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Podgląd może być nieaktualny)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:429
+#: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:441
 #: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:702
 #, c-format
 msgid "%d × %d pixel"
@@ -14988,7 +14988,7 @@ msgid "Emulate brush dynamics"
 msgstr "Emulowanie dynamiki pędzla"
 
 #. no undo (or redo) steps available
-#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:399
+#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:410
 #: ../app/widgets/gimpsymmetryeditor.c:165
 msgid "None"
 msgstr "Brak"
@@ -15334,8 +15334,8 @@ msgstr ""
 "Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011\n"
 "Piotr Zaryk <pzaryk@aviary.pl>, 2008\n"
 "Robert Gomulka <carramba@epf.pl>, 2008\n"
-"Piotr Drąg <piotrdrag@gmail.com>, 2011-2020\n"
-"Aviary.pl <community-poland@mozilla.org>, 2011-2020"
+"Piotr Drąg <piotrdrag@gmail.com>, 2011-2021\n"
+"Aviary.pl <community-poland@mozilla.org>, 2011-2021"
 
 #: ../app/dialogs/about-dialog.c:355
 msgid "Update available!"
@@ -17345,7 +17345,7 @@ msgid "Vertical"
 msgstr "Pionowo"
 
 #: ../app/dialogs/preferences-dialog.c:2731
-#: ../app/widgets/gimpimagepropview.c:457
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
@@ -26930,78 +26930,78 @@ msgstr ""
 "Zamienia bieżący komentarz obrazu na domyślny komentarz ustawiony w Edycja → "
 "Preferencje → Domyślny obraz."
 
-#: ../app/widgets/gimpimagepropview.c:110
+#: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
 msgstr "Rozmiar w pikselach:"
 
-#: ../app/widgets/gimpimagepropview.c:113
+#: ../app/widgets/gimpimagepropview.c:116
 msgid "Print size:"
 msgstr "Rozmiar wydruku:"
 
-#: ../app/widgets/gimpimagepropview.c:116
+#: ../app/widgets/gimpimagepropview.c:119
 msgid "Resolution:"
 msgstr "Rozdzielczość:"
 
-#: ../app/widgets/gimpimagepropview.c:119
+#: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
 msgstr "Przestrzeń kolorów:"
 
-#: ../app/widgets/gimpimagepropview.c:122
+#: ../app/widgets/gimpimagepropview.c:125
 msgid "Precision:"
 msgstr "Dokładność:"
 
-#: ../app/widgets/gimpimagepropview.c:127
+#: ../app/widgets/gimpimagepropview.c:130
 msgid "File Name:"
 msgstr "Nazwa pliku:"
 
-#: ../app/widgets/gimpimagepropview.c:133
+#: ../app/widgets/gimpimagepropview.c:138
 msgid "File Size:"
 msgstr "Rozmiar pliku:"
 
-#: ../app/widgets/gimpimagepropview.c:136
+#: ../app/widgets/gimpimagepropview.c:141
 msgid "File Type:"
 msgstr "Typ pliku:"
 
-#: ../app/widgets/gimpimagepropview.c:141
+#: ../app/widgets/gimpimagepropview.c:146
 msgid "Size in memory:"
 msgstr "Rozmiar w pamięci:"
 
-#: ../app/widgets/gimpimagepropview.c:144
+#: ../app/widgets/gimpimagepropview.c:149
 msgid "Undo steps:"
 msgstr "Kroki cofnięcia:"
 
-#: ../app/widgets/gimpimagepropview.c:147
+#: ../app/widgets/gimpimagepropview.c:152
 msgid "Redo steps:"
 msgstr "Kroki ponowienia:"
 
-#: ../app/widgets/gimpimagepropview.c:152
+#: ../app/widgets/gimpimagepropview.c:157
 msgid "Number of pixels:"
 msgstr "Liczba pikseli:"
 
-#: ../app/widgets/gimpimagepropview.c:155
+#: ../app/widgets/gimpimagepropview.c:160
 msgid "Number of layers:"
 msgstr "Liczba warstw:"
 
-#: ../app/widgets/gimpimagepropview.c:158
+#: ../app/widgets/gimpimagepropview.c:163
 msgid "Number of channels:"
 msgstr "Liczba kanałów:"
 
-#: ../app/widgets/gimpimagepropview.c:161
+#: ../app/widgets/gimpimagepropview.c:166
 msgid "Number of paths:"
 msgstr "Liczba ścieżek:"
 
-#: ../app/widgets/gimpimagepropview.c:452
+#: ../app/widgets/gimpimagepropview.c:464
 #: ../app/widgets/gimptemplateeditor.c:350
 #, c-format
 msgid "pixels/%s"
 msgstr "px/%s"
 
-#: ../app/widgets/gimpimagepropview.c:454
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g×%g %s"
 
-#: ../app/widgets/gimpimagepropview.c:475
+#: ../app/widgets/gimpimagepropview.c:488
 msgid "colors"
 msgstr "kolory"
 
@@ -27762,16 +27762,20 @@ msgstr ""
 "Wykryto uszkodzone dane pasożytnicze „gimp-metadata”.\n"
 "Nie można migrować danych XMP."
 
-#: ../app/xcf/xcf-load.c:423
+#: ../app/xcf/xcf-load.c:427
 #, c-format
 msgid ""
-"Corrupt 'gimp-metadata' parasite discovered.\n"
-"XMP data could not be migrated: %s"
+"Corrupt XMP metadata saved by an older version of GIMP could not be "
+"converted and will be ignored.\n"
+"If you don't know what XMP is, you most likely don't need it. Reported "
+"error: %s."
 msgstr ""
-"Wykryto uszkodzone dane pasożytnicze „gimp-metadata”.\n"
-"Nie można migrować danych XMP: %s"
+"Nie można konwertować uszkodzonych metadanych XMP zapisanych przez starszą "
+"wersję programu GIMP, więc zostaną zignorowane.\n"
+"Jeśli nie wiesz, czym jest XMP, to najprawdopodobniej ich nie potrzebujesz. "
+"Zgłoszony błąd: %s."
 
-#: ../app/xcf/xcf-load.c:685
+#: ../app/xcf/xcf-load.c:691
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -27779,14 +27783,14 @@ msgstr ""
 "Ten plik XCF jest uszkodzony. Tylko część pliku została wczytana, dlatego "
 "jest niekompletny."
 
-#: ../app/xcf/xcf-load.c:704
+#: ../app/xcf/xcf-load.c:710
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Ten plik XCF jest uszkodzony. Nie można było wczytać nawet części pliku."
 
-#: ../app/xcf/xcf-load.c:795
+#: ../app/xcf/xcf-load.c:801
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
