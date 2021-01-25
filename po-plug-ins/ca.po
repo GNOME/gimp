@@ -3822,7 +3822,7 @@ msgstr "S'ha produït un error en llegir la capçalera fitxer."
 #: ../plug-ins/common/file-psp.c:2246
 #, c-format
 msgid "Incorrect file signature."
-msgstr "La signatura del fitxer no és correcta"
+msgstr "La signatura del fitxer no és correcta."
 
 #: ../plug-ins/common/file-psp.c:2260
 #, c-format
@@ -4387,7 +4387,7 @@ msgstr "L'alçada del marc %d de «%s» és massa gran pel cursor X."
 #: ../plug-ins/common/file-xmc.c:918
 #, c-format
 msgid "there is no image chunk in \"%s\"."
-msgstr "Manca un bocí de la imatge a «%s». "
+msgstr "Manca un bocí de la imatge a «%s»."
 
 #: ../plug-ins/common/file-xmc.c:959
 #, c-format
@@ -4528,7 +4528,7 @@ msgstr "Al_tres:"
 
 #: ../plug-ins/common/file-xmc.c:1357
 msgid "Enter other comment if you want."
-msgstr "Introduïu comentaris addicionals si voleu. "
+msgstr "Introduïu comentaris addicionals si voleu."
 
 #: ../plug-ins/common/file-xmc.c:1409
 #, c-format
@@ -4626,7 +4626,7 @@ msgid ""
 "nominal sizes."
 msgstr ""
 "Aquest connector no pot treballar amb cursors amb més de %i mides nominals "
-"diferents. "
+"diferents."
 
 #: ../plug-ins/common/file-xpm.c:176 ../plug-ins/common/file-xpm.c:201
 msgid "X PixMap image"
@@ -7834,7 +7834,7 @@ msgstr "Lineal"
 
 #: ../plug-ins/flame/flame.c:756 ../plug-ins/lighting/lighting-ui.c:857
 msgid "Sinusoidal"
-msgstr "Sinusoïdal"
+msgstr "Sinusoidal"
 
 #: ../plug-ins/flame/flame.c:757 ../plug-ins/lighting/lighting-ui.c:858
 msgid "Spherical"

@@ -684,7 +684,7 @@ msgid ""
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
-"El radi del forat en el centre del patró no s'hi dibuixarà res. Es dóna com "
+"El radi del forat en el centre del patró no s'hi dibuixarà res. Es dona com "
 "a percentatge de la mida del patró. Un valor de 0 no produirà cap forat. Un "
 "valor de 99 produirà una línia fina a la vora."
 
