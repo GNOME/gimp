@@ -28,22 +28,22 @@ import xml.etree.ElementTree as ET
 NESTED_STACK_END = object()
 
 layermodes_map = {
-    "svg:src-over": Gimp.LayerMode.NORMAL,
-    "svg:multiply": Gimp.LayerMode.MULTIPLY_LEGACY,
-    "svg:screen": Gimp.LayerMode.SCREEN_LEGACY,
-    "svg:overlay": Gimp.LayerMode.OVERLAY,
-    "svg:darken": Gimp.LayerMode.DARKEN_ONLY_LEGACY,
-    "svg:lighten": Gimp.LayerMode.LIGHTEN_ONLY_LEGACY,
-    "svg:color-dodge": Gimp.LayerMode.DODGE_LEGACY,
-    "svg:color-burn": Gimp.LayerMode.BURN_LEGACY,
-    "svg:hard-light": Gimp.LayerMode.HARDLIGHT_LEGACY,
-    "svg:soft-light": Gimp.LayerMode.SOFTLIGHT_LEGACY,
-    "svg:difference": Gimp.LayerMode.DIFFERENCE_LEGACY,
-    "svg:color": Gimp.LayerMode.HSL_COLOR_LEGACY,
-    "svg:luminosity": Gimp.LayerMode.HSV_VALUE_LEGACY,
-    "svg:hue": Gimp.LayerMode.HSV_HUE_LEGACY,
-    "svg:saturation": Gimp.LayerMode.HSV_SATURATION_LEGACY,
-    "svg:plus": Gimp.LayerMode.ADDITION_LEGACY,
+    "svg:src-over":     Gimp.LayerMode.NORMAL,
+    "svg:multiply":     Gimp.LayerMode.MULTIPLY,
+    "svg:screen":       Gimp.LayerMode.SCREEN,
+    "svg:overlay":      Gimp.LayerMode.OVERLAY,
+    "svg:darken":       Gimp.LayerMode.DARKEN_ONLY,
+    "svg:lighten":      Gimp.LayerMode.LIGHTEN_ONLY,
+    "svg:color-dodge":  Gimp.LayerMode.DODGE,
+    "svg:color-burn":   Gimp.LayerMode.BURN,
+    "svg:hard-light":   Gimp.LayerMode.HARDLIGHT,
+    "svg:soft-light":   Gimp.LayerMode.SOFTLIGHT,
+    "svg:difference":   Gimp.LayerMode.DIFFERENCE,
+    "svg:color":        Gimp.LayerMode.HSL_COLOR,
+    "svg:luminosity":   Gimp.LayerMode.HSV_VALUE,
+    "svg:hue":          Gimp.LayerMode.HSV_HUE,
+    "svg:saturation":   Gimp.LayerMode.HSV_SATURATION,
+    "svg:plus":         Gimp.LayerMode.ADDITION,
 }
 
 def reverse_map(mapping):
