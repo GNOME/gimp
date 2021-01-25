@@ -77,7 +77,7 @@ def get_group_layer_attributes(layer):
     opac = float(a.get('opacity', '1.0'))
     visible = a.get('visibility', 'visible') != 'hidden'
     m = a.get('composite-op', 'svg:src-over')
-    layer_mode = layermodes_map.get(m, NORMAL_MODE)
+    layer_mode = layermodes_map.get(m, Gimp.LayerMode.NORMAL)
 
     return name, 0, 0, opac, visible, layer_mode
 
@@ -179,7 +179,7 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         group_layer = ET.Element('stack')
         parent.append(group_layer)
         a = group_layer.attrib
-        a['name'] = gimp_layer.name
+        a['name'] = gimp_layer.get_name()
         a['opacity'] = str(opac)
         a['visibility'] = 'visible' if visible else 'hidden'
         a['composite-op'] = reverse_map(layermodes_map).get(gimp_layer.get_mode(), 'svg:src-over')
@@ -288,7 +288,7 @@ def load_ora(procedure, run_mode, file, args, data):
 
         if item.tag == 'stack':
             name, x, y, opac, visible, layer_mode = get_group_layer_attributes(item)
-            gimp_layer = img.layer_group_new()
+            gimp_layer = Gimp.Layer.group_new(img)
 
         else:
             path, name, x, y, opac, visible, layer_mode = get_layer_attributes(item)
