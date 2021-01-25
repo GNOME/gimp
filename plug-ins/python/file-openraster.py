@@ -143,7 +143,7 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
             GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
             GObject.Value(Gimp.Image, image),
             GObject.Value(GObject.TYPE_INT, 1),
-            GObject.Value(Gimp.ObjectArray, Gimp.ObjectArray.new(Gimp.Drawable, [drawable], 1)),
+            GObject.Value(Gimp.ObjectArray, Gimp.ObjectArray.new(Gimp.Drawable, [drawable], False)),
             GObject.Value(Gio.File, Gio.File.new_for_path(tmp)),
             GObject.Value(GObject.TYPE_BOOLEAN, interlace),
             GObject.Value(GObject.TYPE_INT, compression),
