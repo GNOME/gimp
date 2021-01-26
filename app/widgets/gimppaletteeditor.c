@@ -610,7 +610,8 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
       }
       break;
 
-    case GIMP_ZOOM_SMOOTH: /* can't happen */
+    case GIMP_ZOOM_SMOOTH:
+    case GIMP_ZOOM_PINCH: /* can't happen */
       g_return_if_reached ();
     }
 

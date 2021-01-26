@@ -1248,6 +1248,29 @@ gimp_display_shell_canvas_grab_notify (GtkWidget        *canvas,
 }
 
 void
+gimp_display_shell_zoom_gesture_begin (GtkGestureZoom   *gesture,
+                                       GdkEventSequence *sequence,
+                                       GimpDisplayShell *shell)
+{
+  shell->last_zoom_scale = gtk_gesture_zoom_get_scale_delta (gesture);
+}
+
+void
+gimp_display_shell_zoom_gesture_update (GtkGestureZoom   *gesture,
+                                        GdkEventSequence *sequence,
+                                        GimpDisplayShell *shell)
+{
+  gdouble current_scale = gtk_gesture_zoom_get_scale_delta (gesture);
+  gdouble delta = (current_scale - shell->last_zoom_scale) / shell->last_zoom_scale;
+  shell->last_zoom_scale = current_scale;
+
+  gimp_display_shell_scale (shell,
+                            GIMP_ZOOM_PINCH,
+                            delta,
+                            GIMP_ZOOM_FOCUS_POINTER);
+}
+
+void
 gimp_display_shell_buffer_stroke (GimpMotionBuffer *buffer,
                                   const GimpCoords *coords,
                                   guint32           time,

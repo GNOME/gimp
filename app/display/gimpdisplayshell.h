@@ -99,6 +99,7 @@ struct _GimpDisplayShell
   GList             *children;
 
   GtkWidget         *canvas;           /*  GimpCanvas widget                  */
+  GtkGesture        *zoom_gesture;     /*  Zoom gesture handler for the canvas*/
 
   GtkAdjustment     *hsbdata;          /*  adjustments                        */
   GtkAdjustment     *vsbdata;
@@ -202,6 +203,9 @@ struct _GimpDisplayShell
   GdkDevice         *grab_keyboard;
   GdkDevice         *grab_keyboard_source;
   guint32            grab_keyboard_time;
+
+  /*  the state of gimp_display_shell_zoom_gesture_*() */
+  gdouble            last_zoom_scale;
 
   /* Two states are possible when the shell is grabbed: it can be
    * grabbed with space (or space+button1 which is the same state),

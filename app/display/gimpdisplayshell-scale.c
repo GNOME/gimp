@@ -516,6 +516,9 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
   if (zoom_type == GIMP_ZOOM_SMOOTH)
     delta = -new_scale;
 
+  if (zoom_type == GIMP_ZOOM_PINCH)
+    delta = new_scale;
+
   if (zoom_type != GIMP_ZOOM_TO)
     new_scale = gimp_zoom_model_zoom_step (zoom_type, current_scale, delta);
 
