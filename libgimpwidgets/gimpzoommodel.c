@@ -705,6 +705,14 @@ gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
         new_scale = scale;
       break;
 
+    case GIMP_ZOOM_PINCH:
+      if (delta > 0.0)
+        new_scale = scale * (1.0 + delta);
+      else if (delta < 0.0)
+        new_scale = scale / (1.0 + -delta);
+      else
+        new_scale = scale;
+      break;
     }
 
   return CLAMP (new_scale, ZOOM_MIN, ZOOM_MAX);

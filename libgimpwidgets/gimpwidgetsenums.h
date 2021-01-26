@@ -216,6 +216,7 @@ typedef enum
  * @GIMP_ZOOM_OUT_MAX:  zoom out as far as possible
  * @GIMP_ZOOM_TO:       zoom to a specific zoom factor
  * @GIMP_ZOOM_SMOOTH:   zoom smoothly from a smooth scroll event
+ * @GIMP_ZOOM_PINCH:    zoom smoothly from a touchpad pinch gesture
  *
  * the zoom types for #GimpZoomModel.
  **/
@@ -232,7 +233,8 @@ typedef enum
   GIMP_ZOOM_IN_MAX,    /*< skip >*/
   GIMP_ZOOM_OUT_MAX,   /*< skip >*/
   GIMP_ZOOM_TO,        /*< skip >*/
-  GIMP_ZOOM_SMOOTH     /*< skip >*/
+  GIMP_ZOOM_SMOOTH,    /*< skip >*/
+  GIMP_ZOOM_PINCH,     /*< skip >*/
 } GimpZoomType;
 
 
