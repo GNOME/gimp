@@ -1,19 +1,19 @@
 # Swedish messages for the GIMP.
-# Copyright © 1999-2020 Free Software Foundation, Inc.
+# Copyright © 1999-2021 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2010, 2011, 2012.
 # Påvel Nicklasson <pavel@frimix.se>, 2014.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021.
 # Sebastian Rasmussen <sebras@gmail.com>, 2017, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-04 18:12+0000\n"
-"PO-Revision-Date: 2020-10-05 01:09+0200\n"
+"POT-Creation-Date: 2021-01-25 21:46+0000\n"
+"PO-Revision-Date: 2021-01-27 22:18+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -882,7 +882,7 @@ msgstr ""
 "Du bör ha fått en kopia av GNU General Public License tillsammans med detta "
 "program. Om inte, se https://www.gnu.org/licenses/"
 
-#: ../app/gimp-update.c:261
+#: ../app/gimp-update.c:385
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -14352,7 +14352,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Förhandsvisningen kan vara för gammal)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:429
+#: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:441
 #: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:702
 #, c-format
 msgid "%d × %d pixel"
@@ -14881,7 +14881,7 @@ msgid "Emulate brush dynamics"
 msgstr "Emulera penseldynamik"
 
 #. no undo (or redo) steps available
-#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:399
+#: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:410
 #: ../app/widgets/gimpsymmetryeditor.c:165
 msgid "None"
 msgstr "Ingen"
@@ -15205,22 +15205,22 @@ msgstr "procent"
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: ../app/dialogs/about-dialog.c:132
+#: ../app/dialogs/about-dialog.c:134
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revision %d)"
 
-#: ../app/dialogs/about-dialog.c:140
+#: ../app/dialogs/about-dialog.c:142
 msgid "About GIMP"
 msgstr "Om GIMP"
 
-#: ../app/dialogs/about-dialog.c:149
+#: ../app/dialogs/about-dialog.c:151
 msgid "Visit the GIMP website"
 msgstr "Besök webbplatsen för GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:155
+#: ../app/dialogs/about-dialog.c:157
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander <po@danielnylander.se>\n"
@@ -15234,29 +15234,29 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: ../app/dialogs/about-dialog.c:345
+#: ../app/dialogs/about-dialog.c:355
 msgid "Update available!"
 msgstr "Uppdatering tillgänglig!"
 
 #. This is actually a new revision of current version.
-#: ../app/dialogs/about-dialog.c:365
+#: ../app/dialogs/about-dialog.c:375
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Hämta GIMP %s revision %d (utgiven %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: ../app/dialogs/about-dialog.c:375
+#: ../app/dialogs/about-dialog.c:385
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Utgåvekommentar</u>: <i>%s</i>"
 
-#: ../app/dialogs/about-dialog.c:380
+#: ../app/dialogs/about-dialog.c:390
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Hämta GIMP %s (utgiven %s)\n"
 
-#: ../app/dialogs/about-dialog.c:405 ../app/dialogs/about-dialog.c:426
+#: ../app/dialogs/about-dialog.c:415 ../app/dialogs/about-dialog.c:436
 msgid "Check for updates"
 msgstr "Sök uppdateringar"
 
@@ -15264,16 +15264,16 @@ msgstr "Sök uppdateringar"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: ../app/dialogs/about-dialog.c:446
+#: ../app/dialogs/about-dialog.c:456
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Senast kontrollerad %s, %s"
 
-#: ../app/dialogs/about-dialog.c:748
+#: ../app/dialogs/about-dialog.c:759
 msgid "GIMP is brought to you by"
 msgstr "GIMP presenteras av"
 
-#: ../app/dialogs/about-dialog.c:824
+#: ../app/dialogs/about-dialog.c:835
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -17237,7 +17237,7 @@ msgid "Vertical"
 msgstr "Vertikal"
 
 #: ../app/dialogs/preferences-dialog.c:2731
-#: ../app/widgets/gimpimagepropview.c:457
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "punkter/tum"
 
@@ -26803,78 +26803,78 @@ msgstr ""
 "Ersätt den aktuella bildkommentaren med standardkommentaren inställd i "
 "Redigera→Inställningar→Standardbild."
 
-#: ../app/widgets/gimpimagepropview.c:110
+#: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
 msgstr "Storlek i bildpunkter:"
 
-#: ../app/widgets/gimpimagepropview.c:113
+#: ../app/widgets/gimpimagepropview.c:116
 msgid "Print size:"
 msgstr "Utskriftsstorlek:"
 
-#: ../app/widgets/gimpimagepropview.c:116
+#: ../app/widgets/gimpimagepropview.c:119
 msgid "Resolution:"
 msgstr "Upplösning:"
 
-#: ../app/widgets/gimpimagepropview.c:119
+#: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
 msgstr "Färgrymd:"
 
-#: ../app/widgets/gimpimagepropview.c:122
+#: ../app/widgets/gimpimagepropview.c:125
 msgid "Precision:"
 msgstr "Precision:"
 
-#: ../app/widgets/gimpimagepropview.c:127
+#: ../app/widgets/gimpimagepropview.c:130
 msgid "File Name:"
 msgstr "Filnamn:"
 
-#: ../app/widgets/gimpimagepropview.c:133
+#: ../app/widgets/gimpimagepropview.c:138
 msgid "File Size:"
 msgstr "Filstorlek:"
 
-#: ../app/widgets/gimpimagepropview.c:136
+#: ../app/widgets/gimpimagepropview.c:141
 msgid "File Type:"
 msgstr "Filtyp:"
 
-#: ../app/widgets/gimpimagepropview.c:141
+#: ../app/widgets/gimpimagepropview.c:146
 msgid "Size in memory:"
 msgstr "Storlek i minne:"
 
-#: ../app/widgets/gimpimagepropview.c:144
+#: ../app/widgets/gimpimagepropview.c:149
 msgid "Undo steps:"
 msgstr "Ångringssteg:"
 
-#: ../app/widgets/gimpimagepropview.c:147
+#: ../app/widgets/gimpimagepropview.c:152
 msgid "Redo steps:"
 msgstr "Gör om-steg:"
 
-#: ../app/widgets/gimpimagepropview.c:152
+#: ../app/widgets/gimpimagepropview.c:157
 msgid "Number of pixels:"
 msgstr "Antal bildpunkter:"
 
-#: ../app/widgets/gimpimagepropview.c:155
+#: ../app/widgets/gimpimagepropview.c:160
 msgid "Number of layers:"
 msgstr "Antal lager:"
 
-#: ../app/widgets/gimpimagepropview.c:158
+#: ../app/widgets/gimpimagepropview.c:163
 msgid "Number of channels:"
 msgstr "Antal kanaler:"
 
-#: ../app/widgets/gimpimagepropview.c:161
+#: ../app/widgets/gimpimagepropview.c:166
 msgid "Number of paths:"
 msgstr "Antal banor:"
 
-#: ../app/widgets/gimpimagepropview.c:452
+#: ../app/widgets/gimpimagepropview.c:464
 #: ../app/widgets/gimptemplateeditor.c:350
 #, c-format
 msgid "pixels/%s"
 msgstr "bildpunkter/%s"
 
-#: ../app/widgets/gimpimagepropview.c:454
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:475
+#: ../app/widgets/gimpimagepropview.c:488
 msgid "colors"
 msgstr "färger"
 
@@ -27633,16 +27633,20 @@ msgstr ""
 "Skadad ”gimp-metadata”-parasit upptäckt.\n"
 "XMP-data kunde inte migreras."
 
-#: ../app/xcf/xcf-load.c:423
+#: ../app/xcf/xcf-load.c:427
 #, c-format
 msgid ""
-"Corrupt 'gimp-metadata' parasite discovered.\n"
-"XMP data could not be migrated: %s"
+"Corrupt XMP metadata saved by an older version of GIMP could not be "
+"converted and will be ignored.\n"
+"If you don't know what XMP is, you most likely don't need it. Reported "
+"error: %s."
 msgstr ""
-"Skadad ”gimp-metadata”-parasit upptäckt.\n"
-"XMP-data kunde inte migreras: %s"
+"Skadade XMP-metadata sparade av en äldre version av GIMP kunde inte "
+"konverteras och kommer ignoreras.\n"
+"Om du inte vet vad XMP är behöver du det mest troligt inte. Rapporterat fel: "
+"%s."
 
-#: ../app/xcf/xcf-load.c:685
+#: ../app/xcf/xcf-load.c:691
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -27650,7 +27654,7 @@ msgstr ""
 "Den här XCF-filen är skadad!  Jag har läst in så mycket jag kan av den men "
 "den är ofullständig."
 
-#: ../app/xcf/xcf-load.c:704
+#: ../app/xcf/xcf-load.c:710
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -27658,7 +27662,7 @@ msgstr ""
 "Den här XCF-filen är skadad!  Jag kunde inte ens rädda någon del av dess "
 "bilddata."
 
-#: ../app/xcf/xcf-load.c:795
+#: ../app/xcf/xcf-load.c:801
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -27703,6 +27707,13 @@ msgstr "rund"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "luddig"
+
+#~ msgid ""
+#~ "Corrupt 'gimp-metadata' parasite discovered.\n"
+#~ "XMP data could not be migrated: %s"
+#~ msgstr ""
+#~ "Skadad ”gimp-metadata”-parasit upptäckt.\n"
+#~ "XMP-data kunde inte migreras: %s"
 
 #~ msgid "Aux%d Input"
 #~ msgstr "Aux%d-ingång"
@@ -27923,10 +27934,6 @@ msgstr "luddig"
 #~ msgstr ""
 #~ "Typsnitt läses fortfarande in (detta kan ta ett tag), textfunktioner är "
 #~ "inte ännu tillgängliga."
-
-#, fuzzy
-#~ msgid "press Enter to validate."
-#~ msgstr "tryck på Retur för att validera."
 
 #~ msgid "Opening font directory '%s' failed: %s"
 #~ msgstr "Öppnande av typsnittskatalogen ”%s” misslyckades: %s"
