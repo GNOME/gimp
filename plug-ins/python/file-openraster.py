@@ -46,6 +46,79 @@ layermodes_map = {
     "svg:plus":         Gimp.LayerMode.ADDITION,
 }
 
+# There are less svg blending ops than we have GIMP blend modes.
+# We are going to map them as closely as possible.
+gimp_layermodes_map = {
+    Gimp.LayerMode.NORMAL:                  "svg:src-over",
+    Gimp.LayerMode.NORMAL_LEGACY:           "svg:src-over",
+    Gimp.LayerMode.MULTIPLY:                "svg:multiply",
+    Gimp.LayerMode.MULTIPLY_LEGACY:         "svg:multiply",
+    Gimp.LayerMode.SCREEN:                  "svg:screen",
+    Gimp.LayerMode.SCREEN_LEGACY:           "svg:screen",
+    Gimp.LayerMode.OVERLAY:                 "svg:overlay",
+    Gimp.LayerMode.OVERLAY_LEGACY:          "svg:overlay",
+    Gimp.LayerMode.DARKEN_ONLY:             "svg:darken",
+    Gimp.LayerMode.DARKEN_ONLY_LEGACY:      "svg:darken",
+    Gimp.LayerMode.LIGHTEN_ONLY:            "svg:lighten",
+    Gimp.LayerMode.LIGHTEN_ONLY_LEGACY:     "svg:lighten",
+    Gimp.LayerMode.DODGE:                   "svg:color-dodge",
+    Gimp.LayerMode.DODGE_LEGACY:            "svg:color-dodge",
+    Gimp.LayerMode.BURN:                    "svg:color-burn",
+    Gimp.LayerMode.BURN_LEGACY:             "svg:color-burn",
+    Gimp.LayerMode.HARDLIGHT:               "svg:hard-light",
+    Gimp.LayerMode.HARDLIGHT_LEGACY:        "svg:hard-light",
+    Gimp.LayerMode.SOFTLIGHT:               "svg:soft-light",
+    Gimp.LayerMode.SOFTLIGHT_LEGACY:        "svg:soft-light",
+    Gimp.LayerMode.DIFFERENCE:              "svg:difference",
+    Gimp.LayerMode.DIFFERENCE_LEGACY:       "svg:difference",
+    Gimp.LayerMode.HSL_COLOR:               "svg:color",
+    Gimp.LayerMode.HSL_COLOR_LEGACY:        "svg:color",
+    Gimp.LayerMode.HSV_VALUE:               "svg:luminosity",
+    Gimp.LayerMode.HSV_VALUE_LEGACY:        "svg:luminosity",
+    Gimp.LayerMode.HSV_HUE:                 "svg:hue",
+    Gimp.LayerMode.HSV_HUE_LEGACY:          "svg:hue",
+    Gimp.LayerMode.HSV_SATURATION:          "svg:saturation",
+    Gimp.LayerMode.HSV_SATURATION_LEGACY:   "svg:saturation",
+    Gimp.LayerMode.ADDITION:                "svg:plus",
+    Gimp.LayerMode.ADDITION_LEGACY:         "svg:plus",
+
+    # FIXME Determine the closest available layer mode
+    #       Alternatively we could add additional modes
+    #       e.g. something like "gimp:dissolve", this
+    #       is what Krita seems to do too
+    Gimp.LayerMode.DISSOLVE:                "svg:src-over",
+    Gimp.LayerMode.DIVIDE:                  "svg:src-over",
+    Gimp.LayerMode.DIVIDE_LEGACY:           "svg:src-over",
+    Gimp.LayerMode.BEHIND:                  "svg:src-over",
+    Gimp.LayerMode.BEHIND_LEGACY:           "svg:src-over",
+    Gimp.LayerMode.GRAIN_EXTRACT:           "svg:src-over",
+    Gimp.LayerMode.GRAIN_EXTRACT_LEGACY:    "svg:src-over",
+    Gimp.LayerMode.GRAIN_MERGE:             "svg:src-over",
+    Gimp.LayerMode.GRAIN_MERGE_LEGACY:      "svg:src-over",
+    Gimp.LayerMode.COLOR_ERASE:             "svg:src-over",
+    Gimp.LayerMode.COLOR_ERASE_LEGACY:      "svg:src-over",
+    Gimp.LayerMode.LCH_HUE:                 "svg:src-over",
+    Gimp.LayerMode.LCH_CHROMA:              "svg:src-over",
+    Gimp.LayerMode.LCH_COLOR:               "svg:src-over",
+    Gimp.LayerMode.LCH_LIGHTNESS:           "svg:src-over",
+    Gimp.LayerMode.SUBTRACT:                "svg:src-over",
+    Gimp.LayerMode.SUBTRACT_LEGACY:         "svg:src-over",
+    Gimp.LayerMode.VIVID_LIGHT:             "svg:src-over",
+    Gimp.LayerMode.PIN_LIGHT:               "svg:src-over",
+    Gimp.LayerMode.LINEAR_LIGHT:            "svg:src-over",
+    Gimp.LayerMode.HARD_MIX:                "svg:src-over",
+    Gimp.LayerMode.EXCLUSION:               "svg:src-over",
+    Gimp.LayerMode.LINEAR_BURN:             "svg:src-over",
+    Gimp.LayerMode.LUMA_DARKEN_ONLY:        "svg:src-over",
+    Gimp.LayerMode.LUMA_LIGHTEN_ONLY:       "svg:src-over",
+    Gimp.LayerMode.LUMINANCE:               "svg:src-over",
+    Gimp.LayerMode.COLOR_ERASE:             "svg:src-over",
+    Gimp.LayerMode.ERASE:                   "svg:src-over",
+    Gimp.LayerMode.MERGE:                   "svg:src-over",
+    Gimp.LayerMode.SPLIT:                   "svg:src-over",
+    Gimp.LayerMode.PASS_THROUGH:            "svg:src-over",
+}
+
 def reverse_map(mapping):
     return dict((v,k) for k, v in mapping.items())
 
@@ -171,7 +244,7 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         a['y'] = str(y)
         a['opacity'] = str(opac)
         a['visibility'] = 'visible' if visible else 'hidden'
-        a['composite-op'] = reverse_map(layermodes_map).get(gimp_layer.get_mode(), 'svg:src-over')
+        a['composite-op'] = gimp_layermodes_map.get(gimp_layer.get_mode(), 'svg:src-over')
         return layer
 
     def add_group_layer(parent, opac, gimp_layer, visible=True):
@@ -182,7 +255,7 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         a['name'] = gimp_layer.get_name()
         a['opacity'] = str(opac)
         a['visibility'] = 'visible' if visible else 'hidden'
-        a['composite-op'] = reverse_map(layermodes_map).get(gimp_layer.get_mode(), 'svg:src-over')
+        a['composite-op'] = gimp_layermodes_map.get(gimp_layer.get_mode(), 'svg:src-over')
         return group_layer
 
 
