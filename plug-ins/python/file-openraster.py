@@ -193,6 +193,7 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         zi.external_attr = int("100644", 8) << 16
         zfile.writestr(zi, data)
 
+    Gimp.progress_init("Exporting openraster image")
     tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
 
     # use .tmpsave extension, so we don't overwrite a valid file if
@@ -272,7 +273,13 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
     # save layers
     parent_groups = []
     i = 0
-    for lay in enumerate_layers(image.get_layers()):
+
+    layer_stack = image.get_layers()
+    # Number of top level layers for tracking progress
+    lay_cnt = len(layer_stack)
+
+    for lay in enumerate_layers(layer_stack):
+        prev_lay = i
         if lay is NESTED_STACK_END:
             parent_groups.pop()
             continue
@@ -296,6 +303,9 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
             parent_groups.append([group, group_path , 0])
         else:
             add_layer(parent, x, y, opac, lay, path_name, lay.get_visible())
+
+        if (i > prev_lay):
+            Gimp.progress_update(i/lay_cnt)
 
     # save mergedimage
     thumb = image.duplicate()
@@ -327,6 +337,8 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         os.remove(file.peek_path()) # win32 needs that
     os.rename(file.peek_path() + '.tmpsave', file.peek_path())
 
+    Gimp.progress_end()
+
     return Gimp.ValueArray.new_from_values([
         GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS)
     ])
@@ -335,6 +347,8 @@ def load_ora(procedure, run_mode, file, args, data):
     tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
     orafile = zipfile.ZipFile(file.peek_path())
     stack, w, h = get_image_attributes(orafile)
+
+    Gimp.progress_init("Loading openraster image")
 
     img = Gimp.Image.new(w, h, Gimp.ImageBaseType.RGB)
     img.set_file (file)
@@ -352,8 +366,12 @@ def load_ora(procedure, run_mode, file, args, data):
 
     parent_groups = []
 
+    # Number of top level layers for tracking progress
+    lay_cnt = len(stack)
+
     layer_no = 0
     for item in get_layers(stack):
+        prev_lay = layer_no
 
         if item is NESTED_STACK_END:
             parent_groups.pop()
@@ -408,6 +426,11 @@ def load_ora(procedure, run_mode, file, args, data):
 
         if gimp_layer.is_group():
             parent_groups.append([gimp_layer, 0])
+
+        if (layer_no > prev_lay):
+            Gimp.progress_update(layer_no/lay_cnt)
+
+    Gimp.progress_end()
 
     os.rmdir(tempdir)
 
