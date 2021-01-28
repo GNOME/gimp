@@ -60,7 +60,7 @@ script_fu_eval_run (GimpProcedure        *procedure,
 
   if (status != GIMP_PDB_SUCCESS && output->len > 0)
     {
-      GError *error = g_error_new_literal (0, 0,
+      GError *error = g_error_new_literal (g_quark_from_string("scriptfu"), 0,
                                            g_string_free (output, FALSE));
 
       return gimp_procedure_new_return_values (procedure, status, error);

@@ -15,10 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if 0
-#define DEBUG_MARSHALL 0  /* No need to define this until you need it */
 #define DEBUG_SCRIPTS  0
-#endif
+
 
 #include "config.h"
 
@@ -43,6 +41,7 @@
 #include "script-fu-regex.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
+#include "script-fu-errors.h"
 
 #include "scheme-wrapper.h"
 
@@ -141,7 +140,7 @@ tinyscheme_init (GList    *path,
   /* init the interpreter */
   if (! scheme_init (&sc))
     {
-      g_message ("Could not initialize TinyScheme!");
+      g_warning ("Could not initialize TinyScheme!");
       return;
     }
 
@@ -186,7 +185,7 @@ tinyscheme_init (GList    *path,
         }
 
       if (list == NULL)
-        g_printerr ("Unable to read initialization file script-fu.init\n");
+        g_warning ("Unable to read initialization file script-fu.init\n");
     }
 }
 
@@ -459,7 +458,7 @@ ts_init_procedures (scheme   *sc,
       /* Build a define that will call the foreign function.
        * The Scheme statement was suggested by Simon Budig.
        *
-       * We call the procedure through -gimp-proc-db-call, which is a more
+       * Call the procedure through -gimp-proc-db-call, which is a more
        * permissive version of gimp-proc-db-call, that accepts (and ignores)
        * any number of arguments for nullary procedures, for backward
        * compatibility.
@@ -511,7 +510,7 @@ convert_string (gchar *str)
     }
 }
 
-/* This is called by the Scheme interpreter to allow calls to GIMP functions */
+/* Called by the Scheme interpreter on calls to GIMP PDB procedures */
 static pointer
 script_fu_marshal_procedure_call (scheme   *sc,
                                   pointer   a,
@@ -525,30 +524,14 @@ script_fu_marshal_procedure_call (scheme   *sc,
   gint             n_arg_specs;
   gchar            error_str[1024];
   gint             i;
-  gint             success = TRUE;
   pointer          return_val = sc->NIL;
 
-#if DEBUG_MARSHALL
-/* These three #defines are from Tinyscheme (tinyscheme/scheme.c) */
-#define T_MASKTYPE  31
-#define typeflag(p) ((p)->_flag)
-#define type(p)     (typeflag(p)&T_MASKTYPE)
 
-  static const char *ts_types[] =
-  {
-    "T_NONE",
-    "T_STRING",    "T_NUMBER",     "T_SYMBOL",       "T_PROC",
-    "T_PAIR",      "T_CLOSURE",    "T_CONTINUATION", "T_FOREIGN",
-    "T_CHARACTER", "T_PORT",       "T_VECTOR",       "T_MACRO",
-    "T_PROMISE",   "T_ENVIRONMENT","T_ARRAY"
-  };
+  g_debug ("In %s()", G_STRFUNC);
 
-  g_printerr ("\nIn %s()\n", G_STRFUNC);
-#endif
-
-  /*  Make sure there are arguments  */
   if (a == sc->NIL)
-    return foreign_error (sc,
+    /* Some ScriptFu function is calling this incorrectly. */
+    return implementation_error (sc,
                           "Procedure argument marshaller was called with no arguments. "
                           "The procedure to be executed and the arguments it requires "
                           "(possibly none) must be specified.", 0);
@@ -559,10 +542,8 @@ script_fu_marshal_procedure_call (scheme   *sc,
   else
     proc_name = g_strdup (sc->vptr->string_value (a));
 
-#ifdef DEBUG_MARSHALL
-  g_printerr ("  proc name: %s\n", proc_name);
-  g_printerr ("  parms rcvd: %d\n", sc->vptr->list_length (sc, a)-1);
-#endif
+  g_debug ("proc name: %s", proc_name);
+  g_debug ("parms rcvd: %d", sc->vptr->list_length (sc, a)-1);
 
   /*  report the current command  */
   script_fu_interface_report_cc (proc_name);
@@ -572,12 +553,9 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
   if (! procedure)
     {
-#ifdef DEBUG_MARSHALL
-      g_printerr ("  Invalid procedure name\n");
-#endif
       g_snprintf (error_str, sizeof (error_str),
-                  "Invalid procedure name %s specified", proc_name);
-      return foreign_error (sc, error_str, 0);
+                  "Invalid procedure name: %s", proc_name);
+      return script_error(sc, error_str, 0);
     }
 
   arg_specs = gimp_procedure_get_arguments (procedure, &n_arg_specs);
@@ -586,14 +564,10 @@ script_fu_marshal_procedure_call (scheme   *sc,
   if ((n_arg_specs > 0 || ! permissive) &&
       (sc->vptr->list_length (sc, a) - 1) != n_arg_specs)
     {
-#if DEBUG_MARSHALL
-      g_printerr ("  Invalid number of arguments (expected %d but received %d)",
-                  nparams, (sc->vptr->list_length (sc, a) - 1));
-#endif
       g_snprintf (error_str, sizeof (error_str),
-                  "Invalid number of arguments for %s (expected %d but received %d)",
+                  "in script, wrong number of arguments for %s (expected %d but received %d)",
                   proc_name, n_arg_specs, (sc->vptr->list_length (sc, a) - 1));
-      return foreign_error (sc, error_str, 0);
+      return script_error(sc, error_str, 0);
     }
 
   /*  Marshall the supplied arguments  */
@@ -603,286 +577,200 @@ script_fu_marshal_procedure_call (scheme   *sc,
     {
       GParamSpec *arg_spec = arg_specs[i];
       GValue      value    = G_VALUE_INIT;
-      gint32      n_elements;
-      pointer     vector;
+      guint       n_elements; /* !!! unsigned length */
+      pointer     vector;   /* !!! list or vector */
       gint        j;
 
       a = sc->vptr->pair_cdr (a);
 
-#if DEBUG_MARSHALL
-      {
-        const gchar *type_name;
-
-        gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE,
-                             params[i].type,
-                             &type_name, NULL, NULL, NULL);
-
-        g_printerr ("    param %d - expecting type %s (%d)\n",
-                    i + 1, type_name, params[i].type);
-        g_printerr ("      passed arg is type %s (%d)\n",
-                    ts_types[ type(sc->vptr->pair_car (a)) ],
-                    type(sc->vptr->pair_car (a)));
-      }
-#endif
-
       g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (arg_spec));
+
+      debug_in_arg(sc, a, i, g_type_name (G_VALUE_TYPE (&value)));
 
       if (G_VALUE_HOLDS_INT (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
-            {
-              g_value_set_int (&value,
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
+            g_value_set_int (&value,
                                sc->vptr->ivalue (sc->vptr->pair_car (a)));
-#if DEBUG_MARSHALL
-              g_printerr ("      int arg is '%d'\n", args[i].data.d_int32);
-#endif
-            }
         }
       else if (G_VALUE_HOLDS_UINT (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
-            {
-              g_value_set_uint (&value,
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
+            g_value_set_uint (&value,
                                 sc->vptr->ivalue (sc->vptr->pair_car (a)));
-#if DEBUG_MARSHALL
-              g_printerr ("      uint arg is '%u'\n", args[i].data.d_int8);
-#endif
-            }
         }
       else if (G_VALUE_HOLDS_UCHAR (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
-            {
-              g_value_set_uchar (&value,
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
+            g_value_set_uchar (&value,
                                  sc->vptr->ivalue (sc->vptr->pair_car (a)));
-#if DEBUG_MARSHALL
-              g_printerr ("      uchar arg is '%u'\n", args[i].data.d_int8);
-#endif
-            }
         }
       else if (G_VALUE_HOLDS_DOUBLE (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
-            {
-              g_value_set_double (&value,
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
+            g_value_set_double (&value,
                                   sc->vptr->rvalue (sc->vptr->pair_car (a)));
-#if DEBUG_MARSHALL
-              g_printerr ("      float arg is '%f'\n", args[i].data.d_float);
-#endif
-            }
         }
       else if (G_VALUE_HOLDS_ENUM (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
-            {
-              g_value_set_enum (&value,
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
+            g_value_set_enum (&value,
                                 sc->vptr->ivalue (sc->vptr->pair_car (a)));
-#if DEBUG_MARSHALL
-              g_printerr ("      enum arg is '%d'\n", args[i].data.d_int32);
-#endif
-            }
         }
       else if (G_VALUE_HOLDS_BOOLEAN (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
-            {
-              g_value_set_boolean (&value,
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
+            g_value_set_boolean (&value,
                                    sc->vptr->ivalue (sc->vptr->pair_car (a)));
-#if DEBUG_MARSHALL
-              g_printerr ("      bool arg is '%d'\n", args[i].data.d_int32);
-#endif
-            }
         }
       else if (G_VALUE_HOLDS_STRING (&value))
         {
           if (! sc->vptr->is_string (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
-            {
+            return script_type_error(sc, "string", i, proc_name);
+          else
               g_value_set_string (&value,
                                   sc->vptr->string_value (sc->vptr->pair_car (a)));
-#if DEBUG_MARSHALL
-              g_printerr ("      string arg is '%s'\n", args[i].data.d_string);
-#endif
-            }
         }
       else if (GIMP_VALUE_HOLDS_DISPLAY (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
             {
               GimpDisplay *display =
                 gimp_display_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, display);
-#if DEBUG_MARSHALL
-              g_printerr ("      display arg is '%d'\n",
-                          gimp_display_get_id (display));
-#endif
             }
         }
       else if (GIMP_VALUE_HOLDS_IMAGE (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
             {
               GimpImage *image =
                 gimp_image_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, image);
-#if DEBUG_MARSHALL
-              g_printerr ("      image arg is '%d'\n",
-                          gimp_image_get_id (image));
-#endif
             }
         }
       else if (GIMP_VALUE_HOLDS_LAYER (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
             {
               GimpLayer *layer =
                 gimp_layer_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, layer);
-#if DEBUG_MARSHALL
-              g_printerr ("      layer arg is '%d'\n",
-                          gimp_item_get_id (GIMP_ITEM (layer)));
-#endif
             }
         }
       else if (GIMP_VALUE_HOLDS_LAYER_MASK (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
             {
               GimpLayerMask *layer_mask =
                 gimp_layer_mask_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, layer_mask);
-#if DEBUG_MARSHALL
-              g_printerr ("      layer_mask arg is '%d'\n",
-                          gimp_item_get_id (GIMP_ITEM (layer_mask)));
-#endif
             }
         }
       else if (GIMP_VALUE_HOLDS_CHANNEL (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
             {
               GimpChannel *channel =
                 gimp_channel_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, channel);
-#if DEBUG_MARSHALL
-              g_printerr ("      channel arg is '%d'\n",
-                          gimp_item_get_id (GIMP_ITEM (channel)));
-#endif
             }
         }
       else if (GIMP_VALUE_HOLDS_DRAWABLE (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
             {
               GimpDrawable *drawable =
                 gimp_drawable_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, drawable);
-#if DEBUG_MARSHALL
-              g_printerr ("      drawable arg is '%d'\n",
-                          gimp_item_get_id (GIMP_ITEM (drawable)));
-#endif
             }
         }
       else if (GIMP_VALUE_HOLDS_VECTORS (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
             {
               GimpVectors *vectors =
                 gimp_vectors_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, vectors);
-#if DEBUG_MARSHALL
-              g_printerr ("      vectors arg is '%d'\n",
-                          gimp_item_get_id (GIMP_ITEM (vectors)));
-#endif
             }
         }
       else if (GIMP_VALUE_HOLDS_ITEM (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "numeric", i, proc_name);
+          else
             {
               GimpItem *item =
                 gimp_item_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, item);
-#if DEBUG_MARSHALL
-              g_printerr ("      item arg is '%d'\n",
-                          gimp_item_get_id (item));
-#endif
             }
         }
       else if (GIMP_VALUE_HOLDS_INT32_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "vector", i, proc_name);
+          else
             {
+              /* !!! Comments applying to all array args.
+               * n_elements is expected list length, from previous argument.
+               * A PDB procedure takes args paired: ...length, array...
+               * and a script passes the same paired args (..., 1, '("foo"))
+               * (FUTURE: a more object oriented design for the PDB API
+               * would obviate need for this discussion.)
+               *
+               * When a script passes a shorter or empty list,
+               * ensure we don't segfault on cdr past end of list.
+               *
+               * n_elements is unsigned, we don't need to check >= 0
+               *
+               * Since we are not checking for equality of passed length
+               * to actual container length, we adapt an array
+               * that is shorter than specified by the length arg.
+               * Ignoring a discrepancy by the script author.
+               * FUTURE: List must be *exactly* n_elements long.
+               * n_elements != sc->vptr->list_length (sc, vector))
+               */
               gint32 *array;
 
               n_elements = GIMP_VALUES_GET_INT (args, i - 1);
 
-              if (n_elements < 0 ||
-                  n_elements > sc->vptr->vector_length (vector))
-                {
-                  g_snprintf (error_str, sizeof (error_str),
-                              "INT32 vector (argument %d) for function %s has "
-                              "size of %ld but expected size of %d",
-                              i+1, proc_name,
-                              sc->vptr->vector_length (vector), n_elements);
-                  return foreign_error (sc, error_str, 0);
-                }
+              if (n_elements > sc->vptr->vector_length (vector))
+                return script_length_error_in_vector(sc, i, proc_name, n_elements, vector);
 
               array = g_new0 (gint32, n_elements);
 
@@ -893,11 +781,9 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   /* FIXME: Check values in vector stay within range for each type. */
                   if (! sc->vptr->is_number (v_element))
                     {
-                      g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not a number (argument %d for function %s)",
-                                  j+1, i+1, proc_name);
                       g_free (array);
-                      return foreign_error (sc, error_str, vector);
+                      return script_type_error_in_container(sc,
+                        "numeric", i, j, proc_name, vector);
                     }
 
                   array[j] = (gint32) sc->vptr->ivalue (v_element);
@@ -905,44 +791,22 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               gimp_value_take_int32_array (&value, array, n_elements);
 
-#if DEBUG_MARSHALL
-              {
-                glong count = sc->vptr->vector_length (vector);
-                g_printerr ("      int32 vector has %ld elements\n", count);
-                if (count > 0)
-                  {
-                    g_printerr ("     ");
-                    for (j = 0; j < count; ++j)
-                      g_printerr (" %ld",
-                                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
-                    g_printerr ("\n");
-                  }
-              }
-#endif
+              debug_vector(sc, vector, "%ld");
             }
         }
       else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "vector", i, proc_name);
+          else
             {
               guint8 *array;
 
               n_elements = GIMP_VALUES_GET_INT (args, i - 1);
 
-              if (n_elements < 0 ||
-                  n_elements > sc->vptr->vector_length (vector))
-                {
-                  g_snprintf (error_str, sizeof (error_str),
-                              "INT8 vector (argument %d) for function %s has "
-                              "size of %ld but expected size of %d",
-                              i+1, proc_name,
-                              sc->vptr->vector_length (vector), n_elements);
-                  return foreign_error (sc, error_str, 0);
-                }
+              if (n_elements > sc->vptr->vector_length (vector))
+                return script_length_error_in_vector(sc, i, proc_name, n_elements, vector);
 
               array = g_new0 (guint8, n_elements);
 
@@ -952,11 +816,8 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
                   if (!sc->vptr->is_number (v_element))
                     {
-                      g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not a number (argument %d for function %s)",
-                                  j+1, i+1, proc_name);
                       g_free (array);
-                      return foreign_error (sc, error_str, vector);
+                      return script_type_error_in_container(sc, "numeric", i, j, proc_name, vector);
                     }
 
                   array[j] = (guint8) sc->vptr->ivalue (v_element);
@@ -964,44 +825,22 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               gimp_value_take_uint8_array (&value, array, n_elements);
 
-#if DEBUG_MARSHALL
-              {
-                glong count = sc->vptr->vector_length (vector);
-                g_printerr ("      int8 vector has %ld elements\n", count);
-                if (count > 0)
-                  {
-                    g_printerr ("     ");
-                    for (j = 0; j < count; ++j)
-                      g_printerr (" %ld",
-                                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
-                    g_printerr ("\n");
-                  }
-              }
-#endif
+              debug_vector(sc, vector, "%ld");
             }
         }
       else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "vector", i, proc_name);
+          else
             {
               gdouble *array;
 
               n_elements = GIMP_VALUES_GET_INT (args, i - 1);
 
-              if (n_elements < 0 ||
-                  n_elements > sc->vptr->vector_length (vector))
-                {
-                  g_snprintf (error_str, sizeof (error_str),
-                              "FLOAT vector (argument %d) for function %s has "
-                              "size of %ld but expected size of %d",
-                              i+1, proc_name,
-                              sc->vptr->vector_length (vector), n_elements);
-                  return foreign_error (sc, error_str, 0);
-                }
+              if (n_elements > sc->vptr->vector_length (vector))
+                return script_length_error_in_vector(sc, i, proc_name, n_elements, vector);
 
               array = g_new0 (gdouble, n_elements);
 
@@ -1011,11 +850,8 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
                   if (!sc->vptr->is_number (v_element))
                     {
-                      g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not a number (argument %d for function %s)",
-                                  j+1, i+1, proc_name);
                       g_free (array);
-                      return foreign_error (sc, error_str, vector);
+                      return script_type_error_in_container(sc, "numeric", i, j, proc_name, vector);
                     }
 
                   array[j] = (gfloat) sc->vptr->rvalue (v_element);
@@ -1023,43 +859,29 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               gimp_value_take_float_array (&value, array, n_elements);
 
-#if DEBUG_MARSHALL
-              {
-                glong count = sc->vptr->vector_length (vector);
-                g_printerr ("      float vector has %ld elements\n", count);
-                if (count > 0)
-                  {
-                    g_printerr ("     ");
-                    for (j = 0; j < count; ++j)
-                      g_printerr (" %f",
-                                  sc->vptr->rvalue ( sc->vptr->vector_elem (vector, j) ));
-                    g_printerr ("\n");
-                  }
-              }
-#endif
+              debug_vector(sc, vector, "%f");
             }
         }
       else if (GIMP_VALUE_HOLDS_STRING_ARRAY (&value))
         {
-          vector = sc->vptr->pair_car (a);  /* vector is pointing to a list */
+          /* !!!! "vector" is-a list and has different methods than is-a vector */
+          vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_list (sc, vector))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "list", i, proc_name);
+          else
             {
               gchar **array;
 
               n_elements = GIMP_VALUES_GET_INT (args, i - 1);
-
-              if (n_elements < 0 ||
-                  n_elements > sc->vptr->list_length (sc, vector))
+              if (n_elements > sc->vptr->list_length (sc, vector))
                 {
+                  /* is-a list, can't use script_length_error_in_vector */
                   g_snprintf (error_str, sizeof (error_str),
-                              "STRING vector (argument %d) for function %s has "
+                              "STRING list (argument %d) for function %s has "
                               "length of %d but expected length of %d",
                               i+1, proc_name,
                               sc->vptr->list_length (sc, vector), n_elements);
-                  return foreign_error (sc, error_str, 0);
+                  return script_error (sc, error_str, 0);
                 }
 
               array = g_new0 (gchar *, n_elements + 1);
@@ -1070,11 +892,11 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
                   if (!sc->vptr->is_string (v_element))
                     {
-                      g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not a string (argument %d for function %s)",
-                                  j+1, i+1, proc_name);
                       g_strfreev (array);
-                      return foreign_error (sc, error_str, vector);
+                      /* is-a list, but can use script_type_error_in_container */
+                      /* Pass remaining suffix of original list to err msg */
+                      return script_type_error_in_container (sc,
+                        "string", i, j, proc_name, vector);
                     }
 
                   array[j] = g_strdup (sc->vptr->string_value (v_element));
@@ -1084,20 +906,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               gimp_value_take_string_array (&value, array, n_elements);
 
-#if DEBUG_MARSHALL
-              {
-                glong count = sc->vptr->list_length ( sc, sc->vptr->pair_car (a) );
-                g_printerr ("      string vector has %ld elements\n", count);
-                if (count > 0)
-                  {
-                    g_printerr ("     ");
-                    for (j = 0; j < count; ++j)
-                      g_printerr (" \"%s\"",
-                                  args[i].data.d_stringarray[j]);
-                    g_printerr ("\n");
-                  }
-              }
-#endif
+              /* Printing the IN list.
+               * (Alternatively, print the OUT GValue.)
+               * Since we already advanced pointer "vector" into the list,
+               * pass a new pointer to the list.
+               */
+              debug_list(sc, sc->vptr->pair_car (a), "\"%s\"", n_elements);
             }
         }
       else if (GIMP_VALUE_HOLDS_RGB (&value))
@@ -1109,13 +923,10 @@ script_fu_marshal_procedure_call (scheme   *sc,
               if (! gimp_rgb_parse_css (&color,
                                         sc->vptr->string_value (sc->vptr->pair_car (a)),
                                         -1))
-                success = FALSE;
+                return script_type_error(sc, "color string", i, proc_name);
 
               gimp_rgb_set_alpha (&color, 1.0);
-#if DEBUG_MARSHALL
-              g_printerr ("      (%s)\n",
-                          sc->vptr->string_value (sc->vptr->pair_car (a)));
-#endif
+              g_debug ("(%s)", sc->vptr->string_value (sc->vptr->pair_car (a)));
             }
           else if (sc->vptr->is_list (sc, sc->vptr->pair_car (a)) &&
                    sc->vptr->list_length (sc, sc->vptr->pair_car (a)) == 3)
@@ -1128,61 +939,46 @@ script_fu_marshal_procedure_call (scheme   *sc,
                 r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
                            0, 255);
               else
-                success = FALSE;
+                return script_type_error_in_container (
+                  sc, "numeric", i, 0, proc_name, 0);
 
               color_list = sc->vptr->pair_cdr (color_list);
               if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
                 g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
                            0, 255);
               else
-                success = FALSE;
+                return script_type_error_in_container (
+                  sc, "numeric", i, 1, proc_name, 0);
 
               color_list = sc->vptr->pair_cdr (color_list);
               if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
                 b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
                            0, 255);
               else
-                success = FALSE;
+                return script_type_error_in_container (
+                  sc, "numeric", i, 2, proc_name, 0);
 
-              if (success)
-                {
-                  gimp_rgba_set_uchar (&color, r, g, b, 255);
-                  gimp_value_set_rgb (&value, &color);
-                }
-#if DEBUG_MARSHALL
-              if (success)
-                g_printerr ("      (%d %d %d)\n", r, g, b);
-              else
-                g_printerr ("      COLOR list contains non-numbers\n");
-#endif
+              gimp_rgba_set_uchar (&color, r, g, b, 255);
+              gimp_value_set_rgb (&value, &color);
+              g_debug ("(%d %d %d)", r, g, b);
             }
           else
-            {
-              success = FALSE;
-            }
+            return script_type_error(sc, "color string or list", i, proc_name);
         }
       else if (GIMP_VALUE_HOLDS_RGB_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "vector", i, proc_name);
+          else
             {
               GimpRGB *array;
 
               n_elements = GIMP_VALUES_GET_INT (args, i - 1);
 
-              if (n_elements < 0 ||
-                  n_elements > sc->vptr->vector_length (vector))
-                {
-                  g_snprintf (error_str, sizeof (error_str),
-                              "COLOR vector (argument %d) for function %s has "
-                              "size of %ld but expected size of %d",
-                              i+1, proc_name,
-                              sc->vptr->vector_length (vector), n_elements);
-                  return foreign_error (sc, error_str, 0);
-                }
+              if (n_elements > sc->vptr->vector_length (vector))
+                return script_length_error_in_vector(
+                    sc, i, proc_name, n_elements, vector);
 
               array = g_new0 (GimpRGB, n_elements);
 
@@ -1197,12 +993,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
                          sc->vptr->list_length (sc,
                                                 sc->vptr->pair_car (v_element)) == 3))
                     {
+                      g_free (array);
                       g_snprintf (error_str, sizeof (error_str),
                                   "Item %d in vector is not a color "
                                   "(argument %d for function %s)",
                                   j+1, i+1, proc_name);
-                      g_free (array);
-                      return foreign_error (sc, error_str, vector);
+                      return script_error (sc, error_str, 0);
                     }
 
                   color_list = sc->vptr->pair_car (v_element);
@@ -1220,21 +1016,15 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               gimp_value_take_rgb_array (&value, array, n_elements);
 
-#if DEBUG_MARSHALL
-              {
-                glong count = sc->vptr->vector_length (vector);
-                g_printerr ("      color vector has %ld elements\n", count);
-              }
-#endif
+              g_debug ("color vector has %ld elements", sc->vptr->vector_length (vector));
             }
         }
       else if (GIMP_VALUE_HOLDS_PARASITE (&value))
         {
           if (! sc->vptr->is_list (sc, sc->vptr->pair_car (a)) ||
               sc->vptr->list_length (sc, sc->vptr->pair_car (a)) != 3)
-            success = FALSE;
-
-          if (success)
+            return script_type_error(sc, "list", i, proc_name);
+          else
             {
               GimpParasite parasite;
               pointer      temp_val;
@@ -1243,126 +1033,80 @@ script_fu_marshal_procedure_call (scheme   *sc,
               temp_val = sc->vptr->pair_car (a);
 
               if (! sc->vptr->is_string (sc->vptr->pair_car (temp_val)))
-                {
-                  success = FALSE;
-                  break;
-                }
+                return script_type_error_in_container(
+                  sc, "string", i, 0, proc_name, 0);
 
               parasite.name =
                 sc->vptr->string_value (sc->vptr->pair_car (temp_val));
-#if DEBUG_MARSHALL
-              g_printerr ("      name '%s'\n", args[i].data.d_parasite.name);
-#endif
+              g_debug ("name '%s'", parasite.name);
 
               /* parasite->flags */
               temp_val = sc->vptr->pair_cdr (temp_val);
 
               if (! sc->vptr->is_number (sc->vptr->pair_car (temp_val)))
-                {
-                  success = FALSE;
-                  break;
-                }
+                return script_type_error_in_container(
+                  sc, "numeric", i, 1, proc_name, 0);
 
               parasite.flags =
                 sc->vptr->ivalue (sc->vptr->pair_car (temp_val));
-#if DEBUG_MARSHALL
-              g_printerr ("      flags %d", args[i].data.d_parasite.flags);
-#endif
+                g_debug ("flags %d", parasite.flags);
 
               /* parasite->data */
               temp_val = sc->vptr->pair_cdr (temp_val);
 
               if (!sc->vptr->is_string (sc->vptr->pair_car (temp_val)))
-                {
-                  success = FALSE;
-                  break;
-                }
+                return script_type_error_in_container(
+                  sc, "string", i, 2, proc_name, 0);
 
               parasite.data =
                 sc->vptr->string_value (sc->vptr->pair_car (temp_val));
               parasite.size = strlen (parasite.data);
 
-#if DEBUG_MARSHALL
-              g_printerr (", size %d\n", args[i].data.d_parasite.size);
-              g_printerr ("      data '%s'\n", (char *)args[i].data.d_parasite.data);
-#endif
+              g_debug ("size %d", parasite.size);
+              g_debug ("data '%s'", (char *)parasite.data);
 
               g_value_set_boxed (&value, &parasite);
             }
         }
       else if (G_VALUE_TYPE (&value) == GIMP_TYPE_PDB_STATUS_TYPE)
         {
-          return foreign_error (sc,
+          /* A PDB procedure signature wrongly requires a status. */
+          return implementation_error (sc,
                                 "Status is for return types, not arguments",
                                 sc->vptr->pair_car (a));
         }
       else
         {
           g_snprintf (error_str, sizeof (error_str),
-                      "Argument %d for %s is an unknown type %s",
+                      "Argument %d for %s is unhandled type %s",
                       i+1, proc_name, g_type_name (G_VALUE_TYPE (&value)));
-          return foreign_error (sc, error_str, 0);
+          return implementation_error (sc, error_str, 0);
         }
-
-      /* Break out of loop before i gets updated when error was detected */
-      if (! success)
-        break;
-
+      debug_gvalue(&value);
       gimp_value_array_append (args, &value);
       g_value_unset (&value);
     }
 
-  if (success)
-    {
-      /* refuse to refresh scripts from a script, better than crashing
-       * see bug #575830
-       */
-      if (strcmp (proc_name, "script-fu-refresh-scripts"))
-        {
-#if DEBUG_MARSHALL
-          g_printerr ("    calling %s...", proc_name);
-#endif
-          values = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                                 proc_name, args);
-#if DEBUG_MARSHALL
-          g_printerr ("  done.\n");
-#endif
-        }
-    }
-  else
-    {
-#if DEBUG_MARSHALL
-      g_printerr ("  Invalid type for argument %d\n", i+1);
-#endif
-      g_snprintf (error_str, sizeof (error_str),
-                  "Invalid type for argument %d to %s",
-                  i+1, proc_name);
-      return foreign_error (sc, error_str, 0);
-    }
+  /* Omit refresh scripts from a script, better than crashing, see #575830. */
+  if (strcmp (proc_name, "script-fu-refresh") == 0)
+      return script_error (sc, "A script cannot refresh scripts", 0);
+
+  g_debug ("calling %s", proc_name);
+  values = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                         proc_name, args);
+  g_debug ("done.");
 
   /*  Check the return status  */
   if (! values)
     {
-#if DEBUG_MARSHALL
-      g_printerr ("  Did not return status\n");
-#endif
+      /* Usually a plugin that crashed, wire error */
       g_snprintf (error_str, sizeof(error_str),
-                  "Procedure execution of %s did not return a status",
+                  "in script, called procedure %s failed to return a status",
                   proc_name);
-
-      return foreign_error (sc, error_str, 0);
+      return script_error (sc, error_str, 0);
     }
 
-#if DEBUG_MARSHALL
-  {
-    const gchar *status_name;
-
-    gimp_enum_get_value (GIMP_TYPE_PDB_STATUS_TYPE,
-                         values[0].data.d_status,
-                         &status_name, NULL, NULL, NULL);
-    g_printerr ("    return value is %s\n", status_name);
-  }
-#endif
+  /* No need to log a string for status, we log the cases, or caller will log it.*/
 
   switch (GIMP_VALUES_GET_ENUM (values, 0))
     {
@@ -1381,6 +1125,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                       "Procedure execution of %s failed",
                       proc_name);
         }
+        /* not language errors, procedure returned error for unknown reason. */
       return foreign_error (sc, error_str, 0);
       break;
 
@@ -1399,30 +1144,32 @@ script_fu_marshal_procedure_call (scheme   *sc,
                       "Procedure execution of %s failed on invalid input arguments",
                       proc_name);
         }
+      /* not language errors, GIMP validated the GValueArray
+       * and decided it doesn't match the registered signature
+       * or the procedure decided its preconditions not met (e.g. out of range)
+       */
       return foreign_error (sc, error_str, 0);
       break;
 
     case GIMP_PDB_SUCCESS:
-#if DEBUG_MARSHALL
-      g_printerr ("    values returned: %d\n", nvalues-1);
-#endif
+      g_debug ("Count of non-status values returned: %d", gimp_value_array_length (values) - 1);
+
+      /* Counting down, i.e. traversing in reverse.
+       * i+1 is the current index.  i is the preceding value.
+       * When at the current index is an array, preceding value (at i) is array length.
+       *
+       * The below code for array results is not safe.
+       * It implicitly requires, but does not explicitly check,
+       * that the returned length equals the actual length of the returned array,
+       * and iterates over the returned array assuming it has the returned length.
+       */
       for (i = gimp_value_array_length (values) - 2; i >= 0; --i)
         {
           GValue *value = gimp_value_array_index (values, i + 1);
           gint    j;
 
-#if DEBUG_MARSHALL
-          {
-            const gchar *type_name;
+          g_debug("Return value %d is type %s", i+1, G_VALUE_TYPE_NAME (value));
 
-            gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE,
-                                 return_vals[i].type,
-                                 &type_name, NULL, NULL, NULL);
-
-            g_printerr ("      value %d is type %s (%d)\n",
-                        i, type_name, return_vals[i].type);
-          }
-#endif
           if (G_VALUE_HOLDS_OBJECT (value))
             {
               GObject *object = g_value_get_object (value);
@@ -1596,7 +1343,8 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               if (v->name == NULL)
                 {
-                  return_val = foreign_error (sc, "Error: null parasite", 0);
+                  /* Wrongly passed a Parasite that appears to be null, or other error. */
+                  return_val = implementation_error (sc, "Error: null parasite", 0);
                 }
               else
                 {
@@ -1625,34 +1373,35 @@ script_fu_marshal_procedure_call (scheme   *sc,
                                                return_val);
                   g_free (data);
 
-#if DEBUG_MARSHALL
-                  g_printerr ("      name '%s'\n", p->name);
-                  g_printerr ("      flags %d", p->flags);
-                  g_printerr (", size %d\n", p->size);
-                  g_printerr ("      data '%.*s'\n",
-                                p->size, (gchar *) p->data);
-#endif
+                  g_debug ("name '%s'", v->name);
+                  g_debug ("flags %d", v->flags);
+                  g_debug ("size %d", v->size);
+                  g_debug ("data '%.*s'", v->size, (gchar *) v->data);
                 }
             }
           else if (G_VALUE_TYPE (&value) == GIMP_TYPE_PDB_STATUS_TYPE)
             {
-              return foreign_error (sc, "Procedure execution returned multiple status values", 0);
+              /* Called procedure implemented incorrectly. */
+              return implementation_error (sc, "Procedure execution returned multiple status values", 0);
             }
           else
             {
+              /* Missing cases here. */
               g_snprintf (error_str, sizeof (error_str),
-                          "Unknown return type %s",
-                          g_type_name (G_VALUE_TYPE (value)));
-              return foreign_error (sc, error_str, 0);
+                          "Unhandled return type %s",
+                          G_VALUE_TYPE_NAME (value));
+              return implementation_error (sc, error_str, 0);
             }
         }
+      break;
 
     case GIMP_PDB_PASS_THROUGH:
     case GIMP_PDB_CANCEL:   /*  should we do something here?  */
+      g_debug("Status is PASS_THROUGH or CANCEL");
       break;
     }
 
-  /* If we have no return value(s) from PDB call, return
+  /* If we have no non-status return value(s) from PDB call, return
    * either TRUE or FALSE to indicate if call succeeded.
    */
   if (return_val == sc->NIL)
@@ -1663,13 +1412,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
         return_val = sc->vptr->cons (sc, sc->F, sc->NIL);
     }
 
-  /*  free the proc name  */
   g_free (proc_name);
 
-  /*  free up the executed procedure return values  */
+  /*  free executed procedure return values  */
   gimp_value_array_unref (values);
 
-  /*  free up arguments and values  */
+  /*  free arguments and values  */
   gimp_value_array_unref (args);
 
   /*  if we're in server mode, listen for additional commands for 10 ms  */

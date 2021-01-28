@@ -18,6 +18,7 @@ plugin_sources = [
   'script-fu-text-console.c',
   'script-fu-utils.c',
   'script-fu.c',
+  'script-fu-errors.c',
 ]
 
 if platform_windows
