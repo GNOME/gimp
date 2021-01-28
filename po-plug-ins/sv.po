@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-01-18 19:25+0000\n"
-"PO-Revision-Date: 2021-01-18 21:42+0100\n"
+"POT-Creation-Date: 2021-01-28 00:11+0000\n"
+"PO-Revision-Date: 2021-01-28 19:51+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -50,8 +50,8 @@ msgstr "Rasta en get (C)"
 #: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
 #: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2355
 #: ../plug-ins/common/file-jp2-load.c:975
-#: ../plug-ins/common/file-pdf-load.c:643
-#: ../plug-ins/common/file-pdf-load.c:1039
+#: ../plug-ins/common/file-pdf-load.c:655
+#: ../plug-ins/common/file-pdf-load.c:1065
 #: ../plug-ins/common/file-pdf-save.c:1152 ../plug-ins/common/file-ps.c:3550
 #: ../plug-ins/common/file-raw-data.c:1776 ../plug-ins/common/file-svg.c:679
 #: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1308
@@ -152,7 +152,7 @@ msgstr "Rasta en get (Python 3)"
 #: ../plug-ins/common/contrast-retinex.c:329
 #: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/depth-merge.c:711
 #: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:2356
-#: ../plug-ins/common/file-pdf-load.c:644 ../plug-ins/common/file-svg.c:680
+#: ../plug-ins/common/file-pdf-load.c:656 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1309
 #: ../plug-ins/common/grid.c:738 ../plug-ins/common/hot.c:657
 #: ../plug-ins/common/jigsaw.c:2475 ../plug-ins/common/nl-filter.c:1103
@@ -388,7 +388,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/common/file-gegl.c:461 ../plug-ins/common/file-gif-load.c:1037
 #: ../plug-ins/common/file-jp2-load.c:1315 ../plug-ins/common/file-pcx.c:483
 #: ../plug-ins/common/file-pcx.c:491 ../plug-ins/common/file-pix.c:424
-#: ../plug-ins/common/file-png.c:944 ../plug-ins/common/file-pnm.c:764
+#: ../plug-ins/common/file-png.c:947 ../plug-ins/common/file-pnm.c:764
 #: ../plug-ins/common/file-raw-data.c:1327
 #: ../plug-ins/common/file-sunras.c:1087 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:797
@@ -950,7 +950,7 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/common/cml-explorer.c:2145 ../plug-ins/common/curve-bend.c:805
 #: ../plug-ins/common/file-dicom.c:1408 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
-#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1515
+#: ../plug-ins/common/file-pdf-save.c:730 ../plug-ins/common/file-png.c:1521
 #: ../plug-ins/common/file-raw-data.c:1117
 #: ../plug-ins/common/file-raw-data.c:1147 ../plug-ins/common/file-sunras.c:641
 #: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
@@ -980,7 +980,7 @@ msgstr "Läs in parametrar för CML-utforskare"
 #: ../plug-ins/common/file-cel.c:355 ../plug-ins/common/file-cel.c:409
 #: ../plug-ins/common/file-cel.c:649 ../plug-ins/common/file-dicom.c:376
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1412
-#: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:672
+#: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:675
 #: ../plug-ins/common/file-ps.c:1148 ../plug-ins/common/file-ps.c:3500
 #: ../plug-ins/common/file-psp.c:2388 ../plug-ins/common/file-psp.c:2438
 #: ../plug-ins/common/file-raw-data.c:439
@@ -1896,9 +1896,6 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #. Buffer for layer
 #. Counters
 #. Number of items read from file
-#.
-#. * Open the file and initialize the PNG read "engine"...
-#.
 #. max. rows allocated
 #. column, highest column ever used
 #. File pointer
@@ -1914,8 +1911,8 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/common/file-cel.c:398 ../plug-ins/common/file-dicom.c:366
 #: ../plug-ins/common/file-gegl.c:345 ../plug-ins/common/file-gif-load.c:397
 #: ../plug-ins/common/file-heif.c:831 ../plug-ins/common/file-jp2-load.c:1085
-#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:799
-#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:662
+#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:820
+#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:665
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
 #: ../plug-ins/common/file-raw-data.c:1226 ../plug-ins/common/file-sunras.c:448
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1035
@@ -1995,15 +1992,12 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 
 #. init the progress meter
 #.
-#. * Open the file and initialize the PNG write "engine"...
-#.
-#.
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
 #: ../plug-ins/common/file-heif.c:1468 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
-#: ../plug-ins/common/file-png.c:1505 ../plug-ins/common/file-pnm.c:1336
+#: ../plug-ins/common/file-png.c:1511 ../plug-ins/common/file-pnm.c:1336
 #: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
 #: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1049
 #: ../plug-ins/common/file-xpm.c:710 ../plug-ins/common/file-xwd.c:678
@@ -2810,7 +2804,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2270
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2278
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Kunde inte spara transparens utan informationsförlust; sparar opacitet "
@@ -2840,7 +2834,7 @@ msgstr "Spara upplösning"
 msgid "Save creation _time"
 msgstr "Spara skapad _tid"
 
-#: ../plug-ins/common/file-mng.c:1648 ../plug-ins/common/file-png.c:223
+#: ../plug-ins/common/file-mng.c:1648 ../plug-ins/common/file-png.c:224
 msgid "PNG"
 msgstr "PNG"
 
@@ -3003,7 +2997,7 @@ msgstr "Nedre ramen är utanför intervallet (måste vara < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Skrivning till filen ”%s” misslyckades: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:326
+#: ../plug-ins/common/file-pdf-load.c:329
 #: ../plug-ins/common/file-pdf-save.c:353
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
@@ -3013,7 +3007,7 @@ msgstr "Portable Document Format"
 #. * third is number of pages.
 #. * Specify order as in English if needed.
 #.
-#: ../plug-ins/common/file-pdf-load.c:480
+#: ../plug-ins/common/file-pdf-load.c:491
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -3022,66 +3016,71 @@ msgstr[0] ""
 msgstr[1] ""
 "PDF-dokumentet ”%1$s” har %3$d sidor. Sida %2$d är utanför intervallet."
 
-#: ../plug-ins/common/file-pdf-load.c:630
+#: ../plug-ins/common/file-pdf-load.c:642
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF är lösenordsskyddad, ange lösenordet:"
 
-#: ../plug-ins/common/file-pdf-load.c:640
+#: ../plug-ins/common/file-pdf-load.c:652
 msgid "Encrypted PDF"
 msgstr "Krypterad PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:667
+#: ../plug-ins/common/file-pdf-load.c:679
 msgid "Wrong password! Please input the right one:"
 msgstr "Felaktigt lösenord! Ange det korrekta:"
 
-#: ../plug-ins/common/file-pdf-load.c:685
+#: ../plug-ins/common/file-pdf-load.c:697
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Kunde inte läsa in ”%s”: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:837
+#: ../plug-ins/common/file-pdf-load.c:861
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:839 ../plug-ins/common/file-ps.c:1237
+#: ../plug-ins/common/file-pdf-load.c:863 ../plug-ins/common/file-ps.c:1237
 #, c-format
 msgid "%s-pages"
 msgstr "%s-sidor"
 
-#: ../plug-ins/common/file-pdf-load.c:1035
+#: ../plug-ins/common/file-pdf-load.c:1061
 msgid "Import from PDF"
 msgstr "Importera från PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1040 ../plug-ins/common/file-ps.c:3551
+#: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3551
 #: ../plug-ins/file-tiff/file-tiff-load.c:2336
 #: ../plug-ins/metadata/metadata-editor.c:5726
 msgid "_Import"
 msgstr "_Importera"
 
-#: ../plug-ins/common/file-pdf-load.c:1072
+#: ../plug-ins/common/file-pdf-load.c:1098
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Fel vid hämtning av sidantal från angiven PDF-fil."
 
-#: ../plug-ins/common/file-pdf-load.c:1118
+#. "Load in reverse order" toggle button
+#: ../plug-ins/common/file-pdf-load.c:1139
+msgid "Load in reverse order"
+msgstr "Läs in i omvänd ordning"
+
+#: ../plug-ins/common/file-pdf-load.c:1157
 msgid "_Width (pixels):"
 msgstr "_Bredd (bildpunkter):"
 
-#: ../plug-ins/common/file-pdf-load.c:1119
+#: ../plug-ins/common/file-pdf-load.c:1158
 msgid "_Height (pixels):"
 msgstr "_Höjd (bildpunkter):"
 
-#: ../plug-ins/common/file-pdf-load.c:1121
+#: ../plug-ins/common/file-pdf-load.c:1160
 msgid "_Resolution:"
 msgstr "_Upplösning:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1132
+#: ../plug-ins/common/file-pdf-load.c:1171
 msgid "Use _Anti-aliasing"
 msgstr "Använd _kantutjämning"
 
-#: ../plug-ins/common/file-pdf-load.c:1400
-#: ../plug-ins/common/file-pdf-load.c:1401 ../plug-ins/common/file-svg.c:857
+#: ../plug-ins/common/file-pdf-load.c:1439
+#: ../plug-ins/common/file-pdf-load.c:1440 ../plug-ins/common/file-svg.c:857
 #: ../plug-ins/common/file-wmf.c:725 ../plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
@@ -3210,47 +3209,47 @@ msgstr "Alias Pix-bild"
 msgid "PIX format does not support multiple layers."
 msgstr "PIX-formatet stöder inte flera lager."
 
-#: ../plug-ins/common/file-png.c:177 ../plug-ins/common/file-png.c:207
+#: ../plug-ins/common/file-png.c:178 ../plug-ins/common/file-png.c:208
 msgid "PNG image"
 msgstr "PNG-bild"
 
-#: ../plug-ins/common/file-png.c:420
+#: ../plug-ins/common/file-png.c:421
 #, c-format
 msgid "PNG format does not support multiple layers."
 msgstr "PNG-formatet stöder inte flera lager."
 
-#: ../plug-ins/common/file-png.c:495
+#: ../plug-ins/common/file-png.c:497
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Fel vid inläsning av PNG-fil: %s\n"
 
-#: ../plug-ins/common/file-png.c:628
+#: ../plug-ins/common/file-png.c:630
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Fel vid skapande av läs-struct för PNG då ”%s” lästes in."
 
-#: ../plug-ins/common/file-png.c:637
+#: ../plug-ins/common/file-png.c:639
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Fel vid läsning av ”%s”. Kunde inte skapa informationsstruktur för PNG-huvud."
 
-#: ../plug-ins/common/file-png.c:645
+#: ../plug-ins/common/file-png.c:647
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Fel vid inläsning av ”%s”. Skadad fil?"
 
-#: ../plug-ins/common/file-png.c:896
+#: ../plug-ins/common/file-png.c:899
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Okänd färgmodell i PNG-filen ”%s”."
 
-#: ../plug-ins/common/file-png.c:909 ../plug-ins/file-exr/file-exr.c:256
+#: ../plug-ins/common/file-png.c:912 ../plug-ins/file-exr/file-exr.c:256
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Kunde inte skapa ny bild för ”%s”: %s"
 
-#: ../plug-ins/common/file-png.c:994
+#: ../plug-ins/common/file-png.c:997
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3258,19 +3257,19 @@ msgstr ""
 "PNG-filen angav en position som orsakade att lagret blev placerat utanför "
 "bilden."
 
-#: ../plug-ins/common/file-png.c:1229
+#: ../plug-ins/common/file-png.c:1233
 msgid "Apply PNG Offset"
 msgstr "Tillämpa PNG-position"
 
-#: ../plug-ins/common/file-png.c:1233
+#: ../plug-ins/common/file-png.c:1237
 msgid "Ignore PNG offset"
 msgstr "Ignorera PNG-position"
 
-#: ../plug-ins/common/file-png.c:1234
+#: ../plug-ins/common/file-png.c:1238
 msgid "Apply PNG offset to layer"
 msgstr "Tillämpa PNG-position på lager"
 
-#: ../plug-ins/common/file-png.c:1259
+#: ../plug-ins/common/file-png.c:1263
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3279,55 +3278,55 @@ msgstr ""
 "PNG-bilden du importerar anger en position på %d, %d. Vill du tillämpa denna "
 "position på lagret?"
 
-#: ../plug-ins/common/file-png.c:1471
+#: ../plug-ins/common/file-png.c:1476
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Fel vid skapande av PNG skriv-struct då ”%s” exporterades."
 
-#: ../plug-ins/common/file-png.c:1480
+#: ../plug-ins/common/file-png.c:1485
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Fel vid export av ”%s”. Kunde inte skapa informationsstruktur för PNG-huvud."
 
-#: ../plug-ins/common/file-png.c:1488
+#: ../plug-ins/common/file-png.c:1493
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Fel vid export av ”%s”. Kunde inte exportera bild."
 
-#: ../plug-ins/common/file-png.c:2309 ../plug-ins/common/file-ps.c:3693
+#: ../plug-ins/common/file-png.c:2317 ../plug-ins/common/file-ps.c:3693
 msgid "Automatic"
 msgstr "Automatisk"
 
-#: ../plug-ins/common/file-png.c:2310
+#: ../plug-ins/common/file-png.c:2318
 msgid "8 bpc RGB"
 msgstr "8 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2311
+#: ../plug-ins/common/file-png.c:2319
 msgid "8 bpc GRAY"
 msgstr "8 bpc GRÅ"
 
-#: ../plug-ins/common/file-png.c:2312
+#: ../plug-ins/common/file-png.c:2320
 msgid "8 bpc RGBA"
 msgstr "8 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2313
+#: ../plug-ins/common/file-png.c:2321
 msgid "8 bpc GRAYA"
 msgstr "8 bpc GRÅA"
 
-#: ../plug-ins/common/file-png.c:2314
+#: ../plug-ins/common/file-png.c:2322
 msgid "16 bpc RGB"
 msgstr "16 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2315
+#: ../plug-ins/common/file-png.c:2323
 msgid "16 bpc GRAY"
 msgstr "16 bpc GRÅ"
 
-#: ../plug-ins/common/file-png.c:2316
+#: ../plug-ins/common/file-png.c:2324
 msgid "16 bpc RGBA"
 msgstr "16 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2317
+#: ../plug-ins/common/file-png.c:2325
 msgid "16 bpc GRAYA"
 msgstr "16 bpc GRÅA"
 
@@ -12259,11 +12258,6 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgid "Export Image as PNG"
 #~ msgstr "Exportera bild som PNG"
 
-#, fuzzy
-#~| msgid "Export Image as PNG"
-#~ msgid "Export Image as JPEG"
-#~ msgstr "Exportera bild som PNG"
-
 #~ msgid "Export Image as TIFF"
 #~ msgstr "Exportera bild som TIFF"
 
@@ -12838,10 +12832,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Outside Type"
 #~ msgstr "Typ av utsida"
-
-# ?
-#~ msgid "_Wrap"
-#~ msgstr "_Wrap"
 
 #~ msgid "Mandelbrot Parameters"
 #~ msgstr "Mandelbrotparametrar"
