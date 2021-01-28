@@ -110,6 +110,7 @@ static gboolean    save_image                (GFile            *file,
                                               GimpImage        *orig_image,
                                               GObject          *config,
                                               gint             *bits_per_sample,
+                                              gboolean          interactive,
                                               GError          **error);
 
 static int         respin_cmap               (png_structp       pp,
@@ -446,7 +447,8 @@ png_save (GimpProcedure        *procedure,
       gint bits_per_sample;
 
       if (save_image (file, image, drawables[0], orig_image, G_OBJECT (config),
-                      &bits_per_sample, &error))
+                      &bits_per_sample, run_mode != GIMP_RUN_NONINTERACTIVE,
+                      &error))
         {
           if (metadata)
             gimp_metadata_set_bits_per_sample (metadata, bits_per_sample);
@@ -659,8 +661,9 @@ load_image (GFile        *file,
    * Open the file and initialize the PNG read "engine"...
    */
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  if (interactive)
+    gimp_progress_init_printf (_("Opening '%s'"),
+                               gimp_file_get_utf8_name (file));
 
   filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
@@ -1117,9 +1120,10 @@ load_image (GFile        *file,
                            pixel,
                            GEGL_AUTO_ROWSTRIDE);
 
-          gimp_progress_update (((gdouble) pass +
-                                 (gdouble) end / (gdouble) height) /
-                                (gdouble) num_passes);
+          if (interactive)
+            gimp_progress_update (((gdouble) pass +
+                                   (gdouble) end / (gdouble) height) /
+                                  (gdouble) num_passes);
         }
     }
 
@@ -1299,6 +1303,7 @@ save_image (GFile        *file,
             GimpImage    *orig_image,
             GObject      *config,
             gint         *bits_per_sample,
+            gboolean      interactive,
             GError      **error)
 {
   gint              i, k;             /* Looping vars */
@@ -1502,8 +1507,9 @@ save_image (GFile        *file,
    * Open the file and initialize the PNG write "engine"...
    */
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  if (interactive)
+    gimp_progress_init_printf (_("Exporting '%s'"),
+                               gimp_file_get_utf8_name (file));
 
   filename = g_file_get_path (file);
   fp = g_fopen (filename, "wb");
@@ -2058,13 +2064,15 @@ save_image (GFile        *file,
 
           png_write_rows (pp, pixels, num);
 
-          gimp_progress_update (((double) pass + (double) end /
-                                 (double) height) /
-                                (double) num_passes);
+          if (interactive)
+            gimp_progress_update (((double) pass + (double) end /
+                                   (double) height) /
+                                  (double) num_passes);
         }
     }
 
-  gimp_progress_update (1.0);
+  if (interactive)
+    gimp_progress_update (1.0);
 
   png_write_end (pp, info);
   png_destroy_write_struct (&pp, &info);
