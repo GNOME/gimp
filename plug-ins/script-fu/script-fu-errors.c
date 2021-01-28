@@ -61,7 +61,9 @@
  * Returns a value which the caller must return to its caller.
  */
 pointer
-script_error (scheme *sc, const gchar *error_message, const pointer a)
+script_error (scheme        *sc,
+              const gchar   *error_message,
+              const pointer  a)
 {
   /* Logs to domain "scriptfu" since G_LOG_DOMAIN is set to that. */
   g_debug ("%s", error_message);
@@ -78,30 +80,30 @@ script_error (scheme *sc, const gchar *error_message, const pointer a)
 
 /* Arg has wrong type. */
 pointer
-script_type_error (scheme *sc,
-                             const gchar *expected_type,
-                             const guint arg_index,
-                             const gchar * proc_name)
+script_type_error (scheme       *sc,
+                   const gchar  *expected_type,
+                   const guint   arg_index,
+                   const gchar  *proc_name)
 {
-  gchar            error_message[1024];
+  gchar  error_message[1024];
 
   g_snprintf (error_message, sizeof (error_message),
               "in script, expected type: %s for argument %d to %s ",
               expected_type, arg_index+1, proc_name );
 
-  return script_error(sc, error_message, 0);
+  return script_error (sc, error_message, 0);
 }
 
 /* Arg is container (list or vector) having an element of wrong type. */
 pointer
-script_type_error_in_container (scheme *sc,
-                             const gchar  *expected_type,
-                             const guint   arg_index,
-                             const guint   element_index,
-                             const gchar  *proc_name,
-                             const pointer container)
+script_type_error_in_container (scheme        *sc,
+                                const gchar   *expected_type,
+                                const guint    arg_index,
+                                const guint    element_index,
+                                const gchar   *proc_name,
+                                const pointer  container)
 {
-  gchar            error_message[1024];
+  gchar     error_message[1024];
 
   /* convert zero based indices to ordinals */
   g_snprintf (error_message, sizeof (error_message),
@@ -109,18 +111,18 @@ script_type_error_in_container (scheme *sc,
               expected_type, element_index+1, arg_index+1, proc_name );
 
   /* pass container to foreign_error */
-  return script_error(sc, error_message, container);
+  return script_error (sc, error_message, container);
 }
 
 /* Arg is vector of wrong length. !!! Arg is not a list.  */
-pointer script_length_error_in_vector (
-                                      scheme       *sc,
-                                      const guint   arg_index,
-                                      const gchar  *proc_name,
-                                      const guint   expected_length,
-                                      const pointer vector)
+pointer
+script_length_error_in_vector (scheme       *sc,
+                               const guint   arg_index,
+                               const gchar  *proc_name,
+                               const guint   expected_length,
+                               const pointer vector)
 {
-  gchar            error_message[1024];
+  gchar    error_message[1024];
 
   /* vector_length returns signed long (???) but expected_length is unsigned */
   g_snprintf (error_message, sizeof (error_message),
@@ -130,7 +132,7 @@ pointer script_length_error_in_vector (
               sc->vptr->vector_length (vector), expected_length);
 
   /* not pass vector to foreign_error */
-  return script_error(sc, error_message, 0);
+  return script_error (sc, error_message, 0);
 }
 
 
@@ -139,7 +141,8 @@ pointer script_length_error_in_vector (
  * Names a kind of error: in ScriptFu code, or in external code.
  * Same as script_error, but FUTURE distinguish the message with a prefix.
  */
-pointer implementation_error (scheme       *sc,
+pointer
+implementation_error (scheme       *sc,
                       const gchar  *error_message,
                       const pointer a)
 {
@@ -154,15 +157,19 @@ pointer implementation_error (scheme       *sc,
  * Or conditionally compile.
  */
 
-void debug_vector(scheme *sc, const pointer vector, const char *format)
+void
+debug_vector (scheme        *sc,
+              const pointer  vector,
+              const char    *format)
 {
   glong count = sc->vptr->vector_length (vector);
+
   g_debug ("vector has %ld elements", count);
   if (count > 0)
     {
       for (int j = 0; j < count; ++j)
         {
-          if (strcmp(format, "%f")==0)
+          if (strcmp (format, "%f")==0)
             /* real i.e. float */
             g_debug (format,
                      sc->vptr->rvalue ( sc->vptr->vector_elem (vector, j) ));
@@ -182,20 +189,22 @@ void debug_vector(scheme *sc, const pointer vector, const char *format)
  *
  * !!! Only for lists of strings.
  */
-void debug_list(scheme       *sc,
-                pointer       list,
-                const char   *format,
-                const guint   num_elements)
+void
+debug_list (scheme       *sc,
+            pointer       list,
+            const char   *format,
+            const guint   num_elements)
 {
-  g_return_if_fail(num_elements == sc->vptr->list_length (sc, list));
+  g_return_if_fail (num_elements == sc->vptr->list_length (sc, list));
   g_debug ("list has %d elements", num_elements);
   if (num_elements > 0)
     {
       for (int j = 0; j < num_elements; ++j)
         {
           pointer v_element = sc->vptr->pair_car (list);
+
           g_debug (format,
-                      sc->vptr->string_value ( v_element ));
+                   sc->vptr->string_value ( v_element ));
           list = sc->vptr->pair_cdr (list);
         }
     }
@@ -205,24 +214,26 @@ void debug_list(scheme       *sc,
  * Log types of formal and actual args.
  * Scheme type names, and enum of actual type.
  */
-void debug_in_arg(scheme           *sc,
-                  const pointer     a,
-                  const guint       arg_index,
-                  const gchar      *type_name )
+void
+debug_in_arg (scheme           *sc,
+              const pointer     a,
+              const guint       arg_index,
+              const gchar      *type_name )
 {
   g_debug ("param %d - expecting type %s", arg_index + 1, type_name );
   g_debug ("actual arg is type %s (%d)",
-              ts_types[ type(sc->vptr->pair_car (a)) ],
-              type(sc->vptr->pair_car (a)));
+           ts_types[ type(sc->vptr->pair_car (a)) ],
+           type(sc->vptr->pair_car (a)));
 }
 
 /* Log GValue: its value and its GType
  * FUTURE: for Gimp types, gimp_item_get_id (GIMP_ITEM (<value>)));
  */
-void debug_gvalue(const GValue     *value)
+void
+debug_gvalue (const GValue     *value)
 {
-  char * contents_str;
-  const char * type_name;
+  char        *contents_str;
+  const char  *type_name;
 
   type_name = G_VALUE_TYPE_NAME(value);
   contents_str = g_strdup_value_contents (value);

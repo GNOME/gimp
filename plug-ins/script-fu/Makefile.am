@@ -81,8 +81,10 @@ script_fu_SOURCES = \
 	script-fu-server.h		\
 	script-fu-utils.c		\
 	script-fu-utils.h		\
-	script-fu-errors.c  \
-	script-fu-errors.h  \
+	script-fu-errors.c		\
+	script-fu-errors.h		\
+	script-fu-compat.c 		\
+	script-fu-compat.h		\
 	scheme-wrapper.c		\
 	scheme-wrapper.h
 

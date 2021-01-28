@@ -29,38 +29,36 @@
 #endif
 
 
-pointer script_error (scheme       *sc,
-                      const gchar  *error_message,
-                      const pointer a);
+pointer script_error (scheme        *sc,
+                      const gchar   *error_message,
+                      const pointer  a);
 
 pointer script_type_error (scheme       *sc,
                            const gchar  *expected_type,
                            const guint   arg_index,
                            const gchar  *proc_name);
 
-pointer script_type_error_in_container (
-                                      scheme       *sc,
-                                      const gchar  *expected_type,
-                                      const guint   arg_index,
-                                      const guint   element_index,
-                                      const gchar  *proc_name,
-                                      const pointer a);
+pointer script_type_error_in_container (scheme       *sc,
+                                        const gchar  *expected_type,
+                                        const guint   arg_index,
+                                        const guint   element_index,
+                                        const gchar  *proc_name,
+                                        const pointer a);
 
-pointer script_length_error_in_vector (
-                                      scheme       *sc,
-                                      const guint   arg_index,
-                                      const gchar  *proc_name,
-                                      const guint   expected_length,
-                                      const pointer vector);
+pointer script_length_error_in_vector (scheme       *sc,
+                                       const guint   arg_index,
+                                       const gchar  *proc_name,
+                                       const guint   expected_length,
+                                       const pointer vector);
 
-pointer implementation_error (scheme       *sc,
-                              const gchar  *error_message,
-                              const pointer a);
+pointer implementation_error (scheme        *sc,
+                              const gchar   *error_message,
+                              const pointer  a);
 
 
-void debug_vector (scheme      *sc,
-                  const pointer vector,
-                  const gchar  *format);
+void debug_vector (scheme        *sc,
+                   const pointer  vector,
+                   const gchar   *format);
 
 void debug_list (scheme       *sc,
                  pointer       list,
