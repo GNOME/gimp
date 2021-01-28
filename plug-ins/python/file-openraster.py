@@ -164,23 +164,30 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
     with open(tmp, 'wb') as fid:
         fid.write(orafile.read('Thumbnails/thumbnail.png'))
 
-    img = Gimp.get_pdb().run_procedure('file-png-load', [
+    result = Gimp.get_pdb().run_procedure('file-png-load', [
         GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
         GObject.Value(GObject.TYPE_STRING, tmp),
     ])
-    img = img.index(1)
-    # TODO: scaling
     os.remove(tmp)
     os.rmdir(tempdir)
 
-    return Gimp.ValueArray.new_from_values([
-        GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS),
-        GObject.Value(Gimp.Image, img),
-        GObject.Value(GObject.TYPE_INT, w),
-        GObject.Value(GObject.TYPE_INT, h),
-        GObject.Value(Gimp.ImageType, Gimp.ImageType.RGB_IMAGE),
-        GObject.Value(GObject.TYPE_INT, 1)
-    ])
+    if (result.index(0) == Gimp.PDBStatusType.SUCCESS):
+        img = result.index(1)
+        # TODO: scaling
+
+        return Gimp.ValueArray.new_from_values([
+            GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS),
+            GObject.Value(Gimp.Image, img),
+            GObject.Value(GObject.TYPE_INT, w),
+            GObject.Value(GObject.TYPE_INT, h),
+            GObject.Value(Gimp.ImageType, Gimp.ImageType.RGB_IMAGE),
+            GObject.Value(GObject.TYPE_INT, 1)
+        ])
+    else:
+        return Gimp.ValueArray.new_from_values([
+            GObject.Value(Gimp.PDBStatusType, result.index(0)),
+            GObject.Value(GObject.Error, result.index(1))
+        ])
 
 # We would expect the n_drawables parameter to not be there with introspection but
 # currently that isn't working, see issue #5312. Until that is resolved we keep
@@ -406,13 +413,17 @@ def load_ora(procedure, run_mode, file, args, data):
                 fid.write(data)
 
             # import layer, set attributes and add to image
-            gimp_layer = Gimp.get_pdb().run_procedure('gimp-file-load-layer', [
+            result = gimp_layer = Gimp.get_pdb().run_procedure('gimp-file-load-layer', [
                 GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
                 GObject.Value(Gimp.Image, img),
                 GObject.Value(Gio.File, Gio.File.new_for_path(tmp)),
             ])
-            gimp_layer = gimp_layer.index(1)
-            os.remove(tmp)
+            if (result.index(0) == Gimp.PDBStatusType.SUCCESS):
+                gimp_layer = gimp_layer.index(1)
+                os.remove(tmp)
+            else:
+                print("Error loading layer from openraster image.")
+
         gimp_layer.set_name(name)
         gimp_layer.set_mode(layer_mode)
         gimp_layer.set_offsets(x, y)  # move to correct position
