@@ -612,7 +612,7 @@ gimp_chain_line_draw (GtkWidget *widget,
 
   cairo_set_line_width (cr, 2.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_BUTT);
-  gtk_style_context_get_color (context, 0, &color);
+  gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget), &color);
   gdk_cairo_set_source_rgba (cr, &color);
 
   cairo_stroke (cr);
