@@ -447,23 +447,33 @@ gimp_parasite_data_size (const GimpParasite *parasite)
 /**
  * gimp_parasite_get_data:
  * @parasite: a #GimpParasite
- * @num_bytes: (out): size of the returned data.
+ * @num_bytes: (out) (nullable): size of the returned data.
  *
  * Gets the parasite's data. It may not necessarily be text, nor is it
  * guaranteed to be %NULL-terminated. It is your responsibility to know
  * how to deal with this data.
+ * Even when you expect a nul-terminated string, it is advised not to
+ * assume the returned data to be, as parasites can be edited by third
+ * party scripts. You may end up reading out-of-bounds data. So you
+ * should only ignore @num_bytes when you all you care about is checking
+ * if the parasite has contents.
  *
  * Returns: (array length=num_bytes) (element-type char): parasite's data.
  */
 gconstpointer
 gimp_parasite_get_data (const GimpParasite *parasite,
-                        gint               *num_bytes)
+                        guint32            *num_bytes)
 {
   if (parasite)
     {
-      *num_bytes = parasite->size;
+      if (num_bytes)
+        *num_bytes = parasite->size;
+
       return parasite->data;
     }
+
+  if (num_bytes)
+    *num_bytes = 0;
 
   return NULL;
 }
