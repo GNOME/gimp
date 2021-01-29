@@ -1901,15 +1901,23 @@ get_hotspot_from_parasite (GimpImage *image,
 
   if (parasite)
     {
-      gint x, y;
+      gchar   *parasite_data;
+      guint32  parasite_size;
+      gint     x, y;
 
-      if (sscanf (gimp_parasite_data (parasite), "%i %i", &x, &y) == 2)
+      parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      parasite_data = g_strndup (parasite_data, parasite_size);
+
+      if (sscanf (parasite_data, "%i %i", &x, &y) == 2)
         {
           *hot_spot_x = x;
           *hot_spot_y = y;
 
+          g_free (parasite_data);
+
           return TRUE;
         }
+      g_free (parasite_data);
     }
 
   return FALSE;

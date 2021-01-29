@@ -172,7 +172,7 @@ jpeg_restore_original_settings (GimpImage       *image,
 {
   GimpParasite *parasite;
   const guchar *src;
-  glong         src_size;
+  guint32       src_size;
   gint          color_space;
   gint          q;
   gint          num_components;
@@ -187,8 +187,7 @@ jpeg_restore_original_settings (GimpImage       *image,
   parasite = gimp_image_get_parasite (image, "jpeg-settings");
   if (parasite)
     {
-      src = gimp_parasite_data (parasite);
-      src_size = gimp_parasite_data_size (parasite);
+      src = gimp_parasite_get_data (parasite, &src_size);
       if (src_size >= 4)
         {
           color_space      = *src++;
@@ -273,7 +272,7 @@ jpeg_restore_original_tables (GimpImage *image,
 {
   GimpParasite *parasite;
   const guchar *src;
-  glong         src_size;
+  guint32       src_size;
   gint          num_components;
   gint          num_tables;
   guint       **quant_tables;
@@ -283,10 +282,9 @@ jpeg_restore_original_tables (GimpImage *image,
   parasite = gimp_image_get_parasite (image, "jpeg-settings");
   if (parasite)
     {
-      src_size = gimp_parasite_data_size (parasite);
+      src = gimp_parasite_get_data (parasite, &src_size);
       if (src_size >= 4)
         {
-          src = gimp_parasite_data (parasite);
           num_components = src[2];
           num_tables     = src[3];
 
@@ -332,7 +330,7 @@ jpeg_swap_original_settings (GimpImage *image)
 {
   GimpParasite *parasite;
   const guchar *src;
-  glong         src_size;
+  guint32       src_size;
   gint          num_components;
   gint          num_tables;
   guchar       *new_data;
@@ -344,10 +342,9 @@ jpeg_swap_original_settings (GimpImage *image)
   parasite = gimp_image_get_parasite (image, "jpeg-settings");
   if (parasite)
     {
-      src_size = gimp_parasite_data_size (parasite);
+      src = gimp_parasite_get_data (parasite, &src_size);
       if (src_size >= 4)
         {
-          src = gimp_parasite_data (parasite);
           num_components = src[2];
           num_tables     = src[3];
 

@@ -822,65 +822,74 @@ save_layer (TIFF        *tif,
   if (config_save_geotiff_tags)
     {
       GimpParasite *parasite = NULL;
+      gchar        *parasite_data;
+      guint32       parasite_size;
 
       parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelPixelScale");
-
       if (parasite)
         {
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_MODELPIXELSCALE,
-                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
-                        gimp_parasite_data (parasite));
+                        (parasite_size / TIFFDataWidth (TIFF_DOUBLE)),
+                        parasite_data);
           gimp_parasite_free (parasite);
         }
 
       parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelTiePoint");
       if (parasite)
         {
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_MODELTIEPOINT,
-                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
-                        gimp_parasite_data (parasite));
+                        (parasite_size / TIFFDataWidth (TIFF_DOUBLE)),
+                        parasite_data);
           gimp_parasite_free (parasite);
         }
 
       parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelTransformation");
       if (parasite)
         {
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_MODELTRANSFORMATION,
-                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
-                        gimp_parasite_data (parasite));
+                        (parasite_size / TIFFDataWidth (TIFF_DOUBLE)),
+                        parasite_data);
           gimp_parasite_free (parasite);
         }
 
       parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_KeyDirectory");
       if (parasite)
         {
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_KEYDIRECTORY,
-                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_SHORT)),
-                        gimp_parasite_data (parasite));
+                        (parasite_size / TIFFDataWidth (TIFF_SHORT)),
+                        parasite_data);
           gimp_parasite_free (parasite);
         }
 
       parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_DoubleParams");
       if (parasite)
         {
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_DOUBLEPARAMS,
-                        (gimp_parasite_data_size (parasite) / TIFFDataWidth (TIFF_DOUBLE)),
-                        gimp_parasite_data (parasite));
+                        (parasite_size / TIFFDataWidth (TIFF_DOUBLE)),
+                        parasite_data);
           gimp_parasite_free (parasite);
         }
 
       parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_Asciiparams");
       if (parasite)
         {
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = g_strndup (parasite_data, parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_ASCIIPARAMS,
-                        gimp_parasite_data (parasite));
+                        parasite_data);
           gimp_parasite_free (parasite);
+          g_free (parasite_data);
         }
     }
 

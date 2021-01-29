@@ -307,10 +307,13 @@ gih_save (GimpProcedure        *procedure,
                                           "gimp-brush-pipe-name");
       if (parasite)
         {
-          g_strlcpy (info.description,
-                     gimp_parasite_data (parasite),
-                     MIN (sizeof (info.description),
-                          gimp_parasite_data_size (parasite)));
+          gchar   *parasite_data;
+          guint32  parasite_size;
+
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+
+          g_strlcpy (info.description, parasite_data,
+                     MIN (sizeof (info.description), parasite_size));
 
           gimp_parasite_free (parasite);
         }
@@ -331,8 +334,16 @@ gih_save (GimpProcedure        *procedure,
                                           "gimp-brush-pipe-spacing");
       if (parasite)
         {
-          info.spacing = atoi (gimp_parasite_data (parasite));
+          gchar   *parasite_data;
+          guint32  parasite_size;
+
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = g_strndup (parasite_data, parasite_size);
+
+          info.spacing = atoi (parasite_data);
+
           gimp_parasite_free (parasite);
+          g_free (parasite_data);
         }
       break;
 
@@ -356,9 +367,16 @@ gih_save (GimpProcedure        *procedure,
                                           "gimp-brush-pipe-parameters");
       if (parasite)
         {
-          gimp_pixpipe_params_parse (gimp_parasite_data (parasite),
-                                     &gihparams);
+          gchar   *parasite_data;
+          guint32  parasite_size;
+
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = g_strndup (parasite_data, parasite_size);
+
+          gimp_pixpipe_params_parse (parasite_data, &gihparams);
+
           gimp_parasite_free (parasite);
+          g_free (parasite_data);
         }
 
       /* Force default rank to same as number of cells if there is
@@ -410,9 +428,16 @@ gih_save (GimpProcedure        *procedure,
                                           "gimp-brush-pipe-parameters");
       if (parasite)
         {
-          gimp_pixpipe_params_parse (gimp_parasite_data (parasite),
-                                     &gihparams);
+          gchar   *parasite_data;
+          guint32  parasite_size;
+
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = g_strndup (parasite_data, parasite_size);
+
+          gimp_pixpipe_params_parse (parasite_data, &gihparams);
+
           gimp_parasite_free (parasite);
+          g_free (parasite_data);
         }
       break;
     }

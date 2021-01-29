@@ -52,6 +52,9 @@ print_utils_key_file_load_from_parasite (GimpImage   *image,
   GimpParasite *parasite;
   GKeyFile     *key_file;
   GError       *error = NULL;
+  const gchar  *parasite_data;
+  guint32       parasite_size;
+
 
   g_return_val_if_fail (parasite_name != NULL, NULL);
 
@@ -62,9 +65,8 @@ print_utils_key_file_load_from_parasite (GimpImage   *image,
 
   key_file = g_key_file_new ();
 
-  if (! g_key_file_load_from_data (key_file,
-                                   gimp_parasite_data (parasite),
-                                   gimp_parasite_data_size (parasite),
+  parasite_data = gimp_parasite_get_data (parasite, &parasite_size);
+  if (! g_key_file_load_from_data (key_file, parasite_data, parasite_size,
                                    G_KEY_FILE_NONE, &error))
     {
       g_key_file_free (key_file);

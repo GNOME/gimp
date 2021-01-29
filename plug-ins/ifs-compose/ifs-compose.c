@@ -413,9 +413,14 @@ ifs_run (GimpProcedure        *procedure,
                                          PLUG_IN_PARASITE);
       if (parasite)
         {
-          found_parasite = ifsvals_parse_string (gimp_parasite_data (parasite),
-                                                 &ifsvals, &elements);
+          gchar   *parasite_data;
+          guint32  parasite_size;
+
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = g_strndup (parasite_data, parasite_size);
+          found_parasite = ifsvals_parse_string (parasite_data, &ifsvals, &elements);
           gimp_parasite_free (parasite);
+          g_free (parasite_data);
         }
 
       if (! found_parasite)

@@ -1771,9 +1771,14 @@ save_image (GFile        *file,
       parasite = gimp_image_get_parasite (orig_image,
                                           "icc-profile-name");
       if (parasite)
-        profile_name = g_convert (gimp_parasite_data (parasite),
-                                  gimp_parasite_data_size (parasite),
-                                  "UTF-8", "ISO-8859-1", NULL, NULL, NULL);
+        {
+          gchar   *parasite_data;
+          guint32  parasite_size;
+
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          profile_name = g_convert (parasite_data, parasite_size,
+                                    "UTF-8", "ISO-8859-1", NULL, NULL, NULL);
+        }
 
       png_set_iCCP (pp,
                     info,

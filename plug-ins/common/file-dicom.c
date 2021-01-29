@@ -1147,8 +1147,10 @@ dicom_get_elements_list (GimpImage *image)
                    */
                   if (group_word > 0 && element_word > 0)
                     {
-                      const guint8 *val = gimp_parasite_data (parasite);
-                      const guint   len = gimp_parasite_data_size (parasite);
+                      const guint8 *val;
+                      guint32       len;
+
+                      val = (const guint8 *) gimp_parasite_get_data (parasite, &len);
 
                       /* and add the dicom element, asking to have
                          it's value copied for later garbage collection */

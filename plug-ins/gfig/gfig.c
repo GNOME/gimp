@@ -774,6 +774,8 @@ gfig_load_from_parasite (void)
   gchar        *fname;
   FILE         *fp;
   GimpParasite *parasite;
+  const gchar  *parasite_data;
+  guint32       parasite_size;
   GFigObj      *gfig;
 
   parasite = gimp_item_get_parasite (GIMP_ITEM (gfig_context->drawable),
@@ -793,10 +795,8 @@ gfig_load_from_parasite (void)
       return NULL;
     }
 
-  fwrite (gimp_parasite_data (parasite),
-          sizeof (guchar),
-          gimp_parasite_data_size (parasite),
-          fp);
+  parasite_data = gimp_parasite_get_data (parasite, &parasite_size);
+  fwrite (parasite_data, sizeof (guchar), parasite_size, fp);
   fclose (fp);
 
   gimp_parasite_free (parasite);

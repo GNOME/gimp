@@ -395,9 +395,14 @@ xbm_save (GimpProcedure        *procedure,
 
       if (parasite)
         {
-          gint x, y;
+          gchar   *parasite_data;
+          guint32  parasite_size;
+          gint     x, y;
 
-          if (sscanf (gimp_parasite_data (parasite), "%i %i", &x, &y) == 2)
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = g_strndup (parasite_data, parasite_size);
+
+          if (sscanf (parasite_data, "%i %i", &x, &y) == 2)
             {
               g_object_set (config,
                             "use-hot-spot", TRUE,
@@ -407,6 +412,7 @@ xbm_save (GimpProcedure        *procedure,
             }
 
           gimp_parasite_free (parasite);
+          g_free (parasite_data);
         }
 
       if (! save_dialog (drawables[0], procedure, G_OBJECT (config)))

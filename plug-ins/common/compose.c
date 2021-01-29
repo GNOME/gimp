@@ -549,11 +549,15 @@ compose_run (GimpProcedure        *procedure,
         }
       else
         {
-          gint source;
-          gint input[4] = { 0, };
-          gint nret;
+          gchar   *parasite_data;
+          guint32  parasite_size;
+          gint     source;
+          gint     input[4] = { 0, };
+          gint     nret;
 
-          nret = sscanf (gimp_parasite_data (parasite),
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = g_strndup (parasite_data, parasite_size);
+          nret = sscanf (parasite_data,
                          "source=%d type=%31s %d %d %d %d",
                          &source,
                          composevals.compose_type,
@@ -563,6 +567,7 @@ compose_run (GimpProcedure        *procedure,
                          input + 3);
 
           gimp_parasite_free (parasite);
+          g_free (parasite_data);
 
           if (nret < 5)
             {
