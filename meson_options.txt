@@ -51,6 +51,7 @@ option('headless-tests',    type: 'feature', value: 'auto', description: 'Use xv
 
 option('gtk-doc',           type: 'boolean', value: true,   description: 'Build developer documentation')
 option('gtk-doc-app',       type: 'boolean', value: false,  description: 'Build developer documentation for app')
+option('g-ir-doc',          type: 'boolean', value: false,  description: 'Build developer documentation for introspected API')
 
 option('linux-input',       type: 'feature', value: 'auto', description: 'Linux input event controller module')
 option('vec-icons',         type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')

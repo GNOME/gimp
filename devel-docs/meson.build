@@ -17,17 +17,22 @@ mkdb_args_common = [
 ]
 
 
-if get_option('gtk-doc-app')
-  subdir('app')
+if get_option('gtk-doc')
+  if get_option('gtk-doc-app')
+    subdir('app')
+  endif
+
+  subdir('libgimp')
+  subdir('libgimpbase')
+  subdir('libgimpcolor')
+  subdir('libgimpconfig')
+  subdir('libgimpmath')
+  subdir('libgimpmodule')
+  subdir('libgimpthumb')
+  subdir('libgimpwidgets')
+  subdir('tools')
 endif
 
-subdir('libgimp')
-subdir('libgimpbase')
-subdir('libgimpcolor')
-subdir('libgimpconfig')
-subdir('libgimpmath')
-subdir('libgimpmodule')
-subdir('libgimpthumb')
-subdir('libgimpwidgets')
-subdir('tools')
-subdir('g-ir-docs')
+if get_option('g-ir-doc')
+  subdir('g-ir-docs')
+endif

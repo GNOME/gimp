@@ -1012,10 +1012,10 @@ desktop_validate    = find_program('desktop-file-validate', required: false)
 appstream_util = find_program('appstream-util', required: get_option('appdata-test'))
 
 # Check for doc generation tools
-have_gtk_doc = get_option('gtk-doc')
-
-gir_doc_tool = find_program('g-ir-doc-tool', required: false)
-yelp_build   = find_program('yelp-build', required: false)
+if get_option('g-ir-doc')
+  gir_doc_tool = find_program('g-ir-doc-tool', required: true)
+  yelp_build   = find_program('yelp-build', required: true)
+endif
 
 # Check for vector icons
 have_vector_icons = get_option('vec-icons')
@@ -1657,10 +1657,7 @@ subdir('app-tools')
 
 # Docs
 subdir('docs')
-if have_gtk_doc
-  subdir('devel-docs')
-endif
-
+subdir('devel-docs')
 
 
 pkgconfig.generate(libgimp,
@@ -1802,6 +1799,9 @@ final_message = [
 '''Tests:''',
 '''  Use xvfb-run         @0@'''.format(xvfb_run.found()),
 '''  Test appdata         @0@'''.format(appstream_util.found()),
+'',
+'''Documentation:''',
+'''  GObject Introspection: @0@'''.format(get_option('g-ir-doc')),
 '',
 '''Bug report URL: @0@'''.format(bug_report_url),
 ]
