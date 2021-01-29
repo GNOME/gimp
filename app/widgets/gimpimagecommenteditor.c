@@ -159,8 +159,11 @@ gimp_image_comment_editor_update (GimpImageParasiteView *view)
 
   if (parasite)
     {
-      gchar *text = g_strndup (gimp_parasite_data (parasite),
-                               gimp_parasite_data_size (parasite));
+      gchar   *text;
+      guint32  text_size;
+
+      text = (gchar *) gimp_parasite_get_data (parasite, &text_size);
+      text = g_strndup (text, text_size);
 
       if (! g_utf8_validate (text, -1, NULL))
         {

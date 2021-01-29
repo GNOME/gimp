@@ -405,19 +405,21 @@ parasite_serialize (const gchar      *key,
                     GimpParasite     *parasite,
                     GimpConfigWriter *writer)
 {
+  const guint8 *parasite_contents;
+  guint32       parasite_size;
+
   if (! gimp_parasite_is_persistent (parasite))
     return;
 
   gimp_config_writer_open (writer, parasite_symbol);
 
+  parasite_contents = gimp_parasite_get_data (parasite, &parasite_size);
   gimp_config_writer_printf (writer, "\"%s\" %lu %lu",
                              gimp_parasite_name (parasite),
                              gimp_parasite_flags (parasite),
-                             gimp_parasite_data_size (parasite));
+                             (long unsigned int) parasite_size);
 
-  gimp_config_writer_data (writer,
-                           gimp_parasite_data_size (parasite),
-                           gimp_parasite_data (parasite));
+  gimp_config_writer_data (writer, parasite_size, parasite_contents);
 
   gimp_config_writer_close (writer);
   gimp_config_writer_linefeed (writer);

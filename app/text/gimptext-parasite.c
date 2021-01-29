@@ -68,6 +68,8 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
                          GError             **error)
 {
   GimpText *text;
+  gchar    *parasite_data;
+  guint32   parasite_data_size;
 
   g_return_val_if_fail (parasite != NULL, NULL);
   g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
@@ -76,12 +78,15 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
 
   text = g_object_new (GIMP_TYPE_TEXT, NULL);
 
-  if (gimp_parasite_data (parasite))
+  parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
+  if (parasite_data)
     {
+      parasite_data = g_strndup (parasite_data, parasite_data_size);
       gimp_config_deserialize_parasite (GIMP_CONFIG (text),
                                         parasite,
                                         NULL,
                                         error);
+      g_free (parasite_data);
     }
   else
     {
@@ -122,9 +127,10 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
 {
   GimpText               *retval = NULL;
   GimpTextJustification   justify;
-  const gchar            *str;
+  gchar                  *str;
   gchar                  *text = NULL;
   gchar                 **params;
+  guint32                 parasite_data_size;
   gboolean                antialias;
   gdouble                 spacing;
   GimpRGB                 rgb;
@@ -136,7 +142,8 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
                                 gimp_text_gdyntext_parasite_name ()) == 0,
                         NULL);
 
-  str = gimp_parasite_data (parasite);
+  str = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
+  str = g_strndup (str, parasite_data_size);
   g_return_val_if_fail (str != NULL, NULL);
 
   if (! g_str_has_prefix (str, "GDT10{"))  /*  magic value  */
@@ -185,6 +192,7 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
   gimp_text_set_font_from_xlfd (GIMP_TEXT (retval), params[XLFD]);
 
  cleanup:
+  g_free (str);
   g_free (text);
   g_strfreev (params);
 

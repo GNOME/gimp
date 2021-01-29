@@ -730,6 +730,8 @@ gimp_assert_mainimage (GimpImage *image,
                        gboolean   use_gimp_2_8_features)
 {
   const GimpParasite *parasite               = NULL;
+  gchar              *parasite_data          = NULL;
+  guint32             parasite_size          = -1;
   GimpLayer          *layer                  = NULL;
   GList              *iter                   = NULL;
   GimpGuide          *guide                  = NULL;
@@ -873,20 +875,27 @@ gimp_assert_mainimage (GimpImage *image,
   /* Parasites */
   parasite = gimp_image_parasite_find (image,
                                        GIMP_MAINIMAGE_PARASITE_NAME);
-  g_assert_cmpint (gimp_parasite_data_size (parasite),
+  parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+  parasite_data = g_strndup (parasite_data, parasite_size);
+  g_assert_cmpint (parasite_size,
                    ==,
                    GIMP_MAINIMAGE_PARASITE_SIZE);
-  g_assert_cmpstr (gimp_parasite_data (parasite),
+  g_assert_cmpstr (parasite_data,
                    ==,
                    GIMP_MAINIMAGE_PARASITE_DATA);
+  g_free (parasite_data);
+
   parasite = gimp_image_parasite_find (image,
                                        "gimp-comment");
-  g_assert_cmpint (gimp_parasite_data_size (parasite),
+  parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+  parasite_data = g_strndup (parasite_data, parasite_size);
+  g_assert_cmpint (parasite_size,
                    ==,
                    strlen (GIMP_MAINIMAGE_COMMENT) + 1);
-  g_assert_cmpstr (gimp_parasite_data (parasite),
+  g_assert_cmpstr (parasite_data,
                    ==,
                    GIMP_MAINIMAGE_COMMENT);
+  g_free (parasite_data);
 
   /* Unit */
   g_assert_cmpint (gimp_image_get_unit (image),

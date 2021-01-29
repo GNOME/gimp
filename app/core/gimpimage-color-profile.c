@@ -184,6 +184,9 @@ gimp_image_validate_icc_parasite (GimpImage           *image,
                                   gboolean            *is_builtin,
                                   GError             **error)
 {
+  const guint8 *data;
+  guint32       data_size;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (icc_parasite != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -206,11 +209,8 @@ gimp_image_validate_icc_parasite (GimpImage           *image,
       return FALSE;
     }
 
-  return gimp_image_validate_icc_profile (image,
-                                          gimp_parasite_data (icc_parasite),
-                                          gimp_parasite_data_size (icc_parasite),
-                                          is_builtin,
-                                          error);
+  data = gimp_parasite_get_data (icc_parasite, &data_size);
+  return gimp_image_validate_icc_profile (image, data, data_size, is_builtin, error);
 }
 
 const GimpParasite *
@@ -284,10 +284,15 @@ gimp_image_get_icc_profile (GimpImage *image,
 
   if (parasite)
     {
-      if (length)
-        *length = gimp_parasite_data_size (parasite);
+      const guint8 *data;
+      guint32       data_size;
 
-      return gimp_parasite_data (parasite);
+      data = gimp_parasite_get_data (parasite, &data_size);
+
+      if (length)
+        *length = (gsize) data_size;
+
+      return data;
     }
 
   if (length)
@@ -807,12 +812,13 @@ _gimp_image_update_color_profile (GimpImage          *image,
 
   if (icc_parasite)
     {
-      GError *error = NULL;
+      GError       *error = NULL;
+      const guint8 *data;
+      guint32       data_size;
 
+      data = gimp_parasite_get_data (icc_parasite, &data_size);
       private->color_profile =
-        gimp_color_profile_new_from_icc_profile (gimp_parasite_data (icc_parasite),
-                                                 gimp_parasite_data_size (icc_parasite),
-                                                 NULL);
+        gimp_color_profile_new_from_icc_profile (data, data_size, NULL);
 
       private->layer_space =
         gimp_color_profile_get_space (private->color_profile,

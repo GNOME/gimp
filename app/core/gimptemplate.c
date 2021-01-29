@@ -471,8 +471,12 @@ gimp_template_set_from_image (GimpTemplate *template,
 
   parasite =  gimp_image_parasite_find (image, "gimp-comment");
   if (parasite)
-    comment = g_strndup (gimp_parasite_data (parasite),
-                         gimp_parasite_data_size (parasite));
+    {
+      guint32 parasite_size;
+
+      comment = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      comment = g_strndup (comment, parasite_size);
+    }
 
   g_object_set (template,
                 "width",           gimp_image_get_width (image),

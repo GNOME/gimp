@@ -521,6 +521,8 @@ gimp_symmetry_from_parasite (const GimpParasite *parasite,
 {
   GimpSymmetry *symmetry;
   gchar        *parasite_name;
+  gchar        *parasite_contents;
+  guint32       parasite_size;
   GError       *error = NULL;
 
   parasite_name = gimp_symmetry_parasite_name (type);
@@ -530,7 +532,8 @@ gimp_symmetry_from_parasite (const GimpParasite *parasite,
                                 parasite_name) == 0,
                         NULL);
 
-  if (! gimp_parasite_data (parasite))
+  parasite_contents = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+  if (! parasite_contents)
     {
       g_warning ("Empty symmetry parasite \"%s\"", parasite_name);
 
@@ -549,9 +552,9 @@ gimp_symmetry_from_parasite (const GimpParasite *parasite,
                                           &error))
     {
       g_printerr ("Failed to deserialize symmetry parasite: %s\n"
-                  "\t- parasite name: %s\n\t- parasite data: %s\n",
+                  "\t- parasite name: %s\n\t- parasite data: %.*s\n",
                   error->message, parasite_name,
-                  (gchar *) gimp_parasite_data (parasite));
+                  parasite_size, parasite_contents);
       g_error_free (error);
 
       g_object_unref (symmetry);

@@ -1950,9 +1950,10 @@ xcf_save_parasite (XcfInfo       *info,
 {
   if (gimp_parasite_is_persistent (parasite))
     {
-      guint32      value;
-      const gchar *string;
-      GError      *tmp_error = NULL;
+      guint32        value;
+      const gchar   *string;
+      GError        *tmp_error = NULL;
+      gconstpointer  parasite_data;
 
       string = gimp_parasite_name (parasite);
       xcf_write_string_check_error (info, (gchar **) &string, 1);
@@ -1960,12 +1961,10 @@ xcf_save_parasite (XcfInfo       *info,
       value = gimp_parasite_flags (parasite);
       xcf_write_int32_check_error (info, &value, 1);
 
-      value = gimp_parasite_data_size (parasite);
+      parasite_data = gimp_parasite_get_data (parasite, &value);
       xcf_write_int32_check_error (info, &value, 1);
 
-      xcf_write_int8_check_error (info,
-                                  gimp_parasite_data (parasite),
-                                  gimp_parasite_data_size (parasite));
+      xcf_write_int8_check_error (info, parasite_data, value);
     }
 
   return TRUE;

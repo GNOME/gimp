@@ -4007,10 +4007,11 @@ gimp_image_parasite_validate (GimpImage           *image,
     }
   else if (strcmp (name, "gimp-comment") == 0)
     {
-      const gchar *data   = gimp_parasite_data (parasite);
-      gssize       length = gimp_parasite_data_size (parasite);
+      const gchar *data;
+      guint32      length;
       gboolean     valid  = FALSE;
 
+      data = gimp_parasite_get_data (parasite, &length);
       if (length > 0)
         {
           if (data[length - 1] == '\0')
@@ -4052,10 +4053,12 @@ gimp_image_parasite_attach (GimpImage          *image,
     {
       GimpColorProfile *profile;
       GimpColorProfile *builtin;
+      const guint8     *parasite_data;
+      guint32           parasite_length;
 
+      parasite_data = gimp_parasite_get_data (parasite, &parasite_length);
       profile =
-        gimp_color_profile_new_from_icc_profile (gimp_parasite_data (parasite),
-                                                 gimp_parasite_data_size (parasite),
+        gimp_color_profile_new_from_icc_profile (parasite_data, parasite_length,
                                                  NULL);
       builtin = gimp_image_get_builtin_color_profile (image);
 

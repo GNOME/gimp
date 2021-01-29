@@ -281,12 +281,16 @@ xcf_load_image (Gimp     *gimp,
     {
       GimpImagePrivate *private  = GIMP_IMAGE_GET_PRIVATE (image);
       GimpMetadata     *metadata = NULL;
-      const gchar      *meta_string;
+      gchar            *meta_string;
+      guint32           parasite_data_size;
 
-      meta_string = (gchar *) gimp_parasite_data (parasite);
-
+      meta_string = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
       if (meta_string)
-        metadata = gimp_metadata_deserialize (meta_string);
+        {
+          meta_string = g_strndup (meta_string, parasite_data_size);
+          metadata = gimp_metadata_deserialize (meta_string);
+          g_free (meta_string);
+        }
 
       if (metadata)
         {
@@ -350,6 +354,10 @@ xcf_load_image (Gimp     *gimp,
         {
           GimpMetadata *metadata = gimp_image_get_metadata (image);
           GError       *my_error = NULL;
+          const guchar *parasite_data;
+          guint32       parasite_data_size;
+
+          parasite_data = (const guchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
 
           if (metadata)
             g_object_ref (metadata);
@@ -357,8 +365,7 @@ xcf_load_image (Gimp     *gimp,
             metadata = gimp_metadata_new ();
 
           if (! gimp_metadata_set_from_exif (metadata,
-                                             gimp_parasite_data (parasite),
-                                             gimp_parasite_data_size (parasite),
+                                             parasite_data, parasite_data_size,
                                              &my_error))
             {
               gimp_message (gimp, G_OBJECT (info->progress),
@@ -386,8 +393,10 @@ xcf_load_image (Gimp     *gimp,
   if (parasite)
     {
       GimpImagePrivate *private    = GIMP_IMAGE_GET_PRIVATE (image);
-      const gchar      *xmp_data   = gimp_parasite_data (parasite);
-      gint              xmp_length = gimp_parasite_data_size (parasite);
+      const gchar      *xmp_data;
+      guint32           xmp_length;
+
+      xmp_data = (gchar *) gimp_parasite_get_data (parasite, &xmp_length);
 
       if (has_metadata)
         {

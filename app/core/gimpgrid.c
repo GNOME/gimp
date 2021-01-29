@@ -325,7 +325,7 @@ gimp_grid_from_parasite (const GimpParasite *parasite)
   g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
                                 gimp_grid_parasite_name ()) == 0, NULL);
 
-  if (! gimp_parasite_data (parasite))
+  if (! gimp_parasite_get_data (parasite, NULL))
     {
       g_warning ("Empty grid parasite");
 
