@@ -245,12 +245,6 @@ png_create_procedure (GimpPlugIn  *plug_in,
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "gama",
-                             "Save _gamma",
-                             "Write gAMA chunk (PNG metadata)",
-                             FALSE,
-                             G_PARAM_READWRITE);
-
       GIMP_PROC_ARG_BOOLEAN (procedure, "offs",
                              "Save layer o_ffset",
                              "Write oFFs chunk (PNG metadata)",
@@ -958,23 +952,6 @@ load_image (GFile        *file,
    * due to a bug in libpng-1.0.6, see png-implement for details
    */
 
-  if (png_get_valid (pp, info, PNG_INFO_gAMA))
-    {
-      GimpParasite *parasite;
-      gchar         buf[G_ASCII_DTOSTR_BUF_SIZE];
-      gdouble       gamma;
-
-      png_get_gAMA (pp, info, &gamma);
-
-      g_ascii_dtostr (buf, sizeof (buf), gamma);
-
-      parasite = gimp_parasite_new ("gamma",
-                                    GIMP_PARASITE_PERSISTENT,
-                                    strlen (buf) + 1, buf);
-      gimp_image_attach_parasite ((GimpImage *) image, parasite);
-      gimp_parasite_free (parasite);
-    }
-
   if (png_get_valid (pp, info, PNG_INFO_oFFs))
     {
       gint offset_x = png_get_x_offset_pixels (pp, info);
@@ -1345,7 +1322,6 @@ save_image (GFile        *file,
 
   gboolean        save_interlaced;
   gboolean        save_bkgd;
-  gboolean        save_gama;
   gboolean        save_offs;
   gboolean        save_phys;
   gboolean        save_time;
@@ -1365,7 +1341,6 @@ save_image (GFile        *file,
   g_object_get (config,
                 "interlaced",         &save_interlaced,
                 "bkgd",               &save_bkgd,
-                "gama",               &save_gama,
                 "offs",               &save_offs,
                 "phys",               &save_phys,
                 "time",               &save_time,
@@ -1753,21 +1728,6 @@ save_image (GFile        *file,
       background.blue = blue;
       background.gray = gimp_rgb_luminance_uchar (&color);
       png_set_bKGD (pp, info, &background);
-    }
-
-  if (save_gama)
-    {
-      GimpParasite *parasite;
-      gdouble       gamma = 1.0 / DEFAULT_GAMMA;
-
-      parasite = gimp_image_get_parasite (orig_image, "gamma");
-      if (parasite)
-        {
-          gamma = g_ascii_strtod (gimp_parasite_data (parasite), NULL);
-          gimp_parasite_free (parasite);
-        }
-
-      png_set_gAMA (pp, info, gamma);
     }
 
   if (save_offs)
@@ -2334,7 +2294,6 @@ save_dialog (GimpImage     *image,
                             alpha);
 
   gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "bkgd");
-  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "gama");
   gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "offs");
   gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "phys");
   gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "time");
