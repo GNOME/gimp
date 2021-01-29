@@ -5,6 +5,7 @@ app = app
 endif
 
 SUBDIRS = \
+	g-ir-docs	\
 	tools		\
 	libgimpbase	\
 	libgimpcolor	\

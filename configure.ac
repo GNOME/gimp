@@ -2709,6 +2709,22 @@ AM_CONDITIONAL(ENABLE_GTK_DOC, test "x$enable_gtk_doc" = xyes)
 AC_ARG_ENABLE(gtk-doc-app, [  --enable-gtk-doc-app    build developer documentation for app (default=no)], , enable_gtk_doc_app=no)
 AM_CONDITIONAL(ENABLE_GTK_DOC_APP, test "x$enable_gtk_doc_app" = xyes)
 
+########################################
+# Checks for gir-doc-tool and yelp-build
+########################################
+
+AC_ARG_ENABLE(g-ir-doc, [  --enable-g-ir-doc       build GObject Introspection documentation (default=no)], , enable_g_ir_doc=no)
+
+if test "x$enable_g_ir_doc" = xyes; then
+  AC_CHECK_PROGS(GIR_DOC_TOOL, g-ir-doc-tool, no)
+  AC_CHECK_PROGS(YELP_BUILD, yelp-build, no)
+  if test "x$GIR_DOC_TOOL" = "xno" || test "x$YELP_BUILD" = "xno"; then
+    add_deps_error([g-ir-doc], [Could not find g-ir-doc-tool or yelp-build in your PATH.])
+    enable_g_ir_doc="no (g-ir-doc-tool or yelp-build missing)"
+  fi
+fi
+
+AM_CONDITIONAL(ENABLE_G_IR_DOC, test "x$enable_g_ir_doc" = xyes)
 
 #############################
 # Check for Windows installer
@@ -3039,6 +3055,7 @@ modules/Makefile
 devel-docs/Makefile
 devel-docs/version
 devel-docs/app/Makefile
+devel-docs/g-ir-docs/Makefile
 devel-docs/libgimp/Makefile
 devel-docs/libgimpbase/Makefile
 devel-docs/libgimpconfig/Makefile
@@ -3204,6 +3221,9 @@ Tests:
   Use xvfb-run               $have_xvfb_run
   Test appdata               $have_appstream_util
   Test desktop file          $have_desktop_file_validate
+
+Documentation:
+  GObject Introspection:     $enable_g_ir_doc
 
 Bug report URL: $with_bug_report_url
 $override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python$warning_javascript$warning_lua$warning_libheif$warning_libmypaint"
