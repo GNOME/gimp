@@ -6,6 +6,77 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 2.99.4 to GIMP 2.99.6
+===================================================
+
+Core:
+
+  - Various fixes for Wayland support.
+  - Fix stack overflow when loading very large XCF files on Windows.
+
+Tools:
+
+  - Paint Select tool: apply a threshold on the image mask before
+    triggering the automatic expansion to simplify mask handling in the
+    gegl paint-select operation.
+  - Paint Select tool: enable viewport-based local selection.
+
+API:
+
+  - The generate "Metadata" frame layout in a GimpSaveProcedureDialog
+    has been improved to always show the same number of columns to avoid
+    ugly layout with options on 3 columns, then 2 columns on the next
+    line (for instance).
+  - The "Reset" button in GimpProcedureDialog shows a down arrow to show
+    this is actually a button menu.
+  - "Save|Load Defaults" in GimpProcedureDialog are renamed as "Save
+    Settings" and "Load Saved Settings". The term "defaults" was not
+    very clear and could be confused with "factory defaults". Moreover
+    tooltips were added and the "Load Defaults" button is now only
+    sensitive if "Save Defaults" buttion has been hit at least once.
+  - Annotations improved.
+  - Drop g_object_notify() in favor of g_object_notify_by_pspec() in
+    various implementations to avoid a slight performance hit because of
+    a global lock.
+  - New function gimp_parasite_get_data() (meant to replace
+    gimp_parasite_data() and gimp_parasite_data_size() in a GObject
+    Introspection friendly way).
+
+Plug-ins:
+
+  - We dropped the dialog for the Freedesktop portal implementation of
+    the screenshot plug-in. Basically the Freedesktop portal provides
+    its own GUI with most options, so also showing ours is redundant.
+    Just directly call the portal and wait for the image in return.
+  - Various fixes and improvements to DDS BC5 image support.
+  - Color profile and comment is saved on each layer of a TIFF file to
+    prevent any ambiguity as TIFF allows its layers to have different
+    profiles.
+  - Various fixes and improvements to BMP image support.
+  - On PNG import, create an ICC profile out of the gAMA and/or cHRM
+    chunks, if any of them are present, if no color profile is set and
+    if the sRGB chunk is not present.
+  - Improve PNG export in no-profile case with gAMA and cHRM chunks
+    (additionally to the sRGB chunk) according to PNG spec
+    recommendations. Moreover the "gamma" option has now been removed
+    because we just have proper core support of this metadata through
+    ICC profile creation now, which is just more powerful.
+  - Fix some cases of PSD loading.
+  - Adding environment contents to debugging data of darktable plug-in
+    (when DARKTABLE_DEBUG env variable is set).
+  - Allow fractional DPI values when importing PDF.
+  - Add option for reversing order of layers when importing PDF.
+  - Various fixes and improvements to OpenRaster image support.
+
+Devel docs:
+
+  - Python 3 and Javascript API documentation are now generated inside
+    the build directory devel-docs/g-ir-docs/html/ (not installed right
+    now) if you configure the build with option --enable-g-ir-doc
+    (alternative for the meson build: -Dg-ir-doc=true but the docs ends
+    up incomplete so autotools build is advised, cf. #6362).
+
+
 Overview of Changes from GIMP 2.99.2 to GIMP 2.99.4
 ===================================================
 
