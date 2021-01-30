@@ -106,8 +106,6 @@ gboolean       gimp_parasite_has_flag      (const GimpParasite *parasite,
                                             gulong              flag);
 gulong         gimp_parasite_flags         (const GimpParasite *parasite);
 const gchar  * gimp_parasite_name          (const GimpParasite *parasite);
-gconstpointer  gimp_parasite_data          (const GimpParasite *parasite);
-glong          gimp_parasite_data_size     (const GimpParasite *parasite);
 
 gconstpointer  gimp_parasite_get_data      (const GimpParasite *parasite,
                                             guint32            *num_bytes);

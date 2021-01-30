@@ -410,41 +410,6 @@ gimp_parasite_name (const GimpParasite *parasite)
 }
 
 /**
- * gimp_parasite_data:
- * @parasite: a #GimpParasite
- *
- * Gets the parasite's data. It may not necessarily be text, nor is it
- * guaranteed to be %NULL-terminated. It is your responsibility to also
- * call gimp_parasite_data_size() and to know how to deal with this
- * data.
- *
- * Returns: @parasite's data.
- */
-gconstpointer
-gimp_parasite_data (const GimpParasite *parasite)
-{
-  if (parasite)
-    return parasite->data;
-
-  return NULL;
-}
-
-/**
- * gimp_parasite_data_size:
- * @parasite: a #GimpParasite
- *
- * Returns: @parasite's data size.
- */
-glong
-gimp_parasite_data_size (const GimpParasite *parasite)
-{
-  if (parasite)
-    return parasite->size;
-
-  return 0;
-}
-
-/**
  * gimp_parasite_get_data:
  * @parasite: a #GimpParasite
  * @num_bytes: (out) (nullable): size of the returned data.
