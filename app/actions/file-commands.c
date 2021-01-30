@@ -83,7 +83,8 @@ static GtkWidget * file_save_dialog_show        (Gimp         *gimp,
                                                  GimpDisplay  *display);
 static GtkWidget * file_export_dialog_show      (Gimp         *gimp,
                                                  GimpImage    *image,
-                                                 GtkWidget    *parent);
+                                                 GtkWidget    *parent,
+                                                 GimpDisplay  *display);
 static void        file_save_dialog_response    (GtkWidget    *dialog,
                                                  gint          response_id,
                                                  gpointer      data);
@@ -303,7 +304,7 @@ file_save_cmd_callback (GimpAction *action,
       break;
 
     case GIMP_SAVE_MODE_EXPORT_AS:
-      file_export_dialog_show (gimp, image, widget);
+      file_export_dialog_show (gimp, image, widget, display);
       break;
 
     case GIMP_SAVE_MODE_EXPORT:
@@ -321,7 +322,7 @@ file_save_cmd_callback (GimpAction *action,
             if (! file)
               {
                 /* Behave as if Export As... was invoked */
-                file_export_dialog_show (gimp, image, widget);
+                file_export_dialog_show (gimp, image, widget, display);
                 break;
               }
 
@@ -687,7 +688,7 @@ file_save_dialog_response (GtkWidget *dialog,
 
       other = file_export_dialog_show (GIMP_FILE_DIALOG (file_dialog)->image->gimp,
                                        GIMP_FILE_DIALOG (file_dialog)->image,
-                                       GTK_WIDGET (parent));
+                                       GTK_WIDGET (parent), NULL);
 
       gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (other), folder);
       gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (other), basename);
@@ -698,9 +699,10 @@ file_save_dialog_response (GtkWidget *dialog,
 }
 
 static GtkWidget *
-file_export_dialog_show (Gimp      *gimp,
-                         GimpImage *image,
-                         GtkWidget *parent)
+file_export_dialog_show (Gimp        *gimp,
+                         GimpImage   *image,
+                         GtkWidget   *parent,
+                         GimpDisplay *display)
 {
   GtkWidget *dialog;
 
@@ -735,7 +737,8 @@ file_export_dialog_show (Gimp      *gimp,
 
   if (dialog)
     {
-      gimp_export_dialog_set_image (GIMP_EXPORT_DIALOG (dialog), image);
+      gimp_export_dialog_set_image (GIMP_EXPORT_DIALOG (dialog), image,
+                                    GIMP_OBJECT (display));
 
       gtk_window_present (GTK_WINDOW (dialog));
     }

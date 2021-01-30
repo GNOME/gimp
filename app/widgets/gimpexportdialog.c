@@ -85,7 +85,8 @@ gimp_export_dialog_new (Gimp *gimp)
 
 void
 gimp_export_dialog_set_image (GimpExportDialog *dialog,
-                              GimpImage        *image)
+                              GimpImage        *image,
+                              GimpObject       *display)
 {
   GimpFileDialog *file_dialog;
   GFile          *dir_file  = NULL;
@@ -99,6 +100,7 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
   file_dialog = GIMP_FILE_DIALOG (dialog);
 
   file_dialog->image = image;
+  dialog->display    = display;
 
   gimp_file_dialog_set_file_proc (file_dialog, NULL);
 

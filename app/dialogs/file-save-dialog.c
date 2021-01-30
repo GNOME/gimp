@@ -179,12 +179,13 @@ file_save_dialog_response (GtkWidget *dialog,
 
     case CHECK_URI_OK:
       {
-        GimpImage   *image              = file_dialog->image;
-        GimpDisplay *display_to_close   = NULL;
-        gboolean     xcf_compression    = FALSE;
-        gboolean     is_save_dialog     = GIMP_IS_SAVE_DIALOG (dialog);
-        gboolean     close_after_saving = FALSE;
-        gboolean     save_a_copy        = FALSE;
+        GimpImage    *image              = file_dialog->image;
+        GimpProgress *progress           = GIMP_PROGRESS (dialog);
+        GimpDisplay  *display_to_close   = NULL;
+        gboolean      xcf_compression    = FALSE;
+        gboolean      is_save_dialog     = GIMP_IS_SAVE_DIALOG (dialog);
+        gboolean      close_after_saving = FALSE;
+        gboolean      save_a_copy        = FALSE;
 
         if (is_save_dialog)
           {
@@ -205,13 +206,16 @@ file_save_dialog_response (GtkWidget *dialog,
          * file dialog is just blocking the view.
          */
         if  (GIMP_IS_EXPORT_DIALOG (dialog))
-          gtk_widget_hide (dialog);
+          {
+            gtk_widget_hide (dialog);
+            progress = GIMP_PROGRESS (GIMP_EXPORT_DIALOG (dialog)->display);
+          }
 
         g_signal_connect (dialog, "destroy",
                           G_CALLBACK (gtk_widget_destroyed),
                           &dialog);
 
-        if (file_save_dialog_save_image (GIMP_PROGRESS (dialog),
+        if (file_save_dialog_save_image (progress,
                                          gimp,
                                          image,
                                          file,
