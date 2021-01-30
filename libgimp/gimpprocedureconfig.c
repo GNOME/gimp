@@ -326,8 +326,10 @@ gimp_procedure_config_get_parasite (GimpProcedureConfig *config,
 
   if (parasite)
     {
-      value = g_strndup (gimp_parasite_data (parasite),
-                         gimp_parasite_data_size (parasite));
+      guint32 parasite_size;
+
+      value = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      value = g_strndup (value, parasite_size);
       gimp_parasite_free (parasite);
 
       if (value && ! strlen (value))
@@ -374,10 +376,11 @@ gimp_procedure_config_set_parasite (GimpProcedureConfig *config,
       /*  it there is a parasite, always override it if its value was
        *  changed
        */
-      gchar *image_value;
+      gchar   *image_value;
+      guint32  parasite_size;
 
-      image_value = g_strndup (gimp_parasite_data (parasite),
-                               gimp_parasite_data_size (parasite));
+      image_value = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      image_value = g_strndup (image_value, parasite_size);
       gimp_parasite_free (parasite);
 
       if (g_strcmp0 (value, image_value))

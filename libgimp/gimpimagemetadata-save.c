@@ -83,16 +83,16 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 
   if (metadata)
     {
-      GDateTime          *datetime;
-      const GimpParasite *comment_parasite;
-      const gchar        *comment = NULL;
-      gint                image_width;
-      gint                image_height;
-      gdouble             xres;
-      gdouble             yres;
-      gchar               buffer[32];
-      gchar              *str;
-      GExiv2Metadata     *g2metadata = GEXIV2_METADATA (metadata);
+      GDateTime      *datetime;
+      GimpParasite   *comment_parasite;
+      gchar          *comment = NULL;
+      gint            image_width;
+      gint            image_height;
+      gdouble         xres;
+      gdouble         yres;
+      gchar           buffer[32];
+      gchar          *str;
+      GExiv2Metadata *g2metadata = GEXIV2_METADATA (metadata);
 
       image_width  = gimp_image_width  (image);
       image_height = gimp_image_height (image);
@@ -101,7 +101,14 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 
       comment_parasite = gimp_image_get_parasite (image, "gimp-comment");
       if (comment_parasite)
-        comment = gimp_parasite_data (comment_parasite);
+        {
+          guint32  parasite_size;
+
+          comment = (gchar *) gimp_parasite_get_data (comment_parasite, &parasite_size);
+          comment = g_strndup (comment, parasite_size);
+
+          gimp_parasite_free (comment_parasite);
+        }
 
       /* Exif */
 
@@ -198,7 +205,7 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
       g_free (str);
 
       g_date_time_unref (datetime);
-
+      g_clear_pointer (&comment, g_free);
     }
   else
     {

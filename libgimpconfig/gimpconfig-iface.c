@@ -623,18 +623,19 @@ gimp_config_deserialize_parasite (GimpConfig          *config,
                                   gpointer             data,
                                   GError             **error)
 {
+  const gchar *parasite_data;
+  guint32      parasite_size;
+
   g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
   g_return_val_if_fail (parasite != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! gimp_parasite_data (parasite))
+  parasite_data = gimp_parasite_get_data (parasite, &parasite_size);
+  if (! parasite_data)
     return TRUE;
 
-  return gimp_config_deserialize_string (config,
-                                         gimp_parasite_data (parasite),
-                                         gimp_parasite_data_size (parasite),
-                                         data,
-                                         error);
+  return gimp_config_deserialize_string (config, parasite_data, parasite_size,
+                                         data, error);
 }
 
 /**
