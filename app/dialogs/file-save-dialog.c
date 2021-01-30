@@ -179,7 +179,19 @@ file_save_dialog_response (GtkWidget *dialog,
 
     case CHECK_URI_OK:
       {
-        gboolean xcf_compression = FALSE;
+        GimpImage   *image              = file_dialog->image;
+        GimpDisplay *display_to_close   = NULL;
+        gboolean     xcf_compression    = FALSE;
+        gboolean     is_save_dialog     = GIMP_IS_SAVE_DIALOG (dialog);
+        gboolean     close_after_saving = FALSE;
+        gboolean     save_a_copy        = FALSE;
+
+        if (is_save_dialog)
+          {
+            close_after_saving = GIMP_SAVE_DIALOG (dialog)->close_after_saving;
+            display_to_close   = GIMP_DISPLAY (GIMP_SAVE_DIALOG (dialog)->display_to_close);
+            save_a_copy        = GIMP_SAVE_DIALOG (dialog)->save_a_copy;
+          }
 
         gimp_file_dialog_set_sensitive (file_dialog, FALSE);
 
@@ -195,14 +207,17 @@ file_save_dialog_response (GtkWidget *dialog,
         if  (GIMP_IS_EXPORT_DIALOG (dialog))
           gtk_widget_hide (dialog);
 
+        g_signal_connect (dialog, "destroy",
+                          G_CALLBACK (gtk_widget_destroyed),
+                          &dialog);
+
         if (file_save_dialog_save_image (GIMP_PROGRESS (dialog),
                                          gimp,
-                                         file_dialog->image,
+                                         image,
                                          file,
                                          save_proc,
                                          GIMP_RUN_INTERACTIVE,
-                                         GIMP_IS_SAVE_DIALOG (dialog) &&
-                                         ! GIMP_SAVE_DIALOG (dialog)->save_a_copy,
+                                         is_save_dialog && ! save_a_copy,
                                          FALSE,
                                          GIMP_IS_EXPORT_DIALOG (dialog),
                                          xcf_compression,
@@ -213,51 +228,48 @@ file_save_dialog_response (GtkWidget *dialog,
              * save. Lower-level URI management is handled in
              * file_save()
              */
-            if (GIMP_IS_SAVE_DIALOG (dialog))
+            if (is_save_dialog)
               {
-                if (GIMP_SAVE_DIALOG (dialog)->save_a_copy)
-                  gimp_image_set_save_a_copy_file (file_dialog->image, file);
+                if (save_a_copy)
+                  gimp_image_set_save_a_copy_file (image, file);
 
-                g_object_set_data_full (G_OBJECT (file_dialog->image->gimp),
+                g_object_set_data_full (G_OBJECT (image->gimp),
                                         GIMP_FILE_SAVE_LAST_FILE_KEY,
                                         g_object_ref (file),
                                         (GDestroyNotify) g_object_unref);
               }
             else
               {
-                g_object_set_data_full (G_OBJECT (file_dialog->image->gimp),
+                g_object_set_data_full (G_OBJECT (image->gimp),
                                         GIMP_FILE_EXPORT_LAST_FILE_KEY,
                                         g_object_ref (file),
                                         (GDestroyNotify) g_object_unref);
               }
 
             /*  make sure the menus are updated with the keys we've just set  */
-            gimp_image_flush (file_dialog->image);
+            gimp_image_flush (image);
 
             /* Handle close-after-saving */
-            if (GIMP_IS_SAVE_DIALOG (dialog)                  &&
-                GIMP_SAVE_DIALOG (dialog)->close_after_saving &&
-                GIMP_SAVE_DIALOG (dialog)->display_to_close)
+            if (close_after_saving && display_to_close &&
+                ! gimp_image_is_dirty (gimp_display_get_image (display_to_close)))
               {
-                GimpDisplay *display = GIMP_DISPLAY (GIMP_SAVE_DIALOG (dialog)->display_to_close);
-
-                if (! gimp_image_is_dirty (gimp_display_get_image (display)))
-                  {
-                    gimp_display_close (display);
-                  }
+                gimp_display_close (display_to_close);
               }
 
-            gtk_widget_destroy (dialog);
+            if (dialog)
+              gtk_widget_destroy (dialog);
           }
         else
           {
-            gtk_widget_show (dialog);
+            if (dialog)
+              gtk_widget_show (dialog);
           }
 
         g_object_unref (file);
         g_free (basename);
 
-        gimp_file_dialog_set_sensitive (file_dialog, TRUE);
+        if (dialog)
+          gimp_file_dialog_set_sensitive (file_dialog, TRUE);
       }
       break;
 
