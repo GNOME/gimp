@@ -132,8 +132,6 @@ EXPORTS
 	gimp_param_value_array_get_type
 	gimp_parasite_compare
 	gimp_parasite_copy
-	gimp_parasite_data
-	gimp_parasite_data_size
 	gimp_parasite_flags
 	gimp_parasite_free
 	gimp_parasite_get_data
