@@ -230,7 +230,6 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
             GObject.Value(GObject.TYPE_INT, compression),
             # write all PNG chunks except oFFs(ets)
             GObject.Value(GObject.TYPE_BOOLEAN, True),      # Save background color (bKGD chunk)
-            GObject.Value(GObject.TYPE_BOOLEAN, True),      # Save gamma (gAMA chunk)
             GObject.Value(GObject.TYPE_BOOLEAN, False),     # Save layer offset (oFFs chunk)
             GObject.Value(GObject.TYPE_BOOLEAN, True),      # Save resolution (pHYs chunk)
             GObject.Value(GObject.TYPE_BOOLEAN, True),      # Save creation time (tIME chunk)
