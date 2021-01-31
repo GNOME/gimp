@@ -2624,12 +2624,12 @@ msgstr "Deseu la imatge en format AV1 Image File Format (AVIF)"
 #: ../plug-ins/common/file-heif.c:806 ../plug-ins/common/file-heif.c:872
 #, c-format
 msgid "Loading HEIF image failed: %s"
-msgstr "S'ha produït un error en carrega la imatge HEIF: %s"
+msgstr "S'ha produït un error en carregar la imatge HEIF: %s"
 
 #: ../plug-ins/common/file-heif.c:756
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
-"S'ha produït un error en carrega la imatge HEIF: el fitxer d'entrada no "
+"S'ha produït un error en carregar la imatge HEIF: el fitxer d'entrada no "
 "conté imatges que es puguin llegir"
 
 #: ../plug-ins/common/file-heif.c:999
@@ -3450,7 +3450,7 @@ msgstr "El format del fitxer no és compatible."
 
 #: ../plug-ins/common/file-pnm.c:625
 msgid "Invalid X resolution."
-msgstr "La resolució d'X no és vàlida."
+msgstr "La resolució X no és vàlida."
 
 #: ../plug-ins/common/file-pnm.c:627
 msgid "Image width is larger than GIMP can handle."
@@ -4265,7 +4265,7 @@ msgstr "S'ha compost el WMF"
 
 #: ../plug-ins/common/file-xbm.c:183 ../plug-ins/common/file-xbm.c:201
 msgid "X BitMap image"
-msgstr "Mapa de bits d'X"
+msgstr "Mapa de bits X"
 
 #: ../plug-ins/common/file-xbm.c:827
 #, c-format
@@ -4456,7 +4456,7 @@ msgstr ""
 "La mida nominal no té relació amb la mida real (amb l'amplada o amb "
 "l'alçada).\n"
 "Només s'utilitza per a determinar quin fotograma depèn amb quina seqüència "
-"de l'animació i quina seqüència s'utilitza en cada cas basant-se amb el "
+"de l'animació i quina seqüència s'utilitza en cada cas basant-se en el "
 "valor de «gtk-cursor-theme-size»."
 
 #: ../plug-ins/common/file-xmc.c:1195

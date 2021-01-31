@@ -50,7 +50,7 @@ msgstr ""
 "podríeu perdre el vostre projecte.%n Si teniu cap problema, comproveu primer "
 "que no s’hagi arreglat al GIT abans de contactar amb els desenvolupadors o "
 "informar en el gitlab:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%n del "
-"GIMP. Tot i així, voleu continuar amb la instal·lació?"
+"GIMP. Tot i això, voleu continuar amb la instal·lació?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
@@ -95,7 +95,7 @@ msgid ""
 msgstr ""
 "El GIMP ja està llest per ser instal·lat. Cliqueu en el botó Instal·la per "
 "instal·lar usant els paràmetres per defecte o cliqueu el botó Personalitza "
-"si us agrada un major control sobre el que voleu instal·lar."
+"si us agrada un major control sobre què voleu instal·lar."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:14
 msgid "&Install"
@@ -230,7 +230,7 @@ msgstr "Crea una icona d'accés &ràpid"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:45
 msgid "Remove previous GIMP version"
-msgstr "Elimina la versió prèvia del GIMP."
+msgstr "Elimina la versió prèvia del GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:47
 #, no-c-format

@@ -786,7 +786,7 @@ msgid ""
 " report bugs"
 msgstr ""
 "Nou diàleg de depuració que produeix traces i altres dades depuració, "
-"encoratjant a que s'enviïn informes d'error"
+"encoratjant a què s'enviïn informes d'error"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid "Unsaved images can now be recovered after a crash"
@@ -11163,7 +11163,7 @@ msgid ""
 "Check for availability of GIMP updates through background internet queries."
 msgstr ""
 "Comproveu la disponibilitat d’actualitzacions del GIMP mitjançant consultes "
-"a l’internet de fons"
+"a l’internet de fons."
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
@@ -11202,7 +11202,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:84
 msgid "Show full image content by default."
-msgstr "Mostra el contingut de la imatge completa per defecte"
+msgstr "Mostra el contingut de la imatge completa per defecte."
 
 #: ../app/config/gimprc-blurbs.h:87
 msgid ""
@@ -13744,7 +13744,7 @@ msgstr "còpia de %s"
 #: ../app/core/gimpdatafactory.c:587 ../app/tools/gimptextoptions.c:532
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
-msgstr "S'està carregant lletres tipogràfiques (pot tardar una mica...)"
+msgstr "S'estan carregant lletres tipogràfiques (pot tardar una mica...)"
 
 #: ../app/core/gimpdatafactory.c:909
 #, c-format
@@ -19913,7 +19913,7 @@ msgid ""
 " tool"
 msgstr ""
 "Converteix un conjunt de coeficients amb un conjunt de coordenades útils per"
-" l'eina Transformació de la regió del GIMP."
+" l'eina Transformació de la regió del GIMP"
 
 #: ../app/operations/gimpoperationcagetransform.c:129
 msgid "Fill with plain color"
@@ -20772,7 +20772,7 @@ msgstr ""
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
 "L'element «%s» (%d) no es pot utilitzar perquè està associat a una altra "
-"imatge."
+"imatge"
 
 #: ../app/pdb/gimppdb-utils.c:476
 #, c-format
