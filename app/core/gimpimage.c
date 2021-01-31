@@ -5358,6 +5358,7 @@ gimp_image_remove_channel (GimpImage   *image,
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   selected_channels = gimp_image_get_selected_channels (image);
+  selected_channels = g_list_copy (selected_channels);
 
   if (push_undo)
     gimp_image_undo_push_channel_remove (image, C_("undo-type", "Remove Channel"), channel,
@@ -5381,6 +5382,8 @@ gimp_image_remove_channel (GimpImage   *image,
       else
         gimp_image_unset_selected_channels (image);
     }
+
+  g_list_free (selected_channels);
 
   gimp_item_end_move (GIMP_ITEM (channel), push_undo);
 
