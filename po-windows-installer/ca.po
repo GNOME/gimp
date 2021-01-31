@@ -48,7 +48,7 @@ msgstr ""
 "funcions no estiguin finalitzades o siguin inestables. %n Aquesta versió del "
 "GIMP no està pensada per al treball diari, ja que pot ser inestable i "
 "podríeu perdre el vostre projecte.%n Si teniu cap problema, comproveu primer "
-"que no s’hagi arreglat al GIT abans de contactar amb els desenvolupadors o "
+"que no s'hagi arreglat al GIT abans de contactar amb els desenvolupadors o "
 "informar en el gitlab:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%n del "
 "GIMP. Tot i això, voleu continuar amb la instal·lació?"
 

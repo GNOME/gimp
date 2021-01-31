@@ -200,7 +200,7 @@ msgid ""
 "text view displaying their own code (hence also demonstrating how to package "
 "data) and a button which calls a GEGL operation on the active layer."
 msgstr ""
-"Aquesta extensió proporciona un conjunt d’exemples bàsics per a demostrar com "
+"Aquesta extensió proporciona un conjunt d'exemples bàsics per a demostrar com "
 "crear els vostres propis connectors. Cada connector fa el mateix, tret que "
 "es desenvolupi en un llenguatge de programació diferent. Tots creen un "
 "diàleg GTK+ amb una visualització de text que mostra el seu propi codi (per "
@@ -4448,7 +4448,7 @@ msgstr ""
 "La mida nominal no té relació amb la mida real (amb l'amplada o amb "
 "l'alçada).\n"
 "Només s'utilitza per a determinar quin fotograma depèn amb quina seqüència "
-"de l'animació i quina seqüència s'utilitza en cada cas basant-se amb el "
+"de l'animació i quina seqüència s'utilitza en cada cas basant-se en el "
 "valor de «gtk-cursor-theme-size»."
 
 #: ../plug-ins/common/file-xmc.c:1203
@@ -7106,7 +7106,7 @@ msgstr "Canals addicionals amb dades no especificades."
 #. * Let's ask what to do with the channel.
 #: ../plug-ins/file-tiff/file-tiff-load.c:299
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
-msgstr "TIFF no conforme: canals addicionals sense camp «Mostres Addicionals»"
+msgstr "TIFF no conforme: canals addicionals sense camp «Mostres Addicionals»."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:361
 #, c-format
@@ -8547,7 +8547,7 @@ msgstr "Foscor de l'ombra:"
 
 #: ../plug-ins/gimpressionist/general.c:249
 msgid "How much to \"darken\" the drop shadow"
-msgstr "Quantitat de «foscor» de l’ombra caiguda"
+msgstr "Quantitat de «foscor» de l'ombra caiguda"
 
 #: ../plug-ins/gimpressionist/general.c:255
 msgid "Shadow depth:"

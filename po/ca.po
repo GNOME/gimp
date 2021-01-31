@@ -91,23 +91,20 @@ msgstr ""
 "infantil."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
-#, fuzzy
 msgid "Many usability improvements on the slider widget"
-msgstr "Moltes millores d'usabilitat a l'estri lliscant"
+msgstr "Moltes millores d'usabilitat al giny lliscant"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
-#, fuzzy
 msgid "Usability cleaning in the Layers dockable"
-msgstr "S'està netejant la facilitat d'ús a la capa acoblable"
+msgstr "Millores d'usabilitat en les capes acoblables"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
-#, fuzzy
 msgid ""
 "The action search now shows all actions even inactive ones (yet pushed "
 "below)"
 msgstr ""
 "La cerca d'accions ara mostra totes les accions fins i tot les inactives "
-"(s'ha empès a sota)"
+"(mostrades al final)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 #, fuzzy
@@ -118,7 +115,6 @@ msgstr ""
 "apropiats"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
-#, fuzzy
 msgid "Different default tools depending on pointer device type"
 msgstr ""
 "Diferents eines predeterminades depenent del tipus de dispositiu del punter"
@@ -129,7 +125,6 @@ msgid "Default dynamics is now \"Pressure Size\""
 msgstr "La dinàmica predeterminada ara és «Mida de la pressió»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
-#, fuzzy
 msgid "Various usability improvements in the Input Device editor"
 msgstr "Diverses millores d'usabilitat a l'editor de dispositius d'entrada"
 
@@ -139,7 +134,6 @@ msgid "New \"Paint Select\" experimental tool in the playground"
 msgstr "Nova eina experimental «Paint Select» al terreny de joc"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
-#, fuzzy
 msgid "Plug-in API now provides many dialog generation utilities"
 msgstr ""
 "L'API de connectors ara proporciona moltes utilitats de generació de diàlegs"
@@ -150,7 +144,7 @@ msgid ""
 " to the GTK+3 toolkit. Noteworthy improvements (though some are still work-"
 "in-progress) include:"
 msgstr ""
-"Aquesta és la primera versió de desenvolupament del GIMP 3.0 que s’ha "
+"Aquesta és la primera versió de desenvolupament del GIMP 3.0 que s'ha "
 "centrat en el GTK+3 toolkit. Entre les millores destacables (encara que "
 "algunes s'estan fent) hi ha:"
 
@@ -173,12 +167,12 @@ msgstr "Reescriptura de l'API del connector principal"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Plug-in API now available in C/C++, Python 3, Javascript, Lua and Vala"
 msgstr ""
-"L’API del connector ja està disponible en C/C++, Python 3, Javascript, Lua i"
+"L'API del connector ja està disponible en C/C++, Python 3, Javascript, Lua i"
 " Vala"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "New manageable extension format"
-msgstr "Nou format d’extensió manejable"
+msgstr "Nou format d'extensió manejable"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "CSS-based themes and actual symbolic icon theme support"
@@ -261,7 +255,7 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
-"Els grups d’eines ara s’expandeixen per defecte quan s'hi sobre passa el "
+"Els grups d'eines ara s'expandeixen per defecte quan s'hi sobre passa el "
 "cursor en comptes de fer clic"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
@@ -492,7 +486,7 @@ msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
 msgstr ""
-"L’eina Biaix en conjunt conserva ara per defecte la relació d'aspecte quan "
+"L'eina Biaix en conjunt conserva ara per defecte la relació d'aspecte quan "
 "s'augmenta proporcionalment o es redueix"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
@@ -647,7 +641,7 @@ msgstr "Filtre nou «Ombra llarga»"
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
-msgstr "L’opció «Redreça» de l'eina compàs permet ara el redreçat vertical"
+msgstr "L'opció «Redreça» de l'eina compàs permet ara el redreçat vertical"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid ""
@@ -12396,7 +12390,7 @@ msgstr "Mostra la imatge activa a la caixa d'eines."
 
 #: ../app/config/gimprc-blurbs.h:695
 msgid "Show the GIMP mascot at the top of the toolbox."
-msgstr "Mostra la mascota del GIMP a la part superior de la caixa d’eines."
+msgstr "Mostra la mascota del GIMP a la part superior de la caixa d'eines."
 
 #: ../app/config/gimprc-blurbs.h:698
 msgid "Sets the manner in which transparency is displayed in images."
@@ -12587,7 +12581,6 @@ msgid "Convert to built-in sRGB or grayscale profile"
 msgstr "Converteix al perfil incorporat sRGB o d'escala de grisos"
 
 #: ../app/core/core-enums.c:223
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
 msgstr ""
@@ -16560,7 +16553,7 @@ msgid ""
 "Do you really want to reset all input devices to default configuration?"
 msgstr ""
 "Realment voleu restablir la configuració predeterminada de tots els "
-"dispositius d’entrada?"
+"dispositius d'entrada?"
 
 #: ../app/dialogs/item-options-dialog.c:203
 msgid "Color tag:"
@@ -16745,7 +16738,7 @@ msgstr "Gira %s?"
 
 #: ../app/dialogs/metadata-rotation-import-dialog.c:101
 msgid "_Keep Original"
-msgstr "_Manté l’original"
+msgstr "_Manté l'original"
 
 #: ../app/dialogs/metadata-rotation-import-dialog.c:102
 #: ../app/tools/gimprotatetool.c:104
@@ -16762,7 +16755,7 @@ msgstr "Girat"
 
 #: ../app/dialogs/metadata-rotation-import-dialog.c:194
 msgid "This image contains Exif orientation metadata."
-msgstr "Aquesta imatge conté metadades d’orientació Exif."
+msgstr "Aquesta imatge conté metadades d'orientació Exif."
 
 #: ../app/dialogs/metadata-rotation-import-dialog.c:209
 msgid "Would you like to rotate the image?"
