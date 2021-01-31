@@ -684,7 +684,6 @@
       </menu>
       <menuitem action="tools-vector" />
       <menuitem action="tools-text" />
-      <menuitem action="tools-gegl" />
       <separator />
       <menuitem action="tools-color-picker" />
       <menuitem action="tools-measure" />
@@ -780,6 +779,7 @@
       <menu action="filters-generic-menu" name="Generic">
         <menuitem action="filters-convolution-matrix" />
         <menuitem action="filters-distance-map" />
+        <menuitem action="tools-gegl" />
         <menuitem action="filters-gegl-graph" />
         <menuitem action="filters-normal-map" />
         <menuitem action="filters-dilate" />
