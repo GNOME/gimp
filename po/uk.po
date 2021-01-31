@@ -9,16 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-01-22 17:45+0000\n"
-"PO-Revision-Date: 2021-01-22 20:26+0200\n"
+"POT-Creation-Date: 2021-01-31 16:59+0000\n"
+"PO-Revision-Date: 2021-01-31 19:35+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.11.70\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -3370,7 +3369,7 @@ msgstr "240 секунд"
 #: ../app/actions/dashboard-commands.c:118
 #: ../app/actions/documents-commands.c:237 ../app/actions/edit-commands.c:167
 #: ../app/actions/error-console-commands.c:100
-#: ../app/actions/file-commands.c:430
+#: ../app/actions/file-commands.c:431
 #: ../app/actions/gradient-editor-commands.c:409
 #: ../app/actions/gradient-editor-commands.c:520
 #: ../app/actions/gradients-commands.c:79 ../app/actions/plug-in-commands.c:185
@@ -3388,7 +3387,7 @@ msgstr "240 секунд"
 #: ../app/dialogs/convert-precision-dialog.c:146
 #: ../app/dialogs/data-delete-dialog.c:86
 #: ../app/dialogs/file-open-location-dialog.c:80
-#: ../app/dialogs/file-save-dialog.c:725 ../app/dialogs/fill-dialog.c:115
+#: ../app/dialogs/file-save-dialog.c:741 ../app/dialogs/fill-dialog.c:115
 #: ../app/dialogs/grid-dialog.c:102
 #: ../app/dialogs/image-merge-layers-dialog.c:100
 #: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
@@ -3479,7 +3478,7 @@ msgid "Enter a description for the marker"
 msgstr "Введіть опис позначки"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:392
-#: ../app/actions/file-commands.c:210 ../app/dialogs/file-open-dialog.c:228
+#: ../app/actions/file-commands.c:211 ../app/dialogs/file-open-dialog.c:228
 #: ../app/dialogs/file-open-dialog.c:269
 #: ../app/dialogs/file-open-location-dialog.c:217
 #: ../app/dialogs/file-open-location-dialog.c:233
@@ -3505,7 +3504,7 @@ msgid "Untitled"
 msgstr "Без назви"
 
 #: ../app/actions/data-commands.c:216 ../app/actions/documents-commands.c:194
-#: ../app/actions/file-commands.c:536
+#: ../app/actions/file-commands.c:537
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Неможливо показати файл у програмі для керування файлами: %s"
@@ -4860,7 +4859,7 @@ msgid "Save Error Log to File"
 msgstr "Збереження повідомлень про помилки у файлі"
 
 #: ../app/actions/error-console-commands.c:101
-#: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:726
+#: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:742
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:69
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -5071,54 +5070,54 @@ msgstr "Експортувати в %s"
 msgid "Over_write %s"
 msgstr "_Перезаписати %s"
 
-#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:560
+#: ../app/actions/file-commands.c:120 ../app/actions/file-commands.c:561
 #: ../app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Відкривання зображення"
 
-#: ../app/actions/file-commands.c:141
+#: ../app/actions/file-commands.c:142
 msgid "Open Image as Layers"
 msgstr "Відкрити зображення як шари"
 
-#: ../app/actions/file-commands.c:288
+#: ../app/actions/file-commands.c:289
 msgid "No changes need to be saved"
 msgstr "Немає змін, які слід зберегти"
 
-#: ../app/actions/file-commands.c:295 ../app/actions/file-commands.c:769
+#: ../app/actions/file-commands.c:296 ../app/actions/file-commands.c:772
 #: ../app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Збереження зображення"
 
-#: ../app/actions/file-commands.c:301
+#: ../app/actions/file-commands.c:302
 msgid "Save a Copy of the Image"
 msgstr "Збереження копії зображення"
 
-#: ../app/actions/file-commands.c:379
+#: ../app/actions/file-commands.c:380
 msgid "Create New Template"
 msgstr "Створення нового шаблону"
 
-#: ../app/actions/file-commands.c:383
+#: ../app/actions/file-commands.c:384
 msgid "Enter a name for this template"
 msgstr "Введіть назву цього шаблону"
 
-#: ../app/actions/file-commands.c:413
+#: ../app/actions/file-commands.c:414
 msgid "Revert failed. No file name associated with this image."
 msgstr "Не вдалось відновити. Немає пов'язаної з цим зображенням назви файла."
 
-#: ../app/actions/file-commands.c:425
+#: ../app/actions/file-commands.c:426
 msgid "Revert Image"
 msgstr "Відновити зображення"
 
-#: ../app/actions/file-commands.c:431
+#: ../app/actions/file-commands.c:432
 msgid "_Revert"
 msgstr "Від_новити"
 
-#: ../app/actions/file-commands.c:449
+#: ../app/actions/file-commands.c:450
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Відновити «%s» до «%s»?"
 
-#: ../app/actions/file-commands.c:454
+#: ../app/actions/file-commands.c:455
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -5126,11 +5125,11 @@ msgstr ""
 "Відновлюючи зображення до його стану на диску, ви втратити усі зміни, "
 "включаючи всю інформацію про скасування дій."
 
-#: ../app/actions/file-commands.c:791
+#: ../app/actions/file-commands.c:794
 msgid "(Unnamed Template)"
 msgstr "(Шаблон без назви)"
 
-#: ../app/actions/file-commands.c:838
+#: ../app/actions/file-commands.c:841
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -5501,8 +5500,10 @@ msgid "_Selective Gaussian Blur..."
 msgstr "_Вибіркове розмиття за Гаусом…"
 
 #: ../app/actions/filters-actions.c:378
+#| msgctxt "filters-action"
+#| msgid "_GEGL graph..."
 msgctxt "filters-action"
-msgid "_GEGL graph..."
+msgid "_GEGL Graph..."
 msgstr "_Граф GEGL…"
 
 #: ../app/actions/filters-actions.c:383
@@ -11006,7 +11007,7 @@ msgid "Move this window to screen %s"
 msgstr "Перемістити це вікно на екран %s"
 
 #: ../app/actions/window-commands.c:78 ../app/dialogs/extensions-dialog.c:79
-#: ../app/dialogs/file-save-dialog.c:649 ../app/dialogs/grid-dialog.c:103
+#: ../app/dialogs/file-save-dialog.c:665 ../app/dialogs/grid-dialog.c:103
 #: ../app/dialogs/image-new-dialog.c:107 ../app/dialogs/image-new-dialog.c:326
 #: ../app/dialogs/input-devices-dialog.c:67
 #: ../app/dialogs/item-options-dialog.c:146
@@ -14513,7 +14514,7 @@ msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: ../app/core/gimpimage.c:4025
+#: ../app/core/gimpimage.c:4026
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14521,47 +14522,47 @@ msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: ../app/core/gimpimage.c:4084
+#: ../app/core/gimpimage.c:4087
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: ../app/core/gimpimage.c:4126
+#: ../app/core/gimpimage.c:4129
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: ../app/core/gimpimage.c:5084
+#: ../app/core/gimpimage.c:5087
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: ../app/core/gimpimage.c:5128 ../app/core/gimpimage.c:5159
+#: ../app/core/gimpimage.c:5131 ../app/core/gimpimage.c:5162
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: ../app/core/gimpimage.c:5153
+#: ../app/core/gimpimage.c:5156
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: ../app/core/gimpimage.c:5306
+#: ../app/core/gimpimage.c:5309
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: ../app/core/gimpimage.c:5336 ../app/core/gimpimage.c:5360
+#: ../app/core/gimpimage.c:5339 ../app/core/gimpimage.c:5364
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: ../app/core/gimpimage.c:5417
+#: ../app/core/gimpimage.c:5423
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: ../app/core/gimpimage.c:5447 ../app/core/gimpimage.c:5455
+#: ../app/core/gimpimage.c:5453 ../app/core/gimpimage.c:5461
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -14579,11 +14580,11 @@ msgstr "Увімкнути «Використовувати профіль sRGB�
 msgid "Disable 'Use sRGB Profile'"
 msgstr "Вимкнути «Використовувати профіль sRGB»"
 
-#: ../app/core/gimpimage-color-profile.c:195
+#: ../app/core/gimpimage-color-profile.c:198
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr "Перевірка профілю ICC не вдалася: назва паразиту не є 'icc-profile'"
 
-#: ../app/core/gimpimage-color-profile.c:204
+#: ../app/core/gimpimage-color-profile.c:207
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -14595,41 +14596,41 @@ msgstr ""
 msgid "ICC profile validation failed: "
 msgstr "Перевірка профілю ICC не вдалася: "
 
-#: ../app/core/gimpimage-color-profile.c:404
+#: ../app/core/gimpimage-color-profile.c:409
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "Перевірка профілю ICC не вдалася: колірний профіль не годиться для простору "
 "кольорів з відтінків сірого"
 
-#: ../app/core/gimpimage-color-profile.c:414
+#: ../app/core/gimpimage-color-profile.c:419
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Перевірка профілю ICC не вдалася: колірний профіль не годиться для колірного "
 "простору RGB"
 
-#: ../app/core/gimpimage-color-profile.c:473
+#: ../app/core/gimpimage-color-profile.c:478
 msgid "Assigning color profile"
 msgstr "Присвоєння колірного профілю"
 
-#: ../app/core/gimpimage-color-profile.c:474
+#: ../app/core/gimpimage-color-profile.c:479
 msgid "Discarding color profile"
 msgstr "Відкидання колірного профілю"
 
-#: ../app/core/gimpimage-color-profile.c:478
+#: ../app/core/gimpimage-color-profile.c:483
 msgid "Assign color profile"
 msgstr "Присвоїти колірний профіль"
 
-#: ../app/core/gimpimage-color-profile.c:479
+#: ../app/core/gimpimage-color-profile.c:484
 msgid "Discard color profile"
 msgstr "Відкинути колірний профіль"
 
-#: ../app/core/gimpimage-color-profile.c:522
+#: ../app/core/gimpimage-color-profile.c:527
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Перетворюємо з «%s» до «%s»"
 
-#: ../app/core/gimpimage-color-profile.c:527
+#: ../app/core/gimpimage-color-profile.c:532
 msgid "Color profile conversion"
 msgstr "Перетворення профілю кольорів"
 
@@ -16177,7 +16178,7 @@ msgstr "Введіть адресу (URI):"
 msgid "Invalid URI"
 msgstr "Некоректна адреса"
 
-#: ../app/dialogs/file-save-dialog.c:469
+#: ../app/dialogs/file-save-dialog.c:485
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -16186,11 +16187,11 @@ msgstr ""
 "При збереженні вилученого файла потрібно визначити його формат. Вкажіть "
 "розширення файла чи виберіть формат зі списку."
 
-#: ../app/dialogs/file-save-dialog.c:629
+#: ../app/dialogs/file-save-dialog.c:645
 msgid "The given filename cannot be used for exporting"
 msgstr "Задану назву файла не можна використати для експорту"
 
-#: ../app/dialogs/file-save-dialog.c:630
+#: ../app/dialogs/file-save-dialog.c:646
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -16199,15 +16200,15 @@ msgstr ""
 "Якщо ж треба зберегти у форматі GIMP XCF, скористайтесь командою "
 "Файл→Зберегти."
 
-#: ../app/dialogs/file-save-dialog.c:633
+#: ../app/dialogs/file-save-dialog.c:649
 msgid "Take me to the Save dialog"
 msgstr "Взяти мене у діалог Збереження"
 
-#: ../app/dialogs/file-save-dialog.c:637
+#: ../app/dialogs/file-save-dialog.c:653
 msgid "The given filename cannot be used for saving"
 msgstr "Задану назву файла не можна використати для збереження"
 
-#: ../app/dialogs/file-save-dialog.c:638
+#: ../app/dialogs/file-save-dialog.c:654
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -16216,15 +16217,15 @@ msgstr ""
 "XCF. Використовуйте команду Файл→Експортувати для експорту у інші формати "
 "даних."
 
-#: ../app/dialogs/file-save-dialog.c:640
+#: ../app/dialogs/file-save-dialog.c:656
 msgid "Take me to the Export dialog"
 msgstr "Взяти мене у діалог Експорту"
 
-#: ../app/dialogs/file-save-dialog.c:643 ../app/dialogs/file-save-dialog.c:720
+#: ../app/dialogs/file-save-dialog.c:659 ../app/dialogs/file-save-dialog.c:736
 msgid "Extension Mismatch"
 msgstr "Неправильне розширення"
 
-#: ../app/dialogs/file-save-dialog.c:704
+#: ../app/dialogs/file-save-dialog.c:720
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -16232,19 +16233,19 @@ msgstr ""
 "У цій назві файла бракує будь-якого відомого розширення. Вкажіть розширення "
 "у назві файла, чи виберіть формат зі списку."
 
-#: ../app/dialogs/file-save-dialog.c:736
+#: ../app/dialogs/file-save-dialog.c:752
 msgid "The given file extension does not match the chosen file type."
 msgstr "Вказане розширення не відповідає обраному типу файла."
 
-#: ../app/dialogs/file-save-dialog.c:740
+#: ../app/dialogs/file-save-dialog.c:756
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Попри все бажаєте зберегти файл з такою назвою?"
 
-#: ../app/dialogs/file-save-dialog.c:805
+#: ../app/dialogs/file-save-dialog.c:821
 msgid "Saving canceled"
 msgstr "Збереження перервано"
 
-#: ../app/dialogs/file-save-dialog.c:811 ../app/widgets/gimpdnd-xds.c:190
+#: ../app/dialogs/file-save-dialog.c:827 ../app/widgets/gimpdnd-xds.c:190
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -16255,7 +16256,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/dialogs/file-save-dialog.c:813
+#: ../app/dialogs/file-save-dialog.c:829
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
@@ -18853,8 +18854,7 @@ msgstr "Зберегти зміни у «%s» перед закриванням?
 #: ../app/display/gimpdisplayshell-close.c:307
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d годину будуть втрачені."
 msgstr[1] ""
@@ -18888,8 +18888,7 @@ msgstr[3] ""
 #: ../app/display/gimpdisplayshell-close.c:330
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d хвилину будуть втрачені."
 msgstr[1] ""
@@ -22466,7 +22465,7 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Додавання текстового шару"
 
-#: ../app/text/gimptext-parasite.c:89
+#: ../app/text/gimptext-parasite.c:94
 msgid "Empty text parasite"
 msgstr "Порожній текстовий шар"
 
@@ -23625,8 +23624,9 @@ msgid "GEGL Operation"
 msgstr "Операція GEGL"
 
 #: ../app/tools/gimpgegltool.c:79
-msgid "GEGL Tool: Use an arbitrary GEGL operation"
-msgstr "Інструмент GEGL: виконання довільної операції GEGL"
+#| msgid "GEGL Tool: Use an arbitrary GEGL operation"
+msgid "Run an arbitrary GEGL operation"
+msgstr "Виконання довільної операції GEGL"
 
 #: ../app/tools/gimpgegltool.c:80
 msgid "_GEGL Operation..."
@@ -28486,7 +28486,7 @@ msgstr "Помилка при створенні «%s»:"
 msgid "Invalid image mode and precision combination."
 msgstr "Хибне поєднання режиму зображення і точності."
 
-#: ../app/xcf/xcf-load.c:366
+#: ../app/xcf/xcf-load.c:373
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28495,7 +28495,7 @@ msgstr ""
 "Виявлено пошкоджені паразитом 'exif-data'.\n"
 "Дані exif не можна перенести: %s"
 
-#: ../app/xcf/xcf-load.c:403
+#: ../app/xcf/xcf-load.c:412
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28503,7 +28503,7 @@ msgstr ""
 "Виявлено пошкодження додатка «gimp-metadata».\n"
 "Не вдалося перенести дані XMP."
 
-#: ../app/xcf/xcf-load.c:427
+#: ../app/xcf/xcf-load.c:436
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28511,25 +28511,25 @@ msgid ""
 "If you don't know what XMP is, you most likely don't need it. Reported "
 "error: %s."
 msgstr ""
-"Пошкоджені метадані XMP, які було збережено у застарілій версії GIMP, не"
-" вдалося перетворити — їх буде проігноровано.\n"
-"Якщо ви нічого не знаєте про XMP, ймовірно, ці дані вам не потрібні."
-" Повідомлення про помилку: %s."
+"Пошкоджені метадані XMP, які було збережено у застарілій версії GIMP, не "
+"вдалося перетворити — їх буде проігноровано.\n"
+"Якщо ви нічого не знаєте про XMP, ймовірно, ці дані вам не потрібні. "
+"Повідомлення про помилку: %s."
 
-#: ../app/xcf/xcf-load.c:703
+#: ../app/xcf/xcf-load.c:712
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Цей файл XCF зіпсований! Деяку його частину все ж вийшло відновити."
 
-#: ../app/xcf/xcf-load.c:722
+#: ../app/xcf/xcf-load.c:731
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Цей файл XCF пошкоджений! Не вдалось відновити навіть малу його частину!"
 
-#: ../app/xcf/xcf-load.c:813
+#: ../app/xcf/xcf-load.c:822
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
