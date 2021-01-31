@@ -136,6 +136,93 @@ def run(procedure, args, data):
 
             self.cons.grab_focus()
 
+        def command_for_procedure(self, proc_name):
+            '''
+            Assemble string of Python code that when eval'd
+            will call proc_name with contrived arguments.
+
+            The purpose is to generate a template for a call
+            to the PDB procedure the user has selected.
+            The call MIGHT work as is.
+            Otherwise, the names of the arguments might be enough
+            that the user can figure out how to edit the template.
+
+            The code will run in the environment of the console/browser,
+            which is not the GIMP v2 GimpFu environment
+            but the GIMP v3 PyGObject introspected environment.
+
+            If ever GimpFu module is resurrected, and Python console imports it,
+            then revert this code to its v2 form.
+            '''
+            proc = Gimp.get_pdb().lookup_procedure(proc_name)
+            if proc is None:
+                return None
+
+            cmd = ''
+
+            return_values = proc.get_return_values()
+            # assert is list of GParamSpec
+
+            '''
+            Cat str of variable names to which unpack return values
+            Variable names same as return value name, mangled
+            Str like: 'retval_1, ret_val_2 = '
+            '''
+            if len(return_values) > 0:
+                cmd += ', '.join(x.name.replace('-', '_') for x in return_values)
+                cmd += ' = '
+            # else is a void PDB procedure
+
+            '''
+            Cat prefix of str for a call to procedure name
+            Prefix like: Gimp.get_pdb().run_procedure('<foo>',
+            Note:
+             - proc name is quoted, run_procedure wants a string.
+             - proc name has hyphens. Not a Python name. Matches name in PDB.
+             - trailing comma, another arg to follow:
+               run_procedure takes two args: string name, and GValueArray of args
+            '''
+            cmd += f"Gimp.get_pdb().run_procedure('{proc_name}', "
+
+            '''
+            Assemble argument string.
+            Using names of formal args, which might not match names already
+            defined in the browsing environment (the REPL).
+
+            Args are passed to a PDB procedure in a GValueArray.
+            Assemble a string like '[arg_1, arg_2]'.
+            When eval'd, the Python binding will convert to a GValueArray.
+            '''
+            param_specs = proc.get_arguments()
+            cmd += '[ '
+
+            '''
+            Special handling for run mode.
+            GIMP v2: GimpFu had different handling for run mode.
+            Insure run mode interactive, i.e. called procedure may open a GUI.
+
+            This assumes that procedures use the same formal name for runmode arg.
+            There might be rare other cases, especially for third party plugins?
+            E.G. See formal signature of file-gex-load
+
+            There is no other way to distinguish the run mode formal argument,
+            as its formal type is GimpParamEnum, a generic enum.
+            '''
+            if len(param_specs) > 0 and param_specs[0].name == 'run-mode':
+                cmd += 'Gimp.RunMode.INTERACTIVE, '
+                param_specs = param_specs[1:]
+            # else doesn't take a run mode arg
+
+            # Cat string of arg names to a call
+            # Like:  'arg_1, arg_2' where formal names arg-1 and arg-2
+            cmd += ', '.join(x.name.replace('-', '_') for x in param_specs)
+
+            # terminate the arg array, and close parens the call
+            cmd += '])'
+
+            return cmd
+
+
         def browse_response(self, dlg, response_id):
             if response_id != Gtk.ResponseType.APPLY:
                 Gtk.Widget.hide(dlg)
@@ -144,25 +231,13 @@ def run(procedure, args, data):
             proc_name = dlg.get_selected()
 
             if not proc_name:
+                # Apply button was enabled without a selection?
                 return
 
-            proc = pdb[proc_name]
-
-            cmd = ''
-
-            if len(proc.return_vals) > 0:
-                cmd = ', '.join(x[1].replace('-', '_')
-                                for x in proc.return_vals) + ' = '
-
-            cmd = cmd + 'pdb.%s' % proc.proc_name.replace('-', '_')
-
-            if len(proc.params) > 0 and proc.params[0][1] == 'run-mode':
-                params = proc.params[1:]
-            else:
-                params = proc.params
-
-            cmd = cmd + '(%s)' % ', '.join(x[1].replace('-', '_')
-                                           for x in params)
+            cmd = self.command_for_procedure(proc_name)
+            if cmd is None:
+                # Should not happen.  We browsed a name not in the PDB?
+                return
 
             buffer = self.cons.buffer
 
@@ -171,6 +246,7 @@ def run(procedure, args, data):
             buffer.delete(iter, buffer.get_end_iter())
             buffer.place_cursor(buffer.get_end_iter())
             buffer.insert_at_cursor(cmd)
+            # not insert a newline, user can edit and then "enter" the command
 
         def browse(self):
             if not self.browse_dlg:
