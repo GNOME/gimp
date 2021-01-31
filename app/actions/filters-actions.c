@@ -375,7 +375,7 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     GIMP_HELP_FILTER_GAUSSIAN_BLUR_SELECTIVE },
 
   { "filters-gegl-graph", GIMP_ICON_GEGL,
-    NC_("filters-action", "_GEGL graph..."), NULL, NULL,
+    NC_("filters-action", "_GEGL Graph..."), NULL, NULL,
     "gegl:gegl",
     GIMP_HELP_FILTER_GEGL_GRAPH },
 
