@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-01-18 19:22+0000\n"
-"PO-Revision-Date: 2021-01-18 21:38+0100\n"
+"POT-Creation-Date: 2021-01-31 21:30+0000\n"
+"PO-Revision-Date: 2021-02-01 22:19+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -54,8 +54,8 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
 #: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1847
 #: ../plug-ins/common/file-jp2-load.c:961
-#: ../plug-ins/common/file-pdf-load.c:698
-#: ../plug-ins/common/file-pdf-load.c:1264
+#: ../plug-ins/common/file-pdf-load.c:702
+#: ../plug-ins/common/file-pdf-load.c:1282
 #: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3398
 #: ../plug-ins/common/file-raw-data.c:1835 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
@@ -118,7 +118,7 @@ msgstr "A_vbryt"
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1848
-#: ../plug-ins/common/file-pdf-load.c:699 ../plug-ins/common/file-svg.c:664
+#: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:678 ../plug-ins/common/hot.c:615
@@ -2147,7 +2147,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:696 ../plug-ins/common/file-jp2-load.c:1077
-#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1035
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
 #: ../plug-ins/common/file-raw-data.c:1296 ../plug-ins/common/file-sunras.c:429
@@ -3097,8 +3097,8 @@ msgstr "Nedre ramen är utanför intervallet (måste vara < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Skrivning till filen ”%s” misslyckades: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:321
-#: ../plug-ins/common/file-pdf-load.c:340
+#: ../plug-ins/common/file-pdf-load.c:324
+#: ../plug-ins/common/file-pdf-load.c:343
 #: ../plug-ins/common/file-pdf-save.c:350
 #: ../plug-ins/common/file-pdf-save.c:367
 msgid "Portable Document Format"
@@ -3108,7 +3108,7 @@ msgstr "Portable Document Format"
 #. * second is out-of-range page number, third is
 #. * number of pages. Specify order as in English if needed.
 #.
-#: ../plug-ins/common/file-pdf-load.c:504
+#: ../plug-ins/common/file-pdf-load.c:507
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -3117,66 +3117,71 @@ msgstr[0] ""
 msgstr[1] ""
 "PDF-dokumentet ”%1$s” har %3$d sidor. Sida %2$d är utanför intervallet."
 
-#: ../plug-ins/common/file-pdf-load.c:685
+#: ../plug-ins/common/file-pdf-load.c:689
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF är lösenordsskyddad, ange lösenordet:"
 
-#: ../plug-ins/common/file-pdf-load.c:695
+#: ../plug-ins/common/file-pdf-load.c:699
 msgid "Encrypted PDF"
 msgstr "Krypterad PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:722
+#: ../plug-ins/common/file-pdf-load.c:726
 msgid "Wrong password! Please input the right one:"
 msgstr "Felaktigt lösenord! Ange det korrekta:"
 
-#: ../plug-ins/common/file-pdf-load.c:740
+#: ../plug-ins/common/file-pdf-load.c:744
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Kunde inte läsa in ”%s”: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:1069
+#: ../plug-ins/common/file-pdf-load.c:1085
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1071 ../plug-ins/common/file-ps.c:1156
+#: ../plug-ins/common/file-pdf-load.c:1087 ../plug-ins/common/file-ps.c:1156
 #, c-format
 msgid "%s-pages"
 msgstr "%s-sidor"
 
-#: ../plug-ins/common/file-pdf-load.c:1260
+#: ../plug-ins/common/file-pdf-load.c:1278
 msgid "Import from PDF"
 msgstr "Importera från PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1265 ../plug-ins/common/file-ps.c:3399
+#: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3399
 #: ../plug-ins/file-tiff/file-tiff-load.c:2308
 #: ../plug-ins/metadata/metadata-editor.c:5718
 msgid "_Import"
 msgstr "_Importera"
 
-#: ../plug-ins/common/file-pdf-load.c:1298
+#: ../plug-ins/common/file-pdf-load.c:1316
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Fel vid hämtning av sidantal från angiven PDF-fil."
 
-#: ../plug-ins/common/file-pdf-load.c:1344
+#. "Load in reverse order" toggle button
+#: ../plug-ins/common/file-pdf-load.c:1357
+msgid "Load in reverse order"
+msgstr "Läs in i omvänd ordning"
+
+#: ../plug-ins/common/file-pdf-load.c:1375
 msgid "_Width (pixels):"
 msgstr "_Bredd (bildpunkter):"
 
-#: ../plug-ins/common/file-pdf-load.c:1345
+#: ../plug-ins/common/file-pdf-load.c:1376
 msgid "_Height (pixels):"
 msgstr "_Höjd (bildpunkter):"
 
-#: ../plug-ins/common/file-pdf-load.c:1347
+#: ../plug-ins/common/file-pdf-load.c:1378
 msgid "_Resolution:"
 msgstr "_Upplösning:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1358
+#: ../plug-ins/common/file-pdf-load.c:1389
 msgid "Use _Anti-aliasing"
 msgstr "Använd _kantutjämning"
 
-#: ../plug-ins/common/file-pdf-load.c:1636
-#: ../plug-ins/common/file-pdf-load.c:1637 ../plug-ins/common/file-svg.c:852
+#: ../plug-ins/common/file-pdf-load.c:1667
+#: ../plug-ins/common/file-pdf-load.c:1668 ../plug-ins/common/file-svg.c:852
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
