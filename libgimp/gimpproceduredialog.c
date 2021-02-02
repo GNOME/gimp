@@ -365,10 +365,14 @@ gimp_procedure_dialog_real_fill_list (GimpProcedureDialog *dialog,
  * @procedure: the associated #GimpProcedure.
  * @config:    a #GimpProcedureConfig from which properties will be
  *             turned into widgets.
- * @title:     a dialog title.
+ * @title: (nullable): a dialog title.
  *
  * Creates a new dialog for @procedure using widgets generated from
  * properties of @config.
+ * A %NULL title will only be accepted if a menu label was set with
+ * gimp_procedure_set_menu_label() (this menu label will then be used as
+ * dialog title instead). If neither an explicit label nor a @procedure
+ * menu label was set, the call will fail.
  *
  * Returns: (transfer full): the newly created #GimpProcedureDialog.
  */
@@ -378,6 +382,7 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
                            const gchar         *title)
 {
   GtkWidget   *dialog;
+  GtkWidget   *bogus = NULL;
   const gchar *help_id;
   gboolean     use_header_bar;
 
@@ -385,9 +390,20 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
   g_return_val_if_fail (gimp_procedure_config_get_procedure (config) ==
                         procedure, NULL);
-  g_return_val_if_fail (title != NULL, NULL);
+  g_return_val_if_fail (title != NULL || gimp_procedure_get_menu_label (procedure), NULL);
 
   help_id = gimp_procedure_get_help_id (procedure);
+  if (title == NULL)
+    {
+      /* Remove mnemonic underscore. Ugly but must reliable way as GTK
+       * does not expose a function to do this from a string (and better
+       * not to copy-paste the internal function from GTK code).
+       */
+      bogus = gtk_label_new (NULL);
+      gtk_label_set_markup_with_mnemonic (GTK_LABEL (g_object_ref_sink (bogus)),
+                                          gimp_procedure_get_menu_label (procedure));
+      title = gtk_label_get_text (GTK_LABEL (bogus));
+    }
 
   g_object_get (gtk_settings_get_default (),
                 "gtk-dialogs-use-header", &use_header_bar,
@@ -401,6 +417,8 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
                          "help-id",        help_id,
                          "use-header-bar", use_header_bar,
                          NULL);
+
+  g_clear_object (&bogus);
 
   return GTK_WIDGET (dialog);
 }
