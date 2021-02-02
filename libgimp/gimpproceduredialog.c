@@ -360,6 +360,18 @@ gimp_procedure_dialog_real_fill_list (GimpProcedureDialog *dialog,
     }
 }
 
+/**
+ * gimp_procedure_dialog_new:
+ * @procedure: the associated #GimpProcedure.
+ * @config:    a #GimpProcedureConfig from which properties will be
+ *             turned into widgets.
+ * @title:     a dialog title.
+ *
+ * Creates a new dialog for @procedure using widgets generated from
+ * properties of @config.
+ *
+ * Returns: (transfer full): the newly created #GimpProcedureDialog.
+ */
 GtkWidget *
 gimp_procedure_dialog_new (GimpProcedure       *procedure,
                            GimpProcedureConfig *config,
