@@ -195,11 +195,11 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
     }
   else
     {
-      GeglNode           *operation;
-      GimpDrawableFilter *filter;
-      gdouble             opacity;
-      GimpLayerMode       mode;
-      GimpLayerMode       composite_mode;
+      GeglNode               *operation;
+      GimpDrawableFilter     *filter;
+      gdouble                 opacity;
+      GimpLayerMode           mode;
+      GimpLayerCompositeMode  composite_mode;
 
       opacity        = gimp_context_get_opacity (context);
       mode           = gimp_context_get_paint_mode (context);
