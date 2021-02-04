@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-01-28 00:10+0000\n"
-"PO-Revision-Date: 2021-01-28 19:33+0100\n"
+"POT-Creation-Date: 2021-02-02 14:55+0000\n"
+"PO-Revision-Date: 2021-02-04 01:38+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1285,7 +1285,7 @@ msgid "Images"
 msgstr "Bilder"
 
 #: ../app/actions/actions.c:196 ../app/dialogs/dialogs.c:373
-#: ../app/dialogs/resize-dialog.c:143 ../app/widgets/gimppickablepopup.c:228
+#: ../app/dialogs/resize-dialog.c:152 ../app/widgets/gimppickablepopup.c:228
 msgid "Layers"
 msgstr "Lager"
 
@@ -3309,7 +3309,7 @@ msgstr "240 sekunder"
 #: ../app/actions/dashboard-commands.c:118
 #: ../app/actions/documents-commands.c:237 ../app/actions/edit-commands.c:167
 #: ../app/actions/error-console-commands.c:100
-#: ../app/actions/file-commands.c:430
+#: ../app/actions/file-commands.c:431
 #: ../app/actions/gradient-editor-commands.c:409
 #: ../app/actions/gradient-editor-commands.c:520
 #: ../app/actions/gradients-commands.c:79 ../app/actions/plug-in-commands.c:185
@@ -3327,7 +3327,7 @@ msgstr "240 sekunder"
 #: ../app/dialogs/convert-precision-dialog.c:146
 #: ../app/dialogs/data-delete-dialog.c:86
 #: ../app/dialogs/file-open-location-dialog.c:80
-#: ../app/dialogs/file-save-dialog.c:725 ../app/dialogs/fill-dialog.c:115
+#: ../app/dialogs/file-save-dialog.c:741 ../app/dialogs/fill-dialog.c:115
 #: ../app/dialogs/grid-dialog.c:102
 #: ../app/dialogs/image-merge-layers-dialog.c:100
 #: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
@@ -3341,7 +3341,7 @@ msgstr "240 sekunder"
 #: ../app/dialogs/preferences-dialog.c:664
 #: ../app/dialogs/preferences-dialog.c:1120
 #: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:185
+#: ../app/dialogs/resize-dialog.c:200
 #: ../app/dialogs/resolution-calibrate-dialog.c:73
 #: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
 #: ../app/dialogs/template-options-dialog.c:118
@@ -3418,7 +3418,7 @@ msgid "Enter a description for the marker"
 msgstr "Ange en beskrivning för markören"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:392
-#: ../app/actions/file-commands.c:210 ../app/dialogs/file-open-dialog.c:228
+#: ../app/actions/file-commands.c:211 ../app/dialogs/file-open-dialog.c:228
 #: ../app/dialogs/file-open-dialog.c:269
 #: ../app/dialogs/file-open-location-dialog.c:217
 #: ../app/dialogs/file-open-location-dialog.c:233
@@ -3444,7 +3444,7 @@ msgid "Untitled"
 msgstr "Namnlös"
 
 #: ../app/actions/data-commands.c:216 ../app/actions/documents-commands.c:194
-#: ../app/actions/file-commands.c:536
+#: ../app/actions/file-commands.c:537
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Kan inte visa fil i filhanterare: %s"
@@ -4801,7 +4801,7 @@ msgid "Save Error Log to File"
 msgstr "Spara fellogg till fil"
 
 #: ../app/actions/error-console-commands.c:101
-#: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:726
+#: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:742
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:69
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -5012,54 +5012,54 @@ msgstr "Exportera till %s"
 msgid "Over_write %s"
 msgstr "Skriv ö_ver %s"
 
-#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:560
+#: ../app/actions/file-commands.c:120 ../app/actions/file-commands.c:561
 #: ../app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Öppna bild"
 
-#: ../app/actions/file-commands.c:141
+#: ../app/actions/file-commands.c:142
 msgid "Open Image as Layers"
 msgstr "Öppna bild som lager"
 
-#: ../app/actions/file-commands.c:288
+#: ../app/actions/file-commands.c:289
 msgid "No changes need to be saved"
 msgstr "Inga ändringar behöver sparas"
 
-#: ../app/actions/file-commands.c:295 ../app/actions/file-commands.c:769
+#: ../app/actions/file-commands.c:296 ../app/actions/file-commands.c:772
 #: ../app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Spara bild"
 
-#: ../app/actions/file-commands.c:301
+#: ../app/actions/file-commands.c:302
 msgid "Save a Copy of the Image"
 msgstr "Spara en kopia av bilden"
 
-#: ../app/actions/file-commands.c:379
+#: ../app/actions/file-commands.c:380
 msgid "Create New Template"
 msgstr "Skapa en ny mall"
 
-#: ../app/actions/file-commands.c:383
+#: ../app/actions/file-commands.c:384
 msgid "Enter a name for this template"
 msgstr "Ange ett namn för denna mall"
 
-#: ../app/actions/file-commands.c:413
+#: ../app/actions/file-commands.c:414
 msgid "Revert failed. No file name associated with this image."
 msgstr "Återgång misslyckades. Inget filnamn är associerat med den här bilden."
 
-#: ../app/actions/file-commands.c:425
+#: ../app/actions/file-commands.c:426
 msgid "Revert Image"
 msgstr "Återgå till gammal bild"
 
-#: ../app/actions/file-commands.c:431
+#: ../app/actions/file-commands.c:432
 msgid "_Revert"
 msgstr "_Återgå"
 
-#: ../app/actions/file-commands.c:449
+#: ../app/actions/file-commands.c:450
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Återgå från ”%s” till ”%s”?"
 
-#: ../app/actions/file-commands.c:454
+#: ../app/actions/file-commands.c:455
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -5067,11 +5067,11 @@ msgstr ""
 "Genom att återgå till den sparade versionen kommer du att förlora alla dina "
 "ändringar, inklusive all ångringsinformation."
 
-#: ../app/actions/file-commands.c:791
+#: ../app/actions/file-commands.c:794
 msgid "(Unnamed Template)"
 msgstr "(Namnlös mall)"
 
-#: ../app/actions/file-commands.c:838
+#: ../app/actions/file-commands.c:841
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -5444,7 +5444,7 @@ msgstr "_Selektiv gaussisk oskärpa…"
 
 #: ../app/actions/filters-actions.c:378
 msgctxt "filters-action"
-msgid "_GEGL graph..."
+msgid "_GEGL Graph..."
 msgstr "_GEGL-graf…"
 
 #: ../app/actions/filters-actions.c:383
@@ -10929,7 +10929,7 @@ msgid "Move this window to screen %s"
 msgstr "Flytta det här fönstret till skärmen %s"
 
 #: ../app/actions/window-commands.c:78 ../app/dialogs/extensions-dialog.c:79
-#: ../app/dialogs/file-save-dialog.c:649 ../app/dialogs/grid-dialog.c:103
+#: ../app/dialogs/file-save-dialog.c:665 ../app/dialogs/grid-dialog.c:103
 #: ../app/dialogs/image-new-dialog.c:107 ../app/dialogs/image-new-dialog.c:326
 #: ../app/dialogs/input-devices-dialog.c:67
 #: ../app/dialogs/item-options-dialog.c:146
@@ -14422,7 +14422,7 @@ msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Ändra bildenhet"
 
-#: ../app/core/gimpimage.c:4025
+#: ../app/core/gimpimage.c:4026
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14430,47 +14430,47 @@ msgstr ""
 "”gimp-comment”-parasitvalidering misslyckades: kommentar innehåller ogiltig "
 "UTF-8"
 
-#: ../app/core/gimpimage.c:4084
+#: ../app/core/gimpimage.c:4087
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Koppla parasit till bild"
 
-#: ../app/core/gimpimage.c:4126
+#: ../app/core/gimpimage.c:4129
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Ta bort parasit från bild"
 
-#: ../app/core/gimpimage.c:5084
+#: ../app/core/gimpimage.c:5087
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Lägg till lager"
 
-#: ../app/core/gimpimage.c:5128 ../app/core/gimpimage.c:5159
+#: ../app/core/gimpimage.c:5131 ../app/core/gimpimage.c:5162
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Ta bort lager"
 
-#: ../app/core/gimpimage.c:5153
+#: ../app/core/gimpimage.c:5156
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Ta bort flytande markering"
 
-#: ../app/core/gimpimage.c:5306
+#: ../app/core/gimpimage.c:5309
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Lägg till kanal"
 
-#: ../app/core/gimpimage.c:5336 ../app/core/gimpimage.c:5360
+#: ../app/core/gimpimage.c:5339 ../app/core/gimpimage.c:5364
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Ta bort kanal"
 
-#: ../app/core/gimpimage.c:5417
+#: ../app/core/gimpimage.c:5423
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Lägg till bana"
 
-#: ../app/core/gimpimage.c:5447 ../app/core/gimpimage.c:5455
+#: ../app/core/gimpimage.c:5453 ../app/core/gimpimage.c:5461
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Ta bort bana"
@@ -14488,12 +14488,12 @@ msgstr "Aktivera ”Använd sRGB-profil”"
 msgid "Disable 'Use sRGB Profile'"
 msgstr "Inaktivera ”Använd sRGB-profil”"
 
-#: ../app/core/gimpimage-color-profile.c:195
+#: ../app/core/gimpimage-color-profile.c:198
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
 "Validering av ICC-profil misslyckades: Parasitens namn är inte ”icc-profile”"
 
-#: ../app/core/gimpimage-color-profile.c:204
+#: ../app/core/gimpimage-color-profile.c:207
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -14505,39 +14505,39 @@ msgstr ""
 msgid "ICC profile validation failed: "
 msgstr "Validering av ICC-profil misslyckades: "
 
-#: ../app/core/gimpimage-color-profile.c:404
+#: ../app/core/gimpimage-color-profile.c:409
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "Validering av ICC-profil misslyckades: Färgprofil är inte för gråskalerymd"
 
-#: ../app/core/gimpimage-color-profile.c:414
+#: ../app/core/gimpimage-color-profile.c:419
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Validering av ICC-profil misslyckades: Färgprofil är inte för RGB-färgrymd"
 
-#: ../app/core/gimpimage-color-profile.c:473
+#: ../app/core/gimpimage-color-profile.c:478
 msgid "Assigning color profile"
 msgstr "Tilldelar färgprofil"
 
-#: ../app/core/gimpimage-color-profile.c:474
+#: ../app/core/gimpimage-color-profile.c:479
 msgid "Discarding color profile"
 msgstr "Förkastar färgprofil"
 
-#: ../app/core/gimpimage-color-profile.c:478
+#: ../app/core/gimpimage-color-profile.c:483
 msgid "Assign color profile"
 msgstr "Tilldela färgprofil"
 
-#: ../app/core/gimpimage-color-profile.c:479
+#: ../app/core/gimpimage-color-profile.c:484
 msgid "Discard color profile"
 msgstr "Förkasta färgprofil"
 
-#: ../app/core/gimpimage-color-profile.c:522
+#: ../app/core/gimpimage-color-profile.c:527
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Konverterar från ”%s” till ”%s”"
 
-#: ../app/core/gimpimage-color-profile.c:527
+#: ../app/core/gimpimage-color-profile.c:532
 msgid "Color profile conversion"
 msgstr "Färgprofilskonvertering"
 
@@ -16096,7 +16096,7 @@ msgstr "Ange plats (URI):"
 msgid "Invalid URI"
 msgstr "Ogiltig URI"
 
-#: ../app/dialogs/file-save-dialog.c:469
+#: ../app/dialogs/file-save-dialog.c:485
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -16106,11 +16106,11 @@ msgstr ""
 "en filändelse som matchar det valda filformatet eller ange ingen filändelse "
 "alls."
 
-#: ../app/dialogs/file-save-dialog.c:629
+#: ../app/dialogs/file-save-dialog.c:645
 msgid "The given filename cannot be used for exporting"
 msgstr "Det angivna filnamnet kan inte användas för att exportera"
 
-#: ../app/dialogs/file-save-dialog.c:630
+#: ../app/dialogs/file-save-dialog.c:646
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -16118,15 +16118,15 @@ msgstr ""
 "Du kan använda denna dialogruta för att exportera till olika filformat. Om "
 "du vill spara bilden till formatet GIMP XCF, använd istället Arkiv→Spara."
 
-#: ../app/dialogs/file-save-dialog.c:633
+#: ../app/dialogs/file-save-dialog.c:649
 msgid "Take me to the Save dialog"
 msgstr "Ta mig till dialogrutan Spara"
 
-#: ../app/dialogs/file-save-dialog.c:637
+#: ../app/dialogs/file-save-dialog.c:653
 msgid "The given filename cannot be used for saving"
 msgstr "Det angivna filnamnet kan inte användas för att spara"
 
-#: ../app/dialogs/file-save-dialog.c:638
+#: ../app/dialogs/file-save-dialog.c:654
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -16134,15 +16134,15 @@ msgstr ""
 "Du kan använda denna dialogruta för att spara till formatet GIMP XCF. Använd "
 "Arkiv→Exportera för att exportera till andra filformat."
 
-#: ../app/dialogs/file-save-dialog.c:640
+#: ../app/dialogs/file-save-dialog.c:656
 msgid "Take me to the Export dialog"
 msgstr "Ta mig till dialogrutan Exportera"
 
-#: ../app/dialogs/file-save-dialog.c:643 ../app/dialogs/file-save-dialog.c:720
+#: ../app/dialogs/file-save-dialog.c:659 ../app/dialogs/file-save-dialog.c:736
 msgid "Extension Mismatch"
 msgstr "Filändelsen stämmer inte"
 
-#: ../app/dialogs/file-save-dialog.c:704
+#: ../app/dialogs/file-save-dialog.c:720
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -16150,19 +16150,19 @@ msgstr ""
 "Angivet filnamn har inte en känd filändelse. Ange en känd filändelse eller "
 "välj ett filformat från filformatlistan."
 
-#: ../app/dialogs/file-save-dialog.c:736
+#: ../app/dialogs/file-save-dialog.c:752
 msgid "The given file extension does not match the chosen file type."
 msgstr "Angiven filändelse matchar inte den valda filtypen."
 
-#: ../app/dialogs/file-save-dialog.c:740
+#: ../app/dialogs/file-save-dialog.c:756
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Vill du spara bilden med det här namnet ändå?"
 
-#: ../app/dialogs/file-save-dialog.c:805
+#: ../app/dialogs/file-save-dialog.c:821
 msgid "Saving canceled"
 msgstr "Sparning avbröts"
 
-#: ../app/dialogs/file-save-dialog.c:811 ../app/widgets/gimpdnd-xds.c:190
+#: ../app/dialogs/file-save-dialog.c:827 ../app/widgets/gimpdnd-xds.c:190
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -16172,7 +16172,7 @@ msgstr ""
 "Sparande av filen ”%s” misslyckades:\n"
 "%s"
 
-#: ../app/dialogs/file-save-dialog.c:813
+#: ../app/dialogs/file-save-dialog.c:829
 msgid "Unknown error"
 msgstr "Okänt fel"
 
@@ -16225,7 +16225,7 @@ msgid "Create a New Image"
 msgstr "Skapa en ny bild"
 
 #: ../app/dialogs/image-new-dialog.c:138
-#: ../app/dialogs/preferences-dialog.c:1761
+#: ../app/dialogs/preferences-dialog.c:1761 ../app/dialogs/resize-dialog.c:231
 msgid "_Template:"
 msgstr "_Mall:"
 
@@ -16433,7 +16433,7 @@ msgstr "X-position:"
 msgid "Offset Y:"
 msgstr "Y-position:"
 
-#: ../app/dialogs/layer-options-dialog.c:377 ../app/dialogs/resize-dialog.c:359
+#: ../app/dialogs/layer-options-dialog.c:377 ../app/dialogs/resize-dialog.c:404
 #: ../app/widgets/gimptemplateeditor.c:442
 msgid "_Fill with:"
 msgstr "_Fyll med:"
@@ -18346,60 +18346,60 @@ msgstr "Spara denna bild"
 msgid "Save as"
 msgstr "Spara som"
 
-#: ../app/dialogs/resize-dialog.c:142
+#: ../app/dialogs/resize-dialog.c:151
 msgid "Canvas Size"
 msgstr "Storlek på rityta"
 
-#: ../app/dialogs/resize-dialog.c:154 ../app/dialogs/scale-dialog.c:114
+#: ../app/dialogs/resize-dialog.c:163 ../app/dialogs/scale-dialog.c:114
 msgid "Layer Size"
 msgstr "Lagerstorlek"
 
-#: ../app/dialogs/resize-dialog.c:155
+#: ../app/dialogs/resize-dialog.c:164
 msgid "Fill With"
 msgstr "Fyll med"
 
-#: ../app/dialogs/resize-dialog.c:184
+#: ../app/dialogs/resize-dialog.c:199
 msgid "Re_set"
 msgstr "Åter_ställ"
 
-#: ../app/dialogs/resize-dialog.c:186
+#: ../app/dialogs/resize-dialog.c:201
 msgid "_Resize"
 msgstr "_Ändra storlek"
 
 #. The offset frame
 #. offset frame
-#: ../app/dialogs/resize-dialog.c:229 ../app/tools/gimpalignoptions.c:97
+#: ../app/dialogs/resize-dialog.c:274 ../app/tools/gimpalignoptions.c:97
 #: ../app/tools/gimpalignoptions.c:104 ../app/tools/gimpgradientoptions.c:89
 #: ../app/tools/gimpoffsettool.c:129 ../app/tools/gimpoffsettool.c:473
 #: ../app/tools/gimptransform3dtool.c:343 ../app/widgets/gimpgrideditor.c:211
 msgid "Offset"
 msgstr "Position"
 
-#: ../app/dialogs/resize-dialog.c:252 ../app/tools/gimpoffsettool.c:497
+#: ../app/dialogs/resize-dialog.c:297 ../app/tools/gimpoffsettool.c:497
 #: ../app/tools/gimptransform3dtool.c:271
 #: ../app/tools/gimptransform3dtool.c:383
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/resize-dialog.c:253 ../app/tools/gimpoffsettool.c:499
+#: ../app/dialogs/resize-dialog.c:298 ../app/tools/gimpoffsettool.c:499
 #: ../app/tools/gimptransform3dtool.c:272
 #: ../app/tools/gimptransform3dtool.c:388
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/resize-dialog.c:270
+#: ../app/dialogs/resize-dialog.c:315
 msgid "C_enter"
 msgstr "C_entrera"
 
-#: ../app/dialogs/resize-dialog.c:321
+#: ../app/dialogs/resize-dialog.c:366
 msgid "Resize _layers:"
 msgstr "Ändra storlek på _lager:"
 
-#: ../app/dialogs/resize-dialog.c:369
+#: ../app/dialogs/resize-dialog.c:414
 msgid "Resize _text layers"
 msgstr "Ändra storlek på _textlager"
 
-#: ../app/dialogs/resize-dialog.c:380
+#: ../app/dialogs/resize-dialog.c:425
 msgid "Resizing text layers will make them uneditable"
 msgstr "Att skala om textlager kommer att göra dem oredigerbara"
 
@@ -22367,7 +22367,7 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
-#: ../app/text/gimptext-parasite.c:89
+#: ../app/text/gimptext-parasite.c:94
 msgid "Empty text parasite"
 msgstr "Tom textparasit"
 
@@ -23520,8 +23520,8 @@ msgid "GEGL Operation"
 msgstr "GEGL-operation"
 
 #: ../app/tools/gimpgegltool.c:79
-msgid "GEGL Tool: Use an arbitrary GEGL operation"
-msgstr "GEGL-verktyg: Använd en godtycklig GEGL-operation"
+msgid "Run an arbitrary GEGL operation"
+msgstr "Kör en godtycklig GEGL-operation"
 
 #: ../app/tools/gimpgegltool.c:80
 msgid "_GEGL Operation..."
@@ -28372,7 +28372,7 @@ msgstr "Fel vid skapande ”%s”: "
 msgid "Invalid image mode and precision combination."
 msgstr "Ogiltig kombination av bildläge och precision."
 
-#: ../app/xcf/xcf-load.c:366
+#: ../app/xcf/xcf-load.c:373
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28381,7 +28381,7 @@ msgstr ""
 "Skadad ”exif-data”-parasit upptäckt.\n"
 "Exif-data kunde inte migreras: %s"
 
-#: ../app/xcf/xcf-load.c:403
+#: ../app/xcf/xcf-load.c:412
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28389,7 +28389,7 @@ msgstr ""
 "Skadad ”gimp-metadata”-parasit upptäckt.\n"
 "XMP-data kunde inte migreras."
 
-#: ../app/xcf/xcf-load.c:427
+#: ../app/xcf/xcf-load.c:436
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28402,7 +28402,7 @@ msgstr ""
 "Om du inte vet vad XMP är behöver du det mest troligt inte. Rapporterat fel: "
 "%s."
 
-#: ../app/xcf/xcf-load.c:703
+#: ../app/xcf/xcf-load.c:712
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -28410,7 +28410,7 @@ msgstr ""
 "Den här XCF-filen är skadad!  Jag har läst in så mycket jag kan av den men "
 "den är ofullständig."
 
-#: ../app/xcf/xcf-load.c:722
+#: ../app/xcf/xcf-load.c:731
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -28418,7 +28418,7 @@ msgstr ""
 "Den här XCF-filen är skadad!  Jag kunde inte ens rädda någon del av dess "
 "bilddata."
 
-#: ../app/xcf/xcf-load.c:813
+#: ../app/xcf/xcf-load.c:822
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
