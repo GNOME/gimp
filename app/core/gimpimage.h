@@ -104,6 +104,7 @@ struct _GimpImageClass
   void (* undo_event)                   (GimpImage            *image,
                                          GimpUndoEvent         event,
                                          GimpUndo             *undo);
+  void (* layer_links_changed)          (GimpImage            *image);
 };
 
 
@@ -450,6 +451,17 @@ void            gimp_image_add_layers            (GimpImage          *image,
                                                   gint                width,
                                                   gint                height,
                                                   const gchar        *undo_desc);
+
+gboolean        gimp_image_link_layers           (GimpImage          *image,
+                                                  const GList        *layers,
+                                                  const gchar        *link_name);
+gboolean        gimp_image_unlink_layers         (GimpImage          *image,
+                                                  const gchar        *link_name);
+void            gimp_image_select_linked_layers  (GimpImage          *image,
+                                                  const gchar        *link_name);
+void            gimp_image_add_linked_layers     (GimpImage          *image,
+                                                  const gchar        *link_name);
+GList         * gimp_image_get_linked_layer_names (GimpImage         *image);
 
 gboolean        gimp_image_add_channel           (GimpImage          *image,
                                                   GimpChannel        *channel,

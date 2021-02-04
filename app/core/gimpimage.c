@@ -126,6 +126,7 @@ enum
   PARASITE_DETACHED,
   COLORMAP_CHANGED,
   UNDO_EVENT,
+  LAYER_LINKS_CHANGED,
   LAST_SIGNAL
 };
 
@@ -572,6 +573,14 @@ gimp_image_class_init (GimpImageClass *klass)
                   GIMP_TYPE_UNDO_EVENT,
                   GIMP_TYPE_UNDO);
 
+  gimp_image_signals[LAYER_LINKS_CHANGED] =
+    g_signal_new ("layer-links-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, layer_links_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
   object_class->constructed           = gimp_image_constructed;
   object_class->set_property          = gimp_image_set_property;
   object_class->get_property          = gimp_image_get_property;
@@ -775,6 +784,10 @@ gimp_image_init (GimpImage *image)
                                                      GIMP_TYPE_ITEM_STACK,
                                                      GIMP_TYPE_VECTORS);
   private->layer_stack         = NULL;
+
+  private->linked_layers       = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                                        (GDestroyNotify) g_free,
+                                                        (GDestroyNotify) g_list_free);
 
   g_signal_connect (private->projection, "notify::buffer",
                     G_CALLBACK (gimp_image_projection_buffer_notify),
@@ -1118,6 +1131,8 @@ gimp_image_finalize (GObject *object)
   g_clear_object (&private->layers);
   g_clear_object (&private->channels);
   g_clear_object (&private->vectors);
+
+  g_hash_table_destroy (private->linked_layers);
 
   if (private->layer_stack)
     {
@@ -5345,6 +5360,171 @@ gimp_image_add_layers (GimpImage   *image,
     gimp_image_set_selected_layers (image, layers);
 
   gimp_image_undo_group_end (image);
+}
+
+/*
+ * gimp_image_link_layers:
+ * @image:
+ * @layers:
+ * @link_name:
+ *
+ * Create a new set of @layers under the name @link_name.
+ * If @layers is empty, the currently selected layers are linked
+ * instead.
+ * If a set with the same name existed, this call will silently replace
+ * it with the new set of layers.
+ *
+ * Returns: %TRUE if a new set was created, %FALSE otherwise (e.g. no
+ *          list provided and no layers currently selected).
+ */
+gboolean
+gimp_image_link_layers (GimpImage   *image,
+                        const GList *layers,
+                        const gchar *link_name)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (! layers)
+    {
+      layers = gimp_image_get_selected_layers (image);
+
+      if (! layers)
+        return FALSE;
+    }
+
+  g_hash_table_insert (private->linked_layers,
+                       g_strdup (link_name),
+                       g_list_copy ((GList *) layers));
+  g_signal_emit (image, gimp_image_signals[LAYER_LINKS_CHANGED], 0);
+
+  return TRUE;
+}
+
+/*
+ * @gimp_image_unlink_layers:
+ * @image:
+ * @link_name:
+ *
+ * Remove the set of layers named @link_name.
+ *
+ * Returns: %TRUE if the set was removed, %FALSE if no sets with this
+ *          name existed.
+ */
+gboolean
+gimp_image_unlink_layers (GimpImage   *image,
+                          const gchar *link_name)
+{
+  GimpImagePrivate *private;
+  gboolean          success;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  success = g_hash_table_remove (private->linked_layers, link_name);
+  if (success)
+    g_signal_emit (image, gimp_image_signals[LAYER_LINKS_CHANGED], 0);
+
+  return success;
+}
+
+/*
+ * @gimp_image_select_linked_layers:
+ * @image:
+ * @link_name:
+ *
+ * Replace currently selected layers in @image with the layers belonging
+ * to the set named @link_name (which must exist).
+ *
+ * Returns: %TRUE if the selection change is done (even if it turned out
+ *          selected layers stay the same), %FALSE if no sets with this
+ *          name existed.
+ */
+void
+gimp_image_select_linked_layers (GimpImage   *image,
+                                 const gchar *link_name)
+{
+  GimpImagePrivate *private;
+  GList            *linked;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (link_name != NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  linked = g_hash_table_lookup (private->linked_layers,
+                                link_name);
+
+  g_return_if_fail (linked);
+
+  gimp_image_set_selected_layers (image, linked);
+}
+
+/*
+ * @gimp_image_add_linked_layers:
+ * @image:
+ * @link_name:
+ *
+ * Add the layers belonging to the set named @link_name (which must
+ * exist) to the layers currently selected in @image.
+ *
+ * Returns: %TRUE if the selection change is done (even if it turned out
+ *          selected layers stay the same), %FALSE if no sets with this
+ *          name existed.
+ */
+void
+gimp_image_add_linked_layers (GimpImage   *image,
+                              const gchar *link_name)
+{
+  GimpImagePrivate *private;
+  GList            *linked;
+  GList            *layers;
+  GList            *iter;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (link_name != NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  linked = g_hash_table_lookup (private->linked_layers,
+                                link_name);
+
+  g_return_if_fail (linked);
+
+  layers = gimp_image_get_selected_layers (image);
+  layers = g_list_copy (layers);
+  for (iter = linked; iter; iter = iter->next)
+    {
+      if (! g_list_find (layers, iter->data))
+        layers = g_list_prepend (layers, iter->data);
+    }
+
+  gimp_image_set_selected_layers (image, layers);
+  g_list_free (layers);
+}
+
+/*
+ * @gimp_image_get_linked_layer_names:
+ * @image:
+ *
+ * Returns: the newly allocated list of all the link names (which you
+ *          should not modify directly). Free the list with
+ *          g_list_free().
+ */
+GList *
+gimp_image_get_linked_layer_names (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return g_hash_table_get_keys (private->linked_layers);
 }
 
 
