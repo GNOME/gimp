@@ -461,6 +461,10 @@ void            gimp_image_select_linked_layers  (GimpImage          *image,
                                                   const gchar        *link_name);
 void            gimp_image_add_linked_layers     (GimpImage          *image,
                                                   const gchar        *link_name);
+void            gimp_image_remove_linked_layers  (GimpImage          *image,
+                                                  const gchar        *link_name);
+void            gimp_image_intersect_linked_layers (GimpImage        *image,
+                                                    const gchar      *link_name);
 GList         * gimp_image_get_linked_layer_names (GimpImage         *image);
 
 gboolean        gimp_image_add_channel           (GimpImage          *image,

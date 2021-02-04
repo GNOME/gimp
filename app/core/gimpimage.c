@@ -5508,6 +5508,102 @@ gimp_image_add_linked_layers (GimpImage   *image,
 }
 
 /*
+ * @gimp_image_remove_linked_layers:
+ * @image:
+ * @link_name:
+ *
+ * Remove the layers belonging to the set named @link_name (which must
+ * exist) from the layers currently selected in @image.
+ *
+ * Returns: %TRUE if the selection change is done (even if it turned out
+ *          selected layers stay the same), %FALSE if no sets with this
+ *          name existed.
+ */
+void
+gimp_image_remove_linked_layers (GimpImage   *image,
+                                 const gchar *link_name)
+{
+  GimpImagePrivate *private;
+  GList            *linked;
+  GList            *layers;
+  GList            *iter;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (link_name != NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  linked = g_hash_table_lookup (private->linked_layers,
+                                link_name);
+
+  g_return_if_fail (linked);
+
+  layers = gimp_image_get_selected_layers (image);
+  layers = g_list_copy (layers);
+  for (iter = linked; iter; iter = iter->next)
+    {
+      GList *remove;
+
+      if ((remove = g_list_find (layers, iter->data)))
+        layers = g_list_delete_link (layers, remove);
+    }
+
+  gimp_image_set_selected_layers (image, layers);
+  g_list_free (layers);
+}
+
+/*
+ * @gimp_image_intersect_linked_layers:
+ * @image:
+ * @link_name:
+ *
+ * Remove any layers from the layers currently selected in @image if
+ * they don't also belong to the set named @link_name (which must
+ * exist).
+ *
+ * Returns: %TRUE if the selection change is done (even if it turned out
+ *          selected layers stay the same), %FALSE if no sets with this
+ *          name existed.
+ */
+void
+gimp_image_intersect_linked_layers (GimpImage   *image,
+                                    const gchar *link_name)
+{
+  GimpImagePrivate *private;
+  GList            *linked;
+  GList            *layers;
+  GList            *remove = NULL;
+  GList            *iter;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (link_name != NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  linked = g_hash_table_lookup (private->linked_layers,
+                                link_name);
+
+  g_return_if_fail (linked);
+
+  layers = gimp_image_get_selected_layers (image);
+  layers = g_list_copy (layers);
+
+  /* Remove items in layers but not in linked. */
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (! g_list_find (linked, iter->data))
+        remove = g_list_prepend (remove, iter);
+    }
+  for (iter = remove; iter; iter = iter->next)
+    layers = g_list_delete_link (layers, iter->data);
+  g_list_free (remove);
+
+  /* Finally select the intersection. */
+  gimp_image_set_selected_layers (image, layers);
+  g_list_free (layers);
+}
+
+/*
  * @gimp_image_get_linked_layer_names:
  * @image:
  *
