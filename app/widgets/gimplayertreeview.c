@@ -148,8 +148,8 @@ static void       gimp_layer_tree_view_floating_selection_changed (GimpImage    
 
 static void       gimp_layer_tree_view_layer_links_changed        (GimpImage                  *image,
                                                                    GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_link_activated             (GtkListBox                 *list,
-                                                                   GtkListBoxRow               *row,
+static gboolean   gimp_layer_tree_view_link_clicked               (GtkWidget                  *box,
+                                                                   GdkEvent                   *event,
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_new_link_clicked           (GtkButton                  *button,
                                                                    GimpLayerTreeView          *view);
@@ -483,10 +483,6 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (layer_view->priv->link_list),
                                              TRUE);
-  g_signal_connect (layer_view->priv->link_list,
-                    "row-activated",
-                    G_CALLBACK (gimp_layer_tree_view_link_activated),
-                    layer_view);
 
   /* Link popover: new links. */
 
@@ -1138,8 +1134,6 @@ gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
       grid = gtk_grid_new ();
 
       label = gtk_label_new (iter->data);
-      g_object_set_data (G_OBJECT (grid), "link-name",
-                         (gpointer) gtk_label_get_text (GTK_LABEL (label)));
       gtk_widget_set_hexpand (GTK_WIDGET (label), TRUE);
       gtk_widget_set_halign (GTK_WIDGET (label), GTK_ALIGN_START);
       gtk_size_group_add_widget (label_size, label);
@@ -1167,7 +1161,27 @@ gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
       gtk_container_add (GTK_CONTAINER (event_box), icon);
       gtk_widget_show (icon);
 
-      gtk_list_box_prepend (GTK_LIST_BOX (view->priv->link_list), grid);
+      /* Now using again an event box on the whole grid, but behind its
+       * child (so that the delete button is processed first. I do it
+       * this way instead of using the "row-activated" of GtkListBox
+       * because this signal does not give us event info, and in
+       * particular modifier state. Yet I want to be able to process
+       * Shift/Ctrl state for logical operations on layer sets.
+       */
+      event_box = gtk_event_box_new ();
+      gtk_event_box_set_above_child (GTK_EVENT_BOX (event_box), FALSE);
+      gtk_widget_add_events (event_box, GDK_BUTTON_RELEASE_MASK);
+      g_object_set_data (G_OBJECT (event_box), "link-name",
+                         (gpointer) gtk_label_get_text (GTK_LABEL (label)));
+      gtk_container_add (GTK_CONTAINER (event_box), grid);
+      gtk_list_box_prepend (GTK_LIST_BOX (view->priv->link_list), event_box);
+      gtk_widget_show (event_box);
+
+      g_signal_connect (event_box,
+                        "button-release-event",
+                        G_CALLBACK (gimp_layer_tree_view_link_clicked),
+                        view);
+
       gtk_widget_show (grid);
     }
   g_object_unref (label_size);
@@ -1176,22 +1190,35 @@ gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
   g_list_free (links);
 }
 
-static void
-gimp_layer_tree_view_link_activated (GtkListBox        *list,
-                                     GtkListBoxRow      *row,
-                                     GimpLayerTreeView *view)
+static gboolean
+gimp_layer_tree_view_link_clicked (GtkWidget         *box,
+                                   GdkEvent          *event,
+                                   GimpLayerTreeView *view)
 {
-  GimpImage *image;
-  GtkWidget *grid;
+  GimpImage       *image;
+  GdkEventButton  *bevent = (GdkEventButton *) event;
+  GdkModifierType  modifiers;
 
   image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-  grid = gtk_bin_get_child (GTK_BIN (row));
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GTK_IS_GRID (grid));
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GTK_IS_EVENT_BOX (box), FALSE);
 
-  gimp_image_select_linked_layers (image,
-                                   g_object_get_data (G_OBJECT (grid), "link-name"));
+  modifiers = bevent->state & gimp_get_all_modifiers_mask ();
+  if (modifiers == GDK_SHIFT_MASK)
+    gimp_image_add_linked_layers (image,
+                                  g_object_get_data (G_OBJECT (box), "link-name"));
+  else if (modifiers == GDK_CONTROL_MASK)
+    gimp_image_remove_linked_layers (image,
+                                     g_object_get_data (G_OBJECT (box), "link-name"));
+  else if (modifiers == (GDK_CONTROL_MASK | GDK_SHIFT_MASK))
+    gimp_image_intersect_linked_layers (image,
+                                        g_object_get_data (G_OBJECT (box), "link-name"));
+  else
+    gimp_image_select_linked_layers (image,
+                                     g_object_get_data (G_OBJECT (box), "link-name"));
+
+  return FALSE;
 }
 
 static void
