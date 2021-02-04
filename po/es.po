@@ -1,41 +1,38 @@
 # translation of gimp.master.po to Español
-# Copyright © 1998-2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012 Free Software Foundation, Inc.
+# Copyright © 1998-2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
 #
-# Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
+# Pablo G. del Campo <pablodc@bigfoot.com>, 2003-2004.
 # Alonso Lara <keko@khor-ha.net>, 2005.
-# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003, 2004, 2005, 2006.
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003-2006.
 # Joaquín Ignacio Aramendía <samsagax@gmail.com>, 2011.
-# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
-# Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
-#
+# Jorge González <jorgegonz@svn.gnome.org>, 2007-2011.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2003-2013.
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
-# Luis Angel Gonzo <luisangelgonzo@gmail.com>, 2017.
 # Luis Ángel Gonzo <luisangelgonzo@gmail.com>, 2017, 2018.
-# Rodrigo <rodhos92@gmail.com>, 2018-2019.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2020.
-# Rodrigo Lledó <rodhos92@gmail.com>, 2019-2020.
+# Rodrigo Lledó <rodhos92@gmail.com>, 2018-2021.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-30 17:33+0000\n"
-"PO-Revision-Date: 2020-10-06 13:48+0200\n"
-"Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
-"Language: es\n"
+"POT-Creation-Date: 2021-02-01 21:20+0000\n"
+"PO-Revision-Date: 2021-02-04 13:22+0100\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 3.36.0\n"
+"X-Generator: Gtranslator 3.38.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
 msgid "GNU Image Manipulation Program"
-msgstr "Programa de manipulación de imágenes de GNU"
+msgstr "Programa de manipulación de imágenes de GNU…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:2
 #: ../desktop/gimp.desktop.in.in.h:3
@@ -183,8 +180,8 @@ msgstr "Controles en el lienzo para el filtro Vignette"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
-"Filtros nuevos: Capa blanca, Enfoque, Desenfoque de lente, Desenfoque "
-"variable"
+"Filtros nuevos: capa blanca, desenfoque de foco, desenfoque de lente, "
+"desenfoque variable"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "Over 30 bugfixes"
@@ -2755,7 +2752,7 @@ msgstr "Selección de herramienta: cambiar a la última"
 #: ../app/actions/context-actions.c:737
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Previous"
-msgstr "Selección de herramienta: cambiar a la previa "
+msgstr "Selección de herramienta: cambiar a la previa"
 
 #: ../app/actions/context-actions.c:741
 msgctxt "context-action"
@@ -2835,7 +2832,7 @@ msgstr "Selección de paleta: cambiar a la anterior"
 #: ../app/actions/context-actions.c:813
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Next"
-msgstr "Selección de paleta: cambiar a la siguiente "
+msgstr "Selección de paleta: cambiar a la siguiente"
 
 #: ../app/actions/context-actions.c:821
 msgctxt "context-action"
@@ -3100,7 +3097,7 @@ msgstr "Proporción de aspecto del pincel (editor): aumentar en 1"
 #: ../app/actions/context-actions.c:1061
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Set"
-msgstr "Ángulo del pincel (editor): establecer "
+msgstr "Ángulo del pincel (editor): establecer"
 
 #: ../app/actions/context-actions.c:1065
 msgctxt "context-action"
@@ -3191,7 +3188,7 @@ msgstr "Duración del _histórico"
 #: ../app/actions/dashboard-actions.c:51
 msgctxt "dashboard-action"
 msgid "_Start/Stop Recording..."
-msgstr "_Comenzar/Detener grabación..."
+msgstr "_Comenzar/Detener grabación…"
 
 #: ../app/actions/dashboard-actions.c:52
 msgctxt "dashboard-action"
@@ -4628,19 +4625,19 @@ msgstr ""
 
 #: ../app/actions/edit-commands.c:238
 msgid "Cut layer to the clipboard."
-msgstr "Cortar la capa al portapapeles"
+msgstr "Cortar la capa al portapapeles."
 
 #: ../app/actions/edit-commands.c:239
 msgid "Cut pixels to the clipboard."
-msgstr "Cortar los píxeles al portapapeles"
+msgstr "Cortar los píxeles al portapapeles."
 
 #: ../app/actions/edit-commands.c:275
 msgid "Copied layer to the clipboard."
-msgstr "Píxeles copiados al portapapeles"
+msgstr "Capa copiada al portapapeles."
 
 #: ../app/actions/edit-commands.c:276 ../app/actions/edit-commands.c:306
 msgid "Copied pixels to the clipboard."
-msgstr "Píxeles copiados al portapapeles"
+msgstr "Píxeles copiados al portapapeles."
 
 #: ../app/actions/edit-commands.c:386 ../app/actions/edit-commands.c:629
 #: ../app/tools/gimpseamlessclonetool.c:297
@@ -4662,7 +4659,7 @@ msgstr "Copiar (con nombre)"
 
 #: ../app/actions/edit-commands.c:444
 msgid "Copy Visible Named "
-msgstr "Copiar visible con nombre"
+msgstr "Copiar visible con nombre "
 
 #: ../app/actions/edit-commands.c:539 ../app/tools/gimppainttool.c:887
 msgid "The active layer's alpha channel is locked."
@@ -5208,7 +5205,7 @@ msgstr "_Dilatar"
 #: ../app/actions/filters-actions.c:139
 msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
-msgstr "Aumentar áreas más claras de la imagen"
+msgstr "Aumentar las áreas más claras de la imagen"
 
 #: ../app/actions/filters-actions.c:154
 msgctxt "filters-action"
@@ -5218,7 +5215,7 @@ msgstr "_Erosionar"
 #: ../app/actions/filters-actions.c:155
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
-msgstr "Aumentar áreas más oscuras de la imagen"
+msgstr "Aumentar las áreas más oscuras de la imagen"
 
 #: ../app/actions/filters-actions.c:173
 msgctxt "filters-action"
@@ -5228,7 +5225,7 @@ msgstr "Mapa _alienígena…"
 #: ../app/actions/filters-actions.c:178
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
-msgstr "_Aplicar lienzo..."
+msgstr "_Aplicar lienzo…"
 
 #: ../app/actions/filters-actions.c:183
 msgctxt "filters-action"
@@ -5305,7 +5302,7 @@ msgstr "_Rotar colores…"
 #: ../app/actions/filters-actions.c:253
 msgctxt "filters-action"
 msgid "Color T_emperature..."
-msgstr "T_emperatura del color…"
+msgstr "T_emperatura de color…"
 
 #: ../app/actions/filters-actions.c:258
 msgctxt "filters-action"
@@ -5410,7 +5407,7 @@ msgstr "_Fattal et al. 2002…"
 #: ../app/actions/filters-actions.c:358
 msgctxt "filters-action"
 msgid "_Focus Blur..."
-msgstr "_Enfoque…"
+msgstr "_Desenfoque de foco…"
 
 #: ../app/actions/filters-actions.c:363
 msgctxt "filters-action"
@@ -5497,7 +5494,7 @@ msgstr "_Sinusoide lineal…"
 #: ../app/actions/filters-actions.c:443
 msgctxt "filters-action"
 msgid "_Little Planet..."
-msgstr "_Planeta pequeño..."
+msgstr "_Planeta pequeño…"
 
 #: ../app/actions/filters-actions.c:448
 msgctxt "filters-action"
@@ -5517,12 +5514,12 @@ msgstr "_Laberinto…"
 #: ../app/actions/filters-actions.c:463
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
-msgstr "Desenfoque _medio de la c_urvatura…"
+msgstr "Desenfoque de _media de la c_urvatura…"
 
 #: ../app/actions/filters-actions.c:468
 msgctxt "filters-action"
 msgid "_Median Blur..."
-msgstr "Desenfoque _medio…"
+msgstr "Desenfoque de _mediana…"
 
 #: ../app/actions/filters-actions.c:473
 msgctxt "filters-action"
@@ -5632,7 +5629,7 @@ msgstr "Pintura al ó_leo…"
 #: ../app/actions/filters-actions.c:578
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
-msgstr "_Proyección de panorama…"
+msgstr "_Proyección panorámica…"
 
 #: ../app/actions/filters-actions.c:583
 msgctxt "filters-action"
@@ -5663,12 +5660,12 @@ msgstr "_Posterizar…"
 #: ../app/actions/filters-actions.c:608
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
-msgstr "Transformación _recursiva..."
+msgstr "Transformación _recursiva…"
 
 #: ../app/actions/filters-actions.c:613
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
-msgstr "_Eliminar ojos rojos..."
+msgstr "_Eliminar ojos rojos…"
 
 #: ../app/actions/filters-actions.c:618
 msgctxt "filters-action"
@@ -5703,7 +5700,7 @@ msgstr "_Sepia…"
 #: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr "_Sombras-Resaltados..."
+msgstr "_Sombras-Resaltados…"
 
 #: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
@@ -5733,7 +5730,7 @@ msgstr "Brillo _suave…"
 #: ../app/actions/filters-actions.c:678
 msgctxt "filters-action"
 msgid "Spheri_ze..."
-msgstr "Esferifi_car..."
+msgstr "Esferifi_car…"
 
 #: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
@@ -5758,7 +5755,7 @@ msgstr "_Supernova…"
 #: ../app/actions/filters-actions.c:703
 msgctxt "filters-action"
 msgid "_Threshold..."
-msgstr "_Umbral..."
+msgstr "_Umbral…"
 
 #: ../app/actions/filters-actions.c:708
 msgctxt "filters-action"
@@ -5783,7 +5780,7 @@ msgstr "_Mosaico sin costura…"
 #: ../app/actions/filters-actions.c:728
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
-msgstr "Enfocar (_Máscara de desenfoque)…"
+msgstr "Nitidez (_Máscara de suciedad)…"
 
 #: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
@@ -5809,7 +5806,7 @@ msgstr "_Viñeta…"
 #: ../app/actions/filters-actions.c:753
 msgctxt "filters-action"
 msgid "_Waterpixels..."
-msgstr "_Ondas..."
+msgstr "_Píxeles de agua…"
 
 #: ../app/actions/filters-actions.c:758
 msgctxt "filters-action"
@@ -5819,7 +5816,7 @@ msgstr "_Ondas…"
 #: ../app/actions/filters-actions.c:763
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
-msgstr "_Girar y comprimir..."
+msgstr "_Girar y comprimir…"
 
 #: ../app/actions/filters-actions.c:768
 msgctxt "filters-action"
@@ -6708,7 +6705,7 @@ msgstr "Convertir la imagen a coma flotante de 64 bits"
 #: ../app/actions/image-actions.c:253
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
-msgstr "Gamma perceptual (sRGB)"
+msgstr "Gamma de percepción (sRGB)"
 
 #: ../app/actions/image-actions.c:255
 msgctxt "image-convert-action"
@@ -6836,12 +6833,12 @@ msgstr ""
 #: ../app/actions/image-commands.c:1081
 #, c-format
 msgid "Converting to RGB (%s)"
-msgstr "Convertir a RGB (%s)"
+msgstr "Convirtiendo a RGB (%s)"
 
 #: ../app/actions/image-commands.c:1119
 #, c-format
 msgid "Converting to grayscale (%s)"
-msgstr "Convertir a escala de grises (%s)"
+msgstr "Convirtiendo a escala de grises (%s)"
 
 #: ../app/actions/image-commands.c:1181
 msgid "Converting to indexed colors"
@@ -6859,7 +6856,7 @@ msgstr "Asignar perfil de color"
 #: ../app/actions/image-commands.c:1346
 #, c-format
 msgid "Converting to '%s'"
-msgstr "Convertir a «%s»"
+msgstr "Convirtiendo a «%s»"
 
 #: ../app/actions/image-commands.c:1452
 msgid "Change Print Size"
@@ -6879,7 +6876,7 @@ msgstr "Escalar la imagen"
 #: ../app/pdb/layer-cmds.c:448 ../app/pdb/transform-tools-cmds.c:360
 #: ../app/tools/gimpscaletool.c:122
 msgid "Scaling"
-msgstr "Escalado"
+msgstr "Escalando"
 
 #: ../app/actions/images-actions.c:43
 msgctxt "images-action"
@@ -8273,7 +8270,7 @@ msgstr "Crear una selección flotante"
 #: ../app/actions/select-actions.c:74
 msgctxt "select-action"
 msgid "Fea_ther..."
-msgstr "Di_fuminar [Feather]…"
+msgstr "Di_fuminar…"
 
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
@@ -8283,7 +8280,7 @@ msgstr "Difuminar el borde de selección para que se desvanezca suavemente"
 #: ../app/actions/select-actions.c:81
 msgctxt "select-action"
 msgid "_Sharpen"
-msgstr "_Enfocar [Sharpen]"
+msgstr "_Nitidez"
 
 #: ../app/actions/select-actions.c:82
 msgctxt "select-action"
@@ -8293,7 +8290,7 @@ msgstr "Eliminar la borrosidad de la selección"
 #: ../app/actions/select-actions.c:87
 msgctxt "select-action"
 msgid "S_hrink..."
-msgstr "_Encoger [Shrink]…"
+msgstr "_Encoger…"
 
 #: ../app/actions/select-actions.c:88
 msgctxt "select-action"
@@ -8303,7 +8300,7 @@ msgstr "Contraer la selección"
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
-msgstr "Agran_dar [Grow]…"
+msgstr "Agran_dar…"
 
 #: ../app/actions/select-actions.c:94
 msgctxt "select-action"
@@ -8805,8 +8802,8 @@ msgstr "_Guardar las opciones de herramientas en el preajuste"
 msgctxt "tool-preset-editor-action"
 msgid "Save the active tool options to this tool preset"
 msgstr ""
-"Guardar las opciones de herramientas activas en este preajuste de "
-"herramienta."
+"Guardar las opciones activas de la herramienta en este preajuste de "
+"herramienta"
 
 #: ../app/actions/tool-preset-editor-actions.c:55
 msgctxt "tool-preset-editor-action"
@@ -8828,8 +8825,8 @@ msgstr "Editar el ajuste prefijado de la herramienta activa"
 #, c-format
 msgid "Can't save '%s' tool options to an existing '%s' tool preset."
 msgstr ""
-"No se pueden guardar las opciones de herramienta «%s» en un preajuste de "
-"herramienta «%s» existente."
+"No se pueden guardar las opciones de herramienta de «%s» en un preajuste de "
+"herramienta de «%s» existente."
 
 #: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
@@ -9550,7 +9547,7 @@ msgstr "Pintar a lo largo de la ruta"
 #: ../app/actions/vectors-actions.c:137
 msgctxt "vectors-action"
 msgid "Stro_ke Path"
-msgstr "_Trazar ruta [Stroke]"
+msgstr "_Trazar ruta"
 
 #: ../app/actions/vectors-actions.c:138
 msgctxt "vectors-action"
@@ -9862,7 +9859,7 @@ msgstr "Prueba de _renderizado en pantalla"
 #: ../app/actions/view-actions.c:82
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "Pseudoprueba de re_nderizado"
+msgstr "Intención de re_nderizado de la prueba de impresión"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -9944,7 +9941,7 @@ msgstr "Recuperar el nivel de ampliación previo"
 #: ../app/actions/view-actions.c:131
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr "_Otro ángulo de rotación..."
+msgstr "_Otro ángulo de rotación…"
 
 #: ../app/actions/view-actions.c:132
 msgctxt "view-action"
@@ -9985,12 +9982,12 @@ msgstr "Reiniciar gestión del color a lo establecido en las preferencias"
 #: ../app/actions/view-actions.c:156
 msgctxt "view-action"
 msgid "Soft-_Proofing Profile..."
-msgstr "Perfil de _prueba..."
+msgstr "Perfil de la _prueba de impresión…"
 
 #: ../app/actions/view-actions.c:157
 msgctxt "view-action"
 msgid "Set the soft-proofing profile"
-msgstr "Establecer el perfil de prueba"
+msgstr "Establecer el perfil de la prueba de impresión"
 
 # //R Creo que hace esto
 #: ../app/actions/view-actions.c:162
@@ -10051,7 +10048,7 @@ msgstr "Colores de p_rueba"
 #: ../app/actions/view-actions.c:200
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
-msgstr "Utilizar esta vista para la pseudoprueba"
+msgstr "Utilizar esta vista para la prueba de impresión"
 
 #: ../app/actions/view-actions.c:206 ../app/actions/view-actions.c:213
 msgctxt "view-action"
@@ -10066,7 +10063,7 @@ msgstr "Utilizar la compensación de punto negro para visualizar la imagen"
 #: ../app/actions/view-actions.c:214
 msgctxt "view-action"
 msgid "Use black point compensation for soft-proofing"
-msgstr "Utilizar la compensación de punto negro para la pseudoprueba"
+msgstr "Utilizar una compensación de punto negro para la prueba de impresión"
 
 #: ../app/actions/view-actions.c:220
 msgctxt "view-action"
@@ -10079,8 +10076,8 @@ msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
 "color space"
 msgstr ""
-"Cuando realiza una pseudoprueba, marcar los colores que no se pueden "
-"representar en el espacio de color de destino"
+"Cuando se realiza una prueba de impresión, marcar los colores que no se "
+"pueden representar en el espacio de color de destino"
 
 #: ../app/actions/view-actions.c:228
 msgctxt "view-action"
@@ -10230,12 +10227,12 @@ msgstr "Pantalla compl_eta"
 #: ../app/actions/view-actions.c:327
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
-msgstr "Alterna la vista de pantalla completa"
+msgstr "Alternar la vista de pantalla completa"
 
 #: ../app/actions/view-actions.c:336
 msgctxt "view-zoom-action"
 msgid "Set zoom factor"
-msgstr "Establece factor de ampliación"
+msgstr "Establecer el factor de ampliación"
 
 #: ../app/actions/view-actions.c:341
 msgctxt "view-zoom-action"
@@ -10380,7 +10377,7 @@ msgstr "Ampliación 1:16"
 #: ../app/actions/view-actions.c:472
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr "_Otro factor de ampliación..."
+msgstr "_Otro factor de ampliación…"
 
 #: ../app/actions/view-actions.c:473
 msgctxt "view-zoom-action"
@@ -10470,12 +10467,12 @@ msgstr "Rota la vista 15 grados a la izquierda"
 #: ../app/actions/view-actions.c:546 ../app/actions/view-actions.c:573
 msgctxt "view-action"
 msgid "_Perceptual"
-msgstr "_Perceptual"
+msgstr "_Perceptivo"
 
 #: ../app/actions/view-actions.c:547
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
-msgstr "La prueba de renderizado en pantalla es perceptual"
+msgstr "La prueba de renderizado en pantalla es perceptivo"
 
 #: ../app/actions/view-actions.c:552 ../app/actions/view-actions.c:579
 msgctxt "view-action"
@@ -10510,22 +10507,26 @@ msgstr "La prueba de renderizado en pantalla es colorimétrico absoluto"
 #: ../app/actions/view-actions.c:574
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "La pseudoprueba de renderizado es perceptual"
+msgstr "La intención de renderizado de la prueba de impresión es perceptivo"
 
 #: ../app/actions/view-actions.c:580
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "La pseudoprueba de renderizado es colorimétrico relativo"
+msgstr ""
+"La intención de renderizado de la prueba de impresión es colorimétrico "
+"relativo"
 
 #: ../app/actions/view-actions.c:586
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "La pseudoprueba de renderizado es saturación"
+msgstr "La intención de renderizado de la prueba de impresión es saturación"
 
 #: ../app/actions/view-actions.c:592
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "La pseudoprueba de renderizado es colorimétrico absoluto"
+msgstr ""
+"La intención de renderizado de la prueba de impresión es colorimétrico "
+"absoluto"
 
 #: ../app/actions/view-actions.c:600
 msgctxt "view-padding-color"
@@ -10681,7 +10682,7 @@ msgstr "A_mpliación (%s)"
 #. H: Horizontal, V: Vertical
 #: ../app/actions/view-actions.c:1175
 msgid "(H+V) "
-msgstr "(H+V)"
+msgstr "(H+V) "
 
 #. please preserve the trailing space
 #. H: Horizontal
@@ -11126,9 +11127,9 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
 msgstr ""
-"Cuando está activado, una imagen se convertirá en activa al recibir el foco "
-"la ventana de su imagen. Esto es muy útil para los gestores de ventanas que "
-"estén utilizando «pulsar para obtener el foco»."
+"Cuando está activado, una imagen se convertirá en activa cuando la ventana "
+"de esta imagen está enfocada. Esto es útil para los gestores de ventanas que "
+"usen «pulsar para enfocar»."
 
 #: ../app/config/gimprc-blurbs.h:23 ../app/config/gimprc-blurbs.h:28
 msgid "Sets the dynamics search path."
@@ -11728,11 +11729,11 @@ msgstr "Activar la herramienta de transformación de tirador."
 
 #: ../app/config/gimprc-blurbs.h:470
 msgid "Enable symmetry on painting."
-msgstr "Activar simetría en el pintado."
+msgstr "Activar la simetría en la pintura."
 
 #: ../app/config/gimprc-blurbs.h:473
 msgid "Enable the MyPaint Brush tool."
-msgstr "Activar la herramienta pincel MyPaint."
+msgstr "Activar la herramienta de pincel MyPaint."
 
 #: ../app/config/gimprc-blurbs.h:476
 msgid "Enable the Seamless Clone tool."
@@ -12114,7 +12115,7 @@ msgstr ""
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 "Mostrar los pinceles, patrones y degradados activos en la caja de "
-"herramientas"
+"herramientas."
 
 #: ../app/config/gimprc-blurbs.h:686
 msgid "Menu mode of grouped tools."
@@ -12196,7 +12197,7 @@ msgstr "El número máximo de acciones guardadas en el histórico."
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:309
 #: ../app/plug-in/plug-in-rc.c:251 ../app/tools/gimp-tools.c:502
 msgid "fatal parse error"
-msgstr "Error fatal de análisis"
+msgstr "error fatal de análisis"
 
 #: ../app/config/gimprc-deserialize.c:164
 #, c-format
@@ -12397,27 +12398,27 @@ msgstr "Punteados"
 #: ../app/core/core-enums.c:422
 msgctxt "dash-preset"
 msgid "Dash, dot"
-msgstr "Raya - punto"
+msgstr "Guion, punto"
 
 #: ../app/core/core-enums.c:423
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
-msgstr "Raya - punto - punto"
+msgstr "Guion, punto, punto"
 
 #: ../app/core/core-enums.c:453
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
-msgstr "Depurar avisos, errores críticos y caídas"
+msgstr "Depurar advertencias, errores críticos y bloqueos"
 
 #: ../app/core/core-enums.c:454
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
-msgstr "Depurar errores críticos y caídas"
+msgstr "Depurar errores críticos y bloqueos"
 
 #: ../app/core/core-enums.c:455
 msgctxt "debug-policy"
 msgid "Debug crashes only"
-msgstr "Depurar solamente las caídas"
+msgstr "Depurar solamente los bloqueos"
 
 #: ../app/core/core-enums.c:456
 msgctxt "debug-policy"
@@ -13006,12 +13007,12 @@ msgstr "Mostrar máscara de capa"
 #: ../app/core/core-enums.c:1213
 msgctxt "undo-type"
 msgid "New channel"
-msgstr "Nuevo canal"
+msgstr "Canal nuevo"
 
 #: ../app/core/core-enums.c:1214
 msgctxt "undo-type"
 msgid "Delete channel"
-msgstr "Borra el canal"
+msgstr "Borrar el canal"
 
 #: ../app/core/core-enums.c:1215
 msgctxt "undo-type"
@@ -13383,7 +13384,7 @@ msgstr ""
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: el archivo parece estar "
-"truncado."
+"truncado: "
 
 #: ../app/core/gimpbrush-load.c:922
 #, c-format
@@ -13413,11 +13414,11 @@ msgstr "Espaciado del pincel"
 
 #: ../app/core/gimpbrushclipboard.c:185
 msgid "Clipboard Mask"
-msgstr "Máscara de portapapeles"
+msgstr "Máscara del portapapeles"
 
 #: ../app/core/gimpbrushclipboard.c:187 ../app/core/gimppatternclipboard.c:163
 msgid "Clipboard Image"
-msgstr "Imagen de portapapeles"
+msgstr "Imagen del portapapeles"
 
 #: ../app/core/gimpbrushgenerated-load.c:76
 #, c-format
@@ -13467,7 +13468,7 @@ msgstr "Ángulo del pincel no válido."
 #: ../app/core/gimpbrushgenerated-load.c:281
 #, c-format
 msgid "In line %d of brush file: "
-msgstr "En la línea %d del archivo del pincel:"
+msgstr "En la línea %d del archivo del pincel: "
 
 #: ../app/core/gimpbrushgenerated.c:135
 msgid "Brush Shape"
@@ -13487,7 +13488,7 @@ msgstr "Dureza del pincel"
 
 #: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:211
 msgid "Brush Aspect Ratio"
-msgstr "Proporción de aspecto del pincel"
+msgstr "Relación de aspecto del pincel"
 
 #: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:218
 msgid "Brush Angle"
@@ -13591,7 +13592,7 @@ msgstr "Rellenar el canal"
 #: ../app/core/gimpchannel.c:263
 msgctxt "undo-type"
 msgid "Stroke Channel"
-msgstr "Impresionar el canal"
+msgstr "Trazar el canal"
 
 #: ../app/core/gimpchannel.c:264
 msgctxt "undo-type"
@@ -13611,7 +13612,7 @@ msgstr "Elevar el canal"
 #: ../app/core/gimpchannel.c:267
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
-msgstr "Elevar el canal hasta lo alto"
+msgstr "Elevar el canal hasta arriba"
 
 #: ../app/core/gimpchannel.c:268
 msgctxt "undo-type"
@@ -13621,11 +13622,11 @@ msgstr "Bajar el canal"
 #: ../app/core/gimpchannel.c:269
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
-msgstr "Bajar el canal hasta lo más bajo"
+msgstr "Bajar el canal hasta abajo"
 
 #: ../app/core/gimpchannel.c:270
 msgid "Channel cannot be raised higher."
-msgstr "El canal no puede ser elevado más alto."
+msgstr "El canal no puede elevarse más."
 
 #: ../app/core/gimpchannel.c:271
 msgid "Channel cannot be lowered more."
@@ -13664,7 +13665,7 @@ msgstr "Agrandar el canal"
 #: ../app/core/gimpchannel.c:297
 msgctxt "undo-type"
 msgid "Shrink Channel"
-msgstr "Achicar el canal"
+msgstr "Reducir el canal"
 
 #: ../app/core/gimpchannel.c:298
 msgctxt "undo-type"
@@ -13784,7 +13785,7 @@ msgstr "Copia de %s"
 #: ../app/core/gimpdatafactory.c:587 ../app/tools/gimptextoptions.c:532
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
-msgstr "Cargando tipografías (esto puede tardar un rato...)"
+msgstr "Cargando tipografías (esto puede tardar un rato…)"
 
 #: ../app/core/gimpdatafactory.c:909
 #, c-format
@@ -13804,9 +13805,10 @@ msgid ""
 "your data search path. You probably edited the gimprc file manually, please "
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
-"Tiene configurada una carpeta escribible de datos, pero esta carpeta no "
-"forma parte de su ruta de búsqueda.  Probablemente ha editado manualmente el "
-"archivo gimprc, arréglelo en la sección «Carpetas» del diálogo Preferencias. "
+"Tiene configurada una carpeta para escribir datos, pero esta carpeta no "
+"forma parte de la ruta de búsqueda de datos. Probablemente ha editado "
+"manualmente el archivo gimprc, arréglelo en la sección «Carpetas» del "
+"diálogo Preferencias."
 
 #: ../app/core/gimpdatafactory.c:938
 #, c-format
@@ -13867,7 +13869,7 @@ msgstr "Selección flotante"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:66
 msgid "Computing alpha of unknown pixels"
-msgstr "Calculando alfa de píxeles desconocidos."
+msgstr "Calculando alfa de píxeles desconocidos"
 
 #: ../app/core/gimpdrawable-fill.c:212 ../app/vectors/gimpvectors.c:679
 msgid "Not enough points to fill"
@@ -14003,7 +14005,7 @@ msgstr "Cadena UTF-8 no válida en el archivo de degradado «%s»."
 #: ../app/core/gimpgradient-load.c:122
 #, c-format
 msgid "File is corrupt."
-msgstr "El archivo está corrupto"
+msgstr "El archivo está corrupto."
 
 #: ../app/core/gimpgradient-load.c:168 ../app/core/gimpgradient-load.c:183
 #: ../app/core/gimpgradient-load.c:193 ../app/core/gimpgradient-load.c:205
@@ -14020,7 +14022,7 @@ msgstr "Los segmentos no abarcan el rango 0-1."
 #: ../app/core/gimpgradient-load.c:261
 #, c-format
 msgid "In line %d of gradient file: "
-msgstr "En la línea %d del archivo de degradado:"
+msgstr "En la línea %d del archivo de degradado: "
 
 #: ../app/core/gimpgradient-load.c:337
 #, c-format
@@ -14266,7 +14268,7 @@ msgstr ""
 
 #: ../app/core/gimpimage-color-profile.c:187
 msgid "ICC profile validation failed: "
-msgstr "La validación de perfiles ICC falló:"
+msgstr "La validación del perfil ICC falló: "
 
 #: ../app/core/gimpimage-color-profile.c:331
 msgid ""
@@ -14928,12 +14930,12 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:231
 #, c-format
 msgid "In line %d of palette file: "
-msgstr "En la línea %d del archivo de paleta:"
+msgstr "En la línea %d del archivo de paleta: "
 
 #: ../app/core/gimppalette-load.c:427
 #, c-format
 msgid "Could not read header from palette file '%s': "
-msgstr "No se ha podido leer la cabecera del archivo de paleta «%s»:"
+msgstr "No se ha podido leer la cabecera del archivo de paleta «%s»: "
 
 #: ../app/core/gimppalette-load.c:459
 msgid "Premature end of file."
@@ -14945,7 +14947,7 @@ msgstr "Histórico de color"
 
 #: ../app/core/gimppattern-load.c:60
 msgid "File appears truncated: "
-msgstr "El archivo parecer estar truncado:"
+msgstr "El archivo parecer estar truncado: "
 
 #: ../app/core/gimppattern-load.c:78
 #, c-format
@@ -14985,7 +14987,7 @@ msgstr "Cadena UTF-8 no válida en el archivo de patrón «%s»."
 
 #: ../app/core/gimppattern-load.c:177
 msgid "Fatal parse error in pattern file: "
-msgstr "Error fatal de análisis en el archivo de paleta:"
+msgstr "Error fatal de análisis en el archivo de patrón: "
 
 #: ../app/core/gimppdbprogress.c:268
 #, c-format
@@ -15475,7 +15477,8 @@ msgstr ""
 "Alonso Lara\n"
 "Francisco Javier F. Serrador\n"
 "Pablo G. del Campo\n"
-"Francisco Vila"
+"Francisco Vila\n"
+"Rodrigo Lledó"
 
 #: ../app/dialogs/about-dialog.c:355
 msgid "Update available!"
@@ -15604,11 +15607,11 @@ msgstr "Convertir la imagen a escala de grises"
 
 #: ../app/dialogs/color-profile-dialog.c:200
 msgid "Soft-Proof Profile"
-msgstr "Perfil de prueba:"
+msgstr "Perfil de prueba de impresión"
 
 #: ../app/dialogs/color-profile-dialog.c:203
 msgid "Select Soft-Proof Profile"
-msgstr "Seleccionar el perfil de la prueba"
+msgstr "Seleccionar el perfil de la prueba de impresión"
 
 #: ../app/dialogs/color-profile-dialog.c:209
 #: ../app/tools/gimpforegroundselecttool.c:321
@@ -15735,7 +15738,7 @@ msgstr "Precisión de la conversión"
 #: ../app/dialogs/convert-precision-dialog.c:207
 #: ../app/widgets/gimptemplateeditor.c:439
 msgid "Perceptual gamma (sRGB)"
-msgstr "Gamma perceptual (sRGB)"
+msgstr "Gamma de percepción (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:208
 #: ../app/widgets/gimptemplateeditor.c:438
@@ -16674,19 +16677,19 @@ msgstr "_Optimizar la visualización de la imagen para:"
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1382
 msgid "Soft-Proofing"
-msgstr "Pseudoprueba"
+msgstr "Prueba de impresión"
 
 #: ../app/dialogs/preferences-dialog.c:1392
 msgid "Select Soft-Proofing Color Profile"
-msgstr "Seleccionar el perfil de color de la pseudoprueba"
+msgstr "Seleccionar el perfil de color de la prueba de impresión"
 
 #: ../app/dialogs/preferences-dialog.c:1393
 msgid "_Soft-proofing profile:"
-msgstr "Perfil de p_seudoprueba:"
+msgstr "Perfil de la prueba de _impresión:"
 
 #: ../app/dialogs/preferences-dialog.c:1399
 msgid "Re_ndering intent:"
-msgstr "Prueba de _renderizado:"
+msgstr "Intención de _renderizado:"
 
 #: ../app/dialogs/preferences-dialog.c:1404
 msgid "Use black _point compensation"
@@ -16694,11 +16697,11 @@ msgstr "Usar _compensación de punto negro"
 
 #: ../app/dialogs/preferences-dialog.c:1414
 msgid "O_ptimize soft-proofing for:"
-msgstr "_Optimizar pseudoprueba para:"
+msgstr "_Optimizar la prueba de impresión para:"
 
 #: ../app/dialogs/preferences-dialog.c:1423
 msgid "Mar_k out of gamut colors"
-msgstr "Mar_car a partir de los colores del gamut"
+msgstr "Mar_car a partir de los colores de la gama"
 
 #: ../app/dialogs/preferences-dialog.c:1428
 msgid "Select Warning Color"
@@ -16719,11 +16722,11 @@ msgstr "Perfil _RGB:"
 
 #: ../app/dialogs/preferences-dialog.c:1456
 msgid "Select Preferred Grayscale Color Profile"
-msgstr "Seleccionar perfil de color escala de grises preferido"
+msgstr "Seleccionar perfil de color de escala de grises preferido"
 
 #: ../app/dialogs/preferences-dialog.c:1457
 msgid "_Grayscale profile:"
-msgstr "Perfil _escala de grises:"
+msgstr "Perfil de _escala de grises:"
 
 #: ../app/dialogs/preferences-dialog.c:1464
 msgid "Select CMYK Color Profile"
@@ -16740,7 +16743,7 @@ msgstr "Políticas"
 
 #: ../app/dialogs/preferences-dialog.c:1475
 msgid "_File Open behaviour:"
-msgstr "Comportamiento de apertura de arch_ivos:"
+msgstr "Comportamiento al abrir arch_ivos:"
 
 # ¿Filtrar diálogos? o ¿diálogos de filtros?
 #. Filter Dialogs
@@ -16751,7 +16754,7 @@ msgstr "Diálogos de filtros"
 
 #: ../app/dialogs/preferences-dialog.c:1483
 msgid "Show _advanced color options"
-msgstr "Mostrar opciones de color _avanzadas"
+msgstr "Mostrar las opciones de color _avanzadas"
 
 #: ../app/dialogs/preferences-dialog.c:1497
 #: ../app/dialogs/preferences-dialog.c:1498
@@ -16761,7 +16764,7 @@ msgstr "Importar y exportar imágenes"
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1508
 msgid "Import Policies"
-msgstr "Importar políticas"
+msgstr "Políticas de importación"
 
 #: ../app/dialogs/preferences-dialog.c:1512
 msgid "Promote imported images to _floating point precision"
@@ -16769,7 +16772,7 @@ msgstr "Promover las imágenes importadas a precisión de coma _flotante"
 
 #: ../app/dialogs/preferences-dialog.c:1521
 msgid "_Dither images when promoting to floating point"
-msgstr "_Difuminar imágenes al promover a coma flotante"
+msgstr "_Tramar las imágenes al promover a coma flotante"
 
 #: ../app/dialogs/preferences-dialog.c:1526
 msgid "_Add an alpha channel to imported images"
@@ -16782,7 +16785,7 @@ msgstr "Política de _perfil de color:"
 #. Export Policies
 #: ../app/dialogs/preferences-dialog.c:1535
 msgid "Export Policies"
-msgstr "Exportar políticas"
+msgstr "Políticas de exportación"
 
 #: ../app/dialogs/preferences-dialog.c:1539
 msgid "Export the i_mage's color profile by default"
@@ -16856,7 +16859,7 @@ msgstr ""
 #. Hardware Acceleration
 #: ../app/dialogs/preferences-dialog.c:1632
 msgid "Hardware Acceleration"
-msgstr "Aceleración de hardware"
+msgstr "Aceleración por hardware"
 
 #: ../app/dialogs/preferences-dialog.c:1636
 msgid ""
@@ -17480,14 +17483,14 @@ msgstr "Ta_maño de la cuadrícula:"
 
 #: ../app/dialogs/preferences-dialog.c:2705
 msgid "Monitor Resolution"
-msgstr "Resolución de monitor"
+msgstr "Resolución del monitor"
 
 # Debe ir en minúsculas por las reglas de estilo
 #. Pixels
 #: ../app/dialogs/preferences-dialog.c:2709 ../app/display/gimpcursorview.c:212
 #: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:234
 msgid "Pixels"
-msgstr "píxeles"
+msgstr "Píxeles"
 
 #: ../app/dialogs/preferences-dialog.c:2727 ../app/widgets/gimpgrideditor.c:195
 #: ../app/widgets/gimpgrideditor.c:230
@@ -17524,19 +17527,19 @@ msgstr "Gestión de la ventana"
 
 #: ../app/dialogs/preferences-dialog.c:2816
 msgid "Window Manager Hints"
-msgstr "Hints del gestor de ventanas"
+msgstr "Sugerencias del gestor de ventanas"
 
 #: ../app/dialogs/preferences-dialog.c:2822
 msgid "Hint for _docks and toolbox:"
-msgstr "Pista para los emprotables y la caja de herramien_tas:"
+msgstr "Sugerencia para los _emprotables y la caja de herramientas:"
 
 #: ../app/dialogs/preferences-dialog.c:2825
 msgid "Focus"
-msgstr "Foco"
+msgstr "Enfoque"
 
 #: ../app/dialogs/preferences-dialog.c:2829
 msgid "Activate the _focused image"
-msgstr "Activar la imagen con el _foco"
+msgstr "Activar la imagen _enfocada"
 
 #. Window Positions
 #: ../app/dialogs/preferences-dialog.c:2833
@@ -19107,7 +19110,7 @@ msgstr "Subidos %s de los datos de la imagen"
 
 #: ../app/file/file-save.c:100
 msgid "There is no active layer to save"
-msgstr "No hay una capa activa que guardar."
+msgstr "No hay una capa activa que guardar"
 
 #: ../app/file/file-save.c:120
 msgid "Failed to get file information"
@@ -19246,7 +19249,7 @@ msgstr "RGB (lineal)"
 #: ../app/operations/operations-enums.c:27
 msgctxt "layer-color-space"
 msgid "RGB (perceptual)"
-msgstr "RGB (porcentual)"
+msgstr "RGB (perceptivo)"
 
 #: ../app/operations/operations-enums.c:28
 msgctxt "layer-color-space"
@@ -19923,7 +19926,7 @@ msgstr "no es un archivo de niveles GIMP"
 
 #: ../app/operations/gimplevelsconfig.c:921
 msgid "parse error"
-msgstr "Error de análisis"
+msgstr "error de análisis"
 
 #: ../app/operations/gimplevelsconfig.c:956
 msgid "Writing levels file failed: "
@@ -20085,7 +20088,7 @@ msgstr "_Recuperar"
 
 #: ../app/gui/gui.c:344
 msgid "Eeek! It looks like GIMP recovered from a crash!"
-msgstr "Parece que GIMP se ha recuperado de un error grave."
+msgstr "¡Vaya! Parece que GIMP se ha recuperado de un bloqueo."
 
 #. TRANSLATORS: even if English singular form does
 #. * not use %d, you can use %d for translation in
@@ -20171,7 +20174,7 @@ msgstr "Tasa"
 # //R ????
 #: ../app/paint/gimpdodgeburn.c:67
 msgid "Dodge/Burn"
-msgstr "blanquear/ennegrecer"
+msgstr "Blanquear/Oscurecer"
 
 #: ../app/paint/gimpdodgeburnoptions.c:70
 msgid "Type"
@@ -21735,7 +21738,7 @@ msgstr "Opciones de geometría"
 
 #: ../app/propgui/gimppropgui-focus-blur.c:226
 msgid "Focus Blur: "
-msgstr "Enfoque:"
+msgstr "Desenfoque de foco: "
 
 #: ../app/propgui/gimppropgui-generic.c:187
 msgid "Pick coordinates from the image"
@@ -21803,15 +21806,15 @@ msgstr "R_establecer el color"
 
 #: ../app/propgui/gimppropgui-motion-blur-circular.c:132
 msgid "Circular Motion Blur: "
-msgstr "Desenfoque de movimiento circular:"
+msgstr "Desenfoque de movimiento circular: "
 
 #: ../app/propgui/gimppropgui-motion-blur-linear.c:126
 msgid "Linear Motion Blur: "
-msgstr "Desenfoque de movimiento lineal:"
+msgstr "Desenfoque de movimiento lineal: "
 
 #: ../app/propgui/gimppropgui-motion-blur-zoom.c:127
 msgid "Zoom Motion Blur: "
-msgstr "Desenfoque de movimiento por ampliación:"
+msgstr "Desenfoque de movimiento por ampliación: "
 
 #: ../app/propgui/gimppropgui-newsprint.c:92
 msgid "White"
@@ -21840,7 +21843,7 @@ msgstr "Efectos"
 
 #: ../app/propgui/gimppropgui-panorama-projection.c:125
 msgid "Panorama Projection: "
-msgstr "Proyección de panorama:"
+msgstr "Proyección panorámica: "
 
 #: ../app/propgui/gimppropgui-recursive-transform.c:259
 msgid "Add transform"
@@ -22721,7 +22724,7 @@ msgstr "_Tipo de curva:"
 
 #: ../app/tools/gimpcurvestool.c:751 ../app/tools/gimplevelstool.c:746
 msgid "Could not read header: "
-msgstr "No se ha podido leer la cabecera:"
+msgstr "No se ha podido leer la cabecera: "
 
 #: ../app/tools/gimpcurvestool.c:825
 msgid "Use _old curves file format"
@@ -23069,7 +23072,7 @@ msgstr "Dibuje un círculo aproximado alrededor del objeto que quiere extraer"
 
 #: ../app/tools/gimpforegroundselecttool.c:620
 msgid "press Enter to refine."
-msgstr "Pulse Intro para depurar."
+msgstr "pulse Intro para refinar."
 
 #: ../app/tools/gimpforegroundselecttool.c:647
 msgid "Selecting foreground"
@@ -23085,11 +23088,11 @@ msgstr "Seleccionando lo desconocido"
 
 #: ../app/tools/gimpforegroundselecttool.c:654
 msgid "press Enter to preview."
-msgstr "Presione «Intro» para ver una vista previa."
+msgstr "pulse «Intro» para ver una vista previa."
 
 #: ../app/tools/gimpforegroundselecttool.c:656
 msgid "press Escape to exit preview or Enter to apply."
-msgstr "Presione Esc para salir de la vista previa o Intro para aplicar."
+msgstr "pulse Esc para salir de la vista previa o Intro para aplicar."
 
 #: ../app/tools/gimpforegroundselecttool.c:1287
 msgid "Paint mask"
@@ -23571,7 +23574,7 @@ msgstr "Usar el formato antigu_o de archivo de niveles"
 
 #: ../app/tools/gimplevelstool.c:1005 ../app/tools/gimpthresholdtool.c:412
 msgid "Calculating histogram..."
-msgstr "Calculando histograma..."
+msgstr "Calculando histograma…"
 
 #: ../app/tools/gimpmagnifyoptions.c:83
 msgid "Auto-resize window"
@@ -23815,7 +23818,7 @@ msgstr "Desplazar canal"
 
 #: ../app/tools/gimpoffsettool.c:294 ../app/tools/gimpoffsettool.c:391
 msgid "Offset: "
-msgstr "Desplazamiento:"
+msgstr "Desplazamiento: "
 
 #: ../app/tools/gimpoffsettool.c:418
 msgid "Click-Drag to offset drawable"
@@ -24881,7 +24884,7 @@ msgstr "No hay ninguna ruta que transformar."
 
 #: ../app/tools/gimptransformtool.c:731
 msgid "The active path's strokes are locked."
-msgstr "Los trazos de la ruta activa están bloqueados"
+msgstr "Los trazos de la ruta activa están bloqueados."
 
 #: ../app/tools/gimptransformtool.c:735
 msgid "The active path has no strokes."
@@ -25049,7 +25052,7 @@ msgstr "Transformación de deformación"
 
 #: ../app/tools/gimpwarptool.c:176
 msgid "Warp Transform: Deform with different tools"
-msgstr "Transformación de deformación: deforma con diferentes herramientas "
+msgstr "Transformación de deformación: deforma con diferentes herramientas"
 
 #: ../app/tools/gimpwarptool.c:177
 msgid "_Warp Transform"
@@ -26106,12 +26109,12 @@ msgstr ""
 #: ../app/widgets/gimpcriticaldialog.c:240
 #: ../app/widgets/gimpcriticaldialog.c:590
 msgid "Copy the bug information to the clipboard by clicking: "
-msgstr "Copiar la información del error al portapapeles pulsando:"
+msgstr "Copie la información del error al portapapeles pulsando: "
 
 #: ../app/widgets/gimpcriticaldialog.c:242
 #: ../app/widgets/gimpcriticaldialog.c:592
 msgid "Open our bug tracker in the browser by clicking: "
-msgstr "Abra nuestro gestor de errores en el navegador pulsando:"
+msgstr "Abra nuestro gestor de errores en el navegador pulsando: "
 
 #: ../app/widgets/gimpcriticaldialog.c:244
 #: ../app/widgets/gimpcriticaldialog.c:594
@@ -26394,7 +26397,7 @@ msgstr "Indica si la CPU está activa"
 
 #: ../app/widgets/gimpdashboard.c:668
 msgid "Total amount of time the CPU has been active"
-msgstr "Cantidad total de tiempo que la CPU ha estado activa."
+msgstr "Total del tiempo que la CPU ha estado activa"
 
 #: ../app/widgets/gimpdashboard.c:681
 msgctxt "dashboard-variable"
@@ -26579,7 +26582,7 @@ msgstr "N/D"
 
 #: ../app/widgets/gimpdashboard.c:4754
 msgid "Resolving symbol information..."
-msgstr "Resolviendo información de símbolos..."
+msgstr "Resolviendo información de símbolos…"
 
 #: ../app/widgets/gimpdataeditor.c:413
 #, c-format
@@ -26815,7 +26818,7 @@ msgstr "Por extensión"
 
 #: ../app/widgets/gimpexportdialog.c:82
 msgid "All export images"
-msgstr "Todas las imágenes exportadas"
+msgstr "Todas las imágenes que exportar"
 
 #: ../app/widgets/gimpfiledialog.c:353
 msgid "_Help"
@@ -26844,7 +26847,7 @@ msgstr "Extensiones"
 
 #: ../app/widgets/gimpfilleditor.c:124
 msgid "Fill Color"
-msgstr "Rellenar con color"
+msgstr "Color de relleno"
 
 #: ../app/widgets/gimpfilleditor.c:143
 msgid "_Antialiasing"
@@ -26974,7 +26977,7 @@ msgstr "Falta el visor de ayuda"
 
 #: ../app/widgets/gimphelp.c:372
 msgid "The GIMP help browser is not available."
-msgstr "No está disponible el visor de ayuda de GIMP"
+msgstr "El visor de ayuda de GIMP no está disponible."
 
 #: ../app/widgets/gimphelp.c:373
 msgid ""
@@ -27016,7 +27019,7 @@ msgstr "Leer el idioma se_leccionado"
 
 #: ../app/widgets/gimphelp.c:824
 msgid "Available manuals..."
-msgstr "Manuales disponibles..."
+msgstr "Manuales disponibles…"
 
 #: ../app/widgets/gimphelp.c:836
 msgid ""
@@ -27362,15 +27365,15 @@ msgstr "Gestionar ajustes"
 
 #: ../app/widgets/gimpsettingsbox.c:356
 msgid "_Import Current Settings from File..."
-msgstr "_Importar la configuración actual desde un archivo..."
+msgstr "_Importar la configuración actual desde un archivo…"
 
 #: ../app/widgets/gimpsettingsbox.c:362
 msgid "_Export Current Settings to File..."
-msgstr "_Exportar la configuración actual a un archivo..."
+msgstr "_Exportar la configuración actual a un archivo…"
 
 #: ../app/widgets/gimpsettingsbox.c:369
 msgid "_Manage Saved Presets..."
-msgstr "_Gestionar las opciones guardadas..."
+msgstr "_Gestionar las opciones guardadas…"
 
 #: ../app/widgets/gimpsettingsbox.c:605
 msgid "Save Settings as Named Preset"
@@ -27894,7 +27897,7 @@ msgstr "Icono y texto"
 #: ../app/widgets/widgets-enums.c:218
 msgctxt "tab-style"
 msgid "Icon & desc"
-msgstr "Icono y descr."
+msgstr "Icono y descr"
 
 #: ../app/widgets/widgets-enums.c:219
 msgctxt "tab-style"
@@ -27948,7 +27951,7 @@ msgstr "Error al escribir «%s»: "
 #: ../app/xcf/xcf.c:504
 #, c-format
 msgid "Error creating '%s': "
-msgstr "Ocurrió un error al crear «%s»:"
+msgstr "Error al crear «%s»: "
 
 #: ../app/xcf/xcf-load.c:241
 msgid "Invalid image mode and precision combination."
@@ -27971,16 +27974,19 @@ msgstr ""
 "Parásito corrupto de metadatos gimp descubierto.\n"
 "Los datos XMP no se pudieron migrar."
 
-#: ../app/xcf/xcf-load.c:423
+#: ../app/xcf/xcf-load.c:427
 #, c-format
 msgid ""
-"Corrupt 'gimp-metadata' parasite discovered.\n"
-"XMP data could not be migrated: %s"
+"Corrupt XMP metadata saved by an older version of GIMP could not be "
+"converted and will be ignored.\n"
+"If you don't know what XMP is, you most likely don't need it. Reported "
+"error: %s."
 msgstr ""
-"Parásito corrupto de metadatos gimp descubierto.\n"
-"Los datos XMP no se pudieron migrar: %s"
+"Los metadatos XMP guardados por una versión de GIMP anterior no se pudieron "
+"convertir y se ignorarán.\n"
+"Si no sabe qué es XMP, probablemente no lo necesite. Error informado: %s."
 
-#: ../app/xcf/xcf-load.c:685
+#: ../app/xcf/xcf-load.c:691
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -27988,7 +27994,7 @@ msgstr ""
 "¡Este archivo XCF está corrupto! He cargado de él todo lo que he podido, "
 "pero está incompleto."
 
-#: ../app/xcf/xcf-load.c:704
+#: ../app/xcf/xcf-load.c:710
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -27996,7 +28002,7 @@ msgstr ""
 "¡Este archivo XCF está corrupto! No he podido salvar de él ni siquiera una "
 "imagen parcial."
 
-#: ../app/xcf/xcf-load.c:795
+#: ../app/xcf/xcf-load.c:801
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28012,11 +28018,11 @@ msgstr "Cadena UTF-8 no válida en el archivo XCF"
 
 #: ../app/xcf/xcf-seek.c:45
 msgid "Could not seek in XCF file: "
-msgstr "No se ha podido buscar en el archivo XCF:"
+msgstr "No se ha podido buscar en el archivo XCF: "
 
 #: ../app/xcf/xcf-write.c:50
 msgid "Error writing XCF: "
-msgstr "Ocurrió un error al escribir XCF:"
+msgstr "Error al escribir el XCF: "
 
 #: ../app/xcf/xcf-write.c:199
 #, c-format
@@ -28040,6 +28046,13 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "borroso"
+
+#~ msgid ""
+#~ "Corrupt 'gimp-metadata' parasite discovered.\n"
+#~ "XMP data could not be migrated: %s"
+#~ msgstr ""
+#~ "Parásito corrupto de metadatos gimp descubierto.\n"
+#~ "Los datos XMP no se pudieron migrar: %s"
 
 #~ msgid "Aux%d Input"
 #~ msgstr "Entrada auxiliar%d"
