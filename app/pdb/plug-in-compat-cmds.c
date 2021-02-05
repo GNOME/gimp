@@ -2615,6 +2615,49 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_median_blur_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint radius;
+  gdouble percentile;
+
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  radius = g_value_get_int (gimp_value_array_index (args, 3));
+  percentile = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gegl:median-blur",
+                                 "radius",     radius,
+                                 "percentile", percentile,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Median Blur"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_mosaic_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
@@ -7242,6 +7285,54 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "center y",
                                                     "Center Y",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-median-blur
+   */
+  procedure = gimp_procedure_new (plug_in_median_blur_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-median-blur");
+  gimp_procedure_set_static_help (procedure,
+                                  "Blur using the median color near each pixel",
+                                  "Blur resulting from computing the median color in the neighborhood of each pixel",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Compatibility procedure. Please see 'gegl:median-blur' for credits.",
+                                         "Compatibility procedure. Please see 'gegl:median-blur' for credits.",
+                                         "2021");
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("radius",
+                                                 "radius",
+                                                 "Neighborhood radius, a negative value will calculate with inverted percentiles",
+                                                 -400, 400, -400,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("percentile",
+                                                    "percentile",
+                                                    "Neighborhood color percentile",
+                                                    0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
