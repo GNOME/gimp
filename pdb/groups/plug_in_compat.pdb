@@ -2610,6 +2610,56 @@ CODE
     );
 }
 
+sub plug_in_median_blur {
+    $blurb = 'Blur using the median color near each pixel';
+
+    $help = <<'HELP';
+Blur resulting from computing the median color in the
+neighborhood of each pixel
+HELP
+
+    &std_pdb_compat('gegl:median-blur');
+    $date = '2021';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'radius', type => '-400 <= int32 <= 400',
+          desc => 'Neighborhood radius, a negative value will calculate with inverted percentiles' },
+        { name => 'percentile', type => '0 <= float <= 100',
+          desc => 'Neighborhood color percentile' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:median-blur",
+                             "radius",     radius,
+                             "percentile", percentile,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Median Blur"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_mosaic {
     $blurb = 'Convert the image into irregular tiles';
 
@@ -5454,6 +5504,7 @@ CODE
             plug_in_maze
             plug_in_mblur
             plug_in_mblur_inward
+            plug_in_median_blur
             plug_in_mosaic
             plug_in_neon
             plug_in_newsprint
