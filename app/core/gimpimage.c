@@ -5465,6 +5465,60 @@ gimp_image_select_linked_layers (GimpImage   *image,
 }
 
 /*
+ * @gimp_image_select_layers_by_regexp:
+ * @image:
+ * @pattern:
+ * @error:
+ *
+ * Replace currently selected layers in @image with the layers whose
+ * names match with the @pattern regular expression.
+ *
+ * Returns: %TRUE if some layers matched @pattern (even if it turned out
+ *          selected layers stay the same), %FALSE otherwise or if
+ *          @pattern is an invalid regular expression (in which case,
+ *          @error will be filled with the appropriate error).
+ */
+gboolean
+gimp_image_select_layers_by_regexp (GimpImage    *image,
+                                    const gchar  *pattern,
+                                    GError      **error)
+{
+  GList    *layers;
+  GList    *match = NULL;
+  GList    *iter;
+  GRegex   *regex;
+  gboolean  matched;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (pattern != NULL, FALSE);
+
+  regex = g_regex_new (pattern, 0, 0, error);
+
+  if (regex == NULL)
+    {
+      return FALSE;
+    }
+
+  layers = gimp_image_get_layer_list (image);
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (g_regex_match (regex,
+                         gimp_object_get_name (iter->data),
+                         0, NULL))
+        match = g_list_prepend (match, iter->data);
+    }
+
+  gimp_image_set_selected_layers (image, match);
+  matched = (match != NULL);
+
+  g_list_free (match);
+  g_regex_unref (regex);
+
+  return matched;
+}
+
+/*
  * @gimp_image_add_linked_layers:
  * @image:
  * @link_name:
