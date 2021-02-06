@@ -110,7 +110,7 @@ struct _GimpImagePrivate
   GimpItemTree      *channels;              /*  the tree of masks            */
   GimpItemTree      *vectors;               /*  the tree of vectors          */
   GSList            *layer_stack;           /*  the layers in MRU order      */
-  GHashTable        *linked_layers;
+  GList             *linked_layers;
 
   GQuark             layer_offset_x_handler;
   GQuark             layer_offset_y_handler;

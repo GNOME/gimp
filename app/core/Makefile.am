@@ -351,6 +351,8 @@ libappcore_a_sources = \
 	gimpitem-linked.h			\
 	gimpitem-preview.c			\
 	gimpitem-preview.h			\
+	gimpitemlist.c				\
+	gimpitemlist.h				\
 	gimpitempropundo.c			\
 	gimpitempropundo.h			\
 	gimpitemstack.c				\
