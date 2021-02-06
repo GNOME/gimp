@@ -78,6 +78,7 @@ struct _GimpLayerTreeViewPrivate
   GtkWidget       *link_button;
   GtkWidget       *link_list;
   GtkWidget       *link_entry;
+  GtkWidget       *link_regexp_entry;
 
   gint             model_column_mask;
   gint             model_column_mask_visible;
@@ -150,6 +151,9 @@ static void       gimp_layer_tree_view_layer_links_changed        (GimpImage    
                                                                    GimpLayerTreeView          *view);
 static gboolean   gimp_layer_tree_view_link_clicked               (GtkWidget                  *box,
                                                                    GdkEvent                   *event,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_regexp_modified            (GtkEntry                   *entry,
+                                                                   const GParamSpec           *pspec,
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_new_link_clicked           (GtkButton                  *button,
                                                                    GimpLayerTreeView          *view);
@@ -474,11 +478,36 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   grid = gtk_grid_new ();
 
+  /* Link popover: regexp search. */
+  layer_view->priv->link_regexp_entry = gtk_entry_new ();
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (layer_view->priv->link_regexp_entry),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     "system-search");
+  gtk_entry_set_placeholder_text (GTK_ENTRY (layer_view->priv->link_regexp_entry),
+                                  _("Regular Expression search"));
+  gtk_grid_attach (GTK_GRID (grid),
+                   layer_view->priv->link_regexp_entry,
+                   0, 0, 2, 1);
+  gtk_widget_show (layer_view->priv->link_regexp_entry);
+  g_signal_connect (layer_view->priv->link_regexp_entry,
+                    "notify::text",
+                    G_CALLBACK (gimp_layer_tree_view_regexp_modified),
+                    layer_view);
+
+  /* Enter on regexp entry closes the popover dialog. This allows to use
+   * the feature for quick name-based layer selection, not for actually
+   * storing the selected items.
+   */
+  g_signal_connect_swapped (layer_view->priv->link_regexp_entry,
+                            "activate",
+                            G_CALLBACK (gtk_popover_popdown),
+                            popover);
+
   /* Link popover: existing links. */
   layer_view->priv->link_list = gtk_list_box_new ();
   gtk_grid_attach (GTK_GRID (grid),
                    layer_view->priv->link_list,
-                   0, 0, 2, 1);
+                   0, 1, 2, 1);
   gtk_widget_show (layer_view->priv->link_list);
 
   gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (layer_view->priv->link_list),
@@ -491,13 +520,13 @@ gimp_layer_tree_view_constructed (GObject *object)
                                   _("Named Selection"));
   gtk_grid_attach (GTK_GRID (grid),
                    layer_view->priv->link_entry,
-                   0, 1, 1, 1);
+                   0, 2, 1, 1);
   gtk_widget_show (layer_view->priv->link_entry);
 
   button = gtk_button_new_from_icon_name (GIMP_ICON_DOCUMENT_SAVE, button_size);
   gtk_grid_attach (GTK_GRID (grid),
                    button,
-                   1, 1, 1, 1);
+                   1, 2, 1, 1);
   g_signal_connect (button,
                     "clicked",
                     G_CALLBACK (gimp_layer_tree_view_new_link_clicked),
@@ -1219,6 +1248,62 @@ gimp_layer_tree_view_link_clicked (GtkWidget         *box,
                                      g_object_get_data (G_OBJECT (box), "link-name"));
 
   return FALSE;
+}
+
+static void
+gimp_layer_tree_view_regexp_modified (GtkEntry         *entry,
+                                      const GParamSpec *pspec,
+                                      GimpLayerTreeView *view)
+{
+  GimpImage   *image;
+  const gchar *pattern;
+
+  gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_regexp_entry),
+                            NULL);
+  gtk_widget_set_tooltip_text (view->priv->link_regexp_entry,
+                               _("Select layers by regular expressions"));
+  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+
+  if (! image)
+    return;
+
+  pattern = gtk_entry_get_text (GTK_ENTRY (view->priv->link_regexp_entry));
+  if (pattern && strlen (pattern) > 0)
+    {
+      GError *error = NULL;
+
+      gtk_entry_set_text (GTK_ENTRY (view->priv->link_entry), "");
+      gtk_widget_set_sensitive (view->priv->link_entry, FALSE);
+      if (! gimp_image_select_layers_by_regexp (image, pattern, &error))
+        {
+          if (error)
+            {
+              /* Invalid regular expression. */
+              PangoAttrList *attrs = pango_attr_list_new ();
+              gchar         *tooltip;
+
+              pango_attr_list_insert (attrs, pango_attr_strikethrough_new (TRUE));
+              tooltip = g_strdup_printf (_("Invalid regular expression: %s\n"),
+                                         error->message);
+              gtk_widget_set_tooltip_text (view->priv->link_regexp_entry,
+                                           tooltip);
+              gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_regexp_entry),
+                                        attrs);
+              g_free (tooltip);
+              g_error_free (error);
+              pango_attr_list_unref (attrs);
+            }
+          else
+            {
+              /* Pattern does not match any results. */
+              gimp_widget_blink (view->priv->link_regexp_entry);
+            }
+        }
+    }
+  else
+    {
+      gtk_widget_set_sensitive (view->priv->link_entry, TRUE);
+    }
 }
 
 static void

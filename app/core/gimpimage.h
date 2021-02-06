@@ -459,6 +459,9 @@ gboolean        gimp_image_unlink_layers         (GimpImage          *image,
                                                   const gchar        *link_name);
 void            gimp_image_select_linked_layers  (GimpImage          *image,
                                                   const gchar        *link_name);
+gboolean      gimp_image_select_layers_by_regexp (GimpImage          *image,
+                                                  const gchar        *pattern,
+                                                  GError            **error);
 void            gimp_image_add_linked_layers     (GimpImage          *image,
                                                   const gchar        *link_name);
 void            gimp_image_remove_linked_layers  (GimpImage          *image,
