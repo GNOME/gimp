@@ -370,7 +370,9 @@ gimp_layer_tree_view_constructed (GObject *object)
   GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (object);
   GtkWidget             *button;
   GtkWidget             *popover;
+  GtkWidget             *placeholder;
   GtkWidget             *grid;
+  PangoAttrList         *attrs;
   GtkIconSize            button_size;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -505,6 +507,16 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   /* Link popover: existing links. */
   layer_view->priv->link_list = gtk_list_box_new ();
+  placeholder = gtk_label_new (_("No layer set stored"));
+  attrs = pango_attr_list_new ();
+  gtk_label_set_attributes (GTK_LABEL (placeholder),
+                            attrs);
+  pango_attr_list_insert (attrs, pango_attr_style_new (PANGO_STYLE_ITALIC));
+  pango_attr_list_insert (attrs, pango_attr_weight_new (PANGO_WEIGHT_ULTRALIGHT));
+  pango_attr_list_unref (attrs);
+  gtk_list_box_set_placeholder (GTK_LIST_BOX (layer_view->priv->link_list),
+                                placeholder);
+  gtk_widget_show (placeholder);
   gtk_grid_attach (GTK_GRID (grid),
                    layer_view->priv->link_list,
                    0, 1, 2, 1);
