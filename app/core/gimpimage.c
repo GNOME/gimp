@@ -63,6 +63,7 @@
 #include "gimpimage-symmetry.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
+#include "gimpitemlist.h"
 #include "gimpitemtree.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-selection.h"
@@ -785,9 +786,7 @@ gimp_image_init (GimpImage *image)
                                                      GIMP_TYPE_VECTORS);
   private->layer_stack         = NULL;
 
-  private->linked_layers       = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                        (GDestroyNotify) g_free,
-                                                        (GDestroyNotify) g_list_free);
+  private->linked_layers       = NULL;
 
   g_signal_connect (private->projection, "notify::buffer",
                     G_CALLBACK (gimp_image_projection_buffer_notify),
@@ -1066,6 +1065,8 @@ gimp_image_dispose (GObject *object)
 
   gimp_image_undo_free (image);
 
+  g_list_free_full (private->linked_layers, g_object_unref);
+
   g_signal_handlers_disconnect_by_func (private->layers->container,
                                         gimp_image_invalidate,
                                         image);
@@ -1131,8 +1132,6 @@ gimp_image_finalize (GObject *object)
   g_clear_object (&private->layers);
   g_clear_object (&private->channels);
   g_clear_object (&private->vectors);
-
-  g_hash_table_destroy (private->linked_layers);
 
   if (private->layer_stack)
     {
@@ -5363,45 +5362,46 @@ gimp_image_add_layers (GimpImage   *image,
 }
 
 /*
- * gimp_image_link_layers:
+ * gimp_image_store_item_set:
  * @image:
- * @layers:
- * @link_name:
+ * @set: (transfer full): a set of linked items which @images takes
+ *                        ownership of.
  *
- * Create a new set of @layers under the name @link_name.
- * If @layers is empty, the currently selected layers are linked
- * instead.
- * If a set with the same name existed, this call will silently replace
- * it with the new set of layers.
- *
- * Returns: %TRUE if a new set was created, %FALSE otherwise (e.g. no
- *          list provided and no layers currently selected).
+ * Store a new set of @layers.
+ * If a set with the same name and type existed, this call will silently
+ * replace it with the new set of layers.
  */
-gboolean
-gimp_image_link_layers (GimpImage   *image,
-                        const GList *layers,
-                        const gchar *link_name)
+void
+gimp_image_store_item_set (GimpImage    *image,
+                           GimpItemList *set)
 {
   GimpImagePrivate *private;
+  GList            *iter;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
+  /* XXX Only layer sets supported so far as we haven't enabled
+   * multi-selection of channels and vectors yet.
+   */
+  g_return_if_fail (gimp_item_list_get_item_type (set) == GIMP_TYPE_LAYER);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (! layers)
+  for (iter = private->linked_layers; iter; iter = iter->next)
     {
-      layers = gimp_image_get_selected_layers (image);
-
-      if (! layers)
-        return FALSE;
+      /* Remove a previous item set of same type and name. */
+      if (gimp_item_list_is_pattern (iter->data) == gimp_item_list_is_pattern (set) &&
+          g_strcmp0 (gimp_object_get_name (iter->data), gimp_object_get_name (set)) == 0)
+        break;
+    }
+  if (iter)
+    {
+      g_object_unref (iter->data);
+      private->linked_layers = g_list_delete_link (private->linked_layers, iter);
     }
 
-  g_hash_table_insert (private->linked_layers,
-                       g_strdup (link_name),
-                       g_list_copy ((GList *) layers));
+  private->linked_layers = g_list_prepend (private->linked_layers, set);
   g_signal_emit (image, gimp_image_signals[LAYER_LINKS_CHANGED], 0);
-
-  return TRUE;
 }
 
 /*
@@ -5415,113 +5415,79 @@ gimp_image_link_layers (GimpImage   *image,
  *          name existed.
  */
 gboolean
-gimp_image_unlink_layers (GimpImage   *image,
-                          const gchar *link_name)
+gimp_image_unlink_item_set (GimpImage    *image,
+                            GimpItemList *set)
 {
   GimpImagePrivate *private;
+  GList            *found;
   gboolean          success;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  success = g_hash_table_remove (private->linked_layers, link_name);
+  found = g_list_find (private->linked_layers, set);
+  success = (found != NULL);
   if (success)
-    g_signal_emit (image, gimp_image_signals[LAYER_LINKS_CHANGED], 0);
+    {
+      private->linked_layers = g_list_delete_link (private->linked_layers, found);
+      g_object_unref (set);
+      g_signal_emit (image, gimp_image_signals[LAYER_LINKS_CHANGED], 0);
+    }
 
   return success;
 }
 
 /*
- * @gimp_image_select_linked_layers:
+ * @gimp_image_get_stored_item_sets:
  * @image:
- * @link_name:
  *
- * Replace currently selected layers in @image with the layers belonging
- * to the set named @link_name (which must exist).
- *
- * Returns: %TRUE if the selection change is done (even if it turned out
- *          selected layers stay the same), %FALSE if no sets with this
- *          name existed.
+ * Returns: (transfer none): the list of all the layer sets (which you
+ *          should not modify). Order of items is not relevant.
  */
-void
-gimp_image_select_linked_layers (GimpImage   *image,
-                                 const gchar *link_name)
+GList *
+gimp_image_get_stored_item_sets (GimpImage *image)
 {
   GimpImagePrivate *private;
-  GList            *linked;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (link_name != NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  linked = g_hash_table_lookup (private->linked_layers,
-                                link_name);
-
-  g_return_if_fail (linked);
-
-  gimp_image_set_selected_layers (image, linked);
+  return private->linked_layers;
 }
 
 /*
- * @gimp_image_select_layers_by_regexp:
+ * @gimp_image_select_item_set:
  * @image:
- * @pattern:
- * @error:
+ * @set:
  *
- * Replace currently selected layers in @image with the layers whose
- * names match with the @pattern regular expression.
- *
- * Returns: %TRUE if some layers matched @pattern (even if it turned out
- *          selected layers stay the same), %FALSE otherwise or if
- *          @pattern is an invalid regular expression (in which case,
- *          @error will be filled with the appropriate error).
+ * Replace currently selected layers in @image with the layers belonging
+ * to @set.
  */
-gboolean
-gimp_image_select_layers_by_regexp (GimpImage    *image,
-                                    const gchar  *pattern,
-                                    GError      **error)
+void
+gimp_image_select_item_set (GimpImage    *image,
+                            GimpItemList *set)
 {
-  GList    *layers;
-  GList    *match = NULL;
-  GList    *iter;
-  GRegex   *regex;
-  gboolean  matched;
+  GList  *linked;
+  GError *error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (pattern != NULL, FALSE);
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
 
-  regex = g_regex_new (pattern, 0, 0, error);
+  linked = gimp_item_list_get_items (set, &error);
 
-  if (regex == NULL)
-    {
-      return FALSE;
-    }
+  if (! error)
+    gimp_image_set_selected_layers (image, linked);
 
-  layers = gimp_image_get_layer_list (image);
-
-  for (iter = layers; iter; iter = iter->next)
-    {
-      if (g_regex_match (regex,
-                         gimp_object_get_name (iter->data),
-                         0, NULL))
-        match = g_list_prepend (match, iter->data);
-    }
-
-  gimp_image_set_selected_layers (image, match);
-  matched = (match != NULL);
-
-  g_list_free (match);
-  g_regex_unref (regex);
-
-  return matched;
+  g_list_free (linked);
+  g_clear_error (&error);
 }
 
 /*
- * @gimp_image_add_linked_layers:
+ * @gimp_image_add_item_set:
  * @image:
- * @link_name:
+ * @set:
  *
  * Add the layers belonging to the set named @link_name (which must
  * exist) to the layers currently selected in @image.
@@ -5531,40 +5497,40 @@ gimp_image_select_layers_by_regexp (GimpImage    *image,
  *          name existed.
  */
 void
-gimp_image_add_linked_layers (GimpImage   *image,
-                              const gchar *link_name)
+gimp_image_add_item_set (GimpImage    *image,
+                         GimpItemList *set)
 {
-  GimpImagePrivate *private;
-  GList            *linked;
-  GList            *layers;
-  GList            *iter;
+  GList  *linked;
+  GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (link_name != NULL);
+  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  linked = gimp_item_list_get_items (set, &error);
 
-  linked = g_hash_table_lookup (private->linked_layers,
-                                link_name);
-
-  g_return_if_fail (linked);
-
-  layers = gimp_image_get_selected_layers (image);
-  layers = g_list_copy (layers);
-  for (iter = linked; iter; iter = iter->next)
+  if (! error)
     {
-      if (! g_list_find (layers, iter->data))
-        layers = g_list_prepend (layers, iter->data);
-    }
+      GList *layers;
+      GList *iter;
 
-  gimp_image_set_selected_layers (image, layers);
-  g_list_free (layers);
+      layers = gimp_image_get_selected_layers (image);
+      layers = g_list_copy (layers);
+      for (iter = linked; iter; iter = iter->next)
+        {
+          if (! g_list_find (layers, iter->data))
+            layers = g_list_prepend (layers, iter->data);
+        }
+
+      gimp_image_set_selected_layers (image, layers);
+      g_list_free (layers);
+    }
+  g_clear_error (&error);
 }
 
 /*
- * @gimp_image_remove_linked_layers:
+ * @gimp_image_remove_item_set:
  * @image:
- * @link_name:
+ * @set:
  *
  * Remove the layers belonging to the set named @link_name (which must
  * exist) from the layers currently selected in @image.
@@ -5574,42 +5540,42 @@ gimp_image_add_linked_layers (GimpImage   *image,
  *          name existed.
  */
 void
-gimp_image_remove_linked_layers (GimpImage   *image,
-                                 const gchar *link_name)
+gimp_image_remove_item_set (GimpImage    *image,
+                            GimpItemList *set)
 {
-  GimpImagePrivate *private;
-  GList            *linked;
-  GList            *layers;
-  GList            *iter;
+  GList  *linked;
+  GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (link_name != NULL);
+  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  linked = gimp_item_list_get_items (set, &error);
 
-  linked = g_hash_table_lookup (private->linked_layers,
-                                link_name);
-
-  g_return_if_fail (linked);
-
-  layers = gimp_image_get_selected_layers (image);
-  layers = g_list_copy (layers);
-  for (iter = linked; iter; iter = iter->next)
+  if (! error)
     {
-      GList *remove;
+      GList *layers;
+      GList *iter;
 
-      if ((remove = g_list_find (layers, iter->data)))
-        layers = g_list_delete_link (layers, remove);
+      layers = gimp_image_get_selected_layers (image);
+      layers = g_list_copy (layers);
+      for (iter = linked; iter; iter = iter->next)
+        {
+          GList *remove;
+
+          if ((remove = g_list_find (layers, iter->data)))
+            layers = g_list_delete_link (layers, remove);
+        }
+
+      gimp_image_set_selected_layers (image, layers);
+      g_list_free (layers);
     }
-
-  gimp_image_set_selected_layers (image, layers);
-  g_list_free (layers);
+  g_clear_error (&error);
 }
 
 /*
- * @gimp_image_intersect_linked_layers:
+ * @gimp_image_intersect_item_set:
  * @image:
- * @link_name:
+ * @set:
  *
  * Remove any layers from the layers currently selected in @image if
  * they don't also belong to the set named @link_name (which must
@@ -5620,61 +5586,41 @@ gimp_image_remove_linked_layers (GimpImage   *image,
  *          name existed.
  */
 void
-gimp_image_intersect_linked_layers (GimpImage   *image,
-                                    const gchar *link_name)
+gimp_image_intersect_item_set (GimpImage    *image,
+                               GimpItemList *set)
 {
-  GimpImagePrivate *private;
-  GList            *linked;
-  GList            *layers;
-  GList            *remove = NULL;
-  GList            *iter;
+  GList *linked;
+  GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (link_name != NULL);
+  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  linked = gimp_item_list_get_items (set, &error);
 
-  linked = g_hash_table_lookup (private->linked_layers,
-                                link_name);
-
-  g_return_if_fail (linked);
-
-  layers = gimp_image_get_selected_layers (image);
-  layers = g_list_copy (layers);
-
-  /* Remove items in layers but not in linked. */
-  for (iter = layers; iter; iter = iter->next)
+  if (! error)
     {
-      if (! g_list_find (linked, iter->data))
-        remove = g_list_prepend (remove, iter);
+      GList *layers;
+      GList *remove = NULL;
+      GList *iter;
+
+      layers = gimp_image_get_selected_layers (image);
+      layers = g_list_copy (layers);
+
+      /* Remove items in layers but not in linked. */
+      for (iter = layers; iter; iter = iter->next)
+        {
+          if (! g_list_find (linked, iter->data))
+            remove = g_list_prepend (remove, iter);
+        }
+      for (iter = remove; iter; iter = iter->next)
+        layers = g_list_delete_link (layers, iter->data);
+      g_list_free (remove);
+
+      /* Finally select the intersection. */
+      gimp_image_set_selected_layers (image, layers);
+      g_list_free (layers);
     }
-  for (iter = remove; iter; iter = iter->next)
-    layers = g_list_delete_link (layers, iter->data);
-  g_list_free (remove);
-
-  /* Finally select the intersection. */
-  gimp_image_set_selected_layers (image, layers);
-  g_list_free (layers);
-}
-
-/*
- * @gimp_image_get_linked_layer_names:
- * @image:
- *
- * Returns: the newly allocated list of all the link names (which you
- *          should not modify directly). Free the list with
- *          g_list_free().
- */
-GList *
-gimp_image_get_linked_layer_names (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  return g_hash_table_get_keys (private->linked_layers);
+  g_clear_error (&error);
 }
 
 

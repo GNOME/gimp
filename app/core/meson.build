@@ -176,6 +176,7 @@ libappcore_sources = [
   'gimpitem-linked.c',
   'gimpitem-preview.c',
   'gimpitem.c',
+  'gimpitemlist.c',
   'gimpitempropundo.c',
   'gimpitemstack.c',
   'gimpitemtree.c',
