@@ -138,6 +138,9 @@ static void   image_resize_callback            (GtkWidget              *dialog,
                                                 GimpUnit                unit,
                                                 gint                    offset_x,
                                                 gint                    offset_y,
+                                                gdouble                 xres,
+                                                gdouble                 yres,
+                                                GimpUnit                res_unit,
                                                 GimpFillType            fill_type,
                                                 GimpItemSet             layer_set,
                                                 gboolean                resize_text_layers,
@@ -1362,6 +1365,9 @@ image_resize_callback (GtkWidget    *dialog,
                        GimpUnit      unit,
                        gint          offset_x,
                        gint          offset_y,
+                       gdouble       xres,
+                       gdouble       yres,
+                       GimpUnit      res_unit,
                        GimpFillType  fill_type,
                        GimpItemSet   layer_set,
                        gboolean      resize_text_layers,
@@ -1376,6 +1382,10 @@ image_resize_callback (GtkWidget    *dialog,
       GimpImage        *image  = GIMP_IMAGE (viewable);
       GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
       GimpProgress     *progress;
+      gdouble           old_xres;
+      gdouble           old_yres;
+      GimpUnit          old_res_unit;
+      gboolean          update_resolution;
 
       g_object_set (config,
                     "image-resize-fill-type",          fill_type,
@@ -1392,15 +1402,35 @@ image_resize_callback (GtkWidget    *dialog,
       progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
                                       _("Resizing"));
 
+      gimp_image_get_resolution (image, &old_xres, &old_yres);
+      old_res_unit = gimp_image_get_unit (image);
+
+      update_resolution = xres     != old_xres ||
+                          yres     != old_yres ||
+                          res_unit != old_res_unit;
+
+      if (update_resolution)
+        {
+          gimp_image_undo_group_start (image,
+                                       GIMP_UNDO_GROUP_IMAGE_SCALE,
+                                       _("Change Canvas Size"));
+          gimp_image_set_resolution (image, xres, yres);
+          gimp_image_set_unit (image, res_unit);
+        }
+
       gimp_image_resize_with_layers (image,
                                      context, fill_type,
-                                     width, height, offset_x, offset_y,
+                                     width, height,
+                                     offset_x, offset_y,
                                      layer_set,
                                      resize_text_layers,
                                      progress);
 
       if (progress)
         gimp_progress_end (progress);
+
+      if (update_resolution)
+        gimp_image_undo_group_end (image);
 
       gimp_image_flush (image);
     }
