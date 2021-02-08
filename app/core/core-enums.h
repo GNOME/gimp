@@ -545,6 +545,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_ITEM_LINKED,           /*< desc="Link/Unlink item"               >*/
   GIMP_UNDO_GROUP_ITEM_LOCK_CONTENTS,    /*< desc="Lock/Unlock contents"           >*/
   GIMP_UNDO_GROUP_ITEM_LOCK_POSITION,    /*< desc="Lock/Unlock position"           >*/
+  GIMP_UNDO_GROUP_ITEM_LOCK_VISIBILITY,  /*< desc="Lock/Unlock visibility"         >*/
   GIMP_UNDO_GROUP_ITEM_PROPERTIES,       /*< desc="Item properties"                >*/
   GIMP_UNDO_GROUP_ITEM_DISPLACE,         /*< desc="Move item"                      >*/
   GIMP_UNDO_GROUP_ITEM_SCALE,            /*< desc="Scale item"                     >*/
