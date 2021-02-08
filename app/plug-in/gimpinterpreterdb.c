@@ -291,6 +291,7 @@ gimp_interpreter_db_add_program (GimpInterpreterDB  *db,
 
   name = buffer;
   program = p + 1;
+  g_strchomp (program);
 
   if (! g_file_test (program, G_FILE_TEST_IS_EXECUTABLE))
     {
