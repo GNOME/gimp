@@ -1224,13 +1224,22 @@ gimp_highlight_widget_draw (GtkWidget *widget,
                             cairo_t   *cr,
                             gpointer   data)
 {
+  GdkRectangle *rect = (GdkRectangle *) data;
+
   /* this code is a straight copy of draw_flash() from gtk-inspector's
    * inspect-button.c
    */
 
   GtkAllocation alloc;
 
-  if (GTK_IS_WINDOW (widget))
+  if (rect)
+    {
+      alloc.x = rect->x;
+      alloc.y = rect->y;
+      alloc.width = rect->width;
+      alloc.height = rect->height;
+    }
+  else if (GTK_IS_WINDOW (widget))
     {
       GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
       /* We don't want to draw the drag highlight around the
@@ -1262,16 +1271,24 @@ gimp_highlight_widget_draw (GtkWidget *widget,
  * gimp_highlight_widget:
  * @widget:
  * @highlight:
+ * @rect:
  *
  * Turns highlighting for @widget on or off according to
  * @highlight, in a similar fashion to gtk_drag_highlight()
  * and gtk_drag_unhighlight().
+ *
+ * If @rect is %NULL, highlight the full widget, otherwise highlight the
+ * specific rectangle in widget coordinates.
+ * When unhighlighting (i.e. @highlight is %FALSE), the value of @rect
+ * doesn't matter, as the previously used rectangle will be reused.
  **/
 void
-gimp_highlight_widget (GtkWidget *widget,
-                       gboolean   highlight)
+gimp_highlight_widget (GtkWidget    *widget,
+                       gboolean      highlight,
+                       GdkRectangle *rect)
 {
-  gboolean old_highlight;
+  GdkRectangle *old_rect;
+  gboolean      old_highlight;
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
@@ -1279,17 +1296,48 @@ gimp_highlight_widget (GtkWidget *widget,
 
   old_highlight = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                       "gimp-widget-highlight"));
+  old_rect = g_object_get_data (G_OBJECT (widget), "gimp-widget-highlight-rect");
+
+  if (highlight && old_highlight && ! gdk_rectangle_equal (rect, old_rect))
+    {
+      /* Highlight area changed. */
+      gimp_highlight_widget (widget, FALSE, NULL);
+      old_highlight = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                          "gimp-widget-highlight"));
+      old_rect = g_object_get_data (G_OBJECT (widget), "gimp-widget-highlight-rect");
+    }
 
   if (highlight != old_highlight)
     {
       if (highlight)
         {
+          GdkRectangle *new_rect = NULL;
+
+          if (rect)
+            {
+              new_rect = g_new0 (GdkRectangle, 1);
+              *new_rect = *rect;
+              g_object_set_data_full (G_OBJECT (widget),
+                                      "gimp-widget-highlight-rect",
+                                      new_rect,
+                                      (GDestroyNotify) g_free);
+            }
           g_signal_connect_after (widget, "draw",
                                   G_CALLBACK (gimp_highlight_widget_draw),
-                                  NULL);
+                                  new_rect);
         }
       else
         {
+          if (old_rect)
+            {
+              g_signal_handlers_disconnect_by_func (widget,
+                                                    gimp_highlight_widget_draw,
+                                                    old_rect);
+              g_object_set_data (G_OBJECT (widget),
+                                 "gimp-widget-highlight-rect",
+                                 NULL);
+            }
+
           g_signal_handlers_disconnect_by_func (widget,
                                                 gimp_highlight_widget_draw,
                                                 NULL);
@@ -1305,8 +1353,9 @@ gimp_highlight_widget (GtkWidget *widget,
 
 typedef struct
 {
-  gint timeout_id;
-  gint counter;
+  gint          timeout_id;
+  gint          counter;
+  GdkRectangle *rect;
 } WidgetBlink;
 
 static WidgetBlink *
@@ -1318,6 +1367,7 @@ widget_blink_new (void)
 
   blink->timeout_id = 0;
   blink->counter    = 0;
+  blink->rect       = NULL;
 
   return blink;
 }
@@ -1331,6 +1381,9 @@ widget_blink_free (WidgetBlink *blink)
       blink->timeout_id = 0;
     }
 
+  if (blink->rect)
+    g_slice_free (GdkRectangle, blink->rect);
+
   g_slice_free (WidgetBlink, blink);
 }
 
@@ -1341,7 +1394,7 @@ gimp_widget_blink_timeout (GtkWidget *widget)
 
   blink = g_object_get_data (G_OBJECT (widget), "gimp-widget-blink");
 
-  gimp_highlight_widget (widget, blink->counter % 2 == 1);
+  gimp_highlight_widget (widget, blink->counter % 2 == 1, blink->rect);
   blink->counter++;
 
   if (blink->counter == 3)
@@ -1374,7 +1427,34 @@ gimp_widget_blink (GtkWidget *widget)
                                      (GSourceFunc) gimp_widget_blink_timeout,
                                      widget);
 
-  gimp_highlight_widget (widget, TRUE);
+  gimp_highlight_widget (widget, TRUE, NULL);
+
+  while ((widget = gtk_widget_get_parent (widget)))
+    gimp_widget_blink_cancel (widget);
+}
+
+void
+gimp_widget_blink_rect (GtkWidget    *widget,
+                        GdkRectangle *rect)
+{
+  WidgetBlink *blink;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  gimp_widget_blink_cancel (widget);
+
+  blink          = widget_blink_new ();
+  blink->rect    = g_slice_new (GdkRectangle);
+  *(blink->rect) = *rect;
+
+  g_object_set_data_full (G_OBJECT (widget), "gimp-widget-blink", blink,
+                          (GDestroyNotify) widget_blink_free);
+
+  blink->timeout_id = g_timeout_add (150,
+                                     (GSourceFunc) gimp_widget_blink_timeout,
+                                     widget);
+
+  gimp_highlight_widget (widget, TRUE, blink->rect);
 
   while ((widget = gtk_widget_get_parent (widget)))
     gimp_widget_blink_cancel (widget);
@@ -1387,7 +1467,7 @@ gimp_widget_blink_cancel (GtkWidget *widget)
 
   if (g_object_get_data (G_OBJECT (widget), "gimp-widget-blink"))
     {
-      gimp_highlight_widget (widget, FALSE);
+      gimp_highlight_widget (widget, FALSE, NULL);
 
       g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
     }

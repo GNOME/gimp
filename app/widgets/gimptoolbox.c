@@ -379,7 +379,7 @@ gimp_toolbox_drag_leave (GtkWidget      *widget,
                          guint           time,
                          GimpToolbox    *toolbox)
 {
-  gimp_highlight_widget (widget, FALSE);
+  gimp_highlight_widget (widget, FALSE, NULL);
 }
 
 static gboolean
@@ -399,7 +399,7 @@ gimp_toolbox_drag_motion (GtkWidget      *widget,
                                        time))
     {
       gdk_drag_status (context, 0, time);
-      gimp_highlight_widget (widget, FALSE);
+      gimp_highlight_widget (widget, FALSE, NULL);
 
       return FALSE;
     }
@@ -407,7 +407,7 @@ gimp_toolbox_drag_motion (GtkWidget      *widget,
   handle = (gtk_drag_dest_find_target (widget, context, NULL) != GDK_NONE);
 
   gdk_drag_status (context, handle ? GDK_ACTION_MOVE : 0, time);
-  gimp_highlight_widget (widget, handle);
+  gimp_highlight_widget (widget, handle, NULL);
 
   /* Return TRUE so drag_leave() is called */
   return TRUE;
