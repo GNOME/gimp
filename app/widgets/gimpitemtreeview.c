@@ -854,6 +854,36 @@ gimp_item_tree_view_add_lock (GimpItemTreeView *view,
   gtk_widget_show (image);
 }
 
+void
+gimp_item_tree_view_blink_lock (GimpItemTreeView *view,
+                                GimpItem         *item)
+{
+  GtkTreeIter  *iter;
+  GtkTreePath  *path;
+  GdkRectangle  rect;
+
+  g_return_if_fail (GIMP_IS_ITEM_TREE_VIEW (view));
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  /* Find the item in the tree view. */
+  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
+                                     (GimpViewable *) item);
+  path = gtk_tree_model_get_path (GIMP_CONTAINER_TREE_VIEW (view)->model, iter);
+
+  /* Scroll dockable to make sure the cell is showing. */
+  gtk_tree_view_scroll_to_cell (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
+                                gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
+                                FALSE, 0.0, 0.0);
+
+  /* Now blink the lock cell of the specified item. */
+  gtk_tree_view_get_cell_area (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
+                               gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
+                               &rect);
+  gimp_widget_blink_rect (GTK_WIDGET (GIMP_CONTAINER_TREE_VIEW (view)->view), &rect);
+
+  gtk_tree_path_free (path);
+}
+
 GtkWidget *
 gimp_item_tree_view_get_new_button (GimpItemTreeView *view)
 {
@@ -1657,7 +1687,8 @@ gimp_item_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
           if (undo && GIMP_ITEM_UNDO (undo)->item == item)
             push_undo = FALSE;
 
-          gimp_item_set_visible (item, ! active, push_undo);
+          if (! gimp_item_set_visible (item, ! active, push_undo))
+            gimp_item_tree_view_blink_lock (view, item);
 
           if (!push_undo)
             gimp_undo_refresh_preview (undo, context);

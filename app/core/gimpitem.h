@@ -355,7 +355,7 @@ const GimpParasite * gimp_item_parasite_find (GimpItem           *item,
 gchar        ** gimp_item_parasite_list      (GimpItem           *item,
                                               gint               *count);
 
-void            gimp_item_set_visible        (GimpItem           *item,
+gboolean        gimp_item_set_visible        (GimpItem           *item,
                                               gboolean            visible,
                                               gboolean            push_undo);
 gboolean        gimp_item_get_visible        (GimpItem           *item);

@@ -50,10 +50,6 @@ gimp_tools_blink_lock_box (Gimp     *gimp,
   GdkMonitor       *monitor;
   const gchar      *identifier;
 
-  GtkTreeIter      *iter;
-  GtkTreePath      *path;
-  GdkRectangle      rect;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_ITEM (item));
 
@@ -79,22 +75,5 @@ gimp_tools_blink_lock_box (Gimp     *gimp,
     return;
 
   view = GIMP_ITEM_TREE_VIEW (gtk_bin_get_child (GTK_BIN (dockable)));
-
-  /* Find the item in the tree view. */
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
-                                     (GimpViewable *) item);
-  path = gtk_tree_model_get_path (GIMP_CONTAINER_TREE_VIEW (view)->model, iter);
-
-  /* Scroll dockable to make sure the cell is showing. */
-  gtk_tree_view_scroll_to_cell (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
-                                gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
-                                FALSE, 0.0, 0.0);
-
-  /* Now blink the lock cell of the specified item. */
-  gtk_tree_view_get_cell_area (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
-                               gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
-                               &rect);
-  gimp_widget_blink_rect (GTK_WIDGET (GIMP_CONTAINER_TREE_VIEW (view)->view), &rect);
-
-  gtk_tree_path_free (path);
+  gimp_item_tree_view_blink_lock (view, item);
 }
