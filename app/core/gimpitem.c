@@ -2310,18 +2310,22 @@ gimp_item_parasite_list (GimpItem *item,
   return list;
 }
 
-void
+gboolean
 gimp_item_set_visible (GimpItem *item,
                        gboolean  visible,
                        gboolean  push_undo)
 {
-  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
   visible = visible ? TRUE : FALSE;
 
-  if (gimp_item_get_visible (item) != visible &&
-      ! gimp_item_is_visibility_locked (item))
+  if (gimp_item_get_visible (item) != visible)
     {
+      if (gimp_item_is_visibility_locked (item))
+        {
+          return FALSE;
+        }
+
       if (push_undo && gimp_item_is_attached (item))
         {
           GimpImage *image = gimp_item_get_image (item);
@@ -2339,6 +2343,8 @@ gimp_item_set_visible (GimpItem *item,
 
       g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_VISIBLE]);
     }
+
+  return TRUE;
 }
 
 gboolean
