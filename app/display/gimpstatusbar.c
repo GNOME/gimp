@@ -623,32 +623,37 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
 
   if (pango_layout_get_line_count (layout) == 1)
     {
-      GtkAllocation label_allocation;
-      gint          width;
+      GtkWidget     *label_box = gtk_widget_get_parent (statusbar->label);
+      GtkAllocation  label_allocation;
+      gint           text_width, max_label_width, x;
 
-      gtk_widget_get_allocation (statusbar->label, &label_allocation);
-
-      pango_layout_get_pixel_size (layout, &width, NULL);
-
-      if (width < label_allocation.width)
+      gtk_widget_get_allocation (label_box, &label_allocation);
+      if (gtk_widget_translate_coordinates (statusbar->label, label_box, 0, 0,
+                                            &x, NULL))
         {
-          if (icon_name)
+          max_label_width = label_allocation.width - x;
+          pango_layout_get_pixel_size (layout, &text_width, NULL);
+
+          if (text_width < max_label_width)
             {
-              GdkPixbuf *pixbuf;
-              gint       scale_factor;
+              if (icon_name)
+                {
+                  GdkPixbuf *pixbuf;
+                  gint       scale_factor;
 
-              pixbuf = gimp_statusbar_load_icon (statusbar, icon_name);
+                  pixbuf = gimp_statusbar_load_icon (statusbar, icon_name);
 
-              scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (statusbar));
-              width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf) / scale_factor;
+                  scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (statusbar));
+                  text_width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf) / scale_factor;
 
-              g_object_unref (pixbuf);
+                  g_object_unref (pixbuf);
 
-              handle_msg = (width < label_allocation.width);
-            }
-          else
-            {
-              handle_msg = TRUE;
+                  handle_msg = (text_width < max_label_width);
+                }
+              else
+                {
+                  handle_msg = TRUE;
+                }
             }
         }
     }
