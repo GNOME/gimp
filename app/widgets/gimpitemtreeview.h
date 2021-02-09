@@ -44,6 +44,13 @@ typedef void            (* GimpRemoveItemFunc)   (GimpImage *image,
 typedef GimpItem      * (* GimpNewItemFunc)      (GimpImage *image);
 
 
+typedef gboolean        (* GimpIsLockedFunc)     (GimpItem  *item);
+typedef gboolean        (* GimpCanLockFunc)      (GimpItem  *item);
+typedef void            (* GimpSetLockFunc)      (GimpItem  *item,
+                                                  gboolean   lock,
+                                                  gboolean   push_undo);
+
+
 #define GIMP_TYPE_ITEM_TREE_VIEW            (gimp_item_tree_view_get_type ())
 #define GIMP_ITEM_TREE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_TREE_VIEW, GimpItemTreeView))
 #define GIMP_ITEM_TREE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_TREE_VIEW, GimpItemTreeViewClass))
@@ -130,7 +137,18 @@ GimpImage * gimp_item_tree_view_get_image         (GimpItemTreeView *view);
 void        gimp_item_tree_view_add_options       (GimpItemTreeView *view,
                                                    const gchar      *label,
                                                    GtkWidget        *options);
-GtkWidget * gimp_item_tree_view_get_lock_box      (GimpItemTreeView *view);
+void        gimp_item_tree_view_add_lock          (GimpItemTreeView *view,
+                                                   const gchar      *icon_name,
+                                                   GimpIsLockedFunc  is_locked,
+                                                   GimpCanLockFunc   can_lock,
+                                                   GimpSetLockFunc   lock,
+                                                   const gchar      *signal_name,
+                                                   GimpUndoType      undo_type,
+                                                   GimpUndoType      group_undo_type,
+                                                   const gchar      *undo_lock_label,
+                                                   const gchar      *undo_unlock_label,
+                                                   const gchar      *tooltip,
+                                                   const gchar      *help_id);
 
 GtkWidget * gimp_item_tree_view_get_new_button    (GimpItemTreeView *view);
 GtkWidget * gimp_item_tree_view_get_delete_button (GimpItemTreeView *view);

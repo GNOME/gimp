@@ -73,7 +73,6 @@ struct _GimpLayerTreeViewPrivate
 {
   GtkWidget       *layer_mode_box;
   GtkAdjustment   *opacity_adjustment;
-  GtkWidget       *lock_alpha_toggle;
   GtkWidget       *anchor_button;
 
   GtkWidget       *link_button;
@@ -93,7 +92,6 @@ struct _GimpLayerTreeViewPrivate
 
   GimpTreeHandler *mode_changed_handler;
   GimpTreeHandler *opacity_changed_handler;
-  GimpTreeHandler *lock_alpha_changed_handler;
   GimpTreeHandler *mask_changed_handler;
   GimpTreeHandler *alpha_changed_handler;
 };
@@ -168,8 +166,6 @@ static void       gimp_layer_tree_view_layer_mode_box_callback    (GtkWidget    
                                                                    const GParamSpec           *pspec,
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_opacity_scale_changed      (GtkAdjustment              *adj,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_lock_alpha_button_toggled  (GtkWidget                  *widget,
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_layer_signal_handler       (GimpLayer                  *layer,
                                                                    GimpLayerTreeView          *view);
@@ -281,9 +277,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkWidget             *scale;
-  GtkWidget             *hbox;
-  GtkWidget             *image;
-  GtkIconSize            icon_size;
   PangoAttribute        *attr;
 
   view->priv = gimp_layer_tree_view_get_instance_private (view);
@@ -329,31 +322,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   g_signal_connect (view->priv->opacity_adjustment, "value-changed",
                     G_CALLBACK (gimp_layer_tree_view_opacity_scale_changed),
                     view);
-
-  /*  Lock alpha toggle  */
-
-  hbox = gimp_item_tree_view_get_lock_box (GIMP_ITEM_TREE_VIEW (view));
-
-  view->priv->lock_alpha_toggle = gtk_toggle_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), view->priv->lock_alpha_toggle,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (view->priv->lock_alpha_toggle);
-
-  g_signal_connect (view->priv->lock_alpha_toggle, "toggled",
-                    G_CALLBACK (gimp_layer_tree_view_lock_alpha_button_toggled),
-                    view);
-
-  gimp_help_set_help_data (view->priv->lock_alpha_toggle,
-                           _("Lock alpha channel"),
-                           GIMP_HELP_LAYER_LOCK_ALPHA);
-
-  gtk_widget_style_get (GTK_WIDGET (view),
-                        "button-icon-size", &icon_size,
-                        NULL);
-
-  image = gtk_image_new_from_icon_name (GIMP_ICON_TRANSPARENCY, icon_size);
-  gtk_container_add (GTK_CONTAINER (view->priv->lock_alpha_toggle), image);
-  gtk_widget_show (image);
 
   view->priv->italic_attrs = pango_attr_list_new ();
   attr = pango_attr_style_new (PANGO_STYLE_ITALIC);
@@ -555,6 +523,21 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   gtk_container_add (GTK_CONTAINER (layer_view->priv->link_popover), grid);
   gtk_widget_show (grid);
+
+  /*  Lock alpha toggle  */
+
+  gimp_item_tree_view_add_lock (GIMP_ITEM_TREE_VIEW (tree_view),
+                                GIMP_ICON_TRANSPARENCY,
+                                (GimpIsLockedFunc) gimp_layer_get_lock_alpha,
+                                (GimpCanLockFunc) gimp_layer_can_lock_alpha,
+                                (GimpSetLockFunc) gimp_layer_set_lock_alpha,
+                                "lock-alpha-changed",
+                                GIMP_UNDO_LAYER_LOCK_ALPHA,
+                                GIMP_UNDO_GROUP_LAYER_LOCK_ALPHA,
+                                _("Lock alpha channel"),
+                                _("Unlock alpha channel"),
+                                _("Lock alpha channel"),
+                                GIMP_HELP_LAYER_LOCK_ALPHA);
 }
 
 static void
@@ -597,9 +580,6 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
       gimp_tree_handler_disconnect (layer_view->priv->opacity_changed_handler);
       layer_view->priv->opacity_changed_handler = NULL;
 
-      gimp_tree_handler_disconnect (layer_view->priv->lock_alpha_changed_handler);
-      layer_view->priv->lock_alpha_changed_handler = NULL;
-
       gimp_tree_handler_disconnect (layer_view->priv->mask_changed_handler);
       layer_view->priv->mask_changed_handler = NULL;
 
@@ -618,11 +598,6 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
 
       layer_view->priv->opacity_changed_handler =
         gimp_tree_handler_connect (container, "opacity-changed",
-                                   G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
-                                   view);
-
-      layer_view->priv->lock_alpha_changed_handler =
-        gimp_tree_handler_connect (container, "lock-alpha-changed",
                                    G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
                                    view);
 
@@ -1479,63 +1454,6 @@ gimp_layer_tree_view_layer_mode_box_callback (GtkWidget         *widget,
 }
 
 static void
-gimp_layer_tree_view_lock_alpha_button_toggled (GtkWidget         *widget,
-                                                GimpLayerTreeView *view)
-{
-  GimpImage *image;
-  GList     *layers;
-  GList     *iter;
-  GimpUndo  *undo;
-  gboolean   push_undo = TRUE;
-  gboolean   lock_alpha;
-  gint       n_layers  = 0;
-
-  lock_alpha = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-  image      = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-  layers     = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
-  undo       = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                             GIMP_UNDO_LAYER_LOCK_ALPHA);
-
-  for (iter = layers; iter; iter = iter->next)
-    {
-      if (gimp_layer_can_lock_alpha (iter->data) &&
-          gimp_layer_get_lock_alpha (iter->data) != lock_alpha)
-        {
-          n_layers++;
-
-          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (iter->data))
-            push_undo = FALSE;
-        }
-    }
-
-  if (n_layers > 1)
-    {
-      /*  Don't compress mode undos with more than 1 layer changed. */
-      push_undo = TRUE;
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_LOCK_ALPHA,
-                                   lock_alpha ? _("Lock alpha channels") : _("Unlock alpha channels"));
-    }
-
-  for (iter = layers; iter; iter = iter->next)
-    {
-      GimpLayer *layer = iter->data;
-
-      if (gimp_layer_can_lock_alpha (layer) &&
-          gimp_layer_get_lock_alpha (layer) != lock_alpha)
-        {
-          BLOCK();
-          gimp_layer_set_lock_alpha (layer, lock_alpha, push_undo);
-          UNBLOCK();
-        }
-    }
-  gimp_image_flush (image);
-
-  if (n_layers > 1)
-    gimp_image_undo_group_end (image);
-}
-
-static void
 gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
                                             GimpLayerTreeView *view)
 {
@@ -1624,23 +1542,12 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
   GList                *iter;
   GimpLayerMode         mode = GIMP_LAYER_MODE_SEPARATOR;
   GimpLayerModeContext  context = 0;
-  gboolean              all_have_lock_alpha = TRUE;
-  gboolean              some_can_lock_alpha = FALSE;
-  gboolean              inconsistent_lock_alpha = FALSE;
   /*gboolean              inconsistent_opacity    = FALSE;*/
   gboolean              inconsistent_mode       = FALSE;
   gdouble               opacity = -1.0;
 
   for (iter = layers; iter; iter = iter->next)
     {
-      if (! gimp_layer_get_lock_alpha (iter->data))
-        all_have_lock_alpha = FALSE;
-      else
-        inconsistent_lock_alpha = TRUE;
-
-      if (gimp_layer_can_lock_alpha (iter->data))
-        some_can_lock_alpha = TRUE;
-
 #if 0
       if (opacity != -1.0 &&
           opacity != gimp_layer_get_opacity (iter->data))
@@ -1672,8 +1579,6 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
   if (! context)
     context = GIMP_LAYER_MODE_CONTEXT_LAYER;
 
-  inconsistent_lock_alpha = (! all_have_lock_alpha && inconsistent_lock_alpha);
-
   BLOCK (view->priv->layer_mode_box,
          gimp_layer_tree_view_layer_mode_box_callback);
 
@@ -1684,23 +1589,6 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
 
   UNBLOCK (view->priv->layer_mode_box,
            gimp_layer_tree_view_layer_mode_box_callback);
-
-  if (all_have_lock_alpha !=
-      gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (view->priv->lock_alpha_toggle)))
-    {
-      BLOCK (view->priv->lock_alpha_toggle,
-             gimp_layer_tree_view_lock_alpha_button_toggled);
-
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->priv->lock_alpha_toggle),
-                                    all_have_lock_alpha);
-
-      UNBLOCK (view->priv->lock_alpha_toggle,
-               gimp_layer_tree_view_lock_alpha_button_toggled);
-    }
-  gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (view->priv->lock_alpha_toggle),
-                                      inconsistent_lock_alpha);
-
-  gtk_widget_set_sensitive (view->priv->lock_alpha_toggle, some_can_lock_alpha);
 
   if (opacity * 100.0 !=
       gtk_adjustment_get_value (view->priv->opacity_adjustment))
