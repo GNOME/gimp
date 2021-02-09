@@ -122,7 +122,7 @@ gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
   item_view_class->lock_content_tooltip      = _("Lock pixels");
   item_view_class->lock_position_icon_name   = GIMP_ICON_TOOL_MOVE;
   item_view_class->lock_position_tooltip     = _("Lock position and size");
-  item_view_class->lock_visibility_icon_name = GIMP_ICON_VISIBLE;
+  item_view_class->lock_visibility_icon_name = GIMP_ICON_LAYER;
   item_view_class->lock_visibility_tooltip   = _("Lock visibility");
 }
 
