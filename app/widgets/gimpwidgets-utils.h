@@ -85,10 +85,15 @@ void              gimp_pango_layout_set_scale      (PangoLayout          *layout
                                                     double                scale);
 void              gimp_pango_layout_set_weight     (PangoLayout          *layout,
                                                     PangoWeight           weight);
+
 void              gimp_highlight_widget            (GtkWidget            *widget,
-                                                    gboolean              highlight);
+                                                    gboolean              highlight,
+                                                    GdkRectangle         *rect);
+void              gimp_widget_blink_rect           (GtkWidget            *widget,
+                                                    GdkRectangle         *rect);
 void              gimp_widget_blink                (GtkWidget             *widget);
 void              gimp_widget_blink_cancel         (GtkWidget             *widget);
+
 GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factory,
                                                     GdkMonitor           *monitor,
                                                     gboolean              toolbox);
