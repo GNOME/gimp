@@ -1314,7 +1314,7 @@ static void
 gimp_layer_tree_view_new_link_exit (GimpLayerTreeView *view)
 {
   if (gimp_layer_tree_view_new_link_clicked (view))
-    gtk_popover_popdown (GTK_POPOVER (view->priv->link_popover));
+    gtk_widget_hide (GTK_POPOVER (view->priv->link_popover));
 }
 
 static gboolean

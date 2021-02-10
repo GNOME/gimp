@@ -211,6 +211,9 @@ static void   gimp_item_tree_view_lock_toggled      (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
 static void   gimp_item_tree_view_update_lock_box   (GimpItemTreeView  *view,
                                                      GimpItem          *item);
+static gboolean gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
+                                                          GdkEvent         *event,
+                                                          GimpItemTreeView *view);
 
 static gboolean gimp_item_tree_view_item_pre_clicked(GimpCellRendererViewable *cell,
                                                      const gchar              *path_str,
@@ -555,6 +558,10 @@ gimp_item_tree_view_constructed (GObject *object)
   /* Lock popover. */
   item_view->priv->lock_popover = gtk_popover_new (GTK_WIDGET (tree_view->view));
   gtk_popover_set_modal (GTK_POPOVER (item_view->priv->lock_popover), TRUE);
+  g_signal_connect (item_view->priv->lock_popover,
+                    "button-press-event",
+                    G_CALLBACK (gimp_item_tree_view_popover_button_press),
+                    item_view);
   gtk_container_add (GTK_CONTAINER (item_view->priv->lock_popover), item_view->priv->lock_box);
   gtk_widget_show (item_view->priv->lock_box);
 }
@@ -1736,7 +1743,7 @@ gimp_item_tree_view_lock_clicked (GtkCellRendererToggle *toggle,
       gtk_popover_set_pointing_to (GTK_POPOVER (view->priv->lock_popover), &rect);
       gtk_tree_path_free (path);
 
-      gtk_popover_popup (GTK_POPOVER (view->priv->lock_popover));
+      gtk_widget_show (view->priv->lock_popover);
     }
 }
 
@@ -1946,6 +1953,46 @@ gimp_item_tree_view_update_lock_box (GimpItemTreeView *view,
       gtk_widget_set_sensitive (data->toggle, data->can_lock (item));
     }
   view->priv->lock_box_item = item;
+}
+
+static gboolean
+gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
+                                          GdkEvent         *event,
+                                          GimpItemTreeView *view)
+{
+  GimpContainerTreeView *tree_view    = GIMP_CONTAINER_TREE_VIEW (view);
+  GdkEventButton        *bevent       = (GdkEventButton *) event;
+  GdkEvent              *new_event;
+
+  /* If we get to the popover signal handling, it means we didn't click
+   * inside popover's buttons, which would have stopped the signal
+   * first. So we were going to hide the popover anyway.
+   * Nevertheless I do with with gtk_widget_hide() instead of
+   * gtk_popover_popdown() because the animation stuff is very buggy
+   * (sometimes the popup stays displayed even though it doesn't react,
+   * blocking the GUI for a second or so).
+   * Moreover I directly retransfer the event as though it was sent to
+   * the item tree view. This allows much faster GUI interaction, not
+   * having to click twice, once to close the popup, then a second for
+   * the actual action (like eye switching or lock on another item or
+   * item selection).
+   */
+  gtk_widget_hide (widget);
+
+  if (gtk_tree_view_get_path_at_pos (tree_view->view,
+                                     bevent->x, bevent->y,
+                                     NULL, NULL, NULL, NULL))
+    {
+      new_event = gdk_event_copy (event);
+      g_object_unref (new_event->any.window);
+      new_event->any.window     = g_object_ref (gtk_widget_get_window (GTK_WIDGET (tree_view->view)));
+      new_event->any.send_event = TRUE;
+
+      gtk_main_do_event (new_event);
+      gdk_event_free (new_event);
+    }
+
+  return GDK_EVENT_STOP;
 }
 
 
