@@ -558,6 +558,20 @@ gimp_item_tree_view_constructed (GObject *object)
   /* Lock popover. */
   item_view->priv->lock_popover = gtk_popover_new (GTK_WIDGET (tree_view->view));
   gtk_popover_set_modal (GTK_POPOVER (item_view->priv->lock_popover), TRUE);
+  /* This property is marked as deprecated in GTK already at time when I
+   * first wrote this code. Yet the whole transition delaying code is
+   * utterly broken. When working on fast pace, we end up with a popup
+   * which won't disappear before a second, or the opposite, a popup
+   * which refuses to pop up forcing you to click a second time. It just
+   * feels completely broken, yet it's apparently not a bug, only some
+   * weird design decision to make some kind of transitional animation.
+   * We can fix some of these broken behavior in our code by using
+   * gtk_widget_show|hide() instead of gtk_popover_popup|down() but this
+   * deprecated function is necessary for all the GTK internal calls.
+   */
+  g_object_set (item_view->priv->lock_popover,
+                "transitions-enabled", TRUE,
+                NULL);
   g_signal_connect (item_view->priv->lock_popover,
                     "button-press-event",
                     G_CALLBACK (gimp_item_tree_view_popover_button_press),

@@ -448,6 +448,9 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   layer_view->priv->link_popover = gtk_popover_new (layer_view->priv->link_button);
   gtk_popover_set_modal (GTK_POPOVER (layer_view->priv->link_popover), TRUE);
+  g_object_set (layer_view->priv->link_popover,
+                "transitions-enabled", TRUE,
+                NULL);
   gtk_menu_button_set_popover (GTK_MENU_BUTTON (layer_view->priv->link_button),
                                layer_view->priv->link_popover);
 
@@ -1314,7 +1317,7 @@ static void
 gimp_layer_tree_view_new_link_exit (GimpLayerTreeView *view)
 {
   if (gimp_layer_tree_view_new_link_clicked (view))
-    gtk_popover_popdown (GTK_POPOVER (view->priv->link_popover));
+    gtk_widget_hide (view->priv->link_popover);
 }
 
 static gboolean

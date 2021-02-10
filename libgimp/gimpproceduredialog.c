@@ -1654,6 +1654,9 @@ gimp_procedure_dialog_run (GimpProcedureDialog *dialog)
                                                            response);
 
               dialog->priv->reset_popover = gtk_popover_new (button);
+              g_object_set (dialog->priv->reset_popover,
+                            "transitions-enabled", TRUE,
+                            NULL);
 
               vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
               gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
