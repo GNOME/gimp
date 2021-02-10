@@ -31,6 +31,24 @@ USAGE
 
 local dt = require "darktable"
 
+local orig_register_event = dt.register_event
+
+function dt.register_event(name, event, func, label)
+  if dt.configuration.api_version_string >= "6.2.1" then
+    if label then
+      orig_register_event(name, event, func, label)
+    else
+      orig_register_event(name, event, func)
+    end
+  else
+    if label then
+      orig_register_event(event, func, label)
+    else
+      orig_register_event(event, func)
+    end
+  end
+end
+
 local min_api_version = "2.1.0"
 if dt.configuration.api_version_string < min_api_version then
   dt.print("the exit export script requires at least darktable version 1.7.0")
@@ -40,9 +58,11 @@ else
   dt.print("closing darktable will export the image and make GIMP load it")
 end
 
+local CURR_API_STRING = dt.configuration.api_version_string
+
 local export_filename = dt.preferences.read("export_on_exit", "export_filename", "string")
 
-dt.register_event("exit", function()
+dt.register_event("fileraw", "exit", function()
   -- safegurad against someone using this with their library containing 50k images
   if #dt.database > 1 then
     dt.print_error("too many images, only exporting the first")
