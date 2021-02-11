@@ -108,6 +108,7 @@ typedef struct
   GimpIsLockedFunc  is_locked;
   GimpCanLockFunc   can_lock;
   GimpSetLockFunc   lock;
+  GimpUndoLockPush  undo_push;
 
   const gchar      *tooltip;
   const gchar      *help_id;
@@ -119,8 +120,9 @@ typedef struct
   /* Undo types and labels. */
   GimpUndoType      undo_type;
   GimpUndoType      group_undo_type;
-  const gchar      *undo_lock_label;
-  const gchar      *undo_unlock_label;
+  const gchar      *undo_lock_desc;
+  const gchar      *undo_unlock_desc;
+  const gchar      *undo_exclusive_desc;
 } LockToggle;
 
 
@@ -208,6 +210,9 @@ static void   gimp_item_tree_view_lock_clicked      (GtkCellRendererToggle *togg
                                                      gchar             *path,
                                                      GdkModifierType    state,
                                                      GimpItemTreeView  *view);
+static gboolean gimp_item_tree_view_lock_button_release (GtkWidget        *widget,
+                                         GdkEvent         *event,
+                                         GimpItemTreeView *view);
 static void   gimp_item_tree_view_lock_toggled      (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
 static void   gimp_item_tree_view_update_lock_box   (GimpItemTreeView  *view,
@@ -519,13 +524,15 @@ gimp_item_tree_view_constructed (GObject *object)
   gimp_item_tree_view_add_lock (item_view,
                                 item_view_class->lock_content_icon_name,
                                 (GimpIsLockedFunc) gimp_item_get_lock_content,
-                                (GimpCanLockFunc) gimp_item_can_lock_content,
-                                (GimpSetLockFunc) gimp_item_set_lock_content,
+                                (GimpCanLockFunc)  gimp_item_can_lock_content,
+                                (GimpSetLockFunc)  gimp_item_set_lock_content,
+                                (GimpUndoLockPush) gimp_image_undo_push_item_lock_content,
                                 "lock-content-changed",
                                 GIMP_UNDO_ITEM_LOCK_CONTENT,
                                 GIMP_UNDO_GROUP_ITEM_LOCK_CONTENTS,
                                 _("Lock content"),
                                 _("Unlock content"),
+                                _("Set Item Exclusive Content Lock"),
                                 item_view_class->lock_content_tooltip,
                                 item_view_class->lock_content_help_id);
 
@@ -533,13 +540,15 @@ gimp_item_tree_view_constructed (GObject *object)
   gimp_item_tree_view_add_lock (item_view,
                                 item_view_class->lock_position_icon_name,
                                 (GimpIsLockedFunc) gimp_item_get_lock_position,
-                                (GimpCanLockFunc) gimp_item_can_lock_position,
-                                (GimpSetLockFunc) gimp_item_set_lock_position,
+                                (GimpCanLockFunc)  gimp_item_can_lock_position,
+                                (GimpSetLockFunc)  gimp_item_set_lock_position,
+                                (GimpUndoLockPush) gimp_image_undo_push_item_lock_position,
                                 "lock-position-changed",
                                 GIMP_UNDO_ITEM_LOCK_POSITION,
                                 GIMP_UNDO_GROUP_ITEM_LOCK_POSITION,
                                 _("Lock position"),
                                 _("Unlock position"),
+                                _("Set Item Exclusive Position Lock"),
                                 item_view_class->lock_position_tooltip,
                                 item_view_class->lock_position_help_id);
 
@@ -547,13 +556,15 @@ gimp_item_tree_view_constructed (GObject *object)
   gimp_item_tree_view_add_lock (item_view,
                                 item_view_class->lock_visibility_icon_name,
                                 (GimpIsLockedFunc) gimp_item_get_lock_visibility,
-                                (GimpCanLockFunc) gimp_item_can_lock_visibility,
-                                (GimpSetLockFunc) gimp_item_set_lock_visibility,
+                                (GimpCanLockFunc)  gimp_item_can_lock_visibility,
+                                (GimpSetLockFunc)  gimp_item_set_lock_visibility,
+                                (GimpUndoLockPush) gimp_image_undo_push_item_lock_visibility,
                                 "lock-visibility-changed",
                                 GIMP_UNDO_ITEM_LOCK_VISIBILITY,
                                 GIMP_UNDO_GROUP_ITEM_LOCK_VISIBILITY,
                                 _("Lock visibility"),
                                 _("Unlock visibility"),
+                                _("Set Item Exclusive Visibility Lock"),
                                 item_view_class->lock_visibility_tooltip,
                                 item_view_class->lock_visibility_help_id);
 
@@ -833,11 +844,13 @@ gimp_item_tree_view_add_lock (GimpItemTreeView *view,
                               GimpIsLockedFunc  is_locked,
                               GimpCanLockFunc   can_lock,
                               GimpSetLockFunc   lock,
+                              GimpUndoLockPush  undo_push,
                               const gchar      *signal_name,
                               GimpUndoType      undo_type,
                               GimpUndoType      group_undo_type,
-                              const gchar      *undo_lock_label,
-                              const gchar      *undo_unlock_label,
+                              const gchar      *undo_lock_desc,
+                              const gchar      *undo_unlock_desc,
+                              const gchar      *undo_exclusive_desc,
                               const gchar      *tooltip,
                               const gchar      *help_id)
 {
@@ -852,14 +865,16 @@ gimp_item_tree_view_add_lock (GimpItemTreeView *view,
   data->is_locked    = is_locked;
   data->can_lock     = can_lock;
   data->lock         = lock;
+  data->undo_push    = undo_push;
   data->signal_name  = signal_name;
   data->tooltip      = tooltip;
   data->help_id      = help_id;
 
-  data->undo_type         = undo_type;
-  data->group_undo_type   = group_undo_type;
-  data->undo_lock_label   = undo_lock_label;
-  data->undo_unlock_label = undo_unlock_label;
+  data->undo_type           = undo_type;
+  data->group_undo_type     = group_undo_type;
+  data->undo_lock_desc      = undo_lock_desc;
+  data->undo_unlock_desc    = undo_unlock_desc;
+  data->undo_exclusive_desc = undo_exclusive_desc;
 
   view->priv->locks = g_list_prepend (view->priv->locks, data);
 
@@ -870,6 +885,9 @@ gimp_item_tree_view_add_lock (GimpItemTreeView *view,
   g_object_set_data (G_OBJECT (toggle), "lock-data", data);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_item_tree_view_lock_toggled),
+                    view);
+  g_signal_connect (toggle, "button-release-event",
+                    G_CALLBACK (gimp_item_tree_view_lock_button_release),
                     view);
 
   gimp_help_set_help_data (toggle, tooltip, help_id);
@@ -1840,6 +1858,34 @@ gimp_item_tree_view_lock_changed (GimpItem         *item,
     gimp_item_tree_view_update_lock_box (view, item, NULL);
 }
 
+static gboolean
+gimp_item_tree_view_lock_button_release (GtkWidget        *widget,
+                                         GdkEvent         *event,
+                                         GimpItemTreeView *view)
+{
+  GdkEventButton  *bevent = (GdkEventButton *) event;
+  LockToggle      *data;
+  GdkModifierType  modifiers;
+
+  data      = g_object_get_data (G_OBJECT (widget), "lock-data");
+  modifiers = bevent->state & gimp_get_all_modifiers_mask ();
+
+  if (modifiers == GDK_SHIFT_MASK)
+    gimp_item_toggle_exclusive (view->priv->lock_box_item,
+                                data->is_locked,
+                                data->lock,
+                                data->can_lock,
+                                NULL,
+                                data->undo_push,
+                                data->undo_exclusive_desc,
+                                data->group_undo_type,
+                                NULL);
+  else
+    return GDK_EVENT_PROPAGATE;
+
+  return GDK_EVENT_STOP;
+}
+
 static void
 gimp_item_tree_view_lock_toggled (GtkWidget         *widget,
                                   GimpItemTreeView  *view)
@@ -1867,9 +1913,9 @@ gimp_item_tree_view_lock_toggled (GtkWidget         *widget,
   if (push_undo)
     {
       if (locked)
-        undo_label = data->undo_lock_label;
+        undo_label = data->undo_lock_desc;
       else
-        undo_label = data->undo_unlock_label;
+        undo_label = data->undo_unlock_desc;
 
       gimp_image_undo_group_start (image, data->group_undo_type,
                                    undo_label);
@@ -1964,6 +2010,9 @@ gimp_item_tree_view_update_lock_box (GimpItemTreeView *view,
           g_signal_handlers_block_by_func (data->toggle,
                                            gimp_item_tree_view_lock_toggled,
                                            view);
+          g_signal_handlers_block_by_func (data->toggle,
+                                           gimp_item_tree_view_lock_button_release,
+                                           view);
 
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->toggle),
                                         data->is_locked (item));
@@ -1971,6 +2020,9 @@ gimp_item_tree_view_update_lock_box (GimpItemTreeView *view,
           g_signal_handlers_unblock_by_func (data->toggle,
                                              gimp_item_tree_view_lock_toggled,
                                              view);
+          g_signal_handlers_unblock_by_func (data->toggle,
+                                           gimp_item_tree_view_lock_button_release,
+                                           view);
         }
       gtk_widget_set_sensitive (data->toggle, data->can_lock (item));
     }

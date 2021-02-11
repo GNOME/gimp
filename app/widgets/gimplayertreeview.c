@@ -40,6 +40,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
 #include "core/gimpitemlist.h"
 #include "core/gimpitemundo.h"
@@ -532,13 +533,15 @@ gimp_layer_tree_view_constructed (GObject *object)
   gimp_item_tree_view_add_lock (GIMP_ITEM_TREE_VIEW (tree_view),
                                 GIMP_ICON_TRANSPARENCY,
                                 (GimpIsLockedFunc) gimp_layer_get_lock_alpha,
-                                (GimpCanLockFunc) gimp_layer_can_lock_alpha,
-                                (GimpSetLockFunc) gimp_layer_set_lock_alpha,
+                                (GimpCanLockFunc)  gimp_layer_can_lock_alpha,
+                                (GimpSetLockFunc)  gimp_layer_set_lock_alpha,
+                                (GimpUndoLockPush) gimp_image_undo_push_layer_lock_alpha,
                                 "lock-alpha-changed",
                                 GIMP_UNDO_LAYER_LOCK_ALPHA,
                                 GIMP_UNDO_GROUP_LAYER_LOCK_ALPHA,
                                 _("Lock alpha channel"),
                                 _("Unlock alpha channel"),
+                                _("Set Item Exclusive Alpha Channel lock"),
                                 _("Lock alpha channel"),
                                 GIMP_HELP_LAYER_LOCK_ALPHA);
 }

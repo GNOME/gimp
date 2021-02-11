@@ -37,11 +37,13 @@
 #include "gimp-intl.h"
 
 
-static GList * gimp_item_exclusive_get_ancestry (GimpItem     *item);
-static void    gimp_item_exclusive_get_lists    (GimpItem     *item,
-                                                 const gchar  *property,
-                                                 GList       **on,
-                                                 GList       **off);
+static GList * gimp_item_exclusive_get_ancestry (GimpItem              *item);
+static void    gimp_item_exclusive_get_lists    (GimpItem              *item,
+                                                 GimpItemIsEnabledFunc  is_enabled,
+                                                 GimpItemCanSetFunc     can_set,
+                                                 GimpItemIsPropLocked   is_prop_locked,
+                                                 GList                **on,
+                                                 GList                **off);
 
 
 /*  public functions  */
@@ -50,73 +52,99 @@ void
 gimp_item_toggle_exclusive_visible (GimpItem    *item,
                                     GimpContext *context)
 {
-  GList *ancestry;
-  GList *on;
-  GList *off;
-  GList *list;
+  gimp_item_toggle_exclusive (item,
+                              (GimpItemIsEnabledFunc) gimp_item_is_visible,
+                              (GimpItemSetFunc)       gimp_item_set_visible,
+                              NULL,
+                              (GimpItemIsPropLocked)  gimp_item_is_visibility_locked,
+                              (GimpItemUndoPush)      gimp_image_undo_push_item_visibility,
+                              _("Set Item Exclusive Visibility"),
+                              GIMP_UNDO_GROUP_ITEM_VISIBILITY,
+                              context);
+}
+
+void
+gimp_item_toggle_exclusive (GimpItem               *item,
+                            GimpItemIsEnabledFunc   is_enabled,
+                            GimpItemSetFunc         set_prop,
+                            GimpItemCanSetFunc      can_set,
+                            GimpItemIsPropLocked    is_prop_locked,
+                            GimpItemUndoPush        undo_push,
+                            const gchar            *undo_desc,
+                            GimpUndoType            group_undo_type,
+                            GimpContext            *context)
+{
+  GList       *ancestry;
+  GList       *on;
+  GList       *off;
+  GList       *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_is_attached (item));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (undo_desc != NULL);
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
   ancestry = gimp_item_exclusive_get_ancestry (item);
-  gimp_item_exclusive_get_lists (item, "visible", &on, &off);
+  gimp_item_exclusive_get_lists (item, is_enabled, can_set, is_prop_locked, &on, &off);
 
-  if (on || off || ! gimp_item_is_visible (item))
+  if (on || off || (! is_enabled (item) && (can_set == NULL || can_set (item))))
     {
       GimpImage *image = gimp_item_get_image (item);
       GimpUndo  *undo;
       gboolean   push_undo = TRUE;
 
       undo = gimp_image_undo_can_compress (image, GIMP_TYPE_UNDO_STACK,
-                                           GIMP_UNDO_GROUP_ITEM_VISIBILITY);
+                                           group_undo_type);
 
-      if (undo && (g_object_get_data (G_OBJECT (undo), "exclusive-visible-item") ==
+      /* Use the undo description as the undo object key, as we should
+       * assume that a same undo description means the same exclusive
+       * action.
+       */
+      if (undo && (g_object_get_data (G_OBJECT (undo), undo_desc) ==
                    (gpointer) item))
         push_undo = FALSE;
 
       if (push_undo)
         {
           if (gimp_image_undo_group_start (image,
-                                           GIMP_UNDO_GROUP_ITEM_VISIBILITY,
-                                           _("Set Item Exclusive Visible")))
+                                           group_undo_type,
+                                           undo_desc))
             {
               undo = gimp_image_undo_can_compress (image, GIMP_TYPE_UNDO_STACK,
-                                                   GIMP_UNDO_GROUP_ITEM_VISIBILITY);
+                                                   group_undo_type);
 
               if (undo)
-                g_object_set_data (G_OBJECT (undo), "exclusive-visible-item",
-                                   (gpointer) item);
+                g_object_set_data (G_OBJECT (undo), undo_desc, (gpointer) item);
             }
 
           for (list = ancestry; list; list = g_list_next (list))
-            gimp_image_undo_push_item_visibility (image, NULL, list->data);
+            undo_push (image, NULL, list->data);
 
           for (list = on; list; list = g_list_next (list))
-            gimp_image_undo_push_item_visibility (image, NULL, list->data);
+            undo_push (image, NULL, list->data);
 
           for (list = off; list; list = g_list_next (list))
-            gimp_image_undo_push_item_visibility (image, NULL, list->data);
+            undo_push (image, NULL, list->data);
 
           gimp_image_undo_group_end (image);
         }
-      else
+      else if (context)
         {
           gimp_undo_refresh_preview (undo, context);
         }
 
       for (list = ancestry; list; list = g_list_next (list))
-        gimp_item_set_visible (list->data, TRUE, FALSE);
+        set_prop (list->data, TRUE, FALSE);
 
       if (on)
         {
           for (list = on; list; list = g_list_next (list))
-            gimp_item_set_visible (list->data, FALSE, FALSE);
+            set_prop (list->data, FALSE, FALSE);
         }
       else if (off)
         {
           for (list = off; list; list = g_list_next (list))
-            gimp_item_set_visible (list->data, TRUE, FALSE);
+            set_prop (list->data, TRUE, FALSE);
         }
 
       g_list_free (on);
@@ -233,10 +261,12 @@ gimp_item_exclusive_get_ancestry (GimpItem *item)
 }
 
 static void
-gimp_item_exclusive_get_lists (GimpItem     *item,
-                               const gchar  *property,
-                               GList       **on,
-                               GList       **off)
+gimp_item_exclusive_get_lists (GimpItem              *item,
+                               GimpItemIsEnabledFunc  is_enabled,
+                               GimpItemCanSetFunc     can_set,
+                               GimpItemIsPropLocked   is_prop_locked,
+                               GList                 **on,
+                               GList                 **off)
 {
   GimpItemTree *tree;
   GList        *items;
@@ -253,18 +283,16 @@ gimp_item_exclusive_get_lists (GimpItem     *item,
     {
       GimpItem *other = list->data;
 
-      if (other != item                            &&
+      if (other != item                                        &&
           /* Don't include item with visibility locks. */
-          ! gimp_item_is_visibility_locked (other) &&
+          (is_prop_locked == NULL || ! is_prop_locked (other)) &&
+          /* Don't include item which can be changed. */
+          (can_set == NULL || can_set (other))                 &&
           /* We are only interested in same level items. */
           gimp_viewable_get_parent (GIMP_VIEWABLE (other)) ==
           gimp_viewable_get_parent (GIMP_VIEWABLE (item)))
         {
-          gboolean value;
-
-          g_object_get (other, property, &value, NULL);
-
-          if (value)
+          if (is_enabled (other))
             *on = g_list_prepend (*on, other);
           else
             *off = g_list_prepend (*off, other);

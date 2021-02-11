@@ -21,11 +21,29 @@
 #ifndef __GIMP_ITEM_EXCLUSIVE_H__
 #define __GIMP_ITEM_EXCLUSIVE_H__
 
+typedef gboolean        (* GimpItemIsEnabledFunc)    (GimpItem  *item);
+typedef gboolean        (* GimpItemCanSetFunc)       (GimpItem  *item);
+typedef void            (* GimpItemSetFunc)          (GimpItem  *item,
+                                                      gboolean   enabled,
+                                                      gboolean   push_undo);
+typedef gboolean        (* GimpItemIsPropLocked)     (GimpItem  *item);
+typedef GimpUndo      * (*GimpItemUndoPush)          (GimpImage     *image,
+                                                      const gchar   *undo_desc,
+                                                      GimpItem      *item);
 
-void   gimp_item_toggle_exclusive_visible (GimpItem    *item,
-                                           GimpContext *context);
-void   gimp_item_toggle_exclusive_linked  (GimpItem    *item,
-                                           GimpContext *context);
+void   gimp_item_toggle_exclusive_visible (GimpItem             *item,
+                                           GimpContext          *context);
+void   gimp_item_toggle_exclusive         (GimpItem             *item,
+                                           GimpItemIsEnabledFunc is_enabled,
+                                           GimpItemSetFunc       set_prop,
+                                           GimpItemCanSetFunc    can_set,
+                                           GimpItemIsPropLocked  is_prop_locked,
+                                           GimpItemUndoPush      undo_push,
+                                           const gchar          *undo_desc,
+                                           GimpUndoType          group_undo_type,
+                                           GimpContext          *context);
+void   gimp_item_toggle_exclusive_linked  (GimpItem             *item,
+                                           GimpContext          *context);
 
 
 #endif /* __GIMP_ITEM_EXCLUSIVE_H__ */
