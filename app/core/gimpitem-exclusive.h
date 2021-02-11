@@ -32,6 +32,7 @@ typedef GimpUndo      * (*GimpItemUndoPush)          (GimpImage     *image,
                                                       GimpItem      *item);
 
 void   gimp_item_toggle_exclusive_visible (GimpItem             *item,
+                                           gboolean              only_selected,
                                            GimpContext          *context);
 void   gimp_item_toggle_exclusive         (GimpItem             *item,
                                            GimpItemIsEnabledFunc is_enabled,
@@ -41,6 +42,7 @@ void   gimp_item_toggle_exclusive         (GimpItem             *item,
                                            GimpItemUndoPush      undo_push,
                                            const gchar          *undo_desc,
                                            GimpUndoType          group_undo_type,
+                                           gboolean              only_selected,
                                            GimpContext          *context);
 void   gimp_item_toggle_exclusive_linked  (GimpItem             *item,
                                            GimpContext          *context);

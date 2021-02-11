@@ -386,6 +386,8 @@ void          gimp_image_unset_selected_channels (GimpImage          *image);
 GimpVectors   * gimp_image_set_active_vectors    (GimpImage          *image,
                                                   GimpVectors        *vectors);
 
+gboolean        gimp_image_is_selected_drawable  (GimpImage          *image,
+                                                  GimpDrawable       *drawable);
 gboolean     gimp_image_equal_selected_drawables (GimpImage          *image,
                                                   GList              *drawables);
 

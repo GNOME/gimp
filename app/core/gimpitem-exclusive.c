@@ -26,6 +26,8 @@
 #include "core-types.h"
 
 #include "gimpcontext.h"
+#include "gimpdrawable.h"
+#include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
@@ -42,6 +44,7 @@ static void    gimp_item_exclusive_get_lists    (GimpItem              *item,
                                                  GimpItemIsEnabledFunc  is_enabled,
                                                  GimpItemCanSetFunc     can_set,
                                                  GimpItemIsPropLocked   is_prop_locked,
+                                                 gboolean               only_selected,
                                                  GList                **on,
                                                  GList                **off);
 
@@ -50,6 +53,7 @@ static void    gimp_item_exclusive_get_lists    (GimpItem              *item,
 
 void
 gimp_item_toggle_exclusive_visible (GimpItem    *item,
+                                    gboolean     only_selected,
                                     GimpContext *context)
 {
   gimp_item_toggle_exclusive (item,
@@ -60,7 +64,7 @@ gimp_item_toggle_exclusive_visible (GimpItem    *item,
                               (GimpItemUndoPush)      gimp_image_undo_push_item_visibility,
                               _("Set Item Exclusive Visibility"),
                               GIMP_UNDO_GROUP_ITEM_VISIBILITY,
-                              context);
+                              only_selected, context);
 }
 
 void
@@ -72,6 +76,7 @@ gimp_item_toggle_exclusive (GimpItem               *item,
                             GimpItemUndoPush        undo_push,
                             const gchar            *undo_desc,
                             GimpUndoType            group_undo_type,
+                            gboolean                only_selected,
                             GimpContext            *context)
 {
   GList       *ancestry;
@@ -85,7 +90,8 @@ gimp_item_toggle_exclusive (GimpItem               *item,
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
   ancestry = gimp_item_exclusive_get_ancestry (item);
-  gimp_item_exclusive_get_lists (item, is_enabled, can_set, is_prop_locked, &on, &off);
+  gimp_item_exclusive_get_lists (item, is_enabled, can_set, is_prop_locked,
+                                 only_selected, &on, &off);
 
   if (on || off || (! is_enabled (item) && (can_set == NULL || can_set (item))))
     {
@@ -265,9 +271,11 @@ gimp_item_exclusive_get_lists (GimpItem              *item,
                                GimpItemIsEnabledFunc  is_enabled,
                                GimpItemCanSetFunc     can_set,
                                GimpItemIsPropLocked   is_prop_locked,
+                               gboolean               only_selected,
                                GList                 **on,
                                GList                 **off)
 {
+  GimpImage    *image = NULL;
   GimpItemTree *tree;
   GList        *items;
   GList        *list;
@@ -279,15 +287,21 @@ gimp_item_exclusive_get_lists (GimpItem              *item,
 
   items = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (tree->container));
 
+  if (only_selected)
+    image = gimp_item_get_image (item);
+
   for (list = items; list; list = g_list_next (list))
     {
       GimpItem *other = list->data;
 
-      if (other != item                                        &&
+      if (other != item                                                                &&
           /* Don't include item with visibility locks. */
-          (is_prop_locked == NULL || ! is_prop_locked (other)) &&
+          (is_prop_locked == NULL || ! is_prop_locked (other))                         &&
           /* Don't include item which can be changed. */
-          (can_set == NULL || can_set (other))                 &&
+          (can_set == NULL || can_set (other))                                         &&
+          /* Do we care only about selected drawables? */
+          (! only_selected  || gimp_image_is_selected_drawable (image,
+                                                                GIMP_DRAWABLE (other))) &&
           /* We are only interested in same level items. */
           gimp_viewable_get_parent (GIMP_VIEWABLE (other)) ==
           gimp_viewable_get_parent (GIMP_VIEWABLE (item)))
