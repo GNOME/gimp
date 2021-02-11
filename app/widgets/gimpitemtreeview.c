@@ -74,6 +74,7 @@ struct _GimpItemTreeViewPrivate
   GtkWidget       *multi_selection_label;
 
   GimpItem        *lock_box_item;
+  GtkTreePath     *lock_box_path;
   GtkWidget       *lock_popover;
   GtkWidget       *lock_box;
 
@@ -210,7 +211,8 @@ static void   gimp_item_tree_view_lock_clicked      (GtkCellRendererToggle *togg
 static void   gimp_item_tree_view_lock_toggled      (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
 static void   gimp_item_tree_view_update_lock_box   (GimpItemTreeView  *view,
-                                                     GimpItem          *item);
+                                                     GimpItem          *item,
+                                                     GtkTreePath       *path);
 static gboolean gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
                                                           GdkEvent         *event,
                                                           GimpItemTreeView *view);
@@ -592,6 +594,12 @@ gimp_item_tree_view_dispose (GObject *object)
     {
       gtk_widget_destroy (view->priv->lock_popover);
       view->priv->lock_popover = NULL;
+    }
+
+  if (view->priv->lock_box_path)
+    {
+      gtk_tree_path_free (view->priv->lock_box_path);
+      view->priv->lock_box_path = NULL;
     }
 
   if (view->priv->locks)
@@ -1748,14 +1756,13 @@ gimp_item_tree_view_lock_clicked (GtkCellRendererToggle *toggle,
                           -1);
       item = GIMP_ITEM (renderer->viewable);
       g_object_unref (renderer);
-      gimp_item_tree_view_update_lock_box (view, item);
+      gimp_item_tree_view_update_lock_box (view, item, path);
 
       /* Change popover position. */
       gtk_tree_view_get_cell_area (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
                                    gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
                                    &rect);
       gtk_popover_set_pointing_to (GTK_POPOVER (view->priv->lock_popover), &rect);
-      gtk_tree_path_free (path);
 
       gtk_widget_show (view->priv->lock_popover);
     }
@@ -1830,7 +1837,7 @@ gimp_item_tree_view_lock_changed (GimpItem         *item,
                         -1);
 
   if (view->priv->lock_box_item == item)
-    gimp_item_tree_view_update_lock_box (view, item);
+    gimp_item_tree_view_update_lock_box (view, item, NULL);
 }
 
 static void
@@ -1942,7 +1949,8 @@ gimp_item_tree_view_selection_label_notify (GtkLabel         *label,
 
 static void
 gimp_item_tree_view_update_lock_box (GimpItemTreeView *view,
-                                     GimpItem         *item)
+                                     GimpItem         *item,
+                                     GtkTreePath      *path)
 {
   GList *list;
 
@@ -1967,6 +1975,13 @@ gimp_item_tree_view_update_lock_box (GimpItemTreeView *view,
       gtk_widget_set_sensitive (data->toggle, data->can_lock (item));
     }
   view->priv->lock_box_item = item;
+
+  if (path)
+    {
+      if (view->priv->lock_box_path)
+        gtk_tree_path_free (view->priv->lock_box_path);
+      view->priv->lock_box_path = path;
+    }
 }
 
 static gboolean
@@ -1977,6 +1992,8 @@ gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
   GimpContainerTreeView *tree_view    = GIMP_CONTAINER_TREE_VIEW (view);
   GdkEventButton        *bevent       = (GdkEventButton *) event;
   GdkEvent              *new_event;
+  GtkTreeViewColumn     *column;
+  GtkTreePath           *path;
 
   /* If we get to the popover signal handling, it means we didn't click
    * inside popover's buttons, which would have stopped the signal
@@ -1995,15 +2012,24 @@ gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
 
   if (gtk_tree_view_get_path_at_pos (tree_view->view,
                                      bevent->x, bevent->y,
-                                     NULL, NULL, NULL, NULL))
+                                     &path, &column, NULL, NULL))
     {
-      new_event = gdk_event_copy (event);
-      g_object_unref (new_event->any.window);
-      new_event->any.window     = g_object_ref (gtk_widget_get_window (GTK_WIDGET (tree_view->view)));
-      new_event->any.send_event = TRUE;
+      /* Clicking on the lock cell from the currently displayed lock box
+       * should only toggle-hide the lock box.
+       */
+      if (gtk_tree_path_compare (path, view->priv->lock_box_path) != 0 ||
+          column != gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1))
+        {
+          new_event = gdk_event_copy (event);
+          g_object_unref (new_event->any.window);
+          new_event->any.window     = g_object_ref (gtk_widget_get_window (GTK_WIDGET (tree_view->view)));
+          new_event->any.send_event = TRUE;
 
-      gtk_main_do_event (new_event);
-      gdk_event_free (new_event);
+          gtk_main_do_event (new_event);
+
+          gdk_event_free (new_event);
+        }
+      gtk_tree_path_free (path);
     }
 
   return GDK_EVENT_STOP;
