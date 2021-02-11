@@ -1719,9 +1719,10 @@ gimp_item_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
 
       image = gimp_item_get_image (item);
 
-      if ((state & GDK_SHIFT_MASK))
+      if ((state & GDK_SHIFT_MASK) ||
+          (state & GDK_MOD1_MASK))
         {
-          gimp_item_toggle_exclusive_visible (item, context);
+          gimp_item_toggle_exclusive_visible (item, (state & GDK_MOD1_MASK), context);
         }
       else
         {
@@ -1870,7 +1871,8 @@ gimp_item_tree_view_lock_button_release (GtkWidget        *widget,
   data      = g_object_get_data (G_OBJECT (widget), "lock-data");
   modifiers = bevent->state & gimp_get_all_modifiers_mask ();
 
-  if (modifiers == GDK_SHIFT_MASK)
+  if (modifiers == GDK_SHIFT_MASK ||
+      modifiers == GDK_MOD1_MASK)
     gimp_item_toggle_exclusive (view->priv->lock_box_item,
                                 data->is_locked,
                                 data->lock,
@@ -1879,6 +1881,7 @@ gimp_item_tree_view_lock_button_release (GtkWidget        *widget,
                                 data->undo_push,
                                 data->undo_exclusive_desc,
                                 data->group_undo_type,
+                                (modifiers == GDK_MOD1_MASK),
                                 NULL);
   else
     return GDK_EVENT_PROPAGATE;

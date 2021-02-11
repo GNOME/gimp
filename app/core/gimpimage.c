@@ -4667,6 +4667,33 @@ gimp_image_set_active_vectors (GimpImage   *image,
 }
 
 /**
+ * gimp_image_is_selected_drawable:
+ * @image:
+ * @drawable:
+ *
+ * Checks if @drawable belong to the list of currently selected
+ * drawables. It doesn't mean this is the only selected drawable (if
+ * this is what you want to check, use
+ * gimp_image_equal_selected_drawables() with a list containing only
+ * this drawable).
+ *
+ * Returns: %TRUE is @drawable is one of the selected drawables.
+ */
+gboolean
+gimp_image_is_selected_drawable (GimpImage    *image,
+                                 GimpDrawable *drawable)
+{
+  GList    *selected_drawables;
+  gboolean  found;
+
+  selected_drawables = gimp_image_get_selected_drawables (image);
+  found = (g_list_find (selected_drawables, drawable) != NULL);
+  g_list_free (selected_drawables);
+
+  return found;
+}
+
+/**
  * gimp_image_equal_selected_drawables:
  * @image:
  * @drawables:
