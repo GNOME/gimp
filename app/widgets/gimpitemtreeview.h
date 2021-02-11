@@ -49,6 +49,9 @@ typedef gboolean        (* GimpCanLockFunc)      (GimpItem  *item);
 typedef void            (* GimpSetLockFunc)      (GimpItem  *item,
                                                   gboolean   lock,
                                                   gboolean   push_undo);
+typedef GimpUndo      * (*GimpUndoLockPush)      (GimpImage     *image,
+                                                  const gchar   *undo_desc,
+                                                  GimpItem      *item);
 
 
 #define GIMP_TYPE_ITEM_TREE_VIEW            (gimp_item_tree_view_get_type ())
@@ -142,11 +145,13 @@ void        gimp_item_tree_view_add_lock          (GimpItemTreeView *view,
                                                    GimpIsLockedFunc  is_locked,
                                                    GimpCanLockFunc   can_lock,
                                                    GimpSetLockFunc   lock,
+                                                   GimpUndoLockPush  undo_push,
                                                    const gchar      *signal_name,
                                                    GimpUndoType      undo_type,
                                                    GimpUndoType      group_undo_type,
                                                    const gchar      *undo_lock_label,
                                                    const gchar      *undo_unlock_label,
+                                                   const gchar      *undo_exclusive_desc,
                                                    const gchar      *tooltip,
                                                    const gchar      *help_id);
 void        gimp_item_tree_view_blink_lock        (GimpItemTreeView *view,
