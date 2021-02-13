@@ -889,8 +889,14 @@ xcf_load_image_props (XcfInfo   *info,
                 xcf_read_int32 (info, (guint32 *) &position,    1);
                 xcf_read_int8  (info, (guint8 *)  &orientation, 1);
 
-                /*  skip -1 guides from old XCFs  */
-                if (position < 0)
+                /* Some very old XCF had -1 guides which have been
+                 * skipped since 2003 (commit 909a28ced2).
+                 * Then XCF up to version 14 only had positive guide
+                 * positions.
+                 * Since XCF 15 (GIMP 3.0), off-canvas guides became a
+                 * thing.
+                 */
+                if (info->file_version < 15 && position < 0)
                   continue;
 
                 GIMP_LOG (XCF, "prop guide orientation=%d position=%d",
@@ -899,11 +905,23 @@ xcf_load_image_props (XcfInfo   *info,
                 switch (orientation)
                   {
                   case XCF_ORIENTATION_HORIZONTAL:
-                    gimp_image_add_hguide (image, position, FALSE);
+                    if (info->file_version < 15 && position > gimp_image_get_height (image))
+                      gimp_message (info->gimp, G_OBJECT (info->progress),
+                                    GIMP_MESSAGE_WARNING,
+                                    "Ignoring off-canvas horizontal guide (position %d) in XCF %d file",
+                                    position, info->file_version);
+                    else
+                      gimp_image_add_hguide (image, position, FALSE);
                     break;
 
                   case XCF_ORIENTATION_VERTICAL:
-                    gimp_image_add_vguide (image, position, FALSE);
+                    if (info->file_version < 15 && position > gimp_image_get_width (image))
+                      gimp_message (info->gimp, G_OBJECT (info->progress),
+                                    GIMP_MESSAGE_WARNING,
+                                    "Ignoring off-canvas vertical guide (position %d) in XCF %d file",
+                                    position, info->file_version);
+                    else
+                      gimp_image_add_vguide (image, position, FALSE);
                     break;
 
                   default:

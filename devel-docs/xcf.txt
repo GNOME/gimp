@@ -176,10 +176,14 @@ other than 8-bit gamma), zlib compression and 64-bit offsets for XCF
 files bigger than 4GB.
 
 Version 14:
-Since GIMP 2.10.20, released on 2020-MM-DD.
+Since GIMP 3.0.0, released on TODO.
 Allows multiple layers to have the property PROP_ACTIVE_LAYER, hence
 multiple layers selected at once.
 
+Version 15:
+Since GIMP 3.0.0, released on TODO.
+PROP_GUIDES now allows off-canvas guide positions, i.e. negative
+positions and over canvas-dimensions positions.
 
 1. BASIC CONCEPTS
 =================
@@ -872,7 +876,9 @@ PROP_GUIDES (editing state)
   It appears if any guides have been defined.
 
   Some old XCF files define guides with negative coordinates; those
-  should be ignored by readers.
+  should be ignored by readers for XCF < 15. Since XCF 15, off-canvas
+  guides are possible, such as negative coordinates or bigger than the
+  canvas width/height.
 
 PROP_PATHS
   uint32  23       Type identification

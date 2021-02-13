@@ -2821,8 +2821,28 @@ gimp_image_get_xcf_version (GimpImage    *image,
   if (g_list_length (gimp_image_get_selected_layers (image)) > 1)
     {
       ADD_REASON (g_strdup_printf (_("Multiple layer selection was "
-                                     "added in %s"), "GIMP 2.10.20"));
+                                     "added in %s"), "GIMP 3.0.0"));
       version = MAX (14, version);
+    }
+
+  if ((list = gimp_image_get_guides (image)))
+    {
+      for (; list; list = g_list_next (list))
+        {
+          gint32 position = gimp_guide_get_position (list->data);
+
+          if (position < 0 ||
+              (gimp_guide_get_orientation (list->data) == GIMP_ORIENTATION_HORIZONTAL &&
+               position > gimp_image_get_height (image)) ||
+              /* vertical guide. */
+               position > gimp_image_get_width (image))
+            {
+              ADD_REASON (g_strdup_printf (_("Off-canvas guides "
+                                             "added in %s"), "GIMP 3.0.0"));
+              version = MAX (15, version);
+              break;
+            }
+        }
     }
 
 #undef ADD_REASON
@@ -2853,6 +2873,11 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 13:
       if (gimp_version)   *gimp_version   = 210;
       if (version_string) *version_string = "GIMP 2.10";
+      break;
+    case 14:
+    case 15:
+      if (gimp_version)   *gimp_version   = 300;
+      if (version_string) *version_string = "GIMP 3.0";
       break;
     }
 
