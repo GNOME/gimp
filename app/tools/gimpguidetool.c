@@ -176,9 +176,7 @@ gimp_guide_tool_button_release (GimpTool              *tool,
 
           n_non_custom_guides += ! guide->custom;
 
-          if (guide->position == GIMP_GUIDE_POSITION_UNDEFINED ||
-              guide->position <  0                             ||
-              guide->position > max_position)
+          if (guide->position == GIMP_GUIDE_POSITION_UNDEFINED)
             {
               remove_guides = TRUE;
             }
