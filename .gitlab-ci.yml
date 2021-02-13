@@ -226,7 +226,7 @@ gimp-win64:
   before_script:
     - export PATH="${XDG_DATA_HOME}/crossroad/roads/w64/gimp/bin:$PREFIX/bin:$PATH"
     - export CROSSROAD_PKG_CONFIG_PATH="$PREFIX/share/pkgconfig:$PREFIX/lib/pkgconfig:$CROSSROAD_PKG_CONFIG_PATH"
-    - export LD_LIBRARY_PATH="$PREFIX/lib/:$PREFIX/lib:$LD_LIBRARY_PATH"
+    - export LD_LIBRARY_PATH="$PREFIX/lib/:$XDG_DATA_HOME/lib/:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="$PREFIX/share/:$XDG_DATA_DIRS"
   script:
     - mkdir _build
