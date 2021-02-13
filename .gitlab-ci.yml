@@ -17,7 +17,7 @@ variables:
   
 ## prepare docker images ##
 
-build-image:
+.build-image:
   stage: prepare
   variables:
     GIT_STRATEGY: none
@@ -67,7 +67,7 @@ build-image-win32:
 
 ## GNU/Linux 64-bit CIs (Debian testing) ##
 
-deps-debian:
+.deps-debian:
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   cache:
@@ -124,7 +124,7 @@ deps-debian:
     - export PATH="${INSTALL_PREFIX}/bin:$PATH"
   needs: ["deps-debian"]
 
-gimp-autotools-debian:
+.gimp-autotools-debian:
   extends: .gimp-debian-base
   script:
     - mkdir _build
@@ -135,7 +135,7 @@ gimp-autotools-debian:
     - make -j "$(nproc)"
     - make check
 
-gimp-distcheck-debian:
+.gimp-distcheck-debian:
   extends: .gimp-debian-base
   script:
     - mkdir _build
@@ -147,7 +147,7 @@ gimp-distcheck-debian:
     - make -j "$(nproc)"
     - make -j "$(nproc)" distcheck
 
-gimp-meson-debian:
+.gimp-meson-debian:
   extends: .gimp-debian-base
   script:
     - meson _build
@@ -155,7 +155,7 @@ gimp-meson-debian:
     - ninja -C _build
     - ninja -C _build test
 
-gimp-clang-debian:
+.gimp-clang-debian:
   extends: .gimp-debian-base
   variables:
     CC: "clang"
@@ -321,7 +321,7 @@ gimp-win32:
       - _build/
       - gimp-prefix/
 
-cppcheck:
+.cppcheck:
   stage: analysis
   before_script:
     - apt-get update
@@ -341,7 +341,7 @@ cppcheck:
 
 ## Ready-to-distribute ##
 
-sources:
+.sources:
   stage: distribution
   dependencies:
     - gimp-distcheck-debian
