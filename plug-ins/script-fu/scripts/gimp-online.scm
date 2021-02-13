@@ -181,6 +181,11 @@
   (plug-in-web-browser "https://gitlab.gnome.org/GNOME/gimp/issues")
 )
 
+(define (gimp-online-bugs-features-version)
+  (plug-in-web-browser (string-append "https://gitlab.gnome.org/GNOME/gimp/-/issues?scope=all&state=all&label_name[]="
+                                      (car (gimp-version))))
+)
+
 ; (define (gimp-online-plug-in-web-site)
 ;   (plug-in-web-browser "https://registry.gimp.org/")
 ; )
@@ -250,6 +255,17 @@
 (script-fu-menu-register "gimp-online-bugs-features"
                          "<Image>/Help")
 
+(script-fu-register "gimp-online-bugs-features-version"
+   (string-append _"_Bug Reports and Feature Requests for " (car (gimp-version)))
+   (string-append _"Bookmark to the bugs and features reported for GIMP " (car (gimp-version)))
+    "Michael Schumacher <schumaml@gmx.de>"
+    "Michael Schumacher <schumaml@gmx.de>"
+    "2021"
+    ""
+)
+
+(script-fu-menu-register "gimp-online-bugs-features-version"
+                         "<Image>/Help")
 
 (script-fu-register "gimp-online-docs-web-site"
    _"_User Manual Web Site"
