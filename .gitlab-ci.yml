@@ -50,7 +50,7 @@ build-image-win64:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/build/docker/CI/Dockerfile.win64 --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h --build-arg XDG_DATA_HOME=$XDG_DATA_HOME
 
 
-build-image-win32:
+.build-image-win32:
   stage: prepare
   variables:
     XDG_DATA_HOME: "/usr/local/lib"
@@ -247,7 +247,7 @@ gimp-win64:
 
 ## WINDOWS 32-bit CI ##
 
-deps-win32:
+.deps-win32:
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-win32-latest
   variables:
@@ -285,7 +285,7 @@ deps-win32:
       - _deps/
   needs: ["build-image-win32"]
 
-gimp-win32:
+.gimp-win32:
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-win32-latest
   dependencies:
@@ -432,7 +432,7 @@ win64-nightly:
       done
   needs: ["gimp-win64"]
 
-win32-nightly:
+.win32-nightly:
   stage: distribution
   dependencies:
     - gimp-win32
