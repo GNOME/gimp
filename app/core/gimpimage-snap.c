@@ -221,7 +221,8 @@ gimp_image_snap_point (GimpImage *image,
                        gboolean   snap_to_guides,
                        gboolean   snap_to_grid,
                        gboolean   snap_to_canvas,
-                       gboolean   snap_to_vectors)
+                       gboolean   snap_to_vectors,
+                       gboolean   show_all)
 {
   gdouble  mindist_x = G_MAXDOUBLE;
   gdouble  mindist_y = G_MAXDOUBLE;
@@ -241,10 +242,15 @@ gimp_image_snap_point (GimpImage *image,
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors))
     return FALSE;
 
-  if (x < -epsilon_x || x >= (gimp_image_get_width  (image) + epsilon_x) ||
-      y < -epsilon_y || y >= (gimp_image_get_height (image) + epsilon_y))
+  if (! show_all &&
+      (x < -epsilon_x || x >= (gimp_image_get_width  (image) + epsilon_x) ||
+       y < -epsilon_y || y >= (gimp_image_get_height (image) + epsilon_y)))
     {
-      return FALSE;
+      /* Off-canvas grid is invisible unless "show all" option is
+       * enabled. So let's not snap to the invisible grid.
+       */
+      snap_to_grid   = FALSE;
+      snap_to_canvas = FALSE;
     }
 
   if (snap_to_guides)

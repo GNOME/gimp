@@ -1717,7 +1717,8 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                            snap_to_guides,
                                            snap_to_grid,
                                            snap_to_canvas,
-                                           snap_to_vectors);
+                                           snap_to_vectors,
+                                           shell->show_all);
         }
 
       if (snapped)
