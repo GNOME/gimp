@@ -1,5 +1,5 @@
 # Hungarian translation for gimp-script-fu.
-# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2014, 2016, 2017, 2018, 2019, 2020 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2014, 2016, 2017, 2018, 2019, 2020, 2021 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-script-fu package.
 #
 # András Tímár <timar at gnome dot hu>, 2001, 2003.
@@ -7,14 +7,14 @@
 # László Dvornik <dvornik at gnome dot hu>, 2004.
 # Árpád Bíró <biro arpad at gmail dot com>, 2004, 2007, 2008.
 # Gábor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2016, 2017.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2014, 2016, 2018, 2019, 2020.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2014, 2016, 2018, 2019, 2020, 2021.
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-13 16:59+0000\n"
-"PO-Revision-Date: 2020-02-13 18:48+0100\n"
+"POT-Creation-Date: 2021-02-14 00:19+0000\n"
+"PO-Revision-Date: 2021-02-14 01:47+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -22,11 +22,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 19.04.3\n"
+"X-Generator: Lokalize 19.12.3\n"
 
 #: ../plug-ins/script-fu/script-fu.c:138
-msgid "_Console"
-msgstr "_Konzol"
+#| msgid "Script-Fu Console"
+msgid "Script-Fu _Console"
+msgstr "Script-Fu-_konzol"
 
 #: ../plug-ins/script-fu/script-fu.c:143
 msgid "Interactive console for Script-Fu development"
@@ -141,8 +142,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu-konzol kimenetének mentése"
 
 #: ../plug-ins/script-fu/script-fu-console.c:280
-#: ../plug-ins/script-fu/script-fu-interface.c:238
-#: ../plug-ins/script-fu/script-fu-server.c:831
+#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-server.c:834
 msgid "_Cancel"
 msgstr "_Mégse"
 
@@ -164,69 +165,69 @@ msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:201
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "A Script-Fu nem képes egyszerre több parancsfájlt feldolgozni."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:204
+#: ../plug-ins/script-fu/script-fu-interface.c:203
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Már futtatja a(z) „%s” parancsfájlt."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:230
+#: ../plug-ins/script-fu/script-fu-interface.c:229
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:236
 msgid "_Reset"
 msgstr "_Visszaállítás"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:239
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:293
+#: ../plug-ins/script-fu/script-fu-interface.c:292
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:343
+#: ../plug-ins/script-fu/script-fu-interface.c:342
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu színválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu fájlválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:464
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu mappaválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu betűkészlet-választó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:485
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu palettaválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:492
+#: ../plug-ins/script-fu/script-fu-interface.c:494
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu mintaválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:501
+#: ../plug-ins/script-fu/script-fu-interface.c:503
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu színátmenet-választó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:510
+#: ../plug-ins/script-fu/script-fu-interface.c:512
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ecsetválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:888
+#: ../plug-ins/script-fu/script-fu-interface.c:890
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Hiba „%s” végrehajtása közben:"
@@ -240,27 +241,27 @@ msgstr "Túl kevés argumentum a „script-fu-register” meghívásakor"
 msgid "Error while loading %s:"
 msgstr "Hiba „%s” betöltése közben:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:827
+#: ../plug-ins/script-fu/script-fu-server.c:830
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-kiszolgáló beállításai"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "_Start Server"
 msgstr "Kiszolgáló _indítása"
 
-#: ../plug-ins/script-fu/script-fu-server.c:865
+#: ../plug-ins/script-fu/script-fu-server.c:868
 msgid "Listen on IP:"
 msgstr "Figyelés ezen az IP-n:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:872
+#: ../plug-ins/script-fu/script-fu-server.c:875
 msgid "Server port:"
 msgstr "Kiszolgáló által használt port:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:878
+#: ../plug-ins/script-fu/script-fu-server.c:881
 msgid "Server logfile:"
 msgstr "Kiszolgáló által használt naplófájl:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:891
+#: ../plug-ins/script-fu/script-fu-server.c:894
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -687,12 +688,10 @@ msgid "Allow resizing"
 msgstr "Átméretezés engedélyezése"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-#| msgid "_Erase Every Other Row..."
 msgid "_Erase Every Nth Row..."
 msgstr "_Minden N. sor törlése…"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:43
-#| msgid "Erase every other row or column"
 msgid "Erase every nth row or column"
 msgstr "Minden N. sor vagy oszlop törlése"
 
@@ -1616,3 +1615,6 @@ msgstr "Vetett árnyék X-eltolása"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Vetett árnyék Y-eltolása"
+
+#~ msgid "_Console"
+#~ msgstr "_Konzol"
