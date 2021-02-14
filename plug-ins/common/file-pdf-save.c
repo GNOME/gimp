@@ -235,7 +235,8 @@ static GimpValueArray * pdf_save_multi           (GimpProcedure        *procedur
 
 static GimpValueArray * pdf_save_image           (GimpProcedure        *procedure,
                                                   gboolean              single_image,
-                                                  gboolean              defaults_proc);
+                                                  gboolean              defaults_proc,
+                                                  gboolean              show_progress);
 
 static void             init_image_list_defaults (GimpImage            *image);
 
@@ -553,7 +554,8 @@ pdf_save (GimpProcedure        *procedure,
         }
     }
 
-  return pdf_save_image (procedure, TRUE, defaults);
+  return pdf_save_image (procedure, TRUE, defaults,
+                         (run_mode != GIMP_RUN_NONINTERACTIVE));
 }
 
 static GimpValueArray *
@@ -631,7 +633,8 @@ pdf_save_multi (GimpProcedure        *procedure,
         }
     }
 
-  return pdf_save_image (procedure, FALSE, FALSE);
+  return pdf_save_image (procedure, FALSE, FALSE,
+                         (run_mode != GIMP_RUN_NONINTERACTIVE));
 }
 
 static cairo_status_t
@@ -714,7 +717,8 @@ get_missing_fonts (GList *layers)
 static GimpValueArray *
 pdf_save_image (GimpProcedure *procedure,
                 gboolean       single_image,
-                gboolean       defaults_proc)
+                gboolean       defaults_proc,
+                gboolean       show_progress)
 {
   cairo_surface_t        *pdf_file;
   cairo_t                *cr;
@@ -851,6 +855,12 @@ pdf_save_image (GimpProcedure *procedure,
       /* Now, we should loop over the layers of each image */
       for (j = 0; j < n_layers; j++)
         {
+          if (show_progress)
+            /* Progression is showed per image, and would restart at 0
+             * if you open several images.
+             */
+            gimp_progress_update ((gdouble) j / n_layers);
+
           if (! draw_layer (layers, n_layers, j, cr, x_res, y_res,
                             gimp_procedure_get_name (procedure),
                             &error))
@@ -866,6 +876,8 @@ pdf_save_image (GimpProcedure *procedure,
                                                        error);
             }
         }
+      if (show_progress)
+        gimp_progress_update (1.0);
 
       g_free (layers);
 
