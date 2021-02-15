@@ -51,6 +51,7 @@ static GimpValueArray * gimp_temp_progress_run  (GimpProcedure        *procedure
 
 static gdouble         gimp_progress_current = 0.0;
 static const gdouble   gimp_progress_step    = (1.0 / 256.0);
+static const gint64    gimp_progress_delay   = 50000; /* 50 millisecond */
 
 
 /*  public functions  */
@@ -264,16 +265,24 @@ gimp_progress_set_text_printf (const gchar *format,
 
 /**
  * gimp_progress_update:
- * @percentage: Percentage of progress completed (in the range from 0.0 to 1.0).
+ * @percentage: Percentage of progress completed (in the range from 0.0
+ *              to 1.0).
  *
  * Updates the progress bar for the current plug-in.
+ *
+ * The library will handle over-updating by possibly dropping silently
+ * some updates when they happen too close next to each other (either
+ * time-wise or step-wise).
+ * The caller does not have to take care of this aspect of progression
+ * and can focus on computing relevant progression steps.
  *
  * Returns: TRUE on success.
  */
 gboolean
 gimp_progress_update (gdouble percentage)
 {
-  gboolean changed;
+  static gint64 last_update = 0;
+  gboolean      changed;
 
   if (percentage <= 0.0)
     {
@@ -287,32 +296,29 @@ gimp_progress_update (gdouble percentage)
     }
   else
     {
-      changed =
-        (fabs (gimp_progress_current - percentage) > gimp_progress_step);
-
-#ifdef GIMP_UNSTABLE
-      if (! changed)
+      if (last_update == 0 ||
+          g_get_monotonic_time () - last_update >= gimp_progress_delay)
         {
-          static gboolean warned = FALSE;
-          static gint     count  = 0;
-
-          count++;
-
-          if (count > 3 && ! warned)
-            {
-              g_printerr ("%s is updating the progress too often\n",
-                          g_get_prgname ());
-              warned = TRUE;
-            }
+          /* If the progression step is too small, better not show it. */
+          changed =
+            (fabs (gimp_progress_current - percentage) > gimp_progress_step);
         }
-#endif
+      else
+        {
+          /* Too many changes in a short time interval. */
+          changed = FALSE;
+        }
     }
 
-  /*  Suppress the update if the change was only marginal.  */
+  /*  Suppress the update if the change was only marginal or progression
+   *  update happens too often. This is not an error, it is just
+   *  unneeded to overload the GUI with constant updates.
+   */
   if (! changed)
     return TRUE;
 
   gimp_progress_current = percentage;
+  last_update = g_get_monotonic_time ();
 
   return _gimp_progress_update (gimp_progress_current);
 }
