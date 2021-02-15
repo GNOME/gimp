@@ -284,6 +284,9 @@ static gboolean         draw_layer               (GimpLayer           **layers,
                                                   gdouble               x_res,
                                                   gdouble               y_res,
                                                   const gchar          *name,
+                                                  gboolean              show_progress,
+                                                  gdouble               progress_start,
+                                                  gdouble               progress_end,
                                                   GError              **error);
 
 
@@ -855,14 +858,14 @@ pdf_save_image (GimpProcedure *procedure,
       /* Now, we should loop over the layers of each image */
       for (j = 0; j < n_layers; j++)
         {
-          if (show_progress)
-            /* Progression is showed per image, and would restart at 0
-             * if you open several images.
-             */
-            gimp_progress_update ((gdouble) j / n_layers);
-
           if (! draw_layer (layers, n_layers, j, cr, x_res, y_res,
                             gimp_procedure_get_name (procedure),
+                            show_progress,
+                            /* Progression is showed per image, and would restart at 0
+                             * if you open several images.
+                             */
+                            (gdouble) j / n_layers,
+                            (gdouble) (j + 1) / n_layers,
                             &error))
             {
               /* free the resources */
@@ -1916,6 +1919,9 @@ draw_layer (GimpLayer   **layers,
             gdouble       x_res,
             gdouble       y_res,
             const gchar  *name,
+            gboolean      show_progress,
+            gdouble       progress_start,
+            gdouble       progress_end,
             GError      **error)
 {
   GimpLayer *layer;
@@ -1941,7 +1947,11 @@ draw_layer (GimpLayer   **layers,
       for (i = 0; i < children_num; i++)
         {
           if (! draw_layer ((GimpLayer **) children, children_num, i,
-                            cr, x_res, y_res, name, error))
+                            cr, x_res, y_res, name,
+                            show_progress,
+                            progress_start + i * (progress_end - progress_start) / children_num,
+                            progress_end,
+                            error))
             {
               g_free (children);
               return FALSE;
@@ -1954,6 +1964,9 @@ draw_layer (GimpLayer   **layers,
       cairo_surface_t *mask_image = NULL;
       GimpLayerMask   *mask       = NULL;
       gint             x, y;
+
+      if (show_progress)
+        gimp_progress_update (progress_start);
 
       mask = gimp_layer_get_mask (layer);
       if (mask)
