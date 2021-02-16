@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-01-31 16:59+0000\n"
-"PO-Revision-Date: 2021-01-31 19:35+0200\n"
+"POT-Creation-Date: 2021-02-15 21:54+0000\n"
+"PO-Revision-Date: 2021-02-16 12:25+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1347,7 +1347,7 @@ msgid "Images"
 msgstr "Зображення"
 
 #: ../app/actions/actions.c:196 ../app/dialogs/dialogs.c:373
-#: ../app/dialogs/resize-dialog.c:143 ../app/widgets/gimppickablepopup.c:228
+#: ../app/dialogs/resize-dialog.c:152 ../app/widgets/gimppickablepopup.c:228
 msgid "Layers"
 msgstr "Шари"
 
@@ -3401,7 +3401,7 @@ msgstr "240 секунд"
 #: ../app/dialogs/preferences-dialog.c:664
 #: ../app/dialogs/preferences-dialog.c:1120
 #: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:185
+#: ../app/dialogs/resize-dialog.c:200
 #: ../app/dialogs/resolution-calibrate-dialog.c:73
 #: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
 #: ../app/dialogs/template-options-dialog.c:118
@@ -5500,8 +5500,6 @@ msgid "_Selective Gaussian Blur..."
 msgstr "_Вибіркове розмиття за Гаусом…"
 
 #: ../app/actions/filters-actions.c:378
-#| msgctxt "filters-action"
-#| msgid "_GEGL graph..."
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
 msgstr "_Граф GEGL…"
@@ -14143,7 +14141,7 @@ msgstr "Помилка завантаження «%s»: "
 #: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:95
 #: ../app/file-data/file-data-gex.c:341 ../app/file-data/file-data-gex.c:479
 #: ../app/file-data/file-data-gih.c:99 ../app/file-data/file-data-pat.c:96
-#: ../app/xcf/xcf.c:439
+#: ../app/xcf/xcf.c:440
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Не вдалось відкрити «%s» для зчитування: "
@@ -14504,17 +14502,23 @@ msgstr ""
 msgid "Multiple layer selection was added in %s"
 msgstr "Було додано позначення декількох шарів у %s"
 
-#: ../app/core/gimpimage.c:2919
+#: ../app/core/gimpimage.c:2840
+#, c-format
+#| msgid "On-canvas gradient editing"
+msgid "Off-canvas guides added in %s"
+msgstr "У %s додано напрямні поза полотном"
+
+#: ../app/core/gimpimage.c:2944
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Змінити роздільність зображення"
 
-#: ../app/core/gimpimage.c:2971
+#: ../app/core/gimpimage.c:2996
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: ../app/core/gimpimage.c:4026
+#: ../app/core/gimpimage.c:4051
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14522,47 +14526,47 @@ msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: ../app/core/gimpimage.c:4087
+#: ../app/core/gimpimage.c:4112
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: ../app/core/gimpimage.c:4129
+#: ../app/core/gimpimage.c:4154
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: ../app/core/gimpimage.c:5087
+#: ../app/core/gimpimage.c:5112
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: ../app/core/gimpimage.c:5131 ../app/core/gimpimage.c:5162
+#: ../app/core/gimpimage.c:5156 ../app/core/gimpimage.c:5187
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: ../app/core/gimpimage.c:5156
+#: ../app/core/gimpimage.c:5181
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: ../app/core/gimpimage.c:5309
+#: ../app/core/gimpimage.c:5334
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: ../app/core/gimpimage.c:5339 ../app/core/gimpimage.c:5364
+#: ../app/core/gimpimage.c:5364 ../app/core/gimpimage.c:5389
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: ../app/core/gimpimage.c:5423
+#: ../app/core/gimpimage.c:5448
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: ../app/core/gimpimage.c:5453 ../app/core/gimpimage.c:5461
+#: ../app/core/gimpimage.c:5478 ../app/core/gimpimage.c:5486
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -14711,22 +14715,22 @@ msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "Змінити розмір зображення"
 
-#: ../app/core/gimpimage-guides.c:53
+#: ../app/core/gimpimage-guides.c:51
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
 msgstr "Додати горизонтальну напрямну"
 
-#: ../app/core/gimpimage-guides.c:77
+#: ../app/core/gimpimage-guides.c:73
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
 msgstr "Додати вертикальну напрямну"
 
-#: ../app/core/gimpimage-guides.c:121
+#: ../app/core/gimpimage-guides.c:117
 msgctxt "undo-type"
 msgid "Remove Guide"
 msgstr "Вилучити напрямну"
 
-#: ../app/core/gimpimage-guides.c:151
+#: ../app/core/gimpimage-guides.c:141
 msgctxt "undo-type"
 msgid "Move Guide"
 msgstr "Перемістити напрямну"
@@ -16309,7 +16313,7 @@ msgid "Create a New Image"
 msgstr "Створення нового зображення"
 
 #: ../app/dialogs/image-new-dialog.c:138
-#: ../app/dialogs/preferences-dialog.c:1761
+#: ../app/dialogs/preferences-dialog.c:1761 ../app/dialogs/resize-dialog.c:231
 msgid "_Template:"
 msgstr "Ша_блони:"
 
@@ -16518,7 +16522,7 @@ msgstr "Зсув за X:"
 msgid "Offset Y:"
 msgstr "Зсув за Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:377 ../app/dialogs/resize-dialog.c:359
+#: ../app/dialogs/layer-options-dialog.c:377 ../app/dialogs/resize-dialog.c:404
 #: ../app/widgets/gimptemplateeditor.c:442
 msgid "_Fill with:"
 msgstr "_Тло:"
@@ -18431,60 +18435,60 @@ msgstr "Зберегти це зображення"
 msgid "Save as"
 msgstr "Зберегти як"
 
-#: ../app/dialogs/resize-dialog.c:142
+#: ../app/dialogs/resize-dialog.c:151
 msgid "Canvas Size"
 msgstr "Розмір полотна"
 
-#: ../app/dialogs/resize-dialog.c:154 ../app/dialogs/scale-dialog.c:114
+#: ../app/dialogs/resize-dialog.c:163 ../app/dialogs/scale-dialog.c:114
 msgid "Layer Size"
 msgstr "Розмір шару"
 
-#: ../app/dialogs/resize-dialog.c:155
+#: ../app/dialogs/resize-dialog.c:164
 msgid "Fill With"
 msgstr "Заповнення"
 
-#: ../app/dialogs/resize-dialog.c:184
+#: ../app/dialogs/resize-dialog.c:199
 msgid "Re_set"
 msgstr "С_кинути"
 
-#: ../app/dialogs/resize-dialog.c:186
+#: ../app/dialogs/resize-dialog.c:201
 msgid "_Resize"
 msgstr "З_мінити розмір"
 
 #. The offset frame
 #. offset frame
-#: ../app/dialogs/resize-dialog.c:229 ../app/tools/gimpalignoptions.c:97
+#: ../app/dialogs/resize-dialog.c:274 ../app/tools/gimpalignoptions.c:97
 #: ../app/tools/gimpalignoptions.c:104 ../app/tools/gimpgradientoptions.c:89
 #: ../app/tools/gimpoffsettool.c:129 ../app/tools/gimpoffsettool.c:473
 #: ../app/tools/gimptransform3dtool.c:343 ../app/widgets/gimpgrideditor.c:211
 msgid "Offset"
 msgstr "Зсув"
 
-#: ../app/dialogs/resize-dialog.c:252 ../app/tools/gimpoffsettool.c:497
+#: ../app/dialogs/resize-dialog.c:297 ../app/tools/gimpoffsettool.c:497
 #: ../app/tools/gimptransform3dtool.c:271
 #: ../app/tools/gimptransform3dtool.c:383
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/resize-dialog.c:253 ../app/tools/gimpoffsettool.c:499
+#: ../app/dialogs/resize-dialog.c:298 ../app/tools/gimpoffsettool.c:499
 #: ../app/tools/gimptransform3dtool.c:272
 #: ../app/tools/gimptransform3dtool.c:388
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/resize-dialog.c:270
+#: ../app/dialogs/resize-dialog.c:315
 msgid "C_enter"
 msgstr "_Центрувати"
 
-#: ../app/dialogs/resize-dialog.c:321
+#: ../app/dialogs/resize-dialog.c:366
 msgid "Resize _layers:"
 msgstr "Змінити розмір _шарів:"
 
-#: ../app/dialogs/resize-dialog.c:369
+#: ../app/dialogs/resize-dialog.c:414
 msgid "Resize _text layers"
 msgstr "Зміна розміру _текстових шарів"
 
-#: ../app/dialogs/resize-dialog.c:380
+#: ../app/dialogs/resize-dialog.c:425
 msgid "Resizing text layers will make them uneditable"
 msgstr "Зміна розмірів текстових шарів робить їх непридатними до редагування"
 
@@ -21897,13 +21901,13 @@ msgstr "Порожня назва змінної у файлі середови�
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Неправильна назва змінної у файлі середовища %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:302
-#: ../app/plug-in/gimpinterpreterdb.c:399
+#: ../app/plug-in/gimpinterpreterdb.c:303
+#: ../app/plug-in/gimpinterpreterdb.c:400
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "Неправильне посилання на інтерпретатор у інтерпретованому файлі %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:371
+#: ../app/plug-in/gimpinterpreterdb.c:372
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Неправильний двійковий формат рядка у інтерпретованому файлі %s"
@@ -23624,7 +23628,6 @@ msgid "GEGL Operation"
 msgstr "Операція GEGL"
 
 #: ../app/tools/gimpgegltool.c:79
-#| msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgid "Run an arbitrary GEGL operation"
 msgstr "Виконання довільної операції GEGL"
 
@@ -23813,37 +23816,37 @@ msgstr "Середня точка %d"
 msgid "Gradient Step"
 msgstr "Крок градієнта"
 
-#: ../app/tools/gimpguidetool.c:191
+#: ../app/tools/gimpguidetool.c:189
 msgctxt "undo-type"
 msgid "Remove Guides"
 msgstr "вилучення напрямних"
 
-#: ../app/tools/gimpguidetool.c:192
+#: ../app/tools/gimpguidetool.c:190
 msgctxt "undo-type"
 msgid "Move Guides"
 msgstr "пересування напрямних"
 
-#: ../app/tools/gimpguidetool.c:432
+#: ../app/tools/gimpguidetool.c:430
 msgid "Remove Guides"
 msgstr "Вилучити напрямні"
 
-#: ../app/tools/gimpguidetool.c:433
+#: ../app/tools/gimpguidetool.c:431
 msgid "Remove Guide"
 msgstr "Вилучити напрямну"
 
-#: ../app/tools/gimpguidetool.c:434
+#: ../app/tools/gimpguidetool.c:432
 msgid "Cancel Guide"
 msgstr "Прибрати напрямну"
 
-#: ../app/tools/gimpguidetool.c:471
+#: ../app/tools/gimpguidetool.c:469
 msgid "Move Guide: "
 msgstr "Переміщення напрямної: "
 
-#: ../app/tools/gimpguidetool.c:481
+#: ../app/tools/gimpguidetool.c:479
 msgid "Move Guides: "
 msgstr "Переміщення напрямних: "
 
-#: ../app/tools/gimpguidetool.c:492
+#: ../app/tools/gimpguidetool.c:490
 msgid "Add Guide: "
 msgstr "Додавання напрямних"
 
@@ -28444,40 +28447,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Стан та опис"
 
-#: ../app/xcf/xcf.c:116 ../app/xcf/xcf.c:184
+#: ../app/xcf/xcf.c:117 ../app/xcf/xcf.c:185
 msgid "GIMP XCF image"
 msgstr "Файл XCF GIMP"
 
-#: ../app/xcf/xcf.c:261 ../app/xcf/xcf.c:350
+#: ../app/xcf/xcf.c:262 ../app/xcf/xcf.c:351
 msgid "Memory Stream"
 msgstr "Потік пам'яті"
 
-#: ../app/xcf/xcf.c:272
+#: ../app/xcf/xcf.c:273
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається \"%s\""
 
-#: ../app/xcf/xcf.c:314
+#: ../app/xcf/xcf.c:315
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Помилка XCF: версія файла XCF %d не підтримується"
 
-#: ../app/xcf/xcf.c:373
+#: ../app/xcf/xcf.c:374
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження \"%s\""
 
-#: ../app/xcf/xcf.c:381
+#: ../app/xcf/xcf.c:382
 #, c-format
 msgid "Closing '%s'"
 msgstr "Закривається %s"
 
-#: ../app/xcf/xcf.c:399
+#: ../app/xcf/xcf.c:400
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Помилка запису файла «%s»: "
 
-#: ../app/xcf/xcf.c:487
+#: ../app/xcf/xcf.c:488
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Помилка при створенні «%s»:"
