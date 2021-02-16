@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-01-25 21:46+0000\n"
-"PO-Revision-Date: 2021-01-27 22:18+0100\n"
+"POT-Creation-Date: 2021-02-13 12:12+0000\n"
+"PO-Revision-Date: 2021-02-05 12:10+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -3936,7 +3936,7 @@ msgstr "_Öppna bild"
 #: ../app/actions/documents-actions.c:47
 msgctxt "documents-action"
 msgid "Open the selected entry"
-msgstr "Öppna den markera post"
+msgstr "Öppna den markerade posten"
 
 #: ../app/actions/documents-actions.c:52
 msgctxt "documents-action"
@@ -21159,13 +21159,13 @@ msgstr "Tomt variabelnamn i miljöfilen %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Otillåtet variabelnamn i miljöfilen %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:302
-#: ../app/plug-in/gimpinterpreterdb.c:399
+#: ../app/plug-in/gimpinterpreterdb.c:303
+#: ../app/plug-in/gimpinterpreterdb.c:400
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "Felaktig tolk refererad till i tolkfilen %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:371
+#: ../app/plug-in/gimpinterpreterdb.c:372
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Felaktig binär formatsträng i tolkfilen %s"
