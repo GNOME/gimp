@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-02 14:55+0000\n"
-"PO-Revision-Date: 2021-02-04 01:38+0100\n"
+"POT-Creation-Date: 2021-02-15 21:54+0000\n"
+"PO-Revision-Date: 2021-02-16 22:39+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -4043,7 +4043,7 @@ msgstr "_Öppna bild"
 #: ../app/actions/documents-actions.c:47
 msgctxt "documents-action"
 msgid "Open the selected entry"
-msgstr "Öppna den markera post"
+msgstr "Öppna den markerade posten"
 
 #: ../app/actions/documents-actions.c:52
 msgctxt "documents-action"
@@ -14053,7 +14053,7 @@ msgstr "Fel vid inläsning av ”%s”"
 #: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:95
 #: ../app/file-data/file-data-gex.c:341 ../app/file-data/file-data-gex.c:479
 #: ../app/file-data/file-data-gih.c:99 ../app/file-data/file-data-pat.c:96
-#: ../app/xcf/xcf.c:439
+#: ../app/xcf/xcf.c:440
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Kunde inte öppna ”%s” för läsning: "
@@ -14412,17 +14412,22 @@ msgstr "Stöd för bildfiler större än 4GB lades till i %s"
 msgid "Multiple layer selection was added in %s"
 msgstr "Markering av flera lager lades till i %s"
 
-#: ../app/core/gimpimage.c:2919
+#: ../app/core/gimpimage.c:2840
+#, c-format
+msgid "Off-canvas guides added in %s"
+msgstr "Hjälplinjer utanför ritytan lades till i %s"
+
+#: ../app/core/gimpimage.c:2944
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Ändra bildupplösning"
 
-#: ../app/core/gimpimage.c:2971
+#: ../app/core/gimpimage.c:2996
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Ändra bildenhet"
 
-#: ../app/core/gimpimage.c:4026
+#: ../app/core/gimpimage.c:4051
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14430,47 +14435,47 @@ msgstr ""
 "”gimp-comment”-parasitvalidering misslyckades: kommentar innehåller ogiltig "
 "UTF-8"
 
-#: ../app/core/gimpimage.c:4087
+#: ../app/core/gimpimage.c:4112
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Koppla parasit till bild"
 
-#: ../app/core/gimpimage.c:4129
+#: ../app/core/gimpimage.c:4154
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Ta bort parasit från bild"
 
-#: ../app/core/gimpimage.c:5087
+#: ../app/core/gimpimage.c:5112
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Lägg till lager"
 
-#: ../app/core/gimpimage.c:5131 ../app/core/gimpimage.c:5162
+#: ../app/core/gimpimage.c:5156 ../app/core/gimpimage.c:5187
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Ta bort lager"
 
-#: ../app/core/gimpimage.c:5156
+#: ../app/core/gimpimage.c:5181
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Ta bort flytande markering"
 
-#: ../app/core/gimpimage.c:5309
+#: ../app/core/gimpimage.c:5334
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Lägg till kanal"
 
-#: ../app/core/gimpimage.c:5339 ../app/core/gimpimage.c:5364
+#: ../app/core/gimpimage.c:5364 ../app/core/gimpimage.c:5389
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Ta bort kanal"
 
-#: ../app/core/gimpimage.c:5423
+#: ../app/core/gimpimage.c:5448
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Lägg till bana"
 
-#: ../app/core/gimpimage.c:5453 ../app/core/gimpimage.c:5461
+#: ../app/core/gimpimage.c:5478 ../app/core/gimpimage.c:5486
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Ta bort bana"
@@ -14619,22 +14624,22 @@ msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "Ändra storlek på bild"
 
-#: ../app/core/gimpimage-guides.c:53
+#: ../app/core/gimpimage-guides.c:51
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
 msgstr "Lägg till horisontell hjälplinje"
 
-#: ../app/core/gimpimage-guides.c:77
+#: ../app/core/gimpimage-guides.c:73
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
 msgstr "Lägg till vertikal hjälplinje"
 
-#: ../app/core/gimpimage-guides.c:121
+#: ../app/core/gimpimage-guides.c:117
 msgctxt "undo-type"
 msgid "Remove Guide"
 msgstr "Ta bort hjälplinje"
 
-#: ../app/core/gimpimage-guides.c:151
+#: ../app/core/gimpimage-guides.c:141
 msgctxt "undo-type"
 msgid "Move Guide"
 msgstr "Flytta hjälplinje"
@@ -21798,13 +21803,13 @@ msgstr "Tomt variabelnamn i miljöfilen %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Otillåtet variabelnamn i miljöfilen %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:302
-#: ../app/plug-in/gimpinterpreterdb.c:399
+#: ../app/plug-in/gimpinterpreterdb.c:303
+#: ../app/plug-in/gimpinterpreterdb.c:400
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "Felaktig tolk refererad till i tolkfilen %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:371
+#: ../app/plug-in/gimpinterpreterdb.c:372
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Felaktig binär formatsträng i tolkfilen %s"
@@ -23706,37 +23711,37 @@ msgstr "Mittpunkt %d"
 msgid "Gradient Step"
 msgstr "Gradientsteg"
 
-#: ../app/tools/gimpguidetool.c:191
+#: ../app/tools/gimpguidetool.c:189
 msgctxt "undo-type"
 msgid "Remove Guides"
 msgstr "Ta bort hjälplinjer"
 
-#: ../app/tools/gimpguidetool.c:192
+#: ../app/tools/gimpguidetool.c:190
 msgctxt "undo-type"
 msgid "Move Guides"
 msgstr "Flytta hjälplinjer"
 
-#: ../app/tools/gimpguidetool.c:432
+#: ../app/tools/gimpguidetool.c:430
 msgid "Remove Guides"
 msgstr "Ta bort hjälplinjer"
 
-#: ../app/tools/gimpguidetool.c:433
+#: ../app/tools/gimpguidetool.c:431
 msgid "Remove Guide"
 msgstr "Ta bort hjälplinje"
 
-#: ../app/tools/gimpguidetool.c:434
+#: ../app/tools/gimpguidetool.c:432
 msgid "Cancel Guide"
 msgstr "Avbryt hjälplinje"
 
-#: ../app/tools/gimpguidetool.c:471
+#: ../app/tools/gimpguidetool.c:469
 msgid "Move Guide: "
 msgstr "Flytta hjälplinje: "
 
-#: ../app/tools/gimpguidetool.c:481
+#: ../app/tools/gimpguidetool.c:479
 msgid "Move Guides: "
 msgstr "Flytta hjälplinjer: "
 
-#: ../app/tools/gimpguidetool.c:492
+#: ../app/tools/gimpguidetool.c:490
 msgid "Add Guide: "
 msgstr "Lägg till hjälplinje: "
 
@@ -28330,40 +28335,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Status och besk."
 
-#: ../app/xcf/xcf.c:116 ../app/xcf/xcf.c:184
+#: ../app/xcf/xcf.c:117 ../app/xcf/xcf.c:185
 msgid "GIMP XCF image"
 msgstr "GIMP XCF-bild"
 
-#: ../app/xcf/xcf.c:261 ../app/xcf/xcf.c:350
+#: ../app/xcf/xcf.c:262 ../app/xcf/xcf.c:351
 msgid "Memory Stream"
 msgstr "Minnesström"
 
-#: ../app/xcf/xcf.c:272
+#: ../app/xcf/xcf.c:273
 #, c-format
 msgid "Opening '%s'"
 msgstr "Öppnar ”%s”"
 
-#: ../app/xcf/xcf.c:314
+#: ../app/xcf/xcf.c:315
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-fel: anträffad version %d av XCF-fil stöds inte"
 
-#: ../app/xcf/xcf.c:373
+#: ../app/xcf/xcf.c:374
 #, c-format
 msgid "Saving '%s'"
 msgstr "Sparar ”%s”"
 
-#: ../app/xcf/xcf.c:381
+#: ../app/xcf/xcf.c:382
 #, c-format
 msgid "Closing '%s'"
 msgstr "Stänger ”%s”"
 
-#: ../app/xcf/xcf.c:399
+#: ../app/xcf/xcf.c:400
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Fel vid skrivning ”%s”: "
 
-#: ../app/xcf/xcf.c:487
+#: ../app/xcf/xcf.c:488
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Fel vid skapande ”%s”: "
