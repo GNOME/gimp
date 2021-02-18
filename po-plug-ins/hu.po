@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-14 23:05+0000\n"
-"PO-Revision-Date: 2021-02-15 00:29+0100\n"
+"POT-Creation-Date: 2021-02-16 10:28+0000\n"
+"PO-Revision-Date: 2021-02-18 07:36+0100\n"
 "Last-Translator: Balázs Meskó <mesko.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -54,7 +54,7 @@ msgstr "Egy kecske edzése (C)"
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
-#: ../plug-ins/common/file-pdf-save.c:1164 ../plug-ins/common/file-ps.c:3550
+#: ../plug-ins/common/file-pdf-save.c:1167 ../plug-ins/common/file-ps.c:3550
 #: ../plug-ins/common/file-raw-data.c:1776 ../plug-ins/common/file-svg.c:679
 #: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1308
 #: ../plug-ins/common/grid.c:737 ../plug-ins/common/hot.c:656
@@ -131,20 +131,18 @@ msgstr ""
 "kattintva."
 
 #: ../extensions/goat-exercises/goat-exercise-py3.py:59
-#, fuzzy
 #| msgid "Exercise a goat (Python 3)"
 msgid "Exercise a goat and a python"
-msgstr "Egy kecske edzése (Python 3)"
+msgstr "Egy kecske és egy piton edzése"
 
 #: ../extensions/goat-exercises/goat-exercise-py3.py:63
-#, fuzzy
 #| msgid "Exercise a goat in the C language"
 msgid "Exercise a goat in the Python 3 language"
-msgstr "Egy kecske edzése C nyelven"
+msgstr "Egy kecske edzése Python 3 nyelven"
 
 #: ../extensions/goat-exercises/goat-exercise-py3.py:64
 msgid "Takes a goat for a walk in Python 3"
-msgstr ""
+msgstr "Egy kecske sétáltatása Python 3-ban"
 
 #: ../extensions/goat-exercises/goat-exercise-py3.py:80
 msgid "Exercise a goat (Python 3)"
@@ -186,17 +184,16 @@ msgid "_OK"
 msgstr "_OK"
 
 #: ../extensions/goat-exercises/goat-exercise-vala.vala:64
-#| msgid "Exercise a goat (C)"
 msgid "Exercise a goat (Vala)"
 msgstr "Egy kecske edzése (Vala)"
 
 #: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:1
 msgid "Goat Exercises"
-msgstr ""
+msgstr "Kecske edzések"
 
 #: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:2
 msgid "Official Demo Plug-ins"
-msgstr ""
+msgstr "Hivatalos demó bővítmények"
 
 #: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:3
 msgid ""
@@ -206,6 +203,12 @@ msgid ""
 "text view displaying their own code (hence also demonstrating how to package "
 "data) and a button which calls a GEGL operation on the active layer."
 msgstr ""
+"A kiegészítő néhány alapvető példát biztos, amely bemutatja, hogyan "
+"készítheti el a saját bővítményeit. Minden bővítmény ugyanazt csinálja, de "
+"más programozási nyelven készült. Mind létrehoz egy GTK+ párbeszédablakot "
+"egy szöveggel, amely megjeleníti a saját kódját (így azt is bemutatja, hogyan "
+"csomagolhat adatokat) és egy gombot, amely meghívja a GEGL műveletet az "
+"aktív rétegen."
 
 #: ../plug-ins/common/align-layers.c:191
 msgid "Align Visi_ble Layers..."
@@ -752,7 +755,7 @@ msgstr "_Megnyitás"
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1412
 #: ../plug-ins/common/cml-explorer.c:2094 ../plug-ins/common/curve-bend.c:1461
-#: ../plug-ins/common/curve-bend.c:1999 ../plug-ins/common/file-pdf-save.c:1163
+#: ../plug-ins/common/curve-bend.c:1999 ../plug-ins/common/file-pdf-save.c:1166
 #: ../plug-ins/common/qbist.c:793 ../plug-ins/common/qbist.c:922
 #: ../plug-ins/common/sphere-designer.c:2285
 #: ../plug-ins/common/sphere-designer.c:2684 ../plug-ins/flame/flame.c:518
@@ -854,10 +857,9 @@ msgid "Source channel in file:"
 msgstr "Forráscsatorna a fájlban:"
 
 #: ../plug-ins/common/cml-explorer.c:1644
-#, fuzzy
 #| msgid "_Misc Ops."
 msgid "_Misc"
-msgstr "Egyé_b beállítások"
+msgstr "Egyé_b"
 
 #: ../plug-ins/common/cml-explorer.c:1703
 msgid "Function type:"
@@ -951,7 +953,7 @@ msgstr "CML-böngésző paramétereinek mentése"
 #: ../plug-ins/common/cml-explorer.c:2145 ../plug-ins/common/curve-bend.c:805
 #: ../plug-ins/common/file-dicom.c:1410 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
-#: ../plug-ins/common/file-pdf-save.c:734 ../plug-ins/common/file-png.c:1496
+#: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1496
 #: ../plug-ins/common/file-raw-data.c:1117
 #: ../plug-ins/common/file-raw-data.c:1147 ../plug-ins/common/file-sunras.c:641
 #: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
@@ -2433,21 +2435,18 @@ msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "Kép mentése HEIF (nagy hatékonyságú képfájl) formátumban."
 
 #: ../plug-ins/common/file-heif.c:304
-#| msgid "Loads HEIF images"
 msgid "Loads AVIF images"
 msgstr "AVIF képeket tölt be"
 
 #: ../plug-ins/common/file-heif.c:305
 msgid "Load image stored in AV1 Image File Format (AVIF)"
-msgstr ""
+msgstr "AV1 képfájl formátumban (AVIF) tárolt kép betöltése"
 
 #: ../plug-ins/common/file-heif.c:335
-#| msgid "Exports HEIF images"
 msgid "Exports AVIF images"
 msgstr "AVIF képeket exportál"
 
 #: ../plug-ins/common/file-heif.c:336
-#| msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Kép mentése AV1 képfájlformátumban (AVIF)"
 
@@ -2494,7 +2493,6 @@ msgid "Select Image"
 msgstr "Kép kiválasztása"
 
 #: ../plug-ins/common/file-heif.c:2510
-#| msgid "Export Image as GIF"
 msgid "Export Image as AVIF"
 msgstr "Kép exportálása AVIF-ként"
 
@@ -2520,7 +2518,6 @@ msgid "YUV420"
 msgstr "YUV420"
 
 #: ../plug-ins/common/file-heif.c:2554
-#| msgid "_Pixel format:"
 msgid "Pixel format:"
 msgstr "Képpontformátum:"
 
@@ -2537,7 +2534,6 @@ msgid "12 bit/channel"
 msgstr "12 bit/csatorna"
 
 #: ../plug-ins/common/file-heif.c:2604
-#| msgid "_Max depth:"
 msgid "Bit depth:"
 msgstr "Bitmélység:"
 
@@ -2554,7 +2550,6 @@ msgid "Fast"
 msgstr "Gyors"
 
 #: ../plug-ins/common/file-heif.c:2616
-#| msgid "_Speed:"
 msgid "Speed:"
 msgstr "Sebesség:"
 
@@ -2756,7 +2751,7 @@ msgstr "„%s” nem nyitható meg olvasásra"
 #: ../plug-ins/common/file-jp2-load.c:1104
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
-msgstr ""
+msgstr "Nem sikerült a dekóder előkészítése ehhez: „%s”, elfogyott a memória?"
 
 #: ../plug-ins/common/file-jp2-load.c:1120
 #, c-format
@@ -3018,7 +3013,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Nem sikerült írni a(z) „%s” fájlba: %s"
 
 #: ../plug-ins/common/file-pdf-load.c:329
-#: ../plug-ins/common/file-pdf-save.c:354
+#: ../plug-ins/common/file-pdf-save.c:357
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -3081,7 +3076,6 @@ msgstr "Hiba a megadott PDF-fájl oldalszámának lekérésekor."
 
 #. "Load in reverse order" toggle button
 #: ../plug-ins/common/file-pdf-load.c:1139
-#| msgid "Reverse Order"
 msgid "Load in reverse order"
 msgstr "Betöltés fordított sorrendben"
 
@@ -3109,11 +3103,11 @@ msgstr "Élsimítás _használata"
 msgid "pixels/%a"
 msgstr "képpont/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:419
+#: ../plug-ins/common/file-pdf-save.c:422
 msgid "_Create multipage PDF..."
 msgstr "Több oldalas _PDF létrehozása…"
 
-#: ../plug-ins/common/file-pdf-save.c:746
+#: ../plug-ins/common/file-pdf-save.c:749
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3126,11 +3120,11 @@ msgstr ""
 "Ellenőrizze, hogy megfelelő fájlnevet adott meg, és hogy a megadott mappa "
 "írható."
 
-#: ../plug-ins/common/file-pdf-save.c:988
+#: ../plug-ins/common/file-pdf-save.c:991
 msgid "_Convert text layers to image"
 msgstr "Szövegrétegek át_alakítása képpé"
 
-#: ../plug-ins/common/file-pdf-save.c:1032
+#: ../plug-ins/common/file-pdf-save.c:1035
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -3142,83 +3136,83 @@ msgstr ""
 "hiányzó betűkészleteket az exportálás előtt, különben a dizájnja lehet, hogy "
 "rosszul fog kinézni."
 
-#: ../plug-ins/common/file-pdf-save.c:1049
-#: ../plug-ins/common/file-pdf-save.c:1211
+#: ../plug-ins/common/file-pdf-save.c:1052
+#: ../plug-ins/common/file-pdf-save.c:1214
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "Rejtett és nulla átlátszatlanságú rétegek _mellőzése"
 
-#: ../plug-ins/common/file-pdf-save.c:1054
-#: ../plug-ins/common/file-pdf-save.c:1216
+#: ../plug-ins/common/file-pdf-save.c:1057
+#: ../plug-ins/common/file-pdf-save.c:1219
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "_Bitképek vektorgrafikává alakítása, ahol lehetséges"
 
-#: ../plug-ins/common/file-pdf-save.c:1059
-#: ../plug-ins/common/file-pdf-save.c:1221
+#: ../plug-ins/common/file-pdf-save.c:1062
+#: ../plug-ins/common/file-pdf-save.c:1224
 msgid "_Apply layer masks before saving"
 msgstr "Rétegmaszkok _alkalmazása mentés előtt"
 
-#: ../plug-ins/common/file-pdf-save.c:1063
-#: ../plug-ins/common/file-pdf-save.c:1225
+#: ../plug-ins/common/file-pdf-save.c:1066
+#: ../plug-ins/common/file-pdf-save.c:1228
 msgid "Keeping the masks will not change the output"
 msgstr "A maszkok megtartása nem változtatja meg a kimenetet"
 
-#: ../plug-ins/common/file-pdf-save.c:1069
+#: ../plug-ins/common/file-pdf-save.c:1072
 #, c-format
 msgid "_Layers as pages (%s)"
 msgstr "_Rétegek lapokként (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:1071
-#: ../plug-ins/common/file-pdf-save.c:1272
+#: ../plug-ins/common/file-pdf-save.c:1074
+#: ../plug-ins/common/file-pdf-save.c:1275
 msgid "top layers first"
 msgstr "felső rétegek először"
 
-#: ../plug-ins/common/file-pdf-save.c:1071
-#: ../plug-ins/common/file-pdf-save.c:1272
+#: ../plug-ins/common/file-pdf-save.c:1074
+#: ../plug-ins/common/file-pdf-save.c:1275
 msgid "bottom layers first"
 msgstr "alsó rétegek először"
 
-#: ../plug-ins/common/file-pdf-save.c:1079
+#: ../plug-ins/common/file-pdf-save.c:1082
 msgid "_Reverse the pages order"
 msgstr "Lapso_rrend megfordítása"
 
-#: ../plug-ins/common/file-pdf-save.c:1155
+#: ../plug-ins/common/file-pdf-save.c:1158
 msgid "Save to:"
 msgstr "Mentés fájlba:"
 
-#: ../plug-ins/common/file-pdf-save.c:1159
+#: ../plug-ins/common/file-pdf-save.c:1162
 msgid "Browse..."
 msgstr "Tallózás…"
 
-#: ../plug-ins/common/file-pdf-save.c:1160
+#: ../plug-ins/common/file-pdf-save.c:1163
 msgid "Multipage PDF export"
 msgstr "Több oldalas PDF exportálás"
 
-#: ../plug-ins/common/file-pdf-save.c:1196
+#: ../plug-ins/common/file-pdf-save.c:1199
 msgid "Remove the selected pages"
 msgstr "A kijelölt oldalak törlése"
 
-#: ../plug-ins/common/file-pdf-save.c:1206
+#: ../plug-ins/common/file-pdf-save.c:1209
 msgid "Add this image"
 msgstr "Ezen kép hozzáadása"
 
-#: ../plug-ins/common/file-pdf-save.c:1270
+#: ../plug-ins/common/file-pdf-save.c:1273
 #, c-format
 msgid "Layers as pages (%s)"
 msgstr "Rétegek lapokként (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:1327
-#: ../plug-ins/common/file-pdf-save.c:1400
-#: ../plug-ins/common/file-pdf-save.c:1498 ../plug-ins/common/file-ps.c:2036
+#: ../plug-ins/common/file-pdf-save.c:1330
+#: ../plug-ins/common/file-pdf-save.c:1403
+#: ../plug-ins/common/file-pdf-save.c:1501 ../plug-ins/common/file-ps.c:2036
 #: ../plug-ins/file-tiff/file-tiff-load.c:1311
 #, c-format
 msgid "Page %d"
 msgstr "%d. oldal"
 
-#: ../plug-ins/common/file-pdf-save.c:1367
+#: ../plug-ins/common/file-pdf-save.c:1370
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Hiba! Legalább egy képet hozzá kell adni a fájl mentéséhez."
 
-#: ../plug-ins/common/file-pdf-save.c:1545
+#: ../plug-ins/common/file-pdf-save.c:1548
 #: ../plug-ins/print/print-draw-page.c:123
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Nem lehet a kép méretét (szélesség vagy magasság) kezelni."
@@ -3668,25 +3662,21 @@ msgstr "Pozicionálási hiba: %s"
 
 #: ../plug-ins/common/file-psp.c:998
 #, c-format
-#| msgid "Duplicate General Image Attributes block."
 msgid "Invalid general image attribute chunk size."
 msgstr "Érvénytelen általános képattribútum darabméret."
 
 #: ../plug-ins/common/file-psp.c:1020
 #, c-format
-#| msgid "Missing General Image Attributes block."
 msgid "Error reading general image attribute block."
 msgstr "Hiba az általános képattribútum blokk olvasásakor."
 
 #: ../plug-ins/common/file-psp.c:1035
 #, c-format
-#| msgid "Unsupported compression mode: %d"
 msgid "Unknown compression type %d"
 msgstr "Ismeretlen tömörítési típus: %d"
 
 #: ../plug-ins/common/file-psp.c:1071 ../plug-ins/common/file-psp.c:1078
 #, c-format
-#| msgid "Unsupported bit depth: %d"
 msgid "Unsupported bit depth %d"
 msgstr "Nem támogatott bitmélység: %d"
 
@@ -3708,13 +3698,11 @@ msgstr "Hiba a létrehozó kulcsszóadatok olvasásakor"
 #: ../plug-ins/common/file-psp.c:1257 ../plug-ins/common/file-psp.c:1266
 #: ../plug-ins/common/file-psp.c:1275
 #, c-format
-#| msgid "Error reading block header"
 msgid "Error reading color block"
 msgstr "Hiba a színblokk olvasásakor"
 
 #: ../plug-ins/common/file-psp.c:1288
 #, c-format
-#| msgid "Error reading block header"
 msgid "Error reading color palette"
 msgstr "Hiba a színpaletta olvasásakor"
 
@@ -3726,13 +3714,11 @@ msgstr "zlib hiba"
 #: ../plug-ins/common/file-psp.c:1791 ../plug-ins/common/file-psp.c:1825
 #: ../plug-ins/common/file-psp.c:1835
 #, c-format
-#| msgid "Error reading layer information chunk"
 msgid "Error reading layer extension information"
 msgstr "Hiba a réteg kiterjesztésinformációinak olvasásakor"
 
 #: ../plug-ins/common/file-psp.c:1812
 #, c-format
-#| msgid "Error reading layer information chunk"
 msgid "Error reading block information"
 msgstr "Hiba a blokkinformációk olvasásakor"
 
@@ -4411,7 +4397,6 @@ msgid "A read error occurred."
 msgstr "Hiba történt az olvasáskor."
 
 #: ../plug-ins/common/file-xmc.c:1120
-#| msgid "Export Image as XBM"
 msgid "Export Image as X11 Mouse Cursor"
 msgstr "Kép exportálása X11 egérkurzorként"
 
@@ -4424,7 +4409,6 @@ msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr "Írja be a forrópont Y koordinátáját. A bal felső sarok az origó."
 
 #: ../plug-ins/common/file-xmc.c:1163
-#| msgid "_Auto-Crop all frames."
 msgid "_Auto-Crop all frames"
 msgstr "_Minden képkocka automatikus vágása"
 
@@ -4441,7 +4425,6 @@ msgstr ""
 "Ne jelölje be, ha az exportált kurzort más programokkal kívánja szerkeszteni."
 
 #: ../plug-ins/common/file-xmc.c:1186
-#| msgid "_Frame disposal where unspecified"
 msgid ""
 "_Size where\n"
 "unspecified:"
@@ -4468,12 +4451,10 @@ msgstr ""
 "size” értéke szerint."
 
 #: ../plug-ins/common/file-xmc.c:1203
-#| msgid "_Use delay entered above for all frames"
 msgid "Use size entered above for all frames"
 msgstr "A fent megadott méret használata az összes képkockához"
 
 #: ../plug-ins/common/file-xmc.c:1210
-#| msgid "_Delay between frames where unspecified:"
 msgid ""
 "_Delay where\n"
 "unspecified:"
@@ -4488,7 +4469,6 @@ msgstr ""
 "látszódnak."
 
 #: ../plug-ins/common/file-xmc.c:1229
-#| msgid "_Use delay entered above for all frames"
 msgid "Use delay entered above for all frames"
 msgstr "A fenti késleltetés használata az összes képkockához"
 
@@ -6391,13 +6371,11 @@ msgstr "Alfa-kitevő dekódolása"
 
 #: ../plug-ins/file-dds/ddsread.c:305
 #, c-format
-#| msgid "Can't create a new image"
 msgid "Could not allocate a new image."
 msgstr "Nem sikerült helyet foglalni az új képnek."
 
 #: ../plug-ins/file-dds/ddsread.c:318
 #, c-format
-#| msgid "Error reading file"
 msgid "Error reading palette."
 msgstr "Hiba a paletta olvasásakor."
 
@@ -6408,7 +6386,6 @@ msgstr "Érvénytelen mágikus szám a DDS formátumhoz."
 
 #: ../plug-ins/file-dds/ddsread.c:689
 #, c-format
-#| msgid "Invalid block header at %ld"
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Érvénytelen bpp érték az RGB adatokhoz: %d"
 
@@ -6419,13 +6396,11 @@ msgstr "Érvénytelen bpp érték a fényességi adatokhoz: %d"
 
 #: ../plug-ins/file-dds/ddsread.c:750
 #, c-format
-#| msgid "Invalid file."
 msgid "Invalid pixel format."
 msgstr "Érvénytelen képpontformátum."
 
 #: ../plug-ins/file-dds/ddsread.c:919
 #, c-format
-#| msgid "Unsupported file format version: %d"
 msgid "Unsupported DXGI format (%d)"
 msgstr "Nem támogatott DXGI formátum (%d)"
 
@@ -6750,18 +6725,15 @@ msgid "JPEG"
 msgstr "JPEG"
 
 #: ../plug-ins/file-jpeg/jpeg.c:224
-#| msgid "Su_bsampling:"
 msgid "Su_bsampling"
 msgstr "Al_ulmintavételezés"
 
 #: ../plug-ins/file-jpeg/jpeg.c:242
-#, fuzzy
 #| msgid "Interval (MCU rows):"
 msgid "Inter_val (MCU rows):"
-msgstr "Blokkméret (MCU sorok):"
+msgstr "Blokk_méret (MCU sorok):"
 
 #: ../plug-ins/file-jpeg/jpeg.c:249
-#| msgid "_DCT method:"
 msgid "_DCT method"
 msgstr "_DCT-módszer"
 
@@ -6772,10 +6744,9 @@ msgstr ""
 "megnyitásával"
 
 #: ../plug-ins/file-jpeg/jpeg.c:292
-#, fuzzy
 #| msgid "Use _restart markers"
 msgid "Use restart mar_kers"
-msgstr "Ú_jrakezdési jelölések"
+msgstr "Ú_jrakezdési jelölések használata"
 
 #: ../plug-ins/file-jpeg/jpeg.c:462
 msgid "Export Preview"
@@ -6849,10 +6820,10 @@ msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Nem támogatott vagy érvénytelen rétegméret: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:677
-#, fuzzy, c-format
+#, c-format
 #| msgid "Unsupported or invalid image size: %dx%d"
 msgid "Unsupported or invalid mask info size: %d"
-msgstr "Nem támogatott vagy érvénytelen képméret: %dx%d"
+msgstr "Nem támogatott vagy érvénytelen maszkinformáció-méret: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:828
 #, c-format
@@ -7114,7 +7085,7 @@ msgstr ""
 #: ../plug-ins/file-tiff/file-tiff-load.c:268
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
-msgstr "„%s” TIFF nem tartalmaz könyvtárt"
+msgstr "A(z) „%s” TIFF nem tartalmaz könyvtárt"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:275
 #, c-format
@@ -7125,7 +7096,13 @@ msgid_plural ""
 "TIFF '%s' directory count by header failed though there seem to be %d pages. "
 "Attempting to load the file with this assumption."
 msgstr[0] ""
+"A(z) „%s” TIFF könyvtárszámának meghatározása fejléc alapján sikertelen, de "
+"úgy tűnik, hogy %d oldal van. A fájl betöltésének kísérlete ezzel a "
+"feltételezéssel."
 msgstr[1] ""
+"A(z) „%s” TIFF könyvtárszámának meghatározása fejléc alapján sikertelen, de "
+"úgy tűnik, hogy %d oldal van. A fájl betöltésének kísérlete ezzel a "
+"feltételezéssel."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:351
 msgid "Extra channels with unspecified data."
@@ -7145,7 +7122,7 @@ msgstr "Nem szabványos TIFF: további csatornák „ExtraSamples” mező nélk
 #: ../plug-ins/file-tiff/file-tiff-load.c:424
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
-msgstr ""
+msgstr "%d / %d oldal nem olvasható. A kép sérült lehet.\n"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:453
 #, c-format
@@ -7153,6 +7130,8 @@ msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr ""
+"Ez a kép lineáris színprofillal rendelkezik, de nem lett megadva az első "
+"rétegen. A(z) %d. réteg alatti rétegek nem lineárisként lesznek értelmezve."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:461
 msgid ""
@@ -7160,6 +7139,9 @@ msgid ""
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
+"A kép több színprofillal rendelkezik. Az első lesz használva. Ha ez "
+"helytelen eredményhez vezet, akkor fontolja meg, hogy minden réteget külön "
+"képként tölt be."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:952
 #, c-format
@@ -7174,6 +7156,7 @@ msgstr "TIFF-csatorna"
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
+"Nem olvashatók ki adatok a(z) „%s” TIFF-ből. A fájl valószínűleg sérült."
 
 #. Error reading scanline, stop loading
 #: ../plug-ins/file-tiff/file-tiff-load.c:1876
@@ -7181,6 +7164,7 @@ msgstr ""
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
+"A leolvasási vonal beolvasása sikertelen. A kép a(z) %d. sornál lehet sérült."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2331
 msgid "Import from TIFF"
@@ -7248,27 +7232,22 @@ msgid "None"
 msgstr "Nincs"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1312
-#| msgid "_LZW"
 msgid "LZW"
 msgstr "LZW"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1313
-#| msgid "_Pack Bits"
 msgid "Pack Bits"
 msgstr "Bitek összecsomagolása"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1314
-#| msgid "_Deflate"
 msgid "Deflate"
 msgstr "„Deflate” formátum"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1316
-#| msgid "CCITT Group _3 fax"
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1317
-#| msgid "CCITT Group _4 fax"
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax"
 
@@ -11461,7 +11440,7 @@ msgstr "Metaadatok szerkesztése (IPTC, EXIF, XMP)"
 
 #: ../plug-ins/metadata/metadata-editor.c:553
 msgid "Error loading metadata-editor dialog."
-msgstr ""
+msgstr "Hiba a metaadat-szerkesztő párbeszédablak betöltésekor."
 
 #: ../plug-ins/metadata/metadata-editor.c:564
 #, c-format
@@ -11481,10 +11460,10 @@ msgid "Export metadata"
 msgstr "Metaadatok exportálása"
 
 #: ../plug-ins/metadata/metadata-editor.c:807
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error loading PSD file: %s"
 msgid "Error loading calendar. %s"
-msgstr "Hiba a PSD-fájl betöltésekor: %s"
+msgstr "Hiba a naptár betöltésekor. %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:835
 msgid "Calendar Date:"
@@ -11503,6 +11482,12 @@ msgid ""
 "or 10.45\n"
 "Delete all text to remove the current value."
 msgstr ""
+"Itt adja meg vagy szerkessze a GPS értéket.\n"
+"Az érvényes értékek 1, 2 vagy 3 számból állnak (fok, perc, másodperc), lásd "
+"a következő példákat:\n"
+"10deg 15' 20\", vagy 10° 15' 20\", vagy 10:15:20.45, vagy 10 15 20, vagy 10 "
+"15.30, vagy 10.45\n"
+"Törölje ki az összes szöveget a jelenlegi érték eltávolításához."
 
 #: ../plug-ins/metadata/metadata-editor.c:1579
 msgid ""
@@ -11513,16 +11498,22 @@ msgid ""
 "meter (m) or feet (ft)\n"
 "Delete all text to remove the current value."
 msgstr ""
+"Itt adja meg vagy szerkessze a GPS magasságértéket.\n"
+"Az érvényes érték egy számból áll:\n"
+"például 100 vagy 12.24\n"
+"A kiválasztott mértékegységtől függően az értéket méterben (m) vagy lábban "
+"(ft) kell megadni.\n"
+"Törölje ki az összes szöveget a jelenlegi érték eltávolításához."
 
 #: ../plug-ins/metadata/metadata-editor.c:1715
 msgid "Unrated"
 msgstr "Értékeletlen"
 
 #: ../plug-ins/metadata/metadata-editor.c:4413
-#, fuzzy, c-format
+#, c-format
 #| msgid "Failed to decompress data"
 msgid "Failed to set metadata tag %s"
-msgstr "Nem sikerült kibontani az adatokat"
+msgstr "A(z) %s metaadatcímke beállítása sikertelen"
 
 #: ../plug-ins/metadata/metadata-editor.c:5722
 msgid "Import Metadata File"
@@ -11704,13 +11695,11 @@ msgid "Other"
 msgstr "Egyéb"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#, fuzzy
 #| msgid "Above Sea Level"
 msgid "Above sea level"
 msgstr "Tengerszint felett"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#| msgid "Below Sea Level"
 msgid "Below sea level"
 msgstr "Tengerszint alatt"
 
@@ -11740,7 +11729,7 @@ msgstr "Metaadatok megtekintése (Exif, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:265
 msgid "Error loading metadata-viewer dialog."
-msgstr ""
+msgstr "Hiba a metaadat-megjelenítő párbeszédablak betöltésekor."
 
 #: ../plug-ins/metadata/metadata-viewer.c:276
 #, c-format
@@ -11753,7 +11742,6 @@ msgid "(%lu more character(s))"
 msgstr "(még %lu karakter)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:527
-#| msgid "Parameters"
 msgid " meter"
 msgstr " méter"
 
@@ -12291,7 +12279,6 @@ msgid "Capture an image from a TWAIN datasource"
 msgstr "Kép beolvasása TWAIN-adatforrásból"
 
 #: ../plug-ins/twain/twain.c:87
-#| msgid "Capture an image from a TWAIN datasource"
 msgid "This plug-in will capture an image from a TWAIN datasource"
 msgstr "Ez a bővítmény képet rögzít egy TWAIN-adatforrásból"
 
@@ -12303,190 +12290,3 @@ msgstr "La_polvasó/kamera…"
 #: ../plug-ins/twain/twain.c:513
 msgid "Transferring data from scanner/camera"
 msgstr "Adatok átvitele a lapolvasóról/kameráról"
-
-#~ msgid "CMY"
-#~ msgstr "CMY"
-
-#~ msgid "cyan-k"
-#~ msgstr "ciánkék-k"
-
-#~ msgid "magenta-k"
-#~ msgstr "bíbor-k"
-
-#~ msgid "yellow-k"
-#~ msgstr "sárga-k"
-
-#~ msgid "Cyan_K"
-#~ msgstr "Ciánkék_K"
-
-#~ msgid "Magenta_K"
-#~ msgstr "Bíborvörös_K"
-
-#~ msgid "Yellow_K"
-#~ msgstr "Sárga_K"
-
-#~| msgid "Exports HEIF images"
-#~ msgid "Export Image as PNG"
-#~ msgstr "Kép exportálása PNG-ként"
-
-#~ msgid "_Interlacing (Adam7)"
-#~ msgstr "_Váltottsoros (Adam7)"
-
-#~ msgid "Save layer o_ffset"
-#~ msgstr "_Rétegeltolás mentése"
-
-#~ msgid "Save _resolution"
-#~ msgstr "_Felbontás mentése"
-
-#~ msgid "Save color _values from transparent pixels"
-#~ msgstr "Az át_látszó képpontok színértékeinek elmentése"
-
-#~ msgid "Save comme_nt"
-#~ msgstr "Meg_jegyzés mentése"
-
-#~| msgid "Save Exif data"
-#~ msgid "Save E_xif data"
-#~ msgstr "E_xif-adatok mentése"
-
-#~ msgid "Save XMP data"
-#~ msgstr "XMP-adatok mentése"
-
-#~ msgid "Save IPTC data"
-#~ msgstr "IPTC-adatok mentése"
-
-#~ msgid "Save thumbnail"
-#~ msgstr "Bélyegkép mentése"
-
-#~ msgid "Save color profile"
-#~ msgstr "Színprofil mentése"
-
-#~ msgid "Co_mpression level:"
-#~ msgstr "_Tömörítés mértéke:"
-
-#~ msgid "Creator keyword data not nul-terminated"
-#~ msgstr "A létrehozó kulcsszóadatok nem nullal végződőek"
-
-#~ msgid "Invalid bitmap type %d in channel information chunk"
-#~ msgstr "Érvénytelen %d bittérkép-típus a csatornainformációkban"
-
-#~ msgid "XMC Options"
-#~ msgstr "XMC-beállítások"
-
-#~ msgid "_Use this value only for a frame which size is not specified."
-#~ msgstr ""
-#~ "C_sak azoknál a képkockáknál használja ezt, melyeknél nincs méret megadva."
-
-#~ msgid "_Replace the size of all frames even if it is specified."
-#~ msgstr "Min_den képkocka méretének átállítása erre."
-
-#~ msgid "_Delay:"
-#~ msgstr "_Késleltetés:"
-
-#~ msgid "_Use this value only for a frame which delay is not specified."
-#~ msgstr ""
-#~ "Csak a_zoknál a képkockáknál használja ezt, melyeknél nincs késleltetés "
-#~ "megadva."
-
-#~ msgid "_Replace the delay of all frames even if it is specified."
-#~ msgstr "Minden ké_pkocka késleltetésének átállítása erre."
-
-#~ msgid ""
-#~ "The part of copyright information that exceeded 65535 characters was "
-#~ "removed."
-#~ msgstr "A copyright információk 65535 karakteren túli része levágva."
-
-#~ msgid ""
-#~ "The part of license information that exceeded 65535 characters was "
-#~ "removed."
-#~ msgstr "A licencinformációk 65535 karakteren túli részét levágtuk."
-
-#~ msgid "Comment is limited to %d characters."
-#~ msgstr "A megjegyzés hossza maximum %d karakter."
-
-#~ msgid ""
-#~ "The parasite \"%s\" is too long for an X cursor comment. It was cut off "
-#~ "to fit."
-#~ msgstr ""
-#~ "A(z) „%s” parazita túl hosszú X kurzor megjegyzésnek. Le lett rövidítve, "
-#~ "hogy elférjen."
-
-#~ msgid "_Alpha threshold:"
-#~ msgstr "_Alfa-küszöb:"
-
-#~ msgid "_Quality:"
-#~ msgstr "Mi_nőség:"
-
-#~ msgid "JPEG quality parameter"
-#~ msgstr "A JPEG-minőség paramétere"
-
-#~ msgid "_Use quality settings from original image"
-#~ msgstr "Az ere_deti kép minőségi beállításainak használata"
-
-#~ msgid ""
-#~ "If the original image was loaded from a JPEG file using non-standard "
-#~ "quality settings (quantization tables), enable this option to get almost "
-#~ "the same quality and file size."
-#~ msgstr ""
-#~ "Ha az eredeti kép nem szabványos minőségi beállításokat (kvantálási "
-#~ "táblákat) használó JPEG-fájlból volt betöltve, akkor ezen opció "
-#~ "bekapcsolásával közel azonos minőség és fájlméret érhető el."
-
-#~ msgid "Sho_w preview in image window"
-#~ msgstr "E_lőnézet megjelenítése a kép ablakában"
-
-#~ msgid "Save _Exif data"
-#~ msgstr "E_xif-adatok mentése"
-
-#~ msgid "Save _IPTC data"
-#~ msgstr "_IPTC-adatok mentése"
-
-#~ msgid "Save _thumbnail"
-#~ msgstr "Bél_yegkép mentése"
-
-#~ msgid "Comment"
-#~ msgstr "Megjegyzés"
-
-#~ msgid "S_moothing:"
-#~ msgstr "S_imítás:"
-
-#~ msgid "_Optimize"
-#~ msgstr "_Optimalizálás"
-
-#~ msgid "Use arithmetic _coding"
-#~ msgstr "Számtani _kódolás használata"
-
-#~ msgid "_Progressive"
-#~ msgstr "_Progresszív"
-
-#~ msgid "Sa_ve Defaults"
-#~ msgstr "Alapértelme_zések mentése"
-
-#~ msgid "Error loading UI file '%s': %s"
-#~ msgstr "Hiba a(z) „%s” felületfájl betöltésekor: %s"
-
-#~ msgid "Unknown error"
-#~ msgstr "Ismeretlen hiba"
-
-#~ msgid "Compression"
-#~ msgstr "Tömörítés"
-
-#~ msgid "_None"
-#~ msgstr "_Nincs"
-
-#~ msgid "_JPEG"
-#~ msgstr "_JPEG"
-
-#~| msgid "Save layers"
-#~ msgid "Save _layers"
-#~ msgstr "_Rétegek mentése"
-
-#~ msgid "Colors are not stored premultiplied by the associated alpha"
-#~ msgstr ""
-#~ "A színek nem a kapcsolódó alfa értékekkel előre beszorozva vannak tárolva"
-
-#~| msgid "Save Exif data"
-#~ msgid "S_ave Exif data"
-#~ msgstr "Exif-adatok _mentése"
-
-#~ msgid "<b>Comment</b>"
-#~ msgstr "<b>Megjegyzés</b>"
