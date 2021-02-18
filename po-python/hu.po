@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2021-02-18 06:39+0000\n"
-"PO-Revision-Date: 2021-02-18 07:44+0100\n"
-"Last-Translator: Balázs Meskó <mesko.balazs at fsf dot hu>\n"
+"PO-Revision-Date: 2021-02-18 07:48+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -623,11 +623,11 @@ msgstr "A szirmok száma a mintában."
 
 #: ../plug-ins/python/spyro-plus.py:1572
 msgid "Petal Skip"
-msgstr "Szirmok köze"
+msgstr "Szirom kihagyása"
 
 #: ../plug-ins/python/spyro-plus.py:1573
 msgid "The number of petals to advance for drawing the next petal."
-msgstr "Az átugrandó szirmok száma a következő szirom rajzolása előtt."
+msgstr "A szirmok száma a következő szirom rajzolásához való lépéshez."
 
 #: ../plug-ins/python/spyro-plus.py:1578
 msgid "Hole Radius(%)"
@@ -639,9 +639,9 @@ msgid ""
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
-"A minta közepén lévő lyuk sugara, ahová semmi sem lesz rajzolva. A minta "
-"méretének százalékában megadva. A 0 érték azt jelenti, hogy nincs lyuk. A 99-"
-"es érték egy vékony vonalat eredményez a szélén."
+"A minta közepén lévő lyuk sugara, ahol semmi sem lesz rajzolva. A minta "
+"méretének százalékában van megadva. A 0 érték nem hoz létre lyukat. A 99 "
+"érték egy vékony vonalat eredményez a szélen."
 
 #: ../plug-ins/python/spyro-plus.py:1600
 msgid "Width(%)"
@@ -653,12 +653,13 @@ msgid ""
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 msgstr ""
-"A minta szélessége a minta méretének százalékában. Az 1-es érték csak egy "
-"vékony mintát rajzol. A 100-as érték kitölti a teljes fogat."
+"A minta szélessége a minta méretének százalékaként. Az 1 érték csak egy "
+"vékony mintát fog rajzolni. A 100 érték kitölti a teljes rögzített "
+"fogaskereket."
 
 #: ../plug-ins/python/spyro-plus.py:1612
 msgid "Visual"
-msgstr "Vizuális"
+msgstr "Látható"
 
 #: ../plug-ins/python/spyro-plus.py:1618
 msgid "Toy Kit"
@@ -766,8 +767,8 @@ msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 msgstr ""
-"Válasszon, hogy új rétegként menti, újrarajzolja az utolsó aktív rétegen, "
-"vagy útvonalba menti"
+"Válassza ki, hogy új rétegként mentse, újrarajzolja a legutolsó aktív "
+"rétegen vagy útvonalba mentse"
 
 #: ../plug-ins/python/spyro-plus.py:1746
 msgid "Spyrogimp"
