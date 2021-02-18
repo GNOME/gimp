@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-14 00:52+0000\n"
-"PO-Revision-Date: 2021-02-15 00:33+0100\n"
+"POT-Creation-Date: 2021-02-16 21:44+0000\n"
+"PO-Revision-Date: 2021-02-18 07:39+0100\n"
 "Last-Translator: Balázs Meskó <mesko.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -2605,12 +2605,10 @@ msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "Kép mentése HEIF (nagy hatékonyságú képfájl) formátumban."
 
 #: ../plug-ins/common/file-heif.c:194
-#| msgid "Exports HEIF images"
 msgid "Exports AVIF images"
 msgstr "AVIF képeket exportál"
 
 #: ../plug-ins/common/file-heif.c:195
-#| msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Kép mentése AV1 képfájlformátumban (AVIF)"
 
@@ -2652,17 +2650,15 @@ msgid "Select Image"
 msgstr "Kép kiválasztása"
 
 #: ../plug-ins/common/file-heif.c:2023
-#, fuzzy
 #| msgid "_Lossless"
 msgid "Nearly _lossless"
-msgstr "_Veszteségmentes"
+msgstr "Majdnem _veszteségmentes"
 
 #: ../plug-ins/common/file-heif.c:2027 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "Mi_nőség:"
 
 #: ../plug-ins/common/file-heif.c:2070
-#| msgid "_Max depth:"
 msgid "Bit depth:"
 msgstr "Bitmélység:"
 
@@ -3180,7 +3176,6 @@ msgstr "Hiba a megadott PDF-fájl oldalszámának lekérésekor."
 
 #. "Load in reverse order" toggle button
 #: ../plug-ins/common/file-pdf-load.c:1357
-#| msgid "Reverse Order"
 msgid "Load in reverse order"
 msgstr "Betöltés fordított sorrendben"
 
@@ -3716,25 +3711,21 @@ msgstr "Pozicionálási hiba: %s"
 
 #: ../plug-ins/common/file-psp.c:848
 #, c-format
-#| msgid "Duplicate General Image Attributes block."
 msgid "Invalid general image attribute chunk size."
 msgstr "Érvénytelen általános képattribútum darabméret."
 
 #: ../plug-ins/common/file-psp.c:870
 #, c-format
-#| msgid "Missing General Image Attributes block."
 msgid "Error reading general image attribute block."
 msgstr "Hiba az általános képattribútum blokk olvasásakor."
 
 #: ../plug-ins/common/file-psp.c:885
 #, c-format
-#| msgid "Compression type"
 msgid "Unknown compression type %d"
 msgstr "Ismeretlen tömörítési típus: %d"
 
 #: ../plug-ins/common/file-psp.c:921 ../plug-ins/common/file-psp.c:928
 #, c-format
-#| msgid "Unsupported bit depth: %d"
 msgid "Unsupported bit depth %d"
 msgstr "Nem támogatott bitmélység: %d"
 
@@ -3756,13 +3747,11 @@ msgstr "Hiba a létrehozó kulcsszóadatok olvasásakor"
 #: ../plug-ins/common/file-psp.c:1107 ../plug-ins/common/file-psp.c:1116
 #: ../plug-ins/common/file-psp.c:1125
 #, c-format
-#| msgid "Error reading block header"
 msgid "Error reading color block"
 msgstr "Hiba a színblokk olvasásakor"
 
 #: ../plug-ins/common/file-psp.c:1138
 #, c-format
-#| msgid "Error reading block header"
 msgid "Error reading color palette"
 msgstr "Hiba a színpaletta olvasásakor"
 
@@ -3774,13 +3763,11 @@ msgstr "zlib hiba"
 #: ../plug-ins/common/file-psp.c:1641 ../plug-ins/common/file-psp.c:1675
 #: ../plug-ins/common/file-psp.c:1685
 #, c-format
-#| msgid "Error reading layer information chunk"
 msgid "Error reading layer extension information"
 msgstr "Hiba a réteg kiterjesztésinformációinak olvasásakor"
 
 #: ../plug-ins/common/file-psp.c:1662
 #, c-format
-#| msgid "Error reading layer information chunk"
 msgid "Error reading block information"
 msgstr "Hiba a blokkinformációk olvasásakor"
 
@@ -6762,7 +6749,6 @@ msgid "Mipmap Options"
 msgstr "Mipmap beállítások"
 
 #: ../plug-ins/file-dds/ddswrite.c:2117
-#| msgid "_F_ilter:"
 msgid "F_ilter:"
 msgstr "Szű_rő:"
 
@@ -7189,10 +7175,10 @@ msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Nem támogatott vagy érvénytelen rétegméret: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:668
-#, fuzzy, c-format
+#, c-format
 #| msgid "Unsupported or invalid image size: %dx%d"
 msgid "Unsupported or invalid mask info size: %d"
-msgstr "Nem támogatott vagy érvénytelen képméret: %dx%d"
+msgstr "Nem támogatott vagy érvénytelen maszkinformáció-méret: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:819
 #, c-format
@@ -7439,7 +7425,7 @@ msgstr "TIFF-kép"
 #: ../plug-ins/file-tiff/file-tiff-load.c:280
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
-msgstr "„%s” TIFF nem tartalmaz könyvtárt"
+msgstr "A(z) „%s” TIFF nem tartalmaz könyvtárt"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:287
 #, c-format
@@ -7450,7 +7436,13 @@ msgid_plural ""
 "TIFF '%s' directory count by header failed though there seem to be %d pages. "
 "Attempting to load the file with this assumption."
 msgstr[0] ""
+"A(z) „%s” TIFF könyvtárszámának meghatározása fejléc alapján sikertelen, de "
+"úgy tűnik, hogy %d oldal van. A fájl betöltésének kísérlete ezzel a "
+"feltételezéssel."
 msgstr[1] ""
+"A(z) „%s” TIFF könyvtárszámának meghatározása fejléc alapján sikertelen, de "
+"úgy tűnik, hogy %d oldal van. A fájl betöltésének kísérlete ezzel a "
+"feltételezéssel."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:363
 msgid "Extra channels with unspecified data."
@@ -7470,7 +7462,7 @@ msgstr "Nem szabványos TIFF: további csatornák „ExtraSamples” mező nélk
 #: ../plug-ins/file-tiff/file-tiff-load.c:436
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
-msgstr ""
+msgstr "%d / %d oldal nem olvasható. A kép sérült lehet.\n"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:465
 #, c-format
@@ -7478,6 +7470,8 @@ msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr ""
+"Ez a kép lineáris színprofillal rendelkezik, de nem lett megadva az első "
+"rétegen. A(z) %d. réteg alatti rétegek nem lineárisként lesznek értelmezve."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:473
 msgid ""
@@ -7485,6 +7479,9 @@ msgid ""
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
+"A kép több színprofillal rendelkezik. Az első lesz használva. Ha ez "
+"helytelen eredményhez vezet, akkor fontolja meg, hogy minden réteget külön "
+"képként tölt be."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:965
 #, c-format
@@ -7499,6 +7496,7 @@ msgstr "TIFF-csatorna"
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
+"Nem olvashatók ki adatok a(z) „%s” TIFF-ből. A fájl valószínűleg sérült."
 
 #. Error reading scanline, stop loading
 #: ../plug-ins/file-tiff/file-tiff-load.c:1848
@@ -7506,6 +7504,7 @@ msgstr ""
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
+"A leolvasási vonal beolvasása sikertelen. A kép a(z) %d. sornál lehet sérült."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2303
 msgid "Import from TIFF"
@@ -9564,10 +9563,9 @@ msgid "Save _layers"
 msgstr "_Rétegek mentése"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
-#, fuzzy
 #| msgid "Could not get layers for image %d"
 msgid "Cr_op layers to image bounds"
-msgstr "A rétegek nem elérhetők a(z) %d képnél"
+msgstr "A rétegek _vágása a képkeretekre"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
 msgid "Colors are not stored premultiplied by the associated alpha"
@@ -9583,10 +9581,9 @@ msgid "S_ave Exif data"
 msgstr "Exif-adatok _mentése"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
-#, fuzzy
 #| msgid "Save _IPTC data"
 msgid "Save _GeoTIFF data"
-msgstr "_IPTC-adatok mentése"
+msgstr "_GeoTIFF-adatok mentése"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -11954,7 +11951,7 @@ msgstr "Metaadatok sz_erkesztése"
 
 #: ../plug-ins/metadata/metadata-editor.c:545
 msgid "Error loading metadata-editor dialog."
-msgstr ""
+msgstr "Hiba a metaadat-szerkesztő párbeszédablak betöltésekor."
 
 #: ../plug-ins/metadata/metadata-editor.c:556
 #, c-format
@@ -11974,10 +11971,10 @@ msgid "Export metadata"
 msgstr "Metaadatok exportálása"
 
 #: ../plug-ins/metadata/metadata-editor.c:799
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error loading PSD file: %s"
 msgid "Error loading calendar. %s"
-msgstr "Hiba a PSD-fájl betöltésekor: %s"
+msgstr "Hiba a naptár betöltésekor. %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:827
 msgid "Calendar Date:"
@@ -11996,6 +11993,12 @@ msgid ""
 "or 10.45\n"
 "Delete all text to remove the current value."
 msgstr ""
+"Itt adja meg vagy szerkessze a GPS értéket.\n"
+"Az érvényes értékek 1, 2 vagy 3 számból állnak (fok, perc, másodperc), lásd "
+"a következő példákat:\n"
+"10deg 15' 20\", vagy 10° 15' 20\", vagy 10:15:20.45, vagy 10 15 20, vagy 10 "
+"15.30, vagy 10.45\n"
+"Törölje ki az összes szöveget a jelenlegi érték eltávolításához."
 
 #: ../plug-ins/metadata/metadata-editor.c:1571
 msgid ""
@@ -12006,16 +12009,22 @@ msgid ""
 "meter (m) or feet (ft)\n"
 "Delete all text to remove the current value."
 msgstr ""
+"Itt adja meg vagy szerkessze a GPS magasságértéket.\n"
+"Az érvényes érték egy számból áll:\n"
+"például 100 vagy 12.24\n"
+"A kiválasztott mértékegységtől függően az értéket méterben (m) vagy lábban "
+"(ft) kell megadni.\n"
+"Törölje ki az összes szöveget a jelenlegi érték eltávolításához."
 
 #: ../plug-ins/metadata/metadata-editor.c:1707
 msgid "Unrated"
 msgstr "Értékeletlen"
 
 #: ../plug-ins/metadata/metadata-editor.c:4405
-#, fuzzy, c-format
+#, c-format
 #| msgid "Failed to decompress data"
 msgid "Failed to set metadata tag %s"
-msgstr "Nem sikerült kibontani az adatokat"
+msgstr "A(z) %s metaadatcímke beállítása sikertelen"
 
 #: ../plug-ins/metadata/metadata-editor.c:5714
 msgid "Import Metadata File"
@@ -12199,13 +12208,11 @@ msgid "Other"
 msgstr "Egyéb"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#, fuzzy
 #| msgid "Above Sea Level"
 msgid "Above sea level"
 msgstr "Tengerszint felett"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#| msgid "Below Sea Level"
 msgid "Below sea level"
 msgstr "Tengerszint alatt"
 
@@ -12235,7 +12242,7 @@ msgstr "Metaadatok meg_tekintése"
 
 #: ../plug-ins/metadata/metadata-viewer.c:237
 msgid "Error loading metadata-viewer dialog."
-msgstr ""
+msgstr "Hiba a metaadat-megjelenítő párbeszédablak betöltésekor."
 
 #: ../plug-ins/metadata/metadata-viewer.c:248
 #, c-format
@@ -12248,7 +12255,6 @@ msgid "(%lu more character(s))"
 msgstr "(még %lu karakter)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:499
-#| msgid "Parameters"
 msgid " meter"
 msgstr " méter"
 
@@ -12789,33 +12795,3 @@ msgstr "La_polvasó/kamera…"
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Adatok átvitele a lapolvasóról/kameráról"
-
-#~ msgid "CMY"
-#~ msgstr "CMY"
-
-#~ msgid "cyan-k"
-#~ msgstr "ciánkék-k"
-
-#~ msgid "magenta-k"
-#~ msgstr "bíbor-k"
-
-#~ msgid "yellow-k"
-#~ msgstr "sárga-k"
-
-#~ msgid "Cyan_K"
-#~ msgstr "Ciánkék_K"
-
-#~ msgid "Magenta_K"
-#~ msgstr "Bíborvörös_K"
-
-#~ msgid "Yellow_K"
-#~ msgstr "Sárga_K"
-
-#~ msgid "HEIF"
-#~ msgstr "HEIF"
-
-#~ msgid "Creator keyword data not nul-terminated"
-#~ msgstr "A létrehozó kulcsszóadatok nem nullal végződőek"
-
-#~ msgid "Invalid bitmap type %d in channel information chunk"
-#~ msgstr "Érvénytelen %d bittérkép-típus a csatornainformációkban"
