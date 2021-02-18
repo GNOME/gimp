@@ -1,5 +1,5 @@
 # Hungarian translation for gimp-python.
-# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2012, 2013, 2014, 2018, 2019, 2020 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2012, 2013, 2014, 2018, 2019, 2020, 2021 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-python package.
 #
 # Andras Timar <timar at gnome dot hu>, 2001, 2003.
@@ -7,21 +7,21 @@
 # Laszlo Dvornik <dvornik at gnome dot hu>, 2004.
 # Arpad Biro <biro arpad  at gmail dot com>, 2004, 2007, 2008.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2012.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2019, 2020.
-# Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2019, 2020, 2021.
+# Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-13 17:50+0000\n"
-"PO-Revision-Date: 2020-02-13 19:01+0100\n"
-"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2021-02-18 06:43+0000\n"
+"PO-Revision-Date: 2021-02-18 07:47+0100\n"
+"Last-Translator: Balázs Meskó <mesko.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 19.04.3\n"
+"X-Generator: Lokalize 19.12.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
@@ -111,47 +111,47 @@ msgstr "Használandó színátmenet"
 msgid "File Name"
 msgstr "Fájlnév"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "A kép hisztogramot exportálja szövegfájlba (CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
 msgid "_Export histogram..."
 msgstr "Hisztogram _exportálása…"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
 msgid "_Image"
 msgstr "_Kép"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "_Drawable"
 msgstr "_Rajzolható"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "Histogram _File"
 msgstr "Hisztogram _fájl"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
 msgid "_Bucket Size"
 msgstr "Vö_dör mérete"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
 msgid "Sample _Average"
 msgstr "Minta átl_ag"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Output format"
 msgstr "Kimeneti formátum"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Pixel count"
 msgstr "Képpontszám"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "Normalized"
 msgstr "Normalizált"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
 msgid "Percent"
 msgstr "Százalék"
 
@@ -458,7 +458,6 @@ msgid "Spyro Layer"
 msgstr "Spiro réteg"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
-#| msgid "Spyrograph"
 msgid "Spyro Path"
 msgstr "Spiro útvonal"
 
@@ -557,11 +556,11 @@ msgstr "Epitrochoid"
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1395
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1397
 msgid "Curve Type"
 msgstr "Görbe típusa"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1396
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1398
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -569,22 +568,25 @@ msgstr ""
 "Az epitrochoid minta olyan, mint amikor egy mozgó fogaskerék egy fix "
 "fogaskerék körül forog."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1401
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1403
 msgid "Tool"
 msgstr "Eszköz"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1402
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
+#| msgid ""
+#| "The tool with which to draw the pattern.The Preview tool just draws "
+#| "quickly."
 msgid ""
-"The tool with which to draw the pattern.The Preview tool just draws quickly."
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Az eszköz, amellyel ki kell rajzolni a mintát. Az Előnézet eszköz csak "
 "gyorsan rajzol."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1407
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
 msgid "Long Gradient"
 msgstr "Hosszú színátmenet"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1411
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -595,11 +597,11 @@ msgstr ""
 "illeszkedjen a minta hosszához), amely a színátmenet-eszköz beállításaiban "
 "szereplő jelenlegi színátmenetre és ismétlési módra épül."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1429
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Adja meg a mintát a következő lapok egyikének használatával:"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1433
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -611,7 +613,7 @@ msgstr ""
 "megtalálhatóak a játékkészletetekben. Ha követi a játékkészletek leírásaiban "
 "lévő utasításokat, akkor az eredmények hasonlóak lesznek."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1455
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -619,12 +621,12 @@ msgstr ""
 "A rögzített fogaskerék fogainak száma. A rögzített fogaskerék mérete arányos "
 "a fogak számával."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1458
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1484
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1460
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1486
 msgid "Fixed Gear Teeth"
 msgstr "Rögzített fogaskerék fog"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1464
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1466
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -632,16 +634,16 @@ msgstr ""
 "A mozgó fogaskerék fogainak száma. A mozgó fogaskerék mérete arányos a fogak "
 "számával."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1467
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1489
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1469
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1491
 msgid "Moving Gear Teeth"
 msgstr "Mozgó fogaskerék fog"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1472
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
 msgid "Hole percent"
 msgstr "Furat százaléka"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1473
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -649,11 +651,11 @@ msgstr ""
 "Milyen messze van a furat a mozgó fogaskerék közepétől. A 100% azt jelenti, "
 "hogy a furat a fogaskerék szélén van."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1494
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
 msgid "Hole Number"
 msgstr "Furat száma"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1495
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -661,69 +663,68 @@ msgstr ""
 "Az 1-es furat a fogaskerék szélénél van. A maximális furatszám a középpont "
 "közelében van. A maximális furatszám minden egyes fogaskeréknél különböző."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "Flower Petals"
 msgstr "Virágszirmok"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
-#| msgid "Number of sides of the shape."
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "The number of petals in the pattern."
 msgstr "A szirmok száma a mintában."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1511
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
 msgid "Petal Skip"
 msgstr "Szirom kihagyása"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1512
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "A szirmok száma a következő szirom rajzolásához való lépéshez."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1517
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
 msgid "Hole Radius(%)"
 msgstr "Lyuk sugara (%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1518
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
-"A minta közepén lévő lyuk sugara, ahol semmi sem lesz rajzolva. A minta"
-" méretének százalékában van megadva. A 0 érték nem hoz létre lyukat. A 99"
-" érték egy vékony vonalat eredményez a szélen."
+"A minta közepén lévő lyuk sugara, ahol semmi sem lesz rajzolva. A minta "
+"méretének százalékában van megadva. A 0 érték nem hoz létre lyukat. A 99 "
+"érték egy vékony vonalat eredményez a szélen."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1531
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
 msgid "Width(%)"
 msgstr "Szélesség (%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1532
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1534
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 msgstr ""
-"A minta szélessége a minta méretének százalékaként. Az 1 érték csak egy"
-" vékony mintát fog rajzolni. A 100 érték kitölti a teljes rögzített"
-" fogaskereket."
+"A minta szélessége a minta méretének százalékaként. Az 1 érték csak egy "
+"vékony mintát fog rajzolni. A 100 érték kitölti a teljes rögzített "
+"fogaskereket."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1542
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
 msgid "Visual"
 msgstr "Látható"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1547
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
 msgid "Toy Kit"
 msgstr "Játékkészlet"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1552
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
 msgid "Gears"
 msgstr "Fogaskerekek"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1564
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1566
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation"
 msgstr "Forgatás"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1565
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1567
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -731,11 +732,11 @@ msgstr ""
 "A minta forgatása fokokban. A mozgó fogaskerék kezdőpozíciója a rögzített "
 "fogaskerékben."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1588
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
 msgid "Shape"
 msgstr "Alak"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1589
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1591
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -750,40 +751,40 @@ msgstr ""
 "A kiválasztás körbeöleli a jelenlegi kiválasztás határait – próbáljon ki "
 "valamilyen nem négyzetes alakzatot."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Sides"
 msgstr "Oldalak"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Number of sides of the shape."
 msgstr "Az alakzat oldalainak száma."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph"
 msgstr "Torzítás"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr ""
 "A rögzített fogaskerékalak torzítása. Csak egyes alakzatokra van hatása."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "A rögzített fogaskerék forgatása szögben"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
 msgid "Margin (px)"
 msgstr "Margó (képpont)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
 msgid "Margin from edge of selection."
 msgstr "Margó a kijelölés szélétől."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1628
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
 msgid "Make width and height equal"
 msgstr "A szélesség és magasság egyenlővé tétele"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1632
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -792,11 +793,11 @@ msgstr ""
 "kiválasztást. Ha be van jelölve, akkor a minta egyforma szélességű és "
 "magasságú lesz, valamint középre lesz igazítva."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1654
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1656
 msgid "Re_draw"
 msgstr "Újra_rajzolás"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1655
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -804,56 +805,56 @@ msgstr ""
 "Ha változtat egy eszköz beállításain, változtat a színen vagy változtat a "
 "kijelölésen, akkor nyomja ezt meg, hogy megnézze a minta előnézetet."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
 msgid "_Reset"
 msgstr "_Visszaállítás"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1658
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
 msgid "_Cancel"
 msgstr "_Mégse"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
 msgid "_OK"
 msgstr "_Rendben"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1665
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1667
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 msgstr ""
-"Válassza ki, hogy új rétegként mentse, újrarajzolja a legutolsó aktív rétegen"
-" vagy útvonalba mentse"
+"Válassza ki, hogy új rétegként mentse, újrarajzolja a legutolsó aktív "
+"rétegen vagy útvonalba mentse"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1677
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
 msgid "Spyrogimp"
 msgstr "Spirogimp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1686
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2191
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Spirográfok rajzolása a jelenlegi eszköz beállításaival és kijelölésével."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1699
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1701
 msgid "Curve Pattern"
 msgstr "Ívminta"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1702
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1704
 msgid "Fixed Gear"
 msgstr "Rögzített fogaskerék"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1705
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1707
 msgid "Size"
 msgstr "Méret"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2039
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2047
 msgid "Rendering Pattern"
 msgstr "Minta megjelenítése"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2051
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2059
 msgid "Please wait : Rendering Pattern"
 msgstr "Kis türelmet: Minta megjelenítése"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2160
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
 msgid "Spyrogimp..."
 msgstr "Spirogimp…"
