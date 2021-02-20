@@ -2361,6 +2361,8 @@ if test "x$enable_python" != xno; then
 
   GIMP_DETECT_CFLAGS(PYGIMP_EXTRA_CFLAGS, '-fno-strict-aliasing')
   AC_SUBST(PYGIMP_EXTRA_CFLAGS)
+
+  MIME_TYPES="$MIME_TYPES;image/openraster"
 fi
 AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 
