@@ -2287,12 +2287,10 @@ GOAT_EXERCISES="goat-exercise-c$BUILD_EXEEXT"
 
 # By default, we want packagers to install Python plug-ins to get the
 # optimum experience. --with-python=yes will check for a Python 3
-# interpreter and PyGObject, and fails without.
-# --with-python=force will install the plug-ins even though the
-# dependencies are not found at build time. It is up to the packager to
-# ensure they are available at run time. This can be useful in
-# particular when cross-compiling since anyway the interpreter is not
-# useful at build time.
+# interpreter and PyGObject, but still succeeds without, simply
+# outputting a warning (these are runtime not build dependencies).
+# This can be useful in particular when cross-compiling since anyway the
+# interpreter is not useful at build time.
 # --with-python=no won't install Python plug-ins. It is discouraged.
 AC_ARG_WITH(python,
             [  --with-python=no|yes install Python 3 plug-ins (default=yes)], ,
@@ -2324,6 +2322,7 @@ WARNING: ${warning_python}
   AC_SUBST(PYBIN_PATH)
 
   GOAT_EXERCISES="$GOAT_EXERCISES:goat-exercise-py3.py"
+  MIME_TYPES="$MIME_TYPES;image/openraster"
 else
   with_python="no (disabled)"
 fi

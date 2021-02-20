@@ -959,6 +959,8 @@ if have_python
     warning(python_warning)
     warnings += python_warning
   endif
+
+  MIMEtypes += 'image/openraster'
 endif
 
 ## Javascript
