@@ -2311,7 +2311,7 @@ gimp_image_set_active_vectors (GimpImage   *image,
  *          The list of selected layers in the image.
  *          The returned value must be freed with g_free().
  *
- * Since: 2.10.20
+ * Since: 3.0.0
  **/
 GimpLayer **
 gimp_image_get_selected_layers (GimpImage *image,
@@ -2341,6 +2341,51 @@ gimp_image_get_selected_layers (GimpImage *image,
   gimp_value_array_unref (return_vals);
 
   return layers;
+}
+
+/**
+ * gimp_image_set_selected_layers:
+ * @image: The image.
+ * @num_layers: The number of layers to select.
+ * @layers: (array length=num_layers) (element-type GimpLayer): The list of layers to select.
+ *
+ * Sets the specified image's selected layers.
+ *
+ * The layers are set as the selected layers in the image. Any previous
+ * selected layers or channels are unselected. An exception is a
+ * previously existing floating selection, in which case this procedure
+ * will return an execution error.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0.0
+ **/
+gboolean
+gimp_image_set_selected_layers (GimpImage        *image,
+                                gint              num_layers,
+                                const GimpLayer **layers)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_INT, num_layers,
+                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-set-selected-layers",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
 }
 
 /**

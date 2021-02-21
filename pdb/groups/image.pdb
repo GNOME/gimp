@@ -1824,7 +1824,7 @@ sub image_get_selected_layers {
 This procedure returns the list of selected layers in the specified image.
 HELP
 
-    &jehan_pdb_misc('2020', '2.10.20');
+    &jehan_pdb_misc('2020', '3.0.0');
 
     @inargs = (
         { name => 'image', type => 'image',
@@ -1884,6 +1884,46 @@ HELP
         code => <<'CODE'
 {
   active_layer = gimp_image_get_active_layer (image);
+}
+CODE
+    );
+}
+
+sub image_set_selected_layers {
+    $blurb = "Sets the specified image's selected layers.";
+
+    $help = <<'HELP';
+The layers are set as the selected layers in the image. Any previous
+selected layers or channels are unselected. An exception is a previously
+existing floating selection, in which case this procedure will return an
+execution error.
+HELP
+
+    &jehan_pdb_misc('2021', '3.0.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'layers', type => 'layerarray',
+          desc => 'The list of layers to select',
+          no_validate => 1,
+          array => { name => 'num_layers',
+                     type => '0 <= int32',
+                     desc => 'The number of layers to select' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GList *selected_layers = NULL;
+  gint   i;
+
+  for (i = 0; i < num_layers; i++)
+    selected_layers = g_list_prepend (selected_layers,
+                                      GIMP_LAYER (layers[i]));
+
+  gimp_image_set_selected_layers (image, selected_layers);
+  g_list_free (selected_layers);
 }
 CODE
     );
@@ -3116,7 +3156,7 @@ CODE
             image_get_active_layer image_set_active_layer
             image_get_active_channel image_set_active_channel
             image_get_active_vectors image_set_active_vectors
-            image_get_selected_layers
+            image_get_selected_layers image_set_selected_layers
             image_get_selection
             image_get_component_active image_set_component_active
             image_get_component_visible image_set_component_visible

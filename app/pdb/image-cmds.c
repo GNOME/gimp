@@ -1992,6 +1992,40 @@ image_get_selected_layers_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+image_set_selected_layers_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint num_layers;
+  const GimpLayer **layers;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  num_layers = g_value_get_int (gimp_value_array_index (args, 1));
+  layers = (const GimpLayer **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
+
+  if (success)
+    {
+      GList *selected_layers = NULL;
+      gint   i;
+
+      for (i = 0; i < num_layers; i++)
+        selected_layers = g_list_prepend (selected_layers,
+                                          GIMP_LAYER (layers[i]));
+
+      gimp_image_set_selected_layers (image, selected_layers);
+      g_list_free (selected_layers);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 image_get_selection_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
@@ -4703,6 +4737,41 @@ register_image_procs (GimpPDB *pdb)
                                                                  "The list of selected layers in the image.",
                                                                  GIMP_TYPE_LAYER,
                                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-set-selected-layers
+   */
+  procedure = gimp_procedure_new (image_set_selected_layers_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-set-selected-layers");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the specified image's selected layers.",
+                                  "The layers are set as the selected layers in the image. Any previous selected layers or channels are unselected. An exception is a previously existing floating selection, in which case this procedure will return an execution error.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2021");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("num-layers",
+                                                 "num layers",
+                                                 "The number of layers to select",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("layers",
+                                                             "layers",
+                                                             "The list of layers to select",
+                                                             GIMP_TYPE_LAYER,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

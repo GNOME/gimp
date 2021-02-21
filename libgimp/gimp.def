@@ -485,6 +485,7 @@ EXPORTS
 	gimp_image_set_file
 	gimp_image_set_metadata
 	gimp_image_set_resolution
+	gimp_image_set_selected_layers
 	gimp_image_set_tattoo_state
 	gimp_image_set_unit
 	gimp_image_thaw_channels
