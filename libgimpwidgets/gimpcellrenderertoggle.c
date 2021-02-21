@@ -441,13 +441,13 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
 
           gtk_style_context_get_color (context, state, &color);
           gdk_cairo_set_source_rgba (cr, &color);
-          cairo_set_line_width (cr, 1.5);
+          cairo_set_line_width (cr, scale_factor * 1.5);
           cairo_move_to (cr,
-                         toggle_rect.x + toggle_rect.width - 1,
-                         toggle_rect.y + 1);
+                         toggle_rect.x + scale_factor * (toggle_rect.width - 1),
+                         toggle_rect.y + scale_factor);
           cairo_line_to (cr,
-                         toggle_rect.x + 1,
-                         toggle_rect.y + toggle_rect.height - 1);
+                         toggle_rect.x + scale_factor,
+                         toggle_rect.y + scale_factor * (toggle_rect.height - 1));
           cairo_stroke (cr);
         }
     }
