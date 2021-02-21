@@ -62,9 +62,9 @@ if xmllint.found()
   run_target('validate_menus',
     command: [
       xmllint,
-      '--noout',
+      '--noout', '--valid',
       '--path', meson.current_source_dir(),
-      '@INPUT@', menus_files,
+      menus_files,
     ],
   )
 endif
