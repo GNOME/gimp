@@ -167,12 +167,6 @@ gimp_guide_tool_button_release (GimpTool              *tool,
       for (i = 0; i < guide_tool->n_guides; i++)
         {
           GimpGuideToolGuide *guide = &guide_tool->guides[i];
-          gint                max_position;
-
-          if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
-            max_position = gimp_image_get_height (image);
-          else
-            max_position = gimp_image_get_width (image);
 
           n_non_custom_guides += ! guide->custom;
 
