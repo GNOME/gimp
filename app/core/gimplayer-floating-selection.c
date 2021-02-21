@@ -217,6 +217,7 @@ floating_sel_activate_drawable (GimpLayer *layer)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
+  GList        *selected_drawables;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (gimp_layer_is_floating_sel (layer));
@@ -230,24 +231,21 @@ floating_sel_activate_drawable (GimpLayer *layer)
     {
       GimpLayerMask *mask = GIMP_LAYER_MASK (drawable);
 
-      gimp_image_set_active_layer (image, gimp_layer_mask_get_layer (mask));
+      selected_drawables = g_list_prepend (NULL, gimp_layer_mask_get_layer (mask));
+      gimp_image_set_selected_layers (image, selected_drawables);
     }
   else if (GIMP_IS_CHANNEL (drawable))
     {
-      GList *channels = g_list_prepend (NULL, drawable);
-
-      gimp_image_set_selected_channels (image, channels);
-
-      g_list_free (channels);
+      selected_drawables = g_list_prepend (NULL, drawable);
+      gimp_image_set_selected_channels (image, selected_drawables);
     }
   else
     {
-      GList *layers = g_list_prepend (NULL, drawable);
-
-      gimp_image_set_selected_layers (image, layers);
-
-      g_list_free (layers);
+      selected_drawables = g_list_prepend (NULL, drawable);
+      gimp_image_set_selected_layers (image, selected_drawables);
     }
+
+  g_list_free (selected_drawables);
 }
 
 const GimpBoundSeg *

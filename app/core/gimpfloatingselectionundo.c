@@ -101,12 +101,16 @@ gimp_floating_selection_undo_pop (GimpUndo            *undo,
     case GIMP_UNDO_FS_TO_LAYER:
       if (undo_mode == GIMP_UNDO_MODE_UNDO)
         {
+          GList *layers;
+
           /*  Update the preview for the floating selection  */
           gimp_viewable_invalidate_preview (GIMP_VIEWABLE (floating_layer));
 
           gimp_layer_set_floating_sel_drawable (floating_layer,
                                                 floating_sel_undo->drawable);
-          gimp_image_set_active_layer (undo->image, floating_layer);
+          layers = g_list_prepend (NULL, floating_layer);
+          gimp_image_set_selected_layers (undo->image, layers);
+          g_list_free (layers);
 
           gimp_drawable_attach_floating_sel (gimp_layer_get_floating_sel_drawable (floating_layer),
                                              floating_layer);

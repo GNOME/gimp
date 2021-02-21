@@ -161,7 +161,7 @@ text_tool_actions_update (GimpActionGroup *group,
   GimpTextTool     *text_tool  = GIMP_TEXT_TOOL (data);
   GimpDisplay      *display    = GIMP_TOOL (text_tool)->display;
   GimpImage        *image      = gimp_display_get_image (display);
-  GimpLayer        *layer;
+  GList            *layers;
   GimpVectors      *vectors;
   GimpDisplayShell *shell;
   GtkClipboard     *clipboard;
@@ -171,10 +171,10 @@ text_tool_actions_update (GimpActionGroup *group,
   GimpTextDirection direction;
   gint              i;
 
-  layer = gimp_image_get_active_layer (image);
+  layers = gimp_image_get_selected_layers (image);
 
-  if (layer)
-    text_layer = gimp_item_is_text_layer (GIMP_ITEM (layer));
+  if (g_list_length (layers) == 1)
+    text_layer = gimp_item_is_text_layer (GIMP_ITEM (layers->data));
 
   vectors = gimp_image_get_active_vectors (image);
 

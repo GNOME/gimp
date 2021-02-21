@@ -1560,7 +1560,9 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
             {
               GimpStatusbar *statusbar;
 
-              gimp_image_set_active_layer (image, layer);
+              layers = g_list_prepend (NULL, layer);
+              gimp_image_set_selected_layers (image, layers);
+              g_list_free (layers);
 
               statusbar = gimp_display_shell_get_statusbar (shell);
               gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
