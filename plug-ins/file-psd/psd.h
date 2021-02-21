@@ -668,7 +668,8 @@ typedef struct
   guint32               merged_image_start;     /* Merged image pixel data block start address */
   guint32               merged_image_len;       /* Merged image pixel data block length */
   gboolean              no_icc;                 /* Do not use ICC profile */
-  guint16               layer_state;            /* Active layer number counting from bottom up */
+  guint16               layer_state;            /* Active layer index counting from bottom up */
+  GList                *layer_selection;        /* Selected layer IDs (GIMP layer tattoos) */
   GPtrArray            *alpha_names;            /* Alpha channel names */
   PSDchanneldata      **alpha_display_info;     /* Alpha channel display info */
   guint16               alpha_display_count;    /* Number of alpha channel display info recs */

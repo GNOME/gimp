@@ -223,6 +223,12 @@ static gint     load_resource_1058     (const PSDimageres     *res_a,
                                         FILE                  *f,
                                         GError               **error);
 
+static gint     load_resource_1069     (const PSDimageres     *res_a,
+                                        GimpImage             *image,
+                                        PSDimage              *img_a,
+                                        FILE                  *f,
+                                        GError               **error);
+
 static gint     load_resource_1077     (const PSDimageres     *res_a,
                                         GimpImage             *image,
                                         PSDimage              *img_a,
@@ -389,6 +395,11 @@ load_image_resource (PSDimageres  *res_a,
 
           case PSD_EXIF_DATA:
             load_resource_1058 (res_a, image, f, error);
+            break;
+
+          case PSD_LAYER_SELECT_ID:
+            if (! img_a->merged_image_only)
+              load_resource_1069 (res_a, image, img_a, f, error);
             break;
 
           case PSD_XMP_DATA:
@@ -1295,6 +1306,47 @@ load_resource_1058 (const PSDimageres  *res_a,
   g_free (name);
 
   g_free (res_data);
+  return 0;
+}
+
+static gint
+load_resource_1069 (const PSDimageres  *res_a,
+                    GimpImage          *image,
+                    PSDimage           *img_a,
+                    FILE               *f,
+                    GError            **error)
+{
+  guint16 layer_count;
+  gint    i;
+
+  IFDBG(2) g_debug ("Process image resource block: 1069: Layer Selection ID(s)");
+
+  if (fread (&layer_count, 2, 1, f) < 1)
+    {
+      psd_set_error (feof (f), errno, error);
+      return -1;
+    }
+  layer_count = GUINT16_FROM_BE (layer_count);
+
+  /* This should probably not happen, but just in case the block is
+   * duplicated, let's just free the previous selection.
+   */
+  g_list_free (img_a->layer_selection);
+  img_a->layer_selection = NULL;
+
+  for (i = 0; i < layer_count; i++)
+    {
+      guint32 layer_id;
+
+      if (fread (&layer_id, 4, 1, f) < 1)
+        {
+          psd_set_error (feof (f), errno, error);
+          return -1;
+        }
+      layer_id = GUINT32_FROM_BE (layer_id);
+      img_a->layer_selection = g_list_prepend (img_a->layer_selection, GINT_TO_POINTER (layer_id));
+    }
+
   return 0;
 }
 

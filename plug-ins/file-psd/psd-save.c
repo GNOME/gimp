@@ -603,9 +603,7 @@ save_resources (FILE      *fd,
   GList        *iter;
   gint          i;
   gchar        *fileName;            /* Image file name */
-  GimpLayer    *ActLayer;            /* The active layer */
-  guint         nActiveLayer = 0;    /* Number of the active layer */
-  gboolean      ActiveLayerPresent;  /* TRUE if there's an active layer */
+  GList        *SelLayers;           /* The selected layers */
 
   glong         eof_pos;             /* Position for End of file */
   glong         rsc_pos;             /* Position for Lengths of Resources section */
@@ -624,34 +622,9 @@ save_resources (FILE      *fd,
   fileName = g_file_get_path (gimp_image_get_file (image));
   IFDBG printf ("\tImage title: %s\n", fileName);
 
-  /* Get the active layer number id */
+  /* Get the selected layers */
 
-  ActLayer = gimp_image_get_active_layer (image);
-  IFDBG printf ("\tCurrent layer id: %d\n",
-                gimp_item_get_id (GIMP_ITEM (ActLayer)));
-
-  ActiveLayerPresent = FALSE;
-  for (iter = PSDImageData.lLayers, i = 0;
-       iter;
-       iter = g_list_next (iter), i++)
-    {
-      if (ActLayer == ((PSD_Layer *) iter->data)->layer)
-        {
-          nActiveLayer = PSDImageData.nLayers - i - 1;
-          ActiveLayerPresent = TRUE;
-          break;
-        }
-    }
-
-  if (ActiveLayerPresent)
-    {
-      IFDBG printf ("\t\tActive layer is number %d\n", nActiveLayer);
-    }
-  else
-    {
-      IFDBG printf ("\t\tNo active layer\n");
-    }
-
+  SelLayers = gimp_image_list_selected_layers (image);
 
   /* Here's where actual writing starts */
 
@@ -848,22 +821,53 @@ save_resources (FILE      *fd,
     write_gint16 (fd, psd_unit, "height unit");
   }
 
-  /* --------------- Write Active Layer Number --------------- */
+  /* --------------- Write Selected Layers --------------- */
 
-  if (ActiveLayerPresent)
+  if (SelLayers)
     {
+      if (g_list_length (SelLayers) == 1)
+        {
+          /* Write the Layer State Information (0x0400) if and only if
+           * there is exactly one selected layer.
+           * Unless mistaken, this block does not seem used for multiple
+           * layer selected. It seems anyway redundant with the Layer
+           * Selection ID(s) block (0x042D) which is more recent
+           * (Photoshop CS2) but it's probably a good idea to store both
+           * information.
+           */
+          for (iter = PSDImageData.lLayers, i = 0;
+               iter;
+               iter = g_list_next (iter), i++)
+            {
+              if (SelLayers->data == ((PSD_Layer *) iter->data)->layer)
+                {
+                  xfwrite (fd, "8BIM", 4, "imageresources signature");
+                  write_gint16 (fd, 0x0400, "0x0400 Id"); /* 1024 */
+                  /* write_pascalstring (fd, Name, "Id name"); */
+                  write_gint16 (fd, 0, "Id name"); /* Set to null string (two zeros) */
+                  write_gint32 (fd, sizeof (gint16), "0x0400 resource size");
+
+                  /* Layer State Information uses the layer index. */
+                  write_gint16 (fd, PSDImageData.nLayers - i - 1, "active layer");
+
+                  IFDBG printf ("\tTotal length of 0x0400 resource: %d\n", (int) sizeof (gint16));
+                  break;
+                }
+            }
+        }
+
+      /* Write the Layer Selection ID(s) block when there is at least
+       * one selected layer or more.
+       */
       xfwrite (fd, "8BIM", 4, "imageresources signature");
-      write_gint16 (fd, 0x0400, "0x0400 Id"); /* 1024 */
-      /* write_pascalstring (fd, Name, "Id name"); */
+      write_gint16 (fd, 0x042D, "0x042D Id"); /* 1069 */
       write_gint16 (fd, 0, "Id name"); /* Set to null string (two zeros) */
-      write_gint32 (fd, sizeof (gint16), "0x0400 resource size");
-
-      /* Save title as gint16 (length always even) */
-
-      write_gint16 (fd, nActiveLayer, "active layer");
-
-      IFDBG printf ("\tTotal length of 0x0400 resource: %d\n", (int) sizeof (gint16));
+      write_gint32 (fd, sizeof (gint16) + sizeof (gint32) * g_list_length (SelLayers), "0x0400 resource size");
+      write_gint16 (fd, g_list_length (SelLayers), "2 bytes count");
+      for (iter = SelLayers; iter; iter = iter->next)
+        write_gint32 (fd, GPOINTER_TO_INT (gimp_item_get_tattoo (iter->data)), "4 bytes layer ID");
     }
+  g_list_free (SelLayers);
 
   /* --------------- Write ICC profile data ------------------- */
   {
@@ -1212,6 +1216,11 @@ save_layer_and_mask (FILE      *fd,
       write_datablock_luni (fd, layerName, "luni extra data block");
 
       g_free (layerName);
+
+      /* Layer ID */
+      xfwrite (fd, "8BIMlyid", 8, "lyid signature");
+      write_gint32 (fd, 4, "lyid size");
+      write_gint32 (fd, gimp_item_get_tattoo (GIMP_ITEM (psd_layer->layer)), "Layer ID");
 
       /* Layer color tag */
       xfwrite (fd, "8BIMlclr", 8, "sheet color signature");

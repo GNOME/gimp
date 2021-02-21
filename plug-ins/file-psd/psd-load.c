@@ -1167,6 +1167,7 @@ add_image_resources (GimpImage *image,
   /* Initialise image resource variables */
   img_a->no_icc = FALSE;
   img_a->layer_state = 0;
+  img_a->layer_selection = NULL;
   img_a->alpha_names = NULL;
   img_a->alpha_display_info = NULL;
   img_a->alpha_display_count = 0;
@@ -1287,9 +1288,9 @@ add_layers (GimpImage *image,
   gint32                lm_y;                  /* Layer mask y */
   gint32                lm_w;                  /* Layer mask width */
   gint32                lm_h;                  /* Layer mask height */
-  GimpLayer            *layer        = NULL;
-  GimpLayerMask        *mask         = NULL;
-  GimpLayer            *active_layer = NULL;
+  GimpLayer            *layer           = NULL;
+  GimpLayerMask        *mask            = NULL;
+  GList                *selected_layers = NULL;
   gint                  lidx;                  /* Layer index */
   gint                  cidx;                  /* Channel index */
   gint                  rowi;                  /* Row index */
@@ -1660,10 +1661,21 @@ add_layers (GimpImage *image,
                     }
                 }
 
-              /* Remember the active layer ID */
-              if (lidx == img_a->layer_state)
+              /* Remember the selected layers:
+               * - Layer Selection ID(s) (0x042D) are prioritary;
+               * - Layer state information (0x0400) is used instead
+               *   otherwise.
+               */
+              if (img_a->layer_selection)
                 {
-                  active_layer = layer;
+                  if (g_list_find (img_a->layer_selection, GINT_TO_POINTER (lyr_a[lidx]->id)) != NULL)
+                    {
+                      selected_layers = g_list_prepend (selected_layers, layer);
+                    }
+                }
+              else if (lidx == img_a->layer_state)
+                {
+                  selected_layers = g_list_prepend (selected_layers, layer);
                 }
 
               /* Set the layer data */
@@ -1846,9 +1858,23 @@ add_layers (GimpImage *image,
   g_free (lyr_a);
   g_array_free (parent_group_stack, FALSE);
 
-  /* Set the active layer */
-  if (active_layer != NULL)
-    gimp_image_set_active_layer (image, active_layer);
+  /* Set the selected layers */
+  if (selected_layers)
+    {
+      GimpLayer **sel_layers;
+      GList      *list;
+      gint        i;
+
+      sel_layers = g_new0 (GimpLayer *, g_list_length (selected_layers));
+      for (list = selected_layers, i = 0; list; list = list->next, i++)
+        sel_layers[i] = list->data;
+      gimp_image_set_selected_layers (image, g_list_length (selected_layers),
+                                      (const GimpLayer **) sel_layers);
+
+      g_list_free (selected_layers);
+      g_free (sel_layers);
+    }
+  g_list_free (img_a->layer_selection);
 
   return 0;
 }
