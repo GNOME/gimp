@@ -431,6 +431,8 @@ static void     gimp_tool_rectangle_adjust_coord    (GimpToolRectangle     *rect
                                                      gdouble                coord_y_input,
                                                      gdouble               *coord_x_output,
                                                      gdouble               *coord_y_output);
+static void     gimp_tool_rectangle_recalculate_center_xy
+                                                    (GimpToolRectangle     *rectangle);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpToolRectangle, gimp_tool_rectangle,
@@ -1059,6 +1061,8 @@ gimp_tool_rectangle_notify (GObject    *object,
     {
       gimp_tool_rectangle_update_int_rect (rectangle);
 
+      gimp_tool_rectangle_recalculate_center_xy (rectangle);
+
       gimp_tool_rectangle_update_options (rectangle);
     }
   else if (! strcmp  (pspec->name, "x") &&
@@ -1547,8 +1551,7 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
     }
 
   /* We must update this. */
-  private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
-  private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
+  gimp_tool_rectangle_recalculate_center_xy (rectangle);
 
   gimp_tool_rectangle_update_options (rectangle);
 
@@ -1825,8 +1828,7 @@ gimp_tool_rectangle_key_press (GimpToolWidget *widget,
 
   gimp_tool_rectangle_update_with_coord (rectangle, new_x, new_y);
 
-  private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
-  private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
+  gimp_tool_rectangle_recalculate_center_xy (rectangle);
 
   gimp_tool_rectangle_update_options (rectangle);
 
@@ -2190,8 +2192,7 @@ gimp_tool_rectangle_synthesize_motion (GimpToolRectangle *rectangle,
   gimp_tool_rectangle_update_with_coord (rectangle, new_x, new_y);
 
   /* We must update this. */
-  private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
-  private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
+  gimp_tool_rectangle_recalculate_center_xy (rectangle);
 
   gimp_tool_rectangle_update_options (rectangle);
 
@@ -3845,6 +3846,15 @@ gimp_tool_rectangle_adjust_coord (GimpToolRectangle *rectangle,
       *coord_y_output = coord_y_input;
       break;
     }
+}
+
+static void
+gimp_tool_rectangle_recalculate_center_xy (GimpToolRectangle *rectangle)
+{
+  GimpToolRectanglePrivate *private = rectangle->private;
+
+  private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
+  private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
 }
 
 
