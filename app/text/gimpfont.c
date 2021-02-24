@@ -428,13 +428,13 @@ gimp_font_get_sample_string (PangoContext         *context,
     /* CJK are first because fonts that support these characters
      * presumably are primarily designed for it.
      *
-     * Though not a universal rules, most fonts targetting Korean will
+     * Though not a universal rules, most fonts targeting Korean will
      * also have the ideographs as they were used historically (and
      * still in some cases). As for Japanese, ideographs are still
      * definitely used daily. After all the block is called "*CJK*
      * (Chinese-Japanese-Korean) Unified Ideographs". So let's give the
      * Chinese representation less priority towards finding
-     * Korean/Japanese targetting.
+     * Korean/Japanese targeting.
      * Then we prioritize Korean because many fonts for Korean also
      * design Hiragana/Katakana blocks. On the other hand, I could see
      * very few (none so far) Japanese fonts designing also Hangul

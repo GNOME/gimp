@@ -550,7 +550,7 @@ gimp_image_prop_view_realize (GimpImagePropView *view,
                               gpointer           user_data)
 {
   /* Ugly trick to avoid extra-wide dialog at construction because of
-   * overlong file path. Basically I give a reasonnable max size at
+   * overlong file path. Basically I give a reasonable max size at
    * construction (if the path is longer, it is just ellipsized per set
    * rules), then once the widget is realized, I remove the max size,
    * allowing the widget to grow wider if ever the dialog were

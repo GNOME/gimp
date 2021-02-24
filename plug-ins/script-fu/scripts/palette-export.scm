@@ -62,7 +62,7 @@
   )
 
 ; -----------------------------------------------------------------------------
-; Color convertors
+; Color converters
 ; -----------------------------------------------------------------------------
 
 ; The standard way for representing a color would be a list of red

@@ -175,7 +175,7 @@ gimp_label_spin_init (GimpLabelSpin *spin)
 
   /* We want the adjustment to exist at init so that construction
    * properties can apply (default values are bogus but should be
-   * properly overrided with expected values if the object was created
+   * properly overridden with expected values if the object was created
    * with gimp_label_spin_new().
    */
   priv->spin_adjustment = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 10.0, 0.0);

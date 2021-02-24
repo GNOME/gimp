@@ -100,7 +100,7 @@ header files installed.
      (for instance "v1.6.1" tag at time of writing), or simply install
      from a tarball or from your favorite package manager.
 
-     In particular, do NOT install tags or release tarballs versionned
+     In particular, do NOT install tags or release tarballs versioned
      "v2.y.z". GIMP depends on the version 1 of libmypaint and is
      incompatible with the version 2 (which is still experimental anyway
      and has no stable release at time of writing).
@@ -113,7 +113,7 @@ header files installed.
      last tag "v1.y.z" (e.g. "v1.3.1" at time of writing).
      In particular do NOT install from `master` branch which installs
      brushes incompatible with GIMP (the `master` branch brushes are
-     targetted to libmypaint upcoming v2, not v1).
+     targeted to libmypaint upcoming v2, not v1).
 
      Also this is a data packages and therefore it will install the
      pkg-config file inside `$PREFIX/share/pkgconfig/`. If you install

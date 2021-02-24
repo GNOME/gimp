@@ -91,7 +91,7 @@
           The action search now shows all actions even inactive ones (yet pushed below)
           </_li>
           <_li>
-          Fonts targetted for Korean and Japanese language show appropriate characters
+          Fonts targeted for Korean and Japanese language show appropriate characters
           </_li>
           <_li>
           Different default tools depending on pointer device type

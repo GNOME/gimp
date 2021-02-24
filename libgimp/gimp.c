@@ -734,7 +734,7 @@ gimp_export_iptc (void)
  * preferences. This information can be used by plug-ins wishing to
  * follow user settings for multi-threaded implementations.
  *
- * Returns: the prefered number of threads to use.
+ * Returns: the preferred number of threads to use.
  *
  * Since: 3.0
  **/

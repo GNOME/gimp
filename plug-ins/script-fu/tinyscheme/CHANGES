@@ -162,7 +162,7 @@ Version 1.28
     Dennis Taylor remarked that OP_VALUEPRINT reset sc->value instead
     of preserving it. He submitted a modification which I adopted
     partially. David Hovemeyer sent me many little changes, that you
-    will find in version 1.28, and Partice Stoessel modified the
+    will find in version 1.28, and Patrice Stoessel modified the
     float reader to conform to R5RS.
 
 Version 1.27

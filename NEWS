@@ -149,7 +149,7 @@ User Interface:
       Selection", same as you can Alt+click a mask for showing it
       without triggering a selection change. This allows these
       alternative actions to not be redundant of the equivalent actions
-      but complementary with a slightly different targetting behavior.
+      but complementary with a slightly different targeting behavior.
     * The various interactions with modifiers now catch the exact
       modifier combination they require, hence avoiding interaction
       cases running several actions (e.g. Alt-Ctrl on a layer thumbnail
@@ -257,7 +257,7 @@ Plug-ins:
     gimp_get_num_processors().
   - Improved plug-in debugging helper infrastructure: GIMP_PLUGIN_DEBUG
     has a new `fatal-criticals` option and better defaults. Developer
-    documentation got some rewritting and debugging code benefited from
+    documentation got some rewriting and debugging code benefited from
     refactorization.
 
 Installer:
@@ -328,7 +328,7 @@ User Interface:
       theme variant if available` checkbox, allowing for instance to use
       your system theme in its light variant everywhere except in GIMP.
       This option is checked by default as graphics software are often
-      prefered in dark modes.
+      preferred in dark modes.
     * Symbolic icon themes are now recolored automatically according to
       the theme colors (no theme and icon theme tweaking anymore to end
       up with dark on dark or light on light interfaces), except for
@@ -396,7 +396,7 @@ API:
 
   - `GimpPDB` is now a class to represent the PDB communication channel
     with GIMP. It is a singleton which exist exactly once per running
-    plug-in, hence it is not meant to be manually instanciated and can
+    plug-in, hence it is not meant to be manually instantiated and can
     only be returned by gimp_get_pdb(). It is mostly used to look up
     procedures declared by other plug-ins or by GIMP core, check if a
     given procedure exist and run the procedures.
@@ -430,7 +430,7 @@ API:
     (including the last used values) and generated GUI using
     prop_widgets to plug-ins. This is still a work-in-progress.
     Currently `GimpProcedure` run function is called with a
-    `GimpValueArray` whose values can be transfered into a
+    `GimpValueArray` whose values can be transferred into a
     `GimpProcedureConfig` by calling `gimp_procedure_config_begin_run()`
     or `gimp_procedure_config_begin_export()`.
   - `GimpDisplay` is now a class of its own.
@@ -503,7 +503,7 @@ API:
     which simplify various file handling issues (path formats, encoding,
     etc.) and brings new features (remote access, secure protocol
     support, etc.). We also got rid of the "filename" vs "raw_filename"
-    differenciation in parameters. Hence all libgimp* functions with
+    differentiation in parameters. Hence all libgimp* functions with
     these parameters have been updated as well.
   - gimp_image_metadata_load_finish() is now fully GUI/GTK-code free.
     The first consequence is that it is not in libgimpui anymore, but in
@@ -517,7 +517,7 @@ API:
     call the Preferences-set policy on an image. This may result in a
     dialog being presented to the user if `interactive` is TRUE and
     settings is "Ask what to do".
-    It is unecessary to call these functions when developing a new
+    It is unnecessary to call these functions when developing a new
     GimpLoadProcedure because the core will automatically do the right
     thing and call these on normal image loading workflow.
     Instead if a plug-in calls such GimpLoadProcedure through the PDB,

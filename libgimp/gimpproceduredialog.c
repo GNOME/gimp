@@ -1397,7 +1397,7 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
  *                              exists yet
  * @properties: (nullable) (element-type gchar*): the list of property names.
  *
- * A generic function to be used by various publich functions
+ * A generic function to be used by various public functions
  * gimp_procedure_dialog_fill_*_list(). Note in particular that
  * @container is taken over by this function which may return it or not.
  * @container is assumed to be a floating GtkContainer (i.e. newly

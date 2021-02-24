@@ -965,7 +965,7 @@ simplify_subdivide (const GimpBoundSeg *segs,
       /* start and endpoint are at the same coordinates */
       for (i = start_idx + 1; i < end_idx; i++)
         {
-          /* compare the sqared distances */
+          /* compare the squared distances */
           gint dist = (SQR (segs[i].x1 - segs[start_idx].x1) +
                        SQR (segs[i].y1 - segs[start_idx].y1));
 

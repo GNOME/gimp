@@ -319,7 +319,7 @@ gimp_image_new_copy_drawables (GimpImage *image,
           gimp_item_set_linked (GIMP_ITEM (new_layer),
                                 gimp_item_get_linked (iter->data), FALSE);
 
-          /* Visibility, mode and opacity mimick the source image if
+          /* Visibility, mode and opacity mimic the source image if
            * multiple items are copied. Otherwise we just set them to
            * defaults.
            */

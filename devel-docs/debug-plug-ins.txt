@@ -134,7 +134,7 @@ To get a backtrace for a plug-in in any language:
      ( e.g. ">GIMP_PLUGIN_DEBUG=all,fatal-criticals gimp" )
      Expect GIMP to start normally.
 
-  2. In GIMP, do somthing that would invoke a plugin.
+  2. In GIMP, do something that would invoke a plugin.
 
      Whenever the specified plug-in processes generate log events of
      the specified levels or worse, libgimp will print or offer to print
