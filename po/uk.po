@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-15 21:54+0000\n"
-"PO-Revision-Date: 2021-02-16 12:25+0200\n"
+"POT-Creation-Date: 2021-02-24 11:38+0000\n"
+"PO-Revision-Date: 2021-02-24 14:22+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -100,8 +100,11 @@ msgstr ""
 "(неактивні показано нижче)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#| msgid ""
+#| "Fonts targetted for Korean and Japanese language show appropriate "
+#| "characters"
 msgid ""
-"Fonts targetted for Korean and Japanese language show appropriate characters"
+"Fonts targeted for Korean and Japanese language show appropriate characters"
 msgstr ""
 "Реалізовано показ відповідних символів для шрифтів із корейськими та "
 "японськими ієрогліфами"
@@ -14504,7 +14507,6 @@ msgstr "Було додано позначення декількох шарів
 
 #: ../app/core/gimpimage.c:2840
 #, c-format
-#| msgid "On-canvas gradient editing"
 msgid "Off-canvas guides added in %s"
 msgstr "У %s додано напрямні поза полотном"
 
@@ -19036,7 +19038,7 @@ msgstr "(не змінено)"
 msgid "(none)"
 msgstr "(немає)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1568
+#: ../app/display/gimpdisplayshell-tool-events.c:1570
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Вибрано шар: '%s'"
@@ -21450,7 +21452,7 @@ msgid ""
 msgstr ""
 "Процедуру «%s» було викликано з некоректним рядком UTF-8 для аргументу «%s»."
 
-#: ../app/pdb/image-cmds.c:2400
+#: ../app/pdb/image-cmds.c:2434
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -23816,37 +23818,37 @@ msgstr "Середня точка %d"
 msgid "Gradient Step"
 msgstr "Крок градієнта"
 
-#: ../app/tools/gimpguidetool.c:189
+#: ../app/tools/gimpguidetool.c:183
 msgctxt "undo-type"
 msgid "Remove Guides"
 msgstr "вилучення напрямних"
 
-#: ../app/tools/gimpguidetool.c:190
+#: ../app/tools/gimpguidetool.c:184
 msgctxt "undo-type"
 msgid "Move Guides"
 msgstr "пересування напрямних"
 
-#: ../app/tools/gimpguidetool.c:430
+#: ../app/tools/gimpguidetool.c:424
 msgid "Remove Guides"
 msgstr "Вилучити напрямні"
 
-#: ../app/tools/gimpguidetool.c:431
+#: ../app/tools/gimpguidetool.c:425
 msgid "Remove Guide"
 msgstr "Вилучити напрямну"
 
-#: ../app/tools/gimpguidetool.c:432
+#: ../app/tools/gimpguidetool.c:426
 msgid "Cancel Guide"
 msgstr "Прибрати напрямну"
 
-#: ../app/tools/gimpguidetool.c:469
+#: ../app/tools/gimpguidetool.c:463
 msgid "Move Guide: "
 msgstr "Переміщення напрямної: "
 
-#: ../app/tools/gimpguidetool.c:479
+#: ../app/tools/gimpguidetool.c:473
 msgid "Move Guides: "
 msgstr "Переміщення напрямних: "
 
-#: ../app/tools/gimpguidetool.c:490
+#: ../app/tools/gimpguidetool.c:484
 msgid "Add Guide: "
 msgstr "Додавання напрямних"
 
