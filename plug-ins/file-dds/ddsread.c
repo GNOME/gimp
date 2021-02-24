@@ -526,8 +526,7 @@ read_dds (GFile          *file,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  gimp_image_set_active_layer (image, layers->data);
-  g_list_free (layers);
+  gimp_image_take_selected_layers (image, layers);
 
   *ret_image = image;
 

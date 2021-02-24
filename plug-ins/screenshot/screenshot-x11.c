@@ -456,14 +456,14 @@ add_cursor_image (GimpImage  *image,
   GeglBufferIterator *iter;
   GeglRectangle      *roi;
   GimpLayer          *layer;
-  GimpLayer          *active;
+  GList              *selected;
 
   cursor = XFixesGetCursorImage (GDK_DISPLAY_XDISPLAY (display));
 
   if (!cursor)
     return;
 
-  active = gimp_image_get_active_layer (image);
+  selected = gimp_image_list_selected_layers (image);
 
   layer = gimp_layer_new (image, _("Mouse Pointer"),
                           cursor->width, cursor->height,
@@ -520,7 +520,7 @@ add_cursor_image (GimpImage  *image,
   gimp_layer_set_offsets (layer,
                           cursor->x - cursor->xhot, cursor->y - cursor->yhot);
 
-  gimp_image_set_active_layer (image, active);
+  gimp_image_take_selected_layers (image, selected);
 #endif
 }
 

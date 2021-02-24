@@ -1859,21 +1859,7 @@ add_layers (GimpImage *image,
   g_array_free (parent_group_stack, FALSE);
 
   /* Set the selected layers */
-  if (selected_layers)
-    {
-      GimpLayer **sel_layers;
-      GList      *list;
-      gint        i;
-
-      sel_layers = g_new0 (GimpLayer *, g_list_length (selected_layers));
-      for (list = selected_layers, i = 0; list; list = list->next, i++)
-        sel_layers[i] = list->data;
-      gimp_image_set_selected_layers (image, g_list_length (selected_layers),
-                                      (const GimpLayer **) sel_layers);
-
-      g_list_free (selected_layers);
-      g_free (sel_layers);
-    }
+  gimp_image_take_selected_layers (image, selected_layers);
   g_list_free (img_a->layer_selection);
 
   return 0;

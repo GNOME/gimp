@@ -1004,7 +1004,7 @@ diff (GimpDrawable  *drawable,
   GimpDrawable *gdraw;
   GimpImage    *image;              /* image holding X and Y diff. arrays */
   GimpImage    *new_image;          /* image holding X and Y diff. layers */
-  GimpLayer    *layer_active;          /* currently active layer */
+  GList        *selected_layers;    /* currently selected layers          */
   GimpLayer    *xlayer;
   GimpLayer    *ylayer;  /* individual X and Y layer ID numbers */
   GeglBuffer   *src_buffer;
@@ -1088,8 +1088,8 @@ diff (GimpDrawable  *drawable,
         16-bit pixel value. This is either clever, or a kluge,
         depending on your point of view.  */
 
-  image        = gimp_item_get_image (GIMP_ITEM (drawable));
-  layer_active = gimp_image_get_active_layer (image);
+  image           = gimp_item_get_image (GIMP_ITEM (drawable));
+  selected_layers = gimp_image_list_selected_layers (image);
 
   /* create new image for X,Y diff */
   new_image = gimp_image_new (width, height, GIMP_RGB);
@@ -1113,7 +1113,7 @@ diff (GimpDrawable  *drawable,
   gimp_image_insert_layer (new_image, ylayer, NULL, 1);
   gimp_drawable_fill (GIMP_DRAWABLE (xlayer), GIMP_FILL_BACKGROUND);
   gimp_drawable_fill (GIMP_DRAWABLE (ylayer), GIMP_FILL_BACKGROUND);
-  gimp_image_set_active_layer (image, layer_active);
+  gimp_image_take_selected_layers (image, selected_layers);
 
   dest_format = get_u8_format (draw_xd);
   dest_bytes  = babl_format_get_bytes_per_pixel (dest_format);
