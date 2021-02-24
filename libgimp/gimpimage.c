@@ -287,6 +287,35 @@ gimp_image_list_selected_layers (GimpImage *image)
 }
 
 /**
+ * gimp_image_take_selected_layers:
+ * @image: The image.
+ * @layers: (transfer container): The list of layers to select.
+ *
+ * The layers are set as the selected layers in the image. Any previous
+ * selected layers or channels are unselected. An exception is a previously
+ * existing floating selection, in which case this procedure will return an
+ * execution error.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_image_take_selected_layers (GimpImage *image,
+                                 GList     *layers)
+{
+  GimpLayer **sel_layers;
+  GList      *list;
+  gint        i;
+
+  sel_layers = g_new0 (GimpLayer *, g_list_length (layers));
+  for (list = layers, i = 0; list; list = list->next, i++)
+    sel_layers[i] = list->data;
+
+  gimp_image_set_selected_layers (image, g_list_length (layers),
+                                  (const GimpLayer **) sel_layers);
+  g_list_free (layers);
+}
+
+/**
  * gimp_image_list_channels:
  * @image: The image.
  *
