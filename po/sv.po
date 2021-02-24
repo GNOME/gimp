@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-15 21:54+0000\n"
-"PO-Revision-Date: 2021-02-16 22:39+0100\n"
+"POT-Creation-Date: 2021-02-24 18:05+0000\n"
+"PO-Revision-Date: 2021-02-24 22:49+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -101,7 +101,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
-"Fonts targetted for Korean and Japanese language show appropriate characters"
+"Fonts targeted for Korean and Japanese language show appropriate characters"
 msgstr "Typsnitt som har koreanska och japanska som mål visar lämpliga tecken"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
@@ -18940,7 +18940,7 @@ msgstr "(ren)"
 msgid "(none)"
 msgstr "(ingen)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1568
+#: ../app/display/gimpdisplayshell-tool-events.c:1570
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Lager valt: ”%s”"
@@ -19302,13 +19302,13 @@ msgstr ""
 "Klicka och dra lägger till ett ledigt segment, Klick lägger till ett "
 "polygont segment"
 
-#: ../app/display/gimptoolrectangle.c:566
-#: ../app/display/gimptoolrectangle.c:874
+#: ../app/display/gimptoolrectangle.c:568
+#: ../app/display/gimptoolrectangle.c:876
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Rektangel: "
 
-#: ../app/display/gimptoolrectangle.c:2138
+#: ../app/display/gimptoolrectangle.c:2140
 msgid "Position: "
 msgstr "Position: "
 
@@ -21350,7 +21350,7 @@ msgid ""
 msgstr ""
 "Proceduren ”%s” har anropats med en ogiltig UTF-8-sträng för argumentet ”%s”."
 
-#: ../app/pdb/image-cmds.c:2400
+#: ../app/pdb/image-cmds.c:2434
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -23711,37 +23711,37 @@ msgstr "Mittpunkt %d"
 msgid "Gradient Step"
 msgstr "Gradientsteg"
 
-#: ../app/tools/gimpguidetool.c:189
+#: ../app/tools/gimpguidetool.c:183
 msgctxt "undo-type"
 msgid "Remove Guides"
 msgstr "Ta bort hjälplinjer"
 
-#: ../app/tools/gimpguidetool.c:190
+#: ../app/tools/gimpguidetool.c:184
 msgctxt "undo-type"
 msgid "Move Guides"
 msgstr "Flytta hjälplinjer"
 
-#: ../app/tools/gimpguidetool.c:430
+#: ../app/tools/gimpguidetool.c:424
 msgid "Remove Guides"
 msgstr "Ta bort hjälplinjer"
 
-#: ../app/tools/gimpguidetool.c:431
+#: ../app/tools/gimpguidetool.c:425
 msgid "Remove Guide"
 msgstr "Ta bort hjälplinje"
 
-#: ../app/tools/gimpguidetool.c:432
+#: ../app/tools/gimpguidetool.c:426
 msgid "Cancel Guide"
 msgstr "Avbryt hjälplinje"
 
-#: ../app/tools/gimpguidetool.c:469
+#: ../app/tools/gimpguidetool.c:463
 msgid "Move Guide: "
 msgstr "Flytta hjälplinje: "
 
-#: ../app/tools/gimpguidetool.c:479
+#: ../app/tools/gimpguidetool.c:473
 msgid "Move Guides: "
 msgstr "Flytta hjälplinjer: "
 
-#: ../app/tools/gimpguidetool.c:490
+#: ../app/tools/gimpguidetool.c:484
 msgid "Add Guide: "
 msgstr "Lägg till hjälplinje: "
 
