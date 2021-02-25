@@ -920,6 +920,8 @@ gimp_item_tree_view_blink_lock (GimpItemTreeView *view,
   gtk_tree_view_get_cell_area (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
                                gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
                                &rect);
+  gtk_tree_view_convert_bin_window_to_widget_coords (GIMP_CONTAINER_TREE_VIEW (view)->view,
+                                                     rect.x, rect.y, &rect.x, &rect.y);
   gimp_widget_blink_rect (GTK_WIDGET (GIMP_CONTAINER_TREE_VIEW (view)->view), &rect);
 
   gtk_tree_path_free (path);
@@ -1747,6 +1749,8 @@ gimp_item_tree_view_lock_clicked (GtkCellRendererToggle *toggle,
       gtk_tree_view_get_cell_area (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
                                    gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
                                    &rect);
+      gtk_tree_view_convert_bin_window_to_widget_coords (GIMP_CONTAINER_TREE_VIEW (view)->view,
+                                                         rect.x, rect.y, &rect.x, &rect.y);
       gtk_popover_set_pointing_to (GTK_POPOVER (view->priv->lock_popover), &rect);
 
       gtk_widget_show (view->priv->lock_popover);
