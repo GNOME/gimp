@@ -71,7 +71,6 @@ struct _GimpItemTreeViewPrivate
 
   GtkWidget       *options_box;
   GtkSizeGroup    *options_group;
-  GtkWidget       *multi_selection_label;
 
   GimpItem        *lock_box_item;
   GtkTreePath     *lock_box_path;
@@ -227,10 +226,6 @@ static gboolean gimp_item_tree_view_item_pre_clicked(GimpCellRendererViewable *c
                                                      GdkModifierType           state,
                                                      GimpItemTreeView         *item_view);
 
-static void   gimp_item_tree_view_selection_label_notify (GtkLabel         *label,
-                                                          GParamSpec       *pspec,
-                                                          GimpItemTreeView *view);
-
 static void   gimp_item_tree_view_row_expanded      (GtkTreeView       *tree_view,
                                                      GtkTreeIter       *iter,
                                                      GtkTreePath       *path,
@@ -384,9 +379,18 @@ gimp_item_tree_view_constructed (GObject *object)
   GimpContainerTreeView *tree_view       = GIMP_CONTAINER_TREE_VIEW (object);
   GimpItemTreeView      *item_view       = GIMP_ITEM_TREE_VIEW (object);
   GtkTreeViewColumn     *column;
+  GtkWidget             *lock_image;
+  GtkIconSize            button_icon_size;
   gint                   button_spacing;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gtk_tree_view_set_headers_visible (tree_view->view, TRUE);
+
+  gtk_widget_style_get (GTK_WIDGET (item_view),
+                        "button-icon-size", &button_icon_size,
+                        "button-spacing", &button_spacing,
+                        NULL);
 
   gimp_container_tree_view_connect_name_edited (tree_view,
                                                 G_CALLBACK (gimp_item_tree_view_name_edited),
@@ -427,9 +431,12 @@ gimp_item_tree_view_constructed (GObject *object)
                     item_view);
 
   column = gtk_tree_view_column_new ();
+  lock_image = gtk_image_new_from_icon_name ("system-lock-screen", button_icon_size);
+  gtk_tree_view_column_set_widget (column, lock_image);
+  gtk_widget_show (lock_image);
   gtk_tree_view_insert_column (tree_view->view, column, 1);
 
-  item_view->priv->lock_cell = gimp_cell_renderer_toggle_new ("system-lock-screen");
+  item_view->priv->lock_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_MULTI_LOCK);
   g_object_set (item_view->priv->lock_cell,
                 "xpad", 0,
                 "ypad", 0,
@@ -504,20 +511,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                   GTK_BUTTON (item_view->priv->delete_button),
                                   item_view_class->item_type);
 
-  /* Multi-selection label */
-  item_view->priv->multi_selection_label = gtk_label_new (NULL);
-  gtk_widget_set_name (item_view->priv->multi_selection_label, "treeview");
-  gtk_label_set_selectable (GTK_LABEL (item_view->priv->multi_selection_label), TRUE);
-  gimp_item_tree_view_add_options (item_view, "", item_view->priv->multi_selection_label);
-  gtk_box_set_child_packing (GTK_BOX (item_view->priv->options_box),
-                             gtk_widget_get_parent (item_view->priv->multi_selection_label),
-                             FALSE, FALSE, 0, GTK_PACK_END);
-
   /* Lock box. */
-  gtk_widget_style_get (GTK_WIDGET (item_view),
-                        "button-spacing", &button_spacing,
-                        NULL);
-
   item_view->priv->lock_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
 
   /*  Lock box: content toggle  */
@@ -687,7 +681,7 @@ gimp_item_tree_view_style_updated (GtkWidget *widget)
                 "icon-name", GIMP_ICON_VISIBLE,
                 NULL);
   g_object_set (view->priv->lock_cell,
-                "icon-name", "system-lock-screen",
+                "icon-name", GIMP_ICON_MULTI_LOCK,
                 NULL);
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
@@ -1137,7 +1131,7 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   GtkTreeIter           *iter;
   GimpRGB                color;
   gboolean               has_color;
-  const gchar           *icon_name = "system-lock-screen";
+  const gchar           *icon_name;
   gint                   n_locks;
 
   item_view->priv->inserting_item = TRUE;
@@ -1261,34 +1255,6 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
 
   if (tree_view->priv->options_box)
     gtk_widget_set_sensitive (tree_view->priv->options_box, options_sensitive);
-
-  g_signal_handlers_disconnect_by_func (tree_view->priv->multi_selection_label,
-                    G_CALLBACK (gimp_item_tree_view_selection_label_notify),
-                    tree_view);
-  g_signal_handlers_disconnect_by_func (tree_view->priv->multi_selection_label,
-                    G_CALLBACK (gimp_item_tree_view_selection_label_notify),
-                    tree_view);
-  if (g_list_length (items) > 1)
-    {
-      gchar *str;
-
-      g_signal_connect (tree_view->priv->multi_selection_label, "notify::label",
-                        G_CALLBACK (gimp_item_tree_view_selection_label_notify),
-                        tree_view);
-      g_signal_connect (tree_view->priv->multi_selection_label, "notify::selection-bound",
-                        G_CALLBACK (gimp_item_tree_view_selection_label_notify),
-                        tree_view);
-      str = g_strdup_printf (ngettext ("%d item selected", "%d items selected",
-                                       g_list_length (items)),
-                             g_list_length (items));
-      gtk_label_set_text (GTK_LABEL (tree_view->priv->multi_selection_label), str);
-      g_free (str);
-      gtk_widget_show (tree_view->priv->multi_selection_label);
-    }
-  else
-    {
-      gtk_widget_hide (tree_view->priv->multi_selection_label);
-    }
 
   return success;
 }
@@ -1822,7 +1788,7 @@ gimp_item_tree_view_lock_changed (GimpItem         *item,
   GimpContainerView     *container_view  = GIMP_CONTAINER_VIEW (view);
   GimpContainerTreeView *tree_view       = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
-  const gchar           *icon_name       = "system-lock-screen";
+  const gchar           *icon_name;
   gint                   n_locks;
 
   iter = gimp_container_view_lookup (container_view,
@@ -1969,20 +1935,6 @@ gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
 }
 
 static void
-gimp_item_tree_view_selection_label_notify (GtkLabel         *label,
-                                            GParamSpec       *pspec,
-                                            GimpItemTreeView *view)
-{
-  /* This is a weird trick to make the label follow the color scheme of
-   * selected items in whatever theme is selected. It seems we cannot
-   * link to the color of another widget whose theme we don't control.
-   * Faking selection is the only way I found, though it is quite ugly
-   * semantically.
-   */
-  gtk_label_select_region (label, 0, -1);
-}
-
-static void
 gimp_item_tree_view_update_lock_box (GimpItemTreeView *view,
                                      GimpItem         *item,
                                      GtkTreePath      *path)
@@ -2126,7 +2078,7 @@ gimp_item_tree_view_get_n_locks (GimpItemTreeView *view,
   GList *list;
   gint   n_locks = 0;
 
-  *icon_name = "system-lock-screen";
+  *icon_name = GIMP_ICON_MULTI_LOCK;
 
   for (list = view->priv->locks; list; list = list->next)
     {
