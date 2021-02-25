@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-24 11:38+0000\n"
-"PO-Revision-Date: 2021-02-24 14:22+0200\n"
+"POT-Creation-Date: 2021-02-25 17:18+0000\n"
+"PO-Revision-Date: 2021-02-25 19:52+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -100,9 +100,6 @@ msgstr ""
 "(неактивні показано нижче)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
-#| msgid ""
-#| "Fonts targetted for Korean and Japanese language show appropriate "
-#| "characters"
 msgid ""
 "Fonts targeted for Korean and Japanese language show appropriate characters"
 msgstr ""
@@ -19401,13 +19398,13 @@ msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Клацання+перетягування малює довільну лінію, клацання додає прямий відрізок"
 
-#: ../app/display/gimptoolrectangle.c:566
-#: ../app/display/gimptoolrectangle.c:874
+#: ../app/display/gimptoolrectangle.c:568
+#: ../app/display/gimptoolrectangle.c:876
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Прямокутник: "
 
-#: ../app/display/gimptoolrectangle.c:2138
+#: ../app/display/gimptoolrectangle.c:2140
 msgid "Position: "
 msgstr "Позиція:"
 
@@ -23080,8 +23077,9 @@ msgid "How much to dim everything outside selection"
 msgstr "Міра затемнення усього поза позначеною ділянкою"
 
 #: ../app/tools/gimpcropoptions.c:95
-msgid "Current layers only"
-msgstr "Лише поточні шари"
+#| msgid "_Selected Pixels only"
+msgid "Selected layers only"
+msgstr "Лише позначені шари"
 
 #: ../app/tools/gimpcropoptions.c:96
 msgid "Crop only currently selected layers"
@@ -28581,6 +28579,9 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid "Current layers only"
+#~ msgstr "Лише поточні шари"
 
 #~ msgid ""
 #~ "Corrupt 'gimp-metadata' parasite discovered.\n"
