@@ -2,6 +2,7 @@
 if have_vector_icons
   all_icons = [
     [ 'scalable', symbolic_vector_scalable ],
+    [ 'scalable', 'scalable/gimp-multi-lock-symbolic.svg' ],
     [ '24x24',    symbolic_vector_24 ],
     # [ '64x64',    bitmap_64system ],
     [ '64x64',    bitmap_64_always ],
