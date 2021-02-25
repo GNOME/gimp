@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-24 18:05+0000\n"
-"PO-Revision-Date: 2021-02-24 22:49+0100\n"
+"POT-Creation-Date: 2021-02-25 17:18+0000\n"
+"PO-Revision-Date: 2021-02-25 19:33+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22976,8 +22976,8 @@ msgid "How much to dim everything outside selection"
 msgstr "Hur mycket allt utanför markering ska dämpas"
 
 #: ../app/tools/gimpcropoptions.c:95
-msgid "Current layers only"
-msgstr "Endast aktuella lager"
+msgid "Selected layers only"
+msgstr "Endast markerade lager"
 
 #: ../app/tools/gimpcropoptions.c:96
 msgid "Crop only currently selected layers"
@@ -28468,6 +28468,9 @@ msgstr "rund"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "luddig"
+
+#~ msgid "Current layers only"
+#~ msgstr "Endast aktuella lager"
 
 #~ msgid ""
 #~ "Corrupt 'gimp-metadata' parasite discovered.\n"
