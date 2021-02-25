@@ -1298,7 +1298,8 @@ gimp_highlight_widget (GtkWidget    *widget,
                                                       "gimp-widget-highlight"));
   old_rect = g_object_get_data (G_OBJECT (widget), "gimp-widget-highlight-rect");
 
-  if (highlight && old_highlight && ! gdk_rectangle_equal (rect, old_rect))
+  if (highlight && old_highlight &&
+      rect && old_rect && ! gdk_rectangle_equal (rect, old_rect))
     {
       /* Highlight area changed. */
       gimp_highlight_widget (widget, FALSE, NULL);
