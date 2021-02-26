@@ -9,15 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-09 17:07+0000\n"
-"PO-Revision-Date: 2019-09-10 11:07+0200\n"
+"POT-Creation-Date: 2021-02-13 12:13+0000\n"
+"PO-Revision-Date: 2021-02-13 16:09+0100\n"
 "Last-Translator: Paul Matthijsse <paul.matthijsse@wanadoo.fr>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
@@ -106,47 +106,47 @@ msgstr "Te gebruiken verloop"
 msgid "File Name"
 msgstr "Bestandsnaam"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Exporteert het beeldhistogram naar een tekstbestand (CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
 msgid "_Export histogram..."
 msgstr "_Exporteer histogram..."
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
 msgid "_Image"
 msgstr "Afbeeld_ing"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "_Drawable"
 msgstr "Tekengebie_d"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "Histogram _File"
 msgstr "Histogrambestand"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
 msgid "_Bucket Size"
 msgstr "_Emmergrootte"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
 msgid "Sample _Average"
 msgstr "Monstergemiddelde"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Output format"
 msgstr "Uitvoerformaat"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Pixel count"
 msgstr "Aantal pixels"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "Normalized"
 msgstr "Genormaliseerd"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
 msgid "Percent"
 msgstr "Procent"
 
@@ -452,86 +452,108 @@ msgstr "_X verschuiving van slagschaduw"
 msgid "Drop shadow _Y displacement"
 msgstr "_Y-verschuiving van slagschaduw"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:43
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
 msgid "Spyro Layer"
 msgstr "Spirolaag"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:89
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
+msgid "Spyro Path"
+msgstr "Spyropad"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
+msgid ""
+"Save\n"
+"as New Layer"
+msgstr "Bewaar als nieuwe laag"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:57
+msgid ""
+"Redraw on\n"
+"Active layer"
+msgstr "Opnieuw tekenen op actieve laag"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:58
+msgid ""
+"Save\n"
+"as Path"
+msgstr "Bewaar als pad"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:104
 msgid "Circle"
 msgstr "Cirkel"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:140
 msgid "Polygon-Star"
 msgstr "Veelhoekige ster"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:834
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:156
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:947
 msgid "Sine"
 msgstr "Sinus"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:151
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:166
 msgid "Bumps"
 msgstr "Bobbels"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:256
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
 msgid "Rack"
 msgstr "Rek"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
 msgid "Frame"
 msgstr "Kader"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:404
 msgid "Selection"
 msgstr "Selectie"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:479
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:494
 msgid "Pencil"
 msgstr "Potlood"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:495
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:510
 msgid "AirBrush"
 msgstr "Verfspuit"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:555
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:570
 msgid "Preview"
 msgstr "Voorbeeld"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:560
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:575
 msgid "Stroke"
 msgstr "Streek"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:588
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:622
 msgid "PaintBrush"
 msgstr "Penseel"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:590
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:624
 msgid "Ink"
 msgstr "Inkt"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:591
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:625
 msgid "MyPaintBrush"
 msgstr "MijnPenseel"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:820
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:933
 msgid "Spyrograph"
 msgstr "Spirograaf"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:827
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:940
 msgid "Epitrochoid"
 msgstr "Epitrochoïde"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:854
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:967
 msgid "Lissajous"
 msgstr "Lissajousfiguur"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1098
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1397
 msgid "Curve Type"
 msgstr "Type kromme"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1099
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1398
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -539,22 +561,22 @@ msgstr ""
 "Een epitrochoïde-patroon ontstaat wanneer de bewegende cirkel zich aan de "
 "buitenzijde van de vaste cirkel bevindt."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1403
 msgid "Tool"
 msgstr "Gereedschap"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
 msgid ""
-"The tool with which to draw the pattern.The Preview tool just draws quickly."
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Het gereedschap waarmee het patroon moet worden getekend. Het "
-"voorbeeldgereedschap tekent snel."
+"voorbeeldgereedschap tekent dit snel."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
 msgid "Long Gradient"
 msgstr "Lang verloop"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1112
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1411
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -565,11 +587,11 @@ msgstr ""
 "patroon, gebaseerd op het huidige verloop en op de herhaalmodus van het "
 "verloopgereedschap."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Geef patroon op via een van de volgende tabs:"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1433
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -581,7 +603,7 @@ msgstr ""
 "speelgoedkits. Als u de instructies in de handleiding van deze speelgoedkits "
 "volgt, moet u soortgelijke resultaten verkrijgen."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -589,12 +611,12 @@ msgstr ""
 "Aantal tanden van vaste tandwielen. De grootte daarvan is proportioneel met "
 "het aantal tanden."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1460
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1486
 msgid "Fixed Gear Teeth"
 msgstr "Tanden vaste tandwielen"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1466
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -602,16 +624,16 @@ msgstr ""
 "Aantal tanden van bewegende tandwielen. De grootte van de bewegende "
 "tandwielen is proportioneel met het aantal tanden."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1469
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1491
 msgid "Moving Gear Teeth"
 msgstr "Tanden bewegend tandwielen"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
 msgid "Hole percent"
 msgstr "Gat (percentage)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1176
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -619,11 +641,11 @@ msgstr ""
 "Hoe ver het gat verwijderd is van het centrum van de bewegende tandwielen. "
 "100% betekent dat het gat aan de rand van het tandwiel is."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
 msgid "Hole Number"
 msgstr "Gatnummer"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1198
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -631,20 +653,67 @@ msgstr ""
 "Gat 1 bevindt zich aan de rand van de tandwielen. De maximale gatwaarde is "
 "bij het centrum. De maximale gatwaarde is voor elk tandwiel verschillend."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+msgid "Flower Petals"
+msgstr "Bloembladeren"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+msgid "The number of petals in the pattern."
+msgstr "Het aantal bloembladeren in het patroon."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
+msgid "Petal Skip"
+msgstr "Blaadjes overslaan"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
+msgid "The number of petals to advance for drawing the next petal."
+msgstr "Hoeveel blaadjes naar voren om het volgende blad te tekenen."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
+msgid "Hole Radius(%)"
+msgstr "Straal van gat(%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+"De straal van het gat in het centrum waar niets getekend zal worden. "
+"Opgegeven aks percentage van de grootte van het patroon. De waarde 0 "
+"produceert geen gat. De waarde 99 veroorzaakt een dunne lijn aan de rand."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
+msgid "Width(%)"
+msgstr "Breedte(%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1534
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+"De breedte van het patroon als percentage van de grootte ervan. De waarde 1 "
+"tekent een dun patroon, de waarde 100 vult het gehele vaste tandwiel."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
+msgid "Visual"
+msgstr "Visueel"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
 msgid "Toy Kit"
 msgstr "Speelgoedkit"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
 msgid "Gears"
 msgstr "Tandwielen"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1566
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation"
 msgstr "Draaiing"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1225
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1567
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -652,11 +721,11 @@ msgstr ""
 "Draaiing van het patroon, in graden. De startpositie van het bewegende "
 "tandwiel in het vaste tandwiel."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
 msgid "Shape"
 msgstr "Vorm"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1249
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1591
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -670,41 +739,41 @@ msgstr ""
 "raken. Selectie gaat tegen de randen van de huidige selectie aan - probeer "
 "niet-rechthoekige vormen."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Sides"
 msgstr "Zijden"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Number of sides of the shape."
 msgstr "Aantal zijden van de vorm."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph"
 msgstr "Transformeer"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr ""
 "Vormverandering van de vaste tandwielen. Heeft alleen effect op sommige "
 "vormen."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation of the fixed gear, in degrees"
-msgstr "Draaiing van de vaste tandwielen, in graden."
+msgstr "Draaiing van de vaste tandwielen, in graden"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
 msgid "Margin (px)"
 msgstr "Marge (px)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
 msgid "Margin from edge of selection."
 msgstr "Marge vanaf de rand van de selectie."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1288
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
 msgid "Make width and height equal"
-msgstr "Maak breedte en hoogte gelijk."
+msgstr "Maak breedte en hoogte gelijk"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1290
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1632
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -713,11 +782,11 @@ msgstr ""
 "Indien aangevinkt heeft het patroon dezelfde breedte en hoogte en is "
 "gecentreerd."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1656
 msgid "Re_draw"
 msgstr "Opnieuw _tekenen"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -726,68 +795,75 @@ msgstr ""
 "selectie, klik dan hier om een voorbeeld te zien hoe het patroon eruit zal "
 "zien."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
 msgid "_Reset"
 msgstr "Te_rug naar standaardwaarden"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
 msgid "_OK"
 msgstr "_OK"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1667
 msgid ""
-"Keep\n"
-"Layer"
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
 msgstr ""
-"Houd\n"
-"Laag"
+"Kies uit Bewaar als nieuwe laag, Herteken op laatste actieve laag of Bewaar "
+"naar pad"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1323
-msgid ""
-"If checked, then once OK is pressed, the spyro layer is kept, and the plugin "
-"exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
-"redrawn on the layer that was active when the plugin was launched."
-msgstr ""
-"Indien aangevinkt en u klikt op OK, dan wordt de spirolaag behouden en de "
-"plug-in stopt meteen. Indien uitgevinkt wordt de spirolaag gewist en het "
-"patroon hertekend op de laag die actief was toen de plug-in werd gestart."
-
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
 msgid "Spyrogimp"
 msgstr "Spirogimp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Teken spirografen met de huidige gereedschapsinstellingen en selectie."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1701
 msgid "Curve Pattern"
 msgstr "Curvepatroon"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1704
 msgid "Fixed Gear"
 msgstr "Vaste tandwielen"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1707
 msgid "Size"
 msgstr "Grootte"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1650
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2047
 msgid "Rendering Pattern"
 msgstr "Opbouwen patroon"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1662
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2059
 msgid "Please wait : Rendering Pattern"
 msgstr "Wachten alstublieft, patroon wordt opgebouwd"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1771
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
 msgid "Spyrogimp..."
 msgstr "Spirogimp..."
+
+#~ msgid ""
+#~ "Keep\n"
+#~ "Layer"
+#~ msgstr ""
+#~ "Houd\n"
+#~ "Laag"
+
+#~ msgid ""
+#~ "If checked, then once OK is pressed, the spyro layer is kept, and the "
+#~ "plugin exits quickly. If unchecked, the spyro layer is deleted, and the "
+#~ "pattern is redrawn on the layer that was active when the plugin was "
+#~ "launched."
+#~ msgstr ""
+#~ "Indien aangevinkt en u klikt op OK, dan wordt de spirolaag behouden en de "
+#~ "plug-in stopt meteen. Indien uitgevinkt wordt de spirolaag gewist en het "
+#~ "patroon hertekend op de laag die actief was toen de plug-in werd gestart."
 
 #~ msgid "Color _model"
 #~ msgstr "Kleurenmodel"
