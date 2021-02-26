@@ -11144,7 +11144,7 @@ msgstr "_Mode de finestra única"
 #: ../app/actions/windows-actions.c:142
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
-msgstr "Si està activat el GIMP és en el mode de finestra única."
+msgstr "Si està activat, el GIMP és en el mode de finestra única."
 
 #: ../app/actions/windows-actions.c:151
 msgctxt "windows-tabs-position-action"
@@ -12017,7 +12017,7 @@ msgstr "Habilita l'eina de clonació sense costures."
 
 #: ../app/config/gimprc-blurbs.h:482
 msgid "Enable the Paint Select tool."
-msgstr "Habilita l'eina de Selecció de pintura"
+msgstr "Habilita l'eina de Selecció de pintura."
 
 #: ../app/config/gimprc-blurbs.h:485
 msgid "What to do when the space bar is pressed in the image window."
@@ -27964,7 +27964,7 @@ msgstr "Defineix el mode capes"
 #. * mask action.
 #: ../app/widgets/gimplayertreeview.c:1636
 msgid "No channels to create a layer mask from."
-msgstr "No hi ha canals per crear una màscara de capa."
+msgstr "No hi ha canals per a crear una màscara de capa."
 
 #: ../app/widgets/gimpmessagebox.c:452
 #, c-format
