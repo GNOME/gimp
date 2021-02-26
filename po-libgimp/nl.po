@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-09 17:05+0000\n"
-"PO-Revision-Date: 2019-09-10 11:03+0200\n"
+"POT-Creation-Date: 2021-02-13 12:12+0000\n"
+"PO-Revision-Date: 2021-02-13 15:12+0100\n"
 "Last-Translator: Paul Matthijsse <paul.matthijsse@wanadoo.fr>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -53,83 +53,83 @@ msgstr "Penseelselectie"
 msgid "_Browse..."
 msgstr "_Bladeren..."
 
-#: ../libgimp/gimpexport.c:278 ../libgimp/gimpexport.c:314
+#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s plug-in ondersteunt geen lagen"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
 msgid "Merge Visible Layers"
 msgstr "Zichtbare lagen samenvoegen"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:304
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "%s plug-in ondersteunt geen laagverschuiving, -grootte of -ondoorzichtigheid"
 
-#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s plug-in ondersteunt enkel lagen als animatieframes"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
 msgid "Save as Animation"
 msgstr "Opslaan als animatie"
 
 # 29/02/09: oudere vertaling "Afbeelding pletten" maakt niet duidelijk wat de functie precies doet
-#: ../libgimp/gimpexport.c:306 ../libgimp/gimpexport.c:315
-#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:333
+#: ../libgimp/gimpexport.c:323 ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:341 ../libgimp/gimpexport.c:350
 msgid "Flatten Image"
 msgstr "Alle lagen samenvoegen"
 
-#: ../libgimp/gimpexport.c:323
+#: ../libgimp/gimpexport.c:340
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s plug-in ondersteunt geen transparantie"
 
-#: ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:349
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "%s plug-in ondersteunt geen transparante lagen"
 
-#: ../libgimp/gimpexport.c:341
+#: ../libgimp/gimpexport.c:358
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s plug-in ondersteunt geen laagmaskers"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:359
 msgid "Apply Layer Masks"
 msgstr "Laagmaskers toepassen"
 
-#: ../libgimp/gimpexport.c:350
+#: ../libgimp/gimpexport.c:367
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s plug-in ondersteunt enkel RGB-afbeeldingen"
 
-#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:389
-#: ../libgimp/gimpexport.c:398
+#: ../libgimp/gimpexport.c:368 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:415
 msgid "Convert to RGB"
 msgstr "Naar RGB omzetten"
 
-#: ../libgimp/gimpexport.c:359
+#: ../libgimp/gimpexport.c:376
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s plug-in ondersteunt enkel grijswaardenafbeeldingen"
 
-#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:389
-#: ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:377 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:427
 msgid "Convert to Grayscale"
 msgstr "Naar grijswaarden omzetten"
 
-#: ../libgimp/gimpexport.c:368
+#: ../libgimp/gimpexport.c:385
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s plug-in ondersteunt enkel geïndexeerde afbeeldingen"
 
-#: ../libgimp/gimpexport.c:369 ../libgimp/gimpexport.c:398
-#: ../libgimp/gimpexport.c:408
+#: ../libgimp/gimpexport.c:386 ../libgimp/gimpexport.c:415
+#: ../libgimp/gimpexport.c:425
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -137,13 +137,13 @@ msgstr ""
 "Naar geïndexeerd omzetten met standaardinstellingen\n"
 "(Doe dit handmatig voor een nauwkeuriger resultaat)"
 
-#: ../libgimp/gimpexport.c:378
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s plug-in ondersteunt enkel tweekleurs bitmap-geïndexeerde afbeeldingen"
 
-#: ../libgimp/gimpexport.c:379
+#: ../libgimp/gimpexport.c:396
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -151,38 +151,51 @@ msgstr ""
 "Naar geïndexeerd omzetten met standaardinstellingen voor bitmap\n"
 "(Doe dit handmatig voor een nauwkeuriger resultaat)"
 
-#: ../libgimp/gimpexport.c:388
+#: ../libgimp/gimpexport.c:405
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s plug-in ondersteunt enkel RGB- of grijswaardenafbeeldingen"
 
-#: ../libgimp/gimpexport.c:397
+#: ../libgimp/gimpexport.c:414
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s plug-in ondersteunt alleen RGB- of geïndexeerde afbeeldingen"
 
-#: ../libgimp/gimpexport.c:407
+#: ../libgimp/gimpexport.c:424
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "%s plug-in ondersteunt enkel grijswaardenafbeeldingen of geïndexeerde "
 "afbeeldingen"
 
-#: ../libgimp/gimpexport.c:418
+#: ../libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s plug-in heeft een alfakanaal nodig"
 
-#: ../libgimp/gimpexport.c:419
+#: ../libgimp/gimpexport.c:436
 msgid "Add Alpha Channel"
 msgstr "Alfakanaal toevoegen"
 
-#: ../libgimp/gimpexport.c:478
+#: ../libgimp/gimpexport.c:444
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr "%s plug-in moet de lagen bijsnijden tot de afbeeldingsmaten"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Crop Layers"
+msgstr "Lagen bijsnijden"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Resize Image to Layers"
+msgstr "Schaal afbeeldingen naar lagen"
+
+#: ../libgimp/gimpexport.c:504
 msgid "Confirm Save"
 msgstr "Bevestig opslaan"
 
-#: ../libgimp/gimpexport.c:483 ../libgimp/gimpexport.c:565
-#: ../libgimp/gimpexport.c:1063 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimp/gimpexport.c:509 ../libgimp/gimpexport.c:591
+#: ../libgimp/gimpexport.c:1125 ../libgimpwidgets/gimpcolorbutton.c:549
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
@@ -191,25 +204,25 @@ msgstr "Bevestig opslaan"
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: ../libgimp/gimpexport.c:484
+#: ../libgimp/gimpexport.c:510
 msgid "C_onfirm"
 msgstr "B_evestigen"
 
-#: ../libgimp/gimpexport.c:560
+#: ../libgimp/gimpexport.c:586
 msgid "Export File"
 msgstr "Bestand exporteren"
 
-#: ../libgimp/gimpexport.c:564
+#: ../libgimp/gimpexport.c:590
 msgid "_Ignore"
 msgstr "_Negeren"
 
-#: ../libgimp/gimpexport.c:566 ../libgimp/gimpexport.c:1064
+#: ../libgimp/gimpexport.c:592 ../libgimp/gimpexport.c:1126
 msgid "_Export"
 msgstr "_Exporteren"
 
 #  the headline
 #. the headline
-#: ../libgimp/gimpexport.c:596
+#: ../libgimp/gimpexport.c:622
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -219,11 +232,11 @@ msgstr ""
 "de volgende redenen:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:670
+#: ../libgimp/gimpexport.c:696
 msgid "The export conversion won't modify your original image."
 msgstr "De exportconversie zal uw originele afbeelding niet wijzigen."
 
-#: ../libgimp/gimpexport.c:774
+#: ../libgimp/gimpexport.c:800
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -232,7 +245,7 @@ msgstr ""
 "U staat op het punt een laagmasker op te slaan als %s.\n"
 "Hiermee slaat u niet de zichtbare lagen op."
 
-#: ../libgimp/gimpexport.c:780
+#: ../libgimp/gimpexport.c:806
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -242,7 +255,7 @@ msgstr ""
 "Hiermee slaat u niet de zichtbare lagen op."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1057
+#: ../libgimp/gimpexport.c:1119
 #, c-format
 msgid "Export Image as %s"
 msgstr "Afbeelding exporteren als %s"
@@ -255,44 +268,44 @@ msgstr "Lettertypeselectie"
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:519
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:708
 msgid "Background"
 msgstr "Achtergrond"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:897
 #, c-format
 msgid "Rotate %s?"
 msgstr "%s draaien?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:903
 msgid "_Keep Original"
 msgstr "Origineel _behouden"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:904 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Draaien"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:945
 msgid "Original"
 msgstr "Origineel"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:961
 msgid "Rotated"
 msgstr "Gedraaid"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:979
 msgid "This image contains Exif orientation metadata."
 msgstr "Deze afbeelding bevat Exif-oriëntatiegegevens."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:997
 msgid "Would you like to rotate the image?"
 msgstr "Wilt u de afbeelding draaien?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1009
 msgid "_Don't ask me again"
 msgstr "_Niet opnieuw vragen"
 
@@ -1488,37 +1501,37 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Bijsnijden volgens verhouding"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:907
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Kan metadata alleen van lokale bestanden laden"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
+#: ../libgimpbase/gimpmetadata.c:921 ../libgimpbase/gimpmetadata.c:991
 #, c-format
 msgid "Conversion of the filename to system codepage failed."
 msgstr "Conversie van bestandsnaam naar systeem-codepagina mislukt."
 
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:978
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Kan metadata alleen naar lokale bestanden wegschrijven"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1040
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Ongeldige Exif-gegevens."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1069
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Verwerken van Exif-gegevens mislukt."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1119
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Verwerken van IPTC-gegevens mislukt."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1167
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Verwerken van XMP-gegevens mislukt."
@@ -1834,17 +1847,17 @@ msgstr "waarde voor token %s is geen geldige UTF-8-tekenreeks"
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "verwachtte ‘yes’ of ‘no’ voor booleaanse token %s, kreeg ‘%s’"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:588
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ongeldige waarde ‘%s’ voor token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:599
+#: ../libgimpconfig/gimpconfig-deserialize.c:603
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ongeldige waarde ‘%ld’ voor token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:668
+#: ../libgimpconfig/gimpconfig-deserialize.c:672
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "bij verwerken token ‘%s’: %s"
@@ -2018,7 +2031,7 @@ msgstr "Geen regulier bestand."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:147
 msgid "Select color profile from disk..."
-msgstr "Kies kleurprofiel van schijf…"
+msgstr "Kies kleurprofiel van schijf..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:315
 msgctxt "profile"
@@ -2176,17 +2189,17 @@ msgstr "_Transformeren"
 msgid "_Shear"
 msgstr "_Hellen"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
-msgid "Kilobytes"
-msgstr "Kilobyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:256
+msgid "Kibibyte"
+msgstr "Kibibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
-msgid "Megabytes"
-msgstr "Megabyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:257
+msgid "Mebibyte"
+msgstr "Mebibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
-msgid "Gigabytes"
-msgstr "Gigabyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:258
+msgid "Gibibyte"
+msgstr "Gibibyte"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:270
@@ -2275,7 +2288,7 @@ msgstr[1] "Dit tekstinvoerveld mag  maximaal %d tekens bevatten."
 
 #: ../libgimpwidgets/gimpunitmenu.c:261
 msgid "More..."
-msgstr "Meer…"
+msgstr "Meer..."
 
 #: ../libgimpwidgets/gimpunitmenu.c:487
 msgid "Unit Selection"
