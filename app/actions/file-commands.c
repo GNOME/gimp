@@ -293,7 +293,7 @@ file_save_cmd_callback (GimpAction *action,
 
     case GIMP_SAVE_MODE_SAVE_AS:
       file_save_dialog_show (gimp, image, widget,
-                             _("Save Image"), FALSE,
+                             _("Save Image As"), FALSE,
                              save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE, display);
       break;
 
