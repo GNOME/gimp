@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2020
+# Marco Ciampa <ciampix@libero.it>, 2003-2021
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 # Luca Ferretti <elle.uca@libero.it>, 2006, 2009.
 #
@@ -31,8 +31,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-31 15:25+0200\n"
-"PO-Revision-Date: 2020-05-31 16:10+0200\n"
+"POT-Creation-Date: 2021-02-28 19:01+0100\n"
+"PO-Revision-Date: 2021-02-28 19:32+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -42,92 +42,92 @@ msgstr ""
 "Date: dom feb  6 16:47:39 CET 2000\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: ../libgimp/gimpbrushselectbutton.c:176
+#: ../libgimp/gimpbrushselectbutton.c:177
 msgid "Brush Selection"
 msgstr "Selezione pennello"
 
-#: ../libgimp/gimpbrushselectbutton.c:885
-#: ../libgimp/gimppatternselectbutton.c:672
+#: ../libgimp/gimpbrushselectbutton.c:884
+#: ../libgimp/gimppatternselectbutton.c:674
 msgid "_Browse..."
 msgstr "E_splora..."
 
-#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:332 ../libgimp/gimpexport.c:368
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Il plug-in %s non può gestire livelli"
 
-#: ../libgimp/gimpexport.c:300 ../libgimp/gimpexport.c:309
-#: ../libgimp/gimpexport.c:318 ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:369
 msgid "Merge Visible Layers"
 msgstr "Unisci livelli visibili"
 
-#: ../libgimp/gimpexport.c:308
+#: ../libgimp/gimpexport.c:341
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Il plug-in %s non può gestire la posizione, la dimensione o l'opacità dei "
 "livelli"
 
-#: ../libgimp/gimpexport.c:317 ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:350 ../libgimp/gimpexport.c:359
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Il plug-in %s può gestire i livelli solo come fotogrammi di animazione"
 
-#: ../libgimp/gimpexport.c:318 ../libgimp/gimpexport.c:327
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:360
 msgid "Save as Animation"
 msgstr "Salva come animazione"
 
-#: ../libgimp/gimpexport.c:327 ../libgimp/gimpexport.c:336
-#: ../libgimp/gimpexport.c:345 ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:369
+#: ../libgimp/gimpexport.c:378 ../libgimp/gimpexport.c:387
 msgid "Flatten Image"
 msgstr "Immagine appiattita"
 
-#: ../libgimp/gimpexport.c:344
+#: ../libgimp/gimpexport.c:377
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Il plug-in %s non può gestire la trasparenza"
 
-#: ../libgimp/gimpexport.c:353
+#: ../libgimp/gimpexport.c:386
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Il plug-in %s non può gestire livelli trasparenti"
 
-#: ../libgimp/gimpexport.c:362
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Il plug-in %s non può gestire le maschere di livello"
 
-#: ../libgimp/gimpexport.c:363
+#: ../libgimp/gimpexport.c:396
 msgid "Apply Layer Masks"
 msgstr "Applica maschere di livello"
 
-#: ../libgimp/gimpexport.c:371
+#: ../libgimp/gimpexport.c:404
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Il plug-in %s può gestire solo le immagini RGB"
 
-#: ../libgimp/gimpexport.c:372 ../libgimp/gimpexport.c:410
-#: ../libgimp/gimpexport.c:419
+#: ../libgimp/gimpexport.c:405 ../libgimp/gimpexport.c:443
+#: ../libgimp/gimpexport.c:452
 msgid "Convert to RGB"
 msgstr "Converti in RGB"
 
-#: ../libgimp/gimpexport.c:380
+#: ../libgimp/gimpexport.c:413
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Il plug-in %s può gestire solo le immagini in scala di grigi"
 
-#: ../libgimp/gimpexport.c:381 ../libgimp/gimpexport.c:410
-#: ../libgimp/gimpexport.c:431
+#: ../libgimp/gimpexport.c:414 ../libgimp/gimpexport.c:443
+#: ../libgimp/gimpexport.c:464
 msgid "Convert to Grayscale"
 msgstr "Converti in scala di grigi"
 
-#: ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:422
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Il plug-in %s può gestire solo le immagini indicizzate"
 
-#: ../libgimp/gimpexport.c:390 ../libgimp/gimpexport.c:419
-#: ../libgimp/gimpexport.c:429
+#: ../libgimp/gimpexport.c:423 ../libgimp/gimpexport.c:452
+#: ../libgimp/gimpexport.c:462
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -135,13 +135,13 @@ msgstr ""
 "Converti in indicizzata usando le impostazioni predefinite\n"
 "(impostare manualmente per controllare il risultato)"
 
-#: ../libgimp/gimpexport.c:399
+#: ../libgimp/gimpexport.c:432
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "Il plug-in %s può gestire solo le immagini indicizzate bitmap (due colori)"
 
-#: ../libgimp/gimpexport.c:400
+#: ../libgimp/gimpexport.c:433
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -149,65 +149,78 @@ msgstr ""
 "Converti in indicizzata usando le impostazioni predefinite per bitmap\n"
 "(impostare manualmente per controllare il risultato)"
 
-#: ../libgimp/gimpexport.c:409
+#: ../libgimp/gimpexport.c:442
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Il plug-in %s può gestire solo le immagini RGB o in scala di grigi"
 
-#: ../libgimp/gimpexport.c:418
+#: ../libgimp/gimpexport.c:451
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "Il plug-in %s può gestire solo immagini RGB o indicizzate"
 
-#: ../libgimp/gimpexport.c:428
+#: ../libgimp/gimpexport.c:461
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Il plug-in %s può gestire solo le immagini in scala di grigi o indicizzate"
 
-#: ../libgimp/gimpexport.c:439
+#: ../libgimp/gimpexport.c:472
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Il plug-in %s necessita di un canale alfa"
 
-#: ../libgimp/gimpexport.c:440
+#: ../libgimp/gimpexport.c:473
 msgid "Add Alpha Channel"
 msgstr "Aggiungi canale alfa"
 
-#: ../libgimp/gimpexport.c:499
+#: ../libgimp/gimpexport.c:481
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr "il plug-in %s deve ritagliare i livelli ai bordi immagine"
+
+#: ../libgimp/gimpexport.c:482
+msgid "Crop Layers"
+msgstr "Ritaglia livelli"
+
+#: ../libgimp/gimpexport.c:482
+msgid "Resize Image to Layers"
+msgstr "Ridimensiona immagine ai livelli"
+
+#: ../libgimp/gimpexport.c:541
 msgid "Confirm Save"
 msgstr "Conferma salvataggio"
 
-#: ../libgimp/gimpexport.c:504 ../libgimp/gimpexport.c:586
-#: ../libgimp/gimpexport.c:1120 ../libgimp/gimpproceduredialog.c:232
+#: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
+#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:204
 #: ../libgimpwidgets/gimpcolorbutton.c:553
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
-#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpfileentry.c:466 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_Cancel"
 msgstr "Ann_ulla"
 
-#: ../libgimp/gimpexport.c:505
+#: ../libgimp/gimpexport.c:547
 msgid "C_onfirm"
 msgstr "C_onferma"
 
-#: ../libgimp/gimpexport.c:581
+#: ../libgimp/gimpexport.c:623
 msgid "Export File"
 msgstr "Esporta file"
 
-#: ../libgimp/gimpexport.c:585
+#: ../libgimp/gimpexport.c:627
 msgid "_Ignore"
 msgstr "_Ignora"
 
-#: ../libgimp/gimpexport.c:587 ../libgimp/gimpexport.c:1121
-#: ../libgimp/gimpproceduredialog.c:226
+#: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
+#: ../libgimp/gimpproceduredialog.c:176
 msgid "_Export"
 msgstr "_Esporta"
 
 #. the headline
-#: ../libgimp/gimpexport.c:617
+#: ../libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -217,11 +230,11 @@ msgstr ""
 "per le seguenti ragioni:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:691
+#: ../libgimp/gimpexport.c:733
 msgid "The export conversion won't modify your original image."
 msgstr "L'esportazione non modificherà l'immagine originale."
 
-#: ../libgimp/gimpexport.c:811
+#: ../libgimp/gimpexport.c:853
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -230,7 +243,7 @@ msgstr ""
 "Si è in procinto di salvare una maschera di livello come %s.\n"
 "Ciò non salverà i livelli visibili."
 
-#: ../libgimp/gimpexport.c:817
+#: ../libgimp/gimpexport.c:859
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -240,85 +253,53 @@ msgstr ""
 "Ciò non salverà i livelli visibili."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1114
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:388
 #, c-format
 msgid "Export Image as %s"
 msgstr "Esporta immagine come %s"
 
-#: ../libgimp/gimpfontselectbutton.c:136
+#: ../libgimp/gimpfontselectbutton.c:137
 msgid "Font Selection"
 msgstr "Selezione tipo di carattere"
 
-#: ../libgimp/gimpgradientselectbutton.c:154
+#: ../libgimp/gimpgradientselectbutton.c:155
 msgid "Gradient Selection"
 msgstr "Selezione gradiente"
 
-#: ../libgimp/gimpimagemetadata.c:253
+#: ../libgimp/gimpimagemetadata.c:239
 msgid "Background"
 msgstr "Sfondo"
 
-#: ../libgimp/gimpimagemetadata.c:442
-#, c-format
-msgid "Rotate %s?"
-msgstr "_Ruota %s?"
+#: ../libgimp/gimpimagemetadata-save.c:378 ../modules/controller-midi.c:426
+msgid "GIMP"
+msgstr "GIMP"
 
-#: ../libgimp/gimpimagemetadata.c:448
-msgid "_Keep Original"
-msgstr "_Mantieni l'originale"
-
-#: ../libgimp/gimpimagemetadata.c:449
-msgid "_Rotate"
-msgstr "_Ruota"
-
-#: ../libgimp/gimpimagemetadata.c:490
-msgid "Original"
-msgstr "Originale"
-
-#: ../libgimp/gimpimagemetadata.c:506
-msgid "Rotated"
-msgstr "Ruotato"
-
-#: ../libgimp/gimpimagemetadata.c:524
-msgid "This image contains Exif orientation metadata."
-msgstr "Questa immagine contiene metadati Exif di orientamento."
-
-#: ../libgimp/gimpimagemetadata.c:542
-msgid "Would you like to rotate the image?"
-msgstr "Volete ruotare l'immagine?"
-
-#: ../libgimp/gimpimagemetadata.c:554
-msgid "_Don't ask me again"
-msgstr "Non chie_dere più"
-
-#: ../libgimp/gimpimagemetadata-save.c:378
-msgid "GIMP 2.10"
-msgstr "GIMP 2.10"
-
-#: ../libgimp/gimppaletteselectbutton.c:135
+#: ../libgimp/gimppaletteselectbutton.c:136
 msgid "Palette Selection"
 msgstr "Selezione tavolozza"
 
-#: ../libgimp/gimppatternselectbutton.c:164
+#: ../libgimp/gimppatternselectbutton.c:165
 msgid "Pattern Selection"
 msgstr "Selezione motivo"
 
 #. procedure executed successfully
-#: ../libgimp/gimppdb.c:485
+#: ../libgimp/gimppdb.c:518
 msgid "success"
 msgstr "azione riuscita"
 
 #. procedure execution failed
-#: ../libgimp/gimppdb.c:489
+#: ../libgimp/gimppdb.c:522
 msgid "execution error"
 msgstr "errore di esecuzione"
 
 #. procedure called incorrectly
-#: ../libgimp/gimppdb.c:493
+#: ../libgimp/gimppdb.c:526
 msgid "calling error"
 msgstr "errore di chiamata"
 
 #. procedure execution cancelled
-#: ../libgimp/gimppdb.c:497
+#: ../libgimp/gimppdb.c:530
 msgid "cancelled"
 msgstr "annullato"
 
@@ -410,80 +391,100 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedura corrisponde all'interrogazione"
 msgstr[1] "%d procedure corrispondono all'interrogazione"
 
-#: ../libgimp/gimpprocedure.c:1721
+#: ../libgimp/gimpprocedure.c:1828
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "La procedura \"%s\" non ha restituito valori di ritorno"
 
-#: ../libgimp/gimpprocedure.c:1813
+#: ../libgimp/gimpprocedure.c:1920
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
-msgstr "La procedura \"%s\" ha restituito un tipo di valore sbagliato per il valore di ritorno \"%s\" (#%d). Era previsto %s, ottenuto %s."
+msgstr ""
+"La procedura \"%s\" ha restituito un tipo di valore sbagliato per il valore "
+"di ritorno \"%s\" (#%d). Era previsto %s, ottenuto %s."
 
-#: ../libgimp/gimpprocedure.c:1825
+#: ../libgimp/gimpprocedure.c:1932
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
 "%d). Expected %s, got %s."
-msgstr "La procedura \"%s\" è stata chiamata con un tipo di valore sbagliato per l'argomento \"%s\" (#%d). Era previsto %s, ottenuto %s."
+msgstr ""
+"La procedura \"%s\" è stata chiamata con un tipo di valore sbagliato per "
+"l'argomento \"%s\" (#%d). Era previsto %s, ottenuto %s."
 
-#: ../libgimp/gimpprocedure.c:1860
+#: ../libgimp/gimpprocedure.c:1967
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
-msgstr "La procedura \"%s\" la restituito \"%s\" come valore di ritorno \"%s\" (#%d, tipo %s). Questo valore è fuori campo."
+msgstr ""
+"La procedura \"%s\" la restituito \"%s\" come valore di ritorno \"%s\" (#%d, "
+"tipo %s). Questo valore è fuori campo."
 
-#: ../libgimp/gimpprocedure.c:1874
+#: ../libgimp/gimpprocedure.c:1981
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
-msgstr "La procedura \"%s\" è stata chiamata con il valore \"%s\" per l'argomento \"%s\" (#%d, tipo %s). Questo valore è fuori campo."
+msgstr ""
+"La procedura \"%s\" è stata chiamata con il valore \"%s\" per l'argomento "
+"\"%s\" (#%d, tipo %s). Questo valore è fuori campo."
 
-#: ../libgimp/gimpprocedure.c:1924
+#: ../libgimp/gimpprocedure.c:2031
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
-msgstr "La procedura \"%s\" ha restituito una stringa UTF-8 non valida per l'argomento \"%s\"."
+msgstr ""
+"La procedura \"%s\" ha restituito una stringa UTF-8 non valida per "
+"l'argomento \"%s\"."
 
-#: ../libgimp/gimpprocedure.c:1934
+#: ../libgimp/gimpprocedure.c:2041
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
-msgstr "La procedura \"%s\" è stata chiamata con una stringa UTF-8 non valida per l'argomento \"%s\"."
+msgstr ""
+"La procedura \"%s\" è stata chiamata con una stringa UTF-8 non valida per "
+"l'argomento \"%s\"."
 
-#: ../libgimp/gimpproceduredialog.c:224
+#: ../libgimp/gimpproceduredialog.c:174
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "A_pri"
 
-#: ../libgimp/gimpproceduredialog.c:228 ../libgimpwidgets/gimpcolorbutton.c:554
-#: ../libgimpwidgets/gimpfileentry.c:437 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimp/gimpproceduredialog.c:178 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimpwidgets/gimpfileentry.c:467 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_OK"
 
-#: ../libgimp/gimpproceduredialog.c:231 ../libgimpwidgets/gimpcolorbutton.c:552
+#: ../libgimp/gimpproceduredialog.c:186 ../libgimpwidgets/gimpcolorbutton.c:552
 msgid "_Reset"
 msgstr "_Reimposta"
 
+#: ../libgimp/gimpproceduredialog.c:238
+msgid "_Load Saved Settings"
+msgstr "Carica impostazioni sa_lvate"
+
+#: ../libgimp/gimpproceduredialog.c:239
+msgid "Load settings saved with \"Save Settings\" button"
+msgstr "Carica le impostazioni salvate col pulsante \"Salva impostazioni\""
+
+#: ../libgimp/gimpproceduredialog.c:251
+msgid "_Save Settings"
+msgstr "_Salva impostazioni"
+
 #: ../libgimp/gimpproceduredialog.c:252
-msgid "_Load Defaults"
-msgstr "Carica _le impostazioni predefinite"
+msgid "Store current settings for later reuse"
+msgstr "Memorizza le impostazioni correnti per riutilizzo successivo"
 
-#: ../libgimp/gimpproceduredialog.c:260
-msgid "_Save Defaults"
-msgstr "_Salva le impostazioni predefinite"
-
-#: ../libgimp/gimpproceduredialog.c:298
+#: ../libgimp/gimpproceduredialog.c:1226
 msgid "Reset to _Initial Values"
 msgstr "Reimposta ai valori _iniziali"
 
-#: ../libgimp/gimpproceduredialog.c:307
+#: ../libgimp/gimpproceduredialog.c:1235
 msgid "Reset to _Factory Defaults"
 msgstr "Reimposta alle preimpostazioni di _fabbrica"
 
@@ -523,11 +524,23 @@ msgstr "Data:"
 msgid "Copyright:"
 msgstr "Copyright:"
 
+#: ../libgimp/gimpsaveproceduredialog.c:166
+msgid "Metadata"
+msgstr "Metadati"
+
+#: ../libgimp/gimpsaveproceduredialog.c:175
+msgid "Edit Metadata"
+msgstr "Modifica metadati"
+
+#: ../libgimp/gimpsaveproceduredialog.c:175
+msgid "(edit)"
+msgstr "(modifica)"
+
 # era percento, ma il dizionario dice che la
 # grafia separata è più frequente
 #: ../libgimp/gimpunitcache.c:54
 msgid "percent"
-msgstr "per cento"
+msgstr "percento"
 
 #: ../libgimpbase/gimpbaseenums.c:28
 msgctxt "add-mask-type"
@@ -1565,37 +1578,37 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Ritaglia all'aspetto"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:907
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "È possibile caricare i metadati solo da file locali"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
+#: ../libgimpbase/gimpmetadata.c:921 ../libgimpbase/gimpmetadata.c:991
 #, c-format
 msgid "Conversion of the filename to system codepage failed."
 msgstr "Conversione del nome del file alla codepage di sistema fallita."
 
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:978
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "È possibile salvare i metadati sono su file locali"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1040
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Dimensione non valida dati Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1069
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Fallita l'analisi dei dati Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1119
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Fallita l'analisi dei dati IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1167
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Fallita l'analisi dei dati XMP."
@@ -1747,11 +1760,8 @@ msgstr "Il profilo di colore CMYK usato per convertire tra RGB e CMYK."
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
-"device profile. "
-msgstr ""
-"Il profilo colore da usare per il soft-proof, dallo spazio colore "
-"dell'immagine verso qualche altro spazio colore, incluso il soft-proof verso "
-"una stampante o verso altro profilo di dispositivo di uscita. "
+"device profile."
+msgstr "Il profilo colore da usare per il soft-proof, dallo spazio colore dell'immagine verso qualche altro spazio colore, incluso il soft-proof verso una stampante o verso altro profilo di dispositivo di uscita. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1784,7 +1794,7 @@ msgstr ""
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
-"the best. "
+"the best."
 msgstr ""
 "Come vengono convertiti i colori dallo spazio colore dell'immagine al "
 "dispositivo di simulazione (solitamente un monitor). Provarli tutti e "
@@ -1792,7 +1802,7 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
-"Try with and without black point compensation and choose what looks best. "
+"Try with and without black point compensation and choose what looks best."
 msgstr ""
 "Provare con e senza la compensazione del punto nero e scegliere quello che "
 "rende meglio. "
@@ -1840,56 +1850,56 @@ msgstr "Profilo del monitor"
 msgid "Use the system monitor profile"
 msgstr "Usa il profilo del monitor di sistema"
 
-#: ../libgimpconfig/gimpcolorconfig.c:254
+#: ../libgimpconfig/gimpcolorconfig.c:253
 msgid "Simulation profile for soft-proofing"
 msgstr "Profilo di simulazione per il soft-proof"
 
-#: ../libgimpconfig/gimpcolorconfig.c:261
+#: ../libgimpconfig/gimpcolorconfig.c:260
 msgid "Display rendering intent"
 msgstr "Intento di rendering dello schermo"
 
-#: ../libgimpconfig/gimpcolorconfig.c:269
+#: ../libgimpconfig/gimpcolorconfig.c:268
 msgid "Use black point compensation for the display"
 msgstr "Usa la compensazione del punto nero per lo schermo"
 
-#: ../libgimpconfig/gimpcolorconfig.c:276
+#: ../libgimpconfig/gimpcolorconfig.c:275
 msgid "Optimize display color transformations"
 msgstr "Ottimizza le trasformazioni di colore dello schermo"
 
-#: ../libgimpconfig/gimpcolorconfig.c:283
+#: ../libgimpconfig/gimpcolorconfig.c:282
 msgid "Soft-proofing rendering intent"
 msgstr "Intento di rendering del softproof"
 
-#: ../libgimpconfig/gimpcolorconfig.c:291
+#: ../libgimpconfig/gimpcolorconfig.c:290
 msgid "Use black point compensation for soft-proofing"
 msgstr "Usa la compensazione del punto nero per il softproof"
 
-#: ../libgimpconfig/gimpcolorconfig.c:298
+#: ../libgimpconfig/gimpcolorconfig.c:297
 msgid "Optimize soft-proofing color transformations"
 msgstr "Ottimizza le trasformazioni di colore del soft-proof"
 
-#: ../libgimpconfig/gimpcolorconfig.c:305
+#: ../libgimpconfig/gimpcolorconfig.c:304
 msgid "Mark out of gamut colors"
 msgstr "Evidenzia i colori fuori gamut"
 
-#: ../libgimpconfig/gimpcolorconfig.c:312
+#: ../libgimpconfig/gimpcolorconfig.c:311
 msgid "Out of gamut warning color"
 msgstr "Colore di avvertimento fuori gamut"
 
-#: ../libgimpconfig/gimpcolorconfig.c:662
-#: ../libgimpconfig/gimpcolorconfig.c:855
+#: ../libgimpconfig/gimpcolorconfig.c:661
+#: ../libgimpconfig/gimpcolorconfig.c:854
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Il profilo colore \"%s\" non è per una spazio colore RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:706
-#: ../libgimpconfig/gimpcolorconfig.c:905
+#: ../libgimpconfig/gimpcolorconfig.c:705
+#: ../libgimpconfig/gimpcolorconfig.c:904
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Il profilo colore \"%s\" non è per una spazio colore di grigi."
 
-#: ../libgimpconfig/gimpcolorconfig.c:750
-#: ../libgimpconfig/gimpcolorconfig.c:955
+#: ../libgimpconfig/gimpcolorconfig.c:749
+#: ../libgimpconfig/gimpcolorconfig.c:954
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Il profilo colore \"%s\" non è per una spazio colore CMYK."
@@ -1920,9 +1930,9 @@ msgstr "valore \"%ld\" non valido per il token %s"
 msgid "while parsing token '%s': %s"
 msgstr "durante l'analisi del token \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:665
-#: ../libgimpconfig/gimpconfig-iface.c:678 ../libgimpconfig/gimpscanner.c:779
-#: ../libgimpconfig/gimpscanner.c:861
+#: ../libgimpconfig/gimpconfig-iface.c:666
+#: ../libgimpconfig/gimpconfig-iface.c:679 ../libgimpconfig/gimpscanner.c:774
+#: ../libgimpconfig/gimpscanner.c:856
 #: ../libgimpwidgets/gimpcolorprofilestore.c:682
 msgid "fatal parse error"
 msgstr "errore di analisi irrimediabile"
@@ -1963,12 +1973,12 @@ msgid "invalid UTF-8 string"
 msgstr "stringa UTF-8 non valida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:654
+#: ../libgimpconfig/gimpscanner.c:649
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "atteso \"yes\" o \"no\" per il token booleano, ottenuto \"%s\""
 
-#: ../libgimpconfig/gimpscanner.c:888
+#: ../libgimpconfig/gimpscanner.c:883
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Errore durante l'analisi di \"%s\" alla riga %d: %s"
@@ -2086,23 +2096,23 @@ msgstr "Produttore: "
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:206
+#: ../libgimpwidgets/gimpcolorscales.c:205
 msgid "Scales"
 msgstr "Scale"
 
-#: ../libgimpwidgets/gimpcolorscales.c:438
+#: ../libgimpwidgets/gimpcolorscales.c:434
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:440
+#: ../libgimpwidgets/gimpcolorscales.c:436
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:461
+#: ../libgimpwidgets/gimpcolorscales.c:457
 msgid "LCh"
 msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:463
+#: ../libgimpwidgets/gimpcolorscales.c:459
 msgid "HSV"
 msgstr "HSV"
 
@@ -2118,36 +2128,36 @@ msgstr "Precedente:"
 msgid "HTML _notation:"
 msgstr "_Notazione HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:153
+#: ../libgimpwidgets/gimpfileentry.c:167
 msgid "Show file location in the file manager"
 msgstr "Mostra posizione file nel gestore file"
 
-#: ../libgimpwidgets/gimpfileentry.c:224
+#: ../libgimpwidgets/gimpfileentry.c:238
 msgid "Open a file selector to browse your folders"
 msgstr "Apre un selettore file per esplorare le proprie cartelle"
 
-#: ../libgimpwidgets/gimpfileentry.c:225
+#: ../libgimpwidgets/gimpfileentry.c:239
 msgid "Open a file selector to browse your files"
 msgstr "Apre un selettore file per esplorare i propri documenti"
 
-#: ../libgimpwidgets/gimpfileentry.c:237
+#: ../libgimpwidgets/gimpfileentry.c:251
 msgid "Indicates whether or not the folder exists"
 msgstr "Indica l'esistenza della cartella"
 
-#: ../libgimpwidgets/gimpfileentry.c:238
+#: ../libgimpwidgets/gimpfileentry.c:252
 msgid "Indicates whether or not the file exists"
 msgstr "Indica l'esistenza del file"
 
-#: ../libgimpwidgets/gimpfileentry.c:398
+#: ../libgimpwidgets/gimpfileentry.c:428
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Impossibile mostrare il file nel gestore file: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:425
+#: ../libgimpwidgets/gimpfileentry.c:455
 msgid "Select Folder"
 msgstr "Seleziona cartella"
 
-#: ../libgimpwidgets/gimpfileentry.c:427
+#: ../libgimpwidgets/gimpfileentry.c:457
 msgid "Select File"
 msgstr "Seleziona file"
 
@@ -2162,17 +2172,17 @@ msgstr "Premere F1 per ulteriore aiuto"
 msgid "(Empty)"
 msgstr "(Vuoto)"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:215
-msgid "Kilobytes"
-msgstr "Kilobyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:252
+msgid "Kibibyte"
+msgstr "Kibibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:216
-msgid "Megabytes"
-msgstr "Megabyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:253
+msgid "Mebibyte"
+msgstr "Mebibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:217
-msgid "Gigabytes"
-msgstr "Gigabyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:254
+msgid "Gibibyte"
+msgstr "Gibibyte"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:283
@@ -2256,7 +2266,7 @@ msgstr "Dimensione scacchi"
 msgid "Check Style"
 msgstr "Stile scacchi"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2279
+#: ../libgimpwidgets/gimppropwidgets.c:2199
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2494,11 +2504,11 @@ msgstr "Giallo"
 msgid "Black"
 msgstr "Nero"
 
-#: ../modules/color-selector-cmyk.c:372
+#: ../modules/color-selector-cmyk.c:368
 msgid "Profile: (none)"
 msgstr "Profilo: (nessuno)"
 
-#: ../modules/color-selector-cmyk.c:384
+#: ../modules/color-selector-cmyk.c:380
 #, c-format
 msgid "Profile: %s"
 msgstr "Profilo: %s"
@@ -2859,10 +2869,6 @@ msgstr "Controllore %03d"
 msgid "MIDI Events"
 msgstr "Eventi MIDI"
 
-#: ../modules/controller-midi.c:426
-msgid "GIMP"
-msgstr "GIMP"
-
 #: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "Controllore di ingresso MIDI di GIMP"
@@ -2873,7 +2879,12 @@ msgid ""
 "display filter, using a luminance-only approximation of the ACES RRT, a pre-"
 "defined filmic look to be used before ODT (display or output space ICC "
 "profile)"
-msgstr "RRT Aces (RRT = Reference Rendering Transform - Trasformazione di Rendering di Riferimento). Un filtro schermo provino di colore da HDR a SDR, che usa un'approssimazione solo-luminanza dell' RRT Aces, un apetto da film predefinito da usare prima dell'ODT (schermo o profilo di spazio ICC di uscita)"
+msgstr ""
+"RRT Aces (RRT = Reference Rendering Transform - Trasformazione di Rendering "
+"di Riferimento). Un filtro schermo provino di colore da HDR a SDR, che usa "
+"un'approssimazione solo-luminanza dell' RRT Aces, un apetto da film "
+"predefinito da usare prima dell'ODT (schermo o profilo di spazio ICC di "
+"uscita)"
 
 #: ../modules/display-filter-aces-rrt.c:121
 msgid "Pre-transform change in stops"
