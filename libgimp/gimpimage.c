@@ -289,7 +289,7 @@ gimp_image_list_selected_layers (GimpImage *image)
 /**
  * gimp_image_take_selected_layers:
  * @image: The image.
- * @layers: (transfer container): The list of layers to select.
+ * @layers: (transfer container) (element-type GimpLayer): The list of layers to select.
  *
  * The layers are set as the selected layers in the image. Any previous
  * selected layers or channels are unselected. An exception is a previously
