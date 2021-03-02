@@ -739,7 +739,13 @@ load_image (GFile        *file,
           memcpy (&whitepoint, &d65_whitepoint, sizeof whitepoint);
           memcpy (&primaries, &rec709_primaries, sizeof primaries);
         }
-      cms_profile = cmsCreateRGBProfile (&whitepoint, &primaries, gamma_curve);
+
+      if (png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY ||
+          png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY_ALPHA)
+        cms_profile = cmsCreateGrayProfile (&whitepoint, gamma_curve[0]);
+      else /* RGB, RGB with Alpha and Indexed. */
+        cms_profile = cmsCreateRGBProfile (&whitepoint, &primaries, gamma_curve);
+
       cmsFreeToneCurve (gamma_curve[0]);
       g_warn_if_fail (cms_profile != NULL);
 
@@ -758,13 +764,20 @@ load_image (GFile        *file,
            * descriptions to be localized. XXX
            */
           if ((png_get_valid (pp, info, PNG_INFO_gAMA) && png_get_valid (pp, info, PNG_INFO_cHRM)))
-            profile_desc = g_strdup_printf ("Generated RGB profile from PNG's gAMA (gamma %.4f) and cHRM chunks",
-                                            1.0 / gamma);
+            profile_desc = g_strdup_printf ("Generated %s profile from PNG's gAMA (gamma %.4f) and cHRM chunks",
+                                            (png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY ||
+                                             png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY_ALPHA) ?
+                                            "grayscale" : "RGB", 1.0 / gamma);
           else if (png_get_valid (pp, info, PNG_INFO_gAMA))
-            profile_desc = g_strdup_printf ("Generated RGB profile from PNG's gAMA chunk (gamma %.4f)",
-                                            1.0 / gamma);
+            profile_desc = g_strdup_printf ("Generated %s profile from PNG's gAMA chunk (gamma %.4f)",
+                                            (png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY ||
+                                             png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY_ALPHA) ?
+                                            "grayscale" : "RGB", 1.0 / gamma);
           else
-            profile_desc = g_strdup_printf ("Generated RGB profile from PNG's cHRM chunk");
+            profile_desc = g_strdup_printf ("Generated %s profile from PNG's cHRM chunk",
+                                            (png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY ||
+                                             png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY_ALPHA) ?
+                                            "grayscale" : "RGB");
 
           description_mlu  = cmsMLUalloc (context_id, 1);
 
