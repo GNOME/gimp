@@ -212,6 +212,26 @@ tiff_io_warning (const gchar *module,
 
       return;
     }
+  else if (! strcmp (module, "Fax4Decode") ||
+           g_str_has_prefix (module, "Fax3Decode"))
+    {
+      /* Certain corrupt TIFF Fax images can produce a large amount of
+       * warnings which can cause GIMP to run out of GDI resources on
+       * Windows and eventually crash.
+       * The real problem seems to be that the amount of error console
+       * messages does not have a limit.
+       * See e.g. the first page of m1-8110934bb3b18d0e87ccc1ddfc5f0107.tif
+       * from imagetestsuite. LibTiff does not return -1 from
+       * ReadScanline, presumably because for fax images it's not
+       * unreasonable to expect certain lines to fail.
+       * Let's just only report to stderr in this case. */
+      gchar *msg = g_strdup_vprintf (fmt, ap);
+
+      g_printerr ("LibTiff warning: [%s] %s\n", module, msg);
+      g_free (msg);
+
+      return;
+    }
 
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }
