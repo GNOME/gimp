@@ -468,6 +468,13 @@ load_image (GFile        *file,
             *profile_loaded = TRUE;
         }
 
+      if (bps > 64)
+        {
+          g_message (_("Suspicious bit depth: %d for page %d. Image may be corrupt."),
+                     bps, li+1);
+          continue;
+        }
+
       if (bps > 8 && bps != 8 && bps != 16 && bps != 32 && bps != 64)
         worst_case = TRUE; /* Wrong sample width => RGBA */
 
@@ -566,6 +573,20 @@ load_image (GFile        *file,
           g_message ("Could not get image length from '%s'",
                      gimp_file_get_utf8_name (file));
           return GIMP_PDB_EXECUTION_ERROR;
+        }
+
+      if (cols > GIMP_MAX_IMAGE_SIZE || cols <= 0 ||
+          rows > GIMP_MAX_IMAGE_SIZE || rows <= 0)
+        {
+          g_message ("Invalid image dimensions (%u x %u) for page %d. "
+                     "Image may be corrupt.",
+                     (guint32) cols, (guint32) rows, li+1);
+          continue;
+        }
+      else
+        {
+          g_printerr ("Image dimensions: %u x %u.\n",
+                      (guint32) cols, (guint32) rows);
         }
 
       if (! TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
@@ -1568,7 +1589,12 @@ load_rgba (TIFF        *tif,
   buffer = g_new (uint32, image_width * image_height);
 
   if (! TIFFReadRGBAImage (tif, image_width, image_height, buffer, 0))
-    g_message ("Unsupported layout, no RGBA loader");
+    {
+      g_message ("%s: Unsupported image format, no RGBA loader available",
+                 G_STRFUNC);
+      g_free (buffer);
+      return;
+    }
 
   for (row = 0; row < image_height; row++)
     {
@@ -1869,7 +1895,15 @@ load_contiguous (TIFF        *tif,
                                 ((gdouble) x / (gdouble) image_width));
 
           if (TIFFIsTiled (tif))
-            TIFFReadTile (tif, buffer, x, y, 0, 0);
+            {
+              if (TIFFReadTile (tif, buffer, x, y, 0, 0) == -1)
+                {
+                  g_message (_("Reading tile failed. Image may be corrupt at line %d."), y);
+                  g_free (buffer);
+                  g_free (bw_buffer);
+                  return;
+                }
+            }
           else if (TIFFReadScanline (tif, buffer, y, 0) == -1)
             {
               /* Error reading scanline, stop loading */
@@ -2049,7 +2083,15 @@ load_separate (TIFF        *tif,
                                         ((gdouble) x / (gdouble) image_width));
 
                   if (TIFFIsTiled (tif))
-                    TIFFReadTile (tif, buffer, x, y, 0, compindex);
+                    {
+                      if (TIFFReadTile (tif, buffer, x, y, 0, compindex) == -1)
+                        {
+                          g_message (_("Reading tile failed. Image may be corrupt at line %d."), y);
+                          g_free (buffer);
+                          g_free (bw_buffer);
+                          return;
+                        }
+                    }
                   else if (TIFFReadScanline (tif, buffer, y, compindex) == -1)
                     {
                       /* Error reading scanline, stop loading */
