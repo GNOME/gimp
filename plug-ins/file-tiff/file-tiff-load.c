@@ -249,7 +249,13 @@ load_image (GFile        *file,
 
   tif = tiff_open (file, "r", error);
   if (! tif)
-    return GIMP_PDB_EXECUTION_ERROR;
+    {
+      if (! (error && *error))
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Not a TIFF image or image is corrupt."));
+
+      return  GIMP_PDB_EXECUTION_ERROR;
+    }
 
   pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
   gimp_get_data (LOAD_PROC "-target", &pages.target);
@@ -574,7 +580,7 @@ load_image (GFile        *file,
       if (! TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols))
         {
           TIFFClose (tif);
-          g_message ("Could not get image width from '%s'",
+          g_message (_("Could not get image width from '%s'"),
                      gimp_file_get_utf8_name (file));
           return GIMP_PDB_EXECUTION_ERROR;
         }
@@ -582,7 +588,7 @@ load_image (GFile        *file,
       if (! TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
         {
           TIFFClose (tif);
-          g_message ("Could not get image length from '%s'",
+          g_message (_("Could not get image length from '%s'"),
                      gimp_file_get_utf8_name (file));
           return GIMP_PDB_EXECUTION_ERROR;
         }
@@ -590,8 +596,8 @@ load_image (GFile        *file,
       if (cols > GIMP_MAX_IMAGE_SIZE || cols <= 0 ||
           rows > GIMP_MAX_IMAGE_SIZE || rows <= 0)
         {
-          g_message ("Invalid image dimensions (%u x %u) for page %d. "
-                     "Image may be corrupt.",
+          g_message (_("Invalid image dimensions (%u x %u) for page %d. "
+                     "Image may be corrupt."),
                      (guint32) cols, (guint32) rows, li+1);
           continue;
         }
@@ -611,15 +617,15 @@ load_image (GFile        *file,
                compression == COMPRESSION_CCITTRLE  ||
                compression == COMPRESSION_CCITTRLEW))
             {
-              g_message ("Could not get photometric from '%s'. "
-                         "Image is CCITT compressed, assuming min-is-white",
+              g_message (_("Could not get photometric from '%s'. "
+                         "Image is CCITT compressed, assuming min-is-white"),
                          gimp_file_get_utf8_name (file));
               photomet = PHOTOMETRIC_MINISWHITE;
             }
           else
             {
-              g_message ("Could not get photometric from '%s'. "
-                         "Assuming min-is-black",
+              g_message (_("Could not get photometric from '%s'. "
+                         "Assuming min-is-black"),
                          gimp_file_get_utf8_name (file));
 
               /* old AppleScan software misses out the photometric tag
@@ -650,8 +656,8 @@ load_image (GFile        *file,
             /* In non-interactive mode, we assume unassociated alpha if unspecified.
              * We don't output messages in interactive mode as the user
              * has already the ability to choose through a dialog. */
-            g_message ("alpha channel type not defined for file %s. "
-                       "Assuming alpha is not premultiplied",
+            g_message (_("Alpha channel type not defined for %s. "
+                       "Assuming alpha is not premultiplied"),
                        gimp_file_get_utf8_name (file));
 
           switch (default_extra)
@@ -675,9 +681,9 @@ load_image (GFile        *file,
           if (is_non_conformant_tiff (photomet, spp))
             {
               if (run_mode != GIMP_RUN_INTERACTIVE)
-                g_message ("File '%s' does not conform to TIFF specification: "
+                g_message (_("Image '%s' does not conform to the TIFF specification: "
                            "ExtraSamples field is not set while extra channels are present. "
-                           "Assuming the first extra channel as non-premultiplied alpha.",
+                           "Assuming the first extra channel is non-premultiplied alpha."),
                            gimp_file_get_utf8_name (file));
 
               switch (default_extra)
@@ -908,6 +914,9 @@ load_image (GFile        *file,
                 break;
 
               default:
+                g_message (_("Invalid or unknown compression %u. "
+                           "Setting compression to none."),
+                           compression);
                 compression = COMPRESSION_NONE;
                 break;
               }
@@ -963,7 +972,7 @@ load_image (GFile        *file,
           if (*image < 1)
             {
               TIFFClose (tif);
-              g_message ("Could not create a new image: %s",
+              g_message (_("Could not create a new image: %s"),
                          gimp_get_pdb_error ());
               return GIMP_PDB_EXECUTION_ERROR;
             }
@@ -1128,8 +1137,8 @@ load_image (GFile        *file,
                         break;
 
                       default:
-                        g_message ("File error: unknown resolution "
-                                   "unit type %d, assuming dpi", read_unit);
+                        g_message (_("Unknown resolution "
+                                   "unit type %d, assuming dpi"), read_unit);
                         break;
                       }
                   }
@@ -1138,15 +1147,15 @@ load_image (GFile        *file,
                     /* no res unit tag */
 
                     /* old AppleScan software produces these */
-                    g_message ("Warning: resolution specified without "
-                               "any units tag, assuming dpi");
+                    g_message (_("Warning: resolution specified without "
+                               "unit type, assuming dpi"));
                   }
               }
             else
               {
                 /* xres but no yres */
 
-                g_message ("Warning: no y resolution info, assuming same as x");
+                g_message (_("Warning: no y resolution info, assuming same as x"));
                 yres = xres;
               }
 
@@ -1279,7 +1288,7 @@ load_image (GFile        *file,
                                   &redmap, &greenmap, &bluemap))
                 {
                   TIFFClose (tif);
-                  g_message ("Could not get colormaps from '%s'",
+                  g_message (_("Could not get colormaps from '%s'"),
                              gimp_file_get_utf8_name (file));
                   return GIMP_PDB_EXECUTION_ERROR;
                 }
@@ -1562,7 +1571,7 @@ load_rgba (TIFF        *tif,
 
   if (! TIFFReadRGBAImage (tif, image_width, image_height, buffer, 0))
     {
-      g_message ("%s: Unsupported image format, no RGBA loader available",
+      g_message (_("%s: Unsupported image format, no RGBA loader available"),
                  G_STRFUNC);
       g_free (buffer);
       return;
