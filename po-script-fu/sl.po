@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-26 18:48+0000\n"
-"PO-Revision-Date: 2019-09-26 23:34+0200\n"
+"POT-Creation-Date: 2021-02-28 08:10+0000\n"
+"PO-Revision-Date: 2021-03-01 21:15+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -139,7 +139,7 @@ msgstr "Shrani izpis konzole Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
 #: ../plug-ins/script-fu/script-fu-interface.c:236
-#: ../plug-ins/script-fu/script-fu-server.c:834
+#: ../plug-ins/script-fu/script-fu-server.c:839
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
@@ -236,27 +236,27 @@ msgstr "Premalo argumentov za klic 'script-fu-register'"
 msgid "Error while loading %s:"
 msgstr "Napaka pri nalaganju %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:830
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "Script-Fu Server Options"
 msgstr "Možnosti strežnika Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:835
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "_Start Server"
 msgstr "_Zaženi strežnik"
 
-#: ../plug-ins/script-fu/script-fu-server.c:868
+#: ../plug-ins/script-fu/script-fu-server.c:873
 msgid "Listen on IP:"
 msgstr "Poslušaj IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:875
+#: ../plug-ins/script-fu/script-fu-server.c:880
 msgid "Server port:"
 msgstr "Vrata strežnika:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:881
+#: ../plug-ins/script-fu/script-fu-server.c:886
 msgid "Server logfile:"
 msgstr "Dnevniška datoteka strežnika:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:894
+#: ../plug-ins/script-fu/script-fu-server.c:899
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -680,49 +680,63 @@ msgstr "Prekrivnost"
 msgid "Allow resizing"
 msgstr "Dovoli spreminjanje velikosti"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "_Izbriši vsako drugo vrstico …"
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Izbriši vsako drugo vrstico ali stolpec"
+msgid "_Erase Every Nth Row..."
+msgstr "_Izbriši vsako N-to vrstico …"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+msgid "Erase every nth row or column"
+msgstr "Izbriši vsako n-to vrstico ali stolpec"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Vrstice/stolpci"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Vrstice"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Stolpcev"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Sodo/liho"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Sodo"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Liho"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Izbriši/napolni"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Izbriši"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Napolni ozadje z vzorcem"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Izbriši vsako drugo vrstico …"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Izbriši vsako drugo vrstico ali stolpec"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Sodo/liho"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Sodo"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Liho"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
