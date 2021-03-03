@@ -223,6 +223,12 @@ gimp-win64:
     - apt-cache
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
+
+    - apt-get update
+    - apt-get install -y --no-install-recommends wget
+    - wget https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/1563.patch
+    - git apply 1563.patch
+
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
               -Dgtk-doc=false && ninja install &&
@@ -282,6 +288,12 @@ gimp-win32:
     - apt-cache
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
+
+    - apt-get update
+    - apt-get install -y --no-install-recommends wget
+    - wget https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/1563.patch
+    - git apply 1563.patch
+
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
               -Dwmf=disabled  -Dmng=disabled -Dgtk-doc=false && ninja install &&
