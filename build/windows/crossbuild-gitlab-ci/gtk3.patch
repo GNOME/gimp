@@ -1,0 +1,90 @@
+From f9b080ce228db23f7370d4aae2167f0f785d9852 Mon Sep 17 00:00:00 2001
+From: Jehan <jehan@girinstud.io>
+Date: Wed, 3 Mar 2021 17:04:16 +0100
+Subject: [PATCH 1/2] meson: link with ssp on Windows.
+
+Maybe not necessary for all Windows builds, but for the ones with
+mingw-w64 at least, since recent versions, -lssp is necessary for
+fortified functions access.
+---
+ gtk/meson.build | 2 +-
+ meson.build     | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/gtk/meson.build b/gtk/meson.build
+index 43a6e2bfef..41c7e2ee3b 100644
+--- a/gtk/meson.build
++++ b/gtk/meson.build
+@@ -1092,7 +1092,7 @@ gtk_update_icon_cache = executable(
+   'updateiconcache.c',
+   extra_update_icon_cache_objs,
+   c_args: gtk_cargs,
+-  dependencies: libgtk_dep,
++  dependencies: [ libgtk_dep, ssp ],
+   install: true
+ )
+ 
+diff --git a/meson.build b/meson.build
+index 7ea2f4c7dd..c8638a331b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -801,6 +801,9 @@ if os_win32
+   '''
+   result = cc.links(getdevprop_code, args: ['-lsetupapi'], name: 'has SetupDiGetDevicePropertyW')
+   cdata.set('HAVE_SETUP_DI_GET_DEVICE_PROPERTY_W', result ? 1 : false)
++
++  # Necessary with _FORTIFY_SOURCE on mingw-w64.
++  ssp = cc.find_library('ssp')
+ endif
+ 
+ have_gio_unix = false
+-- 
+2.29.2
+
+
+From fa5318d5589c1e1a41b035878c83a1a4d3742b2d Mon Sep 17 00:00:00 2001
+From: Jehan <jehan@girinstud.io>
+Date: Wed, 3 Mar 2021 23:52:02 +0100
+Subject: [PATCH 2/2] gdk: WM_DWMCOMPOSITIONCHANGED is declared in winuser.h.
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fixes:
+> error: ‘WM_DWMCOMPOSITIONCHANGED’ undeclared (first use in this function)
+---
+ gdk/win32/gdkevents-win32.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/gdk/win32/gdkevents-win32.c b/gdk/win32/gdkevents-win32.c
+index 2fc39a9072..5e994de1e3 100644
+--- a/gdk/win32/gdkevents-win32.c
++++ b/gdk/win32/gdkevents-win32.c
+@@ -39,7 +39,24 @@
+  * not have TrackMouseEvent at all (?) --hb
+  */
+ 
++#if defined (_WIN32_WINNT) && WIN32_WINNT < 0x0601
++#  undef _WIN32_WINNT
++
++#  define _WIN32_WINNT 0x0601
++#  ifdef WINVER
++#    undef WINVER
++#  endif
++#  define WINVER _WIN32_WINNT
++#elif !defined (_WIN32_WINNT)
++#  define _WIN32_WINNT 0x0601
++#  ifdef WINVER
++#    undef WINVER
++#  endif
++#  define WINVER _WIN32_WINNT
++#endif
++
+ #include <windows.h>
++#include <winuser.h>
+ 
+ #include "config.h"
+ 
+-- 
+2.29.2
+

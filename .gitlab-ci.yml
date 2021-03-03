@@ -190,7 +190,7 @@ deps-win64:
     - apt-cache
   before_script:
     - apt-get update
-    - apt-get install -y --no-install-recommends wine wine64
+    - apt-get install -y --no-install-recommends wine wine64 wget
 
     - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
     - cd crossroad
@@ -257,6 +257,9 @@ deps-win32:
     - cd ..
     - pip3 install zstandard
   script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends wget
+
     - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w32 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
   artifacts:

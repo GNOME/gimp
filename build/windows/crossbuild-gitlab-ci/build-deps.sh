@@ -17,6 +17,18 @@ crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib && \
 ninja -C _build install || exit 1
 cd ..
 
+#GTK
+
+crossroad install atk glib2 headers-git && \
+git clone --depth 1 -b gtk-3-24 https://gitlab.gnome.org/GNOME/gtk.git && cd gtk && \
+wget https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/1563.patch && \
+git apply 1563.patch && \
+git apply ../../build/windows/crossbuild-gitlab-ci/gtk3.patch && \
+crossroad meson _build/ -Dtests=false -Ddemos=false -Dexamples=false \
+                        -Dbuiltin_immodules=yes -Dintrospection=false -Dlibdir=lib && \
+ninja -C _build install || exit 1
+cd ..
+
 # preparing GIMP
 
 LIBMNG=
@@ -27,10 +39,8 @@ if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
 fi
 
 crossroad install appstream-glib              \
-                  atk                         \
                   drmingw                     \
                   gexiv2                      \
-                  glib2                       \
                   json-c                      \
                   ghostscript                 \
                   iso-codes                   \
