@@ -78,6 +78,14 @@ typedef enum
   GIMP_TIFF_LOAD_CHANNEL
 } DefaultExtra;
 
+typedef enum
+{
+  GIMP_TIFF_DEFAULT,
+  GIMP_TIFF_INDEXED,
+  GIMP_TIFF_GRAY,
+  GIMP_TIFF_GRAY_MINISWHITE,
+} TiffColorMode;
+
 /* Declare some local functions */
 
 static GimpColorProfile * load_profile     (TIFF              *tif);
@@ -89,7 +97,7 @@ static void               load_contiguous  (TIFF              *tif,
                                             const Babl        *type,
                                             gushort            bps,
                                             gushort            spp,
-                                            gboolean           is_bw,
+                                            TiffColorMode      tiff_mode,
                                             gboolean           is_signed,
                                             gint               extra);
 static void               load_separate    (TIFF              *tif,
@@ -97,7 +105,7 @@ static void               load_separate    (TIFF              *tif,
                                             const Babl        *type,
                                             gushort            bps,
                                             gushort            spp,
-                                            gboolean           is_bw,
+                                            TiffColorMode      tiff_mode,
                                             gboolean           is_signed,
                                             gint               extra);
 static void               load_paths       (TIFF              *tif,
@@ -113,9 +121,9 @@ static gushort    get_extra_channels_count (gushort            photomet,
                                             gushort            spp,
                                             gboolean           alpha);
 
-static void               fill_bit2byte    (void);
-static void               fill_2bit2byte   (void);
-static void               fill_4bit2byte   (void);
+static void               fill_bit2byte    (TiffColorMode      tiff_mode);
+static void               fill_2bit2byte   (TiffColorMode      tiff_mode);
+static void               fill_4bit2byte   (TiffColorMode      tiff_mode);
 static void               convert_bit2byte (const guchar      *src,
                                             guchar            *dest,
                                             gint               width,
@@ -129,6 +137,9 @@ static void              convert_4bit2byte (const guchar      *src,
                                             gint               width,
                                             gint               height);
 
+static void             convert_miniswhite (guchar            *buffer,
+                                            gint               width,
+                                            gint               height);
 static void               convert_int2uint (guchar            *buffer,
                                             gint               bps,
                                             gint               spp,
@@ -418,7 +429,7 @@ load_image (GFile        *file,
       gushort          *extra_types;
       ChannelData      *channel = NULL;
       uint16            planar  = PLANARCONFIG_CONTIG;
-      gboolean          is_bw; /* FIXME Might need to change the name since we use it for palette too now */
+      TiffColorMode     tiff_mode;
       gboolean          is_signed;
       gint              i;
       gboolean          worst_case = FALSE;
@@ -697,88 +708,86 @@ load_image (GFile        *file,
 
       extra = get_extra_channels_count (photomet, spp, alpha);
 
-      is_bw     = FALSE;
+      tiff_mode = GIMP_TIFF_DEFAULT;
       is_signed = sampleformat == SAMPLEFORMAT_INT;
 
       switch (photomet)
         {
         case PHOTOMETRIC_MINISBLACK:
         case PHOTOMETRIC_MINISWHITE:
+          if (photomet == PHOTOMETRIC_MINISWHITE)
+            tiff_mode = GIMP_TIFF_GRAY_MINISWHITE;
+          else
+            tiff_mode = GIMP_TIFF_GRAY;
+
           if ((bps == 1 || bps == 2 || bps == 4) && ! alpha && spp == 1)
             {
-              image_type = GIMP_INDEXED;
-              layer_type = GIMP_INDEXED_IMAGE;
-
-              is_bw = TRUE;
               if (bps == 1)
-                fill_bit2byte ();
+                fill_bit2byte (tiff_mode);
               else if (bps == 2)
-                fill_2bit2byte ();
+                fill_2bit2byte (tiff_mode);
               else if (bps == 4)
-                fill_4bit2byte ();
+                fill_4bit2byte (tiff_mode);
             }
-          else
-            {
-              image_type = GIMP_GRAY;
-              layer_type = alpha ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
+          image_type = GIMP_GRAY;
+          layer_type = alpha ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
 
-              if (alpha)
+          if (alpha)
+            {
+              if (save_transp_pixels)
                 {
-                  if (save_transp_pixels)
+                  if (profile_linear)
                     {
-                      if (profile_linear)
-                        {
-                          base_format = babl_format_new (babl_model ("YA"),
-                                                         type,
-                                                         babl_component ("Y"),
-                                                         babl_component ("A"),
-                                                         NULL);
-                        }
-                      else
-                        {
-                          base_format = babl_format_new (babl_model ("Y'A"),
-                                                         type,
-                                                         babl_component ("Y'"),
-                                                         babl_component ("A"),
-                                                         NULL);
-                        }
+                      base_format = babl_format_new (babl_model ("YA"),
+                                                      type,
+                                                      babl_component ("Y"),
+                                                      babl_component ("A"),
+                                                      NULL);
                     }
                   else
                     {
-                      if (profile_linear)
-                        {
-                          base_format = babl_format_new (babl_model ("YaA"),
-                                                         type,
-                                                         babl_component ("Ya"),
-                                                         babl_component ("A"),
-                                                         NULL);
-                        }
-                      else
-                        {
-                          base_format = babl_format_new (babl_model ("Y'aA"),
-                                                         type,
-                                                         babl_component ("Y'a"),
-                                                         babl_component ("A"),
-                                                         NULL);
-                        }
+                      base_format = babl_format_new (babl_model ("Y'A"),
+                                                      type,
+                                                      babl_component ("Y'"),
+                                                      babl_component ("A"),
+                                                      NULL);
                     }
                 }
               else
                 {
                   if (profile_linear)
                     {
-                      base_format = babl_format_new (babl_model ("Y"),
-                                                     type,
-                                                     babl_component ("Y"),
-                                                     NULL);
+                      base_format = babl_format_new (babl_model ("YaA"),
+                                                      type,
+                                                      babl_component ("Ya"),
+                                                      babl_component ("A"),
+                                                      NULL);
                     }
                   else
                     {
-                      base_format = babl_format_new (babl_model ("Y'"),
-                                                     type,
-                                                     babl_component ("Y'"),
-                                                     NULL);
+                      base_format = babl_format_new (babl_model ("Y'aA"),
+                                                      type,
+                                                      babl_component ("Y'a"),
+                                                      babl_component ("A"),
+                                                      NULL);
                     }
+                }
+            }
+          else
+            {
+              if (profile_linear)
+                {
+                  base_format = babl_format_new (babl_model ("Y"),
+                                                  type,
+                                                  babl_component ("Y"),
+                                                  NULL);
+                }
+              else
+                {
+                  base_format = babl_format_new (babl_model ("Y'"),
+                                                  type,
+                                                  babl_component ("Y'"),
+                                                  NULL);
                 }
             }
           break;
@@ -863,13 +872,15 @@ load_image (GFile        *file,
           image_type = GIMP_INDEXED;
           layer_type = alpha ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
 
-          is_bw = TRUE;
+          if (bps < 8)
+            tiff_mode = GIMP_TIFF_INDEXED; /* Only bps < 8 needs special handling. */
+
           if (bps == 1)
-            fill_bit2byte ();
+            fill_bit2byte (tiff_mode);
           else if (bps == 2)
-            fill_2bit2byte ();
+            fill_2bit2byte (tiff_mode);
           else if (bps == 4)
-            fill_4bit2byte ();
+            fill_4bit2byte (tiff_mode);
           break;
 
         default:
@@ -1211,101 +1222,26 @@ load_image (GFile        *file,
       /* Install colormap for INDEXED images only */
       if (image_type == GIMP_INDEXED)
         {
-          guchar cmap[768];
+          guchar   cmap[768];
+          gushort *redmap;
+          gushort *greenmap;
+          gushort *bluemap;
+          gint     i, j;
 
-          if (is_bw && photomet != PHOTOMETRIC_PALETTE)
+          if (! TIFFGetField (tif, TIFFTAG_COLORMAP,
+                              &redmap, &greenmap, &bluemap))
             {
-              if (photomet == PHOTOMETRIC_MINISWHITE)
-                {
-                  if (bps == 1)
-                    {
-                      cmap[0] = cmap[1] = cmap[2] = 255;
-                      cmap[3] = cmap[4] = cmap[5] = 0;
-                    }
-                  else if (bps == 2)
-                    {
-                      cmap[0] = cmap[1]  = cmap[2]  = 255;
-                      cmap[3] = cmap[4]  = cmap[5]  = 170;
-                      cmap[6] = cmap[7]  = cmap[8]  = 85;
-                      cmap[9] = cmap[10] = cmap[11] = 0;
-                    }
-                  else if (bps == 4)
-                    {
-                      cmap[0]  = cmap[1]  = cmap[2]  = 255;
-                      cmap[3]  = cmap[4]  = cmap[5]  = 238;
-                      cmap[6]  = cmap[7]  = cmap[8]  = 221;
-                      cmap[9]  = cmap[10] = cmap[11] = 204;
-                      cmap[12] = cmap[13] = cmap[14] = 187;
-                      cmap[15] = cmap[16] = cmap[17] = 170;
-                      cmap[18] = cmap[19] = cmap[20] = 153;
-                      cmap[21] = cmap[22] = cmap[23] = 136;
-                      cmap[24] = cmap[25] = cmap[26] = 119;
-                      cmap[27] = cmap[28] = cmap[29] = 102;
-                      cmap[30] = cmap[31] = cmap[32] = 85;
-                      cmap[33] = cmap[34] = cmap[35] = 68;
-                      cmap[36] = cmap[37] = cmap[38] = 51;
-                      cmap[39] = cmap[40] = cmap[41] = 34;
-                      cmap[42] = cmap[43] = cmap[44] = 17;
-                      cmap[45] = cmap[46] = cmap[47] = 0;
-                    }
-                }
-              else
-                {
-                  if (bps == 1)
-                    {
-                      cmap[0] = cmap[1] = cmap[2] = 0;
-                      cmap[3] = cmap[4] = cmap[5] = 255;
-                    }
-                  else if (bps == 2)
-                    {
-                      cmap[0] = cmap[1]  = cmap[2]  = 0;
-                      cmap[3] = cmap[4]  = cmap[5]  = 85;
-                      cmap[6] = cmap[7]  = cmap[8]  = 170;
-                      cmap[9] = cmap[10] = cmap[11] = 255;
-                    }
-                  else if (bps == 4)
-                    {
-                      cmap[0]  = cmap[1]  = cmap[2]  = 0;
-                      cmap[3]  = cmap[4]  = cmap[5]  = 17;
-                      cmap[6]  = cmap[7]  = cmap[8]  = 34;
-                      cmap[9]  = cmap[10] = cmap[11] = 51;
-                      cmap[12] = cmap[13] = cmap[14] = 68;
-                      cmap[15] = cmap[16] = cmap[17] = 85;
-                      cmap[18] = cmap[19] = cmap[20] = 102;
-                      cmap[21] = cmap[22] = cmap[23] = 119;
-                      cmap[24] = cmap[25] = cmap[26] = 136;
-                      cmap[27] = cmap[28] = cmap[29] = 153;
-                      cmap[30] = cmap[31] = cmap[32] = 170;
-                      cmap[33] = cmap[34] = cmap[35] = 187;
-                      cmap[36] = cmap[37] = cmap[38] = 204;
-                      cmap[39] = cmap[40] = cmap[41] = 221;
-                      cmap[42] = cmap[43] = cmap[44] = 238;
-                      cmap[45] = cmap[46] = cmap[47] = 255;
-                    }
-                }
+              TIFFClose (tif);
+              g_message (_("Could not get colormaps from '%s'"),
+                         gimp_file_get_utf8_name (file));
+              return GIMP_PDB_EXECUTION_ERROR;
             }
-          else
+
+          for (i = 0, j = 0; i < (1 << bps); i++)
             {
-              gushort *redmap;
-              gushort *greenmap;
-              gushort *bluemap;
-              gint     i, j;
-
-              if (! TIFFGetField (tif, TIFFTAG_COLORMAP,
-                                  &redmap, &greenmap, &bluemap))
-                {
-                  TIFFClose (tif);
-                  g_message (_("Could not get colormaps from '%s'"),
-                             gimp_file_get_utf8_name (file));
-                  return GIMP_PDB_EXECUTION_ERROR;
-                }
-
-              for (i = 0, j = 0; i < (1 << bps); i++)
-                {
-                  cmap[j++] = redmap[i] >> 8;
-                  cmap[j++] = greenmap[i] >> 8;
-                  cmap[j++] = bluemap[i] >> 8;
-                }
+              cmap[j++] = redmap[i] >> 8;
+              cmap[j++] = greenmap[i] >> 8;
+              cmap[j++] = bluemap[i] >> 8;
             }
 
           gimp_image_set_colormap (*image, cmap, (1 << bps));
@@ -1411,12 +1347,12 @@ load_image (GFile        *file,
       else if (planar == PLANARCONFIG_CONTIG)
         {
           load_contiguous (tif, channel, type, bps, spp,
-                           is_bw, is_signed, extra);
+                           tiff_mode, is_signed, extra);
         }
       else
         {
           load_separate (tif, channel, type, bps, spp,
-                         is_bw, is_signed, extra);
+                         tiff_mode, is_signed, extra);
         }
 
       if (TIFFGetField (tif, TIFFTAG_ORIENTATION, &orientation))
@@ -1829,14 +1765,14 @@ load_paths (TIFF      *tif,
 
 
 static void
-load_contiguous (TIFF        *tif,
-                 ChannelData *channel,
-                 const Babl  *type,
-                 gushort      bps,
-                 gushort      spp,
-                 gboolean     is_bw,
-                 gboolean     is_signed,
-                 gint         extra)
+load_contiguous (TIFF         *tif,
+                 ChannelData  *channel,
+                 const Babl   *type,
+                 gushort       bps,
+                 gushort       spp,
+                 TiffColorMode tiff_mode,
+                 gboolean      is_signed,
+                 gint          extra)
 {
   guint32     image_width;
   guint32     image_height;
@@ -1850,6 +1786,7 @@ load_contiguous (TIFF        *tif,
   gdouble     one_row;
   guint32     y;
   gint        i;
+  gboolean    needs_upscale = FALSE;
 
   g_printerr ("%s\n", __func__);
 
@@ -1873,8 +1810,11 @@ load_contiguous (TIFF        *tif,
       buffer = g_malloc (TIFFScanlineSize (tif));
     }
 
-  if (is_bw)
-    bw_buffer = g_malloc (tile_width * tile_height);
+  if (tiff_mode != GIMP_TIFF_DEFAULT && bps < 8)
+    {
+      needs_upscale = TRUE;
+      bw_buffer = g_malloc (tile_width * tile_height);
+    }
 
   one_row = (gdouble) tile_height / (gdouble) image_height;
 
@@ -1925,7 +1865,7 @@ load_contiguous (TIFF        *tif,
           cols = MIN (image_width  - x, tile_width);
           rows = MIN (image_height - y, tile_height);
 
-          if (is_bw)
+          if (needs_upscale)
             {
               if (bps == 1)
                 convert_bit2byte (buffer, bw_buffer, cols, rows);
@@ -1940,7 +1880,12 @@ load_contiguous (TIFF        *tif,
                                 tile_width * bytes_per_pixel);
             }
 
-          src_buf = gegl_buffer_linear_new_from_data (is_bw ? bw_buffer : buffer,
+          if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE && bps == 8)
+            {
+              convert_miniswhite (buffer, cols, rows);
+            }
+
+          src_buf = gegl_buffer_linear_new_from_data (needs_upscale ? bw_buffer : buffer,
                                                       src_format,
                                                       GEGL_RECTANGLE (0, 0, cols, rows),
                                                       tile_width * bytes_per_pixel,
@@ -1998,14 +1943,14 @@ load_contiguous (TIFF        *tif,
 
 
 static void
-load_separate (TIFF        *tif,
-               ChannelData *channel,
-               const Babl  *type,
-               gushort      bps,
-               gushort      spp,
-               gboolean     is_bw,
-               gboolean     is_signed,
-               gint         extra)
+load_separate (TIFF         *tif,
+               ChannelData  *channel,
+               const Babl   *type,
+               gushort       bps,
+               gushort       spp,
+               TiffColorMode tiff_mode,
+               gboolean      is_signed,
+               gint          extra)
 {
   guint32     image_width;
   guint32     image_height;
@@ -2018,6 +1963,7 @@ load_separate (TIFF        *tif,
   gdouble     progress  = 0.0;
   gdouble     one_row;
   gint        i, compindex;
+  gboolean    needs_upscale = FALSE;
 
   g_printerr ("%s\n", __func__);
 
@@ -2041,8 +1987,11 @@ load_separate (TIFF        *tif,
       buffer = g_malloc (TIFFScanlineSize (tif));
     }
 
-  if (is_bw)
-    bw_buffer = g_malloc (tile_width * tile_height);
+  if (tiff_mode != GIMP_TIFF_DEFAULT && bps < 8)
+    {
+      needs_upscale = TRUE;
+      bw_buffer = g_malloc (tile_width * tile_height);
+    }
 
   one_row = (gdouble) tile_height / (gdouble) image_height;
 
@@ -2113,7 +2062,7 @@ load_separate (TIFF        *tif,
                   cols = MIN (image_width  - x, tile_width);
                   rows = MIN (image_height - y, tile_height);
 
-                  if (is_bw)
+                  if (needs_upscale)
                     {
                       if (bps == 1)
                         convert_bit2byte (buffer, bw_buffer, cols, rows);
@@ -2128,7 +2077,12 @@ load_separate (TIFF        *tif,
                                         tile_width * bytes_per_pixel);
                     }
 
-                  src_buf = gegl_buffer_linear_new_from_data (is_bw ? bw_buffer : buffer,
+                  if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE && bps == 8)
+                    {
+                      convert_miniswhite (buffer, cols, rows);
+                    }
+
+                  src_buf = gegl_buffer_linear_new_from_data (needs_upscale ? bw_buffer : buffer,
                                                               src_format,
                                                               GEGL_RECTANGLE (0, 0, cols, rows),
                                                               GEGL_AUTO_ROWSTRIDE,
@@ -2181,8 +2135,40 @@ static guchar   bit2byte[256 * 8];
 static guchar _2bit2byte[256 * 4];
 static guchar _4bit2byte[256 * 2];
 
+static const guchar _1_to_8_bitmap [2] =
+{
+  0, 255
+};
+
+static const guchar _1_to_8_bitmap_rev [2] =
+{
+  255, 0
+};
+
+static const guchar _2_to_8_bitmap [4] =
+{
+  0, 85, 170, 255
+};
+
+static const guchar _2_to_8_bitmap_rev [4] =
+{
+  255, 170, 85, 0
+};
+
+static const guchar _4_to_8_bitmap [16] =
+{
+  0,    17,  34,  51,  68,  85, 102, 119,
+  136, 153, 170, 187, 204, 221, 238, 255
+};
+
+static const guchar _4_to_8_bitmap_rev [16] =
+{
+  255, 238, 221, 204, 187, 170, 153, 136,
+  119, 102,  85,  68,  51,  34,  17,   0
+};
+
 static void
-fill_bit2byte (void)
+fill_bit2byte (TiffColorMode tiff_mode)
 {
   static gboolean filled = FALSE;
 
@@ -2194,15 +2180,38 @@ fill_bit2byte (void)
 
   dest = bit2byte;
 
-  for (j = 0; j < 256; j++)
-    for (i = 7; i >= 0; i--)
-      *(dest++) = ((j & (1 << i)) != 0);
+  if (tiff_mode == GIMP_TIFF_INDEXED)
+    {
+      for (j = 0; j < 256; j++)
+        for (i = 7; i >= 0; i--)
+          {
+            *(dest++) = ((j & (1 << i)) != 0);
+          }
+    }
+  else if (tiff_mode != GIMP_TIFF_DEFAULT)
+    {
+      guchar *_to_8_bitmap = NULL;
+
+      if (tiff_mode == GIMP_TIFF_GRAY)
+        _to_8_bitmap = (guchar *) &_1_to_8_bitmap;
+      else if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE)
+        _to_8_bitmap = (guchar *) &_1_to_8_bitmap_rev;
+
+      for (j = 0; j < 256; j++)
+        for (i = 7; i >= 0; i--)
+          {
+            gint idx;
+
+            idx = ((j & (1 << i)) != 0);
+            *(dest++) = _to_8_bitmap[idx];
+          }
+    }
 
   filled = TRUE;
 }
 
 static void
-fill_2bit2byte (void)
+fill_2bit2byte (TiffColorMode tiff_mode)
 {
   static gboolean filled2 = FALSE;
 
@@ -2214,19 +2223,42 @@ fill_2bit2byte (void)
 
   dest = _2bit2byte;
 
-  for (j = 0; j < 256; j++)
+  if (tiff_mode == GIMP_TIFF_INDEXED)
     {
-    for (i = 3; i >= 0; i--)
-      {
-        *(dest++) = ((j & (3 << (2*i))) >> (2*i));
-      }
+      for (j = 0; j < 256; j++)
+        {
+        for (i = 3; i >= 0; i--)
+          {
+            *(dest++) = ((j & (3 << (2*i))) >> (2*i));
+          }
+        }
+    }
+  else if (tiff_mode != GIMP_TIFF_DEFAULT)
+    {
+      guchar *_to_8_bitmap = NULL;
+
+      if (tiff_mode == GIMP_TIFF_GRAY)
+        _to_8_bitmap = (guchar *) &_2_to_8_bitmap;
+      else if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE)
+        _to_8_bitmap = (guchar *) &_2_to_8_bitmap_rev;
+
+      for (j = 0; j < 256; j++)
+        {
+        for (i = 3; i >= 0; i--)
+          {
+            gint idx;
+
+            idx = ((j & (3 << (2*i))) >> (2*i));
+            *(dest++) = _to_8_bitmap[idx];
+          }
+        }
     }
 
   filled2 = TRUE;
 }
 
 static void
-fill_4bit2byte (void)
+fill_4bit2byte (TiffColorMode tiff_mode)
 {
   static gboolean filled4 = FALSE;
 
@@ -2238,12 +2270,35 @@ fill_4bit2byte (void)
 
   dest = _4bit2byte;
 
-  for (j = 0; j < 256; j++)
+  if (tiff_mode == GIMP_TIFF_INDEXED)
     {
-    for (i = 1; i >= 0; i--)
-      {
-        *(dest++) = ((j & (15 << (4*i))) >> (4*i));
-      }
+      for (j = 0; j < 256; j++)
+        {
+        for (i = 1; i >= 0; i--)
+          {
+            *(dest++) = ((j & (15 << (4*i))) >> (4*i));
+          }
+        }
+    }
+  else if (tiff_mode != GIMP_TIFF_DEFAULT)
+    {
+      guchar *_to_8_bitmap = NULL;
+
+      if (tiff_mode == GIMP_TIFF_GRAY)
+        _to_8_bitmap = (guchar *) &_4_to_8_bitmap;
+      else if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE)
+        _to_8_bitmap = (guchar *) &_4_to_8_bitmap_rev;
+
+      for (j = 0; j < 256; j++)
+        {
+        for (i = 1; i >= 0; i--)
+          {
+            gint idx;
+
+            idx = ((j & (15 << (4*i))) >> (4*i));
+            *(dest++) = _to_8_bitmap[idx];
+          }
+        }
     }
 
   filled4 = TRUE;
@@ -2332,6 +2387,26 @@ convert_4bit2byte (const guchar *src,
           memcpy (dest, _4bit2byte + *src * 2, x);
           dest += x;
           src++;
+        }
+    }
+}
+
+static void
+convert_miniswhite (guchar *buffer,
+                    gint    width,
+                    gint    height)
+{
+  gint    y;
+  guchar *buf = buffer;
+
+  for (y = 0; y < height; y++)
+    {
+      gint x;
+
+      for (x = 0; x < width; x++)
+        {
+          *buf = ~*buf;
+          buf++;
         }
     }
 }
