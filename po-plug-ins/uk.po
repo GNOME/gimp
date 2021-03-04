@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-03-03 07:37+0000\n"
-"PO-Revision-Date: 2021-03-03 09:50+0200\n"
+"POT-Creation-Date: 2021-03-04 18:08+0000\n"
+"PO-Revision-Date: 2021-03-04 20:31+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -62,7 +62,7 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/common/tile-small.c:423 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:706 ../plug-ins/common/warp.c:467
 #: ../plug-ins/common/wavelet-decompose.c:386 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:2386 ../plug-ins/flame/flame.c:516
+#: ../plug-ins/file-tiff/file-tiff-load.c:2458 ../plug-ins/flame/flame.c:516
 #: ../plug-ins/flame/flame.c:692 ../plug-ins/flame/flame.c:1009
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
@@ -395,7 +395,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
 #: ../plug-ins/file-psd/psd-image-res-load.c:1054
 #: ../plug-ins/file-psd/psd-load.c:2039 ../plug-ins/file-sgi/sgi.c:424
-#: ../plug-ins/file-tiff/file-tiff-load.c:1339
+#: ../plug-ins/file-tiff/file-tiff-load.c:1272
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -1926,7 +1926,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/file-psd/psd-load.c:141
 #: ../plug-ins/file-raw/file-darktable.c:419
 #: ../plug-ins/file-raw/file-rawtherapee.c:345 ../plug-ins/file-sgi/sgi.c:330
-#: ../plug-ins/file-tiff/file-tiff-load.c:235
+#: ../plug-ins/file-tiff/file-tiff-load.c:246
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається «%s»"
@@ -3059,7 +3059,7 @@ msgid "Import from PDF"
 msgstr "Імпорт з PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3551
-#: ../plug-ins/file-tiff/file-tiff-load.c:2387
+#: ../plug-ins/file-tiff/file-tiff-load.c:2459
 #: ../plug-ins/metadata/metadata-editor.c:5726
 msgid "_Import"
 msgstr "_Імпортувати"
@@ -3197,7 +3197,7 @@ msgstr "Шари як сторінки (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1330
 #: ../plug-ins/common/file-pdf-save.c:1403
 #: ../plug-ins/common/file-pdf-save.c:1501 ../plug-ins/common/file-ps.c:2036
-#: ../plug-ins/file-tiff/file-tiff-load.c:1341
+#: ../plug-ins/file-tiff/file-tiff-load.c:1274
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
@@ -7073,18 +7073,17 @@ msgstr ""
 "Під час спроби експортування декількох шарів не було позначено пункт "
 "«Зберегти шари»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:243
+#: ../plug-ins/file-tiff/file-tiff-load.c:254
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
-msgstr ""
-"Не є зображенням TIFF або зображення пошкоджено."
+msgstr "Не є зображенням TIFF або зображення пошкоджено."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:274
+#: ../plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF «%s» не містить каталоги"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:281
+#: ../plug-ins/file-tiff/file-tiff-load.c:292
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7102,7 +7101,7 @@ msgstr[2] ""
 "Не вдалося виконати облік каталогу TIFF «%s» за заголовком, хоча, здається, "
 "маємо %d сторінок. Буде виконано спробу завантажити файл із цим припущенням."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:357
+#: ../plug-ins/file-tiff/file-tiff-load.c:368
 msgid "Extra channels with unspecified data."
 msgstr "Зайві канали із даними поза специфікацією."
 
@@ -7113,17 +7112,17 @@ msgstr "Зайві канали із даними поза специфікац�
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:369
+#: ../plug-ins/file-tiff/file-tiff-load.c:380
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Нестандартний TIFF: зайві канали без поля «ExtraSamples»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:430
+#: ../plug-ins/file-tiff/file-tiff-load.c:441
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Не вдалося прочитати сторінку %d з %d. Зображення може бути пошкоджено.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:459
+#: ../plug-ins/file-tiff/file-tiff-load.c:470
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7132,7 +7131,7 @@ msgstr ""
 "Для цього зображення визначено лінійний колірний профіль, але цей профіль не "
 "встановлено на першому шарі. Шари під шаром %d буде оброблено як нелінійні."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:467
+#: ../plug-ins/file-tiff/file-tiff-load.c:478
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7142,141 +7141,148 @@ msgstr ""
 "використовуватимемо лише перший з них. Якщо це призведе до некоректних "
 "результатів, вам варто завантажити кожен з шарів як окреме зображення."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:479
+#: ../plug-ins/file-tiff/file-tiff-load.c:490
 #, c-format
-#| msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
-"Підозрілива бітова глибина: %d для сторінки %d. Можливо, зображення пошкоджено."
+"Підозрілива бітова глибина: %d для сторінки %d. Можливо, зображення "
+"пошкоджено."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:571
+#: ../plug-ins/file-tiff/file-tiff-load.c:564
 #, c-format
-#| msgid "Could not read header from '%s'"
-msgid "Could not get image width from '%s'"
-msgstr "Не вдалося отримати ширину зображення з «%s»"
+#| msgid "Unsupported bit depth: %d"
+msgid "Unsupported bit depth: %d for page %d."
+msgstr "Непідтримувана розрядність на канал %d для сторінки %d."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:579
 #, c-format
-#| msgid "Could not read color entries from '%s'"
-msgid "Could not get image length from '%s'"
-msgstr "Не вдалося отримати довжину зображення з «%s»"
+msgid "Could not get image width from '%s'"
+msgstr "Не вдалося отримати ширину зображення з «%s»"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:587
 #, c-format
+msgid "Could not get image length from '%s'"
+msgstr "Не вдалося отримати довжину зображення з «%s»"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:595
+#, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
-"Некоректні розміри зображення (%u x %u) для сторінки %d. Можливо, зображення пошкоджено."
+"Некоректні розміри зображення (%u x %u) для сторінки %d. Можливо, зображення "
+"пошкоджено."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:608
+#: ../plug-ins/file-tiff/file-tiff-load.c:616
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr ""
-"Не вдалося отримати фотометричні дані з «%s». Зображення стиснено CCITT. Припускаємо, мінімальний колір — білий."
+"Не вдалося отримати фотометричні дані з «%s». Зображення стиснено CCITT. "
+"Припускаємо, мінімальний колір — білий."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:615
+#: ../plug-ins/file-tiff/file-tiff-load.c:623
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
-"Не вдалося отримати фотометричні дані з «%s». Припускаємо, мінімальний колір — чорний."
+"Не вдалося отримати фотометричні дані з «%s». Припускаємо, мінімальний колір "
+"— чорний."
 
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:647
+#: ../plug-ins/file-tiff/file-tiff-load.c:655
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr ""
-"Для %s не визначено тип каналу прозорості. Припускаємо, що прозорість не перемножено попередньо"
+"Для %s не визначено тип каналу прозорості. Припускаємо, що прозорість не "
+"перемножено попередньо"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:672
+#: ../plug-ins/file-tiff/file-tiff-load.c:680
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
 "not set while extra channels are present. Assuming the first extra channel "
 "is non-premultiplied alpha."
 msgstr ""
-"Зображення «%s» не відповідає специфікації TIFF: поле ExtraSamples не встановлено, хоча є додаткові канали. Припускаємо, що перший додатковий канал не є попередньо помноженими даними прозорості."
+"Зображення «%s» не відповідає специфікації TIFF: поле ExtraSamples не "
+"встановлено, хоча є додаткові канали. Припускаємо, що перший додатковий "
+"канал не є попередньо помноженими даними прозорості."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:905
+#: ../plug-ins/file-tiff/file-tiff-load.c:913
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
-msgstr ""
-"Некоректне або невідоме стискання %u. Вимикаємо стискання."
+msgstr "Некоректне або невідоме стискання %u. Вимикаємо стискання."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:963
+#: ../plug-ins/file-tiff/file-tiff-load.c:971
 #, c-format
-#| msgid "Could not create new image for '%s': %s"
 msgid "Could not create a new image: %s"
 msgstr "Не вдалося створити зображення: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:982
+#: ../plug-ins/file-tiff/file-tiff-load.c:990
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-з-%d-сторінок"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1147
+#: ../plug-ins/file-tiff/file-tiff-load.c:1155
 #, c-format
-#| msgid "Unknown compression type %d"
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Невідомий тип одиниці роздільності %d. Припускаємо точки на дюйм."
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1157
+#: ../plug-ins/file-tiff/file-tiff-load.c:1165
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
-"Попередження: роздільність вказано без типу одиниці. Припускаємо точки на дюйм."
+"Попередження: роздільність вказано без типу одиниці. Припускаємо точки на "
+"дюйм."
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1165
+#: ../plug-ins/file-tiff/file-tiff-load.c:1173
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
-"Попередження: немає даних щодо роздільності y, припускаємо ту саму, що і для x"
+"Попередження: немає даних щодо роздільності y, припускаємо ту саму, що і для "
+"x"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1298
+#: ../plug-ins/file-tiff/file-tiff-load.c:1232
 #, c-format
-#| msgid "Could not read color entries from '%s'"
 msgid "Could not get colormaps from '%s'"
 msgstr "Не вдалося отримати мапи кольорів з «%s»"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1378
+#: ../plug-ins/file-tiff/file-tiff-load.c:1311
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1531
+#: ../plug-ins/file-tiff/file-tiff-load.c:1464
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Не вдалося прочитати дані з TIFF «%s». Ймовірно, вміст файла пошкоджено."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1602
+#: ../plug-ins/file-tiff/file-tiff-load.c:1535
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: непідтримуваний формат зображення, немає доступного завантажувача RGBA"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1910
-#: ../plug-ins/file-tiff/file-tiff-load.c:2098
+#: ../plug-ins/file-tiff/file-tiff-load.c:1847
+#: ../plug-ins/file-tiff/file-tiff-load.c:2044
 #, c-format
-#| msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
-"Не вдалося прочитати плитку. Зображення може бути пошкоджено. "
-"Рядок помилки — %d."
+"Не вдалося прочитати плитку. Зображення може бути пошкоджено. Рядок помилки "
+"— %d."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1919
-#: ../plug-ins/file-tiff/file-tiff-load.c:2107
+#: ../plug-ins/file-tiff/file-tiff-load.c:1856
+#: ../plug-ins/file-tiff/file-tiff-load.c:2053
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
 "Рядок помилки — %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2382
+#: ../plug-ins/file-tiff/file-tiff-load.c:2454
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
@@ -7284,23 +7290,23 @@ msgstr "Імпорт TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2435
+#: ../plug-ins/file-tiff/file-tiff-load.c:2507
 msgid "_Keep empty space around imported layers"
 msgstr "За_лишати порожнє місце навколо імпортованих шарів"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2452
+#: ../plug-ins/file-tiff/file-tiff-load.c:2524
 msgid "Process extra channel as:"
 msgstr "Обробляти зайвий канал як:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2455
+#: ../plug-ins/file-tiff/file-tiff-load.c:2527
 msgid "_Non-premultiplied alpha"
 msgstr "Б_ез попередньо помноженої альфи"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2456
+#: ../plug-ins/file-tiff/file-tiff-load.c:2528
 msgid "Pre_multiplied alpha"
 msgstr "_Попередньо помножена альфа"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2457
+#: ../plug-ins/file-tiff/file-tiff-load.c:2529
 msgid "Channe_l"
 msgstr "_Канал"
 
