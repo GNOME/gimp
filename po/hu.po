@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-15 21:54+0000\n"
-"PO-Revision-Date: 2021-02-16 02:13+0100\n"
-"Last-Translator: Balázs Meskó <mesko.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2021-03-03 16:33+0000\n"
+"PO-Revision-Date: 2021-03-04 07:56+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -90,12 +90,10 @@ msgstr ""
 "tartalmaz. Egy új kísérleti eszköz is megjelent a játszótéren."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
-#| msgid "Many usability improvements"
 msgid "Many usability improvements on the slider widget"
 msgstr "Számos használhatósági fejlesztés a csúszka felületi elemen"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
-#| msgid "-Click on thumbnail in Layers dockable"
 msgid "Usability cleaning in the Layers dockable"
 msgstr "Használhatósági tisztítás a Rétegek ablakban"
 
@@ -107,8 +105,11 @@ msgstr ""
 "(viszont alulra kerülnek)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#| msgid ""
+#| "Fonts targetted for Korean and Japanese language show appropriate "
+#| "characters"
 msgid ""
-"Fonts targetted for Korean and Japanese language show appropriate characters"
+"Fonts targeted for Korean and Japanese language show appropriate characters"
 msgstr ""
 "A koreai és japán nyelvet célzó betűkészletek most már a megfelelő "
 "karaktereket jelenítik meg"
@@ -141,12 +142,11 @@ msgid ""
 "to the GTK+3 toolkit. Noteworthy improvements (though some are still work-in-"
 "progress) include:"
 msgstr ""
-"Ez a GIMP 3.0 első fejlesztői kiadása, amely fókusza a GTK+3 eszközkészletre"
-" történő átírás volt. Néhány jelentős fejlesztés (bár némelyik még nincs"
-" kész):"
+"Ez a GIMP 3.0 első fejlesztői kiadása, amely fókusza a GTK+3 eszközkészletre "
+"történő átírás volt. Néhány jelentős fejlesztés (bár némelyik még nincs "
+"kész):"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
-#| msgid "-Click on thumbnail in Layers dockable"
 msgid "Multi-selection of layers in the Layers dockable"
 msgstr "Több réteg kiválasztása a Rétegek ablakban"
 
@@ -155,8 +155,6 @@ msgid "Proper high pixel density display support"
 msgstr "Valódi nagy képpontsűrűségű kijelző támogatás"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
-#| msgctxt "dialogs-action"
-#| msgid "Open the input devices editor"
 msgid "Improved input device support"
 msgstr "Továbbfejlesztett bemeneti eszköz támogatás"
 
@@ -183,9 +181,6 @@ msgid "Wayland support"
 msgstr "Wayland támogatás"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
-#| msgid ""
-#| "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, "
-#| "it includes:"
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
 "A GIMP 2.10.22 főleg egy hibajavítási kiadás. Említésre érdemes változások:"
@@ -217,8 +212,8 @@ msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
 msgstr ""
-"Az OpenCL támogatás engedélyezése lehetőség átkerült a Beállítások Játszótér"
-" lapjára"
+"Az OpenCL támogatás engedélyezése lehetőség átkerült a Beállítások Játszótér "
+"lapjára"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
@@ -7622,7 +7617,7 @@ msgstr "A rétegmaszk hatásának alkalmazása, majd a maszk eltávolítása"
 #: ../app/actions/layers-actions.c:494
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
-msgstr "Rétegmaszkok tör_lése"
+msgstr "Rétegmaszk tör_lése"
 
 #: ../app/actions/layers-actions.c:495
 msgctxt "layers-action"
@@ -11962,7 +11957,6 @@ msgid "Enable the Seamless Clone tool."
 msgstr "A varrat nélküli klónozás eszköz engedélyezése."
 
 #: ../app/config/gimprc-blurbs.h:482
-#| msgid "Enable the MyPaint Brush tool."
 msgid "Enable the Paint Select tool."
 msgstr "A Festő kiválasztás eszköz engedélyezése."
 
@@ -12547,8 +12541,6 @@ msgid "Convert to built-in sRGB or grayscale profile"
 msgstr "Átalakítás a beépített sRGB vagy szürkeárnyalatos színprofilra"
 
 #: ../app/core/core-enums.c:223
-#| msgctxt "color-profile-policy"
-#| msgid "Convert to built-in sRGB or grayscale profile"
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
 msgstr ""
@@ -14579,7 +14571,6 @@ msgstr "A több réteg kijelölése ekkor került hozzáadásra: %s"
 
 #: ../app/core/gimpimage.c:2840
 #, c-format
-#| msgid "On-canvas gradient editing"
 msgid "Off-canvas guides added in %s"
 msgstr "Rajzvásznon kívüli segédvonalak hozzáadva ebben: %s"
 
@@ -16045,7 +16036,6 @@ msgstr ""
 "Átalakítja a képet az előnyben részesített szürkeárnyalatos színprofilra?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:168
-#| msgid "Convert the image to the built-in sRGB color profile?"
 msgid "Convert the image to the preferred RGB color profile?"
 msgstr "Átalakítja a képet az előnybe részesített RGB színprofilra?"
 
@@ -17335,7 +17325,6 @@ msgid "_Seamless Clone tool"
 msgstr "_Varrat nélküli klónozás eszköz"
 
 #: ../app/dialogs/preferences-dialog.c:1639
-#| msgid "P_aint tool:"
 msgid "_Paint Select tool"
 msgstr "_Festő kiválasztás eszköz"
 
@@ -19125,7 +19114,7 @@ msgstr "(tiszta)"
 msgid "(none)"
 msgstr "(nincs)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1568
+#: ../app/display/gimpdisplayshell-tool-events.c:1570
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Kiválasztott réteg: „%s”"
@@ -19491,13 +19480,13 @@ msgstr ""
 "Szabadkézi szakasz felvétele: kattintás+húzás; sokszög-szakasz felvétele: "
 "kattintás"
 
-#: ../app/display/gimptoolrectangle.c:566
-#: ../app/display/gimptoolrectangle.c:874
+#: ../app/display/gimptoolrectangle.c:568
+#: ../app/display/gimptoolrectangle.c:876
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Téglalap: "
 
-#: ../app/display/gimptoolrectangle.c:2138
+#: ../app/display/gimptoolrectangle.c:2140
 msgid "Position: "
 msgstr "Pozíció: "
 
@@ -21542,7 +21531,7 @@ msgstr ""
 "A(z) „%s” eljárás számára érvénytelen UTF-8 karakterlánc érték lett megadva "
 "ezen argumentumban: „%s”."
 
-#: ../app/pdb/image-cmds.c:2400
+#: ../app/pdb/image-cmds.c:2434
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -21574,7 +21563,6 @@ msgstr "Kétdimenziós átalakítás"
 #: ../app/pdb/pdb-cmds.c:1089 ../app/pdb/pdb-cmds.c:1133
 #: ../app/pdb/pdb-cmds.c:1175
 #, c-format
-#| msgid "Procedure name '%s' is not a canonical identifier"
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "A(z) „%s” adatcímke nem kanonikus azonosító"
 
@@ -23167,8 +23155,9 @@ msgid "How much to dim everything outside selection"
 msgstr "A kijelölésen kívüli részek elsötétítésének mértéke"
 
 #: ../app/tools/gimpcropoptions.c:95
-msgid "Current layers only"
-msgstr "Csak a jelenlegi rétegeket"
+#| msgid "_Selected Pixels only"
+msgid "Selected layers only"
+msgstr "Csak a kijelölt rétegek"
 
 #: ../app/tools/gimpcropoptions.c:96
 msgid "Crop only currently selected layers"
@@ -23719,7 +23708,6 @@ msgid "GEGL Operation"
 msgstr "GEGL művelet"
 
 #: ../app/tools/gimpgegltool.c:79
-#| msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgid "Run an arbitrary GEGL operation"
 msgstr "Tetszőleges GEGL művelet futtatása"
 
@@ -23906,38 +23894,38 @@ msgstr "%d. középpont"
 msgid "Gradient Step"
 msgstr "Színátmenet lépés"
 
-#: ../app/tools/gimpguidetool.c:189
+#: ../app/tools/gimpguidetool.c:183
 msgctxt "undo-type"
 msgid "Remove Guides"
 msgstr "Segédvonalak eltávolítása"
 
-#: ../app/tools/gimpguidetool.c:190
+#: ../app/tools/gimpguidetool.c:184
 msgctxt "undo-type"
 msgid "Move Guides"
 msgstr "Segédvonalak áthelyezése"
 
-#: ../app/tools/gimpguidetool.c:430
+#: ../app/tools/gimpguidetool.c:424
 msgid "Remove Guides"
 msgstr "Segédvonalak eltávolítása"
 
-#: ../app/tools/gimpguidetool.c:431
+#: ../app/tools/gimpguidetool.c:425
 msgid "Remove Guide"
 msgstr "Segédvonal eltávolítása"
 
-#: ../app/tools/gimpguidetool.c:432
+#: ../app/tools/gimpguidetool.c:426
 msgid "Cancel Guide"
 msgstr "Segédvonal elhelyezésének visszavonása"
 
-#: ../app/tools/gimpguidetool.c:469
+#: ../app/tools/gimpguidetool.c:463
 msgid "Move Guide: "
 msgstr "Segédvonal áthelyezése: "
 
-#: ../app/tools/gimpguidetool.c:479
+#: ../app/tools/gimpguidetool.c:473
 msgid "Move Guides: "
 msgstr "Segédvonalak áthelyezése: "
 
 # státuszsorban
-#: ../app/tools/gimpguidetool.c:490
+#: ../app/tools/gimpguidetool.c:484
 msgid "Add Guide: "
 msgstr "Segédvonal felvétele: "
 
@@ -24503,9 +24491,6 @@ msgid "Link to brush default"
 msgstr "Összekapcsolás az ecset alapértelmezésével"
 
 #: ../app/tools/gimppaintselectoptions.c:75
-#| msgid ""
-#| "Paint over areas to mark color values for inclusion or exclusion from "
-#| "selection"
 msgid ""
 "Paint over areas to mark pixels for inclusion or exclusion from selection"
 msgstr ""
@@ -24514,24 +24499,19 @@ msgstr ""
 
 #: ../app/tools/gimppaintselectoptions.c:90
 #: ../app/tools/gimppaintselectoptions.c:91
-#| msgid "Show _rulers"
 msgid "Show scribbles"
 msgstr "Firkák megjelenítése"
 
 #: ../app/tools/gimppaintselecttool.c:167
-#| msgctxt "undo-type"
-#| msgid "Path to Selection"
 msgid "Paint Select"
 msgstr "Festő kiválasztás"
 
 #: ../app/tools/gimppaintselecttool.c:168
-#| msgid "Rectangle Select Tool: Select a rectangular region"
 msgid "Paint Select Tool: Select objects by painting roughly"
 msgstr ""
 "Festő kiválasztás eszköz: objektumok kiválasztása a durva kifestésükkel"
 
 #: ../app/tools/gimppaintselecttool.c:169
-#| msgid "_Select"
 msgid "P_aint Select"
 msgstr "_Festő kiválasztás"
 
@@ -24542,13 +24522,10 @@ msgstr ""
 "válasszon ki."
 
 #: ../app/tools/gimppaintselecttool.c:365
-#| msgid "Cannot paint on layer groups."
 msgid "Cannot paint select on layer groups."
 msgstr "A festő kiválasztás nem alkalmazható rétegcsoportra."
 
 #: ../app/tools/gimppaintselecttool.c:641
-#| msgctxt "undo-type"
-#| msgid "Path to Selection"
 msgctxt "command"
 msgid "Paint Select"
 msgstr "Festő kiválasztás"
@@ -27836,7 +27813,6 @@ msgstr "%g × %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:483
 #, c-format
-#| msgid "Indexed Color Conversion"
 msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "Indexelt szín (monokróm)"
@@ -27872,7 +27848,6 @@ msgstr "Rétegmódok beállítása"
 #. No channel. We cannot perform the add
 #. * mask action.
 #: ../app/widgets/gimplayertreeview.c:1636
-#| msgid "Cannot rename layer masks."
 msgid "No channels to create a layer mask from."
 msgstr "Nincs olyan csatorna, amelyből rétegmaszkot lehet létrehozni."
 
@@ -28681,77 +28656,3 @@ msgstr "kerek"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "lágy"
-
-#~ msgctxt "image-action"
-#~ msgid "Pr_ecision"
-#~ msgstr "_Pontosság"
-
-#~ msgctxt "layers-action"
-#~ msgid "Delete this layer"
-#~ msgstr "Ezen réteg törlése"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Add to Selection"
-#~ msgstr "Hozzá_adás a kijelöléshez"
-
-#~ msgctxt "layers-action"
-#~ msgid "A_dd to Selection"
-#~ msgstr "Hozzá_adás a kijelöléshez"
-
-#~ msgid "Cannot crop because the active layer has no content."
-#~ msgstr "Nem lehet levágni, mert az aktív rétegnek nincs tartalma."
-
-#~ msgctxt "select-action"
-#~ msgid "_Fill Selection Outline"
-#~ msgstr "Kijelölés körvonalának ki_töltése"
-
-#~ msgctxt "select-action"
-#~ msgid "_Stroke Selection"
-#~ msgstr "Kijelölés kör_berajzolása"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Input _Methods"
-#~ msgstr "Beviteli mó_dok"
-
-#~ msgid ""
-#~ "A revision of GIMP %s was released on %s.\n"
-#~ "Even though you use the last version, it is recommended to reinstall.\n"
-#~ "New revisions come with package fixes."
-#~ msgstr ""
-#~ "A GIMP %s egy revíziója ekkor lett kiadva: %s.\n"
-#~ "Bár a legfrissebb verziót használja, ajánlott az újratelepítés.\n"
-#~ "Az új revíziók csomagjavításokat tartalmaznak."
-
-#~ msgid "Go to download page"
-#~ msgstr "Ugrás a letöltési oldalra"
-
-#~ msgid "Show _unavailable actions"
-#~ msgstr "_Nem elérhető műveletek megjelenítése"
-
-#~ msgid "The active channel's position is locked."
-#~ msgstr "Az aktív csatorna pozíciója zárolt."
-
-#~ msgid "Move the active layer"
-#~ msgstr "Az aktív réteg áthelyezése"
-
-#~ msgid "Aux%d Input"
-#~ msgstr "Aux%d bemenet"
-
-#~ msgid "There is no active layer or channel to fill"
-#~ msgstr "Nincs kitölthető aktív réteg vagy csatorna"
-
-#~ msgid "There is no active layer or channel to stroke to"
-#~ msgstr "Nincs aktív réteg vagy csatorna, amely rajzolható lenne"
-
-#~ msgid "Keys"
-#~ msgstr "Gombok"
-
-#~ msgid "colors"
-#~ msgstr "színek"
-
-#~ msgid ""
-#~ "Corrupt 'gimp-metadata' parasite discovered.\n"
-#~ "XMP data could not be migrated: %s"
-#~ msgstr ""
-#~ "Sérült „gimp-metadata” élősködő felfedezve.\n"
-#~ "Az XML adatok nem migrálhatóak: %s"
