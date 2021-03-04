@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-16 10:28+0000\n"
-"PO-Revision-Date: 2021-02-18 07:36+0100\n"
-"Last-Translator: Balázs Meskó <mesko.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2021-03-03 16:34+0000\n"
+"PO-Revision-Date: 2021-03-04 09:02+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgstr "Egy kecske edzése (C)"
 #: ../plug-ins/common/tile-small.c:423 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:706 ../plug-ins/common/warp.c:467
 #: ../plug-ins/common/wavelet-decompose.c:386 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:2335 ../plug-ins/flame/flame.c:516
+#: ../plug-ins/file-tiff/file-tiff-load.c:2386 ../plug-ins/flame/flame.c:516
 #: ../plug-ins/flame/flame.c:692 ../plug-ins/flame/flame.c:1009
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
@@ -131,12 +131,10 @@ msgstr ""
 "kattintva."
 
 #: ../extensions/goat-exercises/goat-exercise-py3.py:59
-#| msgid "Exercise a goat (Python 3)"
 msgid "Exercise a goat and a python"
 msgstr "Egy kecske és egy piton edzése"
 
 #: ../extensions/goat-exercises/goat-exercise-py3.py:63
-#| msgid "Exercise a goat in the C language"
 msgid "Exercise a goat in the Python 3 language"
 msgstr "Egy kecske edzése Python 3 nyelven"
 
@@ -206,9 +204,9 @@ msgstr ""
 "A kiegészítő néhány alapvető példát biztos, amely bemutatja, hogyan "
 "készítheti el a saját bővítményeit. Minden bővítmény ugyanazt csinálja, de "
 "más programozási nyelven készült. Mind létrehoz egy GTK+ párbeszédablakot "
-"egy szöveggel, amely megjeleníti a saját kódját (így azt is bemutatja, hogyan "
-"csomagolhat adatokat) és egy gombot, amely meghívja a GEGL műveletet az "
-"aktív rétegen."
+"egy szöveggel, amely megjeleníti a saját kódját (így azt is bemutatja, "
+"hogyan csomagolhat adatokat) és egy gombot, amely meghívja a GEGL műveletet "
+"az aktív rétegen."
 
 #: ../plug-ins/common/align-layers.c:191
 msgid "Align Visi_ble Layers..."
@@ -393,7 +391,7 @@ msgstr "Függő_leges"
 #: ../plug-ins/common/file-gegl.c:461 ../plug-ins/common/file-gif-load.c:1037
 #: ../plug-ins/common/file-jp2-load.c:1315 ../plug-ins/common/file-pcx.c:483
 #: ../plug-ins/common/file-pcx.c:491 ../plug-ins/common/file-pix.c:424
-#: ../plug-ins/common/file-png.c:941 ../plug-ins/common/file-pnm.c:764
+#: ../plug-ins/common/file-png.c:954 ../plug-ins/common/file-pnm.c:764
 #: ../plug-ins/common/file-raw-data.c:1327
 #: ../plug-ins/common/file-sunras.c:1087 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:916 ../plug-ins/common/film.c:797
@@ -401,9 +399,9 @@ msgstr "Függő_leges"
 #: ../plug-ins/file-bmp/bmp-load.c:740 ../plug-ins/file-exr/file-exr.c:275
 #: ../plug-ins/file-faxg3/faxg3.c:547 ../plug-ins/file-fits/fits.c:564
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
-#: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2027 ../plug-ins/file-sgi/sgi.c:424
-#: ../plug-ins/file-tiff/file-tiff-load.c:1309
+#: ../plug-ins/file-psd/psd-image-res-load.c:1054
+#: ../plug-ins/file-psd/psd-load.c:2039 ../plug-ins/file-sgi/sgi.c:424
+#: ../plug-ins/file-tiff/file-tiff-load.c:1339
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -857,7 +855,6 @@ msgid "Source channel in file:"
 msgstr "Forráscsatorna a fájlban:"
 
 #: ../plug-ins/common/cml-explorer.c:1644
-#| msgid "_Misc Ops."
 msgid "_Misc"
 msgstr "Egyé_b"
 
@@ -953,14 +950,14 @@ msgstr "CML-böngésző paramétereinek mentése"
 #: ../plug-ins/common/cml-explorer.c:2145 ../plug-ins/common/curve-bend.c:805
 #: ../plug-ins/common/file-dicom.c:1410 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
-#: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1496
+#: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1509
 #: ../plug-ins/common/file-raw-data.c:1117
 #: ../plug-ins/common/file-raw-data.c:1147 ../plug-ins/common/file-sunras.c:641
 #: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
 #: ../plug-ins/common/sphere-designer.c:2196
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
 #: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
-#: ../plug-ins/file-jpeg/jpeg-save.c:317 ../plug-ins/file-psd/psd-save.c:1753
+#: ../plug-ins/file-jpeg/jpeg-save.c:317 ../plug-ins/file-psd/psd-save.c:1762
 #: ../plug-ins/file-tiff/file-tiff-save.c:1114
 #: ../plug-ins/file-tiff/file-tiff-save.c:1198 ../plug-ins/flame/flame.c:485
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
@@ -2006,13 +2003,13 @@ msgstr "„%s”: fájl vége vagy hiba a palettaadatok olvasása közben"
 #: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
 #: ../plug-ins/common/file-heif.c:1468 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
-#: ../plug-ins/common/file-png.c:1486 ../plug-ins/common/file-pnm.c:1336
+#: ../plug-ins/common/file-png.c:1499 ../plug-ins/common/file-pnm.c:1336
 #: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
 #: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1055
 #: ../plug-ins/common/file-xpm.c:710 ../plug-ins/common/file-xwd.c:678
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
 #: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
-#: ../plug-ins/file-jpeg/jpeg-save.c:270 ../plug-ins/file-psd/psd-save.c:1716
+#: ../plug-ins/file-jpeg/jpeg-save.c:270 ../plug-ins/file-psd/psd-save.c:1725
 #: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:1104
 #, c-format
 msgid "Exporting '%s'"
@@ -2817,7 +2814,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2243
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2256
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Az átlátszóság nem menthető el veszteségmentesen; helyette az "
@@ -3065,7 +3062,7 @@ msgid "Import from PDF"
 msgstr "Importálás PDF-ből"
 
 #: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3551
-#: ../plug-ins/file-tiff/file-tiff-load.c:2336
+#: ../plug-ins/file-tiff/file-tiff-load.c:2387
 #: ../plug-ins/metadata/metadata-editor.c:5726
 msgid "_Import"
 msgstr "_Importálás"
@@ -3203,7 +3200,7 @@ msgstr "Rétegek lapokként (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1330
 #: ../plug-ins/common/file-pdf-save.c:1403
 #: ../plug-ins/common/file-pdf-save.c:1501 ../plug-ins/common/file-ps.c:2036
-#: ../plug-ins/file-tiff/file-tiff-load.c:1311
+#: ../plug-ins/file-tiff/file-tiff-load.c:1341
 #, c-format
 msgid "Page %d"
 msgstr "%d. oldal"
@@ -3259,36 +3256,36 @@ msgstr ""
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Hiba a(z) „%s” olvasásakor. A fájl megsérült?"
 
-#: ../plug-ins/common/file-png.c:893
+#: ../plug-ins/common/file-png.c:906
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Ismeretlen színmodell a(z) „%s” PNG-fájlban."
 
-#: ../plug-ins/common/file-png.c:906 ../plug-ins/file-exr/file-exr.c:256
+#: ../plug-ins/common/file-png.c:919 ../plug-ins/file-exr/file-exr.c:256
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Nem sikerült létrehozni az új képet ehhez: „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:974
+#: ../plug-ins/common/file-png.c:987
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
 "A PNG-fájl olyan eltolást ad meg, ami miatt a réteg a képen kívülre került."
 
-#: ../plug-ins/common/file-png.c:1210
+#: ../plug-ins/common/file-png.c:1223
 msgid "Apply PNG Offset"
 msgstr "PNG eltolás alkalmazása"
 
-#: ../plug-ins/common/file-png.c:1214
+#: ../plug-ins/common/file-png.c:1227
 msgid "Ignore PNG offset"
 msgstr "PNG eltolás mellőzése"
 
-#: ../plug-ins/common/file-png.c:1215
+#: ../plug-ins/common/file-png.c:1228
 msgid "Apply PNG offset to layer"
 msgstr "PNG eltolás alkalmazása a rétegre"
 
-#: ../plug-ins/common/file-png.c:1240
+#: ../plug-ins/common/file-png.c:1253
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3297,58 +3294,58 @@ msgstr ""
 "Az importálandó PNG képben %d, %d eltolás van megadva. Kívánja ezt az "
 "eltolást a rétegre alkalmazni?"
 
-#: ../plug-ins/common/file-png.c:1451
+#: ../plug-ins/common/file-png.c:1464
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 "Hiba a(z) „%s” exportálása közben: nem sikerült létrehozni a PNG írási "
 "struktúrát."
 
-#: ../plug-ins/common/file-png.c:1460
+#: ../plug-ins/common/file-png.c:1473
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Hiba a(z) „%s” exportálásakor. A PNG fejléc információs struktúra nem "
 "hozható létre."
 
-#: ../plug-ins/common/file-png.c:1468
+#: ../plug-ins/common/file-png.c:1481
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Hiba a(z) „%s” exportálásakor. A kép exportálása nem sikerült."
 
-#: ../plug-ins/common/file-png.c:2282 ../plug-ins/common/file-ps.c:3693
+#: ../plug-ins/common/file-png.c:2295 ../plug-ins/common/file-ps.c:3693
 msgid "Automatic"
 msgstr "Automatikus"
 
-#: ../plug-ins/common/file-png.c:2283
+#: ../plug-ins/common/file-png.c:2296
 msgid "8 bpc RGB"
 msgstr "8 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2284
+#: ../plug-ins/common/file-png.c:2297
 msgid "8 bpc GRAY"
 msgstr "8 bpc GRAY"
 
-#: ../plug-ins/common/file-png.c:2285
+#: ../plug-ins/common/file-png.c:2298
 msgid "8 bpc RGBA"
 msgstr "8 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2286
+#: ../plug-ins/common/file-png.c:2299
 msgid "8 bpc GRAYA"
 msgstr "8 bpc GRAYA"
 
-#: ../plug-ins/common/file-png.c:2287
+#: ../plug-ins/common/file-png.c:2300
 msgid "16 bpc RGB"
 msgstr "16 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2288
+#: ../plug-ins/common/file-png.c:2301
 msgid "16 bpc GRAY"
 msgstr "16 bpc GRAY"
 
-#: ../plug-ins/common/file-png.c:2289
+#: ../plug-ins/common/file-png.c:2302
 msgid "16 bpc RGBA"
 msgstr "16 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2290
+#: ../plug-ins/common/file-png.c:2303
 msgid "16 bpc GRAYA"
 msgstr "16 bpc GRAYA"
 
@@ -6379,45 +6376,45 @@ msgstr "Nem sikerült helyet foglalni az új képnek."
 msgid "Error reading palette."
 msgstr "Hiba a paletta olvasásakor."
 
-#: ../plug-ins/file-dds/ddsread.c:615
+#: ../plug-ins/file-dds/ddsread.c:614
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Érvénytelen mágikus szám a DDS formátumhoz."
 
-#: ../plug-ins/file-dds/ddsread.c:689
+#: ../plug-ins/file-dds/ddsread.c:688
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Érvénytelen bpp érték az RGB adatokhoz: %d"
 
-#: ../plug-ins/file-dds/ddsread.c:700
+#: ../plug-ins/file-dds/ddsread.c:699
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Érvénytelen bpp érték a fényességi adatokhoz: %d"
 
-#: ../plug-ins/file-dds/ddsread.c:750
+#: ../plug-ins/file-dds/ddsread.c:749
 #, c-format
 msgid "Invalid pixel format."
 msgstr "Érvénytelen képpontformátum."
 
-#: ../plug-ins/file-dds/ddsread.c:919
+#: ../plug-ins/file-dds/ddsread.c:918
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Nem támogatott DXGI formátum (%d)"
 
-#: ../plug-ins/file-dds/ddsread.c:1065 ../plug-ins/file-dds/ddsread.c:1087
+#: ../plug-ins/file-dds/ddsread.c:1064 ../plug-ins/file-dds/ddsread.c:1086
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Váratlan fájlvégjel (EOF).\n"
 
-#: ../plug-ins/file-dds/ddsread.c:1378
+#: ../plug-ins/file-dds/ddsread.c:1377
 msgid "Open DDS"
 msgstr "DDS megnyitása"
 
-#: ../plug-ins/file-dds/ddsread.c:1387
+#: ../plug-ins/file-dds/ddsread.c:1386
 msgid "_Load mipmaps"
 msgstr "Mipmapok be_töltése"
 
-#: ../plug-ins/file-dds/ddsread.c:1391
+#: ../plug-ins/file-dds/ddsread.c:1390
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "YCoCg/AExp képek _automatikus dekódolása észleléskor"
 
@@ -6729,7 +6726,6 @@ msgid "Su_bsampling"
 msgstr "Al_ulmintavételezés"
 
 #: ../plug-ins/file-jpeg/jpeg.c:242
-#| msgid "Interval (MCU rows):"
 msgid "Inter_val (MCU rows):"
 msgstr "Blokk_méret (MCU sorok):"
 
@@ -6744,7 +6740,6 @@ msgstr ""
 "megnyitásával"
 
 #: ../plug-ins/file-jpeg/jpeg.c:292
-#| msgid "Use _restart markers"
 msgid "Use restart mar_kers"
 msgstr "Ú_jrakezdési jelölések használata"
 
@@ -6821,7 +6816,6 @@ msgstr "Nem támogatott vagy érvénytelen rétegméret: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:677
 #, c-format
-#| msgid "Unsupported or invalid image size: %dx%d"
 msgid "Unsupported or invalid mask info size: %d"
 msgstr "Nem támogatott vagy érvénytelen maszkinformáció-méret: %d"
 
@@ -6840,21 +6834,21 @@ msgstr "Nem támogatott vagy érvénytelen rétegmaszkszélesség: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nem támogatott vagy érvénytelen rétegmaszkméret: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1484 ../plug-ins/file-psd/psd-load.c:2001
+#: ../plug-ins/file-psd/psd-load.c:1485 ../plug-ins/file-psd/psd-load.c:2013
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nem támogatott tömörítési mód: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2132
+#: ../plug-ins/file-psd/psd-load.c:2144
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2310
+#: ../plug-ins/file-psd/psd-load.c:2322
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nem támogatott vagy érvénytelen csatornaméret"
 
-#: ../plug-ins/file-psd/psd-load.c:2376
+#: ../plug-ins/file-psd/psd-load.c:2388
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Nem sikerült kibontani az adatokat"
@@ -6863,7 +6857,7 @@ msgstr "Nem sikerült kibontani az adatokat"
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Hiba: a GIMP alap-képtípusa nem alakítható át PSD módra"
 
-#: ../plug-ins/file-psd/psd-save.c:1709
+#: ../plug-ins/file-psd/psd-save.c:1718
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -6872,7 +6866,7 @@ msgstr ""
 "„%s” exportálása nem lehetséges. A PSD fájlformátum nem tud olyan képeket "
 "eltárolni, amelyek szélessége vagy magassága 30 000 képpontnál nagyobb."
 
-#: ../plug-ins/file-psd/psd-save.c:1734
+#: ../plug-ins/file-psd/psd-save.c:1743
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7082,12 +7076,17 @@ msgstr ""
 "A „Rétegek mentése” beállítás nincs megadva, miközben több réteget próbál "
 "exportálni."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:268
+#: ../plug-ins/file-tiff/file-tiff-load.c:243
+#, c-format
+msgid "Not a TIFF image or image is corrupt."
+msgstr "Nem TIFF-kép vagy a kép sérült."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:274
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "A(z) „%s” TIFF nem tartalmaz könyvtárt"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:275
+#: ../plug-ins/file-tiff/file-tiff-load.c:281
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7104,7 +7103,7 @@ msgstr[1] ""
 "úgy tűnik, hogy %d oldal van. A fájl betöltésének kísérlete ezzel a "
 "feltételezéssel."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:351
+#: ../plug-ins/file-tiff/file-tiff-load.c:357
 msgid "Extra channels with unspecified data."
 msgstr "További csatornák nem megadott adatokkal."
 
@@ -7115,16 +7114,16 @@ msgstr "További csatornák nem megadott adatokkal."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:363
+#: ../plug-ins/file-tiff/file-tiff-load.c:369
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Nem szabványos TIFF: további csatornák „ExtraSamples” mező nélkül."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:424
+#: ../plug-ins/file-tiff/file-tiff-load.c:430
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "%d / %d oldal nem olvasható. A kép sérült lehet.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:453
+#: ../plug-ins/file-tiff/file-tiff-load.c:459
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7133,7 +7132,7 @@ msgstr ""
 "Ez a kép lineáris színprofillal rendelkezik, de nem lett megadva az első "
 "rétegen. A(z) %d. réteg alatti rétegek nem lineárisként lesznek értelmezve."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:461
+#: ../plug-ins/file-tiff/file-tiff-load.c:467
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7143,30 +7142,143 @@ msgstr ""
 "helytelen eredményhez vezet, akkor fontolja meg, hogy minden réteget külön "
 "képként tölt be."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:952
+#: ../plug-ins/file-tiff/file-tiff-load.c:479
+#, c-format
+#| msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
+msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
+msgstr "Gyanús bitmélység: %d ennél az oldalnál: %d. A kép sérült lehet."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:571
+#, c-format
+#| msgid "Could not read header from '%s'"
+msgid "Could not get image width from '%s'"
+msgstr "Nem sikerült lekérni a kép szélességét ebből: „%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:579
+#, c-format
+#| msgid "Could not read color entries from '%s'"
+msgid "Could not get image length from '%s'"
+msgstr "Nem sikerült lekérni a kép hosszát ebből: „%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:587
+#, c-format
+msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
+msgstr ""
+"Érvénytelen képdimenziók (%u x %u) ennél az oldalnál: %d. A kép sérült lehet."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:608
+#, c-format
+msgid ""
+"Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
+"is-white"
+msgstr ""
+"Nem sikerült lekérni a fényképmetrikát ebből: „%s”. A kép CCITT tömörítésű, a"
+" min-is-white érték feltételezett."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:615
+#, c-format
+msgid "Could not get photometric from '%s'. Assuming min-is-black"
+msgstr ""
+"Nem sikerült lekérni a fényképmetrikát ebből: „%s”. A min-is-black érték"
+" feltételezett."
+
+#. In non-interactive mode, we assume unassociated alpha if unspecified.
+#. * We don't output messages in interactive mode as the user
+#. * has already the ability to choose through a dialog.
+#: ../plug-ins/file-tiff/file-tiff-load.c:647
+#, c-format
+msgid ""
+"Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
+msgstr ""
+"Az alfa csatorna típusa nincs meghatározva ehhez: %s. Az kerül"
+" feltételezésre, hogy az alfa nem előre többszörözött."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:672
+#, c-format
+msgid ""
+"Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
+"not set while extra channels are present. Assuming the first extra channel "
+"is non-premultiplied alpha."
+msgstr ""
+"A(z) „%s” kép nem felel meg a TIFF specifikációjának: az ExtraSamples mező"
+" nincs beállítva, miközben további csatornák vannak jelen. Az kerül"
+" feltételezésre, hogy az első további csatorna nem előre többszörözött alfa."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:905
+#, c-format
+msgid "Invalid or unknown compression %u. Setting compression to none."
+msgstr ""
+"Érvénytelen vagy ismeretlen tömörítés: %u. A tömörítés beállítása semmire."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:963
+#, c-format
+#| msgid "Could not create new image for '%s': %s"
+msgid "Could not create a new image: %s"
+msgstr "Nem sikerült létrehozni új képet: „%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:982
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-/-%d-oldal"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1348
+#: ../plug-ins/file-tiff/file-tiff-load.c:1147
+#, c-format
+#| msgid "Unknown compression type %d"
+msgid "Unknown resolution unit type %d, assuming dpi"
+msgstr "Ismeretlen felbontásmértékegység-típus: %d, dpi kerül feltételezésre"
+
+#. no res unit tag
+#. old AppleScan software produces these
+#: ../plug-ins/file-tiff/file-tiff-load.c:1157
+msgid "Warning: resolution specified without unit type, assuming dpi"
+msgstr ""
+"Figyelmeztetés: a felbontás mértékegységtípus nélkül lett megadva, dpi kerül"
+" feltételezésre"
+
+#. xres but no yres
+#: ../plug-ins/file-tiff/file-tiff-load.c:1165
+msgid "Warning: no y resolution info, assuming same as x"
+msgstr ""
+"Figyelmeztetés: nincs Y-felbontási információ, ugyanaz kerül feltételezésre,"
+" mint ami X-nél van"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1298
+#, c-format
+#| msgid "Could not read color entries from '%s'"
+msgid "Could not get colormaps from '%s'"
+msgstr "Nem sikerült lekérni a színtérképeket ebből: „%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1378
 msgid "TIFF Channel"
 msgstr "TIFF-csatorna"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1501
+#: ../plug-ins/file-tiff/file-tiff-load.c:1531
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Nem olvashatók ki adatok a(z) „%s” TIFF-ből. A fájl valószínűleg sérült."
 
+#: ../plug-ins/file-tiff/file-tiff-load.c:1602
+#, c-format
+msgid "%s: Unsupported image format, no RGBA loader available"
+msgstr "%s: nem támogatott képformátum, nem érhető el RGBA betöltő"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1910
+#: ../plug-ins/file-tiff/file-tiff-load.c:2098
+#, c-format
+#| msgid "Reading scanline failed. Image may be corrupt at line %d."
+msgid "Reading tile failed. Image may be corrupt at line %d."
+msgstr "A csempe beolvasása sikertelen. A kép a(z) %d. sornál lehet sérült."
+
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1876
-#: ../plug-ins/file-tiff/file-tiff-load.c:2056
+#: ../plug-ins/file-tiff/file-tiff-load.c:1919
+#: ../plug-ins/file-tiff/file-tiff-load.c:2107
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "A leolvasási vonal beolvasása sikertelen. A kép a(z) %d. sornál lehet sérült."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2331
+#: ../plug-ins/file-tiff/file-tiff-load.c:2382
 msgid "Import from TIFF"
 msgstr "Importálás TIFF-ből"
 
@@ -7174,23 +7286,23 @@ msgstr "Importálás TIFF-ből"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2384
+#: ../plug-ins/file-tiff/file-tiff-load.c:2435
 msgid "_Keep empty space around imported layers"
 msgstr "Üres _terület fenntartása az importált rétegek körül"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2401
+#: ../plug-ins/file-tiff/file-tiff-load.c:2452
 msgid "Process extra channel as:"
 msgstr "További csatorna feldolgozása mint:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2404
+#: ../plug-ins/file-tiff/file-tiff-load.c:2455
 msgid "_Non-premultiplied alpha"
 msgstr "_Nem előre szorzott alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2405
+#: ../plug-ins/file-tiff/file-tiff-load.c:2456
 msgid "Pre_multiplied alpha"
 msgstr "_Előre szorzott alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2406
+#: ../plug-ins/file-tiff/file-tiff-load.c:2457
 msgid "Channe_l"
 msgstr "Csa_torna"
 
@@ -11461,7 +11573,6 @@ msgstr "Metaadatok exportálása"
 
 #: ../plug-ins/metadata/metadata-editor.c:807
 #, c-format
-#| msgid "Error loading PSD file: %s"
 msgid "Error loading calendar. %s"
 msgstr "Hiba a naptár betöltésekor. %s"
 
@@ -11511,7 +11622,6 @@ msgstr "Értékeletlen"
 
 #: ../plug-ins/metadata/metadata-editor.c:4413
 #, c-format
-#| msgid "Failed to decompress data"
 msgid "Failed to set metadata tag %s"
 msgstr "A(z) %s metaadatcímke beállítása sikertelen"
 
@@ -11695,7 +11805,6 @@ msgid "Other"
 msgstr "Egyéb"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#| msgid "Above Sea Level"
 msgid "Above sea level"
 msgstr "Tengerszint felett"
 
