@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-15 17:19+0000\n"
-"PO-Revision-Date: 2021-02-16 02:16+0100\n"
-"Last-Translator: Balázs Meskó <mesko.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2021-03-03 20:03+0000\n"
+"PO-Revision-Date: 2021-03-04 07:54+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -82,14 +82,62 @@ msgid "Photo editing in GIMP"
 msgstr "Fényképszerkesztés a GIMP-ben"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
-#| msgid ""
-#| "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, "
-#| "it includes:"
+#| msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
+msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
+msgstr ""
+"A GIMP 2.10.24 főleg ismét egy hibajavítási kiadás. Említésre érdemes"
+" változások:"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid "GeoTIFF metadata support added"
+msgstr "Hozzáadásra került a GeoTIFF metaadatok támogatása"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid ""
+"PDF import now proposes an option to load layers in reverse orders and "
+"allows fractional pixel density"
+msgstr ""
+"A PDF importálás mostantól javaslatot tesz egy beállításra a rétegek"
+" fordított sorrendben való betöltésére, valamint lehetővé teszi a töredékes"
+" képpontsűrűséget"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid ""
+"Raw image import updated to handle API changes in darktable 3.6 and over"
+msgstr ""
+"A nyers képimportálás frissítve lett, hogy kezelje a Darktable 3.6 és újabb"
+" verziókban lévő API változásokat"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid ""
+"File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
+msgstr ""
+"Továbbfejlesztett fájlformátum-támogatás: HEIF, PSP, TIFF, JPEG, PNG, PDF,"
+" DDS, BMP, PSD"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid "Many fixes and improvements to the metadata viewer and editor"
+msgstr ""
+"Számos javítás és továbbfejlesztés a metaadatok megjelenítőjéhez és"
+" szerkesztőjéhez"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#| msgid "Handle transformation"
+msgid "New Kabyle translation"
+msgstr "Új kabil fordítás"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
+msgstr ""
+"Lehetővé vált a rajzvásznon kívüli pontillesztés (rácshoz, segédvonalakhoz,"
+" útvonalakhoz)"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
 "A GIMP 2.10.22 főleg egy hibajavítási kiadás. Említésre érdemes változások:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
@@ -97,29 +145,29 @@ msgstr ""
 "HEIF támogatási fejlesztések: válaszható magasabb bitmélységű exportálás, "
 "AVIF importálás és exportálás"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr "Számos fejlesztés a Core PaintShop Pro támogatásban"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
 "A „Mintakeverés” most már elérhető a GEGL művelet eszköz lehetőségei között"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr ""
 "A „Mintakeverés” már alapértelmezetten engedélyezett a színválasztáshoz"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
 msgstr ""
-"Az OpenCL támogatás engedélyezése lehetőség átkerült a Beállítások Játszótér"
-" lapjára"
+"Az OpenCL támogatás engedélyezése lehetőség átkerült a Beállítások Játszótér "
+"lapjára"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
@@ -127,21 +175,21 @@ msgstr ""
 "A Levin mattítás már az alapértelmezett motor az Előtér-kiválasztás "
 "eszközben, mert a teljesítménye sokkal jobb"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "New progressive performance logs and dashboard updates"
 msgstr "Új progresszív teljesítménynaplók és vezérlőpult frissítések"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
 "A részletes naplózás most már megjeleníti a flatpak információkat, ha az "
 "releváns"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "Various bug fixes"
 msgstr "Különféle hibajavítások"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
@@ -149,13 +197,13 @@ msgstr ""
 "A GIMP 2.10.20 új funkciókkal, valamint fontos hibajavításokkal érkezik. "
 "Fontosabb változások:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
 "Az eszközcsoportok most már alapértelmezetten ráhúzáskor is kinyílnak, nem "
 "csak kattintáskor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
@@ -163,7 +211,7 @@ msgstr ""
 "A nem destruktív levágás elérhető: a konkrét képpontok helyett a vászon "
 "vágásával"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
@@ -171,19 +219,19 @@ msgstr ""
 "Jobb PSD támogatás: a 16 bites fájlok exportálása már elérhető, csatornák "
 "írása/olvasása a megfelelő sorrendben"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "On-canvas controls for the Vignette filter"
 msgstr "Vásznon lévő vezérlők a Címke szűrőhöz"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr "Új szűrők: Ragyogás, Fókuszelmosás, Lencse elmosás, Változó elmosás"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Over 30 bugfixes"
 msgstr "Több mint 30 hibajavítás"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
@@ -192,7 +240,7 @@ msgstr ""
 "fájlok naív támogatását, és hozzáadja a szimbolikus ikontéma egy magasabb "
 "kontrasztú változatát."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
@@ -202,47 +250,47 @@ msgstr ""
 "eszközt 3D-s térbeli átalakításokhoz, egy új kiadás-ellenőrzőt, és a "
 "szokásos hibajavításokat. Jelentős fejlesztések:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "Tools are now grouped in the toolbox by default"
 msgstr "Az eszközök most már alapértelmezetten csoportosítottak"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr ""
 "A csúszkák most már kompakt stílust használnak, javított felhasználói "
 "interakcióval"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "Vastly improved user experience for the transformation preview"
 msgstr "Jelentősen fejlődött felhasználói élmény az átalakítások előnézeténél"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 "A dokkolható területek most már ki vannak emelve, ha egy dokkolható "
 "párbeszédablakot mozgat"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr "Új 3D-s átalakítási eszköz az elemek forgatásához és mozgatásához"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Much smoother brush outline motion on the canvas"
 msgstr "Sokkal simább ecsetkörvonal-elmozdítás a rajzvásznon"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr ""
 "Egységesített kezelőfelület a rétegek lefelé történő egyesítéséhez és "
 "rögzítéséhez"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 "Frissítés-ellenőrzés a felhasználók értesítéséhez, hogy új kiadás vagy "
 "telepítő érhető el"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
@@ -252,7 +300,7 @@ msgstr ""
 "teszi a GIMP-et. Továbbá számos régi szűrő végre át lett írva GEGL-re. "
 "Természetesen számos érdemi fejlesztés is történt:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
@@ -260,54 +308,54 @@ msgstr ""
 "Nézet menü: új „Összes megjelenítése” lehetőség a rajzvászon-határokon kívül "
 "eső képpontok felfedéséhez"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 "Szűrők: új „Vágás” lehetőség a rétegek átméretezésének lehetővé tételéhez, "
 "ha az releváns"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr "Előtér kiválasztási eszköz: új „szürkeárnyalatos” előnézeti mód"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
 "Előtér kiválasztási eszköz: szín/átlátszatlanság választó a „Szín” "
 "előnézetnél"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr ""
 "Szabadkézi kijelölés eszköz: továbbfejlesztett másolás-beillesztés interakció"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 "Átalakítási eszközök: új képtranszformációs típus az egész kép átalakításához"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr ""
 "Beállítások: új „Nem látható rétegek szerkesztésének engedélyezése” beállítás"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "HEIF import/export: color profile support"
 msgstr "HEIF importálás/exportálás: színprofil támogatás"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
 "PDF exportálás: a rétegcsoportokban található szövegrétegek most már "
 "szövegként kerülnek exportálásra"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr ""
 "TIFF importálás: már rákérdez, hogyan dolgozza fel a nem megadott TIFF "
 "csatornákat"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
@@ -317,31 +365,31 @@ msgstr ""
 "hozó 2.10.10 után várható. De néhány nagyon izgalmas fejlesztés is elérhető, "
 "különösen a görbék szerkesztésénél:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "Improved curves interaction overall"
 msgstr "Általánosságban fejlettebb görbekezelés"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "A few enhancements specific to the Curves tool"
 msgstr "Néhány konkrétan a Görbék eszközt érintő fejlesztés"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Layer support in TIFF"
 msgstr "Rétegtámogatás a TIFF képekben"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "Discovery of user-installed fonts in Windows"
 msgstr "A felhasználó által telepített betűkészletek felfedezése Windowson"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr "Inkrementális mód a Fakítás/Sötétítés eszközben"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Free Select tool creates preliminary selection"
 msgstr "A Szabadkézi kijelölés eszköz előzetes kijelölést hoz létre"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
@@ -349,7 +397,7 @@ msgstr ""
 "A GIMP 2.10.10 egy nagy frissítés, számos új funkcióval és hibajavítással. A "
 "jelentősebb fejlesztések:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
@@ -357,12 +405,12 @@ msgstr ""
 "Kitöltési eszköz: új „Kitöltés vonalrajz-felismeréssel” a nem teljesen zárt "
 "vonalrajz-területekhez"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
 "A kitöltési eszköz most már képes gyors színválasztásra Ctrl+kattintással"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
@@ -370,13 +418,13 @@ msgstr ""
 "A kitöltési eszköz megengedi az egérgomb lent tartását a „hasonló színek” és "
 "a „vonalrajz-észlelés” alapján történő kitöltés közben"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
 "Az átméretezési eszköz numerikus bemenet esetén is a középponthoz "
 "viszonyítva méretez át"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
@@ -384,7 +432,7 @@ msgstr ""
 "Az egységes átalakítási eszköz most már alapértelmezetten megőrzi a "
 "képarányt nagyításkor vagy kicsinyítéskor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
@@ -392,23 +440,23 @@ msgstr ""
 "„Pontok korlátozása” és „Középpont körül” lehetőségek hozzáadása a "
 "perspektivikus átalakítás eszköz felületéhez"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
 "Új általános rajzvászon-módosító: „Alt + középső gomb” a rétegek "
 "kiválasztásához"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 "A paraméteres ecsetek most már 32 bites lebegőpontosak, hogy elkerülhető "
 "legyen a poszterizáció"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr "A vágólap ecsetek és a minta most már kétszerezhető"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
@@ -416,25 +464,25 @@ msgstr ""
 "A zárolt rétegek szerkesztési kísérletekor villogni fog, hogy felhívja a "
 "figyelmet a hibára"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 "Új rajzvásznon megjelenő felület (egyszerű vonalak) a körkörös, a lineáris "
 "és a nagyítási elmosás elmozdítással funkcióhoz"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "Several optimizations including faster layer group rendering"
 msgstr "Számos optimalizáció, köztük a gyorsabb rétegcsoport-megjelenítés"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
 "A cserehelyként és gyorsítótárként használt fájlok már nem kerülnek mentésre "
 "a konfigurációs könyvtárban"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
@@ -442,15 +490,15 @@ msgstr ""
 "Számos fájl mentési/exportálási művelet hibatűrőbb lett azáltal, hogy "
 "részleges fájlok nem kerülnek mentésre"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid "HiDPI support improvements"
 msgstr "HiDPI támogatási fejlesztések"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "New preference to choose the default export file type"
 msgstr "Új beállítás az alapértelmezett exportálási fájlformátumhoz"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -458,11 +506,11 @@ msgstr ""
 "Új lehetőség a PNG, JPEG és TIPP fájlok színprofillal együtt történő "
 "exportálásához; a PSD fájlok mindig színprofillal kerülnek exportálásra"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "New DDS format loading/exporting plug-in"
 msgstr "Új DDS formátum betöltő és exportáló bővítmény"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
@@ -470,7 +518,7 @@ msgstr ""
 "A Spyrogimp bővítmény teljes újraírása további beállításokkal és jobb "
 "interakcióval"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
@@ -478,7 +526,7 @@ msgstr ""
 "A GIMP 2.10.8 főleg egy hibajavítási és optimalizálási kiadás. Konkrétan "
 "ezeket tartalmazza:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
@@ -486,12 +534,12 @@ msgstr ""
 "Alkalmazkodó darabméret a vetületek megjelenítésekor, dinamikusan növelve a "
 "reszponzivitást"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 "A RawTherapee (5.5-ös verzió és felette) észlelésének javítása Windowson"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
@@ -499,7 +547,7 @@ msgstr ""
 "A Mentés párbeszédablakon lévő XCF kompatibilitási információk érthetőbbek, "
 "és könnyebb azokat megtalálni"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
@@ -507,7 +555,7 @@ msgstr ""
 "Különböző teljesítménynaplózási eszközök lettek hozzáadva, és a "
 "naplórögzítés elérhető lett a Vezérlőpult dokkon"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -515,7 +563,7 @@ msgstr ""
 "A GIMP 2.10.6 sok hibajavítást, optimalizációt, és új funkciót tartalmaz. A "
 "legfontosabb változások:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
@@ -523,15 +571,15 @@ msgstr ""
 "A szövegrétegek most már reprezentálhatnak függőleges szövegeket (több "
 "karaktertájolással és soriránnyal)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "Új „Kis bolygó” (gegl:stereographic-projection) szűrő"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid "New \"Long Shadow\" filter"
 msgstr "Új „Hosszú árnyék” szűrő"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
@@ -539,7 +587,7 @@ msgstr ""
 "A Mérőeszközben lévő „Egyenesítés” beállítás most már lehetővé teszi a "
 "függőleges egyenesítést"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
@@ -547,7 +595,7 @@ msgstr ""
 "A rajzolható előnézetek most már aszinkron módon kerülnek megjelenítésre, és "
 "a rétegcsoport előnézetek letilthatók a Beállításokban"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
@@ -555,17 +603,17 @@ msgstr ""
 "Új „async” mező a Vezérlőpult „misc” csoportjában, amely megjeleníti a futó "
 "aszinkron műveletek számát"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 "A fájlformátumra szűrés kevésbé zavaró a Megnyitás/Mentés/Exportálás "
 "párbeszédablakokon"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr "Új nyelv (a GIMP most már 81 nyelvre lett lefordítva): maráthi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -573,7 +621,7 @@ msgstr ""
 "A GIMP 2.10.4 rengeteg hibajavítást és optimalizációt tartalmaz. A "
 "legfontosabb változások:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -581,11 +629,11 @@ msgstr ""
 "Egyenesítés a Mérőeszközben: a rétegek elforgathatók a mérővonal "
 "horizontként használatával"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "Gyors indulás: a betűkészletek betöltése már nem blokkolja az indítást"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -593,12 +641,12 @@ msgstr ""
 "Betűkészletek címkézése ugyanazzal a felhasználói felülettel, mint az "
 "ecsetek, minták és színátmenetek"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 "PSD támogatás: a PSD képek előzetesen kompozitált verziója importálható"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -606,7 +654,7 @@ msgstr ""
 "A Vezérlőpulton megjelent a Memória csoport, és a Cserehely csoport is "
 "különféle mérőszámok megjelenítésével bővült"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -616,7 +664,7 @@ msgstr ""
 "leginkább egy szokásos hibajavító verzió a fő kiadás után, amely néhány "
 "tucat hibát javít."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -628,7 +676,7 @@ msgstr ""
 "„Gömbösítés” és „Rekurzív átalakítás”. Ezek jó példák a lazább "
 "funkciószabályzatunkra, a stabil mikrokiadásoknál."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -636,11 +684,11 @@ msgstr ""
 "A 2.10-es sorozat első kiadása elsődlegesen az új képfeldolgozó motorra, a "
 "GEGL-re váltásról szól. A legfontosabb változások a következőek:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "Magas bitmélységű képfeldolgozás (16/32 bites színenkénti csatorna)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -648,33 +696,33 @@ msgstr ""
 "A színkezelés most már egy központi funkció, a legtöbb ablakelem és "
 "előnézeti terület színkezelt"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Rajzvásznon megjelenő hatás előnézet, osztott nézettel a feldolgozás előtti "
 "és utáni képpontokkal"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr "Többszálú és hardveresen gyorsított renderelés, feldolgozás és festés"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid "Most tools improved, several new transformation tools"
 msgstr "A legtöbb eszköz fejlődött, számos új átalakítóeszköz"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Fejlesztett támogatás sok képformátumhoz, különösképpen jobb PSD importálás"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Újonnan támogatott képformátumok: OpenEXR, RGBE, WebP, HGT…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -682,26 +730,26 @@ msgstr ""
 "Fejlesztett digitális festés: rajzvászonforgatás és felhajtás, szimmetrikus "
 "festés, MyPaint ecsetek…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr ""
 "Metaadatok megtekintése és szerkesztése Exif, XMP, IPTC és DICOM esetén"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Alapvető HiDPI támogatás: automatikusan vagy felhasználó által kiválasztott "
 "ikonméret"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Új GIMP témák: Világos, Szürke, Sötét és Rendszer"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid "And much, much more…"
 msgstr "És még sok más…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -712,7 +760,7 @@ msgstr ""
 "hogy még simább festési élményt nyújtsunk. A legfőbb változások a "
 "következőek:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
@@ -720,13 +768,13 @@ msgstr ""
 "Jelentős alapvető optimalizációk a festés és megjelenítés terén, beleértve a "
 "festési kód párhuzamosítását"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr ""
 "A szimmetriák most már mentésre kerülnek az XCF fájlokban (képparazitaként "
 "kerülnek mentésre)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -735,7 +783,7 @@ msgstr ""
 "különböző használhatósági problémáktól. A „Világosabb” és „Sötétebb” téma el "
 "lett távolítva."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -745,7 +793,7 @@ msgstr ""
 "vetítési szűrő használ. Az ablakelem interakciót biztosít a vásznon a 3D-s "
 "forgatáshoz (legyezés, bólintás, döntés)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -756,7 +804,7 @@ msgstr ""
 "szignálok, hanem a figyelmeztetések és kritikus hibák esetén is, ha a „fatal-"
 "warnings” hibakeresési kapcsoló be van állítva"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -766,11 +814,11 @@ msgstr ""
 "kiadása előtt, amely a hibakeresésre és stabilitásra fókuszál. A számos "
 "hibajavítás mellett, a legfontosabb fejlesztések a következők:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr "Új dokkolható vezérlőpult a GIMP erőforrás-használatának követésére"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -778,35 +826,35 @@ msgstr ""
 "Új hibakereső párbeszédablak nyomkövetések és egyéb hibakeresési adatok "
 "előállításához, hogy ösztönözze a hibák bejelentését"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "A mentetlen képek most már helyreállíthatóak összeomlás után"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid "Layer masks on layer groups"
 msgstr "Rétegmaszkok a rétegcsoportokon"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "A JPEG 2000 támogatás fejlesztve lett magas bitmélység és különböző "
 "színterek esetén"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "A képernyőkép és a színválasztó funkció fejlesztve lett különböző "
 "platformokon"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid "Metadata defaults preferences now available"
 msgstr "A metaadatok alapértelmezett beállításai már elérhetőek"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid "Various GUI polishing"
 msgstr "Különböző fejlesztések a felületen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -815,49 +863,49 @@ msgstr ""
 "valamint különféle fejlesztésekkel érkezik a hibajavításokra és a "
 "stabilitásra fókuszálva."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid "On-canvas gradient editing"
 msgstr "Rajzvásznon történő színátmenet-szerkesztés"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid "Notification when an image is over/underexposed"
 msgstr "Értesítés, ha egy kép túl- vagy alulexponált"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid "Better and faster color management"
 msgstr "Jobb és gyorsabb színkezelés"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 "A színválasztó és a képernyőképek támogatása Waylanden, KDE Plasma esetén"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid "Paste in place feature"
 msgstr "Helyben beillesztés funkció"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid "Many usability improvements"
 msgstr "Számos használhatósági fejlesztés"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid "Manual can be displayed in the user's preferred language"
 msgstr ""
 "A kézikönyv megjeleníthető a felhasználó által előnyben részesített nyelven"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Fejlesztések a Wavelet szétbontási szűrőhöz"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Jobb kompatibilitás a Photoshop .psd fájljaival"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid "New support for password-protected PDF"
 msgstr "Támogatás a jelszóval védett PDF fájlokhoz"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Támogatás a HGT formátumhoz (Digital Elevation Model adatok)"
 
@@ -10980,14 +11028,11 @@ msgid "Switch to Move tool"
 msgstr "Váltás az áthelyezési eszközre"
 
 #: ../app/config/config-enums.c:317
-#| msgid "How to clip"
 msgctxt "tool-group-menu-mode"
 msgid "Show on click"
 msgstr "Megjelenítés kattintásra"
 
 #: ../app/config/config-enums.c:318
-#| msgctxt "dockable-action"
-#| msgid "Show _Button Bar"
 msgctxt "tool-group-menu-mode"
 msgid "Show on hover"
 msgstr "Megjelenítés rámutatásra"
@@ -12047,7 +12092,6 @@ msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "A jelenlegi ecset, minta és színátmenet megjelenítése az eszköztárban."
 
 #: ../app/config/gimprc-blurbs.h:686
-#| msgid "Use a single toolbox button for grouped tools."
 msgid "Menu mode of grouped tools."
 msgstr "Csoportosított eszközök menümódja."
 
@@ -16988,7 +17032,6 @@ msgid "Use tool _groups"
 msgstr "Eszközcs_oportok használata"
 
 #: ../app/dialogs/preferences-dialog.c:2192
-#| msgid "_Mode:"
 msgid "_Menu mode:"
 msgstr "_Menümód:"
 
@@ -18921,13 +18964,13 @@ msgstr ""
 "Szabadkézi szakasz felvétele: kattintás+húzás; sokszög-szakasz felvétele: "
 "kattintás"
 
-#: ../app/display/gimptoolrectangle.c:567
-#: ../app/display/gimptoolrectangle.c:875
+#: ../app/display/gimptoolrectangle.c:569
+#: ../app/display/gimptoolrectangle.c:877
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Téglalap: "
 
-#: ../app/display/gimptoolrectangle.c:2139
+#: ../app/display/gimptoolrectangle.c:2141
 msgid "Position: "
 msgstr "Pozíció: "
 
@@ -27879,25 +27922,3 @@ msgstr "kerek"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "lágy"
-
-#~ msgid ""
-#~ "A revision of GIMP %s was released on %s.\n"
-#~ "Even though you use the last version, it is recommended to reinstall.\n"
-#~ "New revisions come with package fixes."
-#~ msgstr ""
-#~ "A GIMP %s egy revíziója ekkor lett kiadva: %s.\n"
-#~ "Bár a legfrissebb verziót használja, ajánlott az újratelepítés.\n"
-#~ "Az új revíziók csomagjavításokat tartalmaznak."
-
-#~ msgid "Go to download page"
-#~ msgstr "Ugrás a letöltési oldalra"
-
-#~ msgid "Aux%d Input"
-#~ msgstr "Aux%d bemenet"
-
-#~ msgid ""
-#~ "Corrupt 'gimp-metadata' parasite discovered.\n"
-#~ "XMP data could not be migrated: %s"
-#~ msgstr ""
-#~ "Sérült „gimp-metadata” élősködő felfedezve.\n"
-#~ "Az XML adatok nem migrálhatóak: %s"
