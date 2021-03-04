@@ -561,12 +561,9 @@ load_image (GFile        *file,
           break;
 
         default:
-          if (profile_linear)
-            image_precision = GIMP_PRECISION_U16_LINEAR;
-          else
-            image_precision = GIMP_PRECISION_U16_NON_LINEAR;
-
-          type = babl_type ("u16");
+          g_message (_("Unsupported bit depth: %d for page %d."),
+                     bps, li+1);
+          continue;
         }
 
       g_printerr ("bps: %d\n", bps);
