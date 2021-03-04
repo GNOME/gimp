@@ -748,18 +748,18 @@ load_image (GFile        *file,
                   if (profile_linear)
                     {
                       base_format = babl_format_new (babl_model ("YA"),
-                                                      type,
-                                                      babl_component ("Y"),
-                                                      babl_component ("A"),
-                                                      NULL);
+                                                     type,
+                                                     babl_component ("Y"),
+                                                     babl_component ("A"),
+                                                     NULL);
                     }
                   else
                     {
                       base_format = babl_format_new (babl_model ("Y'A"),
-                                                      type,
-                                                      babl_component ("Y'"),
-                                                      babl_component ("A"),
-                                                      NULL);
+                                                     type,
+                                                     babl_component ("Y'"),
+                                                     babl_component ("A"),
+                                                     NULL);
                     }
                 }
               else
@@ -767,18 +767,18 @@ load_image (GFile        *file,
                   if (profile_linear)
                     {
                       base_format = babl_format_new (babl_model ("YaA"),
-                                                      type,
-                                                      babl_component ("Ya"),
-                                                      babl_component ("A"),
-                                                      NULL);
+                                                     type,
+                                                     babl_component ("Ya"),
+                                                     babl_component ("A"),
+                                                     NULL);
                     }
                   else
                     {
                       base_format = babl_format_new (babl_model ("Y'aA"),
-                                                      type,
-                                                      babl_component ("Y'a"),
-                                                      babl_component ("A"),
-                                                      NULL);
+                                                     type,
+                                                     babl_component ("Y'a"),
+                                                     babl_component ("A"),
+                                                     NULL);
                     }
                 }
             }
@@ -787,16 +787,16 @@ load_image (GFile        *file,
               if (profile_linear)
                 {
                   base_format = babl_format_new (babl_model ("Y"),
-                                                  type,
-                                                  babl_component ("Y"),
-                                                  NULL);
+                                                 type,
+                                                 babl_component ("Y"),
+                                                 NULL);
                 }
               else
                 {
                   base_format = babl_format_new (babl_model ("Y'"),
-                                                  type,
-                                                  babl_component ("Y'"),
-                                                  NULL);
+                                                 type,
+                                                 babl_component ("Y'"),
+                                                 NULL);
                 }
             }
           break;
