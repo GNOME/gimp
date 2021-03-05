@@ -207,6 +207,7 @@ load_image (const gchar  *filename,
   int             color;
   int             i, rr, rsize;
   int             cons_eol;
+  int             last_eol_row;
 
   gint32          image_id;
   gint            bperrow = MAX_COLS/8;  /* bytes per bit row */
@@ -241,6 +242,7 @@ load_image (const gchar  *filename,
   data = 0;
 
   cons_eol = 0; /* consecutive EOLs read - zero yet */
+  last_eol_row = 0;
 
   color = 0; /* start with white */
   rr = 0;
@@ -276,7 +278,7 @@ load_image (const gchar  *filename,
 
   bp = &bitmap[row * MAX_COLS / 8];
 
-  while (rs > 0 && cons_eol < 4)        /* i.e., while (!EOF) */
+  while (rs > 0 && cons_eol < 10)        /* i.e., while (!EOF) */
     {
 #ifdef DEBUG
       g_printerr ("hibit=%2d, data=", hibit);
@@ -418,7 +420,11 @@ load_image (const gchar  *filename,
 
           if (col == 0)
             {
-              cons_eol++; /* consecutive EOLs */
+              if (last_eol_row != row)
+                {
+                  cons_eol++; /* consecutive EOLs */
+                  last_eol_row = row;
+                }
             }
           else
             {
