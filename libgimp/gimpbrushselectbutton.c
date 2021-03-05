@@ -346,10 +346,10 @@ gimp_brush_select_button_new (const gchar   *title,
 
 /**
  * gimp_brush_select_button_get_brush:
- * @button: A #GimpBrushSelectButton
- * @opacity: Opacity of the selected brush.
- * @spacing: Spacing of the selected brush.
- * @paint_mode: Paint mode of the selected brush.
+ * @button:                        A #GimpBrushSelectButton
+ * @opacity:    (out) (optional):  Opacity of the selected brush.
+ * @spacing:    (out) (optional):  Spacing of the selected brush.
+ * @paint_mode: (out) (optional):  Paint mode of the selected brush.
  *
  * Retrieves the properties of currently selected brush.
  *
