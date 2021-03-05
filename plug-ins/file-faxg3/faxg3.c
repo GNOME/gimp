@@ -88,7 +88,8 @@ static GimpImage      *  emitgimp              (gint                  hcol,
                                                 gint                  row,
                                                 const gchar          *bitmap,
                                                 gint                  bperrow,
-                                                GFile                *file);
+                                                GFile                *file,
+                                                GError              **error);
 
 
 G_DEFINE_TYPE (Faxg3, faxg3, GIMP_TYPE_PLUG_IN)
@@ -227,7 +228,7 @@ load_image (GFile   *file,
   int             i, rr, rsize;
   int             cons_eol;
 
-  GimpImage      *image;
+  GimpImage      *image   = NULL;
   gint            bperrow = MAX_COLS/8;  /* bytes per bit row */
   gchar          *bitmap;                /* MAX_ROWS by (bperrow) bytes */
   gchar          *bp;                    /* bitmap pointer */
@@ -288,6 +289,12 @@ load_image (GFile   *file,
   row = col = hcol = 0;
 
   bitmap = g_new0 (gchar, (max_rows = MAX_ROWS) * MAX_COLS / 8);
+  if (! bitmap)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Could not create buffer to process image data."));
+      return NULL;
+    }
 
   bp = &bitmap[row * MAX_COLS / 8];
 
@@ -504,7 +511,7 @@ load_image (GFile   *file,
   g_printerr ("consecutive EOLs: %d, max columns: %d\n", cons_eol, hcol);
 #endif
 
-  image = emitgimp (hcol, row, bitmap, bperrow, file);
+  image = emitgimp (hcol, row, bitmap, bperrow, file, error);
 
   g_free (bitmap);
 
@@ -522,7 +529,8 @@ emitgimp (gint         hcol,
           gint         row,
           const gchar *bitmap,
           gint         bperrow,
-          GFile       *file)
+          GFile       *file,
+          GError     **error)
 {
   GeglBuffer *buffer;
   GimpImage  *image;
@@ -541,7 +549,23 @@ emitgimp (gint         hcol,
   g_printerr ("emit gimp: %d x %d\n", hcol, row);
 #endif
 
+  if (hcol > GIMP_MAX_IMAGE_SIZE || hcol <= 0 ||
+      row > GIMP_MAX_IMAGE_SIZE || row <= 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Invalid image dimensions (%d x %d). "
+                     "Image may be corrupt."),
+                   hcol, row);
+      return NULL;
+    }
+
   image = gimp_image_new (hcol, row, GIMP_GRAY);
+  if (! image)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Could not create image."));
+      return NULL;
+    }
   gimp_image_set_file (image, file);
 
   layer = gimp_layer_new (image, _("Background"),
@@ -560,6 +584,14 @@ emitgimp (gint         hcol,
 #endif
 
   buf = g_new (guchar, hcol * tile_height);
+  if (! buf)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Could not create buffer to process image data."));
+      g_object_unref (buffer);
+      gimp_image_delete(image);
+      return NULL;
+    }
 
   xx = 0;
   yy = 0;
