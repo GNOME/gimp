@@ -273,7 +273,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not create buffer to process image data."));
-      return NULL;
+      return -1;
     }
 
   bp = &bitmap[row * MAX_COLS / 8];
@@ -540,7 +540,7 @@ emitgimp (gint         hcol,
                    _("Invalid image dimensions (%d x %d). "
                      "Image may be corrupt."),
                    hcol, row);
-      return NULL;
+      return -1;
     }
 
   image_ID = gimp_image_new (hcol, row, GIMP_GRAY);
@@ -548,7 +548,7 @@ emitgimp (gint         hcol,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not create image."));
-      return NULL;
+      return -1;
     }
   gimp_image_set_filename (image_ID, filename);
 
@@ -573,8 +573,8 @@ emitgimp (gint         hcol,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not create buffer to process image data."));
       g_object_unref (buffer);
-      gimp_image_delete(image);
-      return NULL;
+      gimp_image_delete(image_ID);
+      return -1;
     }
 
   xx = 0;
