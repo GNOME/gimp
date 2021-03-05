@@ -128,9 +128,9 @@ gimp_image_combo_box_finalize (GObject *object)
 
 /**
  * gimp_image_combo_box_new:
- * @constraint:   a #GimpImageConstraintFunc or %NULL
- * @data:         a pointer that is passed to @constraint
- * @data_destroy: Destroy function for @data.
+ * @constraint:   (nullable):  a #GimpImageConstraintFunc or %NULL
+ * @data:         (closure):   a pointer that is passed to @constraint
+ * @data_destroy: (destroy):   Destroy function for @data.
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * images. If a @constraint function is specified, it is called for

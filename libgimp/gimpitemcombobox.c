@@ -167,9 +167,9 @@ gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
 
 /**
  * gimp_drawable_combo_box_new:
- * @constraint: (nullable):   a #GimpItemConstraintFunc or %NULL
- * @data: (closure):  a pointer that is passed to @constraint
- * @data_destroy: Destroy function for @data
+ * @constraint:     (nullable):   a #GimpItemConstraintFunc or %NULL
+ * @data:           (closure):    a pointer that is passed to @constraint
+ * @data_destroy:   (destroy):    Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * drawables. If a @constraint function is specified, it is called for
@@ -223,9 +223,9 @@ gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
 
 /**
  * gimp_channel_combo_box_new:
- * @constraint:   a #GimpItemConstraintFunc or %NULL
- * @data:         a pointer that is passed to @constraint
- * @data_destroy: Destroy function for @data
+ * @constraint:    (nullable):   a #GimpItemConstraintFunc or %NULL
+ * @data:          (closure):    a pointer that is passed to @constraint
+ * @data_destroy:  (destroy):    Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * channels. See gimp_drawable_combo_box_new() for more information.
@@ -272,9 +272,9 @@ gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
 
 /**
  * gimp_layer_combo_box_new:
- * @constraint:   a #GimpItemConstraintFunc or %NULL
- * @data:         a pointer that is passed to @constraint
- * @data_destroy: Destroy function for @data
+ * @constraint:     (nullable):   a #GimpItemConstraintFunc or %NULL
+ * @data:           (closure):    a pointer that is passed to @constraint
+ * @data_destroy:   (destroy):    Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * layers. See gimp_drawable_combo_box_new() for more information.
@@ -322,9 +322,9 @@ gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
 
 /**
  * gimp_vectors_combo_box_new:
- * @constraint:   a #GimpItemConstraintFunc or %NULL
- * @data:         a pointer that is passed to @constraint
- * @data_destroy: Destroy function for @data
+ * @constraint:     (nullable):   a #GimpItemConstraintFunc or %NULL
+ * @data:           (closure):    a pointer that is passed to @constraint
+ * @data_destroy:   (destroy):    Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * vectors objects. If a @constraint function is specified, it is called for
