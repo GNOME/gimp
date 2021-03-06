@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-03-04 18:22+0000\n"
-"PO-Revision-Date: 2021-03-04 20:32+0200\n"
+"POT-Creation-Date: 2021-03-05 19:37+0000\n"
+"PO-Revision-Date: 2021-03-06 09:51+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -449,7 +449,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
-#: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
+#: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:2016 ../plug-ins/file-sgi/sgi.c:416
@@ -1083,7 +1083,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:858
 #: ../plug-ins/common/file-xwd.c:455 ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:234
+#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:236
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
@@ -2154,7 +2154,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
 #: ../plug-ins/common/file-xpm.c:356 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
-#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-faxg3/faxg3.c:220 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
@@ -6797,9 +6797,29 @@ msgstr "Помилка запиту типу зображення з «%s»"
 msgid "Error reading pixel data from '%s'"
 msgstr "Помилка зчитування даних точок з «%s»"
 
-#: ../plug-ins/file-faxg3/faxg3.c:104
+#: ../plug-ins/file-faxg3/faxg3.c:105
 msgid "G3 fax image"
 msgstr "Зображення G3 fax "
+
+#: ../plug-ins/file-faxg3/faxg3.c:275 ../plug-ins/file-faxg3/faxg3.c:574
+#, c-format
+#| msgid "Could not create a new image: %s"
+msgid "Could not create buffer to process image data."
+msgstr "Не вдалося створити буфер для обробки даних зображення."
+
+#: ../plug-ins/file-faxg3/faxg3.c:540
+#, c-format
+#| msgid ""
+#| "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr ""
+"Некоректні розміри зображення (%d x %d). Можливо, зображення пошкоджено."
+
+#: ../plug-ins/file-faxg3/faxg3.c:550
+#, c-format
+#| msgid "Could not create a new image: %s"
+msgid "Could not create image."
+msgstr "Не вдалося створити зображення."
 
 #: ../plug-ins/file-fits/fits.c:166 ../plug-ins/file-fits/fits.c:186
 msgid "Flexible Image Transport System"
@@ -7492,7 +7512,6 @@ msgstr ""
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:576
 #, c-format
-#| msgid "Unsupported bit depth: %d"
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Непідтримувана розрядність на канал %d для сторінки %d."
 
