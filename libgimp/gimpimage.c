@@ -227,7 +227,7 @@ gimp_list_images (void)
  * This procedure returns the list of layers contained in the specified
  * image. The order of layers is from topmost to bottommost.
  *
- * Returns: (element-type GimpImage) (transfer container):
+ * Returns: (element-type GimpLayer) (transfer container):
  *          The list of layers contained in the image.
  *          The returned list must be freed with g_list_free(). Layer
  *          elements belong to libgimp and must not be freed.
@@ -261,7 +261,7 @@ gimp_image_list_layers (GimpImage *image)
  * This procedure returns the list of layers selected in the specified
  * image.
  *
- * Returns: (element-type GimpImage) (transfer container):
+ * Returns: (element-type GimpLayer) (transfer container):
  *          The list of layers contained in the image.
  *          The returned list must be freed with g_list_free(). Layer
  *          elements belong to libgimp and must not be freed.
