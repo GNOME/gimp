@@ -296,23 +296,28 @@ gimp_image_list_selected_layers (GimpImage *image)
  * existing floating selection, in which case this procedure will return an
  * execution error.
  *
+ * Returns: TRUE on success.
+ *
  * Since: 3.0
  **/
-void
+gboolean
 gimp_image_take_selected_layers (GimpImage *image,
                                  GList     *layers)
 {
   GimpLayer **sel_layers;
   GList      *list;
+  gboolean    success;
   gint        i;
 
   sel_layers = g_new0 (GimpLayer *, g_list_length (layers));
   for (list = layers, i = 0; list; list = list->next, i++)
     sel_layers[i] = list->data;
 
-  gimp_image_set_selected_layers (image, g_list_length (layers),
-                                  (const GimpLayer **) sel_layers);
+  success = gimp_image_set_selected_layers (image, g_list_length (layers),
+                                            (const GimpLayer **) sel_layers);
   g_list_free (layers);
+
+  return success;
 }
 
 /**
