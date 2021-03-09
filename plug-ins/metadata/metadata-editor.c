@@ -95,6 +95,10 @@ static void remove_substring                    (const gchar          *string,
                                                  const gchar          *substring);
 
 static gchar * clean_xmp_string                 (const gchar          *value);
+static gchar ** split_metadata_string           (gchar                *value);
+static void     add_to_store                    (gchar                *value,
+                                                 GtkListStore         *liststore,
+                                                 gint                  store_column);
 
 gboolean hasCreatorTagData                      (GtkBuilder           *builder);
 gboolean hasLocationCreationTagData             (GtkBuilder           *builder);
@@ -688,6 +692,65 @@ clean_xmp_string (const gchar *value)
   g_free (value_clean);
 
   return value_utf8;
+}
+
+/* We split a string and accept "," and ";" as delimiters.
+ * The result needs to be freed with g_strfreev.
+ */
+static gchar **
+split_metadata_string (gchar *value)
+{
+  gchar  **split;
+  gint     item;
+
+  /* Can't use g_strsplit_set since we work with utf-8 here. */
+  split = g_strsplit (g_strdelimit (value, ";", ','), ",", 0);
+
+  for (item = 0; split[item]; item++)
+    {
+      split[item] = g_strstrip(split[item]);
+    }
+
+  return split;
+}
+
+static void
+add_to_store (gchar *value, GtkListStore *liststore, gint store_column)
+{
+  gchar       **strings;
+  gint          cnt = 0;
+  gint          item;
+  GtkTreeIter   iter;
+
+  if (value)
+    {
+      strings = split_metadata_string (value);
+      if (strings)
+        {
+          for (item = 0; strings[item]; item++)
+            {
+              if (strings[item][0] != '\0')
+                {
+                  cnt++;
+
+                  gtk_list_store_append (liststore, &iter);
+                  gtk_list_store_set (liststore, &iter,
+                                      store_column, strings[item],
+                                      -1);
+                }
+            }
+          g_strfreev(strings);
+        }
+    }
+
+  /* If there are less than two rows, add empty ones. */
+  for (item = cnt; item < 2; item++)
+    {
+      gtk_list_store_append (liststore, &iter);
+      gtk_list_store_set (liststore, &iter,
+                          store_column, NULL,
+                          -1);
+    }
 }
 
 static gint
@@ -2524,31 +2587,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   GtkCellRenderer   *renderer;
                   GtkTreeModel      *treemodel;
                   GtkListStore      *liststore;
-                  GtkTreeIter        iter;
-                  gchar             *str;
-                  gint               i_ctr;
-                  gint               store_index;
-                  gchar              arr[256][256];
-
-                  /* separate list on commas */
-                  store_index = 0;
-                  if (value)
-                    {
-                      for (i_ctr = 0, str = strtok (value, ",;");
-                           str;
-                           i_ctr++, str = strtok (NULL, ",;"))
-                        {
-                          /* remove leading whitespace */
-                          gint l = strlen (str);
-
-                          while (isspace (str[l - 1])) --l;
-                          while (* str && isspace (*str)) ++str, --l;
-
-                          /* stuff into array */
-                          strcpy (arr[i_ctr], str);
-                          store_index++;
-                        }
-                    }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -2574,30 +2612,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                          "column", GINT_TO_POINTER (COL_ORG_IMG_NAME));
                     }
 
-                  if (store_index > 0)
-                    {
-                      gint item;
-
-                      for (item = 0; item < store_index; item++)
-                        {
-                          gtk_list_store_append (liststore, &iter);
-                          gtk_list_store_set (liststore, &iter,
-                                              COL_ORG_IMG_NAME, &arr[item],
-                                              -1);
-                        }
-                    }
-                  else
-                    {
-                      gint item;
-
-                      for (item = 0; item < 2; item++)
-                        {
-                          gtk_list_store_append (liststore, &iter);
-                          gtk_list_store_set (liststore, &iter,
-                                              COL_ORG_IMG_NAME, NULL,
-                                              -1);
-                        }
-                    }
+                  add_to_store (value, liststore, COL_ORG_IMG_NAME);
                 }
               else if (! strcmp ("Xmp.iptcExt.OrganisationInImageCode",
                                  default_metadata_tags[i].tag))
@@ -2608,31 +2623,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   GtkCellRenderer   *renderer;
                   GtkTreeModel      *treemodel;
                   GtkListStore      *liststore;
-                  GtkTreeIter        iter;
-                  gchar              *str;
-                  int                i_ctr;
-                  int                store_index;
-                  gchar               arr[256][256];
-
-                  /* separate list on commas */
-                  store_index = 0;
-                  if (value)
-                    {
-                      for (i_ctr = 0, str = strtok (value, ",;");
-                           str;
-                           i_ctr++, str = strtok (NULL, ",;"))
-                        {
-                          /* remove leading whitespace */
-                          gint l = strlen (str);
-
-                          while (isspace (str[l - 1])) --l;
-                          while (* str && isspace (*str)) ++str, --l;
-
-                          /* stuff into array */
-                          strcpy (arr[i_ctr], str);
-                          store_index++;
-                        }
-                    }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -2658,30 +2648,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                          "column", GINT_TO_POINTER (COL_ORG_IMG_CODE));
                     }
 
-                  if (store_index > 0)
-                    {
-                      gint item;
-
-                      for (item = 0; item < store_index; item++)
-                        {
-                          gtk_list_store_append (liststore, &iter);
-                          gtk_list_store_set (liststore, &iter,
-                                              COL_ORG_IMG_CODE, &arr[item],
-                                              -1);
-                        }
-                    }
-                  else
-                    {
-                      gint item;
-
-                      for (item = 0; item < 2; item++)
-                        {
-                          gtk_list_store_append (liststore, &iter);
-                          gtk_list_store_set (liststore, &iter,
-                                              COL_ORG_IMG_CODE, NULL,
-                                              -1);
-                        }
-                    }
+                  add_to_store (value, liststore, COL_ORG_IMG_CODE);
                 }
               else if (! strcmp ("Xmp.plus.PropertyReleaseID",
                                  default_metadata_tags[i].tag))
@@ -2692,31 +2659,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   GtkCellRenderer   *renderer;
                   GtkTreeModel      *treemodel;
                   GtkListStore      *liststore;
-                  GtkTreeIter        iter;
-                  gchar              *str;
-                  int                i_ctr;
-                  int                store_index;
-                  gchar               arr[256][256];
-
-                  /* separate list on commas */
-                  store_index = 0;
-                  if (value)
-                    {
-                      for (i_ctr = 0, str = strtok (value, ",;");
-                          str;
-                          i_ctr++, str = strtok (NULL, ",;"))
-                        {
-                          /* remove leading whitespace */
-                          gint l = strlen (str);
-
-                          while (isspace (str[l - 1])) --l;
-                          while (* str && isspace (*str)) ++str, --l;
-
-                          /* stuff into array */
-                          strcpy (arr[i_ctr], str);
-                          store_index++;
-                        }
-                    }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -2743,38 +2685,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                          GINT_TO_POINTER (COL_PROP_REL_ID));
                     }
 
-                  if (store_index > 0)
-                    {
-                      gint item;
-
-                      for (item = 0; item < store_index; item++)
-                        {
-                          gtk_list_store_append (liststore, &iter);
-                          gtk_list_store_set (liststore, &iter,
-                                              COL_PROP_REL_ID, &arr[item],
-                                              -1);
-                        }
-
-                      if (store_index == 1)
-                        {
-                          gtk_list_store_append (liststore, &iter);
-                          gtk_list_store_set (liststore, &iter,
-                                              COL_PROP_REL_ID, NULL,
-                                              -1);
-                        }
-                    }
-                  else
-                    {
-                      gint item;
-
-                      for (item = 0; item < 2; item++)
-                        {
-                          gtk_list_store_append (liststore, &iter);
-                          gtk_list_store_set (liststore, &iter,
-                                              COL_PROP_REL_ID, NULL,
-                                              -1);
-                        }
-                    }
+                  add_to_store (value, liststore, COL_PROP_REL_ID);
                 }
               else if (! strcmp ("Xmp.plus.ModelReleaseID",
                                  default_metadata_tags[i].tag))
@@ -2785,31 +2696,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   GtkCellRenderer   *renderer;
                   GtkTreeModel      *treemodel;
                   GtkListStore      *liststore;
-                  GtkTreeIter        iter;
-                  gchar              *str;
-                  int                i_ctr;
-                  int                store_index;
-                  gchar               arr[256][256];
-
-                  /* separate list on commas */
-                  store_index = 0;
-                  if (value)
-                    {
-                      for (i_ctr = 0, str = strtok (value, ",;");
-                           str;
-                           i_ctr++, str = strtok (NULL, ",;"))
-                        {
-                          /* remove leading whitespace */
-                          gint l = strlen (str);
-
-                          while (isspace (str[l - 1])) --l;
-                          while (*str && isspace (*str)) ++str, --l;
-
-                          /* stuff into array */
-                          strcpy (arr[i_ctr], str);
-                          store_index++;
-                        }
-                    }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -2836,38 +2722,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                          GINT_TO_POINTER (COL_PROP_REL_ID));
                     }
 
-                  if (store_index > 0)
-                    {
-                      gint item;
-
-                      for (item = 0; item < store_index; item++)
-                        {
-                          gtk_list_store_append (liststore, &iter);
-                          gtk_list_store_set (liststore, &iter,
-                                              COL_MOD_REL_ID, &arr[item],
-                                              -1);
-                        }
-
-                      if (store_index == 1)
-                        {
-                          gtk_list_store_append (liststore, &iter);
-                          gtk_list_store_set (liststore, &iter,
-                                              COL_MOD_REL_ID, NULL,
-                                              -1);
-                        }
-                    }
-                  else
-                    {
-                      gint item;
-
-                      for (item = 0; item < 2; item++)
-                        {
-                          gtk_list_store_append (liststore, &iter);
-                          gtk_list_store_set (liststore, &iter,
-                                              COL_MOD_REL_ID, NULL,
-                                              -1);
-                        }
-                    }
+                  add_to_store (value, liststore, COL_MOD_REL_ID);
                 }
             }
           else if (! strcmp ("combo", default_metadata_tags[i].mode))
@@ -4100,32 +3955,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   GtkCellRenderer   *renderer;
                   GtkTreeModel      *treemodel;
                   GtkListStore      *liststore;
-                  GtkTreeIter        iter;
-                  gchar             *str;
-                  gint               i_ctr;
-                  gint               store_index;
-                  gchar              arr[256][256];
-                  gint               item;
-
-                  /* separate list on commas */
-                  store_index = 0;
-                  if (value)
-                    {
-                      for (i_ctr = 0, str = strtok (value, ",;");
-                           str;
-                           i_ctr++, str = strtok (NULL, ",;"))
-                        {
-                          /* remove leading whitespace */
-                          gint l = strlen (str);
-
-                          while (isspace (str[l - 1])) --l;
-                          while (*str && isspace (*str)) ++str, --l;
-
-                          /* stuff into array */
-                          strcpy (arr[i_ctr], str);
-                          store_index++;
-                        }
-                    }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -4152,13 +3981,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                          GINT_TO_POINTER (COL_ORG_IMG_NAME));
                     }
 
-                  for (item = 0; item < 2; item++)
-                    {
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_ORG_IMG_NAME, NULL,
-                                          -1);
-                    }
+                  add_to_store (value, liststore, COL_ORG_IMG_NAME);
                 }
               else if (! strcmp ("Xmp.iptcExt.OrganisationInImageCode",
                                  default_metadata_tags[i].tag))
@@ -4169,32 +3992,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   GtkCellRenderer   *renderer;
                   GtkTreeModel      *treemodel;
                   GtkListStore      *liststore;
-                  GtkTreeIter        iter;
-                  gchar             *str;
-                  int                i_ctr;
-                  int                store_index;
-                  gchar              arr[256][256];
-                  gint               item;
-
-                  /* separate list on commas */
-                  store_index = 0;
-                  if (value)
-                    {
-                      for (i_ctr = 0, str = strtok (value, ",;");
-                           str;
-                           i_ctr++, str = strtok (NULL, ",;"))
-                        {
-                          /* remove leading whitespace */
-                          gint l = strlen (str);
-
-                          while (isspace (str[l - 1])) --l;
-                          while (*str && isspace (*str)) ++str, --l;
-
-                          /* stuff into array */
-                          strcpy (arr[i_ctr], str);
-                          store_index++;
-                        }
-                    }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -4221,13 +4018,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                          GINT_TO_POINTER (COL_ORG_IMG_CODE));
                     }
 
-                  for (item = 0; item < 2; item++)
-                    {
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_ORG_IMG_CODE, NULL,
-                                          -1);
-                    }
+                  add_to_store (value, liststore, COL_ORG_IMG_CODE);
                 }
               else if (! strcmp ("Xmp.plus.PropertyReleaseID",
                                  default_metadata_tags[i].tag))
@@ -4238,32 +4029,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   GtkCellRenderer   *renderer;
                   GtkTreeModel      *treemodel;
                   GtkListStore      *liststore;
-                  GtkTreeIter        iter;
-                  gchar             *str;
-                  int                i_ctr;
-                  int                store_index;
-                  gchar              arr[256][256];
-                  gint               item;
-
-                  /* separate list on commas */
-                  store_index = 0;
-                  if (value)
-                    {
-                      for (i_ctr = 0, str = strtok (value, ",;");
-                           str;
-                           i_ctr++, str = strtok (NULL, ",;"))
-                        {
-                          /* remove leading whitespace */
-                          gint l = strlen (str);
-
-                          while (isspace (str[l - 1])) --l;
-                          while (*str && isspace (*str)) ++str, --l;
-
-                          /* stuff into array */
-                          strcpy (arr[i_ctr], str);
-                          store_index++;
-                        }
-                    }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -4290,13 +4055,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                          GINT_TO_POINTER (COL_PROP_REL_ID));
                     }
 
-                  for (item = 0; item < 2; item++)
-                    {
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_PROP_REL_ID, NULL,
-                                          -1);
-                    }
+                  add_to_store (value, liststore, COL_PROP_REL_ID);
                 }
               else if (! strcmp ("Xmp.plus.ModelReleaseID",
                                  default_metadata_tags[i].tag))
@@ -4307,32 +4066,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   GtkCellRenderer   *renderer;
                   GtkTreeModel      *treemodel;
                   GtkListStore      *liststore;
-                  GtkTreeIter        iter;
-                  gchar             *str;
-                  int                i_ctr;
-                  int                store_index;
-                  gchar              arr[256][256];
-                  gint               item;
-
-                  /* separate list on commas */
-                  store_index = 0;
-                  if (value)
-                    {
-                      for (i_ctr = 0, str = strtok (value, ",;");
-                           str;
-                           i_ctr++, str = strtok (NULL, ",;"))
-                        {
-                          /* remove leading whitespace */
-                          gint l = strlen (str);
-
-                          while (isspace (str[l - 1])) --l;
-                          while (*str && isspace (*str)) ++str, --l;
-
-                          /* stuff into array */
-                          strcpy (arr[i_ctr], str);
-                          store_index++;
-                        }
-                    }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -4359,13 +4092,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                          GINT_TO_POINTER (COL_PROP_REL_ID));
                     }
 
-                  for (item = 0; item < 2; item++)
-                    {
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_PROP_REL_ID, NULL,
-                                          -1);
-                    }
+                  add_to_store (value, liststore, COL_MOD_REL_ID);
                 }
             }
         }
