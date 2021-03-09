@@ -528,7 +528,7 @@ gimp_layer_tree_view_constructed (GObject *object)
   /*  Lock alpha toggle  */
 
   gimp_item_tree_view_add_lock (GIMP_ITEM_TREE_VIEW (tree_view),
-                                GIMP_ICON_TRANSPARENCY,
+                                GIMP_ICON_LOCK_ALPHA,
                                 (GimpIsLockedFunc) gimp_layer_get_lock_alpha,
                                 (GimpCanLockFunc)  gimp_layer_can_lock_alpha,
                                 (GimpSetLockFunc)  gimp_layer_set_lock_alpha,
