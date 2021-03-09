@@ -253,6 +253,9 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
       g_object_unref (renderer);
 
       gtk_tree_view_get_cell_area (tree_view->view, drop_path, NULL, &cell_area);
+      gtk_tree_view_convert_bin_window_to_widget_coords (tree_view->view,
+                                                         cell_area.x, cell_area.y, &cell_area.x, &cell_area.y);
+
 
       if (gimp_viewable_get_children (dest_viewable))
         {
