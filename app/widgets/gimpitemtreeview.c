@@ -431,12 +431,12 @@ gimp_item_tree_view_constructed (GObject *object)
                     item_view);
 
   column = gtk_tree_view_column_new ();
-  lock_image = gtk_image_new_from_icon_name ("system-lock-screen", button_icon_size);
+  lock_image = gtk_image_new_from_icon_name (GIMP_ICON_LOCK, button_icon_size);
   gtk_tree_view_column_set_widget (column, lock_image);
   gtk_widget_show (lock_image);
   gtk_tree_view_insert_column (tree_view->view, column, 1);
 
-  item_view->priv->lock_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_MULTI_LOCK);
+  item_view->priv->lock_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_LOCK_MULTI);
   g_object_set (item_view->priv->lock_cell,
                 "xpad", 0,
                 "ypad", 0,
@@ -695,7 +695,7 @@ gimp_item_tree_view_style_updated (GtkWidget *widget)
                 "icon-name", GIMP_ICON_VISIBLE,
                 NULL);
   g_object_set (view->priv->lock_cell,
-                "icon-name", GIMP_ICON_MULTI_LOCK,
+                "icon-name", GIMP_ICON_LOCK_MULTI,
                 NULL);
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
@@ -2096,7 +2096,7 @@ gimp_item_tree_view_get_n_locks (GimpItemTreeView *view,
   GList *list;
   gint   n_locks = 0;
 
-  *icon_name = GIMP_ICON_MULTI_LOCK;
+  *icon_name = GIMP_ICON_LOCK_MULTI;
 
   for (list = view->priv->locks; list; list = list->next)
     {
