@@ -181,7 +181,11 @@ G_BEGIN_DECLS
 #define GIMP_ICON_DISPLAY_FILTER_PROOF        "gimp-display-filter-proof"
 
 #define GIMP_ICON_LOCK                      "gimp-lock"
-#define GIMP_ICON_MULTI_LOCK                "gimp-multi-lock"
+#define GIMP_ICON_LOCK_ALPHA                "gimp-lock-alpha"
+#define GIMP_ICON_LOCK_CONTENT              "gimp-lock-content"
+#define GIMP_ICON_LOCK_POSITION             "gimp-lock-position"
+#define GIMP_ICON_LOCK_VISIBILITY           "gimp-lock-visibility"
+#define GIMP_ICON_LOCK_MULTI                "gimp-lock-multi"
 
 #define GIMP_ICON_DOCUMENT_NEW              "document-new"
 #define GIMP_ICON_DOCUMENT_OPEN             "document-open"
