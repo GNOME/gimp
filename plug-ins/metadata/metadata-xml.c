@@ -340,8 +340,8 @@ set_tag_ui (metadata_editor *args,
             {
               gtk_list_store_append (liststore, &iter);
               gtk_list_store_set (liststore, &iter,
-                                  COL_REGSITRY_ORG_ID, list_tag_data[row][1],
-                                  COL_REGSITRY_ITEM_ID, list_tag_data[row][2],
+                                  COL_REGISTRY_ORG_ID, list_tag_data[row][1],
+                                  COL_REGISTRY_ITEM_ID, list_tag_data[row][2],
                                   -1);
               for (item = 1; item < n_registryid + 1; item++)
                 {
@@ -359,8 +359,8 @@ set_tag_ui (metadata_editor *args,
                 {
                   gtk_list_store_append (liststore, &iter);
                   gtk_list_store_set (liststore, &iter,
-                                      COL_REGSITRY_ORG_ID, NULL,
-                                      COL_REGSITRY_ITEM_ID, NULL,
+                                      COL_REGISTRY_ORG_ID, NULL,
+                                      COL_REGISTRY_ITEM_ID, NULL,
                                       -1);
                 }
             }
@@ -721,8 +721,8 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
           else if (!strcmp (REGISTRYID_HEADER, name))
             {
               gtk_tree_model_get (treemodel, &iter,
-                                  COL_REGSITRY_ORG_ID, &tagdata[row][0],
-                                  COL_REGSITRY_ITEM_ID, &tagdata[row][1],
+                                  COL_REGISTRY_ORG_ID, &tagdata[row][0],
+                                  COL_REGISTRY_ITEM_ID, &tagdata[row][1],
                                   -1);
 
               if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0) ||
