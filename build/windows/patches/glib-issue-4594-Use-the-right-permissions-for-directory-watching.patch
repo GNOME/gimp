@@ -1,0 +1,31 @@
+From 00e848fbc30867f5c24da5845f4f78c92d094edd Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Mon, 1 Mar 2021 11:35:58 +0100
+Subject: [PATCH] Use the right permissions for directory watching on Win32
+
+Using FILE_GENERIC_READ | FILE_GENERIC_WRITE access rights for directory monitoring
+might cause problems, as noted in https://gitlab.gnome.org/GNOME/gimp/-/issues/4594.
+
+ReadDirectoryChanges only needs FILE_LIST_DIRECTORY, so use that.
+
+Fixes: https://gitlab.gnome.org/GNOME/gimp/-/issues/4594
+---
+ gio/win32/gwin32fsmonitorutils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gio/win32/gwin32fsmonitorutils.c b/gio/win32/gwin32fsmonitorutils.c
+index e6b7d1dcd..b47124634 100644
+--- a/gio/win32/gwin32fsmonitorutils.c
++++ b/gio/win32/gwin32fsmonitorutils.c
+@@ -345,7 +345,7 @@ g_win32_fs_monitor_init (GWin32FSMonitorPrivate *monitor,
+     monitor->file_attribs = INVALID_FILE_ATTRIBUTES;
+   monitor->pfni_prev = NULL;
+   monitor->hDirectory = CreateFileW (wdirname_with_long_prefix != NULL ? wdirname_with_long_prefix : monitor->wfullpath_with_long_prefix,
+-                                     FILE_GENERIC_READ | FILE_GENERIC_WRITE,
++                                     FILE_LIST_DIRECTORY,
+                                      FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
+                                      NULL,
+                                      OPEN_EXISTING,
+-- 
+2.29.2
+
