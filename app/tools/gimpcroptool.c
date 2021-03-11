@@ -114,7 +114,9 @@ gimp_crop_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_CROP_TOOL,
                 GIMP_TYPE_CROP_OPTIONS,
                 gimp_crop_options_gui,
-                0,
+                GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                GIMP_CONTEXT_PROP_MASK_BACKGROUND |
+                GIMP_CONTEXT_PROP_MASK_PATTERN,
                 "gimp-crop-tool",
                 _("Crop"),
                 _("Crop Tool: Remove edge areas from image or layer"),
