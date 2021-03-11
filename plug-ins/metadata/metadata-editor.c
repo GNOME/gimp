@@ -3202,29 +3202,31 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   for (item = 0; item < counter; item++)
                     {
                       gchar **tagdatarow = (gchar **) tagdata[item];
-                      gchar   type1[256];
-                      gchar   type2[256];
+                      gchar   *type1;
+                      gchar   *type2;
                       gint    types;
 
-                      strcpy (type1, gettext (phone_types[0].display));
-                      strcpy (type2, gettext (phone_types[0].display));
+                      type1 = g_strdup (gettext (phone_types[0].display));
+                      type2 = g_strdup (gettext (phone_types[0].display));
 
                       for (types = 0; types < 6; types++)
                         {
+                          /* phone type 1 */
                           if (tagdatarow[3] &&
                               ! strcmp (tagdatarow[3],
                                         phone_types[types].data))
                             {
-                              strcpy (type1,
-                                      gettext (phone_types[types].display));
+                              g_free (type1);
+                              type1 = g_strdup (gettext (phone_types[types].display));
                             }
 
+                          /* phone type 2 */
                           if (tagdatarow[5] &&
                               ! strcmp (tagdatarow[5],
                                         phone_types[types].data))
                             {
-                              strcpy (type2,
-                                      gettext (phone_types[types].display));
+                              g_free (type2);
+                              type2 = g_strdup (gettext (phone_types[types].display));
                             }
                         }
 
@@ -3233,12 +3235,14 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                           COL_LICENSOR_NAME,        tagdatarow[0],
                                           COL_LICENSOR_ID,          tagdatarow[1],
                                           COL_LICENSOR_PHONE1,      tagdatarow[2],
-                                          COL_LICENSOR_PHONE_TYPE1, (gchar*)&type1,
+                                          COL_LICENSOR_PHONE_TYPE1, type1,
                                           COL_LICENSOR_PHONE2,      tagdatarow[4],
-                                          COL_LICENSOR_PHONE_TYPE2, (gchar*)&type2,
+                                          COL_LICENSOR_PHONE_TYPE2, type2,
                                           COL_LICENSOR_EMAIL,       tagdatarow[6],
                                           COL_LICENSOR_WEB,         tagdatarow[7],
                                           -1);
+                      g_free (type1);
+                      g_free (type2);
                     }
                   free_tagdata(tagdata, counter, n_licensor);
                 }
