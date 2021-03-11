@@ -180,12 +180,17 @@ count_tags                                      (GExiv2Metadata       *metadata,
                                                  const gchar         **tags,
                                                  int                   items);
 
-static void
+static gchar **
 get_tags                                        (GExiv2Metadata       *metadata,
                                                  const gchar          *header,
                                                  const gchar         **tags,
                                                  const int             items,
                                                  const int             count);
+
+static void
+free_tagdata                                    (gchar               **tagdata,
+                                                 gint                  rows,
+                                                 gint                  cols);
 
 gboolean
 hasModelReleaseTagData                          (GtkBuilder           *builder);
@@ -365,8 +370,6 @@ cell_edited_callback_combo                      (GtkCellRendererCombo *cell,
 
 
 /* local variables */
-
-gchar *tagdata[256][256];
 
 static int last_gpsaltsys_sel;
 
@@ -751,20 +754,19 @@ count_tags (GExiv2Metadata  *metadata,
             const gchar    **tags,
             gint             items)
 {
-  int tagcount;
+  int   tagcount;
   gchar tag[256];
-  int oo;
-  int ii;
+  int   row, col;
 
   tagcount = 0;
-  for (oo = 1; oo < 256; oo++)
+  for (row = 1; row < 256; row++)
     {
-      for (ii = 0; ii < items; ii++)
+      for (col = 0; col < items; col++)
         {
-          g_sprintf ((gchar*) &tag, "%s[%d]", header, oo);
-          g_sprintf ((gchar*) &tag, "%s%s",
-                     (gchar*) &tag, (gchar*) tags[ii]);
-          if (gexiv2_metadata_has_tag (metadata, (gchar*) &tag))
+          g_snprintf ((gchar *) &tag, 256, "%s[%d]", header, row);
+          g_snprintf ((gchar *) &tag, 256, "%s%s",
+                      (gchar *) &tag, (gchar *) tags[col]);
+          if (gexiv2_metadata_has_tag (metadata, (gchar *) &tag))
             {
               tagcount++;
               break;
@@ -774,28 +776,66 @@ count_tags (GExiv2Metadata  *metadata,
   return tagcount;
 }
 
-static void
+static gchar **
 get_tags (GExiv2Metadata  *metadata,
           const gchar     *header,
           const gchar    **tags,
           const gint       items,
           const gint       count)
 {
-  gchar tag[256];
-  int ooo;
-  int iii;
+  gchar **tagdata;
+  gchar **_datarow;
+  gchar   tag[256];
+  int     row, col;
 
-  for (ooo = 1; ooo < count + 1; ooo++)
+  g_return_val_if_fail (header != NULL && tags != NULL, NULL);
+  g_return_val_if_fail (items > 0, NULL);
+
+  if (count <= 0)
+    return NULL;
+  tagdata = g_new0 (gchar *, count);
+  if (! tagdata)
+    return NULL;
+
+  for (row = 1; row < count + 1; row++)
     {
-      for (iii = 0; iii < items; iii++)
+      tagdata[row-1] = g_malloc0 (sizeof (gchar *) * items);
+      for (col = 0; col < items; col++)
         {
           gchar *value;
-          g_sprintf ((gchar*) &tag, "%s[%d]", header, ooo);
-          g_sprintf ((gchar*) &tag, "%s%s", (gchar*) &tag, (gchar*) tags[iii]);
-          value = gexiv2_metadata_get_tag_string (metadata, (gchar*) &tag);
-          tagdata[ooo-1][iii] = strdup (value);
+
+          g_snprintf ((gchar *) &tag, 256, "%s[%d]", header, row);
+          g_snprintf ((gchar *) &tag, 256, "%s%s",
+                      (gchar *) &tag, (gchar *) tags[col]);
+
+          value = gexiv2_metadata_get_tag_string (metadata, (gchar *) &tag);
+          g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "get_tags tag: %s, value: %s", (gchar *) &tag, value);
+
+          _datarow = (gchar **) tagdata[row-1];
+          if (_datarow)
+            _datarow[col] = strdup (value);
         }
     }
+  return tagdata;
+}
+
+static void
+free_tagdata(gchar **tagdata, gint rows, gint cols)
+{
+  gint    row, col;
+  gchar **tagdatarow;
+
+  for (row = 0; row < rows; row++)
+    {
+      tagdatarow = (gpointer) tagdata[row];
+
+      for (col = 0; col < cols; col++)
+        {
+          g_free (tagdatarow[col]);
+        }
+      g_free (tagdatarow);
+    }
+  g_free (tagdata);
 }
 
 /* ============================================================================
@@ -2139,6 +2179,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               GtkListStore      *liststore;
               GtkTreeIter        iter;
               gint               counter;
+              gchar            **tagdata;
 
               treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
               liststore = GTK_LIST_STORE (treemodel);
@@ -2273,26 +2314,29 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                     locationshown,
                                     n_locationshown);
 
-              get_tags (metadata, LOCATIONSHOWN_HEADER,
-                        locationshown,
-                        n_locationshown, counter);
+              tagdata = get_tags (metadata, LOCATIONSHOWN_HEADER,
+                                  locationshown,
+                                  n_locationshown, counter);
 
-              if (counter > 0)
+              if (counter > 0 && tagdata)
                 {
                   gint item;
 
                   for (item = 0; item < counter; item++)
                     {
+                      gchar **tagdatarow = (gchar **) tagdata[item];
+
                       gtk_list_store_append (liststore, &iter);
                       gtk_list_store_set (liststore, &iter,
-                                          COL_LOC_SHO_SUB_LOC,        tagdata[item][0],
-                                          COL_LOC_SHO_CITY,           tagdata[item][1],
-                                          COL_LOC_SHO_STATE_PROV,     tagdata[item][2],
-                                          COL_LOC_SHO_CNTRY,          tagdata[item][3],
-                                          COL_LOC_SHO_CNTRY_ISO,      tagdata[item][4],
-                                          COL_LOC_SHO_CNTRY_WRLD_REG, tagdata[item][5],
+                                          COL_LOC_SHO_SUB_LOC,        tagdatarow[0],
+                                          COL_LOC_SHO_CITY,           tagdatarow[1],
+                                          COL_LOC_SHO_STATE_PROV,     tagdatarow[2],
+                                          COL_LOC_SHO_CNTRY,          tagdatarow[3],
+                                          COL_LOC_SHO_CNTRY_ISO,      tagdatarow[4],
+                                          COL_LOC_SHO_CNTRY_WRLD_REG, tagdatarow[5],
                                           -1);
                     }
+                  free_tagdata(tagdata, counter, n_locationshown);
 
                   if (counter == 1)
                     {
@@ -2413,6 +2457,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               GtkListStore      *liststore;
               GtkTreeIter        iter;
               gint               counter;
+              gchar            **tagdata;
 
               treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
               liststore = GTK_LIST_STORE (treemodel);
@@ -2547,46 +2592,49 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                     artworkorobject,
                                     n_artworkorobject);
 
-              get_tags (metadata, ARTWORKOROBJECT_HEADER,
-                        artworkorobject,
-                        n_artworkorobject, counter);
+              tagdata = get_tags (metadata, ARTWORKOROBJECT_HEADER,
+                                  artworkorobject,
+                                  n_artworkorobject, counter);
 
 
-              if (counter > 0)
+              if (counter > 0 && tagdata)
                 {
                   gint item;
 
                   for (item = 0; item < counter; item++)
                     {
+                      gchar **tagdatarow = (gchar **) tagdata[item];
+
                       /* remove substring for language id in title field */
-                      remove_substring (tagdata[item][4], lang_default);
-                      if (strstr (tagdata[item][4], " "))
+                      remove_substring (tagdatarow[4], lang_default);
+                      if (strstr (tagdatarow[4], " "))
                         {
-                          remove_substring (tagdata[item][4], " ");
+                          remove_substring (tagdatarow[4], " ");
                         }
 
-                      remove_substring (tagdata[item][4], bag_default);
-                      if (strstr (tagdata[item][4], " "))
+                      remove_substring (tagdatarow[4], bag_default);
+                      if (strstr (tagdatarow[4], " "))
                         {
-                          remove_substring (tagdata[item][4], " ");
+                          remove_substring (tagdatarow[4], " ");
                         }
 
-                      remove_substring (tagdata[item][4], seq_default);
-                      if (strstr (tagdata[item][4], " "))
+                      remove_substring (tagdatarow[4], seq_default);
+                      if (strstr (tagdatarow[4], " "))
                         {
-                          remove_substring (tagdata[item][4], " ");
+                          remove_substring (tagdatarow[4], " ");
                         }
 
                       gtk_list_store_append (liststore, &iter);
                       gtk_list_store_set (liststore, &iter,
-                                          COL_AOO_TITLE,      tagdata[item][4],
-                                          COL_AOO_DATE_CREAT, tagdata[item][0],
-                                          COL_AOO_CREATOR,    tagdata[item][5],
-                                          COL_AOO_SOURCE,     tagdata[item][1],
-                                          COL_AOO_SRC_INV_ID, tagdata[item][2],
-                                          COL_AOO_CR_NOT,     tagdata[item][3],
+                                          COL_AOO_TITLE,      tagdatarow[4],
+                                          COL_AOO_DATE_CREAT, tagdatarow[0],
+                                          COL_AOO_CREATOR,    tagdatarow[5],
+                                          COL_AOO_SOURCE,     tagdatarow[1],
+                                          COL_AOO_SRC_INV_ID, tagdatarow[2],
+                                          COL_AOO_CR_NOT,     tagdatarow[3],
                                           -1);
                     }
+                  free_tagdata(tagdata, counter, n_artworkorobject);
                 }
               else
                 {
@@ -2656,6 +2704,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               GtkListStore      *liststore;
               GtkTreeIter        iter;
               gint               counter;
+              gchar            **tagdata;
 
               treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
               liststore = GTK_LIST_STORE (treemodel);
@@ -2703,22 +2752,25 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                     registryid,
                                     n_registryid);
 
-              get_tags (metadata, REGISTRYID_HEADER,
-                        registryid,
-                        n_registryid, counter);
+              tagdata = get_tags (metadata, REGISTRYID_HEADER,
+                                  registryid,
+                                  n_registryid, counter);
 
-              if (counter > 0)
+              if (counter > 0 && tagdata)
                 {
                   gint item;
 
                   for (item = 0; item < counter; item++)
                     {
+                      gchar **tagdatarow = (gchar **) tagdata[item];
+
                       gtk_list_store_append (liststore, &iter);
                       gtk_list_store_set (liststore, &iter,
-                                          COL_REGISTRY_ORG_ID,  tagdata[item][0],
-                                          COL_REGISTRY_ITEM_ID, tagdata[item][1],
+                                          COL_REGISTRY_ORG_ID,  tagdatarow[0],
+                                          COL_REGISTRY_ITEM_ID, tagdatarow[1],
                                           -1);
                     }
+                  free_tagdata(tagdata, counter, n_registryid);
                 }
               else
                 {
@@ -2746,6 +2798,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               GtkListStore      *liststore;
               GtkTreeIter        iter;
               gint               counter;
+              gchar            **tagdata;
 
               treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
               liststore = GTK_LIST_STORE (treemodel);
@@ -2796,22 +2849,25 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                       imagecreator,
                                       n_imagecreator);
 
-                get_tags (metadata, IMAGECREATOR_HEADER,
-                          imagecreator,
-                          n_imagecreator, counter);
+                tagdata = get_tags (metadata, IMAGECREATOR_HEADER,
+                                    imagecreator,
+                                    n_imagecreator, counter);
 
-                if (counter > 0)
+                if (counter > 0 && tagdata)
                   {
                     gint item;
 
                     for (item = 0; item < counter; item++)
                       {
+                        gchar **tagdatarow = (gchar **) tagdata[item];
+
                         gtk_list_store_append (liststore, &iter);
                         gtk_list_store_set (liststore, &iter,
-                                            COL_IMG_CR8_NAME, tagdata[item][0],
-                                            COL_IMG_CR8_ID,   tagdata[item][1],
+                                            COL_IMG_CR8_NAME, tagdatarow[0],
+                                            COL_IMG_CR8_ID,   tagdatarow[1],
                                             -1);
                       }
+                    free_tagdata(tagdata, counter, n_imagecreator);
                   }
                 else
                   {
@@ -2839,6 +2895,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               GtkListStore      *liststore;
               GtkTreeIter        iter;
               gint               counter;
+              gchar            **tagdata;
 
               treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
               liststore = GTK_LIST_STORE (treemodel);
@@ -2889,22 +2946,25 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                     copyrightowner,
                                     n_copyrightowner);
 
-              get_tags (metadata, COPYRIGHTOWNER_HEADER,
-                        copyrightowner,
-                        n_copyrightowner, counter);
+              tagdata = get_tags (metadata, COPYRIGHTOWNER_HEADER,
+                                  copyrightowner,
+                                  n_copyrightowner, counter);
 
-              if (counter > 0)
+              if (counter > 0 && tagdata)
                 {
                   gint item;
 
                   for (item = 0; item < counter; item++)
                     {
+                      gchar **tagdatarow = (gchar **) tagdata[item];
+
                       gtk_list_store_append (liststore, &iter);
                       gtk_list_store_set (liststore, &iter,
-                                          COL_CR_OWNER_NAME, tagdata[item][0],
-                                          COL_CR_OWNER_ID,   tagdata[item][1],
+                                          COL_CR_OWNER_NAME, tagdatarow[0],
+                                          COL_CR_OWNER_ID,   tagdatarow[1],
                                           -1);
                     }
+                  free_tagdata(tagdata, counter, n_copyrightowner);
                 }
               else
                 {
@@ -2936,6 +2996,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               GtkTreeIter        phoneiter;
               gint               counter;
               gint               j;
+              gchar            **tagdata;
 
               phonestore = gtk_list_store_new (1, G_TYPE_STRING);
               gtk_list_store_append (phonestore, &phoneiter);
@@ -3130,35 +3191,36 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                     licensor,
                                     n_licensor);
 
-              get_tags (metadata, LICENSOR_HEADER,
-                        licensor,
-                        n_licensor, counter);
+              tagdata = get_tags (metadata, LICENSOR_HEADER,
+                                  licensor,
+                                  n_licensor, counter);
 
-              if (counter > 0)
+              if (counter > 0 && tagdata)
                 {
                   gint item;
 
                   for (item = 0; item < counter; item++)
                     {
-                      gchar type1[256];
-                      gchar type2[256];
-                      gint  types;
+                      gchar **tagdatarow = (gchar **) tagdata[item];
+                      gchar   type1[256];
+                      gchar   type2[256];
+                      gint    types;
 
                       strcpy (type1, gettext (phone_types[0].display));
                       strcpy (type2, gettext (phone_types[0].display));
 
                       for (types = 0; types < 6; types++)
                         {
-                          if (tagdata[item][3] &&
-                              ! strcmp (tagdata[item][3],
+                          if (tagdatarow[3] &&
+                              ! strcmp (tagdatarow[3],
                                         phone_types[types].data))
                             {
                               strcpy (type1,
                                       gettext (phone_types[types].display));
                             }
 
-                          if (tagdata[item][5] &&
-                              ! strcmp (tagdata[item][5],
+                          if (tagdatarow[5] &&
+                              ! strcmp (tagdatarow[5],
                                         phone_types[types].data))
                             {
                               strcpy (type2,
@@ -3168,16 +3230,17 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                       gtk_list_store_append (liststore, &iter);
                       gtk_list_store_set (liststore, &iter,
-                                          COL_LICENSOR_NAME,        tagdata[item][0],
-                                          COL_LICENSOR_ID,          tagdata[item][1],
-                                          COL_LICENSOR_PHONE1,      tagdata[item][2],
+                                          COL_LICENSOR_NAME,        tagdatarow[0],
+                                          COL_LICENSOR_ID,          tagdatarow[1],
+                                          COL_LICENSOR_PHONE1,      tagdatarow[2],
                                           COL_LICENSOR_PHONE_TYPE1, (gchar*)&type1,
-                                          COL_LICENSOR_PHONE2,      tagdata[item][4],
+                                          COL_LICENSOR_PHONE2,      tagdatarow[4],
                                           COL_LICENSOR_PHONE_TYPE2, (gchar*)&type2,
-                                          COL_LICENSOR_EMAIL,       tagdata[item][6],
-                                          COL_LICENSOR_WEB,         tagdata[item][7],
+                                          COL_LICENSOR_EMAIL,       tagdatarow[6],
+                                          COL_LICENSOR_WEB,         tagdatarow[7],
                                           -1);
                     }
+                  free_tagdata(tagdata, counter, n_licensor);
                 }
               else
                 {
