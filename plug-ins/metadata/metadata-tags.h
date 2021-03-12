@@ -116,6 +116,13 @@ enum
   PROP_REL_NUM_COLS
 };
 
+enum METADATA_SPECIAL_PROCESSING
+{
+  METADATA_NONE = 0,
+  METADATA_PHONETYPE,
+  METADATA_PREPROCESS_TEXT
+};
+
 extern const metadata_tag default_metadata_tags[];
 extern const gint         n_default_metadata_tags;
 
@@ -200,6 +207,7 @@ extern const TranslateTag imageSupplierInfoTags[];
 #define LICENSOR_HEADER "Xmp.plus.Licensor"
 extern const gchar *licensor[];
 extern const gint   n_licensor;
+extern const gint   licensor_special_handling[];
 
 #ifdef USE_TAGS
 #define IMAGESUPPLIER_HEADER "Xmp.plus.ImageSupplier"
