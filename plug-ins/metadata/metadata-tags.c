@@ -348,6 +348,18 @@ const gchar *licensor[] =
 };
 const gint n_licensor = G_N_ELEMENTS (licensor);
 
+const gint licensor_special_handling[] =
+{
+  METADATA_NONE,
+  METADATA_NONE,
+  METADATA_NONE,
+  METADATA_PHONETYPE,
+  METADATA_NONE,
+  METADATA_PHONETYPE,
+  METADATA_NONE,
+  METADATA_NONE
+};
+
 #ifdef USE_TAGS
 const gchar *imagesupplier[] =
 {
@@ -380,12 +392,12 @@ const gint n_registryid = G_N_ELEMENTS (registryid);
 
 const gchar *artworkorobject[] =
 {
+  "/Iptc4xmpExt:AOTitle",
   "/Iptc4xmpExt:AODateCreated",
+  "/Iptc4xmpExt:AOCreator",
   "/Iptc4xmpExt:AOSource",
   "/Iptc4xmpExt:AOSourceInvNo",
-  "/Iptc4xmpExt:AOTitle",
   "/Iptc4xmpExt:AOCopyrightNotice",
-  "/Iptc4xmpExt:AOCreator"
 };
 const gint n_artworkorobject = G_N_ELEMENTS (artworkorobject);
 

@@ -104,10 +104,20 @@ static void     set_tag_string                  (GimpMetadata         *metadata,
                                                  const gchar          *name,
                                                  const gchar          *value);
 
+static gchar *  get_phonetype                   (gchar                *cur_value);
+
 static void     write_metadata_tag              (GtkBuilder           *builder,
                                                  GimpMetadata         *metadata,
                                                  gchar                *tag,
                                                  gint                  data_column);
+
+static void     write_metadata_tag_multiple     (GtkBuilder           *builder,
+                                                 GimpMetadata         *metadata,
+                                                 GExiv2StructureType   type,
+                                                 const gchar          *header_tag,
+                                                 gint                  n_columns,
+                                                 const gchar         **column_tags,
+                                                 const gint            special_handling[]);
 
 gboolean hasCreatorTagData                      (GtkBuilder           *builder);
 gboolean hasLocationCreationTagData             (GtkBuilder           *builder);
@@ -2623,32 +2633,32 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                       gchar **tagdatarow = (gchar **) tagdata[item];
 
                       /* remove substring for language id in title field */
-                      remove_substring (tagdatarow[4], lang_default);
-                      if (strstr (tagdatarow[4], " "))
+                      remove_substring (tagdatarow[COL_AOO_TITLE], lang_default);
+                      if (strstr (tagdatarow[COL_AOO_TITLE], " "))
                         {
-                          remove_substring (tagdatarow[4], " ");
+                          remove_substring (tagdatarow[COL_AOO_TITLE], " ");
                         }
 
-                      remove_substring (tagdatarow[4], bag_default);
-                      if (strstr (tagdatarow[4], " "))
+                      remove_substring (tagdatarow[COL_AOO_TITLE], bag_default);
+                      if (strstr (tagdatarow[COL_AOO_TITLE], " "))
                         {
-                          remove_substring (tagdatarow[4], " ");
+                          remove_substring (tagdatarow[COL_AOO_TITLE], " ");
                         }
 
-                      remove_substring (tagdatarow[4], seq_default);
-                      if (strstr (tagdatarow[4], " "))
+                      remove_substring (tagdatarow[COL_AOO_TITLE], seq_default);
+                      if (strstr (tagdatarow[COL_AOO_TITLE], " "))
                         {
-                          remove_substring (tagdatarow[4], " ");
+                          remove_substring (tagdatarow[COL_AOO_TITLE], " ");
                         }
 
                       gtk_list_store_append (liststore, &iter);
                       gtk_list_store_set (liststore, &iter,
-                                          COL_AOO_TITLE,      tagdatarow[4],
-                                          COL_AOO_DATE_CREAT, tagdatarow[0],
-                                          COL_AOO_CREATOR,    tagdatarow[5],
-                                          COL_AOO_SOURCE,     tagdatarow[1],
-                                          COL_AOO_SRC_INV_ID, tagdatarow[2],
-                                          COL_AOO_CR_NOT,     tagdatarow[3],
+                                          COL_AOO_TITLE,      tagdatarow[0],
+                                          COL_AOO_DATE_CREAT, tagdatarow[1],
+                                          COL_AOO_CREATOR,    tagdatarow[2],
+                                          COL_AOO_SOURCE,     tagdatarow[3],
+                                          COL_AOO_SRC_INV_ID, tagdatarow[4],
+                                          COL_AOO_CR_NOT,     tagdatarow[5],
                                           -1);
                     }
                   free_tagdata(tagdata, counter, n_artworkorobject);
@@ -3662,6 +3672,31 @@ set_tag_string (GimpMetadata *metadata,
     }
 }
 
+static gchar *
+get_phonetype (gchar *cur_value)
+{
+  gchar *phone_type_value = NULL;
+  gint   types;
+
+  if (cur_value != NULL)
+    {
+      for (types = 0; types < 6; types++)
+        {
+          if (! strcmp (cur_value, gettext (phone_types[types].display)))
+            {
+              phone_type_value = strdup (phone_types[types].data);
+              break;
+            }
+        }
+      g_free (cur_value);
+    }
+  if (! phone_type_value)
+    phone_type_value = strdup (phone_types[0].data);
+  cur_value = phone_type_value;
+
+  return phone_type_value;
+}
+
 static void
 write_metadata_tag (GtkBuilder *builder, GimpMetadata *metadata, gchar * tag, gint data_column)
 {
@@ -3708,6 +3743,87 @@ write_metadata_tag (GtkBuilder *builder, GimpMetadata *metadata, gchar * tag, gi
 
   set_tag_string (metadata, tag, data->str);
   g_string_free (data, TRUE);
+}
+
+static void
+write_metadata_tag_multiple (GtkBuilder *builder, GimpMetadata *metadata,
+                             GExiv2StructureType type, const gchar * header_tag,
+                             gint n_columns, const gchar **column_tags,
+                             const gint special_handling[])
+{
+  GtkWidget     *list_widget;
+  GtkTreeModel  *treemodel;
+  gint           row;
+  gint           number_of_rows;
+  gint           counter;
+  gchar          temp_tag[1024];
+
+  /* Clear old tag data first */
+  gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), header_tag);
+
+  for (row = 0; row < 256; row++)
+    {
+      gint item;
+
+      for (item = 0; item < n_columns; item++)
+        {
+          g_snprintf (temp_tag, sizeof (temp_tag), "%s[%d]%s",
+                      header_tag, row, locationshown[item]);
+          gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), temp_tag);
+        }
+    }
+
+  list_widget = builder_get_widget (builder, header_tag);
+  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
+
+  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
+
+  if (number_of_rows <= 0)
+    return;
+
+  gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
+                                      header_tag,
+                                      GEXIV2_STRUCTURE_XA_BAG);
+
+  /* We need a separate counter because an empty row will not be written */
+  counter = 1;
+  for (row = 0; row < number_of_rows; row++)
+    {
+      GtkTreeIter iter;
+
+      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
+        {
+          gint col;
+
+          for (col = 0; col < n_columns; col++)
+            {
+              gchar *tag_data;
+
+              gtk_tree_model_get (treemodel, &iter,
+                                  col, &tag_data,
+                                  -1);
+
+              g_snprintf (temp_tag, sizeof (temp_tag), "%s[%d]%s",
+                          header_tag, counter, column_tags[col]);
+
+              if (special_handling)
+                switch(special_handling[col])
+                  {
+                  case METADATA_PHONETYPE:
+                    tag_data = get_phonetype (tag_data);
+                    break;
+                  }
+
+              g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,
+                     "write_metadata_tag_multiple tag: %s, value: %s, col: %d",
+                     temp_tag, tag_data, col);
+
+              set_tag_string (metadata, temp_tag, tag_data);
+              g_free (tag_data);
+            }
+          counter++;
+        }
+    }
 }
 
 static void
@@ -3794,18 +3910,9 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                 GtkBuilder *builder,
                                 GimpImage  *image)
 {
-  GimpMetadata     *g_metadata;
-  gint              max_elements;
-  gint              i;
-  GtkWidget        *list_widget;
-  GtkTreeIter       iter;
-  GtkTreeModel     *treemodel;
-  gint              number_of_rows;
-  gchar             tag[1024];
-  gint              counter;
-  gint              row;
-
-  i = 0;
+  GimpMetadata  *g_metadata;
+  gint           max_elements;
+  gint           i = 0;
 
   g_metadata = gimp_image_get_metadata (image);
 
@@ -3827,552 +3934,30 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                       "Xmp.plus.PropertyReleaseID",
                       COL_PROP_REL_ID);
 
-  /* DO LOCATION SHOWN (LISTSTORE) */
-
-  list_widget = builder_get_widget (builder, "Xmp.iptcExt.LocationShown");
-
-  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
-
-  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
-
-  /* CLEAR LOCATION SHOW DATA */
-
-  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                             LOCATIONSHOWN_HEADER);
-
-  for (row = 0; row < 256; row++)
-    {
-      gint item;
-
-      for (item = 0; item < n_locationshown; item++)
-        {
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                     LOCATIONSHOWN_HEADER, row, locationshown[item]);
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-        }
-    }
-
-  /* SET LOCATION SHOW DATA */
-  gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                      "Xmp.iptcExt.LocationShown",
-                                      GEXIV2_STRUCTURE_XA_BAG);
-
-  counter = 1;
-  for (row = 0; row < number_of_rows; row++)
-    {
-      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-        {
-          gchar *tag_data;
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LOC_SHO_SUB_LOC, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LOCATIONSHOWN_HEADER, counter, locationshown[0]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LOC_SHO_CITY, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LOCATIONSHOWN_HEADER, counter, locationshown[1]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LOC_SHO_STATE_PROV, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LOCATIONSHOWN_HEADER, counter, locationshown[2]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LOC_SHO_CNTRY, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LOCATIONSHOWN_HEADER, counter, locationshown[3]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LOC_SHO_CNTRY_ISO, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LOCATIONSHOWN_HEADER, counter, locationshown[4]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LOC_SHO_CNTRY_WRLD_REG, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LOCATIONSHOWN_HEADER, counter, locationshown[5]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          counter++;
-        }
-    }
-
-  /* DO ARTWORK OR OBJECT (LISTSTORE) */
-
-  list_widget = builder_get_widget (builder, "Xmp.iptcExt.ArtworkOrObject");
-
-  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
-
-  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
-
-  /* CLEAR ARTWORK OR OBJECT DATA */
-
-  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                             ARTWORKOROBJECT_HEADER);
-
-  for (row = 0; row < 256; row++)
-    {
-      gint item;
-
-      for (item = 0; item < n_artworkorobject; item++)
-        {
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      ARTWORKOROBJECT_HEADER, row, artworkorobject[item]);
-
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-        }
-    }
-
-  /* SET ARTWORK OR OBJECT DATA */
-
-  gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                      "Xmp.iptcExt.ArtworkOrObject",
-                                      GEXIV2_STRUCTURE_XA_BAG);
-
-  counter = 1;
-  for (row = 0; row < number_of_rows; row++)
-    {
-      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-        {
-          gchar *tag_data;
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_AOO_TITLE, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      ARTWORKOROBJECT_HEADER, counter, artworkorobject[0]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_AOO_DATE_CREAT, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      ARTWORKOROBJECT_HEADER, counter, artworkorobject[1]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_AOO_CREATOR, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      ARTWORKOROBJECT_HEADER, counter, artworkorobject[2]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_AOO_SOURCE, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      ARTWORKOROBJECT_HEADER, counter, artworkorobject[3]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_AOO_SRC_INV_ID, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      ARTWORKOROBJECT_HEADER, counter, artworkorobject[4]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_AOO_CR_NOT, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      ARTWORKOROBJECT_HEADER, counter, artworkorobject[5]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          counter++;
-        }
-    }
-
-  /* DO REGISTRY ID (LISTSTORE) */
-
-  list_widget = builder_get_widget (builder, "Xmp.iptcExt.RegistryId");
-
-  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
-
-  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
-
-  /* CLEAR REGISTRY ID DATA */
-
-  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                             REGISTRYID_HEADER);
-
-  for (row = 0; row < 256; row++)
-    {
-      gint item;
-
-      for (item = 0; item < n_registryid; item++)
-        {
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      REGISTRYID_HEADER, row, registryid[item]);
-
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-        }
-    }
-
-  /* SET REGISTRY ID DATA */
-
-  gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                      "Xmp.iptcExt.RegistryId",
-                                      GEXIV2_STRUCTURE_XA_BAG);
-
-  counter = 1;
-  for (row = 0; row < number_of_rows; row++)
-    {
-      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-        {
-          gchar *tag_data;
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_REGISTRY_ORG_ID, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      REGISTRYID_HEADER, counter, registryid[0]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_REGISTRY_ITEM_ID, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      REGISTRYID_HEADER, counter, registryid[1]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          counter++;
-        }
-    }
-
-  /* DO IMAGE CREATOR (LISTSTORE) */
-
-  list_widget = builder_get_widget (builder, "Xmp.plus.ImageCreator");
-
-  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
-
-  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
-
-  /* CLEAR IMAGE CREATOR DATA */
-
-  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                             IMAGECREATOR_HEADER);
-
-  for (row = 0; row < 256; row++)
-    {
-      gint item;
-
-      for (item = 0; item < n_imagecreator; item++)
-        {
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      IMAGECREATOR_HEADER, row, imagecreator[item]);
-
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-        }
-    }
-
-  /* SET IMAGE CREATOR DATA */
-
-  gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                      "Xmp.plus.ImageCreator",
-                                      GEXIV2_STRUCTURE_XA_SEQ);
-
-  counter = 1;
-  for (row = 0; row < number_of_rows; row++)
-    {
-      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-        {
-          gchar *tag_data;
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_IMG_CR8_NAME, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      IMAGECREATOR_HEADER, counter, imagecreator[0]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_IMG_CR8_ID, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      IMAGECREATOR_HEADER, counter, imagecreator[1]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          counter++;
-        }
-    }
-
-  /* DO COPYRIGHT OWNER (LISTSTORE) */
-
-  list_widget = builder_get_widget (builder, "Xmp.plus.CopyrightOwner");
-
-  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
-
-  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
-
-  /* CLEAR COPYRIGHT OWNER DATA */
-
-  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                             COPYRIGHTOWNER_HEADER);
-
-  for (row = 0; row < 256; row++)
-    {
-      gint item;
-
-      for (item = 0; item < n_copyrightowner; item++)
-        {
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      COPYRIGHTOWNER_HEADER, row, copyrightowner[item]);
-
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-        }
-    }
-
-  /* SET COPYRIGHT OWNER DATA */
-
-  gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                      "Xmp.plus.CopyrightOwner",
-                                      GEXIV2_STRUCTURE_XA_SEQ);
-
-  counter = 1;
-  for (row = 0; row < number_of_rows; row++)
-    {
-      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-        {
-          gchar *tag_data;
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_CR_OWNER_NAME, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      COPYRIGHTOWNER_HEADER, counter, copyrightowner[0]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_CR_OWNER_ID, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      COPYRIGHTOWNER_HEADER, counter, copyrightowner[1]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          counter++;
-        }
-    }
-
-  /* DO LICENSOR (LISTSTORE) */
-
-  list_widget = builder_get_widget (builder, "Xmp.plus.Licensor");
-
-  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
-
-  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
-
-  /* CLEAR LICENSOR DATA */
-
-  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                             LICENSOR_HEADER);
-
-  for (row = 0; row < 256; row++)
-    {
-      gint item;
-
-      for (item = 0; item < n_licensor; item++)
-        {
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LICENSOR_HEADER, row, licensor[item]);
-
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-        }
-    }
-
-  /* SET LICENSOR DATA */
-
-  gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                      "Xmp.plus.Licensor",
-                                      GEXIV2_STRUCTURE_XA_SEQ);
-
-  counter = 1;
-  for (row = 0; row < number_of_rows; row++)
-    {
-      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-        {
-          gchar *tag_data;
-          gchar  type1[256];
-          gchar  type2[256];
-          gint   types;
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LICENSOR_NAME, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LICENSOR_HEADER, counter, licensor[0]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LICENSOR_ID, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LICENSOR_HEADER, counter, licensor[1]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LICENSOR_PHONE1, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LICENSOR_HEADER, counter, licensor[2]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LICENSOR_PHONE_TYPE1, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LICENSOR_HEADER, counter, licensor[3]);
-
-          strcpy (type1, phone_types[0].data);
-
-          if (tag_data != NULL)
-            {
-              for (types = 0; types < 6; types++)
-                {
-                  if (! strcmp (tag_data, gettext (phone_types[types].display)))
-                    {
-                      strcpy (type1, phone_types[types].data);
-                      break;
-                    }
-                }
-            }
-
-          set_tag_string (g_metadata, tag, type1);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LICENSOR_PHONE2, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LICENSOR_HEADER, counter, licensor[4]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LICENSOR_PHONE_TYPE2, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LICENSOR_HEADER, counter, licensor[5]);
-
-          strcpy (type2, phone_types[0].data);
-
-          if (tag_data != NULL)
-            {
-              for (types = 0; types < 6; types++)
-                {
-                  g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "%d %s %s", types, tag_data,
-                           gettext (phone_types[types].display));
-                  if (! strcmp (tag_data, gettext (phone_types[types].display)))
-                    {
-                      g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "%d %s", types, phone_types[types].data);
-                      strcpy (type2, phone_types[types].data);
-                      break;
-                    }
-                }
-            }
-          set_tag_string (g_metadata, tag, type2);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LICENSOR_EMAIL, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LICENSOR_HEADER, counter, licensor[6]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_LICENSOR_WEB, &tag_data,
-                              -1);
-
-          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
-                      LICENSOR_HEADER, counter, licensor[7]);
-
-          set_tag_string (g_metadata, tag, tag_data);
-          g_free (tag_data);
-
-          counter++;
-        }
-    }
+  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
+                               "Xmp.iptcExt.LocationShown",
+                               n_locationshown, locationshown, NULL);
+
+  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
+                               "Xmp.iptcExt.ArtworkOrObject",
+                               n_artworkorobject, artworkorobject, NULL);
+
+  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
+                               "Xmp.iptcExt.RegistryId",
+                               n_registryid, registryid, NULL);
+
+  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
+                               "Xmp.plus.ImageCreator",
+                               n_imagecreator, imagecreator, NULL);
+
+  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
+                               "Xmp.plus.CopyrightOwner",
+                               n_copyrightowner, copyrightowner, NULL);
+
+  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
+                               "Xmp.plus.Licensor",
+                               n_licensor, licensor,
+                               licensor_special_handling);
 
   /* DO CREATOR TAGS */
 
