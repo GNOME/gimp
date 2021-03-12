@@ -458,8 +458,7 @@ heif_save (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
-                                                 args, "image/heif");
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
@@ -499,14 +498,23 @@ heif_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      GimpMetadataSaveFlags metadata_flags;
+
+      metadata = gimp_image_metadata_save_prepare (image, "image/heif", &metadata_flags);
+
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error, heif_compression_HEVC, metadata))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
+
+      if (metadata)
+        {
+          g_object_unref (metadata);
+        }
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  gimp_procedure_config_end_run (config, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
@@ -539,8 +547,7 @@ heif_av1_save (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
-                                                 args, "image/avif");
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
@@ -580,14 +587,23 @@ heif_av1_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      GimpMetadataSaveFlags metadata_flags;
+
+      metadata = gimp_image_metadata_save_prepare (image, "image/avif", &metadata_flags);
+
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error, heif_compression_AV1, metadata))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
+
+      if (metadata)
+        {
+          g_object_unref (metadata);
+        }
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  gimp_procedure_config_end_run (config, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
