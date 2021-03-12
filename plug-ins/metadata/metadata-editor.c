@@ -81,6 +81,15 @@ static void     add_to_store                    (gchar                *value,
                                                  GtkListStore         *liststore,
                                                  gint                  store_column);
 
+static void     set_tag_string                  (GimpMetadata         *metadata,
+                                                 const gchar          *name,
+                                                 const gchar          *value);
+
+static void     write_metadata_tag              (GtkBuilder           *builder,
+                                                 GimpMetadata         *metadata,
+                                                 gchar                *tag,
+                                                 gint                  data_column);
+
 gboolean hasCreatorTagData                      (GtkBuilder           *builder);
 gboolean hasLocationCreationTagData             (GtkBuilder           *builder);
 gboolean hasImageSupplierTagData                (GtkBuilder           *builder);
@@ -3646,6 +3655,54 @@ set_tag_string (GimpMetadata *metadata,
 }
 
 static void
+write_metadata_tag (GtkBuilder *builder, GimpMetadata *metadata, gchar * tag, gint data_column)
+{
+  GtkWidget     *list_widget;
+  GtkTreeModel  *treemodel;
+  gint           row;
+  gint           number_of_rows;
+  gchar         *rc_data;
+  GString       *data;
+
+  list_widget = builder_get_widget (builder, tag);
+  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
+
+  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
+
+  if (number_of_rows <= 0)
+    return;
+
+  data = g_string_sized_new (256);
+
+  for (row = 0; row < number_of_rows; row++)
+    {
+      GtkTreeIter iter;
+
+      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
+        {
+          gtk_tree_model_get (treemodel, &iter,
+                              data_column, &rc_data,
+                              -1);
+          if (rc_data && rc_data[0] != '\0')
+            {
+              if (row > 0)
+                g_string_append (data, ", ");
+
+              g_string_append (data, rc_data);
+            }
+          g_free (rc_data);
+        }
+    }
+
+  g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,
+         "write_metadata_tag tag: %s, value: %s",
+         tag, data->str);
+
+  set_tag_string (metadata, tag, data->str);
+  g_string_free (data, TRUE);
+}
+
+static void
 set_gps_longitude_latitude (GimpMetadata *metadata,
                             const gchar  *tag,
                             const gchar  *value)
@@ -3735,9 +3792,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
   GtkWidget        *list_widget;
   GtkTreeIter       iter;
   GtkTreeModel     *treemodel;
-  gchar            *rc_data;
   gint              number_of_rows;
-  gchar             output_data[256 * 1024];
   gchar             tag[1024];
   gint              counter;
   gint              row;
@@ -3748,123 +3803,21 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
   gimp_metadata_add_xmp_history (g_metadata, "metadata");
 
-  /* DO ORG IMG NAME (LISTSTORE) */
+  write_metadata_tag (builder, g_metadata,
+                      "Xmp.iptcExt.OrganisationInImageName",
+                      COL_ORG_IMG_NAME);
 
-  list_widget = builder_get_widget (builder,
-                                    "Xmp.iptcExt.OrganisationInImageName");
+  write_metadata_tag (builder, g_metadata,
+                      "Xmp.iptcExt.OrganisationInImageCode",
+                      COL_ORG_IMG_CODE);
 
-  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
+  write_metadata_tag (builder, g_metadata,
+                      "Xmp.plus.ModelReleaseID",
+                      COL_MOD_REL_ID);
 
-  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
-
-  output_data[0] = 0;
-  for (row = 0; row < number_of_rows; row++)
-    {
-      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-        {
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_ORG_IMG_NAME, &rc_data,
-                              -1);
-          if (rc_data && *rc_data)
-            {
-              strcat (output_data, rc_data);
-              if (row + 1 < number_of_rows)
-                strcat (output_data, ", ");
-            }
-        }
-    }
-
-  set_tag_string (g_metadata,
-                  "Xmp.iptcExt.OrganisationInImageName",
-                  output_data);
-
-  /* DO ORG IMG CODE (LISTSTORE) */
-
-  list_widget = builder_get_widget (builder,
-                                    "Xmp.iptcExt.OrganisationInImageCode");
-
-  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
-
-  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
-
-  output_data[0] = 0;
-  for (row = 0; row < number_of_rows; row++)
-    {
-      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-        {
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_ORG_IMG_CODE, &rc_data,
-                              -1);
-          if (rc_data && *rc_data)
-            {
-              strcat (output_data, rc_data);
-              if (row + 1 < number_of_rows)
-                strcat (output_data, ", ");
-            }
-        }
-    }
-
-  set_tag_string (g_metadata,
-                  "Xmp.iptcExt.OrganisationInImageCode",
-                  output_data);
-
-  /* DO MODEL RELEASE (LISTSTORE) */
-
-  list_widget = builder_get_widget (builder, "Xmp.plus.ModelReleaseID");
-
-  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
-
-  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
-
-  output_data[0] = 0;
-  for (row = 0; row < number_of_rows; row++)
-    {
-      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-        {
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_MOD_REL_ID, &rc_data,
-                              -1);
-          if (rc_data && *rc_data)
-            {
-              strcat (output_data, rc_data);
-              if (row + 1 < number_of_rows)
-                strcat (output_data, ", ");
-            }
-        }
-    }
-
-  set_tag_string (g_metadata,
-                  "Xmp.plus.ModelReleaseID",
-                  output_data);
-
-  /* DO PROPERTY RELEASE (LISTSTORE) */
-
-  list_widget = builder_get_widget (builder, "Xmp.plus.PropertyReleaseID");
-
-  treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
-
-  number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
-
-  output_data[0] = 0;
-  for (row = 0; row < number_of_rows; row++)
-    {
-      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-        {
-          gtk_tree_model_get (treemodel, &iter,
-                              COL_PROP_REL_ID, &rc_data,
-                              -1);
-          if (rc_data && *rc_data)
-            {
-              strcat (output_data, rc_data);
-              if (row + 1 < number_of_rows)
-                strcat (output_data, ", ");
-            }
-        }
-    }
-
-  set_tag_string (g_metadata,
-                  "Xmp.plus.PropertyReleaseID",
-                  output_data);
+  write_metadata_tag (builder, g_metadata,
+                      "Xmp.plus.PropertyReleaseID",
+                      COL_PROP_REL_ID);
 
   /* DO LOCATION SHOWN (LISTSTORE) */
 
@@ -3879,7 +3832,6 @@ metadata_editor_write_callback (GtkWidget  *dialog,
   gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                              LOCATIONSHOWN_HEADER);
 
-  output_data[0] = 0;
   for (row = 0; row < 256; row++)
     {
       gint item;
@@ -3981,7 +3933,6 @@ metadata_editor_write_callback (GtkWidget  *dialog,
   gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                              ARTWORKOROBJECT_HEADER);
 
-  output_data[0] = 0;
   for (row = 0; row < 256; row++)
     {
       gint item;
@@ -4085,7 +4036,6 @@ metadata_editor_write_callback (GtkWidget  *dialog,
   gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                              REGISTRYID_HEADER);
 
-  output_data[0] = 0;
   for (row = 0; row < 256; row++)
     {
       gint item;
@@ -4149,7 +4099,6 @@ metadata_editor_write_callback (GtkWidget  *dialog,
   gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                              IMAGECREATOR_HEADER);
 
-  output_data[0] = 0;
   for (row = 0; row < 256; row++)
     {
       gint item;
@@ -4213,7 +4162,6 @@ metadata_editor_write_callback (GtkWidget  *dialog,
   gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                              COPYRIGHTOWNER_HEADER);
 
-  output_data[0] = 0;
   for (row = 0; row < 256; row++)
     {
       gint item;
@@ -4277,7 +4225,6 @@ metadata_editor_write_callback (GtkWidget  *dialog,
   gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                              LICENSOR_HEADER);
 
-  output_data[0] = 0;
   for (row = 0; row < 256; row++)
     {
       gint item;
