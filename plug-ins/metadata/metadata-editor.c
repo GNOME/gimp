@@ -1981,6 +1981,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
           gchar *value_utf;
 
           value_utf = clean_xmp_string (value);
+          g_free (value);
 
           if (! strcmp ("single", imageSupplierInfoTags[i].mode))
             {
@@ -1993,6 +1994,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
               gtk_text_buffer_set_text (buffer, value_utf, -1);
             }
+          g_free (value_utf);
         }
     }
 
@@ -2011,11 +2013,13 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
           gchar *value_utf;
 
           value_utf = clean_xmp_string (value);
+          g_free (value);
 
           if (! strcmp ("single", locationCreationInfoTags[i].mode))
             {
               gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
             }
+          g_free (value_utf);
         }
     }
 
@@ -2035,6 +2039,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
           gchar *value_utf;
 
           value_utf = clean_xmp_string (value);
+          g_free (value);
 
           if (! strcmp ("single", creatorContactInfoTags[i].mode))
             {
@@ -2046,6 +2051,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
               gtk_text_buffer_set_text (buffer, value_utf, -1);
             }
+          g_free (value_utf);
         }
     }
 
@@ -3609,6 +3615,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
                 }
             }
+          g_free (value);
         }
     }
 
