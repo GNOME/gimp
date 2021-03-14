@@ -1011,7 +1011,7 @@ hasImageSupplierTagData (GtkBuilder *builder)
       GObject     *object;
       const gchar *text;
 
-      object = gtk_builder_get_object (builder, default_metadata_tags[loop].tag);
+      object = gtk_builder_get_object (builder, imageSupplierInfoTags[loop].id);
 
       if (! strcmp (imageSupplierInfoTags[loop].mode, "single"))
         {
@@ -1037,12 +1037,12 @@ hasLocationCreationTagData (GtkBuilder *builder)
 {
   gint loop;
 
-  for (loop = 0; loop < creatorContactInfoHeader.size; loop++)
+  for (loop = 0; loop < locationCreationInfoHeader.size; loop++)
     {
       GObject     *object;
       const gchar *text;
 
-      object = gtk_builder_get_object (builder, default_metadata_tags[loop].tag);
+      object = gtk_builder_get_object (builder, locationCreationInfoTags[loop].id);
 
       if (! strcmp (locationCreationInfoTags[loop].mode, "single"))
         {
@@ -1079,7 +1079,7 @@ hasCreatorTagData (GtkBuilder *builder)
     {
       GObject *object;
 
-      object = gtk_builder_get_object (builder, default_metadata_tags[loop].tag);
+      object = gtk_builder_get_object (builder, creatorContactInfoTags[loop].id);
 
       if (GTK_IS_ENTRY (object))
         {
