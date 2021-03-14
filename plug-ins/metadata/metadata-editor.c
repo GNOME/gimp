@@ -2025,36 +2025,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
   /* Set up tag data */
 
-  for (i = 0; i < creatorContactInfoHeader.size; i++)
-    {
-      GtkWidget *widget;
-
-      widget = builder_get_widget (builder, creatorContactInfoTags[i].id);
-
-      value = gexiv2_metadata_get_tag_interpreted_string (metadata,
-                                                          creatorContactInfoTags[i].tag);
-
-      if (value)
-        {
-          gchar *value_utf;
-
-          value_utf = clean_xmp_string (value);
-          g_free (value);
-
-          if (! strcmp ("single", creatorContactInfoTags[i].mode))
-            {
-              gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
-            }
-          else if (! strcmp ("multi", creatorContactInfoTags[i].mode))
-            {
-              GtkTextBuffer *buffer;
-              buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
-              gtk_text_buffer_set_text (buffer, value_utf, -1);
-            }
-          g_free (value_utf);
-        }
-    }
-
   for (i = 0; i < numele; i++)
     {
       GtkWidget *widget;
@@ -3616,6 +3586,43 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                 }
             }
           g_free (value);
+        }
+    }
+
+  /* Set Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:* last since the short form
+   * Xmp.iptc.Ci* could have been used to set this information too. Because
+   * the first (longer) form is the most common let that override the shorter
+   * form in the (unlikely) case that both are present and also have
+   * different values. Due to a bug in the metadata-editor previously only
+   * the short form was saved.
+   */
+  for (i = 0; i < creatorContactInfoHeader.size; i++)
+    {
+      GtkWidget *widget;
+
+      widget = builder_get_widget (builder, creatorContactInfoTags[i].id);
+
+      value = gexiv2_metadata_get_tag_interpreted_string (metadata,
+                                                          creatorContactInfoTags[i].tag);
+
+      if (value)
+        {
+          gchar *value_utf;
+
+          value_utf = clean_xmp_string (value);
+          g_free (value);
+
+          if (! strcmp ("single", creatorContactInfoTags[i].mode))
+            {
+              gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
+            }
+          else if (! strcmp ("multi", creatorContactInfoTags[i].mode))
+            {
+              GtkTextBuffer *buffer;
+              buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+              gtk_text_buffer_set_text (buffer, value_utf, -1);
+            }
+          g_free (value_utf);
         }
     }
 
