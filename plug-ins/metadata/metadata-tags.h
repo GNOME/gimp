@@ -225,14 +225,17 @@ extern const gint   n_copyrightowner;
 
 #define REGISTRYID_HEADER "Xmp.iptcExt.RegistryId"
 extern const gchar *registryid[];
+extern const gchar *registryid_alternative[];
 extern const gint   n_registryid;
 
 #define ARTWORKOROBJECT_HEADER "Xmp.iptcExt.ArtworkOrObject"
 extern const gchar *artworkorobject[];
+extern const gchar *artworkorobject_alternative[];
 extern const gint   n_artworkorobject;
 
 #define LOCATIONSHOWN_HEADER "Xmp.iptcExt.LocationShown"
 extern const gchar *locationshown[];
+extern const gchar *locationshown_alternative[];
 extern const gint   n_locationshown;
 
 #ifdef USE_TAGS
