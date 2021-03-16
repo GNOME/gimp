@@ -390,6 +390,12 @@ const gchar *registryid[] =
 };
 const gint n_registryid = G_N_ELEMENTS (registryid);
 
+const gchar *registryid_alternative[] =
+{
+  "/iptcExt:RegOrgId",
+  "/iptcExt:RegItemId"
+};
+
 const gchar *artworkorobject[] =
 {
   "/Iptc4xmpExt:AOTitle",
@@ -401,6 +407,16 @@ const gchar *artworkorobject[] =
 };
 const gint n_artworkorobject = G_N_ELEMENTS (artworkorobject);
 
+const gchar *artworkorobject_alternative[] =
+{
+  "/iptcExt:AOTitle",
+  "/iptcExt:AODateCreated",
+  "/iptcExt:AOCreator",
+  "/iptcExt:AOSource",
+  "/iptcExt:AOSourceInvNo",
+  "/iptcExt:AOCopyrightNotice",
+};
+
 const gchar *locationshown[] =
 {
   "/Iptc4xmpExt:Sublocation",
@@ -411,6 +427,17 @@ const gchar *locationshown[] =
   "/Iptc4xmpExt:WorldRegion"
 };
 const gint n_locationshown = G_N_ELEMENTS (locationshown);
+
+const gchar *locationshown_alternative[] =
+{
+  "/iptcExt:Sublocation",
+  "/iptcExt:City",
+  "/iptcExt:ProvinceState",
+  "/iptcExt:CountryName",
+  "/iptcExt:CountryCode",
+  "/iptcExt:WorldRegion"
+};
+
 
 #ifdef USE_TAGS
 const gchar *locationcreated[] =

@@ -2305,6 +2305,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                      GINT_TO_POINTER (COL_LOC_SHO_CNTRY_WRLD_REG));
                 }
 
+              /* Favor the most common form: /Iptc4xmpExt:* */
               counter = count_tags (metadata, LOCATIONSHOWN_HEADER,
                                     locationshown,
                                     n_locationshown);
@@ -2312,6 +2313,18 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               tagdata = get_tags (metadata, LOCATIONSHOWN_HEADER,
                                   locationshown,
                                   n_locationshown, counter);
+
+              if (counter == 0 || ! tagdata)
+                {
+                  /* Alternatively try: /iptcExt:* */
+                  counter = count_tags (metadata, LOCATIONSHOWN_HEADER,
+                                        locationshown_alternative,
+                                        n_locationshown);
+
+                  tagdata = get_tags (metadata, LOCATIONSHOWN_HEADER,
+                                      locationshown_alternative,
+                                      n_locationshown, counter);
+                }
 
               if (counter > 0 && tagdata)
                 {
@@ -2591,6 +2604,18 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                   artworkorobject,
                                   n_artworkorobject, counter);
 
+              if (counter == 0 || ! tagdata)
+                {
+                  /* Alternatively try: /iptcExt:* */
+                  counter = count_tags (metadata, ARTWORKOROBJECT_HEADER,
+                                        artworkorobject_alternative,
+                                        n_artworkorobject);
+
+                  tagdata = get_tags (metadata, ARTWORKOROBJECT_HEADER,
+                                      artworkorobject_alternative,
+                                      n_artworkorobject, counter);
+                }
+
 
               if (counter > 0 && tagdata)
                 {
@@ -2750,6 +2775,18 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               tagdata = get_tags (metadata, REGISTRYID_HEADER,
                                   registryid,
                                   n_registryid, counter);
+
+              if (counter == 0 || ! tagdata)
+                {
+                  /* Alternatively try: /iptcExt:* */
+                  counter = count_tags (metadata, REGISTRYID_HEADER,
+                                        registryid_alternative,
+                                        n_registryid);
+
+                  tagdata = get_tags (metadata, REGISTRYID_HEADER,
+                                      registryid_alternative,
+                                      n_registryid, counter);
+                }
 
               if (counter > 0 && tagdata)
                 {
@@ -3942,15 +3979,15 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
   write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
                                "Xmp.iptcExt.LocationShown",
-                               n_locationshown, locationshown, NULL);
+                               n_locationshown, locationshown_alternative, NULL);
 
   write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
                                "Xmp.iptcExt.ArtworkOrObject",
-                               n_artworkorobject, artworkorobject, NULL);
+                               n_artworkorobject, artworkorobject_alternative, NULL);
 
   write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
                                "Xmp.iptcExt.RegistryId",
-                               n_registryid, registryid, NULL);
+                               n_registryid, registryid_alternative, NULL);
 
   write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
                                "Xmp.plus.ImageCreator",
