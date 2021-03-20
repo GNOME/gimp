@@ -22,6 +22,7 @@
 #include <unistd.h>
 #endif /* ENABLE_RELOCATABLE_RESOURCES && ! G_OS_WIN32 */
 
+#include <gio/gio.h>
 #include <glib.h>
 #include <glib/gstdio.h>
 
@@ -41,51 +42,41 @@ _br_find_exe (GimpBinrelocInitError *error)
     *error = GIMP_RELOC_INIT_ERROR_DISABLED;
   return NULL;
 #else
-  char *path, *path2, *line, *result;
-  size_t buf_size;
-  ssize_t size;
-  struct stat stat_buf;
-  FILE *f;
+  GDataInputStream *data_input;
+  GInputStream     *input;
+  GFile            *file;
+  GError           *gerror = NULL;
+  gchar            *path;
+  gchar            *sym_path;
+  gchar            *maps_line;
 
-  /* Read from /proc/self/exe (symlink) */
-  if (sizeof (path) > SSIZE_MAX)
-    buf_size = SSIZE_MAX - 1;
-  else
-    buf_size = PATH_MAX - 1;
-  path = g_try_new (char, buf_size);
-  if (path == NULL)
-    {
-      /* Cannot allocate memory. */
-      if (error)
-        *error = GIMP_RELOC_INIT_ERROR_NOMEM;
-      return NULL;
-    }
-  path2 = g_try_new (char, buf_size);
-  if (path2 == NULL)
-    {
-      /* Cannot allocate memory. */
-      if (error)
-        *error = GIMP_RELOC_INIT_ERROR_NOMEM;
-      g_free (path);
-      return NULL;
-    }
-
-  g_strlcpy (path2, "/proc/self/exe", buf_size);
+  sym_path = g_strdup ("/proc/self/exe");
 
   while (1)
     {
-      int i;
+      struct stat stat_buf;
+      int         i;
 
-      size = readlink (path2, path, buf_size - 1);
-      if (size == -1)
+      /* Do not use readlink() with a buffer of size PATH_MAX because
+       * some systems actually allow paths of bigger size. Thus this
+       * macro is kind of bogus. Some systems like Hurd will not even
+       * define it (see MR !424).
+       * g_file_read_link() on the other hand will return a size of
+       * appropriate size, with newline removed and NUL terminator
+       * added.
+       */
+      path = g_file_read_link (sym_path, &gerror);
+      g_free (sym_path);
+      if (! path)
         {
-          /* Error. */
-          g_free (path2);
+          /* Read link fails but we can try reading /proc/self/maps as
+           * an alternate method.
+           */
+          g_printerr ("%s: %s\n", G_STRFUNC, gerror->message);
+          g_error_free (gerror);
+
           break;
         }
-
-      /* readlink() success. */
-      path[size] = '\0';
 
       /* Check whether the symlink's target is also a symlink.
        * We want to get the final target. */
@@ -93,87 +84,80 @@ _br_find_exe (GimpBinrelocInitError *error)
       if (i == -1)
         {
           /* Error. */
-          g_free (path2);
           break;
         }
 
       /* stat() success. */
-      if (!S_ISLNK (stat_buf.st_mode))
+      if (! S_ISLNK (stat_buf.st_mode))
         {
           /* path is not a symlink. Done. */
-          g_free (path2);
           return path;
         }
 
       /* path is a symlink. Continue loop and resolve this. */
-      g_strlcpy (path, path2, buf_size);
+      sym_path = path;
     }
-
 
   /* readlink() or stat() failed; this can happen when the program is
    * running in Valgrind 2.2. Read from /proc/self/maps as fallback. */
 
-  buf_size = PATH_MAX + 128;
-  line = (char *) g_try_realloc (path, buf_size);
-  if (line == NULL)
+  file = g_file_new_for_path ("/proc/self/maps");
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &gerror));
+  g_object_unref (file);
+  if (! input)
     {
-      /* Cannot allocate memory. */
-      g_free (path);
-      if (error)
-        *error = GIMP_RELOC_INIT_ERROR_NOMEM;
-      return NULL;
-    }
+      g_printerr ("%s: %s", G_STRFUNC, gerror->message);
+      g_error_free (gerror);
 
-  f = g_fopen ("/proc/self/maps", "r");
-  if (f == NULL)
-    {
-      g_free (line);
       if (error)
         *error = GIMP_RELOC_INIT_ERROR_OPEN_MAPS;
+
       return NULL;
     }
 
-  /* The first entry should be the executable name. */
-  result = fgets (line, (int) buf_size, f);
-  if (result == NULL)
+  data_input = g_data_input_stream_new (input);
+  g_object_unref (input);
+
+  /* The first entry with r-xp permission should be the executable name. */
+  while ((maps_line = g_data_input_stream_read_line (data_input, NULL, NULL, &gerror)))
     {
-      fclose (f);
-      g_free (line);
-      if (error)
-        *error = GIMP_RELOC_INIT_ERROR_READ_MAPS;
-      return NULL;
+      if (maps_line == NULL)
+        {
+          if (gerror)
+            {
+              g_printerr ("%s: %s\n", G_STRFUNC, gerror->message);
+              g_error_free (gerror);
+            }
+          g_object_unref (data_input);
+
+          if (error)
+            *error = GIMP_RELOC_INIT_ERROR_READ_MAPS;
+
+          return NULL;
+        }
+
+      /* Extract the filename; it is always an absolute path. */
+      path = strchr (maps_line, '/');
+
+      /* Sanity check. */
+      if (path && strstr (maps_line, " r-xp "))
+        {
+          /* We found the executable name. */
+          path = g_strdup (path);
+          break;
+        }
+
+      g_free (maps_line);
+      maps_line = NULL;
+      path = NULL;
     }
 
-  /* Get rid of newline character. */
-  buf_size = strlen (line);
-  if (buf_size == 0)
-    {
-      /* Huh? An empty string? */
-      fclose (f);
-      g_free (line);
-      if (error)
-        *error = GIMP_RELOC_INIT_ERROR_INVALID_MAPS;
-      return NULL;
-    }
-  if (line[buf_size - 1] == 10)
-    line[buf_size - 1] = 0;
+  if (path == NULL && error)
+    *error = GIMP_RELOC_INIT_ERROR_INVALID_MAPS;
 
-  /* Extract the filename; it is always an absolute path. */
-  path = strchr (line, '/');
+  g_object_unref (data_input);
+  g_free (maps_line);
 
-  /* Sanity check. */
-  if (strstr (line, " r-xp ") == NULL || path == NULL)
-    {
-      fclose (f);
-      g_free (line);
-      if (error)
-        *error = GIMP_RELOC_INIT_ERROR_INVALID_MAPS;
-      return NULL;
-    }
-
-  path = g_strdup (path);
-  g_free (line);
-  fclose (f);
   return path;
 #endif /* ! ENABLE_RELOCATABLE_RESOURCES || G_OS_WIN32 */
 }
