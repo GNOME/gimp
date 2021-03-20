@@ -201,7 +201,14 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
         break;
 
       /* Sanity check. */
-      if (strstr (line, " r-xp ") == NULL || strchr (line, '/') == NULL)
+      /* XXX Early versions of this code would check that the mapped
+       * region was with r-xp permission. It might have been true at
+       * some point in time, but last I tested, the searched pointer was
+       * in a r--p region for libgimpbase. Thus _br_find_exe_for_symbol()
+       * would fail to find the executable's path.
+       * So now we don't test the region's permission anymore.
+       */
+      if (strchr (line, '/') == NULL)
         continue;
 
       /* Parse line. */
