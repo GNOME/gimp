@@ -175,30 +175,58 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
     *error = GIMP_RELOC_INIT_ERROR_DISABLED;
   return (char *) NULL;
 #else
-#define SIZE PATH_MAX + 100
-  FILE *f;
-  size_t address_string_len;
-  char *address_string, line[SIZE], *found;
+  GDataInputStream *data_input;
+  GInputStream     *input;
+  GFile            *file;
+  GError           *gerror = NULL;
+  gchar            *maps_line;
+  char             *found = NULL;
+  char             *address_string;
+  size_t            address_string_len;
 
   if (symbol == NULL)
     return (char *) NULL;
 
-  f = g_fopen ("/proc/self/maps", "r");
-  if (f == NULL)
-    return (char *) NULL;
+  file = g_file_new_for_path ("/proc/self/maps");
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &gerror));
+  g_object_unref (file);
+  if (! input)
+    {
+      g_printerr ("%s: %s", G_STRFUNC, gerror->message);
+      g_error_free (gerror);
+
+      if (error)
+        *error = GIMP_RELOC_INIT_ERROR_OPEN_MAPS;
+
+      return NULL;
+    }
+
+  data_input = g_data_input_stream_new (input);
+  g_object_unref (input);
 
   address_string_len = 4;
   address_string = g_try_new (char, address_string_len);
-  found = (char *) NULL;
 
-  while (!feof (f))
+  while ((maps_line = g_data_input_stream_read_line (data_input, NULL, NULL, &gerror)))
     {
-      char *start_addr, *end_addr, *end_addr_end, *file;
-      void *start_addr_p, *end_addr_p;
-      size_t len;
+      char   *start_addr, *end_addr, *end_addr_end;
+      char   *path;
+      void   *start_addr_p, *end_addr_p;
+      size_t  len;
 
-      if (fgets (line, SIZE, f) == NULL)
-        break;
+      if (maps_line == NULL)
+        {
+          if (gerror)
+            {
+              g_printerr ("%s: %s\n", G_STRFUNC, gerror->message);
+              g_error_free (gerror);
+            }
+
+          if (error)
+            *error = GIMP_RELOC_INIT_ERROR_READ_MAPS;
+
+          break;
+        }
 
       /* Sanity check. */
       /* XXX Early versions of this code would check that the mapped
@@ -208,41 +236,55 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
        * would fail to find the executable's path.
        * So now we don't test the region's permission anymore.
        */
-      if (strchr (line, '/') == NULL)
-        continue;
+      if (strchr (maps_line, '/') == NULL)
+        {
+          g_free (maps_line);
+          continue;
+        }
 
       /* Parse line. */
-      start_addr = line;
-      end_addr = strchr (line, '-');
-      file = strchr (line, '/');
+      start_addr = maps_line;
+      end_addr = strchr (maps_line, '-');
+      path = strchr (maps_line, '/');
 
       /* More sanity check. */
-      if (!(file > end_addr && end_addr != NULL && end_addr[0] == '-'))
-        continue;
+      if (!(path > end_addr && end_addr != NULL && end_addr[0] == '-'))
+        {
+          g_free (maps_line);
+          continue;
+        }
 
       end_addr[0] = '\0';
       end_addr++;
       end_addr_end = strchr (end_addr, ' ');
       if (end_addr_end == NULL)
-        continue;
+        {
+          g_free (maps_line);
+          continue;
+        }
 
       end_addr_end[0] = '\0';
-      len = strlen (file);
+      len = strlen (path);
       if (len == 0)
-        continue;
-      if (file[len - 1] == '\n')
-        file[len - 1] = '\0';
+        {
+          g_free (maps_line);
+          continue;
+        }
+      if (path[len - 1] == '\n')
+        path[len - 1] = '\0';
 
       /* Get rid of "(deleted)" from the filename. */
-      len = strlen (file);
-      if (len > 10 && strcmp (file + len - 10, " (deleted)") == 0)
-        file[len - 10] = '\0';
+      len = strlen (path);
+      if (len > 10 && strcmp (path + len - 10, " (deleted)") == 0)
+        path[len - 10] = '\0';
 
       /* I don't know whether this can happen but better safe than sorry. */
       len = strlen (start_addr);
       if (len != strlen (end_addr))
-        continue;
-
+        {
+          g_free (maps_line);
+          continue;
+        }
 
       /* Transform the addresses into a string in the form of 0xdeadbeef,
        * then transform that into a pointer. */
@@ -262,21 +304,20 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
       address_string[2 + len] = '\0';
       sscanf (address_string, "%p", &end_addr_p);
 
-
       if (symbol >= start_addr_p && symbol < end_addr_p)
         {
-          found = file;
+          found = g_strdup (path);
+          g_free (maps_line);
           break;
         }
+
+      g_free (maps_line);
     }
 
   g_free (address_string);
-  fclose (f);
+  g_object_unref (data_input);
 
-  if (found == NULL)
-    return (char *) NULL;
-  else
-    return g_strdup (found);
+  return found;
 #endif /* ! ENABLE_RELOCATABLE_RESOURCES || G_OS_WIN32 */
 }
 
@@ -347,8 +388,10 @@ _gimp_reloc_init_lib (GError **error)
 
   exe = _br_find_exe_for_symbol ((const void *) "", &errcode);
   if (exe != NULL)
-    /* Success! */
-    return TRUE;
+    {
+      /* Success! */
+      return TRUE;
+    }
   else
     {
       /* Failed :-( */
