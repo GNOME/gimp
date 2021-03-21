@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-01-31 21:30+0000\n"
-"PO-Revision-Date: 2021-02-01 22:19+0100\n"
+"POT-Creation-Date: 2021-03-16 17:29+0000\n"
+"PO-Revision-Date: 2021-03-21 18:41+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -74,7 +74,7 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1308 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2307 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2430 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -100,10 +100,10 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/lighting/lighting-ui.c:1162
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
-#: ../plug-ins/metadata/metadata-editor.c:564
-#: ../plug-ins/metadata/metadata-editor.c:830
-#: ../plug-ins/metadata/metadata-editor.c:5717
-#: ../plug-ins/metadata/metadata-editor.c:5752
+#: ../plug-ins/metadata/metadata-editor.c:590
+#: ../plug-ins/metadata/metadata-editor.c:952
+#: ../plug-ins/metadata/metadata-editor.c:4522
+#: ../plug-ins/metadata/metadata-editor.c:4557
 #: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -451,11 +451,11 @@ msgstr "_Vertikal"
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
-#: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
+#: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:2016 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1302
+#: ../plug-ins/file-tiff/file-tiff-load.c:1265
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -1087,7 +1087,7 @@ msgstr "Läs in parametrar för CML-utforskare"
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:858
 #: ../plug-ins/common/file-xwd.c:455 ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:234
+#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:236
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
@@ -2155,12 +2155,12 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
 #: ../plug-ins/common/file-xpm.c:356 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
-#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-faxg3/faxg3.c:220 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:247
+#: ../plug-ins/file-tiff/file-tiff-load.c:258
 #, c-format
 msgid "Opening '%s'"
 msgstr "Öppnar ”%s”"
@@ -3149,8 +3149,8 @@ msgid "Import from PDF"
 msgstr "Importera från PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:2308
-#: ../plug-ins/metadata/metadata-editor.c:5718
+#: ../plug-ins/file-tiff/file-tiff-load.c:2431
+#: ../plug-ins/metadata/metadata-editor.c:4523
 msgid "_Import"
 msgstr "_Importera"
 
@@ -3275,7 +3275,7 @@ msgstr "Lager som sidor (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1304
+#: ../plug-ins/file-tiff/file-tiff-load.c:1267
 #, c-format
 msgid "Page %d"
 msgstr "Sida %d"
@@ -6696,7 +6696,7 @@ msgid "Export as DDS"
 msgstr "Exportera som DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1957
-#: ../plug-ins/metadata/metadata-editor.c:5753
+#: ../plug-ins/metadata/metadata-editor.c:4558
 msgid "_Export"
 msgstr "_Exportera"
 
@@ -6778,9 +6778,24 @@ msgstr "Fel vid förfrågan om bildtyp från ”%s”"
 msgid "Error reading pixel data from '%s'"
 msgstr "Fel vid läsning av bildpunktsdata från ”%s”"
 
-#: ../plug-ins/file-faxg3/faxg3.c:104
+#: ../plug-ins/file-faxg3/faxg3.c:105
 msgid "G3 fax image"
 msgstr "G3 faxbild"
+
+#: ../plug-ins/file-faxg3/faxg3.c:275 ../plug-ins/file-faxg3/faxg3.c:574
+#, c-format
+msgid "Could not create buffer to process image data."
+msgstr "Kunde inte skapa buffert för att bearbeta bilddata."
+
+#: ../plug-ins/file-faxg3/faxg3.c:540
+#, c-format
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr "Ogiltiga bilddimensioner (%d × %d). Bilden kan vara skadad."
+
+#: ../plug-ins/file-faxg3/faxg3.c:550
+#, c-format
+msgid "Could not create image."
+msgstr "Kunde inte skapa bild."
 
 #: ../plug-ins/file-fits/fits.c:166 ../plug-ins/file-fits/fits.c:186
 msgid "Flexible Image Transport System"
@@ -7394,12 +7409,17 @@ msgstr ""
 msgid "TIFF image"
 msgstr "TIFF-bild"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:280
+#: ../plug-ins/file-tiff/file-tiff-load.c:266
+#, c-format
+msgid "Not a TIFF image or image is corrupt."
+msgstr "Inte en TIFF-bild eller så är bilden skadad."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:297
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF ”%s” innehåller inga kataloger"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:287
+#: ../plug-ins/file-tiff/file-tiff-load.c:304
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7414,7 +7434,7 @@ msgstr[1] ""
 "Katalogantal enligt huvud för TIFF ”%s” misslyckades även om det verkar vara "
 "%d sidor. Försöker läsa in filen med detta antagande."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:363
+#: ../plug-ins/file-tiff/file-tiff-load.c:380
 msgid "Extra channels with unspecified data."
 msgstr "Extra kanaler med ospecificerade data."
 
@@ -7425,16 +7445,16 @@ msgstr "Extra kanaler med ospecificerade data."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:375
+#: ../plug-ins/file-tiff/file-tiff-load.c:392
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF följer ej specifikation: extra kanaler utan ”ExtraSamples”-fält."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:436
+#: ../plug-ins/file-tiff/file-tiff-load.c:453
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Kunde inte läsa sida %d av %d. Bilden kan vara skadad.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:465
+#: ../plug-ins/file-tiff/file-tiff-load.c:482
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7443,7 +7463,7 @@ msgstr ""
 "Denna bild har en linjär färgprofil men den ställdes inte in på första "
 "lagret. Lagren under lager %d kommer tolkas som ickelinjära."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:473
+#: ../plug-ins/file-tiff/file-tiff-load.c:490
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7453,28 +7473,131 @@ msgstr ""
 "leder till felaktiga resultat bör du överväga att läsa in varje lager som en "
 "separat bild."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:965
+#: ../plug-ins/file-tiff/file-tiff-load.c:502
+#, c-format
+msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
+msgstr "Misstänkt bitdjup: %d för sida %d. Bilden kan vara skadad."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:576
+#, c-format
+msgid "Unsupported bit depth: %d for page %d."
+msgstr "Bitdjupet stöds inte: %d för sida %d."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:591
+#, c-format
+msgid "Could not get image width from '%s'"
+msgstr "Kunde inte få bildbredd från ”%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:599
+#, c-format
+msgid "Could not get image length from '%s'"
+msgstr "Kunde inte få bildlängd från ”%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:607
+#, c-format
+msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
+msgstr ""
+"Ogiltiga bilddimensioner (%u × %u) för sida %d. Bilden kan vara skadad."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:628
+#, c-format
+msgid ""
+"Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
+"is-white"
+msgstr ""
+"Kunde inte få fotometrisk tolkning från ”%s”. Bilden är CCITT-komprimerad, "
+"antar min-is-white"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:635
+#, c-format
+msgid "Could not get photometric from '%s'. Assuming min-is-black"
+msgstr "Kunde inte få fotometrisk tolkning från ”%s”. Antar min-is-black"
+
+#. In non-interactive mode, we assume unassociated alpha if unspecified.
+#. * We don't output messages in interactive mode as the user
+#. * has already the ability to choose through a dialog.
+#: ../plug-ins/file-tiff/file-tiff-load.c:667
+#, c-format
+msgid ""
+"Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
+msgstr ""
+"Alfakanaltyp inte definierad för %s. Antar att alfa ej förmultiplicerad"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:692
+#, c-format
+msgid ""
+"Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
+"not set while extra channels are present. Assuming the first extra channel "
+"is non-premultiplied alpha."
+msgstr ""
+"Bilden ”%s” följer inte TIFF-specifikationen: fältet ExtraSamples har inte "
+"satts medan extra kanaler är tillgängliga. Antar att den första extra "
+"kanalen är ej förmultiplicerad alfa."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:925
+#, c-format
+msgid "Invalid or unknown compression %u. Setting compression to none."
+msgstr "Ogiltig eller okänd komprimering %u. Sätter komprimering till ingen."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:983
+#, c-format
+msgid "Could not create a new image: %s"
+msgstr "Kunde inte skapa ny bild: %s"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1003
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-av-%d-sidor"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1335
+#: ../plug-ins/file-tiff/file-tiff-load.c:1148
+#, c-format
+msgid "Unknown resolution unit type %d, assuming dpi"
+msgstr "Okänd enhetstyp %d för upplösning, antar dpi"
+
+#. no res unit tag
+#. old AppleScan software produces these
+#: ../plug-ins/file-tiff/file-tiff-load.c:1158
+msgid "Warning: resolution specified without unit type, assuming dpi"
+msgstr "Varning: upplösning angiven utan enhetstyp, antar dpi"
+
+#. xres but no yres
+#: ../plug-ins/file-tiff/file-tiff-load.c:1166
+msgid "Warning: no y resolution info, assuming same as x"
+msgstr "Varning: ingen y-upplösningsinfo, antar samma som x"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1225
+#, c-format
+msgid "Could not get colormaps from '%s'"
+msgstr "Kunde inte få färgkartor från ”%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1298
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1473
+#: ../plug-ins/file-tiff/file-tiff-load.c:1436
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "Inga data kunde läsas från TIFF ”%s”. Filen är troligen skadad."
 
+#: ../plug-ins/file-tiff/file-tiff-load.c:1507
+#, c-format
+msgid "%s: Unsupported image format, no RGBA loader available"
+msgstr "%s: Bildformatet stöds inte, ingen RGBA-inläsare tillgänglig"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1819
+#: ../plug-ins/file-tiff/file-tiff-load.c:2016
+#, c-format
+msgid "Reading tile failed. Image may be corrupt at line %d."
+msgstr "Läsning av platta misslyckades. Bilden kan vara skadad på rad %d."
+
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1848
-#: ../plug-ins/file-tiff/file-tiff-load.c:2028
+#: ../plug-ins/file-tiff/file-tiff-load.c:1828
+#: ../plug-ins/file-tiff/file-tiff-load.c:2025
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Läsning av scanline misslyckades. Bilden kan vara skadad på rad %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2303
+#: ../plug-ins/file-tiff/file-tiff-load.c:2426
 msgid "Import from TIFF"
 msgstr "Importera från TIFF"
 
@@ -7482,23 +7605,23 @@ msgstr "Importera från TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2356
+#: ../plug-ins/file-tiff/file-tiff-load.c:2479
 msgid "_Keep empty space around imported layers"
 msgstr "_Behåll tomt utrymme runt importerade lager"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2373
+#: ../plug-ins/file-tiff/file-tiff-load.c:2496
 msgid "Process extra channel as:"
 msgstr "Bearbeta extra kanal som:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2376
+#: ../plug-ins/file-tiff/file-tiff-load.c:2499
 msgid "_Non-premultiplied alpha"
 msgstr "_Ej förmultiplicerad alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2377
+#: ../plug-ins/file-tiff/file-tiff-load.c:2500
 msgid "Pre_multiplied alpha"
 msgstr "För_multiplicerad alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2378
+#: ../plug-ins/file-tiff/file-tiff-load.c:2501
 msgid "Channe_l"
 msgstr "Kana_l"
 
@@ -8749,7 +8872,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Ändrar gamma (ljusstyrka) på den valda penseln"
 
 #: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/metadata/metadata-editor.c:587
+#: ../plug-ins/metadata/metadata-editor.c:613
 msgid "Select:"
 msgstr "Välj:"
 
@@ -11902,50 +12025,50 @@ msgstr "Visa _trådram"
 msgid "Update preview _live"
 msgstr "Uppdatera förhandsgranskning _live"
 
-#: ../plug-ins/metadata/metadata-editor.c:413
+#: ../plug-ins/metadata/metadata-editor.c:439
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Redigera metadata (IPTC, EXIF, XMP)"
 
-#: ../plug-ins/metadata/metadata-editor.c:421
+#: ../plug-ins/metadata/metadata-editor.c:447
 msgid "_Edit Metadata"
 msgstr "R_edigera metadata"
 
-#: ../plug-ins/metadata/metadata-editor.c:545
+#: ../plug-ins/metadata/metadata-editor.c:571
 msgid "Error loading metadata-editor dialog."
 msgstr "Fel vid inläsning av dialogruta för metadataredigering."
 
-#: ../plug-ins/metadata/metadata-editor.c:556
+#: ../plug-ins/metadata/metadata-editor.c:582
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Metadataredigerare: %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:565
+#: ../plug-ins/metadata/metadata-editor.c:591
 msgid "_Write Metadata"
 msgstr "Skriv _metadata"
 
-#: ../plug-ins/metadata/metadata-editor.c:589
+#: ../plug-ins/metadata/metadata-editor.c:615
 msgid "Import metadata"
 msgstr "Importera metadata"
 
-#: ../plug-ins/metadata/metadata-editor.c:591
+#: ../plug-ins/metadata/metadata-editor.c:617
 msgid "Export metadata"
 msgstr "Exportera metadata"
 
-#: ../plug-ins/metadata/metadata-editor.c:799
+#: ../plug-ins/metadata/metadata-editor.c:921
 #, c-format
 msgid "Error loading calendar. %s"
 msgstr "Fel vid inläsning av kalender. %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:827
+#: ../plug-ins/metadata/metadata-editor.c:949
 msgid "Calendar Date:"
 msgstr "Kalenderdatum:"
 
-#: ../plug-ins/metadata/metadata-editor.c:831
+#: ../plug-ins/metadata/metadata-editor.c:953
 msgid "Set Date"
 msgstr "Ställ in datum"
 
 # Att testa senare: fungerar både punkt och komma som decimaltecken?
-#: ../plug-ins/metadata/metadata-editor.c:1565
+#: ../plug-ins/metadata/metadata-editor.c:1687
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -11961,7 +12084,7 @@ msgstr ""
 "10 15.30, eller 10.45\n"
 "Ta bort all text för att ta bort aktuellt värde."
 
-#: ../plug-ins/metadata/metadata-editor.c:1571
+#: ../plug-ins/metadata/metadata-editor.c:1693
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -11976,20 +12099,20 @@ msgstr ""
 "Beroende på vald mättyp ska värdet anges i meter (m) eller fot (ft)\n"
 "Ta bort all text för att ta bort aktuellt värde."
 
-#: ../plug-ins/metadata/metadata-editor.c:1707
+#: ../plug-ins/metadata/metadata-editor.c:1829
 msgid "Unrated"
 msgstr "Icke rankad"
 
-#: ../plug-ins/metadata/metadata-editor.c:4405
+#: ../plug-ins/metadata/metadata-editor.c:3697
 #, c-format
 msgid "Failed to set metadata tag %s"
 msgstr "Misslyckades med att ställa in metadatatagg %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:5714
+#: ../plug-ins/metadata/metadata-editor.c:4519
 msgid "Import Metadata File"
 msgstr "Importera metadatafil"
 
-#: ../plug-ins/metadata/metadata-editor.c:5749
+#: ../plug-ins/metadata/metadata-editor.c:4554
 msgid "Export Metadata File"
 msgstr "Exportera metadatafil"
 
@@ -15150,9 +15273,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Some error occurred while saving"
 #~ msgstr "Ett fel inträffade vid sparning"
-
-#~ msgid "Could not close the file"
-#~ msgstr "Kunde inte stänga filen"
 
 #~ msgid "Image Properties"
 #~ msgstr "Bildegenskaper"
