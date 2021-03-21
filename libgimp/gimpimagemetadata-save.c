@@ -239,6 +239,42 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
   return metadata;
 }
 
+static const gchar *
+gimp_fix_xmp_tag (const gchar *tag)
+{
+  gchar *substring;
+
+  /* Due to problems using /Iptc4xmpExt namespace (/iptcExt is used
+   * instead by Exiv2) we replace all occurrences with /iptcExt which
+   * is valid but less common. Not doing so would cause saving xmp
+   * metadata to fail. This has to be done after getting the values
+   * from the source metadata since that source uses the original
+   * tag names and would otherwise return NULL as value.
+   * /Iptc4xmpExt length = 12
+   * /iptcExt     length =  8
+   */
+
+  substring = strstr (tag, "/Iptc4xmpExt");
+  while (substring)
+    {
+      gint len_tag = strlen (tag);
+      gint len_end;
+
+      len_end = len_tag - (substring - tag) - 12;
+      strncpy (substring, "/iptcExt", 8);
+      substring += 8;
+      /* Using memmove: we have overlapping source and dest */
+      memmove (substring, substring+4, len_end);
+      substring[len_end] = '\0';
+      g_debug ("Fixed tag value: %s", tag);
+
+      /* Multiple occurrences are possible: e.g.:
+       * Xmp.iptcExt.ImageRegion[3]/Iptc4xmpExt:RegionBoundary/Iptc4xmpExt:rbVertices[1]/Iptc4xmpExt:rbX
+       */
+      substring = strstr (tag, "/Iptc4xmpExt");
+    }
+  return tag;
+}
 
 static void
 gimp_image_metadata_copy_tag (GExiv2Metadata *src,
@@ -249,7 +285,17 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
 
   if (values)
     {
-      gexiv2_metadata_set_tag_multiple (dest, tag, (const gchar **) values);
+      gchar *temp_tag;
+
+      /* Xmp always seems to return multiple values */
+      if (g_str_has_prefix (tag, "Xmp."))
+        temp_tag = (gchar *) gimp_fix_xmp_tag (g_strdup (tag));
+      else
+        temp_tag = g_strdup (tag);
+
+      g_debug ("Copy multi tag %s, first value: %s", temp_tag, values[0]);
+      gexiv2_metadata_set_tag_multiple (dest, temp_tag, (const gchar **) values);
+      g_free (temp_tag);
       g_strfreev (values);
     }
   else
@@ -258,10 +304,109 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
 
       if (value)
         {
+          g_debug ("Copy tag %s, value: %s", tag, value);
           gexiv2_metadata_set_tag_string (dest, tag, value);
           g_free (value);
         }
     }
+}
+
+static gint
+gimp_natural_sort_compare (gconstpointer left,
+                           gconstpointer right)
+{
+  gint   compare;
+  gchar *left_key  = g_utf8_collate_key_for_filename ((gchar *) left, -1);
+  gchar *right_key = g_utf8_collate_key_for_filename ((gchar *) right, -1);
+
+  compare = g_strcmp0 (left_key, right_key);
+  g_free (left_key);
+  g_free (right_key);
+
+  return compare;
+}
+
+static GList*
+gimp_image_metadata_convert_tags_to_list (gchar **xmp_tags)
+{
+  GList *list = NULL;
+  gint   i;
+
+  for (i = 0; xmp_tags[i] != NULL; i++)
+    {
+      g_debug ("Tag: %s, tag type: %s", xmp_tags[i], gexiv2_metadata_get_tag_type(xmp_tags[i]));
+      list = g_list_prepend (list, xmp_tags[i]);
+    }
+  return list;
+}
+
+static GExiv2StructureType
+gimp_image_metadata_get_xmp_struct_type (const gchar *tag)
+{
+  g_debug ("Struct type for tag: %s, type: %s", tag, gexiv2_metadata_get_tag_type (tag));
+
+  if (! g_strcmp0 (gexiv2_metadata_get_tag_type (tag), "XmpSeq"))
+    {
+      return GEXIV2_STRUCTURE_XA_SEQ;
+    }
+
+  return GEXIV2_STRUCTURE_XA_BAG;
+}
+
+static void
+gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
+                                     GExiv2Metadata *metadata)
+{
+  GList *list;
+  gchar *prev_one = NULL;
+  gchar *prev_two = NULL;
+
+  for (list = xmp_list; list != NULL; list = list->next)
+    {
+      gchar **tag_split;
+
+      /*
+       * Most tags with structs have only one struct part, like:
+       * Xmp.xmpMM.History[1]...
+       * However there are also Xmp tags that have two
+       * structs in one tag, e.g.:
+       * Xmp.crs.GradientBasedCorrections[1]/crs:CorrectionMasks[1]...
+       */
+      tag_split = g_strsplit ((gchar *) list->data, "[1]", 3);
+      /* Check if there are at least two parts but don't catch xxx[2]/yyy[1]/zzz */
+      if (tag_split && tag_split[1] && ! strstr (tag_split[0], "["))
+        {
+          if (! prev_one || strcmp (tag_split[0], prev_one) != 0)
+            {
+              GExiv2StructureType  type;
+
+              g_free (prev_one);
+              prev_one = g_strdup (tag_split[0]);
+
+              type = gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_split[0]));
+              gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
+                                                  prev_one, type);
+            }
+          if (tag_split[2] && (!prev_two || strcmp (tag_split[1], prev_two) != 0))
+            {
+              gchar               *second_struct;
+              GExiv2StructureType  type;
+
+              g_free (prev_two);
+              prev_two = g_strdup (tag_split[1]);
+              second_struct = g_strdup_printf ("%s[1]%s", prev_one, gimp_fix_xmp_tag(prev_two));
+
+              type = gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_split[1]));
+              gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
+                                                  second_struct, type);
+              g_free (second_struct);
+            }
+        }
+
+      g_strfreev (tag_split);
+    }
+  g_free (prev_one);
+  g_free (prev_two);
 }
 
 /**
@@ -344,23 +489,12 @@ gimp_image_metadata_save_finish (GimpImage              *image,
 
   if ((flags & GIMP_METADATA_SAVE_XMP) && support_xmp)
     {
-      static const XmpStructs structlist[] =
-      {
-        { "Xmp.iptcExt.LocationCreated", GEXIV2_STRUCTURE_XA_BAG },
-        { "Xmp.iptcExt.LocationShown",   GEXIV2_STRUCTURE_XA_BAG },
-        { "Xmp.iptcExt.ArtworkOrObject", GEXIV2_STRUCTURE_XA_BAG },
-        { "Xmp.iptcExt.RegistryId",      GEXIV2_STRUCTURE_XA_BAG },
-        { "Xmp.xmpMM.History",           GEXIV2_STRUCTURE_XA_SEQ },
-        { "Xmp.plus.ImageSupplier",      GEXIV2_STRUCTURE_XA_SEQ },
-        { "Xmp.plus.ImageCreator",       GEXIV2_STRUCTURE_XA_SEQ },
-        { "Xmp.plus.CopyrightOwner",     GEXIV2_STRUCTURE_XA_SEQ },
-        { "Xmp.plus.Licensor",           GEXIV2_STRUCTURE_XA_SEQ }
-      };
-
       gchar         **xmp_data;
       struct timeval  timer_usec;
       gint64          timestamp_usec;
       gchar           ts[128];
+      GList          *xmp_list = NULL;
+      GList          *list;
 
       gettimeofday (&timer_usec, NULL);
       timestamp_usec = ((gint64) timer_usec.tv_sec) * 1000000ll +
@@ -402,25 +536,24 @@ gimp_image_metadata_save_finish (GimpImage              *image,
 
       xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
 
-      /* Patch necessary structures */
-      for (i = 0; i < G_N_ELEMENTS (structlist); i++)
-        {
-          gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (new_g2metadata),
-                                              structlist[i].tag,
-                                              structlist[i].type);
-        }
+      xmp_list = gimp_image_metadata_convert_tags_to_list (xmp_data);
+      xmp_list = g_list_sort (xmp_list, (GCompareFunc) gimp_natural_sort_compare);
+      gimp_image_metadata_set_xmp_structs (xmp_list, new_g2metadata);
 
-      for (i = 0; xmp_data[i] != NULL; i++)
+      for (list = xmp_list; list != NULL; list = list->next)
         {
-          if (! gexiv2_metadata_has_tag (new_g2metadata, xmp_data[i]) &&
-              gimp_metadata_is_tag_supported (xmp_data[i], mime_type))
+          if (! gexiv2_metadata_has_tag (new_g2metadata, (gchar *) list->data) &&
+              gimp_metadata_is_tag_supported ((gchar *) list->data, mime_type))
             {
               gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
                                             new_g2metadata,
-                                            xmp_data[i]);
+                                            (gchar *) list->data);
             }
+          else
+            g_debug ("Ignored tag: %s", (gchar *) list->data);
         }
 
+      g_list_free (xmp_list);
       g_strfreev (xmp_data);
     }
 
