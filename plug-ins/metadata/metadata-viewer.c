@@ -121,6 +121,7 @@ static void metadata_dialog_add_translated_tag    (GExiv2Metadata  *metadata,
                                                    gint             tag_column,
                                                    gint             value_column,
                                                    const gchar     *tag);
+static gchar   * metadata_interpret_user_comment  (gchar           *comment);
 static gchar   * metadata_dialog_format_tag_value (GExiv2Metadata  *metadata,
                                                    const gchar     *tag,
                                                    gboolean         truncate);
@@ -419,6 +420,39 @@ metadata_dialog_add_translated_tag (GExiv2Metadata  *metadata,
   g_free (value);
 }
 
+static gchar *
+metadata_interpret_user_comment (gchar *comment)
+{
+  /* Exiv2 can return unwanted text at the start of a comment
+   * taken from Exif.Photo.UserComment since 0.27.3.
+   * Let's remove that part and replace with an empty string
+   * if there is nothing else left as comment. */
+
+  if (comment && g_str_has_prefix (comment, "charset=Ascii "))
+    {
+      gchar *real_comment;
+
+      /* Skip "charset=Ascii " (length 14) to find the real comment */
+      real_comment = comment + 14;
+      if (real_comment[0] == '\0' ||
+          ! g_strcmp0 (real_comment, "binary comment"))
+        {
+          g_free (comment);
+          /* Make empty comment instead of returning NULL or else
+           * the exif value will not be shown at all. */
+          comment = g_strdup ("");
+        }
+      else
+        {
+          real_comment = g_strdup (real_comment);
+          g_free (comment);
+          return real_comment;
+        }
+    }
+
+  return comment;
+}
+
 static void
 metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                              gchar          **tags,
@@ -556,6 +590,17 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                 }
               gps_done = TRUE;
             }
+        }
+      else if (! strcmp ("Exif.Photo.UserComment", tag))
+        {
+          value = gexiv2_metadata_get_tag_interpreted_string (metadata, tag);
+          /* Can start with charset. Remove part that is not relevant. */
+          value = metadata_interpret_user_comment (value);
+
+          metadata_dialog_add_tag (store, iter,
+                                   tag_column, value_column,
+                                   tag, value);
+          g_free (value);
         }
       else
         {
