@@ -796,7 +796,7 @@ gimp_string_array_new (const gchar **data,
   if (! static_data && data)
     {
       gchar **tmp = g_new0 (gchar *, length + 1);
-      gint    i;
+      gsize   i;
 
       for (i = 0; i < length; i++)
         tmp[i] = g_strdup (data[i]);
@@ -840,7 +840,7 @@ gimp_string_array_free (GimpStringArray *array)
       if (! array->static_data)
         {
           gchar **tmp = array->data;
-          gint    i;
+          gsize   i;
 
           for (i = 0; i < array->length; i++)
             g_free (tmp[i]);
@@ -1016,7 +1016,7 @@ gimp_value_dup_string_array (const GValue *value)
   if (array)
     {
       gchar **ret = g_memdup (array->data, (array->length + 1) * sizeof (gchar *));
-      gint    i;
+      gsize   i;
 
       for (i = 0; i < array->length; i++)
         ret[i] = g_strdup (ret[i]);
@@ -1306,7 +1306,7 @@ gimp_object_array_new (GType     object_type,
   if (! static_data && data)
     {
       GObject **tmp = g_new0 (GObject *, length);
-      gint      i;
+      gsize     i;
 
       for (i = 0; i < length; i++)
         tmp[i] = g_object_ref (data[i]);
@@ -1351,7 +1351,7 @@ gimp_object_array_free (GimpObjectArray *array)
       if (! array->static_data)
         {
           GObject **tmp = array->data;
-          gint      i;
+          gsize     i;
 
           for (i = 0; i < array->length; i++)
             g_object_unref (tmp[i]);
@@ -1425,7 +1425,7 @@ gimp_param_object_array_validate (GParamSpec *pspec,
 
   if (array)
     {
-      gint i;
+      gsize i;
 
       if ((array->data == NULL && array->length != 0) ||
           (array->data != NULL && array->length == 0))
@@ -1553,7 +1553,7 @@ gimp_value_dup_object_array (const GValue *value)
   if (array)
     {
       GObject **ret = g_memdup (array->data, (array->length) * sizeof (GObject *));
-      gint    i;
+      gsize    i;
 
       for (i = 0; i < array->length; i++)
         g_object_ref (ret[i]);
