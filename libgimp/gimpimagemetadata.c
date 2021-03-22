@@ -39,6 +39,7 @@ typedef struct
   gint  type;
 } XmpStructs;
 
+static gchar *     gimp_image_metadata_interpret_comment    (gchar *comment);
 
 static void        gimp_image_metadata_rotate        (gint32             image_ID,
                                                       GExiv2Orientation  orientation);
@@ -92,6 +93,37 @@ gimp_image_metadata_load_prepare (gint32        image_ID,
   return metadata;
 }
 
+static gchar *
+gimp_image_metadata_interpret_comment (gchar *comment)
+{
+  /* Exiv2 can return unwanted text at the start of a comment
+   * taken from Exif.Photo.UserComment since 0.27.3.
+   * Let's remove that part and return NULL if there
+   * is nothing else left as comment. */
+
+  if (comment && g_str_has_prefix (comment, "charset=Ascii "))
+    {
+      gchar *real_comment;
+
+      /* Skip "charset=Ascii " (length 14) to find the real comment */
+      real_comment = comment + 14;
+      if (real_comment[0] == '\0' ||
+          ! g_strcmp0 (real_comment, "binary comment"))
+        {
+          g_free (comment);
+          return NULL;
+        }
+      else
+        {
+          real_comment = g_strdup (real_comment);
+          g_free (comment);
+          return real_comment;
+        }
+    }
+
+  return comment;
+}
+
 /**
  * gimp_image_metadata_load_finish:
  * @image_ID:    The image
@@ -123,6 +155,8 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
 
       comment = gexiv2_metadata_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
                                                             "Exif.Photo.UserComment");
+      comment = gimp_image_metadata_interpret_comment (comment);
+
       if (! comment)
         comment = gexiv2_metadata_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
                                                               "Exif.Image.ImageDescription");
