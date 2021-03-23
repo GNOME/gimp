@@ -1870,7 +1870,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = builder_get_widget (builder, "Xmp.plus.ModelReleaseStatus");
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < n_modelreleasestatus; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (modelreleasestatus[i].display));
@@ -1880,7 +1880,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   gtk_widget_set_size_request (combo_widget, 180, height);
 
   combo_widget = builder_get_widget (builder, "Xmp.iptcExt.DigitalSourceType");
-  for (i = 0; i < 5; i++)
+  for (i = 0; i < n_digitalsourcetype; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (digitalsourcetype[i].display));
@@ -3545,7 +3545,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                 {
                   gint loop;
 
-                  for (loop = 0; loop < 4; loop++)
+                  for (loop = 0; loop < n_modelreleasestatus; loop++)
                     {
                       if (! strcmp (modelreleasestatus[loop].data, value))
                         {
@@ -3566,7 +3566,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                 {
                   gint loop;
 
-                  for (loop = 0; loop < 5; loop++)
+                  for (loop = 0; loop < n_digitalsourcetype; loop++)
                     {
                       if (! strcmp (digitalsourcetype[loop].data, value))
                         {
@@ -4466,9 +4466,17 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           else if (! strcmp ("Xmp.plus.ModelReleaseStatus",
                              default_metadata_tags[i].tag))
             {
-              gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                              default_metadata_tags[i].tag,
-                                              modelreleasestatus[value].data);
+              if (value == 0)
+                {
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
+                }
+              else
+                {
+                  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                                                  default_metadata_tags[i].tag,
+                                                  modelreleasestatus[value].data);
+                }
             }
           else if (! strcmp ("Xmp.plus.PropertyReleaseStatus",
                              default_metadata_tags[i].tag))
@@ -4503,9 +4511,17 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           else if (! strcmp ("Xmp.iptcExt.DigitalSourceType",
                              default_metadata_tags[i].tag))
             {
-              gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                              default_metadata_tags[i].tag,
-                                              digitalsourcetype[value].data);
+              if (value == 0)
+                {
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
+                }
+              else
+                {
+                  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                                                  default_metadata_tags[i].tag,
+                                                  digitalsourcetype[value].data);
+                }
             }
         }
     }

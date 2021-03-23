@@ -166,6 +166,7 @@ const gint n_equivalent_metadata_tags = G_N_ELEMENTS (equivalent_metadata_tags);
  */
 const combobox_str_tag digitalsourcetype[] =
 {
+  { "",                                                              N_("Select a value")                                   },
   { "http://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture", N_("Original digital capture of a real life scene")    },
   { "http://cv.iptc.org/newscodes/digitalsourcetype/negativeFilm",   N_("Digitized from a negative on film")                },
   { "http://cv.iptc.org/newscodes/digitalsourcetype/positiveFilm",   N_("Digitized from a positive on film")                },
@@ -179,6 +180,7 @@ const gint n_digitalsourcetype = G_N_ELEMENTS (digitalsourcetype);
  */
 const combobox_str_tag modelreleasestatus[] =
 {
+  { "",                                       N_("Select a value")                       },
   { "http://ns.useplus.org/ldf/vocab/MR-NON", N_("None")                                 },
   { "http://ns.useplus.org/ldf/vocab/MR-NAP", N_("Not Applicable")                       },
   { "http://ns.useplus.org/ldf/vocab/MR-NAP", N_("Unlimited Model Releases")             },
