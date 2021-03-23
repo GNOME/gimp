@@ -646,16 +646,16 @@ load_data (gchar *name)
 
   for (i = 0; i < MAX_TRANSFORMS; i++)
     info[0].transformSequence[i] =
-      get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 0);
+      get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 0) % NUM_TRANSFORMS;
 
   for (i = 0; i < MAX_TRANSFORMS; i++)
-    info[0].source[i] = get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 1);
+    info[0].source[i] = get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 1) % NUM_REGISTERS;
 
   for (i = 0; i < MAX_TRANSFORMS; i++)
-    info[0].control[i] = get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 2);
+    info[0].control[i] = get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 2) % NUM_REGISTERS;
 
   for (i = 0; i < MAX_TRANSFORMS; i++)
-    info[0].dest[i] = get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 3);
+    info[0].dest[i] = get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 3) % NUM_REGISTERS;
 
   return TRUE;
 }
