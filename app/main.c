@@ -346,6 +346,8 @@ gimp_macos_setenv (const char * progname)
           g_free (res_dir);
           return;
         }
+      g_print ("Application directory: %s\n", app_dir);
+      g_print ("Resources directory: %s\n", res_dir);
 
       path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (app_dir) + 2;
       path = g_try_malloc (path_len);
