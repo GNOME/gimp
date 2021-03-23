@@ -118,7 +118,7 @@ static gboolean         dialog_run             (void);
 static void             dialog_new_variations  (GtkWidget            *widget,
                                                 gpointer              data);
 static void             dialog_update_previews (GtkWidget            *widget,
-                                                gpointer              data);
+                                                gint                  preview_size);
 static void             dialog_select_preview  (GtkWidget            *widget,
                                                 ExpInfo              *n_info);
 
@@ -597,13 +597,22 @@ dialog_new_variations (GtkWidget *widget,
 
 static void
 dialog_update_previews (GtkWidget *widget,
-                        gpointer   data)
+                        gint       preview_size)
 {
   static const Babl *fish = NULL;
+  static gint        size = -1;
 
-  gfloat buf[PREVIEW_SIZE * PREVIEW_SIZE * 4];
-  guchar u8_buf[PREVIEW_SIZE * PREVIEW_SIZE * 4];
-  gint   i, j;
+  gfloat            *buf;
+  guchar            *u8_buf;
+  gint               i, j;
+
+  if (preview_size > 0)
+    size = preview_size;
+
+  g_return_if_fail (size > 0);
+
+  buf    = g_new (gfloat, size * size * 4);
+  u8_buf = g_new (guchar, size * size * 4);
 
   if (! fish)
     fish = babl_fish (babl_format ("R'G'B'A float"),
@@ -613,20 +622,23 @@ dialog_update_previews (GtkWidget *widget,
     {
       optimize (&info[(j + 5) % 9]);
 
-      for (i = 0; i < PREVIEW_SIZE; i++)
+      for (i = 0; i < size; i++)
         {
-          qbist (&info[(j + 5) % 9], buf + i * PREVIEW_SIZE * 4,
-                 0, i, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, 1);
+          qbist (&info[(j + 5) % 9], buf + i * size * 4,
+                 0, i, size, size, size, 1);
         }
 
-      babl_process (fish, buf, u8_buf, PREVIEW_SIZE * PREVIEW_SIZE);
+      babl_process (fish, buf, u8_buf, size * size);
 
       gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview[j]),
-                              0, 0, PREVIEW_SIZE, PREVIEW_SIZE,
+                              0, 0, size, size,
                               GIMP_RGBA_IMAGE,
                               u8_buf,
-                              PREVIEW_SIZE * 4);
+                              size * 4);
     }
+
+  g_free (buf);
+  g_free (u8_buf);
 }
 
 static void
@@ -636,7 +648,7 @@ dialog_select_preview (GtkWidget *widget,
   memcpy (last_info, info, sizeof (info));
   info[0] = *n_info;
   dialog_new_variations (widget, NULL);
-  dialog_update_previews (widget, NULL);
+  dialog_update_previews (widget, -1);
 }
 
 /* File I/O stuff */
@@ -730,7 +742,7 @@ dialog_undo (GtkWidget *widget,
 
   memcpy (temp_info, info, sizeof (info));
   memcpy (info, last_info, sizeof (info));
-  dialog_update_previews (NULL, NULL);
+  dialog_update_previews (NULL, -1);
   memcpy (last_info, temp_info, sizeof (info));
 }
 
@@ -770,7 +782,7 @@ dialog_load (GtkWidget *widget,
       g_free (name);
 
       dialog_new_variations (NULL, NULL);
-      dialog_update_previews (NULL, NULL);
+      dialog_update_previews (NULL, -1);
     }
 
   gtk_widget_destroy (dialog);
@@ -834,6 +846,7 @@ dialog_run (void)
   GtkWidget *bbox;
   GtkWidget *button;
   GtkWidget *grid;
+  gint       preview_size;
   gint       i;
   gboolean   run;
 
@@ -871,6 +884,7 @@ dialog_run (void)
   dialog_new_variations (NULL, NULL);
   memcpy (last_info, info, sizeof (info));
 
+  preview_size = gtk_widget_get_scale_factor (grid) * PREVIEW_SIZE;
   for (i = 0; i < 9; i++)
     {
       button = gtk_button_new ();
@@ -883,7 +897,7 @@ dialog_run (void)
                         (gpointer) & (info[(i + 5) % 9]));
 
       preview[i] = gimp_preview_area_new ();
-      gtk_widget_set_size_request (preview[i], PREVIEW_SIZE, PREVIEW_SIZE);
+      gtk_widget_set_size_request (preview[i], preview_size, preview_size);
       gtk_container_add (GTK_CONTAINER (button), preview[i]);
       gtk_widget_show (preview[i]);
     }
@@ -928,7 +942,7 @@ dialog_run (void)
                     NULL);
 
   gtk_widget_show (dialog);
-  dialog_update_previews (NULL, NULL);
+  dialog_update_previews (NULL, preview_size);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
