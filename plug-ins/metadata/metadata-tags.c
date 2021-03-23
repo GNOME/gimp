@@ -183,8 +183,8 @@ const combobox_str_tag modelreleasestatus[] =
   { "",                                       N_("Select a value")                       },
   { "http://ns.useplus.org/ldf/vocab/MR-NON", N_("None")                                 },
   { "http://ns.useplus.org/ldf/vocab/MR-NAP", N_("Not Applicable")                       },
-  { "http://ns.useplus.org/ldf/vocab/MR-NAP", N_("Unlimited Model Releases")             },
-  { "http://ns.useplus.org/ldf/vocab/MR-LPR", N_("Limited or Incomplete Model Releases") }
+  { "http://ns.useplus.org/ldf/vocab/MR-UMR", N_("Unlimited Model Releases")             },
+  { "http://ns.useplus.org/ldf/vocab/MR-LMR", N_("Limited or Incomplete Model Releases") }
 };
 const gint n_modelreleasestatus = G_N_ELEMENTS (modelreleasestatus);
 
@@ -195,7 +195,7 @@ const combobox_str_tag propertyreleasestatus[] =
 {
   { "http://ns.useplus.org/ldf/vocab/PR-NON", N_("None")                                    },
   { "http://ns.useplus.org/ldf/vocab/PR-NAP", N_("Not Applicable")                          },
-  { "http://ns.useplus.org/ldf/vocab/PR-NAP", N_("Unlimited Property Releases")             },
+  { "http://ns.useplus.org/ldf/vocab/PR-UPR", N_("Unlimited Property Releases")             },
   { "http://ns.useplus.org/ldf/vocab/PR-LPR", N_("Limited or Incomplete Property Releases") }
 };
 const gint n_propertyreleasestatus = G_N_ELEMENTS (propertyreleasestatus);
