@@ -4181,7 +4181,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                 {
                   gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                                              equivalent_metadata_tags[index].tag);
-                  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                  if (*text_value &&
+                      ! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
                                                         equivalent_metadata_tags[index].tag,
                                                         text_value))
                     {
