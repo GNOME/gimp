@@ -4252,15 +4252,36 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
                 gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                                            equivalent_metadata_tags[index].tag);
-                multi = g_strsplit (text, "\n", 0);
-                if (! gexiv2_metadata_set_tag_multiple (GEXIV2_METADATA (g_metadata),
-                                                        equivalent_metadata_tags[index].tag,
-                                                        (const gchar **) multi))
+                if (! strcmp ("multi", equivalent_metadata_tags[index].mode))
                   {
-                    set_tag_failed (equivalent_metadata_tags[index].tag);
-                  }
+                    multi = g_strsplit (text, "\n", 0);
+                    if (! gexiv2_metadata_set_tag_multiple (GEXIV2_METADATA (g_metadata),
+                                                            equivalent_metadata_tags[index].tag,
+                                                            (const gchar **) multi))
+                      {
+                        set_tag_failed (equivalent_metadata_tags[index].tag);
+                      }
 
-                g_strfreev (multi);
+                    g_strfreev (multi);
+                  }
+                else if (! strcmp ("single", equivalent_metadata_tags[index].mode))
+                  {
+                    /* Convert from multiline to single line: keep the \n and just add the whole text. */
+                    if (*text &&
+                        ! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                                                          equivalent_metadata_tags[index].tag,
+                                                          text))
+                      {
+                        set_tag_failed (equivalent_metadata_tags[index].tag);
+                      }
+                  }
+                else
+                  {
+                    g_warning ("Copying from multiline tag %s to %s tag %s not implemented!",
+                               default_metadata_tags[i].tag,
+                               equivalent_metadata_tags[index].mode,
+                               equivalent_metadata_tags[index].tag);
+                  }
               }
 
           if (text)
