@@ -150,7 +150,7 @@ const metadata_tag equivalent_metadata_tags[] =
   { "Iptc.Application2.Urgency",                 "combo",  26,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 11
   { "Iptc.Application2.SubLocation",             "single", 28,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 12
   { "Iptc.Application2.Byline",                  "single",  1,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 13
-  { "Iptc.Application2.Caption",                 "multi",   2,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 14
+  { "Iptc.Application2.Caption",                 "single",  2,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 14
   { "Iptc.Application2.Keywords",                "multi",   3,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 15
   { "Iptc.Application2.ObjectName",              "single",  0,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 16
   { "Iptc.Application2.Copyright",               "single",  4,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 17
