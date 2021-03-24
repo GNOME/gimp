@@ -888,8 +888,27 @@ dialog_run (void)
   for (i = 0; i < 9; i++)
     {
       button = gtk_button_new ();
-      gtk_grid_attach (GTK_GRID (grid), button, i % 3, i / 3, 1, 1);
-                        // GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      if (i == 4)
+        {
+          GtkWidget *frame;
+
+          frame = gtk_frame_new (_("Pattern"));
+          gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
+          gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
+          gtk_grid_attach (GTK_GRID (grid), frame, i % 3, i / 3, 1, 2);
+
+          gtk_container_add (GTK_CONTAINER (frame), button);
+          gtk_widget_show (frame);
+        }
+      else if (i > 2)
+        {
+          gtk_grid_attach (GTK_GRID (grid), button, i % 3, i / 3 + 1, 1, 1);
+        }
+      else
+        {
+          gtk_grid_attach (GTK_GRID (grid), button, i % 3, i / 3, 1, 1);
+        }
+      gtk_widget_set_valign (button, GTK_ALIGN_END);
       gtk_widget_show (button);
 
       g_signal_connect (button, "clicked",
