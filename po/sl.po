@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-03-01 10:22+0000\n"
-"PO-Revision-Date: 2021-03-01 21:05+0100\n"
+"POT-Creation-Date: 2021-03-16 18:21+0000\n"
+"PO-Revision-Date: 2021-03-26 20:13+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -96,6 +96,8 @@ msgstr "Prečiščenje uporabnosti pri plasteh z omogočenim sidranjem"
 msgid ""
 "The action search now shows all actions even inactive ones (yet pushed below)"
 msgstr ""
+"Iskanje dejanj zdaj prikaže vsa dejanja, tudi nedejavna (vendar potisnjena "
+"navzdol)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
@@ -105,11 +107,11 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Different default tools depending on pointer device type"
-msgstr ""
+msgstr "Različna privzeta orodja glede na vrsto kazalne naprave"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Default dynamics is now \"Pressure Size\""
-msgstr ""
+msgstr "Privzeta dinamika je zdaj »Velikost pritiska«"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Various usability improvements in the Input Device editor"
@@ -117,11 +119,11 @@ msgstr "Več izboljšav uporabnosti v urejevalniku vhodnih naprav"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "New \"Paint Select\" experimental tool in the playground"
-msgstr ""
+msgstr "Novo poskusno orodje »Izberi barvo« v peskovniku"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Plug-in API now provides many dialog generation utilities"
-msgstr ""
+msgstr "API vstavkov zdaj ponuja veliko pripomočkov za tvorbo pogovornih oken"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid ""
@@ -129,6 +131,8 @@ msgid ""
 "to the GTK+3 toolkit. Noteworthy improvements (though some are still work-in-"
 "progress) include:"
 msgstr ""
+"To je prva razvojna izdaja za GIMP 3.0, katere glavni cilj je port na GTK+3. "
+"Omembe vredne izboljšave (čeprav so nekatere še v povojih) so mdr.:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Multi-selection of layers in the Layers dockable"
@@ -136,7 +140,7 @@ msgstr "Izbor več plasti pri plasteh z omogočenim sidranjem"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Proper high pixel density display support"
-msgstr ""
+msgstr "Dejanska podpora prikaza visoke gostote slikovnih točk"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "Improved input device support"
@@ -144,7 +148,7 @@ msgstr "Izboljšana podpora vhodnih naprav"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "Major plug-in API rewrite"
-msgstr ""
+msgstr "Obsežno ponovno programiranje API-ja za vstavke"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Plug-in API now available in C/C++, Python 3, Javascript, Lua and Vala"
@@ -153,7 +157,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "New manageable extension format"
-msgstr ""
+msgstr "Nov prilagodljiv zapis razširitev"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "CSS-based themes and actual symbolic icon theme support"
@@ -174,6 +178,8 @@ msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
 msgstr ""
+"Izboljšave podpore za HEIF: neobvezen izvoz z visoko bitno globino, uvoz in "
+"izvoz AVIF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "Multiple improvements in Corel PaintShop Pro support"
@@ -182,30 +188,37 @@ msgstr "Več izboljšav pri podpori za Corel PaintShop Pro"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
+"»Vzorči spojeno« je zdaj na voljo med možnosti orodij za operacije GEGL"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "\"Sample merged\" is now enabled by default for color picking"
-msgstr ""
+msgstr "»Vzorči spojeno« je zdaj privzeto omogočeno za izbiranje barv"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
 msgstr ""
+"Možnost omogočanja podpore za OpenCL je premaknjena na zavihek Peskovnik v "
+"Nastavitvah"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
 msgstr ""
+"Levinova obkrožna maska je zdaj privzeti pogon orodja Izbor ospredja, saj "
+"deluje veliko bolje"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "New progressive performance logs and dashboard updates"
-msgstr ""
+msgstr "Novi progresivni zapisniki delovanja in posodobitve nadzorne plošče"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
+"Podrobni način razhroščevanja zdaj prikaže podatke o Flatpack, ko je to "
+"relevantno"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Various bug fixes"
@@ -222,18 +235,23 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
+"Skupine orodij se zdaj privzeto razprejo ob postoju z miško in ne s klikom"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
 msgstr ""
+"Neporušitveno obrezovanje je zdaj na voljo z obrezovanjem platna in ne "
+"dejanskih slikovnih točk"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
 msgstr ""
+"Boljša podpora PSD: izvoz 16-bitnih datotek je zdaj možna, branje/pisanje "
+"kanalov v pravem zaporedju"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "On-canvas controls for the Vignette filter"
@@ -242,6 +260,8 @@ msgstr "Kontrolniki na platnu za filter vinjetiranja"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
+"Novi filtri: razcvet, zabrisanost ostrine, zabrisanost objektiva, "
+"spremenljiva zabrisanost"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Over 30 bugfixes"
@@ -252,6 +272,9 @@ msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
 msgstr ""
+"GIMP 2.10.18 odpravlja nekatere kritične hrošče, uvaja domorodno podporo za "
+"datoteke CMYK PSD ter dodaja visoko kontrastno variacijo teme ikon za "
+"simbole."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
@@ -259,6 +282,9 @@ msgid ""
 "transformations in 3D space, new release checker, and the usual amount of "
 "bug fixes. Notable improvements:"
 msgstr ""
+"GIMP 2.10.16 prinaša več osrednjih izboljšav uporabnosti, novo orodje za "
+"preoblikovanje v 3D-prostoru, nov preverjalnik izdaj ter običajno količino "
+"odpravljenih hroščev. Izboljšave, vredne omembe, so:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Tools are now grouped in the toolbox by default"
@@ -277,6 +303,7 @@ msgstr "Krepko izboljšana uporabniška izkušnja pri predogledu preoblikovanj"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
+"Področja, ki podpirajo sidranje, so zdaj poudarjena ob vleki pogovornega okna"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "New 3D Transform tool to rotate and pan items"
@@ -284,7 +311,7 @@ msgstr "Novo orodje 3D-preoblikovanja za sukanje in vrtenje predmetov"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Much smoother brush outline motion on the canvas"
-msgstr ""
+msgstr "Mnogo bolj gladko gibanje orisa čopiča po platnu "
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Consolidated user interface for merging down and anchoring layers"
@@ -293,6 +320,8 @@ msgstr "Konsolidiran uporabniški vmesnik za spajanje in sidranje plasti"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
+"Preverjanje posodobitev za obveščanje uporabnikov, da je na voljo nova "
+"izdaja/namestitvena datoteka"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid ""
@@ -1339,11 +1368,8 @@ msgid "Tools"
 msgstr "Orodja"
 
 #: ../app/actions/actions.c:238
-#, fuzzy
-#| msgctxt "tools-action"
-#| msgid "_Paint Tools"
 msgid "Path Toolpath"
-msgstr "Orodja ba_rvanja"
+msgstr "Orodna pot za poti"
 
 #: ../app/actions/actions.c:241 ../app/dialogs/dialogs.c:381
 #: ../app/tools/gimpvectortool.c:167
@@ -3371,15 +3397,12 @@ msgid "Sample fre_quency:"
 msgstr "Fre_kvenca vzorčenja:"
 
 #: ../app/actions/dashboard-commands.c:202
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Fractal Trace"
 msgid "_Backtrace"
-msgstr "Sledenje fraktala"
+msgstr "_Sledenje za nazaj"
 
 #: ../app/actions/dashboard-commands.c:203
 msgid "Include backtraces in log"
-msgstr ""
+msgstr "V zapisnik vključi sledenje za nazaj"
 
 #: ../app/actions/dashboard-commands.c:215
 msgid "_Messages"
@@ -5408,7 +5431,6 @@ msgid "_Fattal et al. 2002..."
 msgstr "_Fattal et al. 2002 ..."
 
 #: ../app/actions/filters-actions.c:358
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "_Zabrisanost ostrine ..."
@@ -9580,12 +9602,9 @@ msgid "Tool's Force: Increase Relative"
 msgstr "Sila orodja: povečaj relativno"
 
 #: ../app/actions/vector-toolpath-actions.c:45
-#, fuzzy
-#| msgctxt "text-tool-action"
-#| msgid "Text Tool Menu"
 msgctxt "vector-toolpath-action"
 msgid "Vector Toolpath Menu"
-msgstr "Orodje za _besedilo"
+msgstr "Meni orodne poti za vektorje"
 
 #: ../app/actions/vector-toolpath-actions.c:49
 msgctxt "vector-toolpath-action"
@@ -9593,7 +9612,6 @@ msgid "_Delete Anchor"
 msgstr "I_zbriši sidro"
 
 #: ../app/actions/vector-toolpath-actions.c:53
-#, fuzzy
 msgctxt "vector-toolpath-action"
 msgid "Shift S_tart"
 msgstr "Zač_ni z zamikom"
@@ -12373,8 +12391,6 @@ msgid "CIE xyY"
 msgstr "CIE xyY"
 
 #: ../app/core/core-enums.c:190
-#| msgctxt "color-pick-mode"
-#| msgid "CIE xyY"
 msgctxt "color-pick-mode"
 msgid "CIE Yu'v'"
 msgstr "CIE Yu'v'"
@@ -12442,7 +12458,7 @@ msgstr "Skicirno"
 #: ../app/core/core-enums.c:446
 msgctxt "dash-preset"
 msgid "Custom"
-msgstr "Po meri ..."
+msgstr "Po meri"
 
 #: ../app/core/core-enums.c:447
 msgctxt "dash-preset"
@@ -15376,7 +15392,6 @@ msgid "Kaleidoscope"
 msgstr "Kalejdoskop"
 
 #: ../app/core/gimpsymmetry-mandala.c:163
-#, fuzzy
 msgid "Reflect consecutive strokes"
 msgstr "Odbij zaporedne poteze"
 
@@ -22096,7 +22111,6 @@ msgid "Geometry Options"
 msgstr "Možnosti geometrije"
 
 #: ../app/propgui/gimppropgui-focus-blur.c:226
-#, fuzzy
 msgid "Focus Blur: "
 msgstr "Zabrisanost ostrine: "
 
@@ -23000,39 +23014,39 @@ msgstr "Napolni z"
 msgid "How to fill new areas created by 'Allow growing'"
 msgstr "Kako zapolniti nova področja, ki nastanejo z »Dovoli rast«"
 
-#: ../app/tools/gimpcroptool.c:120
+#: ../app/tools/gimpcroptool.c:122
 msgid "Crop"
 msgstr "Obreži"
 
-#: ../app/tools/gimpcroptool.c:121
+#: ../app/tools/gimpcroptool.c:123
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Orodje Obreži: odstrani robna področja sliki ali plasti"
 
-#: ../app/tools/gimpcroptool.c:122
+#: ../app/tools/gimpcroptool.c:124
 msgid "_Crop"
 msgstr "_Obreži"
 
-#: ../app/tools/gimpcroptool.c:160
+#: ../app/tools/gimpcroptool.c:162
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Kliknite in povlecite za risanje pravokotnika za obrezovanje."
 
-#: ../app/tools/gimpcroptool.c:280
+#: ../app/tools/gimpcroptool.c:282
 msgid "Click or press Enter to crop"
 msgstr "Kliknite ali pritisnite vnašalko za obrezovanje."
 
-#: ../app/tools/gimpcroptool.c:387
+#: ../app/tools/gimpcroptool.c:389
 msgid "Crop to: "
 msgstr "Obreži na: "
 
-#: ../app/tools/gimpcroptool.c:457
+#: ../app/tools/gimpcroptool.c:459
 msgid "There are no selected layers to crop."
 msgstr "Ni izbranih plasti, da bi jih obrezali."
 
-#: ../app/tools/gimpcroptool.c:468
+#: ../app/tools/gimpcroptool.c:470
 msgid "All selected layers' pixels are locked."
 msgstr "Vse slikovne točke izbranih plasti so zaklenjene."
 
-#: ../app/tools/gimpcroptool.c:473
+#: ../app/tools/gimpcroptool.c:475
 #, c-format
 msgid "Resize Layer"
 msgid_plural "Resize %d layers"
@@ -24236,10 +24250,8 @@ msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Orodje Operacija: Uporabite poljubno operacijo GEGL"
 
 #: ../app/tools/gimpoperationtool.c:560
-#, fuzzy
-#| msgid "Aux Input"
 msgid "Aux\\1 Input"
-msgstr "Zunanji vhod"
+msgstr "Zunanji\\1 vhod"
 
 #: ../app/tools/gimppaintbrushtool.c:58
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -25154,7 +25166,6 @@ msgid "Transform along the Z axis"
 msgstr "Preoblikuj vzdolž osi Z"
 
 #: ../app/tools/gimptransform3doptions.c:107
-#, fuzzy
 msgid "Transform in the local frame of reference"
 msgstr "Preoblikovanje v krajevnem referenčnem okviru"
 
@@ -25453,7 +25464,7 @@ msgstr "Poteza orodja Ukrivi"
 
 #: ../app/tools/gimpwarptool.c:773
 msgid "Cannot warp multiple layers. Select only one layer."
-msgstr ""
+msgstr "Več plasti ni mogoče ukriviti hkrati. Izberite samo eno plast."
 
 #: ../app/tools/gimpwarptool.c:792
 msgid "Cannot warp layer groups."
@@ -25594,7 +25605,6 @@ msgid "Focal length"
 msgstr "Goriščna razdalja"
 
 #: ../app/tools/tools-enums.c:278
-#, fuzzy
 msgctxt "3-dtrasnform-lens-mode"
 msgid "Field of view (relative to image)"
 msgstr "VIdno polje (relativno na sliko)"
@@ -25602,13 +25612,11 @@ msgstr "VIdno polje (relativno na sliko)"
 #. Translators: this is an abbreviated version of "Field of view (relative to image)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:281
-#, fuzzy
 msgctxt "3-dtrasnform-lens-mode"
 msgid "FOV (image)"
 msgstr "Vidno polje (slika)"
 
 #: ../app/tools/tools-enums.c:282
-#, fuzzy
 msgctxt "3-dtrasnform-lens-mode"
 msgid "Field of view (relative to item)"
 msgstr "Vidno polje (relativno na element)"
@@ -25616,7 +25624,6 @@ msgstr "Vidno polje (relativno na element)"
 #. Translators: this is an abbreviated version of "Field of view (relative to item)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:285
-#, fuzzy
 msgctxt "3-dtrasnform-lens-mode"
 msgid "FOV (item)"
 msgstr "VIdno polje (element)"
@@ -27611,14 +27618,13 @@ msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:483
-#, fuzzy, c-format
-#| msgid "Indexed Color Conversion"
+#, c-format
 msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
-msgstr[0] "Pretvorba v indeksirane barve"
-msgstr[1] "Pretvorba v indeksirane barve"
-msgstr[2] "Pretvorba v indeksirane barve"
-msgstr[3] "Pretvorba v indeksirane barve"
+msgstr[0] "Indeksirane barve (%d barv)"
+msgstr[1] "Indeksirane barve (%d barva, monokromatsko)"
+msgstr[2] "Indeksirane barve (%d barvi)"
+msgstr[3] "Indeksirane barve (%d barve)"
 
 #: ../app/widgets/gimpitemtreeview.c:783
 msgid "Lock:"
@@ -28395,6 +28401,10 @@ msgid ""
 "If you don't know what XMP is, you most likely don't need it. Reported "
 "error: %s."
 msgstr ""
+"Okvarjenih metapodatkov XMP, shranjenih s starejšo različico GIMP-a, ni "
+"možno pretvoriti in bodo prezrti.\n"
+"Če ne veste, kaj je XMP, tega najverjetneje niti ne potrebujete. Javljena "
+"napaka: %s."
 
 #: ../app/xcf/xcf-load.c:712
 msgid ""
