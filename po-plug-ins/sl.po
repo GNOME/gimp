@@ -1,4 +1,4 @@
-#'gimp/po-plug-ins
+# 'gimp/po-plug-ins
 # Slovenian translation of gimp-plugins.
 # Copyright (C) 2007 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-28 08:10+0000\n"
-"PO-Revision-Date: 2021-03-01 21:15+0100\n"
+"POT-Creation-Date: 2021-03-16 17:29+0000\n"
+"PO-Revision-Date: 2021-03-23 12:22+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -75,7 +75,7 @@ msgstr "Poravnaj vidne plasti"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1308 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2307 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2430 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -101,10 +101,10 @@ msgstr "Poravnaj vidne plasti"
 #: ../plug-ins/lighting/lighting-ui.c:1162
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
-#: ../plug-ins/metadata/metadata-editor.c:564
-#: ../plug-ins/metadata/metadata-editor.c:830
-#: ../plug-ins/metadata/metadata-editor.c:5717
-#: ../plug-ins/metadata/metadata-editor.c:5752
+#: ../plug-ins/metadata/metadata-editor.c:590
+#: ../plug-ins/metadata/metadata-editor.c:952
+#: ../plug-ins/metadata/metadata-editor.c:4522
+#: ../plug-ins/metadata/metadata-editor.c:4557
 #: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -452,11 +452,11 @@ msgstr "_Navpične"
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
-#: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
+#: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:2016 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1302
+#: ../plug-ins/file-tiff/file-tiff-load.c:1265
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -1084,7 +1084,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:858
 #: ../plug-ins/common/file-xwd.c:455 ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:234
+#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:236
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
@@ -2154,12 +2154,12 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
 #: ../plug-ins/common/file-xpm.c:356 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
-#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-faxg3/faxg3.c:220 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:247
+#: ../plug-ins/file-tiff/file-tiff-load.c:258
 #, c-format
 msgid "Opening '%s'"
 msgstr "Odpiranje »%s« ..."
@@ -3146,8 +3146,8 @@ msgid "Import from PDF"
 msgstr "Uvozi iz PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:2308
-#: ../plug-ins/metadata/metadata-editor.c:5718
+#: ../plug-ins/file-tiff/file-tiff-load.c:2431
+#: ../plug-ins/metadata/metadata-editor.c:4523
 msgid "_Import"
 msgstr "_Uvozi"
 
@@ -3272,7 +3272,7 @@ msgstr "Plasti kot strani ( %s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1304
+#: ../plug-ins/file-tiff/file-tiff-load.c:1267
 #, c-format
 msgid "Page %d"
 msgstr "Stran %d"
@@ -3686,16 +3686,14 @@ msgid "Seek error: %s"
 msgstr "Napaka pri pozicioniranju: %s"
 
 #: ../plug-ins/common/file-psp.c:848
-#, fuzzy, c-format
-#| msgid "Duplicate General Image Attributes block."
+#, c-format
 msgid "Invalid general image attribute chunk size."
-msgstr "Podvojeni blok splošnih atributov slike."
+msgstr "Neveljavna velikost bloka splošnih atributov slike."
 
 #: ../plug-ins/common/file-psp.c:870
-#, fuzzy, c-format
-#| msgid "Missing General Image Attributes block."
+#, c-format
 msgid "Error reading general image attribute block."
-msgstr "Manjkajoči blok splošnih atributov slike."
+msgstr "Napaka pri branju bloka splošnih atributov slike."
 
 #: ../plug-ins/common/file-psp.c:885
 #, c-format
@@ -3740,16 +3738,14 @@ msgstr "Napaka zlib"
 
 #: ../plug-ins/common/file-psp.c:1641 ../plug-ins/common/file-psp.c:1675
 #: ../plug-ins/common/file-psp.c:1685
-#, fuzzy, c-format
-#| msgid "Error reading layer information chunk"
+#, c-format
 msgid "Error reading layer extension information"
-msgstr "Napaka pri branju kosa podatkov o plasti"
+msgstr "Napaka pri branju podatkov o razšrijenosti plasti."
 
 #: ../plug-ins/common/file-psp.c:1662
-#, fuzzy, c-format
-#| msgid "Error reading layer information chunk"
+#, c-format
 msgid "Error reading block information"
-msgstr "Napaka pri branju kosa podatkov o plasti"
+msgstr "Napaka pri branju kosa podatkov."
 
 #: ../plug-ins/common/file-psp.c:1742
 #, c-format
@@ -6695,7 +6691,7 @@ msgid "Export as DDS"
 msgstr "Izvozi kot DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1957
-#: ../plug-ins/metadata/metadata-editor.c:5753
+#: ../plug-ins/metadata/metadata-editor.c:4558
 msgid "_Export"
 msgstr "I_zvozi"
 
@@ -6776,9 +6772,24 @@ msgstr "Napaka pri poizvedovanju o vrsti slike iz »%s«"
 msgid "Error reading pixel data from '%s'"
 msgstr "Napaka pri branju podatkov slikovnih točk iz »%s«"
 
-#: ../plug-ins/file-faxg3/faxg3.c:104
+#: ../plug-ins/file-faxg3/faxg3.c:105
 msgid "G3 fax image"
 msgstr "Slika faksa G3"
+
+#: ../plug-ins/file-faxg3/faxg3.c:275 ../plug-ins/file-faxg3/faxg3.c:574
+#, c-format
+msgid "Could not create buffer to process image data."
+msgstr "Ni mogoče ustvariti medpomnilnika za obdelavo podatkov slike."
+
+#: ../plug-ins/file-faxg3/faxg3.c:540
+#, c-format
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr "Neveljavne dimenzije slike (%dx%d). Slika je morda okvarjena."
+
+#: ../plug-ins/file-faxg3/faxg3.c:550
+#, c-format
+msgid "Could not create image."
+msgstr "Slike ni mogoče ustvariti."
 
 #: ../plug-ins/file-fits/fits.c:166 ../plug-ins/file-fits/fits.c:186
 msgid "Flexible Image Transport System"
@@ -7147,10 +7158,9 @@ msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:668
-#, fuzzy, c-format
-#| msgid "Unsupported or invalid image size: %dx%d"
+#, c-format
 msgid "Unsupported or invalid mask info size: %d"
-msgstr "Nepodprta ali neveljavna velikost slike: %dx%d"
+msgstr "Nepodprta ali neveljavna velikost podatkov o maski: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:819
 #, c-format
@@ -7393,12 +7403,17 @@ msgstr ""
 msgid "TIFF image"
 msgstr "Slika TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:280
+#: ../plug-ins/file-tiff/file-tiff-load.c:266
+#, c-format
+msgid "Not a TIFF image or image is corrupt."
+msgstr "Ni slika TIFF ali pa je slika okvarjena."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:297
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF »%s« ne vsebuje nobenih map"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:287
+#: ../plug-ins/file-tiff/file-tiff-load.c:304
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7407,11 +7422,19 @@ msgid_plural ""
 "TIFF '%s' directory count by header failed though there seem to be %d pages. "
 "Attempting to load the file with this assumption."
 msgstr[0] ""
+"Štetje map TIFF »%s« po glavi je spodletelo, čeprav se zdi, da je %d strani. "
+"Sledi poskus nalaganja datoteke s to predpostavko."
 msgstr[1] ""
+"Štetje map TIFF »%s« po glavi je spodletelo, čeprav se zdi, da je %d stran. "
+"Sledi poskus nalaganja datoteke s to predpostavko."
 msgstr[2] ""
+"Štetje map TIFF »%s« po glavi je spodletelo, čeprav se zdi, da sta %d "
+"strani. Sledi poskus nalaganja datoteke s to predpostavko."
 msgstr[3] ""
+"Štetje map TIFF »%s« po glavi je spodletelo, čeprav se zdi, da so %d strani. "
+"Sledi poskus nalaganja datoteke s to predpostavko."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:363
+#: ../plug-ins/file-tiff/file-tiff-load.c:380
 msgid "Extra channels with unspecified data."
 msgstr "Dodatni kanali z nedoločenimi podatki."
 
@@ -7422,51 +7445,164 @@ msgstr "Dodatni kanali z nedoločenimi podatki."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:375
+#: ../plug-ins/file-tiff/file-tiff-load.c:392
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Nekonformni TIFF: dodatni kanali brez polja »ExtraSamples«."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:436
+#: ../plug-ins/file-tiff/file-tiff-load.c:453
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
-msgstr ""
+msgstr "Strani %d od %d ni možno prebrati. Slika je morda okvarjena.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:465
+#: ../plug-ins/file-tiff/file-tiff-load.c:482
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr ""
+"Ta slika ima linearen barvni profil, vendar ni nastavljen na prvi plasti. "
+"Plasti pod plastjo št. %d bodo tolmačene kot nelinearne."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:473
+#: ../plug-ins/file-tiff/file-tiff-load.c:490
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
+"Ta slika ima več barvnih profilov. Uporabljen bo prvi med njimi. Če to vodi "
+"v nepravilne rezultate, poskusite naložiti vsako plast posebej kot ločeno "
+"sliko."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:965
+#: ../plug-ins/file-tiff/file-tiff-load.c:502
+#, c-format
+msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
+msgstr "Sumljiva bitna globina: %d za stran %d. Slika je morda okvarjena."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:576
+#, c-format
+msgid "Unsupported bit depth: %d for page %d."
+msgstr "Nepodprta bitna globina: %d za stran %d."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:591
+#, c-format
+msgid "Could not get image width from '%s'"
+msgstr "Širine slike iz »%s« ni mogoče pridobiti"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:599
+#, c-format
+msgid "Could not get image length from '%s'"
+msgstr "Dolžine slike iz »%s« ni mogoče pridobiti"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:607
+#, c-format
+msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
+msgstr "Neveljavne mere slike (%u x %u) za stran %d. Slika je morda okvarjena."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:628
+#, c-format
+msgid ""
+"Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
+"is-white"
+msgstr ""
+"Fotometrije ni mogoče pridobiti iz »%s«. Slika je stisnjeni CCITT, predviden "
+"bo parameter min-is-white"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:635
+#, c-format
+msgid "Could not get photometric from '%s'. Assuming min-is-black"
+msgstr ""
+"Fotometrije iz »%s« ni mogoče pridobiti. Predvideno bo stanje min-is-black"
+
+#. In non-interactive mode, we assume unassociated alpha if unspecified.
+#. * We don't output messages in interactive mode as the user
+#. * has already the ability to choose through a dialog.
+#: ../plug-ins/file-tiff/file-tiff-load.c:667
+#, c-format
+msgid ""
+"Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
+msgstr ""
+"Vrsta kanala alfa ni določena za %s. Predvideno bo, da alfa ni vnaprej "
+"množena."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:692
+#, c-format
+msgid ""
+"Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
+"not set while extra channels are present. Assuming the first extra channel "
+"is non-premultiplied alpha."
+msgstr ""
+"Slika »%s« ne ustreza specifikacijam TIFF: polje ExtraSamples ni "
+"nastavljeno, medtem ko so prisotni dodatni kanali. Predvideno bo, da je prvi "
+"dodatni kanal ne vnaprej množena alfa."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:925
+#, c-format
+msgid "Invalid or unknown compression %u. Setting compression to none."
+msgstr "Neveljavno ali neznano stiskanje %u. Nastavljanje stiskanja na »brez«."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:983
+#, c-format
+msgid "Could not create a new image: %s"
+msgstr "Nove slike ni mogoče ustvariti: %s"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1003
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-od-%d-strani"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1335
+#: ../plug-ins/file-tiff/file-tiff-load.c:1148
+#, c-format
+msgid "Unknown resolution unit type %d, assuming dpi"
+msgstr "Neznana vrsta enot ločljivosti %d, predvidevamo dpi"
+
+#. no res unit tag
+#. old AppleScan software produces these
+#: ../plug-ins/file-tiff/file-tiff-load.c:1158
+msgid "Warning: resolution specified without unit type, assuming dpi"
+msgstr ""
+"Opozorilo: navedena je ločljivost brez vrste enot, predvideno gre za dpi"
+
+#. xres but no yres
+#: ../plug-ins/file-tiff/file-tiff-load.c:1166
+msgid "Warning: no y resolution info, assuming same as x"
+msgstr "Opozorilo: ni podatkov ločljivosti x, predvideno bo enako kot x"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1225
+#, c-format
+msgid "Could not get colormaps from '%s'"
+msgstr "Barvnih vnosov oz. kataloga barv iz »%s« ni mogoče prebrati"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1298
 msgid "TIFF Channel"
 msgstr "Kanal TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1473
+#: ../plug-ins/file-tiff/file-tiff-load.c:1436
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
+"Podatkov ni mogoče prebrati iz TIFF »%s«. Datoteka je najverjetneje "
+"okvarjena."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1507
+#, c-format
+msgid "%s: Unsupported image format, no RGBA loader available"
+msgstr "%s: nepodprta vrsta slike, nalagalnik RGBA ni na voljo"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1819
+#: ../plug-ins/file-tiff/file-tiff-load.c:2016
+#, c-format
+msgid "Reading tile failed. Image may be corrupt at line %d."
+msgstr ""
+"Branje datoteke je spodletelo. Slika je morda okvarjena pri vrstici %d."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1848
-#: ../plug-ins/file-tiff/file-tiff-load.c:2028
+#: ../plug-ins/file-tiff/file-tiff-load.c:1828
+#: ../plug-ins/file-tiff/file-tiff-load.c:2025
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
-msgstr ""
+msgstr "Branje vrstice je spodletelo. Slika je morda okvarjena pri vrstici %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2303
+#: ../plug-ins/file-tiff/file-tiff-load.c:2426
 msgid "Import from TIFF"
 msgstr "Uvozi iz TIFF"
 
@@ -7474,23 +7610,23 @@ msgstr "Uvozi iz TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2356
+#: ../plug-ins/file-tiff/file-tiff-load.c:2479
 msgid "_Keep empty space around imported layers"
 msgstr "O_hrani prazni prostor okoli uvoženih plasti"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2373
+#: ../plug-ins/file-tiff/file-tiff-load.c:2496
 msgid "Process extra channel as:"
 msgstr "Obdelaj dodatni kanal kot:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2376
+#: ../plug-ins/file-tiff/file-tiff-load.c:2499
 msgid "_Non-premultiplied alpha"
 msgstr "Vnaprej _ne pomnožena alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2377
+#: ../plug-ins/file-tiff/file-tiff-load.c:2500
 msgid "Pre_multiplied alpha"
 msgstr "_Vnaprej pomnožena alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2378
+#: ../plug-ins/file-tiff/file-tiff-load.c:2501
 msgid "Channe_l"
 msgstr "Kana_l"
 
@@ -8737,7 +8873,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Spremeni gamo (svetlost) izbranega čopiča"
 
 #: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/metadata/metadata-editor.c:587
+#: ../plug-ins/metadata/metadata-editor.c:613
 msgid "Select:"
 msgstr "Izberite:"
 
@@ -8905,7 +9041,7 @@ msgstr "Slikanje ..."
 
 #: ../plug-ins/gimpressionist/gimpressionist.c:138
 msgid "GIMPressionist"
-msgstr "GIMPresionist "
+msgstr "GIMPresionist"
 
 #: ../plug-ins/gimpressionist/orientation.c:91
 msgid "Or_ientation"
@@ -9514,10 +9650,8 @@ msgid "Save _layers"
 msgstr "Shrani p_lasti"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
-#, fuzzy
-#| msgid "Could not get layers for image %d"
 msgid "Cr_op layers to image bounds"
-msgstr "Ni mogoče pridobiti plasti za sliko %d"
+msgstr "Obre_ži plasti na rob slike"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
 msgid "Colors are not stored premultiplied by the associated alpha"
@@ -11887,49 +12021,49 @@ msgstr "Pokaži _žični model"
 msgid "Update preview _live"
 msgstr "Posodo_bi predogled sproti"
 
-#: ../plug-ins/metadata/metadata-editor.c:413
+#: ../plug-ins/metadata/metadata-editor.c:439
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Urejajte metapodatke (IPTC, EXIF, XMP)"
 
-#: ../plug-ins/metadata/metadata-editor.c:421
+#: ../plug-ins/metadata/metadata-editor.c:447
 msgid "_Edit Metadata"
 msgstr "Ur_edi metapodatke"
 
-#: ../plug-ins/metadata/metadata-editor.c:545
+#: ../plug-ins/metadata/metadata-editor.c:571
 msgid "Error loading metadata-editor dialog."
 msgstr "Napaka pri nalaganju pogovornega okna urejevalnika metapodatkov."
 
-#: ../plug-ins/metadata/metadata-editor.c:556
+#: ../plug-ins/metadata/metadata-editor.c:582
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Urejevalnik metapodatkov: %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:565
+#: ../plug-ins/metadata/metadata-editor.c:591
 msgid "_Write Metadata"
 msgstr "Zapi_ši metapodatke"
 
-#: ../plug-ins/metadata/metadata-editor.c:589
+#: ../plug-ins/metadata/metadata-editor.c:615
 msgid "Import metadata"
 msgstr "Uvozi metapodatke"
 
-#: ../plug-ins/metadata/metadata-editor.c:591
+#: ../plug-ins/metadata/metadata-editor.c:617
 msgid "Export metadata"
 msgstr "Izvozi metapodatke"
 
-#: ../plug-ins/metadata/metadata-editor.c:799
+#: ../plug-ins/metadata/metadata-editor.c:921
 #, c-format
 msgid "Error loading calendar. %s"
 msgstr "Napaka pri nalaganju koledarja. %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:827
+#: ../plug-ins/metadata/metadata-editor.c:949
 msgid "Calendar Date:"
 msgstr "Koledarski datum:"
 
-#: ../plug-ins/metadata/metadata-editor.c:831
+#: ../plug-ins/metadata/metadata-editor.c:953
 msgid "Set Date"
 msgstr "Določi datum"
 
-#: ../plug-ins/metadata/metadata-editor.c:1565
+#: ../plug-ins/metadata/metadata-editor.c:1687
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -11938,8 +12072,14 @@ msgid ""
 "or 10.45\n"
 "Delete all text to remove the current value."
 msgstr ""
+"Tu vnesite ali uredite vrednost GPS.\n"
+"Veljavne vrednosti so 1, 2 ali 3 števila (stopinje, minute, sekunde), glejte "
+"naslednje primere:\n"
+"10deg 15’ 20\" ali 10° 15’ 20\" ali 10:15:20.45 ali 10 15 20 ali 10 15.30 "
+"ali 10.45\n"
+"Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: ../plug-ins/metadata/metadata-editor.c:1571
+#: ../plug-ins/metadata/metadata-editor.c:1693
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -11948,21 +12088,27 @@ msgid ""
 "meter (m) or feet (ft)\n"
 "Delete all text to remove the current value."
 msgstr ""
+"Tu vnesite ali uredite vrednost višine GPS.\n"
+"Veljavno vrednost predstavlja eno število:\n"
+"npr.. 100 ali 12,24\n"
+"Glede na izbrano vrsto merjenja vrednost vnesite v metrih (m) ali čevljih "
+"(ft).\n"
+"Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: ../plug-ins/metadata/metadata-editor.c:1707
+#: ../plug-ins/metadata/metadata-editor.c:1829
 msgid "Unrated"
 msgstr "Neocenjeno"
 
-#: ../plug-ins/metadata/metadata-editor.c:4405
+#: ../plug-ins/metadata/metadata-editor.c:3697
 #, c-format
 msgid "Failed to set metadata tag %s"
 msgstr "Značke metapodatkov %s ni mogoče določiti"
 
-#: ../plug-ins/metadata/metadata-editor.c:5714
+#: ../plug-ins/metadata/metadata-editor.c:4519
 msgid "Import Metadata File"
 msgstr "Uvoz datoteko metapodatkov"
 
-#: ../plug-ins/metadata/metadata-editor.c:5749
+#: ../plug-ins/metadata/metadata-editor.c:4554
 msgid "Export Metadata File"
 msgstr "Izvozi datoteko metapodatkov"
 
