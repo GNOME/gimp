@@ -1,4 +1,4 @@
-#'gimp/po-python
+# 'gimp/po-python
 # Slovenian translation of gimp-python.
 # Copyright (C) 2004-2007 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-28 08:10+0000\n"
-"PO-Revision-Date: 2021-03-01 21:17+0100\n"
+"POT-Creation-Date: 2021-03-16 17:29+0000\n"
+"PO-Revision-Date: 2021-03-23 11:37+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -685,6 +685,9 @@ msgid ""
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
+"Polmer sredinske luknje vzorca, kjer ne bi nič narisano. Podano v odstotkih "
+"velikosti vzorca. Vrednost 0 predstavlja odsotnost luknje. Vrednost 99 "
+"povzroči tanko črto na robu."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
 msgid "Width(%)"
@@ -696,6 +699,8 @@ msgid ""
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 msgstr ""
+"Širina vzorca kot odstotek velikosti vzorca. Vrednost 1 zgolj nariše tanek "
+"vzorec. Vrednost 100 zapolni celoten fiksen postroj."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
 msgid "Visual"
@@ -809,6 +814,8 @@ msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 msgstr ""
+"Izberite, ali želite shraniti kot novo plast, ponovno risati na zadnji "
+"dejavni plasti ali shraniti v pot."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
 msgid "Spyrogimp"
