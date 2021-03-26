@@ -1,4 +1,4 @@
-#'gimp/po-python
+# 'gimp/po-python
 # Slovenian translation of gimp-python.
 # Copyright (C) 2004-2007 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-03-01 10:23+0000\n"
-"PO-Revision-Date: 2021-03-01 21:01+0100\n"
+"POT-Creation-Date: 2021-03-16 18:22+0000\n"
+"PO-Revision-Date: 2021-03-23 11:40+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -54,6 +54,9 @@ msgid ""
 "the characters will be read. Otherwise, the characters in the text entry "
 "will be used to render the image."
 msgstr ""
+"Če je nastavljeno, bo vnos besedila Znaki uporabljen kot ime datoteke, iz "
+"katere bodo prebrani znaki. V nasprotnem primeru bodo znaki v vnosu besedila "
+"uporabljeni za upodobitev slike."
 
 #: ../plug-ins/python/colorxhtml.py:138
 msgid "Choose file"
@@ -189,6 +192,8 @@ msgid ""
 "If checked, the histogram is generated from merging all visible layers. "
 "Otherwise, the histogram is only for the current layer."
 msgstr ""
+"Če je možnost potrjena, bo histogram tvorjen s spajanjem vseh vidnih plasti. "
+"Sicer histogram velja samo za trenutni sloj."
 
 #. Output format parameter
 #: ../plug-ins/python/histogram-export.py:265
@@ -627,6 +632,9 @@ msgid ""
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
+"Polmer sredinske luknje vzorca, kjer ne bi nič narisano. Podano v odstotkih "
+"velikosti vzorca. Vrednost 0 predstavlja odsotnost luknje. Vrednost 99 "
+"povzroči tanko črto na robu."
 
 #: ../plug-ins/python/spyro-plus.py:1600
 msgid "Width(%)"
@@ -638,6 +646,8 @@ msgid ""
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 msgstr ""
+"Širina vzorca kot odstotek velikosti vzorca. Vrednost 1 zgolj nariše tanek "
+"vzorec. Vrednost 100 zapolni celoten fiksen postroj."
 
 #: ../plug-ins/python/spyro-plus.py:1612
 msgid "Visual"
@@ -746,6 +756,8 @@ msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 msgstr ""
+"Izberite, ali želite shraniti kot novo plast, ponovno risati na zadnji "
+"dejavni plasti ali shraniti v pot."
 
 #: ../plug-ins/python/spyro-plus.py:1746
 msgid "Spyrogimp"
