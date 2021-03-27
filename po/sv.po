@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-24 18:07+0000\n"
-"PO-Revision-Date: 2021-02-24 22:47+0100\n"
+"POT-Creation-Date: 2021-03-27 19:28+0000\n"
+"PO-Revision-Date: 2021-03-27 21:20+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -11581,7 +11581,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:452
 msgid "Show a tooltip when the pointer hovers over an item."
-msgstr "Visa ett verktygstips när muspekaren befinner sig över ett objekt."
+msgstr "Visa en inforuta när muspekaren befinner sig över ett objekt."
 
 #: ../app/config/gimprc-blurbs.h:455
 msgid "Use GIMP in a single-window mode."
@@ -18329,7 +18329,7 @@ msgstr "Kan inte ändra bildpunkterna i lagergrupper."
 
 #: ../app/display/gimpdisplayshell-dnd.c:372
 #: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
-#: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1145
+#: ../app/tools/gimpcroptool.c:463 ../app/tools/gimpeditselectiontool.c:1145
 #: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:300
 #: ../app/tools/gimpselectiontool.c:561 ../app/tools/gimptransformtool.c:686
@@ -22365,31 +22365,31 @@ msgstr "Fyll med"
 msgid "How to fill new areas created by 'Allow growing'"
 msgstr "Hur man fyller nya områden skapade genom ”Tillåt växande”"
 
-#: ../app/tools/gimpcroptool.c:119
+#: ../app/tools/gimpcroptool.c:121
 msgid "Crop"
 msgstr "Beskär"
 
-#: ../app/tools/gimpcroptool.c:120
+#: ../app/tools/gimpcroptool.c:122
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Beskärningsverktyg: Ta bort kantområden från bild eller lager"
 
-#: ../app/tools/gimpcroptool.c:121
+#: ../app/tools/gimpcroptool.c:123
 msgid "_Crop"
 msgstr "_Beskär"
 
-#: ../app/tools/gimpcroptool.c:159
+#: ../app/tools/gimpcroptool.c:161
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Klicka och dra för att rita en beskuren rektangel"
 
-#: ../app/tools/gimpcroptool.c:279
+#: ../app/tools/gimpcroptool.c:281
 msgid "Click or press Enter to crop"
 msgstr "Klicka eller tryck på Enter för att beskära"
 
-#: ../app/tools/gimpcroptool.c:386
+#: ../app/tools/gimpcroptool.c:388
 msgid "Crop to: "
 msgstr "Beskär till: "
 
-#: ../app/tools/gimpcroptool.c:454
+#: ../app/tools/gimpcroptool.c:456
 msgid "There is no active layer to crop."
 msgstr "Det finns inget aktivt lager att beskära."
 
