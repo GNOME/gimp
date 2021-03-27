@@ -73,8 +73,8 @@
   </provides>
 
   <releases>
-    <release version="2.10.24" date="TODO">
-      <url type="details">https://www.gimp.org/news/TODO/gimp-2-10-24-released/</url>
+    <release version="2.10.24" date="2021-03-28">
+      <url type="details">https://www.gimp.org/news/2021/03/29/gimp-2-10-24-released/</url>
       <description>
         <_p>
           GIMP 2.10.24 is again mostly a bug fix release. Notable changes:
