@@ -52,7 +52,7 @@ m4_define([fontconfig_required_version], [2.12.4])
 m4_define([freetype2_required_version], [2.1.7])
 m4_define([gdk_pixbuf_required_version], [2.30.8])
 m4_define([gegl_major_minor_version], [0.4])
-m4_define([gegl_micro_version], [26])
+m4_define([gegl_micro_version], [30])
 m4_define([gegl_required_version],
           [gegl_major_minor_version.gegl_micro_version])
 m4_define([gexiv2_required_version], [0.10.6])
