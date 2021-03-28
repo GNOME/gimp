@@ -13,13 +13,27 @@ Core:
 
   - Various fixes for Wayland support.
   - Fix stack overflow when loading very large XCF files on Windows.
+  - Canvas Size dialog now displays a template selector to simply
+    resize the canvas to a known template.
+  - Point snapping now works outside the canvas. This is used for snap
+    to guides, grid and vectors. Snap to grid only works off-canvas when
+    "Show All" is enabled because off-canvas grid is not visible
+    otherwise, though snap to guide and vectors will always work
+    off-canvas.
+  - Off-canvas guides are now allowed. Guides are not deleted anymore
+    when dropped off-canvas, but when dropped off-viewport.
 
 Tools:
 
-  - Paint Select tool: apply a threshold on the image mask before
-    triggering the automatic expansion to simplify mask handling in the
-    gegl paint-select operation.
-  - Paint Select tool: enable viewport-based local selection.
+  - Paint Select tool got various improvements:
+    * apply a threshold on the image mask before triggering the
+      automatic expansion to simplify mask handling in the gegl
+      paint-select operation.
+    * enable viewport-based local selection.
+  - GEGL Operation tool is now moved into Filters > Generic menu because
+    it behaves more like a generic filter conceptually. As other
+    filters, the GEGL Operation action is now only active when there are
+    opened images.
 
 API:
 
@@ -38,9 +52,27 @@ API:
   - Drop g_object_notify() in favor of g_object_notify_by_pspec() in
     various implementations to avoid a slight performance hit because of
     a global lock.
-  - New function gimp_parasite_get_data() (meant to replace
-    gimp_parasite_data() and gimp_parasite_data_size() in a GObject
-    Introspection friendly way).
+  - New function gimp_parasite_get_data() replacing gimp_parasite_data()
+    and gimp_parasite_data_size() in a GObject Introspection friendly
+    way.
+  - gimp_procedure_dialog_new() now allows a NULL title if a menu label
+    was set on the GimpProcedure with gimp_procedure_set_menu_label().
+  - gimp_progress_update() improved: do not update more than 20 times
+    per second and do not warn on stderr when too many progression steps
+    are outputted. Indeed we should not place the burden of deciding
+    whether there are too much or not enough progression updates on
+    plug-in developers. On the opposite, they should be encouraged to
+    update the progression as often as possible while libgimp will
+    handle the decision on whether it actually ignores the progression
+    step or not. This makes easier plug-in development and good
+    progression feedback of long process.
+  - GimpInt16Array was removed: it was used neither by GIMP core nor any
+    core plug-ins. If third-party plug-ins really need this type, they
+    may easily reintroduce it through GimpUint8Array (array of bytes) or
+    GimpInt32Array (using only a subrange).
+  - New function gimp_image_take_selected_layers() similar to
+    gimp_image_set_selected_layers() except that it takes a GList
+    (instead of a C array) and it takes ownership of the list pointer.
 
 Plug-ins:
 
@@ -55,18 +87,28 @@ Plug-ins:
   - Various fixes and improvements to BMP image support.
   - On PNG import, create an ICC profile out of the gAMA and/or cHRM
     chunks, if any of them are present, if no color profile is set and
-    if the sRGB chunk is not present.
+    if the sRGB chunk is not present. This happens for RGB images as
+    well as grayscale images (creating respectively a RGB or grayscale
+    color profile).
   - Improve PNG export in no-profile case with gAMA and cHRM chunks
     (additionally to the sRGB chunk) according to PNG spec
     recommendations. Moreover the "gamma" option has now been removed
     because we just have proper core support of this metadata through
     ICC profile creation now, which is just more powerful.
+  - "gamma" option for PNG export was removed (from GUI and
+    file-png-load PDB API) because it is now redundant as we have proper
+    support for this metadata.
   - Fix some cases of PSD loading.
   - Adding environment contents to debugging data of darktable plug-in
     (when DARKTABLE_DEBUG env variable is set).
   - Allow fractional DPI values when importing PDF.
   - Add option for reversing order of layers when importing PDF.
   - Various fixes and improvements to OpenRaster image support.
+  - PDF export now has progression.
+  - PSD import/export got multi-layer selection support.
+  - Qbist: make the applied pattern a bit more prominent by adding a
+    label about the center pattern of the 9x9 grid (which is the
+    selected one meant to be applied).
 
 Devel docs:
 
