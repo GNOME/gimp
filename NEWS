@@ -12,14 +12,8 @@ Overview of Changes from GIMP 2.99.4 to GIMP 2.99.6
 Core:
 
   - Various fixes for Wayland support.
-  - Fix stack overflow when loading very large XCF files on Windows.
   - Canvas Size dialog now displays a template selector to simply
     resize the canvas to a known template.
-  - Point snapping now works outside the canvas. This is used for snap
-    to guides, grid and vectors. Snap to grid only works off-canvas when
-    "Show All" is enabled because off-canvas grid is not visible
-    otherwise, though snap to guide and vectors will always work
-    off-canvas.
   - Off-canvas guides are now allowed. Guides are not deleted anymore
     when dropped off-canvas, but when dropped off-viewport.
 
@@ -80,11 +74,9 @@ Plug-ins:
     the screenshot plug-in. Basically the Freedesktop portal provides
     its own GUI with most options, so also showing ours is redundant.
     Just directly call the portal and wait for the image in return.
-  - Various fixes and improvements to DDS BC5 image support.
   - Color profile and comment is saved on each layer of a TIFF file to
     prevent any ambiguity as TIFF allows its layers to have different
     profiles.
-  - Various fixes and improvements to BMP image support.
   - On PNG import, create an ICC profile out of the gAMA and/or cHRM
     chunks, if any of them are present, if no color profile is set and
     if the sRGB chunk is not present. This happens for RGB images as
@@ -98,11 +90,6 @@ Plug-ins:
   - "gamma" option for PNG export was removed (from GUI and
     file-png-load PDB API) because it is now redundant as we have proper
     support for this metadata.
-  - Fix some cases of PSD loading.
-  - Adding environment contents to debugging data of darktable plug-in
-    (when DARKTABLE_DEBUG env variable is set).
-  - Allow fractional DPI values when importing PDF.
-  - Add option for reversing order of layers when importing PDF.
   - Various fixes and improvements to OpenRaster image support.
   - PDF export now has progression.
   - PSD import/export got multi-layer selection support.
