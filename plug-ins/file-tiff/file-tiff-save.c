@@ -1200,6 +1200,7 @@ out:
 
 gboolean
 save_dialog (TiffSaveVals  *tsvals,
+             gint32         image,
              const gchar   *help_id,
              gboolean       has_alpha,
              gboolean       is_monochrome,
@@ -1217,7 +1218,22 @@ save_dialog (TiffSaveVals  *tsvals,
   GtkWidget   *cmp_jpeg;
   GtkBuilder  *builder;
   gchar       *ui_file;
+  gchar      **parasites;
   gboolean     run;
+  gboolean     has_geotiff = FALSE;
+  gint         n_parasites;
+  gint         i;
+
+  parasites = gimp_image_get_parasite_list (image, &n_parasites);
+  for (i = 0; i < n_parasites; i++)
+    {
+      if (g_str_has_prefix (parasites[i], "Gimp_GeoTIFF_"))
+        {
+          has_geotiff = TRUE;
+          break;
+        }
+    }
+  g_strfreev (parasites);
 
   dialog = gimp_export_dialog_new (_("TIFF"), PLUG_IN_ROLE, help_id);
 
@@ -1320,7 +1336,8 @@ save_dialog (TiffSaveVals  *tsvals,
 
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-geotiff"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                tsvals->save_geotiff);
+                                has_geotiff && tsvals->save_geotiff);
+  gtk_widget_set_sensitive (toggle, has_geotiff);;
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals->save_geotiff);

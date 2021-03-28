@@ -248,6 +248,7 @@
             <child>
               <object class="GtkCheckButton" id="save-geotiff">
                 <property name="label" translatable="yes">Save _GeoTIFF data</property>
+                <property name="tooltip_text" translatable="yes">Keep the GeoTIFF metadata if it was present on import</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>

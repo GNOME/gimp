@@ -50,6 +50,7 @@ gboolean  save_image  (GFile                  *file,
                        GError                **error);
 
 gboolean  save_dialog (TiffSaveVals *tsvals,
+                       gint32        image,
                        const gchar  *help_id,
                        gboolean      has_alpha,
                        gboolean      is_monochrome,

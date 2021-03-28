@@ -318,7 +318,7 @@ run (const gchar      *name,
           gimp_parasite_free (parasite);
 
           /*  First acquire information with a dialog  */
-          if (! save_dialog (&tsvals,
+          if (! save_dialog (&tsvals, image,
                              SAVE_PROC,
                              gimp_drawable_has_alpha (drawable),
                              image_is_monochrome (image),
