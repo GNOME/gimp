@@ -1129,21 +1129,22 @@ Profile' dialog.  Possible values are yes and no.
 
 Sets the default layer dithering method for the 'Convert Precision' dialog. 
 Possible values are none, floyd-steinberg, bayer, random, random-covariant,
-add, add-covariant, xor and xor-covariant.
+add, add-covariant, xor, xor-covariant, blue-noise and blue-noise-covariant.
 
 .TP
 (image-convert-precision-text-layer-dither-method none)
 
 Sets the default text layer dithering method for the 'Convert Precision'
 dialog.  Possible values are none, floyd-steinberg, bayer, random,
-random-covariant, add, add-covariant, xor and xor-covariant.
+random-covariant, add, add-covariant, xor, xor-covariant, blue-noise and
+blue-noise-covariant.
 
 .TP
 (image-convert-precision-channel-dither-method none)
 
 Sets the default channel dithering method for the 'Convert Precision' dialog. 
 Possible values are none, floyd-steinberg, bayer, random, random-covariant,
-add, add-covariant, xor and xor-covariant.
+add, add-covariant, xor, xor-covariant, blue-noise and blue-noise-covariant.
 
 .TP
 (image-convert-indexed-palette-type generate)
