@@ -23,8 +23,12 @@ Core:
   - Display profile name in "Color space" field of Image Properties and
     improve ellipsis & wrap on dialog fields whose contents' size is not
     controllable together with better dialog size management.
-  - Point snapping now works out-of-canvas (snap to guide, grid or
-    vectors for instance).
+  - Fix stack overflow when loading very large XCF files on Windows.
+  - Point snapping now works outside the canvas. This is used for snap
+    to guides, grid and vectors. Snap to grid only works off-canvas when
+    "Show All" is enabled because off-canvas grid is not visible
+    otherwise, though snap to guide and vectors will always work
+    off-canvas.
 
 Libgimp:
 
@@ -97,7 +101,8 @@ Plug-ins:
     * support loading more bit depth such as 24bpp images.
   - file-darktable:
     * support updated Lua API of darktable 3.6 and beyond;
-    * a bit more debugging output when DARKTABLE_DEBUG is set.
+    * Adding environment contents to debugging output when
+      DARKTABLE_DEBUG env variable is set.
   - PDF import:
     * New option to reverse order of layer.
     * Support fractional DPI (allowing accurate page dimensions).
@@ -118,7 +123,8 @@ Plug-ins:
   - PSD:
     * More flexible reading of layer mask record size, skipping invalid
       or unsupported mask info size, hence allowing us to load more PSD
-      files (at least what we can).
+      files (at least the part of a PSD we support instead of failing
+      the whole import altogether).
   - G3 fax images:
     * Improve error handling when loading.
     * Be more forgiving on bad lines which were quite frequent on older
