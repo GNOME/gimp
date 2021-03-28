@@ -81,6 +81,12 @@
       <gnome:userid>schumaml</gnome:userid>
     </foaf:Person>
   </maintainer>
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Jehan</foaf:name>
+      <gnome:userid>jehanp</gnome:userid>
+    </foaf:Person>
+  </maintainer>
 
 <!-- TODO: generate MAINTAINERS from this file -->
 
