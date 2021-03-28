@@ -160,7 +160,8 @@ Here is how you can find the proper code line in the Flatpak (provided
 you use the right flatpak commit):
 
 ```
-$ flatpak install flathub org.gimp.GIMP.Debug org.gnome.Sdk.Debug
+$ RUNTIME_VERSION=$(flatpak run org.gimp.GIMP//stable -v |grep runtime=runtime/org.gnome.Platform/ |sed 's$runtime=runtime/org.gnome.Platform/$$')
+$ flatpak install flathub org.gimp.GIMP.Debug org.gnome.Sdk/$RUNTIME_VERSION org.gnome.Sdk.Debug/$RUNTIME_VERSION
 $ flatpak run --devel --command=bash org.gimp.GIMP
 (flatpak) $ gdb /app/bin/gimp-2.10
 (gdb) info line *(file_open_image+0x4e8)
