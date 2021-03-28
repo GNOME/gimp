@@ -23,6 +23,8 @@ Core:
   - Display profile name in "Color space" field of Image Properties and
     improve ellipsis & wrap on dialog fields whose contents' size is not
     controllable together with better dialog size management.
+  - Point snapping now works out-of-canvas (snap to guide, grid or
+    vectors for instance).
 
 Libgimp:
 
@@ -35,12 +37,6 @@ Plug-ins:
     possibly with relevant error message. Image export would not fail,
     but at least we make the person aware metadata is not properly
     exported.
-  - Removes the "HDR" mention on HEIF 10/12-bit export because high bit
-    depth does not necessarily means HDR.
-  - Runtime detection of HEIC and AVIF file formats (depending on
-    available encoders and decoders), which allows afterwards update of
-    the dependency, but also allows usage for a single format (e.g. for
-    distributions which want to support only AVIF).
   - More robust TIFF import and export:
     * Better handling of Exif.Thumbnail.* tags on export.
     * Import now ignores TIFF pages with invalid directory (rather than
@@ -50,6 +46,11 @@ Plug-ins:
       images with improper header. Also if reading of a directory fail,
       we now output a message to warn of possible data loss.
     * Fixed loading 2 and 4-bit TIFF images in grayscale and indexed.
+    * Improve support of ExtraSamples fields with non-conformant TIFF
+      files.
+    * Improve loading of multi page tiffs with linear TRC.
+    * More safety checks as a result of fuzz-testing.
+    * Improve loading of MinIsWhite and MinIsBlack images.
   - GeoTIFF tag support added (recognized and stored into image
     parasites at import, then exported back when TIFF format is used)
     with appropriate "Save GeoTIFF data" checkbox (checked by default)
@@ -80,11 +81,48 @@ Plug-ins:
       improve error handling when the calendar dialog fails.
     * Use a logging domain for debugging-only messages which pollutes
       the output.
-    * And more bug fixes.
+    * Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:* override the shorter
+      forms Xmp.iptc.Ci* if both are present, since the longer form is
+      more common.
+    * Improve saving of XMP metadata.
+    * And more bug fixes and refactoring steps to get rid of duplicate
+      code.
   - PNG will now prompt only for layer offset different from zero. Some
     software were always setting an offset of 0 (e.g.: POV-Ray v3.7) so
     GIMP would unecessarily prompt the user until now for PNG created by
     such software.
+  - BMP:
+    * allow loading of BMP images with incorrect BI_BITFIELDS
+      compression.
+    * support loading more bit depth such as 24bpp images.
+  - file-darktable:
+    * support updated Lua API of darktable 3.6 and beyond;
+    * a bit more debugging output when DARKTABLE_DEBUG is set.
+  - PDF import:
+    * New option to reverse order of layer.
+    * Support fractional DPI (allowing accurate page dimensions).
+  - DDS:
+    * Set blue channel of BC5 dds images to 0 instead of 255.
+    * Fix DDS BC5 compression/decompression with Red and Blue swapped.
+      We detect images created by an older GIMP on loading and swap the
+      channels back.
+  - HEIF:
+    * Removes the "HDR" mention on HEIF 10/12-bit export because high
+      bit depth does not necessarily means HDR.
+    * Runtime detection of HEIC and AVIF file formats (depending on
+      available encoders and decoders), which allows afterwards update
+      of the dependency, but also allows usage for a single format (e.g.
+      for distributions which want to support only AVIF).
+    * With libheif 1.10, visually lossless export is possible for
+      10/12 bit depths too
+  - PSD:
+    * More flexible reading of layer mask record size, skipping invalid
+      or unsupported mask info size, hence allowing us to load more PSD
+      files (at least what we can).
+  - G3 fax images:
+    * Improve error handling when loading.
+    * Be more forgiving on bad lines which were quite frequent on older
+      fax images, allowing to salvage some old images.
 
 Build:
 
@@ -100,6 +138,10 @@ Installer:
 Translations:
 
   - Kabyle translation added.
+
+Build:
+
+  - Bumping minimum GEGL to version 0.4.30.
 
 
 Overview of Changes from GIMP 2.10.20 to GIMP 2.10.22
