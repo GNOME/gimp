@@ -2834,8 +2834,8 @@ gimp_image_get_xcf_version (GimpImage    *image,
           if (position < 0 ||
               (gimp_guide_get_orientation (list->data) == GIMP_ORIENTATION_HORIZONTAL &&
                position > gimp_image_get_height (image)) ||
-              /* vertical guide. */
-               position > gimp_image_get_width (image))
+              (gimp_guide_get_orientation (list->data) == GIMP_ORIENTATION_VERTICAL &&
+               position > gimp_image_get_width (image)))
             {
               ADD_REASON (g_strdup_printf (_("Off-canvas guides "
                                              "added in %s"), "GIMP 3.0.0"));
