@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-01-22 18:30+0000\n"
+"POT-Creation-Date: 2021-03-28 21:46+0000\n"
 "PO-Revision-Date: 2020-12-06 22:07+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
@@ -81,14 +81,13 @@ msgid "Photo editing in GIMP"
 msgstr "Editeu fotografies amb el GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
-#, fuzzy
 msgid ""
 "This second development release contains various usability and API updates. "
 "A new experimental tool makes an entrance in the playground."
 msgstr ""
 "Aquesta segona versió de desenvolupament conté diverses actualitzacions "
-"d'usabilitat i API. Una nova eina experimental fa una entrada al parc "
-"infantil."
+"d'usabilitat i API. Una nova eina experimental està disponible al terreny de"
+" joc.infantil."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "Many usability improvements on the slider widget"
@@ -107,9 +106,8 @@ msgstr ""
 "(mostrades al final)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
-#, fuzzy
 msgid ""
-"Fonts targetted for Korean and Japanese language show appropriate characters"
+"Fonts targeted for Korean and Japanese language show appropriate characters"
 msgstr ""
 "Els tipus de lletra dirigits a l'idioma coreà i japonès mostren caràcters "
 "apropiats"
@@ -120,7 +118,6 @@ msgstr ""
 "Diferents eines predeterminades depenent del tipus de dispositiu del punter"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
-#, fuzzy
 msgid "Default dynamics is now \"Pressure Size\""
 msgstr "La dinàmica predeterminada ara és «Mida de la pressió»"
 
@@ -129,7 +126,6 @@ msgid "Various usability improvements in the Input Device editor"
 msgstr "Diverses millores d'usabilitat a l'editor de dispositius d'entrada"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
-#, fuzzy
 msgid "New \"Paint Select\" experimental tool in the playground"
 msgstr "Nova eina experimental «Paint Select» al terreny de joc"
 
@@ -218,8 +214,8 @@ msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
 msgstr ""
-"L'opció que permet el suport d'OpenCL s'ha mogut a la pestanya Playground de"
-" Preferències"
+"L'opció que permet el suport d'OpenCL s'ha mogut a la pestanya Terreny de "
+"joc de Preferències"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
@@ -1041,118 +1037,118 @@ msgstr "s'està utilitzant el %s versió %s (compilat amb la versió %s)"
 msgid "%s version %s"
 msgstr "%s versió %s"
 
-#: ../app/main.c:164
+#: ../app/main.c:163
 msgid "Show version information and exit"
 msgstr "Mostra informació de la versió i surt"
 
-#: ../app/main.c:169
+#: ../app/main.c:168
 msgid "Show license information and exit"
 msgstr "Mostra informació de la llicència i surt"
 
-#: ../app/main.c:174
+#: ../app/main.c:173
 msgid "Be more verbose"
 msgstr "Escriu més informació"
 
-#: ../app/main.c:179
+#: ../app/main.c:178
 msgid "Start a new GIMP instance"
 msgstr "Inicia una nova instància del GIMP"
 
-#: ../app/main.c:184
+#: ../app/main.c:183
 msgid "Open images as new"
 msgstr "Obre les imatges com a noves"
 
-#: ../app/main.c:189
+#: ../app/main.c:188
 msgid "Run without a user interface"
 msgstr "Executa sense interfície d'usuari"
 
-#: ../app/main.c:194
+#: ../app/main.c:193
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "No carreguis pinzells, degradats, paletes, patrons..."
 
-#: ../app/main.c:199
+#: ../app/main.c:198
 msgid "Do not load any fonts"
 msgstr "No carreguis cap lletra tipogràfica"
 
-#: ../app/main.c:204
+#: ../app/main.c:203
 msgid "Do not show a splash screen"
 msgstr "No mostris la pantalla de presentació"
 
-#: ../app/main.c:209
+#: ../app/main.c:208
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr ""
 "No utilitzis la memòria compartida entre el GIMP i els seus connectors"
 
-#: ../app/main.c:214
+#: ../app/main.c:213
 msgid "Do not use special CPU acceleration functions"
 msgstr "No utilitzis cap funció especial d'acceleració de CPU"
 
-#: ../app/main.c:219
+#: ../app/main.c:218
 msgid "Use an alternate sessionrc file"
 msgstr "Utilitza un fitxer sessionrc alternatiu"
 
-#: ../app/main.c:224
+#: ../app/main.c:223
 msgid "Use an alternate user gimprc file"
 msgstr "Utilitza un fitxer gimprc d'usuari alternatiu"
 
-#: ../app/main.c:229
+#: ../app/main.c:228
 msgid "Use an alternate system gimprc file"
 msgstr "Utilitza un fitxer gimprc de sistema alternatiu"
 
-#: ../app/main.c:234
+#: ../app/main.c:233
 msgid "Batch command to run (can be used multiple times)"
 msgstr ""
 "Ordre de processament que s'ha d'executar (es pot utilitzar diverses "
 "vegades)"
 
-#: ../app/main.c:239
+#: ../app/main.c:238
 msgid "The procedure to process batch commands with"
 msgstr "El procediment amb el qual es processaran les ordres"
 
-#: ../app/main.c:244
+#: ../app/main.c:243
 msgid "Send messages to console instead of using a dialog"
 msgstr ""
 "Mostra els avisos a la consola en comptes d'utilitzar un quadre de diàleg"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:250
+#: ../app/main.c:249
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr ""
 "Mode de compatibilitat de la base de dades de procediments (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:256
+#: ../app/main.c:255
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Depura en cas de fallada (never|query|always)"
 
-#: ../app/main.c:261
+#: ../app/main.c:260
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Habilita la depuració dels gestors de senyals no greus"
 
-#: ../app/main.c:266
+#: ../app/main.c:265
 msgid "Make all warnings fatal"
 msgstr "Fes tots els avisos greus"
 
-#: ../app/main.c:271
+#: ../app/main.c:270
 msgid "Output a gimprc file with default settings"
 msgstr "Escriu un fitxer gimprc amb la configuració predeterminada"
 
-#: ../app/main.c:287
+#: ../app/main.c:286
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Mostra una llista ordenada dels procediments desfasats al PDB"
 
-#: ../app/main.c:292
+#: ../app/main.c:291
 msgid "Show a preferences page with experimental features"
 msgstr "Mostra una pàgina de preferències amb característiques experimentals"
 
-#: ../app/main.c:297
+#: ../app/main.c:296
 msgid "Show an image submenu with debug actions"
 msgstr "Mostra un submenú amb imatge amb accions de depuració"
 
-#: ../app/main.c:578
+#: ../app/main.c:598
 msgid "[FILE|URI...]"
 msgstr "[Fitxer|URI...]"
 
-#: ../app/main.c:596
+#: ../app/main.c:616
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1160,21 +1156,21 @@ msgstr ""
 "El GIMP no ha pogut inicialitzar la interfície gràfica d'usuari.\n"
 "Assegureu-vos que l'entorn de visualització està configurat adequadament."
 
-#: ../app/main.c:615
+#: ../app/main.c:635
 msgid "Another GIMP instance is already running."
 msgstr "Ja s'està executant una altra instància del GIMP."
 
-#: ../app/main.c:706
+#: ../app/main.c:726
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "Sortida del GIMP. Escriviu qualsevol caràcter per a tancar aquesta finestra."
 
-#: ../app/main.c:707
+#: ../app/main.c:727
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Escriviu qualsevol caràcter per a tancar aquesta finestra)\n"
 
-#: ../app/main.c:724
+#: ../app/main.c:744
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Sortida del GIMP. Podeu minimitzar aquesta finestra, però no la podeu "
@@ -1334,7 +1330,7 @@ msgid "Images"
 msgstr "Imatges"
 
 #: ../app/actions/actions.c:196 ../app/dialogs/dialogs.c:373
-#: ../app/dialogs/resize-dialog.c:143 ../app/widgets/gimppickablepopup.c:228
+#: ../app/dialogs/resize-dialog.c:152 ../app/widgets/gimppickablepopup.c:228
 msgid "Layers"
 msgstr "Capes"
 
@@ -3361,7 +3357,7 @@ msgstr "240 segons"
 #: ../app/actions/dashboard-commands.c:118
 #: ../app/actions/documents-commands.c:237 ../app/actions/edit-commands.c:167
 #: ../app/actions/error-console-commands.c:100
-#: ../app/actions/file-commands.c:430
+#: ../app/actions/file-commands.c:431
 #: ../app/actions/gradient-editor-commands.c:409
 #: ../app/actions/gradient-editor-commands.c:520
 #: ../app/actions/gradients-commands.c:79
@@ -3380,7 +3376,7 @@ msgstr "240 segons"
 #: ../app/dialogs/convert-precision-dialog.c:146
 #: ../app/dialogs/data-delete-dialog.c:86
 #: ../app/dialogs/file-open-location-dialog.c:80
-#: ../app/dialogs/file-save-dialog.c:725 ../app/dialogs/fill-dialog.c:115
+#: ../app/dialogs/file-save-dialog.c:741 ../app/dialogs/fill-dialog.c:115
 #: ../app/dialogs/grid-dialog.c:102
 #: ../app/dialogs/image-merge-layers-dialog.c:100
 #: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
@@ -3394,7 +3390,7 @@ msgstr "240 segons"
 #: ../app/dialogs/preferences-dialog.c:664
 #: ../app/dialogs/preferences-dialog.c:1120
 #: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:185
+#: ../app/dialogs/resize-dialog.c:200
 #: ../app/dialogs/resolution-calibrate-dialog.c:73
 #: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
 #: ../app/dialogs/template-options-dialog.c:118
@@ -3471,7 +3467,7 @@ msgid "Enter a description for the marker"
 msgstr "Introduïu una descripció pel marcador"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:392
-#: ../app/actions/file-commands.c:210 ../app/dialogs/file-open-dialog.c:228
+#: ../app/actions/file-commands.c:211 ../app/dialogs/file-open-dialog.c:228
 #: ../app/dialogs/file-open-dialog.c:269
 #: ../app/dialogs/file-open-location-dialog.c:217
 #: ../app/dialogs/file-open-location-dialog.c:233
@@ -3498,7 +3494,7 @@ msgid "Untitled"
 msgstr "Sense títol"
 
 #: ../app/actions/data-commands.c:216 ../app/actions/documents-commands.c:194
-#: ../app/actions/file-commands.c:536
+#: ../app/actions/file-commands.c:537
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "No es pot mostrar el fitxer al gestor de fitxers: %s"
@@ -4882,7 +4878,7 @@ msgstr "Desa el registre d'errors al fitxer"
 
 #: ../app/actions/error-console-commands.c:101
 #: ../app/actions/gradients-commands.c:80
-#: ../app/dialogs/file-save-dialog.c:726
+#: ../app/dialogs/file-save-dialog.c:742
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:69
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -5095,55 +5091,55 @@ msgstr "Exporta a %s"
 msgid "Over_write %s"
 msgstr "_Sobreescriu %s"
 
-#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:560
+#: ../app/actions/file-commands.c:120 ../app/actions/file-commands.c:561
 #: ../app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Obre una imatge"
 
-#: ../app/actions/file-commands.c:141
+#: ../app/actions/file-commands.c:142
 msgid "Open Image as Layers"
 msgstr "Obre imatge com a capes"
 
-#: ../app/actions/file-commands.c:288
+#: ../app/actions/file-commands.c:289
 msgid "No changes need to be saved"
 msgstr "No hi ha cap canvi per a desar"
 
-#: ../app/actions/file-commands.c:295 ../app/actions/file-commands.c:769
+#: ../app/actions/file-commands.c:296 ../app/actions/file-commands.c:772
 #: ../app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Desa la imatge"
 
-#: ../app/actions/file-commands.c:301
+#: ../app/actions/file-commands.c:302
 msgid "Save a Copy of the Image"
 msgstr "Desa una còpia de la imatge"
 
-#: ../app/actions/file-commands.c:379
+#: ../app/actions/file-commands.c:380
 msgid "Create New Template"
 msgstr "Crea una plantilla nova"
 
-#: ../app/actions/file-commands.c:383
+#: ../app/actions/file-commands.c:384
 msgid "Enter a name for this template"
 msgstr "Anomena aquesta plantilla"
 
-#: ../app/actions/file-commands.c:413
+#: ../app/actions/file-commands.c:414
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "La reversió ha fallat. No hi ha cap nom de fitxer associat a aquesta imatge."
 
-#: ../app/actions/file-commands.c:425
+#: ../app/actions/file-commands.c:426
 msgid "Revert Image"
 msgstr "Reverteix la imatge"
 
-#: ../app/actions/file-commands.c:431
+#: ../app/actions/file-commands.c:432
 msgid "_Revert"
 msgstr "_Reverteix"
 
-#: ../app/actions/file-commands.c:449
+#: ../app/actions/file-commands.c:450
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Voleu revertir «%s» a «%s»?"
 
-#: ../app/actions/file-commands.c:454
+#: ../app/actions/file-commands.c:455
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -5151,11 +5147,11 @@ msgstr ""
 "Si revertiu la imatge a l'estat desat en el disc, perdreu tots els canvis, "
 "inclosa tota la informació de desfer."
 
-#: ../app/actions/file-commands.c:791
+#: ../app/actions/file-commands.c:794
 msgid "(Unnamed Template)"
 msgstr "(Plantilla sense nom)"
 
-#: ../app/actions/file-commands.c:838
+#: ../app/actions/file-commands.c:841
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -5528,8 +5524,8 @@ msgstr "Difuminació gaussiana _selectiva..."
 
 #: ../app/actions/filters-actions.c:378
 msgctxt "filters-action"
-msgid "_GEGL graph..."
-msgstr "_Graf GEGL..."
+msgid "_GEGL Graph..."
+msgstr "_Gràfic GEGL..."
 
 #: ../app/actions/filters-actions.c:383
 msgctxt "filters-action"
@@ -11055,7 +11051,7 @@ msgid "Move this window to screen %s"
 msgstr "Mou aquesta finestra a la pantalla %s"
 
 #: ../app/actions/window-commands.c:78 ../app/dialogs/extensions-dialog.c:79
-#: ../app/dialogs/file-save-dialog.c:649 ../app/dialogs/grid-dialog.c:103
+#: ../app/dialogs/file-save-dialog.c:665 ../app/dialogs/grid-dialog.c:103
 #: ../app/dialogs/image-new-dialog.c:107 ../app/dialogs/image-new-dialog.c:326
 #: ../app/dialogs/input-devices-dialog.c:67
 #: ../app/dialogs/item-options-dialog.c:146
@@ -14257,7 +14253,7 @@ msgstr "S'ha produït un error en carregar «%s»"
 #: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:95
 #: ../app/file-data/file-data-gex.c:341 ../app/file-data/file-data-gex.c:479
 #: ../app/file-data/file-data-gih.c:99 ../app/file-data/file-data-pat.c:96
-#: ../app/xcf/xcf.c:439
+#: ../app/xcf/xcf.c:440
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "No s'ha pogut obrir «%s» per a lectura:"
@@ -14626,17 +14622,22 @@ msgstr "El suport per imatges més grans de 4GB s'ha afegit a %s"
 msgid "Multiple layer selection was added in %s"
 msgstr "S'ha afegit una selecció de múltiples capes %s"
 
-#: ../app/core/gimpimage.c:2919
+#: ../app/core/gimpimage.c:2840
+#, c-format
+msgid "Off-canvas guides added in %s"
+msgstr "S'han afegit guies fora del llenç a %s"
+
+#: ../app/core/gimpimage.c:2944
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Canvia la resolució de la imatge"
 
-#: ../app/core/gimpimage.c:2971
+#: ../app/core/gimpimage.c:2996
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Canvia les unitats de la imatge"
 
-#: ../app/core/gimpimage.c:4025
+#: ../app/core/gimpimage.c:4051
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14644,47 +14645,47 @@ msgstr ""
 "Error en la validació del paràsit 'gimp-comment': el comentari conté "
 "caràcters UTF-8 invàlids"
 
-#: ../app/core/gimpimage.c:4084
+#: ../app/core/gimpimage.c:4112
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Adjunta un paràsit a la imatge"
 
-#: ../app/core/gimpimage.c:4126
+#: ../app/core/gimpimage.c:4154
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Suprimeix el paràsit de la imatge"
 
-#: ../app/core/gimpimage.c:5084
+#: ../app/core/gimpimage.c:5112
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Afegeix una capa"
 
-#: ../app/core/gimpimage.c:5128 ../app/core/gimpimage.c:5159
+#: ../app/core/gimpimage.c:5156 ../app/core/gimpimage.c:5187
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Suprimeix la capa"
 
-#: ../app/core/gimpimage.c:5153
+#: ../app/core/gimpimage.c:5181
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Suprimeix la selecció flotant"
 
-#: ../app/core/gimpimage.c:5306
+#: ../app/core/gimpimage.c:5334
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Afegeix un canal"
 
-#: ../app/core/gimpimage.c:5336 ../app/core/gimpimage.c:5360
+#: ../app/core/gimpimage.c:5364 ../app/core/gimpimage.c:5389
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Suprimeix el canal"
 
-#: ../app/core/gimpimage.c:5417
+#: ../app/core/gimpimage.c:5448
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Afegeix un camí"
 
-#: ../app/core/gimpimage.c:5447 ../app/core/gimpimage.c:5455
+#: ../app/core/gimpimage.c:5478 ../app/core/gimpimage.c:5486
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Suprimeix el camí"
@@ -14702,13 +14703,13 @@ msgstr "Habilita «l'ús del perfil sRGB»"
 msgid "Disable 'Use sRGB Profile'"
 msgstr "Deshabilita «l'ús del perfil sRGB»"
 
-#: ../app/core/gimpimage-color-profile.c:195
+#: ../app/core/gimpimage-color-profile.c:198
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
 "La validació del perfil ICC ha fallat: el nom del paràsit no és 'icc-"
 "profile'"
 
-#: ../app/core/gimpimage-color-profile.c:204
+#: ../app/core/gimpimage-color-profile.c:207
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -14720,7 +14721,7 @@ msgstr ""
 msgid "ICC profile validation failed: "
 msgstr "La validació del perfil ICC ha fallat: "
 
-#: ../app/core/gimpimage-color-profile.c:404
+#: ../app/core/gimpimage-color-profile.c:409
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color "
 "space"
@@ -14728,35 +14729,35 @@ msgstr ""
 "La validació del perfil ICC ha fallat: el perfil de color no és per a "
 "l'espai de color d'escala de grisos"
 
-#: ../app/core/gimpimage-color-profile.c:414
+#: ../app/core/gimpimage-color-profile.c:419
 msgid ""
 "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "La validació del perfil ICC ha fallat: el perfil de color no és per a "
 "l'espai de color RGB"
 
-#: ../app/core/gimpimage-color-profile.c:473
+#: ../app/core/gimpimage-color-profile.c:478
 msgid "Assigning color profile"
 msgstr "S'està assignant el perfil de color"
 
-#: ../app/core/gimpimage-color-profile.c:474
+#: ../app/core/gimpimage-color-profile.c:479
 msgid "Discarding color profile"
 msgstr "S'està deshabilitant el perfil de color"
 
-#: ../app/core/gimpimage-color-profile.c:478
+#: ../app/core/gimpimage-color-profile.c:483
 msgid "Assign color profile"
 msgstr "Assigna perfil de color"
 
-#: ../app/core/gimpimage-color-profile.c:479
+#: ../app/core/gimpimage-color-profile.c:484
 msgid "Discard color profile"
 msgstr "Descarta el perfil de color"
 
-#: ../app/core/gimpimage-color-profile.c:522
+#: ../app/core/gimpimage-color-profile.c:527
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Convertint «%s» a «%s»"
 
-#: ../app/core/gimpimage-color-profile.c:527
+#: ../app/core/gimpimage-color-profile.c:532
 msgid "Color profile conversion"
 msgstr "Conversió de perfil de color"
 
@@ -14837,22 +14838,22 @@ msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "Canvia la mida de la imatge"
 
-#: ../app/core/gimpimage-guides.c:53
+#: ../app/core/gimpimage-guides.c:51
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
 msgstr "Afegeix guia horitzontal"
 
-#: ../app/core/gimpimage-guides.c:77
+#: ../app/core/gimpimage-guides.c:73
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
 msgstr "Afegeix guia vertical"
 
-#: ../app/core/gimpimage-guides.c:121
+#: ../app/core/gimpimage-guides.c:117
 msgctxt "undo-type"
 msgid "Remove Guide"
 msgstr "Esborra la guia"
 
-#: ../app/core/gimpimage-guides.c:151
+#: ../app/core/gimpimage-guides.c:141
 msgctxt "undo-type"
 msgid "Move Guide"
 msgstr "Mou la guia"
@@ -16321,7 +16322,7 @@ msgstr "Introduïu una ubicació (URI):"
 msgid "Invalid URI"
 msgstr "URI no vàlid"
 
-#: ../app/dialogs/file-save-dialog.c:469
+#: ../app/dialogs/file-save-dialog.c:485
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -16331,11 +16332,11 @@ msgstr ""
 "l'extensió. Introduïu una extensió de fitxer que concordi amb el format de "
 "fitxer seleccionat o no n'introduïu cap."
 
-#: ../app/dialogs/file-save-dialog.c:629
+#: ../app/dialogs/file-save-dialog.c:645
 msgid "The given filename cannot be used for exporting"
 msgstr "No es pot utilitzar el nom de fitxer donat per a exportar el fitxer"
 
-#: ../app/dialogs/file-save-dialog.c:630
+#: ../app/dialogs/file-save-dialog.c:646
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -16343,15 +16344,15 @@ msgstr ""
 "Podeu utilitzar aquest diàleg per a exportar la imatge en diversos formats. "
 "Si voleu desar-la amb el format XCF del GIMP utilitzeu Fitxer→Desa."
 
-#: ../app/dialogs/file-save-dialog.c:633
+#: ../app/dialogs/file-save-dialog.c:649
 msgid "Take me to the Save dialog"
 msgstr "Porta'm al diàleg de desar"
 
-#: ../app/dialogs/file-save-dialog.c:637
+#: ../app/dialogs/file-save-dialog.c:653
 msgid "The given filename cannot be used for saving"
 msgstr "No es pot utilitzar el nom de fitxer donat per a desar el fitxer"
 
-#: ../app/dialogs/file-save-dialog.c:638
+#: ../app/dialogs/file-save-dialog.c:654
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -16360,15 +16361,15 @@ msgstr ""
 "GIMP. Si voleu desar-la en un altre format de fitxer, utilitzeu "
 "Fitxer→Exporta a."
 
-#: ../app/dialogs/file-save-dialog.c:640
+#: ../app/dialogs/file-save-dialog.c:656
 msgid "Take me to the Export dialog"
 msgstr "Porta'm al diàleg d'exportar"
 
-#: ../app/dialogs/file-save-dialog.c:643 ../app/dialogs/file-save-dialog.c:720
+#: ../app/dialogs/file-save-dialog.c:659 ../app/dialogs/file-save-dialog.c:736
 msgid "Extension Mismatch"
 msgstr "Extensió incorrecta"
 
-#: ../app/dialogs/file-save-dialog.c:704
+#: ../app/dialogs/file-save-dialog.c:720
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -16376,19 +16377,19 @@ msgstr ""
 "El nom de fitxer no té cap extensió reconeguda. Introduïu una extensió de "
 "fitxer coneguda o seleccioneu un format de fitxer de la llista de formats."
 
-#: ../app/dialogs/file-save-dialog.c:736
+#: ../app/dialogs/file-save-dialog.c:752
 msgid "The given file extension does not match the chosen file type."
 msgstr "L'extensió de fitxer no concorda amb el tipus de fitxer triat."
 
-#: ../app/dialogs/file-save-dialog.c:740
+#: ../app/dialogs/file-save-dialog.c:756
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Voleu desar la imatge amb aquest nom igualment?"
 
-#: ../app/dialogs/file-save-dialog.c:805
+#: ../app/dialogs/file-save-dialog.c:821
 msgid "Saving canceled"
 msgstr "L'acció desar s'ha cancel·lat"
 
-#: ../app/dialogs/file-save-dialog.c:811 ../app/widgets/gimpdnd-xds.c:190
+#: ../app/dialogs/file-save-dialog.c:827 ../app/widgets/gimpdnd-xds.c:190
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -16399,7 +16400,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/dialogs/file-save-dialog.c:813
+#: ../app/dialogs/file-save-dialog.c:829
 msgid "Unknown error"
 msgstr "Error desconegut"
 
@@ -16452,7 +16453,7 @@ msgid "Create a New Image"
 msgstr "Crea una imatge nova"
 
 #: ../app/dialogs/image-new-dialog.c:138
-#: ../app/dialogs/preferences-dialog.c:1761
+#: ../app/dialogs/preferences-dialog.c:1761 ../app/dialogs/resize-dialog.c:231
 msgid "_Template:"
 msgstr "Plan_tilla:"
 
@@ -16666,7 +16667,7 @@ msgid "Offset Y:"
 msgstr "Desplaçament de Y:"
 
 #: ../app/dialogs/layer-options-dialog.c:377
-#: ../app/dialogs/resize-dialog.c:359 ../app/widgets/gimptemplateeditor.c:442
+#: ../app/dialogs/resize-dialog.c:404 ../app/widgets/gimptemplateeditor.c:442
 msgid "_Fill with:"
 msgstr "_Omple amb:"
 
@@ -18596,61 +18597,61 @@ msgstr "Desa aquesta imatge"
 msgid "Save as"
 msgstr "Anomena i desa"
 
-#: ../app/dialogs/resize-dialog.c:142
+#: ../app/dialogs/resize-dialog.c:151
 msgid "Canvas Size"
 msgstr "Mida del llenç"
 
-#: ../app/dialogs/resize-dialog.c:154 ../app/dialogs/scale-dialog.c:114
+#: ../app/dialogs/resize-dialog.c:163 ../app/dialogs/scale-dialog.c:114
 msgid "Layer Size"
 msgstr "Mida de la capa"
 
-#: ../app/dialogs/resize-dialog.c:155
+#: ../app/dialogs/resize-dialog.c:164
 msgid "Fill With"
 msgstr "Omple amb"
 
-#: ../app/dialogs/resize-dialog.c:184
+#: ../app/dialogs/resize-dialog.c:199
 msgid "Re_set"
 msgstr "_Restableix"
 
 # És substantiu, no verb
-#: ../app/dialogs/resize-dialog.c:186
+#: ../app/dialogs/resize-dialog.c:201
 msgid "_Resize"
 msgstr "_Canvi de mida"
 
 #. The offset frame
 #. offset frame
-#: ../app/dialogs/resize-dialog.c:229 ../app/tools/gimpalignoptions.c:97
+#: ../app/dialogs/resize-dialog.c:274 ../app/tools/gimpalignoptions.c:97
 #: ../app/tools/gimpalignoptions.c:104 ../app/tools/gimpgradientoptions.c:89
 #: ../app/tools/gimpoffsettool.c:129 ../app/tools/gimpoffsettool.c:473
 #: ../app/tools/gimptransform3dtool.c:343 ../app/widgets/gimpgrideditor.c:211
 msgid "Offset"
 msgstr "Desplaçament"
 
-#: ../app/dialogs/resize-dialog.c:252 ../app/tools/gimpoffsettool.c:497
+#: ../app/dialogs/resize-dialog.c:297 ../app/tools/gimpoffsettool.c:497
 #: ../app/tools/gimptransform3dtool.c:271
 #: ../app/tools/gimptransform3dtool.c:383
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/resize-dialog.c:253 ../app/tools/gimpoffsettool.c:499
+#: ../app/dialogs/resize-dialog.c:298 ../app/tools/gimpoffsettool.c:499
 #: ../app/tools/gimptransform3dtool.c:272
 #: ../app/tools/gimptransform3dtool.c:388
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/resize-dialog.c:270
+#: ../app/dialogs/resize-dialog.c:315
 msgid "C_enter"
 msgstr "C_entre"
 
-#: ../app/dialogs/resize-dialog.c:321
+#: ../app/dialogs/resize-dialog.c:366
 msgid "Resize _layers:"
 msgstr "Redimensiona _les capes:"
 
-#: ../app/dialogs/resize-dialog.c:369
+#: ../app/dialogs/resize-dialog.c:414
 msgid "Resize _text layers"
 msgstr "Redimensiona les capes de _text"
 
-#: ../app/dialogs/resize-dialog.c:380
+#: ../app/dialogs/resize-dialog.c:425
 msgid "Resizing text layers will make them uneditable"
 msgstr "Canviar la mida de les capes de text farà que no es puguin editar"
 
@@ -19185,7 +19186,7 @@ msgstr "(net)"
 msgid "(none)"
 msgstr "(cap)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1568
+#: ../app/display/gimpdisplayshell-tool-events.c:1570
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Capa triada:  «%s»"
@@ -19552,13 +19553,13 @@ msgstr ""
 "Feu clic-i-arrossega per a afegir un segment lliure; feu clic per a afegir "
 "un segment poligonal"
 
-#: ../app/display/gimptoolrectangle.c:566
-#: ../app/display/gimptoolrectangle.c:874
+#: ../app/display/gimptoolrectangle.c:568
+#: ../app/display/gimptoolrectangle.c:876
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Rectangle:"
 
-#: ../app/display/gimptoolrectangle.c:2138
+#: ../app/display/gimptoolrectangle.c:2140
 msgid "Position: "
 msgstr "Posició: "
 
@@ -21627,7 +21628,7 @@ msgstr ""
 "El procediment «%s» s'ha cridat amb una cadena UTF-8 no vàlida per a "
 "l'argument «%s»."
 
-#: ../app/pdb/image-cmds.c:2400
+#: ../app/pdb/image-cmds.c:2434
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -22081,13 +22082,13 @@ msgstr "Nom de variable buida al fitxer d'entorn %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Nom de variable il·legal al fitxer d'entorn %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:302
-#: ../app/plug-in/gimpinterpreterdb.c:399
+#: ../app/plug-in/gimpinterpreterdb.c:303
+#: ../app/plug-in/gimpinterpreterdb.c:400
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "S'ha referit un intèrpret incorrecte al fitxer d'intèrpret %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:371
+#: ../app/plug-in/gimpinterpreterdb.c:372
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Cadena de format binari incorrecta al fitxer d'intèrpret %s"
@@ -22654,7 +22655,7 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Afegeix capa de text"
 
-#: ../app/text/gimptext-parasite.c:89
+#: ../app/text/gimptext-parasite.c:94
 msgid "Empty text parasite"
 msgstr "Paràsit de text buit"
 
@@ -23266,8 +23267,8 @@ msgid "How much to dim everything outside selection"
 msgstr "Quan s'ha d'atenuar tot el que està fora de la selecció"
 
 #: ../app/tools/gimpcropoptions.c:95
-msgid "Current layers only"
-msgstr "Només les capes actuals"
+msgid "Selected layers only"
+msgstr "Només capes seleccionades"
 
 #: ../app/tools/gimpcropoptions.c:96
 msgid "Crop only currently selected layers"
@@ -23301,39 +23302,39 @@ msgstr "Omple amb"
 msgid "How to fill new areas created by 'Allow growing'"
 msgstr "Com omplir les àrees noves creades per «Permet eixamplar»"
 
-#: ../app/tools/gimpcroptool.c:120
+#: ../app/tools/gimpcroptool.c:122
 msgid "Crop"
 msgstr "Escapça"
 
-#: ../app/tools/gimpcroptool.c:121
+#: ../app/tools/gimpcroptool.c:123
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Eina Escapça: elimina la vora de la imatge o de la capa"
 
-#: ../app/tools/gimpcroptool.c:122
+#: ../app/tools/gimpcroptool.c:124
 msgid "_Crop"
 msgstr "Es_capça"
 
-#: ../app/tools/gimpcroptool.c:160
+#: ../app/tools/gimpcroptool.c:162
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Feu clic-i-arrossega per a tallar un rectangle"
 
-#: ../app/tools/gimpcroptool.c:280
+#: ../app/tools/gimpcroptool.c:282
 msgid "Click or press Enter to crop"
 msgstr "Feu clic o premeu la tecla de retorn per a escapçar"
 
-#: ../app/tools/gimpcroptool.c:387
+#: ../app/tools/gimpcroptool.c:389
 msgid "Crop to: "
 msgstr "Escapça a: "
 
-#: ../app/tools/gimpcroptool.c:457
+#: ../app/tools/gimpcroptool.c:459
 msgid "There are no selected layers to crop."
 msgstr "No hi ha capes seleccionades per a escapçar."
 
-#: ../app/tools/gimpcroptool.c:468
+#: ../app/tools/gimpcroptool.c:470
 msgid "All selected layers' pixels are locked."
 msgstr "Tots els píxels de les capes seleccionats estan bloquejats."
 
-#: ../app/tools/gimpcroptool.c:473
+#: ../app/tools/gimpcroptool.c:475
 #, c-format
 msgid "Resize Layer"
 msgid_plural "Resize %d layers"
@@ -23826,8 +23827,8 @@ msgid "GEGL Operation"
 msgstr "Operació GEGL"
 
 #: ../app/tools/gimpgegltool.c:79
-msgid "GEGL Tool: Use an arbitrary GEGL operation"
-msgstr "Eina GEGL: Utilitza una operació GEGL arbitrària"
+msgid "Run an arbitrary GEGL operation"
+msgstr "Executa una operació GEGL arbitrària"
 
 #: ../app/tools/gimpgegltool.c:80
 msgid "_GEGL Operation..."
@@ -24012,37 +24013,37 @@ msgstr "Punt del mig %d"
 msgid "Gradient Step"
 msgstr "Pas de degradat"
 
-#: ../app/tools/gimpguidetool.c:191
+#: ../app/tools/gimpguidetool.c:183
 msgctxt "undo-type"
 msgid "Remove Guides"
 msgstr "Treu les guies"
 
-#: ../app/tools/gimpguidetool.c:192
+#: ../app/tools/gimpguidetool.c:184
 msgctxt "undo-type"
 msgid "Move Guides"
 msgstr "Mou les guies"
 
-#: ../app/tools/gimpguidetool.c:432
+#: ../app/tools/gimpguidetool.c:424
 msgid "Remove Guides"
 msgstr "Treu les guies"
 
-#: ../app/tools/gimpguidetool.c:433
+#: ../app/tools/gimpguidetool.c:425
 msgid "Remove Guide"
 msgstr "Treu la guia"
 
-#: ../app/tools/gimpguidetool.c:434
+#: ../app/tools/gimpguidetool.c:426
 msgid "Cancel Guide"
 msgstr "Cancel·la la guia"
 
-#: ../app/tools/gimpguidetool.c:471
+#: ../app/tools/gimpguidetool.c:463
 msgid "Move Guide: "
 msgstr "Mou la guia:"
 
-#: ../app/tools/gimpguidetool.c:481
+#: ../app/tools/gimpguidetool.c:473
 msgid "Move Guides: "
 msgstr "Mou les guies:"
 
-#: ../app/tools/gimpguidetool.c:492
+#: ../app/tools/gimpguidetool.c:484
 msgid "Add Guide: "
 msgstr "Afegeix guia: "
 
@@ -28641,41 +28642,41 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Estat i descripció"
 
-#: ../app/xcf/xcf.c:116 ../app/xcf/xcf.c:184
+#: ../app/xcf/xcf.c:117 ../app/xcf/xcf.c:185
 msgid "GIMP XCF image"
 msgstr "Imatge XCF del GIMP"
 
-#: ../app/xcf/xcf.c:261 ../app/xcf/xcf.c:350
+#: ../app/xcf/xcf.c:262 ../app/xcf/xcf.c:351
 msgid "Memory Stream"
 msgstr "Flux de memòria"
 
-#: ../app/xcf/xcf.c:272
+#: ../app/xcf/xcf.c:273
 #, c-format
 msgid "Opening '%s'"
 msgstr "S'està obrint «%s»"
 
-#: ../app/xcf/xcf.c:314
+#: ../app/xcf/xcf.c:315
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr ""
 "S'ha produït un error en XCF: no es pot treballar amb fitxers XCF versió %d"
 
-#: ../app/xcf/xcf.c:373
+#: ../app/xcf/xcf.c:374
 #, c-format
 msgid "Saving '%s'"
 msgstr "S'està desant «%s»"
 
-#: ../app/xcf/xcf.c:381
+#: ../app/xcf/xcf.c:382
 #, c-format
 msgid "Closing '%s'"
 msgstr "S'està tancant «%s»"
 
-#: ../app/xcf/xcf.c:399
+#: ../app/xcf/xcf.c:400
 #, c-format
 msgid "Error writing '%s': "
 msgstr "S'ha produït un error en escriure «%s»: "
 
-#: ../app/xcf/xcf.c:487
+#: ../app/xcf/xcf.c:488
 #, c-format
 msgid "Error creating '%s': "
 msgstr "S'ha produït un error en crear «%s»: "
@@ -28684,7 +28685,7 @@ msgstr "S'ha produït un error en crear «%s»: "
 msgid "Invalid image mode and precision combination."
 msgstr "Modalitat d'imatge i combinació de precisió no vàlides."
 
-#: ../app/xcf/xcf-load.c:366
+#: ../app/xcf/xcf-load.c:373
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28693,7 +28694,7 @@ msgstr ""
 "S'han descobert dades 'exif-data' paràsites malmeses.\n"
 "Les dades Exif no s'han pogut migrar: %s"
 
-#: ../app/xcf/xcf-load.c:403
+#: ../app/xcf/xcf-load.c:412
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28701,8 +28702,8 @@ msgstr ""
 "S'ha trobat un paràsit de 'gimp-metadata' malmès.\n"
 "Les dades XMP no s'han pogut migrar."
 
-#: ../app/xcf/xcf-load.c:427
-#, c-format, fuzzy
+#: ../app/xcf/xcf-load.c:436
+#, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be converted and will be ignored.\n"
 "If you don't know what XMP is, you most likely don't need it. Reported error: %s."
@@ -28711,7 +28712,7 @@ msgstr ""
 "per una versió més antiga del GIMP. Si no sabeu què és el XMP, probablement "
 "no ho necessiteu. Error informat: %s."
 
-#: ../app/xcf/xcf-load.c:703
+#: ../app/xcf/xcf-load.c:712
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -28719,7 +28720,7 @@ msgstr ""
 "Aquest fitxer XCF està malmès! S'ha intentat llegir el màxim que s'ha pogut,"
 " però està incomplet."
 
-#: ../app/xcf/xcf-load.c:722
+#: ../app/xcf/xcf-load.c:731
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -28727,7 +28728,7 @@ msgstr ""
 "Aquest fitxer XCF està malmès! Ni tan sols s'ha pogut salvar cap informació "
 "parcial de la imatge."
 
-#: ../app/xcf/xcf-load.c:813
+#: ../app/xcf/xcf-load.c:822
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28775,6 +28776,9 @@ msgstr "arrodonit"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "difús"
+
+#~ msgid "Current layers only"
+#~ msgstr "Només les capes actuals"
 
 #~ msgid ""
 #~ "Corrupt 'gimp-metadata' parasite discovered.\n"
