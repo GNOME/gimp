@@ -168,12 +168,17 @@ gimp_gegl_procedure_get_sensitive (GimpProcedure  *procedure,
                                    GimpObject     *object,
                                    const gchar   **tooltip)
 {
-  GimpDrawable *drawable  = GIMP_DRAWABLE (object);
-  gboolean      sensitive = FALSE;
+  GimpImage *image     = GIMP_IMAGE (object);
+  GList     *drawables = NULL;
+  gboolean   sensitive = FALSE;
 
-  if (drawable)
+  if (image)
+    drawables = gimp_image_get_selected_drawables (image);
+
+  if (g_list_length (drawables) == 1)
     {
-      GimpItem *item;
+      GimpDrawable *drawable  = drawables->data;
+      GimpItem     *item;
 
       if (GIMP_IS_LAYER_MASK (drawable))
         item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
@@ -185,6 +190,7 @@ gimp_gegl_procedure_get_sensitive (GimpProcedure  *procedure,
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         sensitive = FALSE;
     }
+  g_list_free (drawables);
 
   return sensitive;
 }

@@ -144,6 +144,11 @@ void             gimp_procedure_set_image_types    (GimpProcedure        *proced
                                                     const gchar          *image_types);
 const gchar    * gimp_procedure_get_image_types    (GimpProcedure        *procedure);
 
+void           gimp_procedure_set_sensitivity_mask (GimpProcedure        *procedure,
+                                                    gint                  sensitivity_mask);
+gint           gimp_procedure_get_sensitivity_mask (GimpProcedure        *procedure);
+
+
 void             gimp_procedure_set_menu_label     (GimpProcedure        *procedure,
                                                     const gchar          *menu_label);
 const gchar    * gimp_procedure_get_menu_label     (GimpProcedure        *procedure);

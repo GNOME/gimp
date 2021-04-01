@@ -426,6 +426,39 @@ pdb_get_proc_image_types_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+pdb_set_proc_sensitivity_mask_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  gint mask;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  mask = g_value_get_int (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_proc_sensitivity_mask (plug_in, procedure_name,
+                                                            mask, error);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 pdb_set_proc_menu_label_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
@@ -1515,6 +1548,36 @@ register_pdb_procs (GimpPDB *pdb)
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-proc-sensitivity-mask
+   */
+  procedure = gimp_procedure_new (pdb_set_proc_sensitivity_mask_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-proc-sensitivity-mask");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the sensitivity mask for a plug-in procedure.",
+                                  "This procedure sets the sensitivity mask for the given procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2021");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("mask",
+                                                 "mask",
+                                                 "The procedure's sensitivity mask",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

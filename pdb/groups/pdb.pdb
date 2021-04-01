@@ -426,6 +426,42 @@ CODE
     );
 }
 
+sub pdb_set_proc_sensitivity_mask {
+    $blurb = "Set the sensitivity mask for a plug-in procedure.";
+
+    $help = <<HELP;
+This procedure sets the sensitivity mask for the given procedure.
+HELP
+
+    &jehan_pdb_misc('2021', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'procedure_name', type => 'string', non_empty => 1,
+	  desc => 'The procedure' },
+	{ name => 'mask', type => 'int32',,
+	  desc => "The procedure's sensitivity mask" }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_proc_sensitivity_mask (plug_in, procedure_name,
+                                                        mask, error);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub pdb_set_proc_menu_label {
     $blurb = "Set the menu label for a plug-in procedure.";
 
@@ -1309,6 +1345,7 @@ CODE
             pdb_get_proc_return_value
             pdb_set_proc_image_types
             pdb_get_proc_image_types
+            pdb_set_proc_sensitivity_mask
             pdb_set_proc_menu_label
             pdb_get_proc_menu_label
             pdb_add_proc_menu_path

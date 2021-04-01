@@ -51,6 +51,7 @@ struct _GimpPlugInProcedure
   gchar               *image_types;
   GimpPlugInImageType  image_types_val;
   gchar               *image_types_tooltip;
+  gint                 sensitivity_mask;
   gint64               mtime;
   gboolean             installed_during_init;
 
@@ -123,6 +124,9 @@ gboolean      gimp_plug_in_procedure_take_icon         (GimpPlugInProcedure *pro
 
 void          gimp_plug_in_procedure_set_image_types   (GimpPlugInProcedure *proc,
                                                         const gchar         *image_types);
+void       gimp_plug_in_procedure_set_sensitivity_mask (GimpPlugInProcedure *proc,
+                                                        gint                 sensitivity_mask);
+
 void          gimp_plug_in_procedure_set_file_proc     (GimpPlugInProcedure *proc,
                                                         const gchar         *extensions,
                                                         const gchar         *prefixes,

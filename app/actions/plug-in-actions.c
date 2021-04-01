@@ -163,7 +163,7 @@ plug_in_actions_update (GimpActionGroup *group,
           const gchar   *tooltip;
 
           sensitive = gimp_procedure_get_sensitive (procedure,
-                                                    GIMP_OBJECT (drawable),
+                                                    GIMP_OBJECT (image),
                                                     &tooltip);
 
           gimp_action_group_set_action_sensitive (group,
@@ -330,22 +330,18 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
     {
       GimpContext  *context  = gimp_get_user_context (group->gimp);
       GimpImage    *image    = gimp_context_get_image (context);
-      GimpDrawable *drawable = NULL;
       gboolean      sensitive;
       const gchar  *tooltip;
 
-      if (image)
-        drawable = gimp_image_get_active_drawable (image);
-
       sensitive = gimp_procedure_get_sensitive (GIMP_PROCEDURE (proc),
-                                                GIMP_OBJECT (drawable),
+                                                GIMP_OBJECT (image),
                                                 &tooltip);
 
       gimp_action_group_set_action_sensitive (group,
                                               gimp_object_get_name (proc),
                                               sensitive);
 
-      if (! sensitive && drawable && tooltip)
+      if (! sensitive && tooltip)
         gimp_action_group_set_action_tooltip (group,
                                               gimp_object_get_name (proc),
                                               tooltip);

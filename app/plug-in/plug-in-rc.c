@@ -389,6 +389,7 @@ plug_in_procedure_deserialize (GScanner             *scanner,
   gint             n_args;
   gint             n_return_vals;
   gint             n_menu_paths;
+  gint             sensitivity_mask;
   gint             i;
 
   if (! gimp_scanner_parse_string (scanner, &str))
@@ -457,6 +458,11 @@ plug_in_procedure_deserialize (GScanner             *scanner,
 
   gimp_plug_in_procedure_set_image_types (*proc, str);
   g_free (str);
+
+  if (! gimp_scanner_parse_int (scanner, &sensitivity_mask))
+    return G_TOKEN_INT;
+
+  gimp_plug_in_procedure_set_sensitivity_mask (*proc, sensitivity_mask);
 
   if (! gimp_scanner_parse_int (scanner, (gint *) &n_args))
     return G_TOKEN_INT;
@@ -1279,6 +1285,10 @@ plug_in_rc_write (GSList  *plug_in_defs,
               gimp_config_writer_linefeed (writer);
 
               gimp_config_writer_string (writer, proc->image_types);
+              gimp_config_writer_linefeed (writer);
+
+              gimp_config_writer_printf (writer, "%d",
+                                         proc->sensitivity_mask);
               gimp_config_writer_linefeed (writer);
 
               gimp_config_writer_printf (writer, "%d %d",

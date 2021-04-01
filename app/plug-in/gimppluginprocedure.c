@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimp-memsize.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpparamspecs.h"
 
@@ -303,17 +304,20 @@ gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
                                       const gchar   **tooltip)
 {
   GimpPlugInProcedure *proc       = GIMP_PLUG_IN_PROCEDURE (procedure);
-  GimpDrawable        *drawable;
+  GimpImage           *image;
+  GList               *drawables  = NULL;
   GimpImageType        image_type = -1;
   gboolean             sensitive  = FALSE;
 
-  g_return_val_if_fail (object == NULL || GIMP_IS_DRAWABLE (object), FALSE);
+  g_return_val_if_fail (object == NULL || GIMP_IS_IMAGE (object), FALSE);
 
-  drawable = GIMP_DRAWABLE (object);
+  image = GIMP_IMAGE (object);
+  if (image)
+    drawables = gimp_image_get_selected_drawables (image);
 
-  if (drawable)
+  if (drawables)
     {
-      const Babl *format = gimp_drawable_get_format (drawable);
+      const Babl *format = gimp_drawable_get_format (drawables->data);
 
       image_type = gimp_babl_format_get_image_type (format);
     }
@@ -341,6 +345,21 @@ gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
     default:
       break;
     }
+
+  if (! image &&
+      (proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_NO_IMAGE) != 0)
+    sensitive = TRUE;
+  else if (g_list_length (drawables) == 1 && proc->sensitivity_mask != 0 &&
+           (proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_DRAWABLE) == 0)
+    sensitive = FALSE;
+  else if (g_list_length (drawables) == 0 &&
+           (proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES) == 0)
+    sensitive = FALSE;
+  else if (g_list_length (drawables) > 1 &&
+           (proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_DRAWABLES) == 0)
+    sensitive = FALSE;
+
+  g_list_free (drawables);
 
   if (! sensitive)
     *tooltip = proc->image_types_tooltip;
@@ -1084,6 +1103,15 @@ gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
 
       proc->image_types_tooltip = g_string_free (string, FALSE);
     }
+}
+
+void
+gimp_plug_in_procedure_set_sensitivity_mask (GimpPlugInProcedure *proc,
+                                             gint                 sensitivity_mask)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  proc->sensitivity_mask = sensitivity_mask;
 }
 
 static GSList *

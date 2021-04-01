@@ -1033,7 +1033,7 @@ filters_actions_update (GimpActionGroup *group,
     gint           i;
 
     if (proc &&
-        gimp_procedure_get_sensitive (proc, GIMP_OBJECT (drawable), NULL))
+        gimp_procedure_get_sensitive (proc, GIMP_OBJECT (image), NULL))
       {
         gimp_action_group_set_action_sensitive (group, "filters-repeat", TRUE);
         gimp_action_group_set_action_sensitive (group, "filters-reshow", TRUE);
@@ -1051,7 +1051,7 @@ filters_actions_update (GimpActionGroup *group,
 
         proc = gimp_filter_history_nth (group->gimp, i);
 
-        sensitive = gimp_procedure_get_sensitive (proc, GIMP_OBJECT (drawable),
+        sensitive = gimp_procedure_get_sensitive (proc, GIMP_OBJECT (image),
                                                   NULL);
 
         gimp_action_group_set_action_sensitive (group, name, sensitive);

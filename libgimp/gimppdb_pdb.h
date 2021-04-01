@@ -55,6 +55,8 @@ G_GNUC_INTERNAL GParamSpec* _gimp_pdb_get_proc_return_value          (const gcha
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_image_types           (const gchar       *procedure_name,
                                                                       const gchar       *image_types);
 G_GNUC_INTERNAL gchar*      _gimp_pdb_get_proc_image_types           (const gchar       *procedure_name);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_sensitivity_mask      (const gchar       *procedure_name,
+                                                                      gint               mask);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_menu_label            (const gchar       *procedure_name,
                                                                       const gchar       *menu_label);
 G_GNUC_INTERNAL gchar*      _gimp_pdb_get_proc_menu_label            (const gchar       *procedure_name);

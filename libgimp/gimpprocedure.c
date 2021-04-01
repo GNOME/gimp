@@ -72,6 +72,8 @@ struct _GimpProcedurePrivate
   gchar            *copyright;
   gchar            *date;
 
+  gint              sensitivity_mask;
+
   gint32            n_args;
   GParamSpec      **args;
 
@@ -424,6 +426,9 @@ gimp_procedure_real_install (GimpProcedure *procedure)
                                      procedure->priv->menu_label);
     }
 
+  _gimp_pdb_set_proc_sensitivity_mask (gimp_procedure_get_name (procedure),
+                                       procedure->priv->sensitivity_mask);
+
   for (list = gimp_procedure_get_menu_paths (procedure);
        list;
        list = g_list_next (list))
@@ -698,6 +703,60 @@ gimp_procedure_get_image_types (GimpProcedure *procedure)
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   return procedure->priv->image_types;
+}
+
+/**
+ * gimp_procedure_set_sensitivity_mask:
+ * @procedure:        A #GimpProcedure.
+ * @sensitivity_mask: A binary mask of #GimpProcedureSensitivityMask.
+ *
+ * Sets the case when @procedure is supposed to be sensitive or not.
+ * Note that it will be used by the core to determine whether to show a
+ * procedure as sensitive (hence forbid running it otherwise), yet it
+ * will not forbid thid-party plug-ins for instance to run manually your
+ * registered procedure. Therefore you should still handle non-supported
+ * cases appropriately by returning with %GIMP_PDB_EXECUTION_ERROR and a
+ * suitable error message.
+ *
+ * Similarly third-party plug-ins should verify they are allowed to call
+ * a procedure with gimp_procedure_get_sensitivity_mask() when running
+ * with dynamic contents.
+ *
+ * Note that by default, a procedure works on an image with a single
+ * drawable selected. Hence not setting the mask, setting it with 0 or
+ * setting it with a mask of %GIMP_PROCEDURE_SENSITIVE_DRAWABLE only are
+ * equivalent.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_set_sensitivity_mask (GimpProcedure *procedure,
+                                     gint           sensitivity_mask)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  procedure->priv->sensitivity_mask = sensitivity_mask;
+
+  if (procedure->priv->installed)
+    _gimp_pdb_set_proc_sensitivity_mask (gimp_procedure_get_name (procedure),
+                                         procedure->priv->sensitivity_mask);
+}
+
+/**
+ * gimp_procedure_get_sensitivity_mask:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: The procedure's sensitivity mask given in
+ *          gimp_procedure_set_sensitivity_mask().
+ *
+ * Since: 3.0
+ **/
+gint
+gimp_procedure_get_sensitivity_mask (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), 0);
+
+  return procedure->priv->sensitivity_mask;
 }
 
 /**
