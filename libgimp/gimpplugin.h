@@ -31,6 +31,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#define GIMP_PLUG_IN_ERROR           (gimp_plug_in_error_quark ())
+
 #define GIMP_TYPE_PLUG_IN            (gimp_plug_in_get_type ())
 #define GIMP_PLUG_IN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PLUG_IN, GimpPlugIn))
 #define GIMP_PLUG_IN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PLUG_IN, GimpPlugInClass))
@@ -140,6 +142,8 @@ struct _GimpPlugInClass
   void (* _gimp_reserved8) (void);
 };
 
+
+GQuark          gimp_plug_in_error_quark            (void);
 
 GType           gimp_plug_in_get_type               (void) G_GNUC_CONST;
 

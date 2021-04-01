@@ -106,6 +106,17 @@
 
 #define WRITE_BUFFER_SIZE 1024
 
+/**
+ * gimp_plug_in_error_quark:
+ *
+ * Generic #GQuark error domain for plug-ins. Plug-ins are welcome to
+ * create their own domain when they want to handle advanced error
+ * handling. Often, you just want to pass an error message to the core.
+ * This domain can be used for such simple usage.
+ *
+ * See #GError for information on error domains.
+ */
+G_DEFINE_QUARK (gimp-plug-in-error-quark, gimp_plug_in_error)
 
 enum
 {
