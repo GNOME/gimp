@@ -1377,6 +1377,42 @@ gimp_precision_get_type (void)
 }
 
 GType
+gimp_procedure_sensitivity_mask_get_type (void)
+{
+  static const GFlagsValue values[] =
+  {
+    { GIMP_PROCEDURE_SENSITIVE_DRAWABLE, "GIMP_PROCEDURE_SENSITIVE_DRAWABLE", "drawable" },
+    { GIMP_PROCEDURE_SENSITIVE_DRAWABLES, "GIMP_PROCEDURE_SENSITIVE_DRAWABLES", "drawables" },
+    { GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES, "GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES", "no-drawables" },
+    { GIMP_PROCEDURE_SENSITIVE_NO_IMAGE, "GIMP_PROCEDURE_SENSITIVE_NO_IMAGE", "no-image" },
+    { GIMP_PROCEDURE_SENSITIVE_ALWAYS, "GIMP_PROCEDURE_SENSITIVE_ALWAYS", "always" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpFlagsDesc descs[] =
+  {
+    { GIMP_PROCEDURE_SENSITIVE_DRAWABLE, "GIMP_PROCEDURE_SENSITIVE_DRAWABLE", NULL },
+    { GIMP_PROCEDURE_SENSITIVE_DRAWABLES, "GIMP_PROCEDURE_SENSITIVE_DRAWABLES", NULL },
+    { GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES, "GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES", NULL },
+    { GIMP_PROCEDURE_SENSITIVE_NO_IMAGE, "GIMP_PROCEDURE_SENSITIVE_NO_IMAGE", NULL },
+    { GIMP_PROCEDURE_SENSITIVE_ALWAYS, "GIMP_PROCEDURE_SENSITIVE_ALWAYS", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_flags_register_static ("GimpProcedureSensitivityMask", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "procedure-sensitivity-mask");
+      gimp_flags_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_progress_command_get_type (void)
 {
   static const GEnumValue values[] =

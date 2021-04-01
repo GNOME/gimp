@@ -940,6 +940,28 @@ typedef enum
 
 
 /**
+ * GimpProcedureSensitivityMask:
+ * @GIMP_PROCEDURE_SENSITIVE_DRAWABLE:     Handles image with one selected drawable.
+ * @GIMP_PROCEDURE_SENSITIVE_DRAWABLES:    Handles image with several selected drawables.
+ * @GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES: Handles image with no selected drawables.
+ * @GIMP_PROCEDURE_SENSITIVE_NO_IMAGE:     Handles no image.
+ *
+ * The cases when a #GimpProcedure should be shown as sensitive.
+ **/
+#define GIMP_TYPE_PROCEDURE_SENSITIVITY_MASK (gimp_procedure_sensitivity_mask_get_type ())
+
+GType gimp_procedure_sensitivity_mask_get_type (void) G_GNUC_CONST;
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_PROCEDURE_SENSITIVE_DRAWABLE      = 1 << 0,
+  GIMP_PROCEDURE_SENSITIVE_DRAWABLES     = 1 << 2,
+  GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES  = 1 << 3,
+  GIMP_PROCEDURE_SENSITIVE_NO_IMAGE      = 1 << 4,
+  GIMP_PROCEDURE_SENSITIVE_ALWAYS        = 0xFFFFFFFF
+} GimpProcedureSensitivityMask;
+
+
+/**
  * GimpProgressCommand:
  * @GIMP_PROGRESS_COMMAND_START:      Start a progress
  * @GIMP_PROGRESS_COMMAND_END:        End the progress
