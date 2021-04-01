@@ -26,6 +26,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
@@ -243,27 +244,61 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
 
       if (image)
         {
+          GList *drawables_list = gimp_image_get_selected_drawables (image);
+
           g_value_set_object (gimp_value_array_index (args, n_args), image);
           n_args++;
 
           if (gimp_value_array_length (args) > n_args &&
               GIMP_IS_PARAM_SPEC_DRAWABLE (procedure->args[n_args]))
             {
-              GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-
-              if (drawable)
+              if (drawables_list)
                 {
+                  g_warning ("%s: plug-in procedures expecting a single drawable are deprecated!",
+                             G_STRFUNC);
                   g_value_set_object (gimp_value_array_index (args, n_args),
-                                      drawable);
+                                      drawables_list->data);
                   n_args++;
                 }
               else
                 {
                   g_warning ("Uh-oh, no active drawable for the plug-in!");
+
                   gimp_value_array_unref (args);
+                  g_list_free (drawables_list);
+
                   return NULL;
                 }
             }
+          else if (gimp_value_array_length (args) > n_args + 1        &&
+                   G_IS_PARAM_SPEC_INT (procedure->args[n_args])      &&
+                   GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (procedure->args[n_args + 1]))
+            {
+              GimpDrawable **drawables   = NULL;
+              gint           n_drawables;
+
+              n_drawables = g_list_length (drawables_list);
+
+              g_value_set_int (gimp_value_array_index (args, n_args++),
+                               n_drawables);
+
+              if (drawables_list)
+                {
+                  GList *iter;
+                  gint   i;
+
+                  drawables = g_new (GimpDrawable *, n_drawables);
+                  for (iter = drawables_list, i = 0; iter; iter = iter->next, i++)
+                    drawables[i] = iter->data;
+                }
+
+              gimp_value_set_object_array (gimp_value_array_index (args, n_args++),
+                                           GIMP_TYPE_DRAWABLE,
+                                           (GObject **) drawables, n_drawables);
+
+              g_free (drawables);
+            }
+          g_list_free (drawables_list);
         }
     }
 

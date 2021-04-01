@@ -141,8 +141,9 @@ gimp_config_class_init (GObjectClass  *klass,
         {
           g_object_class_install_property (klass, i + 1, copy);
         }
-      else if (! G_IS_PARAM_SPEC_OBJECT (pspec) &&
-               ! G_IS_PARAM_SPEC_POINTER (pspec))
+      else if (! G_IS_PARAM_SPEC_OBJECT (pspec)  &&
+               ! G_IS_PARAM_SPEC_POINTER (pspec) &&
+               ! GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
         {
           /*  silently ignore object properties  */
 

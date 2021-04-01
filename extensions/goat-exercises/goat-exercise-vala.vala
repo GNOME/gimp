@@ -55,8 +55,10 @@ public class Goat : Gimp.PlugIn {
   public Gimp.ValueArray run(Gimp.Procedure procedure,
                              Gimp.RunMode run_mode,
                              Gimp.Image image,
-                             Gimp.Drawable drawable,
+                             Gimp.Drawable[] drawables,
                              Gimp.ValueArray args) {
+    var drawable = drawables[0];
+
     if (run_mode == Gimp.RunMode.INTERACTIVE) {
       GimpUi.init(PLUG_IN_BINARY);
 
