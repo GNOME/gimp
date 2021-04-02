@@ -153,7 +153,8 @@ static GimpProcedure  * twain_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * twain_run              (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
                                                 GimpImage            *image,
-                                                GimpDrawable         *drawable,
+                                                gint                  n_drawables,
+                                                GimpDrawable        **drawables,
                                                 const GimpValueArray *args,
                                                 gpointer              run_data);
 
@@ -194,6 +195,11 @@ twain_create_procedure (GimpPlugIn  *plug_in,
                                             twain_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE     |
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES    |
+                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES |
+                                           GIMP_PROCEDURE_SENSITIVE_NO_IMAGE);
 
       gimp_procedure_set_menu_label (procedure, N_("_Scanner/Camera..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
@@ -380,7 +386,8 @@ static GimpValueArray *
 twain_run (GimpProcedure        *procedure,
            GimpRunMode           run_mode,
            GimpImage            *image,
-           GimpDrawable         *drawable,
+           gint                  n_drawables,
+           GimpDrawable        **drawables,
            const GimpValueArray *args,
            gpointer              run_data)
 {

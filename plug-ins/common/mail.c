@@ -88,14 +88,16 @@ static GimpProcedure  * mail_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * mail_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               GimpDrawable         *drawable,
+                                               gint                  n_drawables,
+                                               GimpDrawable        **drawables,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
-static GimpPDBStatusType  send_image              (const gchar      *filename,
-                                                   GimpImage        *image,
-                                                   GimpDrawable     *drawable,
-                                                   gint32            run_mode);
+static GimpPDBStatusType  send_image          (const gchar          *filename,
+                                               GimpImage            *image,
+                                               gint                  n_drawables,
+                                               GimpDrawable        **drawables,
+                                               gint32                run_mode);
 
 static gboolean           send_dialog             (void);
 static void               mail_entry_callback     (GtkWidget        *widget,
@@ -192,6 +194,10 @@ mail_create_procedure (GimpPlugIn  *plug_in,
                                             mail_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
       gimp_procedure_set_menu_label (procedure, N_("Send by E_mail..."));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_EDIT);
@@ -253,7 +259,8 @@ static GimpValueArray *
 mail_run (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           const GimpValueArray *args,
           gpointer              run_data)
 {
@@ -306,7 +313,7 @@ mail_run (GimpProcedure        *procedure,
 
   status = send_image (mail_info.filename,
                        image,
-                       drawable,
+                       n_drawables, drawables,
                        run_mode);
 
   if (status == GIMP_PDB_SUCCESS)
@@ -321,13 +328,13 @@ mail_run (GimpProcedure        *procedure,
 }
 
 static GimpPDBStatusType
-send_image (const gchar  *filename,
-            GimpImage    *image,
-            GimpDrawable *drawable,
-            gint32        run_mode)
+send_image (const gchar   *filename,
+            GimpImage     *image,
+            gint           n_drawables,
+            GimpDrawable **drawables,
+            gint32         run_mode)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpItem         **drawables;
   gchar             *ext;
   GFile             *tmpfile;
   gchar             *tmpname;
@@ -353,18 +360,13 @@ send_image (const gchar  *filename,
   tmpfile = gimp_temp_file (ext + 1);
   tmpname = g_file_get_path (tmpfile);
 
-  drawables = g_new (GimpItem *, 1);
-  drawables[0] = (GimpItem *) drawable;
-  if (! (gimp_file_save (run_mode,
-                         image, 1,
+  if (! (gimp_file_save (run_mode, image, n_drawables,
                          (const GimpItem **) drawables,
                          tmpfile) &&
          valid_file (tmpfile)))
     {
-      g_free (drawables);
       goto error;
     }
-  g_free (drawables);
 
 #ifndef SENDMAIL /* xdg-email */
   /* From xdg-email doc:

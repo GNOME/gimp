@@ -87,7 +87,8 @@ static GimpValueArray * dds_save             (GimpProcedure        *procedure,
 static GimpValueArray * dds_decode           (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 #endif
@@ -307,6 +308,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                             dds_decode, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGBA");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, N_("Decode YCoCg"));
       /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
@@ -327,6 +330,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                             dds_decode, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGBA");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, N_("Decode YCoCg (scaled)"));
       /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
@@ -349,6 +354,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                             dds_decode, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGBA");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, N_("Decode Alpha exponent"));
       /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
@@ -488,11 +495,30 @@ static GimpValueArray *
 dds_decode (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            GimpDrawable         *drawable,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
             const GimpValueArray *args,
             gpointer              run_data)
 {
-  const gchar *name = gimp_procedure_get_name (procedure);
+  const gchar  *name = gimp_procedure_get_name (procedure);
+  GimpDrawable *drawable,
+
+  if (n_drawables != 1)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Procedure '%s' only works with one drawable."),
+                   name);
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
+    }
+  else
+    {
+      drawable = drawables[0];
+    }
 
   if (! strcmp (name, DECODE_YCOCG_PROC))
     {

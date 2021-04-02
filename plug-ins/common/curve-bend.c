@@ -255,7 +255,8 @@ static GimpProcedure  * bender_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * bender_run              (GimpProcedure        *procedure,
                                                  GimpRunMode           run_mode,
                                                  GimpImage            *image,
-                                                 GimpDrawable         *drawable,
+                                                 gint                  n_drawables,
+                                                 GimpDrawable        **drawables,
                                                  const GimpValueArray *args,
                                                  gpointer              run_data);
 
@@ -422,6 +423,8 @@ bender_create_procedure (GimpPlugIn  *plug_in,
                                             bender_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, PLUG_IN_IMAGE_TYPES);
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, N_("_Curve Bend..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Distorts");
@@ -640,7 +643,8 @@ static GimpValueArray *
 bender_run (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            GimpDrawable         *drawable,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
             const GimpValueArray *args,
             gpointer              run_data)
 {
@@ -648,12 +652,30 @@ bender_run (GimpProcedure        *procedure,
   GimpValueArray *return_vals;
   BenderDialog   *cd              = NULL;
   GimpDrawable   *active_drawable = NULL;
+  GimpDrawable   *drawable;
   GimpLayer      *layer           = NULL;
   GimpLayer      *bent_layer      = NULL;
   GError         *error           = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  if (n_drawables != 1)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Procedure '%s' only works with one drawable."),
+                   PLUG_IN_PROC);
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
+    }
+  else
+    {
+      drawable = drawables[0];
+    }
 
   env = g_getenv ("BEND_DEBUG");
   if (env != NULL)

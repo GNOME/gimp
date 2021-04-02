@@ -70,7 +70,8 @@ static GimpProcedure    * print_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray   * print_run              (GimpProcedure        *procedure,
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
-                                                  GimpDrawable         *drawable,
+                                                  gint                  n_drawables,
+                                                  GimpDrawable        **drawables,
                                                   const GimpValueArray *args,
                                                   gpointer              run_data);
 
@@ -156,6 +157,10 @@ print_create_procedure (GimpPlugIn  *plug_in,
                                             print_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
       gimp_procedure_set_menu_label (procedure, N_("_Print..."));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_DOCUMENT_PRINT);
@@ -206,7 +211,8 @@ static GimpValueArray *
 print_run (GimpProcedure        *procedure,
            GimpRunMode           run_mode,
            GimpImage            *image,
-           GimpDrawable         *drawable,
+           gint                  n_drawables,
+           GimpDrawable        **drawables,
            const GimpValueArray *args,
            gpointer              run_data)
 {

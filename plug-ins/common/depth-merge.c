@@ -124,7 +124,8 @@ static GimpProcedure  * merge_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * merge_run              (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
                                                 GimpImage            *image,
-                                                GimpDrawable         *drawable,
+                                                gint                  n_drawables,
+                                                GimpDrawable        **drawables,
                                                 const GimpValueArray *args,
                                                 gpointer              run_data);
 
@@ -209,6 +210,8 @@ merge_create_procedure (GimpPlugIn  *plug_in,
                                             merge_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, N_("_Depth Merge..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Combine");
@@ -284,14 +287,33 @@ static GimpValueArray *
 merge_run (GimpProcedure        *procedure,
            GimpRunMode           run_mode,
            GimpImage            *image,
-           GimpDrawable         *drawable,
+           gint                  n_drawables,
+           GimpDrawable        **drawables,
            const GimpValueArray *args,
            gpointer              run_data)
 {
-  DepthMerge dm;
+  GimpDrawable *drawable;
+  DepthMerge    dm;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  if (n_drawables != 1)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Procedure '%s' only works with one drawable."),
+                   PLUG_IN_PROC);
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+  else
+    {
+      drawable = drawables[0];
+    }
 
   DepthMerge_initParams (&dm);
 

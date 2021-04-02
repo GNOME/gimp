@@ -69,7 +69,8 @@ static GimpProcedure  * remap_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * remap_run              (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
                                                 GimpImage            *image,
-                                                GimpDrawable         *drawable,
+                                                gint                  n_drawables,
+                                                GimpDrawable        **drawables,
                                                 const GimpValueArray *args,
                                                 gpointer              run_data);
 
@@ -124,6 +125,10 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                             remap_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
       gimp_procedure_set_menu_label (procedure, N_("R_earrange Colormap..."));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_COLORMAP);
@@ -160,6 +165,10 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                             remap_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
       gimp_procedure_set_menu_label (procedure, N_("_Swap Colors"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_COLORMAP);
@@ -197,7 +206,8 @@ static GimpValueArray *
 remap_run (GimpProcedure        *procedure,
            GimpRunMode           run_mode,
            GimpImage            *image,
-           GimpDrawable         *drawable,
+           gint                  n_drawables,
+           GimpDrawable        **drawables,
            const GimpValueArray *args,
            gpointer              run_data)
 {

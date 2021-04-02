@@ -98,7 +98,8 @@ static GimpProcedure  * decompose_create_procedure (GimpPlugIn           *plug_i
 static GimpValueArray * decompose_run              (GimpProcedure        *procedure,
                                                     GimpRunMode           run_mode,
                                                     GimpImage            *image,
-                                                    GimpDrawable         *drawable,
+                                                    gint                  n_drawables,
+                                                    GimpDrawable        **drawables,
                                                     const GimpValueArray *args,
                                                     gpointer              run_data);
 
@@ -273,6 +274,8 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
                                             decompose_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, N_("_Decompose..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
@@ -344,12 +347,14 @@ static GimpValueArray *
 decompose_run (GimpProcedure        *procedure,
                GimpRunMode           run_mode,
                GimpImage            *image,
-               GimpDrawable         *drawable,
+               gint                  n_drawables,
+               GimpDrawable        **drawables,
                const GimpValueArray *args,
                gpointer              run_data)
 {
   GimpProcedureConfig *config;
   GimpValueArray      *return_vals;
+  GimpDrawable        *drawable;
   gint                 num_images;
   GimpImage           *image_extract[MAX_EXTRACT_IMAGES];
   GimpLayer           *layer_extract[MAX_EXTRACT_IMAGES];
@@ -361,6 +366,23 @@ decompose_run (GimpProcedure        *procedure,
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  if (n_drawables != 1)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Procedure '%s' only works with one drawable."),
+                   PLUG_IN_PROC);
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+  else
+    {
+      drawable = drawables[0];
+    }
 
   config = gimp_procedure_create_config (procedure);
   gimp_procedure_config_begin_run (config, NULL, run_mode, args);
