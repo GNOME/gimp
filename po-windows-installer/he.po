@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-28 19:54+0000\n"
-"PO-Revision-Date: 2020-10-29 13:35+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2021-04-03 21:38+0000\n"
+"PO-Revision-Date: 2021-04-04 00:57+0300\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
-msgstr "הסכם רישיון"
+msgstr "הסכם רישוי"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
@@ -28,7 +28,7 @@ msgstr "תכנית ההתקנה נבנתה על ידי Jernej Simonèiè,‏ jer
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
-msgstr "לגרסה זו של GIMP נחוצה Windows 7, או גרסה חדשה יותר של Windows."
+msgstr "לגרסה זו של GIMP צריך Windows 7 או גרסה חדשה יותר של Windows."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:4
 msgid "Development version"
@@ -45,6 +45,11 @@ msgid ""
 "gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
+"זו גרסת פיתוח של GIMP בה חלק מהתכונות טרם הושלמו או שאינה יציבה.%nגרסה זו של "
+"GIMP אינה מיועדת לשימוש יומיומי כיוון שהיא עלולה להיות בלתי־יציבה והעבודה שלך "
+"עשויה ללכת לאיבוד.%nאם נתקלת בתקלות כלשהן, תחילה עליך לוודא שהן לא תוקנו ב־"
+"GIT טרם יצירת הקשר עם המפתחים או הגשת דיווח ב־Gitlab של GIMP:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nשנמשיך בהתקנה בכל זאת?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
@@ -57,7 +62,7 @@ msgstr "יציאה"
 #: ../build/windows/installer/lang/setup.isl.in.h:9
 msgid ""
 "This version of GIMP requires a processor that supports SSE instructions."
-msgstr ""
+msgstr "גרסה זו של GIMP דורשת מעבד שתומך בהנחיות SSE."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:10
 msgid "Display settings problem"
@@ -70,6 +75,9 @@ msgid ""
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
+"ההתקנה זיהתה שה־Windows שלך לא פועל במצב תצוגה של 32 סיביות לפיקסל. ידוע שמצב "
+"כזה עשוי לגרום לבעיות יציבות עם GIMP לכן מומלץ לשנות את עומק צבע התצוגה ל־32 "
+"סיביות לפיקסל לפני המשך בתהליך."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:12
 msgid "E&xit"
@@ -81,9 +89,8 @@ msgid ""
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"GIMP מוכנה להתקנה כעת. יש ללחוץ על כפתור \"התקנה כעת\" כדי להתקין עם הגדרות "
-"ברירת המחדל, או ללחוץ על כפתור \"התאמה\" אם ברצונך לקבל יותר שליטה על הדברים "
-"שיותקנו."
+"‫GIMP מוכנה להתקנה כעת. יש ללחוץ על כפתור „התקנה כעת” כדי להתקין עם הגדרות "
+"ברירת המחדל או ללחוץ על הכפתור „התאמה” כדי לשלוט על מה שיותקן."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:14
 msgid "&Install"
@@ -119,28 +126,27 @@ msgstr "GIMP וכל תוספי ברירת המחדל"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:22
 msgid "Run-time libraries"
-msgstr "ספריות Run-time"
+msgstr "ספריות זמן ריצה"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:23
 msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
-msgstr ""
-"ספריות Run-time שנעשה בהן שימוש על ידי GIMP, כוללת את ספריית Run-time של GTK‏+"
+msgstr "ספריות זמן ריצה שמשמשות את GIMP, לרבות את ספריית זמן הריצה של GTK+‎"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:24
 msgid "Debug symbols"
-msgstr ""
+msgstr "סימולים של ניפוי שגיאות"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:25
 msgid "Include information to help with debugging GIMP"
-msgstr ""
+msgstr "לכלול פרטים לסיוע בניפוי שגיאות ב־GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:26
 msgid "MS-Windows engine for GTK+"
-msgstr "מנוע MS-Windows עבור GTK‏+"
+msgstr "מנוע MS-Windows עבור GTK+‎"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:27
 msgid "Native Windows look for GIMP"
-msgstr "מראה מקומי של Windows עבור GIMP"
+msgstr "מראה שגרתי של Windows עבור GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:28
 msgid "Support for old plug-ins"
@@ -148,7 +154,7 @@ msgstr "תמיכה בתוספים ישנים"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:29
 msgid "Install libraries needed by old third-party plug-ins"
-msgstr ""
+msgstr "להתקין ספריות שדורשות תוספות צד־שלישי ישנות"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:30
 msgid "Translations"
@@ -180,14 +186,14 @@ msgstr "מאפשרת ל־GIMP לטעון קובצי PostScript"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:37
 msgid "Support for 32-bit plug-ins"
-msgstr "תמיכה בתוספים ל־32 סיביות"
+msgstr "תמיכה בתוספי 32 סיביות"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:39
 #, no-c-format
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
-msgstr ""
+msgstr "לכלול קבצים שנדרשים לשימוש בתוספי 32 סיביות.%nנחוץ לתמיכה ב־Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:40
 msgid "Additional icons:"
@@ -211,6 +217,8 @@ msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr ""
+"אירעה תקלה בעדכון הסביבה של GIMP בתוך %1. אם מופיעות שגיאות בעת טעינת התוספים "
+"כדאי לנסות להסיר ולהתקין את GIMP מחדש."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:46
 msgid "Error extracting temporary data."
@@ -218,7 +226,7 @@ msgstr "שגיאה בחילוץ נתונים זמניים."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:47
 msgid "Error updating Python interpreter info."
-msgstr ""
+msgstr "שגיאה בעדכון פרטי מפענח Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:48
 msgid "Error updating MyPaint brushes info."
@@ -254,7 +262,7 @@ msgstr "בחירת סוגי הקבצים שברצונך לשייך עם GIMP"
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
-msgstr ""
+msgstr "הגדרה זו תגרום לקבצים הנברחים להיפתח ב־GIMP בלחיצה כפולה בסייר הקבצים."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:58
 msgid "Select &All"
@@ -262,11 +270,11 @@ msgstr "לבחור ה&כול"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:59
 msgid "Unselect &All"
-msgstr "ביטול בחירת ה&כול"
+msgstr "ביטול בחירה בה&כול"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:60
 msgid "Select &Unused"
-msgstr ""
+msgstr "לבחור &לא בשימוש"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:61
 msgid "File types to associate with GIMP:"
@@ -274,7 +282,7 @@ msgstr "סוגי קבצים לשיוך עם GIMP:"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:62
 msgid "Removing previous version of GIMP:"
-msgstr ""
+msgstr "גרסאות קודמות של GIMP נמחקות:"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:64
 #, no-c-format
@@ -285,6 +293,10 @@ msgid ""
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
+"‫לא ניתן להתקין את GIMP %1 על גבי גרסת ה־GIMP שכבר מותקנת אצלך וההסרה "
+"האוטומטית של הגרסה הישנה נכשלה.%n%nנא להסיר את הגרסה הקודמת של GIMP בעצמך "
+"בטרם התקנת הגרסה הזאת תחת %s או לבחור בהתקנה מותאמת ולבחור בתיקיית התקנה שונה."
+"%n%nתכנית ההתקנה תסתיים כעת."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format
@@ -295,6 +307,10 @@ msgid ""
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
+"לא ניתן להתקין את GIMP %1 על גבי גרסת ה־GIMP שכבר מותקנת אצלך ותכנית ההתקנה "
+"לא יכולה לפענח כיצד להסיר את הגרסה הישנה אוטומטית.%n%nנא להסיר את הגרסה "
+"הקודמת של GIMP על כל תוספיה בעצמך בטרם התקנת הגרסה הזאת תחת %2 או לבחור "
+"בהתקנה מותאמת ולבחור בתיקיית התקנה שונה.%n%nתכנית ההתקנה תסתיים כעת."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:68
 #, no-c-format
@@ -303,6 +319,8 @@ msgid ""
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
+"גרסה קודמת של GIMP הוסרה בהצלחה אך יש להפעיל את Windows מחדש בטרם המשך ההתקנה."
+"%n%nלאחר הפעלת המחשב מחדש, תכנית ההתקנה תמשיך עם כניסת המנהל הבאה למערכת."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:70
 #, no-c-format
@@ -311,36 +329,36 @@ msgstr "הייתה בעיה בהתחלת ההתקנה מחדש. (%1)"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:71
 msgid "Cleaning up old files..."
-msgstr "בניקוי קבצים ישנים..."
+msgstr "קבצים ישנים נמחקים…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:73
 #, no-c-format
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "יש לזכור: GIMP היא תוכנה חופשית.%n%nנא לבקר בכתובת"
+msgstr "יש לזכור: GIMP היא במסגרת תכנה חופשית.%n%nנא לבקר בכתובת"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:74
 msgid "for free updates."
-msgstr "בשביל עדכונים חופשיים."
+msgstr "לקבלת עדכונים בחינם."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:75
 msgid "Setting up file associations..."
-msgstr "בהגדרת שיוכי הקבצים..."
+msgstr "שיוכי הקבצים מוגדרים…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:76
 msgid "Setting up environment for GIMP Python extension..."
-msgstr "בהקמת הסביבה להרחבת Python ב־GIMP..."
+msgstr "הסביבה להרחבת Python ב־GIMP מוגדרת…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:77
 msgid "Setting up MyPaint brushes..."
-msgstr "בהקמת מברשות MyPaint..."
+msgstr "מברשות MyPaint מותקנות…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:78
 msgid "Setting up GIMP environment..."
-msgstr "בהקמת הסביבה של GIMP..."
+msgstr "הסביבה של GIMP בהקמה…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:79
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "בהגדרת תצורת GIMP לתמיכה בתוספים ל־32 סיביות..."
+msgstr "תצורת GIMP לתמיכה בתוספים ל־32 סיביות מוגדרת…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:80
 msgid "Launch GIMP"
@@ -348,7 +366,7 @@ msgstr "הפעלת GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:81
 msgid "Removing add-on"
-msgstr ""
+msgstr "התוספת נמחקת"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:83
 #, no-c-format
@@ -359,4 +377,4 @@ msgstr "שגיאה פנימית (%1)."
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
-msgstr "נראה ש־GIMP לא מותקנת בתיקייה הנבחרת. להמשיך בכול זאת?"
+msgstr "נראה ש־GIMP לא מותקנת בתיקייה הנבחרת. להמשיך בכל זאת?"
