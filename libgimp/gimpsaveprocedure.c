@@ -396,7 +396,11 @@ gimp_save_procedure_create_config (GimpProcedure  *procedure,
 static void
 gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
 {
-  GimpProcedure *procedure = GIMP_PROCEDURE (save_procedure);
+  GimpProcedure   *procedure = GIMP_PROCEDURE (save_procedure);
+  static gboolean  ran_once = FALSE;
+
+  if (ran_once)
+    return;
 
   if (save_procedure->priv->supports_exif)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-exif",
@@ -445,6 +449,7 @@ gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
                                         GIMP_ARGUMENT_SYNC_PARASITE);
     }
 
+  ran_once = TRUE;
 }
 
 
