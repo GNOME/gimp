@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-06 14:23+0100\n"
-"PO-Revision-Date: 2021-03-06 14:24+0100\n"
+"POT-Creation-Date: 2021-04-03 13:45+0200\n"
+"PO-Revision-Date: 2021-04-03 13:47+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -99,10 +99,10 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/lighting/lighting-ui.c:1162
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
-#: ../plug-ins/metadata/metadata-editor.c:564
-#: ../plug-ins/metadata/metadata-editor.c:830
-#: ../plug-ins/metadata/metadata-editor.c:5717
-#: ../plug-ins/metadata/metadata-editor.c:5752
+#: ../plug-ins/metadata/metadata-editor.c:590
+#: ../plug-ins/metadata/metadata-editor.c:952
+#: ../plug-ins/metadata/metadata-editor.c:4560
+#: ../plug-ins/metadata/metadata-editor.c:4595
 #: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -1512,12 +1512,12 @@ msgid "Uniform"
 msgstr "Jednostajny"
 
 #: ../plug-ins/common/contrast-retinex.c:319
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Low"
 msgstr "Niski"
 
 #: ../plug-ins/common/contrast-retinex.c:320
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "High"
 msgstr "Wysoki"
 
@@ -3151,7 +3151,7 @@ msgstr "Import z PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3399
 #: ../plug-ins/file-tiff/file-tiff-load.c:2431
-#: ../plug-ins/metadata/metadata-editor.c:5718
+#: ../plug-ins/metadata/metadata-editor.c:4561
 msgid "_Import"
 msgstr "Zai_mportuj"
 
@@ -3379,13 +3379,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Błąd podczas eksportowania pliku „%s”. Nie można wyeksportować obrazu."
 
 #: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1232
+#: ../plug-ins/file-tiff/file-tiff-save.c:1248
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku interfejsu użytkownika „%s”: %s"
 
 #: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1233
+#: ../plug-ins/file-tiff/file-tiff-save.c:1249
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
@@ -6711,7 +6711,7 @@ msgid "Export as DDS"
 msgstr "Eksport jako DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1957
-#: ../plug-ins/metadata/metadata-editor.c:5753
+#: ../plug-ins/metadata/metadata-editor.c:4596
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
@@ -7697,39 +7697,39 @@ msgstr ""
 msgid "Writing pages with different bit depth is strange."
 msgstr "Zapisywanie stron o różnych głębiach bitowych jest dziwne."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1222
+#: ../plug-ins/file-tiff/file-tiff-save.c:1238
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1248
+#: ../plug-ins/file-tiff/file-tiff-save.c:1264
 msgid "Compression"
 msgstr "Kompresja"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1252
+#: ../plug-ins/file-tiff/file-tiff-save.c:1268
 msgid "_None"
 msgstr "_Brak"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1253
+#: ../plug-ins/file-tiff/file-tiff-save.c:1269
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1254
+#: ../plug-ins/file-tiff/file-tiff-save.c:1270
 msgid "_Pack Bits"
 msgstr "_Kompresowanie bitów"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1255
+#: ../plug-ins/file-tiff/file-tiff-save.c:1271
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1256
+#: ../plug-ins/file-tiff/file-tiff-save.c:1272
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1257
+#: ../plug-ins/file-tiff/file-tiff-save.c:1273
 msgid "CCITT Group _3 fax"
 msgstr "Faks CCITT Group _3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1258
+#: ../plug-ins/file-tiff/file-tiff-save.c:1274
 msgid "CCITT Group _4 fax"
 msgstr "Faks CCITT Group _4"
 
@@ -8793,7 +8793,7 @@ msgstr "Typ siatki:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Normal"
 msgstr "Zwykłe"
 
@@ -8914,7 +8914,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Zmienia wartość gamma (jasność) wybranego pędzla"
 
 #: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/metadata/metadata-editor.c:587
+#: ../plug-ins/metadata/metadata-editor.c:613
 msgid "Select:"
 msgstr "Wybór:"
 
@@ -9715,6 +9715,10 @@ msgstr "Zapisanie _danych Exif"
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
 msgid "Save _GeoTIFF data"
 msgstr "Zapisanie danych _GeoTIFF"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
+msgid "Keep the GeoTIFF metadata if it was present on import"
+msgstr "Zachowuje metadane GeoTIFF, jeśli były obecne podczas importu"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -12075,49 +12079,49 @@ msgstr "Wyświetlanie _szkieletu podglądu"
 msgid "Update preview _live"
 msgstr "_Odświeżanie podgląd na żywo"
 
-#: ../plug-ins/metadata/metadata-editor.c:413
+#: ../plug-ins/metadata/metadata-editor.c:439
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Modyfikuje metadane (IPTC, Exif, XMP)"
 
-#: ../plug-ins/metadata/metadata-editor.c:421
+#: ../plug-ins/metadata/metadata-editor.c:447
 msgid "_Edit Metadata"
 msgstr "_Modyfikuj metadane"
 
-#: ../plug-ins/metadata/metadata-editor.c:545
+#: ../plug-ins/metadata/metadata-editor.c:571
 msgid "Error loading metadata-editor dialog."
 msgstr "Błąd podczas wczytywania okna edytora metadanych."
 
-#: ../plug-ins/metadata/metadata-editor.c:556
+#: ../plug-ins/metadata/metadata-editor.c:582
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Edytor metadanych: %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:565
+#: ../plug-ins/metadata/metadata-editor.c:591
 msgid "_Write Metadata"
 msgstr "_Zapisz metadane"
 
-#: ../plug-ins/metadata/metadata-editor.c:589
+#: ../plug-ins/metadata/metadata-editor.c:615
 msgid "Import metadata"
 msgstr "Import metadanych"
 
-#: ../plug-ins/metadata/metadata-editor.c:591
+#: ../plug-ins/metadata/metadata-editor.c:617
 msgid "Export metadata"
 msgstr "Eksport metadanych"
 
-#: ../plug-ins/metadata/metadata-editor.c:799
+#: ../plug-ins/metadata/metadata-editor.c:921
 #, c-format
 msgid "Error loading calendar. %s"
 msgstr "Błąd podczas wczytywania kalendarza. %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:827
+#: ../plug-ins/metadata/metadata-editor.c:949
 msgid "Calendar Date:"
 msgstr "Data kalendarzowa:"
 
-#: ../plug-ins/metadata/metadata-editor.c:831
+#: ../plug-ins/metadata/metadata-editor.c:953
 msgid "Set Date"
 msgstr "Ustaw datę"
 
-#: ../plug-ins/metadata/metadata-editor.c:1565
+#: ../plug-ins/metadata/metadata-editor.c:1687
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -12133,7 +12137,7 @@ msgstr ""
 "lub 10,45\n"
 "Usunięcie całego tekstu usunie obecną wartość."
 
-#: ../plug-ins/metadata/metadata-editor.c:1571
+#: ../plug-ins/metadata/metadata-editor.c:1693
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -12149,217 +12153,219 @@ msgstr ""
 "stopach (ft)\n"
 "Usunięcie całego tekstu usunie obecną wartość."
 
-#: ../plug-ins/metadata/metadata-editor.c:1707
+#: ../plug-ins/metadata/metadata-editor.c:1829
 msgid "Unrated"
 msgstr "Bez oceny"
 
-#: ../plug-ins/metadata/metadata-editor.c:4405
+#: ../plug-ins/metadata/metadata-editor.c:3697
 #, c-format
 msgid "Failed to set metadata tag %s"
 msgstr "Ustawienie etykiety metadanych %s się nie powiodło"
 
-#: ../plug-ins/metadata/metadata-editor.c:5714
+#: ../plug-ins/metadata/metadata-editor.c:4557
 msgid "Import Metadata File"
 msgstr "Import pliku metadanych"
 
-#: ../plug-ins/metadata/metadata-editor.c:5749
+#: ../plug-ins/metadata/metadata-editor.c:4592
 msgid "Export Metadata File"
 msgstr "Eksport pliku metadanych"
 
 #: ../plug-ins/metadata/metadata-tags.c:169
+#: ../plug-ins/metadata/metadata-tags.c:183
+#: ../plug-ins/metadata/metadata-tags.c:243
+#: ../plug-ins/metadata/metadata-tags.c:260
+msgid "Select a value"
+msgstr "Wybierz wartość"
+
+#: ../plug-ins/metadata/metadata-tags.c:170
 msgid "Original digital capture of a real life scene"
 msgstr "Oryginalne zdjęcie cyfrowe prawdziwej sceny"
 
-#: ../plug-ins/metadata/metadata-tags.c:170
+#: ../plug-ins/metadata/metadata-tags.c:171
 msgid "Digitized from a negative on film"
 msgstr "Cyfryzacja z negatywu filmowego"
 
-#: ../plug-ins/metadata/metadata-tags.c:171
+#: ../plug-ins/metadata/metadata-tags.c:172
 msgid "Digitized from a positive on film"
 msgstr "Cyfryzacja z pozytywu filmowego"
 
-#: ../plug-ins/metadata/metadata-tags.c:172
+#: ../plug-ins/metadata/metadata-tags.c:173
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Cyfryzacja z odbitki na nieprzezroczystym nośniku"
 
-#: ../plug-ins/metadata/metadata-tags.c:173
+#: ../plug-ins/metadata/metadata-tags.c:174
 msgid "Created by software"
 msgstr "Utworzone przez oprogramowanie"
 
-#: ../plug-ins/metadata/metadata-tags.c:182
-#: ../plug-ins/metadata/metadata-tags.c:194
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:184
+#: ../plug-ins/metadata/metadata-tags.c:196
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "None"
 msgstr "Brak"
 
-#: ../plug-ins/metadata/metadata-tags.c:183
-#: ../plug-ins/metadata/metadata-tags.c:195
+#: ../plug-ins/metadata/metadata-tags.c:185
+#: ../plug-ins/metadata/metadata-tags.c:197
 msgid "Not Applicable"
 msgstr "Nie dotyczy"
 
-#: ../plug-ins/metadata/metadata-tags.c:184
+#: ../plug-ins/metadata/metadata-tags.c:186
 msgid "Unlimited Model Releases"
 msgstr "Nieograniczone publikacje modelów"
 
-#: ../plug-ins/metadata/metadata-tags.c:185
+#: ../plug-ins/metadata/metadata-tags.c:187
 msgid "Limited or Incomplete Model Releases"
 msgstr "Ograniczone lub niepełne publikacje modelów"
 
-#: ../plug-ins/metadata/metadata-tags.c:196
+#: ../plug-ins/metadata/metadata-tags.c:198
 msgid "Unlimited Property Releases"
 msgstr "Nieograniczone publikacje własności"
 
-#: ../plug-ins/metadata/metadata-tags.c:197
+#: ../plug-ins/metadata/metadata-tags.c:199
 msgid "Limited or Incomplete Property Releases"
 msgstr "Ograniczone lub niepełne publikacje własności"
 
-#: ../plug-ins/metadata/metadata-tags.c:206
+#: ../plug-ins/metadata/metadata-tags.c:208
 msgid "Age Unknown"
 msgstr "Nieznany wiek"
 
-#: ../plug-ins/metadata/metadata-tags.c:207
+#: ../plug-ins/metadata/metadata-tags.c:209
 msgid "Age 25 or Over"
 msgstr "25 lat lub więcej"
 
-#: ../plug-ins/metadata/metadata-tags.c:208
+#: ../plug-ins/metadata/metadata-tags.c:210
 msgid "Age 24"
 msgstr "24 lata"
 
-#: ../plug-ins/metadata/metadata-tags.c:209
+#: ../plug-ins/metadata/metadata-tags.c:211
 msgid "Age 23"
 msgstr "23 lata"
 
-#: ../plug-ins/metadata/metadata-tags.c:210
+#: ../plug-ins/metadata/metadata-tags.c:212
 msgid "Age 22"
 msgstr "22 lata"
 
-#: ../plug-ins/metadata/metadata-tags.c:211
+#: ../plug-ins/metadata/metadata-tags.c:213
 msgid "Age 21"
 msgstr "21 lat"
 
-#: ../plug-ins/metadata/metadata-tags.c:212
+#: ../plug-ins/metadata/metadata-tags.c:214
 msgid "Age 20"
 msgstr "20 lat"
 
-#: ../plug-ins/metadata/metadata-tags.c:213
+#: ../plug-ins/metadata/metadata-tags.c:215
 msgid "Age 19"
 msgstr "19 lat"
 
-#: ../plug-ins/metadata/metadata-tags.c:214
+#: ../plug-ins/metadata/metadata-tags.c:216
 msgid "Age 18"
 msgstr "18 lat"
 
-#: ../plug-ins/metadata/metadata-tags.c:215
+#: ../plug-ins/metadata/metadata-tags.c:217
 msgid "Age 17"
 msgstr "17 lat"
 
-#: ../plug-ins/metadata/metadata-tags.c:216
+#: ../plug-ins/metadata/metadata-tags.c:218
 msgid "Age 16"
 msgstr "16 lat"
 
-#: ../plug-ins/metadata/metadata-tags.c:217
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Age 15"
 msgstr "15 lat"
 
-#: ../plug-ins/metadata/metadata-tags.c:218
+#: ../plug-ins/metadata/metadata-tags.c:220
 msgid "Age 14 or Under"
 msgstr "14 lat lub mniej"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "2"
 msgstr "2"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "3"
 msgstr "3"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "4"
 msgstr "4"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "6"
 msgstr "6"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "7"
 msgstr "7"
 
-#: ../plug-ins/metadata/metadata-tags.c:232
-#: ../plug-ins/metadata/metadata-tags.c:268
-#: ../plug-ins/metadata/metadata-tags.c:275
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:234
+#: ../plug-ins/metadata/metadata-tags.c:270
+#: ../plug-ins/metadata/metadata-tags.c:277
+#: ../plug-ins/metadata/metadata-tags.c:284
 msgid "Unknown"
 msgstr "Nieznane"
 
 #. DO NOT SAVE
-#: ../plug-ins/metadata/metadata-tags.c:233
+#: ../plug-ins/metadata/metadata-tags.c:235
 msgid "Copyrighted"
 msgstr "Zastrzeżone prawa autorskie"
 
 #. TRUE
-#: ../plug-ins/metadata/metadata-tags.c:234
+#: ../plug-ins/metadata/metadata-tags.c:236
 msgid "Public Domain"
 msgstr "Domena publiczna"
 
-#: ../plug-ins/metadata/metadata-tags.c:241
-#: ../plug-ins/metadata/metadata-tags.c:258
-msgid "Select a value"
-msgstr "Wybierz wartość"
-
-#: ../plug-ins/metadata/metadata-tags.c:242
+#: ../plug-ins/metadata/metadata-tags.c:244
 msgid "Work"
 msgstr "Praca"
 
-#: ../plug-ins/metadata/metadata-tags.c:243
+#: ../plug-ins/metadata/metadata-tags.c:245
 msgid "Cell"
 msgstr "Komórka"
 
-#: ../plug-ins/metadata/metadata-tags.c:244
+#: ../plug-ins/metadata/metadata-tags.c:246
 msgid "Fax"
 msgstr "Faks"
 
-#: ../plug-ins/metadata/metadata-tags.c:245
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "Home"
 msgstr "Dom"
 
-#: ../plug-ins/metadata/metadata-tags.c:246
+#: ../plug-ins/metadata/metadata-tags.c:248
 msgid "Pager"
 msgstr "Pager"
 
-#: ../plug-ins/metadata/metadata-tags.c:259
+#: ../plug-ins/metadata/metadata-tags.c:261
 msgid "Male"
 msgstr "Mężczyzna"
 
-#: ../plug-ins/metadata/metadata-tags.c:260
+#: ../plug-ins/metadata/metadata-tags.c:262
 msgid "Female"
 msgstr "Kobieta"
 
-#: ../plug-ins/metadata/metadata-tags.c:261
+#: ../plug-ins/metadata/metadata-tags.c:263
 msgid "Other"
 msgstr "Inne"
 
-#: ../plug-ins/metadata/metadata-tags.c:268
+#: ../plug-ins/metadata/metadata-tags.c:270
 msgid "Above sea level"
 msgstr "Nad poziomem morza"
 
-#: ../plug-ins/metadata/metadata-tags.c:268
+#: ../plug-ins/metadata/metadata-tags.c:270
 msgid "Below sea level"
 msgstr "Pod poziomem morza"
 
-#: ../plug-ins/metadata/metadata-tags.c:275
+#: ../plug-ins/metadata/metadata-tags.c:277
 msgid "North"
 msgstr "Północ"
 
-#: ../plug-ins/metadata/metadata-tags.c:275
+#: ../plug-ins/metadata/metadata-tags.c:277
 msgid "South"
 msgstr "Południe"
 
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:284
 msgid "East"
 msgstr "Wschód"
 
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:284
 msgid "West"
 msgstr "Zachód"
 
@@ -12385,15 +12391,15 @@ msgstr "Przeglądarka metadanych: %s"
 msgid "(%lu more character(s))"
 msgstr "(więcej znaków: %lu)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:499
+#: ../plug-ins/metadata/metadata-viewer.c:532
 msgid " meter"
 msgstr " m"
 
-#: ../plug-ins/metadata/metadata-viewer.c:500
+#: ../plug-ins/metadata/metadata-viewer.c:533
 msgid " feet"
 msgstr " ft"
 
-#: ../plug-ins/metadata/metadata-viewer.c:596
+#: ../plug-ins/metadata/metadata-viewer.c:640
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(więcej bajtów: %llu)"
