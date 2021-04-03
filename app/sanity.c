@@ -391,22 +391,6 @@ sanity_check_lcms (void)
 
   gint lcms_version = cmsGetEncodedCMMversion ();
 
-  if (LCMS_VERSION > lcms_version)
-    {
-      return g_strdup_printf
-        ("Liblcms2 version mismatch!\n\n"
-         "GIMP was compiled against LittleCMS version %d.%d, but the\n"
-         "LittleCMS version found at runtime is only %d.%d.\n\n"
-         "Somehow you or your software packager managed\n"
-         "to install a LittleCMS that is older than what GIMP was\n"
-         "built against.\n\n"
-         "Please make sure that the installed LittleCMS version\n"
-         "is at least %d.%d and that headers and library match.",
-         LCMS_VERSION / 1000, LCMS_VERSION % 1000 / 10,
-         lcms_version / 1000, lcms_version % 1000 / 10,
-         LCMS_VERSION / 1000, LCMS_VERSION % 1000 / 10);
-    }
-
   if (lcms_version < (LCMS_REQUIRED_MAJOR * 1000 +
                       LCMS_REQUIRED_MINOR * 10))
     {
