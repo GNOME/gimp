@@ -87,7 +87,8 @@ static GimpProcedure  * imap_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * imap_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               GimpDrawable         *drawable,
+                                               gint                  n_drawables,
+                                               GimpDrawable        **drawables,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -159,6 +160,8 @@ imap_create_procedure (GimpPlugIn  *plug_in,
                                             imap_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, N_("_Image Map..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Web");
@@ -180,27 +183,43 @@ static GimpValueArray *
 imap_run (GimpProcedure        *procedure,
          GimpRunMode           run_mode,
          GimpImage            *image,
-         GimpDrawable         *drawable,
+         gint                  n_drawables,
+         GimpDrawable        **drawables,
          const GimpValueArray *args,
          gpointer              run_data)
 {
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  _drawable = drawable;
+  if (n_drawables != 1)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Procedure '%s' only works with one drawable."),
+                   gimp_procedure_get_name (procedure));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+  else
+    {
+      _drawable = drawables[0];
+    }
 
   _image_name   = gimp_image_get_name (image);
   _image_width  = gimp_image_width (image);
   _image_height = gimp_image_height (image);
 
-  _map_info.color = gimp_drawable_is_rgb (drawable);
+  _map_info.color = gimp_drawable_is_rgb (_drawable);
 
   if (run_mode != GIMP_RUN_INTERACTIVE)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_CALLING_ERROR,
                                              NULL);
 
-  if (! dialog (drawable))
+  if (! dialog (_drawable))
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              NULL);

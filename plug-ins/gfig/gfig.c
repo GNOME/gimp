@@ -83,7 +83,8 @@ static GimpProcedure  * gfig_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * gfig_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               GimpDrawable         *drawable,
+                                               gint                  n_drawables,
+                                               GimpDrawable        **drawables,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -159,6 +160,8 @@ gfig_create_procedure (GimpPlugIn  *plug_in,
                                             gfig_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, N_("_Gfig..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Render");
@@ -190,14 +193,33 @@ static GimpValueArray *
 gfig_run (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint              pwidth, pheight;
+  GimpDrawable      *drawable;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint               pwidth, pheight;
 
   INIT_I18N ();
+
+  if (n_drawables != 1)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Procedure '%s' only works with one drawable."),
+                   gimp_procedure_get_name (procedure));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+  else
+    {
+      drawable = drawables[0];
+    }
 
   gfig_context = g_new0 (GFigContext, 1);
 

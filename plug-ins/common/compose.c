@@ -137,7 +137,8 @@ static GimpProcedure  * compose_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * compose_run              (GimpProcedure        *procedure,
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
-                                                  GimpDrawable         *drawable,
+                                                  gint                  n_drawables,
+                                                  GimpDrawable        **drawables,
                                                   const GimpValueArray *args,
                                                   gpointer              run_data);
 
@@ -390,6 +391,10 @@ compose_create_procedure (GimpPlugIn  *plug_in,
                                             compose_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "GRAY*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
       gimp_procedure_set_menu_label (procedure, N_("C_ompose..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
@@ -442,6 +447,8 @@ compose_create_procedure (GimpPlugIn  *plug_in,
                                             compose_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "GRAY*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_documentation (procedure,
                                         "Compose an image from multiple "
@@ -491,6 +498,10 @@ compose_create_procedure (GimpPlugIn  *plug_in,
                                             compose_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "GRAY*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
       gimp_procedure_set_menu_label (procedure, N_("R_ecompose"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
@@ -519,12 +530,14 @@ static GimpValueArray *
 compose_run (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
-             GimpDrawable         *drawable,
+             gint                  n_drawables,
+             GimpDrawable        **drawables,
              const GimpValueArray *args,
              gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  const gchar    *name = gimp_procedure_get_name (procedure);
+  GimpDrawable   *drawable = NULL;
+  const gchar    *name     = gimp_procedure_get_name (procedure);
   gint            compose_by_drawable;
   gint            i;
 
@@ -532,6 +545,26 @@ compose_run (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   compose_by_drawable = ! strcmp (name, DRAWABLE_COMPOSE_PROC);
+
+  if (compose_by_drawable)
+    {
+      if (n_drawables != 1)
+        {
+          GError *error = NULL;
+
+          g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                       _("Procedure '%s' only works with one drawable."),
+                       name);
+
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CALLING_ERROR,
+                                                   error);
+        }
+      else
+        {
+          drawable = drawables[0];
+        }
+    }
 
   if (! strcmp (name, RECOMPOSE_PROC))
     {

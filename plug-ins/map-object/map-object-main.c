@@ -64,7 +64,8 @@ static GimpProcedure  * map_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * map_run              (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
@@ -112,6 +113,8 @@ map_create_procedure (GimpPlugIn  *plug_in,
                                             map_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, N_("Map _Object..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
@@ -471,16 +474,35 @@ static GimpValueArray *
 map_run (GimpProcedure        *procedure,
          GimpRunMode           run_mode,
          GimpImage            *_image,
-         GimpDrawable         *drawable,
+         gint                  n_drawables,
+         GimpDrawable        **drawables,
          const GimpValueArray *args,
          gpointer              run_data)
 {
-  gint i;
+  GimpDrawable *drawable;
+  gint          i;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = _image;
+
+  if (n_drawables != 1)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Procedure '%s' only works with one drawable."),
+                   gimp_procedure_get_name (procedure));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+  else
+    {
+      drawable = drawables[0];
+    }
 
   set_default_settings ();
 

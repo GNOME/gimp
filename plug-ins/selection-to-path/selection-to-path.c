@@ -79,7 +79,8 @@ static GimpProcedure  * sel2path_create_procedure (GimpPlugIn           *plug_in
 static GimpValueArray * sel2path_run              (GimpProcedure        *procedure,
                                                    GimpRunMode           run_mode,
                                                    GimpImage            *image,
-                                                   GimpDrawable         *drawable,
+                                                   gint                  n_drawables,
+                                                   GimpDrawable        **drawables,
                                                    const GimpValueArray *args,
                                                    gpointer              run_data);
 
@@ -136,6 +137,10 @@ sel2path_create_procedure (GimpPlugIn  *plug_in,
                                             sel2path_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
       gimp_procedure_set_documentation (procedure,
                                         "Converts a selection to a path",
@@ -274,7 +279,8 @@ static GimpValueArray *
 sel2path_run (GimpProcedure        *procedure,
               GimpRunMode           run_mode,
               GimpImage            *image,
-              GimpDrawable         *drawable,
+              gint                  n_drawables,
+              GimpDrawable        **drawables,
               const GimpValueArray *args,
               gpointer              run_data)
 {
