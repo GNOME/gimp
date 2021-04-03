@@ -238,11 +238,18 @@ CODE
 }
 
 sub image_get_layers {
-    $blurb = 'Returns the list of layers contained in the specified image.';
+    $blurb = 'Returns the list of root layers contained in the specified image.';
 
     $help = <<HELP;
-This procedure returns the list of layers contained in the specified image.
+This procedure returns the list of root layers contained in the specified image.
 The order of layers is from topmost to bottommost.
+
+Note that this is not the full list of layers, but only the root layers,
+i.e. layers with no parents themselves. If you need all layers, it is up
+to you to verify that any of these layers is a group layer with
+gimp_item_is_group() and to obtain its children with
+gimp_item_get_children() (possibly recursively checking if these have
+children too).
 HELP
 
     &std_pdb_misc;
@@ -256,7 +263,7 @@ HELP
         { name => 'layers', type => 'layerarray',
           desc => 'The list of layers contained in the image.',
           array => { name => 'num_layers',
-                     desc => 'The number of layers contained in the image' } }
+                     desc => 'The number of root layers contained in the image' } }
     );
 
     %invoke = (

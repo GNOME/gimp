@@ -463,12 +463,18 @@ gimp_image_height (GimpImage *image)
 /**
  * gimp_image_get_layers:
  * @image: The image.
- * @num_layers: (out): The number of layers contained in the image.
+ * @num_layers: (out): The number of root layers contained in the image.
  *
- * Returns the list of layers contained in the specified image.
+ * Returns the list of root layers contained in the specified image.
  *
- * This procedure returns the list of layers contained in the specified
- * image. The order of layers is from topmost to bottommost.
+ * This procedure returns the list of root layers contained in the
+ * specified image. The order of layers is from topmost to bottommost.
+ * Note that this is not the full list of layers, but only the root
+ * layers, i.e. layers with no parents themselves. If you need all
+ * layers, it is up to you to verify that any of these layers is a
+ * group layer with gimp_item_is_group() and to obtain its children
+ * with gimp_item_get_children() (possibly recursively checking if
+ * these have children too).
  *
  * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
  *          The list of layers contained in the image.

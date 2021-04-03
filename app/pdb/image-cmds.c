@@ -3266,8 +3266,9 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-layers");
   gimp_procedure_set_static_help (procedure,
-                                  "Returns the list of layers contained in the specified image.",
-                                  "This procedure returns the list of layers contained in the specified image. The order of layers is from topmost to bottommost.",
+                                  "Returns the list of root layers contained in the specified image.",
+                                  "This procedure returns the list of root layers contained in the specified image. The order of layers is from topmost to bottommost.\n"
+                                     "Note that this is not the full list of layers, but only the root layers, i.e. layers with no parents themselves. If you need all layers, it is up to you to verify that any of these layers is a group layer with 'gimp-item-is-group' and to obtain its children with 'gimp-item-get-children' (possibly recursively checking if these have children too).",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -3282,7 +3283,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-layers",
                                                      "num layers",
-                                                     "The number of layers contained in the image",
+                                                     "The number of root layers contained in the image",
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
