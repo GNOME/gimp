@@ -402,16 +402,16 @@ sanity_check_lcms (void)
          "built against.\n\n"
          "Please make sure that the installed LittleCMS version\n"
          "is at least %d.%d and that headers and library match.",
-         LCMS_VERSION / 1000, LCMS_VERSION % 100 / 10,
-         lcms_version / 1000, lcms_version % 100 / 10,
-         LCMS_VERSION / 1000, LCMS_VERSION % 100 / 10);
+         LCMS_VERSION / 1000, LCMS_VERSION % 1000 / 10,
+         lcms_version / 1000, lcms_version % 1000 / 10,
+         LCMS_VERSION / 1000, LCMS_VERSION % 1000 / 10);
     }
 
   if (lcms_version < (LCMS_REQUIRED_MAJOR * 1000 +
                       LCMS_REQUIRED_MINOR * 10))
     {
       const gint lcms_major_version = lcms_version / 1000;
-      const gint lcms_minor_version = lcms_version % 100 / 10;
+      const gint lcms_minor_version = lcms_version % 1000 / 10;
 
       return g_strdup_printf
         ("Liblcms2 version too old!\n\n"
