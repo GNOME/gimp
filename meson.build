@@ -640,6 +640,7 @@ MIMEtypes = [
   'image/x-portable-pixmap',
   'image/x-psd',
   'image/x-sgi',
+  'image/x-sun-raster',
   'image/x-tga',
   'image/x-xbitmap',
   'image/x-xcf',

@@ -282,7 +282,7 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-sun-raster");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
-                                          "im1,im8,im24,im32,rs,ras");
+                                          "im1,im8,im24,im32,rs,ras,sun");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,long,0x59a66a95");
     }
@@ -311,7 +311,7 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-sun-raster");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
-                                          "im1,im8,im24,im32,rs,ras");
+                                          "im1,im8,im24,im32,rs,ras,sun");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "rle",
                              "RLE",
