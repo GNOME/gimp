@@ -261,7 +261,7 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-sun-raster");
   gimp_register_magic_load_handler (LOAD_PROC,
-                                    "im1,im8,im24,im32,rs,ras",
+                                    "im1,im8,im24,im32,rs,ras,sun",
                                     "",
                                     "0,long,0x59a66a95");
 
@@ -280,7 +280,7 @@ query (void)
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-sun-raster");
   gimp_register_save_handler (SAVE_PROC,
-                              "im1,im8,im24,im32,rs,ras", "");
+                              "im1,im8,im24,im32,rs,ras,sun", "");
 }
 
 
