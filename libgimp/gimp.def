@@ -682,6 +682,7 @@ EXPORTS
 	gimp_pencil
 	gimp_plug_in_add_menu_branch
 	gimp_plug_in_add_temp_procedure
+	gimp_plug_in_error_quark
 	gimp_plug_in_extension_enable
 	gimp_plug_in_extension_process
 	gimp_plug_in_get_pdb_error_handler
@@ -740,6 +741,7 @@ EXPORTS
 	gimp_procedure_get_plug_in
 	gimp_procedure_get_proc_type
 	gimp_procedure_get_return_values
+	gimp_procedure_get_sensitivity_mask
 	gimp_procedure_get_type
 	gimp_procedure_new
 	gimp_procedure_new_arguments
@@ -753,6 +755,7 @@ EXPORTS
 	gimp_procedure_set_icon_pixbuf
 	gimp_procedure_set_image_types
 	gimp_procedure_set_menu_label
+	gimp_procedure_set_sensitivity_mask
 	gimp_progress_cancel
 	gimp_progress_end
 	gimp_progress_get_window_handle
