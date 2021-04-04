@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-03-24 00:15+0000\n"
-"PO-Revision-Date: 2021-03-24 08:34+0200\n"
+"POT-Creation-Date: 2021-04-04 00:54+0000\n"
+"PO-Revision-Date: 2021-04-04 08:55+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -34,53 +34,53 @@ msgstr "Потренувати козу (Сі)"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:164
 #: ../extensions/goat-exercises/goat-exercise-py3.py:83
-#: ../extensions/goat-exercises/goat-exercise-vala.vala:70
-#: ../plug-ins/common/align-layers.c:664 ../plug-ins/common/blinds.c:277
-#: ../plug-ins/common/border-average.c:409 ../plug-ins/common/busy-dialog.c:279
-#: ../plug-ins/common/checkerboard.c:471 ../plug-ins/common/cml-explorer.c:1327
-#: ../plug-ins/common/cml-explorer.c:2093
-#: ../plug-ins/common/cml-explorer.c:2226
-#: ../plug-ins/common/colormap-remap.c:655 ../plug-ins/common/compose.c:1149
-#: ../plug-ins/common/contrast-retinex.c:328
-#: ../plug-ins/common/curve-bend.c:1189 ../plug-ins/common/curve-bend.c:1963
-#: ../plug-ins/common/curve-bend.c:1998 ../plug-ins/common/depth-merge.c:710
-#: ../plug-ins/common/destripe.c:460 ../plug-ins/common/file-cel.c:1009
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:72
+#: ../plug-ins/common/align-layers.c:670 ../plug-ins/common/blinds.c:300
+#: ../plug-ins/common/border-average.c:431 ../plug-ins/common/busy-dialog.c:279
+#: ../plug-ins/common/checkerboard.c:494 ../plug-ins/common/cml-explorer.c:1346
+#: ../plug-ins/common/cml-explorer.c:2112
+#: ../plug-ins/common/cml-explorer.c:2245
+#: ../plug-ins/common/colormap-remap.c:665 ../plug-ins/common/compose.c:1182
+#: ../plug-ins/common/contrast-retinex.c:350
+#: ../plug-ins/common/curve-bend.c:1211 ../plug-ins/common/curve-bend.c:1985
+#: ../plug-ins/common/curve-bend.c:2020 ../plug-ins/common/depth-merge.c:732
+#: ../plug-ins/common/destripe.c:483 ../plug-ins/common/file-cel.c:1009
 #: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2355
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
 #: ../plug-ins/common/file-pdf-save.c:1167 ../plug-ins/common/file-ps.c:3550
 #: ../plug-ins/common/file-raw-data.c:1776 ../plug-ins/common/file-svg.c:679
-#: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1308
-#: ../plug-ins/common/grid.c:737 ../plug-ins/common/hot.c:656
-#: ../plug-ins/common/jigsaw.c:2474 ../plug-ins/common/mail.c:566
-#: ../plug-ins/common/nl-filter.c:1102 ../plug-ins/common/qbist.c:762
-#: ../plug-ins/common/qbist.c:804 ../plug-ins/common/qbist.c:859
-#: ../plug-ins/common/smooth-palette.c:488 ../plug-ins/common/sparkle.c:403
-#: ../plug-ins/common/sphere-designer.c:2282
-#: ../plug-ins/common/sphere-designer.c:2627 ../plug-ins/common/tile.c:469
-#: ../plug-ins/common/tile-small.c:423 ../plug-ins/common/unit-editor.c:241
-#: ../plug-ins/common/van-gogh-lic.c:706 ../plug-ins/common/warp.c:467
-#: ../plug-ins/common/wavelet-decompose.c:386 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:2458 ../plug-ins/flame/flame.c:516
-#: ../plug-ins/flame/flame.c:692 ../plug-ins/flame/flame.c:1009
+#: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1314
+#: ../plug-ins/common/grid.c:760 ../plug-ins/common/hot.c:678
+#: ../plug-ins/common/jigsaw.c:2497 ../plug-ins/common/mail.c:568
+#: ../plug-ins/common/nl-filter.c:1125 ../plug-ins/common/qbist.c:783
+#: ../plug-ins/common/qbist.c:825 ../plug-ins/common/qbist.c:880
+#: ../plug-ins/common/smooth-palette.c:510 ../plug-ins/common/sparkle.c:425
+#: ../plug-ins/common/sphere-designer.c:2285
+#: ../plug-ins/common/sphere-designer.c:2630 ../plug-ins/common/tile.c:491
+#: ../plug-ins/common/tile-small.c:445 ../plug-ins/common/unit-editor.c:241
+#: ../plug-ins/common/van-gogh-lic.c:707 ../plug-ins/common/warp.c:489
+#: ../plug-ins/common/wavelet-decompose.c:408 ../plug-ins/common/web-page.c:278
+#: ../plug-ins/file-tiff/file-tiff-load.c:2458 ../plug-ins/flame/flame.c:539
+#: ../plug-ins/flame/flame.c:715 ../plug-ins/flame/flame.c:1032
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1676
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:852
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1246
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:874
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1268
 #: ../plug-ins/gfig/gfig-dialog.c:296 ../plug-ins/gfig/gfig-dialog.c:646
 #: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/gimpressionist/brush.c:270
 #: ../plug-ins/gimpressionist/gimpressionist.c:142
 #: ../plug-ins/gimpressionist/orientmap.c:528
 #: ../plug-ins/gimpressionist/presets.c:642
 #: ../plug-ins/gimpressionist/sizemap.c:401
-#: ../plug-ins/gradient-flare/gradient-flare.c:2496
-#: ../plug-ins/gradient-flare/gradient-flare.c:3346
-#: ../plug-ins/gradient-flare/gradient-flare.c:3458
-#: ../plug-ins/ifs-compose/ifs-compose.c:787
-#: ../plug-ins/ifs-compose/ifs-compose.c:2540
-#: ../plug-ins/ifs-compose/ifs-compose.c:2577
+#: ../plug-ins/gradient-flare/gradient-flare.c:2516
+#: ../plug-ins/gradient-flare/gradient-flare.c:3366
+#: ../plug-ins/gradient-flare/gradient-flare.c:3478
+#: ../plug-ins/ifs-compose/ifs-compose.c:809
+#: ../plug-ins/ifs-compose/ifs-compose.c:2562
+#: ../plug-ins/ifs-compose/ifs-compose.c:2599
 #: ../plug-ins/imagemap/imap_browse.c:80
 #: ../plug-ins/imagemap/imap_default_dialog.c:106
 #: ../plug-ins/imagemap/imap_file.c:71 ../plug-ins/imagemap/imap_file.c:124
@@ -90,21 +90,21 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/map-object/map-object-ui.c:1317
 #: ../plug-ins/metadata/metadata-editor.c:598
 #: ../plug-ins/metadata/metadata-editor.c:960
-#: ../plug-ins/metadata/metadata-editor.c:4547
-#: ../plug-ins/metadata/metadata-editor.c:4582
-#: ../plug-ins/pagecurl/pagecurl.c:473 ../plug-ins/screenshot/screenshot.c:532
-#: ../plug-ins/selection-to-path/selection-to-path.c:406
+#: ../plug-ins/metadata/metadata-editor.c:4568
+#: ../plug-ins/metadata/metadata-editor.c:4603
+#: ../plug-ins/pagecurl/pagecurl.c:495 ../plug-ins/screenshot/screenshot.c:532
+#: ../plug-ins/selection-to-path/selection-to-path.c:412
 msgid "_Cancel"
 msgstr "_Скасувати"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:165
 #: ../extensions/goat-exercises/goat-exercise-py3.py:84
-#: ../extensions/goat-exercises/goat-exercise-vala.vala:71
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:73
 msgid "_Source"
 msgstr "_Код"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:166
-#: ../extensions/goat-exercises/goat-exercise-vala.vala:72
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:74
 msgid "_Run"
 msgstr "_Запустити"
 
@@ -113,7 +113,7 @@ msgstr "_Запустити"
 #. any style you like in your plug-ins.
 #: ../extensions/goat-exercises/goat-exercise-c.c:180
 #: ../extensions/goat-exercises/goat-exercise-py3.py:99
-#: ../extensions/goat-exercises/goat-exercise-vala.vala:86
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:88
 #, c-format, python-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
@@ -141,41 +141,41 @@ msgid "Exercise a goat (Python 3)"
 msgstr "Потренувати козу (Python 3)"
 
 #: ../extensions/goat-exercises/goat-exercise-py3.py:85
-#: ../plug-ins/common/align-layers.c:665 ../plug-ins/common/blinds.c:278
-#: ../plug-ins/common/border-average.c:410
-#: ../plug-ins/common/checkerboard.c:472 ../plug-ins/common/cml-explorer.c:1328
-#: ../plug-ins/common/colormap-remap.c:656 ../plug-ins/common/compose.c:1150
-#: ../plug-ins/common/contrast-retinex.c:329
-#: ../plug-ins/common/curve-bend.c:1190 ../plug-ins/common/depth-merge.c:711
-#: ../plug-ins/common/destripe.c:461 ../plug-ins/common/file-heif.c:2356
+#: ../plug-ins/common/align-layers.c:671 ../plug-ins/common/blinds.c:301
+#: ../plug-ins/common/border-average.c:432
+#: ../plug-ins/common/checkerboard.c:495 ../plug-ins/common/cml-explorer.c:1347
+#: ../plug-ins/common/colormap-remap.c:666 ../plug-ins/common/compose.c:1183
+#: ../plug-ins/common/contrast-retinex.c:351
+#: ../plug-ins/common/curve-bend.c:1212 ../plug-ins/common/depth-merge.c:733
+#: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-heif.c:2356
 #: ../plug-ins/common/file-pdf-load.c:656 ../plug-ins/common/file-svg.c:680
-#: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1309
-#: ../plug-ins/common/grid.c:738 ../plug-ins/common/hot.c:657
-#: ../plug-ins/common/jigsaw.c:2475 ../plug-ins/common/nl-filter.c:1103
-#: ../plug-ins/common/qbist.c:860 ../plug-ins/common/smooth-palette.c:489
-#: ../plug-ins/common/sparkle.c:404 ../plug-ins/common/sphere-designer.c:2628
-#: ../plug-ins/common/tile.c:470 ../plug-ins/common/tile-small.c:424
-#: ../plug-ins/common/van-gogh-lic.c:707 ../plug-ins/common/warp.c:468
-#: ../plug-ins/common/wavelet-decompose.c:387 ../plug-ins/flame/flame.c:693
-#: ../plug-ins/flame/flame.c:1010
+#: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1315
+#: ../plug-ins/common/grid.c:761 ../plug-ins/common/hot.c:679
+#: ../plug-ins/common/jigsaw.c:2498 ../plug-ins/common/nl-filter.c:1126
+#: ../plug-ins/common/qbist.c:881 ../plug-ins/common/smooth-palette.c:511
+#: ../plug-ins/common/sparkle.c:426 ../plug-ins/common/sphere-designer.c:2631
+#: ../plug-ins/common/tile.c:492 ../plug-ins/common/tile-small.c:446
+#: ../plug-ins/common/van-gogh-lic.c:708 ../plug-ins/common/warp.c:490
+#: ../plug-ins/common/wavelet-decompose.c:409 ../plug-ins/flame/flame.c:716
+#: ../plug-ins/flame/flame.c:1033
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1247
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1269
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
 #: ../plug-ins/gimpressionist/orientmap.c:529
 #: ../plug-ins/gimpressionist/presets.c:643
 #: ../plug-ins/gimpressionist/sizemap.c:402
-#: ../plug-ins/gradient-flare/gradient-flare.c:2497
-#: ../plug-ins/gradient-flare/gradient-flare.c:3459
-#: ../plug-ins/ifs-compose/ifs-compose.c:788
+#: ../plug-ins/gradient-flare/gradient-flare.c:2517
+#: ../plug-ins/gradient-flare/gradient-flare.c:3479
+#: ../plug-ins/ifs-compose/ifs-compose.c:810
 #: ../plug-ins/imagemap/imap_default_dialog.c:109
 #: ../plug-ins/lighting/lighting-ui.c:1039
 #: ../plug-ins/map-object/map-object-ui.c:1318
-#: ../plug-ins/pagecurl/pagecurl.c:474
-#: ../plug-ins/selection-to-path/selection-to-path.c:407
+#: ../plug-ins/pagecurl/pagecurl.c:496
+#: ../plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_OK"
 msgstr "_Гаразд"
 
-#: ../extensions/goat-exercises/goat-exercise-vala.vala:64
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:66
 msgid "Exercise a goat (Vala)"
 msgstr "Потренувати козу (Vala)"
 
@@ -202,185 +202,213 @@ msgstr ""
 "пакування даних) та кнопкою, натискання якої викликає дію GEGL над активним "
 "шаром."
 
-#: ../plug-ins/common/align-layers.c:191
+#: ../plug-ins/common/align-layers.c:196
 msgid "Align Visi_ble Layers..."
 msgstr "Вирівняти _видимі шари..."
 
-#: ../plug-ins/common/align-layers.c:195
+#: ../plug-ins/common/align-layers.c:200
 msgid "Align all visible layers of the image"
 msgstr "Вирівнювання видимих шарів зображення"
 
-#: ../plug-ins/common/align-layers.c:250
+#: ../plug-ins/common/align-layers.c:256
 msgid "There are not enough layers to align."
 msgstr "Недостатньо шарів для вирівнювання."
 
-#: ../plug-ins/common/align-layers.c:660
+#: ../plug-ins/common/align-layers.c:666
 msgid "Align Visible Layers"
 msgstr "Вирівнювання видимих шарів"
 
-#: ../plug-ins/common/align-layers.c:684 ../plug-ins/common/align-layers.c:715
+#: ../plug-ins/common/align-layers.c:690 ../plug-ins/common/align-layers.c:721
 msgctxt "align-style"
 msgid "None"
 msgstr "Немає"
 
-#: ../plug-ins/common/align-layers.c:685 ../plug-ins/common/align-layers.c:716
+#: ../plug-ins/common/align-layers.c:691 ../plug-ins/common/align-layers.c:722
 msgid "Collect"
 msgstr "Зібрати"
 
-#: ../plug-ins/common/align-layers.c:686
+#: ../plug-ins/common/align-layers.c:692
 msgid "Fill (left to right)"
 msgstr "Заповнити (зліва направо)"
 
-#: ../plug-ins/common/align-layers.c:687
+#: ../plug-ins/common/align-layers.c:693
 msgid "Fill (right to left)"
 msgstr "Заповнити (справа наліво)"
 
-#: ../plug-ins/common/align-layers.c:688 ../plug-ins/common/align-layers.c:719
+#: ../plug-ins/common/align-layers.c:694 ../plug-ins/common/align-layers.c:725
 msgid "Snap to grid"
 msgstr "Прилипати до сітки"
 
-#: ../plug-ins/common/align-layers.c:697
+#: ../plug-ins/common/align-layers.c:703
 msgid "_Horizontal style:"
 msgstr "_Горизонтальний стиль:"
 
-#: ../plug-ins/common/align-layers.c:701
+#: ../plug-ins/common/align-layers.c:707
 msgid "Left edge"
 msgstr "Ліва межа"
 
-#: ../plug-ins/common/align-layers.c:702 ../plug-ins/common/align-layers.c:732
-#: ../plug-ins/gradient-flare/gradient-flare.c:2857
+#: ../plug-ins/common/align-layers.c:708 ../plug-ins/common/align-layers.c:738
+#: ../plug-ins/gradient-flare/gradient-flare.c:2877
 msgid "Center"
 msgstr "Центр"
 
-#: ../plug-ins/common/align-layers.c:703
+#: ../plug-ins/common/align-layers.c:709
 msgid "Right edge"
 msgstr "Права межа"
 
-#: ../plug-ins/common/align-layers.c:712
+#: ../plug-ins/common/align-layers.c:718
 msgid "Ho_rizontal base:"
 msgstr "Г_оризонтальна основа:"
 
-#: ../plug-ins/common/align-layers.c:717
+#: ../plug-ins/common/align-layers.c:723
 msgid "Fill (top to bottom)"
 msgstr "Заповнити (згори донизу)"
 
-#: ../plug-ins/common/align-layers.c:718
+#: ../plug-ins/common/align-layers.c:724
 msgid "Fill (bottom to top)"
 msgstr "Заповнити (знизу догори)"
 
-#: ../plug-ins/common/align-layers.c:728
+#: ../plug-ins/common/align-layers.c:734
 msgid "_Vertical style:"
 msgstr "_Вертикальний стиль:"
 
-#: ../plug-ins/common/align-layers.c:731
+#: ../plug-ins/common/align-layers.c:737
 msgid "Top edge"
 msgstr "Верхній край"
 
-#: ../plug-ins/common/align-layers.c:733
+#: ../plug-ins/common/align-layers.c:739
 msgid "Bottom edge"
 msgstr "Нижній край"
 
-#: ../plug-ins/common/align-layers.c:742
+#: ../plug-ins/common/align-layers.c:748
 msgid "Ver_tical base:"
 msgstr "В_ертикальна основа:"
 
-#: ../plug-ins/common/align-layers.c:745
+#: ../plug-ins/common/align-layers.c:751
 msgid "_Grid size:"
 msgstr "Розмір _сітки:"
 
-#: ../plug-ins/common/align-layers.c:753
+#: ../plug-ins/common/align-layers.c:759
 msgid "_Ignore the bottom layer even if visible"
 msgstr "_Ігнорувати нижній шар навіть якщо він видимий"
 
-#: ../plug-ins/common/align-layers.c:763
+#: ../plug-ins/common/align-layers.c:769
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr "_Використовувати (невидимий) нижній шар як основу"
 
-#: ../plug-ins/common/animation-optimize.c:171
+#: ../plug-ins/common/animation-optimize.c:177
 msgid "Optimize (for _GIF)"
 msgstr "Оптимізація (для _GIF)"
 
-#: ../plug-ins/common/animation-optimize.c:174
+#: ../plug-ins/common/animation-optimize.c:180
 msgid "Modify image to reduce size when saved as GIF animation"
 msgstr ""
 "Змінює зображення так, щоб зменшити розмір файлу для зберігання анімації у "
 "форматі GIF"
 
-#: ../plug-ins/common/animation-optimize.c:194
+#: ../plug-ins/common/animation-optimize.c:205
 msgid "_Optimize (Difference)"
 msgstr "_Оптимізація (різниця)"
 
-#: ../plug-ins/common/animation-optimize.c:197
+#: ../plug-ins/common/animation-optimize.c:208
 msgid "Reduce file size where combining layers is possible"
 msgstr "Зменшити розмір файлу, об'єднуючи шари там, де це можливо"
 
-#: ../plug-ins/common/animation-optimize.c:214
+#: ../plug-ins/common/animation-optimize.c:230
 msgid "_Unoptimize"
 msgstr "_Розоптимізувати"
 
-#: ../plug-ins/common/animation-optimize.c:217
+#: ../plug-ins/common/animation-optimize.c:233
 msgid "Remove optimization to make editing easier"
 msgstr "Видалити оптимізацію для спрощення редагування"
 
-#: ../plug-ins/common/animation-optimize.c:231
+#: ../plug-ins/common/animation-optimize.c:252
 msgid "_Remove Backdrop"
 msgstr "В_идалити тло"
 
-#: ../plug-ins/common/animation-optimize.c:247
+#: ../plug-ins/common/animation-optimize.c:273
 msgid "_Find Backdrop"
 msgstr "З_найти тло"
 
-#: ../plug-ins/common/animation-optimize.c:495
+#: ../plug-ins/common/animation-optimize.c:522
 msgid "Unoptimizing animation"
 msgstr "Розоптимізація"
 
-#: ../plug-ins/common/animation-optimize.c:498
+#: ../plug-ins/common/animation-optimize.c:525
 msgid "Removing animation background"
 msgstr "Видалення тла анімації"
 
-#: ../plug-ins/common/animation-optimize.c:501
+#: ../plug-ins/common/animation-optimize.c:528
 msgid "Finding animation background"
 msgstr "Пошук тла анімації"
 
-#: ../plug-ins/common/animation-optimize.c:505
+#: ../plug-ins/common/animation-optimize.c:532
 msgid "Optimizing animation"
 msgstr "Оптимізація"
 
-#: ../plug-ins/common/blinds.c:153
+#: ../plug-ins/common/blinds.c:156
 msgid "_Blinds..."
 msgstr "_Жалюзі..."
 
-#: ../plug-ins/common/blinds.c:157
+#: ../plug-ins/common/blinds.c:160
 msgid "Simulate an image painted on window blinds"
 msgstr "Створити ефект малюнка на жалюзі"
 
-#: ../plug-ins/common/blinds.c:235
+#: ../plug-ins/common/blinds.c:217 ../plug-ins/common/border-average.c:194
+#: ../plug-ins/common/checkerboard.c:183 ../plug-ins/common/cml-explorer.c:558
+#: ../plug-ins/common/compose.c:556 ../plug-ins/common/contrast-retinex.c:261
+#: ../plug-ins/common/crop-zealous.c:150 ../plug-ins/common/curve-bend.c:668
+#: ../plug-ins/common/decompose.c:375 ../plug-ins/common/depth-merge.c:306
+#: ../plug-ins/common/despeckle.c:242 ../plug-ins/common/destripe.c:182
+#: ../plug-ins/common/gradient-map.c:215 ../plug-ins/common/grid.c:282
+#: ../plug-ins/common/hot.c:316 ../plug-ins/common/jigsaw.c:466
+#: ../plug-ins/common/nl-filter.c:223 ../plug-ins/common/qbist.c:230
+#: ../plug-ins/common/sample-colorize.c:430
+#: ../plug-ins/common/smooth-palette.c:207 ../plug-ins/common/sparkle.c:327
+#: ../plug-ins/common/sphere-designer.c:3178 ../plug-ins/common/tile.c:219
+#: ../plug-ins/common/tile-small.c:307 ../plug-ins/common/van-gogh-lic.c:912
+#: ../plug-ins/common/warp.c:374 ../plug-ins/common/wavelet-decompose.c:189
+#: ../plug-ins/file-dds/dds.c:511 ../plug-ins/flame/flame.c:240
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:398
+#: ../plug-ins/gfig/gfig.c:212 ../plug-ins/gimpressionist/gimp.c:177
+#: ../plug-ins/gradient-flare/gradient-flare.c:934
+#: ../plug-ins/ifs-compose/ifs-compose.c:416
+#: ../plug-ins/imagemap/imap_main.c:199
+#: ../plug-ins/lighting/lighting-main.c:403
+#: ../plug-ins/map-object/map-object-main.c:495
+#: ../plug-ins/pagecurl/pagecurl.c:301
+#, c-format
+msgid "Procedure '%s' only works with one drawable."
+msgstr ""
+"Процедура «%s» працює лише для одного малюнка одночасно."
+
+#: ../plug-ins/common/blinds.c:258
 msgid "Adding blinds"
 msgstr "Додавання жалюзі"
 
-#: ../plug-ins/common/blinds.c:273
+#: ../plug-ins/common/blinds.c:296
 msgid "Blinds"
 msgstr "Жалюзі"
 
-#: ../plug-ins/common/blinds.c:308
+#: ../plug-ins/common/blinds.c:331
 msgid "Orientation"
 msgstr "Орієнтація"
 
-#: ../plug-ins/common/blinds.c:312 ../plug-ins/common/tile-small.c:482
-#: ../plug-ins/pagecurl/pagecurl.c:599
+#: ../plug-ins/common/blinds.c:335 ../plug-ins/common/tile-small.c:504
+#: ../plug-ins/pagecurl/pagecurl.c:621
 msgid "_Horizontal"
 msgstr "Г_оризонтально"
 
-#: ../plug-ins/common/blinds.c:315 ../plug-ins/common/tile-small.c:492
-#: ../plug-ins/pagecurl/pagecurl.c:598
+#: ../plug-ins/common/blinds.c:338 ../plug-ins/common/tile-small.c:514
+#: ../plug-ins/pagecurl/pagecurl.c:620
 msgid "_Vertical"
 msgstr "_Вертикально"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/common/blinds.c:329 ../plug-ins/common/compose.c:1095
-#: ../plug-ins/common/decompose.c:643 ../plug-ins/common/file-cel.c:504
+#: ../plug-ins/common/blinds.c:352 ../plug-ins/common/compose.c:1128
+#: ../plug-ins/common/decompose.c:665 ../plug-ins/common/file-cel.c:504
 #: ../plug-ins/common/file-cel.c:509 ../plug-ins/common/file-dicom.c:645
 #: ../plug-ins/common/file-gegl.c:461 ../plug-ins/common/file-gif-load.c:1037
 #: ../plug-ins/common/file-jp2-load.c:1315 ../plug-ins/common/file-pcx.c:483
@@ -388,8 +416,8 @@ msgstr "_Вертикально"
 #: ../plug-ins/common/file-png.c:954 ../plug-ins/common/file-pnm.c:764
 #: ../plug-ins/common/file-raw-data.c:1327
 #: ../plug-ins/common/file-sunras.c:1087 ../plug-ins/common/file-tga.c:1110
-#: ../plug-ins/common/file-xbm.c:916 ../plug-ins/common/film.c:797
-#: ../plug-ins/common/smooth-palette.c:309 ../plug-ins/common/tile.c:382
+#: ../plug-ins/common/file-xbm.c:916 ../plug-ins/common/film.c:803
+#: ../plug-ins/common/smooth-palette.c:331 ../plug-ins/common/tile.c:404
 #: ../plug-ins/file-bmp/bmp-load.c:740 ../plug-ins/file-exr/file-exr.c:275
 #: ../plug-ins/file-faxg3/faxg3.c:577 ../plug-ins/file-fits/fits.c:564
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
@@ -399,52 +427,52 @@ msgstr "_Вертикально"
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:653
+#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:660
 msgid "Background"
 msgstr "Тло"
 
-#: ../plug-ins/common/blinds.c:333
+#: ../plug-ins/common/blinds.c:356
 msgid "_Transparent"
 msgstr "_Прозоре"
 
-#: ../plug-ins/common/blinds.c:358
+#: ../plug-ins/common/blinds.c:381
 msgid "_Displacement:"
 msgstr "_Переміщення:"
 
-#: ../plug-ins/common/blinds.c:369
+#: ../plug-ins/common/blinds.c:392
 msgid "_Number of segments:"
 msgstr "_Кількість сегментів:"
 
-#: ../plug-ins/common/border-average.c:134
+#: ../plug-ins/common/border-average.c:137
 msgid "_Border Average..."
 msgstr "_Середній колір рамки..."
 
-#: ../plug-ins/common/border-average.c:138
+#: ../plug-ins/common/border-average.c:141
 msgid "Set foreground to the average color of the image border"
 msgstr ""
 "Встановити колір переднього плану таким, як середнє значенню кольору межі "
 "зображення"
 
-#: ../plug-ins/common/border-average.c:221
-#: ../plug-ins/common/border-average.c:405
+#: ../plug-ins/common/border-average.c:243
+#: ../plug-ins/common/border-average.c:427
 msgid "Border Average"
 msgstr "Пошук середнього значення кольору"
 
-#: ../plug-ins/common/border-average.c:427
+#: ../plug-ins/common/border-average.c:449
 msgid "Border Size"
 msgstr "Розмір рамки"
 
-#: ../plug-ins/common/border-average.c:435
+#: ../plug-ins/common/border-average.c:457
 msgid "_Thickness:"
 msgstr "_Товщина:"
 
 #. Number of Colors frame
-#: ../plug-ins/common/border-average.c:471
+#: ../plug-ins/common/border-average.c:493
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:911
 msgid "Number of Colors"
 msgstr "Кількість кольорів"
 
-#: ../plug-ins/common/border-average.c:479
+#: ../plug-ins/common/border-average.c:501
 msgid "_Bucket size:"
 msgstr "_Кількість кольорів:"
 
@@ -461,24 +489,24 @@ msgstr "Будь ласка, зачекайте на завершення дії
 msgid "Canceling..."
 msgstr "Скасовуємо…"
 
-#: ../plug-ins/common/checkerboard.c:132
+#: ../plug-ins/common/checkerboard.c:135
 msgid "_Checkerboard (legacy)..."
 msgstr "_Шахова дошка (старий)..."
 
-#: ../plug-ins/common/checkerboard.c:137
+#: ../plug-ins/common/checkerboard.c:140
 msgid "Create a checkerboard pattern"
 msgstr "Створити текстуру у вигляді шахової дошки"
 
-#: ../plug-ins/common/checkerboard.c:342 ../plug-ins/common/checkerboard.c:467
+#: ../plug-ins/common/checkerboard.c:365 ../plug-ins/common/checkerboard.c:490
 msgid "Checkerboard"
 msgstr "Шахова дошка"
 
-#: ../plug-ins/common/checkerboard.c:532
+#: ../plug-ins/common/checkerboard.c:555
 #: ../plug-ins/gimpressionist/sizemap.c:508
 msgid "_Size:"
 msgstr "_Розмір:"
 
-#: ../plug-ins/common/checkerboard.c:541
+#: ../plug-ins/common/checkerboard.c:564
 msgid "_Psychobilly"
 msgstr "_Психоделія"
 
@@ -676,19 +704,19 @@ msgid "Randoms from seed (shared)"
 msgstr "Випадкове з бази (shared)"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
-#: ../plug-ins/common/decompose.c:200
+#: ../plug-ins/common/decompose.c:201
 #: ../plug-ins/gimpressionist/orientation.c:172
 #: ../plug-ins/gimpressionist/size.c:179
 msgid "Hue"
 msgstr "Відтінок"
 
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
-#: ../plug-ins/common/decompose.c:201
+#: ../plug-ins/common/decompose.c:202
 msgid "Saturation"
 msgstr "Насиченість"
 
 #: ../plug-ins/common/cml-explorer.c:303 ../plug-ins/common/cml-explorer.c:311
-#: ../plug-ins/common/decompose.c:202
+#: ../plug-ins/common/decompose.c:203
 #: ../plug-ins/gimpressionist/orientation.c:148
 #: ../plug-ins/gimpressionist/size.c:155
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
@@ -699,47 +727,47 @@ msgstr "Яскравість"
 msgid "(None)"
 msgstr "(Немає)"
 
-#: ../plug-ins/common/cml-explorer.c:503
+#: ../plug-ins/common/cml-explorer.c:506
 msgid "CML _Explorer..."
 msgstr "Досл_ідник CML..."
 
-#: ../plug-ins/common/cml-explorer.c:508
+#: ../plug-ins/common/cml-explorer.c:511
 msgid "Create abstract Coupled-Map Lattice patterns"
 msgstr "Створити абстрактні текстури Coupled-Map-Lattice"
 
-#: ../plug-ins/common/cml-explorer.c:856
+#: ../plug-ins/common/cml-explorer.c:875
 msgid "CML Explorer: evoluting"
 msgstr "Дослідник CML: викується"
 
-#: ../plug-ins/common/cml-explorer.c:1323
+#: ../plug-ins/common/cml-explorer.c:1342
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Дослідник Coupled-Map-Lattice"
 
-#: ../plug-ins/common/cml-explorer.c:1367
+#: ../plug-ins/common/cml-explorer.c:1386
 msgid "New Seed"
 msgstr "Нова база"
 
-#: ../plug-ins/common/cml-explorer.c:1378
+#: ../plug-ins/common/cml-explorer.c:1397
 msgid "Fix Seed"
 msgstr "Фіксована база"
 
-#: ../plug-ins/common/cml-explorer.c:1389
+#: ../plug-ins/common/cml-explorer.c:1408
 msgid "Random Seed"
 msgstr "База випадковості"
 
 #. The Load button
-#: ../plug-ins/common/cml-explorer.c:1404
-#: ../plug-ins/common/cml-explorer.c:2227 ../plug-ins/common/curve-bend.c:1449
-#: ../plug-ins/common/curve-bend.c:1964 ../plug-ins/common/file-cel.c:1010
+#: ../plug-ins/common/cml-explorer.c:1423
+#: ../plug-ins/common/cml-explorer.c:2246 ../plug-ins/common/curve-bend.c:1471
+#: ../plug-ins/common/curve-bend.c:1986 ../plug-ins/common/file-cel.c:1010
 #: ../plug-ins/common/file-jp2-load.c:976
-#: ../plug-ins/common/file-raw-data.c:1777 ../plug-ins/common/qbist.c:763
-#: ../plug-ins/common/qbist.c:947 ../plug-ins/common/sphere-designer.c:2285
-#: ../plug-ins/common/sphere-designer.c:2676 ../plug-ins/flame/flame.c:518
-#: ../plug-ins/flame/flame.c:1080
+#: ../plug-ins/common/file-raw-data.c:1777 ../plug-ins/common/qbist.c:784
+#: ../plug-ins/common/qbist.c:968 ../plug-ins/common/sphere-designer.c:2288
+#: ../plug-ins/common/sphere-designer.c:2679 ../plug-ins/flame/flame.c:541
+#: ../plug-ins/flame/flame.c:1103
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:806
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1639
-#: ../plug-ins/gfig/gfig-dialog.c:647 ../plug-ins/ifs-compose/ifs-compose.c:784
-#: ../plug-ins/ifs-compose/ifs-compose.c:2578
+#: ../plug-ins/gfig/gfig-dialog.c:647 ../plug-ins/ifs-compose/ifs-compose.c:806
+#: ../plug-ins/ifs-compose/ifs-compose.c:2600
 #: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
 #: ../plug-ins/lighting/lighting-ui.c:608
 #: ../plug-ins/lighting/lighting-ui.c:1308
@@ -747,231 +775,231 @@ msgid "_Open"
 msgstr "_Відкрити"
 
 #. The Save button
-#: ../plug-ins/common/cml-explorer.c:1412
-#: ../plug-ins/common/cml-explorer.c:2094 ../plug-ins/common/curve-bend.c:1461
-#: ../plug-ins/common/curve-bend.c:1999 ../plug-ins/common/file-pdf-save.c:1166
-#: ../plug-ins/common/qbist.c:805 ../plug-ins/common/qbist.c:955
-#: ../plug-ins/common/sphere-designer.c:2285
-#: ../plug-ins/common/sphere-designer.c:2684 ../plug-ins/flame/flame.c:518
-#: ../plug-ins/flame/flame.c:1088
+#: ../plug-ins/common/cml-explorer.c:1431
+#: ../plug-ins/common/cml-explorer.c:2113 ../plug-ins/common/curve-bend.c:1483
+#: ../plug-ins/common/curve-bend.c:2021 ../plug-ins/common/file-pdf-save.c:1166
+#: ../plug-ins/common/qbist.c:826 ../plug-ins/common/qbist.c:976
+#: ../plug-ins/common/sphere-designer.c:2288
+#: ../plug-ins/common/sphere-designer.c:2687 ../plug-ins/flame/flame.c:541
+#: ../plug-ins/flame/flame.c:1111
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:823
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1677
 #: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/gimpressionist/brush.c:271
-#: ../plug-ins/ifs-compose/ifs-compose.c:785
-#: ../plug-ins/ifs-compose/ifs-compose.c:2541
+#: ../plug-ins/ifs-compose/ifs-compose.c:807
+#: ../plug-ins/ifs-compose/ifs-compose.c:2563
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:601
 #: ../plug-ins/lighting/lighting-ui.c:1164
 msgid "_Save"
 msgstr "_Зберегти"
 
-#: ../plug-ins/common/cml-explorer.c:1431 ../plug-ins/common/van-gogh-lic.c:733
+#: ../plug-ins/common/cml-explorer.c:1450 ../plug-ins/common/van-gogh-lic.c:734
 msgid "_Hue"
 msgstr "Від_тінок"
 
-#: ../plug-ins/common/cml-explorer.c:1435
+#: ../plug-ins/common/cml-explorer.c:1454
 msgid "Sat_uration"
 msgstr "_Насиченість"
 
-#: ../plug-ins/common/cml-explorer.c:1439
+#: ../plug-ins/common/cml-explorer.c:1458
 msgid "_Value"
 msgstr "_Яскравість:"
 
-#: ../plug-ins/common/cml-explorer.c:1443
+#: ../plug-ins/common/cml-explorer.c:1462
 msgid "_Advanced"
 msgstr "Д_одатково"
 
-#: ../plug-ins/common/cml-explorer.c:1458
+#: ../plug-ins/common/cml-explorer.c:1477
 msgid "Channel Independent Parameters"
 msgstr "Незалежні від каналу параметри"
 
-#: ../plug-ins/common/cml-explorer.c:1480
+#: ../plug-ins/common/cml-explorer.c:1499
 msgid "Initial value:"
 msgstr "Початкове значення:"
 
-#: ../plug-ins/common/cml-explorer.c:1485
+#: ../plug-ins/common/cml-explorer.c:1504
 msgid "Zoom scale:"
 msgstr "Масштаб:"
 
-#: ../plug-ins/common/cml-explorer.c:1492
+#: ../plug-ins/common/cml-explorer.c:1511
 msgid "Start offset:"
 msgstr "Початковий зсув:"
 
-#: ../plug-ins/common/cml-explorer.c:1500
+#: ../plug-ins/common/cml-explorer.c:1519
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Випадкова база (лише для режиму \"З бази\")"
 
-#: ../plug-ins/common/cml-explorer.c:1510
+#: ../plug-ins/common/cml-explorer.c:1529
 msgid "Seed:"
 msgstr "База:"
 
-#: ../plug-ins/common/cml-explorer.c:1522
+#: ../plug-ins/common/cml-explorer.c:1541
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr "Перемикнутись на \"З бази\" з останньою базою"
 
-#: ../plug-ins/common/cml-explorer.c:1534
+#: ../plug-ins/common/cml-explorer.c:1553
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
-"\"Фіксована база\" - це псевдонім.\n"
+"Інша назва — «фіксована база».\n"
 "Однакові бази створюють однакові зображення, якщо (1) ширина зображень "
 "однакова (з цієї причини зображення та його попередній перегляд "
 "відрізняються) і (2) швидкості всіх мутацій дорівнюють 0."
 
-#: ../plug-ins/common/cml-explorer.c:1542
+#: ../plug-ins/common/cml-explorer.c:1561
 msgid "O_thers"
 msgstr "_Інші"
 
-#: ../plug-ins/common/cml-explorer.c:1557
+#: ../plug-ins/common/cml-explorer.c:1576
 msgid "Copy Settings"
 msgstr "Скопіювати параметри"
 
-#: ../plug-ins/common/cml-explorer.c:1576
+#: ../plug-ins/common/cml-explorer.c:1595
 msgid "Source channel:"
 msgstr "Вихідний канал:"
 
-#: ../plug-ins/common/cml-explorer.c:1591
-#: ../plug-ins/common/cml-explorer.c:1638
+#: ../plug-ins/common/cml-explorer.c:1610
+#: ../plug-ins/common/cml-explorer.c:1657
 msgid "Destination channel:"
 msgstr "Цільовий канал:"
 
-#: ../plug-ins/common/cml-explorer.c:1595
+#: ../plug-ins/common/cml-explorer.c:1614
 msgid "Copy Parameters"
 msgstr "Скопіювати параметри"
 
-#: ../plug-ins/common/cml-explorer.c:1603
+#: ../plug-ins/common/cml-explorer.c:1622
 msgid "Selective Load Settings"
 msgstr "Вибіркове завантаження параметрів"
 
-#: ../plug-ins/common/cml-explorer.c:1623
+#: ../plug-ins/common/cml-explorer.c:1642
 msgid "Source channel in file:"
 msgstr "Вихідний канал у файлі:"
 
-#: ../plug-ins/common/cml-explorer.c:1644
+#: ../plug-ins/common/cml-explorer.c:1663
 msgid "_Misc"
 msgstr "І_нше"
 
-#: ../plug-ins/common/cml-explorer.c:1703
+#: ../plug-ins/common/cml-explorer.c:1722
 msgid "Function type:"
 msgstr "Тип функції:"
 
-#: ../plug-ins/common/cml-explorer.c:1719
+#: ../plug-ins/common/cml-explorer.c:1738
 msgid "Composition:"
 msgstr "Збірка:"
 
-#: ../plug-ins/common/cml-explorer.c:1733
+#: ../plug-ins/common/cml-explorer.c:1752
 msgid "Misc arrange:"
 msgstr "Порядок:"
 
-#: ../plug-ins/common/cml-explorer.c:1737
+#: ../plug-ins/common/cml-explorer.c:1756
 msgid "Use cyclic range"
 msgstr "Використовувати циклічний діапазон"
 
-#: ../plug-ins/common/cml-explorer.c:1746
+#: ../plug-ins/common/cml-explorer.c:1765
 msgid "Mod. rate:"
 msgstr "Частота модифікації:"
 
-#: ../plug-ins/common/cml-explorer.c:1753
+#: ../plug-ins/common/cml-explorer.c:1772
 msgid "Env. sensitivity:"
 msgstr "Чутливість середовища:"
 
-#: ../plug-ins/common/cml-explorer.c:1760
+#: ../plug-ins/common/cml-explorer.c:1779
 msgid "Diffusion dist.:"
 msgstr "Дистанція дифузії:"
 
-#: ../plug-ins/common/cml-explorer.c:1767
+#: ../plug-ins/common/cml-explorer.c:1786
 msgid "# of subranges:"
 msgstr "Кількість піддіапазонів:"
 
-#: ../plug-ins/common/cml-explorer.c:1774
+#: ../plug-ins/common/cml-explorer.c:1793
 msgid "P(ower factor):"
 msgstr "Показник степені:"
 
-#: ../plug-ins/common/cml-explorer.c:1782
+#: ../plug-ins/common/cml-explorer.c:1801
 msgid "Parameter k:"
 msgstr "Параметр k:"
 
-#: ../plug-ins/common/cml-explorer.c:1790
+#: ../plug-ins/common/cml-explorer.c:1809
 msgid "Range low:"
 msgstr "Нижній діапазон:"
 
-#: ../plug-ins/common/cml-explorer.c:1797
+#: ../plug-ins/common/cml-explorer.c:1816
 msgid "Range high:"
 msgstr "Верхній діапазон:"
 
-#: ../plug-ins/common/cml-explorer.c:1808
+#: ../plug-ins/common/cml-explorer.c:1827
 msgid "Plot a Graph of the Settings"
 msgstr "Накреслити графік параметрів"
 
-#: ../plug-ins/common/cml-explorer.c:1850
+#: ../plug-ins/common/cml-explorer.c:1869
 msgid "Ch. sensitivity:"
 msgstr "Чутливість каналу:"
 
-#: ../plug-ins/common/cml-explorer.c:1858
+#: ../plug-ins/common/cml-explorer.c:1877
 msgid "Mutation rate:"
 msgstr "Швидкість мутації:"
 
-#: ../plug-ins/common/cml-explorer.c:1866
+#: ../plug-ins/common/cml-explorer.c:1885
 msgid "Mutation dist.:"
 msgstr "Відстань мутацій:"
 
-#: ../plug-ins/common/cml-explorer.c:1958
+#: ../plug-ins/common/cml-explorer.c:1977
 msgid "Graph of the Current Settings"
 msgstr "Графік поточних параметрів"
 
-#: ../plug-ins/common/cml-explorer.c:1962
+#: ../plug-ins/common/cml-explorer.c:1981
 #: ../plug-ins/common/plugin-browser.c:560
 #: ../plug-ins/common/procedure-browser.c:168
-#: ../plug-ins/common/sample-colorize.c:1392
+#: ../plug-ins/common/sample-colorize.c:1414
 #: ../plug-ins/common/unit-editor.c:447 ../plug-ins/gfig/gfig-dialog.c:297
 #: ../plug-ins/gfig/gfig-dialog.c:887 ../plug-ins/gfig/gfig-dialog.c:1253
 #: ../plug-ins/gfig/gfig-dialog.c:1397
-#: ../plug-ins/ifs-compose/ifs-compose.c:1189
+#: ../plug-ins/ifs-compose/ifs-compose.c:1211
 #: ../plug-ins/imagemap/imap_menu.c:156
 #: ../plug-ins/metadata/metadata-viewer.c:284
 msgid "_Close"
 msgstr "З_акрити"
 
-#: ../plug-ins/common/cml-explorer.c:2030
+#: ../plug-ins/common/cml-explorer.c:2049
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Увага: джерело і призначення в одному каналі."
 
-#: ../plug-ins/common/cml-explorer.c:2089
+#: ../plug-ins/common/cml-explorer.c:2108
 msgid "Save CML Explorer Parameters"
 msgstr "Збереження параметрів CML Explorer"
 
-#: ../plug-ins/common/cml-explorer.c:2145 ../plug-ins/common/curve-bend.c:805
+#: ../plug-ins/common/cml-explorer.c:2164 ../plug-ins/common/curve-bend.c:827
 #: ../plug-ins/common/file-dicom.c:1410 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1509
 #: ../plug-ins/common/file-raw-data.c:1117
 #: ../plug-ins/common/file-raw-data.c:1147 ../plug-ins/common/file-sunras.c:641
 #: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
-#: ../plug-ins/common/sphere-designer.c:2196
+#: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
 #: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
 #: ../plug-ins/file-jpeg/jpeg-save.c:317 ../plug-ins/file-psd/psd-save.c:1762
 #: ../plug-ins/file-tiff/file-tiff-save.c:1114
-#: ../plug-ins/file-tiff/file-tiff-save.c:1198 ../plug-ins/flame/flame.c:485
+#: ../plug-ins/file-tiff/file-tiff-save.c:1198 ../plug-ins/flame/flame.c:508
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
-#: ../plug-ins/gfig/gfig.c:827 ../plug-ins/ifs-compose/ifs-compose.c:2400
+#: ../plug-ins/gfig/gfig.c:849 ../plug-ins/ifs-compose/ifs-compose.c:2422
 #: ../plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не вдається відкрити файл «%s» для запису: %s"
 
-#: ../plug-ins/common/cml-explorer.c:2200
+#: ../plug-ins/common/cml-explorer.c:2219
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Параметри збережено до «%s»"
 
-#: ../plug-ins/common/cml-explorer.c:2222
+#: ../plug-ins/common/cml-explorer.c:2241
 msgid "Load CML Explorer Parameters"
 msgstr "Завантажити параметри CML Explorer"
 
-#: ../plug-ins/common/cml-explorer.c:2318 ../plug-ins/common/curve-bend.c:858
+#: ../plug-ins/common/cml-explorer.c:2337 ../plug-ins/common/curve-bend.c:880
 #: ../plug-ins/common/file-cel.c:355 ../plug-ins/common/file-cel.c:409
 #: ../plug-ins/common/file-cel.c:649 ../plug-ins/common/file-dicom.c:376
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1412
@@ -983,106 +1011,106 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-tga.c:448 ../plug-ins/common/file-xbm.c:753
 #: ../plug-ins/common/file-xmc.c:662 ../plug-ins/common/file-xmc.c:906
-#: ../plug-ins/common/file-xwd.c:484 ../plug-ins/common/sphere-designer.c:2085
+#: ../plug-ins/common/file-xwd.c:484 ../plug-ins/common/sphere-designer.c:2088
 #: ../plug-ins/file-bmp/bmp-load.c:229 ../plug-ins/file-dds/ddsread.c:156
 #: ../plug-ins/file-faxg3/faxg3.c:258 ../plug-ins/file-fits/fits.c:384
 #: ../plug-ins/file-fli/fli-gimp.c:460 ../plug-ins/file-fli/fli-gimp.c:510
 #: ../plug-ins/file-ico/ico-load.c:676 ../plug-ins/file-ico/ico-load.c:758
 #: ../plug-ins/file-jpeg/jpeg-load.c:102 ../plug-ins/file-jpeg/jpeg-load.c:543
 #: ../plug-ins/file-psd/psd-load.c:152 ../plug-ins/file-psd/psd-thumb-load.c:90
-#: ../plug-ins/flame/flame.c:454
+#: ../plug-ins/flame/flame.c:477
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1015
-#: ../plug-ins/gfig/gfig.c:454 ../plug-ins/help/gimphelplocale.c:222
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1037
+#: ../plug-ins/gfig/gfig.c:476 ../plug-ins/help/gimphelplocale.c:222
 #: ../plug-ins/help/gimphelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Не вдається відкрити файл «%s» для читання: %s"
 
-#: ../plug-ins/common/cml-explorer.c:2340
+#: ../plug-ins/common/cml-explorer.c:2359
 msgid "Error: it's not CML parameter file."
 msgstr "Помилка: це не файл параметрів CML."
 
-#: ../plug-ins/common/cml-explorer.c:2347
+#: ../plug-ins/common/cml-explorer.c:2366
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "Попередження: «%s» - це файл старого формату."
 
-#: ../plug-ins/common/cml-explorer.c:2351
+#: ../plug-ins/common/cml-explorer.c:2370
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
 "Попередження: «%s» - цей файл параметрів призначений для більш нової версії "
 "\"CML Explorer\"."
 
-#: ../plug-ins/common/cml-explorer.c:2414
+#: ../plug-ins/common/cml-explorer.c:2433
 msgid "Error: failed to load parameters"
 msgstr "Помилка: не вдається завантажити параметри"
 
-#: ../plug-ins/common/colormap-remap.c:128
+#: ../plug-ins/common/colormap-remap.c:133
 msgid "R_earrange Colormap..."
 msgstr "_Перебудувати мапу кольорів..."
 
-#: ../plug-ins/common/colormap-remap.c:134
+#: ../plug-ins/common/colormap-remap.c:139
 msgid "Rearrange the colormap"
 msgstr "Перебудувати мапу кольорів"
 
-#: ../plug-ins/common/colormap-remap.c:164
+#: ../plug-ins/common/colormap-remap.c:173
 msgid "_Swap Colors"
 msgstr "Поміняти _місцями кольори"
 
-#: ../plug-ins/common/colormap-remap.c:168
+#: ../plug-ins/common/colormap-remap.c:177
 msgid "Swap two colors in the colormap"
 msgstr "Поміняти місцями два кольори на мапі"
 
-#: ../plug-ins/common/colormap-remap.c:324
-#: ../plug-ins/common/colormap-remap.c:335
-#: ../plug-ins/common/colormap-remap.c:346
+#: ../plug-ins/common/colormap-remap.c:334
+#: ../plug-ins/common/colormap-remap.c:345
+#: ../plug-ins/common/colormap-remap.c:356
 msgid "Invalid remap array was passed to remap function"
 msgstr "Функції передано некоректну множину"
 
-#: ../plug-ins/common/colormap-remap.c:370
+#: ../plug-ins/common/colormap-remap.c:380
 msgid "Rearranging the colormap"
 msgstr "Перебудова мапи кольорів"
 
-#: ../plug-ins/common/colormap-remap.c:538
+#: ../plug-ins/common/colormap-remap.c:548
 msgid "Sort on Hue"
 msgstr "Відсортувати за тоном"
 
-#: ../plug-ins/common/colormap-remap.c:542
+#: ../plug-ins/common/colormap-remap.c:552
 msgid "Sort on Saturation"
 msgstr "Відсортувати за насиченістю"
 
-#: ../plug-ins/common/colormap-remap.c:546
+#: ../plug-ins/common/colormap-remap.c:556
 msgid "Sort on Value"
 msgstr "Відсортувати за яскравістю"
 
-#: ../plug-ins/common/colormap-remap.c:550
+#: ../plug-ins/common/colormap-remap.c:560
 msgid "Reverse Order"
 msgstr "Зворотний порядок"
 
-#: ../plug-ins/common/colormap-remap.c:554
+#: ../plug-ins/common/colormap-remap.c:564
 msgid "Reset Order"
 msgstr "Скинути порядок"
 
-#: ../plug-ins/common/colormap-remap.c:650
+#: ../plug-ins/common/colormap-remap.c:660
 msgid "Rearrange Colormap"
 msgstr "Перебудувати мапу кольорів"
 
 #. The Reset button
-#: ../plug-ins/common/colormap-remap.c:654 ../plug-ins/common/curve-bend.c:1432
-#: ../plug-ins/common/sample-colorize.c:1390
-#: ../plug-ins/common/sphere-designer.c:2626
-#: ../plug-ins/common/tile-small.c:502
+#: ../plug-ins/common/colormap-remap.c:664 ../plug-ins/common/curve-bend.c:1454
+#: ../plug-ins/common/sample-colorize.c:1412
+#: ../plug-ins/common/sphere-designer.c:2629
+#: ../plug-ins/common/tile-small.c:524
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:814
 #: ../plug-ins/gimpressionist/preview.c:182
-#: ../plug-ins/ifs-compose/ifs-compose.c:786
-#: ../plug-ins/selection-to-path/selection-to-path.c:405
+#: ../plug-ins/ifs-compose/ifs-compose.c:808
+#: ../plug-ins/selection-to-path/selection-to-path.c:411
 msgid "_Reset"
 msgstr "_Скинути"
 
-#: ../plug-ins/common/colormap-remap.c:754
+#: ../plug-ins/common/colormap-remap.c:764
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
@@ -1094,170 +1122,170 @@ msgstr ""
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
 #.
-#: ../plug-ins/common/compose.c:202
+#: ../plug-ins/common/compose.c:203
 msgid "_Red:"
 msgstr "_Червоний:"
 
-#: ../plug-ins/common/compose.c:203
+#: ../plug-ins/common/compose.c:204
 msgid "_Green:"
 msgstr "_Зелений:"
 
-#: ../plug-ins/common/compose.c:204
+#: ../plug-ins/common/compose.c:205
 msgid "_Blue:"
 msgstr "С_иній:"
 
-#: ../plug-ins/common/compose.c:205
+#: ../plug-ins/common/compose.c:206
 msgid "_Alpha:"
 msgstr "_Альфа:"
 
-#: ../plug-ins/common/compose.c:207 ../plug-ins/common/compose.c:211
+#: ../plug-ins/common/compose.c:208 ../plug-ins/common/compose.c:212
 msgid "_Hue:"
 msgstr "Від_тінок"
 
-#: ../plug-ins/common/compose.c:208 ../plug-ins/common/compose.c:212
+#: ../plug-ins/common/compose.c:209 ../plug-ins/common/compose.c:213
 msgid "_Saturation:"
 msgstr "_Насиченість:"
 
-#: ../plug-ins/common/compose.c:209
+#: ../plug-ins/common/compose.c:210
 msgid "_Value:"
 msgstr "_Яскравість:"
 
-#: ../plug-ins/common/compose.c:213
+#: ../plug-ins/common/compose.c:214
 msgid "_Lightness:"
 msgstr "_Освітлення:"
 
-#: ../plug-ins/common/compose.c:215
+#: ../plug-ins/common/compose.c:216
 msgid "_Cyan:"
 msgstr "_Блакитний:"
 
-#: ../plug-ins/common/compose.c:216
+#: ../plug-ins/common/compose.c:217
 msgid "_Magenta:"
 msgstr "_Пурпурний:"
 
-#: ../plug-ins/common/compose.c:217
+#: ../plug-ins/common/compose.c:218
 msgid "_Yellow:"
 msgstr "_Жовтий:"
 
-#: ../plug-ins/common/compose.c:218
+#: ../plug-ins/common/compose.c:219
 msgid "_Black:"
 msgstr "_Чорний:"
 
-#: ../plug-ins/common/compose.c:220
+#: ../plug-ins/common/compose.c:221
 msgid "_L:"
 msgstr "_L:"
 
-#: ../plug-ins/common/compose.c:221
+#: ../plug-ins/common/compose.c:222
 msgid "_A:"
 msgstr "_A:"
 
-#: ../plug-ins/common/compose.c:222
+#: ../plug-ins/common/compose.c:223
 msgid "_B:"
 msgstr "_B:"
 
-#: ../plug-ins/common/compose.c:224
+#: ../plug-ins/common/compose.c:225
 msgid "_L"
 msgstr "_L"
 
-#: ../plug-ins/common/compose.c:225
+#: ../plug-ins/common/compose.c:226
 msgid "_C"
 msgstr "_C"
 
-#: ../plug-ins/common/compose.c:226
+#: ../plug-ins/common/compose.c:227
 msgid "_H"
 msgstr "_H"
 
-#: ../plug-ins/common/compose.c:228
+#: ../plug-ins/common/compose.c:229
 msgid "_Luma y470:"
 msgstr "_Luma y470:"
 
-#: ../plug-ins/common/compose.c:229
+#: ../plug-ins/common/compose.c:230
 msgid "_Blueness cb470:"
 msgstr "_Blueness cb470:"
 
-#: ../plug-ins/common/compose.c:230
+#: ../plug-ins/common/compose.c:231
 msgid "_Redness cr470:"
 msgstr "_Redness cr470:"
 
-#: ../plug-ins/common/compose.c:232
+#: ../plug-ins/common/compose.c:233
 msgid "_Luma y709:"
 msgstr "_Luma y709:"
 
-#: ../plug-ins/common/compose.c:233
+#: ../plug-ins/common/compose.c:234
 msgid "_Blueness cb709:"
 msgstr "_Blueness cb709:"
 
-#: ../plug-ins/common/compose.c:234
+#: ../plug-ins/common/compose.c:235
 msgid "_Redness cr709:"
 msgstr "_Redness cr709:"
 
 #. Generic case for any data. Let's leave choice to select the
 #. * right type of raw data.
 #.
-#: ../plug-ins/common/compose.c:240 ../plug-ins/common/decompose.c:191
+#: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:192
 #: ../plug-ins/common/file-heif.c:2545 ../plug-ins/common/file-raw-data.c:1880
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/common/compose.c:247 ../plug-ins/common/decompose.c:192
+#: ../plug-ins/common/compose.c:248 ../plug-ins/common/decompose.c:193
 msgid "RGBA"
 msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:255 ../plug-ins/common/decompose.c:199
+#: ../plug-ins/common/compose.c:256 ../plug-ins/common/decompose.c:200
 msgid "HSV"
 msgstr "HSV"
 
-#: ../plug-ins/common/compose.c:262 ../plug-ins/common/decompose.c:204
+#: ../plug-ins/common/compose.c:263 ../plug-ins/common/decompose.c:205
 msgid "HSL"
 msgstr "HSL"
 
-#: ../plug-ins/common/compose.c:269 ../plug-ins/common/decompose.c:209
+#: ../plug-ins/common/compose.c:270 ../plug-ins/common/decompose.c:210
 #: ../plug-ins/common/file-jp2-load.c:1011
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../plug-ins/common/compose.c:277 ../plug-ins/common/decompose.c:215
+#: ../plug-ins/common/compose.c:278 ../plug-ins/common/decompose.c:216
 msgid "LAB"
 msgstr "LAB"
 
-#: ../plug-ins/common/compose.c:284 ../plug-ins/common/decompose.c:217
+#: ../plug-ins/common/compose.c:285 ../plug-ins/common/decompose.c:218
 msgid "LCH"
 msgstr "LCH"
 
-#: ../plug-ins/common/compose.c:291 ../plug-ins/common/decompose.c:219
+#: ../plug-ins/common/compose.c:292 ../plug-ins/common/decompose.c:220
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: ../plug-ins/common/compose.c:298 ../plug-ins/common/decompose.c:222
+#: ../plug-ins/common/compose.c:299 ../plug-ins/common/decompose.c:223
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: ../plug-ins/common/compose.c:305 ../plug-ins/common/decompose.c:220
+#: ../plug-ins/common/compose.c:306 ../plug-ins/common/decompose.c:221
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: ../plug-ins/common/compose.c:312 ../plug-ins/common/decompose.c:223
+#: ../plug-ins/common/compose.c:313 ../plug-ins/common/decompose.c:224
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
-#: ../plug-ins/common/compose.c:394
+#: ../plug-ins/common/compose.c:399
 msgid "C_ompose..."
 msgstr "_Зібрати..."
 
-#: ../plug-ins/common/compose.c:398
+#: ../plug-ins/common/compose.c:403
 msgid "Create an image using multiple gray images as color channels"
 msgstr ""
 "Створити нове зображення, використовуючи зображення у режимі «Градації "
 "сірого» у якості каналів"
 
-#: ../plug-ins/common/compose.c:495
+#: ../plug-ins/common/compose.c:506
 msgid "R_ecompose"
 msgstr "_Возз'єднати"
 
-#: ../plug-ins/common/compose.c:499
+#: ../plug-ins/common/compose.c:510
 msgid "Recompose an image that was previously decomposed"
 msgstr "Зібрати раніше розібране на канали зображення"
 
-#: ../plug-ins/common/compose.c:543
+#: ../plug-ins/common/compose.c:576
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
@@ -1265,170 +1293,170 @@ msgstr ""
 "Функція «Зібрати» доступна лише для тих зображень, які створені за допомогою "
 "фільтра «Розібрати»."
 
-#: ../plug-ins/common/compose.c:574
+#: ../plug-ins/common/compose.c:607
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr "Помилка сканування паразита 'decompose-data': надто мало шарів"
 
-#: ../plug-ins/common/compose.c:589
+#: ../plug-ins/common/compose.c:622
 #, c-format
 msgid "Cannot recompose: Specified source layer ID %d not found"
 msgstr ""
 "Неможливо перекомпонувати: не знайдено вказаного шару джерела із "
 "ідентифікатором %d"
 
-#: ../plug-ins/common/compose.c:609
+#: ../plug-ins/common/compose.c:642
 #, c-format
 msgid "Cannot recompose: Specified layer #%d ID %d not found"
 msgstr ""
 "Неможливо перекомпонувати: не знайдено вказаного шару %d, ідентифікатор %d"
 
-#: ../plug-ins/common/compose.c:641
+#: ../plug-ins/common/compose.c:674
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Не вдається отримати шари зображення %d"
 
-#: ../plug-ins/common/compose.c:705
+#: ../plug-ins/common/compose.c:738
 msgid "Composing"
 msgstr "Збирання"
 
-#: ../plug-ins/common/compose.c:940 ../plug-ins/common/compose.c:1385
+#: ../plug-ins/common/compose.c:973 ../plug-ins/common/compose.c:1418
 msgid "At least one image is needed to compose"
 msgstr "Для збирання треба принаймні одне зображення"
 
-#: ../plug-ins/common/compose.c:961
+#: ../plug-ins/common/compose.c:994
 msgid "Drawables have different size"
 msgstr "Малюнки мають різні розміри"
 
-#: ../plug-ins/common/compose.c:989
+#: ../plug-ins/common/compose.c:1022
 msgid "Images have different size"
 msgstr "Зображення мають різний розмір"
 
-#: ../plug-ins/common/compose.c:1007
+#: ../plug-ins/common/compose.c:1040
 msgid "Error in getting layer IDs"
 msgstr "Помилка отримання ідентифікатора шару"
 
-#: ../plug-ins/common/compose.c:1145
+#: ../plug-ins/common/compose.c:1178
 msgid "Compose"
 msgstr "Зібрати"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1173
+#: ../plug-ins/common/compose.c:1206
 msgid "Compose Channels"
 msgstr "Зібрати канали"
 
-#: ../plug-ins/common/compose.c:1183 ../plug-ins/common/decompose.c:873
+#: ../plug-ins/common/compose.c:1216 ../plug-ins/common/decompose.c:895
 msgid "Color _model:"
 msgstr "Кольорова _модель:"
 
 #. Channel representation grid
-#: ../plug-ins/common/compose.c:1215
+#: ../plug-ins/common/compose.c:1248
 msgid "Channel Representations"
 msgstr "Представлення каналу"
 
-#: ../plug-ins/common/compose.c:1274
+#: ../plug-ins/common/compose.c:1307
 msgid "Mask value"
 msgstr "Значення маски"
 
-#: ../plug-ins/common/contrast-retinex.c:190
+#: ../plug-ins/common/contrast-retinex.c:193
 msgid "Retine_x..."
 msgstr "Ретіне_кс..."
 
-#: ../plug-ins/common/contrast-retinex.c:194
+#: ../plug-ins/common/contrast-retinex.c:197
 msgid "Enhance contrast using the Retinex method"
 msgstr "Збільшити контраст, використовуючи алгоритм Retinex"
 
-#: ../plug-ins/common/contrast-retinex.c:290
+#: ../plug-ins/common/contrast-retinex.c:312
 msgid "Retinex"
 msgstr "Ретінекс"
 
-#: ../plug-ins/common/contrast-retinex.c:324
+#: ../plug-ins/common/contrast-retinex.c:346
 msgid "Retinex Image Enhancement"
 msgstr "Покращення зображення за допомогою ретінексу"
 
-#: ../plug-ins/common/contrast-retinex.c:360
+#: ../plug-ins/common/contrast-retinex.c:382
 msgid "Uniform"
 msgstr "Рівномірний"
 
-#: ../plug-ins/common/contrast-retinex.c:361
+#: ../plug-ins/common/contrast-retinex.c:383
 #: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Low"
 msgstr "Низький"
 
-#: ../plug-ins/common/contrast-retinex.c:362
+#: ../plug-ins/common/contrast-retinex.c:384
 #: ../plug-ins/metadata/metadata-tags.c:227
 msgid "High"
 msgstr "Високий"
 
-#: ../plug-ins/common/contrast-retinex.c:373
+#: ../plug-ins/common/contrast-retinex.c:395
 msgid "_Level:"
 msgstr "_Рівень:"
 
-#: ../plug-ins/common/contrast-retinex.c:377
+#: ../plug-ins/common/contrast-retinex.c:399
 msgid "_Scale:"
 msgstr "_Масштаб:"
 
-#: ../plug-ins/common/contrast-retinex.c:388
+#: ../plug-ins/common/contrast-retinex.c:410
 msgid "Scale _division:"
 msgstr "Ділення _шкали:"
 
-#: ../plug-ins/common/contrast-retinex.c:399
+#: ../plug-ins/common/contrast-retinex.c:421
 msgid "Dy_namic:"
 msgstr "_Динамічно:"
 
-#: ../plug-ins/common/contrast-retinex.c:687
+#: ../plug-ins/common/contrast-retinex.c:709
 msgid "Retinex: filtering"
 msgstr "Retinex: фільтрування"
 
-#: ../plug-ins/common/crop-zealous.c:109
+#: ../plug-ins/common/crop-zealous.c:112
 msgid "_Zealous Crop"
 msgstr "_Старанне кадрування"
 
-#: ../plug-ins/common/crop-zealous.c:113
+#: ../plug-ins/common/crop-zealous.c:116
 msgid "Autocrop unused space from edges and middle"
 msgstr "Автоматичне кадрування невикористаного простору"
 
-#: ../plug-ins/common/crop-zealous.c:137
+#: ../plug-ins/common/crop-zealous.c:143
 msgid "Zealous cropping"
 msgstr "Старанне кадрування..."
 
-#: ../plug-ins/common/crop-zealous.c:260
+#: ../plug-ins/common/crop-zealous.c:283
 msgid "Nothing to crop."
 msgstr "Немає що кадрувати."
 
-#: ../plug-ins/common/curve-bend.c:426
+#: ../plug-ins/common/curve-bend.c:429
 msgid "_Curve Bend..."
 msgstr "_Згин за кривою..."
 
-#: ../plug-ins/common/curve-bend.c:431
+#: ../plug-ins/common/curve-bend.c:434
 msgid "Bend the image using two control curves"
 msgstr "Вигнути зображення, використовуючи дві напрямні криві"
 
-#: ../plug-ins/common/curve-bend.c:665
+#: ../plug-ins/common/curve-bend.c:687
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
-#: ../plug-ins/common/curve-bend.c:679
+#: ../plug-ins/common/curve-bend.c:701
 msgid "Cannot operate on layers with masks."
 msgstr "Не можна використовувати на шарах з маскою."
 
-#: ../plug-ins/common/curve-bend.c:694
+#: ../plug-ins/common/curve-bend.c:716
 msgid "Cannot operate on empty selections."
 msgstr "Неможливо виконувати дії з порожнім виділенням."
 
-#: ../plug-ins/common/curve-bend.c:868
+#: ../plug-ins/common/curve-bend.c:890
 #, c-format
 msgid "Error while reading '%s': %s"
 msgstr "Помилка при читанні «%s»: %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve-bend.c:1185 ../plug-ins/common/curve-bend.c:2927
+#: ../plug-ins/common/curve-bend.c:1207 ../plug-ins/common/curve-bend.c:2949
 msgid "Curve Bend"
 msgstr "Вигин кривої"
 
 #. Preview area, top of column
 #. preview
-#: ../plug-ins/common/curve-bend.c:1222
+#: ../plug-ins/common/curve-bend.c:1244
 #: ../plug-ins/gimpressionist/orientmap.c:589
 #: ../plug-ins/gimpressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:180
@@ -1436,296 +1464,296 @@ msgid "Preview"
 msgstr "Перегляд"
 
 #. The preview button
-#: ../plug-ins/common/curve-bend.c:1249
+#: ../plug-ins/common/curve-bend.c:1271
 msgid "_Preview Once"
 msgstr "_Переглянути"
 
 #. The preview toggle
-#: ../plug-ins/common/curve-bend.c:1258
+#: ../plug-ins/common/curve-bend.c:1280
 msgid "Automatic pre_view"
 msgstr "_Автоматичний перегляд"
 
 #. Options area, bottom of column
-#: ../plug-ins/common/curve-bend.c:1268 ../plug-ins/gfig/gfig-dialog.c:1250
+#: ../plug-ins/common/curve-bend.c:1290 ../plug-ins/gfig/gfig-dialog.c:1250
 msgid "Options"
 msgstr "Параметри"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve-bend.c:1282
+#: ../plug-ins/common/curve-bend.c:1304
 msgid "Rotat_e:"
 msgstr "_Обертання:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve-bend.c:1301
+#: ../plug-ins/common/curve-bend.c:1323
 msgid "Smoo_thing"
 msgstr "_Згладжувати зображення"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1311 ../plug-ins/common/qbist.c:924
+#: ../plug-ins/common/curve-bend.c:1333 ../plug-ins/common/qbist.c:945
 msgid "_Antialiasing"
 msgstr "Згладжувати _межі"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve-bend.c:1321
+#: ../plug-ins/common/curve-bend.c:1343
 msgid "Work on cop_y"
 msgstr "Працювати з копі_єю"
 
 #. The curves graph
-#: ../plug-ins/common/curve-bend.c:1331
+#: ../plug-ins/common/curve-bend.c:1353
 msgid "Modify Curves"
 msgstr "Коригуючі криві"
 
-#: ../plug-ins/common/curve-bend.c:1360
+#: ../plug-ins/common/curve-bend.c:1382
 msgid "Curve for Border"
 msgstr "Крива для межі"
 
-#: ../plug-ins/common/curve-bend.c:1364
+#: ../plug-ins/common/curve-bend.c:1386
 msgctxt "curve-border"
 msgid "_Upper"
 msgstr "_Верхній"
 
-#: ../plug-ins/common/curve-bend.c:1365
+#: ../plug-ins/common/curve-bend.c:1387
 msgctxt "curve-border"
 msgid "_Lower"
 msgstr "_Нижній"
 
-#: ../plug-ins/common/curve-bend.c:1375
+#: ../plug-ins/common/curve-bend.c:1397
 msgid "Curve Type"
 msgstr "Тип кривої"
 
-#: ../plug-ins/common/curve-bend.c:1379
+#: ../plug-ins/common/curve-bend.c:1401
 msgid "Smoot_h"
 msgstr "_Гладка"
 
-#: ../plug-ins/common/curve-bend.c:1380
+#: ../plug-ins/common/curve-bend.c:1402
 msgid "_Free"
 msgstr "Дов_ільна"
 
 #. The Copy button
-#: ../plug-ins/common/curve-bend.c:1395
-#: ../plug-ins/gradient-flare/gradient-flare.c:3062
+#: ../plug-ins/common/curve-bend.c:1417
+#: ../plug-ins/gradient-flare/gradient-flare.c:3082
 #: ../plug-ins/imagemap/imap_menu.c:168
 msgid "_Copy"
 msgstr "_Копіювати"
 
-#: ../plug-ins/common/curve-bend.c:1400
+#: ../plug-ins/common/curve-bend.c:1422
 msgid "Copy the active curve to the other border"
 msgstr "Копіювати активну криву  на інший край"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve-bend.c:1407
+#: ../plug-ins/common/curve-bend.c:1429
 msgid "_Mirror"
 msgstr "_Віддзеркалити"
 
-#: ../plug-ins/common/curve-bend.c:1412
+#: ../plug-ins/common/curve-bend.c:1434
 msgid "Mirror the active curve to the other border"
 msgstr "Віддзеркалити активну криву на інший край"
 
 #. The Swap button
-#: ../plug-ins/common/curve-bend.c:1420
+#: ../plug-ins/common/curve-bend.c:1442
 msgid "S_wap"
 msgstr "_Переставити"
 
-#: ../plug-ins/common/curve-bend.c:1425
+#: ../plug-ins/common/curve-bend.c:1447
 msgid "Swap the two curves"
 msgstr "Переставити дві криві"
 
-#: ../plug-ins/common/curve-bend.c:1437
+#: ../plug-ins/common/curve-bend.c:1459
 msgid "Reset the active curve"
 msgstr "Скинути активну криву"
 
-#: ../plug-ins/common/curve-bend.c:1454
+#: ../plug-ins/common/curve-bend.c:1476
 msgid "Load the curves from a file"
 msgstr "Завантажити криві з файлу"
 
-#: ../plug-ins/common/curve-bend.c:1466
+#: ../plug-ins/common/curve-bend.c:1488
 msgid "Save the curves to a file"
 msgstr "Зберегти криві у файлі"
 
-#: ../plug-ins/common/curve-bend.c:1959
+#: ../plug-ins/common/curve-bend.c:1981
 msgid "Load Curve Points from File"
 msgstr "Завантажити точки кривої з файлу"
 
-#: ../plug-ins/common/curve-bend.c:1994
+#: ../plug-ins/common/curve-bend.c:2016
 msgid "Save Curve Points to File"
 msgstr "Зберегти точки кривої у файлі"
 
-#: ../plug-ins/common/decompose.c:154
+#: ../plug-ins/common/decompose.c:155
 msgid "red"
 msgstr "червоний"
 
-#: ../plug-ins/common/decompose.c:155
+#: ../plug-ins/common/decompose.c:156
 msgid "green"
 msgstr "зелений"
 
-#: ../plug-ins/common/decompose.c:156
+#: ../plug-ins/common/decompose.c:157
 msgid "blue"
 msgstr "синій"
 
-#: ../plug-ins/common/decompose.c:157
+#: ../plug-ins/common/decompose.c:158
 msgid "alpha"
 msgstr "альфа"
 
-#: ../plug-ins/common/decompose.c:159 ../plug-ins/common/decompose.c:163
+#: ../plug-ins/common/decompose.c:160 ../plug-ins/common/decompose.c:164
 msgid "hue"
 msgstr "відтінок"
 
-#: ../plug-ins/common/decompose.c:160 ../plug-ins/common/decompose.c:164
+#: ../plug-ins/common/decompose.c:161 ../plug-ins/common/decompose.c:165
 msgid "saturation"
 msgstr "насиченість"
 
-#: ../plug-ins/common/decompose.c:161
+#: ../plug-ins/common/decompose.c:162
 msgid "value"
 msgstr "яскравість"
 
-#: ../plug-ins/common/decompose.c:165
+#: ../plug-ins/common/decompose.c:166
 msgid "lightness"
 msgstr "lightness"
 
-#: ../plug-ins/common/decompose.c:167
+#: ../plug-ins/common/decompose.c:168
 msgid "cyan"
 msgstr "блакитний"
 
-#: ../plug-ins/common/decompose.c:168
+#: ../plug-ins/common/decompose.c:169
 msgid "magenta"
 msgstr "пурпурний"
 
-#: ../plug-ins/common/decompose.c:169
+#: ../plug-ins/common/decompose.c:170
 msgid "yellow"
 msgstr "жовтий"
 
-#: ../plug-ins/common/decompose.c:170
+#: ../plug-ins/common/decompose.c:171
 msgid "black"
 msgstr "чорний"
 
-#: ../plug-ins/common/decompose.c:172 ../plug-ins/common/decompose.c:176
+#: ../plug-ins/common/decompose.c:173 ../plug-ins/common/decompose.c:177
 msgid "L"
 msgstr "L"
 
-#: ../plug-ins/common/decompose.c:173
+#: ../plug-ins/common/decompose.c:174
 msgid "A"
 msgstr "A"
 
-#: ../plug-ins/common/decompose.c:174
+#: ../plug-ins/common/decompose.c:175
 msgid "B"
 msgstr "B"
 
-#: ../plug-ins/common/decompose.c:177
+#: ../plug-ins/common/decompose.c:178
 msgid "C"
 msgstr "C"
 
-#: ../plug-ins/common/decompose.c:178
+#: ../plug-ins/common/decompose.c:179
 msgid "H"
 msgstr "H"
 
-#: ../plug-ins/common/decompose.c:180
+#: ../plug-ins/common/decompose.c:181
 msgid "luma-y470"
 msgstr "luma-y470"
 
-#: ../plug-ins/common/decompose.c:181
+#: ../plug-ins/common/decompose.c:182
 msgid "blueness-cb470"
 msgstr "blueness-cb470"
 
-#: ../plug-ins/common/decompose.c:182
+#: ../plug-ins/common/decompose.c:183
 msgid "redness-cr470"
 msgstr "redness-cr470"
 
-#: ../plug-ins/common/decompose.c:184
+#: ../plug-ins/common/decompose.c:185
 msgid "luma-y709"
 msgstr "luma-y709"
 
-#: ../plug-ins/common/decompose.c:185
+#: ../plug-ins/common/decompose.c:186
 msgid "blueness-cb709"
 msgstr "blueness-cb709"
 
-#: ../plug-ins/common/decompose.c:186
+#: ../plug-ins/common/decompose.c:187
 msgid "redness-cr709"
 msgstr "redness-cr709"
 
 #. Redmode radio frame
-#: ../plug-ins/common/decompose.c:194
+#: ../plug-ins/common/decompose.c:195
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:990
 msgid "Red"
 msgstr "Червоний"
 
 #. Greenmode radio frame
-#: ../plug-ins/common/decompose.c:195
+#: ../plug-ins/common/decompose.c:196
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1031
 msgid "Green"
 msgstr "Зелений"
 
 #. Bluemode radio frame
-#: ../plug-ins/common/decompose.c:196
+#: ../plug-ins/common/decompose.c:197
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1072
 msgid "Blue"
 msgstr "Синій"
 
-#: ../plug-ins/common/decompose.c:197
+#: ../plug-ins/common/decompose.c:198
 msgid "Alpha"
 msgstr "Альфа"
 
-#: ../plug-ins/common/decompose.c:205
+#: ../plug-ins/common/decompose.c:206
 msgid "Hue (HSL)"
 msgstr "Відтінок (HSL)"
 
-#: ../plug-ins/common/decompose.c:206
+#: ../plug-ins/common/decompose.c:207
 msgid "Saturation (HSL)"
 msgstr "Насиченість (HSL)"
 
-#: ../plug-ins/common/decompose.c:207
+#: ../plug-ins/common/decompose.c:208
 msgid "Lightness"
 msgstr "Яскравість"
 
-#: ../plug-ins/common/decompose.c:210
+#: ../plug-ins/common/decompose.c:211
 msgid "Cyan"
 msgstr "Блакитний"
 
-#: ../plug-ins/common/decompose.c:211
+#: ../plug-ins/common/decompose.c:212
 msgid "Magenta"
 msgstr "Пурпурний"
 
-#: ../plug-ins/common/decompose.c:212
+#: ../plug-ins/common/decompose.c:213
 msgid "Yellow"
 msgstr "Жовтий"
 
-#: ../plug-ins/common/decompose.c:213 ../plug-ins/common/warp.c:594
-#: ../plug-ins/flame/flame.c:1199 ../plug-ins/gfig/gfig-dialog.c:1493
+#: ../plug-ins/common/decompose.c:214 ../plug-ins/common/warp.c:616
+#: ../plug-ins/flame/flame.c:1222 ../plug-ins/gfig/gfig-dialog.c:1493
 msgid "Black"
 msgstr "Чорний"
 
-#: ../plug-ins/common/decompose.c:277
+#: ../plug-ins/common/decompose.c:280
 msgid "_Decompose..."
 msgstr "_Розібрати..."
 
-#: ../plug-ins/common/decompose.c:281
+#: ../plug-ins/common/decompose.c:284
 msgid "Decompose an image into separate colorspace components"
 msgstr "Розібрати зображення на окремі кольорові складові"
 
-#: ../plug-ins/common/decompose.c:391
+#: ../plug-ins/common/decompose.c:413
 msgid "Decomposing"
 msgstr "Розкладання"
 
-#: ../plug-ins/common/decompose.c:526
+#: ../plug-ins/common/decompose.c:548
 msgid "Image not suitable for this decomposition"
 msgstr "Зображення непридатне для такого розкладання"
 
-#: ../plug-ins/common/decompose.c:851
+#: ../plug-ins/common/decompose.c:873
 msgid "Decompose"
 msgstr "Розібрати"
 
-#: ../plug-ins/common/decompose.c:861
+#: ../plug-ins/common/decompose.c:883
 msgid "Extract Channels"
 msgstr "Добути канали"
 
-#: ../plug-ins/common/decompose.c:910
+#: ../plug-ins/common/decompose.c:932
 msgid "_Decompose to layers"
 msgstr "Розібрати на _шари"
 
-#: ../plug-ins/common/decompose.c:914
+#: ../plug-ins/common/decompose.c:936
 msgid "_Foreground as registration color"
 msgstr "П_ередній план як колір приведення"
 
-#: ../plug-ins/common/decompose.c:915
+#: ../plug-ins/common/decompose.c:937
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -1734,116 +1762,116 @@ msgstr ""
 "зображеннях. Це може стати у нагоді для створення позначок для обрізки, "
 "видимих в усіх каналах."
 
-#: ../plug-ins/common/depth-merge.c:213
+#: ../plug-ins/common/depth-merge.c:216
 msgid "_Depth Merge..."
 msgstr "Об'єднання _глибин..."
 
-#: ../plug-ins/common/depth-merge.c:217
+#: ../plug-ins/common/depth-merge.c:220
 msgid "Combine two images using depth maps (z-buffers)"
 msgstr "Об'єднати два зображення, використовуючи карту глибин (z-buffers)"
 
-#: ../plug-ins/common/depth-merge.c:446
+#: ../plug-ins/common/depth-merge.c:468
 msgid "Depth-merging"
 msgstr "Об'єднання глибин"
 
-#: ../plug-ins/common/depth-merge.c:706
+#: ../plug-ins/common/depth-merge.c:728
 msgid "Depth Merge"
 msgstr "Об'єднання глибин"
 
-#: ../plug-ins/common/depth-merge.c:756
+#: ../plug-ins/common/depth-merge.c:778
 msgid "Source 1:"
 msgstr "Джерело 1:"
 
-#: ../plug-ins/common/depth-merge.c:769 ../plug-ins/common/depth-merge.c:797
+#: ../plug-ins/common/depth-merge.c:791 ../plug-ins/common/depth-merge.c:819
 msgid "Depth map:"
 msgstr "Мапа глибин:"
 
-#: ../plug-ins/common/depth-merge.c:784
+#: ../plug-ins/common/depth-merge.c:806
 msgid "Source 2:"
 msgstr "Джерело 2:"
 
 #. Numeric parameters
-#: ../plug-ins/common/depth-merge.c:813
+#: ../plug-ins/common/depth-merge.c:835
 msgid "O_verlap:"
 msgstr "_Перекриття:"
 
-#: ../plug-ins/common/depth-merge.c:822 ../plug-ins/common/file-raw-data.c:1913
+#: ../plug-ins/common/depth-merge.c:844 ../plug-ins/common/file-raw-data.c:1913
 msgid "O_ffset:"
 msgstr "_Зсув:"
 
-#: ../plug-ins/common/depth-merge.c:831
+#: ../plug-ins/common/depth-merge.c:853
 msgid "Sc_ale 1:"
 msgstr "_Масштаб 1:"
 
-#: ../plug-ins/common/depth-merge.c:840
+#: ../plug-ins/common/depth-merge.c:862
 msgid "Sca_le 2:"
 msgstr "Мас_штаб 2:"
 
-#: ../plug-ins/common/despeckle.c:175
+#: ../plug-ins/common/despeckle.c:178
 msgid "Des_peckle..."
 msgstr "Прибирання _плям..."
 
-#: ../plug-ins/common/despeckle.c:179
+#: ../plug-ins/common/despeckle.c:182
 msgid "Remove speckle noise from the image"
 msgstr "Видалити із зображення шум, що створюється плямами"
 
-#: ../plug-ins/common/despeckle.c:396 ../plug-ins/common/despeckle.c:899
+#: ../plug-ins/common/despeckle.c:418 ../plug-ins/common/despeckle.c:921
 msgid "Despeckle"
 msgstr "Прибирання плям"
 
-#: ../plug-ins/common/despeckle.c:414
+#: ../plug-ins/common/despeckle.c:436
 msgid "Median"
 msgstr "Середнє"
 
-#: ../plug-ins/common/despeckle.c:424
+#: ../plug-ins/common/despeckle.c:446
 msgid "_Adaptive"
 msgstr "_Адаптивне"
 
-#: ../plug-ins/common/despeckle.c:437
+#: ../plug-ins/common/despeckle.c:459
 msgid "R_ecursive"
 msgstr "Р_екурсивне"
 
-#: ../plug-ins/common/despeckle.c:461 ../plug-ins/common/nl-filter.c:1170
-#: ../plug-ins/gradient-flare/gradient-flare.c:2901
+#: ../plug-ins/common/despeckle.c:483 ../plug-ins/common/nl-filter.c:1193
+#: ../plug-ins/gradient-flare/gradient-flare.c:2921
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
 msgstr "_Радіус:"
 
-#: ../plug-ins/common/despeckle.c:471
+#: ../plug-ins/common/despeckle.c:493
 msgid "_Black level:"
 msgstr "Рівень _чорного:"
 
-#: ../plug-ins/common/despeckle.c:481
+#: ../plug-ins/common/despeckle.c:503
 msgid "_White level:"
 msgstr "Рівень _білого:"
 
-#: ../plug-ins/common/destripe.c:136
+#: ../plug-ins/common/destripe.c:139
 msgid "Des_tripe..."
 msgstr "Прибирання _штрихів..."
 
-#: ../plug-ins/common/destripe.c:140
+#: ../plug-ins/common/destripe.c:143
 msgid "Remove vertical stripe artifacts from the image"
 msgstr "Видалити вертикальні смуги із зображення"
 
-#: ../plug-ins/common/destripe.c:240
+#: ../plug-ins/common/destripe.c:263
 msgid "Destriping"
 msgstr "Прибирання штрихів"
 
-#: ../plug-ins/common/destripe.c:456
+#: ../plug-ins/common/destripe.c:479
 msgid "Destripe"
 msgstr "Прибирання штрихів"
 
-#: ../plug-ins/common/destripe.c:486 ../plug-ins/common/file-html-table.c:711
+#: ../plug-ins/common/destripe.c:509 ../plug-ins/common/file-html-table.c:711
 #: ../plug-ins/common/file-ps.c:3625 ../plug-ins/common/file-ps.c:3825
 #: ../plug-ins/common/file-raw-data.c:1927
-#: ../plug-ins/common/smooth-palette.c:508 ../plug-ins/common/tile.c:496
+#: ../plug-ins/common/smooth-palette.c:530 ../plug-ins/common/tile.c:518
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:398
 #: ../plug-ins/print/print-page-layout.c:286
 msgid "_Width:"
 msgstr "_Ширина:"
 
-#: ../plug-ins/common/destripe.c:496
+#: ../plug-ins/common/destripe.c:519
 msgid "Create _histogram"
 msgstr "Створити г_істограму"
 
@@ -2688,8 +2716,8 @@ msgstr "_Рамка:"
 
 #: ../plug-ins/common/file-html-table.c:717 ../plug-ins/common/file-ps.c:3638
 #: ../plug-ins/common/file-ps.c:3836 ../plug-ins/common/file-raw-data.c:1941
-#: ../plug-ins/common/film.c:1052 ../plug-ins/common/smooth-palette.c:513
-#: ../plug-ins/common/tile.c:500 ../plug-ins/imagemap/imap_cmd_guides.c:173
+#: ../plug-ins/common/film.c:1058 ../plug-ins/common/smooth-palette.c:535
+#: ../plug-ins/common/tile.c:522 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:405
 #: ../plug-ins/print/print-page-layout.c:288
 msgid "_Height:"
@@ -3060,7 +3088,7 @@ msgstr "Імпорт з PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3551
 #: ../plug-ins/file-tiff/file-tiff-load.c:2459
-#: ../plug-ins/metadata/metadata-editor.c:4548
+#: ../plug-ins/metadata/metadata-editor.c:4569
 msgid "_Import"
 msgstr "_Імпортувати"
 
@@ -3479,7 +3507,7 @@ msgstr "Сторінки:"
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Сторінок для завантаження(наприклад: 1-4 чи 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3663 ../plug-ins/common/sphere-designer.c:2723
+#: ../plug-ins/common/file-ps.c:3663 ../plug-ins/common/sphere-designer.c:2726
 msgid "Layers"
 msgstr "Шари"
 
@@ -4139,7 +4167,7 @@ msgstr "Створити Scalable Vector Graphics"
 
 #. Width and Height
 #: ../plug-ins/common/file-svg.c:733 ../plug-ins/common/file-wmf.c:609
-#: ../plug-ins/common/grid.c:820
+#: ../plug-ins/common/grid.c:843
 msgid "Width:"
 msgstr "Ширина:"
 
@@ -4662,173 +4690,173 @@ msgstr "Помилка при експортуванні «%s»: "
 msgid "XWD-file %s is corrupt."
 msgstr "Файл XWD %s пошкоджений."
 
-#: ../plug-ins/common/film.c:228
+#: ../plug-ins/common/film.c:233
 msgid "_Filmstrip..."
 msgstr "_Фотоплівка..."
 
-#: ../plug-ins/common/film.c:232
+#: ../plug-ins/common/film.c:237
 msgid "Combine several images on a film strip"
 msgstr "Об'єднати декілька зображень у одне на зразок фотоплівки"
 
-#: ../plug-ins/common/film.c:374
+#: ../plug-ins/common/film.c:380
 msgid "Composing images"
 msgstr "Збирання зображень"
 
-#: ../plug-ins/common/film.c:923
+#: ../plug-ins/common/film.c:929
 msgid "Available images:"
 msgstr "Доступні:"
 
-#: ../plug-ins/common/film.c:924
+#: ../plug-ins/common/film.c:930
 msgid "On film:"
 msgstr "На плівку:"
 
-#: ../plug-ins/common/film.c:975 ../plug-ins/common/unit-editor.c:242
+#: ../plug-ins/common/film.c:981 ../plug-ins/common/unit-editor.c:242
 msgid "_Add"
 msgstr "_Додати"
 
-#: ../plug-ins/common/film.c:975 ../plug-ins/imagemap/imap_polygon.c:529
+#: ../plug-ins/common/film.c:981 ../plug-ins/imagemap/imap_polygon.c:529
 msgid "_Remove"
 msgstr "В_идалити"
 
 #. Create selection
-#: ../plug-ins/common/film.c:1011 ../plug-ins/imagemap/imap_selection.c:338
-#: ../plug-ins/selection-to-path/selection-to-path.c:533
+#: ../plug-ins/common/film.c:1017 ../plug-ins/imagemap/imap_selection.c:338
+#: ../plug-ins/selection-to-path/selection-to-path.c:539
 msgid "Selection"
 msgstr "Вибір"
 
 #. Film height/color
-#: ../plug-ins/common/film.c:1022 ../plug-ins/common/film.c:1304
+#: ../plug-ins/common/film.c:1028 ../plug-ins/common/film.c:1310
 msgid "Filmstrip"
 msgstr "Фотоплівка"
 
 #. Keep maximum image height
-#: ../plug-ins/common/film.c:1031
+#: ../plug-ins/common/film.c:1037
 msgid "_Fit height to images"
 msgstr "_Розтягувати до висоти зображення"
 
 #. Film color
-#: ../plug-ins/common/film.c:1073
+#: ../plug-ins/common/film.c:1079
 msgid "Select Film Color"
 msgstr "Вибір кольору плівки"
 
-#: ../plug-ins/common/film.c:1078 ../plug-ins/common/film.c:1134
+#: ../plug-ins/common/film.c:1084 ../plug-ins/common/film.c:1140
 msgid "Co_lor:"
 msgstr "_Колір:"
 
 #. Film numbering: Startindex/Font/color
-#: ../plug-ins/common/film.c:1090
+#: ../plug-ins/common/film.c:1096
 msgid "Numbering"
 msgstr "Нумерація"
 
-#: ../plug-ins/common/film.c:1111
+#: ../plug-ins/common/film.c:1117
 msgid "Start _index:"
 msgstr "Рахувати _від:"
 
-#: ../plug-ins/common/film.c:1124
+#: ../plug-ins/common/film.c:1130
 msgid "_Font:"
 msgstr "_Шрифт:"
 
 #. Numbering color
-#: ../plug-ins/common/film.c:1129
+#: ../plug-ins/common/film.c:1135
 msgid "Select Number Color"
 msgstr "Вибір кольору номерів"
 
-#: ../plug-ins/common/film.c:1147
+#: ../plug-ins/common/film.c:1153
 msgid "At _bottom"
 msgstr "З_низу"
 
-#: ../plug-ins/common/film.c:1148
+#: ../plug-ins/common/film.c:1154
 msgid "At _top"
 msgstr "Зв_ерху"
 
 #. ** The right frame keeps the image selection **
-#: ../plug-ins/common/film.c:1161
+#: ../plug-ins/common/film.c:1167
 msgid "Image Selection"
 msgstr "Вибір зображення"
 
-#: ../plug-ins/common/film.c:1194
+#: ../plug-ins/common/film.c:1200
 msgid "All Values are Fractions of the Strip Height"
 msgstr "Всі значення є долями висоти плівки"
 
-#: ../plug-ins/common/film.c:1197
+#: ../plug-ins/common/film.c:1203
 msgid "Ad_vanced"
 msgstr "Д_одатково"
 
-#: ../plug-ins/common/film.c:1213
+#: ../plug-ins/common/film.c:1219
 msgid "Image _height:"
 msgstr "_Висота зображення:"
 
-#: ../plug-ins/common/film.c:1222
+#: ../plug-ins/common/film.c:1228
 msgid "Image spac_ing:"
 msgstr "_Інтервал між зображеннями:"
 
-#: ../plug-ins/common/film.c:1234
+#: ../plug-ins/common/film.c:1240
 msgid "_Hole offset:"
 msgstr "_Зсув отворів:"
 
-#: ../plug-ins/common/film.c:1243
+#: ../plug-ins/common/film.c:1249
 msgid "Ho_le width:"
 msgstr "_Ширина отворів:"
 
-#: ../plug-ins/common/film.c:1252
+#: ../plug-ins/common/film.c:1258
 msgid "Hol_e height:"
 msgstr "Висота _отворів:"
 
-#: ../plug-ins/common/film.c:1261
+#: ../plug-ins/common/film.c:1267
 msgid "Hole sp_acing:"
 msgstr "І_нтервал між отворами:"
 
-#: ../plug-ins/common/film.c:1273
+#: ../plug-ins/common/film.c:1279
 msgid "_Number height:"
 msgstr "Висота _чисел:"
 
-#: ../plug-ins/common/film.c:1285
+#: ../plug-ins/common/film.c:1291
 msgid "Re_set"
 msgstr "_Скинути"
 
-#: ../plug-ins/common/gradient-map.c:127
+#: ../plug-ins/common/gradient-map.c:130
 msgid "_Gradient Map"
 msgstr "_Карта градієнта"
 
-#: ../plug-ins/common/gradient-map.c:131
+#: ../plug-ins/common/gradient-map.c:134
 msgid "Recolor the image using colors from the active gradient"
 msgstr "Змінити колір зображення, використовуючи колір активного градієнту"
 
-#: ../plug-ins/common/gradient-map.c:161
+#: ../plug-ins/common/gradient-map.c:166
 msgid "_Palette Map"
 msgstr "К_арта палітри:"
 
-#: ../plug-ins/common/gradient-map.c:165
+#: ../plug-ins/common/gradient-map.c:170
 msgid "Recolor the image using colors from the active palette"
 msgstr "Змінити колір зображення, використовуючи активну палітру"
 
-#: ../plug-ins/common/gradient-map.c:212
+#: ../plug-ins/common/gradient-map.c:236
 msgid "Gradient Map"
 msgstr "Відбиття градієнту"
 
-#: ../plug-ins/common/gradient-map.c:216
+#: ../plug-ins/common/gradient-map.c:240
 msgid "Palette Map"
 msgstr "Відбиття палітри"
 
-#: ../plug-ins/common/grid.c:168
+#: ../plug-ins/common/grid.c:171
 msgid "_Grid (legacy)..."
 msgstr "_Сітка (старий)..."
 
-#: ../plug-ins/common/grid.c:173
+#: ../plug-ins/common/grid.c:176
 msgid "Draw a grid on the image"
 msgstr "Малює сітку на зображенні"
 
-#: ../plug-ins/common/grid.c:306
+#: ../plug-ins/common/grid.c:329
 msgid "Drawing grid"
 msgstr "Малювання сітки"
 
-#: ../plug-ins/common/grid.c:733 ../plug-ins/gfig/gfig-dialog.c:1394
+#: ../plug-ins/common/grid.c:756 ../plug-ins/gfig/gfig-dialog.c:1394
 #: ../plug-ins/imagemap/imap_menu.c:223
 msgid "Grid"
 msgstr "Сітка"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:813
+#: ../plug-ins/common/grid.c:836
 msgid ""
 "Horizontal\n"
 "Lines"
@@ -4836,7 +4864,7 @@ msgstr ""
 "Горизонтальні\n"
 "лінії"
 
-#: ../plug-ins/common/grid.c:815
+#: ../plug-ins/common/grid.c:838
 msgid ""
 "Vertical\n"
 "Lines"
@@ -4844,238 +4872,238 @@ msgstr ""
 "Вертикальні\n"
 "лінії"
 
-#: ../plug-ins/common/grid.c:817
+#: ../plug-ins/common/grid.c:840
 msgid "Intersection"
 msgstr "Перетин"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:884
+#: ../plug-ins/common/grid.c:907
 msgid "Spacing:"
 msgstr "Інтервал:"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:949
+#: ../plug-ins/common/grid.c:972
 msgid "Offset:"
 msgstr "Зсув:"
 
 #. attach color selectors
-#: ../plug-ins/common/grid.c:982
+#: ../plug-ins/common/grid.c:1005
 msgid "Horizontal Color"
 msgstr "Колір горизонталей"
 
-#: ../plug-ins/common/grid.c:1004
+#: ../plug-ins/common/grid.c:1027
 msgid "Vertical Color"
 msgstr "Колір вертикалей"
 
-#: ../plug-ins/common/grid.c:1025
+#: ../plug-ins/common/grid.c:1048
 msgid "Intersection Color"
 msgstr "Колір перетинів"
 
-#: ../plug-ins/common/guillotine.c:105
+#: ../plug-ins/common/guillotine.c:110
 msgid "Slice Using G_uides"
 msgstr "Розрізати за _напрямними"
 
-#: ../plug-ins/common/guillotine.c:109
+#: ../plug-ins/common/guillotine.c:114
 msgid "Slice the image into subimages using guides"
 msgstr "Розрізати зображення на частини, вказані напрямними"
 
-#: ../plug-ins/common/guillotine.c:160
+#: ../plug-ins/common/guillotine.c:166
 msgid "Guillotine"
 msgstr "Гільйотина"
 
-#: ../plug-ins/common/guillotine.c:260 ../plug-ins/help-browser/dialog.c:1103
+#: ../plug-ins/common/guillotine.c:266 ../plug-ins/help-browser/dialog.c:1103
 msgid "Untitled"
 msgstr "Без назви"
 
-#: ../plug-ins/common/hot.c:250
+#: ../plug-ins/common/hot.c:253
 msgid "_Hot..."
 msgstr "_Гарячі кольори..."
 
-#: ../plug-ins/common/hot.c:254
+#: ../plug-ins/common/hot.c:257
 msgid "Find and fix pixels that may be unsafely bright"
 msgstr "Знайти та змінити точки, які можуть бути надто яскравими"
 
-#: ../plug-ins/common/hot.c:447 ../plug-ins/common/hot.c:652
+#: ../plug-ins/common/hot.c:469 ../plug-ins/common/hot.c:674
 msgid "Hot"
 msgstr "Гарячі кольори"
 
-#: ../plug-ins/common/hot.c:678
+#: ../plug-ins/common/hot.c:700
 msgid "Mode"
 msgstr "Режим"
 
-#: ../plug-ins/common/hot.c:690
+#: ../plug-ins/common/hot.c:712
 msgid "Create _new layer"
 msgstr "Створити _новий шар"
 
-#: ../plug-ins/common/hot.c:699
+#: ../plug-ins/common/hot.c:721
 msgid "Action"
 msgstr "Дія"
 
-#: ../plug-ins/common/hot.c:703
+#: ../plug-ins/common/hot.c:725
 msgid "Reduce _Luminance"
 msgstr "Зменшити _яскравість"
 
-#: ../plug-ins/common/hot.c:704
+#: ../plug-ins/common/hot.c:726
 msgid "Reduce _Saturation"
 msgstr "Зменшити _насиченість"
 
-#: ../plug-ins/common/hot.c:705
+#: ../plug-ins/common/hot.c:727
 msgid "_Blacken"
 msgstr "_Чорний"
 
-#: ../plug-ins/common/jigsaw.c:396
+#: ../plug-ins/common/jigsaw.c:399
 msgid "_Jigsaw..."
 msgstr "_Головоломка..."
 
-#: ../plug-ins/common/jigsaw.c:401
+#: ../plug-ins/common/jigsaw.c:404
 msgid "Add a jigsaw-puzzle pattern to the image"
 msgstr "Надати зображенню вигляд головоломки-пазла"
 
-#: ../plug-ins/common/jigsaw.c:481
+#: ../plug-ins/common/jigsaw.c:504
 msgid "Assembling jigsaw"
 msgstr "Складання головоломки"
 
-#: ../plug-ins/common/jigsaw.c:2470
+#: ../plug-ins/common/jigsaw.c:2493
 msgid "Jigsaw"
 msgstr "Головоломка"
 
-#: ../plug-ins/common/jigsaw.c:2500
+#: ../plug-ins/common/jigsaw.c:2523
 msgid "Number of Tiles"
 msgstr "Кількість частин головоломки"
 
 #. xtiles
-#: ../plug-ins/common/jigsaw.c:2511
+#: ../plug-ins/common/jigsaw.c:2534
 msgid "_Horizontal:"
 msgstr "Г_оризонтально:"
 
-#: ../plug-ins/common/jigsaw.c:2512
+#: ../plug-ins/common/jigsaw.c:2535
 msgid "Number of pieces going across"
 msgstr "Кількість частин вздовж горизонталі"
 
 #. ytiles
-#: ../plug-ins/common/jigsaw.c:2527
+#: ../plug-ins/common/jigsaw.c:2550
 msgid "_Vertical:"
 msgstr "_Вертикально:"
 
-#: ../plug-ins/common/jigsaw.c:2528
+#: ../plug-ins/common/jigsaw.c:2551
 msgid "Number of pieces going down"
 msgstr "Кількість частин вздовж вертикалі"
 
-#: ../plug-ins/common/jigsaw.c:2544
+#: ../plug-ins/common/jigsaw.c:2567
 msgid "Bevel Edges"
 msgstr "Фаска меж"
 
 #. number of blending lines
-#: ../plug-ins/common/jigsaw.c:2553
+#: ../plug-ins/common/jigsaw.c:2576
 msgid "_Bevel width:"
 msgstr "_Рельєф меж:"
 
-#: ../plug-ins/common/jigsaw.c:2554
+#: ../plug-ins/common/jigsaw.c:2577
 msgid "Degree of slope of each piece's edge"
 msgstr "Ступінь нахилу кромки"
 
 #. blending amount
-#: ../plug-ins/common/jigsaw.c:2568
+#: ../plug-ins/common/jigsaw.c:2591
 msgid "H_ighlight:"
 msgstr "В_ідблиски:"
 
-#: ../plug-ins/common/jigsaw.c:2569
+#: ../plug-ins/common/jigsaw.c:2592
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "Розмір відблиску на межах кожного елементу"
 
 #. frame for primitive radio buttons
-#: ../plug-ins/common/jigsaw.c:2587
+#: ../plug-ins/common/jigsaw.c:2610
 msgid "Jigsaw Style"
 msgstr "Стиль елементів головоломки"
 
-#: ../plug-ins/common/jigsaw.c:2591
+#: ../plug-ins/common/jigsaw.c:2614
 msgid "_Square"
 msgstr "_Квадратні"
 
-#: ../plug-ins/common/jigsaw.c:2592
+#: ../plug-ins/common/jigsaw.c:2615
 msgid "C_urved"
 msgstr "_Викривлені"
 
-#: ../plug-ins/common/jigsaw.c:2596
+#: ../plug-ins/common/jigsaw.c:2619
 msgid "Each piece has straight sides"
 msgstr "Кожен елемент має прямі сторони"
 
-#: ../plug-ins/common/jigsaw.c:2597
+#: ../plug-ins/common/jigsaw.c:2620
 msgid "Each piece has curved sides"
 msgstr "Кожен елемент має викривлені сторони"
 
-#: ../plug-ins/common/mail.c:196
+#: ../plug-ins/common/mail.c:202
 msgid "Send by E_mail..."
 msgstr "Надіслати по_штою..."
 
-#: ../plug-ins/common/mail.c:201
+#: ../plug-ins/common/mail.c:207
 msgid "Send the image by email"
 msgstr "Передати це зображення електронною поштою"
 
-#: ../plug-ins/common/mail.c:562
+#: ../plug-ins/common/mail.c:564
 msgid "Send by Email"
 msgstr "Надіслати поштою"
 
-#: ../plug-ins/common/mail.c:567
+#: ../plug-ins/common/mail.c:569
 msgid "_Send"
 msgstr "_Надіслати:"
 
-#: ../plug-ins/common/mail.c:598
+#: ../plug-ins/common/mail.c:600
 msgid "_Filename:"
 msgstr "Назва _файлу:"
 
-#: ../plug-ins/common/mail.c:612
+#: ../plug-ins/common/mail.c:614
 msgctxt "email-address"
 msgid "_To:"
 msgstr "_Кому:"
 
-#: ../plug-ins/common/mail.c:626
+#: ../plug-ins/common/mail.c:628
 msgctxt "email-address"
 msgid "_From:"
 msgstr "_Від:"
 
-#: ../plug-ins/common/mail.c:638
+#: ../plug-ins/common/mail.c:640
 msgid "S_ubject:"
 msgstr "_Тема:"
 
-#: ../plug-ins/common/mail.c:709
+#: ../plug-ins/common/mail.c:711
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "певна помилка у розширенні файлу"
 
-#: ../plug-ins/common/mail.c:893
+#: ../plug-ins/common/mail.c:895
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Не вдається запустити sendmail (%s)"
 
-#: ../plug-ins/common/nl-filter.c:161
+#: ../plug-ins/common/nl-filter.c:164
 msgid "_NL Filter..."
 msgstr "Не_лінійний фільтр..."
 
-#: ../plug-ins/common/nl-filter.c:165
+#: ../plug-ins/common/nl-filter.c:168
 msgid "Nonlinear swiss army knife filter"
 msgstr "Багатофункціональний нелінійний фільтр"
 
-#: ../plug-ins/common/nl-filter.c:1003 ../plug-ins/common/nl-filter.c:1098
+#: ../plug-ins/common/nl-filter.c:1026 ../plug-ins/common/nl-filter.c:1121
 msgid "NL Filter"
 msgstr "Нелінійний фільтр"
 
-#: ../plug-ins/common/nl-filter.c:1128
+#: ../plug-ins/common/nl-filter.c:1151
 msgid "Filter"
 msgstr "Фільтр"
 
-#: ../plug-ins/common/nl-filter.c:1132
+#: ../plug-ins/common/nl-filter.c:1155
 msgid "_Alpha trimmed mean"
 msgstr "_Альфа-усікання середнє"
 
-#: ../plug-ins/common/nl-filter.c:1134
+#: ../plug-ins/common/nl-filter.c:1157
 msgid "Op_timal estimation"
 msgstr "_Оптимальний розрахунок"
 
-#: ../plug-ins/common/nl-filter.c:1136
+#: ../plug-ins/common/nl-filter.c:1159
 msgid "_Edge enhancement"
 msgstr "П_ідсилення грані"
 
-#: ../plug-ins/common/nl-filter.c:1160
+#: ../plug-ins/common/nl-filter.c:1183
 msgid "A_lpha:"
 msgstr "А_льфа:"
 
@@ -5159,62 +5187,61 @@ msgstr "Список доступних процедур у базі даних"
 msgid "Procedure Browser"
 msgstr "Переглядач процедур"
 
-#: ../plug-ins/common/qbist.c:180
+#: ../plug-ins/common/qbist.c:183
 msgid "_Qbist..."
 msgstr "_Q-біст..."
 
-#: ../plug-ins/common/qbist.c:185
+#: ../plug-ins/common/qbist.c:188
 msgid "Generate a huge variety of abstract patterns"
 msgstr "Створити різні абстрактні текстури"
 
-#: ../plug-ins/common/qbist.c:286
+#: ../plug-ins/common/qbist.c:307
 msgid "Qbist"
 msgstr "Q-біст"
 
-#: ../plug-ins/common/qbist.c:758
+#: ../plug-ins/common/qbist.c:779
 msgid "Load QBE File"
 msgstr "Завантаження файлу QBE"
 
-#: ../plug-ins/common/qbist.c:800
+#: ../plug-ins/common/qbist.c:821
 msgid "Save as QBE File"
 msgstr "Збереження файлу QBE"
 
-#: ../plug-ins/common/qbist.c:855
+#: ../plug-ins/common/qbist.c:876
 msgid "G-Qbist"
 msgstr "G-Q-біст"
 
-#: ../plug-ins/common/qbist.c:895
-#| msgid "Pattern fill"
+#: ../plug-ins/common/qbist.c:916
 msgid "Pattern"
 msgstr "Текстура"
 
-#: ../plug-ins/common/qbist.c:939
+#: ../plug-ins/common/qbist.c:960
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:688
 #: ../plug-ins/gfig/gfig-dialog.c:893
-#: ../plug-ins/ifs-compose/ifs-compose.c:1059
+#: ../plug-ins/ifs-compose/ifs-compose.c:1081
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "_Undo"
 msgstr "В_ернути"
 
-#: ../plug-ins/common/sample-colorize.c:325
+#: ../plug-ins/common/sample-colorize.c:328
 msgid "_Sample Colorize..."
 msgstr "Фарбування за _зразком..."
 
-#: ../plug-ins/common/sample-colorize.c:329
+#: ../plug-ins/common/sample-colorize.c:332
 msgid "Colorize image using a sample image as a guide"
 msgstr "Фарбувати одне зображення за зразком іншого"
 
-#: ../plug-ins/common/sample-colorize.c:1386
+#: ../plug-ins/common/sample-colorize.c:1408
 msgid "Sample Colorize"
 msgstr "Фарбування за зразком"
 
-#: ../plug-ins/common/sample-colorize.c:1391
+#: ../plug-ins/common/sample-colorize.c:1413
 msgid "Get _Sample Colors"
 msgstr "Отримати кольори з_разка"
 
-#: ../plug-ins/common/sample-colorize.c:1393
-#: ../plug-ins/common/tile-small.c:606
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1202
+#: ../plug-ins/common/sample-colorize.c:1415
+#: ../plug-ins/common/tile-small.c:628
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1224
 #: ../plug-ins/gimpressionist/orientmap.c:527
 #: ../plug-ins/gimpressionist/presets.c:1060
 #: ../plug-ins/gimpressionist/sizemap.c:400
@@ -5223,506 +5250,506 @@ msgid "_Apply"
 msgstr "_Застосувати"
 
 #. layer combo_box (Dst)
-#: ../plug-ins/common/sample-colorize.c:1420
+#: ../plug-ins/common/sample-colorize.c:1442
 msgid "Destination:"
 msgstr "Призначення:"
 
 #. layer combo_box (Sample)
-#: ../plug-ins/common/sample-colorize.c:1435
+#: ../plug-ins/common/sample-colorize.c:1457
 msgid "Sample:"
 msgstr "Зразок:"
 
-#: ../plug-ins/common/sample-colorize.c:1444
+#: ../plug-ins/common/sample-colorize.c:1466
 msgid "From reverse gradient"
 msgstr "З оберненого градієнта"
 
-#: ../plug-ins/common/sample-colorize.c:1449
+#: ../plug-ins/common/sample-colorize.c:1471
 msgid "From gradient"
 msgstr "З градієнту"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1468
+#: ../plug-ins/common/sample-colorize.c:1490
 msgid "Sho_w selection"
 msgstr "По_казати вибране"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1479
+#: ../plug-ins/common/sample-colorize.c:1501
 msgid "Show co_lor"
 msgstr "Показати ко_лір"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1494
+#: ../plug-ins/common/sample-colorize.c:1516
 msgid "Show selec_tion"
 msgstr "_Показати вибране"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1505
+#: ../plug-ins/common/sample-colorize.c:1527
 msgid "Show c_olor"
 msgstr "Показа_ти колір"
 
-#: ../plug-ins/common/sample-colorize.c:1632
+#: ../plug-ins/common/sample-colorize.c:1654
 msgid "Input levels:"
 msgstr "Рівень на вході:"
 
-#: ../plug-ins/common/sample-colorize.c:1682
+#: ../plug-ins/common/sample-colorize.c:1704
 msgid "Output levels:"
 msgstr "Рівні на виході:"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1721
+#: ../plug-ins/common/sample-colorize.c:1743
 msgid "Hold _intensity"
 msgstr "З_берегти глибину кольору"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1732
+#: ../plug-ins/common/sample-colorize.c:1754
 msgid "Original i_ntensity"
 msgstr "По_чаткова глибина кольору"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1749
+#: ../plug-ins/common/sample-colorize.c:1771
 msgid "Us_e subcolors"
 msgstr "_Використовувати субкольори"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1760
+#: ../plug-ins/common/sample-colorize.c:1782
 msgid "S_mooth samples"
 msgstr "З_гладжувати кольори зразка"
 
-#: ../plug-ins/common/sample-colorize.c:2639
+#: ../plug-ins/common/sample-colorize.c:2661
 msgid "Sample analyze"
 msgstr "Аналіз зразка"
 
-#: ../plug-ins/common/sample-colorize.c:3039
+#: ../plug-ins/common/sample-colorize.c:3061
 msgid "Remap colorized"
 msgstr "Фарбування за зразком"
 
-#: ../plug-ins/common/smooth-palette.c:129
+#: ../plug-ins/common/smooth-palette.c:132
 msgid "Smoo_th Palette..."
 msgstr "Г_ладка палітра..."
 
-#: ../plug-ins/common/smooth-palette.c:133
+#: ../plug-ins/common/smooth-palette.c:136
 msgid "Derive a smooth color palette from the image"
 msgstr "Створити гладку палітру з кольорів зображення"
 
-#: ../plug-ins/common/smooth-palette.c:224
+#: ../plug-ins/common/smooth-palette.c:246
 msgid "Deriving smooth palette"
 msgstr "Отримання гладкої палітри"
 
-#: ../plug-ins/common/smooth-palette.c:484
+#: ../plug-ins/common/smooth-palette.c:506
 msgid "Smooth Palette"
 msgstr "Гладка палітра"
 
-#: ../plug-ins/common/smooth-palette.c:527
+#: ../plug-ins/common/smooth-palette.c:549
 msgid "_Search depth:"
 msgstr "_Глибина пошуку:"
 
-#: ../plug-ins/common/sparkle.c:203
+#: ../plug-ins/common/sparkle.c:206
 msgid "_Sparkle..."
 msgstr "_Іскри..."
 
-#: ../plug-ins/common/sparkle.c:208
+#: ../plug-ins/common/sparkle.c:211
 msgid "Turn bright spots into starry sparkles"
 msgstr "Перетворити найбільш світлі точки на іскри"
 
-#: ../plug-ins/common/sparkle.c:319
+#: ../plug-ins/common/sparkle.c:341
 msgid "Region selected for filter is empty"
 msgstr "Вибрана для фільтра область порожня"
 
-#: ../plug-ins/common/sparkle.c:363
+#: ../plug-ins/common/sparkle.c:385
 msgid "Sparkling"
 msgstr "Створення іскор"
 
-#: ../plug-ins/common/sparkle.c:399
+#: ../plug-ins/common/sparkle.c:421
 msgid "Sparkle"
 msgstr "Іскри"
 
-#: ../plug-ins/common/sparkle.c:434
+#: ../plug-ins/common/sparkle.c:456
 msgid "Luminosity _threshold:"
 msgstr "Поріг _яскравості:"
 
-#: ../plug-ins/common/sparkle.c:435
+#: ../plug-ins/common/sparkle.c:457
 msgid "Adjust the luminosity threshold"
 msgstr "Підбирання порогу яскравості"
 
-#: ../plug-ins/common/sparkle.c:445
+#: ../plug-ins/common/sparkle.c:467
 msgid "F_lare intensity:"
 msgstr "Інтенсивність _спалаху:"
 
-#: ../plug-ins/common/sparkle.c:446
+#: ../plug-ins/common/sparkle.c:468
 msgid "Adjust the flare intensity"
 msgstr "Підбирання інтенсивності спалаху"
 
-#: ../plug-ins/common/sparkle.c:456
+#: ../plug-ins/common/sparkle.c:478
 msgid "_Spike length:"
 msgstr "Дов_жина променів:"
 
-#: ../plug-ins/common/sparkle.c:457
+#: ../plug-ins/common/sparkle.c:479
 msgid "Adjust the spike length"
 msgstr "Підбирання довжини променів"
 
-#: ../plug-ins/common/sparkle.c:467
+#: ../plug-ins/common/sparkle.c:489
 msgid "Sp_ike points:"
 msgstr "_Кількість променів:"
 
-#: ../plug-ins/common/sparkle.c:468
+#: ../plug-ins/common/sparkle.c:490
 msgid "Adjust the number of spikes"
 msgstr "Підбирання кількості променів"
 
-#: ../plug-ins/common/sparkle.c:478
+#: ../plug-ins/common/sparkle.c:500
 msgid "Spi_ke angle (-1: random):"
 msgstr "К_ут променя (-1: - випадковий):"
 
-#: ../plug-ins/common/sparkle.c:479
+#: ../plug-ins/common/sparkle.c:501
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
 msgstr "Підбирання кута променя (-1 означає вибір випадкового кута)"
 
-#: ../plug-ins/common/sparkle.c:491
+#: ../plug-ins/common/sparkle.c:513
 msgid "Spik_e density:"
 msgstr "_Щільність променя:"
 
-#: ../plug-ins/common/sparkle.c:492
+#: ../plug-ins/common/sparkle.c:514
 msgid "Adjust the spike density"
 msgstr "Підбання щільності променя"
 
-#: ../plug-ins/common/sparkle.c:502
+#: ../plug-ins/common/sparkle.c:524
 msgid "Tr_ansparency:"
 msgstr "Проз_орість"
 
-#: ../plug-ins/common/sparkle.c:503
+#: ../plug-ins/common/sparkle.c:525
 msgid "Adjust the opacity of the spikes"
 msgstr "Підбирання непрозорості променя"
 
-#: ../plug-ins/common/sparkle.c:513
+#: ../plug-ins/common/sparkle.c:535
 msgid "_Random hue:"
 msgstr "_Випадковий відтінок:"
 
-#: ../plug-ins/common/sparkle.c:514
+#: ../plug-ins/common/sparkle.c:536
 msgid "Adjust how much the hue should be changed randomly"
 msgstr "Підбирання ступені випадкової зміни тону"
 
-#: ../plug-ins/common/sparkle.c:524
+#: ../plug-ins/common/sparkle.c:546
 msgid "Rando_m saturation:"
 msgstr "В_ипадкова насиченість:"
 
-#: ../plug-ins/common/sparkle.c:525
+#: ../plug-ins/common/sparkle.c:547
 msgid "Adjust how much the saturation should be changed randomly"
 msgstr "Підбирання ступені випадкової зміни насиченості"
 
-#: ../plug-ins/common/sparkle.c:543
+#: ../plug-ins/common/sparkle.c:565
 msgid "_Preserve luminosity"
 msgstr "З_берігати яскравість"
 
-#: ../plug-ins/common/sparkle.c:550
+#: ../plug-ins/common/sparkle.c:572
 msgid "Should the luminosity be preserved?"
 msgstr "Чи потрібно зберігати яскравість?"
 
-#: ../plug-ins/common/sparkle.c:559
+#: ../plug-ins/common/sparkle.c:581
 msgid "In_verse"
 msgstr "_Інверсія"
 
-#: ../plug-ins/common/sparkle.c:565
+#: ../plug-ins/common/sparkle.c:587
 msgid "Should the effect be inversed?"
 msgstr "Чи потрібно інвертувати ефект?"
 
-#: ../plug-ins/common/sparkle.c:574
+#: ../plug-ins/common/sparkle.c:596
 msgid "A_dd border"
 msgstr "_Додати рамку"
 
-#: ../plug-ins/common/sparkle.c:580
+#: ../plug-ins/common/sparkle.c:602
 msgid "Draw a border of spikes around the image"
 msgstr "Намалювати рамку з променів навколо зображення"
 
-#: ../plug-ins/common/sparkle.c:594
+#: ../plug-ins/common/sparkle.c:616
 msgid "_Natural color"
 msgstr "П_риродній колір"
 
-#: ../plug-ins/common/sparkle.c:595
+#: ../plug-ins/common/sparkle.c:617
 msgid "_Foreground color"
 msgstr "Колір п_ереднього плану"
 
-#: ../plug-ins/common/sparkle.c:596
+#: ../plug-ins/common/sparkle.c:618
 msgid "_Background color"
 msgstr "Колір _тла"
 
-#: ../plug-ins/common/sparkle.c:603
+#: ../plug-ins/common/sparkle.c:625
 msgid "Use the color of the image"
 msgstr "Використовувати колір зображення"
 
-#: ../plug-ins/common/sparkle.c:604
+#: ../plug-ins/common/sparkle.c:626
 msgid "Use the foreground color"
 msgstr "Використовувати колір переднього плану"
 
-#: ../plug-ins/common/sparkle.c:605
+#: ../plug-ins/common/sparkle.c:627
 msgid "Use the background color"
 msgstr "Використовувати колір тла"
 
-#: ../plug-ins/common/sphere-designer.c:334
+#: ../plug-ins/common/sphere-designer.c:335
 #: ../plug-ins/gimpressionist/general.c:165
 msgid "Solid"
 msgstr "Рівномірне тло"
 
-#: ../plug-ins/common/sphere-designer.c:335
+#: ../plug-ins/common/sphere-designer.c:336
 msgid "Checker"
 msgstr "Шахова дошка"
 
-#: ../plug-ins/common/sphere-designer.c:336
+#: ../plug-ins/common/sphere-designer.c:337
 msgid "Marble"
 msgstr "Мармур"
 
-#: ../plug-ins/common/sphere-designer.c:337
+#: ../plug-ins/common/sphere-designer.c:338
 msgid "Lizard"
 msgstr "Ящірка"
 
-#: ../plug-ins/common/sphere-designer.c:338
+#: ../plug-ins/common/sphere-designer.c:339
 msgid "Phong"
 msgstr "Фонг"
 
-#: ../plug-ins/common/sphere-designer.c:339 ../plug-ins/flame/flame.c:812
+#: ../plug-ins/common/sphere-designer.c:340 ../plug-ins/flame/flame.c:835
 msgid "Noise"
 msgstr "Шум"
 
-#: ../plug-ins/common/sphere-designer.c:340
+#: ../plug-ins/common/sphere-designer.c:341
 msgid "Wood"
 msgstr "Дерево"
 
-#: ../plug-ins/common/sphere-designer.c:341 ../plug-ins/flame/flame.c:796
+#: ../plug-ins/common/sphere-designer.c:342 ../plug-ins/flame/flame.c:819
 msgid "Spiral"
 msgstr "Спіраль"
 
-#: ../plug-ins/common/sphere-designer.c:342
+#: ../plug-ins/common/sphere-designer.c:343
 msgid "Spots"
 msgstr "Плями"
 
-#: ../plug-ins/common/sphere-designer.c:405
+#: ../plug-ins/common/sphere-designer.c:408
 msgid "Sphere _Designer..."
 msgstr "_Створення сфери..."
 
-#: ../plug-ins/common/sphere-designer.c:409
+#: ../plug-ins/common/sphere-designer.c:412
 msgid "Create an image of a textured sphere"
 msgstr "Створити сферу з заданою текстурою"
 
-#: ../plug-ins/common/sphere-designer.c:1825
-#: ../plug-ins/common/sphere-designer.c:2770
+#: ../plug-ins/common/sphere-designer.c:1828
+#: ../plug-ins/common/sphere-designer.c:2773
 msgid "Texture"
 msgstr "Текстура"
 
-#: ../plug-ins/common/sphere-designer.c:1827
+#: ../plug-ins/common/sphere-designer.c:1830
 msgid "Bumpmap"
 msgstr "Рельєф"
 
-#: ../plug-ins/common/sphere-designer.c:1829
-#: ../plug-ins/common/sphere-designer.c:2772
+#: ../plug-ins/common/sphere-designer.c:1832
+#: ../plug-ins/common/sphere-designer.c:2775
 msgid "Light"
 msgstr "Світло"
 
-#: ../plug-ins/common/sphere-designer.c:2092
+#: ../plug-ins/common/sphere-designer.c:2095
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "Файл «%s» збережений некоректно."
 
-#: ../plug-ins/common/sphere-designer.c:2272
+#: ../plug-ins/common/sphere-designer.c:2275
 msgid "Open File"
 msgstr "Відкривання файлу"
 
-#: ../plug-ins/common/sphere-designer.c:2272
+#: ../plug-ins/common/sphere-designer.c:2275
 msgid "Save File"
 msgstr "Збереження файлу"
 
-#: ../plug-ins/common/sphere-designer.c:2622
+#: ../plug-ins/common/sphere-designer.c:2625
 msgid "Sphere Designer"
 msgstr "Створення сфери"
 
-#: ../plug-ins/common/sphere-designer.c:2734
-#: ../plug-ins/gradient-flare/gradient-flare.c:3060
-#: ../plug-ins/ifs-compose/ifs-compose.c:1051
+#: ../plug-ins/common/sphere-designer.c:2737
+#: ../plug-ins/gradient-flare/gradient-flare.c:3080
+#: ../plug-ins/ifs-compose/ifs-compose.c:1073
 msgid "_New"
 msgstr "_Новий"
 
-#: ../plug-ins/common/sphere-designer.c:2740
+#: ../plug-ins/common/sphere-designer.c:2743
 msgid "D_uplicate"
 msgstr "_Дублювати"
 
-#: ../plug-ins/common/sphere-designer.c:2746
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:852
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1213
+#: ../plug-ins/common/sphere-designer.c:2749
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:874
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1235
 #: ../plug-ins/gimpressionist/presets.c:1067
-#: ../plug-ins/gradient-flare/gradient-flare.c:3063
-#: ../plug-ins/gradient-flare/gradient-flare.c:3346
-#: ../plug-ins/ifs-compose/ifs-compose.c:1055
+#: ../plug-ins/gradient-flare/gradient-flare.c:3083
+#: ../plug-ins/gradient-flare/gradient-flare.c:3366
+#: ../plug-ins/ifs-compose/ifs-compose.c:1077
 #: ../plug-ins/imagemap/imap_menu.c:172
 msgid "_Delete"
 msgstr "_Видалити"
 
-#: ../plug-ins/common/sphere-designer.c:2756
+#: ../plug-ins/common/sphere-designer.c:2759
 msgid "Properties"
 msgstr "Властивості"
 
-#: ../plug-ins/common/sphere-designer.c:2771
+#: ../plug-ins/common/sphere-designer.c:2774
 msgid "Bump"
 msgstr "Рельєф"
 
 #. row labels
-#: ../plug-ins/common/sphere-designer.c:2779
+#: ../plug-ins/common/sphere-designer.c:2782
 #: ../plug-ins/lighting/lighting-ui.c:414
 msgid "Type:"
 msgstr "Тип:"
 
-#: ../plug-ins/common/sphere-designer.c:2798
+#: ../plug-ins/common/sphere-designer.c:2801
 msgid "Texture:"
 msgstr "Текстура:"
 
-#: ../plug-ins/common/sphere-designer.c:2803
+#: ../plug-ins/common/sphere-designer.c:2806
 msgid "Colors:"
 msgstr "Кольори:"
 
-#: ../plug-ins/common/sphere-designer.c:2806
-#: ../plug-ins/common/sphere-designer.c:2817
+#: ../plug-ins/common/sphere-designer.c:2809
+#: ../plug-ins/common/sphere-designer.c:2820
 msgid "Color Selection Dialog"
 msgstr "Вікно вибору кольору"
 
 #. Scale
-#: ../plug-ins/common/sphere-designer.c:2828
+#: ../plug-ins/common/sphere-designer.c:2831
 #: ../plug-ins/gimpressionist/paper.c:191
-#: ../plug-ins/ifs-compose/ifs-compose.c:564
+#: ../plug-ins/ifs-compose/ifs-compose.c:586
 msgid "Scale:"
 msgstr "Масштаб:"
 
-#: ../plug-ins/common/sphere-designer.c:2836
+#: ../plug-ins/common/sphere-designer.c:2839
 msgid "Turbulence:"
 msgstr "Турбулентність:"
 
-#: ../plug-ins/common/sphere-designer.c:2844
+#: ../plug-ins/common/sphere-designer.c:2847
 msgid "Amount:"
 msgstr "Величина:"
 
-#: ../plug-ins/common/sphere-designer.c:2851
+#: ../plug-ins/common/sphere-designer.c:2854
 msgid "Exp.:"
 msgstr "Експонента:"
 
-#: ../plug-ins/common/sphere-designer.c:2858
+#: ../plug-ins/common/sphere-designer.c:2861
 msgid "Transformations"
 msgstr "Перетворення"
 
-#: ../plug-ins/common/sphere-designer.c:2872
+#: ../plug-ins/common/sphere-designer.c:2875
 #: ../plug-ins/map-object/map-object-ui.c:1121
 msgid "Scale X:"
 msgstr "Масштаб X:"
 
-#: ../plug-ins/common/sphere-designer.c:2880
+#: ../plug-ins/common/sphere-designer.c:2883
 msgid "Scale Y:"
 msgstr "Масштаб Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2888
+#: ../plug-ins/common/sphere-designer.c:2891
 msgid "Scale Z:"
 msgstr "Масштаб Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2899
+#: ../plug-ins/common/sphere-designer.c:2902
 msgid "Rotate X:"
 msgstr "Масштаб X:"
 
-#: ../plug-ins/common/sphere-designer.c:2906
+#: ../plug-ins/common/sphere-designer.c:2909
 msgid "Rotate Y:"
 msgstr "Обертання Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2913
+#: ../plug-ins/common/sphere-designer.c:2916
 msgid "Rotate Z:"
 msgstr "Обертання Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2923
+#: ../plug-ins/common/sphere-designer.c:2926
 msgid "Position X:"
 msgstr "Позиція по X:"
 
-#: ../plug-ins/common/sphere-designer.c:2931
+#: ../plug-ins/common/sphere-designer.c:2934
 msgid "Position Y:"
 msgstr "Позиція по Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2939
+#: ../plug-ins/common/sphere-designer.c:2942
 msgid "Position Z:"
 msgstr "Позиція по Z:"
 
-#: ../plug-ins/common/sphere-designer.c:3069
+#: ../plug-ins/common/sphere-designer.c:3072
 msgid "Rendering sphere"
 msgstr "Візуалізація сфери"
 
-#: ../plug-ins/common/sphere-designer.c:3170
+#: ../plug-ins/common/sphere-designer.c:3192
 msgid "Region selected for plug-in is empty"
 msgstr "Ділянка, вибрана для розширення, порожня"
 
-#: ../plug-ins/common/tile.c:139
+#: ../plug-ins/common/tile.c:142
 msgid "_Tile..."
 msgstr "_Черепиця..."
 
-#: ../plug-ins/common/tile.c:143
+#: ../plug-ins/common/tile.c:146
 msgid "Create an array of copies of the image"
 msgstr "Створити копію вказаної частини зображення"
 
-#: ../plug-ins/common/tile.c:233 ../plug-ins/common/tile-small.c:354
+#: ../plug-ins/common/tile.c:255 ../plug-ins/common/tile-small.c:376
 msgid "Tiling"
 msgstr "Укладання черепиці"
 
-#: ../plug-ins/common/tile.c:465
+#: ../plug-ins/common/tile.c:487
 msgid "Tile"
 msgstr "Черепиця"
 
-#: ../plug-ins/common/tile.c:487
+#: ../plug-ins/common/tile.c:509
 msgid "Tile to New Size"
 msgstr "Розмір площі покриття"
 
-#: ../plug-ins/common/tile.c:508
+#: ../plug-ins/common/tile.c:530
 msgid "C_reate new image"
 msgstr "_Створити нове зображення"
 
-#: ../plug-ins/common/tile-small.c:260
+#: ../plug-ins/common/tile-small.c:263
 msgid "_Small Tiles..."
 msgstr "_Дрібна черепиця..."
 
-#: ../plug-ins/common/tile-small.c:264
+#: ../plug-ins/common/tile-small.c:267
 msgid "Tile image into smaller versions of the original"
 msgstr "Створити зображення з маленьких копій оригіналу"
 
-#: ../plug-ins/common/tile-small.c:303
+#: ../plug-ins/common/tile-small.c:325
 msgid "Region selected for filter is empty."
 msgstr "Вибрана для фільтра область порожня."
 
 #. Get the preview image
-#: ../plug-ins/common/tile-small.c:419
+#: ../plug-ins/common/tile-small.c:441
 msgid "Small Tiles"
 msgstr "Дрібна черепиця"
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tile-small.c:469
-#: ../plug-ins/ifs-compose/ifs-compose.c:620
+#: ../plug-ins/common/tile-small.c:491
+#: ../plug-ins/ifs-compose/ifs-compose.c:642
 msgid "Flip"
 msgstr "Віддзеркалення"
 
-#: ../plug-ins/common/tile-small.c:518
+#: ../plug-ins/common/tile-small.c:540
 msgid "A_ll tiles"
 msgstr "_Усіх секторів"
 
-#: ../plug-ins/common/tile-small.c:531
+#: ../plug-ins/common/tile-small.c:553
 msgid "Al_ternate tiles"
 msgstr "Кожного д_ругого сектору"
 
-#: ../plug-ins/common/tile-small.c:544
+#: ../plug-ins/common/tile-small.c:566
 msgid "_Explicit tile"
 msgstr "Вка_заного сектору"
 
-#: ../plug-ins/common/tile-small.c:549
+#: ../plug-ins/common/tile-small.c:571
 msgid "Ro_w:"
 msgstr "_Рядок:"
 
-#: ../plug-ins/common/tile-small.c:574
+#: ../plug-ins/common/tile-small.c:596
 msgid "Col_umn:"
 msgstr "Ст_овпчик:"
 
 #. Widget for selecting the Opacity
-#: ../plug-ins/common/tile-small.c:622
+#: ../plug-ins/common/tile-small.c:644
 msgid "O_pacity:"
 msgstr "_Непрозорість:"
 
 #. Lower frame saying how many segments
-#: ../plug-ins/common/tile-small.c:632
+#: ../plug-ins/common/tile-small.c:654
 msgid "Number of Segments"
 msgstr "Кількість сегментів"
 
@@ -5870,243 +5897,243 @@ msgstr "Редактор одиниць"
 #. destroy model automatically with view
 #. Put buttons in
 #: ../plug-ins/common/unit-editor.c:446
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1191
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1213
 #: ../plug-ins/gimpressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "_Оновити"
 
-#: ../plug-ins/common/van-gogh-lic.c:629 ../plug-ins/common/van-gogh-lic.c:702
+#: ../plug-ins/common/van-gogh-lic.c:630 ../plug-ins/common/van-gogh-lic.c:703
 msgid "Van Gogh (LIC)"
 msgstr "Ван Гог (LIC)"
 
-#: ../plug-ins/common/van-gogh-lic.c:728
+#: ../plug-ins/common/van-gogh-lic.c:729
 msgid "Effect Channel"
 msgstr "Канал ефекту"
 
-#: ../plug-ins/common/van-gogh-lic.c:734
+#: ../plug-ins/common/van-gogh-lic.c:735
 msgid "_Saturation"
 msgstr "_Насиченість"
 
-#: ../plug-ins/common/van-gogh-lic.c:735
+#: ../plug-ins/common/van-gogh-lic.c:736
 msgid "_Brightness"
 msgstr "_Яскравість"
 
-#: ../plug-ins/common/van-gogh-lic.c:741
+#: ../plug-ins/common/van-gogh-lic.c:742
 msgid "Effect Operator"
 msgstr "Оператор ефекту"
 
-#: ../plug-ins/common/van-gogh-lic.c:746
+#: ../plug-ins/common/van-gogh-lic.c:747
 msgid "_Derivative"
 msgstr "По_хідна"
 
-#: ../plug-ins/common/van-gogh-lic.c:747
+#: ../plug-ins/common/van-gogh-lic.c:748
 msgid "_Gradient"
 msgstr "Г_радієнт"
 
-#: ../plug-ins/common/van-gogh-lic.c:753
+#: ../plug-ins/common/van-gogh-lic.c:754
 msgid "Convolve"
 msgstr "Згортання"
 
-#: ../plug-ins/common/van-gogh-lic.c:758
+#: ../plug-ins/common/van-gogh-lic.c:759
 msgid "_With white noise"
 msgstr "З _білим шумом"
 
-#: ../plug-ins/common/van-gogh-lic.c:759
+#: ../plug-ins/common/van-gogh-lic.c:760
 msgid "W_ith source image"
 msgstr "З _початковим  зображенням"
 
-#: ../plug-ins/common/van-gogh-lic.c:778
+#: ../plug-ins/common/van-gogh-lic.c:779
 msgid "_Effect image:"
 msgstr "Зображення _ефекту:"
 
-#: ../plug-ins/common/van-gogh-lic.c:788
+#: ../plug-ins/common/van-gogh-lic.c:789
 msgid "_Filter length:"
 msgstr "Довжина _фільтра"
 
-#: ../plug-ins/common/van-gogh-lic.c:796
+#: ../plug-ins/common/van-gogh-lic.c:797
 msgid "_Noise magnitude:"
 msgstr "Величина _шуму:"
 
-#: ../plug-ins/common/van-gogh-lic.c:804
+#: ../plug-ins/common/van-gogh-lic.c:805
 msgid "In_tegration steps:"
 msgstr "Ін_теграційні кроки:"
 
-#: ../plug-ins/common/van-gogh-lic.c:811
+#: ../plug-ins/common/van-gogh-lic.c:812
 msgid "_Minimum value:"
 msgstr "М_інімальне значення:"
 
-#: ../plug-ins/common/van-gogh-lic.c:818
+#: ../plug-ins/common/van-gogh-lic.c:819
 msgid "M_aximum value:"
 msgstr "М_аксимальне значення:"
 
-#: ../plug-ins/common/van-gogh-lic.c:873
+#: ../plug-ins/common/van-gogh-lic.c:876
 msgid "_Van Gogh (LIC)..."
 msgstr "_Ван Гог (LIC)..."
 
-#: ../plug-ins/common/van-gogh-lic.c:877
+#: ../plug-ins/common/van-gogh-lic.c:880
 msgid "Special effects that nobody understands"
 msgstr "Спеціальні ефекти, сенс яких нікому не відомий"
 
-#: ../plug-ins/common/warp.c:245
+#: ../plug-ins/common/warp.c:248
 msgid "_Warp..."
 msgstr "Д_еформація..."
 
-#: ../plug-ins/common/warp.c:249
+#: ../plug-ins/common/warp.c:252
 msgid "Twist or smear image in many different ways"
 msgstr "Викривлення та розмиття зображення різними способами"
 
-#: ../plug-ins/common/warp.c:463
+#: ../plug-ins/common/warp.c:485
 msgid "Warp"
 msgstr "Деформація"
 
-#: ../plug-ins/common/warp.c:485
+#: ../plug-ins/common/warp.c:507
 msgid "Basic Options"
 msgstr "Основні параметри"
 
-#: ../plug-ins/common/warp.c:506
+#: ../plug-ins/common/warp.c:528
 msgid "Step size:"
 msgstr "Розмір кроку:"
 
-#: ../plug-ins/common/warp.c:520
+#: ../plug-ins/common/warp.c:542
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:767
-#: ../plug-ins/ifs-compose/ifs-compose.c:1220
+#: ../plug-ins/ifs-compose/ifs-compose.c:1242
 msgid "Iterations:"
 msgstr "Число повторів:"
 
 #. Displacement map menu
-#: ../plug-ins/common/warp.c:529
+#: ../plug-ins/common/warp.c:551
 msgid "Displacement map:"
 msgstr "Мапа заміщення:"
 
 #. =======================================================================
 #. Displacement Type
-#: ../plug-ins/common/warp.c:553
+#: ../plug-ins/common/warp.c:575
 msgid "On edges:"
 msgstr "На краях:"
 
-#: ../plug-ins/common/warp.c:564
+#: ../plug-ins/common/warp.c:586
 msgid "Wrap"
 msgstr "Завертати"
 
-#: ../plug-ins/common/warp.c:579
+#: ../plug-ins/common/warp.c:601
 msgid "Smear"
 msgstr "Пляма"
 
-#: ../plug-ins/common/warp.c:609
+#: ../plug-ins/common/warp.c:631
 msgid "Foreground color"
 msgstr "Колір переднього плану"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary grid          --------------------------
-#: ../plug-ins/common/warp.c:629 ../plug-ins/file-jpeg/jpeg-save.c:880
+#: ../plug-ins/common/warp.c:651 ../plug-ins/file-jpeg/jpeg-save.c:880
 msgid "Advanced Options"
 msgstr "Додаткові параметри"
 
-#: ../plug-ins/common/warp.c:644
+#: ../plug-ins/common/warp.c:666
 msgid "Dither size:"
 msgstr "Розмір змішування:"
 
-#: ../plug-ins/common/warp.c:657
+#: ../plug-ins/common/warp.c:679
 msgid "Rotation angle:"
 msgstr "Кут обертання:"
 
-#: ../plug-ins/common/warp.c:670
+#: ../plug-ins/common/warp.c:692
 msgid "Substeps:"
 msgstr "Підкроки:"
 
 #. Magnitude map menu
-#: ../plug-ins/common/warp.c:679
+#: ../plug-ins/common/warp.c:701
 msgid "Magnitude map:"
 msgstr "Мапа значень:"
 
-#: ../plug-ins/common/warp.c:707
+#: ../plug-ins/common/warp.c:729
 msgid "Use magnitude map"
 msgstr "Використовувати мапу значень"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" grid          --------------------------
-#: ../plug-ins/common/warp.c:721
+#: ../plug-ins/common/warp.c:743
 msgid "More Advanced Options"
 msgstr "Інші параметри"
 
-#: ../plug-ins/common/warp.c:737
+#: ../plug-ins/common/warp.c:759
 msgid "Gradient scale:"
 msgstr "Масштаб градієнта:"
 
-#: ../plug-ins/common/warp.c:760
+#: ../plug-ins/common/warp.c:782
 msgid "Gradient map selection menu"
 msgstr "Меню вибору градієнтної мапи"
 
-#: ../plug-ins/common/warp.c:770
+#: ../plug-ins/common/warp.c:792
 msgid "Vector mag:"
 msgstr "Довжина вектора:"
 
 #. Angle
-#: ../plug-ins/common/warp.c:785 ../plug-ins/ifs-compose/ifs-compose.c:578
+#: ../plug-ins/common/warp.c:807 ../plug-ins/ifs-compose/ifs-compose.c:600
 msgid "Angle:"
 msgstr "Кут:"
 
-#: ../plug-ins/common/warp.c:808
+#: ../plug-ins/common/warp.c:830
 msgid "Fixed-direction-vector map selection menu"
 msgstr "Меню вибору мапи векторів з фіксованими напрямками"
 
 #. make sure layer is visible
-#: ../plug-ins/common/warp.c:1362
+#: ../plug-ins/common/warp.c:1384
 msgid "Smoothing X gradient"
 msgstr "Згладжування X градієнта"
 
-#: ../plug-ins/common/warp.c:1365
+#: ../plug-ins/common/warp.c:1387
 msgid "Smoothing Y gradient"
 msgstr "Згладжування Y градієнта"
 
 #. calculate new X,Y Displacement image maps
-#: ../plug-ins/common/warp.c:1409
+#: ../plug-ins/common/warp.c:1431
 msgid "Finding XY gradient"
 msgstr "Пошук XY градієнта"
 
-#: ../plug-ins/common/warp.c:1427
+#: ../plug-ins/common/warp.c:1449
 #, c-format
 msgid "Flow step %d"
 msgstr "Крок %d"
 
-#: ../plug-ins/common/wavelet-decompose.c:126
+#: ../plug-ins/common/wavelet-decompose.c:129
 msgid "_Wavelet-decompose..."
 msgstr "_Вейвлет-розбір..."
 
-#: ../plug-ins/common/wavelet-decompose.c:130
-#: ../plug-ins/common/wavelet-decompose.c:382
+#: ../plug-ins/common/wavelet-decompose.c:133
+#: ../plug-ins/common/wavelet-decompose.c:404
 msgid "Wavelet decompose"
 msgstr "Вейвлет-розбір"
 
-#: ../plug-ins/common/wavelet-decompose.c:204
+#: ../plug-ins/common/wavelet-decompose.c:226
 msgid "Wavelet-Decompose"
 msgstr "Вейвлет-розбір"
 
-#: ../plug-ins/common/wavelet-decompose.c:214
+#: ../plug-ins/common/wavelet-decompose.c:236
 msgid "Decomposition"
 msgstr "Розкладання"
 
-#: ../plug-ins/common/wavelet-decompose.c:281
+#: ../plug-ins/common/wavelet-decompose.c:303
 #, c-format
 msgid "Scale %d"
 msgstr "Масштаб %d"
 
-#: ../plug-ins/common/wavelet-decompose.c:305
+#: ../plug-ins/common/wavelet-decompose.c:327
 msgid "Residual"
 msgstr "Залишок"
 
 #. scales
-#: ../plug-ins/common/wavelet-decompose.c:406
+#: ../plug-ins/common/wavelet-decompose.c:428
 msgid "Scales:"
 msgstr "Рівні деталізації:"
 
 #. create group layer
-#: ../plug-ins/common/wavelet-decompose.c:416
+#: ../plug-ins/common/wavelet-decompose.c:438
 msgid "Create a layer group to store the decomposition"
 msgstr "Створити групу шарів для зберігання розбиття"
 
 #. create layer masks
-#: ../plug-ins/common/wavelet-decompose.c:428
+#: ../plug-ins/common/wavelet-decompose.c:450
 msgid "Add a layer mask to each scales layers"
 msgstr "Додати маску шару до кожного з шарів деталізації"
 
@@ -6354,19 +6381,19 @@ msgstr "Зображення Windows BMP"
 msgid "BMP format does not support multiple layers."
 msgstr "Для формату BMP не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/file-dds/dds.c:143 ../plug-ins/file-dds/dds.c:181
+#: ../plug-ins/file-dds/dds.c:144 ../plug-ins/file-dds/dds.c:182
 msgid "DDS image"
 msgstr "Зображення DDS"
 
-#: ../plug-ins/file-dds/dds.c:311
+#: ../plug-ins/file-dds/dds.c:314
 msgid "Decode YCoCg"
 msgstr "Декодувати YCoCg"
 
-#: ../plug-ins/file-dds/dds.c:331
+#: ../plug-ins/file-dds/dds.c:336
 msgid "Decode YCoCg (scaled)"
 msgstr "Декодувати YCoCg (масштабоване)"
 
-#: ../plug-ins/file-dds/dds.c:353
+#: ../plug-ins/file-dds/dds.c:360
 msgid "Decode Alpha exponent"
 msgstr "Декодувати Alpha exponent"
 
@@ -6466,7 +6493,7 @@ msgstr "Зас_тосувати корекцію гами"
 msgid "Use s_RGB colorspace"
 msgstr "В_икористати колірний простір sRGB"
 
-#: ../plug-ins/file-dds/ddswrite.c:2121 ../plug-ins/flame/flame.c:1137
+#: ../plug-ins/file-dds/ddswrite.c:2121 ../plug-ins/flame/flame.c:1160
 msgid "_Gamma:"
 msgstr "Г_ама:"
 
@@ -7542,242 +7569,242 @@ msgstr "Не вдається відкрити «%s» для запису: %s"
 msgid "WebP error: '%s'"
 msgstr "Помилка WebP: «%s»"
 
-#: ../plug-ins/flame/flame.c:170
+#: ../plug-ins/flame/flame.c:173
 msgid "_Flame..."
 msgstr "_Полум'я..."
 
-#: ../plug-ins/flame/flame.c:175
+#: ../plug-ins/flame/flame.c:178
 msgid "Create cosmic recursive fractal flames"
 msgstr "Створити ефект спалахів полум'я з використанням фракталів"
 
-#: ../plug-ins/flame/flame.c:260
+#: ../plug-ins/flame/flame.c:283
 msgid "Drawing flame"
 msgstr "Малювання полум'я"
 
-#: ../plug-ins/flame/flame.c:444
+#: ../plug-ins/flame/flame.c:467
 #, c-format
 msgid "'%s' is not a regular file"
 msgstr "«%s» не є звичайним файлом"
 
-#: ../plug-ins/flame/flame.c:688
+#: ../plug-ins/flame/flame.c:711
 msgid "Edit Flame"
 msgstr "Правка полум'я"
 
-#: ../plug-ins/flame/flame.c:711
+#: ../plug-ins/flame/flame.c:734
 msgid "Directions"
 msgstr "Напрямки"
 
-#: ../plug-ins/flame/flame.c:748
+#: ../plug-ins/flame/flame.c:771
 msgid "Controls"
 msgstr "Керування"
 
-#: ../plug-ins/flame/flame.c:756
+#: ../plug-ins/flame/flame.c:779
 msgid "_Speed:"
 msgstr "_Швидкість:"
 
-#: ../plug-ins/flame/flame.c:772
+#: ../plug-ins/flame/flame.c:795
 msgid "_Randomize"
 msgstr "Пере_мішати"
 
-#: ../plug-ins/flame/flame.c:784
+#: ../plug-ins/flame/flame.c:807
 msgid "Same"
 msgstr "Залишити попередні"
 
-#: ../plug-ins/flame/flame.c:785 ../plug-ins/gimpressionist/orientation.c:156
+#: ../plug-ins/flame/flame.c:808 ../plug-ins/gimpressionist/orientation.c:156
 #: ../plug-ins/gimpressionist/size.c:163
 msgid "Random"
 msgstr "Випадковість"
 
-#: ../plug-ins/flame/flame.c:786 ../plug-ins/lighting/lighting-ui.c:855
+#: ../plug-ins/flame/flame.c:809 ../plug-ins/lighting/lighting-ui.c:855
 msgid "Linear"
 msgstr "Лінійний"
 
-#: ../plug-ins/flame/flame.c:787 ../plug-ins/lighting/lighting-ui.c:857
+#: ../plug-ins/flame/flame.c:810 ../plug-ins/lighting/lighting-ui.c:857
 msgid "Sinusoidal"
 msgstr "Синусоїдний"
 
-#: ../plug-ins/flame/flame.c:788 ../plug-ins/lighting/lighting-ui.c:858
+#: ../plug-ins/flame/flame.c:811 ../plug-ins/lighting/lighting-ui.c:858
 msgid "Spherical"
 msgstr "Сферичний"
 
-#: ../plug-ins/flame/flame.c:789
+#: ../plug-ins/flame/flame.c:812
 msgid "Swirl"
 msgstr "Вихор"
 
-#: ../plug-ins/flame/flame.c:790
+#: ../plug-ins/flame/flame.c:813
 msgid "Horseshoe"
 msgstr "Підкова"
 
-#: ../plug-ins/flame/flame.c:791 ../plug-ins/gfig/gfig-dialog.c:1475
+#: ../plug-ins/flame/flame.c:814 ../plug-ins/gfig/gfig-dialog.c:1475
 msgid "Polar"
 msgstr "Полярність"
 
-#: ../plug-ins/flame/flame.c:792
+#: ../plug-ins/flame/flame.c:815
 msgid "Bent"
 msgstr "Згин"
 
-#: ../plug-ins/flame/flame.c:793
+#: ../plug-ins/flame/flame.c:816
 msgid "Handkerchief"
 msgstr "Носовичок"
 
-#: ../plug-ins/flame/flame.c:794
+#: ../plug-ins/flame/flame.c:817
 msgid "Heart"
 msgstr "Серце"
 
-#: ../plug-ins/flame/flame.c:795
+#: ../plug-ins/flame/flame.c:818
 msgid "Disc"
 msgstr "Диск"
 
-#: ../plug-ins/flame/flame.c:797
+#: ../plug-ins/flame/flame.c:820
 msgid "Hyperbolic"
 msgstr "Гіперболічне"
 
-#: ../plug-ins/flame/flame.c:798
+#: ../plug-ins/flame/flame.c:821
 msgid "Diamond"
 msgstr "Ромб"
 
-#: ../plug-ins/flame/flame.c:799
+#: ../plug-ins/flame/flame.c:822
 msgid "Ex"
 msgstr "Колишнє"
 
-#: ../plug-ins/flame/flame.c:800
+#: ../plug-ins/flame/flame.c:823
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:847
 msgid "Julia"
 msgstr "Джулія"
 
-#: ../plug-ins/flame/flame.c:801
+#: ../plug-ins/flame/flame.c:824
 msgid "Waves"
 msgstr "Хвилі"
 
-#: ../plug-ins/flame/flame.c:802
+#: ../plug-ins/flame/flame.c:825
 msgid "Fisheye"
 msgstr "Риб'яче око"
 
-#: ../plug-ins/flame/flame.c:803
+#: ../plug-ins/flame/flame.c:826
 msgid "Popcorn"
 msgstr "Попкорн"
 
-#: ../plug-ins/flame/flame.c:804
+#: ../plug-ins/flame/flame.c:827
 msgid "Exponential"
 msgstr "Експонентне"
 
-#: ../plug-ins/flame/flame.c:805
+#: ../plug-ins/flame/flame.c:828
 msgid "Power"
 msgstr "Енергія"
 
-#: ../plug-ins/flame/flame.c:806
+#: ../plug-ins/flame/flame.c:829
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:996
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1037
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1078
 msgid "Cosine"
 msgstr "Косинус"
 
-#: ../plug-ins/flame/flame.c:807
+#: ../plug-ins/flame/flame.c:830
 msgid "Rings"
 msgstr "Кільця"
 
-#: ../plug-ins/flame/flame.c:808
+#: ../plug-ins/flame/flame.c:831
 msgid "Fan"
 msgstr "Вентилятор"
 
-#: ../plug-ins/flame/flame.c:809
+#: ../plug-ins/flame/flame.c:832
 msgid "Eyefish"
 msgstr "Eyefish"
 
-#: ../plug-ins/flame/flame.c:810
+#: ../plug-ins/flame/flame.c:833
 msgid "Bubble"
 msgstr "Пузир"
 
-#: ../plug-ins/flame/flame.c:811 ../plug-ins/map-object/map-object-ui.c:465
+#: ../plug-ins/flame/flame.c:834 ../plug-ins/map-object/map-object-ui.c:465
 msgid "Cylinder"
 msgstr "Циліндр"
 
-#: ../plug-ins/flame/flame.c:813
+#: ../plug-ins/flame/flame.c:836
 msgid "Blur"
 msgstr "Розмивання"
 
-#: ../plug-ins/flame/flame.c:814
+#: ../plug-ins/flame/flame.c:837
 msgid "Gaussian"
 msgstr "Гаусове розмивання"
 
-#: ../plug-ins/flame/flame.c:827
+#: ../plug-ins/flame/flame.c:850
 msgid "_Variation:"
 msgstr "_Зміна:"
 
-#: ../plug-ins/flame/flame.c:849
+#: ../plug-ins/flame/flame.c:872
 msgid "Load Flame"
 msgstr "Завантаження полум'я"
 
-#: ../plug-ins/flame/flame.c:864
+#: ../plug-ins/flame/flame.c:887
 msgid "Save Flame"
 msgstr "Збереження полум'я"
 
-#: ../plug-ins/flame/flame.c:1005
+#: ../plug-ins/flame/flame.c:1028
 msgid "Flame"
 msgstr "Полум'я"
 
-#: ../plug-ins/flame/flame.c:1072 ../plug-ins/gimpressionist/orientation.c:190
+#: ../plug-ins/flame/flame.c:1095 ../plug-ins/gimpressionist/orientation.c:190
 #: ../plug-ins/gimpressionist/size.c:199
-#: ../plug-ins/gradient-flare/gradient-flare.c:3061
+#: ../plug-ins/gradient-flare/gradient-flare.c:3081
 #: ../plug-ins/imagemap/imap_menu.c:160
 msgid "_Edit"
 msgstr "З_міни"
 
-#: ../plug-ins/flame/flame.c:1103
+#: ../plug-ins/flame/flame.c:1126
 msgid "_Rendering"
 msgstr "_Візуалізація"
 
-#: ../plug-ins/flame/flame.c:1113
+#: ../plug-ins/flame/flame.c:1136
 msgid "_Brightness:"
 msgstr "_Яскравість:"
 
-#: ../plug-ins/flame/flame.c:1125
+#: ../plug-ins/flame/flame.c:1148
 msgid "Co_ntrast:"
 msgstr "_Контраст:"
 
-#: ../plug-ins/flame/flame.c:1152
+#: ../plug-ins/flame/flame.c:1175
 msgid "Sample _density:"
 msgstr "_Щільність зразка:"
 
-#: ../plug-ins/flame/flame.c:1161
+#: ../plug-ins/flame/flame.c:1184
 msgid "Spa_tial oversample:"
 msgstr "П_ерекриття:"
 
-#: ../plug-ins/flame/flame.c:1170
+#: ../plug-ins/flame/flame.c:1193
 msgid "Spatial _filter radius:"
 msgstr "Радіус просторового _фільтра:"
 
-#: ../plug-ins/flame/flame.c:1188
+#: ../plug-ins/flame/flame.c:1211
 msgid "Color_map:"
 msgstr "_Мапа кольорів:"
 
-#: ../plug-ins/flame/flame.c:1230
+#: ../plug-ins/flame/flame.c:1253
 msgid "Custom gradient"
 msgstr "Власний градієнт"
 
-#: ../plug-ins/flame/flame.c:1256
+#: ../plug-ins/flame/flame.c:1279
 msgid "C_amera"
 msgstr "_Камера"
 
-#: ../plug-ins/flame/flame.c:1260
+#: ../plug-ins/flame/flame.c:1283
 msgid "_Zoom:"
 msgstr "Мас_штаб:"
 
-#: ../plug-ins/flame/flame.c:1272
-#: ../plug-ins/gradient-flare/gradient-flare.c:2869
+#: ../plug-ins/flame/flame.c:1295
+#: ../plug-ins/gradient-flare/gradient-flare.c:2889
 #: ../plug-ins/lighting/lighting-ui.c:491
 msgid "_X:"
 msgstr "_X:"
 
-#: ../plug-ins/flame/flame.c:1284
-#: ../plug-ins/gradient-flare/gradient-flare.c:2873
+#: ../plug-ins/flame/flame.c:1307
+#: ../plug-ins/gradient-flare/gradient-flare.c:2893
 #: ../plug-ins/lighting/lighting-ui.c:508
 msgid "_Y:"
 msgstr "_Y:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
 #: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/gimpressionist/utils.c:139
-#: ../plug-ins/gradient-flare/gradient-flare.c:977
+#: ../plug-ins/gradient-flare/gradient-flare.c:997
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -7826,7 +7853,7 @@ msgid "Undo last zoom change"
 msgstr "Скасувати останню зміну масштабу"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:698
-#: ../plug-ins/ifs-compose/ifs-compose.c:1063
+#: ../plug-ins/ifs-compose/ifs-compose.c:1085
 #: ../plug-ins/imagemap/imap_menu.c:164
 msgid "_Redo"
 msgstr "_Повернути"
@@ -8092,34 +8119,34 @@ msgstr "«%s» не є файлом дослідника фракталів"
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Файл «%s» пошкоджений. Рядок %d розділу параметрів неправильний"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:236
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:239
 msgid "_Fractal Explorer..."
 msgstr "Дослідник _фракталів..."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:240
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:243
 msgid "Render fractal art"
 msgstr "Намалювати фрактал"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:466
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:488
 msgid "Rendering fractal"
 msgstr "Візуалізація фрактала"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:843
-#: ../plug-ins/gradient-flare/gradient-flare.c:3337
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:865
+#: ../plug-ins/gradient-flare/gradient-flare.c:3357
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Ви впевнені, що хочете видалити «%s» зі списку та диску?"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:847
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:869
 msgid "Delete Fractal"
 msgstr "Видалення фрактала"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1036
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1058
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Файл «%s» не є файлом дослідника фракталів"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1046
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1068
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -8128,27 +8155,27 @@ msgstr ""
 "Файл «%s» зіпсовано.\n"
 "Рядок %d розділу параметрів неправильний"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1132
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1154
 msgid "My first fractal"
 msgstr "Мій перший фрактал"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1196
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1218
 msgid "Select folder and rescan collection"
 msgstr "Вибрати каталог та перечитати вміст"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1207
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1229
 msgid "Apply currently selected fractal"
 msgstr "Застосувати вибраний фрактал"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1218
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1240
 msgid "Delete currently selected fractal"
 msgstr "Стерти вибраний фрактал"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1241
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1263
 msgid "Rescan for Fractals"
 msgstr "Перечитати фрактали"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1260
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1282
 msgid "Add FractalExplorer Path"
 msgstr "Додати контур дослідника фракталів"
 
@@ -8455,7 +8482,7 @@ msgid "Grid type:"
 msgstr "Тип сітки:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1492
-#: ../plug-ins/gradient-flare/gradient-flare.c:747
+#: ../plug-ins/gradient-flare/gradient-flare.c:748
 #: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Normal"
 msgstr "Звичайна"
@@ -8530,22 +8557,22 @@ msgstr "Кількість обертів спіралі"
 msgid "Star Number of Points"
 msgstr "Кількість променів зірки"
 
-#: ../plug-ins/gfig/gfig.c:163
+#: ../plug-ins/gfig/gfig.c:166
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: ../plug-ins/gfig/gfig.c:167
+#: ../plug-ins/gfig/gfig.c:170
 msgid "Create geometric shapes"
 msgstr "Створити геометричні фігури"
 
-#: ../plug-ins/gfig/gfig.c:760
+#: ../plug-ins/gfig/gfig.c:782
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Помилка при збереженні фігури як паразита: не вдається приєднати паразита до "
 "малюнка."
 
-#: ../plug-ins/gfig/gfig.c:792
+#: ../plug-ins/gfig/gfig.c:814
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
@@ -8628,7 +8655,7 @@ msgid "Adds random noise to the color"
 msgstr "Додає випадковий шум до кольору"
 
 #: ../plug-ins/gimpressionist/general.c:133
-#: ../plug-ins/gradient-flare/gradient-flare.c:3656
+#: ../plug-ins/gradient-flare/gradient-flare.c:3676
 msgid "_General"
 msgstr "_Загальний вигляд"
 
@@ -8721,15 +8748,15 @@ msgstr "Межа відхилення:"
 msgid "A bailout-value for adaptive selections"
 msgstr "Довірче значення для адаптивного вибору"
 
-#: ../plug-ins/gimpressionist/gimp.c:116
+#: ../plug-ins/gimpressionist/gimp.c:119
 msgid "_GIMPressionist..."
 msgstr "_Гімпресіоніст..."
 
-#: ../plug-ins/gimpressionist/gimp.c:120
+#: ../plug-ins/gimpressionist/gimp.c:123
 msgid "Performs various artistic operations"
 msgstr "Множина способів прикрасити зображення"
 
-#: ../plug-ins/gimpressionist/gimp.c:429
+#: ../plug-ins/gimpressionist/gimp.c:448
 msgid "Painting"
 msgstr "Малювання"
 
@@ -9617,54 +9644,54 @@ msgstr "XMP"
 msgid "IPTC Tag"
 msgstr "Мітка IPTC"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:748
+#: ../plug-ins/gradient-flare/gradient-flare.c:749
 msgid "Addition"
 msgstr "Додавання"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:749
+#: ../plug-ins/gradient-flare/gradient-flare.c:750
 msgid "Overlay"
 msgstr "Перекриття"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:750
+#: ../plug-ins/gradient-flare/gradient-flare.c:751
 msgid "Screen"
 msgstr "Екран"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:814
+#: ../plug-ins/gradient-flare/gradient-flare.c:817
 msgid "_Gradient Flare..."
 msgstr "_Градієнтний спалах..."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:819
+#: ../plug-ins/gradient-flare/gradient-flare.c:822
 msgid "Produce a lense flare effect using gradients"
 msgstr "Додати до зображення відблиск, використовуючи градієнт"
 
 #.
 #. *    Dialog Shell
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:1027
-#: ../plug-ins/gradient-flare/gradient-flare.c:2492
+#: ../plug-ins/gradient-flare/gradient-flare.c:1047
+#: ../plug-ins/gradient-flare/gradient-flare.c:2512
 msgid "Gradient Flare"
 msgstr "Градієнтний спалах"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1041
+#: ../plug-ins/gradient-flare/gradient-flare.c:1061
 msgid "Cannot operate on indexed color images."
 msgstr "Не можна використовувати для індексованих зображень"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1354
+#: ../plug-ins/gradient-flare/gradient-flare.c:1374
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
 msgstr "Не вдається сформувати файл град.спалаху: «%s»: %s"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1362
+#: ../plug-ins/gradient-flare/gradient-flare.c:1382
 #, c-format
 msgid "'%s' is not a valid GFlare file."
 msgstr "«%s» не є файлом градієнтного спалаху."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1416
+#: ../plug-ins/gradient-flare/gradient-flare.c:1436
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "неправильно сформований файл градієнтного спалаху: %s\n"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1541
+#: ../plug-ins/gradient-flare/gradient-flare.c:1561
 #, c-format
 msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
@@ -9675,20 +9702,20 @@ msgstr ""
 "(gflare-path «%s»)\n"
 "та створите теку %s, то зможете зберігати створені файли GFlare у цій теці."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1576
+#: ../plug-ins/gradient-flare/gradient-flare.c:1596
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Не вдається записати файл град.спалаху «%s»: %s"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2548
+#: ../plug-ins/gradient-flare/gradient-flare.c:2568
 msgid "A_uto update preview"
 msgstr "_Автоматичний перегляд"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2601
+#: ../plug-ins/gradient-flare/gradient-flare.c:2621
 msgid "'Default' is created."
 msgstr "\"Типовий\" створено."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2602
+#: ../plug-ins/gradient-flare/gradient-flare.c:2622
 msgid "Default"
 msgstr "Типовий"
 
@@ -9698,212 +9725,212 @@ msgstr "Типовий"
 #.
 #. *    Scales
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:2889
-#: ../plug-ins/gradient-flare/gradient-flare.c:3709
-#: ../plug-ins/gradient-flare/gradient-flare.c:3811
-#: ../plug-ins/gradient-flare/gradient-flare.c:3942
+#: ../plug-ins/gradient-flare/gradient-flare.c:2909
+#: ../plug-ins/gradient-flare/gradient-flare.c:3729
+#: ../plug-ins/gradient-flare/gradient-flare.c:3831
+#: ../plug-ins/gradient-flare/gradient-flare.c:3962
 msgid "Parameters"
 msgstr "Параметри"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2912
+#: ../plug-ins/gradient-flare/gradient-flare.c:2932
 msgid "Ro_tation:"
 msgstr "_Обертання:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2923
+#: ../plug-ins/gradient-flare/gradient-flare.c:2943
 msgid "_Hue rotation:"
 msgstr "Обертання _відтінку:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2934
+#: ../plug-ins/gradient-flare/gradient-flare.c:2954
 msgid "Vector _angle:"
 msgstr "_Кут вектора:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2945
+#: ../plug-ins/gradient-flare/gradient-flare.c:2965
 msgid "Vector _length:"
 msgstr "Дов_жина вектора:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2966
+#: ../plug-ins/gradient-flare/gradient-flare.c:2986
 msgid "A_daptive supersampling"
 msgstr "Адап_тивна інтерполяція"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2986
+#: ../plug-ins/gradient-flare/gradient-flare.c:3006
 msgid "_Max depth:"
 msgstr "Максимальна г_либина:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2993
+#: ../plug-ins/gradient-flare/gradient-flare.c:3013
 msgid "_Threshold"
 msgstr "П_оріг"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3002
+#: ../plug-ins/gradient-flare/gradient-flare.c:3022
 msgid "_Settings"
 msgstr "П_араметри"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3130
+#: ../plug-ins/gradient-flare/gradient-flare.c:3150
 msgid "S_elector"
 msgstr "Т_ип спалаху"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3194
+#: ../plug-ins/gradient-flare/gradient-flare.c:3214
 msgid "New Gradient Flare"
 msgstr "Новий градієнтний спалах"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3197
+#: ../plug-ins/gradient-flare/gradient-flare.c:3217
 msgid "Enter a name for the new GFlare"
 msgstr "Введіть назву нового градієнтного спалаху"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3198
+#: ../plug-ins/gradient-flare/gradient-flare.c:3218
 msgid "Unnamed"
 msgstr "Без назви"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3218
-#: ../plug-ins/gradient-flare/gradient-flare.c:3300
+#: ../plug-ins/gradient-flare/gradient-flare.c:3238
+#: ../plug-ins/gradient-flare/gradient-flare.c:3320
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Назва «%s» вже використовується!"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3274
+#: ../plug-ins/gradient-flare/gradient-flare.c:3294
 msgid "Copy Gradient Flare"
 msgstr "Копіювання градієнтного спалаху"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3277
+#: ../plug-ins/gradient-flare/gradient-flare.c:3297
 msgid "Enter a name for the copied GFlare"
 msgstr "Введіть назву для копії градієнтного спалаху"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3331
+#: ../plug-ins/gradient-flare/gradient-flare.c:3351
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3341
+#: ../plug-ins/gradient-flare/gradient-flare.c:3361
 msgid "Delete Gradient Flare"
 msgstr "Видалення градієнтного спалаху"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3413
+#: ../plug-ins/gradient-flare/gradient-flare.c:3433
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "не знайдено %s в списку gflares_list"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3453
+#: ../plug-ins/gradient-flare/gradient-flare.c:3473
 msgid "Gradient Flare Editor"
 msgstr "Редактор градієнтних спалахів"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3457
+#: ../plug-ins/gradient-flare/gradient-flare.c:3477
 msgid "_Rescan Gradients"
 msgstr "Перечитати _градієнти"
 
 #. Glow
-#: ../plug-ins/gradient-flare/gradient-flare.c:3579
+#: ../plug-ins/gradient-flare/gradient-flare.c:3599
 msgid "Glow Paint Options"
 msgstr "Параметри малювання сяйва"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3589
-#: ../plug-ins/gradient-flare/gradient-flare.c:3615
-#: ../plug-ins/gradient-flare/gradient-flare.c:3641
+#: ../plug-ins/gradient-flare/gradient-flare.c:3609
+#: ../plug-ins/gradient-flare/gradient-flare.c:3635
+#: ../plug-ins/gradient-flare/gradient-flare.c:3661
 msgid "Opacity:"
 msgstr "Непрозорість:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3601
-#: ../plug-ins/gradient-flare/gradient-flare.c:3627
-#: ../plug-ins/gradient-flare/gradient-flare.c:3653
+#: ../plug-ins/gradient-flare/gradient-flare.c:3621
+#: ../plug-ins/gradient-flare/gradient-flare.c:3647
+#: ../plug-ins/gradient-flare/gradient-flare.c:3673
 msgid "Paint mode:"
 msgstr "Режим малювання:"
 
 #. Rays
-#: ../plug-ins/gradient-flare/gradient-flare.c:3605
+#: ../plug-ins/gradient-flare/gradient-flare.c:3625
 msgid "Rays Paint Options"
 msgstr "Параметри малювання променів"
 
 #. Rays
-#: ../plug-ins/gradient-flare/gradient-flare.c:3631
+#: ../plug-ins/gradient-flare/gradient-flare.c:3651
 msgid "Second Flares Paint Options"
 msgstr "Параметри малювання другого спалаху"
 
 #.
 #. *  Gradient Menus
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:3682
-#: ../plug-ins/gradient-flare/gradient-flare.c:3782
-#: ../plug-ins/gradient-flare/gradient-flare.c:3915
+#: ../plug-ins/gradient-flare/gradient-flare.c:3702
+#: ../plug-ins/gradient-flare/gradient-flare.c:3802
+#: ../plug-ins/gradient-flare/gradient-flare.c:3935
 msgid "Gradients"
 msgstr "Градієнти"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3693
-#: ../plug-ins/gradient-flare/gradient-flare.c:3795
-#: ../plug-ins/gradient-flare/gradient-flare.c:3926
+#: ../plug-ins/gradient-flare/gradient-flare.c:3713
+#: ../plug-ins/gradient-flare/gradient-flare.c:3815
+#: ../plug-ins/gradient-flare/gradient-flare.c:3946
 msgid "Radial gradient:"
 msgstr "Радіальний градієнт:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3697
-#: ../plug-ins/gradient-flare/gradient-flare.c:3799
+#: ../plug-ins/gradient-flare/gradient-flare.c:3717
+#: ../plug-ins/gradient-flare/gradient-flare.c:3819
 msgid "Angular gradient:"
 msgstr "Кутовий градієнт:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3701
-#: ../plug-ins/gradient-flare/gradient-flare.c:3803
+#: ../plug-ins/gradient-flare/gradient-flare.c:3721
+#: ../plug-ins/gradient-flare/gradient-flare.c:3823
 msgid "Angular size gradient:"
 msgstr "Кутовий розмір градієнта:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3720
-#: ../plug-ins/gradient-flare/gradient-flare.c:3822
-#: ../plug-ins/gradient-flare/gradient-flare.c:3953
+#: ../plug-ins/gradient-flare/gradient-flare.c:3740
+#: ../plug-ins/gradient-flare/gradient-flare.c:3842
+#: ../plug-ins/gradient-flare/gradient-flare.c:3973
 msgid "Size (%):"
 msgstr "Розмір (%):"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3731
-#: ../plug-ins/gradient-flare/gradient-flare.c:3833
-#: ../plug-ins/gradient-flare/gradient-flare.c:3964
+#: ../plug-ins/gradient-flare/gradient-flare.c:3751
+#: ../plug-ins/gradient-flare/gradient-flare.c:3853
+#: ../plug-ins/gradient-flare/gradient-flare.c:3984
 msgid "Rotation:"
 msgstr "Обертання:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3742
-#: ../plug-ins/gradient-flare/gradient-flare.c:3844
-#: ../plug-ins/gradient-flare/gradient-flare.c:3975
+#: ../plug-ins/gradient-flare/gradient-flare.c:3762
+#: ../plug-ins/gradient-flare/gradient-flare.c:3864
+#: ../plug-ins/gradient-flare/gradient-flare.c:3995
 msgid "Hue rotation:"
 msgstr "Обертання _відтінку:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3756
+#: ../plug-ins/gradient-flare/gradient-flare.c:3776
 msgid "G_low"
 msgstr "Ся_йво"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3855
+#: ../plug-ins/gradient-flare/gradient-flare.c:3875
 msgid "# of Spikes:"
 msgstr "Кількість плям:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3866
+#: ../plug-ins/gradient-flare/gradient-flare.c:3886
 msgid "Spike thickness:"
 msgstr "Товщина плям:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3880
+#: ../plug-ins/gradient-flare/gradient-flare.c:3900
 msgid "_Rays"
 msgstr "_Промені"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3930
+#: ../plug-ins/gradient-flare/gradient-flare.c:3950
 msgid "Size factor gradient:"
 msgstr "Градієнт масшт. множника:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3934
+#: ../plug-ins/gradient-flare/gradient-flare.c:3954
 msgid "Probability gradient:"
 msgstr "Градієнт ймовірності:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:3992
+#: ../plug-ins/gradient-flare/gradient-flare.c:4012
 msgid "Shape of Second Flares"
 msgstr "Форма другого спалаху"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:4000
+#: ../plug-ins/gradient-flare/gradient-flare.c:4020
 #: ../plug-ins/imagemap/imap_menu.c:236
 msgid "Circle"
 msgstr "Коло"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:4017
+#: ../plug-ins/gradient-flare/gradient-flare.c:4037
 #: ../plug-ins/imagemap/imap_menu.c:238
 msgid "Polygon"
 msgstr "Багатокутник"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:4051
+#: ../plug-ins/gradient-flare/gradient-flare.c:4071
 msgid "Random seed:"
 msgstr "База випадковості:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:4065
+#: ../plug-ins/gradient-flare/gradient-flare.c:4085
 msgid "_Second Flares"
 msgstr "_Другорядні спалахи"
 
@@ -10032,16 +10059,16 @@ msgstr ""
 "Помилка при аналізі файлу «%s»:\n"
 "%s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:367
+#: ../plug-ins/ifs-compose/ifs-compose.c:370
 msgid "_IFS Fractal..."
 msgstr "_IFS фрактал..."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:373
+#: ../plug-ins/ifs-compose/ifs-compose.c:376
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Створити фрактал Iterated Function System (IFS)"
 
 #. X
-#: ../plug-ins/ifs-compose/ifs-compose.c:536
+#: ../plug-ins/ifs-compose/ifs-compose.c:558
 #: ../plug-ins/lighting/lighting-ui.c:546
 #: ../plug-ins/map-object/map-object-ui.c:663
 #: ../plug-ins/map-object/map-object-ui.c:717
@@ -10051,7 +10078,7 @@ msgid "X:"
 msgstr "X:"
 
 #. Y
-#: ../plug-ins/ifs-compose/ifs-compose.c:550
+#: ../plug-ins/ifs-compose/ifs-compose.c:572
 #: ../plug-ins/lighting/lighting-ui.c:561
 #: ../plug-ins/map-object/map-object-ui.c:677
 #: ../plug-ins/map-object/map-object-ui.c:730
@@ -10062,149 +10089,149 @@ msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: ../plug-ins/ifs-compose/ifs-compose.c:592
+#: ../plug-ins/ifs-compose/ifs-compose.c:614
 msgid "Asymmetry:"
 msgstr "Асиметрія:"
 
 #. Shear
-#: ../plug-ins/ifs-compose/ifs-compose.c:606
+#: ../plug-ins/ifs-compose/ifs-compose.c:628
 msgid "Shear:"
 msgstr "Нахил:"
 
 #. Simple color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:651
+#: ../plug-ins/ifs-compose/ifs-compose.c:673
 msgid "Simple"
 msgstr "Просте"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:660
+#: ../plug-ins/ifs-compose/ifs-compose.c:682
 msgid "IFS Fractal: Target"
 msgstr "IFS фрактал: ціль"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:666
+#: ../plug-ins/ifs-compose/ifs-compose.c:688
 msgid "Scale hue by:"
 msgstr "Масштабувати відтінок за:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:681
+#: ../plug-ins/ifs-compose/ifs-compose.c:703
 msgid "Scale value by:"
 msgstr "Масштабувати яскравість за:"
 
 #. Full color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:698
+#: ../plug-ins/ifs-compose/ifs-compose.c:720
 msgid "Full"
 msgstr "Повний"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:706
+#: ../plug-ins/ifs-compose/ifs-compose.c:728
 msgid "IFS Fractal: Red"
 msgstr "IFS фрактал: червоний"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:714
+#: ../plug-ins/ifs-compose/ifs-compose.c:736
 msgid "IFS Fractal: Green"
 msgstr "IFS фрактал: зелений"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:722
+#: ../plug-ins/ifs-compose/ifs-compose.c:744
 msgid "IFS Fractal: Blue"
 msgstr "IFS фрактал: синій"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:730
+#: ../plug-ins/ifs-compose/ifs-compose.c:752
 msgid "IFS Fractal: Black"
 msgstr "IFS фрактал: чорний"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:780
+#: ../plug-ins/ifs-compose/ifs-compose.c:802
 msgid "IFS Fractal"
 msgstr "IFS фрактал"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:878
+#: ../plug-ins/ifs-compose/ifs-compose.c:900
 msgid "Spatial Transformation"
 msgstr "Просторове перетворення"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:884
+#: ../plug-ins/ifs-compose/ifs-compose.c:906
 msgid "Color Transformation"
 msgstr "Перетворення кольорів"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:894
+#: ../plug-ins/ifs-compose/ifs-compose.c:916
 msgid "Relative probability:"
 msgstr "Відносна вірогідність:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1067
+#: ../plug-ins/ifs-compose/ifs-compose.c:1089
 #: ../plug-ins/imagemap/imap_menu.c:174
 msgid "Select _All"
 msgstr "Виді_лити все"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1071
+#: ../plug-ins/ifs-compose/ifs-compose.c:1093
 msgid "Re_center"
 msgstr "Переобчислити _центрувати"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1071
+#: ../plug-ins/ifs-compose/ifs-compose.c:1093
 msgid "Recompute Center"
 msgstr "Переобчислити центр"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1075
+#: ../plug-ins/ifs-compose/ifs-compose.c:1097
 msgid "Render Options"
 msgstr "Параметри візуалізації"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1081
+#: ../plug-ins/ifs-compose/ifs-compose.c:1103
 #: ../plug-ins/imagemap/imap_cmd_move.c:85
 #: ../plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Перемістити"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1084
+#: ../plug-ins/ifs-compose/ifs-compose.c:1106
 msgid "Rotate"
 msgstr "Обернути"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1084
+#: ../plug-ins/ifs-compose/ifs-compose.c:1106
 msgid "Rotate / Scale"
 msgstr "Обертання / масштаб"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1087
+#: ../plug-ins/ifs-compose/ifs-compose.c:1109
 msgid "Stretch"
 msgstr "Розтягти"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1185
+#: ../plug-ins/ifs-compose/ifs-compose.c:1207
 msgid "IFS Fractal Render Options"
 msgstr "Параметри візуалізації"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1207
+#: ../plug-ins/ifs-compose/ifs-compose.c:1229
 msgid "Max. memory:"
 msgstr "Макс. пам'ять:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1235
+#: ../plug-ins/ifs-compose/ifs-compose.c:1257
 msgid "Subdivide:"
 msgstr "Підрозділяти:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1249
+#: ../plug-ins/ifs-compose/ifs-compose.c:1271
 msgid "Spot radius:"
 msgstr "Радіус плями:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1322
+#: ../plug-ins/ifs-compose/ifs-compose.c:1344
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Візуалізація IFS (%d/%d)..."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1474
+#: ../plug-ins/ifs-compose/ifs-compose.c:1496
 #, c-format
 msgid "Transformation %s"
 msgstr "Перетворення %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2405
+#: ../plug-ins/ifs-compose/ifs-compose.c:2427
 msgid "Save failed"
 msgstr "Помилка при збереженні"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2488
-#: ../plug-ins/ifs-compose/ifs-compose.c:2501
+#: ../plug-ins/ifs-compose/ifs-compose.c:2510
+#: ../plug-ins/ifs-compose/ifs-compose.c:2523
 msgid "Open failed"
 msgstr "Не вдається відкрити"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2496
+#: ../plug-ins/ifs-compose/ifs-compose.c:2518
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Файл «%s» не є файлом IFS-фрактала."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2536
+#: ../plug-ins/ifs-compose/ifs-compose.c:2558
 msgid "Save as IFS Fractal file"
 msgstr "Збереження як файл IFS-фрактала"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2573
+#: ../plug-ins/ifs-compose/ifs-compose.c:2595
 msgid "Open IFS Fractal file"
 msgstr "Відкривання файлу IFS-фрактала"
 
@@ -10586,49 +10613,49 @@ msgstr "точок з_верху"
 msgid "_Preview"
 msgstr "_Попередній перегляд"
 
-#: ../plug-ins/imagemap/imap_main.c:163
+#: ../plug-ins/imagemap/imap_main.c:166
 msgid "_Image Map..."
 msgstr "_Мапа зображення..."
 
-#: ../plug-ins/imagemap/imap_main.c:167
+#: ../plug-ins/imagemap/imap_main.c:170
 msgid "Create a clickable imagemap"
 msgstr "Створити мапу зображення (imagemap)"
 
-#: ../plug-ins/imagemap/imap_main.c:519
+#: ../plug-ins/imagemap/imap_main.c:538
 #: ../plug-ins/imagemap/imap_settings.c:168
 msgid "<Untitled>"
 msgstr "<Без назви>"
 
-#: ../plug-ins/imagemap/imap_main.c:661
+#: ../plug-ins/imagemap/imap_main.c:680
 msgid "Some data has been changed!"
 msgstr "Деякі дані змінились!"
 
-#: ../plug-ins/imagemap/imap_main.c:664
+#: ../plug-ins/imagemap/imap_main.c:683
 msgid "Do you really want to discard your changes?"
 msgstr "Ви справді хочете відмовитись від змін?"
 
-#: ../plug-ins/imagemap/imap_main.c:876
+#: ../plug-ins/imagemap/imap_main.c:895
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Файл «%s» збережено."
 
-#: ../plug-ins/imagemap/imap_main.c:880
+#: ../plug-ins/imagemap/imap_main.c:899
 msgid "Couldn't save file:"
 msgstr "Не вдається зберегти файл:"
 
-#: ../plug-ins/imagemap/imap_main.c:893
+#: ../plug-ins/imagemap/imap_main.c:912
 msgid "Image size has changed."
 msgstr "Розмір зображення змінено."
 
-#: ../plug-ins/imagemap/imap_main.c:894
+#: ../plug-ins/imagemap/imap_main.c:913
 msgid "Resize area's?"
 msgstr "Змінити розмір сектора?"
 
-#: ../plug-ins/imagemap/imap_main.c:927
+#: ../plug-ins/imagemap/imap_main.c:946
 msgid "Couldn't read file:"
 msgstr "Не вдалось зчитати файл:"
 
-#: ../plug-ins/imagemap/imap_main.c:974
+#: ../plug-ins/imagemap/imap_main.c:993
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -10973,11 +11000,11 @@ msgstr "Перегляд джерела"
 msgid "Lighting Effects"
 msgstr "Освітлення"
 
-#: ../plug-ins/lighting/lighting-main.c:116
+#: ../plug-ins/lighting/lighting-main.c:119
 msgid "_Lighting Effects..."
 msgstr "_Освітлення..."
 
-#: ../plug-ins/lighting/lighting-main.c:121
+#: ../plug-ins/lighting/lighting-main.c:124
 msgid "Apply various lighting effects to an image"
 msgstr "Застосувати до зображення різні ефекти освітлення"
 
@@ -11300,11 +11327,11 @@ msgstr "Спроектувати на куб"
 msgid "Map to cylinder"
 msgstr "Спроектувати на циліндр"
 
-#: ../plug-ins/map-object/map-object-main.c:116
+#: ../plug-ins/map-object/map-object-main.c:119
 msgid "Map _Object..."
 msgstr "_Проекція об'єкта..."
 
-#: ../plug-ins/map-object/map-object-main.c:120
+#: ../plug-ins/map-object/map-object-main.c:123
 msgid "Map the image to an object (plane, sphere, box or cylinder)"
 msgstr ""
 "Спроектувати зображення на об'єкт (площина, сферу, паралелепіпед або циліндр)"
@@ -11631,15 +11658,15 @@ msgstr "Без рейтингу"
 msgid "Failed to set metadata tag %s"
 msgstr "Не вдалося встановити мітку метаданих %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:4544
+#: ../plug-ins/metadata/metadata-editor.c:4565
 msgid "Import Metadata File"
 msgstr "Імпорт файлу метаданих"
 
-#: ../plug-ins/metadata/metadata-editor.c:4579
+#: ../plug-ins/metadata/metadata-editor.c:4600
 msgid "Export Metadata File"
 msgstr "Експорт файлу метаданих"
 
-#: ../plug-ins/metadata/metadata-editor.c:4583
+#: ../plug-ins/metadata/metadata-editor.c:4604
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -11871,67 +11898,67 @@ msgstr " футів"
 msgid "(%llu more byte(s))"
 msgstr "(%llu більше байт)"
 
-#: ../plug-ins/pagecurl/pagecurl.c:226
+#: ../plug-ins/pagecurl/pagecurl.c:229
 msgid "_Pagecurl..."
 msgstr "_Загнута сторінка..."
 
-#: ../plug-ins/pagecurl/pagecurl.c:230
+#: ../plug-ins/pagecurl/pagecurl.c:233
 msgid "Curl up one of the image corners"
 msgstr "Завернути один з кутів зображення"
 
-#: ../plug-ins/pagecurl/pagecurl.c:469
+#: ../plug-ins/pagecurl/pagecurl.c:491
 msgid "Pagecurl Effect"
 msgstr "Ефект загнутої сторінки"
 
-#: ../plug-ins/pagecurl/pagecurl.c:527
+#: ../plug-ins/pagecurl/pagecurl.c:549
 msgid "Curl Location"
 msgstr "Позиція загину"
 
-#: ../plug-ins/pagecurl/pagecurl.c:547
+#: ../plug-ins/pagecurl/pagecurl.c:569
 msgid "Lower right"
 msgstr "Знизу праворуч"
 
-#: ../plug-ins/pagecurl/pagecurl.c:548
+#: ../plug-ins/pagecurl/pagecurl.c:570
 msgid "Lower left"
 msgstr "Знизу ліворуч"
 
-#: ../plug-ins/pagecurl/pagecurl.c:549
+#: ../plug-ins/pagecurl/pagecurl.c:571
 msgid "Upper left"
 msgstr "Вгорі ліворуч"
 
-#: ../plug-ins/pagecurl/pagecurl.c:550
+#: ../plug-ins/pagecurl/pagecurl.c:572
 msgid "Upper right"
 msgstr "Вгорі праворуч"
 
-#: ../plug-ins/pagecurl/pagecurl.c:586
+#: ../plug-ins/pagecurl/pagecurl.c:608
 msgid "Curl Orientation"
 msgstr "Орієнтація загину"
 
-#: ../plug-ins/pagecurl/pagecurl.c:630
+#: ../plug-ins/pagecurl/pagecurl.c:652
 msgid "_Shade under curl"
 msgstr "_Тінь під загином"
 
-#: ../plug-ins/pagecurl/pagecurl.c:643
+#: ../plug-ins/pagecurl/pagecurl.c:665
 msgid "Current gradient (reversed)"
 msgstr "Обраний градієнт (реверсивний)"
 
-#: ../plug-ins/pagecurl/pagecurl.c:648
+#: ../plug-ins/pagecurl/pagecurl.c:670
 msgid "Current gradient"
 msgstr "Обраний градієнт"
 
-#: ../plug-ins/pagecurl/pagecurl.c:653
+#: ../plug-ins/pagecurl/pagecurl.c:675
 msgid "Foreground / background colors"
 msgstr "Передній план та тло"
 
-#: ../plug-ins/pagecurl/pagecurl.c:665
+#: ../plug-ins/pagecurl/pagecurl.c:687
 msgid "_Opacity:"
 msgstr "_Непрозорість:"
 
-#: ../plug-ins/pagecurl/pagecurl.c:773
+#: ../plug-ins/pagecurl/pagecurl.c:795
 msgid "Curl Layer"
 msgstr "Шар загину"
 
-#: ../plug-ins/pagecurl/pagecurl.c:1037
+#: ../plug-ins/pagecurl/pagecurl.c:1059
 msgid "Page Curl"
 msgstr "Згин сторінки"
 
@@ -11986,31 +12013,31 @@ msgstr "Вертикально"
 msgid "Both"
 msgstr "Обидва"
 
-#: ../plug-ins/print/print.c:160
+#: ../plug-ins/print/print.c:165
 msgid "_Print..."
 msgstr "Д_рук..."
 
-#: ../plug-ins/print/print.c:165
+#: ../plug-ins/print/print.c:170
 msgid "Print the image"
 msgstr "Надрукувати зображення"
 
-#: ../plug-ins/print/print.c:184
+#: ../plug-ins/print/print.c:189
 msgid "Page Set_up..."
 msgstr "_Попередній перегляд…"
 
-#: ../plug-ins/print/print.c:189
+#: ../plug-ins/print/print.c:194
 msgid "Adjust page size and orientation for printing"
 msgstr "Скоригувати розмір та орієнтацію сторінки для друку"
 
-#: ../plug-ins/print/print.c:320
+#: ../plug-ins/print/print.c:326
 msgid "Image Settings"
 msgstr "Параметри зображення"
 
-#: ../plug-ins/print/print.c:418
+#: ../plug-ins/print/print.c:424
 msgid "An error occurred while trying to print:"
 msgstr "При друкуванні виникла помилка:"
 
-#: ../plug-ins/print/print.c:445
+#: ../plug-ins/print/print.c:451
 msgid "Printing"
 msgstr "Друк"
 
@@ -12141,11 +12168,11 @@ msgstr "Вказане вікно не знайдене"
 msgid "Selection to Path"
 msgstr "Вибране у контур"
 
-#: ../plug-ins/selection-to-path/selection-to-path.c:286
+#: ../plug-ins/selection-to-path/selection-to-path.c:292
 msgid "No selection to convert"
 msgstr "Нічого не вибрано для перетворення"
 
-#: ../plug-ins/selection-to-path/selection-to-path.c:400
+#: ../plug-ins/selection-to-path/selection-to-path.c:406
 msgid "Selection to Path Advanced Settings"
 msgstr "Додаткові параметри перетворення виділення у контур"
 
@@ -12396,12 +12423,12 @@ msgstr ""
 "Цей додаток захоплює зображення з пристрою, підтримку якого передбачено у "
 "TWAIN"
 
-#: ../plug-ins/twain/twain.c:198
+#: ../plug-ins/twain/twain.c:204
 msgid "_Scanner/Camera..."
 msgstr "_Сканер/Камера..."
 
 #. Initialize our progress dialog
-#: ../plug-ins/twain/twain.c:513
+#: ../plug-ins/twain/twain.c:520
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
