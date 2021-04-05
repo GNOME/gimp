@@ -14,16 +14,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-13 12:13+0000\n"
-"PO-Revision-Date: 2021-02-13 16:55+0100\n"
-"Last-Translator: Paul Matthijsse <paul.matthijsse@wanadoo.fr>\n"
+"POT-Creation-Date: 2021-04-04 14:08+0000\n"
+"PO-Revision-Date: 2021-04-05 12:03+0200\n"
+"Last-Translator: Gerrit Jan Roelvink <g.j.roelvink@protonmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -76,7 +76,7 @@ msgstr "Zichtbare lagen uitlijnen"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1308 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2307 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2430 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -102,10 +102,10 @@ msgstr "Zichtbare lagen uitlijnen"
 #: ../plug-ins/lighting/lighting-ui.c:1162
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
-#: ../plug-ins/metadata/metadata-editor.c:564
-#: ../plug-ins/metadata/metadata-editor.c:830
-#: ../plug-ins/metadata/metadata-editor.c:5717
-#: ../plug-ins/metadata/metadata-editor.c:5752
+#: ../plug-ins/metadata/metadata-editor.c:590
+#: ../plug-ins/metadata/metadata-editor.c:952
+#: ../plug-ins/metadata/metadata-editor.c:4560
+#: ../plug-ins/metadata/metadata-editor.c:4595
 #: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -454,11 +454,11 @@ msgstr "_Verticaal"
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
-#: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
+#: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:2016 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1302
+#: ../plug-ins/file-tiff/file-tiff-load.c:1265
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -932,7 +932,7 @@ msgstr ""
 "\"Vaste beginwaarde\"-knop is een alias van mij.\n"
 "De zelfde beginwaarde resulteert in dezelfde afbeelding als (1) de breedten "
 "van afbeeldingen hetzelfde zijn (dit is de reden dat het voorbeeld verschilt "
-"van de uiteindelijke afbeelding) en (2) alle mutatieratios nul zijn."
+"van de uiteindelijke afbeelding) en (2) alle mutatieratio's nul zijn."
 
 #: ../plug-ins/common/cml-explorer.c:1453
 msgid "O_thers"
@@ -1057,7 +1057,7 @@ msgstr "Waarschuwing: bron en doel zijn hetzelfde kanaal."
 
 #: ../plug-ins/common/cml-explorer.c:2022
 msgid "Save CML Explorer Parameters"
-msgstr "CML-verkennerparameters opslaan"
+msgstr "CML-verkenner parameters opslaan"
 
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
@@ -1102,7 +1102,7 @@ msgstr "CML-verkennerparameters laden"
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:858
 #: ../plug-ins/common/file-xwd.c:455 ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:234
+#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:236
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
@@ -1395,11 +1395,11 @@ msgstr "RGBA"
 
 #: ../plug-ins/common/compose.c:206 ../plug-ins/common/decompose.c:178
 msgid "HSV"
-msgstr "TVH"
+msgstr "HSV"
 
 #: ../plug-ins/common/compose.c:213 ../plug-ins/common/decompose.c:183
 msgid "HSL"
-msgstr "TVH"
+msgstr "HSL"
 
 #: ../plug-ins/common/compose.c:220 ../plug-ins/common/decompose.c:188
 #: ../plug-ins/common/file-jp2-load.c:997
@@ -1544,12 +1544,12 @@ msgid "Uniform"
 msgstr "Uniform"
 
 #: ../plug-ins/common/contrast-retinex.c:319
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Low"
 msgstr "Laag"
 
 #: ../plug-ins/common/contrast-retinex.c:320
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "High"
 msgstr "Hoog"
 
@@ -1863,11 +1863,11 @@ msgstr "Alfa"
 
 #: ../plug-ins/common/decompose.c:184
 msgid "Hue (HSL)"
-msgstr "Tint (TVH)"
+msgstr "Tint (HSL)"
 
 #: ../plug-ins/common/decompose.c:185
 msgid "Saturation (HSL)"
-msgstr "Verzadiging (TVH)"
+msgstr "Verzadiging (HSL)"
 
 #: ../plug-ins/common/decompose.c:186
 msgid "Lightness"
@@ -2189,12 +2189,12 @@ msgstr "EOF of fout tijdens lezen afbeeldings-header"
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
 #: ../plug-ins/common/file-xpm.c:356 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
-#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-faxg3/faxg3.c:220 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:247
+#: ../plug-ins/file-tiff/file-tiff-load.c:258
 #, c-format
 msgid "Opening '%s'"
 msgstr "Bezig '%s' te openen"
@@ -2450,7 +2450,7 @@ msgstr "Achtergrond (%d%s)"
 #: ../plug-ins/common/file-gif-load.c:1021
 #, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr "'%s' wordt geopen (frame %d)"
+msgstr "'%s' wordt geopend (frame %d)"
 
 # What is the Dutch translation for this phrase?
 # --
@@ -2553,7 +2553,7 @@ msgid ""
 "image you are trying to export only has one layer."
 msgstr ""
 "U kunt alleen een animatie exporteren als de afbeelding meer dan één laag "
-"heeft. De huidige afbeelding heeft slecht één laag."
+"heeft. De huidige afbeelding heeft slechts één laag."
 
 #. translators: the %d is *always* 240 here
 #: ../plug-ins/common/file-gif-save.c:2533
@@ -2817,7 +2817,7 @@ msgstr "Rand:"
 
 #: ../plug-ins/common/file-html-table.c:636
 msgid "The number of pixels in the table border."
-msgstr "Het aantal beeldpunten dat de tabelrandbreed is."
+msgstr "Het aantal beeldpunten dat de tabelrand breed is."
 
 #: ../plug-ins/common/file-html-table.c:651
 msgid "The width for each table cell.  Can be a number or a percent."
@@ -3027,7 +3027,7 @@ msgstr "Standaardovergang tussen _frames:"
 
 #: ../plug-ins/common/file-mng.c:1464
 msgid "_PNG compression level:"
-msgstr "_PNG-ompressieniveau:"
+msgstr "_PNG-Compressieniveau:"
 
 #: ../plug-ins/common/file-mng.c:1472 ../plug-ins/ui/plug-in-file-png.ui.h:9
 msgid "Choose a high compression level for small file size"
@@ -3206,8 +3206,8 @@ msgid "Import from PDF"
 msgstr "Uit PDF importeren"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:2308
-#: ../plug-ins/metadata/metadata-editor.c:5718
+#: ../plug-ins/file-tiff/file-tiff-load.c:2431
+#: ../plug-ins/metadata/metadata-editor.c:4561
 msgid "_Import"
 msgstr "I_mporteren"
 
@@ -3333,7 +3333,7 @@ msgstr "Lagen als pagina‘s (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1304
+#: ../plug-ins/file-tiff/file-tiff-load.c:1267
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
@@ -3397,7 +3397,7 @@ msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
-"Het PNG-bestand geeft een versprining op die de laag buiten de "
+"Het PNG-bestand geeft een verspringing op die de laag buiten de "
 "afbeeldingsgrens plaatst."
 
 #: ../plug-ins/common/file-png.c:1408
@@ -3439,13 +3439,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Fout tijdens exporteren van '%s'. Kon afbeelding niet exporteren."
 
 #: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1232
+#: ../plug-ins/file-tiff/file-tiff-save.c:1248
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Fout tijdens openen van GUI-bestand '%s': %s"
 
 #: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1233
+#: ../plug-ins/file-tiff/file-tiff-save.c:1249
 msgid "Unknown error"
 msgstr "Onbekende fout"
 
@@ -3547,7 +3547,7 @@ msgstr "Encapsulated PostScript-afbeelding"
 #: ../plug-ins/common/file-ps.c:1081
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
-msgstr "Kon Postscript-bestand '%s' niet interpreteren"
+msgstr "Kon PostScript-bestand '%s' niet interpreteren"
 
 #: ../plug-ins/common/file-ps.c:1219
 #, c-format
@@ -3771,7 +3771,7 @@ msgstr "Ongeldige afmeting algemeen afbeeldingsattribuut."
 #: ../plug-ins/common/file-psp.c:870
 #, c-format
 msgid "Error reading general image attribute block."
-msgstr "Fout tijdens lezen van info over algemeen afbeeldingsattribuut."
+msgstr "Fout tijdens lezen van General image attribute blok."
 
 #: ../plug-ins/common/file-psp.c:885
 #, c-format
@@ -4197,11 +4197,11 @@ msgstr "Reden onbekend"
 
 #: ../plug-ins/common/file-svg.c:337
 msgid "Rendering SVG"
-msgstr "SVG wordt gerenderd"
+msgstr "SVG wordt gegenereerd"
 
 #: ../plug-ins/common/file-svg.c:349
 msgid "Rendered SVG"
-msgstr "SVG gerenderd"
+msgstr "SVG gegenereerd"
 
 #: ../plug-ins/common/file-svg.c:484 ../plug-ins/common/file-wmf.c:369
 #, c-format
@@ -4315,11 +4315,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-wmf.c:511
 msgid "Render Windows Metafile"
-msgstr "Windows Metabestand renderen"
+msgstr "Windows Metabestand genereren"
 
 #: ../plug-ins/common/file-wmf.c:1028
 msgid "Rendered WMF"
-msgstr "WMF gerenderd"
+msgstr "WMF gegenereerd"
 
 #: ../plug-ins/common/file-xbm.c:183 ../plug-ins/common/file-xbm.c:201
 msgid "X BitMap image"
@@ -4549,12 +4549,12 @@ msgstr ""
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
-"Het gedeelte van de copyright-info dat de 65535 karakters te boven ging, is "
-"verwijderd."
+"Het gedeelte van de Auteursrecht-info dat de 65535 karakters te boven ging, "
+"is verwijderd."
 
 #: ../plug-ins/common/file-xmc.c:1285
 msgid "Enter copyright information."
-msgstr "Geef copyright-info op."
+msgstr "Geef Auteursrecht-info op."
 
 #: ../plug-ins/common/file-xmc.c:1287
 msgid "_Copyright:"
@@ -4726,7 +4726,7 @@ msgid ""
 "Illegal number of colormap entries: %ld"
 msgstr ""
 "'%s':\n"
-"Ongeldig aantal kleurkaartingangen: %ld"
+"Ongeldig aantal kleurkaart ingangen: %ld"
 
 #: ../plug-ins/common/file-xwd.c:495
 #, c-format
@@ -4735,7 +4735,7 @@ msgid ""
 "Number of colormap entries < number of colors"
 msgstr ""
 "'%s':\n"
-"Aantal kleurmapingangen < aantal kleuren"
+"Aantal kleurkaart ingangen < aantal kleuren"
 
 #: ../plug-ins/common/file-xwd.c:518
 msgid "Can't read color entries"
@@ -5688,7 +5688,7 @@ msgstr "Verander kleurenkaart"
 
 #: ../plug-ins/common/sharpen.c:112
 msgid "Make image sharper (less powerful than Unsharp Mask)"
-msgstr "Afbeeldin verscherpen (minder krachtig dan 'Onscherp masker')"
+msgstr "Afbeelding verscherpen (minder krachtig dan 'Onscherp masker')"
 
 #: ../plug-ins/common/sharpen.c:119
 msgid "_Sharpen..."
@@ -5819,7 +5819,7 @@ msgstr "Tr_ansparantie:"
 
 #: ../plug-ins/common/sparkle.c:450
 msgid "Adjust the opacity of the spikes"
-msgstr "Piekdekking aanpassen"
+msgstr "Dekking van de pieken aanpassen"
 
 #: ../plug-ins/common/sparkle.c:460
 msgid "_Random hue:"
@@ -6063,7 +6063,7 @@ msgstr "Positie Z:"
 
 #: ../plug-ins/common/sphere-designer.c:2992
 msgid "Rendering sphere"
-msgstr "Bol wordt gerenderd"
+msgstr "Bol wordt gegenereerd"
 
 #: ../plug-ins/common/sphere-designer.c:3055
 msgid "Create an image of a textured sphere"
@@ -6079,7 +6079,7 @@ msgstr "Gebied geselecteerd voor plug-in is leeg"
 
 #: ../plug-ins/common/tile.c:110
 msgid "Create an array of copies of the image"
-msgstr "Een reeks van kopiëen van de afbeelding aanmaken"
+msgstr "Een reeks van kopieën van de afbeelding aanmaken"
 
 #: ../plug-ins/common/tile.c:120
 msgid "_Tile..."
@@ -6805,7 +6805,7 @@ msgid "Export as DDS"
 msgstr "Exporteer als DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1957
-#: ../plug-ins/metadata/metadata-editor.c:5753
+#: ../plug-ins/metadata/metadata-editor.c:4596
 msgid "_Export"
 msgstr "_Exporteren"
 
@@ -6879,7 +6879,7 @@ msgstr "Fout tijdens opvragen beeldafmetingen van '%s'"
 #: ../plug-ins/file-exr/file-exr.c:222
 #, c-format
 msgid "Error querying image precision from '%s'"
-msgstr "Fout tijdens opvragen bitdiepteprecisie van '%s'"
+msgstr "Fout tijdens opvragen bitdiepte van '%s'"
 
 # What is the Dutch translation of header?
 #: ../plug-ins/file-exr/file-exr.c:239
@@ -6893,9 +6893,27 @@ msgstr "Fout tijdens opvragen beeldformaat van '%s'"
 msgid "Error reading pixel data from '%s'"
 msgstr "Fout bij het lezen van pixelgegevens van '%s'"
 
-#: ../plug-ins/file-faxg3/faxg3.c:104
+#: ../plug-ins/file-faxg3/faxg3.c:105
 msgid "G3 fax image"
 msgstr "G3 fax-afbeelding"
+
+# What is the Dutch translation of the term 'Compose'?
+#: ../plug-ins/file-faxg3/faxg3.c:275 ../plug-ins/file-faxg3/faxg3.c:574
+#, c-format
+msgid "Could not create buffer to process image data."
+msgstr "Kon geen buffergeheugen krijgen om gegevens te bewerken."
+
+#: ../plug-ins/file-faxg3/faxg3.c:540
+#, c-format
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr ""
+"Ongeldig afbeeldingsformaat (%d x %d). Mogelijk is de afbeelding beschadigd."
+
+# afsluiten/sluiten
+#: ../plug-ins/file-faxg3/faxg3.c:550
+#, c-format
+msgid "Could not create image."
+msgstr "Kon geen afbeelding maken."
 
 #: ../plug-ins/file-fits/fits.c:166 ../plug-ins/file-fits/fits.c:186
 msgid "Flexible Image Transport System"
@@ -6968,7 +6986,7 @@ msgstr "_Van:"
 #: ../plug-ins/file-fli/fli-gimp.c:913 ../plug-ins/file-fli/fli-gimp.c:971
 msgctxt "frame-range"
 msgid "_To:"
-msgstr "_Naar:"
+msgstr "_Tot:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:943
 msgid "GFLI 1.3"
@@ -6976,19 +6994,20 @@ msgstr "GFLI 1.3"
 
 #: ../plug-ins/file-ico/ico-dialog.c:54
 msgid "Windows Icon"
-msgstr "Windows-icoon"
+msgstr "Windows-pictogram"
 
 #: ../plug-ins/file-ico/ico-dialog.c:74
 msgid "Icon Details"
-msgstr "Icoondetails"
+msgstr "Pictogramdetails"
 
 #: ../plug-ins/file-ico/ico-dialog.c:97
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr ""
-"Grote iconen en compressie wordt niet door alle programma's ondersteund. "
-"Oudere toepassingen kunnen dit bestand mogelijk niet correct openen."
+"Grote pictogrammen en compressie wordt niet door alle programma's "
+"ondersteund. Oudere toepassingen kunnen dit bestand mogelijk niet correct "
+"openen."
 
 #: ../plug-ins/file-ico/ico-dialog.c:169
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
@@ -7022,13 +7041,13 @@ msgstr "Kon '%lu' bytes niet lezen"
 #: ../plug-ins/file-ico/ico-load.c:248
 #, c-format
 msgid "Icon #%d has zero width or height"
-msgstr "Icoon #%d heeft breedte of hoogte van nul"
+msgstr "Pictogram #%d heeft breedte of hoogte van nul"
 
 #. read successfully. add to image
 #: ../plug-ins/file-ico/ico-load.c:634
 #, c-format
 msgid "Icon #%i"
-msgstr "Icoon #%i"
+msgstr "Pictogram #%i"
 
 #: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:529
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
@@ -7083,7 +7102,7 @@ msgstr ""
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:897
 msgid "Enable preview to obtain the file size."
-msgstr "Schakel voorbeeld in om  bestandsgrootte te zien."
+msgstr "Schakel voorbeeld in om bestandsgrootte te zien."
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:900
 msgid "Sho_w preview in image window"
@@ -7305,7 +7324,7 @@ msgstr "Kon gegevens niet decomprimeren"
 
 #: ../plug-ins/file-psd/psd-save.c:463
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Fout: kan GIMP basisafbeeldingstype niet omzetten naar PSD-modus"
+msgstr "Fout: kan GIMP basis afbeeldingstype niet omzetten naar PSD-modus"
 
 #: ../plug-ins/file-psd/psd-save.c:1690
 #, c-format
@@ -7509,12 +7528,17 @@ msgstr ""
 msgid "TIFF image"
 msgstr "TIFF-afbeelding"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:280
+#: ../plug-ins/file-tiff/file-tiff-load.c:266
+#, c-format
+msgid "Not a TIFF image or image is corrupt."
+msgstr "Dit is geen TIFF afbeelding of een beschadigde afbeelding."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:297
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF '%s' bevat geen enkele map"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:287
+#: ../plug-ins/file-tiff/file-tiff-load.c:304
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7529,7 +7553,7 @@ msgstr[1] ""
 "TIFF '%s' map tellen per header mislukt, hoewel %d pagina's lijken te "
 "bestaan. Probeer nu het bestand te laden met deze veronderstelling."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:363
+#: ../plug-ins/file-tiff/file-tiff-load.c:380
 msgid "Extra channels with unspecified data."
 msgstr "Extra kanalen met ongespecificeerde data."
 
@@ -7540,16 +7564,16 @@ msgstr "Extra kanalen met ongespecificeerde data."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:375
+#: ../plug-ins/file-tiff/file-tiff-load.c:392
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Niet-conforme TIFF: extra kanalen zonder 'ExtraSamples'-veld."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:436
+#: ../plug-ins/file-tiff/file-tiff-load.c:453
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Kon pagina %d van %d niet lezen. Afbeelding mogelijk beschadigd.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:465
+#: ../plug-ins/file-tiff/file-tiff-load.c:482
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7559,7 +7583,7 @@ msgstr ""
 "op de eerste laag. De lagen onder laag # %d worden geïnterpreteerd als niet-"
 "lineair."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:473
+#: ../plug-ins/file-tiff/file-tiff-load.c:490
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7569,31 +7593,141 @@ msgstr ""
 "dit tot incorrecte resultaten leidt, kunt u overwegen elke laag als een "
 "aparte afbeelding te laden."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:965
+#: ../plug-ins/file-tiff/file-tiff-load.c:502
+#, c-format
+msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
+msgstr ""
+"Verdachte bit diepte: %d voor pagina %d. Mogelijk is de afbeelding "
+"beschadigd."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:576
+#, c-format
+msgid "Unsupported bit depth: %d for page %d."
+msgstr "Niet-ondersteunde bit diepte: %d voor pagina %d."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:591
+#, c-format
+msgid "Could not get image width from '%s'"
+msgstr "Kan de breedte van de afbeelding niet bepalen van '%s'"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:599
+#, c-format
+msgid "Could not get image length from '%s'"
+msgstr "Kan de hoogte van de afbeelding niet bepalen van '%s'"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:607
+#, c-format
+msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
+msgstr ""
+"Ongeldige afbeelding afmetingen: (%u x %u) voor pagina %d. Mogelijk is de "
+"afbeelding beschadigd."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:628
+#, c-format
+msgid ""
+"Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
+"is-white"
+msgstr ""
+"Kon de fotometrische eigenschappen niet bepalen uit '%s'. De afbeelding is "
+"CCITT gecomprimeerd, neem aan min-is-wit"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:635
+#, c-format
+msgid "Could not get photometric from '%s'. Assuming min-is-black"
+msgstr ""
+"Kon de fotometrische eigenschappen niet bepalen uit '%s'. neem aan min-is-"
+"zwart"
+
+#. In non-interactive mode, we assume unassociated alpha if unspecified.
+#. * We don't output messages in interactive mode as the user
+#. * has already the ability to choose through a dialog.
+#: ../plug-ins/file-tiff/file-tiff-load.c:667
+#, c-format
+msgid ""
+"Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
+msgstr ""
+"Type alfakanaal is niet gedefinieerd voor %s. Neem aan niet "
+"voorvermenigvuldigd"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:692
+#, c-format
+msgid ""
+"Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
+"not set while extra channels are present. Assuming the first extra channel "
+"is non-premultiplied alpha."
+msgstr ""
+"Afbeelding '%s' komt niet overeen met de TIFF specificatie: ExtraSamples "
+"veld is niet ingevuld maar er zijn extra kanalen. Gebruik het eerste extra "
+"kanaal als niet-voorvermenigvuldigd alfa."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:925
+#, c-format
+msgid "Invalid or unknown compression %u. Setting compression to none."
+msgstr "Ongeldige of onbekende compressie %u. Zet compressie op geen."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:983
+#, c-format
+msgid "Could not create a new image: %s"
+msgstr "Kon geen nieuwe afbeelding maken: %s"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1003
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-van-%d-pagina's"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1335
+#: ../plug-ins/file-tiff/file-tiff-load.c:1148
+#, c-format
+msgid "Unknown resolution unit type %d, assuming dpi"
+msgstr "Onbekende eenheid voor resolutie %d, neem aan dpi"
+
+#. no res unit tag
+#. old AppleScan software produces these
+#: ../plug-ins/file-tiff/file-tiff-load.c:1158
+msgid "Warning: resolution specified without unit type, assuming dpi"
+msgstr "Waarschuwing: resolutie gespecificeerd zonder eenheid, neem aan dpi"
+
+#. xres but no yres
+#: ../plug-ins/file-tiff/file-tiff-load.c:1166
+msgid "Warning: no y resolution info, assuming same as x"
+msgstr "Waarschuwing: geen y resolutie informatie, neem aan gelijk aan x"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1225
+#, c-format
+msgid "Could not get colormaps from '%s'"
+msgstr "Kan kleuringangen niet lezen uit '%s'"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1298
 msgid "TIFF Channel"
 msgstr "TIFF-kanaal"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1473
+#: ../plug-ins/file-tiff/file-tiff-load.c:1436
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Kon geen gegevens lezen van TIFF '%s'. Het bestand is waarschijnlijk "
 "beschadigd."
 
+#: ../plug-ins/file-tiff/file-tiff-load.c:1507
+#, c-format
+msgid "%s: Unsupported image format, no RGBA loader available"
+msgstr ""
+"%s: Niet-ondersteund afbeelding formaat, geen RGBA conversie beschikbaar"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1819
+#: ../plug-ins/file-tiff/file-tiff-load.c:2016
+#, c-format
+msgid "Reading tile failed. Image may be corrupt at line %d."
+msgstr "Lezen van tegel mislukt. Afbeelding mogelijk beschadigd bij regel %d."
+
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1848
-#: ../plug-ins/file-tiff/file-tiff-load.c:2028
+#: ../plug-ins/file-tiff/file-tiff-load.c:1828
+#: ../plug-ins/file-tiff/file-tiff-load.c:2025
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Lezen van scanlijn mislukt. Afbeelding mogelijk beschadigd bij regel %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2303
+#: ../plug-ins/file-tiff/file-tiff-load.c:2426
 msgid "Import from TIFF"
 msgstr "Uit TIFF importeren"
 
@@ -7601,23 +7735,23 @@ msgstr "Uit TIFF importeren"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2356
+#: ../plug-ins/file-tiff/file-tiff-load.c:2479
 msgid "_Keep empty space around imported layers"
 msgstr "_Behoud lege ruimte rond geïmporteerde lagen"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2373
+#: ../plug-ins/file-tiff/file-tiff-load.c:2496
 msgid "Process extra channel as:"
 msgstr "Extra kanaal verwerken als:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2376
+#: ../plug-ins/file-tiff/file-tiff-load.c:2499
 msgid "_Non-premultiplied alpha"
 msgstr "_Niet-voorvermenigvuldigd alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2377
+#: ../plug-ins/file-tiff/file-tiff-load.c:2500
 msgid "Pre_multiplied alpha"
 msgstr "Voor-ver_menigvuldigd alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2378
+#: ../plug-ins/file-tiff/file-tiff-load.c:2501
 msgid "Channe_l"
 msgstr "Kanaa_l"
 
@@ -7651,39 +7785,39 @@ msgstr ""
 msgid "Writing pages with different bit depth is strange."
 msgstr "Wegschrijven van pagina's met verschillende bitdiepte is merkwaardig."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1222
+#: ../plug-ins/file-tiff/file-tiff-save.c:1238
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1248
+#: ../plug-ins/file-tiff/file-tiff-save.c:1264
 msgid "Compression"
 msgstr "Compressie"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1252
+#: ../plug-ins/file-tiff/file-tiff-save.c:1268
 msgid "_None"
 msgstr "_Geen"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1253
+#: ../plug-ins/file-tiff/file-tiff-save.c:1269
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1254
+#: ../plug-ins/file-tiff/file-tiff-save.c:1270
 msgid "_Pack Bits"
 msgstr "_Pack Bits"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1255
+#: ../plug-ins/file-tiff/file-tiff-save.c:1271
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1256
+#: ../plug-ins/file-tiff/file-tiff-save.c:1272
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1257
+#: ../plug-ins/file-tiff/file-tiff-save.c:1273
 msgid "CCITT Group _3 fax"
 msgstr "CCITT Groep _3 fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1258
+#: ../plug-ins/file-tiff/file-tiff-save.c:1274
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Groep _4 fax"
 
@@ -7810,7 +7944,7 @@ msgstr "NULL-parameter"
 
 #: ../plug-ins/file-webp/file-webp-save.c:122
 msgid "invalid configuration"
-msgstr "ongeldige X-resolutie"
+msgstr "ongeldige configuratie"
 
 #: ../plug-ins/file-webp/file-webp-save.c:124
 msgid "bad image dimensions"
@@ -8349,7 +8483,7 @@ msgid ""
 msgstr ""
 "Een kleurenkaart aanmaken met de opties die u hierboven heeft aangegeven "
 "(kleurdichtheid/functie). Het resultaat is zichtbaar in de "
-"voorbeeldkafbeelding"
+"voorbeeldafbeelding"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1147
 msgid "Apply active gradient to final image"
@@ -8372,7 +8506,7 @@ msgstr "Fractals"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1562
 #, c-format
 msgid "Could not write '%s': %s"
-msgstr "Schrijven '%s' misluikte: %s"
+msgstr "Schrijven '%s' mislukte: %s"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1637
 msgid "Load Fractal Parameters"
@@ -8404,7 +8538,7 @@ msgstr "_Fractal-ontdekker..."
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:364
 msgid "Rendering fractal"
-msgstr "Fractal wordt gerenderd"
+msgstr "Fractal wordt gegenereerd"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:741
 #: ../plug-ins/gradient-flare/gradient-flare.c:3279
@@ -8429,7 +8563,7 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
-"Bestand '%s' is aangetast.\n"
+"Bestand '%s' is beschadigd.\n"
 "Regel %d optiesectie incorrect"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1030
@@ -8760,7 +8894,7 @@ msgstr "Rastertype:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Normal"
 msgstr "Normaal"
 
@@ -8880,7 +9014,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Verandert de gamma (helderheid) van het geselecteerde penseel"
 
 #: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/metadata/metadata-editor.c:587
+#: ../plug-ins/metadata/metadata-editor.c:613
 msgid "Select:"
 msgstr "Selecteer:"
 
@@ -9082,11 +9216,11 @@ msgstr "De beginhoek van het eerste penseel dat wordt aangemaakt"
 
 #: ../plug-ins/gimpressionist/orientation.c:129
 msgid "Angle span:"
-msgstr "Hoekweidte:"
+msgstr "Hoekwijdte:"
 
 #: ../plug-ins/gimpressionist/orientation.c:133
 msgid "The angle span of the first brush to create"
-msgstr "De hoekweidte van het eerste penseel dat wordt aangemaakt"
+msgstr "De hoekwijdte van het eerste penseel dat wordt aangemaakt"
 
 #: ../plug-ins/gimpressionist/orientation.c:156
 msgid ""
@@ -9259,7 +9393,7 @@ msgstr "Hoekverspringing:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:686
 msgid "Offset all vectors with a given angle"
-msgstr "Verspring alle vectors met een bepaalde hoek"
+msgstr "Verspring alle vectoren met een bepaalde hoek"
 
 #: ../plug-ins/gimpressionist/orientmap.c:693
 msgid "_Strength:"
@@ -9284,7 +9418,7 @@ msgstr "Papier"
 
 #: ../plug-ins/gimpressionist/paper.c:171
 msgid "Inverts the Papers texture"
-msgstr "Keert de papiertekstuur om"
+msgstr "Keert de papiertextuur om"
 
 #: ../plug-ins/gimpressionist/paper.c:175
 msgid "O_verlay"
@@ -9715,6 +9849,10 @@ msgstr "Exif-d_ata opslaan"
 msgid "Save _GeoTIFF data"
 msgstr "_GeoTIFF-gegevens opslaan"
 
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
+msgid "Keep the GeoTIFF metadata if it was present on import"
+msgstr "GeoTIFF gegevens behouden als ze bij import aanwezig waren"
+
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
 msgstr "Documenttitel"
@@ -9725,7 +9863,7 @@ msgstr "Auteur"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:3
 msgid "Author Title"
-msgstr "Maker van de titel"
+msgstr "Maker van de Titel"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:4
 msgid "Description"
@@ -9733,7 +9871,7 @@ msgstr "Omschrijving"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:5
 msgid "Description Writer\t"
-msgstr "Maker van de beschrijving\t"
+msgstr "Maker van de omschrijving\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
 msgid "Rating"
@@ -10241,7 +10379,7 @@ msgstr "Fout bij schrijven GFlare-bestand '%s': %s"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2480
 msgid "A_uto update preview"
-msgstr "Voorbeeld a_utomatisch verniewen"
+msgstr "Voorbeeld a_utomatisch vernieuwen"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2533
 msgid "'Default' is created."
@@ -12067,7 +12205,7 @@ msgstr "Grootte"
 
 #: ../plug-ins/map-object/map-object-ui.c:1229
 msgid "R_adius:"
-msgstr "R_adius:"
+msgstr "St_raal:"
 
 #: ../plug-ins/map-object/map-object-ui.c:1233
 msgid "Cylinder radius"
@@ -12105,49 +12243,49 @@ msgstr "Toon _draadmodel"
 msgid "Update preview _live"
 msgstr "Voorbeeld _live vernieuwen"
 
-#: ../plug-ins/metadata/metadata-editor.c:413
+#: ../plug-ins/metadata/metadata-editor.c:439
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Bewerk metadata (IPTC, Exif, XMP)"
 
-#: ../plug-ins/metadata/metadata-editor.c:421
+#: ../plug-ins/metadata/metadata-editor.c:447
 msgid "_Edit Metadata"
 msgstr "B_ewerk metadata"
 
-#: ../plug-ins/metadata/metadata-editor.c:545
+#: ../plug-ins/metadata/metadata-editor.c:571
 msgid "Error loading metadata-editor dialog."
 msgstr "Fout tijdens het laden van de metadata-editor."
 
-#: ../plug-ins/metadata/metadata-editor.c:556
+#: ../plug-ins/metadata/metadata-editor.c:582
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Metadatabewerker: %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:565
+#: ../plug-ins/metadata/metadata-editor.c:591
 msgid "_Write Metadata"
 msgstr "_Schrijf metadata"
 
-#: ../plug-ins/metadata/metadata-editor.c:589
+#: ../plug-ins/metadata/metadata-editor.c:615
 msgid "Import metadata"
 msgstr "Importeer metadata"
 
-#: ../plug-ins/metadata/metadata-editor.c:591
+#: ../plug-ins/metadata/metadata-editor.c:617
 msgid "Export metadata"
 msgstr "Exporteer metadata"
 
-#: ../plug-ins/metadata/metadata-editor.c:799
+#: ../plug-ins/metadata/metadata-editor.c:921
 #, c-format
 msgid "Error loading calendar. %s"
 msgstr "Fout bij laden kalender. %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:827
+#: ../plug-ins/metadata/metadata-editor.c:949
 msgid "Calendar Date:"
 msgstr "Kalenderdatum:"
 
-#: ../plug-ins/metadata/metadata-editor.c:831
+#: ../plug-ins/metadata/metadata-editor.c:953
 msgid "Set Date"
 msgstr "Stel datum in"
 
-#: ../plug-ins/metadata/metadata-editor.c:1565
+#: ../plug-ins/metadata/metadata-editor.c:1687
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -12163,7 +12301,7 @@ msgstr ""
 "10,45\n"
 "Verwijder alle tekst om de huidige waarde te verwijderen."
 
-#: ../plug-ins/metadata/metadata-editor.c:1571
+#: ../plug-ins/metadata/metadata-editor.c:1693
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -12181,222 +12319,224 @@ msgstr ""
 
 # Komt achter tekst "Waardering"
 # pm
-#: ../plug-ins/metadata/metadata-editor.c:1707
+#: ../plug-ins/metadata/metadata-editor.c:1829
 msgid "Unrated"
 msgstr "Geen"
 
-#: ../plug-ins/metadata/metadata-editor.c:4405
+#: ../plug-ins/metadata/metadata-editor.c:3697
 #, c-format
 msgid "Failed to set metadata tag %s"
 msgstr "Kon metadata-tag %s niet instellen"
 
-#: ../plug-ins/metadata/metadata-editor.c:5714
+#: ../plug-ins/metadata/metadata-editor.c:4557
 msgid "Import Metadata File"
 msgstr "Importeer metadatabestand"
 
-#: ../plug-ins/metadata/metadata-editor.c:5749
+#: ../plug-ins/metadata/metadata-editor.c:4592
 msgid "Export Metadata File"
 msgstr "Exporteer metadatabestand"
 
 #: ../plug-ins/metadata/metadata-tags.c:169
+#: ../plug-ins/metadata/metadata-tags.c:183
+#: ../plug-ins/metadata/metadata-tags.c:243
+#: ../plug-ins/metadata/metadata-tags.c:260
+msgid "Select a value"
+msgstr "Kies een waarde"
+
+#: ../plug-ins/metadata/metadata-tags.c:170
 msgid "Original digital capture of a real life scene"
 msgstr "Originele digitale opname"
 
-#: ../plug-ins/metadata/metadata-tags.c:170
+#: ../plug-ins/metadata/metadata-tags.c:171
 msgid "Digitized from a negative on film"
 msgstr "Gedigitaliseerd van een filmnegatief"
 
-#: ../plug-ins/metadata/metadata-tags.c:171
+#: ../plug-ins/metadata/metadata-tags.c:172
 msgid "Digitized from a positive on film"
 msgstr "Gedigitaliseerd van een filmpositief"
 
-#: ../plug-ins/metadata/metadata-tags.c:172
+#: ../plug-ins/metadata/metadata-tags.c:173
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Gedigitaliseerd van een afdruk op een niet-transparant medium"
 
-#: ../plug-ins/metadata/metadata-tags.c:173
+#: ../plug-ins/metadata/metadata-tags.c:174
 msgid "Created by software"
 msgstr "Gemaakt met software"
 
-#: ../plug-ins/metadata/metadata-tags.c:182
-#: ../plug-ins/metadata/metadata-tags.c:194
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:184
+#: ../plug-ins/metadata/metadata-tags.c:196
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "None"
 msgstr "Geen"
 
-#: ../plug-ins/metadata/metadata-tags.c:183
-#: ../plug-ins/metadata/metadata-tags.c:195
+#: ../plug-ins/metadata/metadata-tags.c:185
+#: ../plug-ins/metadata/metadata-tags.c:197
 msgid "Not Applicable"
 msgstr "Niet toepasbaar"
 
 # iptc.org:
 # A Model Release is a document granting the right to use an image of a person depicted.
 # pm
-#: ../plug-ins/metadata/metadata-tags.c:184
+#: ../plug-ins/metadata/metadata-tags.c:186
 msgid "Unlimited Model Releases"
 msgstr "Onbeperkt publicatierecht model"
 
-#: ../plug-ins/metadata/metadata-tags.c:185
+#: ../plug-ins/metadata/metadata-tags.c:187
 msgid "Limited or Incomplete Model Releases"
 msgstr "Beperkt of incompleet publicatierecht model"
 
 # Property: gebouw of landschap
 # pm
-#: ../plug-ins/metadata/metadata-tags.c:196
+#: ../plug-ins/metadata/metadata-tags.c:198
 msgid "Unlimited Property Releases"
 msgstr "Onbeperkt publicatierecht onroerend goed"
 
-#: ../plug-ins/metadata/metadata-tags.c:197
+#: ../plug-ins/metadata/metadata-tags.c:199
 msgid "Limited or Incomplete Property Releases"
 msgstr "Beperkt of incompleet publicatierecht onroerend goed"
 
-#: ../plug-ins/metadata/metadata-tags.c:206
+#: ../plug-ins/metadata/metadata-tags.c:208
 msgid "Age Unknown"
 msgstr "Leeftijd onbekend"
 
-#: ../plug-ins/metadata/metadata-tags.c:207
+#: ../plug-ins/metadata/metadata-tags.c:209
 msgid "Age 25 or Over"
 msgstr "25 jaar of ouder"
 
-#: ../plug-ins/metadata/metadata-tags.c:208
+#: ../plug-ins/metadata/metadata-tags.c:210
 msgid "Age 24"
 msgstr "24 jaar"
 
-#: ../plug-ins/metadata/metadata-tags.c:209
+#: ../plug-ins/metadata/metadata-tags.c:211
 msgid "Age 23"
 msgstr "23 jaar"
 
-#: ../plug-ins/metadata/metadata-tags.c:210
+#: ../plug-ins/metadata/metadata-tags.c:212
 msgid "Age 22"
 msgstr "22 jaar"
 
-#: ../plug-ins/metadata/metadata-tags.c:211
+#: ../plug-ins/metadata/metadata-tags.c:213
 msgid "Age 21"
 msgstr "21 jaar"
 
-#: ../plug-ins/metadata/metadata-tags.c:212
+#: ../plug-ins/metadata/metadata-tags.c:214
 msgid "Age 20"
 msgstr "20 jaar"
 
-#: ../plug-ins/metadata/metadata-tags.c:213
+#: ../plug-ins/metadata/metadata-tags.c:215
 msgid "Age 19"
 msgstr "19 jaar"
 
-#: ../plug-ins/metadata/metadata-tags.c:214
+#: ../plug-ins/metadata/metadata-tags.c:216
 msgid "Age 18"
 msgstr "18 jaar"
 
-#: ../plug-ins/metadata/metadata-tags.c:215
+#: ../plug-ins/metadata/metadata-tags.c:217
 msgid "Age 17"
 msgstr "17 jaar"
 
-#: ../plug-ins/metadata/metadata-tags.c:216
+#: ../plug-ins/metadata/metadata-tags.c:218
 msgid "Age 16"
 msgstr "16 jaar"
 
-#: ../plug-ins/metadata/metadata-tags.c:217
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Age 15"
 msgstr "15 jaar"
 
-#: ../plug-ins/metadata/metadata-tags.c:218
+#: ../plug-ins/metadata/metadata-tags.c:220
 msgid "Age 14 or Under"
 msgstr "14 jaar of jonger"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "2"
 msgstr "2"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "3"
 msgstr "3"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "4"
 msgstr "4"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "6"
 msgstr "6"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "7"
 msgstr "7"
 
-#: ../plug-ins/metadata/metadata-tags.c:232
-#: ../plug-ins/metadata/metadata-tags.c:268
-#: ../plug-ins/metadata/metadata-tags.c:275
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:234
+#: ../plug-ins/metadata/metadata-tags.c:270
+#: ../plug-ins/metadata/metadata-tags.c:277
+#: ../plug-ins/metadata/metadata-tags.c:284
 msgid "Unknown"
 msgstr "Onbekend"
 
 #. DO NOT SAVE
-#: ../plug-ins/metadata/metadata-tags.c:233
+#: ../plug-ins/metadata/metadata-tags.c:235
 msgid "Copyrighted"
 msgstr "Auteursrechtelijk beschermd"
 
 #. TRUE
-#: ../plug-ins/metadata/metadata-tags.c:234
+#: ../plug-ins/metadata/metadata-tags.c:236
 msgid "Public Domain"
 msgstr "Publiek domein"
 
-#: ../plug-ins/metadata/metadata-tags.c:241
-#: ../plug-ins/metadata/metadata-tags.c:258
-msgid "Select a value"
-msgstr "Kies een waarde"
-
-#: ../plug-ins/metadata/metadata-tags.c:242
+#: ../plug-ins/metadata/metadata-tags.c:244
 msgid "Work"
 msgstr "Werk"
 
-#: ../plug-ins/metadata/metadata-tags.c:243
+#: ../plug-ins/metadata/metadata-tags.c:245
 msgid "Cell"
 msgstr "Mobiele telefoon"
 
-#: ../plug-ins/metadata/metadata-tags.c:244
+#: ../plug-ins/metadata/metadata-tags.c:246
 msgid "Fax"
 msgstr "Fax"
 
-#: ../plug-ins/metadata/metadata-tags.c:245
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "Home"
 msgstr "Thuis"
 
-#: ../plug-ins/metadata/metadata-tags.c:246
+#: ../plug-ins/metadata/metadata-tags.c:248
 msgid "Pager"
 msgstr "Pager"
 
-#: ../plug-ins/metadata/metadata-tags.c:259
+#: ../plug-ins/metadata/metadata-tags.c:261
 msgid "Male"
 msgstr "Man"
 
-#: ../plug-ins/metadata/metadata-tags.c:260
+#: ../plug-ins/metadata/metadata-tags.c:262
 msgid "Female"
 msgstr "Vrouw"
 
-#: ../plug-ins/metadata/metadata-tags.c:261
+#: ../plug-ins/metadata/metadata-tags.c:263
 msgid "Other"
 msgstr "Overige"
 
-#: ../plug-ins/metadata/metadata-tags.c:268
+#: ../plug-ins/metadata/metadata-tags.c:270
 msgid "Above sea level"
 msgstr "Boven zeeniveau"
 
-#: ../plug-ins/metadata/metadata-tags.c:268
+#: ../plug-ins/metadata/metadata-tags.c:270
 msgid "Below sea level"
 msgstr "Beneden zeeniveau"
 
-#: ../plug-ins/metadata/metadata-tags.c:275
+#: ../plug-ins/metadata/metadata-tags.c:277
 msgid "North"
 msgstr "Noord"
 
-#: ../plug-ins/metadata/metadata-tags.c:275
+#: ../plug-ins/metadata/metadata-tags.c:277
 msgid "South"
 msgstr "Zuid"
 
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:284
 msgid "East"
 msgstr "Oost"
 
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:284
 msgid "West"
 msgstr "West"
 
@@ -12424,15 +12564,15 @@ msgstr "Metadataweergave: %s"
 msgid "(%lu more character(s))"
 msgstr "(%lu meer karakters(s))"
 
-#: ../plug-ins/metadata/metadata-viewer.c:499
+#: ../plug-ins/metadata/metadata-viewer.c:532
 msgid " meter"
 msgstr " meter"
 
-#: ../plug-ins/metadata/metadata-viewer.c:500
+#: ../plug-ins/metadata/metadata-viewer.c:533
 msgid " feet"
 msgstr " feet"
 
-#: ../plug-ins/metadata/metadata-viewer.c:596
+#: ../plug-ins/metadata/metadata-viewer.c:640
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu meer byte(s))"
@@ -12724,7 +12864,7 @@ msgstr "Uitlijnen drempelwaarde:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:120
 msgid "If two endpoints are closer than this, they are made to be equal."
-msgstr "Als twee eindpunten dichterbij zijn dat dit, worden ze gelijk gemaakt."
+msgstr "Als twee eindpunten dichterbij zijn dan dit, worden ze gelijk gemaakt."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:129
 msgid "Corner Always Threshold:"
@@ -12737,8 +12877,8 @@ msgid ""
 "pixels of a point with a smaller angle."
 msgstr ""
 "Als de hoek die is gedefinieerd door een punt en zijn voorgangers en "
-"opvolgers kleiner is dan dit, is het een hoek, zelfs als het binnen "
-"'corner_surround'-pixels van een punt met een kleinere hoek ligt."
+"opvolgers kleiner is dan dit, is het een hoek, zelfs als deze binnen de "
+"'omgeving hoek'-pixels van een punt met een kleinere hoek ligt."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:144
 msgid "Corner Surround:"
@@ -12758,8 +12898,8 @@ msgid ""
 "If a point, its predecessors, and its successors define an angle smaller "
 "than this, it's a corner."
 msgstr ""
-"Als een punt en voorgangers en opvolgers een hoek bepalen die kleiner is dan "
-"dit, is het een hoek."
+"Als een punt, z'n voorgangers en z'n opvolgers een hoek bepalen die kleiner "
+"is dan dit, is het een hoek."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:172
 msgid "Error Threshold:"
@@ -12812,7 +12952,7 @@ msgstr ""
 "Aantal keren dat originele datapunten glad gemaakt moeten worden. Door dit "
 "getal sterk te verhogen - naar 50 bijvoorbeeld - kunnen veel betere "
 "resultaten worden verkregen. Maar als er geen punten worden gevonden die "
-"hoeken zouden moeten zijn, gaat de kromme op dat punt volledig de mist in."
+"hoeken 'zouden' moeten zijn, gaat de kromme op dat punt volledig de mist in."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:232
 msgid "Filter Percent:"
@@ -12911,7 +13051,7 @@ msgstr ""
 "gebeurt bijvoorbeeld als we proberen om de omtrek van de buitenzijde van een "
 "'O' te laten passen op een enkele kromme. De initiële pas is niet goed "
 "genoeg voor de Newton-Raphson-iteratie om deze te verbeteren. Misschien is "
-"het beter om gevallen te ontdekken waar we geen enkele hoeken vonden."
+"het beter om die gevallen te ontdekken waar we geen enkele hoeken vonden."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:348
 msgid "Subdivide Search:"
@@ -13652,10 +13792,10 @@ msgstr "Gegevens van scanner / camera worden overgebracht"
 #~ msgstr "Contrast van afbeelding oprekken om het maximale bereik te omvatten"
 
 #~ msgid "Stretch _HSV"
-#~ msgstr "_TVH oprekken"
+#~ msgstr "_HSV oprekken"
 
 #~ msgid "Auto-Stretching HSV"
-#~ msgstr "Contrast in TVH-ruimte wordt automatisch opgerekt"
+#~ msgstr "Contrast in HSV-ruimte wordt automatisch opgerekt"
 
 #~ msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
 #~ msgstr "autostretch_hsv: cmap was NULL!  Bezig met afsluiten...\n"
@@ -14394,13 +14534,13 @@ msgstr "Gegevens van scanner / camera worden overgebracht"
 #~ msgstr "_VG/AG-verlichting"
 
 #~ msgid "Randomize hue/saturation/value independently"
-#~ msgstr "Tint / verzadiging / helderheid onafhankelijk willekeurig maken"
+#~ msgstr "Tint / verzadiging / waarde onafhankelijk willekeurig maken"
 
 #~ msgid "HSV Noise..."
-#~ msgstr "TVH-ruis..."
+#~ msgstr "HSV-ruis..."
 
 #~ msgid "HSV Noise"
-#~ msgstr "TVH-ruis"
+#~ msgstr "HSV-ruis"
 
 # What does this mean?
 #~ msgid "_Holdness:"
@@ -14907,10 +15047,10 @@ msgstr "Gegevens van scanner / camera worden overgebracht"
 #~ msgstr "De helderheid van elk beeldpunt omkeren"
 
 #~ msgid "_Value Invert"
-#~ msgstr "_Helderheid omkeren"
+#~ msgstr "_Waarde (helderheid) omkeren"
 
 #~ msgid "Value Invert"
-#~ msgstr "Helderheid omkeren"
+#~ msgstr "Waarde (helderheid) omkeren"
 
 #~ msgid "More _white (larger value)"
 #~ msgstr "Meer _wit (hogere waarde)"
@@ -15799,10 +15939,6 @@ msgstr "Gegevens van scanner / camera worden overgebracht"
 #~ msgid "Cannot create file"
 #~ msgstr "Kan geen bestand aanmaken"
 
-# afsluiten/sluiten
-#~ msgid "Could not close the file"
-#~ msgstr "Kon het bestand niet sluiten"
-
 #, fuzzy
 #~ msgid "Image Properties"
 #~ msgstr "Afbeeldingsvooruitblik"
@@ -16357,7 +16493,7 @@ msgstr "Gegevens van scanner / camera worden overgebracht"
 
 # What is the Dutch translation of this phrase?
 #~ msgid "Value:"
-#~ msgstr "Value:"
+#~ msgstr "Waarde:"
 
 #~ msgid "Curve Bend..."
 #~ msgstr "Bezig met vervormen..."
@@ -16466,10 +16602,10 @@ msgstr "Gegevens van scanner / camera worden overgebracht"
 
 #, fuzzy
 #~ msgid "S_catter HSV..."
-#~ msgstr "KVW verspreiden..."
+#~ msgstr "HSV verspreiden..."
 
 #~ msgid "Scattering HSV..."
-#~ msgstr "KVW verspreiden..."
+#~ msgstr "HSV verspreiden..."
 
 #~ msgid "Loading Screen Shot..."
 #~ msgstr "Schermafdruk laden (bezig)"
