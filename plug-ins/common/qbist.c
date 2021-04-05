@@ -80,7 +80,7 @@ typedef struct
 {
   ExpInfo  info;
   gint     oversampling;
-  gchar    path[PATH_MAX];
+  gchar   *path;
 } QbistInfo;
 
 
@@ -197,6 +197,24 @@ qbist_create_procedure (GimpPlugIn  *plug_in,
                                       "Jörn Loviscach, Jens Ch. Restemeier",
                                       "Jörn Loviscach, Jens Ch. Restemeier",
                                       PLUG_IN_VERSION);
+
+      /* Saving the pattern as a parasite is a trick allowing to store
+       * random binary data.
+       */
+      GIMP_PROC_AUX_ARG_PARASITE (procedure, "pattern",
+                                  "Qbist pattern", NULL,
+                                  G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_INT (procedure, "oversampling",
+                             "Oversampling", NULL,
+                             1, 4, 4,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_STRING (procedure, "data-path",
+                                "Path of data file",
+                                _("Any file which will be used as source for pattern generation"),
+                                NULL,
+                                G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -211,13 +229,17 @@ qbist_run (GimpProcedure        *procedure,
            const GimpValueArray *args,
            gpointer              run_data)
 {
-  gint                sel_x1, sel_y1, sel_width, sel_height;
-  gint                img_height, img_width;
-  GeglBuffer         *buffer;
-  GeglBufferIterator *iter;
-  GimpDrawable       *drawable;
-  gint                total_pixels;
-  gint                done_pixels;
+  GimpProcedureConfig *config;
+  gint                 sel_x1, sel_y1, sel_width, sel_height;
+  gint                 img_height, img_width;
+  GeglBuffer          *buffer;
+  GeglBufferIterator  *iter;
+  GimpDrawable        *drawable;
+  GimpParasite        *pattern_parasite;
+  gconstpointer        pattern_data;
+  guint32              pattern_data_length;
+  gint                 total_pixels;
+  gint                 done_pixels;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -238,6 +260,9 @@ qbist_run (GimpProcedure        *procedure,
     {
       drawable = drawables[0];
     }
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   img_width  = gimp_drawable_width (drawable);
   img_height = gimp_drawable_height (drawable);
@@ -267,26 +292,62 @@ qbist_run (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &qbist_info);
+      g_object_get (config,
+                    "data-path",    &qbist_info.path,
+                    "oversampling", &qbist_info.oversampling,
+                    "pattern",      &pattern_parasite,
+                    NULL);
+      if (pattern_parasite)
+        {
+          pattern_data = gimp_parasite_get_data (pattern_parasite,
+                                                 &pattern_data_length);
+          memcpy (&qbist_info.info, pattern_data, pattern_data_length);
+          gimp_parasite_free (pattern_parasite);
+          pattern_parasite = NULL;
+        }
 
       if (! dialog_run ())
         {
+          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
+
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
                                                    NULL);
         }
 
-      gimp_set_data (PLUG_IN_PROC, &qbist_info, sizeof (QbistInfo));
+      pattern_parasite = gimp_parasite_new ("pattern", 0,
+                                            sizeof (qbist_info.info),
+                                            &qbist_info.info);
+      g_object_set (config,
+                    "data-path",    qbist_info.path,
+                    "oversampling", qbist_info.oversampling,
+                    "pattern",      pattern_parasite,
+                    NULL);
+      gimp_parasite_free (pattern_parasite);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
+      gimp_procedure_config_end_run (config, GIMP_PDB_CALLING_ERROR);
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_CALLING_ERROR,
                                                NULL);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &qbist_info);
+      g_object_get (config,
+                    "data-path",    &qbist_info.path,
+                    "oversampling", &qbist_info.oversampling,
+                    "pattern",      &pattern_parasite,
+                    NULL);
+
+      if (pattern_parasite)
+        {
+          pattern_data = gimp_parasite_get_data (pattern_parasite,
+                                                 &pattern_data_length);
+          memcpy (&qbist_info.info, pattern_data, pattern_data_length);
+          gimp_parasite_free (pattern_parasite);
+          pattern_parasite = NULL;
+        }
       break;
     }
 
@@ -341,6 +402,9 @@ qbist_run (GimpProcedure        *procedure,
   gimp_displays_flush ();
 
   g_rand_free (gr);
+
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
@@ -791,16 +855,16 @@ dialog_load (GtkWidget *widget,
                                            -1);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
+  if (qbist_info.path)
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      g_strlcpy (qbist_info.path, name, PATH_MAX);
+      g_free (qbist_info.path);
+      qbist_info.path = name;
       load_data (qbist_info.path);
-
-      g_free (name);
 
       dialog_new_variations (NULL, NULL);
       dialog_update_previews (NULL, -1);
@@ -842,10 +906,9 @@ dialog_save (GtkWidget *widget,
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      g_strlcpy (qbist_info.path, name, PATH_MAX);
+      g_free (qbist_info.path);
+      qbist_info.path = name;
       save_data (qbist_info.path);
-
-      g_free (name);
     }
 
   gtk_widget_destroy (dialog);
