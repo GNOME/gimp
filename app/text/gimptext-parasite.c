@@ -72,7 +72,7 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
   guint32   parasite_data_size;
 
   g_return_val_if_fail (parasite != NULL, NULL);
-  g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
+  g_return_val_if_fail (strcmp (gimp_parasite_get_name (parasite),
                                 gimp_text_parasite_name ()) == 0, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
@@ -138,7 +138,7 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
   gint                    i;
 
   g_return_val_if_fail (parasite != NULL, NULL);
-  g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
+  g_return_val_if_fail (strcmp (gimp_parasite_get_name (parasite),
                                 gimp_text_gdyntext_parasite_name ()) == 0,
                         NULL);
 

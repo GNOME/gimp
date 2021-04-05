@@ -191,7 +191,7 @@ gimp_image_validate_icc_parasite (GimpImage           *image,
   g_return_val_if_fail (icc_parasite != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (strcmp (gimp_parasite_name (icc_parasite),
+  if (strcmp (gimp_parasite_get_name (icc_parasite),
               GIMP_ICC_PROFILE_PARASITE_NAME) != 0)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
@@ -200,8 +200,8 @@ gimp_image_validate_icc_parasite (GimpImage           *image,
       return FALSE;
     }
 
-  if (gimp_parasite_flags (icc_parasite) != (GIMP_PARASITE_PERSISTENT |
-                                             GIMP_PARASITE_UNDOABLE))
+  if (gimp_parasite_get_flags (icc_parasite) != (GIMP_PARASITE_PERSISTENT |
+                                                 GIMP_PARASITE_UNDOABLE))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("ICC profile validation failed: "

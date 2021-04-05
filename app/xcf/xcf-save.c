@@ -466,14 +466,14 @@ xcf_save_image_props (XcfInfo    *info,
   if (grid_parasite)
     {
       gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_name (grid_parasite));
+                                 gimp_parasite_get_name (grid_parasite));
       gimp_parasite_free (grid_parasite);
     }
 
   if (meta_parasite)
     {
       gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_name (meta_parasite));
+                                 gimp_parasite_get_name (meta_parasite));
       gimp_parasite_free (meta_parasite);
     }
 
@@ -482,7 +482,7 @@ xcf_save_image_props (XcfInfo    *info,
       GimpParasite *parasite = iter->data;
 
       gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_name (parasite));
+                                 gimp_parasite_get_name (parasite));
     }
   g_list_free_full (symmetry_parasites,
                     (GDestroyNotify) gimp_parasite_free);
@@ -1955,10 +1955,10 @@ xcf_save_parasite (XcfInfo       *info,
       GError        *tmp_error = NULL;
       gconstpointer  parasite_data;
 
-      string = gimp_parasite_name (parasite);
+      string = gimp_parasite_get_name (parasite);
       xcf_write_string_check_error (info, (gchar **) &string, 1);
 
-      value = gimp_parasite_flags (parasite);
+      value = gimp_parasite_get_flags (parasite);
       xcf_write_int32_check_error (info, &value, 1);
 
       parasite_data = gimp_parasite_get_data (parasite, &value);

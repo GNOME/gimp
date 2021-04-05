@@ -267,7 +267,7 @@ xcf_load_image (Gimp     *gimp,
           GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
           gimp_parasite_list_remove (private->parasites,
-                                     gimp_parasite_name (parasite));
+                                     gimp_parasite_get_name (parasite));
 
           gimp_image_set_grid (GIMP_IMAGE (image), grid, FALSE);
           g_object_unref (grid);
@@ -301,7 +301,7 @@ xcf_load_image (Gimp     *gimp,
         }
 
       gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_name (parasite));
+                                 gimp_parasite_get_name (parasite));
     }
 
   /* check for symmetry parasites */
@@ -325,7 +325,7 @@ xcf_load_image (Gimp     *gimp,
               GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
               gimp_parasite_list_remove (private->parasites,
-                                         gimp_parasite_name (parasite));
+                                         gimp_parasite_get_name (parasite));
 
               gimp_image_symmetry_add (image, sym);
 
@@ -384,7 +384,7 @@ xcf_load_image (Gimp     *gimp,
         }
 
       gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_name (parasite));
+                                 gimp_parasite_get_name (parasite));
     }
 
   /* migrate the old "gimp-metadata" parasite */
@@ -449,7 +449,7 @@ xcf_load_image (Gimp     *gimp,
         }
 
       gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_name (parasite));
+                                 gimp_parasite_get_name (parasite));
     }
 
   /* check for a gimp-xcf-compatibility-mode parasite */
@@ -461,7 +461,7 @@ xcf_load_image (Gimp     *gimp,
 
       /* just ditch it, it's unused but shouldn't be re-saved */
       gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_name (parasite));
+                                 gimp_parasite_get_name (parasite));
     }
 
   xcf_progress_update (info);

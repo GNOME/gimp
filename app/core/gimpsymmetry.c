@@ -528,7 +528,7 @@ gimp_symmetry_from_parasite (const GimpParasite *parasite,
   parasite_name = gimp_symmetry_parasite_name (type);
 
   g_return_val_if_fail (parasite != NULL, NULL);
-  g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
+  g_return_val_if_fail (strcmp (gimp_parasite_get_name (parasite),
                                 parasite_name) == 0,
                         NULL);
 

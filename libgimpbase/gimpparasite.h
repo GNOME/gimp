@@ -104,8 +104,8 @@ gboolean       gimp_parasite_is_persistent (const GimpParasite *parasite);
 gboolean       gimp_parasite_is_undoable   (const GimpParasite *parasite);
 gboolean       gimp_parasite_has_flag      (const GimpParasite *parasite,
                                             gulong              flag);
-gulong         gimp_parasite_flags         (const GimpParasite *parasite);
-const gchar  * gimp_parasite_name          (const GimpParasite *parasite);
+gulong         gimp_parasite_get_flags     (const GimpParasite *parasite);
+const gchar  * gimp_parasite_get_name      (const GimpParasite *parasite);
 
 gconstpointer  gimp_parasite_get_data      (const GimpParasite *parasite,
                                             guint32            *num_bytes);

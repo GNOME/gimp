@@ -184,7 +184,7 @@ gimp_image_undo_push_image_parasite (GimpImage          *image,
   return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
                                GIMP_UNDO_PARASITE_ATTACH, undo_desc,
                                GIMP_DIRTY_IMAGE_META,
-                               "parasite-name", gimp_parasite_name (parasite),
+                               "parasite-name", gimp_parasite_get_name (parasite),
                                NULL);
 }
 
@@ -497,7 +497,7 @@ gimp_image_undo_push_item_parasite (GimpImage          *image,
                                GIMP_UNDO_PARASITE_ATTACH, undo_desc,
                                GIMP_DIRTY_ITEM_META,
                                "item",          item,
-                               "parasite-name", gimp_parasite_name (parasite),
+                               "parasite-name", gimp_parasite_get_name (parasite),
                                NULL);
 }
 

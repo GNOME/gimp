@@ -411,8 +411,8 @@ gimp_parasite_is_type
 gimp_parasite_is_persistent
 gimp_parasite_is_undoable
 gimp_parasite_has_flag
-gimp_parasite_flags
-gimp_parasite_name
+gimp_parasite_get_flags
+gimp_parasite_get_name
 gimp_parasite_data
 gimp_parasite_data_size
 GIMP_PARASITE_PERSISTENT

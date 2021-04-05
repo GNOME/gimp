@@ -333,13 +333,13 @@ gimp_parasite_compare (const GimpParasite *a,
 }
 
 /**
- * gimp_parasite_flags:
+ * gimp_parasite_get_flags:
  * @parasite: a #GimpParasite
  *
  * Returns: @parasite flags.
  */
 gulong
-gimp_parasite_flags (const GimpParasite *parasite)
+gimp_parasite_get_flags (const GimpParasite *parasite)
 {
   if (parasite == NULL)
     return 0;
@@ -395,13 +395,13 @@ gimp_parasite_has_flag (const GimpParasite *parasite,
 }
 
 /**
- * gimp_parasite_name:
+ * gimp_parasite_get_name:
  * @parasite: a #GimpParasite
  *
  * Returns: @parasite's name.
  */
 const gchar *
-gimp_parasite_name (const GimpParasite *parasite)
+gimp_parasite_get_name (const GimpParasite *parasite)
 {
   if (parasite)
     return parasite->name;

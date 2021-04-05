@@ -2163,7 +2163,7 @@ gimp_item_parasite_attach (GimpItem           *item,
       else if (gimp_parasite_is_persistent (&copy) &&
                ! gimp_parasite_compare (&copy,
                                         gimp_item_parasite_find
-                                        (item, gimp_parasite_name (&copy))))
+                                        (item, gimp_parasite_get_name (&copy))))
         {
           gimp_image_undo_push_cantundo (private->image,
                                          C_("undo-type", "Attach Parasite to Item"));
@@ -2219,7 +2219,7 @@ gimp_item_parasite_detach (GimpItem    *item,
           gimp_image_undo_push_item_parasite_remove (private->image,
                                                      C_("undo-type", "Remove Parasite from Item"),
                                                      item,
-                                                     gimp_parasite_name (parasite));
+                                                     gimp_parasite_get_name (parasite));
         }
       else if (gimp_parasite_is_persistent (parasite))
         {

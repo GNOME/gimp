@@ -4024,7 +4024,7 @@ gimp_image_parasite_validate (GimpImage           *image,
   g_return_val_if_fail (parasite != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  name = gimp_parasite_name (parasite);
+  name = gimp_parasite_get_name (parasite);
 
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     {
@@ -4071,7 +4071,7 @@ gimp_image_parasite_attach (GimpImage          *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  name = gimp_parasite_name (parasite);
+  name = gimp_parasite_get_name (parasite);
 
   /*  this is so ugly and is only for the PDB  */
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)

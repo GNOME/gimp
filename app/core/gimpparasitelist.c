@@ -415,8 +415,8 @@ parasite_serialize (const gchar      *key,
 
   parasite_contents = gimp_parasite_get_data (parasite, &parasite_size);
   gimp_config_writer_printf (writer, "\"%s\" %lu %lu",
-                             gimp_parasite_name (parasite),
-                             gimp_parasite_flags (parasite),
+                             gimp_parasite_get_name (parasite),
+                             gimp_parasite_get_flags (parasite),
                              (long unsigned int) parasite_size);
 
   gimp_config_writer_data (writer, parasite_size, parasite_contents);

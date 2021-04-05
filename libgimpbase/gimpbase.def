@@ -129,15 +129,15 @@ EXPORTS
 	gimp_param_value_array_get_type
 	gimp_parasite_compare
 	gimp_parasite_copy
-	gimp_parasite_flags
 	gimp_parasite_free
 	gimp_parasite_get_data
+	gimp_parasite_get_flags
+	gimp_parasite_get_name
 	gimp_parasite_get_type
 	gimp_parasite_has_flag
 	gimp_parasite_is_persistent
 	gimp_parasite_is_type
 	gimp_parasite_is_undoable
-	gimp_parasite_name
 	gimp_parasite_new
 	gimp_path_free
 	gimp_path_get_user_writable_dir
