@@ -834,8 +834,8 @@ mng_save_image (GFile         *file,
   else
     mng_ticks_per_second = 0;
 
-  rows = gimp_image_height (image);
-  cols = gimp_image_width  (image);
+  rows = gimp_image_get_height (image);
+  cols = gimp_image_get_width  (image);
 
   mng_simplicity_profile = (MNG_SIMPLICITY_VALID |
                             MNG_SIMPLICITY_SIMPLEFEATURES |
@@ -1029,7 +1029,7 @@ mng_save_image (GFile         *file,
         }
     }
 
-  if (gimp_image_base_type (image) == GIMP_INDEXED)
+  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
     {
       guchar *palette;
       gint    numcolors;

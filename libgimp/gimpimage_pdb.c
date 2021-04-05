@@ -284,7 +284,7 @@ gimp_image_delete (GimpImage *image)
 }
 
 /**
- * gimp_image_base_type:
+ * gimp_image_get_base_type:
  * @image: The image.
  *
  * Get the base type of the image.
@@ -295,7 +295,7 @@ gimp_image_delete (GimpImage *image)
  * Returns: The image's base type.
  **/
 GimpImageBaseType
-gimp_image_base_type (GimpImage *image)
+gimp_image_get_base_type (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -306,7 +306,7 @@ gimp_image_base_type (GimpImage *image)
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-base-type",
+                                              "gimp-image-get-base-type",
                                               args);
   gimp_value_array_unref (args);
 
@@ -391,7 +391,7 @@ gimp_image_get_default_new_layer_mode (GimpImage *image)
 }
 
 /**
- * gimp_image_width:
+ * gimp_image_get_width:
  * @image: The image.
  *
  * Return the width of the image
@@ -402,7 +402,7 @@ gimp_image_get_default_new_layer_mode (GimpImage *image)
  * Returns: The image's width.
  **/
 gint
-gimp_image_width (GimpImage *image)
+gimp_image_get_width (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -413,7 +413,7 @@ gimp_image_width (GimpImage *image)
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-width",
+                                              "gimp-image-get-width",
                                               args);
   gimp_value_array_unref (args);
 
@@ -426,7 +426,7 @@ gimp_image_width (GimpImage *image)
 }
 
 /**
- * gimp_image_height:
+ * gimp_image_get_height:
  * @image: The image.
  *
  * Return the height of the image
@@ -437,7 +437,7 @@ gimp_image_width (GimpImage *image)
  * Returns: The image's height.
  **/
 gint
-gimp_image_height (GimpImage *image)
+gimp_image_get_height (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -448,7 +448,7 @@ gimp_image_height (GimpImage *image)
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-height",
+                                              "gimp-image-get-height",
                                               args);
   gimp_value_array_unref (args);
 

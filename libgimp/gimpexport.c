@@ -94,7 +94,7 @@ export_merge (GimpImage  *image,
        * merge that follows will ensure that the offset, opacity and
        * size are correct
        */
-      switch (gimp_image_base_type (image))
+      switch (gimp_image_get_base_type (image))
         {
         case GIMP_RGB:
           layer_type = GIMP_RGBA_IMAGE;
@@ -110,8 +110,8 @@ export_merge (GimpImage  *image,
           g_return_if_reached ();
         }
       transp = gimp_layer_new (image, "-",
-                               gimp_image_width (image),
-                               gimp_image_height (image),
+                               gimp_image_get_width (image),
+                               gimp_image_get_height (image),
                                layer_type,
                                100.0, GIMP_LAYER_MODE_NORMAL);
       gimp_image_insert_layer (image, transp, NULL, 1);
@@ -135,17 +135,17 @@ export_merge (GimpImage  *image,
       layers = gimp_image_list_layers (image);
 
       /*  make sure that the merged drawable matches the image size  */
-      if (gimp_drawable_width  (GIMP_DRAWABLE (merged)) !=
-          gimp_image_width  (image) ||
-          gimp_drawable_height (GIMP_DRAWABLE (merged)) !=
-          gimp_image_height (image))
+      if (gimp_drawable_width   (GIMP_DRAWABLE (merged)) !=
+          gimp_image_get_width  (image) ||
+          gimp_drawable_height  (GIMP_DRAWABLE (merged)) !=
+          gimp_image_get_height (image))
         {
           gint off_x, off_y;
 
           gimp_drawable_offsets (GIMP_DRAWABLE (merged), &off_x, &off_y);
           gimp_layer_resize (merged,
-                             gimp_image_width (image),
-                             gimp_image_height (image),
+                             gimp_image_get_width (image),
+                             gimp_image_get_height (image),
                              off_x, off_y);
         }
     }
@@ -271,7 +271,7 @@ static void
 export_convert_bitmap (GimpImage  *image,
                        GList     **drawables)
 {
-  if (gimp_image_base_type (image) == GIMP_INDEXED)
+  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
     gimp_image_convert_rgb (image);
 
   gimp_image_convert_indexed (image,
@@ -303,8 +303,8 @@ export_crop_image (GimpImage  *image,
                    GList     **drawables)
 {
   gimp_image_crop (image,
-                   gimp_image_width  (image),
-                   gimp_image_height (image),
+                   gimp_image_get_width  (image),
+                   gimp_image_get_height (image),
                    0, 0);
 }
 
@@ -935,8 +935,8 @@ gimp_export_image (GimpImage               **image,
 
           image_bounds.x      = 0;
           image_bounds.y      = 0;
-          image_bounds.width  = gimp_image_width  (*image);
-          image_bounds.height = gimp_image_height (*image);
+          image_bounds.width  = gimp_image_get_width  (*image);
+          image_bounds.height = gimp_image_get_height (*image);
 
           for (iter = layers; iter; iter = iter->next)
             {
@@ -977,9 +977,9 @@ gimp_export_image (GimpImage               **image,
           gimp_drawable_offsets (drawable, &offset_x, &offset_y);
 
           if ((gimp_layer_get_opacity (GIMP_LAYER (drawable)) < 100.0) ||
-              (gimp_image_width (*image) !=
+              (gimp_image_get_width (*image) !=
                gimp_drawable_width (drawable))            ||
-              (gimp_image_height (*image) !=
+              (gimp_image_get_height (*image) !=
                gimp_drawable_height (drawable))           ||
               offset_x || offset_y)
             {
@@ -1043,7 +1043,7 @@ gimp_export_image (GimpImage               **image,
   g_list_free (layers);
 
   /* check the image type */
-  type = gimp_image_base_type (*image);
+  type = gimp_image_get_base_type (*image);
   switch (type)
     {
     case GIMP_RGB:

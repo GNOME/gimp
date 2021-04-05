@@ -340,7 +340,7 @@ tiff_save (GimpProcedure        *procedure,
       if (! save_dialog (orig_image, procedure, G_OBJECT (config),
                          n_drawables == 1 ? gimp_drawable_has_alpha (drawables[0]) : TRUE,
                          image_is_monochrome (image),
-                         gimp_image_base_type (image) == GIMP_INDEXED,
+                         gimp_image_get_base_type (image) == GIMP_INDEXED,
                          image_is_multi_layer (image)))
         {
           return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,

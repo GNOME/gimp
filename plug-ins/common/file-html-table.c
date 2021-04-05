@@ -613,7 +613,7 @@ save_dialog (GimpImage     *image,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  if (gimp_image_width (image) * gimp_image_height (image) > 4096)
+  if (gimp_image_get_width (image) * gimp_image_get_height (image) > 4096)
     {
       GtkWidget *eek;
       GtkWidget *label;

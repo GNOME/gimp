@@ -656,8 +656,8 @@ sanity_check (GFile        *file,
   gint   image_width;
   gint   image_height;
 
-  image_width  = gimp_image_width (*image);
-  image_height = gimp_image_height (*image);
+  image_width  = gimp_image_get_width (*image);
+  image_height = gimp_image_get_height (*image);
 
   if (image_width > G_MAXUSHORT || image_height > G_MAXUSHORT)
     {
@@ -934,8 +934,8 @@ save_image (GFile         *file,
         }
     }
 
-  cols = gimp_image_width (image);
-  rows = gimp_image_height (image);
+  cols = gimp_image_get_width (image);
+  rows = gimp_image_get_height (image);
   Interlace = config_interlace;
   if (! gif_encode_header (output, is_gif89, cols, rows, bgindex,
                            BitsPerPixel, Red, Green, Blue, get_pixel,

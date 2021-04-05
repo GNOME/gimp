@@ -1432,7 +1432,7 @@ CODE
     );
 }
 
-sub image_base_type {
+sub image_get_base_type {
     $blurb = 'Get the base type of the image.';
 
     $help = <<'HELP';
@@ -1766,7 +1766,7 @@ CODE
     );
 }
 
-sub image_width {
+sub image_get_width {
     $blurb = 'Return the width of the image';
 
     $help = <<'HELP';
@@ -1795,7 +1795,7 @@ CODE
     );
 }
 
-sub image_height {
+sub image_get_height {
     $blurb = 'Return the height of the image';
 
     $help = <<'HELP';
@@ -3131,10 +3131,10 @@ CODE
             get_images
             image_new image_new_with_precision
             image_duplicate image_delete
-            image_base_type
+            image_get_base_type
             image_get_precision
             image_get_default_new_layer_mode
-            image_width image_height
+            image_get_width image_get_height
             image_get_layers
             image_get_channels
             image_get_vectors

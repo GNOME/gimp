@@ -80,7 +80,7 @@ gimp_guides_ok_cb(gpointer data)
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->right_border)))
       vguides = g_slist_append(vguides,
-                               GINT_TO_POINTER(gimp_image_width(image)));
+                               GINT_TO_POINTER(gimp_image_get_width(image)));
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->upper_border)))
       hguides = g_slist_append(NULL, GINT_TO_POINTER(0));
@@ -89,7 +89,7 @@ gimp_guides_ok_cb(gpointer data)
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->lower_border)))
       hguides = g_slist_append(hguides,
-                               GINT_TO_POINTER(gimp_image_height(image)));
+                               GINT_TO_POINTER(gimp_image_get_height(image)));
 
    url = gtk_entry_get_text(GTK_ENTRY(param->url));
 

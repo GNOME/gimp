@@ -272,12 +272,12 @@ image_delete_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_base_type_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
+image_get_base_type_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -359,12 +359,12 @@ image_get_default_new_layer_mode_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_width_invoker (GimpProcedure         *procedure,
-                     Gimp                  *gimp,
-                     GimpContext           *context,
-                     GimpProgress          *progress,
-                     const GimpValueArray  *args,
-                     GError               **error)
+image_get_width_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -388,12 +388,12 @@ image_width_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_height_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
-                      GError               **error)
+image_get_height_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -3112,11 +3112,11 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-base-type
+   * gimp-image-get-base-type
    */
-  procedure = gimp_procedure_new (image_base_type_invoker);
+  procedure = gimp_procedure_new (image_get_base_type_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-base-type");
+                               "gimp-image-get-base-type");
   gimp_procedure_set_static_help (procedure,
                                   "Get the base type of the image.",
                                   "This procedure returns the image's base type. Layers in the image must be of this subtype, but can have an optional alpha channel.",
@@ -3202,11 +3202,11 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-width
+   * gimp-image-get-width
    */
-  procedure = gimp_procedure_new (image_width_invoker);
+  procedure = gimp_procedure_new (image_get_width_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-width");
+                               "gimp-image-get-width");
   gimp_procedure_set_static_help (procedure,
                                   "Return the width of the image",
                                   "This procedure returns the image's width. This value is independent of any of the layers in this image. This is the \"canvas\" width.",
@@ -3231,11 +3231,11 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-height
+   * gimp-image-get-height
    */
-  procedure = gimp_procedure_new (image_height_invoker);
+  procedure = gimp_procedure_new (image_get_height_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-height");
+                               "gimp-image-get-height");
   gimp_procedure_set_static_help (procedure,
                                   "Return the height of the image",
                                   "This procedure returns the image's height. This value is independent of any of the layers in this image. This is the \"canvas\" height.",

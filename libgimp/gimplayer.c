@@ -182,7 +182,7 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
-  if (gimp_image_base_type (image) != GIMP_RGB)
+  if (gimp_image_get_base_type (image) != GIMP_RGB)
     {
       g_warning ("gimp_layer_new_from_pixbuf() needs an RGB image");
       return NULL;
@@ -262,7 +262,7 @@ gimp_layer_new_from_surface (GimpImage            *image,
   g_return_val_if_fail (cairo_surface_get_type (surface) ==
                         CAIRO_SURFACE_TYPE_IMAGE, NULL);
 
-  if (gimp_image_base_type (image) != GIMP_RGB)
+  if (gimp_image_get_base_type (image) != GIMP_RGB)
     {
       g_warning ("gimp_layer_new_from_surface() needs an RGB image");
       return NULL;

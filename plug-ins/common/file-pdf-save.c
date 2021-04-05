@@ -817,8 +817,8 @@ pdf_save_image (GimpProcedure *procedure,
       y_scale = 72.0 / y_res;
 
       cairo_pdf_surface_set_size (pdf_file,
-                                  gimp_image_width  (image) * x_scale,
-                                  gimp_image_height (image) * y_scale);
+                                  gimp_image_get_width  (image) * x_scale,
+                                  gimp_image_get_height (image) * y_scale);
 
       /* This way we set how many pixels are there in every inch.
        * It's very important for PangoCairo
@@ -845,8 +845,8 @@ pdf_save_image (GimpProcedure *procedure,
           GimpRGB color;
 
           cairo_rectangle (cr, 0.0, 0.0,
-                           gimp_image_width  (image),
-                           gimp_image_height (image));
+                           gimp_image_get_width  (image),
+                           gimp_image_get_height (image));
           gimp_context_get_background (&color);
           cairo_set_source_rgb (cr,
                                 color.r,

@@ -218,7 +218,7 @@ remap_run (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   /*  Make sure that the image is indexed  */
-  if (gimp_image_base_type (image) != GIMP_INDEXED)
+  if (gimp_image_get_base_type (image) != GIMP_INDEXED)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              NULL);

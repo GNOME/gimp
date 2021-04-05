@@ -1511,8 +1511,8 @@ load_resource_2000 (const PSDimageres  *res_a,
   if (path_rec ==0)
     return 0;
 
-  image_width = gimp_image_width (image);
-  image_height = gimp_image_height (image);
+  image_width = gimp_image_get_width (image);
+  image_height = gimp_image_get_height (image);
 
   /* Create path */
   if (res_a->id == PSD_WORKING_PATH)

@@ -1126,8 +1126,8 @@ initialize (void)
       return;
     }
 
-  width  = gimp_image_width (image);
-  height = gimp_image_height (image);
+  width  = gimp_image_get_width (image);
+  height = gimp_image_get_height (image);
 
   layers = gimp_image_list_layers (image);
   layers = g_list_reverse (layers);

@@ -2683,7 +2683,7 @@ p_create_pv_image (GimpDrawable  *src_drawable,
   src_height = gimp_drawable_height (src_drawable);
 
   new_image = gimp_image_new (PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
-                              gimp_image_base_type (gimp_item_get_image (GIMP_ITEM (src_drawable))));
+                              gimp_image_get_base_type (gimp_item_get_image (GIMP_ITEM (src_drawable))));
   gimp_image_undo_disable (new_image);
 
   type = gimp_drawable_type (src_drawable);

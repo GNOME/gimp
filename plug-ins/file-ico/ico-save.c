@@ -625,7 +625,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
       GimpImage  *image = gimp_item_get_image (GIMP_ITEM (layer));
       GeglBuffer *tmp;
 
-      tmp_image = gimp_image_new (w, h, gimp_image_base_type (image));
+      tmp_image = gimp_image_new (w, h, gimp_image_get_base_type (image));
       gimp_image_undo_disable (tmp_image);
 
       if (gimp_drawable_is_indexed (layer))

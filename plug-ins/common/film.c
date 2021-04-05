@@ -457,7 +457,7 @@ film (void)
       picture_height = 0;
       for (iter = images_src; iter; iter = iter->next)
         {
-          height = gimp_image_height (iter->data);
+          height = gimp_image_get_height (iter->data);
           if (height > picture_height) picture_height = height;
         }
       film_height = (int)(picture_height / filmvals.picture_height + 0.5);
@@ -482,8 +482,8 @@ film (void)
       layers = gimp_image_list_layers (iter->data);
 
       /* Get scaled image size */
-      width = gimp_image_width (iter->data);
-      height = gimp_image_height (iter->data);
+      width = gimp_image_get_width (iter->data);
+      height = gimp_image_get_height (iter->data);
       f = ((double)picture_height) / (double)height;
       picture_width = width * f;
 
@@ -562,11 +562,11 @@ film (void)
   for (iter = images_src; iter; iter = iter->next)
     {
       image_tmp = gimp_image_duplicate (iter->data);
-      width = gimp_image_width (image_tmp);
-      height = gimp_image_height (image_tmp);
+      width = gimp_image_get_width (image_tmp);
+      height = gimp_image_get_height (image_tmp);
       f = ((gdouble) picture_height) / (gdouble) height;
       picture_width = width * f;
-      if (gimp_image_base_type (image_tmp) != GIMP_RGB)
+      if (gimp_image_get_base_type (image_tmp) != GIMP_RGB)
         gimp_image_convert_rgb (image_tmp);
       gimp_image_scale (image_tmp, picture_width, picture_height);
 

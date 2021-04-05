@@ -630,7 +630,7 @@ save_layer (TIFF        *tif,
 
   if (compression == COMPRESSION_JPEG)
     {
-      if (gimp_image_base_type (image) == GIMP_INDEXED)
+      if (gimp_image_get_base_type (image) == GIMP_INDEXED)
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("Indexed pictures cannot be compressed "
@@ -935,8 +935,8 @@ save_thumbnail (GimpImage *image,
 
 #define EXIF_THUMBNAIL_SIZE 256
 
-  image_width  = gimp_image_width  (image);
-  image_height = gimp_image_height (image);
+  image_width  = gimp_image_get_width  (image);
+  image_height = gimp_image_get_height (image);
 
   if (image_width > image_height)
     {

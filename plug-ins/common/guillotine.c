@@ -209,8 +209,8 @@ guillotine (GimpImage *image,
   GList    *hguides, *hg;
   GList    *vguides, *vg;
 
-  image_width  = gimp_image_width (image);
-  image_height = gimp_image_height (image);
+  image_width  = gimp_image_get_width (image);
+  image_height = gimp_image_get_height (image);
 
   hguides = g_list_append (NULL,    GINT_TO_POINTER (0));
   hguides = g_list_append (hguides, GINT_TO_POINTER (image_height));

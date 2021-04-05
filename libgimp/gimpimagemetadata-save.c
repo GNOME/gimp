@@ -94,8 +94,8 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
       gchar          *str;
       GExiv2Metadata *g2metadata = GEXIV2_METADATA (metadata);
 
-      image_width  = gimp_image_width  (image);
-      image_height = gimp_image_height (image);
+      image_width  = gimp_image_get_width  (image);
+      image_height = gimp_image_get_height (image);
 
       datetime = g_date_time_new_now_local ();
 
@@ -587,8 +587,8 @@ gimp_image_metadata_save_finish (GimpImage              *image,
 
 #define EXIF_THUMBNAIL_SIZE 256
 
-      image_width  = gimp_image_width  (image);
-      image_height = gimp_image_height (image);
+      image_width  = gimp_image_get_width  (image);
+      image_height = gimp_image_get_height (image);
 
       if (image_width > image_height)
         {

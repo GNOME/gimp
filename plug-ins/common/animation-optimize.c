@@ -533,10 +533,10 @@ do_optimizations (GimpRunMode  run_mode,
       break;
     }
 
-  width     = gimp_image_width (image);
-  height    = gimp_image_height (image);
+  width     = gimp_image_get_width (image);
+  height    = gimp_image_get_height (image);
   layers    = gimp_image_get_layers (image, &total_frames);
-  imagetype = gimp_image_base_type (image);
+  imagetype = gimp_image_get_base_type (image);
   pixelstep = (imagetype == GIMP_RGB) ? 4 : 2;
 
   drawabletype_alpha = (imagetype == GIMP_RGB) ? GIMP_RGBA_IMAGE :

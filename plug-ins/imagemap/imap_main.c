@@ -209,8 +209,8 @@ imap_run (GimpProcedure        *procedure,
     }
 
   _image_name   = gimp_image_get_name (image);
-  _image_width  = gimp_image_width (image);
-  _image_height = gimp_image_height (image);
+  _image_width  = gimp_image_get_width (image);
+  _image_height = gimp_image_get_height (image);
 
   _map_info.color = gimp_drawable_is_rgb (_drawable);
 

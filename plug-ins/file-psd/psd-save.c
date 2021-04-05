@@ -1573,7 +1573,7 @@ save_data (FILE      *fd,
                             gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)),
                             0));
 
-  imageHeight = gimp_image_height (image);
+  imageHeight = gimp_image_get_height (image);
 
   write_gint16 (fd, 1, "RLE compression");
 
@@ -1612,7 +1612,7 @@ create_merged_image (GimpImage *image)
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (projection)))
     return projection;
 
-  if (gimp_image_base_type (image) != GIMP_INDEXED)
+  if (gimp_image_get_base_type (image) != GIMP_INDEXED)
     {
       GeglBuffer         *buffer             = gimp_drawable_get_buffer (GIMP_DRAWABLE (projection));
       const Babl         *format             = get_pixel_format (GIMP_DRAWABLE (projection));
@@ -1667,13 +1667,13 @@ get_image_data (GimpImage *image)
 
   PSDImageData.compression = FALSE;
 
-  PSDImageData.image_height = gimp_image_height (image);
+  PSDImageData.image_height = gimp_image_get_height (image);
   IFDBG printf ("\tGot number of rows: %d\n", PSDImageData.image_height);
 
-  PSDImageData.image_width = gimp_image_width (image);
+  PSDImageData.image_width = gimp_image_get_width (image);
   IFDBG printf ("\tGot number of cols: %d\n", PSDImageData.image_width);
 
-  PSDImageData.baseType = gimp_image_base_type (image);
+  PSDImageData.baseType = gimp_image_get_base_type (image);
   IFDBG printf ("\tGot base type: %d\n", PSDImageData.baseType);
 
   PSDImageData.merged_layer = create_merged_image (image);
@@ -1711,8 +1711,8 @@ save_image (GFile      *file,
 
   IFDBG printf (" Function: save_image\n");
 
-  if (gimp_image_width (image) > 30000 ||
-      gimp_image_height (image) > 30000)
+  if (gimp_image_get_width (image) > 30000 ||
+      gimp_image_get_height (image) > 30000)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unable to export '%s'.  The PSD file format does not "

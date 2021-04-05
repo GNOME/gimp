@@ -1442,8 +1442,8 @@ ps_set_save_size (PSSaveVals *vals,
     xres = yres = 72.0;
 
   /* Calculate size of image in inches */
-  width  = gimp_image_width (image);
-  height = gimp_image_height (image);
+  width  = gimp_image_get_width (image);
+  height = gimp_image_get_height (image);
   iw = width  / xres;
   ih = height / yres;
 

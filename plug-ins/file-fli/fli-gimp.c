@@ -703,7 +703,7 @@ save_image (GFile      *file,
   gimp_context_get_background (&background);
   gimp_rgb_get_uchar (&background, &red, &green, &blue);
 
-  switch (gimp_image_base_type (image))
+  switch (gimp_image_get_base_type (image))
     {
     case GIMP_GRAY:
       /* build grayscale palette */
@@ -756,8 +756,8 @@ save_image (GFile      *file,
    */
   fli_header.filesize = 0;  /* will be fixed when writing the header */
   fli_header.frames   = 0;  /* will be fixed during the write */
-  fli_header.width    = gimp_image_width (image);
-  fli_header.height   = gimp_image_height (image);
+  fli_header.width    = gimp_image_get_width (image);
+  fli_header.height   = gimp_image_get_height (image);
 
   if ((fli_header.width == 320) && (fli_header.height == 200))
     {

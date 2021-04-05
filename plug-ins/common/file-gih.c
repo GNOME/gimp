@@ -360,8 +360,8 @@ gih_save (GimpProcedure        *procedure,
     case GIMP_RUN_INTERACTIVE:
       gihparams.ncells = (num_layers * gihparams.rows * gihparams.cols);
 
-      gihparams.cellwidth  = gimp_image_width (image)  / gihparams.cols;
-      gihparams.cellheight = gimp_image_height (image) / gihparams.rows;
+      gihparams.cellwidth  = gimp_image_get_width (image)  / gihparams.cols;
+      gihparams.cellheight = gimp_image_get_height (image) / gihparams.rows;
 
       parasite = gimp_image_get_parasite (orig_image,
                                           "gimp-brush-pipe-parameters");
@@ -538,7 +538,7 @@ size_adjustment_callback (GtkAdjustment      *adjustment,
 
   if (adj->orientation == GIMP_ORIENTATION_VERTICAL)
     {
-      size = gimp_image_width (adj->image);
+      size = gimp_image_get_width (adj->image);
       newn = size / *(adj->value);
       adj->nguides = newn - 1;
       adj->guides = g_new (gint32, adj->nguides);
@@ -548,7 +548,7 @@ size_adjustment_callback (GtkAdjustment      *adjustment,
     }
   else
     {
-      size = gimp_image_height (adj->image);
+      size = gimp_image_get_height (adj->image);
       newn = size / *(adj->value);
       adj->nguides = newn - 1;
       adj->guides = g_new (gint32, adj->nguides);
@@ -672,7 +672,7 @@ gih_save_dialog (GimpImage *image)
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
   adjustment = gtk_adjustment_new (gihparams.cellwidth,
-                                   2, gimp_image_width (image), 1, 10, 0);
+                                   2, gimp_image_get_width (image), 1, 10, 0);
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
@@ -696,7 +696,7 @@ gih_save_dialog (GimpImage *image)
   gtk_widget_show (label);
 
   adjustment = gtk_adjustment_new (gihparams.cellheight,
-                                   2, gimp_image_height (image), 1, 10, 0);
+                                   2, gimp_image_get_height (image), 1, 10, 0);
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);

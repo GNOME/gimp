@@ -352,7 +352,6 @@ EXPORTS
 	gimp_image_add_sample_point
 	gimp_image_add_vguide
 	gimp_image_attach_parasite
-	gimp_image_base_type
 	gimp_image_clean_all
 	gimp_image_convert_color_profile
 	gimp_image_convert_color_profile_from_file
@@ -379,6 +378,7 @@ EXPORTS
 	gimp_image_get_active_drawable
 	gimp_image_get_active_layer
 	gimp_image_get_active_vectors
+	gimp_image_get_base_type
 	gimp_image_get_by_id
 	gimp_image_get_channel_by_name
 	gimp_image_get_channel_by_tattoo
@@ -394,6 +394,7 @@ EXPORTS
 	gimp_image_get_floating_sel
 	gimp_image_get_guide_orientation
 	gimp_image_get_guide_position
+	gimp_image_get_height
 	gimp_image_get_id
 	gimp_image_get_imported_file
 	gimp_image_get_item_position
@@ -417,6 +418,7 @@ EXPORTS
 	gimp_image_get_vectors
 	gimp_image_get_vectors_by_name
 	gimp_image_get_vectors_by_tattoo
+	gimp_image_get_width
 	gimp_image_get_xcf_file
 	gimp_image_grid_get_background_color
 	gimp_image_grid_get_foreground_color
@@ -428,7 +430,6 @@ EXPORTS
 	gimp_image_grid_set_offset
 	gimp_image_grid_set_spacing
 	gimp_image_grid_set_style
-	gimp_image_height
 	gimp_image_id_is_valid
 	gimp_image_insert_channel
 	gimp_image_insert_layer
@@ -500,7 +501,6 @@ EXPORTS
 	gimp_image_undo_is_enabled
 	gimp_image_undo_thaw
 	gimp_image_unset_active_channel
-	gimp_image_width
 	gimp_item_attach_parasite
 	gimp_item_delete
 	gimp_item_detach_parasite

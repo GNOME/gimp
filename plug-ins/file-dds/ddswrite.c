@@ -161,8 +161,8 @@ check_mipmaps (GimpImage *image,
   layers = gimp_image_list_layers (image);
   num_layers = g_list_length (layers);
 
-  w = gimp_image_width (image);
-  h = gimp_image_height (image);
+  w = gimp_image_get_width (image);
+  h = gimp_image_get_height (image);
 
   num_mipmaps = get_num_mipmaps (w, h);
 
@@ -244,8 +244,8 @@ check_cubemap (GimpImage *image)
         cubemap_faces[i] = NULL;
 
       /* find the mipmap level 0 layers */
-      w = gimp_image_width (image);
-      h = gimp_image_height (image);
+      w = gimp_image_get_width (image);
+      h = gimp_image_get_height (image);
 
       for (i = 0, list = layers;
            i < num_layers;
@@ -485,8 +485,8 @@ get_array_size (GimpImage *image)
   layers = gimp_image_list_layers (image);
   num_layers = g_list_length (layers);
 
-  w = gimp_image_width (image);
-  h = gimp_image_height (image);
+  w = gimp_image_get_width (image);
+  h = gimp_image_get_height (image);
 
   for (i = 0, list = layers;
        i < num_layers;
@@ -872,7 +872,7 @@ write_layer (FILE         *fp,
                 "perceptual-metric",  &perceptual_metric,
                 NULL);
 
-  basetype = gimp_image_base_type (image);
+  basetype = gimp_image_get_base_type (image);
   type = gimp_drawable_type (drawable);
 
   buffer = gimp_drawable_get_buffer (drawable);
@@ -1203,7 +1203,7 @@ write_volume_mipmaps (FILE      *fp,
                 "gamma",              &gamma,
                 NULL);
 
-  type = gimp_image_base_type (image);
+  type = gimp_image_get_base_type (image);
 
   if (compression != DDS_COMPRESS_NONE)
     return;
@@ -1219,7 +1219,7 @@ write_volume_mipmaps (FILE      *fp,
   else
     format = babl_format ("R'G'B'A u8");
 
-  if (gimp_image_base_type (image) == GIMP_INDEXED)
+  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
     palette = gimp_image_get_colormap (image, &colors);
 
   offset = 0;
@@ -1352,11 +1352,11 @@ write_image (FILE         *fp,
     }
   else
     {
-      w = gimp_image_width (image);
-      h = gimp_image_height (image);
+      w = gimp_image_get_width (image);
+      h = gimp_image_get_height (image);
     }
 
-  basetype = gimp_image_base_type (image);
+  basetype = gimp_image_get_base_type (image);
   drawable_type = gimp_drawable_type (drawable);
 
   switch (drawable_type)
@@ -1876,7 +1876,7 @@ config_notify (GObject          *config,
       GimpImageBaseType base_type;
       gboolean          transparent_color;
 
-      base_type = gimp_image_base_type (image);
+      base_type = gimp_image_get_base_type (image);
 
       g_object_get (config,
                     "transparent-color", &transparent_color,

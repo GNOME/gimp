@@ -294,8 +294,8 @@ gif_load_thumb (GimpProcedure        *procedure,
                                                   NULL);
 
   GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, gimp_image_width  (image));
-  GIMP_VALUES_SET_INT   (return_vals, 3, gimp_image_height (image));
+  GIMP_VALUES_SET_INT   (return_vals, 2, gimp_image_get_width  (image));
+  GIMP_VALUES_SET_INT   (return_vals, 3, gimp_image_get_height (image));
 
   gimp_value_array_truncate (return_vals, 4);
 

@@ -438,7 +438,7 @@ grid (GimpImage    *image,
 
   alpha = gimp_drawable_has_alpha (drawable);
 
-  switch (gimp_image_base_type (image))
+  switch (gimp_image_get_base_type (image))
     {
     case GIMP_RGB:
       blend = TRUE;

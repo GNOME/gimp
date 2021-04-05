@@ -43,11 +43,11 @@ GimpImage*               gimp_image_new_with_precision         (gint            
                                                                 GimpPrecision        precision);
 GimpImage*               gimp_image_duplicate                  (GimpImage           *image);
 gboolean                 gimp_image_delete                     (GimpImage           *image);
-GimpImageBaseType        gimp_image_base_type                  (GimpImage           *image);
+GimpImageBaseType        gimp_image_get_base_type              (GimpImage           *image);
 GimpPrecision            gimp_image_get_precision              (GimpImage           *image);
 GimpLayerMode            gimp_image_get_default_new_layer_mode (GimpImage           *image);
-gint                     gimp_image_width                      (GimpImage           *image);
-gint                     gimp_image_height                     (GimpImage           *image);
+gint                     gimp_image_get_width                  (GimpImage           *image);
+gint                     gimp_image_get_height                 (GimpImage           *image);
 GimpLayer**              gimp_image_get_layers                 (GimpImage           *image,
                                                                 gint                *num_layers);
 GimpChannel**            gimp_image_get_channels               (GimpImage           *image,

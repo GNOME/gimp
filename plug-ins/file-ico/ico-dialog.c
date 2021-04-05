@@ -275,7 +275,7 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
 
       image = gimp_item_get_image (GIMP_ITEM (layer));
 
-      tmp_image = gimp_image_new (w, h, gimp_image_base_type (image));
+      tmp_image = gimp_image_new (w, h, gimp_image_get_base_type (image));
       gimp_image_undo_disable (tmp_image);
 
       if (gimp_drawable_is_indexed (layer))
@@ -372,7 +372,7 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
 
       image = gimp_item_get_image (GIMP_ITEM (layer));
 
-      tmp_image = gimp_image_new (w, h, gimp_image_base_type (image));
+      tmp_image = gimp_image_new (w, h, gimp_image_get_base_type (image));
       gimp_image_undo_disable (tmp_image);
 
       if (gimp_drawable_is_indexed (layer))

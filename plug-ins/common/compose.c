@@ -1007,8 +1007,8 @@ compose (const gchar  *compose_type,
     }
   else    /* Compose by image */
     {
-      width  = gimp_image_width  (inputs[first_object].comp.object);
-      height = gimp_image_height (inputs[first_object].comp.object);
+      width  = gimp_image_get_width  (inputs[first_object].comp.object);
+      height = gimp_image_get_height (inputs[first_object].comp.object);
 
       precision = gimp_image_get_precision (inputs[first_object].comp.object);
 
@@ -1016,8 +1016,8 @@ compose (const gchar  *compose_type,
         {
           if (inputs[j].is_object)
             {
-              if ((width  != gimp_image_width  (inputs[j].comp.object)) ||
-                  (height != gimp_image_height (inputs[j].comp.object)))
+              if ((width  != gimp_image_get_width  (inputs[j].comp.object)) ||
+                  (height != gimp_image_get_height (inputs[j].comp.object)))
                 {
                   g_message (_("Images have different size"));
                   return NULL;
@@ -1376,9 +1376,9 @@ check_gray (GimpImage *image,
             gpointer   data)
 
 {
-  return ((gimp_image_base_type (image) == GIMP_GRAY) &&
-          (gimp_image_width  (image) == composeint.width) &&
-          (gimp_image_height (image) == composeint.height));
+  return ((gimp_image_get_base_type (image) == GIMP_GRAY) &&
+          (gimp_image_get_width  (image) == composeint.width) &&
+          (gimp_image_get_height (image) == composeint.height));
 }
 
 static void
