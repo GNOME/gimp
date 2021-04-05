@@ -14,7 +14,7 @@
 # ==================================================
 # Todo:
 # alle ... vervangen door …
-# aanhalingstekens ' vervangen door ‘ en ’
+# aanhalingstekens ' vervangen door ‘ en ’ of <quote> en </qoute> ?
 # Wing Tung Leung <tg@skynet.be>, 1998.
 # Gert Dewit <Gert.Dewit@sos.be>, 2000.
 # Branko Collin <collin@xs4all.nl>, 2001, 2002, 2003, 2004.
@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-26 11:51+0000\n"
+"POT-Creation-Date: 2021-04-04 14:07+0000\n"
 "PO-Revision-Date: 2021-02-26 15:27+0100\n"
 "Last-Translator: Paul Matthijsse <paul.matthijsse@wanadoo.fr>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
@@ -1145,7 +1145,7 @@ msgstr "(Druk op een willekeurig toets om dit venster te sluiten)\n"
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP uitvoer. U kunt dit venster minimaliseren, maar sluit het niet."
 
-#: ../app/sanity.c:562
+#: ../app/sanity.c:546
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -1156,7 +1156,7 @@ msgstr ""
 "\n"
 "Controleer de waarde van de omgevingsvariabele G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:581
+#: ../app/sanity.c:565
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -1988,12 +1988,12 @@ msgstr "Alle beeldpunten met deze kleur uit de huidige selectie halen"
 #: ../app/actions/colormap-actions.c:91
 msgctxt "colormap-action"
 msgid "_Intersect with Selection"
-msgstr "_Toevoegen aan selectie"
+msgstr "Door_snede met selectie"
 
 #: ../app/actions/colormap-actions.c:92
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
-msgstr "Alle beeldpunten met deze kleur toevoegen aan de huidige selectie"
+msgstr "Doorsnede van _alle pixels met deze kleur met de huidige selectie"
 
 #: ../app/actions/context-actions.c:47
 msgctxt "context-action"
@@ -3586,7 +3586,7 @@ msgstr "Het dialoogvenster Navigatie openen"
 #: ../app/actions/dialogs-actions.c:113
 msgctxt "dialogs-action"
 msgid "Undo _History"
-msgstr "Geschiedenis"
+msgstr "_Geschiedenis"
 
 #: ../app/actions/dialogs-actions.c:114
 msgctxt "dialogs-action"
@@ -4192,7 +4192,7 @@ msgstr ""
 #: ../app/actions/drawable-actions.c:45
 msgctxt "drawable-action"
 msgid "_Equalize"
-msgstr "Gelijkmaken"
+msgstr "_Gelijkmaken"
 
 # verhogen/vergroten
 #: ../app/actions/drawable-actions.c:46
@@ -4943,7 +4943,7 @@ msgstr "Kopieer afbeeldingslocatie naar het klembord"
 #: ../app/actions/file-actions.c:119
 msgctxt "file-action"
 msgid "Show in _File Manager"
-msgstr "Toon in bestandsbeheer"
+msgstr "Toon in _bestandsbeheer"
 
 #: ../app/actions/file-actions.c:120
 msgctxt "file-action"
@@ -13523,7 +13523,7 @@ msgstr "Ongeldige penseelradius."
 #: ../app/core/gimpbrushgenerated-load.c:209
 #, c-format
 msgid "Invalid brush spike count."
-msgstr "Ongeldig aantal penseelspaken."
+msgstr "Ongeldig aantal penseelpunten."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, c-format
@@ -13555,7 +13555,7 @@ msgstr "Straal van penseel"
 
 #: ../app/core/gimpbrushgenerated.c:150
 msgid "Brush Spikes"
-msgstr "Spaken van penseel"
+msgstr "Punten van penseel"
 
 #: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:232
 msgid "Brush Hardness"
@@ -18712,7 +18712,7 @@ msgstr "Kan de beeldpunten van laaggroepen niet wijzigen."
 
 #: ../app/display/gimpdisplayshell-dnd.c:372
 #: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
-#: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1145
+#: ../app/tools/gimpcroptool.c:463 ../app/tools/gimpeditselectiontool.c:1145
 #: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:300
 #: ../app/tools/gimpselectiontool.c:561 ../app/tools/gimptransformtool.c:686
@@ -22815,31 +22815,31 @@ msgstr ""
 "Hoe nieuwe gebieden te vullen die gemaakt zijn met de optie 'Canvas mag "
 "vergroten'"
 
-#: ../app/tools/gimpcroptool.c:119
+#: ../app/tools/gimpcroptool.c:121
 msgid "Crop"
 msgstr "Bijsnijden"
 
-#: ../app/tools/gimpcroptool.c:120
+#: ../app/tools/gimpcroptool.c:122
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Bijsnijden: randgebieden van afbeelding of laag verwijderen"
 
-#: ../app/tools/gimpcroptool.c:121
+#: ../app/tools/gimpcroptool.c:123
 msgid "_Crop"
 msgstr "Bijsnijden"
 
-#: ../app/tools/gimpcroptool.c:159
+#: ../app/tools/gimpcroptool.c:161
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Klik en sleep om een rechthoekige selectie te maken"
 
-#: ../app/tools/gimpcroptool.c:279
+#: ../app/tools/gimpcroptool.c:281
 msgid "Click or press Enter to crop"
 msgstr "Klik of druk op Enter om bij te snijden"
 
-#: ../app/tools/gimpcroptool.c:386
+#: ../app/tools/gimpcroptool.c:388
 msgid "Crop to: "
 msgstr "Bijsnijden tot: "
 
-#: ../app/tools/gimpcroptool.c:454
+#: ../app/tools/gimpcroptool.c:456
 msgid "There is no active layer to crop."
 msgstr "Er is geen actieve laag om bij te snijden."
 
@@ -24964,21 +24964,21 @@ msgstr "3D-transformatie"
 msgid ""
 "3D Transform Tool: Apply a 3D transformation to the layer, selection or path"
 msgstr ""
-"3d transformeergereedschap: pas een 3d-transformatie toe op laag, selectie "
+"3d transformeergereedschap: pas een 3D-transformatie toe op laag, selectie "
 "of pad"
 
 #: ../app/tools/gimptransform3dtool.c:117
 msgid "_3D Transform"
-msgstr "3d-transformatie"
+msgstr "_3D-transformatie"
 
 #: ../app/tools/gimptransform3dtool.c:140
 msgctxt "undo-type"
 msgid "3D Transform"
-msgstr "3d-transformatie"
+msgstr "3D-transformatie"
 
 #: ../app/tools/gimptransform3dtool.c:141
 msgid "3D transformation"
-msgstr "3d-transformatie"
+msgstr "3D-transformatie"
 
 #: ../app/tools/gimptransform3dtool.c:237
 msgid "Camera"
@@ -25616,7 +25616,7 @@ msgstr "_Sneltoets opnieuw toewijzen"
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Sneltoets \"%s\" is al in gebruik bij \"%s\" in de groep \"%s\"."
 
-#
+# 
 #: ../app/widgets/gimpactionview.c:689
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
@@ -25649,7 +25649,7 @@ msgstr "Vorm:"
 # spaken
 #: ../app/widgets/gimpbrusheditor.c:167
 msgid "Spikes"
-msgstr "Spaken"
+msgstr "Punten"
 
 #: ../app/widgets/gimpbrusheditor.c:216
 #: ../app/widgets/gimpbrushfactoryview.c:86
