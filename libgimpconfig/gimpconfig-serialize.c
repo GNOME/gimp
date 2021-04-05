@@ -237,8 +237,37 @@ gimp_config_serialize_property (GimpConfig       *config,
 
   if (! success)
     {
-      if (G_VALUE_HOLDS_OBJECT (&value) &&
-          G_VALUE_TYPE (&value) != G_TYPE_FILE)
+      if (G_VALUE_TYPE (&value) == GIMP_TYPE_PARASITE)
+        {
+          GimpParasite *parasite = g_value_get_boxed (&value);
+
+          gimp_config_writer_open (writer, param_spec->name);
+
+          if (parasite)
+            {
+              const gchar   *name;
+              gconstpointer  data;
+              guint32        data_length;
+              gulong         flags;
+
+              name = gimp_parasite_get_name (parasite);
+              gimp_config_writer_string (writer, name);
+
+              flags = gimp_parasite_get_flags (parasite);
+              data = gimp_parasite_get_data (parasite, &data_length);
+              gimp_config_writer_printf (writer, "%lu %u", flags, data_length);
+              gimp_config_writer_data (writer, data_length, data);
+
+              success = TRUE;
+            }
+
+          if (success)
+            gimp_config_writer_close (writer);
+          else
+            gimp_config_writer_revert (writer);
+        }
+      else if (G_VALUE_HOLDS_OBJECT (&value) &&
+               G_VALUE_TYPE (&value) != G_TYPE_FILE)
         {
           GimpConfigInterface *config_iface = NULL;
           GimpConfig          *prop_object;

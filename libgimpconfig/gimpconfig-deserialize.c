@@ -57,47 +57,50 @@
  *  couldn't parse it.
  */
 
-static GTokenType  gimp_config_deserialize_value       (GValue     *value,
-                                                        GimpConfig *config,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_fundamental (GValue     *value,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_enum        (GValue     *value,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_memsize     (GValue     *value,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_path        (GValue     *value,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_rgb         (GValue     *value,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_matrix2     (GValue     *value,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_object      (GValue     *value,
-                                                        GimpConfig *config,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner,
-                                                        gint        nest_level);
-static GTokenType  gimp_config_deserialize_value_array (GValue     *value,
-                                                        GimpConfig *config,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_unit        (GValue     *value,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_file_value  (GValue     *value,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_any         (GValue     *value,
-                                                        GParamSpec *prop_spec,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_skip_unknown_property   (GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_value          (GValue     *value,
+                                                           GimpConfig *config,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_fundamental    (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_enum           (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_memsize        (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_path           (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_rgb            (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_matrix2        (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_object         (GValue     *value,
+                                                           GimpConfig *config,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner,
+                                                           gint        nest_level);
+static GTokenType  gimp_config_deserialize_value_array    (GValue     *value,
+                                                           GimpConfig *config,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_unit           (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_file_value     (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_parasite_value (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_any            (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_skip_unknown_property      (GScanner   *scanner);
 
 static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
                                                    const gchar *token_name);
@@ -376,6 +379,10 @@ gimp_config_deserialize_value (GValue     *value,
   else if (prop_spec->value_type == G_TYPE_FILE)
     {
       return gimp_config_deserialize_file_value (value, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == GIMP_TYPE_PARASITE)
+    {
+      return gimp_config_deserialize_parasite_value (value, prop_spec, scanner);
     }
 
   /*  This fallback will only work for value_types that
@@ -942,6 +949,49 @@ gimp_config_deserialize_file_value (GValue     *value,
           g_value_set_object (value, NULL);
         }
     }
+
+  return G_TOKEN_RIGHT_PAREN;
+}
+
+/*
+ * Note: this is different from gimp_config_deserialize_parasite()
+ * which is a public API to deserialize random properties into a config
+ * object from a parasite. Here we are deserializing the contents of a
+ * parasite itself in @scanner.
+ */
+static GTokenType
+gimp_config_deserialize_parasite_value (GValue     *value,
+                                        GParamSpec *prop_spec,
+                                        GScanner   *scanner)
+{
+  GimpParasite *parasite;
+  gchar        *name;
+  guint8       *data;
+  gint          data_length;
+  gint64        flags;
+
+  if (! gimp_scanner_parse_string (scanner, &name))
+    return G_TOKEN_STRING;
+
+  if (! (name && *name))
+    {
+      g_scanner_error (scanner, "Parasite name is empty");
+      g_free (name);
+      return G_TOKEN_NONE;
+    }
+
+  if (! gimp_scanner_parse_int64 (scanner, &flags))
+    return G_TOKEN_INT;
+
+  if (! gimp_scanner_parse_int (scanner, &data_length))
+    return G_TOKEN_INT;
+
+  if (! gimp_scanner_parse_data (scanner, data_length, &data))
+    return G_TOKEN_STRING;
+
+  parasite = gimp_parasite_new (name, flags, data_length, data);
+
+  g_value_take_boxed (value, parasite);
 
   return G_TOKEN_RIGHT_PAREN;
 }
