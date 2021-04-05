@@ -781,8 +781,7 @@ gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
 /**
  * gimp_procedure_dialog_fill:
  * @dialog: the #GimpProcedureDialog.
- * @first_property: the first property name.
- * @...: a %NULL-terminated list of other property names.
+ * @...: a %NULL-terminated list of property names.
  *
  * Populate @dialog with the widgets corresponding to every listed
  * properties. If the list is empty, @dialog will be filled by the whole
@@ -806,25 +805,20 @@ gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
  */
 void
 gimp_procedure_dialog_fill (GimpProcedureDialog *dialog,
-                            const gchar         *first_property,
                             ...)
 {
-  const gchar *prop_name = first_property;
+  const gchar *prop_name;
   GList       *list      = NULL;
   va_list      va_args;
 
   g_return_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog));
 
-  if (first_property)
-    {
-      va_start (va_args, first_property);
+  va_start (va_args, dialog);
 
-      do
-        list = g_list_prepend (list, (gpointer) prop_name);
-      while ((prop_name = va_arg (va_args, const gchar *)));
+  while ((prop_name = va_arg (va_args, const gchar *)))
+    list = g_list_prepend (list, (gpointer) prop_name);
 
-      va_end (va_args);
-    }
+  va_end (va_args);
 
   list = g_list_reverse (list);
   gimp_procedure_dialog_fill_list (dialog, list);

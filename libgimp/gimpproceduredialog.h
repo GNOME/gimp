@@ -110,7 +110,6 @@ GtkWidget * gimp_procedure_dialog_fill_frame        (GimpProcedureDialog *dialog
                                                      const gchar         *contents_id);
 
 void        gimp_procedure_dialog_fill              (GimpProcedureDialog *dialog,
-                                                     const gchar         *first_property,
                                                      ...) G_GNUC_NULL_TERMINATED;
 void        gimp_procedure_dialog_fill_list         (GimpProcedureDialog *dialog,
                                                      GList               *properties);
