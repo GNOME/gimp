@@ -41,6 +41,7 @@ public class Goat : Gimp.PlugIn {
 
     var procedure = new Gimp.ImageProcedure(this, name, Gimp.PDBProcType.PLUGIN, this.run);
     procedure.set_image_types("RGB*, INDEXED*, GRAY*");
+    procedure.set_sensitivity_mask(Gimp.ProcedureSensitivityMask.DRAWABLE);
     procedure.set_menu_label("Exercise a Vala goat");
     procedure.set_documentation("Exercise a goat in the Vala language",
                                 "Takes a goat for a walk in Vala",

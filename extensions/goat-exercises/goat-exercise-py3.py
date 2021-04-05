@@ -55,6 +55,7 @@ class Goat (Gimp.PlugIn):
                                        self.run, None)
 
         procedure.set_image_types("*")
+        procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE)
 
         procedure.set_menu_label(N_("Exercise a goat and a python"))
         procedure.set_icon_name(GimpUi.ICON_GEGL)
@@ -67,7 +68,14 @@ class Goat (Gimp.PlugIn):
 
         return procedure
 
-    def run(self, procedure, run_mode, image, drawable, args, run_data):
+    def run(self, procedure, run_mode, image, n_drawables, drawables, args, run_data):
+        if n_drawables != 1:
+            msg = _("Procedure '{}' only works with one drawable.").format(procedure.get_name())
+            error = GLib.Error.new_literal(Gimp.PlugIn.error_quark(), msg, 0)
+            return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR, error)
+        else:
+            drawable = drawables[0]
+
         if run_mode == Gimp.RunMode.INTERACTIVE:
             gi.require_version('Gtk', '3.0')
             from gi.repository import Gtk

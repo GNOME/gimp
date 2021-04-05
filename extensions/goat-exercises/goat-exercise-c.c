@@ -64,7 +64,8 @@ static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * goat_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               GimpDrawable         *drawable,
+                                               gint                  n_drawables,
+                                               GimpDrawable        **drawables,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -107,6 +108,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
                                             goat_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
+      gimp_procedure_set_sensitivity_mask (procedure,
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, N_("Exercise in _C minor"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_GEGL);
@@ -130,14 +133,33 @@ static GimpValueArray *
 goat_run (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint              x, y, width, height;
+  GimpDrawable      *drawable;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint               x, y, width, height;
 
   INIT_I18N();
+
+  if (n_drawables != 1)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Procedure '%s' only works with one drawable."),
+                   PLUG_IN_PROC);
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+  else
+    {
+      drawable = drawables[0];
+    }
 
   /* In interactive mode, display a dialog to advertise the exercise. */
   if (run_mode == GIMP_RUN_INTERACTIVE)

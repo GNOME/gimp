@@ -33,10 +33,24 @@ local Gdk     = lgi.Gdk
 local Goat = lgi.package 'Goat'
 local Goat = lgi.Goat
 
-function run(procedure, run_mode, image, drawable, args, run_data)
+function run(procedure, run_mode, image, drawables, args, run_data)
   -- procedure:new_return_values() crashes LGI so we construct the
   -- GimpValueArray manually.
   local retval = Gimp.ValueArray(1)
+
+  if table.getn(drawables) ~= 1 then
+    local calling_err = GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.CALLING_ERROR)
+    local msg         = "Procedure '%s' only works with one drawable."
+
+    msg = string.format(msg, procedure:get_name())
+
+    retval:append(calling_err)
+    retval:append(GObject.Value(GObject.Type.STRING, msg))
+    return retval
+  end
+
+  local drawable = drawables[1]
+
   -- Not sure why run_mode has become a string instead of testing
   -- against Gimp.RunMode.INTERACTIVE.
   if run_mode == "INTERACTIVE" then
@@ -145,6 +159,7 @@ function Goat.Exercise:do_create_procedure(name)
                                             run, nil)
 
   procedure:set_image_types("*");
+  procedure:set_sensitivity_mask(Gimp.ProcedureSensitivityMask.DRAWABLE);
 
   procedure:set_menu_label("Exercise a Lua goat");
   procedure:set_icon_name(GimpUi.ICON_GEGL);

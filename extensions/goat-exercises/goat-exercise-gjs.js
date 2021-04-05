@@ -56,6 +56,7 @@ var Goat = GObject.registerClass({
         let procedure = Gimp.ImageProcedure.new(this, name, Gimp.PDBProcType.PLUGIN, this.run);
 
         procedure.set_image_types("*");
+        procedure.set_sensitivity_mask(Gimp.ProcedureSensitivityMask.DRAWABLE);
 
         procedure.set_menu_label("Exercise a JavaScript goat");
         procedure.set_icon_name(GimpUi.ICON_GEGL);
@@ -69,8 +70,16 @@ var Goat = GObject.registerClass({
         return procedure;
     }
 
-    run(procedure, run_mode, image, drawable, args, run_data) {
+    run(procedure, run_mode, image, drawables, args, run_data) {
         /* TODO: localization. */
+
+        if (drawables.length != 1) {
+            let msg = `Procedure '${procedure.get_name()}' only works with one drawable.`;
+            let error = GLib.Error.new_literal(Gimp.PlugIn.error_quark(), 0, msg);
+            return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR, error)
+        }
+
+        let drawable = drawables[0];
 
         if (run_mode == Gimp.RunMode.INTERACTIVE) {
             GimpUi.init("goat-exercise-gjs");
