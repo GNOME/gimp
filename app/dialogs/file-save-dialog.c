@@ -266,7 +266,19 @@ file_save_dialog_response (GtkWidget *dialog,
         else
           {
             if (dialog)
-              gtk_widget_show (dialog);
+              {
+                GFile *parent_dir = g_file_get_parent (file);
+
+                /* XXX Not sure why, but after reshowing the file
+                 * chooser dialog, the displayed name is correct, but
+                 * the parent directory is the current working dir.
+                 * Force it to be the expected folder.
+                 */
+                gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
+                                                          parent_dir, NULL);
+                gtk_widget_show (dialog);
+                g_object_unref (parent_dir);
+              }
           }
 
         g_object_unref (file);
