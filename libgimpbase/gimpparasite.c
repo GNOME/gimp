@@ -215,7 +215,7 @@ gimp_parasite_print (GimpParasite *parasite)
  * @name:  the new #GimpParasite name.
  * @flags: see libgimpbase/gimpparasite.h macros.
  * @size:  the size of @data, including a terminal %NULL byte if needed.
- * @data:  (nullable): the data to save in a parasite.
+ * @data:  (nullable) (array length=size) (element-type char): the data to save in a parasite.
  *
  * Creates a new parasite and save @data which may be a proper text (in
  * which case you may want to set @size as strlen(@data) + 1) or not.
