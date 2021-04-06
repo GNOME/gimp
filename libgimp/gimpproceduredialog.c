@@ -58,7 +58,18 @@ struct _GimpProcedureDialogPrivate
   GHashTable          *mnemonics;
   GHashTable          *core_mnemonics;
   GtkSizeGroup        *label_group;
+
+  GHashTable          *sensitive_data;
 };
+
+typedef struct GimpProcedureDialogSensitiveData
+{
+  gboolean  sensitive;
+
+  GObject  *config;
+  gchar    *config_property;
+  gboolean  config_invert;
+} GimpProcedureDialogSensitiveData;
 
 
 static void   gimp_procedure_dialog_constructed   (GObject      *object);
@@ -95,6 +106,9 @@ static GtkWidget *
                                                          const gchar         *container_id,
                                                          GtkContainer        *container,
                                                          GList               *properties);
+
+static void   gimp_procedure_dialog_sensitive_data_free (GimpProcedureDialogSensitiveData *data);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedureDialog, gimp_procedure_dialog,
                             GIMP_TYPE_DIALOG)
@@ -140,10 +154,12 @@ gimp_procedure_dialog_init (GimpProcedureDialog *dialog)
 {
   dialog->priv = gimp_procedure_dialog_get_instance_private (dialog);
 
-  dialog->priv->widgets     = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
-  dialog->priv->mnemonics   = g_hash_table_new_full (g_direct_hash, NULL, NULL, g_free);
+  dialog->priv->widgets        = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+  dialog->priv->mnemonics      = g_hash_table_new_full (g_direct_hash, NULL, NULL, g_free);
   dialog->priv->core_mnemonics = g_hash_table_new_full (g_direct_hash, NULL, NULL, g_free);
-  dialog->priv->label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  dialog->priv->label_group    = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  dialog->priv->sensitive_data = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
+                                                        (GDestroyNotify) gimp_procedure_dialog_sensitive_data_free);
 }
 
 static void
@@ -273,6 +289,8 @@ gimp_procedure_dialog_dispose (GObject *object)
   g_clear_pointer (&dialog->priv->widgets, g_hash_table_destroy);
   g_clear_pointer (&dialog->priv->mnemonics, g_hash_table_destroy);
   g_clear_pointer (&dialog->priv->core_mnemonics, g_hash_table_destroy);
+
+  g_clear_pointer (&dialog->priv->sensitive_data, g_hash_table_destroy);
 
   g_clear_object (&dialog->priv->label_group);
 
@@ -458,9 +476,10 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                   const gchar         *property,
                                   GType                widget_type)
 {
-  GtkWidget  *widget = NULL;
-  GtkWidget  *label  = NULL;
-  GParamSpec *pspec;
+  GtkWidget                        *widget = NULL;
+  GtkWidget                        *label  = NULL;
+  GimpProcedureDialogSensitiveData *binding;
+  GParamSpec                       *pspec;
 
   g_return_val_if_fail (property != NULL, NULL);
 
@@ -581,6 +600,23 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
         label = gimp_labeled_get_label (GIMP_LABELED (widget));
 
       gtk_size_group_add_widget (dialog->priv->label_group, label);
+    }
+
+  if ((binding = g_hash_table_lookup (dialog->priv->sensitive_data, property)))
+    {
+      if (binding->config)
+        {
+          g_object_bind_property (binding->config, binding->config_property,
+                                  widget, "sensitive",
+                                  G_BINDING_SYNC_CREATE |
+                                  (binding->config_invert ? G_BINDING_INVERT_BOOLEAN : 0));
+        }
+      else
+        {
+          gtk_widget_set_sensitive (widget, binding->sensitive);
+        }
+
+      g_hash_table_remove (dialog->priv->sensitive_data, property);
     }
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
@@ -1181,6 +1217,97 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
   return frame;
 }
 
+
+/**
+ * gimp_procedure_dialog_set_sensitive:
+ * @dialog:          the #GimpProcedureDialog.
+ * @property:        name of a property of the #GimpProcedure @dialog
+ *                   has been created for.
+ * @sensitive:       whether the widget associated to @property should
+ *                   be sensitive.
+ * @config:          (nullable): an optional config object.
+ * @config_property: (nullable): name of a property of @config.
+ * @config_invert:   whether to negate the value of @config_property.
+ *
+ * Sets sensitivity of the widget associated to @property in @dialog. If
+ * @config is %NULL, then it is set to the value of @sensitive.
+ * Otherwise @sensitive is ignored and sensitivity is bound to the value
+ * of @config_property of @config (or the negation of this value
+ * if @config_reverse is %TRUE).
+ */
+void
+gimp_procedure_dialog_set_sensitive (GimpProcedureDialog *dialog,
+                                     const gchar         *property,
+                                     gboolean             sensitive,
+                                     GObject             *config,
+                                     const gchar         *config_property,
+                                     gboolean             config_invert)
+{
+  GtkWidget  *widget = NULL;
+  GParamSpec *pspec;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog));
+  g_return_if_fail (property != NULL);
+  g_return_if_fail (config == NULL || config_property != NULL);
+
+  widget = g_hash_table_lookup (dialog->priv->widgets, property);
+
+  if (! widget)
+    {
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                            property);
+      if (! pspec)
+        {
+          g_warning ("%s: parameter %s does not exist on the GimpProcedure.",
+                     G_STRFUNC, property);
+          return;
+        }
+    }
+
+  if (config)
+    {
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                            config_property);
+      if (! pspec)
+        {
+          g_warning ("%s: parameter %s does not exist on the config object.",
+                     G_STRFUNC, config_property);
+          return;
+        }
+    }
+
+  if (widget)
+    {
+      if (config)
+        {
+          g_object_bind_property (config, config_property,
+                                  widget, "sensitive",
+                                  G_BINDING_SYNC_CREATE | (config_invert ? G_BINDING_INVERT_BOOLEAN : 0));
+        }
+      else
+        {
+          gtk_widget_set_sensitive (widget, sensitive);
+        }
+    }
+  else
+    {
+      /* Set for later creation. */
+      GimpProcedureDialogSensitiveData *data;
+
+      data = g_slice_new0 (GimpProcedureDialogSensitiveData);
+
+      data->sensitive = sensitive;
+      if (config)
+        {
+          data->config          = g_object_ref (config);
+          data->config_property = g_strdup (config_property);
+          data->config_invert   = config_invert;
+        }
+
+      g_hash_table_insert (dialog->priv->sensitive_data, g_strdup (property), data);
+    }
+}
+
 /**
  * gimp_procedure_dialog_run:
  * @dialog: the #GimpProcedureDialog.
@@ -1483,4 +1610,13 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
   g_hash_table_insert (dialog->priv->widgets, g_strdup (container_id), container);
 
   return GTK_WIDGET (container);
+}
+
+static void
+gimp_procedure_dialog_sensitive_data_free (GimpProcedureDialogSensitiveData *data)
+{
+  g_free (data->config_property);
+  g_clear_object (&data->config);
+
+  g_slice_free (GimpProcedureDialogSensitiveData, data);
 }

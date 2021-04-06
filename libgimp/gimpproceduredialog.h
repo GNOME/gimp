@@ -114,6 +114,13 @@ void        gimp_procedure_dialog_fill              (GimpProcedureDialog *dialog
 void        gimp_procedure_dialog_fill_list         (GimpProcedureDialog *dialog,
                                                      GList               *properties);
 
+void        gimp_procedure_dialog_set_sensitive     (GimpProcedureDialog *dialog,
+                                                     const gchar         *property,
+                                                     gboolean             sensitive,
+                                                     GObject             *config,
+                                                     const gchar         *config_property,
+                                                     gboolean             config_invert);
+
 gboolean    gimp_procedure_dialog_run               (GimpProcedureDialog *dialog);
 
 
