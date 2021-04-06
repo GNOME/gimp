@@ -32,23 +32,10 @@ G_BEGIN_DECLS
 
 #include <libgimp/gimpitem.h>
 
-#define GIMP_TYPE_DRAWABLE            (gimp_drawable_get_type ())
-#define GIMP_DRAWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))
-#define GIMP_DRAWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
-#define GIMP_IS_DRAWABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE))
-#define GIMP_IS_DRAWABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE))
-#define GIMP_DRAWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
 
+#define GIMP_TYPE_DRAWABLE (gimp_drawable_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpDrawable, gimp_drawable, GIMP, DRAWABLE, GimpItem)
 
-typedef struct _GimpDrawableClass   GimpDrawableClass;
-typedef struct _GimpDrawablePrivate GimpDrawablePrivate;
-
-struct _GimpDrawable
-{
-  GimpItem             parent_instance;
-
-  GimpDrawablePrivate *priv;
-};
 
 struct _GimpDrawableClass
 {
@@ -66,8 +53,6 @@ struct _GimpDrawableClass
   void (*_gimp_reserved9) (void);
 };
 
-
-GType          gimp_drawable_get_type               (void) G_GNUC_CONST;
 
 GimpDrawable * gimp_drawable_get_by_id              (gint32        drawable_id);
 

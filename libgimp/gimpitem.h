@@ -31,23 +31,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_ITEM            (gimp_item_get_type ())
-#define GIMP_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM, GimpItem))
-#define GIMP_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM, GimpItemClass))
-#define GIMP_IS_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM))
-#define GIMP_IS_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM))
-#define GIMP_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM, GimpItemClass))
+#define GIMP_TYPE_ITEM (gimp_item_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpItem, gimp_item, GIMP, ITEM, GObject)
 
-
-typedef struct _GimpItemClass   GimpItemClass;
-typedef struct _GimpItemPrivate GimpItemPrivate;
-
-struct _GimpItem
-{
-  GObject           parent_instance;
-
-  GimpItemPrivate *priv;
-};
 
 struct _GimpItemClass
 {
@@ -64,8 +50,6 @@ struct _GimpItemClass
   void (*_gimp_reserved8) (void);
 };
 
-
-GType       gimp_item_get_type      (void) G_GNUC_CONST;
 
 gint32      gimp_item_get_id        (GimpItem *item);
 GimpItem  * gimp_item_get_by_id     (gint32    item_id);

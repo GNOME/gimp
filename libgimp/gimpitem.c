@@ -37,10 +37,10 @@ enum
 };
 
 
-struct _GimpItemPrivate
+typedef struct _GimpItemPrivate
 {
   gint id;
-};
+} GimpItemPrivate;
 
 
 static void   gimp_item_set_property  (GObject      *object,
@@ -82,21 +82,21 @@ gimp_item_class_init (GimpItemClass *klass)
 static void
 gimp_item_init (GimpItem *item)
 {
-  item->priv = gimp_item_get_instance_private (item);
 }
 
 static void
 gimp_item_set_property (GObject      *object,
-                         guint         property_id,
-                         const GValue *value,
-                         GParamSpec   *pspec)
+                        guint         property_id,
+                        const GValue *value,
+                        GParamSpec   *pspec)
 {
-  GimpItem *item = GIMP_ITEM (object);
+  GimpItem        *item = GIMP_ITEM (object);
+  GimpItemPrivate *priv = gimp_item_get_instance_private (item);
 
   switch (property_id)
     {
     case PROP_ID:
-      item->priv->id = g_value_get_int (value);
+      priv->id = g_value_get_int (value);
       break;
 
     default:
@@ -111,12 +111,13 @@ gimp_item_get_property (GObject    *object,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-  GimpItem *item = GIMP_ITEM (object);
+  GimpItem        *item = GIMP_ITEM (object);
+  GimpItemPrivate *priv = gimp_item_get_instance_private (item);
 
   switch (property_id)
     {
     case PROP_ID:
-      g_value_set_int (value, item->priv->id);
+      g_value_set_int (value, priv->id);
       break;
 
     default:
@@ -140,7 +141,16 @@ gimp_item_get_property (GObject    *object,
 gint32
 gimp_item_get_id (GimpItem *item)
 {
-  return item ? item->priv->id : -1;
+  if (item)
+    {
+      GimpItemPrivate *priv = gimp_item_get_instance_private (item);
+
+      return priv->id;
+    }
+  else
+    {
+      return -1;
+    }
 }
 
 /**

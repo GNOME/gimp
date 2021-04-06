@@ -24,13 +24,12 @@
 #include "gimp.h"
 
 
-struct _GimpVectorsPrivate
+struct _GimpVectors
 {
-  gpointer unused;
+  GimpItem parent_instance;
 };
 
-
-G_DEFINE_TYPE_WITH_PRIVATE (GimpVectors, gimp_vectors, GIMP_TYPE_ITEM)
+G_DEFINE_TYPE (GimpVectors, gimp_vectors, GIMP_TYPE_ITEM)
 
 #define parent_class gimp_vectors_parent_class
 
@@ -43,7 +42,6 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 static void
 gimp_vectors_init (GimpVectors *vectors)
 {
-  vectors->priv = gimp_vectors_get_instance_private (vectors);
 }
 
 /**

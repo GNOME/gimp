@@ -23,13 +23,13 @@
 #include "gimp.h"
 
 
-struct _GimpSelectionPrivate
+struct _GimpSelection
 {
-  gpointer unused;
+  GimpChannel parent_instance;
 };
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
+G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
 
 #define parent_class gimp_selection_parent_class
 
@@ -42,7 +42,6 @@ gimp_selection_class_init (GimpSelectionClass *klass)
 static void
 gimp_selection_init (GimpSelection *selection)
 {
-  selection->priv = gimp_selection_get_instance_private (selection);
 }
 
 /**

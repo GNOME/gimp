@@ -36,10 +36,10 @@ enum
   N_PROPS
 };
 
-
-struct _GimpImagePrivate
+struct _GimpImage
 {
-  gint id;
+  GObject parent_instance;
+  gint    id;
 };
 
 
@@ -53,7 +53,7 @@ static void   gimp_image_get_property  (GObject      *object,
                                         GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpImage, gimp_image, G_TYPE_OBJECT)
+G_DEFINE_TYPE (GimpImage, gimp_image, G_TYPE_OBJECT)
 
 #define parent_class gimp_image_parent_class
 
@@ -82,7 +82,6 @@ gimp_image_class_init (GimpImageClass *klass)
 static void
 gimp_image_init (GimpImage *image)
 {
-  image->priv = gimp_image_get_instance_private (image);
 }
 
 static void
@@ -96,7 +95,7 @@ gimp_image_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_ID:
-      image->priv->id = g_value_get_int (value);
+      image->id = g_value_get_int (value);
       break;
 
     default:
@@ -116,7 +115,7 @@ gimp_image_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_ID:
-      g_value_set_int (value, image->priv->id);
+      g_value_set_int (value, image->id);
       break;
 
     default:
@@ -139,7 +138,7 @@ gimp_image_get_property (GObject    *object,
 gint32
 gimp_image_get_id (GimpImage *image)
 {
-  return image ? image->priv->id : -1;
+  return image ? image->id : -1;
 }
 
 /**
@@ -486,12 +485,12 @@ gimp_image_get_thumbnail_data (GimpImage *image,
 
 /**
  * gimp_image_get_thumbnail:
- * @image:  the image ID
+ * @image:  the #GimpImage
  * @width:  the requested thumbnail width  (<= 1024 pixels)
  * @height: the requested thumbnail height (<= 1024 pixels)
  * @alpha:  how to handle an alpha channel
  *
- * Retrieves a thumbnail pixbuf for the image identified by @image->priv->id.
+ * Retrieves a thumbnail pixbuf for @image.
  * The thumbnail will be not larger than the requested size.
  *
  * Returns: (transfer full): a new #GdkPixbuf

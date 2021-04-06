@@ -26,13 +26,7 @@
 #include "gimptilebackendplugin.h"
 
 
-struct _GimpDrawablePrivate
-{
-  gpointer unused;
-};
-
-
-G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM)
+G_DEFINE_ABSTRACT_TYPE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM)
 
 #define parent_class gimp_drawable_parent_class
 
@@ -45,7 +39,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 static void
 gimp_drawable_init (GimpDrawable *drawable)
 {
-  drawable->priv = gimp_drawable_get_instance_private (drawable);
 }
 
 
