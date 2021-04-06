@@ -67,6 +67,25 @@ API:
   - New function gimp_image_take_selected_layers() similar to
     gimp_image_set_selected_layers() except that it takes a GList
     (instead of a C array) and it takes ownership of the list pointer.
+  - New functions: gimp_procedure_set_sensitivity_mask() and
+    gimp_procedure_get_sensitivity_mask() for plug-ins to advertize when
+    a procedure should be sensitive (in particular relatively to
+    multi-drawable selection).
+  - GimpImageProcedure's run() functions now have an array of drawables
+    as argument (instead of a single drawable), to be consistent with
+    multi-drawable selection ability.
+  - New gimp_plug_in_error_quark() as a generic GQuark/GError domain for
+    plug-ins.
+  - Several functions were renamed to be consistent with our naming
+    scheme:
+    * s/gimp_parasite_name/gimp_parasite_get_name/
+    * s/gimp_parasite_flags/gimp_parasite_get_flags/
+    * s/gimp_image_base_type/gimp_image_get_base_type/
+    * s/gimp_image_width/gimp_image_get_width/
+    * s/gimp_image_height/gimp_image_get_height/
+  - libgimpconfig: GimpParasite can now be serialized. This is useful
+    when using a GimpParasite procedure argument, whose random contents
+    (possibly binary) can be stored across sessions.
 
 Plug-ins:
 
@@ -93,9 +112,12 @@ Plug-ins:
   - Various fixes and improvements to OpenRaster image support.
   - PDF export now has progression.
   - PSD import/export got multi-layer selection support.
-  - Qbist: make the applied pattern a bit more prominent by adding a
-    label about the center pattern of the 9x9 grid (which is the
-    selected one meant to be applied).
+  - Qbist:
+    * make the applied pattern a bit more prominent by adding a
+      label about the center pattern of the 9x9 grid (which is the
+      selected one meant to be applied).
+    * last used values now stored with the new API, hence surviving
+      across sessions.
 
 Devel docs:
 
@@ -105,6 +127,9 @@ Devel docs:
     (alternative for the meson build: -Dg-ir-doc=true but the docs ends
     up incomplete so autotools build is advised, cf. #6362).
 
+Translations:
+
+  - New Hebrew translation.
 
 Overview of Changes from GIMP 2.99.2 to GIMP 2.99.4
 ===================================================
