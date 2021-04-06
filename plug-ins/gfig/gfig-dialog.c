@@ -112,13 +112,13 @@ SelectItVals selvals =
 
 selection_option selopt =
 {
-  ADD,          /* type */
-  FALSE,        /* Antia */
-  FALSE,        /* Feather */
-  10.0,         /* feather radius */
-  ARC_SEGMENT,  /* Arc as a segment */
-  FILL_PATTERN, /* Fill as pattern */
-  100.0,        /* Max opacity */
+  GIMP_CHANNEL_OP_ADD, /* type */
+  FALSE,               /* Antia */
+  FALSE,               /* Feather */
+  10.0,                /* feather radius */
+  ARC_SEGMENT,         /* Arc as a segment */
+  FILL_PATTERN,        /* Fill as pattern */
+  100.0,               /* Max opacity */
 };
 
 /* Should be kept in sync with GfigOpts */

@@ -48,13 +48,13 @@ typedef struct
 
 typedef struct
 {
-  SelectionType type;           /* ADD etc .. */
-  gint          antia;          /* Boolean for Antia */
-  gint          feather;        /* Feather it ? */
-  gdouble       feather_radius; /* Radius to feather */
-  ArcType       as_pie;         /* Arc type selection segment/sector */
-  FillType      fill_type;      /* Fill type for selection */
-  gdouble       fill_opacity;   /* You can guess this one */
+  GimpChannelOps type;           /* ADD etc .. */
+  gint           antia;          /* Boolean for Antia */
+  gint           feather;        /* Feather it ? */
+  gdouble        feather_radius; /* Radius to feather */
+  ArcType        as_pie;         /* Arc type selection segment/sector */
+  FillType       fill_type;      /* Fill type for selection */
+  gdouble        fill_opacity;   /* You can guess this one */
 } selection_option;
 
 void       object_start            (GdkPoint *pnt, gint);

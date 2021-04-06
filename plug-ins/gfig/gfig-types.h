@@ -34,14 +34,6 @@ typedef enum
 
 typedef enum
 {
-  ADD = 0,
-  SUBTRACT,
-  REPLACE,
-  INTERSECT
-} SelectionType;
-
-typedef enum
-{
   ARC_SEGMENT = 0,
   ARC_SECTOR
 } ArcType;
