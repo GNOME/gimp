@@ -406,8 +406,8 @@ gimp_zoom_preview_style_updated (GtkWidget *widget)
         }
       else
         {
-          width  = gimp_drawable_width  (priv->drawable);
-          height = gimp_drawable_height (priv->drawable);
+          width  = gimp_drawable_get_width  (priv->drawable);
+          height = gimp_drawable_get_height (priv->drawable);
         }
 
       if (width > height)
@@ -542,7 +542,7 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
                                                   src_x, src_y,
                                                   src_width, src_height,
                                                   &w, &h, &bpp);
-      gimp_drawable_offsets (priv->drawable, &offsx, &offsy);
+      gimp_drawable_get_offsets (priv->drawable, &offsx, &offsy);
       sel = gimp_drawable_get_sub_thumbnail_data (GIMP_DRAWABLE (selection),
                                                   src_x + offsx, src_y + offsy,
                                                   src_width, src_height,
@@ -551,7 +551,7 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (area),
                               0, 0, width, height,
                               gimp_drawable_type (priv->drawable),
-                              src, width * gimp_drawable_bpp (priv->drawable),
+                              src, width * gimp_drawable_get_bpp (priv->drawable),
                               buffer, rowstride,
                               sel, width);
 
@@ -672,8 +672,8 @@ gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
     }
   else
     {
-      width  = gimp_drawable_width  (drawable);
-      height = gimp_drawable_height (drawable);
+      width  = gimp_drawable_get_width  (drawable);
+      height = gimp_drawable_get_height (drawable);
 
       priv->extents.x = 0;
       priv->extents.y = 0;

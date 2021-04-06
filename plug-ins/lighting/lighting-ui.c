@@ -260,10 +260,10 @@ bumpmap_constrain (GimpImage *image,
 {
   GimpDrawable *dr = gimp_drawable_get_by_id (mapvals.drawable_id);
 
-  return  ((gimp_drawable_width (GIMP_DRAWABLE (item)) ==
-            gimp_drawable_width (dr)) &&
-           (gimp_drawable_height (GIMP_DRAWABLE (item)) ==
-            gimp_drawable_height (dr)));
+  return  ((gimp_drawable_get_width (GIMP_DRAWABLE (item)) ==
+            gimp_drawable_get_width (dr)) &&
+           (gimp_drawable_get_height (GIMP_DRAWABLE (item)) ==
+            gimp_drawable_get_height (dr)));
 }
 
 static gint
@@ -286,8 +286,8 @@ envmap_combo_callback (GtkWidget *widget,
 
   env = gimp_drawable_get_by_id (mapvals.envmap_id);
 
-  env_width  = gimp_drawable_width  (env);
-  env_height = gimp_drawable_height (env);
+  env_width  = gimp_drawable_get_width  (env);
+  env_height = gimp_drawable_get_height (env);
 }
 
 /***********************/

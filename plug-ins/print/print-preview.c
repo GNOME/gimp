@@ -584,8 +584,8 @@ print_preview_set_image_dpi (PrintPreview *preview,
   g_return_if_fail (PRINT_IS_PREVIEW (preview));
   g_return_if_fail (xres > 0.0 && yres > 0.0);
 
-  width  = gimp_drawable_width  (preview->drawable) * 72.0 / xres;
-  height = gimp_drawable_height (preview->drawable) * 72.0 / yres;
+  width  = gimp_drawable_get_width  (preview->drawable) * 72.0 / xres;
+  height = gimp_drawable_get_height (preview->drawable) * 72.0 / yres;
 
   if (width != preview->image_width || height != preview->image_height)
     {

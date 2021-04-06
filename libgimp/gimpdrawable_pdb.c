@@ -326,7 +326,7 @@ gimp_drawable_is_indexed (GimpDrawable *drawable)
 }
 
 /**
- * gimp_drawable_bpp:
+ * gimp_drawable_get_bpp:
  * @drawable: The drawable.
  *
  * Returns the bytes per pixel.
@@ -336,7 +336,7 @@ gimp_drawable_is_indexed (GimpDrawable *drawable)
  * Returns: Bytes per pixel.
  **/
 gint
-gimp_drawable_bpp (GimpDrawable *drawable)
+gimp_drawable_get_bpp (GimpDrawable *drawable)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -347,7 +347,7 @@ gimp_drawable_bpp (GimpDrawable *drawable)
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-bpp",
+                                              "gimp-drawable-get-bpp",
                                               args);
   gimp_value_array_unref (args);
 
@@ -360,7 +360,7 @@ gimp_drawable_bpp (GimpDrawable *drawable)
 }
 
 /**
- * gimp_drawable_width:
+ * gimp_drawable_get_width:
  * @drawable: The drawable.
  *
  * Returns the width of the drawable.
@@ -370,7 +370,7 @@ gimp_drawable_bpp (GimpDrawable *drawable)
  * Returns: Width of drawable.
  **/
 gint
-gimp_drawable_width (GimpDrawable *drawable)
+gimp_drawable_get_width (GimpDrawable *drawable)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -381,7 +381,7 @@ gimp_drawable_width (GimpDrawable *drawable)
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-width",
+                                              "gimp-drawable-get-width",
                                               args);
   gimp_value_array_unref (args);
 
@@ -394,7 +394,7 @@ gimp_drawable_width (GimpDrawable *drawable)
 }
 
 /**
- * gimp_drawable_height:
+ * gimp_drawable_get_height:
  * @drawable: The drawable.
  *
  * Returns the height of the drawable.
@@ -404,7 +404,7 @@ gimp_drawable_width (GimpDrawable *drawable)
  * Returns: Height of drawable.
  **/
 gint
-gimp_drawable_height (GimpDrawable *drawable)
+gimp_drawable_get_height (GimpDrawable *drawable)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -415,7 +415,7 @@ gimp_drawable_height (GimpDrawable *drawable)
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-height",
+                                              "gimp-drawable-get-height",
                                               args);
   gimp_value_array_unref (args);
 
@@ -428,7 +428,7 @@ gimp_drawable_height (GimpDrawable *drawable)
 }
 
 /**
- * gimp_drawable_offsets:
+ * gimp_drawable_get_offsets:
  * @drawable: The drawable.
  * @offset_x: (out): x offset of drawable.
  * @offset_y: (out): y offset of drawable.
@@ -442,9 +442,9 @@ gimp_drawable_height (GimpDrawable *drawable)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_drawable_offsets (GimpDrawable *drawable,
-                       gint         *offset_x,
-                       gint         *offset_y)
+gimp_drawable_get_offsets (GimpDrawable *drawable,
+                           gint         *offset_x,
+                           gint         *offset_y)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -455,7 +455,7 @@ gimp_drawable_offsets (GimpDrawable *drawable,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-offsets",
+                                              "gimp-drawable-get-offsets",
                                               args);
   gimp_value_array_unref (args);
 

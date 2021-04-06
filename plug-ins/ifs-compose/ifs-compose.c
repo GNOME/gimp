@@ -770,8 +770,8 @@ ifs_compose_dialog (GimpDrawable *drawable)
   GtkWidget *aspect_frame;
   GtkWidget *notebook;
   GtkWidget *page;
-  gint       design_width  = gimp_drawable_width  (drawable);
-  gint       design_height = gimp_drawable_height (drawable);
+  gint       design_width  = gimp_drawable_get_width  (drawable);
+  gint       design_height = gimp_drawable_get_height (drawable);
 
   if (design_width > design_height)
     {
@@ -792,8 +792,8 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   ifsD = g_new0 (IfsDialog, 1);
 
-  ifsD->drawable_width  = gimp_drawable_width  (drawable);
-  ifsD->drawable_height = gimp_drawable_height (drawable);
+  ifsD->drawable_width  = gimp_drawable_get_width  (drawable);
+  ifsD->drawable_height = gimp_drawable_get_height (drawable);
   ifsD->preview_width   = design_width;
   ifsD->preview_height  = design_height;
 
@@ -1302,8 +1302,8 @@ static void
 ifs_compose (GimpDrawable *drawable)
 {
   GeglBuffer *buffer = gimp_drawable_get_shadow_buffer (drawable);
-  gint        width  = gimp_drawable_width (drawable);
-  gint        height = gimp_drawable_height (drawable);
+  gint        width  = gimp_drawable_get_width (drawable);
+  gint        height = gimp_drawable_get_height (drawable);
   gboolean    alpha  = gimp_drawable_has_alpha (drawable);
   const Babl *format;
   gint        num_bands;

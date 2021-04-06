@@ -1559,10 +1559,10 @@ add_layers (GimpImage *image,
                       g_array_remove_index (parent_group_stack,
                                             parent_group_stack->len - 1);
 
-                      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &l_x, &l_y);
+                      gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &l_x, &l_y);
 
-                      l_w = gimp_drawable_width  (GIMP_DRAWABLE (layer));
-                      l_h = gimp_drawable_height (GIMP_DRAWABLE (layer));
+                      l_w = gimp_drawable_get_width  (GIMP_DRAWABLE (layer));
+                      l_h = gimp_drawable_get_height (GIMP_DRAWABLE (layer));
                     }
                   else
                     {

@@ -135,14 +135,14 @@ export_merge (GimpImage  *image,
       layers = gimp_image_list_layers (image);
 
       /*  make sure that the merged drawable matches the image size  */
-      if (gimp_drawable_width   (GIMP_DRAWABLE (merged)) !=
+      if (gimp_drawable_get_width   (GIMP_DRAWABLE (merged)) !=
           gimp_image_get_width  (image) ||
-          gimp_drawable_height  (GIMP_DRAWABLE (merged)) !=
+          gimp_drawable_get_height  (GIMP_DRAWABLE (merged)) !=
           gimp_image_get_height (image))
         {
           gint off_x, off_y;
 
-          gimp_drawable_offsets (GIMP_DRAWABLE (merged), &off_x, &off_y);
+          gimp_drawable_get_offsets (GIMP_DRAWABLE (merged), &off_x, &off_y);
           gimp_layer_resize (merged,
                              gimp_image_get_width (image),
                              gimp_image_get_height (image),
@@ -943,11 +943,11 @@ gimp_export_image (GimpImage               **image,
               GimpDrawable  *drawable = iter->data;
               GeglRectangle  layer_bounds;
 
-              gimp_drawable_offsets (drawable,
+              gimp_drawable_get_offsets (drawable,
                                      &layer_bounds.x, &layer_bounds.y);
 
-              layer_bounds.width  = gimp_drawable_width  (drawable);
-              layer_bounds.height = gimp_drawable_height (drawable);
+              layer_bounds.width  = gimp_drawable_get_width  (drawable);
+              layer_bounds.height = gimp_drawable_get_height (drawable);
 
               if (! gegl_rectangle_contains (&image_bounds, &layer_bounds))
                 {
@@ -974,13 +974,13 @@ gimp_export_image (GimpImage               **image,
           gint          offset_x;
           gint          offset_y;
 
-          gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+          gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
           if ((gimp_layer_get_opacity (GIMP_LAYER (drawable)) < 100.0) ||
               (gimp_image_get_width (*image) !=
-               gimp_drawable_width (drawable))            ||
+               gimp_drawable_get_width (drawable))            ||
               (gimp_image_get_height (*image) !=
-               gimp_drawable_height (drawable))           ||
+               gimp_drawable_get_height (drawable))           ||
               offset_x || offset_y)
             {
               if (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA)

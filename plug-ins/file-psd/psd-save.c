@@ -1060,10 +1060,10 @@ save_layer_and_mask (FILE      *fd,
 
       if (psd_layer->type == PSD_LAYER_TYPE_LAYER)
         {
-          gimp_drawable_offsets (GIMP_DRAWABLE (psd_layer->layer),
+          gimp_drawable_get_offsets (GIMP_DRAWABLE (psd_layer->layer),
                                  &offset_x, &offset_y);
-          layerWidth = gimp_drawable_width (GIMP_DRAWABLE (psd_layer->layer));
-          layerHeight = gimp_drawable_height (GIMP_DRAWABLE (psd_layer->layer));
+          layerWidth = gimp_drawable_get_width (GIMP_DRAWABLE (psd_layer->layer));
+          layerHeight = gimp_drawable_get_height (GIMP_DRAWABLE (psd_layer->layer));
         }
       else
         {
@@ -1114,7 +1114,7 @@ save_layer_and_mask (FILE      *fd,
 
       ChannelLengthPos[i] = g_new (glong, nChannelsLayer);
 
-      /* Try with gimp_drawable_bpp() */
+      /* Try with gimp_drawable_get_bpp() */
 
       for (j = 0; j < nChannelsLayer; j++)
         {
@@ -1174,10 +1174,10 @@ save_layer_and_mask (FILE      *fd,
 
           mask = gimp_layer_get_mask (psd_layer->layer);
 
-          gimp_drawable_offsets (GIMP_DRAWABLE (mask), &maskOffset_x, &maskOffset_y);
+          gimp_drawable_get_offsets (GIMP_DRAWABLE (mask), &maskOffset_x, &maskOffset_y);
 
-          maskWidth  = gimp_drawable_width  (GIMP_DRAWABLE (mask));
-          maskHeight = gimp_drawable_height (GIMP_DRAWABLE (mask));
+          maskWidth  = gimp_drawable_get_width  (GIMP_DRAWABLE (mask));
+          maskHeight = gimp_drawable_get_height (GIMP_DRAWABLE (mask));
           apply      = gimp_layer_get_apply_mask (psd_layer->layer);
 
           IFDBG printf ("\t\tLayer mask size: %d\n", 20);

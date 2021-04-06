@@ -475,8 +475,8 @@ add_cursor_image (GimpImage  *image,
 
   iter = gegl_buffer_iterator_new (buffer,
                                    GEGL_RECTANGLE (0, 0,
-                                                   gimp_drawable_width  (GIMP_DRAWABLE (layer)),
-                                                   gimp_drawable_height (GIMP_DRAWABLE (layer))),
+                                                   gimp_drawable_get_width  (GIMP_DRAWABLE (layer)),
+                                                   gimp_drawable_get_height (GIMP_DRAWABLE (layer))),
                                    0, babl_format ("R'G'B'A u8"),
                                    GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
   roi = &iter->items[0].roi;

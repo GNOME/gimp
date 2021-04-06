@@ -805,7 +805,7 @@ do_curl_effect (GimpDrawable *drawable)
                            drawable_position);
   gimp_drawable_fill (GIMP_DRAWABLE (curl_layer), GIMP_FILL_TRANSPARENT);
 
-  gimp_drawable_offsets (drawable, &x1, &y1);
+  gimp_drawable_get_offsets (drawable, &x1, &y1);
   gimp_layer_set_offsets (curl_layer, sel_x + x1, sel_y + y1);
 
   curl_buffer = gimp_drawable_get_shadow_buffer (GIMP_DRAWABLE (curl_layer));
@@ -1071,7 +1071,7 @@ page_curl (GimpDrawable *drawable)
 
 /*
   Returns NGRADSAMPLES samples of active gradient.
-  Each sample has (gimp_drawable_bpp (drawable)) bytes.
+  Each sample has (gimp_drawable_get_bpp (drawable)) bytes.
   "ripped" from gradmap.c.
  */
 static GimpRGB *

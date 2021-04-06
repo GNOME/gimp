@@ -424,10 +424,10 @@ compose_row (gint          frame_num,
       total_alpha (dest, dest_width, pixelstep);
     }
 
-  gimp_drawable_offsets (drawable, &rawx, &rawy);
+  gimp_drawable_get_offsets (drawable, &rawx, &rawy);
 
-  rawwidth  = gimp_drawable_width (drawable);
-  rawheight = gimp_drawable_height (drawable);
+  rawwidth  = gimp_drawable_get_width (drawable);
+  rawheight = gimp_drawable_get_height (drawable);
 
   /* this frame has nothing to give us for this row; return */
   if (row_num >= rawheight + rawy ||
@@ -762,7 +762,7 @@ do_optimizations (GimpRunMode  run_mode,
 
           /* Image has been closed/etc since we got the layer list? */
           /* FIXME - How do we tell if a gimp_drawable_get() fails? */
-          if (gimp_drawable_width (drawable) == 0)
+          if (gimp_drawable_get_width (drawable) == 0)
             {
               gimp_quit ();
             }

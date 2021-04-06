@@ -114,8 +114,8 @@ print_page_layout_gui (PrintData   *data,
   memset (&info, 0, sizeof (PrintSizeInfo));
 
   info.data         = data;
-  info.image_width  = gimp_drawable_width (data->drawable);
-  info.image_height = gimp_drawable_height (data->drawable);
+  info.image_width  = gimp_drawable_get_width (data->drawable);
+  info.image_height = gimp_drawable_get_height (data->drawable);
 
   setup = gtk_print_operation_get_default_page_setup (data->operation);
   if (! setup)

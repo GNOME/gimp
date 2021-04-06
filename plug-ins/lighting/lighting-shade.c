@@ -142,7 +142,7 @@ precompute_init (gint w,
     {
       GimpDrawable *drawable = gimp_drawable_get_by_id (mapvals.bumpmap_id);
 
-      bpp = gimp_drawable_bpp (drawable);
+      bpp = gimp_drawable_get_bpp (drawable);
     }
 
   bumprow = g_new (guchar, w * bpp);

@@ -221,8 +221,8 @@ gfig_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  img_width  = gimp_drawable_width (gfig_context->drawable);
-  img_height = gimp_drawable_height (gfig_context->drawable);
+  img_width  = gimp_drawable_get_width (gfig_context->drawable);
+  img_height = gimp_drawable_get_height (gfig_context->drawable);
   img_type   = gimp_drawable_type_with_alpha (gfig_context->drawable);
 
   /*

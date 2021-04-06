@@ -351,8 +351,8 @@ check_drawables (void)
           map      = gimp_drawable_get_by_id (mapvals.bumpmap_id);
 
           if (gimp_drawable_is_indexed (map) ||
-              (gimp_drawable_width  (drawable) != gimp_drawable_width  (map)) ||
-              (gimp_drawable_height (drawable) != gimp_drawable_height (map)))
+              (gimp_drawable_get_width  (drawable) != gimp_drawable_get_width  (map)) ||
+              (gimp_drawable_get_height (drawable) != gimp_drawable_get_height (map)))
             {
               mapvals.bump_mapped = FALSE;
               mapvals.bumpmap_id  = -1;

@@ -1468,8 +1468,8 @@ save_image (GFile                        *file,
   gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
-  width   = gimp_drawable_width  (drawable);
-  height  = gimp_drawable_height (drawable);
+  width   = gimp_drawable_get_width  (drawable);
+  height  = gimp_drawable_get_height (drawable);
 
   has_alpha = gimp_drawable_has_alpha (drawable);
 

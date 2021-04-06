@@ -173,8 +173,8 @@ check_mipmaps (GimpImage *image,
       if (type != gimp_drawable_type (list->data))
         return 0;
 
-      if ((gimp_drawable_width  (list->data) == w) &&
-          (gimp_drawable_height (list->data) == h))
+      if ((gimp_drawable_get_width  (list->data) == w) &&
+          (gimp_drawable_get_height (list->data) == h))
         ++num_surfaces;
     }
 
@@ -187,8 +187,8 @@ check_mipmaps (GimpImage *image,
     {
       GimpDrawable *drawable = g_list_nth_data (layers, i);
 
-      if ((gimp_drawable_width  (drawable) != w) ||
-          (gimp_drawable_height (drawable) != h))
+      if ((gimp_drawable_get_width  (drawable) != w) ||
+          (gimp_drawable_get_height (drawable) != h))
         {
           valid = FALSE;
           break;
@@ -202,8 +202,8 @@ check_mipmaps (GimpImage *image,
           miph = h >> j;
           if (mipw < 1) mipw = 1;
           if (miph < 1) miph = 1;
-          if ((gimp_drawable_width  (drawable) != mipw) ||
-              (gimp_drawable_height (drawable) != miph))
+          if ((gimp_drawable_get_width  (drawable) != mipw) ||
+              (gimp_drawable_get_height (drawable) != miph))
             {
               valid = FALSE;
               break;
@@ -253,8 +253,8 @@ check_cubemap (GimpImage *image)
         {
           GimpDrawable *drawable = list->data;
 
-          if ((gimp_drawable_width  (drawable) != w) ||
-              (gimp_drawable_height (drawable) != h))
+          if ((gimp_drawable_get_width  (drawable) != w) ||
+              (gimp_drawable_get_height (drawable) != h))
             continue;
 
           layer_name = (char *) gimp_item_get_name (GIMP_ITEM (drawable));
@@ -339,13 +339,13 @@ check_cubemap (GimpImage *image)
       /* make sure they are all the same size */
       if (cubemap)
         {
-          w = gimp_drawable_width (GIMP_DRAWABLE (cubemap_faces[0]));
-          h = gimp_drawable_height (GIMP_DRAWABLE (cubemap_faces[0]));
+          w = gimp_drawable_get_width (GIMP_DRAWABLE (cubemap_faces[0]));
+          h = gimp_drawable_get_height (GIMP_DRAWABLE (cubemap_faces[0]));
 
           for (i = 1; i < 6 && cubemap; ++i)
             {
-              if ((gimp_drawable_width  (GIMP_DRAWABLE (cubemap_faces[i])) != w) ||
-                  (gimp_drawable_height (GIMP_DRAWABLE (cubemap_faces[i])) != h))
+              if ((gimp_drawable_get_width  (GIMP_DRAWABLE (cubemap_faces[i])) != w) ||
+                  (gimp_drawable_get_height (GIMP_DRAWABLE (cubemap_faces[i])) != h))
                 cubemap = FALSE;
             }
         }
@@ -384,15 +384,15 @@ check_volume (GimpImage *image)
       volume = TRUE;
 
       /* make sure all layers are the same size */
-      w = gimp_drawable_width  (layers->data);
-      h = gimp_drawable_height (layers->data);
+      w = gimp_drawable_get_width  (layers->data);
+      h = gimp_drawable_get_height (layers->data);
 
       for (i = 1, list = layers->next;
            i < num_layers && volume;
            ++i, list = g_list_next (list))
         {
-          if ((gimp_drawable_width  (list->data) != w) ||
-              (gimp_drawable_height (list->data) != h))
+          if ((gimp_drawable_get_width  (list->data) != w) ||
+              (gimp_drawable_get_height (list->data) != h))
             volume = FALSE;
         }
 
@@ -437,15 +437,15 @@ check_array (GimpImage *image)
       array = TRUE;
 
       /* make sure all layers are the same size */
-      w = gimp_drawable_width  (layers->data);
-      h = gimp_drawable_height (layers->data);
+      w = gimp_drawable_get_width  (layers->data);
+      h = gimp_drawable_get_height (layers->data);
 
       for (i = 1, list = g_list_next (layers);
            i < num_layers && array;
            ++i, list = g_list_next (list))
         {
-          if ((gimp_drawable_width  (list->data)  != w) ||
-              (gimp_drawable_height (list->data) != h))
+          if ((gimp_drawable_get_width  (list->data)  != w) ||
+              (gimp_drawable_get_height (list->data) != h))
             array = FALSE;
         }
 
@@ -492,8 +492,8 @@ get_array_size (GimpImage *image)
        i < num_layers;
        ++i, list = g_list_next (list))
     {
-      if ((gimp_drawable_width  (list->data) == w) &&
-          (gimp_drawable_height (list->data) == h))
+      if ((gimp_drawable_get_width  (list->data) == w) &&
+          (gimp_drawable_get_height (list->data) == h))
         {
           elements++;
         }
@@ -1347,8 +1347,8 @@ write_image (FILE         *fp,
 
   if (savetype == DDS_SAVE_SELECTED_LAYER)
     {
-      w = gimp_drawable_width (drawable);
-      h = gimp_drawable_height (drawable);
+      w = gimp_drawable_get_width (drawable);
+      h = gimp_drawable_get_height (drawable);
     }
   else
     {
@@ -1713,8 +1713,8 @@ write_image (FILE         *fp,
            i < num_layers;
            ++i, list = g_list_next (layers))
         {
-          if ((gimp_drawable_width  (list->data) == w) &&
-              (gimp_drawable_height (list->data) == h))
+          if ((gimp_drawable_get_width  (list->data) == w) &&
+              (gimp_drawable_get_height (list->data) == h))
             {
               write_layer (fp, image, list->data, config,
                            w, h, bpp, fmtbpp, num_mipmaps);

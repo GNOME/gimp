@@ -838,7 +838,7 @@ save_image (GFile         *file,
     }
 
   /* Find out how offset this layer was */
-  gimp_drawable_offsets (drawable, &offx, &offy);
+  gimp_drawable_get_offsets (drawable, &offx, &offy);
 
   buffer = gimp_drawable_get_buffer (drawable);
 

@@ -537,8 +537,8 @@ jigsaw (GimpDrawable *drawable,
     {
       gegl_buffer = gimp_drawable_get_buffer (drawable);
 
-      width  = gimp_drawable_width  (drawable);
-      height = gimp_drawable_height (drawable);
+      width  = gimp_drawable_get_width  (drawable);
+      height = gimp_drawable_get_height (drawable);
 
       if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");

@@ -750,8 +750,8 @@ dialog (GimpImage    *image,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  d_width  = gimp_drawable_width  (drawable);
-  d_height = gimp_drawable_height (drawable);
+  d_width  = gimp_drawable_get_width  (drawable);
+  d_height = gimp_drawable_get_height (drawable);
 
   main_dialog = dlg = gimp_dialog_new (_("Grid"), PLUG_IN_ROLE,
                                        NULL, 0,

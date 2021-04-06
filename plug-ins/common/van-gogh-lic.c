@@ -496,7 +496,7 @@ rgb_to_hsl (GimpDrawable     *drawable,
 
   gr = g_rand_new ();
 
-  maxc = gimp_drawable_width (drawable) * gimp_drawable_height (drawable);
+  maxc = gimp_drawable_get_width (drawable) * gimp_drawable_get_height (drawable);
 
   buffer = gimp_drawable_get_buffer (drawable);
 
@@ -645,8 +645,8 @@ compute_image (GimpDrawable *drawable)
 
   effect_image = gimp_drawable_get_by_id (licvals.effect_image_id);
 
-  effect_width =  gimp_drawable_width  (effect_image);
-  effect_height = gimp_drawable_height (effect_image);
+  effect_width =  gimp_drawable_get_width  (effect_image);
+  effect_height = gimp_drawable_get_height (effect_image);
 
   switch (licvals.effect_channel)
     {

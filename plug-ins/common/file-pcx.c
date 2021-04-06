@@ -787,7 +787,7 @@ save_image (GFile         *file,
   gboolean       padding = FALSE;
 
   drawable_type = gimp_drawable_type (drawable);
-  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+  gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
   buffer = gimp_drawable_get_buffer (drawable);
 

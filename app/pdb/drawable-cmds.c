@@ -294,12 +294,12 @@ drawable_is_indexed_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_bpp_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
-                      GError               **error)
+drawable_get_bpp_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -325,12 +325,12 @@ drawable_bpp_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_width_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
-                        GError               **error)
+drawable_get_width_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -354,12 +354,12 @@ drawable_width_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_height_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
+drawable_get_height_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -383,12 +383,12 @@ drawable_height_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_offsets_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
-                          GError               **error)
+drawable_get_offsets_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -1217,11 +1217,11 @@ register_drawable_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-bpp
+   * gimp-drawable-get-bpp
    */
-  procedure = gimp_procedure_new (drawable_bpp_invoker);
+  procedure = gimp_procedure_new (drawable_get_bpp_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-bpp");
+                               "gimp-drawable-get-bpp");
   gimp_procedure_set_static_help (procedure,
                                   "Returns the bytes per pixel.",
                                   "This procedure returns the number of bytes per pixel.",
@@ -1246,11 +1246,11 @@ register_drawable_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-width
+   * gimp-drawable-get-width
    */
-  procedure = gimp_procedure_new (drawable_width_invoker);
+  procedure = gimp_procedure_new (drawable_get_width_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-width");
+                               "gimp-drawable-get-width");
   gimp_procedure_set_static_help (procedure,
                                   "Returns the width of the drawable.",
                                   "This procedure returns the specified drawable's width in pixels.",
@@ -1275,11 +1275,11 @@ register_drawable_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-height
+   * gimp-drawable-get-height
    */
-  procedure = gimp_procedure_new (drawable_height_invoker);
+  procedure = gimp_procedure_new (drawable_get_height_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-height");
+                               "gimp-drawable-get-height");
   gimp_procedure_set_static_help (procedure,
                                   "Returns the height of the drawable.",
                                   "This procedure returns the specified drawable's height in pixels.",
@@ -1304,11 +1304,11 @@ register_drawable_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-offsets
+   * gimp-drawable-get-offsets
    */
-  procedure = gimp_procedure_new (drawable_offsets_invoker);
+  procedure = gimp_procedure_new (drawable_get_offsets_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-offsets");
+                               "gimp-drawable-get-offsets");
   gimp_procedure_set_static_help (procedure,
                                   "Returns the offsets for the drawable.",
                                   "This procedure returns the specified drawable's offsets. This only makes sense if the drawable is a layer since channels are anchored. The offsets of a channel will be returned as 0.",

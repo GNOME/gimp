@@ -740,7 +740,7 @@ save_layer (TIFF        *tif,
       TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
     }
 
-  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offset_x, &offset_y);
+  gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &offset_x, &offset_y);
 
   offset_x -= origin_x;
   offset_y -= origin_y;
@@ -1154,7 +1154,7 @@ save_image (GFile         *file,
       GimpDrawable *drawable = iter->data;
       gint          offset_x, offset_y;
 
-      gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+      gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
       origin_x = MIN (origin_x, offset_x);
       origin_y = MIN (origin_y, offset_y);

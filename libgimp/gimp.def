@@ -188,7 +188,6 @@ EXPORTS
 	gimp_displays_reconnect
 	gimp_dodgeburn
 	gimp_dodgeburn_default
-	gimp_drawable_bpp
 	gimp_drawable_brightness_contrast
 	gimp_drawable_color_balance
 	gimp_drawable_colorize_hsl
@@ -205,9 +204,12 @@ EXPORTS
 	gimp_drawable_fill
 	gimp_drawable_foreground_extract
 	gimp_drawable_free_shadow
+	gimp_drawable_get_bpp
 	gimp_drawable_get_buffer
 	gimp_drawable_get_by_id
 	gimp_drawable_get_format
+	gimp_drawable_get_height
+	gimp_drawable_get_offsets
 	gimp_drawable_get_pixel
 	gimp_drawable_get_shadow_buffer
 	gimp_drawable_get_sub_thumbnail
@@ -216,8 +218,8 @@ EXPORTS
 	gimp_drawable_get_thumbnail_data
 	gimp_drawable_get_thumbnail_format
 	gimp_drawable_get_type
+	gimp_drawable_get_width
 	gimp_drawable_has_alpha
-	gimp_drawable_height
 	gimp_drawable_histogram
 	gimp_drawable_hue_saturation
 	gimp_drawable_invert
@@ -230,14 +232,12 @@ EXPORTS
 	gimp_drawable_mask_intersect
 	gimp_drawable_merge_shadow
 	gimp_drawable_offset
-	gimp_drawable_offsets
 	gimp_drawable_posterize
 	gimp_drawable_set_pixel
 	gimp_drawable_threshold
 	gimp_drawable_type
 	gimp_drawable_type_with_alpha
 	gimp_drawable_update
-	gimp_drawable_width
 	gimp_dynamics_get_list
 	gimp_dynamics_refresh
 	gimp_edit_copy

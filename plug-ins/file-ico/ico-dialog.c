@@ -111,8 +111,8 @@ ico_preview_new (GimpDrawable *layer)
 {
   GtkWidget *image;
   GdkPixbuf *pixbuf;
-  gint       width  = gimp_drawable_width (layer);
-  gint       height = gimp_drawable_height (layer);
+  gint       width  = gimp_drawable_get_width (layer);
+  gint       height = gimp_drawable_get_height (layer);
 
   pixbuf = gimp_drawable_get_thumbnail (layer,
                                         MIN (width, 128), MIN (height, 128),
@@ -229,8 +229,8 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
   GtkWidget  *preview = ico_dialog_get_layer_preview (dialog, layer);
   GdkPixbuf  *pixbuf;
   const Babl *format;
-  gint        w       = gimp_drawable_width (layer);
-  gint        h       = gimp_drawable_height (layer);
+  gint        w       = gimp_drawable_get_width (layer);
+  gint        h       = gimp_drawable_get_height (layer);
 
   if (! preview)
     return;
@@ -517,8 +517,8 @@ ico_dialog_check_compat (GtkWidget   *dialog,
 
   for (iter = info->layers, i = 0; iter; iter = iter->next, i++)
     {
-      if (gimp_drawable_width (iter->data) > 255  ||
-          gimp_drawable_height (iter->data) > 255 ||
+      if (gimp_drawable_get_width (iter->data) > 255  ||
+          gimp_drawable_get_height (iter->data) > 255 ||
           info->compress[i])
         {
           warn = TRUE;

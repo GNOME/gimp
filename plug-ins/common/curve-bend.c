@@ -2357,8 +2357,8 @@ p_render_preview (BenderDialog *cd,
    t_GDRW  l_gdrw;
    t_GDRW *gdrw;
 
-   width  = gimp_drawable_width  (GIMP_DRAWABLE (layer));
-   height = gimp_drawable_height (GIMP_DRAWABLE (layer));
+   width  = gimp_drawable_get_width  (GIMP_DRAWABLE (layer));
+   height = gimp_drawable_get_height (GIMP_DRAWABLE (layer));
 
    ptr = buf = g_new (guchar, PREVIEW_BPP * PREVIEW_SIZE_X * PREVIEW_SIZE_Y);
    gdrw = &l_gdrw;
@@ -2548,8 +2548,8 @@ p_init_gdrw (t_GDRW       *gdrw,
   else
     gdrw->buffer = gimp_drawable_get_buffer (drawable);
 
-  gdrw->width  = gimp_drawable_width  (gdrw->drawable);
-  gdrw->height = gimp_drawable_height (gdrw->drawable);
+  gdrw->width  = gimp_drawable_get_width  (gdrw->drawable);
+  gdrw->height = gimp_drawable_get_height (gdrw->drawable);
 
   gdrw->tile_width  = gimp_tile_width ();
   gdrw->tile_height = gimp_tile_height ();
@@ -2679,8 +2679,8 @@ p_create_pv_image (GimpDrawable  *src_drawable,
   gint          src_width;
   gint          src_height;
 
-  src_width  = gimp_drawable_width  (src_drawable);
-  src_height = gimp_drawable_height (src_drawable);
+  src_width  = gimp_drawable_get_width  (src_drawable);
+  src_height = gimp_drawable_get_height (src_drawable);
 
   new_image = gimp_image_new (PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
                               gimp_image_get_base_type (gimp_item_get_image (GIMP_ITEM (src_drawable))));
@@ -3217,10 +3217,10 @@ p_main_bend (BenderDialog *cd,
 
    interpolation = cd->smoothing;
    image = gimp_item_get_image (GIMP_ITEM (original_drawable));
-   gimp_drawable_offsets (original_drawable, &offset_x, &offset_y);
+   gimp_drawable_get_offsets (original_drawable, &offset_x, &offset_y);
 
-   center_x = offset_x + (gimp_drawable_width  (original_drawable) / 2 );
-   center_y = offset_y + (gimp_drawable_height (original_drawable) / 2 );
+   center_x = offset_x + (gimp_drawable_get_width  (original_drawable) / 2 );
+   center_y = offset_y + (gimp_drawable_get_height (original_drawable) / 2 );
 
    /* always copy original_drawable to a tmp src_layer */
    tmp_layer = gimp_layer_copy (GIMP_LAYER (original_drawable));
@@ -3245,8 +3245,8 @@ p_main_bend (BenderDialog *cd,
 
    src_drawable = GIMP_DRAWABLE (tmp_layer);
 
-   src_width  = gimp_drawable_width  (GIMP_DRAWABLE (tmp_layer));
-   src_height = gimp_drawable_height (GIMP_DRAWABLE (tmp_layer));
+   src_width  = gimp_drawable_get_width  (GIMP_DRAWABLE (tmp_layer));
+   src_height = gimp_drawable_get_height (GIMP_DRAWABLE (tmp_layer));
 
    xmax = ymax = src_width -1;
    cd->curve_ptr[OUTLINE_UPPER] = g_new (gint32, 1+xmax);
@@ -3307,8 +3307,8 @@ p_main_bend (BenderDialog *cd,
    /* set offsets of the resulting new layer
     *(center == center of original_drawable)
     */
-   offset_x = center_x - (gimp_drawable_width  (dst_drawable) / 2 );
-   offset_y = center_y - (gimp_drawable_height (dst_drawable) / 2 );
+   offset_x = center_x - (gimp_drawable_get_width  (dst_drawable) / 2 );
+   offset_y = center_y - (gimp_drawable_get_height (dst_drawable) / 2 );
    gimp_layer_set_offsets (GIMP_LAYER (dst_drawable), offset_x, offset_y);
 
    /* delete the temp layer */

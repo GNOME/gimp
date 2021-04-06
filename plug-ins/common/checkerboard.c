@@ -335,7 +335,7 @@ do_checkerboard_pattern (GimpDrawable *drawable,
 
       gimp_preview_get_position (preview, &x1, &y1);
       gimp_preview_get_size (preview, &width, &height);
-      bpp = gimp_drawable_bpp (drawable);
+      bpp = gimp_drawable_get_bpp (drawable);
       buffer = g_new (guchar, width * height * bpp);
 
       for (i = 0; i < width * height; i++)
@@ -524,8 +524,8 @@ checkerboard_dialog (GimpImage    *image,
   gimp_image_get_resolution (image, &xres, &yres);
   unit = gimp_image_get_unit (image);
 
-  width  = gimp_drawable_width (drawable);
-  height = gimp_drawable_height (drawable);
+  width  = gimp_drawable_get_width (drawable);
+  height = gimp_drawable_get_height (drawable);
   size   = MIN (width, height);
 
   size_entry = gimp_size_entry_new (1, unit, "%a",

@@ -1117,7 +1117,7 @@ ReadImage (FILE     *fp,
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-  bpp = gimp_drawable_bpp (GIMP_DRAWABLE (layer));
+  bpp = gimp_drawable_get_bpp (GIMP_DRAWABLE (layer));
 
   /* Allocate the data. */
   max_tileheight = gimp_tile_height ();

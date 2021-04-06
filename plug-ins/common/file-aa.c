@@ -252,8 +252,8 @@ save_aa (GFile         *file,
 
   memcpy (&format, aa_formats[output_type], sizeof (aa_format));
 
-  format.width  = gimp_drawable_width  (drawable) / 2;
-  format.height = gimp_drawable_height (drawable) / 2;
+  format.width  = gimp_drawable_get_width  (drawable) / 2;
+  format.height = gimp_drawable_get_height (drawable) / 2;
 
   /* Get a libaa context which will save its output to filename. */
   savedata.name   = g_file_get_path (file);

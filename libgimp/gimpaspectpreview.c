@@ -249,8 +249,8 @@ gimp_aspect_preview_style_updated (GtkWidget *widget)
       gint                      preview_height;
       gint                      size;
 
-      width  = gimp_drawable_width  (priv->drawable);
-      height = gimp_drawable_height (priv->drawable);
+      width  = gimp_drawable_get_width  (priv->drawable);
+      height = gimp_drawable_get_height (priv->drawable);
 
       gtk_widget_style_get (widget,
                             "size", &size,
@@ -331,7 +331,7 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (area),
                               0, 0, width, height,
                               gimp_drawable_type (priv->drawable),
-                              src, width * gimp_drawable_bpp (priv->drawable),
+                              src, width * gimp_drawable_get_bpp (priv->drawable),
                               buffer, rowstride,
                               sel, width);
 
@@ -353,8 +353,8 @@ gimp_aspect_preview_transform (GimpPreview *preview,
 
   gimp_preview_get_size (preview, &width, &height);
 
-  *dest_x = (gdouble) src_x * width  / gimp_drawable_width  (priv->drawable);
-  *dest_y = (gdouble) src_y * height / gimp_drawable_height (priv->drawable);
+  *dest_x = (gdouble) src_x * width  / gimp_drawable_get_width  (priv->drawable);
+  *dest_y = (gdouble) src_y * height / gimp_drawable_get_height (priv->drawable);
 }
 
 static void
@@ -370,8 +370,8 @@ gimp_aspect_preview_untransform (GimpPreview *preview,
 
   gimp_preview_get_size (preview, &width, &height);
 
-  *dest_x = (gdouble) src_x * gimp_drawable_width  (priv->drawable) / width;
-  *dest_y = (gdouble) src_y * gimp_drawable_height (priv->drawable) / height;
+  *dest_x = (gdouble) src_x * gimp_drawable_get_width  (priv->drawable) / width;
+  *dest_y = (gdouble) src_y * gimp_drawable_get_height (priv->drawable) / height;
 }
 
 static void
@@ -388,8 +388,8 @@ gimp_aspect_preview_set_drawable (GimpAspectPreview *preview,
 
   priv->drawable = drawable;
 
-  d_width  = gimp_drawable_width  (priv->drawable);
-  d_height = gimp_drawable_height (priv->drawable);
+  d_width  = gimp_drawable_get_width  (priv->drawable);
+  d_height = gimp_drawable_get_height (priv->drawable);
 
   if (d_width > d_height)
     {

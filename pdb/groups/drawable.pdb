@@ -518,7 +518,7 @@ CODE
     );
 }
 
-sub drawable_bpp {
+sub drawable_get_bpp {
     $blurb = 'Returns the bytes per pixel.';
 
     $help = <<'HELP';
@@ -548,7 +548,7 @@ CODE
     );
 }
 
-sub drawable_width {
+sub drawable_get_width {
     $blurb = 'Returns the width of the drawable.';
     $help  = "This procedure returns the specified drawable's width in pixels.";
 
@@ -573,7 +573,7 @@ CODE
     );
 }
 
-sub drawable_height {
+sub drawable_get_height {
     $blurb = 'Returns the height of the drawable.';
     $help  = "This procedure returns the specified drawable's height in pixels.";
 
@@ -598,7 +598,7 @@ CODE
     );
 }
 
-sub drawable_offsets {
+sub drawable_get_offsets {
     $blurb = 'Returns the offsets for the drawable.';
 
     $help = <<'HELP';
@@ -1019,10 +1019,10 @@ CODE
             drawable_is_rgb
             drawable_is_gray
             drawable_is_indexed
-            drawable_bpp
-            drawable_width
-            drawable_height
-            drawable_offsets
+            drawable_get_bpp
+            drawable_get_width
+            drawable_get_height
+            drawable_get_offsets
             drawable_mask_bounds
             drawable_mask_intersect
             drawable_merge_shadow

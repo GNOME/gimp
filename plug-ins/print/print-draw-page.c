@@ -93,8 +93,8 @@ print_surface_from_drawable (GimpDrawable  *drawable,
   const Babl         *format;
   cairo_surface_t    *surface;
   cairo_status_t      status;
-  const gint          width    = gimp_drawable_width  (drawable);
-  const gint          height   = gimp_drawable_height (drawable);
+  const gint          width    = gimp_drawable_get_width  (drawable);
+  const gint          height   = gimp_drawable_get_height (drawable);
   GeglBufferIterator *iter;
   guchar             *pixels;
   gint                stride;

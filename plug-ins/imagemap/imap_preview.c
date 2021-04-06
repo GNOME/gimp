@@ -93,8 +93,8 @@ render_rgb_image (Preview_t *preview_base,
   gint        dwidth, dheight, pwidth, pheight;
   GtkWidget  *preview = preview_base->preview;
 
-  dwidth  = gimp_drawable_width (drawable);
-  dheight = gimp_drawable_height (drawable);
+  dwidth  = gimp_drawable_get_width (drawable);
+  dheight = gimp_drawable_get_height (drawable);
   pwidth  = preview_base->widget_width;
   pheight = preview_base->widget_height;
 
@@ -289,8 +289,8 @@ make_preview (GimpDrawable *drawable)
                      G_CALLBACK (handle_drop),
                      NULL);
 
-   data->widget_width  = data->width  = gimp_drawable_width (drawable);
-   data->widget_height = data->height = gimp_drawable_height (drawable);
+   data->widget_width  = data->width  = gimp_drawable_get_width (drawable);
+   data->widget_height = data->height = gimp_drawable_get_height (drawable);
    gtk_widget_set_size_request (preview, data->widget_width,
                                 data->widget_height);
 

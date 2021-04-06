@@ -823,7 +823,7 @@ save_image (GFile      *file,
       cols = gegl_buffer_get_width  (buffer);
       rows = gegl_buffer_get_height (buffer);
 
-      gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+      gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
       bytes = babl_format_get_bytes_per_pixel (format);
 

@@ -1036,7 +1036,7 @@ save_image (GFile         *file,
   buffer = gimp_drawable_get_buffer (drawable);
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
-  bpp    = gimp_drawable_bpp (drawable);
+  bpp    = gimp_drawable_get_bpp (drawable);
 
   /* Figure out which color is black, and which is white. */
   dark = 0;
@@ -1338,7 +1338,7 @@ save_dialog (GimpDrawable  *drawable,
   spinbutton = gimp_prop_spin_button_new (config, "hot-spot-x",
                                           1, 10, 0);
   gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
-                             0, gimp_drawable_width (drawable) - 1);
+                             0, gimp_drawable_get_width (drawable) - 1);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Hot spot _X:"), 0.0, 0.5,
                             spinbutton, 1);
@@ -1346,7 +1346,7 @@ save_dialog (GimpDrawable  *drawable,
   spinbutton = gimp_prop_spin_button_new (config, "hot-spot-y",
                                           1, 10, 0);
   gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
-                             0, gimp_drawable_width (drawable) - 1);
+                             0, gimp_drawable_get_width (drawable) - 1);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Hot spot _Y:"), 0.0, 0.5,
                             spinbutton, 1);

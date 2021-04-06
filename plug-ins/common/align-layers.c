@@ -497,7 +497,7 @@ align_layers_gather_data (GimpLayer **layers,
   /* 0 is the top layer */
   for (index = 0; index < layer_num; index++)
     {
-      gimp_drawable_offsets (GIMP_DRAWABLE (layers[index]), &orig_x, &orig_y);
+      gimp_drawable_get_offsets (GIMP_DRAWABLE (layers[index]), &orig_x, &orig_y);
 
       align_layers_get_align_offsets (GIMP_DRAWABLE (layers[index]),
                                       &offset_x,
@@ -513,7 +513,7 @@ align_layers_gather_data (GimpLayer **layers,
 
   if (VALS.base_is_bottom_layer)
     {
-      gimp_drawable_offsets (GIMP_DRAWABLE (background), &orig_x, &orig_y);
+      gimp_drawable_get_offsets (GIMP_DRAWABLE (background), &orig_x, &orig_y);
 
       align_layers_get_align_offsets (GIMP_DRAWABLE (background),
                                       &offset_x,
@@ -559,7 +559,7 @@ align_layers_perform_alignment (GimpLayer **layers,
       gint offset_x;
       gint offset_y;
 
-      gimp_drawable_offsets (GIMP_DRAWABLE (layers[index]), &orig_x, &orig_y);
+      gimp_drawable_get_offsets (GIMP_DRAWABLE (layers[index]), &orig_x, &orig_y);
 
       align_layers_get_align_offsets (GIMP_DRAWABLE (layers[index]),
                                       &offset_x,
@@ -615,8 +615,8 @@ align_layers_get_align_offsets (GimpDrawable *drawable,
                                 gint         *x,
                                 gint         *y)
 {
-  gint width  = gimp_drawable_width  (drawable);
-  gint height = gimp_drawable_height (drawable);
+  gint width  = gimp_drawable_get_width  (drawable);
+  gint height = gimp_drawable_get_height (drawable);
 
   switch (VALS.h_base)
     {

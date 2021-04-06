@@ -1440,7 +1440,7 @@ save_image (GFile         *file,
       /* get framename of this layer */
       framename = gimp_item_get_name (GIMP_ITEM (drawable));
       /* get offset of this layer. */
-      gimp_drawable_offsets (drawable, &layer_xoffset, &layer_yoffset);
+      gimp_drawable_get_offsets (drawable, &layer_xoffset, &layer_yoffset);
 
       /*
        * layer dimension check.
@@ -2244,7 +2244,7 @@ get_intersection_of_frames (GimpImage *image)
     {
       GimpDrawable *drawable = list->data;
 
-      if (! gimp_drawable_offsets (drawable, &x_off, &y_off))
+      if (! gimp_drawable_get_offsets (drawable, &x_off, &y_off))
         {
           g_list_free (layers);
           return NULL;
@@ -2252,8 +2252,8 @@ get_intersection_of_frames (GimpImage *image)
 
       x1 = MAX (x1, x_off);
       y1 = MAX (y1, y_off);
-      x2 = MIN (x2, x_off + gimp_drawable_width  (drawable) - 1);
-      y2 = MIN (y2, y_off + gimp_drawable_height (drawable) - 1);
+      x2 = MIN (x2, x_off + gimp_drawable_get_width  (drawable) - 1);
+      y2 = MIN (y2, y_off + gimp_drawable_get_height (drawable) - 1);
     }
 
   g_list_free (layers);

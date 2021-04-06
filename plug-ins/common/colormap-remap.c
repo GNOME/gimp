@@ -386,7 +386,7 @@ remap (GimpImage *image,
 
   for (list = layers; list; list = list->next)
     pixels +=
-      gimp_drawable_width (list->data) * gimp_drawable_height (list->data);
+      gimp_drawable_get_width (list->data) * gimp_drawable_get_height (list->data);
 
   for (list = layers; list; list = list->next)
     {

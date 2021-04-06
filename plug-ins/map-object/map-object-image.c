@@ -321,8 +321,8 @@ image_setup (GimpDrawable *drawable,
                                       &border_w, &border_h))
     return FALSE;
 
-  width  = gimp_drawable_width  (input_drawable);
-  height = gimp_drawable_height (input_drawable);
+  width  = gimp_drawable_get_width  (input_drawable);
+  height = gimp_drawable_get_height (input_drawable);
 
   source_buffer = gimp_drawable_get_buffer (input_drawable);
 

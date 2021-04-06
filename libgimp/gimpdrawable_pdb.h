@@ -40,10 +40,10 @@ gboolean                 gimp_drawable_has_alpha             (GimpDrawable      
 gboolean                 gimp_drawable_is_rgb                (GimpDrawable               *drawable);
 gboolean                 gimp_drawable_is_gray               (GimpDrawable               *drawable);
 gboolean                 gimp_drawable_is_indexed            (GimpDrawable               *drawable);
-gint                     gimp_drawable_bpp                   (GimpDrawable               *drawable);
-gint                     gimp_drawable_width                 (GimpDrawable               *drawable);
-gint                     gimp_drawable_height                (GimpDrawable               *drawable);
-gboolean                 gimp_drawable_offsets               (GimpDrawable               *drawable,
+gint                     gimp_drawable_get_bpp               (GimpDrawable               *drawable);
+gint                     gimp_drawable_get_width             (GimpDrawable               *drawable);
+gint                     gimp_drawable_get_height            (GimpDrawable               *drawable);
+gboolean                 gimp_drawable_get_offsets           (GimpDrawable               *drawable,
                                                               gint                       *offset_x,
                                                               gint                       *offset_y);
 gboolean                 gimp_drawable_mask_bounds           (GimpDrawable               *drawable,

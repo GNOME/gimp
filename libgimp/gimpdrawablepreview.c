@@ -342,8 +342,8 @@ _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
     }
   else
     {
-      width  = gimp_drawable_width  (drawable);
-      height = gimp_drawable_height (drawable);
+      width  = gimp_drawable_get_width  (drawable);
+      height = gimp_drawable_get_height (drawable);
     }
 
   if (width > height)
@@ -436,7 +436,7 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
       gint draw_x, draw_y;
       gint draw_width, draw_height;
 
-      gimp_drawable_offsets (priv->drawable, &offset_x, &offset_y);
+      gimp_drawable_get_offsets (priv->drawable, &offset_x, &offset_y);
 
       if (gimp_drawable_mask_intersect (priv->drawable,
                                         &mask_x, &mask_y,
@@ -575,12 +575,12 @@ _gimp_drawable_preview_get_bounds (GimpDrawable *drawable,
   g_return_val_if_fail (gimp_item_is_valid (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (gimp_item_is_drawable (GIMP_ITEM (drawable)), FALSE);
 
-  width  = gimp_drawable_width (drawable);
-  height = gimp_drawable_height (drawable);
+  width  = gimp_drawable_get_width (drawable);
+  height = gimp_drawable_get_height (drawable);
 
   retval = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+  gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
   *xmin = MAX3 (x1 - SELECTION_BORDER, 0, - offset_x);
   *ymin = MAX3 (y1 - SELECTION_BORDER, 0, - offset_y);

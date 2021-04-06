@@ -264,8 +264,8 @@ qbist_run (GimpProcedure        *procedure,
   config = gimp_procedure_create_config (procedure);
   gimp_procedure_config_begin_run (config, image, run_mode, args);
 
-  img_width  = gimp_drawable_width (drawable);
-  img_height = gimp_drawable_height (drawable);
+  img_width  = gimp_drawable_get_width (drawable);
+  img_height = gimp_drawable_get_height (drawable);
 
   if (! gimp_drawable_is_rgb (drawable))
     {

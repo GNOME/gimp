@@ -356,8 +356,8 @@ tile (GimpImage     *image,
   GeglBuffer   *src_buffer;
   gint          dst_width  = tvals.new_width;
   gint          dst_height = tvals.new_height;
-  gint          src_width  = gimp_drawable_width (drawable);
-  gint          src_height = gimp_drawable_height (drawable);
+  gint          src_width  = gimp_drawable_get_width (drawable);
+  gint          src_height = gimp_drawable_get_height (drawable);
 
   GimpImageBaseType  image_type   = GIMP_RGB;
 
@@ -476,8 +476,8 @@ tile_dialog (GimpImage    *image,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  width  = gimp_drawable_width (drawable);
-  height = gimp_drawable_height (drawable);
+  width  = gimp_drawable_get_width (drawable);
+  height = gimp_drawable_get_height (drawable);
   unit   = gimp_image_get_unit (image);
   gimp_image_get_resolution (image, &xres, &yres);
 

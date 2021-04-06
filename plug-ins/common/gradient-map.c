@@ -255,8 +255,8 @@ map_run (GimpProcedure         *procedure,
   gimp_drawable_merge_shadow (drawable, TRUE);
 
   gimp_drawable_update (drawable, 0, 0,
-                        gimp_drawable_width  (drawable),
-                        gimp_drawable_height (drawable));
+                        gimp_drawable_get_width  (drawable),
+                        gimp_drawable_get_height (drawable));
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();

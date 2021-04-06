@@ -2639,8 +2639,8 @@ dlg_setup_gflare (void)
 void
 dlg_preview_calc_window (void)
 {
-  gint     width  = gimp_drawable_width  (drawable);
-  gint     height = gimp_drawable_height (drawable);
+  gint     width  = gimp_drawable_get_width  (drawable);
+  gint     height = gimp_drawable_get_height (drawable);
   gint     is_wide;
   gdouble  offx, offy;
 
@@ -2670,8 +2670,8 @@ dlg_preview_calc_window (void)
 void
 ed_preview_calc_window (void)
 {
-  gint     width  = gimp_drawable_width  (drawable);
-  gint     height = gimp_drawable_height (drawable);
+  gint     width  = gimp_drawable_get_width  (drawable);
+  gint     height = gimp_drawable_get_height (drawable);
   gint     is_wide;
   gdouble  offx, offy;
 
@@ -2788,8 +2788,8 @@ dlg_preview_render_func (Preview  *preview,
                          gpointer  data)
 {
   GeglBuffer *src_buffer = data;
-  gint        width      = gimp_drawable_width  (drawable);
-  gint        height     = gimp_drawable_height (drawable);
+  gint        width      = gimp_drawable_get_width  (drawable);
+  gint        height     = gimp_drawable_get_height (drawable);
   gint        x;
   gint        dx, dy;         /* drawable x, y */
   guchar     *src_row, *src;
@@ -2888,11 +2888,11 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
                           _("_X:"), pvals.xcenter, xres,
                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0, gimp_drawable_width (drawable),
+                          0, gimp_drawable_get_width (drawable),
 
                           _("_Y:"), pvals.ycenter, yres,
                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0, gimp_drawable_height (drawable));
+                          0, gimp_drawable_get_height (drawable));
 
   chain = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (center));
 
@@ -2919,7 +2919,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   row = 0;
 
   scale = gimp_scale_entry_new (_("_Radius:"), pvals.radius, 0.0, GIMP_MAX_IMAGE_SIZE, 1);
-  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0.0, gimp_drawable_width (drawable) / 2, TRUE);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0.0, gimp_drawable_get_width (drawable) / 2, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.radius);

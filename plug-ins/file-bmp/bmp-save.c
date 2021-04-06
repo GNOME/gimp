@@ -152,8 +152,8 @@ save_image (GFile         *file,
   buffer = gimp_drawable_get_buffer (drawable);
 
   drawable_type   = gimp_drawable_type   (drawable);
-  drawable_width  = gimp_drawable_width  (drawable);
-  drawable_height = gimp_drawable_height (drawable);
+  drawable_width  = gimp_drawable_get_width  (drawable);
+  drawable_height = gimp_drawable_get_height (drawable);
 
   switch (drawable_type)
     {

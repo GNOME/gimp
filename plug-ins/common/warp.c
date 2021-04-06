@@ -893,8 +893,8 @@ blur16 (GimpDrawable *drawable)
   x2 = x1 + width;
   y2 = y1 + height;
 
-  width  = gimp_drawable_width  (drawable);     /* size of input drawable*/
-  height = gimp_drawable_height (drawable);
+  width  = gimp_drawable_get_width  (drawable);     /* size of input drawable*/
+  height = gimp_drawable_get_height (drawable);
 
   format = get_u8_format (drawable);
 
@@ -1099,8 +1099,8 @@ diff (GimpDrawable  *drawable,
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
-  width  = gimp_drawable_width  (drawable);
-  height = gimp_drawable_height (drawable);
+  width  = gimp_drawable_get_width  (drawable);
+  height = gimp_drawable_get_height (drawable);
 
   src_format = get_u8_format (drawable);
   src_bytes  = babl_format_get_bytes_per_pixel (src_format);
@@ -1438,8 +1438,8 @@ warp (GimpDrawable *orig_draw)
   x2 = x1 + width;
   y2 = y1 + height;
 
-  width  = gimp_drawable_width  (orig_draw);
-  height = gimp_drawable_height (orig_draw);
+  width  = gimp_drawable_get_width  (orig_draw);
+  height = gimp_drawable_get_height (orig_draw);
 
   /* generate x,y differential images (arrays) */
   diff (disp_map, &map_x, &map_y);
@@ -1538,8 +1538,8 @@ warp_one (GimpDrawable *draw,
   x2 = x1 + width;
   y2 = y1 + height;
 
-  width  = gimp_drawable_width  (draw);
-  height = gimp_drawable_height (draw);
+  width  = gimp_drawable_get_width  (draw);
+  height = gimp_drawable_get_height (draw);
 
 
   max_progress = (x2 - x1) * (y2 - y1);
@@ -1922,6 +1922,6 @@ warp_map_constrain (GimpImage *image,
 {
   GimpDrawable *d = data;
 
-  return (gimp_drawable_width  (GIMP_DRAWABLE (item)) == gimp_drawable_width  (d) &&
-          gimp_drawable_height (GIMP_DRAWABLE (item)) == gimp_drawable_height (d));
+  return (gimp_drawable_get_width  (GIMP_DRAWABLE (item)) == gimp_drawable_get_width  (d) &&
+          gimp_drawable_get_height (GIMP_DRAWABLE (item)) == gimp_drawable_get_height (d));
 }

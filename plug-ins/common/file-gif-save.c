@@ -682,12 +682,12 @@ sanity_check (GFile        *file,
       gint          offset_x;
       gint          offset_y;
 
-      gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+      gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
       if (offset_x < 0 ||
           offset_y < 0 ||
-          offset_x + gimp_drawable_width (drawable) > image_width ||
-          offset_y + gimp_drawable_height (drawable) > image_height)
+          offset_x + gimp_drawable_get_width (drawable) > image_width ||
+          offset_y + gimp_drawable_get_height (drawable) > image_height)
         {
           g_list_free (layers);
 
@@ -974,9 +974,9 @@ save_image (GFile         *file,
 
       drawable_type = gimp_drawable_type (drawable);
       buffer = gimp_drawable_get_buffer (drawable);
-      gimp_drawable_offsets (drawable, &offset_x, &offset_y);
-      cols = gimp_drawable_width (drawable);
-      rows = gimp_drawable_height (drawable);
+      gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
+      cols = gimp_drawable_get_width (drawable);
+      rows = gimp_drawable_get_height (drawable);
       rowstride = cols;
 
       pixels = g_new (guchar, (cols * rows *

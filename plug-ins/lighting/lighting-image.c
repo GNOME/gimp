@@ -358,8 +358,8 @@ image_setup (GimpDrawable *drawable,
   if (! ret)
     return FALSE;
 
-  width  = gimp_drawable_width  (input_drawable);
-  height = gimp_drawable_height (input_drawable);
+  width  = gimp_drawable_get_width  (input_drawable);
+  height = gimp_drawable_get_height (input_drawable);
 
   source_buffer = gimp_drawable_get_buffer (input_drawable);
 
@@ -399,8 +399,8 @@ envmap_setup (GimpDrawable *envmap)
 {
   if (envmap && ! env_buffer)
     {
-      env_width  = gimp_drawable_width  (envmap);
-      env_height = gimp_drawable_height (envmap);
+      env_width  = gimp_drawable_get_width  (envmap);
+      env_height = gimp_drawable_get_height (envmap);
 
       env_buffer = gimp_drawable_get_buffer (envmap);
     }

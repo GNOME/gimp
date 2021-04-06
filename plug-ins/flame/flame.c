@@ -259,8 +259,8 @@ flame_run (GimpProcedure        *procedure,
   gimp_get_data (PLUG_IN_PROC, &config);
   maybe_init_cp ();
 
-  config.cp.width  = gimp_drawable_width  (drawable);
-  config.cp.height = gimp_drawable_height (drawable);
+  config.cp.width  = gimp_drawable_get_width  (drawable);
+  config.cp.height = gimp_drawable_get_height (drawable);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -364,8 +364,8 @@ flame (GimpDrawable *drawable)
   guchar     *tmp;
   gint        bytes;
 
-  width  = gimp_drawable_width  (drawable);
-  height = gimp_drawable_height (drawable);
+  width  = gimp_drawable_get_width  (drawable);
+  height = gimp_drawable_get_height (drawable);
 
   if (gimp_drawable_has_alpha (drawable))
     format = babl_format ("R'G'B'A u8");

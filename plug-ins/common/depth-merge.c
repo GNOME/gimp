@@ -980,10 +980,10 @@ dm_constraint (GimpImage *image,
   DepthMerge   *dm       = data;
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
 
-  return ((gimp_drawable_width (drawable) ==
-           gimp_drawable_width (dm->resultDrawable)) &&
-          (gimp_drawable_height (drawable) ==
-           gimp_drawable_height (dm->resultDrawable)) &&
+  return ((gimp_drawable_get_width (drawable) ==
+           gimp_drawable_get_width (dm->resultDrawable)) &&
+          (gimp_drawable_get_height (drawable) ==
+           gimp_drawable_get_height (dm->resultDrawable)) &&
           ((gimp_drawable_is_rgb (drawable) &&
             (gimp_drawable_is_rgb (dm->resultDrawable))) ||
            gimp_drawable_is_gray (drawable)));

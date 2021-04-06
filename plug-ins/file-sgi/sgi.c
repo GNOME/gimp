@@ -554,8 +554,8 @@ save_image (GFile        *file,
    * Get the drawable for the current image...
    */
 
-  width  = gimp_drawable_width  (drawable);
-  height = gimp_drawable_height (drawable);
+  width  = gimp_drawable_get_width  (drawable);
+  height = gimp_drawable_get_height (drawable);
 
   buffer = gimp_drawable_get_buffer (drawable);
 

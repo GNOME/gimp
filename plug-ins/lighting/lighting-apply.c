@@ -94,7 +94,7 @@ compute_image (void)
   has_alpha = gimp_drawable_has_alpha (output_drawable);
 
   /* FIXME */
-  obpp = has_alpha ? 4 : 3; //gimp_drawable_bpp (output_drawable);
+  obpp = has_alpha ? 4 : 3; //gimp_drawable_get_bpp (output_drawable);
 
   row = g_new (guchar, obpp * width);
 

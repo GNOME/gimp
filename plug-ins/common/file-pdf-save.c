@@ -1608,7 +1608,7 @@ get_layer_color (GimpLayer *layer,
       return col;
     }
 
-  if (gimp_drawable_bpp (GIMP_DRAWABLE (layer)) >= 3)
+  if (gimp_drawable_get_bpp (GIMP_DRAWABLE (layer)) >= 3)
     {
       /* Are we in RGB mode? */
 
@@ -1702,7 +1702,7 @@ drawText (GimpLayer *layer,
   cairo_get_font_options (cr, options);
 
   /* Position */
-  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x, &y);
+  gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
   cairo_translate (cr, x, y);
 
   /* Color */
@@ -1828,11 +1828,11 @@ drawText (GimpLayer *layer,
   /* Width */
   if (! PANGO_GRAVITY_IS_VERTICAL (pango_context_get_base_gravity (context)))
     pango_layout_set_width (layout,
-                            gimp_drawable_width (GIMP_DRAWABLE (layer)) *
+                            gimp_drawable_get_width (GIMP_DRAWABLE (layer)) *
                             PANGO_SCALE);
   else
     pango_layout_set_width (layout,
-                            gimp_drawable_height (GIMP_DRAWABLE (layer)) *
+                            gimp_drawable_get_height (GIMP_DRAWABLE (layer)) *
                             PANGO_SCALE);
 
   /* Justification, and Alignment */
@@ -1884,14 +1884,14 @@ drawText (GimpLayer *layer,
   if (dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
       dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT)
     {
-      cairo_translate (cr, gimp_drawable_width (GIMP_DRAWABLE (layer)), 0);
+      cairo_translate (cr, gimp_drawable_get_width (GIMP_DRAWABLE (layer)), 0);
       cairo_rotate (cr, G_PI_2);
     }
 
   if (dir == GIMP_TEXT_DIRECTION_TTB_LTR ||
       dir == GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT)
     {
-      cairo_translate (cr, 0, gimp_drawable_height (GIMP_DRAWABLE (layer)));
+      cairo_translate (cr, 0, gimp_drawable_get_height (GIMP_DRAWABLE (layer)));
       cairo_rotate (cr, -G_PI_2);
     }
 
@@ -1978,7 +1978,7 @@ draw_layer (GimpLayer   **layers,
             return FALSE;
         }
 
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x, &y);
+      gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
 
       if (! gimp_item_is_text_layer (GIMP_ITEM (layer)) || optimize.convert_text)
         {
@@ -1990,8 +1990,8 @@ draw_layer (GimpLayer   **layers,
           layer_color = get_layer_color (layer, &single_color);
 
           cairo_rectangle (cr, x, y,
-                           gimp_drawable_width  (GIMP_DRAWABLE (layer)),
-                           gimp_drawable_height (GIMP_DRAWABLE (layer)));
+                           gimp_drawable_get_width  (GIMP_DRAWABLE (layer)),
+                           gimp_drawable_get_height (GIMP_DRAWABLE (layer)));
 
           if (optimize.vectorize && single_color)
             {

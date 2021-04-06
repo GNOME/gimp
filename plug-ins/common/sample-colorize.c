@@ -2546,15 +2546,15 @@ init_gdrw (t_GDRW       *gdrw,
   else
     gdrw->buffer = gimp_drawable_get_buffer (drawable);
 
-  gdrw->width = gimp_drawable_width (drawable);
-  gdrw->height = gimp_drawable_height (drawable);
+  gdrw->width = gimp_drawable_get_width (drawable);
+  gdrw->height = gimp_drawable_get_height (drawable);
   gdrw->tile_width = gimp_tile_width ();
   gdrw->tile_height = gimp_tile_height ();
   gdrw->shadow = shadow;
   gdrw->seldeltax = 0;
   gdrw->seldeltay = 0;
   /* get offsets within the image */
-  gimp_drawable_offsets (gdrw->drawable, &offsetx, &offsety);
+  gimp_drawable_get_offsets (gdrw->drawable, &offsetx, &offsety);
 
   if (! gimp_drawable_mask_intersect (gdrw->drawable,
                                       &gdrw->x1, &gdrw->y1, &w, &h))
@@ -2596,8 +2596,8 @@ init_gdrw (t_GDRW       *gdrw,
       sel_gdrw->buffer = gimp_drawable_get_buffer (sel_channel);
       sel_gdrw->format = babl_format ("Y u8");
 
-      sel_gdrw->width = gimp_drawable_width (sel_channel);
-      sel_gdrw->height = gimp_drawable_height (sel_channel);
+      sel_gdrw->width = gimp_drawable_get_width (sel_channel);
+      sel_gdrw->height = gimp_drawable_get_height (sel_channel);
 
       sel_gdrw->tile_width = gimp_tile_width ();
       sel_gdrw->tile_height = gimp_tile_height ();
@@ -2615,7 +2615,7 @@ init_gdrw (t_GDRW       *gdrw,
       /* offset delta between drawable and selection
        * (selection always has image size and should always have offsets of 0 )
        */
-      gimp_drawable_offsets (sel_channel, &sel_offsetx, &sel_offsety);
+      gimp_drawable_get_offsets (sel_channel, &sel_offsetx, &sel_offsety);
       gdrw->seldeltax = offsetx - sel_offsetx;
       gdrw->seldeltay = offsety - sel_offsety;
 

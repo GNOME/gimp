@@ -211,8 +211,8 @@ ico_save_init (GimpImage   *image,
         }
 
       /* vista icons */
-      if (gimp_drawable_width  (iter->data) > 255 ||
-          gimp_drawable_height (iter->data) > 255)
+      if (gimp_drawable_get_width  (iter->data) > 255 ||
+          gimp_drawable_get_height (iter->data) > 255)
         {
           info->compress[i] = TRUE;
         }
@@ -767,8 +767,8 @@ ico_write_png (FILE         *fp,
   palette = NULL;
   buf = NULL;
 
-  width = gimp_drawable_width (layer);
-  height = gimp_drawable_height (layer);
+  width = gimp_drawable_get_width (layer);
+  height = gimp_drawable_get_height (layer);
 
   png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   if ( !png_ptr )
@@ -847,8 +847,8 @@ ico_write_icon (FILE         *fp,
   D(("Creating data structures for icon %i ------------------------\n",
      num_icon));
 
-  width = gimp_drawable_width (layer);
-  height = gimp_drawable_height (layer);
+  width = gimp_drawable_get_width (layer);
+  height = gimp_drawable_get_height (layer);
 
   header.header_size     = 40;
   header.width          = width;
@@ -1132,8 +1132,8 @@ ico_save_image (GFile      *file,
     {
       gimp_progress_update ((gdouble)i / (gdouble)info.num_icons);
 
-      width = gimp_drawable_width (iter->data);
-      height = gimp_drawable_height (iter->data);
+      width = gimp_drawable_get_width (iter->data);
+      height = gimp_drawable_get_height (iter->data);
       if (width <= 255 && height <= 255)
         {
           entries[i].width = width;

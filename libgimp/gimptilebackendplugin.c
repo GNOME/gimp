@@ -177,8 +177,8 @@ _gimp_tile_backend_plugin_new (GimpDrawable *drawable,
   GeglTileBackend       *backend;
   GimpTileBackendPlugin *backend_plugin;
   const Babl            *format = gimp_drawable_get_format (drawable);
-  gint                   width  = gimp_drawable_width  (drawable);
-  gint                   height = gimp_drawable_height (drawable);
+  gint                   width  = gimp_drawable_get_width  (drawable);
+  gint                   height = gimp_drawable_get_height (drawable);
 
   backend = g_object_new (GIMP_TYPE_TILE_BACKEND_PLUGIN,
                           "tile-width",  TILE_WIDTH,
@@ -192,7 +192,7 @@ _gimp_tile_backend_plugin_new (GimpDrawable *drawable,
   backend_plugin->priv->shadow      = shadow;
   backend_plugin->priv->width       = width;
   backend_plugin->priv->height      = height;
-  backend_plugin->priv->bpp         = gimp_drawable_bpp (drawable);
+  backend_plugin->priv->bpp         = gimp_drawable_get_bpp (drawable);
   backend_plugin->priv->ntile_rows  = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
   backend_plugin->priv->ntile_cols  = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
 

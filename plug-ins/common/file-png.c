@@ -1745,7 +1745,7 @@ save_image (GFile        *file,
 
   if (save_offs)
     {
-      gimp_drawable_offsets (drawable, &offx, &offy);
+      gimp_drawable_get_offsets (drawable, &offx, &offy);
       if (offx != 0 || offy != 0)
         png_set_oFFs (pp, info, offx, offy, PNG_OFFSET_PIXEL);
     }

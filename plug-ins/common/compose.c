@@ -979,8 +979,8 @@ compose (const gchar  *compose_type,
     {
       GimpImage *first_image = gimp_item_get_image (inputs[first_object].comp.object);
 
-      width  = gimp_drawable_width  (inputs[first_object].comp.object);
-      height = gimp_drawable_height (inputs[first_object].comp.object);
+      width  = gimp_drawable_get_width  (inputs[first_object].comp.object);
+      height = gimp_drawable_get_height (inputs[first_object].comp.object);
 
       precision = gimp_image_get_precision (first_image);
 
@@ -988,8 +988,8 @@ compose (const gchar  *compose_type,
         {
           if (inputs[j].is_object)
             {
-              if ((width  != gimp_drawable_width  (inputs[j].comp.object)) ||
-                  (height != gimp_drawable_height (inputs[j].comp.object)))
+              if ((width  != gimp_drawable_get_width  (inputs[j].comp.object)) ||
+                  (height != gimp_drawable_get_height (inputs[j].comp.object)))
                 {
                   g_message (_("Drawables have different size"));
                   return NULL;
@@ -1093,8 +1093,8 @@ compose (const gchar  *compose_type,
     gimp_drawable_merge_shadow (GIMP_DRAWABLE (layer_dst), TRUE);
 
   gimp_drawable_update (GIMP_DRAWABLE (layer_dst), 0, 0,
-                        gimp_drawable_width  (GIMP_DRAWABLE (layer_dst)),
-                        gimp_drawable_height (GIMP_DRAWABLE (layer_dst)));
+                        gimp_drawable_get_width  (GIMP_DRAWABLE (layer_dst)),
+                        gimp_drawable_get_height (GIMP_DRAWABLE (layer_dst)));
 
   return image_dst;
 }
@@ -1167,8 +1167,8 @@ compose_dialog (const gchar  *compose_type,
     }
 
   /* Save original image width/height */
-  composeint.width  = gimp_drawable_width  (drawable);
-  composeint.height = gimp_drawable_height (drawable);
+  composeint.width  = gimp_drawable_get_width  (drawable);
+  composeint.height = gimp_drawable_get_height (drawable);
 
   gimp_ui_init (PLUG_IN_BINARY);
 
