@@ -800,9 +800,9 @@ save_dialog (GimpProcedure       *procedure,
                                            gimp_item_get_image (GIMP_ITEM (drawable)));
 
   /* custom quantization tables - now used also for original quality */
-  widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                                                   "use-original-quality", G_TYPE_NONE);
-  gtk_widget_set_sensitive (widget, (orig_quality > 0));
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "use-original-quality",
+                                       (orig_quality > 0), NULL, NULL, FALSE);
 
   /* Quality as a GimpScaleEntry. */
   gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog), "quality", 100.0);

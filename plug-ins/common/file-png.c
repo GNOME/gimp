@@ -2306,10 +2306,9 @@ save_dialog (GimpImage     *image,
                                        "format", GIMP_INT_STORE (store));
   g_object_unref (store);
 
-  gtk_widget_set_sensitive (gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                                              "save-transparent",
-                                                              G_TYPE_NONE),
-                            alpha);
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "save-transparent",
+                                       alpha, NULL, NULL, FALSE);
 
   gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "bkgd");
   gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "offs");

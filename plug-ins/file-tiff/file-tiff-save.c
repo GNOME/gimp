@@ -1299,9 +1299,23 @@ save_dialog (GimpImage     *image,
   GtkWidget       *dialog;
   GtkListStore    *store;
   GtkWidget       *combo;
-  GtkWidget       *frame;
+  gchar          **parasites;
   GimpCompression  compression;
   gboolean         run;
+  gboolean         has_geotiff = FALSE;
+  gint             n_parasites;
+  gint             i;
+
+  parasites = gimp_image_get_parasite_list (image, &n_parasites);
+  for (i = 0; i < n_parasites; i++)
+    {
+      if (g_str_has_prefix (parasites[i], "Gimp_GeoTIFF_"))
+        {
+          has_geotiff = TRUE;
+          break;
+        }
+    }
+  g_strfreev (parasites);
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
                                            GIMP_PROCEDURE_CONFIG (config),
@@ -1327,25 +1341,30 @@ save_dialog (GimpImage     *image,
   combo_set_item_sensitive (combo, GIMP_COMPRESSION_CCITTFAX4, is_monochrome);
   combo_set_item_sensitive (combo, GIMP_COMPRESSION_JPEG,      ! is_indexed);
 
-  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                            "layers-frame", "save-layers", FALSE,
-                                            "crop-layers");
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "layers-frame", "save-layers", FALSE,
+                                    "crop-layers");
   /* TODO: if single-layer TIFF, set the toggle insensitive and show it
    * as unchecked though I don't actually change the config value to
    * keep storing previously chosen value.
    * This used to be so before. We probably need to add some logics in
    * the GimpProcedureDialog generation for such case.
    */
-  gtk_widget_set_sensitive (frame, is_multi_layer);
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "layers-frame", is_multi_layer,
+                                       NULL, NULL, FALSE);
   /* TODO: same for "save-transparent-pixels", we probably want to show
    * it unchecked even though it doesn't matter for processing.
    */
-  gtk_widget_set_sensitive (gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                                              "save-transparent-pixels",
-                                                              G_TYPE_NONE),
-                            has_alpha && ! is_indexed);
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "save-transparent-pixels",
+                                       has_alpha && ! is_indexed,
+                                       NULL, NULL, FALSE);
 
   gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "save-geotiff");
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "save-geotiff",
+                                       has_geotiff, NULL, NULL, FALSE);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "compression",
