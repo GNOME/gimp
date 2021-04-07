@@ -1,0 +1,173 @@
+From 2c09feb4aec61de9603a30bc7b17fd3a312eb762 Mon Sep 17 00:00:00 2001
+From: Knuckx <gitlab@knuckx.co.uk>
+Date: Wed, 7 Apr 2021 14:22:23 +0200
+Subject: [PATCH] =?UTF-8?q?Issue=20GIMP#6394:=20Wacom=20Airbrush=20finger?=
+ =?UTF-8?q?=20wheel=20non-functional=20(on=E2=80=A6?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+… Cintiq 16)
+
+This commit is made from the patches available at:
+https://gitlab.gnome.org/GNOME/gimp/-/issues/6394#note_1041584
+Commit on the gtk-2-24 branch, with some indentation/space cleaning by
+Jehan as only modifications, to be used for GIMP 2.10.x branch.
+---
+ gdk/win32/gdkinput-win32.c | 73 +++++++++++++++++++++++++++++++++++---
+ gdk/win32/gdkinput-win32.h |  4 +--
+ 2 files changed, 71 insertions(+), 6 deletions(-)
+
+diff --git a/gdk/win32/gdkinput-win32.c b/gdk/win32/gdkinput-win32.c
+index 3fe7aaf3de..42f1b44151 100644
+--- a/gdk/win32/gdkinput-win32.c
++++ b/gdk/win32/gdkinput-win32.c
+@@ -39,7 +39,7 @@
+ 
+ #define WINTAB32_DLL "Wintab32.dll"
+ 
+-#define PACKETDATA (PK_CONTEXT | PK_CURSOR | PK_BUTTONS | PK_X | PK_Y  | PK_NORMAL_PRESSURE | PK_ORIENTATION)
++#define PACKETDATA (PK_CONTEXT | PK_CURSOR | PK_BUTTONS | PK_X | PK_Y  | PK_NORMAL_PRESSURE | PK_ORIENTATION | PK_TANGENT_PRESSURE)
+ /* We want everything in absolute mode */
+ #define PACKETMODE (0)
+ #include <pktdef.h>
+@@ -338,7 +338,7 @@ _gdk_input_wintab_init_check (void)
+   UINT ndevices, ncursors, ncsrtypes, firstcsr, hardware;
+   BOOL active;
+   DWORD physid;
+-  AXIS axis_x, axis_y, axis_npressure, axis_or[3];
++  AXIS axis_x, axis_y, axis_npressure, axis_or[3], axis_tpressure;
+   int i, k, n;
+   int devix, cursorix;
+   wchar_t devname[100], csrname[100];
+@@ -447,6 +447,7 @@ _gdk_input_wintab_init_check (void)
+       (*p_WTInfoA) (WTI_DEVICES + devix, DVC_Y, &axis_y);
+       (*p_WTInfoA) (WTI_DEVICES + devix, DVC_NPRESSURE, &axis_npressure);
+       (*p_WTInfoA) (WTI_DEVICES + devix, DVC_ORIENTATION, axis_or);
++      (*p_WTInfoA) (WTI_DEVICES + devix, DVC_TPRESSURE, &axis_tpressure);
+ 
+       defcontext_done = FALSE;
+       if (HIBYTE (specversion) > 1 || LOBYTE (specversion) >= 1)
+@@ -567,7 +568,23 @@ _gdk_input_wintab_init_check (void)
+ 	    gdkdev->pktdata &= ~PK_ORIENTATION;
+ 	  
+ 	  if (gdkdev->pktdata & PK_ORIENTATION)
+-	    gdkdev->info.num_axes += 2; /* x and y tilt */
++            {
++              if (gdkdev->pktdata & PK_TANGENT_PRESSURE) /* If we have a wheel, disable the twist axis */
++                {
++                  axis_or[2].axResolution = 0;
++                }
++              if (axis_or[2].axResolution == 0) /* Check to see if we have a twist axis */
++                {
++                  gdkdev->info.num_axes += 2; /* x and y tilt */
++                }
++              else
++                {
++                  gdkdev->info.num_axes += 3; /* x and y tilt, rotation (twist) */
++                }
++            }
++
++	  if (gdkdev->pktdata & PK_TANGENT_PRESSURE)
++            gdkdev->info.num_axes++; /* Wacom finger wheel */
+ 
+ 	  gdkdev->info.axes = g_new (GdkDeviceAxis, gdkdev->info.num_axes);
+ 	  gdkdev->axes = g_new (GdkAxisInfo, gdkdev->info.num_axes);
+@@ -611,6 +628,7 @@ _gdk_input_wintab_init_check (void)
+ 	      
+ 	      gdkdev->orientation_axes[0] = axis_or[0];
+ 	      gdkdev->orientation_axes[1] = axis_or[1];
++	      gdkdev->orientation_axes[2] = axis_or[2];
+ 	      for (axis = GDK_AXIS_XTILT; axis <= GDK_AXIS_YTILT; axis++)
+ 		{
+ 		  /* Wintab gives us aximuth and altitude, which
+@@ -624,7 +642,41 @@ _gdk_input_wintab_init_check (void)
+ 		  gdkdev->info.axes[k].max = 1.0;
+ 		  k++;
+ 		}
++              if (axis_or[2].axResolution != 0) /* If twist is present */
++                {
++                  /* Wacom's Wintab driver returns the rotation
++                   * of an Art Pen as the orientation twist value.
++                   */
++                  gdkdev->axes[k].resolution = axis_or[2].axResolution / 65535.;
++                  /* These are back to front on purpose. If you put them
++                   * the "correct" way round, rotation will be flipped!
++                   */
++                  gdkdev->axes[k].min_value = axis_or[2].axMax;
++                  gdkdev->axes[k].max_value = axis_or[2].axMin;
++                  /* We're using GDK_AXIS_WHEEL as it's actually
++                   * called Wheel/Rotation to the user.
++                   */
++                  gdkdev->info.axes[k].use = GDK_AXIS_WHEEL;
++                  /* GIMP seems to expect values in the range 0-1 */
++                  gdkdev->info.axes[k].min = 0.0;
++                  gdkdev->info.axes[k].max = 1.0;
++                  k++;
++                }
+ 	    }
++	  if (gdkdev->pktdata & PK_TANGENT_PRESSURE)
++	    {
++              /* This is the finger wheel on a Wacom Airbrush
++              */
++              gdkdev->axes[k].resolution = axis_tpressure.axResolution / 65535.;
++              gdkdev->axes[k].min_value = axis_tpressure.axMin;
++              gdkdev->axes[k].max_value = axis_tpressure.axMax;
++              gdkdev->info.axes[k].use = GDK_AXIS_WHEEL;
++              /* GIMP seems to expect values in the range 0-1 */
++              gdkdev->info.axes[k].min = 0.0; /*axis_tpressure.axMin;*/
++              gdkdev->info.axes[k].max = 1.0; /*axis_tpressure.axMax;*/
++              k++;
++	    }
++
+ 	  gdkdev->info.num_keys = 0;
+ 	  gdkdev->info.keys = NULL;
+ 	  GDK_NOTE (INPUT, g_print ("device: (%d) %s axes: %d\n",
+@@ -664,6 +716,10 @@ decode_tilt (gint   *axis_data,
+   axis_data[0] = cos (az) * cos (el) * 1000;
+   /* Y tilt */
+   axis_data[1] = sin (az) * cos (el) * 1000;
++  
++  /* Twist (Rotation) if present */
++  if (axes[2].axResolution != 0)
++    axis_data[2] = packet->pkOrientation.orTwist;
+ }
+ 
+ static void
+@@ -996,8 +1052,17 @@ _gdk_input_other_event (GdkEvent  *event,
+ 	{
+ 	  decode_tilt (gdkdev->last_axis_data + k,
+ 		       gdkdev->orientation_axes, &packet);
+-	  k += 2;
++	  if (gdkdev->orientation_axes[2].axResolution == 0) /* we could have 3 axes if twist is present */
++	    {
++	      k += 2;
++	    }
++	  else
++	    {
++	      k += 3;
++	    }
+ 	}
++      if (gdkdev->pktdata & PK_TANGENT_PRESSURE)
++	gdkdev->last_axis_data[k++] = packet.pkTangentPressure;
+ 
+       g_assert (k == gdkdev->info.num_axes);
+ 
+diff --git a/gdk/win32/gdkinput-win32.h b/gdk/win32/gdkinput-win32.h
+index 746bcaf30e..53835b27f9 100644
+--- a/gdk/win32/gdkinput-win32.h
++++ b/gdk/win32/gdkinput-win32.h
+@@ -66,8 +66,8 @@ struct _GdkDevicePrivate
+   UINT cursor;
+   /* The cursor's CSR_PKTDATA */
+   WTPKT pktdata;
+-  /* Azimuth and altitude axis */
+-  AXIS orientation_axes[2];
++  /* Azimuth, altitude and twist axis */
++  AXIS orientation_axes[3];
+ };
+ 
+ /* Addition used for extension_events mask */
+-- 
+2.30.2
+
