@@ -83,7 +83,7 @@ typedef struct
 {
   ExpInfo  info;
   gint     oversampling;
-  gchar    path[PATH_MAX];
+  gchar   *path;
 } QbistInfo;
 
 
@@ -542,6 +542,7 @@ run (const gchar      *name,
           gimp_displays_flush ();
         }
 
+      g_clear_pointer (&qbist_info.path, g_free);
       g_rand_free (gr);
     }
 
@@ -728,16 +729,16 @@ dialog_load (GtkWidget *widget,
                                            -1);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
+  if (qbist_info.path)
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      strncpy (qbist_info.path, name, PATH_MAX - 1);
+      g_free (qbist_info.path);
+      qbist_info.path = name;
       load_data (qbist_info.path);
-
-      g_free (name);
 
       dialog_new_variations (NULL, NULL);
       dialog_update_previews (NULL, NULL);
@@ -773,16 +774,16 @@ dialog_save (GtkWidget *widget,
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                   TRUE);
 
-  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
+  if (qbist_info.path)
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      strncpy (qbist_info.path, name, PATH_MAX - 1);
+      g_free (qbist_info.path);
+      qbist_info.path = name;
       save_data (qbist_info.path);
-
-      g_free (name);
     }
 
   gtk_widget_destroy (dialog);
