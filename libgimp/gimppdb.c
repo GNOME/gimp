@@ -281,10 +281,10 @@ gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
 
 /**
  * gimp_pdb_run_procedure_argv: (rename-to gimp_pdb_run_procedure)
- * @pdb:            the #GimpPDB object.
- * @procedure_name: the procedure registered name.
- * @arguments: (array length=n_arguments): the call arguments.
- * @n_arguments: the number of arguments.
+ * @pdb:                                              the #GimpPDB object.
+ * @procedure_name:                                   the registered name to call.
+ * @arguments: (array length=n_arguments) (nullable): the call arguments or %NULL.
+ * @n_arguments:                                      the number of arguments.
  *
  * Runs the procedure named @procedure_name with @arguments.
  *
@@ -303,7 +303,9 @@ gimp_pdb_run_procedure_argv (GimpPDB      *pdb,
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
-  g_return_val_if_fail (arguments != NULL, NULL);
+  /* Not require arguments != NULL.
+   * gimp_value_array_new_from_values(NULL, 0) will return empty GValueArray.
+   */
 
   args = gimp_value_array_new_from_values (arguments, n_arguments);
   return_values = gimp_pdb_run_procedure_array (pdb, procedure_name, args);

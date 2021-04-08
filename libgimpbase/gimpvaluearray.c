@@ -256,7 +256,7 @@ gimp_value_array_new_from_types_valist (gchar   **error_msg,
  * @n_values: the number of value elements
  *
  * Allocate and initialize a new #GimpValueArray, and fill it with
- * the given #GValues.
+ * the given #GValues.  When no #GValues are given, returns empty #GimpValueArray.
  *
  * Returns: a newly allocated #GimpValueArray.
  *
@@ -269,8 +269,10 @@ gimp_value_array_new_from_values (const GValue *values,
   GimpValueArray *value_array;
   gint i;
 
-  g_return_val_if_fail (values != NULL, NULL);
-  g_return_val_if_fail (n_values > 0, NULL);
+  /* n_values is zero if and only if values is NULL. */
+  g_return_val_if_fail ((n_values == 0  && values == NULL) ||
+                        (n_values > 0 && values != NULL),
+                        NULL);
 
   value_array = gimp_value_array_new (n_values);
 
