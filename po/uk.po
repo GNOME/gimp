@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-25 17:18+0000\n"
-"PO-Revision-Date: 2021-02-25 19:52+0200\n"
+"POT-Creation-Date: 2021-04-08 19:57+0000\n"
+"PO-Revision-Date: 2021-04-09 17:19+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.11.70\n"
+"X-Generator: Lokalize 20.12.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -1058,113 +1058,113 @@ msgstr "використовує %s версії %s (зібрано з верс�
 msgid "%s version %s"
 msgstr "%s версії %s"
 
-#: ../app/main.c:164
+#: ../app/main.c:163
 msgid "Show version information and exit"
 msgstr "Показати номер версії та вийти"
 
-#: ../app/main.c:169
+#: ../app/main.c:168
 msgid "Show license information and exit"
 msgstr "Показати ліцензійні умови та вийти"
 
-#: ../app/main.c:174
+#: ../app/main.c:173
 msgid "Be more verbose"
 msgstr "Виводити докладнішу інформацію"
 
-#: ../app/main.c:179
+#: ../app/main.c:178
 msgid "Start a new GIMP instance"
 msgstr "Запустити нову копію GIMP"
 
-#: ../app/main.c:184
+#: ../app/main.c:183
 msgid "Open images as new"
 msgstr "Відкрити зображення як нові"
 
-#: ../app/main.c:189
+#: ../app/main.c:188
 msgid "Run without a user interface"
 msgstr "Запустити без інтерфейсу користувача"
 
-#: ../app/main.c:194
+#: ../app/main.c:193
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Не завантажувати пензлі, градієнти, палітри, текстури..."
 
-#: ../app/main.c:199
+#: ../app/main.c:198
 msgid "Do not load any fonts"
 msgstr "Не завантажувати шрифти"
 
-#: ../app/main.c:204
+#: ../app/main.c:203
 msgid "Do not show a splash screen"
 msgstr "Не показувати вікно вітання "
 
-#: ../app/main.c:209
+#: ../app/main.c:208
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Не використовувати спільну пам'ять між GIMP та додатками"
 
-#: ../app/main.c:214
+#: ../app/main.c:213
 msgid "Do not use special CPU acceleration functions"
 msgstr "Не використовувати прискоренні команди центрального процесора"
 
-#: ../app/main.c:219
+#: ../app/main.c:218
 msgid "Use an alternate sessionrc file"
 msgstr "Використовувати альтернативний файл sessionrc"
 
-#: ../app/main.c:224
+#: ../app/main.c:223
 msgid "Use an alternate user gimprc file"
 msgstr "Використовувати альтернативний файл gimprc користувача"
 
-#: ../app/main.c:229
+#: ../app/main.c:228
 msgid "Use an alternate system gimprc file"
 msgstr "Використовувати альтернативний системний файл gimprc"
 
-#: ../app/main.c:234
+#: ../app/main.c:233
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Команда для пакетної обробки (можна використовувати неодноразово)"
 
-#: ../app/main.c:239
+#: ../app/main.c:238
 msgid "The procedure to process batch commands with"
 msgstr "Процедура для запуску команди пакетної обробки"
 
-#: ../app/main.c:244
+#: ../app/main.c:243
 msgid "Send messages to console instead of using a dialog"
 msgstr "Показувати попередження на консолі замість діалогових вікон"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:250
+#: ../app/main.c:249
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Режим сумісності з PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:256
+#: ../app/main.c:255
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Налагодження при аварійному завершенні програми (never|query|always)"
 
-#: ../app/main.c:261
+#: ../app/main.c:260
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Дозволити налагодження обробників сигналів для некритичних сигналів"
 
-#: ../app/main.c:266
+#: ../app/main.c:265
 msgid "Make all warnings fatal"
 msgstr "Вважати всі попередження критичними"
 
-#: ../app/main.c:271
+#: ../app/main.c:270
 msgid "Output a gimprc file with default settings"
 msgstr "Показати файл gimprc з типовими параметрами"
 
-#: ../app/main.c:287
+#: ../app/main.c:286
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Показати впорядкований список застарілих процедур у PDB"
 
-#: ../app/main.c:292
+#: ../app/main.c:291
 msgid "Show a preferences page with experimental features"
 msgstr "Показувати сторінку налаштувань із експериментальними функціями"
 
-#: ../app/main.c:297
+#: ../app/main.c:296
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: ../app/main.c:578
+#: ../app/main.c:598
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: ../app/main.c:596
+#: ../app/main.c:616
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1172,24 +1172,24 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: ../app/main.c:615
+#: ../app/main.c:635
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: ../app/main.c:706
+#: ../app/main.c:726
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: ../app/main.c:707
+#: ../app/main.c:727
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: ../app/main.c:724
+#: ../app/main.c:744
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
-#: ../app/sanity.c:562
+#: ../app/sanity.c:546
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -1200,7 +1200,7 @@ msgstr ""
 "\n"
 "Перевірте  значення змінної оточення G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:581
+#: ../app/sanity.c:565
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -1347,7 +1347,7 @@ msgid "Images"
 msgstr "Зображення"
 
 #: ../app/actions/actions.c:196 ../app/dialogs/dialogs.c:373
-#: ../app/dialogs/resize-dialog.c:152 ../app/widgets/gimppickablepopup.c:228
+#: ../app/dialogs/resize-dialog.c:168 ../app/widgets/gimppickablepopup.c:228
 msgid "Layers"
 msgstr "Шари"
 
@@ -3387,7 +3387,7 @@ msgstr "240 секунд"
 #: ../app/dialogs/convert-precision-dialog.c:146
 #: ../app/dialogs/data-delete-dialog.c:86
 #: ../app/dialogs/file-open-location-dialog.c:80
-#: ../app/dialogs/file-save-dialog.c:741 ../app/dialogs/fill-dialog.c:115
+#: ../app/dialogs/file-save-dialog.c:753 ../app/dialogs/fill-dialog.c:115
 #: ../app/dialogs/grid-dialog.c:102
 #: ../app/dialogs/image-merge-layers-dialog.c:100
 #: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
@@ -3401,7 +3401,7 @@ msgstr "240 секунд"
 #: ../app/dialogs/preferences-dialog.c:664
 #: ../app/dialogs/preferences-dialog.c:1120
 #: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:200
+#: ../app/dialogs/resize-dialog.c:222
 #: ../app/dialogs/resolution-calibrate-dialog.c:73
 #: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
 #: ../app/dialogs/template-options-dialog.c:118
@@ -4859,7 +4859,7 @@ msgid "Save Error Log to File"
 msgstr "Збереження повідомлень про помилки у файлі"
 
 #: ../app/actions/error-console-commands.c:101
-#: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:742
+#: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:754
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:69
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -5948,7 +5948,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Повторно просканувати встановлені шрифти"
 
-#: ../app/actions/gimpgeglprocedure.c:285
+#: ../app/actions/gimpgeglprocedure.c:291
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
@@ -6857,84 +6857,89 @@ msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "Відтінки _сірого..."
 
-#: ../app/actions/image-commands.c:563
+#: ../app/actions/image-commands.c:566
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "Не вдалося зберегти колірний профіль: %s"
 
-#: ../app/actions/image-commands.c:603
+#: ../app/actions/image-commands.c:606
 msgid "Save Color Profile"
 msgstr "Зберегти колірний профіль"
 
-#: ../app/actions/image-commands.c:652
+#: ../app/actions/image-commands.c:655
 msgid "Set Image Canvas Size"
 msgstr "Встановлення розміру полотна"
 
-#: ../app/actions/image-commands.c:683 ../app/actions/image-commands.c:708
-#: ../app/actions/image-commands.c:1393
+#: ../app/actions/image-commands.c:686 ../app/actions/image-commands.c:711
+#: ../app/actions/image-commands.c:1403
 msgid "Resizing"
 msgstr "Зміна розміру"
 
-#: ../app/actions/image-commands.c:742
+#: ../app/actions/image-commands.c:745
 msgid "Set Image Print Resolution"
 msgstr "Зміна роздільності"
 
-#: ../app/actions/image-commands.c:812 ../app/pdb/item-transform-cmds.c:228
+#: ../app/actions/image-commands.c:815 ../app/pdb/item-transform-cmds.c:228
 #: ../app/tools/gimpfliptool.c:136
 msgid "Flipping"
 msgstr "Віддзеркалення"
 
-#: ../app/actions/image-commands.c:839 ../app/pdb/image-transform-cmds.c:216
+#: ../app/actions/image-commands.c:842 ../app/pdb/image-transform-cmds.c:216
 #: ../app/pdb/item-transform-cmds.c:536 ../app/tools/gimprotatetool.c:131
 msgid "Rotating"
 msgstr "Обертання"
 
-#: ../app/actions/image-commands.c:867 ../app/actions/layers-commands.c:1203
+#: ../app/actions/image-commands.c:870 ../app/actions/layers-commands.c:1206
 msgid "Cannot crop because the current selection is empty."
 msgstr "Не вдалось кадрувати, бо позначена ділянка порожня."
 
-#: ../app/actions/image-commands.c:906
+#: ../app/actions/image-commands.c:909
 msgid "Cannot crop because the image has no content."
 msgstr "Не вдалось обрізати, бо зображення не має вмісту."
 
-#: ../app/actions/image-commands.c:912
+#: ../app/actions/image-commands.c:915
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr "Не вдалось кадрувати, бо зображення вже обрізане до свого вмісту."
 
-#: ../app/actions/image-commands.c:1078
+#: ../app/actions/image-commands.c:1081
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Перетворення у RGB (%s)"
 
-#: ../app/actions/image-commands.c:1116
+#: ../app/actions/image-commands.c:1119
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Перетворення у відтінки сірого (%s)"
 
-#: ../app/actions/image-commands.c:1178
+#: ../app/actions/image-commands.c:1181
 msgid "Converting to indexed colors"
 msgstr "Перетворення на індексоване"
 
-#: ../app/actions/image-commands.c:1266
+#: ../app/actions/image-commands.c:1269
 #, c-format
 msgid "Converting image to %s"
 msgstr "Перетворення зображення у %s"
 
-#: ../app/actions/image-commands.c:1329
+#: ../app/actions/image-commands.c:1332
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Перетворення у «%s»"
 
-#: ../app/actions/image-commands.c:1435
+#: ../app/actions/image-commands.c:1416
+#| msgid "Set Image Canvas Size"
+msgid "Change Canvas Size"
+msgstr "Змінити розмір полотна"
+
+#: ../app/actions/image-commands.c:1465
 msgid "Change Print Size"
 msgstr "Змінити розмір при друкуванні"
 
-#: ../app/actions/image-commands.c:1479
+#: ../app/actions/image-commands.c:1509
 msgid "Scale Image"
 msgstr "Зміна розміру зображення"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2515
+#: ../app/actions/image-commands.c:1518 ../app/actions/layers-commands.c:2518
 #: ../app/dialogs/preferences-dialog.c:1699
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/item-transform-cmds.c:640
 #: ../app/pdb/layer-cmds.c:410 ../app/tools/gimpscaletool.c:122
@@ -7819,15 +7824,15 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "У _новий шар"
 
-#: ../app/actions/layers-commands.c:266 ../app/actions/layers-commands.c:2357
+#: ../app/actions/layers-commands.c:269 ../app/actions/layers-commands.c:2360
 msgid "Layer Attributes"
 msgstr "Ознаки шару"
 
-#: ../app/actions/layers-commands.c:269
+#: ../app/actions/layers-commands.c:272
 msgid "Edit Layer Attributes"
 msgstr "Зміна ознак шару"
 
-#: ../app/actions/layers-commands.c:338
+#: ../app/actions/layers-commands.c:341
 #: ../app/widgets/gimpdrawabletreeview.c:350
 #: ../app/widgets/gimplayertreeview.c:949
 msgid "New Layer"
@@ -7837,7 +7842,7 @@ msgstr[1] "Нові шари"
 msgstr[2] "Нові шари"
 msgstr[3] "Новий шар"
 
-#: ../app/actions/layers-commands.c:339
+#: ../app/actions/layers-commands.c:342
 #, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
@@ -7846,7 +7851,7 @@ msgstr[1] "Створення %d нових шарів"
 msgstr[2] "Створення %d нових шарів"
 msgstr[3] "Створення нового шару"
 
-#: ../app/actions/layers-commands.c:424 ../app/actions/layers-commands.c:2243
+#: ../app/actions/layers-commands.c:427 ../app/actions/layers-commands.c:2246
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Нові шари"
@@ -7854,11 +7859,11 @@ msgstr[1] "Нові шари"
 msgstr[2] "Нові шари"
 msgstr[3] "Новий шар"
 
-#: ../app/actions/layers-commands.c:503
+#: ../app/actions/layers-commands.c:506
 msgid "Visible"
 msgstr "Видиме"
 
-#: ../app/actions/layers-commands.c:532
+#: ../app/actions/layers-commands.c:535
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "Нові групи шарів"
@@ -7866,7 +7871,7 @@ msgstr[1] "Нові групи шарів"
 msgstr[2] "Нові групи шарів"
 msgstr[3] "Нова група шарів"
 
-#: ../app/actions/layers-commands.c:640
+#: ../app/actions/layers-commands.c:643
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "Підняти шари"
@@ -7874,7 +7879,7 @@ msgstr[1] "Підняти шари"
 msgstr[2] "Підняти шари"
 msgstr[3] "Підняти шар"
 
-#: ../app/actions/layers-commands.c:674
+#: ../app/actions/layers-commands.c:677
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "Підняти шари на вершину"
@@ -7882,7 +7887,7 @@ msgstr[1] "Підняти шари на вершину"
 msgstr[2] "Підняти шари на вершину"
 msgstr[3] "Підняти шар на вершину"
 
-#: ../app/actions/layers-commands.c:711
+#: ../app/actions/layers-commands.c:714
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "Опустити шари"
@@ -7890,7 +7895,7 @@ msgstr[1] "Опустити шари"
 msgstr[2] "Опустити шари"
 msgstr[3] "Опустити шар"
 
-#: ../app/actions/layers-commands.c:748
+#: ../app/actions/layers-commands.c:751
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "Опустити шари на дно"
@@ -7898,35 +7903,35 @@ msgstr[1] "Опустити шари на дно"
 msgstr[2] "Опустити шари на дно"
 msgstr[3] "Опустити шар на дно"
 
-#: ../app/actions/layers-commands.c:775
+#: ../app/actions/layers-commands.c:778
 msgid "Duplicate layers"
 msgstr "Дублювати шари"
 
-#: ../app/actions/layers-commands.c:885
+#: ../app/actions/layers-commands.c:888
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "Об'єднання %d груп шарів"
 
-#: ../app/actions/layers-commands.c:945
+#: ../app/actions/layers-commands.c:948
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Вилучення %d шарів"
 
-#: ../app/actions/layers-commands.c:1091
+#: ../app/actions/layers-commands.c:1094
 msgid "Set Layer Boundary Size"
 msgstr "Встановлення меж шару"
 
-#: ../app/actions/layers-commands.c:1121
+#: ../app/actions/layers-commands.c:1124
 msgid "Layers to Image Size"
 msgstr "Шари до розміру зображення"
 
-#: ../app/actions/layers-commands.c:1169
+#: ../app/actions/layers-commands.c:1172
 msgid "Scale Layer"
 msgstr "Масштабування шару"
 
-#: ../app/actions/layers-commands.c:1208
+#: ../app/actions/layers-commands.c:1211
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
@@ -7935,7 +7940,7 @@ msgstr[1] "Обрізати %d шари до позначеного"
 msgstr[2] "Обрізати %d шарів до позначеного"
 msgstr[3] "Обрізати шар до позначеного"
 
-#: ../app/actions/layers-commands.c:1273
+#: ../app/actions/layers-commands.c:1276
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7943,7 +7948,7 @@ msgstr ""
 "Обрізання неможливе оскільки жоден із позначених шарів не містить даних або "
 "через те, що шари вже обрізано до вмісту."
 
-#: ../app/actions/layers-commands.c:1279
+#: ../app/actions/layers-commands.c:1282
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
@@ -7952,118 +7957,118 @@ msgstr[1] "Обрізати %d шари до вмісту"
 msgstr[2] "Обрізати %d шарів до вмісту"
 msgstr[3] "Обрізати шар до вмісту"
 
-#: ../app/actions/layers-commands.c:1410 ../app/actions/layers-commands.c:2450
+#: ../app/actions/layers-commands.c:1413 ../app/actions/layers-commands.c:2453
 msgid "Add Layer Masks"
 msgstr "Додавання масок шарів"
 
-#: ../app/actions/layers-commands.c:1462
+#: ../app/actions/layers-commands.c:1465
 msgid "Apply Layer Masks"
 msgstr "Застосувати маски шару"
 
-#: ../app/actions/layers-commands.c:1466
+#: ../app/actions/layers-commands.c:1469
 msgid "Delete Layer Masks"
 msgstr "Вилучити маски шарів"
 
-#: ../app/actions/layers-commands.c:1553
+#: ../app/actions/layers-commands.c:1556
 msgid "Show Layer Masks"
 msgstr "Показати маски шарів"
 
-#: ../app/actions/layers-commands.c:1600
+#: ../app/actions/layers-commands.c:1603
 msgid "Disable Layer Masks"
 msgstr "Вимкнути маски шарів"
 
-#: ../app/actions/layers-commands.c:1639
+#: ../app/actions/layers-commands.c:1642
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Маски → Позначене"
 
-#: ../app/actions/layers-commands.c:1643
+#: ../app/actions/layers-commands.c:1646
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Додавання масок до позначеного"
 
-#: ../app/actions/layers-commands.c:1647
+#: ../app/actions/layers-commands.c:1650
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Віднімання масок від позначеного"
 
-#: ../app/actions/layers-commands.c:1651
+#: ../app/actions/layers-commands.c:1654
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Перетин масок із позначеним"
 
-#: ../app/actions/layers-commands.c:1672
+#: ../app/actions/layers-commands.c:1675
 msgid "Add Alpha Channel"
 msgstr "Додати канал альфи"
 
-#: ../app/actions/layers-commands.c:1693
+#: ../app/actions/layers-commands.c:1696
 msgid "Remove Alpha Channel"
 msgstr "Вилучити канал альфи"
 
-#: ../app/actions/layers-commands.c:1721 ../app/core/gimpchannel-select.c:433
+#: ../app/actions/layers-commands.c:1724 ../app/core/gimpchannel-select.c:433
 #: ../app/core/gimplayer.c:442
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Альфа на вибір"
 
-#: ../app/actions/layers-commands.c:1725 ../app/core/gimpchannel-select.c:427
+#: ../app/actions/layers-commands.c:1728 ../app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Додавання альфи до позначеного"
 
-#: ../app/actions/layers-commands.c:1729 ../app/core/gimpchannel-select.c:430
+#: ../app/actions/layers-commands.c:1732 ../app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Віднімання альфи від позначеного"
 
-#: ../app/actions/layers-commands.c:1733 ../app/core/gimpchannel-select.c:436
+#: ../app/actions/layers-commands.c:1736 ../app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Перетин альфи з позначеним"
 
-#: ../app/actions/layers-commands.c:1744
+#: ../app/actions/layers-commands.c:1747
 msgid "Empty Selection"
 msgstr "Спорожнити позначене"
 
-#: ../app/actions/layers-commands.c:1774 ../app/actions/layers-commands.c:1818
+#: ../app/actions/layers-commands.c:1777 ../app/actions/layers-commands.c:1821
 #: ../app/widgets/gimplayertreeview.c:1182
 msgid "Set layers opacity"
 msgstr "Зміна непрозорості шарів"
 
-#: ../app/actions/layers-commands.c:1888
+#: ../app/actions/layers-commands.c:1891
 msgid "Set layers' blend space"
 msgstr "Встановити простір змішування шарів"
 
-#: ../app/actions/layers-commands.c:1941
+#: ../app/actions/layers-commands.c:1944
 msgid "Set layers' composite space"
 msgstr "Встановити простір композиції шарів"
 
-#: ../app/actions/layers-commands.c:1994
+#: ../app/actions/layers-commands.c:1997
 msgid "Set layers' composite mode"
 msgstr "Встановити режим композиції шарів"
 
-#: ../app/actions/layers-commands.c:2063 ../app/widgets/gimpitemtreeview.c:1683
+#: ../app/actions/layers-commands.c:2066 ../app/widgets/gimpitemtreeview.c:1683
 msgid "Lock content"
 msgstr "Заблокувати вміст"
 
-#: ../app/actions/layers-commands.c:2065 ../app/widgets/gimpitemtreeview.c:1685
+#: ../app/actions/layers-commands.c:2068 ../app/widgets/gimpitemtreeview.c:1685
 msgid "Unlock content"
 msgstr "Розблокувати вміст"
 
-#: ../app/actions/layers-commands.c:2112 ../app/widgets/gimpitemtreeview.c:1749
+#: ../app/actions/layers-commands.c:2115 ../app/widgets/gimpitemtreeview.c:1749
 msgid "Lock position"
 msgstr "Заблокувати позицію"
 
-#: ../app/actions/layers-commands.c:2114 ../app/widgets/gimpitemtreeview.c:1751
+#: ../app/actions/layers-commands.c:2117 ../app/widgets/gimpitemtreeview.c:1751
 msgid "Unlock position"
 msgstr "Розблокувати позицію"
 
-#: ../app/actions/layers-commands.c:2164
+#: ../app/actions/layers-commands.c:2167
 #: ../app/widgets/gimplayertreeview.c:1127
 msgid "Lock alpha channels"
 msgstr "Заблокувати альфа-канали"
 
-#: ../app/actions/layers-commands.c:2164
+#: ../app/actions/layers-commands.c:2167
 #: ../app/widgets/gimplayertreeview.c:1127
 msgid "Unlock alpha channels"
 msgstr "Розблокувати альфа-канали"
@@ -11005,7 +11010,7 @@ msgid "Move this window to screen %s"
 msgstr "Перемістити це вікно на екран %s"
 
 #: ../app/actions/window-commands.c:78 ../app/dialogs/extensions-dialog.c:79
-#: ../app/dialogs/file-save-dialog.c:665 ../app/dialogs/grid-dialog.c:103
+#: ../app/dialogs/file-save-dialog.c:677 ../app/dialogs/grid-dialog.c:103
 #: ../app/dialogs/image-new-dialog.c:107 ../app/dialogs/image-new-dialog.c:326
 #: ../app/dialogs/input-devices-dialog.c:67
 #: ../app/dialogs/item-options-dialog.c:146
@@ -16181,7 +16186,7 @@ msgstr "Введіть адресу (URI):"
 msgid "Invalid URI"
 msgstr "Некоректна адреса"
 
-#: ../app/dialogs/file-save-dialog.c:485
+#: ../app/dialogs/file-save-dialog.c:497
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -16190,11 +16195,11 @@ msgstr ""
 "При збереженні вилученого файла потрібно визначити його формат. Вкажіть "
 "розширення файла чи виберіть формат зі списку."
 
-#: ../app/dialogs/file-save-dialog.c:645
+#: ../app/dialogs/file-save-dialog.c:657
 msgid "The given filename cannot be used for exporting"
 msgstr "Задану назву файла не можна використати для експорту"
 
-#: ../app/dialogs/file-save-dialog.c:646
+#: ../app/dialogs/file-save-dialog.c:658
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -16203,15 +16208,15 @@ msgstr ""
 "Якщо ж треба зберегти у форматі GIMP XCF, скористайтесь командою "
 "Файл→Зберегти."
 
-#: ../app/dialogs/file-save-dialog.c:649
+#: ../app/dialogs/file-save-dialog.c:661
 msgid "Take me to the Save dialog"
 msgstr "Взяти мене у діалог Збереження"
 
-#: ../app/dialogs/file-save-dialog.c:653
+#: ../app/dialogs/file-save-dialog.c:665
 msgid "The given filename cannot be used for saving"
 msgstr "Задану назву файла не можна використати для збереження"
 
-#: ../app/dialogs/file-save-dialog.c:654
+#: ../app/dialogs/file-save-dialog.c:666
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -16220,15 +16225,15 @@ msgstr ""
 "XCF. Використовуйте команду Файл→Експортувати для експорту у інші формати "
 "даних."
 
-#: ../app/dialogs/file-save-dialog.c:656
+#: ../app/dialogs/file-save-dialog.c:668
 msgid "Take me to the Export dialog"
 msgstr "Взяти мене у діалог Експорту"
 
-#: ../app/dialogs/file-save-dialog.c:659 ../app/dialogs/file-save-dialog.c:736
+#: ../app/dialogs/file-save-dialog.c:671 ../app/dialogs/file-save-dialog.c:748
 msgid "Extension Mismatch"
 msgstr "Неправильне розширення"
 
-#: ../app/dialogs/file-save-dialog.c:720
+#: ../app/dialogs/file-save-dialog.c:732
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -16236,19 +16241,19 @@ msgstr ""
 "У цій назві файла бракує будь-якого відомого розширення. Вкажіть розширення "
 "у назві файла, чи виберіть формат зі списку."
 
-#: ../app/dialogs/file-save-dialog.c:752
+#: ../app/dialogs/file-save-dialog.c:764
 msgid "The given file extension does not match the chosen file type."
 msgstr "Вказане розширення не відповідає обраному типу файла."
 
-#: ../app/dialogs/file-save-dialog.c:756
+#: ../app/dialogs/file-save-dialog.c:768
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Попри все бажаєте зберегти файл з такою назвою?"
 
-#: ../app/dialogs/file-save-dialog.c:821
+#: ../app/dialogs/file-save-dialog.c:833
 msgid "Saving canceled"
 msgstr "Збереження перервано"
 
-#: ../app/dialogs/file-save-dialog.c:827 ../app/widgets/gimpdnd-xds.c:190
+#: ../app/dialogs/file-save-dialog.c:839 ../app/widgets/gimpdnd-xds.c:190
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -16259,7 +16264,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/dialogs/file-save-dialog.c:829
+#: ../app/dialogs/file-save-dialog.c:841
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
@@ -16312,7 +16317,7 @@ msgid "Create a New Image"
 msgstr "Створення нового зображення"
 
 #: ../app/dialogs/image-new-dialog.c:138
-#: ../app/dialogs/preferences-dialog.c:1761 ../app/dialogs/resize-dialog.c:231
+#: ../app/dialogs/preferences-dialog.c:1761 ../app/dialogs/resize-dialog.c:253
 msgid "_Template:"
 msgstr "Ша_блони:"
 
@@ -16521,7 +16526,7 @@ msgstr "Зсув за X:"
 msgid "Offset Y:"
 msgstr "Зсув за Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:377 ../app/dialogs/resize-dialog.c:404
+#: ../app/dialogs/layer-options-dialog.c:377 ../app/dialogs/resize-dialog.c:487
 #: ../app/widgets/gimptemplateeditor.c:442
 msgid "_Fill with:"
 msgstr "_Тло:"
@@ -18434,62 +18439,88 @@ msgstr "Зберегти це зображення"
 msgid "Save as"
 msgstr "Зберегти як"
 
-#: ../app/dialogs/resize-dialog.c:151
+#: ../app/dialogs/resize-dialog.c:167
 msgid "Canvas Size"
 msgstr "Розмір полотна"
 
-#: ../app/dialogs/resize-dialog.c:163 ../app/dialogs/scale-dialog.c:114
+#: ../app/dialogs/resize-dialog.c:179 ../app/dialogs/scale-dialog.c:114
 msgid "Layer Size"
 msgstr "Розмір шару"
 
-#: ../app/dialogs/resize-dialog.c:164
+#: ../app/dialogs/resize-dialog.c:180
 msgid "Fill With"
 msgstr "Заповнення"
 
-#: ../app/dialogs/resize-dialog.c:199
+#: ../app/dialogs/resize-dialog.c:221
 msgid "Re_set"
 msgstr "С_кинути"
 
-#: ../app/dialogs/resize-dialog.c:201
+#: ../app/dialogs/resize-dialog.c:223
 msgid "_Resize"
 msgstr "З_мінити розмір"
 
+#: ../app/dialogs/resize-dialog.c:290
+#| msgid "Replicate Selection"
+msgid "Reset the template selection"
+msgstr "Скинути вибір шаблона"
+
+#: ../app/dialogs/resize-dialog.c:297
+msgid ""
+"Template and image print resolution don't match.\n"
+"Choose how to scale the canvas:"
+msgstr ""
+"Роздільна здатність шаблона і відбитка зображення не збігаються.\n"
+"Виберіть спосіб масштабування полотна:"
+
+#. offset frame
 #. The offset frame
 #. offset frame
-#: ../app/dialogs/resize-dialog.c:274 ../app/tools/gimpalignoptions.c:97
+#: ../app/dialogs/resize-dialog.c:357 ../app/tools/gimpalignoptions.c:97
 #: ../app/tools/gimpalignoptions.c:104 ../app/tools/gimpgradientoptions.c:89
 #: ../app/tools/gimpoffsettool.c:129 ../app/tools/gimpoffsettool.c:473
 #: ../app/tools/gimptransform3dtool.c:343 ../app/widgets/gimpgrideditor.c:211
 msgid "Offset"
 msgstr "Зсув"
 
-#: ../app/dialogs/resize-dialog.c:297 ../app/tools/gimpoffsettool.c:497
+#: ../app/dialogs/resize-dialog.c:380 ../app/tools/gimpoffsettool.c:497
 #: ../app/tools/gimptransform3dtool.c:271
 #: ../app/tools/gimptransform3dtool.c:383
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/resize-dialog.c:298 ../app/tools/gimpoffsettool.c:499
+#: ../app/dialogs/resize-dialog.c:381 ../app/tools/gimpoffsettool.c:499
 #: ../app/tools/gimptransform3dtool.c:272
 #: ../app/tools/gimptransform3dtool.c:388
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/resize-dialog.c:315
+#: ../app/dialogs/resize-dialog.c:398
 msgid "C_enter"
 msgstr "_Центрувати"
 
-#: ../app/dialogs/resize-dialog.c:366
+#: ../app/dialogs/resize-dialog.c:449
 msgid "Resize _layers:"
 msgstr "Змінити розмір _шарів:"
 
-#: ../app/dialogs/resize-dialog.c:414
+#: ../app/dialogs/resize-dialog.c:497
 msgid "Resize _text layers"
 msgstr "Зміна розміру _текстових шарів"
 
-#: ../app/dialogs/resize-dialog.c:425
+#: ../app/dialogs/resize-dialog.c:508
 msgid "Resizing text layers will make them uneditable"
 msgstr "Зміна розмірів текстових шарів робить їх непридатними до редагування"
+
+#: ../app/dialogs/resize-dialog.c:730
+#, c-format
+#| msgid "_Scale imported paths to fit image"
+msgid "Scale template to %.2f ppi"
+msgstr "Масштабувати шаблон до %.2f точок на дюйм"
+
+#: ../app/dialogs/resize-dialog.c:735
+#, c-format
+#| msgid "Converting image to %s"
+msgid "Set image to %.2f ppi"
+msgstr "Встановити для зображення %.2f точок на дюйм"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:67
 msgid "Calibrate Monitor Resolution"
@@ -19568,7 +19599,7 @@ msgstr "Розширення GIMP"
 #: ../app/gegl/gimp-babl.c:196 ../app/gegl/gimp-babl.c:197
 #: ../app/gegl/gimp-babl.c:198 ../app/gegl/gimp-babl.c:199
 #: ../app/gegl/gimp-babl.c:200 ../app/gegl/gimp-babl.c:201
-#: ../app/plug-in/gimppluginprocedure.c:1011
+#: ../app/plug-in/gimppluginprocedure.c:1030
 msgid "RGB"
 msgstr "RGB"
 
@@ -19593,7 +19624,7 @@ msgstr "RGB-альфа"
 #: ../app/gegl/gimp-babl.c:234 ../app/gegl/gimp-babl.c:235
 #: ../app/gegl/gimp-babl.c:236 ../app/gegl/gimp-babl.c:237
 #: ../app/gegl/gimp-babl.c:238 ../app/gegl/gimp-babl.c:239
-#: ../app/plug-in/gimppluginprocedure.c:1029
+#: ../app/plug-in/gimppluginprocedure.c:1048
 msgid "Grayscale"
 msgstr "Відтінки сірого"
 
@@ -19655,7 +19686,7 @@ msgstr "Складова альфи"
 msgid "Indexed-alpha"
 msgstr "Індексована альфа"
 
-#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1047
+#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1066
 msgid "Indexed"
 msgstr "Індексований"
 
@@ -21478,8 +21509,8 @@ msgstr "2D перетворення"
 msgid "2D Transforming"
 msgstr "2D перетворення"
 
-#: ../app/pdb/pdb-cmds.c:1089 ../app/pdb/pdb-cmds.c:1133
-#: ../app/pdb/pdb-cmds.c:1175
+#: ../app/pdb/pdb-cmds.c:1122 ../app/pdb/pdb-cmds.c:1166
+#: ../app/pdb/pdb-cmds.c:1208
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Мітка даних «%s» не є канонічним ідентифікатором"
@@ -22005,35 +22036,35 @@ msgstr "Ініціалізація доповнень"
 msgid "Starting Extensions"
 msgstr "Запуск розширень"
 
-#: ../app/plug-in/gimppluginprocedure.c:1015
+#: ../app/plug-in/gimppluginprocedure.c:1034
 msgid "RGB without alpha"
 msgstr "RGB без прозорості"
 
-#: ../app/plug-in/gimppluginprocedure.c:1019
+#: ../app/plug-in/gimppluginprocedure.c:1038
 msgid "RGB with alpha"
 msgstr "RGB із прозорістю"
 
-#: ../app/plug-in/gimppluginprocedure.c:1033
+#: ../app/plug-in/gimppluginprocedure.c:1052
 msgid "Grayscale without alpha"
 msgstr "Відтінки сірого без прозорості"
 
-#: ../app/plug-in/gimppluginprocedure.c:1037
+#: ../app/plug-in/gimppluginprocedure.c:1056
 msgid "Grayscale with alpha"
 msgstr "Відтінки сірого із прозорістю"
 
-#: ../app/plug-in/gimppluginprocedure.c:1051
+#: ../app/plug-in/gimppluginprocedure.c:1070
 msgid "Indexed without alpha"
 msgstr "Індексовані без прозорості"
 
-#: ../app/plug-in/gimppluginprocedure.c:1055
+#: ../app/plug-in/gimppluginprocedure.c:1074
 msgid "Indexed with alpha"
 msgstr "Індексовані із прозорістю"
 
-#: ../app/plug-in/gimppluginprocedure.c:1069
+#: ../app/plug-in/gimppluginprocedure.c:1088
 msgid "This plug-in only works on the following layer types:"
 msgstr "Цей додаток працює лише з такими типами шарів:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1279
+#: ../app/plug-in/gimppluginprocedure.c:1307
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22042,7 +22073,7 @@ msgstr ""
 "Помилка виклику «%s»:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1291
+#: ../app/plug-in/gimppluginprocedure.c:1319
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22061,12 +22092,12 @@ msgstr "Пропускається \"%s\": неправильна версія �
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Пропускається \"%s\": неправильна версія файлу формату pluginrc."
 
-#: ../app/plug-in/plug-in-rc.c:544
+#: ../app/plug-in/plug-in-rc.c:550
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "неправильне значення «%s» для значка"
 
-#: ../app/plug-in/plug-in-rc.c:559
+#: ../app/plug-in/plug-in-rc.c:565
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "неправильне значення '%ld' для значка"
@@ -23077,7 +23108,6 @@ msgid "How much to dim everything outside selection"
 msgstr "Міра затемнення усього поза позначеною ділянкою"
 
 #: ../app/tools/gimpcropoptions.c:95
-#| msgid "_Selected Pixels only"
 msgid "Selected layers only"
 msgstr "Лише позначені шари"
 
@@ -23114,39 +23144,39 @@ msgstr ""
 "Спосіб заповнення нових ділянок, які створено за допомогою «Дозволити "
 "збільшення»"
 
-#: ../app/tools/gimpcroptool.c:120
+#: ../app/tools/gimpcroptool.c:122
 msgid "Crop"
 msgstr "Кадрування"
 
-#: ../app/tools/gimpcroptool.c:121
+#: ../app/tools/gimpcroptool.c:123
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Кадрування: вилучення ділянок з межі зображення чи шару"
 
-#: ../app/tools/gimpcroptool.c:122
+#: ../app/tools/gimpcroptool.c:124
 msgid "_Crop"
 msgstr "_Кадрування"
 
-#: ../app/tools/gimpcroptool.c:160
+#: ../app/tools/gimpcroptool.c:162
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Натисніть і перетягніть для малювання прямокутника обрізання"
 
-#: ../app/tools/gimpcroptool.c:280
+#: ../app/tools/gimpcroptool.c:282
 msgid "Click or press Enter to crop"
 msgstr "Для кадрування клацніть мишею або натисніть Enter"
 
-#: ../app/tools/gimpcroptool.c:387
+#: ../app/tools/gimpcroptool.c:389
 msgid "Crop to: "
 msgstr "Обітнути до:"
 
-#: ../app/tools/gimpcroptool.c:457
+#: ../app/tools/gimpcroptool.c:459
 msgid "There are no selected layers to crop."
 msgstr "Немає позначених шарів для обрізання."
 
-#: ../app/tools/gimpcroptool.c:468
+#: ../app/tools/gimpcroptool.c:470
 msgid "All selected layers' pixels are locked."
 msgstr "Усі точки позначених шарів заблоковано."
 
-#: ../app/tools/gimpcroptool.c:473
+#: ../app/tools/gimpcroptool.c:475
 #, c-format
 msgid "Resize Layer"
 msgid_plural "Resize %d layers"
