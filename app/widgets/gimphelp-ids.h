@@ -333,6 +333,7 @@
 #define GIMP_HELP_TOOL_SMUDGE                     "gimp-tool-smudge"
 #define GIMP_HELP_TOOL_TEXT                       "gimp-tool-text"
 #define GIMP_HELP_TOOL_THRESHOLD                  "gimp-tool-threshold"
+#define GIMP_HELP_TOOL_TRANSFORM_3D               "gimp-tool-transform-3d"
 #define GIMP_HELP_TOOL_UNIFIED_TRANSFORM          "gimp-tool-unified-transform"
 #define GIMP_HELP_TOOL_VECTORS                    "gimp-tool-vectors"
 #define GIMP_HELP_TOOL_WARP                       "gimp-tool-warp"
