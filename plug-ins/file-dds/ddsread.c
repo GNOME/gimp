@@ -637,8 +637,13 @@ validate_header (dds_header_t  *hdr,
     {
       if (! (hdr->flags & DDSD_PITCH))
         {
-          g_printerr ("Warning: DDSD_PITCH is not set! (recovered)");
+          g_printerr ("Warning: DDSD_PITCH is incorrectly not set for an uncompressed texture! (recovered)\n");
           hdr->flags |= DDSD_PITCH;
+        }
+      if ((hdr->flags & DDSD_LINEARSIZE))
+        {
+          g_printerr ("Warning: DDSD_LINEARSIZE is incorrectly set for an uncompressed texture! (recovered)\n");
+          hdr->flags &= DDSD_LINEARSIZE;
         }
     }
 
