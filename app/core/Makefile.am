@@ -539,7 +539,7 @@ gimpmarshal.h: $(srcdir)/gimpmarshal.list
 	&& rm -f xgen-gmh xgen-gmh~
 
 gimpmarshal.c: gimpmarshal.h
-	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --header --body >> xgen-gmc \
+	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --prototypes --body >> xgen-gmc \
 	&& cp xgen-gmc $(@F) \
 	&& rm -f xgen-gmc xgen-gmc~
 

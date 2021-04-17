@@ -239,7 +239,7 @@ gimpuimarshal.h: $(srcdir)/gimpuimarshal.list
 	&& rm -f xgen-umh xgen-umh~
 
 gimpuimarshal.c: gimpuimarshal.h
-	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --header --body >> xgen-umc \
+	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --prototypes --body >> xgen-umc \
 	&& cp xgen-umc $(@F) \
 	&& rm -f xgen-umc xgen-umc~
 
