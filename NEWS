@@ -13,7 +13,10 @@ Core:
 
   - Various fixes for Wayland support.
   - Canvas Size dialog now displays a template selector to simply
-    resize the canvas to a known template.
+    resize the canvas to a known template. When the image's and
+    template's pixel density don't match, a choice will be proposed to
+    set the image's PPI to the template's one or to scale the template's
+    pixel size with the image's pixel density.
   - Off-canvas guides are now allowed. Guides are not deleted anymore
     when dropped off-canvas, but when dropped off-viewport.
 
@@ -83,9 +86,18 @@ API:
     * s/gimp_image_base_type/gimp_image_get_base_type/
     * s/gimp_image_width/gimp_image_get_width/
     * s/gimp_image_height/gimp_image_get_height/
+    * s/gimp_drawable_bpp/gimp_drawable_get_bpp/
+    * s/gimp_drawable_width/gimp_drawable_get_width/
+    * s/gimp_drawable_height/gimp_drawable_get_height/
+    * s/gimp_drawable_offsets/gimp_drawable_get_offsets/
   - libgimpconfig: GimpParasite can now be serialized. This is useful
     when using a GimpParasite procedure argument, whose random contents
     (possibly binary) can be stored across sessions.
+  - Move public classes to G_DECLARE_DERIVABLE_TYPE and
+    G_DECLARE_FINAL_TYPE in order not to expose useless variables to
+    plug-in developers.
+  - New function gimp_procedure_dialog_set_sensitive() sets
+    GimpProcedureDialog's widget sensitive value or binding.
 
 Plug-ins:
 
