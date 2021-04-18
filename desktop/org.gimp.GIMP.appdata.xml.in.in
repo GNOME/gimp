@@ -148,6 +148,38 @@
       </description>
     </release>
 
+    <release version="2.10.24" date="2021-03-28">
+      <url type="details">https://www.gimp.org/news/2021/03/29/gimp-2-10-24-released/</url>
+      <description>
+        <_p>
+          GIMP 2.10.24 is again mostly a bug fix release. Notable changes:
+        </_p>
+        <ul>
+          <_li>
+            GeoTIFF metadata support added
+          </_li>
+          <_li>
+            PDF import now proposes an option to load layers in reverse
+            orders and allows fractional pixel density
+          </_li>
+          <_li>
+            Raw image import updated to handle API changes in darktable 3.6 and over
+          </_li>
+          <_li>
+            File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD
+          </_li>
+          <_li>
+            Many fixes and improvements to the metadata viewer and editor
+          </_li>
+          <_li>
+            New Kabyle translation
+          </_li>
+          <_li>
+            Off-canvas point snapping (to grid, guides, paths) made possible
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.22" date="2020-10-04">
       <url type="details">https://www.gimp.org/news/2020/10/04/gimp-2-10-22-released/</url>
       <description>
