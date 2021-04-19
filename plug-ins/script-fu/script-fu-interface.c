@@ -108,6 +108,8 @@ static void   script_fu_brush_callback      (gpointer       data,
                                              gint           height,
                                              const guchar  *mask_data,
                                              gboolean       closing);
+static void   script_fu_flush_events         (void);
+static void   script_fu_activate_main_dialog (void);
 
 
 /*
@@ -660,6 +662,7 @@ script_fu_file_callback (GtkWidget  *widget,
     g_free (file->filename);
 
   file->filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (widget));
+  script_fu_activate_main_dialog ();
 }
 
 static void
@@ -689,6 +692,7 @@ script_fu_pattern_callback (gpointer      data,
                             gboolean      closing)
 {
   script_fu_string_update (data, name);
+  if (closing) script_fu_activate_main_dialog ();
 }
 
 static void
@@ -699,6 +703,7 @@ script_fu_gradient_callback (gpointer       data,
                              gboolean       closing)
 {
   script_fu_string_update (data, name);
+  if (closing) script_fu_activate_main_dialog ();
 }
 
 static void
@@ -707,6 +712,7 @@ script_fu_font_callback (gpointer     data,
                          gboolean     closing)
 {
   script_fu_string_update (data, name);
+  if (closing) script_fu_activate_main_dialog ();
 }
 
 static void
@@ -715,6 +721,7 @@ script_fu_palette_callback (gpointer     data,
                             gboolean     closing)
 {
   script_fu_string_update (data, name);
+  if (closing) script_fu_activate_main_dialog ();
 }
 
 static void
@@ -736,6 +743,8 @@ script_fu_brush_callback (gpointer       data,
   brush->opacity    = opacity;
   brush->spacing    = spacing;
   brush->paint_mode = paint_mode;
+
+  if (closing) script_fu_activate_main_dialog ();
 }
 
 static void
@@ -772,11 +781,7 @@ script_fu_response (GtkWidget *widget,
 
       script_fu_ok (script);
 
-#ifdef GDK_WINDOWING_QUARTZ
-      [NSApp hide: nil];
-      while (g_main_context_pending (NULL))
-        g_main_context_iteration (NULL, TRUE);
-#endif
+      script_fu_flush_events ();
       /*
        * The script could have created a new GimpImageWindow, so
        * unset the transient-for property not to focus the
@@ -790,14 +795,12 @@ script_fu_response (GtkWidget *widget,
     default:
       sf_status = GIMP_PDB_CANCEL;
 
-#ifdef GDK_WINDOWING_QUARTZ
-      [NSApp hide: nil];
-      while (g_main_context_pending (NULL))
-        g_main_context_iteration (NULL, TRUE);
-#endif
+      script_fu_flush_events ();
       gtk_widget_destroy (sf_interface->dialog);
       break;
     }
+
+  script_fu_flush_events ();
 }
 
 static void
@@ -987,4 +990,81 @@ script_fu_reset (SFScript *script)
           break;
         }
     }
+}
+
+
+/*
+ * Functions for window front/back management.
+ * These might only be necessary for MacOS.
+ *
+ * One problem is that the GIMP and the scriptfu extension process are separate "apps".
+ * Closing a main scriptfu dialog does not terminate the scriptfu extension process,
+ * and MacOS does not then activate some other app.
+ * On other platforms, the select dialogs are transient to the GIMP app's progress bar,
+ * but that doesn't seem to work on MacOS.
+ *
+ * Also some of the GIMP "select" widgets (for brush, pattern, gradient, font, palette)
+ * for plugins are independent and tool like:
+ * their popup dialog window is not a child of the button which pops it up.
+ * The button "owns" the popup but GDK is not aware of that relation,
+ * and so does not handle closing automatically.
+ * There are PDB callbacks in each direction:
+ * from the select dialog to the scriptfu extension on user's new selection
+ * from the scriptfu extension to the select dialog on closing
+ *
+ * This might change in the future.
+ * 1) in GIMP 3, scriptfu and python plugins should use a common API for a control dialog,
+ * (script-fu-interface.c is obsoleted?)
+ * 2) the code for select dialogs is significantly changed in GIMP 3
+ * 3) Gtk3 might solve this (now using Gtk2.)
+ */
+
+/* On MacOS, without calls to this, scriptfu dialog gets spinning ball of doom,
+ * meaning MacOS thinks app is not responding to events,
+ * and dialog stays visible even after destroyed.
+ */
+static void
+script_fu_flush_events (void)
+{
+  /* Ensure all GLib events have been processed. */
+
+  /* Former code also hid GUI of the script-fu extension process using: [NSApp hide: nil];
+   * (In Objective-C, get instance of NSApplication and send it a "hide" message with nil sender.)
+   * Hiding is not necessary, since this is only called when
+   * scriptfu is done interpreting the current script and is destroying its widgets.
+   */
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Alternative code might be a call to gtk_main()?
+   * This is not an infinite loop since there are finite events, and iteration reduces them.
+   * Somehow, this lets MacOS think the app is responsive.
+   */
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, TRUE);
+#else
+  /* empty function, optimized out. */
+#endif
+}
+
+
+/* On MacOS, without calls to this,
+ * when user closes GIMP "select" dialogs (child of main dialog)
+ * the main scriptfu dialog can be obscured by GIMP main window.
+ * The main scriptfu dialog must be visible so user can choose the OK button,
+ * and it contains a progress bar.
+ *
+ * Note the color "select" dialog has no callback specialized for scriptfu.
+ * And the file "chooser" dialog is also different.
+ */
+static void
+script_fu_activate_main_dialog (void)
+{
+  /* Ensure the main dialog of the script-fu extension process is not obscured. */
+#ifdef GDK_WINDOWING_QUARTZ
+  /* In Objective-C, get instance of NSApplication
+   * and send it a "activateIgnoringOtherApps" message, i.e. bring to front.
+   */
+  [NSApp activateIgnoringOtherApps: YES];
+#else
+  /* empty function, optimized out. */
+#endif
 }
