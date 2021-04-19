@@ -114,7 +114,7 @@ gimp_image_procedure_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-#define ARG_OFFSET 3
+#define ARG_OFFSET 4
 
 static GimpValueArray *
 gimp_image_procedure_run (GimpProcedure        *procedure,
