@@ -73,6 +73,44 @@
   </provides>
 
   <releases>
+    <release version="2.99.6" date="2021-05-25" type="development">
+      <url type="details">https://www.gimp.org/news/2021/05/25/gimp-2-99-6-released/</url>
+      <description>
+        <_p>
+        For this third development release, more development effort has been shifted towards the API.
+        Many functions were renamed for consistent naming scheme, some
+        new functions appeared, some had signature changes, fixes were
+        made to improve introspection binding of others, and so on.
+        More API updates are to be expected on further development releases where stability is not guaranteed.
+        </_p>
+        <_p>
+        Regarding end-creator changes, some notable improvements are:
+        </_p>
+        <ul>
+          <_li>
+          Canvas Size dialog now displays a template selector
+          </_li>
+          <_li>
+          Off-canvas guides are now allowed
+          </_li>
+          <_li>
+          The experimental Paint Select tool got various improvements
+          </_li>
+          <_li>
+          More fixes for Wayland support
+          </_li>
+          <_li>
+          Dialog dropped for the Freedesktop portal implementation of the screenshot plug-in
+          </_li>
+          <_li>
+          PNG import creates an ICC profile out of the gAMA and/or cHRM chunks
+          </_li>
+          <_li>
+          TIFF export stores the ICC profile and comment on each layer to prevent ambiguous files
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.99.4" date="2020-12-22" type="development">
       <url type="details">https://www.gimp.org/news/2020/12/25/gimp-2-99-4-released/</url>
       <description>
