@@ -33,11 +33,6 @@ python_eval_SCRIPTS = python-eval.py
 spyro_plusdir = $(gimpplugindir)/plug-ins/spyro-plus
 spyro_plus_SCRIPTS = spyro-plus.py
 
-if GIMP_UNSTABLE
-benchmark_foreground_extractdir = $(gimpplugindir)/plug-ins/benchmark-foreground-extract
-benchmark_foreground_extract_SCRIPTS = benchmark-foreground-extract.py
-endif
-
 EXTRA_DIST = \
 	colorxhtml.py			\
 	file-openraster.py		\
@@ -49,10 +44,6 @@ EXTRA_DIST = \
 	palette-to-gradient.py		\
 	python-eval.py			\
 	spyro-plus.py
-
-if GIMP_UNSTABLE
-EXTRA_DIST += benchmark-foreground-extract.py
-endif
 
 # Python interpreter file.
 
