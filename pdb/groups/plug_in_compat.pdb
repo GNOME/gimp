@@ -2340,7 +2340,7 @@ photographing a moving object at a slow shutter
 speed. Done by adding multiple displaced copies.
 HELP
 
-    &std_pdb_compat('gegl:motion-blur-linear, -zoom, -cirular');
+    &std_pdb_compat('gegl:motion-blur-linear, -zoom, -circular');
     $date = '2013';
 
     @inargs = (
@@ -2434,7 +2434,7 @@ This procedure is equivalent to plug-in-mblur but
 performs the zoom blur inward instead of outward.
 HELP
 
-    &std_pdb_compat('gegl:motion-blur-linear, -zoom, -cirular');
+    &std_pdb_compat('gegl:motion-blur-linear, -zoom, -circular');
     $date = '2013';
 
     @inargs = (

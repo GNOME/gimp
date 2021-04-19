@@ -7117,8 +7117,8 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                   "This plug-in simulates the effect seen when photographing a moving object at a slow shutter speed. Done by adding multiple displaced copies.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
-                                         "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
+                                         "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -circular' for credits.",
+                                         "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -circular' for credits.",
                                          "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
@@ -7183,8 +7183,8 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                   "This procedure is equivalent to plug-in-mblur but performs the zoom blur inward instead of outward.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
-                                         "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
+                                         "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -circular' for credits.",
+                                         "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -circular' for credits.",
                                          "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
