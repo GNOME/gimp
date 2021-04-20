@@ -6,8 +6,8 @@
 
 (define (script-fu-clothify timg tdrawable bx by azimuth elevation depth)
   (let* (
-        (width (car (gimp-drawable-width tdrawable)))
-        (height (car (gimp-drawable-height tdrawable)))
+        (width (car (gimp-drawable-get-width tdrawable)))
+        (height (car (gimp-drawable-get-height tdrawable)))
         (img (car (gimp-image-new width height RGB)))
 ;       (layer-two (car (gimp-layer-new img width height RGB-IMAGE "Y Dots" 100 LAYER-MODE-MULTIPLY)))
         (layer-one (car (gimp-layer-new img width height RGB-IMAGE "X Dots" 100 LAYER-MODE-NORMAL)))

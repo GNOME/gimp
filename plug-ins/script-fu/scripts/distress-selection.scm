@@ -31,10 +31,10 @@
 
   (let (
        (theImage inImage)
-       (theWidth (car (gimp-image-width inImage)))
-       (theHeight (car (gimp-image-height inImage)))
+       (theWidth (car (gimp-image-get-width inImage)))
+       (theHeight (car (gimp-image-get-height inImage)))
        (theLayer 0)
-       (theMode (car (gimp-image-base-type inImage)))
+       (theMode (car (gimp-image-get-base-type inImage)))
        (prevLayer (car (gimp-image-get-active-layer inImage)))
        )
 

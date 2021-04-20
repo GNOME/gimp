@@ -64,9 +64,9 @@
         (type (car (gimp-drawable-type-with-alpha drawable)))
         (image (if (= work-on-copy TRUE) (car (gimp-image-duplicate img)) img))
         (pic-layer (car (gimp-image-get-active-drawable image)))
-        (offsets (gimp-drawable-offsets pic-layer))
-        (width (car (gimp-drawable-width pic-layer)))
-        (height (car (gimp-drawable-height pic-layer)))
+        (offsets (gimp-drawable-get-offsets pic-layer))
+        (width (car (gimp-drawable-get-width pic-layer)))
+        (height (car (gimp-drawable-get-height pic-layer)))
 
         ; Bumpmap has a one pixel border on each side
         (bump-layer (car (gimp-layer-new image

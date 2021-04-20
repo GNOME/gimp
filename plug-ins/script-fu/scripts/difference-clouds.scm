@@ -21,8 +21,8 @@
 (define (script-fu-difference-clouds image
                                      drawable)
 
-  (let* ((draw-offset-x (car (gimp-drawable-offsets drawable)))
-         (draw-offset-y (cadr (gimp-drawable-offsets drawable)))
+  (let* ((draw-offset-x (car (gimp-drawable-get-offsets drawable)))
+         (draw-offset-y (cadr (gimp-drawable-get-offsets drawable)))
          (has-sel       (car (gimp-drawable-mask-intersect drawable)))
          (sel-offset-x  (cadr (gimp-drawable-mask-intersect drawable)))
          (sel-offset-y  (caddr (gimp-drawable-mask-intersect drawable)))

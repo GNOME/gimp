@@ -18,8 +18,8 @@
 (define (script-fu-coffee-stain inImage inLayer inNumber inDark)
   (let* (
         (theImage inImage)
-        (theHeight (car (gimp-image-height theImage)))
-        (theWidth (car (gimp-image-width theImage)))
+        (theHeight (car (gimp-image-get-height theImage)))
+        (theWidth (car (gimp-image-get-width theImage)))
         (theNumber inNumber)
         (theSize (min theWidth theHeight))
         (theStain 0)

@@ -8,8 +8,8 @@
 ;
 
 (define (script-fu-ripply-anim image drawable displacement num-frames edge-type)
-  (let* ((width (car (gimp-drawable-width drawable)))
-         (height (car (gimp-drawable-height drawable)))
+  (let* ((width (car (gimp-drawable-get-width drawable)))
+         (height (car (gimp-drawable-get-height drawable)))
          (work-image (car (gimp-image-new width
                                           height
                                           (quotient (car (gimp-drawable-type drawable))

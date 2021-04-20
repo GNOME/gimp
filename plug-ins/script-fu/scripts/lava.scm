@@ -33,8 +33,8 @@
                         current-grad)
   (let* (
         (type (car (gimp-drawable-type-with-alpha drawable)))
-        (image-width (car (gimp-image-width image)))
-        (image-height (car (gimp-image-height image)))
+        (image-width (car (gimp-image-get-width image)))
+        (image-height (car (gimp-image-get-height image)))
         (active-selection 0)
         (selection-bounds 0)
         (select-offset-x 0)

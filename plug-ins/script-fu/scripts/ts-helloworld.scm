@@ -37,8 +37,8 @@
     (gimp-context-set-foreground color)
 
     (set! text-layer (car (gimp-text-fontname img -1 0 0 text 10 TRUE size PIXELS font)))
-    (set! width (car (gimp-drawable-width text-layer)))
-    (set! height (car (gimp-drawable-height text-layer)))
+    (set! width (car (gimp-drawable-get-width text-layer)))
+    (set! height (car (gimp-drawable-get-height text-layer)))
     (gimp-image-resize img width height 0 0)
 
     (gimp-image-undo-enable img)

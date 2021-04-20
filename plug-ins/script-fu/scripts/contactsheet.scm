@@ -120,8 +120,8 @@
                                              (number->string num)
                                              _" for directory " dir)
                                              0 TRUE 14 PIXELS title-font)))
-      (set! text-width (car (gimp-drawable-width text-layer)))
-      (set! text-height (car (gimp-drawable-height text-layer)))
+      (set! text-width (car (gimp-drawable-get-width text-layer)))
+      (set! text-height (car (gimp-drawable-get-height text-layer)))
       (gimp-layer-set-offsets text-layer
         (/ (- img-width text-width) 2)
         (/ (- (+ border-y off-y) text-height) 2)
@@ -132,8 +132,8 @@
 
   (define (make-thumbnail-size img thumb-w thumb-h)
     (let* (
-          (file-height (car (gimp-image-height img)))
-          (file-width  (car (gimp-image-width img)))
+          (file-height (car (gimp-image-get-height img)))
+          (file-width  (car (gimp-image-get-width img)))
           (aspect-ratio (/ file-width file-height))
           )
 
@@ -235,10 +235,10 @@
               ;Move thumbnail in to position and center it in area available.
               (gimp-layer-set-offsets tmp-layer
                 (+ border-x off-x (* pos-x (+ thumb-w border-x))
-                   (/ (- thumb-w (car (gimp-image-width new-img))) 2)
+                   (/ (- thumb-w (car (gimp-image-get-width new-img))) 2)
                 )
                 (+ border-y off-y (* pos-y (+ thumb-h border-y))
-                   (/ (- thumb-h (car (gimp-image-height new-img))) 2)
+                   (/ (- thumb-h (car (gimp-image-get-height new-img))) 2)
                 )
               )
 
@@ -248,7 +248,7 @@
                                      0 TRUE 12 PIXELS legend-font)))
               (gimp-layer-set-offsets tmp-layer
                 (+ border-x off-x (* pos-x (+ thumb-w border-x))
-                   (/ (- thumb-w (car (gimp-drawable-width tmp-layer))) 2))
+                   (/ (- thumb-w (car (gimp-drawable-get-width tmp-layer))) 2))
                 (+ border-y off-y (* pos-y (+ thumb-h border-y)) thumb-h 6)
               )
 

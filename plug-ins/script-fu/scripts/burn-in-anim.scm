@@ -63,7 +63,7 @@
               (gimp-image-convert-rgb img))
           (set! source-layer    (aref (cadr (gimp-image-get-layers img)) 0 ))
           (set! bg-source-layer (aref (cadr (gimp-image-get-layers img)) 1 ))
-          (set! source-layer-width (car (gimp-drawable-width  source-layer)))
+          (set! source-layer-width (car (gimp-drawable-get-width  source-layer)))
 
           ;--- hide layers, cause we want to "merge visible layers" later
           (gimp-item-set-visible source-layer FALSE)
@@ -88,10 +88,10 @@
 
               ;--- handle layer geometry
               (set! bl-layer-width source-layer-width)
-              (set! bl-height      (car (gimp-drawable-height bl-layer)))
+              (set! bl-height      (car (gimp-drawable-get-height bl-layer)))
               (set! bl-x-off (- bl-x     bl-width))
-              (set! bl-x-off (+ bl-x-off (car  (gimp-drawable-offsets bl-layer))))
-              (set! bl-y-off             (cadr (gimp-drawable-offsets bl-layer)))
+              (set! bl-x-off (+ bl-x-off (car  (gimp-drawable-get-offsets bl-layer))))
+              (set! bl-y-off             (cadr (gimp-drawable-get-offsets bl-layer)))
 
               ;--- select a rectangular area to blend
               (gimp-image-select-rectangle img CHANNEL-OP-REPLACE bl-x-off bl-y-off bl-width bl-height)
@@ -100,7 +100,7 @@
 
               (if (= fadeout FALSE)
                   (begin
-                    (set! nofadeout-bl-x-off (car (gimp-drawable-offsets bl-layer)))
+                    (set! nofadeout-bl-x-off (car (gimp-drawable-get-offsets bl-layer)))
                     (set! nofadeout-bl-width (+ nofadeout-bl-x-off bl-x))
                     (set! nofadeout-bl-width (max nofadeout-bl-width 1))
                     (gimp-image-select-rectangle img CHANNEL-OP-REPLACE

@@ -49,8 +49,8 @@
   (let* ((shadow-blur (abs shadow-blur))
          (radius (abs radius))
          (diam (* 2 radius))
-         (width (car (gimp-image-width img)))
-         (height (car (gimp-image-height img)))
+         (width (car (gimp-image-get-width img)))
+         (height (car (gimp-image-get-height img)))
          (type (car (gimp-drawable-type-with-alpha drawable)))
          (image (cond ((= work-on-copy TRUE)
                        (car (gimp-image-duplicate img)))
@@ -95,8 +95,8 @@
                                '(0 0 0)
                                80
                                TRUE)
-        (set! width (car (gimp-image-width image)))
-        (set! height (car (gimp-image-height image)))))
+        (set! width (car (gimp-image-get-width image)))
+        (set! height (car (gimp-image-get-height image)))))
 
   ; optionally add a background
   (if (= background-toggle TRUE)

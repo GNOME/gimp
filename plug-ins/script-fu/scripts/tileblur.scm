@@ -20,8 +20,8 @@
   (let* (
         (theImage inImage)
         (theLayer inLayer)
-        (theHeight (car (gimp-drawable-height theLayer)))
-        (theWidth (car (gimp-drawable-width theLayer)))
+        (theHeight (car (gimp-drawable-get-height theLayer)))
+        (theWidth (car (gimp-drawable-get-width theLayer)))
         )
 
     (define (pasteat xoff yoff)

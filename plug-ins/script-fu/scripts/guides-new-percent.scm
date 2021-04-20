@@ -4,8 +4,8 @@
 
 (define (script-fu-guide-new-percent image drawable direction position)
   (let* (
-        (width (car (gimp-image-width image)))
-      	(height (car (gimp-image-height image)))
+        (width (car (gimp-image-get-width image)))
+      	(height (car (gimp-image-get-height image)))
         )
 
     (if (= direction 0)

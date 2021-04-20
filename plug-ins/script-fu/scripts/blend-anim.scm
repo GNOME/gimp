@@ -47,8 +47,8 @@
         (max-blur (max max-blur 0))
         (frames (max frames 0))
         (image (car (gimp-image-duplicate img)))
-        (width (car (gimp-image-width image)))
-        (height (car (gimp-image-height image)))
+        (width (car (gimp-image-get-width image)))
+        (height (car (gimp-image-get-height image)))
         (layers (gimp-image-get-layers image))
         (num-layers (car layers))
         (layer-array (cadr layers))
@@ -82,11 +82,11 @@
 			(gimp-item-set-visible bg-layer FALSE)
 			(while (> layer-count -1)
 				   (let* ((layer (aref layer-array layer-count))
-				  (layer-width (+ (car (gimp-drawable-width layer))
+				  (layer-width (+ (car (gimp-drawable-get-width layer))
 						  (* max-blur 2)))
-				  (layer-height (+ (car (gimp-drawable-height layer))
+				  (layer-height (+ (car (gimp-drawable-get-height layer))
 						   (* max-blur 2)))
-				  (layer-offsets (gimp-drawable-offsets layer))
+				  (layer-offsets (gimp-drawable-get-offsets layer))
 				  (layer-offset-x (- (car layer-offsets) max-blur))
 				  (layer-offset-y (- (cadr layer-offsets) max-blur)))
 				 (gimp-item-set-visible layer FALSE)
@@ -95,9 +95,9 @@
 				 (set! min-offset-x (min min-offset-x layer-offset-x))
 				 (set! min-offset-y (min min-offset-y layer-offset-y))
 				 (set! layer-count (- layer-count 1))))
-			(set! offset-x (- (car (gimp-drawable-offsets bg-layer))
+			(set! offset-x (- (car (gimp-drawable-get-offsets bg-layer))
 					  min-offset-x))
-			(set! offset-y (- (cadr (gimp-drawable-offsets bg-layer))
+			(set! offset-y (- (cadr (gimp-drawable-get-offsets bg-layer))
 					  min-offset-y)))
 
 		  ; create intermediate frames by merging copies of adjacent layers
@@ -123,8 +123,8 @@
 				  (gimp-layer-set-opacity lower-copy opacity)
 				  (gimp-layer-set-opacity bg-copy 100)
 				  (if (> max-blur 0)
-				  (let* ((layer-width (car (gimp-drawable-width upper-copy)))
-						 (layer-height (car (gimp-drawable-height upper-copy))))
+				  (let* ((layer-width (car (gimp-drawable-get-width upper-copy)))
+						 (layer-height (car (gimp-drawable-get-height upper-copy))))
 					(gimp-layer-set-lock-alpha upper-copy FALSE)
 					(gimp-layer-resize upper-copy
 							   (+ layer-width (* blur 2))
@@ -139,9 +139,9 @@
 							   TRUE TRUE))
 					(set! blur (- max-blur blur))
 					(gimp-layer-set-lock-alpha lower-copy FALSE)
-					(set! layer-width (car (gimp-drawable-width
+					(set! layer-width (car (gimp-drawable-get-width
 								lower-copy)))
-					(set! layer-height (car (gimp-drawable-height
+					(set! layer-height (car (gimp-drawable-get-height
 								 lower-copy)))
 					(gimp-layer-resize lower-copy
 							   (+ layer-width (* blur 2))

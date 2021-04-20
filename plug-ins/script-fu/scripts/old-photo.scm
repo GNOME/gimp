@@ -53,8 +53,8 @@
              (gimp-drawable-color-balance theLayer TRANSFER-SHADOWS TRUE 30 0 -30)
       )
   )
-  (set! theWidth (car (gimp-image-width theImage)))
-  (set! theHeight (car (gimp-image-height theImage)))
+  (set! theWidth (car (gimp-image-get-width theImage)))
+  (set! theHeight (car (gimp-image-get-height theImage)))
   (if (= inMottle TRUE)
       (let (
 	    (mLayer (car (gimp-layer-new theImage theWidth theHeight

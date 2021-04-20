@@ -44,8 +44,8 @@
   )
 
   (let (
-       (theWidth (car (gimp-image-width inImage)))
-       (theHeight (car (gimp-image-height inImage)))
+       (theWidth (car (gimp-image-get-width inImage)))
+       (theHeight (car (gimp-image-get-height inImage)))
        (theImage (if (= inCopy TRUE) (car (gimp-image-duplicate inImage))
                                       inImage))
        (theLayer 0)

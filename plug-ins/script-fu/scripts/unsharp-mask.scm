@@ -5,8 +5,8 @@
 
 (define (script-fu-unsharp-mask img drw mask-size mask-opacity)
   (let* (
-        (drawable-width (car (gimp-drawable-width drw)))
-        (drawable-height (car (gimp-drawable-height drw)))
+        (drawable-width (car (gimp-drawable-get-width drw)))
+        (drawable-height (car (gimp-drawable-get-height drw)))
         (new-image (car (gimp-image-new drawable-width drawable-height RGB)))
         (original-layer (car (gimp-layer-new new-image
                                              drawable-width drawable-height

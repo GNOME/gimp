@@ -33,8 +33,8 @@
 
 (define (script-fu-carve-it mask-img mask-drawable bg-layer carve-white)
   (let* (
-        (width (car (gimp-drawable-width mask-drawable)))
-        (height (car (gimp-drawable-height mask-drawable)))
+        (width (car (gimp-drawable-get-width mask-drawable)))
+        (height (car (gimp-drawable-get-height mask-drawable)))
         (type (car (gimp-drawable-type bg-layer)))
         (img (car (gimp-image-new width height (cond ((= type RGB-IMAGE) RGB)
                                                      ((= type RGBA-IMAGE) RGB)
@@ -61,8 +61,8 @@
         (csl-mask 0)
         (inset-layer 0)
         (il-mask 0)
-        (bg-width (car (gimp-drawable-width bg-layer)))
-        (bg-height (car (gimp-drawable-height bg-layer)))
+        (bg-width (car (gimp-drawable-get-width bg-layer)))
+        (bg-height (car (gimp-drawable-get-height bg-layer)))
         (bg-type (car (gimp-drawable-type bg-layer)))
         (bg-image (car (gimp-item-get-image bg-layer)))
         (layer1 (car (gimp-layer-new img bg-width bg-height bg-type "Layer1" 100 LAYER-MODE-NORMAL)))

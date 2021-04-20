@@ -25,7 +25,7 @@
 (define (script-fu-selection-to-image image drawable)
   (let* (
         (draw-type (car (gimp-drawable-type-with-alpha drawable)))
-        (image-type (car (gimp-image-base-type image)))
+        (image-type (car (gimp-image-get-base-type image)))
         (selection-bounds (gimp-selection-bounds image))
         (select-offset-x (cadr selection-bounds))
         (select-offset-y (caddr selection-bounds))

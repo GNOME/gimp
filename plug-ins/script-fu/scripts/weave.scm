@@ -356,9 +356,9 @@
 
   (let* (
         (d-img (car (gimp-item-get-image drawable)))
-        (d-width (car (gimp-drawable-width drawable)))
-        (d-height (car (gimp-drawable-height drawable)))
-        (d-offsets (gimp-drawable-offsets drawable))
+        (d-width (car (gimp-drawable-get-width drawable)))
+        (d-height (car (gimp-drawable-get-height drawable)))
+        (d-offsets (gimp-drawable-get-offsets drawable))
 
         (weaving (create-complete-weave d-width
                                         d-height

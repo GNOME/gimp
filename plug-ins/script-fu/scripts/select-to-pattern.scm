@@ -39,8 +39,8 @@
 
   (if (= (car (gimp-selection-is-empty image)) TRUE)
       (begin
-        (set! selection-width (car (gimp-drawable-width drawable)))
-        (set! selection-height (car (gimp-drawable-height drawable)))
+        (set! selection-width (car (gimp-drawable-get-width drawable)))
+        (set! selection-height (car (gimp-drawable-get-height drawable)))
       )
       (begin
         (set! selection-bounds (gimp-drawable-mask-bounds drawable))

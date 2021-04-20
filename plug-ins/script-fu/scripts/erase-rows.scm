@@ -4,10 +4,10 @@
 
 (define (script-fu-erase-nth-rows img drawable orientation offset type nth)
   (let* (
-        (width (car (gimp-drawable-width drawable)))
-        (height (car (gimp-drawable-height drawable)))
-        (position-x (car (gimp-drawable-offsets drawable)))
-        (position-y (cadr (gimp-drawable-offsets drawable)))
+        (width (car (gimp-drawable-get-width drawable)))
+        (height (car (gimp-drawable-get-height drawable)))
+        (position-x (car (gimp-drawable-get-offsets drawable)))
+        (position-y (cadr (gimp-drawable-get-offsets drawable)))
         )
 
     (gimp-context-push)

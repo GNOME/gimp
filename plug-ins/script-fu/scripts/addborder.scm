@@ -98,8 +98,8 @@
   )
 
   (let* ((img (car (gimp-item-get-image adraw)))
-         (owidth (car (gimp-image-width img)))
-         (oheight (car (gimp-image-height img)))
+         (owidth (car (gimp-image-get-width img)))
+         (oheight (car (gimp-image-get-height img)))
          (width (+ owidth (* 2 xsize)))
          (height (+ oheight (* 2 ysize)))
          (layer (car (gimp-layer-new img
