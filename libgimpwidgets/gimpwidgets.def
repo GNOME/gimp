@@ -332,6 +332,7 @@ EXPORTS
 	gimp_prop_boolean_radio_frame_new
 	gimp_prop_check_button_new
 	gimp_prop_color_area_new
+	gimp_prop_color_select_new
 	gimp_prop_coordinates_connect
 	gimp_prop_coordinates_new
 	gimp_prop_entry_new
