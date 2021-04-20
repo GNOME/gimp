@@ -714,10 +714,11 @@ plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                      GIMP_PDB_ITEM_CONTENT, error))
         {
-          GimpLayer *layer = gimp_image_get_active_layer (image);
-          gint       x, y, width, height;
+          GList *layers = gimp_image_get_selected_layers (image);
+          GList *iter;
+          gint   x, y, width, height;
 
-          if (layer)
+          if (layers)
             {
               switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
                                                  0, 0,
@@ -729,9 +730,10 @@ plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
                   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                                _("Autocrop layer"));
 
-                  gimp_item_resize (GIMP_ITEM (layer),
-                                    context, GIMP_FILL_TRANSPARENT,
-                                    width, height, -x, -y);
+                  for (iter = layers; iter; iter = iter->next)
+                      gimp_item_resize (GIMP_ITEM (iter->data),
+                                        context, GIMP_FILL_TRANSPARENT,
+                                        width, height, -x, -y);
 
                   gimp_image_undo_group_end (image);
                   break;
@@ -740,9 +742,15 @@ plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
                   break;
                 }
             }
+          else
+            {
+              success = FALSE;
+            }
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -5103,8 +5111,8 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-autocrop-layer");
   gimp_procedure_set_static_help (procedure,
-                                  "Crop the active layer based on empty borders of the input drawable",
-                                  "Crop the active layer of the input \"image\" based on empty borders of the input \"drawable\". \n\nThe input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily the cropped layer (the current active layer).",
+                                  "Crop the selected layers based on empty borders of the input drawable",
+                                  "Crop the selected layers of the input \"image\" based on empty borders of the input \"drawable\". \n\nThe input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily among the cropped layers (the current selected layers).",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
