@@ -3,7 +3,6 @@
 
 [encoding: UTF-8]
 
-plug-ins/python/benchmark-foreground-extract.py
 plug-ins/python/colorxhtml.py
 plug-ins/python/foggify.py
 plug-ins/python/gradients-save-as-css.py
