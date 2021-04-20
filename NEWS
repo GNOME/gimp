@@ -90,6 +90,8 @@ API:
     * s/gimp_drawable_width/gimp_drawable_get_width/
     * s/gimp_drawable_height/gimp_drawable_get_height/
     * s/gimp_drawable_offsets/gimp_drawable_get_offsets/
+  - gimp_parasite_data() and gimp_parasite_data_size() are replaced by
+    gimp_parasite_get_data() which is introspection friendly.
   - libgimpconfig: GimpParasite can now be serialized. This is useful
     when using a GimpParasite procedure argument, whose random contents
     (possibly binary) can be stored across sessions.
@@ -98,6 +100,8 @@ API:
     plug-in developers.
   - New function gimp_procedure_dialog_set_sensitive() sets
     GimpProcedureDialog's widget sensitive value or binding.
+  - PDB procedure 'plug-in-autocrop-layer' multi-layer aware.
+  - GimpProcedureDialog now handles GimpRGB arguments.
 
 Plug-ins:
 
@@ -130,6 +134,9 @@ Plug-ins:
       selected one meant to be applied).
     * last used values now stored with the new API, hence surviving
       across sessions.
+  - benchmark-foreground-extract.py moved to gimp-data-extras.
+  - Various plug-ins now work with multiple selected drawables when
+    relevant.
 
 Devel docs:
 
@@ -325,6 +332,7 @@ Plug-ins:
     has a new `fatal-criticals` option and better defaults. Developer
     documentation got some rewriting and debugging code benefited from
     refactorization.
+  - py-slice.py moved to gimp-data-extras.
 
 Installer:
 
@@ -457,6 +465,8 @@ Plug-ins:
     Lossless option delivers visually lossless output.
   - New "file-heif-av1-load" procedure separate from "file-heif-load"
     for AVIF only.
+  - shadow_bevel.py, sphere.py, whirlpinch.py and clothify.py moved to
+    gimp-data-extras.
 
 API:
 
