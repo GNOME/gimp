@@ -213,6 +213,12 @@ GtkWidget     * gimp_prop_color_area_new          (GObject       *config,
                                                    gint           height,
                                                    GimpColorAreaType  type);
 
+GtkWidget     * gimp_prop_color_select_new        (GObject       *config,
+                                                   const gchar   *property_name,
+                                                   gint           width,
+                                                   gint           height,
+                                                   GimpColorAreaType  type);
+
 /*  GimpParamUnit  */
 
 GtkWidget     * gimp_prop_unit_combo_box_new      (GObject       *config,

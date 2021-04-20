@@ -580,6 +580,12 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                         property, -1);
         }
     }
+  else if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_RGB)
+    {
+      widget = gimp_prop_color_area_new (G_OBJECT (dialog->priv->config),
+                                         property, 20, 20,
+                                         GIMP_COLOR_AREA_SMALL_CHECKS);
+    }
   else
     {
       g_warning ("%s: parameter %s has non supported type %s",
@@ -617,6 +623,86 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
         }
 
       g_hash_table_remove (dialog->priv->sensitive_data, property);
+    }
+
+  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
+
+  return widget;
+}
+
+/**
+ * gimp_procedure_dialog_get_color_widget:
+ * @dialog:   the associated #GimpProcedureDialog.
+ * @property: name of the #GimpRGB property to build a widget for. It
+ *            must be a property of the #GimpProcedure @dialog has been
+ *            created for.
+ * @editable: whether the color can be edited or is only for display.
+ * @type:     the #GimpColorAreaType.
+ *
+ * Creates a new widget for @property which must necessarily be a
+ * #GimpRGB property.
+ * This must be used instead of gimp_procedure_dialog_get_widget() when
+ * you want more customizability for an RGB property.
+ *
+ * If a widget has already been created for this procedure, it will be
+ * returned instead (whatever its actual widget type).
+ *
+ * Returns: (transfer none): a #GimpColorButton representing @property
+ *                           if @editable is %TRUE, a #GimpColorArea otherwise.
+ *                           The object belongs to @dialog and must not
+ *                           be freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
+                                        const gchar         *property,
+                                        gboolean             editable,
+                                        GimpColorAreaType    type)
+{
+  GtkWidget  *widget = NULL;
+  GParamSpec *pspec;
+
+  g_return_val_if_fail (property != NULL, NULL);
+
+  /* First check if it already exists. */
+  widget = g_hash_table_lookup (dialog->priv->widgets, property);
+
+  if (widget)
+    return widget;
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                        property);
+  if (! pspec)
+    {
+      g_warning ("%s: parameter %s does not exist.",
+                 G_STRFUNC, property);
+      return NULL;
+    }
+
+  if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_RGB)
+    {
+      if (editable)
+        widget = gimp_prop_color_select_new (G_OBJECT (dialog->priv->config),
+                                             property, 20, 20, type);
+      else
+        widget = gimp_prop_color_area_new (G_OBJECT (dialog->priv->config),
+                                           property, 20, 20, type);
+
+      gtk_widget_set_vexpand (widget, FALSE);
+      gtk_widget_set_hexpand (widget, TRUE);
+    }
+
+  if (! widget)
+    {
+      g_warning ("%s: parameter '%s' of type %s not suitable as color widget",
+                 G_STRFUNC, property, G_PARAM_SPEC_TYPE_NAME (pspec));
+      return NULL;
+    }
+  else if (GIMP_IS_LABELED (widget))
+    {
+      GtkWidget *label = gimp_labeled_get_label (GIMP_LABELED (widget));
+
+      gtk_size_group_add_widget (dialog->priv->label_group, label);
     }
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);

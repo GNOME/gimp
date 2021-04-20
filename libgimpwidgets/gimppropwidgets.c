@@ -3750,6 +3750,53 @@ gimp_prop_color_area_notify (GObject    *config,
                                      config);
 }
 
+/**
+ * gimp_prop_color_select_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of RGB property.
+ * @width:         Width of the colorpreview in pixels.
+ * @height:        Height of the colorpreview in pixels.
+ * @type:          How transparency is represented.
+ *
+ * Creates a #GimpColorButton to set and display the value of an RGB
+ * property.
+ *
+ * Returns: (transfer full): A new #GimpColorButton widget.
+ *
+ * Since: 3.0
+ */
+GtkWidget *
+gimp_prop_color_select_new (GObject           *config,
+                            const gchar       *property_name,
+                            gint               width,
+                            gint               height,
+                            GimpColorAreaType  type)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *button;
+  GimpRGB    *value;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  button = gimp_color_button_new (g_param_spec_get_nick (param_spec),
+                                  width, height, value, type);
+
+  g_free (value);
+
+  g_object_bind_property (config, property_name,
+                          button, "color",
+                          G_BINDING_BIDIRECTIONAL);
+  gtk_widget_show (button);
+
+  return button;
+}
 
 /********************/
 /*  unit combo box  */

@@ -78,6 +78,10 @@ GtkWidget * gimp_procedure_dialog_new               (GimpProcedure       *proced
 GtkWidget * gimp_procedure_dialog_get_widget        (GimpProcedureDialog *dialog,
                                                      const gchar         *property,
                                                      GType                widget_type);
+GtkWidget * gimp_procedure_dialog_get_color_widget  (GimpProcedureDialog *dialog,
+                                                     const gchar         *property,
+                                                     gboolean             editable,
+                                                     GimpColorAreaType    type);
 GtkWidget * gimp_procedure_dialog_get_int_combo     (GimpProcedureDialog *dialog,
                                                      const gchar         *property,
                                                      GimpIntStore        *store);
