@@ -1,0 +1,44 @@
+From 4f4d89506f58a64b4829b1bb239bab9e46d63727 Mon Sep 17 00:00:00 2001
+From: Jehan <jehan@girinstud.io>
+Date: Tue, 19 Jan 2021 12:42:31 +0100
+Subject: [PATCH] src: do not override explicitly requested grayscale
+ antialiasing.
+
+If CAIRO_ANTIALIAS_DEFAULT is selected and system is set to subpixel, it
+is perfectly normal to switch to CAIRO_ANTIALIAS_SUBPIXEL.
+But when the calling application specifically requested
+CAIRO_ANTIALIAS_GRAY then Cairo should honor the request.
+
+This is an issue we have had for years in GIMP, where text on images
+would render differently depending on the system the file is opened on.
+This is obviously not right as a graphics work should be system
+independant and allow the creator to decide if one wants a text to have
+grayscale or subpixel rendering (a settings which would stick when
+sharing the work file). Cairo should not override this.
+The CAIRO_ANTIALIAS_DEFAULT settings exists exactly for this (when we
+want Cairo to choose for us, in a system-dependant way); other settings
+are when we need system independance.
+
+Thanks to Adam Fontenot for initial investigations and tests on this and
+other contributors before this.
+---
+ src/cairo-ft-font.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/cairo-ft-font.c b/src/cairo-ft-font.c
+index d2221edec..1f5befec3 100644
+--- a/src/cairo-ft-font.c
++++ b/src/cairo-ft-font.c
+@@ -1945,8 +1945,7 @@ _cairo_ft_options_merge (cairo_ft_options_t *options,
+     }
+ 
+     if (other->base.antialias == CAIRO_ANTIALIAS_SUBPIXEL &&
+-	(options->base.antialias == CAIRO_ANTIALIAS_DEFAULT ||
+-	 options->base.antialias == CAIRO_ANTIALIAS_GRAY)) {
++	options->base.antialias == CAIRO_ANTIALIAS_DEFAULT) {
+ 	options->base.antialias = CAIRO_ANTIALIAS_SUBPIXEL;
+ 	options->base.subpixel_order = other->base.subpixel_order;
+     }
+-- 
+GitLab
+
