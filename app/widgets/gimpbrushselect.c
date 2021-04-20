@@ -287,7 +287,7 @@ gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
                                         G_TYPE_INT,            gimp_brush_get_width  (brush),
                                         G_TYPE_INT,            gimp_brush_get_height (brush),
                                         G_TYPE_INT,            array->length,
-                                        GIMP_TYPE_UINT8_ARRAY, array,
+                                        GIMP_TYPE_UINT8_ARRAY, array->data,
                                         G_TYPE_BOOLEAN,        closing,
                                         G_TYPE_NONE);
 
