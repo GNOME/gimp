@@ -46,8 +46,8 @@ EXPORTS
 	gimp_procedure_dialog_fill_flowbox_list
 	gimp_procedure_dialog_fill_frame
 	gimp_procedure_dialog_fill_list
-	gimp_procedure_dialog_get_int_combo
 	gimp_procedure_dialog_get_color_widget
+	gimp_procedure_dialog_get_int_combo
 	gimp_procedure_dialog_get_label
 	gimp_procedure_dialog_get_scale_entry
 	gimp_procedure_dialog_get_type
