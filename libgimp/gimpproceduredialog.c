@@ -627,6 +627,8 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
+  if (g_object_is_floating (widget))
+    g_object_ref_sink (widget);
 
   return widget;
 }
@@ -707,6 +709,8 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
+  if (g_object_is_floating (widget))
+    g_object_ref_sink (widget);
 
   return widget;
 }
@@ -782,6 +786,8 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
+  if (g_object_is_floating (widget))
+    g_object_ref_sink (widget);
 
   return widget;
 }
@@ -847,6 +853,8 @@ gimp_procedure_dialog_get_scale_entry (GimpProcedureDialog *dialog,
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
+  if (g_object_is_floating (widget))
+    g_object_ref_sink (widget);
 
   return widget;
 }
@@ -896,6 +904,8 @@ gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
 
   label = gtk_label_new (text);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (label_id), label);
+  if (g_object_is_floating (label))
+    g_object_ref_sink (label);
 
   return label;
 }
@@ -1299,6 +1309,8 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
     }
 
   g_hash_table_insert (dialog->priv->widgets, g_strdup (container_id), frame);
+  if (g_object_is_floating (frame))
+    g_object_ref_sink (frame);
 
   return frame;
 }
@@ -1694,6 +1706,8 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
     g_list_free (properties);
 
   g_hash_table_insert (dialog->priv->widgets, g_strdup (container_id), container);
+  if (g_object_is_floating (container))
+    g_object_ref_sink (container);
 
   return GTK_WIDGET (container);
 }
