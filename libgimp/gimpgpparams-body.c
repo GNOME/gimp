@@ -64,6 +64,11 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       if (! strcmp (param_def->type_name, "GParamObject") &&
           ! strcmp (param_def->value_type_name, "GFile"))
         return g_param_spec_object (name, nick, blurb, G_TYPE_FILE, flags);
+
+      if (! strcmp (param_def->type_name, "GParamBoxed") &&
+          ! strcmp (param_def->value_type_name, "GimpRGB"))
+        /* Unfortunately this type loses default and alpha info. */
+        return gimp_param_spec_rgb (name, nick, blurb, TRUE, NULL, flags);
       break;
 
     case GP_PARAM_DEF_TYPE_INT:

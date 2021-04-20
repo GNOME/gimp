@@ -251,6 +251,24 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                   &color,
                                   flags);
     }
+  /* In some cases, such as some GIR bindings, creating a GimpRGB
+   * argument is impossible (or at least I have not found how, at least
+   * in the Python binding which is doing some weird shortcuts when
+   * handling GValue and param specs. So instead, the parameter appears
+   * as a Boxed param with a GimpRGB value type.
+   */
+  else if (G_IS_PARAM_SPEC_BOXED (pspec) &&
+           G_PARAM_SPEC_VALUE_TYPE (pspec) == GIMP_TYPE_RGB)
+    {
+      GValue  *value;
+      GimpRGB  color;
+
+      value = (GValue *) g_param_spec_get_default_value (pspec);
+      gimp_value_get_rgb (value, &color);
+
+      copy = gimp_param_spec_rgb (name, nick, blurb,
+                                  TRUE, &color, flags);
+    }
   else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
     {
       GeglColor *gegl_color;
