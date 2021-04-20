@@ -839,7 +839,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
       GType       arg_type  = G_VALUE_TYPE (arg);
       GType       spec_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
 
-      if (arg_type != spec_type)
+      if (! g_type_is_a (arg_type, spec_type))
         {
           if (return_vals)
             {
