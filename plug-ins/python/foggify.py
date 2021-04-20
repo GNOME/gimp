@@ -36,10 +36,7 @@ def foggify(procedure, run_mode, image, n_drawables, drawables, args, data):
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-foggify')
         dialog = GimpUi.ProcedureDialog.new(procedure, config)
-        # Even though gimp_procedure_dialog_get_color_widget() is
-        # transfer none, somehow if I don't set it to a variable PyGObject
-        # frees it, then the plug-in fails at dialog.fill().
-        b = dialog.get_color_widget('color', True, GimpUi.ColorAreaType.FLAT)
+        dialog.get_color_widget('color', True, GimpUi.ColorAreaType.FLAT)
         dialog.fill(None)
         if not dialog.run():
             dialog.destroy()
