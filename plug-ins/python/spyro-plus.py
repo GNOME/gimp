@@ -379,7 +379,11 @@ class SelectionToPath:
         result = Gimp.get_pdb().run_procedure('plug-in-sel2path', [
             GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
             GObject.Value(Gimp.Image, self.image),
-            GObject.Value(Gimp.Drawable, self.image.get_active_layer()),
+            GObject.Value(GObject.TYPE_INT, 0),
+            # XXX: I could use self.image.get_selected_layers() but for
+            # this call, it doesn't matter anyway.
+            GObject.Value(Gimp.ObjectArray,
+                          Gimp.ObjectArray.new(Gimp.Drawable, [], False)),
         ])
 
         self.path = self.image.get_vectors()[0]
@@ -389,7 +393,7 @@ class SelectionToPath:
         # simply describes the borders of the image, if one exists.
         if len(self.stroke_ids) > 1:
             # Lets compute what a stroke of the image borders should look like.
-            w, h = float(self.image.width()), float(self.image.height())
+            w, h = float(self.image.get_width()), float(self.image.get_height())
             frame_strokes = [0.0] * 6 + [0.0, h] * 3 + [w, h] * 3 + [w, 0.0] * 3
 
             for stroke in range(len(self.stroke_ids)):
@@ -408,8 +412,8 @@ class SelectionToPath:
     def compute_selection_hash(self):
         return naive_hash(self.image)
         # In gimp 2 we used this:
-        #px = self.image.get_selection().  get_pixel_rgn(0, 0, self.image.width(), self.image.height())
-        #return px[0:self.image.width(), 0:self.image.height()].__hash__()
+        #px = self.image.get_selection().  get_pixel_rgn(0, 0, self.image.get_width(), self.image.get_height())
+        #return px[0:self.image.get_width(), 0:self.image.get_height()].__hash__()
 
     def regenerate_path_if_selection_changed(self):
         current_selection_hash = self.compute_selection_hash()
@@ -1694,7 +1698,7 @@ class SpyroWindow():
 
             row = 0
             label_in_table(_("Margin (px)"), table, row, _("Margin from edge of selection."))
-            self.margin_adj = Gtk.Adjustment.new(self.p.margin_pixels, 0, max(img.height(), img.width()), 1, 10, 10)
+            self.margin_adj = Gtk.Adjustment.new(self.p.margin_pixels, 0, max(img.get_height(), img.get_width()), 1, 10, 10)
             hscale_in_table(self.margin_adj, table, row, self.margin_changed)
 
             row += 1
@@ -1799,7 +1803,7 @@ class SpyroWindow():
         self.engine = DrawingEngine(img, self.p)
 
         # Make a new GIMP layer to draw on
-        self.spyro_layer = Gimp.Layer.new(img, layer_name, img.width(), img.height(),
+        self.spyro_layer = Gimp.Layer.new(img, layer_name, img.get_width(), img.get_height(),
                                           layer.type_with_alpha(), 100, Gimp.LayerMode.NORMAL)
         img.insert_layer(self.spyro_layer, None, 0)
         self.drawing_layer = self.spyro_layer
@@ -2289,6 +2293,7 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
                                                 Gimp.PDBProcType.PLUGIN,
                                                 self.plug_in_spyrogimp, None)
             procedure.set_image_types("*")
+            procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE)
             procedure.set_documentation (N_("Draw spyrographs using current tool settings and selection."),
                                          "Uses current tool settings to draw Spyrograph patterns. "
                                          "The size and location of the pattern is based on the current selection.",
@@ -2316,7 +2321,7 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
         return procedure
 
     # Implementation of plugin.
-    def plug_in_spyrogimp(self, procedure, run_mode, image, layer, args, data):
+    def plug_in_spyrogimp(self, procedure, run_mode, image, n_layers, layers, args, data):
         curve_type=args.index(0)
         shape=args.index(1)
         sides=args.index(2)
@@ -2348,16 +2353,16 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
             pp.long_gradient = long_gradient
 
             engine = DrawingEngine(image, pp)
-            engine.draw_full(layer)
+            engine.draw_full(layers[0])
 
         elif run_mode == Gimp.RunMode.INTERACTIVE:
-            window = SpyroWindow(image, layer)
+            window = SpyroWindow(image, layers[0])
             Gtk.main()
 
         elif run_mode == Gimp.RunMode.WITH_LAST_VALS:
             pp = unshelf_parameters()
             engine = DrawingEngine(image, pp)
-            engine.draw_full(layer)
+            engine.draw_full(layers[0])
 
         return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
