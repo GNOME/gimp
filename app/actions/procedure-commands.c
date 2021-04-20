@@ -254,8 +254,8 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
             {
               if (drawables_list)
                 {
-                  g_warning ("%s: plug-in procedures expecting a single drawable are deprecated!",
-                             G_STRFUNC);
+                  g_printerr ("%s: plug-in procedures expecting a single drawable are deprecated!\n",
+                              G_STRFUNC);
                   g_value_set_object (gimp_value_array_index (args, n_args),
                                       drawables_list->data);
                   n_args++;
