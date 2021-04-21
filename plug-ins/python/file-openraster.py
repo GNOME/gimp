@@ -213,8 +213,8 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
     xml_image = ET.Element('image')
     stack = ET.SubElement(xml_image, 'stack')
     a = xml_image.attrib
-    a['w'] = str(image.width())
-    a['h'] = str(image.height())
+    a['w'] = str(image.get_width())
+    a['h'] = str(image.get_height())
 
     def store_layer(image, drawable, path):
         tmp = os.path.join(tempdir, 'tmp.png')
@@ -292,7 +292,7 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         if lay is NESTED_STACK_END:
             parent_groups.pop()
             continue
-        _, x, y = lay.offsets()
+        _, x, y = lay.get_offsets()
         opac = lay.get_opacity () / 100.0 # needs to be between 0.0 and 1.0
 
         if not parent_groups:
@@ -322,7 +322,7 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
     store_layer (thumb, thumb_layer, 'mergedimage.png')
 
     # save thumbnail
-    w, h = image.width(), image.height()
+    w, h = image.get_width(), image.get_height()
     if max (w, h) > 256:
         # should be at most 256x256, without changing aspect ratio
         if w > h:
