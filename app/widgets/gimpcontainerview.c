@@ -841,6 +841,12 @@ gimp_container_view_multi_selected (GimpContainerView *view,
 
   selected_count = g_list_length (items);
 
+  /* For some types of transient containers, the fact of setting the
+   * context makes the container disappear (i.e. the object is
+   * destroyed). So we add a weak pointer to not send a signal to a dead
+   * reference later.
+   */
+  g_object_add_weak_pointer (G_OBJECT (view), (gpointer) &view);
   if (selected_count == 1)
     {
       GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
@@ -861,10 +867,15 @@ gimp_container_view_multi_selected (GimpContainerView *view,
             }
         }
     }
-  if (selected_count > 0)
+
+  if (view)
     {
-      g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
-                     items, items_data, &success);
+      if (selected_count > 0)
+        {
+          g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
+                         items, items_data, &success);
+        }
+      g_object_remove_weak_pointer (G_OBJECT (view), (gpointer) &view);
     }
 
   return success;
