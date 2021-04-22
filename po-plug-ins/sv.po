@@ -7,13 +7,14 @@
 # Påvel Nicklasson <pavel@frimix.se>, 2014.
 # Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2018, 2019, 2020, 2021.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2016, 2017.
+# Luna Jernberg <droidbittin@gmail.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-05 04:30+0000\n"
-"PO-Revision-Date: 2021-04-05 12:46+0200\n"
+"POT-Creation-Date: 2021-04-14 17:40+0000\n"
+"PO-Revision-Date: 2021-04-22 22:38+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -23,21 +24,49 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: ../extensions/goat-exercises/goat-exercise-c.c:111
+#: ../extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
 msgstr "Övning i _C-moll"
 
-#: ../extensions/goat-exercises/goat-exercise-c.c:117
+#: ../extensions/goat-exercises/goat-exercise-c.c:120
 msgid "Exercise a goat in the C language"
 msgstr "Rasta en get i språket C"
 
-#: ../extensions/goat-exercises/goat-exercise-c.c:160
+#: ../extensions/goat-exercises/goat-exercise-c.c:152
+#: ../plug-ins/common/blinds.c:217 ../plug-ins/common/border-average.c:194
+#: ../plug-ins/common/checkerboard.c:183 ../plug-ins/common/cml-explorer.c:558
+#: ../plug-ins/common/compose.c:556 ../plug-ins/common/contrast-retinex.c:261
+#: ../plug-ins/common/crop-zealous.c:150 ../plug-ins/common/curve-bend.c:668
+#: ../plug-ins/common/decompose.c:375 ../plug-ins/common/depth-merge.c:306
+#: ../plug-ins/common/despeckle.c:242 ../plug-ins/common/destripe.c:182
+#: ../plug-ins/common/gradient-map.c:215 ../plug-ins/common/grid.c:282
+#: ../plug-ins/common/hot.c:316 ../plug-ins/common/jigsaw.c:466
+#: ../plug-ins/common/nl-filter.c:223 ../plug-ins/common/qbist.c:252
+#: ../plug-ins/common/sample-colorize.c:430
+#: ../plug-ins/common/smooth-palette.c:207 ../plug-ins/common/sparkle.c:327
+#: ../plug-ins/common/sphere-designer.c:3178 ../plug-ins/common/tile.c:219
+#: ../plug-ins/common/tile-small.c:307 ../plug-ins/common/van-gogh-lic.c:912
+#: ../plug-ins/common/warp.c:374 ../plug-ins/common/wavelet-decompose.c:189
+#: ../plug-ins/file-dds/dds.c:511 ../plug-ins/flame/flame.c:240
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:398
+#: ../plug-ins/gfig/gfig.c:212 ../plug-ins/gimpressionist/gimp.c:177
+#: ../plug-ins/gradient-flare/gradient-flare.c:934
+#: ../plug-ins/ifs-compose/ifs-compose.c:416
+#: ../plug-ins/imagemap/imap_main.c:199
+#: ../plug-ins/lighting/lighting-main.c:403
+#: ../plug-ins/map-object/map-object-main.c:495
+#: ../plug-ins/pagecurl/pagecurl.c:301
+#, c-format
+msgid "Procedure '%s' only works with one drawable."
+msgstr "Proceduren ”%s” fungerar endast med en rityta."
+
+#: ../extensions/goat-exercises/goat-exercise-c.c:182
 msgid "Exercise a goat (C)"
 msgstr "Rasta en get (C)"
 
-#: ../extensions/goat-exercises/goat-exercise-c.c:164
-#: ../extensions/goat-exercises/goat-exercise-py3.py:83
-#: ../extensions/goat-exercises/goat-exercise-vala.vala:72
+#: ../extensions/goat-exercises/goat-exercise-c.c:186
+#: ../extensions/goat-exercises/goat-exercise-py3.py:91
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:73
 #: ../plug-ins/common/align-layers.c:670 ../plug-ins/common/blinds.c:300
 #: ../plug-ins/common/border-average.c:431 ../plug-ins/common/busy-dialog.c:279
 #: ../plug-ins/common/checkerboard.c:494 ../plug-ins/common/cml-explorer.c:1346
@@ -48,7 +77,7 @@ msgstr "Rasta en get (C)"
 #: ../plug-ins/common/curve-bend.c:1211 ../plug-ins/common/curve-bend.c:1985
 #: ../plug-ins/common/curve-bend.c:2020 ../plug-ins/common/depth-merge.c:732
 #: ../plug-ins/common/destripe.c:483 ../plug-ins/common/file-cel.c:1009
-#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2355
+#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2371
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
@@ -57,8 +86,8 @@ msgstr "Rasta en get (C)"
 #: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1314
 #: ../plug-ins/common/grid.c:760 ../plug-ins/common/hot.c:678
 #: ../plug-ins/common/jigsaw.c:2497 ../plug-ins/common/mail.c:568
-#: ../plug-ins/common/nl-filter.c:1125 ../plug-ins/common/qbist.c:783
-#: ../plug-ins/common/qbist.c:825 ../plug-ins/common/qbist.c:880
+#: ../plug-ins/common/nl-filter.c:1125 ../plug-ins/common/qbist.c:847
+#: ../plug-ins/common/qbist.c:889 ../plug-ins/common/qbist.c:943
 #: ../plug-ins/common/smooth-palette.c:510 ../plug-ins/common/sparkle.c:425
 #: ../plug-ins/common/sphere-designer.c:2285
 #: ../plug-ins/common/sphere-designer.c:2630 ../plug-ins/common/tile.c:491
@@ -100,23 +129,23 @@ msgstr "Rasta en get (C)"
 msgid "_Cancel"
 msgstr "A_vbryt"
 
-#: ../extensions/goat-exercises/goat-exercise-c.c:165
-#: ../extensions/goat-exercises/goat-exercise-py3.py:84
-#: ../extensions/goat-exercises/goat-exercise-vala.vala:73
+#: ../extensions/goat-exercises/goat-exercise-c.c:187
+#: ../extensions/goat-exercises/goat-exercise-py3.py:92
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:74
 msgid "_Source"
 msgstr "_Källa"
 
-#: ../extensions/goat-exercises/goat-exercise-c.c:166
-#: ../extensions/goat-exercises/goat-exercise-vala.vala:74
+#: ../extensions/goat-exercises/goat-exercise-c.c:188
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:75
 msgid "_Run"
 msgstr "_Kör"
 
 #. XXX We use printf-style string for sharing the localized
 #. string. You may just use recommended Python format() or
 #. any style you like in your plug-ins.
-#: ../extensions/goat-exercises/goat-exercise-c.c:180
-#: ../extensions/goat-exercises/goat-exercise-py3.py:99
-#: ../extensions/goat-exercises/goat-exercise-vala.vala:88
+#: ../extensions/goat-exercises/goat-exercise-c.c:202
+#: ../extensions/goat-exercises/goat-exercise-py3.py:107
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:89
 #, c-format, python-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
@@ -128,35 +157,39 @@ msgstr ""
 "Se den senaste versionen av källkoden på nätet genom att klicka på knappen "
 "”Källa”."
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:59
+#: ../extensions/goat-exercises/goat-exercise-py3.py:60
 msgid "Exercise a goat and a python"
 msgstr "Rasta en get och en pyton"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:63
+#: ../extensions/goat-exercises/goat-exercise-py3.py:64
 msgid "Exercise a goat in the Python 3 language"
 msgstr "Rasta en get i språket Python 3"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:64
+#: ../extensions/goat-exercises/goat-exercise-py3.py:65
 msgid "Takes a goat for a walk in Python 3"
 msgstr "Tar en get på promenad i Python 3"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:80
+#: ../extensions/goat-exercises/goat-exercise-py3.py:73
+msgid "Procedure '{}' only works with one drawable."
+msgstr "Proceduren ”{}” fungerar endast med en rityta."
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:88
 msgid "Exercise a goat (Python 3)"
 msgstr "Rasta en get (Python 3)"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:85
+#: ../extensions/goat-exercises/goat-exercise-py3.py:93
 #: ../plug-ins/common/align-layers.c:671 ../plug-ins/common/blinds.c:301
 #: ../plug-ins/common/border-average.c:432
 #: ../plug-ins/common/checkerboard.c:495 ../plug-ins/common/cml-explorer.c:1347
 #: ../plug-ins/common/colormap-remap.c:666 ../plug-ins/common/compose.c:1183
 #: ../plug-ins/common/contrast-retinex.c:351
 #: ../plug-ins/common/curve-bend.c:1212 ../plug-ins/common/depth-merge.c:733
-#: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-heif.c:2356
+#: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-heif.c:2372
 #: ../plug-ins/common/file-pdf-load.c:656 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1315
 #: ../plug-ins/common/grid.c:761 ../plug-ins/common/hot.c:679
 #: ../plug-ins/common/jigsaw.c:2498 ../plug-ins/common/nl-filter.c:1126
-#: ../plug-ins/common/qbist.c:881 ../plug-ins/common/smooth-palette.c:511
+#: ../plug-ins/common/qbist.c:944 ../plug-ins/common/smooth-palette.c:511
 #: ../plug-ins/common/sparkle.c:426 ../plug-ins/common/sphere-designer.c:2631
 #: ../plug-ins/common/tile.c:492 ../plug-ins/common/tile-small.c:446
 #: ../plug-ins/common/van-gogh-lic.c:708 ../plug-ins/common/warp.c:490
@@ -179,7 +212,7 @@ msgstr "Rasta en get (Python 3)"
 msgid "_OK"
 msgstr "_OK"
 
-#: ../extensions/goat-exercises/goat-exercise-vala.vala:66
+#: ../extensions/goat-exercises/goat-exercise-vala.vala:67
 msgid "Exercise a goat (Vala)"
 msgstr "Rasta en get (Vala)"
 
@@ -356,33 +389,6 @@ msgstr "_Persienner…"
 #: ../plug-ins/common/blinds.c:160
 msgid "Simulate an image painted on window blinds"
 msgstr "Simulera en bild målad på fönsterpersienner"
-
-#: ../plug-ins/common/blinds.c:217 ../plug-ins/common/border-average.c:194
-#: ../plug-ins/common/checkerboard.c:183 ../plug-ins/common/cml-explorer.c:558
-#: ../plug-ins/common/compose.c:556 ../plug-ins/common/contrast-retinex.c:261
-#: ../plug-ins/common/crop-zealous.c:150 ../plug-ins/common/curve-bend.c:668
-#: ../plug-ins/common/decompose.c:375 ../plug-ins/common/depth-merge.c:306
-#: ../plug-ins/common/despeckle.c:242 ../plug-ins/common/destripe.c:182
-#: ../plug-ins/common/gradient-map.c:215 ../plug-ins/common/grid.c:282
-#: ../plug-ins/common/hot.c:316 ../plug-ins/common/jigsaw.c:466
-#: ../plug-ins/common/nl-filter.c:223 ../plug-ins/common/qbist.c:230
-#: ../plug-ins/common/sample-colorize.c:430
-#: ../plug-ins/common/smooth-palette.c:207 ../plug-ins/common/sparkle.c:327
-#: ../plug-ins/common/sphere-designer.c:3178 ../plug-ins/common/tile.c:219
-#: ../plug-ins/common/tile-small.c:307 ../plug-ins/common/van-gogh-lic.c:912
-#: ../plug-ins/common/warp.c:374 ../plug-ins/common/wavelet-decompose.c:189
-#: ../plug-ins/file-dds/dds.c:511 ../plug-ins/flame/flame.c:240
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:398
-#: ../plug-ins/gfig/gfig.c:212 ../plug-ins/gimpressionist/gimp.c:177
-#: ../plug-ins/gradient-flare/gradient-flare.c:934
-#: ../plug-ins/ifs-compose/ifs-compose.c:416
-#: ../plug-ins/imagemap/imap_main.c:199
-#: ../plug-ins/lighting/lighting-main.c:403
-#: ../plug-ins/map-object/map-object-main.c:495
-#: ../plug-ins/pagecurl/pagecurl.c:301
-#, c-format
-msgid "Procedure '%s' only works with one drawable."
-msgstr "Proceduren ”%s” fungerar endast med en rityta."
 
 #: ../plug-ins/common/blinds.c:258
 msgid "Adding blinds"
@@ -762,8 +768,8 @@ msgstr "Slumpfrö"
 #: ../plug-ins/common/cml-explorer.c:2246 ../plug-ins/common/curve-bend.c:1471
 #: ../plug-ins/common/curve-bend.c:1986 ../plug-ins/common/file-cel.c:1010
 #: ../plug-ins/common/file-jp2-load.c:976
-#: ../plug-ins/common/file-raw-data.c:1777 ../plug-ins/common/qbist.c:784
-#: ../plug-ins/common/qbist.c:968 ../plug-ins/common/sphere-designer.c:2288
+#: ../plug-ins/common/file-raw-data.c:1777 ../plug-ins/common/qbist.c:848
+#: ../plug-ins/common/qbist.c:1031 ../plug-ins/common/sphere-designer.c:2288
 #: ../plug-ins/common/sphere-designer.c:2679 ../plug-ins/flame/flame.c:541
 #: ../plug-ins/flame/flame.c:1103
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:806
@@ -781,7 +787,7 @@ msgstr "_Öppna"
 #: ../plug-ins/common/cml-explorer.c:1431
 #: ../plug-ins/common/cml-explorer.c:2113 ../plug-ins/common/curve-bend.c:1483
 #: ../plug-ins/common/curve-bend.c:2021 ../plug-ins/common/file-pdf-save.c:1166
-#: ../plug-ins/common/qbist.c:826 ../plug-ins/common/qbist.c:976
+#: ../plug-ins/common/qbist.c:890 ../plug-ins/common/qbist.c:1039
 #: ../plug-ins/common/sphere-designer.c:2288
 #: ../plug-ins/common/sphere-designer.c:2687 ../plug-ins/flame/flame.c:541
 #: ../plug-ins/flame/flame.c:1111
@@ -1223,7 +1229,7 @@ msgstr "_Rödton cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:192
-#: ../plug-ins/common/file-heif.c:2545 ../plug-ins/common/file-raw-data.c:1880
+#: ../plug-ins/common/file-heif.c:2561 ../plug-ins/common/file-raw-data.c:1880
 msgid "RGB"
 msgstr "RGB"
 
@@ -1486,7 +1492,7 @@ msgid "Smoo_thing"
 msgstr "Ut_jämnande"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1333 ../plug-ins/common/qbist.c:945
+#: ../plug-ins/common/curve-bend.c:1333 ../plug-ins/common/qbist.c:1008
 msgid "_Antialiasing"
 msgstr "_Kantutjämning"
 
@@ -1937,7 +1943,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #.
 #: ../plug-ins/common/file-cel.c:398 ../plug-ins/common/file-dicom.c:366
 #: ../plug-ins/common/file-gegl.c:345 ../plug-ins/common/file-gif-load.c:397
-#: ../plug-ins/common/file-heif.c:831 ../plug-ins/common/file-jp2-load.c:1085
+#: ../plug-ins/common/file-heif.c:847 ../plug-ins/common/file-jp2-load.c:1085
 #: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:820
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:659
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
@@ -2022,7 +2028,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
-#: ../plug-ins/common/file-heif.c:1468 ../plug-ins/common/file-html-table.c:361
+#: ../plug-ins/common/file-heif.c:1484 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
 #: ../plug-ins/common/file-png.c:1499 ../plug-ins/common/file-pnm.c:1336
 #: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
@@ -2465,121 +2471,121 @@ msgstr "Exporterar AVIF-bilder"
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Spara bild i AV1 Image File-format (AVIF)"
 
-#: ../plug-ins/common/file-heif.c:487 ../plug-ins/common/file-heif.c:568
+#: ../plug-ins/common/file-heif.c:486 ../plug-ins/common/file-heif.c:575
 #, c-format
 msgid "HEIF format does not support multiple layers."
 msgstr "HEIF-formatet stöder inte flera lager."
 
-#: ../plug-ins/common/file-heif.c:871 ../plug-ins/common/file-heif.c:904
-#: ../plug-ins/common/file-heif.c:945 ../plug-ins/common/file-heif.c:1011
+#: ../plug-ins/common/file-heif.c:887 ../plug-ins/common/file-heif.c:920
+#: ../plug-ins/common/file-heif.c:961 ../plug-ins/common/file-heif.c:1027
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Inläsning av HEIF-bild misslyckades: %s"
 
-#: ../plug-ins/common/file-heif.c:893
+#: ../plug-ins/common/file-heif.c:909
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Inläsning av HEIF-bild misslyckades: Indatafil innehåller inga läsbara bilder"
 
-#: ../plug-ins/common/file-heif.c:1138
+#: ../plug-ins/common/file-heif.c:1154
 msgid "image content"
 msgstr "bildinnehåll"
 
-#: ../plug-ins/common/file-heif.c:1518 ../plug-ins/common/file-heif.c:1912
+#: ../plug-ins/common/file-heif.c:1534 ../plug-ins/common/file-heif.c:1928
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodning av HEIF-bild misslyckades: %s"
 
-#: ../plug-ins/common/file-heif.c:2117
+#: ../plug-ins/common/file-heif.c:2133
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Skrivning av HEIF-bild misslyckades: %s"
 
-#: ../plug-ins/common/file-heif.c:2206
+#: ../plug-ins/common/file-heif.c:2222
 msgid "primary"
 msgstr "primär"
 
-#: ../plug-ins/common/file-heif.c:2351
+#: ../plug-ins/common/file-heif.c:2367
 msgid "Load HEIF Image"
 msgstr "Läs in HEIF-bild"
 
-#: ../plug-ins/common/file-heif.c:2365
+#: ../plug-ins/common/file-heif.c:2381
 msgid "Select Image"
 msgstr "Välj bild"
 
-#: ../plug-ins/common/file-heif.c:2510
+#: ../plug-ins/common/file-heif.c:2526
 msgid "Export Image as AVIF"
 msgstr "Exportera bild som AVIF"
 
-#: ../plug-ins/common/file-heif.c:2510
+#: ../plug-ins/common/file-heif.c:2526
 msgid "Export Image as HEIF"
 msgstr "Exportera bild som HEIF"
 
-#: ../plug-ins/common/file-heif.c:2523
+#: ../plug-ins/common/file-heif.c:2539
 #: ../plug-ins/file-webp/file-webp-dialog.c:119
 msgid "_Lossless"
 msgstr "För_lustfri"
 
-#: ../plug-ins/common/file-heif.c:2541
+#: ../plug-ins/common/file-heif.c:2557
 msgid "_Quality"
 msgstr "_Kvalitet"
 
-#: ../plug-ins/common/file-heif.c:2546
+#: ../plug-ins/common/file-heif.c:2562
 msgid "YUV444"
 msgstr "YUV444"
 
-#: ../plug-ins/common/file-heif.c:2547
+#: ../plug-ins/common/file-heif.c:2563
 msgid "YUV420"
 msgstr "YUV420"
 
 # src/sidebar.c:115
-#: ../plug-ins/common/file-heif.c:2554
+#: ../plug-ins/common/file-heif.c:2570
 msgid "Pixel format:"
 msgstr "Bildpunktsformat:"
 
-#: ../plug-ins/common/file-heif.c:2595
+#: ../plug-ins/common/file-heif.c:2611
 msgid "8 bit/channel"
 msgstr "8 bitar/kanal"
 
-#: ../plug-ins/common/file-heif.c:2596
+#: ../plug-ins/common/file-heif.c:2612
 msgid "10 bit/channel"
 msgstr "10 bitar/kanal"
 
-#: ../plug-ins/common/file-heif.c:2597
+#: ../plug-ins/common/file-heif.c:2613
 msgid "12 bit/channel"
 msgstr "12 bitar/kanal"
 
-#: ../plug-ins/common/file-heif.c:2604
+#: ../plug-ins/common/file-heif.c:2620
 msgid "Bit depth:"
 msgstr "Bitdjup:"
 
-#: ../plug-ins/common/file-heif.c:2607
+#: ../plug-ins/common/file-heif.c:2623
 msgid "Slow"
 msgstr "Långsam"
 
-#: ../plug-ins/common/file-heif.c:2608
+#: ../plug-ins/common/file-heif.c:2624
 msgid "Balanced"
 msgstr "Balanserad"
 
-#: ../plug-ins/common/file-heif.c:2609
+#: ../plug-ins/common/file-heif.c:2625
 msgid "Fast"
 msgstr "Snabb"
 
-#: ../plug-ins/common/file-heif.c:2616
+#: ../plug-ins/common/file-heif.c:2632
 msgid "Speed:"
 msgstr "Hastighet:"
 
-#: ../plug-ins/common/file-heif.c:2622
+#: ../plug-ins/common/file-heif.c:2638
 #: ../plug-ins/file-webp/file-webp-dialog.c:305
 msgid "Save color _profile"
 msgstr "Spara färg_profil"
 
-#: ../plug-ins/common/file-heif.c:2629
+#: ../plug-ins/common/file-heif.c:2645
 #: ../plug-ins/file-webp/file-webp-dialog.c:295
 msgid "_Save Exif data"
 msgstr "_Spara Exif-data"
 
-#: ../plug-ins/common/file-heif.c:2635
+#: ../plug-ins/common/file-heif.c:2651
 #: ../plug-ins/file-webp/file-webp-dialog.c:300
 msgid "Save _XMP data"
 msgstr "Spara _XMP-data"
@@ -5170,28 +5176,32 @@ msgstr "_Qbist…"
 msgid "Generate a huge variety of abstract patterns"
 msgstr "Generera ett stort urval av abstrakta mönster"
 
-#: ../plug-ins/common/qbist.c:307
+#: ../plug-ins/common/qbist.c:215
+msgid "Any file which will be used as source for pattern generation"
+msgstr "Alla filer som kommer att användas som källa för mönstergenerering"
+
+#: ../plug-ins/common/qbist.c:368
 msgid "Qbist"
 msgstr "Qbist"
 
-#: ../plug-ins/common/qbist.c:779
+#: ../plug-ins/common/qbist.c:843
 msgid "Load QBE File"
 msgstr "Läs in QBE-fil"
 
-#: ../plug-ins/common/qbist.c:821
+#: ../plug-ins/common/qbist.c:885
 msgid "Save as QBE File"
 msgstr "Spara som QBE-fil"
 
-#: ../plug-ins/common/qbist.c:876
+#: ../plug-ins/common/qbist.c:939
 msgid "G-Qbist"
 msgstr "G-Qbist"
 
-#: ../plug-ins/common/qbist.c:916
+#: ../plug-ins/common/qbist.c:979
 msgid "Pattern"
 msgstr "Mönster"
 
 # src/menus.c:302
-#: ../plug-ins/common/qbist.c:960
+#: ../plug-ins/common/qbist.c:1023
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:688
 #: ../plug-ins/gfig/gfig-dialog.c:893
 #: ../plug-ins/ifs-compose/ifs-compose.c:1081
@@ -6389,42 +6399,42 @@ msgstr "Fel vid läsning av palett."
 msgid "Invalid DDS format magic number."
 msgstr "Ogiltigt magiskt nummer för DDS-format."
 
-#: ../plug-ins/file-dds/ddsread.c:688
+#: ../plug-ins/file-dds/ddsread.c:693
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Ogiltigt bpp-värde för RGB-data: %d"
 
-#: ../plug-ins/file-dds/ddsread.c:699
+#: ../plug-ins/file-dds/ddsread.c:704
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Ogiltigt bpp-värde för luminansdata: %d"
 
-#: ../plug-ins/file-dds/ddsread.c:749
+#: ../plug-ins/file-dds/ddsread.c:754
 #, c-format
 msgid "Invalid pixel format."
 msgstr "Ogiltigt bildpunktsformat."
 
-#: ../plug-ins/file-dds/ddsread.c:918
+#: ../plug-ins/file-dds/ddsread.c:923
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "DXGI-formatet (%d) stöds inte"
 
-#: ../plug-ins/file-dds/ddsread.c:1064 ../plug-ins/file-dds/ddsread.c:1086
+#: ../plug-ins/file-dds/ddsread.c:1069 ../plug-ins/file-dds/ddsread.c:1091
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Oväntat filslut.\n"
 
 # data/ui/nautilus-gtranslator-view-ui.xml.h:1 src/dialogs.c:732
 # src/menus.c:276
-#: ../plug-ins/file-dds/ddsread.c:1377
+#: ../plug-ins/file-dds/ddsread.c:1382
 msgid "Open DDS"
 msgstr "Öppna DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1386
+#: ../plug-ins/file-dds/ddsread.c:1391
 msgid "_Load mipmaps"
 msgstr "_Läs in mipmap-bilder"
 
-#: ../plug-ins/file-dds/ddsread.c:1390
+#: ../plug-ins/file-dds/ddsread.c:1395
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Avkoda automatiskt YCoCg/AExp-bilder då de påträffas"
 
@@ -6741,7 +6751,7 @@ msgstr "Flyttal"
 msgid "JPEG image"
 msgstr "JPEG-bild"
 
-#: ../plug-ins/file-jpeg/jpeg.c:190 ../plug-ins/file-tiff/file-tiff-save.c:1315
+#: ../plug-ins/file-jpeg/jpeg.c:190 ../plug-ins/file-tiff/file-tiff-save.c:1329
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7343,30 +7353,30 @@ msgstr "Misslyckades med skrivning av en scanline på rad %d"
 msgid "Writing pages with different bit depth is strange."
 msgstr "Att skriva sidor med olika bitdjup är konstigt."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1311
+#: ../plug-ins/file-tiff/file-tiff-save.c:1325
 #: ../plug-ins/metadata/metadata-tags.c:184
 #: ../plug-ins/metadata/metadata-tags.c:196
 #: ../plug-ins/metadata/metadata-tags.c:227
 msgid "None"
 msgstr "Ingen"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1312
+#: ../plug-ins/file-tiff/file-tiff-save.c:1326
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1313
+#: ../plug-ins/file-tiff/file-tiff-save.c:1327
 msgid "Pack Bits"
 msgstr "Packa bitar"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1314
+#: ../plug-ins/file-tiff/file-tiff-save.c:1328
 msgid "Deflate"
 msgstr "Packa ihop"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1316
+#: ../plug-ins/file-tiff/file-tiff-save.c:1330
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3-fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1317
+#: ../plug-ins/file-tiff/file-tiff-save.c:1331
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4-fax"
 
