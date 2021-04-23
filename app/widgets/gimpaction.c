@@ -399,12 +399,30 @@ static void
 gimp_action_set_proxy_tooltip (GimpAction *action,
                                GtkWidget  *proxy)
 {
-  const gchar *tooltip = gimp_action_get_tooltip (action);
+  const gchar *tooltip;
+  const gchar *reason         = NULL;
+  gchar       *escaped_reason = NULL;
+  gchar       *markup;
 
-  if (tooltip)
-    gimp_help_set_help_data (proxy, tooltip,
-                             g_object_get_qdata (G_OBJECT (proxy),
-                                                 GIMP_HELP_ID));
+  tooltip = gimp_action_get_tooltip (action);
+
+  gimp_action_get_sensitive (action, &reason);
+  if (reason)
+    escaped_reason = g_markup_escape_text (reason, -1);
+
+  markup = g_strdup_printf ("%s%s"                                   /* Action tooltip  */
+                            "<i><span weight='light'>%s</span></i>", /* Inactive reason */
+                            tooltip,
+                            escaped_reason && tooltip ? "\n" : "",
+                            escaped_reason);
+
+  if (tooltip || escaped_reason)
+    gimp_help_set_help_data_with_markup (proxy, markup,
+                                         g_object_get_qdata (G_OBJECT (proxy),
+                                                             GIMP_HELP_ID));
+
+  g_free (escaped_reason);
+  g_free (markup);
 }
 
 static void
