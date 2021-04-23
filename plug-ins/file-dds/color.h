@@ -88,9 +88,9 @@ static inline unsigned int
 pack_rgb10a2 (int r, int g, int b, int a)
 {
   return ((unsigned int)((a >> 6) & 0x003) << 30) |
-         ((unsigned int)((r << 2) & 0x3ff) << 20) |
+         ((unsigned int)((b << 2) & 0x3ff) << 20) |
          ((unsigned int)((g << 2) & 0x3ff) << 10) |
-         ((unsigned int)((b << 2) & 0x3ff)      );
+         ((unsigned int)((r << 2) & 0x3ff)      );
 }
 
 #endif /* __COLOR_H__ */
