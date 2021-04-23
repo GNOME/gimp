@@ -800,6 +800,62 @@ item_set_lock_position_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+item_get_lock_visibility_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpItem *item;
+  gboolean lock_visibility = FALSE;
+
+  item = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      lock_visibility = gimp_item_get_lock_visibility (GIMP_ITEM (item));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), lock_visibility);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+item_set_lock_visibility_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpItem *item;
+  gboolean lock_visibility;
+
+  item = g_value_get_object (gimp_value_array_index (args, 0));
+  lock_visibility = g_value_get_boolean (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      if (gimp_item_can_lock_visibility (GIMP_ITEM (item)))
+        gimp_item_set_lock_visibility (GIMP_ITEM (item), lock_visibility, TRUE);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 item_get_color_tag_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
@@ -1750,6 +1806,64 @@ register_item_procs (GimpPDB *pdb)
                                g_param_spec_boolean ("lock-position",
                                                      "lock position",
                                                      "The new item 'lock position' state",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-get-lock-visibility
+   */
+  procedure = gimp_procedure_new (item_get_lock_visibility_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-get-lock-visibility");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the 'lock visibility' state of the specified item.",
+                                  "This procedure returns the specified item's lock visibility state.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2021");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("lock-visibility",
+                                                         "lock visibility",
+                                                         "Whether the item's visibility is locked",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-set-lock-visibility
+   */
+  procedure = gimp_procedure_new (item_set_lock_visibility_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-set-lock-visibility");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the 'lock visibility' state of the specified item.",
+                                  "This procedure sets the specified item's lock visibility state.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2009");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("lock-visibility",
+                                                     "lock visibility",
+                                                     "The new item 'lock visibility' state",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

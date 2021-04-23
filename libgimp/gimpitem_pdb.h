@@ -32,52 +32,55 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean      gimp_item_id_is_valid       (gint                item_id);
-gboolean      gimp_item_id_is_drawable    (gint                item_id);
-gboolean      gimp_item_id_is_layer       (gint                item_id);
-gboolean      gimp_item_id_is_text_layer  (gint                item_id);
-gboolean      gimp_item_id_is_channel     (gint                item_id);
-gboolean      gimp_item_id_is_layer_mask  (gint                item_id);
-gboolean      gimp_item_id_is_selection   (gint                item_id);
-gboolean      gimp_item_id_is_vectors     (gint                item_id);
-GimpImage*    gimp_item_get_image         (GimpItem           *item);
-gboolean      gimp_item_delete            (GimpItem           *item);
-gboolean      gimp_item_is_group          (GimpItem           *item);
-GimpItem*     gimp_item_get_parent        (GimpItem           *item);
-GimpItem**    gimp_item_get_children      (GimpItem           *item,
-                                           gint               *num_children);
-gboolean      gimp_item_get_expanded      (GimpItem           *item);
-gboolean      gimp_item_set_expanded      (GimpItem           *item,
-                                           gboolean            expanded);
-gchar*        gimp_item_get_name          (GimpItem           *item);
-gboolean      gimp_item_set_name          (GimpItem           *item,
-                                           const gchar        *name);
-gboolean      gimp_item_get_visible       (GimpItem           *item);
-gboolean      gimp_item_set_visible       (GimpItem           *item,
-                                           gboolean            visible);
-gboolean      gimp_item_get_linked        (GimpItem           *item);
-gboolean      gimp_item_set_linked        (GimpItem           *item,
-                                           gboolean            linked);
-gboolean      gimp_item_get_lock_content  (GimpItem           *item);
-gboolean      gimp_item_set_lock_content  (GimpItem           *item,
-                                           gboolean            lock_content);
-gboolean      gimp_item_get_lock_position (GimpItem           *item);
-gboolean      gimp_item_set_lock_position (GimpItem           *item,
-                                           gboolean            lock_position);
-GimpColorTag  gimp_item_get_color_tag     (GimpItem           *item);
-gboolean      gimp_item_set_color_tag     (GimpItem           *item,
-                                           GimpColorTag        color_tag);
-guint         gimp_item_get_tattoo        (GimpItem           *item);
-gboolean      gimp_item_set_tattoo        (GimpItem           *item,
-                                           guint               tattoo);
-gboolean      gimp_item_attach_parasite   (GimpItem           *item,
-                                           const GimpParasite *parasite);
-gboolean      gimp_item_detach_parasite   (GimpItem           *item,
-                                           const gchar        *name);
-GimpParasite* gimp_item_get_parasite      (GimpItem           *item,
-                                           const gchar        *name);
-gchar**       gimp_item_get_parasite_list (GimpItem           *item,
-                                           gint               *num_parasites);
+gboolean      gimp_item_id_is_valid         (gint                item_id);
+gboolean      gimp_item_id_is_drawable      (gint                item_id);
+gboolean      gimp_item_id_is_layer         (gint                item_id);
+gboolean      gimp_item_id_is_text_layer    (gint                item_id);
+gboolean      gimp_item_id_is_channel       (gint                item_id);
+gboolean      gimp_item_id_is_layer_mask    (gint                item_id);
+gboolean      gimp_item_id_is_selection     (gint                item_id);
+gboolean      gimp_item_id_is_vectors       (gint                item_id);
+GimpImage*    gimp_item_get_image           (GimpItem           *item);
+gboolean      gimp_item_delete              (GimpItem           *item);
+gboolean      gimp_item_is_group            (GimpItem           *item);
+GimpItem*     gimp_item_get_parent          (GimpItem           *item);
+GimpItem**    gimp_item_get_children        (GimpItem           *item,
+                                             gint               *num_children);
+gboolean      gimp_item_get_expanded        (GimpItem           *item);
+gboolean      gimp_item_set_expanded        (GimpItem           *item,
+                                             gboolean            expanded);
+gchar*        gimp_item_get_name            (GimpItem           *item);
+gboolean      gimp_item_set_name            (GimpItem           *item,
+                                             const gchar        *name);
+gboolean      gimp_item_get_visible         (GimpItem           *item);
+gboolean      gimp_item_set_visible         (GimpItem           *item,
+                                             gboolean            visible);
+gboolean      gimp_item_get_linked          (GimpItem           *item);
+gboolean      gimp_item_set_linked          (GimpItem           *item,
+                                             gboolean            linked);
+gboolean      gimp_item_get_lock_content    (GimpItem           *item);
+gboolean      gimp_item_set_lock_content    (GimpItem           *item,
+                                             gboolean            lock_content);
+gboolean      gimp_item_get_lock_position   (GimpItem           *item);
+gboolean      gimp_item_set_lock_position   (GimpItem           *item,
+                                             gboolean            lock_position);
+gboolean      gimp_item_get_lock_visibility (GimpItem           *item);
+gboolean      gimp_item_set_lock_visibility (GimpItem           *item,
+                                             gboolean            lock_visibility);
+GimpColorTag  gimp_item_get_color_tag       (GimpItem           *item);
+gboolean      gimp_item_set_color_tag       (GimpItem           *item,
+                                             GimpColorTag        color_tag);
+guint         gimp_item_get_tattoo          (GimpItem           *item);
+gboolean      gimp_item_set_tattoo          (GimpItem           *item,
+                                             guint               tattoo);
+gboolean      gimp_item_attach_parasite     (GimpItem           *item,
+                                             const GimpParasite *parasite);
+gboolean      gimp_item_detach_parasite     (GimpItem           *item,
+                                             const gchar        *name);
+GimpParasite* gimp_item_get_parasite        (GimpItem           *item,
+                                             const gchar        *name);
+gchar**       gimp_item_get_parasite_list   (GimpItem           *item,
+                                             gint               *num_parasites);
 
 
 G_END_DECLS
