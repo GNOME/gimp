@@ -1073,6 +1073,23 @@ load_layer (FILE             *fp,
   if ((hdr->pixelfmt.flags & DDPF_RGB) ||
       (hdr->pixelfmt.flags & DDPF_ALPHA))
     {
+      guint ired  = 0;
+      guint iblue = 2;
+
+      if (hdr->reserved.gimp_dds_special.magic1 == FOURCC ('G','I','M','P') &&
+          hdr->reserved.gimp_dds_special.version <= 199003 &&
+          hdr->reserved.gimp_dds_special.version > 0 &&
+          d->bpp >= 3 && hdr->pixelfmt.amask == 0xc0000000)
+        {
+          /* GIMP dds plug-in versions before or equal to 199003 (3.9.91) wrote
+           * the red and green channels reversed for RGB10A2. We will fix that here.
+           */
+          g_printerr ("Switching incorrect red and green channels in RGB10A2 dds "
+                      "written by an older version of GIMP's dds plug-in.\n");
+          ired = 2;
+          iblue = 0;
+        }
+
       z = 0;
       for (y = 0, n = 0; y < height; ++y, ++n)
         {
@@ -1107,9 +1124,9 @@ load_layer (FILE             *fp,
                 {
                   if (hdr->pixelfmt.amask == 0xc0000000) /* handle RGB10A2 */
                     {
-                      pixels[pos + 0] = (pixel >> d->bshift) >> 2;
-                      pixels[pos + 1] = (pixel >> d->gshift) >> 2;
-                      pixels[pos + 2] = (pixel >> d->rshift) >> 2;
+                      pixels[pos + ired]  = (pixel >> d->rshift) >> 2;
+                      pixels[pos + 1]     = (pixel >> d->gshift) >> 2;
+                      pixels[pos + iblue] = (pixel >> d->bshift) >> 2;
                       if (hdr->pixelfmt.flags & DDPF_ALPHAPIXELS)
                         pixels[pos + 3] = (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
                     }
