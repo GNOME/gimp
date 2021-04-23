@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-22 18:22+0000\n"
-"PO-Revision-Date: 2021-04-22 23:04+0200\n"
+"POT-Creation-Date: 2021-04-23 17:45+0000\n"
+"PO-Revision-Date: 2021-04-23 22:58+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1665,6 +1665,13 @@ msgid "Paste the selected buffer as a new layer at its original position"
 msgstr ""
 "Klistra in den markerade bufferten som ett nytt lager på dess ursprungliga "
 "plats"
+
+#: ../app/actions/buffers-actions.c:126 ../app/actions/buffers-actions.c:127
+#: ../app/actions/buffers-actions.c:128 ../app/actions/buffers-actions.c:129
+#: ../app/actions/buffers-actions.c:130 ../app/actions/buffers-actions.c:131
+#: ../app/actions/buffers-actions.c:132 ../app/actions/buffers-actions.c:133
+msgid "No selected buffer"
+msgstr "Ingen markerad buffert"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -5959,23 +5966,27 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Visa dialogrutan för senast använda filter igen"
 
-#: ../app/actions/filters-actions.c:1126
+#: ../app/actions/filters-actions.c:1129
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "U_pprepa ”%s”"
 
-#: ../app/actions/filters-actions.c:1127
+#: ../app/actions/filters-actions.c:1130
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "V_isa ”%s” igen"
 
-#: ../app/actions/filters-actions.c:1165
+#: ../app/actions/filters-actions.c:1168
 msgid "Repeat Last"
 msgstr "Upprepa senaste"
 
-#: ../app/actions/filters-actions.c:1167
+#: ../app/actions/filters-actions.c:1170
 msgid "Re-Show Last"
 msgstr "Visa senaste igen"
+
+#: ../app/actions/filters-actions.c:1173 ../app/actions/filters-actions.c:1175
+msgid "No last used filters"
+msgstr "Inga senast använda filter"
 
 #: ../app/actions/fonts-actions.c:44
 msgctxt "fonts-action"
@@ -11163,6 +11174,10 @@ msgstr "_Höger"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
 msgstr "Positionera flikarna till höger"
+
+#: ../app/actions/windows-actions.c:286 ../app/actions/windows-actions.c:288
+msgid "Single-window mode disabled"
+msgstr "Läge med ett programfönster inaktiverat"
 
 #: ../app/actions/windows-commands.c:208
 msgid ""
@@ -19062,7 +19077,7 @@ msgstr "(ren)"
 
 #: ../app/display/gimpdisplayshell-title.c:374
 #: ../app/display/gimpdisplayshell-title.c:383
-#: ../app/widgets/gimpactiongroup.c:981
+#: ../app/widgets/gimpactiongroup.c:982
 #: ../app/widgets/gimpbuffersourcebox.c:166
 #: ../app/widgets/gimpbuffersourcebox.c:296
 #: ../app/widgets/gimpdeviceinfo.c:1045 ../app/widgets/gimpdeviceinfo.c:1070
@@ -22061,11 +22076,11 @@ msgstr "Indexerad utan alfa"
 msgid "Indexed with alpha"
 msgstr "Indexerad med alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1088
+#: ../app/plug-in/gimppluginprocedure.c:1085
 msgid "This plug-in only works on the following layer types:"
 msgstr "Denna insticksmodul fungerar endast på följande lagertyper:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1307
+#: ../app/plug-in/gimppluginprocedure.c:1304
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22074,7 +22089,7 @@ msgstr ""
 "Anropsfel för ”%s”:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1319
+#: ../app/plug-in/gimppluginprocedure.c:1316
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -25938,7 +25953,7 @@ msgstr "Misslyckades med att importera banor från ”%s”: %s"
 msgid "_Search:"
 msgstr "_Sök:"
 
-#: ../app/widgets/gimpactiongroup.c:978
+#: ../app/widgets/gimpactiongroup.c:979
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
