@@ -965,6 +965,80 @@ gimp_item_set_lock_position (GimpItem *item,
 }
 
 /**
+ * gimp_item_get_lock_visibility:
+ * @item: The item.
+ *
+ * Get the 'lock visibility' state of the specified item.
+ *
+ * This procedure returns the specified item's lock visibility state.
+ *
+ * Returns: Whether the item's visibility is locked.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_item_get_lock_visibility (GimpItem *item)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean lock_visibility = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM, item,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-item-get-lock-visibility",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    lock_visibility = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return lock_visibility;
+}
+
+/**
+ * gimp_item_set_lock_visibility:
+ * @item: The item.
+ * @lock_visibility: The new item 'lock visibility' state.
+ *
+ * Set the 'lock visibility' state of the specified item.
+ *
+ * This procedure sets the specified item's lock visibility state.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_item_set_lock_visibility (GimpItem *item,
+                               gboolean  lock_visibility)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM, item,
+                                          G_TYPE_BOOLEAN, lock_visibility,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-item-set-lock-visibility",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_item_get_color_tag:
  * @item: The item.
  *

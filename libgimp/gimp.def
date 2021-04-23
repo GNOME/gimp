@@ -515,6 +515,7 @@ EXPORTS
 	gimp_item_get_linked
 	gimp_item_get_lock_content
 	gimp_item_get_lock_position
+	gimp_item_get_lock_visibility
 	gimp_item_get_name
 	gimp_item_get_parasite
 	gimp_item_get_parasite_list
@@ -545,6 +546,7 @@ EXPORTS
 	gimp_item_set_linked
 	gimp_item_set_lock_content
 	gimp_item_set_lock_position
+	gimp_item_set_lock_visibility
 	gimp_item_set_name
 	gimp_item_set_tattoo
 	gimp_item_set_visible
