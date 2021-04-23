@@ -144,11 +144,7 @@ plug_in_actions_update (GimpActionGroup *group,
 {
   GimpImage         *image    = action_data_get_image (data);
   GimpPlugInManager *manager  = group->gimp->plug_in_manager;
-  GimpDrawable      *drawable = NULL;
   GSList            *list;
-
-  if (image)
-    drawable = gimp_image_get_active_drawable (image);
 
   for (list = manager->plug_in_procedures; list; list = g_slist_next (list))
     {
@@ -161,21 +157,21 @@ plug_in_actions_update (GimpActionGroup *group,
           GimpProcedure *procedure = GIMP_PROCEDURE (proc);
           gboolean       sensitive;
           const gchar   *tooltip;
+          const gchar   *reason;
 
           sensitive = gimp_procedure_get_sensitive (procedure,
                                                     GIMP_OBJECT (image),
-                                                    &tooltip);
+                                                    &reason);
 
           gimp_action_group_set_action_sensitive (group,
                                                   gimp_object_get_name (proc),
-                                                  sensitive);
+                                                  sensitive, reason);
 
-          if (sensitive || ! drawable || ! tooltip)
-            tooltip = gimp_procedure_get_blurb (procedure);
-
-          gimp_action_group_set_action_tooltip (group,
-                                                gimp_object_get_name (proc),
-                                                tooltip);
+          tooltip = gimp_procedure_get_blurb (procedure);
+          if (tooltip)
+            gimp_action_group_set_action_tooltip (group,
+                                                  gimp_object_get_name (proc),
+                                                  tooltip);
         }
     }
 }
@@ -332,16 +328,18 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
       GimpImage    *image    = gimp_context_get_image (context);
       gboolean      sensitive;
       const gchar  *tooltip;
+      const gchar  *reason;
 
       sensitive = gimp_procedure_get_sensitive (GIMP_PROCEDURE (proc),
                                                 GIMP_OBJECT (image),
-                                                &tooltip);
+                                                &reason);
 
       gimp_action_group_set_action_sensitive (group,
                                               gimp_object_get_name (proc),
-                                              sensitive);
+                                              sensitive, reason);
 
-      if (! sensitive && tooltip)
+      tooltip = gimp_procedure_get_blurb (GIMP_PROCEDURE (proc));
+      if (tooltip)
         gimp_action_group_set_action_tooltip (group,
                                               gimp_object_get_name (proc),
                                               tooltip);

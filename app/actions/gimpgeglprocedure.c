@@ -66,7 +66,7 @@ static gchar  * gimp_gegl_procedure_get_description     (GimpViewable   *viewabl
 static const gchar * gimp_gegl_procedure_get_menu_label (GimpProcedure  *procedure);
 static gboolean      gimp_gegl_procedure_get_sensitive  (GimpProcedure  *procedure,
                                                          GimpObject     *object,
-                                                         const gchar   **tooltip);
+                                                         const gchar   **reason);
 static GimpValueArray * gimp_gegl_procedure_execute     (GimpProcedure  *procedure,
                                                          Gimp           *gimp,
                                                          GimpContext    *context,
@@ -166,7 +166,7 @@ gimp_gegl_procedure_get_menu_label (GimpProcedure *procedure)
 static gboolean
 gimp_gegl_procedure_get_sensitive (GimpProcedure  *procedure,
                                    GimpObject     *object,
-                                   const gchar   **tooltip)
+                                   const gchar   **reason)
 {
   GimpImage *image     = GIMP_IMAGE (object);
   GList     *drawables = NULL;

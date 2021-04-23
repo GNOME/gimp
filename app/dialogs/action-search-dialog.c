@@ -99,7 +99,7 @@ action_search_history_and_actions (GimpSearchPopup *popup,
   /* 0. Top result: matching action in run history. */
   for (list = history_actions; list; list = g_list_next (list))
     gimp_search_popup_add_result (popup, list->data,
-                                  gimp_action_is_sensitive (list->data) ? 0 : ACTION_SECTION_INACTIVE);
+                                  gimp_action_is_sensitive (list->data, NULL) ? 0 : ACTION_SECTION_INACTIVE);
 
   /* 1. Then other matching actions. */
   for (list = gimp_ui_manager_get_action_groups (manager);
@@ -219,7 +219,7 @@ action_search_match_keyword (GimpAction  *action,
        * matches.
        */
       if (section)
-        *section = gimp_action_is_sensitive (action) ? 0 : ACTION_SECTION_INACTIVE;
+        *section = gimp_action_is_sensitive (action, NULL) ? 0 : ACTION_SECTION_INACTIVE;
 
       return TRUE;
     }
@@ -389,7 +389,7 @@ one_tooltip_matched:
   g_strfreev (label_tokens);
   g_strfreev (label_alternates);
 
-  if (matched && section && ! gimp_action_is_sensitive (action))
+  if (matched && section && ! gimp_action_is_sensitive (action, NULL))
     *section += ACTION_SECTION_INACTIVE;
 
   return matched;

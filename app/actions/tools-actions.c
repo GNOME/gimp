@@ -800,7 +800,7 @@ tools_actions_update (GimpActionGroup *group,
   GimpImage *image = action_data_get_image (data);
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("tools-gegl", image);
 

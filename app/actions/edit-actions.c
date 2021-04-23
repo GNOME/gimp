@@ -348,7 +348,7 @@ edit_actions_update (GimpActionGroup *group,
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, (label))
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_LABEL ("edit-undo", undo_name ? undo_name : _("_Undo"));
   SET_LABEL ("edit-redo", redo_name ? redo_name : _("_Redo"));

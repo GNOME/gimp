@@ -320,7 +320,7 @@ channels_actions_update (GimpActionGroup *group,
     }
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("channels-edit-attributes", !fs && n_channels == 1);
 

@@ -55,26 +55,33 @@ enum
 };
 
 
-static void   gimp_action_impl_finalize      (GObject        *object);
-static void   gimp_action_impl_set_property  (GObject        *object,
-                                              guint           prop_id,
-                                              const GValue   *value,
-                                              GParamSpec     *pspec);
-static void   gimp_action_impl_get_property  (GObject        *object,
-                                              guint           prop_id,
-                                              GValue         *value,
-                                              GParamSpec     *pspec);
+static void   gimp_action_iface_init              (GimpActionInterface *iface);
 
-static void   gimp_action_impl_activate      (GtkAction      *action);
-static void   gimp_action_impl_connect_proxy (GtkAction      *action,
-                                              GtkWidget      *proxy);
+static void   gimp_action_impl_finalize           (GObject             *object);
+static void   gimp_action_impl_set_property       (GObject             *object,
+                                                   guint                prop_id,
+                                                   const GValue        *value,
+                                                   GParamSpec          *pspec);
+static void   gimp_action_impl_get_property       (GObject             *object,
+                                                   guint                prop_id,
+                                                   GValue              *value,
+                                                   GParamSpec          *pspec);
 
-static void   gimp_action_impl_set_proxy     (GimpActionImpl *impl,
-                                              GtkWidget      *proxy);
+static void   gimp_action_impl_set_disable_reason (GimpAction          *action,
+                                                   const gchar         *reason);
+static const gchar *
+              gimp_action_impl_get_disable_reason (GimpAction          *action);
+
+static void   gimp_action_impl_activate           (GtkAction           *action);
+static void   gimp_action_impl_connect_proxy      (GtkAction           *action,
+                                                   GtkWidget           *proxy);
+
+static void   gimp_action_impl_set_proxy          (GimpActionImpl      *impl,
+                                                   GtkWidget           *proxy);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpActionImpl, gimp_action_impl, GTK_TYPE_ACTION,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, NULL))
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, gimp_action_iface_init))
 
 #define parent_class gimp_action_impl_parent_class
 
@@ -128,10 +135,18 @@ gimp_action_impl_class_init (GimpActionImplClass *klass)
 }
 
 static void
+gimp_action_iface_init (GimpActionInterface *iface)
+{
+  iface->set_disable_reason = gimp_action_impl_set_disable_reason;
+  iface->get_disable_reason = gimp_action_impl_get_disable_reason;
+}
+
+static void
 gimp_action_impl_init (GimpActionImpl *impl)
 {
   impl->ellipsize       = PANGO_ELLIPSIZE_NONE;
   impl->max_width_chars = -1;
+  impl->disable_reason  = NULL;
 
   gimp_action_init (GIMP_ACTION (impl));
 }
@@ -141,9 +156,10 @@ gimp_action_impl_finalize (GObject *object)
 {
   GimpActionImpl *impl = GIMP_ACTION_IMPL (object);
 
-  g_clear_object (&impl->context);
+  g_clear_pointer (&impl->disable_reason, g_free);
+  g_clear_object  (&impl->context);
   g_clear_pointer (&impl->color, g_free);
-  g_clear_object (&impl->viewable);
+  g_clear_object  (&impl->viewable);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -236,6 +252,25 @@ gimp_action_impl_set_property (GObject      *object,
           gimp_action_impl_set_proxy (impl, list->data);
         }
     }
+}
+
+static void
+gimp_action_impl_set_disable_reason (GimpAction  *action,
+                                     const gchar *reason)
+{
+  GimpActionImpl *impl = GIMP_ACTION_IMPL (action);
+
+  g_clear_pointer (&impl->disable_reason, g_free);
+  if (reason)
+    impl->disable_reason = g_strdup (reason);
+}
+
+static const gchar *
+gimp_action_impl_get_disable_reason (GimpAction *action)
+{
+  GimpActionImpl *impl = GIMP_ACTION_IMPL (action);
+
+  return (const gchar *) impl->disable_reason;
 }
 
 static void

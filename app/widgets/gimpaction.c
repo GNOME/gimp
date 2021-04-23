@@ -228,22 +228,51 @@ gimp_action_is_visible (GimpAction *action)
 }
 
 void
-gimp_action_set_sensitive (GimpAction *action,
-                           gboolean    sensitive)
+gimp_action_set_sensitive (GimpAction  *action,
+                           gboolean     sensitive,
+                           const gchar *reason)
 {
   gtk_action_set_sensitive ((GtkAction *) action, sensitive);
+
+  if (GIMP_ACTION_GET_INTERFACE (action)->set_disable_reason)
+    GIMP_ACTION_GET_INTERFACE (action)->set_disable_reason (action,
+                                                            ! sensitive ? reason : NULL);
 }
 
 gboolean
-gimp_action_get_sensitive (GimpAction *action)
+gimp_action_get_sensitive (GimpAction   *action,
+                           const gchar **reason)
 {
-  return gtk_action_get_sensitive ((GtkAction *) action);
+  gboolean sensitive;
+
+  sensitive = gtk_action_get_sensitive ((GtkAction *) action);
+
+  if (reason)
+    {
+      *reason = NULL;
+      if (! sensitive && GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason)
+        *reason = GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason (action);
+    }
+
+  return sensitive;
 }
 
 gboolean
-gimp_action_is_sensitive (GimpAction *action)
+gimp_action_is_sensitive (GimpAction   *action,
+                          const gchar **reason)
 {
-  return gtk_action_is_sensitive ((GtkAction *) action);
+  gboolean sensitive;
+
+  sensitive = gtk_action_is_sensitive ((GtkAction *) action);
+
+  if (reason)
+    {
+      *reason = NULL;
+      if (! sensitive && GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason)
+        *reason = GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason (action);
+    }
+
+  return sensitive;
 }
 
 GClosure *

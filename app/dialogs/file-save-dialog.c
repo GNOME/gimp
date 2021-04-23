@@ -810,7 +810,7 @@ file_save_dialog_save_image (GimpProgress        *progress,
        list;
        list = g_list_next (list))
     {
-      gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE);
+      gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE, NULL);
     }
 
   gimp_image_set_xcf_compression (image, xcf_compression);
@@ -848,7 +848,7 @@ file_save_dialog_save_image (GimpProgress        *progress,
        list;
        list = g_list_next (list))
     {
-      gimp_action_group_set_action_sensitive (list->data, "file-quit", TRUE);
+      gimp_action_group_set_action_sensitive (list->data, "file-quit", TRUE, NULL);
     }
 
   return success;

@@ -79,7 +79,7 @@ struct _GimpProcedureClass
   const gchar    * (* get_help_id)    (GimpProcedure   *procedure);
   gboolean         (* get_sensitive)  (GimpProcedure   *procedure,
                                        GimpObject      *object,
-                                       const gchar    **tooltip);
+                                       const gchar    **reason);
 
   GimpValueArray * (* execute)        (GimpProcedure   *procedure,
                                        Gimp            *gimp,
@@ -137,7 +137,7 @@ const gchar    * gimp_procedure_get_help           (GimpProcedure    *procedure)
 const gchar    * gimp_procedure_get_help_id        (GimpProcedure    *procedure);
 gboolean         gimp_procedure_get_sensitive      (GimpProcedure    *procedure,
                                                     GimpObject       *object,
-                                                    const gchar     **tooltip);
+                                                    const gchar     **reason);
 
 void             gimp_procedure_add_argument       (GimpProcedure    *procedure,
                                                     GParamSpec       *pspec);

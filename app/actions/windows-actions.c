@@ -282,8 +282,10 @@ windows_actions_update (GimpActionGroup *group,
     }
 
   gimp_action_group_set_action_active (group, action, TRUE);
-  gimp_action_group_set_action_sensitive (group, "windows-tab-position", config->single_window_mode);
-  gimp_action_group_set_action_sensitive (group, "windows-show-tabs", config->single_window_mode);
+  gimp_action_group_set_action_sensitive (group, "windows-tab-position", config->single_window_mode,
+                                          _("Single-window mode disabled"));
+  gimp_action_group_set_action_sensitive (group, "windows-show-tabs", config->single_window_mode,
+                                          _("Single-window mode disabled"));
 
 #undef SET_ACTIVE
 }

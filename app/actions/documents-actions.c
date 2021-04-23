@@ -126,7 +126,7 @@ documents_actions_update (GimpActionGroup *group,
     imagefile = gimp_context_get_imagefile (context);
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("documents-open",                 imagefile);
   SET_SENSITIVE ("documents-raise-or-open",        imagefile);

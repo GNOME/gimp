@@ -765,7 +765,8 @@ gimp_action_group_set_action_visible (GimpActionGroup *group,
 void
 gimp_action_group_set_action_sensitive (GimpActionGroup *group,
                                         const gchar     *action_name,
-                                        gboolean         sensitive)
+                                        gboolean         sensitive,
+                                        const gchar     *reason)
 {
   GimpAction *action;
 
@@ -782,7 +783,7 @@ gimp_action_group_set_action_sensitive (GimpActionGroup *group,
       return;
     }
 
-  gimp_action_set_sensitive (action, sensitive);
+  gimp_action_set_sensitive (action, sensitive, reason);
 }
 
 void

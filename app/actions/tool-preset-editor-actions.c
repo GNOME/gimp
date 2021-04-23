@@ -92,7 +92,7 @@ tool_preset_editor_actions_update (GimpActionGroup *group,
   edit_active = gimp_data_editor_get_edit_active (data_editor);
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 

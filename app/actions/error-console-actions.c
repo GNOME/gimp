@@ -127,7 +127,7 @@ error_console_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition)                                           \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("error-console-clear",          TRUE);
   SET_SENSITIVE ("error-console-select-all",     TRUE);

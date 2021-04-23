@@ -450,9 +450,9 @@ gimp_procedure_get_help_id (GimpProcedure *procedure)
 gboolean
 gimp_procedure_get_sensitive (GimpProcedure  *procedure,
                               GimpObject     *object,
-                              const gchar   **tooltip)
+                              const gchar   **reason)
 {
-  const gchar *my_tooltip = NULL;
+  const gchar *my_reason  = NULL;
   gboolean     sensitive;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), FALSE);
@@ -460,10 +460,10 @@ gimp_procedure_get_sensitive (GimpProcedure  *procedure,
 
   sensitive = GIMP_PROCEDURE_GET_CLASS (procedure)->get_sensitive (procedure,
                                                                    object,
-                                                                   &my_tooltip);
+                                                                   &my_reason);
 
-  if (tooltip)
-    *tooltip = my_tooltip;
+  if (reason)
+    *reason = my_reason;
 
   return sensitive;
 }

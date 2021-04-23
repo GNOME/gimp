@@ -136,7 +136,7 @@ brushes_actions_update (GimpActionGroup *group,
     }
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("brushes-edit",                 brush);
   SET_SENSITIVE ("brushes-open-as-image",        file && ! GIMP_IS_BRUSH_GENERATED (brush));

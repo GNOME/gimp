@@ -236,14 +236,17 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
   gchar        *markup;
   gchar        *action_name;
   gchar        *label;
-  gchar        *escaped_label = NULL;
+  gchar        *escaped_label    = NULL;
   const gchar  *icon_name;
   gchar        *accel_string;
-  gchar        *escaped_accel = NULL;
-  gboolean      has_shortcut = FALSE;
+  gchar        *escaped_accel    = NULL;
+  gboolean      has_shortcut     = FALSE;
   const gchar  *tooltip;
-  gchar        *escaped_tooltip = NULL;
-  gboolean      has_tooltip  = FALSE;
+  gchar        *escaped_tooltip  = NULL;
+  gboolean      has_tooltip      = FALSE;
+  gboolean      sensitive        = FALSE;
+  const gchar  *sensitive_reason = NULL;
+  gchar        *escaped_reason   = NULL;
 
   label = g_strstrip (gimp_strip_uline (gimp_action_get_label (action)));
 
@@ -281,12 +284,24 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
       has_tooltip = TRUE;
     }
 
-  markup = g_strdup_printf ("%s<small>%s%s%s<span weight='light'>%s</span></small>",
+  sensitive = gimp_action_is_sensitive (action, &sensitive_reason);
+  if (sensitive_reason != NULL)
+    {
+      escaped_reason = g_markup_escape_text (sensitive_reason, -1);
+    }
+
+  markup = g_strdup_printf ("%s"                                           /* Label           */
+                            "<small>%s%s"                                  /* Shortcut        */
+                            "%s<span weight='light'>%s</span>"             /* Tooltip         */
+                            "%s<i><span weight='ultralight'>%s</span></i>" /* Inactive reason */
+                            "</small>",
                             escaped_label,
                             has_shortcut ? " | " : "",
                             has_shortcut ? escaped_accel : "",
                             has_tooltip ? "\n" : "",
-                            has_tooltip ? escaped_tooltip : "");
+                            has_tooltip ? escaped_tooltip : "",
+                            escaped_reason ? "\n" : "",
+                            escaped_reason ? escaped_reason : "");
 
   action_name = g_markup_escape_text (gimp_action_get_name (action), -1);
 
@@ -323,7 +338,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
                       COLUMN_TOOLTIP,   action_name,
                       COLUMN_ACTION,    action,
                       COLUMN_SECTION,   section,
-                      COLUMN_SENSITIVE, gimp_action_is_sensitive (action),
+                      COLUMN_SENSITIVE, sensitive,
                       -1);
 
   g_free (accel_string);
@@ -333,6 +348,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
   g_free (escaped_accel);
   g_free (escaped_label);
   g_free (escaped_tooltip);
+  g_free (escaped_reason);
 }
 
 /************ Private Functions ****************/
@@ -663,7 +679,7 @@ gimp_search_popup_run_selected (GimpSearchPopup *popup)
 
       gtk_tree_model_get (model, &iter, COLUMN_ACTION, &action, -1);
 
-      if (gimp_action_is_sensitive (action))
+      if (gimp_action_is_sensitive (action, NULL))
         {
           /* Close the search popup on activation. */
           GIMP_POPUP_CLASS (parent_class)->cancel (GIMP_POPUP (popup));

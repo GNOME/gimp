@@ -370,7 +370,7 @@ image_actions_update (GimpActionGroup *group,
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, (label))
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_VISIBLE(action,condition) \

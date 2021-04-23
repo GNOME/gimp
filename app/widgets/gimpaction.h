@@ -34,10 +34,16 @@ struct _GimpActionInterface
 {
   GTypeInterface base_interface;
 
-  void (* activate)     (GimpAction *action,
-                         GVariant   *value);
-  void (* change_state) (GimpAction *action,
-                         GVariant   *value);
+  /* Signals */
+  void          (* activate)           (GimpAction  *action,
+                                        GVariant    *value);
+  void          (* change_state)       (GimpAction  *action,
+                                        GVariant    *value);
+
+  /* Virtual methods */
+  void          (* set_disable_reason) (GimpAction  *action,
+                                        const gchar *reason);
+  const gchar * (* get_disable_reason) (GimpAction  *action);
 };
 
 
@@ -81,9 +87,12 @@ gboolean      gimp_action_get_visible         (GimpAction    *action);
 gboolean      gimp_action_is_visible          (GimpAction    *action);
 
 void          gimp_action_set_sensitive       (GimpAction    *action,
-                                               gboolean       sensitive);
-gboolean      gimp_action_get_sensitive       (GimpAction    *action);
-gboolean      gimp_action_is_sensitive        (GimpAction    *action);
+                                               gboolean       sensitive,
+                                               const gchar   *reason);
+gboolean      gimp_action_get_sensitive       (GimpAction    *action,
+                                               const gchar  **reason);
+gboolean      gimp_action_is_sensitive        (GimpAction    *action,
+                                               const gchar  **reason);
 
 GClosure    * gimp_action_get_accel_closure   (GimpAction    *action);
 

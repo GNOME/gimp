@@ -71,7 +71,7 @@ static const gchar * gimp_plug_in_procedure_get_blurb  (GimpProcedure  *procedur
 static const gchar * gimp_plug_in_procedure_get_help_id(GimpProcedure  *procedure);
 static gboolean   gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
                                                         GimpObject     *object,
-                                                        const gchar  **tooltip);
+                                                        const gchar  **reason);
 static GimpValueArray * gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
                                                         Gimp           *gimp,
                                                         GimpContext    *context,
@@ -159,7 +159,7 @@ gimp_plug_in_procedure_finalize (GObject *object)
 
   g_free (proc->icon_data);
   g_free (proc->image_types);
-  g_free (proc->image_types_tooltip);
+  g_free (proc->insensitive_reason);
 
   g_free (proc->extensions);
   g_free (proc->prefixes);
@@ -301,7 +301,7 @@ gimp_plug_in_procedure_get_help_id (GimpProcedure *procedure)
 static gboolean
 gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
                                       GimpObject     *object,
-                                      const gchar   **tooltip)
+                                      const gchar   **reason)
 {
   GimpPlugInProcedure *proc       = GIMP_PLUG_IN_PROCEDURE (procedure);
   GimpImage           *image;
@@ -362,7 +362,7 @@ gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
   g_list_free (drawables);
 
   if (! sensitive)
-    *tooltip = proc->image_types_tooltip;
+    *reason = proc->insensitive_reason;
 
   return sensitive ? TRUE : FALSE;
 }
@@ -1019,7 +1019,7 @@ gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
   proc->image_types_val = image_types_parse (gimp_object_get_name (proc),
                                              proc->image_types);
 
-  g_clear_pointer (&proc->image_types_tooltip, g_free);
+  g_clear_pointer (&proc->insensitive_reason, g_free);
 
   if (proc->image_types_val &
       (GIMP_PLUG_IN_RGB_IMAGE | GIMP_PLUG_IN_RGBA_IMAGE))
@@ -1082,12 +1082,9 @@ gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
 
       types = g_list_reverse (types);
 
-      string = g_string_new (gimp_procedure_get_blurb (GIMP_PROCEDURE (proc)));
-
-      g_string_append (string, "\n\n");
-      g_string_append (string, _("This plug-in only works on the "
-                                 "following layer types:"));
-      g_string_append (string, "\n");
+      string = g_string_new (_("This plug-in only works on the "
+                               "following layer types:"));
+      g_string_append (string, " ");
 
       for (list = types; list; list = g_list_next (list))
         {
@@ -1101,7 +1098,7 @@ gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
 
       g_list_free (types);
 
-      proc->image_types_tooltip = g_string_free (string, FALSE);
+      proc->insensitive_reason = g_string_free (string, FALSE);
     }
 }
 

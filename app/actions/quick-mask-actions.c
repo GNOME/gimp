@@ -110,7 +110,7 @@ quick_mask_actions_update (GimpActionGroup *group,
     }
 
 #define SET_SENSITIVE(action,sensitive) \
-        gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0, NULL)
 #define SET_ACTIVE(action,active) \
         gimp_action_group_set_action_active (group, action, (active) != 0)
 #define SET_COLOR(action,color) \

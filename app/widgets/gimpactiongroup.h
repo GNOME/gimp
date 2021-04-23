@@ -204,7 +204,8 @@ void          gimp_action_group_set_action_visible    (GimpActionGroup *group,
                                                        gboolean         visible);
 void          gimp_action_group_set_action_sensitive  (GimpActionGroup *group,
                                                        const gchar     *action_name,
-                                                       gboolean         sensitive);
+                                                       gboolean         sensitive,
+                                                       const gchar     *reason);
 void          gimp_action_group_set_action_active     (GimpActionGroup *group,
                                                        const gchar     *action_name,
                                                        gboolean         active);

@@ -98,7 +98,7 @@ static const GimpActionEntry tool_options_actions[] =
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 #define SET_HIDE_EMPTY(action,condition) \
         gimp_action_group_set_action_hide_empty (group, action, (condition) != 0)
 

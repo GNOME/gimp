@@ -589,7 +589,7 @@ gimp_editor_button_extended_clicked (GtkWidget       *button,
       ExtendedAction *ext = list->data;
 
       if ((ext->mod_mask & mask) == ext->mod_mask &&
-          gimp_action_get_sensitive (ext->action))
+          gimp_action_get_sensitive (ext->action, NULL))
         {
           gimp_action_activate (ext->action);
           break;

@@ -50,7 +50,7 @@ struct _GimpPlugInProcedure
   guint8              *icon_data;
   gchar               *image_types;
   GimpPlugInImageType  image_types_val;
-  gchar               *image_types_tooltip;
+  gchar               *insensitive_reason;
   gint                 sensitivity_mask;
   gint64               mtime;
   gboolean             installed_during_init;

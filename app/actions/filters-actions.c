@@ -895,7 +895,7 @@ filters_actions_update (GimpActionGroup *group,
    }
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("filters-alien-map",               writable);
   SET_SENSITIVE ("filters-antialias",               writable);
@@ -1029,19 +1029,20 @@ filters_actions_update (GimpActionGroup *group,
 #undef SET_SENSITIVE
 
   {
-    GimpProcedure *proc = gimp_filter_history_nth (group->gimp, 0);
+    GimpProcedure *proc   = gimp_filter_history_nth (group->gimp, 0);
+    const gchar   *reason = NULL;
     gint           i;
 
     if (proc &&
-        gimp_procedure_get_sensitive (proc, GIMP_OBJECT (image), NULL))
+        gimp_procedure_get_sensitive (proc, GIMP_OBJECT (image), &reason))
       {
-        gimp_action_group_set_action_sensitive (group, "filters-repeat", TRUE);
-        gimp_action_group_set_action_sensitive (group, "filters-reshow", TRUE);
+        gimp_action_group_set_action_sensitive (group, "filters-repeat", TRUE, NULL);
+        gimp_action_group_set_action_sensitive (group, "filters-reshow", TRUE, NULL);
       }
     else
       {
-        gimp_action_group_set_action_sensitive (group, "filters-repeat", FALSE);
-        gimp_action_group_set_action_sensitive (group, "filters-reshow", FALSE);
+        gimp_action_group_set_action_sensitive (group, "filters-repeat", FALSE, reason);
+        gimp_action_group_set_action_sensitive (group, "filters-reshow", FALSE, reason);
      }
 
     for (i = 0; i < gimp_filter_history_length (group->gimp); i++)
@@ -1051,10 +1052,11 @@ filters_actions_update (GimpActionGroup *group,
 
         proc = gimp_filter_history_nth (group->gimp, i);
 
+        reason = NULL;
         sensitive = gimp_procedure_get_sensitive (proc, GIMP_OBJECT (image),
-                                                  NULL);
+                                                  &reason);
 
-        gimp_action_group_set_action_sensitive (group, name, sensitive);
+        gimp_action_group_set_action_sensitive (group, name, sensitive, reason);
 
         g_free (name);
       }
@@ -1119,6 +1121,7 @@ filters_actions_history_changed (Gimp            *gimp,
       const gchar *label;
       gchar       *repeat;
       gchar       *reshow;
+      const gchar *reason    = NULL;
       gboolean     sensitive = FALSE;
 
       label = gimp_procedure_get_label (proc);
@@ -1152,12 +1155,12 @@ filters_actions_history_changed (Gimp            *gimp,
         }
 
       if (actual_action)
-        sensitive = gimp_action_get_sensitive (actual_action);
+        sensitive = gimp_action_get_sensitive (actual_action, &reason);
 
       gimp_action_group_set_action_sensitive (group, "filters-repeat",
-                                              sensitive);
+                                              sensitive, reason);
       gimp_action_group_set_action_sensitive (group, "filters-reshow",
-                                              sensitive);
+                                              sensitive, reason);
    }
   else
     {
@@ -1166,8 +1169,10 @@ filters_actions_history_changed (Gimp            *gimp,
       gimp_action_group_set_action_label (group, "filters-reshow",
                                           _("Re-Show Last"));
 
-      gimp_action_group_set_action_sensitive (group, "filters-repeat", FALSE);
-      gimp_action_group_set_action_sensitive (group, "filters-reshow", FALSE);
+      gimp_action_group_set_action_sensitive (group, "filters-repeat",
+                                              FALSE, _("No last used filters"));
+      gimp_action_group_set_action_sensitive (group, "filters-reshow",
+                                              FALSE, _("No last used filters"));
     }
 
   for (i = 0; i < gimp_filter_history_length (gimp); i++)
@@ -1201,7 +1206,7 @@ filters_actions_history_changed (Gimp            *gimp,
         }
 
       if (actual_action)
-        sensitive = gimp_action_get_sensitive (actual_action);
+        sensitive = gimp_action_get_sensitive (actual_action, NULL);
 
       g_object_set (action,
                     "visible",   TRUE,

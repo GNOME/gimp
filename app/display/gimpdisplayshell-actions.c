@@ -55,7 +55,7 @@ gimp_display_shell_set_action_sensitive (GimpDisplayShell *shell,
       action_group = gimp_ui_manager_get_action_group (manager, "view");
 
       if (action_group)
-        gimp_action_group_set_action_sensitive (action_group, action, sensitive);
+        gimp_action_group_set_action_sensitive (action_group, action, sensitive, NULL);
     }
 
   context = gimp_get_user_context (shell->display->gimp);
@@ -68,7 +68,7 @@ gimp_display_shell_set_action_sensitive (GimpDisplayShell *shell,
                                                        "view");
 
       if (action_group)
-        gimp_action_group_set_action_sensitive (action_group, action, sensitive);
+        gimp_action_group_set_action_sensitive (action_group, action, sensitive, NULL);
     }
 }
 

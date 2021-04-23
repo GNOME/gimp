@@ -278,7 +278,7 @@ dockable_actions_update (GimpActionGroup *group,
 #define SET_VISIBLE(action,active) \
         gimp_action_group_set_action_visible (group, action, (active) != 0)
 #define SET_SENSITIVE(action,sensitive) \
-        gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0, NULL)
 
 
   locked = gimp_dockable_get_locked (dockable);

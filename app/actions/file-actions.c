@@ -284,7 +284,7 @@ file_actions_update (GimpActionGroup *group,
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("file-save",                 drawables);
   SET_SENSITIVE ("file-save-as",              drawables);
@@ -434,7 +434,7 @@ file_actions_close_all_update (GimpContainer   *images,
         sensitive = FALSE;
     }
 
-  gimp_action_group_set_action_sensitive (group, "file-close-all", sensitive);
+  gimp_action_group_set_action_sensitive (group, "file-close-all", sensitive, NULL);
 }
 
 static gchar *

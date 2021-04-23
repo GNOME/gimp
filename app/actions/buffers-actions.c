@@ -120,17 +120,17 @@ buffers_actions_update (GimpActionGroup *group,
   if (context)
     buffer = gimp_context_get_buffer (context);
 
-#define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_SENSITIVE(action,condition,reason) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, reason)
 
-  SET_SENSITIVE ("buffers-paste",                       buffer);
-  SET_SENSITIVE ("buffers-paste-in-place",              buffer);
-  SET_SENSITIVE ("buffers-paste-into",                  buffer);
-  SET_SENSITIVE ("buffers-paste-into-in-place",         buffer);
-  SET_SENSITIVE ("buffers-paste-as-new-layer",          buffer);
-  SET_SENSITIVE ("buffers-paste-as-new-layer-in-place", buffer);
-  SET_SENSITIVE ("buffers-paste-as-new-image",          buffer);
-  SET_SENSITIVE ("buffers-delete",                      buffer);
+  SET_SENSITIVE ("buffers-paste",                       buffer, _("No selected buffer"));
+  SET_SENSITIVE ("buffers-paste-in-place",              buffer, _("No selected buffer"));
+  SET_SENSITIVE ("buffers-paste-into",                  buffer, _("No selected buffer"));
+  SET_SENSITIVE ("buffers-paste-into-in-place",         buffer, _("No selected buffer"));
+  SET_SENSITIVE ("buffers-paste-as-new-layer",          buffer, _("No selected buffer"));
+  SET_SENSITIVE ("buffers-paste-as-new-layer-in-place", buffer, _("No selected buffer"));
+  SET_SENSITIVE ("buffers-paste-as-new-image",          buffer, _("No selected buffer"));
+  SET_SENSITIVE ("buffers-delete",                      buffer, _("No selected buffer"));
 
 #undef SET_SENSITIVE
 }
