@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-23 17:45+0000\n"
-"PO-Revision-Date: 2021-04-23 22:58+0200\n"
+"POT-Creation-Date: 2021-04-24 21:29+0000\n"
+"PO-Revision-Date: 2021-04-25 01:05+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -4754,70 +4754,73 @@ msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "Att tömma ångringshistoriken för den här bilden kommer att frigöra %s minne."
 
-#: ../app/actions/edit-commands.c:242
-msgid "Cut layer to the clipboard."
-msgstr "Klipp ut lager till urklipp."
-
 #: ../app/actions/edit-commands.c:243
+#, c-format
+msgid "Cut layer to the clipboard."
+msgid_plural "Cut %d layers to the clipboard."
+msgstr[0] "Klipp ut lager till urklipp."
+msgstr[1] "Klipp ut %d lager till urklipp."
+
+#: ../app/actions/edit-commands.c:248
 msgid "Cut pixels to the clipboard."
 msgstr "Klipp ut bildpunkter till urklipp."
 
-#: ../app/actions/edit-commands.c:280
+#: ../app/actions/edit-commands.c:291
 msgid "Copied layer to the clipboard."
 msgstr "Kopierade lager till urklipp."
 
-#: ../app/actions/edit-commands.c:281 ../app/actions/edit-commands.c:313
+#: ../app/actions/edit-commands.c:292 ../app/actions/edit-commands.c:324
 msgid "Copied pixels to the clipboard."
 msgstr "Kopierade bildpunkter till urklipp."
 
-#: ../app/actions/edit-commands.c:392 ../app/actions/edit-commands.c:669
+#: ../app/actions/edit-commands.c:403 ../app/actions/edit-commands.c:683
 #: ../app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "Det finns ingen bilddata i urklipp att klistra in."
 
-#: ../app/actions/edit-commands.c:408
+#: ../app/actions/edit-commands.c:419
 msgid "Cut Named"
 msgstr "Klipp ut namngiven"
 
-#: ../app/actions/edit-commands.c:411 ../app/actions/edit-commands.c:433
-#: ../app/actions/edit-commands.c:455
+#: ../app/actions/edit-commands.c:422 ../app/actions/edit-commands.c:444
+#: ../app/actions/edit-commands.c:466
 msgid "Enter a name for this buffer"
 msgstr "Ange ett namn för denna buffert"
 
-#: ../app/actions/edit-commands.c:430
+#: ../app/actions/edit-commands.c:441
 msgid "Copy Named"
 msgstr "Kopiera namngiven"
 
-#: ../app/actions/edit-commands.c:452
+#: ../app/actions/edit-commands.c:463
 msgid "Copy Visible Named "
 msgstr "Kopiera synlig namngiven "
 
-#: ../app/actions/edit-commands.c:497
+#: ../app/actions/edit-commands.c:508
 msgid "Clear"
 msgstr "Töm"
 
-#: ../app/actions/edit-commands.c:568
+#: ../app/actions/edit-commands.c:579
 msgid "A selected layer's alpha channel is locked."
 msgstr "Ett markerat lagers alfakanal är låst."
 
-#: ../app/actions/edit-commands.c:638 ../app/display/gimpdisplayshell-dnd.c:495
+#: ../app/actions/edit-commands.c:650 ../app/display/gimpdisplayshell-dnd.c:495
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Klistrades in som ett nytt lager eftersom målet är en lagergrupp."
 
-#: ../app/actions/edit-commands.c:645 ../app/display/gimpdisplayshell-dnd.c:504
+#: ../app/actions/edit-commands.c:657 ../app/display/gimpdisplayshell-dnd.c:504
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Klistrades in som ett nytt lager eftersom målets bildpunkter är låsta."
 
-#: ../app/actions/edit-commands.c:686
+#: ../app/actions/edit-commands.c:700
 msgid "There are no selected layers or channels to cut from."
 msgstr "Det finns inga markerade lager eller kanaler att klippa ut ifrån."
 
-#: ../app/actions/edit-commands.c:691 ../app/actions/edit-commands.c:724
-#: ../app/actions/edit-commands.c:749
+#: ../app/actions/edit-commands.c:705 ../app/actions/edit-commands.c:738
+#: ../app/actions/edit-commands.c:763
 msgid "(Unnamed Buffer)"
 msgstr "(Namnlös buffert)"
 
-#: ../app/actions/edit-commands.c:719
+#: ../app/actions/edit-commands.c:733
 msgid "There are no selected layers or channels to copy from."
 msgstr "Det finns inga markerade lager eller kanaler att kopiera ifrån."
 
@@ -13103,12 +13106,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Förankra flytande markering"
 
-#: ../app/core/core-enums.c:1274 ../app/core/gimp-edit.c:549
+#: ../app/core/core-enums.c:1274 ../app/core/gimp-edit.c:583
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Klistra in"
 
-#: ../app/core/core-enums.c:1275 ../app/core/gimp-edit.c:789
+#: ../app/core/core-enums.c:1275 ../app/core/gimp-edit.c:837
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Klipp ut"
@@ -13451,16 +13454,18 @@ msgstr "Färghistorik"
 msgid "Updating tag cache"
 msgstr "Uppdaterar taggcache"
 
-#: ../app/core/gimp-edit.c:87
-msgctxt "undo-type"
+#: ../app/core/gimp-edit.c:123
+#, c-format
 msgid "Cut Layer"
-msgstr "Klipp lager"
+msgid_plural "Cut %d Layers"
+msgstr[0] "Klipp ut lager"
+msgstr[1] "Klipp ut %d lager"
 
-#: ../app/core/gimp-edit.c:361 ../app/core/gimpimage-new.c:513
+#: ../app/core/gimp-edit.c:412 ../app/core/gimpimage-new.c:513
 msgid "Pasted Layer"
 msgstr "Inklistrat lager"
 
-#: ../app/core/gimp-edit.c:806
+#: ../app/core/gimp-edit.c:854
 msgid "Global Buffer"
 msgstr "Allmän buffert"
 
@@ -21055,8 +21060,8 @@ msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Tröskel"
 
-#: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:364
-#: ../app/pdb/edit-cmds.c:449
+#: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:379
+#: ../app/pdb/edit-cmds.c:464
 msgid "All specified drawables must belong to the same image."
 msgstr "Alla angivna ritytor måste tillhöra samma bild."
 
