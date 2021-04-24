@@ -284,7 +284,7 @@ metadata_viewer_dialog (GimpImage     *image,
                             _("_Close"), GTK_RESPONSE_CLOSE,
                             NULL);
 
-  gtk_widget_set_size_request(dialog, 460, 340);
+  gtk_widget_set_size_request(dialog, 650, 500);
 
   g_free (title);
 
