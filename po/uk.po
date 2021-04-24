@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-19 15:17+0000\n"
-"PO-Revision-Date: 2021-04-20 09:33+0300\n"
+"POT-Creation-Date: 2021-04-23 21:02+0000\n"
+"PO-Revision-Date: 2021-04-24 09:30+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -82,20 +82,25 @@ msgid ""
 "be expected on further development releases where stability is not "
 "guaranteed."
 msgstr ""
-"Це третій випуск версії, що перебуває в активному процесі розробки. У ньому зусилля розробників було зосереджено на програмному інтерфейсі. Для створення однорідної схеми іменування було перейменовано багато функцій, з'явилося декілька нових функцій, у деяких функцій було змінено підписи, у деяких функція було виправлено інтроспекційну прив'язку тощо. У наступних випусках цієї гілки слід очікувати подальших оновлень програмного інтерфейсу, оскільки у цій гілці стабільність інтерфейсу ще не гарантовано."
+"Це третій випуск версії, що перебуває в активному процесі розробки. У ньому "
+"зусилля розробників було зосереджено на програмному інтерфейсі. Для "
+"створення однорідної схеми іменування було перейменовано багато функцій, "
+"з'явилося декілька нових функцій, у деяких функцій було змінено підписи, у "
+"деяких функція було виправлено інтроспекційну прив'язку тощо. У наступних "
+"випусках цієї гілки слід очікувати подальших оновлень програмного "
+"інтерфейсу, оскільки у цій гілці стабільність інтерфейсу ще не гарантовано."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "Regarding end-creator changes, some notable improvements are:"
 msgstr ""
-"Якщо розглядати зміни у засобі завершальної обробки даних, серед помітних удосконалень слід відзначити такі:"
+"Якщо розглядати зміни у засобі завершальної обробки даних, серед помітних "
+"удосконалень слід відзначити такі:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Canvas Size dialog now displays a template selector"
-msgstr ""
-"У новій версії вікна розміру полотна показано засіб вибору шаблона"
+msgstr "У новій версії вікна розміру полотна показано засіб вибору шаблона"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
-#| msgid "Off-canvas guides added in %s"
 msgid "Off-canvas guides are now allowed"
 msgstr "Уможливлено використання напрямних поза полотном"
 
@@ -105,7 +110,6 @@ msgstr ""
 "Різноманітні удосконалення в експериментальному інструментів вибору фарби"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
-#| msgid "Wayland support"
 msgid "More fixes for Wayland support"
 msgstr "Додаткові виправлення у реалізації підтримки Wayland"
 
@@ -114,19 +118,22 @@ msgid ""
 "Dialog dropped for the Freedesktop portal implementation of the screenshot "
 "plug-in"
 msgstr ""
-"Усунено діалогове вікно засобу створення знімків вікон на користь реалізації з порталу Freedesktop"
+"Усунено діалогове вікно засобу створення знімків вікон на користь реалізації "
+"з порталу Freedesktop"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "PNG import creates an ICC profile out of the gAMA and/or cHRM chunks"
 msgstr ""
-"Засіб імпортування PNG створює профіль ICC на основі фрагментів gAMA і/або cHRM"
+"Засіб імпортування PNG створює профіль ICC на основі фрагментів gAMA і/або "
+"cHRM"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "TIFF export stores the ICC profile and comment on each layer to prevent "
 "ambiguous files"
 msgstr ""
-"Засіб експортування TIFF зберігає профіль ICC і коментар до кожного з шарів з метою запобігання появі неоднозначних файлів"
+"Засіб експортування TIFF зберігає профіль ICC і коментар до кожного з шарів "
+"з метою запобігання появі неоднозначних файлів"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
@@ -1726,6 +1733,15 @@ msgstr "Вставити буфер як новий шар на місце"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
 msgstr "Вставити позначений буфер як новий шар на його початкове місце"
+
+#: ../app/actions/buffers-actions.c:126 ../app/actions/buffers-actions.c:127
+#: ../app/actions/buffers-actions.c:128 ../app/actions/buffers-actions.c:129
+#: ../app/actions/buffers-actions.c:130 ../app/actions/buffers-actions.c:131
+#: ../app/actions/buffers-actions.c:132 ../app/actions/buffers-actions.c:133
+#| msgctxt "buffers-action"
+#| msgid "Paste the selected buffer"
+msgid "No selected buffer"
+msgstr "Немає позначеного буфера"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -6018,23 +6034,29 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Знову відкрити діалог останнього використаного фільтру"
 
-#: ../app/actions/filters-actions.c:1126
+#: ../app/actions/filters-actions.c:1129
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Пов_торити \"%s\""
 
-#: ../app/actions/filters-actions.c:1127
+#: ../app/actions/filters-actions.c:1130
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "П_овторити з налаштуванням «%s»"
 
-#: ../app/actions/filters-actions.c:1165
+#: ../app/actions/filters-actions.c:1168
 msgid "Repeat Last"
 msgstr "Повторити останній"
 
-#: ../app/actions/filters-actions.c:1167
+#: ../app/actions/filters-actions.c:1170
 msgid "Re-Show Last"
 msgstr "Показати останній ще раз"
+
+#: ../app/actions/filters-actions.c:1173 ../app/actions/filters-actions.c:1175
+#| msgctxt "filters-action"
+#| msgid "Show the last used filter dialog again"
+msgid "No last used filters"
+msgstr "Немає останніх використаних фільтрів"
 
 #: ../app/actions/fonts-actions.c:44
 msgctxt "fonts-action"
@@ -11241,6 +11263,12 @@ msgstr "_Праворуч"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
 msgstr "Позиція позначок справа"
+
+#: ../app/actions/windows-actions.c:286 ../app/actions/windows-actions.c:288
+#| msgctxt "windows-action"
+#| msgid "Single-Window _Mode"
+msgid "Single-window mode disabled"
+msgstr "Одновіконний режим вимкнено"
 
 #: ../app/actions/windows-commands.c:208
 msgid ""
@@ -18930,19 +18958,19 @@ msgstr "_Об'єднувати за зразком"
 msgid "Access the image menu"
 msgstr "Доступ до меню зображення"
 
-#: ../app/display/gimpdisplayshell.c:629
+#: ../app/display/gimpdisplayshell.c:639
 msgid "Zoom image when window size changes"
 msgstr "При зміні розмірів вікна змінювати розміри зображення"
 
-#: ../app/display/gimpdisplayshell.c:658
+#: ../app/display/gimpdisplayshell.c:668
 msgid "Toggle Quick Mask"
 msgstr "Перемикнути швидку маску"
 
-#: ../app/display/gimpdisplayshell.c:673
+#: ../app/display/gimpdisplayshell.c:683
 msgid "Navigate the image display"
 msgstr "Навігація на зображенні"
 
-#: ../app/display/gimpdisplayshell.c:726 ../app/display/gimpdisplayshell.c:1403
+#: ../app/display/gimpdisplayshell.c:736 ../app/display/gimpdisplayshell.c:1415
 #: ../app/widgets/gimptoolbox.c:236
 msgid "Drop image files here to open them"
 msgstr "Перетягніть сюди зображення, які хочете відкрити"
@@ -19158,14 +19186,14 @@ msgstr "(не змінено)"
 
 #: ../app/display/gimpdisplayshell-title.c:374
 #: ../app/display/gimpdisplayshell-title.c:383
-#: ../app/widgets/gimpactiongroup.c:981
+#: ../app/widgets/gimpactiongroup.c:982
 #: ../app/widgets/gimpbuffersourcebox.c:166
 #: ../app/widgets/gimpbuffersourcebox.c:296
 #: ../app/widgets/gimpdeviceinfo.c:1045 ../app/widgets/gimpdeviceinfo.c:1070
 msgid "(none)"
 msgstr "(немає)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1570
+#: ../app/display/gimpdisplayshell-tool-events.c:1593
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Вибрано шар: '%s'"
@@ -21124,7 +21152,7 @@ msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Відтінок і насиченість"
 
-#: ../app/pdb/drawable-color-cmds.c:532 ../app/pdb/plug-in-compat-cmds.c:1575
+#: ../app/pdb/drawable-color-cmds.c:532 ../app/pdb/plug-in-compat-cmds.c:1583
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Інвертувати"
@@ -21653,316 +21681,316 @@ msgstr "Застосувати лінзу"
 msgid "Autocrop image"
 msgstr "Автообтинання зображення"
 
-#: ../app/pdb/plug-in-compat-cmds.c:730
+#: ../app/pdb/plug-in-compat-cmds.c:731
 msgid "Autocrop layer"
 msgstr "Автообтинання шару"
 
-#: ../app/pdb/plug-in-compat-cmds.c:777
+#: ../app/pdb/plug-in-compat-cmds.c:785
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
 msgstr "Розтягнути контрастність HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:931
+#: ../app/pdb/plug-in-compat-cmds.c:939
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "Розтягнути контрастність"
 
-#: ../app/pdb/plug-in-compat-cmds.c:974
+#: ../app/pdb/plug-in-compat-cmds.c:982
 msgctxt "undo-type"
 msgid "Cartoon"
 msgstr "Мультфільм"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1053
+#: ../app/pdb/plug-in-compat-cmds.c:1061
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Змішувач каналів"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1095
+#: ../app/pdb/plug-in-compat-cmds.c:1103
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Колір у альфу"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1141
+#: ../app/pdb/plug-in-compat-cmds.c:1149
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr "Масив 'matrix' має лише %d членів, а потрібно 25"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1149
+#: ../app/pdb/plug-in-compat-cmds.c:1157
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr "Масив 'channels' має лише %d членів, а потрібно 5"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1221
+#: ../app/pdb/plug-in-compat-cmds.c:1229
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "Матриця згортання"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1283
+#: ../app/pdb/plug-in-compat-cmds.c:1291
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Кубізм"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1328
+#: ../app/pdb/plug-in-compat-cmds.c:1336
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "Усунення черезрядковості"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1407
+#: ../app/pdb/plug-in-compat-cmds.c:1415
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "Дифракційні візерунки"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1544 ../app/pdb/plug-in-compat-cmds.c:1555
+#: ../app/pdb/plug-in-compat-cmds.c:1552 ../app/pdb/plug-in-compat-cmds.c:1563
 msgctxt "undo-type"
 msgid "DoG Edge Detect"
 msgstr "Виділення меж"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1568 ../app/pdb/plug-in-compat-cmds.c:2866
+#: ../app/pdb/plug-in-compat-cmds.c:1576 ../app/pdb/plug-in-compat-cmds.c:2874
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Звичайний"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1645
+#: ../app/pdb/plug-in-compat-cmds.c:1653
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "Межа"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1697
+#: ../app/pdb/plug-in-compat-cmds.c:1705
 msgctxt "undo-type"
 msgid "Emboss"
 msgstr "Барельєф"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1740
+#: ../app/pdb/plug-in-compat-cmds.c:1748
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Гравірування"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1813
+#: ../app/pdb/plug-in-compat-cmds.c:1821
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Заміна кольору"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1861
+#: ../app/pdb/plug-in-compat-cmds.c:1869
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Відблиск лінзи"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1926
+#: ../app/pdb/plug-in-compat-cmds.c:1934
 msgctxt "undo-type"
 msgid "Fractal Trace"
 msgstr "Фрактальний слід"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2110
+#: ../app/pdb/plug-in-compat-cmds.c:2118
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Скляна плитка"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2163
+#: ../app/pdb/plug-in-compat-cmds.c:2171
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Шум HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2206
+#: ../app/pdb/plug-in-compat-cmds.c:2214
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Ілюзія"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2243
+#: ../app/pdb/plug-in-compat-cmds.c:2251
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Лаплас"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2319
+#: ../app/pdb/plug-in-compat-cmds.c:2327
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Викривлення лінзи"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2359
+#: ../app/pdb/plug-in-compat-cmds.c:2367
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Плитка без швів"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2426
+#: ../app/pdb/plug-in-compat-cmds.c:2434
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Лабіринт"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2509 ../app/pdb/plug-in-compat-cmds.c:2593
+#: ../app/pdb/plug-in-compat-cmds.c:2517 ../app/pdb/plug-in-compat-cmds.c:2601
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Розмиття руху"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2694
+#: ../app/pdb/plug-in-compat-cmds.c:2702
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Мозаїка"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2738
+#: ../app/pdb/plug-in-compat-cmds.c:2746
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Неон"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2826
+#: ../app/pdb/plug-in-compat-cmds.c:2834
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Газетний папір"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2928
+#: ../app/pdb/plug-in-compat-cmds.c:2936
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Наднова"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2972 ../app/pdb/plug-in-compat-cmds.c:3040
+#: ../app/pdb/plug-in-compat-cmds.c:2980 ../app/pdb/plug-in-compat-cmds.c:3048
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Олійна фарба"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3130
+#: ../app/pdb/plug-in-compat-cmds.c:3138
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Паперова плитка"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3179
+#: ../app/pdb/plug-in-compat-cmds.c:3187
 msgctxt "undo-type"
 msgid "Photocopy"
 msgstr "Фотокопія"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3220 ../app/pdb/plug-in-compat-cmds.c:3263
+#: ../app/pdb/plug-in-compat-cmds.c:3228 ../app/pdb/plug-in-compat-cmds.c:3271
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Пікселізація"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3314
+#: ../app/pdb/plug-in-compat-cmds.c:3322
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Плазма"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3368
+#: ../app/pdb/plug-in-compat-cmds.c:3376
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Полярні координати"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3408
+#: ../app/pdb/plug-in-compat-cmds.c:3416
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Усунення червоних очей"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3461
+#: ../app/pdb/plug-in-compat-cmds.c:3469
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Випадкове жбурляння"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3514
+#: ../app/pdb/plug-in-compat-cmds.c:3522
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Випадковий відбір"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3567
+#: ../app/pdb/plug-in-compat-cmds.c:3575
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Випадкова пляма"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3642
+#: ../app/pdb/plug-in-compat-cmds.c:3650
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB шум"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3712
+#: ../app/pdb/plug-in-compat-cmds.c:3720
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Брижі"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3837
+#: ../app/pdb/plug-in-compat-cmds.c:3845
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Зашумлення"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3881
+#: ../app/pdb/plug-in-compat-cmds.c:3889
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Вибіркове розмиття за Гаусом"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3925
+#: ../app/pdb/plug-in-compat-cmds.c:3933
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Напівсплющення"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3968
+#: ../app/pdb/plug-in-compat-cmds.c:3976
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Зсув"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4071
+#: ../app/pdb/plug-in-compat-cmds.c:4079
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Синус"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4119
+#: ../app/pdb/plug-in-compat-cmds.c:4127
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Собель"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4167
+#: ../app/pdb/plug-in-compat-cmds.c:4175
 msgctxt "undo-type"
 msgid "Softglow"
 msgstr "М'яке світло"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4228
+#: ../app/pdb/plug-in-compat-cmds.c:4236
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Суцільний шум"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4272
+#: ../app/pdb/plug-in-compat-cmds.c:4280
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Розсіювання"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4313
+#: ../app/pdb/plug-in-compat-cmds.c:4321
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Порогова альфа"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4359
+#: ../app/pdb/plug-in-compat-cmds.c:4367
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Різкість (маска зменшення різкості)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4405
+#: ../app/pdb/plug-in-compat-cmds.c:4413
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Відео"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4442
+#: ../app/pdb/plug-in-compat-cmds.c:4450
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Інверсія яскравості"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4549
+#: ../app/pdb/plug-in-compat-cmds.c:4557
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Поширення значень"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4596
+#: ../app/pdb/plug-in-compat-cmds.c:4604
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Дилатація"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4643
+#: ../app/pdb/plug-in-compat-cmds.c:4651
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Ерозія"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4706
+#: ../app/pdb/plug-in-compat-cmds.c:4714
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Хвилі"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4754
+#: ../app/pdb/plug-in-compat-cmds.c:4762
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Вихор та щипок..."
 
-#: ../app/pdb/plug-in-compat-cmds.c:4806
+#: ../app/pdb/plug-in-compat-cmds.c:4814
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Вітер"
@@ -22159,11 +22187,11 @@ msgstr "Індексовані без прозорості"
 msgid "Indexed with alpha"
 msgstr "Індексовані із прозорістю"
 
-#: ../app/plug-in/gimppluginprocedure.c:1088
+#: ../app/plug-in/gimppluginprocedure.c:1085
 msgid "This plug-in only works on the following layer types:"
 msgstr "Цей додаток працює лише з такими типами шарів:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1307
+#: ../app/plug-in/gimppluginprocedure.c:1304
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22172,7 +22200,7 @@ msgstr ""
 "Помилка виклику «%s»:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1319
+#: ../app/plug-in/gimppluginprocedure.c:1316
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -26045,7 +26073,7 @@ msgstr "Не вдалось імпортувати з «%s»: %s"
 msgid "_Search:"
 msgstr "З_найти:"
 
-#: ../app/widgets/gimpactiongroup.c:978
+#: ../app/widgets/gimpactiongroup.c:979
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -27921,7 +27949,7 @@ msgid "Detach dialog from canvas"
 msgstr "Від'єднати вікно від полотна"
 
 #: ../app/widgets/gimppaletteeditor.c:257
-#: ../app/widgets/gimppaletteeditor.c:800
+#: ../app/widgets/gimppaletteeditor.c:801
 msgid "Undefined"
 msgstr "Невизначено"
 
