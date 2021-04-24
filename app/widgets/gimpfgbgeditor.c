@@ -400,7 +400,7 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
       gimp_fg_bg_editor_draw_color_frame (editor, cr, &color,
                                           rect.x,     rect.y,
                                           rect.width, rect.height,
-                                          +1,         +1);
+                                          -1,         -1);
 
       /*  draw the foreground frame  */
       gimp_context_get_foreground (editor->context, &color);
@@ -872,8 +872,8 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
          ABS (color->r - color->b) > CHANNEL_EPSILON ||
          ABS (color->g - color->b) > CHANNEL_EPSILON))))
     {
-      gint    corner_x = x + 0.5 * (1.0 + corner_dx) * width;
-      gint    corner_y = y + 0.5 * (1.0 + corner_dy) * height;
+      gint    corner_x = x + 0.5 * (1.0 - corner_dx) * width;
+      gint    corner_y = y + 0.5 * (1.0 - corner_dy) * height;
       gint    side     = MIN (width, height) * 2 / 3;
       GimpRGB out_of_gamut_color;
 
