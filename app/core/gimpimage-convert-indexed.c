@@ -2688,7 +2688,9 @@ fill_inverse_cmap_gray (QuantizeObj *quantobj,
   gint   mindisti;
   gint   i;
 
-  mindist  = 65536;
+  g_return_if_fail (quantobj->actual_number_of_colors > 0);
+
+  mindist  = G_MAXLONG;
   mindisti = -1;
 
   for (i = 0; i < quantobj->actual_number_of_colors; i++)
@@ -2699,11 +2701,13 @@ fill_inverse_cmap_gray (QuantizeObj *quantobj,
         {
           mindist  = dist;
           mindisti = i;
+
+          if (mindist == 0)
+            break;
         }
     }
 
-  if (i >= 0)
-    histogram[pixel] = mindisti + 1;
+  histogram[pixel] = mindisti + 1;
 }
 
 
