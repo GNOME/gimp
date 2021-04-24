@@ -19,6 +19,16 @@ Core:
     pixel size with the image's pixel density.
   - Off-canvas guides are now allowed. Guides are not deleted anymore
     when dropped off-canvas, but when dropped off-viewport.
+  - Pinch gesture is now possible on canvas for zooming in/out (works on
+    Wayland, not on X11; untested yet on *BSD, macOS, Windows and
+    others).
+  - GimpAction core class now stores a reason for explaining being
+    disabled. This can be used later for giving better hints on why some
+    effects or plug-ins are not usable in some situations. We already
+    had this feature, but by tweaking the action's tooltip, which
+    prevented this to have proper styling on GUIs and disrupted action
+    search (as the reason text was searched, hence may return actions it
+    should not).
 
 Tools:
 
