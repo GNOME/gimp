@@ -236,11 +236,22 @@ edit_cut_cmd_callback (GimpAction *action,
       GimpDisplay *display = action_data_get_display (data);
 
       if (display)
-        gimp_message_literal (image->gimp,
-                              G_OBJECT (display), GIMP_MESSAGE_INFO,
-                              GIMP_IS_IMAGE (cut) ?
-                              _("Cut layer to the clipboard.") :
-                              _("Cut pixels to the clipboard."));
+        {
+          gchar *msg;
+
+          if (GIMP_IS_IMAGE (cut))
+            msg = g_strdup_printf (ngettext ("Cut layer to the clipboard.",
+                                             "Cut %d layers to the clipboard.",
+                                             g_list_length (drawables)),
+                                   g_list_length (drawables));
+          else
+            msg = g_strdup (_("Cut pixels to the clipboard."));
+
+          gimp_message_literal (image->gimp,
+                                G_OBJECT (display), GIMP_MESSAGE_INFO,
+                                msg);
+          g_free (msg);
+        }
 
       gimp_image_flush (image);
     }
@@ -614,6 +625,7 @@ edit_paste (GimpDisplay   *display,
       GimpDisplayShell *shell     = gimp_display_get_shell (display);
       GList            *drawables = gimp_image_get_selected_drawables (image);
       GimpDrawable     *drawable  = NULL;
+      GList            *pasted_layers;
       gint              x, y;
       gint              width, height;
 
@@ -654,9 +666,11 @@ edit_paste (GimpDisplay   *display,
         ! gimp_display_shell_get_infinite_canvas (shell),
         &x, &y, &width, &height);
 
-      if (gimp_edit_paste (image, drawable, paste,
-                           paste_type, x, y, width, height))
+      if ((pasted_layers = gimp_edit_paste (image, drawable, paste,
+                                            paste_type, x, y, width, height)))
         {
+          gimp_image_set_selected_layers (image, pasted_layers);
+          g_list_free (pasted_layers);
           gimp_image_flush (image);
         }
 

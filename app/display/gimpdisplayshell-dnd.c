@@ -517,8 +517,8 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   /* FIXME: popup a menu for selecting "Paste Into" */
 
-  gimp_edit_paste (image, drawable, GIMP_OBJECT (buffer),
-                   paste_type, x, y, width, height);
+  g_list_free (gimp_edit_paste (image, drawable, GIMP_OBJECT (buffer),
+                                paste_type, x, y, width, height));
 
   gimp_display_shell_dnd_flush (shell, image);
 }

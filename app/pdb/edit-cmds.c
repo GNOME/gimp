@@ -249,7 +249,8 @@ edit_paste_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpDrawable *drawable;
   gboolean paste_into;
-  GimpLayer *floating_sel = NULL;
+  gint num_layers = 0;
+  GimpLayer **layers = NULL;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
   paste_into = g_value_get_boolean (gimp_value_array_index (args, 1));
@@ -263,15 +264,26 @@ edit_paste_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                          drawable, paste,
-                                          paste_into ?
-                                          GIMP_PASTE_TYPE_FLOATING_INTO :
-                                          GIMP_PASTE_TYPE_FLOATING,
-                                          -1, -1, -1, -1);
+          GList *list;
+          gint   i;
 
-          if (! floating_sel)
+          list = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                  drawable, paste,
+                                  paste_into ?
+                                  GIMP_PASTE_TYPE_FLOATING_INTO :
+                                  GIMP_PASTE_TYPE_FLOATING,
+                                  -1, -1, -1, -1);
+
+          if (! list)
             success = FALSE;
+
+          num_layers = g_list_length (list);
+          layers = g_new (GimpLayer *, num_layers);
+
+          for (i = 0; i < num_layers; i++, list = g_list_next (list))
+            layers[i] = g_object_ref (list->data);
+
+          g_list_free (list);
         }
       else
         success = FALSE;
@@ -281,7 +293,10 @@ edit_paste_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), floating_sel);
+    {
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
+    }
 
   return return_vals;
 }
@@ -562,14 +577,20 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                          drawable, GIMP_OBJECT (buffer),
-                                          paste_into ?
-                                          GIMP_PASTE_TYPE_FLOATING_INTO :
-                                          GIMP_PASTE_TYPE_FLOATING,
-                                          -1, -1, -1, -1);
-          if (! floating_sel)
+          GList *layers;
+
+          layers = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                    drawable, GIMP_OBJECT (buffer),
+                                    paste_into ?
+                                    GIMP_PASTE_TYPE_FLOATING_INTO :
+                                    GIMP_PASTE_TYPE_FLOATING,
+                                    -1, -1, -1, -1);
+          if (! layers)
             success = FALSE;
+          else
+            floating_sel = layers->data;
+
+          g_list_free (layers);
         }
       else
         success = FALSE;
@@ -735,7 +756,8 @@ register_edit_procs (GimpPDB *pdb)
                                "gimp-edit-paste");
   gimp_procedure_set_static_help (procedure,
                                   "Paste buffer to the specified drawable.",
-                                  "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted buffer will be a new layer in the image which is designated as the image floating selection. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to its drawable before the new floating selection is added. This procedure returns the new floating layer. The resulting floating selection will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
+                                  "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted data may be a floating selection when relevant, layers otherwise. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to its drawable before the new floating selection is added.\n"
+                                     "This procedure returns the new layers (floating or not). If the result is a floating selection, it will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -754,11 +776,17 @@ register_edit_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("floating-sel",
-                                                          "floating sel",
-                                                          "The new floating selection",
-                                                          FALSE,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-layers",
+                                                     "num layers",
+                                                     "The newly pasted layers",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_object_array ("layers",
+                                                                 "layers",
+                                                                 "The list of pasted layers.",
+                                                                 GIMP_TYPE_LAYER,
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

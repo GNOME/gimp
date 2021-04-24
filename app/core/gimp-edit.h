@@ -31,7 +31,7 @@ GimpBuffer  * gimp_edit_copy_visible       (GimpImage       *image,
                                             GimpContext     *context,
                                             GError         **error);
 
-GimpLayer   * gimp_edit_paste              (GimpImage       *image,
+GList       * gimp_edit_paste              (GimpImage       *image,
                                             GimpDrawable    *drawable,
                                             GimpObject      *paste,
                                             GimpPasteType    paste_type,

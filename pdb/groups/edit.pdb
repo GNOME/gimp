@@ -238,13 +238,15 @@ was previously made to either gimp_edit_cut() or gimp_edit_copy(). The
 selection, or to paste the buffer "behind" the selection. This allows
 the selection to act as a mask for the pasted buffer. Anywhere that
 the selection mask is non-zero, the pasted buffer will show
-through. The pasted buffer will be a new layer in the image which is
-designated as the image floating selection. If the image has a
-floating selection at the time of pasting, the old floating selection
-will be anchored to its drawable before the new floating selection is
-added. This procedure returns the new floating layer. The resulting
-floating selection will already be attached to the specified drawable,
-and a subsequent call to floating_sel_attach is not needed.
+through.
+The pasted data may be a floating selection when relevant, layers otherwise.
+If the image has a floating selection at the time of pasting, the old
+floating selection will be anchored to its drawable before the new
+floating selection is added.
+
+This procedure returns the new layers (floating or not). If the result
+is a floating selection, it will already be attached to the specified
+drawable, and a subsequent call to floating_sel_attach is not needed.
 HELP
 
     &std_pdb_misc;
@@ -257,8 +259,10 @@ HELP
     );
 
     @outargs = (
-	{ name  => 'floating_sel', type  => 'layer',
-	  desc  => 'The new floating selection' }
+        { name => 'layers', type => 'layerarray',
+          desc => 'The list of pasted layers.',
+          array => { name => 'num_layers',
+                     desc => 'The newly pasted layers' } }
     );
 
     %invoke = (
@@ -271,15 +275,26 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                      drawable, paste,
-                                      paste_into ?
-                                      GIMP_PASTE_TYPE_FLOATING_INTO :
-                                      GIMP_PASTE_TYPE_FLOATING,
-                                      -1, -1, -1, -1);
+      GList *list;
+      gint   i;
 
-      if (! floating_sel)
+      list = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+                              drawable, paste,
+                              paste_into ?
+                              GIMP_PASTE_TYPE_FLOATING_INTO :
+                              GIMP_PASTE_TYPE_FLOATING,
+                              -1, -1, -1, -1);
+
+      if (! list)
         success = FALSE;
+
+      num_layers = g_list_length (list);
+      layers = g_new (GimpLayer *, num_layers);
+
+      for (i = 0; i < num_layers; i++, list = g_list_next (list))
+        layers[i] = g_object_ref (list->data);
+
+      g_list_free (list);
     }
   else
     success = FALSE;
@@ -583,14 +598,20 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                      drawable, GIMP_OBJECT (buffer),
-                                      paste_into ?
-                                      GIMP_PASTE_TYPE_FLOATING_INTO :
-                                      GIMP_PASTE_TYPE_FLOATING,
-                                      -1, -1, -1, -1);
-      if (! floating_sel)
+      GList *layers;
+
+      layers = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                drawable, GIMP_OBJECT (buffer),
+                                paste_into ?
+                                GIMP_PASTE_TYPE_FLOATING_INTO :
+                                GIMP_PASTE_TYPE_FLOATING,
+                                -1, -1, -1, -1);
+      if (! layers)
         success = FALSE;
+      else
+        floating_sel = layers->data;
+
+      g_list_free (layers);
     }
   else
     success = FALSE;

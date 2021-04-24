@@ -170,6 +170,7 @@ gimp_edit_copy_visible (GimpImage *image)
  * gimp_edit_paste:
  * @drawable: The drawable to paste to.
  * @paste_into: Clear selection, or paste behind it?
+ * @num_layers: (out): The newly pasted layers.
  *
  * Paste buffer to the specified drawable.
  *
@@ -180,24 +181,27 @@ gimp_edit_copy_visible (GimpImage *image)
  * image selection, or to paste the buffer \"behind\" the selection.
  * This allows the selection to act as a mask for the pasted buffer.
  * Anywhere that the selection mask is non-zero, the pasted buffer will
- * show through. The pasted buffer will be a new layer in the image
- * which is designated as the image floating selection. If the image
- * has a floating selection at the time of pasting, the old floating
- * selection will be anchored to its drawable before the new floating
- * selection is added. This procedure returns the new floating layer.
- * The resulting floating selection will already be attached to the
+ * show through. The pasted data may be a floating selection when
+ * relevant, layers otherwise. If the image has a floating selection at
+ * the time of pasting, the old floating selection will be anchored to
+ * its drawable before the new floating selection is added.
+ * This procedure returns the new layers (floating or not). If the
+ * result is a floating selection, it will already be attached to the
  * specified drawable, and a subsequent call to floating_sel_attach is
  * not needed.
  *
- * Returns: (transfer none): The new floating selection.
+ * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
+ *          The list of pasted layers.
+ *          The returned value must be freed with g_free().
  **/
-GimpLayer *
+GimpLayer **
 gimp_edit_paste (GimpDrawable *drawable,
-                 gboolean      paste_into)
+                 gboolean      paste_into,
+                 gint         *num_layers)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpLayer *floating_sel = NULL;
+  GimpLayer **layers = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
@@ -209,12 +213,17 @@ gimp_edit_paste (GimpDrawable *drawable,
                                               args);
   gimp_value_array_unref (args);
 
+  *num_layers = 0;
+
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    floating_sel = GIMP_VALUES_GET_LAYER (return_vals, 1);
+    {
+      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup (a->data, a->length * sizeof (gpointer)); };
+    }
 
   gimp_value_array_unref (return_vals);
 
-  return floating_sel;
+  return layers;
 }
 
 /**

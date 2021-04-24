@@ -625,7 +625,16 @@ p_if_selection_float_it (GimpImage *image,
              the selection  */
           if (gimp_edit_copy (1, (const GimpItem **) &layer))
             {
-              layer = gimp_edit_paste (GIMP_DRAWABLE (layer), FALSE);
+              GimpLayer **layers;
+              gint        num_layers;
+
+              layers = gimp_edit_paste (GIMP_DRAWABLE (layer), FALSE, &num_layers);
+              /* Since we explicitly copied a single layer, there should
+               * be no more than a single layer in the paste as well.
+               */
+              layer = num_layers ? layers[0] : NULL;
+
+              g_free (layers);
             }
           else
             {
