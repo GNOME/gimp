@@ -8,6 +8,33 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.24 to GIMP 2.10.26
+=====================================================
+
+Plug-ins:
+
+  - Improved DDS support and fix some red/blue bit swap for RGB10A2 DDS.
+    The plug-in version is incremented so that it is able to catch and
+    correct previously incorrect RGB10A2 images exported by older
+    versions of our plug-in.
+
+Script-fu:
+
+  - New (dir-make "/dir/name" mode) function to create a directory.
+
+Build:
+
+  - On Windows, *.rs file extension is not associated with SUN Raster
+    images anymore. The reason is that this file extension is mostly
+    used for Rust code files nowadays. If Windows could detect file
+    formats with "magic numbers" (i.e. byte identifiers), it would not
+    be a problem, but since it relies apparently only the extension,
+    it's better to remove this association.
+  - Oppositely on Linux and other Unix-like systems using desktop files,
+    add the image/x-sun-raster MimeType which was forgotten (there,
+    detection should be fine and not depend on file extension).
+
+
 Overview of Changes from GIMP 2.10.22 to GIMP 2.10.24
 =====================================================
 
@@ -57,8 +84,9 @@ Plug-ins:
     * Improve loading of MinIsWhite and MinIsBlack images.
   - GeoTIFF tag support added (recognized and stored into image
     parasites at import, then exported back when TIFF format is used)
-    with appropriate "Save GeoTIFF data" checkbox (checked by default)
-    to disable GeoTIFF metadata export when not desired.
+    with appropriate "Save GeoTIFF data" checkbox (checked by default
+    and sensitive only when the metadata parasite is present) to disable
+    GeoTIFF metadata export when not desired.
   - The metadata viewer and editor got a big cleaning and refactoring
     pass, as well as various fixes and several improvements:
     * Fix handling of IPTC tags which can appear more than once (such as
