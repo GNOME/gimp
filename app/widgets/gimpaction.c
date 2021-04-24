@@ -414,7 +414,7 @@ gimp_action_set_proxy_tooltip (GimpAction *action,
                             "<i><span weight='light'>%s</span></i>", /* Inactive reason */
                             tooltip,
                             escaped_reason && tooltip ? "\n" : "",
-                            escaped_reason);
+                            escaped_reason ? escaped_reason : "");
 
   if (tooltip || escaped_reason)
     gimp_help_set_help_data_with_markup (proxy, markup,
