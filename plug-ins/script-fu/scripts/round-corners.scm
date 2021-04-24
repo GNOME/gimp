@@ -51,12 +51,14 @@
          (diam (* 2 radius))
          (width (car (gimp-image-width img)))
          (height (car (gimp-image-height img)))
-         (type (car (gimp-drawable-type-with-alpha drawable)))
          (image (cond ((= work-on-copy TRUE)
                        (car (gimp-image-duplicate img)))
                       ((= work-on-copy FALSE)
                        img)))
-         (pic-layer (car (gimp-image-get-active-drawable image))))
+         ; active drawable is not necessarily the active layer
+         (pic-layer (car (gimp-image-get-active-layer image)))
+         (type (car (gimp-drawable-type-with-alpha pic-layer)))
+        )
 
   (gimp-context-push)
   (gimp-context-set-defaults)
@@ -131,7 +133,7 @@
   "Sven Neumann <sven@gimp.org>"
   "Sven Neumann"
   "1999/12/21"
-  "RGB GRAY"
+  "RGB* GRAY*"
   SF-IMAGE      "Image"            0
   SF-DRAWABLE   "Drawable"         0
   SF-ADJUSTMENT _"Edge radius"     '(15 0 4096 1 10 0 1)
