@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-26 17:03+0000\n"
+"POT-Creation-Date: 2021-04-25 16:36+0000\n"
 "PO-Revision-Date: 2020-11-26 19:18+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
@@ -97,31 +97,47 @@ msgstr "Desa com a text HTML de colors"
 msgid "Colored HTML text"
 msgstr "Text HTML de colors"
 
-#: ../plug-ins/python/foggify.py:83 ../plug-ins/python/foggify.py:84
+#: ../plug-ins/python/foggify.py:105
+msgid "Layer _name"
+msgstr "_Nom de la capa"
+
+#: ../plug-ins/python/foggify.py:106
 msgid "Layer name"
 msgstr "Nom de la capa"
 
-#: ../plug-ins/python/foggify.py:85
+#: ../plug-ins/python/foggify.py:107
 msgid "Clouds"
 msgstr "Núvols"
 
-#: ../plug-ins/python/foggify.py:88 ../plug-ins/python/foggify.py:89
-msgid "Fog color"
-msgstr "Color de la boira"
+#: ../plug-ins/python/foggify.py:110
+msgid "_Turbulence"
+msgstr "_Turbulència"
 
-#: ../plug-ins/python/foggify.py:92 ../plug-ins/python/foggify.py:93
+#: ../plug-ins/python/foggify.py:111
 msgid "Turbulence"
 msgstr "Turbulència"
 
-#: ../plug-ins/python/foggify.py:97 ../plug-ins/python/foggify.py:98
+#: ../plug-ins/python/foggify.py:115
+msgid "O_pacity"
+msgstr "_Opacitat"
+
+#: ../plug-ins/python/foggify.py:116
 msgid "Opacity"
 msgstr "Opacitat"
 
-#: ../plug-ins/python/foggify.py:115
+#: ../plug-ins/python/foggify.py:125
+msgid "Fog _color"
+msgstr "C_olor de la boira"
+
+#: ../plug-ins/python/foggify.py:126
+msgid "Fog color"
+msgstr "Color de la boira"
+
+#: ../plug-ins/python/foggify.py:142
 msgid "Add a layer of fog"
 msgstr "Afegeix una capa de boira"
 
-#: ../plug-ins/python/foggify.py:118
+#: ../plug-ins/python/foggify.py:145
 msgid "_Fog..."
 msgstr "_Boira..."
 
@@ -379,57 +395,6 @@ msgstr "Degradat _repetitiu de la paleta"
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Crea un degradat repetitiu emprant els colors de la paleta"
 
-#: ../plug-ins/python/py-slice.py:74
-msgid "Slice"
-msgstr "Divideix"
-
-#: ../plug-ins/python/py-slice.py:439 ../plug-ins/python/py-slice.py:440
-msgid "Path for HTML export"
-msgstr "Camí de l'exportació HTML"
-
-#: ../plug-ins/python/py-slice.py:444 ../plug-ins/python/py-slice.py:445
-msgid "Filename for export"
-msgstr "Nom del fitxer que s'ha d'exportar"
-
-#: ../plug-ins/python/py-slice.py:449 ../plug-ins/python/py-slice.py:450
-msgid "Image name prefix"
-msgstr "Prefix dels noms de les imatges"
-
-#: ../plug-ins/python/py-slice.py:454 ../plug-ins/python/py-slice.py:455
-msgid "Image format (gif, jpg, png)"
-msgstr "Format de les imatges (gif, jpg, png)"
-
-#: ../plug-ins/python/py-slice.py:459 ../plug-ins/python/py-slice.py:460
-msgid "Separate image folder"
-msgstr "Posa les imatges en una carpeta a part"
-
-#: ../plug-ins/python/py-slice.py:464 ../plug-ins/python/py-slice.py:465
-msgid "Folder for image export"
-msgstr "Carpeta on s'exportaran les imatges"
-
-#: ../plug-ins/python/py-slice.py:469 ../plug-ins/python/py-slice.py:470
-msgid "Space between table elements"
-msgstr "Separació entre els elements de la taula"
-
-#: ../plug-ins/python/py-slice.py:474 ../plug-ins/python/py-slice.py:475
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javascript per al onmouseover i el clicked"
-
-#: ../plug-ins/python/py-slice.py:480 ../plug-ins/python/py-slice.py:481
-msgid "Skip animation for table caps"
-msgstr "Deshabilita l'animació de la taula"
-
-#. table snippet means a small piece of HTML code here
-#: ../plug-ins/python/py-slice.py:501
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Retalla una imatge per les seves guies, creant un conjunt d'imatges "
-"separades i una taula HTML formada per les imatges resultants"
-
-#: ../plug-ins/python/py-slice.py:510
-msgid "_Slice..."
-msgstr "_Divideix..."
-
 #: ../plug-ins/python/python-console/python-console.py:75
 msgid "Python Console"
 msgstr "Consola Python"
@@ -438,29 +403,29 @@ msgstr "Consola Python"
 msgid "_Browse..."
 msgstr "_Navega..."
 
-#: ../plug-ins/python/python-console/python-console.py:179
+#: ../plug-ins/python/python-console/python-console.py:255
 msgid "Python Procedure Browser"
 msgstr "Navegador de procediments Python"
 
-#: ../plug-ins/python/python-console/python-console.py:207
+#: ../plug-ins/python/python-console/python-console.py:283
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "No s'ha pogut obrir «%s» per a escriure: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:222
+#: ../plug-ins/python/python-console/python-console.py:298
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "No s'ha pogut escriure a «%s»: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:231
+#: ../plug-ins/python/python-console/python-console.py:307
 msgid "Save Python-Fu Console Output"
 msgstr "Desa la sortida de la consola Python-Fu"
 
-#: ../plug-ins/python/python-console/python-console.py:280
+#: ../plug-ins/python/python-console/python-console.py:356
 msgid "Python _Console"
 msgstr "_Consola Python"
 
-#: ../plug-ins/python/python-console/python-console.py:281
+#: ../plug-ins/python/python-console/python-console.py:357
 msgid "Interactive GIMP Python interpreter"
 msgstr "Intèrpret interactiu de Python del GIMP"
 
@@ -493,7 +458,7 @@ msgid "Polygon-Star"
 msgstr "Polígon-Estel"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/python/spyro-plus.py:163 ../plug-ins/python/spyro-plus.py:986
+#: ../plug-ins/python/spyro-plus.py:163 ../plug-ins/python/spyro-plus.py:990
 msgid "Sine"
 msgstr "Sinus"
 
@@ -510,55 +475,55 @@ msgstr "Prestatge"
 msgid "Frame"
 msgstr "Marc"
 
-#: ../plug-ins/python/spyro-plus.py:435
+#: ../plug-ins/python/spyro-plus.py:439
 msgid "Selection"
 msgstr "Selecció"
 
-#: ../plug-ins/python/spyro-plus.py:522
+#: ../plug-ins/python/spyro-plus.py:526
 msgid "Pencil"
 msgstr "Llapis"
 
-#: ../plug-ins/python/spyro-plus.py:538
+#: ../plug-ins/python/spyro-plus.py:542
 msgid "AirBrush"
 msgstr "Aerògraf"
 
-#: ../plug-ins/python/spyro-plus.py:598
+#: ../plug-ins/python/spyro-plus.py:602
 msgid "Preview"
 msgstr "Vista prèvia"
 
-#: ../plug-ins/python/spyro-plus.py:603
+#: ../plug-ins/python/spyro-plus.py:607
 msgid "Stroke"
 msgstr "Traça"
 
-#: ../plug-ins/python/spyro-plus.py:650
+#: ../plug-ins/python/spyro-plus.py:654
 msgid "PaintBrush"
 msgstr "Pinzell"
 
-#: ../plug-ins/python/spyro-plus.py:652
+#: ../plug-ins/python/spyro-plus.py:656
 msgid "Ink"
 msgstr "Tinta"
 
-#: ../plug-ins/python/spyro-plus.py:653
+#: ../plug-ins/python/spyro-plus.py:657
 msgid "MyPaintBrush"
 msgstr "MyPaintPinzell"
 
-#: ../plug-ins/python/spyro-plus.py:972
+#: ../plug-ins/python/spyro-plus.py:976
 msgid "Spyrograph"
 msgstr "Espirògraf"
 
-#: ../plug-ins/python/spyro-plus.py:979
+#: ../plug-ins/python/spyro-plus.py:983
 msgid "Epitrochoid"
 msgstr "Epitrocoide"
 
-#: ../plug-ins/python/spyro-plus.py:1006
+#: ../plug-ins/python/spyro-plus.py:1010
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/python/spyro-plus.py:1453
+#: ../plug-ins/python/spyro-plus.py:1457
 msgid "Curve Type"
 msgstr "Tipus de corba"
 
-#: ../plug-ins/python/spyro-plus.py:1454
+#: ../plug-ins/python/spyro-plus.py:1458
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -566,22 +531,22 @@ msgstr ""
 "Un patró epitricoide és quan l’engranatge mòbil està a l’exterior de "
 "l’engranatge fix."
 
-#: ../plug-ins/python/spyro-plus.py:1459
+#: ../plug-ins/python/spyro-plus.py:1463
 msgid "Tool"
 msgstr "Eina"
 
-#: ../plug-ins/python/spyro-plus.py:1460
+#: ../plug-ins/python/spyro-plus.py:1464
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "L'eina amb la qual dibuixar el patró. L’eina de previsualització només "
 "dibuixa ràpidament."
 
-#: ../plug-ins/python/spyro-plus.py:1465
+#: ../plug-ins/python/spyro-plus.py:1469
 msgid "Long Gradient"
 msgstr "Degradat gran"
 
-#: ../plug-ins/python/spyro-plus.py:1467
+#: ../plug-ins/python/spyro-plus.py:1471
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -592,11 +557,11 @@ msgstr ""
 "longitud del patró, basat en el degradat actual i en el mode de repetició "
 "dels ajustos de l'eina de degradat."
 
-#: ../plug-ins/python/spyro-plus.py:1487
+#: ../plug-ins/python/spyro-plus.py:1491
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Especifiqueu el patró utilitzant una de les pestanyes següents:"
 
-#: ../plug-ins/python/spyro-plus.py:1489
+#: ../plug-ins/python/spyro-plus.py:1493
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -609,7 +574,7 @@ msgstr ""
 "instruccions dels manuals del conjunt de joguines, els resultats haurien de "
 "ser similars."
 
-#: ../plug-ins/python/spyro-plus.py:1513
+#: ../plug-ins/python/spyro-plus.py:1517
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -617,11 +582,11 @@ msgstr ""
 "Nombre de dents de l'engranatge fix. La mida de l'engranatge fix és "
 "proporcional al nombre de dents."
 
-#: ../plug-ins/python/spyro-plus.py:1516 ../plug-ins/python/spyro-plus.py:1544
+#: ../plug-ins/python/spyro-plus.py:1520 ../plug-ins/python/spyro-plus.py:1548
 msgid "Fixed Gear Teeth"
 msgstr "Dents de l'engranatge fix"
 
-#: ../plug-ins/python/spyro-plus.py:1524
+#: ../plug-ins/python/spyro-plus.py:1528
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -629,15 +594,15 @@ msgstr ""
 "Nombre de dents de l'engranatge mòbil. La mida de l'engranatge mòbil és "
 "proporcional al nombre de dents."
 
-#: ../plug-ins/python/spyro-plus.py:1527 ../plug-ins/python/spyro-plus.py:1549
+#: ../plug-ins/python/spyro-plus.py:1531 ../plug-ins/python/spyro-plus.py:1553
 msgid "Moving Gear Teeth"
 msgstr "Dents de l'engranatge mòbil"
 
-#: ../plug-ins/python/spyro-plus.py:1532
+#: ../plug-ins/python/spyro-plus.py:1536
 msgid "Hole percent"
 msgstr "Percentatge del forat"
 
-#: ../plug-ins/python/spyro-plus.py:1533
+#: ../plug-ins/python/spyro-plus.py:1537
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -645,11 +610,11 @@ msgstr ""
 "Quan allunyat es troba el forat des del centre de l’engranatge mòbil. 100% "
 "significa que el forat es troba a la vora de l’engranatge."
 
-#: ../plug-ins/python/spyro-plus.py:1554
+#: ../plug-ins/python/spyro-plus.py:1558
 msgid "Hole Number"
 msgstr "Número de forat"
 
-#: ../plug-ins/python/spyro-plus.py:1555
+#: ../plug-ins/python/spyro-plus.py:1559
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -658,27 +623,27 @@ msgstr ""
 "està prop del centre. El número de forat màxim és diferent per a cada "
 "engranatge."
 
-#: ../plug-ins/python/spyro-plus.py:1566
+#: ../plug-ins/python/spyro-plus.py:1570
 msgid "Flower Petals"
 msgstr "Pètals de flors"
 
-#: ../plug-ins/python/spyro-plus.py:1567
+#: ../plug-ins/python/spyro-plus.py:1571
 msgid "The number of petals in the pattern."
 msgstr "El nombre de pètals en el patró."
 
-#: ../plug-ins/python/spyro-plus.py:1572
+#: ../plug-ins/python/spyro-plus.py:1576
 msgid "Petal Skip"
 msgstr "Salta els pètals"
 
-#: ../plug-ins/python/spyro-plus.py:1573
+#: ../plug-ins/python/spyro-plus.py:1577
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "El nombre de pètals per a avançar i dibuixar el pròxim pètal."
 
-#: ../plug-ins/python/spyro-plus.py:1578
+#: ../plug-ins/python/spyro-plus.py:1582
 msgid "Hole Radius(%)"
 msgstr "Radi del forat(%)"
 
-#: ../plug-ins/python/spyro-plus.py:1579
+#: ../plug-ins/python/spyro-plus.py:1583
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -688,11 +653,11 @@ msgstr ""
 "com a percentatge de la mida del patró. Un valor de 0 no produirà cap forat. "
 "Un valor de 99 produirà una línia fina a la vora."
 
-#: ../plug-ins/python/spyro-plus.py:1600
+#: ../plug-ins/python/spyro-plus.py:1604
 msgid "Width(%)"
 msgstr "Amplada(%)"
 
-#: ../plug-ins/python/spyro-plus.py:1601
+#: ../plug-ins/python/spyro-plus.py:1605
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -701,23 +666,23 @@ msgstr ""
 "L’amplada del patró com a percentatge de la mida del patró. Un valor d'1 "
 "només dibuixarà un patró prim. Un valor de 100 omplirà tot l’engranatge fix."
 
-#: ../plug-ins/python/spyro-plus.py:1612
+#: ../plug-ins/python/spyro-plus.py:1616
 msgid "Visual"
 msgstr "Visual"
 
-#: ../plug-ins/python/spyro-plus.py:1618
+#: ../plug-ins/python/spyro-plus.py:1622
 msgid "Toy Kit"
 msgstr "Conjunt de joguines"
 
-#: ../plug-ins/python/spyro-plus.py:1624
+#: ../plug-ins/python/spyro-plus.py:1628
 msgid "Gears"
 msgstr "Engranatges"
 
-#: ../plug-ins/python/spyro-plus.py:1637 ../plug-ins/python/spyro-plus.py:1681
+#: ../plug-ins/python/spyro-plus.py:1641 ../plug-ins/python/spyro-plus.py:1685
 msgid "Rotation"
 msgstr "Rotació"
 
-#: ../plug-ins/python/spyro-plus.py:1638
+#: ../plug-ins/python/spyro-plus.py:1642
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -725,11 +690,11 @@ msgstr ""
 "Rotació del patró, en graus. La posició inicial de l'engranatge mòbil a "
 "l'engranatge fix."
 
-#: ../plug-ins/python/spyro-plus.py:1661
+#: ../plug-ins/python/spyro-plus.py:1665
 msgid "Shape"
 msgstr "Forma"
 
-#: ../plug-ins/python/spyro-plus.py:1662
+#: ../plug-ins/python/spyro-plus.py:1666
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -740,45 +705,45 @@ msgstr ""
 "La forma de l’engranatge fix que s'utilitzarà dins de la selecció actual. El "
 "prestatge és una forma allargada de vores rodones que es proporciona als "
 "kits de joguines. El marc abraça els límits de la selecció rectangular, "
-"utilitzeu el forat = 100 a la notació de l'engranatge per a assolir el límit. "
-"La selecció abraçarà els límits de la selecció actual: proveu alguna cosa "
-"que no sigui rectangular."
+"utilitzeu el forat = 100 a la notació de l'engranatge per a assolir el "
+"límit. La selecció abraçarà els límits de la selecció actual: proveu alguna "
+"cosa que no sigui rectangular."
 
-#: ../plug-ins/python/spyro-plus.py:1671
+#: ../plug-ins/python/spyro-plus.py:1675
 msgid "Sides"
 msgstr "Cares"
 
-#: ../plug-ins/python/spyro-plus.py:1671
+#: ../plug-ins/python/spyro-plus.py:1675
 msgid "Number of sides of the shape."
 msgstr "Nombre de cares de la forma."
 
-#: ../plug-ins/python/spyro-plus.py:1676
+#: ../plug-ins/python/spyro-plus.py:1680
 msgid "Morph"
 msgstr "Animació per vèrtexs"
 
-#: ../plug-ins/python/spyro-plus.py:1676
+#: ../plug-ins/python/spyro-plus.py:1680
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr ""
 "Forma de l'engranatge fix animat per vèrtex. Sols afecta algunes de les "
 "formes."
 
-#: ../plug-ins/python/spyro-plus.py:1681
+#: ../plug-ins/python/spyro-plus.py:1685
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Rotació de l'engranatge fix, en graus"
 
-#: ../plug-ins/python/spyro-plus.py:1696
+#: ../plug-ins/python/spyro-plus.py:1700
 msgid "Margin (px)"
 msgstr "Marge (px)"
 
-#: ../plug-ins/python/spyro-plus.py:1696
+#: ../plug-ins/python/spyro-plus.py:1700
 msgid "Margin from edge of selection."
 msgstr "Marge des de la vora de la selecció."
 
-#: ../plug-ins/python/spyro-plus.py:1701
+#: ../plug-ins/python/spyro-plus.py:1705
 msgid "Make width and height equal"
 msgstr "Fes que l'amplada i l'alçada siguin iguals"
 
-#: ../plug-ins/python/spyro-plus.py:1703
+#: ../plug-ins/python/spyro-plus.py:1707
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -787,11 +752,11 @@ msgstr ""
 "Quan estigui marcat, el patró tindrà la mateixa amplada i alçada, i estarà "
 "centrat."
 
-#: ../plug-ins/python/spyro-plus.py:1718
+#: ../plug-ins/python/spyro-plus.py:1722
 msgid "Re_draw"
 msgstr "Re_dibuixa"
 
-#: ../plug-ins/python/spyro-plus.py:1720
+#: ../plug-ins/python/spyro-plus.py:1724
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -799,15 +764,15 @@ msgstr ""
 "Si canvieu els paràmetres d'una eina, el color o  la selecció, premeu aquí "
 "per a previsualitzar l’aspecte del patró."
 
-#: ../plug-ins/python/spyro-plus.py:1723
+#: ../plug-ins/python/spyro-plus.py:1727
 msgid "_Reset"
 msgstr "_Reinicia"
 
-#: ../plug-ins/python/spyro-plus.py:1731
+#: ../plug-ins/python/spyro-plus.py:1735
 msgid "Save"
 msgstr "Desa"
 
-#: ../plug-ins/python/spyro-plus.py:1732
+#: ../plug-ins/python/spyro-plus.py:1736
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -815,152 +780,35 @@ msgstr ""
 "Tria si vols desar com a capa nova, redibuixar l'última capa activa o bé "
 "desar-la al camí"
 
-#: ../plug-ins/python/spyro-plus.py:1746
+#: ../plug-ins/python/spyro-plus.py:1750
 msgid "Spyrogimp"
 msgstr "Espirògraf"
 
-#: ../plug-ins/python/spyro-plus.py:1755 ../plug-ins/python/spyro-plus.py:2292
+#: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Dibuixa espirògrafs utilitzant els paràmetres de l'eina actual i la selecció."
 
-#: ../plug-ins/python/spyro-plus.py:1768
+#: ../plug-ins/python/spyro-plus.py:1772
 msgid "Curve Pattern"
 msgstr "Patró corba"
 
-#: ../plug-ins/python/spyro-plus.py:1771
+#: ../plug-ins/python/spyro-plus.py:1775
 msgid "Fixed Gear"
 msgstr "Engranatge fix"
 
-#: ../plug-ins/python/spyro-plus.py:1774
+#: ../plug-ins/python/spyro-plus.py:1778
 msgid "Size"
 msgstr "Mida"
 
-#: ../plug-ins/python/spyro-plus.py:2130
+#: ../plug-ins/python/spyro-plus.py:2134
 msgid "Rendering Pattern"
 msgstr "Renderització del patró"
 
-#: ../plug-ins/python/spyro-plus.py:2142
+#: ../plug-ins/python/spyro-plus.py:2146
 msgid "Please wait : Rendering Pattern"
 msgstr "Espereu: s'està renderitzant el patró"
 
-#: ../plug-ins/python/spyro-plus.py:2296
+#: ../plug-ins/python/spyro-plus.py:2301
 msgid "Spyrogimp..."
 msgstr "Espirògraf..."
-
-#~ msgid "_Console"
-#~ msgstr "_Consola"
-
-#~ msgid "Missing exception information"
-#~ msgstr "Falta la informació de l'excepció"
-
-#~ msgid "An error occurred running %s"
-#~ msgstr "S'ha produït un error en executar %s"
-
-#~ msgid "_More Information"
-#~ msgstr "_Més informació"
-
-#~ msgid "No"
-#~ msgstr "No"
-
-#~ msgid "Yes"
-#~ msgstr "Sí"
-
-#~ msgid "Python-Fu File Selection"
-#~ msgstr "Selecció del fitxer Python-Fu"
-
-#~ msgid "Python-Fu Folder Selection"
-#~ msgstr "Selecció de la carpeta Python-Fu"
-
-#~ msgid "Invalid input for '%s'"
-#~ msgstr "El valor d'entrada no és vàlid per a '%s'"
-
-#~ msgid "Python-Fu Color Selection"
-#~ msgstr "Selecció del color Python-Fu"
-
-#~ msgid "Source code"
-#~ msgstr "Codi font"
-
-#~ msgid "Entry box"
-#~ msgstr "Camp d'entrada"
-
-#~ msgid "_Image"
-#~ msgstr "_Imatge"
-
-#~ msgid "_Drawable"
-#~ msgstr "_Dibuixable"
-
-#~ msgid "Add a drop shadow to a layer, and optionally bevel it"
-#~ msgstr "Afegeix una ombra a una capa i opcionalment un bisell"
-
-#~ msgid "_Drop Shadow and Bevel..."
-#~ msgstr "_Ombra i bisell..."
-
-#~ msgid "_Shadow blur"
-#~ msgstr "_Difuminat de l'ombra"
-
-#~ msgid "_Bevel"
-#~ msgstr "_Bisell"
-
-#~ msgid "_Drop shadow"
-#~ msgstr "_Ombra"
-
-#~ msgid "Drop shadow _X displacement"
-#~ msgstr "Longitud _X de l'ombra"
-
-#~ msgid "Drop shadow _Y displacement"
-#~ msgstr "Longitud _Y de l'ombra"
-
-#~ msgid "_Cancel"
-#~ msgstr "_Cancel·la"
-
-#~ msgid "_OK"
-#~ msgstr "D'ac_ord"
-
-#~ msgid ""
-#~ "Keep\n"
-#~ "Layer"
-#~ msgstr ""
-#~ "Manté\n"
-#~ "la capa"
-
-#~ msgid ""
-#~ "If checked, then once OK is pressed, the spyro layer is kept, and the "
-#~ "plugin exits quickly. If unchecked, the spyro layer is deleted, and the "
-#~ "pattern is redrawn on the layer that was active when the plugin was "
-#~ "launched."
-#~ msgstr ""
-#~ "Si està marcat, després del «d'acord», es manté la capa espiroide i el "
-#~ "connector surt ràpidament. Si no està marcat, se suprimeix la capa "
-#~ "d'espiroide i es torna a dibuixar el patró a la capa que estava activa "
-#~ "quan es va llançar el connector."
-
-#~ msgid "Color _model"
-#~ msgstr "_Model de color"
-
-#~ msgid "RGB"
-#~ msgstr "RGB"
-
-#~ msgid "HSV"
-#~ msgstr "HSV"
-
-#~ msgid "Red or Hue"
-#~ msgstr "Vermell o to"
-
-#~ msgid "Blue or Value"
-#~ msgstr "Blau o valor"
-
-#~ msgid "Create a new brush with characters from a text sequence"
-#~ msgstr "Crea un pinzell nou a partir dels caràcters d'una seqüència de text"
-
-#~ msgid "New Brush from _Text..."
-#~ msgstr "Crea un pinzell nou a partir de _text..."
-
-#~ msgid "Font"
-#~ msgstr "Estil de lletra"
-
-#~ msgid "Pixel Size"
-#~ msgstr "Mida del píxel"
-
-#~ msgid "Text"
-#~ msgstr "Text"

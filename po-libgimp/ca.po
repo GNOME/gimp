@@ -459,7 +459,6 @@ msgid "_Load Saved Settings"
 msgstr "_Carrega els paràmetres desats"
 
 #: ../libgimp/gimpproceduredialog.c:255
-#, fuzzy
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Carrega la configuració desada amb el botó «Desa la configuració»"
 
