@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-24 21:29+0000\n"
-"PO-Revision-Date: 2021-04-25 01:05+0200\n"
+"POT-Creation-Date: 2021-04-25 13:58+0000\n"
+"PO-Revision-Date: 2021-04-25 18:05+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21637,7 +21637,7 @@ msgctxt "undo-type"
 msgid "DoG Edge Detect"
 msgstr "DoG kantidentifiering"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1576 ../app/pdb/plug-in-compat-cmds.c:2874
+#: ../app/pdb/plug-in-compat-cmds.c:1576 ../app/pdb/plug-in-compat-cmds.c:2917
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normal"
@@ -21712,177 +21712,182 @@ msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Rörelseoskärpa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2702
+#: ../app/pdb/plug-in-compat-cmds.c:2648
+msgctxt "undo-type"
+msgid "Median Blur"
+msgstr "Medianoskärpa"
+
+#: ../app/pdb/plug-in-compat-cmds.c:2745
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mosaik"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2746
+#: ../app/pdb/plug-in-compat-cmds.c:2789
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neon"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2834
+#: ../app/pdb/plug-in-compat-cmds.c:2877
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Tidningstryck"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2936
+#: ../app/pdb/plug-in-compat-cmds.c:2979
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernova"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2980 ../app/pdb/plug-in-compat-cmds.c:3048
+#: ../app/pdb/plug-in-compat-cmds.c:3023 ../app/pdb/plug-in-compat-cmds.c:3091
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Oljifiera"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3138
+#: ../app/pdb/plug-in-compat-cmds.c:3181
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Pappersplatta"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3187
+#: ../app/pdb/plug-in-compat-cmds.c:3230
 msgctxt "undo-type"
 msgid "Photocopy"
 msgstr "Fotokopia"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3228 ../app/pdb/plug-in-compat-cmds.c:3271
+#: ../app/pdb/plug-in-compat-cmds.c:3271 ../app/pdb/plug-in-compat-cmds.c:3314
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pixelera"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3322
+#: ../app/pdb/plug-in-compat-cmds.c:3365
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plasma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3376
+#: ../app/pdb/plug-in-compat-cmds.c:3419
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Polära koordinater"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3416
+#: ../app/pdb/plug-in-compat-cmds.c:3459
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Borttagning av röda ögon"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3469
+#: ../app/pdb/plug-in-compat-cmds.c:3512
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Slumpmässigt kast"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3522
+#: ../app/pdb/plug-in-compat-cmds.c:3565
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Slumpmässigt val"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3575
+#: ../app/pdb/plug-in-compat-cmds.c:3618
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Slumpmässig slamning"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3650
+#: ../app/pdb/plug-in-compat-cmds.c:3693
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB-brus"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3720
+#: ../app/pdb/plug-in-compat-cmds.c:3763
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Krusa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3845
+#: ../app/pdb/plug-in-compat-cmds.c:3888
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Brusa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3889
+#: ../app/pdb/plug-in-compat-cmds.c:3932
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Selektiv gaussisk oskärpa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3933
+#: ../app/pdb/plug-in-compat-cmds.c:3976
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Semiutplatta"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3976
+#: ../app/pdb/plug-in-compat-cmds.c:4019
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Skift"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4079
+#: ../app/pdb/plug-in-compat-cmds.c:4122
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinus"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4127
+#: ../app/pdb/plug-in-compat-cmds.c:4170
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4175
+#: ../app/pdb/plug-in-compat-cmds.c:4218
 msgctxt "undo-type"
 msgid "Softglow"
 msgstr "Mjuk glöd"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4236
+#: ../app/pdb/plug-in-compat-cmds.c:4279
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Enfärgat brus"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4280
+#: ../app/pdb/plug-in-compat-cmds.c:4323
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Sprid"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4321
+#: ../app/pdb/plug-in-compat-cmds.c:4364
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Tröskelvärde alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4367
+#: ../app/pdb/plug-in-compat-cmds.c:4410
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Gör skarpare (Oskarp mask)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4413
+#: ../app/pdb/plug-in-compat-cmds.c:4456
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Video"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4450
+#: ../app/pdb/plug-in-compat-cmds.c:4493
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Invertera intensitet"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4557
+#: ../app/pdb/plug-in-compat-cmds.c:4600
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Värdepropagering"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4604
+#: ../app/pdb/plug-in-compat-cmds.c:4647
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Utvidga"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4651
+#: ../app/pdb/plug-in-compat-cmds.c:4694
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erodera"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4714
+#: ../app/pdb/plug-in-compat-cmds.c:4757
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Vågor"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4762
+#: ../app/pdb/plug-in-compat-cmds.c:4805
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Virvel och knipning"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4814
+#: ../app/pdb/plug-in-compat-cmds.c:4857
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Vind"
