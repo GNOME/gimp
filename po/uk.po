@@ -9,16 +9,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-24 16:17+0000\n"
-"PO-Revision-Date: 2021-02-24 18:40+0200\n"
+"POT-Creation-Date: 2021-04-25 17:11+0000\n"
+"PO-Revision-Date: 2021-04-25 20:52+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.11.70\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 20.12.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -74,50 +75,52 @@ msgid "Photo editing in GIMP"
 msgstr "Редагування фото в GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
-#| msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
-"GIMP 2.10.24, знову ж таки, є випуском, основним акцентом у якому є виправлення вад. "
-"Помітні зміни:"
+"GIMP 2.10.24, знову ж таки, є випуском, основним акцентом у якому є "
+"виправлення вад. Помітні зміни:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "GeoTIFF metadata support added"
-msgstr ""
-"Додано підтримку метаданих GeoTIFF"
+msgstr "Додано підтримку метаданих GeoTIFF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
 msgstr ""
-"Під час імпортування PDF нова версія програми пропонує завантажувати шари у зворотному порядку і уможливлює нецілі значення густини пікселів"
+"Під час імпортування PDF нова версія програми пропонує завантажувати шари у "
+"зворотному порядку і уможливлює нецілі значення густини пікселів"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
-"Оновлено засіб імпортування цифрових негативів з метою обробки змін у програмному інтерфейсі darktable 3.6 та новіших версій"
+"Оновлено засіб імпортування цифрових негативів з метою обробки змін у "
+"програмному інтерфейсі darktable 3.6 та новіших версій"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
-"Удосконалено підтримку файлів у таких форматах: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
+"Удосконалено підтримку файлів у таких форматах: HEIF, PSP, TIFF, JPEG, PNG, "
+"PDF, DDS, BMP, PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr ""
-"Багато виправлено та удосконалень у засобах перегляду та редагування метаданих"
+"Багато виправлено та удосконалень у засобах перегляду та редагування "
+"метаданих"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
-#| msgid "Handle transformation"
 msgid "New Kabyle translation"
 msgstr "Новий переклад кабильською мовою"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr ""
-"Уможливлено прилипання до точок поза полотном (до ґратки, напрямних і контурів)"
+"Уможливлено прилипання до точок поза полотном (до ґратки, напрямних і "
+"контурів)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
@@ -1129,7 +1132,7 @@ msgstr "(Введіть будь-який символ для закриття �
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
-#: ../app/sanity.c:562
+#: ../app/sanity.c:546
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -1140,7 +1143,7 @@ msgstr ""
 "\n"
 "Перевірте  значення змінної оточення G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:581
+#: ../app/sanity.c:565
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -18317,7 +18320,8 @@ msgstr "Зберегти зміни у «%s» перед закриванням?
 #: ../app/display/gimpdisplayshell-close.c:307
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d годину будуть втрачені."
 msgstr[1] ""
@@ -18346,7 +18350,8 @@ msgstr[2] ""
 #: ../app/display/gimpdisplayshell-close.c:330
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d хвилину будуть втрачені."
 msgstr[1] ""
@@ -18379,7 +18384,7 @@ msgstr "Неможливо змінити точки растру групи ш�
 
 #: ../app/display/gimpdisplayshell-dnd.c:372
 #: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
-#: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1145
+#: ../app/tools/gimpcroptool.c:463 ../app/tools/gimpeditselectiontool.c:1145
 #: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:300
 #: ../app/tools/gimpselectiontool.c:561 ../app/tools/gimptransformtool.c:686
@@ -18846,13 +18851,13 @@ msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Клацання+перетягування малює довільну лінію, клацання додає прямий відрізок"
 
-#: ../app/display/gimptoolrectangle.c:567
-#: ../app/display/gimptoolrectangle.c:875
+#: ../app/display/gimptoolrectangle.c:569
+#: ../app/display/gimptoolrectangle.c:877
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Прямокутник: "
 
-#: ../app/display/gimptoolrectangle.c:2139
+#: ../app/display/gimptoolrectangle.c:2141
 msgid "Position: "
 msgstr "Позиція:"
 
@@ -21023,172 +21028,179 @@ msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Розмиття руху"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2802
+#: ../app/pdb/plug-in-compat-cmds.c:2748
+#| msgctxt "filters-action"
+#| msgid "_Median Blur..."
+msgctxt "undo-type"
+msgid "Median Blur"
+msgstr "Медіанне розмиття"
+
+#: ../app/pdb/plug-in-compat-cmds.c:2845
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Мозаїка"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2846
+#: ../app/pdb/plug-in-compat-cmds.c:2889
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Неон"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2934
+#: ../app/pdb/plug-in-compat-cmds.c:2977
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Газетний папір"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2974
+#: ../app/pdb/plug-in-compat-cmds.c:3017
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Звичайний"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3036
+#: ../app/pdb/plug-in-compat-cmds.c:3079
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Наднова"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3080 ../app/pdb/plug-in-compat-cmds.c:3148
+#: ../app/pdb/plug-in-compat-cmds.c:3123 ../app/pdb/plug-in-compat-cmds.c:3191
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Олійна фарба"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3238
+#: ../app/pdb/plug-in-compat-cmds.c:3281
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Паперова плитка"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3279 ../app/pdb/plug-in-compat-cmds.c:3322
+#: ../app/pdb/plug-in-compat-cmds.c:3322 ../app/pdb/plug-in-compat-cmds.c:3365
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Пікселізація"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3373
+#: ../app/pdb/plug-in-compat-cmds.c:3416
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Плазма"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3427
+#: ../app/pdb/plug-in-compat-cmds.c:3470
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Полярні координати"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3467
+#: ../app/pdb/plug-in-compat-cmds.c:3510
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Усунення червоних очей"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3520
+#: ../app/pdb/plug-in-compat-cmds.c:3563
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Випадкове жбурляння"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3573
+#: ../app/pdb/plug-in-compat-cmds.c:3616
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Випадковий відбір"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3626
+#: ../app/pdb/plug-in-compat-cmds.c:3669
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Випадкова пляма"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3701
+#: ../app/pdb/plug-in-compat-cmds.c:3744
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB шум"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3771
+#: ../app/pdb/plug-in-compat-cmds.c:3814
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Брижі"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3896
+#: ../app/pdb/plug-in-compat-cmds.c:3939
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Зашумлення"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3940
+#: ../app/pdb/plug-in-compat-cmds.c:3983
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Вибіркове розмиття за Гаусом"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3984
+#: ../app/pdb/plug-in-compat-cmds.c:4027
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Напівсплющення"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4027
+#: ../app/pdb/plug-in-compat-cmds.c:4070
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Зсув"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4130
+#: ../app/pdb/plug-in-compat-cmds.c:4173
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Синус"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4178
+#: ../app/pdb/plug-in-compat-cmds.c:4221
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Собел"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4239
+#: ../app/pdb/plug-in-compat-cmds.c:4282
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Суцільний шум"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4283
+#: ../app/pdb/plug-in-compat-cmds.c:4326
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Розсіювання"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4324
+#: ../app/pdb/plug-in-compat-cmds.c:4367
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Порогова альфа"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4370
+#: ../app/pdb/plug-in-compat-cmds.c:4413
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Різкість (маска зменшення різкості)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4416
+#: ../app/pdb/plug-in-compat-cmds.c:4459
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Відео"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4453
+#: ../app/pdb/plug-in-compat-cmds.c:4496
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Інверсія яскравості"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4560
+#: ../app/pdb/plug-in-compat-cmds.c:4603
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Поширення значень"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4607
+#: ../app/pdb/plug-in-compat-cmds.c:4650
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Дилатація"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4654
+#: ../app/pdb/plug-in-compat-cmds.c:4697
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Ерозія"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4717
+#: ../app/pdb/plug-in-compat-cmds.c:4760
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Хвилі"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4765
+#: ../app/pdb/plug-in-compat-cmds.c:4808
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Вихор та щипок..."
 
-#: ../app/pdb/plug-in-compat-cmds.c:4817
+#: ../app/pdb/plug-in-compat-cmds.c:4860
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Вітер"
@@ -22423,31 +22435,31 @@ msgstr ""
 "Спосіб заповнення нових ділянок, які створено за допомогою «Дозволити "
 "збільшення»"
 
-#: ../app/tools/gimpcroptool.c:119
+#: ../app/tools/gimpcroptool.c:121
 msgid "Crop"
 msgstr "Кадрування"
 
-#: ../app/tools/gimpcroptool.c:120
+#: ../app/tools/gimpcroptool.c:122
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Кадрування: вилучення ділянок з межі зображення чи шару"
 
-#: ../app/tools/gimpcroptool.c:121
+#: ../app/tools/gimpcroptool.c:123
 msgid "_Crop"
 msgstr "_Кадрування"
 
-#: ../app/tools/gimpcroptool.c:159
+#: ../app/tools/gimpcroptool.c:161
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Натисніть і перетягніть для малювання прямокутника обрізання"
 
-#: ../app/tools/gimpcroptool.c:279
+#: ../app/tools/gimpcroptool.c:281
 msgid "Click or press Enter to crop"
 msgstr "Для кадрування клацніть мишею або натисніть Enter"
 
-#: ../app/tools/gimpcroptool.c:386
+#: ../app/tools/gimpcroptool.c:388
 msgid "Crop to: "
 msgstr "Обітнути до:"
 
-#: ../app/tools/gimpcroptool.c:454
+#: ../app/tools/gimpcroptool.c:456
 msgid "There is no active layer to crop."
 msgstr "Немає активного шару чи каналу для картування."
 
