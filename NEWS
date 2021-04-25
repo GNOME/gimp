@@ -29,6 +29,11 @@ Core:
     prevented this to have proper styling on GUIs and disrupted action
     search (as the reason text was searched, hence may return actions it
     should not).
+  - Copy|Cut-Paste could already operate on multiple layers, by merging
+    the result into a single layer. It will still do this when a
+    selection exists, yet will paste layers as-is otherwise. This makes
+    an alternative way to move layers, which is sometimes easier than
+    drag'n dropping (especially between separate images).
 
 Tools:
 
