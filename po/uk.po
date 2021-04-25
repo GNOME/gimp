@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-23 21:02+0000\n"
-"PO-Revision-Date: 2021-04-24 09:30+0300\n"
+"POT-Creation-Date: 2021-04-24 23:09+0000\n"
+"PO-Revision-Date: 2021-04-25 10:49+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1738,8 +1738,6 @@ msgstr "Вставити позначений буфер як новий шар 
 #: ../app/actions/buffers-actions.c:128 ../app/actions/buffers-actions.c:129
 #: ../app/actions/buffers-actions.c:130 ../app/actions/buffers-actions.c:131
 #: ../app/actions/buffers-actions.c:132 ../app/actions/buffers-actions.c:133
-#| msgctxt "buffers-action"
-#| msgid "Paste the selected buffer"
 msgid "No selected buffer"
 msgstr "Немає позначеного буфера"
 
@@ -4822,70 +4820,76 @@ msgstr "Справді хочете спорожнити журнал скасу
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Спорожнення журналу дій із цим зображенням звільнить %s пам'яті."
 
-#: ../app/actions/edit-commands.c:242
-msgid "Cut layer to the clipboard."
-msgstr "Вирізати шар у буфер обміну."
-
 #: ../app/actions/edit-commands.c:243
+#, c-format
+#| msgid "Cut layer to the clipboard."
+msgid "Cut layer to the clipboard."
+msgid_plural "Cut %d layers to the clipboard."
+msgstr[0] "Вирізати %d шар у буфер обміну."
+msgstr[1] "Вирізати %d шари у буфер обміну."
+msgstr[2] "Вирізати %d шарів у буфер обміну."
+msgstr[3] "Вирізати шар у буфер обміну."
+
+#: ../app/actions/edit-commands.c:248
 msgid "Cut pixels to the clipboard."
 msgstr "Вирізати пікселі в буфер обміну."
 
-#: ../app/actions/edit-commands.c:280
+#: ../app/actions/edit-commands.c:291
 msgid "Copied layer to the clipboard."
 msgstr "Шар скопійовано в буфер обміну."
 
-#: ../app/actions/edit-commands.c:281 ../app/actions/edit-commands.c:313
+#: ../app/actions/edit-commands.c:292 ../app/actions/edit-commands.c:324
 msgid "Copied pixels to the clipboard."
 msgstr "Пікселі скопійовано в буфер обміну."
 
-#: ../app/actions/edit-commands.c:392 ../app/actions/edit-commands.c:669
+#: ../app/actions/edit-commands.c:403 ../app/actions/edit-commands.c:683
 #: ../app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "У буфері обміну нічого немає."
 
-#: ../app/actions/edit-commands.c:408
+#: ../app/actions/edit-commands.c:419
 msgid "Cut Named"
 msgstr "Вирізання в буфер з назвою"
 
-#: ../app/actions/edit-commands.c:411 ../app/actions/edit-commands.c:433
-#: ../app/actions/edit-commands.c:455
+#: ../app/actions/edit-commands.c:422 ../app/actions/edit-commands.c:444
+#: ../app/actions/edit-commands.c:466
 msgid "Enter a name for this buffer"
 msgstr "Введіть назву цього буфера"
 
-#: ../app/actions/edit-commands.c:430
+#: ../app/actions/edit-commands.c:441
 msgid "Copy Named"
 msgstr "Копіювання з буфера з назвою"
 
-#: ../app/actions/edit-commands.c:452
+#: ../app/actions/edit-commands.c:463
 msgid "Copy Visible Named "
 msgstr "Копіювати видиме з назвою"
 
-#: ../app/actions/edit-commands.c:497
+#: ../app/actions/edit-commands.c:508
 msgid "Clear"
 msgstr "Очистити"
 
-#: ../app/actions/edit-commands.c:568
+#: ../app/actions/edit-commands.c:579
 msgid "A selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
-#: ../app/actions/edit-commands.c:638 ../app/display/gimpdisplayshell-dnd.c:495
+#: ../app/actions/edit-commands.c:650 ../app/display/gimpdisplayshell-dnd.c:495
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Вставлено як новий шар, тому що ціль є групою шарів."
 
-#: ../app/actions/edit-commands.c:645 ../app/display/gimpdisplayshell-dnd.c:504
+#: ../app/actions/edit-commands.c:657 ../app/display/gimpdisplayshell-dnd.c:504
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Вставлено як новий шар, бо цільові пікселі заблоковано."
 
-#: ../app/actions/edit-commands.c:686
+#: ../app/actions/edit-commands.c:700
 msgid "There are no selected layers or channels to cut from."
 msgstr "Немає позначених шарів або каналів для вирізання."
 
-#: ../app/actions/edit-commands.c:691 ../app/actions/edit-commands.c:724
-#: ../app/actions/edit-commands.c:749
+#: ../app/actions/edit-commands.c:705 ../app/actions/edit-commands.c:738
+#: ../app/actions/edit-commands.c:763
 msgid "(Unnamed Buffer)"
 msgstr "(Буфер без назви)"
 
-#: ../app/actions/edit-commands.c:719
+#: ../app/actions/edit-commands.c:733
 msgid "There are no selected layers or channels to copy from."
 msgstr "Немає позначених шарів або каналів для копіювання."
 
@@ -6053,8 +6057,6 @@ msgid "Re-Show Last"
 msgstr "Показати останній ще раз"
 
 #: ../app/actions/filters-actions.c:1173 ../app/actions/filters-actions.c:1175
-#| msgctxt "filters-action"
-#| msgid "Show the last used filter dialog again"
 msgid "No last used filters"
 msgstr "Немає останніх використаних фільтрів"
 
@@ -11265,8 +11267,6 @@ msgid "Position the tabs on the right"
 msgstr "Позиція позначок справа"
 
 #: ../app/actions/windows-actions.c:286 ../app/actions/windows-actions.c:288
-#| msgctxt "windows-action"
-#| msgid "Single-Window _Mode"
 msgid "Single-window mode disabled"
 msgstr "Одновіконний режим вимкнено"
 
@@ -13196,12 +13196,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Прикріплення рухомого вибору"
 
-#: ../app/core/core-enums.c:1274 ../app/core/gimp-edit.c:549
+#: ../app/core/core-enums.c:1274 ../app/core/gimp-edit.c:583
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Вставити"
 
-#: ../app/core/core-enums.c:1275 ../app/core/gimp-edit.c:789
+#: ../app/core/core-enums.c:1275 ../app/core/gimp-edit.c:837
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Вирізати"
@@ -13547,16 +13547,22 @@ msgstr "Історія кольору"
 msgid "Updating tag cache"
 msgstr "Оновлюється кеш позначок"
 
-#: ../app/core/gimp-edit.c:87
-msgctxt "undo-type"
+#: ../app/core/gimp-edit.c:123
+#, c-format
+#| msgctxt "undo-type"
+#| msgid "Cut Layer"
 msgid "Cut Layer"
-msgstr "Вирізати шар"
+msgid_plural "Cut %d Layers"
+msgstr[0] "Вирізати %d шар"
+msgstr[1] "Вирізати %d шари"
+msgstr[2] "Вирізати %d шарів"
+msgstr[3] "Вирізати шар"
 
-#: ../app/core/gimp-edit.c:361 ../app/core/gimpimage-new.c:513
+#: ../app/core/gimp-edit.c:412 ../app/core/gimpimage-new.c:513
 msgid "Pasted Layer"
 msgstr "Вставлений шар"
 
-#: ../app/core/gimp-edit.c:806
+#: ../app/core/gimp-edit.c:854
 msgid "Global Buffer"
 msgstr "Глобальний буфер"
 
@@ -21172,8 +21178,8 @@ msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Поріг"
 
-#: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:364
-#: ../app/pdb/edit-cmds.c:449
+#: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:379
+#: ../app/pdb/edit-cmds.c:464
 msgid "All specified drawables must belong to the same image."
 msgstr "Усі вказані об'єкти малювання мають належати одному зображенню."
 
