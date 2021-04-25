@@ -1683,6 +1683,19 @@ gimp_procedure_get_argument_sync (GimpProcedure *procedure,
   return sync;
 }
 
+/**
+ * gimp_procedure_new_arguments:
+ * @procedure: the #GimpProcedure.
+ *
+ * Format the expected argument values of procedures, in the order as
+ * added with gimp_procedure_add_argument().
+ *
+ * Returns: (transfer full): the expected #GimpValueArray which could be given as
+ *          arguments to run @procedure, with all values set to
+ *          defaults. Free with gimp_value_array_unref().
+ *
+ * Since: 3.0
+ **/
 GimpValueArray *
 gimp_procedure_new_arguments (GimpProcedure *procedure)
 {
@@ -1719,7 +1732,7 @@ gimp_procedure_new_arguments (GimpProcedure *procedure)
  * Format the expected return values from procedures, using the return
  * values set with gimp_procedure_add_return_value().
  *
- * Returns: the expected #GimpValueArray as could be returned by a
+ * Returns: (transfer full): the expected #GimpValueArray as could be returned by a
  *          #GimpRunFunc.
  *
  * Since: 3.0
