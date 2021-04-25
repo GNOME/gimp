@@ -9,15 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-24 23:09+0000\n"
-"PO-Revision-Date: 2021-04-25 10:49+0300\n"
+"POT-Creation-Date: 2021-04-25 16:35+0000\n"
+"PO-Revision-Date: 2021-04-25 20:54+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -4822,7 +4823,6 @@ msgstr "Спорожнення журналу дій із цим зображе�
 
 #: ../app/actions/edit-commands.c:243
 #, c-format
-#| msgid "Cut layer to the clipboard."
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
 msgstr[0] "Вирізати %d шар у буфер обміну."
@@ -13549,8 +13549,6 @@ msgstr "Оновлюється кеш позначок"
 
 #: ../app/core/gimp-edit.c:123
 #, c-format
-#| msgctxt "undo-type"
-#| msgid "Cut Layer"
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "Вирізати %d шар"
@@ -19021,7 +19019,8 @@ msgstr "Зберегти зміни у «%s» перед закриванням?
 #: ../app/display/gimpdisplayshell-close.c:307
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d годину будуть втрачені."
 msgstr[1] ""
@@ -19055,7 +19054,8 @@ msgstr[3] ""
 #: ../app/display/gimpdisplayshell-close.c:330
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d хвилину будуть втрачені."
 msgstr[1] ""
@@ -21751,7 +21751,7 @@ msgctxt "undo-type"
 msgid "DoG Edge Detect"
 msgstr "Виділення меж"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1576 ../app/pdb/plug-in-compat-cmds.c:2874
+#: ../app/pdb/plug-in-compat-cmds.c:1576 ../app/pdb/plug-in-compat-cmds.c:2917
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Звичайний"
@@ -21826,177 +21826,184 @@ msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Розмиття руху"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2702
+#: ../app/pdb/plug-in-compat-cmds.c:2648
+#| msgctxt "filters-action"
+#| msgid "_Median Blur..."
+msgctxt "undo-type"
+msgid "Median Blur"
+msgstr "Медіанне розмиття"
+
+#: ../app/pdb/plug-in-compat-cmds.c:2745
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Мозаїка"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2746
+#: ../app/pdb/plug-in-compat-cmds.c:2789
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Неон"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2834
+#: ../app/pdb/plug-in-compat-cmds.c:2877
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Газетний папір"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2936
+#: ../app/pdb/plug-in-compat-cmds.c:2979
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Наднова"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2980 ../app/pdb/plug-in-compat-cmds.c:3048
+#: ../app/pdb/plug-in-compat-cmds.c:3023 ../app/pdb/plug-in-compat-cmds.c:3091
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Олійна фарба"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3138
+#: ../app/pdb/plug-in-compat-cmds.c:3181
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Паперова плитка"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3187
+#: ../app/pdb/plug-in-compat-cmds.c:3230
 msgctxt "undo-type"
 msgid "Photocopy"
 msgstr "Фотокопія"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3228 ../app/pdb/plug-in-compat-cmds.c:3271
+#: ../app/pdb/plug-in-compat-cmds.c:3271 ../app/pdb/plug-in-compat-cmds.c:3314
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Пікселізація"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3322
+#: ../app/pdb/plug-in-compat-cmds.c:3365
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Плазма"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3376
+#: ../app/pdb/plug-in-compat-cmds.c:3419
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Полярні координати"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3416
+#: ../app/pdb/plug-in-compat-cmds.c:3459
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Усунення червоних очей"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3469
+#: ../app/pdb/plug-in-compat-cmds.c:3512
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Випадкове жбурляння"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3522
+#: ../app/pdb/plug-in-compat-cmds.c:3565
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Випадковий відбір"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3575
+#: ../app/pdb/plug-in-compat-cmds.c:3618
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Випадкова пляма"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3650
+#: ../app/pdb/plug-in-compat-cmds.c:3693
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB шум"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3720
+#: ../app/pdb/plug-in-compat-cmds.c:3763
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Брижі"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3845
+#: ../app/pdb/plug-in-compat-cmds.c:3888
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Зашумлення"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3889
+#: ../app/pdb/plug-in-compat-cmds.c:3932
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Вибіркове розмиття за Гаусом"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3933
+#: ../app/pdb/plug-in-compat-cmds.c:3976
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Напівсплющення"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3976
+#: ../app/pdb/plug-in-compat-cmds.c:4019
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Зсув"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4079
+#: ../app/pdb/plug-in-compat-cmds.c:4122
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Синус"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4127
+#: ../app/pdb/plug-in-compat-cmds.c:4170
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Собель"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4175
+#: ../app/pdb/plug-in-compat-cmds.c:4218
 msgctxt "undo-type"
 msgid "Softglow"
 msgstr "М'яке світло"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4236
+#: ../app/pdb/plug-in-compat-cmds.c:4279
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Суцільний шум"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4280
+#: ../app/pdb/plug-in-compat-cmds.c:4323
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Розсіювання"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4321
+#: ../app/pdb/plug-in-compat-cmds.c:4364
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Порогова альфа"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4367
+#: ../app/pdb/plug-in-compat-cmds.c:4410
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Різкість (маска зменшення різкості)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4413
+#: ../app/pdb/plug-in-compat-cmds.c:4456
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Відео"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4450
+#: ../app/pdb/plug-in-compat-cmds.c:4493
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Інверсія яскравості"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4557
+#: ../app/pdb/plug-in-compat-cmds.c:4600
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Поширення значень"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4604
+#: ../app/pdb/plug-in-compat-cmds.c:4647
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Дилатація"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4651
+#: ../app/pdb/plug-in-compat-cmds.c:4694
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Ерозія"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4714
+#: ../app/pdb/plug-in-compat-cmds.c:4757
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Хвилі"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4762
+#: ../app/pdb/plug-in-compat-cmds.c:4805
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Вихор та щипок..."
 
-#: ../app/pdb/plug-in-compat-cmds.c:4814
+#: ../app/pdb/plug-in-compat-cmds.c:4857
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Вітер"
