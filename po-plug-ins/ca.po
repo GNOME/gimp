@@ -666,7 +666,7 @@ msgstr "Multiplica el valor aleatori (0,2)"
 
 #: ../plug-ins/common/cml-explorer.c:209
 msgid "Multiply gradient (0,1)"
-msgstr "Multiplica el grau (0,1)"
+msgstr "Multiplica el degradat (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:210
 msgid "With p and random (0,1)"
@@ -9705,7 +9705,7 @@ msgstr "Pantalla"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:817
 msgid "_Gradient Flare..."
-msgstr "Llum enlluernadora _GFlare..."
+msgstr "_Llum enlluernadora..."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:822
 msgid "Produce a lense flare effect using gradients"
@@ -9715,7 +9715,7 @@ msgstr "Produeix un efecte de punt de llum enlluernador amb degradats"
 #: ../plug-ins/gradient-flare/gradient-flare.c:1047
 #: ../plug-ins/gradient-flare/gradient-flare.c:2512
 msgid "Gradient Flare"
-msgstr "Llum enlluernadora GFlare"
+msgstr "Llum enlluernadora"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1061
 msgid "Cannot operate on indexed color images."
@@ -9811,7 +9811,7 @@ msgstr "S_elector"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3214
 msgid "New Gradient Flare"
-msgstr "Nou GFlare"
+msgstr "Llum enlluernadora nova"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3217
 msgid "Enter a name for the new GFlare"
@@ -9829,7 +9829,7 @@ msgstr "El nom «%s» ja es troba en ús!"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3294
 msgid "Copy Gradient Flare"
-msgstr "Copia el GFlare"
+msgstr "Copia la Llum enlluernadora"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3297
 msgid "Enter a name for the copied GFlare"
@@ -9841,7 +9841,7 @@ msgstr "No es pot suprimir. Ha d'haver-hi un GFlare com a mínim."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3361
 msgid "Delete Gradient Flare"
-msgstr "Suprimeix el GFlare"
+msgstr "Suprimeix la Llum enlluernadora"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3433
 #, c-format
@@ -9850,7 +9850,7 @@ msgstr "no s'ha trobat %s a gflares_list"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3473
 msgid "Gradient Flare Editor"
-msgstr "Editor del GFlare"
+msgstr "Editor de la Llum enlluernadora"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3477
 msgid "_Rescan Gradients"
@@ -11663,7 +11663,7 @@ msgid ""
 msgstr ""
 "Introduïu o editeu el valor del GPS aquí.\n"
 "Els valors vàlids consisteixen en 1, 2 o 3 nombres (graus, minuts, segons); mireu els exemples següents:\n"
-"10graus 15 '20 \", o 10° 15' 20\", o 10: 15:20.45, o 10 15 20, o 10 15.30, o 10.45\n"
+"10deg 15' 20 \", o 10° 15' 20\", o 10: 15:20.45, o 10 15 20, o 10 15.30, o 10.45\n"
 "Suprimiu tot el text per a eliminar el valor actual."
 
 #: ../plug-ins/metadata/metadata-editor.c:1701
@@ -11918,11 +11918,11 @@ msgstr "(%lu més caràcter(s))"
 
 #: ../plug-ins/metadata/metadata-viewer.c:561
 msgid " meter"
-msgstr "Metres"
+msgstr " metres"
 
 #: ../plug-ins/metadata/metadata-viewer.c:562
 msgid " feet"
-msgstr "Peus"
+msgstr " peus"
 
 #: ../plug-ins/metadata/metadata-viewer.c:669
 #, c-format

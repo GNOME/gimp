@@ -92,7 +92,7 @@ msgstr ""
 "Per a aquest tercer llançament d'una versió de desenvolupament, l'esforç s'ha centrat "
 "en el desenvolupament de l'API. Moltes funcions van ser canviades de nom "
 "per consistència, van aparèixer noves funcions, algunes "
-"tenien canvis de signatura, es van fer correccions per millorar la "
+"tenien canvis de signatura, es van fer correccions per a millorar la "
 "vinculació d'introspecció d'altres, i així successivament. S'espera que hi "
 "hagi més actualitzacions de l'API en futures versions de desenvolupament en "
 "les quals l'estabilitat no estigui garantida."
@@ -252,14 +252,14 @@ msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
 msgstr ""
-"La importació de PDF ara proposa una opció per carregar capes en ordre "
+"La importació de PDF ara proposa una opció per a carregar capes en ordre "
 "invers i permet densitats de píxels fraccionaries"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
-"S'ha actualitzat la importació d'imatges RAW per gestionar els canvis de "
+"S'ha actualitzat la importació d'imatges RAW per a gestionar els canvis de "
 "l'API a darktable 3.6 i superior"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
@@ -323,7 +323,7 @@ msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
 msgstr ""
-"Matting Levin és ara el motor per defecte de l'eina Foreground Select ja que"
+"Matting Levin és ara el motor per defecte de l'eina Selecció del primer pla, ja que"
 " funciona molt millor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
@@ -16961,7 +16961,7 @@ msgstr "Opcions d'importació"
 
 #: ../app/dialogs/palette-import-dialog.c:309
 msgid "New import"
-msgstr "Nova importació"
+msgstr "Importació nova"
 
 #: ../app/dialogs/palette-import-dialog.c:311
 msgid "Palette _name:"
@@ -18781,7 +18781,7 @@ msgstr "Escala la plantilla a %.2f ppi"
 #: ../app/dialogs/resize-dialog.c:735
 #, c-format
 msgid "Set image to %.2f ppi"
-msgstr "Establex la imatge a %.2f ppi"
+msgstr "Estableix la imatge a %.2f ppi"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:67
 msgid "Calibrate Monitor Resolution"
@@ -27081,7 +27081,7 @@ msgstr "El GIMP ha fallat amb l'error: %s"
 #: ../app/widgets/gimpcriticaldialog.c:562
 #, c-format
 msgid "GIMP encountered an error: %s"
-msgstr "El GIMPha trobat un error: %s"
+msgstr "El GIMP ha trobat un error: %s"
 
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
