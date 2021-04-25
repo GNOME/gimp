@@ -84,10 +84,14 @@ msgid ""
 "be expected on further development releases where stability is not "
 "guaranteed."
 msgstr ""
+"В третьем предварительно выпуске программы фокус смещен на доработку API."
+"Многие функции были переименованы ради единообразия, появилось несколько новых"
+"функций, улучшены привязки интроспекции. В следующих выпусках ожидается"
+"дальнейшая доработка API, стабильность прграммы пока не гарантируется."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "Regarding end-creator changes, some notable improvements are:"
-msgstr ""
+msgstr "Вот наиболее заметные изменения для конечных пользователей:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Canvas Size dialog now displays a template selector"
@@ -225,45 +229,45 @@ msgid "Wayland support"
 msgstr "Поддержка Wayland"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
-#, fuzzy
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
-"Выпуск GIMP 2.10.22 является в основном выпуском исправления ошибок. "
+"В GIMP 2.10.22 преимущественно исправлены ошибки. "
 "Наиболее значительные изменения:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "GeoTIFF metadata support added"
-msgstr ""
+msgstr "Добавлена поддержка метаданных GeoTIFF."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
 msgstr ""
+"При импорте PDF теперь можно развернуть порядок загрузки слоёв"
+"и использовать дробную плотность пикселей."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
-msgstr ""
+msgstr "Плагин поддержки raw теперь поддерживает изменения в API darktable 3.6+."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
+"Улучшена поддержка форматов HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
-#, fuzzy
 msgid "Many fixes and improvements to the metadata viewer and editor"
-msgstr "Улучшена эргономика ползунка"
+msgstr "Множество исправлений и улучшений в просмотрщике и редакторе метаданных."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
-#, fuzzy
 msgid "New Kabyle translation"
-msgstr "Преобразование по точкам"
+msgstr "Перевод программы на новый язык — кабильский."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
-msgstr ""
+msgstr "Добавлено прилипание к сетке, направляющим, контурам за границами холста."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
@@ -459,7 +463,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "Transform tools: new Image transform type to transform the whole image"
-msgstr ""
+msgstr "Новый тип трансформации, «Изображение», меняющий все слои изображения."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
