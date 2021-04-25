@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-21 17:06+0000\n"
+"POT-Creation-Date: 2021-04-25 16:35+0000\n"
 "PO-Revision-Date: 2020-12-06 22:07+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
@@ -89,9 +89,9 @@ msgid ""
 "be expected on further development releases where stability is not "
 "guaranteed."
 msgstr ""
-"Per a aquest tercer llançament d'una versió de desenvolupament, l'esforç s'ha centrat "
-"en el desenvolupament de l'API. Moltes funcions van ser canviades de nom "
-"per consistència, van aparèixer noves funcions, algunes "
+"Per a aquest tercer llançament d'una versió de desenvolupament, l'esforç "
+"s'ha centrat en el desenvolupament de l'API. Moltes funcions van ser "
+"canviades de nom per consistència, van aparèixer noves funcions, algunes "
 "tenien canvis de signatura, es van fer correccions per a millorar la "
 "vinculació d'introspecció d'altres, i així successivament. S'espera que hi "
 "hagi més actualitzacions de l'API en futures versions de desenvolupament en "
@@ -123,20 +123,21 @@ msgid ""
 "Dialog dropped for the Freedesktop portal implementation of the screenshot "
 "plug-in"
 msgstr ""
-"S'ha eliminat el diàleg per a la implementació del portal de Freedesktop "
-"del connector de captura de pantalla"
+"S'ha eliminat el diàleg per a la implementació del portal de Freedesktop del"
+" connector de captura de pantalla"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "PNG import creates an ICC profile out of the gAMA and/or cHRM chunks"
-msgstr "La importació PNG crea un perfil ICC a partir dels trossos gAMA i/o cHRM"
+msgstr ""
+"La importació PNG crea un perfil ICC a partir dels trossos gAMA i/o cHRM"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "TIFF export stores the ICC profile and comment on each layer to prevent "
 "ambiguous files"
 msgstr ""
-"L'exportació TIFF emmagatzema el perfil ICC i el comentari a cada capa per a "
-"evitar fitxers ambigus"
+"L'exportació TIFF emmagatzema el perfil ICC i el comentari a cada capa per a"
+" evitar fitxers ambigus"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
@@ -266,7 +267,8 @@ msgstr ""
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
-"Millorada la compatibilitat dels formats de fitxer: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
+"Millorada la compatibilitat dels formats de fitxer: HEIF, PSP, TIFF, JPEG, "
+"PNG, PDF, DDS, BMP, PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Many fixes and improvements to the metadata viewer and editor"
@@ -278,7 +280,7 @@ msgstr "Nova traducció al cabilenc"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
-msgstr "Ara és possible l'ajust fora del llenç (a la graella, guies, camins)" 
+msgstr "Ara és possible l'ajust fora del llenç (a la graella, guies, camins)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
@@ -323,8 +325,8 @@ msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
 msgstr ""
-"Matting Levin és ara el motor per defecte de l'eina Selecció del primer pla, ja que"
-" funciona molt millor"
+"Matting Levin és ara el motor per defecte de l'eina Selecció del primer pla,"
+" ja que funciona molt millor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "New progressive performance logs and dashboard updates"
@@ -1712,6 +1714,14 @@ msgid "Paste the selected buffer as a new layer at its original position"
 msgstr ""
 "Enganxa la memòria intermèdia seleccionada com una nova capa en la posició "
 "original"
+
+#: ../app/actions/buffers-actions.c:126 ../app/actions/buffers-actions.c:127
+#: ../app/actions/buffers-actions.c:128 ../app/actions/buffers-actions.c:129
+#: ../app/actions/buffers-actions.c:130 ../app/actions/buffers-actions.c:131
+#: ../app/actions/buffers-actions.c:132 ../app/actions/buffers-actions.c:133
+#, fuzzy
+msgid "No selected buffer"
+msgstr "No hi ha cap memòria intermèdia seleccionada"
 
 # Quim: no és 'menú dels canals' pel mateix criteri que 'brushes menu'
 #: ../app/actions/channels-actions.c:45
@@ -4819,73 +4829,76 @@ msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "Si esborreu l'historial de desfer d'aquesta imatge guanyareu %s de memòria."
 
-#: ../app/actions/edit-commands.c:242
-msgid "Cut layer to the clipboard."
-msgstr "Retalla la capa al porta-retalls."
-
 #: ../app/actions/edit-commands.c:243
+#, c-format
+msgid "Cut layer to the clipboard."
+msgid_plural "Cut %d layers to the clipboard."
+msgstr[0] "Retalla la capa al porta-retalls."
+msgstr[1] "Retalla %d capes al porta-retalls."
+
+#: ../app/actions/edit-commands.c:248
 msgid "Cut pixels to the clipboard."
 msgstr "Retalla els píxels al porta-retalls."
 
-#: ../app/actions/edit-commands.c:280
+#: ../app/actions/edit-commands.c:291
 msgid "Copied layer to the clipboard."
 msgstr "S'ha copiat la capa al porta-retalls."
 
-#: ../app/actions/edit-commands.c:281 ../app/actions/edit-commands.c:313
+#: ../app/actions/edit-commands.c:292 ../app/actions/edit-commands.c:324
 msgid "Copied pixels to the clipboard."
 msgstr "Píxels que s'han copiat al porta-retalls."
 
-#: ../app/actions/edit-commands.c:392 ../app/actions/edit-commands.c:669
+#: ../app/actions/edit-commands.c:403 ../app/actions/edit-commands.c:683
 #: ../app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "No hi ha cap imatge al porta-retalls per a enganxar."
 
-#: ../app/actions/edit-commands.c:408
+#: ../app/actions/edit-commands.c:419
 msgid "Cut Named"
 msgstr "Retalla i anomena"
 
-#: ../app/actions/edit-commands.c:411 ../app/actions/edit-commands.c:433
-#: ../app/actions/edit-commands.c:455
+#: ../app/actions/edit-commands.c:422 ../app/actions/edit-commands.c:444
+#: ../app/actions/edit-commands.c:466
 msgid "Enter a name for this buffer"
 msgstr "Introduïu un nom per l'objecte del porta-retalls"
 
-#: ../app/actions/edit-commands.c:430
+#: ../app/actions/edit-commands.c:441
 msgid "Copy Named"
 msgstr "Copia i anomena"
 
 #  GIMP_STOCK_COPY_VISIBLE,
-#: ../app/actions/edit-commands.c:452
+#: ../app/actions/edit-commands.c:463
 msgid "Copy Visible Named "
 msgstr "Copia el que es veu i anomena"
 
-#: ../app/actions/edit-commands.c:497
+#: ../app/actions/edit-commands.c:508
 msgid "Clear"
 msgstr "Buida"
 
-#: ../app/actions/edit-commands.c:568
+#: ../app/actions/edit-commands.c:579
 msgid "A selected layer's alpha channel is locked."
 msgstr "El canal alfa d'una capa seleccionada està bloquejat."
 
-#: ../app/actions/edit-commands.c:638
+#: ../app/actions/edit-commands.c:650
 #: ../app/display/gimpdisplayshell-dnd.c:495
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Enganxat com a capa nova perquè el destí és un grup de capes."
 
-#: ../app/actions/edit-commands.c:645
+#: ../app/actions/edit-commands.c:657
 #: ../app/display/gimpdisplayshell-dnd.c:504
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Enganxat com a capa nova perquè els píxels de destí estan bloquejats."
 
-#: ../app/actions/edit-commands.c:686
+#: ../app/actions/edit-commands.c:700
 msgid "There are no selected layers or channels to cut from."
 msgstr "No hi ha capes ni canals seleccionats per a tallar-los."
 
-#: ../app/actions/edit-commands.c:691 ../app/actions/edit-commands.c:724
-#: ../app/actions/edit-commands.c:749
+#: ../app/actions/edit-commands.c:705 ../app/actions/edit-commands.c:738
+#: ../app/actions/edit-commands.c:763
 msgid "(Unnamed Buffer)"
 msgstr "(memòria intermèdia sense nom)"
 
-#: ../app/actions/edit-commands.c:719
+#: ../app/actions/edit-commands.c:733
 msgid "There are no selected layers or channels to copy from."
 msgstr "No hi ha capes ni canals seleccionats per a copiar-los."
 
@@ -6039,23 +6052,28 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Mostra de nou el diàleg del darrer filtre utilitzat"
 
-#: ../app/actions/filters-actions.c:1126
+#: ../app/actions/filters-actions.c:1129
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Re_peteix «%s»"
 
-#: ../app/actions/filters-actions.c:1127
+#: ../app/actions/filters-actions.c:1130
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "To_rna a mostrar «%s»"
 
-#: ../app/actions/filters-actions.c:1165
+#: ../app/actions/filters-actions.c:1168
 msgid "Repeat Last"
 msgstr "Repeteix el darrer"
 
-#: ../app/actions/filters-actions.c:1167
+#: ../app/actions/filters-actions.c:1170
 msgid "Re-Show Last"
 msgstr "Torna a mostrar el darrer"
+
+#: ../app/actions/filters-actions.c:1173 ../app/actions/filters-actions.c:1175
+#, fuzzy
+msgid "No last used filters"
+msgstr "No hi ha últims filtres utilitzats"
 
 # Quim: no és 'menú dels tipus de lletra' pel mateix criteri que 'brushes
 # menu'
@@ -11287,6 +11305,10 @@ msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
 msgstr "Col·loca les pestanyes a la dreta"
 
+#: ../app/actions/windows-actions.c:286 ../app/actions/windows-actions.c:288
+msgid "Single-window mode disabled"
+msgstr "Mode de finestra única inhabilitat"
+
 #: ../app/actions/windows-commands.c:208
 msgid ""
 "The chosen recent dock contains a toolbox. Please close the currently open "
@@ -13264,12 +13286,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ancora la selecció flotant"
 
-#: ../app/core/core-enums.c:1274 ../app/core/gimp-edit.c:549
+#: ../app/core/core-enums.c:1274 ../app/core/gimp-edit.c:583
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Enganxa"
 
-#: ../app/core/core-enums.c:1275 ../app/core/gimp-edit.c:789
+#: ../app/core/core-enums.c:1275 ../app/core/gimp-edit.c:837
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Retalla"
@@ -13616,16 +13638,18 @@ msgstr "Historial de color"
 msgid "Updating tag cache"
 msgstr "S'està actualitzant la memòria cau de les etiquetes"
 
-#: ../app/core/gimp-edit.c:87
-msgctxt "undo-type"
+#: ../app/core/gimp-edit.c:123
+#, c-format
 msgid "Cut Layer"
-msgstr "Retalla la capa"
+msgid_plural "Cut %d Layers"
+msgstr[0] "Retalla la capa"
+msgstr[1] "Retalla %d capes"
 
-#: ../app/core/gimp-edit.c:361 ../app/core/gimpimage-new.c:513
+#: ../app/core/gimp-edit.c:412 ../app/core/gimpimage-new.c:513
 msgid "Pasted Layer"
 msgstr "Capa enganxada"
 
-#: ../app/core/gimp-edit.c:806
+#: ../app/core/gimp-edit.c:854
 msgid "Global Buffer"
 msgstr "Memòria global"
 
@@ -19093,20 +19117,20 @@ msgstr "Mo_stra fusionada"
 msgid "Access the image menu"
 msgstr "Accedeix al menú imatge"
 
-#: ../app/display/gimpdisplayshell.c:629
+#: ../app/display/gimpdisplayshell.c:639
 msgid "Zoom image when window size changes"
 msgstr "Amplia/Redueix la imatge quan canvia la mida de la finestra"
 
-#: ../app/display/gimpdisplayshell.c:658
+#: ../app/display/gimpdisplayshell.c:668
 msgid "Toggle Quick Mask"
 msgstr "Commuta la màscara ràpida"
 
-#: ../app/display/gimpdisplayshell.c:673
+#: ../app/display/gimpdisplayshell.c:683
 msgid "Navigate the image display"
 msgstr "Navega per la visualització de la imatge"
 
-#: ../app/display/gimpdisplayshell.c:726
-#: ../app/display/gimpdisplayshell.c:1403 ../app/widgets/gimptoolbox.c:236
+#: ../app/display/gimpdisplayshell.c:736
+#: ../app/display/gimpdisplayshell.c:1415 ../app/widgets/gimptoolbox.c:236
 msgid "Drop image files here to open them"
 msgstr "Arrossega-hi fitxers d'imatge per a obrir-los"
 
@@ -19307,14 +19331,14 @@ msgstr "(net)"
 
 #: ../app/display/gimpdisplayshell-title.c:374
 #: ../app/display/gimpdisplayshell-title.c:383
-#: ../app/widgets/gimpactiongroup.c:981
+#: ../app/widgets/gimpactiongroup.c:982
 #: ../app/widgets/gimpbuffersourcebox.c:166
 #: ../app/widgets/gimpbuffersourcebox.c:296
 #: ../app/widgets/gimpdeviceinfo.c:1045 ../app/widgets/gimpdeviceinfo.c:1070
 msgid "(none)"
 msgstr "(cap)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1570
+#: ../app/display/gimpdisplayshell-tool-events.c:1593
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Capa triada:  «%s»"
@@ -21305,8 +21329,8 @@ msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Llindar"
 
-#: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:364
-#: ../app/pdb/edit-cmds.c:449
+#: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:379
+#: ../app/pdb/edit-cmds.c:464
 msgid "All specified drawables must belong to the same image."
 msgstr ""
 "Tots els dibuixables especificats han de pertànyer a la mateixa imatge."
@@ -21895,7 +21919,7 @@ msgctxt "undo-type"
 msgid "DoG Edge Detect"
 msgstr "Detecció de vores DoG"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1576 ../app/pdb/plug-in-compat-cmds.c:2874
+#: ../app/pdb/plug-in-compat-cmds.c:1576 ../app/pdb/plug-in-compat-cmds.c:2917
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normalitza"
@@ -21970,179 +21994,184 @@ msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Difuminat de moviment"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2702
+#: ../app/pdb/plug-in-compat-cmds.c:2648
+msgctxt "undo-type"
+msgid "Median Blur"
+msgstr "Difuminació mediana"
+
+#: ../app/pdb/plug-in-compat-cmds.c:2745
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mosaic"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2746
+#: ../app/pdb/plug-in-compat-cmds.c:2789
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neó"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2834
+#: ../app/pdb/plug-in-compat-cmds.c:2877
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Foto de diari"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2936
+#: ../app/pdb/plug-in-compat-cmds.c:2979
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernova"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2980 ../app/pdb/plug-in-compat-cmds.c:3048
+#: ../app/pdb/plug-in-compat-cmds.c:3023 ../app/pdb/plug-in-compat-cmds.c:3091
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Pintura a l'oli"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3138
+#: ../app/pdb/plug-in-compat-cmds.c:3181
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Mosaic de paper"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3187
+#: ../app/pdb/plug-in-compat-cmds.c:3230
 msgctxt "undo-type"
 msgid "Photocopy"
 msgstr "Fotocòpia"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3228 ../app/pdb/plug-in-compat-cmds.c:3271
+#: ../app/pdb/plug-in-compat-cmds.c:3271 ../app/pdb/plug-in-compat-cmds.c:3314
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pixela"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3322
+#: ../app/pdb/plug-in-compat-cmds.c:3365
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plasma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3376
+#: ../app/pdb/plug-in-compat-cmds.c:3419
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Coordenades polars"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3416
+#: ../app/pdb/plug-in-compat-cmds.c:3459
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Elimina els ulls vermells"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3469
+#: ../app/pdb/plug-in-compat-cmds.c:3512
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Llançament aleatori"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3522
+#: ../app/pdb/plug-in-compat-cmds.c:3565
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Tria aleatòria"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3575
+#: ../app/pdb/plug-in-compat-cmds.c:3618
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Barreja aleatòria"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3650
+#: ../app/pdb/plug-in-compat-cmds.c:3693
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Soroll RGB"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3720
+#: ../app/pdb/plug-in-compat-cmds.c:3763
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Onades del mar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3845
+#: ../app/pdb/plug-in-compat-cmds.c:3888
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Afegeix soroll"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3889
+#: ../app/pdb/plug-in-compat-cmds.c:3932
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Difuminació gaussiana selectiva"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3933
+#: ../app/pdb/plug-in-compat-cmds.c:3976
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Semiaplana"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3976
+#: ../app/pdb/plug-in-compat-cmds.c:4019
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Desplaçament"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4079
+#: ../app/pdb/plug-in-compat-cmds.c:4122
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinusoidal"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4127
+#: ../app/pdb/plug-in-compat-cmds.c:4170
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4175
+#: ../app/pdb/plug-in-compat-cmds.c:4218
 msgctxt "undo-type"
 msgid "Softglow"
 msgstr "Lluentor suau"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4236
+#: ../app/pdb/plug-in-compat-cmds.c:4279
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Soroll sòlid"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4280
+#: ../app/pdb/plug-in-compat-cmds.c:4323
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Difusió"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4321
+#: ../app/pdb/plug-in-compat-cmds.c:4364
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Llindar alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4367
+#: ../app/pdb/plug-in-compat-cmds.c:4410
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Ressalta (Màscara d'enfocament)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4413
+#: ../app/pdb/plug-in-compat-cmds.c:4456
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Vídeo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4450
+#: ../app/pdb/plug-in-compat-cmds.c:4493
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Inversió del valor"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4557
+#: ../app/pdb/plug-in-compat-cmds.c:4600
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Propagació de valor"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4604
+#: ../app/pdb/plug-in-compat-cmds.c:4647
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Dilata"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4651
+#: ../app/pdb/plug-in-compat-cmds.c:4694
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erosiona"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4714
+#: ../app/pdb/plug-in-compat-cmds.c:4757
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Ones"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4762
+#: ../app/pdb/plug-in-compat-cmds.c:4805
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Gira i contrau"
 
 # No com a "vent" sinó com a "sinuós", com el títol de la cançó "The Long And
 # Winding Road" dels Beatles.
-#: ../app/pdb/plug-in-compat-cmds.c:4814
+#: ../app/pdb/plug-in-compat-cmds.c:4857
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Doblega"
@@ -22337,11 +22366,11 @@ msgstr "Indexat sense alfa"
 msgid "Indexed with alpha"
 msgstr "Indexat amb alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1088
+#: ../app/plug-in/gimppluginprocedure.c:1085
 msgid "This plug-in only works on the following layer types:"
 msgstr "El connector sols funciona amb el tipus següents de capes:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1307
+#: ../app/plug-in/gimppluginprocedure.c:1304
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22350,7 +22379,7 @@ msgstr ""
 "Error en la crida a «%s»:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1319
+#: ../app/plug-in/gimppluginprocedure.c:1316
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -26250,7 +26279,7 @@ msgstr "No s'han pogut importar els camins de «%s»: %s"
 msgid "_Search:"
 msgstr "_Cerca:"
 
-#: ../app/widgets/gimpactiongroup.c:978
+#: ../app/widgets/gimpactiongroup.c:979
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -28111,7 +28140,7 @@ msgid "Detach dialog from canvas"
 msgstr "Desenganxa el diàleg del llenç"
 
 #: ../app/widgets/gimppaletteeditor.c:257
-#: ../app/widgets/gimppaletteeditor.c:800
+#: ../app/widgets/gimppaletteeditor.c:801
 msgid "Undefined"
 msgstr "No definit"
 
