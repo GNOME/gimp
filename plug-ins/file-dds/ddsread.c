@@ -55,6 +55,7 @@ typedef struct
   unsigned char  rbits, gbits, bbits, abits;
   unsigned int   rmask, gmask, bmask, amask;
   unsigned int   bpp, gimp_bpp;
+  unsigned int   gimp_bps;         /* bytes per sample */
   int            tile_height;
   unsigned char *palette;
 } dds_load_info_t;
@@ -113,6 +114,7 @@ read_dds (gchar    *filename,
   dds_load_info_t d;
   gint *layers, layer_count;
   GimpImageBaseType type;
+  GimpPrecision     precision;
   int i, j;
 
   if (interactive_dds)
@@ -191,6 +193,7 @@ read_dds (gchar    *filename,
         hdr.pixelfmt.flags |= DDPF_ALPHAPIXELS;
     }
 
+  d.gimp_bps = 1; /* Most formats will be converted to 1 byte per sample */
   if (hdr.pixelfmt.flags & DDPF_FOURCC)
     {
       switch (GETL32(hdr.pixelfmt.fourcc))
@@ -238,10 +241,21 @@ read_dds (gchar    *filename,
 
               type = GIMP_RGB;
             }
-          else //L16
+          else if (hdr.pixelfmt.rmask == 0xffff) /* L16 */
             {
-              d.gimp_bpp = 1;
+              d.gimp_bpp = 2;
+              d.gimp_bps = 2;
               type = GIMP_GRAY;
+            }
+          else
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           "Unsupported uncompressed dds format: "
+                           "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x",
+                           hdr.pixelfmt.bpp,
+                           hdr.pixelfmt.rmask, hdr.pixelfmt.gmask,
+                           hdr.pixelfmt.bmask, hdr.pixelfmt.amask);
+              return GIMP_PDB_EXECUTION_ERROR;
             }
         }
       else
@@ -273,7 +287,16 @@ read_dds (gchar    *filename,
         }
     }
 
-  image = gimp_image_new (hdr.width, hdr.height, type);
+  if (d.gimp_bps == 2)
+    {
+      precision = GIMP_PRECISION_U16_NON_LINEAR;
+    }
+  else
+    {
+      precision = GIMP_PRECISION_U8_NON_LINEAR;
+    }
+
+  image = gimp_image_new_with_precision (hdr.width, hdr.height, type, precision);
 
   if (image == -1)
     {
@@ -930,10 +953,10 @@ load_layer (FILE            *fp,
           type = (hdr->pixelfmt.amask == 0x8000) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
           bablfmt = (hdr->pixelfmt.amask == 0x8000) ? babl_format ("R'G'B'A u8") : babl_format ("R'G'B' u8");
         }
-      else /* L16 */
+      else if (hdr->pixelfmt.rmask == 0xffff) /* L16 */
         {
           type = GIMP_GRAY_IMAGE;
-          bablfmt = babl_format ("Y' u8");
+          bablfmt = babl_format ("Y' u16");
         }
       break;
     case 3: type = GIMP_RGB_IMAGE;  bablfmt = babl_format ("R'G'B' u8");  break;
@@ -1098,8 +1121,12 @@ load_layer (FILE            *fp,
                             (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
                         }
                     }
-                  else //L16
-                    pixels[pos] = (unsigned char)(255 * ((float)(pixel & 0xffff) / 65535.0f));
+                  else if (hdr->pixelfmt.rmask == 0xffff) /* L16 */
+                    {
+                      guint16 *pixels16 = (guint16 *) &pixels[pos];
+
+                      *pixels16 = (guint16) (pixel & 0xffff);
+                    }
                 }
               else
                 {
