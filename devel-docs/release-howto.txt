@@ -3,6 +3,20 @@
                       ----------------------------
                   a check-list for doing a GIMP release
 
+ ( ) Make sure we have a <release> tag inside
+     desktop/org.gimp.GIMP.appdata.xml.in.in for this upcoming
+     version, with type="development" for development or RC releases
+     (set type="stable", or just no type for stable releases).
+
+     Some installers may feature more prominently software with recent
+     releases if the appropriate tag was set (e.g. GNOME Software has a
+     "Recent Releases" category).
+
+     If a description is added, it may be featured in installers and
+     will be translatable (use <_p> or <_li> tags to make the strings
+     localizable). So it is better to prepare the description text as
+     early as possible.
+
  ( ) Announce a string freeze on the GIMP Developer mailing list.
 
      Mention that a release is planned, what branch will be frozen, and
@@ -18,23 +32,10 @@
      https://mail.gnome.org/archives/gnome-i18n/2016-October/msg00035.html
 
  ( ) Also notify the maintainers of the official builds for Windows
-     (irc:ender/@jernejs), macOS (irc:Samm/@samm-git) and flatpak
-     (irc:Jehan/@Jehan) of the upcoming release so they have some time
-     to sort out issues with their builds.
-
- ( ) Make sure we have a <release> tag inside
-     desktop/org.gimp.GIMP.appdata.xml.in.in for this upcoming
-     version, with type="development" for development or RC releases
-     (set type="stable", or just no type for stable releases).
-
-     Some installers may feature more prominently software with recent
-     releases if the appropriate tag was set (e.g. GNOME Software has a
-     "Recent Releases" category).
-
-     If a description is added, it may be featured in installers and
-     will be translatable (use <_p> or <_li> tags to make the strings
-     localizable). So it is better to prepare the description text as
-     early as possible.
+     (irc:ender/@jernejs), macOS (irc:Samm/@samm-git and
+     irc:DesMcG/@DesMcGuinness) and flatpak (irc:Jehan/@Jehan) of the
+     upcoming release so they have some time to sort out issues with
+     their builds.
 
  ( ) Wait until the date specified in the announcements, use this time
      to get bug fixes applied which don't modify strings.
@@ -47,9 +48,9 @@
      release and to place it into the download area. If not, make
      place or ask Michael Natterer or Michael Schumacher to do that.
 
- ( ) Check that you have admin access to the GIMP product on
-     bugzilla.gimp.org and commit access to the gimp-web module, or
-     that someone can do the changes for you.
+ ( ) Check that you have admin access to https://gitlab.gnome.org/GNOME/gimp/
+     and commit access to the gimp-web module, or that someone can do
+     the changes for you.
 
  ( ) Check if NEWS, authors.xml (and the generated AUTHORS), README or
      INSTALL need to be updated, as well as any release notes on
@@ -82,6 +83,9 @@
      [ ] In configure.ac, modify gimp_micro_version accordingly.
 
      [ ] In configure.ac, modify gimp_interface_age accordingly.
+
+ ( ) Bump the version in project() of meson.build identically as the
+     version set in configure.ac.
 
  ( ) Make dist tarballs:
 
@@ -131,6 +135,9 @@
      [ ] In configure.ac, modify gimp_micro_version accordingly.
 
      [ ] In configure.ac, modify gimp_interface_age accordingly.
+
+ ( ) Bump the version number in meson.build to the same value as in
+     configure.ac.
 
  ( ) Publish dist tarballs:
 
