@@ -73,8 +73,8 @@
   </provides>
 
   <releases>
-    <release version="2.99.6" date="2021-04-25" type="development">
-      <url type="details">https://www.gimp.org/news/2021/04/28/gimp-2-99-6-released/</url>
+    <release version="2.99.6" date="2021-04-26" type="development">
+      <url type="details">https://www.gimp.org/news/2021/04/29/gimp-2-99-6-released/</url>
       <description>
         <_p>
         For this third development release, more development effort has been shifted towards the API.
