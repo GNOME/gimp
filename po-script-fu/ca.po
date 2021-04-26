@@ -134,7 +134,7 @@ msgstr "Consola interactiva de l'Scheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:232
 msgid "_Browse..."
-msgstr "_Cerca..."
+msgstr "_Navega..."
 
 #: ../plug-ins/script-fu/script-fu-console.c:288
 msgid "Save Script-Fu Console Output"
