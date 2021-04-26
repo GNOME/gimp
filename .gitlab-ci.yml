@@ -155,6 +155,8 @@ gimp-distcheck-debian:
     - make -j "$(nproc)" distcheck
 
 gimp-meson-debian:
+  rules:
+    - if: '$CI_COMMIT_TAG == null'
   extends: .gimp-debian-base
   script:
     - meson _build
@@ -163,6 +165,8 @@ gimp-meson-debian:
     - ninja -C _build test
 
 gimp-clang-debian:
+  rules:
+    - if: '$CI_COMMIT_TAG == null'
   extends: .gimp-debian-base
   variables:
     CC: "clang"
@@ -179,6 +183,8 @@ gimp-clang-debian:
 ## WINDOWS 64-bit CI ##
 
 deps-win64:
+  rules:
+    - if: '$CI_COMMIT_TAG == null'
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-win64-latest
   variables:
@@ -210,6 +216,8 @@ deps-win64:
   needs: ["build-image-win64"]
 
 gimp-win64:
+  rules:
+    - if: '$CI_COMMIT_TAG == null'
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-win64-latest
   dependencies:
@@ -241,6 +249,8 @@ gimp-win64:
 ## WINDOWS 32-bit CI ##
 
 deps-win32:
+  rules:
+    - if: '$CI_COMMIT_TAG == null'
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-win32-latest
   variables:
@@ -269,6 +279,8 @@ deps-win32:
   needs: ["build-image-win32"]
 
 gimp-win32:
+  rules:
+    - if: '$CI_COMMIT_TAG == null'
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-win32-latest
   dependencies:
@@ -326,11 +338,14 @@ sources:
     when: always
     expire_in: 2 days
     paths:
-    - gimp-*.tar.*
-    - SHA256SUMS
+    - gimp-*.tar.bz2
+    - gimp-*.tar.bz2.SHA256SUMS
+    - gimp-*.tar.bz2.SHA512SUMS
   script:
-    - mv _build/gimp-*.tar.* .
-    - sha256sum gimp-*.tar.* > SHA256SUMS
+    - mv _build/gimp-*.tar.bz2 .
+    - FILENAME=`ls gimp-*.tar.bz2` &&
+      sha256sum gimp-*.tar.bz2 > ${FILENAME}.SHA256SUMS &&
+      sha512sum gimp-*.tar.bz2 > ${FILENAME}.SHA512SUMS
   needs: ["gimp-distcheck-debian"]
 
 win64-nightly:
