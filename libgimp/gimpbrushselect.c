@@ -53,6 +53,24 @@ static gboolean         gimp_temp_brush_idle (GimpBrushData        *data);
 
 /*  public functions  */
 
+/**
+ * gimp_brush_select_new:
+ * @title:      Title of the brush selection dialog.
+ * @brush_name: The name of the brush to set as the first selected.
+ * @opacity:    The initial opacity of the brush.
+ * @spacing:    The initial spacing of the brush (if < 0 then use brush default spacing).
+ * @paint_mode: The initial paint mode.
+ * @callback: (scope notified): The callback function to call each time a settings change.
+ * @data: (closure callback): the run_data given to @callback.
+ * @data_destroy: (destroy data): the destroy function for @data.
+ *
+ * Invokes a brush selection dialog then run @callback with the selected
+ * brush, various settings and user's @data.
+ *
+ * Returns: (transfer none): the name of a temporary PDB procedure. The
+ *          string belongs to the brush selection dialog and will be
+ *          freed automatically when the dialog is closed.
+ **/
 const gchar *
 gimp_brush_select_new (const gchar          *title,
                        const gchar          *brush_name,
