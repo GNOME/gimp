@@ -249,12 +249,11 @@ read_dds (gchar    *filename,
             }
           else
             {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           "Unsupported uncompressed dds format: "
-                           "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x",
-                           hdr.pixelfmt.bpp,
-                           hdr.pixelfmt.rmask, hdr.pixelfmt.gmask,
-                           hdr.pixelfmt.bmask, hdr.pixelfmt.amask);
+              g_message ("Unsupported uncompressed dds format: "
+                         "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x",
+                         hdr.pixelfmt.bpp,
+                         hdr.pixelfmt.rmask, hdr.pixelfmt.gmask,
+                         hdr.pixelfmt.bmask, hdr.pixelfmt.amask);
               return GIMP_PDB_EXECUTION_ERROR;
             }
         }
@@ -289,11 +288,11 @@ read_dds (gchar    *filename,
 
   if (d.gimp_bps == 2)
     {
-      precision = GIMP_PRECISION_U16_NON_LINEAR;
+      precision = GIMP_PRECISION_U16_GAMMA;
     }
   else
     {
-      precision = GIMP_PRECISION_U8_NON_LINEAR;
+      precision = GIMP_PRECISION_U8_GAMMA;
     }
 
   image = gimp_image_new_with_precision (hdr.width, hdr.height, type, precision);
