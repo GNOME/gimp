@@ -1,0 +1,51 @@
+From feb4f26b5c643382241aa995034fb36b02a21a4d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=D0=A0=D1=83=D1=81=D0=BB=D0=B0=D0=BD=20=D0=98=D0=B6=D0=B1?=
+ =?UTF-8?q?=D1=83=D0=BB=D0=B0=D1=82=D0=BE=D0=B2?= <lrn1986@gmail.com>
+Date: Mon, 8 Mar 2021 14:10:56 +0000
+Subject: [PATCH] GDK W32: Use PROCESS_PER_MONITOR_DPI_AWARE
+
+According to Microsoft documentation, PROCESS_SYSTEM_DPI_AWARE, just as
+PROCESS_DPI_UNAWARE, allows Windows to scale GTK windows and do all kinds
+of stuff. To ensure this doesn't happen, we need to use PROCESS_PER_MONITOR_DPI_AWARE,
+even if GTK does not really handle DPI changes dynamically via the  WM_DPICHANGED
+message.
+
+This completely prevents Windows from scaling GTK windows when they are moved
+between screens with different scaling set up.
+---
+ gdk/win32/gdkdisplay-win32.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/gdk/win32/gdkdisplay-win32.c b/gdk/win32/gdkdisplay-win32.c
+index c2b572b402..0fa92a7143 100644
+--- a/gdk/win32/gdkdisplay-win32.c
++++ b/gdk/win32/gdkdisplay-win32.c
+@@ -916,10 +916,10 @@ _gdk_win32_enable_hidpi (GdkWin32Display *display)
+           /* then make the GDK-using app DPI-aware */
+           if (display->shcore_funcs.setDpiAwareFunc != NULL)
+             {
+-              switch (display->shcore_funcs.setDpiAwareFunc (PROCESS_SYSTEM_DPI_AWARE))
++              switch (display->shcore_funcs.setDpiAwareFunc (PROCESS_PER_MONITOR_DPI_AWARE))
+                 {
+                   case S_OK:
+-                    display->dpi_aware_type = PROCESS_SYSTEM_DPI_AWARE;
++                    display->dpi_aware_type = PROCESS_PER_MONITOR_DPI_AWARE;
+                     status = DPI_STATUS_SUCCESS;
+                     break;
+                   case E_ACCESSDENIED:
+@@ -1000,10 +1000,10 @@ _gdk_win32_enable_hidpi (GdkWin32Display *display)
+               /* This most probably means DPI awareness is set through
+                  the manifest, or a DPI compatibility setting is used. */
+               display->dpi_aware_type = display->user32_dpi_funcs.isDpiAwareFunc () ?
+-                                        PROCESS_SYSTEM_DPI_AWARE :
++                                        PROCESS_PER_MONITOR_DPI_AWARE :
+                                         PROCESS_DPI_UNAWARE;
+ 
+-              if (display->dpi_aware_type == PROCESS_SYSTEM_DPI_AWARE)
++              if (display->dpi_aware_type != PROCESS_DPI_UNAWARE)
+                 status = DPI_STATUS_SUCCESS;
+               else
+                 status = DPI_STATUS_DISABLED;
+-- 
+GitLab
+
