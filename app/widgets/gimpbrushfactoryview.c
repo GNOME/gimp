@@ -42,6 +42,12 @@
 
 #include "gimp-intl.h"
 
+enum
+{
+  SPACING_CHANGED,
+  LAST_SIGNAL
+};
+
 
 static void   gimp_brush_factory_view_dispose         (GObject              *object);
 
@@ -59,6 +65,8 @@ G_DEFINE_TYPE (GimpBrushFactoryView, gimp_brush_factory_view,
 
 #define parent_class gimp_brush_factory_view_parent_class
 
+static guint gimp_brush_factory_view_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_brush_factory_view_class_init (GimpBrushFactoryViewClass *klass)
@@ -69,6 +77,20 @@ gimp_brush_factory_view_class_init (GimpBrushFactoryViewClass *klass)
   object_class->dispose     = gimp_brush_factory_view_dispose;
 
   editor_class->select_item = gimp_brush_factory_view_select_item;
+
+  /**
+   * GimpBrushFactoryView::spacing-changed:
+   * @view: the #GimpBrushFactoryView.
+   *
+   * Emitted when the spacing changed.
+   */
+  gimp_brush_factory_view_signals[SPACING_CHANGED] =
+    g_signal_new ("spacing-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpBrushFactoryViewClass, spacing_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
 }
 
 static void
@@ -249,4 +271,5 @@ gimp_brush_factory_view_spacing_update (GtkAdjustment        *adjustment,
                                          gimp_brush_factory_view_spacing_changed,
                                          view);
     }
+  g_signal_emit (view, gimp_brush_factory_view_signals[SPACING_CHANGED], 0);
 }

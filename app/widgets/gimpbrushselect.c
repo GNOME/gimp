@@ -76,8 +76,8 @@ static void          gimp_brush_select_mode_changed    (GimpContext     *context
 
 static void          gimp_brush_select_opacity_update  (GtkAdjustment   *adj,
                                                         GimpBrushSelect *select);
-static void          gimp_brush_select_spacing_update  (GtkAdjustment   *adj,
-                                                        GimpBrushSelect *select);
+static void          gimp_brush_select_spacing_update  (GimpBrushFactoryView *view,
+                                                        GimpBrushSelect      *select);
 
 
 G_DEFINE_TYPE (GimpBrushSelect, gimp_brush_select, GIMP_TYPE_PDB_DIALOG)
@@ -207,7 +207,7 @@ gimp_brush_select_constructed (GObject *object)
   if (select->spacing >= 0)
     gtk_adjustment_set_value (spacing_adj, select->spacing);
 
-  g_signal_connect (spacing_adj, "value-changed",
+  g_signal_connect (dialog->view, "spacing-changed",
                     G_CALLBACK (gimp_brush_select_spacing_update),
                     select);
 }
@@ -313,7 +313,7 @@ gimp_brush_select_opacity_changed (GimpContext     *context,
                                      gimp_brush_select_opacity_update,
                                      select);
 
-  gimp_pdb_dialog_run_callback (GIMP_PDB_DIALOG (select), FALSE);
+  gimp_pdb_dialog_run_callback ((GimpPdbDialog **) &select, FALSE);
 }
 
 static void
@@ -321,7 +321,7 @@ gimp_brush_select_mode_changed (GimpContext     *context,
                                 GimpLayerMode    paint_mode,
                                 GimpBrushSelect *select)
 {
-  gimp_pdb_dialog_run_callback (GIMP_PDB_DIALOG (select), FALSE);
+  gimp_pdb_dialog_run_callback ((GimpPdbDialog **) &select, FALSE);
 }
 
 static void
@@ -333,15 +333,15 @@ gimp_brush_select_opacity_update (GtkAdjustment   *adjustment,
 }
 
 static void
-gimp_brush_select_spacing_update (GtkAdjustment   *adjustment,
-                                  GimpBrushSelect *select)
+gimp_brush_select_spacing_update (GimpBrushFactoryView *view,
+                                  GimpBrushSelect      *select)
 {
-  gdouble value = gtk_adjustment_get_value (adjustment);
+  gdouble value = gtk_adjustment_get_value (view->spacing_adjustment);
 
   if (select->spacing != value)
     {
       select->spacing = value;
 
-      gimp_pdb_dialog_run_callback (GIMP_PDB_DIALOG (select), FALSE);
+      gimp_pdb_dialog_run_callback ((GimpPdbDialog **) &select, FALSE);
     }
 }

@@ -48,6 +48,10 @@ struct _GimpBrushFactoryView
 struct _GimpBrushFactoryViewClass
 {
   GimpDataFactoryViewClass  parent_class;
+
+  /* Signals */
+
+  void (* spacing_changed) (GimpBrushFactoryView *view);
 };
 
 

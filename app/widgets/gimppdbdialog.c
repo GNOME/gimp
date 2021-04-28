@@ -244,34 +244,37 @@ gimp_pdb_dialog_response (GtkDialog *gtk_dialog,
 {
   GimpPdbDialog *dialog = GIMP_PDB_DIALOG (gtk_dialog);
 
-  gimp_pdb_dialog_run_callback (dialog, TRUE);
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gimp_pdb_dialog_run_callback (&dialog, TRUE);
+  if (dialog)
+    gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 void
-gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
-                              gboolean       closing)
+gimp_pdb_dialog_run_callback (GimpPdbDialog **dialog,
+                              gboolean        closing)
 {
-  GimpPdbDialogClass *klass = GIMP_PDB_DIALOG_GET_CLASS (dialog);
+  GimpPdbDialogClass *klass = GIMP_PDB_DIALOG_GET_CLASS (*dialog);
   GimpObject         *object;
 
-  object = gimp_context_get_by_type (dialog->context, dialog->select_type);
+  g_object_add_weak_pointer (G_OBJECT (*dialog), (gpointer) dialog);
+  object = gimp_context_get_by_type ((*dialog)->context, (*dialog)->select_type);
 
-  if (object                &&
-      klass->run_callback   &&
-      dialog->callback_name &&
-      ! dialog->callback_busy)
+  if (*dialog && object        &&
+      klass->run_callback      &&
+      (*dialog)->callback_name &&
+      ! (*dialog)->callback_busy)
     {
-      dialog->callback_busy = TRUE;
+      (*dialog)->callback_busy = TRUE;
 
-      if (gimp_pdb_lookup_procedure (dialog->pdb, dialog->callback_name))
+      if (gimp_pdb_lookup_procedure ((*dialog)->pdb, (*dialog)->callback_name))
         {
           GimpValueArray *return_vals;
           GError         *error = NULL;
 
-          return_vals = klass->run_callback (dialog, object, closing, &error);
+          return_vals = klass->run_callback (*dialog, object, closing, &error);
 
-          if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) !=
+          if (*dialog &&
+              g_value_get_enum (gimp_value_array_index (return_vals, 0)) !=
               GIMP_PDB_SUCCESS)
             {
               const gchar *message;
@@ -281,15 +284,15 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
               else
                 message = _("The corresponding plug-in may have crashed.");
 
-              gimp_message (dialog->context->gimp, G_OBJECT (dialog),
+              gimp_message ((*dialog)->context->gimp, G_OBJECT (*dialog),
                             GIMP_MESSAGE_ERROR,
                             _("Unable to run %s callback.\n%s"),
-                            g_type_name (G_TYPE_FROM_INSTANCE (dialog)),
+                            g_type_name (G_TYPE_FROM_INSTANCE (*dialog)),
                             message);
             }
-          else if (error)
+          else if (*dialog && error)
             {
-              gimp_message_literal (dialog->context->gimp, G_OBJECT (dialog),
+              gimp_message_literal ((*dialog)->context->gimp, G_OBJECT (*dialog),
                                     GIMP_MESSAGE_ERROR,
                                     error->message);
               g_error_free (error);
@@ -298,8 +301,12 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
           gimp_value_array_unref (return_vals);
         }
 
-      dialog->callback_busy = FALSE;
+      if (*dialog)
+        (*dialog)->callback_busy = FALSE;
     }
+
+  if (*dialog)
+    g_object_remove_weak_pointer (G_OBJECT (*dialog), (gpointer) dialog);
 }
 
 GimpPdbDialog *
@@ -332,7 +339,7 @@ gimp_pdb_dialog_context_changed (GimpContext   *context,
                                  GimpPdbDialog *dialog)
 {
   if (object)
-    gimp_pdb_dialog_run_callback (dialog, FALSE);
+    gimp_pdb_dialog_run_callback (&dialog, FALSE);
 }
 
 static void
