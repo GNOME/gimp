@@ -111,6 +111,11 @@ static gboolean   gimp_plug_in_flush         (GIOChannel   *channel,
 static void       gimp_plug_in_set_dll_directory (const gchar *path);
 #endif
 
+#ifndef G_OS_WIN32
+static void       gimp_plug_in_close_waitpid     (GPid         pid,
+                                                  gint         status,
+                                                  GimpPlugIn  *plug_in);
+#endif
 
 
 G_DEFINE_TYPE (GimpPlugIn, gimp_plug_in, GIMP_TYPE_OBJECT)
@@ -367,6 +372,27 @@ out:
   if (w_bin_dir)
     g_free ((void*) w_bin_dir);
   g_free (bin_dir);
+}
+#endif
+
+#ifndef G_OS_WIN32
+static void
+gimp_plug_in_close_waitpid (GPid        pid,
+                            gint        status,
+                            GimpPlugIn *plug_in)
+{
+  GError *error = NULL;
+
+  if (plug_in->manager->gimp->be_verbose &&
+      ! g_spawn_check_exit_status (status, &error))
+    {
+      g_printerr ("Process for plug-in '%s' terminated with error: %s\n",
+                  gimp_object_get_name (plug_in),
+                  error->message);
+    }
+  g_clear_error (&error);
+
+  g_spawn_close_pid (pid);
 }
 #endif
 
@@ -664,12 +690,33 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
             status = kill (- plug_in->pid, SIGKILL);
           else
             status = kill (plug_in->pid, SIGKILL);
-        }
 
-      /* Wait for the process to exit. This will happen
-       * immediately if it was just killed.
-       */
-      waitpid (plug_in->pid, &status, 0);
+          /* Wait for the process to exit. This will happen
+           * immediately as it was just killed.
+           */
+          waitpid (plug_in->pid, &status, 0);
+        }
+      else
+        {
+          /*
+           * If we don't kill it, it means the plug-in ended normally
+           * hence its process should just return without problem. And
+           * this is the case nearly all the time. Yet I had this one
+           * case where the process would never return (even though the
+           * plug-in returned with a result and no errors) and a
+           * waitpid() would block the main process forever.
+           * Thus use instead a child watch source. My idea was that in
+           * the rare case when the child process doesn't return, it is
+           * better to leave a zombie than freeze the core. As it turns
+           * out, doing this even made the broken process exit (does
+           * g_child_watch_add_full() do something better than
+           * waitpid()?).
+           */
+          g_object_ref (plug_in);
+          g_child_watch_add_full (G_PRIORITY_LOW, plug_in->pid,
+                                  (GChildWatchFunc) gimp_plug_in_close_waitpid,
+                                  plug_in, (GDestroyNotify) g_object_unref);
+        }
 
 #else /* G_OS_WIN32 */
 
@@ -700,9 +747,9 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
             }
         }
 
+      g_spawn_close_pid (plug_in->pid);
 #endif /* G_OS_WIN32 */
 
-      g_spawn_close_pid (plug_in->pid);
       plug_in->pid = 0;
     }
 
