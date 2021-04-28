@@ -11,8 +11,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-19 15:17+0000\n"
-"PO-Revision-Date: 2021-04-20 10:00+0100\n"
+"POT-Creation-Date: 2021-04-27 12:25+0000\n"
+"PO-Revision-Date: 2021-04-28 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -468,11 +468,11 @@ msgstr "Eraldatze bateraturako tresnaren aukera lehenetsia, orain, aspektu-erlaz
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
-msgstr ""
+msgstr "'Murriztu heldulekuak' eta 'Zentroaren inguruan' aukerak gehitu zaizkio perspektibaren eraldaketaren interfazeari"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
-msgstr ""
+msgstr "Oihalaren aldatzaile berria gehitu da, 'Alt + erdiko klik', geruzak aukeratzeko"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid "Parametric brushes now 32-bit float to avoid posterization"
@@ -480,18 +480,18 @@ msgstr "Brotxa parametrikoak orain 32 bit-eko koma mugikorrekoak dira, posteriza
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid "Clipboard brushes and pattern can now be duplicated"
-msgstr ""
+msgstr "Arbeleko brotxak eta ereduak orain bikoiztu egin daitezke"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
-msgstr ""
+msgstr "Blokeatutako geruzen edizioak huts egiten duenean, keinu bat ikusiko da arreta errorearen zergatira bideratzeko"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
-msgstr ""
+msgstr "Oihal gaineko erabiltzaile-interfaze berria (lerro sinpleak) mugimendu-lausotze zirkular, lineal eta zoom bidezkorako"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid "Several optimizations including faster layer group rendering"
@@ -506,7 +506,7 @@ msgstr "Trukatze- eta cache-fitxategiak ez dira gordetzen konfigurazio-direktori
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
-msgstr ""
+msgstr "Fitxategiak gordetzeko/esportatzeko zenbait eragiketa sendotu dira, erroreak ez gertatzeko eta fitxategi partzialak gorde ez daitezen eragozteko"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "HiDPI support improvements"
@@ -536,17 +536,17 @@ msgstr "Spyrogimp plugina erabat berridatzi da, aukera gehiago eta elkarrekintza
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
-msgstr ""
+msgstr "GIMP 2.10.8 bertsioa akatsak konpontzeko eta optimizaziorako bertsio bat da. Aldaketa nagusiak:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
-msgstr ""
+msgstr "Pusken tamaina moldakorra proiekzioak errendatzean, horrek erantzun-abiadura dinamikoki hobetzen du"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
-msgstr ""
+msgstr "RawTherapee (5.5 bertsioa eta berriagoak) detektatzea hobetu da Windowsen"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid ""
@@ -760,7 +760,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid "New dashboard dockable to monitor GIMP resource usage"
-msgstr ""
+msgstr "Aginte-panel atrakagarri berria GIMPen baliabide-erabilera monitorizatzeko"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
 msgid ""
@@ -1474,6 +1474,13 @@ msgstr "Itsatsi buferra lekuan geruza berri gisa"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
 msgstr "Itsatsi hautatutako buferra geruza berri gisa bere jatorrizko kokalekuan"
+
+#: ../app/actions/buffers-actions.c:126 ../app/actions/buffers-actions.c:127
+#: ../app/actions/buffers-actions.c:128 ../app/actions/buffers-actions.c:129
+#: ../app/actions/buffers-actions.c:130 ../app/actions/buffers-actions.c:131
+#: ../app/actions/buffers-actions.c:132 ../app/actions/buffers-actions.c:133
+msgid "No selected buffer"
+msgstr "Ez dago bufferrik hautatuta"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -3123,7 +3130,7 @@ msgstr "_Abiarazi/gelditu grabazioa..."
 #: ../app/actions/dashboard-actions.c:52
 msgctxt "dashboard-action"
 msgid "Start/stop recording performance log"
-msgstr "Abiarazi/gelditu performantzia-egunkariaren grabazioa"
+msgstr "Abiarazi/gelditu errendimendu-egunkariaren grabazioa"
 
 #: ../app/actions/dashboard-actions.c:56
 msgctxt "dashboard-action"
@@ -3133,7 +3140,7 @@ msgstr "Gehitu _markatzailea..."
 #: ../app/actions/dashboard-actions.c:57
 msgctxt "dashboard-action"
 msgid "Add an event marker to the performance log"
-msgstr "Gehitu gertaera-markatzaile bat performantzia-egunkariari"
+msgstr "Gehitu gertaera-markatzaile bat errendimendu-egunkariari"
 
 #: ../app/actions/dashboard-actions.c:62
 msgctxt "dashboard-action"
@@ -3143,7 +3150,7 @@ msgstr "Gehitu markatzaile _hutsa"
 #: ../app/actions/dashboard-actions.c:63
 msgctxt "dashboard-action"
 msgid "Add an empty event marker to the performance log"
-msgstr "Gehitu gertaera-markatzaile huts bat performantzia-egunkariari"
+msgstr "Gehitu gertaera-markatzaile huts bat errendimendu-egunkariari"
 
 #: ../app/actions/dashboard-actions.c:69
 msgctxt "dashboard-action"
@@ -4544,70 +4551,73 @@ msgstr "Irudiaren desegite-historia ezabatzea nahi duzu?"
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Irudiaren desegite-historia garbitzean %s memoria irabaziko da."
 
-#: ../app/actions/edit-commands.c:242
-msgid "Cut layer to the clipboard."
-msgstr "Ebaki geruza arbelera."
-
 #: ../app/actions/edit-commands.c:243
+#, c-format
+msgid "Cut layer to the clipboard."
+msgid_plural "Cut %d layers to the clipboard."
+msgstr[0] "Ebaki geruza arbelera."
+msgstr[1] "Ebaki %d geruza arbelera."
+
+#: ../app/actions/edit-commands.c:248
 msgid "Cut pixels to the clipboard."
 msgstr "Ebaki pixelak arbelera."
 
-#: ../app/actions/edit-commands.c:280
+#: ../app/actions/edit-commands.c:291
 msgid "Copied layer to the clipboard."
 msgstr "Geruza arbelera kopiatu da."
 
-#: ../app/actions/edit-commands.c:281 ../app/actions/edit-commands.c:313
+#: ../app/actions/edit-commands.c:292 ../app/actions/edit-commands.c:324
 msgid "Copied pixels to the clipboard."
 msgstr "Pixelak arbelera kopiatu dira."
 
-#: ../app/actions/edit-commands.c:392 ../app/actions/edit-commands.c:669
+#: ../app/actions/edit-commands.c:403 ../app/actions/edit-commands.c:683
 #: ../app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "Ez dago irudiaren daturik arbelean itsasteko."
 
-#: ../app/actions/edit-commands.c:408
+#: ../app/actions/edit-commands.c:419
 msgid "Cut Named"
 msgstr "Ebaki izenduna"
 
-#: ../app/actions/edit-commands.c:411 ../app/actions/edit-commands.c:433
-#: ../app/actions/edit-commands.c:455
+#: ../app/actions/edit-commands.c:422 ../app/actions/edit-commands.c:444
+#: ../app/actions/edit-commands.c:466
 msgid "Enter a name for this buffer"
 msgstr "Sartu buffer honen izena"
 
-#: ../app/actions/edit-commands.c:430
+#: ../app/actions/edit-commands.c:441
 msgid "Copy Named"
 msgstr "Kopiatu izenduna"
 
-#: ../app/actions/edit-commands.c:452
+#: ../app/actions/edit-commands.c:463
 msgid "Copy Visible Named "
 msgstr "Kopiatu ikusgai izenduna "
 
-#: ../app/actions/edit-commands.c:497
+#: ../app/actions/edit-commands.c:508
 msgid "Clear"
 msgstr "Garbitu"
 
-#: ../app/actions/edit-commands.c:568
+#: ../app/actions/edit-commands.c:579
 msgid "A selected layer's alpha channel is locked."
 msgstr "Hautatutako geruza baten alfa kanala blokeatuta dago."
 
-#: ../app/actions/edit-commands.c:638 ../app/display/gimpdisplayshell-dnd.c:495
+#: ../app/actions/edit-commands.c:650 ../app/display/gimpdisplayshell-dnd.c:495
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Geruza berri gisa itsatsi da helburua geruza talde bat delako."
 
-#: ../app/actions/edit-commands.c:645 ../app/display/gimpdisplayshell-dnd.c:504
+#: ../app/actions/edit-commands.c:657 ../app/display/gimpdisplayshell-dnd.c:504
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Geruza berri gisa itsatsi da helburuko pixelak blokeatuta daudelako."
 
-#: ../app/actions/edit-commands.c:686
+#: ../app/actions/edit-commands.c:700
 msgid "There are no selected layers or channels to cut from."
 msgstr "Ez dago ebakitzeko geruza edo kanalik hautatuta."
 
-#: ../app/actions/edit-commands.c:691 ../app/actions/edit-commands.c:724
-#: ../app/actions/edit-commands.c:749
+#: ../app/actions/edit-commands.c:705 ../app/actions/edit-commands.c:738
+#: ../app/actions/edit-commands.c:763
 msgid "(Unnamed Buffer)"
 msgstr "(Buffer izengabea)"
 
-#: ../app/actions/edit-commands.c:719
+#: ../app/actions/edit-commands.c:733
 msgid "There are no selected layers or channels to copy from."
 msgstr "Ez dago kopiatzeko geruza edo kanalik hautatuta."
 
@@ -5453,7 +5463,7 @@ msgstr "Mugimendu-lausotze _lineala..."
 #: ../app/actions/filters-actions.c:493
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
-msgstr "_Zoomaren araberako mugimendu-lausotzea..."
+msgstr "_Zoom mugimendu-lausotzea..."
 
 #: ../app/actions/filters-actions.c:498
 msgctxt "filters-action"
@@ -5750,23 +5760,27 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Erakutsi berriro erabilitako azken pluginaren elkarrizketa-koadroa"
 
-#: ../app/actions/filters-actions.c:1126
+#: ../app/actions/filters-actions.c:1129
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Erre_pikatu \"%s\""
 
-#: ../app/actions/filters-actions.c:1127
+#: ../app/actions/filters-actions.c:1130
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Erakutsi _berriro \"%s\""
 
-#: ../app/actions/filters-actions.c:1165
+#: ../app/actions/filters-actions.c:1168
 msgid "Repeat Last"
 msgstr "Errepikatu azkena"
 
-#: ../app/actions/filters-actions.c:1167
+#: ../app/actions/filters-actions.c:1170
 msgid "Re-Show Last"
 msgstr "Erakutsi berriro azkena"
+
+#: ../app/actions/filters-actions.c:1173 ../app/actions/filters-actions.c:1175
+msgid "No last used filters"
+msgstr "Ez dago erabilitako azken iragazkien zerrendarik"
 
 #: ../app/actions/fonts-actions.c:44
 msgctxt "fonts-action"
@@ -10922,6 +10936,10 @@ msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
 msgstr "Kokatu fitxan eskuinean"
 
+#: ../app/actions/windows-actions.c:286 ../app/actions/windows-actions.c:288
+msgid "Single-window mode disabled"
+msgstr "Leiho bakarreko modua desgaitu da"
+
 #: ../app/actions/windows-commands.c:208
 msgid ""
 "The chosen recent dock contains a toolbox. Please close the currently open "
@@ -12665,12 +12683,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ainguratu hautapen mugikorra"
 
-#: ../app/core/core-enums.c:1274 ../app/core/gimp-edit.c:549
+#: ../app/core/core-enums.c:1274 ../app/core/gimp-edit.c:583
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Itsatsi"
 
-#: ../app/core/core-enums.c:1275 ../app/core/gimp-edit.c:789
+#: ../app/core/core-enums.c:1275 ../app/core/gimp-edit.c:837
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Ebaki"
@@ -13013,16 +13031,18 @@ msgstr "Kolore-historia"
 msgid "Updating tag cache"
 msgstr "Etiketen cachea eguneratzen"
 
-#: ../app/core/gimp-edit.c:87
-msgctxt "undo-type"
+#: ../app/core/gimp-edit.c:123
+#, c-format
 msgid "Cut Layer"
-msgstr "Moztu geruza"
+msgid_plural "Cut %d Layers"
+msgstr[0] "Moztu geruza"
+msgstr[1] "Moztu %d geruza"
 
-#: ../app/core/gimp-edit.c:361 ../app/core/gimpimage-new.c:513
+#: ../app/core/gimp-edit.c:412 ../app/core/gimpimage-new.c:513
 msgid "Pasted Layer"
 msgstr "Itsatsitako geruza"
 
-#: ../app/core/gimp-edit.c:806
+#: ../app/core/gimp-edit.c:854
 msgid "Global Buffer"
 msgstr "Buffer globala"
 
@@ -18306,19 +18326,19 @@ msgstr "Batutako _lagina"
 msgid "Access the image menu"
 msgstr "Atzitu irudiaren menua"
 
-#: ../app/display/gimpdisplayshell.c:629
+#: ../app/display/gimpdisplayshell.c:639
 msgid "Zoom image when window size changes"
 msgstr "Aldatu irudiaren zooma leihoaren tamaina aldatzean"
 
-#: ../app/display/gimpdisplayshell.c:658
+#: ../app/display/gimpdisplayshell.c:668
 msgid "Toggle Quick Mask"
 msgstr "Txandakatu maskara azkarra"
 
-#: ../app/display/gimpdisplayshell.c:673
+#: ../app/display/gimpdisplayshell.c:683
 msgid "Navigate the image display"
 msgstr "Nabigatu irudiaren ikuspegian"
 
-#: ../app/display/gimpdisplayshell.c:726 ../app/display/gimpdisplayshell.c:1403
+#: ../app/display/gimpdisplayshell.c:736 ../app/display/gimpdisplayshell.c:1415
 #: ../app/widgets/gimptoolbox.c:236
 msgid "Drop image files here to open them"
 msgstr "Jaregin irudien fitxategiak hemen irekitzeko"
@@ -18513,14 +18533,14 @@ msgstr "(garbia)"
 
 #: ../app/display/gimpdisplayshell-title.c:374
 #: ../app/display/gimpdisplayshell-title.c:383
-#: ../app/widgets/gimpactiongroup.c:981
+#: ../app/widgets/gimpactiongroup.c:982
 #: ../app/widgets/gimpbuffersourcebox.c:166
 #: ../app/widgets/gimpbuffersourcebox.c:296
 #: ../app/widgets/gimpdeviceinfo.c:1045 ../app/widgets/gimpdeviceinfo.c:1070
 msgid "(none)"
 msgstr "(bat ere ez)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1570
+#: ../app/display/gimpdisplayshell-tool-events.c:1593
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Hartutako geruza: '%s'"
@@ -20458,7 +20478,7 @@ msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Ñabardura eta saturazioa"
 
-#: ../app/pdb/drawable-color-cmds.c:532 ../app/pdb/plug-in-compat-cmds.c:1575
+#: ../app/pdb/drawable-color-cmds.c:532 ../app/pdb/plug-in-compat-cmds.c:1583
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Alderantzikatu"
@@ -20478,8 +20498,8 @@ msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Atalasea"
 
-#: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:364
-#: ../app/pdb/edit-cmds.c:449
+#: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:379
+#: ../app/pdb/edit-cmds.c:464
 msgid "All specified drawables must belong to the same image."
 msgstr "Zehaztutako marrazgai guztiek irudi berekoek izan behar dute."
 
@@ -20953,316 +20973,321 @@ msgstr "Aplikatu leiarrak"
 msgid "Autocrop image"
 msgstr "Moztu irudia automatikoki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:730
+#: ../app/pdb/plug-in-compat-cmds.c:731
 msgid "Autocrop layer"
 msgstr "Moztu geruza automatikoki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:777
+#: ../app/pdb/plug-in-compat-cmds.c:785
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
 msgstr "Tiratu HSV kontrastea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:931
+#: ../app/pdb/plug-in-compat-cmds.c:939
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "Tiratu kontrastea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:974
+#: ../app/pdb/plug-in-compat-cmds.c:982
 msgctxt "undo-type"
 msgid "Cartoon"
 msgstr "Komikia"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1053
+#: ../app/pdb/plug-in-compat-cmds.c:1061
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Kanal-nahasgailua"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1095
+#: ../app/pdb/plug-in-compat-cmds.c:1103
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Kolorea alfara"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1141
+#: ../app/pdb/plug-in-compat-cmds.c:1149
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr "'matrix' matrizeak %d kide besterik ez ditu, 25 izan behar ditu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1149
+#: ../app/pdb/plug-in-compat-cmds.c:1157
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr "'channels' matrizeak %d kide besterik ez ditu, 5 izan behar ditu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1221
+#: ../app/pdb/plug-in-compat-cmds.c:1229
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "Konboluzio-matrizea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1283
+#: ../app/pdb/plug-in-compat-cmds.c:1291
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Kubismoa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1328
+#: ../app/pdb/plug-in-compat-cmds.c:1336
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "Gurutzelarkatu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1407
+#: ../app/pdb/plug-in-compat-cmds.c:1415
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "Difrakzio-ereduak"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1544 ../app/pdb/plug-in-compat-cmds.c:1555
+#: ../app/pdb/plug-in-compat-cmds.c:1552 ../app/pdb/plug-in-compat-cmds.c:1563
 msgctxt "undo-type"
 msgid "DoG Edge Detect"
 msgstr "GDren ertz-detekzioa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1568 ../app/pdb/plug-in-compat-cmds.c:2866
+#: ../app/pdb/plug-in-compat-cmds.c:1576 ../app/pdb/plug-in-compat-cmds.c:2917
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normalizatu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1645
+#: ../app/pdb/plug-in-compat-cmds.c:1653
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "Ertza"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1697
+#: ../app/pdb/plug-in-compat-cmds.c:1705
 msgctxt "undo-type"
 msgid "Emboss"
 msgstr "Bozeldu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1740
+#: ../app/pdb/plug-in-compat-cmds.c:1748
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Grabatu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1813
+#: ../app/pdb/plug-in-compat-cmds.c:1821
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Kolore-trukea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1861
+#: ../app/pdb/plug-in-compat-cmds.c:1869
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Leiarren dirdaia"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1926
+#: ../app/pdb/plug-in-compat-cmds.c:1934
 msgctxt "undo-type"
 msgid "Fractal Trace"
 msgstr "Arrasto fraktala"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2110
+#: ../app/pdb/plug-in-compat-cmds.c:2118
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Beiratea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2163
+#: ../app/pdb/plug-in-compat-cmds.c:2171
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "HSV zarata"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2206
+#: ../app/pdb/plug-in-compat-cmds.c:2214
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Ilusioa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2243
+#: ../app/pdb/plug-in-compat-cmds.c:2251
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2319
+#: ../app/pdb/plug-in-compat-cmds.c:2327
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Leiar-distortsioa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2359
+#: ../app/pdb/plug-in-compat-cmds.c:2367
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Josturarik gabeko lauzak"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2426
+#: ../app/pdb/plug-in-compat-cmds.c:2434
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Labirintoa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2509 ../app/pdb/plug-in-compat-cmds.c:2593
+#: ../app/pdb/plug-in-compat-cmds.c:2517 ../app/pdb/plug-in-compat-cmds.c:2601
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Mugimendu-lausotzea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2694
+#: ../app/pdb/plug-in-compat-cmds.c:2648
+msgctxt "undo-type"
+msgid "Median Blur"
+msgstr "Mediana-lausotzea"
+
+#: ../app/pdb/plug-in-compat-cmds.c:2745
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mosaikoa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2738
+#: ../app/pdb/plug-in-compat-cmds.c:2789
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neona"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2826
+#: ../app/pdb/plug-in-compat-cmds.c:2877
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Prentsa-papera"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2928
+#: ../app/pdb/plug-in-compat-cmds.c:2979
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernoba"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2972 ../app/pdb/plug-in-compat-cmds.c:3040
+#: ../app/pdb/plug-in-compat-cmds.c:3023 ../app/pdb/plug-in-compat-cmds.c:3091
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Olioz pintatu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3130
+#: ../app/pdb/plug-in-compat-cmds.c:3181
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Paper-lauzak"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3179
+#: ../app/pdb/plug-in-compat-cmds.c:3230
 msgctxt "undo-type"
 msgid "Photocopy"
 msgstr "Fotokopia"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3220 ../app/pdb/plug-in-compat-cmds.c:3263
+#: ../app/pdb/plug-in-compat-cmds.c:3271 ../app/pdb/plug-in-compat-cmds.c:3314
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pixelizatu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3314
+#: ../app/pdb/plug-in-compat-cmds.c:3365
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plasma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3368
+#: ../app/pdb/plug-in-compat-cmds.c:3419
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Koordenatu polarrak"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3408
+#: ../app/pdb/plug-in-compat-cmds.c:3459
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Begi gorriak kentzea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3461
+#: ../app/pdb/plug-in-compat-cmds.c:3512
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Ausazko jaurtitzea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3514
+#: ../app/pdb/plug-in-compat-cmds.c:3565
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Ausazko aukeratzea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3567
+#: ../app/pdb/plug-in-compat-cmds.c:3618
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Ausazko urtzea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3642
+#: ../app/pdb/plug-in-compat-cmds.c:3693
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB zarata"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3712
+#: ../app/pdb/plug-in-compat-cmds.c:3763
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Izurtu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3837
+#: ../app/pdb/plug-in-compat-cmds.c:3888
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Sartu zarata"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3881
+#: ../app/pdb/plug-in-compat-cmds.c:3932
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Gaussen lausotze selektiboa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3925
+#: ../app/pdb/plug-in-compat-cmds.c:3976
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Berdindu erdizka"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3968
+#: ../app/pdb/plug-in-compat-cmds.c:4019
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Desplazatu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4071
+#: ../app/pdb/plug-in-compat-cmds.c:4122
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinua"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4119
+#: ../app/pdb/plug-in-compat-cmds.c:4170
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobela"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4167
+#: ../app/pdb/plug-in-compat-cmds.c:4218
 msgctxt "undo-type"
 msgid "Softglow"
 msgstr "Lausotze leuna"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4228
+#: ../app/pdb/plug-in-compat-cmds.c:4279
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Zarata solidoa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4272
+#: ../app/pdb/plug-in-compat-cmds.c:4323
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Sakabanatu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4313
+#: ../app/pdb/plug-in-compat-cmds.c:4364
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Atalase-alfa..."
 
-#: ../app/pdb/plug-in-compat-cmds.c:4359
+#: ../app/pdb/plug-in-compat-cmds.c:4410
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Fokuratu (desfokuratze-maskara)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4405
+#: ../app/pdb/plug-in-compat-cmds.c:4456
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Bideoa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4442
+#: ../app/pdb/plug-in-compat-cmds.c:4493
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Balioen alderantzikatzea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4549
+#: ../app/pdb/plug-in-compat-cmds.c:4600
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Balioen hedatzea"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4596
+#: ../app/pdb/plug-in-compat-cmds.c:4647
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Luzatu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4643
+#: ../app/pdb/plug-in-compat-cmds.c:4694
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Higatu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4706
+#: ../app/pdb/plug-in-compat-cmds.c:4757
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Uhinak"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4754
+#: ../app/pdb/plug-in-compat-cmds.c:4805
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Bihurritu eta tiratu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4806
+#: ../app/pdb/plug-in-compat-cmds.c:4857
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Haizea"
@@ -21453,11 +21478,11 @@ msgstr "Indexatua alfarik gabe"
 msgid "Indexed with alpha"
 msgstr "Indexatua alfarekin"
 
-#: ../app/plug-in/gimppluginprocedure.c:1088
+#: ../app/plug-in/gimppluginprocedure.c:1085
 msgid "This plug-in only works on the following layer types:"
 msgstr "Plugin honen honako geruza motetan soilik funtzionatzen du:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1307
+#: ../app/plug-in/gimppluginprocedure.c:1304
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -21465,7 +21490,7 @@ msgid ""
 msgstr "'%s'(r)en dei-errorea:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1319
+#: ../app/plug-in/gimppluginprocedure.c:1316
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -21696,7 +21721,7 @@ msgstr "Berr_ezarri kolorea"
 
 #: ../app/propgui/gimppropgui-motion-blur-circular.c:132
 msgid "Circular Motion Blur: "
-msgstr "Mugimendu zirkularraren lausotzea: "
+msgstr "Mugimendu-lausotze zirkularra: "
 
 #: ../app/propgui/gimppropgui-motion-blur-linear.c:126
 msgid "Linear Motion Blur: "
@@ -21704,7 +21729,7 @@ msgstr "Mugimendu-lausotze lineala: "
 
 #: ../app/propgui/gimppropgui-motion-blur-zoom.c:127
 msgid "Zoom Motion Blur: "
-msgstr "Zoom mugimenduaren lausotzea: "
+msgstr "Zoom mugimendu-lausotzea: "
 
 #: ../app/propgui/gimppropgui-newsprint.c:92
 msgid "White"
@@ -25264,7 +25289,7 @@ msgstr "Ezin izan da '%s'(e)tik bidea inportatu: %s"
 msgid "_Search:"
 msgstr "_Bilatu:"
 
-#: ../app/widgets/gimpactiongroup.c:978
+#: ../app/widgets/gimpactiongroup.c:979
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -25589,7 +25614,7 @@ msgstr "Bat ere ez"
 #: ../app/widgets/gimpcompressioncombobox.c:114
 msgctxt "compression"
 msgid "Best performance"
-msgstr "Performantziarik onena"
+msgstr "Errendimendurik onena"
 
 #: ../app/widgets/gimpcompressioncombobox.c:120
 msgctxt "compression"
@@ -27100,7 +27125,7 @@ msgid "Detach dialog from canvas"
 msgstr "Askatu elkarrizketa-koadroa oihaletik"
 
 #: ../app/widgets/gimppaletteeditor.c:257
-#: ../app/widgets/gimppaletteeditor.c:800
+#: ../app/widgets/gimppaletteeditor.c:801
 msgid "Undefined"
 msgstr "Definitu gabe"
 
