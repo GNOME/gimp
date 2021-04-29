@@ -75,6 +75,16 @@
      planned date, update the "date" in the <release> tag of the appdata
      in: desktop/org.gimp.GIMP.appdata.xml.in
 
+ ( ) Check that our Continuous Integration builds are working fine for
+     the branch we plan to release: https://gitlab.gnome.org/GNOME/gimp/-/pipelines
+     Check that all jobs are successful because we should not release
+     with code known not to build in some conditions.
+
+     Note: some jobs rely on our meson build which has race condition
+     bugs so if some jobs fail, you should check if it is because of
+     bugs in the code or issues with meson or the CI infrastructure.
+     When unsure, it is better to trigger a job retry.
+
  ( ) Bump the version number to an even micro in configure.ac and
      commit this change. It should be the version number of the
      release you are about to make. Releases always have even micro
@@ -87,7 +97,20 @@
  ( ) Bump the version in project() of meson.build identically as the
      version set in configure.ac.
 
- ( ) Make dist tarballs:
+ ( ) Commit the version bumps only and push these. Since there was no
+     code change since the last CI check, the CI should build fine once
+     again. Make sure of it.
+
+ ( ) Make dist tarballs [DEPRECATED - taken from CI jobs]
+
+     🛈 These instructions are left for information purpose and so that
+     maintainers remember the way to test locally that distribution
+     tarball creation works fine. Nevertheless this is already what the
+     continuous integration does (jobs `gimp-distcheck-debian` and
+     `sources` in particular) from a clean slate. So as we check the CI
+     success, this step is now unecessary. Moreover we should now always
+     publish the tarball prepared by the CI, not by a local build, for
+     purpose of process transparency.
 
      [ ] Start with a checkout of the GIMP tree. Make sure the
          checkout is up to date, clean from uncommitted changes.
@@ -117,35 +140,34 @@
      [ ] If 'make distcheck' passed and created tarballs, go to the
          next item.
 
- ( ) A successful run of the 'make distcheck' would create the final
-     dist tarballs. It will include a ChangeLog generated from the
-     'git log'. Note that we don't bother with any release commit,
-     that's what tags are for (see below).
+     [ ] A successful run of the 'make distcheck' would create the final
+         dist tarballs. It will include a ChangeLog generated from the
+         'git log'. Note that we don't bother with any release commit,
+         that's what tags are for (see below).
 
  ( ) Tag the release (don't forget to push the tag)
        git tag -s GIMP_2_x_y
        git push origin GIMP_2_x_y
 
-     TODO: determine what should be the policy regarding tag signing.
+     All release tags are signed in order for the authenticity and
+     origin of the release to be publicly verified.
 
- ( ) Bump the version number (past the tagged version) in configure.ac
-     to the next odd micro and commit this change. GIT versions always
-     have odd micro numbers.
+ ( ) Gitlab will run a new CI pipeline specifically for the tag (tag
+     pipelines build less jobs, only the necessary ones to create the
+     tarball). Once it is done, you will find a tarball, SHA256 and
+     SHA512 checksum files on the artifacts of the job `sources`. A
+     direct link, for instance for the GIMP_2_99_6 tag would be:
 
-     [ ] In configure.ac, modify gimp_micro_version accordingly.
-
-     [ ] In configure.ac, modify gimp_interface_age accordingly.
-
- ( ) Bump the version number in meson.build to the same value as in
-     configure.ac.
+     https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/GIMP_2_99_6/browse/?job=sources
 
  ( ) Publish dist tarballs:
 
      [ ] Use `sha256sum` and `sha512sum` to create checksums of the
          tarball (tar.bz2).
 
-     [ ] Upload the tarball (tar.bz2) to your home directory on
-         master.gnome.org.
+     [ ] Upload the 3 files (tar.bz2 tarball and 2 checksums) to
+         /gimp_ftp/incoming/ on master.gnome.org (do not upload to your
+         home first as it would mess up some SELinux flags).
 
      [ ] Copy the tarball to its final destination in the download
          area (/gimp_ftp/pub/gimp/). Really use "cp" not "mv" or
@@ -165,6 +187,17 @@
          the 'gimpftpadmin' group. This will allow other members of
          this group to correct mistakes and to update the
          0.0_LATEST-IS- file next time.
+
+ ( ) Bump the version number (past the tagged version) in configure.ac
+     to the next odd micro and commit this change. GIT versions always
+     have odd micro numbers.
+
+     [ ] In configure.ac, modify gimp_micro_version accordingly.
+
+     [ ] In configure.ac, modify gimp_interface_age accordingly.
+
+ ( ) Bump the version number in meson.build to the same value as in
+     configure.ac.
 
  ( ) Add the next version milestone on GIMP's Gitlab:
      https://gitlab.gnome.org/GNOME/gimp/-/milestones
