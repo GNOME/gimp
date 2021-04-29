@@ -43,6 +43,9 @@ static GimpProcedureConfig *
               gimp_image_procedure_create_config (GimpProcedure        *procedure,
                                                   GParamSpec          **args,
                                                   gint                  n_args);
+static gboolean
+            gimp_image_procedure_set_sensitivity (GimpProcedure        *procedure,
+                                                  gint                  sensitivity_mask);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpImageProcedure, gimp_image_procedure,
@@ -57,11 +60,12 @@ gimp_image_procedure_class_init (GimpImageProcedureClass *klass)
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
   GimpProcedureClass *procedure_class = GIMP_PROCEDURE_CLASS (klass);
 
-  object_class->constructed      = gimp_image_procedure_constructed;
-  object_class->finalize         = gimp_image_procedure_finalize;
+  object_class->constructed        = gimp_image_procedure_constructed;
+  object_class->finalize           = gimp_image_procedure_finalize;
 
-  procedure_class->run           = gimp_image_procedure_run;
-  procedure_class->create_config = gimp_image_procedure_create_config;
+  procedure_class->run             = gimp_image_procedure_run;
+  procedure_class->create_config   = gimp_image_procedure_create_config;
+  procedure_class->set_sensitivity = gimp_image_procedure_set_sensitivity;
 }
 
 static void
@@ -175,6 +179,24 @@ gimp_image_procedure_create_config (GimpProcedure  *procedure,
                                                              n_args);
 }
 
+static gboolean
+gimp_image_procedure_set_sensitivity (GimpProcedure *procedure,
+                                      gint           sensitivity_mask)
+{
+  GParamSpec *pspec;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_PROCEDURE (procedure), FALSE);
+
+  pspec = gimp_procedure_find_argument (procedure, "image");
+  g_return_val_if_fail (pspec, FALSE);
+
+  if (sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_NO_IMAGE)
+    pspec->flags |= GIMP_PARAM_NO_VALIDATE;
+  else
+    pspec->flags &= ~GIMP_PARAM_NO_VALIDATE;
+
+  return TRUE;
+}
 
 /*  public functions  */
 

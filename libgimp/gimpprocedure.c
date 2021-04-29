@@ -733,13 +733,22 @@ void
 gimp_procedure_set_sensitivity_mask (GimpProcedure *procedure,
                                      gint           sensitivity_mask)
 {
+  gboolean success = TRUE;
+
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  procedure->priv->sensitivity_mask = sensitivity_mask;
+  if (GIMP_PROCEDURE_GET_CLASS (procedure)->set_sensitivity)
+    success = GIMP_PROCEDURE_GET_CLASS (procedure)->set_sensitivity (procedure,
+                                                                     sensitivity_mask);
 
-  if (procedure->priv->installed)
-    _gimp_pdb_set_proc_sensitivity_mask (gimp_procedure_get_name (procedure),
-                                         procedure->priv->sensitivity_mask);
+  if (success)
+    {
+      procedure->priv->sensitivity_mask = sensitivity_mask;
+
+      if (procedure->priv->installed)
+        _gimp_pdb_set_proc_sensitivity_mask (gimp_procedure_get_name (procedure),
+                                             procedure->priv->sensitivity_mask);
+    }
 }
 
 /**
