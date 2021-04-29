@@ -85,6 +85,7 @@ GIMP_MAIN (JPEG_TYPE)
 
 gboolean         undo_touched      = FALSE;
 GimpDisplay     *display           = NULL;
+gboolean         separate_display  = FALSE;
 GimpImage       *orig_image_global = NULL;
 GimpDrawable    *drawable_global   = NULL;
 
@@ -470,6 +471,7 @@ jpeg_save (GimpProcedure        *procedure,
               }
 
             display = NULL;
+            separate_display = TRUE;
           }
           break;
 

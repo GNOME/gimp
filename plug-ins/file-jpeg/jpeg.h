@@ -56,6 +56,7 @@ extern GimpLayer *      preview_layer;
 extern gboolean         undo_touched;
 extern gboolean         load_interactive;
 extern GimpDisplay     *display;
+extern gboolean         separate_display;
 
 
 void      destroy_preview               (void);

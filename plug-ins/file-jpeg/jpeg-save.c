@@ -743,7 +743,7 @@ make_preview (GimpProcedureConfig *config)
 
       g_object_unref (file);
 
-      if (! display)
+      if (separate_display)
         display = gimp_display_new (preview_image);
     }
   else
