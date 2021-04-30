@@ -196,6 +196,9 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
           return return_vals;
         }
 
+      if (! display)
+        display = gimp_context_get_display (context);
+
       display_id = display ? gimp_display_get_id (display) : -1;
 
       icon_theme_dir = gimp_get_icon_theme_dir (manager->gimp);
