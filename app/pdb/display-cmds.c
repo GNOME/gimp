@@ -161,6 +161,28 @@ display_get_window_handle_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+display_present_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDisplay *display;
+
+  display = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      gimp_display_present (display);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 displays_flush_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
@@ -320,6 +342,29 @@ register_display_procs (GimpPDB *pdb)
                                                      "The native window handle or 0",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-display-present
+   */
+  procedure = gimp_procedure_new (display_present_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-display-present");
+  gimp_procedure_set_static_help (procedure,
+                                  "Present the specified display.",
+                                  "This procedure presents the specified display at the top of the display stack.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2021");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_display ("display",
+                                                        "display",
+                                                        "The display to present",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

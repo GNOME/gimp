@@ -184,6 +184,7 @@ EXPORTS
 	gimp_display_is_valid
 	gimp_display_name
 	gimp_display_new
+	gimp_display_present
 	gimp_displays_flush
 	gimp_displays_reconnect
 	gimp_dodgeburn

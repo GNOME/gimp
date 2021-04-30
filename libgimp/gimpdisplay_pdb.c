@@ -188,6 +188,42 @@ gimp_display_get_window_handle (GimpDisplay *display)
 }
 
 /**
+ * gimp_display_present:
+ * @display: The display to present.
+ *
+ * Present the specified display.
+ *
+ * This procedure presents the specified display at the top of the
+ * display stack.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_display_present (GimpDisplay *display)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DISPLAY, display,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-display-present",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_displays_flush:
  *
  * Flush all internal changes to the user interface

@@ -93,6 +93,8 @@ static void     gimp_display_get_property           (GObject             *object
                                                      GValue              *value,
                                                      GParamSpec          *pspec);
 
+static gboolean gimp_display_impl_present           (GimpDisplay         *display);
+
 static GimpProgress * gimp_display_progress_start   (GimpProgress        *progress,
                                                      gboolean             cancellable,
                                                      const gchar         *message);
@@ -132,10 +134,13 @@ G_DEFINE_TYPE_WITH_CODE (GimpDisplayImpl, gimp_display_impl, GIMP_TYPE_DISPLAY,
 static void
 gimp_display_impl_class_init (GimpDisplayImplClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
+  GimpDisplayClass *display_class = GIMP_DISPLAY_CLASS (klass);
 
   object_class->set_property = gimp_display_set_property;
   object_class->get_property = gimp_display_get_property;
+
+  display_class->present     = gimp_display_impl_present;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image",
@@ -206,6 +211,14 @@ gimp_display_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_display_impl_present (GimpDisplay *display)
+{
+  gimp_display_shell_present (gimp_display_get_shell (display));
+
+  return TRUE;
 }
 
 static GimpProgress *

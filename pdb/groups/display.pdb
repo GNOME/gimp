@@ -117,6 +117,29 @@ CODE
     );
 }
 
+sub display_present {
+    $blurb = 'Present the specified display.';
+
+    $help = <<'HELP';
+This procedure presents the specified display at the top of the display stack.
+HELP
+
+    &jehan_pdb_misc('2021', '3.0');
+
+    @inargs = (
+	{ name => 'display', type => 'display',
+	  desc => 'The display to present' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_display_present (display);
+}
+CODE
+    );
+}
+
 sub display_get_window_handle {
     $blurb = 'Get a handle to the native window for an image display.';
 
@@ -217,7 +240,8 @@ CODE
             display_new
             display_delete
             display_get_window_handle
-	    displays_flush
+            display_present
+            displays_flush
             displays_reconnect);
 
 %exports = (app => [@procs], lib => [@procs]);
