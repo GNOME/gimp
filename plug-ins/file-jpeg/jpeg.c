@@ -625,9 +625,14 @@ jpeg_save (GimpProcedure        *procedure,
        * deletes the image.
        */
       if (display)
-        gimp_display_delete (display);
+        {
+          gimp_display_delete (display);
+          gimp_display_present (gimp_default_display ());
+        }
       else
-        gimp_image_delete (image);
+        {
+          gimp_image_delete (image);
+        }
 
       g_free (drawables);
     }
