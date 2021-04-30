@@ -45,6 +45,7 @@
 #include "script-fu-compat.h"
 
 #include "scheme-wrapper.h"
+#include "scheme-marshal.h"
 
 
 #undef cons
@@ -538,6 +539,8 @@ script_fu_marshal_procedure_call (scheme   *sc,
   gchar           *proc_name;
   GParamSpec     **arg_specs;
   gint             n_arg_specs;
+  gint             actual_arg_count;
+  gint             consumed_arg_count = 0;
   gchar            error_str[1024];
   gint             i;
   pointer          return_val = sc->NIL;
@@ -581,44 +584,34 @@ script_fu_marshal_procedure_call (scheme   *sc,
     }
 
   arg_specs = gimp_procedure_get_arguments (procedure, &n_arg_specs);
+  actual_arg_count = sc->vptr->list_length (sc, a) - 1;
 
-  /*  Check the supplied number of arguments  */
+  /* Check the supplied number of arguments.
+   * This only gives warnings to the console.
+   * It does not ensure that the count of supplied args equals the count of formal args.
+   * Subsequent code must not assume that.
+   *
+   * When too few supplied args, when permissive, scriptfu or downstream machinery
+   * can try to provide missing args e.g. defaults.
+   *
+   * Extra supplied args can be discarded.
+   * Formerly, this was a deprecated behavior depending on "permissive".
+   */
   {
-    int actual_arg_count = sc->vptr->list_length (sc, a) - 1;
-
-    if (n_arg_specs == 0)
+    if (actual_arg_count > n_arg_specs)
       {
-        if (actual_arg_count > 0 )
-          {
-            if (permissive)
-              {
-                /* Warn but permit extra args to a procedure that takes zero args (nullary)
-                 * Deprecated behaviour, may go away.
-                 */
-                g_warning ("in script, permitting too many args to %s", proc_name);
-              }
-            else
-              {
-                g_snprintf (error_str, sizeof (error_str),
-                            "in script, arguments passed to %s which takes no arguments",
-                            proc_name);
-                return script_error (sc, error_str, 0);
-              }
-          }
-          /* else both actual and formal counts zero */
+        /* Warn, but permit extra args. Will discard args from script.*/
+        g_warning ("in script, permitting too many args to %s", proc_name);
       }
-    else /* formal arg count > 0 */
+    else if (actual_arg_count < n_arg_specs)
       {
-        if ( actual_arg_count != n_arg_specs)
-          {
-            /* Not permitted. We don't say whether too few or too many. */
-            g_snprintf (error_str, sizeof (error_str),
-                        "in script, wrong number of arguments for %s (expected %d but received %d)",
-                        proc_name, n_arg_specs, actual_arg_count);
-            return script_error (sc, error_str, 0);
-          }
-        /* else matching counts of args. */
+        /* Warn, but permit too few args.
+         * Scriptfu or downstream might provide missing args.
+         * It is author friendly to continue to parse the script for type errors.
+         */
+        g_warning ("in script, permitting too few args to %s", proc_name);
       }
+    /* else equal counts of args. */
   }
 
   /*  Marshall the supplied arguments  */
@@ -632,7 +625,20 @@ script_fu_marshal_procedure_call (scheme   *sc,
       pointer     vector;   /* !!! list or vector */
       gint        j;
 
-      a = sc->vptr->pair_cdr (a);
+      consumed_arg_count++;
+
+      if (consumed_arg_count > actual_arg_count)
+        {
+          /* Exhausted supplied arguments before formal specs. */
+
+          /* Say formal type of first missing arg. */
+          g_warning ("Missing arg type: %s", g_type_name (G_PARAM_SPEC_VALUE_TYPE (arg_spec)));
+
+          /* Break loop over formal specs. Continuation is to call PDB with partial args. */
+          break;
+        }
+      else
+        a = sc->vptr->pair_cdr (a);  /* advance pointer to next arg in list. */
 
       g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (arg_spec));
 
@@ -760,10 +766,11 @@ script_fu_marshal_procedure_call (scheme   *sc,
             return script_type_error (sc, "numeric", i, proc_name);
           else
             {
-              GimpDrawable *drawable =
-                gimp_drawable_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+              gint id = sc->vptr->ivalue (sc->vptr->pair_car (a));
 
-              g_value_set_object (&value, drawable);
+              pointer error = marshal_ID_to_drawable(sc, a, id, &value);
+              if (error)
+                return error;
             }
         }
       else if (GIMP_VALUE_HOLDS_VECTORS (&value))
@@ -1113,6 +1120,25 @@ script_fu_marshal_procedure_call (scheme   *sc,
               g_value_set_boxed (&value, &parasite);
             }
         }
+      else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (&value))
+        {
+          vector = sc->vptr->pair_car (a);
+
+          if (sc->vptr->is_vector (vector))
+            {
+              pointer error = marshal_vector_to_drawable_array (sc, vector, &value);
+              if (error)
+                return error;
+            }
+          else
+              return script_type_error (sc, "vector", i, proc_name);
+        }
+      else if (G_VALUE_TYPE (&value) == G_TYPE_FILE)
+        {
+          if (! sc->vptr->is_string (sc->vptr->pair_car (a)))
+            return script_type_error (sc, "string for path", i, proc_name);
+          marshal_path_string_to_gfile (sc, a, &value);
+        }
       else if (G_VALUE_TYPE (&value) == GIMP_TYPE_PDB_STATUS_TYPE)
         {
           /* A PDB procedure signature wrongly requires a status. */
@@ -1215,8 +1241,31 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
           g_debug ("Return value %d is type %s", i+1, G_VALUE_TYPE_NAME (value));
 
-          if (G_VALUE_HOLDS_OBJECT (value))
+          /* Order is important. GFile before GIMP objects. */
+          if (G_VALUE_TYPE (value) == G_TYPE_FILE)
             {
+              gchar *parsed_filepath = marshal_returned_gfile_to_string (value);
+
+              if (parsed_filepath)
+                {
+                  g_debug ("PDB procedure returned GFile '%s'", parsed_filepath);
+                  /* copy string into interpreter state. */
+                  return_val = sc->vptr->cons (sc, sc->vptr->mk_string (sc, parsed_filepath), return_val);
+                  g_free (parsed_filepath);
+                }
+              else
+                {
+                  g_warning ("PDB procedure failed to return a valid GFile");
+                  return_val = sc->vptr->cons (sc, sc->vptr->mk_string (sc, ""), return_val);
+                }
+              /* Ensure return_val holds a string, possibly empty. */
+            }
+          else if (G_VALUE_HOLDS_OBJECT (value))
+            {
+              /* G_VALUE_HOLDS_OBJECT only ensures value derives from GObject.
+               * Could be a GIMP or a GLib type.
+               * Here we handle GIMP types, which all have an id property.
+               */
               GObject *object = g_value_get_object (value);
               gint     id     = -1;
 
@@ -1227,8 +1276,11 @@ script_fu_marshal_procedure_call (scheme   *sc,
               /* id is -1 when the gvalue had no GObject*,
                * or the referenced object had no property "id".
                * This can be an undetected fault in the called procedure.
-               * But it is not an error in the script.
+               * It is not necessarily an error in the script.
                */
+              if (id == -1)
+                g_warning("PDB procedure returned NULL GIMP object or non-GIMP object.");
+
               g_debug ("PDB procedure returned object ID: %i", id);
 
               /* Scriptfu stores object IDs as int. */
@@ -1432,6 +1484,11 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   g_debug ("size %d", v->size);
                   g_debug ("data '%.*s'", v->size, (gchar *) v->data);
                 }
+            }
+          else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
+            {
+              pointer vector = marshal_returned_object_array_to_vector (sc, value);
+              return_val = sc->vptr->cons (sc, vector, return_val);
             }
           else if (G_VALUE_TYPE (&value) == GIMP_TYPE_PDB_STATUS_TYPE)
             {

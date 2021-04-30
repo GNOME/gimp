@@ -8,6 +8,7 @@ plugin_name = 'script-fu'
 
 plugin_sources = [
   'scheme-wrapper.c',
+  'scheme-marshal.c',
   'script-fu-console.c',
   'script-fu-eval.c',
   'script-fu-interface.c',
