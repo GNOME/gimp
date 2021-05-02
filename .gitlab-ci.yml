@@ -186,6 +186,18 @@ gimp-clang-debian:
 
 ## WINDOWS 64-bit CI ##
 
+gimp-native-win64:
+  variables:
+    MSYSTEM: "MINGW64"
+    CHERE_INVOKING: "yes"
+  stage: gimp
+  tags:
+    - win32-ps
+  script:
+    - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/build-msys2.sh"
+  needs: []
+
 deps-win64:
   rules:
     - if: '$CI_COMMIT_TAG == null'
