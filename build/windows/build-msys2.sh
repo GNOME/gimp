@@ -8,6 +8,22 @@ else
     export MSYS2_ARCH="x86_64"
 fi
 
+# Why do we even have to remove these manually? The whole thing is
+# messed up, but it looks like the Gitlab runner fails to clean properly
+# (it spews a bunch of "failed to remove" warnings at runner start, then
+# ends with a "error: failed to commit transaction (conflicting files)"
+# listing the various files it failed to remove).
+# Might be tied to: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1839
+rm -f /c/msys64/mingw64/bin/libpcre-1.dll
+rm -f /c/msys64/mingw64/bin/libgio-2.0-0.dll
+rm -f /c/msys64/mingw64/bin/libglib-2.0-0.dll
+rm -f /c/msys64/mingw64/bin/libgmodule-2.0-0.dll
+rm -f /c/msys64/mingw64/bin/libgobject-2.0-0.dll
+rm -f /c/msys64/mingw64/bin/libpng16-16.dll
+rm -f /c/msys64/mingw64/bin/gdk-pixbuf-pixdata.exe
+rm -f /c/msys64/mingw64/bin/libgdk_pixbuf-2.0-0.dll
+rm -f /c/msys64/mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-png.dll
+
 # Update everything
 pacman --noconfirm -Suy
 
