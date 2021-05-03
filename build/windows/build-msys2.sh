@@ -75,11 +75,6 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-vala \
     mingw-w64-$MSYS2_ARCH-xpm-nox
 
-mkdir -p _ccache
-export CCACHE_BASEDIR="$(pwd)"
-export CCACHE_DIR="${CCACHE_BASEDIR}/_ccache"
-export CC="ccache gcc"
-
 export GIT_DEPTH=1
 export GIMP_PREFIX=`realpath ~/_install`
 export PATH="$GIMP_PREFIX/bin:$PATH"
@@ -92,17 +87,26 @@ export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/mingw64/share/"
 git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
 git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
-cd _babl
-meson -Dprefix="${GIMP_PREFIX}" -Dwith-docs=false _build
-ninja -v -C _build
-ninja -C _build install
-cd ../_gegl
-meson -Dprefix="${GIMP_PREFIX}" -Ddocs=false _build
-ninja -C _build
-ninja -C _build install
-cd ..
+mkdir _babl/_build
+cd _babl/_build
+meson -Dprefix="${GIMP_PREFIX}" -Dwith-docs=false ..
+ninja
+ninja install
+
+mkdir ../../_gegl/_build
+cd ../../_gegl/_build
+meson -Dprefix="${GIMP_PREFIX}" -Ddocs=false ..
+ninja
+ninja install
+cd ../..
 
 # Build
+
+mkdir -p _ccache
+export CCACHE_BASEDIR="$(pwd)"
+export CCACHE_DIR="${CCACHE_BASEDIR}/_ccache"
+export CC="ccache gcc"
+
 ccache --zero-stats
 ccache --show-stats
 

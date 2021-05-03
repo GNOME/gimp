@@ -196,6 +196,15 @@ gimp-native-win64:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/build-msys2.sh"
+  artifacts:
+    name: "GIMP-Win-native-${CI_COMMIT_SHORT_SHA}"
+    when: always
+    expire_in: 2 days
+    paths:
+    - _install
+  cache:
+    paths:
+    - _ccache/
   needs: []
 
 deps-win64:
