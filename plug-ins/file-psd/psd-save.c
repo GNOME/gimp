@@ -1512,7 +1512,9 @@ write_pixel_data (FILE     *fd,
 
       if (ChanLenPosition)    /* Update total compressed length */
         {
-          fseek (fd, ChanLenPosition[bytes], SEEK_SET); /*+bytes OR SOMETHING*/
+          /* Mask follows other components so use that as offset. */
+          fseek (fd, ChanLenPosition[components], SEEK_SET);
+
           write_gint32 (fd, len, "channel data length");
           IFDBG printf ("\t\tUpdating data len to %d, at %ld\n", len, ftell(fd));
         }
