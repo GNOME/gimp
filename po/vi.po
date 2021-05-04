@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-26 00:20+0000\n"
-"PO-Revision-Date: 2021-04-26 09:17+0700\n"
+"POT-Creation-Date: 2021-05-02 17:17+0000\n"
+"PO-Revision-Date: 2021-05-04 14:18+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -789,7 +789,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
-msgstr ""
+msgstr "Xem và sửa các siêu dữ liệu Exif, XMP, IPTC, và DICOM"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid "Basic HiDPI support: automatically or user-selected icon size"
@@ -5189,7 +5189,7 @@ msgstr "Ánh _xạ"
 #: ../app/actions/filters-actions.c:85
 msgctxt "filters-action"
 msgid "_Render"
-msgstr "_Vẽ"
+msgstr "Tô _vẽ"
 
 #: ../app/actions/filters-actions.c:87
 msgctxt "filters-action"
@@ -5499,7 +5499,7 @@ msgstr ""
 #, fuzzy
 msgctxt "filters-action"
 msgid "_Focus Blur..."
-msgstr "Che mờ tiêu"
+msgstr "Mờ do mất nét: "
 
 #: ../app/actions/filters-actions.c:363
 #, fuzzy
@@ -5535,10 +5535,9 @@ msgid "_Grid..."
 msgstr "_Lưới…"
 
 #: ../app/actions/filters-actions.c:388
-#, fuzzy
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr "Tần số thôi của một bộ lọc thông cao áp dụng cho dữ liệu âm thanh"
+msgstr "Lọc _cao..."
 
 #: ../app/actions/filters-actions.c:393
 #, fuzzy
@@ -5548,8 +5547,6 @@ msgid "Hue-_Chroma..."
 msgstr "Kế Vectơ Màu Sắc"
 
 #: ../app/actions/filters-actions.c:398
-#, fuzzy
-#| msgid "Hue-_Saturation..."
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "_Sắc màu-Độ bão hòa..."
@@ -5746,12 +5743,9 @@ msgid "_Normal Map..."
 msgstr "Bản đồ _Thường…"
 
 #: ../app/actions/filters-actions.c:568
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "_Offset..."
 msgctxt "filters-action"
 msgid "_Offset..."
-msgstr "_Offset…"
+msgstr "_Dịch…"
 
 #: ../app/actions/filters-actions.c:573
 #, fuzzy
@@ -5760,11 +5754,9 @@ msgid "Oili_fy..."
 msgstr "Tranh _sơn dầu..."
 
 #: ../app/actions/filters-actions.c:578
-#, fuzzy
-#| msgid "Transform Direction"
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
-msgstr "Chụp toàn cảnh"
+msgstr "chiếu _toàn cảnh..."
 
 #: ../app/actions/filters-actions.c:583
 msgctxt "filters-action"
@@ -5810,7 +5802,7 @@ msgstr "_Reinhard 2005..."
 #, fuzzy
 msgctxt "filters-action"
 msgid "RGB _Clip..."
-msgstr "_RGB"
+msgstr "Xén thành:"
 
 #: ../app/actions/filters-actions.c:628
 msgctxt "filters-action"
@@ -6335,7 +6327,7 @@ msgstr "Sao lại đoạn"
 
 #: ../app/actions/gradient-editor-commands.c:392
 msgid "Replicate Gradient Segment"
-msgstr "Sao lại đoạn dốc"
+msgstr "Sao lại đoạn dốc màu"
 
 #: ../app/actions/gradient-editor-commands.c:396
 msgid "Replicate Selection"
@@ -6343,7 +6335,7 @@ msgstr "Sao lại vùng chọn"
 
 #: ../app/actions/gradient-editor-commands.c:397
 msgid "Replicate Gradient Selection"
-msgstr "Sao lại vùng chọn dốc"
+msgstr "Sao lại vùng chọn dốc màu"
 
 #: ../app/actions/gradient-editor-commands.c:410
 msgid "_Replicate"
@@ -7130,7 +7122,7 @@ msgstr "_Mặt nạ"
 #: ../app/actions/layers-actions.c:78
 msgctxt "layers-action"
 msgid "Tr_ansparency"
-msgstr "Độ tr_ong suốt"
+msgstr "Tr_ong suốt"
 
 #: ../app/actions/layers-actions.c:80
 msgctxt "layers-action"
@@ -7579,7 +7571,7 @@ msgstr "Đặt không gian tổng hợp mặc định cho hộp thoại 'Lớp m
 #, fuzzy
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
-msgstr "Phương thức tổng hợp: Phép giao"
+msgstr "Phương thức tổng hợp lớp: Xén vừa lớp"
 
 #: ../app/actions/layers-actions.c:404
 msgctxt "layers-action"
@@ -10865,7 +10857,7 @@ msgstr "Hiển thị mục đích _vẽ:"
 #| msgid "_Delete Color"
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
-msgstr "Sắc kế tương đối"
+msgstr "Đo màu tượng ứng"
 
 #: ../app/actions/view-actions.c:552
 #, fuzzy
@@ -11569,23 +11561,19 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:113
 msgid "Snap to guides by default in new image windows."
-msgstr ""
+msgstr "Dính đường dẫn hướng theo mặc định trong cửa sổ ảnh mới."
 
 #: ../app/config/gimprc-blurbs.h:116
-#, fuzzy
-#| msgid "Sets the text to appear in image window titles."
 msgid "Snap to the grid by default in new image windows."
-msgstr "Đặt chuỗi sẽ xuất hiện trong tựa đề cửa sổ ảnh."
+msgstr "Dính lưới theo mặc định trong cửa sổ ảnh mới."
 
 #: ../app/config/gimprc-blurbs.h:119
 msgid "Snap to the canvas edges by default in new image windows."
-msgstr ""
+msgstr "Dính cạnh vùng vẽ theo mặc định trong cửa sổ ảnh mới."
 
 #: ../app/config/gimprc-blurbs.h:122
-#, fuzzy
-#| msgid "Sets the text to appear in image window titles."
 msgid "Snap to the active path by default in new image windows."
-msgstr "Đặt chuỗi sẽ xuất hiện trong tựa đề cửa sổ ảnh."
+msgstr "Dính đường dẫn hoạt động theo mặc định trong cửa sổ ảnh mới."
 
 #: ../app/config/gimprc-blurbs.h:125
 msgid ""
@@ -11842,9 +11830,8 @@ msgstr ""
 "tạo."
 
 #: ../app/config/gimprc-blurbs.h:355
-#, fuzzy
 msgid "Sets the default quick mask color."
-msgstr "Đặt màu mặc điịnh cho Mặt nạ Nhanh"
+msgstr "Đặt màu mặc điịnh cho Mặt nạ Nhanh."
 
 #: ../app/config/gimprc-blurbs.h:358
 #, fuzzy
@@ -12236,9 +12223,8 @@ msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "Đặt kiểu đổ màu mặc định cho hộp thoại 'Lớp mới'."
 
 #: ../app/config/gimprc-blurbs.h:595
-#, fuzzy
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
-msgstr "Đặt kiểu đổ màu mặc định cho hộp thoại 'Lớp mới'."
+msgstr "Đặt kiểu đổ màu mặc định cho hộp thoại 'Cỡ biên Lớp'."
 
 #: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
@@ -12432,8 +12418,6 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Khi bật thì bấm phím F1 sẽ mở bộ duyệt trợ giúp."
 
 #: ../app/config/gimprc-blurbs.h:723
-#, fuzzy
-#| msgid "When enabled, menus can be torn off."
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "Khi bật thì dùng OpenCL cho một số thao tác."
 
@@ -13227,7 +13211,7 @@ msgstr "Thay đổi về độ phân giải ảnh"
 #: ../app/core/core-enums.c:1288
 msgctxt "undo-type"
 msgid "Change metadata"
-msgstr "Đổi siêu dữ liệu"
+msgstr "Thay đổi siêu dữ liệu"
 
 #: ../app/core/core-enums.c:1289
 msgctxt "undo-type"
@@ -13508,12 +13492,10 @@ msgid "Updating tag cache"
 msgstr "Cập nhật vùng nhớ đệm của thẻ"
 
 #: ../app/core/gimp-edit.c:123
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Cut Layer"
+#, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
-msgstr[0] "Cắt lớp"
+msgstr[0] "Cắt %d lớp"
 
 #: ../app/core/gimp-edit.c:412 ../app/core/gimpimage-new.c:513
 msgid "Pasted Layer"
@@ -20238,7 +20220,7 @@ msgstr "Đè"
 #, fuzzy
 msgctxt "layer-mode"
 msgid "LCh Hue"
-msgstr "CIE LCh"
+msgstr "LCh"
 
 #: ../app/operations/operations-enums.c:244
 #, fuzzy
@@ -20256,7 +20238,7 @@ msgstr "Màu LCh"
 #| msgid "_Lightness:"
 msgctxt "layer-mode"
 msgid "LCh Lightness"
-msgstr "Độ _nhạt:"
+msgstr "Độ sáng"
 
 #: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
@@ -20418,7 +20400,7 @@ msgstr "Chỉ làm tối"
 #| msgid "Darken only"
 msgctxt "layer-mode"
 msgid "Luma darken only"
-msgstr "Chỉ làm tối"
+msgstr "Độ Sáng"
 
 #: ../app/operations/operations-enums.c:277
 #, fuzzy
@@ -20996,7 +20978,8 @@ msgstr "Tỷ lệ hình thể"
 
 #: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:114
 #: ../app/widgets/gimpbrusheditor.c:205
-#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:176
+#: ../app/widgets/gimpbrushfactoryview.c:103
+#: ../app/widgets/gimpgrideditor.c:176
 msgid "Spacing"
 msgstr "Khoảng cách"
 
@@ -21269,8 +21252,6 @@ msgid "Desaturate"
 msgstr "Khử bão hòa"
 
 #: ../app/pdb/drawable-color-cmds.c:497
-#, fuzzy
-#| msgid "Hue-Saturation"
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Sắc màu-Độ bão hòa"
@@ -21359,16 +21340,13 @@ msgid "Paint dynamics '%s' is not editable"
 msgstr "Sơn năng động “%s” không được phép sửa"
 
 #: ../app/pdb/gimppdb-utils.c:179
-#, fuzzy, c-format
-#| msgid "Paint dynamics '%s' is not editable"
+#, c-format
 msgid "Paint dynamics '%s' is not renamable"
-msgstr "Sơn năng động “%s” không được phép sửa"
+msgstr "Sơn năng động “%s” không được phép đổi tên"
 
 #: ../app/pdb/gimppdb-utils.c:200
-#, fuzzy
-#| msgid "Invalid empty brush name"
 msgid "Invalid empty MyPaint brush name"
-msgstr "Tên chỗi vẽ trống và sai"
+msgstr "Tên chỗi vẽ MyPaint để trống và sai"
 
 #: ../app/pdb/gimppdb-utils.c:209
 #, c-format
@@ -21376,16 +21354,14 @@ msgid "MyPaint brush '%s' not found"
 msgstr "Không thể tìm thấy chổi vẽ MyPaint '%s'"
 
 #: ../app/pdb/gimppdb-utils.c:215
-#, fuzzy, c-format
-#| msgid "Brush '%s' is not editable"
+#, c-format
 msgid "MyPaint brush '%s' is not editable"
-msgstr "Không sửa được chổi '%s'"
+msgstr "Chổi MyPaint '%s' là không sửa được"
 
 #: ../app/pdb/gimppdb-utils.c:222
-#, fuzzy, c-format
-#| msgid "Brush '%s' is not editable"
+#, c-format
 msgid "MyPaint brush '%s' is not renamable"
-msgstr "Không thể đổi tên chổi “%s”"
+msgstr "Chổi MyPaint “%s” là không đổi tên được"
 
 #: ../app/pdb/gimppdb-utils.c:242
 msgid "Invalid empty pattern name"
@@ -21768,7 +21744,6 @@ msgid "Data label '%s' is not a canonical identifier"
 msgstr "Nhãn: %s, Định danh đĩa: %s"
 
 #: ../app/pdb/plug-in-compat-cmds.c:270
-#, fuzzy
 msgctxt "undo-type"
 msgid "Bump Map"
 msgstr "Ánh xạ lồi lõm"
@@ -21779,7 +21754,6 @@ msgid "Displace"
 msgstr "Dịch"
 
 #: ../app/pdb/plug-in-compat-cmds.c:376
-#, fuzzy
 msgctxt "undo-type"
 msgid "Gaussian Blur"
 msgstr "Làm nhoè Gauss"
@@ -22242,7 +22216,7 @@ msgstr "gặp lỗi khi đọc tập tin gõ « %s»: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Gặp chuỗi định dạng nhị phân sai trong tập tin thông dịch %s"
 
-#: ../app/plug-in/gimpplugin.c:231
+#: ../app/plug-in/gimpplugin.c:236
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -22288,8 +22262,8 @@ msgid "Plug-in Environment"
 msgstr "Môi trường phần bổ sung"
 
 #: ../app/plug-in/gimppluginmanager-call.c:187
-#: ../app/plug-in/gimppluginmanager-call.c:246
-#: ../app/plug-in/gimppluginmanager-call.c:342
+#: ../app/plug-in/gimppluginmanager-call.c:249
+#: ../app/plug-in/gimppluginmanager-call.c:345
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr ""
@@ -22537,26 +22511,20 @@ msgid "Contours"
 msgstr "Đường bao"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:88
-#, fuzzy
-#| msgctxt "convolve-type"
-#| msgid "Sharpen"
 msgid "Sharp Edges"
-msgstr "Cạnh Bén"
+msgstr "Làm sắc cạnh"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:98
 msgid "Other Options"
 msgstr "Các tùy chọn khác"
 
 #: ../app/propgui/gimppropgui-focus-blur.c:199
-#, fuzzy
-#| msgid "Other Options"
 msgid "Geometry Options"
 msgstr "Tùy chọn Hình học"
 
 #: ../app/propgui/gimppropgui-focus-blur.c:226
-#, fuzzy
 msgid "Focus Blur: "
-msgstr "Che mờ tiêu"
+msgstr "Mờ do mất nét: "
 
 #: ../app/propgui/gimppropgui-generic.c:187
 msgid "Pick coordinates from the image"
@@ -22607,8 +22575,6 @@ msgid "Adjust Selected Color"
 msgstr "Chỉnh màu đã chọn"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:240
-#, fuzzy
-#| msgid "_Hue:"
 msgid "_Hue"
 msgstr "_Sắc màu"
 
@@ -22669,7 +22635,7 @@ msgstr "Hiệu ứng"
 #, fuzzy
 #| msgid "Transform Direction"
 msgid "Panorama Projection: "
-msgstr "Chụp toàn cảnh"
+msgstr "chiếu _toàn cảnh"
 
 #: ../app/propgui/gimppropgui-recursive-transform.c:259
 msgid "Add transform"
@@ -22711,16 +22677,17 @@ msgid "Supernova: "
 msgstr "Siêu tân tinh"
 
 #: ../app/propgui/gimppropgui-utils.c:64
+#, fuzzy
 msgid "1,700 K – Match flame"
-msgstr ""
+msgstr "1,850 K – Ngọn nén, hoàng hôn/bình minh"
 
 #: ../app/propgui/gimppropgui-utils.c:65
 msgid "1,850 K – Candle flame, sunset/sunrise"
-msgstr ""
+msgstr "1,850 K – Ngọn nén, hoàng hôn/bình minh"
 
 #: ../app/propgui/gimppropgui-utils.c:66
 msgid "2,700 K - Soft (or warm) LED lamps"
-msgstr ""
+msgstr "2,700 K - Đèn LED mềm (hoặc ấm)"
 
 #: ../app/propgui/gimppropgui-utils.c:67
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
@@ -24042,7 +24009,7 @@ msgstr "Chế độ trực tiếp"
 #: ../app/tools/gimpgradientoptions.c:137
 #, fuzzy
 msgid "Commit gradient instantly"
-msgstr "Độ _dốc"
+msgstr "Số lượt điền được ngay khi loại trừ : "
 
 #: ../app/tools/gimpgradientoptions.c:143
 msgid "Modify active gradient"
@@ -25779,7 +25746,7 @@ msgstr "Không có lớp cần chuyển dạng."
 #, fuzzy
 #| msgid "The active layer's pixels are locked."
 msgid "A selected layer's position and size are locked."
-msgstr "Vị trí của lớp đã chọn đang bị khóa."
+msgstr "Vị trí của lớp đã chọn hiện đang bị khóa."
 
 #: ../app/tools/gimptransformtool.c:698
 #, fuzzy
@@ -26413,7 +26380,7 @@ msgid "Spikes"
 msgstr "Gai"
 
 #: ../app/widgets/gimpbrusheditor.c:210
-#: ../app/widgets/gimpbrushfactoryview.c:85
+#: ../app/widgets/gimpbrushfactoryview.c:107
 msgid "Percentage of width of brush"
 msgstr "Phần trăm của độ rộng chổi"
 
@@ -28195,7 +28162,7 @@ msgstr "%g × %g %s"
 #| msgid "Indexed Color Conversion"
 msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
-msgstr[0] "Dạng thức cho ảnh màu (gồm có đơn sắc)"
+msgstr[0] "Màu chỉ mục"
 
 #: ../app/widgets/gimpitemtreeview.c:783
 msgid "Lock:"
@@ -28260,14 +28227,14 @@ msgstr "Sửa màu bảng chọn"
 msgid "Edit Color Palette Entry"
 msgstr "Sửa mục tin bảng chọn màu"
 
-#: ../app/widgets/gimppdbdialog.c:282
+#: ../app/widgets/gimppdbdialog.c:285
 #, fuzzy
 #| msgid ""
 #| "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgid "The corresponding plug-in may have crashed."
 msgstr "Không thể chạy Callback %s. bổ sung tương ứng có lẽ đã đổ vỡ."
 
-#: ../app/widgets/gimppdbdialog.c:286
+#: ../app/widgets/gimppdbdialog.c:289
 #, c-format
 msgid ""
 "Unable to run %s callback.\n"
@@ -28879,7 +28846,7 @@ msgstr "Mô tả"
 #: ../app/widgets/widgets-enums.c:215
 msgctxt "tab-style"
 msgid "Icon & text"
-msgstr "Biểu tượng và & chữ"
+msgstr "Biểu tượng & chữ"
 
 #: ../app/widgets/widgets-enums.c:216
 msgctxt "tab-style"
