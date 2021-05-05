@@ -69,7 +69,12 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-vala \
     mingw-w64-$MSYS2_ARCH-xpm-nox
 
-export GIMP_PREFIX=`realpath ./_install`
+# XXX We've got a weird error when the prefix is in the current dir.
+# Until we figure it out, this trick seems to work, even though it's
+# completely ridiculous.
+mv _install ~
+
+export GIMP_PREFIX=`realpath ~/_install`
 export PATH="$GIMP_PREFIX/bin:$PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
@@ -90,3 +95,6 @@ make -j4
 make install
 
 ccache --show-stats
+
+# XXX Moving back the prefix to be used as artifacts.
+mv "${GIMP_PREFIX}" .
