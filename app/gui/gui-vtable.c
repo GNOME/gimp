@@ -569,7 +569,7 @@ static void
 gui_free_progress (Gimp          *gimp,
                    GimpProgress  *progress)
 {
-  g_return_if_fail (GIMP_IS_PROGRESS_DIALOG (progress));
+  g_return_if_fail (GIMP_IS_PROGRESS (progress));
 
   if (GIMP_IS_PROGRESS_DIALOG (progress))
     gtk_widget_destroy (GTK_WIDGET (progress));
