@@ -16,6 +16,9 @@ variables:
 ## prepare docker images ##
 
 build-image:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE != "schedule"'
+    - if: '$SCHEDULE_CLANG != null'
   stage: prepare
   variables:
     GIT_STRATEGY: none
@@ -36,7 +39,7 @@ build-image:
 
 build-image-win64:
   rules:
-    - if: '$CI_COMMIT_TAG == null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
   stage: prepare
   variables:
     GIT_STRATEGY: none
@@ -57,7 +60,7 @@ build-image-win64:
 
 build-image-win32:
   rules:
-    - if: '$CI_COMMIT_TAG == null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_WIN32 != null'
   stage: prepare
   variables:
     GIT_STRATEGY: none
@@ -79,6 +82,9 @@ build-image-win32:
 ## GNU/Linux 64-bit CIs (Debian testing) ##
 
 deps-debian:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE != "schedule"'
+    - if: '$SCHEDULE_CLANG != null'
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   cache:
@@ -136,6 +142,8 @@ deps-debian:
   needs: ["deps-debian"]
 
 gimp-autotools-debian:
+  except:
+    - schedules
   extends: .gimp-debian-base
   script:
     - mkdir _build
@@ -147,6 +155,8 @@ gimp-autotools-debian:
     - make check
 
 gimp-distcheck-debian:
+  except:
+    - schedules
   extends: .gimp-debian-base
   script:
     - mkdir _build
@@ -160,7 +170,7 @@ gimp-distcheck-debian:
 
 gimp-meson-debian:
   rules:
-    - if: '$CI_COMMIT_TAG == null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
   extends: .gimp-debian-base
   script:
     - meson _build
@@ -170,7 +180,7 @@ gimp-meson-debian:
 
 gimp-clang-debian:
   rules:
-    - if: '$CI_COMMIT_TAG == null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_CLANG != null'
   extends: .gimp-debian-base
   variables:
     CC: "clang"
@@ -187,6 +197,8 @@ gimp-clang-debian:
 ## WINDOWS 64-bit CI (native MSYS2) ##
 
 deps-win64-native:
+  rules:
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
   stage: dependencies
   variables:
     MSYSTEM: "MINGW64"
@@ -208,6 +220,8 @@ deps-win64-native:
   needs: []
 
 gimp-win64-native:
+  rules:
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
   stage: gimp
   variables:
     MSYSTEM: "MINGW64"
@@ -232,7 +246,7 @@ gimp-win64-native:
 
 deps-win64:
   rules:
-    - if: '$CI_COMMIT_TAG == null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-win64-latest
   variables:
@@ -265,7 +279,7 @@ deps-win64:
 
 gimp-win64:
   rules:
-    - if: '$CI_COMMIT_TAG == null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-win64-latest
   dependencies:
@@ -298,7 +312,7 @@ gimp-win64:
 
 deps-win32:
   rules:
-    - if: '$CI_COMMIT_TAG == null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_WIN32 != null'
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-win32-latest
   variables:
@@ -328,7 +342,7 @@ deps-win32:
 
 gimp-win32:
   rules:
-    - if: '$CI_COMMIT_TAG == null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_WIN32 != null'
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-win32-latest
   dependencies:
@@ -358,6 +372,8 @@ gimp-win32:
       - gimp-prefix/
 
 cppcheck:
+  except:
+    - schedules
   stage: analysis
   before_script:
     - apt-get update
@@ -378,6 +394,8 @@ cppcheck:
 ## Ready-to-distribute ##
 
 sources:
+  except:
+    - schedules
   stage: distribution
   dependencies:
     - gimp-distcheck-debian
@@ -398,7 +416,7 @@ sources:
 
 win64-nightly:
   rules:
-    - if: '$CI_COMMIT_TAG == null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
   stage: distribution
   dependencies:
     - gimp-win64
@@ -475,7 +493,7 @@ win64-nightly:
 
 win32-nightly:
   rules:
-    - if: '$CI_COMMIT_TAG == null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_WIN32 != null'
   stage: distribution
   dependencies:
     - gimp-win32
