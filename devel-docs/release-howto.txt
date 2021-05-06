@@ -202,6 +202,11 @@
  ( ) Add the next version milestone on GIMP's Gitlab:
      https://gitlab.gnome.org/GNOME/gimp/-/milestones
 
+     Note: we don't close immediately the milestone of the just-released
+     version as we may still assign some reports to it, but older
+     milestones might be closed (up to what feels the most needed for
+     organization of reports).
+
  ( ) Check out or update the 'gimp-web' module, check out its testing
      branch.
 
@@ -216,12 +221,35 @@
          the file `authors.md`. Move it to ./content/about/authors.md on
          the 'gimp-web' module and commit it.
 
-     [ ] Commit and push the changes, the web server should then
-         update itself soon (it checks for updates every 5 minutes).
+     [ ] Commit and push the changes to the `testing` branch, the web
+         server should then update itself soon (it checks for updates
+         every 5 minutes).
          Go to https://testing.gimp.org to verify the changes.
 
- ( ) Announce the release on gimp.org and send a release announcement
-     to the gimp-user and gimp-developer mailing lists.
+     [ ] Do not merge to `master` branch yet. We usually wait for a few
+         packages to be available (often at least the Flatpak and
+         Windows installer) and published to the download server when
+         relevant.
+
+     [ ] For binary packages, we also usually publish web torrent files
+         with the `tools/download/mt` tool. Here is an example of
+         command as run for the revision 2 of GIMP 2.10.24 installer:
+
+           $ tools/downloads/mt -c "GIMP 2.10.24 Installer for Microsoft Windows - 32 and 64 Bit - Update 2: custom GTK fixes for drag&drop issues with certain screen grabbers (issue #1082), tiny SVG icons (issue #1563) and pasting images from some other applications (issue #3481)" -p "v2.10/windows" gimp-2.10.24-setup-2.exe
+
+     [ ] Check regularly that most (ideally all) mirrors synced the new
+         files. The following command allows to query all mirrors:
+
+           $ tools/downloads/gimp-check-mirrors.py https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.24-setup-2.exe
+
+         We want to hold the news a bit because if we publish without
+         binary installers, everyone desperately search for them; and if
+         we publish with most mirrors lagging behind, many download
+         errors will occur.
+
+ ( ) When confident about the installers availability, announce the
+     release on gimp.org and send a release announcement to the
+     gimp-user and gimp-developer mailing lists.
 
      [ ] Check out the gimp-web master branch and merge or cherry-pick
          the changes you did in the testing branch.
