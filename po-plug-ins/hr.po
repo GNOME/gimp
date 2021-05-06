@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-24 18:08+0000\n"
-"PO-Revision-Date: 2021-02-24 22:49+0100\n"
+"POT-Creation-Date: 2021-03-04 20:27+0000\n"
+"PO-Revision-Date: 2021-03-05 12:27+0100\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -79,7 +79,7 @@ msgstr "Poravnaj vidljive slojeve"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1308 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2307 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2430 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -460,7 +460,7 @@ msgstr "_Uspravno"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:2016 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1302
+#: ../plug-ins/file-tiff/file-tiff-load.c:1265
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -2165,7 +2165,7 @@ msgstr "Kraj datoteke ili greška prilikom čitanja zaglavlja slike"
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:247
+#: ../plug-ins/file-tiff/file-tiff-load.c:258
 #, c-format
 msgid "Opening '%s'"
 msgstr "Otvaranje datoteke „%s”"
@@ -3157,7 +3157,7 @@ msgid "Import from PDF"
 msgstr "Uvezi iz PDF‑a"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:2308
+#: ../plug-ins/file-tiff/file-tiff-load.c:2431
 #: ../plug-ins/metadata/metadata-editor.c:5718
 msgid "_Import"
 msgstr "_Uvezi"
@@ -3283,7 +3283,7 @@ msgstr "Slojevi kao stranice (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1304
+#: ../plug-ins/file-tiff/file-tiff-load.c:1267
 #, c-format
 msgid "Page %d"
 msgstr "Stranica %d"
@@ -3474,7 +3474,7 @@ msgstr "Formatiranje podataka"
 
 #: ../plug-ins/common/file-pnm.c:1621
 msgid "_Raw"
-msgstr "_Raw"
+msgstr "_Neobrađeni"
 
 #: ../plug-ins/common/file-pnm.c:1622
 msgid "_ASCII"
@@ -5190,7 +5190,7 @@ msgstr "Slagalica"
 
 #: ../plug-ins/common/jigsaw.c:2441
 msgid "Number of Tiles"
-msgstr "Broj dijelova"
+msgstr "Broj pločica"
 
 #: ../plug-ins/common/jigsaw.c:2453
 msgid "_Horizontal:"
@@ -7221,103 +7221,103 @@ msgstr "Photoshop slika (sjedinjena)"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
-msgstr "Raw Canon"
+msgstr "Neobrađeni Canon"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:59
 msgid "Raw Nikon"
-msgstr "Raw Nikon"
+msgstr "Neobrađeni Nikon"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:70
 msgid "Raw Hasselblad"
-msgstr "Raw Hasselblad"
+msgstr "Neobrađeni Hasselblad"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:81
 msgid "Raw Sony"
-msgstr "Raw Sony"
+msgstr "Neobrađeni Sony"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:92
 msgid "Raw Casio BAY"
-msgstr "Raw Casio BAY"
+msgstr "Neobrađeni Casio BAY"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:103
 msgid "Raw Phantom Software CINE"
-msgstr "Raw Phantom Software CINE"
+msgstr "Neobrađeni Phantom Software CINE"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:114
 msgid "Raw Sinar"
-msgstr "Raw Sinar"
+msgstr "Neobrađeni Sinar"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:125
 msgid "Raw Kodak"
-msgstr "Raw Kodak"
+msgstr "Neobrađeni Kodak"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:136
 msgid "Raw Adobe DNG Digital Negative"
-msgstr "Raw Adobe DNG digitalni negativ"
+msgstr "Neobrađeni Adobe DNG digitalni negativ"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:147
 msgid "Raw Epson ERF"
-msgstr "Raw Epson ERF"
+msgstr "Neobrađeni Epson ERF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:158
 msgid "Raw Phase One"
-msgstr "Raw Phase One"
+msgstr "Neobrađeni Phase One"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:169
 msgid "Raw Minolta"
-msgstr "Raw Minolta"
+msgstr "Neobrađeni Minolta"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:180
 msgid "Raw Mamiya MEF"
-msgstr "Raw Mamiya MEF"
+msgstr "Neobrađeni Mamiya MEF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:190
 msgid "Raw Leaf MOS"
-msgstr "Raw Leaf MOS"
+msgstr "Neobrađeni Leaf MOS"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:201
 msgid "Raw Olympus ORF"
-msgstr "Raw Olympus ORF"
+msgstr "Neobrađeni Olympus ORF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:212
 msgid "Raw Pentax PEF"
-msgstr "Raw Pentax PEF"
+msgstr "Neobrađeni Pentax PEF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:223
 msgid "Raw Logitech PXN"
-msgstr "Raw Logitech PXN"
+msgstr "Neobrađeni Logitech PXN"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:234
 msgid "Raw Apple QuickTake QTK"
-msgstr "Raw Apple QuickTake QTK"
+msgstr "Neobrađeni Apple QuickTake QTK"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:245
 msgid "Raw Fujifilm RAF"
-msgstr "Raw Fujifilm RAF"
+msgstr "Neobrađeni Fujifilm RAF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:256
 msgid "Raw Panasonic"
-msgstr "Raw Panasonic"
+msgstr "Neobrađeni Panasonic"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:267
 msgid "Raw Digital Foto Maker RDC"
-msgstr "Raw Digital Foto Maker RDC"
+msgstr "Neobrađeni Digital Foto Maker RDC"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:278
 msgid "Raw Leica RWL"
-msgstr "Raw Leica RWL"
+msgstr "Neobrađeni Leica RWL"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:289
 msgid "Raw Samsung SRW"
-msgstr "Raw Samsung SRW"
+msgstr "Neobrađeni Samsung SRW"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:300
 msgid "Raw Sigma X3F"
-msgstr "Raw Sigma X3F"
+msgstr "Neobrađeni Sigma X3F"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:311
 msgid "Raw Arriflex ARI"
-msgstr "Raw Arriflex ARI"
+msgstr "Neobrađeni Arriflex ARI"
 
 #: ../plug-ins/file-raw/file-raw-placeholder.c:139
 #, c-format
@@ -7330,13 +7330,13 @@ msgid ""
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
-"Nema instaliranog učitavača RAW formata za otvaranje „%s” datoteka.\n"
+"Nema učitavača neobrađenih formata za otvaranje „%s” datoteka.\n"
 "\n"
-"GIMP trenutačno podržava sljedeće učitavače RAW formata:\n"
+"GIMP trenutačno podržava sljedeće učitavače neobrađenih formata:\n"
 "- darktable (http://www.darktable.org/), barem 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), barem 5.2\n"
 "\n"
-"Instaliraj jedan od njih, za učitavanje RAW datoteka."
+"Za učitavanje neobrađenih datoteka instaliraj jedan od njih."
 
 #: ../plug-ins/file-sgi/sgi.c:121 ../plug-ins/file-sgi/sgi.c:141
 msgid "Silicon Graphics IRIS image"
@@ -7392,12 +7392,17 @@ msgstr ""
 msgid "TIFF image"
 msgstr "TIFF slika"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:280
+#: ../plug-ins/file-tiff/file-tiff-load.c:266
+#, c-format
+msgid "Not a TIFF image or image is corrupt."
+msgstr "Nije TIFF slika ili je slika pokvarena."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:297
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF „%s” ne sadrži direktorije"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:287
+#: ../plug-ins/file-tiff/file-tiff-load.c:304
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7415,7 +7420,7 @@ msgstr[2] ""
 "TIFF „%s” brojanje direktorija po zaglavlju nije uspjelo, mada se čini da "
 "postoji %d stranica. Datoteka će se pokušati učitati s ovom pretpostavkom."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:363
+#: ../plug-ins/file-tiff/file-tiff-load.c:380
 msgid "Extra channels with unspecified data."
 msgstr "Dodatni kanali s neodređenim podacima."
 
@@ -7426,16 +7431,16 @@ msgstr "Dodatni kanali s neodređenim podacima."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:375
+#: ../plug-ins/file-tiff/file-tiff-load.c:392
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Nesuklađeni TIFF: dodatni kanali bez polja „Dodatni uzorci”."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:436
+#: ../plug-ins/file-tiff/file-tiff-load.c:453
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Nije moguće pročitati stranicu %d od %d. Slika je možda oštećena.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:465
+#: ../plug-ins/file-tiff/file-tiff-load.c:482
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7444,7 +7449,7 @@ msgstr ""
 "Ova slika ima linearni profil boje, ali nije postavljena na prvom sloju. "
 "Slojevi ispod sloja broj %d interpretirat će se kao nelinearni."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:473
+#: ../plug-ins/file-tiff/file-tiff-load.c:490
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7453,31 +7458,141 @@ msgstr ""
 "Ova slika ima više profila boja. Koristit ćemo prvu. Ako to prouzroči "
 "netočne rezultate, učitaj svaki sloj kao zasebnu sliku."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:965
+#: ../plug-ins/file-tiff/file-tiff-load.c:502
+#, c-format
+msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
+msgstr "Sumnjiva količina bitova: %d za %d. stranicu. Slika je možda oštećena."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:576
+#, c-format
+msgid "Unsupported bit depth: %d for page %d."
+msgstr "Nepodržana količina bitova: %d za %d. stranicu."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:591
+#, c-format
+msgid "Could not get image width from '%s'"
+msgstr "Nije bilo moguće dohvatiti širinu slike iz „%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:599
+#, c-format
+msgid "Could not get image length from '%s'"
+msgstr "Nije bilo moguće dohvatiti duljinu slike iz „%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:607
+#, c-format
+msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
+msgstr ""
+"Neispravna veličina slike (%u × %u) za %d. stranicu. Slika je možda oštećena."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:628
+#, c-format
+msgid ""
+"Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
+"is-white"
+msgstr ""
+"Nije moguće dobiti fotometrijsku vrijednost iz „%s”. Slika je CCITT "
+"komprimirana. Pretpostavlja se „min-is-white”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:635
+#, c-format
+msgid "Could not get photometric from '%s'. Assuming min-is-black"
+msgstr ""
+"Nije moguće dobiti fotometrijsku vrijednost iz „%s”. Pretpostavlja se „min-"
+"is-black”"
+
+#. In non-interactive mode, we assume unassociated alpha if unspecified.
+#. * We don't output messages in interactive mode as the user
+#. * has already the ability to choose through a dialog.
+#: ../plug-ins/file-tiff/file-tiff-load.c:667
+#, c-format
+msgid ""
+"Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
+msgstr ""
+"Vrsta alfa kanala nije definirana za %s. Pretpostavlja se da alfa nije "
+"predpomnožena"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:692
+#, c-format
+msgid ""
+"Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
+"not set while extra channels are present. Assuming the first extra channel "
+"is non-premultiplied alpha."
+msgstr ""
+"Slika „%s” nije u skladu s TIFF specifikacijom: Polje ExtraSamples nije "
+"postavljeno mada su dodatni kanali prisutni. Pretpostavlja se da prvi "
+"dodatni kanal nije predpomnoženi alfa kanal."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:925
+#, c-format
+msgid "Invalid or unknown compression %u. Setting compression to none."
+msgstr ""
+"Neispravno ili nepoznato komprimiranje %u. Vrsta komprimiranja se postavlja "
+"na „Bez”."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:983
+#, c-format
+msgid "Could not create a new image: %s"
+msgstr "Nije bilo moguće stvoriti novu sliku: %s"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1003
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-od-%d-stranica"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1335
+#: ../plug-ins/file-tiff/file-tiff-load.c:1148
+#, c-format
+msgid "Unknown resolution unit type %d, assuming dpi"
+msgstr "Nepoznata jedinica komprimiranja %d, pretpostavlja se dpi"
+
+#. no res unit tag
+#. old AppleScan software produces these
+#: ../plug-ins/file-tiff/file-tiff-load.c:1158
+msgid "Warning: resolution specified without unit type, assuming dpi"
+msgstr "Upozorenje: rezolucija ne sadrži mjernu jedinicu, pretpostavlja se dpi"
+
+#. xres but no yres
+#: ../plug-ins/file-tiff/file-tiff-load.c:1166
+msgid "Warning: no y resolution info, assuming same as x"
+msgstr ""
+"Upozorenje: bez podataka za y rezoluciju, pretpostavljaju se isti podaci kao "
+"za x rezoluciju"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1225
+#, c-format
+msgid "Could not get colormaps from '%s'"
+msgstr "Nije bilo moguće dohvatiti palete boja iz „%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1298
 msgid "TIFF Channel"
 msgstr "TIFF kanal"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1473
+#: ../plug-ins/file-tiff/file-tiff-load.c:1436
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Čitanje podataka iz TIFF-a „%s” nije moguće. Datoteka je vjerojatno oštećena."
 
+#: ../plug-ins/file-tiff/file-tiff-load.c:1507
+#, c-format
+msgid "%s: Unsupported image format, no RGBA loader available"
+msgstr "%s: Nepodržan format slika, učitavač RGBA podataka nije dostupan"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1819
+#: ../plug-ins/file-tiff/file-tiff-load.c:2016
+#, c-format
+msgid "Reading tile failed. Image may be corrupt at line %d."
+msgstr "Neuspjelo čitanje pločice. Slika je vjerojatno oštećena u %d. retku."
+
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1848
-#: ../plug-ins/file-tiff/file-tiff-load.c:2028
+#: ../plug-ins/file-tiff/file-tiff-load.c:1828
+#: ../plug-ins/file-tiff/file-tiff-load.c:2025
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Neuspjelo čitanje iscrtavajućeg retka. Slika je vjerojatno oštećena u %d. "
 "retku."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2303
+#: ../plug-ins/file-tiff/file-tiff-load.c:2426
 msgid "Import from TIFF"
 msgstr "Uvezi iz TIFF‑a"
 
@@ -7485,23 +7600,23 @@ msgstr "Uvezi iz TIFF‑a"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2356
+#: ../plug-ins/file-tiff/file-tiff-load.c:2479
 msgid "_Keep empty space around imported layers"
 msgstr "_Zadrži prazan prostor oko uvezenih slojeva"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2373
+#: ../plug-ins/file-tiff/file-tiff-load.c:2496
 msgid "Process extra channel as:"
 msgstr "Obradi dodatni kanal kao:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2376
+#: ../plug-ins/file-tiff/file-tiff-load.c:2499
 msgid "_Non-premultiplied alpha"
 msgstr "Ne pred-pomnožena alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2377
+#: ../plug-ins/file-tiff/file-tiff-load.c:2500
 msgid "Pre_multiplied alpha"
 msgstr "Pred-po_množena alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2378
+#: ../plug-ins/file-tiff/file-tiff-load.c:2501
 msgid "Channe_l"
 msgstr "Kana_l"
 
@@ -8840,7 +8955,7 @@ msgstr "Odabire, da li se potezi potežu sve do rubova slike"
 
 #: ../plug-ins/gimpressionist/general.c:212
 msgid "Tileable"
-msgstr "Popločeno"
+msgstr "Popločivo"
 
 #: ../plug-ins/gimpressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
@@ -11263,7 +11378,7 @@ msgstr "Gornji lijevi _z:"
 
 #: ../plug-ins/imagemap/imap_selection.c:348
 msgid "#"
-msgstr "#"
+msgstr "Broj"
 
 #: ../plug-ins/imagemap/imap_selection.c:359
 msgid "URL"
@@ -11693,11 +11808,11 @@ msgstr "Učini sliku transparentnom izvan objekta"
 
 #: ../plug-ins/map-object/map-object-ui.c:482
 msgid "Tile source image"
-msgstr "Poploči s izvornom slikom"
+msgstr "Poploči izvornu sliku"
 
 #: ../plug-ins/map-object/map-object-ui.c:493
 msgid "Tile source image: useful for infinite planes"
-msgstr "Poploči s izvornom slikom: korisno je za beskonačne plohe"
+msgstr "Poploči izvornu sliku: korisno je za beskonačne plohe"
 
 #: ../plug-ins/map-object/map-object-ui.c:496
 msgid "Create new image"
@@ -11967,7 +12082,6 @@ msgstr "Neocjenjeno"
 
 #: ../plug-ins/metadata/metadata-editor.c:4405
 #, c-format
-#| msgid "Failed to decompress data"
 msgid "Failed to set metadata tag %s"
 msgstr "Neuspjelo postavljanje oznake metapodataka %s"
 
