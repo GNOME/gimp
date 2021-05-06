@@ -234,7 +234,7 @@ gimp-win64-native:
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
-    expire_in: 2 days
+    expire_in: 1 day
     paths:
     - _install
   cache:
@@ -392,6 +392,28 @@ cppcheck:
   needs: []
 
 ## Ready-to-distribute ##
+
+win64-native-nightly:
+  rules:
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+  variables:
+    MSYSTEM: "MINGW64"
+    CHERE_INVOKING: "yes"
+  tags:
+    - win32-ps
+  stage: distribution
+  dependencies:
+    - gimp-win64-native
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
+    when: always
+    expire_in: 2 days
+    paths:
+    - gimp-w64
+  script:
+    - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
+  needs: ["gimp-win64-native"]
 
 sources:
   except:
