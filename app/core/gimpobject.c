@@ -209,7 +209,7 @@ gimp_object_get_property (GObject    *object,
 /**
  * gimp_object_set_name:
  * @object: a #GimpObject
- * @name: the @object's new name
+ * @name: the @object's new name (transfer none)
  *
  * Sets the @object's name. Takes care of freeing the old name and
  * emitting the ::name_changed signal if the old and new name differ.
@@ -235,7 +235,7 @@ gimp_object_set_name (GimpObject  *object,
 /**
  * gimp_object_set_name_safe:
  * @object: a #GimpObject
- * @name: the @object's new name
+ * @name: the @object's new name (transfer none)
  *
  * A safe version of gimp_object_set_name() that takes care of
  * handling newlines and overly long names. The actual name set
@@ -259,6 +259,19 @@ gimp_object_set_name_safe (GimpObject  *object,
   g_object_notify_by_pspec (G_OBJECT (object), object_props[PROP_NAME]);
 }
 
+/**
+ * gimp_object_set_static_name:
+ * @object: a #GimpObject
+ * @name: the @object's new name as a static string
+ *
+ * Sets the @object's name.
+ * Takes care of freeing the old name (when it was not statically set)
+ * and emits the ::name_changed signal if the old and new name differ.
+ *
+ * This function is a variant of gimp_object_set_name() which assumes that
+ * the string is static and optimizes for this use case.
+ * Do not ever use this function with allocated strings.
+ **/
 void
 gimp_object_set_static_name (GimpObject  *object,
                              const gchar *name)
@@ -277,6 +290,20 @@ gimp_object_set_static_name (GimpObject  *object,
   g_object_notify_by_pspec (G_OBJECT (object), object_props[PROP_NAME]);
 }
 
+/**
+ * gimp_object_take_name:
+ * @object: a #GimpObject
+ * @name: the @object's new name (transfer full)
+ *
+ * Sets the @object's name. Takes care of freeing the old name and
+ * emitting the ::name_changed signal if the old and new name differ.
+ *
+ * Only use this function with GLib allocated strings.
+ *
+ * GimpObject will own the @name pointer and will dispose it when
+ * no longer needed or when it is the same as stored name.
+ * Calling code should *not* g_free() passed @name at all.
+ **/
 void
 gimp_object_take_name (GimpObject *object,
                        gchar      *name)
