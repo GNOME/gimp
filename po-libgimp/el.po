@@ -10,26 +10,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master.el.po\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-12-25 14:14+0000\n"
-"PO-Revision-Date: 2020-12-29 21:45+0200\n"
-"Last-Translator: dmtrs32@gmail.com <team@lists.gnome.gr>\n"
+"POT-Creation-Date: 2021-05-05 22:21+0000\n"
+"PO-Revision-Date: 2021-05-06 12:50+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Project-Style: gnome\n"
 
 #
-#: ../libgimp/gimpbrushselectbutton.c:176
+#: ../libgimp/gimpbrushselectbutton.c:177
 msgid "Brush Selection"
 msgstr "Επιλογή πινέλου"
 
-#: ../libgimp/gimpbrushselectbutton.c:885
-#: ../libgimp/gimppatternselectbutton.c:672
+#: ../libgimp/gimpbrushselectbutton.c:884
+#: ../libgimp/gimppatternselectbutton.c:674
 msgid "_Browse..."
 msgstr "_Περιήγηση..."
 
@@ -177,7 +177,7 @@ msgid "Confirm Save"
 msgstr "Επιβεβαίωση αποθήκευσης"
 
 #: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
-#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:181
+#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:220
 #: ../libgimpwidgets/gimpcolorbutton.c:553
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -202,7 +202,7 @@ msgstr "_Παράβλεψη"
 
 #
 #: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
-#: ../libgimp/gimpproceduredialog.c:173
+#: ../libgimp/gimpproceduredialog.c:192
 msgid "_Export"
 msgstr "_Εξαγωγή"
 
@@ -241,56 +241,56 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:391
+#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:388
 #, c-format
 msgid "Export Image as %s"
 msgstr "Εξαγωγή εικόνας ως %s"
 
 #
-#: ../libgimp/gimpfontselectbutton.c:136
+#: ../libgimp/gimpfontselectbutton.c:137
 msgid "Font Selection"
 msgstr "Επιλογή γραμματοσειράς"
 
 #
-#: ../libgimp/gimpgradientselectbutton.c:154
+#: ../libgimp/gimpgradientselectbutton.c:155
 msgid "Gradient Selection"
 msgstr "Επιλογή διαβάθμισης"
 
-#: ../libgimp/gimpimagemetadata.c:239
+#: ../libgimp/gimpimagemetadata.c:273
 msgid "Background"
 msgstr "Παρασκήνιο"
 
-#: ../libgimp/gimpimagemetadata-save.c:371 ../modules/controller-midi.c:426
+#: ../libgimp/gimpimagemetadata-save.c:512 ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
 #
-#: ../libgimp/gimppaletteselectbutton.c:135
+#: ../libgimp/gimppaletteselectbutton.c:136
 msgid "Palette Selection"
 msgstr "Επιλογή παλέτας"
 
 #
-#: ../libgimp/gimppatternselectbutton.c:164
+#: ../libgimp/gimppatternselectbutton.c:165
 msgid "Pattern Selection"
 msgstr "Επιλογή μοτίβου"
 
 #. procedure executed successfully
-#: ../libgimp/gimppdb.c:518
+#: ../libgimp/gimppdb.c:520
 msgid "success"
 msgstr "επιτυχία"
 
 #. procedure execution failed
-#: ../libgimp/gimppdb.c:522
+#: ../libgimp/gimppdb.c:524
 msgid "execution error"
 msgstr "σφάλμα εκτέλεσης"
 
 #. procedure called incorrectly
-#: ../libgimp/gimppdb.c:526
+#: ../libgimp/gimppdb.c:528
 msgid "calling error"
 msgstr "σφάλμα κλήσης"
 
 #. procedure execution cancelled
-#: ../libgimp/gimppdb.c:530
+#: ../libgimp/gimppdb.c:532
 msgid "cancelled"
 msgstr "ακυρώθηκε"
 
@@ -382,12 +382,12 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d διαδικασία ταιριάζει στο ερώτημά σας"
 msgstr[1] "%d διαδικασίες ταιριάζουν στο ερώτημά σας"
 
-#: ../libgimp/gimpprocedure.c:1828
+#: ../libgimp/gimpprocedure.c:1909
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Η διεργασία '%s' δεν επέστρεψε τιμές επιστροφής"
 
-#: ../libgimp/gimpprocedure.c:1920
+#: ../libgimp/gimpprocedure.c:2001
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -396,7 +396,7 @@ msgstr ""
 "Η διεργασία '%s' επέστρεψε εσφαλμένο τύπο τιμής για την τιμή επιστροφής "
 "'%s' (#%d). Αναμενόταν %s, επεστράφη %s."
 
-#: ../libgimp/gimpprocedure.c:1932
+#: ../libgimp/gimpprocedure.c:2013
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -405,7 +405,7 @@ msgstr ""
 "Η διεργασία '%s' έχει κληθεί με εσφαλμένο τύπο τιμής για το όρισμα '%s' (#"
 "%d). Αναμενόταν %s, ελήφθη %s."
 
-#: ../libgimp/gimpprocedure.c:1967
+#: ../libgimp/gimpprocedure.c:2048
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -414,7 +414,7 @@ msgstr ""
 "Η διεργασία '%s' επέστρεψε '%s' ως τιμή επιστροφής του '%s' (#%d, τύπος %s). "
 "Αυτή η τιμή είναι εκτός ορίων."
 
-#: ../libgimp/gimpprocedure.c:1981
+#: ../libgimp/gimpprocedure.c:2062
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -423,13 +423,13 @@ msgstr ""
 "Η διεργασία '%s' έχει κληθεί με τιμή '%s' για το όρισμα '%s' (#%d, τύπος "
 "%s). Αυτή η τιμή είναι εκτός ορίων."
 
-#: ../libgimp/gimpprocedure.c:2031
+#: ../libgimp/gimpprocedure.c:2112
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "Η διεργασία '%s' επέστρεψε άκυρη συμβολοσειρά UTF-8 για το όρισμα '%s'."
 
-#: ../libgimp/gimpprocedure.c:2041
+#: ../libgimp/gimpprocedure.c:2122
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -437,35 +437,43 @@ msgid ""
 msgstr ""
 "Η διεργασία '%s' έχει κληθεί με άκυρη συμβολοσειρά UTF-8 για το όρισμα '%s'."
 
-#: ../libgimp/gimpproceduredialog.c:171
+#: ../libgimp/gimpproceduredialog.c:190
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "Ά_νοιγμα"
 
-#: ../libgimp/gimpproceduredialog.c:175 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimp/gimpproceduredialog.c:194 ../libgimpwidgets/gimpcolorbutton.c:554
 #: ../libgimpwidgets/gimpfileentry.c:467 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "Ε_ντάξει"
 
-#: ../libgimp/gimpproceduredialog.c:178 ../libgimpwidgets/gimpcolorbutton.c:552
+#: ../libgimp/gimpproceduredialog.c:202 ../libgimpwidgets/gimpcolorbutton.c:552
 msgid "_Reset"
 msgstr "_Επαναφορά"
 
-#: ../libgimp/gimpproceduredialog.c:215
-msgid "_Load Defaults"
-msgstr "_Φόρτωση προεπιλογών"
+#: ../libgimp/gimpproceduredialog.c:254
+msgid "_Load Saved Settings"
+msgstr "_Φόρτωση αποθηκευμένων ρυθμίσεων"
 
-#: ../libgimp/gimpproceduredialog.c:224
-msgid "_Save Defaults"
-msgstr "Απο_θήκευση προεπιλογών"
+#: ../libgimp/gimpproceduredialog.c:255
+msgid "Load settings saved with \"Save Settings\" button"
+msgstr "Φόρτωση των ρυθμίσεων που αποθηκεύτηκαν με \"Αποθήκευση ρυθμίσεων\""
 
-#: ../libgimp/gimpproceduredialog.c:1168
+#: ../libgimp/gimpproceduredialog.c:267
+msgid "_Save Settings"
+msgstr "Απο_θήκευση ρυθμίσεων"
+
+#: ../libgimp/gimpproceduredialog.c:268
+msgid "Store current settings for later reuse"
+msgstr "Αποθήκευση τρεχουσών ρυθμίσεων για μεταγενέστερη επαναχρησιμοποίηση"
+
+#: ../libgimp/gimpproceduredialog.c:1445
 msgid "Reset to _Initial Values"
 msgstr "Επαναφορά στις α_ρχικές τιμές"
 
-#: ../libgimp/gimpproceduredialog.c:1177
+#: ../libgimp/gimpproceduredialog.c:1454
 msgid "Reset to _Factory Defaults"
 msgstr "Επαναφορά στις ερ_γοστασιακές προεπιλογές"
 
@@ -505,15 +513,15 @@ msgstr "Ημερομηνία:"
 msgid "Copyright:"
 msgstr "Πνευματικά δικαιώματα:"
 
-#: ../libgimp/gimpsaveproceduredialog.c:167
+#: ../libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
 msgstr "Μεταδεδομένα"
 
-#: ../libgimp/gimpsaveproceduredialog.c:176
+#: ../libgimp/gimpsaveproceduredialog.c:175
 msgid "Edit Metadata"
 msgstr "Επεξεργασία μεταδεδομένων"
 
-#: ../libgimp/gimpsaveproceduredialog.c:176
+#: ../libgimp/gimpsaveproceduredialog.c:175
 msgid "(edit)"
 msgstr "(επεξεργασία)"
 
@@ -1331,228 +1339,228 @@ msgctxt "precision"
 msgid "64-bit perceptual floating point"
 msgstr "Διαισθητική κινητή υποδιαστολή 64 δυαδικών"
 
-#: ../libgimpbase/gimpbaseenums.c:1431
+#: ../libgimpbase/gimpbaseenums.c:1467
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Καμία (επέκταση)"
 
-#: ../libgimpbase/gimpbaseenums.c:1432
+#: ../libgimpbase/gimpbaseenums.c:1468
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Πριονωτό κύμα"
 
-#: ../libgimpbase/gimpbaseenums.c:1433
+#: ../libgimpbase/gimpbaseenums.c:1469
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Τριγωνικό κύμα"
 
-#: ../libgimpbase/gimpbaseenums.c:1434
+#: ../libgimpbase/gimpbaseenums.c:1470
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Αποκοπή"
 
-#: ../libgimpbase/gimpbaseenums.c:1496
+#: ../libgimpbase/gimpbaseenums.c:1532
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Διαδραστική εκτέλεση"
 
-#: ../libgimpbase/gimpbaseenums.c:1497
+#: ../libgimpbase/gimpbaseenums.c:1533
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Μη διαδραστική εκτέλεση"
 
-#: ../libgimpbase/gimpbaseenums.c:1498
+#: ../libgimpbase/gimpbaseenums.c:1534
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Εκτέλεση με τις τελευταίες χρησιμοποιημένες τιμές"
 
-#: ../libgimpbase/gimpbaseenums.c:1536
+#: ../libgimpbase/gimpbaseenums.c:1572
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Σύνθετο"
 
-#: ../libgimpbase/gimpbaseenums.c:1537
+#: ../libgimpbase/gimpbaseenums.c:1573
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Κόκκινο"
 
-#: ../libgimpbase/gimpbaseenums.c:1538
+#: ../libgimpbase/gimpbaseenums.c:1574
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Πράσινο"
 
-#: ../libgimpbase/gimpbaseenums.c:1539
+#: ../libgimpbase/gimpbaseenums.c:1575
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Γαλάζιο"
 
-#: ../libgimpbase/gimpbaseenums.c:1540
+#: ../libgimpbase/gimpbaseenums.c:1576
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "Χροιά HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1541
+#: ../libgimpbase/gimpbaseenums.c:1577
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "Κορεσμός HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1542
+#: ../libgimpbase/gimpbaseenums.c:1578
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "Τιμή HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1543
+#: ../libgimpbase/gimpbaseenums.c:1579
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "Φωτεινότητα (Lightness) LCH"
 
-#: ../libgimpbase/gimpbaseenums.c:1544
+#: ../libgimpbase/gimpbaseenums.c:1580
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "Χρωματικότητα (Chroma) LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1545
+#: ../libgimpbase/gimpbaseenums.c:1581
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "Απόχρωση LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1546
+#: ../libgimpbase/gimpbaseenums.c:1582
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Άλφα"
 
 #
-#: ../libgimpbase/gimpbaseenums.c:1575
+#: ../libgimpbase/gimpbaseenums.c:1611
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Εικονοστοιχεία"
 
-#: ../libgimpbase/gimpbaseenums.c:1576
+#: ../libgimpbase/gimpbaseenums.c:1612
 msgctxt "size-type"
 msgid "Points"
 msgstr "Στιγμές"
 
-#: ../libgimpbase/gimpbaseenums.c:1637
+#: ../libgimpbase/gimpbaseenums.c:1673
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Γραμμή πινελιάς"
 
-#: ../libgimpbase/gimpbaseenums.c:1638
+#: ../libgimpbase/gimpbaseenums.c:1674
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Βάψιμο με εργαλείο ζωγραφικής"
 
-#: ../libgimpbase/gimpbaseenums.c:1671
+#: ../libgimpbase/gimpbaseenums.c:1707
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Από αριστερά προς τα δεξιά"
 
-#: ../libgimpbase/gimpbaseenums.c:1672
+#: ../libgimpbase/gimpbaseenums.c:1708
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Από δεξιά προς τα αριστερά"
 
-#: ../libgimpbase/gimpbaseenums.c:1673
+#: ../libgimpbase/gimpbaseenums.c:1709
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Κατακόρυφα, δεξιά προς τα αριστερά (μεικτός προσανατολισμός)"
 
-#: ../libgimpbase/gimpbaseenums.c:1674
+#: ../libgimpbase/gimpbaseenums.c:1710
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Κατακόρυφα, δεξιά προς τα αριστερά (ορθός προσανατολισμός)"
 
-#: ../libgimpbase/gimpbaseenums.c:1675
+#: ../libgimpbase/gimpbaseenums.c:1711
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Κατακόρυφα, αριστερά προς τα δεξιά (μικτός προσανατολισμός)"
 
-#: ../libgimpbase/gimpbaseenums.c:1676
+#: ../libgimpbase/gimpbaseenums.c:1712
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Κατακόρυφα, αριστερά προς τα δεξιά (ορθός προσανατολισμός)"
 
-#: ../libgimpbase/gimpbaseenums.c:1707
+#: ../libgimpbase/gimpbaseenums.c:1743
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Χωρίς"
 
-#: ../libgimpbase/gimpbaseenums.c:1708
+#: ../libgimpbase/gimpbaseenums.c:1744
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Ελαφριές"
 
-#: ../libgimpbase/gimpbaseenums.c:1709
+#: ../libgimpbase/gimpbaseenums.c:1745
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Μεσαίες"
 
-#: ../libgimpbase/gimpbaseenums.c:1710
+#: ../libgimpbase/gimpbaseenums.c:1746
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Πλήρεις"
 
-#: ../libgimpbase/gimpbaseenums.c:1741
+#: ../libgimpbase/gimpbaseenums.c:1777
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Στοίχιση αριστερά"
 
-#: ../libgimpbase/gimpbaseenums.c:1742
+#: ../libgimpbase/gimpbaseenums.c:1778
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Στοίχιση δεξιά"
 
-#: ../libgimpbase/gimpbaseenums.c:1743
+#: ../libgimpbase/gimpbaseenums.c:1779
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Κεντραρισμένο"
 
-#: ../libgimpbase/gimpbaseenums.c:1744
+#: ../libgimpbase/gimpbaseenums.c:1780
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Πλήρης στοίχιση"
 
-#: ../libgimpbase/gimpbaseenums.c:1774
+#: ../libgimpbase/gimpbaseenums.c:1810
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Σκιές"
 
-#: ../libgimpbase/gimpbaseenums.c:1775
+#: ../libgimpbase/gimpbaseenums.c:1811
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Ενδιάμεσοι τόνοι"
 
-#: ../libgimpbase/gimpbaseenums.c:1776
+#: ../libgimpbase/gimpbaseenums.c:1812
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Φωτεινοί τόνοι"
 
-#: ../libgimpbase/gimpbaseenums.c:1805
+#: ../libgimpbase/gimpbaseenums.c:1841
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Κανονική (Εμπρός)"
 
-#: ../libgimpbase/gimpbaseenums.c:1806
+#: ../libgimpbase/gimpbaseenums.c:1842
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Διορθωτική (Πίσω)"
 
-#: ../libgimpbase/gimpbaseenums.c:1837
+#: ../libgimpbase/gimpbaseenums.c:1873
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Προσαρμογή"
 
-#: ../libgimpbase/gimpbaseenums.c:1838
+#: ../libgimpbase/gimpbaseenums.c:1874
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Περικοπή"
 
-#: ../libgimpbase/gimpbaseenums.c:1839
+#: ../libgimpbase/gimpbaseenums.c:1875
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Περικοπή στο αποτέλεσμα"
 
-#: ../libgimpbase/gimpbaseenums.c:1840
+#: ../libgimpbase/gimpbaseenums.c:1876
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Περικοπή με ίδιες αναλογίες"
@@ -1887,34 +1895,34 @@ msgstr "Η χρωματική κατατομή '%s' δεν είναι για τ�
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Η χρωματική κατατομή '%s' δεν είναι για τον χρωματικό χώρο CMYK."
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:113
+#: ../libgimpconfig/gimpconfig-deserialize.c:116
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "η τιμή για κουπόνι %s δεν είναι έγκυρη συμβολοσειρά UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:473
+#: ../libgimpconfig/gimpconfig-deserialize.c:480
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "ενώ αναμενόταν 'yes' ή 'no' για το κουπόνι Μπουλ %s, ελήφθη '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:588
+#: ../libgimpconfig/gimpconfig-deserialize.c:595
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "άκυρη τιμή '%s' για το κουπόνι %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:603
+#: ../libgimpconfig/gimpconfig-deserialize.c:610
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "άκυρη τιμή '%ld' για το κουπόνι %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:672
+#: ../libgimpconfig/gimpconfig-deserialize.c:679
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "κατά την ανάλυση του κουπονιού '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:665
-#: ../libgimpconfig/gimpconfig-iface.c:678 ../libgimpconfig/gimpscanner.c:774
+#: ../libgimpconfig/gimpconfig-iface.c:666
+#: ../libgimpconfig/gimpconfig-iface.c:679 ../libgimpconfig/gimpscanner.c:774
 #: ../libgimpconfig/gimpscanner.c:856
 #: ../libgimpwidgets/gimpcolorprofilestore.c:682
 msgid "fatal parse error"
@@ -2160,17 +2168,14 @@ msgid "(Empty)"
 msgstr "(Κενό)"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:252
-#| msgid "Kilobytes"
 msgid "Kibibyte"
 msgstr "Kibibyte"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:253
-#| msgid "Megabytes"
 msgid "Mebibyte"
 msgstr "Mebibyte"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:254
-#| msgid "Gigabytes"
 msgid "Gibibyte"
 msgstr "Gibibyte"
 
@@ -2998,6 +3003,9 @@ msgstr "Κύκλοι αντίθεσης"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Αντίθεση"
+
+#~ msgid "_Load Defaults"
+#~ msgstr "_Φόρτωση προεπιλογών"
 
 #~ msgid "Rotate %s?"
 #~ msgstr "Περιστροφή %s;"
