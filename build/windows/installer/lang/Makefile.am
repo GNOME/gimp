@@ -33,6 +33,7 @@ languages = \
 	sl:[sl]:WINDOWS-1250		\
 	sv:[sv]:WINDOWS-1252		\
 	tr:[tr]:WINDOWS-1254		\
+	vi:[vi]:WINDOWS-1258		\
 	zh_CN:[zh_CN]:WINDOWS-936	\
 	zh_TW:[zh_TW]:CP950
 
