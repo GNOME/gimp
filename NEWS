@@ -6,6 +6,26 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 2.99.6 to GIMP 2.99.8
+===================================================
+
+API:
+
+  - New gimp_display_present() function to present a specific display at
+    the top of the image display stack.
+
+Translations:
+
+  - New Vietnamese translation for the installer.
+
+Build:
+
+  - New CI job for a Windows native build with MSYS2.
+  - Several less critical CI jobs moved to a scheduled run for resource
+    saving.
+  - Improved tag handling in the CI for transparent release process.
+
+
 Overview of Changes from GIMP 2.99.4 to GIMP 2.99.6
 ===================================================
 
@@ -164,6 +184,11 @@ Devel docs:
 Translations:
 
   - New Hebrew translation for the installer.
+
+Build:
+
+  - Bumping minimum GEGL to version 0.4.30.
+
 
 Overview of Changes from GIMP 2.99.2 to GIMP 2.99.4
 ===================================================
