@@ -237,10 +237,60 @@ gimp-win64-native:
     expire_in: 1 day
     paths:
     - _install
+    - _build
   cache:
     paths:
     - _ccache/
   needs: ["deps-win64-native"]
+
+## WINDOWS 32-bit CI (native MSYS2) ##
+
+deps-win32-native:
+  rules:
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+  stage: dependencies
+  variables:
+    MSYSTEM: "MINGW32"
+    CHERE_INVOKING: "yes"
+  tags:
+    - win32-ps
+  cache:
+    paths:
+    - _install/
+  script:
+    - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/build-deps-msys2.sh"
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
+    when: always
+    expire_in: 2 hours
+    paths:
+      - _install
+  needs: []
+
+gimp-win32-native:
+  rules:
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+  stage: gimp
+  variables:
+    MSYSTEM: "MINGW32"
+    CHERE_INVOKING: "yes"
+  tags:
+    - win32-ps
+  script:
+    - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/build-gimp-msys2.sh"
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
+    when: always
+    expire_in: 1 day
+    paths:
+    - _install
+    - _build
+  cache:
+    paths:
+    - _ccache/
+  needs: ["deps-win32-native"]
 
 ## WINDOWS 64-bit CI (cross-build crossroad) ##
 

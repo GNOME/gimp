@@ -4,8 +4,14 @@ set -e
 
 if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export MSYS2_ARCH="i686"
+    export ACLOCAL_FLAGS="-I/c/msys64/mingw32/share/aclocal"
+    export PATH="/c/msys64/mingw32/bin:$PATH"
+    export GIMP_OPTIONS="--with-vala=no --enable-vala=no"
 else
     export MSYS2_ARCH="x86_64"
+    export ACLOCAL_FLAGS="-I/c/msys64/mingw64/share/aclocal"
+    export PATH="/c/msys64/mingw64/bin:$PATH"
+    export GIMP_OPTIONS=""
 fi
 
 # Why do we even have to remove these manually? The whole thing is
@@ -79,7 +85,7 @@ export PATH="$GIMP_PREFIX/bin:$PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
 export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
-export ACLOCAL_FLAGS="-I/c/msys64/mingw64/share/aclocal"
+export ACLOCAL_FLAGS="-I/c/msys64/mingw32/share/aclocal"
 export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/mingw64/share/"
 
 mkdir -p _ccache
@@ -90,9 +96,12 @@ export CC="ccache gcc"
 ccache --zero-stats
 ccache --show-stats
 
-./autogen.sh --prefix="${GIMP_PREFIX}"
+mkdir _build
+cd _build
+../autogen.sh --prefix="${GIMP_PREFIX}" ${GIMP_OPTIONS}
 make -j4
 make install
+cd ..
 
 ccache --show-stats
 

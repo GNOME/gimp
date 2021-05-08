@@ -4,8 +4,14 @@ set -e
 
 if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export MSYS2_ARCH="i686"
+    # vapi build fails on 32-bit, with no error output. Let's just drop
+    # it for this architecture.
+    export BABL_OPTIONS="-Denable-vapi=false"
+    export GEGL_OPTIONS="-Dvapigen=disabled"
 else
     export MSYS2_ARCH="x86_64"
+    export BABL_OPTIONS=""
+    export GEGL_OPTIONS=""
 fi
 
 # Why do we even have to remove these manually? The whole thing is
@@ -59,7 +65,8 @@ git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
 mkdir _babl/_build
 cd _babl/_build
-meson -Dprefix="${GIMP_PREFIX}" -Dwith-docs=false ..
+meson -Dprefix="${GIMP_PREFIX}" -Dwith-docs=false \
+      ${BABL_OPTIONS} ..
 ninja
 ninja install
 
@@ -67,6 +74,7 @@ mkdir ../../_gegl/_build
 cd ../../_gegl/_build
 meson -Dprefix="${GIMP_PREFIX}" -Ddocs=false \
       -Dcairo=enabled -Dumfpack=enabled \
-      -Dopenexr=enabled -Dworkshop=true ..
+      -Dopenexr=enabled -Dworkshop=true \
+      ${GEGL_OPTIONS} ..
 ninja
 ninja install
