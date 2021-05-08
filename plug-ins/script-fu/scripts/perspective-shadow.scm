@@ -151,7 +151,6 @@
 
       (gimp-context-set-transform-direction TRANSFORM-FORWARD)
       (gimp-context-set-interpolation interpolation)
-      (gimp-context-set-transform-recursion 3)
       (gimp-context-set-transform-resize TRANSFORM-RESIZE-ADJUST)
 
       (gimp-item-transform-perspective shadow-layer
