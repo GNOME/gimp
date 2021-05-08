@@ -977,22 +977,39 @@ load_image (GFile        *file,
 
           if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
             {
-              gchar *fname = g_strdup_printf ("%s-%d", g_file_get_uri (file),
-                                              ilayer);
+              gchar *uri;
+              gchar *fname;
+              GFile *new_file;
 
-              gimp_image_set_file (*image, g_file_new_for_uri (fname));
+              uri      = g_file_get_uri (file);
+              fname    = g_strdup_printf ("%s-%d", uri, ilayer);
+              new_file = g_file_new_for_uri (fname);
+
+              gimp_image_set_file (*image, new_file);
+
+              g_free (uri);
               g_free (fname);
+              g_object_unref (new_file);
 
               images_list = g_list_prepend (images_list, *image);
             }
           else if (pages.o_pages != pages.n_pages)
             {
-              gchar *fname = g_strdup_printf (_("%s-%d-of-%d-pages"),
-                                              g_file_get_uri (file),
-                                              pages.n_pages, pages.o_pages);
+              gchar *uri;
+              gchar *fname;
+              GFile *new_file;
 
-              gimp_image_set_file (*image, g_file_new_for_uri (fname));
+              uri      = g_file_get_uri (file);
+              fname    = g_strdup_printf (_("%s-%d-of-%d-pages"),
+                                          uri,
+                                          pages.n_pages, pages.o_pages);
+              new_file = g_file_new_for_uri (fname);
+
+              gimp_image_set_file (*image, new_file);
+
+              g_free (uri);
               g_free (fname);
+              g_object_unref (new_file);
             }
           else
             {

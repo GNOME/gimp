@@ -181,6 +181,8 @@ file_utils_load_thumbnail (GFile *file)
   thumbnail = gimp_thumbnail_new ();
   gimp_thumbnail_set_uri (thumbnail, uri);
 
+  g_free (uri);
+
   pixbuf = gimp_thumbnail_load_thumb (thumbnail,
                                       (GimpThumbSize) GIMP_THUMBNAIL_SIZE_NORMAL,
                                       NULL);

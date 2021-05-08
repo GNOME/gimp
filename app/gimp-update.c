@@ -337,8 +337,12 @@ gimp_check_updates_callback (GObject      *source,
       parser = json_parser_new ();
       if (! json_parser_load_from_data (parser, file_contents, file_length, &error))
         {
+          gchar *uri = g_file_get_uri (G_FILE (source));
+
           g_printerr ("%s: parsing of %s failed: %s\n", G_STRFUNC,
-                      g_file_get_uri (G_FILE (source)), error->message);
+                      uri, error->message);
+
+          g_free (uri);
           g_free (file_contents);
           g_clear_object (&parser);
           g_clear_error (&error);
@@ -387,8 +391,12 @@ gimp_check_updates_callback (GObject      *source,
     }
   else
     {
-      g_printerr("%s: loading of %s failed: %s\n", G_STRFUNC,
-                 g_file_get_uri (G_FILE (source)), error->message);
+      gchar *uri = g_file_get_uri (G_FILE (source));
+
+      g_printerr ("%s: loading of %s failed: %s\n", G_STRFUNC,
+                  uri, error->message);
+
+      g_free (uri);
       g_clear_error (&error);
     }
 }
