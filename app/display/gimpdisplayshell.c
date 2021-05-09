@@ -151,6 +151,8 @@ static void      gimp_display_shell_unmap          (GtkWidget        *widget);
 static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
                                                     GdkScreen        *previous);
 static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
+static gboolean  gimp_display_shell_draw           (GtkWidget        *widget,
+                                                    cairo_t          *cr);
 
 static void      gimp_display_shell_real_scaled    (GimpDisplayShell *shell);
 static void      gimp_display_shell_real_scrolled  (GimpDisplayShell *shell);
@@ -255,6 +257,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   widget_class->unmap              = gimp_display_shell_unmap;
   widget_class->screen_changed     = gimp_display_shell_screen_changed;
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
+  widget_class->draw               = gimp_display_shell_draw;
 
   klass->scaled                    = gimp_display_shell_real_scaled;
   klass->scrolled                  = gimp_display_shell_real_scrolled;
@@ -1051,6 +1054,20 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
                             NULL, NULL);
 
   return TRUE;
+}
+
+static gboolean
+gimp_display_shell_draw (GtkWidget *widget,
+                         cairo_t   *cr)
+{
+  GtkWidgetClass   *widget_class = g_type_class_peek_parent (parent_class);
+  GimpDisplayShell *shell        = GIMP_DISPLAY_SHELL (widget);
+  gboolean          stop_handlers;
+
+  stop_handlers = widget_class->draw (widget, cr);
+  gimp_display_shell_selection_draw (shell, cr);
+
+  return stop_handlers;
 }
 
 static void
