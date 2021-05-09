@@ -2498,6 +2498,45 @@ gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
   variable_data->value.size = ms.ullAvailPhys;
 }
 
+#elif defined(__OpenBSD__)
+#include <sys/resource.h>
+#include <sys/types.h>
+#include <sys/sysctl.h>
+
+static void
+gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
+                                   Variable       variable)
+{
+  GimpDashboardPrivate *priv          = dashboard->priv;
+  VariableData         *variable_data = &priv->variables[variable];
+  struct rusage         rusage;
+
+  variable_data->available = FALSE;
+
+  if (getrusage (RUSAGE_SELF, &rusage) == -1)
+    return;
+  variable_data->available  = TRUE;
+  variable_data->value.size = (guint64) (rusage.ru_maxrss * 1024);
+}
+
+static void
+gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
+                                        Variable       variable)
+{
+  GimpDashboardPrivate *priv            = dashboard->priv;
+  VariableData         *variable_data   = &priv->variables[variable];
+  int                   mib[]           = { CTL_HW, HW_PHYSMEM64 };
+  int64_t               result;
+  size_t                sz              = sizeof(int64_t);
+
+  variable_data->available = FALSE;
+
+  if (sysctl (mib, 2, &result, &sz, NULL, 0) == -1)
+    return;
+  variable_data->available  = TRUE;
+  variable_data->value.size = (guint64) result;
+}
+
 #else /* ! G_OS_WIN32 && ! PLATFORM_OSX */
 static void
 gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
