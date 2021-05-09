@@ -31,5 +31,7 @@ void   gimp_display_shell_selection_resume   (GimpDisplayShell     *shell);
 void   gimp_display_shell_selection_set_show (GimpDisplayShell     *shell,
                                               gboolean              show);
 
+void   gimp_display_shell_selection_draw     (GimpDisplayShell     *shell,
+                                              cairo_t              *cr);
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SELECTION_H__  */

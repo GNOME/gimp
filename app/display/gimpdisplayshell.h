@@ -95,6 +95,7 @@ struct _GimpDisplayShell
   gboolean           show_all;         /*  show the entire image              */
 
   Selection         *selection;        /*  Selection (marching ants)          */
+  gint64             selection_update; /*  Last selection index update        */
 
   GList             *children;
 
