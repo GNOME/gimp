@@ -309,7 +309,7 @@ selection_render_mask (Selection *selection)
   cairo_surface_t *surface;
   cairo_t         *cr;
 
-  window = gtk_widget_get_window (selection->shell->canvas);
+  window = gtk_widget_get_window (GTK_WIDGET (selection->shell));
   surface = gdk_window_create_similar_surface (window, CAIRO_CONTENT_ALPHA,
                                                gdk_window_get_width  (window),
                                                gdk_window_get_height (window));
@@ -451,7 +451,7 @@ selection_start_timeout (Selection *selection)
       cairo_rectangle_int_t  rect;
       cairo_region_t        *region;
 
-      window = gtk_widget_get_window (selection->shell->canvas);
+      window = gtk_widget_get_window (GTK_WIDGET (selection->shell));
 
       rect.x      = 0;
       rect.y      = 0;
