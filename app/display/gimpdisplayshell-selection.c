@@ -229,7 +229,7 @@ selection_start (Selection *selection)
   selection_stop (selection);
 
   /*  If this selection is paused, do not start it  */
-  if (selection->paused == 0)
+  if (selection->paused == 0 && selection->timeout == 0)
     {
       selection->timeout = g_idle_add ((GSourceFunc) selection_start_timeout,
                                        selection);
@@ -441,27 +441,37 @@ selection_free_segs (Selection *selection)
 static gboolean
 selection_start_timeout (Selection *selection)
 {
-  selection->timeout = 0;
-
   /*  Draw the ants  */
   if (gimp_display_get_image (selection->shell->display) &&
       selection->show_selection)
     {
-      GdkWindow             *window;
-      cairo_rectangle_int_t  rect;
-      cairo_region_t        *region;
+      GimpDisplayConfig *config = selection->shell->display->config;
+      gint64             time = g_get_monotonic_time ();
 
-      window = gtk_widget_get_window (GTK_WIDGET (selection->shell));
+      if ((time - selection->shell->selection_update) / 1000 > config->marching_ants_speed)
+        {
+          GdkWindow             *window;
+          cairo_rectangle_int_t  rect;
+          cairo_region_t        *region;
 
-      rect.x      = 0;
-      rect.y      = 0;
-      rect.width  = gdk_window_get_width  (window);
-      rect.height = gdk_window_get_height (window);
+          window = gtk_widget_get_window (GTK_WIDGET (selection->shell));
 
-      region = cairo_region_create_rectangle (&rect);
-      gtk_widget_queue_draw_region (GTK_WIDGET (selection->shell), region);
-      cairo_region_destroy (region);
+          rect.x      = 0;
+          rect.y      = 0;
+          rect.width  = gdk_window_get_width  (window);
+          rect.height = gdk_window_get_height (window);
+
+          region = cairo_region_create_rectangle (&rect);
+          gtk_widget_queue_draw_region (GTK_WIDGET (selection->shell), region);
+          cairo_region_destroy (region);
+        }
+      else
+        {
+          return G_SOURCE_CONTINUE;
+        }
     }
+
+  selection->timeout = 0;
 
   return G_SOURCE_REMOVE;
 }
