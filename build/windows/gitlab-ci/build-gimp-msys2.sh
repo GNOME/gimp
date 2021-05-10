@@ -98,7 +98,7 @@ ccache --show-stats
 
 mkdir _build
 cd _build
-../autogen.sh --prefix="${GIMP_PREFIX}" ${GIMP_OPTIONS}
+../autogen.sh --prefix="${GIMP_PREFIX}" --enable-windows-installer ${GIMP_OPTIONS}
 make -j4
 make install
 cd ..
