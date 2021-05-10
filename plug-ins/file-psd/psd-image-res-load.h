@@ -22,22 +22,23 @@
 #define __PSD_IMAGE_RES_LOAD_H__
 
 
-gint  get_image_resource_header (PSDimageres  *res_a,
-                                 FILE         *f,
-                                 GError      **error);
+gint  get_image_resource_header (PSDimageres   *res_a,
+                                 GInputStream  *input,
+                                 GError       **error);
 
-gint  load_image_resource       (PSDimageres  *res_a,
-                                 GimpImage    *image,
-                                 PSDimage     *img_a,
-                                 FILE         *f,
-                                 gboolean     *resolution_loaded,
-                                 gboolean     *profile_loaded,
-                                 GError      **error);
+gint  load_image_resource       (PSDimageres   *res_a,
+                                 GimpImage     *image,
+                                 PSDimage      *img_a,
+                                 GInputStream  *input,
+                                 gboolean      *resolution_loaded,
+                                 gboolean      *profile_loaded,
+                                 GError       **error);
 
-gint  load_thumbnail_resource   (PSDimageres  *res_a,
-                                 GimpImage    *image,
-                                 FILE         *f,
-                                 GError      **error);
+gint  load_thumbnail_resource   (PSDimageres   *res_a,
+                                 GimpImage     *image,
+                                 GFile         *file,
+                                 GInputStream  *input,
+                                 GError       **error);
 
 
 #endif /* __PSD_IMAGE_RES_LOAD_H__ */

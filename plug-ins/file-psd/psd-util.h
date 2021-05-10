@@ -21,11 +21,21 @@
 #ifndef __PSD_UTIL_H__
 #define __PSD_UTIL_H__
 
+#define PSD_TELL(f)     g_seekable_tell (G_SEEKABLE (input))
+
 /*
  *  Set file read error
  */
-void                    psd_set_error          (gboolean             file_eof,
-                                                gint                 err_no,
+void                    psd_set_error          (GError             **error);
+
+gint                    psd_read               (GInputStream        *input,
+                                                gconstpointer        data,
+                                                gint                 count,
+                                                GError             **error);
+
+gboolean                psd_seek               (GInputStream        *input,
+                                                goffset              offset,
+                                                GSeekType            type,
                                                 GError             **error);
 
 /*
@@ -35,7 +45,7 @@ void                    psd_set_error          (gboolean             file_eof,
 gchar                 * fread_pascal_string    (gint32              *bytes_read,
                                                 gint32              *bytes_written,
                                                 guint16              mod_len,
-                                                FILE                *f,
+                                                GInputStream        *input,
                                                 GError             **error);
 
 /*
@@ -44,7 +54,7 @@ gchar                 * fread_pascal_string    (gint32              *bytes_read,
  */
 gint32                  fwrite_pascal_string   (const gchar         *src,
                                                 guint16              mod_len,
-                                                FILE                *f,
+                                                GOutputStream       *output,
                                                 GError             **error);
 
 /*
@@ -54,7 +64,7 @@ gint32                  fwrite_pascal_string   (const gchar         *src,
 gchar                 * fread_unicode_string   (gint32              *bytes_read,
                                                 gint32              *bytes_written,
                                                 guint16              mod_len,
-                                                FILE                *f,
+                                                GInputStream        *input,
                                                 GError             **error);
 
 /*
@@ -63,7 +73,7 @@ gchar                 * fread_unicode_string   (gint32              *bytes_read,
  */
 gint32                  fwrite_unicode_string  (const gchar         *src,
                                                 guint16              mod_len,
-                                                FILE                *f,
+                                                GOutputStream       *output,
                                                 GError             **error);
 
 gint                    decode_packbits        (const gchar         *src,

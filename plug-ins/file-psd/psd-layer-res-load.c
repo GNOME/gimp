@@ -137,96 +137,97 @@
 /*  Local function prototypes  */
 static gint     load_resource_unknown (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_ladj    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_lfil    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_lfx     (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_ltyp    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_luni    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_lyid    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_lclr    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_lsct    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_lrfx    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_lyvr    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_lnsr    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f,
+                                       GInputStream          *input,
                                        GError               **error);
 
 /* Public Functions */
 gint
-get_layer_resource_header (PSDlayerres  *res_a,
-                           FILE         *f,
-                           GError      **error)
+get_layer_resource_header (PSDlayerres   *res_a,
+                           GInputStream  *input,
+                           GError       **error)
 {
-  if (fread (res_a->sig, 4, 1, f) < 1
-      || fread (res_a->key, 4, 1, f) < 1
-      || fread (&res_a->data_len, 4, 1, f) < 1)
+  g_debug ("get_layer_resource_header");
+  if (psd_read (input, res_a->sig,       4, error) < 4 ||
+      psd_read (input, res_a->key,       4, error) < 4 ||
+      psd_read (input, &res_a->data_len, 4, error) < 4)
     {
-      psd_set_error (feof (f), errno, error);
+      psd_set_error (error);
       return -1;
     }
   res_a->data_len = GUINT32_FROM_BE (res_a->data_len);
-  res_a->data_start = ftell (f);
+  res_a->data_start = g_seekable_tell (G_SEEKABLE (input));
 
-  IFDBG(2) g_debug ("Sig: %.4s, key: %.4s, start: %d, len: %d",
+  IFDBG(2) g_debug ("Sig: %.4s, key: %.4s, start: %" G_GOFFSET_FORMAT ", len: %" G_GOFFSET_FORMAT,
                      res_a->sig, res_a->key, res_a->data_start, res_a->data_len);
 
   return 0;
 }
 
 gint
-load_layer_resource (PSDlayerres  *res_a,
-                     PSDlayer     *lyr_a,
-                     FILE         *f,
-                     GError      **error)
+load_layer_resource (PSDlayerres   *res_a,
+                     PSDlayer      *lyr_a,
+                     GInputStream  *input,
+                     GError       **error)
 {
   /* Set file position to start of layer resource data block */
-  if (fseek (f, res_a->data_start, SEEK_SET) < 0)
+  if (! psd_seek (input, res_a->data_start, G_SEEK_SET, error))
     {
-      psd_set_error (feof (f), errno, error);
+      psd_set_error (error);
       return -1;
     }
 
@@ -252,51 +253,54 @@ load_layer_resource (PSDlayerres  *res_a,
           || memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0
           || memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0
           || memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0)
-        load_resource_ladj (res_a, lyr_a, f, error);
+        load_resource_ladj (res_a, lyr_a, input, error);
 
       else if (memcmp (res_a->key, PSD_LFIL_SOLID, 4) == 0
                || memcmp (res_a->key, PSD_LFIL_PATTERN, 4) == 0
                || memcmp (res_a->key, PSD_LFIL_GRADIENT, 4) == 0)
-        load_resource_lfil (res_a, lyr_a, f, error);
+        load_resource_lfil (res_a, lyr_a, input, error);
 
       else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0
                || memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
-        load_resource_lfx (res_a, lyr_a, f, error);
+        load_resource_lfx (res_a, lyr_a, input, error);
 
       else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
                || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
-        load_resource_ltyp (res_a, lyr_a, f, error);
+        load_resource_ltyp (res_a, lyr_a, input, error);
 
       else if (memcmp (res_a->key, PSD_LPRP_UNICODE, 4) == 0)
-        load_resource_luni (res_a, lyr_a, f, error);
+        load_resource_luni (res_a, lyr_a, input, error);
 
       else if (memcmp (res_a->key, PSD_LPRP_ID, 4) == 0)
-        load_resource_lyid (res_a, lyr_a, f, error);
+        load_resource_lyid (res_a, lyr_a, input, error);
 
       else if (memcmp (res_a->key, PSD_LPRP_COLOR, 4) == 0)
-        load_resource_lclr (res_a, lyr_a, f, error);
+        load_resource_lclr (res_a, lyr_a, input, error);
 
       else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0
                || memcmp (res_a->key, PSD_LOTH_SECTION2, 4) == 0) /* bug #789981 */
-        load_resource_lsct (res_a, lyr_a, f, error);
+        load_resource_lsct (res_a, lyr_a, input, error);
 
       else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
-        load_resource_lrfx (res_a, lyr_a, f, error);
+        load_resource_lrfx (res_a, lyr_a, input, error);
 
       else if (memcmp (res_a->key, PSD_LPRP_VERSION, 4) == 0)
-        load_resource_lyvr (res_a, lyr_a, f, error);
+        load_resource_lyvr (res_a, lyr_a, input, error);
 
       else if (memcmp (res_a->key, PSD_LPRP_SOURCE, 4) == 0)
-        load_resource_lnsr (res_a, lyr_a, f, error);
+        load_resource_lnsr (res_a, lyr_a, input, error);
 
       else
-        load_resource_unknown (res_a, lyr_a, f, error);
+        load_resource_unknown (res_a, lyr_a, input, error);
     }
 
+  if (error && *error)
+    return -1;
+
   /* Set file position to end of layer resource block */
-  if (fseek (f, res_a->data_start + res_a->data_len, SEEK_SET) < 0)
+  if (! psd_seek (input, res_a->data_start + res_a->data_len, G_SEEK_SET, error))
     {
-      psd_set_error (feof (f), errno, error);
+      psd_set_error (error);
       return -1;
     }
 
@@ -308,7 +312,7 @@ load_layer_resource (PSDlayerres  *res_a,
 static gint
 load_resource_unknown (const PSDlayerres  *res_a,
                        PSDlayer           *lyr_a,
-                       FILE               *f,
+                       GInputStream       *input,
                        GError            **error)
 {
   IFDBG(2) g_debug ("Process unknown layer resource block: %.4s", res_a->key);
@@ -319,7 +323,7 @@ load_resource_unknown (const PSDlayerres  *res_a,
 static gint
 load_resource_ladj (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
-                    FILE               *f,
+                    GInputStream       *input,
                     GError            **error)
 {
   /* Load adjustment layer */
@@ -342,7 +346,7 @@ load_resource_ladj (const PSDlayerres  *res_a,
 static gint
 load_resource_lfil (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
-                    FILE               *f,
+                    GInputStream       *input,
                     GError            **error)
 {
   /* Load fill layer */
@@ -364,7 +368,7 @@ load_resource_lfil (const PSDlayerres  *res_a,
 static gint
 load_resource_lfx (const PSDlayerres  *res_a,
                    PSDlayer           *lyr_a,
-                   FILE               *f,
+                   GInputStream       *input,
                    GError            **error)
 {
   /* Load layer effects */
@@ -386,7 +390,7 @@ load_resource_lfx (const PSDlayerres  *res_a,
 static gint
 load_resource_ltyp (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
-                    FILE               *f,
+                    GInputStream       *input,
                     GError            **error)
 {
   /* Load type tool layer */
@@ -418,17 +422,17 @@ load_resource_ltyp (const PSDlayerres  *res_a,
   /* New style type tool layers (ps6) */
   if (memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
     {
-      if (fread (&version, 2, 1, f) < 1
-          || fread (&t_xx, 8, 1, f) < 1
-          || fread (&t_xy, 8, 1, f) < 1
-          || fread (&t_yx, 8, 1, f) < 1
-          || fread (&t_yy, 8, 1, f) < 1
-          || fread (&t_tx, 8, 1, f) < 1
-          || fread (&t_ty, 8, 1, f) < 1
-          || fread (&text_desc_vers, 2, 1, f) < 1
-          || fread (&desc_version, 4, 1, f) < 1)
+      if (psd_read (input, &version, 2, error) < 2 ||
+          psd_read (input, &t_xx,    8, error) < 8 ||
+          psd_read (input, &t_xy,    8, error) < 8 ||
+          psd_read (input, &t_yx,    8, error) < 8 ||
+          psd_read (input, &t_yy,    8, error) < 8 ||
+          psd_read (input, &t_tx,    8, error) < 8 ||
+          psd_read (input, &t_ty,    8, error) < 8 ||
+          psd_read (input, &text_desc_vers, 2, error) < 2 ||
+          psd_read (input, &desc_version,   4, error) < 4)
         {
-          psd_set_error (feof (f), errno, error);
+          psd_set_error (error);
           return -1;
         }
 
@@ -457,7 +461,7 @@ load_resource_ltyp (const PSDlayerres  *res_a,
                         lyr_a->text.xx, lyr_a->text.xy, lyr_a->text.yx,
                         lyr_a->text.yy, lyr_a->text.tx, lyr_a->text.ty);
 
-      classID = fread_unicode_string (&read_len, &write_len, 4, f, error);
+      classID = fread_unicode_string (&read_len, &write_len, 4, input, error);
       IFDBG(2) g_debug ("Unicode name: %s", classID);
     }
 
@@ -467,7 +471,7 @@ load_resource_ltyp (const PSDlayerres  *res_a,
 static gint
 load_resource_luni (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
-                    FILE               *f,
+                    GInputStream       *input,
                     GError            **error)
 {
   /* Load layer name in unicode (length padded to multiple of 4 bytes) */
@@ -478,7 +482,7 @@ load_resource_luni (const PSDlayerres  *res_a,
   if (lyr_a->name)
     g_free (lyr_a->name);
 
-  lyr_a->name = fread_unicode_string (&read_len, &write_len, 4, f, error);
+  lyr_a->name = fread_unicode_string (&read_len, &write_len, 4, input, error);
   if (*error)
     return -1;
   IFDBG(3) g_debug ("Unicode name: %s", lyr_a->name);
@@ -489,15 +493,15 @@ load_resource_luni (const PSDlayerres  *res_a,
 static gint
 load_resource_lyid (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
-                    FILE               *f,
+                    GInputStream       *input,
                     GError            **error)
 {
   /* Load layer id (tattoo) */
 
   IFDBG(2) g_debug ("Process layer resource block lyid: Layer ID");
-  if (fread (&lyr_a->id, 4, 1, f) < 1)
+  if (psd_read (input, &lyr_a->id, 4, error) < 4)
     {
-      psd_set_error (feof (f), errno, error);
+      psd_set_error (error);
       return -1;
     }
   lyr_a->id = GUINT32_FROM_BE (lyr_a->id);
@@ -509,16 +513,16 @@ load_resource_lyid (const PSDlayerres  *res_a,
 static gint
 load_resource_lclr (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
-                    FILE               *f,
+                    GInputStream       *input,
                     GError            **error)
 {
   /* Load layer sheet color code */
   IFDBG(2) g_debug ("Process layer resource block %.4s: Sheet color",
                     res_a->key);
 
-  if (fread (lyr_a->color_tag, 8, 1, f) < 1)
+  if (psd_read (input, lyr_a->color_tag, 8, error) < 8)
     {
-      psd_set_error (feof (f), errno, error);
+      psd_set_error (error);
       return -1;
     }
 
@@ -533,7 +537,7 @@ load_resource_lclr (const PSDlayerres  *res_a,
 static gint
 load_resource_lsct (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
-                    FILE               *f,
+                    GInputStream       *input,
                     GError            **error)
 {
   /* Load layer group & type information
@@ -544,9 +548,9 @@ load_resource_lsct (const PSDlayerres  *res_a,
   guint32           type;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Section divider", res_a->key);
-  if (fread (&type, 4, 1, f) < 1)
+  if (psd_read (input, &type, 4, error) < 4)
     {
-      psd_set_error (feof (f), errno, error);
+      psd_set_error (error);
       return -1;
     }
   type = GUINT32_FROM_BE (type);
@@ -559,10 +563,10 @@ load_resource_lsct (const PSDlayerres  *res_a,
       gchar signature[4];
       gchar blend_mode[4];
 
-      if (fread (signature,  4, 1, f) < 1 ||
-          fread (blend_mode, 4, 1, f) < 1)
+      if (psd_read (input, signature,  4, error) < 4 ||
+          psd_read (input, blend_mode, 4, error) < 4)
         {
-          psd_set_error (feof (f), errno, error);
+          psd_set_error (error);
           return -1;
         }
       if (memcmp (signature, "8BIM", 4) == 0)
@@ -583,7 +587,7 @@ load_resource_lsct (const PSDlayerres  *res_a,
 static gint
 load_resource_lrfx (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
-                    FILE               *f,
+                    GInputStream       *input,
                     GError            **error)
 {
   gint16    version;
@@ -594,19 +598,19 @@ load_resource_lrfx (const PSDlayerres  *res_a,
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Layer effects", res_a->key);
 
-  if (fread (&version, 2, 1, f) < 1
-      || fread (&count, 2, 1, f) < 1)
+  if (psd_read (input, &version, 2, error) < 2 ||
+      psd_read (input, &count,   2, error) < 2)
     {
-      psd_set_error (feof (f), errno, error);
+      psd_set_error (error);
       return -1;
     }
 
   for (i = 0; i < count; i++)
     {
-      if (fread (&signature, 4, 1, f) < 1
-          || fread(&effectname, 4, 1, f) < 1)
+      if (psd_read (input, &signature,  4, error) < 4 ||
+          psd_read (input, &effectname, 4, error) < 4)
         {
-          psd_set_error (feof (f), errno, error);
+          psd_set_error (error);
           return -1;
         }
 
@@ -623,12 +627,12 @@ load_resource_lrfx (const PSDlayerres  *res_a,
               gchar     visible;
               gint16    unused;
 
-              if (fread (&size, 4, 1, f) < 1
-                  || fread(&ver, 4, 1, f) < 1
-                  || fread(&visible, 1, 1, f) < 1
-                  || fread(&unused, 2, 1, f) < 1)
+              if (psd_read (input, &size,    4, error) < 4 ||
+                  psd_read (input, &ver,     4, error) < 4 ||
+                  psd_read (input, &visible, 1, error) < 1 ||
+                  psd_read (input, &unused,  2, error) < 2)
                 {
-                  psd_set_error (feof (f), errno, error);
+                  psd_set_error (error);
                   return -1;
                 }
             }
@@ -649,29 +653,29 @@ load_resource_lrfx (const PSDlayerres  *res_a,
               gchar     opacity;
               gint16    natcolor[5];
 
-              if (fread (&size, 4, 1, f) < 1
-                  || fread(&ver, 4, 1, f) < 1
-                  || fread(&blur, 4, 1, f) < 1
-                  || fread(&intensity, 4, 1, f) < 1
-                  || fread(&angle, 4, 1, f) < 1
-                  || fread(&distance, 4, 1, f) < 1
-                  || fread(&color[0], 2, 1, f) < 1
-                  || fread(&color[1], 2, 1, f) < 1
-                  || fread(&color[2], 2, 1, f) < 1
-                  || fread(&color[3], 2, 1, f) < 1
-                  || fread(&color[4], 2, 1, f) < 1
-                  || fread(&blendsig, 4, 1, f) < 1
-                  || fread(&effect, 4, 1, f) < 1
-                  || fread(&effecton, 1, 1, f) < 1
-                  || fread(&anglefx, 1, 1, f) < 1
-                  || fread(&opacity, 1, 1, f) < 1
-                  || fread(&natcolor[0], 2, 1, f) < 1
-                  || fread(&natcolor[1], 2, 1, f) < 1
-                  || fread(&natcolor[2], 2, 1, f) < 1
-                  || fread(&natcolor[3], 2, 1, f) < 1
-                  || fread(&natcolor[4], 2, 1, f) < 1)
+              if (psd_read (input, &size,        4, error) < 4 ||
+                  psd_read (input, &ver,         4, error) < 4 ||
+                  psd_read (input, &blur,        4, error) < 4 ||
+                  psd_read (input, &intensity,   4, error) < 4 ||
+                  psd_read (input, &angle,       4, error) < 4 ||
+                  psd_read (input, &distance,    4, error) < 4 ||
+                  psd_read (input, &color[0],    2, error) < 2 ||
+                  psd_read (input, &color[1],    2, error) < 2 ||
+                  psd_read (input, &color[2],    2, error) < 2 ||
+                  psd_read (input, &color[3],    2, error) < 2 ||
+                  psd_read (input, &color[4],    2, error) < 2 ||
+                  psd_read (input, &blendsig,    4, error) < 4 ||
+                  psd_read (input, &effect,      4, error) < 4 ||
+                  psd_read (input, &effecton,    1, error) < 1 ||
+                  psd_read (input, &anglefx,     1, error) < 1 ||
+                  psd_read (input, &opacity,     1, error) < 1 ||
+                  psd_read (input, &natcolor[0], 2, error) < 2 ||
+                  psd_read (input, &natcolor[1], 2, error) < 2 ||
+                  psd_read (input, &natcolor[2], 2, error) < 2 ||
+                  psd_read (input, &natcolor[3], 2, error) < 2 ||
+                  psd_read (input, &natcolor[4], 2, error) < 2)
                 {
-                  psd_set_error (feof (f), errno, error);
+                  psd_set_error (error);
                   return -1;
                 }
             }
@@ -688,33 +692,33 @@ load_resource_lrfx (const PSDlayerres  *res_a,
               gchar     opacity;
               gint16    natcolor[5];
 
-              if (fread (&size, 4, 1, f) < 1
-                  || fread(&ver, 4, 1, f) < 1
-                  || fread(&blur, 4, 1, f) < 1
-                  || fread(&intensity, 4, 1, f) < 1
-                  || fread(&color[0], 2, 1, f) < 1
-                  || fread(&color[1], 2, 1, f) < 1
-                  || fread(&color[2], 2, 1, f) < 1
-                  || fread(&color[3], 2, 1, f) < 1
-                  || fread(&color[4], 2, 1, f) < 1
-                  || fread(&blendsig, 4, 1, f) < 1
-                  || fread(&effect, 4, 1, f) < 1
-                  || fread(&effecton, 1, 1, f) < 1
-                  || fread(&opacity, 1, 1, f) < 1)
+              if (psd_read (input, &size,      4, error) < 4 ||
+                  psd_read (input, &ver,       4, error) < 4 ||
+                  psd_read (input, &blur,      4, error) < 4 ||
+                  psd_read (input, &intensity, 4, error) < 4 ||
+                  psd_read (input, &color[0],  2, error) < 2 ||
+                  psd_read (input, &color[1],  2, error) < 2 ||
+                  psd_read (input, &color[2],  2, error) < 2 ||
+                  psd_read (input, &color[3],  2, error) < 2 ||
+                  psd_read (input, &color[4],  2, error) < 2 ||
+                  psd_read (input, &blendsig,  4, error) < 4 ||
+                  psd_read (input, &effect,    4, error) < 4 ||
+                  psd_read (input, &effecton,  1, error) < 1 ||
+                  psd_read (input, &opacity,   1, error) < 1)
                 {
-                  psd_set_error (feof (f), errno, error);
+                  psd_set_error (error);
                   return -1;
                 }
 
               if (size == 42)
                 {
-                  if (fread(&natcolor[0], 2, 1, f) < 1
-                      || fread(&natcolor[1], 2, 1, f) < 1
-                      || fread(&natcolor[2], 2, 1, f) < 1
-                      || fread(&natcolor[3], 2, 1, f) < 1
-                      || fread(&natcolor[4], 2, 1, f) < 1)
+                  if (psd_read (input, &natcolor[0], 2, error) < 2 ||
+                      psd_read (input, &natcolor[1], 2, error) < 2 ||
+                      psd_read (input, &natcolor[2], 2, error) < 2 ||
+                      psd_read (input, &natcolor[3], 2, error) < 2 ||
+                      psd_read (input, &natcolor[4], 2, error) < 2)
                     {
-                      psd_set_error (feof (f), errno, error);
+                      psd_set_error (error);
                       return -1;
                     }
                 }
@@ -736,43 +740,43 @@ load_resource_lrfx (const PSDlayerres  *res_a,
               gchar     invert;
               gint16    natcolor[5];
 
-              if (fread (&size, 4, 1, f) < 1
-                  || fread(&ver, 4, 1, f) < 1
-                  || fread(&blur, 4, 1, f) < 1
-                  || fread(&intensity, 4, 1, f) < 1
-                  || fread(&angle, 4, 1, f) < 1
-                  || fread(&distance, 4, 1, f) < 1
-                  || fread(&color[0], 2, 1, f) < 1
-                  || fread(&color[1], 2, 1, f) < 1
-                  || fread(&color[2], 2, 1, f) < 1
-                  || fread(&color[3], 2, 1, f) < 1
-                  || fread(&color[4], 2, 1, f) < 1
-                  || fread(&blendsig, 4, 1, f) < 1
-                  || fread(&effect, 4, 1, f) < 1
-                  || fread(&effecton, 1, 1, f) < 1
-                  || fread(&anglefx, 1, 1, f) < 1
-                  || fread(&opacity, 1, 1, f) < 1
-                  || fread(&natcolor[0], 2, 1, f) < 1
-                  || fread(&natcolor[1], 2, 1, f) < 1
-                  || fread(&natcolor[2], 2, 1, f) < 1
-                  || fread(&natcolor[3], 2, 1, f) < 1
-                  || fread(&natcolor[4], 2, 1, f) < 1)
+              if (psd_read (input, &size,        4, error) < 4 ||
+                  psd_read (input, &ver,         4, error) < 4 ||
+                  psd_read (input, &blur,        4, error) < 4 ||
+                  psd_read (input, &intensity,   4, error) < 4 ||
+                  psd_read (input, &angle,       4, error) < 4 ||
+                  psd_read (input, &distance,    4, error) < 4 ||
+                  psd_read (input, &color[0],    2, error) < 2 ||
+                  psd_read (input, &color[1],    2, error) < 2 ||
+                  psd_read (input, &color[2],    2, error) < 2 ||
+                  psd_read (input, &color[3],    2, error) < 2 ||
+                  psd_read (input, &color[4],    2, error) < 2 ||
+                  psd_read (input, &blendsig,    4, error) < 4 ||
+                  psd_read (input, &effect,      4, error) < 4 ||
+                  psd_read (input, &effecton,    1, error) < 1 ||
+                  psd_read (input, &anglefx,     1, error) < 1 ||
+                  psd_read (input, &opacity,     1, error) < 1 ||
+                  psd_read (input, &natcolor[0], 2, error) < 2 ||
+                  psd_read (input, &natcolor[1], 2, error) < 2 ||
+                  psd_read (input, &natcolor[2], 2, error) < 2 ||
+                  psd_read (input, &natcolor[3], 2, error) < 2 ||
+                  psd_read (input, &natcolor[4], 2, error) < 2)
                 {
-                  psd_set_error (feof (f), errno, error);
+                  psd_set_error (error);
                   return -1;
                 }
 
               if (size == 43)
                 {
-                  if (fread (&invert, 1, 1, f) < 1
-                      || fread(&natcolor[0], 2, 1, f) < 1
-                      || fread(&natcolor[0], 2, 1, f) < 1
-                      || fread(&natcolor[1], 2, 1, f) < 1
-                      || fread(&natcolor[2], 2, 1, f) < 1
-                      || fread(&natcolor[3], 2, 1, f) < 1
-                      || fread(&natcolor[4], 2, 1, f) < 1)
+                  if (psd_read (input, &invert,      1, error) < 1 ||
+                      psd_read (input, &natcolor[0], 2, error) < 2 ||
+                      psd_read (input, &natcolor[0], 2, error) < 2 ||
+                      psd_read (input, &natcolor[1], 2, error) < 2 ||
+                      psd_read (input, &natcolor[2], 2, error) < 2 ||
+                      psd_read (input, &natcolor[3], 2, error) < 2 ||
+                      psd_read (input, &natcolor[4], 2, error) < 2)
                     {
-                      psd_set_error (feof (f), errno, error);
+                      psd_set_error (error);
                       return -1;
                     }
                 }
@@ -799,52 +803,52 @@ load_resource_lrfx (const PSDlayerres  *res_a,
               gint16    highlightnatcolor[5];
               gint16    shadownatcolor[5];
 
-              if (fread (&size, 4, 1, f) < 1
-                  || fread(&ver, 4, 1, f) < 1
-                  || fread(&angle, 4, 1, f) < 1
-                  || fread(&strength, 4, 1, f) < 1
-                  || fread(&blur, 4, 1, f) < 1
-                  || fread(&highlightsig, 4, 1, f) < 1
-                  || fread(&highlighteffect, 4, 1, f) < 1
-                  || fread(&shadowsig, 4, 1, f) < 1
-                  || fread(&highlightcolor[0], 2, 1, f) < 1
-                  || fread(&shadoweffect, 4, 1, f) < 1
-                  || fread(&highlightcolor[1], 2, 1, f) < 1
-                  || fread(&highlightcolor[2], 2, 1, f) < 1
-                  || fread(&highlightcolor[3], 2, 1, f) < 1
-                  || fread(&highlightcolor[4], 2, 1, f) < 1
-                  || fread(&shadowcolor[0], 2, 1, f) < 1
-                  || fread(&shadowcolor[1], 2, 1, f) < 1
-                  || fread(&shadowcolor[2], 2, 1, f) < 1
-                  || fread(&shadowcolor[3], 2, 1, f) < 1
-                  || fread(&shadowcolor[4], 2, 1, f) < 1
-                  || fread(&style, 1, 1, f) < 1
-                  || fread(&highlightopacity, 1, 1, f) < 1
-                  || fread(&shadowopacity, 1, 1, f) < 1
-                  || fread(&enabled, 1, 1, f) < 1
-                  || fread(&global, 1, 1, f) < 1
-                  || fread(&direction, 1, 1, f) < 1)
+              if (psd_read (input, &size,              4, error) < 4 ||
+                  psd_read (input, &ver,               4, error) < 4 ||
+                  psd_read (input, &angle,             4, error) < 4 ||
+                  psd_read (input, &strength,          4, error) < 4 ||
+                  psd_read (input, &blur,              4, error) < 4 ||
+                  psd_read (input, &highlightsig,      4, error) < 4 ||
+                  psd_read (input, &highlighteffect,   4, error) < 4 ||
+                  psd_read (input, &shadowsig,         4, error) < 4 ||
+                  psd_read (input, &highlightcolor[0], 2, error) < 2 ||
+                  psd_read (input, &shadoweffect,      4, error) < 4 ||
+                  psd_read (input, &highlightcolor[1], 2, error) < 2 ||
+                  psd_read (input, &highlightcolor[2], 2, error) < 2 ||
+                  psd_read (input, &highlightcolor[3], 2, error) < 2 ||
+                  psd_read (input, &highlightcolor[4], 2, error) < 2 ||
+                  psd_read (input, &shadowcolor[0],    2, error) < 2 ||
+                  psd_read (input, &shadowcolor[1],    2, error) < 2 ||
+                  psd_read (input, &shadowcolor[2],    2, error) < 2 ||
+                  psd_read (input, &shadowcolor[3],    2, error) < 2 ||
+                  psd_read (input, &shadowcolor[4],    2, error) < 2 ||
+                  psd_read (input, &style,             1, error) < 1 ||
+                  psd_read (input, &highlightopacity,  1, error) < 1 ||
+                  psd_read (input, &shadowopacity,     1, error) < 1 ||
+                  psd_read (input, &enabled,           1, error) < 1 ||
+                  psd_read (input, &global,            1, error) < 1 ||
+                  psd_read (input, &direction,         1, error) < 1)
                 {
-                  psd_set_error (feof (f), errno, error);
+                  psd_set_error (error);
                   return -1;
                 }
 
               if (size == 78)
                 {
-                  if (fread(&highlightnatcolor[0], 2, 1, f) < 1
-                      || fread(&highlightnatcolor[0], 2, 1, f) < 1
-                      || fread(&highlightnatcolor[1], 2, 1, f) < 1
-                      || fread(&highlightnatcolor[2], 2, 1, f) < 1
-                      || fread(&highlightnatcolor[3], 2, 1, f) < 1
-                      || fread(&highlightnatcolor[4], 2, 1, f) < 1
-                      || fread(&shadownatcolor[0], 2, 1, f) < 1
-                      || fread(&shadownatcolor[0], 2, 1, f) < 1
-                      || fread(&shadownatcolor[1], 2, 1, f) < 1
-                      || fread(&shadownatcolor[2], 2, 1, f) < 1
-                      || fread(&shadownatcolor[3], 2, 1, f) < 1
-                      || fread(&shadownatcolor[4], 2, 1, f) < 1)
+                  if (psd_read (input, &highlightnatcolor[0], 2, error) < 2 ||
+                      psd_read (input, &highlightnatcolor[0], 2, error) < 2 ||
+                      psd_read (input, &highlightnatcolor[1], 2, error) < 2 ||
+                      psd_read (input, &highlightnatcolor[2], 2, error) < 2 ||
+                      psd_read (input, &highlightnatcolor[3], 2, error) < 2 ||
+                      psd_read (input, &highlightnatcolor[4], 2, error) < 2 ||
+                      psd_read (input, &shadownatcolor[0],    2, error) < 2 ||
+                      psd_read (input, &shadownatcolor[0],    2, error) < 2 ||
+                      psd_read (input, &shadownatcolor[1],    2, error) < 2 ||
+                      psd_read (input, &shadownatcolor[2],    2, error) < 2 ||
+                      psd_read (input, &shadownatcolor[3],    2, error) < 2 ||
+                      psd_read (input, &shadownatcolor[4],    2, error) < 2)
                     {
-                      psd_set_error (feof (f), errno, error);
+                      psd_set_error (error);
                       return -1;
                     }
                 }
@@ -859,23 +863,23 @@ load_resource_lrfx (const PSDlayerres  *res_a,
               gchar     enabled;
               gint16    natcolor[5];
 
-              if (fread (&size, 4, 1, f) < 1
-                  || fread(&ver, 4, 1, f) < 1
-                  || fread(&key, 4, 1, f) < 1
-                  || fread(&color[0], 2, 1, f) < 1
-                  || fread(&color[1], 2, 1, f) < 1
-                  || fread(&color[2], 2, 1, f) < 1
-                  || fread(&color[3], 2, 1, f) < 1
-                  || fread(&color[4], 2, 1, f) < 1
-                  || fread(&opacity, 1, 1, f) < 1
-                  || fread(&enabled, 1, 1, f) < 1
-                  || fread(&natcolor[0], 2, 1, f) < 1
-                  || fread(&natcolor[1], 2, 1, f) < 1
-                  || fread(&natcolor[2], 2, 1, f) < 1
-                  || fread(&natcolor[3], 2, 1, f) < 1
-                  || fread(&natcolor[4], 2, 1, f) < 1)
+              if (psd_read (input, &size,        4, error) < 4 ||
+                  psd_read (input, &ver,         4, error) < 4 ||
+                  psd_read (input, &key,         4, error) < 4 ||
+                  psd_read (input, &color[0],    2, error) < 2 ||
+                  psd_read (input, &color[1],    2, error) < 2 ||
+                  psd_read (input, &color[2],    2, error) < 2 ||
+                  psd_read (input, &color[3],    2, error) < 2 ||
+                  psd_read (input, &color[4],    2, error) < 2 ||
+                  psd_read (input, &opacity,     1, error) < 1 ||
+                  psd_read (input, &enabled,     1, error) < 1 ||
+                  psd_read (input, &natcolor[0], 2, error) < 2 ||
+                  psd_read (input, &natcolor[1], 2, error) < 2 ||
+                  psd_read (input, &natcolor[2], 2, error) < 2 ||
+                  psd_read (input, &natcolor[3], 2, error) < 2 ||
+                  psd_read (input, &natcolor[4], 2, error) < 2)
                 {
-                  psd_set_error (feof (f), errno, error);
+                  psd_set_error (error);
                   return -1;
                 }
             }
@@ -892,7 +896,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
 static gint
 load_resource_lyvr (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
-                    FILE               *f,
+                    GInputStream       *input,
                     GError            **error)
 {
   gint32 version;
@@ -900,9 +904,9 @@ load_resource_lyvr (const PSDlayerres  *res_a,
   IFDBG(2) g_debug ("Process layer resource block %.4s: layer version",
                     res_a->key);
 
-  if (fread (&version, 4, 1, f) < 1)
+  if (psd_read (input, &version, 4, error) < 4)
     {
-      psd_set_error (feof (f), errno, error);
+      psd_set_error (error);
       return -1;
     }
   version = GINT32_FROM_BE(version);
@@ -921,7 +925,7 @@ load_resource_lyvr (const PSDlayerres  *res_a,
 static gint
 load_resource_lnsr (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
-                    FILE               *f,
+                    GInputStream       *input,
                     GError            **error)
 {
   gchar layername[4];
@@ -929,9 +933,9 @@ load_resource_lnsr (const PSDlayerres  *res_a,
   IFDBG(2) g_debug ("Process layer resource block %.4s: layer source name",
                     res_a->key);
 
-  if (fread (&layername, 4, 1, f) < 1)
+  if (psd_read (input, &layername, 4, error) < 4)
     {
-      psd_set_error (feof (f), errno, error);
+      psd_set_error (error);
       return -1;
     }
 

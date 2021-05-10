@@ -590,9 +590,9 @@ typedef struct
   guchar                clipping;               /* Clipping */
   guchar                flags;                  /* Layer flags */
   guchar                filler;                 /* Filler */
-  guint32               extra_len;              /* Extra data length */
+  guint64               extra_len;              /* Extra data length */
   gchar                *name;                   /* Layer name */
-  guint32               mask_len;               /* Layer mask data length */
+  guint64               mask_len;               /* Layer mask data length */
   LayerMask             layer_mask;             /* Layer mask data */
   LayerMaskExtra        layer_mask_extra;       /* Layer mask extra data */
   LayerFlags            layer_flags;            /* Layer flags */
@@ -629,8 +629,8 @@ typedef struct
   gchar         type[4];                /* Image resource type */
   gint16        id;                     /* Image resource ID */
   gchar         name[256];              /* Image resource name (pascal string) */
-  guint32       data_start;             /* Image resource data start */
-  guint32       data_len;               /* Image resource data length */
+  guint64       data_start;             /* Image resource data start */
+  guint64       data_len;               /* Image resource data length */
 } PSDimageres;
 
 /* PSD Layer Resource data structure */
@@ -638,8 +638,8 @@ typedef struct
 {
   gchar         sig[4];                 /* Layer resource signature */
   gchar         key[4];                 /* Layer resource key */
-  guint32       data_start;             /* Layer resource data start */
-  guint32       data_len;               /* Layer resource data length */
+  guint64       data_start;             /* Layer resource data start */
+  guint64       data_len;               /* Layer resource data length */
 } PSDlayerres;
 
 /* PSD File data structures */
@@ -658,15 +658,15 @@ typedef struct
   guchar               *color_map;              /* Color map data */
   guint32               color_map_len;          /* Color map data length */
   guint32               color_map_entries;      /* Color map number of entries */
-  guint32               image_res_start;        /* Image resource block start address */
-  guint32               image_res_len;          /* Image resource block length */
-  guint32               mask_layer_start;       /* Mask & layer block start address */
-  guint32               mask_layer_len;         /* Mask & layer block length */
+  guint64               image_res_start;        /* Image resource block start address */
+  guint64               image_res_len;          /* Image resource block length */
+  guint64               mask_layer_start;       /* Mask & layer block start address */
+  guint64               mask_layer_len;         /* Mask & layer block length */
   gint16                num_layers;             /* Number of layers */
-  guint32               layer_data_start;       /* Layer pixel data start */
-  guint32               layer_data_len;         /* Layer pixel data length */
-  guint32               merged_image_start;     /* Merged image pixel data block start address */
-  guint32               merged_image_len;       /* Merged image pixel data block length */
+  guint64               layer_data_start;       /* Layer pixel data start */
+  guint64               layer_data_len;         /* Layer pixel data length */
+  guint64               merged_image_start;     /* Merged image pixel data block start address */
+  guint64               merged_image_len;       /* Merged image pixel data block length */
   gboolean              no_icc;                 /* Do not use ICC profile */
   guint16               layer_state;            /* Active layer index counting from bottom up */
   GList                *layer_selection;        /* Selected layer IDs (GIMP layer tattoos) */
