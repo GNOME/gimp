@@ -3,11 +3,13 @@
 set -e
 
 if [[ "$MSYSTEM" == "MINGW32" ]]; then
+    export ARTIFACTS_SUFFIX="-w32"
     export MSYS2_ARCH="i686"
     export MSYS_PREFIX="/c/msys64/mingw32/"
     export PATH="/mingw32/bin:$PATH"
     export GIMP_DISTRIB=`realpath ./gimp-w32`
 else
+    export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export MSYS_PREFIX="/c/msys64/mingw64/"
     export PATH="/mingw64/bin:$PATH"
@@ -76,7 +78,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-vala \
     mingw-w64-$MSYS2_ARCH-xpm-nox
 
-export GIMP_PREFIX=`realpath ./_install`
+export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
 export PATH="$GIMP_PREFIX/bin:$PATH"
 
 # Package ressources.

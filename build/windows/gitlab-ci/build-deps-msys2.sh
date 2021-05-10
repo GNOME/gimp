@@ -3,12 +3,14 @@
 set -e
 
 if [[ "$MSYSTEM" == "MINGW32" ]]; then
+    export ARTIFACTS_SUFFIX="-w32"
     export MSYS2_ARCH="i686"
     # vapi build fails on 32-bit, with no error output. Let's just drop
     # it for this architecture.
     export BABL_OPTIONS="-Denable-vapi=false"
     export GEGL_OPTIONS="-Dvapigen=disabled"
 else
+    export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export BABL_OPTIONS=""
     export GEGL_OPTIONS=""
@@ -52,7 +54,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-vala
 
 export GIT_DEPTH=1
-export GIMP_PREFIX=`realpath ./_install`
+export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
 export PATH="$GIMP_PREFIX/bin:$PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"

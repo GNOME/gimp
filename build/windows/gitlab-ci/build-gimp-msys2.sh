@@ -3,11 +3,13 @@
 set -e
 
 if [[ "$MSYSTEM" == "MINGW32" ]]; then
+    export ARTIFACTS_SUFFIX="-w32"
     export MSYS2_ARCH="i686"
     export ACLOCAL_FLAGS="-I/c/msys64/mingw32/share/aclocal"
     export PATH="/c/msys64/mingw32/bin:$PATH"
     export GIMP_OPTIONS="--with-vala=no --enable-vala=no"
 else
+    export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export ACLOCAL_FLAGS="-I/c/msys64/mingw64/share/aclocal"
     export PATH="/c/msys64/mingw64/bin:$PATH"
@@ -78,9 +80,9 @@ pacman --noconfirm -S --needed \
 # XXX We've got a weird error when the prefix is in the current dir.
 # Until we figure it out, this trick seems to work, even though it's
 # completely ridiculous.
-mv _install ~
+mv "_install${ARTIFACTS_SUFFIX}" ~
 
-export GIMP_PREFIX=`realpath ~/_install`
+export GIMP_PREFIX="`realpath ~/_install`${ARTIFACTS_SUFFIX}"
 export PATH="$GIMP_PREFIX/bin:$PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
@@ -96,8 +98,8 @@ export CC="ccache gcc"
 ccache --zero-stats
 ccache --show-stats
 
-mkdir _build
-cd _build
+mkdir "_build${ARTIFACTS_SUFFIX}"
+cd "_build${ARTIFACTS_SUFFIX}"
 ../autogen.sh --prefix="${GIMP_PREFIX}" --enable-windows-installer ${GIMP_OPTIONS}
 make -j4
 make install

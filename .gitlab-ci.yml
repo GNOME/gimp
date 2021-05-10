@@ -215,9 +215,6 @@ deps-win64-native:
     CHERE_INVOKING: "yes"
   tags:
     - win32-ps
-  cache:
-    paths:
-    - _install/
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/build-deps-msys2.sh"
@@ -226,7 +223,7 @@ deps-win64-native:
     when: always
     expire_in: 2 hours
     paths:
-      - _install
+      - _install-w64
   needs: []
 
 gimp-win64-native:
@@ -246,8 +243,8 @@ gimp-win64-native:
     when: always
     expire_in: 1 day
     paths:
-    - _install
-    - _build
+    - _install-w64
+    - build/windows/installer/lang/
   cache:
     paths:
     - _ccache/
@@ -264,9 +261,6 @@ deps-win32-native:
     CHERE_INVOKING: "yes"
   tags:
     - win32-ps
-  cache:
-    paths:
-    - _install/
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/build-deps-msys2.sh"
@@ -275,7 +269,7 @@ deps-win32-native:
     when: always
     expire_in: 2 hours
     paths:
-      - _install
+      - _install-w32
   needs: []
 
 gimp-win32-native:
@@ -295,8 +289,7 @@ gimp-win32-native:
     when: always
     expire_in: 1 day
     paths:
-    - _install
-    - _build
+    - _install-w32
   cache:
     paths:
     - _ccache/
@@ -453,49 +446,29 @@ cppcheck:
 
 ## Ready-to-distribute ##
 
-win64-native-nightly:
+win-installer-nightly:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN64 != null'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN64 != null && $SCHEDULE_NATIVE_WIN32 != null'
   variables:
-    MSYSTEM: "MINGW64"
     CHERE_INVOKING: "yes"
   tags:
     - win32-ps
   stage: distribution
   dependencies:
     - gimp-win64-native
-  artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
-    when: always
-    expire_in: 2 days
-    paths:
-    - gimp-w64
-  script:
-    - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
-    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
-  needs: ["gimp-win64-native"]
-
-win32-native-nightly:
-  rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN32 != null'
-  variables:
-    MSYSTEM: "MINGW32"
-    CHERE_INVOKING: "yes"
-  tags:
-    - win32-ps
-  stage: distribution
-  dependencies:
     - gimp-win32-native
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
     expire_in: 2 days
     paths:
-    - gimp-w32
+    - build/windows/installer/_Output
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
-    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
-  needs: ["gimp-win32-native"]
+    - C:\msys64\usr\bin\bash -lc "MSYSTEM=MINGW64 bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
+    - C:\msys64\usr\bin\bash -lc "MSYSTEM=MINGW32 bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/installer-gimp-msys2.sh"
+  needs: ["gimp-win32-native", "gimp-win64-native"]
 
 sources:
   except:
