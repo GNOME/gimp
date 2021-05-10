@@ -99,6 +99,9 @@ cp -fr ${GIMP_PREFIX}/bin/gimp*.exe ${GIMP_DISTRIB}/bin/
 echo "bin\gimp-2.99.exe" > ${GIMP_DISTRIB}/gimp.cmd
 
 # Package library data and modules.
+cp -fr ${MSYS_PREFIX}/etc/fonts ${GIMP_DISTRIB}/etc/
+cp -fr ${MSYS_PREFIX}/etc/gtk-3.0 ${GIMP_DISTRIB}/etc/
+
 mkdir ${GIMP_DISTRIB}/lib/
 cp -fr ${GIMP_PREFIX}/lib/gimp ${GIMP_DISTRIB}/lib/
 cp -fr ${GIMP_PREFIX}/lib/gegl-0.4 ${GIMP_DISTRIB}/lib/
@@ -109,8 +112,17 @@ cp -fr ${GIMP_PREFIX}/lib/girepository-1.0/* ${GIMP_DISTRIB}/lib/girepository-1.
 
 cp -fr ${MSYS_PREFIX}/lib/gio ${GIMP_DISTRIB}/lib/
 cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/gtk-3.0 ${GIMP_DISTRIB}/lib/
 
+cp -fr ${MSYS_PREFIX}/share/ghostscript ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/glib-2.0 ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/libthai ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/libwmf ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/mypaint-data ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/poppler ${GIMP_DISTRIB}/share/
+
+# XXX Are these themes really needed?
+cp -fr ${MSYS_PREFIX}/share/themes ${GIMP_DISTRIB}/share/
 
 # Only copy from langs supported in GIMP.
 for dir in ${GIMP_DISTRIB}/share/locale/*/; do
@@ -130,6 +142,23 @@ cp -fr ${MSYS_PREFIX}/share/xml/iso-codes/iso_639.xml ${GIMP_DISTRIB}/share/xml/
 
 # Adwaita can be used as the base icon set.
 cp -fr ${MSYS_PREFIX}/share/icons/Adwaita ${GIMP_DISTRIB}/share/icons/
+
+# XXX Why are these for exactly?
+cp -fr ${MSYS_PREFIX}/bin/gspawn*.exe ${GIMP_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gspawn-win*-helper.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gspawn-win*-helper.exe ${MSYS_PREFIX}/ ${GIMP_DISTRIB}
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gspawn-win*-helper-console.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gspawn-win*-helper-console.exe ${MSYS_PREFIX}/ ${GIMP_DISTRIB}
+
+# XXX Does not look like it's needed anymore. Check?
+cp -fr ${MSYS_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${GIMP_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gdk-pixbuf-query-loaders.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gdk-pixbuf-query-loaders.exe ${MSYS_PREFIX}/ ${GIMP_DISTRIB}
+
+# XXX Why is bzip2.exe needed?
+cp -fr ${MSYS_PREFIX}/bin/bzip2.exe ${GIMP_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/bzip2.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/bzip2.exe ${MSYS_PREFIX}/ ${GIMP_DISTRIB}
 
 # Executables for supported interpreters.
 cp -fr ${MSYS_PREFIX}/bin/pythonw.exe ${GIMP_DISTRIB}/bin/
