@@ -76,7 +76,7 @@ static void      selection_zoom_segs      (Selection          *selection,
 static void      selection_generate_segs  (Selection          *selection);
 static void      selection_free_segs      (Selection          *selection);
 
-static gboolean  selection_start_timeout  (Selection          *selection);
+static gboolean  selection_timeout        (Selection          *selection);
 
 static gboolean  selection_window_state_event      (GtkWidget           *shell,
                                                     GdkEventWindowState *event,
@@ -229,10 +229,22 @@ selection_start (Selection *selection)
   selection_stop (selection);
 
   /*  If this selection is paused, do not start it  */
-  if (selection->paused == 0 && selection->timeout == 0)
+  if (selection->paused == 0                             &&
+      gimp_display_get_image (selection->shell->display) &&
+      selection->show_selection)
     {
-      selection->timeout = g_idle_add ((GSourceFunc) selection_start_timeout,
-                                       selection);
+      /*  Draw the ants once  */
+      selection_timeout (selection);
+
+      if (selection->segs_in && selection->shell_visible)
+        {
+          GimpDisplayConfig *config = selection->shell->display->config;
+
+          selection->timeout = g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                                   config->marching_ants_speed,
+                                                   (GSourceFunc) selection_timeout,
+                                                   selection, NULL);
+        }
     }
 }
 
@@ -439,41 +451,30 @@ selection_free_segs (Selection *selection)
 }
 
 static gboolean
-selection_start_timeout (Selection *selection)
+selection_timeout (Selection *selection)
 {
-  /*  Draw the ants  */
-  if (gimp_display_get_image (selection->shell->display) &&
-      selection->show_selection)
+  GimpDisplayConfig *config = selection->shell->display->config;
+  gint64             time   = g_get_monotonic_time ();
+
+  if ((time - selection->shell->selection_update) / 1000 > config->marching_ants_speed)
     {
-      GimpDisplayConfig *config = selection->shell->display->config;
-      gint64             time = g_get_monotonic_time ();
+      GdkWindow             *window;
+      cairo_rectangle_int_t  rect;
+      cairo_region_t        *region;
 
-      if ((time - selection->shell->selection_update) / 1000 > config->marching_ants_speed)
-        {
-          GdkWindow             *window;
-          cairo_rectangle_int_t  rect;
-          cairo_region_t        *region;
+      window = gtk_widget_get_window (GTK_WIDGET (selection->shell));
 
-          window = gtk_widget_get_window (GTK_WIDGET (selection->shell));
+      rect.x      = 0;
+      rect.y      = 0;
+      rect.width  = gdk_window_get_width  (window);
+      rect.height = gdk_window_get_height (window);
 
-          rect.x      = 0;
-          rect.y      = 0;
-          rect.width  = gdk_window_get_width  (window);
-          rect.height = gdk_window_get_height (window);
-
-          region = cairo_region_create_rectangle (&rect);
-          gtk_widget_queue_draw_region (GTK_WIDGET (selection->shell), region);
-          cairo_region_destroy (region);
-        }
-      else
-        {
-          return G_SOURCE_CONTINUE;
-        }
+      region = cairo_region_create_rectangle (&rect);
+      gtk_widget_queue_draw_region (GTK_WIDGET (selection->shell), region);
+      cairo_region_destroy (region);
     }
 
-  selection->timeout = 0;
-
-  return G_SOURCE_REMOVE;
+  return G_SOURCE_CONTINUE;
 }
 
 static void
