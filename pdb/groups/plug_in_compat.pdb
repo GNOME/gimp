@@ -3491,7 +3491,7 @@ HELP
 	  desc => 'Input image (unused)' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'Input drawable' },
-        { name => 'rndm_pct', type => '1.0 <= float <= 100.0',
+        { name => 'rndm_pct', type => '0.0 <= float <= 100.0',
           desc => 'Randomization percentage' },
         { name => 'rndm_rcount', type => '1.0 <= float <= 100.0',
           desc => 'Repeat count' },
