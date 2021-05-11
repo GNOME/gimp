@@ -291,8 +291,7 @@ Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data
 Source: "{#DEPS_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR32}\etc\gtk-3.0\*"; DestDir: "{app}\etc\gtk-3.0"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
-;ghostscript TODO: detect version automatically
-Source: "{#DEPS_DIR32}\share\ghostscript\9.50\lib\*.*"; DestDir: "{app}\share\ghostscript\9.50\lib"; Components: gs and (gimp32 or gimp64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\ghostscript\*"; Excludes: "*\doc\*"; DestDir: "{app}\share\ghostscript"; Components: gs and (gimp32 or gimp64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 #ifdef PYTHON
 ;*.py files are the same on 32 and 64-bit
