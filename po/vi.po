@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-06 00:48+0000\n"
-"PO-Revision-Date: 2021-05-07 15:05+0700\n"
+"POT-Creation-Date: 2021-05-11 07:52+0000\n"
+"PO-Revision-Date: 2021-05-11 14:57+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -95,7 +95,7 @@ msgstr "Về những thay đổi của người tạo cuối, một số cải t
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Canvas Size dialog now displays a template selector"
-msgstr "Hộp thoại Canvas Size giờ hiển thị bộ chọn mẫu"
+msgstr "Hộp thoại \"Cỡ vùng vẽ\" giờ hiển thị bộ chọn mẫu"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "Off-canvas guides are now allowed"
@@ -194,10 +194,8 @@ msgstr ""
 "trong quá trình hoàn thiện) bao gồm:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
-#, fuzzy
-#| msgid "-Click on thumbnail in Layers dockable"
 msgid "Multi-selection of layers in the Layers dockable"
-msgstr "-Nhấn vào hình nhỏ trong lớp neo được"
+msgstr "Chọn nhiều lớp cùng lúc trong lớp neo được"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "Proper high pixel density display support"
@@ -1238,7 +1236,7 @@ msgstr "Neo"
 
 #: ../app/actions/actions.c:145
 msgid "Dockable"
-msgstr "Cụ neo được"
+msgstr "Neo được"
 
 #. Document History
 #: ../app/actions/actions.c:148 ../app/dialogs/dialogs.c:365
@@ -1729,7 +1727,7 @@ msgstr "Không"
 #: ../app/actions/channels-actions.c:141
 msgctxt "channels-action"
 msgid "Channel Color Tag: Clear"
-msgstr "Màu thẻ kênh: Xóa"
+msgstr "Màu thẻ kênh: Xóa sạch"
 
 #: ../app/actions/channels-actions.c:146
 msgctxt "channels-action"
@@ -2528,37 +2526,37 @@ msgstr "Xanh lam hậu cảnh: Tăng 10%"
 #: ../app/actions/context-actions.c:481
 msgctxt "context-action"
 msgid "Foreground Hue: Set"
-msgstr "Hue tiền cảnh: Đặt"
+msgstr "Sắc độ tiền cảnh: Đặt"
 
 #: ../app/actions/context-actions.c:485
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
-msgstr "Hue tiền cảnh: Đặt thành tối thiểu"
+msgstr "Sắc độ tiền cảnh: Đặt thành tối thiểu"
 
 #: ../app/actions/context-actions.c:489
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
-msgstr "‪Hue tiền cảnh: Đặt thành tối đa"
+msgstr "‪Sắc độ tiền cảnh: Đặt thành tối đa"
 
 #: ../app/actions/context-actions.c:493
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 1%"
-msgstr "Hue tiền cảnh: Giảm 1%"
+msgstr "Sắc độ tiền cảnh: Giảm 1%"
 
 #: ../app/actions/context-actions.c:497
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 1%"
-msgstr "Hue tiền cảnh: Tăng 1%"
+msgstr "Sắc độ tiền cảnh: Tăng 1%"
 
 #: ../app/actions/context-actions.c:501
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 10%"
-msgstr "Hue tiền cảnh: Giảm 10%"
+msgstr "Sắc độ tiền cảnh: Giảm 10%"
 
 #: ../app/actions/context-actions.c:505
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 10%"
-msgstr "Hue tiền cảnh: Tăng 10%"
+msgstr "Sắc độ tiền cảnh: Tăng 10%"
 
 #: ../app/actions/context-actions.c:513
 msgctxt "context-action"
@@ -2633,37 +2631,37 @@ msgstr "Giá trị tiền cảnh: Tăng 10%"
 #: ../app/actions/context-actions.c:577
 msgctxt "context-action"
 msgid "Background Hue: Set"
-msgstr "Hue hậu cảnh: Đặt"
+msgstr "Sắc độ hậu cảnh: Đặt"
 
 #: ../app/actions/context-actions.c:581
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "Hue hậu cảnh: Đặt thành tối thiểu"
+msgstr "Sắc độ hậu cảnh: Đặt thành tối thiểu"
 
 #: ../app/actions/context-actions.c:585
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "Hue hậu cảnh: Đặt thành tối đa"
+msgstr "Sắc độ hậu cảnh: Đặt thành tối đa"
 
 #: ../app/actions/context-actions.c:589
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 1%"
-msgstr "Hue hậu cảnh: Giảm 1%"
+msgstr "Sắc độ hậu cảnh: Giảm 1%"
 
 #: ../app/actions/context-actions.c:593
 msgctxt "context-action"
 msgid "Background Hue: Increase by 1%"
-msgstr "Hue hậu cảnh: Tăng 1%"
+msgstr "Sắc độ hậu cảnh: Tăng 1%"
 
 #: ../app/actions/context-actions.c:597
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 10%"
-msgstr "Hue hậu cảnh: Giảm 10%"
+msgstr "Sắc độ hậu cảnh: Giảm 10%"
 
 #: ../app/actions/context-actions.c:601
 msgctxt "context-action"
 msgid "Background Hue: Increase by 10%"
-msgstr "Hue hậu cảnh: Tăng 10%"
+msgstr "Sắc độ hậu cảnh: Tăng 10%"
 
 #: ../app/actions/context-actions.c:609
 msgctxt "context-action"
@@ -2738,37 +2736,37 @@ msgstr "Giá trị hậu cảnh: Tăng 10%"
 #: ../app/actions/context-actions.c:673
 msgctxt "context-action"
 msgid "Tool Opacity: Set Transparency"
-msgstr "Độ trong suốt của công cụ: Đặt độ trong suốt"
+msgstr "Độ đục của công cụ: Đặt độ trong suốt"
 
 #: ../app/actions/context-actions.c:677
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Transparent"
-msgstr "Độ trong suốt của công cụ: Làm cho hoàn toàn trong suốt"
+msgstr "Độ đục của công cụ: Làm cho hoàn toàn trong suốt"
 
 #: ../app/actions/context-actions.c:681
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Opaque"
-msgstr "Độ trong suốt của công cụ: Làm cho đục hoàn toàn"
+msgstr "Độ đục của công cụ: Làm cho đục hoàn toàn"
 
 #: ../app/actions/context-actions.c:685
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Transparent"
-msgstr "Độ trong suốt của công cụ: Làm cho trong suốt hơn 1%"
+msgstr "Độ đục của công cụ: Làm cho trong suốt hơn 1%"
 
 #: ../app/actions/context-actions.c:689
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Opaque"
-msgstr "Độ trong suốt của công cụ: Làm cho đục hơn 1%"
+msgstr "Độ đục của công cụ: Làm cho đục hơn 1%"
 
 #: ../app/actions/context-actions.c:693
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Transparent"
-msgstr "Độ trong suốt của công cụ: Làm cho trong suốt hơn 10%"
+msgstr "Độ đục của công cụ: Làm cho trong suốt hơn 10%"
 
 #: ../app/actions/context-actions.c:697
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Opaque"
-msgstr "Độ trong suốt của công cụ: Làm cho đục hơn 10%"
+msgstr "Độ đục của công cụ: Làm cho đục hơn 10%"
 
 #: ../app/actions/context-actions.c:705
 msgctxt "context-action"
@@ -4142,12 +4140,12 @@ msgstr "Gỡ bỏ mục tin đã chọn"
 #: ../app/actions/documents-actions.c:82
 msgctxt "documents-action"
 msgid "_Clear History"
-msgstr "_Xóa lược sử"
+msgstr "_Xóa sạch lược sử"
 
 #: ../app/actions/documents-actions.c:83
 msgctxt "documents-action"
 msgid "Clear the entire document history"
-msgstr "Xóa toàn lược sử của tài liệu"
+msgstr "Xóa sạch toàn bộ lược sử của tài liệu"
 
 #: ../app/actions/documents-actions.c:88
 msgctxt "documents-action"
@@ -4181,24 +4179,24 @@ msgstr "Gỡ bỏ hạng mục mà tập tin không tồn tại"
 
 #: ../app/actions/documents-commands.c:230
 msgid "Clear Document History"
-msgstr "Xóa lược sử tài liệu"
+msgstr "Xóa sạch lược sử tài liệu"
 
 #: ../app/actions/documents-commands.c:238 ../app/actions/edit-commands.c:168
 #: ../app/dialogs/preferences-dialog.c:665
 msgid "Cl_ear"
-msgstr "X_oá"
+msgstr "Xóa _sạch"
 
 #: ../app/actions/documents-commands.c:253
 msgid "Clear the Recent Documents list?"
-msgstr "Xóa lược sử của tài liệu gần đây chứ?"
+msgstr "Xóa sạch lược sử của tài liệu gần đây chứ?"
 
 #: ../app/actions/documents-commands.c:256
 msgid ""
 "Clearing the document history will permanently remove all images from the "
 "recent documents list."
 msgstr ""
-"Việc xóa lược sử tài liệu thì sẽ gỡ bỏ vĩnh viễn mọi ảnh trong danh sách tài "
-"liệu gần đây."
+"Việc xóa sạch lược sử tài liệu thì sẽ gỡ bỏ vĩnh viễn mọi ảnh trong danh "
+"sách tài liệu mới dùng gần đây."
 
 #: ../app/actions/drawable-actions.c:45
 msgctxt "drawable-action"
@@ -4454,12 +4452,12 @@ msgstr ""
 #: ../app/actions/edit-actions.c:99
 msgctxt "edit-action"
 msgid "_Clear Undo History"
-msgstr "Xóa lượ_c sử Hủy bước"
+msgstr "Xóa sạch lượ_c sử hủy bước"
 
 #: ../app/actions/edit-actions.c:100
 msgctxt "edit-action"
 msgid "Remove all operations from the undo history"
-msgstr "Gỡ bỏ mọi thao tác khỏi lược sử hủy bước"
+msgstr "Xóa bỏ mọi thao tác khỏi lược sử hủy bước"
 
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
@@ -4551,12 +4549,12 @@ msgstr "Dán nội dung của bộ nhớ tạm"
 #: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
 msgid "Cl_ear"
-msgstr "X_oá"
+msgstr "_Xóa sạch"
 
 #: ../app/actions/edit-actions.c:161
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
-msgstr "Xóa điểm ảnh đã chọn"
+msgstr "Xóa sạch điểm ảnh đã chọn"
 
 #: ../app/actions/edit-actions.c:169
 msgctxt "edit-action"
@@ -4625,7 +4623,7 @@ msgstr "Tạo lớp mới từ nội dung của bảng nháp và đặt nó tạ
 #: ../app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
-msgstr "Tô _bằng màu cận cảnh"
+msgstr "Tô đầy _bằng màu cận cảnh"
 
 #: ../app/actions/edit-actions.c:215
 msgctxt "edit-action"
@@ -4672,16 +4670,17 @@ msgstr "Bước _lại"
 
 #: ../app/actions/edit-commands.c:159
 msgid "Clear Undo History"
-msgstr "Xóa lược sử Hủy bước"
+msgstr "Xóa sạch lược sử hủy bước"
 
 #: ../app/actions/edit-commands.c:186
 msgid "Really clear image's undo history?"
-msgstr "Thật sự xóa lược sử hủy bước của ảnh này không?"
+msgstr "Thật sự xóa sạch lược sử hủy bước của ảnh này không?"
 
 #: ../app/actions/edit-commands.c:199
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
-msgstr "Việc xóa lược sử hủy bước của ảnh này sẽ giải phóng thêm bộ nhớ %s."
+msgstr ""
+"Việc xóa sạch lược sử hủy bước của ảnh này sẽ giải phóng thêm %s bộ nhớ."
 
 #: ../app/actions/edit-commands.c:243
 #, c-format
@@ -4725,7 +4724,7 @@ msgstr "Chép hiển thị có tên "
 
 #: ../app/actions/edit-commands.c:508
 msgid "Clear"
-msgstr "Xóa"
+msgstr "Xóa sạch"
 
 #: ../app/actions/edit-commands.c:579
 msgid "A selected layer's alpha channel is locked."
@@ -4760,12 +4759,12 @@ msgstr "Trình đơn Bàn giao tiếp Lỗi"
 #: ../app/actions/error-console-actions.c:44
 msgctxt "error-console-action"
 msgid "_Clear"
-msgstr "_Xóa"
+msgstr "_Xóa sạch"
 
 #: ../app/actions/error-console-actions.c:45
 msgctxt "error-console-action"
 msgid "Clear error console"
-msgstr "Xóa bàn giao tiếp lỗi"
+msgstr "Xóa sạch lỗi bàn giao tiếp"
 
 #: ../app/actions/error-console-actions.c:50
 msgctxt "error-console-action"
@@ -5548,7 +5547,7 @@ msgstr "Kế Vectơ Màu Sắc"
 #: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "_Sắc màu-Độ bão hòa..."
+msgstr "_Sắc độ-Độ bão hòa..."
 
 #: ../app/actions/filters-actions.c:403
 msgctxt "filters-action"
@@ -6535,7 +6534,7 @@ msgstr "_Biến đổi"
 #: ../app/actions/image-actions.c:64
 msgctxt "image-action"
 msgid "_Guides"
-msgstr "Nét _dẫn"
+msgstr "Đườn_g dẫn hướng"
 
 #: ../app/actions/image-actions.c:65
 msgctxt "image-action"
@@ -7101,7 +7100,7 @@ msgstr "Chế độ Tổng hợp"
 #: ../app/actions/layers-actions.c:68
 msgctxt "layers-action"
 msgid "Color Tag"
-msgstr "Thẻ Màu"
+msgstr "Màu thẻ"
 
 #: ../app/actions/layers-actions.c:72
 msgctxt "layers-action"
@@ -7583,10 +7582,9 @@ msgid "Clip to Backdrop"
 msgstr "Xén vừa nền"
 
 #: ../app/actions/layers-actions.c:411
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Backdrop"
-msgstr "Chế độ tổng hợp lớp: Xén vừa lớp"
+msgstr "Chế độ tổng hợp lớp: Xén vừa nền tảng"
 
 #: ../app/actions/layers-actions.c:416
 msgctxt "layers-action"
@@ -7616,7 +7614,7 @@ msgstr "Không"
 #: ../app/actions/layers-actions.c:432
 msgctxt "layers-action"
 msgid "Layer Color Tag: Clear"
-msgstr "Màu thẻ lớp: Xóa"
+msgstr "Màu thẻ lớp: Xóa sạch"
 
 #: ../app/actions/layers-actions.c:437
 msgctxt "layers-action"
@@ -8053,7 +8051,7 @@ msgstr "Trừ mặt nạ khỏi vùng chọn"
 #: ../app/actions/layers-commands.c:1654
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
-msgstr "Đảo mặt nạ với vùng chọn"
+msgstr "Giao mặt nạ với vùng chọn"
 
 #: ../app/actions/layers-commands.c:1675
 msgid "Add Alpha Channel"
@@ -8593,7 +8591,7 @@ msgstr "Đả_o"
 #: ../app/actions/select-actions.c:63
 msgctxt "select-action"
 msgid "Invert the selection"
-msgstr "Đảo vùng chọn"
+msgstr "Đảo ngược vùng chọn"
 
 #: ../app/actions/select-actions.c:68
 msgctxt "select-action"
@@ -8603,7 +8601,7 @@ msgstr "Nổ_i"
 #: ../app/actions/select-actions.c:69
 msgctxt "select-action"
 msgid "Create a floating selection"
-msgstr "Tạo một vùng chọn nổi"
+msgstr "Tạo một vùng chọn trôi nổi"
 
 #: ../app/actions/select-actions.c:74
 msgctxt "select-action"
@@ -8730,18 +8728,18 @@ msgid "_Selected areas continue outside the image"
 msgstr "_Chọn các vùng kề nhau phía ngoài của ảnh"
 
 #: ../app/actions/select-commands.c:182
-#, fuzzy
 msgid "When feathering, act as if selected areas continued outside the image."
 msgstr ""
-"Khi co nhỏ, thực hiện theo kiểu nếu các vùng đã chọn tiếp tục nằm ngoài ảnh."
+"Khi làm mờ biên dạng lông chim, thực hiện như kiểu các vùng kề nhau nằm "
+"ngoài ảnh."
 
 #: ../app/actions/select-commands.c:241
 msgid "Shrink Selection"
-msgstr "Thu nhỏ vùng chọn"
+msgstr "Co nhỏ vùng chọn"
 
 #: ../app/actions/select-commands.c:245
 msgid "Shrink selection by"
-msgstr "Thu nhỏ vùng chọn bằng"
+msgstr "Co nhỏ vùng chọn bằng"
 
 #: ../app/actions/select-commands.c:259
 msgid "When shrinking, act as if selected areas continued outside the image."
@@ -8785,7 +8783,7 @@ msgstr "Chọn nét"
 #: ../app/actions/templates-actions.c:42
 msgctxt "templates-action"
 msgid "Templates Menu"
-msgstr "Trình đơn Biểu mẫu"
+msgstr "Trình đơn biểu mẫu"
 
 #: ../app/actions/templates-actions.c:46
 msgctxt "templates-action"
@@ -8878,7 +8876,7 @@ msgstr "Tải văn bản từ tập tin"
 #: ../app/actions/text-editor-actions.c:50
 msgctxt "text-editor-action"
 msgid "Clear"
-msgstr "Xóa"
+msgstr "Xóa sạch"
 
 #: ../app/actions/text-editor-actions.c:51
 msgctxt "text-editor-action"
@@ -8992,7 +8990,7 @@ msgstr "_Dán"
 #: ../app/actions/text-tool-actions.c:69
 msgctxt "text-tool-action"
 msgid "_Delete"
-msgstr "_Xóa"
+msgstr "_Xóa bỏ"
 
 #: ../app/actions/text-tool-actions.c:74
 msgctxt "text-tool-action"
@@ -9002,12 +9000,12 @@ msgstr "_Mở tệp văn bản…"
 #: ../app/actions/text-tool-actions.c:79
 msgctxt "text-tool-action"
 msgid "Cl_ear"
-msgstr "X_oá"
+msgstr "Xóa _sạch"
 
 #: ../app/actions/text-tool-actions.c:80
 msgctxt "text-tool-action"
 msgid "Clear all text"
-msgstr "Xóa hết chữ"
+msgstr "Xóa toàm bộ chữ"
 
 #: ../app/actions/text-tool-actions.c:85
 msgctxt "text-tool-action"
@@ -9373,52 +9371,52 @@ msgstr "Lưu lượng phun sơn: Tăng 10"
 #: ../app/actions/tools-actions.c:271
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set"
-msgstr "Độ trong suốt của công cụ: Đặt"
+msgstr "Độ đục của công cụ: Đặt"
 
 #: ../app/actions/tools-actions.c:275
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
-msgstr "Độ trong suốt của công cụ: Đặt thành giá trị mặc định"
+msgstr "Độ đục của công cụ: Đặt thành giá trị mặc định"
 
 #: ../app/actions/tools-actions.c:279
 msgctxt "tools-action"
 msgid "Tool's Opacity: Minimize"
-msgstr "Độ trong suốt của công cụ: Tối thiểu"
+msgstr "Độ đục của công cụ: Tối thiểu"
 
 #: ../app/actions/tools-actions.c:283
 msgctxt "tools-action"
 msgid "Tool's Opacity: Maximize"
-msgstr "Độ trong suốt của công cụ: Tối đa"
+msgstr "Độ đục của công cụ: Tối đa"
 
 #: ../app/actions/tools-actions.c:287
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 1"
-msgstr "Độ trong suốt của công cụ: Tăng 1"
+msgstr "Độ đục của công cụ: Tăng 1"
 
 #: ../app/actions/tools-actions.c:291
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 1"
-msgstr "Độ trong suốt của công cụ: Giảm 1"
+msgstr "Độ đục của công cụ: Giảm 1"
 
 #: ../app/actions/tools-actions.c:295
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 10"
-msgstr "Độ trong suốt của công cụ: Giảm 10"
+msgstr "Độ đục của công cụ: Giảm 10"
 
 #: ../app/actions/tools-actions.c:299
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 10"
-msgstr "Độ trong suốt của công cụ: Tăng 10"
+msgstr "Độ đục của công cụ: Tăng 10"
 
 #: ../app/actions/tools-actions.c:303
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease Relative"
-msgstr "Độ trong suốt của công cụ: Giảm tương đối"
+msgstr "Độ đục của công cụ: Giảm tương đối"
 
 #: ../app/actions/tools-actions.c:307
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase Relative"
-msgstr "Độ trong suốt của công cụ: Tăng tương đối"
+msgstr "Độ đục của công cụ: Tăng tương đối"
 
 #: ../app/actions/tools-actions.c:315
 msgctxt "tools-action"
@@ -9728,18 +9726,17 @@ msgstr "Trình đơn Công cụ đường dẫn Véc-tơ"
 #: ../app/actions/vector-toolpath-actions.c:49
 msgctxt "vector-toolpath-action"
 msgid "_Delete Anchor"
-msgstr "_Xóa bỏ neo"
+msgstr "_Xóa điểm neo"
 
 #: ../app/actions/vector-toolpath-actions.c:53
-#, fuzzy
 msgctxt "vector-toolpath-action"
 msgid "Shift S_tart"
-msgstr "Bắt đầu _tại cột:"
+msgstr "Dịch điểm đầ_u"
 
 #: ../app/actions/vector-toolpath-actions.c:58
 msgctxt "vector-toolpath-action"
 msgid "_Insert Anchor"
-msgstr "_Chèn neo"
+msgstr "_Chèn thêm điểm neo"
 
 #: ../app/actions/vector-toolpath-actions.c:62
 msgctxt "vector-toolpath-action"
@@ -9759,7 +9756,7 @@ msgstr "Trình đơn đường dẫn"
 #: ../app/actions/vectors-actions.c:50
 msgctxt "vectors-action"
 msgid "Color Tag"
-msgstr "Thẻ Màu"
+msgstr "Màu thẻ"
 
 #: ../app/actions/vectors-actions.c:54
 msgctxt "vectors-action"
@@ -9809,7 +9806,7 @@ msgstr "Nhân đô_i đường dẫn"
 #: ../app/actions/vectors-actions.c:79
 msgctxt "vectors-action"
 msgid "Duplicate this path"
-msgstr "Nhân đôi đường dẫn hiện tại"
+msgstr "Nhân đôi đường dẫn này"
 
 #: ../app/actions/vectors-actions.c:84
 msgctxt "vectors-action"
@@ -9819,7 +9816,7 @@ msgstr "Xóa đường _dẫn"
 #: ../app/actions/vectors-actions.c:85
 msgctxt "vectors-action"
 msgid "Delete this path"
-msgstr "Xóa đường dẫn"
+msgstr "Xóa bỏ đường dẫn này"
 
 #: ../app/actions/vectors-actions.c:90
 msgctxt "vectors-action"
@@ -9834,7 +9831,7 @@ msgstr "Nân_g đường dẫn"
 #: ../app/actions/vectors-actions.c:96
 msgctxt "vectors-action"
 msgid "Raise this path"
-msgstr "Nâng đường dẫn"
+msgstr "Nâng đường dẫn này lên"
 
 #: ../app/actions/vectors-actions.c:101
 msgctxt "vectors-action"
@@ -9844,7 +9841,7 @@ msgstr "Nâng đường dẫn lên_ đỉnh"
 #: ../app/actions/vectors-actions.c:102
 msgctxt "vectors-action"
 msgid "Raise this path to the top"
-msgstr "Nâng đường dẫn lên đỉnh"
+msgstr "Nâng đường dẫn này lên trên cùng"
 
 #: ../app/actions/vectors-actions.c:107
 msgctxt "vectors-action"
@@ -9854,17 +9851,17 @@ msgstr "_Hạ đường dẫn"
 #: ../app/actions/vectors-actions.c:108
 msgctxt "vectors-action"
 msgid "Lower this path"
-msgstr "Hạ đường dẫn"
+msgstr "Hạ đường dẫn này xuống thấp hơn"
 
 #: ../app/actions/vectors-actions.c:113
 msgctxt "vectors-action"
 msgid "Lower Path to _Bottom"
-msgstr "Hạ đường dẫn xuống _dưới"
+msgstr "Hạ đường dẫn xuống đá_y"
 
 #: ../app/actions/vectors-actions.c:114
 msgctxt "vectors-action"
 msgid "Lower this path to the bottom"
-msgstr "Hạ đường dẫn xuống dưới"
+msgstr "Hạ đường dẫn này xuống dưới đáy"
 
 #: ../app/actions/vectors-actions.c:119
 msgctxt "vectors-action"
@@ -9874,7 +9871,7 @@ msgstr "Đổ màu đườ_ng dẫn…"
 #: ../app/actions/vectors-actions.c:120
 msgctxt "vectors-action"
 msgid "Fill the path"
-msgstr "Đổ theo đường dẫn"
+msgstr "Đổ màu theo đường dẫn"
 
 #: ../app/actions/vectors-actions.c:125
 msgctxt "vectors-action"
@@ -9884,27 +9881,27 @@ msgstr "Đổ màu đường dẫn"
 #: ../app/actions/vectors-actions.c:126
 msgctxt "vectors-action"
 msgid "Fill the path with last values"
-msgstr "Đổ đường dẫn nét với các giá trị cuối cùng"
+msgstr "Đổ màu đường dẫn bằng các giá trị cuối cùng"
 
 #: ../app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
-msgstr "Đường dẫn _nét…"
+msgstr "Tạo _nét vẽ theo đường dẫn…"
 
 #: ../app/actions/vectors-actions.c:132
 msgctxt "vectors-action"
 msgid "Paint along the path"
-msgstr "Vẽ theo đường dẫn"
+msgstr "Vẽ dọc theo đường dẫn"
 
 #: ../app/actions/vectors-actions.c:137
 msgctxt "vectors-action"
 msgid "Stro_ke Path"
-msgstr "Đường dẫn _nét"
+msgstr "Tạo _nét vẽ theo đường dẫn"
 
 #: ../app/actions/vectors-actions.c:138
 msgctxt "vectors-action"
 msgid "Paint along the path with last values"
-msgstr "Đường dẫn nét với các giá trị cuối cùng"
+msgstr "Vẽ dọc theo đường dẫn bằng giá trị cuối cùng"
 
 #: ../app/actions/vectors-actions.c:143
 msgctxt "vectors-action"
@@ -9955,7 +9952,7 @@ msgstr "Không"
 #: ../app/actions/vectors-actions.c:194
 msgctxt "vectors-action"
 msgid "Path Color Tag: Clear"
-msgstr "Thẻ Màu Đường dẫn: Xóa"
+msgstr "Màu thẻ đường dẫn: Xóa sạch"
 
 #: ../app/actions/vectors-actions.c:199
 msgctxt "vectors-action"
@@ -9965,7 +9962,7 @@ msgstr "Xanh dương"
 #: ../app/actions/vectors-actions.c:200
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Blue"
-msgstr "Thẻ Màu Đường dẫn: Đặt thành xanh lam"
+msgstr "Màu thẻ đường dẫn: Đặt thành màu xanh lam"
 
 #: ../app/actions/vectors-actions.c:205
 msgctxt "vectors-action"
@@ -9975,7 +9972,7 @@ msgstr "Xanh lá cây"
 #: ../app/actions/vectors-actions.c:206
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Green"
-msgstr "Thẻ Màu Đường dẫn: Đặt thành xanh lá"
+msgstr "Màu thẻ đường dẫn: Đặt thành màu xanh lá"
 
 #: ../app/actions/vectors-actions.c:211
 msgctxt "vectors-action"
@@ -9985,7 +9982,7 @@ msgstr "Vàng"
 #: ../app/actions/vectors-actions.c:212
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Yellow"
-msgstr "Thẻ Màu Đường dẫn: Đặt thành Vàng"
+msgstr "Màu thẻ đường dẫn: Đặt thành màu vàng"
 
 #: ../app/actions/vectors-actions.c:217
 msgctxt "vectors-action"
@@ -9995,7 +9992,7 @@ msgstr "Cam"
 #: ../app/actions/vectors-actions.c:218
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Orange"
-msgstr "Thẻ Màu Đường dẫn: Đặt thành Cam"
+msgstr "Màu thẻ đường dẫn: Đặt thành màu cam"
 
 #: ../app/actions/vectors-actions.c:223
 msgctxt "vectors-action"
@@ -10005,7 +10002,7 @@ msgstr "Nâu"
 #: ../app/actions/vectors-actions.c:224
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Brown"
-msgstr "Thẻ Màu Đường dẫn: Đặt thành Nâu"
+msgstr "Màu thẻ đường dẫn: Đặt thành màu nâu"
 
 #: ../app/actions/vectors-actions.c:229
 msgctxt "vectors-action"
@@ -10015,7 +10012,7 @@ msgstr "Đỏ"
 #: ../app/actions/vectors-actions.c:230
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Red"
-msgstr "Thẻ Màu Đường dẫn: Đặt thành Đỏ"
+msgstr "Màu thẻ đường dẫn: Đặt thành màu đỏ"
 
 #: ../app/actions/vectors-actions.c:235
 msgctxt "vectors-action"
@@ -10025,7 +10022,7 @@ msgstr "Tím"
 #: ../app/actions/vectors-actions.c:236
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Violet"
-msgstr "Thẻ Màu Đường dẫn: Đặt thành Tím"
+msgstr "Màu thẻ đường dẫn: Đặt thành màu tím"
 
 #: ../app/actions/vectors-actions.c:241
 msgctxt "vectors-action"
@@ -10035,17 +10032,17 @@ msgstr "Xám"
 #: ../app/actions/vectors-actions.c:242
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Gray"
-msgstr "Thẻ Màu Đường dẫn: Đặt thành xám"
+msgstr "Màu thẻ đường dẫn: Đặt thành xám"
 
 #: ../app/actions/vectors-actions.c:250
 msgctxt "vectors-action"
 msgid "Path to Sele_ction"
-msgstr "Đường dẫn đến lựa _chọn"
+msgstr "Đường dẫn thành vùng _chọn"
 
 #: ../app/actions/vectors-actions.c:251
 msgctxt "vectors-action"
 msgid "Path to selection"
-msgstr "Đường dẫn đến vùng chọn"
+msgstr "Đường dẫn thành vùng chọn"
 
 #: ../app/actions/vectors-actions.c:256
 msgctxt "vectors-action"
@@ -10065,7 +10062,7 @@ msgstr "Thê_m vào vùng chọn"
 #: ../app/actions/vectors-actions.c:263
 msgctxt "vectors-action"
 msgid "Add path to selection"
-msgstr "Đường dẫn đến vùng chọn"
+msgstr "Thêm đường dẫn vào vùng chọn"
 
 #: ../app/actions/vectors-actions.c:268
 msgctxt "vectors-action"
@@ -10075,7 +10072,7 @@ msgstr "Loại _trừ khỏi vùng chọn"
 #: ../app/actions/vectors-actions.c:269
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
-msgstr "Loại trừ khỏi vùng chọn"
+msgstr "Loại trừ đường dẫn khỏi vùng chọn"
 
 #: ../app/actions/vectors-actions.c:274
 msgctxt "vectors-action"
@@ -10085,27 +10082,27 @@ msgstr "Giao vớ_i vùng chọn"
 #: ../app/actions/vectors-actions.c:275
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
-msgstr "Giao với vùng chọn"
+msgstr "Giao đường dẫn với vùng chọn"
 
 #: ../app/actions/vectors-actions.c:283
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
-msgstr "_Vùng chọn tới đường dẫn"
+msgstr "_Vùng chọn thành đường dẫn"
 
 #: ../app/actions/vectors-actions.c:284 ../app/actions/vectors-actions.c:290
 msgctxt "vectors-action"
 msgid "Selection to path"
-msgstr "Vùng chọn tới đường dẫn"
+msgstr "Chuyển vùng chọn thành đường dẫn"
 
 #: ../app/actions/vectors-actions.c:289
 msgctxt "vectors-action"
 msgid "To _Path"
-msgstr "Tới đường _dẫn"
+msgstr "Thành đường _dẫn"
 
 #: ../app/actions/vectors-actions.c:295
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
-msgstr "Vùng chọn tới đường dẫn (nâng c_ao)"
+msgstr "Vùng chọn thành đường dẫn (nâng c_ao)"
 
 #: ../app/actions/vectors-actions.c:296
 msgctxt "vectors-action"
@@ -10166,17 +10163,17 @@ msgstr "Đường dẫn mới"
 
 #: ../app/actions/vectors-commands.c:209
 msgid "Create a New Path"
-msgstr "Tạo đường dẫn mới"
+msgstr "Tạo một đường dẫn mới"
 
 #: ../app/actions/vectors-commands.c:438 ../app/tools/gimpvectoroptions.c:201
 #: ../app/tools/gimpvectortool.c:744
 msgid "Fill Path"
-msgstr "Đổ màu đường dẫn"
+msgstr "Đổ màu theo đường dẫn"
 
 #: ../app/actions/vectors-commands.c:470 ../app/tools/gimpvectoroptions.c:209
 #: ../app/tools/gimpvectortool.c:818
 msgid "Stroke Path"
-msgstr "Đường dẫn nét"
+msgstr "Tạo nét vẽ theo đường dẫn"
 
 #: ../app/actions/view-actions.c:69
 msgctxt "view-action"
@@ -10248,12 +10245,9 @@ msgid "C_enter Image in Window"
 msgstr "Đặt ảnh vào t_rung tâm cửa sổ"
 
 #: ../app/actions/view-actions.c:101
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Crop the image to the extents of the selection"
 msgctxt "view-action"
 msgid "Scroll the image so that it is centered in the window"
-msgstr "Cuộn màn cho bức hiện tại ở trung tâm"
+msgstr "Cuộn ảnh sao cho nó ở trung tâm cửa sổ"
 
 #: ../app/actions/view-actions.c:106
 msgctxt "view-action"
@@ -10497,7 +10491,7 @@ msgstr "Hiện điểm mẫu màu của ảnh"
 #: ../app/actions/view-actions.c:269
 msgctxt "view-action"
 msgid "Snap to Gu_ides"
-msgstr "_Dính đường hướng dẫn"
+msgstr "_Dính đường dẫn hướng"
 
 #: ../app/actions/view-actions.c:270
 msgctxt "view-action"
@@ -11151,15 +11145,11 @@ msgid "_Hide Docks"
 msgstr "Đóng _Neo"
 
 #: ../app/actions/windows-actions.c:128
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid ""
-#| "When enabled docks and other dialogs are hidden, leaving only image "
-#| "windows."
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
-msgstr "Khi dùng neo mà các hộp thoại khác ẩn, chỉ giữ lại cửa sổ của ảnh."
+msgstr ""
+"Khi bật, chỗ neo mà các hộp thoại khác bị ẩn, chỉ giữ lại cửa sổ của ảnh."
 
 #: ../app/actions/windows-actions.c:134
 msgctxt "windows-action"
@@ -11529,8 +11519,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:109
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
-"Giá trị này là bao nhiêu điểm ảnh đến vị trí sẽ hoạt hóa khả năng Dính nét "
-"dẫn và Dính lưới."
+"Giá trị này là bao nhiêu điểm ảnh đến vị trí sẽ hoạt hóa khả năng Dính đường "
+"dẫn hướng và Dính lưới."
 
 #: ../app/config/gimprc-blurbs.h:113
 msgid "Snap to guides by default in new image windows."
@@ -11960,8 +11950,8 @@ msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"Khi bật thì hiển thị những nét dẫn theo mặc định. Cũng có thể bật tắt khả "
-"năng này bằng lệnh “Xem → Hiện nét dẫn”."
+"Khi bật thì hiển thị những đường dẫn hướng theo mặc định. Cũng có thể bật "
+"tắt khả năng này bằng lệnh “Xem → Hiện đường dẫn hướng”."
 
 #: ../app/config/gimprc-blurbs.h:447
 msgid ""
@@ -11989,7 +11979,7 @@ msgstr "Dùng GIMP trong chế độ cửa sổ đơn."
 
 #: ../app/config/gimprc-blurbs.h:461
 msgid "Hide docks and other windows, leaving only image windows."
-msgstr "Ẩn neo vào các cửa sổ khác, chỉ hiển thị các cửa sổ ảnh."
+msgstr "Ẩn neo và các cửa sổ khác, chỉ hiển thị các cửa sổ ảnh."
 
 #: ../app/config/gimprc-blurbs.h:464
 #, fuzzy
@@ -12985,7 +12975,7 @@ msgstr "Lưới"
 #: ../app/core/core-enums.c:1250 ../app/core/core-enums.c:1291
 msgctxt "undo-type"
 msgid "Guide"
-msgstr "Nét dẫn"
+msgstr "Đường dẫn hướng"
 
 #: ../app/core/core-enums.c:1251 ../app/core/core-enums.c:1292
 msgctxt "undo-type"
@@ -13190,12 +13180,12 @@ msgstr "Định dạng Lớp/Kênh"
 #: ../app/core/core-enums.c:1298
 msgctxt "undo-type"
 msgid "Rename item"
-msgstr "Đổi tên mục"
+msgstr "Đổi tên mục tin"
 
 #: ../app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "Item color tag"
-msgstr "Thẻ màu mục tin"
+msgstr "Đặt màu cho thẻ mục tin"
 
 #: ../app/core/core-enums.c:1303
 msgctxt "undo-type"
@@ -13395,12 +13385,12 @@ msgstr "Xem kiểu lưới"
 #. initialize babl fishes
 #: ../app/core/gimp.c:535 ../app/core/gimp.c:565
 msgid "Initialization"
-msgstr "Cách khởi động"
+msgstr "Khởi tạo"
 
 #. register all internal procedures
 #: ../app/core/gimp.c:545
 msgid "Internal Procedures"
-msgstr "Thủ tục Nội bộ"
+msgstr "Thủ tục nội bộ"
 
 #. initialize  the global parasite table
 #: ../app/core/gimp.c:845
@@ -13409,7 +13399,7 @@ msgstr "Đang tìm tập tin dữ liệu"
 
 #: ../app/core/gimp.c:845
 msgid "Parasites"
-msgstr "Bộ bám"
+msgstr "Ký sinh"
 
 #. initialize the module list
 #: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3310
@@ -13431,7 +13421,7 @@ msgstr "Bộ thông dịch bó “%s” không sẵn sàng nên chế độ bó 
 #: ../app/menus/menus.c:492 ../app/widgets/gimpdevices.c:225
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
-msgstr "Xóa bỏ “%s” thất bại: %s"
+msgstr "Xóa bỏ “%s” gặp lỗi: %s"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:703
@@ -13563,11 +13553,11 @@ msgstr "Tiền Cảnh tới Hậu Cảnh (Hardedge)"
 
 #: ../app/core/gimp-gradients.c:90
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "Cảnh gần tới nền (HSV chiều ngược)"
+msgstr "Cảnh gần tới nền (HSV ngược chiều)"
 
 #: ../app/core/gimp-gradients.c:98
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "Cảnh gần tới nền (HSV chiều thường)"
+msgstr "Cảnh gần tới nền (sắc độ HSV xuôi chiều kim đồng hồ)"
 
 #: ../app/core/gimp-gradients.c:106
 msgid "FG to Transparent"
@@ -13626,8 +13616,8 @@ msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr ""
-"Có vẻ là bạn đã sử dụng GIMP %s lần trước. Như thế thì GIMP sẽ chuyển cài "
-"đặt người dùng của bạn sang “%s”."
+"Có vẻ là bạn đã từng sử dụng GIMP %s trước kia rồi. Thế thì GIMP sẽ chuyển "
+"cài đặt người dùng của bạn sang “%s”."
 
 #: ../app/core/gimp-user-install.c:220
 #, c-format
@@ -13635,8 +13625,8 @@ msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
 "a folder named '%s' and copy some files to it."
 msgstr ""
-"Có vẻ là bạn đang sử dụng GIMP lần đầu tiên. Như thế thì GIMP sẽ tạo một thư "
-"mục tên “%s” và sao chép một số tập tin vào nó."
+"Có vẻ là bạn sử dụng GIMP lần đầu tiên. Thế thì GIMP sẽ tạo một thư mục tên "
+"“%s” và sao chép một số tập tin vào nó."
 
 #: ../app/core/gimp-user-install.c:419
 #, c-format
@@ -14007,7 +13997,7 @@ msgstr "Làm sắc kênh"
 #: ../app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Clear Channel"
-msgstr "Xóa kênh"
+msgstr "Xóa sạch kênh"
 
 #: ../app/core/gimpchannel.c:295
 msgctxt "undo-type"
@@ -14027,7 +14017,7 @@ msgstr "Nới kênh"
 #: ../app/core/gimpchannel.c:298
 msgctxt "undo-type"
 msgid "Shrink Channel"
-msgstr "Thu nhỏ kênh"
+msgstr "Co nhỏ kênh"
 
 #: ../app/core/gimpchannel.c:299
 msgctxt "undo-type"
@@ -14220,7 +14210,7 @@ msgstr "Tô bằng xô"
 #: ../app/core/gimpdrawable-edit.c:151
 msgctxt "undo-type"
 msgid "Clear"
-msgstr "Xóa"
+msgstr "Xóa sạch"
 
 #: ../app/core/gimpdrawable-equalize.c:63
 msgctxt "undo-type"
@@ -14761,22 +14751,22 @@ msgstr "Đổi cỡ ảnh"
 #: ../app/core/gimpimage-guides.c:51
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
-msgstr "Thêm nét dẫn ngang"
+msgstr "Thêm đường dẫn hướng ngang"
 
 #: ../app/core/gimpimage-guides.c:73
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
-msgstr "Thêm nét dẫn dọc"
+msgstr "Thêm đường dẫn hướng dọc"
 
 #: ../app/core/gimpimage-guides.c:117
 msgctxt "undo-type"
 msgid "Remove Guide"
-msgstr "Bỏ nét dẫn"
+msgstr "Bỏ đường dẫn hướng"
 
 #: ../app/core/gimpimage-guides.c:141
 msgctxt "undo-type"
 msgid "Move Guide"
-msgstr "Di chuyển nét dẫn"
+msgstr "Di chuyển đường dẫn hướng"
 
 #: ../app/core/gimpimage-item-list.c:121
 msgctxt "undo-type"
@@ -15372,7 +15362,7 @@ msgstr "Chọn Tất cả"
 #: ../app/core/gimpselection.c:196
 msgctxt "undo-type"
 msgid "Invert Selection"
-msgstr "Đảo vùng chọn"
+msgstr "Đảo ngược vùng chọn"
 
 #: ../app/core/gimpselection.c:197
 msgctxt "undo-type"
@@ -15382,12 +15372,12 @@ msgstr "Viền vùng chọn"
 #: ../app/core/gimpselection.c:198
 msgctxt "undo-type"
 msgid "Grow Selection"
-msgstr "Nới vùng chọn"
+msgstr "Nới rộng vùng chọn"
 
 #: ../app/core/gimpselection.c:199
 msgctxt "undo-type"
 msgid "Shrink Selection"
-msgstr "Thu nhỏ vùng chọn"
+msgstr "Co nhỏ vùng chọn"
 
 #: ../app/core/gimpselection.c:200
 msgctxt "undo-type"
@@ -15400,15 +15390,15 @@ msgstr "Không có vùng chọn để mà đổ màu."
 
 #: ../app/core/gimpselection.c:344
 msgid "There is no selection to stroke."
-msgstr "Không có vùng chọn để vẽ."
+msgstr "Không có vùng chọn để tạo nét vẽ."
 
 #: ../app/core/gimpselection.c:750
 msgid "Unable to cut or copy because the selected region is empty."
-msgstr "Không thể cắt hoặc sao chép vì vùng chọn rỗng."
+msgstr "Không thể cắt hoặc sao chép vì vùng chọn trống rỗng."
 
 #: ../app/core/gimpselection.c:894
 msgid "Cannot float selection because the selected region is empty."
-msgstr "Không thể nổi vùng chọn vì vùng được chọn rỗng."
+msgstr "Không thể làm trôi nổi vùng chọn vì vùng được chọn trống rỗng."
 
 #: ../app/core/gimpselection.c:901
 msgctxt "undo-type"
@@ -16504,7 +16494,7 @@ msgid ""
 "accelerator, or press backspace to clear."
 msgstr ""
 "Để sửa đổi phím tắt, nhấn vào hàng tương ứng rồi gõ phím tắt mới, hoặc nhấn "
-"phím xóa lui để xóa."
+"phím xóa lùi để xóa sạch."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:97
 msgid "S_ave keyboard shortcuts on exit"
@@ -16924,7 +16914,7 @@ msgstr "Chế độ đệm _vùng vẽ:"
 
 #: ../app/dialogs/preferences-dialog.c:1027
 msgid "Snap to _Guides"
-msgstr "_Dính đường hướng dẫn"
+msgstr "_Dính đường dẫn hướng"
 
 #: ../app/dialogs/preferences-dialog.c:1030
 msgid "S_nap to Grid"
@@ -17889,7 +17879,7 @@ msgstr "Cỡ lịch sử _tối đa:"
 
 #: ../app/dialogs/preferences-dialog.c:2641
 msgid "C_lear Action History"
-msgstr "_Xóa lịch sử hoạt động"
+msgstr "_Xóa sạch lịch sử hoạt động"
 
 #: ../app/dialogs/preferences-dialog.c:2655
 #: ../app/dialogs/preferences-dialog.c:2656
@@ -18582,6 +18572,7 @@ msgstr "Đổi cỡ lớp _chữ"
 #: ../app/dialogs/resize-dialog.c:508
 msgid "Resizing text layers will make them uneditable"
 msgstr ""
+"Thay đổi kích thước các lớp văn bản sẽ làm cho chúng không thể chỉnh sửa được"
 
 #: ../app/dialogs/resize-dialog.c:730
 #, c-format
@@ -18692,11 +18683,11 @@ msgstr "Lỗi cài đặt người dùng!"
 
 #: ../app/dialogs/user-install-dialog.c:96
 msgid "The GIMP user installation failed; see the log for details."
-msgstr "Việc cài đặt người dùng GIMP bị lỗi: xem bản ghi để tìm chi tiết."
+msgstr "Việc cài đặt người dùng GIMP bị lỗi: xem nhật ký để tìm chi tiết."
 
 #: ../app/dialogs/user-install-dialog.c:99
 msgid "Installation Log"
-msgstr "Bản ghi Cài đặt"
+msgstr "Nhật ký cài đặt"
 
 #: ../app/dialogs/vectors-export-dialog.c:80
 msgid "Export Path to SVG"
@@ -18736,7 +18727,7 @@ msgstr "Tên đườ_ng dẫn:"
 
 #: ../app/dialogs/vectors-options-dialog.c:108
 msgid "Lock path _strokes"
-msgstr "Khóa đường dẫn tạo _nét"
+msgstr "Khóa tạo _nét theo đường dẫn"
 
 #: ../app/dialogs/vectors-options-dialog.c:109
 msgid "Lock path _position"
@@ -18775,7 +18766,7 @@ msgstr "Quy tắc một phần ba"
 #: ../app/display/display-enums.c:158
 msgctxt "guides-type"
 msgid "Rule of fifths"
-msgstr "Quy tắc phần năm"
+msgstr "Quy tắc một phần năm"
 
 #: ../app/display/display-enums.c:159
 msgctxt "guides-type"
@@ -18845,7 +18836,7 @@ msgstr "Chỉnh sửa"
 #: ../app/display/display-enums.c:545
 msgctxt "vector-mode"
 msgid "Move"
-msgstr "Di Chuyển"
+msgstr "Di chuyển"
 
 #: ../app/display/gimpcursorview.c:221 ../app/display/gimpcursorview.c:227
 #: ../app/display/gimpcursorview.c:246 ../app/display/gimpcursorview.c:252
@@ -18893,23 +18884,23 @@ msgstr "H"
 msgid "_Sample Merged"
 msgstr "_Mẫu đã trộn"
 
-#: ../app/display/gimpdisplayshell.c:509
+#: ../app/display/gimpdisplayshell.c:512
 msgid "Access the image menu"
 msgstr "Truy cập thực đơn ảnh"
 
-#: ../app/display/gimpdisplayshell.c:639
+#: ../app/display/gimpdisplayshell.c:642
 msgid "Zoom image when window size changes"
 msgstr "Thu phóng ảnh khi cỡ ảnh đổi"
 
-#: ../app/display/gimpdisplayshell.c:668
+#: ../app/display/gimpdisplayshell.c:671
 msgid "Toggle Quick Mask"
 msgstr "Bật/tắt mặt nạ nhanh"
 
-#: ../app/display/gimpdisplayshell.c:683
+#: ../app/display/gimpdisplayshell.c:686
 msgid "Navigate the image display"
 msgstr "Định vị hiển thị ảnh"
 
-#: ../app/display/gimpdisplayshell.c:736 ../app/display/gimpdisplayshell.c:1415
+#: ../app/display/gimpdisplayshell.c:739 ../app/display/gimpdisplayshell.c:1432
 #: ../app/widgets/gimptoolbox.c:236
 msgid "Drop image files here to open them"
 msgstr "Thả tập tin để mở"
@@ -19134,23 +19125,23 @@ msgstr "Nhấn để đặt đường đẫn hướng dọc"
 
 #: ../app/display/gimptoolcompass.c:871
 msgid "Click-Drag to add a new point"
-msgstr "Nhấn-kéo chuột để thêm điểm"
+msgstr "Nhấn giữ rồi kéo rê để thêm điểm"
 
 #: ../app/display/gimptoolcompass.c:882 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
-msgstr "Nhắp-kéo để di chuyển quanh điểm này"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển điểm này"
 
 #: ../app/display/gimptoolcompass.c:899
 msgid "Click-Drag to move all points"
-msgstr "Nhấn-kéo để di chuyển mọi điểm"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển mọi điểm"
 
 #: ../app/display/gimptoolfocus.c:1117
 msgid "Click-Drag to change the midpoint"
-msgstr "Nhấn-kéo để thay đổi điểm giữa"
+msgstr "Nhấn giữ rồi kéo rê để thay đổi điểm giữa"
 
 #: ../app/display/gimptoolfocus.c:1119
 msgid "Click-Drag to resize the limit"
-msgstr "Click và rê chuột để điều chỉnh kích cỡ giới hạn"
+msgstr "Nhấn giữ rồi kéo rê để điều chỉnh kích cỡ giới hạn"
 
 #: ../app/display/gimptoolfocus.c:1121 ../app/display/gimptoolfocus.c:1134
 #, c-format
@@ -19163,15 +19154,15 @@ msgstr "Bấm và rê chuột để điều chỉnh kích cỡ tiêu điểm"
 
 #: ../app/display/gimptoolfocus.c:1133
 msgid "Click-Drag to change the aspect ratio"
-msgstr "Nhấn-kéo để thay đổi tỷ lệ hình dáng"
+msgstr "Nhấn giữ rồi kéo rê để thay đổi tỷ lệ hình dáng"
 
 #: ../app/display/gimptoolfocus.c:1144
 msgid "Click-Drag to move the focus"
-msgstr "Nhắp-kéo để di chuyển tiêu điểm"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển tiêu điểm"
 
 #: ../app/display/gimptoolfocus.c:1148
 msgid "Click-Drag to rotate the focus"
-msgstr "Nhấn-kéo để tạo quay tiêu điểm"
+msgstr "Nhấn giữ rồi kéo rê để tạo quay tiêu điểm"
 
 #: ../app/display/gimptoolfocus.c:1149 ../app/display/gimptoolgyroscope.c:729
 #: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:662
@@ -19181,7 +19172,7 @@ msgstr "%s cho góc bị ép buộc"
 
 #: ../app/display/gimptoolgyroscope.c:714
 msgid "Click-Drag to zoom"
-msgstr "Nhắp-kéo phóng to"
+msgstr "Nhấn giữ rồi kéo rê phóng to"
 
 #: ../app/display/gimptoolgyroscope.c:718
 #, c-format
@@ -19191,11 +19182,11 @@ msgstr "%s cho các bước bị ràng buộc"
 #: ../app/display/gimptoolgyroscope.c:725
 #: ../app/display/gimptooltransformgrid.c:1841
 msgid "Click-Drag to rotate"
-msgstr "Nhấn-kéo chuột để xoay"
+msgstr "Nhấn giữ rồi kéo rê để xoay"
 
 #: ../app/display/gimptoolgyroscope.c:734
 msgid "Click-Drag to pan"
-msgstr "Nhấn-kéo để di chuyển"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển"
 
 #: ../app/display/gimptoolgyroscope.c:740
 #, c-format
@@ -19215,20 +19206,20 @@ msgstr "%s để phóng to"
 #: ../app/display/gimptoolhandlegrid.c:865
 #: ../app/display/gimptooltransformgrid.c:1832
 msgid "Click-Drag to move"
-msgstr "Nhắp-kéo để di chuyển"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển"
 
 #: ../app/display/gimptoolhandlegrid.c:868
 msgid "Click-Drag to rotate and scale"
-msgstr "Nhấn-kéo để tạo quay và co dãn"
+msgstr "Nhấn giữ rồi kéo rê để tạo quay và co dãn"
 
 #: ../app/display/gimptoolhandlegrid.c:871
 msgid "Click-Drag to shear and scale"
-msgstr "Nhấn-kéo để tạo độ nghiêng và co giãn tỷ lệ"
+msgstr "Nhấn giữ rồi kéo rê để tạo độ nghiêng và co giãn tỷ lệ"
 
 #: ../app/display/gimptoolhandlegrid.c:874
 #: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to change perspective"
-msgstr "Nhấn-kéo để thay đổi phối cảnh"
+msgstr "Nhấn giữ rồi kéo rê để thay đổi phối cảnh"
 
 #: ../app/display/gimptoolhandlegrid.c:885
 msgid "Click to add a handle"
@@ -19236,11 +19227,11 @@ msgstr "Nhấn để thêm tay cầm"
 
 #: ../app/display/gimptoolhandlegrid.c:891
 msgid "Click-Drag to move this handle"
-msgstr "Nhấn-kéo để di chuyển tay cầm này"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển tay cầm này"
 
 #: ../app/display/gimptoolhandlegrid.c:896
 msgid "Click-Drag to remove this handle"
-msgstr "Nhấn-kéo để gỡ bỏ tay cầm này"
+msgstr "Nhấn giữ rồi kéo rê để gỡ bỏ tay cầm này"
 
 #: ../app/display/gimptoolline.c:345 ../app/display/gimptoolline.c:504
 msgid "Line: "
@@ -19248,7 +19239,7 @@ msgstr "Đường: "
 
 #: ../app/display/gimptoolline.c:1551
 msgid "Click-Drag to move the endpoint"
-msgstr "Nhắp-kéo để di chuyển điểm cuối"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển điểm cuối"
 
 #: ../app/display/gimptoolline.c:1564
 msgid "Release to remove the slider"
@@ -19261,31 +19252,32 @@ msgstr "%s cho giá trị bị ép buộc"
 
 #: ../app/display/gimptoolline.c:1578
 msgid "Click-Drag to move the slider; drag away to remove the slider"
-msgstr "Nhấn-kéo để di chuyển con trượt; kéo thả ra ngoài để bỏ con trượt"
+msgstr ""
+"Nhấn giữ rồi kéo rê để di chuyển con trượt; kéo thả ra ngoài để bỏ con trượt"
 
 #: ../app/display/gimptoolline.c:1583
 msgid "Click-Drag to move or remove the slider"
-msgstr "Nhấn-kéo để di chuyển hay bỏ con trượt"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển hay bỏ con trượt"
 
 #: ../app/display/gimptoolline.c:1588
 msgid "Click-Drag to move the slider"
-msgstr "Nhấn-kéo để di chuyển con trượt"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển con trượt"
 
 #: ../app/display/gimptoolline.c:1599
 msgid "Click-Drag away to remove the slider"
-msgstr "Nhấn-kéo ra ngoài để xóa bỏ con trượt"
+msgstr "Nhấn giữ rồi kéo rê ra ngoài để xóa bỏ con trượt"
 
 #: ../app/display/gimptoolline.c:1603
 msgid "Click-Drag to remove the slider"
-msgstr "Nhấn-kéo để di gỡ bỏ con trượt"
+msgstr "Nhấn giữ rồi kéo rê để di gỡ bỏ con trượt"
 
 #: ../app/display/gimptoolline.c:1614
 msgid "Click or Click-Drag to add a new slider"
-msgstr "Nhấn-kéo chuột để thêm con trượt mới"
+msgstr "Nhấn giữ rồi kéo rê chuột để thêm con trượt mới"
 
 #: ../app/display/gimptoolline.c:1620
 msgid "Click-Drag to move the line"
-msgstr "Nhắp-kéo để di chuyển đường thẳng"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển đường thẳng"
 
 #: ../app/display/gimptoolline.c:1632
 #, c-format
@@ -19314,12 +19306,12 @@ msgstr "Thêm nét vẽ"
 
 #: ../app/display/gimptoolpath.c:661
 msgid "Add Anchor"
-msgstr "Thêm neo"
+msgstr "Thêm điểm neo"
 
 #: ../app/display/gimptoolpath.c:685 ../app/display/gimptoolpath.c:2056
 #: ../app/display/gimptoolpath.c:2093
 msgid "Insert Anchor"
-msgstr "Chèn neo"
+msgstr "Chèn điểm neo"
 
 #: ../app/display/gimptoolpath.c:714
 msgid "Drag Handle"
@@ -19327,11 +19319,11 @@ msgstr "Kéo móc"
 
 #: ../app/display/gimptoolpath.c:745
 msgid "Drag Anchor"
-msgstr "Kéo neo"
+msgstr "Kéo điểm neo"
 
 #: ../app/display/gimptoolpath.c:763
 msgid "Drag Anchors"
-msgstr "Kéo các neo"
+msgstr "Kéo các điểm neo"
 
 #: ../app/display/gimptoolpath.c:785
 msgid "Drag Curve"
@@ -19351,7 +19343,7 @@ msgstr "Chuyển đổi cạnh"
 
 #: ../app/display/gimptoolpath.c:888
 msgid "Delete Anchor"
-msgstr "Xóa bỏ neo"
+msgstr "Xóa bỏ điểm neo"
 
 #: ../app/display/gimptoolpath.c:911 ../app/display/gimptoolpath.c:2073
 msgid "Delete Segment"
@@ -19359,7 +19351,7 @@ msgstr "Xóa bỏ đoạn"
 
 #: ../app/display/gimptoolpath.c:1163
 msgid "Move Anchors"
-msgstr "Chuyển các neo"
+msgstr "Di chuyển các điểm neo"
 
 #: ../app/display/gimptoolpath.c:1590
 msgid "Click to pick path to edit"
@@ -19375,27 +19367,27 @@ msgstr "Nhắp chuột để tạo một thành phần mới của đường d�
 
 #: ../app/display/gimptoolpath.c:1602
 msgid "Click or Click-Drag to create a new anchor"
-msgstr "Nhấn hoặc nhấn-kéo để tạo một neo mới"
+msgstr "Nhấn hoặc Nhấn giữ rồi kéo rê để tạo một điểm neo mới"
 
 #: ../app/display/gimptoolpath.c:1612 ../app/display/gimptoolpath.c:1619
 msgid "Click-Drag to move the anchor around"
-msgstr "Nhắp-kéo để di chuyển neo quanh"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển neo đi chỗ khác"
 
 #: ../app/display/gimptoolpath.c:1623 ../app/display/gimptoolpath.c:1646
 msgid "Click-Drag to move the anchors around"
-msgstr "Nhắp-kéo để di chuyển các neo quanh"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển các điểm neo đi chỗ khác"
 
 #: ../app/display/gimptoolpath.c:1629
 msgid "Click-Drag to move the handle around"
-msgstr "Nhấn-kéo để di chuyển móc chung quanh"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển tay cầm đến vị trí khác"
 
 #: ../app/display/gimptoolpath.c:1636
 msgid "Click-Drag to move the handles around symmetrically"
-msgstr "Nhấn-kéo để di chuyển móc chung quanh"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển tay cầm đi xung quanh đối xứng"
 
 #: ../app/display/gimptoolpath.c:1651
 msgid "Click-Drag to change the shape of the curve"
-msgstr "Nhấn-kéo để thay đổi hình của cong"
+msgstr "Nhấn giữ rồi kéo rê để thay đổi hình của cong"
 
 #: ../app/display/gimptoolpath.c:1654
 #, c-format
@@ -19404,23 +19396,23 @@ msgstr "%s: đối xứng"
 
 #: ../app/display/gimptoolpath.c:1659
 msgid "Click-Drag to move the component around"
-msgstr "Nhấn-kéo để di chuyển thành phần chung quanh"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển thành phần đi chỗ khác"
 
 #: ../app/display/gimptoolpath.c:1667
 msgid "Click-Drag to move the path around"
-msgstr "Nhắp-kéo để di chuyển đường dẫn quanh"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển đường dẫn đi chỗ khác"
 
 #: ../app/display/gimptoolpath.c:1671
 msgid "Click-Drag to insert an anchor on the path"
-msgstr "Nhấn-kéo để chèn một neo trên đường dẫn"
+msgstr "Nhấn giữ rồi kéo rê để chèn một điểm neo trên đường dẫn"
 
 #: ../app/display/gimptoolpath.c:1679
 msgid "Click to delete this anchor"
-msgstr "Nhắp chuột để xóa bỏ neo này"
+msgstr "Nhắp chuột để xóa bỏ điểm neo này"
 
 #: ../app/display/gimptoolpath.c:1683
 msgid "Click to connect this anchor with the selected endpoint"
-msgstr "Nhắp chuột để kết nối neo này đến điểm cuối cùng được chọn"
+msgstr "Nhắp chuột để kết nối điểm neo này đến điểm cuối cùng được chọn"
 
 #: ../app/display/gimptoolpath.c:1688
 msgid "Click to open up the path"
@@ -19436,7 +19428,7 @@ msgstr "Bấm vào đây chẳng làm gì cả, thử bấm vào các phần t�
 
 #: ../app/display/gimptoolpath.c:1904 ../app/display/gimptoolpath.c:2014
 msgid "Delete Anchors"
-msgstr "Xóa bỏ các neo"
+msgstr "Xóa bỏ các điểm neo"
 
 #: ../app/display/gimptoolpath.c:2041
 msgid "Shift start"
@@ -19448,19 +19440,22 @@ msgstr "Nhấn để đóng hình dạng"
 
 #: ../app/display/gimptoolpolygon.c:895
 msgid "Click-Drag to move segment vertex"
-msgstr "Nhấn-kéo để di chuyển đỉnh cạnh"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển đỉnh cạnh"
 
 #: ../app/display/gimptoolpolygon.c:900
 msgid "Return commits, Escape cancels, Backspace re-opens shape"
-msgstr "Trả về commit, hủy Escape, Backspace để mở lại hình dạng cuối"
+msgstr ""
+"Phím Enter để chuyển giao, Escape để hủy, Backspace để mở lại hình dạng cuối"
 
 #: ../app/display/gimptoolpolygon.c:904
 msgid "Return commits, Escape cancels, Backspace removes last segment"
-msgstr "Trả về commit, hủy Escape, Backspace đã bỏ qua đoạn cuối"
+msgstr ""
+"Phím Enter để chuyển giao, Escape để hủy, Backspace để xóa bỏ đoạn cuối cùng"
 
 #: ../app/display/gimptoolpolygon.c:908
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
-msgstr "Nhấn-và-thả để thêm một đoạn tự do, Nhấn để thêm một đoạn đa giác"
+msgstr ""
+"Nhấn giữ rồi kéo rê để thêm một đoạn tự do, Nhấn để thêm một cạnh đa giác"
 
 #: ../app/display/gimptoolrectangle.c:568
 #: ../app/display/gimptoolrectangle.c:876
@@ -19474,24 +19469,24 @@ msgstr "Vị trí: "
 
 #: ../app/display/gimptooltransform3dgrid.c:632
 msgid "Click-Drag to move the vanishing point"
-msgstr "Nhắp-kéo để di chuyển điểm biến mất"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển điểm biến mất"
 
 #: ../app/display/gimptooltransformgrid.c:1825
 #: ../app/display/gimptooltransformgrid.c:1830
 msgid "Click-Drag to scale"
-msgstr "Nhấn-kéo để co dãn"
+msgstr "Nhấn giữ rồi kéo rê để co dãn"
 
 #: ../app/display/gimptooltransformgrid.c:1834
 msgid "Click-Drag to move the pivot point"
-msgstr "Nhắp-kéo để di chuyển quanh chốt xoay này"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển quanh chốt xoay này"
 
 #: ../app/display/gimptooltransformgrid.c:1839
 msgid "Click-Drag to shear"
-msgstr "Nhấn kéo chuột để làm nghiêng"
+msgstr "Nhấn giữ rồi kéo rê để làm nghiêng"
 
 #: ../app/file/file-open.c:136 ../app/file/file-save.c:140
 msgid "Not a regular file"
-msgstr "Không phải là một tập tin chuẩn"
+msgstr "Không phải là một tập tin thông thường"
 
 #: ../app/file/file-open.c:145 ../app/file/file-save.c:149
 msgid "Permission denied"
@@ -19522,7 +19517,7 @@ msgstr "Gắn phân vùng trên mạng"
 
 #: ../app/file/file-remote.c:289
 msgid "Opening remote file"
-msgstr "Mở tập tin từ mạng"
+msgstr "Mở tập tin từ trên mạng"
 
 #: ../app/file/file-remote.c:355
 #, c-format
@@ -19578,16 +19573,17 @@ msgid "File not allowed in root of GIMP extension '%s': %s"
 msgstr "Tập tin không được phép trong gốc của phần mở rộng GIMP “%s”: %s"
 
 #: ../app/file-data/file-data-gex.c:167
-#, fuzzy, c-format
+#, c-format
 msgid "File not in GIMP extension '%s' folder id '%s': %s"
-msgstr "Phần mở rộng GIMP “%s” cần một tập tin AppStream: %s"
+msgstr ""
+"Tập tin không tìm thấy trong phần mở rộng GIMP “%s” mã thư mục “%s”: %s"
 
 #: ../app/file-data/file-data-gex.c:263 ../app/file-data/file-data-gex.c:409
 #: ../app/file-data/file-data-gex.c:421 ../app/file-data/file-data-gex.c:433
 #: ../app/file-data/file-data-gex.c:446
 #, c-format
 msgid "Fatal error when uncompressing GIMP extension '%s': %s"
-msgstr ""
+msgstr "Gặp lỗi nghiêm trọng khi giải nén phần bổ sung GIMP '%s': %s"
 
 #: ../app/file-data/file-data-gex.c:297
 #, c-format
@@ -19835,20 +19831,16 @@ msgid "Screen (l)"
 msgstr "Màn hình (l)"
 
 #: ../app/operations/operations-enums.c:170
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Old broken Overlay"
-msgstr "Đè"
+msgstr "Đè vỡ cũ"
 
 #. Translators: this is an abbreviated version of "Old broken Overlay".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:173
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Overlay"
 msgctxt "layer-mode"
 msgid "Old Overlay"
-msgstr "Đè"
+msgstr "Đè cũ"
 
 #: ../app/operations/operations-enums.c:174
 msgctxt "layer-mode"
@@ -19887,54 +19879,40 @@ msgid "Subtract (l)"
 msgstr "Trừ (l)"
 
 #: ../app/operations/operations-enums.c:186
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Darken only"
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
-msgstr "Chỉ làm tối"
+msgstr "Chỉ làm tối (cũ)"
 
 #. Translators: this is an abbreviated version of "Darken only (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:189
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Darken only"
 msgctxt "layer-mode"
 msgid "Darken only (l)"
-msgstr "Chỉ làm tối"
+msgstr "Chỉ làm tối (l)"
 
 #: ../app/operations/operations-enums.c:190
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Lighten only"
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
-msgstr "Chỉ làm sáng"
+msgstr "Chỉ làm sáng (cũ)"
 
 #. Translators: this is an abbreviated version of "Lighten only (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:193
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Lighten only"
 msgctxt "layer-mode"
 msgid "Lighten only (l)"
-msgstr "Chỉ làm sáng"
+msgstr "Chỉ làm sáng (l)"
 
 #: ../app/operations/operations-enums.c:194
-#, fuzzy
 msgctxt "layer-mode"
 msgid "HSV Hue (legacy)"
-msgstr "Độ bão hòa HSV (cũ)"
+msgstr "Sắc độ HSV (cũ)"
 
 #. Translators: this is an abbreviated version of "HSV Hue (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:197
-#, fuzzy
 msgctxt "layer-mode"
 msgid "HSV Hue (l)"
-msgstr "HSV Hue"
+msgstr "Sắc độ HSV (l)"
 
 #: ../app/operations/operations-enums.c:198
 msgctxt "layer-mode"
@@ -19985,20 +19963,16 @@ msgid "Divide (l)"
 msgstr "Chia (l)"
 
 #: ../app/operations/operations-enums.c:214
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
-msgstr "Cũ"
+msgstr "Tránh (cũ)"
 
 #. Translators: this is an abbreviated version of "Dodge (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:217
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Dodge"
 msgctxt "layer-mode"
 msgid "Dodge (l)"
-msgstr "Tránh"
+msgstr "Tránh (l)"
 
 #: ../app/operations/operations-enums.c:218
 msgctxt "layer-mode"
@@ -20037,58 +20011,40 @@ msgid "Soft light (l)"
 msgstr "Sáng mềm (l)"
 
 #: ../app/operations/operations-enums.c:230
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Grain extract"
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
-msgstr "Xuất hạt"
+msgstr "Trích hạt (cũ)"
 
 #. Translators: this is an abbreviated version of "Grain extract (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:233
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Grain extract"
 msgctxt "layer-mode"
 msgid "Grain extract (l)"
-msgstr "Xuất hạt"
+msgstr "Trích hạt (l)"
 
 #: ../app/operations/operations-enums.c:234
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Grain merge"
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
-msgstr " Trộn hạt"
+msgstr "Trích hạt (cũ)"
 
 #. Translators: this is an abbreviated version of "Grain merge (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:237
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Grain merge"
 msgctxt "layer-mode"
 msgid "Grain merge (l)"
-msgstr " Trộn hạt"
+msgstr "Trích hạt (l)"
 
 #: ../app/operations/operations-enums.c:238
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Color erase"
 msgctxt "layer-mode"
 msgid "Color erase (legacy)"
-msgstr "Màu HSL (cũ)"
+msgstr "Tẩy xóa màu (cũ)"
 
 #. Translators: this is an abbreviated version of "Color erase (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:241
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Color erase"
 msgctxt "layer-mode"
 msgid "Color erase (l)"
-msgstr "Tẩy xóa màu"
+msgstr "Tẩy xóa màu (l)"
 
 #: ../app/operations/operations-enums.c:242
 msgctxt "layer-mode"
@@ -20096,16 +20052,14 @@ msgid "Overlay"
 msgstr "Đè"
 
 #: ../app/operations/operations-enums.c:243
-#, fuzzy
 msgctxt "layer-mode"
 msgid "LCh Hue"
-msgstr "LCh"
+msgstr "Sắc độ LCh"
 
 #: ../app/operations/operations-enums.c:244
-#, fuzzy
 msgctxt "layer-mode"
 msgid "LCh Chroma"
-msgstr "Màu Trong Suốt"
+msgstr "Sắc độ màu LCh"
 
 #: ../app/operations/operations-enums.c:245
 msgctxt "layer-mode"
@@ -20113,11 +20067,9 @@ msgid "LCh Color"
 msgstr "Màu LCh"
 
 #: ../app/operations/operations-enums.c:246
-#, fuzzy
-#| msgid "_Lightness:"
 msgctxt "layer-mode"
 msgid "LCh Lightness"
-msgstr "Độ sáng"
+msgstr "Độ sáng LCh"
 
 #: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
@@ -20147,12 +20099,12 @@ msgstr "Khác biệt"
 #: ../app/operations/operations-enums.c:252
 msgctxt "layer-mode"
 msgid "Addition"
-msgstr "Thêm"
+msgstr "Cộng thêm"
 
 #: ../app/operations/operations-enums.c:253
 msgctxt "layer-mode"
 msgid "Subtract"
-msgstr "Trừ"
+msgstr "Trừ bớt"
 
 #: ../app/operations/operations-enums.c:254
 msgctxt "layer-mode"
@@ -20167,7 +20119,7 @@ msgstr "Chỉ làm sáng"
 #: ../app/operations/operations-enums.c:256
 msgctxt "layer-mode"
 msgid "HSV Hue"
-msgstr "HSV Hue"
+msgstr "Sắc độ HSV"
 
 #: ../app/operations/operations-enums.c:257
 msgctxt "layer-mode"
@@ -20190,9 +20142,6 @@ msgid "Divide"
 msgstr "Chia"
 
 #: ../app/operations/operations-enums.c:261
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Dodge"
 msgctxt "layer-mode"
 msgid "Dodge"
 msgstr "Tránh"
@@ -20213,40 +20162,29 @@ msgid "Soft light"
 msgstr "Sáng mềm"
 
 #: ../app/operations/operations-enums.c:265
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Grain extract"
 msgctxt "layer-mode"
 msgid "Grain extract"
-msgstr "Xuất hạt"
+msgstr "Trích hạt"
 
 #: ../app/operations/operations-enums.c:266
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Grain merge"
 msgctxt "layer-mode"
 msgid "Grain merge"
-msgstr " Trộn hạt"
+msgstr "Hòa trộn hạt"
 
 #: ../app/operations/operations-enums.c:267
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "layer-mode"
 msgid "Vivid light"
-msgstr "Ánh Sáng Rực Rỡ"
+msgstr "Sáng Vivid"
 
 #: ../app/operations/operations-enums.c:268
-#, fuzzy
-#| msgid "Highlight"
 msgctxt "layer-mode"
 msgid "Pin light"
-msgstr "Ánh Sáng Tiêu Điểm"
+msgstr "Sáng Pin"
 
 #: ../app/operations/operations-enums.c:269
 msgctxt "layer-mode"
 msgid "Linear light"
-msgstr "Ánh sáng tuyến tính"
+msgstr "Sáng tuyến tính"
 
 #: ../app/operations/operations-enums.c:270
 msgctxt "layer-mode"
@@ -20259,45 +20197,33 @@ msgid "Exclusion"
 msgstr "Loại trừ"
 
 #: ../app/operations/operations-enums.c:272
-#, fuzzy
-#| msgid "Linear"
 msgctxt "layer-mode"
 msgid "Linear burn"
-msgstr "Cháy Bậc Một"
+msgstr "Cháy tuyến tính"
 
 #: ../app/operations/operations-enums.c:273
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
-msgstr "Chỉ làm tối"
+msgstr "Luma/Luminance chỉ làm tối"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance darken only".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:276
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Darken only"
 msgctxt "layer-mode"
 msgid "Luma darken only"
-msgstr "Độ Sáng"
+msgstr "Luma chỉ làm tối"
 
 #: ../app/operations/operations-enums.c:277
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Lighten only"
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
-msgstr "Chỉ làm sáng"
+msgstr "Luma/Luminance chỉ làm sáng"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance lighten only".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:280
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Lighten only"
 msgctxt "layer-mode"
 msgid "Luma lighten only"
-msgstr "Chỉ làm sáng"
+msgstr "Luma chỉ làm sáng"
 
 #: ../app/operations/operations-enums.c:281
 msgctxt "layer-mode"
@@ -20307,7 +20233,7 @@ msgstr "Độ chói"
 #: ../app/operations/operations-enums.c:282
 msgctxt "layer-mode"
 msgid "Color erase"
-msgstr "Tẩy xóa màu"
+msgstr "Tẩy màu"
 
 #: ../app/operations/operations-enums.c:283
 msgctxt "layer-mode"
@@ -20317,7 +20243,7 @@ msgstr "Tẩy"
 #: ../app/operations/operations-enums.c:284
 msgctxt "layer-mode"
 msgid "Merge"
-msgstr "Trộn"
+msgstr "Hòa trộn"
 
 #: ../app/operations/operations-enums.c:285
 msgctxt "layer-mode"
@@ -20372,17 +20298,13 @@ msgstr "Vùng chịu ảnh hưởng"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:103
 #: ../app/operations/gimpcolorbalanceconfig.c:104
-#, fuzzy
-#| msgid "Cyan"
 msgid "Cyan-Red"
-msgstr "Đỏ-Xanh Da Trời"
+msgstr "Lá mạ-Đỏ"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:109
 #: ../app/operations/gimpcolorbalanceconfig.c:110
-#, fuzzy
-#| msgid "Magenta"
 msgid "Magenta-Green"
-msgstr "Lục-Tím Đỏ"
+msgstr "Đỏ tươi-Lục"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:115
 #: ../app/operations/gimpcolorbalanceconfig.c:116
@@ -20392,7 +20314,7 @@ msgstr "Vàng-Xanh"
 #: ../app/operations/gimpcolorbalanceconfig.c:121
 #: ../app/operations/gimpcolorbalanceconfig.c:122
 msgid "Preserve Luminosity"
-msgstr "Bảo tồn độ sáng"
+msgstr "Giữ nguyên độ sáng"
 
 #: ../app/operations/gimpcurvesconfig.c:106
 #: ../app/operations/gimplevelsconfig.c:111
@@ -20402,7 +20324,7 @@ msgstr "Làm việc trên RGB tuyến tính hoặc tri giác"
 #: ../app/operations/gimpcurvesconfig.c:113
 #: ../app/operations/gimplevelsconfig.c:118
 msgid "Linear"
-msgstr "Tuyến"
+msgstr "Tuyến tính"
 
 #: ../app/operations/gimpcurvesconfig.c:114
 #: ../app/operations/gimplevelsconfig.c:119
@@ -20473,7 +20395,7 @@ msgstr "Kẹp đầu vào"
 
 #: ../app/operations/gimplevelsconfig.c:144
 msgid "Clamp input values before applying output mapping."
-msgstr ""
+msgstr "Kẹp giá trị đầu ra trước khi áp dụng các ánh xạ cho đầu ra."
 
 #: ../app/operations/gimplevelsconfig.c:155
 #: ../app/operations/gimplevelsconfig.c:156
@@ -20547,10 +20469,8 @@ msgid "Adjust color curves"
 msgstr "Chỉnh đường cong màu"
 
 #: ../app/operations/gimpoperationdesaturate.c:86
-#, fuzzy
-#| msgid "Desaturate Tool: Turn colors into shades of gray"
 msgid "Turn colors into shades of gray"
-msgstr "Công cụ giảm màu: Chuyển đổi màu sắc thành mức xám"
+msgstr "Chỉnh màu sắc thành bóng của xám"
 
 #: ../app/operations/gimpoperationdesaturate.c:91
 #: ../app/operations/gimpoperationsettings.c:92
@@ -20568,10 +20488,8 @@ msgid "Choose shade of gray based on"
 msgstr "Hãy chọn sắc màu xám dựa vào :"
 
 #: ../app/operations/gimpoperationhuesaturation.c:65
-#, fuzzy
-#| msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
 msgid "Adjust hue, saturation, and lightness"
-msgstr "Công cụ Màu-Bão Hòa: Chỉnh màu, độ bão hòa và độ sáng"
+msgstr "Chỉnh sắc độ, độ bão hòa và độ sáng"
 
 #: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:139
 msgid "Adjust color levels"
@@ -20579,23 +20497,16 @@ msgstr "Chỉnh mức màu"
 
 #: ../app/operations/gimpoperationoffset.c:118
 #: ../app/tools/gimpoffsettool.c:130
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Shift the pixels, optionally wrapping them at the borders"
 msgid "Shift the pixels, optionally wrapping them at the borders"
-msgstr "Dịch các điểm ảnh, và có thể cuộn tại viền"
+msgstr "Dịch các điểm ảnh, tùy chọn cuộn tại viền"
 
 #: ../app/operations/gimpoperationposterize.c:83
-#, fuzzy
-#| msgid "Posterize Tool: Reduce to a limited set of colors"
 msgid "Reduce to a limited set of colors"
-msgstr "Công cụ posterize: giảm số lượng màu về một tập hạn chế"
+msgstr "Ciảm số lượng màu về một tập hạn chế"
 
 #: ../app/operations/gimpoperationposterize.c:88
-#, fuzzy
-#| msgid "Posterize _levels:"
 msgid "Posterize levels"
-msgstr "Bích chương hóa _lớp:"
+msgstr "Mức bích chương hóa"
 
 #: ../app/operations/gimpoperationsemiflatten.c:84
 msgid "Replace partial transparency with a color"
@@ -20642,7 +20553,7 @@ msgstr "Giá trị"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:91
 msgid "The alpha value"
-msgstr "Ggiá trị alpha"
+msgstr "Giá trị alpha"
 
 #: ../app/gui/gui.c:317
 msgid "Image Recovery"
@@ -20833,11 +20744,11 @@ msgstr "Tẩy bằng chổi này"
 
 #: ../app/paint/gimpmybrushoptions.c:115
 msgid "No erasing effect"
-msgstr "Không hiệu ứng tẩy nào"
+msgstr "Không chịu tác động tẩy"
 
 #: ../app/paint/gimpmybrushoptions.c:116 ../app/paint/gimpsmudgeoptions.c:87
 msgid "Never decrease alpha of existing pixels"
-msgstr ""
+msgstr "Không bao giờ giảm anfa của các điểm ảnh có sẵn"
 
 #: ../app/paint/gimppaintbrush.c:82 ../app/tools/gimppaintbrushtool.c:57
 msgid "Paintbrush"
@@ -20845,11 +20756,11 @@ msgstr "Chổi sơn"
 
 #: ../app/paint/gimppaintcore.c:148
 msgid "Paint"
-msgstr "Sơn"
+msgstr "Sơn vẽ"
 
 #: ../app/paint/gimppaintoptions.c:204
 msgid "Brush Size"
-msgstr "Cỡ chổi"
+msgstr "Cỡ chổi vẽ"
 
 #: ../app/paint/gimppaintoptions.c:210
 msgid "Aspect Ratio"
@@ -21491,8 +21402,6 @@ msgid "Transform resize"
 msgstr "Cỡ chuyển dạng"
 
 #: ../app/pdb/gimppdbcontext.c:196
-#, fuzzy
-#| msgid "Distance:"
 msgid "Distance metric"
 msgstr "Thước đo khoảng cách"
 
@@ -21637,10 +21546,9 @@ msgid "Gaussian Blur"
 msgstr "Làm nhòe Gauss"
 
 #: ../app/pdb/plug-in-compat-cmds.c:482
-#, fuzzy
 msgctxt "undo-type"
 msgid "Alien Map"
-msgstr "Ánh xạ lạ"
+msgstr "Ánh xạ Alien"
 
 #: ../app/pdb/plug-in-compat-cmds.c:519
 msgctxt "undo-type"
@@ -21666,14 +21574,11 @@ msgid "Autocrop layer"
 msgstr "Tự động xén lớp"
 
 #: ../app/pdb/plug-in-compat-cmds.c:785
-#, fuzzy
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
-msgstr "_Kéo giãn độ tương phản"
+msgstr "Kéo giãn độ tương phản HSV"
 
 #: ../app/pdb/plug-in-compat-cmds.c:939
-#, fuzzy
-#| msgid "Con_trast:"
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "Kéo giãn độ tương phản"
@@ -21889,11 +21794,9 @@ msgid "Random Hurl"
 msgstr "Ném ngẫu nhiên"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3565
-#, fuzzy
-#| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Pick"
-msgstr "Châm ngẫu nhiên"
+msgstr "Chọn ngẫu nhiên"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3618
 #, fuzzy
@@ -22847,7 +22750,8 @@ msgstr "C_anh lề"
 #: ../app/tools/gimpaligntool.c:541
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
-"Nhấn vào một lớp, đường dẫn hay hướng dẫn, hoặc nhấn-và-thả để chọn nhiều lớp"
+"Nhấn vào một lớp, đường dẫn hay hướng dẫn, hoặc nhấn kéo rê chuột để chọn "
+"nhiều lớp"
 
 #: ../app/tools/gimpaligntool.c:549
 msgid "Click to pick this layer as first item"
@@ -23316,7 +23220,7 @@ msgstr "_Xén"
 
 #: ../app/tools/gimpcroptool.c:162
 msgid "Click-Drag to draw a crop rectangle"
-msgstr "Nhấn-kéo để tạo một vùng xén hình chữ nhật"
+msgstr "Nhấn giữ rồi kéo rê để tạo một vùng xén hình chữ nhật"
 
 #: ../app/tools/gimpcroptool.c:282
 msgid "Click or press Enter to crop"
@@ -23899,7 +23803,7 @@ msgstr "_Dốc màu"
 
 #: ../app/tools/gimpgradienttool.c:223
 msgid "Click-Drag to draw a gradient"
-msgstr "Nhấn-kéo để vẽ một dốc màu"
+msgstr "Nhấn giữ rồi kéo rê để vẽ một dốc màu"
 
 #: ../app/tools/gimpgradienttool.c:257
 msgid "Cannot paint on multiple drawables. Select only one."
@@ -24007,36 +23911,36 @@ msgstr "Bước dốc màu"
 #: ../app/tools/gimpguidetool.c:183
 msgctxt "undo-type"
 msgid "Remove Guides"
-msgstr "Bỏ đường hướng dẫn"
+msgstr "Bỏ đường dẫn hướng"
 
 #: ../app/tools/gimpguidetool.c:184
 msgctxt "undo-type"
 msgid "Move Guides"
-msgstr "Di chuyển đường hướng dẫn"
+msgstr "Di chuyển đường dẫn hướng"
 
 #: ../app/tools/gimpguidetool.c:424
 msgid "Remove Guides"
-msgstr "Bỏ đường hướng dẫn"
+msgstr "Bỏ đường dẫn hướng"
 
 #: ../app/tools/gimpguidetool.c:425
 msgid "Remove Guide"
-msgstr "Gỡ bỏ đường hướng dẫn"
+msgstr "Gỡ bỏ đường dẫn hướng"
 
 #: ../app/tools/gimpguidetool.c:426
 msgid "Cancel Guide"
-msgstr "Hủy đường hướng dẫn"
+msgstr "Hủy đường dẫn hướng"
 
 #: ../app/tools/gimpguidetool.c:463
 msgid "Move Guide: "
-msgstr "Di chuyển đường hướng dẫn: "
+msgstr "Di chuyển đường dẫn hướng: "
 
 #: ../app/tools/gimpguidetool.c:473
 msgid "Move Guides: "
-msgstr "Di chyển đường hướng dẫn: "
+msgstr "Di chuyển đường dẫn hướng: "
 
 #: ../app/tools/gimpguidetool.c:484
 msgid "Add Guide: "
-msgstr "Thêm đường hướng dẫn: "
+msgstr "Thêm đường dẫn hướng: "
 
 #: ../app/tools/gimphandletransformoptions.c:74
 #: ../app/tools/gimphandletransformoptions.c:75
@@ -24174,7 +24078,7 @@ msgstr "Nhấn Enter để chuyển đổi thành vùng chọn"
 
 #: ../app/tools/gimpiscissorstool.c:979
 msgid "Click or Click-Drag to add a point"
-msgstr "Bấm hoặc Kéo-thả chuột để thêm điểm"
+msgstr "Bấm hoặc Nhấn giữ rồi kéo rê để thêm điểm"
 
 #: ../app/tools/gimpiscissorstool.c:1138 ../app/tools/gimpiscissorstool.c:1150
 msgid "Modify Scissors Curve"
@@ -24332,7 +24236,7 @@ msgstr "Nắn thẳng"
 
 #: ../app/tools/gimpmeasuretool.c:173
 msgid "Click-Drag to create a line"
-msgstr "Nhấn-kéo để tạo đường thẳng"
+msgstr "Nhấn giữ rồi kéo rê để tạo đường thẳng"
 
 #: ../app/tools/gimpmeasuretool.c:365
 #, c-format
@@ -24354,7 +24258,7 @@ msgstr "Nắn thẳng theo chiều dọc %-3.3g°"
 
 #: ../app/tools/gimpmeasuretool.c:452
 msgid "Add Guides"
-msgstr "Thêm nét dẫn"
+msgstr "Thêm đường dẫn hướng"
 
 #: ../app/tools/gimpmeasuretool.c:742
 msgid "Measure Distances and Angles"
@@ -24509,10 +24413,8 @@ msgid "Offset: "
 msgstr "Dịch: "
 
 #: ../app/tools/gimpoffsettool.c:432
-#, fuzzy
-#| msgid "Click-Drag to move segment vertex"
 msgid "Click-Drag to offset drawable"
-msgstr "Offset vẽ được"
+msgstr "Nhấn giữ rồi kéo rê để bù thêm vùng vẽ được"
 
 #: ../app/tools/gimpoffsettool.c:514
 msgid "By width/_2, height/2"
@@ -24651,7 +24553,7 @@ msgstr "Chọn Sơn"
 
 #: ../app/tools/gimppainttool.c:175
 msgid "Click to paint"
-msgstr "Nhấn để sơn"
+msgstr "Nhấn để vẽ"
 
 #: ../app/tools/gimppainttool.c:176
 msgid "Click to draw the line"
@@ -24663,9 +24565,8 @@ msgid "%s to pick a color"
 msgstr "%s để chọn màu"
 
 #: ../app/tools/gimppainttool.c:296 ../app/tools/gimpperspectiveclonetool.c:225
-#, fuzzy
 msgid "Cannot paint on multiple layers. Select only one layer."
-msgstr "Không thể sửa nhiều lớp cùng lúc. Hãy chỉ chọn một lớp thôi."
+msgstr "Không thể vẽ trên nhiều lớp cùng lúc. Hãy chỉ chọn một lớp thôi."
 
 #: ../app/tools/gimppainttool.c:310
 msgid "Cannot paint on layer groups."
@@ -24674,11 +24575,11 @@ msgstr "Không thể vẽ trên nhóm lớp."
 #: ../app/tools/gimppainttool.c:693
 #, c-format
 msgid "%s for a straight line"
-msgstr "%s cho một đường thẳng"
+msgstr "%s để vẽ một đường thẳng"
 
 #: ../app/tools/gimppainttool.c:918
 msgid "The active layer does not have an alpha channel."
-msgstr "Lớp hoạt đọng không có kênh alpha."
+msgstr "Lớp hoạt động không có kênh alpha."
 
 #: ../app/tools/gimppainttool.c:928
 msgid "The active layer's alpha channel is locked."
@@ -24740,7 +24641,7 @@ msgstr "Dùng mọi lớp hiển thị khi thu nhỏ vùng chọn"
 #: ../app/tools/gimprectangleoptions.c:102
 #: ../app/tools/gimptransformgridoptions.c:149
 msgid "Composition guides such as rule of thirds"
-msgstr "Hướng dẫn thành phần dạng luật 1/3"
+msgstr "Các đường dẫn hướng theo dạng luật 1/3"
 
 #: ../app/tools/gimprectangleoptions.c:111
 msgid "X coordinate of top left corner"
@@ -24978,39 +24879,39 @@ msgstr "Chế độ:"
 
 #: ../app/tools/gimpselectiontool.c:329
 msgid "Click-Drag to replace the current selection"
-msgstr "Nhấn-kéo để thay thế vùng chọn hiện tại"
+msgstr "Nhấn giữ rồi kéo rê để thay thế vùng chọn hiện tại"
 
 #: ../app/tools/gimpselectiontool.c:337
 msgid "Click-Drag to create a new selection"
-msgstr "Nhấn-kéo để tạo một vùng chọn mới"
+msgstr "Nhấn giữ rồi kéo rê để tạo một vùng chọn mới"
 
 #: ../app/tools/gimpselectiontool.c:342
 msgid "Click-Drag to add to the current selection"
-msgstr "Nhấn-kéo để thêm vào vùng chọn hiện tại"
+msgstr "Nhấn giữ rồi kéo rê để thêm vào vùng chọn hiện tại"
 
 #: ../app/tools/gimpselectiontool.c:351
 msgid "Click-Drag to subtract from the current selection"
-msgstr "Nhấn-kéo để trừ khỏi vùng chọn hiện tại"
+msgstr "Nhấn giữ rồi kéo rê để trừ khỏi vùng chọn hiện tại"
 
 #: ../app/tools/gimpselectiontool.c:360
 msgid "Click-Drag to intersect with the current selection"
-msgstr "Nhấn-kéo để giao với vùng chọn hiện tại"
+msgstr "Nhấn giữ rồi kéo rê để giao với vùng chọn hiện tại"
 
 #: ../app/tools/gimpselectiontool.c:370
 msgid "Click-Drag to move the selection mask"
-msgstr "Nhấn-kéo để di chuyển mặt nạ lựa chọn"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển mặt nạ lựa chọn"
 
 #: ../app/tools/gimpselectiontool.c:378
 msgid "Click-Drag to move the selected pixels"
-msgstr "Nhấn-kéo để di chuyển các điểm ảnh đã chọn"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển các điểm ảnh đã chọn"
 
 #: ../app/tools/gimpselectiontool.c:382
 msgid "Click-Drag to move a copy of the selected pixels"
-msgstr "Nhấn-kéo để di chuyển một bản sao của các điểm ảnh đã chọn"
+msgstr "Nhấn giữ rồi kéo rê để di chuyển một bản sao của các điểm ảnh đã chọn"
 
 #: ../app/tools/gimpselectiontool.c:386
 msgid "Click to anchor the floating selection"
-msgstr "Nhấn để cụ neo vùng chọn đang nổi"
+msgstr "Nhấn để neo vùng chọn đang nổi"
 
 #: ../app/tools/gimpselectiontool.c:539
 #, c-format
@@ -25441,9 +25342,9 @@ msgid "Transform Step"
 msgstr "Bước chuyển dạng"
 
 #: ../app/tools/gimptransformgridtool.c:997
-#, fuzzy, c-format
+#, c-format
 msgid "%s (Corrective)"
-msgstr "Chỉnh Sửa Mịn"
+msgstr "%s (Sửa chữa)"
 
 #: ../app/tools/gimptransformgridtool.c:1281
 msgid "Re_adjust"
@@ -25458,10 +25359,8 @@ msgid "Transform mode"
 msgstr "Chế độ đổi dạng"
 
 #: ../app/tools/gimptransform3doptions.c:85
-#, fuzzy
-#| msgid "Cage transform"
 msgid "Unified interaction"
-msgstr "Tương tác:"
+msgstr "Tương tác hợp nhất"
 
 #: ../app/tools/gimptransform3doptions.c:86
 msgid "Combine all interaction modes"
@@ -25565,10 +25464,8 @@ msgid "Confirm Transformation"
 msgstr "Xác nhận chuyển dạng"
 
 #: ../app/tools/gimptransformtool.c:442
-#, fuzzy
-#| msgid "Transformation Matrix"
 msgid "Transformation creates a very large item."
-msgstr "Ma trận chuyển dạng"
+msgstr "Việc chuyển dạng tạo ra một mục tin cực lớn."
 
 #: ../app/tools/gimptransformtool.c:447
 #, c-format
@@ -25578,10 +25475,8 @@ msgid ""
 msgstr ""
 
 #: ../app/tools/gimptransformtool.c:455
-#, fuzzy
-#| msgid "Transformation Matrix"
 msgid "Transformation creates a very large image."
-msgstr "Ma trận chuyển dạng"
+msgstr "Việc chuyển dạng tạo ra một ảnh cực lớn."
 
 #: ../app/tools/gimptransformtool.c:460
 #, c-format
@@ -25593,22 +25488,16 @@ msgid "There is no layer to transform."
 msgstr "Không có lớp cần chuyển dạng."
 
 #: ../app/tools/gimptransformtool.c:684
-#, fuzzy
-#| msgid "The active layer's pixels are locked."
 msgid "A selected layer's position and size are locked."
-msgstr "Vị trí của lớp đã chọn hiện đang bị khóa."
+msgstr "Vị trí và cỡ của lớp đã chọn hiện đang bị khóa."
 
 #: ../app/tools/gimptransformtool.c:698
-#, fuzzy
-#| msgid "The given file extension does not match the chosen file type."
 msgid "The selection does not intersect with a selected layer."
-msgstr "Vùng chọn không giao với lớp hiện tại hoặc mặt nạ."
+msgstr "Vùng chọn không giao với lớp đã chọn."
 
 #: ../app/tools/gimptransformtool.c:705
-#, fuzzy
-#| msgid "There is no selection to stroke."
 msgid "There is no selection to transform."
-msgstr "_Biến đổi"
+msgstr "Ở đây không có vùng chọn nào để chuyển dạng."
 
 #: ../app/tools/gimptransformtool.c:720
 msgid "There is no path to transform."
@@ -25619,15 +25508,12 @@ msgid "The active path's strokes are locked."
 msgstr "Nét của đường dẫn bị khóa."
 
 #: ../app/tools/gimptransformtool.c:731
-#, fuzzy
-#| msgid "The active path is locked."
 msgid "The active path has no strokes."
-msgstr "Nét của đường dẫn bị khóa."
+msgstr "Đường dẫn đang kích hoạt không có nét vẽ nào."
 
 #: ../app/tools/gimptransformtool.c:803
-#, fuzzy
 msgid "The current transform is invalid"
-msgstr "Định hướng đến cài đặt biến hóa hiện tại"
+msgstr "Chuyển dạng hiện tại không hợp lệ"
 
 #: ../app/tools/gimpunifiedtransformtool.c:89
 msgid "Unified Transform"
@@ -25636,7 +25522,7 @@ msgstr "Chuyển dạng hợp nhất"
 #: ../app/tools/gimpunifiedtransformtool.c:90
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr ""
-"Công cụ Chuyển dạng hợp nhất: Chuyển dạng lớp, vùng chọn hoặc đường dẫn"
+"Công cụ chuyển dạng hợp nhất: Chuyển dạng lớp, vùng chọn hoặc đường dẫn"
 
 #: ../app/tools/gimpunifiedtransformtool.c:92
 msgid "_Unified Transform"
@@ -25667,7 +25553,7 @@ msgstr ""
 #. Create a selection from the current path
 #: ../app/tools/gimpvectoroptions.c:191
 msgid "Selection from Path"
-msgstr "Chọn từ đường dẫn"
+msgstr "Tạo vùng chọn từ đường dẫn"
 
 #: ../app/tools/gimpvectortool.c:168
 msgid "Paths Tool: Create and edit paths"
@@ -25698,15 +25584,12 @@ msgid "Effect Strength"
 msgstr "Độ mạnh của hiệu ứng"
 
 #: ../app/tools/gimpwarpoptions.c:115
-#, fuzzy
-#| msgid "Stroke Selection"
 msgid "Stroke Spacing"
-msgstr "Cách Giữa Theo Nét"
+msgstr "Khoảng cách nét vẽ"
 
 #: ../app/tools/gimpwarpoptions.c:129 ../app/tools/gimpwarpoptions.c:340
-#, fuzzy
 msgid "Abyss policy"
-msgstr "Chính sách:"
+msgstr "Chính sách Abyss"
 
 #: ../app/tools/gimpwarpoptions.c:130
 #, fuzzy
@@ -25718,10 +25601,8 @@ msgid "High quality preview"
 msgstr "Xem thử chất lượng cao"
 
 #: ../app/tools/gimpwarpoptions.c:138
-#, fuzzy
-#| msgid "Use an alternate user gimprc file"
 msgid "Use an accurate but slower preview"
-msgstr "Xem trước ở thời gian thực (chậm hơn)"
+msgstr "Xem trước chính xác nhưng sẽ chậm hơn"
 
 #: ../app/tools/gimpwarpoptions.c:144
 msgid "Real-time preview"
@@ -25752,9 +25633,8 @@ msgid "Rate"
 msgstr "Tỷ lệ"
 
 #: ../app/tools/gimpwarpoptions.c:166
-#, fuzzy
 msgid "Periodic stroke rate"
-msgstr "Lãi suất định kì"
+msgstr "Tỷ lệ tạo nét vẽ chu kỳ"
 
 #: ../app/tools/gimpwarpoptions.c:172
 msgid "Frames"
@@ -25953,10 +25833,9 @@ msgid "Focal length"
 msgstr "Chiều dài tiêu cự"
 
 #: ../app/tools/tools-enums.c:278
-#, fuzzy
 msgctxt "3-dtrasnform-lens-mode"
 msgid "Field of view (relative to image)"
-msgstr "Trường hiển thị của thấu kính máy quay phim"
+msgstr "Trường hiển thị (có liên quan đến ảnh)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to image)".
 #. Keep it short.
@@ -25966,18 +25845,16 @@ msgid "FOV (image)"
 msgstr "FOV (ảnh)"
 
 #: ../app/tools/tools-enums.c:282
-#, fuzzy
 msgctxt "3-dtrasnform-lens-mode"
 msgid "Field of view (relative to item)"
-msgstr "Trường Tên Hàng hóa là bắt buộc."
+msgstr "Trường hiển thị (có liên quan đến mục tin)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to item)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:285
-#, fuzzy
 msgctxt "3-dtrasnform-lens-mode"
 msgid "FOV (item)"
-msgstr "FOV (ảnh)"
+msgstr "FOV (mục tin)"
 
 #: ../app/tools/tools-enums.c:318
 msgctxt "warp-behavior"
@@ -25995,20 +25872,14 @@ msgid "Shrink area"
 msgstr "Co nhỏ vùng"
 
 #: ../app/tools/tools-enums.c:321
-#, fuzzy
-#| msgctxt "gradient-editor-coloring"
-#| msgid "HSV (clockwise _hue)"
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
-msgstr "Xoáy"
+msgstr "Xoáy theo chiều kim đồng hồ"
 
 #: ../app/tools/tools-enums.c:322
-#, fuzzy
-#| msgctxt "gradient-editor-coloring"
-#| msgid "HSV (_counter-clockwise hue)"
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
-msgstr "Nghịch Hướng Kim Đồng Hồ"
+msgstr "Xoáy ngược chiều kim đồng hồ"
 
 #: ../app/tools/tools-enums.c:323
 #, fuzzy
@@ -26216,6 +26087,7 @@ msgstr "F1 không thể ánh xạ lại."
 #, c-format
 msgid "Alt+%d is used to switch to display %d and cannot be remapped."
 msgstr ""
+"Alt+%d được dùng để chuyển màn hình %d và không thể ánh xạ lại lần nữa."
 
 #: ../app/widgets/gimpactionview.c:836
 msgid "Removing shortcut failed."
@@ -26423,13 +26295,13 @@ msgstr "Y:"
 #: ../app/widgets/gimpcolorframe.c:980
 msgctxt "Yu'v' color space"
 msgid "u':"
-msgstr "u”:"
+msgstr "u':"
 
 #. TRANSLATORS: v' from Yu'v' color space
 #: ../app/widgets/gimpcolorframe.c:982
 msgctxt "Yu'v' color space"
 msgid "v':"
-msgstr "v”:"
+msgstr "v':"
 
 #. TRANSLATORS: C for Cyan (CMYK)
 #: ../app/widgets/gimpcolorframe.c:1010
@@ -26471,7 +26343,7 @@ msgstr "Sửa mục tin bố trí màu"
 
 #: ../app/widgets/gimpcolormapselection.c:248
 msgid "Color index:"
-msgstr "Phụ lục màu:"
+msgstr "Chỉ số màu:"
 
 #: ../app/widgets/gimpcolormapselection.c:258
 msgid "HTML notation:"
@@ -26479,7 +26351,7 @@ msgstr "Cách ghi HTML:"
 
 #: ../app/widgets/gimpcolormapselection.c:485
 msgid "Only indexed images have a colormap."
-msgstr "Chỉ những ảnh có chỉ số mới có colormap - bản đồ màu."
+msgstr "Chỉ những ảnh đánh chỉ số mới có colormap - bản đồ màu."
 
 #: ../app/widgets/gimpcompressioncombobox.c:102
 msgctxt "compression"
@@ -26543,7 +26415,7 @@ msgstr "_Sửa sự kiện"
 
 #: ../app/widgets/gimpcontrollereditor.c:383
 msgid "_Clear event"
-msgstr "_Xóa sự kiện"
+msgstr "_Xóa sạch sự kiện"
 
 #: ../app/widgets/gimpcontrollereditor.c:522
 #, c-format
@@ -27341,17 +27213,17 @@ msgid "Select fields"
 msgstr "Chọn các trường"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3266
+#: ../app/widgets/gimpdashboard.c:3305
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Không"
 
-#: ../app/widgets/gimpdashboard.c:3275 ../app/widgets/gimpdashboard.c:4283
+#: ../app/widgets/gimpdashboard.c:3314 ../app/widgets/gimpdashboard.c:4322
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Có"
 
-#: ../app/widgets/gimpdashboard.c:3276 ../app/widgets/gimpdashboard.c:4284
+#: ../app/widgets/gimpdashboard.c:3315 ../app/widgets/gimpdashboard.c:4323
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Không"
@@ -27360,7 +27232,7 @@ msgstr "Không"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3360
+#: ../app/widgets/gimpdashboard.c:3399
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -27371,16 +27243,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4273
+#: ../app/widgets/gimpdashboard.c:4312
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4351
+#: ../app/widgets/gimpdashboard.c:4390
 msgid "N/A"
 msgstr "Không"
 
-#: ../app/widgets/gimpdashboard.c:4729
+#: ../app/widgets/gimpdashboard.c:4768
 msgid "Resolving symbol information..."
 msgstr "Thông tin ký hiệu phân giải…"
 
@@ -28005,11 +27877,10 @@ msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:483
-#, fuzzy, c-format
-#| msgid "Indexed Color Conversion"
+#, c-format
 msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
-msgstr[0] "Màu chỉ mục"
+msgstr[0] "Màu đánh chỉ số (%d màu)"
 
 #: ../app/widgets/gimpitemtreeview.c:783
 msgid "Lock:"
@@ -28122,6 +27993,8 @@ msgstr "Mọi ảnh XCF"
 msgid ""
 "Keep compression disabled to make the XCF file readable by %s and later."
 msgstr ""
+"Đừng cho nén nếu bạn muốn tập tin XCF có thể được đọc bởi phiên bản %s hay "
+"mới hơn."
 
 #: ../app/widgets/gimpsavedialog.c:326
 msgid "Save this _XCF file with better but slower compression"
@@ -28138,6 +28011,7 @@ msgstr ""
 msgid ""
 "The image uses features from %s and won't be readable by older GIMP versions."
 msgstr ""
+"Ảnh sử dụng tính năng từ %s và không thể đọc được bởi GIMP phiên bản cũ hơn."
 
 #: ../app/widgets/gimpsavedialog.c:407
 msgid "Metadata won't be visible in GIMP older than version 2.10."
@@ -28347,7 +28221,7 @@ msgstr "_Dùng phông chữ được chọn"
 #: ../app/widgets/gimptextstyleeditor.c:210
 #: ../app/widgets/gimptextstyleeditor.c:1314
 msgid "Change font of selected text"
-msgstr "Thay đổi font của văn bản đã chọn"
+msgstr "Thay đổi phông chữ của văn bản đã chọn"
 
 #: ../app/widgets/gimptextstyleeditor.c:220
 msgid "Change size of selected text"
@@ -28355,7 +28229,7 @@ msgstr "Thay đổi kích cỡ văn bản đã chọn"
 
 #: ../app/widgets/gimptextstyleeditor.c:239
 msgid "Clear style of selected text"
-msgstr "Xóa kiểu của văn bản đã chọn"
+msgstr "Xóa sạch kiểu của văn bản đã chọn"
 
 #: ../app/widgets/gimptextstyleeditor.c:250
 #: ../app/widgets/gimptextstyleeditor.c:260
@@ -28368,7 +28242,7 @@ msgstr "Đổi kerning của văn bản đã chọn"
 
 #: ../app/widgets/gimptextstyleeditor.c:292
 msgid "Change baseline of selected text"
-msgstr "Thay đổi baseline của text đã chọn"
+msgstr "Thay đổi đường cơ sở của chữ đã chọn"
 
 #: ../app/widgets/gimptextstyleeditor.c:331
 msgid "Bold"
@@ -28460,7 +28334,7 @@ msgid ""
 "Click to open the Brush Dialog."
 msgstr ""
 "Chổi hoạt động.\n"
-"Nhắp chuột để mở Hộp thoại Chổi."
+"Nhắp chuột để mở Hộp thoại chổi vẽ."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:197
 msgid ""
@@ -28468,7 +28342,7 @@ msgid ""
 "Click to open the Pattern Dialog."
 msgstr ""
 "Mẫu hoạt động.\n"
-"Nhắp chuột để mở Hộp thoại Mẫu."
+"Nhắp chuột để mở Hộp thoại mẫu."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:228
 msgid ""
@@ -28476,7 +28350,7 @@ msgid ""
 "Click to open the Gradient Dialog."
 msgstr ""
 "Dốc màu hoạt động.\n"
-"Nhắp chuột để mở Hộp thoại Dốc màu."
+"Nhắp chuột để mở Hộp thoại dốc màu."
 
 #: ../app/widgets/gimptoolbutton.c:548
 msgid "Also in group:"
@@ -28529,7 +28403,7 @@ msgstr "Đặt sẵn %s"
 
 #: ../app/widgets/gimpuimanager.c:917
 msgid "Your GIMP installation is incomplete:"
-msgstr "Cài đặt GIMP xong rồi:"
+msgstr "Bản cài đặt GIMP không hoàn thiện:"
 
 #: ../app/widgets/gimpuimanager.c:919
 msgid "Please make sure the menu XML files are correctly installed."
@@ -28546,7 +28420,7 @@ msgstr "[ Ảnh cơ sở ]"
 
 #: ../app/widgets/gimpvectorstreeview.c:113
 msgid "Lock path strokes"
-msgstr "Khóa đường dẫn"
+msgstr "Khóa nét vẽ đường dẫn"
 
 #: ../app/widgets/gimpvectorstreeview.c:116
 msgid "Lock path position"
@@ -28758,12 +28632,16 @@ msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
 "Exif data could not be migrated: %s"
 msgstr ""
+"Tìm thấy 'dữ-liệu-exif' ký sinh bị hỏng.\n"
+"Dữ liệu exif không thể được di trú: %s"
 
 #: ../app/xcf/xcf-load.c:412
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
 msgstr ""
+"Tìm thấy 'dữ-liệu-gimp' ký sinh bị hỏng.\n"
+"Dữ liệu XMP không thể được di trú."
 
 #: ../app/xcf/xcf-load.c:436
 #, c-format
@@ -28773,6 +28651,10 @@ msgid ""
 "If you don't know what XMP is, you most likely don't need it. Reported "
 "error: %s."
 msgstr ""
+"Siêu dữ liệu XMP được lưu bởi phiên bản GIMP cũ hơn không thể được chuyển "
+"đổi và sẽ bị bỏ qua.\n"
+"Nếu bạn không biết XMP là cái gì, bạn cũng chẳng cần quan tâm đến nó đâu. "
+"Lỗi đã được báo cáo: %s."
 
 #: ../app/xcf/xcf-load.c:712
 msgid ""
