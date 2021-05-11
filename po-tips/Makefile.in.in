@@ -99,37 +99,10 @@ all-no:
 $(GETTEXT_PACKAGE).pot: $(POTFILES)
 	$(GENPOT)
 
+# XXX: we don't install these locale files because they are only used at
+# build-time to construct gimp-tips.xml (see #6852).
 install: install-data
-install-data: install-data-@USE_NLS@
-install-data-no: all
-install-data-yes: all
-	$(mkdir_p) $(DESTDIR)$(itlocaledir)
-	linguas="$(USE_LINGUAS)"; \
-	for lang in $$linguas; do \
-	  dir=$(DESTDIR)$(itlocaledir)/$$lang/LC_MESSAGES; \
-	  $(mkdir_p) $$dir; \
-	  if test -r $$lang.gmo; then \
-	    $(INSTALL_DATA) $$lang.gmo $$dir/$(GETTEXT_PACKAGE).mo; \
-	    echo "installing $$lang.gmo as $$dir/$(GETTEXT_PACKAGE).mo"; \
-	  else \
-	    $(INSTALL_DATA) $(srcdir)/$$lang.gmo $$dir/$(GETTEXT_PACKAGE).mo; \
-	    echo "installing $(srcdir)/$$lang.gmo as" \
-		 "$$dir/$(GETTEXT_PACKAGE).mo"; \
-	  fi; \
-	  if test -r $$lang.gmo.m; then \
-	    $(INSTALL_DATA) $$lang.gmo.m $$dir/$(GETTEXT_PACKAGE).mo.m; \
-	    echo "installing $$lang.gmo.m as $$dir/$(GETTEXT_PACKAGE).mo.m"; \
-	  else \
-	    if test -r $(srcdir)/$$lang.gmo.m ; then \
-	      $(INSTALL_DATA) $(srcdir)/$$lang.gmo.m \
-		$$dir/$(GETTEXT_PACKAGE).mo.m; \
-	      echo "installing $(srcdir)/$$lang.gmo.m as" \
-		   "$$dir/$(GETTEXT_PACKAGE).mo.m"; \
-	    else \
-	      true; \
-	    fi; \
-	  fi; \
-	done
+install-data:
 
 # Empty stubs to satisfy archaic automake needs
 dvi info tags TAGS ID:
@@ -138,11 +111,6 @@ dvi info tags TAGS ID:
 install-exec installcheck:
 
 uninstall:
-	linguas="$(USE_LINGUAS)"; \
-	for lang in $$linguas; do \
-	  rm -f $(DESTDIR)$(itlocaledir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE).mo; \
-	  rm -f $(DESTDIR)$(itlocaledir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE).mo.m; \
-	done
 
 check: all $(GETTEXT_PACKAGE).pot
 	rm -f missing notexist
