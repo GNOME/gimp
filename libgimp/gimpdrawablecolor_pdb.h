@@ -53,6 +53,10 @@ gboolean gimp_drawable_curves_spline       (gint32                drawable_ID,
                                             GimpHistogramChannel  channel,
                                             gint                  num_points,
                                             const gdouble        *points);
+gboolean gimp_drawable_extract_component   (gint32                drawable_ID,
+                                            guint8                component,
+                                            gboolean              invert,
+                                            gboolean              linear);
 gboolean gimp_drawable_desaturate          (gint32                drawable_ID,
                                             GimpDesaturateMode    desaturate_mode);
 gboolean gimp_drawable_equalize            (gint32                drawable_ID,

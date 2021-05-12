@@ -261,6 +261,44 @@ gimp_drawable_curves_spline (gint32                drawable_ID,
 }
 
 /**
+ * gimp_drawable_extract_component:
+ * @drawable_ID: The drawable.
+ * @component: Commponent (RGB Red (0), RGB Green (1), RGB Blue (2), Hue (3), HSV Saturation (4), HSV Value (5), HSL Saturation (6), HSL Lightness (7), CMYK Cyan (8), CMYK Magenta (9), CMYK Yellow (10), CMYK Key (11), Y'CbCr Y' (12), Y'CbCr Cb (13), Y'CbCr Cr (14), LAB L (15), LAB A (16), LAB B (17), LCH C(ab) (18), LCH H(ab) (19), Alpha (20)).
+ * @invert: Invert the extracted component.
+ * @linear: Use linear output instead of gamma corrected.
+ *
+ * Extract a color model component.
+ *
+ * Extract a color model component.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_drawable_extract_component (gint32   drawable_ID,
+                                 guint8   component,
+                                 gboolean invert,
+                                 gboolean linear)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-drawable-extract-component",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT8, component,
+                                    GIMP_PDB_INT32, invert,
+                                    GIMP_PDB_INT32, linear,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_desaturate:
  * @drawable_ID: The drawable.
  * @desaturate_mode: The formula to use to desaturate.
