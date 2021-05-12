@@ -11,12 +11,18 @@ Otherwise, this branch is only for bug-fixes.
 Overview of Changes from GIMP 2.10.24 to GIMP 2.10.26
 =====================================================
 
+Core:
+
+  - Dashboard now has memory support in OpenBSD.
+
 Plug-ins:
 
   - Improved DDS support and fix some red/blue bit swap for RGB10A2 DDS.
     The plug-in version is incremented so that it is able to catch and
     correct previously incorrect RGB10A2 images exported by older
     versions of our plug-in.
+  - DDS files with "L16" - a 16 bit luminance channel - are now loaded
+    in 16-bit.
 
 Script-fu:
 
@@ -33,6 +39,8 @@ Build:
   - Oppositely on Linux and other Unix-like systems using desktop files,
     add the image/x-sun-raster MimeType which was forgotten (there,
     detection should be fine and not depend on file extension).
+  - gimp30-tips.mo is not installed anymore (only used during the build
+    to generate gimp-tips.xml with multiple language support).
 
 
 Overview of Changes from GIMP 2.10.22 to GIMP 2.10.24
