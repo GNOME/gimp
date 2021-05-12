@@ -679,8 +679,9 @@ read_layer_info (PSDimage      *img_a,
           if (block_len + 4 > block_rem)
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Unsupported or invalid mask info size: %" G_GOFFSET_FORMAT),
-                           block_len);
+                           _("Unsupported or invalid mask info size."));
+              /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
+              g_debug ("Unsupported or invalid mask info size: %" G_GSIZE_FORMAT, block_len);
               return NULL;
             }
 
