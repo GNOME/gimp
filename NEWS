@@ -9,10 +9,23 @@ This is the unstable branch of GIMP.
 Overview of Changes from GIMP 2.99.6 to GIMP 2.99.8
 ===================================================
 
+Core:
+
+  - Selection display implementation now updated to more modern display
+    server logics when drawing to display buffer. This fixes selection
+    drawing in Wayland (and possibly in macOS Big Sur too, though this
+    change is untested on this OS so far).
+
 API:
 
   - New gimp_display_present() function to present a specific display at
     the top of the image display stack.
+
+Plug-ins:
+
+  - PSD now supports bigger-than-4GiB files. File support was ported to
+    GIO API with 64-bit offsets, hence allowing loading correctly very
+    big files.
 
 Translations:
 
@@ -20,7 +33,7 @@ Translations:
 
 Build:
 
-  - New CI job for a Windows native build with MSYS2.
+  - New CI jobs for Windows native builds with MSYS2.
   - Several less critical CI jobs moved to a scheduled run for resource
     saving.
   - Improved tag handling in the CI for transparent release process.
