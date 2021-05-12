@@ -85,6 +85,14 @@ gboolean gimp_drawable_levels              (GimpDrawable         *drawable,
                                             gdouble               high_output,
                                             gboolean              clamp_output);
 gboolean gimp_drawable_levels_stretch      (GimpDrawable         *drawable);
+gboolean gimp_drawable_shadows_highlights  (GimpDrawable         *drawable,
+                                            gdouble               shadows,
+                                            gdouble               highlights,
+                                            gdouble               whitepoint,
+                                            gdouble               radius,
+                                            gdouble               compress,
+                                            gdouble               shadows_ccorrect,
+                                            gdouble               highlights_ccorrect);
 gboolean gimp_drawable_posterize           (GimpDrawable         *drawable,
                                             gint                  levels);
 gboolean gimp_drawable_threshold           (GimpDrawable         *drawable,

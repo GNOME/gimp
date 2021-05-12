@@ -661,6 +661,64 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable)
 }
 
 /**
+ * gimp_drawable_shadows_highlights:
+ * @drawable: The drawable.
+ * @shadows: Adjust exposure of shadows.
+ * @highlights: Adjust exposure of highlights.
+ * @whitepoint: Shift white point.
+ * @radius: Spatial extent.
+ * @compress: Compress the effect on shadows/highlights and preserve midtones.
+ * @shadows_ccorrect: Adjust saturation of shadows.
+ * @highlights_ccorrect: Adjust saturation of highlights.
+ *
+ * Perform shadows and highlights correction.
+ *
+ * This filter allows adjusting shadows and highlights in the image
+ * separately. The implementation closely follow its counterpart in the
+ * Darktable photography software.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_drawable_shadows_highlights (GimpDrawable *drawable,
+                                  gdouble       shadows,
+                                  gdouble       highlights,
+                                  gdouble       whitepoint,
+                                  gdouble       radius,
+                                  gdouble       compress,
+                                  gdouble       shadows_ccorrect,
+                                  gdouble       highlights_ccorrect)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          G_TYPE_DOUBLE, shadows,
+                                          G_TYPE_DOUBLE, highlights,
+                                          G_TYPE_DOUBLE, whitepoint,
+                                          G_TYPE_DOUBLE, radius,
+                                          G_TYPE_DOUBLE, compress,
+                                          G_TYPE_DOUBLE, shadows_ccorrect,
+                                          G_TYPE_DOUBLE, highlights_ccorrect,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-drawable-shadows-highlights",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_posterize:
  * @drawable: The drawable.
  * @levels: Levels of posterization.

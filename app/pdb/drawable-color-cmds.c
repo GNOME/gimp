@@ -642,6 +642,64 @@ drawable_levels_stretch_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+drawable_shadows_highlights_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble shadows;
+  gdouble highlights;
+  gdouble whitepoint;
+  gdouble radius;
+  gdouble compress;
+  gdouble shadows_ccorrect;
+  gdouble highlights_ccorrect;
+
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  shadows = g_value_get_double (gimp_value_array_index (args, 1));
+  highlights = g_value_get_double (gimp_value_array_index (args, 2));
+  whitepoint = g_value_get_double (gimp_value_array_index (args, 3));
+  radius = g_value_get_double (gimp_value_array_index (args, 4));
+  compress = g_value_get_double (gimp_value_array_index (args, 5));
+  shadows_ccorrect = g_value_get_double (gimp_value_array_index (args, 6));
+  highlights_ccorrect = g_value_get_double (gimp_value_array_index (args, 7));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode  *node;
+          node = gegl_node_new_child (NULL,
+                                      "operation",          "gegl:shadows-highlights",
+                                      "shadows",            shadows,
+                                      "highlights",         highlights,
+                                      "whitepoint",         whitepoint,
+                                      "radius",             radius,
+                                      "compress",           compress,
+                                      "shadows_correct",    shadows_ccorrect,
+                                      "highlights_correct", highlights_ccorrect,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Shadows-Highlights"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 drawable_posterize_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
@@ -1256,6 +1314,71 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                          "The drawable",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-shadows-highlights
+   */
+  procedure = gimp_procedure_new (drawable_shadows_highlights_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-shadows-highlights");
+  gimp_procedure_set_static_help (procedure,
+                                  "Perform shadows and highlights correction.",
+                                  "This filter allows adjusting shadows and highlights in the image separately. The implementation closely follow its counterpart in the Darktable photography software.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "",
+                                         "",
+                                         "2021");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("shadows",
+                                                    "shadows",
+                                                    "Adjust exposure of shadows",
+                                                    -100, 100, -100,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("highlights",
+                                                    "highlights",
+                                                    "Adjust exposure of highlights",
+                                                    -100, 100, -100,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("whitepoint",
+                                                    "whitepoint",
+                                                    "Shift white point",
+                                                    -10, 10, -10,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("radius",
+                                                    "radius",
+                                                    "Spatial extent",
+                                                    0.1, 1500, 0.1,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("compress",
+                                                    "compress",
+                                                    "Compress the effect on shadows/highlights and preserve midtones",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("shadows-ccorrect",
+                                                    "shadows ccorrect",
+                                                    "Adjust saturation of shadows",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("highlights-ccorrect",
+                                                    "highlights ccorrect",
+                                                    "Adjust saturation of highlights",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
