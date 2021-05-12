@@ -992,7 +992,7 @@ read_layer_block (PSDimage      *img_a,
     }
   else
     {
-      guint32 total_len = img_a->mask_layer_len;
+      gsize total_len = img_a->mask_layer_len;
 
       img_a->mask_layer_start = PSD_TELL(input);
       block_end = img_a->mask_layer_start + img_a->mask_layer_len;
@@ -1000,10 +1000,22 @@ read_layer_block (PSDimage      *img_a,
       /* Layer info */
       if (psd_read (input, &block_len, 4, error) == 4 && block_len)
         {
+          total_len -= 4;
           block_len = GUINT32_FROM_BE (block_len);
           IFDBG(1) g_debug ("Layer info size = %" G_GOFFSET_FORMAT, block_len);
 
           lyr_a = read_layer_info (img_a, input, error);
+
+          if (img_a->mask_layer_start + 4 + block_len != PSD_TELL(input))
+            {
+              g_debug ("Unexpected offset after reading layer info: %" G_GOFFSET_FORMAT
+                       " instead of %" G_GOFFSET_FORMAT,
+                       PSD_TELL(input), img_a->mask_layer_start + 4 + block_len);
+              /* Correct the offset. */
+              if (! psd_seek (input, img_a->mask_layer_start + 4 + block_len,
+                              G_SEEK_SET, error))
+                return NULL;
+            }
 
           total_len -= block_len;
         }
@@ -1013,20 +1025,31 @@ read_layer_block (PSDimage      *img_a,
           lyr_a = NULL;
         }
 
-      /* Global layer mask info */
-      if (psd_read (input, &block_len, 4, error) == 4 && block_len)
+      if (total_len >= 4)
         {
-          block_len = GUINT32_FROM_BE (block_len);
-          IFDBG(1) g_debug ("Global layer mask info size = %" G_GOFFSET_FORMAT, block_len);
-
-          /* read_global_layer_mask_info (img_a, f, error); */
-          if (! psd_seek (input, block_len, G_SEEK_CUR, error))
+          /* Global layer mask info */
+          if (psd_read (input, &block_len, 4, error) == 4 && block_len)
             {
-              psd_set_error (error);
-              return NULL;
-            }
+              block_len = GUINT32_FROM_BE (block_len);
+              IFDBG(1) g_debug ("Global layer mask info size = %" G_GOFFSET_FORMAT, block_len);
 
-          total_len -= block_len;
+              if (block_len > total_len)
+                {
+                  g_debug ("Invalid global layer mask size. Skipping remainder of layer data.");
+                  total_len = 0;
+                }
+              else
+                {
+                  /* read_global_layer_mask_info (img_a, f, error); */
+                  if (! psd_seek (input, block_len, G_SEEK_CUR, error))
+                    {
+                      psd_set_error (error);
+                      return NULL;
+                    }
+
+                  total_len -= block_len;
+                }
+            }
         }
 
       /* Additional Layer Information */
