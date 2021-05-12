@@ -608,6 +608,60 @@ gimp_drawable_levels_stretch (gint32 drawable_ID)
 }
 
 /**
+ * gimp_drawable_shadows_highlights:
+ * @drawable_ID: The drawable.
+ * @shadows: Adjust exposure of shadows.
+ * @highlights: Adjust exposure of highlights.
+ * @whitepoint: Shift white point.
+ * @radius: Spatial extent.
+ * @compress: Compress the effect on shadows/highlights and preserve midtones.
+ * @shadows_ccorrect: Adjust saturation of shadows.
+ * @highlights_ccorrect: Adjust saturation of highlights.
+ *
+ * Perform shadows and highlights correction.
+ *
+ * This filter allows adjusting shadows and highlights in the image
+ * separately. The implementation closely follow its counterpart in the
+ * Darktable photography software
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_drawable_shadows_highlights (gint32  drawable_ID,
+                                  gdouble shadows,
+                                  gdouble highlights,
+                                  gdouble whitepoint,
+                                  gdouble radius,
+                                  gdouble compress,
+                                  gdouble shadows_ccorrect,
+                                  gdouble highlights_ccorrect)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-drawable-shadows-highlights",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, shadows,
+                                    GIMP_PDB_FLOAT, highlights,
+                                    GIMP_PDB_FLOAT, whitepoint,
+                                    GIMP_PDB_FLOAT, radius,
+                                    GIMP_PDB_FLOAT, compress,
+                                    GIMP_PDB_FLOAT, shadows_ccorrect,
+                                    GIMP_PDB_FLOAT, highlights_ccorrect,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_posterize:
  * @drawable_ID: The drawable.
  * @levels: Levels of posterization.

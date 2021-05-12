@@ -713,6 +713,68 @@ CODE
     );
 }
 
+sub drawable_shadows_highlights {
+    $blurb = 'Perform shadows and highlights correction.';
+
+    $help = <<'HELP';
+This filter allows adjusting shadows and highlights in the image
+separately. The implementation closely follow its counterpart in the
+Darktable photography software.
+HELP
+
+    $date = '2021';
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'shadows', type => '-100 <= float <= 100',
+	  desc => 'Adjust exposure of shadows' },
+	{ name => 'highlights', type => '-100 <= float <= 100',
+	  desc => 'Adjust exposure of highlights' },
+	{ name => 'whitepoint', type => '-10 <= float <= 10',
+	  desc => 'Shift white point' },
+	{ name => 'radius', type => '0.1 <= float <= 1500',
+	  desc => 'Spatial extent' },
+	{ name => 'compress', type => '0 <= float <= 100',
+	  desc => 'Compress the effect on shadows/highlights and preserve midtones' },
+	{ name => 'shadows_ccorrect', type => '0 <= float <= 100',
+	  desc => 'Adjust saturation of shadows' },
+	{ name => 'highlights_ccorrect', type => '0 <= float <= 100',
+	  desc => 'Adjust saturation of highlights' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode  *node;
+      node = gegl_node_new_child (NULL,
+                                  "operation",          "gegl:shadows-highlights",
+                                  "shadows",            shadows,
+                                  "highlights",         highlights,
+                                  "whitepoint",         whitepoint,
+                                  "radius",             radius,
+                                  "compress",           compress,
+                                  "shadows_correct",    shadows_ccorrect,
+                                  "highlights_correct", highlights_ccorrect,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Shadows-Highlights"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub drawable_posterize {
     $blurb = 'Posterize the specified drawable.';
 
@@ -831,6 +893,7 @@ CODE
             drawable_invert
             drawable_levels
             drawable_levels_stretch
+            drawable_shadows_highlights
             drawable_posterize
             drawable_threshold);
 

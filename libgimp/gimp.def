@@ -275,6 +275,7 @@ EXPORTS
 	gimp_drawable_set_pixel
 	gimp_drawable_set_tattoo
 	gimp_drawable_set_visible
+        gimp_drawable_shadows_highlights
 	gimp_drawable_threshold
 	gimp_drawable_transform_2d
 	gimp_drawable_transform_2d_default
