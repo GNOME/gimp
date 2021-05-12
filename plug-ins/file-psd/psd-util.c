@@ -171,7 +171,7 @@ static const LayerModeMapping layer_mode_map[] =
 void
 psd_set_error (GError  **error)
 {
-  if (! error)
+  if (! error || ! *error)
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                  _("Error reading data. Most likely unexpected end of file."));
 
