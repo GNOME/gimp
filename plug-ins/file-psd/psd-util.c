@@ -423,7 +423,7 @@ fread_unicode_string (gint32        *bytes_read,
 
   if (mod_len > 0)
     {
-      padded_len = len + 1;
+      padded_len = *bytes_read;
       while (padded_len % mod_len != 0)
         {
           if (! psd_seek (input, 1, G_SEEK_CUR, error))
