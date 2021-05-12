@@ -457,6 +457,15 @@ read_color_mode_block (PSDimage      *img_a,
           return -1;
         }
     }
+  else
+    {
+      /* Apparently it's possible to have a non zero block_len here. */
+      if (! psd_seek (input, block_len, G_SEEK_CUR, error))
+        {
+          psd_set_error (error);
+          return -1;
+        }
+    }
 
   /* Create color map for bitmap image */
   if (img_a->color_mode == PSD_BITMAP)
