@@ -191,8 +191,12 @@ psd_read (GInputStream  *input,
    */
   if (count > 0)
     {
-      g_input_stream_read_all (input, (void *) data, count,
-                               &bytes_read, NULL, error);
+      /* We consider reading less bytes than we want an error. */
+      if (g_input_stream_read_all (input, (void *) data, count,
+                                   &bytes_read, NULL, error) &&
+          bytes_read < count)
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Unexpected end of file"));
     }
 
   return bytes_read;
