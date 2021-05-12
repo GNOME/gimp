@@ -294,6 +294,53 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+drawable_extract_component_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint component;
+  gboolean invert;
+  gboolean linear;
+
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  component = g_value_get_int (gimp_value_array_index (args, 1));
+  invert = g_value_get_boolean (gimp_value_array_index (args, 2));
+  linear = g_value_get_boolean (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          gimp_drawable_is_rgb (drawable))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gegl:component-extract",
+                                 "component", component,
+                                 "invert", invert,
+                                 "linear", linear,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Extract Component"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 drawable_desaturate_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
@@ -999,6 +1046,47 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                             "points",
                                                             "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-extract-component
+   */
+  procedure = gimp_procedure_new (drawable_extract_component_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-extract-component");
+  gimp_procedure_set_static_help (procedure,
+                                  "Extract a color model component.",
+                                  "Extract a color model component.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "",
+                                         "",
+                                         "2021");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("component",
+                                                 "component",
+                                                 "Commponent (RGB Red (0), RGB Green (1), RGB Blue (2), Hue (3), HSV Saturation (4), HSV Value (5), HSL Saturation (6), HSL Lightness (7), CMYK Cyan (8), CMYK Magenta (9), CMYK Yellow (10), CMYK Key (11), Y'CbCr Y' (12), Y'CbCr Cb (13), Y'CbCr Cr (14), LAB L (15), LAB A (16), LAB B (17), LCH C(ab) (18), LCH H(ab) (19), Alpha (20))",
+                                                 0, 20, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("invert",
+                                                     "invert",
+                                                     "Invert the extracted component",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("linear",
+                                                     "linear",
+                                                     "Use linear output instead of gamma corrected",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

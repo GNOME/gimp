@@ -292,6 +292,55 @@ CODE
     );
 }
 
+sub drawable_extract_component {
+    $blurb = 'Extract a color model component.';
+
+    $help = 'Extract a color model component.';
+
+    $date = '2021';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'component', type => '0 <= int32 <= 20',
+	  desc => 'Commponent (RGB Red (0), RGB Green (1), RGB Blue (2), Hue (3), HSV Saturation (4), HSV Value (5),' .
+                  ' HSL Saturation (6), HSL Lightness (7), CMYK Cyan (8), CMYK Magenta (9), CMYK Yellow (10), CMYK Key (11),' .
+                  ' Y\'CbCr Y\' (12), Y\'CbCr Cb (13), Y\'CbCr Cr (14), LAB L (15), LAB A (16), LAB B (17), LCH C(ab) (18),' .
+                  ' LCH H(ab) (19), Alpha (20))' },
+	{ name => 'invert', type => 'boolean',
+	  desc => 'Invert the extracted component' },
+	{ name => 'linear', type => 'boolean',
+	  desc => 'Use linear output instead of gamma corrected' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      gimp_drawable_is_rgb (drawable))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:component-extract",
+                             "component", component,
+                             "invert", invert,
+                             "linear", linear,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Extract Component"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub drawable_desaturate {
     $blurb = <<'BLURB';
 Desaturate the contents of the specified drawable, with the specified formula.
@@ -876,6 +925,7 @@ CODE
             drawable_colorize_hsl
             drawable_curves_explicit
             drawable_curves_spline
+            drawable_extract_component
             drawable_desaturate
             drawable_equalize
             drawable_histogram

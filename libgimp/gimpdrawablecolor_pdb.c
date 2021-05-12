@@ -286,6 +286,48 @@ gimp_drawable_curves_spline (GimpDrawable         *drawable,
 }
 
 /**
+ * gimp_drawable_extract_component:
+ * @drawable: The drawable.
+ * @component: Commponent (RGB Red (0), RGB Green (1), RGB Blue (2), Hue (3), HSV Saturation (4), HSV Value (5), HSL Saturation (6), HSL Lightness (7), CMYK Cyan (8), CMYK Magenta (9), CMYK Yellow (10), CMYK Key (11), Y'CbCr Y' (12), Y'CbCr Cb (13), Y'CbCr Cr (14), LAB L (15), LAB A (16), LAB B (17), LCH C(ab) (18), LCH H(ab) (19), Alpha (20)).
+ * @invert: Invert the extracted component.
+ * @linear: Use linear output instead of gamma corrected.
+ *
+ * Extract a color model component.
+ *
+ * Extract a color model component.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_drawable_extract_component (GimpDrawable *drawable,
+                                 gint          component,
+                                 gboolean      invert,
+                                 gboolean      linear)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          G_TYPE_INT, component,
+                                          G_TYPE_BOOLEAN, invert,
+                                          G_TYPE_BOOLEAN, linear,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-drawable-extract-component",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_desaturate:
  * @drawable: The drawable.
  * @desaturate_mode: The formula to use to desaturate.

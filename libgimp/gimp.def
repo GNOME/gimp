@@ -211,6 +211,7 @@ EXPORTS
 	gimp_drawable_edit_stroke_item
 	gimp_drawable_edit_stroke_selection
 	gimp_drawable_equalize
+	gimp_drawable_extract_component
 	gimp_drawable_fill
 	gimp_drawable_foreground_extract
 	gimp_drawable_free_shadow
