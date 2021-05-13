@@ -1,3 +1,13 @@
+# Default commit CI ($CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"):
+# - Linux autotools and meson (base & fast)
+# - Win64 crossbuilds (base & fast)
+# Scheduled CI ($CI_PIPELINE_SOURCE == "schedule"):
+# - Win 32/64 native builds (base but slow)
+# - Win32 crossbuilds (rare usefulness)
+# - Linux CLang (rare usefulness)
+# Release ($CI_COMMIT_TAG != null):
+# - Linux autotools (distcheck source tarball)
+
 image: debian:testing
 
 stages:
@@ -198,7 +208,7 @@ gimp-clang-debian:
 
 deps-win64-native:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN64 != null'
   stage: dependencies
   variables:
     MSYSTEM: "MINGW64"
@@ -221,7 +231,7 @@ deps-win64-native:
 
 gimp-win64-native:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN64 != null'
   stage: gimp
   variables:
     MSYSTEM: "MINGW64"
@@ -247,7 +257,7 @@ gimp-win64-native:
 
 deps-win32-native:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN32 != null'
   stage: dependencies
   variables:
     MSYSTEM: "MINGW32"
@@ -270,7 +280,7 @@ deps-win32-native:
 
 gimp-win32-native:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN32 != null'
   stage: gimp
   variables:
     MSYSTEM: "MINGW32"
@@ -445,7 +455,7 @@ cppcheck:
 
 win64-native-nightly:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN64 != null'
   variables:
     MSYSTEM: "MINGW64"
     CHERE_INVOKING: "yes"
@@ -467,7 +477,7 @@ win64-native-nightly:
 
 win32-native-nightly:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN32 != null'
   variables:
     MSYSTEM: "MINGW32"
     CHERE_INVOKING: "yes"
