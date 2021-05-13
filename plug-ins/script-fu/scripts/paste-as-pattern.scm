@@ -31,13 +31,13 @@
                              filename
                              (number->string pattern-image)
                              ".pat"))
-       
+
         (file-pat-save RUN-NONINTERACTIVE
-                       pattern-image pattern-draw path path
+                       pattern-image pattern-draw path
                        name)
-       
+
         (gimp-image-delete pattern-image)
-       
+
         (gimp-patterns-refresh)
         (gimp-context-set-pattern name)
       )

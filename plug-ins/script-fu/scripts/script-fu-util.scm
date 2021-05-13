@@ -61,13 +61,12 @@
 ; start directory:
 ;
 ;    gimp -i -b '(with-files "*.png" (gimp-drawable-invert layer FALSE) \
-;                 (gimp-file-save 1 image layer filename filename ))'
+;                 (gimp-file-save 1 image layer filename))'
 ;
 ; To do the same thing, but saving them as jpeg instead:
 ;
 ;    gimp -i -b '(with-files "*.png" (gimp-drawable-invert layer FALSE) \
 ;                 (gimp-file-save 1 image layer \
-;                  (string-append basename ".jpg") \
 ;                  (string-append basename ".jpg") ))'
 
 (define-macro (with-files pattern . body)
@@ -79,8 +78,7 @@
          (unless (null? ,filenames)
            (let* ((filename (car ,filenames))
                   (image (catch #f (car (gimp-file-load RUN-NONINTERACTIVE
-                                                        filename
-                                                        filename ))))
+                                                        filename))))
                   (layer (if image (car (gimp-image-get-active-layer image)) #f))
                   (basename (unbreakupstr (butlast (strbreakup filename ".")) ".")))
              (when image

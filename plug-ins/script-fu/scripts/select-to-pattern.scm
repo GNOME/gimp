@@ -80,7 +80,7 @@
                                  (number->string image)
                                  ".pat"))
 
-  (file-pat-save 1 pattern-image pattern-draw filename2 "" desc)
+  (file-pat-save 1 pattern-image pattern-draw filename2 desc)
   (gimp-patterns-refresh)
   (gimp-context-set-pattern desc)
 

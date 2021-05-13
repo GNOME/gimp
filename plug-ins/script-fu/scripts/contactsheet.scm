@@ -214,12 +214,13 @@
           ( (eof-object? file) )
 
           (set! file-path (string-append dir DIR-SEPARATOR file))
+          ; file-path is a full path, file is filename
           (if (and (not (re-match "index.*" file))
                    (= (file-type file-path) FILE-TYPE-FILE)
               )
             (catch ()
               (set! new-img
-                    (car (gimp-file-load RUN-NONINTERACTIVE file-path file)))
+                    (car (gimp-file-load RUN-NONINTERACTIVE file-path)))
 
               (make-thumbnail-size new-img thumb-w thumb-h)
 
@@ -269,8 +270,6 @@
                         sheet-layer
                         (string-append dir DIR-SEPARATOR
                             "index" (number->string sheet-num) ".jpg")
-                        (string-append
-                            "index" (number->string sheet-num) ".jpg")
                       )
 
                       (set! sheet-num (+ sheet-num 1))
@@ -296,7 +295,6 @@
               sheet-layer
               (string-append dir DIR-SEPARATOR
                   "index" (number->string sheet-num) ".jpg")
-              (string-append "index" (number->string sheet-num) ".jpg")
             )
           )
         )

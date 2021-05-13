@@ -34,7 +34,7 @@
                                   filename
                                   (number->string brush-image)
                                   ".gbr"))
-       
+
         (if (= type GRAYA-IMAGE)
             (begin
                 (gimp-context-push)
@@ -43,13 +43,13 @@
                 (gimp-context-pop)
             )
         )
-       
+
         (file-gbr-save RUN-NONINTERACTIVE
-                       brush-image brush-draw path path
+                       brush-image brush-draw path
                        spacing name)
-       
+
         (gimp-image-delete brush-image)
-       
+
         (gimp-brushes-refresh)
         (gimp-context-set-brush name)
       )

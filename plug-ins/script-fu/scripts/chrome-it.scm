@@ -73,7 +73,7 @@
   )
 
   (let* (
-        (banding-img (car (gimp-file-load RUN-NONINTERACTIVE env-map env-map)))
+        (banding-img (car (gimp-file-load RUN-NONINTERACTIVE env-map)))
         (banding-layer (car (gimp-image-get-active-drawable banding-img)))
         (banding-height (car (gimp-drawable-get-height banding-layer)))
         (banding-width (car (gimp-drawable-get-width banding-layer)))
