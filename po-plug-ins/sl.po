@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-03-16 17:29+0000\n"
-"PO-Revision-Date: 2021-03-23 12:22+0100\n"
+"POT-Creation-Date: 2021-05-09 18:04+0000\n"
+"PO-Revision-Date: 2021-05-11 00:08+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -22,7 +22,7 @@ msgstr ""
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -73,7 +73,7 @@ msgstr "Poravnaj vidne plasti"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1308 ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddsread.c:1356 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:2430 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -103,8 +103,8 @@ msgstr "Poravnaj vidne plasti"
 #: ../plug-ins/map-object/map-object-ui.c:1333
 #: ../plug-ins/metadata/metadata-editor.c:590
 #: ../plug-ins/metadata/metadata-editor.c:952
-#: ../plug-ins/metadata/metadata-editor.c:4522
-#: ../plug-ins/metadata/metadata-editor.c:4557
+#: ../plug-ins/metadata/metadata-editor.c:4560
+#: ../plug-ins/metadata/metadata-editor.c:4595
 #: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -131,7 +131,7 @@ msgstr "Pre_kliči"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1309 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1357 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -1052,7 +1052,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1726
+#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1728
 #: ../plug-ins/file-tiff/file-tiff-save.c:1045
 #: ../plug-ins/file-tiff/file-tiff-save.c:1155 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
@@ -1515,12 +1515,12 @@ msgid "Uniform"
 msgstr "konstantno"
 
 #: ../plug-ins/common/contrast-retinex.c:319
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Low"
 msgstr "nizko"
 
 #: ../plug-ins/common/contrast-retinex.c:320
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "High"
 msgstr "visoko"
 
@@ -2242,7 +2242,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: ../plug-ins/common/file-xpm.c:674 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
-#: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1697
+#: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1699
 #: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:1035
 #, c-format
 msgid "Exporting '%s'"
@@ -3147,7 +3147,7 @@ msgstr "Uvozi iz PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3399
 #: ../plug-ins/file-tiff/file-tiff-load.c:2431
-#: ../plug-ins/metadata/metadata-editor.c:4523
+#: ../plug-ins/metadata/metadata-editor.c:4561
 msgid "_Import"
 msgstr "_Uvozi"
 
@@ -3373,13 +3373,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Napaka pri izvažanju »%s«. Slike ni mogoče izvoziti."
 
 #: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1232
+#: ../plug-ins/file-tiff/file-tiff-save.c:1248
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Napaka pri nalaganju datoteke up. vmesnika »%s«: %s"
 
 #: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1233
+#: ../plug-ins/file-tiff/file-tiff-save.c:1249
 msgid "Unknown error"
 msgstr "Neznana napaka"
 
@@ -6674,15 +6674,15 @@ msgstr "Dekodiraj YCoCg (prilagojeno)"
 msgid "Decode Alpha exponent"
 msgstr "Dekodiraj eksponent alfa"
 
-#: ../plug-ins/file-dds/ddsread.c:1306
+#: ../plug-ins/file-dds/ddsread.c:1354
 msgid "Load DDS"
 msgstr "Naloži DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1325
+#: ../plug-ins/file-dds/ddsread.c:1373
 msgid "_Load mipmaps"
 msgstr "_Naloži mipmapse"
 
-#: ../plug-ins/file-dds/ddsread.c:1332
+#: ../plug-ins/file-dds/ddsread.c:1380
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "S_amodejno dekodiraj zaznane slike YCoCg/AExp"
 
@@ -6691,7 +6691,7 @@ msgid "Export as DDS"
 msgstr "Izvozi kot DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1957
-#: ../plug-ins/metadata/metadata-editor.c:4558
+#: ../plug-ins/metadata/metadata-editor.c:4596
 msgid "_Export"
 msgstr "I_zvozi"
 
@@ -7200,7 +7200,7 @@ msgstr "Podatkov ni mogoče razpakirati"
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Napaka: Osnovne vrste slike GIMP ni mogoče pretvoriti v način PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1690
+#: ../plug-ins/file-psd/psd-save.c:1692
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7209,7 +7209,7 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik, ki so daljše "
 "ali širše od 30.000 slikovnih točk."
 
-#: ../plug-ins/file-psd/psd-save.c:1711
+#: ../plug-ins/file-psd/psd-save.c:1713
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7660,39 +7660,39 @@ msgstr ""
 msgid "Writing pages with different bit depth is strange."
 msgstr "Zapisovanje strani z različnimi bitnimi globinami je čudno."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1222
+#: ../plug-ins/file-tiff/file-tiff-save.c:1238
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1248
+#: ../plug-ins/file-tiff/file-tiff-save.c:1264
 msgid "Compression"
 msgstr "Stiskanje"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1252
+#: ../plug-ins/file-tiff/file-tiff-save.c:1268
 msgid "_None"
 msgstr "_brez"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1253
+#: ../plug-ins/file-tiff/file-tiff-save.c:1269
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1254
+#: ../plug-ins/file-tiff/file-tiff-save.c:1270
 msgid "_Pack Bits"
 msgstr "_Zloži bite"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1255
+#: ../plug-ins/file-tiff/file-tiff-save.c:1271
 msgid "_Deflate"
 msgstr "_Stisni"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1256
+#: ../plug-ins/file-tiff/file-tiff-save.c:1272
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1257
+#: ../plug-ins/file-tiff/file-tiff-save.c:1273
 msgid "CCITT Group _3 fax"
 msgstr "Faks CCITT Group _3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1258
+#: ../plug-ins/file-tiff/file-tiff-save.c:1274
 msgid "CCITT Group _4 fax"
 msgstr "Faks CCITT Group _4"
 
@@ -8753,7 +8753,7 @@ msgstr "Vrsta mreže:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Normal"
 msgstr "Navadna"
 
@@ -9668,6 +9668,10 @@ msgstr "Shr_ani podatke Exif"
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
 msgid "Save _GeoTIFF data"
 msgstr "Shrani podatke _GeoTIFF"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
+msgid "Keep the GeoTIFF metadata if it was present on import"
+msgstr "Ohrani metapodatke GeoTIFF, če so prisotni ob uvozu"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -12104,208 +12108,210 @@ msgstr "Neocenjeno"
 msgid "Failed to set metadata tag %s"
 msgstr "Značke metapodatkov %s ni mogoče določiti"
 
-#: ../plug-ins/metadata/metadata-editor.c:4519
+#: ../plug-ins/metadata/metadata-editor.c:4557
 msgid "Import Metadata File"
 msgstr "Uvoz datoteko metapodatkov"
 
-#: ../plug-ins/metadata/metadata-editor.c:4554
+#: ../plug-ins/metadata/metadata-editor.c:4592
 msgid "Export Metadata File"
 msgstr "Izvozi datoteko metapodatkov"
 
 #: ../plug-ins/metadata/metadata-tags.c:169
+#: ../plug-ins/metadata/metadata-tags.c:183
+#: ../plug-ins/metadata/metadata-tags.c:243
+#: ../plug-ins/metadata/metadata-tags.c:260
+msgid "Select a value"
+msgstr "Izberite vrednost"
+
+#: ../plug-ins/metadata/metadata-tags.c:170
 msgid "Original digital capture of a real life scene"
 msgstr "Izvirni digitalni zajem prizora iz resničnega življenja"
 
-#: ../plug-ins/metadata/metadata-tags.c:170
+#: ../plug-ins/metadata/metadata-tags.c:171
 msgid "Digitized from a negative on film"
 msgstr "Digitalizirano iz filmskega negativa"
 
-#: ../plug-ins/metadata/metadata-tags.c:171
+#: ../plug-ins/metadata/metadata-tags.c:172
 msgid "Digitized from a positive on film"
 msgstr "Digitalizirano iz filmskega pozitiva"
 
-#: ../plug-ins/metadata/metadata-tags.c:172
+#: ../plug-ins/metadata/metadata-tags.c:173
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitalizirano s tiska na neprosojnem nosilcu"
 
-#: ../plug-ins/metadata/metadata-tags.c:173
+#: ../plug-ins/metadata/metadata-tags.c:174
 msgid "Created by software"
 msgstr "Ustvarjeno s programjem"
 
-#: ../plug-ins/metadata/metadata-tags.c:182
-#: ../plug-ins/metadata/metadata-tags.c:194
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:184
+#: ../plug-ins/metadata/metadata-tags.c:196
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "None"
 msgstr "Brez"
 
-#: ../plug-ins/metadata/metadata-tags.c:183
-#: ../plug-ins/metadata/metadata-tags.c:195
+#: ../plug-ins/metadata/metadata-tags.c:185
+#: ../plug-ins/metadata/metadata-tags.c:197
 msgid "Not Applicable"
 msgstr "Se ne uporabi"
 
-#: ../plug-ins/metadata/metadata-tags.c:184
+#: ../plug-ins/metadata/metadata-tags.c:186
 msgid "Unlimited Model Releases"
 msgstr "Neomejeno izdajanje modelov"
 
-#: ../plug-ins/metadata/metadata-tags.c:185
+#: ../plug-ins/metadata/metadata-tags.c:187
 msgid "Limited or Incomplete Model Releases"
 msgstr "Omejeno ali nepopolno izdajanje modelov"
 
-#: ../plug-ins/metadata/metadata-tags.c:196
+#: ../plug-ins/metadata/metadata-tags.c:198
 msgid "Unlimited Property Releases"
 msgstr "Neomejeno izdajanje lastnosti"
 
-#: ../plug-ins/metadata/metadata-tags.c:197
+#: ../plug-ins/metadata/metadata-tags.c:199
 msgid "Limited or Incomplete Property Releases"
 msgstr "Omejeno ali nepopolno izdajanje lastnosti"
 
-#: ../plug-ins/metadata/metadata-tags.c:206
+#: ../plug-ins/metadata/metadata-tags.c:208
 msgid "Age Unknown"
 msgstr "Starost ni znana"
 
-#: ../plug-ins/metadata/metadata-tags.c:207
+#: ../plug-ins/metadata/metadata-tags.c:209
 msgid "Age 25 or Over"
 msgstr "Starost 25 let ali več"
 
-#: ../plug-ins/metadata/metadata-tags.c:208
+#: ../plug-ins/metadata/metadata-tags.c:210
 msgid "Age 24"
 msgstr "Starost 24 let"
 
-#: ../plug-ins/metadata/metadata-tags.c:209
+#: ../plug-ins/metadata/metadata-tags.c:211
 msgid "Age 23"
 msgstr "Starost 23 let"
 
-#: ../plug-ins/metadata/metadata-tags.c:210
+#: ../plug-ins/metadata/metadata-tags.c:212
 msgid "Age 22"
 msgstr "Starost 22 let"
 
-#: ../plug-ins/metadata/metadata-tags.c:211
+#: ../plug-ins/metadata/metadata-tags.c:213
 msgid "Age 21"
 msgstr "Starost 21 let"
 
-#: ../plug-ins/metadata/metadata-tags.c:212
+#: ../plug-ins/metadata/metadata-tags.c:214
 msgid "Age 20"
 msgstr "Starost 20 let"
 
-#: ../plug-ins/metadata/metadata-tags.c:213
+#: ../plug-ins/metadata/metadata-tags.c:215
 msgid "Age 19"
 msgstr "Starost 19 let"
 
-#: ../plug-ins/metadata/metadata-tags.c:214
+#: ../plug-ins/metadata/metadata-tags.c:216
 msgid "Age 18"
 msgstr "Starost 18 let"
 
-#: ../plug-ins/metadata/metadata-tags.c:215
+#: ../plug-ins/metadata/metadata-tags.c:217
 msgid "Age 17"
 msgstr "Starost 17 let"
 
-#: ../plug-ins/metadata/metadata-tags.c:216
+#: ../plug-ins/metadata/metadata-tags.c:218
 msgid "Age 16"
 msgstr "Starost 16 let"
 
-#: ../plug-ins/metadata/metadata-tags.c:217
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Age 15"
 msgstr "Starost 15 let"
 
-#: ../plug-ins/metadata/metadata-tags.c:218
+#: ../plug-ins/metadata/metadata-tags.c:220
 msgid "Age 14 or Under"
 msgstr "Starost 14 let ali manj"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "2"
 msgstr "2"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "3"
 msgstr "3"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "4"
 msgstr "4"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "6"
 msgstr "6"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "7"
 msgstr "7"
 
-#: ../plug-ins/metadata/metadata-tags.c:232
-#: ../plug-ins/metadata/metadata-tags.c:268
-#: ../plug-ins/metadata/metadata-tags.c:275
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:234
+#: ../plug-ins/metadata/metadata-tags.c:270
+#: ../plug-ins/metadata/metadata-tags.c:277
+#: ../plug-ins/metadata/metadata-tags.c:284
 msgid "Unknown"
 msgstr "Neznano"
 
 #. DO NOT SAVE
-#: ../plug-ins/metadata/metadata-tags.c:233
+#: ../plug-ins/metadata/metadata-tags.c:235
 msgid "Copyrighted"
 msgstr "Avtorsko zaščiteno"
 
 #. TRUE
-#: ../plug-ins/metadata/metadata-tags.c:234
+#: ../plug-ins/metadata/metadata-tags.c:236
 msgid "Public Domain"
 msgstr "Javna last"
 
-#: ../plug-ins/metadata/metadata-tags.c:241
-#: ../plug-ins/metadata/metadata-tags.c:258
-msgid "Select a value"
-msgstr "Izberite vrednost"
-
-#: ../plug-ins/metadata/metadata-tags.c:242
+#: ../plug-ins/metadata/metadata-tags.c:244
 msgid "Work"
 msgstr "Delo"
 
-#: ../plug-ins/metadata/metadata-tags.c:243
+#: ../plug-ins/metadata/metadata-tags.c:245
 msgid "Cell"
 msgstr "Mobilnik"
 
-#: ../plug-ins/metadata/metadata-tags.c:244
+#: ../plug-ins/metadata/metadata-tags.c:246
 msgid "Fax"
 msgstr "Faks"
 
-#: ../plug-ins/metadata/metadata-tags.c:245
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "Home"
 msgstr "Domača številka"
 
-#: ../plug-ins/metadata/metadata-tags.c:246
+#: ../plug-ins/metadata/metadata-tags.c:248
 msgid "Pager"
 msgstr "Pozivnik"
 
-#: ../plug-ins/metadata/metadata-tags.c:259
+#: ../plug-ins/metadata/metadata-tags.c:261
 msgid "Male"
 msgstr "Moški"
 
-#: ../plug-ins/metadata/metadata-tags.c:260
+#: ../plug-ins/metadata/metadata-tags.c:262
 msgid "Female"
 msgstr "Ženska"
 
-#: ../plug-ins/metadata/metadata-tags.c:261
+#: ../plug-ins/metadata/metadata-tags.c:263
 msgid "Other"
 msgstr "Drugo"
 
-#: ../plug-ins/metadata/metadata-tags.c:268
+#: ../plug-ins/metadata/metadata-tags.c:270
 msgid "Above sea level"
 msgstr "Nadmorska višina"
 
-#: ../plug-ins/metadata/metadata-tags.c:268
+#: ../plug-ins/metadata/metadata-tags.c:270
 msgid "Below sea level"
 msgstr "Pod morsko gladino"
 
-#: ../plug-ins/metadata/metadata-tags.c:275
+#: ../plug-ins/metadata/metadata-tags.c:277
 msgid "North"
 msgstr "Sever"
 
-#: ../plug-ins/metadata/metadata-tags.c:275
+#: ../plug-ins/metadata/metadata-tags.c:277
 msgid "South"
 msgstr "Jug"
 
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:284
 msgid "East"
 msgstr "Vzhod"
 
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:284
 msgid "West"
 msgstr "Zahod"
 
@@ -12331,15 +12337,15 @@ msgstr "Pregledovalnik metapodatkov: %s"
 msgid "(%lu more character(s))"
 msgstr "(%lu več znakov)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:499
+#: ../plug-ins/metadata/metadata-viewer.c:532
 msgid " meter"
 msgstr "m"
 
-#: ../plug-ins/metadata/metadata-viewer.c:500
+#: ../plug-ins/metadata/metadata-viewer.c:533
 msgid " feet"
 msgstr "čevlji"
 
-#: ../plug-ins/metadata/metadata-viewer.c:596
+#: ../plug-ins/metadata/metadata-viewer.c:640
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu več bajtov)"
