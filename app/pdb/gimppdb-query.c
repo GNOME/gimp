@@ -424,7 +424,7 @@ gimp_pdb_print_entry (gpointer key,
           if (i > 0)
             g_string_append_printf (string, " ");
 
-          output_string (string, G_PARAM_SPEC_TYPE_NAME (pspec));
+          output_string (string, g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec)));
         }
 
       g_string_append_printf (string, ") (");
@@ -436,7 +436,7 @@ gimp_pdb_print_entry (gpointer key,
           if (i > 0)
             g_string_append_printf (string, " ");
 
-          output_string (string, G_PARAM_SPEC_TYPE_NAME (pspec))
+          output_string (string, g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec)));
         }
 
       g_string_append_printf (string, "))\n");
@@ -474,7 +474,7 @@ gimp_pdb_print_entry (gpointer key,
           output_string (string, g_param_spec_get_name (pspec));
 
           g_string_append_printf (string, "      ");
-          output_string (string, G_PARAM_SPEC_TYPE_NAME (pspec));
+          output_string (string, g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec)));
 
           g_string_append_printf (string, "      ");
           output_string (string, desc);
@@ -499,7 +499,7 @@ gimp_pdb_print_entry (gpointer key,
           output_string (string, g_param_spec_get_name (pspec));
 
           g_string_append_printf (string, "      ");
-          output_string (string, G_PARAM_SPEC_TYPE_NAME (pspec));
+          output_string (string, g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec)));
 
           g_string_append_printf (string, "      ");
           output_string (string, desc);
