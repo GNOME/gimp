@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-03-16 17:28+0000\n"
-"PO-Revision-Date: 2021-03-21 12:58+0100\n"
+"POT-Creation-Date: 2021-05-09 18:03+0000\n"
+"PO-Revision-Date: 2021-05-11 00:08+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -1092,7 +1092,7 @@ msgstr "(Pritisnite katero koli tipko, da zaprete to okno)\n"
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Izhod programa GIMP. To okno lahko pomanjšate, vendar ga ne zapirajte."
 
-#: ../app/sanity.c:562
+#: ../app/sanity.c:546
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -1104,7 +1104,7 @@ msgstr ""
 "\n"
 "Preverite vrednost okoljske spremenljivke G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:581
+#: ../app/sanity.c:565
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -20959,172 +20959,177 @@ msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Zabriši kot pri gibanju"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2802
+#: ../app/pdb/plug-in-compat-cmds.c:2748
+msgctxt "undo-type"
+msgid "Median Blur"
+msgstr "Zabrisanost mediane"
+
+#: ../app/pdb/plug-in-compat-cmds.c:2845
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mozaik"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2846
+#: ../app/pdb/plug-in-compat-cmds.c:2889
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neon"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2934
+#: ../app/pdb/plug-in-compat-cmds.c:2977
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Časopisni tisk"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2974
+#: ../app/pdb/plug-in-compat-cmds.c:3017
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normaliziraj"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3036
+#: ../app/pdb/plug-in-compat-cmds.c:3079
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernova"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3080 ../app/pdb/plug-in-compat-cmds.c:3148
+#: ../app/pdb/plug-in-compat-cmds.c:3123 ../app/pdb/plug-in-compat-cmds.c:3191
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Naolji"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3238
+#: ../app/pdb/plug-in-compat-cmds.c:3281
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Tlakuj kot papir"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3279 ../app/pdb/plug-in-compat-cmds.c:3322
+#: ../app/pdb/plug-in-compat-cmds.c:3322 ../app/pdb/plug-in-compat-cmds.c:3365
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pikseliziraj"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3373
+#: ../app/pdb/plug-in-compat-cmds.c:3416
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plazma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3427
+#: ../app/pdb/plug-in-compat-cmds.c:3470
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Polarne koordinate"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3467
+#: ../app/pdb/plug-in-compat-cmds.c:3510
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Odstrani rdeče oči"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3520
+#: ../app/pdb/plug-in-compat-cmds.c:3563
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Naključno vrženo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3573
+#: ../app/pdb/plug-in-compat-cmds.c:3616
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Naključno naberi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3626
+#: ../app/pdb/plug-in-compat-cmds.c:3669
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Naključno nerazločno"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3701
+#: ../app/pdb/plug-in-compat-cmds.c:3744
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Šum RGB"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3771
+#: ../app/pdb/plug-in-compat-cmds.c:3814
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Zgrbanči"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3896
+#: ../app/pdb/plug-in-compat-cmds.c:3939
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Zašumi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3940
+#: ../app/pdb/plug-in-compat-cmds.c:3983
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Selektivno Gaussovo zabrisanje"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3984
+#: ../app/pdb/plug-in-compat-cmds.c:4027
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Napol splošči"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4027
+#: ../app/pdb/plug-in-compat-cmds.c:4070
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Zamakni"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4130
+#: ../app/pdb/plug-in-compat-cmds.c:4173
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinus"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4178
+#: ../app/pdb/plug-in-compat-cmds.c:4221
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4239
+#: ../app/pdb/plug-in-compat-cmds.c:4282
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Enakomeren šum"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4283
+#: ../app/pdb/plug-in-compat-cmds.c:4326
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Razširi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4324
+#: ../app/pdb/plug-in-compat-cmds.c:4367
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Prag alfe"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4370
+#: ../app/pdb/plug-in-compat-cmds.c:4413
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Izostri (maska neostrine)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4416
+#: ../app/pdb/plug-in-compat-cmds.c:4459
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Video"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4453
+#: ../app/pdb/plug-in-compat-cmds.c:4496
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Preobrni vrednost"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4560
+#: ../app/pdb/plug-in-compat-cmds.c:4603
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Razširi vrednost"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4607
+#: ../app/pdb/plug-in-compat-cmds.c:4650
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Razlij"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4654
+#: ../app/pdb/plug-in-compat-cmds.c:4697
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Razjedi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4717
+#: ../app/pdb/plug-in-compat-cmds.c:4760
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Valovanje"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4765
+#: ../app/pdb/plug-in-compat-cmds.c:4808
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Vrtinči in odščipni"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4817
+#: ../app/pdb/plug-in-compat-cmds.c:4860
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Veter"
@@ -26224,17 +26229,17 @@ msgid "Select fields"
 msgstr "Izberite polja"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3296
+#: ../app/widgets/gimpdashboard.c:3335
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "N/D"
 
-#: ../app/widgets/gimpdashboard.c:3305 ../app/widgets/gimpdashboard.c:4308
+#: ../app/widgets/gimpdashboard.c:3344 ../app/widgets/gimpdashboard.c:4347
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Da"
 
-#: ../app/widgets/gimpdashboard.c:3306 ../app/widgets/gimpdashboard.c:4309
+#: ../app/widgets/gimpdashboard.c:3345 ../app/widgets/gimpdashboard.c:4348
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Ne"
@@ -26243,7 +26248,7 @@ msgstr "Ne"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3390
+#: ../app/widgets/gimpdashboard.c:3429
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -26254,16 +26259,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4298
+#: ../app/widgets/gimpdashboard.c:4337
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4376
+#: ../app/widgets/gimpdashboard.c:4415
 msgid "N/A"
 msgstr "Ni na voljo"
 
-#: ../app/widgets/gimpdashboard.c:4754
+#: ../app/widgets/gimpdashboard.c:4793
 msgid "Resolving symbol information..."
 msgstr "Razločevanje informacij simbola …"
 
