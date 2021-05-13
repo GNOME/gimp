@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-11 17:18+0000\n"
-"PO-Revision-Date: 2021-05-12 09:06+0300\n"
+"POT-Creation-Date: 2021-05-12 21:56+0000\n"
+"PO-Revision-Date: 2021-05-13 10:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -426,7 +426,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/file-faxg3/faxg3.c:577 ../plug-ins/file-fits/fits.c:564
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
 #: ../plug-ins/file-psd/psd-image-res-load.c:1072
-#: ../plug-ins/file-psd/psd-load.c:2064 ../plug-ins/file-sgi/sgi.c:424
+#: ../plug-ins/file-psd/psd-load.c:2097 ../plug-ins/file-sgi/sgi.c:424
 #: ../plug-ins/file-tiff/file-tiff-load.c:1272
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
@@ -6846,66 +6846,67 @@ msgid "Unsupported bit depth: %d"
 msgstr "Непідтримувана розрядність на канал: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:421 ../plug-ins/file-psd/psd-load.c:431
-#: ../plug-ins/file-psd/psd-load.c:644 ../plug-ins/file-psd/psd-load.c:922
+#: ../plug-ins/file-psd/psd-load.c:653 ../plug-ins/file-psd/psd-load.c:932
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Цей файл пошкоджений!"
 
-#: ../plug-ins/file-psd/psd-load.c:572
+#: ../plug-ins/file-psd/psd-load.c:581
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Надто багато каналів у шарі: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:580
+#: ../plug-ins/file-psd/psd-load.c:589
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Непідтримувана чи некоректна висота шару: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:588
+#: ../plug-ins/file-psd/psd-load.c:597
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Непідтримувана чи некоректні ширина шару: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:597
+#: ../plug-ins/file-psd/psd-load.c:606
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір шару: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:682
-#| msgid "Unsupported or invalid mask info size: %d"
-msgid "Unsupported or invalid mask info size: %"
-msgstr "Непідтримуваний або некоректний розмір відомостей щодо маски: %"
+#: ../plug-ins/file-psd/psd-load.c:691
+#, c-format
+#| msgid "Unsupported or invalid mask info size: %"
+msgid "Unsupported or invalid mask info size."
+msgstr "Непідтримуваний або некоректний розмір відомостей щодо маски."
 
-#: ../plug-ins/file-psd/psd-load.c:833
+#: ../plug-ins/file-psd/psd-load.c:843
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Непідтримувана чи некоректна висота маски: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:841
+#: ../plug-ins/file-psd/psd-load.c:851
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Непідтримувана чи хибна ширина маски: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:850
+#: ../plug-ins/file-psd/psd-load.c:860
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1511 ../plug-ins/file-psd/psd-load.c:2038
+#: ../plug-ins/file-psd/psd-load.c:1544 ../plug-ins/file-psd/psd-load.c:2071
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2169
+#: ../plug-ins/file-psd/psd-load.c:2202
 msgid "Extra"
 msgstr "Додатково"
 
-#: ../plug-ins/file-psd/psd-load.c:2347
+#: ../plug-ins/file-psd/psd-load.c:2380
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: ../plug-ins/file-psd/psd-load.c:2413
+#: ../plug-ins/file-psd/psd-load.c:2446
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
@@ -6937,7 +6938,13 @@ msgstr ""
 #, c-format
 msgid "Error reading data. Most likely unexpected end of file."
 msgstr ""
-"Помилка під час спроби читання даних. Найімовірніше, неочікуване завершення файла."
+"Помилка під час спроби читання даних. Найімовірніше, неочікуване завершення "
+"файла."
+
+#: ../plug-ins/file-psd/psd-util.c:199
+#, c-format
+msgid "Unexpected end of file"
+msgstr "Передчасне закінчення файлу"
 
 #: ../plug-ins/file-psd/psd.c:123 ../plug-ins/file-psd/psd.c:203
 msgid "Photoshop image"
@@ -12445,9 +12452,6 @@ msgstr "_Сканер/Камера..."
 #: ../plug-ins/twain/twain.c:520
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
-
-#~ msgid "Unexpected end of file"
-#~ msgstr "Передчасне закінчення файлу"
 
 #~ msgid "Export Image as PNG"
 #~ msgstr "Експортувати зображення як PNG"
