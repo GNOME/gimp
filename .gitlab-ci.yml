@@ -151,19 +151,6 @@ deps-debian:
     - export PATH="${INSTALL_PREFIX}/bin:$PATH"
   needs: ["deps-debian"]
 
-gimp-autotools-debian:
-  except:
-    - schedules
-  extends: .gimp-debian-base
-  script:
-    - mkdir _build
-    - cd _build
-    - ../autogen.sh
-        --prefix="${INSTALL_PREFIX}"
-        --enable-debug
-    - make -j "$(nproc)"
-    - make check
-
 gimp-distcheck-debian:
   except:
     - schedules
@@ -176,6 +163,7 @@ gimp-distcheck-debian:
         --enable-debug
         --enable-gtk-doc
     - make -j "$(nproc)"
+    - make -j "$(nproc)" check
     - make -j "$(nproc)" distcheck
 
 gimp-meson-debian:
@@ -425,8 +413,8 @@ gimp-win32:
       - gimp-prefix/
 
 cppcheck:
-  except:
-    - schedules
+  rules:
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_CPPCHECK != null'
   stage: analysis
   before_script:
     - apt-get update
