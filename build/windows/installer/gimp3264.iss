@@ -163,8 +163,8 @@ LZMANumFastBytes=273
 ;LZMADictionarySize=524288
 
 ;SignTool=Default
-SignedUninstaller=yes
-SignedUninstallerDir=_Uninst
+;SignedUninstaller=yes
+;SignedUninstallerDir=_Uninst
 #endif //NOCOMPRESSION
 
 #if !defined(REVISION)
