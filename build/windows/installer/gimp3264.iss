@@ -157,7 +157,10 @@ InternalCompressLevel=ultra
 SolidCompression=yes
 LZMAUseSeparateProcess=yes
 LZMANumFastBytes=273
-LZMADictionarySize=524288
+; Increasing dictionary size may improve compression ratio at the
+; expense of memory requirement. We run into "Out of memory" error in
+; the CI.
+;LZMADictionarySize=524288
 
 ;SignTool=Default
 SignedUninstaller=yes
