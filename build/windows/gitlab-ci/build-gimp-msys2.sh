@@ -5,16 +5,17 @@ set -e
 if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export ARTIFACTS_SUFFIX="-w32"
     export MSYS2_ARCH="i686"
-    export ACLOCAL_FLAGS="-I/c/msys64/mingw32/share/aclocal"
-    export PATH="/c/msys64/mingw32/bin:$PATH"
+    export MSYS2_PREFIX="/c/msys64/mingw32"
     export GIMP_OPTIONS="--with-vala=no --enable-vala=no"
 else
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
-    export ACLOCAL_FLAGS="-I/c/msys64/mingw64/share/aclocal"
-    export PATH="/c/msys64/mingw64/bin:$PATH"
+    export MSYS2_PREFIX="/c/msys64/mingw64/"
     export GIMP_OPTIONS=""
 fi
+
+export ACLOCAL_FLAGS="-I${MSYS2_PREFIX}/share/aclocal"
+export PATH="${MSYS2_PREFIX}/bin:$PATH"
 
 # Why do we even have to remove these manually? The whole thing is
 # messed up, but it looks like the Gitlab runner fails to clean properly
@@ -53,6 +54,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-graphviz \
     mingw-w64-$MSYS2_ARCH-gtk3 \
     mingw-w64-$MSYS2_ARCH-gtk-doc \
+    mingw-w64-$MSYS2_ARCH-headers-git \
     mingw-w64-$MSYS2_ARCH-iso-codes \
     mingw-w64-$MSYS2_ARCH-json-c \
     mingw-w64-$MSYS2_ARCH-json-glib \
@@ -100,7 +102,9 @@ ccache --show-stats
 
 mkdir "_build${ARTIFACTS_SUFFIX}"
 cd "_build${ARTIFACTS_SUFFIX}"
-../autogen.sh --prefix="${GIMP_PREFIX}" --enable-windows-installer ${GIMP_OPTIONS}
+../autogen.sh --prefix="${GIMP_PREFIX}" --enable-windows-installer \
+              --with-directx-sdk="${MSYS2_PREFIX}" \
+              ${GIMP_OPTIONS}
 make -j4
 make install
 cd ..
