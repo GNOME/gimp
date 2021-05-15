@@ -212,6 +212,7 @@ deps-win64-native:
     expire_in: 2 hours
     paths:
       - _install-w64
+      - aalib-1.4.0/_build
   needs: []
 
 gimp-win64-native:

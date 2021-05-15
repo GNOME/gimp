@@ -1,0 +1,119 @@
+From a50637c4d5f8b91bfbd9434ad0484387282d1ae9 Mon Sep 17 00:00:00 2001
+From: Jehan <jehan@girinstud.io>
+Date: Sun, 16 May 2021 17:06:56 +0200
+Subject: [PATCH] configure, src: tweak Windows link flags.
+
+- libws2_32 is needed on Windows for the select() function.
+- Without flag -no-undefined, the build still succeeds but fails to
+  build the shared library and outputs:
+
+> libtool: warning: undefined symbols not allowed in x86_64-w64-mingw32 shared libraries; building static only
+
+Also adding some specific Windows detection code in the configure file
+and disabling some Linux-specific (apparently) paths (LINUX_DRIVER and
+LINUX_KBDDRIVER) as well as some X11 paths (X11_KBDDRIVER and
+X11_MOUSEDRIVER). I am not actually sure if these are really about
+building **for** Linux/X11 or **on** Linux/X11, especially because
+existing test on $system was actually looking at the build machine, not
+the host/target. But that may just be non-generic code which didn't
+expect cross-building (which is anyway a case where I failed to build
+without this change). For now let's just disable these code paths when
+building for Windows and not bother too much.
+---
+ configure.in    | 30 ++++++++++++++++++++++--------
+ src/Makefile.am |  7 ++++++-
+ 2 files changed, 28 insertions(+), 9 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 78806dc..27c133c 100644
+--- a/configure.in
++++ b/configure.in
+@@ -366,6 +366,9 @@ case "$target" in
+     *-*-solaris*)
+         ARCH=solaris
+ 	;;
++    *-*-mingw32*)
++        ARCH=windows
++	;;
+     *)
+         ARCH=other
+ 	;;
+@@ -388,6 +391,9 @@ AC_SUBST(AALIB_LIBS)
+ AC_SUBST(AALIB_RLD_FLAGS)
+ AC_SUBST(XCURSES)
+ 
++# Windows needs some tweaking.
++AM_CONDITIONAL(PLATFORM_WIN32, test "$ARCH" = "windows")
++
+ # Set conditional variables for shared and static library selection.
+ # These are not used in any Makefile.am but in sdl-config.in.
+ AM_CONDITIONAL([ENABLE_SHARED], [test "$enable_shared" = yes])
+@@ -423,26 +429,34 @@ if test  "$curses_driver" = true; then
+ fi
+ if test  "$linux_driver_test" = yes; then
+  if test "x$system" = xLinux; then
+-   echo " Linux console"
+-   AC_DEFINE(LINUX_DRIVER)
+-   AC_DEFINE(LINUX_KBDDRIVER)
++   if test $ARCH != windows; then
++     echo " Linux console"
++     AC_DEFINE(LINUX_DRIVER)
++     AC_DEFINE(LINUX_KBDDRIVER)
++   fi
+  fi
+ fi
+ if test  "$x_driver" = true; then
+   echo " x11"
+   if test  "$x_kbddriver_test" = yes; then
+-     AC_DEFINE(X11_KBDDRIVER)
+-     x_kbddriver=true
++    if test $ARCH != windows; then
++      AC_DEFINE(X11_KBDDRIVER)
++      x_kbddriver=true
++    fi
+   fi
+   if test  "$x_mousedriver_test" = yes; then
+-     AC_DEFINE(X11_MOUSEDRIVER)
+-     x_mousedriver=true
++    if test $ARCH != windows; then
++      AC_DEFINE(X11_MOUSEDRIVER)
++      x_mousedriver=true
++    fi
+   fi
+ fi
+ echo "Keyboard drivers:"
+ if test  "$linux_driver_test" = yes; then
+  if test "x$system" = xLinux; then
+-   echo " Linux console"
++   if test $ARCH != windows; then
++     echo " Linux console"
++   fi
+  fi
+ fi
+ if test  "$slang_kbddriver" = true; then
+diff --git a/src/Makefile.am b/src/Makefile.am
+index ad23666..3d63dc0 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -1,4 +1,9 @@
+ AUTOMAKE_OPTIONS = foreign #include-deps
++
++if PLATFORM_WIN32
++libaa_ldflags = -no-undefined -lws2_32
++endif
++
+ EXTRA_DIST = config.dos config.os2 Makefile.dos Makefile.os2 aados.c aadoskbd.c aadosmou.c aaos2.c  aaos2kbd.c aaos2mou.c  aaint.h aamktabl.h aaxint.h toc.c
+ lib_LTLIBRARIES=libaa.la
+ libaa_la_SOURCES= \
+@@ -57,7 +62,7 @@ libaa_la_SOURCES= \
+        aaattrs.c \
+        aaputpixel.c \
+        aarecfunc.c 
+-libaa_la_LDFLAGS=@LDFLAGS@ -version-info 1:4:0
++libaa_la_LDFLAGS=@LDFLAGS@ -version-info 1:4:0 $(libaa_ldflags)
+ bin_PROGRAMS=aainfo aatest aafire aasavefont
+ 
+ aainfo_LDADD= libaa.la
+-- 
+2.31.1
+

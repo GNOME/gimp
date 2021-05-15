@@ -42,6 +42,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-meson \
     \
     mingw-w64-$MSYS2_ARCH-cairo \
+    mingw-w64-$MSYS2_ARCH-crt-git \
     mingw-w64-$MSYS2_ARCH-gobject-introspection \
     mingw-w64-$MSYS2_ARCH-json-glib \
     mingw-w64-$MSYS2_ARCH-lcms2 \
@@ -61,6 +62,29 @@ export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
 export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
 export ACLOCAL_FLAGS="-I/c/msys64/mingw64/share/aclocal"
 export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/mingw64/share/"
+
+## AA-lib (not available in MSYS2) ##
+
+wget https://downloads.sourceforge.net/aa-project/aalib-1.4rc5.tar.gz
+echo "9801095c42bba12edebd1902bcf0a990 aalib-1.4rc5.tar.gz" | md5sum -c -
+tar xzf aalib-1.4rc5.tar.gz
+cd aalib-1.4.0
+patch --binary -p1 < ../build/windows/patches/aalib-0001-Apply-patch-for-MSYS2.patch
+patch --binary -p1 < ../build/windows/patches/aalib-0002-configure-src-tweak-Windows-link-flags.patch
+wget "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" --output-document config.guess
+wget "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" --output-document config.sub
+aclocal
+libtoolize --force
+automake --add-missing
+autoconf
+mkdir _build
+cd _build
+../configure --prefix="${GIMP_PREFIX}"
+make
+make install
+cd ../..
+
+## babl and GEGL (follow master branch) ##
 
 git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
 git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl

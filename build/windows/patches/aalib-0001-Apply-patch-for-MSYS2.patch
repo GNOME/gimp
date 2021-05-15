@@ -1,0 +1,242 @@
+From 533b7b01e435cb0dc3a2382b9414086d0a392384 Mon Sep 17 00:00:00 2001
+From: Jehan <jehan@girinstud.io>
+Date: Sat, 15 May 2021 19:50:08 +0200
+Subject: [PATCH] Apply patch for MSYS2.
+
+The contributor Sylvie Alexandre sent me (on 2021-05-06) a patch
+improving the Windows build for 32 and 64-bit on Windows for our Windows
+build of GIMP.
+
+I have not looked in details to the changes, but it's mostly include
+fixes, typo fixes and one function call change. Also I have not looked
+if it doesn't break other builds (such as Linux), as I'm mostly trying
+to get it to build on GIMP CI jobs for Windows anyway.
+---
+ configure      | 2 +-
+ configure.in   | 2 +-
+ src/aacurkbd.c | 2 +-
+ src/aacurses.c | 4 ++--
+ src/aados.c    | 2 +-
+ src/aadoskbd.c | 1 -
+ src/aaedit.c   | 2 +-
+ src/aakbdreg.c | 2 +-
+ src/aalib.c    | 2 +-
+ src/aalinux.c  | 1 -
+ src/aamoureg.c | 2 +-
+ src/aarec.c    | 2 +-
+ src/aaregist.c | 2 +-
+ src/aastdin.c  | 5 ++++-
+ src/aax.c      | 1 -
+ src/aaxkbd.c   | 1 -
+ src/aaxmouse.c | 1 -
+ 17 files changed, 16 insertions(+), 18 deletions(-)
+
+diff --git a/configure b/configure
+index a103cf0..2bbae5f 100755
+--- a/configure
++++ b/configure
+@@ -4040,7 +4040,7 @@ EOF
+ 
+ fi
+ 
+-for ac_hdr in fcntl.h limits.h malloc.h sys/ioctl.h sys/time.h unistd.h
++for ac_hdr in fcntl.h limits.h sys/ioctl.h sys/time.h unistd.h
+ do
+ ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
+ echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
+diff --git a/configure.in b/configure.in
+index 4de06a8..78806dc 100644
+--- a/configure.in
++++ b/configure.in
+@@ -342,7 +342,7 @@ fi
+ 
+ dnl Checks for header files.
+ AC_HEADER_STDC
+-AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sys/ioctl.h sys/time.h unistd.h)
++AC_CHECK_HEADERS(fcntl.h limits.h sys/ioctl.h sys/time.h unistd.h)
+ 
+ dnl Checks for typedefs, structures, and compiler characteristics.
+ AC_STRUCT_ST_RDEV
+diff --git a/src/aacurkbd.c b/src/aacurkbd.c
+index 801897b..418b6a3 100644
+--- a/src/aacurkbd.c
++++ b/src/aacurkbd.c
+@@ -112,7 +112,7 @@ static int curses_getchar(aa_context * c1, int wait)
+ 	return (AA_UP);
+     case KEY_DOWN:
+ 	return (AA_DOWN);
+-#ifdef KEY_MOUDE
++#ifdef KEY_MOUSE
+     case KEY_MOUSE:
+ #ifdef GPM_MOUSEDRIVER
+ 	if (!__curses_usegpm)
+diff --git a/src/aacurses.c b/src/aacurses.c
+index a3dc713..6e2f5f6 100644
+--- a/src/aacurses.c
++++ b/src/aacurses.c
+@@ -71,8 +71,8 @@ static void curses_getsize(aa_context * c, int *width, int *height)
+ {
+     if (__resized_curses)
+ 	curses_uninit(c), curses_init(&c->params, NULL,&c->driverparams, NULL), __resized_curses = 0;
+-    *width = stdscr->_maxx + 1;
+-    *height = stdscr->_maxy + 1;
++    *width = getmaxx(stdscr) + 1;
++    *height = getmaxy(stdscr) + 1;
+ #ifdef GPM_MOUSEDRIVER
+     gpm_mx = *width;
+     gpm_my = *height;
+diff --git a/src/aados.c b/src/aados.c
+index 1256606..c98df20 100644
+--- a/src/aados.c
++++ b/src/aados.c
+@@ -5,7 +5,7 @@
+ #include <go32.h>
+ #include <dpmi.h>
+ #include <sys/nearptr.h>
+-#include <malloc.h>
++#include <stdlib.h>
+ #include "aalib.h"
+ #include "aaint.h"
+ int __use_nearptr_hack;
+diff --git a/src/aadoskbd.c b/src/aadoskbd.c
+index 2fc0f37..325fe91 100644
+--- a/src/aadoskbd.c
++++ b/src/aadoskbd.c
+@@ -4,7 +4,6 @@
+ #include <go32.h>
+ #include <dpmi.h>
+ #include <sys/nearptr.h>
+-#include <malloc.h>
+ #include <stdlib.h>
+ #include <dos.h>
+ #include <dpmi.h>
+diff --git a/src/aaedit.c b/src/aaedit.c
+index 09534d2..2ea52f9 100644
+--- a/src/aaedit.c
++++ b/src/aaedit.c
+@@ -1,6 +1,6 @@
+ #include <string.h>
+ #include <ctype.h>
+-#include <malloc.h>
++#include <stdlib.h>
+ #include "aalib.h"
+ #include "aaint.h"
+ static void aa_editdisplay(struct aa_edit *e)
+diff --git a/src/aakbdreg.c b/src/aakbdreg.c
+index def65fe..f4f8efb 100644
+--- a/src/aakbdreg.c
++++ b/src/aakbdreg.c
+@@ -1,4 +1,4 @@
+-#include <malloc.h>
++#include <stdlib.h>
+ #include "config.h"
+ #include "aalib.h"
+ #include "aaint.h"
+diff --git a/src/aalib.c b/src/aalib.c
+index 11fecc8..e3063b4 100644
+--- a/src/aalib.c
++++ b/src/aalib.c
+@@ -1,6 +1,6 @@
+ #include <stdio.h>
+ #include <string.h>
+-#include <malloc.h>
++#include <stdlib.h>
+ #include "aalib.h"
+ #include "aaint.h"
+ 
+diff --git a/src/aalinux.c b/src/aalinux.c
+index 0006d37..bb63120 100644
+--- a/src/aalinux.c
++++ b/src/aalinux.c
+@@ -1,7 +1,6 @@
+ #include "config.h"
+ #ifdef LINUX_DRIVER
+ #include <sys/stat.h>
+-#include <malloc.h>
+ #include <sys/ioctl.h>
+ #include <linux/kd.h>
+ #ifdef GPM_MOUSEDRIVER
+diff --git a/src/aamoureg.c b/src/aamoureg.c
+index 0380828..bb55fe3 100644
+--- a/src/aamoureg.c
++++ b/src/aamoureg.c
+@@ -1,4 +1,4 @@
+-#include <malloc.h>
++#include <stdlib.h>
+ #include "config.h"
+ #include "aalib.h"
+ #include "aaint.h"
+diff --git a/src/aarec.c b/src/aarec.c
+index 70f4ebc..ee43e8a 100644
+--- a/src/aarec.c
++++ b/src/aarec.c
+@@ -1,5 +1,5 @@
+ #include <string.h>
+-#include <malloc.h>
++#include <stdlib.h>
+ #include "aalib.h"
+ #include "aaint.h"
+ aa_linkedlist *aa_kbdrecommended = NULL, *aa_mouserecommended = NULL,
+diff --git a/src/aaregist.c b/src/aaregist.c
+index 54abec0..765155e 100644
+--- a/src/aaregist.c
++++ b/src/aaregist.c
+@@ -1,4 +1,4 @@
+-#include <malloc.h>
++#include <stdlib.h>
+ #include "config.h"
+ #include "aalib.h"
+ #include "aaint.h"
+diff --git a/src/aastdin.c b/src/aastdin.c
+index 696d87b..d18bd68 100644
+--- a/src/aastdin.c
++++ b/src/aastdin.c
+@@ -5,6 +5,9 @@
+ #include <setjmp.h>
+ #include <sys/time.h>
+ #include <sys/types.h>
++#ifdef _WIN32
++#include <winsock2.h>
++#endif
+ #ifdef GPM_MOUSEDRIVER
+ #include <gpm.h>
+ #endif
+@@ -88,7 +91,7 @@ static int stdin_getchar(aa_context * c1, int wait)
+     if (c > 0 && c < 127 && c != 127)
+ 	return (c);
+     switch (c) {
+-#ifdef KEY_MOUDE
++#ifdef KEY_MOUSE
+     case KEY_MOUSE:
+ 	return AA_MOUSE
+ #endif
+diff --git a/src/aax.c b/src/aax.c
+index 02797c4..d329564 100644
+--- a/src/aax.c
++++ b/src/aax.c
+@@ -1,4 +1,3 @@
+-#include <malloc.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <stdio.h>
+diff --git a/src/aaxkbd.c b/src/aaxkbd.c
+index f16afc6..c331c24 100644
+--- a/src/aaxkbd.c
++++ b/src/aaxkbd.c
+@@ -1,4 +1,3 @@
+-#include <malloc.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <stdio.h>
+diff --git a/src/aaxmouse.c b/src/aaxmouse.c
+index 9935b03..7e725ad 100644
+--- a/src/aaxmouse.c
++++ b/src/aaxmouse.c
+@@ -1,4 +1,3 @@
+-#include <malloc.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <stdio.h>
+-- 
+2.31.1
+
