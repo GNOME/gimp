@@ -1656,13 +1656,25 @@ AC_SUBST(MNG_CFLAGS)
 AC_ARG_WITH(aa,  [  --without-aa            do not build the AA plug-in])
 
 have_libaa=no
-if test "x$with_aa" != xno && test -z "$AA_LIBS"; then
+if test "x$with_aa" != xno; then
   have_libaa=yes
-  AC_CHECK_LIB(aa, aa_printf,
-    [AC_CHECK_HEADER(aalib.h,
-      FILE_AA='file-aa$(EXEEXT)'; AA_LIBS='-laa',
-      [have_libaa="no (AA header file not found)"])],
-    [have_libaa="no (AA library not found)"])
+  # First case if manually set, use the AA_LIBS environment variable.
+  if test -z "$AA_LIBS"; then
+    # Otherwise try the aalib-config script.
+    AA_LIBS=`aalib-config --libs`
+    if test -z "$AA_LIBS"; then
+      # Just try -laa.
+      AC_CHECK_LIB(aa, aa_printf,
+        [AC_CHECK_HEADER(aalib.h,
+          AA_LIBS='-laa',
+          [have_libaa="no (AA header file not found)"])],
+        [have_libaa="no (AA library not found)"])
+    fi
+  fi
+
+  if test "$have_libaa" = yes; then
+    FILE_AA='file-aa$(EXEEXT)'
+  fi
 fi
 
 AC_SUBST(FILE_AA)
