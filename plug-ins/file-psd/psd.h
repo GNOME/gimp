@@ -489,7 +489,7 @@ typedef struct {
 typedef struct
 {
   gint16        channel_id;             /* Channel ID */
-  guint32       data_len;               /* Layer left */
+  guint64       data_len;               /* Layer left */
 } ChannelLengthInfo;
 
 /* PSD Layer flags */
