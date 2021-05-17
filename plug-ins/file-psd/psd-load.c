@@ -578,33 +578,6 @@ read_layer_info (PSDimage      *img_a,
                            lyr_a[lidx]->num_channels);
               return NULL;
             }
-          if (lyr_a[lidx]->bottom < lyr_a[lidx]->top ||
-              lyr_a[lidx]->bottom - lyr_a[lidx]->top > GIMP_MAX_IMAGE_SIZE)
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Unsupported or invalid layer height: %d"),
-                           lyr_a[lidx]->bottom - lyr_a[lidx]->top);
-              return NULL;
-            }
-          if (lyr_a[lidx]->right < lyr_a[lidx]->left ||
-              lyr_a[lidx]->right - lyr_a[lidx]->left > GIMP_MAX_IMAGE_SIZE)
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Unsupported or invalid layer width: %d"),
-                           lyr_a[lidx]->right - lyr_a[lidx]->left);
-              return NULL;
-            }
-
-          if ((lyr_a[lidx]->right - lyr_a[lidx]->left) >
-              G_MAXINT32 / MAX (lyr_a[lidx]->bottom - lyr_a[lidx]->top, 1))
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Unsupported or invalid layer size: %dx%d"),
-                           lyr_a[lidx]->right - lyr_a[lidx]->left,
-                           lyr_a[lidx]->bottom - lyr_a[lidx]->top);
-              return NULL;
-            }
-
           IFDBG(2) g_debug ("Layer %d, Coords %d %d %d %d, channels %d, ",
                             lidx, lyr_a[lidx]->left, lyr_a[lidx]->top,
                             lyr_a[lidx]->right, lyr_a[lidx]->bottom,
@@ -671,7 +644,38 @@ read_layer_info (PSDimage      *img_a,
                             lyr_a[lidx]->layer_flags.trans_prot,
                             lyr_a[lidx]->layer_flags.visible,
                             lyr_a[lidx]->layer_flags.irrelevant);
-          IFDBG(3) g_debug ("Remaining length %" G_GOFFSET_FORMAT, block_rem);
+          IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", Remaining length %" G_GSIZE_FORMAT,
+                            PSD_TELL(input), block_rem);
+
+          if (! lyr_a[lidx]->layer_flags.irrelevant)
+            {
+              if (lyr_a[lidx]->bottom < lyr_a[lidx]->top ||
+                  lyr_a[lidx]->bottom - lyr_a[lidx]->top > GIMP_MAX_IMAGE_SIZE)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                              _("Unsupported or invalid layer height: %d"),
+                              lyr_a[lidx]->bottom - lyr_a[lidx]->top);
+                  return NULL;
+                }
+              if (lyr_a[lidx]->right < lyr_a[lidx]->left ||
+                  lyr_a[lidx]->right - lyr_a[lidx]->left > GIMP_MAX_IMAGE_SIZE)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                              _("Unsupported or invalid layer width: %d"),
+                              lyr_a[lidx]->right - lyr_a[lidx]->left);
+                  return NULL;
+                }
+
+              if ((lyr_a[lidx]->right - lyr_a[lidx]->left) >
+                  G_MAXINT32 / MAX (lyr_a[lidx]->bottom - lyr_a[lidx]->top, 1))
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                              _("Unsupported or invalid layer size: %dx%d"),
+                              lyr_a[lidx]->right - lyr_a[lidx]->left,
+                              lyr_a[lidx]->bottom - lyr_a[lidx]->top);
+                  return NULL;
+                }
+            }
 
           /* Layer mask data */
           if (psd_read (input, &block_len, 4, error) < 4)
