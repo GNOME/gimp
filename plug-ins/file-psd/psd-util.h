@@ -33,6 +33,11 @@ gint                    psd_read               (GInputStream        *input,
                                                 gint                 count,
                                                 GError             **error);
 
+gboolean                psd_read_len           (GInputStream        *input,
+                                                gsize               *data,
+                                                gint                 psd_version,
+                                                GError            **error);
+
 gboolean                psd_seek               (GInputStream        *input,
                                                 goffset              offset,
                                                 GSeekType            type,

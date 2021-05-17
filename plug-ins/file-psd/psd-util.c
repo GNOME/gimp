@@ -203,6 +203,27 @@ psd_read (GInputStream  *input,
 }
 
 gboolean
+psd_read_len (GInputStream  *input,
+              gsize         *data,
+              gint           psd_version,
+              GError       **error)
+{
+  gint block_len_size = (psd_version == 1 ? 4 : 8);
+
+  if (psd_read (input, data, block_len_size, error) < block_len_size)
+    {
+      psd_set_error (error);
+      return FALSE;
+    }
+
+  if (psd_version == 1)
+    *data = GUINT32_FROM_BE (*data);
+  else
+    *data = GUINT64_FROM_BE (*data);
+  return TRUE;
+}
+
+gboolean
 psd_seek (GInputStream  *input,
           goffset        offset,
           GSeekType      type,
