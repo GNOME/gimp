@@ -28,5 +28,8 @@ wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Uno
 cd -
 
 # Construct now the installer.
+MAJOR_VERSION=`grep 'm4_define(\[gimp_major_version' configure.ac |sed 's/m4_define(\[gimp_major_version.*\[\([0-9]*\)\].*/\1/'`
+MINOR_VERSION=`grep 'm4_define(\[gimp_minor_version' configure.ac |sed 's/m4_define(\[gimp_minor_version.*\[\([0-9]*\)\].*/\1/'`
+MICRO_VERSION=`grep 'm4_define(\[gimp_micro_version' configure.ac |sed 's/m4_define(\[gimp_micro_version.*\[\([0-9]*\)\].*/\1/'`
 cd build/windows/installer
-./compile.bat 2.99.6 ../../.. gimp-w32 gimp-w64 ../../.. gimp-w32 gimp-w64
+./compile.bat ${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION} ../../.. gimp-w32 gimp-w64 ../../.. gimp-w32 gimp-w64
