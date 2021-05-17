@@ -2538,7 +2538,7 @@ convert_1_bit (const gchar *src,
       for (j = 0; j < 8 && row_pos < columns; ++j)
         {
           *dst = (*src & mask) ? 0 : 1;
-          IFDBG(3) g_debug ("byte %d, bit %d, offset %d, src %d, dst %d",
+          IFDBG(4) g_debug ("byte %d, bit %d, offset %d, src %d, dst %d",
             i , j, row_pos, *src, *dst);
           dst++;
           mask >>= 1;
