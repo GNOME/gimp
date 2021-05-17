@@ -518,8 +518,8 @@ read_layer_info (PSDimage      *img_a,
   gint       lidx;                  /* Layer index */
   gint       cidx;                  /* Channel index */
 
-  g_debug ("Reading layer info at offset %" G_GOFFSET_FORMAT,
-           PSD_TELL(input));
+  IFDBG(1) g_debug ("Reading layer info at offset %" G_GOFFSET_FORMAT,
+                    PSD_TELL(input));
   /* Get number of layers */
   if (psd_read (input, &img_a->num_layers, 2, error) < 2)
     {
@@ -547,6 +547,8 @@ read_layer_info (PSDimage      *img_a,
 
       for (lidx = 0; lidx < img_a->num_layers; ++lidx)
         {
+          IFDBG(3) g_debug ("Read info for layer %d at offset %" G_GOFFSET_FORMAT, lidx, PSD_TELL(input));
+
           /* Allocate layer record */
           lyr_a[lidx] = (PSDlayer *) g_malloc (sizeof (PSDlayer) );
 
@@ -695,7 +697,8 @@ read_layer_info (PSDimage      *img_a,
             }
 
           block_rem -= (block_len + 4);
-          IFDBG(3) g_debug ("Remaining length %" G_GOFFSET_FORMAT, block_rem);
+          IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", Remaining length %" G_GSIZE_FORMAT,
+                            PSD_TELL(input), block_rem);
 
           lyr_a[lidx]->layer_mask_extra.top = 0;
           lyr_a[lidx]->layer_mask_extra.left = 0;
@@ -888,7 +891,10 @@ read_layer_info (PSDimage      *img_a,
 
           block_len = GUINT32_FROM_BE (block_len);
           block_rem -= (block_len + 4);
-          IFDBG(3) g_debug ("Remaining length %" G_GOFFSET_FORMAT, block_rem);
+          IFDBG(3) g_debug ("Blending ranges size %" G_GSIZE_FORMAT
+                            " (not imported)", block_len);
+          IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", Remaining length %" G_GSIZE_FORMAT,
+                            PSD_TELL(input), block_rem);
 
           if (block_len > 0)
             {
@@ -936,6 +942,7 @@ read_layer_info (PSDimage      *img_a,
               if (load_layer_resource (&res_a, lyr_a[lidx], input, error) < 0)
                 return NULL;
               block_rem -= res_a.data_len;
+              IFDBG(3) g_debug ("Remaining length in block: %" G_GSIZE_FORMAT, block_rem);
             }
           if (block_rem > 0)
             {
@@ -954,13 +961,13 @@ read_layer_info (PSDimage      *img_a,
           return NULL;
         }
 
-      IFDBG(1) g_debug ("Layer image data block size %" G_GOFFSET_FORMAT,
-                        img_a->layer_data_len);
+      IFDBG(1) g_debug ("Layer image data block start %" G_GOFFSET_FORMAT ", size %" G_GSIZE_FORMAT
+                        ", end: %" G_GOFFSET_FORMAT,
+                        img_a->layer_data_start, img_a->layer_data_len, PSD_TELL(input));
     }
 
   return lyr_a;
 }
-
 
 static PSDlayer **
 read_layer_block (PSDimage      *img_a,
@@ -1076,6 +1083,8 @@ read_layer_block (PSDimage      *img_a,
           psd_set_error (error);
           return NULL;
         }
+      IFDBG(3) g_debug ("Finished read_layer_block. Now at offset: %" G_GOFFSET_FORMAT,
+                        PSD_TELL(input));
     }
 
   return lyr_a;
@@ -1488,7 +1497,7 @@ add_layers (GimpImage     *image,
                   switch (comp_mode)
                     {
                       case PSD_COMP_RAW:        /* Planar raw data */
-                        IFDBG(3) g_debug ("Raw data length: %d",
+                        IFDBG(3) g_debug ("Raw data length: %" G_GSIZE_FORMAT,
                                           lyr_a[lidx]->chn_info[cidx].data_len - 2);
                         if (read_channel_data (lyr_chn[cidx], img_a->bps,
                                                PSD_COMP_RAW, NULL, input, 0,
@@ -2370,7 +2379,7 @@ read_channel_data (PSDchannel     *channel,
   else
     readline_len = (channel->columns * bps / 8);
 
-  IFDBG(3) g_debug ("raw data size %d x %d = %d", readline_len,
+  IFDBG(4) g_debug ("raw data size %d x %d = %d", readline_len,
                     channel->rows, readline_len * channel->rows);
 
   /* sanity check, int overflow check (avoid divisions by zero) */
