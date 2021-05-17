@@ -1659,7 +1659,8 @@ add_layers (GimpImage     *image,
                * subsequent layers; the real group name is set by the group
                * start marker.
                */
-              gimp_item_set_name (GIMP_ITEM (layer), lyr_a[lidx]->name);
+              if (lyr_a[lidx]->name)
+                gimp_item_set_name (GIMP_ITEM (layer), lyr_a[lidx]->name);
 
               /* Set the layer properties (skip this for layer group end
                * markers; we set their properties when processing the start
