@@ -124,9 +124,9 @@ psd_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads images from the Photoshop "
-                                        "PSD file format",
+                                        "PSD and PSB file formats",
                                         "This plug-in loads images in Adobe "
-                                        "Photoshop (TM) native PSD format.",
+                                        "Photoshop (TM) native PSD and PSB format.",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "John Marshall",
@@ -136,7 +136,7 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-psd");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
-                                          "psd");
+                                          "psd, psb");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,8BPS");
 
@@ -153,10 +153,10 @@ psd_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads images from the Photoshop "
-                                        "PSD file format",
+                                        "PSD and PSB file formats",
                                         "This plug-in loads the merged image "
                                         "data in Adobe Photoshop (TM) native "
-                                        "PSD format.",
+                                        "PSD and PSB format.",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Ell",
@@ -166,7 +166,7 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-psd");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
-                                          "psd");
+                                          "psd, psb");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,8BPS");
       gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure), +1);

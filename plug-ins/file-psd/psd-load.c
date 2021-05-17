@@ -92,10 +92,16 @@ static void             psd_to_gimp_color_map      (guchar         *map256);
 static GimpImageType    get_gimp_image_type        (GimpImageBaseType image_base_type,
                                                     gboolean          alpha);
 
+static gboolean         read_RLE_channel           (PSDimage       *img_a,
+                                                    PSDchannel     *lyr_chn,
+                                                    guint64         channel_data_len,
+                                                    GInputStream   *input,
+                                                    GError        **error);
+
 static gint             read_channel_data          (PSDchannel     *channel,
                                                     guint16         bps,
                                                     guint16         compression,
-                                                    const guint16  *rle_pack_len,
+                                                    const guint32  *rle_pack_len,
                                                     GInputStream   *input,
                                                     guint32         comp_len,
                                                     GError        **error);
@@ -295,10 +301,10 @@ read_header_block (PSDimage      *img_a,
       return -1;
     }
 
-  if (version != 1)
+  if (img_a->version != 1 && img_a->version != 2)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                  _("Unsupported file format version: %d"), version);
+                  _("Unsupported file format version: %d"), img_a->version);
       return -1;
     }
 
@@ -589,18 +595,20 @@ read_layer_info (PSDimage      *img_a,
 
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             {
-              if (psd_read (input, &lyr_a[lidx]->chn_info[cidx].channel_id, 2, error) < 2 ||
-                  psd_read (input, &lyr_a[lidx]->chn_info[cidx].data_len,   4, error) < 4)
+              if (psd_read (input, &lyr_a[lidx]->chn_info[cidx].channel_id, 2, error) < 2)
                 {
                   psd_set_error (error);
                   return NULL;
                 }
+              if (! psd_read_len (input, &lyr_a[lidx]->chn_info[cidx].data_len,
+                                  img_a->version, error))
+                {
+                  return NULL;
+                }
               lyr_a[lidx]->chn_info[cidx].channel_id =
                 GINT16_FROM_BE (lyr_a[lidx]->chn_info[cidx].channel_id);
-              lyr_a[lidx]->chn_info[cidx].data_len =
-                GUINT32_FROM_BE (lyr_a[lidx]->chn_info[cidx].data_len);
               img_a->layer_data_len += lyr_a[lidx]->chn_info[cidx].data_len;
-              IFDBG(3) g_debug ("Channel ID %d, data len %d",
+              IFDBG(3) g_debug ("Channel ID %d, data len %" G_GSIZE_FORMAT,
                                 lyr_a[lidx]->chn_info[cidx].channel_id,
                                 lyr_a[lidx]->chn_info[cidx].data_len);
             }
@@ -987,20 +995,21 @@ read_layer_block (PSDimage      *img_a,
   PSDlayer **lyr_a = NULL;
   guint64    block_len;
   guint64    block_end;
+  gint       block_len_size = (img_a->version == 1 ? 4 : 8);
 
-  if (psd_read (input, &block_len, 4, error) < 4)
+  if (! psd_read_len (input, &block_len, img_a->version, error))
     {
-      psd_set_error (error);
       img_a->num_layers = -1;
       return NULL;
     }
-
-  img_a->mask_layer_len = GUINT32_FROM_BE (block_len);
+  else
+    img_a->mask_layer_len = block_len;
 
   IFDBG(1) g_debug ("Layer and mask block size = %" G_GOFFSET_FORMAT, img_a->mask_layer_len);
 
   img_a->transparency = FALSE;
   img_a->layer_data_len = 0;
+  img_a->num_layers = 0;
 
   if (!img_a->mask_layer_len)
     {
@@ -1015,37 +1024,44 @@ read_layer_block (PSDimage      *img_a,
       block_end = img_a->mask_layer_start + img_a->mask_layer_len;
 
       /* Layer info */
-      if (psd_read (input, &block_len, 4, error) == 4 && block_len)
+      if (! psd_read_len (input, &block_len, img_a->version, error))
         {
-          total_len -= 4;
-          block_len = GUINT32_FROM_BE (block_len);
-          IFDBG(1) g_debug ("Layer info size = %" G_GOFFSET_FORMAT, block_len);
-
-          lyr_a = read_layer_info (img_a, input, error);
-
-          if (img_a->mask_layer_start + 4 + block_len != PSD_TELL(input))
-            {
-              g_debug ("Unexpected offset after reading layer info: %" G_GOFFSET_FORMAT
-                       " instead of %" G_GOFFSET_FORMAT,
-                       PSD_TELL(input), img_a->mask_layer_start + 4 + block_len);
-              /* Correct the offset. */
-              if (! psd_seek (input, img_a->mask_layer_start + 4 + block_len,
-                              G_SEEK_SET, error))
-                return NULL;
-            }
-
-          total_len -= block_len;
+          lyr_a = NULL;
+          return NULL;
         }
       else
         {
-          img_a->num_layers = 0;
-          lyr_a = NULL;
+          IFDBG(1) g_debug ("Layer info size = %" G_GOFFSET_FORMAT, block_len);
+          /* To make computations easier add the size of block_len */
+          block_len += block_len_size;
+
+          if (block_len > block_len_size)
+            {
+              lyr_a = read_layer_info (img_a, input, error);
+
+              if (error && *error)
+                return NULL;
+
+              if (img_a->mask_layer_start + block_len != PSD_TELL(input))
+                {
+                  g_debug ("Unexpected offset after reading layer info: %" G_GOFFSET_FORMAT
+                          " instead of %" G_GOFFSET_FORMAT,
+                          PSD_TELL(input), img_a->mask_layer_start + block_len);
+                  /* Correct the offset. */
+                  if (! psd_seek (input, img_a->mask_layer_start + block_len,
+                                  G_SEEK_SET, error))
+                    return NULL;
+                }
+            }
+          total_len -= block_len;
         }
+      IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", remaining len: %" G_GSIZE_FORMAT,
+                        PSD_TELL(input), total_len);
 
       if (total_len >= 4)
         {
           /* Global layer mask info */
-          if (psd_read (input, &block_len, 4, error) == 4 && block_len)
+          if (psd_read (input, &block_len, 4, error) == 4)
             {
               block_len = GUINT32_FROM_BE (block_len);
               IFDBG(1) g_debug ("Global layer mask info size = %" G_GOFFSET_FORMAT, block_len);
@@ -1333,6 +1349,50 @@ psd_convert_cmyk_to_srgb (PSDimage *img_a,
   return (guchar*) dst;
 }
 
+static gboolean
+read_RLE_channel (PSDimage      *img_a,
+                  PSDchannel    *lyr_chn,
+                  guint64        channel_data_len,
+                  GInputStream  *input,
+                  GError       **error)
+{
+  gint      rle_count_size = (img_a->version == 1 ? 2 : 4);
+  gint      rle_row_size   = lyr_chn->rows * rle_count_size;
+  guint32  *rle_pack_len;
+  gint      rowi;
+
+  IFDBG(4) g_debug ("RLE channel length %" G_GSIZE_FORMAT
+                    ", RLE length data: %d, "
+                    "RLE data block: %" G_GSIZE_FORMAT,
+                    channel_data_len - 2,
+                    rle_row_size,
+                    (channel_data_len - 2 - rle_row_size));
+  rle_pack_len = g_malloc (lyr_chn->rows * 4); /* Always 4 since this is the data size in memory. */
+  for (rowi = 0; rowi < lyr_chn->rows; ++rowi)
+    {
+      if (psd_read (input, &rle_pack_len[rowi], rle_count_size,
+                    error) < rle_count_size)
+        {
+          psd_set_error (error);
+          g_free (rle_pack_len);
+          return FALSE;
+        }
+      if (img_a->version == 1)
+        rle_pack_len[rowi] = GUINT16_FROM_BE (rle_pack_len[rowi]);
+      else
+        rle_pack_len[rowi] = GUINT32_FROM_BE (rle_pack_len[rowi]);
+    }
+
+  if (read_channel_data (lyr_chn, img_a->bps,
+                         PSD_COMP_RLE, rle_pack_len, input, 0,
+                         error) < 1)
+    {
+      return FALSE;
+    }
+
+  g_free (rle_pack_len);
+  return TRUE;
+}
 
 static gint
 add_layers (GimpImage     *image,
@@ -1348,7 +1408,6 @@ add_layers (GimpImage     *image,
   guint16               user_mask_chn;
   guint16               layer_channels;
   guint16               channel_idx[MAX_CHANNELS];
-  guint16              *rle_pack_len;
   guint16               bps;
   gint32                l_x;                   /* Layer x */
   gint32                l_y;                   /* Layer y */
@@ -1363,7 +1422,6 @@ add_layers (GimpImage     *image,
   GList                *selected_layers = NULL;
   gint                  lidx;                  /* Layer index */
   gint                  cidx;                  /* Channel index */
-  gint                  rowi;                  /* Row index */
   gboolean              alpha;
   gboolean              user_mask;
   gboolean              empty;
@@ -1518,33 +1576,10 @@ add_layers (GimpImage     *image,
                         break;
 
                       case PSD_COMP_RLE:        /* Packbits */
-                        IFDBG(3) g_debug ("RLE channel length %d, RLE length data: %d, "
-                                          "RLE data block: %d",
-                                          lyr_a[lidx]->chn_info[cidx].data_len - 2,
-                                          lyr_chn[cidx]->rows * 2,
-                                          (lyr_a[lidx]->chn_info[cidx].data_len - 2 -
-                                           lyr_chn[cidx]->rows * 2));
-                        rle_pack_len = g_malloc (lyr_chn[cidx]->rows * 2);
-                        for (rowi = 0; rowi < lyr_chn[cidx]->rows; ++rowi)
-                          {
-                            if (psd_read (input, &rle_pack_len[rowi], 2, error) < 2)
-                              {
-                                psd_set_error (error);
-                                g_free (rle_pack_len);
-                                return -1;
-                              }
-                            rle_pack_len[rowi] = GUINT16_FROM_BE (rle_pack_len[rowi]);
-                          }
-
-                        IFDBG(3) g_debug ("RLE decode - data");
-                        if (read_channel_data (lyr_chn[cidx], img_a->bps,
-                                               PSD_COMP_RLE, rle_pack_len, input, 0,
-                                               error) < 1)
-                          {
-                            return -1;
-                          }
-
-                        g_free (rle_pack_len);
+                        if (! read_RLE_channel (img_a, lyr_chn[cidx],
+                                                lyr_a[lidx]->chn_info[cidx].data_len,
+                                                input, error))
+                          return -1;
                         break;
 
                       case PSD_COMP_ZIP:                 /* ? */
@@ -1958,7 +1993,7 @@ add_merged_image (GimpImage     *image,
   guint16               extra_channels;
   guint16               total_channels;
   guint16               bps;
-  guint16              *rle_pack_len[MAX_CHANNELS];
+  guint32              *rle_pack_len[MAX_CHANNELS];
   guint32               alpha_id;
   gint32                layer_size;
   GimpLayer            *layer   = NULL;
@@ -2046,43 +2081,50 @@ add_merged_image (GimpImage     *image,
           case PSD_COMP_RLE:        /* Packbits */
             /* Image data is stored as packed scanlines in planar order
                with all compressed length counters stored first */
-            IFDBG(3) g_debug ("RLE length data: %d, RLE data block: %d",
-                               total_channels * img_a->rows * 2,
-                               block_len - (total_channels * img_a->rows * 2));
-            for (cidx = 0; cidx < total_channels; ++cidx)
-              {
-                chn_a[cidx].columns = img_a->columns;
-                chn_a[cidx].rows = img_a->rows;
-                rle_pack_len[cidx] = g_malloc (img_a->rows * 2);
-                for (rowi = 0; rowi < img_a->rows; ++rowi)
-                  {
-                    if (psd_read (input, &rle_pack_len[cidx][rowi], 2, error) < 2)
-                      {
-                        psd_set_error (error);
-                        return -1;
-                      }
-                    rle_pack_len[cidx][rowi] = GUINT16_FROM_BE (rle_pack_len[cidx][rowi]);
-                  }
-              }
+            {
+              gint  rle_count_size = (img_a->version == 1 ? 2 : 4);
+              gint  rle_row_size   = img_a->rows * rle_count_size;
 
-            /* Skip channel length data for unloaded channels */
-            if (! psd_seek (input, (img_a->channels - total_channels) * img_a->rows * 2,
-                            G_SEEK_CUR, error))
-              {
-                psd_set_error (error);
-                return -1;
-              }
+              IFDBG(3) g_debug ("RLE length data: %d, RLE data block: %d",
+                                total_channels * rle_row_size,
+                                block_len - (total_channels * rle_row_size));
+              for (cidx = 0; cidx < total_channels; ++cidx)
+                {
+                  chn_a[cidx].columns = img_a->columns;
+                  chn_a[cidx].rows = img_a->rows;
+                  rle_pack_len[cidx] = g_malloc (img_a->rows * 4); /* Always 4 since this is the data size in memory. */
+                  for (rowi = 0; rowi < img_a->rows; ++rowi)
+                    {
+                      if (psd_read (input, &rle_pack_len[cidx][rowi], rle_count_size, error) < rle_count_size)
+                        {
+                          psd_set_error (error);
+                          return -1;
+                        }
+                      if (img_a->version == 1)
+                        rle_pack_len[cidx][rowi] = GUINT16_FROM_BE (rle_pack_len[cidx][rowi]);
+                      else
+                        rle_pack_len[cidx][rowi] = GUINT32_FROM_BE (rle_pack_len[cidx][rowi]);
+                    }
+                }
 
-            IFDBG(3) g_debug ("RLE decode - data");
-            for (cidx = 0; cidx < total_channels; ++cidx)
-              {
-                if (read_channel_data (&chn_a[cidx], img_a->bps,
-                                       PSD_COMP_RLE, rle_pack_len[cidx], input, 0,
-                                       error) < 1)
+              /* Skip channel length data for unloaded channels */
+              if (! psd_seek (input, (img_a->channels - total_channels) * rle_row_size,
+                              G_SEEK_CUR, error))
+                {
+                  psd_set_error (error);
                   return -1;
-                g_free (rle_pack_len[cidx]);
-              }
-            break;
+                }
+
+              for (cidx = 0; cidx < total_channels; ++cidx)
+                {
+                  if (read_channel_data (&chn_a[cidx], img_a->bps,
+                                        PSD_COMP_RLE, rle_pack_len[cidx], input, 0,
+                                        error) < 1)
+                    return -1;
+                  g_free (rle_pack_len[cidx]);
+                }
+              break;
+            }
 
           case PSD_COMP_ZIP:                 /* ? */
           case PSD_COMP_ZIP_PRED:
@@ -2374,7 +2416,7 @@ static gint
 read_channel_data (PSDchannel     *channel,
                    guint16         bps,
                    guint16         compression,
-                   const guint16  *rle_pack_len,
+                   const guint32  *rle_pack_len,
                    GInputStream   *input,
                    guint32         comp_len,
                    GError        **error)
