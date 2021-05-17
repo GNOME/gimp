@@ -1,12 +1,27 @@
-# Default commit CI ($CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"):
+# Default commit CI should only run the following pipelines:
 # - Linux autotools and meson (base & fast)
-# - Win64 crossbuilds (base & fast)
-# Scheduled CI ($CI_PIPELINE_SOURCE == "schedule"):
+# - Win64 crossbuild (base & fast)
+# Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly:
 # - Win 32/64 native builds (base but slow)
 # - Win32 crossbuilds (rare usefulness)
 # - Linux CLang (rare usefulness)
-# Release ($CI_COMMIT_TAG != null):
+# - cppcheck (static code analysis)
+# Releases ($CI_COMMIT_TAG != null) should run only:
 # - Linux autotools (distcheck source tarball)
+# - Win 32/64 native builds (Windows installer creation)
+#
+# To force step-specific pipelines without waiting for commits and/or
+# pipelines, these are the variable you should set:
+# - GIMP_CI_AUTOTOOLS: trigger the autotools/gcc build.
+# - GIMP_CI_MESON_GCC: trigger the meson/gcc build.
+# - GIMP_CI_MESON_CLANG: trigger the meson/clang build.
+# - GIMP_CI_CROSSROAD_WIN32: trigger the crossroad/meson build for Win 32-bit.
+# - GIMP_CI_CROSSROAD_WIN64: trigger the crossroad/meson build for Win 64-bit.
+# - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
+# - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
+# - GIMP_CI_WIN_INSTALLER: trigger both native MSYS2 builds then creates Windows installer.
+# - GIMP_CI_SOURCES: trigger the autotools/gcc build and the source tarball job.
+# - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
 
 image: debian:testing
 
@@ -27,8 +42,15 @@ variables:
 
 build-image:
   rules:
-    - if: '$CI_PIPELINE_SOURCE != "schedule"'
-    - if: '$SCHEDULE_CLANG != null'
+    # On commits.
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_AUTOTOOLS != null'
+    - if: '$GIMP_CI_SOURCES != null'
+    - if: '$GIMP_CI_MESON_GCC != null'
+    - if: '$GIMP_CI_MESON_CLANG != null'
   stage: prepare
   variables:
     GIT_STRATEGY: none
@@ -49,7 +71,10 @@ build-image:
 
 build-image-win64:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    # On commits except tags.
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   stage: prepare
   variables:
     GIT_STRATEGY: none
@@ -70,7 +95,8 @@ build-image-win64:
 
 build-image-win32:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_WIN32 != null'
+    # Custom builds only (web GUI, API or schedules).
+    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
   stage: prepare
   variables:
     GIT_STRATEGY: none
@@ -93,8 +119,15 @@ build-image-win32:
 
 deps-debian:
   rules:
-    - if: '$CI_PIPELINE_SOURCE != "schedule"'
-    - if: '$SCHEDULE_CLANG != null'
+    # On commits.
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_AUTOTOOLS != null'
+    - if: '$GIMP_CI_SOURCES != null'
+    - if: '$GIMP_CI_MESON_GCC != null'
+    - if: '$GIMP_CI_MESON_CLANG != null'
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   cache:
@@ -152,8 +185,14 @@ deps-debian:
   needs: ["deps-debian"]
 
 gimp-distcheck-debian:
-  except:
-    - schedules
+  rules:
+    # On commits.
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_AUTOTOOLS != null'
+    - if: '$GIMP_CI_SOURCES != null'
   extends: .gimp-debian-base
   script:
     - mkdir _build
@@ -168,7 +207,10 @@ gimp-distcheck-debian:
 
 gimp-meson-debian:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    # On commits except tags.
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_MESON_GCC != null'
   extends: .gimp-debian-base
   script:
     - meson _build
@@ -178,7 +220,8 @@ gimp-meson-debian:
 
 gimp-clang-debian:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_CLANG != null'
+    # Custom builds only (web GUI, API or schedules).
+    - if: '$GIMP_CI_MESON_CLANG != null'
   extends: .gimp-debian-base
   variables:
     CC: "clang"
@@ -196,7 +239,11 @@ gimp-clang-debian:
 
 deps-win64-native:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN64 != null'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_MSYS2_WIN64 != null'
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
   stage: dependencies
   variables:
     MSYSTEM: "MINGW64"
@@ -217,7 +264,11 @@ deps-win64-native:
 
 gimp-win64-native:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN64 != null'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_MSYS2_WIN64 != null'
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
   stage: gimp
   variables:
     MSYSTEM: "MINGW64"
@@ -243,7 +294,11 @@ gimp-win64-native:
 
 deps-win32-native:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN32 != null'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_MSYS2_WIN32 != null'
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
   stage: dependencies
   variables:
     MSYSTEM: "MINGW32"
@@ -263,7 +318,11 @@ deps-win32-native:
 
 gimp-win32-native:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN32 != null'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_MSYS2_WIN32 != null'
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
   stage: gimp
   variables:
     MSYSTEM: "MINGW32"
@@ -288,7 +347,10 @@ gimp-win32-native:
 
 deps-win64:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    # On commits except tags.
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-win64-latest
   variables:
@@ -321,7 +383,10 @@ deps-win64:
 
 gimp-win64:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    # On commits except tags.
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-win64-latest
   dependencies:
@@ -354,7 +419,8 @@ gimp-win64:
 
 deps-win32:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_WIN32 != null'
+    # Custom builds only (web GUI, API or schedules).
+    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-win32-latest
   variables:
@@ -384,7 +450,8 @@ deps-win32:
 
 gimp-win32:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_WIN32 != null'
+    # Custom builds only (web GUI, API or schedules).
+    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-win32-latest
   dependencies:
@@ -415,7 +482,8 @@ gimp-win32:
 
 cppcheck:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_CPPCHECK != null'
+    # Custom builds only (web GUI, API or schedules).
+    - if: '$GIMP_CI_CPPCHECK != null'
   stage: analysis
   before_script:
     - apt-get update
@@ -437,7 +505,10 @@ cppcheck:
 
 win-installer-nightly:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_NATIVE_WIN64 != null && $SCHEDULE_NATIVE_WIN32 != null'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
   variables:
     CHERE_INVOKING: "yes"
   tags:
@@ -460,8 +531,13 @@ win-installer-nightly:
   needs: ["gimp-win32-native", "gimp-win64-native"]
 
 sources:
-  except:
-    - schedules
+  rules:
+    # On commits.
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_SOURCES != null'
   stage: distribution
   dependencies:
     - gimp-distcheck-debian
@@ -482,7 +558,10 @@ sources:
 
 win64-nightly:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE != "schedule"'
+    # On commits except tags.
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   stage: distribution
   dependencies:
     - gimp-win64
@@ -559,7 +638,8 @@ win64-nightly:
 
 win32-nightly:
   rules:
-    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_WIN32 != null'
+    # Custom builds only (web GUI, API or schedules).
+    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
   stage: distribution
   dependencies:
     - gimp-win32
