@@ -708,6 +708,10 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpDisplayShell       *shell   = gimp_image_window_get_active_shell (window);
 
+  /* Run the parent implementation */
+  if (GTK_WIDGET_CLASS (parent_class)->window_state_event)
+    GTK_WIDGET_CLASS (parent_class)->window_state_event (widget, event);
+
   if (! shell)
     return FALSE;
 
