@@ -616,7 +616,9 @@ read_layer_info (PSDimage      *img_a,
               psd_set_error (error);
               return NULL;
             }
-          if (memcmp (lyr_a[lidx]->mode_key, "8BIM", 4) != 0)
+          /* Not sure if 8B64 is possible here but it won't hurt to check. */
+          if (memcmp (lyr_a[lidx]->mode_key, "8BIM", 4) != 0 &&
+              memcmp (lyr_a[lidx]->mode_key, "8B64", 4) != 0)
             {
               IFDBG(1) g_debug ("Incorrect layer mode signature %.4s",
                                 lyr_a[lidx]->mode_key);
@@ -911,16 +913,24 @@ read_layer_info (PSDimage      *img_a,
             return NULL;
 
           block_rem -= read_len;
-          IFDBG(3) g_debug ("Remaining length %" G_GOFFSET_FORMAT, block_rem);
+          IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", Remaining length %" G_GSIZE_FORMAT,
+                            PSD_TELL(input), block_rem);
 
           /* Adjustment layer info */           /* FIXME */
 
           while (block_rem > 7)
             {
-              if (get_layer_resource_header (&res_a, input, error) < 0)
-                return NULL;
+              gint  header_size;
+              IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", Remaining length %" G_GSIZE_FORMAT,
+                                PSD_TELL(input), block_rem);
+              header_size = get_layer_resource_header (&res_a, img_a->version, input, error);
+              if (header_size < 0)
+                {
+                  psd_set_error (error);
+                  return NULL;
+                }
 
-              block_rem -= 12;
+              block_rem -= header_size;
 
               if (res_a.data_len % 2 != 0)
                 {

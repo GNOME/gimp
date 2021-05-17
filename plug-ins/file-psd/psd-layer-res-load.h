@@ -23,6 +23,7 @@
 
 
 gint  get_layer_resource_header (PSDlayerres   *res_a,
+                                 guint16        psd_version,
                                  GInputStream  *input,
                                  GError       **error);
 

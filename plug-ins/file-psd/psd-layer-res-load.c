@@ -196,26 +196,77 @@ static gint     load_resource_lnsr    (const PSDlayerres     *res_a,
                                        GError               **error);
 
 /* Public Functions */
+
+/* Returns < 0 for errors, else returns the size of the resource header
+ * which should be either 4 or 8. */
 gint
 get_layer_resource_header (PSDlayerres   *res_a,
+                           guint16        psd_version,
                            GInputStream  *input,
                            GError       **error)
 {
-  g_debug ("get_layer_resource_header");
-  if (psd_read (input, res_a->sig,       4, error) < 4 ||
-      psd_read (input, res_a->key,       4, error) < 4 ||
-      psd_read (input, &res_a->data_len, 4, error) < 4)
+  gint  block_len_size = 4;
+
+  if (psd_read (input, res_a->sig, 4, error) < 4 ||
+      psd_read (input, res_a->key, 4, error) < 4)
     {
       psd_set_error (error);
       return -1;
     }
-  res_a->data_len = GUINT32_FROM_BE (res_a->data_len);
-  res_a->data_start = g_seekable_tell (G_SEEKABLE (input));
+  else if (memcmp (res_a->sig, "8BIM", 4) != 0 &&
+           memcmp (res_a->sig, "8B64", 4) != 0)
+    {
+      IFDBG(1) g_debug ("Unknown layer resource signature %.4s", res_a->sig);
+    }
+
+  if (psd_version == 1)
+    block_len_size = 4;
+  else
+    {
+      /* For PSB only certain block resources have a double sized length
+        * so we need to check which resource it is first before we can
+        * read the block length.
+        * According to the docs: LMsk, Lr16, Lr32, Layr, Mt16, Mt32, Mtrn,
+        * Alph, FMsk, lnk2, FEid, FXid, PxSD have an 8 byte length. */
+      if (memcmp (res_a->key, "LMsk", 4) == 0 ||
+          memcmp (res_a->key, "Lr16", 4) == 0 ||
+          memcmp (res_a->key, "Lr32", 4) == 0 ||
+          memcmp (res_a->key, "Layr", 4) == 0 ||
+          memcmp (res_a->key, "Mt16", 4) == 0 ||
+          memcmp (res_a->key, "Mt32", 4) == 0 ||
+          memcmp (res_a->key, "Mtrn", 4) == 0 ||
+          memcmp (res_a->key, "Alph", 4) == 0 ||
+          memcmp (res_a->key, "FMsk", 4) == 0 ||
+          memcmp (res_a->key, "lnk2", 4) == 0 ||
+          memcmp (res_a->key, "FEid", 4) == 0 ||
+          memcmp (res_a->key, "FXid", 4) == 0 ||
+          memcmp (res_a->key, "PxSD", 4) == 0 ||
+          /* Apparently also using 8 bytes in size but not mentioned in specs: */
+          memcmp (res_a->key, "lnkE", 4) == 0 ||
+          memcmp (res_a->key, "pths", 4) == 0
+          )
+        block_len_size = 8;
+      else
+        block_len_size = 4;
+      IFDBG(3) g_debug ("PSB: Using block_len_size %d", block_len_size);
+    }
+
+  if (psd_read (input, &res_a->data_len, block_len_size, error) < block_len_size)
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  if (block_len_size == 4)
+    res_a->data_len = GUINT32_FROM_BE (res_a->data_len);
+  else
+    res_a->data_len = GUINT64_FROM_BE (res_a->data_len);
+  res_a->data_start = PSD_TELL (input);
 
   IFDBG(2) g_debug ("Sig: %.4s, key: %.4s, start: %" G_GOFFSET_FORMAT ", len: %" G_GOFFSET_FORMAT,
                      res_a->sig, res_a->key, res_a->data_start, res_a->data_len);
 
-  return 0;
+  return block_len_size + 8;
 }
 
 gint
@@ -232,67 +283,60 @@ load_layer_resource (PSDlayerres   *res_a,
     }
 
   /* Process layer resource blocks */
-  if (memcmp (res_a->sig, "8BIM", 4) != 0)
-    {
-      IFDBG(1) g_debug ("Unknown layer resource signature %.4s", res_a->sig);
-    }
+  if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_SELECTIVE, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_GRAD_MAP, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_PHOTO_FILT, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_EXPOSURE, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0
+      || memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0)
+    load_resource_ladj (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LFIL_SOLID, 4) == 0
+           || memcmp (res_a->key, PSD_LFIL_PATTERN, 4) == 0
+           || memcmp (res_a->key, PSD_LFIL_GRADIENT, 4) == 0)
+    load_resource_lfil (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0
+           || memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
+    load_resource_lfx (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
+           || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
+    load_resource_ltyp (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LPRP_UNICODE, 4) == 0)
+    load_resource_luni (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LPRP_ID, 4) == 0)
+    load_resource_lyid (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LPRP_COLOR, 4) == 0)
+    load_resource_lclr (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0
+           || memcmp (res_a->key, PSD_LOTH_SECTION2, 4) == 0) /* bug #789981 */
+    load_resource_lsct (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
+    load_resource_lrfx (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LPRP_VERSION, 4) == 0)
+    load_resource_lyvr (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LPRP_SOURCE, 4) == 0)
+    load_resource_lnsr (res_a, lyr_a, input, error);
+
   else
-    {
-      if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_SELECTIVE, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_GRAD_MAP, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_PHOTO_FILT, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_EXPOSURE, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0
-          || memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0)
-        load_resource_ladj (res_a, lyr_a, input, error);
-
-      else if (memcmp (res_a->key, PSD_LFIL_SOLID, 4) == 0
-               || memcmp (res_a->key, PSD_LFIL_PATTERN, 4) == 0
-               || memcmp (res_a->key, PSD_LFIL_GRADIENT, 4) == 0)
-        load_resource_lfil (res_a, lyr_a, input, error);
-
-      else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0
-               || memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
-        load_resource_lfx (res_a, lyr_a, input, error);
-
-      else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
-               || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
-        load_resource_ltyp (res_a, lyr_a, input, error);
-
-      else if (memcmp (res_a->key, PSD_LPRP_UNICODE, 4) == 0)
-        load_resource_luni (res_a, lyr_a, input, error);
-
-      else if (memcmp (res_a->key, PSD_LPRP_ID, 4) == 0)
-        load_resource_lyid (res_a, lyr_a, input, error);
-
-      else if (memcmp (res_a->key, PSD_LPRP_COLOR, 4) == 0)
-        load_resource_lclr (res_a, lyr_a, input, error);
-
-      else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0
-               || memcmp (res_a->key, PSD_LOTH_SECTION2, 4) == 0) /* bug #789981 */
-        load_resource_lsct (res_a, lyr_a, input, error);
-
-      else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
-        load_resource_lrfx (res_a, lyr_a, input, error);
-
-      else if (memcmp (res_a->key, PSD_LPRP_VERSION, 4) == 0)
-        load_resource_lyvr (res_a, lyr_a, input, error);
-
-      else if (memcmp (res_a->key, PSD_LPRP_SOURCE, 4) == 0)
-        load_resource_lnsr (res_a, lyr_a, input, error);
-
-      else
-        load_resource_unknown (res_a, lyr_a, input, error);
-    }
+    load_resource_unknown (res_a, lyr_a, input, error);
 
   if (error && *error)
     return -1;
@@ -569,7 +613,9 @@ load_resource_lsct (const PSDlayerres  *res_a,
           psd_set_error (error);
           return -1;
         }
-      if (memcmp (signature, "8BIM", 4) == 0)
+      /* Not sure if 8B64 is possible here but it won't hurt to check. */
+      if (memcmp (signature, "8BIM", 4) == 0 ||
+          memcmp (signature, "8B64", 4) == 0)
         {
           memcpy (lyr_a->blend_mode, blend_mode, 4);
           IFDBG(3) g_debug ("Section divider layer mode sig: %.4s, blend mode: %.4s",
@@ -614,7 +660,9 @@ load_resource_lrfx (const PSDlayerres  *res_a,
           return -1;
         }
 
-      if (memcmp (signature, "8BIM", 4) != 0)
+      /* Not sure if 8B64 is possible here but it won't hurt to check. */
+      if (memcmp (signature, "8BIM", 4) != 0 &&
+          memcmp (signature, "8B64", 4) != 0)
         {
           IFDBG(1) g_debug ("Unknown layer resource signature %.4s", signature);
         }
