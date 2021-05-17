@@ -48,7 +48,8 @@
 #define MAX_RAW_SIZE    0               /* FIXME all images are raw if 0 */
 
 /* PSD spec defines */
-#define MAX_CHANNELS    56              /* Photoshop CS to CS3 support 56 channels */
+/* Although the spec still says 56 there is a test image with more so let's go a little higher to 99 */
+#define MAX_CHANNELS    99              /* Photoshop CS to CS3 support 56 channels */
 
 /* PSD spec constants */
 
