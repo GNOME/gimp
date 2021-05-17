@@ -309,9 +309,6 @@ read_header_block (PSDimage      *img_a,
       return -1;
     }
 
-    /* Photoshop CS (version 8) supports 300000 x 300000, but this
-       is currently larger than GIMP_MAX_IMAGE_SIZE */
-
   if (img_a->rows < 1 || img_a->rows > GIMP_MAX_IMAGE_SIZE)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
