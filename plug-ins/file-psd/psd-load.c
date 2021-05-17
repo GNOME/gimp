@@ -260,12 +260,11 @@ read_header_block (PSDimage      *img_a,
                    GInputStream  *input,
                    GError       **error)
 {
-  guint16  version;
   gchar    sig[4];
   gchar    buf[6];
 
   if (psd_read (input, sig,                4, error) < 4 ||
-      psd_read (input, &version,           2, error) < 2 ||
+      psd_read (input, &img_a->version,    2, error) < 2 ||
       psd_read (input, buf,                6, error) < 6 ||
       psd_read (input, &img_a->channels,   2, error) < 2 ||
       psd_read (input, &img_a->rows,       4, error) < 4 ||
@@ -276,7 +275,7 @@ read_header_block (PSDimage      *img_a,
       psd_set_error (error);
       return -1;
     }
-  version = GUINT16_FROM_BE (version);
+  img_a->version = GUINT16_FROM_BE (img_a->version);
   img_a->channels = GUINT16_FROM_BE (img_a->channels);
   img_a->rows = GUINT32_FROM_BE (img_a->rows);
   img_a->columns = GUINT32_FROM_BE (img_a->columns);
@@ -285,7 +284,7 @@ read_header_block (PSDimage      *img_a,
 
   IFDBG(1) g_debug ("\n\n\tSig: %.4s\n\tVer: %d\n\tChannels: "
                     "%d\n\tSize: %dx%d\n\tBPS: %d\n\tMode: %d\n",
-                    sig, version, img_a->channels,
+                    sig, img_a->version, img_a->channels,
                     img_a->columns, img_a->rows,
                     img_a->bps, img_a->color_mode);
 

@@ -647,6 +647,7 @@ typedef struct
 {
   gboolean              merged_image_only;      /* Whether to load only the merged image data */
 
+  guint16               version;                /* Version 1 (PSD) or 2 (PSB) */
   guint16               channels;               /* Number of channels: 1- 56 */
   gboolean              transparency;           /* Image has merged transparency alpha channel */
   guint32               rows;                   /* Number of rows: 1 - 30000 */
