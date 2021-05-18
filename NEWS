@@ -26,16 +26,26 @@ Plug-ins:
   - PSD now supports bigger-than-4GiB files. File support was ported to
     GIO API with 64-bit offsets, hence allowing loading correctly very
     big files.
+  - PSD now supports loading up to 99 channels (specs say that 56 is the
+    max but some sample PSD files have more channels).
+  - PSB file format is now supported for loading.
 
 Translations:
 
   - New Vietnamese translation for the installer.
 
+Installer:
+
+  - Windows installer scripts updated to all supported languages.
+
 Build:
 
   - New CI jobs for Windows native builds with MSYS2.
-  - Several less critical CI jobs moved to a scheduled run for resource
-    saving.
+  - Several less critical CI jobs (32-bit cross-built Windows,
+    meson/clang build, cppcheck static analysis) moved to a scheduled
+    run for resource saving.
+  - Windows installer now built as a CI job. Some issues are still to be
+    fixed and the installer is not signed.
   - Improved tag handling in the CI for transparent release process.
 
 
