@@ -22,15 +22,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-19 14:36+0000\n"
-"PO-Revision-Date: 2021-04-20 15:39+0200\n"
+"POT-Creation-Date: 2021-05-13 08:00+0000\n"
+"PO-Revision-Date: 2021-05-18 13:08+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:114
@@ -45,7 +45,7 @@ msgstr "Ejercitar una cabra en el lenguaje C"
 #: ../plug-ins/common/blinds.c:217 ../plug-ins/common/border-average.c:194
 #: ../plug-ins/common/checkerboard.c:183 ../plug-ins/common/cml-explorer.c:558
 #: ../plug-ins/common/compose.c:556 ../plug-ins/common/contrast-retinex.c:261
-#: ../plug-ins/common/crop-zealous.c:150 ../plug-ins/common/curve-bend.c:668
+#: ../plug-ins/common/crop-zealous.c:150 ../plug-ins/common/curve-bend.c:677
 #: ../plug-ins/common/decompose.c:375 ../plug-ins/common/depth-merge.c:306
 #: ../plug-ins/common/despeckle.c:242 ../plug-ins/common/destripe.c:182
 #: ../plug-ins/common/gradient-map.c:215 ../plug-ins/common/grid.c:282
@@ -83,8 +83,8 @@ msgstr "Ejercitar una cabra (C)"
 #: ../plug-ins/common/cml-explorer.c:2245
 #: ../plug-ins/common/colormap-remap.c:665 ../plug-ins/common/compose.c:1182
 #: ../plug-ins/common/contrast-retinex.c:350
-#: ../plug-ins/common/curve-bend.c:1211 ../plug-ins/common/curve-bend.c:1985
-#: ../plug-ins/common/curve-bend.c:2020 ../plug-ins/common/depth-merge.c:732
+#: ../plug-ins/common/curve-bend.c:1220 ../plug-ins/common/curve-bend.c:1994
+#: ../plug-ins/common/curve-bend.c:2029 ../plug-ins/common/depth-merge.c:732
 #: ../plug-ins/common/destripe.c:483 ../plug-ins/common/file-cel.c:1009
 #: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2371
 #: ../plug-ins/common/file-jp2-load.c:975
@@ -192,7 +192,7 @@ msgstr "Ejercitar una cabra (Python 3)"
 #: ../plug-ins/common/checkerboard.c:495 ../plug-ins/common/cml-explorer.c:1347
 #: ../plug-ins/common/colormap-remap.c:666 ../plug-ins/common/compose.c:1183
 #: ../plug-ins/common/contrast-retinex.c:351
-#: ../plug-ins/common/curve-bend.c:1212 ../plug-ins/common/depth-merge.c:733
+#: ../plug-ins/common/curve-bend.c:1221 ../plug-ins/common/depth-merge.c:733
 #: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-heif.c:2372
 #: ../plug-ins/common/file-pdf-load.c:656 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:550 ../plug-ins/common/film.c:1315
@@ -438,8 +438,8 @@ msgstr "_Vertical"
 #: ../plug-ins/file-bmp/bmp-load.c:740 ../plug-ins/file-exr/file-exr.c:275
 #: ../plug-ins/file-faxg3/faxg3.c:577 ../plug-ins/file-fits/fits.c:564
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
-#: ../plug-ins/file-psd/psd-image-res-load.c:1054
-#: ../plug-ins/file-psd/psd-load.c:2039 ../plug-ins/file-sgi/sgi.c:424
+#: ../plug-ins/file-psd/psd-image-res-load.c:1072
+#: ../plug-ins/file-psd/psd-load.c:2097 ../plug-ins/file-sgi/sgi.c:424
 #: ../plug-ins/file-tiff/file-tiff-load.c:1272
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
@@ -777,8 +777,8 @@ msgstr "Semilla aleatoria"
 
 #. The Load button
 #: ../plug-ins/common/cml-explorer.c:1423
-#: ../plug-ins/common/cml-explorer.c:2246 ../plug-ins/common/curve-bend.c:1471
-#: ../plug-ins/common/curve-bend.c:1986 ../plug-ins/common/file-cel.c:1010
+#: ../plug-ins/common/cml-explorer.c:2246 ../plug-ins/common/curve-bend.c:1480
+#: ../plug-ins/common/curve-bend.c:1995 ../plug-ins/common/file-cel.c:1010
 #: ../plug-ins/common/file-jp2-load.c:976
 #: ../plug-ins/common/file-raw-data.c:1777 ../plug-ins/common/qbist.c:848
 #: ../plug-ins/common/qbist.c:1031 ../plug-ins/common/sphere-designer.c:2288
@@ -796,8 +796,8 @@ msgstr "_Abrir"
 
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1431
-#: ../plug-ins/common/cml-explorer.c:2113 ../plug-ins/common/curve-bend.c:1483
-#: ../plug-ins/common/curve-bend.c:2021 ../plug-ins/common/file-pdf-save.c:1166
+#: ../plug-ins/common/cml-explorer.c:2113 ../plug-ins/common/curve-bend.c:1492
+#: ../plug-ins/common/curve-bend.c:2030 ../plug-ins/common/file-pdf-save.c:1166
 #: ../plug-ins/common/qbist.c:890 ../plug-ins/common/qbist.c:1039
 #: ../plug-ins/common/sphere-designer.c:2288
 #: ../plug-ins/common/sphere-designer.c:2687 ../plug-ins/flame/flame.c:541
@@ -993,7 +993,7 @@ msgstr "Aviso: el origen y del destino son el mismo canal."
 msgid "Save CML Explorer Parameters"
 msgstr "Guardar los parámetros del Examinador CML"
 
-#: ../plug-ins/common/cml-explorer.c:2164 ../plug-ins/common/curve-bend.c:827
+#: ../plug-ins/common/cml-explorer.c:2164 ../plug-ins/common/curve-bend.c:836
 #: ../plug-ins/common/file-dicom.c:1410 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1509
@@ -1003,7 +1003,7 @@ msgstr "Guardar los parámetros del Examinador CML"
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
 #: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
-#: ../plug-ins/file-jpeg/jpeg-save.c:317 ../plug-ins/file-psd/psd-save.c:1762
+#: ../plug-ins/file-jpeg/jpeg-save.c:317 ../plug-ins/file-psd/psd-save.c:1813
 #: ../plug-ins/file-tiff/file-tiff-save.c:1114
 #: ../plug-ins/file-tiff/file-tiff-save.c:1198 ../plug-ins/flame/flame.c:508
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
@@ -1022,7 +1022,7 @@ msgstr "Los parámetros fueron guardados en «%s»"
 msgid "Load CML Explorer Parameters"
 msgstr "Cargar los parámetros del Examinador CML"
 
-#: ../plug-ins/common/cml-explorer.c:2337 ../plug-ins/common/curve-bend.c:880
+#: ../plug-ins/common/cml-explorer.c:2337 ../plug-ins/common/curve-bend.c:889
 #: ../plug-ins/common/file-cel.c:355 ../plug-ins/common/file-cel.c:409
 #: ../plug-ins/common/file-cel.c:649 ../plug-ins/common/file-dicom.c:376
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1412
@@ -1035,13 +1035,15 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: ../plug-ins/common/file-tga.c:448 ../plug-ins/common/file-xbm.c:753
 #: ../plug-ins/common/file-xmc.c:662 ../plug-ins/common/file-xmc.c:906
 #: ../plug-ins/common/file-xwd.c:484 ../plug-ins/common/sphere-designer.c:2088
-#: ../plug-ins/file-bmp/bmp-load.c:229 ../plug-ins/file-dds/ddsread.c:156
+#: ../plug-ins/file-bmp/bmp-load.c:229 ../plug-ins/file-dds/ddsread.c:158
 #: ../plug-ins/file-faxg3/faxg3.c:258 ../plug-ins/file-fits/fits.c:384
 #: ../plug-ins/file-fli/fli-gimp.c:460 ../plug-ins/file-fli/fli-gimp.c:510
 #: ../plug-ins/file-ico/ico-load.c:676 ../plug-ins/file-ico/ico-load.c:758
 #: ../plug-ins/file-jpeg/jpeg-load.c:102 ../plug-ins/file-jpeg/jpeg-load.c:543
-#: ../plug-ins/file-psd/psd-load.c:152 ../plug-ins/file-psd/psd-thumb-load.c:90
-#: ../plug-ins/flame/flame.c:477
+#: ../plug-ins/file-psd/psd-load.c:138 ../plug-ins/file-psd/psd-load.c:143
+#: ../plug-ins/file-psd/psd-save.c:1818
+#: ../plug-ins/file-psd/psd-thumb-load.c:82
+#: ../plug-ins/file-psd/psd-thumb-load.c:87 ../plug-ins/flame/flame.c:477
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1037
 #: ../plug-ins/gfig/gfig.c:476 ../plug-ins/help/gimphelplocale.c:222
@@ -1124,7 +1126,7 @@ msgstr "Reordenar el mapa de colores"
 
 # //R ¿Esto existe?
 #. The Reset button
-#: ../plug-ins/common/colormap-remap.c:664 ../plug-ins/common/curve-bend.c:1454
+#: ../plug-ins/common/colormap-remap.c:664 ../plug-ins/common/curve-bend.c:1463
 #: ../plug-ins/common/sample-colorize.c:1412
 #: ../plug-ins/common/sphere-designer.c:2629
 #: ../plug-ins/common/tile-small.c:524
@@ -1456,33 +1458,33 @@ msgstr "Doblar según _curva…"
 msgid "Bend the image using two control curves"
 msgstr "Doblar la imagen usando dos curvas de control"
 
-#: ../plug-ins/common/curve-bend.c:687
+#: ../plug-ins/common/curve-bend.c:696
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "Sólo puede funcionar en capas (pero fue llamada en un canal o una máscara)."
 
-#: ../plug-ins/common/curve-bend.c:701
+#: ../plug-ins/common/curve-bend.c:710
 msgid "Cannot operate on layers with masks."
 msgstr "No funciona con capas con máscaras."
 
-#: ../plug-ins/common/curve-bend.c:716
+#: ../plug-ins/common/curve-bend.c:725
 msgid "Cannot operate on empty selections."
 msgstr "No puede operar sobre selecciones vacías."
 
-#: ../plug-ins/common/curve-bend.c:890
+#: ../plug-ins/common/curve-bend.c:899
 #, c-format
 msgid "Error while reading '%s': %s"
 msgstr "Ocurrió un error al leer «%s»: %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve-bend.c:1207 ../plug-ins/common/curve-bend.c:2949
+#: ../plug-ins/common/curve-bend.c:1216 ../plug-ins/common/curve-bend.c:2958
 msgid "Curve Bend"
 msgstr "Doblar según curva"
 
 #. Preview area, top of column
 #. preview
-#: ../plug-ins/common/curve-bend.c:1244
+#: ../plug-ins/common/curve-bend.c:1253
 #: ../plug-ins/gimpressionist/orientmap.c:589
 #: ../plug-ins/gimpressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:180
@@ -1490,117 +1492,117 @@ msgid "Preview"
 msgstr "Vista previa"
 
 #. The preview button
-#: ../plug-ins/common/curve-bend.c:1271
+#: ../plug-ins/common/curve-bend.c:1280
 msgid "_Preview Once"
 msgstr "_Previsualizar una vez"
 
 #. The preview toggle
-#: ../plug-ins/common/curve-bend.c:1280
+#: ../plug-ins/common/curve-bend.c:1289
 msgid "Automatic pre_view"
 msgstr "_Vista previa automática"
 
 #. Options area, bottom of column
-#: ../plug-ins/common/curve-bend.c:1290 ../plug-ins/gfig/gfig-dialog.c:1250
+#: ../plug-ins/common/curve-bend.c:1299 ../plug-ins/gfig/gfig-dialog.c:1250
 msgid "Options"
 msgstr "Opciones"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve-bend.c:1304
+#: ../plug-ins/common/curve-bend.c:1313
 msgid "Rotat_e:"
 msgstr "R_otar:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve-bend.c:1323
+#: ../plug-ins/common/curve-bend.c:1332
 msgid "Smoo_thing"
 msgstr "Suavizad_o"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1333 ../plug-ins/common/qbist.c:1008
+#: ../plug-ins/common/curve-bend.c:1342 ../plug-ins/common/qbist.c:1008
 msgid "_Antialiasing"
 msgstr "_Antialias"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve-bend.c:1343
+#: ../plug-ins/common/curve-bend.c:1352
 msgid "Work on cop_y"
 msgstr "Trabajar con una cop_ia"
 
 #. The curves graph
-#: ../plug-ins/common/curve-bend.c:1353
+#: ../plug-ins/common/curve-bend.c:1362
 msgid "Modify Curves"
 msgstr "Modificar las curvas"
 
-#: ../plug-ins/common/curve-bend.c:1382
+#: ../plug-ins/common/curve-bend.c:1391
 msgid "Curve for Border"
 msgstr "Curva para el borde"
 
-#: ../plug-ins/common/curve-bend.c:1386
+#: ../plug-ins/common/curve-bend.c:1395
 msgctxt "curve-border"
 msgid "_Upper"
 msgstr "S_uperior"
 
-#: ../plug-ins/common/curve-bend.c:1387
+#: ../plug-ins/common/curve-bend.c:1396
 msgctxt "curve-border"
 msgid "_Lower"
 msgstr "I_nferior"
 
-#: ../plug-ins/common/curve-bend.c:1397
+#: ../plug-ins/common/curve-bend.c:1406
 msgid "Curve Type"
 msgstr "Tipo de curva"
 
-#: ../plug-ins/common/curve-bend.c:1401
+#: ../plug-ins/common/curve-bend.c:1410
 msgid "Smoot_h"
 msgstr "Sua_ve"
 
-#: ../plug-ins/common/curve-bend.c:1402
+#: ../plug-ins/common/curve-bend.c:1411
 msgid "_Free"
 msgstr "_Libre"
 
 #. The Copy button
-#: ../plug-ins/common/curve-bend.c:1417
+#: ../plug-ins/common/curve-bend.c:1426
 #: ../plug-ins/gradient-flare/gradient-flare.c:3082
 #: ../plug-ins/imagemap/imap_menu.c:168
 msgid "_Copy"
 msgstr "_Copiar"
 
-#: ../plug-ins/common/curve-bend.c:1422
+#: ../plug-ins/common/curve-bend.c:1431
 msgid "Copy the active curve to the other border"
 msgstr "Copiar la curva activa al otro borde"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve-bend.c:1429
+#: ../plug-ins/common/curve-bend.c:1438
 msgid "_Mirror"
 msgstr "_Reflejar"
 
-#: ../plug-ins/common/curve-bend.c:1434
+#: ../plug-ins/common/curve-bend.c:1443
 msgid "Mirror the active curve to the other border"
 msgstr "Reflejar la curva activa al otro borde"
 
 #. The Swap button
-#: ../plug-ins/common/curve-bend.c:1442
+#: ../plug-ins/common/curve-bend.c:1451
 msgid "S_wap"
 msgstr "I_ntercambiar"
 
-#: ../plug-ins/common/curve-bend.c:1447
+#: ../plug-ins/common/curve-bend.c:1456
 msgid "Swap the two curves"
 msgstr "Intercambiar las dos curvas"
 
-#: ../plug-ins/common/curve-bend.c:1459
+#: ../plug-ins/common/curve-bend.c:1468
 msgid "Reset the active curve"
 msgstr "Reiniciar la curva activa"
 
-#: ../plug-ins/common/curve-bend.c:1476
+#: ../plug-ins/common/curve-bend.c:1485
 msgid "Load the curves from a file"
 msgstr "Cargar las curvas desde un archivo"
 
-#: ../plug-ins/common/curve-bend.c:1488
+#: ../plug-ins/common/curve-bend.c:1497
 msgid "Save the curves to a file"
 msgstr "Guardar las curvas en un archivo"
 
-#: ../plug-ins/common/curve-bend.c:1981
+#: ../plug-ins/common/curve-bend.c:1990
 msgid "Load Curve Points from File"
 msgstr "Cargar puntos de curva desde un archivo"
 
-#: ../plug-ins/common/curve-bend.c:2016
+#: ../plug-ins/common/curve-bend.c:2025
 msgid "Save Curve Points to File"
 msgstr "Guardar puntos de curva en un archivo"
 
@@ -1977,7 +1979,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: ../plug-ins/file-bmp/bmp-load.c:219 ../plug-ins/file-exr/file-exr.c:188
 #: ../plug-ins/file-faxg3/faxg3.c:240 ../plug-ins/file-fli/fli-gimp.c:500
 #: ../plug-ins/file-ico/ico-load.c:666 ../plug-ins/file-jpeg/jpeg-load.c:91
-#: ../plug-ins/file-psd/psd-load.c:141
+#: ../plug-ins/file-psd/psd-load.c:151
 #: ../plug-ins/file-raw/file-darktable.c:419
 #: ../plug-ins/file-raw/file-rawtherapee.c:345 ../plug-ins/file-sgi/sgi.c:330
 #: ../plug-ins/file-tiff/file-tiff-load.c:246
@@ -2059,7 +2061,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: ../plug-ins/common/file-xpm.c:710 ../plug-ins/common/file-xwd.c:678
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
 #: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
-#: ../plug-ins/file-jpeg/jpeg-save.c:270 ../plug-ins/file-psd/psd-save.c:1725
+#: ../plug-ins/file-jpeg/jpeg-save.c:270 ../plug-ins/file-psd/psd-save.c:1775
 #: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:1104
 #, c-format
 msgid "Exporting '%s'"
@@ -3004,13 +3006,13 @@ msgid "'%s' is not a PCX file"
 msgstr "«%s» no es un archivo PCX"
 
 #: ../plug-ins/common/file-pcx.c:448 ../plug-ins/file-bmp/bmp-load.c:729
-#: ../plug-ins/file-psd/psd-load.c:324
+#: ../plug-ins/file-psd/psd-load.c:327
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Anchura de imagen no soportada o no válida: %d"
 
 #: ../plug-ins/common/file-pcx.c:454 ../plug-ins/file-bmp/bmp-load.c:735
-#: ../plug-ins/file-psd/psd-load.c:316
+#: ../plug-ins/file-psd/psd-load.c:319
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Altura de imagen no soportada o no válida: %d"
@@ -6451,55 +6453,55 @@ msgstr "Decodificar YCoCg (escalado)"
 msgid "Decode Alpha exponent"
 msgstr "Decodificar exponente Alfa"
 
-#: ../plug-ins/file-dds/ddsread.c:305
+#: ../plug-ins/file-dds/ddsread.c:328
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "No se puede reservar una imagen nueva."
 
-#: ../plug-ins/file-dds/ddsread.c:318
+#: ../plug-ins/file-dds/ddsread.c:341
 #, c-format
 msgid "Error reading palette."
 msgstr "Error al leer la paleta."
 
-#: ../plug-ins/file-dds/ddsread.c:614
+#: ../plug-ins/file-dds/ddsread.c:637
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Formato de número mágico DDS no válido."
 
-#: ../plug-ins/file-dds/ddsread.c:693
+#: ../plug-ins/file-dds/ddsread.c:716
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Valor bpp para datos de RGB no válido: %d"
 
-#: ../plug-ins/file-dds/ddsread.c:704
+#: ../plug-ins/file-dds/ddsread.c:727
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Valor bpp para datos de luminosidad no válido: %d"
 
-#: ../plug-ins/file-dds/ddsread.c:754
+#: ../plug-ins/file-dds/ddsread.c:777
 #, c-format
 msgid "Invalid pixel format."
 msgstr "Formato de píxel no válido."
 
-#: ../plug-ins/file-dds/ddsread.c:923
+#: ../plug-ins/file-dds/ddsread.c:946
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Formato DXGI (%d) no soportado"
 
-#: ../plug-ins/file-dds/ddsread.c:1069 ../plug-ins/file-dds/ddsread.c:1091
+#: ../plug-ins/file-dds/ddsread.c:1092 ../plug-ins/file-dds/ddsread.c:1131
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "EOF no esperado.\n"
 
-#: ../plug-ins/file-dds/ddsread.c:1382
+#: ../plug-ins/file-dds/ddsread.c:1426
 msgid "Open DDS"
 msgstr "Abrir DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1391
+#: ../plug-ins/file-dds/ddsread.c:1435
 msgid "_Load mipmaps"
 msgstr "_Cargar mipmaps"
 
-#: ../plug-ins/file-dds/ddsread.c:1395
+#: ../plug-ins/file-dds/ddsread.c:1439
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "Decodificar _automáticamente imágenes YCoCg/AExp al detectarlas"
 
@@ -6751,8 +6753,9 @@ msgstr "El icono #%d tiene altura o anchura cero"
 msgid "Icon #%i"
 msgstr "Icono #%i"
 
+#. ----- Open PSD file -----
 #: ../plug-ins/file-ico/ico-load.c:748 ../plug-ins/file-jpeg/jpeg-load.c:529
-#: ../plug-ins/file-psd/psd-thumb-load.c:80
+#: ../plug-ins/file-psd/psd-thumb-load.c:72
 #: ../plug-ins/file-raw/file-darktable.c:525
 #: ../plug-ins/file-raw/file-rawtherapee.c:465
 #, c-format
@@ -6814,152 +6817,152 @@ msgstr "Entero"
 msgid "Floating-Point"
 msgstr "Coma flotante"
 
-#: ../plug-ins/file-jpeg/jpeg.c:130 ../plug-ins/file-jpeg/jpeg.c:177
+#: ../plug-ins/file-jpeg/jpeg.c:131 ../plug-ins/file-jpeg/jpeg.c:178
 msgid "JPEG image"
 msgstr "Imagen JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:190 ../plug-ins/file-tiff/file-tiff-save.c:1329
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1329
 msgid "JPEG"
 msgstr "JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:224
+#: ../plug-ins/file-jpeg/jpeg.c:225
 msgid "Su_bsampling"
 msgstr "Su_bmuestreo"
 
-#: ../plug-ins/file-jpeg/jpeg.c:242
+#: ../plug-ins/file-jpeg/jpeg.c:243
 msgid "Inter_val (MCU rows):"
 msgstr "Inter_valo (filas de MCU):"
 
-#: ../plug-ins/file-jpeg/jpeg.c:249
+#: ../plug-ins/file-jpeg/jpeg.c:250
 msgid "_DCT method"
 msgstr "Método _DCT"
 
-#: ../plug-ins/file-jpeg/jpeg.c:287
+#: ../plug-ins/file-jpeg/jpeg.c:288
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "El software antiguo puede tener problemas para abrir imágenes codificadas "
 "aritméticamente"
 
-#: ../plug-ins/file-jpeg/jpeg.c:292
+#: ../plug-ins/file-jpeg/jpeg.c:293
 msgid "Use restart mar_kers"
 msgstr "Usar mar_cadores de reinicio"
 
-#: ../plug-ins/file-jpeg/jpeg.c:462
+#: ../plug-ins/file-jpeg/jpeg.c:463
 msgid "Export Preview"
 msgstr "Vista previa de la exportación"
 
-#: ../plug-ins/file-jpeg/jpeg.c:494
+#: ../plug-ins/file-jpeg/jpeg.c:496
 #, c-format
 msgid "JPEG format does not support multiple layers."
 msgstr "El formato JPEG no soporta múltiples capas."
 
-#: ../plug-ins/file-psd/psd-load.c:237
+#: ../plug-ins/file-psd/psd-load.c:241
 #: ../plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Ocurrió un error al cargar el archivo PSD: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:292
+#: ../plug-ins/file-psd/psd-load.c:295
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Este archivo no es un documento de Photoshop válido"
 
-#: ../plug-ins/file-psd/psd-load.c:299
+#: ../plug-ins/file-psd/psd-load.c:302
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Versión del formato de archivo no soportada: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:306
+#: ../plug-ins/file-psd/psd-load.c:309
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Demasiados canales en el archivo: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:333
+#: ../plug-ins/file-psd/psd-load.c:336
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Tamaño de imagen no soportado o no válido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:347 ../plug-ins/file-psd/psd-load.c:357
+#: ../plug-ins/file-psd/psd-load.c:350 ../plug-ins/file-psd/psd-load.c:360
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Modo de color no soportado: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:384
+#: ../plug-ins/file-psd/psd-load.c:387
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Profundidad de bits no soportada: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:418 ../plug-ins/file-psd/psd-load.c:428
-#: ../plug-ins/file-psd/psd-load.c:639 ../plug-ins/file-psd/psd-load.c:917
+#: ../plug-ins/file-psd/psd-load.c:421 ../plug-ins/file-psd/psd-load.c:431
+#: ../plug-ins/file-psd/psd-load.c:653 ../plug-ins/file-psd/psd-load.c:932
 #, c-format
 msgid "The file is corrupt!"
 msgstr "El archivo está corrupto."
 
-#: ../plug-ins/file-psd/psd-load.c:567
+#: ../plug-ins/file-psd/psd-load.c:581
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Demasiados canales en la capa: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:575
+#: ../plug-ins/file-psd/psd-load.c:589
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Altura de la capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:583
+#: ../plug-ins/file-psd/psd-load.c:597
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Anchura de la capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:592
+#: ../plug-ins/file-psd/psd-load.c:606
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Tamaño de la capa no soportado o no válido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:677
+#: ../plug-ins/file-psd/psd-load.c:691
 #, c-format
-msgid "Unsupported or invalid mask info size: %d"
-msgstr "Tamaño de info. de máscara no soportado o no válido: %d"
+msgid "Unsupported or invalid mask info size."
+msgstr "Tamaño de info. de máscara no soportado o no válido."
 
-#: ../plug-ins/file-psd/psd-load.c:828
+#: ../plug-ins/file-psd/psd-load.c:843
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Altura de la máscara de capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:836
+#: ../plug-ins/file-psd/psd-load.c:851
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Anchura de la máscara de capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:845
+#: ../plug-ins/file-psd/psd-load.c:860
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Tamaño de la máscara de capa no soportado o no válido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1485 ../plug-ins/file-psd/psd-load.c:2013
+#: ../plug-ins/file-psd/psd-load.c:1544 ../plug-ins/file-psd/psd-load.c:2071
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modo de compresión no soportado: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2144
+#: ../plug-ins/file-psd/psd-load.c:2202
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2322
+#: ../plug-ins/file-psd/psd-load.c:2380
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Tamaño del canal no soportado o no válido"
 
-#: ../plug-ins/file-psd/psd-load.c:2388
+#: ../plug-ins/file-psd/psd-load.c:2446
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Error al descomprimir los datos"
 
-#: ../plug-ins/file-psd/psd-save.c:463
+#: ../plug-ins/file-psd/psd-save.c:481
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Error: no se puede convertir el tipo de imagen básico de GIMP al modo PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1718
+#: ../plug-ins/file-psd/psd-save.c:1768
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -6968,7 +6971,7 @@ msgstr ""
 "Imposible exportar «%s». El formato de archivo PSD no soporta imágenes que "
 "tengan más de 30.000 píxeles de anchura o altura."
 
-#: ../plug-ins/file-psd/psd-save.c:1743
+#: ../plug-ins/file-psd/psd-save.c:1793
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -6977,7 +6980,15 @@ msgstr ""
 "Imposible exportar «%s».  El formato de archivo PSD no soporta imágenes con "
 "capas que tengan más de 30.000 píxeles de anchura o altura."
 
-#: ../plug-ins/file-psd/psd-util.c:179
+#: ../plug-ins/file-psd/psd-util.c:176
+#, c-format
+msgid "Error reading data. Most likely unexpected end of file."
+msgstr ""
+"Error al leer los datos. Lo más probable es que se trate de un final "
+"inesperado del archivo."
+
+#: ../plug-ins/file-psd/psd-util.c:199
+#, c-format
 msgid "Unexpected end of file"
 msgstr "Final prematuro del archivo"
 
