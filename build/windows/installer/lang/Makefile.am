@@ -62,3 +62,9 @@ clean-local:
 		echo "  RM       $$isl";		\
 		rm -f "$$isl";				\
 	done
+
+TESTS_ENVIRONMENT = \
+	chmod +x test-installer-langs.sh; \
+	GIMP_TESTING_ABS_TOP_SRCDIR=@abs_top_srcdir@
+
+TESTS = test-installer-langs.sh
