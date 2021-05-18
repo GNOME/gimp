@@ -1074,30 +1074,90 @@ read_layer_block (PSDimage      *img_a,
               else
                 {
                   /* read_global_layer_mask_info (img_a, f, error); */
-                  if (! psd_seek (input, block_len, G_SEEK_CUR, error))
-                    {
-                      psd_set_error (error);
-                      return NULL;
-                    }
+                  /* For now skipping ... */
+                  if (block_len > 0)
+                    if (! psd_seek (input, block_len, G_SEEK_CUR, error))
+                      {
+                        psd_set_error (error);
+                        return NULL;
+                      }
 
-                  total_len -= block_len;
+                  total_len -= block_len + 4;
                 }
+            }
+          else
+            {
+              psd_set_error (error);
+              return NULL;
             }
         }
 
       /* Additional Layer Information */
-      if (total_len > 12)
+      g_debug ("Reading layer resources...");
+      while (total_len >= 12)
         {
-          gchar signature_key[8];
+          gsize        adjusted_len;
+          gint         header_size;
+          PSDlayerres  res_a;
 
-          if (psd_read (input, &signature_key, 4 * 2, error) == 4 * 2 &&
-              (memcmp (signature_key, "8BIMLr16", 8) == 0 ||
-               memcmp (signature_key, "8BIMLr32", 8) == 0) &&
-              psd_read (input, &block_len, 4, error) == 4 && block_len)
-            lyr_a = read_layer_info (img_a, input, error);
+          IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", remaining len: %" G_GSIZE_FORMAT,
+                            PSD_TELL(input), total_len);
 
-          if (*error)
+          header_size = get_layer_resource_header (&res_a, img_a->version, input, error);
+          if (header_size < 0)
             {
+              psd_set_error (error);
+              return NULL;
+            }
+
+          total_len -= header_size;
+
+          if (res_a.data_len > total_len)
+            {
+              /* Not fatal just skip remainder of this block. */
+              g_debug ("Invalid resource block length: %" G_GSIZE_FORMAT
+                       " is larger than maximum %" G_GSIZE_FORMAT,
+                       res_a.data_len, total_len);
+              break;
+            }
+
+          if (res_a.data_len > 0)
+            {
+            if (memcmp (res_a.key, "Lr16", 4) == 0 ||
+                memcmp (res_a.key, "Lr32", 4) == 0)
+              {
+                lyr_a = read_layer_info (img_a, input, error);
+                if (lyr_a == NULL)
+                  {
+                    img_a->num_layers = 0;
+                  }
+                if (error && *error)
+                  return NULL;
+              }
+            else
+              {
+                /* FIXME Loading layer resources here to a specific layer is probably
+                 * not right. We need to figure out what to do instead.
+                 * Most likely these resources are not connected to a layer so
+                 * lyr_a being NULL should not matter. e.g. PATT (pattern)
+                 * e.g. 0layers.psb has resources when lyr_a == NULL
+                 */
+                if (load_layer_resource (&res_a, NULL, input, error) < 0)
+                  {
+                    return NULL;
+                  }
+              }
+            }
+
+          /* Seems the length here needs to be a multiple of 4? */
+          adjusted_len = (res_a.data_len + 3) / 4 * 4;
+          total_len -= adjusted_len;
+
+          /* Seek to correct offset */
+          if (! psd_seek (input, res_a.data_start + adjusted_len, G_SEEK_SET, error))
+            {
+              g_debug ("Failed to seek to start of next layer resource at offset %" G_GOFFSET_FORMAT,
+                       res_a.data_start + adjusted_len);
               psd_set_error (error);
               return NULL;
             }
