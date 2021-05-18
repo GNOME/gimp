@@ -186,8 +186,22 @@ load_image (GFile        *file,
   IFDBG(2) g_debug ("Read layer & mask block at offset %" G_GOFFSET_FORMAT,
                     PSD_TELL(input));
   lyr_a = read_layer_block (&img_a, input, &error);
-  if (! img_a.merged_image_only && img_a.num_layers != 0 && lyr_a == NULL)
-    goto load_error;
+  /* No layer or layer info is apparently valid so only check for presence of error. */
+  if (error)
+    {
+      goto load_error;
+    }
+  else if (lyr_a == NULL)
+    {
+      if (img_a.num_layers > 0)
+        {
+          g_warning ("No error message but loading layer failed. This should not happen!");
+          goto load_error;
+        }
+      else
+        /* Only a merged image present, no layers. */
+        img_a.merged_image_only = TRUE;
+    }
   gimp_progress_update (0.4);
 
   /* ----- Read the PSD file Merged Image Data block ----- */
