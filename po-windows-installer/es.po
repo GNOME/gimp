@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-10 09:28+0000\n"
-"PO-Revision-Date: 2020-11-10 13:31+0100\n"
+"POT-Creation-Date: 2021-05-13 07:47+0000\n"
+"PO-Revision-Date: 2021-05-18 13:15+0200\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 3.36.0\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -64,7 +64,7 @@ msgstr "&Continuar"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:8
 msgid "Exit"
-msgstr "&Salir"
+msgstr "Salir"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:9
 msgid ""
@@ -74,7 +74,7 @@ msgstr ""
 
 #: ../build/windows/installer/lang/setup.isl.in.h:10
 msgid "Display settings problem"
-msgstr "Problema con la configuración de vídeo de su pantalla"
+msgstr "Problema con la configuración de su pantalla"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:11
 msgid ""
@@ -174,7 +174,7 @@ msgstr "Traducciones"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:31
 msgid "Python scripting"
-msgstr "Python scripting"
+msgstr "Secuencias de Python"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:32
 msgid "Allows you to use GIMP plugins written in Python scripting language."
@@ -184,7 +184,7 @@ msgstr ""
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "Lua scripting"
-msgstr "Lua scripting"
+msgstr "Secuencias de Lua"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:34
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
@@ -218,8 +218,8 @@ msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
 msgstr ""
-"Incluye archivos necesarios para usar complementos de 32-bit.%nRequerido "
-"para el soporte de Python."
+"Incluir archivos necesarios para usar complementos de 32-bit.%nRequerido "
+"para soportar Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:42
 msgid "Additional icons:"
@@ -351,10 +351,10 @@ msgid ""
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"La versión anterior de GIMP se eliminó correctamente pero Windows necesita "
-"reiniciar antes de que el instalador pueda continuar.%n%nDespués de "
-"reiniciar su equipo, el instalador continuará la próxima vez que inicie "
-"sesión como administrador."
+"La versión anterior de GIMP se eliminó correctamente, pero es necesario "
+"reiniciar Windows antes de que el instalador pueda continuar.%n%nDespués de "
+"reiniciar su equipo, el instalador continuará la próxima vez que un "
+"administrador inicie sesión."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:72
 #, no-c-format
