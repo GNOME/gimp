@@ -59,3 +59,10 @@ foreach language : languages
     build_by_default: true,
   )
 endforeach
+
+test('windows-installer-langs',
+  find_program('test-installer-langs.sh'),
+  env: [
+    'GIMP_TESTING_ABS_TOP_SRCDIR=' + meson.source_root(),
+  ],
+  suite: 'build')
