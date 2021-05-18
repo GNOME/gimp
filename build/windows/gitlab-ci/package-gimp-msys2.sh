@@ -72,6 +72,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-pango \
     mingw-w64-$MSYS2_ARCH-poppler \
     mingw-w64-$MSYS2_ARCH-poppler-data \
+    mingw-w64-$MSYS2_ARCH-python \
     mingw-w64-$MSYS2_ARCH-python3-gobject \
     mingw-w64-$MSYS2_ARCH-shared-mime-info \
     mingw-w64-$MSYS2_ARCH-suitesparse \
@@ -115,6 +116,8 @@ cp -fr ${GIMP_PREFIX}/lib/girepository-1.0/* ${GIMP_DISTRIB}/lib/girepository-1.
 cp -fr ${MSYS_PREFIX}/lib/gio ${GIMP_DISTRIB}/lib/
 cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
 cp -fr ${MSYS_PREFIX}/lib/gtk-3.0 ${GIMP_DISTRIB}/lib/
+
+cp -fr ${MSYS_PREFIX}/lib/python3.8 ${GIMP_DISTRIB}/lib/
 
 cp -fr ${MSYS_PREFIX}/share/ghostscript ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/glib-2.0 ${GIMP_DISTRIB}/share/
@@ -166,6 +169,12 @@ python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/bzip2.exe ${MSYS
 cp -fr ${MSYS_PREFIX}/bin/pythonw.exe ${GIMP_DISTRIB}/bin/
 python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/pythonw.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
 python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/pythonw.exe ${MSYS_PREFIX}/ ${GIMP_DISTRIB}
+cp -fr ${MSYS_PREFIX}/bin/python3w.exe ${GIMP_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3w.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3w.exe ${MSYS_PREFIX}/ ${GIMP_DISTRIB}
+cp -fr ${MSYS_PREFIX}/bin/python3.exe ${GIMP_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3.exe ${MSYS_PREFIX}/ ${GIMP_DISTRIB}
 
 cp -fr ${MSYS_PREFIX}/bin/luajit.exe ${GIMP_DISTRIB}/bin/
 python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/luajit.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
@@ -219,6 +228,17 @@ for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/modules/*.dll; do
   python3 build/windows/gitlab-ci/dll_link.py $dll ${MSYS_PREFIX}/ ${GIMP_DISTRIB};
 done
 for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/plug-ins/*/*.exe; do
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${MSYS_PREFIX}/ ${GIMP_DISTRIB};
+done
+
+# Libraries for GObject Introspection.
+
+cp -fr ${MSYS_PREFIX}/bin/libgirepository-1.0-1.dll ${GIMP_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/libgirepository-1.0-1.dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/libgirepository-1.0-1.dll ${MSYS_PREFIX}/ ${GIMP_DISTRIB}
+
+for dll in ${GIMP_DISTRIB}/lib/python3.8/site-packages/*/*.dll; do
   python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
   python3 build/windows/gitlab-ci/dll_link.py $dll ${MSYS_PREFIX}/ ${GIMP_DISTRIB};
 done
