@@ -16,22 +16,6 @@ else
     export GIMP_DISTRIB=`realpath ./gimp-w64`
 fi
 
-# Why do we even have to remove these manually? The whole thing is
-# messed up, but it looks like the Gitlab runner fails to clean properly
-# (it spews a bunch of "failed to remove" warnings at runner start, then
-# ends with a "error: failed to commit transaction (conflicting files)"
-# listing the various files it failed to remove).
-# Might be tied to: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1839
-rm -f /c/msys64/mingw64/bin/libpcre-1.dll
-rm -f /c/msys64/mingw64/bin/libgio-2.0-0.dll
-rm -f /c/msys64/mingw64/bin/libglib-2.0-0.dll
-rm -f /c/msys64/mingw64/bin/libgmodule-2.0-0.dll
-rm -f /c/msys64/mingw64/bin/libgobject-2.0-0.dll
-rm -f /c/msys64/mingw64/bin/libpng16-16.dll
-rm -f /c/msys64/mingw64/bin/gdk-pixbuf-pixdata.exe
-rm -f /c/msys64/mingw64/bin/libgdk_pixbuf-2.0-0.dll
-rm -f /c/msys64/mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-png.dll
-
 # Update everything
 pacman --noconfirm -Suy
 
@@ -48,6 +32,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-drmingw \
     mingw-w64-$MSYS2_ARCH-gexiv2 \
     mingw-w64-$MSYS2_ARCH-ghostscript \
+    mingw-w64-$MSYS2_ARCH-glib2 \
     mingw-w64-$MSYS2_ARCH-glib-networking \
     mingw-w64-$MSYS2_ARCH-gobject-introspection \
     mingw-w64-$MSYS2_ARCH-gobject-introspection-runtime \
@@ -65,6 +50,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-libspiro \
     mingw-w64-$MSYS2_ARCH-libwebp \
     mingw-w64-$MSYS2_ARCH-libwmf \
+    mingw-w64-$MSYS2_ARCH-lua51-lgi \
     mingw-w64-$MSYS2_ARCH-luajit \
     mingw-w64-$MSYS2_ARCH-maxflow \
     mingw-w64-$MSYS2_ARCH-mypaint-brushes \
@@ -118,11 +104,14 @@ cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
 cp -fr ${MSYS_PREFIX}/lib/gtk-3.0 ${GIMP_DISTRIB}/lib/
 
 cp -fr ${MSYS_PREFIX}/lib/python3.8 ${GIMP_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/lua ${GIMP_DISTRIB}/lib/
 
 cp -fr ${MSYS_PREFIX}/share/ghostscript ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/glib-2.0 ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/libthai ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/libwmf ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/lua ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/luajit-2.1.0-beta3 ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/mypaint-data ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/poppler ${GIMP_DISTRIB}/share/
 
