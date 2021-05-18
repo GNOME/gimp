@@ -322,6 +322,8 @@ load_image (GFile   *file,
   guchar       **pixels,      /* Pixel rows */
                 *pptr;        /* Current pixel */
   gushort      **rows;        /* SGI image data */
+  GimpPrecision  precision;
+  const Babl    *bablfmt = NULL;
 
  /*
   * Open the file for reading...
@@ -381,31 +383,82 @@ load_image (GFile   *file,
     case 1 :    /* Grayscale */
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAY_IMAGE;
+      if (sgip->bpp == 1)
+        {
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          bablfmt = babl_format ("Y' u8");
+        }
+      else
+        {
+          precision = GIMP_PRECISION_U16_NON_LINEAR;
+          bablfmt = babl_format ("Y' u16");
+        }
       break;
 
     case 2 :    /* Grayscale + alpha */
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAYA_IMAGE;
+      if (sgip->bpp == 1)
+        {
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          bablfmt = babl_format ("Y'A u8");
+        }
+      else
+        {
+          precision = GIMP_PRECISION_U16_NON_LINEAR;
+          bablfmt = babl_format ("Y'A u16");
+        }
       break;
 
     case 3 :    /* RGB */
       image_type = GIMP_RGB;
       layer_type = GIMP_RGB_IMAGE;
+      if (sgip->bpp == 1)
+        {
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          bablfmt = babl_format ("R'G'B' u8");
+        }
+      else
+        {
+          precision = GIMP_PRECISION_U16_NON_LINEAR;
+          bablfmt = babl_format ("R'G'B' u16");
+        }
       break;
 
     case 4 :    /* RGBA */
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
+      if (sgip->bpp == 1)
+        {
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          bablfmt = babl_format ("R'G'B'A u8");
+        }
+      else
+        {
+          precision = GIMP_PRECISION_U16_NON_LINEAR;
+          bablfmt = babl_format ("R'G'B'A u16");
+        }
       break;
 
     default:
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
       bytes = 4;
+      if (sgip->bpp == 1)
+        {
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          bablfmt = babl_format ("R'G'B'A u8");
+        }
+      else
+        {
+          precision = GIMP_PRECISION_U16_NON_LINEAR;
+          bablfmt = babl_format ("R'G'B'A u16");
+        }
       break;
     }
 
-  image = gimp_image_new (sgip->xsize, sgip->ysize, image_type);
+  image = gimp_image_new_with_precision (sgip->xsize, sgip->ysize,
+                                         image_type, precision);
   if (! image)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -439,10 +492,10 @@ load_image (GFile   *file,
 
   tile_height = gimp_tile_height ();
   pixels      = g_new (guchar *, tile_height);
-  pixels[0]   = g_new (guchar, ((gsize) tile_height) * sgip->xsize * bytes);
+  pixels[0]   = g_new (guchar, ((gsize) tile_height) * sgip->xsize * sgip->bpp * bytes);
 
   for (i = 1; i < tile_height; i ++)
-    pixels[i] = pixels[0] + sgip->xsize * bytes * i;
+    pixels[i] = pixels[0] + sgip->xsize * sgip->bpp * bytes * i;
 
   rows    = g_new (unsigned short *, sgip->zsize);
   rows[0] = g_new (unsigned short, ((gsize) sgip->xsize) * sgip->zsize);
@@ -462,7 +515,7 @@ load_image (GFile   *file,
         {
           gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y - count,
                                                    sgip->xsize, count), 0,
-                           NULL, pixels[0], GEGL_AUTO_ROWSTRIDE);
+                           bablfmt, pixels[0], GEGL_AUTO_ROWSTRIDE);
 
           count = 0;
 
@@ -490,9 +543,11 @@ load_image (GFile   *file,
            * 16-bit (unsigned) pixels...
            */
 
-          for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
-            for (i = 0; i < bytes; i ++, pptr ++)
-              *pptr = rows[i][x] >> 8;
+          guint16 *pixels16;
+
+          for (x = 0, pixels16 = (guint16 *) pixels[count]; x < sgip->xsize; x ++)
+            for (i = 0; i < bytes; i ++, pixels16 ++)
+              *pixels16 = rows[i][x];
         }
     }
 
@@ -502,7 +557,7 @@ load_image (GFile   *file,
 
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y - count,
                                            sgip->xsize, count), 0,
-                   NULL, pixels[0], GEGL_AUTO_ROWSTRIDE);
+                   bablfmt, pixels[0], GEGL_AUTO_ROWSTRIDE);
 
   /*
    * Done with the file...
