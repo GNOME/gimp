@@ -814,7 +814,29 @@ save_image (GFile         *file,
    * file, not a vanilla GIF87a.
    */
   if (nlayers > 1)
-    is_gif89 = TRUE;
+    {
+      is_gif89 = TRUE;
+
+      /* Layers can be with or without alpha channel. Make sure we set
+       * alpha if there is at least one layer with alpha channel. */
+      if (drawable_type == GIMP_GRAY_IMAGE ||
+          drawable_type == GIMP_INDEXED_IMAGE)
+        {
+          for (list = layers, i = nlayers - 1;
+              list && i >= 0;
+              list = g_list_next (list), i--, cur_progress = (nlayers - i) * rows)
+            {
+              GimpImageType dr_type = gimp_drawable_type (drawable);
+
+              if (dr_type == GIMP_GRAYA_IMAGE ||
+                  dr_type == GIMP_INDEXEDA_IMAGE)
+                {
+                  drawable_type = dr_type;
+                  break;
+                }
+            }
+        }
+    }
 
   if (config_save_comment)
     is_gif89 = TRUE;
@@ -850,11 +872,6 @@ save_image (GFile         *file,
         {
           Red[i] = Green[i] = Blue[i] = i;
         }
-
-      if (drawable_type == GIMP_GRAYA_IMAGE)
-        format = babl_format ("Y'A u8");
-      else
-        format = babl_format ("Y' u8");
       break;
 
     default:
@@ -973,6 +990,15 @@ save_image (GFile         *file,
       GimpDrawable *drawable = list->data;
 
       drawable_type = gimp_drawable_type (drawable);
+      if (drawable_type == GIMP_GRAYA_IMAGE)
+        {
+          format = babl_format ("Y'A u8");
+        }
+      else if (drawable_type == GIMP_GRAY_IMAGE)
+        {
+          format = babl_format ("Y' u8");
+        }
+
       buffer = gimp_drawable_get_buffer (drawable);
       gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
       cols = gimp_drawable_get_width (drawable);
