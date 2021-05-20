@@ -233,7 +233,13 @@ gimp-clang-debian:
         clang libomp-dev
     - meson _build
       --prefix="${INSTALL_PREFIX}"
-    - ninja -C _build
+    # This is absolute ugly but is the current trick to handle issue
+    # #6257 which is a race condition in the meson build. When we have a
+    # failure because of this, "git-version.h" will still have been
+    # created, yet after a depending target is being built. So all we
+    # have to do is re-run `ninja`. If the second attempt fails too,
+    # then it's another issue.
+    - ninja -C _build || ninja -C _build
     - ninja -C _build test
 
 ## WINDOWS 64-bit CI (native MSYS2) ##
