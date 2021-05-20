@@ -115,6 +115,14 @@ cp -fr ${MSYS_PREFIX}/share/luajit-2.1.0-beta3 ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/mypaint-data ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/poppler ${GIMP_DISTRIB}/share/
 
+# Move these 2 folders into bin/ so that Lua plug-ins find the lua
+# dependencies. The alternative was to modify LUA_PATH_DEFAULT and
+# LUA_CPATH_DEFAULT macros in lua (which ender used to do, hence
+# rebuilding lua). But it's much simpler to just move these 2 folders as
+# bin/lua/ and bin/lgi/
+cp -fr ${MSYS_PREFIX}/share/lua/5.1/ ${GIMP_DISTRIB}/bin/lua
+cp -fr ${MSYS_PREFIX}/lib/lua/5.1/lgi/ ${GIMP_DISTRIB}/bin/
+
 # XXX Are these themes really needed?
 cp -fr ${MSYS_PREFIX}/share/themes ${GIMP_DISTRIB}/share/
 

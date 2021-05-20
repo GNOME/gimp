@@ -56,4 +56,5 @@ Source: "{#DEPS_DIR}\{#DDIR}\lib\python3.8\*"; DestDir: "{app}\lib\python3.8"; C
 Source: "{#DEPS_DIR}\{#DDIR}\bin\luajit.exe"; DestDir: "{app}\bin"; Components: lua and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\{#DDIR}\bin\lua51.dll"; DestDir: "{app}\bin"; Components: lua and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\{#DDIR}\lib\lua\5.1\*.*"; DestDir: "{app}\lib\lua\5.1"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\lua\*"; DestDir: "{app}\bin\lua"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #endif
