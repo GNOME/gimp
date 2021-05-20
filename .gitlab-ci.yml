@@ -233,13 +233,7 @@ gimp-clang-debian:
         clang libomp-dev
     - meson _build
       --prefix="${INSTALL_PREFIX}"
-    # This is absolute ugly but is the current trick to handle issue
-    # #6257 which is a race condition in the meson build. When we have a
-    # failure because of this, "git-version.h" will still have been
-    # created, yet after a depending target is being built. So all we
-    # have to do is re-run `ninja`. If the second attempt fails too,
-    # then it's another issue.
-    - ninja -C _build || ninja -C _build
+    - ninja -C _build
     - ninja -C _build test
 
 ## WINDOWS 64-bit CI (native MSYS2) ##
@@ -412,8 +406,14 @@ gimp-win64:
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
+    # This is absolute ugly but is the current trick to handle issue
+    # #6257 which is a race condition in the meson build. When we have a
+    # failure because of this, "git-version.h" will still have been
+    # created, yet after a depending target is being built. So all we
+    # have to do is re-run `ninja`. If the second attempt fails too,
+    # then it's another issue.
     - echo 'crossroad meson ..
-              -Dgtk-doc=false && ninja install &&
+              -Dgtk-doc=false && (ninja || ninja) && ninja install &&
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w64 gimp --run="-"
@@ -478,7 +478,7 @@ gimp-win32:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
-              -Dwmf=disabled  -Dmng=disabled -Dgtk-doc=false && ninja install &&
+              -Dwmf=disabled  -Dmng=disabled -Dgtk-doc=false && (ninja || ninja) && ninja install &&
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w32 gimp --run="-"
