@@ -11,7 +11,7 @@ else
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export MSYS2_PREFIX="/c/msys64/mingw64/"
-    export GIMP_OPTIONS=""
+    export GIMP_OPTIONS="--enable-windows-installer"
 fi
 
 export ACLOCAL_FLAGS="-I${MSYS2_PREFIX}/share/aclocal"
@@ -102,7 +102,7 @@ ccache --show-stats
 
 mkdir "_build${ARTIFACTS_SUFFIX}"
 cd "_build${ARTIFACTS_SUFFIX}"
-../autogen.sh --prefix="${GIMP_PREFIX}" --enable-windows-installer \
+../autogen.sh --prefix="${GIMP_PREFIX}" \
               --with-directx-sdk="${MSYS2_PREFIX}" \
               ${GIMP_OPTIONS}
 make -j4
