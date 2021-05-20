@@ -107,6 +107,7 @@ image_new_dialog_new (GimpContext *context)
                      _("_OK"),     GTK_RESPONSE_OK,
 
                      NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
