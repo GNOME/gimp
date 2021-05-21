@@ -279,6 +279,7 @@ gimp-win64-native:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/build-gimp-msys2.sh"
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
     - cd _install-w64
     - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/split-debug-msys2.sh"
   artifacts:
@@ -286,7 +287,7 @@ gimp-win64-native:
     when: always
     expire_in: 1 day
     paths:
-    - _install-w64
+    - gimp-w64
     - build/windows/installer/lang/
   cache:
     paths:
@@ -335,6 +336,7 @@ gimp-win32-native:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/build-gimp-msys2.sh"
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
     - cd _install-w32
     - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/split-debug-msys2.sh"
   artifacts:
@@ -342,7 +344,7 @@ gimp-win32-native:
     when: always
     expire_in: 1 day
     paths:
-    - _install-w32
+    - gimp-w32
   cache:
     paths:
     - _ccache/
@@ -536,8 +538,6 @@ win-installer-nightly:
     - build/windows/installer/_Output
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
-    - C:\msys64\usr\bin\bash -lc "MSYSTEM=MINGW64 bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "MSYSTEM=MINGW32 bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/installer-gimp-msys2.sh"
   needs: ["gimp-win32-native", "gimp-win64-native"]
 
