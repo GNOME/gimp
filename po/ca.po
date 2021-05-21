@@ -1719,7 +1719,6 @@ msgstr ""
 #: ../app/actions/buffers-actions.c:128 ../app/actions/buffers-actions.c:129
 #: ../app/actions/buffers-actions.c:130 ../app/actions/buffers-actions.c:131
 #: ../app/actions/buffers-actions.c:132 ../app/actions/buffers-actions.c:133
-#, fuzzy
 msgid "No selected buffer"
 msgstr "No hi ha cap memòria intermèdia seleccionada"
 
@@ -4561,7 +4560,7 @@ msgstr "_Refés"
 #: ../app/actions/edit-actions.c:81
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone"
-msgstr "Refà l'última operació desfeta"
+msgstr "Refés l'última operació desfeta"
 
 # Quim: strong undo desfà la última operació que no sigui una acció de
 # visibilitat
@@ -4585,7 +4584,7 @@ msgstr "Refeta forta"
 #: ../app/actions/edit-actions.c:94
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone, skipping visibility changes"
-msgstr "Refà l'última operació desfeta, ometent els canvis en la visibilitat"
+msgstr "Refés l'última operació desfeta, ometent els canvis en la visibilitat"
 
 #: ../app/actions/edit-actions.c:99
 msgctxt "edit-action"
@@ -4727,7 +4726,7 @@ msgstr "_Enganxa dins la selecció"
 #: ../app/actions/edit-actions.c:184
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "Enganxa el contingut del porta-retalls damunt de la selecció actual"
+msgstr "Enganxa el contingut del porta-retalls dins de la selecció actual"
 
 #: ../app/actions/edit-actions.c:189
 msgctxt "edit-action"
@@ -5042,7 +5041,7 @@ msgstr "Obr_e com a capes..."
 #: ../app/actions/file-actions.c:84
 msgctxt "file-action"
 msgid "Open an image file as layers"
-msgstr "Afegeix les capes de la imatge del fitxer a la imatge actual"
+msgstr "Obre un fitxer d'imatge com a capes"
 
 #: ../app/actions/file-actions.c:89
 msgctxt "file-action"
@@ -6071,7 +6070,6 @@ msgid "Re-Show Last"
 msgstr "Torna a mostrar el darrer"
 
 #: ../app/actions/filters-actions.c:1173 ../app/actions/filters-actions.c:1175
-#, fuzzy
 msgid "No last used filters"
 msgstr "No hi ha últims filtres utilitzats"
 
@@ -8673,7 +8671,7 @@ msgstr "_Res"
 #: ../app/actions/select-actions.c:57
 msgctxt "select-action"
 msgid "Dismiss the selection"
-msgstr "Desfà la selecció"
+msgstr "Desfés la selecció"
 
 #: ../app/actions/select-actions.c:62
 msgctxt "select-action"
@@ -17491,7 +17489,7 @@ msgid ""
 "use them unless you really know what you are doing or you intend to "
 "contribute patches."
 msgstr ""
-"Aquestes funcionalitats no estan acabades, són errònies i poden trencar el "
+"Aquestes funcionalitats no estan acabades, tenen errades i poden trencar el "
 "GIMP. No es recomana utilitzar-les tret que sapigueu realment el que esteu "
 "fent o intenteu aportar millores."
 
