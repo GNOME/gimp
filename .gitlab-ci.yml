@@ -29,8 +29,9 @@ stages:
   - prepare
   - dependencies
   - gimp
-  - analysis
+  - packaging
   - distribution
+  - analysis
 
 variables:
   GIT_DEPTH: "1"
@@ -279,8 +280,34 @@ gimp-win64-native:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/build-gimp-msys2.sh"
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
+    when: always
+    expire_in: 1 day
+    paths:
+    - _install-w64
+    - build/windows/installer/lang/
+  cache:
+    paths:
+    - _ccache/
+  needs: ["deps-win64-native"]
+
+packaging-win64-native:
+  rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
+  stage: packaging
+  variables:
+    MSYSTEM: "MINGW64"
+    CHERE_INVOKING: "yes"
+  tags:
+    - win32-ps
+  script:
+    - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
-    - cd _install-w64
+    - cd gimp-w64
     - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/split-debug-msys2.sh"
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
@@ -289,10 +316,7 @@ gimp-win64-native:
     paths:
     - gimp-w64
     - build/windows/installer/lang/
-  cache:
-    paths:
-    - _ccache/
-  needs: ["deps-win64-native"]
+  needs: ["gimp-win64-native"]
 
 ## WINDOWS 32-bit CI (native MSYS2) ##
 
@@ -336,8 +360,33 @@ gimp-win32-native:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/build-gimp-msys2.sh"
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
+    when: always
+    expire_in: 1 day
+    paths:
+    - _install-w32
+  cache:
+    paths:
+    - _ccache/
+  needs: ["deps-win32-native"]
+
+packaging-win32-native:
+  rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
+  stage: packaging
+  variables:
+    MSYSTEM: "MINGW32"
+    CHERE_INVOKING: "yes"
+  tags:
+    - win32-ps
+  script:
+    - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/package-gimp-msys2.sh"
-    - cd _install-w32
+    - cd gimp-w32
     - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/split-debug-msys2.sh"
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
@@ -345,10 +394,7 @@ gimp-win32-native:
     expire_in: 1 day
     paths:
     - gimp-w32
-  cache:
-    paths:
-    - _ccache/
-  needs: ["deps-win32-native"]
+  needs: ["gimp-win32-native"]
 
 ## WINDOWS 64-bit CI (cross-build crossroad) ##
 
@@ -528,8 +574,8 @@ win-installer-nightly:
     - win32-ps
   stage: distribution
   dependencies:
-    - gimp-win64-native
-    - gimp-win32-native
+    - packaging-win64-native
+    - packaging-win32-native
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
@@ -539,7 +585,7 @@ win-installer-nightly:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/installer-gimp-msys2.sh"
-  needs: ["gimp-win32-native", "gimp-win64-native"]
+  needs: ["packaging-win32-native", "packaging-win64-native"]
 
 sources:
   rules:
