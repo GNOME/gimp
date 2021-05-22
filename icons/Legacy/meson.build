@@ -16,6 +16,8 @@ legacy_icons_12 = [
   '12/gimp-zoom-follow-window.png',
 ]
 legacy_icons_16 = [
+  '16/dialog-information.png',
+  '16/dialog-warning.png',
   '16/gimp-anchor.png',
   '16/gimp-cap-butt.png',
   '16/gimp-cap-round.png',
@@ -52,8 +54,6 @@ legacy_icons_16 = [
   '16/gimp-display-filter.png',
   '16/gimp-duplicate.png',
   '16/gimp-dynamics.png',
-  '16/gimp-flip-horizontal.png',
-  '16/gimp-flip-vertical.png',
   '16/gimp-floating-selection.png',
   '16/gimp-gegl.png',
   '16/gimp-gradient-bilinear.png',
@@ -73,7 +73,6 @@ legacy_icons_16 = [
   '16/gimp-histogram.png',
   '16/gimp-image.png',
   '16/gimp-images.png',
-  '16/gimp-info.png',
   '16/gimp-input-device.png',
   '16/gimp-invert.png',
   '16/gimp-join-bevel.png',
@@ -122,8 +121,6 @@ legacy_icons_16 = [
   '16/gimp-reshow-filter.png',
   '16/gimp-resize.png',
   '16/gimp-rotate-180.png',
-  '16/gimp-rotate-270.png',
-  '16/gimp-rotate-90.png',
   '16/gimp-sample-point.png',
   '16/gimp-scale.png',
   '16/gimp-selection-add.png',
@@ -201,10 +198,13 @@ legacy_icons_16 = [
   '16/gimp-undo-history.png',
   '16/gimp-user-manual.png',
   '16/gimp-video.png',
-  '16/gimp-warning.png',
   '16/gimp-web.png',
   '16/gimp-wilber.png',
   '16/gtk-edit.png',
+  '16/object-flip-horizontal.png',
+  '16/object-flip-vertical.png',
+  '16/object-rotate-left.png',
+  '16/object-rotate-right.png',
 ]
 legacy_icons_18 = [
   '18/gimp-color-picker-black.png',
@@ -315,6 +315,10 @@ legacy_tools_22 = [
   '22/gimp-tool-zoom.png',
 ]
 legacy_icons_24 = [
+  '24/dialog-information.png',
+  '24/dialog-warning.png',
+  '24/format-text-direction-ltr.png',
+  '24/format-text-direction-rtl.png',
   '24/gimp-center.png',
   '24/gimp-channel-alpha.png',
   '24/gimp-channel-blue.png',
@@ -353,7 +357,6 @@ legacy_icons_24 = [
   '24/gimp-hfill.png',
   '24/gimp-image.png',
   '24/gimp-images.png',
-  '24/gimp-info.png',
   '24/gimp-layer-mask.png',
   '24/gimp-layer.png',
   '24/gimp-layers.png',
@@ -361,8 +364,6 @@ legacy_icons_24 = [
   '24/gimp-print-resolution.png',
   '24/gimp-sample-point.png',
   '24/gimp-template.png',
-  '24/gimp-text-dir-ltr.png',
-  '24/gimp-text-dir-rtl.png',
   '24/gimp-text-layer.png',
   '24/gimp-toilet-paper.png',
   '24/gimp-tool-options.png',
@@ -375,7 +376,6 @@ legacy_icons_24 = [
   '24/gimp-vchain.png',
   '24/gimp-vfill.png',
   '24/gimp-video.png',
-  '24/gimp-warning.png',
   '24/gimp-web.png',
 ]
 legacy_icons_32 = [
@@ -446,13 +446,13 @@ legacy_icons_48 = [
   '48/gimp-wilber.png',
 ]
 legacy_icons_64 = [
-  '64/gimp-error.png',
+  '64/dialog-error.png',
+  '64/dialog-information.png',
+  '64/dialog-question.png',
+  '64/dialog-warning.png',
   '64/gimp-frame.png',
-  '64/gimp-info.png',
-  '64/gimp-question.png',
   '64/gimp-texture.png',
   '64/gimp-user-manual.png',
-  '64/gimp-warning.png',
   '64/gimp-wilber-eek.png',
   '64/gimp-wilber-outline.png',
   '64/gimp-wilber.png',
@@ -509,7 +509,7 @@ foreach icon_info : all_legacy_tools
 endforeach
 
 
-icons_core = [ '64/gimp-question.png', ]
+icons_core = [ '64/dialog-question.png', ]
 icons_imgs = [ '64/gimp-wilber-eek.png', ]
 
 resourcename = 'gimp-core-pixbufs'

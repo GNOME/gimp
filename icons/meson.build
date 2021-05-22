@@ -1644,7 +1644,7 @@ gimpiconsdir = gimpdatadir / 'icons'
 
 themes = [
   'Color',
-  # 'Legacy',
+  'Legacy',
   'Symbolic',
   'hicolor'
 ]
