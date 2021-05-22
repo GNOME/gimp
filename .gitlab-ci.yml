@@ -582,9 +582,10 @@ win-installer-nightly:
     expire_in: 2 days
     paths:
     - build/windows/installer/_Output
+    - installer.log
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
-    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/installer-gimp-msys2.sh"
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/installer-gimp-msys2.sh > installer.log 2>&1"
   needs: ["packaging-win32-native", "packaging-win64-native"]
 
 sources:
