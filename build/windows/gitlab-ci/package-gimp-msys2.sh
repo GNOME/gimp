@@ -104,14 +104,11 @@ cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
 cp -fr ${MSYS_PREFIX}/lib/gtk-3.0 ${GIMP_DISTRIB}/lib/
 
 cp -fr ${MSYS_PREFIX}/lib/python3.8 ${GIMP_DISTRIB}/lib/
-cp -fr ${MSYS_PREFIX}/lib/lua ${GIMP_DISTRIB}/lib/
 
 cp -fr ${MSYS_PREFIX}/share/ghostscript ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/glib-2.0 ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/libthai ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/libwmf ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/lua ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/luajit-2.1.0-beta3 ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/mypaint-data ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/poppler ${GIMP_DISTRIB}/share/
 

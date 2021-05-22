@@ -27,7 +27,7 @@ Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\{#DIR_VER}\plug-ins\file-ps\file-ps.exe"; D
 Source: "{#GIMP_DIR}\{#DIR}\lib\girepository-1.0\*.*"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\lib\girepository-1.0\*.*"; DestDir: "{app}\lib\girepository-1.0"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 
-Source: "{#DEPS_DIR}\{#DDIR}\bin\*.dll"; DestDir: "{app}\bin"; Excludes: "\bin\libgs*.dll"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\*.dll"; DestDir: "{app}\bin"; Excludes: "\bin\libgs*.dll,\bin\lua*.dll"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: gs and deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #ifdef DEBUG_SYMBOLS
 Source: "{#DEPS_DIR}\{#DDIR}\bin\.debug\*.dll.debug"; DestDir: "{app}\bin\.debug"; Components: deps{#PLATFORM} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete skipifsourcedoesntexist
@@ -55,6 +55,6 @@ Source: "{#DEPS_DIR}\{#DDIR}\lib\python3.8\*"; DestDir: "{app}\lib\python3.8"; C
 #ifdef LUA
 Source: "{#DEPS_DIR}\{#DDIR}\bin\luajit.exe"; DestDir: "{app}\bin"; Components: lua and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\{#DDIR}\bin\lua51.dll"; DestDir: "{app}\bin"; Components: lua and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR}\{#DDIR}\lib\lua\5.1\*.*"; DestDir: "{app}\lib\lua\5.1"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\{#DDIR}\bin\lua\*"; DestDir: "{app}\bin\lua"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\lgi\*"; DestDir: "{app}\bin\lgi"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #endif
