@@ -301,11 +301,6 @@ Source: "{#DEPS_DIR32}\share\ghostscript\*"; Excludes: "*\doc\*"; DestDir: "{app
 Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\*.py"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
 
-#ifdef LUA
-Source: "{#DEPS_DIR32}\share\lua\5.1\*.*"; DestDir: "{app}\share\lua\5.1"; Components: lua; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\luajit-2.1.0-beta3\*.*"; DestDir: "{app}\share\luajit-2.1.0-beta3"; Components: lua; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-#endif
-
 ;64bit
 #define PLATFORM 64
 #include "files.isi"
