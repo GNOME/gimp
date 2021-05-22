@@ -102,8 +102,14 @@ ccache --show-stats
 
 mkdir "_build${ARTIFACTS_SUFFIX}"
 cd "_build${ARTIFACTS_SUFFIX}"
+# We disable javascript as we are not able for the time being to add a
+# javascript interpreter with GObject Introspection (GJS/spidermonkey
+# and Seed/Webkit are the 2 contenders so far, but they are not
+# available on MSYS2 and we are told it's very hard to build them).
+# TODO: re-enable javascript plug-ins when we can figure this out.
 ../autogen.sh --prefix="${GIMP_PREFIX}" \
               --with-directx-sdk="${MSYS2_PREFIX}" \
+              --with-javascript=no \
               ${GIMP_OPTIONS}
 make -j4
 make install
