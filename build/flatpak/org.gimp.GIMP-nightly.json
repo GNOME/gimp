@@ -51,7 +51,7 @@
                 }
             ],
             "buildsystem": "meson",
-            "config-opts": [ "-Dintrospection=false", "-Dlibdir=lib" ],
+            "config-opts": [ "-Dintrospection=false" ],
             "sources": [
                 {
                     "type": "archive",
@@ -405,7 +405,7 @@
         {
             "name": "babl",
             "buildsystem": "meson",
-            "config-opts": [ "-Dwith-docs=false", "-Dlibdir=lib" ],
+            "config-opts": [ "-Dwith-docs=false" ],
             "sources": [
                 {
                     "type": "git",
@@ -417,7 +417,7 @@
         {
             "name": "gegl",
             "buildsystem": "meson",
-            "config-opts": [ "-Ddocs=false", "-Dlibdir=lib" ],
+            "config-opts": [ "-Ddocs=false" ],
             "cleanup": [ "/bin" ],
             "sources": [
                 {
