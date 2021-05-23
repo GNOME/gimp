@@ -432,7 +432,7 @@
         {
             "name": "gegl",
             "buildsystem": "meson",
-            "config-opts": [ "-Ddocs=false" ],
+            "config-opts": [ "-Ddocs=false", "-Dworkshop=true" ],
             "cleanup": [ "/bin" ],
             "sources": [
                 {
@@ -442,6 +442,18 @@
                 }
             ],
             "modules": [
+                {
+                    "name": "maxflow",
+                    "buildsystem": "cmake-ninja",
+                    "cleanup": [ "/bin" ],
+                    "sources": [
+                        {
+                            "type": "git",
+                            "url": "https://github.com/gerddie/maxflow.git",
+                            "commit": "6ac148f164b9567ac81fbb4ebb36112f850c902b"
+                        }
+                    ]
+                },
                 {
                     "name": "graphviz",
                     "buildsystem": "autotools",
