@@ -1529,7 +1529,7 @@ write_pixel_data (GOutputStream  *output,
         {
           write_gint16 (output, 1, "Compression type (RLE)");
           len += 2;
-          IF_DEEP_DBG printf ("\t\t\t\t. ChanLenPos, len %d\n", len);
+          IF_DEEP_DBG printf ("\t\t\t\t. ChanLenPos, len %ld\n", len);
         }
 
       if (ltable_offset > 0)

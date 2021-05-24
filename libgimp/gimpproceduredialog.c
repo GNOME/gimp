@@ -993,7 +993,7 @@ gimp_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
     {
       GParamSpec **pspecs;
       guint        n_pspecs;
-      gint         i;
+      guint        i;
 
       pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (dialog->priv->config),
                                                &n_pspecs);
@@ -1661,7 +1661,7 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
     {
       GParamSpec **pspecs;
       guint        n_pspecs;
-      gint         i;
+      guint        i;
 
       pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (dialog->priv->config),
                                                &n_pspecs);

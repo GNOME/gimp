@@ -675,7 +675,7 @@ gimp_param_value_array_values_cmp (GParamSpec   *pspec,
     }
   else /* length1 == length2 */
     {
-      guint i;
+      gint i;
 
       for (i = 0; i < length1; i++)
         {

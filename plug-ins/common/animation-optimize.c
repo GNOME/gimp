@@ -570,7 +570,8 @@ do_optimizations (GimpRunMode  run_mode,
     {
       /* iterate through all rows of all frames, find statistical
          mode for each pixel position. */
-      gint     i,j;
+      gint     i;
+      guint    j;
       guchar **these_rows;
       guchar **red;
       guchar **green;

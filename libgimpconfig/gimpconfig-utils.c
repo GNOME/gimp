@@ -89,7 +89,7 @@ gimp_config_diff_same (GObject     *a,
 {
   GParamSpec **param_specs;
   guint        n_param_specs;
-  gint         i;
+  guint        i;
   GList       *list = NULL;
 
   param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (a),
@@ -118,7 +118,7 @@ gimp_config_diff_other (GObject     *a,
 {
   GParamSpec **param_specs;
   guint        n_param_specs;
-  gint         i;
+  guint        i;
   GList       *list = NULL;
 
   param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (a),

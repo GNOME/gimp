@@ -232,9 +232,9 @@ gimp_tile_read (GimpTileBackendPlugin *backend_plugin,
     }
   else
     {
-      gint tile_stride      = TILE_WIDTH * priv->bpp;
-      gint gimp_tile_stride = gimp_tile.ewidth * priv->bpp;
-      gint row;
+      gint  tile_stride      = TILE_WIDTH * priv->bpp;
+      gint  gimp_tile_stride = gimp_tile.ewidth * priv->bpp;
+      guint row;
 
       for (row = 0; row < gimp_tile.eheight; row++)
         {
@@ -277,9 +277,9 @@ gimp_tile_write (GimpTileBackendPlugin *backend_plugin,
     }
   else
     {
-      gint tile_stride      = TILE_WIDTH * priv->bpp;
-      gint gimp_tile_stride = gimp_tile.ewidth * priv->bpp;
-      gint row;
+      gint  tile_stride      = TILE_WIDTH * priv->bpp;
+      gint  gimp_tile_stride = gimp_tile.ewidth * priv->bpp;
+      guint row;
 
       for (row = 0; row < gimp_tile.eheight; row++)
         {

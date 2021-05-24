@@ -395,7 +395,7 @@ gimp_color_area_draw (GtkWidget *widget,
       guchar     *buf    = g_new (guchar, priv->rowstride * priv->height);
       guchar     *src    = priv->buf;
       guchar     *dest   = buf;
-      gint        i;
+      guint       i;
 
       for (i = 0; i < priv->height; i++)
         {

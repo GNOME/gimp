@@ -1538,7 +1538,7 @@ _gp_params_read (GIOChannel  *channel,
                  guint       *n_params,
                  gpointer     user_data)
 {
-  gint i;
+  guint i;
 
   if (! _gimp_wire_read_int32 (channel, (guint32 *) n_params, 1, user_data))
     return;

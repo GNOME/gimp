@@ -806,7 +806,7 @@ gih_save_dialog (GimpImage *image)
   gtk_grid_set_column_spacing (GTK_GRID (dimgrid), 4);
   for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     {
-      gint j;
+      gsize j;
 
       adjustment = gtk_adjustment_new (gihparams.rank[i], 1, 100, 1, 1, 0);
       spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);

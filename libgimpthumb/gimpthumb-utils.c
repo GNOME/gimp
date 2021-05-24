@@ -103,7 +103,7 @@ gimp_thumb_init (const gchar *creator,
 {
   GEnumClass *enum_class;
   GEnumValue *enum_value;
-  gint        i;
+  guint        i;
 
   g_return_val_if_fail (creator != NULL, FALSE);
   g_return_val_if_fail (thumb_basedir == NULL ||

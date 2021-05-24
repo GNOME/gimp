@@ -554,7 +554,7 @@ special_flatten_indexed_alpha (guchar *pixels,
                                gint    transparent,
                                gint    numpixels)
 {
-  guint32 i;
+  gint i;
 
   /* Each transparent pixel in the image is mapped to a uniform value
    * for encoding, if image already has <=255 colors

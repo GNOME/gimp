@@ -528,7 +528,7 @@ gimp_config_path_expand_only (const gchar  *path,
   gchar      **substs   = NULL;
   guint        n_substs = 0;
   gint         length   = 0;
-  gint         i;
+  guint        i;
 
   home = g_get_home_dir ();
   if (home)
