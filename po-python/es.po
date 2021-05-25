@@ -17,15 +17,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-21 20:13+0000\n"
-"PO-Revision-Date: 2021-04-22 10:30+0200\n"
+"POT-Creation-Date: 2021-05-20 02:37+0000\n"
+"PO-Revision-Date: 2021-05-23 17:54+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 40.0\n"
+"X-Generator: Poedit 2.4.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/python/colorxhtml.py:89
@@ -169,7 +169,7 @@ msgstr "Normalizado"
 
 #: ../plug-ins/python/histogram-export.py:96
 msgid "Percent"
-msgstr "Por ciento"
+msgstr "Porcentaje"
 
 #: ../plug-ins/python/histogram-export.py:166
 msgid "File is either a directory or file name is empty."
@@ -294,11 +294,11 @@ msgstr "Valor"
 
 #: ../plug-ins/python/palette-sort.py:44
 msgid "Saturation (HSL)"
-msgstr "Saturación (HSL)"
+msgstr "Saturación (TSL)"
 
 #: ../plug-ins/python/palette-sort.py:44
 msgid "Lightness (HSL)"
-msgstr "Luminosidad (HSL)"
+msgstr "Luminosidad (TSL)"
 
 #: ../plug-ins/python/palette-sort.py:45
 msgid "Index"
@@ -322,11 +322,11 @@ msgstr "Color-B"
 
 #: ../plug-ins/python/palette-sort.py:93
 msgid "Chroma (LCHab)"
-msgstr "Chroma (LCHab)"
+msgstr "Croma (LCTab)"
 
 #: ../plug-ins/python/palette-sort.py:94
 msgid "Hue (LCHab)"
-msgstr "Tono (LCHab)"
+msgstr "Tono (LCTab)"
 
 #: ../plug-ins/python/palette-sort.py:328
 msgid "All"
@@ -411,7 +411,7 @@ msgstr "_Examinar…"
 
 #: ../plug-ins/python/python-console/python-console.py:255
 msgid "Python Procedure Browser"
-msgstr "Examinador de procedimientos Python"
+msgstr "Examinador de procedimientos de Python"
 
 #: ../plug-ins/python/python-console/python-console.py:283
 #, python-format
@@ -438,7 +438,7 @@ msgstr "Intérprete interactivo de Python en GIMP"
 #
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
-msgstr "Capa spyro"
+msgstr "Capa espiro"
 
 #: ../plug-ins/python/spyro-plus.py:51
 msgid "Spyro Path"
@@ -578,10 +578,10 @@ msgid ""
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
 msgstr ""
-"El patrón se especifica solo por la pestaña activa. «Caja de juguetes» es "
-"similar a «Engranajes», pero usa engranajes y números de orificios que se "
-"encuentran en las cajas de juguetes. Si sigue las instrucciones de los "
-"manuales de la caja de juguetes, los resultados deberían ser similares."
+"El patrón se especifica solo por la pestaña activa. «Kit de juguetes» es "
+"similar a «Engranajes», pero usa los engranajes y números de orificio que "
+"aparecen en kits de juguetes. Si sigue las instrucciones de los manuales de "
+"los kits de juguetes, los resultados deberían ser similares."
 
 #: ../plug-ins/python/spyro-plus.py:1517
 msgid ""
@@ -630,7 +630,7 @@ msgid ""
 msgstr ""
 "El agujero nº1 está en el borde del engranaje. El número de agujero máximo "
 "está cerca del centro. El número de agujero máximo es diferente para cada "
-"engranaje"
+"engranaje."
 
 #: ../plug-ins/python/spyro-plus.py:1570
 msgid "Flower Petals"
@@ -681,7 +681,7 @@ msgstr "Visual"
 
 #: ../plug-ins/python/spyro-plus.py:1622
 msgid "Toy Kit"
-msgstr "Caja de juguetes"
+msgstr "Kit de juguetes"
 
 #: ../plug-ins/python/spyro-plus.py:1628
 msgid "Gears"
@@ -712,7 +712,7 @@ msgid ""
 "non-rectangular."
 msgstr ""
 "La forma del engranaje fijo que se utilizará dentro de la selección actual. "
-"El estante es una forma redondeada larga proporcionada en la caja de "
+"El estante es una forma redondeada larga proporcionada en el kit de "
 "juguetes. El marco abarca los límites de la selección rectangular, use el "
 "agujero=100 en la notación de engranaje para tocar el límite. La selección "
 "abarcará los límites de la selección actual; intente algo no rectangular."
@@ -789,7 +789,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1750
 msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgstr "Espirogimp"
 
 #: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
 msgid "Draw spyrographs using current tool settings and selection."
@@ -820,7 +820,7 @@ msgstr "Espere : Trazando el patrón"
 
 #: ../plug-ins/python/spyro-plus.py:2301
 msgid "Spyrogimp..."
-msgstr "Spyrogimp…"
+msgstr "Espirogimp…"
 
 #~ msgid "Exercise a goat (Python 3)"
 #~ msgstr "Ejercitar una cabra (Python 3)"
