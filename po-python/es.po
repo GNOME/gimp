@@ -2,13 +2,13 @@
 # Spanish translation for gimp-python.
 # Copyright © 1998-2000,2003, 2006, 2007, 2008, 2009, 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
-# 
+#
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2009, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2009.
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
-# 
+#
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2019.
 # Rodrigo <rodhos92@gmail.com>, 2019.
 # Rodrigo Lledó <rodhos92@gmail.com>, 2019-2020.
@@ -17,16 +17,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-04 18:13+0000\n"
-"PO-Revision-Date: 2020-10-06 14:02+0200\n"
+"POT-Creation-Date: 2021-05-20 02:32+0000\n"
+"PO-Revision-Date: 2021-05-23 18:03+0200\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"\n"
-"X-Generator: Gtranslator 3.36.0\n"
+"X-Generator: Poedit 2.4.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
@@ -62,7 +61,7 @@ msgstr "Selección de carpeta Python-Fu"
 #: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr "Entrada inválida para «%s»"
+msgstr "Entrada no válida para «%s»"
 
 #: ../plug-ins/pygimp/gimpui.py:176
 msgid "Python-Fu Color Selection"
@@ -158,7 +157,7 @@ msgstr "Normalizado"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
 msgid "Percent"
-msgstr "Por ciento"
+msgstr "Porcentaje"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
@@ -237,11 +236,11 @@ msgstr "Valor"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
 msgid "Saturation (HSL)"
-msgstr "Saturación (HSL)"
+msgstr "Saturación (TSL)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
 msgid "Lightness (HSL)"
-msgstr "Luminosidad (HSL)"
+msgstr "Luminosidad (TSL)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
 msgid "Index"
@@ -265,11 +264,11 @@ msgstr "Color-B"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
 msgid "Chroma (LCHab)"
-msgstr "Chroma (LCHab)"
+msgstr "Croma (LCTab)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
 msgid "Hue (LCHab)"
-msgstr "Tono (LCHab)"
+msgstr "Tono (LCTab)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
 msgid "Sort the colors in a palette"
@@ -406,7 +405,7 @@ msgstr "_Examinar…"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
-msgstr "Examinador de procedimientos Python"
+msgstr "Examinador de procedimientos de Python"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
@@ -461,11 +460,11 @@ msgstr "Desplazamiento _Y de la sombra arrojada"
 #
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
 msgid "Spyro Layer"
-msgstr "Capa spyro"
+msgstr "Capa espiro"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
 msgid "Spyro Path"
-msgstr "Ruta spyro"
+msgstr "Ruta espiro"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
 msgid ""
@@ -582,9 +581,6 @@ msgid "Tool"
 msgstr "Herramienta"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
-#| msgid ""
-#| "The tool with which to draw the pattern.The Preview tool just draws "
-#| "quickly."
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
@@ -617,10 +613,10 @@ msgid ""
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
 msgstr ""
-"El patrón se especifica solo por la pestaña activa. «Caja de juguetes» es "
-"similar a «Engranajes», pero usa engranajes y números de orificios que se "
-"encuentran en las cajas de juguetes. Si sigue las instrucciones de los "
-"manuales de la caja de juguetes, los resultados deberían ser similares."
+"El patrón se especifica solo por la pestaña activa. «Kit de juguetes» es "
+"similar a «Engranajes», pero usa los engranajes y números de orificio que "
+"aparecen en kits de juguetes. Si sigue las instrucciones de los manuales de "
+"los kits de juguetes, los resultados deberían ser similares."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
 msgid ""
@@ -672,7 +668,7 @@ msgid ""
 msgstr ""
 "El agujero nº1 está en el borde del engranaje. El número de agujero máximo "
 "está cerca del centro. El número de agujero máximo es diferente para cada "
-"engranaje"
+"engranaje."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "Flower Petals"
@@ -724,7 +720,7 @@ msgstr "Visual"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
 msgid "Toy Kit"
-msgstr "Caja de juguetes"
+msgstr "Kit de juguetes"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
 msgid "Gears"
@@ -756,7 +752,7 @@ msgid ""
 "non-rectangular."
 msgstr ""
 "La forma del engranaje fijo que se utilizará dentro de la selección actual. "
-"El estante es una forma redondeada larga proporcionada en la caja de "
+"El estante es una forma redondeada larga proporcionada en el kit de "
 "juguetes. El marco abarca los límites de la selección rectangular, use el "
 "agujero=100 en la notación de engranaje para tocar el límite. La selección "
 "abarcará los límites de la selección actual; intente algo no rectangular."
@@ -837,7 +833,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
 msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgstr "Espirogimp"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
@@ -869,7 +865,7 @@ msgstr "Espere : Trazando el patrón"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
 msgid "Spyrogimp..."
-msgstr "Spyrogimp…"
+msgstr "Espirogimp…"
 
 #~ msgid ""
 #~ "Keep\n"
