@@ -552,7 +552,6 @@ flatpak:
   extends: .flatpak
   stage: gimp
   needs: []
-  when: always
   rules:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_FLATPAK != null'
