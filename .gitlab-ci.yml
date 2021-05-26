@@ -6,7 +6,7 @@
 # - Win32 crossbuilds (rare usefulness)
 # - Linux CLang (rare usefulness)
 # - cppcheck (static code analysis)
-# - Flatpak build
+# - Flatpak build (slow and doesn't need constant publishing)
 # Releases ($CI_COMMIT_TAG != null) should run only:
 # - Linux autotools (distcheck source tarball)
 # - Win 32/64 native builds (Windows installer creation)
@@ -23,6 +23,7 @@
 # - GIMP_CI_WIN_INSTALLER: trigger both native MSYS2 builds then creates Windows installer.
 # - GIMP_CI_SOURCES: trigger the autotools/gcc build and the source tarball job.
 # - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
+# - GIMP_CI_FLATPAK: trigger the nightly flatpak build and publishing.
 
 include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
 
@@ -552,8 +553,9 @@ flatpak:
   stage: gimp
   needs: []
   when: always
-  only:
-    - schedules
+  rules:
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_FLATPAK != null'
   variables:
     GIT_SUBMODULE_STRATEGY: normal
 
@@ -809,8 +811,9 @@ win32-nightly:
 flatpak-nightly:
   extends: '.publish_nightly'
   stage: distribution
-  only:
-    - schedules
+  rules:
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_FLATPAK != null'
   needs: ["flatpak"]
   dependencies:
     - 'flatpak'
