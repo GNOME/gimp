@@ -131,48 +131,8 @@ Hackordnung
 -----------
 We encourage you to follow the GIMP coding style throughout the GIMP
 project.  For the core components (application and libs) this coding
-style is enforced.  The GIMP coding style is defined as follows:
-
-    * There's a single space between the function name and the opening
-      paren.
-
-    * Function names are lowercase, words separated by underscores.
-
-    * Macros and enums are all uppercase, words separated by
-      underscores.
-
-    * Types are all words capitalized, no separators between words.
-
-    * All functions in header files need to be prototyped.
-
-    * Indentation rules are GNU coding style, in particular:
-        - 2 characters indentation level
-        - Do not use tabs (of course your editor can accept the TAB key
-          as a command, typically to indent the current line properly
-          or to add spaces at the cursor until the next multiple of 8
-          columns, but it should not put TAB characters in the file).
-        - When editing files that still have TABs in them, make sure your
-          editor interprets the TABs correctly, that is, has tab stops
-          at 8 column intervals.
-        - Opening braces are on a new line and indented one level.
-        - Function header have the return type on one line, the name
-          starting in the first column of the following line. All
-          parameters are prototyped and there's a new line for each.
-
-    * Align relevant listing:
-        - In declaration and definition of functions, each parameter
-          should be on a new line and aligned with the first one.
-        - In function calls, if the call is too long and spans on
-          several lines, you should align the parameters with the first
-          one.
-        - Blocks of variable declaration/initialization should align the
-          variable names, allowing quick skimming of the variable list.
-        - Function names in blocks of function declarations should be
-          aligned.
-
-    * Avoid trailing whitespaces. Any editor should have a function to
-      warn of trailing spaces/tabs. By default, git colorization also
-      warns about trailing whitespaces.
+style is enforced. See separate CODING_STYLE.md for a detailed description
+of the source code style.
 
 The source tree contains local config files which can be used to set the
 right coding style in common editors: `.dir-locals.el` for Emacs,
