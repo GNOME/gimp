@@ -565,7 +565,23 @@ flatpak:
     FLATPAK_MODULE: "gimp"
     APP_ID: "org.gimp.GIMP"
     BUNDLE: "gimp-git.flatpak"
-
+  before_script:
+    # Our script is too long for Gitlab and ends up with:
+    # > Job's log exceeded limit of 16777216 bytes.
+    # > Job execution will continue but no more output will be collected.
+    # To make debugging actually possible, let's save logs as a file.
+    - shopt -s expand_aliases
+    - flatpak-builder-wrapper() { flatpak-builder "$@" > flatpak-builder.log 2>&1; }
+    - alias flatpak-builder=flatpak-builder-wrapper
+  artifacts:
+    paths:
+      - flatpak-builder.log
+      # These are the same as flatpak_ci_initiative.yml as according to
+      # docs, key values are not merged but replaced.
+      - "${BUNDLE}"
+      - 'repo.tar'
+      - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/meson-log.txt'
+      - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/testlog.txt'
 
 cppcheck:
   rules:
