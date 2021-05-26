@@ -438,7 +438,7 @@
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/gegl.git",
-                    "tag": "GEGL_0_4_30"
+                    "branch": "master"
                 }
             ],
             "modules": [
