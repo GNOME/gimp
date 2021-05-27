@@ -349,7 +349,7 @@ AM_CONDITIONAL(PLATFORM_LINUX, test "$platform_linux" = "yes")
 
 AC_MSG_CHECKING([if compiling for Win32])
 case "$host_os" in
-  mingw* | cygwin*)
+  msys* | mingw* | cygwin*)
     platform_win32=yes
     ;;
   *)
@@ -364,7 +364,7 @@ os_win32=no
 if test "x$platform_win32" != xno; then
   AC_MSG_CHECKING([if this is native Win32])
   case "$host_os" in
-    mingw*)
+    msys* | mingw*)
       os_win32=yes
       case "$host_cpu" in
         x86_64)
