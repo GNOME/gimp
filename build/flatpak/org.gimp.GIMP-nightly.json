@@ -10,6 +10,7 @@
     "rename-icon": "gimp",
     "finish-args": ["--share=ipc", "--share=network",
                     "--socket=x11", "--socket=wayland",
+                    "--device=dri",
                     "--filesystem=host", "--filesystem=xdg-config/GIMP",
                     "--filesystem=xdg-config/gtk-3.0", "--filesystem=/tmp",
                     "--filesystem=xdg-run/gvfs", "--filesystem=xdg-run/gvfsd",
@@ -57,6 +58,18 @@
                     "type": "archive",
                     "url": "https://download.gnome.org/sources/gexiv2/0.12/gexiv2-0.12.2.tar.xz",
                     "sha256": "2322b552aca330eef79724a699c51a302345d5e074738578b398b7f2ff97944c"
+                }
+            ]
+        },
+        {
+            "name": "lcms2",
+            "config-opts": [ "--disable-static" ],
+            "cleanup": [ "/bin", "/share" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://src.fedoraproject.org/repo/pkgs/rpms/lcms2/lcms2-2.12.tar.gz/sha512/967e8ac9a1d1aa3be45dc82362b9bc71c555e8577441efda57dc12d0bf84ed9188460c52eb8542d399ce9ab43bd4191988ed22b254ef34c6c1877bbb935952ed/lcms2-2.12.tar.gz",
+                    "sha512": "967e8ac9a1d1aa3be45dc82362b9bc71c555e8577441efda57dc12d0bf84ed9188460c52eb8542d399ce9ab43bd4191988ed22b254ef34c6c1877bbb935952ed"
                 }
             ]
         },
