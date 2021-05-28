@@ -250,6 +250,8 @@ deps-win64-native:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MSYS2_WIN64 != null'
     - if: '$GIMP_CI_WIN_INSTALLER != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: dependencies
   variables:
     MSYSTEM: "MINGW64"
@@ -275,6 +277,8 @@ gimp-win64-native:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MSYS2_WIN64 != null'
     - if: '$GIMP_CI_WIN_INSTALLER != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: gimp
   variables:
     MSYSTEM: "MINGW64"
@@ -302,6 +306,8 @@ packaging-win64-native:
     - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_WIN_INSTALLER != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: packaging
   variables:
     MSYSTEM: "MINGW64"
@@ -331,6 +337,8 @@ deps-win32-native:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MSYS2_WIN32 != null'
     - if: '$GIMP_CI_WIN_INSTALLER != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: dependencies
   variables:
     MSYSTEM: "MINGW32"
@@ -355,6 +363,8 @@ gimp-win32-native:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MSYS2_WIN32 != null'
     - if: '$GIMP_CI_WIN_INSTALLER != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: gimp
   variables:
     MSYSTEM: "MINGW32"
@@ -381,6 +391,8 @@ packaging-win32-native:
     - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_WIN_INSTALLER != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: packaging
   variables:
     MSYSTEM: "MINGW32"
@@ -555,6 +567,8 @@ flatpak:
   rules:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_FLATPAK != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
   variables:
     GIT_SUBMODULE_STRATEGY: normal
 
@@ -612,6 +626,8 @@ win-installer-nightly:
     - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_WIN_INSTALLER != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   variables:
     CHERE_INVOKING: "yes"
   tags:
