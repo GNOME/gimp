@@ -623,7 +623,7 @@ win-installer-nightly:
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
-    expire_in: 2 days
+    expire_in: 1 week
     paths:
     - build/windows/installer/_Output
     - installer.log
