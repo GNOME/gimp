@@ -47,8 +47,9 @@ variables:
 
 build-image:
   rules:
-    # On commits.
+    # On commits and merge requests.
     - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     # On releases.
     - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
@@ -78,6 +79,8 @@ build-image-win64:
   rules:
     # On commits except tags.
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # On merge requests.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   stage: prepare
@@ -124,8 +127,9 @@ build-image-win32:
 
 deps-debian:
   rules:
-    # On commits.
+    # On commits and merge requests.
     - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     # On releases.
     - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
@@ -191,8 +195,9 @@ deps-debian:
 
 gimp-distcheck-debian:
   rules:
-    # On commits.
+    # On commits and merge requests.
     - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     # On releases.
     - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
@@ -215,6 +220,8 @@ gimp-meson-debian:
   rules:
     # On commits except tags.
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # On merge requests.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MESON_GCC != null'
   extends: .gimp-debian-base
@@ -418,6 +425,8 @@ deps-win64:
   rules:
     # On commits except tags.
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # On merge requests.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   stage: dependencies
@@ -454,6 +463,8 @@ gimp-win64:
   rules:
     # On commits except tags.
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # On merge requests.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   stage: gimp
