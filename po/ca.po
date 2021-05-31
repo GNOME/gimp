@@ -54,7 +54,7 @@ msgid ""
 "a mass production image renderer, an image format converter, etc."
 msgstr ""
 "Té moltes funcionalitats. Pot utilitzar-se com a un programa simple de "
-"pintura, com una aplicació professional de retoc fotogràfic, com un sistema "
+"dibuix, com una aplicació professional de retoc fotogràfic, com un sistema "
 "en línia de processament per lots, per a renderitzar imatges de forma "
 "massiva, per a convertir imatges entre formats, etc."
 
@@ -14924,11 +14924,11 @@ msgstr "Converteix la imatge a indexat"
 
 #: ../app/core/gimpimage-convert-indexed.c:892
 msgid "Converting to indexed colors (stage 2)"
-msgstr "S'està convertint a colors indexats (2ª etapa)"
+msgstr "S'està convertint a colors indexats (2a etapa)"
 
 #: ../app/core/gimpimage-convert-indexed.c:941
 msgid "Converting to indexed colors (stage 3)"
-msgstr "S'està convertint a colors indexats (3ª etapa)"
+msgstr "S'està convertint a colors indexats (3a etapa)"
 
 #: ../app/core/gimpimage-convert-precision.c:79
 #, c-format
@@ -27203,7 +27203,7 @@ msgid ""
 "queue"
 msgstr ""
 "El nombre de vegades que l'escriptura a la memòria d'intercanvi ha encallat "
-"degut a una cua plena"
+"a causa d'una cua plena"
 
 #: ../app/widgets/gimpdashboard.c:573
 msgctxt "dashboard-variable"
@@ -27308,11 +27308,11 @@ msgstr "Mida de la memòria física"
 #: ../app/widgets/gimpdashboard.c:704
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
-msgstr "Mapejat com mipmap"
+msgstr "En mapes MIP"
 
 #: ../app/widgets/gimpdashboard.c:705
 msgid "Total size of processed mipmapped data"
-msgstr "Mida total de dades processades en format mipmap"
+msgstr "Mida total de dades processades en format de mapa MIP"
 
 #: ../app/widgets/gimpdashboard.c:713
 msgctxt "dashboard-variable"
