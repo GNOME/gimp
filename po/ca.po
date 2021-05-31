@@ -54,7 +54,7 @@ msgid ""
 "a mass production image renderer, an image format converter, etc."
 msgstr ""
 "Té moltes funcionalitats. Pot utilitzar-se com a un programa simple de "
-"pintura, com una aplicació professional de retoc fotogràfic, com un sistema "
+"dibuix, com una aplicació professional de retoc fotogràfic, com un sistema "
 "en línia de processament per lots, per renderitzar imatges de forma massiva, "
 "per convertir imatges entre formats, etc."
 
@@ -26411,11 +26411,11 @@ msgstr "Mida de la memòria física"
 #: ../app/widgets/gimpdashboard.c:711
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
-msgstr "Mapejat com mipmap"
+msgstr "En mapes MIP"
 
 #: ../app/widgets/gimpdashboard.c:712
 msgid "Total size of processed mipmapped data"
-msgstr "Mida total de dades processades en format mipmap"
+msgstr "Mida total de dades processades en format de mapa MIP"
 
 #: ../app/widgets/gimpdashboard.c:720
 msgctxt "dashboard-variable"
