@@ -822,11 +822,9 @@ save_image (GFile         *file,
       if (drawable_type == GIMP_GRAY_IMAGE ||
           drawable_type == GIMP_INDEXED_IMAGE)
         {
-          for (list = layers, i = nlayers - 1;
-              list && i >= 0;
-              list = g_list_next (list), i--, cur_progress = (nlayers - i) * rows)
+          for (list = layers; list; list = g_list_next (list))
             {
-              GimpImageType dr_type = gimp_drawable_type (drawable);
+              GimpImageType dr_type = gimp_drawable_type (list->data);
 
               if (dr_type == GIMP_GRAYA_IMAGE ||
                   dr_type == GIMP_INDEXEDA_IMAGE)
