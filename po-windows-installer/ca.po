@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-10-31 23:26+0000\n"
+"POT-Creation-Date: 2021-05-31 16:29+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -93,8 +93,8 @@ msgid ""
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"El GIMP ja està llest per a ser instal·lat. Cliqueu en el botó Instal·la per a "
-"instal·lar usant els paràmetres per defecte o cliqueu el botó Personalitza "
+"El GIMP ja està llest per a ser instal·lat. Cliqueu en el botó Instal·la per "
+"a instal·lar usant els paràmetres per defecte o cliqueu el botó Personalitza "
 "si us agrada un major control sobre què voleu instal·lar."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:14
@@ -179,26 +179,35 @@ msgstr ""
 "Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
+msgid "Lua scripting"
+msgstr "Script de Lua"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:34
+msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgstr ""
+"Us permet usar els connectors del GIMP escrits en llenguatge script de Lua."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:35
 msgid "MyPaint brushes"
 msgstr "Pinzells del MyPaint"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:34
+#: ../build/windows/installer/lang/setup.isl.in.h:36
 msgid "Install the default set of MyPaint brushes"
 msgstr "Instal·lat el conjunt per defecte de pinzells del Mypaint"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:35
+#: ../build/windows/installer/lang/setup.isl.in.h:37
 msgid "PostScript support"
 msgstr "Suport PostScript"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:36
+#: ../build/windows/installer/lang/setup.isl.in.h:38
 msgid "Allow GIMP to load PostScript files"
 msgstr " Permet al GIMP carregar fitxers PostScript"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:37
+#: ../build/windows/installer/lang/setup.isl.in.h:39
 msgid "Support for 32-bit plug-ins"
 msgstr "Suport per connectors de 32-bit"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:39
+#: ../build/windows/installer/lang/setup.isl.in.h:41
 #, no-c-format
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
@@ -207,23 +216,23 @@ msgstr ""
 "Inclou els fitxers necessaris per a usar els connectors de 32-bits."
 "%nNecessaris pel suport de Python."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:40
+#: ../build/windows/installer/lang/setup.isl.in.h:42
 msgid "Additional icons:"
 msgstr "Icones addicionals:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:41
+#: ../build/windows/installer/lang/setup.isl.in.h:43
 msgid "Create a &desktop icon"
 msgstr "Crea una icona en l'&escriptori"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:42
+#: ../build/windows/installer/lang/setup.isl.in.h:44
 msgid "Create a &Quick Launch icon"
 msgstr "Crea una icona d'accés &ràpid"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:43
+#: ../build/windows/installer/lang/setup.isl.in.h:45
 msgid "Remove previous GIMP version"
 msgstr "Elimina la versió prèvia del GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:45
+#: ../build/windows/installer/lang/setup.isl.in.h:47
 #, no-c-format
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
@@ -233,48 +242,48 @@ msgstr ""
 "qualsevol en carregar els connectors, proveu de desinstal·lar i tornar a "
 "instal·lar el GIMP."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:46
+#: ../build/windows/installer/lang/setup.isl.in.h:48
 msgid "Error extracting temporary data."
 msgstr "S'ha produït un error en extreure les dades temporals."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:47
+#: ../build/windows/installer/lang/setup.isl.in.h:49
 msgid "Error updating Python interpreter info."
 msgstr ""
 "S'ha produït un error en actualitzar la informació de l'intèrpret de Python."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:48
+#: ../build/windows/installer/lang/setup.isl.in.h:50
 msgid "Error updating MyPaint brushes info."
 msgstr ""
 "S'ha produït un error en actualitzar la informació dels pinzells del MyPaint."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:50
+#: ../build/windows/installer/lang/setup.isl.in.h:52
 #, no-c-format
 msgid "There was an error updating %1."
 msgstr "S'ha produït un error en actualitzar %1."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:52
+#: ../build/windows/installer/lang/setup.isl.in.h:54
 #, no-c-format
 msgid "There was an error updating GIMP's configuration file %1."
 msgstr ""
 "S'ha produït un error en actualitzar el fitxer %1 de configuració del GIMP."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:53
+#: ../build/windows/installer/lang/setup.isl.in.h:55
 msgid "Edit with GIMP"
 msgstr "Edita amb el GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:54
+#: ../build/windows/installer/lang/setup.isl.in.h:56
 msgid "Select file associations"
 msgstr "Seleccioneu les associacions dels fitxers"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:55
+#: ../build/windows/installer/lang/setup.isl.in.h:57
 msgid "Extensions:"
 msgstr "Extensions:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:56
+#: ../build/windows/installer/lang/setup.isl.in.h:58
 msgid "Select the file types you wish to associate with GIMP"
 msgstr "Seleccioneu els tipus de fitxers que voleu associar amb el GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:57
+#: ../build/windows/installer/lang/setup.isl.in.h:59
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
@@ -282,27 +291,27 @@ msgstr ""
 "Això farà que els tipus de fitxers seleccionats s'obrin amb el GIMP quan feu "
 "doble clic sobre ells en l'explorador."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:58
+#: ../build/windows/installer/lang/setup.isl.in.h:60
 msgid "Select &All"
 msgstr "Selecciona-ho &tot"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:59
+#: ../build/windows/installer/lang/setup.isl.in.h:61
 msgid "Unselect &All"
 msgstr "Desselecciona-ho t&ot"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:60
+#: ../build/windows/installer/lang/setup.isl.in.h:62
 msgid "Select &Unused"
 msgstr "Selecciona els no &usats"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:61
+#: ../build/windows/installer/lang/setup.isl.in.h:63
 msgid "File types to associate with GIMP:"
 msgstr "Tipus de fitxer a associar amb el GIMP:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:62
+#: ../build/windows/installer/lang/setup.isl.in.h:64
 msgid "Removing previous version of GIMP:"
 msgstr "S'està eliminant la versió anterior del GIMP:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:64
+#: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
@@ -317,7 +326,7 @@ msgstr ""
 "%2, o escolliu Instal·lació personalitzada, i seleccioneu una carpeta "
 "d'instal·lació diferent.%n%nL'instal·lador es tancarà ara."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:66
+#: ../build/windows/installer/lang/setup.isl.in.h:68
 #, no-c-format
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
@@ -333,7 +342,7 @@ msgstr ""
 "seleccioneu una carpeta d'instal·lació diferent.%n%nL'instal·lador es "
 "tancarà ara."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:68
+#: ../build/windows/installer/lang/setup.isl.in.h:70
 #, no-c-format
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
@@ -345,58 +354,58 @@ msgstr ""
 "reiniciar l'ordinador, l'instal·lador continuarà un cop un administrador "
 "obri sessió."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:70
+#: ../build/windows/installer/lang/setup.isl.in.h:72
 #, no-c-format
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "S'ha produït un error en reiniciar l'instal·lador. (%1)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:71
+#: ../build/windows/installer/lang/setup.isl.in.h:73
 msgid "Cleaning up old files..."
 msgstr "S'estan netejant els fitxers antics..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:73
+#: ../build/windows/installer/lang/setup.isl.in.h:75
 #, no-c-format
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Recordeu: El GIMP és programari lliure.%n%nVisiteu"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:74
+#: ../build/windows/installer/lang/setup.isl.in.h:76
 msgid "for free updates."
 msgstr "per actualitzacions gratuïtes."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:75
+#: ../build/windows/installer/lang/setup.isl.in.h:77
 msgid "Setting up file associations..."
 msgstr "S'estan configurant les associacions de fitxer..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:76
+#: ../build/windows/installer/lang/setup.isl.in.h:78
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "S'està configurant l'entorn per l'extensió Python del GIMP..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:77
+#: ../build/windows/installer/lang/setup.isl.in.h:79
 msgid "Setting up MyPaint brushes..."
 msgstr "S'estan configurant els pinzells del MyPaint..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:78
+#: ../build/windows/installer/lang/setup.isl.in.h:80
 msgid "Setting up GIMP environment..."
 msgstr "S'està configurant l'entorn del GIMP..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:79
+#: ../build/windows/installer/lang/setup.isl.in.h:81
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "S'està configurant el GIMP pel suport de connectors de 32-bits..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:80
+#: ../build/windows/installer/lang/setup.isl.in.h:82
 msgid "Launch GIMP"
 msgstr "Inicia el GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:81
+#: ../build/windows/installer/lang/setup.isl.in.h:83
 msgid "Removing add-on"
 msgstr "S'estan eliminant complements"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:83
+#: ../build/windows/installer/lang/setup.isl.in.h:85
 #, no-c-format
 msgid "Internal error (%1)."
 msgstr "S'ha produït un error intern (%1)."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:84
+#: ../build/windows/installer/lang/setup.isl.in.h:86
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
