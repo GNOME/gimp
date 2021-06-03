@@ -5531,7 +5531,7 @@ msgstr "_Desfés"
 
 #: ../plug-ins/common/sample-colorize.c:294
 msgid "Colorize image using a sample image as a guide"
-msgstr "Dóna color a la imatge utilitzant una imatge d'exemple com a guia"
+msgstr "Dona color a la imatge utilitzant una imatge d'exemple com a guia"
 
 #: ../plug-ins/common/sample-colorize.c:299
 msgid "_Sample Colorize..."
@@ -10512,7 +10512,7 @@ msgstr "Atura la càrrega d'aquesta pàgina"
 
 #: ../plug-ins/help-browser/dialog.c:576
 msgid "Go to the index page"
-msgstr "Vés a la pàgina d'índex"
+msgstr "Ves a la pàgina d'índex"
 
 #: ../plug-ins/help-browser/dialog.c:581
 msgid "C_opy location"
