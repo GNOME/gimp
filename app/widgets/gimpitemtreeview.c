@@ -95,8 +95,6 @@ struct _GimpItemTreeViewPrivate
   GimpTreeHandler *color_tag_changed_handler;
   GimpTreeHandler *lock_content_changed_handler;
   GimpTreeHandler *lock_position_changed_handler;
-
-  gboolean         inserting_item; /* EEK */
 };
 
 
@@ -989,12 +987,8 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   GdkColor               gdk_color;
   gboolean               has_color;
 
-  item_view->priv->inserting_item = TRUE;
-
   iter = parent_view_iface->insert_item (view, viewable,
                                          parent_insert_data, index);
-
-  item_view->priv->inserting_item = FALSE;
 
   has_color = gimp_get_color_tag_color (gimp_item_get_merged_color_tag (item),
                                         &color,
@@ -1740,13 +1734,19 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
                                   GtkTreePath      *path,
                                   GimpItemTreeView *item_view)
 {
+  GimpItemTreeViewClass *item_view_class;
+  GimpItem              *active_item;
+
+  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
+  active_item = item_view_class->get_active_item (item_view->priv->image);
+
   /*  don't select the item while it is being inserted  */
-  if (! item_view->priv->inserting_item)
+  if (active_item &&
+      gimp_container_view_lookup (GIMP_CONTAINER_VIEW (item_view),
+                                  GIMP_VIEWABLE (active_item)))
     {
-      GimpItemTreeViewClass *item_view_class;
-      GimpViewRenderer      *renderer;
-      GimpItem              *expanded_item;
-      GimpItem              *active_item;
+      GimpViewRenderer *renderer;
+      GimpItem         *expanded_item;
 
       gtk_tree_model_get (GIMP_CONTAINER_TREE_VIEW (item_view)->model, iter,
                           GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
@@ -1754,15 +1754,10 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
       expanded_item = GIMP_ITEM (renderer->viewable);
       g_object_unref (renderer);
 
-      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
-
-      active_item = item_view_class->get_active_item (item_view->priv->image);
-
       /*  select the active item only if it was made visible by expanding
        *  its immediate parent. See bug #666561.
        */
-      if (active_item &&
-          gimp_item_get_parent (active_item) == expanded_item)
+      if (gimp_item_get_parent (active_item) == expanded_item)
         {
           gimp_container_view_select_item (GIMP_CONTAINER_VIEW (item_view),
                                            GIMP_VIEWABLE (active_item));
