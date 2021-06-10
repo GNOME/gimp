@@ -77,6 +77,9 @@ static void     gimp_container_combo_box_rename_item  (GimpContainerView      *v
 static gboolean  gimp_container_combo_box_select_item (GimpContainerView      *view,
                                                        GimpViewable           *viewable,
                                                        gpointer                insert_data);
+static gboolean  gimp_container_combo_box_select_items(GimpContainerView      *view,
+                                                       GList                  *viewables,
+                                                       GList                  *paths);
 static void     gimp_container_combo_box_clear_items  (GimpContainerView      *view);
 static void    gimp_container_combo_box_set_view_size (GimpContainerView      *view);
 
@@ -127,6 +130,7 @@ gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface)
   iface->reorder_item  = gimp_container_combo_box_reorder_item;
   iface->rename_item   = gimp_container_combo_box_rename_item;
   iface->select_item   = gimp_container_combo_box_select_item;
+  iface->select_items  = gimp_container_combo_box_select_items;
   iface->clear_items   = gimp_container_combo_box_clear_items;
   iface->set_view_size = gimp_container_combo_box_set_view_size;
 
@@ -366,6 +370,40 @@ gimp_container_combo_box_select_item (GimpContainerView *view,
       if (iter)
         {
           gtk_combo_box_set_active_iter (combo_box, iter);
+        }
+      else
+        {
+          gtk_combo_box_set_active (combo_box, -1);
+        }
+
+      g_signal_handlers_unblock_by_func (combo_box,
+                                         gimp_container_combo_box_changed,
+                                         view);
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_container_combo_box_select_items (GimpContainerView *view,
+                                       GList             *viewables,
+                                       GList             *paths)
+{
+  GtkComboBox *combo_box = GTK_COMBO_BOX (view);
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
+  /* Only zero or one items may selected in a GimpContainerComboBox. */
+  g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
+
+  if (gtk_combo_box_get_model (GTK_COMBO_BOX (view)))
+    {
+      g_signal_handlers_block_by_func (combo_box,
+                                       gimp_container_combo_box_changed,
+                                       view);
+
+      if (viewables)
+        {
+          gimp_container_view_item_selected (view, viewables->data);
         }
       else
         {
