@@ -1383,8 +1383,15 @@ gimp_container_view_context_changed (GimpContext       *context,
                                      GimpViewable      *viewable,
                                      GimpContainerView *view)
 {
-  if (! gimp_container_view_select_item (view, viewable))
+  GList *viewables = NULL;
+
+  if (viewable)
+    viewables = g_list_prepend (viewables, viewable);
+
+  if (! gimp_container_view_select_items (view, viewables))
     g_warning ("%s: select_item() failed (should not happen)", G_STRFUNC);
+
+  g_list_free (viewables);
 }
 
 static void
