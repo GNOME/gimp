@@ -45,11 +45,14 @@
 
 static void   gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface);
 
-static void     gimp_drawable_tree_view_constructed (GObject           *object);
+static void     gimp_drawable_tree_view_constructed   (GObject           *object);
 
-static gboolean gimp_drawable_tree_view_select_item (GimpContainerView *view,
-                                                     GimpViewable      *item,
-                                                     gpointer           insert_data);
+static gboolean gimp_drawable_tree_view_select_item   (GimpContainerView *view,
+                                                       GimpViewable      *item,
+                                                       gpointer           insert_data);
+static gboolean gimp_drawable_tree_view_select_items  (GimpContainerView *view,
+                                                       GList             *items,
+                                                       GList             *paths);
 
 static gboolean gimp_drawable_tree_view_drop_possible(GimpContainerTreeView *view,
                                                       GimpDndType          src_type,
@@ -131,7 +134,8 @@ gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->select_item = gimp_drawable_tree_view_select_item;
+  iface->select_item  = gimp_drawable_tree_view_select_item;
+  iface->select_items = gimp_drawable_tree_view_select_items;
 }
 
 static void
@@ -199,6 +203,41 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
   return success;
 }
 
+static gboolean
+gimp_drawable_tree_view_select_items (GimpContainerView *view,
+                                      GList             *items,
+                                      GList             *paths)
+{
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
+  GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
+  gboolean          success   = TRUE;
+
+  if (image)
+    {
+      GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
+
+      success = (items        == NULL ||
+                 floating_sel == NULL ||
+                 (g_list_length (items) == 1 &&
+                  items->data           == GIMP_VIEWABLE (floating_sel)));
+
+      if (! success)
+        {
+          Gimp        *gimp    = image->gimp;
+          GimpContext *context = gimp_get_user_context (gimp);
+          GimpDisplay *display = gimp_context_get_display (context);
+
+          gimp_message_literal (gimp, G_OBJECT (display), GIMP_MESSAGE_WARNING,
+                                _("Cannot select items while a floating "
+                                  "selection is active."));
+        }
+    }
+
+  if (success)
+    success = parent_view_iface->select_items (view, items, paths);
+
+  return success;
+}
 
 /*  GimpContainerTreeView methods  */
 

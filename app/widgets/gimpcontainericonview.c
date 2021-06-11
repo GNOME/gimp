@@ -80,6 +80,9 @@ static void          gimp_container_icon_view_rename_item       (GimpContainerVi
 static gboolean      gimp_container_icon_view_select_item       (GimpContainerView           *view,
                                                                  GimpViewable                *viewable,
                                                                  gpointer                     insert_data);
+static gboolean      gimp_container_icon_view_select_items      (GimpContainerView           *view,
+                                                                 GList                       *items,
+                                                                 GList                       *paths);
 static void          gimp_container_icon_view_clear_items       (GimpContainerView           *view);
 static void          gimp_container_icon_view_set_view_size     (GimpContainerView           *view);
 
@@ -150,6 +153,7 @@ gimp_container_icon_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->reorder_item       = gimp_container_icon_view_reorder_item;
   iface->rename_item        = gimp_container_icon_view_rename_item;
   iface->select_item        = gimp_container_icon_view_select_item;
+  iface->select_items       = gimp_container_icon_view_select_items;
   iface->clear_items        = gimp_container_icon_view_clear_items;
   iface->set_view_size      = gimp_container_icon_view_set_view_size;
   iface->get_selected       = gimp_container_icon_view_get_selected;
@@ -514,6 +518,75 @@ gimp_container_icon_view_select_item (GimpContainerView *view,
     {
       /* viewable == NULL && insert_data != NULL means multiple selection.
        * viewable == NULL && insert_data == NULL means no selection. */
+      gtk_icon_view_unselect_all (icon_view->view);
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_container_icon_view_select_items (GimpContainerView *view,
+                                       GList             *viewables,
+                                       GList             *paths)
+{
+  GimpContainerIconView *icon_view = GIMP_CONTAINER_ICON_VIEW (view);
+  GList                 *list;
+
+  if (viewables)
+    {
+      gboolean free_paths = FALSE;
+
+      if (g_list_length (paths) != g_list_length (viewables))
+        {
+          free_paths = TRUE;
+          paths = NULL;
+          for (list = viewables; list; list = list->next)
+            {
+              GtkTreeIter *iter;
+              GtkTreePath *path;
+
+              iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
+                                                 list->data);
+              if (! iter)
+                /* This may happen when the GimpContainerIconView only
+                 * shows a subpart of the whole icons. We don't select
+                 * what is not shown.
+                 */
+                continue;
+
+              path = gtk_tree_model_get_path (icon_view->model, iter);
+
+              paths = g_list_prepend (paths, path);
+            }
+          paths = g_list_reverse (paths);
+        }
+
+      g_signal_handlers_block_by_func (icon_view->view,
+                                       gimp_container_icon_view_selection_changed,
+                                       icon_view);
+
+      gtk_icon_view_unselect_all (icon_view->view);
+
+      for (list = paths; list; list = list->next)
+        {
+          gtk_icon_view_select_path (icon_view->view, list->data);
+        }
+
+      if (list)
+        {
+          gtk_icon_view_set_cursor (icon_view->view, list->data, NULL, FALSE);
+          gtk_icon_view_scroll_to_path (icon_view->view, list->data, FALSE, 0.0, 0.0);
+        }
+
+      g_signal_handlers_unblock_by_func (icon_view->view,
+                                         gimp_container_icon_view_selection_changed,
+                                         icon_view);
+
+      if (free_paths)
+        g_list_free_full (paths, (GDestroyNotify) gtk_tree_path_free);
+    }
+  else
+    {
       gtk_icon_view_unselect_all (icon_view->view);
     }
 
