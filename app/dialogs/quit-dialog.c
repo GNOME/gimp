@@ -94,9 +94,9 @@ static void        quit_close_all_dialog_accel_marshal     (GClosure          *c
 static void        quit_close_all_dialog_container_changed (GimpContainer     *images,
                                                             GimpObject        *image,
                                                             QuitDialog        *private);
-static void        quit_close_all_dialog_image_selected    (GimpContainerView *view,
-                                                            GimpImage         *image,
-                                                            gpointer           insert_data,
+static gboolean    quit_close_all_dialog_images_selected   (GimpContainerView *view,
+                                                            GList             *images,
+                                                            GList             *paths,
                                                             QuitDialog        *private);
 static void        quit_close_all_dialog_name_cell_func    (GtkTreeViewColumn *tree_column,
                                                             GtkCellRenderer   *cell,
@@ -239,8 +239,8 @@ quit_close_all_dialog_new (Gimp     *gimp,
   gtk_box_pack_start (GTK_BOX (private->box), view, TRUE, TRUE, 0);
   gtk_widget_show (view);
 
-  g_signal_connect (view, "select-item",
-                    G_CALLBACK (quit_close_all_dialog_image_selected),
+  g_signal_connect (view, "select-items",
+                    G_CALLBACK (quit_close_all_dialog_images_selected),
                     private);
 
   dnd_widget = gimp_container_view_get_dnd_widget (GIMP_CONTAINER_VIEW (view));
@@ -414,30 +414,41 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
   g_free (accel_string);
 }
 
-static void
-quit_close_all_dialog_image_selected (GimpContainerView *view,
-                                      GimpImage         *image,
-                                      gpointer           insert_data,
-                                      QuitDialog        *private)
+static gboolean
+quit_close_all_dialog_images_selected (GimpContainerView *view,
+                                       GList             *images,
+                                       GList             *paths,
+                                       QuitDialog        *private)
 {
-  GList *list;
+  /* The signal allows for multiple selection cases, but this specific
+   * dialog only allows one image selected at a time.
+   */
+  g_return_val_if_fail (g_list_length (images) <= 1, FALSE);
 
-  for (list = gimp_get_display_iter (private->gimp);
-       list;
-       list = g_list_next (list))
+  if (images)
     {
-      GimpDisplay *display = list->data;
+      GimpImage *image = images->data;
+      GList     *list;
 
-      if (gimp_display_get_image (display) == image)
+      for (list = gimp_get_display_iter (private->gimp);
+           list;
+           list = g_list_next (list))
         {
-          gimp_display_shell_present (gimp_display_get_shell (display));
+          GimpDisplay *display = list->data;
 
-          /* We only want to update the active shell. Give back keyboard
-           * focus to the quit dialog after this.
-           */
-          gtk_window_present (GTK_WINDOW (private->dialog));
+          if (gimp_display_get_image (display) == image)
+            {
+              gimp_display_shell_present (gimp_display_get_shell (display));
+
+              /* We only want to update the active shell. Give back keyboard
+               * focus to the quit dialog after this.
+               */
+              gtk_window_present (GTK_WINDOW (private->dialog));
+            }
         }
     }
+
+  return TRUE;
 }
 
 static void
