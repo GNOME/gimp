@@ -403,7 +403,29 @@ gimp_container_combo_box_select_items (GimpContainerView *view,
 
       if (viewables)
         {
-          gimp_container_view_item_selected (view, viewables->data);
+          GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
+          GtkTreeIter   iter;
+          gboolean      iter_valid;
+
+          for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+               iter_valid;
+               iter_valid = gtk_tree_model_iter_next (model, &iter))
+            {
+              GimpViewRenderer *renderer;
+
+              gtk_tree_model_get (model, &iter,
+                                  GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                                  -1);
+
+              if (renderer->viewable == viewables->data)
+                {
+                  gtk_combo_box_set_active_iter (combo_box, &iter);
+                  g_object_unref (renderer);
+
+                  break;
+                }
+              g_object_unref (renderer);
+            }
         }
       else
         {

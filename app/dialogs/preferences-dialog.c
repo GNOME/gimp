@@ -514,20 +514,24 @@ prefs_path_reset (GtkWidget *widget,
     gimp_config_reset_property (config, writable_property);
 }
 
-static void
+static gboolean
 prefs_template_select_callback (GimpContainerView *view,
-                                GimpTemplate      *template,
-                                gpointer           insert_data,
+                                GList             *templates,
+                                GList             *paths,
                                 GimpTemplate      *edit_template)
 {
-  if (template)
+  g_return_val_if_fail (g_list_length (templates) < 2, FALSE);
+
+  if (templates)
     {
       /*  make sure the resolution values are copied first (see bug #546924)  */
-      gimp_config_sync (G_OBJECT (template), G_OBJECT (edit_template),
+      gimp_config_sync (G_OBJECT (templates->data), G_OBJECT (edit_template),
                         GIMP_TEMPLATE_PARAM_COPY_FIRST);
-      gimp_config_sync (G_OBJECT (template), G_OBJECT (edit_template),
+      gimp_config_sync (G_OBJECT (templates->data), G_OBJECT (edit_template),
                         0);
     }
+
+  return TRUE;
 }
 
 static void
@@ -1795,9 +1799,9 @@ prefs_dialog_new (Gimp       *gimp,
                                _("_Template:"),  0.0, 0.5,
                                combo, 1);
 
-    gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo), NULL);
+    gimp_container_view_select_items (GIMP_CONTAINER_VIEW (combo), NULL);
 
-    g_signal_connect (combo, "select-item",
+    g_signal_connect (combo, "select-items",
                       G_CALLBACK (prefs_template_select_callback),
                       core_config->default_image);
   }

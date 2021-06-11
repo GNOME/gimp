@@ -2036,15 +2036,13 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
                                   GimpItemTreeView *item_view)
 {
   GimpItemTreeViewClass *item_view_class;
-  GimpItem              *active_item;
+  GList                 *selected_items;
+  GList                 *list;
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
-  active_item = item_view_class->get_active_item (item_view->priv->image);
+  selected_items  = item_view_class->get_selected_items (item_view->priv->image);
 
-  /*  don't select the item while it is being inserted  */
-  if (active_item &&
-      gimp_container_view_lookup (GIMP_CONTAINER_VIEW (item_view),
-                                  GIMP_VIEWABLE (active_item)))
+  if (selected_items)
     {
       GimpViewRenderer *renderer;
       GimpItem         *expanded_item;
@@ -2055,14 +2053,22 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
       expanded_item = GIMP_ITEM (renderer->viewable);
       g_object_unref (renderer);
 
-      /*  select the active item only if it was made visible by expanding
-       *  its immediate parent. See bug #666561.
-       */
-      if (gimp_item_get_parent (active_item) == expanded_item)
+      for (list = selected_items; list; list = list->next)
         {
-          gimp_container_view_select_item (GIMP_CONTAINER_VIEW (item_view),
-                                           GIMP_VIEWABLE (active_item));
+          /*  don't select an item while it is being inserted  */
+          if (! gimp_container_view_lookup (GIMP_CONTAINER_VIEW (item_view),
+                                            list->data))
+            return;
+
+          /*  select items only if they were made visible by expanding
+           *  their immediate parent. See bug #666561.
+           */
+          if (gimp_item_get_parent (list->data) != expanded_item)
+            return;
         }
+
+      gimp_container_view_select_items (GIMP_CONTAINER_VIEW (item_view),
+                                        selected_items);
     }
 }
 
