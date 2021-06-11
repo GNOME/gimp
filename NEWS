@@ -15,6 +15,8 @@ Core:
     server logics when drawing to display buffer. This fixes selection
     drawing in Wayland (and possibly in macOS Big Sur too, though this
     change is untested on this OS so far).
+  - "Create a New Image" default action is "OK" so that hitting Enter in
+    text/number fields is equivalent to clicking OK.
 
 API:
 
@@ -29,24 +31,34 @@ Plug-ins:
   - PSD now supports loading up to 99 channels (specs say that 56 is the
     max but some sample PSD files have more channels).
   - PSB file format is now supported for loading.
+  - Scriptfu now handles GFile and GimpObjectArray types.
+  - 16-bit SGI images now supported (until now, they were loaded as
+    8-bit).
 
 Translations:
 
   - New Vietnamese translation for the installer.
 
-Installer:
-
-  - Windows installer scripts updated to all supported languages.
-
 Build:
 
+  - Windows installer scripts updated to all supported languages.
   - New CI jobs for Windows native builds with MSYS2.
   - Several less critical CI jobs (32-bit cross-built Windows,
     meson/clang build, cppcheck static analysis) moved to a scheduled
     run for resource saving.
-  - Windows installer now built as a CI job. Some issues are still to be
-    fixed and the installer is not signed.
+  - Windows installer now built as a CI job. The installer is not
+    signed. The installer creation happens on tags for releases and at
+    regular scheduled intervals for tests.
   - Improved tag handling in the CI for transparent release process.
+  - New unit test to check that localizations listed in the installer
+    script match available po files in po-windows-installer/.
+  - New flatpak job (on scheduled interval) published on GNOME Nightly
+    repository.
+  - "msys*" host value now detected as Windows builds.
+  - Windows installer and test flatpak (to download, no repository) can
+    now be built by a merge request CI when the labels "5. Windows
+    Installer" and/or "5. Flatpak package" are respectively set in the
+    MR labels.
 
 
 Overview of Changes from GIMP 2.99.4 to GIMP 2.99.6
