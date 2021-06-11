@@ -387,7 +387,7 @@ gimp_tool_editor_drop_viewables (GimpContainerTreeView   *tree_view,
                                                                  drop_pos);
 
   if (src_viewables)
-    gimp_container_view_select_item (container_view, src_viewables->data);
+    gimp_container_view_select_items (container_view, src_viewables);
 }
 
 static void

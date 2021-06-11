@@ -399,7 +399,7 @@ gimp_container_view_real_set_container (GimpContainerView *view,
       if (private->context)
         gimp_container_view_disconnect_context (view);
 
-      gimp_container_view_select_item (view, NULL);
+      gimp_container_view_select_items (view, NULL);
 
       /* freeze/thaw is only supported for the toplevel container */
       g_signal_handlers_disconnect_by_func (private->container,
@@ -651,26 +651,25 @@ gimp_container_view_select_items (GimpContainerView *view,
   return success;
 }
 
+/* Mostly a convenience function calling the more generic
+ * gimp_container_view_select_items().
+ * This is to be used when you want to select one viewable only (or
+ * because the container this is called from only handles single
+ * selection anyway).
+ */
 gboolean
 gimp_container_view_select_item (GimpContainerView *view,
                                  GimpViewable      *viewable)
 {
-  GimpContainerViewPrivate *private;
-  gboolean                  success = FALSE;
-  gpointer                  insert_data;
+  GList    *viewables = NULL;
+  gboolean  success;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
-  g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), FALSE);
+  if (viewable)
+    viewables = g_list_prepend (viewables, viewable);
 
-  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+  success = gimp_container_view_select_items (view, viewables);
 
-  if (gimp_container_frozen (private->container))
-    return TRUE;
-
-  insert_data = g_hash_table_lookup (private->item_hash, viewable);
-
-  g_signal_emit (view, view_signals[SELECT_ITEM], 0,
-                 viewable, insert_data, &success);
+  g_list_free (viewables);
 
   return success;
 }

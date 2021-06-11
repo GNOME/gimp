@@ -62,8 +62,8 @@ static void       layer_add_mask_dialog_response         (GtkWidget          *di
                                                           gint                response_id,
                                                           LayerAddMaskDialog *private);
 static gboolean   layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
-                                                          GimpViewable       *viewable,
-                                                          gpointer            insert_data,
+                                                          GList              *viewables,
+                                                          GList              *paths,
                                                           LayerAddMaskDialog *dialog);
 
 
@@ -165,7 +165,7 @@ layer_add_mask_dialog_new (GList               *layers,
                              GIMP_ADD_MASK_CHANNEL, TRUE);
   gtk_widget_show (combo);
 
-  g_signal_connect (combo, "select-item",
+  g_signal_connect (combo, "select-items",
                     G_CALLBACK (layer_add_mask_dialog_channel_selected),
                     private);
 
@@ -231,11 +231,13 @@ layer_add_mask_dialog_response (GtkWidget          *dialog,
 
 static gboolean
 layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
-                                        GimpViewable       *viewable,
-                                        gpointer            insert_data,
+                                        GList              *viewables,
+                                        GList              *paths,
                                         LayerAddMaskDialog *private)
 {
-  private->channel = GIMP_CHANNEL (viewable);
+  g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
+
+  private->channel = viewables? GIMP_CHANNEL (viewables->data) : NULL;
 
   return TRUE;
 }

@@ -968,5 +968,5 @@ gimp_settings_box_unset (GimpSettingsBox *box)
 
   private = GET_PRIVATE (box);
 
-  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (private->combo), NULL);
+  gimp_container_view_select_items (GIMP_CONTAINER_VIEW (private->combo), NULL);
 }
