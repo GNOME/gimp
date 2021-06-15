@@ -486,6 +486,8 @@ User Interface:
     * Various dialogs now use Client-Side decorations and modern GTK+
       widgets are being used when relevant (e.g. GtkSwitch which gives a
       better feeling of a general "ON/OFF state").
+    * Progressive/smooth scroll actions (e.g. ctrl+scroll for zooming)
+      are now possible.
   - Image display rendered faster with a render cache that keeps the
     result of scaling, color management, display filters and shell mask
     (for tools like fuzzy select).
