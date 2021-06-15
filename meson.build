@@ -179,8 +179,12 @@ endif
 
 ################################################################################
 # Compiler CPU extensions for optimizations
-# -- Don't enable these project-wide, since some tools like g-ir-scanner,
-#    will crash on them.
+#
+# -- Don't enable these flags project-wide, only files needing them
+# should be built with a given extension, which we do with meson simd
+# module. Otherwise GIMP would end up crashing when run on CPUs which
+# don't support all the flags supported by the compiler.
+# See merge request !262 for more details.
 
 # Note that Meson has a SIMD module which can also do this for us, but it uses
 # its own #defines and we want to stay compatible with the autotools build
