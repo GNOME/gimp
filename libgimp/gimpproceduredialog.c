@@ -559,7 +559,6 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
       if (widget_type == G_TYPE_NONE || widget_type == GTK_TYPE_TEXT_VIEW)
         {
           GtkTextBuffer *buffer;
-          const gchar   *tooltip;
 
           buffer = gimp_prop_text_buffer_new (G_OBJECT (dialog->priv->config),
                                               property, -1);
@@ -569,10 +568,6 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           gtk_text_view_set_left_margin (GTK_TEXT_VIEW (widget), 3);
           gtk_text_view_set_right_margin (GTK_TEXT_VIEW (widget), 3);
           g_object_unref (buffer);
-
-          tooltip = g_param_spec_get_blurb (pspec);
-          if (tooltip)
-            gimp_help_set_help_data (widget, tooltip, NULL);
         }
       else if (widget_type == GTK_TYPE_ENTRY)
         {
@@ -600,12 +595,18 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                  property, G_PARAM_SPEC_TYPE_NAME (pspec));
       return NULL;
     }
-  else if (GIMP_IS_LABELED (widget) || label)
+  else
     {
-      if (! label)
-        label = gimp_labeled_get_label (GIMP_LABELED (widget));
+      const gchar *tooltip = g_param_spec_get_blurb (pspec);
+      if (tooltip)
+        gimp_help_set_help_data (widget, tooltip, NULL);
+      if (GIMP_IS_LABELED (widget) || label)
+        {
+          if (! label)
+            label = gimp_labeled_get_label (GIMP_LABELED (widget));
 
-      gtk_size_group_add_widget (dialog->priv->label_group, label);
+          gtk_size_group_add_widget (dialog->priv->label_group, label);
+        }
     }
 
   if ((binding = g_hash_table_lookup (dialog->priv->sensitive_data, property)))
@@ -702,10 +703,14 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
     }
   else if (GIMP_IS_LABELED (widget))
     {
-      GtkWidget *label = gimp_labeled_get_label (GIMP_LABELED (widget));
+      GtkWidget   *label   = gimp_labeled_get_label (GIMP_LABELED (widget));
+      const gchar *tooltip = g_param_spec_get_blurb (pspec);
 
       gtk_size_group_add_widget (dialog->priv->label_group, label);
+      if (tooltip)
+        gimp_help_set_help_data (label, tooltip, NULL);
     }
+
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
@@ -777,11 +782,17 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
                  G_STRFUNC, property, G_PARAM_SPEC_TYPE_NAME (pspec));
       return NULL;
     }
-  else if (GIMP_IS_LABELED (widget))
+  else
     {
-      GtkWidget *label = gimp_labeled_get_label (GIMP_LABELED (widget));
+      const gchar *tooltip = g_param_spec_get_blurb (pspec);
+      if (tooltip)
+        gimp_help_set_help_data (widget, tooltip, NULL);
+      if (GIMP_IS_LABELED (widget))
+        {
+          GtkWidget *label = gimp_labeled_get_label (GIMP_LABELED (widget));
 
-      gtk_size_group_add_widget (dialog->priv->label_group, label);
+          gtk_size_group_add_widget (dialog->priv->label_group, label);
+        }
     }
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
