@@ -155,96 +155,80 @@ webp_create_procedure (GimpPlugIn  *plug_in,
                                       "(C) 2016 Ben Touchette",
                                       "2015,2016");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("WebP"));
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/webp");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "webp");
 
       GIMP_PROC_ARG_INT (procedure, "preset",
-                         "Preset",
-                         "Preset (Default=0, Picture=1, Photo=2, Drawing=3, "
+                         "Source _type",
+                         "WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, "
                          "Icon=4, Text=5)",
                          0, 5, WEBP_PRESET_DEFAULT,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
-                             "Lossless",
+                             "L_ossless",
                              "Use lossless encoding",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "quality",
-                            "Quality",
+                            "Image _quality",
                             "Quality of the image",
                             0, 100, 90,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "alpha-quality",
-                            "Alpha quality",
+                            "Alpha q_uality",
                             "Quality of the image's alpha channel",
                             0, 100, 100,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "animation",
-                             "Animation",
-                             "Use layers for animation",
-                             FALSE,
-                             G_PARAM_READWRITE);
-
       GIMP_PROC_ARG_BOOLEAN (procedure, "animation-loop",
-                             "Animation loop",
+                             _("Loop _forever"),
                              "Loop animation infinitely",
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "minimize-size",
-                             "Minimize size",
-                             "Minimize animation size",
+                             _("_Minimize output size (slower)"),
+                             "Minimize output file size",
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "keyframe-distance",
-                         "Keyframe distance",
+                         _("Max distance between _key-frames"),
                          "Maximum distance between keyframes",
                          0, G_MAXINT, 50,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
-                             "Save Exif",
-                             "Toggle saving Exif data",
-                             gimp_export_exif (),
-                             G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-iptc",
-                             "Save IPTC",
-                             "Toggle saving IPTC data",
-                             gimp_export_iptc (),
-                             G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
-                             "Save XMP",
-                             "Toggle saving XMP data",
-                             gimp_export_xmp (),
-                             G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-color-profile",
-                             "Save color profle",
-                             "Toggle saving the color profile",
-                             gimp_export_color_profile (),
-                             G_PARAM_READWRITE);
-
       GIMP_PROC_ARG_INT (procedure, "default-delay",
-                         "Default delay",
-                         "Delay to use when timestamps are not available "
-                         "or forced",
+                         _("_Default delay between frames"),
+                         "Default delay (in milliseconds) to use when timestamps"
+                         " for frames are not available or forced.",
                          0, G_MAXINT, 200,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "force-delay",
-                             "Force delay",
-                             "Force delay on all frames",
+                             _("Use default dela_y for all frames"),
+                             "Force default delay on all frames",
                              FALSE,
                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "animation",
+                             _("Save a_nimation"),
+                             "Use layers for animation",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      gimp_save_procedure_set_support_exif      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_iptc      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_xmp       (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_profile   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      gimp_save_procedure_set_support_thumbnail (GIMP_SAVE_PROCEDURE (procedure), TRUE);
     }
 
   return procedure;

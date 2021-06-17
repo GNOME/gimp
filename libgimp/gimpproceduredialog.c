@@ -1317,6 +1317,124 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
 
 
 /**
+ * gimp_procedure_dialog_fill_expander:
+ * @dialog:        the #GimpProcedureDialog.
+ * @container_id:  a container identifier.
+ * @title_id: (nullable): the identifier for the title widget.
+ * @invert_title:  whether to use the opposite value of @title_id if it
+ *                 represents a boolean widget.
+ * @contents_id: (nullable): the identifier for the contents.
+ *
+ * Creates a new #GtkExpander and packs @title_id as its title
+ * and @contents_id as content.
+ * If @title_id represents a boolean property, its value will be used to
+ * expand the #GtkExpander. If @invert_title is TRUE, then expand binding is
+ * inverted.
+ *
+ * The @container_id must be a unique ID which is neither the name of a
+ * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * the ID of any previously created container. This ID can later be used
+ * together with property names to be packed in other containers or
+ * inside @dialog itself.
+ *
+ * Returns: (transfer none): the #GtkWidget representing @container_id. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
+                                     const gchar         *container_id,
+                                     const gchar         *title_id,
+                                     gboolean             invert_title,
+                                     const gchar         *contents_id)
+{
+  GtkWidget *expander;
+  GtkWidget *contents = NULL;
+  GtkWidget *title    = NULL;
+
+  g_return_val_if_fail (container_id != NULL, NULL);
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                    container_id))
+    {
+      g_warning ("%s: expander identifier '%s' cannot be an existing property name.",
+                 G_STRFUNC, container_id);
+      return NULL;
+    }
+
+  if ((expander = g_hash_table_lookup (dialog->priv->widgets, container_id)))
+    {
+      g_warning ("%s: expander identifier '%s' was already configured.",
+                 G_STRFUNC, container_id);
+      return expander;
+    }
+
+  expander = gtk_expander_new (NULL);
+
+  if (contents_id)
+    {
+      contents = gimp_procedure_dialog_get_widget (dialog, contents_id, G_TYPE_NONE);
+      if (! contents)
+        {
+          g_warning ("%s: no property or configured widget with identifier '%s'.",
+                     G_STRFUNC, contents_id);
+          return expander;
+        }
+
+      g_object_ref (contents);
+      gtk_container_add (GTK_CONTAINER (expander), contents);
+      gtk_widget_show (contents);
+    }
+
+  if (title_id)
+    {
+      title = gimp_procedure_dialog_get_widget (dialog, title_id, G_TYPE_NONE);
+      if (! title)
+        {
+          g_warning ("%s: no property or configured widget with identifier '%s'.",
+                     G_STRFUNC, title_id);
+          return expander;
+        }
+
+      g_object_ref (title);
+      gtk_expander_set_label_widget (GTK_EXPANDER (expander), title);
+      gtk_expander_set_resize_toplevel (GTK_EXPANDER (expander), TRUE);
+      gtk_widget_show (title);
+      g_object_bind_property (title,    "sensitive",
+                              expander, "sensitive",
+                              G_BINDING_SYNC_CREATE);
+
+      if (contents && (GTK_IS_CHECK_BUTTON (title) || GTK_IS_SWITCH (title)))
+        {
+          GBindingFlags flags = G_BINDING_SYNC_CREATE;
+          gboolean      active;
+
+          /* Workaround for connecting check button state to expanded state of
+           * GtkExpander. This is required as GtkExpander do not pass click
+           * events to label widget.
+           * Please see https://bugzilla.gnome.org/show_bug.cgi?id=705971
+           */
+          if (invert_title)
+            flags |= G_BINDING_INVERT_BOOLEAN;
+
+          g_object_get (title, "active", &active, NULL);
+          gtk_expander_set_expanded (GTK_EXPANDER (expander),
+                                     invert_title ?  ! active : active);
+          g_object_bind_property (expander, "expanded",
+                                  title,    "active",
+                                  flags);
+        }
+    }
+
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (container_id), expander);
+  if (g_object_is_floating (expander))
+    g_object_ref_sink (expander);
+
+  return expander;
+}
+
+
+/**
  * gimp_procedure_dialog_set_sensitive:
  * @dialog:          the #GimpProcedureDialog.
  * @property:        name of a property of the #GimpProcedure @dialog

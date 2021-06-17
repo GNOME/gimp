@@ -42,6 +42,7 @@ EXPORTS
 	gimp_procedure_dialog_fill
 	gimp_procedure_dialog_fill_box
 	gimp_procedure_dialog_fill_box_list
+	gimp_procedure_dialog_fill_expander
 	gimp_procedure_dialog_fill_flowbox
 	gimp_procedure_dialog_fill_flowbox_list
 	gimp_procedure_dialog_fill_frame
