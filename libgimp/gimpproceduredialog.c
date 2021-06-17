@@ -1750,8 +1750,9 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
                                            GtkContainer        *container,
                                            GList               *properties)
 {
-  GList    *iter;
-  gboolean  free_properties = FALSE;
+  GList        *iter;
+  gboolean      free_properties = FALSE;
+  GtkSizeGroup *sz_group;
 
   g_return_val_if_fail (container_id != NULL, NULL);
   g_return_val_if_fail (GTK_IS_CONTAINER (container), NULL);
@@ -1803,6 +1804,7 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
         free_properties = TRUE;
     }
 
+  sz_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   for (iter = properties; iter; iter = iter->next)
     {
       GtkWidget *widget;
@@ -1816,6 +1818,12 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
            */
           g_object_ref (widget);
           gtk_container_add (container, widget);
+          if (GIMP_IS_LABELED (widget))
+            {
+              GtkWidget *label = gimp_labeled_get_label (GIMP_LABELED (widget));
+              gtk_size_group_remove_widget (dialog->priv->label_group, label);
+              gtk_size_group_add_widget (sz_group, label);
+            }
           gtk_widget_show (widget);
         }
     }
