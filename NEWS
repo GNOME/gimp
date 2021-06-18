@@ -9,6 +9,40 @@ This is the unstable branch of GIMP.
 Overview of Changes from GIMP 2.99.6 to GIMP 2.99.10
 ====================================================
 
+Core:
+
+  - Linked layers concept replaced by named sets of layers:
+    * One can now store your current selection of layers under any given
+      name and call it layer to get it selected again.
+    * You can also search for layers by their names with patterns.
+  - New item visibility lock: forbidding to change the state of
+    visibility of a given item. This is useful when shift-clicking
+    massively items visibility, but you want to exclude some specific
+    items from the visibility switch.
+
+User Interface:
+
+  - Lock items are now made visible next to the "Eye" icon (visibility)
+    on each item row.
+    * This makes locks much more obvious rather than when they were at
+      the dockable header.
+    * This also works better than toggle buttons with multiple selection
+      of items (indeed when one selected item is locked and another is
+      not, the lock button ends up in some inconsistent state and is
+      much less useful).
+    * This is clearer by showing or not icons (rather than always
+      showing several icons, yet with toggle design which is not even so
+      understandable depending on the theme used). If nos locks are set,
+      nothing is shown; if only one lock is set, a specific icon is
+      shown; if several locks are set, a multi-lock icon is shown (and
+      one need to click to get the list of locks).
+    * Locks can now be set massively with shift and alt-click (see next
+      item) with the same logics as you can change visibility massively
+      on the eye button.
+  - Alt-click on eye and lock icons allows to massively switch
+    visibility/lock state but only within selected items (unlike
+    shift-click which switch within all items at same level).
+
 Plug-ins:
 
   - PSD:
@@ -29,6 +63,17 @@ Build:
   - Improved Coding Style document with commit message styling, git
     usage, comment styling, natural language text rules, localization
     and some section reorganization.
+
+API:
+
+  - New gimp_item_get_lock_visibility() and
+    gimp_item_set_lock_visibility() to get and set the visibility lock
+    of an item.
+  - New gimp_event_triggers_context_menu() as alternative to
+    gdk_event_triggers_context_menu() with the additional ability of
+    using button release events a contextual menu triggering (instead of
+    press events), which might be prefered in some cases. Other than
+    this, it uses exactly the same conditions as its GDK counterpart.
 
 
 Overview of Changes from GIMP 2.99.6 to GIMP 2.99.8
