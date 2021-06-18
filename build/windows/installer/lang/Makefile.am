@@ -54,7 +54,7 @@ stamp-isl: setup.isl Makefile.am
 		isl="$(srcdir)/$$code.setup.isl";					\
 		echo "  GEN      $$isl";						\
 		sed '/^\w\+'"$$prefix"'=/{s/\(.\)'"$$prefix"'/\1/;n};/^\w.*=/d' $< |	\
-		iconv -f UTF-8 -t $$encoding > "$$isl";					\
+		iconv -c -f UTF-8 -t $$encoding > "$$isl";				\
 	done &&										\
 	echo timestamp > stamp-isl
 
