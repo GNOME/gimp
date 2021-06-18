@@ -38,13 +38,6 @@
 #include <process.h>
 #endif
 
-#if defined(G_OS_UNIX) && defined(HAVE_EXECINFO_H)
-/* For get_backtrace() */
-#include <stdlib.h>
-#include <string.h>
-#include <execinfo.h>
-#endif
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gobject/gvaluecollector.h>
