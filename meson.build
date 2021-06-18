@@ -1551,12 +1551,16 @@ custom_target('authors.md',
 )
 
 if xmllint.found()
-  run_target('validate-authors',
+  custom_target('validate-authors',
     command: [
       xmllint,
-      '--noout',
-      '--valid', 'authors.xml',
+      '--output', '@OUTPUT@',
+      '--valid', '@INPUT@',
     ],
+    input : [ 'authors.xml', ],
+    output: [ 'validate-authors-output.xml' ],
+    build_by_default: true,
+    install: false
   )
 endif
 
