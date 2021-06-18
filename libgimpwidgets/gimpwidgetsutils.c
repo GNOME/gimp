@@ -109,6 +109,54 @@ find_mnemonic_widget (GtkWidget *widget,
 }
 
 /**
+ * gimp_event_triggers_context_menu:
+ * @event:      The #GdkEvent to verify.
+ * @on_release: Whether a menu is triggered on a button release event
+ *              instead of a press event.
+ *
+ * Alternative of gdk_event_triggers_context_menu() with the additional
+ * feature of allowing a menu triggering to happen on a button release
+ * event. All the other rules on whether @event should trigger a
+ * contextual menu are exactly the same. Only the swapping to release
+ * state as additional feature is different.
+ *
+ * Returns: %TRUE if the event should trigger a context menu.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_event_triggers_context_menu (const GdkEvent *event,
+                                  gboolean        on_release)
+{
+  GdkEvent *copy_event;
+  gboolean  trigger = FALSE;
+
+  g_return_val_if_fail (event != NULL, FALSE);
+
+  copy_event = gdk_event_copy (event);
+
+  /* It's an ugly trick because GDK only considers press events as
+   * menu-triggering events. We want to use the same per-platform
+   * conventions as set in GTK/GDK, except for this small point.
+   * So when we want a menu-triggering on release events, we just
+   * temporary simulate the event to be a PRESS event and pass it to
+   * the usual function.
+   */
+  if (on_release)
+    {
+      if (event->type == GDK_BUTTON_RELEASE)
+        copy_event->type = GDK_BUTTON_PRESS;
+      else if (event->type == GDK_BUTTON_PRESS)
+        copy_event->type = GDK_BUTTON_RELEASE;
+    }
+  trigger = gdk_event_triggers_context_menu (copy_event);
+
+  gdk_event_free (copy_event);
+
+  return trigger;
+}
+
+/**
  * gimp_grid_attach_aligned:
  * @grid:       The #GtkGrid the widgets will be attached to.
  * @left:       The column to start with.
