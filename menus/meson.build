@@ -1,6 +1,6 @@
 menus_dir = prefix / gimpdatadir / 'menus'
 
-menus_files = [
+menus_files = files(
   'brush-editor-menu.xml',
   'brushes-menu.xml',
   'buffers-menu.xml',
@@ -33,7 +33,7 @@ menus_files = [
   'undo-menu.xml',
   'vector-toolpath-menu.xml',
   'vectors-menu.xml',
-]
+)
 
 install_data(menus_files,
   install_dir: menus_dir,
@@ -41,8 +41,9 @@ install_data(menus_files,
 
 unstable_menus_args = stable ? [] : [ '--stringparam', 'unstable-menus', 'yes' ]
 
+menus_built_files = []
 foreach menu_filegen : [ 'dockable-menu.xml', 'image-menu.xml', ]
-  menus_files += custom_target(menu_filegen,
+  menus_built_files += custom_target(menu_filegen,
     input : [ menu_filegen +'.in', 'menus.xsl', ],
     output: [ menu_filegen ],
     command: [
@@ -59,12 +60,18 @@ foreach menu_filegen : [ 'dockable-menu.xml', 'image-menu.xml', ]
 endforeach
 
 if xmllint.found()
-  run_target('validate_menus',
+  custom_target('validate_menus',
     command: [
       xmllint,
-      '--noout', '--valid',
+      '--output', '@OUTPUT@',
+      '--valid',
       '--path', meson.current_source_dir(),
-      menus_files,
+      menus_files, menus_built_files
     ],
+    # The output file is only useful as a flag file, so that the command
+    # knows if it has been run already.
+    output: [ 'validate_menus-output.xml' ],
+    build_by_default: true,
+    install: false
   )
 endif
