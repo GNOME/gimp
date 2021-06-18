@@ -27,6 +27,9 @@ wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Uno
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Vietnamese.isl
 cd -
 
+# Copy generated language files into the source directory.
+cp _build-w64/build/windows/installer/lang/*isl build/windows/installer/lang
+
 # Construct now the installer.
 MAJOR_VERSION=`grep 'm4_define(\[gimp_major_version' configure.ac |sed 's/m4_define(\[gimp_major_version.*\[\([0-9]*\)\].*/\1/'`
 MINOR_VERSION=`grep 'm4_define(\[gimp_minor_version' configure.ac |sed 's/m4_define(\[gimp_minor_version.*\[\([0-9]*\)\].*/\1/'`

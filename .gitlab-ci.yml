@@ -301,7 +301,7 @@ gimp-win64-native:
     expire_in: 1 day
     paths:
     - _install-w64
-    - build/windows/installer/lang/
+    - _build-w64/build/windows/installer/lang/
   cache:
     paths:
     - _ccache/
@@ -332,7 +332,7 @@ packaging-win64-native:
     expire_in: 1 day
     paths:
     - gimp-w64
-    - build/windows/installer/lang/
+    - _build-w64/build/windows/installer/lang/
   needs: ["gimp-win64-native"]
 
 ## WINDOWS 32-bit CI (native MSYS2) ##

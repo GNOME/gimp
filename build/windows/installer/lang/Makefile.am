@@ -51,7 +51,7 @@ stamp-isl: setup.isl Makefile.am
 		code=`echo $$lang | cut -d: -f1`;					\
 		prefix=`echo $$lang | cut -d: -f2 | sed 's/[][]/\\\\\\0/g'`;		\
 		encoding=`echo $$lang | cut -d: -f3`;					\
-		isl="$(srcdir)/$$code.setup.isl";					\
+		isl="$(builddir)/$$code.setup.isl";					\
 		echo "  GEN      $$isl";						\
 		sed '/^\w\+'"$$prefix"'=/{s/\(.\)'"$$prefix"'/\1/;n};/^\w.*=/d' $< |	\
 		iconv -c -f UTF-8 -t $$encoding > "$$isl";				\
@@ -67,7 +67,7 @@ clean-local:
 	@						\
 	for lang in $(languages); do			\
 		code=`echo $$lang | cut -d: -f1`;	\
-		isl="$(srcdir)/$$code.setup.isl";	\
+		isl="$(builddir)/$$code.setup.isl";	\
 		echo "  RM       $$isl";		\
 		rm -f "$$isl";				\
 	done
