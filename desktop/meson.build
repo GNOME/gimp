@@ -91,8 +91,10 @@ metainfofile = custom_target(metainfofilename,
 )
 
 if desktop_validate.found()
-  run_target('validate-desktop',
-    command: [ desktop_validate, desktopfile ],
+  test('validate-desktop',
+    desktop_validate,
+    args: [ desktopfile ],
+    suite: 'desktop',
   )
 endif
 
@@ -109,14 +111,6 @@ if appstream_util.found()
   test('metainfo_file',
     appstream_util,
     args: [ 'validate-relax', metainfofile ],
-    env: [
-      'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.build_root(),
-    ],
-    suite: 'desktop',
-  )
-
-  test('desktop_file',
-    find_program('test-desktop.sh'),
     env: [
       'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.build_root(),
     ],
