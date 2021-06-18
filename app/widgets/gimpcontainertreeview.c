@@ -1486,7 +1486,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
 
       g_object_ref (tree_view);
 
-      if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
+      if (gimp_event_triggers_context_menu ((GdkEvent *) bevent, TRUE))
         {
           /* If the clicked item is not selected, it becomes the new
            * selection. Otherwise, we use the current selection. This

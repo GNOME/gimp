@@ -30,6 +30,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+gboolean             gimp_event_triggers_context_menu (const GdkEvent   *event,
+                                                       gboolean          on_release);
+
 GtkWidget          * gimp_grid_attach_aligned        (GtkGrid           *grid,
                                                       gint               left,
                                                       gint               top,
