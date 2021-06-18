@@ -12,10 +12,22 @@ INSTALLER_LANGS=`echo "$INSTALLER_LANGS" | tr '\n\r' ' ' | sed 's/\<en\> //'`
 PO_LANGS=`ls ${GIMP_TESTING_ABS_TOP_SRCDIR}/po-windows-installer/*.po |sed 's%.*/po-windows-installer/\([a-zA-Z_]*\).po%\1%'`
 PO_LANGS=`echo "$PO_LANGS" | tr '\n\r' ' '`
 
-if [ "$PO_LANGS" = "$INSTALLER_LANGS" ]; then
-  exit 0
-else
+if [ "$PO_LANGS" != "$INSTALLER_LANGS" ]; then
   echo "Error: languages listed in the Windows installer script do not match the .po files in po-windows-installer/."
+  echo "- PO languages:        $PO_LANGS"
+  echo "- Installer languages: $INSTALLER_LANGS"
   echo "Please verify: build/windows/installer/gimp3264.iss"
+  exit 1
+fi
+
+AUTOTOOLS_LANGS=`grep '[a-zA-Z_]*:\[[a-zA-Z_]*\]:[A-Z0-9-]*' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/installer/lang/Makefile.am | \
+                 sed 's/^\t*\([a-zA-Z_]*\):.*$/\1/' |sort`
+AUTOTOOLS_LANGS=`echo "$AUTOTOOLS_LANGS" | tr '\n\r' ' ' | sed 's/\<en\> //'`
+
+if [ "$PO_LANGS" != "$AUTOTOOLS_LANGS" ]; then
+  echo "Error: languages listed in the autotools script do not match the .po files in po-windows-installer/."
+  echo "- PO languages:        $PO_LANGS"
+  echo "- Autotools languages: $AUTOTOOLS_LANGS"
+  echo "Please verify: build/windows/installer/lang/Makefile.am"
   exit 1
 fi
