@@ -32,12 +32,15 @@ fortunes_tips = custom_target('fortunes-tips',
 )
 
 if xmllint.found()
-  run_target('validate-tips',
+  custom_target('validate-tips',
     command: [
       xmllint,
-      '--noout',
+      '--output', '@OUTPUT@',
       '--path', meson.current_source_dir(),
       '--valid', gimp_tips,
     ],
+    output: [ 'validate-tips-output.xml' ],
+    build_by_default: true,
+    install: false
   )
 endif

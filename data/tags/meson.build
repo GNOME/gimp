@@ -19,12 +19,15 @@ gimp_tags_default = custom_target(xmlfilename,
 )
 
 if xmllint.found()
-  run_target('validate-tags',
+  custom_target('validate-tags',
     command: [
       xmllint,
-      '--noout',
+      '--output', '@OUTPUT@',
       '--path', meson.current_source_dir(),
       '--valid', gimp_tags_default,
     ],
+    output: [ 'validate-tags-output.xml' ],
+    build_by_default: true,
+    install: false
   )
 endif
