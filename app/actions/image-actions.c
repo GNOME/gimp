@@ -435,7 +435,7 @@ image_actions_update (GimpActionGroup *group,
       is_indexed  = (base_type == GIMP_INDEXED);
       is_u8_gamma = (precision == GIMP_PRECISION_U8_NON_LINEAR);
       is_double   = (component_type == GIMP_COMPONENT_TYPE_DOUBLE);
-      aux         = (gimp_image_get_active_channel (image) != NULL);
+      aux         = (gimp_image_get_selected_channels (image) != NULL);
       lp          = ! gimp_image_is_empty (image);
       sel         = ! gimp_channel_is_empty (gimp_image_get_mask (image));
 

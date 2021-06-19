@@ -558,10 +558,14 @@ layer_create_mask_invoker (GimpProcedure         *procedure,
 
       if (mask_type == GIMP_ADD_MASK_CHANNEL)
         {
-          channel = gimp_image_get_active_channel (gimp_item_get_image (GIMP_ITEM (layer)));
+          GList *channels;
 
-          if (! channel)
+          channels = gimp_image_get_selected_channels (gimp_item_get_image (GIMP_ITEM (layer)));
+
+          if (! channels)
             success = FALSE;
+          else
+            channel = channels->data;
         }
 
       if (success)
