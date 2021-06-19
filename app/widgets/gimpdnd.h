@@ -97,6 +97,8 @@
 #define GIMP_TARGET_LAYER_LIST \
         { "application/x-gimp-layer-list", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_LAYER_LIST }
 
+#define GIMP_TARGET_CHANNEL_LIST \
+        { "application/x-gimp-channel-list", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_CHANNEL_LIST }
 
 /*  dnd initialization  */
 

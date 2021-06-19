@@ -643,6 +643,20 @@ static const GimpDndDataDef dnd_data_defs[] =
     gimp_dnd_set_item_list_data,
   },
 
+  {
+    GIMP_TARGET_CHANNEL_LIST,
+
+    "gimp-dnd-get-channel-list-func",
+    "gimp-dnd-get-channel-list-data",
+
+    "gimp-dnd-set-channel-list-func",
+    "gimp-dnd-set-channel-list-data",
+
+    gimp_dnd_get_viewable_list_icon,
+    gimp_dnd_get_item_list_data,
+    gimp_dnd_set_item_list_data,
+  },
+
 };
 
 
@@ -1916,9 +1930,9 @@ gimp_dnd_data_type_get_by_g_type (GType    type,
     {
       dnd_type = GIMP_DND_TYPE_LAYER_MASK;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_CHANNEL) && ! list)
+  else if (g_type_is_a (type, GIMP_TYPE_CHANNEL))
     {
-      dnd_type = GIMP_DND_TYPE_CHANNEL;
+      dnd_type = list ? GIMP_DND_TYPE_CHANNEL_LIST : GIMP_DND_TYPE_CHANNEL;
     }
   else if (g_type_is_a (type, GIMP_TYPE_VECTORS) && ! list)
     {
