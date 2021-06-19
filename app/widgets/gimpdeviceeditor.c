@@ -43,6 +43,7 @@
 #include "gimpdevices.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
+#include "gimpviewrenderer.h"
 
 #include "gimp-intl.h"
 
@@ -96,10 +97,10 @@ static void   gimp_device_editor_remove_device  (GimpContainer     *container,
 static void   gimp_device_editor_device_changed (GimpDeviceInfo    *info,
                                                  GimpDeviceEditor  *editor);
 
-static void   gimp_device_editor_select_device  (GimpContainerView *view,
-                                                 GimpViewable      *viewable,
-                                                 gpointer           insert_data,
-                                                 GimpDeviceEditor  *editor);
+static gboolean gimp_device_editor_select_device (GimpContainerView *view,
+                                                  GList             *viewables,
+                                                  GList             *paths,
+                                                  GimpDeviceEditor  *editor);
 
 static void   gimp_device_editor_delete_clicked (GtkWidget         *button,
                                                  GimpDeviceEditor  *editor);
@@ -149,7 +150,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_paned_pack1 (GTK_PANED (editor), private->treeview, TRUE, FALSE);
   gtk_widget_show (private->treeview);
 
-  g_signal_connect_object (private->treeview, "select-item",
+  g_signal_connect_object (private->treeview, "select-items",
                            G_CALLBACK (gimp_device_editor_select_device),
                            G_OBJECT (editor), 0);
 
@@ -431,48 +432,65 @@ gimp_device_editor_device_changed (GimpDeviceInfo   *info,
     }
 }
 
-static void
+static gboolean
 gimp_device_editor_select_device (GimpContainerView *view,
-                                  GimpViewable      *viewable,
-                                  gpointer           insert_data,
+                                  GList             *viewables,
+                                  GList             *paths,
                                   GimpDeviceEditor  *editor)
 {
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
 
-  if (viewable && insert_data)
+  g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
+
+  if (viewables)
     {
       GimpContainerTreeView *treeview;
       GtkWidget             *widget;
+      GtkTreeIter            iter;
+      gboolean               iter_valid;
 
       treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
 
-      gtk_tree_model_get (treeview->model, insert_data,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
-                          -1);
-
-      if (widget)
+      for (iter_valid = gtk_tree_model_get_iter_first (treeview->model, &iter);
+           iter_valid;
+           iter_valid = gtk_tree_model_iter_next (treeview->model, &iter))
         {
-          GimpDeviceInfo *info;
-          gboolean        delete_sensitive = FALSE;
+          GimpViewRenderer *renderer;
 
-          gtk_stack_set_visible_child (GTK_STACK (private->stack), widget);
+          gtk_tree_model_get (treeview->model, &iter,
+                              GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
+                              GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,  &renderer,
+                              -1);
+          if (renderer->viewable == viewables->data && widget)
+            {
+              GimpDeviceInfo *info;
+              gboolean        delete_sensitive = FALSE;
 
-          g_object_get (widget ,"info", &info, NULL);
+              gtk_stack_set_visible_child (GTK_STACK (private->stack), widget);
 
-          gtk_label_set_text (GTK_LABEL (private->label),
-                              gimp_object_get_name (info));
-          gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
-                                        gimp_viewable_get_icon_name (GIMP_VIEWABLE (info)),
-                                        GTK_ICON_SIZE_BUTTON);
+              g_object_get (widget ,"info", &info, NULL);
 
-          if (! gimp_device_info_get_device (info, NULL))
-            delete_sensitive = TRUE;
+              gtk_label_set_text (GTK_LABEL (private->label),
+                                  gimp_object_get_name (info));
+              gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
+                                            gimp_viewable_get_icon_name (GIMP_VIEWABLE (info)),
+                                            GTK_ICON_SIZE_BUTTON);
 
-          gtk_widget_set_sensitive (private->delete_button, delete_sensitive);
+              if (! gimp_device_info_get_device (info, NULL))
+                delete_sensitive = TRUE;
 
-          g_object_unref (info);
+              gtk_widget_set_sensitive (private->delete_button, delete_sensitive);
+
+              g_object_unref (info);
+              g_object_unref (renderer);
+
+              break;
+            }
+          g_object_unref (renderer);
         }
     }
+
+  return TRUE;
 }
 
 static void
