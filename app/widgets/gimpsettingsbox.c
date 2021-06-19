@@ -111,9 +111,10 @@ static gboolean
             gimp_settings_box_row_separator_func (GtkTreeModel      *model,
                                                   GtkTreeIter       *iter,
                                                   gpointer           data);
-static void   gimp_settings_box_setting_selected (GimpContainerView *view,
-                                                  GimpViewable      *object,
-                                                  gpointer           insert_data,
+static gboolean
+              gimp_settings_box_setting_selected (GimpContainerView *view,
+                                                  GList             *objects,
+                                                  GList             *paths,
                                                   GimpSettingsBox   *box);
 static gboolean gimp_settings_box_menu_press     (GtkWidget         *widget,
                                                   GdkEventButton    *bevent,
@@ -298,7 +299,7 @@ gimp_settings_box_constructed (GObject *object)
   gimp_help_set_help_data (private->combo, _("Pick a preset from the list"),
                            NULL);
 
-  g_signal_connect_after (private->combo, "select-item",
+  g_signal_connect_after (private->combo, "select-items",
                           G_CALLBACK (gimp_settings_box_setting_selected),
                           box);
 
@@ -546,15 +547,19 @@ gimp_settings_box_row_separator_func (GtkTreeModel *model,
   return name == NULL;
 }
 
-static void
+static gboolean
 gimp_settings_box_setting_selected (GimpContainerView *view,
-                                    GimpViewable      *object,
-                                    gpointer           insert_data,
+                                    GList             *objects,
+                                    GList             *paths,
                                     GimpSettingsBox   *box)
 {
-  if (object)
+  g_return_val_if_fail (g_list_length (objects) < 2, FALSE);
+
+  if (objects)
     g_signal_emit (box, settings_box_signals[SELECTED], 0,
-                   object);
+                   objects->data);
+
+  return TRUE;
 }
 
 static gboolean

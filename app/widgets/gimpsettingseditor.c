@@ -89,9 +89,9 @@ static gboolean
           gimp_settings_editor_row_separator_func (GtkTreeModel        *model,
                                                    GtkTreeIter         *iter,
                                                    gpointer             data);
-static void   gimp_settings_editor_select_item    (GimpContainerView   *view,
-                                                   GimpViewable        *viewable,
-                                                   gpointer             insert_data,
+static gboolean gimp_settings_editor_select_items (GimpContainerView   *view,
+                                                   GList               *viewables,
+                                                   GList               *paths,
                                                    GimpSettingsEditor  *editor);
 static void   gimp_settings_editor_import_clicked (GtkWidget           *widget,
                                                    GimpSettingsEditor  *editor);
@@ -178,8 +178,8 @@ gimp_settings_editor_constructed (GObject *object)
                                         gimp_settings_editor_row_separator_func,
                                         private->view, NULL);
 
-  g_signal_connect (tree_view, "select-item",
-                    G_CALLBACK (gimp_settings_editor_select_item),
+  g_signal_connect (tree_view, "select-items",
+                    G_CALLBACK (gimp_settings_editor_select_items),
                     editor);
 
   gimp_container_tree_view_connect_name_edited (tree_view,
@@ -298,22 +298,26 @@ gimp_settings_editor_row_separator_func (GtkTreeModel *model,
   return name == NULL;
 }
 
-static void
-gimp_settings_editor_select_item (GimpContainerView  *view,
-                                  GimpViewable       *viewable,
-                                  gpointer            insert_data,
-                                  GimpSettingsEditor *editor)
+static gboolean
+gimp_settings_editor_select_items (GimpContainerView  *view,
+                                   GList              *viewables,
+                                   GList              *paths,
+                                   GimpSettingsEditor *editor)
 {
   GimpSettingsEditorPrivate *private = GET_PRIVATE (editor);
   gboolean                   sensitive;
 
-  private->selected_setting = G_OBJECT (viewable);
+  g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
+
+  private->selected_setting = viewables ? G_OBJECT (viewables->data) : NULL;
 
   sensitive = (private->selected_setting != NULL &&
                gimp_object_get_name (private->selected_setting));
 
   gtk_widget_set_sensitive (private->export_button, sensitive);
   gtk_widget_set_sensitive (private->delete_button, sensitive);
+
+  return TRUE;
 }
 
 static void

@@ -89,9 +89,9 @@ static void gimp_controller_list_row_activated   (GtkTreeView        *tv,
                                                   GtkTreeViewColumn  *column,
                                                   GimpControllerList *list);
 
-static void gimp_controller_list_select_item     (GimpContainerView  *view,
-                                                  GimpViewable       *viewable,
-                                                  gpointer            insert_data,
+static gboolean gimp_controller_list_select_items(GimpContainerView  *view,
+                                                  GList              *viewables,
+                                                  GList              *paths,
                                                   GimpControllerList *list);
 static void gimp_controller_list_activate_item   (GimpContainerView  *view,
                                                   GimpViewable       *viewable,
@@ -282,8 +282,8 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_box_pack_start (GTK_BOX (list->hbox), list->dest, TRUE, TRUE, 0);
   gtk_widget_show (list->dest);
 
-  g_signal_connect_object (list->dest, "select-item",
-                           G_CALLBACK (gimp_controller_list_select_item),
+  g_signal_connect_object (list->dest, "select-items",
+                           G_CALLBACK (gimp_controller_list_select_items),
                            G_OBJECT (list), 0);
   g_signal_connect_object (list->dest, "activate-item",
                            G_CALLBACK (gimp_controller_list_activate_item),
@@ -451,15 +451,17 @@ gimp_controller_list_row_activated (GtkTreeView        *tv,
     gtk_button_clicked (GTK_BUTTON (list->add_button));
 }
 
-static void
-gimp_controller_list_select_item (GimpContainerView  *view,
-                                  GimpViewable       *viewable,
-                                  gpointer            insert_data,
-                                  GimpControllerList *list)
+static gboolean
+gimp_controller_list_select_items (GimpContainerView  *view,
+                                   GList              *viewables,
+                                   GList              *paths,
+                                   GimpControllerList *list)
 {
   gboolean selected;
 
-  list->dest_info = GIMP_CONTROLLER_INFO (viewable);
+  g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
+
+  list->dest_info = viewables ? GIMP_CONTROLLER_INFO (viewables->data) : NULL;
 
   selected = GIMP_IS_CONTROLLER_INFO (list->dest_info);
 
@@ -482,6 +484,8 @@ gimp_controller_list_select_item (GimpContainerView  *view,
   gtk_widget_set_sensitive (list->edit_button, selected);
   gtk_widget_set_sensitive (list->up_button,   selected);
   gtk_widget_set_sensitive (list->down_button, selected);
+
+  return TRUE;
 }
 
 static void
