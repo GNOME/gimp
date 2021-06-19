@@ -33,7 +33,6 @@
 #include "core/gimpitem.h"
 #include "core/gimp-memsize.h"
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 #include "core/gimpprogress.h"
 
 #include "gimppdb.h"
