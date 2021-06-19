@@ -86,6 +86,7 @@ layer_add_mask_dialog_new (GList               *layers,
   GtkWidget          *button;
   GimpImage          *image;
   GimpChannel        *channel;
+  GList              *channels;
   gchar              *title;
   gchar              *desc;
   gint                n_layers = g_list_length (layers);
@@ -169,9 +170,13 @@ layer_add_mask_dialog_new (GList               *layers,
                     G_CALLBACK (layer_add_mask_dialog_channel_selected),
                     private);
 
-  channel = gimp_image_get_active_channel (image);
-
-  if (! channel)
+  channels = gimp_image_get_selected_channels (image);
+  if (channels)
+    /* Mask dialog only requires one channel. Just take any of the
+     * selected ones randomly.
+     */
+    channel = channels->data;
+  else
     channel = GIMP_CHANNEL (gimp_container_get_first_child (gimp_image_get_channels (image)));
 
   gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),

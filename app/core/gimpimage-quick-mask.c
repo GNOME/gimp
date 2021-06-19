@@ -65,7 +65,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
   if (private->quick_mask_state)
     channel_was_active = (private->quick_mask_state & CHANNEL_WAS_ACTIVE) != 0;
   else
-    channel_was_active = gimp_image_get_active_channel (image) != NULL;
+    channel_was_active = (gimp_image_get_selected_channels (image) != NULL);
 
   /*  Set private->quick_mask_state early so we can return early when
    *  being called recursively.

@@ -1383,9 +1383,15 @@ layers_mask_add_last_vals_cmd_callback (GimpAction *action,
 
   if (config->layer_add_mask_type == GIMP_ADD_MASK_CHANNEL)
     {
-      channel = gimp_image_get_active_channel (image);
+      GList *selected_channels;
 
-      if (! channel)
+      selected_channels = gimp_image_get_selected_channels (image);
+
+      if (selected_channels)
+        {
+          channel = selected_channels->data;
+        }
+      else
         {
           GimpContainer *channels = gimp_image_get_channels (image);
 

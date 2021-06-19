@@ -766,7 +766,7 @@ layers_actions_update (GimpActionGroup *group,
   GList         *iter           = NULL;
   GimpLayer     *layer          = NULL;
   gboolean       fs             = FALSE;    /*  floating sel           */
-  gboolean       ac             = FALSE;    /*  active channel         */
+  gboolean       ac             = FALSE;    /*  Has selected channels  */
   gboolean       sel            = FALSE;
   gboolean       indexed        = FALSE;    /*  is indexed             */
   gboolean       lock_alpha     = TRUE;
@@ -802,7 +802,7 @@ layers_actions_update (GimpActionGroup *group,
   if (image)
     {
       fs      = (gimp_image_get_floating_selection (image) != NULL);
-      ac      = (gimp_image_get_active_channel (image) != NULL);
+      ac      = (gimp_image_get_selected_channels (image) != NULL);
       sel     = ! gimp_channel_is_empty (gimp_image_get_mask (image));
       indexed = (gimp_image_get_base_type (image) == GIMP_INDEXED);
 
