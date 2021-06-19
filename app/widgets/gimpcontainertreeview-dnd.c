@@ -206,6 +206,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
       }
       break;
 
+    case GIMP_DND_TYPE_CHANNEL_LIST:
     case GIMP_DND_TYPE_LAYER_LIST:
       /* Various GimpViewable list (GList) drag data. */
       {
