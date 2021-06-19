@@ -625,7 +625,7 @@ xcf_save_channel_props (XcfInfo      *info,
 {
   GimpParasiteList *parasites;
 
-  if (channel == gimp_image_get_active_channel (image))
+  if (g_list_find (gimp_image_get_selected_channels (image), channel))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_CHANNEL, error));
 
   if (channel == gimp_image_get_mask (image))

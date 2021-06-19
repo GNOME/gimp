@@ -680,8 +680,8 @@ xcf_load_image (Gimp     *gimp,
       g_clear_pointer (&info->selected_layers, g_list_free);
     }
 
-  if (info->active_channel)
-    gimp_image_set_active_channel (image, info->active_channel);
+  if (info->selected_channels)
+    gimp_image_set_selected_channels (image, info->selected_channels);
 
   if (info->file)
     gimp_image_set_file (image, info->file);
@@ -1674,18 +1674,23 @@ xcf_load_channel_props (XcfInfo      *info,
           return TRUE;
 
         case PROP_ACTIVE_CHANNEL:
-          info->active_channel = *channel;
+          info->selected_channels = g_list_prepend (info->selected_channels, *channel);
           break;
 
         case PROP_SELECTION:
           {
             GimpChannel *mask;
+            GList       *iter;
 
             /* We're going to delete *channel, Don't leave its pointer
              * in @info. See bug #767873.
              */
-            if (*channel == info->active_channel)
-              info->active_channel = NULL;
+            for (iter = info->selected_channels; iter; iter = iter->next)
+              if (*channel == iter->data)
+                {
+                  info->selected_channels = g_list_delete_link (info->selected_channels, iter);
+                  break;
+                }
 
             mask =
               gimp_selection_new (image,
@@ -1698,7 +1703,7 @@ xcf_load_channel_props (XcfInfo      *info,
             g_object_unref (*channel);
             *channel = mask;
 
-            /* Don't restore info->active_channel because the
+            /* Don't restore info->selected_channels because the
              * selection can't be the active channel
              */
           }
@@ -2177,8 +2182,14 @@ xcf_load_channel (XcfInfo   *info,
   /* don't unref the selection of a partially loaded XCF */
   if (channel != gimp_image_get_mask (image))
     {
-      if (info->active_channel == channel)
-        info->active_channel = NULL;
+      GList *iter;
+
+      for (iter = info->selected_channels; iter; iter = iter->next)
+        if (channel == iter->data)
+          {
+            info->selected_channels = g_list_delete_link (info->selected_channels, iter);
+            break;
+          }
 
       if (info->floating_sel_drawable == GIMP_DRAWABLE (channel))
         info->floating_sel_drawable = NULL;
@@ -2195,6 +2206,7 @@ xcf_load_layer_mask (XcfInfo   *info,
 {
   GimpLayerMask *layer_mask;
   GimpChannel   *channel;
+  GList         *iter;
   goffset        hierarchy_offset;
   gint           width;
   gint           height;
@@ -2248,8 +2260,12 @@ xcf_load_layer_mask (XcfInfo   *info,
   return layer_mask;
 
  error:
-  if (info->active_channel == GIMP_CHANNEL (layer_mask))
-    info->active_channel = NULL;
+  for (iter = info->selected_channels; iter; iter = iter->next)
+    if (layer_mask == iter->data)
+      {
+        info->selected_channels = g_list_delete_link (info->selected_channels, iter);
+        break;
+      }
 
   if (info->floating_sel_drawable == GIMP_DRAWABLE (layer_mask))
     info->floating_sel_drawable = NULL;
