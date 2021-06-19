@@ -89,9 +89,6 @@ static void          gimp_container_tree_view_rename_item       (GimpContainerVi
 static void          gimp_container_tree_view_expand_item       (GimpContainerView           *view,
                                                                  GimpViewable                *viewable,
                                                                  gpointer                     insert_data);
-static gboolean      gimp_container_tree_view_select_item       (GimpContainerView           *view,
-                                                                 GimpViewable                *viewable,
-                                                                 gpointer                     insert_data);
 static gboolean      gimp_container_tree_view_select_items      (GimpContainerView           *view,
                                                                  GList                       *viewables,
                                                                  GList                       *paths);
@@ -222,7 +219,6 @@ gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->reorder_item       = gimp_container_tree_view_reorder_item;
   iface->rename_item        = gimp_container_tree_view_rename_item;
   iface->expand_item        = gimp_container_tree_view_expand_item;
-  iface->select_item        = gimp_container_tree_view_select_item;
   iface->select_items       = gimp_container_tree_view_select_items;
   iface->clear_items        = gimp_container_tree_view_clear_items;
   iface->set_view_size      = gimp_container_tree_view_set_view_size;
@@ -868,53 +864,6 @@ gimp_container_tree_view_expand_item (GimpContainerView *view,
       gtk_tree_path_free (path);
       g_object_unref (renderer);
     }
-}
-
-static gboolean
-gimp_container_tree_view_select_item (GimpContainerView *view,
-                                      GimpViewable      *viewable,
-                                      gpointer           insert_data)
-{
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-
-  if (viewable && insert_data)
-    {
-      GtkTreePath *path;
-      GtkTreePath *parent_path;
-      GtkTreeIter *iter = (GtkTreeIter *) insert_data;
-
-      path = gtk_tree_model_get_path (tree_view->model, iter);
-
-      parent_path = gtk_tree_path_copy (path);
-
-      if (gtk_tree_path_up (parent_path))
-        gtk_tree_view_expand_to_path (tree_view->view, parent_path);
-
-      gtk_tree_path_free (parent_path);
-
-      g_signal_handlers_block_by_func (tree_view->priv->selection,
-                                       gimp_container_tree_view_selection_changed,
-                                       tree_view);
-
-      gtk_tree_view_set_cursor (tree_view->view, path, NULL, FALSE);
-
-      g_signal_handlers_unblock_by_func (tree_view->priv->selection,
-                                         gimp_container_tree_view_selection_changed,
-                                         tree_view);
-
-      gtk_tree_view_scroll_to_cell (tree_view->view, path,
-                                    NULL, FALSE, 0.0, 0.0);
-
-      gtk_tree_path_free (path);
-    }
-  else if (insert_data == NULL)
-    {
-      /* viewable == NULL && insert_data != NULL means multiple selection.
-       * viewable == NULL && insert_data == NULL means no selection. */
-      gtk_tree_selection_unselect_all (tree_view->priv->selection);
-    }
-
-  return TRUE;
 }
 
 static gboolean

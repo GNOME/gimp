@@ -74,9 +74,6 @@ static void     gimp_container_combo_box_reorder_item (GimpContainerView      *v
 static void     gimp_container_combo_box_rename_item  (GimpContainerView      *view,
                                                        GimpViewable           *viewable,
                                                        gpointer                insert_data);
-static gboolean  gimp_container_combo_box_select_item (GimpContainerView      *view,
-                                                       GimpViewable           *viewable,
-                                                       gpointer                insert_data);
 static gboolean  gimp_container_combo_box_select_items(GimpContainerView      *view,
                                                        GList                  *viewables,
                                                        GList                  *paths);
@@ -129,7 +126,6 @@ gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface)
   iface->remove_item   = gimp_container_combo_box_remove_item;
   iface->reorder_item  = gimp_container_combo_box_reorder_item;
   iface->rename_item   = gimp_container_combo_box_rename_item;
-  iface->select_item   = gimp_container_combo_box_select_item;
   iface->select_items  = gimp_container_combo_box_select_items;
   iface->clear_items   = gimp_container_combo_box_clear_items;
   iface->set_view_size = gimp_container_combo_box_set_view_size;
@@ -350,38 +346,6 @@ gimp_container_combo_box_rename_item (GimpContainerView *view,
     gimp_container_tree_store_rename_item (GIMP_CONTAINER_TREE_STORE (model),
                                            viewable,
                                            insert_data);
-}
-
-static gboolean
-gimp_container_combo_box_select_item (GimpContainerView *view,
-                                      GimpViewable      *viewable,
-                                      gpointer           insert_data)
-{
-  GtkComboBox *combo_box = GTK_COMBO_BOX (view);
-
-  if (gtk_combo_box_get_model (GTK_COMBO_BOX (view)))
-    {
-      GtkTreeIter *iter = insert_data;
-
-     g_signal_handlers_block_by_func (combo_box,
-                                       gimp_container_combo_box_changed,
-                                       view);
-
-      if (iter)
-        {
-          gtk_combo_box_set_active_iter (combo_box, iter);
-        }
-      else
-        {
-          gtk_combo_box_set_active (combo_box, -1);
-        }
-
-      g_signal_handlers_unblock_by_func (combo_box,
-                                         gimp_container_combo_box_changed,
-                                         view);
-    }
-
-  return TRUE;
 }
 
 static gboolean

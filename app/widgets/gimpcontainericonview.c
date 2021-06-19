@@ -77,9 +77,6 @@ static void          gimp_container_icon_view_reorder_item      (GimpContainerVi
 static void          gimp_container_icon_view_rename_item       (GimpContainerView           *view,
                                                                  GimpViewable                *viewable,
                                                                  gpointer                     insert_data);
-static gboolean      gimp_container_icon_view_select_item       (GimpContainerView           *view,
-                                                                 GimpViewable                *viewable,
-                                                                 gpointer                     insert_data);
 static gboolean      gimp_container_icon_view_select_items      (GimpContainerView           *view,
                                                                  GList                       *items,
                                                                  GList                       *paths);
@@ -152,7 +149,6 @@ gimp_container_icon_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->remove_item        = gimp_container_icon_view_remove_item;
   iface->reorder_item       = gimp_container_icon_view_reorder_item;
   iface->rename_item        = gimp_container_icon_view_rename_item;
-  iface->select_item        = gimp_container_icon_view_select_item;
   iface->select_items       = gimp_container_icon_view_select_items;
   iface->clear_items        = gimp_container_icon_view_clear_items;
   iface->set_view_size      = gimp_container_icon_view_set_view_size;
@@ -471,57 +467,6 @@ gimp_container_icon_view_rename_item (GimpContainerView *view,
   gimp_container_tree_store_rename_item (GIMP_CONTAINER_TREE_STORE (icon_view->model),
                                          viewable,
                                          iter);
-}
-
-static gboolean
-gimp_container_icon_view_select_item (GimpContainerView *view,
-                                      GimpViewable      *viewable,
-                                      gpointer           insert_data)
-{
-  GimpContainerIconView *icon_view = GIMP_CONTAINER_ICON_VIEW (view);
-
-  if (viewable && insert_data)
-    {
-      GtkTreePath *path;
-      GtkTreePath *parent_path;
-      GtkTreeIter *iter = (GtkTreeIter *) insert_data;
-
-      path = gtk_tree_model_get_path (icon_view->model, iter);
-
-      parent_path = gtk_tree_path_copy (path);
-
-      if (gtk_tree_path_up (parent_path))
-        ;
-#if 0
-        gtk_icon_view_expand_to_path (icon_view->view, parent_path);
-#endif
-
-      gtk_tree_path_free (parent_path);
-
-      g_signal_handlers_block_by_func (icon_view->view,
-                                       gimp_container_icon_view_selection_changed,
-                                       icon_view);
-
-      gtk_icon_view_unselect_all (icon_view->view);
-      gtk_icon_view_select_path (icon_view->view, path);
-      gtk_icon_view_set_cursor (icon_view->view, path, NULL, FALSE);
-
-      g_signal_handlers_unblock_by_func (icon_view->view,
-                                         gimp_container_icon_view_selection_changed,
-                                         icon_view);
-
-      gtk_icon_view_scroll_to_path (icon_view->view, path, FALSE, 0.0, 0.0);
-
-      gtk_tree_path_free (path);
-    }
-  else if (insert_data == NULL)
-    {
-      /* viewable == NULL && insert_data != NULL means multiple selection.
-       * viewable == NULL && insert_data == NULL means no selection. */
-      gtk_icon_view_unselect_all (icon_view->view);
-    }
-
-  return TRUE;
 }
 
 static gboolean

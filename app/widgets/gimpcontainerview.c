@@ -45,7 +45,6 @@
 
 enum
 {
-  SELECT_ITEM,
   SELECT_ITEMS,
   ACTIVATE_ITEM,
   LAST_SIGNAL
@@ -157,17 +156,6 @@ static guint view_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_container_view_default_init (GimpContainerViewInterface *iface)
 {
-  view_signals[SELECT_ITEM] =
-    g_signal_new ("select-item",
-                  G_TYPE_FROM_INTERFACE (iface),
-                  G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpContainerViewInterface, select_item),
-                  NULL, NULL,
-                  gimp_marshal_BOOLEAN__OBJECT_POINTER,
-                  G_TYPE_BOOLEAN, 2,
-                  GIMP_TYPE_OBJECT,
-                  G_TYPE_POINTER);
-
   view_signals[SELECT_ITEMS] =
     g_signal_new ("select-items",
                   G_TYPE_FROM_INTERFACE (iface),
@@ -190,7 +178,6 @@ gimp_container_view_default_init (GimpContainerViewInterface *iface)
                   GIMP_TYPE_OBJECT,
                   G_TYPE_POINTER);
 
-  iface->select_item        = NULL;
   iface->select_items       = NULL;
   iface->activate_item      = NULL;
 
@@ -862,8 +849,8 @@ gimp_container_view_multi_selected (GimpContainerView *view,
  * the class to decide what type of data is passed along.
  *
  * Note that by default, the interface only implements some basic single
- * selection. Override select_item() and select_items() signals to get
- * more complete selection support.
+ * selection. Override select_items() signal to get more complete
+ * selection support.
  *
  * Returns: the number of selected items.
  */
@@ -1388,7 +1375,7 @@ gimp_container_view_context_changed (GimpContext       *context,
     viewables = g_list_prepend (viewables, viewable);
 
   if (! gimp_container_view_select_items (view, viewables))
-    g_warning ("%s: select_item() failed (should not happen)", G_STRFUNC);
+    g_warning ("%s: select_items() failed (should not happen)", G_STRFUNC);
 
   g_list_free (viewables);
 }

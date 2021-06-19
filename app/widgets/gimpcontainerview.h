@@ -44,9 +44,6 @@ struct _GimpContainerViewInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  gboolean (* select_item)        (GimpContainerView *view,
-                                   GimpViewable      *object,
-                                   gpointer           insert_data);
   gboolean (* select_items)       (GimpContainerView *view,
                                    GList             *items,
                                    GList             *paths);

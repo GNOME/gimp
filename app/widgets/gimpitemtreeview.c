@@ -148,9 +148,6 @@ static gpointer gimp_item_tree_view_insert_item     (GimpContainerView *view,
                                                      gpointer           parent_insert_data,
                                                      gint               index);
 static void  gimp_item_tree_view_insert_items_after (GimpContainerView *view);
-static gboolean gimp_item_tree_view_select_item     (GimpContainerView *view,
-                                                     GimpViewable      *item,
-                                                     gpointer           insert_data);
 static gboolean gimp_item_tree_view_select_items    (GimpContainerView *view,
                                                      GList             *items,
                                                      GList             *paths);
@@ -321,7 +318,6 @@ gimp_item_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->set_context        = gimp_item_tree_view_set_context;
   iface->insert_item        = gimp_item_tree_view_insert_item;
   iface->insert_items_after = gimp_item_tree_view_insert_items_after;
-  iface->select_item        = gimp_item_tree_view_select_item;
   iface->select_items       = gimp_item_tree_view_select_items;
   iface->activate_item      = gimp_item_tree_view_activate_item;
 }
@@ -1177,47 +1173,6 @@ gimp_item_tree_view_insert_items_after (GimpContainerView *view)
 
   selected_items = item_view_class->get_selected_items (item_view->priv->image);
   gimp_container_view_select_items (view, selected_items);
-}
-
-static gboolean
-gimp_item_tree_view_select_item (GimpContainerView *view,
-                                 GimpViewable      *item,
-                                 gpointer           insert_data)
-{
-  GimpItemTreeView *tree_view         = GIMP_ITEM_TREE_VIEW (view);
-  gboolean          options_sensitive = FALSE;
-  gboolean          success;
-
-  success = parent_view_iface->select_item (view, item, insert_data);
-
-  if (item)
-    {
-      GimpItemTreeViewClass *item_view_class;
-      GList                 *items;
-
-      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (tree_view);
-
-      items = item_view_class->get_selected_items (tree_view->priv->image);
-
-      if (g_list_length (items) != 1 ||
-          items->data != (GimpItem *) item)
-        {
-          item_view_class->set_active_item (tree_view->priv->image,
-                                            GIMP_ITEM (item));
-
-          gimp_image_flush (tree_view->priv->image);
-          items = item_view_class->get_selected_items (tree_view->priv->image);
-        }
-
-      options_sensitive = TRUE;
-    }
-
-  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view)), tree_view);
-
-  if (tree_view->priv->options_box)
-    gtk_widget_set_sensitive (tree_view->priv->options_box, options_sensitive);
-
-  return success;
 }
 
 static gboolean

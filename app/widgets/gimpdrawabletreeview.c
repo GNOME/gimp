@@ -47,9 +47,6 @@ static void   gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterfac
 
 static void     gimp_drawable_tree_view_constructed   (GObject           *object);
 
-static gboolean gimp_drawable_tree_view_select_item   (GimpContainerView *view,
-                                                       GimpViewable      *item,
-                                                       gpointer           insert_data);
 static gboolean gimp_drawable_tree_view_select_items  (GimpContainerView *view,
                                                        GList             *items,
                                                        GList             *paths);
@@ -134,7 +131,6 @@ gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->select_item  = gimp_drawable_tree_view_select_item;
   iface->select_items = gimp_drawable_tree_view_select_items;
 }
 
@@ -167,41 +163,6 @@ gimp_drawable_tree_view_constructed (GObject *object)
 
 
 /*  GimpContainerView methods  */
-
-static gboolean
-gimp_drawable_tree_view_select_item (GimpContainerView *view,
-                                     GimpViewable      *item,
-                                     gpointer           insert_data)
-{
-  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
-  GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
-  gboolean          success   = TRUE;
-
-  if (image)
-    {
-      GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
-
-      success = (item         == NULL ||
-                 floating_sel == NULL ||
-                 item         == GIMP_VIEWABLE (floating_sel));
-
-      if (! success)
-        {
-          Gimp        *gimp    = image->gimp;
-          GimpContext *context = gimp_get_user_context (gimp);
-          GimpDisplay *display = gimp_context_get_display (context);
-
-          gimp_message_literal (gimp, G_OBJECT (display), GIMP_MESSAGE_WARNING,
-                                _("Cannot select item while a floating "
-                                  "selection is active."));
-        }
-    }
-
-  if (success)
-    success = parent_view_iface->select_item (view, item, insert_data);
-
-  return success;
-}
 
 static gboolean
 gimp_drawable_tree_view_select_items (GimpContainerView *view,
