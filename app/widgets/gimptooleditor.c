@@ -76,9 +76,6 @@ static void            gimp_tool_editor_view_iface_init           (GimpContainer
 
 static void            gimp_tool_editor_constructed               (GObject                    *object);
 
-static gboolean        gimp_tool_editor_select_item               (GimpContainerView          *view,
-                                                                   GimpViewable               *viewable,
-                                                                   gpointer                    insert_data);
 static gboolean        gimp_tool_editor_select_items              (GimpContainerView          *view,
                                                                    GList                      *items,
                                                                    GList                      *paths);
@@ -172,7 +169,6 @@ gimp_tool_editor_view_iface_init (GimpContainerViewInterface *iface)
   if (! parent_view_iface)
     parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
 
-  iface->select_item   = gimp_tool_editor_select_item;
   iface->select_items  = gimp_tool_editor_select_items;
   iface->set_container = gimp_tool_editor_set_container;
   iface->set_context   = gimp_tool_editor_set_context;
@@ -280,22 +276,6 @@ gimp_tool_editor_constructed (GObject *object)
                             tool_editor);
 
   gimp_tool_editor_update_sensitivity (tool_editor);
-}
-
-static gboolean
-gimp_tool_editor_select_item (GimpContainerView *container_view,
-                              GimpViewable      *viewable,
-                              gpointer           insert_data)
-{
-  GimpToolEditor *tool_editor = GIMP_TOOL_EDITOR (container_view);
-  gboolean        result;
-
-  result = parent_view_iface->select_item (container_view,
-                                           viewable, insert_data);
-
-  gimp_tool_editor_update_sensitivity (tool_editor);
-
-  return result;
 }
 
 static gboolean

@@ -60,9 +60,6 @@ static void     gimp_container_entry_reorder_item (GimpContainerView      *view,
 static void     gimp_container_entry_rename_item  (GimpContainerView      *view,
                                                    GimpViewable           *viewable,
                                                    gpointer                insert_data);
-static gboolean  gimp_container_entry_select_item (GimpContainerView      *view,
-                                                   GimpViewable           *viewable,
-                                                   gpointer                insert_data);
 static gboolean  gimp_container_entry_select_items(GimpContainerView      *view,
                                                    GList                  *items,
                                                    GList                  *paths);
@@ -112,7 +109,6 @@ gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface)
   iface->remove_item   = gimp_container_entry_remove_item;
   iface->reorder_item  = gimp_container_entry_reorder_item;
   iface->rename_item   = gimp_container_entry_rename_item;
-  iface->select_item   = gimp_container_entry_select_item;
   iface->select_items  = gimp_container_entry_select_items;
   iface->clear_items   = gimp_container_entry_clear_items;
   iface->set_view_size = gimp_container_entry_set_view_size;
@@ -312,53 +308,6 @@ gimp_container_entry_rename_item (GimpContainerView *view,
   gimp_container_tree_store_rename_item (GIMP_CONTAINER_TREE_STORE (model),
                                          viewable,
                                          insert_data);
-}
-
-static gboolean
-gimp_container_entry_select_item (GimpContainerView *view,
-                                  GimpViewable      *viewable,
-                                  gpointer           insert_data)
-{
-  GimpContainerEntry *container_entry = GIMP_CONTAINER_ENTRY (view);
-  GtkEntry           *entry           = GTK_ENTRY (view);
-  GtkTreeIter        *iter            = insert_data;
-
-  g_signal_handlers_block_by_func (entry,
-                                   gimp_container_entry_changed,
-                                   view);
-
-  if (container_entry->viewable)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (container_entry->viewable),
-                                    (gpointer) &container_entry->viewable);
-      container_entry->viewable = NULL;
-    }
-
-  if (iter)
-    {
-      container_entry->viewable = viewable;
-      g_object_add_weak_pointer (G_OBJECT (container_entry->viewable),
-                                 (gpointer) &container_entry->viewable);
-
-      gtk_entry_set_icon_from_icon_name (entry,
-                                         GTK_ENTRY_ICON_SECONDARY,
-                                         NULL);
-    }
-  else
-    {
-      /* The selected item does not exist. */
-      gtk_entry_set_icon_from_icon_name (entry,
-                                         GTK_ENTRY_ICON_SECONDARY,
-                                         GIMP_ICON_WILBER_EEK);
-    }
-
-  gtk_entry_set_text (entry, viewable? gimp_object_get_name (viewable) : "");
-
-  g_signal_handlers_unblock_by_func (entry,
-                                     gimp_container_entry_changed,
-                                     view);
-
-  return TRUE;
 }
 
 static gboolean

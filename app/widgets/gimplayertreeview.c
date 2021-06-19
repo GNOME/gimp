@@ -111,9 +111,6 @@ static gpointer   gimp_layer_tree_view_insert_item                (GimpContainer
                                                                    GimpViewable               *viewable,
                                                                    gpointer                    parent_insert_data,
                                                                    gint                        index);
-static gboolean   gimp_layer_tree_view_select_item                (GimpContainerView          *view,
-                                                                   GimpViewable               *item,
-                                                                   gpointer                    insert_data);
 static gboolean   gimp_layer_tree_view_select_items               (GimpContainerView          *view,
                                                                    GList                      *items,
                                                                    GList                      *paths);
@@ -266,7 +263,6 @@ gimp_layer_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->set_container = gimp_layer_tree_view_set_container;
   iface->set_context   = gimp_layer_tree_view_set_context;
   iface->insert_item   = gimp_layer_tree_view_insert_item;
-  iface->select_item   = gimp_layer_tree_view_select_item;
   iface->select_items  = gimp_layer_tree_view_select_items;
   iface->set_view_size = gimp_layer_tree_view_set_view_size;
 
@@ -692,43 +688,6 @@ gimp_layer_tree_view_insert_item (GimpContainerView *view,
 }
 
 static gboolean
-gimp_layer_tree_view_select_item (GimpContainerView *view,
-                                  GimpViewable      *item,
-                                  gpointer           insert_data)
-{
-  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
-  gboolean           success;
-
-  success = parent_view_iface->select_item (view, item, insert_data);
-
-  if (item)
-    {
-      if (success)
-        {
-          GList *layers = g_list_prepend (NULL, item);
-
-          gimp_layer_tree_view_update_borders (layer_view,
-                                               (GtkTreeIter *) insert_data);
-          gimp_layer_tree_view_update_options (layer_view, layers);
-          gimp_layer_tree_view_update_menu (layer_view, layers);
-          g_list_free (layers);
-        }
-    }
-
-  if (! success)
-    {
-      GimpEditor *editor = GIMP_EDITOR (view);
-
-      /* currently, select_item() only ever fails when there is a floating
-       * selection, which can be committed/canceled through the editor buttons.
-       */
-      gimp_widget_blink (GTK_WIDGET (gimp_editor_get_button_box (editor)));
-    }
-
-  return success;
-}
-
-static gboolean
 gimp_layer_tree_view_select_items (GimpContainerView *view,
                                    GList             *items,
                                    GList             *paths)
@@ -761,7 +720,7 @@ gimp_layer_tree_view_select_items (GimpContainerView *view,
     {
       GimpEditor *editor = GIMP_EDITOR (view);
 
-      /* currently, select_item() only ever fails when there is a floating
+      /* currently, select_items() only ever fails when there is a floating
        * selection, which can be committed/canceled through the editor buttons.
        */
       gimp_widget_blink (GTK_WIDGET (gimp_editor_get_button_box (editor)));
