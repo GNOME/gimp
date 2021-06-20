@@ -62,7 +62,7 @@
         )
     )
 
-    (gimp-edit-copy drawable)
+    (gimp-edit-copy 1 (make-vector 1 drawable))
 
     (set! brush-draw-type
           (if (= type GRAYA-IMAGE)
@@ -98,7 +98,11 @@
         (gimp-drawable-fill brush-draw FILL-TRANSPARENT)
     )
 
-    (let ((floating-sel (car (gimp-edit-paste brush-draw FALSE))))
+    (let* (
+           (pasted (gimp-edit-paste brush-draw FALSE))
+           (num-pasted (car pasted))
+           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+          )
       (gimp-floating-sel-anchor floating-sel)
     )
 
@@ -108,7 +112,7 @@
                                    (number->string image)
                                    ".gbr"))
 
-    (file-gbr-save 1 brush-image brush-draw filename2 "" spacing name)
+    (file-gbr-save 1 brush-image 1 (make-vector 1 brush-draw) filename2 spacing name)
 
     (if (= from-selection TRUE)
         (begin
@@ -118,7 +122,7 @@
     )
 
     (gimp-image-undo-enable image)
-    (gimp-image-set-active-layer image drawable)
+    (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
     (gimp-image-delete brush-image)
     (gimp-displays-flush)
 
