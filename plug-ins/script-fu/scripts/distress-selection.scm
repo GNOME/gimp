@@ -35,7 +35,7 @@
        (theHeight (car (gimp-image-get-height inImage)))
        (theLayer 0)
        (theMode (car (gimp-image-get-base-type inImage)))
-       (prevLayer (car (gimp-image-get-active-layer inImage)))
+       (prevLayers (gimp-image-get-selected-layers inImage))
        )
 
     (gimp-context-push)
@@ -93,7 +93,7 @@
       )
     (gimp-image-undo-group-end theImage)
 
-    (gimp-image-set-active-layer theImage prevLayer)
+    (gimp-image-set-selected-layers theImage (car prevLayers) (cadr prevLayers))
 
     (gimp-displays-flush)
     (gimp-context-pop)
