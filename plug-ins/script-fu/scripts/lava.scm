@@ -43,73 +43,85 @@
         (select-height 0)
         (lava-layer 0)
         (active-layer 0)
+        (selected-layers (gimp-image-get-selected-layers image))
+        (num-selected-layers (car selected-layers))
+        (selected-layers-array (cadr selected-layers))
         )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
-    (gimp-image-undo-group-start image)
-
-    (if (= (car (gimp-drawable-has-alpha drawable)) FALSE)
-        (gimp-layer-add-alpha drawable)
-    )
-
-    (if (= (car (gimp-selection-is-empty image)) TRUE)
-        (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
-    )
-
-    (set! active-selection (car (gimp-selection-save image)))
-    (gimp-image-set-active-layer image drawable)
-
-    (set! selection-bounds (gimp-selection-bounds image))
-    (set! select-offset-x (cadr selection-bounds))
-    (set! select-offset-y (caddr selection-bounds))
-    (set! select-width (- (cadr (cddr selection-bounds)) select-offset-x))
-    (set! select-height (- (caddr (cddr selection-bounds)) select-offset-y))
-
-    (if (= separate-layer TRUE)
+    (if (= num-selected-layers 1)
         (begin
-          (set! lava-layer (car (gimp-layer-new image
-                                                select-width
-                                                select-height
-                                                type
-                                                "Lava Layer"
-                                                100
-                                                LAYER-MODE-NORMAL-LEGACY)))
+            (gimp-context-push)
+            (gimp-context-set-defaults)
+            (gimp-image-undo-group-start image)
 
-          (gimp-image-insert-layer image lava-layer 0 -1)
-          (gimp-layer-set-offsets lava-layer select-offset-x select-offset-y)
-          (gimp-selection-none image)
-          (gimp-drawable-edit-clear lava-layer)
+            (if (= (car (gimp-drawable-has-alpha drawable)) FALSE)
+                (gimp-layer-add-alpha drawable)
+            )
 
-          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
-          (gimp-image-set-active-layer image lava-layer)
+            (if (= (car (gimp-selection-is-empty image)) TRUE)
+                (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
+            )
+
+            (set! active-selection (car (gimp-selection-save image)))
+            (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
+
+            (set! selection-bounds (gimp-selection-bounds image))
+            (set! select-offset-x (cadr selection-bounds))
+            (set! select-offset-y (caddr selection-bounds))
+            (set! select-width (- (cadr (cddr selection-bounds)) select-offset-x))
+            (set! select-height (- (caddr (cddr selection-bounds)) select-offset-y))
+
+            (if (= separate-layer TRUE)
+                (begin
+                  (set! lava-layer (car (gimp-layer-new image
+                                                        select-width
+                                                        select-height
+                                                        type
+                                                        "Lava Layer"
+                                                        100
+                                                        LAYER-MODE-NORMAL-LEGACY)))
+
+                  (gimp-image-insert-layer image lava-layer 0 -1)
+                  (gimp-layer-set-offsets lava-layer select-offset-x select-offset-y)
+                  (gimp-selection-none image)
+                  (gimp-drawable-edit-clear lava-layer)
+
+                  (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
+                  (gimp-image-set-selected-layers image 1 (make-vector 1 lava-layer))
+                )
+            )
+
+            (set! selected-layers (gimp-image-get-selected-layers image))
+            (set! num-selected-layers (car selected-layers))
+            (set! selected-layers-array (cadr selected-layers))
+            (set! active-layer (aref selected-layers-array (- num-selected-layers 1)))
+
+            (if (= current-grad FALSE)
+                (gimp-context-set-gradient gradient)
+            )
+
+            (plug-in-solid-noise RUN-NONINTERACTIVE image active-layer FALSE TRUE seed 2 2 2)
+            (plug-in-cubism RUN-NONINTERACTIVE image active-layer tile_size 2.5 0)
+            (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask_size 0)
+            (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 0 0)
+            (plug-in-gauss-rle RUN-NONINTERACTIVE image active-layer 2 TRUE TRUE)
+            (plug-in-gradmap RUN-NONINTERACTIVE image num-selected-layers selected-layers-array)
+
+            (if (= keep-selection FALSE)
+                (gimp-selection-none image)
+            )
+
+            (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
+            (gimp-image-remove-channel image active-selection)
+
+            (gimp-image-undo-group-end image)
+            (gimp-context-pop)
+
+            (gimp-displays-flush)
         )
+    ; else
+        (gimp-message _"Lava works with exactly one selected layer")
     )
-
-    (set! active-layer (car (gimp-image-get-active-layer image)))
-
-    (if (= current-grad FALSE)
-        (gimp-context-set-gradient gradient)
-    )
-
-    (plug-in-solid-noise RUN-NONINTERACTIVE image active-layer FALSE TRUE seed 2 2 2)
-    (plug-in-cubism RUN-NONINTERACTIVE image active-layer tile_size 2.5 0)
-    (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask_size 0)
-    (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 0 0)
-    (plug-in-gauss-rle RUN-NONINTERACTIVE image active-layer 2 TRUE TRUE)
-    (plug-in-gradmap RUN-NONINTERACTIVE image active-layer)
-
-    (if (= keep-selection FALSE)
-        (gimp-selection-none image)
-    )
-
-    (gimp-image-set-active-layer image drawable)
-    (gimp-image-remove-channel image active-selection)
-
-    (gimp-image-undo-group-end image)
-    (gimp-context-pop)
-
-    (gimp-displays-flush)
   )
 )
 
