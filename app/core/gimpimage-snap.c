@@ -235,9 +235,12 @@ gimp_image_snap_point (GimpImage *image,
   *tx = x;
   *ty = y;
 
-  if (! gimp_image_get_guides (image))         snap_to_guides  = FALSE;
-  if (! gimp_image_get_grid (image))           snap_to_grid    = FALSE;
-  if (! gimp_image_get_active_vectors (image)) snap_to_vectors = FALSE;
+  if (! gimp_image_get_guides (image))
+    snap_to_guides  = FALSE;
+  if (! gimp_image_get_grid (image))
+    snap_to_grid    = FALSE;
+  if (! gimp_image_get_selected_vectors (image))
+    snap_to_vectors = FALSE;
 
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors))
     return FALSE;
@@ -336,27 +339,33 @@ gimp_image_snap_point (GimpImage *image,
 
   if (snap_to_vectors)
     {
-      GimpVectors *vectors = gimp_image_get_active_vectors (image);
-      GimpStroke  *stroke  = NULL;
-      GimpCoords   coords  = { 0, 0, 0, 0, 0 };
+      GList      *selected_vectors = gimp_image_get_selected_vectors (image);
+      GList      *iter;
+      GimpStroke *stroke           = NULL;
+      GimpCoords  coords           = { 0, 0, 0, 0, 0 };
 
       coords.x = x;
       coords.y = y;
 
-      while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+      for (iter = selected_vectors; iter; iter = iter->next)
         {
-          GimpCoords nearest;
+          GimpVectors *vectors = iter->data;
 
-          if (gimp_stroke_nearest_point_get (stroke, &coords, 1.0,
-                                             &nearest,
-                                             NULL, NULL, NULL) >= 0)
+          while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
             {
-              snapped |= gimp_image_snap_distance (x, nearest.x,
-                                                   epsilon_x,
-                                                   &mindist_x, tx);
-              snapped |= gimp_image_snap_distance (y, nearest.y,
-                                                   epsilon_y,
-                                                   &mindist_y, ty);
+              GimpCoords nearest;
+
+              if (gimp_stroke_nearest_point_get (stroke, &coords, 1.0,
+                                                 &nearest,
+                                                 NULL, NULL, NULL) >= 0)
+                {
+                  snapped |= gimp_image_snap_distance (x, nearest.x,
+                                                       epsilon_x,
+                                                       &mindist_x, tx);
+                  snapped |= gimp_image_snap_distance (y, nearest.y,
+                                                       epsilon_y,
+                                                       &mindist_y, ty);
+                }
             }
         }
     }
@@ -393,9 +402,12 @@ gimp_image_snap_rectangle (GimpImage *image,
   *tx1 = x1;
   *ty1 = y1;
 
-  if (! gimp_image_get_guides (image))         snap_to_guides  = FALSE;
-  if (! gimp_image_get_grid (image))           snap_to_grid    = FALSE;
-  if (! gimp_image_get_active_vectors (image)) snap_to_vectors = FALSE;
+  if (! gimp_image_get_guides (image))
+    snap_to_guides  = FALSE;
+  if (! gimp_image_get_grid (image))
+    snap_to_grid    = FALSE;
+  if (! gimp_image_get_selected_vectors (image))
+    snap_to_vectors = FALSE;
 
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors))
     return FALSE;
@@ -474,208 +486,214 @@ gimp_image_snap_rectangle (GimpImage *image,
 
   if (snap_to_vectors)
     {
-      GimpVectors *vectors = gimp_image_get_active_vectors (image);
-      GimpStroke  *stroke  = NULL;
-      GimpCoords   coords1 = GIMP_COORDS_DEFAULT_VALUES;
-      GimpCoords   coords2 = GIMP_COORDS_DEFAULT_VALUES;
+      GList      *selected_vectors = gimp_image_get_selected_vectors (image);
+      GList      *iter;
+      GimpStroke *stroke           = NULL;
+      GimpCoords  coords1          = GIMP_COORDS_DEFAULT_VALUES;
+      GimpCoords  coords2          = GIMP_COORDS_DEFAULT_VALUES;
 
-      while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+      for (iter = selected_vectors; iter; iter = iter->next)
         {
-          GimpCoords nearest;
-          gdouble    dist;
+          GimpVectors *vectors = iter->data;
 
-          /*  top edge  */
-
-          coords1.x = x1;
-          coords1.y = y1;
-          coords2.x = x2;
-          coords2.y = y1;
-
-          if (gimp_stroke_nearest_tangent_get (stroke, &coords1, &coords2,
-                                               1.0, &nearest,
-                                               NULL, NULL, NULL) >= 0)
+          while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
             {
-              snapped |= gimp_image_snap_distance (y1, nearest.y,
-                                                   epsilon_y,
-                                                   &mindist_y, ty1);
-            }
+              GimpCoords nearest;
+              gdouble    dist;
 
-          if (gimp_stroke_nearest_intersection_get (stroke, &coords1, &coords2,
-                                                    1.0, &nearest,
-                                                    NULL, NULL, NULL) >= 0)
-            {
-              snapped |= gimp_image_snap_distance (x1, nearest.x,
-                                                   epsilon_x,
-                                                   &mindist_x, tx1);
-            }
+              /*  top edge  */
 
-          if (gimp_stroke_nearest_intersection_get (stroke, &coords2, &coords1,
-                                                    1.0, &nearest,
-                                                    NULL, NULL, NULL) >= 0)
-            {
-              dist = ABS (nearest.x - x2);
+              coords1.x = x1;
+              coords1.y = y1;
+              coords2.x = x2;
+              coords2.y = y1;
 
-              if (dist < MIN (epsilon_x, mindist_x))
+              if (gimp_stroke_nearest_tangent_get (stroke, &coords1, &coords2,
+                                                   1.0, &nearest,
+                                                   NULL, NULL, NULL) >= 0)
                 {
-                  mindist_x = dist;
-                  *tx1 = RINT (x1 + (nearest.x - x2));
-                  snapped = TRUE;
-                }
-            }
-
-          /*  bottom edge  */
-
-          coords1.x = x1;
-          coords1.y = y2;
-          coords2.x = x2;
-          coords2.y = y2;
-
-          if (gimp_stroke_nearest_tangent_get (stroke, &coords1, &coords2,
-                                               1.0, &nearest,
-                                               NULL, NULL, NULL) >= 0)
-            {
-              dist = ABS (nearest.y - y2);
-
-              if (dist < MIN (epsilon_y, mindist_y))
-                {
-                  mindist_y = dist;
-                  *ty1 = RINT (y1 + (nearest.y - y2));
-                  snapped = TRUE;
-                }
-            }
-
-          if (gimp_stroke_nearest_intersection_get (stroke, &coords1, &coords2,
-                                                    1.0, &nearest,
-                                                    NULL, NULL, NULL) >= 0)
-            {
-              snapped |= gimp_image_snap_distance (x1, nearest.x,
-                                                   epsilon_x,
-                                                   &mindist_x, tx1);
-            }
-
-          if (gimp_stroke_nearest_intersection_get (stroke, &coords2, &coords1,
-                                                    1.0, &nearest,
-                                                    NULL, NULL, NULL) >= 0)
-            {
-              dist = ABS (nearest.x - x2);
-
-              if (dist < MIN (epsilon_x, mindist_x))
-                {
-                  mindist_x = dist;
-                  *tx1 = RINT (x1 + (nearest.x - x2));
-                  snapped = TRUE;
-                }
-            }
-
-          /*  left edge  */
-
-          coords1.x = x1;
-          coords1.y = y1;
-          coords2.x = x1;
-          coords2.y = y2;
-
-          if (gimp_stroke_nearest_tangent_get (stroke, &coords1, &coords2,
-                                               1.0, &nearest,
-                                               NULL, NULL, NULL) >= 0)
-            {
-              snapped |= gimp_image_snap_distance (x1, nearest.x,
-                                                   epsilon_x,
-                                                   &mindist_x, tx1);
-            }
-
-          if (gimp_stroke_nearest_intersection_get (stroke, &coords1, &coords2,
-                                                    1.0, &nearest,
-                                                    NULL, NULL, NULL) >= 0)
-            {
-              snapped |= gimp_image_snap_distance (y1, nearest.y,
-                                                   epsilon_y,
-                                                   &mindist_y, ty1);
-            }
-
-          if (gimp_stroke_nearest_intersection_get (stroke, &coords2, &coords1,
-                                                    1.0, &nearest,
-                                                    NULL, NULL, NULL) >= 0)
-            {
-              dist = ABS (nearest.y - y2);
-
-              if (dist < MIN (epsilon_y, mindist_y))
-                {
-                  mindist_y = dist;
-                  *ty1 = RINT (y1 + (nearest.y - y2));
-                  snapped = TRUE;
-                }
-            }
-
-          /*  right edge  */
-
-          coords1.x = x2;
-          coords1.y = y1;
-          coords2.x = x2;
-          coords2.y = y2;
-
-          if (gimp_stroke_nearest_tangent_get (stroke, &coords1, &coords2,
-                                               1.0, &nearest,
-                                               NULL, NULL, NULL) >= 0)
-            {
-              dist = ABS (nearest.x - x2);
-
-              if (dist < MIN (epsilon_x, mindist_x))
-                {
-                  mindist_x = dist;
-                  *tx1 = RINT (x1 + (nearest.x - x2));
-                  snapped = TRUE;
-                }
-            }
-
-          if (gimp_stroke_nearest_intersection_get (stroke, &coords1, &coords2,
-                                                    1.0, &nearest,
-                                                    NULL, NULL, NULL) >= 0)
-            {
-              snapped |= gimp_image_snap_distance (y1, nearest.y,
-                                                   epsilon_y,
-                                                   &mindist_y, ty1);
-            }
-
-          if (gimp_stroke_nearest_intersection_get (stroke, &coords2, &coords1,
-                                                    1.0, &nearest,
-                                                    NULL, NULL, NULL) >= 0)
-            {
-              dist = ABS (nearest.y - y2);
-
-              if (dist < MIN (epsilon_y, mindist_y))
-                {
-                  mindist_y = dist;
-                  *ty1 = RINT (y1 + (nearest.y - y2));
-                  snapped = TRUE;
-                }
-            }
-
-          /*  center  */
-
-          coords1.x = x_center;
-          coords1.y = y_center;
-
-          if (gimp_stroke_nearest_point_get (stroke, &coords1, 1.0,
-                                             &nearest,
-                                             NULL, NULL, NULL) >= 0)
-            {
-              if (gimp_image_snap_distance (x_center, nearest.x,
-                                            epsilon_x,
-                                            &mindist_x, &nx))
-                {
-                  mindist_x = ABS (nx - x_center);
-                  *tx1 = RINT (x1 + (nx - x_center));
-                  snapped = TRUE;
+                  snapped |= gimp_image_snap_distance (y1, nearest.y,
+                                                       epsilon_y,
+                                                       &mindist_y, ty1);
                 }
 
-              if (gimp_image_snap_distance (y_center, nearest.y,
-                                            epsilon_y,
-                                            &mindist_y, &ny))
+              if (gimp_stroke_nearest_intersection_get (stroke, &coords1, &coords2,
+                                                        1.0, &nearest,
+                                                        NULL, NULL, NULL) >= 0)
                 {
-                  mindist_y = ABS (ny - y_center);
-                  *ty1 = RINT (y1 + (ny - y_center));
-                  snapped = TRUE;
-               }
+                  snapped |= gimp_image_snap_distance (x1, nearest.x,
+                                                       epsilon_x,
+                                                       &mindist_x, tx1);
+                }
+
+              if (gimp_stroke_nearest_intersection_get (stroke, &coords2, &coords1,
+                                                        1.0, &nearest,
+                                                        NULL, NULL, NULL) >= 0)
+                {
+                  dist = ABS (nearest.x - x2);
+
+                  if (dist < MIN (epsilon_x, mindist_x))
+                    {
+                      mindist_x = dist;
+                      *tx1 = RINT (x1 + (nearest.x - x2));
+                      snapped = TRUE;
+                    }
+                }
+
+              /*  bottom edge  */
+
+              coords1.x = x1;
+              coords1.y = y2;
+              coords2.x = x2;
+              coords2.y = y2;
+
+              if (gimp_stroke_nearest_tangent_get (stroke, &coords1, &coords2,
+                                                   1.0, &nearest,
+                                                   NULL, NULL, NULL) >= 0)
+                {
+                  dist = ABS (nearest.y - y2);
+
+                  if (dist < MIN (epsilon_y, mindist_y))
+                    {
+                      mindist_y = dist;
+                      *ty1 = RINT (y1 + (nearest.y - y2));
+                      snapped = TRUE;
+                    }
+                }
+
+              if (gimp_stroke_nearest_intersection_get (stroke, &coords1, &coords2,
+                                                        1.0, &nearest,
+                                                        NULL, NULL, NULL) >= 0)
+                {
+                  snapped |= gimp_image_snap_distance (x1, nearest.x,
+                                                       epsilon_x,
+                                                       &mindist_x, tx1);
+                }
+
+              if (gimp_stroke_nearest_intersection_get (stroke, &coords2, &coords1,
+                                                        1.0, &nearest,
+                                                        NULL, NULL, NULL) >= 0)
+                {
+                  dist = ABS (nearest.x - x2);
+
+                  if (dist < MIN (epsilon_x, mindist_x))
+                    {
+                      mindist_x = dist;
+                      *tx1 = RINT (x1 + (nearest.x - x2));
+                      snapped = TRUE;
+                    }
+                }
+
+              /*  left edge  */
+
+              coords1.x = x1;
+              coords1.y = y1;
+              coords2.x = x1;
+              coords2.y = y2;
+
+              if (gimp_stroke_nearest_tangent_get (stroke, &coords1, &coords2,
+                                                   1.0, &nearest,
+                                                   NULL, NULL, NULL) >= 0)
+                {
+                  snapped |= gimp_image_snap_distance (x1, nearest.x,
+                                                       epsilon_x,
+                                                       &mindist_x, tx1);
+                }
+
+              if (gimp_stroke_nearest_intersection_get (stroke, &coords1, &coords2,
+                                                        1.0, &nearest,
+                                                        NULL, NULL, NULL) >= 0)
+                {
+                  snapped |= gimp_image_snap_distance (y1, nearest.y,
+                                                       epsilon_y,
+                                                       &mindist_y, ty1);
+                }
+
+              if (gimp_stroke_nearest_intersection_get (stroke, &coords2, &coords1,
+                                                        1.0, &nearest,
+                                                        NULL, NULL, NULL) >= 0)
+                {
+                  dist = ABS (nearest.y - y2);
+
+                  if (dist < MIN (epsilon_y, mindist_y))
+                    {
+                      mindist_y = dist;
+                      *ty1 = RINT (y1 + (nearest.y - y2));
+                      snapped = TRUE;
+                    }
+                }
+
+              /*  right edge  */
+
+              coords1.x = x2;
+              coords1.y = y1;
+              coords2.x = x2;
+              coords2.y = y2;
+
+              if (gimp_stroke_nearest_tangent_get (stroke, &coords1, &coords2,
+                                                   1.0, &nearest,
+                                                   NULL, NULL, NULL) >= 0)
+                {
+                  dist = ABS (nearest.x - x2);
+
+                  if (dist < MIN (epsilon_x, mindist_x))
+                    {
+                      mindist_x = dist;
+                      *tx1 = RINT (x1 + (nearest.x - x2));
+                      snapped = TRUE;
+                    }
+                }
+
+              if (gimp_stroke_nearest_intersection_get (stroke, &coords1, &coords2,
+                                                        1.0, &nearest,
+                                                        NULL, NULL, NULL) >= 0)
+                {
+                  snapped |= gimp_image_snap_distance (y1, nearest.y,
+                                                       epsilon_y,
+                                                       &mindist_y, ty1);
+                }
+
+              if (gimp_stroke_nearest_intersection_get (stroke, &coords2, &coords1,
+                                                        1.0, &nearest,
+                                                        NULL, NULL, NULL) >= 0)
+                {
+                  dist = ABS (nearest.y - y2);
+
+                  if (dist < MIN (epsilon_y, mindist_y))
+                    {
+                      mindist_y = dist;
+                      *ty1 = RINT (y1 + (nearest.y - y2));
+                      snapped = TRUE;
+                    }
+                }
+
+              /*  center  */
+
+              coords1.x = x_center;
+              coords1.y = y_center;
+
+              if (gimp_stroke_nearest_point_get (stroke, &coords1, 1.0,
+                                                 &nearest,
+                                                 NULL, NULL, NULL) >= 0)
+                {
+                  if (gimp_image_snap_distance (x_center, nearest.x,
+                                                epsilon_x,
+                                                &mindist_x, &nx))
+                    {
+                      mindist_x = ABS (nx - x_center);
+                      *tx1 = RINT (x1 + (nx - x_center));
+                      snapped = TRUE;
+                    }
+
+                  if (gimp_image_snap_distance (y_center, nearest.y,
+                                                epsilon_y,
+                                                &mindist_y, &ny))
+                    {
+                      mindist_y = ABS (ny - y_center);
+                      *ty1 = RINT (y1 + (ny - y_center));
+                      snapped = TRUE;
+                    }
+                }
             }
         }
     }

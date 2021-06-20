@@ -945,8 +945,8 @@ static void
 gimp_display_shell_active_vectors_handler (GimpImage        *image,
                                            GimpDisplayShell *shell)
 {
-  GimpCanvasProxyGroup *group  = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
-  GimpVectors          *active = gimp_image_get_active_vectors (image);
+  GimpCanvasProxyGroup *group    = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
+  GList                *selected = gimp_image_get_selected_vectors (image);
   GList                *list;
 
   for (list = gimp_image_get_vectors_iter (image);
@@ -958,7 +958,8 @@ gimp_display_shell_active_vectors_handler (GimpImage        *image,
 
       item = gimp_canvas_proxy_group_get_item (group, vectors);
 
-      gimp_canvas_item_set_highlight (item, vectors == active);
+      gimp_canvas_item_set_highlight (item,
+                                      g_list_find (selected, vectors) != NULL);
     }
 }
 
