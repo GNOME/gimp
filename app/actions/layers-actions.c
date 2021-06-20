@@ -558,14 +558,14 @@ static const GimpEnumActionEntry layers_alpha_to_selection_actions[] =
 static const GimpEnumActionEntry layers_select_actions[] =
 {
   { "layers-select-top", NULL,
-    NC_("layers-action", "Select _Top Layers"), "Home",
-    NC_("layers-action", "Select the topmost layers"),
+    NC_("layers-action", "Select _Top Layer"), "Home",
+    NC_("layers-action", "Select the topmost layer"),
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_LAYER_TOP },
 
   { "layers-select-bottom", NULL,
-    NC_("layers-action", "Select _Bottom Layers"), "End",
-    NC_("layers-action", "Select the bottommost layers"),
+    NC_("layers-action", "Select _Bottom Layer"), "End",
+    NC_("layers-action", "Select the bottommost layer"),
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_LAYER_BOTTOM },
 
@@ -797,7 +797,8 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       all_writable       = TRUE;
   gboolean       all_movable        = TRUE;
 
-  gint           n_layers       = 0;
+  gint           n_selected_layers  = 0;
+  gint           n_layers           = 0;
 
   if (image)
     {
@@ -806,8 +807,9 @@ layers_actions_update (GimpActionGroup *group,
       sel     = ! gimp_channel_is_empty (gimp_image_get_mask (image));
       indexed = (gimp_image_get_base_type (image) == GIMP_INDEXED);
 
-      layers = gimp_image_get_selected_layers (image);
-      n_layers = g_list_length (layers);
+      layers            = gimp_image_get_selected_layers (image);
+      n_selected_layers = g_list_length (layers);
+      n_layers          = gimp_image_get_n_layers (image);
 
       for (iter = layers; iter; iter = iter->next)
         {
@@ -935,7 +937,7 @@ layers_actions_update (GimpActionGroup *group,
             break;
         }
 
-      if (n_layers == 1)
+      if (n_selected_layers == 1)
         {
           /* Special unique layer case. */
           const gchar *action = NULL;
@@ -1020,41 +1022,41 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-new-last-values",  image);
   SET_SENSITIVE ("layers-new-from-visible", image);
   SET_SENSITIVE ("layers-new-group",        image && !indexed);
-  SET_SENSITIVE ("layers-duplicate",        n_layers > 0 && !fs && !ac);
-  SET_SENSITIVE ("layers-delete",           n_layers > 0 && !ac);
+  SET_SENSITIVE ("layers-duplicate",        n_selected_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-delete",           n_selected_layers > 0 && !ac);
 
-  SET_SENSITIVE ("layers-mode-first",       n_layers > 0 && !ac && first_mode);
-  SET_SENSITIVE ("layers-mode-last",        n_layers > 0 && !ac && last_mode);
-  SET_SENSITIVE ("layers-mode-previous",    n_layers > 0 && !ac && prev_mode);
-  SET_SENSITIVE ("layers-mode-next",        n_layers > 0 && !ac && next_mode);
+  SET_SENSITIVE ("layers-mode-first",       n_selected_layers > 0 && !ac && first_mode);
+  SET_SENSITIVE ("layers-mode-last",        n_selected_layers > 0 && !ac && last_mode);
+  SET_SENSITIVE ("layers-mode-previous",    n_selected_layers > 0 && !ac && prev_mode);
+  SET_SENSITIVE ("layers-mode-next",        n_selected_layers > 0 && !ac && next_mode);
 
-  SET_SENSITIVE ("layers-select-top",       n_layers > 0 && !fs && !ac && have_prev);
-  SET_SENSITIVE ("layers-select-bottom",    n_layers > 0 && !fs && !ac && have_next);
-  SET_SENSITIVE ("layers-select-previous",  n_layers > 0 && !fs && !ac && have_prev);
-  SET_SENSITIVE ("layers-select-next",      n_layers > 0 && !fs && !ac && have_next);
+  SET_SENSITIVE ("layers-select-top",       n_layers > 0 && !fs && (n_selected_layers == 0 || have_prev));
+  SET_SENSITIVE ("layers-select-bottom",    n_layers > 0 && !fs && (n_selected_layers == 0 || have_next));
+  SET_SENSITIVE ("layers-select-previous",  n_selected_layers > 0 && !fs && !ac && have_prev);
+  SET_SENSITIVE ("layers-select-next",      n_selected_layers > 0 && !fs && !ac && have_next);
 
-  SET_SENSITIVE ("layers-raise",            n_layers > 0 && !fs && !ac && have_prev);
-  SET_SENSITIVE ("layers-raise-to-top",     n_layers > 0 && !fs && !ac && have_prev);
-  SET_SENSITIVE ("layers-lower",            n_layers > 0 && !fs && !ac && have_next);
-  SET_SENSITIVE ("layers-lower-to-bottom",  n_layers > 0 && !fs && !ac && have_next);
+  SET_SENSITIVE ("layers-raise",            n_selected_layers > 0 && !fs && !ac && have_prev);
+  SET_SENSITIVE ("layers-raise-to-top",     n_selected_layers > 0 && !fs && !ac && have_prev);
+  SET_SENSITIVE ("layers-lower",            n_selected_layers > 0 && !fs && !ac && have_next);
+  SET_SENSITIVE ("layers-lower-to-bottom",  n_selected_layers > 0 && !fs && !ac && have_next);
 
   SET_VISIBLE   ("layers-anchor",            fs && !ac);
   SET_VISIBLE   ("layers-merge-down",        !fs);
-  SET_SENSITIVE ("layers-merge-down",        n_layers > 0 && !fs && !ac && all_visible && all_next_visible);
+  SET_SENSITIVE ("layers-merge-down",        n_selected_layers > 0 && !fs && !ac && all_visible && all_next_visible);
   SET_VISIBLE   ("layers-merge-down-button", !fs);
-  SET_SENSITIVE ("layers-merge-down-button", n_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-merge-down-button", n_selected_layers > 0 && !fs && !ac);
   SET_VISIBLE   ("layers-merge-group",       have_groups);
-  SET_SENSITIVE ("layers-merge-group",       n_layers && !fs && !ac && have_groups);
-  SET_SENSITIVE ("layers-merge-layers",      n_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-merge-group",       n_selected_layers && !fs && !ac && have_groups);
+  SET_SENSITIVE ("layers-merge-layers",      n_selected_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-flatten-image",     !fs && !ac);
 
   SET_VISIBLE   ("layers-text-discard",       text_layer && !ac);
   SET_VISIBLE   ("layers-text-to-vectors",    text_layer && !ac);
   SET_VISIBLE   ("layers-text-along-vectors", text_layer && !ac);
 
-  SET_SENSITIVE ("layers-resize",          n_layers == 1 && all_writable && all_movable && !ac);
+  SET_SENSITIVE ("layers-resize",          n_selected_layers == 1 && all_writable && all_movable && !ac);
   SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac);
-  SET_SENSITIVE ("layers-scale",           n_layers == 1 && all_writable && all_movable && !ac);
+  SET_SENSITIVE ("layers-scale",           n_selected_layers == 1 && all_writable && all_movable && !ac);
 
   SET_SENSITIVE ("layers-crop-to-selection", all_writable && all_movable && sel);
   SET_SENSITIVE ("layers-crop-to-content",   all_writable && all_movable);
@@ -1065,44 +1067,44 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
-  SET_SENSITIVE ("layers-blend-space-auto",           n_layers && bs_mutable);
-  SET_SENSITIVE ("layers-blend-space-rgb-linear",     n_layers && bs_mutable);
-  SET_SENSITIVE ("layers-blend-space-rgb-perceptual", n_layers && bs_mutable);
+  SET_SENSITIVE ("layers-blend-space-auto",           n_selected_layers && bs_mutable);
+  SET_SENSITIVE ("layers-blend-space-rgb-linear",     n_selected_layers && bs_mutable);
+  SET_SENSITIVE ("layers-blend-space-rgb-perceptual", n_selected_layers && bs_mutable);
 
-  SET_SENSITIVE ("layers-composite-space-auto",           n_layers && cs_mutable);
-  SET_SENSITIVE ("layers-composite-space-rgb-linear",     n_layers && cs_mutable);
-  SET_SENSITIVE ("layers-composite-space-rgb-perceptual", n_layers && cs_mutable);
+  SET_SENSITIVE ("layers-composite-space-auto",           n_selected_layers && cs_mutable);
+  SET_SENSITIVE ("layers-composite-space-rgb-linear",     n_selected_layers && cs_mutable);
+  SET_SENSITIVE ("layers-composite-space-rgb-perceptual", n_selected_layers && cs_mutable);
 
-  SET_SENSITIVE ("layers-composite-mode-auto",             n_layers && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-union",            n_layers && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-clip-to-backdrop", n_layers && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-clip-to-layer",    n_layers && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-intersection",     n_layers && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-auto",             n_selected_layers && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-union",            n_selected_layers && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-clip-to-backdrop", n_selected_layers && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-clip-to-layer",    n_selected_layers && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-intersection",     n_selected_layers && cm_mutable);
 
-  SET_SENSITIVE ("layers-mask-add",             n_layers > 0 && !fs && !ac && have_no_masks);
-  SET_SENSITIVE ("layers-mask-add-button",      n_layers > 0 && !fs && !ac);
-  SET_SENSITIVE ("layers-mask-add-last-values", n_layers > 0 && !fs && !ac && have_no_masks);
+  SET_SENSITIVE ("layers-mask-add",             n_selected_layers > 0 && !fs && !ac && have_no_masks);
+  SET_SENSITIVE ("layers-mask-add-button",      n_selected_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-mask-add-last-values", n_selected_layers > 0 && !fs && !ac && have_no_masks);
 
   SET_SENSITIVE ("layers-mask-apply",  have_writable && !fs && !ac && have_masks && have_no_groups);
-  SET_SENSITIVE ("layers-mask-delete", n_layers > 0 && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-delete", n_selected_layers > 0 && !fs && !ac && have_masks);
 
-  SET_SENSITIVE ("layers-mask-edit",    n_layers == 1 && !fs && !ac && have_masks);
-  SET_SENSITIVE ("layers-mask-show",    n_layers > 0 && !fs && !ac && have_masks);
-  SET_SENSITIVE ("layers-mask-disable", n_layers > 0 && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-edit",    n_selected_layers == 1 && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-show",    n_selected_layers > 0 && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-disable", n_selected_layers > 0 && !fs && !ac && have_masks);
 
-  SET_ACTIVE ("layers-mask-edit",    n_layers == 1 && have_masks && gimp_layer_get_edit_mask (layers->data));
+  SET_ACTIVE ("layers-mask-edit",    n_selected_layers == 1 && have_masks && gimp_layer_get_edit_mask (layers->data));
   SET_ACTIVE ("layers-mask-show",    all_masks_shown);
   SET_ACTIVE ("layers-mask-disable", all_masks_disabled);
 
-  SET_SENSITIVE ("layers-mask-selection-replace",   n_layers && !fs && !ac && have_masks);
-  SET_SENSITIVE ("layers-mask-selection-add",       n_layers && !fs && !ac && have_masks);
-  SET_SENSITIVE ("layers-mask-selection-subtract",  n_layers && !fs && !ac && have_masks);
-  SET_SENSITIVE ("layers-mask-selection-intersect", n_layers && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-selection-replace",   n_selected_layers && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-selection-add",       n_selected_layers && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-selection-subtract",  n_selected_layers && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-selection-intersect", n_selected_layers && !fs && !ac && have_masks);
 
-  SET_SENSITIVE ("layers-alpha-selection-replace",   n_layers > 0 && !fs && !ac);
-  SET_SENSITIVE ("layers-alpha-selection-add",       n_layers > 0 && !fs && !ac);
-  SET_SENSITIVE ("layers-alpha-selection-subtract",  n_layers > 0 && !fs && !ac);
-  SET_SENSITIVE ("layers-alpha-selection-intersect", n_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-alpha-selection-replace",   n_selected_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-alpha-selection-add",       n_selected_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-alpha-selection-subtract",  n_selected_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-alpha-selection-intersect", n_selected_layers > 0 && !fs && !ac);
 
 #undef SET_VISIBLE
 #undef SET_SENSITIVE
