@@ -68,15 +68,15 @@ static const GimpActionEntry channels_actions[] =
     GIMP_HELP_CHANNEL_NEW },
 
   { "channels-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
-    NC_("channels-action", "D_uplicate Channel"), NULL,
+    NC_("channels-action", "D_uplicate Channels"), NULL,
     NC_("channels-action",
-        "Create a duplicate of this channel and add it to the image"),
+        "Create duplicates of selected channels and add them to the image"),
     channels_duplicate_cmd_callback,
     GIMP_HELP_CHANNEL_DUPLICATE },
 
   { "channels-delete", GIMP_ICON_EDIT_DELETE,
-    NC_("channels-action", "_Delete Channel"), NULL,
-    NC_("channels-action", "Delete this channel"),
+    NC_("channels-action", "_Delete Channels"), NULL,
+    NC_("channels-action", "Delete selected channels"),
     channels_delete_cmd_callback,
     GIMP_HELP_CHANNEL_DELETE },
 
@@ -335,7 +335,7 @@ channels_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("channels-new",             !fs && image);
   SET_SENSITIVE ("channels-new-last-values", !fs && image);
-  SET_SENSITIVE ("channels-duplicate",       !fs && (n_selected_channels == 1 || component));
+  SET_SENSITIVE ("channels-duplicate",       !fs && (n_selected_channels > 0 || component));
   SET_SENSITIVE ("channels-delete",          !fs && n_selected_channels > 0);
 
   SET_SENSITIVE ("channels-raise",           !fs && n_selected_channels > 0 && have_prev);

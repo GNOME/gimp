@@ -359,16 +359,17 @@ channels_duplicate_cmd_callback (GimpAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
-  GimpImage   *image;
-  GimpChannel *new_channel;
+  GimpImage   *image  = NULL;
+  GList       *channels;
   GimpChannel *parent = GIMP_IMAGE_ACTIVE_PARENT;
+  return_if_no_channels (image, channels, data);
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
       GimpChannelType  component;
+      GimpChannel     *new_channel;
       const gchar     *desc;
       gchar           *name;
-      return_if_no_image (image, data);
 
       component = GIMP_COMPONENT_EDITOR (data)->clicked_component;
 
@@ -384,26 +385,43 @@ channels_duplicate_cmd_callback (GimpAction *action,
        *  of components don't affect each other
        */
       gimp_item_set_visible (GIMP_ITEM (new_channel), FALSE, FALSE);
+      gimp_image_add_channel (image, new_channel, parent, -1, TRUE);
 
       g_free (name);
     }
   else
     {
-      GimpChannel *channel;
-      return_if_no_channel (image, channel, data);
+      GList *new_channels = NULL;
+      GList *iter;
 
-      new_channel =
-        GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
-                                           G_TYPE_FROM_INSTANCE (channel)));
+      channels = g_list_copy (channels);
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_CHANNEL_ADD,
+                                   _("Duplicate channels"));
+      for (iter = channels; iter; iter = iter->next)
+        {
+          GimpChannel *new_channel;
 
-      /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
-       *  the latter would add a duplicated group inside itself instead of
-       *  above it
-       */
-      parent = gimp_channel_get_parent (channel);
+          new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (iter->data),
+                                                           G_TYPE_FROM_INSTANCE (iter->data)));
+
+          /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
+           *  the latter would add a duplicated group inside itself instead of
+           *  above it
+           */
+          gimp_image_add_channel (image, new_channel,
+                                  gimp_channel_get_parent (iter->data),
+                                  gimp_item_get_index (iter->data),
+                                  TRUE);
+          new_channels = g_list_prepend (new_channels, new_channel);
+        }
+
+      gimp_image_set_selected_channels (image, new_channels);
+      g_list_free (channels);
+      g_list_free (new_channels);
+
+      gimp_image_undo_group_end (image);
     }
-
-  gimp_image_add_channel (image, new_channel, parent, -1, TRUE);
   gimp_image_flush (image);
 }
 
@@ -412,11 +430,29 @@ channels_delete_cmd_callback (GimpAction *action,
                               GVariant   *value,
                               gpointer    data)
 {
-  GimpImage   *image;
-  GimpChannel *channel;
-  return_if_no_channel (image, channel, data);
+  GimpImage *image;
+  GList     *channels;
+  GList     *iter;
+  return_if_no_channels (image, channels, data);
 
-  gimp_image_remove_channel (image, channel, TRUE, NULL);
+  channels = g_list_copy (channels);
+  if (g_list_length (channels) > 1)
+    {
+      gchar *undo_name;
+
+      undo_name = g_strdup_printf (C_("undo-type", "Remove %d Channels"),
+                                   g_list_length (channels));
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
+                                   undo_name);
+    }
+
+  for (iter = channels; iter; iter = iter->next)
+    gimp_image_remove_channel (image, iter->data, TRUE, NULL);
+
+  if (g_list_length (channels) > 1)
+    gimp_image_undo_group_end (image);
+
+  g_list_free (channels);
   gimp_image_flush (image);
 }
 

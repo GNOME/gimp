@@ -558,6 +558,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_LAYER_LOCK_ALPHA,      /*< desc="Lock/Unlock alpha channels"     >*/
   GIMP_UNDO_GROUP_LAYER_OPACITY,         /*< desc="Set layers opacity"             >*/
   GIMP_UNDO_GROUP_LAYER_MODE,            /*< desc="Set layers mode"                >*/
+  GIMP_UNDO_GROUP_CHANNEL_ADD,           /*< desc="Add channels"                   >*/
   GIMP_UNDO_GROUP_FS_TO_LAYER,           /*< desc="Floating selection to layer"    >*/
   GIMP_UNDO_GROUP_FS_FLOAT,              /*< desc="Float selection"                >*/
   GIMP_UNDO_GROUP_FS_ANCHOR,             /*< desc="Anchor floating selection"      >*/
