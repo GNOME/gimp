@@ -58,7 +58,7 @@
   (gimp-context-push)
   (gimp-context-set-defaults)
 
-  (gimp-image-set-active-layer image drawable)
+  (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
 
   (gimp-image-undo-group-start image)
 
@@ -128,7 +128,7 @@
                                             "Drop Shadow"
                                             shadow-opacity
                                             LAYER-MODE-NORMAL)))
-    (gimp-image-set-active-layer image drawable)
+    (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
     (gimp-image-insert-layer image shadow-layer 0 -1)
     (gimp-layer-set-offsets shadow-layer
                             shadow-offset-x
@@ -158,7 +158,7 @@
        (= from-selection FALSE))
       (gimp-image-raise-item image drawable))
 
-  (gimp-image-set-active-layer image drawable)
+  (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
   (gimp-image-undo-group-end image)
   (gimp-displays-flush)
 
