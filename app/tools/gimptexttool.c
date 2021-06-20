@@ -2327,27 +2327,43 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
   gimp_image_flush (text_tool->image);
 }
 
-void
-gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
+gboolean
+gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
+                                      GError       **error)
 {
-  GimpVectors       *vectors0;
+  GList             *vectors0;
   GimpVectors       *vectors;
   gdouble            box_width;
   gdouble            box_height;
   GimpTextDirection  dir;
   gdouble            offset = 0.0;
 
-  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+  g_return_val_if_fail (GIMP_IS_TEXT_TOOL (text_tool), FALSE);
 
   if (! text_tool->text || ! text_tool->image || ! text_tool->layer)
-    return;
+    {
+      if (! text_tool->text)
+        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                             _("Text is required."));
+      if (! text_tool->image)
+        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                             _("No image."));
+      if (! text_tool->layer)
+        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                             _("No layer."));
+      return FALSE;
+    }
 
   box_width  = gimp_item_get_width  (GIMP_ITEM (text_tool->layer));
   box_height = gimp_item_get_height (GIMP_ITEM (text_tool->layer));
 
-  vectors0 = gimp_image_get_active_vectors (text_tool->image);
-  if (! vectors0)
-    return;
+  vectors0 = gimp_image_get_selected_vectors (text_tool->image);
+  if (g_list_length (vectors0) != 1)
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("Exactly one path must be selected."));
+      return FALSE;
+    }
 
   vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
 
@@ -2376,7 +2392,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
       break;
     }
 
-  gimp_vectors_warp_vectors (vectors0, vectors, offset);
+  gimp_vectors_warp_vectors (vectors0->data, vectors, offset);
 
   gimp_item_set_visible (GIMP_ITEM (vectors), TRUE, FALSE);
 
@@ -2384,6 +2400,8 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_flush (text_tool->image);
+
+  return TRUE;
 }
 
 GimpTextDirection
