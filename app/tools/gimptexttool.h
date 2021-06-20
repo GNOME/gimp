@@ -106,27 +106,28 @@ void       gimp_text_tool_register               (GimpToolRegisterCallback  call
 
 GType      gimp_text_tool_get_type               (void) G_GNUC_CONST;
 
-gboolean   gimp_text_tool_set_layer              (GimpTextTool *text_tool,
-                                                  GimpLayer    *layer);
+gboolean   gimp_text_tool_set_layer              (GimpTextTool  *text_tool,
+                                                  GimpLayer     *layer);
 
-gboolean   gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool);
+gboolean   gimp_text_tool_get_has_text_selection (GimpTextTool  *text_tool);
 
-void       gimp_text_tool_delete_selection       (GimpTextTool *text_tool);
-void       gimp_text_tool_cut_clipboard          (GimpTextTool *text_tool);
-void       gimp_text_tool_copy_clipboard         (GimpTextTool *text_tool);
-void       gimp_text_tool_paste_clipboard        (GimpTextTool *text_tool);
+void       gimp_text_tool_delete_selection       (GimpTextTool  *text_tool);
+void       gimp_text_tool_cut_clipboard          (GimpTextTool  *text_tool);
+void       gimp_text_tool_copy_clipboard         (GimpTextTool  *text_tool);
+void       gimp_text_tool_paste_clipboard        (GimpTextTool  *text_tool);
 
-void       gimp_text_tool_create_vectors         (GimpTextTool *text_tool);
-void       gimp_text_tool_create_vectors_warped  (GimpTextTool *text_tool);
+void       gimp_text_tool_create_vectors         (GimpTextTool  *text_tool);
+gboolean   gimp_text_tool_create_vectors_warped  (GimpTextTool  *text_tool,
+                                                  GError       **error);
 
 GimpTextDirection
-           gimp_text_tool_get_direction          (GimpTextTool *text_tool);
+           gimp_text_tool_get_direction          (GimpTextTool  *text_tool);
 
 /*  only for the text editor  */
-void       gimp_text_tool_clear_layout           (GimpTextTool *text_tool);
-gboolean   gimp_text_tool_ensure_layout          (GimpTextTool *text_tool);
-void       gimp_text_tool_apply                  (GimpTextTool *text_tool,
-                                                  gboolean      push_undo);
+void       gimp_text_tool_clear_layout           (GimpTextTool  *text_tool);
+gboolean   gimp_text_tool_ensure_layout          (GimpTextTool  *text_tool);
+void       gimp_text_tool_apply                  (GimpTextTool  *text_tool,
+                                                  gboolean       push_undo);
 
 
 #endif /* __GIMP_TEXT_TOOL_H__ */

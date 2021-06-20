@@ -26,6 +26,7 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -178,8 +179,16 @@ text_tool_text_along_path_cmd_callback (GimpAction *action,
                                         gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
+  GError       *error     = NULL;
 
-  gimp_text_tool_create_vectors_warped (text_tool);
+  if (! gimp_text_tool_create_vectors_warped (text_tool, &error))
+    {
+      gimp_message (text_tool->image->gimp, G_OBJECT (text_tool),
+                    GIMP_MESSAGE_ERROR,
+                    _("Test along path failed: %s"),
+                    error->message);
+      g_clear_error (&error);
+    }
 }
 
 void
