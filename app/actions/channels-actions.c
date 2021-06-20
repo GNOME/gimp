@@ -81,28 +81,28 @@ static const GimpActionEntry channels_actions[] =
     GIMP_HELP_CHANNEL_DELETE },
 
   { "channels-raise", GIMP_ICON_GO_UP,
-    NC_("channels-action", "_Raise Channel"), NULL,
-    NC_("channels-action", "Raise this channel one step in the channel stack"),
+    NC_("channels-action", "_Raise Channels"), NULL,
+    NC_("channels-action", "Raise these channels one step in the channel stack"),
     channels_raise_cmd_callback,
     GIMP_HELP_CHANNEL_RAISE },
 
   { "channels-raise-to-top", GIMP_ICON_GO_TOP,
-    NC_("channels-action", "Raise Channel to _Top"), NULL,
+    NC_("channels-action", "Raise Channels to _Top"), NULL,
     NC_("channels-action",
-        "Raise this channel to the top of the channel stack"),
+        "Raise these channels to the top of the channel stack"),
     channels_raise_to_top_cmd_callback,
     GIMP_HELP_CHANNEL_RAISE_TO_TOP },
 
   { "channels-lower", GIMP_ICON_GO_DOWN,
-    NC_("channels-action", "_Lower Channel"), NULL,
-    NC_("channels-action", "Lower this channel one step in the channel stack"),
+    NC_("channels-action", "_Lower Channels"), NULL,
+    NC_("channels-action", "Lower these channels one step in the channel stack"),
     channels_lower_cmd_callback,
     GIMP_HELP_CHANNEL_LOWER },
 
   { "channels-lower-to-bottom", GIMP_ICON_GO_BOTTOM,
-    NC_("channels-action", "Lower Channel to _Bottom"), NULL,
+    NC_("channels-action", "Lower Channels to _Bottom"), NULL,
     NC_("channels-action",
-        "Lower this channel to the bottom of the channel stack"),
+        "Lower these channels to the bottom of the channel stack"),
     channels_lower_to_bottom_cmd_callback,
     GIMP_HELP_CHANNEL_LOWER_TO_BOTTOM }
 };
@@ -338,10 +338,10 @@ channels_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("channels-duplicate",       !fs && (n_selected_channels == 1 || component));
   SET_SENSITIVE ("channels-delete",          !fs && n_selected_channels > 0);
 
-  SET_SENSITIVE ("channels-raise",           !fs && n_selected_channels == 1 && have_prev);
-  SET_SENSITIVE ("channels-raise-to-top",    !fs && n_selected_channels == 1 && have_prev);
-  SET_SENSITIVE ("channels-lower",           !fs && n_selected_channels == 1 && have_next);
-  SET_SENSITIVE ("channels-lower-to-bottom", !fs && n_selected_channels == 1 && have_next);
+  SET_SENSITIVE ("channels-raise",           !fs && n_selected_channels > 0 && have_prev);
+  SET_SENSITIVE ("channels-raise-to-top",    !fs && n_selected_channels > 0 && have_prev);
+  SET_SENSITIVE ("channels-lower",           !fs && n_selected_channels > 0 && have_next);
+  SET_SENSITIVE ("channels-lower-to-bottom", !fs && n_selected_channels > 0 && have_next);
 
   SET_SENSITIVE ("channels-selection-replace",   !fs && (n_selected_channels == 1 || component));
   SET_SENSITIVE ("channels-selection-add",       !fs && (n_selected_channels == 1 || component));
