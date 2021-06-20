@@ -282,17 +282,27 @@ gimp_move_tool_button_press (GimpTool            *tool,
     {
     case GIMP_TRANSFORM_TYPE_PATH:
       {
-        active_item = GIMP_ITEM (gimp_image_get_active_vectors (image));
+        selected_items = gimp_image_get_selected_vectors (image);
+        selected_items = g_list_copy (selected_items);
 
         translate_mode = GIMP_TRANSLATE_MODE_VECTORS;
 
-        if (! active_item)
+        if (! selected_items)
           {
-            null_message = _("There is no path to move.");
+            null_message = _("There are no paths to move.");
           }
-        else if (gimp_item_is_position_locked (active_item))
+        else
           {
-            locked_message = _("The active path's position is locked.");
+            gint n_items = 0;
+
+            for (iter = selected_items; iter; iter = iter->next)
+              {
+                if (! gimp_item_is_position_locked (iter->data))
+                  n_items++;
+              }
+
+            if (n_items == 0)
+              locked_message = _("All selected path's position are locked.");
           }
       }
       break;
@@ -587,9 +597,17 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
 
       if (options->move_current)
         {
-          GimpItem *item = GIMP_ITEM (gimp_image_get_active_vectors (image));
+          GList *selected = gimp_image_get_selected_vectors (image);
+          GList *iter;
+          gint   n_items = 0;
 
-          if (! item || gimp_item_is_position_locked (item))
+          for (iter = selected; iter; iter = iter->next)
+            {
+              if (! gimp_item_is_position_locked (iter->data))
+                n_items++;
+            }
+
+          if (n_items == 0)
             modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
       else
