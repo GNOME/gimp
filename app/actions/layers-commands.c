@@ -584,8 +584,6 @@ layers_select_cmd_callback (GimpAction *action,
   GList                *new_layers = NULL;
   GList                *layers;
   GList                *iter;
-  GimpContainer        *container;
-  GimpLayer            *new_layer;
   GimpActionSelectType  select_type;
   gboolean              run_once;
   return_if_no_image (image, data);
@@ -597,14 +595,21 @@ layers_select_cmd_callback (GimpAction *action,
 
   for (iter = layers; iter || run_once; iter = iter ? iter->next : NULL)
     {
-      if (iter)
-        container = gimp_item_get_container (GIMP_ITEM (iter->data));
-      else /* run_once */
-        container = gimp_image_get_layers (image);
+      GimpLayer     *new_layer;
+      GimpContainer *container;
 
+      if (iter)
+        {
+          container = gimp_item_get_container (GIMP_ITEM (iter->data));
+        }
+      else /* run_once */
+        {
+          container = gimp_image_get_layers (image);
+          run_once  = FALSE;
+        }
       new_layer = (GimpLayer *) action_select_object (select_type,
                                                       container,
-                                                      (GimpObject *) iter->data);
+                                                      iter ? iter->data : NULL);
       if (new_layer)
         new_layers = g_list_prepend (new_layers, new_layer);
     }
