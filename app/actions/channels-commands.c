@@ -215,12 +215,34 @@ channels_raise_cmd_callback (GimpAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpImage   *image;
-  GimpChannel *channel;
-  return_if_no_channel (image, channel, data);
+  GimpImage *image;
+  GList     *channels;
+  GList     *iter;
+  GList     *raised_channels = NULL;
+  return_if_no_channels (image, channels, data);
 
-  gimp_image_raise_item (image, GIMP_ITEM (channel), NULL);
+  for (iter = channels; iter; iter = iter->next)
+    {
+      gint index;
+
+      index = gimp_item_get_index (iter->data);
+      if (index > 0)
+        raised_channels = g_list_prepend (raised_channels, iter->data);
+    }
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               ngettext ("Raise Channel",
+                                         "Raise Channels",
+                                         g_list_length (raised_channels)));
+
+  for (iter = raised_channels; iter; iter = iter->next)
+    gimp_image_raise_item (image, iter->data, NULL);
+
   gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
+
+  g_list_free (raised_channels);
 }
 
 void
@@ -228,12 +250,34 @@ channels_raise_to_top_cmd_callback (GimpAction *action,
                                     GVariant   *value,
                                     gpointer    data)
 {
-  GimpImage   *image;
-  GimpChannel *channel;
-  return_if_no_channel (image, channel, data);
+  GimpImage *image;
+  GList     *channels;
+  GList     *iter;
+  GList     *raised_channels = NULL;
+  return_if_no_channels (image, channels, data);
 
-  gimp_image_raise_item_to_top (image, GIMP_ITEM (channel));
+  for (iter = channels; iter; iter = iter->next)
+    {
+      gint index;
+
+      index = gimp_item_get_index (iter->data);
+      if (index > 0)
+        raised_channels = g_list_prepend (raised_channels, iter->data);
+    }
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               ngettext ("Raise Channel to Top",
+                                         "Raise Channels to Top",
+                                         g_list_length (raised_channels)));
+
+  for (iter = raised_channels; iter; iter = iter->next)
+    gimp_image_raise_item_to_top (image, iter->data);
+
   gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
+
+  g_list_free (raised_channels);
 }
 
 void
@@ -241,12 +285,36 @@ channels_lower_cmd_callback (GimpAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpImage   *image;
-  GimpChannel *channel;
-  return_if_no_channel (image, channel, data);
+  GimpImage *image;
+  GList     *channels;
+  GList     *iter;
+  GList     *lowered_channels = NULL;
+  return_if_no_channels (image, channels, data);
 
-  gimp_image_lower_item (image, GIMP_ITEM (channel), NULL);
+  for (iter = channels; iter; iter = iter->next)
+    {
+      GList *layer_list;
+      gint   index;
+
+      layer_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+      index = gimp_item_get_index (iter->data);
+      if (index < g_list_length (layer_list) - 1)
+        lowered_channels = g_list_prepend (lowered_channels, iter->data);
+    }
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               ngettext ("Lower Channel",
+                                         "Lower Channels",
+                                         g_list_length (lowered_channels)));
+
+  for (iter = lowered_channels; iter; iter = iter->next)
+    gimp_image_lower_item (image, iter->data, NULL);
+
   gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
+
+  g_list_free (lowered_channels);
 }
 
 void
@@ -254,12 +322,36 @@ channels_lower_to_bottom_cmd_callback (GimpAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpImage   *image;
-  GimpChannel *channel;
-  return_if_no_channel (image, channel, data);
+  GimpImage *image;
+  GList     *channels;
+  GList     *iter;
+  GList     *lowered_channels = NULL;
+  return_if_no_channels (image, channels, data);
 
-  gimp_image_lower_item_to_bottom (image, GIMP_ITEM (channel));
+  for (iter = channels; iter; iter = iter->next)
+    {
+      GList *layer_list;
+      gint   index;
+
+      layer_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+      index = gimp_item_get_index (iter->data);
+      if (index < g_list_length (layer_list) - 1)
+        lowered_channels = g_list_prepend (lowered_channels, iter->data);
+    }
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               ngettext ("Lower Channel to Bottom",
+                                         "Lower Channels to Bottom",
+                                         g_list_length (lowered_channels)));
+
+  for (iter = lowered_channels; iter; iter = iter->next)
+    gimp_image_lower_item_to_bottom (image, iter->data);
+
   gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
+
+  g_list_free (lowered_channels);
 }
 
 void
