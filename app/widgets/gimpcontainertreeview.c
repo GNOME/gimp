@@ -885,7 +885,12 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
         {
           GtkTreePath *path;
           path = gimp_container_tree_view_get_path (tree_view, item->data);
-          g_return_val_if_fail (path, FALSE);
+          if (path == NULL)
+            {
+              g_critical ("%s: item %s has no path!\n",
+                          G_STRFUNC, gimp_object_get_name (GIMP_OBJECT (item->data)));
+              return FALSE;
+            }
           paths = g_list_prepend (paths, path);
         }
 
