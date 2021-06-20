@@ -234,13 +234,13 @@ static const GimpEnumActionEntry channels_select_actions[] =
 
   { "channels-select-previous", NULL,
     NC_("channels-action", "Select _Previous Channel"), NULL,
-    NC_("channels-action", "Select the channel above the current channel"),
+    NC_("channels-action", "Select the channels above the selected channels"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_CHANNEL_PREVIOUS },
 
   { "channels-select-next", NULL,
-    NC_("channels-action", "Select _Next Channel"), NULL,
-    NC_("channels-action", "Select the channel below the current channel"),
+    NC_("channels-action", "Select _Next Channels"), NULL,
+    NC_("channels-action", "Select the channels below the selected channels"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_CHANNEL_NEXT }
 };
@@ -279,13 +279,14 @@ void
 channels_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpImage   *image      = action_data_get_image (data);
-  GList       *channels   = NULL;
-  gboolean     fs         = FALSE;
-  gboolean     component  = FALSE;
-  GList       *next       = NULL;
-  GList       *prev       = NULL;
-  gint         n_channels = 0;
+  GimpImage   *image               = action_data_get_image (data);
+  gboolean     fs                  = FALSE;
+  gboolean     component           = FALSE;
+  GList       *selected_channels   = NULL;
+  gint         n_selected_channels = 0;
+  gint         n_channels          = 0;
+  gboolean     have_prev           = FALSE; /* At least 1 selected channel has a previous sibling. */
+  gboolean     have_next           = FALSE; /* At least 1 selected channel has a next sibling.     */
 
   if (image)
     {
@@ -298,23 +299,31 @@ channels_actions_update (GimpActionGroup *group,
         }
       else
         {
-          channels = gimp_image_get_selected_channels (image);
-          n_channels = g_list_length (channels);
+          GList *iter;
 
-          if (n_channels == 1)
+          selected_channels   = gimp_image_get_selected_channels (image);
+          n_selected_channels = g_list_length (selected_channels);
+          n_channels          = gimp_image_get_n_channels (image);
+
+          for (iter = selected_channels; iter; iter = iter->next)
             {
               GList *channel_list;
               GList *list;
 
-              channel_list = gimp_item_get_container_iter (GIMP_ITEM (channels->data));
+              channel_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
 
-              list = g_list_find (channel_list, channels->data);
+              list = g_list_find (channel_list, iter->data);
 
               if (list)
                 {
-                  prev = g_list_previous (list);
-                  next = g_list_next (list);
+                  if (g_list_previous (list))
+                    have_prev = TRUE;
+                  if (g_list_next (list))
+                    have_next = TRUE;
                 }
+
+              if (have_prev && have_next)
+                break;
             }
         }
     }
@@ -322,29 +331,29 @@ channels_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
-  SET_SENSITIVE ("channels-edit-attributes", !fs && n_channels == 1);
+  SET_SENSITIVE ("channels-edit-attributes", !fs && n_selected_channels == 1);
 
   SET_SENSITIVE ("channels-new",             !fs && image);
   SET_SENSITIVE ("channels-new-last-values", !fs && image);
-  SET_SENSITIVE ("channels-duplicate",       !fs && (n_channels == 1 || component));
-  SET_SENSITIVE ("channels-delete",          !fs && n_channels > 0);
+  SET_SENSITIVE ("channels-duplicate",       !fs && (n_selected_channels == 1 || component));
+  SET_SENSITIVE ("channels-delete",          !fs && n_selected_channels > 0);
 
-  SET_SENSITIVE ("channels-raise",           !fs && n_channels == 1 && prev);
-  SET_SENSITIVE ("channels-raise-to-top",    !fs && n_channels == 1 && prev);
-  SET_SENSITIVE ("channels-lower",           !fs && n_channels == 1 && next);
-  SET_SENSITIVE ("channels-lower-to-bottom", !fs && n_channels == 1 && next);
+  SET_SENSITIVE ("channels-raise",           !fs && n_selected_channels == 1 && have_prev);
+  SET_SENSITIVE ("channels-raise-to-top",    !fs && n_selected_channels == 1 && have_prev);
+  SET_SENSITIVE ("channels-lower",           !fs && n_selected_channels == 1 && have_next);
+  SET_SENSITIVE ("channels-lower-to-bottom", !fs && n_selected_channels == 1 && have_next);
 
-  SET_SENSITIVE ("channels-selection-replace",   !fs && (n_channels == 1 || component));
-  SET_SENSITIVE ("channels-selection-add",       !fs && (n_channels == 1 || component));
-  SET_SENSITIVE ("channels-selection-subtract",  !fs && (n_channels == 1 || component));
-  SET_SENSITIVE ("channels-selection-intersect", !fs && (n_channels == 1 || component));
+  SET_SENSITIVE ("channels-selection-replace",   !fs && (n_selected_channels == 1 || component));
+  SET_SENSITIVE ("channels-selection-add",       !fs && (n_selected_channels == 1 || component));
+  SET_SENSITIVE ("channels-selection-subtract",  !fs && (n_selected_channels == 1 || component));
+  SET_SENSITIVE ("channels-selection-intersect", !fs && (n_selected_channels == 1 || component));
 
-  SET_SENSITIVE ("channels-select-top",      !fs && n_channels == 1 && prev);
-  SET_SENSITIVE ("channels-select-bottom",   !fs && n_channels == 1 && next);
-  SET_SENSITIVE ("channels-select-previous", !fs && n_channels == 1 && prev);
-  SET_SENSITIVE ("channels-select-next",     !fs && n_channels == 1 && next);
+  SET_SENSITIVE ("channels-select-top",      !fs && n_channels > 0 && (n_selected_channels == 0 || have_prev));
+  SET_SENSITIVE ("channels-select-bottom",   !fs && n_channels > 0 && (n_selected_channels == 0 || have_next));
+  SET_SENSITIVE ("channels-select-previous", !fs && n_selected_channels > 0 && have_prev);
+  SET_SENSITIVE ("channels-select-next",     !fs && n_selected_channels > 0 && have_next);
 
 #undef SET_SENSITIVE
 
-  items_actions_update (group, "channels", channels);
+  items_actions_update (group, "channels", selected_channels);
 }

@@ -665,7 +665,9 @@ action_select_object (GimpActionSelectType  select_type,
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (current == NULL || GIMP_IS_OBJECT (current), NULL);
 
-  if (! current)
+  if (! current                               &&
+      select_type != GIMP_ACTION_SELECT_FIRST &&
+      select_type != GIMP_ACTION_SELECT_LAST)
     return NULL;
 
   n_children = gimp_container_get_n_children (container);
