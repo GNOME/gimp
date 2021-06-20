@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-fill.h"
 #include "core/gimpimage.h"
@@ -429,23 +430,47 @@ channels_select_cmd_callback (GimpAction *action,
                               gpointer    data)
 {
   GimpImage            *image;
-  GimpChannel          *channel;
-  GimpChannel          *channel2;
-  GimpContainer        *container;
+  GList                *channels;
+  GList                *new_channels = NULL;
+  GList                *iter;
   GimpActionSelectType  select_type;
-  return_if_no_channel (image, channel, data);
+  gboolean              run_once;
+  return_if_no_image (image, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  container = gimp_image_get_channels (image);
-  channel2 = (GimpChannel *) action_select_object (select_type, container,
-                                                   (GimpObject *) channel);
+  channels = gimp_image_get_selected_channels (image);
+  run_once = (g_list_length (channels) == 0);
 
-  if (channel2 && channel2 != channel)
+  for (iter = channels; iter || run_once; iter = iter ? iter->next : NULL)
     {
-      gimp_image_set_active_channel (image, channel2);
+      GimpChannel   *new_channel = NULL;
+      GimpContainer *container;
+
+      if (iter)
+        {
+          container = gimp_item_get_container (GIMP_ITEM (iter->data));
+        }
+      else /* run_once */
+        {
+          container = gimp_image_get_channels (image);
+          run_once  = FALSE;
+        }
+      new_channel = (GimpChannel *) action_select_object (select_type,
+                                                          container,
+                                                          iter ? iter->data : NULL);
+
+      if (new_channel)
+        new_channels = g_list_prepend (new_channels, new_channel);
+    }
+
+  if (new_channels)
+    {
+      gimp_image_set_selected_channels (image, new_channels);
       gimp_image_flush (image);
     }
+
+  g_list_free (new_channels);
 }
 
 /*  private functions  */
