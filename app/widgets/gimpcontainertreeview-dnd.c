@@ -208,6 +208,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
 
     case GIMP_DND_TYPE_CHANNEL_LIST:
     case GIMP_DND_TYPE_LAYER_LIST:
+    case GIMP_DND_TYPE_VECTORS_LIST:
       /* Various GimpViewable list (GList) drag data. */
       {
         GtkWidget *src_widget = gtk_drag_get_source_widget (context);
