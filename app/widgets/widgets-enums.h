@@ -169,8 +169,9 @@ typedef enum  /*< skip >*/
 
   GIMP_DND_TYPE_LAYER_LIST   = 25,
   GIMP_DND_TYPE_CHANNEL_LIST = 26,
+  GIMP_DND_TYPE_VECTORS_LIST = 27,
 
-  GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_CHANNEL_LIST
+  GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_VECTORS_LIST
 } GimpDndType;
 
 typedef enum  /*< skip >*/
