@@ -68,6 +68,31 @@ make
 make install
 cd ../..
 
+## GLib (patched from MSYS2) ##
+
+git clone --branch 2.68.0 --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/glib.git _glib
+
+cd _glib/
+wget "https://raw.githubusercontent.com/msys2/MINGW-packages/master/mingw-w64-glib2/0001-Update-g_fopen-g_open-and-g_creat-to-open-with-FILE_.patch"
+wget "https://raw.githubusercontent.com/msys2/MINGW-packages/master/mingw-w64-glib2/0001-disable-some-tests-when-static.patch"
+wget "https://raw.githubusercontent.com/msys2/MINGW-packages/master/mingw-w64-glib2/0001-win32-Make-the-static-build-work-with-MinGW-when-pos.patch"
+wget "https://raw.githubusercontent.com/msys2/MINGW-packages/master/mingw-w64-glib2/0002-disable_glib_compile_schemas_warning.patch"
+git apply 0001-Update-g_fopen-g_open-and-g_creat-to-open-with-FILE_.patch
+git apply 0001-win32-Make-the-static-build-work-with-MinGW-when-pos.patch
+patch -p1 < 0001-disable-some-tests-when-static.patch
+git apply 0002-disable_glib_compile_schemas_warning.patch
+# Only this patch is different from MSYS2 build.
+git apply ../build/windows/patches/glib-mr2020.patch
+
+mkdir _build
+cd _build
+meson -Dprefix="${GIMP_PREFIX}" -Dlibelf=disabled --buildtype=release \
+      --wrap-mode=nodownload --auto-features=enabled \
+      -Ddefault_library=shared -Dforce_posix_threads=true -Dgtk_doc=false ..
+ninja
+ninja install
+cd ../..
+
 ## babl and GEGL (follow master branch) ##
 
 git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
