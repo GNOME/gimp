@@ -9,11 +9,13 @@ if [[ "$MSYSTEM" == "MINGW32" ]]; then
     # it for this architecture.
     export BABL_OPTIONS="-Denable-vapi=false"
     export GEGL_OPTIONS="-Dvapigen=disabled"
+    export MSYS_PREFIX="/c/msys64/mingw32/"
 else
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export BABL_OPTIONS=""
     export GEGL_OPTIONS=""
+    export MSYS_PREFIX="/c/msys64/mingw64/"
 fi
 
 # Update everything
@@ -27,6 +29,7 @@ pacman --noconfirm -S --needed \
     \
     mingw-w64-$MSYS2_ARCH-cairo \
     mingw-w64-$MSYS2_ARCH-crt-git \
+    mingw-w64-$MSYS2_ARCH-glib-networking \
     mingw-w64-$MSYS2_ARCH-gobject-introspection \
     mingw-w64-$MSYS2_ARCH-json-glib \
     mingw-w64-$MSYS2_ARCH-lcms2 \
@@ -92,6 +95,13 @@ meson -Dprefix="${GIMP_PREFIX}" -Dlibelf=disabled --buildtype=release \
 ninja
 ninja install
 cd ../..
+
+# glib-networking is needed. No need to rebuild it, since we build the
+# same version of glib with the same options, and just some additional
+# patches, so we assume MSYS2-built packages should be fine.
+mkdir -p ${GIMP_PREFIX}/lib/gio/modules/
+cp -fr ${MSYS_PREFIX}/lib/gio/modules/*.dll ${GIMP_PREFIX}/lib/gio/modules/
+# TODO: what about /mingw64/share/locale/*/LC_MESSAGES/glib-networking.mo ?
 
 ## babl and GEGL (follow master branch) ##
 
