@@ -1966,11 +1966,18 @@ gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
       if (gtk_tree_path_compare (path, view->priv->lock_box_path) != 0 ||
           column != gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1))
         {
+          /* Propagate the press event to the tree view. */
           new_event = gdk_event_copy (event);
           g_object_unref (new_event->any.window);
           new_event->any.window     = g_object_ref (gtk_widget_get_window (GTK_WIDGET (tree_view->view)));
           new_event->any.send_event = TRUE;
+          gtk_main_do_event (new_event);
 
+          /* Also immediately pass a release event at same position.
+           * Without this, we get weird pointer as though a quick drag'n
+           * drop occured.
+           */
+          new_event->type = GDK_BUTTON_RELEASE;
           gtk_main_do_event (new_event);
 
           gdk_event_free (new_event);
