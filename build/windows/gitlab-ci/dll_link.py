@@ -35,6 +35,7 @@ bindir = 'bin'
 
 # Main function
 def main(binary, srcdir, destdir, debug):
+  sys.stdout.write("{} (INFO): searching for dependencies of {} in {}\n".format(os.path.basename(__file__), binary, srcdir))
   find_dependencies(binary, srcdir)
   if args.debug:
     print("Running in debug mode (no DLL moved)")
@@ -105,7 +106,9 @@ def copy_dlls(dll_list, srcdir, destdir):
   for dll in dll_list:
     full_file_name = os.path.join(srcdir, bindir, dll)
     if os.path.isfile(full_file_name):
-      shutil.copy(full_file_name, destbin)
+      if not os.path.exists(os.path.join(destbin, dll)):
+        sys.stdout.write("{} (INFO): copying {} to {}\n".format(os.path.basename(__file__), full_file_name, destbin))
+        shutil.copy(full_file_name, destbin)
     else:
       sys.stderr.write("Missing DLL: {}\n".format(full_file_name))
       sys.exit(os.EX_DATAERR)
