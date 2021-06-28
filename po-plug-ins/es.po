@@ -22,15 +22,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-13 08:00+0000\n"
-"PO-Revision-Date: 2021-05-18 13:08+0200\n"
+"POT-Creation-Date: 2021-06-18 12:53+0000\n"
+"PO-Revision-Date: 2021-06-26 16:28+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:114
@@ -86,7 +86,7 @@ msgstr "Ejercitar una cabra (C)"
 #: ../plug-ins/common/curve-bend.c:1220 ../plug-ins/common/curve-bend.c:1994
 #: ../plug-ins/common/curve-bend.c:2029 ../plug-ins/common/depth-merge.c:732
 #: ../plug-ins/common/destripe.c:483 ../plug-ins/common/file-cel.c:1009
-#: ../plug-ins/common/file-gif-save.c:1119 ../plug-ins/common/file-heif.c:2371
+#: ../plug-ins/common/file-gif-save.c:1143 ../plug-ins/common/file-heif.c:2371
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
@@ -103,7 +103,7 @@ msgstr "Ejercitar una cabra (C)"
 #: ../plug-ins/common/tile-small.c:445 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:707 ../plug-ins/common/warp.c:489
 #: ../plug-ins/common/wavelet-decompose.c:408 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:2458 ../plug-ins/flame/flame.c:539
+#: ../plug-ins/file-tiff/file-tiff-load.c:2475 ../plug-ins/flame/flame.c:539
 #: ../plug-ins/flame/flame.c:715 ../plug-ins/flame/flame.c:1032
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
@@ -439,8 +439,8 @@ msgstr "_Vertical"
 #: ../plug-ins/file-faxg3/faxg3.c:577 ../plug-ins/file-fits/fits.c:564
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
 #: ../plug-ins/file-psd/psd-image-res-load.c:1072
-#: ../plug-ins/file-psd/psd-load.c:2097 ../plug-ins/file-sgi/sgi.c:424
-#: ../plug-ins/file-tiff/file-tiff-load.c:1272
+#: ../plug-ins/file-psd/psd-load.c:2233 ../plug-ins/file-sgi/sgi.c:477
+#: ../plug-ins/file-tiff/file-tiff-load.c:1289
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -1040,7 +1040,7 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: ../plug-ins/file-fli/fli-gimp.c:460 ../plug-ins/file-fli/fli-gimp.c:510
 #: ../plug-ins/file-ico/ico-load.c:676 ../plug-ins/file-ico/ico-load.c:758
 #: ../plug-ins/file-jpeg/jpeg-load.c:102 ../plug-ins/file-jpeg/jpeg-load.c:543
-#: ../plug-ins/file-psd/psd-load.c:138 ../plug-ins/file-psd/psd-load.c:143
+#: ../plug-ins/file-psd/psd-load.c:144 ../plug-ins/file-psd/psd-load.c:149
 #: ../plug-ins/file-psd/psd-save.c:1818
 #: ../plug-ins/file-psd/psd-thumb-load.c:82
 #: ../plug-ins/file-psd/psd-thumb-load.c:87 ../plug-ins/flame/flame.c:477
@@ -1956,13 +1956,6 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #. Number of items read from file
 #. max. rows allocated
 #. column, highest column ever used
-#. File pointer
-#. Image
-#. Layer
-#. Buffer for layer
-#. Pixel rows
-#. Current pixel
-#. SGI image data
 #.
 #. * Open the file for reading...
 #.
@@ -1979,9 +1972,9 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: ../plug-ins/file-bmp/bmp-load.c:219 ../plug-ins/file-exr/file-exr.c:188
 #: ../plug-ins/file-faxg3/faxg3.c:240 ../plug-ins/file-fli/fli-gimp.c:500
 #: ../plug-ins/file-ico/ico-load.c:666 ../plug-ins/file-jpeg/jpeg-load.c:91
-#: ../plug-ins/file-psd/psd-load.c:151
+#: ../plug-ins/file-psd/psd-load.c:157
 #: ../plug-ins/file-raw/file-darktable.c:419
-#: ../plug-ins/file-raw/file-rawtherapee.c:345 ../plug-ins/file-sgi/sgi.c:330
+#: ../plug-ins/file-raw/file-rawtherapee.c:345 ../plug-ins/file-sgi/sgi.c:332
 #: ../plug-ins/file-tiff/file-tiff-load.c:246
 #, c-format
 msgid "Opening '%s'"
@@ -2052,7 +2045,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:888
+#: ../plug-ins/common/file-cel.c:848 ../plug-ins/common/file-gif-save.c:903
 #: ../plug-ins/common/file-heif.c:1484 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
 #: ../plug-ins/common/file-png.c:1499 ../plug-ins/common/file-pnm.c:1336
@@ -2062,7 +2055,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
 #: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
 #: ../plug-ins/file-jpeg/jpeg-save.c:270 ../plug-ins/file-psd/psd-save.c:1775
-#: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:1104
+#: ../plug-ins/file-sgi/sgi.c:649 ../plug-ins/file-tiff/file-tiff-save.c:1104
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exportando «%s»"
@@ -2299,18 +2292,18 @@ msgstr ""
 "El formato GIF sólo soporta comentarios en codificación ASCII de 7 bits. No "
 "se guardará ningún comentario."
 
-#: ../plug-ins/common/file-gif-save.c:861
+#: ../plug-ins/common/file-gif-save.c:876
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "No se puede guardar imágenes en color RGB. Convertir a color indexado o\n"
 "escala en gris primero."
 
-#: ../plug-ins/common/file-gif-save.c:1065
+#: ../plug-ins/common/file-gif-save.c:1089
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Retardo insertado para evitar la maldita animación chupadora de CPU."
 
-#: ../plug-ins/common/file-gif-save.c:1114
+#: ../plug-ins/common/file-gif-save.c:1138
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2319,11 +2312,11 @@ msgstr ""
 "extiende\n"
 "más allá de los bordes reales de la imagen."
 
-#: ../plug-ins/common/file-gif-save.c:1120
+#: ../plug-ins/common/file-gif-save.c:1144
 msgid "Cr_op"
 msgstr "_Recortar"
 
-#: ../plug-ins/common/file-gif-save.c:1131
+#: ../plug-ins/common/file-gif-save.c:1155
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2331,65 +2324,63 @@ msgstr ""
 "El formato de archivo GIF no permite esto. Puede elegir si quiere recortar\n"
 "todas las capas de los bordes de la imagen, o cancelar la exportación."
 
-#: ../plug-ins/common/file-gif-save.c:1168
+#: ../plug-ins/common/file-gif-save.c:1192
 msgid "Export Image as GIF"
 msgstr "Exportar imagen como GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1178 ../plug-ins/common/file-mng.c:1616
+#: ../plug-ins/common/file-gif-save.c:1202 ../plug-ins/common/file-mng.c:1616
 msgid "_Interlace"
 msgstr "_Entrelazar"
 
-#: ../plug-ins/common/file-gif-save.c:1187
+#: ../plug-ins/common/file-gif-save.c:1211
 msgid "Save c_omment"
 msgstr "Guardar el coment_ario"
 
-#: ../plug-ins/common/file-gif-save.c:1226
+#: ../plug-ins/common/file-gif-save.c:1250
 msgid "As _animation"
 msgstr "Como _animación"
 
-#: ../plug-ins/common/file-gif-save.c:1241
+#: ../plug-ins/common/file-gif-save.c:1265
 msgid "_Loop forever"
 msgstr "Buc_le perpetuo"
 
-#: ../plug-ins/common/file-gif-save.c:1247
+#: ../plug-ins/common/file-gif-save.c:1271
 msgid "_Delay between frames where unspecified:"
 msgstr "Retraso entre cua_dros cuando no esté especificado:"
 
-#. label for 'ms' adjustment
-#: ../plug-ins/common/file-gif-save.c:1255 ../plug-ins/common/file-mng.c:1731
-#: ../plug-ins/file-webp/file-webp-dialog.c:282
+#: ../plug-ins/common/file-gif-save.c:1279 ../plug-ins/common/file-mng.c:1731
 msgid "milliseconds"
 msgstr "milisegundos"
 
-#: ../plug-ins/common/file-gif-save.c:1259
+#: ../plug-ins/common/file-gif-save.c:1283
 msgid "I don't care"
 msgstr "No me importa"
 
-#: ../plug-ins/common/file-gif-save.c:1261
+#: ../plug-ins/common/file-gif-save.c:1285
 msgid "Cumulative layers (combine)"
 msgstr "Capas acumulativas (combinar)"
 
-#: ../plug-ins/common/file-gif-save.c:1263
+#: ../plug-ins/common/file-gif-save.c:1287
 msgid "One frame per layer (replace)"
 msgstr "Un cuadro por capa (reemplazar)"
 
-#: ../plug-ins/common/file-gif-save.c:1271
+#: ../plug-ins/common/file-gif-save.c:1295
 msgid "_Frame disposal where unspecified"
 msgstr "Residuo de _cuadros cuando no esté especificado"
 
-#: ../plug-ins/common/file-gif-save.c:1277
+#: ../plug-ins/common/file-gif-save.c:1301
 msgid "_Use delay entered above for all frames"
 msgstr "_Usar el retraso introducido más arriba para todos los cuadros"
 
-#: ../plug-ins/common/file-gif-save.c:1282
+#: ../plug-ins/common/file-gif-save.c:1306
 msgid "U_se disposal entered above for all frames"
 msgstr "U_sar el residuo introducido más arriba para todos los cuadros"
 
-#: ../plug-ins/common/file-gif-save.c:1290
+#: ../plug-ins/common/file-gif-save.c:1314
 msgid "Animated GIF"
 msgstr "GIF animado"
 
-#: ../plug-ins/common/file-gif-save.c:1294
+#: ../plug-ins/common/file-gif-save.c:1318
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -2554,7 +2545,6 @@ msgid "Export Image as HEIF"
 msgstr "Exportar imagen como HEIF"
 
 #: ../plug-ins/common/file-heif.c:2539
-#: ../plug-ins/file-webp/file-webp-dialog.c:119
 msgid "_Lossless"
 msgstr "_Sin pérdida"
 
@@ -2607,17 +2597,14 @@ msgid "Speed:"
 msgstr "Velocidad:"
 
 #: ../plug-ins/common/file-heif.c:2638
-#: ../plug-ins/file-webp/file-webp-dialog.c:305
 msgid "Save color _profile"
 msgstr "Guardar _perfil de color"
 
 #: ../plug-ins/common/file-heif.c:2645
-#: ../plug-ins/file-webp/file-webp-dialog.c:295
 msgid "_Save Exif data"
 msgstr "_Guardar los datos Exif"
 
 #: ../plug-ins/common/file-heif.c:2651
-#: ../plug-ins/file-webp/file-webp-dialog.c:300
 msgid "Save _XMP data"
 msgstr "Guardar los datos _XMP"
 
@@ -3006,13 +2993,13 @@ msgid "'%s' is not a PCX file"
 msgstr "«%s» no es un archivo PCX"
 
 #: ../plug-ins/common/file-pcx.c:448 ../plug-ins/file-bmp/bmp-load.c:729
-#: ../plug-ins/file-psd/psd-load.c:327
+#: ../plug-ins/file-psd/psd-load.c:343
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Anchura de imagen no soportada o no válida: %d"
 
 #: ../plug-ins/common/file-pcx.c:454 ../plug-ins/file-bmp/bmp-load.c:735
-#: ../plug-ins/file-psd/psd-load.c:319
+#: ../plug-ins/file-psd/psd-load.c:335
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Altura de imagen no soportada o no válida: %d"
@@ -3116,7 +3103,7 @@ msgid "Import from PDF"
 msgstr "Importar desde PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3551
-#: ../plug-ins/file-tiff/file-tiff-load.c:2459
+#: ../plug-ins/file-tiff/file-tiff-load.c:2476
 #: ../plug-ins/metadata/metadata-editor.c:4569
 msgid "_Import"
 msgstr "_Importar"
@@ -3257,7 +3244,7 @@ msgstr "Capas como páginas (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1330
 #: ../plug-ins/common/file-pdf-save.c:1403
 #: ../plug-ins/common/file-pdf-save.c:1501 ../plug-ins/common/file-ps.c:2036
-#: ../plug-ins/file-tiff/file-tiff-load.c:1274
+#: ../plug-ins/file-tiff/file-tiff-load.c:1291
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
@@ -6856,103 +6843,103 @@ msgstr "Vista previa de la exportación"
 msgid "JPEG format does not support multiple layers."
 msgstr "El formato JPEG no soporta múltiples capas."
 
-#: ../plug-ins/file-psd/psd-load.c:241
+#: ../plug-ins/file-psd/psd-load.c:261
 #: ../plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Ocurrió un error al cargar el archivo PSD: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:295
+#: ../plug-ins/file-psd/psd-load.c:314
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Este archivo no es un documento de Photoshop válido"
 
-#: ../plug-ins/file-psd/psd-load.c:302
+#: ../plug-ins/file-psd/psd-load.c:321
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Versión del formato de archivo no soportada: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:309
+#: ../plug-ins/file-psd/psd-load.c:328
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Demasiados canales en el archivo: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:336
+#: ../plug-ins/file-psd/psd-load.c:352
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Tamaño de imagen no soportado o no válido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:350 ../plug-ins/file-psd/psd-load.c:360
+#: ../plug-ins/file-psd/psd-load.c:366 ../plug-ins/file-psd/psd-load.c:376
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Modo de color no soportado: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:387
+#: ../plug-ins/file-psd/psd-load.c:403
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Profundidad de bits no soportada: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:421 ../plug-ins/file-psd/psd-load.c:431
-#: ../plug-ins/file-psd/psd-load.c:653 ../plug-ins/file-psd/psd-load.c:932
+#: ../plug-ins/file-psd/psd-load.c:437 ../plug-ins/file-psd/psd-load.c:447
+#: ../plug-ins/file-psd/psd-load.c:648 ../plug-ins/file-psd/psd-load.c:970
 #, c-format
 msgid "The file is corrupt!"
 msgstr "El archivo está corrupto."
 
-#: ../plug-ins/file-psd/psd-load.c:581
+#: ../plug-ins/file-psd/psd-load.c:599
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Demasiados canales en la capa: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:589
+#: ../plug-ins/file-psd/psd-load.c:682
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Altura de la capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:597
+#: ../plug-ins/file-psd/psd-load.c:690
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Anchura de la capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:606
+#: ../plug-ins/file-psd/psd-load.c:699
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Tamaño de la capa no soportado o no válido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:691
+#: ../plug-ins/file-psd/psd-load.c:717
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Tamaño de info. de máscara no soportado o no válido."
 
-#: ../plug-ins/file-psd/psd-load.c:843
+#: ../plug-ins/file-psd/psd-load.c:870
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Altura de la máscara de capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:851
+#: ../plug-ins/file-psd/psd-load.c:878
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Anchura de la máscara de capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:860
+#: ../plug-ins/file-psd/psd-load.c:887
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Tamaño de la máscara de capa no soportado o no válido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1544 ../plug-ins/file-psd/psd-load.c:2071
+#: ../plug-ins/file-psd/psd-load.c:1672 ../plug-ins/file-psd/psd-load.c:2207
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modo de compresión no soportado: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2202
+#: ../plug-ins/file-psd/psd-load.c:2338
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2380
+#: ../plug-ins/file-psd/psd-load.c:2516
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Tamaño del canal no soportado o no válido"
 
-#: ../plug-ins/file-psd/psd-load.c:2446
+#: ../plug-ins/file-psd/psd-load.c:2582
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Error al descomprimir los datos"
@@ -7128,48 +7115,48 @@ msgstr "Imagen IRIS de Silicon Graphics"
 msgid "SGI format does not support multiple layers."
 msgstr "El formato SGI no soporta múltiples capas."
 
-#: ../plug-ins/file-sgi/sgi.c:340
+#: ../plug-ins/file-sgi/sgi.c:342
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "No se pudo abrir «%s» para lectura."
 
-#: ../plug-ins/file-sgi/sgi.c:356
+#: ../plug-ins/file-sgi/sgi.c:358
 #, c-format
 msgid "Invalid width: %hu"
 msgstr "Anchura no válida: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:364
+#: ../plug-ins/file-sgi/sgi.c:366
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Altura no válida: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:372
+#: ../plug-ins/file-sgi/sgi.c:374
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "Número de canales no válido: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:605
+#: ../plug-ins/file-sgi/sgi.c:660
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "No se pudo abrir «%s» para escritura."
 
-#: ../plug-ins/file-sgi/sgi.c:693
+#: ../plug-ins/file-sgi/sgi.c:748
 msgid "Export Image as SGI"
 msgstr "Exportar imagen como  SGI"
 
-#: ../plug-ins/file-sgi/sgi.c:702
+#: ../plug-ins/file-sgi/sgi.c:757
 msgid "No compression"
 msgstr "Sin compresión"
 
-#: ../plug-ins/file-sgi/sgi.c:704
+#: ../plug-ins/file-sgi/sgi.c:759
 msgid "RLE compression"
 msgstr "Compresión RLE"
 
-#: ../plug-ins/file-sgi/sgi.c:706
+#: ../plug-ins/file-sgi/sgi.c:761
 msgid "Aggressive RLE (not supported by SGI)"
 msgstr "RLE agresivo (no soportado por SGI)"
 
-#: ../plug-ins/file-sgi/sgi.c:714
+#: ../plug-ins/file-sgi/sgi.c:769
 msgid "Compression _type:"
 msgstr "_Tipo de compresión:"
 
@@ -7331,70 +7318,70 @@ msgstr ""
 msgid "Could not create a new image: %s"
 msgstr "No se pudo crear una imagen nueva: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:990
+#: ../plug-ins/file-tiff/file-tiff-load.c:1003
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-de-%d-páginas"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1155
+#: ../plug-ins/file-tiff/file-tiff-load.c:1172
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Tipo de unidad de resolución %d desconocido, se supondrá dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1165
+#: ../plug-ins/file-tiff/file-tiff-load.c:1182
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "Advertencia: se especificó la resolución sin un tipo de unidad, se supondrá "
 "dpi"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1173
+#: ../plug-ins/file-tiff/file-tiff-load.c:1190
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Advertencia: no hay información sobre la resolución de «y», se supondrá la "
 "misma que «x»"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1232
+#: ../plug-ins/file-tiff/file-tiff-load.c:1249
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "No se pudieron obtener los mapas de color de «%s»"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1311
+#: ../plug-ins/file-tiff/file-tiff-load.c:1328
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1464
+#: ../plug-ins/file-tiff/file-tiff-load.c:1481
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "No se pudo leer ningún dato del TIFF «%s». Es probable que el archivo esté "
 "dañado."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1535
+#: ../plug-ins/file-tiff/file-tiff-load.c:1552
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: formato de imagen no admitido, no hay un cargador de RGBA disponible"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1847
-#: ../plug-ins/file-tiff/file-tiff-load.c:2044
+#: ../plug-ins/file-tiff/file-tiff-load.c:1864
+#: ../plug-ins/file-tiff/file-tiff-load.c:2061
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 "Falló al leer la tesela. Puede que la imagen esté corrupta en la línea %d."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1856
-#: ../plug-ins/file-tiff/file-tiff-load.c:2053
+#: ../plug-ins/file-tiff/file-tiff-load.c:1873
+#: ../plug-ins/file-tiff/file-tiff-load.c:2070
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Falló al leer la línea de exploración. Puede que la imagen esté corrupta en "
 "la línea %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2454
+#: ../plug-ins/file-tiff/file-tiff-load.c:2471
 msgid "Import from TIFF"
 msgstr "Importar desde TIFF"
 
@@ -7402,23 +7389,23 @@ msgstr "Importar desde TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2507
+#: ../plug-ins/file-tiff/file-tiff-load.c:2524
 msgid "_Keep empty space around imported layers"
 msgstr "_Mantener espacio vacío alrededor de capas importadas"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2524
+#: ../plug-ins/file-tiff/file-tiff-load.c:2541
 msgid "Process extra channel as:"
 msgstr "Procesar canal adicional como:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2527
+#: ../plug-ins/file-tiff/file-tiff-load.c:2544
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _no premultiplicado"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2528
+#: ../plug-ins/file-tiff/file-tiff-load.c:2545
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_multiplicado"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2529
+#: ../plug-ins/file-tiff/file-tiff-load.c:2546
 msgid "Channe_l"
 msgstr "Cana_l"
 
@@ -7483,7 +7470,35 @@ msgstr "Fax CCITT grupo 4"
 msgid "WebP image"
 msgstr "Imagen WebP"
 
-#: ../plug-ins/file-webp/file-webp.c:356
+#: ../plug-ins/file-webp/file-webp.c:159
+msgid "WebP"
+msgstr "WebP"
+
+#: ../plug-ins/file-webp/file-webp.c:191
+msgid "Loop _forever"
+msgstr "Bucle in_finito"
+
+#: ../plug-ins/file-webp/file-webp.c:197
+msgid "_Minimize output size (slower)"
+msgstr "_Minimizar tamaño de salida (más lento)"
+
+#: ../plug-ins/file-webp/file-webp.c:203
+msgid "Max distance between _key-frames"
+msgstr "Distancia máxima entre _fotogramas clave"
+
+#: ../plug-ins/file-webp/file-webp.c:209
+msgid "_Default delay between frames"
+msgstr "Retraso _predeterminado entre fotogramas"
+
+#: ../plug-ins/file-webp/file-webp.c:216
+msgid "Use default dela_y for all frames"
+msgstr "Usar el retraso predeterminado para todos los fotogramas"
+
+#: ../plug-ins/file-webp/file-webp.c:222
+msgid "Save a_nimation"
+msgstr "Guardar _animación"
+
+#: ../plug-ins/file-webp/file-webp.c:340
 #, c-format
 msgid ""
 "The WebP plug-in cannot export multiple layer, except in animation mode."
@@ -7491,64 +7506,13 @@ msgstr ""
 "El complemento WebP no puede exportar múltiples capas salvo en el modo "
 "animación."
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:62
+#: ../plug-ins/file-webp/file-webp-dialog.c:48
 msgid "(no keyframes)"
 msgstr "(sin fotogramas clave)"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:66
+#: ../plug-ins/file-webp/file-webp-dialog.c:52
 msgid "(all frames are keyframes)"
 msgstr "(todos los fotogramas son fotogramas clave)"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:103
-msgid "Export Image as WebP"
-msgstr "Exportar imagen como WebP"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:125
-msgid "Image _quality:"
-msgstr "_Calidad de la imagen:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:132
-msgid "Alpha q_uality:"
-msgstr "C_alidad alfa:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:161
-msgid "Source _type:"
-msgstr "_Tipo de la fuente:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:164
-msgid "WebP encoder \"preset\""
-msgstr "Codificador WebP «preajuste»"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:182
-msgid "_Advanced Options"
-msgstr "_Opciones avanzadas"
-
-#. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:189
-msgid "As A_nimation"
-msgstr "Como _animación"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:213
-msgid "Loop _forever"
-msgstr "Bucle in_finito"
-
-#. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:224
-msgid "Max distance between key-frames:"
-msgstr "Distancia máxima entre fotogramas clave:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:252
-msgid "_Minimize output size (slower)"
-msgstr "_Minimizar tamaño de salida (más lento)"
-
-#. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:271
-msgid "Delay between frames where unspecified:"
-msgstr "Retraso entre fotogramas cuando no esté especificado:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:288
-msgid "Use _delay entered above for all frames"
-msgstr "Usar el retraso intro_ducido anteriormente para todos los cuadros"
 
 #: ../plug-ins/file-webp/file-webp-load.c:111
 #, c-format
@@ -12545,6 +12509,30 @@ msgstr "_Escáner/Cámara…"
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
 
+#~ msgid "Export Image as WebP"
+#~ msgstr "Exportar imagen como WebP"
+
+#~ msgid "Image _quality:"
+#~ msgstr "_Calidad de la imagen:"
+
+#~ msgid "Alpha q_uality:"
+#~ msgstr "C_alidad alfa:"
+
+#~ msgid "Source _type:"
+#~ msgstr "_Tipo de la fuente:"
+
+#~ msgid "WebP encoder \"preset\""
+#~ msgstr "Codificador WebP «preajuste»"
+
+#~ msgid "_Advanced Options"
+#~ msgstr "_Opciones avanzadas"
+
+#~ msgid "Delay between frames where unspecified:"
+#~ msgstr "Retraso entre fotogramas cuando no esté especificado:"
+
+#~ msgid "Use _delay entered above for all frames"
+#~ msgstr "Usar el retraso intro_ducido anteriormente para todos los cuadros"
+
 #~ msgid "Export Image as PNG"
 #~ msgstr "Exportar imagen como PNG"
 
@@ -13258,9 +13246,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 
 #~ msgid "SGI"
 #~ msgstr "SGI"
-
-#~ msgid "WebP"
-#~ msgstr "WebP"
 
 #~ msgid "Image quality"
 #~ msgstr "Calidad de la imagen"
