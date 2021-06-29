@@ -247,6 +247,9 @@ _("Export IPTC metadata by default.")
 #define GENERATE_BACKTRACE_BLURB \
 _("Try generating debug data for bug reporting when appropriate.")
 
+#define WIN32_POINTER_INPUT_API_BLURB \
+_("Sets the preferred pen and touch input API.")
+
 #define INITIAL_ZOOM_TO_FIT_BLURB \
 _("When enabled, this will ensure that the full image is visible after a " \
   "file is opened, otherwise it will be displayed with a scale of 1:1.")

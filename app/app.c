@@ -34,6 +34,10 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
+#ifndef GIMP_CONSOLE_COMPILATION
+#include <gtk/gtk.h>
+#endif
+
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #ifdef G_OS_WIN32
@@ -239,6 +243,34 @@ app_run (const gchar         *full_prog_name,
   language_init (language);
   if (language)
     g_free (language);
+
+#if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
+
+#if GTK_MAJOR_VERSION > 3
+#warning For GTK4 and above use the proper backend-specific API instead of the GDK_WIN32_TABLET_INPUT_API environment variable
+#endif
+
+  /* Support for Windows Ink was introduced in GTK3 3.24.30
+   */
+  if (gtk_get_major_version () == 3 &&
+      (gtk_get_minor_version () > 24 ||
+      (gtk_get_minor_version () == 24 &&
+       gtk_get_micro_version () >= 30)))
+    {
+      GimpWin32PointerInputAPI api = gimp_early_rc_get_win32_pointer_input_api (earlyrc);;
+
+      switch (api)
+        {
+        case GIMP_WIN32_POINTER_INPUT_API_WINTAB:
+          g_setenv ("GDK_WIN32_TABLET_INPUT_API", "wintab", TRUE);
+          break;
+        case GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK:
+          g_setenv ("GDK_WIN32_TABLET_INPUT_API", "winpointer", TRUE);
+          break;
+        }
+    }
+
+#endif
 
   g_object_unref (earlyrc);
 

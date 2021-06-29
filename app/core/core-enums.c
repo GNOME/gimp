@@ -990,6 +990,35 @@ gimp_paste_type_get_type (void)
 }
 
 GType
+gimp_win32_pointer_input_api_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_WIN32_POINTER_INPUT_API_WINTAB, "GIMP_WIN32_POINTER_INPUT_API_WINTAB", "wintab" },
+    { GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK, "GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK", "windows-ink" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_WIN32_POINTER_INPUT_API_WINTAB, NC_("win32-pointer-input-api", "Wintab"), NULL },
+    { GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK, NC_("win32-pointer-input-api", "Windows Ink"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpWin32PointerInputAPI", values);
+      gimp_type_set_translation_context (type, "win32-pointer-input-api");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_thumbnail_size_get_type (void)
 {
   static const GEnumValue values[] =

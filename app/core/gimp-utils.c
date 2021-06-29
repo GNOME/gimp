@@ -1137,6 +1137,44 @@ gimp_idle_run_async_full (gint             priority,
   return g_object_ref (data->async);
 }
 
+#ifdef G_OS_WIN32
+
+gboolean
+gimp_win32_have_wintab (void)
+{
+  gunichar2 wchars_buffer[MAX_PATH + 1];
+  UINT      wchars_count = 0;
+
+  memset (wchars_buffer, 0, sizeof (wchars_buffer));
+  wchars_count = GetSystemDirectoryW (wchars_buffer, MAX_PATH);
+  if (wchars_count > 0 && wchars_count < MAX_PATH)
+    {
+      char *system32_directory = g_utf16_to_utf8 (wchars_buffer, -1, NULL, NULL, NULL);
+
+      if (system32_directory)
+        {
+          GFile    *file   = g_file_new_build_filename (system32_directory, "Wintab32.dll", NULL);
+          gboolean  exists = g_file_query_exists (file, NULL);
+
+          g_object_unref (file);
+          g_free (system32_directory);
+
+          return exists;
+        }
+    }
+
+  return FALSE;
+}
+
+gboolean
+gimp_win32_have_windows_ink (void)
+{
+  /* Check for Windows 8 or later */
+  return g_win32_check_windows_version (6, 2, 0, G_WIN32_OS_ANY);
+}
+
+#endif
+
 
 /*  debug stuff  */
 

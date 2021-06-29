@@ -34,6 +34,7 @@
 
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
+#include "core/gimp-utils.h"
 
 #include "plug-in/gimppluginmanager.h"
 
@@ -756,6 +757,37 @@ prefs_devices_clear_callback (GtkWidget *widget,
                        "default values the next time you start GIMP."));
     }
 }
+
+#ifdef G_OS_WIN32
+
+static gboolean
+prefs_devices_api_sensitivity_func (gint      value,
+                                    gpointer  data)
+{
+  static gboolean have_wintab      = TRUE;
+  static gboolean have_windows_ink = TRUE;
+  static gboolean inited           = FALSE;
+
+  if (!inited)
+    {
+      have_wintab      = gimp_win32_have_wintab ();
+      have_windows_ink = gimp_win32_have_windows_ink ();
+
+      inited = TRUE;
+    }
+
+  switch (value)
+    {
+    case GIMP_WIN32_POINTER_INPUT_API_WINTAB:
+      return have_wintab;
+    case GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK:
+      return have_windows_ink;
+    default:
+      return TRUE;
+    }
+}
+
+#endif
 
 static void
 prefs_search_clear_callback (GtkWidget *widget,
@@ -3130,6 +3162,29 @@ prefs_dialog_new (Gimp       *gimp,
   /*  Extended Input Devices  */
   vbox2 = prefs_frame_new (_("Extended Input Devices"),
                            GTK_CONTAINER (vbox), FALSE);
+
+#ifdef G_OS_WIN32
+
+  if ((gtk_get_major_version () == 3 &&
+       gtk_get_minor_version () > 24) ||
+      (gtk_get_major_version () == 3 &&
+       gtk_get_minor_version () == 24 &&
+       gtk_get_micro_version () >= 30))
+    {
+      GtkWidget *combo;
+
+      grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+
+      combo = prefs_enum_combo_box_add (object, "win32-pointer-input-api", 0, 0,
+                                        _("Pointer Input API:"),
+                                        GTK_GRID (grid), 0, NULL);
+
+      gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
+                                          prefs_devices_api_sensitivity_func,
+                                          NULL, NULL);
+    }
+
+#endif
 
   prefs_check_button_add (object, "devices-share-tool",
                           _("S_hare tool and tool options between input devices"),

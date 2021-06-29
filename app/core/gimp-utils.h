@@ -118,5 +118,11 @@ GimpImage  * gimp_create_image_from_buffer         (Gimp              *gimp,
                                                     GeglBuffer        *buffer,
                                                     const gchar       *image_name);
 
+#ifdef G_OS_WIN32
+
+gboolean     gimp_win32_have_wintab                (void);
+gboolean     gimp_win32_have_windows_ink           (void);
+
+#endif
 
 #endif /* __APP_GIMP_UTILS_H__ */

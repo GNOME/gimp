@@ -447,6 +447,17 @@ typedef enum  /*< pdb-skip >*/
 } GimpPasteType;
 
 
+#define GIMP_TYPE_WIN32_POINTER_INPUT_API (gimp_win32_pointer_input_api_get_type ())
+
+GType gimp_win32_pointer_input_api_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_WIN32_POINTER_INPUT_API_WINTAB,      /*< desc="Wintab"      >*/
+  GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK  /*< desc="Windows Ink" >*/
+} GimpWin32PointerInputAPI;
+
+
 #define GIMP_TYPE_THUMBNAIL_SIZE (gimp_thumbnail_size_get_type ())
 
 GType gimp_thumbnail_size_get_type (void) G_GNUC_CONST;

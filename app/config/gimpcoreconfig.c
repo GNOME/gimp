@@ -134,6 +134,9 @@ enum
   PROP_LAST_RELEASE_COMMENT,
   PROP_LAST_REVISION,
   PROP_LAST_KNOWN_RELEASE,
+#ifdef G_OS_WIN32
+  PROP_WIN32_POINTER_INPUT_API,
+#endif
 
   /* ignored, only for backward compatibility: */
   PROP_INSTALL_COLORMAP,
@@ -823,6 +826,17 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 #endif
                          GIMP_PARAM_STATIC_STRINGS);
 
+#ifdef G_OS_WIN32
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_WIN32_POINTER_INPUT_API,
+                         "win32-pointer-input-api",
+                         "Pointer Input API",
+                         WIN32_POINTER_INPUT_API_BLURB,
+                         GIMP_TYPE_WIN32_POINTER_INPUT_API,
+                         GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
+#endif
+
   /*  only for backward compatibility:  */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
                             "install-colormap",
@@ -1166,6 +1180,11 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_DEBUG_POLICY:
       core_config->debug_policy = g_value_get_enum (value);
       break;
+#ifdef G_OS_WIN32
+    case PROP_WIN32_POINTER_INPUT_API:
+      core_config->win32_pointer_input_api = g_value_get_enum (value);
+      break;
+#endif
 
     case PROP_INSTALL_COLORMAP:
     case PROP_MIN_COLORS:
@@ -1395,6 +1414,11 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_DEBUG_POLICY:
       g_value_set_enum (value, core_config->debug_policy);
       break;
+#ifdef G_OS_WIN32
+    case PROP_WIN32_POINTER_INPUT_API:
+      g_value_set_enum (value, core_config->win32_pointer_input_api);
+      break;
+#endif
 
     case PROP_INSTALL_COLORMAP:
     case PROP_MIN_COLORS:

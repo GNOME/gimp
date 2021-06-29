@@ -37,7 +37,10 @@ enum
   PROP_VERBOSE,
   PROP_SYSTEM_GIMPRC,
   PROP_USER_GIMPRC,
-  PROP_LANGUAGE
+  PROP_LANGUAGE,
+#ifdef G_OS_WIN32
+  PROP_WIN32_POINTER_INPUT_API,
+#endif
 };
 
 
@@ -96,6 +99,14 @@ gimp_early_rc_class_init (GimpEarlyRcClass *klass)
                            "language", NULL, NULL, NULL,
                            GIMP_PARAM_STATIC_STRINGS);
 
+#ifdef G_OS_WIN32
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_WIN32_POINTER_INPUT_API,
+                         "win32-pointer-input-api", NULL, NULL,
+                         GIMP_TYPE_WIN32_POINTER_INPUT_API,
+                         GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK,
+                         GIMP_PARAM_STATIC_STRINGS |
+                         GIMP_CONFIG_PARAM_RESTART);
+#endif
 }
 
 static void
@@ -197,6 +208,12 @@ gimp_early_rc_set_property (GObject      *object,
       rc->language = g_value_dup_string (value);
       break;
 
+#ifdef G_OS_WIN32
+    case PROP_WIN32_POINTER_INPUT_API:
+      rc->win32_pointer_input_api = g_value_get_enum (value);
+      break;
+#endif
+
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -225,6 +242,12 @@ gimp_early_rc_get_property (GObject    *object,
     case PROP_LANGUAGE:
       g_value_set_string (value, rc->language);
       break;
+
+#ifdef G_OS_WIN32
+    case PROP_WIN32_POINTER_INPUT_API:
+      g_value_set_enum (value, rc->win32_pointer_input_api);
+      break;
+#endif
 
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -280,3 +303,22 @@ gimp_early_rc_get_language (GimpEarlyRc *rc)
 {
   return rc->language ? g_strdup (rc->language) : NULL;
 }
+
+#ifdef G_OS_WIN32
+
+/**
+ * gimp_early_rc_get_win32_pointer_input_api:
+ * @rc: a #GimpEarlyRc object.
+ *
+ * This function looks up the win32-specific pointer input API
+ * set in `gimprc`.
+ *
+ * Returns: the selected win32-specific pointer input API
+ **/
+GimpWin32PointerInputAPI
+gimp_early_rc_get_win32_pointer_input_api (GimpEarlyRc *rc)
+{
+  return rc->win32_pointer_input_api;
+}
+
+#endif
