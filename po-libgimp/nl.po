@@ -5,13 +5,14 @@
 # Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005, 2006.
 # Filip Vervloesem <filip.vervloesem@member.fsf.org>, 2008.
 # Nathan Follens <nthn@unseen.is>, 2019.
+# Marcia van den Hout <mvdh1176@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-13 12:12+0000\n"
-"PO-Revision-Date: 2021-02-13 15:12+0100\n"
-"Last-Translator: Paul Matthijsse <paul.matthijsse@wanadoo.fr>\n"
+"POT-Creation-Date: 2021-06-26 00:45+0000\n"
+"PO-Revision-Date: 2021-06-30 \n"
+"Last-Translator: Marcia van den Hout <mvdh1176@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -268,44 +269,44 @@ msgstr "Lettertypeselectie"
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
-#: ../libgimp/gimpimagemetadata.c:519
+#: ../libgimp/gimpimagemetadata.c:687
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:708
+#: ../libgimp/gimpimagemetadata.c:875
 msgid "Background"
 msgstr "Achtergrond"
 
-#: ../libgimp/gimpimagemetadata.c:897
+#: ../libgimp/gimpimagemetadata.c:1064
 #, c-format
 msgid "Rotate %s?"
 msgstr "%s draaien?"
 
-#: ../libgimp/gimpimagemetadata.c:903
+#: ../libgimp/gimpimagemetadata.c:1070
 msgid "_Keep Original"
 msgstr "Origineel _behouden"
 
-#: ../libgimp/gimpimagemetadata.c:904 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1071 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Draaien"
 
-#: ../libgimp/gimpimagemetadata.c:945
+#: ../libgimp/gimpimagemetadata.c:1112
 msgid "Original"
 msgstr "Origineel"
 
-#: ../libgimp/gimpimagemetadata.c:961
+#: ../libgimp/gimpimagemetadata.c:1128
 msgid "Rotated"
 msgstr "Gedraaid"
 
-#: ../libgimp/gimpimagemetadata.c:979
+#: ../libgimp/gimpimagemetadata.c:1146
 msgid "This image contains Exif orientation metadata."
 msgstr "Deze afbeelding bevat Exif-oriëntatiegegevens."
 
-#: ../libgimp/gimpimagemetadata.c:997
+#: ../libgimp/gimpimagemetadata.c:1164
 msgid "Would you like to rotate the image?"
 msgstr "Wilt u de afbeelding draaien?"
 
-#: ../libgimp/gimpimagemetadata.c:1009
+#: ../libgimp/gimpimagemetadata.c:1176
 msgid "_Don't ask me again"
 msgstr "_Niet opnieuw vragen"
 
@@ -714,17 +715,17 @@ msgstr "32-bit integer"
 #: ../libgimpbase/gimpbaseenums.c:416
 msgctxt "component-type"
 msgid "16-bit floating point"
-msgstr "16-bit drijvendekomma"
+msgstr "16-bit decimaal"
 
 #: ../libgimpbase/gimpbaseenums.c:417
 msgctxt "component-type"
 msgid "32-bit floating point"
-msgstr "32-bit drijvendekomma"
+msgstr "32-bit decimaal"
 
 #: ../libgimpbase/gimpbaseenums.c:418
 msgctxt "component-type"
 msgid "64-bit floating point"
-msgstr "64-bit drijvendekomma"
+msgstr "64-bit decimaal"
 
 #: ../libgimpbase/gimpbaseenums.c:449
 msgctxt "convert-palette-type"
@@ -1248,32 +1249,32 @@ msgstr "32-bit gamma integer"
 #: ../libgimpbase/gimpbaseenums.c:1473
 msgctxt "precision"
 msgid "16-bit linear floating point"
-msgstr "16-bit lineair drijvendekomma"
+msgstr "16-bit lineair decimaal"
 
 #: ../libgimpbase/gimpbaseenums.c:1474
 msgctxt "precision"
 msgid "16-bit gamma floating point"
-msgstr "16-bit gamma drijvendekomma"
+msgstr "16-bit gamma decimaal"
 
 #: ../libgimpbase/gimpbaseenums.c:1475
 msgctxt "precision"
 msgid "32-bit linear floating point"
-msgstr "32-bit lineair drijvendekomma"
+msgstr "32-bit lineair decimaal"
 
 #: ../libgimpbase/gimpbaseenums.c:1476
 msgctxt "precision"
 msgid "32-bit gamma floating point"
-msgstr "32-bit gamma drijvendekomma"
+msgstr "32-bit gamma decimaal"
 
 #: ../libgimpbase/gimpbaseenums.c:1477
 msgctxt "precision"
 msgid "64-bit linear floating point"
-msgstr "64-bit lineair drijvendekomma"
+msgstr "64-bit lineair decimaal"
 
 #: ../libgimpbase/gimpbaseenums.c:1478
 msgctxt "precision"
 msgid "64-bit gamma floating point"
-msgstr "64-bit gamma drijvendekomma"
+msgstr "64-bit gamma decimaal"
 
 #: ../libgimpbase/gimpbaseenums.c:1547
 msgctxt "repeat-mode"
@@ -3139,7 +3140,7 @@ msgstr "Contrast"
 # Datum-tijdstip van originele bestand is niet veranderd? (tino)
 # Ik laat het zo maar staan, als mensen er over vallen moeten ze
 # maar schrijven.
-#
+# 
 #~ msgid ""
 #~ "Error writing to temporary file for '%s': %s\n"
 #~ "The original file has not been touched."
