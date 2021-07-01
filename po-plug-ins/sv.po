@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-31 16:01+0000\n"
-"PO-Revision-Date: 2021-06-04 23:21+0200\n"
+"POT-Creation-Date: 2021-06-18 19:04+0000\n"
+"PO-Revision-Date: 2021-07-01 17:47+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -2323,9 +2323,7 @@ msgstr "_Loopa för evigt"
 msgid "_Delay between frames where unspecified:"
 msgstr "_Tidsmellanrum mellan bildrutor när inte angivet:"
 
-#. label for 'ms' adjustment
 #: ../plug-ins/common/file-gif-save.c:1279 ../plug-ins/common/file-mng.c:1731
-#: ../plug-ins/file-webp/file-webp-dialog.c:282
 msgid "milliseconds"
 msgstr "millisekunder"
 
@@ -2517,7 +2515,6 @@ msgid "Export Image as HEIF"
 msgstr "Exportera bild som HEIF"
 
 #: ../plug-ins/common/file-heif.c:2539
-#: ../plug-ins/file-webp/file-webp-dialog.c:119
 msgid "_Lossless"
 msgstr "För_lustfri"
 
@@ -2571,17 +2568,14 @@ msgid "Speed:"
 msgstr "Hastighet:"
 
 #: ../plug-ins/common/file-heif.c:2638
-#: ../plug-ins/file-webp/file-webp-dialog.c:305
 msgid "Save color _profile"
 msgstr "Spara färg_profil"
 
 #: ../plug-ins/common/file-heif.c:2645
-#: ../plug-ins/file-webp/file-webp-dialog.c:295
 msgid "_Save Exif data"
 msgstr "_Spara Exif-data"
 
 #: ../plug-ins/common/file-heif.c:2651
-#: ../plug-ins/file-webp/file-webp-dialog.c:300
 msgid "Save _XMP data"
 msgstr "Spara _XMP-data"
 
@@ -7386,71 +7380,48 @@ msgstr "CCITT Group 4-fax"
 msgid "WebP image"
 msgstr "WebP-bild"
 
-#: ../plug-ins/file-webp/file-webp.c:356
+#: ../plug-ins/file-webp/file-webp.c:159
+msgid "WebP"
+msgstr "WebP"
+
+#: ../plug-ins/file-webp/file-webp.c:191
+msgid "Loop _forever"
+msgstr "Loopa _för evigt"
+
+#: ../plug-ins/file-webp/file-webp.c:197
+msgid "_Minimize output size (slower)"
+msgstr "_Minimera utdatastorlek (långsammare)"
+
+#: ../plug-ins/file-webp/file-webp.c:203
+msgid "Max distance between _key-frames"
+msgstr "Ma_x avstånd mellan nyckelbildrutor"
+
+#: ../plug-ins/file-webp/file-webp.c:209
+msgid "_Default delay between frames"
+msgstr "_Standardfördröjning mellan bildrutor"
+
+#: ../plug-ins/file-webp/file-webp.c:216
+msgid "Use default dela_y for all frames"
+msgstr "Använd standardfördröjnin_g för alla bildrutor"
+
+#: ../plug-ins/file-webp/file-webp.c:222
+msgid "Save a_nimation"
+msgstr "Spara a_nimation"
+
+#: ../plug-ins/file-webp/file-webp.c:340
 #, c-format
 msgid ""
 "The WebP plug-in cannot export multiple layer, except in animation mode."
 msgstr ""
 "Webp-insticksmodulen kan inte exportera flera lager, utom i animeringsläge."
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:62
+#: ../plug-ins/file-webp/file-webp-dialog.c:48
 msgid "(no keyframes)"
 msgstr "(inga nyckelbilder)"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:66
+#: ../plug-ins/file-webp/file-webp-dialog.c:52
 msgid "(all frames are keyframes)"
 msgstr "(alla bildrutor är nyckelbilder)"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:103
-msgid "Export Image as WebP"
-msgstr "Exportera bild som WebP"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:125
-msgid "Image _quality:"
-msgstr "Bild_kvalitet:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:132
-msgid "Alpha q_uality:"
-msgstr "Alfak_valitet:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:161
-msgid "Source _type:"
-msgstr "Käll_typ:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:164
-msgid "WebP encoder \"preset\""
-msgstr "”Förinställning” för WebP-kodare"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:182
-msgid "_Advanced Options"
-msgstr "_Avancerade inställningar"
-
-#. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:189
-msgid "As A_nimation"
-msgstr "Som a_nimation"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:213
-msgid "Loop _forever"
-msgstr "Loopa _för evigt"
-
-#. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:224
-msgid "Max distance between key-frames:"
-msgstr "Max avstånd mellan nyckelbildrutor:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:252
-msgid "_Minimize output size (slower)"
-msgstr "_Minimera utdatastorlek (långsammare)"
-
-#. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:271
-msgid "Delay between frames where unspecified:"
-msgstr "Tidsmellanrum mellan bildrutor när inte angivet:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:288
-msgid "Use _delay entered above for all frames"
-msgstr "Använd ovanstående för_dröjning för alla bildrutor"
 
 #: ../plug-ins/file-webp/file-webp-load.c:111
 #, c-format
@@ -12423,6 +12394,33 @@ msgstr "_Bildläsare/Kamera…"
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
 
+#~ msgid "Export Image as WebP"
+#~ msgstr "Exportera bild som WebP"
+
+#~ msgid "Image _quality:"
+#~ msgstr "Bild_kvalitet:"
+
+#~ msgid "Alpha q_uality:"
+#~ msgstr "Alfak_valitet:"
+
+#~ msgid "Source _type:"
+#~ msgstr "Käll_typ:"
+
+#~ msgid "WebP encoder \"preset\""
+#~ msgstr "”Förinställning” för WebP-kodare"
+
+#~ msgid "_Advanced Options"
+#~ msgstr "_Avancerade inställningar"
+
+#~ msgid "As A_nimation"
+#~ msgstr "Som a_nimation"
+
+#~ msgid "Delay between frames where unspecified:"
+#~ msgstr "Tidsmellanrum mellan bildrutor när inte angivet:"
+
+#~ msgid "Use _delay entered above for all frames"
+#~ msgstr "Använd ovanstående för_dröjning för alla bildrutor"
+
 #~ msgid "Export Image as PNG"
 #~ msgstr "Exportera bild som PNG"
 
@@ -12534,9 +12532,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Save Exif data"
 #~ msgstr "Spara Exif-data"
-
-#~ msgid "Use delay entred above for all frames"
-#~ msgstr "Använd ovanstående fördröjning för alla bildrutor"
 
 #~ msgid "XMC Options"
 #~ msgstr "XMC-inställningar"
@@ -13100,9 +13095,6 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgid "SGI"
 #~ msgstr "SGI"
 
-#~ msgid "WebP"
-#~ msgstr "WebP"
-
 #~ msgid "Image quality"
 #~ msgstr "Bildkvalitet"
 
@@ -13518,9 +13510,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Preset:"
 #~ msgstr "Förinställning:"
-
-#~ msgid "Use animation"
-#~ msgstr "Använd animation"
 
 #~ msgid "Loop infinitely"
 #~ msgstr "Loopa oändligt"
