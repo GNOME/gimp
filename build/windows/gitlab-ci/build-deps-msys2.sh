@@ -103,6 +103,38 @@ mkdir -p ${GIMP_PREFIX}/lib/gio/modules/
 cp -fr ${MSYS_PREFIX}/lib/gio/modules/*.dll ${GIMP_PREFIX}/lib/gio/modules/
 # TODO: what about /mingw64/share/locale/*/LC_MESSAGES/glib-networking.mo ?
 
+## GTK (patched from MSYS2) ##
+
+pacman --noconfirm -S --needed \
+    mingw-w64-$MSYS2_ARCH-adwaita-icon-theme \
+    mingw-w64-$MSYS2_ARCH-atk \
+    mingw-w64-$MSYS2_ARCH-gdk-pixbuf2 \
+    mingw-w64-$MSYS2_ARCH-libepoxy \
+    mingw-w64-$MSYS2_ARCH-libxslt \
+    mingw-w64-$MSYS2_ARCH-sassc \
+    mingw-w64-$MSYS2_ARCH-shared-mime-info
+
+git clone --branch 3.24.29 --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gtk.git _gtk
+
+cd _gtk/
+wget "https://github.com/msys2/MINGW-packages/raw/master/mingw-w64-gtk3/0002-Revert-Quartz-Set-the-popup-menu-type-hint-before-re.patch"
+wget "https://github.com/msys2/MINGW-packages/raw/master/mingw-w64-gtk3/0003-gtkwindow-Don-t-force-enable-CSD-under-Windows.patch"
+wget "https://github.com/msys2/MINGW-packages/raw/master/mingw-w64-gtk3/0004-Disable-low-level-keyboard-hook.patch"
+patch -p1 < 0002-Revert-Quartz-Set-the-popup-menu-type-hint-before-re.patch
+patch -p1 < 0003-gtkwindow-Don-t-force-enable-CSD-under-Windows.patch
+patch -p1 < 0004-Disable-low-level-keyboard-hook.patch
+# Patches not in MSYS2 build.
+patch -p1 < ../build/windows/patches/gtk3-24-mr3275-gimp-issue-5475.patch
+
+mkdir _build
+cd _build
+meson -Dprefix="${GIMP_PREFIX}" \
+      --wrap-mode=nodownload --auto-features=enabled \
+      --buildtype=release
+ninja
+ninja install
+cd ../..
+
 ## babl and GEGL (follow master branch) ##
 
 git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
