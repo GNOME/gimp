@@ -31,6 +31,11 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdisplay.h"
+
+#include "display/display-types.h"
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "file/file-open.h"
 
@@ -182,6 +187,7 @@ gimp_toolbox_constructed (GObject *object)
   GimpToolbox   *toolbox = GIMP_TOOLBOX (object);
   GimpGuiConfig *config;
   GtkWidget     *main_vbox;
+  GtkWidget     *event_box;
 
   gimp_assert (GIMP_IS_CONTEXT (toolbox->p->context));
 
@@ -216,10 +222,16 @@ gimp_toolbox_constructed (GObject *object)
                     G_CALLBACK (gimp_toolbox_drag_drop),
                     toolbox);
 
+  event_box = gtk_event_box_new ();
+  gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), event_box, FALSE, FALSE, 0);
+  g_signal_connect_swapped (event_box, "button-press-event",
+                            G_CALLBACK (gimp_toolbox_button_press_event),
+                            toolbox);
+  gtk_widget_show (event_box);
+
   toolbox->p->header = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (toolbox->p->header), GTK_SHADOW_NONE);
-  gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->header,
-                      FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (event_box), toolbox->p->header);
 
   g_object_bind_property (config,             "toolbox-wilber",
                           toolbox->p->header, "visible",
@@ -340,6 +352,21 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
                                  GdkEventButton *event)
 {
   GimpToolbox *toolbox = GIMP_TOOLBOX (widget);
+  GimpDisplay *display;
+
+  if ((display = gimp_context_get_display (toolbox->p->context)) &&
+      gimp_context_get_image (toolbox->p->context))
+    {
+      /* Any button event in empty spaces or the Wilber area gives focus
+       * to the top image.
+       */
+      GimpImageWindow *image_window;
+
+      image_window = gimp_display_shell_get_window (gimp_display_get_shell (display));
+
+      gimp_display_present (display);
+      gtk_widget_grab_focus (gimp_window_get_primary_focus_widget (GIMP_WINDOW (image_window)));
+    }
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 2)
     {

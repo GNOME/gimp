@@ -35,8 +35,13 @@
 #include "core/gimp-gui.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdisplay.h"
 #include "core/gimptoolgroup.h"
 #include "core/gimptoolinfo.h"
+
+#include "display/display-types.h"
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "actions/tools-commands.h"
 
@@ -47,6 +52,7 @@
 #include "gimptoolbutton.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
+#include "gimpwindow.h"
 #include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
@@ -599,10 +605,24 @@ gimp_tool_button_toggled (GtkToggleToolButton *toggle_tool_button)
 
   if (tool_info)
     {
+      GimpDisplay *display;
+
       if (gtk_toggle_tool_button_get_active (toggle_tool_button))
         gimp_context_set_tool (context, tool_info);
       else if (tool_info == gimp_context_get_tool (context))
         gtk_toggle_tool_button_set_active (toggle_tool_button, TRUE);
+
+      /* Give focus to the main image. */
+      if ((display = gimp_context_get_display (context)) &&
+          gimp_context_get_image (context))
+        {
+          GimpImageWindow *image_window;
+
+          image_window = gimp_display_shell_get_window (gimp_display_get_shell (display));
+
+          gimp_display_present (display);
+          gtk_widget_grab_focus (gimp_window_get_primary_focus_widget (GIMP_WINDOW (image_window)));
+        }
     }
   else
     {
