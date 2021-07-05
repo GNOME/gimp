@@ -706,5 +706,5 @@ toolbox_paste_received (GtkClipboard *clipboard,
         }
     }
 
-  g_object_unref (context);
+  g_object_unref (toolbox);
 }
