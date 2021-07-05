@@ -55,7 +55,6 @@ scalable_images = \
 	scalable/system-run-symbolic.svg					\
 	scalable/view-fullscreen-symbolic.svg				\
 	scalable/view-refresh-symbolic.svg				\
-	scalable/window-close-symbolic.svg				\
 	scalable/window-new-symbolic.svg					\
 	scalable/zoom-fit-best-symbolic.svg				\
 	scalable/zoom-in-symbolic.svg					\
@@ -593,7 +592,6 @@ icons16_images = \
 	16/system-run-symbolic.symbolic.png					\
 	16/view-fullscreen-symbolic.symbolic.png				\
 	16/view-refresh-symbolic.symbolic.png					\
-	16/window-close-symbolic.symbolic.png					\
 	16/window-new-symbolic.symbolic.png					\
 	16/zoom-fit-best-symbolic.symbolic.png					\
 	16/zoom-in-symbolic.symbolic.png					\

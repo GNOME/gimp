@@ -55,7 +55,6 @@ scalable_images = \
 	scalable/system-run.svg					\
 	scalable/view-fullscreen.svg				\
 	scalable/view-refresh.svg				\
-	scalable/window-close.svg				\
 	scalable/window-new.svg					\
 	scalable/zoom-fit-best.svg				\
 	scalable/zoom-in.svg					\
@@ -593,7 +592,6 @@ icons16_images = \
 	16/system-run.png					\
 	16/view-fullscreen.png					\
 	16/view-refresh.png					\
-	16/window-close.png					\
 	16/window-new.png					\
 	16/zoom-fit-best.png					\
 	16/zoom-in.png						\
