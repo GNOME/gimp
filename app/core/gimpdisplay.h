@@ -47,7 +47,8 @@ struct _GimpDisplayClass
 {
   GimpObjectClass     parent_class;
 
-  gboolean         (* present) (GimpDisplay *display);
+  gboolean         (* present)    (GimpDisplay *display);
+  gboolean         (* grab_focus) (GimpDisplay *display);
 };
 
 
@@ -57,7 +58,8 @@ gint          gimp_display_get_id    (GimpDisplay *display);
 GimpDisplay * gimp_display_get_by_id (Gimp        *gimp,
                                       gint         id);
 
-gboolean      gimp_display_present   (GimpDisplay *display);
+gboolean      gimp_display_present    (GimpDisplay *display);
+gboolean      gimp_display_grab_focus (GimpDisplay *display);
 
 Gimp        * gimp_display_get_gimp  (GimpDisplay *display);
 

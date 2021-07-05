@@ -197,6 +197,17 @@ gimp_display_present (GimpDisplay *display)
   return FALSE;
 }
 
+gboolean
+gimp_display_grab_focus (GimpDisplay *display)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
+
+  if (GIMP_DISPLAY_GET_CLASS (display)->grab_focus)
+    return GIMP_DISPLAY_GET_CLASS (display)->grab_focus (display);
+
+  return FALSE;
+}
+
 Gimp *
 gimp_display_get_gimp (GimpDisplay *display)
 {

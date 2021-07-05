@@ -94,6 +94,7 @@ static void     gimp_display_get_property           (GObject             *object
                                                      GParamSpec          *pspec);
 
 static gboolean gimp_display_impl_present           (GimpDisplay         *display);
+static gboolean gimp_display_impl_grab_focus        (GimpDisplay         *display);
 
 static GimpProgress * gimp_display_progress_start   (GimpProgress        *progress,
                                                      gboolean             cancellable,
@@ -141,6 +142,7 @@ gimp_display_impl_class_init (GimpDisplayImplClass *klass)
   object_class->get_property = gimp_display_get_property;
 
   display_class->present     = gimp_display_impl_present;
+  display_class->grab_focus  = gimp_display_impl_grab_focus;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image",
@@ -219,6 +221,26 @@ gimp_display_impl_present (GimpDisplay *display)
   gimp_display_shell_present (gimp_display_get_shell (display));
 
   return TRUE;
+}
+
+static gboolean
+gimp_display_impl_grab_focus (GimpDisplay *display)
+{
+  GimpDisplayImpl *display_impl = GIMP_DISPLAY_IMPL (display);
+
+  if (display_impl->priv->shell && gimp_display_get_image (display))
+    {
+      GimpImageWindow *image_window;
+
+      image_window = gimp_display_shell_get_window (gimp_display_get_shell (display));
+
+      gimp_display_present (display);
+      gtk_widget_grab_focus (gimp_window_get_primary_focus_widget (GIMP_WINDOW (image_window)));
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static GimpProgress *

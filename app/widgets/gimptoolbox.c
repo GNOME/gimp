@@ -33,10 +33,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdisplay.h"
 
-#include "display/display-types.h"
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-
 #include "file/file-open.h"
 
 #include "gimpcairo-wilber.h"
@@ -353,20 +349,7 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
 {
   GimpToolbox *toolbox = GIMP_TOOLBOX (widget);
   GimpDisplay *display;
-
-  if ((display = gimp_context_get_display (toolbox->p->context)) &&
-      gimp_context_get_image (toolbox->p->context))
-    {
-      /* Any button event in empty spaces or the Wilber area gives focus
-       * to the top image.
-       */
-      GimpImageWindow *image_window;
-
-      image_window = gimp_display_shell_get_window (gimp_display_get_shell (display));
-
-      gimp_display_present (display);
-      gtk_widget_grab_focus (gimp_window_get_primary_focus_widget (GIMP_WINDOW (image_window)));
-    }
+  gboolean     stop_event = GDK_EVENT_PROPAGATE;
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 2)
     {
@@ -377,10 +360,17 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
                                   toolbox_paste_received,
                                   g_object_ref (toolbox));
 
-      return TRUE;
+      stop_event = GDK_EVENT_STOP;
+    }
+  else if ((display = gimp_context_get_display (toolbox->p->context)))
+    {
+      /* Any button event in empty spaces or the Wilber area gives focus
+       * to the top image.
+       */
+      gimp_display_grab_focus (display);
     }
 
-  return FALSE;
+  return stop_event;
 }
 
 static void
@@ -686,6 +676,7 @@ toolbox_paste_received (GtkClipboard *clipboard,
         {
           GtkWidget         *widget = GTK_WIDGET (toolbox);
           GimpImage         *image;
+          GimpDisplay       *display;
           GimpPDBStatusType  status;
           GError            *error = NULL;
 
@@ -700,6 +691,11 @@ toolbox_paste_received (GtkClipboard *clipboard,
                             _("Opening '%s' failed:\n\n%s"),
                             gimp_file_get_utf8_name (file), error->message);
               g_clear_error (&error);
+            }
+          else if ((display = gimp_context_get_display (context)))
+            {
+              /* Giving focus to newly opened image. */
+              gimp_display_grab_focus (display);
             }
 
           g_object_unref (file);
