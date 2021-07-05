@@ -259,7 +259,9 @@ gimp_critical_dialog_constructed (GObject *object)
 
   buffer = gtk_text_buffer_new (NULL);
   version = gimp_version (TRUE, FALSE);
-  text = g_strdup_printf ("```\n%s\n```", version);
+  text = g_strdup_printf ("<!-- %s -->\n\n\n```\n%s\n```",
+                          _("Copy-paste this whole debug data to report to developers"),
+                          version);
   gtk_text_buffer_set_text (buffer, text, -1);
   g_free (version);
   g_free (text);
