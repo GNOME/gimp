@@ -9,16 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-25 16:35+0000\n"
-"PO-Revision-Date: 2021-04-25 20:54+0300\n"
+"POT-Creation-Date: 2021-07-05 14:46+0000\n"
+"PO-Revision-Date: 2021-07-05 19:40+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -1150,7 +1149,7 @@ msgstr ""
 "Разом з програмою ви маєте отримати копію Стандартної Суспільної Ліцензії "
 "GNU. Якщо це не так, дивіться https://www.gnu.org/licenses/"
 
-#: ../app/gimp-update.c:410
+#: ../app/gimp-update.c:418
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -3508,7 +3507,7 @@ msgstr "240 секунд"
 #: ../app/dialogs/file-save-dialog.c:753 ../app/dialogs/fill-dialog.c:115
 #: ../app/dialogs/grid-dialog.c:102
 #: ../app/dialogs/image-merge-layers-dialog.c:100
-#: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
+#: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:326
 #: ../app/dialogs/image-scale-dialog.c:210
 #: ../app/dialogs/input-devices-dialog.c:66
 #: ../app/dialogs/input-devices-dialog.c:121
@@ -3601,7 +3600,7 @@ msgstr "Введіть опис позначки"
 #: ../app/dialogs/file-open-location-dialog.c:217
 #: ../app/dialogs/file-open-location-dialog.c:233
 #: ../app/display/gimpdisplayshell-dnd.c:648
-#: ../app/widgets/gimplayertreeview.c:830 ../app/widgets/gimptoolbox.c:673
+#: ../app/widgets/gimplayertreeview.c:830 ../app/widgets/gimptoolbox.c:691
 #: ../app/widgets/gimptoolbox-dnd.c:169
 #, c-format
 msgid ""
@@ -11137,7 +11136,7 @@ msgstr "Перемістити це вікно на екран %s"
 
 #: ../app/actions/window-commands.c:78 ../app/dialogs/extensions-dialog.c:79
 #: ../app/dialogs/file-save-dialog.c:677 ../app/dialogs/grid-dialog.c:103
-#: ../app/dialogs/image-new-dialog.c:107 ../app/dialogs/image-new-dialog.c:326
+#: ../app/dialogs/image-new-dialog.c:107 ../app/dialogs/image-new-dialog.c:327
 #: ../app/dialogs/input-devices-dialog.c:67
 #: ../app/dialogs/item-options-dialog.c:146
 #: ../app/dialogs/preferences-dialog.c:1121
@@ -16450,22 +16449,22 @@ msgstr "_Відмовитися від невидимих шарів"
 msgid "Create a New Image"
 msgstr "Створення нового зображення"
 
-#: ../app/dialogs/image-new-dialog.c:138
+#: ../app/dialogs/image-new-dialog.c:139
 #: ../app/dialogs/preferences-dialog.c:1761 ../app/dialogs/resize-dialog.c:253
 msgid "_Template:"
 msgstr "Ша_блони:"
 
-#: ../app/dialogs/image-new-dialog.c:319
+#: ../app/dialogs/image-new-dialog.c:320
 msgid "Confirm Image Size"
 msgstr "Підтвердження розміру зображення"
 
-#: ../app/dialogs/image-new-dialog.c:341
+#: ../app/dialogs/image-new-dialog.c:342
 #: ../app/dialogs/image-scale-dialog.c:237
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "Ви намагаєтесь створити зображення розміром %s."
 
-#: ../app/dialogs/image-new-dialog.c:348
+#: ../app/dialogs/image-new-dialog.c:349
 #, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
@@ -17572,7 +17571,7 @@ msgid "Use symbolic icons if available"
 msgstr "Використовувати символічні піктограми, якщо доступні"
 
 #: ../app/dialogs/preferences-dialog.c:2134
-#: ../app/dialogs/preferences-dialog.c:2135 ../app/widgets/gimptoolbox.c:440
+#: ../app/dialogs/preferences-dialog.c:2135 ../app/widgets/gimptoolbox.c:457
 msgid "Toolbox"
 msgstr "Панель інструментів"
 
@@ -18958,24 +18957,24 @@ msgstr "В"
 msgid "_Sample Merged"
 msgstr "_Об'єднувати за зразком"
 
-#: ../app/display/gimpdisplayshell.c:509
+#: ../app/display/gimpdisplayshell.c:512
 msgid "Access the image menu"
 msgstr "Доступ до меню зображення"
 
-#: ../app/display/gimpdisplayshell.c:639
+#: ../app/display/gimpdisplayshell.c:642
 msgid "Zoom image when window size changes"
 msgstr "При зміні розмірів вікна змінювати розміри зображення"
 
-#: ../app/display/gimpdisplayshell.c:668
+#: ../app/display/gimpdisplayshell.c:671
 msgid "Toggle Quick Mask"
 msgstr "Перемикнути швидку маску"
 
-#: ../app/display/gimpdisplayshell.c:683
+#: ../app/display/gimpdisplayshell.c:686
 msgid "Navigate the image display"
 msgstr "Навігація на зображенні"
 
-#: ../app/display/gimpdisplayshell.c:736 ../app/display/gimpdisplayshell.c:1415
-#: ../app/widgets/gimptoolbox.c:236
+#: ../app/display/gimpdisplayshell.c:739 ../app/display/gimpdisplayshell.c:1432
+#: ../app/widgets/gimptoolbox.c:244
 msgid "Drop image files here to open them"
 msgstr "Перетягніть сюди зображення, які хочете відкрити"
 
@@ -19019,8 +19018,7 @@ msgstr "Зберегти зміни у «%s» перед закриванням?
 #: ../app/display/gimpdisplayshell-close.c:307
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d годину будуть втрачені."
 msgstr[1] ""
@@ -19054,8 +19052,7 @@ msgstr[3] ""
 #: ../app/display/gimpdisplayshell-close.c:330
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d хвилину будуть втрачені."
 msgstr[1] ""
@@ -20880,7 +20877,8 @@ msgstr "Співвідношення сторін"
 
 #: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:114
 #: ../app/widgets/gimpbrusheditor.c:205
-#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:176
+#: ../app/widgets/gimpbrushfactoryview.c:103
+#: ../app/widgets/gimpgrideditor.c:176
 msgid "Spacing"
 msgstr "Проміжок"
 
@@ -21827,8 +21825,6 @@ msgid "Motion Blur"
 msgstr "Розмиття руху"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2648
-#| msgctxt "filters-action"
-#| msgid "_Median Blur..."
 msgctxt "undo-type"
 msgid "Median Blur"
 msgstr "Медіанне розмиття"
@@ -22082,7 +22078,7 @@ msgstr "Неправильне посилання на інтерпретато�
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Неправильний двійковий формат рядка у інтерпретованому файлі %s"
 
-#: ../app/plug-in/gimpplugin.c:231
+#: ../app/plug-in/gimpplugin.c:236
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -22128,8 +22124,8 @@ msgid "Plug-in Environment"
 msgstr "Середовище додатків"
 
 #: ../app/plug-in/gimppluginmanager-call.c:187
-#: ../app/plug-in/gimppluginmanager-call.c:246
-#: ../app/plug-in/gimppluginmanager-call.c:342
+#: ../app/plug-in/gimppluginmanager-call.c:249
+#: ../app/plug-in/gimppluginmanager-call.c:345
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "Не вдалось запустити розширення «%s»"
@@ -26155,7 +26151,7 @@ msgid "Spikes"
 msgstr "Шипи"
 
 #: ../app/widgets/gimpbrusheditor.c:210
-#: ../app/widgets/gimpbrushfactoryview.c:85
+#: ../app/widgets/gimpbrushfactoryview.c:107
 msgid "Percentage of width of brush"
 msgstr "Відсоток ширини пензлів"
 
@@ -26795,7 +26791,7 @@ msgid "You are running an unsupported version!"
 msgstr "Ви працюєте з версією, підтримка якої не здійснюється розробниками!"
 
 #: ../app/widgets/gimpcriticaldialog.c:239
-#: ../app/widgets/gimpcriticaldialog.c:589
+#: ../app/widgets/gimpcriticaldialog.c:591
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
@@ -26803,27 +26799,27 @@ msgstr ""
 "виконавши такі кроки:"
 
 #: ../app/widgets/gimpcriticaldialog.c:241
-#: ../app/widgets/gimpcriticaldialog.c:591
+#: ../app/widgets/gimpcriticaldialog.c:593
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Скопіюйте дані вади до буфера обміну натисканням"
 
 #: ../app/widgets/gimpcriticaldialog.c:243
-#: ../app/widgets/gimpcriticaldialog.c:593
+#: ../app/widgets/gimpcriticaldialog.c:595
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Відкрийте сторінку стеження за вадами натисканням"
 
 #: ../app/widgets/gimpcriticaldialog.c:245
-#: ../app/widgets/gimpcriticaldialog.c:595
+#: ../app/widgets/gimpcriticaldialog.c:597
 msgid "Create a login if you don't have one yet."
 msgstr "Створіть обліковий запис, якщо у вас його ще немає."
 
 #: ../app/widgets/gimpcriticaldialog.c:246
-#: ../app/widgets/gimpcriticaldialog.c:596
+#: ../app/widgets/gimpcriticaldialog.c:598
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Вставте вміст буфера обміну до поля звіту щодо вади."
 
 #: ../app/widgets/gimpcriticaldialog.c:247
-#: ../app/widgets/gimpcriticaldialog.c:597
+#: ../app/widgets/gimpcriticaldialog.c:599
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -26847,77 +26843,82 @@ msgstr ""
 "Ви також можете безпосередньо закрити це вікно, але звітування щодо вад є "
 "найкращим способом поліпшення програмного забезпечення."
 
-#: ../app/widgets/gimpcriticaldialog.c:360
+#: ../app/widgets/gimpcriticaldialog.c:263
+msgid "Copy-paste this whole debug data to report to developers"
+msgstr ""
+"Скопіюйте і вставте усі ці діагностичні дані до звіту розробникам"
+
+#: ../app/widgets/gimpcriticaldialog.c:362
 msgid "The operating system is out of memory or resources."
 msgstr "У операційної системи не вистачає пам'яті або ресурсів."
 
-#: ../app/widgets/gimpcriticaldialog.c:363
+#: ../app/widgets/gimpcriticaldialog.c:365
 msgid "The specified file was not found."
 msgstr "Не було знайдено вказаний файл."
 
-#: ../app/widgets/gimpcriticaldialog.c:366
+#: ../app/widgets/gimpcriticaldialog.c:368
 msgid "The specified path was not found."
 msgstr "Не було знайдено вказаний шлях."
 
-#: ../app/widgets/gimpcriticaldialog.c:369
+#: ../app/widgets/gimpcriticaldialog.c:371
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 "Файл .exe є некоректним (не-Microsoft Win32 .exe або ж помилка у файлі .exe)."
 
-#: ../app/widgets/gimpcriticaldialog.c:372
+#: ../app/widgets/gimpcriticaldialog.c:374
 msgid "The operating system denied access to the specified file."
 msgstr "Операційна система відмовила у доступі до вказаного файла."
 
-#: ../app/widgets/gimpcriticaldialog.c:375
+#: ../app/widgets/gimpcriticaldialog.c:377
 msgid "The file name association is incomplete or invalid."
 msgstr "Прив'язка програм до суфіксів назв файлів є неповною або некоректною."
 
-#: ../app/widgets/gimpcriticaldialog.c:378
+#: ../app/widgets/gimpcriticaldialog.c:380
 msgid "DDE transaction busy"
 msgstr "Стан зайнятості операції DDE"
 
-#: ../app/widgets/gimpcriticaldialog.c:381
+#: ../app/widgets/gimpcriticaldialog.c:383
 msgid "The DDE transaction failed."
 msgstr "Помилка передавання даних DDE."
 
-#: ../app/widgets/gimpcriticaldialog.c:384
+#: ../app/widgets/gimpcriticaldialog.c:386
 msgid "The DDE transaction timed out."
 msgstr "Перевищено час очікування на завершення операції DDE."
 
-#: ../app/widgets/gimpcriticaldialog.c:387
+#: ../app/widgets/gimpcriticaldialog.c:389
 msgid "The specified DLL was not found."
 msgstr "Не знайдено вказаного файла DLL."
 
-#: ../app/widgets/gimpcriticaldialog.c:390
+#: ../app/widgets/gimpcriticaldialog.c:392
 msgid "There is no application associated with the given file name extension."
 msgstr "Із файлами із вказаним суфіксом назви не пов'язано жодної програми."
 
-#: ../app/widgets/gimpcriticaldialog.c:393
+#: ../app/widgets/gimpcriticaldialog.c:395
 msgid "There was not enough memory to complete the operation."
 msgstr "Недостатньо місця у пам'яті для завершення операції."
 
-#: ../app/widgets/gimpcriticaldialog.c:396
+#: ../app/widgets/gimpcriticaldialog.c:398
 msgid "A sharing violation occurred."
 msgstr "Сталося порушення правил спільного використання даних."
 
-#: ../app/widgets/gimpcriticaldialog.c:399
+#: ../app/widgets/gimpcriticaldialog.c:401
 msgid "Unknown Microsoft Windows error."
 msgstr "Невідома помилка Microsoft Windows."
 
-#: ../app/widgets/gimpcriticaldialog.c:402
+#: ../app/widgets/gimpcriticaldialog.c:404
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Не вдалося відкрити «%s»: %s"
 
-#: ../app/widgets/gimpcriticaldialog.c:555
+#: ../app/widgets/gimpcriticaldialog.c:557
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr ""
 "Програма GIMP аварійно завершила роботу внаслідок критичної помилки: %s"
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:562
+#: ../app/widgets/gimpcriticaldialog.c:564
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "Сталася помилка у GIMP: %s"
@@ -26925,12 +26926,12 @@ msgstr "Сталася помилка у GIMP: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:570
+#: ../app/widgets/gimpcriticaldialog.c:572
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "Сталося декілька критичних помилок у GIMP!"
 
-#: ../app/widgets/gimpcriticaldialog.c:622
+#: ../app/widgets/gimpcriticaldialog.c:624
 msgid "_Restart GIMP"
 msgstr "Пе_резапустити GIMP"
 
@@ -27233,17 +27234,17 @@ msgid "Select fields"
 msgstr "Виберіть поля"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3266
+#: ../app/widgets/gimpdashboard.c:3305
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "н/д"
 
-#: ../app/widgets/gimpdashboard.c:3275 ../app/widgets/gimpdashboard.c:4283
+#: ../app/widgets/gimpdashboard.c:3314 ../app/widgets/gimpdashboard.c:4322
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Так"
 
-#: ../app/widgets/gimpdashboard.c:3276 ../app/widgets/gimpdashboard.c:4284
+#: ../app/widgets/gimpdashboard.c:3315 ../app/widgets/gimpdashboard.c:4323
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Ні"
@@ -27252,7 +27253,7 @@ msgstr "Ні"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3360
+#: ../app/widgets/gimpdashboard.c:3399
 #, c-format
 msgid "%g/s"
 msgstr "%g/с"
@@ -27263,16 +27264,16 @@ msgstr "%g/с"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4273
+#: ../app/widgets/gimpdashboard.c:4312
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
 
-#: ../app/widgets/gimpdashboard.c:4351
+#: ../app/widgets/gimpdashboard.c:4390
 msgid "N/A"
 msgstr "н/д"
 
-#: ../app/widgets/gimpdashboard.c:4729
+#: ../app/widgets/gimpdashboard.c:4768
 msgid "Resolving symbol information..."
 msgstr "Визначаємо дані щодо символу…"
 
@@ -27978,11 +27979,11 @@ msgstr "Змінити колір палітри"
 msgid "Edit Color Palette Entry"
 msgstr "Змінити запис палітри кольорів"
 
-#: ../app/widgets/gimppdbdialog.c:282
+#: ../app/widgets/gimppdbdialog.c:285
 msgid "The corresponding plug-in may have crashed."
 msgstr "Можливо, відповідний додаток завершив роботу аварійно."
 
-#: ../app/widgets/gimppdbdialog.c:286
+#: ../app/widgets/gimppdbdialog.c:289
 #, c-format
 msgid ""
 "Unable to run %s callback.\n"
@@ -28385,7 +28386,7 @@ msgstr ""
 "Активний градієнт.\n"
 "Клацніть, щоб відкрити діалогове вікно \"Градієнти\"."
 
-#: ../app/widgets/gimptoolbutton.c:548
+#: ../app/widgets/gimptoolbutton.c:549
 msgid "Also in group:"
 msgstr "Також у групі:"
 
