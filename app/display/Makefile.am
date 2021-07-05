@@ -126,8 +126,6 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-filter-dialog.h	\
 	gimpdisplayshell-layer-select.c		\
 	gimpdisplayshell-layer-select.h		\
-	gimpdisplayshell-icon.c			\
-	gimpdisplayshell-icon.h			\
 	gimpdisplayshell-items.c		\
 	gimpdisplayshell-items.h		\
 	gimpdisplayshell-profile.c		\

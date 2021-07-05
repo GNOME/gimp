@@ -262,9 +262,6 @@ static void      gimp_image_window_shell_rotated       (GimpDisplayShell    *she
 static void      gimp_image_window_shell_title_notify  (GimpDisplayShell    *shell,
                                                         const GParamSpec    *pspec,
                                                         GimpImageWindow     *window);
-static void      gimp_image_window_shell_icon_notify   (GimpDisplayShell    *shell,
-                                                        const GParamSpec    *pspec,
-                                                        GimpImageWindow     *window);
 static GtkWidget *
                  gimp_image_window_create_tab_label    (GimpImageWindow     *window,
                                                         GimpDisplayShell    *shell);
@@ -2015,12 +2012,8 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
   g_signal_connect (private->active_shell, "notify::title",
                     G_CALLBACK (gimp_image_window_shell_title_notify),
                     window);
-  g_signal_connect (private->active_shell, "notify::icon",
-                    G_CALLBACK (gimp_image_window_shell_icon_notify),
-                    window);
 
   gtk_window_set_title (GTK_WINDOW (window), shell->title);
-  gtk_window_set_icon (GTK_WINDOW (window), shell->icon);
 
   gimp_display_shell_appearance_update (private->active_shell);
 
@@ -2120,9 +2113,6 @@ gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
                                         window);
   g_signal_handlers_disconnect_by_func (private->active_shell,
                                         gimp_image_window_shell_title_notify,
-                                        window);
-  g_signal_handlers_disconnect_by_func (private->active_shell,
-                                        gimp_image_window_shell_icon_notify,
                                         window);
 
   if (private->menubar_manager)
@@ -2330,14 +2320,6 @@ gimp_image_window_shell_title_notify (GimpDisplayShell *shell,
                                       GimpImageWindow  *window)
 {
   gtk_window_set_title (GTK_WINDOW (window), shell->title);
-}
-
-static void
-gimp_image_window_shell_icon_notify (GimpDisplayShell *shell,
-                                     const GParamSpec *pspec,
-                                     GimpImageWindow  *window)
-{
-  gtk_window_set_icon (GTK_WINDOW (window), shell->icon);
 }
 
 static void

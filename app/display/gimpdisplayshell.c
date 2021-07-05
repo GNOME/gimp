@@ -103,7 +103,6 @@ enum
   PROP_UNIT,
   PROP_TITLE,
   PROP_STATUS,
-  PROP_ICON,
   PROP_SHOW_ALL,
   PROP_INFINITE_CANVAS
 };
@@ -289,11 +288,6 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class, PROP_ICON,
-                                   g_param_spec_object ("icon", NULL, NULL,
-                                                        GDK_TYPE_PIXBUF,
-                                                        GIMP_PARAM_READWRITE));
-
   g_object_class_install_property (object_class, PROP_SHOW_ALL,
                                    g_param_spec_boolean ("show-all",
                                                          NULL, NULL,
@@ -336,9 +330,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->show_all    = FALSE;
 
   gimp_display_shell_items_init (shell);
-
-  shell->icon_size       = 128;
-  shell->icon_size_small = 96;
 
   shell->cursor_handedness = GIMP_HANDEDNESS_RIGHT;
   shell->current_cursor    = (GimpCursorType) -1;
@@ -831,7 +822,6 @@ gimp_display_shell_finalize (GObject *object)
   g_clear_object (&shell->no_image_options);
   g_clear_pointer (&shell->title,  g_free);
   g_clear_pointer (&shell->status, g_free);
-  g_clear_object (&shell->icon);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -865,11 +855,6 @@ gimp_display_shell_set_property (GObject      *object,
     case PROP_STATUS:
       g_free (shell->status);
       shell->status = g_value_dup_string (value);
-      break;
-    case PROP_ICON:
-      if (shell->icon)
-        g_object_unref (shell->icon);
-      shell->icon = g_value_dup_object (value);
       break;
     case PROP_SHOW_ALL:
       gimp_display_shell_set_show_all (shell, g_value_get_boolean (value));
@@ -908,9 +893,6 @@ gimp_display_shell_get_property (GObject    *object,
       break;
     case PROP_STATUS:
       g_value_set_string (value, shell->status);
-      break;
-    case PROP_ICON:
-      g_value_set_object (value, shell->icon);
       break;
     case PROP_SHOW_ALL:
       g_value_set_boolean (value, shell->show_all);

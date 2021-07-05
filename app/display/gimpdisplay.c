@@ -44,7 +44,6 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-handlers.h"
-#include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-scrollbars.h"
@@ -632,7 +631,6 @@ gimp_display_set_image (GimpDisplay *display,
       else
         {
           gimp_display_shell_title_update (shell);
-          gimp_display_shell_icon_update (shell);
         }
     }
 

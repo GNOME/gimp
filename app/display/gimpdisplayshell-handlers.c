@@ -60,7 +60,6 @@
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-handlers.h"
-#include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-profile.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-rulers.h"
@@ -123,8 +122,6 @@ static void   gimp_display_shell_sample_point_remove_handler(GimpImage        *i
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_sample_point_move_handler  (GimpImage        *image,
                                                              GimpSamplePoint  *sample_point,
-                                                             GimpDisplayShell *shell);
-static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_mode_changed_handler       (GimpImage        *image,
                                                              GimpDisplayShell *shell);
@@ -276,9 +273,6 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
       gimp_display_shell_sample_point_add_handler (image, list->data, shell);
     }
 
-  g_signal_connect (image, "invalidate-preview",
-                    G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
-                    shell);
   g_signal_connect (image, "mode-changed",
                     G_CALLBACK (gimp_display_shell_mode_changed_handler),
                     shell);
@@ -395,7 +389,6 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     shell);
 
   gimp_display_shell_active_vectors_handler     (image, shell);
-  gimp_display_shell_invalidate_preview_handler (image, shell);
   gimp_display_shell_quick_mask_changed_handler (image, shell);
   gimp_display_shell_profile_changed_handler    (GIMP_COLOR_MANAGED (image),
                                                  shell);
@@ -440,8 +433,6 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   color_config = GIMP_CORE_CONFIG (config)->color_management;
 
   user_context = gimp_get_user_context (shell->display->gimp);
-
-  gimp_display_shell_icon_update_stop (shell);
 
   gimp_canvas_layer_boundary_set_layers (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                          NULL);
@@ -525,9 +516,6 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_mode_changed_handler,
-                                        shell);
-  g_signal_handlers_disconnect_by_func (image,
-                                        gimp_display_shell_invalidate_preview_handler,
                                         shell);
 
   g_signal_handlers_disconnect_by_func (image,
@@ -904,13 +892,6 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
       gimp_display_shell_expose_full (shell);
       gimp_display_shell_render_invalidate_full (shell);
     }
-}
-
-static void
-gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
-                                               GimpDisplayShell *shell)
-{
-  gimp_display_shell_icon_update (shell);
 }
 
 static void

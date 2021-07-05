@@ -65,7 +65,9 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
                    GimpGetColorFunc      get_background_func,
                    GimpEnsureModulesFunc ensure_modules_func)
 {
-  GtkIconTheme *icon_theme;
+  const gchar *svg_icon = DATADIR "/icons/hicolor/scalable/apps/gimp.svg";
+  GList       *icons = NULL;
+  GdkPixbuf   *pixbuf;
 
   g_return_if_fail (standard_help_func != NULL);
 
@@ -81,12 +83,75 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   gimp_icons_init ();
 
-  icon_theme = gtk_icon_theme_get_for_screen (gdk_screen_get_default ());
-
-  if (gtk_icon_theme_has_icon (icon_theme, GIMP_ICON_WILBER "-symbolic"))
-    gtk_window_set_default_icon_name (GIMP_ICON_WILBER "-symbolic");
+  /* Loading the application icons. Unfortunately GTK doesn't know how
+   * to load any size from a single SVG, so we have to generate common
+   * sizes ourselves.
+   * To be fair, it could with gtk_window_set_default_icon_name() but
+   * then the application icon is dependant to the theme and for now at
+   * least, we want the installed icon.
+   */
+  pixbuf = gdk_pixbuf_new_from_file (DATADIR "/icons/hicolor/16x16/apps/gimp.png", NULL);
+  if (pixbuf)
+    icons = g_list_prepend (icons, pixbuf);
   else
-    gtk_window_set_default_icon_name (GIMP_ICON_WILBER);
+    g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/16x16/apps/gimp.png");
+
+  pixbuf = gdk_pixbuf_new_from_file (DATADIR "/icons/hicolor/32x32/apps/gimp.png", NULL);
+  if (pixbuf)
+    icons = g_list_prepend (icons, pixbuf);
+  else
+    g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/32x32/apps/gimp.png");
+
+  pixbuf = gdk_pixbuf_new_from_file (DATADIR "/icons/hicolor/48x48/apps/gimp.png", NULL);
+  if (pixbuf)
+    icons = g_list_prepend (icons, pixbuf);
+  else
+    g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/48x48/apps/gimp.png");
+
+  pixbuf = gdk_pixbuf_new_from_file (DATADIR "/icons/hicolor/64x64/apps/gimp.png", NULL);
+  if (pixbuf)
+    icons = g_list_prepend (icons, pixbuf);
+  else
+    g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/64x64/apps/gimp.png");
+
+  pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 128, 128, NULL);
+  if (pixbuf)
+    {
+      /* Various common sizes from the same SVG. Why I go into such
+       * exhaustive list of sizes is that nowadays desktops/OSes use
+       * quite big icon sizes and in some cases, when they don't find
+       * the right one, GTK may render quite ugly resized/skewed image.
+       */
+      icons = g_list_prepend (icons, pixbuf);
+
+      pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 144, 144, NULL);
+      icons = g_list_prepend (icons, pixbuf);
+
+      pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 160, 160, NULL);
+      icons = g_list_prepend (icons, pixbuf);
+
+      pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 176, 176, NULL);
+      icons = g_list_prepend (icons, pixbuf);
+
+      pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 192, 192, NULL);
+      icons = g_list_prepend (icons, pixbuf);
+
+      pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 224, 224, NULL);
+      icons = g_list_prepend (icons, pixbuf);
+    }
+  else
+    {
+      g_warning ("Application icon missing: %s", svg_icon);
+    }
+
+  pixbuf = gdk_pixbuf_new_from_file (DATADIR "/icons/hicolor/256x256/apps/gimp.png", NULL);
+  if (pixbuf)
+    icons = g_list_prepend (icons, pixbuf);
+  else
+    g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/256x256/apps/gimp.png");
+
+  gtk_window_set_default_icon_list (icons);
+  g_list_free_full (icons, g_object_unref);
 
   gimp_widgets_init_foreign_enums ();
 

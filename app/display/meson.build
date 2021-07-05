@@ -62,7 +62,6 @@ libappdisplay_sources = [
   'gimpdisplayshell-filter.c',
   'gimpdisplayshell-grab.c',
   'gimpdisplayshell-handlers.c',
-  'gimpdisplayshell-icon.c',
   'gimpdisplayshell-items.c',
   'gimpdisplayshell-layer-select.c',
   'gimpdisplayshell-profile.c',
