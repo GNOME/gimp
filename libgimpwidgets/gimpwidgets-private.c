@@ -102,7 +102,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_warning ("Application icon missing: %s", path);
+    g_printerr ("Application icon missing: %s", path);
   g_free (path);
 
   path   = g_build_filename (base_dir, "32x32/apps/gimp.png", NULL);
@@ -110,7 +110,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_warning ("Application icon missing: %s", path);
+    g_printerr ("Application icon missing: %s", path);
   g_free (path);
 
   path   = g_build_filename (base_dir, "48x48/apps/gimp.png", NULL);
@@ -118,7 +118,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_warning ("Application icon missing: %s", path);
+    g_printerr ("Application icon missing: %s", path);
   g_free (path);
 
   path   = g_build_filename (base_dir, "64x64/apps/gimp.png", NULL);
@@ -126,7 +126,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_warning ("Application icon missing: %s", path);
+    g_printerr ("Application icon missing: %s", path);
   g_free (path);
 
   path   = g_build_filename (base_dir, "scalable/apps/gimp.svg", NULL);
@@ -157,7 +157,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
     }
   else
     {
-      g_warning ("Application icon missing: %s", path);
+      g_printerr ("Application icon missing: %s", path);
     }
   g_free (path);
 
@@ -166,7 +166,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_warning ("Application icon missing: %s", path);
+    g_printerr ("Application icon missing: %s", path);
   g_free (path);
 
   gtk_window_set_default_icon_list (icons);
