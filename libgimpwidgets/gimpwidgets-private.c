@@ -83,6 +83,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   gimp_icons_init ();
 
+#if 0
   /* Loading the application icons. Unfortunately GTK doesn't know how
    * to load any size from a single SVG, so we have to generate common
    * sizes ourselves.
@@ -152,6 +153,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   gtk_window_set_default_icon_list (icons);
   /*g_list_free_full (icons, g_object_unref);*/
+#endif
 
   gimp_widgets_init_foreign_enums ();
 
