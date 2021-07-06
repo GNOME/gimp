@@ -120,11 +120,14 @@ cd _gtk/
 wget "https://github.com/msys2/MINGW-packages/raw/master/mingw-w64-gtk3/0002-Revert-Quartz-Set-the-popup-menu-type-hint-before-re.patch"
 wget "https://github.com/msys2/MINGW-packages/raw/master/mingw-w64-gtk3/0003-gtkwindow-Don-t-force-enable-CSD-under-Windows.patch"
 wget "https://github.com/msys2/MINGW-packages/raw/master/mingw-w64-gtk3/0004-Disable-low-level-keyboard-hook.patch"
+wget "https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/1563.patch"
 patch -p1 < 0002-Revert-Quartz-Set-the-popup-menu-type-hint-before-re.patch
 patch -p1 < 0003-gtkwindow-Don-t-force-enable-CSD-under-Windows.patch
 patch -p1 < 0004-Disable-low-level-keyboard-hook.patch
 # Patches not in MSYS2 build.
 patch -p1 < ../build/windows/patches/gtk3-24-mr3275-gimp-issue-5475.patch
+# The --binary option is necessary to accomodate such errors: Hunk #1 FAILED at 15 (different line endings)
+patch -p1 --ignore-whitespace --binary < 1563.patch
 
 mkdir _build
 cd _build
