@@ -65,9 +65,8 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
                    GimpGetColorFunc      get_background_func,
                    GimpEnsureModulesFunc ensure_modules_func)
 {
+  const gchar *svg_icon = DATADIR "/icons/hicolor/scalable/apps/gimp.svg";
   GList       *icons = NULL;
-  gchar       *base_dir;
-  gchar       *path;
   GdkPixbuf   *pixbuf;
 
   g_return_if_fail (standard_help_func != NULL);
@@ -84,12 +83,6 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   gimp_icons_init ();
 
-#ifdef ENABLE_RELOCATABLE_RESOURCES
-  base_dir = g_build_filename (gimp_installation_directory (), "share", "icons", "hicolor", NULL);
-#else
-  base_dir = g_build_filename (DATAROOTDIR, "icons", "hicolor", NULL);
-#endif
-
   /* Loading the application icons. Unfortunately GTK doesn't know how
    * to load any size from a single SVG, so we have to generate common
    * sizes ourselves.
@@ -97,40 +90,31 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
    * then the application icon is dependant to the theme and for now at
    * least, we want the installed icon.
    */
-  path   = g_build_filename (base_dir, "16x16/apps/gimp.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (DATAROOTDIR "/icons/hicolor/16x16/apps/gimp.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (DATADIR "/icons/hicolor/16x16/apps/gimp.png", NULL);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_warning ("Application icon missing: %s", path);
-  g_free (path);
+    g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/16x16/apps/gimp.png");
 
-  path   = g_build_filename (base_dir, "32x32/apps/gimp.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (DATAROOTDIR "/icons/hicolor/32x32/apps/gimp.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (DATADIR "/icons/hicolor/32x32/apps/gimp.png", NULL);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_warning ("Application icon missing: %s", path);
-  g_free (path);
+    g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/32x32/apps/gimp.png");
 
-  path   = g_build_filename (base_dir, "48x48/apps/gimp.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (DATAROOTDIR "/icons/hicolor/48x48/apps/gimp.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (DATADIR "/icons/hicolor/48x48/apps/gimp.png", NULL);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_warning ("Application icon missing: %s", path);
-  g_free (path);
+    g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/48x48/apps/gimp.png");
 
-  path   = g_build_filename (base_dir, "64x64/apps/gimp.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (DATAROOTDIR "/icons/hicolor/64x64/apps/gimp.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (DATADIR "/icons/hicolor/64x64/apps/gimp.png", NULL);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_warning ("Application icon missing: %s", path);
-  g_free (path);
+    g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/64x64/apps/gimp.png");
 
-  path   = g_build_filename (base_dir, "scalable/apps/gimp.svg", NULL);
-  pixbuf = gdk_pixbuf_new_from_file_at_size (path, 128, 128, NULL);
+  pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 128, 128, NULL);
   if (pixbuf)
     {
       /* Various common sizes from the same SVG. Why I go into such
@@ -140,34 +124,31 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
        */
       icons = g_list_prepend (icons, pixbuf);
 
-      pixbuf = gdk_pixbuf_new_from_file_at_size (path, 144, 144, NULL);
+      pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 144, 144, NULL);
       icons = g_list_prepend (icons, pixbuf);
 
-      pixbuf = gdk_pixbuf_new_from_file_at_size (path, 160, 160, NULL);
+      pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 160, 160, NULL);
       icons = g_list_prepend (icons, pixbuf);
 
-      pixbuf = gdk_pixbuf_new_from_file_at_size (path, 176, 176, NULL);
+      pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 176, 176, NULL);
       icons = g_list_prepend (icons, pixbuf);
 
-      pixbuf = gdk_pixbuf_new_from_file_at_size (path, 192, 192, NULL);
+      pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 192, 192, NULL);
       icons = g_list_prepend (icons, pixbuf);
 
-      pixbuf = gdk_pixbuf_new_from_file_at_size (path, 224, 224, NULL);
+      pixbuf = gdk_pixbuf_new_from_file_at_size (svg_icon, 224, 224, NULL);
       icons = g_list_prepend (icons, pixbuf);
     }
   else
     {
-      g_warning ("Application icon missing: %s", path);
+      g_warning ("Application icon missing: %s", svg_icon);
     }
-  g_free (path);
 
-  path   = g_build_filename (base_dir, "256x256/apps/gimp.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (DATAROOTDIR "/icons/hicolor/256x256/apps/gimp.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (DATADIR "/icons/hicolor/256x256/apps/gimp.png", NULL);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_warning ("Application icon missing: %s", path);
-  g_free (path);
+    g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/256x256/apps/gimp.png");
 
   gtk_window_set_default_icon_list (icons);
   g_list_free_full (icons, g_object_unref);
@@ -175,7 +156,6 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   gimp_widgets_init_foreign_enums ();
 
   gimp_widgets_initialized = TRUE;
-  g_free (base_dir);
 }
 
 /* clean up babl (in particular, so that the fish cache is constructed) if the
