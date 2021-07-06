@@ -151,7 +151,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
     g_warning ("Application icon missing: %s", DATADIR "/icons/hicolor/256x256/apps/gimp.png");
 
   gtk_window_set_default_icon_list (icons);
-  g_list_free_full (icons, g_object_unref);
+  /*g_list_free_full (icons, g_object_unref);*/
 
   gimp_widgets_init_foreign_enums ();
 
