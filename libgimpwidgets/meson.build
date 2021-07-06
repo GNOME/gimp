@@ -189,9 +189,7 @@ libgimpwidgets = library('gimpwidgets-'+ gimp_api_version,
   dependencies: [
     gegl, gtk3, lcms, math
   ],
-  c_args: [ '-DG_LOG_DOMAIN="LibGimpWidgets"', '-DGIMP_WIDGETS_COMPILATION',
-            '-DDATADIR="@0@"'.format(prefix / get_option('datadir')),
-  ],
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpWidgets"', '-DGIMP_WIDGETS_COMPILATION', ],
   link_with: [
     libgimpbase,
     libgimpcolor,

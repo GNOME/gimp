@@ -56,7 +56,7 @@ libgimpwidgetsincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpwidgets
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
 	-DGIMP_WIDGETS_COMPILATION		\
-	-DDATADIR=\""$(datadir)"\"		\
+	-DDATAROOTDIR=\""$(datarootdir)"\"	\
 	-I$(top_srcdir)				\
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
