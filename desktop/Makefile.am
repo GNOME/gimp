@@ -34,6 +34,9 @@ icons32_DATA = 32x32/gimp.png
 icons48dir = $(DESKTOP_DATADIR)/icons/hicolor/48x48/apps
 icons48_DATA = 48x48/gimp.png
 
+icons64dir = $(DESKTOP_DATADIR)/icons/hicolor/64x64/apps
+icons64_DATA = 64x64/gimp.png
+
 icons256dir = $(DESKTOP_DATADIR)/icons/hicolor/256x256/apps
 icons256_DATA = 256x256/gimp.png
 
