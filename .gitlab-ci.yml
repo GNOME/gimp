@@ -213,7 +213,6 @@ gimp-distcheck-debian:
         --enable-gtk-doc
         --enable-windows-installer
     - make -j "$(nproc)"
-    - make -j "$(nproc)" install
     - make -j "$(nproc)" check
     - make -j "$(nproc)" distcheck
 
