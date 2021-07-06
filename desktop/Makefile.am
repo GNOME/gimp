@@ -37,6 +37,9 @@ icons48_DATA = 48x48/gimp.png
 icons256dir = $(DESKTOP_DATADIR)/icons/hicolor/256x256/apps
 icons256_DATA = 256x256/gimp.png
 
+iconsscalabledir = $(DESKTOP_DATADIR)/icons/hicolor/scalable/apps
+iconsscalable_DATA = scalable/gimp.svg
+
 
 # touch the toplevel icon directory as required by the icon theme spec
 install-data-hook:

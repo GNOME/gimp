@@ -14,6 +14,9 @@ foreach size : sizes
     install_dir: get_option('datadir') / 'icons' / 'hicolor' / sizedir / 'apps'
   )
 endforeach
+install_data('scalable/gimp.svg',
+  install_dir: get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'apps'
+)
 
 desktopfilename = 'gimp.desktop'
 
