@@ -69,6 +69,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   gchar       *base_dir;
   gchar       *path;
   GdkPixbuf   *pixbuf;
+  GError      *error = NULL;
 
   g_return_if_fail (standard_help_func != NULL);
 
@@ -98,39 +99,43 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
    * least, we want the installed icon.
    */
   path   = g_build_filename (base_dir, "16x16/apps/gimp.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (DATAROOTDIR "/icons/hicolor/16x16/apps/gimp.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (path, &error);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_printerr ("Application icon missing: %s", path);
+    g_printerr ("Application icon missing: %s (%s)\n", path, error->message);
+  g_clear_error (&error);
   g_free (path);
 
   path   = g_build_filename (base_dir, "32x32/apps/gimp.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (DATAROOTDIR "/icons/hicolor/32x32/apps/gimp.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (path, &error);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_printerr ("Application icon missing: %s", path);
+    g_printerr ("Application icon missing: %s (%s)\n", path, error->message);
+  g_clear_error (&error);
   g_free (path);
 
   path   = g_build_filename (base_dir, "48x48/apps/gimp.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (DATAROOTDIR "/icons/hicolor/48x48/apps/gimp.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (path, &error);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_printerr ("Application icon missing: %s", path);
+    g_printerr ("Application icon missing: %s (%s)\n", path, error->message);
+  g_clear_error (&error);
   g_free (path);
 
   path   = g_build_filename (base_dir, "64x64/apps/gimp.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (DATAROOTDIR "/icons/hicolor/64x64/apps/gimp.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (path, &error);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_printerr ("Application icon missing: %s", path);
+    g_printerr ("Application icon missing: %s (%s)\n", path, error->message);
+  g_clear_error (&error);
   g_free (path);
 
   path   = g_build_filename (base_dir, "scalable/apps/gimp.svg", NULL);
-  pixbuf = gdk_pixbuf_new_from_file_at_size (path, 128, 128, NULL);
+  pixbuf = gdk_pixbuf_new_from_file_at_size (path, 128, 128, &error);
   if (pixbuf)
     {
       /* Various common sizes from the same SVG. Why I go into such
@@ -157,16 +162,17 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
     }
   else
     {
-      g_printerr ("Application icon missing: %s", path);
+      g_printerr ("Application icon missing: %s (%s)\n", path, error->message);
+      g_clear_error (&error);
     }
   g_free (path);
 
   path   = g_build_filename (base_dir, "256x256/apps/gimp.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (DATAROOTDIR "/icons/hicolor/256x256/apps/gimp.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (path, &error);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
   else
-    g_printerr ("Application icon missing: %s", path);
+    g_printerr ("Application icon missing: %s\n", path);
   g_free (path);
 
   gtk_window_set_default_icon_list (icons);
