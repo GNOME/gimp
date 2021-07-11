@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-02 11:59+0200\n"
-"PO-Revision-Date: 2021-05-02 12:02+0200\n"
+"POT-Creation-Date: 2021-07-11 12:30+0200\n"
+"PO-Revision-Date: 2021-07-11 12:33+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -25948,7 +25948,7 @@ msgid "You are running an unsupported version!"
 msgstr "Używana jest niewspierana wersja!"
 
 #: ../app/widgets/gimpcriticaldialog.c:238
-#: ../app/widgets/gimpcriticaldialog.c:588
+#: ../app/widgets/gimpcriticaldialog.c:590
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
@@ -25956,27 +25956,27 @@ msgstr ""
 "program GIMP:"
 
 #: ../app/widgets/gimpcriticaldialog.c:240
-#: ../app/widgets/gimpcriticaldialog.c:590
+#: ../app/widgets/gimpcriticaldialog.c:592
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Skopiuj informacje o błędzie do schowka klikając: "
 
 #: ../app/widgets/gimpcriticaldialog.c:242
-#: ../app/widgets/gimpcriticaldialog.c:592
+#: ../app/widgets/gimpcriticaldialog.c:594
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Otwórz system śledzenia błędów w przeglądarce klikając: "
 
 #: ../app/widgets/gimpcriticaldialog.c:244
-#: ../app/widgets/gimpcriticaldialog.c:594
+#: ../app/widgets/gimpcriticaldialog.c:596
 msgid "Create a login if you don't have one yet."
 msgstr "Utwórz konto, jeśli jeszcze go nie masz."
 
 #: ../app/widgets/gimpcriticaldialog.c:245
-#: ../app/widgets/gimpcriticaldialog.c:595
+#: ../app/widgets/gimpcriticaldialog.c:597
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Wklej tekst ze schowka do nowego zgłoszenia błędu."
 
 #: ../app/widgets/gimpcriticaldialog.c:246
-#: ../app/widgets/gimpcriticaldialog.c:596
+#: ../app/widgets/gimpcriticaldialog.c:598
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -26000,77 +26000,82 @@ msgstr ""
 "Można także zamknąć to okno od razu, ale zgłaszanie błędów to najlepszy "
 "sposób, aby przyczynić się do ulepszania używanego oprogramowania."
 
-#: ../app/widgets/gimpcriticaldialog.c:358
+#: ../app/widgets/gimpcriticaldialog.c:262
+msgid "Copy-paste this whole debug data to report to developers"
+msgstr ""
+"Skopiuj i wklej całość tych danych debugowania do zgłoszenia do programistów"
+
+#: ../app/widgets/gimpcriticaldialog.c:360
 msgid "The operating system is out of memory or resources."
 msgstr "Za mało pamięci lub zasobów w systemie operacyjnym."
 
-#: ../app/widgets/gimpcriticaldialog.c:361
+#: ../app/widgets/gimpcriticaldialog.c:363
 msgid "The specified file was not found."
 msgstr "Nie odnaleziono podanego pliku."
 
-#: ../app/widgets/gimpcriticaldialog.c:364
+#: ../app/widgets/gimpcriticaldialog.c:366
 msgid "The specified path was not found."
 msgstr "Nie odnaleziono podanej ścieżki."
 
-#: ../app/widgets/gimpcriticaldialog.c:367
+#: ../app/widgets/gimpcriticaldialog.c:369
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 "Plik .exe jest nieprawidłowy (nie jest plikiem .exe typu Microsoft Win32 lub "
 "w obrazie .exe jest błąd)."
 
-#: ../app/widgets/gimpcriticaldialog.c:370
+#: ../app/widgets/gimpcriticaldialog.c:372
 msgid "The operating system denied access to the specified file."
 msgstr "System operacyjny odmówił dostępu do podanego pliku."
 
-#: ../app/widgets/gimpcriticaldialog.c:373
+#: ../app/widgets/gimpcriticaldialog.c:375
 msgid "The file name association is incomplete or invalid."
 msgstr "Powiązanie nazwy pliku jest niepełne lub nieprawidłowe."
 
-#: ../app/widgets/gimpcriticaldialog.c:376
+#: ../app/widgets/gimpcriticaldialog.c:378
 msgid "DDE transaction busy"
 msgstr "Transakcja DDE jest zajęta"
 
-#: ../app/widgets/gimpcriticaldialog.c:379
+#: ../app/widgets/gimpcriticaldialog.c:381
 msgid "The DDE transaction failed."
 msgstr "Transakcja DDE się nie powiodła."
 
-#: ../app/widgets/gimpcriticaldialog.c:382
+#: ../app/widgets/gimpcriticaldialog.c:384
 msgid "The DDE transaction timed out."
 msgstr "Transakcja DDE przekroczyła czas oczekiwania."
 
-#: ../app/widgets/gimpcriticaldialog.c:385
+#: ../app/widgets/gimpcriticaldialog.c:387
 msgid "The specified DLL was not found."
 msgstr "Nie odnaleziono podanego pliku DDL."
 
-#: ../app/widgets/gimpcriticaldialog.c:388
+#: ../app/widgets/gimpcriticaldialog.c:390
 msgid "There is no application associated with the given file name extension."
 msgstr "Nie ma programu powiązanego z podanym rozszerzeniem pliku."
 
-#: ../app/widgets/gimpcriticaldialog.c:391
+#: ../app/widgets/gimpcriticaldialog.c:393
 msgid "There was not enough memory to complete the operation."
 msgstr "Za mało pamięci, aby ukończyć działanie."
 
-#: ../app/widgets/gimpcriticaldialog.c:394
+#: ../app/widgets/gimpcriticaldialog.c:396
 msgid "A sharing violation occurred."
 msgstr "Wystąpiło naruszenie współdzielenia."
 
-#: ../app/widgets/gimpcriticaldialog.c:397
+#: ../app/widgets/gimpcriticaldialog.c:399
 msgid "Unknown Microsoft Windows error."
 msgstr "Nieznany błąd systemu Microsoft Windows."
 
-#: ../app/widgets/gimpcriticaldialog.c:400
+#: ../app/widgets/gimpcriticaldialog.c:402
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Otwarcie „%s” się nie powiodło: %s"
 
-#: ../app/widgets/gimpcriticaldialog.c:554
+#: ../app/widgets/gimpcriticaldialog.c:556
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr "Program GIMP uległ awarii z błędem krytycznym: %s"
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:561
+#: ../app/widgets/gimpcriticaldialog.c:563
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "Wystąpił błąd programu GIMP: %s"
@@ -26078,12 +26083,12 @@ msgstr "Wystąpił błąd programu GIMP: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:569
+#: ../app/widgets/gimpcriticaldialog.c:571
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "Wystąpiło kilka krytycznych błędów programu GIMP."
 
-#: ../app/widgets/gimpcriticaldialog.c:621
+#: ../app/widgets/gimpcriticaldialog.c:623
 msgid "_Restart GIMP"
 msgstr "_Uruchom program GIMP ponownie"
 
@@ -26385,17 +26390,17 @@ msgid "Select fields"
 msgstr "Zaznacz pola"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3296
+#: ../app/widgets/gimpdashboard.c:3335
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:3305 ../app/widgets/gimpdashboard.c:4308
+#: ../app/widgets/gimpdashboard.c:3344 ../app/widgets/gimpdashboard.c:4347
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Tak"
 
-#: ../app/widgets/gimpdashboard.c:3306 ../app/widgets/gimpdashboard.c:4309
+#: ../app/widgets/gimpdashboard.c:3345 ../app/widgets/gimpdashboard.c:4348
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nie"
@@ -26404,7 +26409,7 @@ msgstr "Nie"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3390
+#: ../app/widgets/gimpdashboard.c:3429
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -26415,16 +26420,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4298
+#: ../app/widgets/gimpdashboard.c:4337
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4376
+#: ../app/widgets/gimpdashboard.c:4415
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:4754
+#: ../app/widgets/gimpdashboard.c:4793
 msgid "Resolving symbol information..."
 msgstr "Rozwiązywanie informacji o symbolach…"
 
@@ -27054,7 +27059,7 @@ msgstr "%g×%g %s"
 msgid "colors"
 msgstr "kolory"
 
-#: ../app/widgets/gimpitemtreeview.c:755
+#: ../app/widgets/gimpitemtreeview.c:753
 msgid "Lock:"
 msgstr "Blokowanie:"
 
