@@ -5,7 +5,7 @@
 #########################
 
 #### Usage ####
-if test "$#" -ne 4; then
+if [test "$#" -ne 4]; then
     echo "Usage: $0 <GPKKEY> <REPO> <LOGDIR> <BUILDDIR>"
     echo
     echo "    GPKKEY: GPG Key ID to sign flatpak commits with"
