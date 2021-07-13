@@ -814,6 +814,7 @@ gimp_babl_is_valid (GimpImageBaseType base_type,
       switch (precision)
         {
         case GIMP_PRECISION_U8_NON_LINEAR:
+        case GIMP_PRECISION_U8_LINEAR:
           return TRUE;
 
         default:

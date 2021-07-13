@@ -2160,13 +2160,16 @@ gimp_image_get_format (GimpImage         *image,
       return gimp_babl_format (base_type, precision, with_alpha, space);
 
     case GIMP_INDEXED:
-      if (precision == GIMP_PRECISION_U8_NON_LINEAR)
+      if (precision == GIMP_PRECISION_U8_NON_LINEAR ||
+          precision == GIMP_PRECISION_U8_LINEAR)
         {
           if (with_alpha)
             return gimp_image_colormap_get_rgba_format (image);
           else
             return gimp_image_colormap_get_rgb_format (image);
         }
+      else
+        g_printerr ("Error: unhandled precision %d for GIMP_INDEXED", precision);
     }
 
   g_return_val_if_reached (NULL);
