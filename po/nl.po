@@ -29,16 +29,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-04 14:07+0000\n"
-"PO-Revision-Date: 2021-02-26 15:27+0100\n"
-"Last-Translator: Paul Matthijsse <paul.matthijsse@wanadoo.fr>\n"
+"POT-Creation-Date: 2021-07-11 10:35+0000\n"
+"PO-Revision-Date: 2021-07-13 21:13+0200\n"
+"Last-Translator: Gerrit Jan Roelvink <g.j.roelvink@protonmail.com>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0\n"
 
 # Waarom niet: beeldbewerkingsprogramma of beeldmanipulatieprogramma? - Hannie
 # Omdat het de naam van het programma is?
@@ -6736,32 +6736,32 @@ msgstr "Afbeelding naar 32-bit integer converteren"
 #: ../app/actions/image-actions.c:232
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
-msgstr "16-bit drijvendekomma"
+msgstr "16-bit decimaal"
 
 #: ../app/actions/image-actions.c:234
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
-msgstr "Afbeelding naar 16-bit drijvendekomma-precisie converteren"
+msgstr "Afbeelding naar 16-bit decimaal converteren"
 
 #: ../app/actions/image-actions.c:238
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
-msgstr "32-bit drijvendekomma-precisie"
+msgstr "32-bit decimale precisie"
 
 #: ../app/actions/image-actions.c:240
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
-msgstr "Afbeelding naar 32-bit drijvendekomma-precisie converteren"
+msgstr "Afbeelding naar 32-bit decimale precisie converteren"
 
 #: ../app/actions/image-actions.c:244
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
-msgstr "64 bit floating point"
+msgstr "64 bit decimaal"
 
 #: ../app/actions/image-actions.c:246
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
-msgstr "Afbeelding naar 64 bit floating point omzetten"
+msgstr "Afbeelding naar 64 bit decimaal omzetten"
 
 #: ../app/actions/image-actions.c:253
 msgctxt "image-convert-action"
@@ -11456,17 +11456,16 @@ msgid ""
 "Promote imported images to floating point precision. Does not apply to "
 "indexed images."
 msgstr ""
-"Promoveer geïmporteerde beelden naar drijvendekomma-precisie. Geldt niet "
-"voor geïndexeerde afbeeldingen."
+"Promoveer geïmporteerde beelden naar decimale precisie. Geldt niet voor "
+"geïndexeerde afbeeldingen."
 
 #: ../app/config/gimprc-blurbs.h:214
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
 msgstr ""
-"Als geïmporteerde afbeeldingen naar drijvendekomma-precisie worden "
-"gepromoveerd, voeg dan een minimale ruis toe om de kleurwaarden enigszins te "
-"distribueren."
+"Als geïmporteerde afbeeldingen naar decimale precisie worden gepromoveerd, "
+"voeg dan een minimale ruis toe om de kleurwaarden enigszins te distribueren."
 
 #: ../app/config/gimprc-blurbs.h:218
 msgid "Add an alpha channel to all layers of imported images."
@@ -14439,32 +14438,32 @@ msgstr "Afbeelding naar 32-bit integer converteren"
 #: ../app/core/gimpimage-convert-precision.c:95
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear floating point"
-msgstr "Afbeelding naar 16-bit drijvendekomma-precisie converteren"
+msgstr "Afbeelding naar 16-bit decimale precisie converteren"
 
 #: ../app/core/gimpimage-convert-precision.c:98
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma floating point"
-msgstr "Afbeelding naar 16-bit drijvendekomma-precisie converteren"
+msgstr "Afbeelding naar 16-bit decimale precisie converteren"
 
 #: ../app/core/gimpimage-convert-precision.c:101
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear floating point"
-msgstr "Afbeelding naar 32-bit drijvendekomma-precisie converteren"
+msgstr "Afbeelding naar 32-bit decimale precisie converteren"
 
 #: ../app/core/gimpimage-convert-precision.c:104
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma floating point"
-msgstr "Afbeelding naar 32-bit drijvendekomma-precisie converteren"
+msgstr "Afbeelding naar 32-bit decimale precisie converteren"
 
 #: ../app/core/gimpimage-convert-precision.c:107
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit linear floating point"
-msgstr "Afbeelding naar 64-bit lineair drijvendekomma converteren"
+msgstr "Afbeelding naar 64-bit lineair decimaal converteren"
 
 #: ../app/core/gimpimage-convert-precision.c:110
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit gamma floating point"
-msgstr "Afbeelding naar 64-bit gamma drijvendekomma converteren"
+msgstr "Afbeelding naar 64-bit gamma decimaal converteren"
 
 #. dithering
 #: ../app/core/gimpimage-convert-precision.c:268
@@ -15557,7 +15556,8 @@ msgstr "Bezoek de website van GIMP"
 #: ../app/dialogs/about-dialog.c:157
 msgid "translator-credits"
 msgstr ""
-"Paul Matthijsse (2020-2021)\n"
+"vertalers:\n"
+"Paul Matthijsse & Gerrit Jan Roelvink (2020-2021)\n"
 "Paul Matthijsse & Just Vecht (2018-2019)\n"
 "Justin van Steijn (2016)\n"
 "André Schutten\n"
@@ -16892,11 +16892,11 @@ msgstr "Importbeleid"
 
 #: ../app/dialogs/preferences-dialog.c:1512
 msgid "Promote imported images to _floating point precision"
-msgstr "Afbeelding naar drijvendekomma-precisie converteren"
+msgstr "Geïmporteerde afbeeldingen naar decimale precisie converteren"
 
 #: ../app/dialogs/preferences-dialog.c:1521
 msgid "_Dither images when promoting to floating point"
-msgstr "Afbeeldingen rasteren tijdens conversie naar _drijvendekomma-precisie"
+msgstr "Afbeeldingen rasteren tijdens conversie naar decimale precisie"
 
 #: ../app/dialogs/preferences-dialog.c:1526
 msgid "_Add an alpha channel to imported images"
@@ -21404,172 +21404,177 @@ msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Bewegingsvervaging"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2802
+#: ../app/pdb/plug-in-compat-cmds.c:2748
+msgctxt "undo-type"
+msgid "Median Blur"
+msgstr "Mediaanvervaging"
+
+#: ../app/pdb/plug-in-compat-cmds.c:2845
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mozaïek"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2846
+#: ../app/pdb/plug-in-compat-cmds.c:2889
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neon"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2934
+#: ../app/pdb/plug-in-compat-cmds.c:2977
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Krantendruk"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2974
+#: ../app/pdb/plug-in-compat-cmds.c:3017
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normaliseren"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3036
+#: ../app/pdb/plug-in-compat-cmds.c:3079
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernova"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3080 ../app/pdb/plug-in-compat-cmds.c:3148
+#: ../app/pdb/plug-in-compat-cmds.c:3123 ../app/pdb/plug-in-compat-cmds.c:3191
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Olieverven"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3238
+#: ../app/pdb/plug-in-compat-cmds.c:3281
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Papieren tegel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3279 ../app/pdb/plug-in-compat-cmds.c:3322
+#: ../app/pdb/plug-in-compat-cmds.c:3322 ../app/pdb/plug-in-compat-cmds.c:3365
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pixels vergroten"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3373
+#: ../app/pdb/plug-in-compat-cmds.c:3416
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plasma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3427
+#: ../app/pdb/plug-in-compat-cmds.c:3470
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Poolcoördinaten"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3467
+#: ../app/pdb/plug-in-compat-cmds.c:3510
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Rode ogen verwijderen"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3520
+#: ../app/pdb/plug-in-compat-cmds.c:3563
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Willekeurige gooi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3573
+#: ../app/pdb/plug-in-compat-cmds.c:3616
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Willekeurig kiezen"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3626
+#: ../app/pdb/plug-in-compat-cmds.c:3669
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Willekeurig bedoezelen"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3701
+#: ../app/pdb/plug-in-compat-cmds.c:3744
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB-ruis"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3771
+#: ../app/pdb/plug-in-compat-cmds.c:3814
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Rimpeling"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3896
+#: ../app/pdb/plug-in-compat-cmds.c:3939
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Ruis toevoegen"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3940
+#: ../app/pdb/plug-in-compat-cmds.c:3983
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Selectieve Gaussiaanse vervaging"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3984
+#: ../app/pdb/plug-in-compat-cmds.c:4027
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Semi-vlak maken"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4027
+#: ../app/pdb/plug-in-compat-cmds.c:4070
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Shift"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4130
+#: ../app/pdb/plug-in-compat-cmds.c:4173
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinusoïde"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4178
+#: ../app/pdb/plug-in-compat-cmds.c:4221
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4239
+#: ../app/pdb/plug-in-compat-cmds.c:4282
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Solide ruis"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4283
+#: ../app/pdb/plug-in-compat-cmds.c:4326
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Spreiding"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4324
+#: ../app/pdb/plug-in-compat-cmds.c:4367
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Alfa-drempelwaarde"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4370
+#: ../app/pdb/plug-in-compat-cmds.c:4413
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Verscherpen (Onscherp masker)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4416
+#: ../app/pdb/plug-in-compat-cmds.c:4459
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Video"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4453
+#: ../app/pdb/plug-in-compat-cmds.c:4496
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Waarde inverteren"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4560
+#: ../app/pdb/plug-in-compat-cmds.c:4603
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Waarden wijzigen"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4607
+#: ../app/pdb/plug-in-compat-cmds.c:4650
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Vervorm lichtere delen van het beeld"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4654
+#: ../app/pdb/plug-in-compat-cmds.c:4697
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Vervorm donkerder delen van het beeld"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4717
+#: ../app/pdb/plug-in-compat-cmds.c:4760
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Golven"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4765
+#: ../app/pdb/plug-in-compat-cmds.c:4808
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Golven en indrukken"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4817
+#: ../app/pdb/plug-in-compat-cmds.c:4860
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Wind"
@@ -25616,7 +25621,7 @@ msgstr "_Sneltoets opnieuw toewijzen"
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Sneltoets \"%s\" is al in gebruik bij \"%s\" in de groep \"%s\"."
 
-# 
+#
 #: ../app/widgets/gimpactionview.c:689
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
@@ -26305,7 +26310,7 @@ msgid "You are running an unsupported version!"
 msgstr "U gebruikt een niet-ondersteunde versie!"
 
 #: ../app/widgets/gimpcriticaldialog.c:238
-#: ../app/widgets/gimpcriticaldialog.c:588
+#: ../app/widgets/gimpcriticaldialog.c:590
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
@@ -26313,27 +26318,27 @@ msgstr ""
 "eenvoudige stappen:"
 
 #: ../app/widgets/gimpcriticaldialog.c:240
-#: ../app/widgets/gimpcriticaldialog.c:590
+#: ../app/widgets/gimpcriticaldialog.c:592
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Kopieer de bug-informatie naar het klembord door hier te klikken: "
 
 #: ../app/widgets/gimpcriticaldialog.c:242
-#: ../app/widgets/gimpcriticaldialog.c:592
+#: ../app/widgets/gimpcriticaldialog.c:594
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Open onze bug-melder in de browser door hier te klikken: "
 
 #: ../app/widgets/gimpcriticaldialog.c:244
-#: ../app/widgets/gimpcriticaldialog.c:594
+#: ../app/widgets/gimpcriticaldialog.c:596
 msgid "Create a login if you don't have one yet."
 msgstr "Creëer een login als u er nog geen heeft."
 
 #: ../app/widgets/gimpcriticaldialog.c:245
-#: ../app/widgets/gimpcriticaldialog.c:595
+#: ../app/widgets/gimpcriticaldialog.c:597
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Plak de klembordtekst in een nieuw bug-rapport."
 
 #: ../app/widgets/gimpcriticaldialog.c:246
-#: ../app/widgets/gimpcriticaldialog.c:596
+#: ../app/widgets/gimpcriticaldialog.c:598
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -26357,77 +26362,83 @@ msgstr ""
 "U kunt het dialoogvenster ook direct sluiten, maar door bugs te rapporteren "
 "helpt u mee deze software te verbeteren."
 
-#: ../app/widgets/gimpcriticaldialog.c:358
+#: ../app/widgets/gimpcriticaldialog.c:262
+msgid "Copy-paste this whole debug data to report to developers"
+msgstr ""
+"Kopieer en plak deze hele foutopsporingsgegevens om te rapporteren aan "
+"ontwikkelaars"
+
+#: ../app/widgets/gimpcriticaldialog.c:360
 msgid "The operating system is out of memory or resources."
 msgstr "Het besturingssysteem heeft onvoldoende geheugen of bronnen."
 
-#: ../app/widgets/gimpcriticaldialog.c:361
+#: ../app/widgets/gimpcriticaldialog.c:363
 msgid "The specified file was not found."
 msgstr "Het opgegeven bestand is niet gevonden."
 
-#: ../app/widgets/gimpcriticaldialog.c:364
+#: ../app/widgets/gimpcriticaldialog.c:366
 msgid "The specified path was not found."
 msgstr "Het opgegeven pad werd niet gevonden."
 
-#: ../app/widgets/gimpcriticaldialog.c:367
+#: ../app/widgets/gimpcriticaldialog.c:369
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 "Het .exe-bestand is ongeldig (non-Microsoft Win32 .exe of fout in .exe-"
 "bestand)."
 
-#: ../app/widgets/gimpcriticaldialog.c:370
+#: ../app/widgets/gimpcriticaldialog.c:372
 msgid "The operating system denied access to the specified file."
 msgstr "Het besturingssysteem weigerde toegang tot gevraagd bestand."
 
-#: ../app/widgets/gimpcriticaldialog.c:373
+#: ../app/widgets/gimpcriticaldialog.c:375
 msgid "The file name association is incomplete or invalid."
 msgstr "Bestandsnaamassociatie is onvolledig of ongeldig."
 
-#: ../app/widgets/gimpcriticaldialog.c:376
+#: ../app/widgets/gimpcriticaldialog.c:378
 msgid "DDE transaction busy"
 msgstr "DDE-transactie bezig"
 
-#: ../app/widgets/gimpcriticaldialog.c:379
+#: ../app/widgets/gimpcriticaldialog.c:381
 msgid "The DDE transaction failed."
 msgstr "DDE-transactie mislukt."
 
-#: ../app/widgets/gimpcriticaldialog.c:382
+#: ../app/widgets/gimpcriticaldialog.c:384
 msgid "The DDE transaction timed out."
 msgstr "Time-out DDE-transactie."
 
-#: ../app/widgets/gimpcriticaldialog.c:385
+#: ../app/widgets/gimpcriticaldialog.c:387
 msgid "The specified DLL was not found."
 msgstr "De opgegeven DDL is niet gevonden."
 
-#: ../app/widgets/gimpcriticaldialog.c:388
+#: ../app/widgets/gimpcriticaldialog.c:390
 msgid "There is no application associated with the given file name extension."
 msgstr "Er is geen applicatie aan deze bestandsextensie gekoppeld."
 
-#: ../app/widgets/gimpcriticaldialog.c:391
+#: ../app/widgets/gimpcriticaldialog.c:393
 msgid "There was not enough memory to complete the operation."
 msgstr "Onvoldoende geheugen om de bewerking te voltooien."
 
-#: ../app/widgets/gimpcriticaldialog.c:394
+#: ../app/widgets/gimpcriticaldialog.c:396
 msgid "A sharing violation occurred."
 msgstr "Fout tijdens het delen."
 
-#: ../app/widgets/gimpcriticaldialog.c:397
+#: ../app/widgets/gimpcriticaldialog.c:399
 msgid "Unknown Microsoft Windows error."
 msgstr "Onbekende Microsoft Windows-fout."
 
-#: ../app/widgets/gimpcriticaldialog.c:400
+#: ../app/widgets/gimpcriticaldialog.c:402
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Kon '%s': %s niet openen"
 
-#: ../app/widgets/gimpcriticaldialog.c:554
+#: ../app/widgets/gimpcriticaldialog.c:556
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr "GIMP crashte met een fatale fout: %s"
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:561
+#: ../app/widgets/gimpcriticaldialog.c:563
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "GIMP ondervond een fout: %s"
@@ -26435,12 +26446,12 @@ msgstr "GIMP ondervond een fout: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:569
+#: ../app/widgets/gimpcriticaldialog.c:571
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "GIMP ondervond meerdere kritieke fouten!"
 
-#: ../app/widgets/gimpcriticaldialog.c:621
+#: ../app/widgets/gimpcriticaldialog.c:623
 msgid "_Restart GIMP"
 msgstr "He_rstart GIMP"
 
@@ -26753,17 +26764,17 @@ msgid "Select fields"
 msgstr "Selecteer velden"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3296
+#: ../app/widgets/gimpdashboard.c:3335
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Nvt"
 
-#: ../app/widgets/gimpdashboard.c:3305 ../app/widgets/gimpdashboard.c:4308
+#: ../app/widgets/gimpdashboard.c:3344 ../app/widgets/gimpdashboard.c:4347
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../app/widgets/gimpdashboard.c:3306 ../app/widgets/gimpdashboard.c:4309
+#: ../app/widgets/gimpdashboard.c:3345 ../app/widgets/gimpdashboard.c:4348
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Geen"
@@ -26772,7 +26783,7 @@ msgstr "Geen"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3390
+#: ../app/widgets/gimpdashboard.c:3429
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -26783,16 +26794,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4298
+#: ../app/widgets/gimpdashboard.c:4337
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4376
+#: ../app/widgets/gimpdashboard.c:4415
 msgid "N/A"
 msgstr "Nvt"
 
-#: ../app/widgets/gimpdashboard.c:4754
+#: ../app/widgets/gimpdashboard.c:4793
 msgid "Resolving symbol information..."
 msgstr "Verwerken symboolinformatie..."
 
@@ -27428,7 +27439,7 @@ msgid "colors"
 msgstr "kleuren"
 
 # Dokbaar/aanlegbaar/aankoppelbaar
-#: ../app/widgets/gimpitemtreeview.c:755
+#: ../app/widgets/gimpitemtreeview.c:753
 msgid "Lock:"
 msgstr "Vergrendelen:"
 
