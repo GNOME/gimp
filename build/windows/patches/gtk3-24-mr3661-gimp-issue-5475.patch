@@ -1,0 +1,152 @@
+From 696a356b14ac2426b8b8176d298f05204751862c Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Fri, 11 Jun 2021 19:37:17 +0200
+Subject: [PATCH] Wintab: Fix coordinates in mixed-DPI setups
+
+Fixes #753
+---
+ gdk/win32/gdkdevice-wintab.c       | 77 +++++++++++++++++++-----------
+ gdk/win32/gdkdevice-wintab.h       |  5 ++
+ gdk/win32/gdkdevicemanager-win32.c |  5 ++
+ 3 files changed, 59 insertions(+), 28 deletions(-)
+
+diff --git a/gdk/win32/gdkdevice-wintab.c b/gdk/win32/gdkdevice-wintab.c
+index 338479db43..0337cc0d42 100644
+--- a/gdk/win32/gdkdevice-wintab.c
++++ b/gdk/win32/gdkdevice-wintab.c
+@@ -220,18 +220,9 @@ _gdk_device_wintab_translate_axes (GdkDeviceWintab *device_wintab,
+                                    gdouble         *x,
+                                    gdouble         *y)
+ {
+-  GdkDevice *device;
+-  GdkWindow *impl_window;
+-  gint root_x, root_y;
+-  gdouble temp_x, temp_y;
++  GdkDevice *device = GDK_DEVICE (device_wintab);
+   gint i;
+ 
+-  device = GDK_DEVICE (device_wintab);
+-  impl_window = _gdk_window_get_impl_window (window);
+-  temp_x = temp_y = 0;
+-
+-  gdk_window_get_origin (impl_window, &root_x, &root_y);
+-
+   for (i = 0; i < gdk_device_get_n_axes (device); i++)
+     {
+       GdkAxisUse use;
+@@ -243,19 +234,55 @@ _gdk_device_wintab_translate_axes (GdkDeviceWintab *device_wintab,
+         case GDK_AXIS_X:
+         case GDK_AXIS_Y:
+           if (gdk_device_get_mode (device) == GDK_MODE_WINDOW)
+-            _gdk_device_translate_window_coord (device, window, i,
+-                                                device_wintab->last_axis_data[i],
+-                                                &axes[i]);
++            {
++              _gdk_device_translate_window_coord (device, window, i,
++                                                  device_wintab->last_axis_data[i],
++                                                  &axes[i]);
++
++              if (use == GDK_AXIS_X)
++                {
++                  *x = axes[i];
++                }
++              else
++                {
++                  *y = axes[i];
++                }
++            }
+           else
+-            _gdk_device_translate_screen_coord (device, window,
+-                                                root_x, root_y, i,
+-                                                device_wintab->last_axis_data[i],
+-                                                &axes[i]);
+-          if (use == GDK_AXIS_X)
+-            temp_x = axes[i];
+-          else if (use == GDK_AXIS_Y)
+-            temp_y = axes[i];
+-
++            {
++              GdkAtom label_atom;
++              GdkAxisUse use;
++              double min_value, max_value, resolution;
++              double device_val = device_wintab->last_axis_data[i];
++              double screen_val = 0.0;
++              double window_val = 0.0;
++              POINT client;
++
++              client.x = 0;
++              client.y = 0;
++              ClientToScreen (GDK_WINDOW_HWND (window), &client);
++
++              _gdk_device_get_axis_info (device, i,
++                                         &label_atom, &use,
++                                         &min_value, &max_value, &resolution);
++
++              if (use == GDK_AXIS_X)
++                {
++                  screen_val = device_wintab->screen_mapping_origin_x +
++                               (device_wintab->screen_mapping_width / (max_value - min_value)) *
++                               (device_val - min_value);
++                  window_val = screen_val - client.x;
++                  *x = axes[i] = window_val;
++                }
++              else
++                {
++                  screen_val = device_wintab->screen_mapping_origin_y +
++                               (device_wintab->screen_mapping_height / (max_value - min_value)) *
++                               (device_val - min_value);
++                  window_val = screen_val - client.y;
++                  *y = axes[i] = window_val;
++                }
++            }
+           break;
+         default:
+           _gdk_device_translate_axis (device, i,
+@@ -264,12 +291,6 @@ _gdk_device_wintab_translate_axes (GdkDeviceWintab *device_wintab,
+           break;
+         }
+     }
+-
+-  if (x)
+-    *x = temp_x;
+-
+-  if (y)
+-    *y = temp_y;
+ }
+ 
+ static void
+diff --git a/gdk/win32/gdkdevice-wintab.h b/gdk/win32/gdkdevice-wintab.h
+index 9431215359..828dd198d6 100644
+--- a/gdk/win32/gdkdevice-wintab.h
++++ b/gdk/win32/gdkdevice-wintab.h
+@@ -39,6 +39,11 @@ struct _GdkDeviceWintab
+ {
+   GdkDevice parent_instance;
+ 
++  double screen_mapping_origin_x;
++  double screen_mapping_origin_y;
++  double screen_mapping_width;
++  double screen_mapping_height;
++
+   gboolean sends_core;
+   gint *last_axis_data;
+   gint button_state;
+diff --git a/gdk/win32/gdkdevicemanager-win32.c b/gdk/win32/gdkdevicemanager-win32.c
+index 34c0083cb3..d22dd3e68d 100644
+--- a/gdk/win32/gdkdevicemanager-win32.c
++++ b/gdk/win32/gdkdevicemanager-win32.c
+@@ -633,6 +633,11 @@ _wintab_recognize_new_cursors (GdkDeviceManagerWin32 *device_manager,
+           _gdk_device_add_slave (device_manager->core_pointer, GDK_DEVICE (device));
+         }
+ 
++      device->screen_mapping_origin_x = lc.lcSysOrgX;
++      device->screen_mapping_origin_y = lc.lcSysOrgY;
++      device->screen_mapping_width = lc.lcSysExtX;
++      device->screen_mapping_height = lc.lcSysExtY;
++
+       device->hctx = hctx;
+       device->cursor = cursorix;
+       (*p_WTInfoA) (WTI_CURSORS + cursorix, CSR_PKTDATA, &device->pktdata);
+-- 
+GitLab
+
