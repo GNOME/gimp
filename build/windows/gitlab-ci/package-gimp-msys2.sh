@@ -101,7 +101,7 @@ cp -fr ${GIMP_PREFIX}/lib/gio ${GIMP_DISTRIB}/lib/
 cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
 cp -fr ${GIMP_PREFIX}/lib/gtk-3.0 ${GIMP_DISTRIB}/lib/
 
-cp -fr ${MSYS_PREFIX}/lib/python3.8 ${GIMP_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/python3.9 ${GIMP_DISTRIB}/lib/
 
 cp -fr ${MSYS_PREFIX}/share/ghostscript ${GIMP_DISTRIB}/share/
 cp -fr ${GIMP_PREFIX}/share/glib-2.0 ${GIMP_DISTRIB}/share/
@@ -230,7 +230,7 @@ cp -fr ${MSYS_PREFIX}/bin/libgirepository-1.0-1.dll ${GIMP_DISTRIB}/bin/
 python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/libgirepository-1.0-1.dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
 python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/libgirepository-1.0-1.dll ${MSYS_PREFIX}/ ${GIMP_DISTRIB}
 
-for dll in ${GIMP_DISTRIB}/lib/python3.8/site-packages/*/*.dll; do
+for dll in ${GIMP_DISTRIB}/lib/python3.9/site-packages/*/*.dll; do
   python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
   python3 build/windows/gitlab-ci/dll_link.py $dll ${MSYS_PREFIX}/ ${GIMP_DISTRIB};
 done
