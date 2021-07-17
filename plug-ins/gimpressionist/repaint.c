@@ -1035,7 +1035,7 @@ repaint (ppm_t *p, ppm_t *a)
       if (runningvals.color_noise > 0.0)
         {
           double v = runningvals.color_noise;
-#define BOUNDS(a) (((a) < 0) ? (a) : ((a) > 255) ? 255 : (a))
+#define BOUNDS(a) (((a) < 0) ? (0) : ((a) > 255) ? 255 : (a))
 #define MYASSIGN(a) \
     { \
         a = a + g_rand_double_range (random_generator, -v/2.0, v/2.0); \
