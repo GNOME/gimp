@@ -363,6 +363,8 @@ load_image (GFile   *file,
   guint8     *pix_buf           = NULL;
   gboolean    is_signed         = FALSE;
   guint8      in_sequence       = 0;
+  gboolean    implicit_encoding = FALSE;
+  gboolean    big_endian        = FALSE;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -416,8 +418,6 @@ load_image (GFile   *file,
       guint16  ctx_us;
       guint8  *value;
       guint32  tag;
-      gboolean __attribute__((unused))do_toggle_endian = FALSE;
-      gboolean implicit_encoding = FALSE;
 
       if (fread (&group_word, 1, 2, dicom) == 0)
         break;
@@ -425,6 +425,12 @@ load_image (GFile   *file,
 
       fread (&element_word, 1, 2, dicom);
       element_word = g_ntohs (GUINT16_SWAP_LE_BE (element_word));
+
+      if (group_word != 0x0002 && big_endian)
+        {
+          group_word   = GUINT16_SWAP_LE_BE (group_word);
+          element_word = GUINT16_SWAP_LE_BE (element_word);
+        }
 
       tag = (group_word << 16) | element_word;
       fread(value_rep, 2, 1, dicom);
@@ -462,8 +468,12 @@ load_image (GFile   *file,
           fread (&element_length_chars[2], 1, 2, dicom);
 
           /* Now cast to integer and insert into element_length */
-          element_length =
-            g_ntohl (GUINT32_SWAP_LE_BE (*((gint *) element_length_chars)));
+          if (big_endian && group_word != 0x0002)
+            element_length =
+              g_ntohl (*((gint *) element_length_chars));
+          else
+            element_length =
+              g_ntohl (GUINT32_SWAP_LE_BE (*((gint *) element_length_chars)));
       }
       /* Binary value reps are OB, OW, SQ or UN */
       else if (strncmp (value_rep, "OB", 2) == 0
@@ -473,7 +483,10 @@ load_image (GFile   *file,
         {
           fread (&element_length, 1, 2, dicom); /* skip two bytes */
           fread (&element_length, 1, 4, dicom);
-          element_length = g_ntohl (GUINT32_SWAP_LE_BE (element_length));
+          if (big_endian && group_word != 0x0002)
+            element_length = g_ntohl (element_length);
+          else
+            element_length = g_ntohl (GUINT32_SWAP_LE_BE (element_length));
         }
       /* Short length */
       else
@@ -481,7 +494,10 @@ load_image (GFile   *file,
           guint16 el16;
 
           fread (&el16, 1, 2, dicom);
-          element_length = g_ntohs (GUINT16_SWAP_LE_BE (el16));
+          if (big_endian && group_word != 0x0002)
+            element_length = g_ntohs (el16);
+          else
+            element_length = g_ntohs (GUINT16_SWAP_LE_BE (el16));
         }
 
       /* Sequence of items - just ignore the delimiters... */
@@ -524,7 +540,12 @@ load_image (GFile   *file,
         }
       /* Some special casts that are used below */
       ctx_us = *(guint16 *) value;
+      if (big_endian && group_word != 0x0002)
+        ctx_us = GUINT16_SWAP_LE_BE (ctx_us);
 
+      g_debug ("group: %04x, element: %04x, length: %d",
+               group_word, element_word, element_length);
+      g_debug ("Value: %s", (char*)value);
       /* Recognize some critical tags */
       if (group_word == 0x0002)
         {
@@ -533,13 +554,33 @@ load_image (GFile   *file,
             case 0x0010:   /* transfer syntax id */
               if (strcmp("1.2.840.10008.1.2", (char*)value) == 0)
                 {
-                  do_toggle_endian = FALSE;
                   implicit_encoding = TRUE;
+                  g_debug ("Transfer syntax: Implicit VR Endian: Default Transfer Syntax for DICOM.");
                 }
               else if (strcmp("1.2.840.10008.1.2.1", (char*)value) == 0)
-                do_toggle_endian = FALSE;
+                {
+                  g_debug ("Transfer syntax: Explicit VR Little Endian.");
+                }
+              else if (strcmp("1.2.840.10008.1.2.1.99", (char*)value) == 0)
+                {
+                  g_debug ("Transfer syntax: Deflated Explicit VR Little Endian.");
+                }
               else if (strcmp("1.2.840.10008.1.2.2", (char*)value) == 0)
-                do_toggle_endian = TRUE;
+                {
+                  /* This Transfer Syntax was retired in 2006. For the most recent description of it, see PS3.5 2016b */
+                  big_endian = TRUE;
+                  g_debug ("Transfer syntax: Deprecated Explicit VR Big Endian.");
+                }
+              else
+                {
+                  g_debug ("Transfer syntax %s is not supported by GIMP.", (gchar *) value);
+                  g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                              _("Transfer syntax %s is not supported by GIMP."),
+                              (gchar *) value);
+                  g_free (dicominfo);
+                  fclose (dicom);
+                  return NULL;
+                }
               break;
             }
         }
