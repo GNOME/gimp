@@ -57,6 +57,7 @@ typedef struct _DicomInfo
   gint       bits_stored;
   gint       high_bit;
   gboolean   is_signed;
+  gboolean   planar;
 } DicomInfo;
 
 /* Local function prototypes */
@@ -514,24 +515,41 @@ load_image (const gchar  *filename,
             {
             case 0x0002:  /* samples per pixel */
               samples_per_pixel = ctx_us;
+              g_debug ("spp: %d", samples_per_pixel);
+              break;
+            case 0x0004:  /* photometric interpretation */
+              g_debug ("photometric interpretation: %s", (char*) value);
+              break;
+            case 0x0006:  /* planar configuration */
+              g_debug ("planar configuration: %u", ctx_us);
+              dicominfo->planar = (ctx_us == 1);
+              break;
+            case 0x0008:  /* number of frames */
+              g_debug ("number of frames: %d", ctx_us);
               break;
             case 0x0010:  /* rows */
               height = ctx_us;
+              g_debug ("height: %d", height);
               break;
             case 0x0011:  /* columns */
               width = ctx_us;
+              g_debug ("width: %d", width);
               break;
             case 0x0100:  /* bits allocated */
               bpp = ctx_us;
+              g_debug ("bpp: %d", bpp);
               break;
             case 0x0101:  /* bits stored */
               bits_stored = ctx_us;
+              g_debug ("bits stored: %d", bits_stored);
               break;
             case 0x0102:  /* high bit */
               high_bit = ctx_us;
+              g_debug ("high bit: %d", high_bit);
               break;
             case 0x0103:  /* is pixel representation signed? */
               is_signed = (ctx_us == 0) ? FALSE : TRUE;
+              g_debug ("is signed: %d", ctx_us);
               break;
             }
         }
@@ -718,29 +736,69 @@ dicom_loader (guint8     *pix_buffer,
             }
           else if (info->bpp == 8)
             {
-              guint8 *row_start;
-              gint    col_idx;
-
-              row_start = (pix_buffer +
-                           (row_idx + i) * width * samples_per_pixel);
-
-              for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
+              if (! info->planar)
                 {
-                  /* Shift it by 0 bits, or more in case bits_stored is
-                   * less than bpp.
-                   */
-                  d[col_idx] = row_start[col_idx] << (8 - info->bits_stored);
+                  guint8 *row_start;
+                  gint    col_idx;
 
-                  if (info->is_signed)
+                  row_start = (pix_buffer +
+                              (row_idx + i) * width * samples_per_pixel);
+
+                  for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
                     {
-                      /* If the data is negative, make it 0. Otherwise,
-                       * multiply the positive value by 2, so that the
-                       * positive values span between 0 and 254.
+                      /* Shift it by 0 bits, or more in case bits_stored is
+                       * less than bpp.
                        */
-                      if (d[col_idx] > 127)
-                        d[col_idx] = 0;
-                      else
-                        d[col_idx] <<= 1;
+                      d[col_idx] = row_start[col_idx] << (8 - info->bits_stored);
+
+                      if (info->is_signed)
+                        {
+                          /* If the data is negative, make it 0. Otherwise,
+                           * multiply the positive value by 2, so that the
+                           * positive values span between 0 and 254.
+                           */
+                          if (d[col_idx] > 127)
+                            d[col_idx] = 0;
+                          else
+                            d[col_idx] <<= 1;
+                        }
+                    }
+                }
+              else
+                {
+                  /* planar organization of color data */
+                  guint8 *row_start;
+                  gint    col_idx;
+                  gint    plane_size = width * height;
+
+                  row_start = (pix_buffer + (row_idx + i) * width);
+
+                  for (col_idx = 0; col_idx < width; col_idx++)
+                    {
+                      /* Shift it by 0 bits, or more in case bits_stored is
+                       * less than bpp.
+                       */
+                      gint  pix_idx;
+                      gint  src_offset = col_idx;
+
+                      for (pix_idx = 0; pix_idx < samples_per_pixel; pix_idx++)
+                        {
+                          gint  dest_idx = col_idx * samples_per_pixel + pix_idx;
+
+                          d[dest_idx] = row_start[src_offset] << (8 - info->bits_stored);
+                          if (info->is_signed)
+                            {
+                              /* If the data is negative, make it 0. Otherwise,
+                               * multiply the positive value by 2, so that the
+                               * positive values span between 0 and 254.
+                               */
+                              if (d[dest_idx] > 127)
+                                d[dest_idx] = 0;
+                              else
+                                d[dest_idx] <<= 1;
+                            }
+                          src_offset += plane_size;
+                        }
                     }
                 }
             }
