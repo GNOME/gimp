@@ -123,15 +123,15 @@
                 }
             ],
             "config-opts": [ "-DENABLE_GOBJECT_INTROSPECTION=OFF", "-DENABLE_CPP=OFF",
-                             "-DOpenJPEG_DIR=/usr/lib64/openjpeg-2.3" ],
+                             "-DOpenJPEG_DIR=/usr/lib64/openjpeg-2.3", "-DENABLE_BOOST=OFF" ],
             "cleanup": [ "/bin", "/share" ],
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-21.04.0.tar.xz",
-                    "sha256": "5e2219656c6bbd36154133fef2e12b7d0938464518827098b29a10b1697ea79c"
+                    "url": "https://poppler.freedesktop.org/poppler-21.06.1.tar.xz",
+                    "sha256": "86b09e5a02de40081a3916ef8711c5128eaf4b1fc59d5f87d0ec66f04f595db4"
                 }
             ]
         },
@@ -188,8 +188,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9533/ghostscript-9.53.3.tar.gz",
-                    "sha512": "c142ef9d83896aa8fd18c8e412220fe8f4950614be00d327d27ab051fe85e16524bf2ee00f46c2aca7a352ce47bc3acf2c4de0f7bbea7e4c55474b8af6cdc0a6"
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9540/ghostscript-9.54.0.tar.gz",
+                    "sha512": "93cfac3a754d4a7fa94112f3e04ba2ae633c40bb924734db72229096aac2f07c95877737f37f2bfef6be1b1d074af79e75cde3d589ea102def7f4654403e4804"
                 },
                 {
                     "type": "shell",
@@ -255,13 +255,13 @@
             /* Shamelessly taken from org.octave.Octave manifest! */
             "name": "SuiteSparse",
             "no-autogen": true,
-            "make-args": [ "LAPACK=", "library" ],
-            "make-install-args": [ "LAPACK=", "INSTALL_LIB=/app/lib", "INSTALL_INCLUDE=/app/include", "library" ],
+            "make-args": [ "BLAS=-lopenblas", "LAPACK=", "library" ],
+            "make-install-args": [ "BLAS=-lopenblas", "LAPACK=", "INSTALL_LIB=/app/lib", "INSTALL_INCLUDE=/app/include/suitesparse", "library" ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-5.4.0.tar.gz",
-                    "sha256": "374dd136696c653e34ef3212dc8ab5b61d9a67a6791d5ec4841efb838e94dbd1"
+                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v5.10.1.tar.gz",
+                    "sha256": "acb4d1045f48a237e70294b950153e48dce5b5f9ca8190e86c2b8c54ce00a7ee"
                 },
                 {
                     "type": "patch",
@@ -277,8 +277,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.15.tar.gz",
-                            "sha256": "30a99dec977594b387a17f49904523e6bc8dd88bd247266e83485803759e4bbe"
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.17.tar.gz",
+                            "sha256": "df2934fa33d04fd84d839ca698280df55c690c86a5a1133b3f7266fce1de279f"
                         }
                     ]
                 }
