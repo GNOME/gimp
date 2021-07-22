@@ -1,13 +1,20 @@
-diff -Naur SuiteSparse.ori/Makefile SuiteSparse/Makefile
---- SuiteSparse.ori/Makefile	2018-12-23 14:31:36.000000000 +0100
-+++ SuiteSparse/Makefile	2019-04-05 15:21:59.287341367 +0200
-@@ -38,24 +38,24 @@
+diff -Naur SuiteSparse-5.10.1/Makefile SuiteSparse-5.10.1.patched/Makefile
+--- SuiteSparse-5.10.1/Makefile	2021-05-18 15:01:16.000000000 +0200
++++ SuiteSparse-5.10.1.patched/Makefile	2021-07-22 02:03:40.698984882 +0200
+@@ -35,7 +35,7 @@
+ endif
+ 	( cd SPQR && $(MAKE) )
+ 	( cd GraphBLAS && $(MAKE) JOBS=$(JOBS) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' )
+-	( cd SLIP_LU && $(MAKE) )
++#	( cd SLIP_LU && $(MAKE) )
+ #	( cd PIRO_BAND && $(MAKE) )
+ #	( cd SKYLINE_SVD && $(MAKE) )
+ 
+@@ -46,27 +46,27 @@
  # (note that CSparse is not installed; CXSparse is installed instead)
  install: metisinstall
  	( cd SuiteSparse_config && $(MAKE) install )
--	( cd GraphBLAS && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
 -	( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
-+#	( cd GraphBLAS && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
 +#	( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
  	( cd AMD && $(MAKE) install )
 -	( cd BTF && $(MAKE) install )
@@ -30,17 +37,30 @@ diff -Naur SuiteSparse.ori/Makefile SuiteSparse/Makefile
  	( cd GPUQREngine && $(MAKE) install )
  endif
 -	( cd SPQR && $(MAKE) install )
+-	( cd GraphBLAS && $(MAKE) JOBS=$(JOBS) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
 +#	( cd SPQR && $(MAKE) install )
++#	( cd GraphBLAS && $(MAKE) JOBS=$(JOBS) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
  #	( cd PIRO_BAND && $(MAKE) install )
  #	( cd SKYLINE_SVD && $(MAKE) install )
- 	$(CP) README.txt $(INSTALL_DOC)/SuiteSparse_README.txt
-@@ -116,25 +116,25 @@
+-	( cd SLIP_LU && $(MAKE) install )
++#	( cd SLIP_LU && $(MAKE) install )
+ 	$(CP) README.md $(INSTALL_DOC)/SuiteSparse_README.md
+ 	chmod 644 $(INSTALL_DOC)/SuiteSparse_README.md
+ 
+@@ -110,7 +110,7 @@
+ 	( cd SuiteSparse_GPURuntime && $(MAKE) uninstall )
+ 	( cd GPUQREngine && $(MAKE) uninstall )
+ 	( cd SPQR && $(MAKE) uninstall )
+-	( cd SLIP_LU && $(MAKE) uninstall )
++#	( cd SLIP_LU && $(MAKE) uninstall )
+ #	( cd PIRO_BAND && $(MAKE) uninstall )
+ #	( cd SKYLINE_SVD && $(MAKE) uninstall )
+ ifeq (,$(MY_METIS_LIB))
+@@ -126,26 +126,26 @@
  # the static library
  library: metis
  	( cd SuiteSparse_config && $(MAKE) )
--	( cd GraphBLAS && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' library )
 -	( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' library )
-+#	( cd GraphBLAS && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' library )
 +#	( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' library )
  	( cd AMD && $(MAKE) library )
 -	( cd BTF && $(MAKE) library )
@@ -64,7 +84,38 @@ diff -Naur SuiteSparse.ori/Makefile SuiteSparse/Makefile
  	( cd GPUQREngine && $(MAKE) library )
  endif
 -	( cd SPQR && $(MAKE) library )
+-	( cd GraphBLAS && $(MAKE) JOBS=$(JOBS) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' library )
+-	( cd SLIP_LU && $(MAKE) library )
 +#	( cd SPQR && $(MAKE) library )
++#	( cd GraphBLAS && $(MAKE) JOBS=$(JOBS) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' library )
++#	( cd SLIP_LU && $(MAKE) library )
  #	( cd PIRO_BAND && $(MAKE) library )
  #	( cd SKYLINE_SVD && $(MAKE) library )
+ 
+@@ -173,7 +173,7 @@
+ endif
+ 	( cd SPQR && $(MAKE) static )
+ 	( cd GraphBLAS && $(MAKE) JOBS=$(JOBS) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' static )
+-	( cd SLIP_LU && $(MAKE) static )
++#	( cd SLIP_LU && $(MAKE) static )
+ #	( cd PIRO_BAND && $(MAKE) static )
+ #	( cd SKYLINE_SVD && $(MAKE) static )
+ 
+@@ -200,7 +200,7 @@
+ 	- ( cd SuiteSparse_GPURuntime && $(MAKE) purge )
+ 	- ( cd GPUQREngine && $(MAKE) purge )
+ 	- ( cd SPQR && $(MAKE) purge )
+-	- ( cd SLIP_LU && $(MAKE) purge )
++#	- ( cd SLIP_LU && $(MAKE) purge )
+ #	- ( cd PIRO_BAND && $(MAKE) purge )
+ #	- ( cd SKYLINE_SVD && $(MAKE) purge )
+ 	- $(RM) MATLAB_Tools/*/*.mex* MATLAB_Tools/spok/private/*.mex*
+@@ -227,7 +227,7 @@
+ 	- ( cd SuiteSparse_GPURuntime && $(MAKE) clean )
+ 	- ( cd GPUQREngine && $(MAKE) clean )
+ 	- ( cd SPQR && $(MAKE) clean )
+-	- ( cd SLIP_LU && $(MAKE) clean )
++#	- ( cd SLIP_LU && $(MAKE) clean )
+ #	- ( cd PIRO_BAND && $(MAKE) clean )
+ #	- ( cd SKYLINE_SVD && $(MAKE) clean )
  
