@@ -106,6 +106,7 @@ opened_xcf_file_files (gconstpointer data)
   GFile             *file;
   gchar             *filename;
   GimpPDBStatusType  status;
+  GError            *error = NULL;
 
   filename = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
                                "app/tests/files/gimp-2-6-file.xcf",
@@ -122,8 +123,12 @@ opened_xcf_file_files (gconstpointer data)
                            GIMP_RUN_NONINTERACTIVE,
                            &status,
                            NULL /*mime_type*/,
-                           NULL /*error*/);
+                           &error);
 
+  if (! image)
+    printf("NO image: %s\n", error->message);
+  else if (! GIMP_IS_IMAGE (image))
+    printf("image but not GimpImage? %s\n", error ? error->message : "PLOP");
   g_assert (g_file_equal (gimp_image_get_file (image), file));
   g_assert (gimp_image_get_imported_file (image) == NULL);
   g_assert (gimp_image_get_exported_file (image) == NULL);
@@ -145,6 +150,7 @@ imported_file_files (gconstpointer data)
   GFile             *file;
   gchar             *filename;
   GimpPDBStatusType  status;
+  GError            *error = NULL;
 
   filename = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
                                "desktop/64x64/gimp.png",
@@ -162,8 +168,12 @@ imported_file_files (gconstpointer data)
                            GIMP_RUN_NONINTERACTIVE,
                            &status,
                            NULL /*mime_type*/,
-                           NULL /*error*/);
+                           &error);
 
+  if (! image)
+    printf("NO image: %s\n", error->message);
+  else if (! GIMP_IS_IMAGE (image))
+    printf("image but not GimpImage? %s\n", error ? error->message : "PLOP");
   g_assert (gimp_image_get_file (image) == NULL);
   g_assert (g_file_equal (gimp_image_get_imported_file (image), file));
   g_assert (gimp_image_get_exported_file (image) == NULL);
