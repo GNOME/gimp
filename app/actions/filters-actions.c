@@ -80,6 +80,10 @@ static const GimpActionEntry filters_menu_actions[] =
   { "filters-decor-menu",           NULL, NC_("filters-action",
                                               "_Decor")            },
   { "filters-map-menu",             NULL, NC_("filters-action",
+                                              /* TRANSLATORS: menu group
+                                               * containing mapping
+                                               * filters.
+                                               */
                                               "_Map")              },
   { "filters-render-menu",          NULL, NC_("filters-action",
                                               "_Render")           },
