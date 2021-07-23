@@ -303,11 +303,16 @@ file_proc_find (GSList  *procs,
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
+  printf("%s\n", G_STRFUNC);
   /* First, check magicless prefixes/suffixes */
   file_proc = file_proc_find_by_name (procs, file, TRUE);
 
   if (file_proc)
-    return file_proc;
+    {
+      printf("%s: found file proc '%s'\n", G_STRFUNC,
+             gimp_object_get_name (file_proc));
+      return file_proc;
+    }
 
   /* Then look for magics, but not on remote files */
   if (g_file_is_native (file))
@@ -320,10 +325,15 @@ file_proc_find (GSList  *procs,
       FileMatchType        best_match_val = FILE_MATCH_NONE;
       GimpPlugInProcedure *best_file_proc = NULL;
 
+      printf("%s: file is native: '%s'\n", G_STRFUNC,
+             g_file_get_uri (file));
+
       for (list = procs; list; list = g_slist_next (list))
         {
           file_proc = list->data;
 
+          printf("%s: Testing magics with '%s'\n", G_STRFUNC,
+                 gimp_object_get_name (file_proc));
           if (file_proc->magics_list)
             {
               if (G_UNLIKELY (! opened))
@@ -374,6 +384,8 @@ file_proc_find (GSList  *procs,
                                 "magic match %d on %s\n",
                                 match_val,
                                 gimp_object_get_name (file_proc));
+                      printf("%s: magic match %d on '%s'\n", G_STRFUNC,
+                             match_val, gimp_object_get_name (file_proc));
 
                       if (match_val > best_match_val)
                         {
@@ -393,9 +405,16 @@ file_proc_find (GSList  *procs,
           GIMP_LOG (MAGIC_MATCH,
                     "best magic match on %s\n",
                     gimp_object_get_name (best_file_proc));
+          printf("%s: best magic match on '%s'\n", G_STRFUNC,
+                 gimp_object_get_name (best_file_proc));
 
           return best_file_proc;
         }
+    }
+  else
+    {
+      printf("%s: file is NOT native: '%s'\n", G_STRFUNC,
+             g_file_get_uri (file));
     }
 
   if (size_match_count == 1)
@@ -406,12 +425,15 @@ file_proc_find (GSList  *procs,
 
   if (file_proc)
     {
+      printf("%s: finally found file proc '%s'\n", G_STRFUNC,
+             gimp_object_get_name (file_proc));
       /* we found a procedure, clear error that might have been set */
       g_clear_error (error);
     }
   else
     {
       /* set an error message unless one was already set */
+      printf("%s: Waaaaat!\n", G_STRFUNC);
       if (error && *error == NULL)
         g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                              _("Unknown file type"));
@@ -487,10 +509,14 @@ file_proc_find_by_extension (GSList   *procs,
     {
       GSList *p;
 
+      printf("%s: extension is: '%s'\n", G_STRFUNC, ext);
       for (p = procs; p; p = g_slist_next (p))
         {
           GimpPlugInProcedure *proc = p->data;
 
+          printf("%s: testing proc '%s'%s\n",
+                 G_STRFUNC, gimp_object_get_name (proc),
+                 skip_magic && proc->magics_list? " (skipped)" : "");
           if (skip_magic && proc->magics_list)
             continue;
 
@@ -498,6 +524,8 @@ file_proc_find_by_extension (GSList   *procs,
                                    ext + 1,
                                    (GCompareFunc) g_ascii_strcasecmp))
             {
+              printf("%s: FOUND! %s is a valid extension for '%s'\n",
+                     G_STRFUNC, ext, gimp_object_get_name (proc));
               g_free (ext);
 
               return proc;
@@ -521,6 +549,9 @@ file_proc_find_by_name (GSList   *procs,
 
   if (! proc)
     proc = file_proc_find_by_extension (procs, file, skip_magic);
+  else
+    printf("%s: found file proc by prefix '%s'\n", G_STRFUNC,
+           gimp_object_get_name (proc));
 
   return proc;
 }
