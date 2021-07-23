@@ -447,8 +447,8 @@ load_image (const gchar  *filename,
           || strncmp (value_rep, "SQ", 2) == 0
           || strncmp (value_rep, "UN", 2) == 0)
         {
-          fread (&element_length, 1, 2, dicom); /* skip two bytes */
-          fread (&element_length, 1, 4, dicom);
+          fread (&element_length, 1, 2, DICOM); /* skip two bytes */
+          fread (&element_length, 1, 4, DICOM);
           if (big_endian && group_word != 0x0002)
             element_length = g_ntohl (element_length);
           else
@@ -459,7 +459,7 @@ load_image (const gchar  *filename,
         {
           guint16 el16;
 
-          fread (&el16, 1, 2, dicom);
+          fread (&el16, 1, 2, DICOM);
           if (big_endian && group_word != 0x0002)
             element_length = g_ntohs (el16);
           else
@@ -540,12 +540,12 @@ load_image (const gchar  *filename,
               else
                 {
                   g_debug ("Transfer syntax %s is not supported by GIMP.", (gchar *) value);
-                  g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                               _("Transfer syntax %s is not supported by GIMP."),
                               (gchar *) value);
                   g_free (dicominfo);
-                  fclose (dicom);
-                  return NULL;
+                  fclose (DICOM);
+                  return -1;
                 }
               break;
             }
