@@ -609,6 +609,8 @@ flatpak:
       - 'repo.tar'
       - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/meson-log.txt'
       - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/testlog.txt'
+      - '.flatpak-builder/build/'
+      - _flatpak_build/
 
 cppcheck:
   rules:
