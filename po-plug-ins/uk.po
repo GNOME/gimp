@@ -9,16 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-06-18 12:53+0000\n"
-"PO-Revision-Date: 2021-06-18 22:01+0300\n"
+"POT-Creation-Date: 2021-07-23 19:26+0000\n"
+"PO-Revision-Date: 2021-07-24 09:29+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:114
@@ -414,7 +413,7 @@ msgstr "_Вертикально"
 #.
 #: ../plug-ins/common/blinds.c:352 ../plug-ins/common/compose.c:1128
 #: ../plug-ins/common/decompose.c:665 ../plug-ins/common/file-cel.c:504
-#: ../plug-ins/common/file-cel.c:509 ../plug-ins/common/file-dicom.c:645
+#: ../plug-ins/common/file-cel.c:509 ../plug-ins/common/file-dicom.c:704
 #: ../plug-ins/common/file-gegl.c:461 ../plug-ins/common/file-gif-load.c:1037
 #: ../plug-ins/common/file-jp2-load.c:1315 ../plug-ins/common/file-pcx.c:483
 #: ../plug-ins/common/file-pcx.c:491 ../plug-ins/common/file-pix.c:424
@@ -976,7 +975,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "Збереження параметрів CML Explorer"
 
 #: ../plug-ins/common/cml-explorer.c:2164 ../plug-ins/common/curve-bend.c:836
-#: ../plug-ins/common/file-dicom.c:1410 ../plug-ins/common/file-mng.c:878
+#: ../plug-ins/common/file-dicom.c:1509 ../plug-ins/common/file-mng.c:878
 #: ../plug-ins/common/file-mng.c:1228 ../plug-ins/common/file-pcx.c:914
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1509
 #: ../plug-ins/common/file-raw-data.c:1117
@@ -1006,7 +1005,7 @@ msgstr "Завантажити параметри CML Explorer"
 
 #: ../plug-ins/common/cml-explorer.c:2337 ../plug-ins/common/curve-bend.c:889
 #: ../plug-ins/common/file-cel.c:355 ../plug-ins/common/file-cel.c:409
-#: ../plug-ins/common/file-cel.c:649 ../plug-ins/common/file-dicom.c:376
+#: ../plug-ins/common/file-cel.c:649 ../plug-ins/common/file-dicom.c:379
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1412
 #: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:669
 #: ../plug-ins/common/file-ps.c:1148 ../plug-ins/common/file-ps.c:3500
@@ -1938,7 +1937,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:398 ../plug-ins/common/file-dicom.c:366
+#: ../plug-ins/common/file-cel.c:398 ../plug-ins/common/file-dicom.c:369
 #: ../plug-ins/common/file-gegl.c:345 ../plug-ins/common/file-gif-load.c:397
 #: ../plug-ins/common/file-heif.c:847 ../plug-ins/common/file-jp2-load.c:1085
 #: ../plug-ins/common/file-pcx.c:403 ../plug-ins/common/file-pdf-load.c:820
@@ -2124,29 +2123,35 @@ msgstr "Посилання .desktop"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Помилка при відкритті файлу desktop «%s»: %s"
 
-#: ../plug-ins/common/file-dicom.c:169
+#: ../plug-ins/common/file-dicom.c:170
 msgid "DICOM image"
 msgstr "Зображення DICOM"
 
-#: ../plug-ins/common/file-dicom.c:201
+#: ../plug-ins/common/file-dicom.c:202
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Зображення формату Digital Imaging and Communications in Medicine"
 
-#: ../plug-ins/common/file-dicom.c:299
+#: ../plug-ins/common/file-dicom.c:300
 #, c-format
 msgid "Dicom format does not support multiple layers."
 msgstr "Для формату Dicom не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-dicom.c:402
+#: ../plug-ins/common/file-dicom.c:405
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "«%s»: не DICOM файлом"
 
-#: ../plug-ins/common/file-dicom.c:1373
+#: ../plug-ins/common/file-dicom.c:578
+#, c-format
+#| msgid "Aggressive RLE (not supported by SGI)"
+msgid "Transfer syntax %s is not supported by GIMP."
+msgstr "У GIMP не передбачено підтримки перехідного синтаксису %s."
+
+#: ../plug-ins/common/file-dicom.c:1472
 msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
-#: ../plug-ins/common/file-dicom.c:1392 ../plug-ins/common/file-ps.c:1319
+#: ../plug-ins/common/file-dicom.c:1491 ../plug-ins/common/file-ps.c:1319
 #: ../plug-ins/common/file-xwd.c:673 ../plug-ins/file-fits/fits.c:505
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -7439,22 +7444,18 @@ msgid "_Minimize output size (slower)"
 msgstr "_Мінімізувати кінцевий розмір (повільніше)"
 
 #: ../plug-ins/file-webp/file-webp.c:203
-#| msgid "Max distance between key-frames:"
 msgid "Max distance between _key-frames"
 msgstr "Найбільша відстань між к_лючовими кадрами"
 
 #: ../plug-ins/file-webp/file-webp.c:209
-#| msgid "Max distance between key-frames:"
 msgid "_Default delay between frames"
 msgstr "_Типова затримка між кадрами"
 
 #: ../plug-ins/file-webp/file-webp.c:216
-#| msgid "Use delay entered above for all frames"
 msgid "Use default dela_y for all frames"
 msgstr "Використати типову затри_мку для всіх кадрів"
 
 #: ../plug-ins/file-webp/file-webp.c:222
-#| msgid "As A_nimation"
 msgid "Save a_nimation"
 msgstr "З_берегти анімацію"
 
