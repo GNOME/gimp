@@ -574,8 +574,11 @@ gimp-win32:
 ## To learn more about the CI, go to https://gitlab.gnome.org/GNOME/Initiatives/-/wikis/DevOps-with-Flatpak
 
 flatpak:
-  extends: .flatpak
+  image: 'registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master'
   stage: gimp
+  interruptible: true
+  tags:
+    - flatpak
   needs: []
   rules:
     # Custom builds though web GUI, API or schedules.
@@ -592,23 +595,57 @@ flatpak:
     FLATPAK_MODULE: "gimp"
     APP_ID: "org.gimp.GIMP"
     BUNDLE: "gimp-git.flatpak"
-  before_script:
-    # Our script is too long for Gitlab and ends up with:
-    # > Job's log exceeded limit of 16777216 bytes.
-    # > Job execution will continue but no more output will be collected.
-    # To make debugging actually possible, let's save logs as a file.
-    - shopt -s expand_aliases
-    - flatpak-builder-wrapper() { flatpak-builder "$@" > flatpak-builder.log 2>&1; }
-    - alias flatpak-builder=flatpak-builder-wrapper
+  script:
+    # Report the installed versions of the runtime
+    - flatpak info org.gnome.Platform
+    - flatpak info org.gnome.Sdk
+
+    # Print the date, since appstream depends on local timezone
+    - date && date -u
+
+    - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
+    - flatpak-builder --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH} > flatpak-builder.log 2>&1
+    # Generate a Flatpak bundle
+    - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
+    - tar cf repo.tar repo/
+
+    # Run automatic tests inside the Flatpak env
+    # we need to recreate the build directory because cleanup would have deleted build dependencies
+    - rm -rf flatpak_app
+    - flatpak-builder --user --disable-rofiles-fuse --build-only flatpak_app ${MANIFEST_PATH} > flatpak-builder-2.log 2>&1
+    - flatpak build-finish --socket=x11 --share=network flatpak_app
+    - >
+      xvfb-run -a -s "-screen 0 1024x768x24"
+      flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH} <<END
+
+      LANG=C.UTF-8
+      NO_AT_BRIDGE=1
+      dbus-run-session
+      meson test --no-stdsplit --print-errorlogs ${TEST_RUN_ARGS}
+
+      END
+
+
   artifacts:
     paths:
       - flatpak-builder.log
+      - flatpak-builder-2.log
       # These are the same as flatpak_ci_initiative.yml as according to
       # docs, key values are not merged but replaced.
       - "${BUNDLE}"
       - 'repo.tar'
       - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/meson-log.txt'
       - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/testlog.txt'
+    expire_in: 1 week
+  cache:
+    - key: "$CI_JOB_NAME"
+      paths:
+        - '.flatpak-builder/downloads'
+        - '.flatpak-builder/git'
+    - key: "$CI_JOB_NAME"
+      paths:
+        - '.flatpak-builder/cache'
+        - '.flatpak-builder/ccache'
 
 cppcheck:
   rules:
