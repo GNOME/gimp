@@ -574,8 +574,11 @@ gimp-win32:
 ## To learn more about the CI, go to https://gitlab.gnome.org/GNOME/Initiatives/-/wikis/DevOps-with-Flatpak
 
 flatpak:
-  extends: .flatpak
+  image: 'registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master'
   stage: gimp
+  interruptible: true
+  tags:
+    - flatpak
   needs: []
   rules:
     # Custom builds though web GUI, API or schedules.
@@ -592,14 +595,32 @@ flatpak:
     FLATPAK_MODULE: "gimp"
     APP_ID: "org.gimp.GIMP"
     BUNDLE: "gimp-git.flatpak"
-  before_script:
+  script:
+    # Report the installed versions of the runtime
+    - flatpak info org.gnome.Platform
+    - flatpak info org.gnome.Sdk
+
+    # Print the date, since appstream depends on local timezone
+    - date && date -u
+
+    - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
     # Our script is too long for Gitlab and ends up with:
     # > Job's log exceeded limit of 16777216 bytes.
     # > Job execution will continue but no more output will be collected.
     # To make debugging actually possible, let's save logs as a file.
-    - shopt -s expand_aliases
-    - flatpak-builder-wrapper() { flatpak-builder "$@" > flatpak-builder.log 2>&1; }
-    - alias flatpak-builder=flatpak-builder-wrapper
+    - flatpak-builder --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH} > flatpak-builder.log 2>&1
+    # Generate a Flatpak bundle
+    - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
+    - tar cf repo.tar repo/
+
+    # XXX This job is mostly the same as .flatpak job of
+    # flatpak_ci_initiative.yml so far, except that I removed the
+    # automatic tests inside the Flatpak env at the end. The reason is
+    # that this part suddenly stopped working (even though the flatpak
+    # itself is functional) because the rebuild somehow was not
+    # rebuilding plug-ins. Yet one of the test (save-and-export)
+    # requires plug-ins to be built.
+
   artifacts:
     paths:
       - flatpak-builder.log
@@ -609,6 +630,16 @@ flatpak:
       - 'repo.tar'
       - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/meson-log.txt'
       - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/testlog.txt'
+    expire_in: 1 week
+  cache:
+    - key: "$CI_JOB_NAME"
+      paths:
+        - '.flatpak-builder/downloads'
+        - '.flatpak-builder/git'
+    - key: "$CI_JOB_NAME"
+      paths:
+        - '.flatpak-builder/cache'
+        - '.flatpak-builder/ccache'
 
 cppcheck:
   rules:
