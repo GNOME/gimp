@@ -690,6 +690,10 @@ win-installer-nightly:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/installer-gimp-msys2.sh > installer.log 2>&1"
+    - cd build/windows/installer/_Output
+    - FILENAME=`ls gimp-*.exe` &&
+      sha256sum gimp-*.exe > ${FILENAME}.SHA256SUMS &&
+      sha512sum gimp-*.exe > ${FILENAME}.SHA512SUMS
   needs: ["packaging-win32-native", "packaging-win64-native"]
 
 sources:
