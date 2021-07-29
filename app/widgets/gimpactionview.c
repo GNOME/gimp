@@ -470,9 +470,10 @@ gimp_action_view_accel_changed (GtkAccelGroup   *accel_group,
                                 GClosure        *accel_closure,
                                 GimpActionView  *view)
 {
-  GtkTreeModel *model;
+  GtkTreeModel *model, *tmpmodel;
   GtkTreeIter   iter;
   gboolean      iter_valid;
+  gchar        *pathstr = NULL;
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
   if (! model)
@@ -481,6 +482,14 @@ gimp_action_view_accel_changed (GtkAccelGroup   *accel_group,
   model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (model));
   if (! model)
     return;
+
+  if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (view)),
+                                       &tmpmodel, &iter))
+    {
+      GtkTreePath *path = gtk_tree_model_get_path (tmpmodel, &iter);
+
+      pathstr = gtk_tree_path_to_string(path);
+    }
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
@@ -525,11 +534,23 @@ gimp_action_view_accel_changed (GtkAccelGroup   *accel_group,
                                   GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,  accel_key,
                                   GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK, accel_mask,
                                   -1);
+              gtk_tree_store_set (GTK_TREE_STORE (model), &iter,
+                                  GIMP_ACTION_VIEW_COLUMN_VISIBLE, TRUE,
+                                  -1);
 
+              if (pathstr)
+                {
+                  GtkTreePath *path = gtk_tree_path_new_from_string (pathstr);
+
+                  gimp_action_view_select_path (view, path);
+                  gtk_tree_path_free (path);
+                }
+              g_free (pathstr);
               return;
             }
         }
     }
+  g_free (pathstr);
 }
 
 typedef struct
