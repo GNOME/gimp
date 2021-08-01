@@ -414,7 +414,7 @@ script_fu_interface (SFScript  *script,
                 {
                   GtkWidget *spinbutton;
 
-                  widget = gimp_scale_entry_new (label_text,
+                  widget = gimp_scale_entry_new ("",
                                                  arg->value.sfa_adjustment.value,
                                                  arg->default_value.sfa_adjustment.lower,
                                                  arg->default_value.sfa_adjustment.upper,
