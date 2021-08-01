@@ -39,6 +39,10 @@ cd build/windows/installer
 
 # Test if the installer was created and return success/failure.
 if [ -f "_Output/gimp-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}-setup.exe" ]; then
+  cd _Output/
+  INSTALLER="gimp-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}-setup.exe"
+  sha256sum $INSTALLER > ${INSTALLER}.SHA256SUMS
+  sha512sum $INSTALLER > ${INSTALLER}.SHA512SUMS
   exit 0
 else
   exit 1
