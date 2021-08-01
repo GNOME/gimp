@@ -392,7 +392,12 @@ gimp_procedure_dialog_real_fill_list (GimpProcedureDialog *dialog,
  * dialog title instead). If neither an explicit label nor a @procedure
  * menu label was set, the call will fail.
  *
- * Returns: (transfer full): the newly created #GimpProcedureDialog.
+ * As for all #GtkWindow, the returned #GimpProcedureDialog object is
+ * owned by GTK and its initial reference is stored in an internal list
+ * of top-level windows. To delete the dialog, call
+ * gtk_widget_destroy().
+ *
+ * Returns: (transfer none): the newly created #GimpProcedureDialog.
  */
 GtkWidget *
 gimp_procedure_dialog_new (GimpProcedure       *procedure,
