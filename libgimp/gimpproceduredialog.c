@@ -1838,6 +1838,7 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
           gtk_widget_show (widget);
         }
     }
+  g_clear_object (&sz_group);
 
   if (free_properties)
     g_list_free (properties);
