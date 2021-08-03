@@ -497,6 +497,8 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
                                gdouble          value)
 {
   const Babl         *format;
+  guchar             *shared_buf      = NULL;
+  gsize               shared_buf_size = 0;
   GeglBufferIterator *iter;
   GeglRectangle      *roi;
   cairo_t            *cr;
@@ -545,7 +547,13 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
        */
       if (roi->width * bpp != stride)
         {
-          tmp_buf = g_alloca (stride * roi->height);
+          if (shared_buf_size < stride * roi->height)
+            {
+              shared_buf_size = stride * roi->height;
+              g_free (shared_buf);
+              shared_buf = g_malloc (shared_buf_size);
+            }
+          tmp_buf = shared_buf;
 
           if (! replace)
             {
@@ -634,4 +642,6 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
             }
         }
     }
+
+  g_free (shared_buf);
 }
