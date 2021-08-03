@@ -306,6 +306,8 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
 G_DEFINE_TYPE_WITH_CODE (GimpLineArt, gimp_line_art, GIMP_TYPE_OBJECT,
                          G_ADD_PRIVATE (GimpLineArt))
 
+#define parent_class gimp_line_art_parent_class
+
 static guint gimp_line_art_signals[LAST_SIGNAL] = { 0 };
 
 static void
@@ -382,6 +384,8 @@ gimp_line_art_finalize (GObject *object)
   line_art->priv->frozen = FALSE;
 
   gimp_line_art_set_input (line_art, NULL);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

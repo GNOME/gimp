@@ -165,6 +165,8 @@ gimp_extension_finalize (GObject *object)
   g_free (extension->p->path);
   if (extension->p->app)
     g_object_unref (extension->p->app);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
