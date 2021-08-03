@@ -37,7 +37,7 @@ foreach lang : [ 'python', 'gjs' ]
       '-I', meson.build_root() / 'libgimp',
       '--language=' + lang,
       '-o', '@OUTDIR@' + '/pages/' + lang + '/Gimp-' + gimp_api_version,
-      '@INPUT@'
+      meson.build_root() / '@INPUT@'
     ],
     build_by_default: true)
 
@@ -83,7 +83,7 @@ foreach lang : [ 'python', 'gjs' ]
       '-I', meson.build_root() / 'libgimp',
       '--language=' + lang,
       '-o', '@OUTDIR@' + '/pages/' + lang + '/GimpUi-' + gimp_api_version,
-      '@INPUT@'
+      meson.build_root() / '@INPUT@'
     ],
     build_by_default: true)
 
