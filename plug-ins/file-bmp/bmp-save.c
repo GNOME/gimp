@@ -68,7 +68,8 @@ static  void      write_image     (FILE          *f,
 
 static  gboolean  save_dialog     (GimpProcedure *procedure,
                                    GObject       *config,
-                                   gint           channels);
+                                   gint           channels,
+                                   gint           bpp);
 
 
 static void
@@ -166,6 +167,7 @@ save_image (GFile         *file,
 
       g_object_set (config,
                     "rgb-format", RGBA_8888,
+                    "use-rle",    FALSE,
                     NULL);
       break;
 
@@ -178,6 +180,7 @@ save_image (GFile         *file,
 
       g_object_set (config,
                     "rgb-format", RGBA_8888,
+                    "use-rle",    FALSE,
                     NULL);
       break;
 
@@ -238,7 +241,12 @@ save_image (GFile         *file,
       else if (colors > 2)
         BitsPerPixel = 4;
       else
-        BitsPerPixel = 1;
+        {
+          BitsPerPixel = 1;
+          g_object_set (config,
+                        "use-rle",    FALSE,
+                        NULL);
+        }
 
       for (i = 0; i < colors; i++)
         {
@@ -256,9 +264,10 @@ save_image (GFile         *file,
 
   if (run_mode == GIMP_RUN_INTERACTIVE &&
       (BitsPerPixel == 8 ||
-       BitsPerPixel == 4))
+       BitsPerPixel == 4 ||
+       BitsPerPixel == 1))
     {
-      if (! save_dialog (procedure, config, 1))
+      if (! save_dialog (procedure, config, 1, BitsPerPixel))
         return GIMP_PDB_CANCEL;
     }
   else if (BitsPerPixel == 24 ||
@@ -266,7 +275,7 @@ save_image (GFile         *file,
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          if (! save_dialog (procedure, config, channels))
+          if (! save_dialog (procedure, config, channels, BitsPerPixel))
             return GIMP_PDB_CANCEL;
         }
 
@@ -722,7 +731,7 @@ write_image (FILE     *f,
   else
     {
       /* now it gets more difficult */
-      if (! use_run_length_encoding)
+      if (! use_run_length_encoding || bpp == 1)
         {
           /* uncompressed 1,4 and 8 bit */
 
@@ -958,7 +967,8 @@ config_notify (GObject          *config,
 static gboolean
 save_dialog (GimpProcedure *procedure,
              GObject       *config,
-             gint           channels)
+             gint           channels,
+             gint           bpp)
 {
   GtkWidget    *dialog;
   GtkWidget    *toggle;
@@ -985,7 +995,7 @@ save_dialog (GimpProcedure *procedure,
                                        _("_Run-Length Encoded"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
-  if (channels > 1)
+  if (channels > 1 || bpp == 1)
     gtk_widget_set_sensitive (toggle, FALSE);
 
   /* Compatibility Options */
