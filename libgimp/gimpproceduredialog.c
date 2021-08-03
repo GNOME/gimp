@@ -39,6 +39,10 @@ enum
   PROP_0,
   PROP_PROCEDURE,
   PROP_CONFIG,
+
+  /* From here the overridden properties. */
+  PROP_TITLE,
+
   N_PROPS
 };
 
@@ -72,42 +76,45 @@ typedef struct GimpProcedureDialogSensitiveData
 } GimpProcedureDialogSensitiveData;
 
 
-static void   gimp_procedure_dialog_constructed   (GObject      *object);
-static void   gimp_procedure_dialog_dispose       (GObject      *object);
-static void   gimp_procedure_dialog_set_property  (GObject      *object,
-                                                   guint         property_id,
-                                                   const GValue *value,
-                                                   GParamSpec   *pspec);
-static void   gimp_procedure_dialog_get_property  (GObject      *object,
-                                                   guint         property_id,
-                                                   GValue       *value,
-                                                   GParamSpec   *pspec);
+static GObject * gimp_procedure_dialog_constructor    (GType                  type,
+                                                       guint                  n_construct_properties,
+                                                       GObjectConstructParam *construct_properties);
+static void      gimp_procedure_dialog_constructed    (GObject               *object);
+static void      gimp_procedure_dialog_dispose        (GObject               *object);
+static void      gimp_procedure_dialog_set_property   (GObject               *object,
+                                                       guint                  property_id,
+                                                       const GValue          *value,
+                                                       GParamSpec            *pspec);
+static void      gimp_procedure_dialog_get_property   (GObject               *object,
+                                                       guint                  property_id,
+                                                       GValue                *value,
+                                                       GParamSpec            *pspec);
 
-static void  gimp_procedure_dialog_real_fill_list (GimpProcedureDialog *dialog,
-                                                   GimpProcedure       *procedure,
-                                                   GimpProcedureConfig *config,
-                                                   GList               *properties);
+static void      gimp_procedure_dialog_real_fill_list (GimpProcedureDialog   *dialog,
+                                                       GimpProcedure         *procedure,
+                                                       GimpProcedureConfig   *config,
+                                                       GList                 *properties);
 
-static void   gimp_procedure_dialog_reset_initial (GtkWidget           *button,
-                                                   GimpProcedureDialog *dialog);
-static void   gimp_procedure_dialog_reset_factory (GtkWidget           *button,
-                                                   GimpProcedureDialog *dialog);
-static void   gimp_procedure_dialog_load_defaults (GtkWidget           *button,
-                                                   GimpProcedureDialog *dialog);
-static void   gimp_procedure_dialog_save_defaults (GtkWidget           *button,
-                                                   GimpProcedureDialog *dialog);
+static void      gimp_procedure_dialog_reset_initial  (GtkWidget             *button,
+                                                       GimpProcedureDialog   *dialog);
+static void      gimp_procedure_dialog_reset_factory  (GtkWidget             *button,
+                                                       GimpProcedureDialog   *dialog);
+static void      gimp_procedure_dialog_load_defaults  (GtkWidget             *button,
+                                                       GimpProcedureDialog   *dialog);
+static void      gimp_procedure_dialog_save_defaults  (GtkWidget             *button,
+                                                       GimpProcedureDialog   *dialog);
 
-static gboolean gimp_procedure_dialog_check_mnemonic    (GimpProcedureDialog *dialog,
-                                                         GtkWidget           *widget,
-                                                         const gchar         *id,
-                                                         const gchar         *core_id);
+static gboolean  gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog  *dialog,
+                                                       GtkWidget            *widget,
+                                                       const gchar          *id,
+                                                       const gchar          *core_id);
 static GtkWidget *
-              gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
-                                                         const gchar         *container_id,
-                                                         GtkContainer        *container,
-                                                         GList               *properties);
+            gimp_procedure_dialog_fill_container_list (GimpProcedureDialog  *dialog,
+                                                       const gchar          *container_id,
+                                                       GtkContainer         *container,
+                                                       GList                *properties);
 
-static void   gimp_procedure_dialog_sensitive_data_free (GimpProcedureDialogSensitiveData *data);
+static void gimp_procedure_dialog_sensitive_data_free (GimpProcedureDialogSensitiveData *data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedureDialog, gimp_procedure_dialog,
@@ -123,6 +130,7 @@ gimp_procedure_dialog_class_init (GimpProcedureDialogClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->constructor  = gimp_procedure_dialog_constructor;
   object_class->constructed  = gimp_procedure_dialog_constructed;
   object_class->dispose      = gimp_procedure_dialog_dispose;
   object_class->get_property = gimp_procedure_dialog_get_property;
@@ -136,7 +144,7 @@ gimp_procedure_dialog_class_init (GimpProcedureDialogClass *klass)
                          "The GimpProcedure this dialog is used with",
                          GIMP_TYPE_PROCEDURE,
                          GIMP_PARAM_READWRITE |
-                         G_PARAM_CONSTRUCT);
+                         G_PARAM_CONSTRUCT_ONLY);
 
   props[PROP_CONFIG] =
     g_param_spec_object ("config",
@@ -146,7 +154,17 @@ gimp_procedure_dialog_class_init (GimpProcedureDialogClass *klass)
                          GIMP_PARAM_READWRITE |
                          G_PARAM_CONSTRUCT);
 
-  g_object_class_install_properties (object_class, N_PROPS, props);
+  g_object_class_install_properties (object_class, N_PROPS - 1, props);
+
+  /**
+   * GimpProcedureDialog:title:
+   *
+   * Overrides the "title" property of #GtkWindow.
+   * When %NULL, the title is taken from the #GimpProcedure menu label.
+   *
+   * Since: 3.0
+   */
+  g_object_class_override_property (object_class, PROP_TITLE, "title");
 }
 
 static void
@@ -162,11 +180,68 @@ gimp_procedure_dialog_init (GimpProcedureDialog *dialog)
                                                         (GDestroyNotify) gimp_procedure_dialog_sensitive_data_free);
 }
 
+static GObject *
+gimp_procedure_dialog_constructor (GType                  type,
+                                   guint                  n_construct_properties,
+                                   GObjectConstructParam *construct_properties)
+{
+  gboolean use_header_bar        = FALSE;
+  gboolean use_header_bar_edited = FALSE;
+  gboolean help_func_edited      = FALSE;
+
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
+  for (guint i = 0; i < n_construct_properties; i++)
+    {
+      /* We need to override the default values of some properties and
+       * can't do it in _init() or _constructed() because it's too late
+       * for G_PARAM_CONSTRUCT_ONLY properties.
+       * Moreover we don't do it in _new() because we need this to work
+       * also in bindings sometimes using only constructors to
+       * initialize their object, hence we can't rely on our _new()
+       * function (relying on _new() functions doing more than the
+       * constructor is now discouraged by GTK/GLib developers).
+       */
+      GObjectConstructParam property;
+
+      property = construct_properties[i];
+      if (! use_header_bar_edited &&
+          g_strcmp0 (g_param_spec_get_name (property.pspec),
+                     "use-header-bar") == 0)
+        {
+          if (g_value_get_int (property.value) == -1)
+            g_value_set_int (property.value, (gint) use_header_bar);
+
+          use_header_bar_edited = TRUE;
+        }
+      else if (! help_func_edited &&
+               g_strcmp0 (g_param_spec_get_name (property.pspec),
+                          "help-func") == 0)
+        {
+          if (g_value_get_pointer (property.value) == NULL)
+            g_value_set_pointer (property.value,
+                                 gimp_standard_help_func);
+
+          help_func_edited = TRUE;
+        }
+
+      if (use_header_bar_edited && help_func_edited)
+        break;
+    }
+
+  return G_OBJECT_CLASS (parent_class)->constructor (type,
+                                                     n_construct_properties,
+                                                     construct_properties);
+}
+
 static void
 gimp_procedure_dialog_constructed (GObject *object)
 {
   GimpProcedureDialog *dialog;
   GimpProcedure       *procedure;
+  const gchar         *help_id;
   const gchar         *ok_label;
   GtkWidget           *hbox;
   GtkWidget           *button;
@@ -180,9 +255,17 @@ gimp_procedure_dialog_constructed (GObject *object)
   dialog = GIMP_PROCEDURE_DIALOG (object);
   procedure = dialog->priv->procedure;
 
-  role = g_strdup_printf ("gimp-%s", gimp_procedure_get_name (procedure));
+  role    = g_strdup_printf ("gimp-%s", gimp_procedure_get_name (procedure));
+  help_id = gimp_procedure_get_help_id (procedure);
   g_object_set (object,
-                "role", role,
+                "role",    role,
+                "help-id", help_id,
+                /* This may seem weird, but this is actually because we
+                 * are overriding this property and if the title is NULL
+                 * in particular, we create one out of the procedure's
+                 * menu label. So we force the reset this way.
+                 */
+                "title",   gtk_window_get_title (GTK_WINDOW (dialog)),
                 NULL);
   g_free (role);
 
@@ -319,6 +402,32 @@ gimp_procedure_dialog_set_property (GObject      *object,
           gimp_config_duplicate (GIMP_CONFIG (dialog->priv->config));
       break;
 
+    case PROP_TITLE:
+        {
+          GtkWidget   *bogus = NULL;
+          const gchar *title;
+
+          title = g_value_get_string (value);
+
+          if (title == NULL)
+            {
+              /* Use the procedure menu label, but remove mnemonic
+               * underscore. Ugly yet must reliable way as GTK does not
+               * expose a function to do this from a string (and better
+               * not to copy-paste the internal function from GTK code).
+               */
+              bogus = gtk_label_new (NULL);
+              gtk_label_set_markup_with_mnemonic (GTK_LABEL (g_object_ref_sink (bogus)),
+                                                  gimp_procedure_get_menu_label (dialog->priv->procedure));
+              title = gtk_label_get_text (GTK_LABEL (bogus));
+            }
+          if (title != NULL)
+            gtk_window_set_title (GTK_WINDOW (dialog), title);
+
+          g_clear_object (&bogus);
+        }
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -341,6 +450,11 @@ gimp_procedure_dialog_get_property (GObject    *object,
 
     case PROP_CONFIG:
       g_value_set_object (value, dialog->priv->config);
+      break;
+
+    case PROP_TITLE:
+      g_value_set_string (value,
+                          gtk_window_get_title (GTK_WINDOW (dialog)));
       break;
 
     default:
@@ -404,46 +518,17 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
                            GimpProcedureConfig *config,
                            const gchar         *title)
 {
-  GtkWidget   *dialog;
-  GtkWidget   *bogus = NULL;
-  const gchar *help_id;
-  gboolean     use_header_bar;
-
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
   g_return_val_if_fail (gimp_procedure_config_get_procedure (config) ==
                         procedure, NULL);
   g_return_val_if_fail (title != NULL || gimp_procedure_get_menu_label (procedure), NULL);
 
-  help_id = gimp_procedure_get_help_id (procedure);
-  if (title == NULL)
-    {
-      /* Remove mnemonic underscore. Ugly but must reliable way as GTK
-       * does not expose a function to do this from a string (and better
-       * not to copy-paste the internal function from GTK code).
-       */
-      bogus = gtk_label_new (NULL);
-      gtk_label_set_markup_with_mnemonic (GTK_LABEL (g_object_ref_sink (bogus)),
-                                          gimp_procedure_get_menu_label (procedure));
-      title = gtk_label_get_text (GTK_LABEL (bogus));
-    }
-
-  g_object_get (gtk_settings_get_default (),
-                "gtk-dialogs-use-header", &use_header_bar,
-                NULL);
-
-  dialog = g_object_new (GIMP_TYPE_PROCEDURE_DIALOG,
-                         "procedure",      procedure,
-                         "config",         config,
-                         "title",          title,
-                         "help-func",      gimp_standard_help_func,
-                         "help-id",        help_id,
-                         "use-header-bar", use_header_bar,
-                         NULL);
-
-  g_clear_object (&bogus);
-
-  return GTK_WIDGET (dialog);
+  return g_object_new (GIMP_TYPE_PROCEDURE_DIALOG,
+                       "procedure", procedure,
+                       "config",    config,
+                       "title",     title,
+                       NULL);
 }
 
 /**
