@@ -35,7 +35,7 @@ def foggify(procedure, run_mode, image, n_drawables, drawables, args, data):
 
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-foggify')
-        dialog = GimpUi.ProcedureDialog.new(procedure, config)
+        dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
         dialog.get_color_widget('color', True, GimpUi.ColorAreaType.FLAT)
         dialog.fill(None)
         if not dialog.run():
