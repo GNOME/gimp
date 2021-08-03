@@ -66,7 +66,8 @@ static  void      write_image     (FILE   *f,
                                    gint    mask_info_size,
                                    gint    color_space_size);
 
-static  gboolean  save_dialog     (gint    channels);
+static  gboolean  save_dialog     (gint    channels,
+                                   gint    bpp);
 
 
 static struct
@@ -259,9 +260,10 @@ save_image (const gchar  *filename,
 
   if (run_mode == GIMP_RUN_INTERACTIVE &&
       (BitsPerPixel == 8 ||
-       BitsPerPixel == 4))
+       BitsPerPixel == 4 ||
+       BitsPerPixel == 1))
     {
-      if (! save_dialog (1))
+      if (! save_dialog (1, BitsPerPixel))
         return GIMP_PDB_CANCEL;
     }
   else if (BitsPerPixel == 24 ||
@@ -269,7 +271,7 @@ save_image (const gchar  *filename,
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          if (! save_dialog (channels))
+          if (! save_dialog (channels, BitsPerPixel))
             return GIMP_PDB_CANCEL;
         }
 
@@ -714,6 +716,8 @@ write_image (FILE   *f,
     }
   else
     {
+      if (bpp == 1)
+        use_run_length_encoding = 0;
       switch (use_run_length_encoding)  /* now it gets more difficult */
         {               /* uncompressed 1,4 and 8 bit */
         case 0:
@@ -893,7 +897,7 @@ format_callback (GtkToggleButton *toggle,
 }
 
 static gboolean
-save_dialog (gint channels)
+save_dialog (gint channels, gint bpp)
 {
   GtkWidget *dialog;
   GtkWidget *toggle;
@@ -922,7 +926,7 @@ save_dialog (gint channels)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 BMPSaveData.use_run_length_encoding);
   gtk_widget_show (toggle);
-  if (channels > 1)
+  if (channels > 1 || bpp == 1)
     gtk_widget_set_sensitive (toggle, FALSE);
 
   g_signal_connect (toggle, "toggled",
