@@ -427,6 +427,7 @@ else
     libgimpcolor,
     libgimpconfig,
     libgimpmath,
+    libgimpmodule,
 
     sources: libgimp_introspectable_files,
     nsversion: gimp_api_version,
@@ -442,7 +443,6 @@ else
   )
 
   libgimpui_gir = gnome.generate_gir(
-    libgimpmodule,
     libgimpui,
     libgimpwidgets,
 
