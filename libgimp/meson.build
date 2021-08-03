@@ -375,11 +375,11 @@ libgimp_introspectable_files = [
   libgimpcolor_introspectable,
   libgimpconfig_introspectable,
   libgimpmath_introspectable,
+  libgimpmodule_introspectable,
   'gimpparamspecs-body.c',
 ]
 
 libgimpui_introspectable_files = [
-  libgimpmodule_introspectable,
   libgimpui_introspectable,
   libgimpwidgets_introspectable,
 ]
