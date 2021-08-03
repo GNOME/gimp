@@ -336,7 +336,6 @@ libgimpui = library('gimpui-'+ gimp_api_version,
   ],
   c_args: [ '-DG_LOG_DOMAIN="LibGimpUI"', '-DGIMP_COMPILATION', ],
   link_with: [
-    libgimpmodule,
     libgimpwidgets,
   ],
   vs_module_defs: 'gimpui.def',
@@ -351,7 +350,6 @@ libgimpui_dep = declare_dependency(
     gtk3,
   ],
   link_with: [
-    libgimpmodule,
     libgimpui,
     libgimpwidgets,
   ],
@@ -442,7 +440,6 @@ else
   )
 
   libgimpui_gir = gnome.generate_gir(
-    libgimpmodule,
     libgimpui,
     libgimpwidgets,
 
