@@ -9,8 +9,8 @@
      (set type="stable", or just no type for stable releases).
 
      Some installers may feature more prominently software with recent
-     releases if the appropriate tag was set (e.g. GNOME Software has a
-     "Recent Releases" category).
+     releases if the appropriate tag was set (e.g. GNOME Software and
+     Flathub have a "Recent Releases" category).
 
      If a description is added, it may be featured in installers and
      will be translatable (use <_p> or <_li> tags to make the strings
@@ -31,7 +31,7 @@
      on, and how many changes to expect. An example message is:
      https://mail.gnome.org/archives/gnome-i18n/2016-October/msg00035.html
 
- ( ) Also notify the maintainers of the official builds for Windows
+ ( ) Notify the maintainers of the official builds for Windows
      (irc:ender/@jernejs), macOS (irc:Samm/@samm-git and
      irc:DesMcG/@DesMcGuinness) and flatpak (irc:Jehan/@Jehan) of the
      upcoming release so they have some time to sort out issues with
@@ -80,10 +80,29 @@
      Check that all jobs are successful because we should not release
      with code known not to build in some conditions.
 
-     Note: some jobs rely on our meson build which has race condition
-     bugs so if some jobs fail, you should check if it is because of
-     bugs in the code or issues with meson or the CI infrastructure.
-     When unsure, it is better to trigger a job retry.
+     The following procedure allows to simulate a release:
+
+     [ ] Go to https://gitlab.gnome.org/GNOME/gimp/-/pipelines
+
+     [ ] Click the "Run pipeline" button.
+
+     [ ] Choose the appropriate branch and add the variable
+         `CI_COMMIT_TAG` to any value (it will simulate a build with a
+         tag, which is characteristical of a release).
+
+     [ ] The following jobs should be triggered:
+         build-image, deps-debian, gimp-distcheck-debian, sources,
+         deps-win32-native, gimp-win32-native, packaging-win32-native,
+         deps-win64-native, gimp-win64-native, packaging-win64-native
+         and win-installer-nightly.
+
+     [ ] Check in particular:
+         * the job `win-installer-nightly` should contain a working
+           Windows installer and 2 checksum files;
+         * the job `sources` should contain a tar.bz2 tarball and 2
+           checksum files.
+
+     If these steps work fine, we are ready to tag and publish.
 
  ( ) Bump the version number to an even micro in configure.ac and
      commit this change. It should be the version number of the
@@ -100,6 +119,140 @@
  ( ) Commit the version bumps only and push these. Since there was no
      code change since the last CI check, the CI should build fine once
      again. Make sure of it.
+
+ ( ) Tag the release (don't forget to push the tag)
+       git tag -s GIMP_2_x_y
+       git push origin GIMP_2_x_y
+
+     All release tags are signed in order for the authenticity and
+     origin of the release to be publicly verified.
+
+ ( ) Gitlab will run a new CI pipeline specifically for the tag.
+     Once it is done, you will find a tarball, a Windows installer,
+     SHA256 and SHA512 checksum files on the artifacts of the job
+     `sources` and `win-installer-nightly`.
+     Direct links, for instance for the GIMP_2_99_6 tag, would be:
+
+     https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/GIMP_2_99_6/browse/?job=sources
+     https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/GIMP_2_99_6/browse/?job=win-installer-nightly
+
+ ( ) Ask the Windows installer maintainers to test the installer then to
+     sign it if all looks fine.
+
+ ( ) Publish dist tarballs:
+
+     [ ] Upload the 3 files (tar.bz2 tarball and 2 checksums) to
+         /gimp_ftp/incoming/ on master.gnome.org (do not upload to your
+         home first as it would mess up some SELinux flags).
+
+     [ ] Copy the tarball to its final destination in the download
+         area (/gimp_ftp/pub/gimp/). Really use "cp" not "mv" or
+         SELinux will make the uploaded file unreadable to the web
+         server unless some obscure status bit is toggled.
+
+     [ ] Update the `SHA256SUMS` and `SHA512SUMS` files present in the
+         same download area by adding the computed sha256 and sha512
+         sums.
+         Note: do not add new MD5 sums anymore. They are considered
+         unsafe.
+
+     [ ] Update the 0.0_LATEST-IS- file in the corresponding directory
+         on the download server.
+
+     [ ] Change permissions of the new files to make them writable by
+         the 'gimpftpadmin' group. This will allow other members of
+         this group to correct mistakes and to update the
+         0.0_LATEST-IS- file next time.
+
+ ( ) Bump the version number (past the tagged version) in configure.ac
+     to the next odd micro and commit this change. GIT versions always
+     have odd micro numbers.
+
+     [ ] In configure.ac, modify gimp_micro_version accordingly.
+
+     [ ] In configure.ac, modify gimp_interface_age accordingly.
+
+ ( ) Bump the version number in meson.build to the same value as in
+     configure.ac.
+
+ ( ) Add the next version milestone on GIMP's Gitlab:
+     https://gitlab.gnome.org/GNOME/gimp/-/milestones
+
+     Note: we don't close immediately the milestone of the just-released
+     version as we may still assign some reports to it, but older
+     milestones might be closed (up to what feels the most needed for
+     organization of reports).
+
+ ( ) Publish the Windows installer with a similar procedure to the
+     source tarballs. The checksum files will probably have to be
+     regenerated after the installer's signature.
+
+ ( ) Check out or update the 'gimp-web' module, check out its testing
+     branch.
+
+     [ ] Update the file 'GIMP_VERSIONS' adding the version, release
+         date, tarball name and its SHA256 and SHA512 hashes under
+         "STABLE".
+         Note: do not add new MD5 sums in 'GIMP_VERSIONS' as well.
+
+     [ ] Create a news items for the release in content/news/
+
+     [ ] Run `make authors.md` in GIMP repository. This will generate
+         the file `authors.md`. Move it to ./content/about/authors.md on
+         the 'gimp-web' module and commit it.
+
+     [ ] Commit and push the changes to the `testing` branch, the web
+         server should then update itself soon (it checks for updates
+         every 5 minutes).
+         Go to https://testing.gimp.org to verify the changes.
+
+     [ ] Do not merge to `master` branch yet. We usually wait for a few
+         packages to be available (often at least the Flatpak and
+         Windows installer) and published to the download server when
+         relevant.
+
+     [ ] For binary packages, we also usually publish web torrent files
+         with the `tools/download/mt` tool. Here is an example of
+         command as run for the revision 2 of GIMP 2.10.24 installer:
+
+           $ tools/downloads/mt -c "GIMP 2.10.24 Installer for Microsoft Windows - 32 and 64 Bit - Update 2: custom GTK fixes for drag&drop issues with certain screen grabbers (issue #1082), tiny SVG icons (issue #1563) and pasting images from some other applications (issue #3481)" -p "v2.10/windows" -m "./tools/downloads/downloads.http.txt" gimp-2.10.24-setup-2.exe
+
+     [ ] Check regularly that most (ideally all) mirrors synced the new
+         files. The following commands allows to query all mirrors:
+
+           $ tools/downloads/update-mirrors.py --ssh-user $SSH_USER # where $SSH_USER is your user on download.gimp.org server.
+           $ tools/downloads/gimp-check-mirrors.py https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.24-setup-2.exe
+
+         We want to hold the news a bit because if we publish without
+         binary installers, everyone desperately search for them; and if
+         we publish with most mirrors lagging behind, many download
+         errors will occur.
+
+ ( ) When confident about the installers availability, announce the
+     release on gimp.org and send a release announcement to the
+     gimp-user and gimp-developer mailing lists.
+
+     [ ] Check out the gimp-web master branch and merge or cherry-pick
+         the changes you did in the testing branch.
+
+     [ ] Push the changes, the web server should then update itself
+         soon (it checks for updates every 15 minutes).
+         Go to https://www.gimp.org to verify the changes.
+
+     [ ] Due to the tendency of news sites to front-run release
+         articles even before actual announcements appear, publish
+         everything as fast as possible.
+
+ ( ) Grab a properly chilled beverage and enjoy yourself.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optional: debug the source tarball
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The source tarball is now created by the `gimp-distcheck-debian` CI job.
+Nevertheless in case it were to fail, and you need to debug or
+exceptionally create your own local tarball for publishing, here would
+be the manual version:
 
  ( ) Make dist tarballs [DEPRECATED - taken from CI jobs]
 
@@ -144,122 +297,3 @@
          dist tarballs. It will include a ChangeLog generated from the
          'git log'. Note that we don't bother with any release commit,
          that's what tags are for (see below).
-
- ( ) Tag the release (don't forget to push the tag)
-       git tag -s GIMP_2_x_y
-       git push origin GIMP_2_x_y
-
-     All release tags are signed in order for the authenticity and
-     origin of the release to be publicly verified.
-
- ( ) Gitlab will run a new CI pipeline specifically for the tag (tag
-     pipelines build less jobs, only the necessary ones to create the
-     tarball). Once it is done, you will find a tarball, SHA256 and
-     SHA512 checksum files on the artifacts of the job `sources`. A
-     direct link, for instance for the GIMP_2_99_6 tag would be:
-
-     https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/GIMP_2_99_6/browse/?job=sources
-
- ( ) Publish dist tarballs:
-
-     [ ] Use `sha256sum` and `sha512sum` to create checksums of the
-         tarball (tar.bz2).
-
-     [ ] Upload the 3 files (tar.bz2 tarball and 2 checksums) to
-         /gimp_ftp/incoming/ on master.gnome.org (do not upload to your
-         home first as it would mess up some SELinux flags).
-
-     [ ] Copy the tarball to its final destination in the download
-         area (/gimp_ftp/pub/gimp/). Really use "cp" not "mv" or
-         SELinux will make the uploaded file unreadable to the web
-         server unless some obscure status bit is toggled.
-
-     [ ] Update the `SHA256SUMS` and `SHA512SUMS` files present in the
-         same download area by adding the computed sha256 and sha512
-         sums.
-         Note: do not add new MD5 sums anymore. They are considered
-         unsafe.
-
-     [ ] Update the 0.0_LATEST-IS- file in the corresponding directory
-         on the download server.
-
-     [ ] Change permissions of the new files to make them writable by
-         the 'gimpftpadmin' group. This will allow other members of
-         this group to correct mistakes and to update the
-         0.0_LATEST-IS- file next time.
-
- ( ) Bump the version number (past the tagged version) in configure.ac
-     to the next odd micro and commit this change. GIT versions always
-     have odd micro numbers.
-
-     [ ] In configure.ac, modify gimp_micro_version accordingly.
-
-     [ ] In configure.ac, modify gimp_interface_age accordingly.
-
- ( ) Bump the version number in meson.build to the same value as in
-     configure.ac.
-
- ( ) Add the next version milestone on GIMP's Gitlab:
-     https://gitlab.gnome.org/GNOME/gimp/-/milestones
-
-     Note: we don't close immediately the milestone of the just-released
-     version as we may still assign some reports to it, but older
-     milestones might be closed (up to what feels the most needed for
-     organization of reports).
-
- ( ) Check out or update the 'gimp-web' module, check out its testing
-     branch.
-
-     [ ] Update the file 'GIMP_VERSIONS' adding the version, release
-         date, tarball name and its SHA256 and SHA512 hashes under
-         "STABLE".
-         Note: do not add new MD5 sums in 'GIMP_VERSIONS' as well.
-
-     [ ] Create a news items for the release in content/news/
-
-     [ ] Run `make authors.md` in GIMP repository. This will generate
-         the file `authors.md`. Move it to ./content/about/authors.md on
-         the 'gimp-web' module and commit it.
-
-     [ ] Commit and push the changes to the `testing` branch, the web
-         server should then update itself soon (it checks for updates
-         every 5 minutes).
-         Go to https://testing.gimp.org to verify the changes.
-
-     [ ] Do not merge to `master` branch yet. We usually wait for a few
-         packages to be available (often at least the Flatpak and
-         Windows installer) and published to the download server when
-         relevant.
-
-     [ ] For binary packages, we also usually publish web torrent files
-         with the `tools/download/mt` tool. Here is an example of
-         command as run for the revision 2 of GIMP 2.10.24 installer:
-
-           $ tools/downloads/mt -c "GIMP 2.10.24 Installer for Microsoft Windows - 32 and 64 Bit - Update 2: custom GTK fixes for drag&drop issues with certain screen grabbers (issue #1082), tiny SVG icons (issue #1563) and pasting images from some other applications (issue #3481)" -p "v2.10/windows" gimp-2.10.24-setup-2.exe
-
-     [ ] Check regularly that most (ideally all) mirrors synced the new
-         files. The following command allows to query all mirrors:
-
-           $ tools/downloads/gimp-check-mirrors.py https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.24-setup-2.exe
-
-         We want to hold the news a bit because if we publish without
-         binary installers, everyone desperately search for them; and if
-         we publish with most mirrors lagging behind, many download
-         errors will occur.
-
- ( ) When confident about the installers availability, announce the
-     release on gimp.org and send a release announcement to the
-     gimp-user and gimp-developer mailing lists.
-
-     [ ] Check out the gimp-web master branch and merge or cherry-pick
-         the changes you did in the testing branch.
-
-     [ ] Push the changes, the web server should then update itself
-         soon (it checks for updates every 15 minutes).
-         Go to https://www.gimp.org to verify the changes.
-
-     [ ] Due to the tendency of news sites to front-run release
-         articles even before actual announcements appear, publish
-         everything as fast as possible.
-
- ( ) Grab a properly chilled beverage and enjoy yourself.
