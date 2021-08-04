@@ -86,6 +86,7 @@
 #ifdef GDK_WINDOWING_QUARTZ
 #import <AppKit/AppKit.h>
 #include <gtkosxapplication.h>
+#include <gdk/gdkquartz.h>
 
 /* Forward declare since we are building against old SDKs. */
 #if !defined(MAC_OS_X_VERSION_10_12) || \
@@ -263,6 +264,18 @@ gui_init (Gimp     *gimp,
    */
   if ([NSWindow respondsToSelector:@selector(setAllowsAutomaticWindowTabbing:)])
     [NSWindow setAllowsAutomaticWindowTabbing:NO];
+
+  /* MacOS 11 (Big Sur) has added a new, dynamic "accent" as default.
+   * This uses a 10-bit colorspace so every GIMP drawing operation
+   * has the additional cost of an 8-bit (ARGB) to 10-bit conversion.
+   * Let's disable this mode to regain the lost performance.
+   */
+  if (gdk_quartz_osx_version () >= GDK_OSX_BIG_SUR)
+    {
+      NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+      [userDefaults setBool: NO forKey:@"NSViewUsesAutomaticLayerBackingStores"];
+    }
+
 #endif /* GDK_WINDOWING_QUARTZ */
 
   gimp_dnd_init (gimp);
