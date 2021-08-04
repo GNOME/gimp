@@ -1214,7 +1214,6 @@ conf.set('HAVE_VPRINTF',
 foreach header : [
     { 'm': 'HAVE_ALLOCA_H',       'v': 'alloca.h' },
     { 'm': 'HAVE_DLFCN_H',        'v': 'dlfcn.h' },
-    { 'm': 'HAVE_EXECINFO_H',     'v': 'execinfo.h' },
     { 'm': 'HAVE_FCNTL_H',        'v': 'fcntl.h' },
     { 'm': 'HAVE_IEEEFP_H',       'v': 'ieeefp.h' },
     { 'm': 'HAVE_INTTYPES_H',     'v': 'inttypes.h' },
@@ -1241,6 +1240,12 @@ foreach header : [
   conf.set(header['m'], cc.has_header(header['v']) ? 1 : false)
 endforeach
 
+# In musl, backtrace() is in the libexecinfo library.
+# In glibc, it is internal (there we only need the header).
+# So we look for both cases, so that we are able to link to libexecinfo
+# if it exists. Cf. !455.
+opt_execinfo = cc.find_library('execinfo', has_headers: ['execinfo.h'], required: false)
+conf.set('HAVE_EXECINFO_H', opt_execinfo.found() or cc.has_header('execinfo.h') ? 1 : false)
 
 
 ################################################################################

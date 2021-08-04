@@ -100,13 +100,14 @@ libgimpbase_introspectable = [
   libgimpbase_headers_introspectable,
 ]
 
-optional_libexecinfo = cc.find_library('execinfo', required: false)
-
 libgimpbase = library('gimpbase-' + gimp_api_version,
   libgimpbase_sources,
   include_directories: rootInclude,
   dependencies: [
-    gexiv2, gio, math, optional_libexecinfo
+    gexiv2, gio, math,
+    # optionally depend on libexecinfo on platforms where it is not
+    # internal to the libc.
+    opt_execinfo,
   ],
   c_args: [
     '-DG_LOG_DOMAIN="LibGimpBase"',
