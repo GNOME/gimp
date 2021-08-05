@@ -1203,8 +1203,8 @@ generate_histogram_rgb (CFHistogram   histogram,
 
   format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
 
-  g_return_if_fail (format == babl_format ("R'G'B' u8") ||
-                    format == babl_format ("R'G'B'A u8"));
+  g_return_if_fail (format == babl_format_with_space ("R'G'B' u8", format) ||
+                    format == babl_format_with_space ("R'G'B'A u8", format));
 
   bpp       = babl_format_get_bytes_per_pixel (format);
   has_alpha = babl_format_has_alpha (format);
