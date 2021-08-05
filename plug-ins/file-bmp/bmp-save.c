@@ -165,10 +165,15 @@ save_image (GFile         *file,
       MapSize      = 0;
       channels     = 4;
 
-      g_object_set (config,
-                    "rgb-format", RGBA_8888,
-                    "use-rle",    FALSE,
-                    NULL);
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        g_object_set (config,
+                      "rgb-format", RGBA_8888,
+                      "use-rle",    FALSE,
+                      NULL);
+      else
+        g_object_set (config,
+                      "use-rle",    FALSE,
+                      NULL);
       break;
 
     case GIMP_RGB_IMAGE:
@@ -178,10 +183,15 @@ save_image (GFile         *file,
       MapSize      = 0;
       channels     = 3;
 
-      g_object_set (config,
-                    "rgb-format", RGBA_8888,
-                    "use-rle",    FALSE,
-                    NULL);
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        g_object_set (config,
+                      "rgb-format", RGB_888,
+                      "use-rle",    FALSE,
+                      NULL);
+      else
+        g_object_set (config,
+                      "use-rle",    FALSE,
+                      NULL);
       break;
 
     case GIMP_GRAYA_IMAGE:

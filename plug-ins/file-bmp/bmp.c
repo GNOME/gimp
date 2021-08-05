@@ -189,24 +189,27 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "bmp");
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-rle",
-                                 "Use RLE",
-                                 "Use run-lengh-encoding",
-                                 FALSE,
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "write-color-space-info",
-                                 "Write color space information",
-                                 "Whether or not to write BITMAPV5HEADER "
-                                 "color space data",
-                                 TRUE,
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_INT (procedure, "rgb-format",
-                             "RGB format",
-                             "Export format for RGB images",
-                             0, 5, 3,
+      GIMP_PROC_ARG_BOOLEAN (procedure, "use-rle",
+                             "Use RLE",
+                             "Use run-lengh-encoding compression "
+                             "(only valid for 4 and 8-bit indexed images)",
+                             FALSE,
                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "write-color-space-info",
+                             "Write color space information",
+                             "Whether or not to write BITMAPV5HEADER "
+                             "color space data",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "rgb-format",
+                         "RGB format",
+                         "Export format for RGB images "
+                         "(0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888,"
+                         " 4=RGBA_8888, 5=RGBX_8888)",
+                         0, 5, 3,
+                         G_PARAM_READWRITE);
     }
 
   return procedure;
