@@ -212,18 +212,18 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
   n_cage_vertices   = gimp_cage_config_get_n_points (config);
 
   it = gegl_buffer_iterator_new (output, roi, 0, format,
-                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
+                                 GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (it))
     {
       /* iterate inside the roi */
-      gint  n_pixels = it->length;
-      gint  x = it->items[0].roi.x; /* initial x                   */
-      gint  y = it->items[0].roi.y; /*           and y coordinates */
-      gint  j;
+      gfloat *coef     = it->items[0].data;
+      gint    n_pixels = it->length;
+      gint    x        = it->items[0].roi.x; /* initial x         */
+      gint    y        = it->items[0].roi.y; /* and y coordinates */
+      gint    j;
 
-      gfloat      *coef = it->items[0].data;
-
+      memset (coef, 0, sizeof * coef * n_pixels * 2 * n_cage_vertices);
       while(n_pixels--)
         {
           if (gimp_cage_config_point_inside(config, x, y))
