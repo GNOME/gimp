@@ -109,8 +109,7 @@ gimp_color_display_stack_class_init (GimpColorDisplayStackClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorDisplayStackClass, removed),
-                  NULL, NULL,
-                  _gimp_widgets_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_COLOR_DISPLAY);
 

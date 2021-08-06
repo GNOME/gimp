@@ -22,10 +22,8 @@
 #   NONE        deprecated alias for VOID
 #   BOOL        deprecated alias for BOOLEAN
 
-VOID: ENUM
 VOID: ENUM, BOOLEAN
 VOID: INT, INT 
-VOID: OBJECT
 VOID: OBJECT, INT
 VOID: BOXED, BOXED
 VOID: STRING, FLAGS

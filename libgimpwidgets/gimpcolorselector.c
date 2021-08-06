@@ -100,8 +100,7 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorSelectorClass, channel_changed),
-                  NULL, NULL,
-                  _gimp_widgets_marshal_VOID__ENUM,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_COLOR_SELECTOR_CHANNEL);
 
