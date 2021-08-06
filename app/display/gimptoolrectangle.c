@@ -36,7 +36,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
-#include "core/gimpmarshal.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-auto-shrink.h"
 

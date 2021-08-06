@@ -29,7 +29,6 @@
 #include "gimp.h"
 #include "gimp-memsize.h"
 #include "gimpfilter.h"
-#include "gimpmarshal.h"
 
 
 enum

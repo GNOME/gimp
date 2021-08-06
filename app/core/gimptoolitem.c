@@ -30,8 +30,6 @@
 
 #include "core-types.h"
 
-#include "core/gimpmarshal.h"
-
 #include "gimptoolitem.h"
 
 

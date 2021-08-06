@@ -41,7 +41,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpmarshal.h"
 #include "core/gimptempbuf.h"
 #include "core/gimpviewable.h"
 

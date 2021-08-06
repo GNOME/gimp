@@ -38,7 +38,6 @@
 #include "core/gimpdynamicsoutput.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
-#include "core/gimpmarshal.h"
 #include "core/gimpsymmetry.h"
 #include "core/gimptempbuf.h"
 

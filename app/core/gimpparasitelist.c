@@ -27,7 +27,6 @@
 #include "core-types.h"
 
 #include "gimp-memsize.h"
-#include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 
 

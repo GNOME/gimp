@@ -42,7 +42,6 @@
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimagefile.h"
-#include "gimpmarshal.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
 

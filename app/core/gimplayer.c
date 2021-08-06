@@ -52,7 +52,6 @@
 #include "gimplayer-floating-selection.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
-#include "gimpmarshal.h"
 #include "gimpobjectqueue.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"

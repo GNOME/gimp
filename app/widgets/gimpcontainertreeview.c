@@ -32,7 +32,6 @@
 
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
 #include "gimpcellrendererbutton.h"

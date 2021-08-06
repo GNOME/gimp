@@ -31,7 +31,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"

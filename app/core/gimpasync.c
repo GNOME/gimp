@@ -27,7 +27,6 @@
 
 #include "gimpasync.h"
 #include "gimpcancelable.h"
-#include "gimpmarshal.h"
 #include "gimpwaitable.h"
 
 

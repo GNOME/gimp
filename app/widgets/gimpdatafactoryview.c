@@ -36,7 +36,6 @@
 #include "core/gimpdata.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
-#include "core/gimpmarshal.h"
 #include "core/gimptaggedcontainer.h"
 
 #include "gimpcombotagentry.h"

@@ -44,7 +44,6 @@
 #include "gimpimagefile.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
-#include "gimpmarshal.h"
 #include "gimpmybrush.h"
 #include "gimppaintinfo.h"
 #include "gimppalette.h"

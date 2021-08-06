@@ -35,7 +35,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpdnd.h"
 #include "gimpfgbgview.h"

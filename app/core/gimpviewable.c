@@ -36,7 +36,6 @@
 #include "gimp-memsize.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
-#include "gimpmarshal.h"
 #include "gimptempbuf.h"
 #include "gimpviewable.h"
 

@@ -32,7 +32,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpfilteredcontainer.h"
 #include "core/gimplist.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpcontainerview.h"
 #include "gimpcontainertreestore.h"

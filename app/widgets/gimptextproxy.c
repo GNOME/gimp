@@ -25,8 +25,6 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpmarshal.h"
-
 #include "gimptextproxy.h"
 
 

@@ -26,8 +26,6 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpmarshal.h"
-
 #include "gimpaction.h"
 #include "gimpaction-history.h"
 #include "gimpenumaction.h"

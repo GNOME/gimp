@@ -34,7 +34,6 @@
 #include "core/gimp-memsize.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpmarshal.h"
 #include "core/gimpparamspecs.h"
 
 #include "file/file-utils.h"

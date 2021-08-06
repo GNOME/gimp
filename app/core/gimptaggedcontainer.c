@@ -25,7 +25,6 @@
 #include "core-types.h"
 
 #include "gimp.h"
-#include "gimpmarshal.h"
 #include "gimptag.h"
 #include "gimptagged.h"
 #include "gimptaggedcontainer.h"

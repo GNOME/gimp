@@ -52,7 +52,6 @@
 #include "gimpcontext.h"
 #include "gimpdrawable-fill.h"
 #include "gimpdrawable-stroke.h"
-#include "gimpmarshal.h"
 #include "gimppaintinfo.h"
 #include "gimppickable.h"
 #include "gimpstrokeoptions.h"

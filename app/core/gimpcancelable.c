@@ -27,7 +27,6 @@
 #include "core-types.h"
 
 #include "gimpcancelable.h"
-#include "gimpmarshal.h"
 
 
 enum

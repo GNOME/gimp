@@ -37,7 +37,6 @@
 #include "display-types.h"
 
 #include "core/gimp-utils.h"
-#include "core/gimpmarshal.h"
 
 #include "widgets/gimpwidgets-utils.h"
 

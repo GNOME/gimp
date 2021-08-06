@@ -34,7 +34,6 @@
 #include "core/gimpcurve.h"
 #include "core/gimpcurve-map.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimpmarshal.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimptoolinfo.h"
 

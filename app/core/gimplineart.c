@@ -39,7 +39,6 @@
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimplineart.h"
-#include "gimpmarshal.h"
 #include "gimppickable.h"
 #include "gimpprojection.h"
 #include "gimpviewable.h"

@@ -30,7 +30,6 @@
 
 #include "core/gimpcontext.h"
 #include "core/gimpgrid.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpcolorpanel.h"
 #include "gimpgrideditor.h"

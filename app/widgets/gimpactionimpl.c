@@ -33,7 +33,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 #include "core/gimpimagefile.h"  /* eek */
 
 #include "gimpaction.h"

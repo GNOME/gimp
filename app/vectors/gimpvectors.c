@@ -40,7 +40,6 @@
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
-#include "core/gimpmarshal.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpstrokeoptions.h"
 

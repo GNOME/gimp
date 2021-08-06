@@ -41,7 +41,6 @@
 #include "gimpitem-preview.h"
 #include "gimpitemtree.h"
 #include "gimplist.h"
-#include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimpprogress.h"
 #include "gimpstrokeoptions.h"

@@ -28,8 +28,6 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpmarshal.h"
-
 #include "plug-in/gimppluginprocedure.h"
 
 #include "gimppluginview.h"

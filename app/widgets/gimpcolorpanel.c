@@ -29,7 +29,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpaction.h"
 #include "gimpactiongroup.h"

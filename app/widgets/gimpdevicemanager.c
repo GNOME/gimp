@@ -33,7 +33,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcurve.h"
-#include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
 #include "gimpdeviceinfo.h"

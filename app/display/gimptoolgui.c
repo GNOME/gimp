@@ -28,7 +28,6 @@
 #include "display-types.h"
 
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"

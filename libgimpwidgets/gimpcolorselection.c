@@ -39,8 +39,6 @@
 #include "gimpwidgets.h"
 #include "gimpwidgets-private.h"
 
-#include "gimpwidgetsmarshal.h"
-
 #include "libgimp/libgimp-intl.h"
 
 

@@ -34,7 +34,6 @@
 #include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpdashpattern.h"
-#include "gimpmarshal.h"
 #include "gimppaintinfo.h"
 #include "gimpparamspecs.h"
 #include "gimpstrokeoptions.h"

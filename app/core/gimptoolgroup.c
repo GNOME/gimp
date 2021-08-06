@@ -31,7 +31,6 @@
 #include "core-types.h"
 
 #include "gimplist.h"
-#include "gimpmarshal.h"
 #include "gimptoolgroup.h"
 #include "gimptoolinfo.h"
 
