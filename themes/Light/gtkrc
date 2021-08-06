@@ -77,6 +77,8 @@ style "tlsog-default-style"
   color["clr8"] = "#DDDDDD"
   color["clr9"] = "#B2B2B2"
   color["clr10"] = "#000000"
+  color["link_color"]         = "#5d81e3"
+  color["visited_link_color"] = "#1a74d3"
 
   fg[NORMAL] = @clr3
   fg[PRELIGHT] = @clr10
@@ -133,6 +135,13 @@ style "tlsog-default-style"
   GtkComboBox::appears-as-list = 0
   GtkComboBoxEntry::appears-as-list = 0
   GtkComboBoxText::appears-as-list = 0
+
+  GnomeHRef ::link_color         = @link_color
+  GtkHTML   ::link-color         = @link_color
+  GtkIMHtmlr::hyperlink-color    = @link_color
+  GtkIMHtml ::hyperlink-color    = @link_color
+  GtkWidget ::link-color         = @link_color
+  GtkWidget ::visited-link-color = @visited_link_color
 
   #
   # To adjust to default button spacing:
