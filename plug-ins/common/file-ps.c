@@ -1765,6 +1765,7 @@ ps_open (const gchar      *filename,
 
   code = gsapi_new_instance (&instance, NULL);
   if (code == 0) {
+    code = gsapi_set_arg_encoding(instance, GS_ARG_ENCODING_UTF8);
     code = gsapi_init_with_args (instance, cmdA->len - 1, pcmdA);
     code = gsapi_exit (instance);
     gsapi_delete_instance (instance);
