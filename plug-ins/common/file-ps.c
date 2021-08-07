@@ -1138,9 +1138,8 @@ load_image (GFile   *file,
                              gimp_file_get_utf8_name (file));
 
   /* Try to see if PostScript file is available */
-  filename = g_file_get_path (file);
+  filename = gimp_file_get_utf8_name (file);
   ifp = g_fopen (filename, "r");
-  g_free (filename);
 
   if (! ifp)
     {
@@ -1730,7 +1729,7 @@ ps_open (GFile            *file,
   /* Check if it is a EPS-file */
   *is_epsf = FALSE;
 
-  filename = g_file_get_path (file);
+  filename = gimp_file_get_utf8_name (file);
 
   eps_file = g_fopen (filename, "rb");
 
@@ -1870,8 +1869,6 @@ ps_open (GFile            *file,
   g_ptr_array_add (cmdA, g_strdup ("-f"));
   g_ptr_array_add (cmdA, g_strdup (filename));
 
-  g_free (filename);
-
   if (*is_epsf)
     {
       g_ptr_array_add (cmdA, g_strdup ("-c"));
@@ -1899,6 +1896,7 @@ ps_open (GFile            *file,
 
   code = gsapi_new_instance (&instance, NULL);
   if (code == 0) {
+    code = gsapi_set_arg_encoding(instance, GS_ARG_ENCODING_UTF8);
     code = gsapi_init_with_args (instance, cmdA->len - 1, pcmdA);
     code = gsapi_exit (instance);
     gsapi_delete_instance (instance);
