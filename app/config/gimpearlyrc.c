@@ -1,7 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpLangRc: pre-parsing of gimprc returning the language.
+ * GimpEarlyRc: pre-parsing of gimprc suitable for use during early
+ * initialization, when the gimp singleton is not constructed yet
+ *
  * Copyright (C) 2017  Jehan <jehan@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +29,7 @@
 
 #include "config-types.h"
 
-#include "gimplangrc.h"
+#include "gimpearlyrc.h"
 
 enum
 {
@@ -39,35 +41,35 @@ enum
 };
 
 
-static void         gimp_lang_rc_constructed       (GObject      *object);
-static void         gimp_lang_rc_finalize          (GObject      *object);
-static void         gimp_lang_rc_set_property      (GObject      *object,
-                                                    guint         property_id,
-                                                    const GValue *value,
-                                                    GParamSpec   *pspec);
-static void         gimp_lang_rc_get_property      (GObject      *object,
-                                                    guint         property_id,
-                                                    GValue       *value,
-                                                    GParamSpec   *pspec);
+static void         gimp_early_rc_constructed       (GObject      *object);
+static void         gimp_early_rc_finalize          (GObject      *object);
+static void         gimp_early_rc_set_property      (GObject      *object,
+                                                     guint         property_id,
+                                                     const GValue *value,
+                                                     GParamSpec   *pspec);
+static void         gimp_early_rc_get_property      (GObject      *object,
+                                                     guint         property_id,
+                                                     GValue       *value,
+                                                     GParamSpec   *pspec);
 
 
 /* Just use GimpConfig interface's default implementation which will
- * fill the PROP_LANGUAGE property. */
-G_DEFINE_TYPE_WITH_CODE (GimpLangRc, gimp_lang_rc, G_TYPE_OBJECT,
+ * fill the properties. */
+G_DEFINE_TYPE_WITH_CODE (GimpEarlyRc, gimp_early_rc, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
-#define parent_class gimp_lang_rc_parent_class
+#define parent_class gimp_early_rc_parent_class
 
 
 static void
-gimp_lang_rc_class_init (GimpLangRcClass *klass)
+gimp_early_rc_class_init (GimpEarlyRcClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_lang_rc_constructed;
-  object_class->finalize     = gimp_lang_rc_finalize;
-  object_class->set_property = gimp_lang_rc_set_property;
-  object_class->get_property = gimp_lang_rc_get_property;
+  object_class->constructed  = gimp_early_rc_constructed;
+  object_class->finalize     = gimp_early_rc_finalize;
+  object_class->set_property = gimp_early_rc_set_property;
+  object_class->get_property = gimp_early_rc_get_property;
 
   g_object_class_install_property (object_class, PROP_VERBOSE,
                                    g_param_spec_boolean ("verbose",
@@ -97,18 +99,18 @@ gimp_lang_rc_class_init (GimpLangRcClass *klass)
 }
 
 static void
-gimp_lang_rc_init (GimpLangRc *rc)
+gimp_early_rc_init (GimpEarlyRc *rc)
 {
 }
 
 static void
-gimp_lang_rc_constructed (GObject *object)
+gimp_early_rc_constructed (GObject *object)
 {
-  GimpLangRc *rc = GIMP_LANG_RC (object);
-  GError     *error = NULL;
+  GimpEarlyRc *rc    = GIMP_EARLY_RC (object);
+  GError      *error = NULL;
 
   if (rc->verbose)
-    g_print ("Parsing '%s' for configured language.\n",
+    g_print ("Parsing '%s' for configuration data required during early initialization.\n",
              gimp_file_get_utf8_name (rc->system_gimprc));
 
   if (! gimp_config_deserialize_file (GIMP_CONFIG (rc),
@@ -121,7 +123,7 @@ gimp_lang_rc_constructed (GObject *object)
     }
 
   if (rc->verbose)
-    g_print ("Parsing '%s' for configured language.\n",
+    g_print ("Parsing '%s' for configuration data required during early initialization.\n",
              gimp_file_get_utf8_name (rc->user_gimprc));
 
   if (! gimp_config_deserialize_file (GIMP_CONFIG (rc),
@@ -143,9 +145,9 @@ gimp_lang_rc_constructed (GObject *object)
 }
 
 static void
-gimp_lang_rc_finalize (GObject *object)
+gimp_early_rc_finalize (GObject *object)
 {
-  GimpLangRc *rc = GIMP_LANG_RC (object);
+  GimpEarlyRc *rc = GIMP_EARLY_RC (object);
 
   g_clear_object (&rc->system_gimprc);
   g_clear_object (&rc->user_gimprc);
@@ -156,12 +158,12 @@ gimp_lang_rc_finalize (GObject *object)
 }
 
 static void
-gimp_lang_rc_set_property (GObject      *object,
-                           guint         property_id,
-                           const GValue *value,
-                           GParamSpec   *pspec)
+gimp_early_rc_set_property (GObject      *object,
+                            guint         property_id,
+                            const GValue *value,
+                            GParamSpec   *pspec)
 {
-  GimpLangRc *rc = GIMP_LANG_RC (object);
+  GimpEarlyRc *rc = GIMP_EARLY_RC (object);
 
   switch (property_id)
     {
@@ -202,12 +204,12 @@ gimp_lang_rc_set_property (GObject      *object,
 }
 
 static void
-gimp_lang_rc_get_property (GObject    *object,
-                           guint       property_id,
-                           GValue     *value,
-                           GParamSpec *pspec)
+gimp_early_rc_get_property (GObject    *object,
+                            guint       property_id,
+                            GValue     *value,
+                            GParamSpec *pspec)
 {
-  GimpLangRc *rc = GIMP_LANG_RC (object);
+  GimpEarlyRc *rc = GIMP_EARLY_RC (object);
 
   switch (property_id)
     {
@@ -231,31 +233,31 @@ gimp_lang_rc_get_property (GObject    *object,
 }
 
 /**
- * gimp_lang_rc_new:
+ * gimp_early_rc_new:
  * @system_gimprc: the name of the system-wide gimprc file or %NULL to
  *                 use the standard location
  * @user_gimprc:   the name of the user gimprc file or %NULL to use the
  *                 standard location
- * @verbose:       enable console messages about loading the language
+ * @verbose:       enable console messages about loading the preferences
  *
- * Creates a new GimpLangRc object which only looks for the configure
- * language.
+ * Creates a new GimpEarlyRc object which looks for some configuration
+ * data required during early initialization steps
  *
- * Returns: the new #GimpLangRc.
+ * Returns: the new #GimpEarlyRc.
  */
-GimpLangRc *
-gimp_lang_rc_new (GFile    *system_gimprc,
-                  GFile    *user_gimprc,
-                  gboolean  verbose)
+GimpEarlyRc *
+gimp_early_rc_new (GFile    *system_gimprc,
+                   GFile    *user_gimprc,
+                   gboolean  verbose)
 {
-  GimpLangRc *rc;
+  GimpEarlyRc *rc;
 
   g_return_val_if_fail (system_gimprc == NULL || G_IS_FILE (system_gimprc),
                         NULL);
   g_return_val_if_fail (user_gimprc == NULL || G_IS_FILE (user_gimprc),
                         NULL);
 
-  rc = g_object_new (GIMP_TYPE_LANG_RC,
+  rc = g_object_new (GIMP_TYPE_EARLY_RC,
                      "verbose",       verbose,
                      "system-gimprc", system_gimprc,
                      "user-gimprc",   user_gimprc,
@@ -265,8 +267,8 @@ gimp_lang_rc_new (GFile    *system_gimprc,
 }
 
 /**
- * gimp_lang_rc_get_language:
- * @lang_rc:  a #GimpLangRc object.
+ * gimp_early_rc_get_language:
+ * @rc: a #GimpEarlyRc object.
  *
  * This function looks up the language set in `gimprc`.
  *
@@ -274,7 +276,7 @@ gimp_lang_rc_new (GFile    *system_gimprc,
  *               %NULL if the key couldn't be found.
  **/
 gchar *
-gimp_lang_rc_get_language (GimpLangRc *rc)
+gimp_early_rc_get_language (GimpEarlyRc *rc)
 {
   return rc->language ? g_strdup (rc->language) : NULL;
 }

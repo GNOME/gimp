@@ -48,7 +48,7 @@
 
 #include "core/core-types.h"
 
-#include "config/gimplangrc.h"
+#include "config/gimpearlyrc.h"
 #include "config/gimprc.h"
 
 #include "gegl/gimp-gegl.h"
@@ -194,7 +194,7 @@ app_run (const gchar         *full_prog_name,
   GFile              *default_folder = NULL;
   GFile              *gimpdir;
   const gchar        *abort_message;
-  GimpLangRc         *temprc;
+  GimpEarlyRc        *earlyrc;
   gchar              *language   = NULL;
   GError             *font_error = NULL;
 
@@ -218,25 +218,29 @@ app_run (const gchar         *full_prog_name,
       filenames = NULL;
     }
 
+  /* Here we do a first pass on "gimprc" file for the sole purpose
+   * of getting some configuration data that's required during early
+   * initialization, before the gimp singleton is constructed
+   */
+  earlyrc = gimp_early_rc_new (alternate_system_gimprc,
+                               alternate_gimprc,
+                               be_verbose);
+
   /* Language needs to be determined first, before any GimpContext is
    * instantiated (which happens when the Gimp object is created)
    * because its properties need to be properly localized in the
    * settings language (if different from system language). Otherwise we
    * end up with pieces of GUI always using the system language (cf. bug
-   * 787457). Therefore we do a first pass on "gimprc" file for the sole
-   * purpose of getting the settings language, so that we can initialize
-   * it before anything else.
+   * 787457)
    */
-  temprc = gimp_lang_rc_new (alternate_system_gimprc,
-                             alternate_gimprc,
-                             be_verbose);
-  language = gimp_lang_rc_get_language (temprc);
-  g_object_unref (temprc);
+  language = gimp_early_rc_get_language (earlyrc);
 
   /*  change the locale if a language if specified  */
   language_init (language);
   if (language)
     g_free (language);
+
+  g_object_unref (earlyrc);
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
