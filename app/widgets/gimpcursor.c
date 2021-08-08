@@ -155,6 +155,10 @@ static GimpCursor gimp_cursors[] =
   {
     "cursor-side-top-left",
     cursor_default_hot_x, cursor_default_hot_y
+  },
+  { 
+    "cursor-single-dot",
+    cursor_default_hot_x, cursor_default_hot_y
   }
 };
 

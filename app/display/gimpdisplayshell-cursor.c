@@ -270,6 +270,11 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
               modifier = GIMP_CURSOR_MODIFIER_NONE;
             }
           break;
+
+        case GIMP_CURSOR_MODE_SINGLE_DOT:
+          cursor_type = GIMP_CURSOR_SINGLE_DOT;
+          tool_cursor = GIMP_TOOL_CURSOR_NONE;
+          break;
         }
     }
 

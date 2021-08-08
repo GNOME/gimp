@@ -47,6 +47,8 @@ CURSOR_IMAGES = \
 	cursor-side-top-right-x2.png		\
 	cursor-side-top.png			\
 	cursor-side-top-x2.png			\
+	cursor-single-dot.png		\
+	cursor-single-dot-x2.png		\
 	cursor-zoom.png				\
 	cursor-zoom-x2.png			\
 	\

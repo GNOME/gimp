@@ -78,6 +78,7 @@ gimp_cursor_mode_get_type (void)
     { GIMP_CURSOR_MODE_TOOL_ICON, "GIMP_CURSOR_MODE_TOOL_ICON", "tool-icon" },
     { GIMP_CURSOR_MODE_TOOL_CROSSHAIR, "GIMP_CURSOR_MODE_TOOL_CROSSHAIR", "tool-crosshair" },
     { GIMP_CURSOR_MODE_CROSSHAIR, "GIMP_CURSOR_MODE_CROSSHAIR", "crosshair" },
+    { GIMP_CURSOR_MODE_SINGLE_DOT, "GIMP_CURSOR_MODE_SINGLE_DOT", "single-dot" },
     { 0, NULL, NULL }
   };
 
@@ -86,6 +87,7 @@ gimp_cursor_mode_get_type (void)
     { GIMP_CURSOR_MODE_TOOL_ICON, NC_("cursor-mode", "Tool icon"), NULL },
     { GIMP_CURSOR_MODE_TOOL_CROSSHAIR, NC_("cursor-mode", "Tool icon with crosshair"), NULL },
     { GIMP_CURSOR_MODE_CROSSHAIR, NC_("cursor-mode", "Crosshair only"), NULL },
+    { GIMP_CURSOR_MODE_SINGLE_DOT, NC_("cursor-mode", "Single Dot"), NULL },
     { 0, NULL, NULL }
   };
 
