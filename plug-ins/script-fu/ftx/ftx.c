@@ -274,7 +274,7 @@ pointer foreign_mkdir(scheme *sc, pointer args)
   else
     mode = 0777;
 
-  retcode = mkdir(dirname, (mode_t)mode);
+  retcode = g_mkdir(dirname, (mode_t)mode);
   if (retcode == 0)
     return sc->T;
   else
