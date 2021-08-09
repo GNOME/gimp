@@ -96,10 +96,11 @@ gimp_pattern_load (GimpContext   *context,
       (G_MAXSIZE / header.width / header.height / header.bytes < 1))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Invalid header data in '%s': width=%lu, height=%lu, "
-                     "bytes=%lu"), gimp_file_get_utf8_name (file),
-                   (gulong) header.width,
-                   (gulong) header.height,
+                   _("Invalid header data in '%s': width=%lu (maximum %lu), "
+                     "height=%lu (maximum %lu), bytes=%lu"),
+                   gimp_file_get_utf8_name (file),
+                   (gulong) header.width,  (gulong) GIMP_PATTERN_MAX_SIZE,
+                   (gulong) header.height, (gulong) GIMP_PATTERN_MAX_SIZE,
                    (gulong) header.bytes);
       goto error;
     }
