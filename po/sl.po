@@ -1,18 +1,18 @@
 # Slovenian translation of GIMP.
-# Copyright (C) 2004-2012 THE GIMP'S COPYRIGHT HOLDER
+# Copyright (C) 2004-2021 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
 #
 # Boštjan Špetič <igzebede@cyberpipe.org>, 2004–2005.
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
-# Martin Srebotnjak <miles@filmsi.net>, 2007–2013, translated from scratch, 2013–2019.
+# Martin Srebotnjak <miles@filmsi.net>, 2007–2013, translated from scratch, 2013–2019, 2020, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-09 18:03+0000\n"
-"PO-Revision-Date: 2021-05-11 00:08+0200\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"POT-Creation-Date: 2021-07-19 13:27+0000\n"
+"PO-Revision-Date: 2021-07-21 19:20+0200\n"
+"Last-Translator: miles\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -25791,7 +25791,7 @@ msgid "You are running an unsupported version!"
 msgstr "Poganjate nepodprto različico!"
 
 #: ../app/widgets/gimpcriticaldialog.c:238
-#: ../app/widgets/gimpcriticaldialog.c:588
+#: ../app/widgets/gimpcriticaldialog.c:590
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
@@ -25799,27 +25799,27 @@ msgstr ""
 "preprostimi koraki:"
 
 #: ../app/widgets/gimpcriticaldialog.c:240
-#: ../app/widgets/gimpcriticaldialog.c:590
+#: ../app/widgets/gimpcriticaldialog.c:592
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Kopiraj podatke o hrošči na odložišče s klikom: "
 
 #: ../app/widgets/gimpcriticaldialog.c:242
-#: ../app/widgets/gimpcriticaldialog.c:592
+#: ../app/widgets/gimpcriticaldialog.c:594
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Odprite naš sledilnik hroščev v brskalniku s klikom: "
 
 #: ../app/widgets/gimpcriticaldialog.c:244
-#: ../app/widgets/gimpcriticaldialog.c:594
+#: ../app/widgets/gimpcriticaldialog.c:596
 msgid "Create a login if you don't have one yet."
 msgstr "Ustvarite prijavo, če je še niste."
 
 #: ../app/widgets/gimpcriticaldialog.c:245
-#: ../app/widgets/gimpcriticaldialog.c:595
+#: ../app/widgets/gimpcriticaldialog.c:597
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Prilepi besedilo odložišča v novo poročilo o hrošču."
 
 #: ../app/widgets/gimpcriticaldialog.c:246
-#: ../app/widgets/gimpcriticaldialog.c:596
+#: ../app/widgets/gimpcriticaldialog.c:598
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -25843,77 +25843,83 @@ msgstr ""
 "Lahko tudi zgolj zaprete pogovorno okno, a je poročanje o hrošču najboljši "
 "način, da pomagate narediti programje fantastično."
 
-#: ../app/widgets/gimpcriticaldialog.c:358
+#: ../app/widgets/gimpcriticaldialog.c:262
+msgid "Copy-paste this whole debug data to report to developers"
+msgstr ""
+"Kopirajte in prilepite celotne podatke razhroščevanja, da jih posredujete "
+"razvijalcem"
+
+#: ../app/widgets/gimpcriticaldialog.c:360
 msgid "The operating system is out of memory or resources."
 msgstr "Operacijskemu sistemu je zmanjkalo pomnilnika oz. virov."
 
-#: ../app/widgets/gimpcriticaldialog.c:361
+#: ../app/widgets/gimpcriticaldialog.c:363
 msgid "The specified file was not found."
 msgstr "Navedene datoteke ni mogoče najti."
 
-#: ../app/widgets/gimpcriticaldialog.c:364
+#: ../app/widgets/gimpcriticaldialog.c:366
 msgid "The specified path was not found."
 msgstr "Navedene poti ni mogoče najti."
 
-#: ../app/widgets/gimpcriticaldialog.c:367
+#: ../app/widgets/gimpcriticaldialog.c:369
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 "Datoteka .exe ni veljavna (ne-Microsoftova Win32 .exe ali napaka v sliki ."
 "exe)."
 
-#: ../app/widgets/gimpcriticaldialog.c:370
+#: ../app/widgets/gimpcriticaldialog.c:372
 msgid "The operating system denied access to the specified file."
 msgstr "Operacijski sistem je zavrnil dostop do navedene datoteke."
 
-#: ../app/widgets/gimpcriticaldialog.c:373
+#: ../app/widgets/gimpcriticaldialog.c:375
 msgid "The file name association is incomplete or invalid."
 msgstr "Povezava imen datotek ni popolna ali je neveljavna."
 
-#: ../app/widgets/gimpcriticaldialog.c:376
+#: ../app/widgets/gimpcriticaldialog.c:378
 msgid "DDE transaction busy"
 msgstr "Transakcija DDE je zasedena"
 
-#: ../app/widgets/gimpcriticaldialog.c:379
+#: ../app/widgets/gimpcriticaldialog.c:381
 msgid "The DDE transaction failed."
 msgstr "Transakcija DDE ni uspela."
 
-#: ../app/widgets/gimpcriticaldialog.c:382
+#: ../app/widgets/gimpcriticaldialog.c:384
 msgid "The DDE transaction timed out."
 msgstr "Transakcija DDE je prekoračila časovno omejitev."
 
-#: ../app/widgets/gimpcriticaldialog.c:385
+#: ../app/widgets/gimpcriticaldialog.c:387
 msgid "The specified DLL was not found."
 msgstr "Navedenega DLL ni mogoče najti."
 
-#: ../app/widgets/gimpcriticaldialog.c:388
+#: ../app/widgets/gimpcriticaldialog.c:390
 msgid "There is no application associated with the given file name extension."
 msgstr "S podano končnico datotek ni povezan noben program."
 
-#: ../app/widgets/gimpcriticaldialog.c:391
+#: ../app/widgets/gimpcriticaldialog.c:393
 msgid "There was not enough memory to complete the operation."
 msgstr "Ni dovolj pomnilnika, da bi dokončali operacijo."
 
-#: ../app/widgets/gimpcriticaldialog.c:394
+#: ../app/widgets/gimpcriticaldialog.c:396
 msgid "A sharing violation occurred."
 msgstr "Prišlo je do kršitve skupne rabe."
 
-#: ../app/widgets/gimpcriticaldialog.c:397
+#: ../app/widgets/gimpcriticaldialog.c:399
 msgid "Unknown Microsoft Windows error."
 msgstr "Neznana napaka Microsoft Windows."
 
-#: ../app/widgets/gimpcriticaldialog.c:400
+#: ../app/widgets/gimpcriticaldialog.c:402
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Odpiranje »%s« je spodletelo: %s"
 
-#: ../app/widgets/gimpcriticaldialog.c:554
+#: ../app/widgets/gimpcriticaldialog.c:556
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr "GIMP se je sesul z usodno napako: %s"
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:561
+#: ../app/widgets/gimpcriticaldialog.c:563
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "GIMP je naletel na napako: %s"
@@ -25921,12 +25927,12 @@ msgstr "GIMP je naletel na napako: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:569
+#: ../app/widgets/gimpcriticaldialog.c:571
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "GIMP je naletel na več kritičnih napak!"
 
-#: ../app/widgets/gimpcriticaldialog.c:621
+#: ../app/widgets/gimpcriticaldialog.c:623
 msgid "_Restart GIMP"
 msgstr "_Ponovno zaženi GIMP"
 
@@ -26901,7 +26907,7 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "barve"
 
-#: ../app/widgets/gimpitemtreeview.c:755
+#: ../app/widgets/gimpitemtreeview.c:753
 msgid "Lock:"
 msgstr "Zakleni:"
 
