@@ -26,6 +26,8 @@
 #include "gimppattern-save.h"
 #include "gimptempbuf.h"
 
+#include "gimp-intl.h"
+
 
 gboolean
 gimp_pattern_save (GimpData       *data,
@@ -44,6 +46,15 @@ gimp_pattern_save (GimpData       *data,
   width  = gimp_temp_buf_get_width  (mask);
   height = gimp_temp_buf_get_height (mask);
 
+  if (width > GIMP_PATTERN_MAX_SIZE || height > GIMP_PATTERN_MAX_SIZE)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Unsupported pattern dimensions %d x %d.\n"
+                     "GIMP Patterns have a maximum size of %d x %d."),
+                   width, height,
+                   GIMP_PATTERN_MAX_SIZE, GIMP_PATTERN_MAX_SIZE);
+      return FALSE;
+    }
   header.header_size  = g_htonl (sizeof (GimpPatternHeader) +
                                  strlen (name) + 1);
   header.version      = g_htonl (1);
