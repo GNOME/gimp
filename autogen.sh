@@ -282,6 +282,7 @@ $LIBTOOLIZE --force || exit $?
 if test x$enable_gtk_doc = xno; then
     if test -f gtk-doc.make; then :; else
        echo "EXTRA_DIST = missing-gtk-doc" > gtk-doc.make
+       echo "CLEANFILES = " >> gtk-doc.make
     fi
     echo "WARNING: You have disabled gtk-doc."
     echo "         As a result, you will not be able to generate the API"
