@@ -692,8 +692,6 @@ gimp_image_merge_layers (GimpImage     *image,
         (&bg,
          gimp_drawable_get_space (GIMP_DRAWABLE (layer)),
          gimp_layer_get_real_composite_space (bottom_layer));
-
-      position = 0;
     }
   else
     {
@@ -715,7 +713,14 @@ gimp_image_merge_layers (GimpImage     *image,
 
           return NULL;
         }
+    }
 
+  if (merge_type == GIMP_FLATTEN_IMAGE)
+    {
+      position = 0;
+    }
+  else
+    {
       /*  Find the index in the layer list of the bottom layer--we need this
        *  in order to add the final, merged layer to the layer list correctly
        */
