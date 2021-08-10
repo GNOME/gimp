@@ -126,6 +126,8 @@ gimp_scale_combo_box_constructed (GObject *object)
 
   entry = gtk_bin_get_child (GTK_BIN (combo_box));
 
+  gtk_widget_add_events (GTK_WIDGET (entry), GDK_SCROLL_MASK);
+
   g_object_set (entry,
                 "xalign",             1.0,
                 "width-chars",        5,
