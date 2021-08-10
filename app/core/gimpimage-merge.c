@@ -620,8 +620,6 @@ gimp_image_merge_layers (GimpImage     *image,
 
       flatten_node = gimp_gegl_create_flatten_node (
         &bg, gimp_layer_get_real_composite_space (bottom_layer));
-
-      position = 0;
     }
   else
     {
@@ -643,7 +641,14 @@ gimp_image_merge_layers (GimpImage     *image,
 
           return NULL;
         }
+    }
 
+  if (merge_type == GIMP_FLATTEN_IMAGE)
+    {
+      position = 0;
+    }
+  else
+    {
       /*  Find the index in the layer list of the bottom layer--we need this
        *  in order to add the final, merged layer to the layer list correctly
        */
