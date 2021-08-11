@@ -1068,10 +1068,9 @@ prefs_message (GtkMessageType  type,
                                    type, GTK_BUTTONS_OK,
                                    "%s", message);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
-  gtk_widget_show (dialog);
+  gtk_dialog_run (GTK_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
 }
 
 static GtkWidget *
