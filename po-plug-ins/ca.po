@@ -6571,7 +6571,7 @@ msgstr "Imatge de fax G3"
 #, c-format
 msgid "Could not create buffer to process image data."
 msgstr ""
-"No s'ha pogut crear la memòria intermèdia per processar les dades de la "
+"No s'ha pogut crear la memòria intermèdia per a processar les dades de la "
 "imatge."
 
 #: ../plug-ins/file-faxg3/faxg3.c:562
