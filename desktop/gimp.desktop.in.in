@@ -13,3 +13,4 @@ Terminal=false
 Categories=Graphics;2DGraphics;RasterGraphics;GTK;
 StartupNotify=true
 MimeType=@MIME_TYPES@
+StartupWMClass=gimp-@GIMP_APP_VERSION@
