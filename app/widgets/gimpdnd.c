@@ -2206,6 +2206,7 @@ gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
       desc = gimp_viewable_get_description (viewable, NULL);
       desc_width_chars =  MIN (strlen (desc), 10);
     }
+  g_list_free (viewables);
 
   if (desc)
     {
