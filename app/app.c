@@ -34,10 +34,6 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
-#ifndef GIMP_CONSOLE_COMPILATION
-#include <gtk/gtk.h>
-#endif
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #ifdef G_OS_WIN32
@@ -52,7 +48,6 @@
 
 #include "core/core-types.h"
 
-#include "config/gimpearlyrc.h"
 #include "config/gimprc.h"
 
 #include "gegl/gimp-gegl.h"
@@ -72,7 +67,6 @@
 
 #include "app.h"
 #include "errors.h"
-#include "language.h"
 #include "sanity.h"
 #include "gimp-debug.h"
 
@@ -198,8 +192,6 @@ app_run (const gchar         *full_prog_name,
   GFile              *default_folder = NULL;
   GFile              *gimpdir;
   const gchar        *abort_message;
-  GimpEarlyRc        *earlyrc;
-  gchar              *language   = NULL;
   GError             *font_error = NULL;
 
   if (filenames && filenames[0] && ! filenames[1] &&
@@ -221,58 +213,6 @@ app_run (const gchar         *full_prog_name,
 
       filenames = NULL;
     }
-
-  /* Here we do a first pass on "gimprc" file for the sole purpose
-   * of getting some configuration data that's required during early
-   * initialization, before the gimp singleton is constructed
-   */
-  earlyrc = gimp_early_rc_new (alternate_system_gimprc,
-                               alternate_gimprc,
-                               be_verbose);
-
-  /* Language needs to be determined first, before any GimpContext is
-   * instantiated (which happens when the Gimp object is created)
-   * because its properties need to be properly localized in the
-   * settings language (if different from system language). Otherwise we
-   * end up with pieces of GUI always using the system language (cf. bug
-   * 787457)
-   */
-  language = gimp_early_rc_get_language (earlyrc);
-
-  /*  change the locale if a language if specified  */
-  language_init (language);
-  if (language)
-    g_free (language);
-
-#if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
-
-#if GTK_MAJOR_VERSION > 3
-#warning For GTK4 and above use the proper backend-specific API instead of the GDK_WIN32_TABLET_INPUT_API environment variable
-#endif
-
-  /* Support for Windows Ink was introduced in GTK3 3.24.30
-   */
-  if (gtk_get_major_version () == 3 &&
-      (gtk_get_minor_version () > 24 ||
-      (gtk_get_minor_version () == 24 &&
-       gtk_get_micro_version () >= 30)))
-    {
-      GimpWin32PointerInputAPI api = gimp_early_rc_get_win32_pointer_input_api (earlyrc);;
-
-      switch (api)
-        {
-        case GIMP_WIN32_POINTER_INPUT_API_WINTAB:
-          g_setenv ("GDK_WIN32_TABLET_INPUT_API", "wintab", TRUE);
-          break;
-        case GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK:
-          g_setenv ("GDK_WIN32_TABLET_INPUT_API", "winpointer", TRUE);
-          break;
-        }
-    }
-
-#endif
-
-  g_object_unref (earlyrc);
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
