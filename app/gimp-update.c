@@ -447,13 +447,12 @@ gimp_version_break (const gchar *v,
           if (versions[2] != NULL)
             {
               *micro = g_ascii_strtoll (versions[2], NULL, 10);
-              return TRUE;
             }
         }
     }
   g_strfreev (versions);
 
-  return (*major > 0);
+  return (*major > 0 || *minor > 0 || *micro > 0);
 }
 
 /**
