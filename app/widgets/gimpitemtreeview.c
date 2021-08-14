@@ -1254,11 +1254,12 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
                                     GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeViewClass *item_view_class;
-  GimpItemTreeView      *item_view         = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpItemTreeView      *item_view              = GIMP_ITEM_TREE_VIEW (tree_view);
   GList                 *iter;
-  GimpImage             *src_image         = NULL;
-  GType                  src_viewable_type = G_TYPE_NONE;
-  gint                   dest_index        = -1;
+  GimpImage             *src_image              = NULL;
+  GType                  src_viewable_type      = G_TYPE_NONE;
+  gint                   dest_index             = -1;
+  gboolean               src_viewables_reversed = FALSE;
 
   g_return_if_fail (g_list_length (src_viewables) > 0);
 
@@ -1297,7 +1298,10 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
       (drop_pos == GTK_TREE_VIEW_DROP_INTO_OR_AFTER &&
        dest_viewable                                &&
        gimp_viewable_get_children (dest_viewable)))
-    src_viewables = g_list_reverse (src_viewables);
+    {
+      src_viewables_reversed = TRUE;
+      src_viewables = g_list_reverse (src_viewables);
+    }
 
   if (item_view->priv->image != src_image ||
       ! g_type_is_a (src_viewable_type, item_view_class->item_type))
@@ -1364,6 +1368,15 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
                                    TRUE, NULL);
         }
     }
+
+  if (src_viewables_reversed)
+    /* The caller keeps a copy to src_viewables to free it. If we
+     * reverse it, the pointer stays valid yet ends up pointing to the
+     * now last (previously first) element of the list. So we leak the
+     * whole list but this element. Let's reverse back the list to have
+     * next and prev pointers same as call time.
+     */
+    src_viewables = g_list_reverse (src_viewables);
 
   gimp_image_undo_group_end (item_view->priv->image);
   gimp_image_flush (item_view->priv->image);
