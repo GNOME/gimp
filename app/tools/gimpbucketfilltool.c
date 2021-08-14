@@ -879,6 +879,8 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
               break;
             }
         }
+
+      g_list_free (drawables);
     }
 
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
