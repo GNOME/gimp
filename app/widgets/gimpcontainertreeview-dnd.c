@@ -225,7 +225,6 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
             {
               g_warning ("%s: contents of the viewable list has the wrong type '%s'.",
                          G_STRFUNC, G_OBJECT_TYPE_NAME (iter->data));
-              g_list_free (src_viewables);
               goto drop_impossible;
             }
       }
@@ -336,6 +335,10 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
                                                      tree_view);
               *return_src = src_viewables;
             }
+          else
+            {
+              g_list_free (src_viewables);
+            }
 
           if (return_dest)
             *return_dest = dest_viewable;
@@ -345,12 +348,12 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
 
           return TRUE;
         }
-
-      gtk_tree_path_free (drop_path);
     }
 
  drop_impossible:
 
+  g_list_free (src_viewables);
+  gtk_tree_path_free (drop_path);
   gdk_drag_status (context, 0, time);
 
   return FALSE;
