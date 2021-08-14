@@ -516,8 +516,8 @@ gimp_plug_in_cleanup_item_new (GimpPlugInProcFrame *proc_frame,
   cleanup->item    = item;
   cleanup->item_id = gimp_item_get_id (item);
 
-  proc_frame->item_cleanups = g_list_remove (proc_frame->item_cleanups,
-                                             cleanup);
+  proc_frame->item_cleanups = g_list_prepend (proc_frame->item_cleanups,
+                                              cleanup);
 
   return cleanup;
 }
