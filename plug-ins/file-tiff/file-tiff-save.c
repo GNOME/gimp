@@ -702,7 +702,7 @@ save_layer (TIFF        *tif,
 
   if (alpha)
     {
-      if (config_save_transp_pixels ||
+      if (config_save_transp_pixels &&
           /* Associated alpha, hence premultiplied components is
            * meaningless for palette images with transparency in TIFF
            * format, since alpha is set per pixel, not per color (so a
