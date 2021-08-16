@@ -280,9 +280,12 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
     {
       if (settings || run_mode == GIMP_RUN_NONINTERACTIVE)
         {
+          GimpValueArray *return_vals;
+
           g_value_set_object (gimp_value_array_index (args, 3), settings);
-          gimp_procedure_execute (procedure, gimp, context, progress,
-                                  args, NULL);
+          return_vals = gimp_procedure_execute (procedure, gimp, context, progress,
+                                                args, NULL);
+          gimp_value_array_unref (return_vals);
           return;
         }
 
