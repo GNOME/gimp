@@ -234,6 +234,8 @@ file_gih_pipe_to_image (Gimp          *gimp,
           gimp_parasite_free (parasite);
           g_free (paramstring);
         }
+
+      gimp_pixpipe_params_free (&params);
     }
 
   return image;
