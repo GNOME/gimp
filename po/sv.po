@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-07-05 16:41+0000\n"
-"PO-Revision-Date: 2021-07-06 07:31+0200\n"
+"POT-Creation-Date: 2021-08-16 10:25+0000\n"
+"PO-Revision-Date: 2021-08-16 14:21+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -1293,7 +1293,7 @@ msgid "Text Editor"
 msgstr "Textredigerare"
 
 #: ../app/actions/actions.c:231 ../app/dialogs/dialogs.c:312
-#: ../app/gui/gui.c:554
+#: ../app/gui/gui.c:567
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
 
@@ -10656,7 +10656,7 @@ msgstr "Flytta det här fönstret till skärmen %s"
 #: ../app/dialogs/template-options-dialog.c:119
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
-#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:197
+#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:198
 #: ../app/tools/gimpfiltertool.c:347 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:663
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
@@ -13160,7 +13160,7 @@ msgstr "Ogiltig huvuddata i ”%s”: Penselnamnet är för långt: %lu"
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ogiltig UTF-8-sträng i penselfilen ”%s”."
 
-#: ../app/core/gimpbrush-load.c:279 ../app/core/gimppattern-load.c:141
+#: ../app/core/gimpbrush-load.c:279 ../app/core/gimppattern-load.c:142
 #: ../app/dialogs/template-options-dialog.c:110
 #: ../app/display/gimptoolpath.c:570
 msgid "Unnamed"
@@ -14763,24 +14763,27 @@ msgstr ""
 
 #: ../app/core/gimppattern-load.c:99
 #, c-format
-msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr "Ogiltig huvuddata i ”%s”: bredd=%lu, höjd=%lu, byte=%lu"
+msgid ""
+"Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
+"%lu), bytes=%lu"
+msgstr ""
+"Ogiltig huvuddata i ”%s”: bredd=%lu (max %lu), höjd=%lu (max %lu), byte=%lu"
 
-#: ../app/core/gimppattern-load.c:115
+#: ../app/core/gimppattern-load.c:116
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr "Ogiltig huvuddata i ”%s”: Mönsternamnet är för långt: %lu"
 
-#: ../app/core/gimppattern-load.c:128 ../app/core/gimppattern-load.c:166
+#: ../app/core/gimppattern-load.c:129 ../app/core/gimppattern-load.c:167
 msgid "File appears truncated."
 msgstr "Fil verkar vara avhuggen."
 
-#: ../app/core/gimppattern-load.c:134
+#: ../app/core/gimppattern-load.c:135
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Ogiltig UTF-8-sträng i mönsterfilen ”%s”."
 
-#: ../app/core/gimppattern-load.c:177
+#: ../app/core/gimppattern-load.c:178
 msgid "Fatal parse error in pattern file: "
 msgstr "Ödesdigert tolkningsfel i palettfil: "
 
@@ -15571,7 +15574,7 @@ msgid ""
 msgstr ""
 "Är du säker att du vill ta bort ”%s” från listan och ta bort den från disken?"
 
-#: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:194
+#: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:195
 #: ../app/gui/gui-message.c:271
 msgid "GIMP Message"
 msgstr "GIMP-meddelande"
@@ -19835,23 +19838,23 @@ msgstr "Alfavärdet"
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:240
+#: ../app/gui/gui.c:241
 msgid "default:LTR"
 msgstr "default:LTR"
 
-#: ../app/gui/gui.c:330
+#: ../app/gui/gui.c:343
 msgid "Image Recovery"
 msgstr "Bildåterskapande"
 
-#: ../app/gui/gui.c:332
+#: ../app/gui/gui.c:345
 msgid "_Discard"
 msgstr "_Förkasta"
 
-#: ../app/gui/gui.c:333
+#: ../app/gui/gui.c:346
 msgid "_Recover"
 msgstr "Å_terskapa"
 
-#: ../app/gui/gui.c:344
+#: ../app/gui/gui.c:357
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Ajdå! Det verkar som att GIMP återställdes från en krasch!"
 
@@ -19861,7 +19864,7 @@ msgstr "Ajdå! Det verkar som att GIMP återställdes från en krasch!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: ../app/gui/gui.c:353
+#: ../app/gui/gui.c:366
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -19873,7 +19876,7 @@ msgstr[1] "%d bilder räddades från kraschen. Vill du försöka återskapa dem?
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:598
+#: ../app/gui/gui.c:611
 msgid "Documents"
 msgstr "Dokument"
 
