@@ -527,6 +527,7 @@ gimp_mypaint_surface_destroy (MyPaintSurface *base_surface)
 
   g_clear_object (&surface->buffer);
   g_clear_object (&surface->paint_mask);
+  g_free (surface);
 }
 
 GimpMybrushSurface *
