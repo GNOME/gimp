@@ -22,15 +22,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-03-30 22:11+0000\n"
-"PO-Revision-Date: 2021-04-01 15:04+0200\n"
+"POT-Creation-Date: 2021-08-05 17:55+0000\n"
+"PO-Revision-Date: 2021-08-15 13:23+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/common/align-layers.c:158
@@ -62,7 +62,7 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1847
+#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1847
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:702
 #: ../plug-ins/common/file-pdf-load.c:1282
@@ -82,7 +82,7 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1308 ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddsread.c:1356 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:2430 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -140,7 +140,7 @@ msgstr "_Cancelar"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1309 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1357 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -393,12 +393,12 @@ msgstr "Velocidad de la reproducción"
 
 #. 2 styles of default frame disposals: cumulative layers and one frame per layer.
 #: ../plug-ins/common/animation-play.c:931
-#: ../plug-ins/common/file-gif-save.c:1298
+#: ../plug-ins/common/file-gif-save.c:1321
 msgid "Cumulative layers (combine)"
 msgstr "Capas acumulativas (combinar)"
 
 #: ../plug-ins/common/animation-play.c:935
-#: ../plug-ins/common/file-gif-save.c:1300
+#: ../plug-ins/common/file-gif-save.c:1323
 msgid "One frame per layer (replace)"
 msgstr "Un cuadro por capa (reemplazar)"
 
@@ -454,7 +454,7 @@ msgstr "_Vertical"
 #.
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1011
 #: ../plug-ins/common/decompose.c:598 ../plug-ins/common/file-cel.c:446
-#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:611
+#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:670
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:992
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
@@ -1063,16 +1063,16 @@ msgid "Save CML Explorer Parameters"
 msgstr "Guardar los parámetros del Examinador EMA"
 
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
+#: ../plug-ins/common/file-dicom.c:1470 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
 #: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
+#: ../plug-ins/file-bmp/bmp-save.c:320 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1726
+#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1728
 #: ../plug-ins/file-tiff/file-tiff-save.c:1045
 #: ../plug-ins/file-tiff/file-tiff-save.c:1155 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
@@ -1093,7 +1093,7 @@ msgstr "Cargar los parámetros del Examinador EMA"
 
 #: ../plug-ins/common/cml-explorer.c:2251 ../plug-ins/common/curve-bend.c:944
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
-#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:342
+#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3348
@@ -2169,7 +2169,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
+#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:337
 #: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:696 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
@@ -2259,16 +2259,16 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
+#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:880
 #: ../plug-ins/common/file-heif.c:1268 ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
 #: ../plug-ins/common/file-png.c:1611 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1213 ../plug-ins/common/file-xbm.c:1040
 #: ../plug-ins/common/file-xpm.c:674 ../plug-ins/common/file-xwd.c:652
-#: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
+#: ../plug-ins/file-bmp/bmp-save.c:312 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
-#: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1697
+#: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1699
 #: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:1035
 #, c-format
 msgid "Exporting '%s'"
@@ -2360,24 +2360,29 @@ msgstr "Enlace del escritorio"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Ocurrió un error al abrir el archivo de escritorio «%s»: %s"
 
-#: ../plug-ins/common/file-dicom.c:139
+#: ../plug-ins/common/file-dicom.c:140
 msgid "DICOM image"
 msgstr "Imagen DICOM"
 
-#: ../plug-ins/common/file-dicom.c:164
+#: ../plug-ins/common/file-dicom.c:165
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Imagen «Digital Imaging and Communications in Medicine»"
 
-#: ../plug-ins/common/file-dicom.c:368
+#: ../plug-ins/common/file-dicom.c:371
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "«%s» no es un archivo DICOM."
 
-#: ../plug-ins/common/file-dicom.c:1336
+#: ../plug-ins/common/file-dicom.c:544
+#, c-format
+msgid "Transfer syntax %s is not supported by GIMP."
+msgstr "GIMP no admite la sintaxis de transferencia %s."
+
+#: ../plug-ins/common/file-dicom.c:1435
 msgid "Cannot save images with alpha channel."
 msgstr "No se pueden guardar imágenes con canales alfa."
 
-#: ../plug-ins/common/file-dicom.c:1355 ../plug-ins/common/file-ps.c:1232
+#: ../plug-ins/common/file-dicom.c:1454 ../plug-ins/common/file-ps.c:1232
 #: ../plug-ins/common/file-xwd.c:647 ../plug-ins/file-fits/fits.c:468
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2478,18 +2483,18 @@ msgstr ""
 "El formato GIF sólo soporta comentarios en codificación ASCII de 7 bits. No "
 "se guardará ningún comentario."
 
-#: ../plug-ins/common/file-gif-save.c:838
+#: ../plug-ins/common/file-gif-save.c:853
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "No se puede guardar imágenes en color RGB. Convertir a color indexado o\n"
 "escala en gris primero."
 
-#: ../plug-ins/common/file-gif-save.c:1035
+#: ../plug-ins/common/file-gif-save.c:1058
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Retardo insertado para evitar la maldita animación chupadora de CPU."
 
-#: ../plug-ins/common/file-gif-save.c:1084
+#: ../plug-ins/common/file-gif-save.c:1107
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2498,11 +2503,11 @@ msgstr ""
 "extiende\n"
 "más allá de los bordes reales de la imagen."
 
-#: ../plug-ins/common/file-gif-save.c:1090
+#: ../plug-ins/common/file-gif-save.c:1113
 msgid "Cr_op"
 msgstr "_Recortar"
 
-#: ../plug-ins/common/file-gif-save.c:1101
+#: ../plug-ins/common/file-gif-save.c:1124
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2510,11 +2515,11 @@ msgstr ""
 "El formato de archivo GIF no permite esto. Puede elegir si quiere recortar\n"
 "todas las capas de los bordes de la imagen, o cancelar la exportación."
 
-#: ../plug-ins/common/file-gif-save.c:1235
+#: ../plug-ins/common/file-gif-save.c:1258
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1243
+#: ../plug-ins/common/file-gif-save.c:1266
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -2523,11 +2528,11 @@ msgstr ""
 "Ocurrió un error al cargar el archivo de IU «%s»:\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1296
+#: ../plug-ins/common/file-gif-save.c:1319
 msgid "I don't care"
 msgstr "No me importa"
 
-#: ../plug-ins/common/file-gif-save.c:1317
+#: ../plug-ins/common/file-gif-save.c:1340
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -2536,7 +2541,7 @@ msgstr ""
 "La imagen que está tratando de exportar tiene una sola capa."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2533
+#: ../plug-ins/common/file-gif-save.c:2556
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "El comentario predeterminado está limitado a %d caracteres."
@@ -4498,7 +4503,7 @@ msgstr "_Retardo:"
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr ""
 "Introduzca el intervalo de tiempo en milisegundos en que se renderiza cada "
-"cuadro."
+"fotograma."
 
 #: ../plug-ins/common/file-xmc.c:1247
 msgid "_Use this value only for a frame which delay is not specified."
@@ -6674,31 +6679,31 @@ msgstr "Profundidad de bits no soportada o no válida."
 msgid "The bitmap ends unexpectedly."
 msgstr "El mapa de bits finaliza inesperadamente."
 
-#: ../plug-ins/file-bmp/bmp-save.c:182 ../plug-ins/file-bmp/bmp-save.c:215
+#: ../plug-ins/file-bmp/bmp-save.c:183 ../plug-ins/file-bmp/bmp-save.c:216
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
 "No se puede exportar una imagen indexada con transparencia en \n"
 "formato de archivo BMP."
 
-#: ../plug-ins/file-bmp/bmp-save.c:184 ../plug-ins/file-bmp/bmp-save.c:217
+#: ../plug-ins/file-bmp/bmp-save.c:185 ../plug-ins/file-bmp/bmp-save.c:218
 msgid "Alpha channel will be ignored."
 msgstr "El canal alfa se ignorará."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-save.c:920
+#: ../plug-ins/file-bmp/bmp-save.c:924
 msgid "_Run-Length Encoded"
 msgstr "Codificación _Run-Lenght"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-save.c:933
+#: ../plug-ins/file-bmp/bmp-save.c:937
 msgid "Co_mpatibility Options"
 msgstr "Opciones de co_mpatibilidad"
 
-#: ../plug-ins/file-bmp/bmp-save.c:943
+#: ../plug-ins/file-bmp/bmp-save.c:947
 msgid "_Do not write color space information"
 msgstr "No escribir la información del espacio _de colores"
 
-#: ../plug-ins/file-bmp/bmp-save.c:945
+#: ../plug-ins/file-bmp/bmp-save.c:949
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -6711,20 +6716,20 @@ msgstr ""
 
 #. Advanced Options
 #. Advanced expander
-#: ../plug-ins/file-bmp/bmp-save.c:961 ../plug-ins/file-jpeg/jpeg-save.c:1014
+#: ../plug-ins/file-bmp/bmp-save.c:965 ../plug-ins/file-jpeg/jpeg-save.c:1014
 #: ../plug-ins/file-webp/file-webp-dialog.c:221
 msgid "_Advanced Options"
 msgstr "_Opciones avanzadas"
 
-#: ../plug-ins/file-bmp/bmp-save.c:976
+#: ../plug-ins/file-bmp/bmp-save.c:980
 msgid "16 bits"
 msgstr "16 bits"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1012
+#: ../plug-ins/file-bmp/bmp-save.c:1016
 msgid "24 bits"
 msgstr "24 bits"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1029
+#: ../plug-ins/file-bmp/bmp-save.c:1033
 msgid "32 bits"
 msgstr "32 bits"
 
@@ -6748,15 +6753,15 @@ msgstr "Decodificar YCoCg (escalado)"
 msgid "Decode Alpha exponent"
 msgstr "Decodificar exponente Alfa"
 
-#: ../plug-ins/file-dds/ddsread.c:1306
+#: ../plug-ins/file-dds/ddsread.c:1354
 msgid "Load DDS"
 msgstr "Cargar DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1325
+#: ../plug-ins/file-dds/ddsread.c:1373
 msgid "_Load mipmaps"
 msgstr "_Cargar mipmaps"
 
-#: ../plug-ins/file-dds/ddsread.c:1332
+#: ../plug-ins/file-dds/ddsread.c:1380
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "Decodificar _automáticamente imágenes YCoCg/AExp al detectarlas"
 
@@ -7279,7 +7284,7 @@ msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Error: no se puede convertir el tipo de imagen básico de GIMP al modo PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1690
+#: ../plug-ins/file-psd/psd-save.c:1692
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7288,7 +7293,7 @@ msgstr ""
 "Imposible exportar «%s». El formato de archivo PSD no soporta imágenes que "
 "tengan más de 30.000 píxeles de anchura o altura."
 
-#: ../plug-ins/file-psd/psd-save.c:1711
+#: ../plug-ins/file-psd/psd-save.c:1713
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10762,7 +10767,7 @@ msgstr "Estirar"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1161
 msgid "IFS Fractal Render Options"
-msgstr "Opciones de render de fractal IFS"
+msgstr "Opciones de renderizado de fractal IFS"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1183
 msgid "Max. memory:"
