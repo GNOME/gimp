@@ -992,6 +992,7 @@ gimp_stroke_real_duplicate (GimpStroke *stroke)
                              "name", gimp_object_get_name (stroke),
                              NULL);
 
+  g_queue_free_full (new_stroke->anchors, (GDestroyNotify) gimp_anchor_free);
   new_stroke->anchors = g_queue_copy (stroke->anchors);
 
   for (list = new_stroke->anchors->head; list; list = g_list_next (list))
