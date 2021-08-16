@@ -454,6 +454,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   g_object_unref (color);
 
   g_list_free_full (blob_unions, g_free);
+  g_list_free (blobs_to_render);
 }
 
 static GimpBlob *
