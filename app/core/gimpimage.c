@@ -272,6 +272,9 @@ static void     gimp_image_update_bounding_box   (GimpImage         *image);
 
 static gint     gimp_image_layer_stack_cmp         (GList           *layers1,
                                                     GList           *layers2);
+static void gimp_image_rec_remove_layer_stack_dups (GimpImage       *image,
+                                                    GSList          *start);
+static void     gimp_image_clean_layer_stack       (GimpImage       *image);
 static void     gimp_image_remove_from_layer_stack (GimpImage       *image,
                                                     GimpLayer       *layer);
 static gint     gimp_image_selected_is_descendant  (GimpViewable    *selected,
@@ -1742,17 +1745,14 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
       /*  Configure the layer stack to reflect this change  */
       GSList *prev_layers;
 
-      prev_layers = g_slist_find_custom (private->layer_stack, layers,
-                                         (GCompareFunc) gimp_image_layer_stack_cmp);
-
-      if (prev_layers)
+      while ((prev_layers = g_slist_find_custom (private->layer_stack, layers,
+                                                (GCompareFunc) gimp_image_layer_stack_cmp)))
         {
           g_list_free (prev_layers->data);
           private->layer_stack = g_slist_delete_link (private->layer_stack,
                                                       prev_layers);
         }
-      private->layer_stack = g_slist_prepend (private->layer_stack,
-                                              g_list_copy (layers));
+      private->layer_stack = g_slist_prepend (private->layer_stack, g_list_copy (layers));
     }
 
   g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
@@ -1875,11 +1875,67 @@ gimp_image_layer_stack_cmp (GList *layers1,
 
       for (iter = layers1; iter; iter = iter->next)
         {
-          if (! g_list_find (layers2, iter))
+          if (! g_list_find (layers2, iter->data))
             return 1;
         }
       return 0;
     }
+}
+
+/**
+ * gimp_image_rec_remove_layer_stack_dups:
+ * @image:
+ *
+ * Recursively remove duplicates from the layer stack. You should not
+ * call this directly, call gimp_image_clean_layer_stack() instead.
+ */
+static void
+gimp_image_rec_remove_layer_stack_dups (GimpImage *image,
+                                        GSList    *start)
+{
+  GimpImagePrivate *private;
+  GSList           *dup_layers;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (start == NULL || start->next == NULL)
+    return;
+
+  while ((dup_layers = g_slist_find_custom (start->next, start->data,
+                                            (GCompareFunc) gimp_image_layer_stack_cmp)))
+    {
+      g_list_free (dup_layers->data);
+      /* We can safely remove the duplicate then search again because we
+       * know that @start is never removed as we search after it.
+       */
+      private->layer_stack = g_slist_delete_link (private->layer_stack,
+                                                  dup_layers);
+    }
+
+  gimp_image_rec_remove_layer_stack_dups (image, start->next);
+}
+
+/**
+ * gimp_image_clean_layer_stack:
+ * @image:
+ *
+ * Remove any duplicate and empty selections in the layer stack.
+ */
+static void
+gimp_image_clean_layer_stack (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  /* First remove all empty layer lists. */
+  private->layer_stack = g_slist_remove_all (private->layer_stack, NULL);
+  /* Then remove all duplicates. */
+  gimp_image_rec_remove_layer_stack_dups (image, private->layer_stack);
 }
 
 static void
@@ -1896,15 +1952,7 @@ gimp_image_remove_from_layer_stack (GimpImage *image,
 
   /* Remove layer itself from the MRU layer stack. */
   for (slist = private->layer_stack; slist; slist = slist->next)
-    {
-      GList *layers = slist->data;
-
-      layers = g_list_remove (layers, layer);
-      if (layers == NULL)
-        private->layer_stack = g_slist_delete_link (private->layer_stack, slist);
-      else
-        slist->data = layers;
-    }
+    slist->data = g_list_remove (slist->data, layer);
 
   /*  Also remove all children of a group layer from the layer_stack  */
   if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
@@ -1920,19 +1968,13 @@ gimp_image_remove_from_layer_stack (GimpImage *image,
           GimpLayer *child = list->data;
 
           for (slist = private->layer_stack; slist; slist = slist->next)
-            {
-              GList *layers = slist->data;
-
-              layers = g_list_remove (layers, child);
-              if (layers == NULL)
-                private->layer_stack = g_slist_delete_link (private->layer_stack, slist);
-              else
-                slist->data = layers;
-            }
+            slist->data = g_list_remove (slist->data, child);
         }
 
       g_list_free (children);
     }
+
+  gimp_image_clean_layer_stack (image);
 }
 
 static gint
