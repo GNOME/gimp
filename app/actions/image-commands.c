@@ -1561,5 +1561,5 @@ image_merge_layers_callback (GtkWidget     *dialog,
 
   gimp_image_flush (image);
 
-  gtk_widget_destroy (dialog);
+  g_clear_pointer (&dialog, gtk_widget_destroy);
 }
