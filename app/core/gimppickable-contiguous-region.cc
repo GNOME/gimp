@@ -540,8 +540,11 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
             {
               mask[c->x + c->y * width] = 1.0;
               if (c->level >= line_art_max_grow)
-                /* Do not overflood under line arts. */
-                continue;
+                {
+                  /* Do not overflood under line arts. */
+                  g_free (c);
+                  continue;
+                }
               if (c->x > 0)
                 {
                   nx = c->x - 1;
