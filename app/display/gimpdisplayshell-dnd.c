@@ -364,6 +364,7 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
           gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                                 GIMP_MESSAGE_ERROR,
                                 _("Cannot modify the pixels of layer groups."));
+          g_list_free (drawables);
           return;
         }
 
@@ -372,6 +373,7 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
           gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                                 GIMP_MESSAGE_ERROR,
                                 _("A selected layer's pixels are locked."));
+          g_list_free (drawables);
           return;
         }
     }
@@ -400,6 +402,7 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
         }
     }
 
+  g_list_free (drawables);
   gimp_image_undo_group_end (image);
   gimp_display_shell_dnd_flush (shell, image);
 }
