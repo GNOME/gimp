@@ -116,6 +116,8 @@ static void
 gimp_source_tool_init (GimpSourceTool *source)
 {
   source->show_source_outline = TRUE;
+
+  gimp_paint_tool_enable_multi_paint (GIMP_PAINT_TOOL (source));
 }
 
 static gboolean

@@ -40,7 +40,7 @@
 
 
 static void   gimp_dodge_burn_paint  (GimpPaintCore    *paint_core,
-                                      GimpDrawable     *drawable,
+                                      GList            *drawables,
                                       GimpPaintOptions *paint_options,
                                       GimpSymmetry     *sym,
                                       GimpPaintState    paint_state,
@@ -86,19 +86,22 @@ gimp_dodge_burn_init (GimpDodgeBurn *dodgeburn)
 
 static void
 gimp_dodge_burn_paint (GimpPaintCore    *paint_core,
-                       GimpDrawable     *drawable,
+                       GList            *drawables,
                        GimpPaintOptions *paint_options,
                        GimpSymmetry     *sym,
                        GimpPaintState    paint_state,
                        guint32           time)
 {
+  g_return_if_fail (g_list_length (drawables) == 1);
+
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
       break;
 
     case GIMP_PAINT_STATE_MOTION:
-      gimp_dodge_burn_motion (paint_core, drawable, paint_options, sym);
+      for (GList *iter = drawables; iter; iter = iter->next)
+        gimp_dodge_burn_motion (paint_core, iter->data, paint_options, sym);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
@@ -142,12 +145,12 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
     return;
 
   if (paint_options->application_mode == GIMP_PAINT_CONSTANT)
-    src_buffer = gimp_paint_core_get_orig_image (paint_core);
+    src_buffer = gimp_paint_core_get_orig_image (paint_core, drawable);
   else
     src_buffer = gimp_drawable_get_buffer (drawable);
 
   gimp_brush_core_eval_transform_dynamics (brush_core,
-                                           drawable,
+                                           image,
                                            paint_options,
                                            coords);
   n_strokes = gimp_symmetry_get_size (sym);

@@ -68,7 +68,7 @@
  */
 
 static gboolean     gimp_heal_start              (GimpPaintCore    *paint_core,
-                                                  GimpDrawable     *drawable,
+                                                  GList            *drawables,
                                                   GimpPaintOptions *paint_options,
                                                   const GimpCoords *coords,
                                                   GError          **error);
@@ -138,21 +138,21 @@ gimp_heal_init (GimpHeal *heal)
 
 static gboolean
 gimp_heal_start (GimpPaintCore     *paint_core,
-                 GimpDrawable      *drawable,
+                 GList             *drawables,
                  GimpPaintOptions  *paint_options,
                  const GimpCoords  *coords,
                  GError           **error)
 {
   GimpSourceCore *source_core = GIMP_SOURCE_CORE (paint_core);
 
-  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawable,
+  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawables,
                                                      paint_options, coords,
                                                      error))
     {
       return FALSE;
     }
 
-  if (! source_core->set_source && gimp_drawable_is_indexed (drawable))
+  if (! source_core->set_source && gimp_drawable_is_indexed (drawables->data))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("Healing does not operate on indexed layers."));

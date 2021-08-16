@@ -58,8 +58,9 @@ typedef struct
 
 typedef struct
 {
-  GimpCoords coords;
-  guint32    time;
+  GList        *drawables;
+  GimpCoords    coords;
+  guint32       time;
 } InterpolateData;
 
 
@@ -159,9 +160,8 @@ gimp_paint_tool_paint_thread (gpointer data)
 static gboolean
 gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
 {
-  GimpPaintCore *core     = paint_tool->core;
-  GimpDrawable  *drawable = paint_tool->drawable;
-  gboolean       update;
+  GimpPaintCore *core   = paint_tool->core;
+  gboolean       update = FALSE;
 
   paint_timeout_pending = TRUE;
 
@@ -170,7 +170,12 @@ gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
   paint_tool->paint_x = core->last_paint.x;
   paint_tool->paint_y = core->last_paint.y;
 
-  update = gimp_drawable_flush_paint (drawable);
+  for (GList *iter = paint_tool->drawables; iter; iter = iter->next)
+    {
+      update |= gimp_drawable_flush_paint (iter->data);
+      if (update)
+        break;
+    }
 
   if (update && GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_flush)
     GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_flush (paint_tool);
@@ -205,11 +210,11 @@ gimp_paint_tool_paint_interpolate (GimpPaintTool   *paint_tool,
 {
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
   GimpPaintCore    *core          = paint_tool->core;
-  GimpDrawable     *drawable      = paint_tool->drawable;
 
-  gimp_paint_core_interpolate (core, drawable, paint_options,
+  gimp_paint_core_interpolate (core, data->drawables, paint_options,
                                &data->coords, data->time);
 
+  g_list_free (data->drawables);
   g_slice_free (InterpolateData, data);
 }
 
@@ -230,10 +235,9 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
   GimpPaintCore    *core;
   GimpDisplayShell *shell;
   GimpImage        *image;
-  GimpDrawable     *drawable;
   GList            *drawables;
+  GList            *iter;
   GimpCoords        curr_coords;
-  gint              off_x, off_y;
 
   g_return_val_if_fail (GIMP_IS_PAINT_TOOL (paint_tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
@@ -249,16 +253,11 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
   image         = gimp_display_get_image (display);
   drawables     = gimp_image_get_selected_drawables (image);
 
-  g_return_val_if_fail (g_list_length (drawables) == 1, FALSE);
+  g_return_val_if_fail (g_list_length (drawables) == 1 ||
+                        (g_list_length (drawables) > 1 && paint_tool->can_multi_paint),
+                        FALSE);
 
   curr_coords = *coords;
-
-  drawable = drawables->data;
-  g_list_free (drawables);
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
-  curr_coords.x -= off_x;
-  curr_coords.y -= off_y;
 
   paint_tool->paint_x = curr_coords.x;
   paint_tool->paint_y = curr_coords.y;
@@ -267,7 +266,8 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
    *  paint core
    */
   if (gimp_paint_tool_paint_use_thread (paint_tool))
-    gimp_drawable_start_paint (drawable);
+    for (iter = drawables; iter; iter = iter->next)
+      gimp_drawable_start_paint (iter->data);
 
   /*  Prepare to start the paint core  */
   if (GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_prepare)
@@ -275,16 +275,19 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
 
   /*  Start the paint core  */
   if (! gimp_paint_core_start (core,
-                               drawable, paint_options, &curr_coords,
+                               drawables, paint_options, &curr_coords,
                                error))
     {
-      gimp_drawable_end_paint (drawable);
+      for (iter = drawables; iter; iter = iter->next)
+        gimp_drawable_end_paint (iter->data);
+      g_list_free (drawables);
 
       return FALSE;
     }
 
   paint_tool->display  = display;
-  paint_tool->drawable = drawable;
+  g_list_free (paint_tool->drawables);
+  paint_tool->drawables = drawables;
 
   if ((display != tool->display) || ! paint_tool->draw_line)
     {
@@ -323,18 +326,18 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
     }
 
   /*  Let the specific painting function initialize itself  */
-  gimp_paint_core_paint (core, drawable, paint_options,
+  gimp_paint_core_paint (core, drawables, paint_options,
                          GIMP_PAINT_STATE_INIT, time);
 
   /*  Paint to the image  */
   if (paint_tool->draw_line)
     {
-      gimp_paint_core_interpolate (core, drawable, paint_options,
+      gimp_paint_core_interpolate (core, drawables, paint_options,
                                    &core->cur_coords, time);
     }
   else
     {
-      gimp_paint_core_paint (core, drawable, paint_options,
+      gimp_paint_core_paint (core, drawables, paint_options,
                              GIMP_PAINT_STATE_MOTION, time);
     }
 
@@ -361,14 +364,14 @@ gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
 {
   GimpPaintOptions *paint_options;
   GimpPaintCore    *core;
-  GimpDrawable     *drawable;
+  GList            *drawables;
 
   g_return_if_fail (GIMP_IS_PAINT_TOOL (paint_tool));
   g_return_if_fail (paint_tool->display != NULL);
 
   paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
   core          = paint_tool->core;
-  drawable      = paint_tool->drawable;
+  drawables     = paint_tool->drawables;
 
   /*  Process remaining paint items  */
   if (gimp_paint_tool_paint_use_thread (paint_tool))
@@ -414,13 +417,13 @@ gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
     }
 
   /*  Let the specific painting function finish up  */
-  gimp_paint_core_paint (core, drawable, paint_options,
+  gimp_paint_core_paint (core, drawables, paint_options,
                          GIMP_PAINT_STATE_FINISH, time);
 
   if (cancel)
-    gimp_paint_core_cancel (core, drawable);
+    gimp_paint_core_cancel (core, drawables);
   else
-    gimp_paint_core_finish (core, drawable, TRUE);
+    gimp_paint_core_finish (core, drawables, TRUE);
 
   /*  Notify subclasses  */
   if (gimp_paint_tool_paint_use_thread (paint_tool) &&
@@ -431,10 +434,11 @@ gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
 
   /*  Exit paint mode  */
   if (gimp_paint_tool_paint_use_thread (paint_tool))
-    gimp_drawable_end_paint (drawable);
+    for (GList *iter = drawables; iter; iter = iter->next)
+      gimp_drawable_end_paint (iter->data);
 
-  paint_tool->display  = NULL;
-  paint_tool->drawable = NULL;
+  paint_tool->display = NULL;
+  g_clear_pointer (&paint_tool->drawables, g_list_free);
 }
 
 gboolean
@@ -442,8 +446,13 @@ gimp_paint_tool_paint_is_active (GimpPaintTool *paint_tool)
 {
   g_return_val_if_fail (GIMP_IS_PAINT_TOOL (paint_tool), FALSE);
 
-  return paint_tool->drawable != NULL &&
-         gimp_drawable_is_painting (paint_tool->drawable);
+  for (GList *iter = paint_tool->drawables; iter; iter = iter->next)
+    {
+      if (gimp_drawable_is_painting (iter->data))
+        return TRUE;
+    }
+
+  return FALSE;
 }
 
 void
@@ -501,9 +510,8 @@ gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
 {
   GimpPaintOptions *paint_options;
   GimpPaintCore    *core;
-  GimpDrawable     *drawable;
+  GList            *drawables;
   InterpolateData  *data;
-  gint              off_x, off_y;
 
   g_return_if_fail (GIMP_IS_PAINT_TOOL (paint_tool));
   g_return_if_fail (coords != NULL);
@@ -511,17 +519,13 @@ gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
 
   paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
   core          = paint_tool->core;
-  drawable      = paint_tool->drawable;
+  drawables     = paint_tool->drawables;
 
   data = g_slice_new (InterpolateData);
 
-  data->coords = *coords;
-  data->time   = time;
-
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
-  data->coords.x -= off_x;
-  data->coords.y -= off_y;
+  data->drawables = g_list_copy (drawables);
+  data->coords    = *coords;
+  data->time      = time;
 
   paint_tool->cursor_x = data->coords.x;
   paint_tool->cursor_y = data->coords.y;
@@ -532,14 +536,14 @@ gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
   if (paint_tool->draw_line)
     {
       gimp_paint_core_set_current_coords (core, &data->coords);
+      g_list_free (data->drawables);
 
       g_slice_free (InterpolateData, data);
 
       return;
     }
 
-  gimp_paint_tool_paint_push (
-    paint_tool,
-    (GimpPaintToolPaintFunc) gimp_paint_tool_paint_interpolate,
-    data);
+  gimp_paint_tool_paint_push (paint_tool,
+                              (GimpPaintToolPaintFunc) gimp_paint_tool_paint_interpolate,
+                              data);
 }

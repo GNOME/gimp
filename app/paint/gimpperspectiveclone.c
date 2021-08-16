@@ -47,7 +47,7 @@
 
 
 static void         gimp_perspective_clone_paint      (GimpPaintCore     *paint_core,
-                                                       GimpDrawable      *drawable,
+                                                       GList             *drawables,
                                                        GimpPaintOptions  *paint_options,
                                                        GimpSymmetry      *sym,
                                                        GimpPaintState     paint_state,
@@ -119,7 +119,7 @@ gimp_perspective_clone_init (GimpPerspectiveClone *clone)
 
 static void
 gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
-                              GimpDrawable     *drawable,
+                              GList            *drawables,
                               GimpPaintOptions *paint_options,
                               GimpSymmetry     *sym,
                               GimpPaintState    paint_state,
@@ -140,7 +140,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_INIT:
       if (source_core->set_source)
         {
-          g_object_set (source_core, "src-drawable", drawable, NULL);
+          g_object_set (source_core, "src-drawable", drawables->data, NULL);
 
           source_core->src_x = floor (coords->x);
           source_core->src_y = floor (coords->y);
@@ -194,12 +194,12 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                 if (options->sample_merged)
                   src_pickable = GIMP_PICKABLE (src_image);
 
-                dest_image = gimp_item_get_image (GIMP_ITEM (drawable));
+                dest_image = gimp_item_get_image (GIMP_ITEM (drawables->data));
 
                 if ((options->sample_merged &&
                      (src_image != dest_image)) ||
                     (! options->sample_merged &&
-                     (source_core->src_drawable != drawable)))
+                     (source_core->src_drawable != drawables->data)))
                   {
                     orig_buffer = gimp_pickable_get_buffer (src_pickable);
                   }
@@ -208,7 +208,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                     if (options->sample_merged)
                       orig_buffer = gimp_paint_core_get_orig_proj (paint_core);
                     else
-                      orig_buffer = gimp_paint_core_get_orig_image (paint_core);
+                      orig_buffer = gimp_paint_core_get_orig_image (paint_core, drawables->data);
                   }
               }
               break;
@@ -326,7 +326,8 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                 }
             }
 
-          gimp_source_core_motion (source_core, drawable, paint_options, sym);
+          for (GList *iter = drawables; iter; iter = iter->next)
+            gimp_source_core_motion (source_core, iter->data, paint_options, sym);
         }
       break;
 

@@ -54,7 +54,7 @@
 static void         gimp_ink_finalize         (GObject           *object);
 
 static void         gimp_ink_paint            (GimpPaintCore     *paint_core,
-                                               GimpDrawable      *drawable,
+                                               GList             *drawables,
                                                GimpPaintOptions  *paint_options,
                                                GimpSymmetry      *sym,
                                                GimpPaintState     paint_state,
@@ -149,7 +149,7 @@ gimp_ink_finalize (GObject *object)
 
 static void
 gimp_ink_paint (GimpPaintCore    *paint_core,
-                GimpDrawable     *drawable,
+                GList            *drawables,
                 GimpPaintOptions *paint_options,
                 GimpSymmetry     *sym,
                 GimpPaintState    paint_state,
@@ -158,6 +158,8 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
   GimpInk    *ink = GIMP_INK (paint_core);
   GimpCoords *cur_coords;
   GimpCoords  last_coords;
+
+  g_return_if_fail (g_list_length (drawables) == 1);
 
   gimp_paint_core_get_last_coords (paint_core, &last_coords);
   cur_coords = gimp_symmetry_get_origin (sym);
@@ -215,7 +217,8 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_MOTION:
-      gimp_ink_motion (paint_core, drawable, paint_options, sym, time);
+      for (GList *iter = drawables; iter; iter = iter->next)
+        gimp_ink_motion (paint_core, iter->data, paint_options, sym, time);
       break;
 
     case GIMP_PAINT_STATE_FINISH:

@@ -80,28 +80,28 @@ static void      gimp_paint_core_get_property        (GObject          *object,
                                                       GParamSpec       *pspec);
 
 static gboolean  gimp_paint_core_real_start          (GimpPaintCore    *core,
-                                                      GimpDrawable     *drawable,
+                                                      GList            *drawables,
                                                       GimpPaintOptions *paint_options,
                                                       const GimpCoords *coords,
                                                       GError          **error);
 static gboolean  gimp_paint_core_real_pre_paint      (GimpPaintCore    *core,
-                                                      GimpDrawable     *drawable,
+                                                      GList            *drawables,
                                                       GimpPaintOptions *options,
                                                       GimpPaintState    paint_state,
                                                       guint32           time);
 static void      gimp_paint_core_real_paint          (GimpPaintCore    *core,
-                                                      GimpDrawable     *drawable,
+                                                      GList            *drawables,
                                                       GimpPaintOptions *options,
                                                       GimpSymmetry     *sym,
                                                       GimpPaintState    paint_state,
                                                       guint32           time);
 static void      gimp_paint_core_real_post_paint     (GimpPaintCore    *core,
-                                                      GimpDrawable     *drawable,
+                                                      GList            *drawables,
                                                       GimpPaintOptions *options,
                                                       GimpPaintState    paint_state,
                                                       guint32           time);
 static void      gimp_paint_core_real_interpolate    (GimpPaintCore    *core,
-                                                      GimpDrawable     *drawable,
+                                                      GList            *drawables,
                                                       GimpPaintOptions *options,
                                                       guint32           time);
 static GeglBuffer *
@@ -154,6 +154,7 @@ static void
 gimp_paint_core_init (GimpPaintCore *core)
 {
   core->ID = global_core_ID++;
+  core->undo_buffers = g_hash_table_new_full (g_direct_hash, g_direct_equal, NULL, g_object_unref);
 }
 
 static void
@@ -164,6 +165,7 @@ gimp_paint_core_finalize (GObject *object)
   gimp_paint_core_cleanup (core);
 
   g_clear_pointer (&core->undo_desc, g_free);
+  g_hash_table_unref (core->undo_buffers);
 
   if (core->stroke_buffer)
     {
@@ -217,7 +219,7 @@ gimp_paint_core_get_property (GObject    *object,
 
 static gboolean
 gimp_paint_core_real_start (GimpPaintCore    *core,
-                            GimpDrawable     *drawable,
+                            GList            *drawables,
                             GimpPaintOptions *paint_options,
                             const GimpCoords *coords,
                             GError          **error)
@@ -227,7 +229,7 @@ gimp_paint_core_real_start (GimpPaintCore    *core,
 
 static gboolean
 gimp_paint_core_real_pre_paint (GimpPaintCore    *core,
-                                GimpDrawable     *drawable,
+                                GList            *drawables,
                                 GimpPaintOptions *paint_options,
                                 GimpPaintState    paint_state,
                                 guint32           time)
@@ -237,7 +239,7 @@ gimp_paint_core_real_pre_paint (GimpPaintCore    *core,
 
 static void
 gimp_paint_core_real_paint (GimpPaintCore    *core,
-                            GimpDrawable     *drawable,
+                            GList            *drawables,
                             GimpPaintOptions *paint_options,
                             GimpSymmetry     *sym,
                             GimpPaintState    paint_state,
@@ -247,7 +249,7 @@ gimp_paint_core_real_paint (GimpPaintCore    *core,
 
 static void
 gimp_paint_core_real_post_paint (GimpPaintCore    *core,
-                                 GimpDrawable     *drawable,
+                                 GList            *drawables,
                                  GimpPaintOptions *paint_options,
                                  GimpPaintState    paint_state,
                                  guint32           time)
@@ -256,11 +258,11 @@ gimp_paint_core_real_post_paint (GimpPaintCore    *core,
 
 static void
 gimp_paint_core_real_interpolate (GimpPaintCore    *core,
-                                  GimpDrawable     *drawable,
+                                  GList            *drawables,
                                   GimpPaintOptions *paint_options,
                                   guint32           time)
 {
-  gimp_paint_core_paint (core, drawable, paint_options,
+  gimp_paint_core_paint (core, drawables, paint_options,
                          GIMP_PAINT_STATE_MOTION, time);
 
   core->last_coords = core->cur_coords;
@@ -297,7 +299,7 @@ gimp_paint_core_real_push_undo (GimpPaintCore *core,
 
 void
 gimp_paint_core_paint (GimpPaintCore    *core,
-                       GimpDrawable     *drawable,
+                       GList            *drawables,
                        GimpPaintOptions *paint_options,
                        GimpPaintState    paint_state,
                        guint32           time)
@@ -305,22 +307,19 @@ gimp_paint_core_paint (GimpPaintCore    *core,
   GimpPaintCoreClass *core_class;
 
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (drawables != NULL);
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
 
   core_class = GIMP_PAINT_CORE_GET_CLASS (core);
 
-  if (core_class->pre_paint (core, drawable,
+  if (core_class->pre_paint (core, drawables,
                              paint_options,
                              paint_state, time))
     {
       GimpSymmetry *sym;
       GimpImage    *image;
-      GimpItem     *item;
 
-      item  = GIMP_ITEM (drawable);
-      image = gimp_item_get_image (item);
+      image = gimp_item_get_image (GIMP_ITEM (drawables->data));
 
       if (paint_state == GIMP_PAINT_STATE_MOTION)
         {
@@ -330,16 +329,16 @@ gimp_paint_core_paint (GimpPaintCore    *core,
         }
 
       sym = g_object_ref (gimp_image_get_active_symmetry (image));
-      gimp_symmetry_set_origin (sym, drawable, &core->cur_coords);
+      gimp_symmetry_set_origin (sym, drawables->data, &core->cur_coords);
 
-      core_class->paint (core, drawable,
+      core_class->paint (core, drawables,
                          paint_options,
                          sym, paint_state, time);
 
       gimp_symmetry_clear_origin (sym);
       g_object_unref (sym);
 
-      core_class->post_paint (core, drawable,
+      core_class->post_paint (core, drawables,
                               paint_options,
                               paint_state, time);
     }
@@ -347,24 +346,24 @@ gimp_paint_core_paint (GimpPaintCore    *core,
 
 gboolean
 gimp_paint_core_start (GimpPaintCore     *core,
-                       GimpDrawable      *drawable,
+                       GList             *drawables,
                        GimpPaintOptions  *paint_options,
                        const GimpCoords  *coords,
                        GError           **error)
 {
   GimpImage   *image;
-  GimpItem    *item;
   GimpChannel *mask;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
+  g_return_val_if_fail (g_list_length (drawables) > 0, FALSE);
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  item  = GIMP_ITEM (drawable);
-  image = gimp_item_get_image (item);
+  for (GList *iter = drawables; iter; iter = iter->next)
+    g_return_val_if_fail (gimp_item_is_attached (iter->data), FALSE);
+
+  image = gimp_item_get_image (GIMP_ITEM (drawables->data));
 
   if (core->stroke_buffer)
     {
@@ -378,21 +377,14 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
   /* remember the last stroke's endpoint for later undo */
   core->start_coords = core->last_coords;
+  core->cur_coords   = *coords;
 
-  core->cur_coords = *coords;
-
-  if (! GIMP_PAINT_CORE_GET_CLASS (core)->start (core, drawable,
+  if (! GIMP_PAINT_CORE_GET_CLASS (core)->start (core, drawables,
                                                  paint_options,
                                                  coords, error))
     {
       return FALSE;
     }
-
-  /*  Allocate the undo structure  */
-  if (core->undo_buffer)
-    g_object_unref (core->undo_buffer);
-
-  core->undo_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
   /*  Set the image pickable  */
   if (! core->show_all)
@@ -410,80 +402,86 @@ gimp_paint_core_start (GimpPaintCore     *core,
       core->saved_proj_buffer = gimp_gegl_buffer_dup (buffer);
     }
 
-  /*  Allocate the canvas blocks structure  */
-  if (core->canvas_buffer)
-    g_object_unref (core->canvas_buffer);
-
-  core->canvas_buffer =
-    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                     gimp_item_get_width  (item),
-                                     gimp_item_get_height (item)),
-                     babl_format ("Y float"));
-
-  /*  Get the initial undo extents  */
-
-  core->x1 = core->x2 = core->cur_coords.x;
-  core->y1 = core->y2 = core->cur_coords.y;
-
-  core->last_paint.x = -1e6;
-  core->last_paint.y = -1e6;
-
-  mask = gimp_image_get_mask (image);
-
-  /*  don't apply the mask to itself and don't apply an empty mask  */
-  if (GIMP_DRAWABLE (mask) != drawable && ! gimp_channel_is_empty (mask))
+  for (GList *iter = drawables; iter; iter = iter->next)
     {
-      GeglBuffer *mask_buffer;
-      gint        offset_x;
-      gint        offset_y;
+      /*  Allocate the undo structures  */
+      g_hash_table_insert (core->undo_buffers, iter->data,
+                           gimp_gegl_buffer_dup (gimp_drawable_get_buffer (iter->data)));
 
-      mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
-      gimp_item_get_offset (item, &offset_x, &offset_y);
+      /*  Allocate the canvas blocks structure  */
+      if (core->canvas_buffer)
+        g_object_unref (core->canvas_buffer);
 
-      core->mask_buffer   = g_object_ref (mask_buffer);
-      core->mask_x_offset = -offset_x;
-      core->mask_y_offset = -offset_y;
-    }
-  else
-    {
-      core->mask_buffer = NULL;
-    }
+      core->canvas_buffer =
+        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                         gimp_item_get_width  (iter->data),
+                                         gimp_item_get_height (iter->data)),
+                         babl_format ("Y float"));
 
-  if (paint_options->use_applicator)
-    {
-      core->applicator = gimp_applicator_new (NULL);
+      /*  Get the initial undo extents  */
 
-      if (core->mask_buffer)
+      core->x1 = core->x2 = core->cur_coords.x;
+      core->y1 = core->y2 = core->cur_coords.y;
+
+      core->last_paint.x = -1e6;
+      core->last_paint.y = -1e6;
+
+      mask = gimp_image_get_mask (image);
+
+      /*  don't apply the mask to itself and don't apply an empty mask  */
+      if (GIMP_DRAWABLE (mask) != iter->data && ! gimp_channel_is_empty (mask))
         {
-          gimp_applicator_set_mask_buffer (core->applicator,
-                                           core->mask_buffer);
-          gimp_applicator_set_mask_offset (core->applicator,
-                                           core->mask_x_offset,
-                                           core->mask_y_offset);
+          GeglBuffer *mask_buffer;
+          gint        offset_x;
+          gint        offset_y;
+
+          mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+          gimp_item_get_offset (iter->data, &offset_x, &offset_y);
+
+          core->mask_buffer   = g_object_ref (mask_buffer);
+          core->mask_x_offset = -offset_x;
+          core->mask_y_offset = -offset_y;
+        }
+      else
+        {
+          core->mask_buffer = NULL;
         }
 
-      gimp_applicator_set_affect (core->applicator,
-                                  gimp_drawable_get_active_mask (drawable));
-      gimp_applicator_set_dest_buffer (core->applicator,
-                                       gimp_drawable_get_buffer (drawable));
-    }
+      if (paint_options->use_applicator)
+        {
+          core->applicator = gimp_applicator_new (NULL);
 
-  /*  Freeze the drawable preview so that it isn't constantly updated.  */
-  gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
+          if (core->mask_buffer)
+            {
+              gimp_applicator_set_mask_buffer (core->applicator,
+                                               core->mask_buffer);
+              gimp_applicator_set_mask_offset (core->applicator,
+                                               core->mask_x_offset,
+                                               core->mask_y_offset);
+            }
+
+          gimp_applicator_set_affect (core->applicator,
+                                      gimp_drawable_get_active_mask (iter->data));
+          gimp_applicator_set_dest_buffer (core->applicator,
+                                           gimp_drawable_get_buffer (iter->data));
+        }
+
+      /*  Freeze the drawable preview so that it isn't constantly updated.  */
+      gimp_viewable_preview_freeze (GIMP_VIEWABLE (iter->data));
+    }
 
   return TRUE;
 }
 
 void
 gimp_paint_core_finish (GimpPaintCore *core,
-                        GimpDrawable  *drawable,
+                        GList         *drawables,
                         gboolean       push_undo)
 {
   GimpImage *image;
+  gboolean   undo_group_started = FALSE;
 
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
   g_clear_object (&core->applicator);
 
@@ -495,72 +493,87 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
   g_clear_object (&core->mask_buffer);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawables->data));
 
-  /*  Determine if any part of the image has been altered--
-   *  if nothing has, then just return...
-   */
-  if ((core->x2 == core->x1) || (core->y2 == core->y1))
+  for (GList *iter = drawables; iter; iter = iter->next)
     {
-      gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
-      return;
-    }
+      /*  Determine if any part of the image has been altered--
+       *  if nothing has, then just go to the next drawable...
+       */
+      if ((core->x2 == core->x1) || (core->y2 == core->y1))
+        {
+          gimp_viewable_preview_thaw (GIMP_VIEWABLE (iter->data));
+          continue;
+        }
 
-  if (push_undo)
-    {
-      GeglBuffer    *buffer;
-      GeglRectangle  rect;
+      if (push_undo)
+        {
+          GeglBuffer    *undo_buffer;
+          GeglBuffer    *buffer;
+          GeglRectangle  rect;
 
-      gimp_rectangle_intersect (core->x1, core->y1,
-                                core->x2 - core->x1, core->y2 - core->y1,
-                                0, 0,
-                                gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                gimp_item_get_height (GIMP_ITEM (drawable)),
-                                &rect.x, &rect.y, &rect.width, &rect.height);
+          if (! g_hash_table_steal_extended (core->undo_buffers, iter->data,
+                                             NULL, (gpointer*) &undo_buffer))
+            {
+              g_critical ("%s: missing undo buffer for '%s'.",
+                          G_STRFUNC, gimp_object_get_name (iter->data));
+              continue;
+            }
 
-      gegl_rectangle_align_to_buffer (&rect, &rect, core->undo_buffer,
-                                      GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
+          gimp_rectangle_intersect (core->x1, core->y1,
+                                    core->x2 - core->x1, core->y2 - core->y1,
+                                    0, 0,
+                                    gimp_item_get_width  (GIMP_ITEM (iter->data)),
+                                    gimp_item_get_height (GIMP_ITEM (iter->data)),
+                                    &rect.x, &rect.y, &rect.width, &rect.height);
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
-                                   core->undo_desc);
+          gegl_rectangle_align_to_buffer (&rect, &rect, undo_buffer,
+                                          GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
-      GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
+          if (! undo_group_started)
+            {
+              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
+                                           core->undo_desc);
+              undo_group_started = TRUE;
+            }
 
-      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect.width, rect.height),
-                                gimp_drawable_get_format (drawable));
+          GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
-      gimp_gegl_buffer_copy (core->undo_buffer,
-                             &rect,
-                             GEGL_ABYSS_NONE,
-                             buffer,
-                             GEGL_RECTANGLE (0, 0, 0, 0));
+          buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect.width, rect.height),
+                                    gimp_drawable_get_format (iter->data));
 
-      gimp_drawable_push_undo (drawable, NULL,
-                               buffer, rect.x, rect.y, rect.width, rect.height);
+          gimp_gegl_buffer_copy (undo_buffer,
+                                 &rect,
+                                 GEGL_ABYSS_NONE,
+                                 buffer,
+                                 GEGL_RECTANGLE (0, 0, 0, 0));
 
-      g_object_unref (buffer);
+          gimp_drawable_push_undo (iter->data, NULL,
+                                   buffer, rect.x, rect.y, rect.width, rect.height);
 
-      gimp_image_undo_group_end (image);
+          g_object_unref (buffer);
+          g_object_unref (undo_buffer);
+        }
+
+      gimp_viewable_preview_thaw (GIMP_VIEWABLE (iter->data));
     }
 
   core->image_pickable = NULL;
 
-  g_clear_object (&core->undo_buffer);
   g_clear_object (&core->saved_proj_buffer);
 
-  gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
+  if (undo_group_started)
+    gimp_image_undo_group_end (image);
 }
 
 void
 gimp_paint_core_cancel (GimpPaintCore *core,
-                        GimpDrawable  *drawable)
+                        GList         *drawables)
 {
   gint x, y;
   gint width, height;
 
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
   /*  Determine if any part of the image has been altered--
    *  if nothing has, then just return...
@@ -568,34 +581,46 @@ gimp_paint_core_cancel (GimpPaintCore *core,
   if ((core->x2 == core->x1) || (core->y2 == core->y1))
     return;
 
-  if (gimp_rectangle_intersect (core->x1, core->y1,
-                                core->x2 - core->x1,
-                                core->y2 - core->y1,
-                                0, 0,
-                                gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                gimp_item_get_height (GIMP_ITEM (drawable)),
-                                &x, &y, &width, &height))
+  for (GList *iter = drawables; iter; iter = iter->next)
     {
-      GeglRectangle rect;
+      if (gimp_rectangle_intersect (core->x1, core->y1,
+                                    core->x2 - core->x1,
+                                    core->y2 - core->y1,
+                                    0, 0,
+                                    gimp_item_get_width  (GIMP_ITEM (iter->data)),
+                                    gimp_item_get_height (GIMP_ITEM (iter->data)),
+                                    &x, &y, &width, &height))
+        {
+          GeglBuffer    *undo_buffer;
+          GeglRectangle  rect;
 
-      gegl_rectangle_align_to_buffer (&rect,
-                                      GEGL_RECTANGLE (x, y, width, height),
-                                      gimp_drawable_get_buffer (drawable),
-                                      GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
+          if (! g_hash_table_steal_extended (core->undo_buffers, iter->data,
+                                             NULL, (gpointer*) &undo_buffer))
+            {
+              g_critical ("%s: missing undo buffer for '%s'.",
+                          G_STRFUNC, gimp_object_get_name (iter->data));
+              continue;
+            }
 
-      gimp_gegl_buffer_copy (core->undo_buffer,
-                             &rect,
-                             GEGL_ABYSS_NONE,
-                             gimp_drawable_get_buffer (drawable),
-                             &rect);
+          gegl_rectangle_align_to_buffer (&rect,
+                                          GEGL_RECTANGLE (x, y, width, height),
+                                          gimp_drawable_get_buffer (iter->data),
+                                          GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
+
+          gimp_gegl_buffer_copy (undo_buffer,
+                                 &rect,
+                                 GEGL_ABYSS_NONE,
+                                 gimp_drawable_get_buffer (iter->data),
+                                 &rect);
+          g_object_unref (undo_buffer);
+        }
+
+      gimp_drawable_update (iter->data, x, y, width, height);
+
+      gimp_viewable_preview_thaw (GIMP_VIEWABLE (iter->data));
     }
 
-  g_clear_object (&core->undo_buffer);
   g_clear_object (&core->saved_proj_buffer);
-
-  gimp_drawable_update (drawable, x, y, width, height);
-
-  gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
 }
 
 void
@@ -603,7 +628,8 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
 
-  g_clear_object (&core->undo_buffer);
+  g_hash_table_remove_all (core->undo_buffers);
+
   g_clear_object (&core->saved_proj_buffer);
   g_clear_object (&core->canvas_buffer);
   g_clear_object (&core->paint_buffer);
@@ -611,20 +637,19 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
 
 void
 gimp_paint_core_interpolate (GimpPaintCore    *core,
-                             GimpDrawable     *drawable,
+                             GList            *drawables,
                              GimpPaintOptions *paint_options,
                              const GimpCoords *coords,
                              guint32           time)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (drawables != NULL);
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
   g_return_if_fail (coords != NULL);
 
   core->cur_coords = *coords;
 
-  GIMP_PAINT_CORE_GET_CLASS (core)->interpolate (core, drawable,
+  GIMP_PAINT_CORE_GET_CLASS (core)->interpolate (core, drawables,
                                                  paint_options, time);
 }
 
@@ -779,12 +804,17 @@ gimp_paint_core_get_image_pickable (GimpPaintCore *core)
 }
 
 GeglBuffer *
-gimp_paint_core_get_orig_image (GimpPaintCore *core)
+gimp_paint_core_get_orig_image (GimpPaintCore *core,
+                                GimpDrawable  *drawable)
 {
-  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
-  g_return_val_if_fail (core->undo_buffer != NULL, NULL);
+  GeglBuffer *undo_buffer;
 
-  return core->undo_buffer;
+  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
+
+  undo_buffer = g_hash_table_lookup (core->undo_buffers, drawable);
+  g_return_val_if_fail (undo_buffer != NULL, NULL);
+
+  return undo_buffer;
 }
 
 GeglBuffer *
@@ -807,9 +837,12 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                        GimpLayerMode             paint_mode,
                        GimpPaintApplicationMode  mode)
 {
-  gint              width  = gegl_buffer_get_width  (core->paint_buffer);
-  gint              height = gegl_buffer_get_height (core->paint_buffer);
-  GimpComponentMask affect = gimp_drawable_get_active_mask (drawable);
+  gint               width  = gegl_buffer_get_width  (core->paint_buffer);
+  gint               height = gegl_buffer_get_height (core->paint_buffer);
+  GimpComponentMask  affect = gimp_drawable_get_active_mask (drawable);
+  GeglBuffer        *undo_buffer;
+
+  undo_buffer = g_hash_table_lookup (core->undo_buffers, drawable);
 
   if (! affect)
     return;
@@ -851,8 +884,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                 GEGL_RECTANGLE (0, 0, width, height),
                                 1.0);
 
-          gimp_applicator_set_src_buffer (core->applicator,
-                                          core->undo_buffer);
+          gimp_applicator_set_src_buffer (core->applicator, undo_buffer);
         }
       /*  Otherwise:
        *   combine the paint mask to the paint buffer directly
@@ -931,7 +963,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
           algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK;
 
           /* undo buf -> paint_buf -> dest_buffer */
-          params.src_buffer = core->undo_buffer;
+          params.src_buffer = undo_buffer;
         }
       else
         {
@@ -998,8 +1030,9 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                          gdouble                   image_opacity,
                          GimpPaintApplicationMode  mode)
 {
-  gint              width, height;
-  GimpComponentMask affect;
+  GeglBuffer        *undo_buffer;
+  gint               width, height;
+  GimpComponentMask  affect;
 
   if (! gimp_drawable_has_alpha (drawable))
     {
@@ -1021,6 +1054,8 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 
   if (! affect)
     return;
+
+  undo_buffer = g_hash_table_lookup (core->undo_buffers, drawable);
 
   if (core->applicator)
     {
@@ -1060,8 +1095,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                                          core->paint_buffer_y,
                                          width, height);
 
-          gimp_applicator_set_src_buffer (core->applicator,
-                                          core->undo_buffer);
+          gimp_applicator_set_src_buffer (core->applicator, undo_buffer);
         }
       /*  Otherwise:
        *   use the paint mask as the mask buffer directly

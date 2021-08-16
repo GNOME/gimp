@@ -62,16 +62,16 @@ struct _GimpMybrushCorePrivate
 static void      gimp_mybrush_core_finalize       (GObject           *object);
 
 static gboolean  gimp_mybrush_core_start          (GimpPaintCore     *paint_core,
-                                                   GimpDrawable      *drawable,
+                                                   GList             *drawables,
                                                    GimpPaintOptions  *paint_options,
                                                    const GimpCoords  *coords,
                                                    GError           **error);
 static void      gimp_mybrush_core_interpolate    (GimpPaintCore     *paint_core,
-                                                   GimpDrawable      *drawable,
+                                                   GList             *drawables,
                                                    GimpPaintOptions  *paint_options,
                                                    guint32            time);
 static void      gimp_mybrush_core_paint          (GimpPaintCore     *paint_core,
-                                                   GimpDrawable      *drawable,
+                                                   GList             *drawables,
                                                    GimpPaintOptions  *paint_options,
                                                    GimpSymmetry      *sym,
                                                    GimpPaintState     paint_state,
@@ -141,7 +141,7 @@ gimp_mybrush_core_finalize (GObject *object)
 
 static gboolean
 gimp_mybrush_core_start (GimpPaintCore     *paint_core,
-                         GimpDrawable      *drawable,
+                         GList             *drawables,
                          GimpPaintOptions  *paint_options,
                          const GimpCoords  *coords,
                          GError           **error)
@@ -163,7 +163,7 @@ gimp_mybrush_core_start (GimpPaintCore     *paint_core,
 
 static void
 gimp_mybrush_core_interpolate (GimpPaintCore    *paint_core,
-                               GimpDrawable     *drawable,
+                               GList            *drawables,
                                GimpPaintOptions *paint_options,
                                guint32           time)
 {
@@ -180,13 +180,13 @@ gimp_mybrush_core_interpolate (GimpPaintCore    *paint_core,
 
       mybrush->private->synthetic = TRUE;
 
-      gimp_paint_core_paint (paint_core, drawable, paint_options,
+      gimp_paint_core_paint (paint_core, drawables, paint_options,
                              GIMP_PAINT_STATE_MOTION, time);
 
       paint_core->cur_coords = saved_coords;
     }
 
-  gimp_paint_core_paint (paint_core, drawable, paint_options,
+  gimp_paint_core_paint (paint_core, drawables, paint_options,
                          GIMP_PAINT_STATE_MOTION, time);
 
   paint_core->last_coords = paint_core->cur_coords;
@@ -194,7 +194,7 @@ gimp_mybrush_core_interpolate (GimpPaintCore    *paint_core,
 
 static void
 gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
-                         GimpDrawable     *drawable,
+                         GList            *drawables,
                          GimpPaintOptions *paint_options,
                          GimpSymmetry     *sym,
                          GimpPaintState    paint_state,
@@ -204,6 +204,8 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
   GimpContext     *context = GIMP_CONTEXT (paint_options);
   GimpRGB          fg;
 
+  g_return_if_fail (g_list_length (drawables) == 1);
+
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
@@ -212,21 +214,21 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
       gimp_symmetry_set_stateful (sym, TRUE);
 
       mybrush->private->surface =
-        gimp_mypaint_surface_new (gimp_drawable_get_buffer (drawable),
-                                  gimp_drawable_get_active_mask (drawable),
+        gimp_mypaint_surface_new (gimp_drawable_get_buffer (drawables->data),
+                                  gimp_drawable_get_active_mask (drawables->data),
                                   paint_core->mask_buffer,
                                   paint_core->mask_x_offset,
                                   paint_core->mask_y_offset,
                                   GIMP_MYBRUSH_OPTIONS (paint_options));
 
-      gimp_mybrush_core_create_brushes (mybrush, drawable, paint_options, sym);
+      gimp_mybrush_core_create_brushes (mybrush, drawables->data, paint_options, sym);
 
       mybrush->private->last_time = -1;
       mybrush->private->synthetic = FALSE;
       break;
 
     case GIMP_PAINT_STATE_MOTION:
-      gimp_mybrush_core_motion (paint_core, drawable, paint_options,
+      gimp_mybrush_core_motion (paint_core, drawables->data, paint_options,
                                 sym, time);
       break;
 

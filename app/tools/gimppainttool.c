@@ -160,9 +160,10 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   gimp_tool_control_set_action_opacity (tool->control,
                                         "context/context-opacity-set");
 
-  paint_tool->active        = TRUE;
-  paint_tool->pick_colors   = FALSE;
-  paint_tool->draw_line     = FALSE;
+  paint_tool->active          = TRUE;
+  paint_tool->pick_colors     = FALSE;
+  paint_tool->can_multi_paint = FALSE;
+  paint_tool->draw_line       = FALSE;
 
   paint_tool->show_cursor   = TRUE;
   paint_tool->draw_brush    = TRUE;
@@ -277,7 +278,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   GimpDisplayShell *shell      = gimp_display_get_shell (display);
   GimpImage        *image      = gimp_display_get_image (display);
   GList            *drawables;
-  GimpDrawable     *drawable;
+  GList            *iter;
   gboolean          constrain;
   GError           *error = NULL;
 
@@ -289,68 +290,76 @@ gimp_paint_tool_button_press (GimpTool            *tool,
     }
 
   drawables  = gimp_image_get_selected_drawables (image);
-  if (g_list_length (drawables) != 1)
-    {
-      if (g_list_length (drawables) > 1)
-        gimp_tool_message_literal (tool, display,
-                                   _("Cannot paint on multiple layers. Select only one layer."));
-      else
-        gimp_tool_message_literal (tool, display,
-                                   _("No selected drawables."));
-
-      g_list_free (drawables);
-      return;
-    }
-
-  drawable = drawables->data;
-
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+  if (drawables == NULL)
     {
       gimp_tool_message_literal (tool, display,
-                                 _("Cannot paint on layer groups."));
-      g_list_free (drawables);
+                                 _("No selected drawables."));
 
       return;
     }
-
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+  else if (! paint_tool->can_multi_paint)
     {
-      gimp_tool_message_literal (tool, display,
-                                 _("The active layer's pixels are locked."));
-      gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
-      g_list_free (drawables);
+      if (g_list_length (drawables) != 1)
+        {
+          gimp_tool_message_literal (tool, display,
+                                     _("Cannot paint on multiple layers. Select only one layer."));
 
-      return;
+          g_list_free (drawables);
+          return;
+        }
     }
 
-  if (! gimp_paint_tool_check_alpha (paint_tool, drawable, display, &error))
+  for (iter = drawables; iter; iter = iter->next)
     {
-      GtkWidget *options_gui;
-      GtkWidget *mode_box;
+      GimpDrawable *drawable = iter->data;
 
-      gimp_tool_message_literal (tool, display, error->message);
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+        {
+          gimp_tool_message_literal (tool, display,
+                                     _("Cannot paint on layer groups."));
+          g_list_free (drawables);
 
-      options_gui = gimp_tools_get_tool_options_gui (
-                      GIMP_TOOL_OPTIONS (options));
-      mode_box    = gimp_paint_options_gui_get_paint_mode_box (options_gui);
+          return;
+        }
 
-      if (gtk_widget_is_sensitive (mode_box))
-        gimp_widget_blink (mode_box);
+      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+        {
+          gimp_tool_message_literal (tool, display,
+                                     _("A selected layer's pixels are locked."));
+          gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+          g_list_free (drawables);
 
-      g_clear_error (&error);
-      g_list_free (drawables);
+          return;
+        }
 
-      return;
-    }
+      if (! gimp_paint_tool_check_alpha (paint_tool, drawable, display, &error))
+        {
+          GtkWidget *options_gui;
+          GtkWidget *mode_box;
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
-      ! config->edit_non_visible)
-    {
-      gimp_tool_message_literal (tool, display,
-                                 _("The active layer is not visible."));
-      g_list_free (drawables);
+          gimp_tool_message_literal (tool, display, error->message);
 
-      return;
+          options_gui = gimp_tools_get_tool_options_gui (GIMP_TOOL_OPTIONS (options));
+          mode_box    = gimp_paint_options_gui_get_paint_mode_box (options_gui);
+
+          if (gtk_widget_is_sensitive (mode_box))
+            gimp_widget_blink (mode_box);
+
+          g_clear_error (&error);
+          g_list_free (drawables);
+
+          return;
+        }
+
+      if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+          ! config->edit_non_visible)
+        {
+          gimp_tool_message_literal (tool, display,
+                                     _("A selected layer is not visible."));
+          g_list_free (drawables);
+
+          return;
+        }
     }
 
   if (gimp_draw_tool_is_active (draw_tool))
@@ -533,26 +542,28 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
     {
       GimpImage    *image     = gimp_display_get_image (display);
       GList        *drawables = gimp_image_get_selected_drawables (image);
-      GimpDrawable *drawable  = NULL;
+      GList        *iter;
 
       if (! drawables)
         return;
 
-      if (g_list_length (drawables) == 1)
-        drawable = drawables->data;
+      for (iter = drawables; iter; iter = iter->next)
+        {
+          GimpDrawable *drawable = iter->data;
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))               ||
+              gimp_item_is_content_locked (GIMP_ITEM (drawable))                  ||
+              ! gimp_paint_tool_check_alpha (paint_tool, drawable, display, NULL) ||
+              ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
+                 config->edit_non_visible))
+            {
+              modifier        = GIMP_CURSOR_MODIFIER_BAD;
+              toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;
+              break;
+            }
+        }
 
       g_list_free (drawables);
-
-      if (! drawable                                                          ||
-          gimp_viewable_get_children (GIMP_VIEWABLE (drawable))               ||
-          gimp_item_is_content_locked (GIMP_ITEM (drawable))                  ||
-          ! gimp_paint_tool_check_alpha (paint_tool, drawable, display, NULL) ||
-          ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
-             config->edit_non_visible))
-        {
-          modifier        = GIMP_CURSOR_MODIFIER_BAD;
-          toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;
-        }
 
       if (! paint_tool->show_cursor &&
           modifier != GIMP_CURSOR_MODIFIER_BAD)
@@ -626,18 +637,15 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
     }
 
   drawables = gimp_image_get_selected_drawables (image);
-  if (g_list_length (drawables) == 1 && proximity)
+
+  if ((g_list_length (drawables) == 1 ||
+       (g_list_length (drawables) > 1 && paint_tool->can_multi_paint)) &&
+      proximity)
     {
       gchar    *status;
       gboolean  constrain_mask = gimp_get_constrain_behavior_mask ();
-      gint      off_x, off_y;
 
       core->cur_coords = *coords;
-
-      gimp_item_get_offset (GIMP_ITEM (drawables->data), &off_x, &off_y);
-
-      core->cur_coords.x -= off_x;
-      core->cur_coords.y -= off_y;
 
       if (display == tool->display && (state & GIMP_PAINT_TOOL_LINE_MASK))
         {
@@ -725,31 +733,20 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
       ! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     {
       GimpPaintCore  *core       = paint_tool->core;
-      GimpImage      *image      = gimp_display_get_image (draw_tool->display);
       GimpCanvasItem *outline    = NULL;
       gboolean        line_drawn = FALSE;
       gdouble         cur_x, cur_y;
-      gint            off_x, off_y;
-      GList          *drawables  = gimp_image_get_selected_drawables (image);
-      GimpDrawable   *drawable;
-
-      g_return_if_fail (g_list_length (drawables) == 1);
-
-      drawable = drawables->data;
-      g_list_free (drawables);
-
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
       if (gimp_paint_tool_paint_is_active (paint_tool) &&
           paint_tool->snap_brush)
         {
-          cur_x = paint_tool->paint_x + off_x;
-          cur_y = paint_tool->paint_y + off_y;
+          cur_x = paint_tool->paint_x;
+          cur_y = paint_tool->paint_y;
         }
       else
         {
-          cur_x = paint_tool->cursor_x + off_x;
-          cur_y = paint_tool->cursor_y + off_y;
+          cur_x = paint_tool->cursor_x;
+          cur_y = paint_tool->cursor_y;
 
           if (paint_tool->draw_line &&
               ! gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
@@ -757,8 +754,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
               GimpCanvasGroup *group;
               gdouble          last_x, last_y;
 
-              last_x = core->last_coords.x + off_x;
-              last_y = core->last_coords.y + off_y;
+              last_x = core->last_coords.x;
+              last_y = core->last_coords.y;
 
               group = gimp_draw_tool_add_stroke_group (draw_tool);
               gimp_draw_tool_push_group (draw_tool, group);
@@ -1007,6 +1004,21 @@ gimp_paint_tool_enable_color_picker (GimpPaintTool       *tool,
   tool->pick_colors = TRUE;
 
   GIMP_COLOR_TOOL (tool)->pick_target = target;
+}
+
+/**
+ * gimp_paint_tool_enable_multi_paint:
+ * @tool: a #GimpPaintTool
+ *
+ * This is a convenience function used from the init method of paint
+ * tools that want to allow painting with several drawables.
+ **/
+void
+gimp_paint_tool_enable_multi_paint (GimpPaintTool *tool)
+{
+  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+
+  tool->can_multi_paint = TRUE;
 }
 
 void

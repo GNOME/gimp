@@ -47,7 +47,7 @@
 
 
 static void    gimp_convolve_paint            (GimpPaintCore    *paint_core,
-                                               GimpDrawable     *drawable,
+                                               GList            *drawables,
                                                GimpPaintOptions *paint_options,
                                                GimpSymmetry     *sym,
                                                GimpPaintState    paint_state,
@@ -101,16 +101,19 @@ gimp_convolve_init (GimpConvolve *convolve)
 
 static void
 gimp_convolve_paint (GimpPaintCore    *paint_core,
-                     GimpDrawable     *drawable,
+                     GList            *drawables,
                      GimpPaintOptions *paint_options,
                      GimpSymmetry     *sym,
                      GimpPaintState    paint_state,
                      guint32           time)
 {
+  g_return_if_fail (g_list_length (drawables) == 1);
+
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_MOTION:
-      gimp_convolve_motion (paint_core, drawable, paint_options, sym);
+      for (GList *iter = drawables; iter; iter = iter->next)
+        gimp_convolve_motion (paint_core, iter->data, paint_options, sym);
       break;
 
     default:
@@ -156,7 +159,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
     return;
 
   gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
-                                           drawable,
+                                           image,
                                            paint_options,
                                            coords);
   n_strokes = gimp_symmetry_get_size (sym);

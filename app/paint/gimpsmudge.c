@@ -46,7 +46,7 @@
 static void       gimp_smudge_finalize     (GObject          *object);
 
 static void       gimp_smudge_paint        (GimpPaintCore    *paint_core,
-                                            GimpDrawable     *drawable,
+                                            GList            *drawables,
                                             GimpPaintOptions *paint_options,
                                             GimpSymmetry     *sym,
                                             GimpPaintState    paint_state,
@@ -133,13 +133,15 @@ gimp_smudge_finalize (GObject *object)
 
 static void
 gimp_smudge_paint (GimpPaintCore    *paint_core,
-                   GimpDrawable     *drawable,
+                   GList            *drawables,
                    GimpPaintOptions *paint_options,
                    GimpSymmetry     *sym,
                    GimpPaintState    paint_state,
                    guint32           time)
 {
   GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
+
+  g_return_if_fail (g_list_length (drawables) == 1);
 
   switch (paint_state)
     {
@@ -169,11 +171,11 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_MOTION:
       /* initialization fails if the user starts outside the drawable */
       if (! smudge->initialized)
-        smudge->initialized = gimp_smudge_start (paint_core, drawable,
+        smudge->initialized = gimp_smudge_start (paint_core, drawables->data,
                                                  paint_options, sym);
 
       if (smudge->initialized)
-        gimp_smudge_motion (paint_core, drawable, paint_options, sym);
+        gimp_smudge_motion (paint_core, drawables->data, paint_options, sym);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
@@ -223,7 +225,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
 
   coords = gimp_symmetry_get_origin (sym);
   gimp_brush_core_eval_transform_dynamics (brush_core,
-                                           drawable,
+                                           gimp_item_get_image (GIMP_ITEM (drawable)),
                                            paint_options,
                                            coords);
 
@@ -395,7 +397,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     return;
 
   gimp_brush_core_eval_transform_dynamics (brush_core,
-                                           drawable,
+                                           image,
                                            paint_options,
                                            coords);
 

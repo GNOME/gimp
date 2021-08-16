@@ -47,7 +47,7 @@
 
 
 static void       gimp_paintbrush_paint                        (GimpPaintCore             *paint_core,
-                                                                GimpDrawable              *drawable,
+                                                                GList                     *drawables,
                                                                 GimpPaintOptions          *paint_options,
                                                                 GimpSymmetry              *sym,
                                                                 GimpPaintState             paint_state,
@@ -104,7 +104,7 @@ gimp_paintbrush_init (GimpPaintbrush *paintbrush)
 
 static void
 gimp_paintbrush_paint (GimpPaintCore    *paint_core,
-                       GimpDrawable     *drawable,
+                       GList            *drawables,
                        GimpPaintOptions *paint_options,
                        GimpSymmetry     *sym,
                        GimpPaintState    paint_state,
@@ -112,26 +112,32 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
 {
   GimpPaintbrush *paintbrush = GIMP_PAINTBRUSH (paint_core);
 
+  g_return_if_fail (g_list_length (drawables) == 1);
+
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
       {
         GimpRGB color;
 
-        if (GIMP_PAINTBRUSH_GET_CLASS (paintbrush)->get_color_history_color &&
-            GIMP_PAINTBRUSH_GET_CLASS (paintbrush)->get_color_history_color (
-              paintbrush, drawable, paint_options, &color))
-          {
-            GimpContext *context = GIMP_CONTEXT (paint_options);
+        for (GList *iter = drawables; iter; iter = iter->next)
+          if (GIMP_PAINTBRUSH_GET_CLASS (paintbrush)->get_color_history_color &&
+              GIMP_PAINTBRUSH_GET_CLASS (paintbrush)->get_color_history_color (paintbrush,
+                                                                               iter->data,
+                                                                               paint_options,
+                                                                               &color))
+            {
+              GimpContext *context = GIMP_CONTEXT (paint_options);
 
-            gimp_palettes_add_color_history (context->gimp, &color);
-          }
+              gimp_palettes_add_color_history (context->gimp, &color);
+            }
       }
       break;
 
     case GIMP_PAINT_STATE_MOTION:
-      _gimp_paintbrush_motion (paint_core, drawable, paint_options,
-                               sym, GIMP_OPACITY_OPAQUE);
+      for (GList *iter = drawables; iter; iter = iter->next)
+        _gimp_paintbrush_motion (paint_core, iter->data, paint_options,
+                                 sym, GIMP_OPACITY_OPAQUE);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
@@ -258,7 +264,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (GIMP_BRUSH_CORE_GET_CLASS (brush_core)->handles_transforming_brush)
     {
       gimp_brush_core_eval_transform_dynamics (brush_core,
-                                               drawable,
+                                               image,
                                                paint_options,
                                                coords);
     }

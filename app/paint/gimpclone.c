@@ -46,7 +46,7 @@
 
 
 static gboolean   gimp_clone_start      (GimpPaintCore     *paint_core,
-                                         GimpDrawable      *drawable,
+                                         GList             *drawables,
                                          GimpPaintOptions  *paint_options,
                                          const GimpCoords  *coords,
                                          GError           **error);
@@ -110,14 +110,14 @@ gimp_clone_init (GimpClone *clone)
 
 static gboolean
 gimp_clone_start (GimpPaintCore     *paint_core,
-                  GimpDrawable      *drawable,
+                  GList             *drawables,
                   GimpPaintOptions  *paint_options,
                   const GimpCoords  *coords,
                   GError           **error)
 {
   GimpCloneOptions *options = GIMP_CLONE_OPTIONS (paint_options);
 
-  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawable,
+  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawables,
                                                      paint_options, coords,
                                                      error))
     {

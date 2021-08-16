@@ -140,7 +140,7 @@ const GimpTempBuf * gimp_brush_core_get_brush_pixmap
 
 void   gimp_brush_core_eval_transform_dynamics
                                       (GimpBrushCore            *core,
-                                       GimpDrawable             *drawable,
+                                       GimpImage                *image,
                                        GimpPaintOptions         *paint_options,
                                        const GimpCoords         *coords);
 void   gimp_brush_core_eval_transform_symmetry

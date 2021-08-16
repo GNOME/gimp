@@ -42,7 +42,8 @@ struct _GimpPaintTool
   GimpColorTool  parent_instance;
 
   gboolean       active;
-  gboolean       pick_colors;  /*  pick color if ctrl is pressed   */
+  gboolean       pick_colors;      /*  pick color if ctrl is pressed           */
+  gboolean       can_multi_paint;  /*  if paint works with multiple drawables  */
   gboolean       draw_line;
 
   gboolean       show_cursor;
@@ -60,7 +61,7 @@ struct _GimpPaintTool
   GimpPaintCore *core;
 
   GimpDisplay   *display;
-  GimpDrawable  *drawable;
+  GList         *drawables;
 
   gdouble        cursor_x;
   gdouble        cursor_y;
@@ -96,6 +97,8 @@ void    gimp_paint_tool_set_active          (GimpPaintTool       *tool,
 
 void    gimp_paint_tool_enable_color_picker (GimpPaintTool       *tool,
                                              GimpColorPickTarget  target);
+
+void    gimp_paint_tool_enable_multi_paint  (GimpPaintTool       *tool);
 
 void    gimp_paint_tool_set_draw_fallback   (GimpPaintTool       *tool,
                                              gboolean             draw_fallback,
