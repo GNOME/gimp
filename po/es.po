@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-07-16 17:22+0000\n"
-"PO-Revision-Date: 2021-07-17 14:27+0200\n"
+"POT-Creation-Date: 2021-08-05 17:54+0000\n"
+"PO-Revision-Date: 2021-08-15 13:43+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -1355,7 +1355,7 @@ msgstr "Herramienta de texto"
 msgid "Text Editor"
 msgstr "Editor de textos"
 
-#: ../app/actions/actions.c:231 ../app/dialogs/dialogs.c:312 ../app/gui/gui.c:554
+#: ../app/actions/actions.c:231 ../app/dialogs/dialogs.c:312 ../app/gui/gui.c:567
 msgid "Tool Options"
 msgstr "Opciones de herramienta"
 
@@ -5141,10 +5141,11 @@ msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Mapa"
 
+# Generar: patrón, fractal, ruido. En el menú de filtros.
 #: ../app/actions/filters-actions.c:85
 msgctxt "filters-action"
 msgid "_Render"
-msgstr "_Renderizado"
+msgstr "_Generar"
 
 #: ../app/actions/filters-actions.c:87
 msgctxt "filters-action"
@@ -10733,7 +10734,7 @@ msgstr "Mover esta ventana a la pantalla %s"
 #: ../app/dialogs/template-options-dialog.c:119
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
-#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:197
+#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:198
 #: ../app/tools/gimpfiltertool.c:347 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:663 ../app/widgets/gimperrordialog.c:76
 #: ../app/widgets/gimpfiledialog.c:178
@@ -11806,8 +11807,8 @@ msgstr "El nombre del tema que usar."
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
-"Establece la prueba de renderizado predeterminada para el diálogo «Convertir "
-"en perfil de color»."
+"Establece la prueba de renderizado predeterminada para el diálogo «Convertir a "
+"perfil de color»."
 
 #: ../app/config/gimprc-blurbs.h:531
 msgid ""
@@ -15749,7 +15750,7 @@ msgid "Are you sure you want to remove '%s' from the list and delete it on disk?
 msgstr ""
 "¿Está seguro de que quiere eliminar «%s» de la lista y eliminarlo del disco?"
 
-#: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:194
+#: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:195
 #: ../app/gui/gui-message.c:271
 msgid "GIMP Message"
 msgstr "Mensaje de GIMP"
@@ -20023,23 +20024,23 @@ msgstr "El valor alfa"
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:240
+#: ../app/gui/gui.c:241
 msgid "default:LTR"
 msgstr "default:LTR"
 
-#: ../app/gui/gui.c:330
+#: ../app/gui/gui.c:343
 msgid "Image Recovery"
 msgstr "Recuperación de la imagen"
 
-#: ../app/gui/gui.c:332
+#: ../app/gui/gui.c:345
 msgid "_Discard"
 msgstr "_Descartar"
 
-#: ../app/gui/gui.c:333
+#: ../app/gui/gui.c:346
 msgid "_Recover"
 msgstr "_Recuperar"
 
-#: ../app/gui/gui.c:344
+#: ../app/gui/gui.c:357
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "¡Vaya! Parece que GIMP se ha recuperado de un bloqueo."
 
@@ -20049,7 +20050,7 @@ msgstr "¡Vaya! Parece que GIMP se ha recuperado de un bloqueo."
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: ../app/gui/gui.c:353
+#: ../app/gui/gui.c:366
 #, c-format
 msgid "An image was salvaged from the crash. Do you want to try and recover it?"
 msgid_plural ""
@@ -20061,7 +20062,7 @@ msgstr[1] ""
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:598
+#: ../app/gui/gui.c:611
 msgid "Documents"
 msgstr "Documentos"
 
@@ -22004,8 +22005,8 @@ msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter or "
 "use a smaller font."
 msgstr ""
-"Su texto no se puede renderizar. Es probablemente muy grande. Hágalo más corto "
-"o use una tipografía más pequeña."
+"Su texto no se puede renderizar. Probablemente porque es muy grande. Hágalo "
+"más corto o use una tipografía más pequeña."
 
 #: ../app/text/gimptextlayer-xcf.c:78
 #, c-format
@@ -25009,7 +25010,7 @@ msgstr "Agregue primero algunos trazos de deformación."
 #: ../app/tools/gimpwarptool.c:1407 ../app/tools/gimpwarptool.c:1444
 #, c-format
 msgid "Rendering Frame %d"
-msgstr "Renderizando marco %d"
+msgstr "Renderizando fotograma %d"
 
 #: ../app/tools/gimpwarptool.c:1422 ../app/tools/gimpwarptool.c:1452
 #, c-format
