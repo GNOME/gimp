@@ -1,17 +1,17 @@
 # Slovenian translation of GIMP.
-# Copyright (C) 2004-2021 THE GIMP'S COPYRIGHT HOLDER
+# Copyright (C) 2004-2012 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
 #
 # Boštjan Špetič <igzebede@cyberpipe.org>, 2004–2005.
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
-# Martin Srebotnjak <miles@filmsi.net>, 2007–2013, translated from scratch, 2013–2019, 2020, 2021.
+# Martin Srebotnjak <miles@filmsi.net>, 2007–2013, translated from scratch, 2013–2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-07-19 13:27+0000\n"
-"PO-Revision-Date: 2021-07-21 19:20+0200\n"
+"POT-Creation-Date: 2021-08-05 17:54+0000\n"
+"PO-Revision-Date: 2021-08-15 12:44+0200\n"
 "Last-Translator: miles\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1311,7 +1311,7 @@ msgid "Text Editor"
 msgstr "Urejevalnik besedila"
 
 #: ../app/actions/actions.c:231 ../app/dialogs/dialogs.c:312
-#: ../app/gui/gui.c:554
+#: ../app/gui/gui.c:567
 msgid "Tool Options"
 msgstr "Možnosti orodja"
 
@@ -10651,7 +10651,7 @@ msgstr "Pomakni okno na zaslon %s"
 #: ../app/dialogs/template-options-dialog.c:119
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
-#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:197
+#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:198
 #: ../app/tools/gimpfiltertool.c:347 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:663
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
@@ -15556,7 +15556,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Ste prepričani, da želite izbrisati '%s' s seznama in z diska?"
 
-#: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:194
+#: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:195
 #: ../app/gui/gui-message.c:271
 msgid "GIMP Message"
 msgstr "Sporočilo GIMP"
@@ -19824,23 +19824,23 @@ msgstr "Vrednost alfe"
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:240
+#: ../app/gui/gui.c:241
 msgid "default:LTR"
 msgstr "default:LTR"
 
-#: ../app/gui/gui.c:330
+#: ../app/gui/gui.c:343
 msgid "Image Recovery"
 msgstr "Obnovitev slike"
 
-#: ../app/gui/gui.c:332
+#: ../app/gui/gui.c:345
 msgid "_Discard"
 msgstr "_Zavrzi"
 
-#: ../app/gui/gui.c:333
+#: ../app/gui/gui.c:346
 msgid "_Recover"
 msgstr "_Obnovi"
 
-#: ../app/gui/gui.c:344
+#: ../app/gui/gui.c:357
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Ojoj! Videti je, da se je GIMP obnovil iz sesutja!"
 
@@ -19850,7 +19850,7 @@ msgstr "Ojoj! Videti je, da se je GIMP obnovil iz sesutja!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: ../app/gui/gui.c:353
+#: ../app/gui/gui.c:366
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -19868,7 +19868,7 @@ msgstr[3] ""
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:598
+#: ../app/gui/gui.c:611
 msgid "Documents"
 msgstr "Dokumenti"
 
