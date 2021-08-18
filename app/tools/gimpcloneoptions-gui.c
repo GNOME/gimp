@@ -24,6 +24,9 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpimage.h"
+
 #include "paint/gimpcloneoptions.h"
 
 #include "widgets/gimpviewablebox.h"
@@ -47,6 +50,50 @@ gimp_clone_options_sync_source (GBinding     *binding,
                        type == GPOINTER_TO_INT (user_data));
 
   return TRUE;
+}
+
+static void
+gimp_clone_options_gui_drawables_changed (GimpImage *image,
+                                          GtkWidget *button)
+{
+  GList *drawables;
+
+  drawables = gimp_image_get_selected_drawables (image);
+  gtk_widget_set_sensitive (button, (g_list_length (drawables) < 2));
+  g_list_free (drawables);
+}
+
+static void
+gimp_clone_options_gui_context_image_changed (GimpContext *context,
+                                              GimpImage   *image,
+                                              GtkWidget   *button)
+{
+  GimpImage *prev_image;
+
+  prev_image = g_object_get_data (G_OBJECT (button), "gimp-clone-options-gui-image");
+  if (image != prev_image)
+    {
+      if (prev_image)
+        g_signal_handlers_disconnect_by_func (prev_image,
+                                              G_CALLBACK (gimp_clone_options_gui_drawables_changed),
+                                              button);
+      if (image)
+        {
+          g_signal_connect_object (image, "selected-channels-changed",
+                                   G_CALLBACK (gimp_clone_options_gui_drawables_changed),
+                                   button, 0);
+          g_signal_connect_object (image, "selected-layers-changed",
+                                   G_CALLBACK (gimp_clone_options_gui_drawables_changed),
+                                   button, 0);
+          gimp_clone_options_gui_drawables_changed (image, button);
+        }
+      else
+        {
+          gtk_widget_set_sensitive (button, TRUE);
+        }
+
+      g_object_set_data (G_OBJECT (button), "gimp-clone-options-gui-image", image);
+    }
 }
 
 GtkWidget *
@@ -84,6 +131,11 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
                                gimp_clone_options_sync_source,
                                NULL,
                                GINT_TO_POINTER (GIMP_CLONE_IMAGE), NULL);
+
+  g_signal_connect (gimp_get_user_context (GIMP_CONTEXT (tool_options)->gimp),
+                    "image-changed",
+                    G_CALLBACK (gimp_clone_options_gui_context_image_changed),
+                    button);
 
   hbox = gimp_prop_pattern_box_new (NULL, GIMP_CONTEXT (tool_options),
                                     NULL, 2,

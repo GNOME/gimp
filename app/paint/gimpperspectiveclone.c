@@ -58,6 +58,7 @@ static gboolean     gimp_perspective_clone_use_source (GimpSourceCore    *source
 static GeglBuffer * gimp_perspective_clone_get_source (GimpSourceCore    *source_core,
                                                        GimpDrawable      *drawable,
                                                        GimpPaintOptions  *paint_options,
+                                                       gboolean           self_drawable,
                                                        GimpPickable      *src_pickable,
                                                        gint               src_offset_x,
                                                        gint               src_offset_y,
@@ -131,9 +132,12 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
   GimpCloneOptions     *clone_options = GIMP_CLONE_OPTIONS (paint_options);
   GimpSourceOptions    *options       = GIMP_SOURCE_OPTIONS (paint_options);
   const GimpCoords     *coords;
+  gboolean              sample_merged;
 
   /* The source is based on the original stroke */
-  coords = gimp_symmetry_get_origin (sym);
+  coords        = gimp_symmetry_get_origin (sym);
+
+  sample_merged = options->sample_merged && (g_list_length (drawables) > 1);
 
   switch (paint_state)
     {
@@ -191,21 +195,21 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                 src_pickable = GIMP_PICKABLE (source_core->src_drawable);
                 src_image    = gimp_pickable_get_image (src_pickable);
 
-                if (options->sample_merged)
+                if (sample_merged)
                   src_pickable = GIMP_PICKABLE (src_image);
 
                 dest_image = gimp_item_get_image (GIMP_ITEM (drawables->data));
 
-                if ((options->sample_merged &&
+                if ((sample_merged &&
                      (src_image != dest_image)) ||
-                    (! options->sample_merged &&
+                    (! sample_merged &&
                      (source_core->src_drawable != drawables->data)))
                   {
                     orig_buffer = gimp_pickable_get_buffer (src_pickable);
                   }
                 else
                   {
-                    if (options->sample_merged)
+                    if (sample_merged)
                       orig_buffer = gimp_paint_core_get_orig_proj (paint_core);
                     else
                       orig_buffer = gimp_paint_core_get_orig_image (paint_core, drawables->data);
@@ -327,7 +331,8 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
             }
 
           for (GList *iter = drawables; iter; iter = iter->next)
-            gimp_source_core_motion (source_core, iter->data, paint_options, sym);
+            gimp_source_core_motion (source_core, iter->data, paint_options,
+                                     (g_list_length (drawables) > 1), sym);
         }
       break;
 
@@ -357,6 +362,7 @@ static GeglBuffer *
 gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
                                    GimpDrawable     *drawable,
                                    GimpPaintOptions *paint_options,
+                                   gboolean          self_drawable,
                                    GimpPickable     *src_pickable,
                                    gint              src_offset_x,
                                    gint              src_offset_y,

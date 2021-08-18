@@ -60,6 +60,7 @@ struct _GimpSourceCoreClass
   GeglBuffer * (* get_source) (GimpSourceCore    *source_core,
                                GimpDrawable      *drawable,
                                GimpPaintOptions  *paint_options,
+                               gboolean           self_drawable,
                                GimpPickable      *src_pickable,
                                gint               src_offset_x,
                                gint               src_offset_y,
@@ -104,6 +105,7 @@ gboolean gimp_source_core_use_source (GimpSourceCore    *source_core,
 void     gimp_source_core_motion     (GimpSourceCore    *source_core,
                                       GimpDrawable      *drawable,
                                       GimpPaintOptions  *paint_options,
+                                      gboolean           self_drawable,
                                       GimpSymmetry      *sym);
 
 

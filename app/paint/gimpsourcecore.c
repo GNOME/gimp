@@ -75,6 +75,7 @@ static void     gimp_source_core_paint           (GimpPaintCore     *paint_core,
 static void     gimp_source_core_motion          (GimpSourceCore    *source_core,
                                                   GimpDrawable      *drawable,
                                                   GimpPaintOptions  *paint_options,
+                                                  gboolean           self_drawable,
                                                   GimpSymmetry      *sym);
 #endif
 
@@ -84,6 +85,7 @@ static GeglBuffer *
                 gimp_source_core_real_get_source (GimpSourceCore    *source_core,
                                                   GimpDrawable      *drawable,
                                                   GimpPaintOptions  *paint_options,
+                                                  gboolean           self_drawable,
                                                   GimpPickable      *src_pickable,
                                                   gint               src_offset_x,
                                                   gint               src_offset_y,
@@ -240,7 +242,8 @@ gimp_source_core_start (GimpPaintCore     *paint_core,
           return FALSE;
         }
 
-      if (options->sample_merged &&
+      if (options->sample_merged         &&
+          g_list_length (drawables) == 1 &&
           gimp_item_get_image (GIMP_ITEM (source_core->src_drawable)) ==
           gimp_item_get_image (GIMP_ITEM (drawables->data)))
         {
@@ -331,7 +334,9 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
 
           for (GList *iter = drawables; iter; iter = iter->next)
             gimp_source_core_motion (source_core, iter->data,
-                                     paint_options, sym);
+                                     paint_options,
+                                     (g_list_length (drawables) > 1),
+                                     sym);
         }
       break;
 
@@ -356,6 +361,7 @@ void
 gimp_source_core_motion (GimpSourceCore   *source_core,
                          GimpDrawable     *drawable,
                          GimpPaintOptions *paint_options,
+                         gboolean          self_drawable,
                          GimpSymmetry     *sym)
 
 {
@@ -407,7 +413,11 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
     {
       src_pickable = GIMP_PICKABLE (source_core->src_drawable);
 
-      if (options->sample_merged)
+      if (self_drawable)
+        {
+          src_pickable = GIMP_PICKABLE (drawable);
+        }
+      else if (options->sample_merged)
         {
           GimpImage *src_image = gimp_pickable_get_image (src_pickable);
           gint       off_x, off_y;
@@ -470,6 +480,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
             GIMP_SOURCE_CORE_GET_CLASS (source_core)->get_source (source_core,
                                                                   drawable,
                                                                   paint_options,
+                                                                  self_drawable,
                                                                   src_pickable,
                                                                   src_offset_x,
                                                                   src_offset_y,
@@ -579,6 +590,7 @@ static GeglBuffer *
 gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                   GimpDrawable     *drawable,
                                   GimpPaintOptions *paint_options,
+                                  gboolean          self_drawable,
                                   GimpPickable     *src_pickable,
                                   gint              src_offset_x,
                                   gint              src_offset_y,
@@ -596,8 +608,14 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
   GimpImage         *src_image  = gimp_pickable_get_image (src_pickable);
   GeglBuffer        *src_buffer = gimp_pickable_get_buffer (src_pickable);
   GeglBuffer        *dest_buffer;
+  gboolean           sample_merged;
   gint               x, y;
   gint               width, height;
+
+  /* As a special case, we bypass sample merged value when we request
+   * each drawable to be its own source.
+   */
+  sample_merged = options->sample_merged && (! self_drawable);
 
   if (! gimp_rectangle_intersect (paint_buffer_x + src_offset_x,
                                   paint_buffer_y + src_offset_y,
@@ -619,15 +637,15 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
    *  Otherwise, we need a call to get_orig_image to make sure
    *  we get a copy of the unblemished (offset) image
    */
-  if ((  options->sample_merged && (src_image                 != image)) ||
-      (! options->sample_merged && (source_core->src_drawable != drawable)))
+  if ((  sample_merged && (src_image                 != image)) ||
+      (! sample_merged && (source_core->src_drawable != drawable)))
     {
       dest_buffer = src_buffer;
     }
   else
     {
       /*  get the original image  */
-      if (options->sample_merged)
+      if (sample_merged)
         dest_buffer = gimp_paint_core_get_orig_proj (GIMP_PAINT_CORE (source_core));
       else
         dest_buffer = gimp_paint_core_get_orig_image (GIMP_PAINT_CORE (source_core),
