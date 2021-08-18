@@ -228,7 +228,10 @@ clone_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
+          GList *src_drawables;
+
           options = gimp_config_duplicate (GIMP_CONFIG (options));
+          src_drawables = g_list_prepend (NULL, src_drawable);
 
           g_object_set (options,
                         "clone-type", clone_type,
@@ -236,11 +239,12 @@ clone_invoker (GimpProcedure         *procedure,
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
-                                        "undo-desc",    options->paint_info->blurb,
-                                        "src-drawable", src_drawable,
-                                        "src-x",        (gint) floor (src_x),
-                                        "src-y",        (gint) floor (src_y),
+                                        "undo-desc",     options->paint_info->blurb,
+                                        "src-drawables", src_drawables,
+                                        "src-x",         (gint) floor (src_x),
+                                        "src-y",         (gint) floor (src_y),
                                         NULL);
+          g_list_free (src_drawables);
         }
       else
         success = FALSE;
@@ -615,15 +619,19 @@ heal_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
+          GList *src_drawables;
+
           options = gimp_config_duplicate (GIMP_CONFIG (options));
+          src_drawables = g_list_prepend (NULL, src_drawable);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
-                                        "undo-desc",    options->paint_info->blurb,
-                                        "src-drawable", src_drawable,
-                                        "src-x",        (gint) floor (src_x),
-                                        "src-y",        (gint) floor (src_y),
+                                        "undo-desc",     options->paint_info->blurb,
+                                        "src-drawables", src_drawables,
+                                        "src-x",         (gint) floor (src_x),
+                                        "src-y",         (gint) floor (src_y),
                                         NULL);
+          g_list_free (src_drawables);
         }
       else
         success = FALSE;

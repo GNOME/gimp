@@ -168,7 +168,7 @@ gimp_source_tool_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_HALT:
       gimp_source_tool_set_src_display (source_tool, NULL);
       g_object_set (GIMP_PAINT_TOOL (tool)->core,
-                    "src-drawable", NULL,
+                    "src-drawables", NULL,
                     NULL);
       break;
 
@@ -302,7 +302,7 @@ gimp_source_tool_cursor_update (GimpTool         *tool,
         {
           cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
         }
-      else if (! GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
+      else if (! GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core)->src_drawables)
         {
           modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
@@ -341,7 +341,7 @@ gimp_source_tool_oper_update (GimpTool         *tool,
 
   if (gimp_source_core_use_source (source, options))
     {
-      if (source->src_drawable == NULL)
+      if (source->src_drawables == NULL)
         {
           GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
 
@@ -400,20 +400,16 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 
   if (gimp_source_core_use_source (source, options) &&
-      source->src_drawable && source_tool->src_display)
+      source->src_drawables && source_tool->src_display)
     {
       GimpDisplayShell *src_shell;
-      gint              off_x;
-      gint              off_y;
       gdouble           src_x;
       gdouble           src_y;
 
       src_shell = gimp_display_get_shell (source_tool->src_display);
 
-      gimp_item_get_offset (GIMP_ITEM (source->src_drawable), &off_x, &off_y);
-
-      src_x = source_tool->src_x + off_x + 0.5;
-      src_y = source_tool->src_y + off_y + 0.5;
+      src_x = source_tool->src_x + 0.5;
+      src_y = source_tool->src_y + 0.5;
 
       if (source_tool->src_outline)
         {

@@ -28,10 +28,12 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-new.h"
 #include "core/gimppickable.h"
 #include "core/gimpsymmetry.h"
 
@@ -44,12 +46,13 @@
 enum
 {
   PROP_0,
-  PROP_SRC_DRAWABLE,
+  PROP_SRC_DRAWABLES,
   PROP_SRC_X,
   PROP_SRC_Y
 };
 
 
+static void     gimp_source_core_finalize        (GObject           *object);
 static void     gimp_source_core_set_property    (GObject           *object,
                                                   guint              property_id,
                                                   const GValue      *value,
@@ -99,7 +102,8 @@ static GeglBuffer *
                                                   GeglRectangle     *src_rect);
 
 static void    gimp_source_core_set_src_drawable (GimpSourceCore    *source_core,
-                                                  GimpDrawable      *drawable);
+                                                  GList             *drawables);
+static void    gimp_source_core_make_pickable    (GimpSourceCore    *source_core);
 
 
 G_DEFINE_TYPE (GimpSourceCore, gimp_source_core, GIMP_TYPE_BRUSH_CORE)
@@ -114,6 +118,7 @@ gimp_source_core_class_init (GimpSourceCoreClass *klass)
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
   GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
 
+  object_class->finalize                   = gimp_source_core_finalize;
   object_class->set_property               = gimp_source_core_set_property;
   object_class->get_property               = gimp_source_core_get_property;
 
@@ -126,11 +131,10 @@ gimp_source_core_class_init (GimpSourceCoreClass *klass)
   klass->get_source                        = gimp_source_core_real_get_source;
   klass->motion                            = NULL;
 
-  g_object_class_install_property (object_class, PROP_SRC_DRAWABLE,
-                                   g_param_spec_object ("src-drawable",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_DRAWABLE,
-                                                        GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_SRC_DRAWABLES,
+                                   g_param_spec_pointer ("src-drawables",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SRC_X,
                                    g_param_spec_int ("src-x", NULL, NULL,
@@ -148,18 +152,29 @@ gimp_source_core_class_init (GimpSourceCoreClass *klass)
 static void
 gimp_source_core_init (GimpSourceCore *source_core)
 {
-  source_core->set_source   = FALSE;
+  source_core->set_source    = FALSE;
 
-  source_core->src_drawable = NULL;
-  source_core->src_x        = 0;
-  source_core->src_y        = 0;
+  source_core->src_drawables = NULL;
+  source_core->src_x         = 0;
+  source_core->src_y         = 0;
 
-  source_core->orig_src_x   = 0;
-  source_core->orig_src_y   = 0;
+  source_core->orig_src_x    = 0;
+  source_core->orig_src_y    = 0;
 
-  source_core->offset_x     = 0;
-  source_core->offset_y     = 0;
-  source_core->first_stroke = TRUE;
+  source_core->offset_x      = 0;
+  source_core->offset_y      = 0;
+  source_core->first_stroke  = TRUE;
+}
+
+static void
+gimp_source_core_finalize (GObject *object)
+{
+  GimpSourceCore *source_core = GIMP_SOURCE_CORE (object);
+
+  g_clear_object (&source_core->src_image);
+  g_clear_pointer (&source_core->src_drawables, g_list_free);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -172,9 +187,9 @@ gimp_source_core_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_SRC_DRAWABLE:
+    case PROP_SRC_DRAWABLES:
       gimp_source_core_set_src_drawable (source_core,
-                                         g_value_get_object (value));
+                                         g_value_get_pointer (value));
       break;
     case PROP_SRC_X:
       source_core->src_x = g_value_get_int (value);
@@ -198,8 +213,8 @@ gimp_source_core_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_SRC_DRAWABLE:
-      g_value_set_object (value, source_core->src_drawable);
+    case PROP_SRC_DRAWABLES:
+      g_value_set_pointer (value, source_core->src_drawables);
       break;
     case PROP_SRC_X:
       g_value_set_int (value, source_core->src_x);
@@ -235,7 +250,7 @@ gimp_source_core_start (GimpPaintCore     *paint_core,
   if (! source_core->set_source &&
       gimp_source_core_use_source (source_core, options))
     {
-      if (! source_core->src_drawable)
+      if (! source_core->src_drawables)
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                _("Set a source image first."));
@@ -244,7 +259,7 @@ gimp_source_core_start (GimpPaintCore     *paint_core,
 
       if (options->sample_merged         &&
           g_list_length (drawables) == 1 &&
-          gimp_item_get_image (GIMP_ITEM (source_core->src_drawable)) ==
+          gimp_item_get_image (GIMP_ITEM (source_core->src_drawables->data)) ==
           gimp_item_get_image (GIMP_ITEM (drawables->data)))
         {
           paint_core->use_saved_proj = TRUE;
@@ -274,7 +289,7 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_INIT:
       if (source_core->set_source)
         {
-          gimp_source_core_set_src_drawable (source_core, drawables->data);
+          gimp_source_core_set_src_drawable (source_core, drawables);
 
           /* FIXME(?): subpixel source sampling */
           source_core->src_x = floor (coords->x);
@@ -289,6 +304,8 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
 
           source_core->first_stroke = TRUE;
         }
+
+      gimp_source_core_make_pickable (source_core);
       break;
 
     case GIMP_PAINT_STATE_MOTION:
@@ -411,16 +428,15 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
 
   if (gimp_source_core_use_source (source_core, options))
     {
-      src_pickable = GIMP_PICKABLE (source_core->src_drawable);
-
       if (self_drawable)
         {
           src_pickable = GIMP_PICKABLE (drawable);
         }
       else if (options->sample_merged)
         {
-          GimpImage *src_image = gimp_pickable_get_image (src_pickable);
-          gint       off_x, off_y;
+          GimpImage *src_image;
+
+          src_image = gimp_pickable_get_image (source_core->src_drawables->data);
 
           if (! gimp_paint_core_get_show_all (paint_core))
             {
@@ -428,15 +444,12 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
             }
           else
             {
-              src_pickable = GIMP_PICKABLE (
-                gimp_image_get_projection (src_image));
+              src_pickable = GIMP_PICKABLE (gimp_image_get_projection (src_image));
             }
-
-          gimp_item_get_offset (GIMP_ITEM (source_core->src_drawable),
-                                &off_x, &off_y);
-
-          base_src_offset_x += off_x;
-          base_src_offset_y += off_y;
+        }
+      else
+        {
+          src_pickable = source_core->src_pickable;
         }
     }
 
@@ -638,7 +651,8 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
    *  we get a copy of the unblemished (offset) image
    */
   if ((  sample_merged && (src_image                 != image)) ||
-      (! sample_merged && (source_core->src_drawable != drawable)))
+      (! sample_merged && (g_list_length (source_core->src_drawables) != 1 ||
+                           source_core->src_drawables->data != drawable)))
     {
       dest_buffer = src_buffer;
     }
@@ -666,10 +680,7 @@ static void
 gimp_source_core_src_drawable_removed (GimpDrawable   *drawable,
                                        GimpSourceCore *source_core)
 {
-  if (drawable == source_core->src_drawable)
-    {
-      source_core->src_drawable = NULL;
-    }
+  source_core->src_drawables = g_list_remove (source_core->src_drawables, drawable);
 
   g_signal_handlers_disconnect_by_func (drawable,
                                         gimp_source_core_src_drawable_removed,
@@ -678,22 +689,84 @@ gimp_source_core_src_drawable_removed (GimpDrawable   *drawable,
 
 static void
 gimp_source_core_set_src_drawable (GimpSourceCore *source_core,
-                                   GimpDrawable   *drawable)
+                                   GList          *drawables)
 {
-  if (source_core->src_drawable == drawable)
-    return;
+  GimpImage *image = NULL;
+  GList     *iter;
 
-  if (source_core->src_drawable)
-    g_signal_handlers_disconnect_by_func (source_core->src_drawable,
-                                          gimp_source_core_src_drawable_removed,
-                                          source_core);
+  if (g_list_length (source_core->src_drawables) == g_list_length (drawables))
+    {
+      GList *iter2;
 
-  source_core->src_drawable = drawable;
+      for (iter = source_core->src_drawables, iter2 = drawables;
+           iter; iter = iter->next, iter2 = iter2->next)
+        {
+          if (iter->data != iter2->data)
+            break;
+        }
+      if (iter == NULL)
+        return;
+    }
+  for (GList *iter = drawables; iter; iter = iter->next)
+    {
+      /* Make sure all drawables are from the same image. */
+      if (image == NULL)
+        image = gimp_item_get_image (GIMP_ITEM (iter->data));
+      else
+        g_return_if_fail (image == gimp_item_get_image (GIMP_ITEM (iter->data)));
+    }
 
-  if (source_core->src_drawable)
-    g_signal_connect (source_core->src_drawable, "removed",
-                      G_CALLBACK (gimp_source_core_src_drawable_removed),
-                      source_core);
+  if (source_core->src_drawables)
+    {
+      for (GList *iter = source_core->src_drawables; iter; iter = iter->next)
+        g_signal_handlers_disconnect_by_func (iter->data,
+                                              gimp_source_core_src_drawable_removed,
+                                              source_core);
 
-  g_object_notify (G_OBJECT (source_core), "src-drawable");
+      g_list_free (source_core->src_drawables);
+    }
+
+  source_core->src_drawables = g_list_copy (drawables);
+
+  if (source_core->src_drawables)
+    {
+      for (GList *iter = source_core->src_drawables; iter; iter = iter->next)
+        g_signal_connect (iter->data, "removed",
+                          G_CALLBACK (gimp_source_core_src_drawable_removed),
+                          source_core);
+    }
+
+  g_object_notify (G_OBJECT (source_core), "src-drawables");
+}
+
+static void
+gimp_source_core_make_pickable (GimpSourceCore *source_core)
+{
+  g_clear_object (&source_core->src_image);
+  source_core->src_pickable = NULL;
+
+  if (source_core->src_drawables)
+    {
+      GimpImage *image;
+
+      image = gimp_item_get_image (GIMP_ITEM (source_core->src_drawables->data));
+
+      if (g_list_length (source_core->src_drawables) > 1)
+        {
+          /* A composited projection of src_drawables as if they were on
+           * their own in the image. Some kind of sample_merged limited
+           * to these drawables.
+           */
+          source_core->src_image = gimp_image_new_from_drawables (image->gimp, source_core->src_drawables,
+                                                                  FALSE);
+          gimp_container_remove (image->gimp->images, GIMP_OBJECT (source_core->src_image));
+
+          source_core->src_pickable = GIMP_PICKABLE (source_core->src_image);
+          gimp_pickable_flush (source_core->src_pickable);
+        }
+      else
+        {
+          source_core->src_pickable = GIMP_PICKABLE (source_core->src_drawables->data);
+        }
+    }
 }

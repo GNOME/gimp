@@ -566,7 +566,7 @@ gimp_perspective_clone_tool_cursor_update (GimpTool         *tool,
         {
           cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
         }
-      else if (! GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
+      else if (! GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core)->src_drawables)
         {
           modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
@@ -624,7 +624,7 @@ gimp_perspective_clone_tool_oper_update (GimpTool         *tool,
           GimpPerspectiveClone *clone       = GIMP_PERSPECTIVE_CLONE (core);
           GimpSourceCore       *source_core = GIMP_SOURCE_CORE (core);
 
-          if (source_core->src_drawable == NULL)
+          if (source_core->src_drawables == NULL)
             {
               gimp_tool_replace_status (tool, display,
                                         _("Ctrl-Click to set a clone source"));
@@ -759,7 +759,7 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_pop_group (draw_tool);
     }
 
-  if (source_core->src_drawable && clone_tool->src_display)
+  if (source_core->src_drawables && clone_tool->src_display)
     {
       GimpDisplay *tmp_display;
 
@@ -788,7 +788,7 @@ gimp_perspective_clone_tool_halt (GimpPerspectiveCloneTool *clone_tool)
   clone_tool->src_display = NULL;
 
   g_object_set (GIMP_PAINT_TOOL (tool)->core,
-                "src-drawable", NULL,
+                "src-drawables", NULL,
                 NULL);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))

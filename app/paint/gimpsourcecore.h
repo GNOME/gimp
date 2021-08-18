@@ -38,9 +38,13 @@ struct _GimpSourceCore
 
   gboolean       set_source;
 
-  GimpDrawable  *src_drawable;
+  GList         *src_drawables;
   gint           src_x;
   gint           src_y;
+
+  /* The pickable to use when not in sample merged mode. */
+  GimpPickable  *src_pickable;
+  GimpImage     *src_image;
 
   gint           orig_src_x;
   gint           orig_src_y;
