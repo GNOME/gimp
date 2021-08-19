@@ -48,6 +48,7 @@ struct _GimpPerspectiveClone
   GeglNode      *node;
   GeglNode      *crop;
   GeglNode      *transform_node;
+  GeglNode      *src_node;
   GeglNode      *dest_node;
 };
 

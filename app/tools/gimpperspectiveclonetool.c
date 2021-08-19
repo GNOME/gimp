@@ -188,6 +188,7 @@ gimp_perspective_clone_tool_init (GimpPerspectiveCloneTool *clone_tool)
                                          "context/context-pattern-select-set");
 
   gimp_matrix3_identity (&clone_tool->transform);
+  gimp_paint_tool_enable_multi_paint (GIMP_PAINT_TOOL (clone_tool));
 }
 
 static void
@@ -218,13 +219,9 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
     }
 
   drawables = gimp_image_get_selected_drawables (image);
-  if (g_list_length (drawables) != 1)
+  if (g_list_length (drawables) == 0)
     {
-      if (g_list_length (drawables) > 1)
-        gimp_tool_message_literal (tool, display,
-                                   _("Cannot paint on multiple layers. Select only one layer."));
-      else
-        gimp_tool_message_literal (tool, display, _("No selected drawables."));
+      gimp_tool_message_literal (tool, display, _("No selected drawables."));
 
       g_list_free (drawables);
 

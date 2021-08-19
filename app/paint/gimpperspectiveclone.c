@@ -33,9 +33,11 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-new.h"
 #include "core/gimppattern.h"
 #include "core/gimppickable.h"
 #include "core/gimpsymmetry.h"
@@ -160,9 +162,9 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
         }
       else
         {
+          GimpImage  *del_image   = NULL;
           GeglBuffer *orig_buffer = NULL;
           GeglNode   *tile        = NULL;
-          GeglNode   *src_node;
 
           if (options->align_mode == GIMP_SOURCE_ALIGN_NO)
             {
@@ -182,7 +184,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
             {
             case GIMP_CLONE_IMAGE:
               {
-                GimpPickable *src_pickable;
+                GimpPickable *src_pickable = NULL;
                 GimpImage    *src_image;
                 GimpImage    *dest_image;
 
@@ -192,8 +194,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                  *  Otherwise, we need a call to get_orig_image to make sure
                  *  we get a copy of the unblemished (offset) image
                  */
-                src_pickable = GIMP_PICKABLE (source_core->src_drawables->data);
-                src_image    = gimp_pickable_get_image (src_pickable);
+                src_image = gimp_pickable_get_image (source_core->src_drawables->data);
 
                 if (sample_merged)
                   src_pickable = GIMP_PICKABLE (src_image);
@@ -202,17 +203,35 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
 
                 if ((sample_merged &&
                      (src_image != dest_image)) ||
-                    (! sample_merged &&
-                     (source_core->src_drawable != drawables->data)))
+                    (! sample_merged                                 &&
+                     g_list_length (source_core->src_drawables) == 1 &&
+                     g_list_length (drawables) == 1                  &&
+                     (source_core->src_drawables != drawables->data)))
                   {
+                    if (! sample_merged)
+                      src_pickable = GIMP_PICKABLE (source_core->src_drawables->data);
+
                     orig_buffer = gimp_pickable_get_buffer (src_pickable);
                   }
                 else
                   {
-                    if (sample_merged)
+                    if (sample_merged && paint_core->use_saved_proj)
                       orig_buffer = gimp_paint_core_get_orig_proj (paint_core);
                     else
                       orig_buffer = gimp_paint_core_get_orig_image (paint_core, drawables->data);
+                  }
+
+                if (! orig_buffer)
+                  {
+                    /* A composited image of the drawables */
+                    del_image = gimp_image_new_from_drawables (src_image->gimp, drawables,
+                                                               FALSE);
+                    gimp_container_remove (src_image->gimp->images, GIMP_OBJECT (del_image));
+
+                    src_pickable = GIMP_PICKABLE (del_image);
+                    gimp_pickable_flush (src_pickable);
+
+                    orig_buffer = gimp_pickable_get_buffer (src_pickable);
                   }
               }
               break;
@@ -233,10 +252,10 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
               break;
             }
 
-          src_node = gegl_node_new_child (clone->node,
-                                          "operation", "gegl:buffer-source",
-                                          "buffer",    orig_buffer,
-                                          NULL);
+          clone->src_node = gegl_node_new_child (clone->node,
+                                                 "operation", "gegl:buffer-source",
+                                                 "buffer",    orig_buffer,
+                                                 NULL);
 
           clone->transform_node =
             gegl_node_new_child (clone->node,
@@ -251,7 +270,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
 
           if (tile)
             {
-              gegl_node_link_many (src_node,
+              gegl_node_link_many (clone->src_node,
                                    tile,
                                    clone->crop,
                                    clone->transform_node,
@@ -262,11 +281,13 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
             }
           else
             {
-              gegl_node_link_many (src_node,
+              gegl_node_link_many (clone->src_node,
                                    clone->transform_node,
                                    clone->dest_node,
                                    NULL);
             }
+
+          g_clear_object (&del_image);
         }
       break;
 
@@ -386,6 +407,9 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   GimpMatrix3           matrix;
   GimpMatrix3           gegl_matrix;
 
+  if (self_drawable)
+    src_pickable = GIMP_PICKABLE (drawable);
+
   src_buffer       = gimp_pickable_get_buffer (src_pickable);
   src_format_alpha = gimp_pickable_get_format_with_alpha (src_pickable);
 
@@ -422,6 +446,12 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
         {
           /* if the source area is completely out of the image */
           return NULL;
+        }
+      else
+        {
+          gegl_node_set (clone->src_node,
+                         "buffer", src_buffer,
+                         NULL);
         }
       break;
 

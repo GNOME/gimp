@@ -190,6 +190,7 @@ gimp_source_core_set_property (GObject      *object,
     case PROP_SRC_DRAWABLES:
       gimp_source_core_set_src_drawable (source_core,
                                          g_value_get_pointer (value));
+      gimp_source_core_make_pickable (source_core);
       break;
     case PROP_SRC_X:
       source_core->src_x = g_value_get_int (value);
