@@ -29,6 +29,9 @@
 
 #include "config-types.h"
 
+#include "core/core-types.h"
+#include "core/gimp-utils.h"
+
 #include "gimpearlyrc.h"
 
 enum
@@ -210,7 +213,26 @@ gimp_early_rc_set_property (GObject      *object,
 
 #ifdef G_OS_WIN32
     case PROP_WIN32_POINTER_INPUT_API:
-      rc->win32_pointer_input_api = g_value_get_enum (value);
+      {
+        GimpWin32PointerInputAPI api = g_value_get_enum (value);
+        gboolean have_wintab         = gimp_win32_have_wintab ();
+        gboolean have_windows_ink    = gimp_win32_have_windows_ink ();
+        gboolean api_is_wintab       = (api == GIMP_WIN32_POINTER_INPUT_API_WINTAB);
+        gboolean api_is_windows_ink  = (api == GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK);
+
+        if (api_is_wintab && !have_wintab && have_windows_ink)
+          {
+            rc->win32_pointer_input_api = GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK;
+          }
+        else if (api_is_windows_ink && !have_windows_ink && have_wintab)
+          {
+            rc->win32_pointer_input_api = GIMP_WIN32_POINTER_INPUT_API_WINTAB;
+          }
+        else
+          {
+            rc->win32_pointer_input_api = api;
+          }
+      }
       break;
 #endif
 

@@ -1182,7 +1182,26 @@ gimp_core_config_set_property (GObject      *object,
       break;
 #ifdef G_OS_WIN32
     case PROP_WIN32_POINTER_INPUT_API:
-      core_config->win32_pointer_input_api = g_value_get_enum (value);
+      {
+        GimpWin32PointerInputAPI api = g_value_get_enum (value);
+        gboolean have_wintab         = gimp_win32_have_wintab ();
+        gboolean have_windows_ink    = gimp_win32_have_windows_ink ();
+        gboolean api_is_wintab       = (api == GIMP_WIN32_POINTER_INPUT_API_WINTAB);
+        gboolean api_is_windows_ink  = (api == GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK);
+
+        if (api_is_wintab && !have_wintab && have_windows_ink)
+          {
+            core_config->win32_pointer_input_api = GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK;
+          }
+        else if (api_is_windows_ink && !have_windows_ink && have_wintab)
+          {
+            core_config->win32_pointer_input_api = GIMP_WIN32_POINTER_INPUT_API_WINTAB;
+          }
+        else
+          {
+            core_config->win32_pointer_input_api = api;
+          }
+      }
       break;
 #endif
 
