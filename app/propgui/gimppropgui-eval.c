@@ -730,6 +730,10 @@ gimp_prop_eval_string_selection (GObject      *config,
               match  = TRUE;
               result = value;
             }
+          else
+            {
+              g_free (value);
+            }
 
           if (! g_strcmp0 (*t, ","))
             {
