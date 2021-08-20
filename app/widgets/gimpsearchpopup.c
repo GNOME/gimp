@@ -616,8 +616,10 @@ results_list_key_press_event (GtkWidget       *widget,
         if (gtk_tree_selection_get_selected (selection, &model, &iter))
           {
             GtkTreePath *path = gtk_tree_model_get_path (model, &iter);
+            gchar       *path_str;
 
-            if (strcmp (gtk_tree_path_to_string (path), "0") == 0)
+            path_str = gtk_tree_path_to_string (path);
+            if (strcmp (path_str, "0") == 0)
               {
                 gint start_pos;
                 gint end_pos;
@@ -631,6 +633,7 @@ results_list_key_press_event (GtkWidget       *widget,
                 event_processed = TRUE;
               }
 
+            g_free (path_str);
             gtk_tree_path_free (path);
           }
 
