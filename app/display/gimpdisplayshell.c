@@ -374,7 +374,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_buffer_hover),
                     shell);
 
-  shell->zoom_focus_pointer_queue = g_queue_new ();
+  shell->zoom_focus_point = NULL;
 
   gtk_widget_set_events (GTK_WIDGET (shell), (GDK_POINTER_MOTION_MASK    |
                                               GDK_BUTTON_PRESS_MASK      |
@@ -782,7 +782,11 @@ gimp_display_shell_dispose (GObject *object)
 
   g_clear_object (&shell->motion_buffer);
 
-  g_clear_pointer (&shell->zoom_focus_pointer_queue, g_queue_free);
+  if (shell->zoom_focus_point)
+    {
+      g_slice_free (GdkPoint, shell->zoom_focus_point);
+      shell->zoom_focus_point = NULL;
+    }
 
   if (shell->title_idle_id)
     {

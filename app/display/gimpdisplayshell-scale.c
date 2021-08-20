@@ -539,6 +539,10 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
       gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, new_scale);
 
       gimp_display_shell_scale_resize (shell, TRUE, FALSE);
+
+      /* XXX The @zoom_focus policy is clearly not working in this code
+       * path. This should be fixed.
+       */
     }
   else
     {
@@ -805,21 +809,33 @@ gimp_display_shell_scale_drag (GimpDisplayShell *shell,
 
   scale = gimp_zoom_model_get_factor (shell->zoom);
 
-  gimp_display_shell_push_zoom_focus_pointer_pos (shell, start_x, start_y);
+  if (delta_y != 0.0)
+    {
+      gimp_display_shell_push_zoom_focus_pointer_pos (shell, start_x, start_y);
 
-  if (delta_y > 0)
-    {
-      gimp_display_shell_scale (shell,
-                                GIMP_ZOOM_TO,
-                                scale * 1.1,
-                                GIMP_ZOOM_FOCUS_POINTER);
-    }
-  else if (delta_y < 0)
-    {
-      gimp_display_shell_scale (shell,
-                                GIMP_ZOOM_TO,
-                                scale * 0.9,
-                                GIMP_ZOOM_FOCUS_POINTER);
+      if (delta_y > 0.0)
+        {
+          gimp_display_shell_scale (shell,
+                                    GIMP_ZOOM_TO,
+                                    scale * 1.1,
+                                    GIMP_ZOOM_FOCUS_POINTER);
+        }
+      else /* delta_y < 0.0 */
+        {
+          gimp_display_shell_scale (shell,
+                                    GIMP_ZOOM_TO,
+                                    scale * 0.9,
+                                    GIMP_ZOOM_FOCUS_POINTER);
+        }
+
+      if (shell->zoom_focus_point)
+        {
+          /* In case we hit one of the cases when the focus pointer
+           * position was unused.
+           */
+          g_slice_free (GdkPoint, shell->zoom_focus_point);
+          shell->zoom_focus_point = NULL;
+        }
     }
 }
 
@@ -997,6 +1013,13 @@ gimp_display_shell_get_rotated_scale (GimpDisplayShell *shell,
  *
  * When the zoom focus mechanism asks for the pointer the next time,
  * use @x and @y.
+ *
+ * It was primarily created for unit testing (see commit 7e3898da093).
+ * Therefore it should not be used by our code. When it is, we should
+ * make sure that @shell->zoom_focus_point has been properly used and
+ * freed, if we don't want it to leak.
+ * Just calling gimp_display_shell_scale() is not enough as there are
+ * currently some code paths where the values is not used.
  **/
 void
 gimp_display_shell_push_zoom_focus_pointer_pos (GimpDisplayShell *shell,
@@ -1007,8 +1030,8 @@ gimp_display_shell_push_zoom_focus_pointer_pos (GimpDisplayShell *shell,
   point->x = x;
   point->y = y;
 
-  g_queue_push_head (shell->zoom_focus_pointer_queue,
-                     point);
+  g_slice_free (GdkPoint, shell->zoom_focus_point);
+  shell->zoom_focus_point = point;
 }
 
 
@@ -1372,16 +1395,16 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
       gtk_get_event_widget (event) == shell->canvas ||
       gtk_get_event_widget (event) == window)
     {
-      GdkPoint *point = g_queue_pop_head (shell->zoom_focus_pointer_queue);
-      gint      canvas_pointer_x;
-      gint      canvas_pointer_y;
+      gint canvas_pointer_x;
+      gint canvas_pointer_y;
 
-      if (point)
+      if (shell->zoom_focus_point)
         {
-          canvas_pointer_x = point->x;
-          canvas_pointer_y = point->y;
+          canvas_pointer_x = shell->zoom_focus_point->x;
+          canvas_pointer_y = shell->zoom_focus_point->y;
 
-          g_slice_free (GdkPoint, point);
+          g_slice_free (GdkPoint, shell->zoom_focus_point);
+          shell->zoom_focus_point = NULL;
         }
       else
         {
