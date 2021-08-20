@@ -501,12 +501,15 @@ keyword_entry_key_press_event (GtkWidget       *widget,
       gtk_widget_get_visible (popup->priv->list_view))
     {
       GtkTreeView *tree_view = GTK_TREE_VIEW (popup->priv->results_list);
+      GtkTreePath *path;
 
       /* When hitting the down key while editing, select directly the
        * second item, since the first could have run directly with
        * Enter. */
-      gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view),
-                                      gtk_tree_path_new_from_string ("1"));
+      path = gtk_tree_path_new_from_string ("1");
+      gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view), path);
+      gtk_tree_path_free (path);
+
       gtk_widget_grab_focus (GTK_WIDGET (popup->priv->results_list));
       event_processed = TRUE;
     }
@@ -520,6 +523,7 @@ keyword_entry_key_release_event (GtkWidget       *widget,
                                  GimpSearchPopup *popup)
 {
   GtkTreeView *tree_view = GTK_TREE_VIEW (popup->priv->results_list);
+  GtkTreePath *path;
   gchar       *entry_text;
   gint         width;
 
@@ -537,25 +541,27 @@ keyword_entry_key_release_event (GtkWidget       *widget,
 
   if (strcmp (entry_text, "") != 0)
     {
+      path = gtk_tree_path_new_from_string ("0");
       gtk_window_resize (GTK_WINDOW (popup),
                          width, window_height);
       gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (tree_view)));
       gtk_widget_show_all (popup->priv->list_view);
       popup->priv->build_results (popup, entry_text,
                                   popup->priv->build_results_data);
-      gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view),
-                                      gtk_tree_path_new_from_string ("0"));
+      gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view), path);
+      gtk_tree_path_free (path);
     }
   else if (strcmp (entry_text, "") == 0 && (event->keyval == GDK_KEY_Down))
     {
+      path = gtk_tree_path_new_from_string ("0");
       gtk_window_resize (GTK_WINDOW (popup),
                          width, window_height);
       gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (tree_view)));
       gtk_widget_show_all (popup->priv->list_view);
       popup->priv->build_results (popup, NULL,
                                   popup->priv->build_results_data);
-      gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view),
-                                      gtk_tree_path_new_from_string ("0"));
+      gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view), path);
+      gtk_tree_path_free (path);
     }
   else
     {
@@ -568,8 +574,6 @@ keyword_entry_key_release_event (GtkWidget       *widget,
 
       if (gtk_tree_selection_get_selected (selection, &model, &iter))
         {
-          GtkTreePath *path;
-
           path = gtk_tree_model_get_path (model, &iter);
           gtk_tree_selection_unselect_path (selection, path);
 
