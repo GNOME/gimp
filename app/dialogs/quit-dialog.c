@@ -562,6 +562,8 @@ quit_close_all_dialog_save_clicked (GtkCellRenderer *cell,
             }
         }
     }
+
+  gtk_tree_path_free (path);
 }
 
 static gboolean
