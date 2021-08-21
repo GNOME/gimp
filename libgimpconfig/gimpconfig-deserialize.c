@@ -817,7 +817,10 @@ gimp_config_deserialize_value_array (GValue     *value,
       g_value_unset (&array_value);
 
       if (token != G_TOKEN_RIGHT_PAREN)
-        return token;
+        {
+          gimp_value_array_unref (array);
+          return token;
+        }
     }
 
   g_value_take_boxed (value, array);
