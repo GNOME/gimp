@@ -502,7 +502,10 @@ edit_clear_cmd_callback (GimpAction *action,
   for (iter = drawables; iter; iter = iter->next)
     /* Return if any has a locked alpha. */
     if (! check_drawable_alpha (iter->data, data))
-      return;
+      {
+        g_list_free (drawables);
+        return;
+      }
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
                                _("Clear"));
