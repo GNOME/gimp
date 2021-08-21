@@ -118,7 +118,7 @@ msgid ""
 "hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
 "Anda boleh menggunakan butang tengah tetikus untuk melata di sekitar imej "
-"(atau cara lain, tahan <tt>Spacebar<tt> ketika anda menggerakkan tetikus)."
+"(atau cara lain, tahan <tt>Spacebar</tt> ketika anda menggerakkan tetikus)."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
