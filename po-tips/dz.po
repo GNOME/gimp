@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "</big>ཇི་ཨིན་ཡུ་ མ་ནུ་པ་ལེ་ཤན་ ལས་རིམ་ལུ་ བྱོན་པ་ལེགས་སོ་ཡོད!</big>"
+msgstr "<big>ཇི་ཨིན་ཡུ་ མ་ནུ་པ་ལེ་ཤན་ ལས་རིམ་ལུ་ བྱོན་པ་ལེགས་སོ་ཡོད!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool sets the background color instead of the foreground color."
