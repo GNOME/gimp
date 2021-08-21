@@ -45,7 +45,7 @@ msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
-"Ao premer <tt<Ctrl</tt> mentres arrastra coa ferramenta de rotación, esta "
+"Ao premer <tt>Ctrl</tt> mentres arrastra coa ferramenta de rotación, esta "
 "farase en ángulos de 15 graos."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
