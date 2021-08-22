@@ -304,11 +304,6 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   vbox = children->data;
   g_list_free (children);
 
-  /* The preferred localized date representation without the time. */
-  datetime = g_date_time_new_from_unix_local (config->last_release_timestamp);
-  date = g_date_time_format (datetime, "%x");
-  g_date_time_unref (datetime);
-
   /* The update frame. */
   frame = gtk_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 2);
@@ -358,6 +353,11 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       g_signal_connect (button, "clicked",
                         (GCallback) about_dialog_download_clicked,
                         "https://www.gimp.org/downloads/");
+
+      /* The preferred localized date representation without the time. */
+      datetime = g_date_time_new_from_unix_local (config->last_release_timestamp);
+      date = g_date_time_format (datetime, "%x");
+      g_date_time_unref (datetime);
 
       if (config->last_revision > 0)
         {
