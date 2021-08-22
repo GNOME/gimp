@@ -69,11 +69,14 @@ To use a debugger on a C-language plug-in:
      (e.g. "gdb> attach <pid>")
      Expect the debugger to say where the plug-in is suspended.
 
-
   5. In the debugger, set breakpoints (or examine memory, or step, etc.)
 
   6. Windows: resume the plug-in process with "gimp-debug-resume.exe <pid>"
-     (On Linux, the gdb continue command resumes the attached process.)
+
+     Linux and Unix-like: the gdb `continue` command might resume the
+     attached process. Possibly you will have to send a SIGCONT signal:
+
+         kill -SIGCONT <pid>
 
   7. In the debugger, enter "continue". Expect the plug-in to resume under
      control of the debugger and pause at breakpoints.
