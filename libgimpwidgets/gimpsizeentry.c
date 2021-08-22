@@ -1366,7 +1366,7 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
   GimpSizeEntryPrivate *priv      = GET_PRIVATE (gsef->gse);
   GimpEevlOptions       options   = GIMP_EEVL_OPTIONS_INIT;
   gboolean              success   = FALSE;
-  const gchar          *error_pos = 0;
+  const gchar          *error_pos = NULL;
   GError               *error     = NULL;
   GimpEevlQuantity      result;
 
@@ -1424,6 +1424,7 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
         {
           g_printerr ("ERROR: Expression evaluation failed without error.\n");
         }
+      g_clear_error (&error);
 
       gtk_widget_error_bell (GTK_WIDGET (spinner));
       return GTK_INPUT_ERROR;
