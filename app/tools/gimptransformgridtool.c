@@ -720,6 +720,8 @@ gimp_transform_grid_tool_options_notify (GimpTool         *tool,
                 {
                   gimp_transform_grid_tool_show_selected_objects (tg_tool);
                 }
+
+              g_list_free (objects);
             }
 
           gimp_transform_grid_tool_update_preview (tg_tool);
