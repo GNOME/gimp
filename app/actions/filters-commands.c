@@ -69,6 +69,7 @@ filters_apply_cmd_callback (GimpAction *action,
   gchar         *operation;
   GimpObject    *settings;
   GimpProcedure *procedure;
+  GVariant      *variant;
   return_if_no_drawable (image, drawable, data);
 
   operation = filters_parse_operation (image->gimp,
@@ -91,10 +92,12 @@ filters_apply_cmd_callback (GimpAction *action,
     g_object_unref (settings);
 
   gimp_filter_history_add (image->gimp, procedure);
-  filters_history_cmd_callback (NULL,
-                                g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure)),
-                                data);
 
+  variant = g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure));
+  g_variant_take_ref (variant);
+  filters_history_cmd_callback (NULL, variant, data);
+
+  g_variant_unref (variant);
   g_object_unref (procedure);
 }
 
@@ -106,6 +109,7 @@ filters_apply_interactive_cmd_callback (GimpAction *action,
   GimpImage     *image;
   GimpDrawable  *drawable;
   GimpProcedure *procedure;
+  GVariant      *variant;
   return_if_no_drawable (image, drawable, data);
 
   procedure = gimp_gegl_procedure_new (image->gimp,
@@ -118,10 +122,12 @@ filters_apply_interactive_cmd_callback (GimpAction *action,
                                        gimp_action_get_help_id (action));
 
   gimp_filter_history_add (image->gimp, procedure);
-  filters_history_cmd_callback (NULL,
-                                g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure)),
-                                data);
 
+  variant = g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure));
+  g_variant_take_ref (variant);
+  filters_history_cmd_callback (NULL, variant, data);
+
+  g_variant_unref (variant);
   g_object_unref (procedure);
 }
 
