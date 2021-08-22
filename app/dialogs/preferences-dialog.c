@@ -3076,6 +3076,8 @@ prefs_dialog_new (Gimp       *gimp,
                                          GTK_LIST_BOX_ROW (row));
               }
           }
+        g_object_unref (name_group);
+        g_object_unref (format_group);
 
         g_signal_connect (listbox, "row-selected",
                           G_CALLBACK (prefs_format_string_select_callback),
