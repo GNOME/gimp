@@ -187,8 +187,13 @@
                     "sha512": "9280851e560becc91546906b911e0c59a1abd690e10680f6d94a335d66aeaec5eb12ccf2214ee7af2a15729a7b5f8b906022822399b4e2bc12c75a2d75748cab"
                 },
                 {
+                    "type": "patch",
+                    "path": "patches/libwmf-no-freetype-config.patch"
+                },
+                {
                     "type": "shell",
-                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
+                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} .",
+                                  "aclocal", "automake --add-missing", "autoconf" ]
                 }
             ]
         },
