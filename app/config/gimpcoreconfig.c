@@ -877,6 +877,8 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->brush_path_writable);
   g_free (core_config->dynamics_path);
   g_free (core_config->dynamics_path_writable);
+  g_free (core_config->mypaint_brush_path);
+  g_free (core_config->mypaint_brush_path_writable);
   g_free (core_config->pattern_path);
   g_free (core_config->pattern_path_writable);
   g_free (core_config->palette_path);
@@ -889,6 +891,7 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->font_path_writable);
   g_free (core_config->default_brush);
   g_free (core_config->default_dynamics);
+  g_free (core_config->default_mypaint_brush);
   g_free (core_config->default_pattern);
   g_free (core_config->default_palette);
   g_free (core_config->default_gradient);
