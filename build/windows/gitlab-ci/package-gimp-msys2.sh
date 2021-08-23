@@ -32,6 +32,8 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-drmingw \
     mingw-w64-$MSYS2_ARCH-gexiv2 \
     mingw-w64-$MSYS2_ARCH-ghostscript \
+    mingw-w64-$MSYS2_ARCH-glib2 \
+    mingw-w64-$MSYS2_ARCH-glib-networking \
     mingw-w64-$MSYS2_ARCH-gobject-introspection \
     mingw-w64-$MSYS2_ARCH-gobject-introspection-runtime \
     mingw-w64-$MSYS2_ARCH-graphviz \
@@ -97,14 +99,14 @@ cp -fr ${GIMP_PREFIX}/lib/babl-0.1 ${GIMP_DISTRIB}/lib/
 cp -fr ${MSYS_PREFIX}/lib/girepository-1.0 ${GIMP_DISTRIB}/lib/
 cp -fr ${GIMP_PREFIX}/lib/girepository-1.0/* ${GIMP_DISTRIB}/lib/girepository-1.0/
 
-cp -fr ${GIMP_PREFIX}/lib/gio ${GIMP_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/gio ${GIMP_DISTRIB}/lib/
 cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
 cp -fr ${GIMP_PREFIX}/lib/gtk-3.0 ${GIMP_DISTRIB}/lib/
 
 cp -fr ${MSYS_PREFIX}/lib/python3.9 ${GIMP_DISTRIB}/lib/
 
 cp -fr ${MSYS_PREFIX}/share/ghostscript ${GIMP_DISTRIB}/share/
-cp -fr ${GIMP_PREFIX}/share/glib-2.0 ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/glib-2.0 ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/libthai ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/libwmf ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/mypaint-data ${GIMP_DISTRIB}/share/
