@@ -26,6 +26,7 @@ gboolean   gimp_config_file_copy             (const gchar        *source,
                                               const gchar        *dest,
                                               const gchar        *old_options_regexp,
                                               GRegexEvalCallback  update_callback,
+                                              gpointer            user_data,
                                               GError            **error);
 
 gboolean   gimp_config_file_backup_on_error  (GFile              *file,

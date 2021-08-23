@@ -69,6 +69,8 @@ struct _GimpUserInstall
   gint                    old_major;
   gint                    old_minor;
 
+  gint                    scale_factor;
+
   const gchar            *migrate;
 
   GimpUserInstallLogFunc  log;
@@ -202,12 +204,14 @@ gimp_user_install_new (GObject  *gimp,
 }
 
 gboolean
-gimp_user_install_run (GimpUserInstall *install)
+gimp_user_install_run (GimpUserInstall *install,
+                       gint             scale_factor)
 {
   gchar *dirname;
 
   g_return_val_if_fail (install != NULL, FALSE);
 
+  install->scale_factor = scale_factor;
   dirname = g_filename_display_name (gimp_directory ());
 
   if (install->migrate)
@@ -269,6 +273,7 @@ user_install_detect_old (GimpUserInstall *install,
   gboolean  migrate = FALSE;
 
   version = strstr (dir, GIMP_APP_VERSION);
+  g_snprintf (version, 5, "%d.XY", 2);
 
   if (version)
     {
@@ -277,7 +282,7 @@ user_install_detect_old (GimpUserInstall *install,
       for (i = (GIMP_MINOR_VERSION & ~1); i >= 0; i -= 2)
         {
           /*  we assume that GIMP_APP_VERSION is in the form '2.x'  */
-          g_snprintf (version + 2, 2, "%d", i);
+          g_snprintf (version + 2, 3, "%d", i);
 
           migrate = g_file_test (dir, G_FILE_TEST_IS_DIR);
 
@@ -420,7 +425,7 @@ user_install_file_copy (GimpUserInstall    *install,
                     gimp_filename_to_utf8 (dest),
                     gimp_filename_to_utf8 (source));
 
-  success = gimp_config_file_copy (source, dest, old_options_regexp, update_callback, &error);
+  success = gimp_config_file_copy (source, dest, old_options_regexp, update_callback, install, &error);
 
   user_install_log_error (install, &error);
 
@@ -608,6 +613,79 @@ user_update_controllerrc (const GMatchInfo *matched_value,
   g_free (original);
   g_free (replacement);
   g_regex_unref (regexp);
+
+  return FALSE;
+}
+
+#define SESSIONRC_UPDATE_PATTERN \
+  "\\(position [0-9]* [0-9]*\\)"    "|" \
+  "\\(size [0-9]* [0-9]*\\)"
+
+static gboolean
+user_update_sessionrc (const GMatchInfo *matched_value,
+                       GString          *new_value,
+                       gpointer          data)
+{
+  GimpUserInstall *install = (GimpUserInstall *) data;
+  gchar           *original;
+
+  original = g_match_info_fetch (matched_value, 0);
+
+  if (install->scale_factor != 1 && install->scale_factor > 0)
+    {
+      /* GTK < 3.0 didn't have scale factor support. It means that any
+       * size and position back then would be in real pixel size. Now
+       * with GTK3 and over, we need to think of position and size in
+       * virtual/application pixels.
+       * In particular it means that if we were to just copy the numbers
+       * from GTK2 to GTK3 on a display with scale factor of 2, every
+       * width, height and position would be 2 times too big (a full
+       * screen window would end up off-screen).
+       */
+      GRegex     *regexp;
+      GMatchInfo *match_info;
+      gchar      *match;
+
+      /* First copy the pattern title. */
+      regexp = g_regex_new ("\\((position|size) ", 0, 0, NULL);
+      g_regex_match (regexp, original, 0, &match_info);
+      match = g_match_info_fetch (match_info, 0);
+      g_string_append (new_value, match);
+
+      g_match_info_free (match_info);
+      g_regex_unref (regexp);
+      g_free (match);
+
+      /* Now copy the numbers. */
+      regexp = g_regex_new ("[0-9]+", 0, 0, NULL);
+      g_regex_match (regexp, original, 0, &match_info);
+
+      while (g_match_info_matches (match_info))
+        {
+          gint num;
+
+          match = g_match_info_fetch (match_info, 0);
+          num = g_ascii_strtoll (match, NULL, 10);
+          num /= install->scale_factor;
+
+          g_string_append_printf (new_value, " %d", num);
+
+          g_free (match);
+          g_match_info_next (match_info, NULL);
+        }
+
+      g_match_info_free (match_info);
+      g_regex_unref (regexp);
+
+      g_string_append (new_value, ")");
+    }
+  else
+    {
+      /* Just copy as-is. */
+      g_string_append (new_value, original);
+    }
+
+  g_free (original);
 
   return FALSE;
 }
@@ -891,6 +969,15 @@ user_install_migrate_files (GimpUserInstall *install)
             {
               goto next_file;
             }
+          else if (install->old_major < 3 &&
+                   strcmp (basename, "sessionrc") == 0)
+            {
+              /* We need to update size and positions because of scale
+               * factor support.
+               */
+              update_pattern  = SESSIONRC_UPDATE_PATTERN;
+              update_callback = user_update_sessionrc;
+            }
           else if (strcmp (basename, "menurc") == 0)
             {
               switch (install->old_minor)
@@ -938,6 +1025,13 @@ user_install_migrate_files (GimpUserInstall *install)
               strcmp (basename, "tool-options") == 0 ||
               strcmp (basename, "themes") == 0)
             {
+              goto next_file;
+            }
+          else if (install->old_major < 3 &&
+                   (strcmp (basename, "plug-ins") == 0 ||
+                    strcmp (basename, "scripts") == 0))
+            {
+              /* Major API update. */
               goto next_file;
             }
 

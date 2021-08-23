@@ -45,6 +45,7 @@ gimp_config_file_copy (const gchar         *source,
                        const gchar         *dest,
                        const gchar         *old_options_pattern,
                        GRegexEvalCallback   update_callback,
+                       gpointer             user_data,
                        GError             **error)
 {
   gchar        buffer[8192];
@@ -129,7 +130,7 @@ gimp_config_file_copy (const gchar         *source,
 
           write_bytes = g_regex_replace_eval (old_options_regexp, buffer,
                                               read_len, 0, 0, update_callback,
-                                              NULL, error);
+                                              user_data, error);
           if (write_bytes == NULL)
             {
               /* error already set. */
@@ -226,7 +227,7 @@ gimp_config_file_backup_on_error (GFile        *file,
   path   = g_file_get_path (file);
   backup = g_strconcat (path, "~", NULL);
 
-  success = gimp_config_file_copy (path, backup, NULL, NULL, error);
+  success = gimp_config_file_copy (path, backup, NULL, NULL, NULL, error);
 
   if (success)
     g_message (_("There was an error parsing your '%s' file. "

@@ -53,7 +53,8 @@ user_install_dialog_run (GimpUserInstall *install)
 
   dialog = user_install_dialog_new (install);
 
-  success = gimp_user_install_run (install);
+  success = gimp_user_install_run (install,
+                                   gtk_widget_get_scale_factor (dialog));
 
   if (! success)
     {

@@ -272,10 +272,10 @@ app_run (const gchar         *full_prog_name,
                                                         be_verbose);
 
 #ifdef GIMP_CONSOLE_COMPILATION
-      gimp_user_install_run (install);
+      gimp_user_install_run (install, 1);
 #else
       if (! (no_interface ?
-             gimp_user_install_run (install) :
+             gimp_user_install_run (install, 1) :
              user_install_dialog_run (install)))
         exit (EXIT_FAILURE);
 #endif
