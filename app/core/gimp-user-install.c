@@ -497,7 +497,8 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
   "\"<Actions>/plug-in/plug-in-gauss\""         "|" \
   "\"<Actions>/tools/tools-value-[1-4]-.*\""    "|" \
   "\"<Actions>/vectors/vectors-path-tool\""     "|" \
-  "\"<Actions>/tools/tools-blend\""
+  "\"<Actions>/tools/tools-blend\""             "|" \
+  "\"<Actions>/view/view-rotate-reset\""
 
 /**
  * callback to use for updating a menurc from GIMP over 2.0.
@@ -509,7 +510,8 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
                            GString          *new_value,
                            gpointer          data)
 {
-  gchar *match = g_match_info_fetch (matched_value, 0);
+  GimpUserInstall *install = (GimpUserInstall *) data;
+  gchar           *match   = g_match_info_fetch (matched_value, 0);
 
   /* "*-paste-as-new" renamed to "*-paste-as-new-image"
    */
@@ -526,11 +528,19 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
    */
   else if (g_strcmp0 (match, "\"<Actions>/file/file-export\"") == 0)
     {
-      g_string_append (new_value, "\"<Actions>/file/file-export-as\"");
+      if (install->old_major == 2 && install->old_minor <= 8)
+        g_string_append (new_value, "\"<Actions>/file/file-export-as\"");
+      else
+        /* Don't change from a 2.10 config. */
+        g_string_append (new_value, match);
     }
   else if (g_strcmp0 (match, "\"<Actions>/file/file-export-to\"") == 0)
     {
-      g_string_append (new_value, "\"<Actions>/file/file-export\"");
+      if (install->old_major == 2 && install->old_minor <= 8)
+        g_string_append (new_value, "\"<Actions>/file/file-export\"");
+      else
+        /* Don't change from a 2.10 config. */
+        g_string_append (new_value, match);
     }
   else if (g_strcmp0 (match, "\"<Actions>/layers/layers-text-tool\"") == 0)
     {
@@ -575,11 +585,23 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
     {
       g_string_append (new_value, "\"<Actions>/tools/tools-gradient\"");
     }
-  /* Should not happen. Just in case we match something unexpected by
-   * mistake.
-   */
+  else if (g_strcmp0 (match, "\"<Actions>/view/view-rotate-reset\"") == 0)
+    {
+      /* view-rotate-reset became view-reset and new view-rotate-reset
+       * and view-flip-reset actions were created.
+       * See commit 15fb4a7be0.
+       */
+      if (install->old_major == 2)
+        g_string_append (new_value, "\"<Actions>/view/view-reset\"");
+      else
+        /* In advance for a migration from a 3.0 config to higher ones. */
+        g_string_append (new_value, match);
+    }
   else
     {
+      /* Should not happen. Just in case we match something unexpected by
+       * mistake.
+       */
       g_message ("(WARNING) %s: invalid match \"%s\"", G_STRFUNC, match);
       g_string_append (new_value, match);
     }
