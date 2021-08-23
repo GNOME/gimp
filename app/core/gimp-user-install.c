@@ -618,8 +618,10 @@ user_update_controllerrc (const GMatchInfo *matched_value,
 }
 
 #define SESSIONRC_UPDATE_PATTERN \
-  "\\(position [0-9]* [0-9]*\\)"    "|" \
-  "\\(size [0-9]* [0-9]*\\)"
+  "\\(position [0-9]* [0-9]*\\)"        "|"  \
+  "\\(size [0-9]* [0-9]*\\)"            "|" \
+  "\\(left-docks-width \"?[0-9]*\"?\\)" "|" \
+  "\\(right-docks-width \"?[0-9]*\"?\\)"
 
 static gboolean
 user_update_sessionrc (const GMatchInfo *matched_value,
@@ -647,7 +649,7 @@ user_update_sessionrc (const GMatchInfo *matched_value,
       gchar      *match;
 
       /* First copy the pattern title. */
-      regexp = g_regex_new ("\\((position|size) ", 0, 0, NULL);
+      regexp = g_regex_new ("\\([a-z-]* ", 0, 0, NULL);
       g_regex_match (regexp, original, 0, &match_info);
       match = g_match_info_fetch (match_info, 0);
       g_string_append (new_value, match);
@@ -657,18 +659,25 @@ user_update_sessionrc (const GMatchInfo *matched_value,
       g_free (match);
 
       /* Now copy the numbers. */
-      regexp = g_regex_new ("[0-9]+", 0, 0, NULL);
+      regexp = g_regex_new ("[0-9]+|\"", 0, 0, NULL);
       g_regex_match (regexp, original, 0, &match_info);
 
       while (g_match_info_matches (match_info))
         {
-          gint num;
-
           match = g_match_info_fetch (match_info, 0);
-          num = g_ascii_strtoll (match, NULL, 10);
-          num /= install->scale_factor;
+          if (g_strcmp0 (match, "\"") == 0)
+            {
+              g_string_append (new_value, match);
+            }
+          else
+            {
+              gint num;
 
-          g_string_append_printf (new_value, " %d", num);
+              num = g_ascii_strtoll (match, NULL, 10);
+              num /= install->scale_factor;
+
+              g_string_append_printf (new_value, " %d", num);
+            }
 
           g_free (match);
           g_match_info_next (match_info, NULL);
