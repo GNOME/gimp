@@ -9,15 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-08-11 17:11+0000\n"
-"PO-Revision-Date: 2021-08-11 23:00+0300\n"
+"POT-Creation-Date: 2021-08-23 16:41+0000\n"
+"PO-Revision-Date: 2021-08-23 22:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -1334,7 +1335,7 @@ msgstr "Редактор пензлів"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:115 ../app/core/gimp-data-factories.c:356
-#: ../app/dialogs/dialogs.c:338 ../app/dialogs/preferences-dialog.c:3250
+#: ../app/dialogs/dialogs.c:338 ../app/dialogs/preferences-dialog.c:3251
 msgid "Brushes"
 msgstr "Пензлі"
 
@@ -1383,7 +1384,7 @@ msgstr "Панель"
 
 #. Document History
 #: ../app/actions/actions.c:148 ../app/dialogs/dialogs.c:365
-#: ../app/dialogs/preferences-dialog.c:1212
+#: ../app/dialogs/preferences-dialog.c:1211
 msgid "Document History"
 msgstr "Недавні зображення"
 
@@ -1418,7 +1419,7 @@ msgstr "Фільтри"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:172 ../app/core/gimp-data-factories.c:390
-#: ../app/dialogs/dialogs.c:356 ../app/dialogs/preferences-dialog.c:3280
+#: ../app/dialogs/dialogs.c:356 ../app/dialogs/preferences-dialog.c:3281
 msgid "Fonts"
 msgstr "Шрифти"
 
@@ -1429,12 +1430,12 @@ msgstr "Редактор градієнтів"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:178 ../app/core/gimp-data-factories.c:381
-#: ../app/dialogs/dialogs.c:350 ../app/dialogs/preferences-dialog.c:3274
+#: ../app/dialogs/dialogs.c:350 ../app/dialogs/preferences-dialog.c:3275
 msgid "Gradients"
 msgstr "Градієнти"
 
 #: ../app/actions/actions.c:181 ../app/core/gimp-data-factories.c:397
-#: ../app/dialogs/dialogs.c:362 ../app/dialogs/preferences-dialog.c:3286
+#: ../app/dialogs/dialogs.c:362 ../app/dialogs/preferences-dialog.c:3287
 msgid "Tool Presets"
 msgstr "Шаблони інструментів"
 
@@ -1457,13 +1458,13 @@ msgid "Images"
 msgstr "Зображення"
 
 #: ../app/actions/actions.c:196 ../app/dialogs/dialogs.c:373
-#: ../app/dialogs/resize-dialog.c:168 ../app/widgets/gimppickablepopup.c:228
+#: ../app/dialogs/resize-dialog.c:171 ../app/widgets/gimppickablepopup.c:228
 msgid "Layers"
 msgstr "Шари"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:199 ../app/core/gimp-data-factories.c:366
-#: ../app/dialogs/dialogs.c:344 ../app/dialogs/preferences-dialog.c:3292
+#: ../app/dialogs/dialogs.c:344 ../app/dialogs/preferences-dialog.c:3293
 msgid "MyPaint Brushes"
 msgstr "Пензлі MyPaint"
 
@@ -1474,23 +1475,23 @@ msgstr "Редактор палітри"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:205 ../app/core/gimp-data-factories.c:376
-#: ../app/dialogs/dialogs.c:353 ../app/dialogs/preferences-dialog.c:3268
+#: ../app/dialogs/dialogs.c:353 ../app/dialogs/preferences-dialog.c:3269
 msgid "Palettes"
 msgstr "Палітри"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:208 ../app/core/gimp-data-factories.c:371
-#: ../app/dialogs/dialogs.c:347 ../app/dialogs/preferences-dialog.c:3262
+#: ../app/dialogs/dialogs.c:347 ../app/dialogs/preferences-dialog.c:3263
 msgid "Patterns"
 msgstr "Текстури"
 
-#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3298
+#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3299
 msgid "Plug-ins"
 msgstr "Додатки"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:214 ../app/core/gimpchannel.c:359
-#: ../app/dialogs/preferences-dialog.c:1778
+#: ../app/actions/actions.c:214 ../app/core/gimpchannel.c:358
+#: ../app/dialogs/preferences-dialog.c:1777
 msgid "Quick Mask"
 msgstr "Швидка маска"
 
@@ -2064,7 +2065,7 @@ msgid "New Channel Color"
 msgstr "Колір нового каналу"
 
 #: ../app/actions/channels-commands.c:285 ../app/core/gimpimage-new.c:466
-#: ../app/display/gimpdisplayshell-dnd.c:705
+#: ../app/display/gimpdisplayshell-dnd.c:708
 #: ../app/widgets/gimpchanneltreeview.c:263
 #: ../app/widgets/gimplayertreeview.c:872
 #, c-format
@@ -3516,9 +3517,9 @@ msgstr "240 секунд"
 #: ../app/dialogs/palette-import-dialog.c:161
 #: ../app/dialogs/preferences-dialog.c:291
 #: ../app/dialogs/preferences-dialog.c:664
-#: ../app/dialogs/preferences-dialog.c:1120
+#: ../app/dialogs/preferences-dialog.c:1119
 #: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:222
+#: ../app/dialogs/resize-dialog.c:225
 #: ../app/dialogs/resolution-calibrate-dialog.c:73
 #: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
 #: ../app/dialogs/template-options-dialog.c:118
@@ -3529,13 +3530,13 @@ msgstr "240 секунд"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:363
-#: ../app/tools/gimpforegroundselecttool.c:331 ../app/tools/gimptexttool.c:1760
-#: ../app/tools/gimptransformgridtool.c:1282
+#: ../app/tools/gimpforegroundselecttool.c:331 ../app/tools/gimptexttool.c:1759
+#: ../app/tools/gimptransformgridtool.c:1284
 #: ../app/tools/gimptransformtool.c:429 ../app/widgets/gimpactionview.c:622
 #: ../app/widgets/gimpcolordialog.c:460
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimpcontrollerlist.c:563
-#: ../app/widgets/gimpdeviceeditor.c:526 ../app/widgets/gimpdnd-xds.c:228
+#: ../app/widgets/gimpdeviceeditor.c:525 ../app/widgets/gimpdnd-xds.c:228
 #: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
 #: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:484
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:707
@@ -3599,7 +3600,7 @@ msgstr "Введіть опис позначки"
 #: ../app/dialogs/file-open-dialog.c:269
 #: ../app/dialogs/file-open-location-dialog.c:217
 #: ../app/dialogs/file-open-location-dialog.c:233
-#: ../app/display/gimpdisplayshell-dnd.c:648
+#: ../app/display/gimpdisplayshell-dnd.c:651
 #: ../app/widgets/gimplayertreeview.c:830 ../app/widgets/gimptoolbox.c:691
 #: ../app/widgets/gimptoolbox-dnd.c:169
 #, c-format
@@ -3613,7 +3614,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:115 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2256
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2298
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:762 ../app/widgets/gimpdnd-xds.c:87
@@ -4841,7 +4842,7 @@ msgstr "Шар скопійовано в буфер обміну."
 msgid "Copied pixels to the clipboard."
 msgstr "Пікселі скопійовано в буфер обміну."
 
-#: ../app/actions/edit-commands.c:403 ../app/actions/edit-commands.c:683
+#: ../app/actions/edit-commands.c:403 ../app/actions/edit-commands.c:686
 #: ../app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "У буфері обміну нічого немає."
@@ -4863,32 +4864,32 @@ msgstr "Копіювання з буфера з назвою"
 msgid "Copy Visible Named "
 msgstr "Копіювати видиме з назвою"
 
-#: ../app/actions/edit-commands.c:508
+#: ../app/actions/edit-commands.c:511
 msgid "Clear"
 msgstr "Очистити"
 
-#: ../app/actions/edit-commands.c:579
+#: ../app/actions/edit-commands.c:582
 msgid "A selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
-#: ../app/actions/edit-commands.c:650 ../app/display/gimpdisplayshell-dnd.c:495
+#: ../app/actions/edit-commands.c:653 ../app/display/gimpdisplayshell-dnd.c:498
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Вставлено як новий шар, тому що ціль є групою шарів."
 
-#: ../app/actions/edit-commands.c:657 ../app/display/gimpdisplayshell-dnd.c:504
+#: ../app/actions/edit-commands.c:660 ../app/display/gimpdisplayshell-dnd.c:507
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Вставлено як новий шар, бо цільові пікселі заблоковано."
 
-#: ../app/actions/edit-commands.c:700
+#: ../app/actions/edit-commands.c:703
 msgid "There are no selected layers or channels to cut from."
 msgstr "Немає позначених шарів або каналів для вирізання."
 
-#: ../app/actions/edit-commands.c:705 ../app/actions/edit-commands.c:738
-#: ../app/actions/edit-commands.c:763
+#: ../app/actions/edit-commands.c:708 ../app/actions/edit-commands.c:741
+#: ../app/actions/edit-commands.c:766
 msgid "(Unnamed Buffer)"
 msgstr "(Буфер без назви)"
 
-#: ../app/actions/edit-commands.c:733
+#: ../app/actions/edit-commands.c:736
 msgid "There are no selected layers or channels to copy from."
 msgstr "Немає позначених шарів або каналів для копіювання."
 
@@ -6078,7 +6079,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Повторно просканувати встановлені шрифти"
 
-#: ../app/actions/gimpgeglprocedure.c:291
+#: ../app/actions/gimpgeglprocedure.c:294
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
@@ -7069,7 +7070,7 @@ msgstr "Зміна розміру зображення"
 
 #. Scaling
 #: ../app/actions/image-commands.c:1518 ../app/actions/layers-commands.c:2518
-#: ../app/dialogs/preferences-dialog.c:1699
+#: ../app/dialogs/preferences-dialog.c:1698
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/item-transform-cmds.c:640
 #: ../app/pdb/layer-cmds.c:410 ../app/tools/gimpscaletool.c:122
 msgid "Scaling"
@@ -8135,7 +8136,7 @@ msgid "Remove Alpha Channel"
 msgstr "Вилучити канал альфи"
 
 #: ../app/actions/layers-commands.c:1724 ../app/core/gimpchannel-select.c:433
-#: ../app/core/gimplayer.c:442
+#: ../app/core/gimplayer.c:441
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Альфа на вибір"
@@ -8176,19 +8177,19 @@ msgstr "Встановити простір композиції шарів"
 msgid "Set layers' composite mode"
 msgstr "Встановити режим композиції шарів"
 
-#: ../app/actions/layers-commands.c:2066 ../app/widgets/gimpitemtreeview.c:1683
+#: ../app/actions/layers-commands.c:2066 ../app/widgets/gimpitemtreeview.c:1696
 msgid "Lock content"
 msgstr "Заблокувати вміст"
 
-#: ../app/actions/layers-commands.c:2068 ../app/widgets/gimpitemtreeview.c:1685
+#: ../app/actions/layers-commands.c:2068 ../app/widgets/gimpitemtreeview.c:1698
 msgid "Unlock content"
 msgstr "Розблокувати вміст"
 
-#: ../app/actions/layers-commands.c:2115 ../app/widgets/gimpitemtreeview.c:1749
+#: ../app/actions/layers-commands.c:2115 ../app/widgets/gimpitemtreeview.c:1762
 msgid "Lock position"
 msgstr "Заблокувати позицію"
 
-#: ../app/actions/layers-commands.c:2117 ../app/widgets/gimpitemtreeview.c:1751
+#: ../app/actions/layers-commands.c:2117 ../app/widgets/gimpitemtreeview.c:1764
 msgid "Unlock position"
 msgstr "Розблокувати позицію"
 
@@ -8551,11 +8552,11 @@ msgstr "Перезавантажити усі фільтри"
 #: ../app/dialogs/input-devices-dialog.c:65
 #: ../app/dialogs/input-devices-dialog.c:122
 #: ../app/dialogs/preferences-dialog.c:292
-#: ../app/dialogs/preferences-dialog.c:1119
+#: ../app/dialogs/preferences-dialog.c:1118
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:362 ../app/tools/gimptransformgridtool.c:1279
+#: ../app/tools/gimpfiltertool.c:362 ../app/tools/gimptransformgridtool.c:1281
 #: ../app/widgets/gimpcolordialog.c:459
 #: ../app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
@@ -8928,7 +8929,7 @@ msgid "Delete Template"
 msgstr "Вилучити шаблон"
 
 #: ../app/actions/templates-commands.c:249
-#: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:527
+#: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:526
 msgid "_Delete"
 msgstr "Ви_лучити"
 
@@ -9033,7 +9034,7 @@ msgid "_Open"
 msgstr "Від_крити"
 
 #: ../app/actions/text-editor-commands.c:141
-#: ../app/actions/text-tool-commands.c:217 ../app/config/gimpconfig-file.c:71
+#: ../app/actions/text-tool-commands.c:217 ../app/config/gimpconfig-file.c:72
 #: ../app/core/gimppalette-import.c:521 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:234
 #: ../app/tools/gimpfiltertool-settings.c:170
@@ -10373,126 +10374,149 @@ msgid "Set a custom rotation angle"
 msgstr "Вказати інший кут повороту"
 
 #: ../app/actions/view-actions.c:136
+#| msgid "Flipping"
+msgctxt "view-action"
+msgid "_Reset Flipping"
+msgstr "_Скинути віддзеркалення"
+
+#: ../app/actions/view-actions.c:138
+#| msgctxt "view-action"
+#| msgid "Reset flipping to unflipped and the angle of rotation to 0°"
+msgctxt "view-action"
+msgid "Reset flipping to unflipped"
+msgstr "Скинути віддзеркалення до невіддзеркаленого стану"
+
+#: ../app/actions/view-actions.c:143
+msgctxt "view-action"
+msgid "_Reset Flip & Rotate"
+msgstr "С_кинути віддзеркалення і обертання"
+
+#: ../app/actions/view-actions.c:145
+msgctxt "view-action"
+msgid "Reset flipping to unflipped and the angle of rotation to 0°"
+msgstr "Скинути віддзеркалення і встановити кут обертання 0°"
+
+#: ../app/actions/view-actions.c:150
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "Вікно наві_гації"
 
-#: ../app/actions/view-actions.c:137
+#: ../app/actions/view-actions.c:151
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Показати вікно перегляду для зображення"
 
-#: ../app/actions/view-actions.c:142
+#: ../app/actions/view-actions.c:156
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "Екранні _фільтри…"
 
-#: ../app/actions/view-actions.c:143
+#: ../app/actions/view-actions.c:157
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Налаштовування екранних фільтрів"
 
-#: ../app/actions/view-actions.c:148
+#: ../app/actions/view-actions.c:162
 msgctxt "view-action"
 msgid "As in _Preferences"
 msgstr "Як у п_араметрах"
 
-#: ../app/actions/view-actions.c:150
+#: ../app/actions/view-actions.c:164
 msgctxt "view-action"
 msgid "Reset color management to what's configured in preferences"
 msgstr "Скинути керування кольором до вказаного у параметрах програми"
 
-#: ../app/actions/view-actions.c:155
+#: ../app/actions/view-actions.c:169
 msgctxt "view-action"
 msgid "Soft-_Proofing Profile..."
 msgstr "Про_філь проби кольорів…"
 
-#: ../app/actions/view-actions.c:156
+#: ../app/actions/view-actions.c:170
 msgctxt "view-action"
 msgid "Set the soft-proofing profile"
 msgstr "Встановити профіль для проби кольорів"
 
-#: ../app/actions/view-actions.c:161
+#: ../app/actions/view-actions.c:175
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "С_коротити обгортку"
 
-#: ../app/actions/view-actions.c:162
+#: ../app/actions/view-actions.c:176
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "Зменшує вікно до розміру зображення"
 
-#: ../app/actions/view-actions.c:167
+#: ../app/actions/view-actions.c:181
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "Відкрити  _екран…"
 
-#: ../app/actions/view-actions.c:168
+#: ../app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Встановити з'єднання з іншим екраном"
 
-#: ../app/actions/view-actions.c:177
+#: ../app/actions/view-actions.c:191
 msgctxt "view-action"
 msgid "Show _All"
 msgstr "Показати _усе"
 
-#: ../app/actions/view-actions.c:178
+#: ../app/actions/view-actions.c:192
 msgctxt "view-action"
 msgid "Show full image content"
 msgstr "Показати усе зображення"
 
-#: ../app/actions/view-actions.c:184
+#: ../app/actions/view-actions.c:198
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "То_чка за точкою"
 
-#: ../app/actions/view-actions.c:185
+#: ../app/actions/view-actions.c:199
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Точка на екрані дорівнює точці зображення"
 
-#: ../app/actions/view-actions.c:191
+#: ../app/actions/view-actions.c:205
 msgctxt "view-action"
 msgid "_Color-Manage this View"
 msgstr "_Керування кольорами на цій панелі"
 
-#: ../app/actions/view-actions.c:192
+#: ../app/actions/view-actions.c:206
 msgctxt "view-action"
 msgid "Use color management for this view"
 msgstr "Використовувати керування кольорами для цієї панелі перегляду"
 
-#: ../app/actions/view-actions.c:198
+#: ../app/actions/view-actions.c:212
 msgctxt "view-action"
 msgid "_Proof Colors"
 msgstr "Пр_оба кольорів"
 
-#: ../app/actions/view-actions.c:199
+#: ../app/actions/view-actions.c:213
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
 msgstr "Використовувати цю панель перегляду для проби кольорів"
 
-#: ../app/actions/view-actions.c:205 ../app/actions/view-actions.c:212
+#: ../app/actions/view-actions.c:219 ../app/actions/view-actions.c:226
 msgctxt "view-action"
 msgid "_Black Point Compensation"
 msgstr "Компенсація _чорної точки"
 
-#: ../app/actions/view-actions.c:206
+#: ../app/actions/view-actions.c:220
 msgctxt "view-action"
 msgid "Use black point compensation for image display"
 msgstr "Використовувати компенсацію _чорної точки для показу зображення"
 
-#: ../app/actions/view-actions.c:213
+#: ../app/actions/view-actions.c:227
 msgctxt "view-action"
 msgid "Use black point compensation for soft-proofing"
 msgstr "Використовувати компенсацію чорної точки для проби кольорів"
 
-#: ../app/actions/view-actions.c:219
+#: ../app/actions/view-actions.c:233
 msgctxt "view-action"
 msgid "_Mark Out Of Gamut Colors"
 msgstr "Позначити кольори поза колірною гамою"
 
-#: ../app/actions/view-actions.c:220
+#: ../app/actions/view-actions.c:234
 msgctxt "view-action"
 msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
@@ -10501,630 +10525,634 @@ msgstr ""
 "Під час виконання проби кольорів позначати кольори, які не може бути "
 "представлено у просторі кольорів призначення."
 
-#: ../app/actions/view-actions.c:227
+#: ../app/actions/view-actions.c:241
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "Показувати ви_бране"
 
-#: ../app/actions/view-actions.c:228
+#: ../app/actions/view-actions.c:242
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Показати межу позначеного"
 
-#: ../app/actions/view-actions.c:234
+#: ../app/actions/view-actions.c:248
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "Показувати ме_жі шару"
 
-#: ../app/actions/view-actions.c:235
+#: ../app/actions/view-actions.c:249
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Показувати межі активного шару"
 
-#: ../app/actions/view-actions.c:241
+#: ../app/actions/view-actions.c:255
 msgctxt "view-action"
 msgid "Show Canvas Bounda_ry"
 msgstr "Показувати меж_і полотна"
 
-#: ../app/actions/view-actions.c:242
+#: ../app/actions/view-actions.c:256
 msgctxt "view-action"
 msgid "Draw a border around the canvas"
 msgstr "Малювати рамку навколо полотна"
 
-#: ../app/actions/view-actions.c:248
+#: ../app/actions/view-actions.c:262
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "Показувати _напрямні"
 
-#: ../app/actions/view-actions.c:249
+#: ../app/actions/view-actions.c:263
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "Показувати напрямні зображення"
 
-#: ../app/actions/view-actions.c:255
+#: ../app/actions/view-actions.c:269
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "Показувати с_ітку"
 
-#: ../app/actions/view-actions.c:256
+#: ../app/actions/view-actions.c:270
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "Показувати сітку зображення"
 
-#: ../app/actions/view-actions.c:262
+#: ../app/actions/view-actions.c:276
 msgctxt "view-action"
 msgid "Sh_ow Sample Points"
 msgstr "По_казувати зразкові точки"
 
-#: ../app/actions/view-actions.c:263
+#: ../app/actions/view-actions.c:277
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Показувати кольорові зразкові точки зображення"
 
-#: ../app/actions/view-actions.c:269
+#: ../app/actions/view-actions.c:283
 msgctxt "view-action"
 msgid "Snap to Gu_ides"
 msgstr "Прилипання до _напрямних"
 
-#: ../app/actions/view-actions.c:270
+#: ../app/actions/view-actions.c:284
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "При роботі курсор активного інструменту прилипає до напрямних"
 
-#: ../app/actions/view-actions.c:276
+#: ../app/actions/view-actions.c:290
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "При_липання до сітки"
 
-#: ../app/actions/view-actions.c:277
+#: ../app/actions/view-actions.c:291
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "При роботі курсор активного інструменту прилипає до сітки"
 
-#: ../app/actions/view-actions.c:283
+#: ../app/actions/view-actions.c:297
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Прилипати до _меж полотна"
 
-#: ../app/actions/view-actions.c:284
+#: ../app/actions/view-actions.c:298
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "При роботі курсор активного інструменту прилипає до меж полотна"
 
-#: ../app/actions/view-actions.c:290
+#: ../app/actions/view-actions.c:304
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Прилипати до _активного контуру"
 
-#: ../app/actions/view-actions.c:291
+#: ../app/actions/view-actions.c:305
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "При роботі курсор активного інструменту прилипає до активного контуру"
 
-#: ../app/actions/view-actions.c:297
+#: ../app/actions/view-actions.c:311
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "Показувати панель _меню"
 
-#: ../app/actions/view-actions.c:298
+#: ../app/actions/view-actions.c:312
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Показувати панель меню у вікнах зображень"
 
-#: ../app/actions/view-actions.c:304
+#: ../app/actions/view-actions.c:318
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "Показувати _лінійки"
 
-#: ../app/actions/view-actions.c:305
+#: ../app/actions/view-actions.c:319
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Показувати лінійки у цьому вікні"
 
-#: ../app/actions/view-actions.c:311
+#: ../app/actions/view-actions.c:325
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Показувати смуги _прокручування"
 
-#: ../app/actions/view-actions.c:312
+#: ../app/actions/view-actions.c:326
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Показувати смуги прокручування у цьому вікні"
 
-#: ../app/actions/view-actions.c:318
+#: ../app/actions/view-actions.c:332
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Показувати рядок ст_ану"
 
-#: ../app/actions/view-actions.c:319
+#: ../app/actions/view-actions.c:333
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Показувати рядок стану у цьому вікні"
 
-#: ../app/actions/view-actions.c:325
+#: ../app/actions/view-actions.c:339
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "На весь _екран"
 
-#: ../app/actions/view-actions.c:326
+#: ../app/actions/view-actions.c:340
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Перемикнутися у повноекранний режим або вийти з нього"
 
-#: ../app/actions/view-actions.c:335
+#: ../app/actions/view-actions.c:349
 msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Встановити масштаб"
 
-#: ../app/actions/view-actions.c:340
+#: ../app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Максимально зменшити"
 
-#: ../app/actions/view-actions.c:345
+#: ../app/actions/view-actions.c:359
 msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Максимально збільшити"
 
-#: ../app/actions/view-actions.c:350
+#: ../app/actions/view-actions.c:364
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "З_меншити"
 
-#: ../app/actions/view-actions.c:351 ../app/actions/view-actions.c:363
+#: ../app/actions/view-actions.c:365 ../app/actions/view-actions.c:377
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Віддалити"
 
-#: ../app/actions/view-actions.c:356
+#: ../app/actions/view-actions.c:370
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "З_більшити"
 
-#: ../app/actions/view-actions.c:357 ../app/actions/view-actions.c:369
+#: ../app/actions/view-actions.c:371 ../app/actions/view-actions.c:383
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Наблизити"
 
-#: ../app/actions/view-actions.c:362
+#: ../app/actions/view-actions.c:376
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Зменшити"
 
-#: ../app/actions/view-actions.c:368
+#: ../app/actions/view-actions.c:382
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Збільшити"
 
-#: ../app/actions/view-actions.c:374
+#: ../app/actions/view-actions.c:388
 msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Значно зменшити"
 
-#: ../app/actions/view-actions.c:379
+#: ../app/actions/view-actions.c:393
 msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Значно збільшити"
 
-#: ../app/actions/view-actions.c:387 ../app/actions/view-actions.c:393
+#: ../app/actions/view-actions.c:401 ../app/actions/view-actions.c:407
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:388 ../app/actions/view-actions.c:394
+#: ../app/actions/view-actions.c:402 ../app/actions/view-actions.c:408
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Масштаб 16:1"
 
-#: ../app/actions/view-actions.c:399 ../app/actions/view-actions.c:405
+#: ../app/actions/view-actions.c:413 ../app/actions/view-actions.c:419
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:400 ../app/actions/view-actions.c:406
+#: ../app/actions/view-actions.c:414 ../app/actions/view-actions.c:420
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Масштаб 8:1"
 
-#: ../app/actions/view-actions.c:411 ../app/actions/view-actions.c:417
+#: ../app/actions/view-actions.c:425 ../app/actions/view-actions.c:431
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:412 ../app/actions/view-actions.c:418
+#: ../app/actions/view-actions.c:426 ../app/actions/view-actions.c:432
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Масштаб 4:1"
 
-#: ../app/actions/view-actions.c:423 ../app/actions/view-actions.c:429
+#: ../app/actions/view-actions.c:437 ../app/actions/view-actions.c:443
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:424 ../app/actions/view-actions.c:430
+#: ../app/actions/view-actions.c:438 ../app/actions/view-actions.c:444
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Масштаб 2:1"
 
-#: ../app/actions/view-actions.c:435 ../app/actions/view-actions.c:441
+#: ../app/actions/view-actions.c:449 ../app/actions/view-actions.c:455
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:436 ../app/actions/view-actions.c:442
+#: ../app/actions/view-actions.c:450 ../app/actions/view-actions.c:456
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Масштаб 1:1"
 
-#: ../app/actions/view-actions.c:447
+#: ../app/actions/view-actions.c:461
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: ../app/actions/view-actions.c:448
+#: ../app/actions/view-actions.c:462
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Масштаб 1:2"
 
-#: ../app/actions/view-actions.c:453
+#: ../app/actions/view-actions.c:467
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: ../app/actions/view-actions.c:454
+#: ../app/actions/view-actions.c:468
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Масштаб 1:4"
 
-#: ../app/actions/view-actions.c:459
+#: ../app/actions/view-actions.c:473
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: ../app/actions/view-actions.c:460
+#: ../app/actions/view-actions.c:474
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Масштаб 1:8"
 
-#: ../app/actions/view-actions.c:465
+#: ../app/actions/view-actions.c:479
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: ../app/actions/view-actions.c:466
+#: ../app/actions/view-actions.c:480
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Масштаб 1:16"
 
-#: ../app/actions/view-actions.c:471
+#: ../app/actions/view-actions.c:485
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
 msgstr "І_нший масштаб…"
 
-#: ../app/actions/view-actions.c:472
+#: ../app/actions/view-actions.c:486
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Вказати інший масштаб"
 
-#: ../app/actions/view-actions.c:480
+#: ../app/actions/view-actions.c:494
 msgctxt "view-action"
 msgid "Flip _Horizontally"
 msgstr "Віддзеркалити _горизонтально"
 
-#: ../app/actions/view-actions.c:481
+#: ../app/actions/view-actions.c:495
 msgctxt "view-action"
 msgid "Flip the view horizontally"
 msgstr "Віддзеркалення зображення горизонтально"
 
-#: ../app/actions/view-actions.c:487
+#: ../app/actions/view-actions.c:501
 msgctxt "view-action"
 msgid "Flip _Vertically"
 msgstr "Віддзеркалити _вертикально"
 
-#: ../app/actions/view-actions.c:488
+#: ../app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "Flip the view vertically"
 msgstr "Віддзеркалення зображення вертикально"
 
-#: ../app/actions/view-actions.c:502
+#: ../app/actions/view-actions.c:516
+#| msgctxt "view-action"
+#| msgid "_Reset Flip & Rotate"
 msgctxt "view-action"
-msgid "_Reset Flip & Rotate"
-msgstr "С_кинути віддзеркалення і обертання"
+msgid "_Reset Rotate"
+msgstr "С_кинути обертання"
 
-#: ../app/actions/view-actions.c:504
+#: ../app/actions/view-actions.c:518
+#| msgctxt "view-action"
+#| msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgctxt "view-action"
-msgid "Reset flipping to unflipped and the angle of rotation to 0°"
-msgstr "Скинути віддзеркалення і встановити кут обертання 0°"
+msgid "Reset the angle of rotation to 0°"
+msgstr "Встановити кут обертання 0°"
 
-#: ../app/actions/view-actions.c:512
+#: ../app/actions/view-actions.c:526
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Обернути на 15° за _годинниковою стрілкою"
 
-#: ../app/actions/view-actions.c:513
+#: ../app/actions/view-actions.c:527
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
 msgstr "Обертання зображення на 15 градусів праворуч"
 
-#: ../app/actions/view-actions.c:518
+#: ../app/actions/view-actions.c:532
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Обернути на 90° за _годинниковою стрілкою"
 
-#: ../app/actions/view-actions.c:519
+#: ../app/actions/view-actions.c:533
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
 msgstr "Обертання зображення на 90 градусів праворуч"
 
-#: ../app/actions/view-actions.c:524
+#: ../app/actions/view-actions.c:538
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Обернути на _180°"
 
-#: ../app/actions/view-actions.c:525
+#: ../app/actions/view-actions.c:539
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "Обертання зображення догори ногами"
 
-#: ../app/actions/view-actions.c:530
+#: ../app/actions/view-actions.c:544
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Обернути на 90° _проти годинникової стрілки"
 
-#: ../app/actions/view-actions.c:531
+#: ../app/actions/view-actions.c:545
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
 msgstr "Обернути зображення на 90 градусів ліворуч"
 
-#: ../app/actions/view-actions.c:536
+#: ../app/actions/view-actions.c:550
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Обернути на 15° _проти годинникової стрілки"
 
-#: ../app/actions/view-actions.c:537
+#: ../app/actions/view-actions.c:551
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
 msgstr "Обернути зображення на 15 градусів ліворуч"
 
-#: ../app/actions/view-actions.c:545 ../app/actions/view-actions.c:572
+#: ../app/actions/view-actions.c:559 ../app/actions/view-actions.c:586
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "П_ридатне до сприйняття"
 
-#: ../app/actions/view-actions.c:546
+#: ../app/actions/view-actions.c:560
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr "Відтворення кольорів на дисплеї є придатним до сприйняття"
 
-#: ../app/actions/view-actions.c:551 ../app/actions/view-actions.c:578
+#: ../app/actions/view-actions.c:565 ../app/actions/view-actions.c:592
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "_Відносне колориметричне"
 
-#: ../app/actions/view-actions.c:552
+#: ../app/actions/view-actions.c:566
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr "Відтворення кольорів на дисплеї є відносним колориметричним"
 
-#: ../app/actions/view-actions.c:557 ../app/actions/view-actions.c:584
+#: ../app/actions/view-actions.c:571 ../app/actions/view-actions.c:598
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_Насиченість"
 
-#: ../app/actions/view-actions.c:558
+#: ../app/actions/view-actions.c:572
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr "Відтворення кольорів на дисплеї є спрямованим на насиченість"
 
-#: ../app/actions/view-actions.c:563 ../app/actions/view-actions.c:590
+#: ../app/actions/view-actions.c:577 ../app/actions/view-actions.c:604
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "_Абсолютне колориметричне"
 
-#: ../app/actions/view-actions.c:564
+#: ../app/actions/view-actions.c:578
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "Відтворення кольорів на дисплеї є абсолютним колориметричним"
 
-#: ../app/actions/view-actions.c:573
+#: ../app/actions/view-actions.c:587
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
 msgstr "Відтворення кольорів для проби є придатним до сприйняття"
 
-#: ../app/actions/view-actions.c:579
+#: ../app/actions/view-actions.c:593
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
 msgstr "Відтворення кольорів для проби є відносним колориметричним"
 
-#: ../app/actions/view-actions.c:585
+#: ../app/actions/view-actions.c:599
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
 msgstr "Відтворення кольорів для проби є спрямованим на насиченість"
 
-#: ../app/actions/view-actions.c:591
+#: ../app/actions/view-actions.c:605
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
 msgstr "Відтворення кольорів для проби є абсолютним колориметричним"
 
-#: ../app/actions/view-actions.c:599
+#: ../app/actions/view-actions.c:613
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "З т_еми"
 
-#: ../app/actions/view-actions.c:600
+#: ../app/actions/view-actions.c:614
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Встановити колір тла поточної теми оформлення"
 
-#: ../app/actions/view-actions.c:605
+#: ../app/actions/view-actions.c:619
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "_Світлий"
 
-#: ../app/actions/view-actions.c:606
+#: ../app/actions/view-actions.c:620
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Використовувати світлий колір тла"
 
-#: ../app/actions/view-actions.c:611
+#: ../app/actions/view-actions.c:625
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "_Темний"
 
-#: ../app/actions/view-actions.c:612
+#: ../app/actions/view-actions.c:626
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Використовувати темний колір тла"
 
-#: ../app/actions/view-actions.c:617
+#: ../app/actions/view-actions.c:631
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "Інший _колір…"
 
-#: ../app/actions/view-actions.c:618
+#: ../app/actions/view-actions.c:632
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Використовувати довільний колір тла"
 
-#: ../app/actions/view-actions.c:623
+#: ../app/actions/view-actions.c:637
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Як у п_араметрах"
 
-#: ../app/actions/view-actions.c:625
+#: ../app/actions/view-actions.c:639
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Скинути колір тла до вказаного у параметрах програми"
 
-#: ../app/actions/view-actions.c:633
+#: ../app/actions/view-actions.c:647
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
 msgstr "Зберігати підкладку у режимі «Показати _усе»"
 
-#: ../app/actions/view-actions.c:635
+#: ../app/actions/view-actions.c:649
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr ""
 "Зберігати підкладку полотна, якщо позначено пункт меню «Перегляд → Показати "
 "усе»"
 
-#: ../app/actions/view-actions.c:644
+#: ../app/actions/view-actions.c:658
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
 msgstr "Встановити горизонтальне зміщення гортання"
 
-#: ../app/actions/view-actions.c:649
+#: ../app/actions/view-actions.c:663
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "Гортати до лівої межі"
 
-#: ../app/actions/view-actions.c:654
+#: ../app/actions/view-actions.c:668
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "Гортати до правої межі"
 
-#: ../app/actions/view-actions.c:659
+#: ../app/actions/view-actions.c:673
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "Гортати ліворуч"
 
-#: ../app/actions/view-actions.c:664
+#: ../app/actions/view-actions.c:678
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "Гортати праворуч"
 
-#: ../app/actions/view-actions.c:669
+#: ../app/actions/view-actions.c:683
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "Гортати на сторінку ліворуч"
 
-#: ../app/actions/view-actions.c:674
+#: ../app/actions/view-actions.c:688
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "Гортати на сторінку праворуч"
 
-#: ../app/actions/view-actions.c:682
+#: ../app/actions/view-actions.c:696
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
 msgstr "Встановити вертикальне зміщення гортання"
 
-#: ../app/actions/view-actions.c:687
+#: ../app/actions/view-actions.c:701
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "Гортати до верхньої межі"
 
-#: ../app/actions/view-actions.c:692
+#: ../app/actions/view-actions.c:706
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "Гортати до нижньої межі"
 
-#: ../app/actions/view-actions.c:697
+#: ../app/actions/view-actions.c:711
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "Гортати вгору"
 
-#: ../app/actions/view-actions.c:702
+#: ../app/actions/view-actions.c:716
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "Гортати вниз"
 
-#: ../app/actions/view-actions.c:707
+#: ../app/actions/view-actions.c:721
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "Гортати на сторінку вгору"
 
-#: ../app/actions/view-actions.c:712
+#: ../app/actions/view-actions.c:726
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "Гортати на сторінку вниз"
 
-#: ../app/actions/view-actions.c:943
+#: ../app/actions/view-actions.c:957
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Повернути _масштаб (%d%%)"
 
-#: ../app/actions/view-actions.c:951
+#: ../app/actions/view-actions.c:965
 msgid "Re_vert Zoom"
 msgstr "_Вернути масштаб"
 
-#: ../app/actions/view-actions.c:1131
+#: ../app/actions/view-actions.c:1148
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "_Інший (%s) …"
 
-#: ../app/actions/view-actions.c:1140
+#: ../app/actions/view-actions.c:1157
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "Мас_штаб (%s)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: ../app/actions/view-actions.c:1162
+#: ../app/actions/view-actions.c:1179
 msgid "(H+V) "
 msgstr "(H+V) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: ../app/actions/view-actions.c:1168
+#: ../app/actions/view-actions.c:1185
 msgid "(H) "
 msgstr "(H) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: ../app/actions/view-actions.c:1174
+#: ../app/actions/view-actions.c:1191
 msgid "(V) "
 msgstr "(V) "
 
-#: ../app/actions/view-actions.c:1181
+#: ../app/actions/view-actions.c:1198
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Віддзеркалити %s і обернути (%d°)"
 
-#: ../app/actions/view-commands.c:1123
+#: ../app/actions/view-commands.c:1149
 msgid "Set Canvas Padding Color"
 msgstr "Колір тла навколо зображення"
 
-#: ../app/actions/view-commands.c:1125
+#: ../app/actions/view-commands.c:1151
 msgid "Set Custom Canvas Padding Color"
 msgstr "Встановити колір тла навколо зображення"
 
@@ -11143,7 +11171,7 @@ msgstr "Перемістити це вікно на екран %s"
 #: ../app/dialogs/image-new-dialog.c:107 ../app/dialogs/image-new-dialog.c:327
 #: ../app/dialogs/input-devices-dialog.c:67
 #: ../app/dialogs/item-options-dialog.c:146
-#: ../app/dialogs/preferences-dialog.c:1121
+#: ../app/dialogs/preferences-dialog.c:1120
 #: ../app/dialogs/print-size-dialog.c:125
 #: ../app/dialogs/resolution-calibrate-dialog.c:74
 #: ../app/dialogs/template-options-dialog.c:119
@@ -11446,31 +11474,31 @@ msgctxt "zoom-quality"
 msgid "High"
 msgstr "Висока"
 
-#: ../app/config/gimpconfig-file.c:82
+#: ../app/config/gimpconfig-file.c:83
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не вдалось відкрити «%s» для запису: %s"
 
-#: ../app/config/gimpconfig-file.c:116
+#: ../app/config/gimpconfig-file.c:117
 #, c-format
 msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Помилка аналізу '%%s': рядок довший за %s символів."
 
-#: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
+#: ../app/config/gimpconfig-file.c:153 ../app/config/gimpconfig-file.c:197
 #: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:323
 #: ../app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Помилка записування файла «%s»: %s"
 
-#: ../app/config/gimpconfig-file.c:182 ../app/plug-in/gimpenvirontable.c:369
+#: ../app/config/gimpconfig-file.c:183 ../app/plug-in/gimpenvirontable.c:369
 #: ../app/plug-in/gimpinterpreterdb.c:268
 #: ../app/tools/gimpfiltertool-settings.c:182
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Помилка зчитування файла «%s»: %s"
 
-#: ../app/config/gimpconfig-file.c:232
+#: ../app/config/gimpconfig-file.c:233
 #, c-format
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
@@ -11479,11 +11507,11 @@ msgstr ""
 "Помилка зчитування файла «%s». Будуть використані типові значення. Резервна "
 "копія конфігурації створена у «%s»."
 
-#: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:434
+#: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:433
 msgid "Layer"
 msgstr "Шар"
 
-#: ../app/config/gimpdialogconfig.c:416 ../app/core/gimpchannel.c:255
+#: ../app/config/gimpdialogconfig.c:416 ../app/core/gimpchannel.c:254
 #: ../app/operations/gimpcurvesconfig.c:119
 #: ../app/operations/gimplevelsconfig.c:124
 #: ../app/operations/gimpoperationthreshold.c:90
@@ -11491,7 +11519,7 @@ msgstr "Шар"
 msgid "Channel"
 msgstr "Канал"
 
-#: ../app/config/gimpdialogconfig.c:431 ../app/vectors/gimpvectors.c:225
+#: ../app/config/gimpdialogconfig.c:431 ../app/vectors/gimpvectors.c:224
 #: ../app/widgets/gimpvectorstreeview.c:252
 msgid "Path"
 msgstr "Контур"
@@ -13509,7 +13537,7 @@ msgid "Parasites"
 msgstr "Шуми"
 
 #. initialize the module list
-#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3310
+#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3311
 msgid "Modules"
 msgstr "Модулі"
 
@@ -13534,8 +13562,8 @@ msgid "Deleting \"%s\" failed: %s"
 msgstr "Не вдалось вилучити «%s»: %s"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:703
-#: ../app/dialogs/preferences-dialog.c:3256
+#: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:702
+#: ../app/dialogs/preferences-dialog.c:3257
 #: ../app/tools/gimppaintoptions-gui.c:218
 msgid "Dynamics"
 msgstr "Динаміка малювання"
@@ -13685,12 +13713,12 @@ msgid "Please wait: %s\n"
 msgstr "Будь ласка, зачекайте: %s\n"
 
 #: ../app/core/gimp-internal-data.c:286 ../app/core/gimp-internal-data.c:299
-#: ../app/core/gimpdata.c:548 ../app/core/gimpdata.c:561
+#: ../app/core/gimpdata.c:547 ../app/core/gimpdata.c:560
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Помилка збереження «%s»: "
 
-#: ../app/core/gimp-internal-data.c:305 ../app/core/gimpdata.c:567
+#: ../app/core/gimp-internal-data.c:305 ../app/core/gimpdata.c:566
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Помилка збереження «%s»"
@@ -13724,7 +13752,7 @@ msgstr "tags-locale:uk"
 msgid "Error closing '%s': %s"
 msgstr "Помилка закривання '%s': %s"
 
-#: ../app/core/gimp-user-install.c:215
+#: ../app/core/gimp-user-install.c:219
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -13733,7 +13761,7 @@ msgstr ""
 "Схоже, ви вже використовували GIMP %s раніше.  GIMP перенесе ваші параметри "
 "користувача до «%s»."
 
-#: ../app/core/gimp-user-install.c:220
+#: ../app/core/gimp-user-install.c:224
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -13742,17 +13770,17 @@ msgstr ""
 "Схоже, що ви вперше використовуєте GIMP. Зараз програма створить каталог з "
 "назвою «%s» та скопіює туди деякі файли."
 
-#: ../app/core/gimp-user-install.c:419
+#: ../app/core/gimp-user-install.c:424
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Копіювання файла «%s» з «%s»…"
 
-#: ../app/core/gimp-user-install.c:434 ../app/core/gimp-user-install.c:460
+#: ../app/core/gimp-user-install.c:439 ../app/core/gimp-user-install.c:465
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Створення теки «%s»…"
 
-#: ../app/core/gimp-user-install.c:445 ../app/core/gimp-user-install.c:471
+#: ../app/core/gimp-user-install.c:450 ../app/core/gimp-user-install.c:476
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Не вдалось створити теку \"%s\": %s"
@@ -14006,213 +14034,213 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Вибрати за індексованим кольором"
 
-#: ../app/core/gimpchannel.c:256
+#: ../app/core/gimpchannel.c:255
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Перейменувати канал"
 
-#: ../app/core/gimpchannel.c:257
+#: ../app/core/gimpchannel.c:256
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Перенести канал"
 
-#: ../app/core/gimpchannel.c:258
+#: ../app/core/gimpchannel.c:257
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Масштабувати канал"
 
-#: ../app/core/gimpchannel.c:259
+#: ../app/core/gimpchannel.c:258
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Змінити розмір каналу"
 
-#: ../app/core/gimpchannel.c:260
+#: ../app/core/gimpchannel.c:259
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Віддзеркалити канал"
 
-#: ../app/core/gimpchannel.c:261
+#: ../app/core/gimpchannel.c:260
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Обернути канал"
 
-#: ../app/core/gimpchannel.c:262 ../app/core/gimpdrawable-transform.c:1049
+#: ../app/core/gimpchannel.c:261 ../app/core/gimpdrawable-transform.c:1049
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Перетворити канал"
 
-#: ../app/core/gimpchannel.c:263 ../app/core/gimpchannel.c:294
+#: ../app/core/gimpchannel.c:262 ../app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Заповнити канал"
 
-#: ../app/core/gimpchannel.c:264
+#: ../app/core/gimpchannel.c:263
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Обвести канал"
 
-#: ../app/core/gimpchannel.c:265
+#: ../app/core/gimpchannel.c:264
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Канал на вибір"
 
-#: ../app/core/gimpchannel.c:266
+#: ../app/core/gimpchannel.c:265
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Перевпорядкувати канал"
 
-#: ../app/core/gimpchannel.c:267
+#: ../app/core/gimpchannel.c:266
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Підняти канал"
 
-#: ../app/core/gimpchannel.c:268
+#: ../app/core/gimpchannel.c:267
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Підняти канал догори"
 
-#: ../app/core/gimpchannel.c:269
+#: ../app/core/gimpchannel.c:268
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Опустити канал"
 
-#: ../app/core/gimpchannel.c:270
+#: ../app/core/gimpchannel.c:269
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Опустити канал додолу"
 
-#: ../app/core/gimpchannel.c:271
+#: ../app/core/gimpchannel.c:270
 msgid "Channel cannot be raised higher."
 msgstr "Канал не можна підняти ще вище."
 
-#: ../app/core/gimpchannel.c:272
+#: ../app/core/gimpchannel.c:271
 msgid "Channel cannot be lowered more."
 msgstr "Канал не можна опустити ще нижче."
 
-#: ../app/core/gimpchannel.c:291
+#: ../app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Розмити канал"
 
-#: ../app/core/gimpchannel.c:292
+#: ../app/core/gimpchannel.c:291
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Загострити канал"
 
-#: ../app/core/gimpchannel.c:293
+#: ../app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Очистити канал"
 
-#: ../app/core/gimpchannel.c:295
+#: ../app/core/gimpchannel.c:294
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Перевернути канал"
 
-#: ../app/core/gimpchannel.c:296
+#: ../app/core/gimpchannel.c:295
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Обмежити канал"
 
-#: ../app/core/gimpchannel.c:297
+#: ../app/core/gimpchannel.c:296
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Збільшити канал"
 
-#: ../app/core/gimpchannel.c:298
+#: ../app/core/gimpchannel.c:297
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Стиснути канал"
 
-#: ../app/core/gimpchannel.c:299
+#: ../app/core/gimpchannel.c:298
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Заповнити канал"
 
-#: ../app/core/gimpchannel.c:783
+#: ../app/core/gimpchannel.c:782
 msgid "Cannot fill empty channel."
 msgstr "Не можна заповнити порожній канал."
 
-#: ../app/core/gimpchannel.c:819
+#: ../app/core/gimpchannel.c:818
 msgid "Cannot stroke empty channel."
 msgstr "Не можна обводити порожній канал."
 
-#: ../app/core/gimpchannel.c:1648
+#: ../app/core/gimpchannel.c:1647
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Встановити колір каналу"
 
-#: ../app/core/gimpchannel.c:1699
+#: ../app/core/gimpchannel.c:1698
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Встановити непрозорість каналу"
 
-#: ../app/core/gimpchannel.c:1788 ../app/core/gimpselection.c:172
+#: ../app/core/gimpchannel.c:1787 ../app/core/gimpselection.c:172
 msgid "Selection Mask"
 msgstr "Маска позначеної ділянки"
 
-#: ../app/core/gimpcontext.c:665
+#: ../app/core/gimpcontext.c:664
 msgid "Foreground"
 msgstr "Передній план"
 
-#: ../app/core/gimpcontext.c:666 ../app/core/gimpgrid.c:94
+#: ../app/core/gimpcontext.c:665 ../app/core/gimpgrid.c:94
 msgid "Foreground color"
 msgstr "Колір переднього плану"
 
-#: ../app/core/gimpcontext.c:672 ../app/core/gimpimage-new.c:149
+#: ../app/core/gimpcontext.c:671 ../app/core/gimpimage-new.c:149
 msgid "Background"
 msgstr "Тло"
 
-#: ../app/core/gimpcontext.c:673 ../app/core/gimpgrid.c:101
+#: ../app/core/gimpcontext.c:672 ../app/core/gimpgrid.c:101
 msgid "Background color"
 msgstr "Колір тла"
 
-#: ../app/core/gimpcontext.c:679 ../app/core/gimpcontext.c:680
+#: ../app/core/gimpcontext.c:678 ../app/core/gimpcontext.c:679
 #: ../app/operations/gimpoperationsettings.c:100
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:297
 msgid "Opacity"
 msgstr "Непрозорість"
 
-#: ../app/core/gimpcontext.c:688 ../app/core/gimpcontext.c:689
+#: ../app/core/gimpcontext.c:687 ../app/core/gimpcontext.c:688
 msgid "Paint Mode"
 msgstr "Режим малювання"
 
-#: ../app/core/gimpcontext.c:696 ../app/core/gimpcontext.c:697
+#: ../app/core/gimpcontext.c:695 ../app/core/gimpcontext.c:696
 #: ../app/tools/gimpmybrushoptions-gui.c:54
 #: ../app/tools/gimppaintoptions-gui.c:156
 msgid "Brush"
 msgstr "Пензель"
 
-#: ../app/core/gimpcontext.c:704
+#: ../app/core/gimpcontext.c:703
 msgid "Paint dynamics"
 msgstr "Динаміка малювання"
 
-#: ../app/core/gimpcontext.c:710 ../app/core/gimpcontext.c:711
+#: ../app/core/gimpcontext.c:709 ../app/core/gimpcontext.c:710
 #: ../app/tools/gimpmybrushtool.c:73
 msgid "MyPaint Brush"
 msgstr "Пензель MyPaint"
 
-#: ../app/core/gimpcontext.c:717 ../app/core/gimpcontext.c:718
+#: ../app/core/gimpcontext.c:716 ../app/core/gimpcontext.c:717
 msgid "Pattern"
 msgstr "Текстура"
 
-#: ../app/core/gimpcontext.c:724 ../app/core/gimpcontext.c:725
+#: ../app/core/gimpcontext.c:723 ../app/core/gimpcontext.c:724
 #: ../app/pdb/drawable-edit-cmds.c:253 ../app/tools/gimpgradientoptions.c:269
 #: ../app/tools/gimpgradienttool.c:164 ../app/tools/gimppaintoptions-gui.c:367
 msgid "Gradient"
 msgstr "Градієнт"
 
-#: ../app/core/gimpcontext.c:731 ../app/core/gimpcontext.c:732
+#: ../app/core/gimpcontext.c:730 ../app/core/gimpcontext.c:731
 #: ../app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "Палітра"
 
-#: ../app/core/gimpcontext.c:738 ../app/core/gimpcontext.c:739
+#: ../app/core/gimpcontext.c:737 ../app/core/gimpcontext.c:738
 #: ../app/tools/gimptextoptions.c:551
 msgid "Font"
 msgstr "Шрифт"
 
-#: ../app/core/gimpcontext.c:745 ../app/core/gimpcontext.c:746
+#: ../app/core/gimpcontext.c:744 ../app/core/gimpcontext.c:745
 msgid "Tool Preset"
 msgstr "Шаблон інструментів"
 
@@ -14229,11 +14257,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:442 ../app/core/gimpdatafactory.c:445
-#: ../app/core/gimpitem.c:534 ../app/core/gimpitem.c:537
+#: ../app/core/gimpitem.c:533 ../app/core/gimpitem.c:536
 msgid "copy"
 msgstr "копія"
 
-#: ../app/core/gimpdatafactory.c:454 ../app/core/gimpitem.c:545
+#: ../app/core/gimpdatafactory.c:454 ../app/core/gimpitem.c:544
 #, c-format
 msgid "%s copy"
 msgstr "копія %s"
@@ -14327,7 +14355,7 @@ msgstr "Рухомий вибір"
 msgid "Computing alpha of unknown pixels"
 msgstr "Обчислення альфи невідомих пікселів"
 
-#: ../app/core/gimpdrawable-fill.c:215 ../app/vectors/gimpvectors.c:677
+#: ../app/core/gimpdrawable-fill.c:215 ../app/vectors/gimpvectors.c:676
 msgid "Not enough points to fill"
 msgstr "Бракує точок для заповнення"
 
@@ -14358,7 +14386,7 @@ msgid "Offset Drawable"
 msgstr "Тягнучий зсув"
 
 #: ../app/core/gimpdrawable-stroke.c:111
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:699
+#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:698
 msgid "Not enough points to stroke"
 msgstr "Бракує точок для обведення"
 
@@ -14372,7 +14400,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Обертання"
 
-#: ../app/core/gimpdrawable-transform.c:1047 ../app/core/gimplayer.c:441
+#: ../app/core/gimpdrawable-transform.c:1047 ../app/core/gimplayer.c:440
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Перетворення шару"
@@ -14585,81 +14613,81 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Перетворити групу шарів"
 
-#: ../app/core/gimpimage.c:669 ../app/widgets/gimpsymmetryeditor.c:176
+#: ../app/core/gimpimage.c:672 ../app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
 msgstr "Симетрія"
 
-#: ../app/core/gimpimage.c:2501
+#: ../app/core/gimpimage.c:2543
 msgid " (exported)"
 msgstr " (експортовано)"
 
-#: ../app/core/gimpimage.c:2505
+#: ../app/core/gimpimage.c:2547
 msgid " (overwritten)"
 msgstr " (перезаписано)"
 
-#: ../app/core/gimpimage.c:2514
+#: ../app/core/gimpimage.c:2556
 msgid " (imported)"
 msgstr " (імпортовано)"
 
-#: ../app/core/gimpimage.c:2688 ../app/core/gimpimage.c:2702
-#: ../app/core/gimpimage.c:2745
+#: ../app/core/gimpimage.c:2730 ../app/core/gimpimage.c:2744
+#: ../app/core/gimpimage.c:2787
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Режим шару «%s» було додано у %s"
 
-#: ../app/core/gimpimage.c:2760
+#: ../app/core/gimpimage.c:2802
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Групи шарів було додано у %s"
 
-#: ../app/core/gimpimage.c:2767
+#: ../app/core/gimpimage.c:2809
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Маски для груп шарів було додано у %s"
 
-#: ../app/core/gimpimage.c:2783
+#: ../app/core/gimpimage.c:2825
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 "Підтримку зображень із великою бітовою розрядністю кольорів було додано у %s"
 
-#: ../app/core/gimpimage.c:2791
+#: ../app/core/gimpimage.c:2833
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Кодування зображень із великою глибиною кольорів було виправлено у %s"
 
-#: ../app/core/gimpimage.c:2799
+#: ../app/core/gimpimage.c:2841
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Додано вбудовані засоби стискання zlib у %s"
 
-#: ../app/core/gimpimage.c:2816
+#: ../app/core/gimpimage.c:2858
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 "Підтримку файлів зображень, розмір яких перевищує 4 ГБ, було додано у %s"
 
-#: ../app/core/gimpimage.c:2823
+#: ../app/core/gimpimage.c:2865
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Було додано позначення декількох шарів у %s"
 
-#: ../app/core/gimpimage.c:2840
+#: ../app/core/gimpimage.c:2882
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "У %s додано напрямні поза полотном"
 
-#: ../app/core/gimpimage.c:2944
+#: ../app/core/gimpimage.c:2986
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Змінити роздільність зображення"
 
-#: ../app/core/gimpimage.c:2996
+#: ../app/core/gimpimage.c:3038
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: ../app/core/gimpimage.c:4051
+#: ../app/core/gimpimage.c:4093
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14667,47 +14695,47 @@ msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: ../app/core/gimpimage.c:4112
+#: ../app/core/gimpimage.c:4154
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: ../app/core/gimpimage.c:4154
+#: ../app/core/gimpimage.c:4196
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: ../app/core/gimpimage.c:5112
+#: ../app/core/gimpimage.c:5154
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: ../app/core/gimpimage.c:5156 ../app/core/gimpimage.c:5187
+#: ../app/core/gimpimage.c:5198 ../app/core/gimpimage.c:5229
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: ../app/core/gimpimage.c:5181
+#: ../app/core/gimpimage.c:5223
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: ../app/core/gimpimage.c:5334
+#: ../app/core/gimpimage.c:5376
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: ../app/core/gimpimage.c:5364 ../app/core/gimpimage.c:5389
+#: ../app/core/gimpimage.c:5406 ../app/core/gimpimage.c:5431
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: ../app/core/gimpimage.c:5448
+#: ../app/core/gimpimage.c:5490
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: ../app/core/gimpimage.c:5478 ../app/core/gimpimage.c:5486
+#: ../app/core/gimpimage.c:5520 ../app/core/gimpimage.c:5528
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -14896,56 +14924,56 @@ msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Перетворити об'єкти"
 
-#: ../app/core/gimpimage-merge.c:77
+#: ../app/core/gimpimage-merge.c:76
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Об'єднати видимі шари"
 
-#: ../app/core/gimpimage-merge.c:234
+#: ../app/core/gimpimage-merge.c:233
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Звести зображення"
 
-#: ../app/core/gimpimage-merge.c:263
+#: ../app/core/gimpimage-merge.c:262
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Не можна сплюснути зображення без жодного видимого шару."
 
-#: ../app/core/gimpimage-merge.c:298
+#: ../app/core/gimpimage-merge.c:297
 msgid "Cannot merge down a floating selection."
 msgstr "Неможливо об'єднати рухому позначену ділянку."
 
-#: ../app/core/gimpimage-merge.c:307
+#: ../app/core/gimpimage-merge.c:306
 msgid "Cannot merge down an invisible layer."
 msgstr "Неможливо об'єднати невидимий шар."
 
-#: ../app/core/gimpimage-merge.c:333
+#: ../app/core/gimpimage-merge.c:332
 msgid "Cannot merge down to a layer group."
 msgstr "Не вдалось виконати зведення у групу шарів."
 
-#: ../app/core/gimpimage-merge.c:342
+#: ../app/core/gimpimage-merge.c:341
 msgid "The layer to merge down to is locked."
 msgstr "Шар, я який має бути виконане зведення, замкнений"
 
-#: ../app/core/gimpimage-merge.c:357
+#: ../app/core/gimpimage-merge.c:356
 msgid "There is no visible layer to merge down to."
 msgstr "Немає видимого шару, у якому можна виконати зведення."
 
-#: ../app/core/gimpimage-merge.c:382
+#: ../app/core/gimpimage-merge.c:381
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Об'єднати з нижнім"
 
-#: ../app/core/gimpimage-merge.c:423
+#: ../app/core/gimpimage-merge.c:422
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Об'єднати групу шарів"
 
-#: ../app/core/gimpimage-merge.c:499
+#: ../app/core/gimpimage-merge.c:498
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Об'єднати видимі контури"
 
-#: ../app/core/gimpimage-merge.c:535
+#: ../app/core/gimpimage-merge.c:534
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Недостатньо видимих контурів для об'єднання. Необхідно принаймні два контури."
@@ -14990,40 +15018,40 @@ msgstr "Масштабувати зображення"
 msgid "Can't undo %s"
 msgstr "Не вдалось скасувати %s"
 
-#: ../app/core/gimpimagefile.c:744 ../app/dialogs/preferences-dialog.c:1946
+#: ../app/core/gimpimagefile.c:743 ../app/dialogs/preferences-dialog.c:1945
 msgid "Folder"
 msgstr "Тека"
 
-#: ../app/core/gimpimagefile.c:749
+#: ../app/core/gimpimagefile.c:748
 msgid "Special File"
 msgstr "Особливий файл"
 
-#: ../app/core/gimpimagefile.c:765
+#: ../app/core/gimpimagefile.c:764
 msgid "Remote File"
 msgstr "Віддалений файл"
 
-#: ../app/core/gimpimagefile.c:784
+#: ../app/core/gimpimagefile.c:783
 msgid "Click to create preview"
 msgstr "Натисніть для створення файла перегляду"
 
-#: ../app/core/gimpimagefile.c:790
+#: ../app/core/gimpimagefile.c:789
 msgid "Loading preview..."
 msgstr "Завантаження файла попереднього перегляду…"
 
-#: ../app/core/gimpimagefile.c:796
+#: ../app/core/gimpimagefile.c:795
 msgid "Preview is out of date"
 msgstr "Файл попереднього перегляду застарів"
 
-#: ../app/core/gimpimagefile.c:802
+#: ../app/core/gimpimagefile.c:801
 msgid "Cannot create preview"
 msgstr "Не вдалось створити файл попереднього перегляду"
 
-#: ../app/core/gimpimagefile.c:812
+#: ../app/core/gimpimagefile.c:811
 msgid "(Preview may be out of date)"
 msgstr "(Можливо, файл попереднього перегляду застарів)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:821 ../app/widgets/gimpimagepropview.c:437
+#: ../app/core/gimpimagefile.c:820 ../app/widgets/gimpimagepropview.c:437
 #: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:658
 #, c-format
 msgid "%d × %d pixel"
@@ -15033,7 +15061,7 @@ msgstr[1] "%d x %d точки"
 msgstr[2] "%d x %d точок"
 msgstr[3] "%d x %d точка"
 
-#: ../app/core/gimpimagefile.c:844 ../app/display/gimpdisplayshell-title.c:358
+#: ../app/core/gimpimagefile.c:843 ../app/display/gimpdisplayshell-title.c:358
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -15042,22 +15070,22 @@ msgstr[1] "%d шари"
 msgstr[2] "%d шарів"
 msgstr[3] "%d шар"
 
-#: ../app/core/gimpimagefile.c:892
+#: ../app/core/gimpimagefile.c:891
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не вдалось відкрити файл мініатюри «%s»: %s"
 
-#: ../app/core/gimpitem.c:2159
+#: ../app/core/gimpitem.c:2158
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Додати шум"
 
-#: ../app/core/gimpitem.c:2169
+#: ../app/core/gimpitem.c:2168
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Додати шум до об'єкта"
 
-#: ../app/core/gimpitem.c:2220 ../app/core/gimpitem.c:2227
+#: ../app/core/gimpitem.c:2219 ../app/core/gimpitem.c:2226
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Вилучити шум з об'єкта"
@@ -15075,7 +15103,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Прикріпити рухомий вибір"
 
-#: ../app/core/gimplayer-floating-selection.c:182 ../app/core/gimplayer.c:1044
+#: ../app/core/gimplayer-floating-selection.c:182 ../app/core/gimplayer.c:1043
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -15088,76 +15116,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Рухомий вибір у шар"
 
-#: ../app/core/gimplayer.c:435
+#: ../app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Перейменувати шар"
 
-#: ../app/core/gimplayer.c:436
+#: ../app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Перенести шар"
 
-#: ../app/core/gimplayer.c:437
+#: ../app/core/gimplayer.c:436
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Масштабувати шар"
 
-#: ../app/core/gimplayer.c:438
+#: ../app/core/gimplayer.c:437
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Змінити розмір шару"
 
-#: ../app/core/gimplayer.c:439
+#: ../app/core/gimplayer.c:438
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Віддзеркалити шар"
 
-#: ../app/core/gimplayer.c:440
+#: ../app/core/gimplayer.c:439
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Обернути шар"
 
-#: ../app/core/gimplayer.c:443
+#: ../app/core/gimplayer.c:442
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Перевпорядкувати шар"
 
-#: ../app/core/gimplayer.c:444
+#: ../app/core/gimplayer.c:443
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Підняти шар"
 
-#: ../app/core/gimplayer.c:445
+#: ../app/core/gimplayer.c:444
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Підняти шар догори"
 
-#: ../app/core/gimplayer.c:446
+#: ../app/core/gimplayer.c:445
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Опустити шар"
 
-#: ../app/core/gimplayer.c:447
+#: ../app/core/gimplayer.c:446
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Опустити шар додолу"
 
-#: ../app/core/gimplayer.c:448
+#: ../app/core/gimplayer.c:447
 msgid "Layer cannot be raised higher."
 msgstr "Шар неможливо підняти ще вище."
 
-#: ../app/core/gimplayer.c:449
+#: ../app/core/gimplayer.c:448
 msgid "Layer cannot be lowered more."
 msgstr "Шар неможливо опустити ще нижче."
 
-#: ../app/core/gimplayer.c:741 ../app/core/gimplayer.c:2002
+#: ../app/core/gimplayer.c:740 ../app/core/gimplayer.c:2001
 #: ../app/core/gimplayermask.c:288
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
 
-#: ../app/core/gimplayer.c:780
+#: ../app/core/gimplayer.c:779
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -15166,74 +15194,74 @@ msgstr ""
 "Рухомий вибір\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1903
+#: ../app/core/gimplayer.c:1902
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Не вдалось додати маску шару, бо шар вже має маску."
 
-#: ../app/core/gimplayer.c:1914
+#: ../app/core/gimplayer.c:1913
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Не можна додавати маску шару, яка відрізняється розмірами від вказаного шару."
 
-#: ../app/core/gimplayer.c:1920
+#: ../app/core/gimplayer.c:1919
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Додати маску шару"
 
-#: ../app/core/gimplayer.c:2043
+#: ../app/core/gimplayer.c:2042
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Перетворити альфу в маску"
 
-#: ../app/core/gimplayer.c:2206
+#: ../app/core/gimplayer.c:2205
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Застосувати маску шару"
 
-#: ../app/core/gimplayer.c:2207
+#: ../app/core/gimplayer.c:2206
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Вилучити маску шару"
 
-#: ../app/core/gimplayer.c:2314
+#: ../app/core/gimplayer.c:2313
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Увімкнути маску шару"
 
-#: ../app/core/gimplayer.c:2315
+#: ../app/core/gimplayer.c:2314
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Вимкнути маску шару"
 
-#: ../app/core/gimplayer.c:2396
+#: ../app/core/gimplayer.c:2395
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Показати маску шару"
 
-#: ../app/core/gimplayer.c:2475
+#: ../app/core/gimplayer.c:2474
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Додати канал альфи"
 
-#: ../app/core/gimplayer.c:2511
+#: ../app/core/gimplayer.c:2510
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Вилучити канал альфи"
 
-#: ../app/core/gimplayer.c:2532
+#: ../app/core/gimplayer.c:2531
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Шар до розміру зображення"
 
-#: ../app/core/gimplayer.c:2715
+#: ../app/core/gimplayer.c:2714
 msgid "Set layer's blend space"
 msgstr "Встановити режим змішування шару"
 
-#: ../app/core/gimplayer.c:2762
+#: ../app/core/gimplayer.c:2761
 msgid "Set layer's composite space"
 msgstr "Встановити простір композиції шару"
 
-#: ../app/core/gimplayer.c:2809
+#: ../app/core/gimplayer.c:2808
 msgid "Set layer's composite mode"
 msgstr "Встановити режим композиції шару"
 
@@ -15252,40 +15280,40 @@ msgstr "Маска шару до вибору"
 msgid "Cannot rename layer masks."
 msgstr "Не вдалось перейменувати маски шарів."
 
-#: ../app/core/gimplineart.c:339 ../app/core/gimplineart.c:340
+#: ../app/core/gimplineart.c:338 ../app/core/gimplineart.c:339
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Вибрати прозорі пікселі замість сірих"
 
-#: ../app/core/gimplineart.c:346 ../app/tools/gimpbucketfilloptions.c:189
+#: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:189
 msgid "Line art detection threshold"
 msgstr "Поріг виявлення контуру"
 
-#: ../app/core/gimplineart.c:347 ../app/tools/gimpbucketfilloptions.c:190
+#: ../app/core/gimplineart.c:346 ../app/tools/gimpbucketfilloptions.c:190
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 "Поріг виявлення контуру (за більших значень буде включено більше пікселів )"
 
-#: ../app/core/gimplineart.c:353 ../app/tools/gimpbucketfilloptions.c:196
+#: ../app/core/gimplineart.c:352 ../app/tools/gimpbucketfilloptions.c:196
 msgid "Maximum growing size"
 msgstr "Максимальний розмір нарощування"
 
-#: ../app/core/gimplineart.c:354 ../app/tools/gimpbucketfilloptions.c:197
+#: ../app/core/gimplineart.c:353 ../app/tools/gimpbucketfilloptions.c:197
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Максимальна кількість пікселів нарощування під контуром"
 
-#: ../app/core/gimplineart.c:360
+#: ../app/core/gimplineart.c:359
 msgid "Maximum curved closing length"
 msgstr "Найдовше з'єднання кривої"
 
-#: ../app/core/gimplineart.c:361
+#: ../app/core/gimplineart.c:360
 msgid "Maximum curved length (in pixels) to close the line art"
 msgstr "Найдовший розрив кривої (у пікселях) для з'єднання"
 
-#: ../app/core/gimplineart.c:367
+#: ../app/core/gimplineart.c:366
 msgid "Maximum straight closing length"
 msgstr "Найдовше з'єднання прямої"
 
-#: ../app/core/gimplineart.c:368
+#: ../app/core/gimplineart.c:367
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Найдовший розрив прямої (у пікселях) для з'єднання"
 
@@ -15406,12 +15434,12 @@ msgstr ""
 
 #: ../app/core/gimppattern-load.c:99
 #, c-format
-#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
 "%lu), bytes=%lu"
 msgstr ""
-"Неправильний заголовок даних у «%s»: ширина=%lu (максимальна %lu), висота=%lu (максимальна %lu), байтів=%lu"
+"Неправильний заголовок даних у «%s»: ширина=%lu (максимальна %lu), висота="
+"%lu (максимальна %lu), байтів=%lu"
 
 #: ../app/core/gimppattern-load.c:116
 #, c-format
@@ -15430,6 +15458,18 @@ msgstr "Неправильний UTF-8 рядок у файлі текстури
 #: ../app/core/gimppattern-load.c:178
 msgid "Fatal parse error in pattern file: "
 msgstr "Критична помилка аналізу файла текстури: "
+
+#: ../app/core/gimppattern-save.c:52
+#, c-format
+#| msgid ""
+#| "Unsupported pattern depth %d.\n"
+#| "GIMP Patterns must be GRAY or RGB."
+msgid ""
+"Unsupported pattern dimensions %d x %d.\n"
+"GIMP Patterns have a maximum size of %d x %d."
+msgstr ""
+"Непідтримувані розмірності текстури — %d ⨯ %d.\n"
+"Максимальним розміром текстури GIMP є %d ⨯ %d."
 
 #: ../app/core/gimppdbprogress.c:268
 #, c-format
@@ -15527,32 +15567,32 @@ msgstr "Рухомий шар"
 msgid "Last used: %s"
 msgstr "Дата використання: %s"
 
-#: ../app/core/gimpstrokeoptions.c:154
+#: ../app/core/gimpstrokeoptions.c:153
 msgid "Method"
 msgstr "Метод"
 
-#: ../app/core/gimpstrokeoptions.c:162
+#: ../app/core/gimpstrokeoptions.c:161
 msgid "Line width"
 msgstr "Ширина лінії"
 
-#: ../app/core/gimpstrokeoptions.c:169 ../app/core/gimptemplate.c:152
+#: ../app/core/gimpstrokeoptions.c:168 ../app/core/gimptemplate.c:152
 #: ../app/tools/gimptextoptions.c:123
 msgid "Unit"
 msgstr "Одиниця виміру"
 
-#: ../app/core/gimpstrokeoptions.c:176
+#: ../app/core/gimpstrokeoptions.c:175
 msgid "Cap style"
 msgstr "Стиль кінчику"
 
-#: ../app/core/gimpstrokeoptions.c:183
+#: ../app/core/gimpstrokeoptions.c:182
 msgid "Join style"
 msgstr "Стиль з'єднання"
 
-#: ../app/core/gimpstrokeoptions.c:190
+#: ../app/core/gimpstrokeoptions.c:189
 msgid "Miter limit"
 msgstr "Обмеження фацета"
 
-#: ../app/core/gimpstrokeoptions.c:191
+#: ../app/core/gimpstrokeoptions.c:190
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -15561,11 +15601,11 @@ msgstr ""
 "відстані більшої, ніж межа гострого, помноженого на товщину лінії від "
 "актуальної точки з'єднання."
 
-#: ../app/core/gimpstrokeoptions.c:200
+#: ../app/core/gimpstrokeoptions.c:199
 msgid "Dash offset"
 msgstr "Зсув риски"
 
-#: ../app/core/gimpstrokeoptions.c:222
+#: ../app/core/gimpstrokeoptions.c:221
 msgid "Emulate brush dynamics"
 msgstr "Імітувати динаміку пензля"
 
@@ -15769,7 +15809,7 @@ msgid "Filename"
 msgstr "Назва файла"
 
 #. Translators: this is a noun
-#: ../app/core/gimptoolgroup.c:264
+#: ../app/core/gimptoolgroup.c:263
 msgctxt "tool-item"
 msgid "Group"
 msgstr "Група"
@@ -15901,7 +15941,7 @@ msgstr ""
 "Максим Дзюманенко <dziumanenko@gmail.com>\n"
 "Daniel Korostil <ted.korostiled@gmail.com>"
 
-#: ../app/dialogs/about-dialog.c:345
+#: ../app/dialogs/about-dialog.c:340
 msgid "Update available!"
 msgstr "Маємо оновлення!"
 
@@ -16281,7 +16321,7 @@ msgstr "Пер.план/тло"
 msgid "FG/BG Color"
 msgstr "Колір пер.плану/тла"
 
-#: ../app/dialogs/extensions-dialog.c:76 ../app/widgets/gimpfileprocview.c:211
+#: ../app/dialogs/extensions-dialog.c:76 ../app/widgets/gimpfileprocview.c:210
 msgid "Extensions"
 msgstr "За розширенням"
 
@@ -16457,7 +16497,7 @@ msgid "Create a New Image"
 msgstr "Створення нового зображення"
 
 #: ../app/dialogs/image-new-dialog.c:139
-#: ../app/dialogs/preferences-dialog.c:1761 ../app/dialogs/resize-dialog.c:253
+#: ../app/dialogs/preferences-dialog.c:1760 ../app/dialogs/resize-dialog.c:256
 msgid "_Template:"
 msgstr "Ша_блони:"
 
@@ -16666,7 +16706,7 @@ msgstr "Зсув за X:"
 msgid "Offset Y:"
 msgstr "Зсув за Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:377 ../app/dialogs/resize-dialog.c:487
+#: ../app/dialogs/layer-options-dialog.c:377 ../app/dialogs/resize-dialog.c:508
 #: ../app/widgets/gimptemplateeditor.c:442
 msgid "_Fill with:"
 msgstr "_Тло:"
@@ -16818,7 +16858,7 @@ msgid "Select Source"
 msgstr "Вибір джерела"
 
 #: ../app/dialogs/palette-import-dialog.c:211
-#: ../app/dialogs/preferences-dialog.c:1724
+#: ../app/dialogs/preferences-dialog.c:1723
 msgid "_Gradient"
 msgstr "_Градієнт"
 
@@ -16938,12 +16978,12 @@ msgstr ""
 "типові значення."
 
 #: ../app/dialogs/preferences-dialog.c:849
-#: ../app/dialogs/preferences-dialog.c:2576
+#: ../app/dialogs/preferences-dialog.c:2575
 msgid "There's a local installation of the user manual."
 msgstr "Посібник користувача встановлено локально"
 
 #: ../app/dialogs/preferences-dialog.c:854
-#: ../app/dialogs/preferences-dialog.c:2582
+#: ../app/dialogs/preferences-dialog.c:2581
 msgid "The user manual is not installed locally."
 msgstr "Посібник користувача не встановлено локально"
 
@@ -17019,75 +17059,75 @@ msgstr "Прилипання до _меж полотна"
 msgid "Snap to _Active Path"
 msgstr "Прилипання до _активного контуру"
 
-#: ../app/dialogs/preferences-dialog.c:1114
+#: ../app/dialogs/preferences-dialog.c:1113
 msgid "Preferences"
 msgstr "Параметри"
 
+#: ../app/dialogs/preferences-dialog.c:1149
 #: ../app/dialogs/preferences-dialog.c:1150
-#: ../app/dialogs/preferences-dialog.c:1151
 msgid "System Resources"
 msgstr "Системні ресурси"
 
-#: ../app/dialogs/preferences-dialog.c:1159
+#: ../app/dialogs/preferences-dialog.c:1158
 msgid "Resource Consumption"
 msgstr "Використання ресурсів"
 
-#: ../app/dialogs/preferences-dialog.c:1165
+#: ../app/dialogs/preferences-dialog.c:1164
 msgid "Minimal number of _undo levels:"
 msgstr "Мінімальна кількість рівнів по_вернення:"
 
-#: ../app/dialogs/preferences-dialog.c:1168
+#: ../app/dialogs/preferences-dialog.c:1167
 msgid "Maximum undo _memory:"
 msgstr "Максимальна _пам'ять для скасувань:"
 
-#: ../app/dialogs/preferences-dialog.c:1171
+#: ../app/dialogs/preferences-dialog.c:1170
 msgid "Tile cache _size:"
 msgstr "Розмір _кешу:"
 
-#: ../app/dialogs/preferences-dialog.c:1174
+#: ../app/dialogs/preferences-dialog.c:1173
 msgid "Maximum _new image size:"
 msgstr "Максимальний розмір _нового зображення:"
 
-#: ../app/dialogs/preferences-dialog.c:1178
+#: ../app/dialogs/preferences-dialog.c:1177
 msgid "S_wap compression:"
 msgstr "С_тискання файла резервної пам'яті:"
 
-#: ../app/dialogs/preferences-dialog.c:1183
+#: ../app/dialogs/preferences-dialog.c:1182
 msgid "Number of _threads to use:"
 msgstr "Кількість п_отоків обробки:"
 
-#: ../app/dialogs/preferences-dialog.c:1189
+#: ../app/dialogs/preferences-dialog.c:1188
 msgid "Network access"
 msgstr "Доступ до мережі"
 
-#: ../app/dialogs/preferences-dialog.c:1193
+#: ../app/dialogs/preferences-dialog.c:1192
 msgid "Check for updates (requires internet)"
 msgstr "Шукати оновлення (потрібне з'єднання із інтернетом)"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1199
+#: ../app/dialogs/preferences-dialog.c:1198
 msgid "Image Thumbnails"
 msgstr "Мініатюри зображень"
 
-#: ../app/dialogs/preferences-dialog.c:1204
+#: ../app/dialogs/preferences-dialog.c:1203
 msgid "Size of _thumbnails:"
 msgstr "Розмір файлів _мініатюр:"
 
-#: ../app/dialogs/preferences-dialog.c:1208
+#: ../app/dialogs/preferences-dialog.c:1207
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Максимальний розмір _файла перегляду:"
 
-#: ../app/dialogs/preferences-dialog.c:1215
+#: ../app/dialogs/preferences-dialog.c:1214
 msgid "_Keep record of used files in the Recent Documents list"
 msgstr "З_берігати список нещодавно відкритих файлів"
 
 #. TODO: icon needed.
+#: ../app/dialogs/preferences-dialog.c:1232
 #: ../app/dialogs/preferences-dialog.c:1233
-#: ../app/dialogs/preferences-dialog.c:1234
 msgid "Debugging"
 msgstr "Діагностика"
 
-#: ../app/dialogs/preferences-dialog.c:1241
+#: ../app/dialogs/preferences-dialog.c:1240
 msgid ""
 "We hope you will never need these settings, but as all software, GIMP has "
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
@@ -17098,19 +17138,19 @@ msgstr ""
 "режимі. Якщо таке станеться, ви можете допомогти в усуванні вад, повідомивши "
 "розробникам про помилку."
 
-#: ../app/dialogs/preferences-dialog.c:1250
+#: ../app/dialogs/preferences-dialog.c:1249
 msgid "Bug Reporting"
 msgstr "Звітування про вади"
 
-#: ../app/dialogs/preferences-dialog.c:1256
+#: ../app/dialogs/preferences-dialog.c:1255
 msgid "Debug _policy:"
 msgstr "П_равила діагностики:"
 
-#: ../app/dialogs/preferences-dialog.c:1268
+#: ../app/dialogs/preferences-dialog.c:1267
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
 msgstr "Щоб скористатися цією можливістю, вам слід встановити gdb або lldb."
 
-#: ../app/dialogs/preferences-dialog.c:1272
+#: ../app/dialogs/preferences-dialog.c:1271
 msgid ""
 "This feature is more efficient with \"gdb\" or \"lldb\" installed on your "
 "system."
@@ -17118,179 +17158,179 @@ msgstr ""
 "Ефективніші результати від використання цієї можливості можна отримати, якщо "
 "у системі буде встановлено gdb або lldb."
 
+#: ../app/dialogs/preferences-dialog.c:1284
 #: ../app/dialogs/preferences-dialog.c:1285
-#: ../app/dialogs/preferences-dialog.c:1286
 msgid "Color Management"
 msgstr "Керування кольором"
 
-#: ../app/dialogs/preferences-dialog.c:1295
+#: ../app/dialogs/preferences-dialog.c:1294
 msgid "R_eset Color Management"
 msgstr "С_кинути керування кольорами"
 
-#: ../app/dialogs/preferences-dialog.c:1318
+#: ../app/dialogs/preferences-dialog.c:1317
 msgid "Image display _mode:"
 msgstr "_Режим показу зображення:"
 
 #. Color Managed Display
-#: ../app/dialogs/preferences-dialog.c:1322
+#: ../app/dialogs/preferences-dialog.c:1321
 msgid "Color Managed Display"
 msgstr "Дисплей із керуванням кольорами"
 
-#: ../app/dialogs/preferences-dialog.c:1331
+#: ../app/dialogs/preferences-dialog.c:1330
 msgid "Select Monitor Color Profile"
 msgstr "Вибір колірного профілю монітору"
 
-#: ../app/dialogs/preferences-dialog.c:1332
+#: ../app/dialogs/preferences-dialog.c:1331
 msgid "_Monitor profile:"
 msgstr "Профіль _монітору:"
 
-#: ../app/dialogs/preferences-dialog.c:1338
+#: ../app/dialogs/preferences-dialog.c:1337
 msgid "_Try to use the system monitor profile"
 msgstr "_Спробувати використати системний профіль монітору"
 
-#: ../app/dialogs/preferences-dialog.c:1345
+#: ../app/dialogs/preferences-dialog.c:1344
 msgid "_Rendering intent:"
 msgstr "Ві_дтворення кольорів:"
 
-#: ../app/dialogs/preferences-dialog.c:1350
+#: ../app/dialogs/preferences-dialog.c:1349
 msgid "Use _black point compensation"
 msgstr "Використовувати компенсацію _чорної точки"
 
-#: ../app/dialogs/preferences-dialog.c:1356
-#: ../app/dialogs/preferences-dialog.c:1390 ../app/paint/gimpinkoptions.c:94
+#: ../app/dialogs/preferences-dialog.c:1355
+#: ../app/dialogs/preferences-dialog.c:1389 ../app/paint/gimpinkoptions.c:94
 msgid "Speed"
 msgstr "Швидкість"
 
-#: ../app/dialogs/preferences-dialog.c:1357
-#: ../app/dialogs/preferences-dialog.c:1391
+#: ../app/dialogs/preferences-dialog.c:1356
+#: ../app/dialogs/preferences-dialog.c:1390
 msgid "Precision / Color Fidelity"
 msgstr "Точність відтворення кольорів"
 
-#: ../app/dialogs/preferences-dialog.c:1358
+#: ../app/dialogs/preferences-dialog.c:1357
 msgid "_Optimize image display for:"
 msgstr "_Оптимізувати показ зображення для:"
 
 #. Print Simulation (Soft-proofing)
-#: ../app/dialogs/preferences-dialog.c:1362
+#: ../app/dialogs/preferences-dialog.c:1361
 msgid "Soft-Proofing"
 msgstr "Проба кольорів"
 
-#: ../app/dialogs/preferences-dialog.c:1372
+#: ../app/dialogs/preferences-dialog.c:1371
 msgid "Select Soft-Proofing Color Profile"
 msgstr "Виберіть колірний профіль для проби"
 
-#: ../app/dialogs/preferences-dialog.c:1373
+#: ../app/dialogs/preferences-dialog.c:1372
 msgid "_Soft-proofing profile:"
 msgstr "Профіль п_роби кольорів:"
 
-#: ../app/dialogs/preferences-dialog.c:1379
+#: ../app/dialogs/preferences-dialog.c:1378
 msgid "Re_ndering intent:"
 msgstr "Ві_дтворення кольорів:"
 
-#: ../app/dialogs/preferences-dialog.c:1384
+#: ../app/dialogs/preferences-dialog.c:1383
 msgid "Use black _point compensation"
 msgstr "Використовувати компенсацію _чорної точки"
 
-#: ../app/dialogs/preferences-dialog.c:1392
+#: ../app/dialogs/preferences-dialog.c:1391
 msgid "O_ptimize soft-proofing for:"
 msgstr "_Оптимізувати пробу для:"
 
-#: ../app/dialogs/preferences-dialog.c:1401
+#: ../app/dialogs/preferences-dialog.c:1400
 msgid "Mar_k out of gamut colors"
 msgstr "Позна_чити кольори поза кольоровим охопленням"
 
-#: ../app/dialogs/preferences-dialog.c:1405
+#: ../app/dialogs/preferences-dialog.c:1404
 msgid "Select Warning Color"
 msgstr "Виберіть колір попередження"
 
 #. Preferred profiles
-#: ../app/dialogs/preferences-dialog.c:1415
+#: ../app/dialogs/preferences-dialog.c:1414
 msgid "Preferred Profiles"
 msgstr "Бажані профілі"
 
-#: ../app/dialogs/preferences-dialog.c:1424
+#: ../app/dialogs/preferences-dialog.c:1423
 msgid "Select Preferred RGB Color Profile"
 msgstr "Виберіть бажаний колірний профіль RGB"
 
-#: ../app/dialogs/preferences-dialog.c:1425
+#: ../app/dialogs/preferences-dialog.c:1424
 msgid "_RGB profile:"
 msgstr "Профіль _RGB:"
 
-#: ../app/dialogs/preferences-dialog.c:1432
+#: ../app/dialogs/preferences-dialog.c:1431
 msgid "Select Preferred Grayscale Color Profile"
 msgstr "Виберіть бажаний колірний профіль відтінків сірого"
 
-#: ../app/dialogs/preferences-dialog.c:1433
+#: ../app/dialogs/preferences-dialog.c:1432
 msgid "_Grayscale profile:"
 msgstr "Профіль відтінків _сірого:"
 
-#: ../app/dialogs/preferences-dialog.c:1440
+#: ../app/dialogs/preferences-dialog.c:1439
 msgid "Select CMYK Color Profile"
 msgstr "Вибір профілю CMYK"
 
-#: ../app/dialogs/preferences-dialog.c:1441
+#: ../app/dialogs/preferences-dialog.c:1440
 msgid "_CMYK profile:"
 msgstr "Профіль _CMYK:"
 
 #. Policies
-#: ../app/dialogs/preferences-dialog.c:1446
+#: ../app/dialogs/preferences-dialog.c:1445
 msgid "Policies"
 msgstr "Політики"
 
-#: ../app/dialogs/preferences-dialog.c:1451
+#: ../app/dialogs/preferences-dialog.c:1450
 msgid "_File Open behaviour:"
 msgstr "Поведінка при відкриванні _файла:"
 
 #. Filter Dialogs
-#: ../app/dialogs/preferences-dialog.c:1455
-#: ../app/dialogs/preferences-dialog.c:2290
+#: ../app/dialogs/preferences-dialog.c:1454
+#: ../app/dialogs/preferences-dialog.c:2289
 msgid "Filter Dialogs"
 msgstr "Вікна фільтрування"
 
-#: ../app/dialogs/preferences-dialog.c:1459
+#: ../app/dialogs/preferences-dialog.c:1458
 msgid "Show _advanced color options"
 msgstr "Показати _розширені параметри кольорів"
 
+#: ../app/dialogs/preferences-dialog.c:1472
 #: ../app/dialogs/preferences-dialog.c:1473
-#: ../app/dialogs/preferences-dialog.c:1474
 msgid "Image Import & Export"
 msgstr "Імпортування та експортування зображень"
 
 #. Import Policies
-#: ../app/dialogs/preferences-dialog.c:1484
+#: ../app/dialogs/preferences-dialog.c:1483
 msgid "Import Policies"
 msgstr "Правила імпортування"
 
-#: ../app/dialogs/preferences-dialog.c:1488
+#: ../app/dialogs/preferences-dialog.c:1487
 msgid "Promote imported images to _floating point precision"
 msgstr "Перетворити зображення у 16-бітне з рухомою комою"
 
-#: ../app/dialogs/preferences-dialog.c:1497
+#: ../app/dialogs/preferences-dialog.c:1496
 msgid "_Dither images when promoting to floating point"
 msgstr "Роз_мивати зображення при переході до значень із рухомою комою"
 
-#: ../app/dialogs/preferences-dialog.c:1502
+#: ../app/dialogs/preferences-dialog.c:1501
 msgid "_Add an alpha channel to imported images"
 msgstr "_Додавати канал прозорості до імпортованих зображень"
 
-#: ../app/dialogs/preferences-dialog.c:1507
+#: ../app/dialogs/preferences-dialog.c:1506
 msgid "Color _profile policy:"
 msgstr "Правила пр_офілів кольорів:"
 
-#: ../app/dialogs/preferences-dialog.c:1510
+#: ../app/dialogs/preferences-dialog.c:1509
 msgid "Metadata _rotation policy:"
 msgstr "Правила _обертання за метаданими:"
 
 #. Export Policies
-#: ../app/dialogs/preferences-dialog.c:1514
+#: ../app/dialogs/preferences-dialog.c:1513
 msgid "Export Policies"
 msgstr "Правила експортування"
 
-#: ../app/dialogs/preferences-dialog.c:1518
+#: ../app/dialogs/preferences-dialog.c:1517
 msgid "Export the i_mage's color profile by default"
 msgstr "Експортувати типовий колірний профіль зо_браження"
 
-#: ../app/dialogs/preferences-dialog.c:1521
+#: ../app/dialogs/preferences-dialog.c:1520
 msgid "Export the image's comment by default"
 msgstr "Типово експортувати коментар до зображення"
 
@@ -17299,7 +17339,7 @@ msgstr "Типово експортувати коментар до зображ
 #. * It determines how file export
 #. * plug-ins handle Exif by default.
 #.
-#: ../app/dialogs/preferences-dialog.c:1529
+#: ../app/dialogs/preferences-dialog.c:1528
 msgid "Export _Exif metadata by default when available"
 msgstr "Типово експортувати ме_тадані Exif, якщо доступні"
 
@@ -17308,7 +17348,7 @@ msgstr "Типово експортувати ме_тадані Exif, якщо �
 #. * It determines how file export
 #. * plug-ins handle XMP by default.
 #.
-#: ../app/dialogs/preferences-dialog.c:1537
+#: ../app/dialogs/preferences-dialog.c:1536
 msgid "Export _XMP metadata by default when available"
 msgstr "Типово е_кспортувати метадані XMP, якщо доступні"
 
@@ -17317,37 +17357,37 @@ msgstr "Типово е_кспортувати метадані XMP, якщо д
 #. * It determines how file export
 #. * plug-ins handle IPTC by default.
 #.
-#: ../app/dialogs/preferences-dialog.c:1545
+#: ../app/dialogs/preferences-dialog.c:1544
 msgid "Export _IPTC metadata by default when available"
 msgstr "Типово _експортувати метадані IPTC, якщо доступні"
 
-#: ../app/dialogs/preferences-dialog.c:1548
+#: ../app/dialogs/preferences-dialog.c:1547
 msgid "Metadata can contain sensitive information."
 msgstr "Метадані можуть містити конфіденційні відомості."
 
 #. Export File Type
-#: ../app/dialogs/preferences-dialog.c:1552
+#: ../app/dialogs/preferences-dialog.c:1551
 msgid "Export File Type"
 msgstr "Тип файла для експорту"
 
-#: ../app/dialogs/preferences-dialog.c:1556
+#: ../app/dialogs/preferences-dialog.c:1555
 msgid "Default export file t_ype:"
 msgstr "Типовий т_ип файла для експорту:"
 
 #. Raw Image Importer
-#: ../app/dialogs/preferences-dialog.c:1560
+#: ../app/dialogs/preferences-dialog.c:1559
 msgid "Raw Image Importer"
 msgstr "Засіб імпортування цифрових негативів"
 
-#: ../app/dialogs/preferences-dialog.c:1596
+#: ../app/dialogs/preferences-dialog.c:1595
 msgid "Experimental Playground"
 msgstr "Експериментальна площадка"
 
-#: ../app/dialogs/preferences-dialog.c:1597
+#: ../app/dialogs/preferences-dialog.c:1596
 msgid "Playground"
 msgstr "Площадка"
 
-#: ../app/dialogs/preferences-dialog.c:1604
+#: ../app/dialogs/preferences-dialog.c:1603
 msgid ""
 "These features are unfinished, buggy and may crash GIMP. It is unadvised to "
 "use them unless you really know what you are doing or you intend to "
@@ -17359,11 +17399,11 @@ msgstr ""
 "відповідного досвіду, і ви не маєте наміру брати участь у розробці програми."
 
 #. Hardware Acceleration
-#: ../app/dialogs/preferences-dialog.c:1614
+#: ../app/dialogs/preferences-dialog.c:1613
 msgid "Hardware Acceleration"
 msgstr "Апаратне прискорення"
 
-#: ../app/dialogs/preferences-dialog.c:1618
+#: ../app/dialogs/preferences-dialog.c:1617
 msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
@@ -17371,29 +17411,29 @@ msgstr ""
 "Підтримка OpenCL та драйвери є експериментальними. Можливе уповільнення "
 "роботи та аварії (будь ласка, повідомляйте про них розробникам)."
 
-#: ../app/dialogs/preferences-dialog.c:1624
+#: ../app/dialogs/preferences-dialog.c:1623
 msgid "Use O_penCL"
 msgstr "В_икористовувати OpenCL"
 
 #. Very unstable tools
-#: ../app/dialogs/preferences-dialog.c:1629
+#: ../app/dialogs/preferences-dialog.c:1628
 msgid "Insane Options"
 msgstr "Параметри згасання"
 
-#: ../app/dialogs/preferences-dialog.c:1633
+#: ../app/dialogs/preferences-dialog.c:1632
 msgid "_N-Point Deformation tool"
 msgstr "Інструмент «Деформація за N _точками»"
 
-#: ../app/dialogs/preferences-dialog.c:1636
+#: ../app/dialogs/preferences-dialog.c:1635
 msgid "_Seamless Clone tool"
 msgstr "Інструмент _безшовного клонування"
 
-#: ../app/dialogs/preferences-dialog.c:1639
+#: ../app/dialogs/preferences-dialog.c:1638
 msgid "_Paint Select tool"
 msgstr "Інструмент «_Малювання позначеного»"
 
+#: ../app/dialogs/preferences-dialog.c:1660
 #: ../app/dialogs/preferences-dialog.c:1661
-#: ../app/dialogs/preferences-dialog.c:1662
 msgctxt "preferences"
 msgid "Tool Options"
 msgstr "Параметри інструменту"
@@ -17401,528 +17441,528 @@ msgstr "Параметри інструменту"
 #. General
 #. Snapping Distance
 #. general device information
-#: ../app/dialogs/preferences-dialog.c:1671
-#: ../app/dialogs/preferences-dialog.c:2523
-#: ../app/dialogs/preferences-dialog.c:2856
-#: ../app/dialogs/preferences-dialog.c:3109
+#: ../app/dialogs/preferences-dialog.c:1670
+#: ../app/dialogs/preferences-dialog.c:2522
+#: ../app/dialogs/preferences-dialog.c:2855
+#: ../app/dialogs/preferences-dialog.c:3110
 #: ../app/widgets/gimpcontrollereditor.c:188
 #: ../app/widgets/gimpdeviceinfoeditor.c:298
 msgid "General"
 msgstr "Загальне"
 
-#: ../app/dialogs/preferences-dialog.c:1674
+#: ../app/dialogs/preferences-dialog.c:1673
 msgid "Allow _editing on non-visible layers"
 msgstr "Дозволити _редагування невидимих шарів"
 
-#: ../app/dialogs/preferences-dialog.c:1678
+#: ../app/dialogs/preferences-dialog.c:1677
 msgid "_Save tool options on exit"
 msgstr "З_берігати параметри інструментів при виході"
 
-#: ../app/dialogs/preferences-dialog.c:1682
+#: ../app/dialogs/preferences-dialog.c:1681
 msgid "Save Tool Options _Now"
 msgstr "Зберігати _параметри інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:1689
+#: ../app/dialogs/preferences-dialog.c:1688
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Відновлювати початкові параметри інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:1703
+#: ../app/dialogs/preferences-dialog.c:1702
 msgid "Default _interpolation:"
 msgstr "Типова _інтерполяція:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1711
+#: ../app/dialogs/preferences-dialog.c:1710
 msgid "Paint Options Shared Between Tools"
 msgstr "Параметри малювання спільні для інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:1715
+#: ../app/dialogs/preferences-dialog.c:1714
 msgid "_Brush"
 msgstr "_Пензель"
 
-#: ../app/dialogs/preferences-dialog.c:1718
+#: ../app/dialogs/preferences-dialog.c:1717
 msgid "_Dynamics"
 msgstr "_Динаміка"
 
-#: ../app/dialogs/preferences-dialog.c:1721
+#: ../app/dialogs/preferences-dialog.c:1720
 msgid "_Pattern"
 msgstr "_Текстура"
 
 #. Move Tool
-#: ../app/dialogs/preferences-dialog.c:1728
+#: ../app/dialogs/preferences-dialog.c:1727
 msgid "Move Tool"
 msgstr "Інструмент переміщення"
 
-#: ../app/dialogs/preferences-dialog.c:1732
+#: ../app/dialogs/preferences-dialog.c:1731
 msgid "Set _layer or path as active"
 msgstr "Додати _шар чи контур активним"
 
-#: ../app/dialogs/preferences-dialog.c:1744
+#: ../app/dialogs/preferences-dialog.c:1743
 msgid "Default New Image"
 msgstr "Властивості нового зображення"
 
-#: ../app/dialogs/preferences-dialog.c:1745
+#: ../app/dialogs/preferences-dialog.c:1744
 msgid "Default Image"
 msgstr "Типове зображення"
 
-#: ../app/dialogs/preferences-dialog.c:1782
+#: ../app/dialogs/preferences-dialog.c:1781
 msgid "Quick Mask color:"
 msgstr "Колір швидкої маски:"
 
-#: ../app/dialogs/preferences-dialog.c:1783
+#: ../app/dialogs/preferences-dialog.c:1782
 msgid "Set the default Quick Mask color"
 msgstr "Вказує типовий колір швидкої маски"
 
-#: ../app/dialogs/preferences-dialog.c:1793
+#: ../app/dialogs/preferences-dialog.c:1792
 msgid "Default Image Grid"
 msgstr "Параметри сітки"
 
-#: ../app/dialogs/preferences-dialog.c:1794
+#: ../app/dialogs/preferences-dialog.c:1793
 msgid "Default Grid"
 msgstr "Типова сітка"
 
-#: ../app/dialogs/preferences-dialog.c:1814
+#: ../app/dialogs/preferences-dialog.c:1813
 msgid "User Interface"
 msgstr "Інтерфейс користувача"
 
-#: ../app/dialogs/preferences-dialog.c:1815
+#: ../app/dialogs/preferences-dialog.c:1814
 msgid "Interface"
 msgstr "Інтерфейс"
 
-#: ../app/dialogs/preferences-dialog.c:1825 ../app/tools/gimptextoptions.c:153
+#: ../app/dialogs/preferences-dialog.c:1824 ../app/tools/gimptextoptions.c:153
 msgid "Language"
 msgstr "Мова"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1831
+#: ../app/dialogs/preferences-dialog.c:1830
 msgid "Previews"
 msgstr "Попередній перегляд"
 
-#: ../app/dialogs/preferences-dialog.c:1834
+#: ../app/dialogs/preferences-dialog.c:1833
 msgid "_Enable layer & channel previews"
 msgstr "_Попередній перегляд шарів та каналів"
 
-#: ../app/dialogs/preferences-dialog.c:1842
+#: ../app/dialogs/preferences-dialog.c:1841
 msgid "Enable layer _group previews"
 msgstr "Увімкнути попередній перегляд _груп шарів"
 
-#: ../app/dialogs/preferences-dialog.c:1848
+#: ../app/dialogs/preferences-dialog.c:1847
 msgid "_Default layer & channel preview size:"
 msgstr "Розмір перегляду _шарів та каналів:"
 
-#: ../app/dialogs/preferences-dialog.c:1851
+#: ../app/dialogs/preferences-dialog.c:1850
 msgid "_Undo preview size:"
 msgstr "Розмір перегляду с_касовування:"
 
-#: ../app/dialogs/preferences-dialog.c:1854
+#: ../app/dialogs/preferences-dialog.c:1853
 msgid "Na_vigation preview size:"
 msgstr "Розмір вікна _навігації:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1858
+#: ../app/dialogs/preferences-dialog.c:1857
 msgid "Keyboard Shortcuts"
 msgstr "Комбінації клавіш"
 
-#: ../app/dialogs/preferences-dialog.c:1862
+#: ../app/dialogs/preferences-dialog.c:1861
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "Використовувати _динамічні комбінації клавіші"
 
-#: ../app/dialogs/preferences-dialog.c:1866
+#: ../app/dialogs/preferences-dialog.c:1865
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Налаштувати _комбінації клавіш…"
 
-#: ../app/dialogs/preferences-dialog.c:1873
+#: ../app/dialogs/preferences-dialog.c:1872
 msgid "_Save keyboard shortcuts on exit"
 msgstr "З_берігати комбінації клавіш при виході"
 
-#: ../app/dialogs/preferences-dialog.c:1877
+#: ../app/dialogs/preferences-dialog.c:1876
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Зберегти комбінації клавіш _зараз"
 
-#: ../app/dialogs/preferences-dialog.c:1884
+#: ../app/dialogs/preferences-dialog.c:1883
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "_Відновити початкові комбінації клавіш"
 
-#: ../app/dialogs/preferences-dialog.c:1893
+#: ../app/dialogs/preferences-dialog.c:1892
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Вилучити всі _клавіатурні скорочення"
 
+#: ../app/dialogs/preferences-dialog.c:1904
 #: ../app/dialogs/preferences-dialog.c:1905
-#: ../app/dialogs/preferences-dialog.c:1906
-#: ../app/dialogs/preferences-dialog.c:1941
+#: ../app/dialogs/preferences-dialog.c:1940
 msgid "Theme"
 msgstr "Тема"
 
-#: ../app/dialogs/preferences-dialog.c:1911
+#: ../app/dialogs/preferences-dialog.c:1910
 msgid "Select Theme"
 msgstr "Вибір теми"
 
-#: ../app/dialogs/preferences-dialog.c:1989
+#: ../app/dialogs/preferences-dialog.c:1988
 msgid "Use dark theme variant if available"
 msgstr "Використовувати темний варіант теми, якщо він доступний"
 
-#: ../app/dialogs/preferences-dialog.c:1997
+#: ../app/dialogs/preferences-dialog.c:1996
 msgid "Reload C_urrent Theme"
 msgstr "Оновити поточну _тему"
 
+#: ../app/dialogs/preferences-dialog.c:2008
 #: ../app/dialogs/preferences-dialog.c:2009
-#: ../app/dialogs/preferences-dialog.c:2010
 msgid "Icon Theme"
 msgstr "Тема піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:2015
+#: ../app/dialogs/preferences-dialog.c:2014
 msgid "Select an Icon Theme"
 msgstr "Виберіть тему піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:2124
+#: ../app/dialogs/preferences-dialog.c:2123
 msgid "Use symbolic icons if available"
 msgstr "Використовувати символічні піктограми, якщо доступні"
 
-#: ../app/dialogs/preferences-dialog.c:2134
-#: ../app/dialogs/preferences-dialog.c:2135 ../app/widgets/gimptoolbox.c:457
+#: ../app/dialogs/preferences-dialog.c:2133
+#: ../app/dialogs/preferences-dialog.c:2134 ../app/widgets/gimptoolbox.c:457
 msgid "Toolbox"
 msgstr "Панель інструментів"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:2143
-#: ../app/dialogs/preferences-dialog.c:2939 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2142
+#: ../app/dialogs/preferences-dialog.c:2938 ../app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "Зовнішній вигляд"
 
-#: ../app/dialogs/preferences-dialog.c:2147
+#: ../app/dialogs/preferences-dialog.c:2146
 msgid "Show GIMP _logo (drag-and-drop target)"
 msgstr "Показувати _логотип GIMP (на нього можна перетягувати зображення)"
 
-#: ../app/dialogs/preferences-dialog.c:2151
+#: ../app/dialogs/preferences-dialog.c:2150
 msgid "Show _foreground & background color"
 msgstr "_Колір переднього плану та тла"
 
-#: ../app/dialogs/preferences-dialog.c:2155
+#: ../app/dialogs/preferences-dialog.c:2154
 msgid "Show active _brush, pattern & gradient"
 msgstr "_Пензлі, текстури та градієнти"
 
-#: ../app/dialogs/preferences-dialog.c:2159
+#: ../app/dialogs/preferences-dialog.c:2158
 msgid "Show active _image"
 msgstr "Показувати _активне зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2168
+#: ../app/dialogs/preferences-dialog.c:2167
 msgid "Use tool _groups"
 msgstr "_Групувати інструменти"
 
 #. Tool Editor
-#: ../app/dialogs/preferences-dialog.c:2175
+#: ../app/dialogs/preferences-dialog.c:2174
 msgid "Tools Configuration"
 msgstr "Конфігурація інструментів"
 
+#: ../app/dialogs/preferences-dialog.c:2189
 #: ../app/dialogs/preferences-dialog.c:2190
-#: ../app/dialogs/preferences-dialog.c:2191
 msgid "Dialog Defaults"
 msgstr "Типові параметри вікон"
 
-#: ../app/dialogs/preferences-dialog.c:2200
+#: ../app/dialogs/preferences-dialog.c:2199
 msgid "Reset Dialog _Defaults"
 msgstr "Відновити _типові параметри"
 
 #. Color profile import dialog
-#: ../app/dialogs/preferences-dialog.c:2208
+#: ../app/dialogs/preferences-dialog.c:2207
 msgid "Color Profile Import Dialog"
 msgstr "Вікно імпортування профілю кольорів"
 
-#: ../app/dialogs/preferences-dialog.c:2213
+#: ../app/dialogs/preferences-dialog.c:2212
 msgid "Color profile policy:"
 msgstr "Правила профілів кольорів:"
 
 #. All color profile chooser dialogs
-#: ../app/dialogs/preferences-dialog.c:2217
+#: ../app/dialogs/preferences-dialog.c:2216
 msgid "Color Profile File Dialogs"
 msgstr "Вікна файлів профілів кольорів"
 
-#: ../app/dialogs/preferences-dialog.c:2222
+#: ../app/dialogs/preferences-dialog.c:2221
 msgid "Profile folder:"
 msgstr "Тека профілів:"
 
-#: ../app/dialogs/preferences-dialog.c:2223
+#: ../app/dialogs/preferences-dialog.c:2222
 msgid "Select Default Folder for Color Profiles"
 msgstr "Виберіть типову теку для профілів кольорів"
 
 #. Convert to Color Profile Dialog
-#: ../app/dialogs/preferences-dialog.c:2227
+#: ../app/dialogs/preferences-dialog.c:2226
 msgid "Convert to Color Profile Dialog"
 msgstr "Вікно перетворення до профілю кольорів"
 
-#: ../app/dialogs/preferences-dialog.c:2232
+#: ../app/dialogs/preferences-dialog.c:2231
 msgid "Rendering intent:"
 msgstr "Відтворення кольорів:"
 
-#: ../app/dialogs/preferences-dialog.c:2236
+#: ../app/dialogs/preferences-dialog.c:2235
 msgid "Black point compensation"
 msgstr "Компенсація чорної точки"
 
 #. Convert Precision Dialog
-#: ../app/dialogs/preferences-dialog.c:2240
+#: ../app/dialogs/preferences-dialog.c:2239
 msgid "Precision Conversion Dialog"
 msgstr "Вікно перетворення точності"
 
-#: ../app/dialogs/preferences-dialog.c:2247
+#: ../app/dialogs/preferences-dialog.c:2246
 msgid "Dither layers:"
 msgstr "Розмивання шарів:"
 
-#: ../app/dialogs/preferences-dialog.c:2252
+#: ../app/dialogs/preferences-dialog.c:2251
 msgid "Dither text layers:"
 msgstr "Розмивання текстових шарів:"
 
-#: ../app/dialogs/preferences-dialog.c:2257
+#: ../app/dialogs/preferences-dialog.c:2256
 msgid "Dither channels/masks:"
 msgstr "Розмивання каналів/масок:"
 
 #. Convert Indexed Dialog
-#: ../app/dialogs/preferences-dialog.c:2261
+#: ../app/dialogs/preferences-dialog.c:2260
 msgid "Indexed Conversion Dialog"
 msgstr "Вікно перетворення зображення на індексоване"
 
-#: ../app/dialogs/preferences-dialog.c:2266
+#: ../app/dialogs/preferences-dialog.c:2265
 msgid "Colormap:"
 msgstr "Мапа кольорів:"
 
-#: ../app/dialogs/preferences-dialog.c:2269
+#: ../app/dialogs/preferences-dialog.c:2268
 msgid "Maximum number of colors:"
 msgstr "Максимальна кількість кольорів:"
 
-#: ../app/dialogs/preferences-dialog.c:2273
+#: ../app/dialogs/preferences-dialog.c:2272
 msgid "Remove unused and duplicate colors from colormap"
 msgstr "Вилучити невикористані кольори та дублікати з мапи кольорів"
 
-#: ../app/dialogs/preferences-dialog.c:2279
+#: ../app/dialogs/preferences-dialog.c:2278
 msgid "Color dithering:"
 msgstr "Розмиття кольору:"
 
-#: ../app/dialogs/preferences-dialog.c:2283
+#: ../app/dialogs/preferences-dialog.c:2282
 msgid "Enable dithering of transparency"
 msgstr "Увімкнути розмивання прозорості"
 
-#: ../app/dialogs/preferences-dialog.c:2286
+#: ../app/dialogs/preferences-dialog.c:2285
 msgid "Enable dithering of text layers"
 msgstr "Увімкнути розмивання _текстових шарів"
 
-#: ../app/dialogs/preferences-dialog.c:2295
+#: ../app/dialogs/preferences-dialog.c:2294
 msgid "Keep recent settings:"
 msgstr "К-ть збережених параметрів:"
 
-#: ../app/dialogs/preferences-dialog.c:2299
+#: ../app/dialogs/preferences-dialog.c:2298
 msgid "Default to the last used settings"
 msgstr "Типово використовувати останні параметри"
 
-#: ../app/dialogs/preferences-dialog.c:2302
+#: ../app/dialogs/preferences-dialog.c:2301
 msgid "Show advanced color options"
 msgstr "Показати розширені параметри кольорів"
 
 #. Canvas Size Dialog
-#: ../app/dialogs/preferences-dialog.c:2306
+#: ../app/dialogs/preferences-dialog.c:2305
 msgid "Canvas Size Dialog"
 msgstr "Вікно розмірів полотна"
 
-#: ../app/dialogs/preferences-dialog.c:2311
-#: ../app/dialogs/preferences-dialog.c:2340
+#: ../app/dialogs/preferences-dialog.c:2310
+#: ../app/dialogs/preferences-dialog.c:2339
 msgid "Fill with:"
 msgstr "Заповнення:"
 
-#: ../app/dialogs/preferences-dialog.c:2314
+#: ../app/dialogs/preferences-dialog.c:2313
 msgid "Resize layers:"
 msgstr "Змінити розмір шарів:"
 
-#: ../app/dialogs/preferences-dialog.c:2318
+#: ../app/dialogs/preferences-dialog.c:2317
 msgid "Resize text layers"
 msgstr "Змінити розмір текстових шарів"
 
 #. New Layer Dialog
-#: ../app/dialogs/preferences-dialog.c:2322
+#: ../app/dialogs/preferences-dialog.c:2321
 msgid "New Layer Dialog"
 msgstr "Вікно створення шару"
 
-#: ../app/dialogs/preferences-dialog.c:2327
+#: ../app/dialogs/preferences-dialog.c:2326
 msgid "Layer name:"
 msgstr "Назва шару:"
 
-#: ../app/dialogs/preferences-dialog.c:2331
+#: ../app/dialogs/preferences-dialog.c:2330
 msgid "Fill type:"
 msgstr "Тип заповнення:"
 
 #. Layer Boundary Size Dialog
-#: ../app/dialogs/preferences-dialog.c:2335
+#: ../app/dialogs/preferences-dialog.c:2334
 msgid "Layer Boundary Size Dialog"
 msgstr "Вікно розмірів меж шару"
 
 #. Add Layer Mask Dialog
-#: ../app/dialogs/preferences-dialog.c:2344
+#: ../app/dialogs/preferences-dialog.c:2343
 msgid "Add Layer Mask Dialog"
 msgstr "Вікно додавання маски шару"
 
-#: ../app/dialogs/preferences-dialog.c:2349
+#: ../app/dialogs/preferences-dialog.c:2348
 msgid "Layer mask type:"
 msgstr "Тип маски шару:"
 
-#: ../app/dialogs/preferences-dialog.c:2353
+#: ../app/dialogs/preferences-dialog.c:2352
 msgid "Invert mask"
 msgstr "Інвертувати маску"
 
 #. Merge Layers Dialog
-#: ../app/dialogs/preferences-dialog.c:2357
+#: ../app/dialogs/preferences-dialog.c:2356
 msgid "Merge Layers Dialog"
 msgstr "Вікно об'єднання шарів"
 
-#: ../app/dialogs/preferences-dialog.c:2364
+#: ../app/dialogs/preferences-dialog.c:2363
 msgid "Merged layer size:"
 msgstr "Розмір об'єднаного шару:"
 
-#: ../app/dialogs/preferences-dialog.c:2368
+#: ../app/dialogs/preferences-dialog.c:2367
 msgid "Merge within active groups only"
 msgstr "Об'єднувати лише у межах активних груп"
 
-#: ../app/dialogs/preferences-dialog.c:2371
+#: ../app/dialogs/preferences-dialog.c:2370
 msgid "Discard invisible layers"
 msgstr "Відкинути невидимі шари"
 
 #. New Channel Dialog
-#: ../app/dialogs/preferences-dialog.c:2375
+#: ../app/dialogs/preferences-dialog.c:2374
 msgid "New Channel Dialog"
 msgstr "Діалог Новий канал"
 
-#: ../app/dialogs/preferences-dialog.c:2380
+#: ../app/dialogs/preferences-dialog.c:2379
 msgid "Channel name:"
 msgstr "Назва каналу:"
 
-#: ../app/dialogs/preferences-dialog.c:2384
+#: ../app/dialogs/preferences-dialog.c:2383
 msgid "Color and opacity:"
 msgstr "Колір і непрозорість:"
 
-#: ../app/dialogs/preferences-dialog.c:2385
+#: ../app/dialogs/preferences-dialog.c:2384
 msgid "Default New Channel Color and Opacity"
 msgstr "Типовий колір та прозорість нового каналу"
 
 #. New Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2390
+#: ../app/dialogs/preferences-dialog.c:2389
 msgid "New Path Dialog"
 msgstr "Вікно створення контурів"
 
-#: ../app/dialogs/preferences-dialog.c:2395
+#: ../app/dialogs/preferences-dialog.c:2394
 msgid "Path name:"
 msgstr "Назва контуру:"
 
 #. Export Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2399
+#: ../app/dialogs/preferences-dialog.c:2398
 msgid "Export Paths Dialog"
 msgstr "Вікно експортування контурів"
 
-#: ../app/dialogs/preferences-dialog.c:2404
+#: ../app/dialogs/preferences-dialog.c:2403
 msgid "Export folder:"
 msgstr "Тека експортування:"
 
-#: ../app/dialogs/preferences-dialog.c:2405
+#: ../app/dialogs/preferences-dialog.c:2404
 msgid "Select Default Folder for Exporting Paths"
 msgstr "Виберіть типову теку для експортованих контурів"
 
-#: ../app/dialogs/preferences-dialog.c:2409
+#: ../app/dialogs/preferences-dialog.c:2408
 msgid "Export the active path only"
 msgstr "Експортувати лише активний контур"
 
 #. Import Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2413
+#: ../app/dialogs/preferences-dialog.c:2412
 msgid "Import Paths Dialog"
 msgstr "Діалог Шлях імпорту"
 
-#: ../app/dialogs/preferences-dialog.c:2418
+#: ../app/dialogs/preferences-dialog.c:2417
 msgid "Import folder:"
 msgstr "Тека імпорту:"
 
-#: ../app/dialogs/preferences-dialog.c:2419
+#: ../app/dialogs/preferences-dialog.c:2418
 msgid "Select Default Folder for Importing Paths"
 msgstr "Виберіть типову теку для імпортування контурів"
 
-#: ../app/dialogs/preferences-dialog.c:2423
+#: ../app/dialogs/preferences-dialog.c:2422
 msgid "Merge imported paths"
 msgstr "Об'єднати імпортовані контури"
 
-#: ../app/dialogs/preferences-dialog.c:2426
+#: ../app/dialogs/preferences-dialog.c:2425
 msgid "Scale imported paths"
 msgstr "Масштабувати імпортовані контури"
 
 #. Feather Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2430
+#: ../app/dialogs/preferences-dialog.c:2429
 msgid "Feather Selection Dialog"
 msgstr "Вікно розмивання позначеного"
 
-#: ../app/dialogs/preferences-dialog.c:2435
+#: ../app/dialogs/preferences-dialog.c:2434
 msgid "Feather radius:"
 msgstr "Радіус пера:"
 
-#: ../app/dialogs/preferences-dialog.c:2439
-#: ../app/dialogs/preferences-dialog.c:2461
-#: ../app/dialogs/preferences-dialog.c:2478
+#: ../app/dialogs/preferences-dialog.c:2438
+#: ../app/dialogs/preferences-dialog.c:2460
+#: ../app/dialogs/preferences-dialog.c:2477
 msgid "Selected areas continue outside the image"
 msgstr "Позначені ділянки продовжити за межі зображення"
 
 #. Grow Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2443
+#: ../app/dialogs/preferences-dialog.c:2442
 msgid "Grow Selection Dialog"
 msgstr "Вікно збільшення позначеного"
 
-#: ../app/dialogs/preferences-dialog.c:2448
+#: ../app/dialogs/preferences-dialog.c:2447
 msgid "Grow radius:"
 msgstr "Радіус збільшення:"
 
 #. Shrink Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2452
+#: ../app/dialogs/preferences-dialog.c:2451
 msgid "Shrink Selection Dialog"
 msgstr "Вікно зменшення позначеного"
 
-#: ../app/dialogs/preferences-dialog.c:2457
+#: ../app/dialogs/preferences-dialog.c:2456
 msgid "Shrink radius:"
 msgstr "Радіус зменшення:"
 
 #. Border Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2465
+#: ../app/dialogs/preferences-dialog.c:2464
 msgid "Border Selection Dialog"
 msgstr "Вікно вибору рамки"
 
-#: ../app/dialogs/preferences-dialog.c:2470
+#: ../app/dialogs/preferences-dialog.c:2469
 msgid "Border radius:"
 msgstr "Радіус рамки:"
 
-#: ../app/dialogs/preferences-dialog.c:2474
+#: ../app/dialogs/preferences-dialog.c:2473
 msgid "Border style:"
 msgstr "Стиль рамки:"
 
 #. Fill Options Dialog
-#: ../app/dialogs/preferences-dialog.c:2482
+#: ../app/dialogs/preferences-dialog.c:2481
 msgid "Fill Selection Outline & Fill Path Dialogs"
 msgstr "Вікна «Заповнити контур позначеного» та «Заповнити контур»"
 
 #. Stroke Options Dialog
-#: ../app/dialogs/preferences-dialog.c:2491
+#: ../app/dialogs/preferences-dialog.c:2490
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "Вікна «Обвести позначене» і «Обвести контур»"
 
+#: ../app/dialogs/preferences-dialog.c:2513
 #: ../app/dialogs/preferences-dialog.c:2514
-#: ../app/dialogs/preferences-dialog.c:2515
 msgid "Help System"
 msgstr "Система довідки"
 
-#: ../app/dialogs/preferences-dialog.c:2526
+#: ../app/dialogs/preferences-dialog.c:2525
 msgid "Show help _buttons"
 msgstr "Показувати _кнопку \"Довідка\""
 
-#: ../app/dialogs/preferences-dialog.c:2531
+#: ../app/dialogs/preferences-dialog.c:2530
 msgid "Use the online version"
 msgstr "Використовувати версію з Інтернету"
 
-#: ../app/dialogs/preferences-dialog.c:2532
+#: ../app/dialogs/preferences-dialog.c:2531
 msgid "Use a locally installed copy"
 msgstr "Використовувати локальну копію"
 
-#: ../app/dialogs/preferences-dialog.c:2533
+#: ../app/dialogs/preferences-dialog.c:2532
 msgid "U_ser manual:"
 msgstr "Підру_чник користувача:"
 
-#: ../app/dialogs/preferences-dialog.c:2544
+#: ../app/dialogs/preferences-dialog.c:2543
 msgid "User interface language"
 msgstr "Мова інтерфейсу користувача"
 
@@ -17930,15 +17970,15 @@ msgstr "Мова інтерфейсу користувача"
 #. *  that doesn't use the help browser, so don't bother showing
 #. *  the combo.
 #.
-#: ../app/dialogs/preferences-dialog.c:2603
+#: ../app/dialogs/preferences-dialog.c:2602
 msgid "Help Browser"
 msgstr "Перегляд довідки"
 
-#: ../app/dialogs/preferences-dialog.c:2610
+#: ../app/dialogs/preferences-dialog.c:2609
 msgid "H_elp browser to use:"
 msgstr "П_рограма перегляду довідки:"
 
-#: ../app/dialogs/preferences-dialog.c:2616
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
@@ -17947,531 +17987,531 @@ msgstr ""
 "замість нього вашу програму для перегляду сторінок інтернету."
 
 #. Action Search
-#: ../app/dialogs/preferences-dialog.c:2633
+#: ../app/dialogs/preferences-dialog.c:2632
 msgid "Action Search"
 msgstr "Пошук дії"
 
-#: ../app/dialogs/preferences-dialog.c:2637
+#: ../app/dialogs/preferences-dialog.c:2636
 msgid "_Maximum History Size:"
 msgstr "_Максимальний розмір історії:"
 
-#: ../app/dialogs/preferences-dialog.c:2641
+#: ../app/dialogs/preferences-dialog.c:2640
 msgid "C_lear Action History"
 msgstr "_Очистити історію дій"
 
+#: ../app/dialogs/preferences-dialog.c:2654
 #: ../app/dialogs/preferences-dialog.c:2655
-#: ../app/dialogs/preferences-dialog.c:2656
 msgid "Display"
 msgstr "Показ"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2665
+#: ../app/dialogs/preferences-dialog.c:2664
 msgid "Transparency"
 msgstr "Прозорість"
 
-#: ../app/dialogs/preferences-dialog.c:2669
+#: ../app/dialogs/preferences-dialog.c:2668
 msgid "_Check style:"
 msgstr "_Стиль кліток:"
 
-#: ../app/dialogs/preferences-dialog.c:2672
+#: ../app/dialogs/preferences-dialog.c:2671
 msgid "Check _size:"
 msgstr "_Розмір клітин:"
 
 #. Zoom Quality
-#: ../app/dialogs/preferences-dialog.c:2676
+#: ../app/dialogs/preferences-dialog.c:2675
 msgid "Zoom Quality"
 msgstr "Якість масштабування"
 
-#: ../app/dialogs/preferences-dialog.c:2680
+#: ../app/dialogs/preferences-dialog.c:2679
 msgid "_Zoom quality:"
 msgstr "Якість _масштабування:"
 
 #. Monitor Resolution
-#: ../app/dialogs/preferences-dialog.c:2684
+#: ../app/dialogs/preferences-dialog.c:2683
 msgid "Monitor Resolution"
 msgstr "Роздільність монітора"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2688 ../app/display/gimpcursorview.c:211
-#: ../app/widgets/gimpgrideditor.c:202 ../app/widgets/gimpgrideditor.c:237
+#: ../app/dialogs/preferences-dialog.c:2687 ../app/display/gimpcursorview.c:211
+#: ../app/widgets/gimpgrideditor.c:201 ../app/widgets/gimpgrideditor.c:236
 msgid "Pixels"
 msgstr "Точок"
 
-#: ../app/dialogs/preferences-dialog.c:2706 ../app/widgets/gimpgrideditor.c:198
-#: ../app/widgets/gimpgrideditor.c:233
+#: ../app/dialogs/preferences-dialog.c:2705 ../app/widgets/gimpgrideditor.c:197
+#: ../app/widgets/gimpgrideditor.c:232
 msgid "Horizontal"
 msgstr "Горизонтальне"
 
-#: ../app/dialogs/preferences-dialog.c:2708 ../app/widgets/gimpgrideditor.c:200
-#: ../app/widgets/gimpgrideditor.c:235
+#: ../app/dialogs/preferences-dialog.c:2707 ../app/widgets/gimpgrideditor.c:199
+#: ../app/widgets/gimpgrideditor.c:234
 msgid "Vertical"
 msgstr "Вертикальне"
 
-#: ../app/dialogs/preferences-dialog.c:2710
+#: ../app/dialogs/preferences-dialog.c:2709
 #: ../app/widgets/gimpimagepropview.c:465
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2728
+#: ../app/dialogs/preferences-dialog.c:2727
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Визначити автоматично (наразі %d × %d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2746
+#: ../app/dialogs/preferences-dialog.c:2745
 msgid "_Enter manually"
 msgstr "Вр_учну"
 
-#: ../app/dialogs/preferences-dialog.c:2761
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "C_alibrate..."
 msgstr "_Калібрувати"
 
+#: ../app/dialogs/preferences-dialog.c:2790
 #: ../app/dialogs/preferences-dialog.c:2791
-#: ../app/dialogs/preferences-dialog.c:2792
 msgid "Window Management"
 msgstr "Поведінка вікон"
 
-#: ../app/dialogs/preferences-dialog.c:2797
+#: ../app/dialogs/preferences-dialog.c:2796
 msgid "Window Manager Hints"
 msgstr "Керування зовнішнім виглядом виглядом вікон"
 
-#: ../app/dialogs/preferences-dialog.c:2803
+#: ../app/dialogs/preferences-dialog.c:2802
 msgid "Hint for _docks and toolbox:"
 msgstr "Тип вікна для _панелей:"
 
-#: ../app/dialogs/preferences-dialog.c:2806
+#: ../app/dialogs/preferences-dialog.c:2805
 msgid "Focus"
 msgstr "Фокус вводу"
 
-#: ../app/dialogs/preferences-dialog.c:2810
+#: ../app/dialogs/preferences-dialog.c:2809
 msgid "Activate the _focused image"
 msgstr "Робити активним зображення під _фокусом"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2814
+#: ../app/dialogs/preferences-dialog.c:2813
 msgid "Window Positions"
 msgstr "Позиція вікна"
 
-#: ../app/dialogs/preferences-dialog.c:2817
+#: ../app/dialogs/preferences-dialog.c:2816
 msgid "_Save window positions on exit"
 msgstr "З_берігати позиції вікон при виході"
 
-#: ../app/dialogs/preferences-dialog.c:2820
+#: ../app/dialogs/preferences-dialog.c:2819
 msgid "Open windows on the same _monitor they were open before"
 msgstr ""
 "Відкривати вікна на тому самому _моніторі, на якому були відкриті перед цим"
 
-#: ../app/dialogs/preferences-dialog.c:2824
+#: ../app/dialogs/preferences-dialog.c:2823
 msgid "Save Window Positions _Now"
 msgstr "Зберегти позицію вікон _зараз"
 
-#: ../app/dialogs/preferences-dialog.c:2831
+#: ../app/dialogs/preferences-dialog.c:2830
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Відновити позиції вікон на типові"
 
+#: ../app/dialogs/preferences-dialog.c:2845
 #: ../app/dialogs/preferences-dialog.c:2846
-#: ../app/dialogs/preferences-dialog.c:2847
 msgid "Image Windows"
 msgstr "Вікна зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2859
+#: ../app/dialogs/preferences-dialog.c:2858
 msgid "Use \"Show _all\" by default"
 msgstr "Типово використовувати «Показувати _усе»"
 
-#: ../app/dialogs/preferences-dialog.c:2863
+#: ../app/dialogs/preferences-dialog.c:2862
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Типово використовувати \"То_чка за точкою\""
 
-#: ../app/dialogs/preferences-dialog.c:2869
+#: ../app/dialogs/preferences-dialog.c:2868
 msgid "Marching ants s_peed:"
 msgstr "Швидкість _мурашиної доріжки:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2873
+#: ../app/dialogs/preferences-dialog.c:2872
 msgid "Zoom & Resize Behavior"
 msgstr "Правила масштабування та зміни розміру"
 
-#: ../app/dialogs/preferences-dialog.c:2877
+#: ../app/dialogs/preferences-dialog.c:2876
 msgid "Resize window on _zoom"
 msgstr "Змінювати розмір вікна при мас_штабуванні"
 
-#: ../app/dialogs/preferences-dialog.c:2880
+#: ../app/dialogs/preferences-dialog.c:2879
 msgid "Resize window on image _size change"
 msgstr "Змінювати розмір вікна при зміні _розміру зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2886
+#: ../app/dialogs/preferences-dialog.c:2885
 msgid "Show entire image"
 msgstr "Повністю показувати зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2888
+#: ../app/dialogs/preferences-dialog.c:2887
 msgid "Initial zoom _ratio:"
 msgstr "Початкові пр_опорції масштабу:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2892
+#: ../app/dialogs/preferences-dialog.c:2891
 msgid "Space Bar"
 msgstr "Пробіл"
 
-#: ../app/dialogs/preferences-dialog.c:2898
+#: ../app/dialogs/preferences-dialog.c:2897
 msgid "_While space bar is pressed:"
 msgstr "_При натисканні пробілу:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2902
+#: ../app/dialogs/preferences-dialog.c:2901
 msgid "Mouse Pointers"
 msgstr "Вказівник миші"
 
-#: ../app/dialogs/preferences-dialog.c:2906
+#: ../app/dialogs/preferences-dialog.c:2905
 msgid "Show _brush outline"
 msgstr "Показувати контур _пензля"
 
-#: ../app/dialogs/preferences-dialog.c:2914
+#: ../app/dialogs/preferences-dialog.c:2913
 msgid "S_nap brush outline to stroke"
 msgstr "При_липання пензля до контуру мазків"
 
-#: ../app/dialogs/preferences-dialog.c:2918
+#: ../app/dialogs/preferences-dialog.c:2917
 msgid "Show pointer for paint _tools"
 msgstr "Показувати вказівник у режимі _малювання"
 
-#: ../app/dialogs/preferences-dialog.c:2924
+#: ../app/dialogs/preferences-dialog.c:2923
 msgid "Pointer _mode:"
 msgstr "_Режим курсору:"
 
-#: ../app/dialogs/preferences-dialog.c:2927
+#: ../app/dialogs/preferences-dialog.c:2926
 msgid "Pointer _handedness:"
 msgstr "Хіральність _курсору:"
 
-#: ../app/dialogs/preferences-dialog.c:2938
+#: ../app/dialogs/preferences-dialog.c:2937
 msgid "Image Window Appearance"
 msgstr "Вигляд вікна зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2948
+#: ../app/dialogs/preferences-dialog.c:2947
 msgid "Default Appearance in Normal Mode"
 msgstr "Зовнішній вигляд з звичайному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:2953
+#: ../app/dialogs/preferences-dialog.c:2952
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Зовнішній вигляд у повноекранному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:2962
+#: ../app/dialogs/preferences-dialog.c:2961
 msgid "Image Title & Statusbar Format"
 msgstr "Формат заголовку зображення та рядок сану"
 
-#: ../app/dialogs/preferences-dialog.c:2963
+#: ../app/dialogs/preferences-dialog.c:2962
 msgid "Title & Status"
 msgstr "Заголовок та стан"
 
-#: ../app/dialogs/preferences-dialog.c:2981
+#: ../app/dialogs/preferences-dialog.c:2980
 msgid "Current format"
 msgstr "Поточний формат"
 
-#: ../app/dialogs/preferences-dialog.c:2982
+#: ../app/dialogs/preferences-dialog.c:2981
 msgid "Default format"
 msgstr "Типовий формат"
 
-#: ../app/dialogs/preferences-dialog.c:2983
+#: ../app/dialogs/preferences-dialog.c:2982
 msgid "Show zoom percentage"
 msgstr "Показувати масштаб у відсотках"
 
-#: ../app/dialogs/preferences-dialog.c:2984
+#: ../app/dialogs/preferences-dialog.c:2983
 msgid "Show zoom ratio"
 msgstr "Показувати масштабний коефіцієнт"
 
-#: ../app/dialogs/preferences-dialog.c:2985
+#: ../app/dialogs/preferences-dialog.c:2984
 msgid "Show image size"
 msgstr "Показувати розмір зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2986
+#: ../app/dialogs/preferences-dialog.c:2985
 msgid "Show drawable size"
 msgstr "Показувати розмір промальованого"
 
-#: ../app/dialogs/preferences-dialog.c:2999
+#: ../app/dialogs/preferences-dialog.c:2998
 msgid "Image Title Format"
 msgstr "Формат заголовку зображення"
 
-#: ../app/dialogs/preferences-dialog.c:3001
+#: ../app/dialogs/preferences-dialog.c:3000
 msgid "Image Statusbar Format"
 msgstr "Формат рядка стану"
 
-#: ../app/dialogs/preferences-dialog.c:3093
+#: ../app/dialogs/preferences-dialog.c:3094
 msgid "Image Window Snapping Behavior"
 msgstr "Поведінка щодо прилипання у вікні зображення"
 
-#: ../app/dialogs/preferences-dialog.c:3094
+#: ../app/dialogs/preferences-dialog.c:3095
 msgid "Snapping"
 msgstr "Прилипання"
 
-#: ../app/dialogs/preferences-dialog.c:3101
+#: ../app/dialogs/preferences-dialog.c:3102
 msgid "Default Behavior in Normal Mode"
 msgstr "Типова поведінка у звичайному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:3105
+#: ../app/dialogs/preferences-dialog.c:3106
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Типовий поведінка у повноекранному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:3114
+#: ../app/dialogs/preferences-dialog.c:3115
 msgid "_Snapping distance:"
 msgstr "Відстань прилипанн_я:"
 
-#: ../app/dialogs/preferences-dialog.c:3123
 #: ../app/dialogs/preferences-dialog.c:3124
+#: ../app/dialogs/preferences-dialog.c:3125
 msgid "Input Devices"
 msgstr "Пристрої вводу"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:3130
+#: ../app/dialogs/preferences-dialog.c:3131
 msgid "Extended Input Devices"
 msgstr "Додаткові пристрої вводу"
 
-#: ../app/dialogs/preferences-dialog.c:3134
+#: ../app/dialogs/preferences-dialog.c:3135
 msgid "S_hare tool and tool options between input devices"
 msgstr "Сп_ільне використання інструментів і параметрів для пристроїв введення"
 
-#: ../app/dialogs/preferences-dialog.c:3138
+#: ../app/dialogs/preferences-dialog.c:3139
 msgid "Configure E_xtended Input Devices..."
 msgstr "Налаштувати _додаткові пристрої вводу…"
 
-#: ../app/dialogs/preferences-dialog.c:3145
+#: ../app/dialogs/preferences-dialog.c:3146
 msgid "_Save input device settings on exit"
 msgstr "З_берігати параметри пристроїв вводу при виході"
 
-#: ../app/dialogs/preferences-dialog.c:3149
+#: ../app/dialogs/preferences-dialog.c:3150
 msgid "Save Input Device Settings _Now"
 msgstr "Зберегти параметри пристроїв вводу _зараз"
 
-#: ../app/dialogs/preferences-dialog.c:3156
+#: ../app/dialogs/preferences-dialog.c:3157
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Відновити типові параметри пристроїв вводу"
 
-#: ../app/dialogs/preferences-dialog.c:3171
+#: ../app/dialogs/preferences-dialog.c:3172
 msgid "Additional Input Controllers"
 msgstr "Додаткові способи керування"
 
-#: ../app/dialogs/preferences-dialog.c:3172
+#: ../app/dialogs/preferences-dialog.c:3173
 msgid "Input Controllers"
 msgstr "Способи керування"
 
-#: ../app/dialogs/preferences-dialog.c:3187
 #: ../app/dialogs/preferences-dialog.c:3188
+#: ../app/dialogs/preferences-dialog.c:3189
 msgid "Folders"
 msgstr "Теки"
 
-#: ../app/dialogs/preferences-dialog.c:3195
+#: ../app/dialogs/preferences-dialog.c:3196
 msgid "Reset _Folders"
 msgstr "Скинути _теки"
 
-#: ../app/dialogs/preferences-dialog.c:3211
+#: ../app/dialogs/preferences-dialog.c:3212
 msgid "_Temporary folder:"
 msgstr "Тека тим_часових файлів:"
 
-#: ../app/dialogs/preferences-dialog.c:3212
+#: ../app/dialogs/preferences-dialog.c:3213
 msgid "Select Folder for Temporary Files"
 msgstr "Виберіть каталог для тимчасових файлів"
 
-#: ../app/dialogs/preferences-dialog.c:3216
+#: ../app/dialogs/preferences-dialog.c:3217
 msgid "_Swap folder:"
 msgstr "_Каталог резервної пам'яті:"
 
-#: ../app/dialogs/preferences-dialog.c:3217
+#: ../app/dialogs/preferences-dialog.c:3218
 msgid "Select Swap Folder"
 msgstr "Виберіть теку свопінгу"
 
-#: ../app/dialogs/preferences-dialog.c:3250
+#: ../app/dialogs/preferences-dialog.c:3251
 msgid "Brush Folders"
 msgstr "Теки пензлів"
 
-#: ../app/dialogs/preferences-dialog.c:3253
+#: ../app/dialogs/preferences-dialog.c:3254
 msgid "Reset Brush _Folders"
 msgstr "Скинути _теки пензлів"
 
-#: ../app/dialogs/preferences-dialog.c:3254
+#: ../app/dialogs/preferences-dialog.c:3255
 msgid "Select Brush Folders"
 msgstr "Виберіть теку пензлів"
 
-#: ../app/dialogs/preferences-dialog.c:3256
+#: ../app/dialogs/preferences-dialog.c:3257
 msgid "Dynamics Folders"
 msgstr "Теки з файлами динаміки малювання"
 
-#: ../app/dialogs/preferences-dialog.c:3259
+#: ../app/dialogs/preferences-dialog.c:3260
 msgid "Reset Dynamics _Folders"
 msgstr "Скинути _теки динаміки малювання"
 
-#: ../app/dialogs/preferences-dialog.c:3260
+#: ../app/dialogs/preferences-dialog.c:3261
 msgid "Select Dynamics Folders"
 msgstr "Виберіть теку з файлами динаміки малювання"
 
-#: ../app/dialogs/preferences-dialog.c:3262
+#: ../app/dialogs/preferences-dialog.c:3263
 msgid "Pattern Folders"
 msgstr "Теки текстур"
 
-#: ../app/dialogs/preferences-dialog.c:3265
+#: ../app/dialogs/preferences-dialog.c:3266
 msgid "Reset Pattern _Folders"
 msgstr "Скинути _теки текстур"
 
-#: ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/preferences-dialog.c:3267
 msgid "Select Pattern Folders"
 msgstr "Виберіть теку текстури"
 
-#: ../app/dialogs/preferences-dialog.c:3268
+#: ../app/dialogs/preferences-dialog.c:3269
 msgid "Palette Folders"
 msgstr "Теки палітр"
 
-#: ../app/dialogs/preferences-dialog.c:3271
+#: ../app/dialogs/preferences-dialog.c:3272
 msgid "Reset Palette _Folders"
 msgstr "Скинути _теки палітр"
 
-#: ../app/dialogs/preferences-dialog.c:3272
+#: ../app/dialogs/preferences-dialog.c:3273
 msgid "Select Palette Folders"
 msgstr "Виберіть теку палітр"
 
-#: ../app/dialogs/preferences-dialog.c:3274
+#: ../app/dialogs/preferences-dialog.c:3275
 msgid "Gradient Folders"
 msgstr "Теки градієнтів"
 
-#: ../app/dialogs/preferences-dialog.c:3277
+#: ../app/dialogs/preferences-dialog.c:3278
 msgid "Reset Gradient _Folders"
 msgstr "Скинути _теки градієнтів"
 
-#: ../app/dialogs/preferences-dialog.c:3278
+#: ../app/dialogs/preferences-dialog.c:3279
 msgid "Select Gradient Folders"
 msgstr "Виберіть теку градієнтів"
 
-#: ../app/dialogs/preferences-dialog.c:3280
+#: ../app/dialogs/preferences-dialog.c:3281
 msgid "Font Folders"
 msgstr "Теки шрифтів"
 
-#: ../app/dialogs/preferences-dialog.c:3283
+#: ../app/dialogs/preferences-dialog.c:3284
 msgid "Reset Font _Folders"
 msgstr "Скинути _теки шрифтів"
 
-#: ../app/dialogs/preferences-dialog.c:3284
+#: ../app/dialogs/preferences-dialog.c:3285
 msgid "Select Font Folders"
 msgstr "Виберіть теку шрифтів"
 
-#: ../app/dialogs/preferences-dialog.c:3286
+#: ../app/dialogs/preferences-dialog.c:3287
 msgid "Tool Preset Folders"
 msgstr "Теки шаблону інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:3289
+#: ../app/dialogs/preferences-dialog.c:3290
 msgid "Reset Tool Preset _Folders"
 msgstr "Скинути _теки типових наборів інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:3290
+#: ../app/dialogs/preferences-dialog.c:3291
 msgid "Select Tool Preset Folders"
 msgstr "Вибрати теки шаблону інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:3292
+#: ../app/dialogs/preferences-dialog.c:3293
 msgid "MyPaint Brush Folders"
 msgstr "Теки пензлів MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3295
+#: ../app/dialogs/preferences-dialog.c:3296
 msgid "Reset MyPaint Brush _Folders"
 msgstr "Скинути _теки пензлів MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3296
+#: ../app/dialogs/preferences-dialog.c:3297
 msgid "Select MyPaint Brush Folders"
 msgstr "Виберіть теки пензлів MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3298
+#: ../app/dialogs/preferences-dialog.c:3299
 msgid "Plug-in Folders"
 msgstr "Теки додатків"
 
-#: ../app/dialogs/preferences-dialog.c:3301
+#: ../app/dialogs/preferences-dialog.c:3302
 msgid "Reset plug-in _Folders"
 msgstr "Скинути _теки додатків"
 
-#: ../app/dialogs/preferences-dialog.c:3302
+#: ../app/dialogs/preferences-dialog.c:3303
 msgid "Select plug-in Folders"
 msgstr "Виберіть теки додатків"
 
-#: ../app/dialogs/preferences-dialog.c:3304
+#: ../app/dialogs/preferences-dialog.c:3305
 msgid "Scripts"
 msgstr "Скрипти"
 
-#: ../app/dialogs/preferences-dialog.c:3304
+#: ../app/dialogs/preferences-dialog.c:3305
 msgid "Script-Fu Folders"
 msgstr "Теки Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3307
+#: ../app/dialogs/preferences-dialog.c:3308
 msgid "Reset Script-Fu _Folders"
 msgstr "Скинути _теки Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3308
+#: ../app/dialogs/preferences-dialog.c:3309
 msgid "Select Script-Fu Folders"
 msgstr "Виберіть теки Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3310
+#: ../app/dialogs/preferences-dialog.c:3311
 msgid "Module Folders"
 msgstr "Теки модулів"
 
-#: ../app/dialogs/preferences-dialog.c:3313
+#: ../app/dialogs/preferences-dialog.c:3314
 msgid "Reset Module _Folders"
 msgstr "Скинути _теки модулів"
 
-#: ../app/dialogs/preferences-dialog.c:3314
+#: ../app/dialogs/preferences-dialog.c:3315
 msgid "Select Module Folders"
 msgstr "Виберіть теку модулів"
 
-#: ../app/dialogs/preferences-dialog.c:3316
+#: ../app/dialogs/preferences-dialog.c:3317
 msgid "Interpreters"
 msgstr "Інтерпретатори"
 
-#: ../app/dialogs/preferences-dialog.c:3316
+#: ../app/dialogs/preferences-dialog.c:3317
 msgid "Interpreter Folders"
 msgstr "Каталоги інтерпретаторів"
 
-#: ../app/dialogs/preferences-dialog.c:3319
+#: ../app/dialogs/preferences-dialog.c:3320
 msgid "Reset Interpreter _Folders"
 msgstr "Скинути _теки інтерпретаторів"
 
-#: ../app/dialogs/preferences-dialog.c:3320
+#: ../app/dialogs/preferences-dialog.c:3321
 msgid "Select Interpreter Folders"
 msgstr "Виберіть каталоги інтерпретаторів"
 
-#: ../app/dialogs/preferences-dialog.c:3322
+#: ../app/dialogs/preferences-dialog.c:3323
 msgid "Environment"
 msgstr "Середовище"
 
-#: ../app/dialogs/preferences-dialog.c:3322
+#: ../app/dialogs/preferences-dialog.c:3323
 msgid "Environment Folders"
 msgstr "Теки середовища"
 
-#: ../app/dialogs/preferences-dialog.c:3325
+#: ../app/dialogs/preferences-dialog.c:3326
 msgid "Reset Environment _Folders"
 msgstr "Скинути _теки середовища"
 
-#: ../app/dialogs/preferences-dialog.c:3326
+#: ../app/dialogs/preferences-dialog.c:3327
 msgid "Select Environment Folders"
 msgstr "Виберіть теку середовища"
 
-#: ../app/dialogs/preferences-dialog.c:3328
+#: ../app/dialogs/preferences-dialog.c:3329
 msgid "Themes"
 msgstr "Теми"
 
-#: ../app/dialogs/preferences-dialog.c:3328
+#: ../app/dialogs/preferences-dialog.c:3329
 msgid "Theme Folders"
 msgstr "Теки стилів оформлення"
 
-#: ../app/dialogs/preferences-dialog.c:3331
+#: ../app/dialogs/preferences-dialog.c:3332
 msgid "Reset Theme _Folders"
 msgstr "Скинути _теки стилів оформлення"
 
-#: ../app/dialogs/preferences-dialog.c:3332
+#: ../app/dialogs/preferences-dialog.c:3333
 msgid "Select Theme Folders"
 msgstr "Виберіть теки стилів оформлення"
 
-#: ../app/dialogs/preferences-dialog.c:3334
+#: ../app/dialogs/preferences-dialog.c:3335
 msgid "Icon Themes"
 msgstr "Теми піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:3334
+#: ../app/dialogs/preferences-dialog.c:3335
 msgid "Icon Theme Folders"
 msgstr "Теки тем піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:3337
+#: ../app/dialogs/preferences-dialog.c:3338
 msgid "Reset Icon Theme _Folders"
 msgstr "Скинути _теки тем піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:3338
+#: ../app/dialogs/preferences-dialog.c:3339
 msgid "Select Icon Theme Folders"
 msgstr "Виберіть теки тем піктограм"
 
@@ -18544,7 +18584,7 @@ msgstr "Натисніть %s для виходу."
 msgid "Press %s to close all images."
 msgstr "Натисніть %s, аби закрити усі зображення."
 
-#: ../app/dialogs/quit-dialog.c:364 ../app/dialogs/user-install-dialog.c:89
+#: ../app/dialogs/quit-dialog.c:364 ../app/dialogs/user-install-dialog.c:90
 msgid "_Quit"
 msgstr "Ви_йти"
 
@@ -18571,39 +18611,39 @@ msgstr "_Відкинути зміни"
 msgid "Exported to %s"
 msgstr "Експортовано у %s"
 
-#: ../app/dialogs/quit-dialog.c:589
+#: ../app/dialogs/quit-dialog.c:591
 msgid "Save this image"
 msgstr "Зберегти це зображення"
 
-#: ../app/dialogs/quit-dialog.c:591
+#: ../app/dialogs/quit-dialog.c:593
 msgid "Save as"
 msgstr "Зберегти як"
 
-#: ../app/dialogs/resize-dialog.c:167
+#: ../app/dialogs/resize-dialog.c:170
 msgid "Canvas Size"
 msgstr "Розмір полотна"
 
-#: ../app/dialogs/resize-dialog.c:179 ../app/dialogs/scale-dialog.c:114
+#: ../app/dialogs/resize-dialog.c:182 ../app/dialogs/scale-dialog.c:114
 msgid "Layer Size"
 msgstr "Розмір шару"
 
-#: ../app/dialogs/resize-dialog.c:180
+#: ../app/dialogs/resize-dialog.c:183
 msgid "Fill With"
 msgstr "Заповнення"
 
-#: ../app/dialogs/resize-dialog.c:221
+#: ../app/dialogs/resize-dialog.c:224
 msgid "Re_set"
 msgstr "С_кинути"
 
-#: ../app/dialogs/resize-dialog.c:223
+#: ../app/dialogs/resize-dialog.c:226
 msgid "_Resize"
 msgstr "З_мінити розмір"
 
-#: ../app/dialogs/resize-dialog.c:290
+#: ../app/dialogs/resize-dialog.c:293
 msgid "Reset the template selection"
 msgstr "Скинути вибір шаблона"
 
-#: ../app/dialogs/resize-dialog.c:297
+#: ../app/dialogs/resize-dialog.c:300
 msgid ""
 "Template and image print resolution don't match.\n"
 "Choose how to scale the canvas:"
@@ -18614,47 +18654,48 @@ msgstr ""
 #. offset frame
 #. The offset frame
 #. offset frame
-#: ../app/dialogs/resize-dialog.c:357 ../app/tools/gimpalignoptions.c:97
+#: ../app/dialogs/resize-dialog.c:377 ../app/tools/gimpalignoptions.c:97
 #: ../app/tools/gimpalignoptions.c:104 ../app/tools/gimpgradientoptions.c:89
 #: ../app/tools/gimpoffsettool.c:129 ../app/tools/gimpoffsettool.c:473
-#: ../app/tools/gimptransform3dtool.c:343 ../app/widgets/gimpgrideditor.c:211
+#: ../app/tools/gimptransform3dtool.c:343 ../app/widgets/gimpgrideditor.c:210
 msgid "Offset"
 msgstr "Зсув"
 
-#: ../app/dialogs/resize-dialog.c:380 ../app/tools/gimpoffsettool.c:497
+#: ../app/dialogs/resize-dialog.c:400 ../app/tools/gimpoffsettool.c:497
 #: ../app/tools/gimptransform3dtool.c:271
 #: ../app/tools/gimptransform3dtool.c:383
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/resize-dialog.c:381 ../app/tools/gimpoffsettool.c:499
+#: ../app/dialogs/resize-dialog.c:401 ../app/tools/gimpoffsettool.c:499
 #: ../app/tools/gimptransform3dtool.c:272
 #: ../app/tools/gimptransform3dtool.c:388
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/resize-dialog.c:398
+#. Button to center the image on canvas just below the preview.
+#: ../app/dialogs/resize-dialog.c:444
 msgid "C_enter"
 msgstr "_Центрувати"
 
-#: ../app/dialogs/resize-dialog.c:449
+#: ../app/dialogs/resize-dialog.c:470
 msgid "Resize _layers:"
 msgstr "Змінити розмір _шарів:"
 
-#: ../app/dialogs/resize-dialog.c:497
+#: ../app/dialogs/resize-dialog.c:518
 msgid "Resize _text layers"
 msgstr "Зміна розміру _текстових шарів"
 
-#: ../app/dialogs/resize-dialog.c:508
+#: ../app/dialogs/resize-dialog.c:529
 msgid "Resizing text layers will make them uneditable"
 msgstr "Зміна розмірів текстових шарів робить їх непридатними до редагування"
 
-#: ../app/dialogs/resize-dialog.c:730
+#: ../app/dialogs/resize-dialog.c:751
 #, c-format
 msgid "Scale template to %.2f ppi"
 msgstr "Масштабувати шаблон до %.2f точок на дюйм"
 
-#: ../app/dialogs/resize-dialog.c:735
+#: ../app/dialogs/resize-dialog.c:756
 #, c-format
 msgid "Set image to %.2f ppi"
 msgstr "Встановити для зображення %.2f точок на дюйм"
@@ -18752,20 +18793,20 @@ msgstr "Дізнатись більше"
 msgid "tips-locale:C"
 msgstr "tips-locale:uk"
 
-#: ../app/dialogs/user-install-dialog.c:85
+#: ../app/dialogs/user-install-dialog.c:86
 msgid "GIMP User Installation"
 msgstr "Встановлення GIMP для користувача"
 
-#: ../app/dialogs/user-install-dialog.c:94
+#: ../app/dialogs/user-install-dialog.c:95
 msgid "User installation failed!"
 msgstr "Помилка при встановленні!"
 
-#: ../app/dialogs/user-install-dialog.c:96
+#: ../app/dialogs/user-install-dialog.c:97
 msgid "The GIMP user installation failed; see the log for details."
 msgstr ""
 "Не вдалось провести користувацьке встановлення GIMP; подробиці у журналі."
 
-#: ../app/dialogs/user-install-dialog.c:99
+#: ../app/dialogs/user-install-dialog.c:100
 msgid "Installation Log"
 msgstr "Журнал встановлення"
 
@@ -18931,13 +18972,13 @@ msgstr "н/д"
 
 #: ../app/display/gimpcursorview.c:224 ../app/display/gimpcursorview.c:249
 #: ../app/display/gimpcursorview.c:276 ../app/tools/gimptransform3dtool.c:435
-#: ../app/widgets/gimpdeviceinfo.c:54
+#: ../app/widgets/gimpdeviceinfo.c:53
 msgid "X"
 msgstr "X"
 
 #: ../app/display/gimpcursorview.c:230 ../app/display/gimpcursorview.c:255
 #: ../app/display/gimpcursorview.c:282 ../app/tools/gimptransform3dtool.c:435
-#: ../app/widgets/gimpdeviceinfo.c:55
+#: ../app/widgets/gimpdeviceinfo.c:54
 msgid "Y"
 msgstr "Y"
 
@@ -18980,7 +19021,7 @@ msgstr "Перемикнути швидку маску"
 msgid "Navigate the image display"
 msgstr "Навігація на зображенні"
 
-#: ../app/display/gimpdisplayshell.c:730 ../app/display/gimpdisplayshell.c:1414
+#: ../app/display/gimpdisplayshell.c:730 ../app/display/gimpdisplayshell.c:1418
 #: ../app/widgets/gimptoolbox.c:244
 msgid "Drop image files here to open them"
 msgstr "Перетягніть сюди зображення, які хочете відкрити"
@@ -19025,7 +19066,8 @@ msgstr "Зберегти зміни у «%s» перед закриванням?
 #: ../app/display/gimpdisplayshell-close.c:307
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d годину будуть втрачені."
 msgstr[1] ""
@@ -19059,7 +19101,8 @@ msgstr[3] ""
 #: ../app/display/gimpdisplayshell-close.c:330
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d хвилину будуть втрачені."
 msgstr[1] ""
@@ -19075,8 +19118,8 @@ msgid "The image has been exported to '%s'."
 msgstr "Зображення експортовано у «%s»."
 
 #: ../app/display/gimpdisplayshell-dnd.c:249
-#: ../app/display/gimpdisplayshell-dnd.c:708
-#: ../app/display/gimpdisplayshell-dnd.c:767
+#: ../app/display/gimpdisplayshell-dnd.c:711
+#: ../app/display/gimpdisplayshell-dnd.c:770
 msgid "Drop New Layer"
 msgstr "Опускання нового шару"
 
@@ -19092,33 +19135,33 @@ msgstr "Опускання нового контуру"
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Неможливо змінити точки растру групи шарів"
 
-#: ../app/display/gimpdisplayshell-dnd.c:374 ../app/tools/gimpfiltertool.c:315
+#: ../app/display/gimpdisplayshell-dnd.c:375 ../app/tools/gimpfiltertool.c:315
 #: ../app/tools/gimptransformtool.c:682
 msgid "A selected layer's pixels are locked."
 msgstr "Точки растру позначеного шару заблоковані від змін."
 
-#: ../app/display/gimpdisplayshell-dnd.c:424
+#: ../app/display/gimpdisplayshell-dnd.c:427
 #: ../app/widgets/gimpdrawabletreeview.c:265
 #: ../app/widgets/gimpdrawabletreeview.c:377
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Опустити текстуру на шар"
 
-#: ../app/display/gimpdisplayshell-dnd.c:446
+#: ../app/display/gimpdisplayshell-dnd.c:449
 #: ../app/widgets/gimpdrawabletreeview.c:296
 #: ../app/widgets/gimpdrawabletreeview.c:397
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Опустити колір на шар"
 
-#: ../app/display/gimpdisplayshell-dnd.c:598
-#: ../app/widgets/gimpitemtreeview.c:1309
+#: ../app/display/gimpdisplayshell-dnd.c:601
+#: ../app/widgets/gimpitemtreeview.c:1313
 #: ../app/widgets/gimplayertreeview.c:821
 msgid "Drop layers"
 msgstr "Перемістити шари"
 
-#: ../app/display/gimpdisplayshell-dnd.c:741
-#: ../app/display/gimpdisplayshell-dnd.c:758
+#: ../app/display/gimpdisplayshell-dnd.c:744
+#: ../app/display/gimpdisplayshell-dnd.c:761
 #: ../app/widgets/gimplayertreeview.c:898 ../app/widgets/gimptoolbox-dnd.c:268
 msgid "Dropped Buffer"
 msgstr "Переміщений буфер"
@@ -19199,7 +19242,7 @@ msgstr "(не змінено)"
 #: ../app/widgets/gimpactiongroup.c:982
 #: ../app/widgets/gimpbuffersourcebox.c:166
 #: ../app/widgets/gimpbuffersourcebox.c:296
-#: ../app/widgets/gimpdeviceinfo.c:1045 ../app/widgets/gimpdeviceinfo.c:1070
+#: ../app/widgets/gimpdeviceinfo.c:1044 ../app/widgets/gimpdeviceinfo.c:1069
 msgid "(none)"
 msgstr "(немає)"
 
@@ -19543,36 +19586,36 @@ msgstr "Вилучити вузли"
 msgid "Shift start"
 msgstr "Початок зсуву"
 
-#: ../app/display/gimptoolpolygon.c:891
+#: ../app/display/gimptoolpolygon.c:890
 msgid "Click to close shape"
 msgstr "Клацніть, щоб замкнути форму"
 
-#: ../app/display/gimptoolpolygon.c:895
+#: ../app/display/gimptoolpolygon.c:894
 msgid "Click-Drag to move segment vertex"
 msgstr "Натисніть та перетягніть, щоб перемістити вершину сегмента"
 
-#: ../app/display/gimptoolpolygon.c:900
+#: ../app/display/gimptoolpolygon.c:899
 msgid "Return commits, Escape cancels, Backspace re-opens shape"
 msgstr "Enter завершує дію, Escape скасовує її, Backspace розмикає форму"
 
-#: ../app/display/gimptoolpolygon.c:904
+#: ../app/display/gimptoolpolygon.c:903
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "Ввід завершує вибирання, Escape скасовує його, Backspace прибирає останній "
 "сегмент"
 
-#: ../app/display/gimptoolpolygon.c:908
+#: ../app/display/gimptoolpolygon.c:907
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Клацання+перетягування малює довільну лінію, клацання додає прямий відрізок"
 
-#: ../app/display/gimptoolrectangle.c:568
-#: ../app/display/gimptoolrectangle.c:876
+#: ../app/display/gimptoolrectangle.c:567
+#: ../app/display/gimptoolrectangle.c:875
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Прямокутник: "
 
-#: ../app/display/gimptoolrectangle.c:2140
+#: ../app/display/gimptoolrectangle.c:2139
 msgid "Position: "
 msgstr "Позиція:"
 
@@ -19736,7 +19779,7 @@ msgstr "Розширення GIMP"
 #: ../app/gegl/gimp-babl.c:196 ../app/gegl/gimp-babl.c:197
 #: ../app/gegl/gimp-babl.c:198 ../app/gegl/gimp-babl.c:199
 #: ../app/gegl/gimp-babl.c:200 ../app/gegl/gimp-babl.c:201
-#: ../app/plug-in/gimppluginprocedure.c:1030
+#: ../app/plug-in/gimppluginprocedure.c:1029
 msgid "RGB"
 msgstr "RGB"
 
@@ -19761,7 +19804,7 @@ msgstr "RGB-альфа"
 #: ../app/gegl/gimp-babl.c:234 ../app/gegl/gimp-babl.c:235
 #: ../app/gegl/gimp-babl.c:236 ../app/gegl/gimp-babl.c:237
 #: ../app/gegl/gimp-babl.c:238 ../app/gegl/gimp-babl.c:239
-#: ../app/plug-in/gimppluginprocedure.c:1048
+#: ../app/plug-in/gimppluginprocedure.c:1047
 msgid "Grayscale"
 msgstr "Відтінки сірого"
 
@@ -19823,7 +19866,7 @@ msgstr "Складова альфи"
 msgid "Indexed-alpha"
 msgstr "Індексована альфа"
 
-#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1066
+#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1065
 msgid "Indexed"
 msgstr "Індексований"
 
@@ -20587,7 +20630,7 @@ msgstr "Перетворити кольори на градації сірого
 #: ../app/operations/gimpoperationsettings.c:92
 #: ../app/tools/gimpfiltertool.c:1136 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimppaintselectoptions.c:74
-#: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:174
+#: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:173
 #: ../app/widgets/gimplayertreeview.c:282
 msgid "Mode"
 msgstr "Режим"
@@ -20731,11 +20774,11 @@ msgstr "Лише рух"
 msgid "Flow"
 msgstr "Потік"
 
-#: ../app/paint/gimpbrushcore.c:371
+#: ../app/paint/gimpbrushcore.c:370
 msgid "No brushes available for use with this tool."
 msgstr "Немає пензлів доступних для використання з цим інструментом."
 
-#: ../app/paint/gimpbrushcore.c:378
+#: ../app/paint/gimpbrushcore.c:377
 msgid "No paint dynamics available for use with this tool."
 msgstr "Немає динамік малювання для використання з цим інструментом."
 
@@ -20885,7 +20928,7 @@ msgstr "Співвідношення сторін"
 #: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:114
 #: ../app/widgets/gimpbrusheditor.c:205
 #: ../app/widgets/gimpbrushfactoryview.c:103
-#: ../app/widgets/gimpgrideditor.c:176
+#: ../app/widgets/gimpgrideditor.c:175
 msgid "Spacing"
 msgstr "Проміжок"
 
@@ -22179,35 +22222,35 @@ msgstr "Ініціалізація доповнень"
 msgid "Starting Extensions"
 msgstr "Запуск розширень"
 
-#: ../app/plug-in/gimppluginprocedure.c:1034
+#: ../app/plug-in/gimppluginprocedure.c:1033
 msgid "RGB without alpha"
 msgstr "RGB без прозорості"
 
-#: ../app/plug-in/gimppluginprocedure.c:1038
+#: ../app/plug-in/gimppluginprocedure.c:1037
 msgid "RGB with alpha"
 msgstr "RGB із прозорістю"
 
-#: ../app/plug-in/gimppluginprocedure.c:1052
+#: ../app/plug-in/gimppluginprocedure.c:1051
 msgid "Grayscale without alpha"
 msgstr "Відтінки сірого без прозорості"
 
-#: ../app/plug-in/gimppluginprocedure.c:1056
+#: ../app/plug-in/gimppluginprocedure.c:1055
 msgid "Grayscale with alpha"
 msgstr "Відтінки сірого із прозорістю"
 
-#: ../app/plug-in/gimppluginprocedure.c:1070
+#: ../app/plug-in/gimppluginprocedure.c:1069
 msgid "Indexed without alpha"
 msgstr "Індексовані без прозорості"
 
-#: ../app/plug-in/gimppluginprocedure.c:1074
+#: ../app/plug-in/gimppluginprocedure.c:1073
 msgid "Indexed with alpha"
 msgstr "Індексовані із прозорістю"
 
-#: ../app/plug-in/gimppluginprocedure.c:1085
+#: ../app/plug-in/gimppluginprocedure.c:1084
 msgid "This plug-in only works on the following layer types:"
 msgstr "Цей додаток працює лише з такими типами шарів:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1304
+#: ../app/plug-in/gimppluginprocedure.c:1303
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22216,7 +22259,7 @@ msgstr ""
 "Помилка виклику «%s»:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1316
+#: ../app/plug-in/gimppluginprocedure.c:1315
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22638,7 +22681,7 @@ msgstr ""
 "Не вдалося завантажити деякі шрифти:\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1632
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1631
 msgid "Add Text Layer"
 msgstr "Додавання текстового шару"
 
@@ -23023,12 +23066,12 @@ msgstr "Точки растру активного шару заблокован
 msgid "No valid line art source selected."
 msgstr "Не вибрано придатного джерела контурів."
 
-#: ../app/tools/gimpbucketfilltool.c:786 ../app/tools/gimpbucketfilltool.c:924
+#: ../app/tools/gimpbucketfilltool.c:786 ../app/tools/gimpbucketfilltool.c:926
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:492
 msgid "Click in any image to pick the background color"
 msgstr "Натисніть на будь-якому зображенні для отримання кольору його тла"
 
-#: ../app/tools/gimpbucketfilltool.c:793 ../app/tools/gimpbucketfilltool.c:933
+#: ../app/tools/gimpbucketfilltool.c:793 ../app/tools/gimpbucketfilltool.c:935
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:486
 msgid "Click in any image to pick the foreground color"
 msgstr ""
@@ -25153,43 +25196,43 @@ msgstr "Блок:"
 msgid "Language:"
 msgstr "Мова:"
 
-#: ../app/tools/gimptexttool.c:214
+#: ../app/tools/gimptexttool.c:213
 msgid "Text"
 msgstr "Текст"
 
-#: ../app/tools/gimptexttool.c:215
+#: ../app/tools/gimptexttool.c:214
 msgid "Text Tool: Create or edit text layers"
 msgstr "Текст: створення або редагування текстового шару"
 
-#: ../app/tools/gimptexttool.c:216
+#: ../app/tools/gimptexttool.c:215
 msgid "Te_xt"
 msgstr "_Текст"
 
-#: ../app/tools/gimptexttool.c:1036
+#: ../app/tools/gimptexttool.c:1035
 msgid "Fonts are still loading"
 msgstr "Завантаження шрифтів ще не завершено"
 
-#: ../app/tools/gimptexttool.c:1047
+#: ../app/tools/gimptexttool.c:1046
 msgid "Text box: "
 msgstr "Текстовий блок:"
 
-#: ../app/tools/gimptexttool.c:1179
+#: ../app/tools/gimptexttool.c:1178
 msgid "Reshape Text Layer"
 msgstr "Зміна розміру текстового шару"
 
-#: ../app/tools/gimptexttool.c:1752 ../app/tools/gimptexttool.c:1755
+#: ../app/tools/gimptexttool.c:1751 ../app/tools/gimptexttool.c:1754
 msgid "Confirm Text Editing"
 msgstr "Підтвердження зміни тексту"
 
-#: ../app/tools/gimptexttool.c:1759
+#: ../app/tools/gimptexttool.c:1758
 msgid "Create _New Layer"
 msgstr "_Створити новий шар"
 
-#: ../app/tools/gimptexttool.c:1761
+#: ../app/tools/gimptexttool.c:1760
 msgid "_Edit"
 msgstr "З_міни"
 
-#: ../app/tools/gimptexttool.c:1783
+#: ../app/tools/gimptexttool.c:1782
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -25415,16 +25458,16 @@ msgstr "Пере_творення"
 msgid "Transform Step"
 msgstr "Крок перетворення"
 
-#: ../app/tools/gimptransformgridtool.c:997
+#: ../app/tools/gimptransformgridtool.c:999
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (виправлення)"
 
-#: ../app/tools/gimptransformgridtool.c:1281
+#: ../app/tools/gimptransformgridtool.c:1283
 msgid "Re_adjust"
 msgstr "Повторно с_коригувати"
 
-#: ../app/tools/gimptransformgridtool.c:1534
+#: ../app/tools/gimptransformgridtool.c:1536
 msgid "Cannot readjust the transformation"
 msgstr "Не вдалося повторно скоригувати перетворення"
 
@@ -25959,102 +26002,102 @@ msgctxt "paint-select-mode"
 msgid "Subtract from selection"
 msgstr "Відняти від позначеного"
 
-#: ../app/vectors/gimpvectors.c:226
+#: ../app/vectors/gimpvectors.c:225
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Перейменувати контур"
 
-#: ../app/vectors/gimpvectors.c:227
+#: ../app/vectors/gimpvectors.c:226
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Перенести контур"
 
-#: ../app/vectors/gimpvectors.c:228
+#: ../app/vectors/gimpvectors.c:227
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Масштабувати контуру"
 
-#: ../app/vectors/gimpvectors.c:229
+#: ../app/vectors/gimpvectors.c:228
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Змінити розмір контуру"
 
-#: ../app/vectors/gimpvectors.c:230
+#: ../app/vectors/gimpvectors.c:229
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Віддзеркалити контур"
 
-#: ../app/vectors/gimpvectors.c:231
+#: ../app/vectors/gimpvectors.c:230
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Обернути контур"
 
-#: ../app/vectors/gimpvectors.c:232
+#: ../app/vectors/gimpvectors.c:231
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Перетворити контур"
 
-#: ../app/vectors/gimpvectors.c:233
+#: ../app/vectors/gimpvectors.c:232
 msgctxt "undo-type"
 msgid "Fill Path"
 msgstr "Заповнити контур"
 
-#: ../app/vectors/gimpvectors.c:234
+#: ../app/vectors/gimpvectors.c:233
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "Обвести контур"
 
-#: ../app/vectors/gimpvectors.c:235
+#: ../app/vectors/gimpvectors.c:234
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Контур до позначеного"
 
-#: ../app/vectors/gimpvectors.c:236
+#: ../app/vectors/gimpvectors.c:235
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Перевпорядкувати контур"
 
-#: ../app/vectors/gimpvectors.c:237
+#: ../app/vectors/gimpvectors.c:236
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Змінити розмір контуру"
 
-#: ../app/vectors/gimpvectors.c:238
+#: ../app/vectors/gimpvectors.c:237
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Підняти контур доверху"
 
-#: ../app/vectors/gimpvectors.c:239
+#: ../app/vectors/gimpvectors.c:238
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Опустити контур"
 
-#: ../app/vectors/gimpvectors.c:240
+#: ../app/vectors/gimpvectors.c:239
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Опустити контур додолу"
 
-#: ../app/vectors/gimpvectors.c:241
+#: ../app/vectors/gimpvectors.c:240
 msgid "Path cannot be raised higher."
 msgstr "Контур не можна підняти ще вище."
 
-#: ../app/vectors/gimpvectors.c:242
+#: ../app/vectors/gimpvectors.c:241
 msgid "Path cannot be lowered more."
 msgstr "Контур не можна опустити ще нижче."
 
-#: ../app/vectors/gimpvectors.c:457
+#: ../app/vectors/gimpvectors.c:456
 msgid "Move Path"
 msgstr "Перейменування контуру"
 
-#: ../app/vectors/gimpvectors.c:557
+#: ../app/vectors/gimpvectors.c:556
 msgid "Flip Path"
 msgstr "Віддзеркалення контуру"
 
-#: ../app/vectors/gimpvectors.c:588
+#: ../app/vectors/gimpvectors.c:587
 msgid "Rotate Path"
 msgstr "Обертання контуру"
 
-#: ../app/vectors/gimpvectors.c:618
+#: ../app/vectors/gimpvectors.c:617
 msgid "Transform Path"
 msgstr "Перетворення контуру"
 
@@ -27288,20 +27331,20 @@ msgstr "Визначаємо дані щодо символу…"
 msgid "%s (read only)"
 msgstr "%s (лише для читання)"
 
-#: ../app/widgets/gimpdeviceeditor.c:160
+#: ../app/widgets/gimpdeviceeditor.c:159
 msgid "Delete the selected device"
 msgstr "Вилучити позначений пристрій"
 
-#: ../app/widgets/gimpdeviceeditor.c:520
+#: ../app/widgets/gimpdeviceeditor.c:519
 msgid "Delete Device Settings"
 msgstr "Вилучити позначені пристрої"
 
-#: ../app/widgets/gimpdeviceeditor.c:541
+#: ../app/widgets/gimpdeviceeditor.c:540
 #, c-format
 msgid "Delete \"%s\"?"
 msgstr "Вилучити «%s»?"
 
-#: ../app/widgets/gimpdeviceeditor.c:544
+#: ../app/widgets/gimpdeviceeditor.c:543
 msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
@@ -27310,16 +27353,16 @@ msgstr ""
 "Наступного разу, коли приєднаєте цей пристрій, буде використано типові "
 "налаштування.  "
 
-#: ../app/widgets/gimpdeviceinfo.c:56 ../app/widgets/gimpdynamicseditor.c:161
+#: ../app/widgets/gimpdeviceinfo.c:55 ../app/widgets/gimpdynamicseditor.c:161
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "Натиск"
 
-#: ../app/widgets/gimpdeviceinfo.c:57
+#: ../app/widgets/gimpdeviceinfo.c:56
 msgid "X tilt"
 msgstr "Нахил по X"
 
-#: ../app/widgets/gimpdeviceinfo.c:58
+#: ../app/widgets/gimpdeviceinfo.c:57
 msgid "Y tilt"
 msgstr "Нахил по Y"
 
@@ -27330,31 +27373,31 @@ msgstr "Нахил по Y"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: ../app/widgets/gimpdeviceinfo.c:66
+#: ../app/widgets/gimpdeviceinfo.c:65
 msgid "Wheel"
 msgstr "Колесо"
 
-#: ../app/widgets/gimpdeviceinfo.c:67
+#: ../app/widgets/gimpdeviceinfo.c:66
 msgid "Distance"
 msgstr "Відстань"
 
-#: ../app/widgets/gimpdeviceinfo.c:68
+#: ../app/widgets/gimpdeviceinfo.c:67
 msgid "Rotation"
 msgstr "Обертання"
 
-#: ../app/widgets/gimpdeviceinfo.c:69
+#: ../app/widgets/gimpdeviceinfo.c:68
 msgid "Slider"
 msgstr "Повзунок"
 
-#: ../app/widgets/gimpdeviceinfo.c:249
+#: ../app/widgets/gimpdeviceinfo.c:248
 msgid "Pressure curve"
 msgstr "Крива натиску"
 
-#: ../app/widgets/gimpdeviceinfo.c:1030 ../app/widgets/gimpdeviceinfo.c:1055
+#: ../app/widgets/gimpdeviceinfo.c:1029 ../app/widgets/gimpdeviceinfo.c:1054
 msgid "(Device not present)"
 msgstr "(Немає пристрою)"
 
-#: ../app/widgets/gimpdeviceinfo.c:1038 ../app/widgets/gimpdeviceinfo.c:1063
+#: ../app/widgets/gimpdeviceinfo.c:1037 ../app/widgets/gimpdeviceinfo.c:1062
 msgid "(Virtual device)"
 msgstr "(Віртуальний пристрій)"
 
@@ -27576,7 +27619,7 @@ msgstr "Вибрати _тип файла (%s)"
 msgid "Select File _Type"
 msgstr "Вибрати _тип файла"
 
-#: ../app/widgets/gimpfileprocview.c:199
+#: ../app/widgets/gimpfileprocview.c:198
 msgid "File Type"
 msgstr "Тип файла"
 
@@ -27686,23 +27729,23 @@ msgstr "Позиція позначки: %0.4f"
 msgid "Distance: %0.4f"
 msgstr "Відстань: %0.4f"
 
-#: ../app/widgets/gimpgrideditor.c:147
+#: ../app/widgets/gimpgrideditor.c:146
 msgid "Line _style:"
 msgstr "Сти_ль лінії:"
 
-#: ../app/widgets/gimpgrideditor.c:151
+#: ../app/widgets/gimpgrideditor.c:150
 msgid "Change grid foreground color"
 msgstr "Змінити колір переднього плану сітки"
 
-#: ../app/widgets/gimpgrideditor.c:159
+#: ../app/widgets/gimpgrideditor.c:158
 msgid "_Foreground color:"
 msgstr "Колір _переднього плану:"
 
-#: ../app/widgets/gimpgrideditor.c:163
+#: ../app/widgets/gimpgrideditor.c:162
 msgid "Change grid background color"
 msgstr "Змінити колір тла сітки"
 
-#: ../app/widgets/gimpgrideditor.c:171
+#: ../app/widgets/gimpgrideditor.c:170
 msgid "_Background color:"
 msgstr "Колір _тла:"
 
@@ -28003,7 +28046,7 @@ msgstr ""
 msgid "Select an image in the left pane"
 msgstr "Виберіть зображення у лівій панелі"
 
-#: ../app/widgets/gimppluginview.c:148
+#: ../app/widgets/gimppluginview.c:146
 msgid "Plug-In"
 msgstr "Доповнення"
 
