@@ -1066,7 +1066,21 @@ else
   conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'other')
 endif
 
-conf.set('CHECK_UPDATE', get_option('check-update'))
+if get_option('check-update') == 'yes'
+  check_update = true
+elif get_option('check-update') == 'no'
+  check_update = false
+else # == 'platform-default'
+  if platform_windows or platform_osx
+    check_update = true
+  else
+    # Other packages usually have their own update system (software
+    # repositories on Linux and other *BSDs for instance) so we
+    # shouldn't notify about new versions, at least not as a default.
+    check_update = false
+  endif
+endif
+conf.set('CHECK_UPDATE', check_update)
 
 # Default ICC directory #
 
@@ -1746,7 +1760,7 @@ final_message = [
 '''  gimp-console:        @0@'''.format(enable_console_bin),
 '',
 '''Optional Features:''',
-'''  Check updates at startup:  @0@'''.format(get_option('check-update')),
+'''  Check updates at startup:  @0@'''.format(check_update),
 '''  Language selection:        @0@'''.format(isocodes.found()),
 '''  Vector icons:              @0@'''.format(have_vector_icons),
 '''  Dr. Mingw (Win32):         @0@'''.format(drmingw.found()),

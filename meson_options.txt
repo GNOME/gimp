@@ -16,7 +16,9 @@ option('shmem-type',        type: 'combo',   value: 'auto', description: 'Shared
 
 option('build-id',          type: 'string',  value: 'unknown', description: 'Unique string used to define your build')
 option('revision',          type: 'integer', value: 0,    description: 'Revision increment for a package')
-option('check-update',      type: 'boolean', value: true, description: 'GIMP will look up new version availability on startup')
+option('check-update',      type: 'combo', value: 'platform-default',
+                            description: 'GIMP will look up new version availability on startup',
+                            choices: [ 'yes', 'no', 'platform-default' ])
 
 option('bug-report-url',    type: 'string',  value: '',   description: 'URL used by the debug dialog to report bugs')
 option('gimpdir',           type: 'string',  value: '',   description: 'Change default gimpdir from ~/.config/GIMP/2.9 to ~/.config/DIR/2.9 (if relative), or to DIR (if absolute)')
