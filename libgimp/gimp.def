@@ -259,6 +259,7 @@ EXPORTS
 	gimp_export_comment
 	gimp_export_exif
 	gimp_export_iptc
+	gimp_export_thumbnail
 	gimp_export_xmp
 	gimp_file_load
 	gimp_file_load_layer
