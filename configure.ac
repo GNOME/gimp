@@ -2655,11 +2655,19 @@ GIMP_PACKAGE_REVISION=$with_revision
 AC_SUBST(GIMP_PACKAGE_REVISION)
 
 AC_ARG_ENABLE(check-update,
-              [  --disable-check-update
-                          GIMP will not look up new version availability on startup],
-              check_update=no,
-              check_update=yes)
-if test "x$check_update" = xyes; then
+              [  --enable-check-update
+                          GIMP will not look up new version availability on startup (default=auto)],,
+              enable_check_update=auto)
+if test "x$enable_check_update" != xno &&
+   test "x$enable_check_update" != xyes; then
+  if test "x$platform_osx" = "xyes" ||
+     test "x$platform_win32" = "xyes"; then
+     enable_check_update=yes
+  else
+     enable_check_update=no
+  fi
+fi
+if test "x$enable_check_update" = xyes; then
   AC_DEFINE(CHECK_UPDATE, 1,
               [Define to 1 if automatic update check is enabled])
 fi
@@ -3189,7 +3197,7 @@ Extra Binaries:
   gimp-console:              $enable_gimp_console
 
 Optional Features:
-  Check updates at startup:  $check_update
+  Check updates at startup:  $enable_check_update
   Levin matting engine:      $have_matting_levin
   Language selection:        $have_iso_codes
   Vector icons:              $enable_vector_icons
