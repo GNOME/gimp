@@ -430,7 +430,7 @@ gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-thumbnail",
                                "Save _thumbnail",
                                "Save a smaller representation of the image as metadata",
-                               TRUE,
+                               gimp_export_thumbnail (),
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_comment)
     {
@@ -684,7 +684,8 @@ gimp_save_procedure_set_support_profile (GimpSaveProcedure *procedure,
  *   properties to decide whether to save a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
- * the PDB arguments. By default, the value will be %TRUE.
+ * the PDB arguments. By default, the value will be
+ * gimp_export_thumbnail().
  * Since: 3.0
  **/
 void

@@ -124,6 +124,7 @@ enum
   PROP_EXPORT_FILE_TYPE,
   PROP_EXPORT_COLOR_PROFILE,
   PROP_EXPORT_COMMENT,
+  PROP_EXPORT_THUMBNAIL,
   PROP_EXPORT_METADATA_EXIF,
   PROP_EXPORT_METADATA_XMP,
   PROP_EXPORT_METADATA_IPTC,
@@ -793,6 +794,13 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPORT_THUMBNAIL,
+                            "export-thumbnail",
+                            "Export Thumbnail",
+                            EXPORT_THUMBNAIL_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPORT_METADATA_EXIF,
                             "export-metadata-exif",
                             "Export Exif metadata",
@@ -1168,6 +1176,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_EXPORT_COMMENT:
       core_config->export_comment = g_value_get_boolean (value);
       break;
+    case PROP_EXPORT_THUMBNAIL:
+      core_config->export_thumbnail = g_value_get_boolean (value);
+      break;
     case PROP_EXPORT_METADATA_EXIF:
       core_config->export_metadata_exif = g_value_get_boolean (value);
       break;
@@ -1420,6 +1431,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_EXPORT_COMMENT:
       g_value_set_boolean (value, core_config->export_comment);
+      break;
+    case PROP_EXPORT_THUMBNAIL:
+      g_value_set_boolean (value, core_config->export_thumbnail);
       break;
     case PROP_EXPORT_METADATA_EXIF:
       g_value_set_boolean (value, core_config->export_metadata_exif);

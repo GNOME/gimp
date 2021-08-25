@@ -1551,6 +1551,9 @@ prefs_dialog_new (Gimp       *gimp,
   button = prefs_check_button_add (object, "export-comment",
                                    _("Export the image's comment by default"),
                                    GTK_BOX (vbox2));
+  button = prefs_check_button_add (object, "export-thumbnail",
+                                   _("Export the image's thumbnail by default"),
+                                   GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-exif",
                                    /* Translators: label for
                                     * configuration option (checkbox).

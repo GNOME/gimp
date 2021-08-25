@@ -14,6 +14,7 @@ gimp_export_comment
 gimp_export_exif
 gimp_export_xmp
 gimp_export_iptc
+gimp_export_thumbnail
 gimp_check_size
 gimp_check_type
 gimp_default_display

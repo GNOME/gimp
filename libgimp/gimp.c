@@ -137,6 +137,7 @@ static gboolean            _export_comment       = FALSE;
 static gboolean            _export_exif          = FALSE;
 static gboolean            _export_xmp           = FALSE;
 static gboolean            _export_iptc          = FALSE;
+static gboolean            _export_thumbnail     = TRUE;
 static gint32              _num_processors       = 1;
 static GimpCheckSize       _check_size           = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
 static GimpCheckType       _check_type           = GIMP_CHECK_TYPE_GRAY_CHECKS;
@@ -725,6 +726,22 @@ gboolean
 gimp_export_iptc (void)
 {
   return _export_iptc;
+}
+
+/**
+ * gimp_export_thumbnail:
+ *
+ * Returns whether file plug-ins should default to exporting the
+ * image's comment.
+ *
+ * Returns: TRUE if preferences are set to export the thumbnail.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_export_thumbnail (void)
+{
+  return _export_thumbnail;
 }
 
 /**

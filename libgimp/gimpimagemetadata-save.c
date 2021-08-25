@@ -223,7 +223,7 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 
   /* Thumbnail */
 
-  if (FALSE /* FIXME if (original image had a thumbnail) */)
+  if (! gimp_export_thumbnail () /* FIXME if (original image had a thumbnail) */)
     *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
   /* Color profile */
