@@ -40,6 +40,7 @@ option('ghostscript',       type: 'feature', value: 'auto', description: 'Ghosts
 option('gudev',             type: 'feature', value: 'auto', description: 'Gudev support')
 option('heif',              type: 'feature', value: 'auto', description: 'HEIF support')
 option('jpeg2000',          type: 'feature', value: 'auto', description: 'Jpeg-2000 support')
+option('jpeg-xl',           type: 'feature', value: 'auto', description: 'JPEG XL support')
 option('mng',               type: 'feature', value: 'auto', description: 'Mng support')
 option('openexr',           type: 'feature', value: 'auto', description: 'Openexr support')
 option('png',               type: 'feature', value: 'auto', description: 'PNG support')

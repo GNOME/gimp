@@ -802,6 +802,18 @@ if openjpeg.found()
   MIMEtypes += [ 'image/jp2', 'image/jpeg2000', 'image/jpx', ]
 endif
 
+jpegxl_minver  = '0.5.0'
+libjxl         = dependency('libjxl',
+                            version: '>='+jpegxl_minver,
+                            required: get_option('jpeg-xl')
+)
+libjxl_threads = dependency('libjxl_threads',
+                            version: '>='+jpegxl_minver,
+                            required: get_option('jpeg-xl')
+)
+if libjxl.found() and libjxl_threads.found()
+  MIMEtypes += 'image/jxl'
+endif
 
 xmc = dependency('xcursor', required: get_option('xcursor'))
 if xmc.found()
@@ -1774,6 +1786,7 @@ final_message = [
 '''  Ghostscript:         @0@'''.format(ghostscript.found()),
 '''  Help Browser:        @0@'''.format(webkit.found()),
 '''  JPEG 2000:           @0@'''.format(openjpeg.found()),
+'''  JPEG XL:             @0@'''.format(libjxl.found()),
 '''  MNG:                 @0@'''.format(libmng.found()),
 '''  OpenEXR:             @0@'''.format(openexr.found()),
 '''  WebP:                @0@'''.format(webp_found),

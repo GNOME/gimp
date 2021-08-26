@@ -103,6 +103,13 @@ if openjpeg.found()
   }
 endif
 
+if libjxl.found() and libjxl_threads.found()
+  common_plugins_list += {
+    'name': 'file-jpegxl',
+    'deps': [ gtk3, gegl, libjxl, libjxl_threads, ],
+  }
+endif
+
 if libmng.found()
   common_plugins_list += { 'name': 'file-mng',
     'deps': [ gtk3, gegl, libmng, libpng, ],

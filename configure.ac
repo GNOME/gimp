@@ -75,6 +75,7 @@ m4_define([json_glib_required_version], [1.2.6])
 m4_define([lcms_required_version], [2.8])
 m4_define([libgudev_required_version], [167])
 m4_define([libheif_required_version], [1.3.2])
+m4_define([libjxl_required_version], [0.5.0])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([libmypaint_required_version], [1.3.0])
 m4_define([libpng_required_version], [1.6.25])
@@ -176,6 +177,7 @@ HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
 INTLTOOL_REQUIRED_VERSION=intltool_required_version
 LCMS_REQUIRED_VERSION=lcms_required_version
 LIBHEIF_REQUIRED_VERSION=libheif_required_version
+LIBJXL_REQUIRED_VERSION=libjxl_required_version
 LIBLZMA_REQUIRED_VERSION=liblzma_required_version
 LIBMYPAINT_REQUIRED_VERSION=libmypaint_required_version
 LIBPNG_REQUIRED_VERSION=libpng_required_version
@@ -211,6 +213,7 @@ AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
 AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 AC_SUBST(LCMS_REQUIRED_VERSION)
 AC_SUBST(LIBHEIF_REQUIRED_VERSION)
+AC_SUBST(LIBJXL_REQUIRED_VERSION)
 AC_SUBST(LIBLZMA_REQUIRED_VERSION)
 AC_SUBST(LIBMYPAINT_REQUIRED_VERSION)
 AC_SUBST(LIBPNG_REQUIRED_VERSION)
@@ -1846,6 +1849,30 @@ if test "x$have_libheif_1_4_0" = xyes; then
   fi
 fi
 
+###################
+# Check for JPEG XL
+###################
+
+AC_ARG_WITH(jpegxl, [  --without-jpegxl        build without JPEG XL support])
+
+have_jpegxl=no
+if test "x$with_jpegxl" != xno; then
+  PKG_CHECK_MODULES(JXL, libjxl >= libjxl_required_version,
+    [
+      PKG_CHECK_MODULES(JXL_THREADS, libjxl_threads >= libjxl_required_version,
+        [have_jpegxl=yes],
+        [have_jpegxl="no (libjxl_threads not found)"])
+    ],
+    [have_jpegxl="no (libjxl not found)"])
+fi
+
+if test "x$have_jpegxl" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/jxl"
+  FILE_JPEGXL='file-jpegxl$(EXEEXT)'
+fi
+
+AM_CONDITIONAL(HAVE_JPEGXL, test "x$have_jpegxl" = xyes)
+AC_SUBST(FILE_JPEGXL)
 
 ########################
 # Check for libbacktrace
@@ -3213,6 +3240,7 @@ Optional Plug-Ins:
   Ghostscript:               $have_gs
   Help Browser:              $have_webkit
   JPEG 2000:                 $have_openjpeg
+  JPEG XL:                   $have_jpegxl
   MNG:                       $have_libmng
   OpenEXR:                   $have_openexr
   WebP:                      $have_webp
