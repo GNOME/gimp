@@ -239,7 +239,7 @@ gimp_parasite_new (const gchar    *name,
   parasite->size  = size;
 
   if (size)
-    parasite->data = g_memdup (data, size);
+    parasite->data = g_memdup2 (data, size);
   else
     parasite->data = NULL;
 

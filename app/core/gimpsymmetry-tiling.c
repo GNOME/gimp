@@ -368,7 +368,7 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
         {
           for (j = 0, y = starty; j < y_count; j++)
             {
-              coords = g_memdup (origin, sizeof (GimpCoords));
+              coords = g_memdup2 (origin, sizeof (GimpCoords));
               coords->x = x;
               coords->y = y;
               strokes = g_list_prepend (strokes, coords);
@@ -403,7 +403,7 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
               if (tiling->max_x && x_count >= tiling->max_x)
                 break;
 
-              coords = g_memdup (origin, sizeof (GimpCoords));
+              coords = g_memdup2 (origin, sizeof (GimpCoords));
               coords->x = x;
               coords->y = y;
               strokes = g_list_prepend (strokes, coords);

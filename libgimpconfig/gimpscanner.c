@@ -482,7 +482,7 @@ gimp_scanner_parse_data (GimpScanner  *scanner,
   g_scanner_get_next_token (scanner);
 
   if (scanner->value.v_string)
-    *dest = g_memdup (scanner->value.v_string, length);
+    *dest = g_memdup2 (scanner->value.v_string, length);
   else
     *dest = NULL;
 

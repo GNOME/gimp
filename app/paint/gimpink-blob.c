@@ -463,7 +463,7 @@ gimp_blob_duplicate (GimpBlob *b)
 {
   g_return_val_if_fail (b != NULL, NULL);
 
-  return g_memdup (b, sizeof (GimpBlob) +  sizeof (GimpBlobSpan) * (b->height - 1));
+  return g_memdup2 (b, sizeof (GimpBlob) +  sizeof (GimpBlobSpan) * (b->height - 1));
 }
 
 #if 0

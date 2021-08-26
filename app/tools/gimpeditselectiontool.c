@@ -285,13 +285,13 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                            &edit_select->num_segs_out,
                            0, 0, 0, 0);
 
-    edit_select->segs_in = g_memdup (segs_in,
-                                     edit_select->num_segs_in *
-                                     sizeof (GimpBoundSeg));
-
-    edit_select->segs_out = g_memdup (segs_out,
-                                      edit_select->num_segs_out *
+    edit_select->segs_in = g_memdup2 (segs_in,
+                                      edit_select->num_segs_in *
                                       sizeof (GimpBoundSeg));
+
+    edit_select->segs_out = g_memdup2 (segs_out,
+                                       edit_select->num_segs_out *
+                                       sizeof (GimpBoundSeg));
 
     if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
       {

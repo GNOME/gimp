@@ -1112,7 +1112,7 @@ pdb_get_data_invoker (GimpProcedure         *procedure,
                                                      identifier, &bytes);
 
           if (orig_data)
-            data = g_memdup (orig_data, bytes);
+            data = g_memdup2 (orig_data, bytes);
           else
             success = FALSE;
         }

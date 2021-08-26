@@ -786,8 +786,8 @@ gimp_value_to_gp_param (const GValue *value,
           param->data.d_array.size = array->length;
 
           if (full_copy)
-            param->data.d_array.data = g_memdup (array->data,
-                                                 array->length);
+            param->data.d_array.data = g_memdup2 (array->data,
+                                                  array->length);
           else
             param->data.d_array.data = array->data;
         }

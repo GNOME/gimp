@@ -178,20 +178,20 @@ gimp_brush_pipe_copy (GimpData *data,
   pipe->dimension = src_pipe->dimension;
 
   g_clear_pointer (&pipe->rank, g_free);
-  pipe->rank = g_memdup (src_pipe->rank,
-                         pipe->dimension * sizeof (gint));
+  pipe->rank = g_memdup2 (src_pipe->rank,
+                          pipe->dimension * sizeof (gint));
 
   g_clear_pointer (&pipe->stride, g_free);
-  pipe->stride = g_memdup (src_pipe->stride,
-                           pipe->dimension * sizeof (gint));
+  pipe->stride = g_memdup2 (src_pipe->stride,
+                            pipe->dimension * sizeof (gint));
 
   g_clear_pointer (&pipe->select, g_free);
-  pipe->select = g_memdup (src_pipe->select,
-                           pipe->dimension * sizeof (PipeSelectModes));
+  pipe->select = g_memdup2 (src_pipe->select,
+                            pipe->dimension * sizeof (PipeSelectModes));
 
   g_clear_pointer (&pipe->index, g_free);
-  pipe->index = g_memdup (src_pipe->index,
-                          pipe->dimension * sizeof (gint));
+  pipe->index = g_memdup2 (src_pipe->index,
+                           pipe->dimension * sizeof (gint));
 
   for (i = 0; i < pipe->n_brushes; i++)
     if (pipe->brushes[i])

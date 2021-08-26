@@ -198,7 +198,7 @@ gimp_color_profile_new_from_file (GFile   *file,
         return NULL;
 
       length = g_mapped_file_get_length (mapped);
-      data   = g_memdup (g_mapped_file_get_contents (mapped), length);
+      data   = g_memdup2 (g_mapped_file_get_contents (mapped), length);
 
       lcms_profile = cmsOpenProfileFromMem (data, length);
 
@@ -295,7 +295,7 @@ gimp_color_profile_new_from_icc_profile (const guint8  *data,
       profile = g_object_new (GIMP_TYPE_COLOR_PROFILE, NULL);
 
       profile->priv->lcms_profile = lcms_profile;
-      profile->priv->data         = g_memdup (data, length);
+      profile->priv->data         = g_memdup2 (data, length);
       profile->priv->length       = length;
    }
   else

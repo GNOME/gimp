@@ -375,8 +375,8 @@ smooth_palette (GimpDrawable  *drawable,
       gdouble  len_best = 0;
       gint     try;
 
-      pal_best = g_memdup (pal, bpp * psize);
-      original = g_memdup (pal, bpp * psize);
+      pal_best = g_memdup2 (pal, bpp * psize);
+      original = g_memdup2 (pal, bpp * psize);
 
       for (try = 0; try < config.ntries; try++)
         {

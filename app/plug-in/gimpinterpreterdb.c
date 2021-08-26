@@ -511,8 +511,8 @@ gimp_interpreter_db_add_magic (GimpInterpreterDB  *db,
       interp_magic = g_slice_new (GimpInterpreterMagic);
 
       interp_magic->offset  = offset;
-      interp_magic->magic   = g_memdup (magic, size);
-      interp_magic->mask    = g_memdup (mask, size);
+      interp_magic->magic   = g_memdup2 (magic, size);
+      interp_magic->mask    = g_memdup2 (mask, size);
       interp_magic->size    = size;
       interp_magic->program = g_strdup (program);
 

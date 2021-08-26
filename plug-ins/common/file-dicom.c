@@ -992,7 +992,7 @@ dicom_add_element_copy (GSList       *elements,
   elements = dicom_add_element (elements,
                                 group_word, element_word, value_rep,
                                 element_length,
-                                g_memdup (value, element_length));
+                                g_memdup2 (value, element_length));
 
   ((DICOMELEMENT *) elements->data)->free = TRUE;
 

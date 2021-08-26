@@ -390,8 +390,8 @@ gimp_gradient_select_button_callback (const gchar   *gradient_name,
 
   button->priv->gradient_name = g_strdup (gradient_name);
   button->priv->n_samples     = n_samples;
-  button->priv->gradient_data = g_memdup (gradient_data,
-                                          n_samples * sizeof (gdouble));
+  button->priv->gradient_data = g_memdup2 (gradient_data,
+                                           n_samples * sizeof (gdouble));
 
   gtk_widget_queue_draw (button->priv->preview);
 

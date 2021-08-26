@@ -361,7 +361,7 @@ brush_get_pixels_invoker (GimpProcedure         *procedure,
           mask_bpp       = babl_format_get_bytes_per_pixel (format);
           num_mask_bytes = gimp_temp_buf_get_height (mask) *
                            gimp_temp_buf_get_width  (mask) * mask_bpp;
-          mask_bytes     = g_memdup (data, num_mask_bytes);
+          mask_bytes     = g_memdup2 (data, num_mask_bytes);
 
           gimp_temp_buf_unlock (mask, data);
 
@@ -375,7 +375,7 @@ brush_get_pixels_invoker (GimpProcedure         *procedure,
               num_color_bytes = gimp_temp_buf_get_height (pixmap) *
                                 gimp_temp_buf_get_width  (pixmap) *
                                 color_bpp;
-              color_bytes     = g_memdup (data, num_color_bytes);
+              color_bytes     = g_memdup2 (data, num_color_bytes);
 
               gimp_temp_buf_unlock (pixmap, data);
             }

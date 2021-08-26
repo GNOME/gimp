@@ -418,7 +418,7 @@ gimp_pattern_select_button_callback (const gchar  *pattern_name,
   button->priv->width        = width;
   button->priv->height       = height;
   button->priv->bytes        = bytes;
-  button->priv->mask_data    = g_memdup (mask_data, width * height * bytes);
+  button->priv->mask_data    = g_memdup2 (mask_data, width * height * bytes);
 
   gimp_pattern_select_preview_update (button->priv->preview,
                                       width, height, bytes, mask_data);

@@ -102,7 +102,7 @@ gimp_plug_in_manager_set_data (GimpPlugInManager *manager,
     }
 
   plug_in_data->bytes = bytes;
-  plug_in_data->data  = g_memdup (data, bytes);
+  plug_in_data->data  = g_memdup2 (data, bytes);
 }
 
 const guint8 *

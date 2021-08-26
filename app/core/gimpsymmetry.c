@@ -235,7 +235,7 @@ gimp_symmetry_real_update_strokes (GimpSymmetry *sym,
 {
   /* The basic symmetry just uses the origin as is. */
   sym->strokes = g_list_prepend (sym->strokes,
-                                 g_memdup (origin, sizeof (GimpCoords)));
+                                 g_memdup2 (origin, sizeof (GimpCoords)));
 }
 
 static void
@@ -323,7 +323,7 @@ gimp_symmetry_set_origin (GimpSymmetry *sym,
   if (origin != sym->origin)
     {
       g_free (sym->origin);
-      sym->origin = g_memdup (origin, sizeof (GimpCoords));
+      sym->origin = g_memdup2 (origin, sizeof (GimpCoords));
     }
 
   g_list_free_full (sym->strokes, g_free);

@@ -383,8 +383,8 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
 
   if (tile_data->use_shm)
     {
-      tile->data = g_memdup (_gimp_shm_addr (),
-                             tile->ewidth * tile->eheight * priv->bpp);
+      tile->data = g_memdup2 (_gimp_shm_addr (),
+                              tile->ewidth * tile->eheight * priv->bpp);
     }
   else
     {

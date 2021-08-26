@@ -132,7 +132,7 @@ package Gimp::CodeGen::pdb;
 		     in_annotate     => '(element-type GimpImage)',
 		     out_annotate    => '(element-type GimpImage) (transfer container)',
 		     get_value_func  => '$var = (const GimpImage **) gimp_value_get_object_array ($value)',
-		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup (a->data, a->length * sizeof (gpointer)); }',
+		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup2 (a->data, a->length * sizeof (gpointer)); }',
 		     set_value_func  => 'gimp_value_set_object_array ($value, GIMP_TYPE_IMAGE, (GObject **) $var, $var_len)',
 		     take_value_func => 'gimp_value_take_object_array ($value, GIMP_TYPE_IMAGE, (GObject **) $var, $var_len)' },
 
@@ -145,7 +145,7 @@ package Gimp::CodeGen::pdb;
 		     in_annotate     => '(element-type GimpItem)',
 		     out_annotate    => '(element-type GimpItem) (transfer container)',
 		     get_value_func  => '$var = (const GimpItem **) gimp_value_get_object_array ($value)',
-		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup (a->data, a->length * sizeof (gpointer)); }',
+		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup2 (a->data, a->length * sizeof (gpointer)); }',
 		     set_value_func  => 'gimp_value_set_object_array ($value, GIMP_TYPE_ITEM, (GObject **) $var, $var_len)',
 		     take_value_func => 'gimp_value_take_object_array ($value, GIMP_TYPE_ITEM, (GObject **) $var, $var_len)' },
 
@@ -158,7 +158,7 @@ package Gimp::CodeGen::pdb;
 		     in_annotate     => '(element-type GimpLayer)',
 		     out_annotate    => '(element-type GimpLayer) (transfer container)',
 		     get_value_func  => '$var = (const GimpLayer **) gimp_value_get_object_array ($value)',
-		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup (a->data, a->length * sizeof (gpointer)); }',
+		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup2 (a->data, a->length * sizeof (gpointer)); }',
 		     set_value_func  => 'gimp_value_set_object_array ($value, GIMP_TYPE_LAYER, (GObject **) $var, $var_len)',
 		     take_value_func => 'gimp_value_take_object_array ($value, GIMP_TYPE_LAYER, (GObject **) $var, $var_len)' },
 
@@ -171,7 +171,7 @@ package Gimp::CodeGen::pdb;
 		     in_annotate     => '(element-type GimpChannel)',
 		     out_annotate    => '(element-type GimpChannel) (transfer container)',
 		     get_value_func  => '$var = gimp_value_get_object_array ($value)',
-		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup (a->data, a->length * sizeof (gpointer)); }',
+		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup2 (a->data, a->length * sizeof (gpointer)); }',
 		     set_value_func  => 'gimp_value_set_object_array ($value, GIMP_TYPE_CHANNEL, (GObject **) $var, $var_len)',
 		     take_value_func => 'gimp_value_take_object_array ($value, GIMP_TYPE_CHANNEL, (GObject **) $var, $var_len)' },
 
@@ -184,7 +184,7 @@ package Gimp::CodeGen::pdb;
 		     in_annotate     => '(element-type GimpVectors)',
 		     out_annotate    => '(element-type GimpVectors) (transfer container)',
 		     get_value_func  => '$var = (const GimpVectors **) gimp_value_get_object_array ($value)',
-		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup (a->data, a->length * sizeof (gpointer)); }',
+		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup2 (a->data, a->length * sizeof (gpointer)); }',
 		     set_value_func  => 'gimp_value_set_object_array ($value, GIMP_TYPE_VECTORS, (GObject **) $var, $var_len)',
 		     take_value_func => 'gimp_value_take_object_array ($value, GIMP_TYPE_VECTORS, (GObject **) $var, $var_len)' },
 

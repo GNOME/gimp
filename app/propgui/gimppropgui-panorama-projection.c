@@ -47,7 +47,7 @@ gyroscope_callback (GObject       *config,
                     gboolean       invert)
 {
   g_object_set_data_full (G_OBJECT (config), "area",
-                          g_memdup (area, sizeof (GeglRectangle)),
+                          g_memdup2 (area, sizeof (GeglRectangle)),
                           (GDestroyNotify) g_free);
 
   g_object_set (config,
@@ -130,7 +130,7 @@ _gimp_prop_gui_new_panorama_projection (GObject                   *config,
       g_object_set_data (G_OBJECT (config), "set-func", set_func);
 
       g_object_set_data_full (G_OBJECT (config), "area",
-                              g_memdup (area, sizeof (GeglRectangle)),
+                              g_memdup2 (area, sizeof (GeglRectangle)),
                               (GDestroyNotify) g_free);
 
       config_notify (config, NULL, set_data);

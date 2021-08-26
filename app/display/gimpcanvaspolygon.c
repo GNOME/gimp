@@ -148,7 +148,7 @@ gimp_canvas_polygon_set_property (GObject      *object,
 
         if (array)
           {
-            private->points = g_memdup (array->data, array->length);
+            private->points = g_memdup2 (array->data, array->length);
             private->n_points = array->length / sizeof (GimpVector2);
           }
       }
@@ -160,7 +160,7 @@ gimp_canvas_polygon_set_property (GObject      *object,
         if (private->transform)
           g_free (private->transform);
         if (transform)
-          private->transform = g_memdup (transform, sizeof (GimpMatrix3));
+          private->transform = g_memdup2 (transform, sizeof (GimpMatrix3));
         else
           private->transform = NULL;
       }

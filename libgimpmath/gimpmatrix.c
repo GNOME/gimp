@@ -200,7 +200,7 @@ gimp_param_spec_matrix2 (const gchar       *name,
 static GimpMatrix2 *
 matrix2_copy (const GimpMatrix2 *matrix)
 {
-  return (GimpMatrix2 *) g_memdup (matrix, sizeof (GimpMatrix2));
+  return (GimpMatrix2 *) g_memdup2 (matrix, sizeof (GimpMatrix2));
 }
 
 
@@ -463,7 +463,7 @@ gimp_param_spec_matrix3 (const gchar       *name,
 static GimpMatrix3 *
 matrix3_copy (const GimpMatrix3 *matrix)
 {
-  return (GimpMatrix3 *) g_memdup (matrix, sizeof (GimpMatrix3));
+  return (GimpMatrix3 *) g_memdup2 (matrix, sizeof (GimpMatrix3));
 }
 
 

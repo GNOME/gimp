@@ -509,7 +509,7 @@ gimp_get_mod_string (GdkModifierType modifiers)
       g_type_class_unref (accel_label_class);
 
       g_hash_table_insert (mod_labels,
-                           g_memdup (&modifiers, sizeof (GdkModifierType)),
+                           g_memdup2 (&modifiers, sizeof (GdkModifierType)),
                            label);
     }
 

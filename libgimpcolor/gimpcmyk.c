@@ -48,7 +48,7 @@ G_DEFINE_BOXED_TYPE (GimpCMYK, gimp_cmyk, gimp_cmyk_copy, g_free)
 static GimpCMYK *
 gimp_cmyk_copy (const GimpCMYK *cmyk)
 {
-  return g_memdup (cmyk, sizeof (GimpCMYK));
+  return g_memdup2 (cmyk, sizeof (GimpCMYK));
 }
 
 

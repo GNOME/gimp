@@ -402,7 +402,7 @@ ppm_copy (ppm_t *s, ppm_t *p)
   ppm_kill (p);
   p->width = s->width;
   p->height = s->height;
-  p->col = g_memdup (s->col, p->width * 3 * p->height);
+  p->col = g_memdup2 (s->col, p->width * 3 * p->height);
 }
 
 void

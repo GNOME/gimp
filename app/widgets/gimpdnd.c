@@ -1366,7 +1366,7 @@ gimp_dnd_get_color_icon (GtkWidget      *widget,
   GIMP_LOG (DND, "called");
 
   g_object_set_data_full (G_OBJECT (context),
-                          "gimp-dnd-color", g_memdup (&color, sizeof (GimpRGB)),
+                          "gimp-dnd-color", g_memdup2 (&color, sizeof (GimpRGB)),
                           (GDestroyNotify) g_free);
 
   color_area = gimp_color_area_new (&color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);

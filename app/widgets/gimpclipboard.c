@@ -493,7 +493,7 @@ gimp_clipboard_get_svg (Gimp  *gimp,
               stream = gimp_selection_data_get_stream (data, svg_length);
 
               if (stream)
-                svg = g_memdup (stream, *svg_length);
+                svg = g_memdup2 (stream, *svg_length);
 
               gtk_selection_data_free (data);
             }

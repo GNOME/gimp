@@ -71,7 +71,7 @@ image_get_color_profile_invoker (GimpProcedure         *procedure,
 
           data = gimp_color_profile_get_icc_profile (profile, &length);
 
-          profile_data = g_memdup (data, length);
+          profile_data = g_memdup2 (data, length);
           num_bytes = length;
         }
     }
@@ -117,7 +117,7 @@ image_get_effective_color_profile_invoker (GimpProcedure         *procedure,
 
           data = gimp_color_profile_get_icc_profile (profile, &length);
 
-          profile_data = g_memdup (data, length);
+          profile_data = g_memdup2 (data, length);
           num_bytes = length;
         }
     }

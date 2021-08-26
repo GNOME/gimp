@@ -304,8 +304,8 @@ file_load_thumbnail_invoker (GimpProcedure         *procedure,
           width            = gdk_pixbuf_get_width (pixbuf);
           height           = gdk_pixbuf_get_height (pixbuf);
           thumb_data_count = 3 * width * height;
-          thumb_data       = g_memdup (gdk_pixbuf_get_pixels (pixbuf),
-                                       thumb_data_count);
+          thumb_data       = g_memdup2 (gdk_pixbuf_get_pixels (pixbuf),
+                                        thumb_data_count);
 
           g_object_unref (pixbuf);
         }

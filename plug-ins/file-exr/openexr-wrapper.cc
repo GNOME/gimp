@@ -359,7 +359,7 @@ struct _EXRLoader
           }
       }
 
-    return (guchar *)g_memdup (exif_data, *size);
+    return (guchar *)g_memdup2 (exif_data, *size);
   }
 
   guchar *getXmp(guint *size) const {
@@ -369,7 +369,7 @@ struct _EXRLoader
     if (xmp)
       {
         *size = xmp->value().size();
-        result = (guchar *) g_memdup (xmp->value().data(), *size);
+        result = (guchar *) g_memdup2 (xmp->value().data(), *size);
       }
     return result;
   }

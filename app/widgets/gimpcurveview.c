@@ -1314,7 +1314,7 @@ gimp_curve_view_set_curve (GimpCurveView *view,
     g_free (view->curve_color);
 
   if (color)
-    view->curve_color = g_memdup (color, sizeof (GimpRGB));
+    view->curve_color = g_memdup2 (color, sizeof (GimpRGB));
   else
     view->curve_color = NULL;
 

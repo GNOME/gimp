@@ -807,8 +807,8 @@ drawable_thumbnail_invoker (GimpProcedure         *procedure,
           actual_height        = gimp_temp_buf_get_height (buf);
           bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
           thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-          thumbnail_data       = g_memdup (gimp_temp_buf_get_data (buf),
-                                           thumbnail_data_count);
+          thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
+                                            thumbnail_data_count);
 
           gimp_temp_buf_unref (buf);
         }
@@ -886,8 +886,8 @@ drawable_sub_thumbnail_invoker (GimpProcedure         *procedure,
               height               = gimp_temp_buf_get_height (buf);
               bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
               thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-              thumbnail_data       = g_memdup (gimp_temp_buf_get_data (buf),
-                                               thumbnail_data_count);
+              thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
+                                                thumbnail_data_count);
 
               gimp_temp_buf_unref (buf);
             }

@@ -561,7 +561,7 @@ gimp_item_combo_box_remove_items (GtkTreeModel *model,
                       -1);
 
   if (item_ID > 0)
-    *remove = g_list_prepend (*remove, g_memdup (iter, sizeof (GtkTreeIter)));
+    *remove = g_list_prepend (*remove, g_memdup2 (iter, sizeof (GtkTreeIter)));
 
   return FALSE;
 }

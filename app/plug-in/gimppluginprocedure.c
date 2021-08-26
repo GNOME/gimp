@@ -819,7 +819,7 @@ gimp_plug_in_procedure_set_icon (GimpPlugInProcedure  *proc,
                                  GError              **error)
 {
   return gimp_plug_in_procedure_take_icon (proc, icon_type,
-                                           g_memdup (icon_data, icon_data_length),
+                                           g_memdup2 (icon_data, icon_data_length),
                                            icon_data_length, error);
 }
 

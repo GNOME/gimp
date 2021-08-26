@@ -71,7 +71,7 @@ gimp_value_set_rgb (GValue        *value,
 static GimpRGB *
 gimp_rgb_copy (const GimpRGB *rgb)
 {
-  return g_memdup (rgb, sizeof (GimpRGB));
+  return g_memdup2 (rgb, sizeof (GimpRGB));
 }
 
 

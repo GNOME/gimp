@@ -577,7 +577,7 @@ gimp_brush_select_button_callback (const gchar   *name,
   button->priv->brush_name = g_strdup (name);
   button->priv->width      = width;
   button->priv->height     = height;
-  button->priv->mask_data  = g_memdup (mask_data, width * height);
+  button->priv->mask_data  = g_memdup2 (mask_data, width * height);
   button->priv->opacity    = opacity;
   button->priv->spacing    = spacing;
   button->priv->paint_mode = paint_mode;

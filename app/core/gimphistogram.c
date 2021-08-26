@@ -263,10 +263,10 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
 
   dup->priv->n_channels = histogram->priv->n_channels;
   dup->priv->n_bins     = histogram->priv->n_bins;
-  dup->priv->values     = g_memdup (histogram->priv->values,
-                                    sizeof (gdouble) *
-                                    dup->priv->n_channels *
-                                    dup->priv->n_bins);
+  dup->priv->values     = g_memdup2 (histogram->priv->values,
+                                     sizeof (gdouble) *
+                                     dup->priv->n_channels *
+                                     dup->priv->n_bins);
 
   return dup;
 }

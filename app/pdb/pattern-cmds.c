@@ -127,7 +127,7 @@ pattern_get_pixels_invoker (GimpProcedure         *procedure,
           height          = gimp_temp_buf_get_height (pattern->mask);
           bpp             = babl_format_get_bytes_per_pixel (format);
           num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
-          color_bytes     = g_memdup (data, num_color_bytes);
+          color_bytes     = g_memdup2 (data, num_color_bytes);
 
           gimp_temp_buf_unlock (pattern->mask, data);
         }

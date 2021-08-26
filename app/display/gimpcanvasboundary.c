@@ -157,7 +157,7 @@ gimp_canvas_boundary_set_property (GObject      *object,
         if (private->transform)
           g_free (private->transform);
         if (transform)
-          private->transform = g_memdup (transform, sizeof (GimpMatrix3));
+          private->transform = g_memdup2 (transform, sizeof (GimpMatrix3));
         else
           private->transform = NULL;
       }
@@ -377,7 +377,7 @@ gimp_canvas_boundary_new (GimpDisplayShell   *shell,
   private = GET_PRIVATE (item);
 
   /* puke */
-  private->segs   = g_memdup (segs, n_segs * sizeof (GimpBoundSeg));
+  private->segs   = g_memdup2 (segs, n_segs * sizeof (GimpBoundSeg));
   private->n_segs = n_segs;
 
   return item;

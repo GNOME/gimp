@@ -47,7 +47,7 @@ gimp_array_new (const guint8 *data,
 
   array = g_slice_new0 (GimpArray);
 
-  array->data        = static_data ? (guint8 *) data : g_memdup (data, length);
+  array->data        = static_data ? (guint8 *) data : g_memdup2 (data, length);
   array->length      = length;
   array->static_data = static_data;
 
@@ -216,7 +216,7 @@ gimp_value_dup_array (const GValue *value)
   GimpArray *array = value->data[0].v_pointer;
 
   if (array)
-    return g_memdup (array->data, array->length);
+    return g_memdup2 (array->data, array->length);
 
   return NULL;
 }
@@ -1015,7 +1015,7 @@ gimp_value_dup_string_array (const GValue *value)
 
   if (array)
     {
-      gchar **ret = g_memdup (array->data, (array->length + 1) * sizeof (gchar *));
+      gchar **ret = g_memdup2 (array->data, (array->length + 1) * sizeof (gchar *));
       gsize   i;
 
       for (i = 0; i < array->length; i++)
@@ -1552,7 +1552,7 @@ gimp_value_dup_object_array (const GValue *value)
 
   if (array)
     {
-      GObject **ret = g_memdup (array->data, (array->length) * sizeof (GObject *));
+      GObject **ret = g_memdup2 (array->data, (array->length) * sizeof (GObject *));
       gsize    i;
 
       for (i = 0; i < array->length; i++)

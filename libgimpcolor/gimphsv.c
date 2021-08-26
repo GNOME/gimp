@@ -46,7 +46,7 @@ G_DEFINE_BOXED_TYPE (GimpHSV, gimp_hsv, gimp_hsv_copy, g_free)
 static GimpHSV *
 gimp_hsv_copy (const GimpHSV *hsv)
 {
-  return g_memdup (hsv, sizeof (GimpHSV));
+  return g_memdup2 (hsv, sizeof (GimpHSV));
 }
 
 

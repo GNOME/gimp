@@ -138,7 +138,7 @@ gimp_plug_in_view_new (GSList *procedures)
 
           g_hash_table_insert (GIMP_PLUG_IN_VIEW (view)->plug_in_hash,
                                g_object_ref (file),
-                               g_memdup (&iter, sizeof (GtkTreeIter)));
+                               g_memdup2 (&iter, sizeof (GtkTreeIter)));
         }
     }
 

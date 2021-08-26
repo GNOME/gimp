@@ -37,7 +37,7 @@ G_DEFINE_BOXED_TYPE (GimpHSL, gimp_hsl, gimp_hsl_copy, g_free)
 static GimpHSL *
 gimp_hsl_copy (const GimpHSL *hsl)
 {
-  return g_memdup (hsl, sizeof (GimpHSL));
+  return g_memdup2 (hsl, sizeof (GimpHSL));
 }
 
 

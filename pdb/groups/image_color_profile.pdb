@@ -54,7 +54,7 @@ HELP
 
       data = gimp_color_profile_get_icc_profile (profile, &length);
 
-      profile_data = g_memdup (data, length);
+      profile_data = g_memdup2 (data, length);
       num_bytes = length;
     }
 }
@@ -102,7 +102,7 @@ HELP
 
       data = gimp_color_profile_get_icc_profile (profile, &length);
 
-      profile_data = g_memdup (data, length);
+      profile_data = g_memdup2 (data, length);
       num_bytes = length;
     }
 }
