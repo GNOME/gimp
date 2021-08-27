@@ -1226,6 +1226,7 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
       g_warning ("Argument with name '%s' already exists on procedure '%s'",
                  pspec->name,
                  gimp_procedure_get_name (procedure));
+      g_param_spec_sink (pspec);
       return pspec;
     }
 
@@ -1235,6 +1236,7 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
                  "on procedure '%s'",
                  pspec->name,
                  gimp_procedure_get_name (procedure));
+      g_param_spec_sink (pspec);
       return pspec;
     }
 
