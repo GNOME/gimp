@@ -511,6 +511,10 @@ gimp_tag_cache_load (GimpTagCache *cache)
     {
       g_printerr ("Failed to parse tag cache: %s\n",
                   error ? error->message : "WTF unknown error");
+      if (error)
+        {
+          g_error_free (error);
+        }
     }
 
   g_object_unref (file);
