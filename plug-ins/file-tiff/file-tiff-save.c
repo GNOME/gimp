@@ -75,9 +75,6 @@ static void      byte2bit               (const guchar  *byteline,
                                          guchar        *bitline,
                                          gboolean       invert);
 
-static void      save_thumbnail         (GimpImage     *image,
-                                         TIFF          *tif);
-
 
 static void
 double_to_psd_fixed (gdouble  value,
@@ -910,85 +907,6 @@ out:
   return status;
 }
 
-static void
-save_thumbnail (GimpImage *image,
-                TIFF      *tif)
-{
-  /* now switch IFD and write thumbnail
-   *
-   * the thumbnail must be saved in a subimage of the image.
-   * otherwise the thumbnail will be saved in a second page of the
-   * same image.
-   *
-   * Exif saves the thumbnail as a second page. To avoid this, the
-   * thumbnail must be saved with the functions of libtiff.
-   */
-
-  GdkPixbuf *thumb_pixbuf;
-  guchar    *thumb_pixels;
-  guchar    *buf;
-  gint       image_width;
-  gint       image_height;
-  gint       thumbw;
-  gint       thumbh;
-  gint       x, y;
-
-#define EXIF_THUMBNAIL_SIZE 256
-
-  image_width  = gimp_image_get_width  (image);
-  image_height = gimp_image_get_height (image);
-
-  if (image_width > image_height)
-    {
-      thumbw = EXIF_THUMBNAIL_SIZE;
-      thumbh = EXIF_THUMBNAIL_SIZE * image_height / image_width;
-    }
-  else
-    {
-      thumbh = EXIF_THUMBNAIL_SIZE;
-      thumbw = EXIF_THUMBNAIL_SIZE * image_width / image_height;
-    }
-
-  thumb_pixbuf = gimp_image_get_thumbnail (image, thumbw, thumbh,
-                                           GIMP_PIXBUF_KEEP_ALPHA);
-
-  thumb_pixels = gdk_pixbuf_get_pixels (thumb_pixbuf);
-
-  TIFFSetField (tif, TIFFTAG_SUBFILETYPE, FILETYPE_REDUCEDIMAGE);
-  TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, thumbw);
-  TIFFSetField (tif, TIFFTAG_IMAGELENGTH, thumbh);
-  TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 8);
-  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-  TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, thumbh);
-  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_NONE);
-  TIFFSetField (tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
-  TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-  TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
-
-  buf = _TIFFmalloc (thumbw * 3);
-
-  for (y = 0; y < thumbh; y++)
-    {
-      guchar *p = buf;
-
-      for (x = 0; x < thumbw; x++)
-        {
-          *p++ = *thumb_pixels++; /* r */
-          *p++ = *thumb_pixels++; /* g */
-          *p++ = *thumb_pixels++; /* b */
-          thumb_pixels++;
-        }
-
-      TIFFWriteScanline (tif, buf, y, 0);
-    }
-
-  _TIFFfree (buf);
-
-  TIFFWriteDirectory (tif);
-
-  g_object_unref (thumb_pixbuf);
-}
-
 /* FIXME Most of the stuff in save_metadata except the
  * thumbnail saving should probably be moved to
  * gimpmetadata.c and gimpmetadata-save.c.
@@ -1001,7 +919,6 @@ save_metadata (GFile        *file,
                gint          saved_bpp)
 {
   gchar    **exif_tags;
-  gboolean   save_thumbnail;
 
   /* See bug 758909: clear TIFFTAG_MIN/MAXSAMPLEVALUE because
    * exiv2 saves them with wrong type and the original values
@@ -1050,21 +967,8 @@ save_metadata (GFile        *file,
 
   gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
 
-  g_object_get (config,
-                "save-thumbnail", &save_thumbnail,
-                NULL);
-
-  /* never save metadata thumbnails for TIFF, see bug #729952 */
-  g_object_set (config,
-                "save-thumbnail", FALSE,
-                NULL);
-
   gimp_procedure_config_save_metadata (GIMP_PROCEDURE_CONFIG (config),
                                        image, file);
-
-  g_object_set (config,
-                "save-thumbnail", save_thumbnail,
-                NULL);
 }
 
 gboolean
@@ -1080,8 +984,6 @@ save_image (GFile         *file,
   const Babl *space               = NULL;
   gboolean    status              = FALSE;
   gboolean    out_linear          = FALSE;
-  gint        number_of_sub_IFDs  = 1;
-  toff_t      sub_IFDs_offsets[1] = { 0UL };
   gint32      num_layers;
   gint32      current_layer       = 0;
   GList      *layers;
@@ -1144,10 +1046,6 @@ save_image (GFile         *file,
       g_object_unref (profile);
     }
 
-  /* we put the whole file's thumbnail into the first IFD (i.e., page) */
-  if (config_save_thumbnail)
-    TIFFSetField (tif, TIFFTAG_SUBIFD, number_of_sub_IFDs, sub_IFDs_offsets);
-
   /* calculate the top-left coordinates */
   for (iter = layers; iter; iter = g_list_next (iter))
     {
@@ -1171,10 +1069,6 @@ save_image (GFile         *file,
       goto out;
     }
   current_layer++;
-
-  /* write thumbnail */
-  if (config_save_thumbnail)
-    save_thumbnail (image, tif);
 
   /* close file so we can safely let exiv2 work on it to write metadata.
    * this can be simplified once multi page TIFF is supported by exiv2
