@@ -1954,6 +1954,7 @@ xcf_load_layer (XcfInfo    *info,
       break;
 
     default:
+      g_free (name);
       return NULL;
     }
 
@@ -1977,6 +1978,7 @@ xcf_load_layer (XcfInfo    *info,
         }
       else
         {
+          g_free (name);
           return NULL;
         }
     }
@@ -2830,6 +2832,7 @@ xcf_load_old_path (XcfInfo   *info,
     {
       g_printerr ("Unknown path type. Possibly corrupt XCF file");
 
+      g_free (name);
       return FALSE;
     }
 
