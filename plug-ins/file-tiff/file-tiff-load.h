@@ -29,6 +29,8 @@ typedef struct
   gint                    o_pages;
   gint                    n_pages;
   gint                   *pages;
+  gint                   *filtered_pages;   /* thumbnail is marked as -1 */
+  gint                    n_filtered_pages;
   GimpPageSelectorTarget  target;
   gboolean                keep_empty_space;
 } TiffSelectedPages;

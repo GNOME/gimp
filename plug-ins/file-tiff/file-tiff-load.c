@@ -252,6 +252,7 @@ load_image (GFile        *file,
   gint               max_row          = 0;
   gint               max_col          = 0;
   GimpColorProfile  *first_profile      = NULL;
+  const gchar       *extra_message      = NULL;
   gint               li;
 
   *image = 0;
@@ -312,96 +313,164 @@ load_image (GFile        *file,
     }
 
   pages.pages = NULL;
-  if (run_mode != GIMP_RUN_INTERACTIVE)
-    {
-      pages.pages = g_new (gint, pages.n_pages);
+  pages.n_filtered_pages = pages.n_pages;
 
-      for (li = 0; li < pages.n_pages; li++)
-        pages.pages[li] = li;
+  pages.filtered_pages  = g_new0 (gint, pages.n_pages);
+  for (li = 0; li < pages.n_pages; li++)
+    pages.filtered_pages[li] = li;
+
+  if (pages.n_pages == 1)
+    {
+      pages.pages  = g_new0 (gint, pages.n_pages);
+      pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
     }
-  else
-    {
-      const gchar *extra_message = NULL;
 
-      if (pages.n_pages == 1)
+  /* Check all pages if any has an unspecified or unset channel. */
+  for (li = 0; li < pages.n_pages; li++)
+    {
+      gushort  spp;
+      gushort  photomet;
+      gushort  extra;
+      gushort *extra_types;
+      gushort  file_type = 0;
+      gboolean first_page_old_jpeg = FALSE;
+
+      if (TIFFSetDirectory (tif, li) == 0)
+        continue;
+
+      TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLESPERPIXEL, &spp);
+      if (! TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
         {
-          pages.pages  = g_new0 (gint, pages.n_pages);
-          pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+          guint16 compression;
+
+          if (TIFFGetField (tif, TIFFTAG_COMPRESSION, &compression) &&
+              (compression == COMPRESSION_CCITTFAX3 ||
+               compression == COMPRESSION_CCITTFAX4 ||
+               compression == COMPRESSION_CCITTRLE  ||
+               compression == COMPRESSION_CCITTRLEW))
+            {
+              photomet = PHOTOMETRIC_MINISWHITE;
+            }
+          else
+            {
+              /* old AppleScan software misses out the photometric tag
+               * (and incidentally assumes min-is-white, but xv
+               * assumes min-is-black, so we follow xv's lead.  It's
+               * not much hardship to invert the image later).
+               */
+              photomet = PHOTOMETRIC_MINISBLACK;
+            }
+        }
+      if (! TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra, &extra_types))
+        extra = 0;
+
+      /* Try to detect if a TIFF page is a thumbnail.
+       * Easy case: if subfiletype is set to FILETYPE_REDUCEDIMAGE.
+       * If no subfiletype is defined we try to detect it ourselves.
+       * We will consider it a thumbnail if:
+       * - It's the second page
+       * - PhotometricInterpretation is YCbCr
+       * - Compression is old style jpeg
+       * - First page uses a different compression or PhotometricInterpretation
+       *
+       * We could also add a check for the presence of TIFFTAG_EXIFIFD since
+       * this should usually be a thumbnail part of EXIF metadata. Since that
+       * probably won't make a difference, I will leave that out for now.
+       */
+      if (li == 0)
+        {
+          guint16 compression;
+
+          if (TIFFGetField (tif, TIFFTAG_COMPRESSION, &compression) &&
+              compression == COMPRESSION_OJPEG &&
+              photomet    == PHOTOMETRIC_YCBCR)
+            first_page_old_jpeg = TRUE;
         }
 
-      /* Check all pages if any has an unspecified or unset channel. */
-      for (li = 0; li < pages.n_pages; li++)
+      if (TIFFGetField (tif, TIFFTAG_SUBFILETYPE, &file_type))
         {
-          gushort  spp;
-          gushort  photomet;
-          gushort  extra;
-          gushort *extra_types;
-
-          if (TIFFSetDirectory (tif, li) == 0)
-            continue;
-
-          TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLESPERPIXEL, &spp);
-          if (! TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
+          if (file_type == FILETYPE_REDUCEDIMAGE)
+            {
+              /* file_type is a mask but we will only filter out pages
+               * that only have FILETYPE_REDUCEDIMAGE set */
+              pages.filtered_pages[li] = -1;
+              pages.n_filtered_pages--;
+              g_debug ("Page %d is a FILETYPE_REDUCEDIMAGE thumbnail.\n", li);
+            }
+        }
+      else
+        {
+          if (li == 1 && photomet == PHOTOMETRIC_YCBCR &&
+              ! first_page_old_jpeg)
             {
               guint16 compression;
 
               if (TIFFGetField (tif, TIFFTAG_COMPRESSION, &compression) &&
-                  (compression == COMPRESSION_CCITTFAX3 ||
-                   compression == COMPRESSION_CCITTFAX4 ||
-                   compression == COMPRESSION_CCITTRLE  ||
-                   compression == COMPRESSION_CCITTRLEW))
+                  compression == COMPRESSION_OJPEG)
                 {
-                  photomet = PHOTOMETRIC_MINISWHITE;
+                  pages.filtered_pages[li] = -1;
+                  pages.n_filtered_pages--;
+                  g_debug ("Page %d is most likely a thumbnail.\n", li);
                 }
-              else
-                {
-                  /* old AppleScan software misses out the photometric tag
-                   * (and incidentally assumes min-is-white, but xv
-                   * assumes min-is-black, so we follow xv's lead.  It's
-                   * not much hardship to invert the image later).
-                   */
-                  photomet = PHOTOMETRIC_MINISBLACK;
-                }
-            }
-          if (! TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra, &extra_types))
-            extra = 0;
-
-          /* TODO: current code always assumes that the alpha channel
-           * will be the first extra channel, though the TIFF spec does
-           * not mandate such assumption. A future improvement should be
-           * to actually loop through the extra channels and save the
-           * alpha channel index.
-           * Of course, this is an edge case, as most image would likely
-           * have only a single extra channel anyway. But still we could
-           * be more accurate.
-           */
-          if (extra > 0 && (extra_types[0] == EXTRASAMPLE_UNSPECIFIED))
-            {
-              extra_message = _("Extra channels with unspecified data.");
-              break;
-            }
-          else if (extra == 0 && is_non_conformant_tiff (photomet, spp))
-            {
-              /* ExtraSamples field not set, yet we have more channels than
-               * the PhotometricInterpretation field suggests.
-               * This should not happen as the spec clearly says "This field
-               * must be present if there are extra samples". So the files
-               * can be considered non-conformant.
-               * Let's ask what to do with the channel.
-               */
-              extra_message = _("Non-conformant TIFF: extra channels without 'ExtraSamples' field.");
             }
         }
-      TIFFSetDirectory (tif, 0);
 
-      if ((pages.n_pages > 1 || extra_message) &&
-          ! load_dialog (tif, LOAD_PROC, &pages,
-                         extra_message, &default_extra))
+      /* TODO: current code always assumes that the alpha channel
+       * will be the first extra channel, though the TIFF spec does
+       * not mandate such assumption. A future improvement should be
+       * to actually loop through the extra channels and save the
+       * alpha channel index.
+       * Of course, this is an edge case, as most image would likely
+       * have only a single extra channel anyway. But still we could
+       * be more accurate.
+       */
+      if (extra > 0 && (extra_types[0] == EXTRASAMPLE_UNSPECIFIED))
         {
-          TIFFClose (tif);
-          g_clear_pointer (&pages.pages, g_free);
+          extra_message = _("Extra channels with unspecified data.");
+          break;
+        }
+      else if (extra == 0 && is_non_conformant_tiff (photomet, spp))
+        {
+          /* ExtraSamples field not set, yet we have more channels than
+           * the PhotometricInterpretation field suggests.
+           * This should not happen as the spec clearly says "This field
+           * must be present if there are extra samples". So the files
+           * can be considered non-conformant.
+           * Let's ask what to do with the channel.
+           */
+          extra_message = _("Non-conformant TIFF: extra channels without 'ExtraSamples' field.");
+        }
+    }
+  TIFFSetDirectory (tif, 0);
 
-          return GIMP_PDB_CANCEL;
+  if (run_mode == GIMP_RUN_INTERACTIVE &&
+      (pages.n_pages > 1 || extra_message) &&
+      ! load_dialog (tif, LOAD_PROC, &pages,
+                     extra_message, &default_extra))
+    {
+      TIFFClose (tif);
+      g_clear_pointer (&pages.pages, g_free);
+
+      return GIMP_PDB_CANCEL;
+    }
+  /* Adjust pages to take filtered out pages into account. */
+  if (pages.o_pages > pages.n_filtered_pages)
+    {
+      gint fi;
+      gint sel_index = 0;
+      gint sel_add   = 0;
+
+      for (fi = 0; fi < pages.o_pages && sel_index < pages.n_pages; fi++)
+        {
+          if (pages.filtered_pages[fi] == -1)
+            {
+              sel_add++;
+            }
+          if (pages.pages[sel_index] + sel_add == fi)
+            {
+              pages.pages[sel_index] = fi;
+              sel_index++;
+            }
         }
     }
 
@@ -2446,7 +2515,7 @@ load_dialog (TIFF              *tif,
 
   if (pages->n_pages > 1)
     {
-      gint i;
+      gint i, j;
 
       /* Page Selector */
       selector = gimp_page_selector_new ();
@@ -2454,16 +2523,20 @@ load_dialog (TIFF              *tif,
       gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
 
       gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector),
-                                      pages->n_pages);
+                                      pages->n_filtered_pages);
       gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector), pages->target);
 
-      for (i = 0; i < pages->n_pages; i++)
+      for (i = 0, j = 0; i < pages->n_pages && j < pages->n_filtered_pages; i++)
         {
-          const gchar *name = tiff_get_page_name (tif);
+          if (pages->filtered_pages[i] != -1)
+            {
+              const gchar *name = tiff_get_page_name (tif);
 
-          if (name)
-            gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (selector),
-                                               i, name);
+              if (name)
+                gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (selector),
+                                                   j, name);
+              j++;
+            }
 
           TIFFReadDirectory (tif);
         }
