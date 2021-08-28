@@ -808,7 +808,10 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
                                           "3");
           gexiv2_metadata_set_tag_string (new_g2metadata,
                                           "Exif.Thumbnail.PhotometricInterpretation",
-                                          "6");
+                                          "6"); /* old jpeg */
+          gexiv2_metadata_set_tag_string (new_g2metadata,
+                                          "Exif.Thumbnail.NewSubfileType",
+                                          "1"); /* reduced resolution image */
 
           g_free (thumb_buffer);
         }
