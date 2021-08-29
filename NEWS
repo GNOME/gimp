@@ -14,6 +14,10 @@ Overview of Changes from GIMP 2.10.24 to GIMP 2.10.26
 Core:
 
   - Dashboard now has memory support in OpenBSD.
+  - Default shortcuts Shift+[ and ] for tool size changed to { and }.
+  - Performance improvements for GIMP on macOS Big Sur: these
+    improvements were actually already applied in our macOS packages
+    since GIMP 2.10.22, but were applied upstream directly only now.
 
 Plug-ins:
 
@@ -23,6 +27,9 @@ Plug-ins:
     versions of our plug-in.
   - DDS files with "L16" - a 16 bit luminance channel - are now loaded
     in 16-bit.
+  - DICOM images:
+    * Support for planar configuration.
+    * Support for deprecated big endian transfer.
 
 Script-fu:
 
@@ -41,6 +48,9 @@ Build:
     detection should be fine and not depend on file extension).
   - gimp30-tips.mo is not installed anymore (only used during the build
     to generate gimp-tips.xml with multiple language support).
+  - --enable-check-update now has an "auto" value, which is the new
+    default. It is equivalent to "yes" for Windows and macOS and "no" in
+    all other cases.
 
 
 Overview of Changes from GIMP 2.10.22 to GIMP 2.10.24
