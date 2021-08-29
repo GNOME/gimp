@@ -883,6 +883,12 @@ save_metadata (GFile                 *file,
   exif_tags = gexiv2_metadata_get_exif_tags (GEXIV2_METADATA(metadata));
   for (char **tag = exif_tags; *tag; tag++)
     {
+      /* Keeping Exif.Image2, 3 can cause exiv2 to save faulty extra TIFF pages
+       * that are empty except for the Exif metadata. See issue #7195. */
+      if (g_str_has_prefix (*tag, "Exif.Image")
+          && (*tag)[strlen ("Exif.Image")] >= '0'
+          && (*tag)[strlen ("Exif.Image")] <= '9')
+        gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), *tag);
       if (g_str_has_prefix (*tag, "Exif.SubImage")
           && (*tag)[strlen ("Exif.SubImage")] >= '0'
           && (*tag)[strlen ("Exif.SubImage")] <= '9')
