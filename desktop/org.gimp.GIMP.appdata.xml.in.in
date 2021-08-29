@@ -186,6 +186,14 @@
       </description>
     </release>
 
+    <release version="2.10.26" date="2021-09-05">
+      <description>
+        <_p>
+          GIMP 2.10.26 is a bug fix release, containing dozens of
+          fixes, both in core, scripts and plug-in code.
+        </_p>
+      </description>
+    </release>
     <release version="2.10.24" date="2021-03-28">
       <url type="details">https://www.gimp.org/news/2021/03/29/gimp-2-10-24-released/</url>
       <description>
