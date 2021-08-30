@@ -24,6 +24,7 @@
     <menuitem action="vectors-delete" />
     <menuitem action="vectors-merge-visible" />
     <separator />
+    <menuitem action="vectors-to-vector-layer" />
     <menuitem action="vectors-selection-replace" />
     <menuitem action="vectors-selection-add" />
     <menuitem action="vectors-selection-subtract" />

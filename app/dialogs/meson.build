@@ -40,6 +40,8 @@ libappdialogs_sources = [
   'tips-dialog.c',
   'tips-parser.c',
   'user-install-dialog.c',
+  'vector-layer-options-dialog.c',
+  'vector-layer-options-dialog.h',
   'vectors-export-dialog.c',
   'vectors-import-dialog.c',
   'vectors-options-dialog.c',

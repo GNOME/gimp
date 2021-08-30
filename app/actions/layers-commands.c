@@ -59,6 +59,8 @@
 #include "text/gimptextlayer.h"
 
 #include "vectors/gimpstroke.h"
+#include "vectors/gimpvectorlayer.h"
+#include "vectors/gimpvectorlayeroptions.h"
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-warp.h"
 
@@ -72,6 +74,7 @@
 #include "display/gimpimagewindow.h"
 
 #include "tools/gimptexttool.h"
+#include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 
 #include "dialogs/dialogs.h"
@@ -79,6 +82,7 @@
 #include "dialogs/layer-options-dialog.h"
 #include "dialogs/resize-dialog.h"
 #include "dialogs/scale-dialog.h"
+#include "dialogs/vector-layer-options-dialog.h"
 
 #include "actions.h"
 #include "items-commands.h"
@@ -241,9 +245,54 @@ layers_edit_text_cmd_callback (GimpAction *action,
 }
 
 void
+layers_edit_vector_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  GimpTool  *active_tool;
+  return_if_no_layer (image, layer, data);
+  return_if_no_widget (widget, data);
+
+  g_return_if_fail (gimp_item_is_vector_layer (GIMP_ITEM (layer)));
+
+  /*if (! gimp_drawable_is_vector_layer (GIMP_DRAWABLE (layer)))
+    {
+      layers_edit_attributes_cmd_callback (action, value, data);
+      return;
+    }*/
+
+  active_tool = tool_manager_get_active (image->gimp);
+
+  if (! GIMP_IS_VECTOR_TOOL (active_tool))
+    {
+      /*GimpToolInfo *tool_info;
+
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (image->gimp->tool_info_list,
+                                          "gimp-vector-tool");*/
+      GimpToolInfo *tool_info = gimp_get_tool_info (image->gimp,
+                                                    "gimp-vector-tool");
+
+      if (GIMP_IS_TOOL_INFO (tool_info))
+        {
+          gimp_context_set_tool (action_data_get_context (data), tool_info);
+          active_tool = tool_manager_get_active (image->gimp);
+        }
+    }
+
+  if (GIMP_IS_VECTOR_TOOL (active_tool))
+    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool),
+                                  GIMP_VECTOR_LAYER (layer)->options->vectors);
+//                                  layer->options->vectors);
+}
+
+void
 layers_edit_attributes_cmd_callback (GimpAction *action,
                                      GVariant   *value,
-                                     gpointer    data)
+                                     gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -1059,9 +1108,47 @@ layers_text_along_vectors_cmd_callback (GimpAction *action,
 }
 
 void
+layers_vector_fill_stroke_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  return_if_no_layer (image, layer, data);
+  return_if_no_widget (widget, data);
+
+  if (GIMP_IS_VECTOR_LAYER (layer))
+    {
+      GtkWidget *dialog;
+
+      dialog = vector_layer_options_dialog_new (GIMP_VECTOR_LAYER (layer),
+                                                action_data_get_context (data),
+                                                _("Fill / Stroke"),
+                                                _("_OK"),
+                                                NULL, /* FIXME: help id */
+                                                widget);
+      gtk_widget_show (dialog);
+    }
+}
+
+void
+layers_vector_discard_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer     data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  if (GIMP_IS_VECTOR_LAYER (layer))
+    gimp_vector_layer_discard (GIMP_VECTOR_LAYER (layer));
+}
+
+void
 layers_resize_cmd_callback (GimpAction *action,
                             GVariant   *value,
-                            gpointer    data)
+                            gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;

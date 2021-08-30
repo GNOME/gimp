@@ -460,6 +460,10 @@
         <menuitem action="layers-text-to-vectors" />
         <menuitem action="layers-text-along-vectors" />
       </placeholder>
+      <placeholder name="Vector">
+        <menuitem action="layers-vector-fill-stroke" />
+        <menuitem action="layers-vector-discard" />
+      </placeholder>
       <separator />
       <menu action="layers-stack-menu" name="Stack">
         <placeholder name="Select">

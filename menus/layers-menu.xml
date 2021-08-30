@@ -4,6 +4,8 @@
 <ui>
   <popup action="layers-popup">
     <menuitem action="layers-edit-text" />
+    <menuitem action="layers-edit-vector" />
+
     <menuitem action="layers-edit-attributes" />
     <menu action="layers-blend-space-menu" name="Blend Space">
       <menuitem action="layers-blend-space-auto" />
@@ -52,6 +54,9 @@
     <menuitem action="layers-text-discard" />
     <menuitem action="layers-text-to-vectors" />
     <menuitem action="layers-text-along-vectors" />
+    <separator />
+    <menuitem action="layers-vector-fill-stroke" />
+    <menuitem action="layers-vector-discard" />
     <separator />
     <menuitem action="layers-resize" />
     <menuitem action="layers-resize-to-image" />

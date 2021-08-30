@@ -33,6 +33,8 @@
 
 #include "text/gimptextlayer.h"
 
+#include "vectors/gimpvectorlayer.h"
+
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -96,6 +98,13 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "Edit this text layer content on canvas"),
     layers_edit_text_cmd_callback,
     GIMP_HELP_LAYER_EDIT },
+
+  { "layers-edit-vector", GIMP_ICON_TOOL_PATH,
+    NC_("layers-action", "Edit Vector layer"), NULL,
+    NC_("layers-action",
+        "Activate the path tool to edit this vector layer's path"),
+    layers_edit_vector_cmd_callback,
+    GIMP_HELP_TOOL_PATH },
 
   { "layers-edit-attributes", GIMP_ICON_EDIT,
     NC_("layers-action", "_Edit Layer Attributes..."), NULL,
@@ -227,6 +236,18 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "Warp this layer's text along the current path"),
     layers_text_along_vectors_cmd_callback,
     GIMP_HELP_LAYER_TEXT_ALONG_PATH },
+
+  { "layers-vector-fill-stroke", NULL,
+    N_("Fill / Stroke"), NULL,
+    N_("Edit the fill and stroke of this vector layer"),
+    layers_vector_fill_stroke_cmd_callback,
+    NULL },
+
+  { "layers-vector-discard", NULL,
+    N_("Discard Vector Information"), NULL,
+    N_("Turn this vector layer into a normal layer"),
+    layers_vector_discard_cmd_callback,
+    NULL },
 
   { "layers-resize", GIMP_ICON_OBJECT_RESIZE,
     NC_("layers-action", "Layer B_oundary Size..."), NULL,
@@ -766,6 +787,7 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       lock_alpha     = TRUE;
   gboolean       can_lock_alpha = FALSE;
   gboolean       text_layer     = FALSE;
+  gboolean       vector_layer   = FALSE;
   gboolean       bs_mutable     = FALSE; /* At least 1 selected layers' blend space is mutable.     */
   gboolean       cs_mutable     = FALSE; /* At least 1 selected layers' composite space is mutable. */
   gboolean       cm_mutable     = FALSE; /* At least 1 selected layers' composite mode is mutable.  */
@@ -983,8 +1005,9 @@ layers_actions_update (GimpActionGroup *group,
 
           gimp_action_group_set_action_active (group, action, TRUE);
 
-          text_layer = gimp_item_is_text_layer (GIMP_ITEM (layer));
-        }
+          text_layer   = gimp_item_is_text_layer (GIMP_ITEM (layer));
+          vector_layer = gimp_item_is_vector_layer (GIMP_ITEM (layer));
+         }
     }
 
 #define SET_VISIBLE(action,condition) \
@@ -996,9 +1019,11 @@ layers_actions_update (GimpActionGroup *group,
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, label)
 
-  SET_SENSITIVE ("layers-edit",             !ac && ((layer && !fs) || text_layer));
+  SET_SENSITIVE ("layers-edit",             !ac && ((layer && !fs) || text_layer || vector_layer));
   SET_VISIBLE   ("layers-edit-text",        text_layer && !ac);
   SET_SENSITIVE ("layers-edit-text",        text_layer && !ac);
+  SET_VISIBLE   ("layers-edit-vector",      vector_layer && !ac);
+  SET_SENSITIVE ("layers-edit-vector",      vector_layer && !ac);
   SET_SENSITIVE ("layers-edit-attributes",  layer && !fs && !ac);
 
   if (layer && gimp_layer_is_floating_sel (layer))
@@ -1047,6 +1072,9 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-discard",       text_layer && !ac);
   SET_VISIBLE   ("layers-text-to-vectors",    text_layer && !ac);
   SET_VISIBLE   ("layers-text-along-vectors", text_layer && !ac);
+
+  SET_VISIBLE   ("layers-vector-fill-stroke", vector_layer && !ac);
+  SET_VISIBLE   ("layers-vector-discard",     vector_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          n_selected_layers == 1 && all_writable && all_movable && !ac);
   SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac);

@@ -89,29 +89,6 @@ gimp_vector_options_init (GimpVectorOptions *options)
 }
 
 static void
-gimp_vector_options_set_property (GObject      *object,
-                                  guint         property_id,
-                                  const GValue *value,
-                                  GParamSpec   *pspec)
-{
-  GimpVectorOptions *options = GIMP_VECTOR_OPTIONS (object);
-
-  switch (property_id)
-    {
-    case PROP_VECTORS_EDIT_MODE:
-      options->edit_mode = g_value_get_enum (value);
-      break;
-    case PROP_VECTORS_POLYGONAL:
-      options->polygonal = g_value_get_boolean (value);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-
-static void
 gimp_vector_options_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
@@ -126,6 +103,28 @@ gimp_vector_options_get_property (GObject    *object,
       break;
     case PROP_VECTORS_POLYGONAL:
       g_value_set_boolean (value, options->polygonal);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_vector_options_set_property (GObject      *object,
+                                  guint         property_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
+{
+  GimpVectorOptions *options = GIMP_VECTOR_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_VECTORS_EDIT_MODE:
+      options->edit_mode = g_value_get_enum (value);
+      break;
+    case PROP_VECTORS_POLYGONAL:
+      options->polygonal = g_value_get_boolean (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -213,6 +212,14 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   options->stroke_button = button;
+
+  button = gtk_button_new_with_label (_("Create Vector Layer"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_sensitive (button, FALSE);
+  gimp_help_set_help_data (button, NULL, NULL /* FIXME */);
+  gtk_widget_show (button);
+
+  options->vector_layer_button = button;
 
   return vbox;
 }
