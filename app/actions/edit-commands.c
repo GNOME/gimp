@@ -460,7 +460,7 @@ edit_named_copy_visible_cmd_callback (GimpAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  dialog = gimp_query_string_box (_("Copy Visible Named "), widget,
+  dialog = gimp_query_string_box (_("Copy Visible Named"), widget,
                                   gimp_standard_help_func,
                                   GIMP_HELP_BUFFER_COPY,
                                   _("Enter a name for this buffer"),
