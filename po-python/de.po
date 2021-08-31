@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-12 23:00+0000\n"
-"PO-Revision-Date: 2020-02-13 20:35+0100\n"
+"POT-Creation-Date: 2021-08-30 21:05+0000\n"
+"PO-Revision-Date: 2021-08-31 21:40+0200\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 3.0\n"
 "X-Project-Style: gnome\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
@@ -110,47 +110,47 @@ msgstr "Zu verwendender Farbverlauf"
 msgid "File Name"
 msgstr "Dateiname"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Exportiert das Histogramm des Bildes in eine Textdatei (CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
 msgid "_Export histogram..."
 msgstr "Histogramm e_xportieren …"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
 msgid "_Image"
 msgstr "B_ild"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "_Drawable"
 msgstr "_Zeichenfläche"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "Histogram _File"
 msgstr "Histogramm_datei"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
 msgid "_Bucket Size"
 msgstr "_Eimergröße"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
 msgid "Sample _Average"
 msgstr "Stichproben_mittelwert"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Output format"
 msgstr "Ausgabeformat"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Pixel count"
 msgstr "Pixelanzahl"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "Normalized"
 msgstr "Normalisiert"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
 msgid "Percent"
 msgstr "Prozent"
 
@@ -560,11 +560,11 @@ msgstr "Epitrochoid"
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1395
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1397
 msgid "Curve Type"
 msgstr "Kurventyp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1396
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1398
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -572,22 +572,22 @@ msgstr ""
 "Epitrochoid-Muster: Das drehende Zahnrad befindet sich auf der Außenseite "
 "des feststehenden Zahnrads."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1401
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1403
 msgid "Tool"
 msgstr "Werkzeug"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1402
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
 msgid ""
-"The tool with which to draw the pattern.The Preview tool just draws quickly."
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Das Werkzeug, um das Muster zu zeichnen. Das Vorschau-Werkzeug erstellt nur "
 "eine grobe Zeichnung."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1407
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
 msgid "Long Gradient"
 msgstr "Langer Farbverlauf"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1411
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -598,11 +598,11 @@ msgstr ""
 "aktuellen Farbverlauf und Wiederholungsmodus in den Werkzeugeinstellungen "
 "für Farbverläufe."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1429
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Muster über einen der folgenden Reiter spezifizieren:"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1433
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -615,7 +615,7 @@ msgstr ""
 "Anleitungen solcher Sammlungen folgen, sollten Sie vergleichbare Ergebnisse "
 "erzielen."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1455
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -623,12 +623,12 @@ msgstr ""
 "Anzahl der Zähne des feststehenden Zahnrads. Die Größe des feststehenden "
 "Zahnrads ist proportional zu der Anzahl der Zähne."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1458
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1484
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1460
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1486
 msgid "Fixed Gear Teeth"
 msgstr "Zähne des feststehenden Zahnrads"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1464
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1466
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -636,16 +636,16 @@ msgstr ""
 "Anzahl der Zähne des sich bewegenden Zahnrads. Die Größe des sich bewegenden "
 "Zahnrads ist proportional zu der Anzahl der Zähne."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1467
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1489
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1469
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1491
 msgid "Moving Gear Teeth"
 msgstr "Zähne des sich bewegenden Zahnrads"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1472
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
 msgid "Hole percent"
 msgstr "Loch-Prozent"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1473
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -653,11 +653,11 @@ msgstr ""
 "Legt fest, wie weit das Loch vom Mittelpunkt des sich bewegenden Zahnrads "
 "entfernt ist. 100% bedeutet, dass es sich am Rand befindet."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1494
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
 msgid "Hole Number"
 msgstr "Anzahl Löcher"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1495
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -666,29 +666,29 @@ msgstr ""
 "nahe des Mittelpunkts. Die maximale Anzahl an Löchern ist unterschiedlich "
 "für jedes Zahnrad."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "Flower Petals"
 msgstr "Blütenblätter"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "The number of petals in the pattern."
 msgstr "Die Anzahl an Blütenblättern im Muster."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1511
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
 msgid "Petal Skip"
 msgstr "Lücke zwischen Blütenblättern"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1512
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
 msgid "The number of petals to advance for drawing the next petal."
 msgstr ""
 "Die Anzahl an Blütenblättern, die vorangegangen werden soll, bevor das "
 "nächste Blatt gezeichnet wird."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1517
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
 msgid "Hole Radius(%)"
 msgstr "Loch-Radius (%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1518
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -698,11 +698,11 @@ msgstr ""
 "wird. Angegeben prozentual zur Größe des Musters. Ein Wert von 0 ergibt kein "
 "Loch. Eine Wert von 99 ergibt eine schmale Linie an der Kante."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1531
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
 msgid "Width(%)"
 msgstr "Breite (%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1532
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1534
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -712,24 +712,24 @@ msgstr ""
 "ergibt nur ein schmales Muster. Ein Wert von 100 füllt das gesamte "
 "feststehende Zahnrad."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1542
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
 msgid "Visual"
 msgstr "Schaubild"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1547
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
 msgid "Toy Kit"
 msgstr "Spielzeug-Sammlung"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1552
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
 msgid "Gears"
 msgstr "Zahnräder"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1564
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1566
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation"
 msgstr "Drehung"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1565
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1567
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -737,11 +737,11 @@ msgstr ""
 "Drehung des Musters in Grad. Die Startposition des sich drehenden Zahnrads "
 "im feststehenden Zahnrad."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1588
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
 msgid "Shape"
 msgstr "Form"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1589
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1591
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -756,40 +756,40 @@ msgstr ""
 "Umriss zu berühren. »Auswahl« umklammert den Umriss der aktuellen Auswahl - "
 "versuchen Sie etwas nicht-rechteckiges."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Sides"
 msgstr "Seiten"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Number of sides of the shape."
 msgstr "Anzahl der Seiten der Form."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph"
 msgstr "Verwandeln"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr ""
 "Die Form des feststehenden Zahnrads verwandeln. Betrifft nur einige Formen."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Drehung des feststehenden Zahnrads in Grad"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
 msgid "Margin (px)"
 msgstr "Rand (px)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
 msgid "Margin from edge of selection."
 msgstr "Rand von der Kante der Auswahl."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1628
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
 msgid "Make width and height equal"
 msgstr "Breite und Höhe gleich anpassen"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1632
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -798,11 +798,11 @@ msgstr ""
 "Auswahl ausfüllen. Wenn angekreuzt, bekommt das Muster dieselbe Höhe und "
 "Breite und wird zentriert."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1654
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1656
 msgid "Re_draw"
 msgstr "Erneut _Zeichnen"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1655
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -810,19 +810,19 @@ msgstr ""
 "Drücken Sie hier, um eine Vorschau des Musters zu erhalten, nachdem Sie die "
 "Einstellungen eines Werkzeugs, Farbe oder Auswahl verändert haben."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
 msgid "_Reset"
 msgstr "Zu_rücksetzen"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1658
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
 msgid "_Cancel"
 msgstr "A_bbrechen"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
 msgid "_OK"
 msgstr "_OK"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1665
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1667
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -830,37 +830,37 @@ msgstr ""
 "Legen Sie fest, ob das Ergebnis als neue Ebene oder Pfad gespeichert, oder "
 "erneut auf die zuletzt aktive Ebene gezeichnet werden soll"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1677
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1686
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2191
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Spyrographen mit den aktuellen Werkzeugeinstellungen und Auswahl zeichnen."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1699
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1701
 msgid "Curve Pattern"
 msgstr "Kurvenmuster"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1702
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1704
 msgid "Fixed Gear"
 msgstr "Feststehendes Zahnrad"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1705
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1707
 msgid "Size"
 msgstr "Größe"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2039
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2047
 msgid "Rendering Pattern"
 msgstr "Muster wird erstellt"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2051
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2059
 msgid "Please wait : Rendering Pattern"
 msgstr "Bitte warten: Muster wird erstellt"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2160
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
 msgid "Spyrogimp..."
 msgstr "Spyrogimp …"
 
