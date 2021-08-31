@@ -1321,6 +1321,16 @@ style "gimp-dark-radio-button" = "gimp-dark-default-style"
     {
       image
         {
+          function = BOX
+          state = PRELIGHT
+          recolorable = TRUE
+          file = "ui/gimp-button-prelight-white-border.png"
+          border = { 8, 8, 8, 8}
+          stretch = TRUE
+        }
+
+      image
+        {
           function = OPTION
           shadow = OUT
           recolorable = TRUE
