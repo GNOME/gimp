@@ -70,7 +70,7 @@ struct _GimpPaintCore
   gint            mask_x_offset;
   gint            mask_y_offset;
 
-  GimpApplicator *applicator;
+  GHashTable     *applicators;
 
   GArray         *stroke_buffer;
 };

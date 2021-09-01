@@ -166,6 +166,8 @@ gimp_paint_core_finalize (GObject *object)
 
   g_clear_pointer (&core->undo_desc, g_free);
   g_hash_table_unref (core->undo_buffers);
+  if (core->applicators)
+    g_hash_table_unref (core->applicators);
 
   if (core->stroke_buffer)
     {
@@ -379,6 +381,11 @@ gimp_paint_core_start (GimpPaintCore     *core,
   core->start_coords = core->last_coords;
   core->cur_coords   = *coords;
 
+  if (paint_options->use_applicator)
+    core->applicators = g_hash_table_new_full (g_direct_hash, g_direct_equal, NULL, g_object_unref);
+  else
+    core->applicators  = NULL;
+
   if (! GIMP_PAINT_CORE_GET_CLASS (core)->start (core, drawables,
                                                  paint_options,
                                                  coords, error))
@@ -449,20 +456,23 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
       if (paint_options->use_applicator)
         {
-          core->applicator = gimp_applicator_new (NULL);
+          GimpApplicator *applicator;
+
+          applicator = gimp_applicator_new (NULL);
+          g_hash_table_insert (core->applicators, iter->data, applicator);
 
           if (core->mask_buffer)
             {
-              gimp_applicator_set_mask_buffer (core->applicator,
+              gimp_applicator_set_mask_buffer (applicator,
                                                core->mask_buffer);
-              gimp_applicator_set_mask_offset (core->applicator,
+              gimp_applicator_set_mask_offset (applicator,
                                                core->mask_x_offset,
                                                core->mask_y_offset);
             }
 
-          gimp_applicator_set_affect (core->applicator,
+          gimp_applicator_set_affect (applicator,
                                       gimp_drawable_get_active_mask (iter->data));
-          gimp_applicator_set_dest_buffer (core->applicator,
+          gimp_applicator_set_dest_buffer (applicator,
                                            gimp_drawable_get_buffer (iter->data));
         }
 
@@ -483,7 +493,11 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
 
-  g_clear_object (&core->applicator);
+  if (core->applicators)
+    {
+      g_hash_table_unref (core->applicators);
+      core->applicators = NULL;
+    }
 
   if (core->stroke_buffer)
     {
@@ -847,8 +861,12 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   if (! affect)
     return;
 
-  if (core->applicator)
+  if (core->applicators)
     {
+      GimpApplicator *applicator;
+
+      applicator = g_hash_table_lookup (core->applicators, drawable);
+
       /*  If the mode is CONSTANT:
        *   combine the canvas buffer and the paint mask to the paint buffer
        */
@@ -884,7 +902,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                 GEGL_RECTANGLE (0, 0, width, height),
                                 1.0);
 
-          gimp_applicator_set_src_buffer (core->applicator, undo_buffer);
+          gimp_applicator_set_src_buffer (applicator, undo_buffer);
         }
       /*  Otherwise:
        *   combine the paint mask to the paint buffer directly
@@ -904,24 +922,24 @@ gimp_paint_core_paste (GimpPaintCore            *core,
 
           g_object_unref (paint_mask_buffer);
 
-          gimp_applicator_set_src_buffer (core->applicator,
+          gimp_applicator_set_src_buffer (applicator,
                                           gimp_drawable_get_buffer (drawable));
         }
 
-      gimp_applicator_set_apply_buffer (core->applicator,
+      gimp_applicator_set_apply_buffer (applicator,
                                         core->paint_buffer);
-      gimp_applicator_set_apply_offset (core->applicator,
+      gimp_applicator_set_apply_offset (applicator,
                                         core->paint_buffer_x,
                                         core->paint_buffer_y);
 
-      gimp_applicator_set_opacity (core->applicator, image_opacity);
-      gimp_applicator_set_mode (core->applicator, paint_mode,
+      gimp_applicator_set_opacity (applicator, image_opacity);
+      gimp_applicator_set_mode (applicator, paint_mode,
                                 GIMP_LAYER_COLOR_SPACE_AUTO,
                                 GIMP_LAYER_COLOR_SPACE_AUTO,
                                 gimp_layer_mode_get_paint_composite_mode (paint_mode));
 
       /*  apply the paint area to the image  */
-      gimp_applicator_blit (core->applicator,
+      gimp_applicator_blit (applicator,
                             GEGL_RECTANGLE (core->paint_buffer_x,
                                             core->paint_buffer_y,
                                             width, height));
@@ -1057,10 +1075,13 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 
   undo_buffer = g_hash_table_lookup (core->undo_buffers, drawable);
 
-  if (core->applicator)
+  if (core->applicators)
     {
-      GeglRectangle  mask_rect;
-      GeglBuffer    *mask_buffer;
+      GimpApplicator *applicator;
+      GeglRectangle   mask_rect;
+      GeglBuffer     *mask_buffer;
+
+      applicator = g_hash_table_lookup (core->applicators, drawable);
 
       /*  If the mode is CONSTANT:
        *   combine the paint mask to the canvas buffer, and use it as the mask
@@ -1095,7 +1116,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                                          core->paint_buffer_y,
                                          width, height);
 
-          gimp_applicator_set_src_buffer (core->applicator, undo_buffer);
+          gimp_applicator_set_src_buffer (applicator, undo_buffer);
         }
       /*  Otherwise:
        *   use the paint mask as the mask buffer directly
@@ -1108,7 +1129,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                                          paint_mask_offset_y,
                                          width, height);
 
-          gimp_applicator_set_src_buffer (core->applicator,
+          gimp_applicator_set_src_buffer (applicator,
                                           gimp_drawable_get_buffer (drawable));
         }
 
@@ -1152,32 +1173,32 @@ gimp_paint_core_replace (GimpPaintCore            *core,
           mask_rect   = combined_mask_rect;
         }
 
-      gimp_applicator_set_mask_buffer (core->applicator, mask_buffer);
-      gimp_applicator_set_mask_offset (core->applicator,
+      gimp_applicator_set_mask_buffer (applicator, mask_buffer);
+      gimp_applicator_set_mask_offset (applicator,
                                        core->paint_buffer_x - mask_rect.x,
                                        core->paint_buffer_y - mask_rect.y);
 
-      gimp_applicator_set_apply_buffer (core->applicator,
+      gimp_applicator_set_apply_buffer (applicator,
                                         core->paint_buffer);
-      gimp_applicator_set_apply_offset (core->applicator,
+      gimp_applicator_set_apply_offset (applicator,
                                         core->paint_buffer_x,
                                         core->paint_buffer_y);
 
-      gimp_applicator_set_opacity (core->applicator, image_opacity);
-      gimp_applicator_set_mode (core->applicator, GIMP_LAYER_MODE_REPLACE,
+      gimp_applicator_set_opacity (applicator, image_opacity);
+      gimp_applicator_set_mode (applicator, GIMP_LAYER_MODE_REPLACE,
                                 GIMP_LAYER_COLOR_SPACE_AUTO,
                                 GIMP_LAYER_COLOR_SPACE_AUTO,
                                 gimp_layer_mode_get_paint_composite_mode (
                                   GIMP_LAYER_MODE_REPLACE));
 
       /*  apply the paint area to the image  */
-      gimp_applicator_blit (core->applicator,
+      gimp_applicator_blit (applicator,
                             GEGL_RECTANGLE (core->paint_buffer_x,
                                             core->paint_buffer_y,
                                             width, height));
 
-      gimp_applicator_set_mask_buffer (core->applicator, core->mask_buffer);
-      gimp_applicator_set_mask_offset (core->applicator,
+      gimp_applicator_set_mask_buffer (applicator, core->mask_buffer);
+      gimp_applicator_set_mask_offset (applicator,
                                        core->mask_x_offset,
                                        core->mask_y_offset);
 

@@ -334,7 +334,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
        * (unless using an applicator, which currently modifies the paint buffer
        * in-place).
        */
-      if (paint_core->applicator                   ||
+      if (paint_core->applicators                  ||
           paint_buffer != paintbrush->paint_buffer ||
           paint_pixmap != paintbrush->paint_pixmap ||
           (! paint_pixmap && (gimp_rgba_distance (&paint_color,
