@@ -255,9 +255,11 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
   MyPaintRectangle  rect;
   GList            *iter;
   gdouble           dt = 0.0;
+  gint              off_x, off_y;
   gint              n_strokes;
   gint              i;
 
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
   n_strokes = gimp_symmetry_get_size (sym);
 
   /* The number of strokes may change during a motion, depending on
@@ -278,15 +280,15 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
            iter = g_list_next (iter), i++)
         {
           MyPaintBrush *brush  = iter->data;
-          GimpCoords   *coords = gimp_symmetry_get_coords (sym, i);
+          GimpCoords    coords = *(gimp_symmetry_get_coords (sym, i));
 
           mypaint_brush_stroke_to (brush,
                                    (MyPaintSurface *) mybrush->private->surface,
-                                   coords->x,
-                                   coords->y,
+                                   coords.x - off_x,
+                                   coords.y - off_y,
                                    0.0f,
-                                   coords->xtilt,
-                                   coords->ytilt,
+                                   coords.xtilt,
+                                   coords.ytilt,
                                    1.0f /* Pretend the cursor hasn't moved in a while */);
         }
 
@@ -309,16 +311,16 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
        iter = g_list_next (iter), i++)
     {
       MyPaintBrush *brush    = iter->data;
-      GimpCoords   *coords   = gimp_symmetry_get_coords (sym, i);
-      gdouble       pressure = coords->pressure;
+      GimpCoords    coords   = *(gimp_symmetry_get_coords (sym, i));
+      gdouble       pressure = coords.pressure;
 
       mypaint_brush_stroke_to (brush,
                                (MyPaintSurface *) mybrush->private->surface,
-                               coords->x,
-                               coords->y,
+                               coords.x - off_x,
+                               coords.y - off_y,
                                pressure,
-                               coords->xtilt,
-                               coords->ytilt,
+                               coords.xtilt,
+                               coords.ytilt,
                                dt);
     }
 

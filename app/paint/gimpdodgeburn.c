@@ -127,7 +127,8 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gdouble               fade_point;
   gdouble               opacity;
   gdouble               force;
-  const GimpCoords     *coords;
+  GimpCoords            coords;
+  gint                  off_x, off_y;
   gint                  paint_width, paint_height;
   gint                  n_strokes;
   gint                  i;
@@ -135,10 +136,14 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  coords = gimp_symmetry_get_origin (sym);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+  coords = *(gimp_symmetry_get_origin (sym));
+  coords.x -= off_x;
+  coords.y -= off_y;
+
   opacity = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_OPACITY,
-                                            coords,
+                                            &coords,
                                             paint_options,
                                             fade_point);
   if (opacity == 0.0)
@@ -152,18 +157,20 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gimp_brush_core_eval_transform_dynamics (brush_core,
                                            image,
                                            paint_options,
-                                           coords);
+                                           &coords);
   n_strokes = gimp_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
-      coords = gimp_symmetry_get_coords (sym, i);
+      coords = *(gimp_symmetry_get_coords (sym, i));
+      coords.x -= off_x;
+      coords.y -= off_y;
 
       gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
 
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
                                                        GIMP_LAYER_MODE_NORMAL,
-                                                       coords,
+                                                       &coords,
                                                        &paint_buffer_x,
                                                        &paint_buffer_y,
                                                        &paint_width,
@@ -186,7 +193,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
       if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
         force = gimp_dynamics_get_linear_value (dynamics,
                                                 GIMP_DYNAMICS_OUTPUT_FORCE,
-                                                coords,
+                                                &coords,
                                                 paint_options,
                                                 fade_point);
       else
@@ -194,7 +201,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
       /* Replace the newly dodgedburned area (paint_area) to the image */
       gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
-                                      coords,
+                                      &coords,
                                       MIN (opacity, GIMP_OPACITY_OPAQUE),
                                       gimp_context_get_opacity (context),
                                       gimp_paint_options_get_brush_mode (paint_options),
