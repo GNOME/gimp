@@ -384,7 +384,7 @@ libgimpui_introspectable_files = [
   libgimpwidgets_introspectable,
 ]
 
-if meson.is_cross_build()
+if meson.is_cross_build() and not get_option('can-crosscompile-gir')
   have_gobject_introspection = false
   gobject_introspection_warning = '\n      '.join(['',
     'GObject Introspection is disabled while cross-compiling because',

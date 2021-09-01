@@ -51,6 +51,8 @@ option('xcursor',           type: 'feature', value: 'auto', description: 'Xcurso
 option('xpm',               type: 'feature', value: 'auto', description: 'XPM support')
 option('headless-tests',    type: 'feature', value: 'auto', description: 'Use xvfb-run/dbus-run-session for UI-dependent automatic tests')
 
+option('can-crosscompile-gir', type: 'boolean', value: false, description: 'GIR is buildable even if crosscompiling')
+
 option('gi-docgen',         type: 'feature', value: 'auto', description: 'Build developer documentation (uses gi-docgen)')
 option('g-ir-doc',          type: 'boolean', value: false,  description: 'Build developer documentation for introspected API')
 
