@@ -406,23 +406,29 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   gdouble            opacity;
   GimpLayerMode      paint_mode;
   GeglNode          *op;
-  GimpCoords        *origin;
-  GimpCoords        *coords;
+  GimpCoords         origin;
+  GimpCoords         coords;
+  gint               src_off_x = 0;
+  gint               src_off_y = 0;
+  gint               off_x, off_y;
   gint               n_strokes;
   gint               i;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  origin     = gimp_symmetry_get_origin (sym);
+  origin = *(gimp_symmetry_get_origin (sym));
+
   /* Some settings are based on the original stroke. */
   opacity = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_OPACITY,
-                                            origin,
+                                            &origin,
                                             paint_options,
                                             fade_point);
   if (opacity == 0.0)
     return;
+
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   base_src_offset_x = source_core->offset_x;
   base_src_offset_y = source_core->offset_y;
@@ -452,26 +458,32 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
         {
           src_pickable = source_core->src_pickable;
         }
+
+      if (GIMP_IS_ITEM (src_pickable))
+        gimp_item_get_offset (GIMP_ITEM (src_pickable),
+                              &src_off_x, &src_off_y);
     }
 
   gimp_brush_core_eval_transform_dynamics (brush_core,
                                            image,
                                            paint_options,
-                                           origin);
+                                           &origin);
 
   paint_mode = gimp_context_get_paint_mode (GIMP_CONTEXT (paint_options));
 
   n_strokes  = gimp_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
-      coords = gimp_symmetry_get_coords (sym, i);
+      coords    = *(gimp_symmetry_get_coords (sym, i));
+      coords.x -= off_x;
+      coords.y -= off_y;
 
       gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
 
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
                                                        paint_mode,
-                                                       coords,
+                                                       &coords,
                                                        &paint_buffer_x,
                                                        &paint_buffer_y,
                                                        NULL, NULL);
@@ -488,8 +500,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
       if (gimp_source_core_use_source (source_core, options))
         {
           /* When using a source, use the same for every stroke. */
-          src_offset_x += floor (origin->x) - floor (coords->x);
-          src_offset_y += floor (origin->y) - floor (coords->y);
+          src_offset_x += floor (origin.x) - floor (coords.x) - src_off_x;
+          src_offset_y += floor (origin.y) - floor (coords.y) - src_off_y;
           src_buffer =
             GIMP_SOURCE_CORE_GET_CLASS (source_core)->get_source (source_core,
                                                                   drawable,
@@ -563,7 +575,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
       GIMP_SOURCE_CORE_GET_CLASS (source_core)->motion (source_core,
                                                         drawable,
                                                         paint_options,
-                                                        coords,
+                                                        &coords,
                                                         op,
                                                         opacity,
                                                         src_pickable,
