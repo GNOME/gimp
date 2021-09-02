@@ -2362,6 +2362,13 @@ style "gimp-dark-treeview" = "gimp-dark-default-style"
     {
       image
         {
+          function = SHADOW
+          file = "ui/null.png"
+          border = { 0, 0, 0, 0 }
+          stretch = TRUE
+        }
+     image
+        {
           function = FLAT_BOX
           state = ACTIVE
           file = "ui/null.png"
