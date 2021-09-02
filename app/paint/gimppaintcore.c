@@ -355,6 +355,8 @@ gimp_paint_core_start (GimpPaintCore     *core,
 {
   GimpImage   *image;
   GimpChannel *mask;
+  gint         max_width  = 0;
+  gint         max_height = 0;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (g_list_length (drawables) > 0, FALSE);
@@ -414,47 +416,46 @@ gimp_paint_core_start (GimpPaintCore     *core,
       /*  Allocate the undo structures  */
       g_hash_table_insert (core->undo_buffers, iter->data,
                            gimp_gegl_buffer_dup (gimp_drawable_get_buffer (iter->data)));
+      max_width  = MAX (max_width, gimp_item_get_width (iter->data));
+      max_height = MAX (max_height, gimp_item_get_height (iter->data));
+    }
 
-      /*  Allocate the canvas blocks structure  */
-      if (core->canvas_buffer)
-        g_object_unref (core->canvas_buffer);
+  /*  Allocate the canvas blocks structure  */
+  if (core->canvas_buffer)
+    g_object_unref (core->canvas_buffer);
 
-      core->canvas_buffer =
-        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                         gimp_item_get_width  (iter->data),
-                                         gimp_item_get_height (iter->data)),
-                         babl_format ("Y float"));
+  core->canvas_buffer =
+    gegl_buffer_new (GEGL_RECTANGLE (0, 0, max_width, max_height),
+                     babl_format ("Y float"));
 
-      /*  Get the initial undo extents  */
+  /*  Get the initial undo extents  */
 
-      core->x1 = core->x2 = core->cur_coords.x;
-      core->y1 = core->y2 = core->cur_coords.y;
+  core->x1 = core->x2 = core->cur_coords.x;
+  core->y1 = core->y2 = core->cur_coords.y;
 
-      core->last_paint.x = -1e6;
-      core->last_paint.y = -1e6;
+  core->last_paint.x = -1e6;
+  core->last_paint.y = -1e6;
 
-      mask = gimp_image_get_mask (image);
+  mask = gimp_image_get_mask (image);
 
-      /*  don't apply the mask to itself and don't apply an empty mask  */
-      if (GIMP_DRAWABLE (mask) != iter->data && ! gimp_channel_is_empty (mask))
-        {
-          GeglBuffer *mask_buffer;
-          gint        offset_x;
-          gint        offset_y;
+  /*  don't apply the mask to itself and don't apply an empty mask  */
+  if (! gimp_channel_is_empty (mask) &&
+      (g_list_length (drawables) > 1 || GIMP_DRAWABLE (mask) != drawables->data))
+    {
+      GeglBuffer *mask_buffer;
 
-          mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
-          gimp_item_get_offset (iter->data, &offset_x, &offset_y);
+      mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-          core->mask_buffer   = g_object_ref (mask_buffer);
-          core->mask_x_offset = -offset_x;
-          core->mask_y_offset = -offset_y;
-        }
-      else
-        {
-          core->mask_buffer = NULL;
-        }
+      core->mask_buffer   = g_object_ref (mask_buffer);
+    }
+  else
+    {
+      core->mask_buffer = NULL;
+    }
 
-      if (paint_options->use_applicator)
+  if (paint_options->use_applicator)
+    {
+      for (GList *iter = drawables; iter; iter = iter->next)
         {
           GimpApplicator *applicator;
 
@@ -463,11 +464,13 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
           if (core->mask_buffer)
             {
+              gint offset_x;
+              gint offset_y;
+
               gimp_applicator_set_mask_buffer (applicator,
                                                core->mask_buffer);
-              gimp_applicator_set_mask_offset (applicator,
-                                               core->mask_x_offset,
-                                               core->mask_y_offset);
+              gimp_item_get_offset (iter->data, &offset_x, &offset_y);
+              gimp_applicator_set_mask_offset (applicator, -offset_x, -offset_y);
             }
 
           gimp_applicator_set_affect (applicator,
@@ -475,10 +478,11 @@ gimp_paint_core_start (GimpPaintCore     *core,
           gimp_applicator_set_dest_buffer (applicator,
                                            gimp_drawable_get_buffer (iter->data));
         }
-
-      /*  Freeze the drawable preview so that it isn't constantly updated.  */
-      gimp_viewable_preview_freeze (GIMP_VIEWABLE (iter->data));
     }
+
+  /*  Freeze the drawable preview so that it isn't constantly updated.  */
+  for (GList *iter = drawables; iter; iter = iter->next)
+    gimp_viewable_preview_freeze (GIMP_VIEWABLE (iter->data));
 
   return TRUE;
 }
@@ -999,9 +1003,11 @@ gimp_paint_core_paste (GimpPaintCore            *core,
           params.src_buffer = params.dest_buffer;
         }
 
+      gimp_item_get_offset (GIMP_ITEM (drawable),
+                            &params.mask_offset_x, &params.mask_offset_y);
+      params.mask_offset_x = -params.mask_offset_x;
+      params.mask_offset_y = -params.mask_offset_y;
       params.mask_buffer   = core->mask_buffer;
-      params.mask_offset_x = core->mask_x_offset;
-      params.mask_offset_y = core->mask_y_offset;
       params.image_opacity = image_opacity;
       params.paint_mode    = paint_mode;
 
@@ -1080,6 +1086,8 @@ gimp_paint_core_replace (GimpPaintCore            *core,
       GimpApplicator *applicator;
       GeglRectangle   mask_rect;
       GeglBuffer     *mask_buffer;
+      gint            offset_x;
+      gint            offset_y;
 
       applicator = g_hash_table_lookup (core->applicators, drawable);
 
@@ -1133,6 +1141,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                                           gimp_drawable_get_buffer (drawable));
         }
 
+      gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
       if (core->mask_buffer)
         {
           GeglBuffer    *combined_mask_buffer;
@@ -1153,10 +1162,8 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 
           gimp_gegl_buffer_copy (
             core->mask_buffer,
-            GEGL_RECTANGLE (aligned_combined_mask_rect.x -
-                            core->mask_x_offset,
-                            aligned_combined_mask_rect.y -
-                            core->mask_y_offset,
+            GEGL_RECTANGLE (aligned_combined_mask_rect.x + offset_x,
+                            aligned_combined_mask_rect.y + offset_y,
                             aligned_combined_mask_rect.width,
                             aligned_combined_mask_rect.height),
             GEGL_ABYSS_NONE,
@@ -1198,9 +1205,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                                             width, height));
 
       gimp_applicator_set_mask_buffer (applicator, core->mask_buffer);
-      gimp_applicator_set_mask_offset (applicator,
-                                       core->mask_x_offset,
-                                       core->mask_y_offset);
+      gimp_applicator_set_mask_offset (applicator, -offset_x, -offset_y);
 
       g_object_unref (mask_buffer);
     }

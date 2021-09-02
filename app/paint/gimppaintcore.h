@@ -67,8 +67,6 @@ struct _GimpPaintCore
   gint            paint_buffer_y;
 
   GeglBuffer     *mask_buffer;       /*  the target drawable's mask          */
-  gint            mask_x_offset;
-  gint            mask_y_offset;
 
   GHashTable     *applicators;
 

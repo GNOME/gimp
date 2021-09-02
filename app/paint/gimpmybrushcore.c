@@ -202,6 +202,8 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
 {
   GimpMybrushCore *mybrush = GIMP_MYBRUSH_CORE (paint_core);
   GimpContext     *context = GIMP_CONTEXT (paint_options);
+  gint             offset_x;
+  gint             offset_y;
   GimpRGB          fg;
 
   g_return_if_fail (g_list_length (drawables) == 1);
@@ -213,12 +215,12 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
       gimp_palettes_add_color_history (context->gimp, &fg);
       gimp_symmetry_set_stateful (sym, TRUE);
 
+      gimp_item_get_offset (drawables->data, &offset_x, &offset_y);
       mybrush->private->surface =
         gimp_mypaint_surface_new (gimp_drawable_get_buffer (drawables->data),
                                   gimp_drawable_get_active_mask (drawables->data),
                                   paint_core->mask_buffer,
-                                  paint_core->mask_x_offset,
-                                  paint_core->mask_y_offset,
+                                  -offset_x, -offset_y,
                                   GIMP_MYBRUSH_OPTIONS (paint_options));
 
       gimp_mybrush_core_create_brushes (mybrush, drawables->data, paint_options, sym);
