@@ -234,15 +234,15 @@ clone_invoker (GimpProcedure         *procedure,
           src_drawables = g_list_prepend (NULL, src_drawable);
 
           g_object_set (options,
-                        "clone-type", clone_type,
+                        "clone-type",    clone_type,
+                        "src-drawables", src_drawables,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
-                                        "undo-desc",     options->paint_info->blurb,
-                                        "src-drawables", src_drawables,
-                                        "src-x",         (gint) floor (src_x),
-                                        "src-y",         (gint) floor (src_y),
+                                        "undo-desc", options->paint_info->blurb,
+                                        "src-x",     (gint) floor (src_x),
+                                        "src-y",     (gint) floor (src_y),
                                         NULL);
           g_list_free (src_drawables);
         }
@@ -624,12 +624,15 @@ heal_invoker (GimpProcedure         *procedure,
           options = gimp_config_duplicate (GIMP_CONFIG (options));
           src_drawables = g_list_prepend (NULL, src_drawable);
 
+          g_object_set (options,
+                        "src-drawables", src_drawables,
+                        NULL);
+
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
-                                        "undo-desc",     options->paint_info->blurb,
-                                        "src-drawables", src_drawables,
-                                        "src-x",         (gint) floor (src_x),
-                                        "src-y",         (gint) floor (src_y),
+                                        "undo-desc", options->paint_info->blurb,
+                                        "src-x",     (gint) floor (src_x),
+                                        "src-y",     (gint) floor (src_y),
                                         NULL);
           g_list_free (src_drawables);
         }
