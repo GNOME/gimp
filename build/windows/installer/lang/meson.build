@@ -34,6 +34,7 @@ languages = [
   { 'code': 'ja',    'encoding': 'CP932',        },
   { 'code': 'kab',   'encoding': 'UTF-8',        },
   { 'code': 'ko',    'encoding': 'EUC-KR',       },
+  { 'code': 'lt',    'encoding': 'ISO-8859-13',  },
   { 'code': 'lv',    'encoding': 'ISO-8859-13',  },
   { 'code': 'mr',    'encoding': 'UTF-8',  },
   { 'code': 'ms',    'encoding': 'UTF-8',  },

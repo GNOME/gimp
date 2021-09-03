@@ -28,6 +28,7 @@ languages = \
 	ja:[ja]:CP932			\
 	kab:[kab]:UTF-8			\
 	ko:[ko]:EUC-KR			\
+	lt:[lt]:ISO-8859-13		\
 	lv:[lv]:ISO-8859-13		\
 	mr:[mr]:UTF-8   		\
 	ms:[ms]:UTF-8   		\
