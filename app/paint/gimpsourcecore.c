@@ -257,6 +257,13 @@ gimp_source_core_start (GimpPaintCore     *paint_core,
                                _("Set a source image first."));
           return FALSE;
         }
+      else if (options->align_mode == GIMP_SOURCE_ALIGN_REGISTERED &&
+               g_list_length (drawables) > 1)
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("\"Registered\" alignment cannot paint on multiple drawables."));
+          return FALSE;
+        }
 
       if (options->sample_merged         &&
           g_list_length (drawables) == 1 &&
