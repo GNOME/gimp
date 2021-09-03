@@ -14,7 +14,7 @@ languages = \
 	de:[de]:WINDOWS-1252		\
 	el:[el]:WINDOWS-1253		\
 	en::WINDOWS-1252		\
-	en_GB:[en_GN]:UTF-8		\
+	en_GB:[en_GB]:UTF-8		\
 	eo:[eo]:ISO-8859-3		\
 	es:[es]:WINDOWS-1252		\
 	eu:[eu]:WINDOWS-1252		\
