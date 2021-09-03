@@ -146,7 +146,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_INIT:
       if (source_core->set_source)
         {
-          g_object_set (source_core, "src-drawables", drawables, NULL);
+          g_object_set (options, "src-drawables", drawables, NULL);
 
           source_core->src_x = floor (coords->x);
           source_core->src_y = floor (coords->y);
@@ -194,7 +194,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                  *  Otherwise, we need a call to get_orig_image to make sure
                  *  we get a copy of the unblemished (offset) image
                  */
-                src_image = gimp_pickable_get_image (source_core->src_drawables->data);
+                src_image = gimp_pickable_get_image (options->src_drawables->data);
 
                 if (sample_merged)
                   src_pickable = GIMP_PICKABLE (src_image);
@@ -204,12 +204,12 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                 if ((sample_merged &&
                      (src_image != dest_image)) ||
                     (! sample_merged                                 &&
-                     g_list_length (source_core->src_drawables) == 1 &&
+                     g_list_length (options->src_drawables) == 1 &&
                      g_list_length (drawables) == 1                  &&
-                     (source_core->src_drawables != drawables->data)))
+                     (options->src_drawables != drawables->data)))
                   {
                     if (! sample_merged)
-                      src_pickable = GIMP_PICKABLE (source_core->src_drawables->data);
+                      src_pickable = GIMP_PICKABLE (options->src_drawables->data);
 
                     orig_buffer = gimp_pickable_get_buffer (src_pickable);
                   }

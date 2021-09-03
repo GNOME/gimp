@@ -563,7 +563,7 @@ gimp_perspective_clone_tool_cursor_update (GimpTool         *tool,
         {
           cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
         }
-      else if (! GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core)->src_drawables)
+      else if (! GIMP_SOURCE_OPTIONS (options)->src_drawables)
         {
           modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
@@ -621,7 +621,7 @@ gimp_perspective_clone_tool_oper_update (GimpTool         *tool,
           GimpPerspectiveClone *clone       = GIMP_PERSPECTIVE_CLONE (core);
           GimpSourceCore       *source_core = GIMP_SOURCE_CORE (core);
 
-          if (source_core->src_drawables == NULL)
+          if (GIMP_SOURCE_OPTIONS (options)->src_drawables == NULL)
             {
               gimp_tool_replace_status (tool, display,
                                         _("Ctrl-Click to set a clone source"));
@@ -708,8 +708,6 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTool                    *tool        = GIMP_TOOL (draw_tool);
   GimpPerspectiveCloneTool    *clone_tool  = GIMP_PERSPECTIVE_CLONE_TOOL (draw_tool);
-  GimpPerspectiveClone        *clone       = GIMP_PERSPECTIVE_CLONE (GIMP_PAINT_TOOL (tool)->core);
-  GimpSourceCore              *source_core = GIMP_SOURCE_CORE (clone);
   GimpPerspectiveCloneOptions *options;
 
   options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
@@ -756,7 +754,7 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_pop_group (draw_tool);
     }
 
-  if (source_core->src_drawables && clone_tool->src_display)
+  if (GIMP_SOURCE_OPTIONS (options)->src_drawables && clone_tool->src_display)
     {
       GimpDisplay *tmp_display;
 
@@ -780,11 +778,14 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_perspective_clone_tool_halt (GimpPerspectiveCloneTool *clone_tool)
 {
-  GimpTool *tool = GIMP_TOOL (clone_tool);
+  GimpTool                    *tool = GIMP_TOOL (clone_tool);
+  GimpPerspectiveCloneOptions *options;
+
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
   clone_tool->src_display = NULL;
 
-  g_object_set (GIMP_PAINT_TOOL (tool)->core,
+  g_object_set (options,
                 "src-drawables", NULL,
                 NULL);
 

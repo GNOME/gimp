@@ -157,7 +157,8 @@ gimp_source_tool_control (GimpTool       *tool,
                           GimpToolAction  action,
                           GimpDisplay    *display)
 {
-  GimpSourceTool *source_tool = GIMP_SOURCE_TOOL (tool);
+  GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (tool);
+  GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
 
   switch (action)
     {
@@ -167,7 +168,7 @@ gimp_source_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       gimp_source_tool_set_src_display (source_tool, NULL);
-      g_object_set (GIMP_PAINT_TOOL (tool)->core,
+      g_object_set (options,
                     "src-drawables", NULL,
                     NULL);
       break;
@@ -302,7 +303,7 @@ gimp_source_tool_cursor_update (GimpTool         *tool,
         {
           cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
         }
-      else if (! GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core)->src_drawables)
+      else if (! options->src_drawables)
         {
           modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
@@ -341,7 +342,7 @@ gimp_source_tool_oper_update (GimpTool         *tool,
 
   if (gimp_source_core_use_source (source, options))
     {
-      if (source->src_drawables == NULL)
+      if (options->src_drawables == NULL)
         {
           GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
 
@@ -400,7 +401,7 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 
   if (gimp_source_core_use_source (source, options) &&
-      source->src_drawables && source_tool->src_display)
+      options->src_drawables && source_tool->src_display)
     {
       GimpDisplayShell *src_shell;
       gdouble           src_x;
