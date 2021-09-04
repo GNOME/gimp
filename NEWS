@@ -19,6 +19,16 @@ Core:
     improvements were actually already applied in our macOS packages
     since GIMP 2.10.22, but were applied upstream directly only now.
 
+User Interface:
+
+  - Dark theme: improve accessibility of GtkRadioButton by adding a
+    white border on mouse-hover.
+  - Gray theme: set light background for selected text in Layers and
+    Paths dockable dialogs to make text visible.
+  - Dark, Gray and Light themes: remove 3D shadow box around eye and
+    link toggles in Layers, Channels, and Paths dockable dialog tree
+    views.
+
 Plug-ins:
 
   - Improved DDS support and fix some red/blue bit swap for RGB10A2 DDS.
@@ -30,10 +40,31 @@ Plug-ins:
   - DICOM images:
     * Support for planar configuration.
     * Support for deprecated big endian transfer.
+  - TIFF images:
+    * Thumbnail storing now done by storing the thumbnail as the second
+      page in the file (through Exiv2) and setting metadata
+      "Exif.Thumbnail.NewSubfileType" to 1 (reduced resolution image)
+      instead of storing the thumbnail as a subifd. This was done
+      because of a Windows bug locking TIFF files with thumbnail stored
+      as subfid.
+    * Symmetrically, loading will ignore pages marked as "reduced
+      resolution image" (i.e. it will consider them as thumbnails), as
+      well as try to guess if a page (without subfile type) is a
+      thumbnail when it meets following criteria: second page with YCbCr
+      PhotometricInterpretation, old style jpeg compression while the
+      first page has a different PhotometricInterpretation or
+      compression.
 
 Script-fu:
 
   - New (dir-make "/dir/name" mode) function to create a directory.
+
+Translations:
+
+  - New translations for the Windows installer: Vietnamese, Lithuanian.
+  - 13 translations were updated: Catalan, Chinese (China), Croatian,
+    Dutch, German, Lithuanian, Polish, Russian, Slovenian, Spanish,
+    Swedish, Ukrainian and Vietnamese.
 
 Build:
 
@@ -51,6 +82,9 @@ Build:
   - --enable-check-update now has an "auto" value, which is the new
     default. It is equivalent to "yes" for Windows and macOS and "no" in
     all other cases.
+  - New unit test to check that localizations listed in the installer
+    script match available po files in po-windows-installer/.
+  - "msys*" host value now detected as Windows builds.
 
 
 Overview of Changes from GIMP 2.10.22 to GIMP 2.10.24
