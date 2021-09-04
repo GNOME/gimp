@@ -471,6 +471,7 @@ style "sogg-treeview" = "sogg-default-style"
   #text[INSENSITIVE] = "#0F0"
   text[ACTIVE] = "#222"
   text[SELECTED] = "#222"
+  base[SELECTED] = "#DDD"
 
   engine  "pixmap"
     {
