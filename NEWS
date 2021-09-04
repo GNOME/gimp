@@ -50,11 +50,8 @@ Build:
     signed. The installer creation happens on tags for releases and at
     regular scheduled intervals for tests.
   - Improved tag handling in the CI for transparent release process.
-  - New unit test to check that localizations listed in the installer
-    script match available po files in po-windows-installer/.
   - New flatpak job (on scheduled interval) published on GNOME Nightly
     repository.
-  - "msys*" host value now detected as Windows builds.
   - Windows installer and test flatpak (to download, no repository) can
     now be built by a merge request CI when the labels "5. Windows
     Installer" and/or "5. Flatpak package" are respectively set in the
