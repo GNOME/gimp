@@ -183,6 +183,7 @@ app/core/gimppalette-save.c
 app/core/gimppalettemru.c
 app/core/gimppattern.c
 app/core/gimppattern-load.c
+app/core/gimppattern-save.c
 app/core/gimppatternclipboard.c
 app/core/gimppdbprogress.c
 app/core/gimpprogress.c
