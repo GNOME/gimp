@@ -85,6 +85,7 @@ Build:
   - New unit test to check that localizations listed in the installer
     script match available po files in po-windows-installer/.
   - "msys*" host value now detected as Windows builds.
+  - Bumping minimum GEGL to version 0.4.32.
 
 
 Overview of Changes from GIMP 2.10.22 to GIMP 2.10.24
