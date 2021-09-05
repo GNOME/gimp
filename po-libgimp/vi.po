@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-11 12:41+0000\n"
-"PO-Revision-Date: 2021-05-12 14:00+0700\n"
+"POT-Creation-Date: 2021-09-05 08:11+0000\n"
+"PO-Revision-Date: 2021-09-05 15:34+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -259,46 +259,45 @@ msgid "Gradient Selection"
 msgstr "Chọn dốc màu"
 
 #: ../libgimp/gimpimagemetadata.c:687
-#| msgid "GIMP"
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:875
+#: ../libgimp/gimpimagemetadata.c:878
 msgid "Background"
 msgstr "Nền"
 
-#: ../libgimp/gimpimagemetadata.c:1064
+#: ../libgimp/gimpimagemetadata.c:1067
 #, c-format
 msgid "Rotate %s?"
 msgstr "Xoay %s?"
 
-#: ../libgimp/gimpimagemetadata.c:1070
+#: ../libgimp/gimpimagemetadata.c:1073
 msgid "_Keep Original"
 msgstr "_Giữ Nguyên"
 
-#: ../libgimp/gimpimagemetadata.c:1071 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1074 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Xoay"
 
-#: ../libgimp/gimpimagemetadata.c:1112
+#: ../libgimp/gimpimagemetadata.c:1115
 msgid "Original"
 msgstr "Gốc"
 
-#: ../libgimp/gimpimagemetadata.c:1128
+#: ../libgimp/gimpimagemetadata.c:1131
 msgid "Rotated"
-msgstr "Xoay"
+msgstr "Đã xoay"
 
-#: ../libgimp/gimpimagemetadata.c:1146
+#: ../libgimp/gimpimagemetadata.c:1149
 msgid "This image contains Exif orientation metadata."
 msgstr "Ảnh này có chứa siêu dữ liệu về hướng EXIF."
 
-#: ../libgimp/gimpimagemetadata.c:1164
+#: ../libgimp/gimpimagemetadata.c:1167
 msgid "Would you like to rotate the image?"
-msgstr "Bạn có muốn xoay ảnh không?"
+msgstr "Bạn có muốn xoay ảnh?"
 
-#: ../libgimp/gimpimagemetadata.c:1176
+#: ../libgimp/gimpimagemetadata.c:1179
 msgid "_Don't ask me again"
-msgstr "Đừng _hỏi tôi nữa"
+msgstr "Đừng hỏi _lại tôi nữa"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
@@ -1183,12 +1182,9 @@ msgid "8-bit linear integer"
 msgstr "Số nguyên tuyến tính 8 bít"
 
 #: ../libgimpbase/gimpbaseenums.c:1468
-#, fuzzy
-#| msgctxt "component-type"
-#| msgid "8-bit integer"
 msgctxt "precision"
 msgid "8-bit gamma integer"
-msgstr "số nguyên 8-bit"
+msgstr "số nguyên gamma 8-bit"
 
 #: ../libgimpbase/gimpbaseenums.c:1469
 msgctxt "precision"
@@ -1196,12 +1192,9 @@ msgid "16-bit linear integer"
 msgstr "Số nguyên tuyến tính 16 bít"
 
 #: ../libgimpbase/gimpbaseenums.c:1470
-#, fuzzy
-#| msgctxt "component-type"
-#| msgid "16-bit integer"
 msgctxt "precision"
 msgid "16-bit gamma integer"
-msgstr "số nguyên 16-bit"
+msgstr "số nguyên gamma 16-bit"
 
 #: ../libgimpbase/gimpbaseenums.c:1471
 msgctxt "precision"
@@ -1209,12 +1202,9 @@ msgid "32-bit linear integer"
 msgstr "Số nguyên tuyến tính 32 bít"
 
 #: ../libgimpbase/gimpbaseenums.c:1472
-#, fuzzy
-#| msgctxt "component-type"
-#| msgid "32-bit integer"
 msgctxt "precision"
 msgid "32-bit gamma integer"
-msgstr "số nguyên 32-bit"
+msgstr "Số nguyên gamma 32 bit"
 
 #: ../libgimpbase/gimpbaseenums.c:1473
 msgctxt "precision"
@@ -1222,12 +1212,9 @@ msgid "16-bit linear floating point"
 msgstr "Số thực dấu chấm động tuyến tính 16-bít"
 
 #: ../libgimpbase/gimpbaseenums.c:1474
-#, fuzzy
-#| msgctxt "component-type"
-#| msgid "16-bit floating point"
 msgctxt "precision"
 msgid "16-bit gamma floating point"
-msgstr "Số thực dấu chấm động 16-bit"
+msgstr "Số thực dấu chấm động gamma 16-bit"
 
 #: ../libgimpbase/gimpbaseenums.c:1475
 msgctxt "precision"
@@ -1235,12 +1222,9 @@ msgid "32-bit linear floating point"
 msgstr "Số thực dấu chấm động tuyến tính 32-bít"
 
 #: ../libgimpbase/gimpbaseenums.c:1476
-#, fuzzy
-#| msgctxt "component-type"
-#| msgid "32-bit floating point"
 msgctxt "precision"
 msgid "32-bit gamma floating point"
-msgstr "Số thực dấu chấm động 32-bit"
+msgstr "Số thực dấu chấm động gamma 32-bit"
 
 #: ../libgimpbase/gimpbaseenums.c:1477
 msgctxt "precision"
@@ -1248,12 +1232,9 @@ msgid "64-bit linear floating point"
 msgstr "Số thực dấu chấm động tuyến tính 64-bít"
 
 #: ../libgimpbase/gimpbaseenums.c:1478
-#, fuzzy
-#| msgctxt "component-type"
-#| msgid "64-bit floating point"
 msgctxt "precision"
 msgid "64-bit gamma floating point"
-msgstr "Số thực dấu chấm động 64-bit"
+msgstr "Số thực dấu chấm động gamma 64-bit"
 
 #: ../libgimpbase/gimpbaseenums.c:1547
 msgctxt "repeat-mode"
@@ -1485,32 +1466,32 @@ msgstr "Xén với diện mạo"
 msgid "Can load metadata only from local files"
 msgstr "Chỉ có thể tải siêu dữ liệu từ các tệp cục bộ"
 
-#: ../libgimpbase/gimpmetadata.c:921 ../libgimpbase/gimpmetadata.c:991
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr "Chuyển đổi tên tệp thành codepage hệ thống không thành công."
-
-#: ../libgimpbase/gimpmetadata.c:978
+#: ../libgimpbase/gimpmetadata.c:963
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Chỉ có thể lưu siêu dữ liệu vào tệp cục bộ"
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:976
+#, c-format
+msgid "Conversion of the filename to system codepage failed."
+msgstr "Chuyển đổi tên tệp thành codepage hệ thống không thành công."
+
+#: ../libgimpbase/gimpmetadata.c:1025
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Cỡ dữ liệu Exif không hợp lệ."
 
-#: ../libgimpbase/gimpmetadata.c:1069
+#: ../libgimpbase/gimpmetadata.c:1054
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Gặp lỗi khi phân tích dữ liệu EXIF."
 
-#: ../libgimpbase/gimpmetadata.c:1119
+#: ../libgimpbase/gimpmetadata.c:1104
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Gặp lỗi khi phân tích dữ liệu IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1167
+#: ../libgimpbase/gimpmetadata.c:1152
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Gặp lỗi khi phân tích dữ liệu XMP."
@@ -1589,7 +1570,7 @@ msgstr "Hiển thị màu được quản lý"
 #: ../libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
-msgstr "Soft-proofing"
+msgstr "Mô-phỏng-in"
 
 #: ../libgimpconfig/gimpconfigenums.c:57
 msgctxt "color-rendering-intent"
@@ -1636,19 +1617,20 @@ msgstr ""
 "bộ trình bày đã cấu hình thì chỉ dùng là sự chọn phòng bị."
 
 #: ../libgimpconfig/gimpcolorconfig.c:63
-#, fuzzy
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
-"Cấu hình màu không gian làm việc RGB ưa thích. Nó sẽ được cung cấp bên cạnh "
-"cấu hình RGB tích hợp khi có thể chọn cấu hình màu."
+"Hồ sơ màu không gian làm việc RGB ưa thích. Nó sẽ được cung cấp bên cạnh cấu "
+"hình RGB tích hợp khi có thể chọn cấu hình màu."
 
 #: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
+"Hồ sơ màu không gian làm việc xám ưa thích. Nó sẽ được cung cấp bên cạnh cấu "
+"hình xám tích hợp khi có thể chọn cấu hình màu."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -1660,6 +1642,9 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
+"Hồ sơ màu được dùng cho mô-phỏng-in từ không gian màu của ảnh của bạn sang "
+"không gian màu khác, bao gồm mô-phỏng-in thành một máy in hoặc hồ sơ thiết "
+"bị đầu ra khác. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1668,16 +1653,22 @@ msgid ""
 "LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
 "intent really gives you relative colorimetric."
 msgstr ""
+"Màu sẽ chuyển đổi thế nào từ không gian màu của ảnh của bạn sang thiết bị "
+"hiển thị của bạn. Đo màu tương ứng thường là lựa chọn tốt nhất. Trừ phi bạn "
+"sử dụng một hồ sơ màn hình LUT (phần lớn hồ sơ màn hình là ma trận), chọn "
+"mục đích tri giác thực tế đưa cho bạn đo màu tương ứng."
 
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
-msgstr ""
+msgstr "Để dùng bù điểm đen (trừ khi bạn biết bạn có lý do không dùng nó)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
+"Khi tắt, việc hiển thị ảnh cho chất lượng có thể cao hơn nhưng làm chậm tốc "
+"độ."
 
 #: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
@@ -1685,29 +1676,28 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
+"Các màu sắc được chuyển đổi như thế nào từ không gian màu ảnh của bạn đến "
+"thiết bị mô phỏng (thường là màn hình). Hãy thử tất cả và chọn cái tốt nhất. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
-#, fuzzy
-#| msgid ""
-#| "Try with and without black point compensation and choose what looks best."
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
-msgstr "Hãy thử có và không có bù điểm đen và chọn những gì trông đẹp nhất."
+msgstr "Hãy thử có và không có bù điểm đen và chọn những gì trông đẹp nhất. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Khi bị vô hiệu hóa, soft-proofing có thể có chất lượng tốt hơn với chi phí "
-"tốc độ."
+"Khi bị vô hiệu hóa, mô-phỏng-in có thể có chất lượng tốt hơn với chi phí tốc "
+"độ."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Khi được bật, soft-proofing sẽ đánh dấu các màu không thể được thể hiện "
-"trong không gian màu đích."
+"Khi được bật, mô-phỏng-in sẽ đánh dấu các màu không thể được thể hiện trong "
+"không gian màu đích."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
@@ -1739,7 +1729,7 @@ msgstr "Sử dụng hồ sơ màn hình hệ thống"
 
 #: ../libgimpconfig/gimpcolorconfig.c:242
 msgid "Simulation profile for soft-proofing"
-msgstr "Hồ sơ mô phỏng cho soft-proofing"
+msgstr "Hồ sơ mô phỏng cho mô-phỏng-in"
 
 #: ../libgimpconfig/gimpcolorconfig.c:249
 msgid "Display rendering intent"
@@ -1755,15 +1745,15 @@ msgstr "Tối ưu hóa chuyển đổi màu hiển thị"
 
 #: ../libgimpconfig/gimpcolorconfig.c:271
 msgid "Soft-proofing rendering intent"
-msgstr "Mục đích dựng hình soft-proofing"
+msgstr "Mục đích dựng hình mô-phỏng-in"
 
 #: ../libgimpconfig/gimpcolorconfig.c:279
 msgid "Use black point compensation for soft-proofing"
-msgstr "Dùng bù điểm đen cho soft-proofing"
+msgstr "Dùng bù điểm đen cho mô-phỏng-in"
 
 #: ../libgimpconfig/gimpcolorconfig.c:286
 msgid "Optimize soft-proofing color transformations"
-msgstr "Tối ưu hóa chuyển đổi màu soft-proofing"
+msgstr "Tối ưu hóa chuyển đổi màu mô-phỏng-in"
 
 #: ../libgimpconfig/gimpcolorconfig.c:293
 msgid "Mark out of gamut colors"
@@ -1923,7 +1913,7 @@ msgstr "Tìm _kiếm:"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:147
 msgid "_Foreground Color"
-msgstr "Màu cảnh _gần"
+msgstr "Màu _tiền cảnh"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:151
 msgid "_Background Color"
@@ -2032,7 +2022,7 @@ msgstr "Cách _ghi HTML:"
 
 #: ../libgimpwidgets/gimpdialog.c:178
 msgid "_Help"
-msgstr ""
+msgstr "Trợ giú_p"
 
 #: ../libgimpwidgets/gimpfileentry.c:152
 msgid "Show file location in the file manager"
@@ -2125,7 +2115,7 @@ msgstr "_Xén"
 
 #: ../libgimpwidgets/gimpicons.c:255
 msgid "_Select"
-msgstr "C_họn"
+msgstr "_Chọn"
 
 #: ../libgimpwidgets/gimpicons.c:267
 msgid "_Transform"
@@ -2847,10 +2837,8 @@ msgid "GIMP MIDI Input Controller"
 msgstr "Bộ điều khiển nhận MIDI"
 
 #: ../modules/display-filter-clip-warning.c:120
-#, fuzzy
-#| msgid "Gamma color display filter"
 msgid "Clip warning color display filter"
-msgstr "Bộ lọc hiển thị màu gamma (γ)"
+msgstr "Bộ lọc hiển thị màu cảnh báo clip"
 
 #: ../modules/display-filter-clip-warning.c:157
 msgid "Show shadows"
@@ -3102,6 +3090,23 @@ msgstr "Độ tương phản"
 #~ msgctxt "precision"
 #~ msgid "64-bit perceptual floating point"
 #~ msgstr "Số thực dấu chấm động tri giác 64-bít"
+
+#~ msgid ""
+#~ "ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
+#~ "display filter, using a luminance-only approximation of the ACES RRT, a "
+#~ "pre-defined filmic look to be used before ODT (display or output space "
+#~ "ICC profile)"
+#~ msgstr ""
+#~ "ACES RRT (RRT = Reference Rendering Transform). Một bộ lọc màu hiển thị "
+#~ "màu in thử HDR sang SDR, dùng một ước tính chỉ-luminance của ACES RRT, "
+#~ "một giống phim định nghĩa trước được sử dụng trước ODT (bộ hiển thị hoặc "
+#~ "hồ sơ ICC không gian đầu ra)"
+
+#~ msgid "Pre-transform change in stops"
+#~ msgstr "Chuyển-dạng-trước thay đổi trong các điểm dừng"
+
+#~ msgid "Aces RRT"
+#~ msgstr "Aces RRT"
 
 #~ msgid "Sans"
 #~ msgstr "Không chân"
