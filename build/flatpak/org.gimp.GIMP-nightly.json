@@ -524,7 +524,7 @@
             "config-opts": [ "-Dgtk-doc=false",
                              "-Dicc-directory=/run/host/usr/share/color/icc/",
                              "-Dbuild-id=org.gimp.GIMP.flatpak.nightly",
-                             "-Dcheck-update=false" ],
+                             "-Dcheck-update=no" ],
             "cleanup": [ "/bin/gimptool-2.99", "/bin/gimp-console-2.99" ],
             "buildsystem": "meson",
             "sources": [
