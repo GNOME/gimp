@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-09-01 14:47+0000\n"
-"PO-Revision-Date: 2021-09-01 22:59+0200\n"
+"POT-Creation-Date: 2021-09-05 15:27+0000\n"
+"PO-Revision-Date: 2021-09-05 18:02+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -14794,6 +14794,15 @@ msgstr "Ogiltig UTF-8-sträng i mönsterfilen ”%s”."
 #: ../app/core/gimppattern-load.c:178
 msgid "Fatal parse error in pattern file: "
 msgstr "Ödesdigert tolkningsfel i palettfil: "
+
+#: ../app/core/gimppattern-save.c:52
+#, c-format
+msgid ""
+"Unsupported pattern dimensions %d x %d.\n"
+"GIMP Patterns have a maximum size of %d x %d."
+msgstr ""
+"Mönsterdimensionerna %d × %d stöds inte.\n"
+"GIMP-mönster har en maximal storlek på %d × %d."
 
 #: ../app/core/gimppdbprogress.c:268
 #, c-format
