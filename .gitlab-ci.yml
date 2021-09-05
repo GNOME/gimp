@@ -576,7 +576,6 @@ gimp-win32:
 flatpak:
   image: 'registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master'
   stage: gimp
-  interruptible: true
   tags:
     - flatpak
   needs: []
