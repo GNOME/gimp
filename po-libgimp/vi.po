@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-10 19:42+0000\n"
-"PO-Revision-Date: 2021-05-11 14:44+0700\n"
+"POT-Creation-Date: 2021-09-05 08:03+0000\n"
+"PO-Revision-Date: 2021-09-05 15:21+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -167,7 +167,7 @@ msgid "Confirm Save"
 msgstr "Xác nhận lưu"
 
 #: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
-#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:220
+#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:303
 #: ../libgimpwidgets/gimpcolorbutton.c:553
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -190,7 +190,7 @@ msgid "_Ignore"
 msgstr "Bỏ _qua"
 
 #: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
-#: ../libgimp/gimpproceduredialog.c:192
+#: ../libgimp/gimpproceduredialog.c:275
 msgid "_Export"
 msgstr "_Xuất"
 
@@ -417,43 +417,43 @@ msgid ""
 msgstr ""
 "Thủ tục “%s” được gọi với trị chuỗi UTF-8 không hợp lệ cho tham số “%s”."
 
-#: ../libgimp/gimpproceduredialog.c:190
+#: ../libgimp/gimpproceduredialog.c:273
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Mở"
 
-#: ../libgimp/gimpproceduredialog.c:194 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimp/gimpproceduredialog.c:277 ../libgimpwidgets/gimpcolorbutton.c:554
 #: ../libgimpwidgets/gimpfileentry.c:467 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_OK"
 
-#: ../libgimp/gimpproceduredialog.c:202 ../libgimpwidgets/gimpcolorbutton.c:552
+#: ../libgimp/gimpproceduredialog.c:285 ../libgimpwidgets/gimpcolorbutton.c:552
 msgid "_Reset"
 msgstr "Đặt _lại"
 
-#: ../libgimp/gimpproceduredialog.c:254
+#: ../libgimp/gimpproceduredialog.c:337
 msgid "_Load Saved Settings"
 msgstr "_Tải các cài đặt đã lưu"
 
-#: ../libgimp/gimpproceduredialog.c:255
+#: ../libgimp/gimpproceduredialog.c:338
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Cài đặt tải được lưu bằng nút “Lưu cài đặt”"
 
-#: ../libgimp/gimpproceduredialog.c:267
+#: ../libgimp/gimpproceduredialog.c:350
 msgid "_Save Settings"
 msgstr "_Lưu các cài đặt"
 
-#: ../libgimp/gimpproceduredialog.c:268
+#: ../libgimp/gimpproceduredialog.c:351
 msgid "Store current settings for later reuse"
 msgstr "Lưu trữ thiết đặt hiện tại để tái sử dụng sau này"
 
-#: ../libgimp/gimpproceduredialog.c:1445
+#: ../libgimp/gimpproceduredialog.c:1664
 msgid "Reset to _Initial Values"
 msgstr "Đặt về giá trị _khởi đầu"
 
-#: ../libgimp/gimpproceduredialog.c:1454
+#: ../libgimp/gimpproceduredialog.c:1673
 msgid "Reset to _Factory Defaults"
 msgstr "Đặt lại cài đặt thành mặc định _ban đầu"
 
@@ -1542,32 +1542,32 @@ msgstr "Xén với diện mạo"
 msgid "Can load metadata only from local files"
 msgstr "Chỉ có thể tải siêu dữ liệu từ các tệp cục bộ"
 
-#: ../libgimpbase/gimpmetadata.c:921 ../libgimpbase/gimpmetadata.c:991
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr "Chuyển đổi tên tệp thành codepage hệ thống không thành công."
-
-#: ../libgimpbase/gimpmetadata.c:978
+#: ../libgimpbase/gimpmetadata.c:963
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Chỉ có thể lưu siêu dữ liệu vào tệp cục bộ"
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:976
+#, c-format
+msgid "Conversion of the filename to system codepage failed."
+msgstr "Chuyển đổi tên tệp thành codepage hệ thống không thành công."
+
+#: ../libgimpbase/gimpmetadata.c:1025
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Cỡ dữ liệu Exif không hợp lệ."
 
-#: ../libgimpbase/gimpmetadata.c:1069
+#: ../libgimpbase/gimpmetadata.c:1054
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Gặp lỗi khi phân tích dữ liệu EXIF."
 
-#: ../libgimpbase/gimpmetadata.c:1119
+#: ../libgimpbase/gimpmetadata.c:1104
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Gặp lỗi khi phân tích dữ liệu IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1167
+#: ../libgimpbase/gimpmetadata.c:1152
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Gặp lỗi khi phân tích dữ liệu XMP."
@@ -1646,7 +1646,7 @@ msgstr "Hiển thị màu được quản lý"
 #: ../libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
-msgstr "Soft-proofing"
+msgstr "Mô-phỏng-in"
 
 #: ../libgimpconfig/gimpconfigenums.c:57
 msgctxt "color-rendering-intent"
@@ -1693,19 +1693,20 @@ msgstr ""
 "bộ trình bày đã cấu hình thì chỉ dùng là sự chọn phòng bị."
 
 #: ../libgimpconfig/gimpcolorconfig.c:63
-#, fuzzy
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
-"Cấu hình màu không gian làm việc RGB ưa thích. Nó sẽ được cung cấp bên cạnh "
-"cấu hình RGB tích hợp khi có thể chọn cấu hình màu."
+"Hồ sơ màu không gian làm việc RGB ưa thích. Nó sẽ được cung cấp bên cạnh cấu "
+"hình RGB tích hợp khi có thể chọn cấu hình màu."
 
 #: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
+"Hồ sơ màu không gian làm việc xám ưa thích. Nó sẽ được cung cấp bên cạnh cấu "
+"hình xám tích hợp khi có thể chọn cấu hình màu."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -1717,6 +1718,9 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile."
 msgstr ""
+"Hồ sơ màu được dùng cho mô-phỏng-in từ không gian màu của ảnh của bạn sang "
+"không gian màu khác, bao gồm mô-phỏng-in thành một máy in hoặc hồ sơ thiết "
+"bị đầu ra khác."
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1725,16 +1729,22 @@ msgid ""
 "LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
 "intent really gives you relative colorimetric."
 msgstr ""
+"Màu sẽ chuyển đổi thế nào từ không gian màu của ảnh của bạn sang thiết bị "
+"hiển thị của bạn. Đo màu tương ứng thường là lựa chọn tốt nhất. Trừ phi bạn "
+"sử dụng một hồ sơ màn hình LUT (phần lớn hồ sơ màn hình là ma trận), chọn "
+"mục đích tri giác thực tế đưa cho bạn đo màu tương ứng."
 
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
-msgstr ""
+msgstr "Để dùng bù điểm đen (trừ khi bạn biết bạn có lý do không dùng nó)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
+"Khi tắt, việc hiển thị ảnh cho chất lượng có thể cao hơn nhưng làm chậm tốc "
+"độ."
 
 #: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
@@ -1742,6 +1752,8 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best."
 msgstr ""
+"Các màu sắc được chuyển đổi như thế nào từ không gian màu ảnh của bạn đến "
+"thiết bị mô phỏng (thường là màn hình). Hãy thử tất cả và chọn cái tốt nhất."
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
@@ -1752,16 +1764,16 @@ msgstr "Hãy thử có và không có bù điểm đen và chọn những gì tr
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Khi bị vô hiệu hóa, soft-proofing có thể có chất lượng tốt hơn với chi phí "
-"tốc độ."
+"Khi bị vô hiệu hóa, mô-phỏng-in có thể có chất lượng tốt hơn với chi phí tốc "
+"độ."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Khi được bật, soft-proofing sẽ đánh dấu các màu không thể được thể hiện "
-"trong không gian màu đích."
+"Khi được bật, mô-phỏng-in sẽ đánh dấu các màu không thể được thể hiện trong "
+"không gian màu đích."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
@@ -1793,7 +1805,7 @@ msgstr "Sử dụng hồ sơ màn hình hệ thống"
 
 #: ../libgimpconfig/gimpcolorconfig.c:253
 msgid "Simulation profile for soft-proofing"
-msgstr "Hồ sơ mô phỏng cho soft-proofing"
+msgstr "Hồ sơ mô phỏng cho mô-phỏng-in"
 
 #: ../libgimpconfig/gimpcolorconfig.c:260
 msgid "Display rendering intent"
@@ -1809,15 +1821,15 @@ msgstr "Tối ưu hóa chuyển đổi màu hiển thị"
 
 #: ../libgimpconfig/gimpcolorconfig.c:282
 msgid "Soft-proofing rendering intent"
-msgstr "Mục đích dựng hình soft-proofing"
+msgstr "Mục đích dựng hình mô-phỏng-in"
 
 #: ../libgimpconfig/gimpcolorconfig.c:290
 msgid "Use black point compensation for soft-proofing"
-msgstr "Dùng bù điểm đen cho soft-proofing"
+msgstr "Dùng bù điểm đen cho mô-phỏng-in"
 
 #: ../libgimpconfig/gimpcolorconfig.c:297
 msgid "Optimize soft-proofing color transformations"
-msgstr "Tối ưu hóa chuyển đổi màu soft-proofing"
+msgstr "Tối ưu hóa chuyển đổi màu mô-phỏng-in"
 
 #: ../libgimpconfig/gimpcolorconfig.c:304
 msgid "Mark out of gamut colors"
@@ -1961,12 +1973,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Lỗi tạo thư mục hình thu nhỏ “%s”."
 
-#: ../libgimpthumb/gimpthumbnail.c:479
+#: ../libgimpthumb/gimpthumbnail.c:481
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Ảnh thu nhỏ không chứa thẻ Thumb::URI"
 
-#: ../libgimpthumb/gimpthumbnail.c:876
+#: ../libgimpthumb/gimpthumbnail.c:878
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Không thể tạo hình thu nhỏ cho %s: %s"
@@ -1977,7 +1989,7 @@ msgstr "Tìm _kiếm:"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:152
 msgid "_Foreground Color"
-msgstr "Màu cảnh _gần"
+msgstr "Màu _tiền cảnh"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:156
 msgid "_Background Color"
@@ -2057,15 +2069,15 @@ msgstr "LCh"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../libgimpwidgets/gimpcolorselection.c:249
+#: ../libgimpwidgets/gimpcolorselection.c:247
 msgid "Current:"
 msgstr "Hiện thời:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:258
+#: ../libgimpwidgets/gimpcolorselection.c:256
 msgid "Old:"
 msgstr "Cũ :"
 
-#: ../libgimpwidgets/gimpcolorselection.c:345
+#: ../libgimpwidgets/gimpcolorselection.c:343
 msgid "HTML _notation:"
 msgstr "Cách _ghi HTML:"
 
@@ -2811,20 +2823,22 @@ msgid ""
 "defined filmic look to be used before ODT (display or output space ICC "
 "profile)"
 msgstr ""
+"ACES RRT (RRT = Reference Rendering Transform). Một bộ lọc màu hiển thị màu "
+"in thử HDR sang SDR, dùng một ước tính chỉ-luminance của ACES RRT, một giống "
+"phim định nghĩa trước được sử dụng trước ODT (bộ hiển thị hoặc hồ sơ ICC "
+"không gian đầu ra)"
 
 #: ../modules/display-filter-aces-rrt.c:121
 msgid "Pre-transform change in stops"
-msgstr ""
+msgstr "Chuyển-dạng-trước thay đổi trong các điểm dừng"
 
 #: ../modules/display-filter-aces-rrt.c:126
 msgid "Aces RRT"
-msgstr ""
+msgstr "Aces RRT"
 
 #: ../modules/display-filter-clip-warning.c:121
-#, fuzzy
-#| msgid "Gamma color display filter"
 msgid "Clip warning color display filter"
-msgstr "Bộ lọc hiển thị màu gamma (γ)"
+msgstr "Bộ lọc hiển thị màu cảnh báo clip"
 
 #: ../modules/display-filter-clip-warning.c:158
 msgid "Show shadows"
