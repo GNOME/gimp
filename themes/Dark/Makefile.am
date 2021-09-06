@@ -88,6 +88,7 @@ themeui_DATA =	\
 	ui/gimp-button-insensitive.png	\
 	ui/gimp-button-normal.png	\
 	ui/gimp-button-prelight.png	\
+	ui/gimp-button-prelight-white-border.png	\
 	ui/gimp-button-pressed.png	\
 	ui/gimp-handle-h.png	\
 	ui/gimp-handle-v.png	\
