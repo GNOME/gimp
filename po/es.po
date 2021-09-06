@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-08-30 18:42+0000\n"
-"PO-Revision-Date: 2021-08-30 22:05+0200\n"
+"POT-Creation-Date: 2021-09-05 21:48+0000\n"
+"PO-Revision-Date: 2021-09-06 13:37+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -14980,6 +14980,15 @@ msgstr "Cadena UTF-8 no válida en el archivo de patrón «%s»."
 #: ../app/core/gimppattern-load.c:178
 msgid "Fatal parse error in pattern file: "
 msgstr "Error fatal de análisis en el archivo de patrón: "
+
+#: ../app/core/gimppattern-save.c:52
+#, c-format
+msgid ""
+"Unsupported pattern dimensions %d x %d.\n"
+"GIMP Patterns have a maximum size of %d x %d."
+msgstr ""
+"Dimensión del patrón no soportada %d x %d.\n"
+"Los patrones de GIMP tienen un tamaño máximo de %d x %d."
 
 #: ../app/core/gimppdbprogress.c:268
 #, c-format
