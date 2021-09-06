@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-08-29 17:03+0000\n"
-"PO-Revision-Date: 2021-08-29 20:08+0300\n"
+"POT-Creation-Date: 2021-09-05 21:48+0000\n"
+"PO-Revision-Date: 2021-09-06 08:21+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -78,7 +78,8 @@ msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
 msgstr ""
-"GIMP 2.10.26 є випуском із виправленням вад — десятки виправлених вад у коді ядра, скриптів та додатків."
+"GIMP 2.10.26 є випуском із виправленням вад — десятки виправлених вад у коді "
+"ядра, скриптів та додатків."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
@@ -14851,6 +14852,18 @@ msgstr "Неправильний UTF-8 рядок у файлі текстури
 #: ../app/core/gimppattern-load.c:178
 msgid "Fatal parse error in pattern file: "
 msgstr "Критична помилка аналізу файла текстури: "
+
+#: ../app/core/gimppattern-save.c:52
+#, c-format
+#| msgid ""
+#| "Unsupported pattern depth %d.\n"
+#| "GIMP Patterns must be GRAY or RGB."
+msgid ""
+"Unsupported pattern dimensions %d x %d.\n"
+"GIMP Patterns have a maximum size of %d x %d."
+msgstr ""
+"Непідтримувані розмірності текстури — %d ⨯ %d.\n"
+"Максимальним розміром текстури GIMP є %d ⨯ %d."
 
 #: ../app/core/gimppdbprogress.c:268
 #, c-format
