@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-08-29 21:14+0000\n"
-"PO-Revision-Date: 2021-09-05 17:29-0400\n"
+"POT-Creation-Date: 2021-09-05 21:31+0000\n"
+"PO-Revision-Date: 2021-09-07 01:40-0400\n"
 "Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -1740,7 +1740,7 @@ msgstr "分解到图层(_D)"
 
 #: ../plug-ins/common/decompose.c:936
 msgid "_Foreground as registration color"
-msgstr "前景色作为注册颜色(_F)"
+msgstr "前景色作为套准标记颜色(_F)"
 
 #: ../plug-ins/common/decompose.c:937
 msgid ""
