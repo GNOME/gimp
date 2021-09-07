@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-09-05 21:49+0000\n"
-"PO-Revision-Date: 2021-09-07 01:47-0400\n"
+"POT-Creation-Date: 2021-09-07 05:49+0000\n"
+"PO-Revision-Date: 2021-09-07 02:02-0400\n"
 "Last-Translator: YunQiang Su <wzssyqa@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1044,10 +1044,8 @@ msgstr "当前设置的图像"
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
 #: ../plug-ins/imagemap/imap_menu.c:156
 #: ../plug-ins/metadata/metadata-viewer.c:255
-#, fuzzy
-#| msgid "Closed"
 msgid "_Close"
-msgstr "闭合"
+msgstr "关闭(_C)"
 
 #: ../plug-ins/common/cml-explorer.c:1963
 msgid "Warning: the source and the destination are the same channel."
@@ -1130,7 +1128,7 @@ msgstr "警告：“%s”是一个较新版本的 CML 探索器的参数文件�
 
 #: ../plug-ins/common/cml-explorer.c:2347
 msgid "Error: failed to load parameters"
-msgstr "错误：无法加载参数。"
+msgstr "错误：无法加载参数"
 
 #: ../plug-ins/common/color-cube-analyze.c:106
 msgid "Analyze the set of colors in the image"
@@ -1263,10 +1261,8 @@ msgstr "重新整理颜色表"
 #: ../plug-ins/gimpressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:762
 #: ../plug-ins/selection-to-path/selection-to-path.c:308
-#, fuzzy
-#| msgid "_Presets"
 msgid "_Reset"
-msgstr "预设(_P)"
+msgstr "重置(_R)"
 
 #: ../plug-ins/common/colormap-remap.c:720
 msgid ""
@@ -1327,38 +1323,28 @@ msgid "_Black:"
 msgstr "黑色(_B)："
 
 #: ../plug-ins/common/compose.c:171
-#, fuzzy
-#| msgid "_X:"
 msgid "_L:"
-msgstr "_X："
+msgstr "_L:"
 
 #: ../plug-ins/common/compose.c:172
-#, fuzzy
-#| msgid "_X:"
 msgid "_A:"
-msgstr "_X："
+msgstr "_A:"
 
 #: ../plug-ins/common/compose.c:173
-#, fuzzy
-#| msgid "_X:"
 msgid "_B:"
-msgstr "_X："
+msgstr "_B:"
 
 #: ../plug-ins/common/compose.c:175
-#, fuzzy
-#| msgid "_RLE"
 msgid "_L"
-msgstr "RLE(_R)"
+msgstr "_L"
 
 #: ../plug-ins/common/compose.c:176
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: ../plug-ins/common/compose.c:177
-#, fuzzy
-#| msgid "_Hue"
 msgid "_H"
-msgstr "色调(_H)"
+msgstr "_H"
 
 #: ../plug-ins/common/compose.c:179
 msgid "_Luma y470:"
@@ -1415,23 +1401,23 @@ msgstr "LAB"
 
 #: ../plug-ins/common/compose.c:235 ../plug-ins/common/decompose.c:196
 msgid "LCH"
-msgstr ""
+msgstr "LCH"
 
 #: ../plug-ins/common/compose.c:242 ../plug-ins/common/decompose.c:198
 msgid "YCbCr_ITU_R470"
-msgstr ""
+msgstr "YCbCr_ITU_R470"
 
 #: ../plug-ins/common/compose.c:249 ../plug-ins/common/decompose.c:201
 msgid "YCbCr_ITU_R709"
-msgstr ""
+msgstr "YCbCr_ITU_R709"
 
 #: ../plug-ins/common/compose.c:256 ../plug-ins/common/decompose.c:199
 msgid "YCbCr_ITU_R470_256"
-msgstr ""
+msgstr "YCbCr_ITU_R470_256"
 
 #: ../plug-ins/common/compose.c:263 ../plug-ins/common/decompose.c:202
 msgid "YCbCr_ITU_R709_256"
-msgstr ""
+msgstr "YCbCr_ITU_R709_256"
 
 #: ../plug-ins/common/compose.c:389
 msgid "Create an image using multiple gray images as color channels"
@@ -1754,7 +1740,7 @@ msgstr "蓝色"
 
 #: ../plug-ins/common/decompose.c:136
 msgid "alpha"
-msgstr "Alpha"
+msgstr "alpha"
 
 #: ../plug-ins/common/decompose.c:138 ../plug-ins/common/decompose.c:142
 msgid "hue"
@@ -6198,7 +6184,7 @@ msgstr "此单位的复数形式。"
 
 #: ../plug-ins/common/unit-editor.c:121
 msgid "Create a new unit from scratch"
-msgstr "重新创建一个新的单位。"
+msgstr "重新创建一个新的单位"
 
 #: ../plug-ins/common/unit-editor.c:127
 msgid "Create a new unit using the currently selected unit as template"
@@ -6262,7 +6248,7 @@ msgstr "单位编辑器"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1088
 #: ../plug-ins/gimpressionist/presets.c:1073
 msgid "_Refresh"
-msgstr ""
+msgstr "刷新(_R)"
 
 #: ../plug-ins/common/van-gogh-lic.c:575 ../plug-ins/common/van-gogh-lic.c:646
 msgid "Van Gogh (LIC)"
@@ -6289,7 +6275,6 @@ msgid "_Gradient"
 msgstr "渐变(_G)"
 
 #: ../plug-ins/common/van-gogh-lic.c:697
-#, fuzzy
 msgid "Convolve"
 msgstr "卷积"
 
@@ -6457,26 +6442,18 @@ msgstr "按照第 %d 步"
 
 #: ../plug-ins/common/wavelet-decompose.c:97
 #: ../plug-ins/common/wavelet-decompose.c:350
-#, fuzzy
-#| msgid "Decompose"
 msgid "Wavelet decompose"
-msgstr "分解"
+msgstr "小波分解"
 
 #: ../plug-ins/common/wavelet-decompose.c:102
-#, fuzzy
-#| msgid "_Decompose..."
 msgid "_Wavelet-decompose..."
-msgstr "分解(_D)..."
+msgstr "小波分解(_W)…"
 
 #: ../plug-ins/common/wavelet-decompose.c:177
-#, fuzzy
-#| msgid "Decompose"
 msgid "Wavelet-Decompose"
-msgstr "分解"
+msgstr "小波分解"
 
 #: ../plug-ins/common/wavelet-decompose.c:186
-#, fuzzy
-#| msgid "Decomposing"
 msgid "Decomposition"
 msgstr "分解"
 
@@ -9736,34 +9713,24 @@ msgid "S_ave Defaults"
 msgstr "保存默认值(_A)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
-#, fuzzy
-#| msgid "Save _EXIF data"
 msgid "Save Exif data"
-msgstr "保存 _EXIF 数据"
+msgstr "保存 Exif 数据"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:13
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "Save XMP data"
-msgstr "保存 _XMP 数据"
+msgstr "保存 XMP 数据"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:14
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "Save IPTC data"
-msgstr "保存 _XMP 数据"
+msgstr "保存 IPTC 数据"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:15
-#, fuzzy
-#| msgid "Save _thumbnail"
 msgid "Save thumbnail"
-msgstr "保存缩略图(_T)"
+msgstr "保存缩略图"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:16
-#, fuzzy
-#| msgid "_Save comment to file"
 msgid "Save color profile"
-msgstr "保存注释到文件(_S)"
+msgstr "保存色彩配置文件"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:17
 msgid "Co_mpression level:"
@@ -9854,191 +9821,153 @@ msgid "Colors are not stored premultiplied by the associated alpha"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
-#, fuzzy
-#| msgid "Comment"
 msgid "<b>Comment</b>"
-msgstr "注释"
+msgstr "<b>注释</b>"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
-#, fuzzy
-#| msgid "Save _EXIF data"
 msgid "S_ave Exif data"
-msgstr "保存 _EXIF 数据"
+msgstr "保存 Exif 数据(_A)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
-#, fuzzy
-#| msgid "Save _EXIF data"
 msgid "Save _GeoTIFF data"
-msgstr "保存 _EXIF 数据"
+msgstr "保存 _GeoTIFF 数据"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Keep the GeoTIFF metadata if it was present on import"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
-#, fuzzy
-#| msgid "PDF document"
 msgid "Document Title"
-msgstr "PDF 文档"
+msgstr "文档标题"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:2
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:3
 msgid "Author Title"
-msgstr ""
+msgstr "作者头衔"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:4
-#, fuzzy
-#| msgid "Description:"
 msgid "Description"
-msgstr "描述："
+msgstr "描述"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:5
-#, fuzzy
-#| msgid "Description:"
 msgid "Description Writer\t"
-msgstr "描述："
+msgstr "描述的作者\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
-#, fuzzy
-#| msgid "Rotating"
 msgid "Rating"
-msgstr "旋转"
+msgstr "评级"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:7
 msgid "Keywords"
-msgstr ""
+msgstr "关键词"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:8
-#, fuzzy
-#| msgid "_Copyright:"
 msgid "Copyright Status"
-msgstr "版权(_C)："
+msgstr "版权状态"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:9
-#, fuzzy
-#| msgid "_Copyright:"
 msgid "Copyright Notice"
-msgstr "版权(_C)："
+msgstr "版权公告"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:10
-#, fuzzy
-#| msgid "_Copyright:"
 msgid "Copyright URL"
-msgstr "版权(_C)："
+msgstr "版权网址"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:11
 msgid "Address"
-msgstr ""
+msgstr "地址"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:12
 msgid "City"
-msgstr ""
+msgstr "城市"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:13
 msgid "Postal Code\t"
-msgstr ""
+msgstr "邮编\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:14
-#, fuzzy
-#| msgid "Rotate / Scale"
 msgid "State / Province"
-msgstr "旋转/缩放"
+msgstr "州/省"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:15
 msgid "Country"
-msgstr ""
+msgstr "国家"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:16
-#, fuzzy
-#| msgid "Phong"
 msgid "Phone(s)"
-msgstr "光照模型 (Phong)"
+msgstr "电话"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:17
 msgid "Email(s)"
-msgstr ""
+msgstr "邮箱"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:18
 msgid "Website(s)"
-msgstr ""
+msgstr "网站"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:19
-#, fuzzy
-#| msgid "Installation Date"
 msgid "Creation Date"
-msgstr "安装日期"
+msgstr "创建日期"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:20
 msgid "Intellectual Genre"
-msgstr ""
+msgstr "新闻类别"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:21
 msgid "IPTC Scene Code"
-msgstr ""
+msgstr "IPTC 场景代码"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:22
-#, fuzzy
-#| msgid "Curl Location"
 msgid "Sublocation\t"
-msgstr "卷曲位置"
+msgstr "子位置\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:23
 msgid "ISO Country Code"
-msgstr ""
+msgstr "ISO 国家代码"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:24
 msgid "IPTC Subject Code"
-msgstr ""
+msgstr "IPTC 主题代码"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:25
-#, fuzzy
-#| msgid "Create line"
 msgid "Headline"
-msgstr "创建线段"
+msgstr "标题"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:26
 msgid "Urgency"
-msgstr ""
+msgstr "紧急"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:27
 msgid "Job Identifier\t"
-msgstr ""
+msgstr "工作标识\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:28
-#, fuzzy
-#| msgid "Intersection"
 msgid "Instructions"
-msgstr "虚线"
+msgstr "说明"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:29
 msgid "Credit Line"
-msgstr ""
+msgstr "新闻来源"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:30
-#, fuzzy
-#| msgid "C-Source"
 msgid "Source"
-msgstr "C-源码"
+msgstr "来源"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:31
-#, fuzzy
-#| msgid "Image Types"
 msgid "Usage Terms"
-msgstr "图像类型"
+msgstr "使用条款"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:32
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:7
 msgid "IPTC"
-msgstr ""
+msgstr "IPTC"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:33
-#, fuzzy
-#| msgid "Curl Location"
 msgid "Sublocation"
-msgstr "卷曲位置"
+msgstr "子位置"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:34
 msgid "Person Shown"
@@ -10363,32 +10292,28 @@ msgid "Equipment Manufacturer"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:103
-#, fuzzy
-#| msgid "DICOM image"
 msgid "DICOM"
-msgstr "DICOM 图像"
+msgstr "DICOM"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:1
 msgid "Exif Tag"
-msgstr ""
+msgstr "Exif 标签"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
 msgid "Exif"
-msgstr ""
+msgstr "Exif"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:4
 msgid "XMP Tag"
-msgstr ""
+msgstr "XMP 标签"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:5
-#, fuzzy
-#| msgid "XBM"
 msgid "XMP"
-msgstr "XBM"
+msgstr "XMP"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:6
 msgid "IPTC Tag"
-msgstr ""
+msgstr "IPTC 标签"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -10454,8 +10379,6 @@ msgid "A_uto update preview"
 msgstr "自动更新预览(_U)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2533
-#, fuzzy
-#| msgid "`Default' is created."
 msgid "'Default' is created."
 msgstr "“默认”已创建。"
 
@@ -10556,10 +10479,8 @@ msgid "Gradient Flare Editor"
 msgstr "渐变闪光编辑器"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3400
-#, fuzzy
-#| msgid "Rescan Gradients"
 msgid "_Rescan Gradients"
-msgstr "重新扫描渐变"
+msgstr "重新扫描渐变(_R)"
 
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3525
@@ -10755,11 +10676,9 @@ msgid "_Next"
 msgstr "下一个(_N)"
 
 #: ../plug-ins/help-browser/dialog.c:1188
-#, fuzzy
-#| msgid "Closed"
 msgctxt "search"
 msgid "_Close"
-msgstr "闭合"
+msgstr "关闭(_C)"
 
 #: ../plug-ins/help/gimphelpdomain.c:180
 #, c-format
@@ -10777,14 +10696,10 @@ msgstr "GIMP 用户手册不可用。"
 #. * Cf. bug 762282.
 #.
 #: ../plug-ins/help/gimphelpdomain.c:193
-#, fuzzy
-#| msgid ""
-#| "Please install the additional help package or use the online user manual "
-#| "at http://docs.gimp.org/."
 msgid ""
 "Please install the additional help package or use the online user manual at: "
 "https://docs.gimp.org/"
-msgstr "请安装附加的帮助包或使用位于 http://docs.gimp.org/ 的在线用户手册。"
+msgstr "请安装附加的帮助包或使用位于 https://docs.gimp.org/ 的在线用户手册"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -10986,10 +10901,8 @@ msgid "Open IFS Fractal file"
 msgstr "打开 IFS 分形文件"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-#, fuzzy
-#| msgid "Image Map Plug-In"
 msgid "Image Map Plug-in"
-msgstr "图像映像插件"
+msgstr "图像映射插件"
 
 #: ../plug-ins/imagemap/imap_about.c:46
 msgid "Copyright © 1999-2005 by Maurits Rijk"
@@ -11434,7 +11347,7 @@ msgstr "另存为(_A)..."
 
 #: ../plug-ins/imagemap/imap_menu.c:158
 msgid "_Quit"
-msgstr ""
+msgstr "退出(_Q)"
 
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Undo"
@@ -11446,13 +11359,11 @@ msgstr "重做"
 
 #: ../plug-ins/imagemap/imap_menu.c:166
 msgid "Cu_t"
-msgstr ""
+msgstr "剪切(_T)"
 
 #: ../plug-ins/imagemap/imap_menu.c:170
-#, fuzzy
-#| msgid "Paste"
 msgid "_Paste"
-msgstr "粘贴"
+msgstr "粘贴(_P)"
 
 #: ../plug-ins/imagemap/imap_menu.c:176
 msgid "D_eselect All"
@@ -11467,26 +11378,20 @@ msgid "Edit selected area info"
 msgstr "编辑选中区域的信息"
 
 #: ../plug-ins/imagemap/imap_menu.c:182
-#, fuzzy
-#| msgid "Preferences"
 msgid "_Preferences"
-msgstr "首选项"
+msgstr "首选项(_P)"
 
 #: ../plug-ins/imagemap/imap_menu.c:182
 msgid "Preferences"
 msgstr "首选项"
 
 #: ../plug-ins/imagemap/imap_menu.c:184
-#, fuzzy
-#| msgid "Move to Front"
 msgid "Move Area to Front"
-msgstr "提到最前"
+msgstr "移动区域至最前"
 
 #: ../plug-ins/imagemap/imap_menu.c:186
-#, fuzzy
-#| msgid "Move to Front"
 msgid "Move Area to Bottom"
-msgstr "提到最前"
+msgstr "移动区域至底部"
 
 #: ../plug-ins/imagemap/imap_menu.c:188
 msgid "Delete Area"
@@ -11550,7 +11455,7 @@ msgstr "内容(_C)"
 
 #: ../plug-ins/imagemap/imap_menu.c:215
 msgid "_About"
-msgstr ""
+msgstr "关于(_A)"
 
 #: ../plug-ins/imagemap/imap_menu.c:217
 msgid "_Zoom"
@@ -11586,11 +11491,11 @@ msgstr "多边形(_P)"
 
 #: ../plug-ins/imagemap/imap_polygon.c:471
 msgid "x (pixels)"
-msgstr "X (像素)"
+msgstr "x（像素）"
 
 #: ../plug-ins/imagemap/imap_polygon.c:480
 msgid "y (pixels)"
-msgstr "Y (像素)"
+msgstr "y（像素）"
 
 #: ../plug-ins/imagemap/imap_polygon.c:518
 msgid "_Insert"
@@ -11625,7 +11530,6 @@ msgid "Show area _handles"
 msgstr "显示区域控制块(_H)"
 
 #: ../plug-ins/imagemap/imap_preferences.c:389
-#, fuzzy
 msgid "_Keep NCSA circles true"
 msgstr "保持 NCSA 圆为真(true)(_K)"
 
@@ -11666,10 +11570,8 @@ msgid "Selected:"
 msgstr "选中："
 
 #: ../plug-ins/imagemap/imap_preferences.c:442
-#, fuzzy
-#| msgid "Iterations:"
 msgid "Interaction:"
-msgstr "迭代次数："
+msgstr "交互："
 
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
@@ -11834,8 +11736,6 @@ msgid "Color:"
 msgstr "颜色："
 
 #: ../plug-ins/lighting/lighting-ui.c:428
-#, fuzzy
-#| msgid "None"
 msgctxt "light-source"
 msgid "None"
 msgstr "无"
@@ -12330,57 +12230,50 @@ msgid "Show _wireframe"
 msgstr "显示预览网格(_W)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1422
-#, fuzzy
-#| msgid "Recompute preview image"
 msgid "Update preview _live"
-msgstr "重新计算预览图像"
+msgstr "实时更新预览"
 
 #: ../plug-ins/metadata/metadata-editor.c:439
-#, fuzzy
-#| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
-msgstr "查看并编辑元数据(EXIF, IPTC, XMP)"
+msgstr "编辑元数据（IPTC，EXIF，XMP）"
 
 #: ../plug-ins/metadata/metadata-editor.c:447
 msgid "_Edit Metadata"
-msgstr ""
+msgstr "编辑元数据(_E)"
 
 #: ../plug-ins/metadata/metadata-editor.c:571
 msgid "Error loading metadata-editor dialog."
-msgstr ""
+msgstr "加载元数据编辑器对话框出错。"
 
 #: ../plug-ins/metadata/metadata-editor.c:582
 #, c-format
 msgid "Metadata Editor: %s"
-msgstr ""
+msgstr "元数据编辑器：%s"
 
 #: ../plug-ins/metadata/metadata-editor.c:591
 msgid "_Write Metadata"
-msgstr ""
+msgstr "写入元数据(_W)"
 
 #: ../plug-ins/metadata/metadata-editor.c:615
-#, fuzzy
-#| msgid "Import _paths"
 msgid "Import metadata"
-msgstr "导入路径(_P)"
+msgstr "导入元数据"
 
 #: ../plug-ins/metadata/metadata-editor.c:617
 msgid "Export metadata"
-msgstr ""
+msgstr "导出元数据"
 
 #: ../plug-ins/metadata/metadata-editor.c:921
-#, fuzzy, c-format
-#| msgid "Error loading PNG file: %s"
+#, c-format
 msgid "Error loading calendar. %s"
-msgstr "读入 PNG 文件出错：%s"
+msgstr "加载日历出错。%s"
 
 #: ../plug-ins/metadata/metadata-editor.c:949
 msgid "Calendar Date:"
-msgstr ""
+msgstr "日历日期："
 
 #: ../plug-ins/metadata/metadata-editor.c:953
 msgid "Set Date"
-msgstr ""
+msgstr "设置日期"
 
 #: ../plug-ins/metadata/metadata-editor.c:1687
 msgid ""
@@ -12391,6 +12284,11 @@ msgid ""
 "or 10.45\n"
 "Delete all text to remove the current value."
 msgstr ""
+"在这里键入或编辑 GPS 数值。\n"
+"有效的值由 1、2 或 3 个数字组成（角度、分钟、秒数），参阅以下示例：\n"
+"10deg 15' 20\"，或 10° 15' 20\"，或 10:15:20.45，或 10 15 20，或 10 15.30，"
+"或 10.45\n"
+"删除所有文字可删除当前值。"
 
 #: ../plug-ins/metadata/metadata-editor.c:1693
 msgid ""
@@ -12401,54 +12299,55 @@ msgid ""
 "meter (m) or feet (ft)\n"
 "Delete all text to remove the current value."
 msgstr ""
+"在这里键入或编辑 GPS 海拔数值。\n"
+"一个有效的值由一个数字构成：\n"
+"比如 100 或 12.24\n"
+"根据选中的度量类型该值应为米（m）或英尺（ft）\n"
+"删除所有文字可删除当前值。"
 
 #: ../plug-ins/metadata/metadata-editor.c:1829
 msgid "Unrated"
-msgstr ""
+msgstr "未评级"
 
 #: ../plug-ins/metadata/metadata-editor.c:3697
 #, c-format
 msgid "Failed to set metadata tag %s"
-msgstr ""
+msgstr "设置元数据标签失败 %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:4557
 msgid "Import Metadata File"
-msgstr ""
+msgstr "导入元数据文件"
 
 #: ../plug-ins/metadata/metadata-editor.c:4592
 msgid "Export Metadata File"
-msgstr ""
+msgstr "导出元数据文件"
 
 #: ../plug-ins/metadata/metadata-tags.c:169
 #: ../plug-ins/metadata/metadata-tags.c:183
 #: ../plug-ins/metadata/metadata-tags.c:243
 #: ../plug-ins/metadata/metadata-tags.c:260
-#, fuzzy
-#| msgid "Select Image File"
 msgid "Select a value"
-msgstr "选择图像文件"
+msgstr "选择一个值"
 
 #: ../plug-ins/metadata/metadata-tags.c:170
 msgid "Original digital capture of a real life scene"
-msgstr ""
+msgstr "真实生活场景的原始数码捕获"
 
 #: ../plug-ins/metadata/metadata-tags.c:171
 msgid "Digitized from a negative on film"
-msgstr ""
+msgstr "由电影负片数字化"
 
 #: ../plug-ins/metadata/metadata-tags.c:172
 msgid "Digitized from a positive on film"
-msgstr ""
+msgstr "由电影正片数字化"
 
 #: ../plug-ins/metadata/metadata-tags.c:173
 msgid "Digitized from a print on non-transparent medium"
-msgstr ""
+msgstr "由不透明媒介上打印的数字化"
 
 #: ../plug-ins/metadata/metadata-tags.c:174
-#, fuzzy
-#| msgid "Create star"
 msgid "Created by software"
-msgstr "创建星形"
+msgstr "通过软件创建"
 
 #: ../plug-ins/metadata/metadata-tags.c:184
 #: ../plug-ins/metadata/metadata-tags.c:196
@@ -12459,219 +12358,203 @@ msgstr "无"
 #: ../plug-ins/metadata/metadata-tags.c:185
 #: ../plug-ins/metadata/metadata-tags.c:197
 msgid "Not Applicable"
-msgstr ""
+msgstr "不适用"
 
 #: ../plug-ins/metadata/metadata-tags.c:186
 msgid "Unlimited Model Releases"
-msgstr ""
+msgstr "无限制的模特发布"
 
 #: ../plug-ins/metadata/metadata-tags.c:187
 msgid "Limited or Incomplete Model Releases"
-msgstr ""
+msgstr "有限或不完全的模特发布"
 
 #: ../plug-ins/metadata/metadata-tags.c:198
 msgid "Unlimited Property Releases"
-msgstr ""
+msgstr "无限制的所有权发布"
 
 #: ../plug-ins/metadata/metadata-tags.c:199
 msgid "Limited or Incomplete Property Releases"
-msgstr ""
+msgstr "有限或不完全的所有权发布"
 
 #: ../plug-ins/metadata/metadata-tags.c:208
 msgid "Age Unknown"
-msgstr ""
+msgstr "未知年龄"
 
 #: ../plug-ins/metadata/metadata-tags.c:209
 msgid "Age 25 or Over"
-msgstr ""
+msgstr "25 岁或更大"
 
 #: ../plug-ins/metadata/metadata-tags.c:210
 msgid "Age 24"
-msgstr ""
+msgstr "24 岁"
 
 #: ../plug-ins/metadata/metadata-tags.c:211
 msgid "Age 23"
-msgstr ""
+msgstr "23 岁"
 
 #: ../plug-ins/metadata/metadata-tags.c:212
 msgid "Age 22"
-msgstr ""
+msgstr "22 岁"
 
 #: ../plug-ins/metadata/metadata-tags.c:213
 msgid "Age 21"
-msgstr ""
+msgstr "21 岁"
 
 #: ../plug-ins/metadata/metadata-tags.c:214
 msgid "Age 20"
-msgstr ""
+msgstr "20 岁"
 
 #: ../plug-ins/metadata/metadata-tags.c:215
 msgid "Age 19"
-msgstr ""
+msgstr "19 岁"
 
 #: ../plug-ins/metadata/metadata-tags.c:216
 msgid "Age 18"
-msgstr ""
+msgstr "18 岁"
 
 #: ../plug-ins/metadata/metadata-tags.c:217
 msgid "Age 17"
-msgstr ""
+msgstr "17 岁"
 
 #: ../plug-ins/metadata/metadata-tags.c:218
 msgid "Age 16"
-msgstr ""
+msgstr "16 岁"
 
 #: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Age 15"
-msgstr ""
+msgstr "15 岁"
 
 #: ../plug-ins/metadata/metadata-tags.c:220
 msgid "Age 14 or Under"
-msgstr ""
+msgstr "14 岁或更小"
 
 #: ../plug-ins/metadata/metadata-tags.c:227
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: ../plug-ins/metadata/metadata-tags.c:227
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: ../plug-ins/metadata/metadata-tags.c:227
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../plug-ins/metadata/metadata-tags.c:227
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: ../plug-ins/metadata/metadata-tags.c:227
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: ../plug-ins/metadata/metadata-tags.c:234
 #: ../plug-ins/metadata/metadata-tags.c:270
 #: ../plug-ins/metadata/metadata-tags.c:277
 #: ../plug-ins/metadata/metadata-tags.c:284
-#, fuzzy
-#| msgid "Unknown reason"
 msgid "Unknown"
-msgstr "未知原因"
+msgstr "未知"
 
 #. DO NOT SAVE
 #: ../plug-ins/metadata/metadata-tags.c:235
-#, fuzzy
-#| msgid "_Copyright:"
 msgid "Copyrighted"
-msgstr "版权(_C)："
+msgstr "已有版权"
 
 #. TRUE
 #: ../plug-ins/metadata/metadata-tags.c:236
 msgid "Public Domain"
-msgstr ""
+msgstr "公共领域"
 
 #: ../plug-ins/metadata/metadata-tags.c:244
 msgid "Work"
-msgstr ""
+msgstr "工作"
 
 #: ../plug-ins/metadata/metadata-tags.c:245
 msgid "Cell"
-msgstr ""
+msgstr "手机"
 
 #: ../plug-ins/metadata/metadata-tags.c:246
-#, fuzzy
-#| msgid "Fan"
 msgid "Fax"
-msgstr "扇形"
+msgstr "传真"
 
 #: ../plug-ins/metadata/metadata-tags.c:247
 msgid "Home"
-msgstr ""
+msgstr "家庭"
 
 #: ../plug-ins/metadata/metadata-tags.c:248
-#, fuzzy
-#| msgid "Pages:"
 msgid "Pager"
-msgstr "页数："
+msgstr "寻呼机"
 
 #: ../plug-ins/metadata/metadata-tags.c:261
 msgid "Male"
-msgstr ""
+msgstr "雄性"
 
 #: ../plug-ins/metadata/metadata-tags.c:262
 msgid "Female"
-msgstr ""
+msgstr "雌性"
 
 #: ../plug-ins/metadata/metadata-tags.c:263
-#, fuzzy
-#| msgid "_Other:"
 msgid "Other"
-msgstr "其它(_O)："
+msgstr "其它"
 
 #: ../plug-ins/metadata/metadata-tags.c:270
 msgid "Above sea level"
-msgstr ""
+msgstr "海平面之上"
 
 #: ../plug-ins/metadata/metadata-tags.c:270
-#, fuzzy
-#| msgid "_Black level:"
 msgid "Below sea level"
-msgstr "黑色水平(_B)："
+msgstr "海平面之下"
 
 #: ../plug-ins/metadata/metadata-tags.c:277
 msgid "North"
-msgstr ""
+msgstr "北"
 
 #: ../plug-ins/metadata/metadata-tags.c:277
 msgid "South"
-msgstr ""
+msgstr "南"
 
 #: ../plug-ins/metadata/metadata-tags.c:284
 msgid "East"
-msgstr ""
+msgstr "东"
 
 #: ../plug-ins/metadata/metadata-tags.c:284
 msgid "West"
-msgstr ""
+msgstr "西"
 
 #: ../plug-ins/metadata/metadata-viewer.c:135
-#, fuzzy
-#| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "View metadata (Exif, IPTC, XMP)"
-msgstr "查看并编辑元数据(EXIF, IPTC, XMP)"
+msgstr "查看元数据（Exif，IPTC，XMP）"
 
 #: ../plug-ins/metadata/metadata-viewer.c:142
 msgid "_View Metadata"
-msgstr ""
+msgstr "查看元数据(_V)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:237
 msgid "Error loading metadata-viewer dialog."
-msgstr ""
+msgstr "加载元数据查看器对话框出错。"
 
 #: ../plug-ins/metadata/metadata-viewer.c:248
 #, c-format
 msgid "Metadata Viewer: %s"
-msgstr ""
+msgstr "元数据查看器：%s"
 
 #: ../plug-ins/metadata/metadata-viewer.c:340
 #, c-format
 msgid "(%lu more character(s))"
-msgstr ""
+msgstr "（%lu 个更多字符）"
 
 #: ../plug-ins/metadata/metadata-viewer.c:532
-#, fuzzy
-#| msgid "Parameters"
 msgid " meter"
-msgstr "参数"
+msgstr " 米"
 
 #: ../plug-ins/metadata/metadata-viewer.c:533
 msgid " feet"
-msgstr ""
+msgstr " 英尺"
 
 #: ../plug-ins/metadata/metadata-viewer.c:640
 #, c-format
 msgid "(%llu more byte(s))"
-msgstr ""
+msgstr "（%llu 个更多字节）"
 
 #: ../plug-ins/pagecurl/pagecurl.c:202
 msgid "Curl up one of the image corners"
@@ -12768,8 +12651,6 @@ msgstr "中心(_E)："
 
 #. if and how to center the image on the page
 #: ../plug-ins/print/print-page-layout.c:499
-#, fuzzy
-#| msgid "None"
 msgctxt "center-mode"
 msgid "None"
 msgstr "无"
@@ -12799,10 +12680,8 @@ msgid "Adjust page size and orientation for printing"
 msgstr "调整打印页面的大小和方向"
 
 #: ../plug-ins/print/print.c:131
-#, fuzzy
-#| msgid "Page Set_up"
 msgid "Page Set_up..."
-msgstr "页面设置(_U)"
+msgstr "页面设置(_U)…"
 
 #: ../plug-ins/print/print.c:275
 msgid "Image Settings"
@@ -12864,10 +12743,8 @@ msgid "Delay"
 msgstr "延迟"
 
 #: ../plug-ins/screenshot/screenshot.c:694
-#, fuzzy
-#| msgid "Se_lection only"
 msgid "Selection delay: "
-msgstr "仅选区(_L)"
+msgstr "选区延迟："
 
 #. translators: this is the unit label of a spinbutton
 #: ../plug-ins/screenshot/screenshot.c:713
@@ -12882,17 +12759,15 @@ msgstr "在延迟之后，拖动您的鼠标以选择屏幕截图范围。"
 
 #: ../plug-ins/screenshot/screenshot.c:731
 msgid "Click in a window to snap it after delay."
-msgstr ""
+msgstr "在一个窗口中单击以在延迟后截取它。"
 
 #: ../plug-ins/screenshot/screenshot.c:736
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "延迟结束时，在一个窗口中点击以捕捉它。"
 
 #: ../plug-ins/screenshot/screenshot.c:757
-#, fuzzy
-#| msgid "Screenshot"
 msgid "Screenshot dela_y: "
-msgstr "屏幕截图"
+msgstr "截屏延迟(_Y)："
 
 #: ../plug-ins/screenshot/screenshot.c:789
 msgid "After the delay, the screenshot is taken."
@@ -12900,33 +12775,27 @@ msgstr "在延迟之后，得到屏幕截图。"
 
 #: ../plug-ins/screenshot/screenshot.c:791
 msgid "Once the region is selected, it will be captured after this delay."
-msgstr ""
+msgstr "一旦选中区域，将在延迟后对其截屏。"
 
 #: ../plug-ins/screenshot/screenshot.c:796
 msgid "Once the window is selected, it will be captured after this delay."
-msgstr ""
+msgstr "一旦选中窗口，将在延迟后对其截屏。"
 
 #: ../plug-ins/screenshot/screenshot.c:802
-#, fuzzy
-#| msgid "After the delay, the screenshot is taken."
 msgid "After the delay, the active window will be captured."
-msgstr "在延迟之后，得到屏幕截图。"
+msgstr "在延迟之后，活动窗口将被截屏。"
 
 #: ../plug-ins/screenshot/screenshot.c:809
-#, fuzzy
-#| msgid "Color fill"
 msgid "Color Profile"
-msgstr "颜色填充"
+msgstr "色彩配置文件"
 
 #: ../plug-ins/screenshot/screenshot.c:814
 msgid "Tag image with _monitor profile"
-msgstr ""
+msgstr "使用显示器配置文件标记图像(_M)"
 
 #: ../plug-ins/screenshot/screenshot.c:818
-#, fuzzy
-#| msgid "Environment image to use"
 msgid "Convert image to sR_GB"
-msgstr "要使用的环境图像"
+msgstr "转换图像为 sRGB(_G)"
 
 #: ../plug-ins/screenshot/screenshot-win32.c:299
 msgid "No data captured"
@@ -12962,20 +12831,16 @@ msgid "Selection to Path Advanced Settings"
 msgstr "选区到路径高级设置"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:116
-#, fuzzy
-#| msgid "Threshold:"
 msgid "Align Threshold:"
-msgstr "阈值："
+msgstr "对齐阈值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:120
 msgid "If two endpoints are closer than this, they are made to be equal."
-msgstr ""
+msgstr "如果两个端点距离小于该值，它们将被视为同等。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:129
-#, fuzzy
-#| msgid "Gray Threshold"
 msgid "Corner Always Threshold:"
-msgstr "灰色阈值"
+msgstr "总是夹角阈值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:133
 msgid ""
@@ -12983,55 +12848,51 @@ msgid ""
 "smaller than this, it's a corner, even if it's within 'corner_surround' "
 "pixels of a point with a smaller angle."
 msgstr ""
+"如果通过一个点和它的前者及后者所确定的角度小于该值，它就是一个夹角，即使它处"
+"于具有较小角度端点的“夹角环绕”像素范围内。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:144
-#, fuzzy
-#| msgid "Foreground"
 msgid "Corner Surround:"
-msgstr "前景"
+msgstr "夹角环绕："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:148
 msgid ""
 "Number of points to consider when determining if a point is a corner or not."
-msgstr ""
+msgstr "决定一个点是否是夹角时所考虑的点数。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:157
-#, fuzzy
-#| msgid "Lower t_hreshold:"
 msgid "Corner Threshold:"
-msgstr "低端阈值(_H)："
+msgstr "夹角阈值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:161
 msgid ""
 "If a point, its predecessors, and its successors define an angle smaller "
 "than this, it's a corner."
-msgstr ""
+msgstr "如果一个点的前者和后者形成的角度小于该值，它就是一个夹角。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:172
-#, fuzzy
-#| msgid "Threshold:"
 msgid "Error Threshold:"
-msgstr "阈值："
+msgstr "错误阈值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:176
 msgid ""
 "Amount of error at which a fitted spline is unacceptable. If any pixel is "
 "further away than this from the fitted curve, we try again."
 msgstr ""
+"拟合的样条曲线不可接受时的错误数量。如果有任何像素距离拟合曲线远超该值，我们"
+"将重试。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:187
 msgid "Filter Alternative Surround:"
-msgstr ""
+msgstr "过滤替代环绕："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "A second number of adjacent points to consider when filtering."
-msgstr ""
+msgstr "过滤时所考虑的临近点第二数量。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:201
-#, fuzzy
-#| msgid "_Filter length:"
 msgid "Filter Epsilon:"
-msgstr "滤镜长度(_F)："
+msgstr "过滤艾普西隆："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:205
 msgid ""
@@ -13039,12 +12900,12 @@ msgid ""
 "filter_alternative_surround points differ by more than this, use the one "
 "from filter_alternative_surround."
 msgstr ""
+"如果由过滤环绕和过滤替代环绕产生的矢量中的角度与该值差异较大，使用来自过滤替"
+"代环绕的结果。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:216
-#, fuzzy
-#| msgid "T_ile saturation:"
 msgid "Filter Iteration Count:"
-msgstr "方块饱和度(_I)："
+msgstr "过滤迭代次数："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:220
 msgid ""
@@ -13053,49 +12914,47 @@ msgid ""
 "any points that 'should' be corners aren't found, the curve goes to hell "
 "around that point."
 msgstr ""
+"平滑原始数据端点的倍数。显著地增加该值到 50 或诸如此类可以产生非常好的结果。"
+"但是如果没有发现“应该”是夹角的端点的话，该端点周围的曲线会很糟糕。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:232
-#, fuzzy
-#| msgid "_Filter length:"
 msgid "Filter Percent:"
-msgstr "滤镜长度(_F)："
+msgstr "过滤百分比："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:236
 msgid ""
 "To produce the new point, use the old point plus this times the neighbors."
-msgstr ""
+msgstr "为了产生新端点，使用旧端点加上该临近点的倍数。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:245
 msgid "Filter Secondary Surround:"
-msgstr ""
+msgstr "过滤次要环绕："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:249
 msgid ""
 "Number of adjacent points to consider if 'filter_surround' points defines a "
 "straight line."
-msgstr ""
+msgstr "“过滤环绕”是否确定直线所考虑的临近点数量。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:259
 msgid "Filter Surround:"
-msgstr ""
+msgstr "过滤环绕："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:263
 msgid "Number of adjacent points to consider when filtering."
-msgstr ""
+msgstr "过滤时所考虑的临近点数量。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:271
 msgid "Keep Knees"
-msgstr ""
+msgstr "保留拐点"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:276
 msgid "Says whether or not to remove 'knee' points after finding the outline."
-msgstr ""
+msgstr "决定找到轮廓线后是否删除拐点。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:287
-#, fuzzy
-#| msgid "Deviation threshold:"
 msgid "Line Reversion Threshold:"
-msgstr "偏差阈值："
+msgstr "线回复阈值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:291
 msgid ""
@@ -13104,34 +12963,34 @@ msgid ""
 "weighted by the square of the curve length, to make shorter curves more "
 "likely to be reverted."
 msgstr ""
+"如果样条曲线比该值更接近直线，它会保持直线，即使它否则会被变回曲线。这是由曲"
+"线长度的平方权衡的，以使更短的曲线更可能恢复原状。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:303
-#, fuzzy
-#| msgid "Threshold:"
 msgid "Line Threshold:"
-msgstr "阈值："
+msgstr "直线阈值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:307
 msgid ""
 "How many pixels (on the average) a spline can diverge from the line "
 "determined by its endpoints before it is changed to a straight line."
-msgstr ""
+msgstr "在它变为直线之前样条曲线有多少像素（平均上）会偏离由其端点确定的线条。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:317
 msgid "Reparametrize Improvement:"
-msgstr ""
+msgstr "重新参数化提升："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:321
 msgid ""
 "If reparameterization doesn't improve the fit by this much percent, stop "
 "doing it. Amount of error at which it is pointless to reparameterize."
 msgstr ""
+"如果重新参数化无法通过该百分比提升拟合度则停止该行为。重新参数化毫无意义的错"
+"误数量。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:331
-#, fuzzy
-#| msgid "Deviation threshold:"
 msgid "Reparametrize Threshold:"
-msgstr "偏差阈值："
+msgstr "重新参数化阈值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:335
 msgid ""
@@ -13141,54 +13000,49 @@ msgid ""
 "Raphson iteration to improve it.  It may be that it would be better to "
 "detect the cases where we didn't find any corners."
 msgstr ""
+"重新参数化毫无意义的错误数量。比如当我们试图使用单独样条曲线绘制”O“的外部轮廓"
+"线时会发生这种情况。初始拟合没有好到足以使用牛顿-拉夫森迭代法对其提升。对我们"
+"未找到任何夹角的情况进行检测可能会更好。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:348
-#, fuzzy
-#| msgid "Subdivide:"
 msgid "Subdivide Search:"
-msgstr "细分："
+msgstr "细分搜索："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:352
 msgid ""
 "Percentage of the curve away from the worst point to look for a better place "
 "to subdivide."
-msgstr ""
+msgstr "用以寻找更好细分位置的曲线远离最差端点的百分比。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:361
-#, fuzzy
-#| msgid "Subdivide:"
 msgid "Subdivide Surround:"
-msgstr "细分："
+msgstr "细分环绕："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:365
 msgid ""
 "Number of points to consider when deciding whether a given point is a better "
 "place to subdivide."
-msgstr ""
+msgstr "决定指定端点是否是细分最佳位置时所考虑的端点数量。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:375
-#, fuzzy
-#| msgid "Threshold:"
 msgid "Subdivide Threshold:"
-msgstr "阈值："
+msgstr "细分阈值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:379
 msgid ""
 "How many pixels a point can diverge from a straight line and still be "
 "considered a better place to subdivide."
-msgstr ""
+msgstr "一个端点可偏离直线多少像素且仍被考虑为细分的更好位置。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:389
-#, fuzzy
-#| msgid "Transparent background"
 msgid "Tangent Surround:"
-msgstr "透明背景"
+msgstr "相切环绕："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:393
 msgid ""
 "Number of points to look at on either side of a point when computing the "
 "approximation to the tangent at that point."
-msgstr ""
+msgstr "当计算指定端点切线的接近值时端点两边需要考虑的端点数量。"
 
 #: ../plug-ins/twain/twain.c:86
 msgid "Capture an image from a TWAIN datasource"
