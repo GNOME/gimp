@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-09-05 21:31+0000\n"
-"PO-Revision-Date: 2021-09-07 01:40-0400\n"
+"POT-Creation-Date: 2021-09-07 05:43+0000\n"
+"PO-Revision-Date: 2021-09-07 01:47-0400\n"
 "Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -3873,11 +3873,11 @@ msgstr "索引 Alpha"
 
 #: ../plug-ins/common/file-raw-data.c:1893
 msgid "Gray unsigned 16 bit Big Endian"
-msgstr "灰阶未签名 16 位大端"
+msgstr "灰阶无符号 16 位大端"
 
 #: ../plug-ins/common/file-raw-data.c:1894
 msgid "Gray unsigned 16 bit Little Endian"
-msgstr "灰阶未签名 16 位小端"
+msgstr "灰阶无符号 16 位小端"
 
 #: ../plug-ins/common/file-raw-data.c:1895
 msgid "Gray 16 bit Big Endian"
