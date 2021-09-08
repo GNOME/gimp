@@ -36,12 +36,28 @@ MESON_LANGS=`grep "'code':" ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/install
             sed "s/^.*'code': *'\([^']*\)'.*$/\1/" |sort`
 MESON_LANGS=`echo "$MESON_LANGS" | tr '\n\r' ' ' | sed 's/\<en\> //'`
 
-if [ "$PO_LANGS" = "$MESON_LANGS" ]; then
-  exit 0
-else
+if [ "$PO_LANGS" != "$MESON_LANGS" ]; then
   echo "Error: languages listed in the meson script do not match the .po files in po-windows-installer/."
   echo "- PO languages:    $PO_LANGS"
   echo "- Meson languages: $MESON_LANGS"
   echo "Please verify: build/windows/installer/lang/meson.build"
+  exit 1
+fi
+
+INSTALLER_LANGS=`grep -rI '^Name:.*MessagesFile.*Unofficial' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/installer/gimp3264.iss | \
+                 sed 's/^.*Unofficial\\\\\([a-zA-Z_.]*\),.*$/\1/' | sort`
+INSTALLER_LANGS=`echo "$INSTALLER_LANGS" | tr '\n\r' ' '`
+
+PULLED_UNOFFICIAL=`grep '^wget .*Unofficial/' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/gitlab-ci/installer-gimp-msys2.sh | \
+                   sed 's$^wget.*Unofficial/\([^.]*.isl.\?\)$\1$' | sort`
+PULLED_UNOFFICIAL=`echo "$PULLED_UNOFFICIAL" | tr '\n\r' ' '`
+
+if [ "$INSTALLER_LANGS" = "$PULLED_UNOFFICIAL" ]; then
+  exit 0
+else
+  echo "Error: unofficial languages listed in the Windows installer script do not match the pulled InnoSetup files."
+  echo "- Pulled files:        $PULLED_UNOFFICIAL"
+  echo "- Installer languages: $INSTALLER_LANGS"
+  echo "Please verify: build/windows/gitlab-ci/installer-gimp-msys2.sh"
   exit 1
 fi
