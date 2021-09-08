@@ -20,6 +20,7 @@ wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Uno
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Indonesian.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Korean.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Latvian.isl
+wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Lithuanian.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Malaysian.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Marathi.islu
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Romanian.isl
