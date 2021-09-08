@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-08-31 19:43+0000\n"
-"PO-Revision-Date: 2021-08-31 23:50+0200\n"
+"POT-Creation-Date: 2021-09-07 15:03+0000\n"
+"PO-Revision-Date: 2021-09-07 22:27+0200\n"
 "Last-Translator: miles\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -78,21 +78,29 @@ msgstr "Urejanje fotografij v GIMP-u"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
+"GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
+"not properly installed."
+msgstr ""
+"GIMP 2.10.28 odpravlja vprašanje gradnje GIMP 2.10.26, kjer nekateri podatki "
+"o temi niso bili pravilno nameščeni."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
 msgstr ""
 "GIMP 2.10.26 je izdaja z odpravljenimi hrošči, ki vsebuje na ducate "
 "popravkov, tako v jedru, skriptah in vstavkih."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr "GIMP 2.10.24 je v veliki meri izdaja s popravki hroščev. Vključuje:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "GeoTIFF metadata support added"
 msgstr "Dodana podpora metapodatkov GeoTIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
@@ -100,40 +108,40 @@ msgstr ""
 "Uvoz PDF zdaj ponudi možnost nalaganja plasti v obratnem vrstnem redu in "
 "dovoljuje ulomljeno gostoto slikovnih točk"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
 "Uvoz slik RAW posodobljen, da deluje s spremembami API v darktable 3.6 in "
 "kasnejših"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
 "Izboljšana podpora za vrste datotek: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, "
 "BMP, PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr ""
 "Številni popravki in izboljšave ogledovalnika in urejevalnika metapodatkov"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "New Kabyle translation"
 msgstr "Nov prevod v kabilščini"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr "Pripenjanje točk izven platna (na mrežo, vodila, poti) je omogočeno"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.22 je v veliki meri izdaja s popravki hroščev. Omembe vredne "
 "novosti:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
@@ -141,20 +149,20 @@ msgstr ""
 "Izboljšave podpore za HEIF: neobvezen izvoz z visoko bitno globino, uvoz in "
 "izvoz AVIF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr "Več izboljšav pri podpori za Corel PaintShop Pro"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
 "»Vzorči spojeno« je zdaj na voljo med možnosti orodij za operacije GEGL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr "»Vzorči spojeno« je zdaj privzeto omogočeno za izbiranje barv"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
@@ -162,7 +170,7 @@ msgstr ""
 "Možnost omogočanja podpore za OpenCL je premaknjena na zavihek Peskovnik v "
 "Nastavitvah"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
@@ -170,21 +178,21 @@ msgstr ""
 "Levinova obkrožna maska je zdaj privzeti pogon orodja Izbor ospredja, saj "
 "deluje veliko bolje"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "New progressive performance logs and dashboard updates"
 msgstr "Novi progresivni zapisniki delovanja in posodobitve nadzorne plošče"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
 "Podrobni način razhroščevanja zdaj prikaže podatke o Flatpack, ko je to "
 "relevantno"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid "Various bug fixes"
 msgstr "Razni popravki hroščev"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
@@ -192,12 +200,12 @@ msgstr ""
 "GIMP 2.10.20 vključuje številne novosti in pomembne popravke hroščev. "
 "Najpomembnejše spremembe so:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
 "Skupine orodij se zdaj privzeto razprejo ob postoju z miško in ne s klikom"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
@@ -205,7 +213,7 @@ msgstr ""
 "Neporušitveno obrezovanje je zdaj na voljo z obrezovanjem platna in ne "
 "dejanskih slikovnih točk"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
@@ -213,21 +221,21 @@ msgstr ""
 "Boljša podpora PSD: izvoz 16-bitnih datotek je zdaj možna, branje/pisanje "
 "kanalov v pravem zaporedju"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "On-canvas controls for the Vignette filter"
 msgstr "Kontrolniki na platnu za filter vinjetiranja"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
 "Novi filtri: razcvet, zabrisanost ostrine, zabrisanost objektiva, "
 "spremenljiva zabrisanost"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Over 30 bugfixes"
 msgstr "Več kot 30 popravkov hroščev"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
@@ -236,7 +244,7 @@ msgstr ""
 "datoteke CMYK PSD ter dodaja visoko kontrastno variacijo teme ikon za "
 "simbole."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
@@ -246,44 +254,44 @@ msgstr ""
 "preoblikovanje v 3D-prostoru, nov preverjalnik izdaj ter običajno količino "
 "odpravljenih hroščev. Izboljšave, vredne omembe, so:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "Tools are now grouped in the toolbox by default"
 msgstr "Orodja so zdaj privzeto združena po orodjarnah"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr ""
 "Drsniki zdaj uporabljajo strnjeni slog ter izboljšano interakcijo z "
 "uporabnikom"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "Vastly improved user experience for the transformation preview"
 msgstr "Krepko izboljšana uporabniška izkušnja pri predogledu preoblikovanj"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 "Področja, ki podpirajo sidranje, so zdaj poudarjena ob vleki pogovornega okna"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr "Novo orodje 3D-preoblikovanja za sukanje in vrtenje predmetov"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Much smoother brush outline motion on the canvas"
 msgstr "Mnogo bolj gladko gibanje orisa čopiča po platnu "
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr "Konsolidiran uporabniški vmesnik za spajanje in sidranje plasti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 "Preverjanje posodobitev za obveščanje uporabnikov, da je na voljo nova "
 "izdaja/namestitvena datoteka"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
@@ -294,7 +302,7 @@ msgstr ""
 "stari filtri končno preneseni v GEGL. Seveda vključuje tudi nekaj pomembnih "
 "izboljšav:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
@@ -302,50 +310,50 @@ msgstr ""
 "Pogled: nov način pogleda »Pokaži vse«, ki prikazuje slikovne točke zunaj "
 "meja platna"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 "Filtri: nova možnost »Odrezanost« omogoča spremembo velikosti plasti, ko je "
 "to smiselno"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr "Orodje izbora v ospredju: nov ogledni način »Sivinsko«"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
 "Orodje izbora v ospredju: izbirnik barve/prekrivnosti za ogledni način "
 "»Barvno«"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr ""
 "Orodje Prostoročni izbor: izboljšana interakcija pri kopiranju-lepljenju"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 "Orodje Preoblikuj: nova vrsta preoblikovanje slike preoblikuje celotno sliko"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr "Nastavitve: nova nastavitev »Dovoli urejanje na ne vidnih plasteh«"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "HEIF import/export: color profile support"
 msgstr "Uvoz/izvoz HEIF: podpora za barvne profile"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
 "Izvoz PDF: plasti besedila v skupinah plasti se zdaj izvozijo kot besedila"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr "Uvoz TIFF: zdaj povpraša, kako naj obdela nedoločene kanale TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
@@ -355,31 +363,31 @@ msgstr ""
 "pričakujemo po izdaji 2.10.10 s tako številnimi spremembami! Ne glede na to "
 "so na voljo še nekatere izjemne izboljšave, še posebej za urejanje krivulj:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Improved curves interaction overall"
 msgstr "Vsesplošno izboljšana interakcija krivulj"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "A few enhancements specific to the Curves tool"
 msgstr "Nekatere specifične izboljšave orodja Krivulje"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Layer support in TIFF"
 msgstr "Podpora plasti v zapisu TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Discovery of user-installed fonts in Windows"
 msgstr "Odkrivanje uporabniško nameščenih pisav v okoljih Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr "Stopnjevalni način v orodju Posvetli/Zapeci"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Free Select tool creates preliminary selection"
 msgstr "Orodje Prosti izbor ustvari preliminarni izbor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
@@ -387,7 +395,7 @@ msgstr ""
 "GIMP 2.10.10 je precej obsežna posodobitev s številnimi novimi funkcijami in "
 "popravki napak. Pomembne izboljšave vključujejo:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
@@ -395,12 +403,12 @@ msgstr ""
 "Orodje Zapolni s kanglico: nov »Napolni z zaznavo risanih črt« za ne povsem "
 "zaprta področja risb"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
 "Orodje Zapolni s kanglico lahko zdaj hitro izbere barvo s krmilko+klikom"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
@@ -408,13 +416,13 @@ msgstr ""
 "Orodje Zapolni s kanglico omogoča držanje miške ob zapolnjevanju s "
 "»podobnimi barvami« in »z zaznavo črt risbe«"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
 "Orodje Spremeni velikost spreminja velikost okoli središča, tudi ko "
 "uporabite številski vnos"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
@@ -422,7 +430,7 @@ msgstr ""
 "Poenoteno orodje Preoblikuj zdaj pri spreminjanju merila privzeto ohranja "
 "razmerje stranic"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
@@ -430,23 +438,23 @@ msgstr ""
 "Dodani možnosti »Omeji ročice« in »Okoli središča« za vmesnik orodja "
 "preoblikovanja perspektive"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
 "Nova kombinacija tipk na platnu »izmenjalka + srednji klik« za izbiranje "
 "plasti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 "Parametrični čopiči so zdaj 32-bitni s plavajočo vejico, da se prepreči "
 "posterizacija."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr "Čopiče in vzorce na odložišču je odslej mogoče podvojiti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
@@ -454,24 +462,24 @@ msgstr ""
 "Ob neuspelem urejanju zaklenjenih plasti slednja prične utripati, s čimer "
 "usmeri pozornost na vzrok napake"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 "Nov vmesnik na platnu (enostavne črte) za zabrisanost (krožno, linearno in "
 "povečanemu gibanju podobno)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "Several optimizations including faster layer group rendering"
 msgstr "Več optimizacij, vključno s hitrejšim upodabljanjem skupine plasti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
 "Izmenjalne in medpomnilniške datoteke se ne shranjujejo v mapo prilagoditev"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
@@ -479,15 +487,15 @@ msgstr ""
 "Več shranjevanj/izvozov datotek je robustnejših, ko gre za napake, ker nič "
 "več ne shranjujejo delne datoteke"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid "HiDPI support improvements"
 msgstr "Izboljšave podpore HiDPI"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "New preference to choose the default export file type"
 msgstr "Nova nastavitev za izbor privzete vrste datoteke ob izvozu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -495,11 +503,11 @@ msgstr ""
 "Nova možnost izvoza slik PNG, JPEG in TIFF z barvnim profilom; vedno izvozi "
 "PSD z barvnim profilom"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "New DDS format loading/exporting plug-in"
 msgstr "Novi vstavek za nalaganje/izvoz v zapisu DDS"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
@@ -507,7 +515,7 @@ msgstr ""
 "V celoti na novo napisan vstavek Spirogimp z več možnostmi in boljšo "
 "interakcijo"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
@@ -515,7 +523,7 @@ msgstr ""
 "GIMP 2.10.8 je v veliki meri izdaja s popravki hroščev in z optimizacijami. "
 "Vključuje:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
@@ -523,12 +531,12 @@ msgstr ""
 "Prilagodljiva velikost kosov pri upodabljanju projekcij, kar dinamično "
 "izboljšuje odzivnost"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 "Zaznava RawTherapee (različica 5.5 in novejše) izboljšana v okoljih Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
@@ -536,7 +544,7 @@ msgstr ""
 "Podatki o združljivosti XCF so v pogovornem oknu Shrani razumljivejši in "
 "bolj opazni"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
@@ -544,7 +552,7 @@ msgstr ""
 "Dodana različna orodja beleženja učinkovitosti delovanja v podokno nadzorne "
 "plošče"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -552,7 +560,7 @@ msgstr ""
 "GIMP 2.10.6 prinaša številne popravke hroščev, različne optimizacije in "
 "novosti. Najpomembnejše spremembe so:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
@@ -560,21 +568,21 @@ msgstr ""
 "Plasti besedila lahko zdaj predstavljajo navpična besedila (z različnimi "
 "usmeritvami znakov in smermi vrstic)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "Nov filter »Majhen planet« (gegl:stereographic-projection)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid "New \"Long Shadow\" filter"
 msgstr "Nov filter »Dolga senca«"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr "Možnost »ravnanja« pri orodju merjenja zdaj omogoča navpično ravnanje"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
@@ -582,7 +590,7 @@ msgstr ""
 "Risane predoglede, ki so zdaj upodobljeni asinhrono, in skupinske predoglede "
 "lahko onemogočite v nastavitvah"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
@@ -590,17 +598,17 @@ msgstr ""
 "Novo »asinhrono« polje na nadzorni plošči v skupini »razno«, ki prikazuje "
 "število asinhronih operacij, ki se trenutno izvajajo"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 "Predelano filtriranje vrst datotek v pogovornih oknih Odpri/Shrani/Izvozi "
 "uporabnika manj zmede"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr "Nov jezik (ob prevodu GIMP-a v 81 jezikov): maratski"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -608,7 +616,7 @@ msgstr ""
 "GIMP 2.10.4 vključuje številne popravke hroščev in različne optimizacije. "
 "Najpomembnejše spremembe so:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -616,11 +624,11 @@ msgstr ""
 "Izravnavanje v orodju Mera: plasti je mogoče sukati z uporabo merske črte "
 "kot horizonta"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "Hiter zagon: nalaganje pisav ne blokira več zagona"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -628,11 +636,11 @@ msgstr ""
 "Označevanje pisav z enakim uporabniškim vmesnikom kot za čopiče, vzorce in "
 "prelive"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr "Podpora PSD: uvoziti je mogoče sliko PSD pred-skladane različice"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -640,7 +648,7 @@ msgstr ""
 "Posodobitev Nadzorne plošče: nova skupina »Pomnilnik« in izboljšana skupina "
 "»Izmenjalna datoteka« prikazujeta različne meritve"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -650,7 +658,7 @@ msgstr ""
 "posvečena odpravljanju napak po večji izdaji, z nekaj desetimi odpravljenimi "
 "hrošči."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -661,7 +669,7 @@ msgstr ""
 "tudi za dva nova filtra: »Kockaj« in »Rekurzivno preoblikovanje«. To so lepi "
 "primeri naše sproščene politike funkcionalnosti v stabilnih mikro izdajah."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -669,11 +677,11 @@ msgstr ""
 "Prva izdaja iz niza 2.10, ki ga v prvi vrsti krasi prehod na nov pogon za "
 "obdelavo slik, GEGL. Najpomembnejše spremembe so:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "Obdelava barv v visoki bitni globini (16/32-bitno na barvni kanal)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -681,32 +689,32 @@ msgstr ""
 "Upravljanje barv je zdaj temeljna funkcija, večina gradnikov in območij "
 "predogleda imajo barve upravljane"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Predogled učinkov na platnu z deljenim pogledom slikovnih točk pred/po "
 "obdelavi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr "Večnitno in strojno pospešeno upodabljanje, obdelovanje in slikanje"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid "Most tools improved, several new transformation tools"
 msgstr "Večina orodij je izboljšanih, več novih orodij za preoblikovanje"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr "Izboljšana podpora za več formatov slik, zlasti izboljšan uvoz PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Novo podprti slikovni zapisi: OpenEXR, RGBE, WebP, HGT ..."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -714,24 +722,24 @@ msgstr ""
 "Izboljšano digitalno slikanje: vrtenje in preslikovanje platna, simetrično "
 "slikanje, čopiči MyPaint ..."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "Ogled in urejanje metapodatkov za zapise Exif, XMP, IPTC in DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Osnovna podpora HiDPI: samodejna ali uporabniško določena velikost ikon"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Nove teme za GIMP: svetla, siva, temna in sistemska"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid "And much, much more…"
 msgstr "In še veliko, veliko več …"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -741,7 +749,7 @@ msgstr ""
 "vedno glavni cilj, je bil nov poudarek na hitrosti in optimizaciji, da bi "
 "zagotovili bolj gladko izkušnjo slikanja. Večje spremembe so:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
@@ -749,13 +757,13 @@ msgstr ""
 "Občutne optimizacije jedra za barvanje in prikaz, vključno s kodo za "
 "vzporedno slikanje"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr ""
 "V datotekah XCF so zdaj ohranjene simetrije (shranjene kot slikovni "
 "paraziti)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -763,7 +771,7 @@ msgstr ""
 "Temi »Svetla« in »Temna« napisani na novo, s tem sta odrešeni različnih "
 "težav uporabnosti. Temi »Svetlejša« in »Temnejša« sta odstranjeni."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -773,7 +781,7 @@ msgstr ""
 "panoramske projekcije. Gradnik omogoča interakcijo na platnu za 3D-vrtenje "
 "(angl. yaw, pitch, roll)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -784,7 +792,7 @@ msgstr ""
 "ampak tudi za opozorila in kritične napake, ko je nastavljen ključ "
 "razhroščevanja »fatal-warnings«"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -794,12 +802,12 @@ msgstr ""
 "s poudarkom na odpravljanju napak in stabilnosti. Ob številnih odpravljenih "
 "hroščih so najbolj opazne izboljšave:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "Novo pomično okno nadzorne plošče za spremljanje rabe virov programa GIMP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -807,34 +815,34 @@ msgstr ""
 "Novo okno razhroščevanja za izdelavo sledenja napakam in drugih podatkov "
 "razhroščevanja, ki spodbujajo poročanje o napakah"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Neshranjene slike je zdaj mogoče po sesutju obnoviti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid "Layer masks on layer groups"
 msgstr "Maske plasti na skupinah plasti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Podpora za JPEG 2000 je izboljšana z visoko bitno globino in različnimi "
 "barvnimi prostori"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "Posnetki zaslona in izbiranje barv so izboljšani na različnih platformah"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid "Metadata defaults preferences now available"
 msgstr "Na voljo so privzete nastavitve za metapodatke"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid "Various GUI polishing"
 msgstr "Različno poliranje uporabniškega vmesnika"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -842,47 +850,47 @@ msgstr ""
 "GIMP 2.9.8 uvaja urejanje prelivov na platnu in razne izboljšave s poudarkom "
 "na odpravljanju hroščev in stabilnosti."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid "On-canvas gradient editing"
 msgstr "Urejanje prelivov na platnu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid "Notification when an image is over/underexposed"
 msgstr "Obvestilo, če je slika preveč/premalo osvetljena"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid "Better and faster color management"
 msgstr "Boljše in hitrejše upravljanje z barvami"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr "Podpora za izbirnik barv in zaslonske slike v Wayland-u na KDE Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid "Paste in place feature"
 msgstr "Funkcija lepljenja na mesto"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid "Many usability improvements"
 msgstr "Številne izboljšave uporabnosti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Priročnik je mogoče prikazati v želenem jeziku uporabnika"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Izboljšave filtra Razstavi valček"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Izboljšana združljivost z datotekami Photoshop (.psd)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid "New support for password-protected PDF"
 msgstr "Dodana podpora za dokumente PDF, zaščitene z gesli"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Dodana podpora za zapis HGT (podatki Digital Elevation Model)"
 
@@ -14794,6 +14802,15 @@ msgstr "Neveljaven niz UTF-8 v datoteki vzorca '%s'."
 #: ../app/core/gimppattern-load.c:178
 msgid "Fatal parse error in pattern file: "
 msgstr "Usodna napaka pri razčlenjevanju datoteke vzorca: "
+
+#: ../app/core/gimppattern-save.c:52
+#, c-format
+msgid ""
+"Unsupported pattern dimensions %d x %d.\n"
+"GIMP Patterns have a maximum size of %d x %d."
+msgstr ""
+"Nepodprte mere vzorca %d x %d.\n"
+"Največja velikost vzorcev za GIMP je %d x %d."
 
 #: ../app/core/gimppdbprogress.c:268
 #, c-format
