@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: GIMP Windows Installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-08 20:55+0200\n"
-"PO-Revision-Date: 2021-09-08 20:57+0200\n"
+"PO-Revision-Date: 2021-09-08 21:00+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: Italian <it@li.org>\n"
 "Language: it\n"
@@ -173,7 +173,7 @@ msgstr "Scripting Python"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:32
 msgid "Allows you to use GIMP plugins written in Python scripting language."
-msgstr "Consente di usare plugin di GIMP scritti in linguaggio di scripting Python."
+msgstr "Consente di usare plugin di GIMP scritti nel linguaggio di scripting Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "Lua scripting"
