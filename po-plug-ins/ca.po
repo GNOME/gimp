@@ -5784,11 +5784,11 @@ msgstr "Ajusta com canvia aleatòriament la saturació del color"
 
 #: ../plug-ins/common/sparkle.c:493
 msgid "_Preserve luminosity"
-msgstr "_Preserva la lluminositat"
+msgstr "_Conserva la lluminositat"
 
 #: ../plug-ins/common/sparkle.c:500
 msgid "Should the luminosity be preserved?"
-msgstr "Cal preservar la lluminositat?"
+msgstr "Cal conservar la lluminositat?"
 
 #: ../plug-ins/common/sparkle.c:509
 msgid "In_verse"
