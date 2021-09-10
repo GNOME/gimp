@@ -389,7 +389,6 @@ load_image (GFile     *file,
   gboolean   useGlobalColormap;
   gint       bitPixel;
   gint       imageCount = 0;
-  gchar      version[4];
   GimpImage *image      = NULL;
   gboolean   status;
 
@@ -421,9 +420,7 @@ load_image (GFile     *file,
       return NULL;
     }
 
-  g_strlcpy (version, (gchar *) buf + 3, 4);
-
-  if ((strcmp (version, "87a") != 0) && (strcmp (version, "89a") != 0))
+  if ((strncmp (buf + 3, "87a", 3) != 0) && (strncmp (buf + 3, "89a", 3) != 0))
     {
       g_message ("Bad version number, not '87a' or '89a'");
       fclose (fd);
