@@ -914,6 +914,10 @@ LZWReadByte (FILE *fd,
 
       while (code >= clear_code && sp < &(stack[STACK_SIZE]))
         {
+          if (code >= (1 << MAX_LZW_BITS)) {
+              g_message ("Invalid table entry.  Corrupt file.");
+              return -1;
+          }
           *sp++ = table[1][code];
           if (code == table[0][code])
             {
