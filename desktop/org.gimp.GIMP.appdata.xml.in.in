@@ -73,7 +73,7 @@
   </provides>
 
   <releases>
-    <release version="2.10.28" date="2021-09-07">
+    <release version="2.10.28" date="2021-09-14">
       <description>
         <_p>
           GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some
