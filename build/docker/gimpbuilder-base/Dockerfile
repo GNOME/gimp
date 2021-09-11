@@ -1,3 +1,5 @@
+# This file is an outdated incomplete experiment for a Docker-based build environment and won't get you a working build environment. It was created just before our switch to GitLab CI and became mostly obsolete due to this.
+
 # gimpbuilder-base
 
 FROM debian:testing
