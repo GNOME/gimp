@@ -8,6 +8,18 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.26 to GIMP 2.10.28
+=====================================================
+
+Translations:
+
+  - 10 translations were updated: Catalan, Chinese (China), Finnish,
+    Italian, Polish, Russian, Slovenian, Spanish, Swedish and Ukrainian.
+
+Build:
+
+  - Fix uninstalled white-border prelight file.
+
 Overview of Changes from GIMP 2.10.24 to GIMP 2.10.26
 =====================================================
 
