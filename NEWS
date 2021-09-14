@@ -17,11 +17,49 @@ Core:
     change is untested on this OS so far).
   - "Create a New Image" default action is "OK" so that hitting Enter in
     text/number fields is equivalent to clicking OK.
+  - Paint tool core code can now receive multiple drawables as input
+    though it is disabled by default, unless a tool calls
+    gimp_paint_tool_enable_multi_paint() in its init() method. This is
+    only used in source tools so far.
+  - Clicking anywhere on toolbox empty space (dead areas between
+    buttons) or on Wilber's drop area, as well as on the toolbox buttons
+    themselves, actively focuses the canvas (similarly to the `Esc`
+    shortcut).
+  - Config folder migration for GIMP 3 with initial implementation.
+  - Action "view-rotate-reset" renamed to "view-reset" (resets both
+    flipping and rotate). New "view-rotate-reset" and "view-flip-rotate"
+    for resetting rotation and flipping respectively.
+  - New GimpEarlyRc class replacing GimpLangRc for very early config
+    parsing (it used to be for language setting, now also for the
+    pointer input API choice on Windows).
+
+Tools:
+
+  - Clone, Heal and Perspective clone now work on multiple selected
+    layers. There are 2 new modes:
+    * When cloning while multiple drawables are being selected, each
+      drawable clones from itself to itself, i.e. every drawable is both
+      its source and target.
+    * When sourcing from multiple drawables then cloning into a single
+      drawable, the source is the composited image. This is similar to
+      "Sample Merged", except limited to a list of drawables.
+
+User Interface:
+
+  - Preferences now allows to select the input device API on Windows
+    (Wintab or Windows Ink), as Windows Pointer Input Stack (Windows
+    Ink) support was added recently in GTK3.
+  - Layout of the Canvas Size dialog re-designed a bit more horizontally
+    after the template selector feature made it too high.
 
 API:
 
   - New gimp_display_present() function to present a specific display at
     the top of the image display stack.
+  - New gimp_procedure_dialog_fill_expander() to create a GtkExpander in
+    procedure dialogs.
+  - All widgets within a same container in a GimpProcedureDialog are
+    added to their own GtkSizeGroup.
 
 Plug-ins:
 
@@ -34,10 +72,11 @@ Plug-ins:
   - Scriptfu now handles GFile and GimpObjectArray types.
   - 16-bit SGI images now supported (until now, they were loaded as
     8-bit).
+  - file-webp ported to GimpSaveProcedureDialog.
 
 Translations:
 
-  - New Vietnamese translation for the installer.
+  - New Vietnamese and Lithuanian translations for the installer.
 
 Build:
 
@@ -56,6 +95,21 @@ Build:
     now be built by a merge request CI when the labels "5. Windows
     Installer" and/or "5. Flatpak package" are respectively set in the
     MR labels.
+  - Scalable GIMP application icon is installed too.
+  - Thumbnail icon feature was dropped: when images were opened, the
+    application icon used to be a composition of the active image and
+    the application icon (Wilber). This was confusing, hard to
+    distinguish and working on less and less platforms because of recent
+    OS and desktop rules.
+  - Generate SHA* checksums for CI-generated Windows installers.
+  - New `CODING_STYLE.md` document in repository for our coding style
+    rules.
+  - Configure: --enable-check-update now has an "auto" value.
+    Meson: -Dcheck-update is now a yes|no|platform-default combo.
+    The auto/platform-default value defaults to "yes" on Windows and
+    macOS and "no" on other platforms.
+  - GLib dependency's minimum required version bumped to 2.68.0.
+  - GEGL minimum required version bumped to 0.4.32.
 
 
 Overview of Changes from GIMP 2.99.4 to GIMP 2.99.6
