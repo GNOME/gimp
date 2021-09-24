@@ -626,12 +626,23 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
         }
       else
         {
-          value = metadata_dialog_format_tag_value (metadata, tag,
-                                                    /* truncate = */ TRUE);
-          metadata_dialog_add_tag (store, iter,
-                                   tag_column, value_column,
-                                   tag, value);
-          g_free (value);
+          if (g_str_has_prefix (tag, "Xmp.") &&
+              g_strcmp0 (gexiv2_metadata_get_tag_type (tag), "XmpText") != 0)
+            {
+              metadata_dialog_add_multiple_values (GEXIV2_METADATA (metadata),
+                                                   tag, store,
+                                                   tag_column,
+                                                   value_column);
+            }
+          else
+            {
+              value = metadata_dialog_format_tag_value (metadata, tag,
+                                                        /* truncate = */ TRUE);
+              metadata_dialog_add_tag (store, iter,
+                                       tag_column, value_column,
+                                       tag, value);
+              g_free (value);
+            }
         }
     }
 }
