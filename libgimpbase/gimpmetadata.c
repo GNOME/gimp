@@ -823,14 +823,39 @@ gimp_metadata_serialize (GimpMetadata *metadata)
     {
       for (i = 0; xmp_data[i] != NULL; i++)
         {
-          value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
-                                                  xmp_data[i]);
-          escaped = gimp_metadata_escape (xmp_data[i], value, &base64);
-          g_free (value);
+          /* XmpText is always a single value, but structures like
+           * XmpBag and XmpSeq can have multiple values that need to be
+           * treated separately or else saving will do things wrong. */
+          if (! g_strcmp0 (gexiv2_metadata_get_tag_type (xmp_data[i]), "XmpText"))
+            {
+              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
+                                                      xmp_data[i]);
+              escaped = gimp_metadata_escape (xmp_data[i], value, &base64);
+              g_free (value);
 
-          gimp_metadata_append_tag (string, xmp_data[i], escaped, base64);
+              gimp_metadata_append_tag (string, xmp_data[i], escaped, base64);
+            }
+          else
+            {
+              gchar **values;
+
+              values = gexiv2_metadata_get_tag_multiple (GEXIV2_METADATA (metadata),
+                                                         xmp_data[i]);
+
+              if (values)
+                {
+                  gint  vi;
+
+                  for (vi = 0; values[vi] != NULL; vi++)
+                    {
+                      escaped = gimp_metadata_escape (xmp_data[i], values[vi], &base64);
+                      gimp_metadata_append_tag (string, xmp_data[i], escaped, base64);
+                    }
+
+                  g_strfreev (values);
+                }
+            }
         }
-
       g_strfreev (xmp_data);
     }
 
