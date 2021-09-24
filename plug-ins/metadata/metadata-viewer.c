@@ -98,36 +98,36 @@ static GimpValueArray * metadata_run              (GimpProcedure        *procedu
                                                    const GimpValueArray *args,
                                                    gpointer              run_data);
 
-static gboolean  metadata_viewer_dialog           (GimpImage      *image,
-                                                   GimpMetadata   *g_metadata,
-                                                   GError        **error);
-static void      metadata_dialog_set_metadata     (GExiv2Metadata *metadata,
-                                                   GtkBuilder     *builder);
-static void      metadata_dialog_append_tags      (GExiv2Metadata  *metadata,
-                                                   gchar          **tags,
-                                                   GtkListStore    *store,
-                                                   gint             tag_column,
-                                                   gint             value_column,
-                                                   gboolean         load_iptc);
-static void metadata_dialog_add_tag               (GtkListStore    *store,
-                                                   GtkTreeIter      iter,
-                                                   gint             tag_column,
-                                                   gint             value_column,
-                                                   const gchar     *tag,
-                                                   const gchar     *value);
-static void metadata_dialog_add_translated_tag    (GExiv2Metadata  *metadata,
-                                                   GtkListStore    *store,
-                                                   GtkTreeIter      iter,
-                                                   gint             tag_column,
-                                                   gint             value_column,
-                                                   const gchar     *tag);
-static gchar   * metadata_interpret_user_comment  (gchar           *comment);
-static gchar   * metadata_dialog_format_tag_value (GExiv2Metadata  *metadata,
-                                                   const gchar     *tag,
-                                                   gboolean         truncate);
-static gchar   * metadata_format_string_value     (const gchar     *value,
-                                                   gboolean         truncate);
-static inline gboolean metadata_tag_is_string     (const gchar     *tag);
+static gboolean  metadata_viewer_dialog           (GimpImage            *image,
+                                                   GimpMetadata         *g_metadata,
+                                                   GError              **error);
+static void      metadata_dialog_set_metadata     (GExiv2Metadata       *metadata,
+                                                   GtkBuilder           *builder);
+static void      metadata_dialog_append_tags      (GExiv2Metadata       *metadata,
+                                                   gchar               **tags,
+                                                   GtkListStore         *store,
+                                                   gint                  tag_column,
+                                                   gint                  value_column,
+                                                   gboolean              load_iptc);
+static void metadata_dialog_add_tag               (GtkListStore         *store,
+                                                   GtkTreeIter           iter,
+                                                   gint                  tag_column,
+                                                   gint                  value_column,
+                                                   const gchar          *tag,
+                                                   const gchar          *value);
+static void metadata_dialog_add_translated_tag    (GExiv2Metadata       *metadata,
+                                                   GtkListStore         *store,
+                                                   GtkTreeIter           iter,
+                                                   gint                  tag_column,
+                                                   gint                  value_column,
+                                                   const gchar          *tag);
+static gchar   * metadata_interpret_user_comment  (gchar                *comment);
+static gchar   * metadata_dialog_format_tag_value (GExiv2Metadata       *metadata,
+                                                   const gchar          *tag,
+                                                   gboolean              truncate);
+static gchar   * metadata_format_string_value     (const gchar          *value,
+                                                   gboolean              truncate);
+static inline gboolean metadata_tag_is_string     (const gchar          *tag);
 
 
 G_DEFINE_TYPE (Metadata, metadata, GIMP_TYPE_PLUG_IN)
