@@ -4224,27 +4224,10 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                       set_tag_failed (default_metadata_tags[i].tag);
                     }
                 }
-              else if (default_metadata_tags[i].xmp_type == GIMP_XMP_BAG)
+              else
                 {
                   gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                                              default_metadata_tags[i].tag);
-                  gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                                      default_metadata_tags[i].tag,
-                                                      GEXIV2_STRUCTURE_XA_BAG);
-                  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                        default_metadata_tags[i].tag,
-                                                        text_value))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag);
-                    }
-                }
-              else if (default_metadata_tags[i].xmp_type == GIMP_XMP_SEQ)
-                {
-                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                             default_metadata_tags[i].tag);
-                  gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                                      default_metadata_tags[i].tag,
-                                                      GEXIV2_STRUCTURE_XA_SEQ);
                   if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
                                                         default_metadata_tags[i].tag,
                                                         text_value))
@@ -4301,33 +4284,24 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                   set_tag_failed (default_metadata_tags[i].tag);
                 }
             }
-          else if (default_metadata_tags[i].xmp_type == GIMP_XMP_BAG)
+          else
             {
+              gchar **multi;
+
               gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                                          default_metadata_tags[i].tag);
-              gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                                  default_metadata_tags[i].tag,
-                                                  GEXIV2_STRUCTURE_XA_BAG);
-              if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                    default_metadata_tags[i].tag,
-                                                    text))
+
+              /* We have one value per line. */
+              multi = g_strsplit (text, "\n", 0);
+
+              if (! gexiv2_metadata_set_tag_multiple (GEXIV2_METADATA (g_metadata),
+                                                      default_metadata_tags[i].tag,
+                                                      (const gchar **) multi))
                 {
                   set_tag_failed (default_metadata_tags[i].tag);
                 }
-            }
-          else if (default_metadata_tags[i].xmp_type == GIMP_XMP_SEQ)
-            {
-              gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                         default_metadata_tags[i].tag);
-              gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                                  default_metadata_tags[i].tag,
-                                                  GEXIV2_STRUCTURE_XA_SEQ);
-              if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                    default_metadata_tags[i].tag,
-                                                    text))
-                {
-                  set_tag_failed (default_metadata_tags[i].tag);
-                }
+
+              g_strfreev (multi);
             }
 
             index = default_metadata_tags[i].other_tag_index;
