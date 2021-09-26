@@ -540,6 +540,13 @@ gimp_container_tree_view_drag_drop (GtkWidget             *widget,
           gtk_drag_finish (context, success, FALSE, time);
           g_list_free (src_viewables);
         }
+      else
+        {
+          /* Necessary for instance for dragging color components onto
+           * item dialogs.
+           */
+          gtk_drag_get_data (widget, context, target, time);
+        }
 
       return TRUE;
     }
