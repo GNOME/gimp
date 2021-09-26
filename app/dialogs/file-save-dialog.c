@@ -285,7 +285,12 @@ file_save_dialog_response (GtkWidget *dialog,
         g_free (basename);
 
         if (dialog)
-          gimp_file_dialog_set_sensitive (file_dialog, TRUE);
+          {
+            gimp_file_dialog_set_sensitive (file_dialog, TRUE);
+            g_signal_handlers_disconnect_by_func (dialog,
+                                                  G_CALLBACK (gtk_widget_destroyed),
+                                                  &dialog);
+          }
       }
       break;
 
