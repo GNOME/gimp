@@ -57,6 +57,9 @@ enum
 enum
 {
   COLOR_CLICKED,
+  COLOR_DROPPED,
+  COLORS_SWAPPED,
+  COLORS_DEFAULT,
   TOOLTIP,
   LAST_SIGNAL
 };
@@ -144,6 +147,31 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_ACTIVE_COLOR);
+
+  editor_signals[COLOR_DROPPED] =
+    g_signal_new ("color-dropped",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpFgBgEditorClass, color_dropped),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_ACTIVE_COLOR);
+
+  editor_signals[COLORS_SWAPPED] =
+    g_signal_new ("colors-swapped",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpFgBgEditorClass, colors_swapped),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
+  editor_signals[COLORS_DEFAULT] =
+    g_signal_new ("colors-default",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpFgBgEditorClass, colors_default),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
 
   editor_signals[TOOLTIP] =
     g_signal_new ("tooltip",
@@ -512,12 +540,18 @@ gimp_fg_bg_editor_button_press (GtkWidget      *widget,
 
         case GIMP_FG_BG_TARGET_SWAP:
           if (editor->context)
-            gimp_context_swap_colors (editor->context);
+            {
+              gimp_context_swap_colors (editor->context);
+              g_signal_emit (editor, editor_signals[COLORS_SWAPPED], 0);
+            }
           break;
 
         case GIMP_FG_BG_TARGET_DEFAULT:
           if (editor->context)
-            gimp_context_set_default_colors (editor->context);
+            {
+              gimp_context_set_default_colors (editor->context);
+              g_signal_emit (editor, editor_signals[COLORS_DEFAULT], 0);
+            }
           break;
 
         default:
@@ -525,7 +559,7 @@ gimp_fg_bg_editor_button_press (GtkWidget      *widget,
         }
     }
 
-  return FALSE;
+  return GDK_EVENT_STOP;
 }
 
 static gboolean
@@ -561,7 +595,7 @@ gimp_fg_bg_editor_button_release (GtkWidget      *widget,
       editor->click_target = GIMP_FG_BG_TARGET_INVALID;
     }
 
-  return FALSE;
+  return GDK_EVENT_STOP;
 }
 
 static gboolean
@@ -729,10 +763,14 @@ gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
         {
         case GIMP_FG_BG_TARGET_FOREGROUND:
           gimp_context_set_foreground (editor->context, color);
+          g_signal_emit (editor, editor_signals[COLOR_DROPPED], 0,
+                         GIMP_ACTIVE_COLOR_FOREGROUND);
           break;
 
         case GIMP_FG_BG_TARGET_BACKGROUND:
           gimp_context_set_background (editor->context, color);
+          g_signal_emit (editor, editor_signals[COLOR_DROPPED], 0,
+                         GIMP_ACTIVE_COLOR_BACKGROUND);
           break;
 
         default:

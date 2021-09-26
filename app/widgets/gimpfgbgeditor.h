@@ -68,12 +68,16 @@ struct _GimpFgBgEditorClass
 
   /*  signals  */
 
-  void (* color_clicked) (GimpFgBgEditor  *editor,
-                          GimpActiveColor  color);
+  void (* color_clicked)  (GimpFgBgEditor  *editor,
+                           GimpActiveColor  color);
+  void (* color_dropped)  (GimpFgBgEditor  *editor,
+                           GimpActiveColor  color);
+  void (* colors_swapped) (GimpFgBgEditor  *editor);
+  void (* colors_default) (GimpFgBgEditor  *editor);
 
-  void (* tooltip)       (GimpFgBgEditor *editor,
-                          GimpFgBgTarget  target,
-                          GtkTooltip      tooltip);
+  void (* tooltip)        (GimpFgBgEditor *editor,
+                           GimpFgBgTarget  target,
+                           GtkTooltip      tooltip);
 };
 
 

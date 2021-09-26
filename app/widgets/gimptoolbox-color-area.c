@@ -28,6 +28,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdisplay.h"
 
 #include "gimpaction.h"
 #include "gimpcolordialog.h"
@@ -59,6 +60,7 @@ static void   color_area_dialog_update      (GimpColorDialog      *dialog,
 static void   color_area_color_clicked      (GimpFgBgEditor       *editor,
                                              GimpActiveColor       active_color,
                                              GimpContext          *context);
+static void   color_area_color_changed      (GimpContext          *context);
 static void   color_area_tooltip            (GimpFgBgEditor       *editor,
                                              GimpFgBgTarget        target,
                                              GtkTooltip           *tooltip,
@@ -98,6 +100,15 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
   g_signal_connect (color_area, "color-clicked",
                     G_CALLBACK (color_area_color_clicked),
                     context);
+  g_signal_connect_swapped (color_area, "colors-swapped",
+                            G_CALLBACK (color_area_color_changed),
+                            context);
+  g_signal_connect_swapped (color_area, "colors-default",
+                            G_CALLBACK (color_area_color_changed),
+                            context);
+  g_signal_connect_swapped (color_area, "color-dropped",
+                            G_CALLBACK (color_area_color_changed),
+                            context);
 
   g_signal_connect (color_area, "tooltip",
                     G_CALLBACK (color_area_tooltip),
@@ -198,6 +209,9 @@ color_area_dialog_update (GimpColorDialog      *dialog,
       gimp_context_set_background (context, &revert_bg);
       break;
     }
+
+  if (gimp_context_get_display (context))
+    gimp_display_grab_focus (gimp_context_get_display (context));
 }
 
 static void
@@ -261,6 +275,13 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
   gtk_window_present (GTK_WINDOW (color_dialog));
   color_dialog_active = TRUE;
+}
+
+static void
+color_area_color_changed (GimpContext *context)
+{
+  if (gimp_context_get_display (context))
+    gimp_display_grab_focus (gimp_context_get_display (context));
 }
 
 static gboolean
