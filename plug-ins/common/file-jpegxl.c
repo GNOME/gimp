@@ -188,9 +188,10 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpImage *load_image (GFile        *file,
-                              GimpRunMode   runmode,
-                              GError      **error)
+static GimpImage *
+load_image (GFile        *file,
+            GimpRunMode   runmode,
+            GError      **error)
 {
   gchar            *filename = g_file_get_path (file);
 
@@ -407,7 +408,9 @@ static GimpImage *load_image (GFile        *file,
 
   result_size = 4 * pixel_format.num_channels * (size_t) basicinfo.xsize * (size_t) basicinfo.ysize;
 
-  if (JxlDecoderGetColorAsEncodedProfile (decoder, &pixel_format, JXL_COLOR_PROFILE_TARGET_DATA, &color_encoding) == JXL_DEC_SUCCESS)
+  if (JxlDecoderGetColorAsEncodedProfile (decoder, &pixel_format,
+                                          JXL_COLOR_PROFILE_TARGET_DATA,
+                                          &color_encoding) == JXL_DEC_SUCCESS)
     {
       if (color_encoding.white_point == JXL_WHITE_POINT_D65)
         {
@@ -449,13 +452,17 @@ static GimpImage *load_image (GFile        *file,
 
   if (!profile)
     {
-      if (JxlDecoderGetICCProfileSize (decoder, &pixel_format, JXL_COLOR_PROFILE_TARGET_DATA, &icc_size) == JXL_DEC_SUCCESS)
+      if (JxlDecoderGetICCProfileSize (decoder, &pixel_format,
+                                       JXL_COLOR_PROFILE_TARGET_DATA,
+                                       &icc_size) == JXL_DEC_SUCCESS)
         {
           if (icc_size > 0)
             {
               gpointer raw_icc_profile = g_malloc (icc_size);
 
-              if (JxlDecoderGetColorAsICCProfile (decoder, &pixel_format, JXL_COLOR_PROFILE_TARGET_DATA, raw_icc_profile, icc_size)
+              if (JxlDecoderGetColorAsICCProfile (decoder, &pixel_format,
+                                                  JXL_COLOR_PROFILE_TARGET_DATA,
+                                                  raw_icc_profile, icc_size)
                   == JXL_DEC_SUCCESS)
                 {
                   profile = gimp_color_profile_new_from_icc_profile (raw_icc_profile, icc_size, error);
@@ -539,7 +546,8 @@ static GimpImage *load_image (GFile        *file,
 
   if (basicinfo.num_color_channels == 1) /* grayscale */
     {
-      image = gimp_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, GIMP_GRAY, loadlinear ? GIMP_PRECISION_FLOAT_LINEAR : GIMP_PRECISION_FLOAT_NON_LINEAR);
+      image = gimp_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, GIMP_GRAY,
+                                             loadlinear ? GIMP_PRECISION_FLOAT_LINEAR : GIMP_PRECISION_FLOAT_NON_LINEAR);
 
       if (profile)
         {
@@ -556,7 +564,8 @@ static GimpImage *load_image (GFile        *file,
     }
   else /* RGB */
     {
-      image = gimp_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, GIMP_RGB, loadlinear ? GIMP_PRECISION_FLOAT_LINEAR : GIMP_PRECISION_FLOAT_NON_LINEAR);
+      image = gimp_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, GIMP_RGB,
+                                             loadlinear ? GIMP_PRECISION_FLOAT_LINEAR : GIMP_PRECISION_FLOAT_NON_LINEAR);
 
       if (profile)
         {
@@ -638,11 +647,12 @@ jpegxl_load (GimpProcedure        *procedure,
 }
 
 
-static gboolean    save_image (GFile                *file,
-                               GimpProcedureConfig *config,
-                               GimpImage            *image,
-                               GimpDrawable         *drawable,
-                               GError              **error)
+static gboolean
+save_image (GFile                *file,
+            GimpProcedureConfig  *config,
+            GimpImage            *image,
+            GimpDrawable         *drawable,
+            GError              **error)
 {
   JxlEncoder        *encoder;
   void              *runner;
@@ -682,9 +692,9 @@ static gboolean    save_image (GFile                *file,
   gimp_progress_init_printf ("Exporting '%s'.", filename);
 
   g_object_get (config,
-                "lossless",           &lossless,
-                "compression",        &compression,
-                "speed",              &speed,
+                "lossless",              &lossless,
+                "compression",           &compression,
+                "speed",                 &speed,
                 "uses-original-profile", &uses_original_profile,
                 NULL);
 
@@ -707,7 +717,8 @@ static gboolean    save_image (GFile                *file,
 
       if (error && *error)
         {
-          g_printerr ("%s: error getting the profile space: %s\n", G_STRFUNC, (*error)->message);
+          g_printerr ("%s: error getting the profile space: %s\n",
+                      G_STRFUNC, (*error)->message);
           g_free (filename);
           return FALSE;
         }

@@ -31,6 +31,7 @@ file_header_RC = file-header.rc.o
 file_heif_RC = file-heif.rc.o
 file_html_table_RC = file-html-table.rc.o
 file_jp2_load_RC = file-jp2-load.rc.o
+file_jpegxl_RC = file-jpegxl.rc.o
 file_mng_RC = file-mng.rc.o
 file_pat_RC = file-pat.rc.o
 file_pcx_RC = file-pcx.rc.o
