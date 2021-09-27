@@ -387,8 +387,8 @@
             ],
             "sources" : [
                 {
-                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.9.1/libheif-1.9.1.tar.gz",
-                    "sha256" : "5f65ca2bd2510eed4e13bdca123131c64067e9dd809213d7aef4dc5e37948bca",
+                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.12.0/libheif-1.12.0.tar.gz",
+                    "sha256" : "e1ac2abb354fdc8ccdca71363ebad7503ad731c84022cf460837f0839e171718",
                     "type" : "archive"
                 }
             ]
@@ -445,6 +445,10 @@
                 {
                     "type": "patch",
                     "path": "../patches/cairo-mr114-gimp-issue-6210.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "../patches/cairo-mr245-issue325.patch"
                 }
             ]
         },

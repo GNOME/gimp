@@ -1,0 +1,22 @@
+diff -Naur cairo-1.16.0/src/cairo-composite-rectangles.c cairo-1.16.0.patched/src/cairo-composite-rectangles.c
+--- cairo-1.16.0/src/cairo-composite-rectangles.c	2018-08-17 03:10:53.000000000 +0200
++++ cairo-1.16.0.patched/src/cairo-composite-rectangles.c	2021-09-26 15:52:04.410502567 +0200
+@@ -431,18 +431,6 @@
+     if (! _cairo_composite_rectangles_init (extents, surface, op, source, clip))
+ 	return CAIRO_INT_STATUS_NOTHING_TO_DO;
+ 
+-    /* Computing the exact bbox and the overlap is expensive.
+-     * First perform a cheap test to see if the glyphs are all clipped out.
+-     */
+-    if (extents->is_bounded & CAIRO_OPERATOR_BOUND_BY_MASK &&
+-	_cairo_scaled_font_glyph_approximate_extents (scaled_font,
+-						      glyphs, num_glyphs,
+-						      &extents->mask))
+-    {
+-	if (! _cairo_rectangle_intersect (&extents->bounded, &extents->mask))
+-	    return CAIRO_INT_STATUS_NOTHING_TO_DO;
+-    }
+-
+     status = _cairo_scaled_font_glyph_device_extents (scaled_font,
+ 						      glyphs, num_glyphs,
+ 						      &extents->mask,
