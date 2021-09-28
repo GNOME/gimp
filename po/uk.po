@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-09-07 05:54+0000\n"
-"PO-Revision-Date: 2021-09-07 11:28+0300\n"
+"POT-Creation-Date: 2021-09-28 10:47+0000\n"
+"PO-Revision-Date: 2021-09-28 17:14+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -78,7 +78,8 @@ msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
 msgstr ""
-"У GIMP 2.10.28 виправлено помилку збирання GIMP 2.10.26, яку було пов'язано із неправильним встановленням деяких даних теми."
+"У GIMP 2.10.28 виправлено помилку збирання GIMP 2.10.26, яку було пов'язано "
+"із неправильним встановленням деяких даних теми."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
@@ -4684,7 +4685,8 @@ msgid "Copy Named"
 msgstr "Копіювання з буфера з назвою"
 
 #: ../app/actions/edit-commands.c:444
-msgid "Copy Visible Named "
+#| msgid "Copy Visible Named "
+msgid "Copy Visible Named"
 msgstr "Копіювати видиме з назвою"
 
 #: ../app/actions/edit-commands.c:539 ../app/tools/gimppainttool.c:887
