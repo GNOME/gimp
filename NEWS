@@ -73,6 +73,7 @@ Plug-ins:
   - 16-bit SGI images now supported (until now, they were loaded as
     8-bit).
   - file-webp ported to GimpSaveProcedureDialog.
+  - New JPEG XL plug-in (loading and exporting).
 
 Translations:
 
