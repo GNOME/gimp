@@ -8,6 +8,21 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.28 to GIMP 2.10.30
+=====================================================
+
+Plug-ins:
+
+  - metadata-viewer: improve how XMP tags with multiple values are
+    handled and shown (now each value on a separate line for better
+    readability).
+  - metadata-editor:
+    * XMP array tags of type BAG and SEQ are now on separate lines.
+    * Comparing XMP tags with equivalent IPTC tags with multiple values,
+      each value is compared individually, instead of comparing the list
+      as a whole.
+
+
 Overview of Changes from GIMP 2.10.26 to GIMP 2.10.28
 =====================================================
 
@@ -19,6 +34,7 @@ Translations:
 Build:
 
   - Fix uninstalled white-border prelight file.
+
 
 Overview of Changes from GIMP 2.10.24 to GIMP 2.10.26
 =====================================================
