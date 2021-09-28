@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-07-23 19:26+0000\n"
-"PO-Revision-Date: 2021-07-24 09:29+0300\n"
+"POT-Creation-Date: 2021-09-28 16:44+0000\n"
+"PO-Revision-Date: 2021-09-28 22:52+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -77,7 +77,7 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
-#: ../plug-ins/common/file-pdf-save.c:1167 ../plug-ins/common/file-ps.c:3550
+#: ../plug-ins/common/file-pdf-save.c:1167 ../plug-ins/common/file-ps.c:3548
 #: ../plug-ins/common/file-raw-data.c:1776 ../plug-ins/common/file-svg.c:679
 #: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1314
 #: ../plug-ins/common/grid.c:760 ../plug-ins/common/hot.c:678
@@ -90,7 +90,7 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/common/tile-small.c:445 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:707 ../plug-ins/common/warp.c:489
 #: ../plug-ins/common/wavelet-decompose.c:408 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:2475 ../plug-ins/flame/flame.c:539
+#: ../plug-ins/file-tiff/file-tiff-load.c:2544 ../plug-ins/flame/flame.c:539
 #: ../plug-ins/flame/flame.c:715 ../plug-ins/flame/flame.c:1032
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
@@ -118,8 +118,8 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/map-object/map-object-ui.c:1317
 #: ../plug-ins/metadata/metadata-editor.c:598
 #: ../plug-ins/metadata/metadata-editor.c:960
-#: ../plug-ins/metadata/metadata-editor.c:4568
-#: ../plug-ins/metadata/metadata-editor.c:4603
+#: ../plug-ins/metadata/metadata-editor.c:4627
+#: ../plug-ins/metadata/metadata-editor.c:4662
 #: ../plug-ins/pagecurl/pagecurl.c:495 ../plug-ins/screenshot/screenshot.c:532
 #: ../plug-ins/selection-to-path/selection-to-path.c:412
 msgid "_Cancel"
@@ -427,7 +427,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
 #: ../plug-ins/file-psd/psd-image-res-load.c:1072
 #: ../plug-ins/file-psd/psd-load.c:2233 ../plug-ins/file-sgi/sgi.c:477
-#: ../plug-ins/file-tiff/file-tiff-load.c:1289
+#: ../plug-ins/file-tiff/file-tiff-load.c:1358
 #: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -962,7 +962,7 @@ msgstr "Графік поточних параметрів"
 #: ../plug-ins/gfig/gfig-dialog.c:1397
 #: ../plug-ins/ifs-compose/ifs-compose.c:1211
 #: ../plug-ins/imagemap/imap_menu.c:156
-#: ../plug-ins/metadata/metadata-viewer.c:284
+#: ../plug-ins/metadata/metadata-viewer.c:289
 msgid "_Close"
 msgstr "З_акрити"
 
@@ -982,11 +982,11 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/common/file-raw-data.c:1147 ../plug-ins/common/file-sunras.c:641
 #: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
 #: ../plug-ins/common/sphere-designer.c:2199
-#: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
+#: ../plug-ins/file-bmp/bmp-save.c:343 ../plug-ins/file-fits/fits.c:521
 #: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
 #: ../plug-ins/file-jpeg/jpeg-save.c:317 ../plug-ins/file-psd/psd-save.c:1813
-#: ../plug-ins/file-tiff/file-tiff-save.c:1114
-#: ../plug-ins/file-tiff/file-tiff-save.c:1198 ../plug-ins/flame/flame.c:508
+#: ../plug-ins/file-tiff/file-tiff-save.c:1022
+#: ../plug-ins/file-tiff/file-tiff-save.c:1098 ../plug-ins/flame/flame.c:508
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:849 ../plug-ins/ifs-compose/ifs-compose.c:2422
 #: ../plug-ins/lighting/lighting-ui.c:1233
@@ -1008,7 +1008,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-cel.c:649 ../plug-ins/common/file-dicom.c:379
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1412
 #: ../plug-ins/common/file-pcx.c:413 ../plug-ins/common/file-png.c:669
-#: ../plug-ins/common/file-ps.c:1148 ../plug-ins/common/file-ps.c:3500
+#: ../plug-ins/common/file-ps.c:1147 ../plug-ins/common/file-ps.c:3498
 #: ../plug-ins/common/file-psp.c:2388 ../plug-ins/common/file-psp.c:2438
 #: ../plug-ins/common/file-raw-data.c:439
 #: ../plug-ins/common/file-raw-data.c:1236 ../plug-ins/common/file-sunras.c:458
@@ -1868,7 +1868,7 @@ msgid "Destripe"
 msgstr "Прибирання штрихів"
 
 #: ../plug-ins/common/destripe.c:509 ../plug-ins/common/file-html-table.c:711
-#: ../plug-ins/common/file-ps.c:3625 ../plug-ins/common/file-ps.c:3825
+#: ../plug-ins/common/file-ps.c:3623 ../plug-ins/common/file-ps.c:3823
 #: ../plug-ins/common/file-raw-data.c:1927
 #: ../plug-ins/common/smooth-palette.c:530 ../plug-ins/common/tile.c:518
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
@@ -1953,7 +1953,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/file-psd/psd-load.c:157
 #: ../plug-ins/file-raw/file-darktable.c:419
 #: ../plug-ins/file-raw/file-rawtherapee.c:345 ../plug-ins/file-sgi/sgi.c:332
-#: ../plug-ins/file-tiff/file-tiff-load.c:246
+#: ../plug-ins/file-tiff/file-tiff-load.c:247
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається «%s»"
@@ -2027,13 +2027,13 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: ../plug-ins/common/file-heif.c:1484 ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-pcx.c:797 ../plug-ins/common/file-pix.c:562
 #: ../plug-ins/common/file-png.c:1499 ../plug-ins/common/file-pnm.c:1336
-#: ../plug-ins/common/file-ps.c:1324 ../plug-ins/common/file-sunras.c:630
+#: ../plug-ins/common/file-ps.c:1323 ../plug-ins/common/file-sunras.c:630
 #: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1055
 #: ../plug-ins/common/file-xpm.c:710 ../plug-ins/common/file-xwd.c:678
-#: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
+#: ../plug-ins/file-bmp/bmp-save.c:333 ../plug-ins/file-fits/fits.c:510
 #: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
 #: ../plug-ins/file-jpeg/jpeg-save.c:270 ../plug-ins/file-psd/psd-save.c:1775
-#: ../plug-ins/file-sgi/sgi.c:649 ../plug-ins/file-tiff/file-tiff-save.c:1104
+#: ../plug-ins/file-sgi/sgi.c:649 ../plug-ins/file-tiff/file-tiff-save.c:1012
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Експортування «%s»"
@@ -2143,7 +2143,6 @@ msgstr "«%s»: не DICOM файлом"
 
 #: ../plug-ins/common/file-dicom.c:578
 #, c-format
-#| msgid "Aggressive RLE (not supported by SGI)"
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "У GIMP не передбачено підтримки перехідного синтаксису %s."
 
@@ -2151,7 +2150,7 @@ msgstr "У GIMP не передбачено підтримки перехідн�
 msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
-#: ../plug-ins/common/file-dicom.c:1491 ../plug-ins/common/file-ps.c:1319
+#: ../plug-ins/common/file-dicom.c:1491 ../plug-ins/common/file-ps.c:1318
 #: ../plug-ins/common/file-xwd.c:673 ../plug-ins/file-fits/fits.c:505
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2171,7 +2170,7 @@ msgid "Export Image as Brush"
 msgstr "Експортувати зображення як пензель"
 
 #: ../plug-ins/common/file-gbr.c:317 ../plug-ins/common/file-gih.c:648
-#: ../plug-ins/common/file-pat.c:288 ../plug-ins/imagemap/imap_settings.c:105
+#: ../plug-ins/common/file-pat.c:287 ../plug-ins/imagemap/imap_settings.c:105
 msgid "_Description:"
 msgstr "_Опис:"
 
@@ -2713,8 +2712,8 @@ msgstr "Параметри таблиці"
 msgid "_Border:"
 msgstr "_Рамка:"
 
-#: ../plug-ins/common/file-html-table.c:717 ../plug-ins/common/file-ps.c:3638
-#: ../plug-ins/common/file-ps.c:3836 ../plug-ins/common/file-raw-data.c:1941
+#: ../plug-ins/common/file-html-table.c:717 ../plug-ins/common/file-ps.c:3636
+#: ../plug-ins/common/file-ps.c:3834 ../plug-ins/common/file-raw-data.c:1941
 #: ../plug-ins/common/film.c:1058 ../plug-ins/common/smooth-palette.c:535
 #: ../plug-ins/common/tile.c:522 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:405
@@ -2827,6 +2826,98 @@ msgstr "Неможливо перетворити зображення xvYCC JP2
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Невідомий колірний простір у зображенні JP2 «%s»."
+
+#: ../plug-ins/common/file-jpegxl.c:117 ../plug-ins/common/file-jpegxl.c:144
+#| msgid "JPEG image"
+msgid "JPEG-XL image"
+msgstr "Зображення JPEG-XL"
+
+#: ../plug-ins/common/file-jpegxl.c:120 ../plug-ins/common/file-jpegxl.c:121
+msgid "Loads files in the JPEG-XL file format"
+msgstr ""
+"Завантажує файли у форматі JPEG-XL"
+
+#: ../plug-ins/common/file-jpegxl.c:147 ../plug-ins/common/file-jpegxl.c:148
+msgid "Saves files in the JPEG-XL file format"
+msgstr ""
+"Зберігає файли у форматі JPEG-XL"
+
+#: ../plug-ins/common/file-jpegxl.c:163
+#| msgid "_Lossless"
+msgid "L_ossless"
+msgstr "_Без втрат"
+
+#: ../plug-ins/common/file-jpegxl.c:164
+#| msgid "No compression"
+msgid "Use lossless compression"
+msgstr "Стискання без втрати якості"
+
+#: ../plug-ins/common/file-jpegxl.c:169
+#| msgid "_Compression:"
+msgid "Co_mpression/maxError"
+msgstr "С_тиснення/Макс. похибка"
+
+#: ../plug-ins/common/file-jpegxl.c:170
+msgid ""
+"Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = "
+"visually lossless."
+msgstr ""
+"Максимальна відстань butteraugli, менше значення = вища якість. Діапазон: 0 .. 15. 1.0 = візуально без втрат."
+
+#: ../plug-ins/common/file-jpegxl.c:175
+msgid "Effort/S_peed"
+msgstr ""
+"Зусилля/_Швидкість"
+
+#: ../plug-ins/common/file-jpegxl.c:176
+msgid "Encoder effort setting"
+msgstr ""
+"Параметр рівня стискання кодувальника"
+
+#: ../plug-ins/common/file-jpegxl.c:182
+#| msgid "Save color profile"
+msgid "Save ori_ginal profile"
+msgstr "Зберегти _початковий профіль"
+
+#: ../plug-ins/common/file-jpegxl.c:183
+msgid "Store ICC profile to exported JXL file"
+msgstr ""
+"Зберегти профіль ICC у експортованому файлі JXL"
+
+#: ../plug-ins/common/file-jpegxl.c:1032
+msgid "falcon (faster)"
+msgstr ""
+"сокіл (швидко)"
+
+#: ../plug-ins/common/file-jpegxl.c:1033
+msgid "cheetah"
+msgstr ""
+"гепард"
+
+#: ../plug-ins/common/file-jpegxl.c:1034
+msgid "hare"
+msgstr ""
+"заєць"
+
+#: ../plug-ins/common/file-jpegxl.c:1035
+msgid "wombat"
+msgstr ""
+"вомбат"
+
+#: ../plug-ins/common/file-jpegxl.c:1036
+msgid "squirrel"
+msgstr ""
+"білка"
+
+#: ../plug-ins/common/file-jpegxl.c:1037
+msgid "kitten"
+msgstr ""
+"кошеня"
+
+#: ../plug-ins/common/file-jpegxl.c:1038
+msgid "tortoise (slower)"
+msgstr ""
+"черепаха (повільно)"
 
 #: ../plug-ins/common/file-mng.c:252
 msgid "MNG animation"
@@ -2952,7 +3043,7 @@ msgstr "Текстура GIMP"
 msgid "PAT format does not support multiple layers."
 msgstr "Для формату PAT не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-pat.c:274
+#: ../plug-ins/common/file-pat.c:273
 msgid "Export Image as Pattern"
 msgstr "Експортувати зображення як візерунок"
 
@@ -3076,7 +3167,7 @@ msgstr "Не вдалось завантажити «%s»: %s"
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:863 ../plug-ins/common/file-ps.c:1237
+#: ../plug-ins/common/file-pdf-load.c:863 ../plug-ins/common/file-ps.c:1236
 #, c-format
 msgid "%s-pages"
 msgstr "%s-сторінок"
@@ -3085,9 +3176,9 @@ msgstr "%s-сторінок"
 msgid "Import from PDF"
 msgstr "Імпорт з PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3551
-#: ../plug-ins/file-tiff/file-tiff-load.c:2476
-#: ../plug-ins/metadata/metadata-editor.c:4569
+#: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3549
+#: ../plug-ins/file-tiff/file-tiff-load.c:2545
+#: ../plug-ins/metadata/metadata-editor.c:4628
 msgid "_Import"
 msgstr "_Імпортувати"
 
@@ -3223,8 +3314,8 @@ msgstr "Шари як сторінки (%s)"
 
 #: ../plug-ins/common/file-pdf-save.c:1330
 #: ../plug-ins/common/file-pdf-save.c:1403
-#: ../plug-ins/common/file-pdf-save.c:1501 ../plug-ins/common/file-ps.c:2036
-#: ../plug-ins/file-tiff/file-tiff-load.c:1291
+#: ../plug-ins/common/file-pdf-save.c:1501 ../plug-ins/common/file-ps.c:2034
+#: ../plug-ins/file-tiff/file-tiff-load.c:1360
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
@@ -3335,7 +3426,7 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
-#: ../plug-ins/common/file-png.c:2295 ../plug-ins/common/file-ps.c:3693
+#: ../plug-ins/common/file-png.c:2295 ../plug-ins/common/file-ps.c:3691
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -3473,118 +3564,118 @@ msgstr "Encapsulated PostScript"
 msgid "PostScript plug-in does not support multiple layers."
 msgstr "У додатку PostScript не передбачено підтримки декількох шарів."
 
-#: ../plug-ins/common/file-ps.c:1158
+#: ../plug-ins/common/file-ps.c:1157
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Не вдається інтерпретувати файл PostScript «%s»"
 
-#: ../plug-ins/common/file-ps.c:1306
+#: ../plug-ins/common/file-ps.c:1305
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як PostScript"
 
-#: ../plug-ins/common/file-ps.c:3546
+#: ../plug-ins/common/file-ps.c:3544
 msgid "Import from PostScript"
 msgstr "Завантажити з PostScript"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3590
+#: ../plug-ins/common/file-ps.c:3588
 msgid "Rendering"
 msgstr "Візуалізація"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3609 ../plug-ins/common/file-svg.c:851
+#: ../plug-ins/common/file-ps.c:3607 ../plug-ins/common/file-svg.c:851
 #: ../plug-ins/common/file-wmf.c:720
 msgid "Resolution:"
 msgstr "Роздільна здатність:"
 
-#: ../plug-ins/common/file-ps.c:3651
+#: ../plug-ins/common/file-ps.c:3649
 msgid "Pages:"
 msgstr "Сторінки:"
 
-#: ../plug-ins/common/file-ps.c:3658
+#: ../plug-ins/common/file-ps.c:3656
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Сторінок для завантаження(наприклад: 1-4 чи 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3663 ../plug-ins/common/sphere-designer.c:2726
+#: ../plug-ins/common/file-ps.c:3661 ../plug-ins/common/sphere-designer.c:2726
 msgid "Layers"
 msgstr "Шари"
 
-#: ../plug-ins/common/file-ps.c:3666
+#: ../plug-ins/common/file-ps.c:3664
 msgid "Images"
 msgstr "Зображення"
 
-#: ../plug-ins/common/file-ps.c:3669
+#: ../plug-ins/common/file-ps.c:3667
 msgid "Open as"
 msgstr "Відкрити як"
 
-#: ../plug-ins/common/file-ps.c:3673
+#: ../plug-ins/common/file-ps.c:3671
 msgid "Try Bounding Box"
 msgstr "Обмежувати розмір"
 
 #. Coloring
-#: ../plug-ins/common/file-ps.c:3686
+#: ../plug-ins/common/file-ps.c:3684
 msgid "Coloring"
 msgstr "Фарбування"
 
-#: ../plug-ins/common/file-ps.c:3690
+#: ../plug-ins/common/file-ps.c:3688
 msgid "B/W"
 msgstr "Ч/Б"
 
-#: ../plug-ins/common/file-ps.c:3691 ../plug-ins/imagemap/imap_menu.c:228
+#: ../plug-ins/common/file-ps.c:3689 ../plug-ins/imagemap/imap_menu.c:228
 msgid "Gray"
 msgstr "Сірий"
 
-#: ../plug-ins/common/file-ps.c:3692 ../plug-ins/common/file-xpm.c:515
+#: ../plug-ins/common/file-ps.c:3690 ../plug-ins/common/file-xpm.c:515
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Колір"
 
-#: ../plug-ins/common/file-ps.c:3704
+#: ../plug-ins/common/file-ps.c:3702
 msgid "Text antialiasing"
 msgstr "Згладжування тексту"
 
-#: ../plug-ins/common/file-ps.c:3708 ../plug-ins/common/file-ps.c:3720
+#: ../plug-ins/common/file-ps.c:3706 ../plug-ins/common/file-ps.c:3718
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Немає"
 
-#: ../plug-ins/common/file-ps.c:3709 ../plug-ins/common/file-ps.c:3721
+#: ../plug-ins/common/file-ps.c:3707 ../plug-ins/common/file-ps.c:3719
 msgid "Weak"
 msgstr "Слабке"
 
-#: ../plug-ins/common/file-ps.c:3710 ../plug-ins/common/file-ps.c:3722
+#: ../plug-ins/common/file-ps.c:3708 ../plug-ins/common/file-ps.c:3720
 msgid "Strong"
 msgstr "Сильне"
 
-#: ../plug-ins/common/file-ps.c:3716
+#: ../plug-ins/common/file-ps.c:3714
 msgid "Graphic antialiasing"
 msgstr "Згладжування графіки"
 
-#: ../plug-ins/common/file-ps.c:3790
+#: ../plug-ins/common/file-ps.c:3788
 msgid "PostScript"
 msgstr "PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3807
+#: ../plug-ins/common/file-ps.c:3805
 msgid "Image Size"
 msgstr "Розмір зображення"
 
-#: ../plug-ins/common/file-ps.c:3847
+#: ../plug-ins/common/file-ps.c:3845
 msgid "_X offset:"
 msgstr "Зсув вздовж _X:"
 
-#: ../plug-ins/common/file-ps.c:3858
+#: ../plug-ins/common/file-ps.c:3856
 msgid "_Y offset:"
 msgstr "Зсув вздовж _Y:"
 
-#: ../plug-ins/common/file-ps.c:3864
+#: ../plug-ins/common/file-ps.c:3862
 msgid "_Keep aspect ratio"
 msgstr "З_берігати пропорції"
 
-#: ../plug-ins/common/file-ps.c:3870
+#: ../plug-ins/common/file-ps.c:3868
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -3593,42 +3684,42 @@ msgstr ""
 "розміру без зміни пропорцій."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3880
+#: ../plug-ins/common/file-ps.c:3878
 msgid "Unit"
 msgstr "Одиниця"
 
-#: ../plug-ins/common/file-ps.c:3884
+#: ../plug-ins/common/file-ps.c:3882
 msgid "_Inch"
 msgstr "_Дюйм"
 
-#: ../plug-ins/common/file-ps.c:3885
+#: ../plug-ins/common/file-ps.c:3883
 msgid "_Millimeter"
 msgstr "_Міліметр"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3896
+#: ../plug-ins/common/file-ps.c:3894
 #: ../plug-ins/map-object/map-object-ui.c:1013
 msgid "Rotation"
 msgstr "Обертання"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3911
+#: ../plug-ins/common/file-ps.c:3909
 msgid "Output"
 msgstr "Вивід"
 
-#: ../plug-ins/common/file-ps.c:3917
+#: ../plug-ins/common/file-ps.c:3915
 msgid "_PostScript level 2"
 msgstr "_PostScript level 2"
 
-#: ../plug-ins/common/file-ps.c:3926
+#: ../plug-ins/common/file-ps.c:3924
 msgid "_Encapsulated PostScript"
 msgstr "_Encapsulated PostScript"
 
-#: ../plug-ins/common/file-ps.c:3935
+#: ../plug-ins/common/file-ps.c:3933
 msgid "P_review"
 msgstr "_Перегляд"
 
-#: ../plug-ins/common/file-ps.c:3959
+#: ../plug-ins/common/file-ps.c:3957
 msgid "Preview _size:"
 msgstr "_Розмір перегляду:"
 
@@ -6311,33 +6402,33 @@ msgstr "Непідтримувана чи некоректна розрядні�
 msgid "The bitmap ends unexpectedly."
 msgstr "Дані зображення несподівано закінчились."
 
-#: ../plug-ins/file-bmp/bmp-save.c:186 ../plug-ins/file-bmp/bmp-save.c:219
+#: ../plug-ins/file-bmp/bmp-save.c:199 ../plug-ins/file-bmp/bmp-save.c:232
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
 "Неможливо зберегти індексоване зображення з прозорістю у файл формату BMP."
 
-#: ../plug-ins/file-bmp/bmp-save.c:188 ../plug-ins/file-bmp/bmp-save.c:221
+#: ../plug-ins/file-bmp/bmp-save.c:201 ../plug-ins/file-bmp/bmp-save.c:234
 msgid "Alpha channel will be ignored."
 msgstr "Альфа-канал буде проігнорований."
 
-#: ../plug-ins/file-bmp/bmp-save.c:973
+#: ../plug-ins/file-bmp/bmp-save.c:993
 msgid "Export Image as BMP"
 msgstr "Експортувати зображення як BMP"
 
-#: ../plug-ins/file-bmp/bmp-save.c:985
+#: ../plug-ins/file-bmp/bmp-save.c:1005
 msgid "_Run-Length Encoded"
 msgstr "_RLE-кодування"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-save.c:992
+#: ../plug-ins/file-bmp/bmp-save.c:1012
 msgid "Compatibility"
 msgstr "Сумісність"
 
-#: ../plug-ins/file-bmp/bmp-save.c:997
+#: ../plug-ins/file-bmp/bmp-save.c:1017
 msgid "_Write color space information"
 msgstr "З_аписувати інформацію про простір кольору"
 
-#: ../plug-ins/file-bmp/bmp-save.c:999
+#: ../plug-ins/file-bmp/bmp-save.c:1019
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Disabling this "
@@ -6348,31 +6439,31 @@ msgstr ""
 "параметра змусить його не записувати цієї інформації у файл."
 
 #. RGB Encoding Pptions
-#: ../plug-ins/file-bmp/bmp-save.c:1008
+#: ../plug-ins/file-bmp/bmp-save.c:1028
 msgid "RGB Encoding"
 msgstr "Кодування RGB"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1015
+#: ../plug-ins/file-bmp/bmp-save.c:1035
 msgid "16 bit (R5 G6 B5)"
 msgstr "16-бітове (R5 G6 B5)"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1016
+#: ../plug-ins/file-bmp/bmp-save.c:1036
 msgid "16 bit (A1 R5 G5 B5)"
 msgstr "16-бітове (A1 R5 G5 B5)"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1017
+#: ../plug-ins/file-bmp/bmp-save.c:1037
 msgid "16 bit (X1 R5 G5 B5)"
 msgstr "16-бітове (X1 R5 G5 B5)"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1018
+#: ../plug-ins/file-bmp/bmp-save.c:1038
 msgid "24 bit (R8 G8 B8)"
 msgstr "24-бітове (R8 G8 B8)"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1019
+#: ../plug-ins/file-bmp/bmp-save.c:1039
 msgid "32 bit (A8 R8 G8 B8)"
 msgstr "32-бітове (A8 R8 G8 B8)"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1020
+#: ../plug-ins/file-bmp/bmp-save.c:1040
 msgid "32 bit (X8 R8 G8 B8)"
 msgstr "32-бітове (X8 R8 G8 B8)"
 
@@ -6380,7 +6471,7 @@ msgstr "32-бітове (X8 R8 G8 B8)"
 msgid "Windows BMP image"
 msgstr "Зображення Windows BMP"
 
-#: ../plug-ins/file-bmp/bmp.c:291
+#: ../plug-ins/file-bmp/bmp.c:294
 #, c-format
 msgid "BMP format does not support multiple layers."
 msgstr "Для формату BMP не передбачено підтримку декількох шарів."
@@ -6767,7 +6858,7 @@ msgstr "З рухомою комою"
 msgid "JPEG image"
 msgstr "Перегляд JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1329
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1229
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7134,17 +7225,17 @@ msgstr ""
 "Під час спроби експортування декількох шарів не було позначено пункт "
 "«Зберегти шари»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:254
+#: ../plug-ins/file-tiff/file-tiff-load.c:255
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Не є зображенням TIFF або зображення пошкоджено."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:285
+#: ../plug-ins/file-tiff/file-tiff-load.c:286
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF «%s» не містить каталоги"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:292
+#: ../plug-ins/file-tiff/file-tiff-load.c:293
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7162,7 +7253,7 @@ msgstr[2] ""
 "Не вдалося виконати облік каталогу TIFF «%s» за заголовком, хоча, здається, "
 "маємо %d сторінок. Буде виконано спробу завантажити файл із цим припущенням."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:368
+#: ../plug-ins/file-tiff/file-tiff-load.c:417
 msgid "Extra channels with unspecified data."
 msgstr "Зайві канали із даними поза специфікацією."
 
@@ -7173,17 +7264,17 @@ msgstr "Зайві канали із даними поза специфікац�
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:380
+#: ../plug-ins/file-tiff/file-tiff-load.c:429
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Нестандартний TIFF: зайві канали без поля «ExtraSamples»."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:441
+#: ../plug-ins/file-tiff/file-tiff-load.c:510
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Не вдалося прочитати сторінку %d з %d. Зображення може бути пошкоджено.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:470
+#: ../plug-ins/file-tiff/file-tiff-load.c:539
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7192,7 +7283,7 @@ msgstr ""
 "Для цього зображення визначено лінійний колірний профіль, але цей профіль не "
 "встановлено на першому шарі. Шари під шаром %d буде оброблено як нелінійні."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:478
+#: ../plug-ins/file-tiff/file-tiff-load.c:547
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7202,36 +7293,36 @@ msgstr ""
 "використовуватимемо лише перший з них. Якщо це призведе до некоректних "
 "результатів, вам варто завантажити кожен з шарів як окреме зображення."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:490
+#: ../plug-ins/file-tiff/file-tiff-load.c:559
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Підозрілива бітова глибина: %d для сторінки %d. Можливо, зображення "
 "пошкоджено."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:564
+#: ../plug-ins/file-tiff/file-tiff-load.c:633
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Непідтримувана розрядність на канал %d для сторінки %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:579
+#: ../plug-ins/file-tiff/file-tiff-load.c:648
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Не вдалося отримати ширину зображення з «%s»"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:587
+#: ../plug-ins/file-tiff/file-tiff-load.c:656
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Не вдалося отримати довжину зображення з «%s»"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:595
+#: ../plug-ins/file-tiff/file-tiff-load.c:664
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Некоректні розміри зображення (%u x %u) для сторінки %d. Можливо, зображення "
 "пошкоджено."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:616
+#: ../plug-ins/file-tiff/file-tiff-load.c:685
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -7240,7 +7331,7 @@ msgstr ""
 "Не вдалося отримати фотометричні дані з «%s». Зображення стиснено CCITT. "
 "Припускаємо, мінімальний колір — білий."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:623
+#: ../plug-ins/file-tiff/file-tiff-load.c:692
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -7250,7 +7341,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:655
+#: ../plug-ins/file-tiff/file-tiff-load.c:724
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -7258,7 +7349,7 @@ msgstr ""
 "Для %s не визначено тип каналу прозорості. Припускаємо, що прозорість не "
 "перемножено попередньо"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:680
+#: ../plug-ins/file-tiff/file-tiff-load.c:749
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7269,64 +7360,64 @@ msgstr ""
 "встановлено, хоча є додаткові канали. Припускаємо, що перший додатковий "
 "канал не є попередньо помноженими даними прозорості."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:913
+#: ../plug-ins/file-tiff/file-tiff-load.c:982
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Некоректне або невідоме стискання %u. Вимикаємо стискання."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:971
+#: ../plug-ins/file-tiff/file-tiff-load.c:1040
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Не вдалося створити зображення: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1003
+#: ../plug-ins/file-tiff/file-tiff-load.c:1072
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-з-%d-сторінок"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1172
+#: ../plug-ins/file-tiff/file-tiff-load.c:1241
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Невідомий тип одиниці роздільності %d. Припускаємо точки на дюйм."
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1182
+#: ../plug-ins/file-tiff/file-tiff-load.c:1251
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "Попередження: роздільність вказано без типу одиниці. Припускаємо точки на "
 "дюйм."
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1190
+#: ../plug-ins/file-tiff/file-tiff-load.c:1259
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Попередження: немає даних щодо роздільності y, припускаємо ту саму, що і для "
 "x"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1249
+#: ../plug-ins/file-tiff/file-tiff-load.c:1318
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Не вдалося отримати мапи кольорів з «%s»"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1328
+#: ../plug-ins/file-tiff/file-tiff-load.c:1397
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1481
+#: ../plug-ins/file-tiff/file-tiff-load.c:1550
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Не вдалося прочитати дані з TIFF «%s». Ймовірно, вміст файла пошкоджено."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1552
+#: ../plug-ins/file-tiff/file-tiff-load.c:1621
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: непідтримуваний формат зображення, немає доступного завантажувача RGBA"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1864
-#: ../plug-ins/file-tiff/file-tiff-load.c:2061
+#: ../plug-ins/file-tiff/file-tiff-load.c:1933
+#: ../plug-ins/file-tiff/file-tiff-load.c:2130
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
@@ -7334,15 +7425,15 @@ msgstr ""
 "— %d."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1873
-#: ../plug-ins/file-tiff/file-tiff-load.c:2070
+#: ../plug-ins/file-tiff/file-tiff-load.c:1942
+#: ../plug-ins/file-tiff/file-tiff-load.c:2139
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
 "Рядок помилки — %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2471
+#: ../plug-ins/file-tiff/file-tiff-load.c:2540
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
@@ -7350,27 +7441,27 @@ msgstr "Імпорт TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2524
+#: ../plug-ins/file-tiff/file-tiff-load.c:2597
 msgid "_Keep empty space around imported layers"
 msgstr "За_лишати порожнє місце навколо імпортованих шарів"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2541
+#: ../plug-ins/file-tiff/file-tiff-load.c:2614
 msgid "Process extra channel as:"
 msgstr "Обробляти зайвий канал як:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2544
+#: ../plug-ins/file-tiff/file-tiff-load.c:2617
 msgid "_Non-premultiplied alpha"
 msgstr "Б_ез попередньо помноженої альфи"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2545
+#: ../plug-ins/file-tiff/file-tiff-load.c:2618
 msgid "Pre_multiplied alpha"
 msgstr "_Попередньо помножена альфа"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2546
+#: ../plug-ins/file-tiff/file-tiff-load.c:2619
 msgid "Channe_l"
 msgstr "_Канал"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:622
+#: ../plug-ins/file-tiff/file-tiff-save.c:619
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7378,11 +7469,11 @@ msgstr ""
 "За допомогою \"CCITT Group 4\" або \"CCITT Group 3\" можна стискати тільки "
 "монохромні зображення."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:636
+#: ../plug-ins/file-tiff/file-tiff-save.c:633
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Індексовані зображення не можна стиснути за допомогою \"JPEG\"."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:670
+#: ../plug-ins/file-tiff/file-tiff-save.c:667
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7390,40 +7481,40 @@ msgstr ""
 "Формат TIFF підтримує лише 7-бітні ASCII\n"
 "коментарі. Коментар не збережено."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:811
+#: ../plug-ins/file-tiff/file-tiff-save.c:808
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Не вдалося записати рядок сканування %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1223
+#: ../plug-ins/file-tiff/file-tiff-save.c:1123
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Записування сторінок із різною бітовою глибиною є доволі дивною дією."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1325
+#: ../plug-ins/file-tiff/file-tiff-save.c:1225
 #: ../plug-ins/metadata/metadata-tags.c:184
 #: ../plug-ins/metadata/metadata-tags.c:196
 #: ../plug-ins/metadata/metadata-tags.c:227
 msgid "None"
 msgstr "Немає"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1326
+#: ../plug-ins/file-tiff/file-tiff-save.c:1226
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1327
+#: ../plug-ins/file-tiff/file-tiff-save.c:1227
 msgid "Pack Bits"
 msgstr "Упаковані біти"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1328
+#: ../plug-ins/file-tiff/file-tiff-save.c:1228
 msgid "Deflate"
 msgstr "Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1330
+#: ../plug-ins/file-tiff/file-tiff-save.c:1230
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1331
+#: ../plug-ins/file-tiff/file-tiff-save.c:1231
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax"
 
@@ -11643,20 +11734,20 @@ msgstr ""
 msgid "Unrated"
 msgstr "Без рейтингу"
 
-#: ../plug-ins/metadata/metadata-editor.c:3705
+#: ../plug-ins/metadata/metadata-editor.c:3790
 #, c-format
 msgid "Failed to set metadata tag %s"
 msgstr "Не вдалося встановити мітку метаданих %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:4565
+#: ../plug-ins/metadata/metadata-editor.c:4624
 msgid "Import Metadata File"
 msgstr "Імпорт файлу метаданих"
 
-#: ../plug-ins/metadata/metadata-editor.c:4600
+#: ../plug-ins/metadata/metadata-editor.c:4659
 msgid "Export Metadata File"
 msgstr "Експорт файлу метаданих"
 
-#: ../plug-ins/metadata/metadata-editor.c:4604
+#: ../plug-ins/metadata/metadata-editor.c:4663
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -11853,37 +11944,37 @@ msgstr "Схід"
 msgid "West"
 msgstr "Захід"
 
-#: ../plug-ins/metadata/metadata-viewer.c:172
+#: ../plug-ins/metadata/metadata-viewer.c:177
 msgid "_View Metadata"
 msgstr "По_казати метадані"
 
-#: ../plug-ins/metadata/metadata-viewer.c:176
+#: ../plug-ins/metadata/metadata-viewer.c:181
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Показати метадані (Exif, IPTC, XMP)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:266
+#: ../plug-ins/metadata/metadata-viewer.c:271
 msgid "Error loading metadata-viewer dialog."
 msgstr "Помилка під час завантаження вікна переглядача метаданих."
 
-#: ../plug-ins/metadata/metadata-viewer.c:277
+#: ../plug-ins/metadata/metadata-viewer.c:282
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Оглядач метаданих: %s"
 
-#: ../plug-ins/metadata/metadata-viewer.c:369
+#: ../plug-ins/metadata/metadata-viewer.c:374
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu більше символів)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:561
+#: ../plug-ins/metadata/metadata-viewer.c:583
 msgid " meter"
 msgstr " метр"
 
-#: ../plug-ins/metadata/metadata-viewer.c:562
+#: ../plug-ins/metadata/metadata-viewer.c:584
 msgid " feet"
 msgstr " футів"
 
-#: ../plug-ins/metadata/metadata-viewer.c:669
+#: ../plug-ins/metadata/metadata-viewer.c:702
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu більше байт)"
@@ -12481,9 +12572,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Save thumbnail"
 #~ msgstr "Зберегти мініатюру"
-
-#~ msgid "Save color profile"
-#~ msgstr "Зберегти колірний профіль"
 
 #~ msgid "_Pixel format:"
 #~ msgstr "_Формат пікселів:"
