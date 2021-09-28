@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-09-14 16:12+0000\n"
-"PO-Revision-Date: 2021-09-14 20:44+0300\n"
+"POT-Creation-Date: 2021-09-28 15:32+0000\n"
+"PO-Revision-Date: 2021-09-28 23:01+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -244,7 +244,8 @@ msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
 msgstr ""
-"У GIMP 2.10.28 виправлено ваду у збиранні GIMP 2.10.26, яку пов'язано із тим, що неналежним чином встановлювалися деякі з даних тем."
+"У GIMP 2.10.28 виправлено ваду у збиранні GIMP 2.10.26, яку пов'язано із "
+"тим, що неналежним чином встановлювалися деякі з даних тем."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
@@ -3519,7 +3520,7 @@ msgstr "240 секунд"
 #: ../app/dialogs/convert-precision-dialog.c:146
 #: ../app/dialogs/data-delete-dialog.c:86
 #: ../app/dialogs/file-open-location-dialog.c:80
-#: ../app/dialogs/file-save-dialog.c:753 ../app/dialogs/fill-dialog.c:115
+#: ../app/dialogs/file-save-dialog.c:758 ../app/dialogs/fill-dialog.c:115
 #: ../app/dialogs/grid-dialog.c:102
 #: ../app/dialogs/image-merge-layers-dialog.c:100
 #: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:326
@@ -4875,7 +4876,8 @@ msgid "Copy Named"
 msgstr "Копіювання з буфера з назвою"
 
 #: ../app/actions/edit-commands.c:463
-msgid "Copy Visible Named "
+#| msgid "Copy Visible Named "
+msgid "Copy Visible Named"
 msgstr "Копіювати видиме з назвою"
 
 #: ../app/actions/edit-commands.c:511
@@ -4996,7 +4998,7 @@ msgid "Save Error Log to File"
 msgstr "Збереження повідомлень про помилки у файлі"
 
 #: ../app/actions/error-console-commands.c:101
-#: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:754
+#: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:759
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:69
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -11174,7 +11176,7 @@ msgid "Move this window to screen %s"
 msgstr "Перемістити це вікно на екран %s"
 
 #: ../app/actions/window-commands.c:78 ../app/dialogs/extensions-dialog.c:79
-#: ../app/dialogs/file-save-dialog.c:677 ../app/dialogs/grid-dialog.c:103
+#: ../app/dialogs/file-save-dialog.c:682 ../app/dialogs/grid-dialog.c:103
 #: ../app/dialogs/image-new-dialog.c:107 ../app/dialogs/image-new-dialog.c:327
 #: ../app/dialogs/input-devices-dialog.c:67
 #: ../app/dialogs/item-options-dialog.c:146
@@ -16384,7 +16386,7 @@ msgstr "Введіть адресу (URI):"
 msgid "Invalid URI"
 msgstr "Некоректна адреса"
 
-#: ../app/dialogs/file-save-dialog.c:497
+#: ../app/dialogs/file-save-dialog.c:502
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -16393,11 +16395,11 @@ msgstr ""
 "При збереженні вилученого файла потрібно визначити його формат. Вкажіть "
 "розширення файла чи виберіть формат зі списку."
 
-#: ../app/dialogs/file-save-dialog.c:657
+#: ../app/dialogs/file-save-dialog.c:662
 msgid "The given filename cannot be used for exporting"
 msgstr "Задану назву файла не можна використати для експорту"
 
-#: ../app/dialogs/file-save-dialog.c:658
+#: ../app/dialogs/file-save-dialog.c:663
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -16406,15 +16408,15 @@ msgstr ""
 "Якщо ж треба зберегти у форматі GIMP XCF, скористайтесь командою "
 "Файл→Зберегти."
 
-#: ../app/dialogs/file-save-dialog.c:661
+#: ../app/dialogs/file-save-dialog.c:666
 msgid "Take me to the Save dialog"
 msgstr "Взяти мене у діалог Збереження"
 
-#: ../app/dialogs/file-save-dialog.c:665
+#: ../app/dialogs/file-save-dialog.c:670
 msgid "The given filename cannot be used for saving"
 msgstr "Задану назву файла не можна використати для збереження"
 
-#: ../app/dialogs/file-save-dialog.c:666
+#: ../app/dialogs/file-save-dialog.c:671
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -16423,15 +16425,15 @@ msgstr ""
 "XCF. Використовуйте команду Файл→Експортувати для експорту у інші формати "
 "даних."
 
-#: ../app/dialogs/file-save-dialog.c:668
+#: ../app/dialogs/file-save-dialog.c:673
 msgid "Take me to the Export dialog"
 msgstr "Взяти мене у діалог Експорту"
 
-#: ../app/dialogs/file-save-dialog.c:671 ../app/dialogs/file-save-dialog.c:748
+#: ../app/dialogs/file-save-dialog.c:676 ../app/dialogs/file-save-dialog.c:753
 msgid "Extension Mismatch"
 msgstr "Неправильне розширення"
 
-#: ../app/dialogs/file-save-dialog.c:732
+#: ../app/dialogs/file-save-dialog.c:737
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -16439,19 +16441,19 @@ msgstr ""
 "У цій назві файла бракує будь-якого відомого розширення. Вкажіть розширення "
 "у назві файла, чи виберіть формат зі списку."
 
-#: ../app/dialogs/file-save-dialog.c:764
+#: ../app/dialogs/file-save-dialog.c:769
 msgid "The given file extension does not match the chosen file type."
 msgstr "Вказане розширення не відповідає обраному типу файла."
 
-#: ../app/dialogs/file-save-dialog.c:768
+#: ../app/dialogs/file-save-dialog.c:773
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Попри все бажаєте зберегти файл з такою назвою?"
 
-#: ../app/dialogs/file-save-dialog.c:833
+#: ../app/dialogs/file-save-dialog.c:838
 msgid "Saving canceled"
 msgstr "Збереження перервано"
 
-#: ../app/dialogs/file-save-dialog.c:839 ../app/widgets/gimpdnd-xds.c:190
+#: ../app/dialogs/file-save-dialog.c:844 ../app/widgets/gimpdnd-xds.c:190
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -16462,7 +16464,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/dialogs/file-save-dialog.c:841
+#: ../app/dialogs/file-save-dialog.c:846
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
@@ -21149,10 +21151,10 @@ msgid "Set a source image first."
 msgstr "Вкажіть початкове зображення."
 
 #: ../app/paint/gimpsourcecore.c:232
-#| msgid "Cannot paint on multiple drawables. Select only one."
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr ""
-"Неможливо малювати на вирівнюванні «Зареєстровано» на декількох об'єктах для малювання."
+"Неможливо малювати на вирівнюванні «Зареєстровано» на декількох об'єктах для "
+"малювання."
 
 #: ../app/paint/gimpsourceoptions.c:89 ../app/tools/gimpaligntool.c:123
 #: ../app/tools/gimpcloneoptions-gui.c:283 ../app/tools/gimphealtool.c:104
@@ -23159,7 +23161,6 @@ msgstr "Перетворення клітки"
 
 #: ../app/tools/gimpcloneoptions-gui.c:145
 #: ../app/tools/gimpcloneoptions-gui.c:251
-#| msgid "No filter selected"
 msgid "No source selected"
 msgstr "Не вказано джерела"
 
@@ -23167,32 +23168,22 @@ msgstr "Не вказано джерела"
 #, c-format
 msgid "Source: %d item to itself"
 msgid_plural "Source: %d items to themselves"
-msgstr[0] ""
-"Джерело: %d запис у самих себе"
-msgstr[1] ""
-"Джерело: %d записи у самих себе"
-msgstr[2] ""
-"Джерело: %d записів у самих себе"
-msgstr[3] ""
-"Джерело: %d запис у самого себе"
+msgstr[0] "Джерело: %d запис у самих себе"
+msgstr[1] "Джерело: %d записи у самих себе"
+msgstr[2] "Джерело: %d записів у самих себе"
+msgstr[3] "Джерело: %d запис у самого себе"
 
 #: ../app/tools/gimpcloneoptions-gui.c:175
-#| msgctxt "item-set"
-#| msgid "All visible layers"
 msgid "All composited visible layers"
 msgstr "Усі компоновані видимі шари"
 
 #: ../app/tools/gimpcloneoptions-gui.c:177
 #, c-format
-#| msgctxt "item-set"
-#| msgid "All visible layers"
 msgid "All composited visible layers from '%s'"
 msgstr "Усі компоновані видимі шари з «%s»"
 
 #: ../app/tools/gimpcloneoptions-gui.c:183
 #, c-format
-#| msgctxt "undo-type"
-#| msgid "Scale item"
 msgid "Source: %d item"
 msgid_plural "Source: %d items"
 msgstr[0] "Джерело: %d запис"
@@ -23204,14 +23195,10 @@ msgstr[3] "Джерело: %d запис"
 #, c-format
 msgid "Source: %d item from '%s'"
 msgid_plural "Source: %d items from '%s'"
-msgstr[0] ""
-"Джерело: %d запис з «%s»"
-msgstr[1] ""
-"Джерело: %d записи з «%s»"
-msgstr[2] ""
-"Джерело: %d записів з «%s»"
-msgstr[3] ""
-"Джерело: %d запис з «%s»"
+msgstr[0] "Джерело: %d запис з «%s»"
+msgstr[1] "Джерело: %d записи з «%s»"
+msgstr[2] "Джерело: %d записів з «%s»"
+msgstr[3] "Джерело: %d запис з «%s»"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -28455,15 +28442,15 @@ msgstr "Мініатюра %d з %d"
 msgid "Creating preview..."
 msgstr "Створення попереднього перегляду…"
 
-#: ../app/widgets/gimptoolbox-color-area.c:220
+#: ../app/widgets/gimptoolbox-color-area.c:234
 msgid "Change Foreground Color"
 msgstr "Зміна кольору переднього плану"
 
-#: ../app/widgets/gimptoolbox-color-area.c:225
+#: ../app/widgets/gimptoolbox-color-area.c:239
 msgid "Change Background Color"
 msgstr "Зміна кольору тла"
 
-#: ../app/widgets/gimptoolbox-color-area.c:287
+#: ../app/widgets/gimptoolbox-color-area.c:308
 msgid ""
 "The active foreground color.\n"
 "Click to open the color selection dialog."
@@ -28471,7 +28458,7 @@ msgstr ""
 "Активний колір переднього плану.\n"
 "Клацніть, щоб відкрити діалогове вікно зміни кольору."
 
-#: ../app/widgets/gimptoolbox-color-area.c:292
+#: ../app/widgets/gimptoolbox-color-area.c:313
 msgid ""
 "The active background color.\n"
 "Click to open the color selection dialog."
