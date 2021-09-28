@@ -130,7 +130,7 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "jxl");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
-                                      "0,string,\xFF\x0A,3,string,\x0CJXL");
+                                      "0,string,\xFF\x0A,0,string,\\000\\000\\000\x0CJXL\\040\\015\\012\x87\\012");
 
     }
   else if (! strcmp (name, SAVE_PROC))
