@@ -49,6 +49,28 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
+    # build libjxl (not available in MSYS2 yet)
+    crossroad install brotli highway && \
+    git clone --depth=1 --branch v0.6.x --recursive https://github.com/libjxl/libjxl.git libjxl && cd libjxl && \
+    mkdir _build && cd _build && \
+    crossroad cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DJPEGXL_ENABLE_PLUGINS=OFF -DBUILD_TESTING=OFF -DJPEGXL_WARNINGS_AS_ERRORS=OFF -DJPEGXL_ENABLE_SJPEG=OFF -DJPEGXL_ENABLE_BENCHMARK=OFF -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_MANPAGES=OFF -DJPEGXL_ENABLE_SKCMS=ON -DJPEGXL_FORCE_SYSTEM_BROTLI=ON -DJPEGXL_FORCE_SYSTEM_HWY=ON -DJPEGXL_ENABLE_JNI=OFF -DJPEGXL_ENABLE_TCMALLOC=OFF -DJPEGXL_ENABLE_TOOLS=OFF -DCMAKE_CXX_FLAGS="-DHWY_COMPILE_ONLY_SCALAR" .. && \
+    ninja && ninja install || exit 1
+
+    # move DLLs into correct location
+    if [ -f ${CROSSROAD_PREFIX}/lib/libjxl.dll ]; then
+      mv --target-directory=${CROSSROAD_PREFIX}/bin ${CROSSROAD_PREFIX}/lib/libjxl.dll
+    fi
+
+    if [ -f ${CROSSROAD_PREFIX}/lib/libjxl_threads.dll ]; then
+      mv --target-directory=${CROSSROAD_PREFIX}/bin ${CROSSROAD_PREFIX}/lib/libjxl_threads.dll
+    fi
+
+    # install image/jxl mime type
+    mkdir -p ${CROSSROAD_PREFIX}/share/mime/packages
+    cp --target-directory=${CROSSROAD_PREFIX}/share/mime/packages ../plugins/mime/image-jxl.xml
+
+    cd ../..
+
     # Generate the loaders.cache file for GUI image support.
     # Note: this is mostly for distribution so I initially wanted to
     # have these in "win64-nightly" job but "win32-nightly" also
