@@ -528,6 +528,7 @@ dump_describe_param (GParamSpec *param_spec)
         case G_TYPE_UINT:
         case G_TYPE_LONG:
         case G_TYPE_ULONG:
+        case G_TYPE_INT64:
           values = "This is an integer value.";
           break;
         case G_TYPE_FLOAT:
