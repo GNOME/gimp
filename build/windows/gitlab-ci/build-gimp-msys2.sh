@@ -28,6 +28,7 @@ pacman --noconfirm -S --needed \
     \
     mingw-w64-$MSYS2_ARCH-appstream-glib \
     mingw-w64-$MSYS2_ARCH-atk \
+    mingw-w64-$MSYS2_ARCH-brotli \
     mingw-w64-$MSYS2_ARCH-cairo \
     mingw-w64-$MSYS2_ARCH-drmingw \
     mingw-w64-$MSYS2_ARCH-gexiv2 \
@@ -39,6 +40,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-gtk3 \
     mingw-w64-$MSYS2_ARCH-gtk-doc \
     mingw-w64-$MSYS2_ARCH-headers-git \
+    mingw-w64-$MSYS2_ARCH-highway \
     mingw-w64-$MSYS2_ARCH-iso-codes \
     mingw-w64-$MSYS2_ARCH-json-c \
     mingw-w64-$MSYS2_ARCH-json-glib \
