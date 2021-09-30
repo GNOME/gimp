@@ -16,12 +16,12 @@ _build:
 
 .PHONY: build
 build: | _build
-	ninja -C _build
+	meson compile -C _build
 
 
 .PHONY: install
 install:
-	ninja -C _build install
+	meson install -C _build
 
 
 .PHONY: clean
