@@ -81,7 +81,11 @@ export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/mingw64/share/"
 mkdir -p _ccache
 export CCACHE_BASEDIR="$(pwd)"
 export CCACHE_DIR="${CCACHE_BASEDIR}/_ccache"
-export CC="ccache gcc"
+
+# XXX Do not enable ccache this way because it breaks
+# gobject-introspection rules. Let's see later for ccache.
+# See: https://github.com/msys2/MINGW-packages/issues/9677
+#export CC="ccache gcc"
 
 ccache --zero-stats
 ccache --show-stats
