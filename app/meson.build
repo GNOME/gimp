@@ -184,7 +184,9 @@ if platform_windows
     copy: true,
   )
   gui_rc_file = windows.compile_resources(
-    gimp_app_rc,
+    depends: [
+      gimp_plugins_rc,
+    ],
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(gui_rc_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(gui_rc_name),

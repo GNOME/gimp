@@ -11,7 +11,9 @@ plugin_sources = [
 
 if platform_windows
   plugin_sources += windows.compile_resources(
-    gimp_plugins_rc,
+    depends: [
+      gimp_plugins_rc,
+    ],
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
