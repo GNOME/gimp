@@ -426,11 +426,10 @@ save_image (const CompressorEntry  *compressor,
             gint32                  run_mode,
             GError                **error)
 {
-  gchar       *filename = g_file_get_path (file);
   const gchar *ext;
   GFile       *tmp_file;
 
-  ext = find_extension (compressor, filename);
+  ext = find_extension (compressor, g_file_peek_path (file));
 
   if (! ext)
     {
@@ -451,7 +450,6 @@ save_image (const CompressorEntry  *compressor,
     {
       g_file_delete (tmp_file, NULL, NULL);
       g_object_unref (tmp_file);
-      g_free (filename);
 
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s", gimp_pdb_get_last_error (gimp_get_pdb ()));
@@ -466,7 +464,6 @@ save_image (const CompressorEntry  *compressor,
     {
       g_file_delete (tmp_file, NULL, NULL);
       g_object_unref (tmp_file);
-      g_free (filename);
 
       return GIMP_PDB_EXECUTION_ERROR;
     }
@@ -480,8 +477,6 @@ save_image (const CompressorEntry  *compressor,
   if (strcmp (ext, ".xcf") == 0)
     gimp_file_save_thumbnail (image, file);
 
-  g_free (filename);
-
   return GIMP_PDB_SUCCESS;
 }
 
@@ -493,13 +488,10 @@ load_image (const CompressorEntry  *compressor,
             GError                **error)
 {
   GimpImage   *image;
-  gchar       *filename;
   const gchar *ext;
   GFile       *tmp_file;
 
-  filename = g_file_get_path (file);
-
-  ext = find_extension (compressor, filename);
+  ext = find_extension (compressor, g_file_peek_path (file));
 
   if (! ext)
     {
@@ -514,12 +506,9 @@ load_image (const CompressorEntry  *compressor,
   if (! compressor->load_fn (file, tmp_file))
     {
       g_object_unref (tmp_file);
-      g_free (filename);
       *status = GIMP_PDB_EXECUTION_ERROR;
       return NULL;
     }
-
-  g_free (filename);
 
   /* now that we uncompressed it, load the temp file */
 
@@ -551,13 +540,10 @@ load_image (const CompressorEntry  *compressor,
 static gboolean
 valid_file (GFile *file)
 {
-  gchar    *filename;
   GStatBuf  buf;
   gboolean  valid;
 
-  filename = g_file_get_path (file);
-  valid = g_stat (filename, &buf) == 0 && buf.st_size > 0;
-  g_free (filename);
+  valid = g_stat (g_file_peek_path (file), &buf) == 0 && buf.st_size > 0;
 
   return valid;
 }
@@ -603,8 +589,6 @@ static gboolean
 gzip_load (GFile *infile,
            GFile *outfile)
 {
-  gchar    *in_filename  = g_file_get_path (infile);
-  gchar    *out_filename = g_file_get_path (outfile);
   gboolean  ret;
   int       fd;
   gzFile    in;
@@ -616,7 +600,7 @@ gzip_load (GFile *infile,
   in = NULL;
   out = NULL;
 
-  fd = g_open (in_filename, O_RDONLY | _O_BINARY, 0);
+  fd = g_open (g_file_peek_path (infile), O_RDONLY | _O_BINARY, 0);
   if (fd == -1)
     goto out;
 
@@ -627,7 +611,7 @@ gzip_load (GFile *infile,
       goto out;
     }
 
-  out = g_fopen (out_filename, "wb");
+  out = g_fopen (g_file_peek_path (outfile), "wb");
   if (! out)
     goto out;
 
@@ -656,9 +640,6 @@ gzip_load (GFile *infile,
   if (out)
     fclose (out);
 
-  g_free (in_filename);
-  g_free (out_filename);
-
   return ret;
 }
 
@@ -666,8 +647,6 @@ static gboolean
 gzip_save (GFile *infile,
            GFile *outfile)
 {
-  gchar    *in_filename  = g_file_get_path (infile);
-  gchar    *out_filename = g_file_get_path (outfile);
   gboolean  ret;
   FILE     *in;
   int       fd;
@@ -680,11 +659,11 @@ gzip_save (GFile *infile,
   in = NULL;
   out = NULL;
 
-  in = g_fopen (in_filename, "rb");
+  in = g_fopen (g_file_peek_path (infile), "rb");
   if (! in)
     goto out;
 
-  fd = g_open (out_filename, O_CREAT | O_WRONLY | O_TRUNC | _O_BINARY, 0664);
+  fd = g_open (g_file_peek_path (outfile), O_CREAT | O_WRONLY | O_TRUNC | _O_BINARY, 0664);
   if (fd == -1)
     goto out;
 
@@ -732,8 +711,6 @@ static gboolean
 bzip2_load (GFile *infile,
            GFile  *outfile)
 {
-  gchar    *in_filename  = g_file_get_path (infile);
-  gchar    *out_filename = g_file_get_path (outfile);
   gboolean  ret;
   int       fd;
   BZFILE   *in;
@@ -745,7 +722,7 @@ bzip2_load (GFile *infile,
   in = NULL;
   out = NULL;
 
-  fd = g_open (in_filename, O_RDONLY | _O_BINARY, 0);
+  fd = g_open (g_file_peek_path (infile), O_RDONLY | _O_BINARY, 0);
   if (fd == -1)
     goto out;
 
@@ -756,7 +733,7 @@ bzip2_load (GFile *infile,
       goto out;
     }
 
-  out = g_fopen (out_filename, "wb");
+  out = g_fopen (g_file_peek_path (outfile), "wb");
   if (!out)
     goto out;
 
@@ -785,9 +762,6 @@ bzip2_load (GFile *infile,
   if (out)
     fclose (out);
 
-  g_free (in_filename);
-  g_free (out_filename);
-
   return ret;
 }
 
@@ -795,8 +769,6 @@ static gboolean
 bzip2_save (GFile *infile,
             GFile *outfile)
 {
-  gchar    *in_filename  = g_file_get_path (infile);
-  gchar    *out_filename = g_file_get_path (outfile);
   gboolean  ret;
   FILE     *in;
   int       fd;
@@ -809,11 +781,11 @@ bzip2_save (GFile *infile,
   in = NULL;
   out = NULL;
 
-  in = g_fopen (in_filename, "rb");
+  in = g_fopen (g_file_peek_path (infile), "rb");
   if (!in)
     goto out;
 
-  fd = g_open (out_filename, O_CREAT | O_WRONLY | O_TRUNC | _O_BINARY, 0664);
+  fd = g_open (g_file_peek_path (outfile), O_CREAT | O_WRONLY | O_TRUNC | _O_BINARY, 0664);
   if (fd == -1)
     goto out;
 
@@ -854,9 +826,6 @@ bzip2_save (GFile *infile,
   if (out)
     BZ2_bzclose (out);
 
-  g_free (in_filename);
-  g_free (out_filename);
-
   return ret;
 }
 
@@ -864,8 +833,6 @@ static gboolean
 xz_load (GFile *infile,
          GFile *outfile)
 {
-  gchar       *in_filename  = g_file_get_path (infile);
-  gchar       *out_filename = g_file_get_path (outfile);
   gboolean     ret;
   FILE        *in;
   FILE        *out;
@@ -879,11 +846,11 @@ xz_load (GFile *infile,
   in = NULL;
   out = NULL;
 
-  in = g_fopen (in_filename, "rb");
+  in = g_fopen (g_file_peek_path (infile), "rb");
   if (!in)
     goto out;
 
-  out = g_fopen (out_filename, "wb");
+  out = g_fopen (g_file_peek_path (outfile), "wb");
   if (!out)
     goto out;
 
@@ -947,9 +914,6 @@ xz_load (GFile *infile,
   if (out)
     fclose (out);
 
-  g_free (in_filename);
-  g_free (out_filename);
-
   return ret;
 }
 
@@ -957,8 +921,6 @@ static gboolean
 xz_save (GFile *infile,
          GFile *outfile)
 {
-  gchar       *in_filename  = g_file_get_path (infile);
-  gchar       *out_filename = g_file_get_path (outfile);
   gboolean     ret;
   FILE        *in;
   FILE        *out;
@@ -973,12 +935,12 @@ xz_save (GFile *infile,
   in = NULL;
   out = NULL;
 
-  in = g_fopen (in_filename, "rb");
+  in = g_fopen (g_file_peek_path (infile), "rb");
   if (!in)
     goto out;
 
   file_size = get_file_info (infile);
-  out = g_fopen (out_filename, "wb");
+  out = g_fopen (g_file_peek_path (outfile), "wb");
   if (!out)
     goto out;
 
@@ -1045,9 +1007,6 @@ xz_save (GFile *infile,
 
   if (out)
     fclose (out);
-
-  g_free (in_filename);
-  g_free (out_filename);
 
   return ret;
 }

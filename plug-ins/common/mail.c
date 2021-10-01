@@ -681,13 +681,10 @@ send_dialog (void)
 static gboolean
 valid_file (GFile *file)
 {
-  gchar    *filename;
   GStatBuf  buf;
   gboolean  valid;
 
-  filename = g_file_get_path (file);
-  valid = g_stat (filename, &buf) == 0 && buf.st_size > 0;
-  g_free (filename);
+  valid = g_stat (g_file_peek_path (file), &buf) == 0 && buf.st_size > 0;
 
   return valid;
 }

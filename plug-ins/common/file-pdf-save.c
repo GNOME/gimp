@@ -1292,7 +1292,7 @@ choose_file_call (GtkWidget *browse_button,
   if (gtk_dialog_run (GTK_DIALOG (file_choose)) == GTK_RESPONSE_OK)
     {
       file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (file_choose));
-      gtk_entry_set_text (GTK_ENTRY (file_entry), g_file_get_path (file));
+      gtk_entry_set_text (GTK_ENTRY (file_entry), g_file_peek_path (file));
     }
 
   file_name = g_file_get_path (file);

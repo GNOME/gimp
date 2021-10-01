@@ -620,7 +620,6 @@ save_resources (GOutputStream  *output,
 {
   GList        *iter;
   gint          i;
-  gchar        *fileName;            /* Image file name */
   GList        *SelLayers;           /* The selected layers */
 
   goffset       eof_pos;             /* Position for End of file */
@@ -637,8 +636,8 @@ save_resources (GOutputStream  *output,
 
   /* Get the image title from its filename */
 
-  fileName = g_file_get_path (gimp_image_get_file (image));
-  IFDBG printf ("\tImage title: %s\n", fileName);
+  IFDBG printf ("\tImage title: %s\n",
+                g_file_peek_path (gimp_image_get_file (image)));
 
   /* Get the selected layers */
 

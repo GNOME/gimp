@@ -377,7 +377,7 @@ raw_load (GimpProcedure        *procedure,
 
       runtime->image_type = RAW_GRAY_16BPP_SBE;
 
-      fp = g_fopen (g_file_get_path (file), "rb");
+      fp = g_fopen (g_file_peek_path (file), "rb");
       if (! fp)
         {
           g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
@@ -431,7 +431,7 @@ raw_load (GimpProcedure        *procedure,
       if (! is_hgt)
         gimp_get_data (LOAD_PROC, runtime);
 
-      preview_fd = g_open (g_file_get_path (file), O_RDONLY, 0);
+      preview_fd = g_open (g_file_peek_path (file), O_RDONLY, 0);
       if (preview_fd < 0)
         {
           g_set_error (&error,
@@ -990,11 +990,7 @@ raw_load_palette (RawGimpData *data,
 
   if (palette_file)
     {
-      gchar *filename;
-
-      filename = g_file_get_path (palette_file);
-      fd = g_open (filename, O_RDONLY, 0);
-      g_free (filename);
+      fd = g_open (g_file_peek_path (palette_file), O_RDONLY, 0);
 
       if (! fd)
         return FALSE;
@@ -1046,7 +1042,6 @@ save_image (GFile         *file,
             GError       **error)
 {
   GeglBuffer     *buffer;
-  gchar          *filename;
   const Babl     *format = NULL;
   guchar         *cmap   = NULL;  /* colormap for indexed images */
   guchar         *buf;
@@ -1108,15 +1103,13 @@ save_image (GFile         *file,
 
   g_object_unref (buffer);
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "wb");
+  fp = g_fopen (g_file_peek_path (file), "wb");
 
   if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
                    gimp_file_get_utf8_name (file), g_strerror (errno));
-      g_free (filename);
       return FALSE;
     }
 
@@ -1136,7 +1129,7 @@ save_image (GFile         *file,
       if (cmap)
         {
           /* we have colormap, too.write it into filename+pal */
-          gchar *newfile = g_strconcat (filename, ".pal", NULL);
+          gchar *newfile = g_strconcat (g_file_peek_path (file), ".pal", NULL);
           gchar *temp;
 
           fp = g_fopen (newfile, "wb");
@@ -1146,7 +1139,6 @@ save_image (GFile         *file,
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Could not open '%s' for writing: %s"),
                            gimp_filename_to_utf8 (newfile), g_strerror (errno));
-              g_free (filename);
               return FALSE;
             }
 
@@ -1203,8 +1195,6 @@ save_image (GFile         *file,
       break;
     }
 
-  g_free (filename);
-
   return ret;
 }
 
@@ -1214,7 +1204,6 @@ load_image (GFile   *file,
 {
   RawGimpData       *data;
   GimpLayer         *layer = NULL;
-  gchar             *filename;
   GimpImageType      ltype = GIMP_RGB_IMAGE;
   GimpImageBaseType  itype = GIMP_RGB;
   goffset            size;
@@ -1226,9 +1215,7 @@ load_image (GFile   *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  data->fp = g_fopen (filename, "rb");
-  g_free (filename);
+  data->fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! data->fp)
     {
@@ -1600,12 +1587,9 @@ preview_update (GimpPreviewArea *preview)
           {
             if (palfile)
               {
-                gchar *filename;
-                gint   fd;
+                gint fd;
 
-                filename = g_file_get_path (palfile);
-                fd = g_open (filename, O_RDONLY, 0);
-                g_free (filename);
+                fd = g_open (g_file_peek_path (palfile), O_RDONLY, 0);
 
                 lseek (fd, runtime->palette_offset, SEEK_SET);
                 read (fd, preview_cmap,

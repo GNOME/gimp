@@ -349,7 +349,6 @@ load_image (GFile   *file,
   GimpImage  *image = NULL;
   GimpLayer  *layer;
   GeglBuffer *buffer;
-  gchar      *filename;
   GSList     *elements          = NULL;
   FILE       *dicom;
   gchar       buf[500];    /* buffer for random things like scanning */
@@ -369,9 +368,7 @@ load_image (GFile   *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  dicom = g_fopen (filename, "rb");
-  g_free (filename);
+  dicom = g_fopen (g_file_peek_path (file), "rb");
 
   if (! dicom)
     {
@@ -1444,7 +1441,6 @@ save_image (GFile        *file,
             GimpDrawable *drawable,
             GError      **error)
 {
-  gchar         *filename;
   FILE          *dicom;
   GimpImageType  drawable_type;
   GeglBuffer    *buffer;
@@ -1499,9 +1495,7 @@ save_image (GFile        *file,
   g_date_free (date);
 
   /* Open the output file. */
-  filename = g_file_get_path (file);
-  dicom = g_fopen (filename, "wb");
-  g_free (filename);
+  dicom = g_fopen (g_file_peek_path (file), "wb");
 
   if (! dicom)
     {

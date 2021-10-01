@@ -2358,7 +2358,6 @@ static GimpImage *
 load_image (GFile   *file,
             GError **error)
 {
-  gchar     *filename;
   FILE      *f;
   GStatBuf   st;
   char       buf[32];
@@ -2370,17 +2369,12 @@ load_image (GFile   *file,
 
   GimpImage *image = NULL;
 
-  filename = g_file_get_path (file);
-
-  if (g_stat (filename, &st) == -1)
+  if (g_stat (g_file_peek_path (file), &st) == -1)
     {
-      g_free (filename);
       return NULL;
     }
 
-  f = g_fopen (filename, "rb");
-
-  g_free (filename);
+  f = g_fopen (g_file_peek_path (file), "rb");
 
   if (! f)
     {

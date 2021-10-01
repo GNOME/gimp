@@ -327,7 +327,6 @@ load_image (GFile   *file,
 {
   GimpImage         *image;
   GimpLayer         *layer;
-  gchar             *filename;
   GimpImageType      image_type;
   GimpImageBaseType  base_type;
   GimpPrecision      precision;
@@ -340,8 +339,6 @@ load_image (GFile   *file,
   GeglBuffer        *dest_buf = NULL;
   const Babl        *format;
 
-  filename = g_file_get_path (file);
-
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
@@ -349,7 +346,7 @@ load_image (GFile   *file,
 
   source = gegl_node_new_child (graph,
                                 "operation", "gegl:load",
-                                "path",      filename,
+                                "path",      g_file_peek_path (file),
                                 NULL);
   sink = gegl_node_new_child (graph,
                               "operation", "gegl:buffer-sink",
@@ -485,13 +482,10 @@ save_image (GFile         *file,
             GimpDrawable  *drawable,
             GError       **error)
 {
-  gchar      *filename;
   GeglNode   *graph;
   GeglNode   *source;
   GeglNode   *sink;
   GeglBuffer *src_buf;
-
-  filename = g_file_get_path (file);
 
   src_buf = gimp_drawable_get_buffer (drawable);
 
@@ -503,7 +497,7 @@ save_image (GFile         *file,
                                 NULL);
   sink = gegl_node_new_child (graph,
                               "operation", "gegl:save",
-                              "path",      filename,
+                              "path",      g_file_peek_path (file),
                               NULL);
 
   gegl_node_connect_to (source, "output",

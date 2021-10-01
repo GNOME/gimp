@@ -123,7 +123,6 @@ read_dds (GFile          *file,
   guchar            *buf;
   guint              l = 0;
   guchar            *pixels;
-  gchar             *filename;
   FILE              *fp;
   dds_header_t       hdr;
   dds_header_dx10_t  dx10hdr;
@@ -148,9 +147,7 @@ read_dds (GFile          *file,
                 "decode-images", &decode_images,
                 NULL);
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fp)
     {

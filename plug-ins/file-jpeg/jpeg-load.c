@@ -67,7 +67,6 @@ load_image (GFile        *file,
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
   jpeg_saved_marker_ptr         marker;
-  gchar             *filename;
   FILE              *infile;
   guchar            *buf;
   guchar           **rowbuf;
@@ -92,9 +91,7 @@ load_image (GFile        *file,
                                  gimp_file_get_utf8_name (file));
     }
 
-  filename = g_file_get_path (file);
-  infile = g_fopen (filename, "rb");
-  g_free (filename);
+  infile = g_fopen (g_file_peek_path (file), "rb");
 
   if (! infile)
     {
@@ -537,7 +534,7 @@ load_thumbnail_image (GFile         *file,
   jerr.pub.error_exit     = my_error_exit;
   jerr.pub.output_message = my_output_message;
 
-  if ((infile = g_fopen (g_file_get_path (file), "rb")) == NULL)
+  if ((infile = g_fopen (g_file_peek_path (file), "rb")) == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),

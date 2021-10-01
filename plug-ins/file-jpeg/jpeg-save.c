@@ -210,7 +210,6 @@ save_image (GFile                *file,
   const Babl       *format;
   const Babl       *space;
   JpegSubsampling   subsampling;
-  gchar            *filename;
   FILE             * volatile outfile;
   guchar           *data;
   guchar           *src;
@@ -307,9 +306,7 @@ save_image (GFile                *file,
    * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
    * requires it in order to write binary files.
    */
-  filename = g_file_get_path (file);
-  outfile = g_fopen (filename, "wb");
-  g_free (filename);
+  outfile = g_fopen (g_file_peek_path (file), "wb");
 
   if (! outfile)
     {

@@ -426,7 +426,6 @@ static GimpImage *
 load_image (GFile   *file,
             GError **error)
 {
-  gchar     *filename;
   FILE      *fp;
   tga_info   info;
   guchar     header[18];
@@ -438,9 +437,7 @@ load_image (GFile   *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fp)
     {
@@ -1195,7 +1192,6 @@ save_image (GFile         *file,
   GimpImageType  dtype;
   gint           width;
   gint           height;
-  gchar         *filename;
   FILE          *fp;
   gint           out_bpp = 0;
   gboolean       status  = TRUE;
@@ -1224,9 +1220,7 @@ save_image (GFile         *file,
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "wb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "wb");
 
   if (! fp)
     {

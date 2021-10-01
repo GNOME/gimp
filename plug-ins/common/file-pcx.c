@@ -391,7 +391,6 @@ load_image (GFile   *file,
 {
   FILE         *fd;
   GeglBuffer   *buffer;
-  gchar        *filename;
   guint16       offset_x, offset_y, bytesperline;
   gint32        width, height;
   guint16       resolution_x, resolution_y;
@@ -403,9 +402,7 @@ load_image (GFile   *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fd = g_fopen (filename, "rb");
-  g_free (filename);
+  fd = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fd)
     {
@@ -774,7 +771,6 @@ save_image (GFile         *file,
 {
   FILE          *fp;
   GeglBuffer    *buffer;
-  gchar         *filename;
   const Babl    *format;
   GimpImageType  drawable_type;
   guchar        *cmap= NULL;
@@ -904,9 +900,7 @@ save_image (GFile         *file,
       return FALSE;
     }
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "wb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "wb");
 
   if (! fp)
     {

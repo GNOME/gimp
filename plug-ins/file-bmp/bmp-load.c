@@ -204,7 +204,6 @@ GimpImage *
 load_image (GFile  *file,
             GError **error)
 {
-  gchar          *filename;
   FILE           *fd;
   BitmapFileHead  bitmap_file_head;
   BitmapHead      bitmap_head;
@@ -219,9 +218,7 @@ load_image (GFile  *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fd = g_fopen (filename, "rb");
-  g_free (filename);
+  fd = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fd)
     {

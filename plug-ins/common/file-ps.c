@@ -1655,14 +1655,11 @@ get_bbox (GFile *file,
           gint  *x1,
           gint  *y1)
 {
-  gchar *filename;
   char   line[1024], *src;
   FILE  *ifp;
   int    retval = -1;
 
-  filename = g_file_get_path (file);
-  ifp = g_fopen (filename, "rb");
-  g_free (filename);
+  ifp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! ifp)
     return -1;
@@ -3465,16 +3462,13 @@ print (GOutputStream  *output,
 static gint32
 count_ps_pages (GFile *file)
 {
-  gchar  *filename;
   FILE   *psfile;
   gchar  *extension;
   gchar   buf[1024];
   gint32  num_pages      = 0;
   gint32  showpage_count = 0;
 
-  filename = g_file_get_path (file);
-
-  extension = strrchr (filename, '.');
+  extension = strrchr (g_file_peek_path (file), '.');
   if (extension)
     {
       extension = g_ascii_strdown (extension + 1, -1);
@@ -3482,16 +3476,13 @@ count_ps_pages (GFile *file)
       if (strcmp (extension, "eps") == 0)
         {
           g_free (extension);
-          g_free (filename);
           return 1;
         }
 
       g_free (extension);
     }
 
-  psfile = g_fopen (filename, "r");
-
-  g_free (filename);
+  psfile = g_fopen (g_file_peek_path (file), "r");
 
   if (psfile == NULL)
     {

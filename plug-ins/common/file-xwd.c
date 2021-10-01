@@ -464,7 +464,6 @@ static GimpImage *
 load_image (GFile   *file,
             GError **error)
 {
-  gchar           *filename;
   FILE            *ifp;
   gint             depth, bpp;
   GimpImage       *image = NULL;
@@ -474,9 +473,7 @@ load_image (GFile   *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  ifp = g_fopen (filename, "rb");
-  g_free (filename);
+  ifp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! ifp)
     {
@@ -533,7 +530,7 @@ load_image (GFile   *file,
 #ifdef XWD_COL_DEBUG
       {
         int j;
-        g_printf ("File %s\n", g_file_get_path (file));
+        g_printf ("File %s\n", g_file_peek_path (file));
         for (j = 0; j < xwdhdr.l_colormap_entries; j++)
           g_printf ("Entry 0x%08lx: 0x%04lx,  0x%04lx, 0x%04lx, %d\n",
                     (long)xwdcolmap[j].l_pixel,(long)xwdcolmap[j].l_red,

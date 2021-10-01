@@ -125,7 +125,6 @@ save_image (GFile         *file,
             GObject       *config,
             GError       **error)
 {
-  gchar          *filename;
   FILE           *outfile;
   BitmapFileHead  bitmap_file_head;
   BitmapHead      bitmap_head;
@@ -333,9 +332,7 @@ save_image (GFile         *file,
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  outfile = g_fopen (filename, "wb");
-  g_free (filename);
+  outfile = g_fopen (g_file_peek_path (file), "wb");
 
   if (! outfile)
     {

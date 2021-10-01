@@ -340,14 +340,11 @@ static gboolean
 need_palette (GFile   *file,
               GError **error)
 {
-  gchar  *filename;
   FILE   *fp;
   guchar  header[32];
   size_t  n_read;
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fp)
     {
@@ -377,7 +374,6 @@ static GimpImage *
 load_image (GFile   *file,
             GError **error)
 {
-  gchar      *filename;
   FILE       *fp;            /* Read file pointer */
   guchar      header[32],    /* File header */
               file_mark,     /* KiSS file type */
@@ -399,9 +395,7 @@ load_image (GFile   *file,
                              gimp_file_get_utf8_name (file));
 
   /* Open the file for reading */
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "r");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "r");
 
   if (fp == NULL)
     {
