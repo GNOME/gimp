@@ -898,7 +898,7 @@ load_thumbnail (GFile   *file,
 
   filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
-  g_free (file);
+  g_free (filename);
 
   if (! fp)
     {
