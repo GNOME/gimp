@@ -6,23 +6,22 @@
 # Pedro Barreira <almufadado@gmail.com>, 2011
 # Tiago S. <almosthumane@portugalmail.pt>, 2015
 # Pedro Albuquerque <palbuquerque73@openmailbox.com>, 2015.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2015-07-21 17:32+0000\n"
-"PO-Revision-Date: 2015-07-22 10:50+0100\n"
-"Last-Translator: Pedro Albuquerque <palbuquerque73@openmailbox.com>\n"
-"Language-Team: Português <palbuquerque73@openmailbox.com>\n"
+"POT-Creation-Date: 2020-05-26 14:47+0000\n"
+"PO-Revision-Date: 2021-10-01 14:06+0100\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"Language-Team: Português <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Language: Portuguese\n"
-"X-Poedit-Country: Portugal\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Poedit 3.0\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid ""
@@ -51,22 +50,16 @@ msgstr ""
 "etiqueta de texto de uma camada no diálogo Camadas."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
-#| msgid ""
-#| "When you save an image to work on it again later, try using XCF, GIMP's "
-#| "native file format (use the file extension <tt>.xcf</tt>). This preserves "
-#| "the layers and every aspect of your work-in-progress. Once a project is "
-#| "completed, you can save it as JPEG, PNG, GIF, ..."
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
-"native file format (use the file extension <tt>.xcf</tt>). This preserves "
-"the layers and many aspects of your work-in-progress. Once a project is "
-"completed, you can export it as JPEG, PNG, GIF, etc."
+"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"xcf</tt>). This preserves the layers and many aspects of your work-in-"
+"progress, allowing to work on it again later. Once a project is completed, "
+"you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Ao gravar uma imagem para mais tarde a trabalhar, experimente utilizar XCF, "
-"o formato de imagem nativo do GIMP (utiliza a extensão de ficheiros <tt>."
-"xcf</tt> ). Isto preserva as camadas e todos os aspetos do seu trabalho em "
-"curso. Assim que o seu projeto esteja terminado, pode exportá-lo como JPEG, "
-"PNG, GIF, etc."
+"O gravar uma imagem utiliza o XCF, o formato de imagem nativo do GIMP "
+"(extensão de ficheiros <tt>.xcf</tt> ). Isto preserva as camadas e todos os "
+"aspetos do seu trabalho em curso, permitindo trabalhar de novo mais tarde. "
+"Uma vez concluído um projeto, pode exportá-lo como JPEG, PNG, GIF, etc."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
