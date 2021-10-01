@@ -512,12 +512,11 @@ write_dds (GFile         *file,
            GimpProcedure *procedure,
            GObject       *config)
 {
-  gchar *filename;
-  FILE  *fp;
-  gint   rc = 0;
-  gint   compression;
-  gint   mipmaps;
-  gint   savetype;
+  FILE *fp;
+  gint  rc = 0;
+  gint  compression;
+  gint  mipmaps;
+  gint  savetype;
 
   g_object_get (config,
                 "compression-format", &compression,
@@ -569,13 +568,11 @@ write_dds (GFile         *file,
         }
     }
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "wb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "wb");
 
   if (! fp)
     {
-      g_message ("Error opening %s", filename);
+      g_message ("Error opening %s", g_file_peek_path (file));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
