@@ -394,6 +394,32 @@
             ]
         },
         {
+            "name": "libjxl",
+            "config-opts": [
+                "-DJPEGXL_ENABLE_PLUGINS=OFF",
+                "-DBUILD_TESTING=OFF",
+                "-DJPEGXL_WARNINGS_AS_ERRORS=OFF",
+                "-DJPEGXL_ENABLE_SJPEG=OFF",
+                "-DJPEGXL_ENABLE_BENCHMARK=OFF",
+                "-DJPEGXL_ENABLE_EXAMPLES=OFF",
+                "-DJPEGXL_ENABLE_MANPAGES=OFF",
+                "-DJPEGXL_ENABLE_SKCMS=ON",
+                "-DJPEGXL_ENABLE_JNI=OFF",
+                "-DJPEGXL_ENABLE_TCMALLOC=OFF",
+                "-DJPEGXL_ENABLE_TOOLS=OFF"
+            ],
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/libjxl/libjxl.git",
+                    /* Last commit on v0.6.x branch at time of writing. */
+                    "commit": "20cccbf646158cb128d68db20d12f93d1fb9b6a1"
+                }
+            ]
+        },
+        {
             "name": "luajit",
             "no-autogen": true,
             "cleanup": [ "/lib/*.a", "/include", "/lib/pkgconfig", "/share/man" ],
