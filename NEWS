@@ -77,7 +77,8 @@ Plug-ins:
 
 Translations:
 
-  - New Vietnamese and Lithuanian translations for the installer.
+  - New Vietnamese, Lithuanian and Portuguese translations for the
+    installer.
 
 Build:
 
@@ -111,6 +112,8 @@ Build:
     macOS and "no" on other platforms.
   - GLib dependency's minimum required version bumped to 2.68.0.
   - GEGL minimum required version bumped to 0.4.32.
+  - Flatpak nightly build now uses the new "fallback-x11" permission
+    instead of "x11" to prevent unnecessary X11 access while in Wayland.
 
 
 Overview of Changes from GIMP 2.99.4 to GIMP 2.99.6
