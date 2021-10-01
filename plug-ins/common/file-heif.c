@@ -1792,7 +1792,21 @@ save_image (GFile                        *file,
   /* heif_encoder_set_logging_level (encoder, logging_level); */
 
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-  encoder_name = heif_encoder_get_name (encoder);
+  if (compression == heif_compression_HEVC)
+    {
+      /* This is an ugly woraround to avoid following issue:
+       * https://github.com/strukturag/libheif/issues/357
+       * When libheif is built on MSYS2 without CPPFLAGS+=" -DX265_API_IMPORTS=1"
+       * x265_plugin_name called by heif_encoder_get_name can crash.
+       * x265 is only HEVC encoder în libheif so we can avoid the call
+       * and set name by ourselves.
+       */
+      encoder_name = "x265 HEVC encoder";
+    }
+  else
+    {
+      encoder_name = heif_encoder_get_name (encoder);
+    }
 #if LIBHEIF_HAVE_VERSION(1,10,0)
 
   if (lossless && pixel_format != HEIFPLUGIN_EXPORT_FORMAT_RGB)
