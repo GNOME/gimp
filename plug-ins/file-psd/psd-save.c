@@ -1111,6 +1111,7 @@ save_layer_and_mask (GOutputStream  *output,
             case PSD_LAYER_TYPE_LAYER:       type = "normal layer"; break;
             case PSD_LAYER_TYPE_GROUP_START: type = "group start marker"; break;
             case PSD_LAYER_TYPE_GROUP_END:   type = "group end marker"; break;
+            default:                         type = "unknown"; break;
             }
 
           printf ("\t\tType: %s\n", type);
@@ -1387,7 +1388,7 @@ write_pixel_data (GOutputStream  *output,
   goffset        length_table_pos;     /* position in file of the length table */
   int            i, j;
 
-  IFDBG printf (" Function: write_pixel_data, drw %d, lto %d\n",
+  IFDBG printf (" Function: write_pixel_data, drw %d, lto %ld\n",
                 gimp_item_get_id (GIMP_ITEM (drawable)), ltable_offset);
 
   if (write_mask)
@@ -1469,7 +1470,7 @@ write_pixel_data (GOutputStream  *output,
           xfwrite (output, LengthsTable, height * sizeof(gint16),
                    "Dummy RLE length");
           len += height * sizeof(gint16);
-          IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %d\n", length_table_pos, len);
+          IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %lu\n", length_table_pos, len);
         }
 
       for (y = 0; y < height; y += tile_height)
@@ -1505,7 +1506,7 @@ write_pixel_data (GOutputStream  *output,
                            ChanLenPosition[i], G_SEEK_SET,
                            NULL, NULL /*FIXME: error*/);
           write_gint32 (output, len, "channel data length");
-          IFDBG printf ("\t\tUpdating data len to %d\n", len);
+          IFDBG printf ("\t\tUpdating data len to %lu\n", len);
         }
       g_seekable_seek (G_SEEKABLE (output),
                        0, G_SEEK_END,
@@ -1544,7 +1545,7 @@ write_pixel_data (GOutputStream  *output,
           xfwrite (output, LengthsTable, height * sizeof(gint16),
                    "Dummy RLE length");
           len += height * sizeof(gint16);
-          IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %d\n",
+          IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %lu\n",
                               length_table_pos, len);
         }
 
@@ -1587,7 +1588,7 @@ write_pixel_data (GOutputStream  *output,
                            NULL, NULL /*FIXME: error*/);
 
           write_gint32 (output, len, "channel data length");
-          IFDBG printf ("\t\tUpdating data len to %d, at %ld\n", len, g_seekable_tell (G_SEEKABLE (output)));
+          IFDBG printf ("\t\tUpdating data len to %lu, at %ld\n", len, g_seekable_tell (G_SEEKABLE (output)));
         }
       g_seekable_seek (G_SEEKABLE (output),
                        0, G_SEEK_END,
