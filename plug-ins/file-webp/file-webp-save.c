@@ -190,16 +190,12 @@ save_layer (GFile         *file,
 
   do
     {
-      gchar *filename;
-
       /* Begin displaying export progress */
       gimp_progress_init_printf (_("Saving '%s'"),
                                  gimp_file_get_utf8_name (file));
 
       /* Attempt to open the output file */
-      filename = g_file_get_path (file);
-      outfile = g_fopen (filename, "w+b");
-      g_free (filename);
+      outfile = g_fopen (g_file_peek_path (file), "w+b");
 
       if (! outfile)
         {
@@ -586,7 +582,6 @@ save_animation (GFile         *file,
 
   do
     {
-      gchar *filename;
       GList *list;
       gint   i;
 
@@ -595,9 +590,7 @@ save_animation (GFile         *file,
                                  gimp_file_get_utf8_name (file));
 
       /* Attempt to open the output file */
-      filename = g_file_get_path (file);
-      outfile = g_fopen (filename, "wb");
-      g_free (filename);
+      outfile = g_fopen (g_file_peek_path (file), "wb");
 
       if (! outfile)
         {

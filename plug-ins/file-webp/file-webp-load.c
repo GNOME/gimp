@@ -77,7 +77,6 @@ load_image (GFile    *file,
             gboolean  interactive,
             GError   **error)
 {
-  gchar            *filename;
   uint8_t          *indata = NULL;
   gsize             indatalen;
   gint              width;
@@ -92,15 +91,12 @@ load_image (GFile    *file,
   gboolean          exif      = FALSE;
   gboolean          xmp       = FALSE;
 
-  filename = g_file_get_path (file);
-
   /* Attempt to read the file contents from disk */
-  if (! g_file_get_contents (filename,
+  if (! g_file_get_contents (g_file_peek_path (file),
                              (gchar **) &indata,
                              &indatalen,
                              error))
     {
-      g_free (filename);
       return NULL;
     }
 
@@ -110,7 +106,6 @@ load_image (GFile    *file,
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Invalid WebP file '%s'"),
                    gimp_file_get_utf8_name (file));
-      g_free (filename);
       return NULL;
     }
 
@@ -120,7 +115,6 @@ load_image (GFile    *file,
   mux = WebPMuxCreate (&wp_data, 1);
   if (! mux)
     {
-      g_free (filename);
       return NULL;
     }
 
@@ -166,7 +160,6 @@ load_image (GFile    *file,
       if (! outdata)
         {
           WebPMuxDelete (mux);
-          g_free (filename);
           return NULL;
         }
 
@@ -198,7 +191,6 @@ load_image (GFile    *file,
             }
 
           WebPMuxDelete (mux);
-          g_free (filename);
           return NULL;
         }
 
@@ -258,7 +250,6 @@ load_image (GFile    *file,
   if (exif || xmp)
     {
       GimpMetadata *metadata;
-      GFile        *file;
 
       if (exif)
         {
@@ -274,7 +265,6 @@ load_image (GFile    *file,
           WebPMuxGetChunk (mux, "XMP ", &xmp);
         }
 
-      file = g_file_new_for_path (filename);
       metadata = gimp_image_metadata_load_prepare (image, "image/webp",
                                                    file, NULL);
       if (metadata)
@@ -288,15 +278,12 @@ load_image (GFile    *file,
                                            metadata, flags);
           g_object_unref (metadata);
         }
-
-      g_object_unref (file);
     }
 
   WebPMuxDelete (mux);
 
   gimp_image_set_file (image, file);
 
-  g_free (filename);
   if (profile)
     g_object_unref (profile);
 
