@@ -886,6 +886,7 @@ save_image (GFile                *file,
           JxlEncoderDestroy (encoder);
           g_free (picture_buffer);
           g_free (filename);
+          return FALSE;
         }
     }
   else
