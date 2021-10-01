@@ -18,6 +18,9 @@ if [ "$PO_LANGS" != "$INSTALLER_LANGS" ]; then
   echo "- PO languages:        $PO_LANGS"
   echo "- Installer languages: $INSTALLER_LANGS"
   echo "Please verify: build/windows/installer/gimp3264.iss"
+  echo "Base language files can be found in: https://github.com/jrsoftware/issrc/tree/main/Files/Languages"
+  echo "If a new language is in Unofficial/, also edit/download it from:"
+  echo "build/windows/gitlab-ci/installer-gimp-msys2.sh"
   exit 1
 fi
 
