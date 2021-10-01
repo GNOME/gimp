@@ -40,6 +40,7 @@ languages = [
   { 'code': 'ms',    'encoding': 'UTF-8',  },
   { 'code': 'nl',    },
   { 'code': 'pl',    'encoding': 'WINDOWS-1250', },
+  { 'code': 'pt', },
   { 'code': 'pt_BR', },
   { 'code': 'ro',    'encoding': 'WINDOWS-1250', },
   { 'code': 'ru',    'encoding': 'WINDOWS-1251', },

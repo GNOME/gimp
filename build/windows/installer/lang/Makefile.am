@@ -34,6 +34,7 @@ languages = \
 	ms:[ms]:UTF-8   		\
 	nl:[nl]:WINDOWS-1252		\
 	pl:[pl]:WINDOWS-1250		\
+	pt:[pt]:WINDOWS-1252		\
 	pt_BR:[pt_BR]:WINDOWS-1252	\
 	ro:[ro]:WINDOWS-1250		\
 	ru:[ru]:WINDOWS-1251		\
