@@ -793,7 +793,6 @@ GFigObj *
 gfig_load_from_parasite (void)
 {
   GFile        *file;
-  gchar        *fname;
   FILE         *fp;
   GimpParasite *parasite;
   const gchar  *parasite_data;
@@ -806,9 +805,8 @@ gfig_load_from_parasite (void)
     return NULL;
 
   file  = gimp_temp_file ("gfigtmp");
-  fname = g_file_get_path (file);
 
-  fp = g_fopen (fname, "wb");
+  fp = g_fopen (g_file_peek_path (file), "wb");
   if (! fp)
     {
       g_message (_("Error trying to open temporary file '%s' "
@@ -823,11 +821,10 @@ gfig_load_from_parasite (void)
 
   gimp_parasite_free (parasite);
 
-  gfig = gfig_load (fname, "(none)");
+  gfig = gfig_load (g_file_peek_path (file), "(none)");
 
-  g_unlink (fname);
+  g_file_delete (file, NULL, NULL);
 
-  g_free (fname);
   g_object_unref (file);
 
   return gfig;

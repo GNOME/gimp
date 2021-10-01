@@ -314,7 +314,6 @@ load_image (GFile   *file,
                  tile_height, /* Height of tile in GIMP */
                  count,       /* Count of rows to put in image */
                  bytes;       /* Number of channels to use */
-  gchar         *filename;
   sgi_t         *sgip;        /* File pointer */
   GimpImage     *image;       /* Image */
   GimpLayer     *layer;       /* Layer */
@@ -332,9 +331,7 @@ load_image (GFile   *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  sgip = sgiOpen (filename, SGI_READ, 0, 0, 0, 0, 0);
-  g_free (filename);
+  sgip = sgiOpen (g_file_peek_path (file), SGI_READ, 0, 0, 0, 0, 0);
 
   if (! sgip)
     {
@@ -593,7 +590,6 @@ save_image (GFile        *file,
   gint         tile_height; /* Height of tile in GIMP */
   gint         count;       /* Count of rows to put in image */
   gint         zsize;       /* Number of channels in file */
-  gchar       *filename;
   sgi_t       *sgip;        /* File pointer */
   GeglBuffer  *buffer;      /* Buffer for layer */
   const Babl  *format;
@@ -649,10 +645,8 @@ save_image (GFile        *file,
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  sgip = sgiOpen (filename, SGI_WRITE, compression, 1,
+  sgip = sgiOpen (g_file_peek_path (file), SGI_WRITE, compression, 1,
                   width, height, zsize);
-  g_free (filename);
 
   if (! sgip)
     {

@@ -222,7 +222,6 @@ load_image (GFile   *file,
   int             hibit;
   struct g3_tree *p;
   int             nr_pels;
-  gchar          *filename;
   int             fd;
   int             color;
   int             i, rr, rsize;
@@ -248,9 +247,7 @@ load_image (GFile   *file,
 
   init_byte_tab (0, byte_tab);
 
-  filename = g_file_get_path (file);
-  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
-  g_free (filename);
+  fd = g_open (g_file_peek_path (file), O_RDONLY | _O_BINARY, 0);
 
   if (fd < 0)
     {

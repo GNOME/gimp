@@ -364,7 +364,6 @@ load_image (GFile        *file,
   guint        picnum;
   gint         k, n_images, max_images, hdu_picnum;
   gint         compose;
-  gchar       *filename;
   FILE        *fp;
   FitsFile    *ifp;
   FitsHduList *hdu;
@@ -374,9 +373,7 @@ load_image (GFile        *file,
                 "compose", &compose_arg,
                 NULL);
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fp)
     {
@@ -388,9 +385,7 @@ load_image (GFile        *file,
 
   fclose (fp);
 
-  filename = g_file_get_path (file);
-  ifp = fits_open (filename, "r");
-  g_free (filename);
+  ifp = fits_open (g_file_peek_path (file), "r");
 
   if (! ifp)
     {
@@ -479,7 +474,6 @@ save_image (GFile         *file,
             GimpDrawable  *drawable,
             GError       **error)
 {
-  gchar         *filename;
   FitsFile      *ofp;
   GimpImageType  drawable_type;
   gint           retval;
@@ -511,9 +505,7 @@ save_image (GFile         *file,
                              gimp_file_get_utf8_name (file));
 
   /* Open the output file. */
-  filename = g_file_get_path (file);
-  ofp = fits_open (filename, "w");
-  g_free (filename);
+  ofp = fits_open (g_file_peek_path (file), "w");
 
   if (! ofp)
     {

@@ -375,7 +375,6 @@ static GimpImage *
 load_image (GFile   *file,
             GError  **error)
 {
-  gchar     *filename;
   XpmImage   xpm_image;
   guchar    *cmap;
   GimpImage *image;
@@ -383,10 +382,8 @@ load_image (GFile   *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-
   /* read the raw file */
-  switch (XpmReadFileToXpmImage (filename, &xpm_image, NULL))
+  switch (XpmReadFileToXpmImage (g_file_peek_path (file), &xpm_image, NULL))
     {
     case XpmSuccess:
       break;
@@ -395,21 +392,16 @@ load_image (GFile   *file,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error opening file '%s'"),
                    gimp_file_get_utf8_name (file));
-      g_free (filename);
       return NULL;
 
     case XpmFileInvalid:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s", _("XPM file invalid"));
-      g_free (filename);
       return NULL;
 
     default:
-      g_free (filename);
       return NULL;
     }
-
-  g_free (filename);
 
   cmap = parse_colors (&xpm_image);
 
@@ -649,7 +641,6 @@ save_image (GFile         *file,
   gboolean    alpha;
   gboolean    alpha_used = FALSE;
   XpmColor   *colormap;
-  gchar      *filename;
   XpmImage   *xpm_image;
   guint      *ibuff   = NULL;
   guchar     *buf;
@@ -847,10 +838,8 @@ save_image (GFile         *file,
   xpm_image->colorTable = colormap;
   xpm_image->data       = ibuff;
 
-  filename = g_file_get_path (file);
-
   /* do the save */
-  switch (XpmWriteFileFromXpmImage (filename, xpm_image, NULL))
+  switch (XpmWriteFileFromXpmImage (g_file_peek_path (file), xpm_image, NULL))
     {
     case XpmSuccess:
       success = TRUE;
@@ -870,8 +859,6 @@ save_image (GFile         *file,
     default:
       break;
     }
-
-  g_free (filename);
 
   g_object_unref (buffer);
   g_free (ibuff);

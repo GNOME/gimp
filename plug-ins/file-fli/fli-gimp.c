@@ -444,15 +444,12 @@ get_info (GFile   *file,
           gint32  *frames,
           GError **error)
 {
-  gchar        *filename;
   FILE         *fp;
   s_fli_header  fli_header;
 
   *width = 0; *height = 0; *frames = 0;
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename ,"rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file),"rb");
 
   if (! fp)
     {
@@ -480,7 +477,6 @@ load_image (GFile    *file,
             GObject  *config,
             GError  **error)
 {
-  gchar        *filename;
   FILE         *fp;
   GeglBuffer   *buffer;
   GimpImage    *image;
@@ -500,9 +496,7 @@ load_image (GFile    *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename ,"rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file) ,"rb");
 
   if (! fp)
     {
@@ -641,7 +635,6 @@ save_image (GFile      *file,
             GObject    *config,
             GError    **error)
 {
-  gchar        *filename;
   FILE         *fp;
   GList        *framelist;
   GList        *iter;
@@ -776,9 +769,7 @@ save_image (GFile      *file,
   fli_header.aspect_y = 1;  /* ... as GIMP supports it. */
   fli_header.oframe1  = fli_header.oframe2 = 0; /* will be fixed during the write */
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename , "wb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file) , "wb");
 
   if (! fp)
     {

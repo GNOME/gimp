@@ -631,7 +631,6 @@ static GimpImage *
 load_image (GFile   *file,
             GError **error)
 {
-  gchar           *filename;
   FILE            *fp;
   GimpImage       *image;
   GimpLayer       *layer;
@@ -652,9 +651,7 @@ load_image (GFile   *file,
 
   /* Open the file and check it is a valid X cursor */
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (fp == NULL)
     {
@@ -876,7 +873,6 @@ load_thumbnail (GFile   *file,
   guint32        diff;         /* difference between thumb_size and current size */
   guint32        min_diff = XCURSOR_IMAGE_MAX_SIZE; /* minimum value of diff */
   guint32        type;         /* chunk type */
-  gchar         *filename;
   FILE          *fp    = NULL;
   GimpImage     *image = NULL;
   GimpLayer     *layer;
@@ -896,9 +892,7 @@ load_thumbnail (GFile   *file,
   *thumb_height     = 0;
   *thumb_num_layers = 0;
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fp)
     {
@@ -1330,7 +1324,6 @@ save_image (GFile         *file,
             GObject       *config,
             GError       **error)
 {
-  gchar           *filename;
   FILE            *fp;                     /* File pointer */
   gboolean         dimension_warn = FALSE; /* become TRUE if even one
                                             * of the dimensions of the
@@ -1385,9 +1378,7 @@ save_image (GFile         *file,
    */
   DM_XMC ("Open the file pointer.\n");
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "wb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "wb");
 
   if (! fp)
     {

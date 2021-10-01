@@ -781,7 +781,6 @@ mng_save_image (GFile         *file,
                 GObject       *config,
                 GError       **error)
 {
-  gchar          *filename;
   gboolean        ret = FALSE;
   gint            rows, cols;
   volatile gint   i;
@@ -865,12 +864,8 @@ mng_save_image (GFile         *file,
         }
     }
 
-  filename = g_file_get_path (file);
-
   userdata = g_new0 (struct mnglib_userdata_t, 1);
-  userdata->fp = g_fopen (filename, "wb");
-
-  g_free (filename);
+  userdata->fp = g_fopen (g_file_peek_path (file), "wb");
 
   if (! userdata->fp)
     {
@@ -1064,7 +1059,6 @@ mng_save_image (GFile         *file,
       gchar           frame_mode;
       int             frame_delay;
       GFile          *temp_file;
-      gchar          *temp_file_name;
       png_structp     pp;
       png_infop       info;
       FILE           *infile, *outfile;
@@ -1220,9 +1214,7 @@ mng_save_image (GFile         *file,
           goto err3;
         }
 
-      temp_file_name = g_file_get_path (temp_file);
-
-      if ((outfile = g_fopen (temp_file_name, "wb")) == NULL)
+      if ((outfile = g_fopen (g_file_peek_path (temp_file), "wb")) == NULL)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not open '%s' for writing: %s"),
@@ -1404,7 +1396,7 @@ mng_save_image (GFile         *file,
 
       fclose (outfile);
 
-      infile = g_fopen (temp_file_name, "rb");
+      infile = g_fopen (g_file_peek_path (temp_file), "rb");
 
       if (! infile)
         {

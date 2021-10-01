@@ -193,9 +193,7 @@ load_image (GFile        *file,
             GimpRunMode   runmode,
             GError      **error)
 {
-  gchar            *filename = g_file_get_path (file);
-
-  FILE             *inputFile = g_fopen (filename, "rb");
+  FILE             *inputFile = g_fopen (g_file_peek_path (file), "rb");
 
   gsize             inputFileSize;
   gpointer          memory;
@@ -220,8 +218,8 @@ load_image (GFile        *file,
   if (!inputFile)
     {
       g_set_error (error, G_FILE_ERROR, 0,
-                   "Cannot open file for read: %s\n", filename);
-      g_free (filename);
+                   "Cannot open file for read: %s\n",
+                   g_file_peek_path (file));
       return NULL;
     }
 
@@ -232,9 +230,9 @@ load_image (GFile        *file,
   if (inputFileSize < 1)
     {
       g_set_error (error, G_FILE_ERROR, 0,
-                   "File too small: %s\n", filename);
+                   "File too small: %s\n",
+                   g_file_peek_path (file));
       fclose (inputFile);
-      g_free (filename);
       return NULL;
     }
 
@@ -242,11 +240,10 @@ load_image (GFile        *file,
   if (fread (memory, 1, inputFileSize, inputFile) != inputFileSize)
     {
       g_set_error (error, G_FILE_ERROR, 0,
-                   "Failed to read %zu bytes: %s\n", inputFileSize, filename);
+                   "Failed to read %zu bytes: %s\n", inputFileSize,
+                   g_file_peek_path (file));
       fclose (inputFile);
       g_free (memory);
-
-      g_free (filename);
       return NULL;
     }
 
@@ -256,9 +253,9 @@ load_image (GFile        *file,
   if (signature != JXL_SIG_CODESTREAM && signature != JXL_SIG_CONTAINER)
     {
       g_set_error (error, G_FILE_ERROR, 0,
-                   "File %s is probably not in JXL format!\n", filename);
+                   "File %s is probably not in JXL format!\n",
+                   g_file_peek_path (file));
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -268,7 +265,6 @@ load_image (GFile        *file,
       g_set_error (error, G_FILE_ERROR, 0,
                    "ERROR: JxlDecoderCreate failed");
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -280,7 +276,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -291,7 +286,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -302,7 +296,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -314,7 +307,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -325,7 +317,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -337,7 +328,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -348,7 +338,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -360,7 +349,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -506,7 +494,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -522,7 +509,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -539,7 +525,6 @@ load_image (GFile        *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlDecoderDestroy (decoder);
       g_free (memory);
-      g_free (filename);
       return NULL;
     }
 
@@ -600,7 +585,6 @@ load_image (GFile        *file,
   JxlThreadParallelRunnerDestroy (runner);
   JxlDecoderDestroy (decoder);
   g_free (memory);
-  g_free (filename);
   return image;
 }
 
@@ -665,7 +649,6 @@ save_image (GFile                *file,
 
   GByteArray        *compressed;
 
-  gchar             *filename;
   FILE              *outfile;
   GeglBuffer        *buffer;
   GimpImageType      drawable_type;
@@ -688,8 +671,7 @@ save_image (GFile                *file,
   gint               speed = 7;
   gboolean           uses_original_profile = FALSE;
 
-  filename = g_file_get_path (file);
-  gimp_progress_init_printf ("Exporting '%s'.", filename);
+  gimp_progress_init_printf ("Exporting '%s'.", g_file_peek_path (file));
 
   g_object_get (config,
                 "lossless",              &lossless,
@@ -719,7 +701,6 @@ save_image (GFile                *file,
         {
           g_printerr ("%s: error getting the profile space: %s\n",
                       G_STRFUNC, (*error)->message);
-          g_free (filename);
           return FALSE;
         }
     }
@@ -801,7 +782,6 @@ save_image (GFile                *file,
         {
           g_object_unref (profile);
         }
-      g_free (filename);
       return FALSE;
       break;
     }
@@ -832,7 +812,6 @@ save_image (GFile                *file,
         {
           g_object_unref (profile);
         }
-      g_free (filename);
       return FALSE;
     }
 
@@ -848,7 +827,6 @@ save_image (GFile                *file,
         {
           g_object_unref (profile);
         }
-      g_free (filename);
       return FALSE;
     }
 
@@ -864,7 +842,6 @@ save_image (GFile                *file,
         {
           g_object_unref (profile);
         }
-      g_free (filename);
       return FALSE;
     }
 
@@ -885,7 +862,6 @@ save_image (GFile                *file,
           JxlThreadParallelRunnerDestroy (runner);
           JxlEncoderDestroy (encoder);
           g_free (picture_buffer);
-          g_free (filename);
           return FALSE;
         }
     }
@@ -905,7 +881,6 @@ save_image (GFile                *file,
           JxlThreadParallelRunnerDestroy (runner);
           JxlEncoderDestroy (encoder);
           g_free (picture_buffer);
-          g_free (filename);
           return FALSE;
         }
     }
@@ -939,7 +914,6 @@ save_image (GFile                *file,
       JxlThreadParallelRunnerDestroy (runner);
       JxlEncoderDestroy (encoder);
       g_free (picture_buffer);
-      g_free (filename);
       return FALSE;
     }
 
@@ -967,7 +941,6 @@ save_image (GFile                *file,
           JxlThreadParallelRunnerDestroy (runner);
           JxlEncoderDestroy (encoder);
           g_free (picture_buffer);
-          g_free (filename);
           return FALSE;
         }
     }
@@ -984,17 +957,16 @@ save_image (GFile                *file,
 
   if (compressed->len > 0)
     {
-      outfile = g_fopen (filename, "wb");
+      outfile = g_fopen (g_file_peek_path (file), "wb");
       if (!outfile)
         {
           g_set_error (error, G_FILE_ERROR, 0,
-                       "Could not open '%s' for writing!\n", filename);
-          g_free (filename);
+                       "Could not open '%s' for writing!\n",
+                       g_file_peek_path (file));
           g_byte_array_free (compressed, TRUE);
           return FALSE;
         }
 
-      g_free (filename);
       fwrite (compressed->data, 1, compressed->len, outfile);
       fclose (outfile);
 
@@ -1007,7 +979,6 @@ save_image (GFile                *file,
   g_set_error (error, G_FILE_ERROR, 0,
                "No data to write");
   g_byte_array_free (compressed, TRUE);
-  g_free (filename);
   return FALSE;
 }
 

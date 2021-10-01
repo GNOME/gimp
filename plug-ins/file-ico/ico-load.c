@@ -653,7 +653,6 @@ GimpImage *
 ico_load_image (GFile        *file,
                 GError      **error)
 {
-  gchar       *filename;
   FILE        *fp;
   IcoLoadInfo *info;
   gint         max_width, max_height;
@@ -666,9 +665,7 @@ ico_load_image (GFile        *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fp)
     {
@@ -734,7 +731,6 @@ ico_load_thumbnail_image (GFile   *file,
                           gint    *height,
                           GError **error)
 {
-  gchar       *filename;
   FILE        *fp;
   IcoLoadInfo *info;
   GimpImage   *image;
@@ -748,9 +744,7 @@ ico_load_thumbnail_image (GFile   *file,
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fp)
     {

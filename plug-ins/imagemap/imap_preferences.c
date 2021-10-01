@@ -170,13 +170,10 @@ preferences_load(PreferencesData_t *data)
   FILE *in;
   char buf[256];
   GFile *file;
-  gchar *filename;
 
   file = gimp_directory_file ("imagemaprc", NULL);
 
-  filename = g_file_get_path (file);
-  in = g_fopen (filename, "rb");
-  g_free (filename);
+  in = g_fopen (g_file_peek_path (file), "rb");
 
   g_object_unref (file);
 
@@ -203,14 +200,11 @@ preferences_save(PreferencesData_t *data)
 {
    FILE *out;
    GFile *file;
-   gchar *filename;
    ColorSelData_t *colors = &data->colors;
 
    file = gimp_directory_file ("imagemaprc", NULL);
 
-   filename = g_file_get_path (file);
-   out = g_fopen(filename, "wb");
-   g_free (filename);
+   out = g_fopen(g_file_peek_path (file), "wb");
 
    if (out)
      {

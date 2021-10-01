@@ -597,7 +597,6 @@ load_image (GFile        *file,
   GimpPrecision     image_precision;      /* Precision of image */
   GimpImageType     layer_type;           /* Type of drawable/layer */
   GimpColorProfile *profile      = NULL;  /* Color profile */
-  gchar            *filename;
   gchar            *profile_name = NULL;  /* Profile's name */
   gboolean          linear       = FALSE; /* Linear RGB */
   FILE             *fp;                   /* File pointer */
@@ -659,9 +658,7 @@ load_image (GFile        *file,
     gimp_progress_init_printf (_("Opening '%s'"),
                                gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (fp == NULL)
     {
@@ -1311,7 +1308,6 @@ save_image (GFile        *file,
   GimpColorProfile *profile = NULL;   /* Color profile */
   gboolean          out_linear;       /* Save linear RGB */
   GeglBuffer       *buffer;           /* GEGL buffer for layer */
-  gchar            *filename;
   const Babl       *file_format = NULL; /* BABL format of file */
   const gchar      *encoding;
   const Babl       *space;
@@ -1499,9 +1495,7 @@ save_image (GFile        *file,
     gimp_progress_init_printf (_("Exporting '%s'"),
                                gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "wb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "wb");
 
   if (! fp)
     {

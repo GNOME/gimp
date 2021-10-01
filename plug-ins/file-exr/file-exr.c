@@ -161,7 +161,6 @@ load_image (GFile        *file,
             gboolean      interactive,
             GError      **error)
 {
-  gchar            *filename;
   EXRLoader        *loader;
   gint              width;
   gint              height;
@@ -188,9 +187,7 @@ load_image (GFile        *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  loader = exr_loader_new (filename);
-  g_free (filename);
+  loader = exr_loader_new (g_file_peek_path (file));
 
   if (! loader)
     {

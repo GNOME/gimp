@@ -330,7 +330,6 @@ static gboolean
 load_wmf_size (GFile       *file,
                WmfLoadVals *vals)
 {
-  gchar          *filename;
   GMappedFile    *mapped;
   /* the bits we need to decode the WMF via libwmf2's GD layer  */
   wmf_error_t     err;
@@ -344,9 +343,7 @@ load_wmf_size (GFile       *file,
   gboolean        success = TRUE;
   char*           wmffontdirs[2] = { NULL, NULL };
 
-  filename = g_file_get_path (file);
-  mapped = g_mapped_file_new (filename, FALSE, NULL);
-  g_free (filename);
+  mapped = g_mapped_file_new (g_file_peek_path (file), FALSE, NULL);
 
   if (! mapped)
     return FALSE;
@@ -798,7 +795,6 @@ wmf_get_pixbuf (GFile *file,
                 gint  *width,
                 gint  *height)
 {
-  gchar          *filename;
   GMappedFile    *mapped;
   guchar         *pixels   = NULL;
 
@@ -814,9 +810,7 @@ wmf_get_pixbuf (GFile *file,
   gint           *gd_pixels = NULL;
   char*           wmffontdirs[2] = { NULL, NULL };
 
-  filename = g_file_get_path (file);
-  mapped = g_mapped_file_new (filename, FALSE, NULL);
-  g_free (filename);
+  mapped = g_mapped_file_new (g_file_peek_path (file), FALSE, NULL);
 
   if (! mapped)
     return NULL;
@@ -921,7 +915,6 @@ wmf_load_file (GFile   *file,
                guint   *height,
                GError **error)
 {
-  gchar          *filename;
   GMappedFile    *mapped;
   guchar         *pixels   = NULL;
 
@@ -937,9 +930,7 @@ wmf_load_file (GFile   *file,
 
   *width = *height = -1;
 
-  filename = g_file_get_path (file);
-  mapped = g_mapped_file_new (filename, FALSE, NULL);
-  g_free (filename);
+  mapped = g_mapped_file_new (g_file_peek_path (file), FALSE, NULL);
 
   if (! mapped)
     return NULL;
