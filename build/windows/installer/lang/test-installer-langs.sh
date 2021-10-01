@@ -9,7 +9,8 @@ INSTALLER_LANGS=`grep -rI '^Name:.*MessagesFile' ${GIMP_TESTING_ABS_TOP_SRCDIR}/
 # 'en' doesn't have a gettext file because it is the default.
 INSTALLER_LANGS=`echo "$INSTALLER_LANGS" | tr '\n\r' ' ' | sed 's/\<en\> //'`
 
-PO_LANGS=`ls ${GIMP_TESTING_ABS_TOP_SRCDIR}/po-windows-installer/*.po |sed 's%.*/po-windows-installer/\([a-zA-Z_]*\).po%\1%'`
+PO_LANGS=`ls ${GIMP_TESTING_ABS_TOP_SRCDIR}/po-windows-installer/*.po | \
+          sed 's%.*/po-windows-installer/\([a-zA-Z_]*\).po%\1%' | sort`
 PO_LANGS=`echo "$PO_LANGS" | tr '\n\r' ' '`
 
 if [ "$PO_LANGS" != "$INSTALLER_LANGS" ]; then
