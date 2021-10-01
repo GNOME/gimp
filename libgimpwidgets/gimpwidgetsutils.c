@@ -727,10 +727,10 @@ transform_cache_config_notify (GObject          *config,
   if (cache->proof_profile)
     g_object_unref (cache->proof_profile);
 
-  g_free (cache);
-
   if (debug_cache)
     g_printerr ("deleted cache %p\n", cache);
+
+  g_free (cache);
 }
 
 /**
