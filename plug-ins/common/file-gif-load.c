@@ -382,7 +382,6 @@ load_image (GFile     *file,
             GError   **error)
 {
   FILE      *fd;
-  gchar     *filename;
   guchar     buf[16];
   guchar     c;
   CMap       localColorMap;
@@ -397,9 +396,7 @@ load_image (GFile     *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fd = g_fopen (filename, "rb");
-  g_free (filename);
+  fd = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fd)
     {

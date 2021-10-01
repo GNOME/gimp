@@ -377,15 +377,12 @@ load_image (GFile        *file,
   GFile     *lua_file           = gimp_data_directory_file ("file-raw",
                                                             "file-darktable-export-on-exit.lua",
                                                             NULL);
-  gchar     *lua_script         = g_file_get_path (lua_file);
-  gchar     *lua_script_escaped = g_strescape (lua_script, "");
+  gchar     *lua_script_escaped = g_strescape (g_file_peek_path (lua_file), "");
   gchar     *lua_quoted         = g_shell_quote (lua_script_escaped);
   gchar     *lua_cmd            = g_strdup_printf ("dofile(%s)", lua_quoted);
-  gchar     *filename           = g_file_get_path (file);
   GFile     *file_out           = gimp_temp_file ("exr");
-  gchar     *filename_out       = g_file_get_path (file_out);
   gchar     *export_filename    = g_strdup_printf ("lua/export_on_exit/export_filename=%s",
-                                                   filename_out);
+                                                   g_file_peek_path (file_out));
 
   gchar *darktable_stdout    = NULL;
   gchar *darktable_stderr    = NULL;
@@ -407,12 +404,11 @@ load_image (GFile        *file,
       "--luacmd",  lua_cmd,
       "--conf",    "plugins/lighttable/export/icctype=3",
       "--conf",    export_filename,
-      (gchar *) filename,
+      (gchar *) g_file_peek_path (file),
       NULL
     };
 
   g_object_unref (lua_file);
-  g_free (lua_script);
   g_free (lua_script_escaped);
   g_free (lua_quoted);
 
@@ -465,9 +461,8 @@ load_image (GFile        *file,
   g_free (darktable_stdout);
   g_free (darktable_stderr);
 
-  g_unlink (filename_out);
+  g_file_delete (file_out, NULL, NULL);
   g_free (lua_cmd);
-  g_free (filename_out);
   g_free (export_filename);
   g_free (exec_path);
 
@@ -485,15 +480,12 @@ load_thumbnail_image (GFile   *file,
 {
   GimpImage *image           = NULL;
 
-  gchar  *filename           = g_file_get_path (file);
   GFile  *file_out           = gimp_temp_file ("jpg");
-  gchar  *filename_out       = g_file_get_path (file_out);
   gchar  *size               = g_strdup_printf ("%d", thumb_size);
   GFile  *lua_file           = gimp_data_directory_file ("file-raw",
                                                          "file-darktable-get-size.lua",
                                                          NULL);
-  gchar  *lua_script         = g_file_get_path (lua_file);
-  gchar  *lua_script_escaped = g_strescape (lua_script, "");
+  gchar  *lua_script_escaped = g_strescape (g_file_peek_path (lua_file), "");
   gchar  *lua_quoted         = g_shell_quote (lua_script_escaped);
   gchar  *lua_cmd            = g_strdup_printf ("dofile(%s)", lua_quoted);
   gchar  *darktable_stdout   = NULL;
@@ -507,7 +499,8 @@ load_thumbnail_image (GFile   *file,
   gchar    *argv[] =
     {
       exec_path,
-      (gchar *) filename, filename_out,
+      (gchar *) g_file_peek_path (file),
+      (gchar *) g_file_peek_path (file_out),
       "--width",          size,
       "--height",         size,
       "--hq",             "false",
@@ -518,7 +511,6 @@ load_thumbnail_image (GFile   *file,
     };
 
   g_object_unref (lua_file);
-  g_free (lua_script);
   g_free (lua_script_escaped);
   g_free (lua_quoted);
 
@@ -560,8 +552,7 @@ load_thumbnail_image (GFile   *file,
 
   gimp_progress_update (1.0);
 
-  g_unlink (filename_out);
-  g_free (filename_out);
+  g_file_delete (file_out, NULL, NULL);
   g_free (size);
   g_free (lua_cmd);
   g_free (darktable_stdout);

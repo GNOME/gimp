@@ -977,7 +977,6 @@ load_resource_1033 (const PSDimageres  *res_a,
   struct jpeg_decompress_struct cinfo;
   struct jpeg_error_mgr         jerr;
 
-  gchar                *filename;
   FILE                 *f;
   ThumbnailInfo         thumb_info;
   GeglBuffer           *buffer;
@@ -1028,9 +1027,7 @@ load_resource_1033 (const PSDimageres  *res_a,
   /* Load Jpeg RGB thumbnail info */
 
   /* Open input also as a FILE. */
-  filename = g_file_get_path (file);
-  f = g_fopen (filename, "rb");
-  g_free (filename);
+  f = g_fopen (g_file_peek_path (file), "rb");
 
   if (! f)
     return -1;

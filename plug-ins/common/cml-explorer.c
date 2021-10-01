@@ -582,14 +582,16 @@ explorer_run (GimpProcedure        *procedure,
       {
         const gchar *uri      = GIMP_VALUES_GET_STRING (args, 0);
         GFile       *file     = g_file_new_for_uri (uri);
-        gchar       *filename = g_file_get_path (file);
 
-        if (! CML_load_parameter_file (filename, FALSE))
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CALLING_ERROR,
-                                                   NULL);
+        if (! CML_load_parameter_file (g_file_peek_path (file), FALSE))
+          {
+            g_object_unref (file);
 
-        g_free (filename);
+            return gimp_procedure_new_return_values (procedure,
+                                                     GIMP_PDB_CALLING_ERROR,
+                                                     NULL);
+          }
+
         g_object_unref (file);
       }
       break;

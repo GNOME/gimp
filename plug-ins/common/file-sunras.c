@@ -440,7 +440,6 @@ load_image (GFile   *file,
             GError **error)
 {
   GimpImage       *image;
-  gchar           *filename;
   FILE            *ifp;
   L_SUNFILEHEADER  sunhdr;
   guchar          *suncolmap = NULL;
@@ -448,9 +447,7 @@ load_image (GFile   *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  ifp = g_fopen (filename, "rb");
-  g_free (filename);
+  ifp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! ifp)
     {
@@ -496,7 +493,7 @@ load_image (GFile   *file,
 #ifdef DEBUG
       {
         int j, ncols;
-        printf ("File %s\n", g_file_get_path (file));
+        printf ("File %s\n", g_file_peek_path (file));
         ncols = sunhdr.l_ras_maplength/3;
         for (j=0; j < ncols; j++)
           printf ("Entry 0x%08x: 0x%04x,  0x%04x, 0x%04x\n",
@@ -595,7 +592,6 @@ save_image (GFile         *file,
             GObject       *config,
             GError       **error)
 {
-  gchar         *filename;
   FILE          *ofp;
   GimpImageType  drawable_type;
   gboolean       rle;
@@ -631,9 +627,7 @@ save_image (GFile         *file,
                              gimp_file_get_utf8_name (file));
 
   /* Open the output file. */
-  filename = g_file_get_path (file);
-  ofp = g_fopen (filename, "wb");
-  g_free (filename);
+  ofp = g_fopen (g_file_peek_path (file), "wb");
 
   if (! ofp)
     {

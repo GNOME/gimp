@@ -320,9 +320,7 @@ load_image (GFile        *file,
             GError      **error)
 {
   GimpImage *image              = NULL;
-  gchar     *filename           = g_file_get_path (file);
   GFile     *file_out           = gimp_temp_file ("tif");
-  gchar     *filename_out       = g_file_get_path (file_out);
   gchar     *rawtherapee_stdout = NULL;
 
   gboolean   search_path        = FALSE;
@@ -337,8 +335,8 @@ load_image (GFile        *file,
     {
       exec_path,
       "-gimp",
-      (gchar *) filename,
-      filename_out,
+      (gchar *) g_file_peek_path (file),
+      (gchar *) g_file_peek_path (file_out),
       NULL
     };
 
@@ -367,8 +365,7 @@ load_image (GFile        *file,
   g_free (rawtherapee_stdout);
   g_free (exec_path);
 
-  g_unlink (filename_out);
-  g_free (filename_out);
+  g_file_delete (file_out, NULL, NULL);
 
   gimp_progress_update (1.0);
 
@@ -381,12 +378,9 @@ load_thumbnail_image (GFile   *file,
                       GError **error)
 {
   GimpImage *image            = NULL;
-  gchar     *filename         = g_file_get_path (file);
   GFile     *file_out         = gimp_temp_file ("jpg");
-  gchar     *filename_out     = g_file_get_path (file_out);
   GFile     *thumb_pp3_file   = gimp_temp_file ("pp3");
-  gchar     *thumb_pp3        = g_file_get_path (thumb_pp3_file);
-  FILE      *thumb_pp3_f      = fopen (thumb_pp3, "w");
+  FILE      *thumb_pp3_f      = fopen (g_file_peek_path (thumb_pp3_file), "w");
   gchar     *rawtherapee_stdout = NULL;
   const char *pp3_content =
     "[Version]\n"
@@ -443,13 +437,13 @@ load_thumbnail_image (GFile   *file,
   gchar *argv[] =
     {
       exec_path,
-      "-o", filename_out,
+      "-o", (gchar *) g_file_peek_path (file_out),
       "-d",
       "-s",
       "-j",
-      "-p", thumb_pp3,
+      "-p", (gchar *) g_file_peek_path (thumb_pp3_file),
       "-f",
-      "-c", (char *) filename,
+      "-c", (gchar *) g_file_peek_path (file),
       NULL
     };
 
@@ -493,9 +487,7 @@ load_thumbnail_image (GFile   *file,
   if (thumb_pp3_f)
     fclose (thumb_pp3_f);
 
-  g_unlink (thumb_pp3);
-  g_free (filename_out);
-  g_free (thumb_pp3);
+  g_file_delete (thumb_pp3_file, NULL, NULL);
   g_free (rawtherapee_stdout);
   g_free (exec_path);
 

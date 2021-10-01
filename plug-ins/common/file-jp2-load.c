@@ -1057,7 +1057,6 @@ load_image (GFile             *file,
             gboolean          *profile_loaded,
             GError           **error)
 {
-  gchar             *filename;
   opj_stream_t      *stream     = NULL;
   opj_codec_t       *codec      = NULL;
   opj_dparameters_t  parameters;
@@ -1085,9 +1084,7 @@ load_image (GFile             *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  stream = opj_stream_create_default_file_stream (filename, OPJ_TRUE);
-  g_free (filename);
+  stream = opj_stream_create_default_file_stream (g_file_peek_path (file), OPJ_TRUE);
 
   if (! stream)
     {

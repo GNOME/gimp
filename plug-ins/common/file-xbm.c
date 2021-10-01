@@ -297,13 +297,10 @@ static gchar *
 init_prefix (GFile   *file,
              GObject *config)
 {
-  gchar *filename;
   gchar *p, *prefix;
   gint   len;
 
-  filename = g_file_get_path (file);
-  prefix = g_path_get_basename (filename);
-  g_free (filename);
+  prefix = g_file_get_basename (file);
 
   g_object_set (config,
                 "prefix", NULL,
@@ -719,7 +716,6 @@ static GimpImage *
 load_image (GFile   *file,
             GError **error)
 {
-  gchar      *filename;
   FILE       *fp;
   GeglBuffer *buffer;
   GimpImage  *image;
@@ -743,9 +739,7 @@ load_image (GFile   *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "rb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (! fp)
     {

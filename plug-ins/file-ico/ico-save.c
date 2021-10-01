@@ -1066,9 +1066,7 @@ ico_save_image (GFile      *file,
                 gint32      run_mode,
                 GError    **error)
 {
-  gchar *filename;
-  FILE  *fp;
-
+  FILE          *fp;
   GList         *iter;
   gint           width;
   gint           height;
@@ -1093,9 +1091,7 @@ ico_save_image (GFile      *file,
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  fp = g_fopen (filename, "wb");
-  g_free (filename);
+  fp = g_fopen (g_file_peek_path (file), "wb");
 
   if (! fp)
     {
