@@ -73,7 +73,7 @@ _br_find_exe (GimpBinrelocInitError *error)
            * an alternate method.
            */
           g_printerr ("%s: %s\n", G_STRFUNC, gerror->message);
-          g_error_free (gerror);
+          g_clear_error (&gerror);
 
           break;
         }
@@ -107,7 +107,7 @@ _br_find_exe (GimpBinrelocInitError *error)
   if (! input)
     {
       g_printerr ("%s: %s", G_STRFUNC, gerror->message);
-      g_error_free (gerror);
+      g_clear_error (&gerror);
 
       if (error)
         *error = GIMP_RELOC_INIT_ERROR_OPEN_MAPS;
