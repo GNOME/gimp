@@ -893,3 +893,119 @@ flatpak-nightly:
   needs: ["flatpak"]
   dependencies:
     - 'flatpak'
+
+## macOS ##
+
+deps-macos:
+  tags:
+    - macos
+  stage: dependencies
+  before_script:
+    # Setup rust
+    - curl https://sh.rustup.rs -sSf | sh -s -- -y
+    # Setup Python3
+    - curl -L 'https://www.python.org/ftp/python/3.9.7/python-3.9.7-macos11.pkg' > python-3.9.7-macosx11.pkg
+    - sudo installer -pkg python-3.9.7-macosx11.pkg -target /
+    # Setup 10.12 SDK
+    - cd /Library/Developer/CommandLineTools/SDKs
+    - sudo curl -L 'https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.12.sdk.tar.xz' | sudo tar -xzf -
+    - echo 'export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX10.12.sdk' > ~/.profile
+    - echo 'export MACOSX_DEPLOYMENT_TARGET=10.12' >> ~/.profile
+    # Setup JHBuild
+    - cd $HOME
+    - mkdir -p ~/.config && cp ~/project/jhbuildrc-gtk-osx-gimp ~/.config/jhbuildrc-custom
+    - curl https://gitlab.gnome.org/samm-git/gtk-osx/raw/gimp/gtk-osx-setup.sh > gtk-osx-setup.sh
+    - chmod +x gtk-osx-setup.sh
+    - echo 'export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH:$HOME/.new_local/bin"' >> ~/.profile
+    - echo 'export ARCHFLAGS="-arch x86_64"' >> ~/.profile
+    # PYTHON variable seems to be incorrectly set
+    - echo 'export PYTHON=/Library/Frameworks/Python.framework/Versions/3.6/bin/python3' >> ~/.profile 
+    - source ~/.profile
+    - PIPENV_YES=1 ./gtk-osx-setup.sh
+    - $HOME/.new_local/bin/jhbuild bootstrap-gtk-osx-gimp
+    - cat ~/.profile
+    # Setup gtk-mac-bundler
+    - cd ~/Source
+    - git clone https://gitlab.gnome.org/lukaso/gtk-mac-bundler
+    - cd gtk-mac-bundler
+    - make install
+  script:
+    # Bootstrap
+    - source ~/.profile && jhbuild build icu libnsgif meta-gtk-osx-freetype meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
+    # Cleanup
+    - find  ~/gtk/source -type d -mindepth 1 -maxdepth 1 | xargs -I% rm -rf %/*
+    # Build GIMP dependencies (without gegl/babl)
+    - source ~/.profile && jhbuild build python3
+    # Build all WebKit dependencies
+    - source ~/.profile && jhbuild build enchant libpsl sqlite vala gnutls libgpg-error
+    - source ~/.profile && jhbuild buildone libsoup libgcrypt libwebp
+    # Cleanup
+    - find  ~/gtk/source -type d -mindepth 1 -maxdepth 1 | xargs -I% rm -rf %/*
+    # Build WebKit v1
+    # source ~/.profile && jhbuild buildone webkit
+    # Cleanup
+    - find  ~/gtk/source -type d -mindepth 1 -maxdepth 1 | xargs -I% rm -rf %/*
+    # Build and test babl/gegl
+    - source ~/.profile && jhbuild build --check babl gegl
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
+    when: always
+    expire_in: 2 hours
+    paths:
+      - ./
+
+gimp-macos:
+  tags:
+    - macos
+  stage: gimp
+  dependencies:
+    - deps-macos
+  script:
+    - source ~/.profile
+    - jhbuild build gimp299
+    # Cleanup
+    - find  ~/gtk/source -type d -mindepth 1 -maxdepth 1 | xargs -I% rm -rf %/*
+  needs: ["deps-macos"]
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
+    when: always
+    expire_in: 1 day
+    paths:
+      - ./
+
+packaging-macos:
+  tags:
+    - macos
+  stage: packaging
+  tags:
+    - macos
+  script:
+    # Importing signing certificate
+    - mkdir ${HOME}/codesign
+    - cd ${HOME}/codesign
+    - echo "$osx_crt" | base64 -D > gnome.pfx
+    - curl 'https://developer.apple.com/certificationauthority/AppleWWDRCA.cer' > apple.cer
+    - security create-keychain -p "" signchain
+    - security set-keychain-settings signchain
+    - security unlock-keychain -u signchain
+    - security list-keychains  -s "${HOME}/Library/Keychains/signchain-db" "${HOME}/Library/Keychains/login.keychain-db"
+    - security import apple.cer -k signchain  -T /usr/bin/codesign
+    - security import gnome.pfx  -k signchain -P "$osx_crt_pw" -T /usr/bin/codesign
+    - security set-key-partition-list -S "apple-tool:,apple:" -k "" signchain
+    - rm -rf ${HOME}/codesign
+    # Creating DMG package
+    - source ~/.profile
+    - cd ${HOME}/project/package
+    - jhbuild run ./build299.sh
+    # Notarizing DMG package
+    - source ~/.profile
+    - cd ${HOME}/project/package
+    - jhbuild run ./notarize.sh
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
+    when: always
+    expire_in: 1 day
+    paths:
+      - ./
+      - /tmp/artifacts
+  needs: ["gimp-macos"]
