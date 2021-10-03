@@ -31,7 +31,16 @@
 #ifdef GDK_WINDOWING_QUARTZ
 #import <AppKit/AppKit.h>
 #include <gdk/gdkquartz.h>
-#endif /* !GDK_WINDOWING_QUARTZ */
+
+#if GTK_CHECK_VERSION(3, 24, 29)
+#warning Using a workaround for older GTK versions.
+#warning If minimum requirement was bumped to 3.24.29 or over, remove it.
+#warning See MR !483
+#include "gdk/quartz/gdkquartz-cocoa-access.h"
+#else
+NSWindow *gdk_quartz_window_get_nswindow            (GdkWindow *window);
+#endif /* GTK_CHECK_VERSION(3, 24, 29) */
+#endif /* GDK_WINDOWING_QUARTZ */
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
