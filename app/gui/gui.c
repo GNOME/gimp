@@ -270,7 +270,7 @@ gui_init (Gimp     *gimp,
    * has the additional cost of an 8-bit (ARGB) to 10-bit conversion.
    * Let's disable this mode to regain the lost performance.
    */
-  if (gdk_quartz_osx_version () >= GDK_OSX_BIG_SUR)
+  if (gdk_quartz_osx_version () >= GDK_OSX_BIGSUR)
     {
       NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
       [userDefaults setBool: NO forKey:@"NSViewUsesAutomaticLayerBackingStores"];
