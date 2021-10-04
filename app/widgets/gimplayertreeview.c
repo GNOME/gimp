@@ -1234,6 +1234,7 @@ gimp_layer_tree_view_regexp_modified (GtkEntry         *entry,
 
       view->priv->link_regexp = gimp_item_list_pattern_new (image,
                                                             GIMP_TYPE_LAYER,
+                                                            GIMP_SELECT_REGEX_PATTERN,
                                                             pattern);
       items = gimp_item_list_get_items (view->priv->link_regexp, &error);
       if (error)

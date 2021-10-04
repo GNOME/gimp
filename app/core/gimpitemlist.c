@@ -51,7 +51,7 @@ enum
 {
   PROP_0,
   PROP_IMAGE,
-  PROP_IS_PATTERN,
+  PROP_SELECT_METHOD,
   PROP_ITEMS,
   PROP_ITEM_TYPE,
   N_PROPS
@@ -62,14 +62,14 @@ typedef struct _GimpItemListPrivate GimpItemListPrivate;
 
 struct _GimpItemListPrivate
 {
-  GimpImage *image;
+  GimpImage        *image;
 
-  gchar     *label;         /* Item set name or pattern.                      */
-  gboolean   is_pattern;    /* Whether a named fixed set or a pattern-search. */
+  gchar            *label;         /* Item set name or pattern.                              */
+  GimpSelectMethod  select_method; /* Named fixed set or a pattern-search.                   */
 
-  GList     *items;         /* The fixed item list if is_pattern is FALSE.    */
-  GList     *deleted_items; /* Removed item list kept for undoes.             */
-  GType      item_type;
+  GList            *items;         /* Fixed item list if select_method is GIMP_SELECT_FIXED. */
+  GList            *deleted_items; /* Removed item list kept for undoes.                     */
+  GType             item_type;
 };
 
 
@@ -94,6 +94,12 @@ static void       gimp_item_list_item_remove         (GimpContainer  *container,
                                                       GimpObject     *object,
                                                       GimpItemList   *set);
 
+static GList *    gimp_item_list_get_items_by_substr (GimpItemList   *set,
+                                                      const gchar    *pattern,
+                                                      GError        **error);
+static GList *    gimp_item_list_get_items_by_glob   (GimpItemList   *set,
+                                                      const gchar    *pattern,
+                                                      GError        **error);
 static GList *    gimp_item_list_get_items_by_regexp (GimpItemList   *set,
                                                       const gchar    *pattern,
                                                       GError        **error);
@@ -135,23 +141,24 @@ gimp_item_list_class_init (GimpItemListClass *klass)
   object_class->set_property      = gimp_item_list_set_property;
   object_class->get_property      = gimp_item_list_get_property;
 
-  gimp_item_list_props[PROP_IMAGE]      = g_param_spec_object ("image", NULL, NULL,
-                                                              GIMP_TYPE_IMAGE,
-                                                              GIMP_PARAM_READWRITE |
-                                                              G_PARAM_CONSTRUCT_ONLY);
-  gimp_item_list_props[PROP_IS_PATTERN] = g_param_spec_boolean ("is-pattern", NULL, NULL,
-                                                               FALSE,
-                                                               GIMP_PARAM_READWRITE |
-                                                               G_PARAM_CONSTRUCT_ONLY);
-  gimp_item_list_props[PROP_ITEMS]      = g_param_spec_pointer ("items",
-                                                                NULL, NULL,
+  gimp_item_list_props[PROP_IMAGE]         = g_param_spec_object ("image", NULL, NULL,
+                                                                 GIMP_TYPE_IMAGE,
+                                                                 GIMP_PARAM_READWRITE |
+                                                                 G_PARAM_CONSTRUCT_ONLY);
+  gimp_item_list_props[PROP_SELECT_METHOD] = g_param_spec_enum ("select-method", NULL, NULL,
+                                                                GIMP_TYPE_SELECT_METHOD,
+                                                                GIMP_SELECT_PLAIN_TEXT,
                                                                 GIMP_PARAM_READWRITE |
                                                                 G_PARAM_CONSTRUCT_ONLY);
-  gimp_item_list_props[PROP_ITEM_TYPE]  = g_param_spec_gtype ("item-type",
-                                                              NULL, NULL,
-                                                              G_TYPE_NONE,
-                                                              GIMP_PARAM_READWRITE |
-                                                              G_PARAM_CONSTRUCT_ONLY);
+  gimp_item_list_props[PROP_ITEMS]         = g_param_spec_pointer ("items",
+                                                                   NULL, NULL,
+                                                                   GIMP_PARAM_READWRITE |
+                                                                   G_PARAM_CONSTRUCT_ONLY);
+  gimp_item_list_props[PROP_ITEM_TYPE]     = g_param_spec_gtype ("item-type",
+                                                                 NULL, NULL,
+                                                                 G_TYPE_NONE,
+                                                                 GIMP_PARAM_READWRITE |
+                                                                 G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, N_PROPS, gimp_item_list_props);
 }
@@ -161,9 +168,9 @@ gimp_item_list_init (GimpItemList *set)
 {
   set->p = gimp_item_list_get_instance_private (set);
 
-  set->p->label      = NULL;
-  set->p->items      = NULL;
-  set->p->is_pattern = FALSE;
+  set->p->label         = NULL;
+  set->p->items         = NULL;
+  set->p->select_method = GIMP_SELECT_FIXED;
 }
 
 static void
@@ -174,12 +181,12 @@ gimp_item_list_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_assert (GIMP_IS_IMAGE (set->p->image));
-  gimp_assert (set->p->items != NULL || set->p->is_pattern);
+  gimp_assert (set->p->items != NULL || set->p->select_method != GIMP_SELECT_FIXED);
   gimp_assert (set->p->item_type == GIMP_TYPE_LAYER   ||
                set->p->item_type == GIMP_TYPE_VECTORS ||
                set->p->item_type == GIMP_TYPE_CHANNEL);
 
-  if (! set->p->is_pattern)
+  if (set->p->select_method == GIMP_SELECT_FIXED)
     {
       GimpContainer *container;
 
@@ -203,7 +210,7 @@ gimp_item_list_dispose (GObject *object)
 {
   GimpItemList *set = GIMP_ITEM_LIST (object);
 
-  if (! set->p->is_pattern)
+  if (set->p->select_method == GIMP_SELECT_FIXED)
     {
       GimpContainer *container;
 
@@ -248,8 +255,8 @@ gimp_item_list_set_property (GObject      *object,
     case PROP_IMAGE:
       set->p->image = g_value_get_object (value);
       break;
-    case PROP_IS_PATTERN:
-      set->p->is_pattern = g_value_get_boolean (value);
+    case PROP_SELECT_METHOD:
+      set->p->select_method = g_value_get_enum (value);
       break;
     case PROP_ITEMS:
       set->p->items = g_list_copy (g_value_get_pointer (value));
@@ -277,8 +284,8 @@ gimp_item_list_get_property (GObject    *object,
     case PROP_IMAGE:
       g_value_set_object (value, set->p->image);
       break;
-    case PROP_IS_PATTERN:
-      g_value_set_boolean (value, set->p->is_pattern);
+    case PROP_SELECT_METHOD:
+      g_value_set_enum (value, set->p->select_method);
       break;
     case PROP_ITEMS:
       g_value_set_pointer (value, set->p->items);
@@ -357,6 +364,7 @@ gimp_item_list_named_new (GimpImage   *image,
  * gimp_item_list_pattern_new:
  * @image:     The new item_list's #GimpImage.
  * @item_type: The type of #GimpItem in the list.
+ * @pattern_syntax: type of patterns we are handling.
  * @pattern:   The pattern generating the contents of the list.
  *
  * Create a list of items generated from a pattern. It cannot be edited.
@@ -364,21 +372,23 @@ gimp_item_list_named_new (GimpImage   *image,
  * Returns: The newly created #GimpItemList.
  */
 GimpItemList *
-gimp_item_list_pattern_new (GimpImage   *image,
-                            GType        item_type,
-                            const gchar *pattern)
+gimp_item_list_pattern_new (GimpImage        *image,
+                            GType             item_type,
+                            GimpSelectMethod  pattern_syntax,
+                            const gchar      *pattern)
 {
   GimpItemList *set;
 
   g_return_val_if_fail (g_type_is_a (item_type, GIMP_TYPE_ITEM), NULL);
+  g_return_val_if_fail (pattern_syntax != GIMP_SELECT_FIXED, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   /* TODO: check pattern first and fail if invalid. */
   set = g_object_new (GIMP_TYPE_ITEM_LIST,
-                      "image",      image,
-                      "name",       pattern,
-                      "is-pattern", TRUE,
-                      "item-type",  item_type,
+                      "image",          image,
+                      "name",           pattern,
+                      "select-method",  pattern_syntax,
+                      "item-type",      item_type,
                       NULL);
 
   return set;
@@ -403,24 +413,31 @@ GList *
 gimp_item_list_get_items (GimpItemList  *set,
                           GError       **error)
 {
-  GList *items;
+  GList *items = NULL;
 
   g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (set->p->is_pattern)
+  switch (set->p->select_method)
     {
-      GError *reg_error = NULL;
-
+    case GIMP_SELECT_FIXED:
+      items = g_list_copy (set->p->items);
+      break;
+    case GIMP_SELECT_PLAIN_TEXT:
+      items = gimp_item_list_get_items_by_substr (set,
+                                                  gimp_object_get_name (set),
+                                                  error);
+      break;
+    case GIMP_SELECT_GLOB_PATTERN:
+      items = gimp_item_list_get_items_by_glob (set,
+                                                gimp_object_get_name (set),
+                                                error);
+      break;
+    case GIMP_SELECT_REGEX_PATTERN:
       items = gimp_item_list_get_items_by_regexp (set,
                                                   gimp_object_get_name (set),
-                                                  &reg_error);
-      if (reg_error)
-        g_propagate_error (error, reg_error);
-    }
-  else
-    {
-      items = g_list_copy (set->p->items);
+                                                  error);
+      break;
     }
 
   return items;
@@ -431,7 +448,7 @@ gimp_item_list_is_pattern (GimpItemList *set)
 {
   g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), FALSE);
 
-  return set->p->is_pattern;
+  return (set->p->select_method != GIMP_SELECT_FIXED);
 }
 
 
@@ -472,6 +489,107 @@ gimp_item_list_item_remove (GimpContainer  *container,
 
   g_weak_ref_init (deleted_item, object);
   set->p->deleted_items = g_list_prepend (set->p->deleted_items, deleted_item);
+}
+
+/*
+ * @gimp_item_list_get_items_by_substr:
+ * @image:
+ * @pattern:
+ * @error: unused #GError.
+ *
+ * Replace currently selected items in @image with the items whose
+ * names match with the @pattern after tokenisation, case-folding and
+ * normalization.
+ *
+ * Returns: %TRUE if some items matched @pattern (even if it turned out
+ *          selected items stay the same), %FALSE otherwise.
+ */
+static GList *
+gimp_item_list_get_items_by_substr (GimpItemList  *set,
+                                    const gchar   *pattern,
+                                    GError       **error)
+{
+  GList  *items;
+  GList  *match = NULL;
+  GList  *iter;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), FALSE);
+  g_return_val_if_fail (error && *error == NULL, FALSE);
+
+  if (pattern == NULL)
+    return NULL;
+
+  if (set->p->item_type == GIMP_TYPE_LAYER)
+    {
+      items = gimp_image_get_layer_list (set->p->image);
+    }
+  else
+    {
+      g_critical ("%s: only list of GimpLayer supported for now.",
+                  G_STRFUNC);
+      return NULL;
+    }
+
+  for (iter = items; iter; iter = iter->next)
+    {
+      if (g_str_match_string (pattern,
+                              gimp_object_get_name (iter->data),
+                              TRUE))
+        match = g_list_prepend (match, iter->data);
+    }
+
+  return match;
+}
+
+/*
+ * @gimp_item_list_get_items_by_glob:
+ * @image:
+ * @pattern:
+ * @error: unused #GError.
+ *
+ * Replace currently selected items in @image with the items whose
+ * names match with the @pattern glob expression.
+ *
+ * Returns: %TRUE if some items matched @pattern (even if it turned out
+ *          selected items stay the same), %FALSE otherwise.
+ */
+static GList *
+gimp_item_list_get_items_by_glob (GimpItemList  *set,
+                                  const gchar   *pattern,
+                                  GError       **error)
+{
+  GList        *items;
+  GList        *match = NULL;
+  GList        *iter;
+  GPatternSpec *spec;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), FALSE);
+  g_return_val_if_fail (error && *error == NULL, FALSE);
+
+  if (pattern == NULL)
+    return NULL;
+
+  if (set->p->item_type == GIMP_TYPE_LAYER)
+    {
+      items = gimp_image_get_layer_list (set->p->image);
+    }
+  else
+    {
+      g_critical ("%s: only list of GimpLayer supported for now.",
+                  G_STRFUNC);
+      return NULL;
+    }
+
+  spec = g_pattern_spec_new (pattern);
+  for (iter = items; iter; iter = iter->next)
+    {
+      if (g_pattern_match_string (spec,
+                                  gimp_object_get_name (iter->data)))
+        match = g_list_prepend (match, iter->data);
+    }
+  g_pattern_spec_free (spec);
+
+  return match;
 }
 
 /*
