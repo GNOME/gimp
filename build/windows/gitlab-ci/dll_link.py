@@ -34,9 +34,10 @@ bindir = 'bin'
 # Functions
 
 # Main function
-def main(binary, srcdir, destdir, debug):
-  sys.stdout.write("{} (INFO): searching for dependencies of {} in {}\n".format(os.path.basename(__file__), binary, srcdir))
-  find_dependencies(binary, srcdir)
+def main(binary, srcdirs, destdir, debug):
+  sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
+                                                                                 binary, ', '.join(srcdirs)))
+  find_dependencies(os.path.abspath(binary), srcdirs)
   if args.debug:
     print("Running in debug mode (no DLL moved)")
     if len(dlls) > 0:
@@ -58,13 +59,23 @@ def main(binary, srcdir, destdir, debug):
       sys.stdout.write("\n\t- ".join(installed_dlls))
       print()
   else:
-    copy_dlls(dlls - sys_dlls, srcdir, destdir)
+    copy_dlls(dlls - sys_dlls, srcdirs, destdir)
 
-def find_dependencies(obj, srcdir):
+def find_dependencies(obj, srcdirs):
   '''
   List DLLs of an object file in a recursive way.
   '''
-  if os.path.exists(obj):
+  if not os.path.isabs(obj):
+    for srcdir in srcdirs:
+      abs_dll = os.path.join(srcdir, bindir, obj)
+      abs_dll = os.path.abspath(abs_dll)
+      if find_dependencies(abs_dll, srcdirs):
+        return True
+    else:
+      # Found in none of the srcdirs: consider it a system DLL
+      sys_dlls.add(os.path.basename(obj))
+      return False
+  elif os.path.exists(obj):
     # If DLL exists, extract dependencies.
     objdump = None
 
@@ -93,31 +104,36 @@ def find_dependencies(obj, srcdir):
       dll = match.group(1)
       if dll not in dlls:
         dlls.add(dll)
-        next_dll = os.path.join(srcdir, bindir, dll)
-        find_dependencies(next_dll, srcdir)
+        find_dependencies(dll, srcdirs)
+
+    return True
   else:
-    # Otherwise, it is a system DLL
-    sys_dlls.add(os.path.basename(obj))
+    return False
 
 # Copy a DLL set into the /destdir/bin directory
-def copy_dlls(dll_list, srcdir, destdir):
+def copy_dlls(dll_list, srcdirs, destdir):
   destbin = os.path.join(destdir, bindir)
   os.makedirs(destbin, exist_ok=True)
   for dll in dll_list:
-    full_file_name = os.path.join(srcdir, bindir, dll)
-    if os.path.isfile(full_file_name):
-      if not os.path.exists(os.path.join(destbin, dll)):
-        sys.stdout.write("{} (INFO): copying {} to {}\n".format(os.path.basename(__file__), full_file_name, destbin))
-        shutil.copy(full_file_name, destbin)
-    else:
-      sys.stderr.write("Missing DLL: {}\n".format(full_file_name))
-      sys.exit(os.EX_DATAERR)
+    if not os.path.exists(os.path.join(destbin, dll)):
+      # Do not overwrite existing files.
+      for srcdir in srcdirs:
+        full_file_name = os.path.join(srcdir, bindir, dll)
+        if os.path.isfile(full_file_name):
+          sys.stdout.write("{} (INFO): copying {} to {}\n".format(os.path.basename(__file__), full_file_name, destbin))
+          shutil.copy(full_file_name, destbin)
+          break
+      else:
+        # This should not happen. We determined that the dll is in one
+        # of the srcdirs.
+        sys.stderr.write("Missing DLL: {}\n".format(dll))
+        sys.exit(os.EX_DATAERR)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument('--debug', dest='debug', action = 'store_true', default = False)
   parser.add_argument('bin')
-  parser.add_argument('src')
+  parser.add_argument('src', nargs='+')
   parser.add_argument('dest')
   args = parser.parse_args(sys.argv[1:])
 
