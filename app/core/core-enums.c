@@ -1462,7 +1462,6 @@ gimp_select_method_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_SELECT_FIXED, "GIMP_SELECT_FIXED", "fixed" },
     { GIMP_SELECT_PLAIN_TEXT, "GIMP_SELECT_PLAIN_TEXT", "plain-text" },
     { GIMP_SELECT_REGEX_PATTERN, "GIMP_SELECT_REGEX_PATTERN", "regex-pattern" },
     { GIMP_SELECT_GLOB_PATTERN, "GIMP_SELECT_GLOB_PATTERN", "glob-pattern" },
@@ -1471,7 +1470,6 @@ gimp_select_method_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_SELECT_FIXED, NC_("select-method", "Selection of fixed list of items"), NULL },
     { GIMP_SELECT_PLAIN_TEXT, NC_("select-method", "Selection by basic text search"), NULL },
     { GIMP_SELECT_REGEX_PATTERN, NC_("select-method", "Selection by regular expression search"), NULL },
     { GIMP_SELECT_GLOB_PATTERN, NC_("select-method", "Selection by glob pattern search"), NULL },
