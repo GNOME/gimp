@@ -671,7 +671,6 @@ GType gimp_select_method_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
-  GIMP_SELECT_FIXED,         /*< desc="Selection of fixed list of items"       >*/
   GIMP_SELECT_PLAIN_TEXT,    /*< desc="Selection by basic text search"         >*/
   GIMP_SELECT_REGEX_PATTERN, /*< desc="Selection by regular expression search" >*/
   GIMP_SELECT_GLOB_PATTERN,  /*< desc="Selection by glob pattern search"       >*/

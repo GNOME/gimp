@@ -107,6 +107,7 @@ struct _GimpCoreConfig
 #ifdef G_OS_WIN32
   GimpWin32PointerInputAPI win32_pointer_input_api;
 #endif
+  GimpSelectMethod        items_select_method;
 
   gboolean                check_updates;
   gint64                  check_update_timestamp;
