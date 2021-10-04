@@ -32,10 +32,11 @@
 #import <AppKit/AppKit.h>
 #include <gdk/gdkquartz.h>
 
-#if GTK_CHECK_VERSION(3, 24, 29)
+#if GTK_CHECK_VERSION(3, 24, 31)
 #warning Using a workaround for older GTK versions.
-#warning If minimum requirement was bumped to 3.24.29 or over, remove it.
+#warning If minimum requirement was bumped to 3.24.31 or over, remove it.
 #warning See MR !483
+#warning See also https://gitlab.gnome.org/GNOME/gtk/-/commit/7e732caa1e3dc72630704bc4908e8a165a5934c0
 #include "gdk/quartz/gdkquartz-cocoa-access.h"
 #else
 NSWindow *gdk_quartz_window_get_nswindow            (GdkWindow *window);
