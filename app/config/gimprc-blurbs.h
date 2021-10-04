@@ -576,6 +576,9 @@ _("Sets the default set of layers to resize for the 'Canvas Size' dialog.")
 #define IMAGE_RESIZE_RESIZE_TEXT_LAYERS_BLURB \
 _("Sets the default 'Resize text layers' state for the 'Canvas Size' dialog.")
 
+# define ITEMS_SELECT_METHOD_BLURB \
+_("Sets how items are searched and selected from a textual pattern.")
+
 #define LAYER_NEW_NAME_BLURB \
 _("Sets the default layer name for the 'New Layer' dialog.")
 

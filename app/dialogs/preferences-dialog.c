@@ -1892,6 +1892,13 @@ prefs_dialog_new (Gimp       *gimp,
                             _("Na_vigation preview size:"),
                             GTK_GRID (grid), 2, NULL);
 
+  /*  Item   */
+  vbox2 = prefs_frame_new (_("Item search"), GTK_CONTAINER (vbox), FALSE);
+  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+  prefs_enum_combo_box_add (object, "items-select-method", 0, 0,
+                            _("Pattern syntax for searching and selecting items:"),
+                            GTK_GRID (grid), 0, NULL);
+
   /* Keyboard Shortcuts */
   vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
                            GTK_CONTAINER (vbox), FALSE);

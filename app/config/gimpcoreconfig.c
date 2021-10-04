@@ -138,6 +138,7 @@ enum
 #ifdef G_OS_WIN32
   PROP_WIN32_POINTER_INPUT_API,
 #endif
+  PROP_ITEMS_SELECT_METHOD,
 
   /* ignored, only for backward compatibility: */
   PROP_INSTALL_COLORMAP,
@@ -845,6 +846,14 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GIMP_CONFIG_PARAM_RESTART);
 #endif
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ITEMS_SELECT_METHOD,
+                         "items-select-method",
+                         _("Pattern syntax for searching and selecting items:"),
+                         ITEMS_SELECT_METHOD_BLURB,
+                         GIMP_TYPE_SELECT_METHOD,
+                         GIMP_SELECT_PLAIN_TEXT,
+                         GIMP_PARAM_STATIC_STRINGS);
+
   /*  only for backward compatibility:  */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
                             "install-colormap",
@@ -1215,6 +1224,9 @@ gimp_core_config_set_property (GObject      *object,
       }
       break;
 #endif
+    case PROP_ITEMS_SELECT_METHOD:
+      core_config->items_select_method = g_value_get_enum (value);
+      break;
 
     case PROP_INSTALL_COLORMAP:
     case PROP_MIN_COLORS:
@@ -1452,6 +1464,9 @@ gimp_core_config_get_property (GObject    *object,
       g_value_set_enum (value, core_config->win32_pointer_input_api);
       break;
 #endif
+    case PROP_ITEMS_SELECT_METHOD:
+      g_value_set_enum (value, core_config->items_select_method);
+      break;
 
     case PROP_INSTALL_COLORMAP:
     case PROP_MIN_COLORS:
