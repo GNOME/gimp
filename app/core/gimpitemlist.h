@@ -48,19 +48,20 @@ struct _GimpItemListClass
 
 GType          gimp_item_list_get_type  (void) G_GNUC_CONST;
 
-GimpItemList  * gimp_item_list_named_new    (GimpImage          *image,
-                                             GType               item_type,
-                                             const gchar        *name,
-                                             GList              *items);
+GimpItemList  * gimp_item_list_named_new    (GimpImage        *image,
+                                             GType             item_type,
+                                             const gchar      *name,
+                                             GList            *items);
 
-GimpItemList  * gimp_item_list_pattern_new  (GimpImage          *image,
-                                             GType               item_type,
-                                             const gchar        *pattern);
+GimpItemList  * gimp_item_list_pattern_new  (GimpImage        *image,
+                                             GType             item_type,
+                                             GimpSelectMethod  pattern_syntax,
+                                             const gchar      *pattern);
 
-GType          gimp_item_list_get_item_type (GimpItemList       *set);
-GList        * gimp_item_list_get_items     (GimpItemList       *set,
-                                             GError            **error);
-gboolean       gimp_item_list_is_pattern    (GimpItemList       *set);
+GType          gimp_item_list_get_item_type (GimpItemList     *set);
+GList        * gimp_item_list_get_items     (GimpItemList     *set,
+                                             GError          **error);
+gboolean       gimp_item_list_is_pattern    (GimpItemList     *set);
 
 
 #endif /* __GIMP_ITEM_LIST_H__ */

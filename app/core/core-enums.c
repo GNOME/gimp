@@ -1457,6 +1457,39 @@ gimp_view_type_get_type (void)
   return type;
 }
 
+GType
+gimp_select_method_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_SELECT_FIXED, "GIMP_SELECT_FIXED", "fixed" },
+    { GIMP_SELECT_PLAIN_TEXT, "GIMP_SELECT_PLAIN_TEXT", "plain-text" },
+    { GIMP_SELECT_REGEX_PATTERN, "GIMP_SELECT_REGEX_PATTERN", "regex-pattern" },
+    { GIMP_SELECT_GLOB_PATTERN, "GIMP_SELECT_GLOB_PATTERN", "glob-pattern" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_SELECT_FIXED, NC_("select-method", "Selection of fixed list of items"), NULL },
+    { GIMP_SELECT_PLAIN_TEXT, NC_("select-method", "Selection by basic text search"), NULL },
+    { GIMP_SELECT_REGEX_PATTERN, NC_("select-method", "Selection by regular expression search"), NULL },
+    { GIMP_SELECT_GLOB_PATTERN, NC_("select-method", "Selection by glob pattern search"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpSelectMethod", values);
+      gimp_type_set_translation_context (type, "select-method");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 
