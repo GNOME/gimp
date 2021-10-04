@@ -59,7 +59,7 @@ def main(binary, srcdirs, destdir, debug):
       sys.stdout.write("\n\t- ".join(installed_dlls))
       print()
   else:
-    copy_dlls(dlls - sys_dlls, destdir)
+    copy_dlls(dlls - sys_dlls, srcdirs, destdir)
 
 def find_dependencies(obj, srcdirs):
   '''
@@ -111,17 +111,23 @@ def find_dependencies(obj, srcdirs):
     return False
 
 # Copy a DLL set into the /destdir/bin directory
-def copy_dlls(dll_list, destdir):
+def copy_dlls(dll_list, srcdirs, destdir):
   destbin = os.path.join(destdir, bindir)
   os.makedirs(destbin, exist_ok=True)
   for dll in dll_list:
-    if os.path.isfile(dll):
-      if not os.path.exists(os.path.join(destbin, os.path.basename(dll))):
-        sys.stdout.write("{} (INFO): copying {} to {}\n".format(os.path.basename(__file__), dll, destbin))
-        shutil.copy(dll, destbin)
-    else:
-      sys.stderr.write("Missing DLL: {}\n".format(dll))
-      sys.exit(os.EX_DATAERR)
+    if not os.path.exists(os.path.join(destbin, dll)):
+      # Do not overwrite existing files.
+      for srcdir in srcdirs:
+        full_file_name = os.path.join(srcdir, bindir, dll)
+        if os.path.isfile(full_file_name):
+          sys.stdout.write("{} (INFO): copying {} to {}\n".format(os.path.basename(__file__), full_file_name, destbin))
+          shutil.copy(full_file_name, destbin)
+          break
+      else:
+        # This should not happen. We determined that the dll is in one
+        # of the srcdirs.
+        sys.stderr.write("Missing DLL: {}\n".format(dll))
+        sys.exit(os.EX_DATAERR)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
