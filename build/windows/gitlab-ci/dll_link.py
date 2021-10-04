@@ -68,8 +68,8 @@ def find_dependencies(obj, srcdirs):
   if not os.path.isabs(obj):
     for srcdir in srcdirs:
       abs_dll = os.path.join(srcdir, bindir, obj)
+      abs_dll = os.path.abspath(abs_dll)
       if find_dependencies(abs_dll, srcdirs):
-        dlls.add(abs_dll)
         return True
     else:
       # Found in none of the srcdirs: consider it a system DLL
@@ -103,6 +103,7 @@ def find_dependencies(obj, srcdirs):
     for match in re.finditer(r"DLL Name: *(\S+.dll)", out, re.MULTILINE):
       dll = match.group(1)
       if dll not in dlls:
+        dlls.add(dll)
         find_dependencies(dll, srcdirs)
 
     return True
