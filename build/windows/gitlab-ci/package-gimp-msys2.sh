@@ -223,8 +223,8 @@ for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/modules/*.dll; do
   python3 build/windows/gitlab-ci/dll_link.py $dll ${MSYS_PREFIX}/ ${GIMP_DISTRIB};
 done
 for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/plug-ins/*/*.exe; do
-  python3 build/windows/gitlab-ci/dll_link.py --debug $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
-  python3 build/windows/gitlab-ci/dll_link.py --debug $dll ${MSYS_PREFIX}/ ${GIMP_DISTRIB};
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${MSYS_PREFIX}/ ${GIMP_DISTRIB};
 done
 
 # Libraries for GObject Introspection.
