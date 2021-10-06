@@ -8,295 +8,327 @@
 # Bruno Queiros <brunomiguelqueiros@sapo.pt>, 2008.
 # Pedro Barreira <almufadado@gmail.com>, 2010
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
+# Sara Campos <lalocas@protonmail.com>, 2021.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2015-09-20 17:44+0000\n"
-"PO-Revision-Date: 2015-09-21 06:38+0100\n"
-"Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
-"Language-Team: Português <palbuquerque73@gmail.com>\n"
+"POT-Creation-Date: 2021-10-06 13:06+0000\n"
+"PO-Revision-Date: 2021-10-06 22:41+0100\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Language: Portuguese\n"
-"X-Poedit-Country: Portugal\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Poedit 3.0\n"
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: ../plug-ins/script-fu/script-fu.c:138
+msgid "Script-Fu _Console"
+msgstr "_Consola Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:143
 msgid "Interactive console for Script-Fu development"
 msgstr "Consola interativa para desenvolvimento do Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:117
-msgid "_Console"
-msgstr "_Consola"
-
-#: ../plug-ins/script-fu/script-fu.c:141
-msgid "Server for remote Script-Fu operation"
-msgstr "Servidor para operação remota do Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu.c:151
+#: ../plug-ins/script-fu/script-fu.c:190
 msgid "_Start Server..."
 msgstr "_Iniciar servidor..."
 
-#: ../plug-ins/script-fu/script-fu.c:306
-msgid "_GIMP Online"
-msgstr "_GIMP online"
+#: ../plug-ins/script-fu/script-fu.c:195
+msgid "Server for remote Script-Fu operation"
+msgstr "Servidor para operação remota do Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:394
+msgid "_GIMP Online"
+msgstr "_GIMP na Internet"
+
+#: ../plug-ins/script-fu/script-fu.c:395
 msgid "_User Manual"
 msgstr "_Manual do utilizador"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:398
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:400
 msgid "_Test"
 msgstr "_Testar"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:403
 msgid "_Buttons"
 msgstr "_Botões"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:405
 msgid "_Logos"
 msgstr "_Logótipos"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:407
 msgid "_Patterns"
 msgstr "_Texturas"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:410
 msgid "_Web Page Themes"
-msgstr "_Temas da página Web"
+msgstr "_Temas de página web"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:412
 msgid "_Alien Glow"
-msgstr "_Brilho estranho"
+msgstr "_Resplandecência estranha"
 
-#: ../plug-ins/script-fu/script-fu.c:326
+#: ../plug-ins/script-fu/script-fu.c:414
 msgid "_Beveled Pattern"
-msgstr "_Textura chanfrada"
+msgstr "_Textura biselada"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: ../plug-ins/script-fu/script-fu.c:416
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:331
+#: ../plug-ins/script-fu/script-fu.c:419
 msgid "Alpha to _Logo"
-msgstr "Alfa para _Logótipo"
+msgstr "Alfa para _logótipo"
 
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Reler todos os scripts Script-Fu disponíveis"
-
-#: ../plug-ins/script-fu/script-fu.c:339
+#: ../plug-ins/script-fu/script-fu.c:425
 msgid "_Refresh Scripts"
 msgstr "_Atualizar scripts"
 
-#: ../plug-ins/script-fu/script-fu.c:362
+#: ../plug-ins/script-fu/script-fu.c:430
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Reler todos os scripts Script-Fu disponíveis"
+
+#: ../plug-ins/script-fu/script-fu.c:456
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
-"Não pode utilizar \"Atualizar scripts\" enquanto um diálogo Script-Fu "
-"estiver aberto. Por favor feche todas as janelas Script-Fu e tente de novo."
+"Não pode utilizar \"Atualizar scripts\" enquanto estiver aberta uma janela "
+"Script-Fu. Por favor feche todas as janelas Script-Fu e tente de novo."
 
-#: ../plug-ins/script-fu/script-fu-console.c:127
-#: ../plug-ins/script-fu/script-fu-console.c:194
+#: ../plug-ins/script-fu/script-fu-console.c:110
+#: ../plug-ins/script-fu/script-fu-console.c:177
 msgid "Script-Fu Console"
 msgstr "Consola Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:190
+#: ../plug-ins/script-fu/script-fu-console.c:115
+#: ../plug-ins/script-fu/script-fu-console.c:281
+msgid "_Save"
+msgstr "_Guardar"
+
+#: ../plug-ins/script-fu/script-fu-console.c:116
+msgid "C_lear"
+msgstr "_Limpar"
+
+#: ../plug-ins/script-fu/script-fu-console.c:117
+#: ../plug-ins/script-fu/script-fu-console.c:359
+msgid "_Close"
+msgstr "_Fechar"
+
+#: ../plug-ins/script-fu/script-fu-console.c:173
 msgid "Welcome to TinyScheme"
 msgstr "Boas vindas ao TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:196
+#: ../plug-ins/script-fu/script-fu-console.c:179
 msgid "Interactive Scheme Development"
 msgstr "Desenvolvimento de esquema interativo"
 
-#: ../plug-ins/script-fu/script-fu-console.c:232
+#: ../plug-ins/script-fu/script-fu-console.c:215
 msgid "_Browse..."
 msgstr "_Navegar..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:288
+#: ../plug-ins/script-fu/script-fu-console.c:276
 msgid "Save Script-Fu Console Output"
-msgstr "Gravar saída da consola Script-Fu"
+msgstr "Guardar saída da consola Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:335
+#: ../plug-ins/script-fu/script-fu-console.c:280
+#: ../plug-ins/script-fu/script-fu-interface.c:239
+#: ../plug-ins/script-fu/script-fu-server.c:834
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: ../plug-ins/script-fu/script-fu-console.c:325
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Impossível abrir \"%s\" para escrita: %s"
+msgstr "Não foi possível abrir \"%s\" para escrita: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:364
+#: ../plug-ins/script-fu/script-fu-console.c:354
 msgid "Script-Fu Procedure Browser"
 msgstr "Navegador de procedimentos do Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:60
+#: ../plug-ins/script-fu/script-fu-console.c:358
+msgid "_Apply"
+msgstr "_Aplicar"
+
+#: ../plug-ins/script-fu/script-fu-eval.c:53
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "O modo de avaliação Script-Fu só permite invocação não interativa"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:203
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "O Script-Fu não pode processar dois scripts ao mesmo tempo."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:205
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Já está a executar o script \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:226
+#: ../plug-ins/script-fu/script-fu-interface.c:231
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:238
+msgid "_Reset"
+msgstr "_Repor"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:240
+msgid "_OK"
+msgstr "_OK"
+
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:289
+#: ../plug-ins/script-fu/script-fu-interface.c:294
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:344
 msgid "Script-Fu Color Selection"
 msgstr "Seleção de cores do Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:446
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu File Selection"
 msgstr "Seleção de ficheiros Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-Fu Folder Selection"
 msgstr "Seleção de pastas Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Font Selection"
-msgstr "Seleção de letra do Script-Fu"
+msgstr "Seleção de tipo de letra do Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Palette Selection"
 msgstr "Seleção de paleta do Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+#: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Pattern Selection"
 msgstr "Seleção de textura do Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:505
 msgid "Script-Fu Gradient Selection"
 msgstr "Seleção de gradiente do Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:514
 msgid "Script-Fu Brush Selection"
 msgstr "Seleção de pincel do Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:857
+#: ../plug-ins/script-fu/script-fu-interface.c:893
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Erro ao executar %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:149
+#: ../plug-ins/script-fu/script-fu-scripts.c:148
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Poucos argumentos para a chamada a \"script-fu-register\""
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:648
+#: ../plug-ins/script-fu/script-fu-scripts.c:647
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Erro ao carregar %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:827
+#: ../plug-ins/script-fu/script-fu-server.c:830
 msgid "Script-Fu Server Options"
 msgstr "Opções do servidor Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "_Start Server"
 msgstr "_Iniciar servidor"
 
-#: ../plug-ins/script-fu/script-fu-server.c:865
+#: ../plug-ins/script-fu/script-fu-server.c:868
 msgid "Listen on IP:"
-msgstr "Ouvir no IP:"
+msgstr "Escutar no IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:872
+#: ../plug-ins/script-fu/script-fu-server.c:875
 msgid "Server port:"
 msgstr "Porta do servidor:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:878
+#: ../plug-ins/script-fu/script-fu-server.c:881
 msgid "Server logfile:"
-msgstr "Ficheiro de diário do servidor:"
+msgstr "Ficheiro de registos do servidor:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:891
+#: ../plug-ins/script-fu/script-fu-server.c:894
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
-"Ouvir num endereço IP diferente de 127.0.0.1 (especialmente no 0.0.0.0) pode "
-"permitir que atacantes executem remotamente código arbitrário nesta máquina."
+"Escutar num endereço IP diferente de 127.0.0.1 (especialmente no 0.0.0.0) "
+"pode permitir que atacantes executem remotamente código arbitrário nesta "
+"máquina."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:76
 msgid "Bumpmap"
 msgstr "Mapa de relevos"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add B_evel..."
-msgstr "Adicionar ângulo B_evel..."
+msgstr "Adicionar _biselado…"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:190
 msgid "Add a beveled border to an image"
-msgstr "Adicionar uma margem biselada a uma imagem"
+msgstr "Adicionar uma margem com biselado (chanfra) a uma imagem"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:197
 msgid "Thickness"
 msgstr "Espessura"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:198
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
-#: ../plug-ins/script-fu/scripts/slide.scm:248
+#: ../plug-ins/script-fu/scripts/round-corners.scm:145
+#: ../plug-ins/script-fu/scripts/slide.scm:257
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Work on copy"
 msgstr "Trabalhar na cópia"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:199
 msgid "Keep bump layer"
-msgstr "Manter Camada de Saliência"
+msgstr "Manter camada de relevo"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:108
 msgid "Border Layer"
-msgstr "Rebordo da camada"
+msgstr "Camada da margem"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:160
+#: ../plug-ins/script-fu/scripts/addborder.scm:162
 msgid "Add _Border..."
-msgstr "Adicionar Re_bordo"
+msgstr "Adicionar _margem…"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:161
+#: ../plug-ins/script-fu/scripts/addborder.scm:163
 msgid "Add a border around an image"
 msgstr "Adiciona uma margem à volta de uma imagem, pelo exterior"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:168
+#: ../plug-ins/script-fu/scripts/addborder.scm:170
 msgid "Border X size"
 msgstr "Tamanho do rebordo X"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:169
+#: ../plug-ins/script-fu/scripts/addborder.scm:171
 msgid "Border Y size"
 msgstr "Tamanho do rebordo Y"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:170
+#: ../plug-ins/script-fu/scripts/addborder.scm:172
 msgid "Border color"
 msgstr "Cor do rebordo"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:171
+#: ../plug-ins/script-fu/scripts/addborder.scm:173
 msgid "Delta value on color"
-msgstr "Valor Delta nas Cores"
+msgstr "Valor delta nas cores"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
 msgid "Frame"
-msgstr "Quadro"
+msgstr "Fotograma"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:222
 msgid "Blend Animation needs at least three source layers"
@@ -316,191 +348,191 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:236
 msgid "Intermediate frames"
-msgstr "Quadros Intermediários"
+msgstr "Fotogramas intermédios"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:237
 msgid "Max. blur radius"
-msgstr "Raio de Desfoc. Máx."
+msgstr "Raio da desfocagem máxima"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:238
 msgid "Looped"
 msgstr "Cíclico"
 
 #. --- false form of "if-1"
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:217
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"O script Descolorações de animação requer um total de duas camadas ! Uma "
-"camada de 1º plano com transparência e uma camada de fundo."
+"O script “queimar para dentro” requer um total de duas camadas! Uma camada "
+"de 1º plano com transparência e uma camada de fundo."
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
 msgid "B_urn-In..."
-msgstr "_Descolorações de Animação..."
+msgstr "Q_ueimar para dentro…"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
-"Criar camadas intermédias para produzir uma transição de descolorações "
-"animadas entre duas camadas"
+"Criar camadas intermédias para produzir uma transição de “queimar para "
+"dentro” entre duas camadas"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
-msgstr "Cor de Brilho"
+msgstr "Cor do brilho"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
 msgid "Fadeout"
-msgstr "Desbotar"
+msgstr "Desvanecimento para fora"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Fadeout width"
-msgstr "Largura do Desvanecimento"
+msgstr "Largura do desvanecimento para fora"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Corona width"
 msgstr "Largura da coroa"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "After glow"
-msgstr "Após brilho"
+msgstr "Após o brilho"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Add glowing"
 msgstr "Adicionar brilho"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "Prepare for GIF"
 msgstr "Preparar para GIF"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Speed (pixels/frame)"
-msgstr "Velocidade (pixels/quadro)"
+msgstr "Velocidade (píxeis/fotograma)"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+#: ../plug-ins/script-fu/scripts/carve-it.scm:176
 msgid "Carved Surface"
-msgstr "Superfície Cinzelada"
+msgstr "Superfície esculpida"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+#: ../plug-ins/script-fu/scripts/carve-it.scm:177
 msgid "Bevel Shadow"
-msgstr "Sombra Biselada"
+msgstr "Sombra biselada"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+#: ../plug-ins/script-fu/scripts/carve-it.scm:178
 msgid "Bevel Highlight"
-msgstr "Realce do Chanfro"
+msgstr "Realce do biselado"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+#: ../plug-ins/script-fu/scripts/carve-it.scm:179
 msgid "Cast Shadow"
 msgstr "Criar sombra"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+#: ../plug-ins/script-fu/scripts/carve-it.scm:180
 msgid "Inset"
 msgstr "Inserir"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+#: ../plug-ins/script-fu/scripts/carve-it.scm:192
 msgid "Stencil C_arve..."
 msgstr "Esc_ulpir com estêncil..."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+#: ../plug-ins/script-fu/scripts/carve-it.scm:193
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
-"Usar o desenho especificado como um stencil para esculpir a partir da imagem "
-"especificada."
+"Usar o desenho especificado como um estêncil para esculpir a partir da "
+"imagem especificada."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+#: ../plug-ins/script-fu/scripts/carve-it.scm:200
 msgid "Image to carve"
 msgstr "Imagem a esculpir"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+#: ../plug-ins/script-fu/scripts/carve-it.scm:201
 msgid "Carve white areas"
 msgstr "Esculpir áreas brancas"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:93
 msgid "Background"
 msgstr "Fundo"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:94
 msgid "Layer 1"
 msgstr "Camada 1"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:95
 msgid "Layer 2"
 msgstr "Camada 2"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:96
 msgid "Layer 3"
 msgstr "Camada 3"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:97
 msgid "Drop Shadow"
-msgstr "Sombra projectada"
+msgstr "Sombra projetada"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:217
 msgid "Chrome"
 msgstr "Cromar"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:218
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:68
 msgid "Highlight"
 msgstr "Realce"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:232
 msgid "Stencil C_hrome..."
-msgstr "Estêncil _Cromado..."
+msgstr "Estêncil _cromado..."
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:233
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
-"Adiciona um efeito cromado à região seleccionada (ou à transparência) usando "
+"Adiciona um efeito cromado à região selecionada (ou à transparência) usando "
 "o estêncil (de tons de cinzento) especificado"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:240
 msgid "Chrome saturation"
 msgstr "Saturação do cromado"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
 msgid "Chrome lightness"
 msgstr "Claridade do cromado"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:242
 msgid "Chrome factor"
-msgstr "Factor do cromado"
+msgstr "Fator do cromado"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:243
 msgid "Environment map"
-msgstr "Mapa do Ambiente"
+msgstr "Mapa do ambiente"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
 msgid "Highlight balance"
 msgstr "Equilíbrio dos destaques"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:247
 msgid "Chrome balance"
 msgstr "Equilíbrio do cromado"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:248
 msgid "Chrome white areas"
 msgstr "Cromar áreas brancas"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:74
 msgid "Effect layer"
-msgstr "Camada de Efeitos"
+msgstr "Camada de efeitos"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:127
 msgid "_Circuit..."
-msgstr "_Circuito electrónico..."
+msgstr "_Circuito eletrónico..."
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:128
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
-"Preencher a região seleccionada (ou a transparência) com traços como os das "
-"placas de circuitos electrónicos"
+"Preencher a região selecionada (ou a transparência) com traços como os das "
+"placas de circuitos eletrónicos"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:135
 msgid "Oilify mask size"
@@ -508,7 +540,7 @@ msgstr "Tamanho da máscara de \"óleoficação\""
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:136
 msgid "Circuit seed"
-msgstr "Circuitos electrónicos"
+msgstr "Circuitos eletrónicos"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:137
 msgid "No background (only for separate layer)"
@@ -519,7 +551,7 @@ msgstr "Nenhum fundo (apenas para camada separada)"
 #: ../plug-ins/script-fu/scripts/predator.scm:132
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
-msgstr "Manter selecção"
+msgstr "Manter seleção"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:139
 #: ../plug-ins/script-fu/scripts/lava.scm:130
@@ -527,32 +559,32 @@ msgstr "Manter selecção"
 msgid "Separate layer"
 msgstr "Camada separada"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:51
+#: ../plug-ins/script-fu/scripts/clothify.scm:52
 msgid "_Clothify..."
 msgstr "Transformar em te_cido..."
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:52
+#: ../plug-ins/script-fu/scripts/clothify.scm:53
 msgid "Add a cloth-like texture to the selected region (or alpha)"
 msgstr ""
-"Adicionar uma textura tipo tecido à região seleccionada (ou à transparência)"
-
-#: ../plug-ins/script-fu/scripts/clothify.scm:59
-msgid "Blur X"
-msgstr "Desfocamento X"
+"Adicionar uma textura tipo tecido à região selecionada (ou à transparência)"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:60
-msgid "Blur Y"
-msgstr "Desfocamento Y"
+msgid "Blur X"
+msgstr "Desfocagem X"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Blur Y"
+msgstr "Desfocagem Y"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:62
 msgid "Azimuth"
 msgstr "Azimute"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:62
+#: ../plug-ins/script-fu/scripts/clothify.scm:63
 msgid "Elevation"
 msgstr "Elevação"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:63
+#: ../plug-ins/script-fu/scripts/clothify.scm:64
 msgid "Depth"
 msgstr "Profundidade"
 
@@ -560,70 +592,73 @@ msgstr "Profundidade"
 msgid "Stain"
 msgstr "Mancha"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:81
-msgid "_Coffee Stain..."
-msgstr "Man_chas de Café..."
-
 #: ../plug-ins/script-fu/scripts/coffee.scm:82
-msgid "Add realistic looking coffee stains to the image"
-msgstr "Adicionar à imagem marcas do fundo de uma chávena de café"
+msgid "_Coffee Stain..."
+msgstr "Man_chas de café..."
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:89
+#: ../plug-ins/script-fu/scripts/coffee.scm:83
+msgid "Add realistic looking coffee stains to the image"
+msgstr ""
+"Adicionar à imagem marcas realistas do fundo de uma chávena de café molhada"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:90
 msgid "Stains"
 msgstr "Manchas"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:90
+#: ../plug-ins/script-fu/scripts/coffee.scm:91
 msgid "Darken only"
-msgstr "Somente escurecer"
+msgstr "Apenas escurecer"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
-msgid "Difference Clouds..."
-msgstr "Nuvens diferenciadas..."
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
+msgid "_Difference Clouds..."
+msgstr "Nuvens _diferenciadas..."
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
 msgstr "Ruído sólido aplicado em modo de diferenciação de camada"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:105
 msgid "_Distort..."
-msgstr "_Distorcer..."
+msgstr "_Distorcer aleatoriamente…"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
-msgstr "Acalmar a selecção"
+msgstr ""
+"Distorce ligeiramente e de forma aleatória a seleção atual (como ruído "
+"aplicado nas bordas da seleção)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-msgid "Threshold (bigger 1<-->254 smaller)"
-msgstr "Limite (maior 1<-->254 menor)"
+msgid "_Threshold (bigger 1<-->254 smaller)"
+msgstr "_Limite (1 aumenta <-> 254 encolhe a seleção)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-msgid "Spread"
-msgstr "Espalhar"
+msgid "_Spread"
+msgstr "_Espalhar (valor alto aumenta a deformação)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-msgid "Granularity (1 is low)"
-msgstr "Granulado (1 é baixo)"
+msgid "_Granularity (1 is low)"
+msgstr "_Granulado (valor alto aumenta a deformação)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-msgid "Smooth"
-msgstr "Uniforme"
+msgid "S_mooth"
+msgstr "_Suavizar (valor alto diminui a deformação)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-msgid "Smooth horizontally"
-msgstr "Suavizar horizontalmente"
+msgid "Smooth hor_izontally"
+msgstr "Suavizar _horizontalmente"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-msgid "Smooth vertically"
-msgstr "Suavizar verticalmente"
+msgid "Smooth _vertically"
+msgstr "Suavizar _verticalmente"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
-msgid "_Drop Shadow..."
-msgstr "Sombra Projecta_da..."
+msgid "_Drop Shadow (legacy)..."
+msgstr "Sombra projeta_da..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr ""
-"Adicionar uma sombra projectada à região seleccionada (ou à transparência)"
+"Adicionar uma sombra projetada à região selecionada (ou à transparência)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset X"
@@ -635,14 +670,13 @@ msgstr "Deslocamento Y"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
-msgstr "Raio de suavização"
+msgstr "Raio de desfocagem"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
 msgid "Color"
 msgstr "Cor"
 
@@ -656,86 +690,103 @@ msgstr "Opacidade"
 msgid "Allow resizing"
 msgstr "Permitir o redimensionamento"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
-msgid "_Erase Every Other Row..."
-msgstr "_Apagar Linhas Alternadas..."
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:42
+msgid "_Erase Every Nth Row..."
+msgstr "_Apagar a cada N linhas…"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
-msgid "Erase every other row or column"
-msgstr "Apagar Linhas ou colunas alternadas"
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+msgid "Erase every nth row or column"
+msgstr "Apagar a cada dado número de uma série de linhas ou colunas"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
-msgstr "Linhas/Colunas"
+msgstr "Linhas / colunas"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Linhas"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Colunas"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
-msgid "Even/odd"
-msgstr "Pares/Impares"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
-msgid "Even"
-msgstr "Par"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
-msgid "Odd"
-msgstr "Ímpar"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
-msgstr "Apagar/Preencher"
+msgstr "Apagar / preencher"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Apagar"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
-msgstr "Preencher com Cor Fundo"
+msgstr "Preencher com cor de fundo"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Apagar todas as outras linhas…"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Apagar todas as outras linhas ou colunas"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Par / ímpar"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Par"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Ímpar"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
-msgstr "Desenhar Mapa do _Tipo de letra..."
+msgstr "Criar mapa de tipos de _letra…"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:153
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
-msgstr "Criar uma imagem das ante-visões de tipos de letra filtrados por nome"
+msgstr ""
+"Cria uma imagem com exemplos de todos os tipos de letra instalados que "
+"correspondem ao filtro de nomes dos tipos de letra"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:158
 msgid "_Text"
-msgstr "_Texto"
+msgstr "_Texto personalizado"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:159
 msgid "Use font _name as text"
-msgstr "Utilizar o _nome do Tipo de letra como texto"
+msgstr "Usar o _nome do tipo de letra em vez do texto personalizado"
 
+# String original induz em erro. Usar “Mostrar nome do tipo de letra”
 #: ../plug-ins/script-fu/scripts/font-map.scm:160
 msgid "_Labels"
-msgstr "_Etiquetas"
+msgstr "_Mostrar nome do tipo de letra"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:161
 msgid "_Filter (regexp)"
-msgstr "_Filtro (exp reg)"
+msgstr "_Filtro (expressão regular)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:162
 msgid "Font _size (pixels)"
-msgstr "Tamanho do Tipo de Letra (pixei_s)"
+msgstr "T_amanho do tipo de letra (em píxeis)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:163
 msgid "_Border (pixels)"
-msgstr "_Margem (pixeis)"
+msgstr "_Margem (píxeis)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "_Color scheme"
-msgstr "Esquema de _Cores"
+msgstr "Esquema de _cores"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
@@ -743,44 +794,44 @@ msgstr "Preto sobre branco"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Active colors"
-msgstr "Cores activas"
+msgstr "Cores ativas"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "_Fuzzy Border..."
-msgstr "_Margem Difusa..."
+msgstr "_Margem difusa..."
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Add a jagged, fuzzy border to an image"
 msgstr "Adicionar uma margem difusa e dentada à imagem"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
 #: ../plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Border size"
 msgstr "Tamanho da margem"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
 msgid "Blur border"
-msgstr "Margem esbatida"
+msgstr "Margem desfocada"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
 msgid "Granularity (1 is Low)"
-msgstr "Granularidade (1 é Baixo)"
+msgstr "Granularidade (1 é baixa)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
 msgid "Add shadow"
 msgstr "Adicionar sombra"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:162
 msgid "Shadow weight (%)"
 msgstr "Peso da sombra (%)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
-msgstr "Alisar Imagem"
+msgstr "Achatar imagem"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:59
 msgid "Using _Paths"
-msgstr "Utilizando _Caminhos"
+msgstr "Utilizando _caminhos"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:60
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:73
@@ -795,80 +846,99 @@ msgstr "Favorito para o manual do utilizador"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
-msgstr "_Preparando as suas imagens para a Web"
+msgstr "_Preparar as suas imagens para a web"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
-msgstr "_Trabalhando com Fotos de Camera Digital"
+msgstr "_Trabalhar com fotografias de câmaras digitais"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:98
 msgid "Create, Open and Save _Files"
-msgstr "Criar, Abrir e Gravar _Ficheiros"
+msgstr "Criar, abrir e guardar _ficheiros"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:111
 msgid "_Basic Concepts"
-msgstr "_Conceitos Básicos"
+msgstr "_Conceitos básicos"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:124
 msgid "How to Use _Dialogs"
-msgstr "Como Utilizar _Dialogos"
+msgstr "Como utilizar _diálogos"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:137
 msgid "Drawing _Simple Objects"
-msgstr "Desenhando Objectos _Simples"
+msgstr "Desenhar objetos _simples"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:150
 msgid "Create and Use _Selections"
-msgstr "Criar e Utilizar _Selecções"
+msgstr "Criar e utilizar _seleções"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
 msgid "_Main Web Site"
-msgstr "_Página Web Principal"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the GIMP web site"
-msgstr "Favorito para a página web do GIMP"
+msgstr "_Página web principal"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-msgid "_Developer Web Site"
-msgstr "Página Web do _Criador"
-
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-msgid "_User Manual Web Site"
-msgstr "_Página Web do Manual do Utilizador"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
+msgid "Bookmark to the GIMP web site"
+msgstr "Favorito para o sítio web do GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+msgid "_Developer Web Site"
+msgstr "Sítio web do _criador"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+msgid "_Roadmap"
+msgstr "_Calendário de implementações"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Plug-in _Registry"
-msgstr "_Registo Plug-in"
+msgid "Bookmark to the roadmap of GIMP"
+msgstr "Favorito para o calendário de implementações (roadmap) do GIMP"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
-msgid "Custom _Gradient..."
-msgstr "Gradiente _Personalizado..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+msgid "_Wiki"
+msgstr "_Wiki"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
-msgid "Create an image filled with an example of the current gradient"
-msgstr "Criar uma imagem preenchida com um exemplo do actual gradiente"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+msgid "Bookmark to the wiki of GIMP"
+msgstr "Favorito para a wiki do GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+msgid "_Bug Reports and Feature Requests"
+msgstr "_Erros reportados e pedidos de funcionalidades"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr "Favorito para o rastreador de erros do GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+msgid "_User Manual Web Site"
+msgstr "_Página web do manual do utilizador"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+msgid "Custom _Gradient..."
+msgstr "_Gradiente personalizado..."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+msgid "Create an image filled with an example of the current gradient"
+msgstr "Criar uma imagem preenchida com um exemplo do gradiente atual"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:75
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:70
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
 msgid "Width"
 msgstr "Largura"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:76
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:71
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:197
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
 msgid "Height"
 msgstr "Altura"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:77
 msgid "Gradient reverse"
 msgstr "Gradiente inverso"
 
@@ -881,7 +951,8 @@ msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
 msgstr ""
-"Desenhar uma grelha segundo as listas dos eixos X e Y, usando o pincel actual"
+"Desenhar uma grelha especificada pelas listas dos eixos X e Y, usando o "
+"pincel atual"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
@@ -893,15 +964,15 @@ msgstr "Divisões Y"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
-msgstr "Novas Guias a partir da _Selecção"
+msgstr "Novas guias a partir da _seleção"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "Criar quatro guias à volta da caixa limite da seleção atual"
+msgstr "Criar quatro guias à volta da caixa delimitadora da seleção atual"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
-msgstr "Nova Guia (por _Percentagem)..."
+msgstr "Nova guia (por p_ercentagem)..."
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -911,8 +982,8 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-msgid "Direction"
-msgstr "Direcção"
+msgid "_Direction"
+msgstr "_Direção"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
@@ -925,24 +996,24 @@ msgid "Vertical"
 msgstr "Vertical"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-msgid "Position (in %)"
-msgstr "Posição (em %)"
+msgid "_Position (in %)"
+msgstr "P_osição (em %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
-msgstr "Nova _Guia..."
+msgstr "_Nova guia..."
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "Adicionar uma guia na orientacao e na posição especificada (em pixeis)"
+msgstr "Adicionar uma guia na orientação e na posição especificada (em píxeis)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-msgid "Position"
-msgstr "Posição"
+msgid "_Position"
+msgstr "_Posição"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
-msgstr "_Remover todas as Guias"
+msgstr "_Remover todas as guias"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
@@ -954,11 +1025,11 @@ msgstr "_Lava..."
 
 #: ../plug-ins/script-fu/scripts/lava.scm:118
 msgid "Fill the current selection with lava"
-msgstr "Preencher a seleccao actual com lava"
+msgstr "Preencher a seleção atual com lava"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:125
 msgid "Seed"
-msgstr "Origem"
+msgstr "Semear"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:126
 msgid "Size"
@@ -966,27 +1037,27 @@ msgstr "Tamanho"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:127
 msgid "Roughness"
-msgstr "Roughness"
+msgstr "Rugosidade"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
 msgid "Gradient"
 msgstr "Gradiente"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:131
 msgid "Use current gradient"
-msgstr "Usar o gradiente actual"
+msgstr "Usar o gradiente atual"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:108
 msgid "Line _Nova..."
-msgstr "E_xplosão de Linhas..."
+msgstr "E_xplosão de linhas..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:109
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
 msgstr ""
-"Preencher a camada com raios emanando do seu centro, usando a cor de 1º plano"
+"Preencher a camada com raios provenientes do centro, usando a cor de 1º "
+"plano nos raios"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:116
 msgid "Number of lines"
@@ -994,7 +1065,7 @@ msgstr "Número de linhas"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Sharpness (degrees)"
-msgstr "Acuidade (grau)"
+msgstr "Nitidez (graus)"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:118
 msgid "Offset radius"
@@ -1006,64 +1077,62 @@ msgstr "Aleatório"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
-msgstr "_Rectangular..."
+msgstr "_Retangular..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:64
 msgid "Create a rectangular brush"
-msgstr "Criar um pincel rectangular"
+msgstr "Criar um pincel retangular"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:69
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
 msgid "Name"
 msgstr "Nome"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:72
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:143
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:198
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:268
 msgid "Spacing"
 msgstr "Espaçamento"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Re_ctangular, Feathered..."
-msgstr "Re_ctangular, Orla Suavizada..."
+msgstr "R_etangular, margens a desvanecer…"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:134
 msgid "Create a rectangular brush with feathered edges"
-msgstr "Criar um pincel rectangular com as orlas suavizadas"
+msgstr "Criar um pincel retangular com margens a desvanecer (suavizadas)"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:142
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:267
 msgid "Feathering"
-msgstr "Difusão da orla"
+msgstr "Margens a desvanecer"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:189
 msgid "_Elliptical..."
-msgstr "_Eliptical..."
+msgstr "_Elíptico..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:190
 msgid "Create an elliptical brush"
-msgstr "Criar um pincel eliptico"
+msgstr "Criar um pincel oval"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Elli_ptical, Feathered..."
-msgstr "Elí_ptico, Orla Suavizada..."
+msgstr "E_líptico, margem a desvanecer…"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Create an elliptical brush with feathered edges"
-msgstr "Criar um pincel elíptico com as orlas suavizadas"
+msgstr "Criar um pincel elíptico com margens a desvanecer (suavizadas)"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
-msgstr "Fot_o Antiga..."
+msgstr "Fotografia _antiga..."
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:90
 msgid "Make an image look like an old photo"
-msgstr "Fazer com que uma imagem se pareca com uma foto antiga"
+msgstr "Fazer com que uma imagem tenha o aspeto de uma fotografia antiga"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:97
 msgid "Defocus"
@@ -1078,7 +1147,7 @@ msgstr "Sépia"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:103
 msgid "Mottle"
-msgstr "Matizar"
+msgstr "Manchar"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:226
 msgid "Folder for the output file"
@@ -1089,8 +1158,8 @@ msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
-"O nome do ficheiro a ser criado (se já existir um ficheiro com este nome "
-"será substituido)"
+"O nome do ficheiro a ser criado (se já existir um ficheiro com este nome, "
+"este será substituído pelo novo)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
@@ -1110,38 +1179,37 @@ msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
-"Exportar a paleta activa como folha-de-estilos CSS, com o nome do item de "
-"cor como 'class name' e a própria cor como atributo de cor"
+"Exportar a paleta ativa como folha de estilos CSS, com o nome do item de cor "
+"como nome da classe e a própria cor como atributo de cor"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr "Exportar a paleta activa como dicionário PHP (nome => cor)"
+msgstr "Exportar a paleta ativa como dicionário PHP (nome => cor)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
-msgstr "Exportar a paleta activa como dicionário Python (nome: cor)"
+msgstr "Exportar a paleta ativa como dicionário Python (nome: cor)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr ""
-"Escrever todoas as cores da palete como ficheiro de texto, um valor "
-"hexadecimal por linha (sem nomes)"
+"Guardar todas as cores da paleta num ficheiro de texto, um valor hexadecimal "
+"por linha (sem nomes)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr "Exportar a paleta activa como java.util.Hashtable<Expressão, Cor>"
+msgstr "Exportar a paleta ativa como java.util.Hashtable<expressão, cor>"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
 msgid "There is no image data in the clipboard to paste."
-msgstr ""
-"Não há nenhuma informação de imagem na área de transferência para colar."
+msgstr "Não há dados de imagem na área de transferência para colar."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
 msgid "New _Brush..."
-msgstr "Novo _Pincel..."
+msgstr "Novo pinc_el..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste the clipboard contents into a new brush"
@@ -1149,36 +1217,41 @@ msgstr "Colar o conteúdo da área de transferência num novo pincel"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-msgid "Brush name"
-msgstr "Nome pincel"
+msgid "_Brush name"
+msgstr "_Nome do pincel"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-msgid "File name"
-msgstr "Nome ficheiro"
+msgid "_File name"
+msgstr "Nome do _ficheiro"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "_Spacing"
+msgstr "_Espaçamento"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "New _Pattern..."
-msgstr "Nova _Textura..."
+msgstr "Nova _textura..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
 msgid "Paste the clipboard contents into a new pattern"
-msgstr "Colar o conteúdo da área de transferência num nova Textura"
+msgstr "Colar o conteúdo da área de transferência numa nova textura"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-msgid "Pattern name"
-msgstr "Nome da Textura"
+msgid "_Pattern name"
+msgstr "Nome da _textura"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "_Perspective..."
-msgstr "_Perspectiva..."
+msgstr "_Perspetiva..."
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr "Adicionar uma sombra de perspectiva à região seleccionada (ou alfa)"
+msgstr "Adicionar uma sombra de perspetiva à região selecionada (ou alfa)"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
 msgid "Angle"
@@ -1202,11 +1275,11 @@ msgstr "_Predador..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm:122
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Adicionar um efeito 'Predador' à região seleccionada (ou alfa)"
+msgstr "Adicionar um efeito “predador” à região selecionada (ou alfa)"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:129
 msgid "Edge amount"
-msgstr "Tamanho da orla"
+msgstr "Tamanho da margem"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:130
 msgid "Pixelize"
@@ -1214,172 +1287,171 @@ msgstr "Pixelizar"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:131
 msgid "Pixel amount"
-msgstr "Quantidade de pixel"
+msgstr "Quantidade de píxel"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-msgid "Reverse Layer Order"
-msgstr "Ordem de Camada Inversa"
+msgid "Reverse Layer _Order"
+msgstr "_Ordem inversa de camadas"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
 msgid "Reverse the order of layers in the image"
 msgstr "Inverter a ordem das camadas na imagem"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:67
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
 msgid "_Rippling..."
-msgstr "_Ondulação..."
+msgstr "O_ndulação..."
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:68
-#| msgid ""
-#| "Create a multi-layer image by adding a ripple effect to the current image"
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
-"Criar uma imagem multi-camada ao adicionar um efeito de ondulação à imagem "
+"Criar uma imagem multicamada ao adicionar um efeito de ondulação à imagem "
 "atual"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:75
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
-msgstr "Força da ondulação"
+msgstr "Intensidade da ondulação"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:76
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:78
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:105
 msgid "Number of frames"
-msgstr "Número de quadros"
+msgstr "Número de fotogramas"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Edge behavior"
-msgstr "Comportamento da orla"
+msgstr "Comportamento da margem"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+# Confirmar tradução. Onde aparece esta string?
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
 msgstr "Quebrar"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Smear"
 msgstr "Esborratar"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Black"
 msgstr "Preto"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: ../plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
-msgstr "_Cantos Redondos..."
+msgstr "_Cantos arredondados…"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: ../plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
 "Arredondar o cantos de uma imagem e opcionalmente adicionar uma sombra "
-"projectada e um fundo"
-
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
-msgid "Edge radius"
-msgstr "Raio da orla"
-
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
-msgid "Add drop-shadow"
-msgstr "Adicionar sombra projectada"
+"projetada e um fundo"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:139
-msgid "Shadow X offset"
-msgstr "Deslocamento do eixo X da Sombra"
+msgid "Edge radius"
+msgstr "Raio da margem"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:140
-msgid "Shadow Y offset"
-msgstr "Deslocamento do eixo Y da Sombra"
+msgid "Add drop-shadow"
+msgstr "Adicionar sombra projetada"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Shadow X offset"
+msgstr "Deslocamento do eixo X da sombra"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Shadow Y offset"
+msgstr "Deslocamento do eixo Y da sombra"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "Adicionar fundo"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
-msgstr "De_finir Mapa de Cores..."
+msgstr "_Definir mapa de cores..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
-"Mudar o mapa de cores de uma imagem para as cores na paleta especificada."
+"Alterar o mapa de cores de uma imagem para as cores numa paleta especificada."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
 msgid "Palette"
-msgstr "Palette"
+msgstr "Paleta"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:139
 msgid "Rounded R_ectangle..."
-msgstr "R_ectangulo Arredondado..."
+msgstr "_Retângulo arredondado..."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:140
 msgid "Round the corners of the current selection"
-msgstr "Arredondar os cantos da selecção actual"
+msgstr "Arredondar os cantos da seleção atual"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-msgid "Radius (%)"
-msgstr "Raio (%)"
+msgid "R_adius (%)"
+msgstr "R_aio (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-msgid "Concave"
-msgstr "Concâvo"
+msgid "Co_ncave"
+msgstr "Co_ncâvo"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
 msgid "To _Brush..."
-msgstr "Em _Pincel..."
+msgstr "Para pin_cel..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
 msgid "Convert a selection to a brush"
-msgstr "Converter uma selecção para um pincel"
+msgstr "Converter uma seleção num pincel"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm:81
 msgid "To _Image"
-msgstr "Para a _Imagem"
+msgstr "Para _imagem"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm:82
 msgid "Convert a selection to an image"
-msgstr "Converter uma seleccao numa imagem"
+msgstr "Converter uma seleção numa imagem"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
 msgid "To _Pattern..."
-msgstr "Converter em _Textura..."
+msgstr "Para _textura..."
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
 msgid "Convert a selection to a pattern"
-msgstr "Converter uma seleccão numa Textura"
+msgstr "Converter uma seleção numa Textura"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:236
+#: ../plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
-msgstr "_Película fotográfica"
+msgstr "_Diapositivo…"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:237
+#: ../plug-ins/script-fu/scripts/slide.scm:246
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr ""
-"Adicionar à imagem uma moldura tipo as margens de uma película fotográfica "
-"antiga, incluindo buracos e dizeres"
+"Adicionar à imagem uma moldura a simular um diapositivo com perfurações e "
+"etiquetas típicas de películas fotográficas"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:244
+#: ../plug-ins/script-fu/scripts/slide.scm:253
 msgid "Text"
 msgstr "Texto"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:245
+#: ../plug-ins/script-fu/scripts/slide.scm:254
 msgid "Number"
 msgstr "Número"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:246
+#: ../plug-ins/script-fu/scripts/slide.scm:255
 msgid "Font"
-msgstr "Tipo de Letra"
+msgstr "Tipo de letra"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:247
+#: ../plug-ins/script-fu/scripts/slide.scm:256
 msgid "Font color"
-msgstr "Cor do Tipo de Letra"
+msgstr "Cor do tipo de letra"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
 msgid "_Spinning Globe..."
-msgstr "E_sfera giratória..."
+msgstr "_Globo giratório…"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
-"Criar uma animação através do mapeamento da imagem actual numa esfera "
+"Criar uma animação através do mapeamento da imagem atual numa esfera "
 "giratória"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
@@ -1396,143 +1468,21 @@ msgstr "Fundo transparente"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
 msgid "Index to n colors (0 = remain RGB)"
-msgstr "Indexar em N cores (0=mantém-se RGB)"
+msgstr "Indexar em N cores (0 = mantém-se RGB)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
-msgid "Rendering Spyro"
-msgstr "Renderizando Spyro"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
-msgstr "E_spirografo Gimp..."
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"Adicionar curvas espirograficas, epitrocoidais e de Lissajous à camada actual"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
-msgid "Type"
-msgstr "Tipo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
-msgid "Spyrograph"
-msgstr "Espirógrafo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
-msgid "Epitrochoid"
-msgstr "Epitrocoido"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
-msgid "Lissajous"
-msgstr "Lissajous"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
-msgid "Shape"
-msgstr "Forma"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
-msgid "Circle"
-msgstr "Círculo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
-msgid "Triangle"
-msgstr "Triângulo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
-msgid "Square"
-msgstr "Quadrado"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
-msgid "Pentagon"
-msgstr "Pentágono"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
-msgid "Hexagon"
-msgstr "Hexágono"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
-msgid "Polygon: 7 sides"
-msgstr "Polígono: 7 lados"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
-msgid "Polygon: 8 sides"
-msgstr "Polígono: 8 lados"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
-msgid "Polygon: 9 sides"
-msgstr "Polígono: 9 lados"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
-msgid "Polygon: 10 sides"
-msgstr "Polígono: 10 lados"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
-msgid "Outer teeth"
-msgstr "Dentes exteriores"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
-msgid "Inner teeth"
-msgstr "Dentes interiores"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
-msgid "Margin (pixels)"
-msgstr "Margem (pixeis)"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
-msgid "Hole ratio"
-msgstr "Factor do buraco"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
-msgid "Start angle"
-msgstr "Ângulo inicial"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
-msgid "Tool"
-msgstr "Ferramenta"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
-msgid "Pencil"
-msgstr "Lápis"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
-msgid "Brush"
-msgstr "Pincel"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
-msgid "Airbrush"
-msgstr "Aerógrafo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
-msgid "Color method"
-msgstr "Método de cor"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
-msgid "Solid Color"
-msgstr "Cor sólida"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
-msgid "Gradient: Loop Sawtooth"
-msgstr "Gradiente: Ciclo Puzzle"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
-msgid "Gradient: Loop Triangle"
-msgstr "Gradiente: Ciclo Triângulo"
-
-#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:272
 msgid "_Sphere..."
 msgstr "_Esfera..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:68
 msgid "_Tileable Blur..."
-msgstr "_Suavização em mosaico..."
+msgstr "_Desfocagem em mosaicos…"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:69
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr ""
-"Desfocar as orlas de uma imagem para que o resultado seja em mosaico contínuo"
+"Desfocar as margens de uma imagem para que o resultado possa ser disposto em "
+"mosaicos contínuos"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:76
 msgid "Radius"
@@ -1540,15 +1490,15 @@ msgstr "Raio"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:77
 msgid "Blur vertically"
-msgstr "Suavizar verticalmente"
+msgstr "Desfocar verticalmente"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:78
 msgid "Blur horizontally"
-msgstr "Suavizar horizontalmente"
+msgstr "Desfocar horizontalmente"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "Blur type"
-msgstr "Tipo de Suavização"
+msgstr "Tipo de desfocagem"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
@@ -1575,8 +1525,8 @@ msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
-"Criar um imagem multi-camada com um efeito provocado por pedra que tenha "
-"sido atirada à imagem"
+"Criar um imagem multicamada com um efeito de ondulação a simular uma pedra "
+"atirada à imagem"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:103
 msgid "Amplitude"
@@ -1590,11 +1540,11 @@ msgstr "Comprimento da onda"
 msgid "Invert direction"
 msgstr "Inverter direção"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:389
+#: ../plug-ins/script-fu/scripts/weave.scm:397
 msgid "_Weave..."
-msgstr "_Tecelagem"
+msgstr "_Tecelagem…"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:390
+#: ../plug-ins/script-fu/scripts/weave.scm:398
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
@@ -1602,31 +1552,31 @@ msgstr ""
 "Criar uma nova camada preenchida com um efeito de tecelagem para ser usada "
 "como sobreposição ou mapa de relevo"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:397
+#: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
 msgstr "Largura das fitas"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:398
+#: ../plug-ins/script-fu/scripts/weave.scm:406
 msgid "Ribbon spacing"
 msgstr "Espaço das fitas"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:399
+#: ../plug-ins/script-fu/scripts/weave.scm:407
 msgid "Shadow darkness"
 msgstr "Escuridão da sombra"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:400
+#: ../plug-ins/script-fu/scripts/weave.scm:408
 msgid "Shadow depth"
 msgstr "Profundidade da sombra"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:401
+#: ../plug-ins/script-fu/scripts/weave.scm:409
 msgid "Thread length"
 msgstr "Tamanho do fiamento"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:402
+#: ../plug-ins/script-fu/scripts/weave.scm:410
 msgid "Thread density"
 msgstr "Densidade do fiamento"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:403
+#: ../plug-ins/script-fu/scripts/weave.scm:411
 msgid "Thread intensity"
 msgstr "Intensidade do fiamento"
 
@@ -1641,15 +1591,15 @@ msgstr "Efeito _Xach..."
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:122
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr ""
-"Adicionar um efeito subtil 3D translúcido à região seleccionada (ou alfa)"
+"Adicionar um efeito subtil em 3D translúcido à região selecionada (ou alfa)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:129
 msgid "Highlight X offset"
-msgstr "Deslocamento do destaque X"
+msgstr "Deslocamento X do destaque"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight Y offset"
-msgstr "Deslocamento do destaque Y"
+msgstr "Deslocamento Y do destaque"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight color"
@@ -1657,27 +1607,126 @@ msgstr "Cor do destaque"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight opacity"
-msgstr "Destaque Opacidade"
+msgstr "Opacidade do destaque"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"
-msgstr "Cor da sombra projectada"
+msgstr "Cor da sombra projetada"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow opacity"
-msgstr "Opacidade Sombra Projectada"
+msgstr "Opacidade da sombra projetada"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow blur radius"
-msgstr "Raio de suavização da sombra proj."
+msgstr "Raio da desfocagem da sombra projetada"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow X offset"
-msgstr "Deslocamento X da sombra projectada"
+msgstr "Deslocamento X da sombra projetada"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
-msgstr "Deslocamento Y da sombra projectada"
+msgstr "Deslocamento Y da sombra projetada"
+
+#~ msgid "_Console"
+#~ msgstr "_Consola"
+
+#~ msgid "Plug-in _Registry"
+#~ msgstr "_Registo Plug-in"
+
+#~ msgid "Rendering Spyro"
+#~ msgstr "Renderizando Spyro"
+
+#~ msgid "_Spyrogimp..."
+#~ msgstr "E_spirografo Gimp..."
+
+#~ msgid ""
+#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+#~ msgstr ""
+#~ "Adicionar curvas espirograficas, epitrocoidais e de Lissajous à camada "
+#~ "actual"
+
+#~ msgid "Type"
+#~ msgstr "Tipo"
+
+#~ msgid "Spyrograph"
+#~ msgstr "Espirógrafo"
+
+#~ msgid "Epitrochoid"
+#~ msgstr "Epitrocoido"
+
+#~ msgid "Lissajous"
+#~ msgstr "Lissajous"
+
+#~ msgid "Shape"
+#~ msgstr "Forma"
+
+#~ msgid "Circle"
+#~ msgstr "Círculo"
+
+#~ msgid "Triangle"
+#~ msgstr "Triângulo"
+
+#~ msgid "Square"
+#~ msgstr "Quadrado"
+
+#~ msgid "Pentagon"
+#~ msgstr "Pentágono"
+
+#~ msgid "Hexagon"
+#~ msgstr "Hexágono"
+
+#~ msgid "Polygon: 7 sides"
+#~ msgstr "Polígono: 7 lados"
+
+#~ msgid "Polygon: 8 sides"
+#~ msgstr "Polígono: 8 lados"
+
+#~ msgid "Polygon: 9 sides"
+#~ msgstr "Polígono: 9 lados"
+
+#~ msgid "Polygon: 10 sides"
+#~ msgstr "Polígono: 10 lados"
+
+#~ msgid "Outer teeth"
+#~ msgstr "Dentes exteriores"
+
+#~ msgid "Inner teeth"
+#~ msgstr "Dentes interiores"
+
+#~ msgid "Margin (pixels)"
+#~ msgstr "Margem (pixeis)"
+
+#~ msgid "Hole ratio"
+#~ msgstr "Factor do buraco"
+
+#~ msgid "Start angle"
+#~ msgstr "Ângulo inicial"
+
+#~ msgid "Tool"
+#~ msgstr "Ferramenta"
+
+#~ msgid "Pencil"
+#~ msgstr "Lápis"
+
+#~ msgid "Brush"
+#~ msgstr "Pincel"
+
+#~ msgid "Airbrush"
+#~ msgstr "Aerógrafo"
+
+#~ msgid "Color method"
+#~ msgstr "Método de cor"
+
+#~ msgid "Solid Color"
+#~ msgstr "Cor sólida"
+
+#~ msgid "Gradient: Loop Sawtooth"
+#~ msgstr "Gradiente: Ciclo Puzzle"
+
+#~ msgid "Gradient: Loop Triangle"
+#~ msgstr "Gradiente: Ciclo Triângulo"
 
 #~ msgid "Right"
 #~ msgstr "Direita"
