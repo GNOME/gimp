@@ -8,19 +8,39 @@
     "separate-locales": false,
     "rename-desktop-file": "gimp.desktop",
     "rename-icon": "gimp",
-    "finish-args": ["--share=ipc", "--share=network",
-                    "--socket=fallback-x11", "--socket=wayland",
-                    "--device=dri",
-                    "--filesystem=host", "--filesystem=xdg-config/GIMP",
-                    "--filesystem=xdg-config/gtk-3.0", "--filesystem=/tmp",
-                    "--filesystem=xdg-run/gvfs", "--filesystem=xdg-run/gvfsd",
-                    "--talk-name=org.gtk.vfs", "--talk-name=org.gtk.vfs.*",
-                    "--talk-name=org.freedesktop.FileManager1"],
-    "tags": ["GTK+3", "nightly"],
+    "finish-args": [
+        "--share=ipc",
+        "--share=network",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--device=dri",
+        "--filesystem=host",
+        "--filesystem=xdg-config/GIMP",
+        "--filesystem=xdg-config/gtk-3.0",
+        "--filesystem=/tmp",
+        "--filesystem=xdg-run/gvfs",
+        "--filesystem=xdg-run/gvfsd",
+        "--talk-name=org.gtk.vfs",
+        "--talk-name=org.gtk.vfs.*",
+        "--talk-name=org.freedesktop.FileManager1"
+    ],
+    "tags": [
+        "GTK+3",
+        "nightly"
+    ],
     "desktop-file-name-prefix": "(Nightly) ",
-    "cleanup": ["/include", "/lib/pkgconfig", "/share/pkgconfig",
-                "/share/aclocal", "/man", "/share/man", "/share/gtk-doc",
-                "/share/vala", "*.la", "*.a" ],
+    "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/share/pkgconfig",
+        "/share/aclocal",
+        "/man",
+        "/share/man",
+        "/share/gtk-doc",
+        "/share/vala",
+        "*.la",
+        "*.a"
+    ],
     "modules": [
         {
             "name": "gexiv2",
@@ -29,7 +49,10 @@
                     "name": "exiv2",
                     "buildsystem": "cmake-ninja",
                     "builddir": true,
-                    "cleanup": [ "/bin", "/share" ],
+                    "cleanup": [
+                        "/bin",
+                        "/share"
+                    ],
                     "sources": [
                         {
                             "type": "archive",
@@ -46,8 +69,11 @@
                 }
             ],
             "buildsystem": "meson",
-            "config-opts": [ "-Dintrospection=false", "-Dpython3=false",
-                             "-Dvapi=false" ],
+            "config-opts": [
+                "-Dintrospection=false",
+                "-Dpython3=false",
+                "-Dvapi=false"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -64,13 +90,18 @@
         },
         {
             "name": "lcms2",
-            "config-opts": [ "--disable-static" ],
-            "cleanup": [ "/bin", "/share" ],
+            "config-opts": [
+                "--disable-static"
+            ],
+            "cleanup": [
+                "/bin",
+                "/share"
+            ],
             "sources": [
                 {
                     "type": "archive",
                     "url": "https://github.com/mm2/Little-CMS/releases/download/lcms2.12/lcms2-2.12.tar.gz",
-                    "sha512": "967e8ac9a1d1aa3be45dc82362b9bc71c555e8577441efda57dc12d0bf84ed9188460c52eb8542d399ce9ab43bd4191988ed22b254ef34c6c1877bbb935952ed",
+                    "sha256": "18663985e864100455ac3e507625c438c3710354d85e5cbb7cd4043e11fe10f5",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 9815,
@@ -85,7 +116,9 @@
             "modules": [
                 {
                     "name": "ilmbase",
-                    "config-opts": [ "--disable-static" ],
+                    "config-opts": [
+                        "--disable-static"
+                    ],
                     "build-options": {
                         "cxxflags": "-std=c++14",
                         "env": {
@@ -100,13 +133,22 @@
                         },
                         {
                             "type": "shell",
-                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
+                            "commands": [
+                                "cp -p /usr/share/automake-*/config.{sub,guess} ."
+                            ]
                         }
                     ]
                 }
             ],
-            "config-opts": [ "--disable-static", "--disable-ilmbasetest" ],
-            "cleanup": [ "/bin", "/share/doc", "/lib/libIlmImfUtil*" ],
+            "config-opts": [
+                "--disable-static",
+                "--disable-ilmbasetest"
+            ],
+            "cleanup": [
+                "/bin",
+                "/share/doc",
+                "/lib/libIlmImfUtil*"
+            ],
             "build-options": {
                 "cxxflags": "-std=c++14"
             },
@@ -128,7 +170,9 @@
                 },
                 {
                     "type": "shell",
-                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
+                    "commands": [
+                        "cp -p /usr/share/automake-*/config.{sub,guess} ."
+                    ]
                 }
             ]
         },
@@ -154,9 +198,16 @@
                     ]
                 }
             ],
-            "config-opts": [ "-DENABLE_GOBJECT_INTROSPECTION=OFF", "-DENABLE_CPP=OFF",
-                             "-DOpenJPEG_DIR=/usr/lib64/openjpeg-2.3", "-DENABLE_BOOST=OFF" ],
-            "cleanup": [ "/bin", "/share" ],
+            "config-opts": [
+                "-DENABLE_GOBJECT_INTROSPECTION=OFF",
+                "-DENABLE_CPP=OFF",
+                "-DOpenJPEG_DIR=/usr/lib64/openjpeg-2.3",
+                "-DENABLE_BOOST=OFF"
+            ],
+            "cleanup": [
+                "/bin",
+                "/share"
+            ],
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "sources": [
@@ -175,8 +226,14 @@
         },
         {
             "name": "aalib",
-            "config-opts": [ "--disable-static" ],
-            "cleanup": [ "/bin", "/info", "/man" ],
+            "config-opts": [
+                "--disable-static"
+            ],
+            "cleanup": [
+                "/bin",
+                "/info",
+                "/man"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -185,14 +242,20 @@
                 },
                 {
                     "type": "shell",
-                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
+                    "commands": [
+                        "cp -p /usr/share/automake-*/config.{sub,guess} ."
+                    ]
                 }
             ]
         },
         {
             "name": "libmng",
-            "config-opts": [ "--disable-static" ],
-            "cleanup": [ "/share" ],
+            "config-opts": [
+                "--disable-static"
+            ],
+            "cleanup": [
+                "/share"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -203,8 +266,14 @@
         },
         {
             "name": "libwmf",
-            "config-opts": [ "--disable-static", "--disable-dependency-tracking" ],
-            "cleanup": [ "/share/doc", "/bin" ],
+            "config-opts": [
+                "--disable-static",
+                "--disable-dependency-tracking"
+            ],
+            "cleanup": [
+                "/share/doc",
+                "/bin"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -217,17 +286,31 @@
                 },
                 {
                     "type": "shell",
-                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} .",
-                                  "aclocal", "automake --add-missing", "autoconf" ]
+                    "commands": [
+                        "cp -p /usr/share/automake-*/config.{sub,guess} .",
+                        "aclocal",
+                        "automake --add-missing",
+                        "autoconf"
+                    ]
                 }
             ]
         },
         {
             "name": "ghostscript",
-            "config-opts": [ "--disable-cups" ],
-            "make-args": [ "so" ],
-            "make-install-args": [ "soinstall" ],
-            "cleanup": [ "/bin", "/share/man", "/share/doc" ],
+            "config-opts": [
+                "--disable-cups"
+            ],
+            "make-args": [
+                "so"
+            ],
+            "make-install-args": [
+                "soinstall"
+            ],
+            "cleanup": [
+                "/bin",
+                "/share/man",
+                "/share/doc"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -243,21 +326,23 @@
                 {
                     "type": "shell",
                     "commands": [
-                                  "cp -p /usr/share/automake-*/config.{sub,guess} freetype/builds/unix/",
-                                  "cp -p /usr/share/automake-*/config.{sub,guess} ijs/",
-                                  "cp -p /usr/share/automake-*/config.{sub,guess} jpeg/",
-                                  "cp -p /usr/share/automake-*/config.{sub,guess} libpng/",
-                                  "cp -p /usr/share/automake-*/config.{sub,guess} lcms2mt/",
-                                  "cp -p /usr/share/automake-*/config.{sub,guess} tiff/config/",
-                                  "rm -rf libpng/pngread.c"
-                                ]
+                        "cp -p /usr/share/automake-*/config.{sub,guess} freetype/builds/unix/",
+                        "cp -p /usr/share/automake-*/config.{sub,guess} ijs/",
+                        "cp -p /usr/share/automake-*/config.{sub,guess} jpeg/",
+                        "cp -p /usr/share/automake-*/config.{sub,guess} libpng/",
+                        "cp -p /usr/share/automake-*/config.{sub,guess} lcms2mt/",
+                        "cp -p /usr/share/automake-*/config.{sub,guess} tiff/config/",
+                        "rm -rf libpng/pngread.c"
+                    ]
                 }
             ]
         },
         {
             /* Copy from shared-modules to avoid submodules on dev repo. */
             "name": "intltool",
-            "cleanup": [ "*" ],
+            "cleanup": [
+                "*"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -274,7 +359,10 @@
         },
         {
             "name": "libmypaint",
-            "config-opts": [ "--disable-gegl", "--disable-introspection" ],
+            "config-opts": [
+                "--disable-gegl",
+                "--disable-introspection"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -322,8 +410,18 @@
             /* Shamelessly taken from org.octave.Octave manifest! */
             "name": "SuiteSparse",
             "no-autogen": true,
-            "make-args": [ "BLAS=-lopenblas", "LAPACK=", "library" ],
-            "make-install-args": [ "BLAS=-lopenblas", "LAPACK=", "INSTALL_LIB=/app/lib", "INSTALL_INCLUDE=/app/include/suitesparse", "library" ],
+            "make-args": [
+                "BLAS=-lopenblas",
+                "LAPACK=",
+                "library"
+            ],
+            "make-install-args": [
+                "BLAS=-lopenblas",
+                "LAPACK=",
+                "INSTALL_LIB=/app/lib",
+                "INSTALL_INCLUDE=/app/include/suitesparse",
+                "library"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -345,8 +443,16 @@
                 {
                     "name": "openblas",
                     "no-autogen": true,
-                    "make-args": [ "DYNAMIC_ARCH=1", "FC=gfortran", "NO_CBLAS=1", "NO_LAPACKE=1", "USE_OPENMP=0" ],
-                    "make-install-args": [ "PREFIX=/app" ],
+                    "make-args": [
+                        "DYNAMIC_ARCH=1",
+                        "FC=gfortran",
+                        "NO_CBLAS=1",
+                        "NO_LAPACKE=1",
+                        "USE_OPENMP=0"
+                    ],
+                    "make-install-args": [
+                        "PREFIX=/app"
+                    ],
                     "sources": [
                         {
                             "type": "archive",
@@ -364,14 +470,23 @@
             ]
         },
         {
-            "name" : "libheif",
-            "config-opts": [ "--disable-gdk-pixbuf" ],
-            "cleanup": [ "/bin", "/share/thumbnailers" ],
+            "name": "libheif",
+            "config-opts": [
+                "--disable-gdk-pixbuf"
+            ],
+            "cleanup": [
+                "/bin",
+                "/share/thumbnailers"
+            ],
             "modules": [
                 {
                     "name": "libde265",
-                    "config-opts": [ "--disable-sherlock265" ],
-                    "cleanup": [ "/bin" ],
+                    "config-opts": [
+                        "--disable-sherlock265"
+                    ],
+                    "cleanup": [
+                        "/bin"
+                    ],
                     "sources": [
                         {
                             "type": "archive",
@@ -390,10 +505,15 @@
                     "name": "libx265",
                     "buildsystem": "cmake",
                     "subdir": "source",
-                    "config-opts": [ "-DEXTRA_LIB='libx265-10.a;libx265-12.a'",
-                                     "-DEXTRA_LINK_FLAGS=-L.",
-                                     "-DLINKED_10BIT=ON", "-DLINKED_12BIT=ON" ],
-                    "cleanup": [ "/bin" ],
+                    "config-opts": [
+                        "-DEXTRA_LIB='libx265-10.a;libx265-12.a'",
+                        "-DEXTRA_LINK_FLAGS=-L.",
+                        "-DLINKED_10BIT=ON",
+                        "-DLINKED_12BIT=ON"
+                    ],
+                    "cleanup": [
+                        "/bin"
+                    ],
                     "sources": [
                         {
                             "type": "archive",
@@ -409,10 +529,10 @@
                         {
                             "type": "shell",
                             "commands": [
-                                            "ln -s ${FLATPAK_DEST}/lib/libx265-10.a",
-                                            "ln -s ${FLATPAK_DEST}/lib/libx265-12.a",
-                                            "rm -fr ${FLATPAK_DEST}/lib/libx265.so*"
-                                        ]
+                                "ln -s ${FLATPAK_DEST}/lib/libx265-10.a",
+                                "ln -s ${FLATPAK_DEST}/lib/libx265-12.a",
+                                "rm -fr ${FLATPAK_DEST}/lib/libx265.so*"
+                            ]
                         }
                     ],
                     "modules": [
@@ -420,9 +540,13 @@
                             "name": "libx265-10bpc",
                             "buildsystem": "cmake",
                             "subdir": "source",
-                            "config-opts": [ "-DHIGH_BIT_DEPTH=ON", "-DEXPORT_C_API=OFF",
-                                             "-DENABLE_SHARED=OFF", "-DENABLE_CLI=OFF",
-                                             "-DENABLE_ASSEMBLY=OFF" ],
+                            "config-opts": [
+                                "-DHIGH_BIT_DEPTH=ON",
+                                "-DEXPORT_C_API=OFF",
+                                "-DENABLE_SHARED=OFF",
+                                "-DENABLE_CLI=OFF",
+                                "-DENABLE_ASSEMBLY=OFF"
+                            ],
                             "sources": [
                                 {
                                     "type": "archive",
@@ -437,16 +561,21 @@
                                 }
                             ],
                             "post-install": [
-                                    "mv ${FLATPAK_DEST}/lib/libx265.a ${FLATPAK_DEST}/lib/libx265-10.a"
-                                ]
+                                "mv ${FLATPAK_DEST}/lib/libx265.a ${FLATPAK_DEST}/lib/libx265-10.a"
+                            ]
                         },
                         {
                             "name": "libx265-12bpc",
                             "buildsystem": "cmake",
                             "subdir": "source",
-                            "config-opts": [ "-DHIGH_BIT_DEPTH=ON", "-DEXPORT_C_API=OFF",
-                                             "-DENABLE_SHARED=OFF", "-DENABLE_CLI=OFF",
-                                             "-DENABLE_ASSEMBLY=OFF", "-DMAIN12=ON" ],
+                            "config-opts": [
+                                "-DHIGH_BIT_DEPTH=ON",
+                                "-DEXPORT_C_API=OFF",
+                                "-DENABLE_SHARED=OFF",
+                                "-DENABLE_CLI=OFF",
+                                "-DENABLE_ASSEMBLY=OFF",
+                                "-DMAIN12=ON"
+                            ],
                             "sources": [
                                 {
                                     "type": "archive",
@@ -461,17 +590,17 @@
                                 }
                             ],
                             "post-install": [
-                                    "mv ${FLATPAK_DEST}/lib/libx265.a ${FLATPAK_DEST}/lib/libx265-12.a"
-                                ]
+                                "mv ${FLATPAK_DEST}/lib/libx265.a ${FLATPAK_DEST}/lib/libx265-12.a"
+                            ]
                         }
                     ]
                 }
             ],
-            "sources" : [
+            "sources": [
                 {
-                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.12.0/libheif-1.12.0.tar.gz",
-                    "sha256" : "e1ac2abb354fdc8ccdca71363ebad7503ad731c84022cf460837f0839e171718",
-                    "type" : "archive",
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.12.0/libheif-1.12.0.tar.gz",
+                    "sha256": "e1ac2abb354fdc8ccdca71363ebad7503ad731c84022cf460837f0839e171718",
+                    "type": "archive",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 64439,
@@ -510,11 +639,16 @@
         {
             "name": "luajit",
             "no-autogen": true,
-            "cleanup": [ "/lib/*.a", "/include", "/lib/pkgconfig", "/share/man" ],
+            "cleanup": [
+                "/lib/*.a",
+                "/include",
+                "/lib/pkgconfig",
+                "/share/man"
+            ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "http://luajit.org/download/LuaJIT-2.1.0-beta3.tar.gz",
+                    "url": "https://luajit.org/download/LuaJIT-2.1.0-beta3.tar.gz",
                     "sha256": "1ad2e34b111c802f9d0cdf019e986909123237a28c746b21295b63c9e785d9c3",
                     "x-checker-data": {
                         "type": "anitya",
@@ -525,7 +659,9 @@
                 },
                 {
                     "type": "shell",
-                    "commands": [ "sed -i 's|/usr/local|/app|' ./Makefile" ]
+                    "commands": [
+                        "sed -i 's|/usr/local|/app|' ./Makefile"
+                    ]
                 }
             ],
             "post-install": [
@@ -536,11 +672,11 @@
             "name": "lua-lgi",
             "buildsystem": "meson",
             "sources": [
-            {
-                "type": "git",
-                "url": "https://github.com/pavouk/lgi.git",
-                "commit": "c21f35fccae87fd4e3625d4c878f584b7255d6f6"
-            }
+                {
+                    "type": "git",
+                    "url": "https://github.com/pavouk/lgi.git",
+                    "commit": "c21f35fccae87fd4e3625d4c878f584b7255d6f6"
+                }
             ]
         },
         {
@@ -581,7 +717,9 @@
         {
             "name": "babl",
             "buildsystem": "meson",
-            "config-opts": [ "-Dwith-docs=false" ],
+            "config-opts": [
+                "-Dwith-docs=false"
+            ],
             "sources": [
                 {
                     "type": "git",
@@ -593,8 +731,13 @@
         {
             "name": "gegl",
             "buildsystem": "meson",
-            "config-opts": [ "-Ddocs=false", "-Dworkshop=true" ],
-            "cleanup": [ "/bin" ],
+            "config-opts": [
+                "-Ddocs=false",
+                "-Dworkshop=true"
+            ],
+            "cleanup": [
+                "/bin"
+            ],
             "sources": [
                 {
                     "type": "git",
@@ -606,7 +749,9 @@
                 {
                     "name": "maxflow",
                     "buildsystem": "cmake-ninja",
-                    "cleanup": [ "/bin" ],
+                    "cleanup": [
+                        "/bin"
+                    ],
                     "sources": [
                         {
                             "type": "git",
@@ -636,11 +781,9 @@
                         "/bin/????*",
                         "/bin/fdp",
                         "/bin/nop",
-
                         "/lib/libgvpr*",
                         "/lib/liblab*",
                         "*.la",
-
                         "/lib/graphviz/libgvplugin_core*",
                         "/lib/graphviz/libgvplugin_g*",
                         "/lib/graphviz/libgvplugin_neato_layout*",
@@ -649,7 +792,6 @@
                         "/lib/graphviz/libgvplugin_visio*",
                         "/lib/graphviz/libgvplugin_webp*",
                         "/lib/graphviz/libgvplugin_xlib*",
-
                         "/share"
                     ]
                 }
@@ -657,11 +799,16 @@
         },
         {
             "name": "gimp",
-            "config-opts": [ "-Dgtk-doc=false",
-                             "-Dicc-directory=/run/host/usr/share/color/icc/",
-                             "-Dbuild-id=org.gimp.GIMP.flatpak.nightly",
-                             "-Dcheck-update=no" ],
-            "cleanup": [ "/bin/gimptool-2.99", "/bin/gimp-console-2.99" ],
+            "config-opts": [
+                "-Dgtk-doc=false",
+                "-Dicc-directory=/run/host/usr/share/color/icc/",
+                "-Dbuild-id=org.gimp.GIMP.flatpak.nightly",
+                "-Dcheck-update=no"
+            ],
+            "cleanup": [
+                "/bin/gimptool-2.99",
+                "/bin/gimp-console-2.99"
+            ],
             "buildsystem": "meson",
             "sources": [
                 {
