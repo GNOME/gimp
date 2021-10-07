@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-09-14 17:45+0000\n"
-"PO-Revision-Date: 2021-09-21 00:25+0200\n"
+"POT-Creation-Date: 2021-10-03 11:31+0000\n"
+"PO-Revision-Date: 2021-10-07 16:00+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -3525,7 +3525,7 @@ msgstr "240 segundos"
 #: ../app/dialogs/convert-precision-dialog.c:146
 #: ../app/dialogs/data-delete-dialog.c:86
 #: ../app/dialogs/file-open-location-dialog.c:80
-#: ../app/dialogs/file-save-dialog.c:753 ../app/dialogs/fill-dialog.c:115
+#: ../app/dialogs/file-save-dialog.c:758 ../app/dialogs/fill-dialog.c:115
 #: ../app/dialogs/grid-dialog.c:102
 #: ../app/dialogs/image-merge-layers-dialog.c:100
 #: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:326
@@ -4884,8 +4884,8 @@ msgid "Copy Named"
 msgstr "Copiar (con nombre)"
 
 #: ../app/actions/edit-commands.c:463
-msgid "Copy Visible Named "
-msgstr "Copiar visible con nombre "
+msgid "Copy Visible Named"
+msgstr "Copiar visible con nombre"
 
 #: ../app/actions/edit-commands.c:511
 msgid "Clear"
@@ -5006,7 +5006,7 @@ msgid "Save Error Log to File"
 msgstr "Guardar registro de errores en un archivo"
 
 #: ../app/actions/error-console-commands.c:101
-#: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:754
+#: ../app/actions/gradients-commands.c:80 ../app/dialogs/file-save-dialog.c:759
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:69
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -11187,7 +11187,7 @@ msgid "Move this window to screen %s"
 msgstr "Mover esta ventana a la pantalla %s"
 
 #: ../app/actions/window-commands.c:78 ../app/dialogs/extensions-dialog.c:79
-#: ../app/dialogs/file-save-dialog.c:677 ../app/dialogs/grid-dialog.c:103
+#: ../app/dialogs/file-save-dialog.c:682 ../app/dialogs/grid-dialog.c:103
 #: ../app/dialogs/image-new-dialog.c:107 ../app/dialogs/image-new-dialog.c:327
 #: ../app/dialogs/input-devices-dialog.c:67
 #: ../app/dialogs/item-options-dialog.c:146
@@ -16509,7 +16509,7 @@ msgstr "Introduzca dirección (URI):"
 msgid "Invalid URI"
 msgstr "URI no válido"
 
-#: ../app/dialogs/file-save-dialog.c:497
+#: ../app/dialogs/file-save-dialog.c:502
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -16519,11 +16519,11 @@ msgstr ""
 "la extensión del archivo. Introduzca una extensión que coincida con el "
 "formato de archivo seleccionado o no introduzca ninguna extensión de archivo."
 
-#: ../app/dialogs/file-save-dialog.c:657
+#: ../app/dialogs/file-save-dialog.c:662
 msgid "The given filename cannot be used for exporting"
 msgstr "El archivo dado no se puede usar para exportar"
 
-#: ../app/dialogs/file-save-dialog.c:658
+#: ../app/dialogs/file-save-dialog.c:663
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -16532,15 +16532,15 @@ msgstr ""
 "quiere guardar la imagen en el formato XCF de GIMP, use Archivo→Guardar en su "
 "lugar."
 
-#: ../app/dialogs/file-save-dialog.c:661
+#: ../app/dialogs/file-save-dialog.c:666
 msgid "Take me to the Save dialog"
 msgstr "Ir al diálogo Guardar"
 
-#: ../app/dialogs/file-save-dialog.c:665
+#: ../app/dialogs/file-save-dialog.c:670
 msgid "The given filename cannot be used for saving"
 msgstr "El archivo dado no se puede usar para guardar"
 
-#: ../app/dialogs/file-save-dialog.c:666
+#: ../app/dialogs/file-save-dialog.c:671
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -16548,15 +16548,15 @@ msgstr ""
 "Puede usar este diálogo para guardar en el formato XCF de GIMP. Use "
 "Archivo→Exportar para exportar a otros formatos de archivo."
 
-#: ../app/dialogs/file-save-dialog.c:668
+#: ../app/dialogs/file-save-dialog.c:673
 msgid "Take me to the Export dialog"
 msgstr "Ir al diálogo Exportar"
 
-#: ../app/dialogs/file-save-dialog.c:671 ../app/dialogs/file-save-dialog.c:748
+#: ../app/dialogs/file-save-dialog.c:676 ../app/dialogs/file-save-dialog.c:753
 msgid "Extension Mismatch"
 msgstr "Incongruencia de la extensión"
 
-#: ../app/dialogs/file-save-dialog.c:732
+#: ../app/dialogs/file-save-dialog.c:737
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -16565,20 +16565,20 @@ msgstr ""
 "introduzca una extensión de archivo conocida o seleccione un formato de "
 "archivo de la lista de formatos de archivo."
 
-#: ../app/dialogs/file-save-dialog.c:764
+#: ../app/dialogs/file-save-dialog.c:769
 msgid "The given file extension does not match the chosen file type."
 msgstr ""
 "La extensión de archivo dada no concuerda con el tipo de archivo elegido."
 
-#: ../app/dialogs/file-save-dialog.c:768
+#: ../app/dialogs/file-save-dialog.c:773
 msgid "Do you want to save the image using this name anyway?"
 msgstr "¿Seguro que quiere guardar la imagen con este nombre?"
 
-#: ../app/dialogs/file-save-dialog.c:833
+#: ../app/dialogs/file-save-dialog.c:838
 msgid "Saving canceled"
 msgstr "Guardado cancelado"
 
-#: ../app/dialogs/file-save-dialog.c:839 ../app/widgets/gimpdnd-xds.c:190
+#: ../app/dialogs/file-save-dialog.c:844 ../app/widgets/gimpdnd-xds.c:190
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -16589,7 +16589,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/dialogs/file-save-dialog.c:841
+#: ../app/dialogs/file-save-dialog.c:846
 msgid "Unknown error"
 msgstr "Error desconocido"
 
@@ -28578,15 +28578,15 @@ msgstr "Miniatura %d de %d"
 msgid "Creating preview..."
 msgstr "Creando la vista previa…"
 
-#: ../app/widgets/gimptoolbox-color-area.c:220
+#: ../app/widgets/gimptoolbox-color-area.c:234
 msgid "Change Foreground Color"
 msgstr "Cambiar el color de frente"
 
-#: ../app/widgets/gimptoolbox-color-area.c:225
+#: ../app/widgets/gimptoolbox-color-area.c:239
 msgid "Change Background Color"
 msgstr "Cambiar el color de fondo"
 
-#: ../app/widgets/gimptoolbox-color-area.c:287
+#: ../app/widgets/gimptoolbox-color-area.c:308
 msgid ""
 "The active foreground color.\n"
 "Click to open the color selection dialog."
@@ -28594,7 +28594,7 @@ msgstr ""
 "El color de primer plano activo.\n"
 "Pulse para abrir el diálogo de selección de color."
 
-#: ../app/widgets/gimptoolbox-color-area.c:292
+#: ../app/widgets/gimptoolbox-color-area.c:313
 msgid ""
 "The active background color.\n"
 "Click to open the color selection dialog."
