@@ -1,61 +1,59 @@
 # gimp-python's Portuguese translation.
 # Copyright © 2002, 2003, 2004, 2007 gimp
 # This file is distributed under the same license as the gimp package.
-#
-# Filipe Maia <fmaia@gmx.net>, 2002
-# Duarte Loreto <happyguy_pt@hotmail.com>, 2003, 2004
+# Filipe Maia <fmaia@gmx.net>, 2002.
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2003, 2004.
 # Filipe Gomes <filipefgomes@gmail.com>, 2007.
 # Fernando Correia <fcorreia.mail@gmail.com>, 2010.
-#
-# Baseado na versão brasileria por  Marcia Norie Nakaza <norie@conectiva.com.br>, 2000.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2015-07-21 17:32+0000\n"
-"PO-Revision-Date: 2015-07-22 11:51+0100\n"
-"Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
-"Language-Team: Português <palbuquerque73@gmail.com>\n"
+"POT-Creation-Date: 2021-10-07 20:10+0000\n"
+"PO-Revision-Date: 2021-10-07 21:28+0100\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
 msgstr "Informação sobre a exceção em falta"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pygimp/gimpfu.py:404
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Ocorreu um erro ao executar %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pygimp/gimpfu.py:415
 msgid "_More Information"
 msgstr "_Mais informação"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
+#: ../plug-ins/pygimp/gimpfu.py:546
 msgid "No"
 msgstr "Não"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
 msgid "Yes"
 msgstr "Sim"
 
-#: ../plug-ins/pygimp/gimpfu.py:597 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Seleção de ficheiro do Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:643
+#: ../plug-ins/pygimp/gimpfu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Seleção de pastas do Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:732
+#: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Entrada inválida para \"%s\""
@@ -112,47 +110,47 @@ msgstr "Gradiente a usar"
 msgid "File Name"
 msgstr "Nome do ficheiro"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Exporta o histograma da imagem para um ficheiro de texto (CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
 msgid "_Export histogram..."
 msgstr "_Exportar histograma..."
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
 msgid "_Image"
 msgstr "_Imagem"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "_Drawable"
 msgstr "_Desenhável"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "Histogram _File"
 msgstr "_Ficheiro de Histograma"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
 msgid "_Bucket Size"
 msgstr "Tamanho do _Balde"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
 msgid "Sample _Average"
 msgstr "Médi_a da Amostra"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Output format"
 msgstr "Formato de Saída"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Pixel count"
 msgstr "Contagem de Pixéis"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "Normalized"
 msgstr "Normalizado"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
 msgid "Percent"
 msgstr "Percentagem"
 
@@ -345,83 +343,83 @@ msgid "Slice"
 msgstr "Dividir"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "Corta uma imagem ao longo das guias, cria imagens e um excerto de tabela HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
 msgstr "_Dividir..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "Caminho para exportação HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "Nome do ficheiro a exportar"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "Prefixo do nome da imagem"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
 msgstr "Formato da imagem"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Pasta de imagem separada"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Pasta para exportar imagem"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "Espaço entre elementos da tabela"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript para rato sobre objeto e clique"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "Saltar animação para células limite da tabela"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
 msgstr "Consola Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
 msgstr "_Navegar..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pygimp/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
 msgstr "Navegador de procedimentos do Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossível abrir \"%s\" para escrever: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pygimp/plug-ins/python-console.py:198
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Impossível escrever em \"%s\": %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
 msgstr "Gravar saída da consola Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#: ../plug-ins/pygimp/plug-ins/python-console.py:232
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interpretador interativo GIMP Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pygimp/plug-ins/python-console.py:237
 msgid "_Console"
 msgstr "_Consola"
 
@@ -453,6 +451,410 @@ msgstr "Desvio _X da sombra projetada"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Desvio _Y da sombra projetada"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
+msgid "Spyro Layer"
+msgstr "Camada Spyro"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
+msgid "Spyro Path"
+msgstr "Caminho Spyro"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
+msgid ""
+"Save\n"
+"as New Layer"
+msgstr ""
+"Guardar\n"
+"como Nova Camada"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:57
+msgid ""
+"Redraw on\n"
+"Active layer"
+msgstr ""
+"Redesenhar em\n"
+"Camada ativa"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:58
+msgid ""
+"Save\n"
+"as Path"
+msgstr ""
+"Guardar\n"
+"como Caminho"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:104
+msgid "Circle"
+msgstr "Círculo"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:140
+msgid "Polygon-Star"
+msgstr "Estrela-polígono"
+
+#. Sine wave on a circle ring.
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:156
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:947
+msgid "Sine"
+msgstr "Seno"
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:166
+msgid "Bumps"
+msgstr "Saliências"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
+msgid "Rack"
+msgstr "Cremalheira"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
+msgid "Frame"
+msgstr "Moldura"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:404
+msgid "Selection"
+msgstr "Seleção"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:494
+msgid "Pencil"
+msgstr "Lápis"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:510
+msgid "AirBrush"
+msgstr "Aerógrafo"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:570
+msgid "Preview"
+msgstr "Previsão"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:575
+msgid "Stroke"
+msgstr "Traçar"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:622
+msgid "PaintBrush"
+msgstr "Pincel"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:624
+msgid "Ink"
+msgstr "Tinta"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:625
+msgid "MyPaintBrush"
+msgstr "MyPaintBrush"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:933
+msgid "Spyrograph"
+msgstr "Espirógrafo"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:940
+msgid "Epitrochoid"
+msgstr "Epitrocoido"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:967
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1397
+msgid "Curve Type"
+msgstr "Tipo de curva"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1398
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+"Um padrão epitrocóide é quando a engrenagem móvel está do lado de fora da "
+"engrenagem fixa."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1403
+msgid "Tool"
+msgstr "Ferramenta"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr ""
+"A ferramenta com a qual desenhar o padrão. A ferramenta de visualização "
+"simplesmente desenha rapidamente."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+msgid "Long Gradient"
+msgstr "Gradiente longo"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1411
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+"Quando desativado, serão usadas as configurações atuais da ferramenta. "
+"Quando ativado, será usado um gradiente longo para corresponder ao "
+"comprimento do padrão, com base no gradiente atual e no modo de repetição "
+"das configurações da ferramenta de gradiente."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+msgid "Specify pattern using one of the following tabs:"
+msgstr "Especifique a textura usando uma das seguintes guias:"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1433
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"A textura é especificada apenas pela guia ativa. O “Kit de brinquedo” é "
+"semelhante ao “Rodas dentadas”, mas usa engrenagens e números de orifícios "
+"que são encontrados em kits de brinquedos. Se seguir as instruções dos "
+"manuais do kit de brinquedos, os resultados devem ser semelhantes."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+"Número de dentes da engrenagem fixa. O tamanho da engrenagem fixa é "
+"proporcional ao número de dentes."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1460
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1486
+msgid "Fixed Gear Teeth"
+msgstr "Dentes de engrenagem fixa"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1466
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+"Número de dentes da engrenagem móvel. O tamanho da engrenagem móvel é "
+"proporcional ao número de dentes."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1469
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1491
+msgid "Moving Gear Teeth"
+msgstr "Dentes de engrenagem móvel"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
+msgid "Hole percent"
+msgstr "Percentagem do buraco"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+"A que distância está o orifício do centro da engrenagem em movimento. 100% "
+"significa que o orifício está na borda da engrenagem."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
+msgid "Hole Number"
+msgstr "Número do buraco"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"O orifício nº1 está na borda da engrenagem. O número máximo de orifícios "
+"está próximo do centro. O número máximo de orifícios é diferente para cada "
+"engrenagem."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+msgid "Flower Petals"
+msgstr "Pétalas de flor"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+msgid "The number of petals in the pattern."
+msgstr "O número de pétalas na textura."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
+msgid "Petal Skip"
+msgstr "Saltar pétala"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
+msgid "The number of petals to advance for drawing the next petal."
+msgstr "O número de pétalas a avançar para desenhar a próxima pétala."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
+msgid "Hole Radius(%)"
+msgstr "Raio do orifício (%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+"O raio do orifício no centro da textura onde nada será desenhado. Dado como "
+"uma percentagem do tamanho da textura. Um valor de 0 não produzirá nenhum "
+"orifício. Um valor de 99 produzirá uma linha fina na borda."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
+msgid "Width(%)"
+msgstr "Largura (%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1534
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+"A largura da textura como uma percentagem do tamanho da textura. Um valor de "
+"1 apenas desenhará uma textura fina. Um valor de 100 preencherá toda a "
+"engrenagem fixa."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
+msgid "Visual"
+msgstr "Visual"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
+msgid "Toy Kit"
+msgstr "Kit de brinquedo"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
+msgid "Gears"
+msgstr "Rodas dentadas"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1566
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
+msgid "Rotation"
+msgstr "Rotação"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1567
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+"Rotação da textura, em graus. A posição inicial da engrenagem móvel na "
+"engrenagem fixa."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
+msgid "Shape"
+msgstr "Forma"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1591
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+"A forma da engrenagem fixa a ser usada dentro da seleção atual. Cremalheira "
+"é uma forma longa e arredondada fornecida nos kits de brinquedos. O quadro "
+"abraça os limites da seleção retangular, use “orifício=100” na notação "
+"Engrenagem para tocar o limite. A seleção abrangerá os limites da seleção "
+"atual - tente algo não retangular."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
+msgid "Sides"
+msgstr "Lados"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
+msgid "Number of sides of the shape."
+msgstr "Número de lados da forma."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
+msgid "Morph"
+msgstr "Metamorfosear"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr ""
+"Faz a metamorfose da forma da engrenagem fixa. Afeta apenas algumas das "
+"formas."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "Rotação da engrenagem fixa, em graus"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
+msgid "Margin (px)"
+msgstr "Margem (px)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
+msgid "Margin from edge of selection."
+msgstr "Margem da borda da seleção."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+msgid "Make width and height equal"
+msgstr "Tornar a largura e altura iguais"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1632
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+"Quando desativado, a textura preencherá a imagem ou seleção atual. Quando "
+"ativado, a textura terá a mesma largura e altura e será centralizada."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1656
+msgid "Re_draw"
+msgstr "Re_desenhar"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+"Se alterar as configurações de uma ferramenta, alterar a cor ou alterar a "
+"seleção, pressione isto para visualizar a aparência da textura."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
+msgid "_Reset"
+msgstr "_Repor"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
+msgid "_OK"
+msgstr "_OK"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1667
+msgid ""
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr ""
+"Escolha se quer guardar como uma nova camada, redesenhar na última camada "
+"ativa ou guardar no caminho"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
+msgid "Spyrogimp"
+msgstr "Espirógrafo"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr ""
+"Desenhar espirógrafos usando as configurações e seleção de ferramentas "
+"atuais."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1701
+msgid "Curve Pattern"
+msgstr "Textura de curva"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1704
+msgid "Fixed Gear"
+msgstr "Engrenagem fixa"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1707
+msgid "Size"
+msgstr "Tamanho"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2047
+msgid "Rendering Pattern"
+msgstr "A renderizar a textura"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2059
+msgid "Please wait : Rendering Pattern"
+msgstr "Por favor aguarde: a renderizar a textura"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
+msgid "Spyrogimp..."
+msgstr "Espirógrafo…"
 
 #~ msgid "Color _model"
 #~ msgstr "_Modelo de Cor"
