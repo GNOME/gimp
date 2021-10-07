@@ -33,37 +33,26 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://exiv2.org/builds/exiv2-0.27.3-Source.tar.gz",
-                            "sha256": "a79f5613812aa21755d578a297874fb59a85101e793edc64ec2c6bd994e3e778",
+                            "url": "https://exiv2.org/builds/exiv2-0.27.4-Source.tar.gz",
+                            "sha256": "84366dba7c162af9a7603bcd6c16f40fe0e9af294ba2fd2f66ffffb9fbec904e",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
                                 "stable-only": true,
                                 "url-template": "https://exiv2.org/builds/exiv2-$version-Source.tar.gz"
                             }
-                        },
-                        {
-                            "type": "patch",
-                            "path": "patches/exiv2-0001-Properly-detect-availability-of-flags-in-cmake-compi.patch"
-                        },
-                        {
-                            "type": "patch",
-                            "path": "patches/exiv2-0002-fix_solaris_stack_protection_0.27.patch"
-                        },
-                        {
-                            "type": "patch",
-                            "path": "patches/exiv2-0003-Use-check_cxx_compiler_flags-instead-of-C-version.patch"
                         }
                     ]
                 }
             ],
             "buildsystem": "meson",
-            "config-opts": [ "-Dintrospection=false" ],
+            "config-opts": [ "-Dintrospection=false", "-Dpython3=false",
+                             "-Dvapi=false" ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.12/gexiv2-0.12.2.tar.xz",
-                    "sha256": "2322b552aca330eef79724a699c51a302345d5e074738578b398b7f2ff97944c",
+                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.0.tar.xz",
+                    "sha256": "e58279a6ff20b6f64fa499615da5e9b57cf65ba7850b72fafdf17221a9d6d69e",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1626,
@@ -153,8 +142,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://poppler.freedesktop.org/poppler-data-0.4.10.tar.gz",
-                            "sha256": "6e2fcef66ec8c44625f94292ccf8af9f1d918b410d5aa69c274ce67387967b30",
+                            "url": "https://poppler.freedesktop.org/poppler-data-0.4.11.tar.gz",
+                            "sha256": "2cec05cd1bb03af98a8b06a1e22f6e6e1a65b1e2f3816cb3069bb0874825f08c",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 3687,
@@ -173,8 +162,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-21.06.1.tar.xz",
-                    "sha256": "86b09e5a02de40081a3916ef8711c5128eaf4b1fc59d5f87d0ec66f04f595db4",
+                    "url": "https://poppler.freedesktop.org/poppler-21.10.0.tar.xz",
+                    "sha256": "964b5b16290fbec3fae57c2a5bcdea49bb0736bd750c3a3711c47995c9efc394",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -242,8 +231,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9540/ghostscript-9.54.0.tar.gz",
-                    "sha512": "93cfac3a754d4a7fa94112f3e04ba2ae633c40bb924734db72229096aac2f07c95877737f37f2bfef6be1b1d074af79e75cde3d589ea102def7f4654403e4804",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9550/ghostscript-9.55.0.tar.gz",
+                    "sha256": "31e2064be67e15b478a8da007d96d6cd4d2bee253e5be220703a225f7f79a70b",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1157,
@@ -361,8 +350,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.17.tar.gz",
-                            "sha256": "df2934fa33d04fd84d839ca698280df55c690c86a5a1133b3f7266fce1de279f",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.18.tar.gz",
+                            "sha256": "1632c1e8cca62d8bed064b37747e331a1796fc46f688626337362bf0d16aeadb",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
@@ -408,7 +397,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.4.tar.gz",
+                            "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
+                            "sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 7275,
@@ -436,7 +426,8 @@
                             "sources": [
                                 {
                                     "type": "archive",
-                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.4.tar.gz",
+                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
+                                    "sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8",
                                     "x-checker-data": {
                                         "type": "anitya",
                                         "project-id": 7275,
@@ -459,7 +450,8 @@
                             "sources": [
                                 {
                                     "type": "archive",
-                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.4.tar.gz",
+                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
+                                    "sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8",
                                     "x-checker-data": {
                                         "type": "anitya",
                                         "project-id": 7275,
@@ -567,8 +559,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/1.16.0/cairo-1.16.0.tar.gz",
-                    "sha256": "9b8ecc0d4648c659a18a55b61f1feef265423550fba18736a8afb2ca1fee8f3b",
+                    "url": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/1.17.4/cairo-1.17.4.tar.gz",
+                    "sha256": "0a673c88f7c049b4555c1f152b11d9fe16d8523b62632d2d5c14e1868499ce9f",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 247,
@@ -629,8 +621,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/2.44.1/graphviz-2.44.1.tar.gz",
-                            "sha256": "8e1b34763254935243ccdb83c6ce108f531876d7a5dfd443f255e6418b8ea313",
+                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/2.49.1/graphviz-2.49.1.tar.gz",
+                            "sha256": "f62f644aa9b9c03cb14f0dc351a28525c055cd7951614c0b7efa6af66d4a8fb7",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 1249,
