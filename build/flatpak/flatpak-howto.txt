@@ -137,6 +137,16 @@ Or if you already have a build:
 
 > less /usr/manifest.base
 
+* Some sources have set a x-checker-data property which makes it possible
+  to check for their updates using flatpak-external-data-checker:
+    > https://github.com/flathub/flatpak-external-data-checker
+  To run the tool either install it locally, via flatpak or via OCI image.
+
+  The OCI image is not straightforward at first but is the least intrusive
+  if you already have docker or podman installed:
+  $ cd <path-to-gimp-repo>/flatpak/build
+  $ podman run --rm --privileged -v "$(pwd):/run/host:rw" ghcr.io/flathub/flatpak-external-data-checker:latest /run/host/org.gimp.GIMP-nightly.json
+
 * For a stable release, remove the following line from the manifest:
 
 >  "desktop-file-name-prefix": "(Dev) ",

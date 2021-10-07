@@ -34,7 +34,13 @@
                         {
                             "type": "archive",
                             "url": "https://exiv2.org/builds/exiv2-0.27.3-Source.tar.gz",
-                            "sha256": "a79f5613812aa21755d578a297874fb59a85101e793edc64ec2c6bd994e3e778"
+                            "sha256": "a79f5613812aa21755d578a297874fb59a85101e793edc64ec2c6bd994e3e778",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 769,
+                                "stable-only": true,
+                                "url-template": "https://exiv2.org/builds/exiv2-$version-Source.tar.gz"
+                            }
                         },
                         {
                             "type": "patch",
@@ -57,7 +63,13 @@
                 {
                     "type": "archive",
                     "url": "https://download.gnome.org/sources/gexiv2/0.12/gexiv2-0.12.2.tar.xz",
-                    "sha256": "2322b552aca330eef79724a699c51a302345d5e074738578b398b7f2ff97944c"
+                    "sha256": "2322b552aca330eef79724a699c51a302345d5e074738578b398b7f2ff97944c",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1626,
+                        "stable-only": true,
+                        "url-template": "https://download.gnome.org/sources/gexiv2/$major.$minor/gexiv2-$version.tar.xz"
+                    }
                 }
             ]
         },
@@ -68,8 +80,14 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://src.fedoraproject.org/repo/pkgs/rpms/lcms2/lcms2-2.12.tar.gz/sha512/967e8ac9a1d1aa3be45dc82362b9bc71c555e8577441efda57dc12d0bf84ed9188460c52eb8542d399ce9ab43bd4191988ed22b254ef34c6c1877bbb935952ed/lcms2-2.12.tar.gz",
-                    "sha512": "967e8ac9a1d1aa3be45dc82362b9bc71c555e8577441efda57dc12d0bf84ed9188460c52eb8542d399ce9ab43bd4191988ed22b254ef34c6c1877bbb935952ed"
+                    "url": "https://github.com/mm2/Little-CMS/releases/download/lcms2.12/lcms2-2.12.tar.gz",
+                    "sha512": "967e8ac9a1d1aa3be45dc82362b9bc71c555e8577441efda57dc12d0bf84ed9188460c52eb8542d399ce9ab43bd4191988ed22b254ef34c6c1877bbb935952ed",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 9815,
+                        "stable-only": true,
+                        "url-template": "https://github.com/mm2/Little-CMS/releases/download/lcms$version/lcms2-$version.tar.gz"
+                    }
                 }
             ]
         },
@@ -106,8 +124,14 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/openexr-2.3.0.tar.gz",
-                    "sha256": "fd6cb3a87f8c1a233be17b94c74799e6241d50fc5efd4df75c7a4b9cf4e25ea6"
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/releases/download/v2.3.0/openexr-2.3.0.tar.gz",
+                    "sha256": "fd6cb3a87f8c1a233be17b94c74799e6241d50fc5efd4df75c7a4b9cf4e25ea6",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 13289,
+                        "stable-only": true,
+                        "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
+                    }
                 },
                 {
                     "type": "patch",
@@ -130,7 +154,13 @@
                         {
                             "type": "archive",
                             "url": "https://poppler.freedesktop.org/poppler-data-0.4.10.tar.gz",
-                            "sha256": "6e2fcef66ec8c44625f94292ccf8af9f1d918b410d5aa69c274ce67387967b30"
+                            "sha256": "6e2fcef66ec8c44625f94292ccf8af9f1d918b410d5aa69c274ce67387967b30",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 3687,
+                                "stable-only": true,
+                                "url-template": "https://poppler.freedesktop.org/poppler-data-$version.tar.gz"
+                            }
                         }
                     ]
                 }
@@ -144,7 +174,13 @@
                 {
                     "type": "archive",
                     "url": "https://poppler.freedesktop.org/poppler-21.06.1.tar.xz",
-                    "sha256": "86b09e5a02de40081a3916ef8711c5128eaf4b1fc59d5f87d0ec66f04f595db4"
+                    "sha256": "86b09e5a02de40081a3916ef8711c5128eaf4b1fc59d5f87d0ec66f04f595db4",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 3686,
+                        "stable-only": true,
+                        "url-template": "https://poppler.freedesktop.org/poppler-$version.tar.xz"
+                    }
                 }
             ]
         },
@@ -207,7 +243,13 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9540/ghostscript-9.54.0.tar.gz",
-                    "sha512": "93cfac3a754d4a7fa94112f3e04ba2ae633c40bb924734db72229096aac2f07c95877737f37f2bfef6be1b1d074af79e75cde3d589ea102def7f4654403e4804"
+                    "sha512": "93cfac3a754d4a7fa94112f3e04ba2ae633c40bb924734db72229096aac2f07c95877737f37f2bfef6be1b1d074af79e75cde3d589ea102def7f4654403e4804",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1157,
+                        "stable-only": true,
+                        "url-template": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs$major$minor$patch/ghostscript-$version.tar.gz"
+                    }
                 },
                 {
                     "type": "shell",
@@ -231,7 +273,13 @@
                 {
                     "type": "archive",
                     "url": "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz",
-                    "sha256": "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd"
+                    "sha256": "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1385,
+                        "stable-only": true,
+                        "url-template": "https://launchpad.net/intltool/trunk/$version/+download/intltool-$version.tar.gz"
+                    }
                 }
             ]
         },
@@ -242,7 +290,13 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/mypaint/libmypaint/releases/download/v1.6.1/libmypaint-1.6.1.tar.xz",
-                    "sha256": "741754f293f6b7668f941506da07cd7725629a793108bb31633fb6c3eae5315f"
+                    "sha256": "741754f293f6b7668f941506da07cd7725629a793108bb31633fb6c3eae5315f",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 12974,
+                        "stable-only": true,
+                        "url-template": "https://github.com/mypaint/libmypaint/releases/download/v$version/libmypaint-$version.tar.xz"
+                    }
                 }
             ],
             "modules": [
@@ -265,7 +319,13 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/mypaint/mypaint-brushes/releases/download/v1.3.1/mypaint-brushes-1.3.1.tar.xz",
-                    "sha256": "fef66ffc241b7c5cd29e9c518e933c739618cb51c4ed4d745bf648a1afc3fe70"
+                    "sha256": "fef66ffc241b7c5cd29e9c518e933c739618cb51c4ed4d745bf648a1afc3fe70",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 17096,
+                        "stable-only": true,
+                        "url-template": "https://github.com/mypaint/mypaint-brushes/releases/download/v$version/mypaint-brushes-$version.tar.xz"
+                    }
                 }
             ]
         },
@@ -279,7 +339,13 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v5.10.1.tar.gz",
-                    "sha256": "acb4d1045f48a237e70294b950153e48dce5b5f9ca8190e86c2b8c54ce00a7ee"
+                    "sha256": "acb4d1045f48a237e70294b950153e48dce5b5f9ca8190e86c2b8c54ce00a7ee",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 4908,
+                        "stable-only": true,
+                        "url-template": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v$version.tar.gz"
+                    }
                 },
                 {
                     "type": "patch",
@@ -296,7 +362,13 @@
                         {
                             "type": "archive",
                             "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.17.tar.gz",
-                            "sha256": "df2934fa33d04fd84d839ca698280df55c690c86a5a1133b3f7266fce1de279f"
+                            "sha256": "df2934fa33d04fd84d839ca698280df55c690c86a5a1133b3f7266fce1de279f",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 2540,
+                                "stable-only": true,
+                                "url-template": "https://github.com/xianyi/OpenBLAS/archive/v$version.tar.gz"
+                            }
                         }
                     ]
                 }
@@ -315,7 +387,13 @@
                         {
                             "type": "archive",
                             "url": "https://github.com/strukturag/libde265/releases/download/v1.0.8/libde265-1.0.8.tar.gz",
-                            "sha256": "24c791dd334fa521762320ff54f0febfd3c09fc978880a8c5fbc40a88f21d905"
+                            "sha256": "24c791dd334fa521762320ff54f0febfd3c09fc978880a8c5fbc40a88f21d905",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 11239,
+                                "stable-only": true,
+                                "url-template": "https://github.com/strukturag/libde265/releases/download/v$version/libde265-$version.tar.gz"
+                            }
                         }
                     ]
                 },
@@ -329,10 +407,14 @@
                     "cleanup": [ "/bin" ],
                     "sources": [
                         {
-                            "type": "git",
-                            "url": "https://github.com/videolan/x265.git",
-                            "tag": "3.4",
-                            "commit": "07295ba7ab551bb9c1580fdaee3200f1b45711b7"
+                            "type": "archive",
+                            "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.4.tar.gz",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 7275,
+                                "stable-only": true,
+                                "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
+                            }
                         },
                         {
                             "type": "shell",
@@ -353,10 +435,14 @@
                                              "-DENABLE_ASSEMBLY=OFF" ],
                             "sources": [
                                 {
-                                    "type": "git",
-                                    "url": "https://github.com/videolan/x265.git",
-                                    "tag": "3.4",
-                                    "commit": "07295ba7ab551bb9c1580fdaee3200f1b45711b7"
+                                    "type": "archive",
+                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.4.tar.gz",
+                                    "x-checker-data": {
+                                        "type": "anitya",
+                                        "project-id": 7275,
+                                        "stable-only": true,
+                                        "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
+                                    }
                                 }
                             ],
                             "post-install": [
@@ -372,10 +458,14 @@
                                              "-DENABLE_ASSEMBLY=OFF", "-DMAIN12=ON" ],
                             "sources": [
                                 {
-                                    "type": "git",
-                                    "url": "https://github.com/videolan/x265.git",
-                                    "tag": "3.4",
-                                    "commit": "07295ba7ab551bb9c1580fdaee3200f1b45711b7"
+                                    "type": "archive",
+                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.4.tar.gz",
+                                    "x-checker-data": {
+                                        "type": "anitya",
+                                        "project-id": 7275,
+                                        "stable-only": true,
+                                        "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
+                                    }
                                 }
                             ],
                             "post-install": [
@@ -389,7 +479,13 @@
                 {
                     "url" : "https://github.com/strukturag/libheif/releases/download/v1.12.0/libheif-1.12.0.tar.gz",
                     "sha256" : "e1ac2abb354fdc8ccdca71363ebad7503ad731c84022cf460837f0839e171718",
-                    "type" : "archive"
+                    "type" : "archive",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 64439,
+                        "stable-only": true,
+                        "url-template": "https://github.com/strukturag/libheif/releases/download/v$version/libheif-$version.tar.gz"
+                    }
                 }
             ]
         },
@@ -427,7 +523,13 @@
                 {
                     "type": "archive",
                     "url": "http://luajit.org/download/LuaJIT-2.1.0-beta3.tar.gz",
-                    "sha256": "1ad2e34b111c802f9d0cdf019e986909123237a28c746b21295b63c9e785d9c3"
+                    "sha256": "1ad2e34b111c802f9d0cdf019e986909123237a28c746b21295b63c9e785d9c3",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 6444,
+                        "stable-only": false,
+                        "url-template": "https://luajit.org/download/LuaJIT-$version.tar.gz"
+                    }
                 },
                 {
                     "type": "shell",
@@ -465,8 +567,14 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://www.cairographics.org/releases/cairo-1.16.0.tar.xz",
-                    "sha256": "5e7b29b3f113ef870d1e3ecf8adf21f923396401604bda16d44be45e66052331"
+                    "url": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/1.16.0/cairo-1.16.0.tar.gz",
+                    "sha256": "9b8ecc0d4648c659a18a55b61f1feef265423550fba18736a8afb2ca1fee8f3b",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 247,
+                        "stable-only": true,
+                        "url-template": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/$version/cairo-$version.tar.gz"
+                    }
                 },
                 {
                     "type": "patch",
@@ -521,8 +629,14 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www2.graphviz.org/Packages/stable/portable_source/graphviz-2.44.1.tar.gz",
-                            "sha256": "8e1b34763254935243ccdb83c6ce108f531876d7a5dfd443f255e6418b8ea313"
+                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/2.44.1/graphviz-2.44.1.tar.gz",
+                            "sha256": "8e1b34763254935243ccdb83c6ce108f531876d7a5dfd443f255e6418b8ea313",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 1249,
+                                "stable-only": true,
+                                "url-template": "https://gitlab.com/graphviz/graphviz/-/archive/$version/graphviz-$version.tar.gz"
+                            }
                         }
                     ],
                     "cleanup": [
