@@ -170,7 +170,7 @@ _br_find_exe (GimpBinrelocInitError *error)
 static char *
 _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
 {
-#if ! defined(ENABLE_RELOCATABLE_RESOURCES) || defined(G_OS_WIN32)
+#if ! defined(ENABLE_RELOCATABLE_RESOURCES) || defined(G_OS_WIN32) || defined(__APPLE__)
   if (error)
     *error = GIMP_RELOC_INIT_ERROR_DISABLED;
   return (char *) NULL;
