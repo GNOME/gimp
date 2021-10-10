@@ -13,8 +13,7 @@ Core:
 
   - Selection display implementation now updated to more modern display
     server logics when drawing to display buffer. This fixes selection
-    drawing in Wayland (and possibly in macOS Big Sur too, though this
-    change is untested on this OS so far).
+    drawing in Wayland and macOS Big Sur.
   - "Create a New Image" default action is "OK" so that hitting Enter in
     text/number fields is equivalent to clicking OK.
   - Paint tool core code can now receive multiple drawables as input
@@ -32,6 +31,9 @@ Core:
   - New GimpEarlyRc class replacing GimpLangRc for very early config
     parsing (it used to be for language setting, now also for the
     pointer input API choice on Windows).
+  - All g_memdup() ported to g_memdup2() thanks to GLib version bump.
+  - Various leaks and other bugs fixed, notably with several static
+    analyzer results
 
 Tools:
 
@@ -74,6 +76,7 @@ Plug-ins:
     8-bit).
   - file-webp ported to GimpSaveProcedureDialog.
   - New JPEG XL plug-in (loading and exporting).
+  - Various cleaning replacing g_file_get_path() with g_file_peek_path()
 
 Translations:
 
@@ -83,10 +86,12 @@ Translations:
 Build:
 
   - Windows installer scripts updated to all supported languages.
+  - New "windows-installer-langs" unit test to detect discrepancies of
+    langs listed in build system, installer and gettext files.
   - New CI jobs for Windows native builds with MSYS2.
-  - Several less critical CI jobs (32-bit cross-built Windows,
-    meson/clang build, cppcheck static analysis) moved to a scheduled
-    run for resource saving.
+  - Less critical CI jobs (meson/clang build and cppcheck static
+    analysis) moved to a scheduled run for resource saving, and 32-bit
+    cross-built Windows job now only runnable manually.
   - Windows installer now built as a CI job. The installer is not
     signed. The installer creation happens on tags for releases and at
     regular scheduled intervals for tests.
@@ -102,7 +107,7 @@ Build:
     application icon used to be a composition of the active image and
     the application icon (Wilber). This was confusing, hard to
     distinguish and working on less and less platforms because of recent
-    OS and desktop rules.
+    OS and desktop rules or logics changes.
   - Generate SHA* checksums for CI-generated Windows installers.
   - New `CODING_STYLE.md` document in repository for our coding style
     rules.
@@ -114,6 +119,8 @@ Build:
   - GEGL minimum required version bumped to 0.4.32.
   - Flatpak nightly build now uses the new "fallback-x11" permission
     instead of "x11" to prevent unnecessary X11 access while in Wayland.
+  - Fixes to codebase making GIMP 2.99 finally building and running on
+    macOS.
 
 
 Overview of Changes from GIMP 2.99.4 to GIMP 2.99.6
