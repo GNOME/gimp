@@ -5904,7 +5904,7 @@ msgstr "_Säkenöinti..."
 
 #: ../plug-ins/common/sparkle.c:223
 msgid "Region selected for filter is empty"
-msgstr "Suotimelle valittu alue on tyhjä"
+msgstr "Suodattimelle valittu alue on tyhjä"
 
 #: ../plug-ins/common/sparkle.c:299
 msgid "Sparkling"
@@ -6225,7 +6225,7 @@ msgstr "Pallos_uunnittelu..."
 
 #: ../plug-ins/common/sphere-designer.c:3107
 msgid "Region selected for plug-in is empty"
-msgstr "Suotimelle valittu alue on tyhjä"
+msgstr "Suodattimelle valittu alue on tyhjä"
 
 #: ../plug-ins/common/tile.c:110
 msgid "Create an array of copies of the image"
@@ -6262,7 +6262,7 @@ msgstr "Laatoitus..."
 
 #: ../plug-ins/common/tile-small.c:268
 msgid "Region selected for filter is empty."
-msgstr "Suotimelle valittu alue on tyhjä."
+msgstr "Suodattimelle valittu alue on tyhjä."
 
 #. Get the preview image
 #: ../plug-ins/common/tile-small.c:369
@@ -14598,7 +14598,7 @@ msgstr "Siirretään tietoja kuvanlukijasta tai kamerasta"
 #~ msgstr "Kierto ja pullistus..."
 
 #~ msgid "Region affected by plug-in is empty"
-#~ msgstr "Suotimelle valittu alue on tyhjä"
+#~ msgstr "Suodattimelle valittu alue on tyhjä"
 
 #~ msgid "Whirling and pinching"
 #~ msgstr "Kierto ja pullistus"
