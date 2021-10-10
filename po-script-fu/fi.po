@@ -702,7 +702,7 @@ msgstr "Piirrä _kirjasinkartta..."
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
-"Luo kuva, joka sisältää esikatselukuvan kirjasinnimen suodinta vastaavista "
+"Luo kuva, joka sisältää esikatselukuvan kirjasinnimen suodatinta vastaavista "
 "kirjasimista"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:158
@@ -2331,7 +2331,7 @@ msgstr "Varjon Y siirtymä"
 #~ msgstr "Script-Fu-konsoli - "
 
 #~ msgid "<Image>/Filters/Decor"
-#~ msgstr "<Kuva>/Suotimet/Koristeelliset"
+#~ msgstr "<Kuva>/Suodattimet/Koristeelliset"
 
 #~ msgid "Burn-In: Need two layers in total!"
 #~ msgstr "Polta: tarvitaan kaksi tasoa!"
