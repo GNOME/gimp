@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2021-10-10 11:31+0000\n"
-"PO-Revision-Date: 2021-10-10 18:14+0000\n"
+"PO-Revision-Date: 2021-10-10 21:29+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -245,7 +245,7 @@ msgstr "Hægt að velja mörg lög í tengjanlega lagskiptingaflipanum"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Proper high pixel density display support"
-msgstr ""
+msgstr "Almennilegur stuðningur við skjái með miklum þéttleika mynddíla"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Improved input device support"
@@ -253,11 +253,13 @@ msgstr "Bættur stuðningur við inntakstæki"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "Major plug-in API rewrite"
-msgstr ""
+msgstr "Meiriháttar endurgerð API-kerfisviðmóts fyrir viðbætur"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Plug-in API now available in C/C++, Python 3, Javascript, Lua and Vala"
 msgstr ""
+"API-kerfisviðmót viðbóta er núna tiltækt í C/C++, Python 3, Javascript, Lua"
+" og Vala"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "New manageable extension format"
@@ -276,12 +278,16 @@ msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
 msgstr ""
+"GIMP 2.10.28 lagar vandamál við byggingu GIMP 2.10.26, þar sem sum gögn"
+" varðandi þemu voru ekki rétt uppsett."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
 msgstr ""
+"GIMP 210.26 er fyrst og fremst útgáfa fyrir villulagfæringar, jafnt fyrir"
+" kóða í core, scripts og plug-in söfnum."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 #| msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
@@ -292,7 +298,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "GeoTIFF metadata support added"
-msgstr ""
+msgstr "Bætt við stuðningi við GeoTIFF-lýsigögn"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid ""
@@ -309,6 +315,8 @@ msgstr ""
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
+"Stuðningur við fleiri skráasnið: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP,"
+" PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "Many fixes and improvements to the metadata viewer and editor"
@@ -15558,7 +15566,7 @@ msgstr "Skuggsjá"
 
 #: ../app/core/gimpsymmetry-mandala.c:163
 msgid "Reflect consecutive strokes"
-msgstr ""
+msgstr "Spegla strokum í röð"
 
 #: ../app/core/gimpsymmetry-mirror.c:121
 msgid "Mirror"
@@ -17229,7 +17237,7 @@ msgstr "Stefna varðandi not_kun litasniða:"
 
 #: ../app/dialogs/preferences-dialog.c:1541
 msgid "Metadata _rotation policy:"
-msgstr ""
+msgstr "Stefna varðandi snúning í lýsigögnum:"
 
 #. Export Policies
 #: ../app/dialogs/preferences-dialog.c:1545
@@ -18173,7 +18181,7 @@ msgstr "Auka-inntakstæki"
 
 #: ../app/dialogs/preferences-dialog.c:3179
 msgid "Pointer Input API:"
-msgstr ""
+msgstr "Inntaks-API bendils:"
 
 #: ../app/dialogs/preferences-dialog.c:3190
 msgid "S_hare tool and tool options between input devices"
@@ -18560,6 +18568,8 @@ msgid ""
 "Template and image print resolution don't match.\n"
 "Choose how to scale the canvas:"
 msgstr ""
+"Sniðmát og prentupplausn myndar samsvara ekki.\n"
+"Veldu hvernig eigi að kvarða myndflötinn:"
 
 #. offset frame
 #. The offset frame
@@ -19644,7 +19654,7 @@ msgstr ""
 #: ../app/file-data/file-data-gex.c:306
 #, c-format
 msgid "GIMP extension '%s' requires an AppStream file: %s"
-msgstr ""
+msgstr "GIMP forritsviðaukinn '%s' þarfnast AppStream-skrár: %s"
 
 #: ../app/file-data/file-data-gex.c:321 ../app/file-data/file-data-gex.c:456
 #, c-format
@@ -21124,7 +21134,7 @@ msgstr "Litmörk"
 #: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:379
 #: ../app/pdb/edit-cmds.c:464
 msgid "All specified drawables must belong to the same image."
-msgstr ""
+msgstr "Allir tilgreindir myndhlutar verða að tilheyra sömu mynd."
 
 #: ../app/pdb/floating-sel-cmds.c:69
 msgid "Cannot remove this layer because it is not a floating selection."
@@ -22418,7 +22428,7 @@ msgstr "_Læsa mynstrum"
 
 #: ../app/propgui/gimppropgui-newsprint.c:245
 msgid "Loc_k periods"
-msgstr ""
+msgstr "Læsa pun_ktum"
 
 #: ../app/propgui/gimppropgui-newsprint.c:254
 msgid "Lock a_ngles"
@@ -22939,7 +22949,7 @@ msgstr "Fötufylla"
 
 #: ../app/tools/gimpbucketfilltool.c:565
 msgid "Cannot fill multiple layers. Select only one layer."
-msgstr ""
+msgstr "Get ekki fyllt mörg lög. Veldu aðeins eitt lag."
 
 #: ../app/tools/gimpbucketfilltool.c:567 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcurvestool.c:220 ../app/tools/gimpfiltertool.c:296
@@ -22949,7 +22959,7 @@ msgstr ""
 #: ../app/tools/gimpthresholdtool.c:160
 #: ../app/tools/gimptransformgridtool.c:355
 msgid "No selected drawables."
-msgstr ""
+msgstr "Engir valdir myndhlutar."
 
 #: ../app/tools/gimpbucketfilltool.c:587 ../app/tools/gimpcagetool.c:257
 #: ../app/tools/gimpforegroundselecttool.c:307
@@ -23019,7 +23029,7 @@ msgstr "Sjónar_hornsbreyting"
 
 #: ../app/tools/gimpcagetool.c:226
 msgid "Cannot modify multiple layers. Select only one layer."
-msgstr ""
+msgstr "Get ekki breytt mörgum lögum. Veldu aðeins eitt lag."
 
 #: ../app/tools/gimpcagetool.c:763 ../app/tools/gimpwarptool.c:391
 msgid "Press ENTER to commit the transform"
@@ -23043,8 +23053,8 @@ msgstr "Enginn uppruni valinn"
 #, c-format
 msgid "Source: %d item to itself"
 msgid_plural "Source: %d items to themselves"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Uppruni: %d atriði í sjálft sig"
+msgstr[1] "Uppruni: %d atriði í sjálf sig"
 
 #: ../app/tools/gimpcloneoptions-gui.c:175
 #| msgctxt "item-set"
@@ -23327,7 +23337,7 @@ msgstr "Lit_ferlar..."
 #: ../app/tools/gimplevelstool.c:208 ../app/tools/gimpoffsettool.c:187
 #: ../app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
-msgstr ""
+msgstr "Get ekki breytt mörgum myndhlutum. Veldu aðeins einn."
 
 #: ../app/tools/gimpcurvestool.c:411
 msgid "Click to add a control point"
@@ -23873,12 +23883,12 @@ msgstr "Smella-Draga til að teikna litstigul"
 
 #: ../app/tools/gimpgradienttool.c:257
 msgid "Cannot paint on multiple drawables. Select only one."
-msgstr ""
+msgstr "Get ekki málað á marga myndhluta. Veldu aðeins einn."
 
 #: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppaintselecttool.c:349
 #: ../app/tools/gimpwarptool.c:776
 msgid "No active drawables."
-msgstr ""
+msgstr "Enginn virkur myndhluti."
 
 #: ../app/tools/gimpgradienttool.c:297
 msgid "No gradient available for use with this tool."
@@ -24625,7 +24635,7 @@ msgstr "%s til að plokka lit"
 
 #: ../app/tools/gimppainttool.c:305
 msgid "Cannot paint on multiple layers. Select only one layer."
-msgstr ""
+msgstr "Get ekki málað á mörg lög. Veldu aðeins eitt lag."
 
 #: ../app/tools/gimppainttool.c:319
 msgid "Cannot paint on layer groups."
@@ -25238,7 +25248,7 @@ msgstr "Skjásamsett forskoðun"
 
 #: ../app/tools/gimptransformgridoptions.c:121
 msgid "Show preview as part of the image composition"
-msgstr ""
+msgstr "Birta forskoðun sem hluta af myndsamsetningunni"
 
 #: ../app/tools/gimptransformgridoptions.c:127
 msgid "Preview linked items"
@@ -25246,7 +25256,7 @@ msgstr "Forskoða tengd atriði"
 
 #: ../app/tools/gimptransformgridoptions.c:128
 msgid "Include linked items in the preview"
-msgstr ""
+msgstr "Innifela tengd atriði í forskoðuninni"
 
 #: ../app/tools/gimptransformgridoptions.c:134
 msgid "Synchronous preview"
@@ -25739,7 +25749,7 @@ msgstr "Ferill beyglunarverkfæris"
 
 #: ../app/tools/gimpwarptool.c:773
 msgid "Cannot warp multiple layers. Select only one layer."
-msgstr ""
+msgstr "Get ekki beyglað mörg lög. Veldu aðeins eitt lag."
 
 #: ../app/tools/gimpwarptool.c:792
 msgid "Cannot warp layer groups."
@@ -26843,6 +26853,7 @@ msgstr ""
 #: ../app/widgets/gimpcriticaldialog.c:263
 msgid "Copy-paste this whole debug data to report to developers"
 msgstr ""
+"Afritaðu-Límdu alla þessa vandamálsskýrslu og sendu hana til forritaranna"
 
 #: ../app/widgets/gimpcriticaldialog.c:362
 msgid "The operating system is out of memory or resources."
@@ -28672,6 +28683,10 @@ msgid ""
 "If you don't know what XMP is, you most likely don't need it. Reported "
 "error: %s."
 msgstr ""
+"Ekki var hægt að umbreyta skemmdum XMP-lýsigögnum sem vistuð hafa verið í"
+" eldri útgáfu GIMP og verða þau hunsuð.\n"
+"Ef þú veist ekki hvað XMP er, eru líkur á að þú þurfir ekki að hafa áhyggjur"
+" af þessu. Uppgefin villa: %s."
 
 #: ../app/xcf/xcf-load.c:712
 msgid ""
@@ -28724,7 +28739,7 @@ msgstr ""
 
 #: ../app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
-msgstr "Villukemba á hruni GIMP"
+msgstr "Villukembing úr hruni GIMP"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "round"
