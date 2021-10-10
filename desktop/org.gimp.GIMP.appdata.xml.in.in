@@ -73,6 +73,52 @@
   </provides>
 
   <releases>
+    <release version="2.99.8" date="TODO" type="development">
+      <description>
+        <_p>
+        While during this fourth cycle of development, many efforts were devoted to
+        infrastructure, GIMP 2.99.8 still received many welcome improvements, notably:
+        </_p>
+        <ul>
+          <_li>
+          New modes in Clone, Heal and Perspective Clone tools when multiple layers are selected
+          </_li>
+          <_li>
+          Windows Ink support for input devices on Windows
+          </_li>
+          <_li>
+          Clicking on toolbox or Wilber's drop area actively focuses the canvas
+          </_li>
+          <_li>
+          Marching ants display ported to Wayland and macOS Big Sur logics
+          </_li>
+          <_li>
+          Initial implementation of config folder migration for GIMP 3
+          </_li>
+          <_li>
+          Action "view-rotate-reset" renamed to "view-reset" and new "view-rotate-reset" and "view-flip-rotate" actions
+          </_li>
+          <_li>
+          PSD: bigger-than-4GiB file support and up to 99 channels
+          </_li>
+          <_li>
+          PSB: new support (loading only)
+          </_li>
+          <_li>
+          SGI: 16-bit images support
+          </_li>
+          <_li>
+          JPEG XL: new support (loading and exporting)
+          </_li>
+          <_li>
+          New API functions gimp_display_present() and gimp_procedure_dialog_fill_expander()
+          </_li>
+          <_li>
+          Much porting to newer API, code cleanup and bug fixing done
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.99.6" date="2021-04-26" type="development">
       <url type="details">https://www.gimp.org/news/2021/04/29/gimp-2-99-6-released/</url>
       <description>
