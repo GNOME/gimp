@@ -88,14 +88,14 @@ def find_dependencies(obj, srcdirs):
 
     if objdump is None:
       sys.stderr.write('File type of {} unknown: {}\n'.format(obj, file_type))
-      sys.exit(os.EX_UNAVAILABLE)
+      sys.exit(1)
     elif shutil.which(objdump) is None:
       # For native objdump case.
       objdump = 'objdump.exe'
 
     if shutil.which(objdump) is None:
       sys.stderr.write("Executable doesn't exist: {}\n".format(objdump))
-      sys.exit(os.EX_UNAVAILABLE)
+      sys.exit(1)
 
     result = subprocess.run([objdump, '-p', obj], stdout=subprocess.PIPE)
     out = result.stdout.decode('utf-8')
@@ -127,7 +127,7 @@ def copy_dlls(dll_list, srcdirs, destdir):
         # This should not happen. We determined that the dll is in one
         # of the srcdirs.
         sys.stderr.write("Missing DLL: {}\n".format(dll))
-        sys.exit(os.EX_DATAERR)
+        sys.exit(1)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
