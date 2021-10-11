@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2021-10-10 11:31+0000\n"
-"PO-Revision-Date: 2021-10-10 21:29+0000\n"
+"PO-Revision-Date: 2021-10-11 13:20+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -263,7 +263,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "New manageable extension format"
-msgstr ""
+msgstr "Nýtt auðveldara snið forritsviðauka"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "CSS-based themes and actual symbolic icon theme support"
@@ -1386,7 +1386,7 @@ msgstr "Mynstur"
 
 #: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3354
 msgid "Plug-ins"
-msgstr "Viðbætur"
+msgstr "Hjálparforrit"
 
 #. Quick Mask Color
 #: ../app/actions/actions.c:214 ../app/core/gimpchannel.c:358
@@ -19627,29 +19627,31 @@ msgstr "Ógild stafaruna í URI"
 #: ../app/file-data/file-data-gex.c:146
 #, c-format
 msgid "Absolute path are forbidden in GIMP extension '%s': %s"
-msgstr ""
+msgstr "Algildar slóðir eru bannaðar í GIMP forritsviðaukanum '%s': %s"
 
 #: ../app/file-data/file-data-gex.c:156
 #, c-format
 msgid "File not allowed in root of GIMP extension '%s': %s"
-msgstr ""
+msgstr "Skrá ekki leyfð á rót GIMP forritsviðaukans '%s': %s"
 
 #: ../app/file-data/file-data-gex.c:167
 #, c-format
 msgid "File not in GIMP extension '%s' folder id '%s': %s"
-msgstr ""
+msgstr "Skrá ekki í möppu GIMP forritsviðaukans '%s' með auðkennið '%s': %s"
 
 #: ../app/file-data/file-data-gex.c:263 ../app/file-data/file-data-gex.c:409
 #: ../app/file-data/file-data-gex.c:421 ../app/file-data/file-data-gex.c:433
 #: ../app/file-data/file-data-gex.c:446
 #, c-format
 msgid "Fatal error when uncompressing GIMP extension '%s': %s"
-msgstr ""
+msgstr "Alvarleg villa við afþjöppun GIMP forritsviðaukans '%s': %s"
 
 #: ../app/file-data/file-data-gex.c:297
 #, c-format
 msgid "GIMP extension '%s' directory (%s) different from AppStream id: %s"
 msgstr ""
+"Mappa GIMP forritsviðaukans '%s' (%s) er önnur en sú sem AppStream auðkennið"
+" gefur til kynna: %s"
 
 #: ../app/file-data/file-data-gex.c:306
 #, c-format
@@ -22132,7 +22134,7 @@ msgstr "Frumstilli hjálparforrit"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:590
 msgid "Starting Extensions"
-msgstr "Ræsi viðbætur"
+msgstr "Ræsi forritsviðauka"
 
 #: ../app/plug-in/gimppluginprocedure.c:1033
 msgid "RGB without alpha"
@@ -27720,7 +27722,7 @@ msgid ""
 "You may instead use the web browser for reading the help pages."
 msgstr ""
 "Viðbótina fyrir GIMP hjálparvafrann virðist vanta í uppsetninguna hjá þér. "
-"Þú getur í staðinn notað venjulegann netvafra til að lesa hjálparsíðurnar."
+"Þú getur í staðinn notað venjulegan netvafra til að lesa hjálparsíðurnar."
 
 #: ../app/widgets/gimphelp.c:419
 msgid "Help browser doesn't start"
@@ -27728,7 +27730,7 @@ msgstr "Hjálparvafri ræsist ekki"
 
 #: ../app/widgets/gimphelp.c:420
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Gat ekki ræst viðbótina fyrir GIMP hjálparvafrann."
+msgstr "Gat ekki ræst hjálparforritið fyrir GIMP hjálparvafrann."
 
 #: ../app/widgets/gimphelp.c:422
 msgid "You may instead use the web browser for reading the help pages."
