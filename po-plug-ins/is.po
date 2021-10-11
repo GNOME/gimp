@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2021-09-28 16:44+0000\n"
-"PO-Revision-Date: 2021-10-11 07:03+0000\n"
+"PO-Revision-Date: 2021-10-11 13:28+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -1868,10 +1868,9 @@ msgid "ASCII art does not support multiple layers."
 msgstr ""
 
 #: ../plug-ins/common/file-aa.c:384
-#, fuzzy
 #| msgid "Exports HEIF images"
 msgid "Export Image as Text"
-msgstr "Flytur út HEIF-myndir"
+msgstr "Flytja mynd út sem texta"
 
 #: ../plug-ins/common/file-aa.c:392 ../plug-ins/file-dds/ddswrite.c:2014
 msgid "_Format:"
@@ -2024,10 +2023,9 @@ msgid "C source does not support multiple layers."
 msgstr ""
 
 #: ../plug-ins/common/file-csource.c:967
-#, fuzzy
 #| msgid "Exports HEIF images"
 msgid "Export Image as C-Source"
-msgstr "Flytur út HEIF-myndir"
+msgstr "Flytja mynd út sem C-Source"
 
 #: ../plug-ins/common/file-csource.c:985
 msgid "_Prefixed name:"
@@ -2120,14 +2118,12 @@ msgid "'%s' is not a DICOM file."
 msgstr "'%s' er ekki DICOM skrá."
 
 #: ../plug-ins/common/file-dicom.c:578
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "_Aggressive RLE\n"
 #| "(not supported by SGI)"
 msgid "Transfer syntax %s is not supported by GIMP."
-msgstr ""
-"Ý_kt RLE\n"
-"(ekki stutt af SGI)"
+msgstr "Yfirfærsluskipanin %s er ekki studd af GIMP."
 
 #: ../plug-ins/common/file-dicom.c:1472
 msgid "Cannot save images with alpha channel."
@@ -2163,10 +2159,9 @@ msgid "_Spacing:"
 msgstr "_Millibil:"
 
 #: ../plug-ins/common/file-gegl.c:109
-#, fuzzy
 #| msgid "Radians"
 msgid "Radiance RGBE"
-msgstr "Radíanar"
+msgstr "Radiance RGBE"
 
 #: ../plug-ins/common/file-gegl.c:123 ../plug-ins/file-exr/file-exr.c:104
 msgid "OpenEXR image"
@@ -3756,16 +3751,16 @@ msgstr ""
 
 #: ../plug-ins/common/file-psp.c:1257 ../plug-ins/common/file-psp.c:1266
 #: ../plug-ins/common/file-psp.c:1275
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading block header"
 msgid "Error reading color block"
-msgstr "Villa við að lesa haus blokkar"
+msgstr "Villa við að lesa litablokk"
 
 #: ../plug-ins/common/file-psp.c:1288
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading block header"
 msgid "Error reading color palette"
-msgstr "Villa við að lesa haus blokkar"
+msgstr "Villa við lestur litaspjalds"
 
 #: ../plug-ins/common/file-psp.c:1714 ../plug-ins/common/file-psp.c:1728
 #, c-format
@@ -4030,10 +4025,9 @@ msgid "Pal_ette File:"
 msgstr "Litas_pjaldsskrá:"
 
 #: ../plug-ins/common/file-raw-data.c:2032
-#, fuzzy
 #| msgid "Load Image from Raw Data"
 msgid "Export Image as Raw Data"
-msgstr "Hlaða mynd inn úr RAW-myndgögnum"
+msgstr "Flytja mynd út sem  RAW-myndgögn"
 
 #. Image type combo
 #: ../plug-ins/common/file-raw-data.c:2041
@@ -6339,7 +6333,7 @@ msgstr ""
 #. RGB Encoding Pptions
 #: ../plug-ins/file-bmp/bmp-save.c:1028
 msgid "RGB Encoding"
-msgstr ""
+msgstr "RGB-kóðun"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1035
 msgid "16 bit (R5 G6 B5)"
@@ -6397,10 +6391,10 @@ msgid "Could not allocate a new image."
 msgstr "Get ekki búið til nýja mynd"
 
 #: ../plug-ins/file-dds/ddsread.c:341
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading file"
 msgid "Error reading palette."
-msgstr "Villa við lestur skráar."
+msgstr "Villa við lestur litaspjalds."
 
 #: ../plug-ins/file-dds/ddsread.c:637
 #, c-format
@@ -6419,16 +6413,16 @@ msgid "Invalid bpp value for luminance data: %d"
 msgstr ""
 
 #: ../plug-ins/file-dds/ddsread.c:777
-#, fuzzy, c-format
+#, c-format
 #| msgid "automatic pixelformat"
 msgid "Invalid pixel format."
-msgstr "sjálfvirkt snið mynddíla"
+msgstr "Ógilt snið mynddíla."
 
 #: ../plug-ins/file-dds/ddsread.c:946
-#, fuzzy, c-format
+#, c-format
 #| msgid "Unsupported brush format"
 msgid "Unsupported DXGI format (%d)"
-msgstr "Óstutt pensilsnið"
+msgstr "Óstutt DXGI-snið (%d)"
 
 #: ../plug-ins/file-dds/ddsread.c:1092 ../plug-ins/file-dds/ddsread.c:1131
 #, c-format
@@ -6536,22 +6530,22 @@ msgid "G3 fax image"
 msgstr "G3 faxmynd"
 
 #: ../plug-ins/file-faxg3/faxg3.c:297 ../plug-ins/file-faxg3/faxg3.c:596
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not get layers for image %d"
 msgid "Could not create buffer to process image data."
-msgstr "Get ekki opnað lög myndarinnar %d"
+msgstr "Gat ekki búið biðminni til að vinna með myndgögn."
 
 #: ../plug-ins/file-faxg3/faxg3.c:562
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid layer dimensions: %dx%d"
 msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
-msgstr "Ógildar stærðir lags: %d×%d"
+msgstr "Ógildar stærðir myndar (%d×%d). Myndin gæti verið skemmd."
 
 #: ../plug-ins/file-faxg3/faxg3.c:572
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not close the file"
 msgid "Could not create image."
-msgstr "Gat ekki lokað skránni"
+msgstr "Gat ekki búið til mynd."
 
 #: ../plug-ins/file-fits/fits.c:178 ../plug-ins/file-fits/fits.c:224
 msgid "Flexible Image Transport System"
@@ -6806,7 +6800,7 @@ msgstr "Flytja út forskoðun"
 #: ../plug-ins/file-jpeg/jpeg.c:496
 #, c-format
 msgid "JPEG format does not support multiple layers."
-msgstr ""
+msgstr "JPEG-snið styður ekki mörg lög."
 
 #: ../plug-ins/file-psd/psd-load.c:261
 #: ../plug-ins/file-psd/psd-thumb-load.c:138
@@ -7085,7 +7079,7 @@ msgstr "Ógild hæð: %hu"
 #: ../plug-ins/file-sgi/sgi.c:374
 #, c-format
 msgid "Invalid number of channels: %hu"
-msgstr ""
+msgstr "Ógildur fjöldi litrása: %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:660
 #, c-format
@@ -7198,16 +7192,16 @@ msgid "Unsupported bit depth: %d for page %d."
 msgstr "Óstudd bitadýpt: %d"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:648
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not read header from '%s'"
 msgid "Could not get image width from '%s'"
-msgstr "Gat ekki lesið haus frá '%s'"
+msgstr "Gat ekki lesið breidd myndar úr '%s'"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:656
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not read color entries from '%s'"
 msgid "Could not get image length from '%s'"
-msgstr "Gat ekki lesið litafærslur úr '%s'"
+msgstr "Gat ekki lesið lengd myndar úr '%s'"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:664
 #, c-format
@@ -7249,10 +7243,10 @@ msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1040
-#, fuzzy, c-format
+#, c-format
 #| msgid "Can't create a new image"
 msgid "Could not create a new image: %s"
-msgstr "Get ekki búið til nýja mynd"
+msgstr "Get ekki búið til nýja mynd: %s"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1072
 #, c-format
@@ -7276,10 +7270,10 @@ msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1318
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not read color entries from '%s'"
 msgid "Could not get colormaps from '%s'"
-msgstr "Gat ekki lesið litafærslur úr '%s'"
+msgstr "Gat ekki sótt litafærslur frá '%s'"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1397
 msgid "TIFF Channel"
@@ -8203,7 +8197,7 @@ msgstr "Sýna hnitanet"
 
 #: ../plug-ins/gfig/gfig-dialog.c:642
 msgid "Load Gfig Object Collection"
-msgstr ""
+msgstr "Hlaða inn safni Gfig-hluta"
 
 #: ../plug-ins/gfig/gfig-dialog.c:691
 msgid "Save Gfig Drawing"
@@ -8211,7 +8205,7 @@ msgstr "Vista Gfig-teikningu"
 
 #: ../plug-ins/gfig/gfig-dialog.c:855
 msgid "First Gfig"
-msgstr ""
+msgstr "Fyrsta Gfig"
 
 #: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/imagemap/imap_menu.c:148
 msgid "_Open..."
@@ -8618,7 +8612,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Solid colored background"
-msgstr ""
+msgstr "Heillitaður bakgrunnur"
 
 #: ../plug-ins/gimpressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
@@ -11528,10 +11522,10 @@ msgid "Export metadata"
 msgstr "Flytja út lýsigögn"
 
 #: ../plug-ins/metadata/metadata-editor.c:929
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error loading PSD file: %s"
 msgid "Error loading calendar. %s"
-msgstr "Villa við að hlaða inn PSD-skrá: %s"
+msgstr "Villa við að hlaða inn dagatali. %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:957
 msgid "Calendar Date:"
@@ -12314,10 +12308,9 @@ msgid "Capture an image from a TWAIN datasource"
 msgstr "Ná í mynd frá TWAIN gagnagjafa"
 
 #: ../plug-ins/twain/twain.c:87
-#, fuzzy
 #| msgid "Capture an image from a TWAIN datasource"
 msgid "This plug-in will capture an image from a TWAIN datasource"
-msgstr "Ná í mynd frá TWAIN gagnagjafa"
+msgstr "Þetta hjálparforrit mun ná í mynd frá TWAIN gagnagjafa"
 
 #: ../plug-ins/twain/twain.c:204
 msgid "_Scanner/Camera..."
