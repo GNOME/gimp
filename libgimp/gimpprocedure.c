@@ -1202,14 +1202,17 @@ gimp_procedure_get_date (GimpProcedure *procedure)
 /**
  * gimp_procedure_add_argument:
  * @procedure: the #GimpProcedure.
- * @pspec:     (transfer full): the argument specification.
+ * @pspec:     (transfer floating): the argument specification.
  *
  * Add a new argument to @procedure according to @pspec specifications.
  * The arguments will be ordered according to the call order to
  * gimp_procedure_add_argument() and
  * gimp_procedure_add_argument_from_property().
  *
- * Returns: (transfer none): the same @pspec.
+ * If @pspec is floating, ownership will be taken over by @procedure,
+ * allowing to pass directly g*_param_spec_*() calls as arguments.
+ *
+ * Returns: (transfer none): the same @pspec or %NULL in case of error.
  *
  * Since: 3.0
  **/
@@ -1227,7 +1230,7 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
                  pspec->name,
                  gimp_procedure_get_name (procedure));
       g_param_spec_sink (pspec);
-      return pspec;
+      return NULL;
     }
 
   if (gimp_procedure_find_aux_argument (procedure, pspec->name))
@@ -1237,7 +1240,7 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
                  pspec->name,
                  gimp_procedure_get_name (procedure));
       g_param_spec_sink (pspec);
-      return pspec;
+      return NULL;
     }
 
   procedure->priv->args = g_renew (GParamSpec *, procedure->priv->args,
