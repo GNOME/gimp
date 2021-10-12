@@ -374,6 +374,10 @@
 # 
 # (export-comment yes)
 
+# Export the image's thumbnail by default  Possible values are yes and no.
+# 
+# (export-thumbnail yes)
+
 # Export Exif metadata by default.  Possible values are yes and no.
 # 
 # (export-metadata-exif yes)
@@ -396,11 +400,11 @@
 # 
 # (check-updates yes)
 
-# Timestamp of the last update check.  (null)
+# Timestamp of the last update check.  This is an integer value.
 # 
 # (check-update-timestamp 0)
 
-# The timestamp for the last known release date.  (null)
+# The timestamp for the last known release date.  This is an integer value.
 # 
 # (last-release-timestamp 0)
 

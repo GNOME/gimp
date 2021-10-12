@@ -457,6 +457,11 @@ Export the image's color profile by default.  Possible values are yes and no.
 Export the image's comment by default.  Possible values are yes and no.
 
 .TP
+(export-thumbnail yes)
+
+Export the image's thumbnail by default  Possible values are yes and no.
+
+.TP
 (export-metadata-exif yes)
 
 Export Exif metadata by default.  Possible values are yes and no.
@@ -486,12 +491,12 @@ Possible values are yes and no.
 .TP
 (check-update-timestamp 0)
 
-Timestamp of the last update check.  (null)
+Timestamp of the last update check.  This is an integer value.
 
 .TP
 (last-release-timestamp 0)
 
-The timestamp for the last known release date.  (null)
+The timestamp for the last known release date.  This is an integer value.
 
 .TP
 
