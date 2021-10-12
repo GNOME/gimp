@@ -28,6 +28,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #ifdef G_OS_WIN32
+#include <io.h> /* get_osfhandle */
 #include <gio/gwin32outputstream.h>
 #else
 #include <gio/gunixoutputstream.h>
@@ -70,7 +71,7 @@ gimp_config_dump (GObject              *gimp,
                      NULL);
 
 #ifdef G_OS_WIN32
-  output = g_win32_output_stream_new ((gpointer) 1, FALSE);
+  output = g_win32_output_stream_new ((gpointer) _get_osfhandle (fileno (stdout)), FALSE);
 #else
   output = g_unix_output_stream_new (1, FALSE);
 #endif
