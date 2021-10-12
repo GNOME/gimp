@@ -1115,15 +1115,15 @@ static GimpImage *
 load_image (GFile   *file,
             GError **error)
 {
-  GimpImage  *image = NULL;
-  GimpImage **image_list, **nl;
-  gchar      *filename;
-  guint       page_count;
-  FILE       *ifp;
-  gchar      *temp;
-  gint        llx, lly, urx, ury;
-  gint        k, n_images, max_images, max_pagenum;
-  gboolean    is_epsf;
+  GimpImage    *image = NULL;
+  GimpImage   **image_list, **nl;
+  const gchar  *filename;
+  guint         page_count;
+  FILE         *ifp;
+  gchar        *temp;
+  gint          llx, lly, urx, ury;
+  gint          k, n_images, max_images, max_pagenum;
+  gboolean      is_epsf;
 
 #ifdef PS_DEBUG
   g_print ("load_image:\n resolution = %d\n", plvals.resolution);
@@ -1697,7 +1697,7 @@ ps_open (GFile            *file,
          gint             *ury,
          gboolean         *is_epsf)
 {
-  gchar        *filename;
+  const gchar  *filename;
   const gchar  *driver;
   GPtrArray    *cmdA;
   gchar       **pcmdA;
