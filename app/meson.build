@@ -161,7 +161,7 @@ app_gui_links = [
 if platform_windows
   console_rc_name = 'gimp-console-'+ gimp_app_version
   gimp_app_console_rc = configure_file(
-    input : gimp_plugins_rc,
+    input : gimp_plugins_rc.full_path(),
     output: console_rc_name + '.rc',
     copy: true,
   )
@@ -179,7 +179,7 @@ if platform_windows
 
   gui_rc_name = 'gimp-'+ gimp_app_version
   gimp_app_gui_rc = configure_file(
-    input : gimp_plugins_rc,
+    input : gimp_plugins_rc.full_path(),
     output: gui_rc_name + '.rc',
     copy: true,
   )
