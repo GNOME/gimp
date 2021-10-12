@@ -498,24 +498,23 @@ monitor_number (GdkMonitor *monitor)
 GimpColorProfile *
 gimp_monitor_get_color_profile (GdkMonitor *monitor)
 {
-  GdkDisplay       *display;
-  GdkScreen        *screen;
   GimpColorProfile *profile = NULL;
 
   g_return_val_if_fail (GDK_IS_MONITOR (monitor), NULL);
 
-  display = gdk_monitor_get_display (monitor);
-
 #if defined GDK_WINDOWING_X11
   {
-    GdkAtom  type    = GDK_NONE;
-    gint     format  = 0;
-    gint     nitems  = 0;
-    gint     number;
-    gchar   *atom_name;
-    guchar  *data    = NULL;
+    GdkDisplay *display;
+    GdkScreen  *screen;
+    GdkAtom     type    = GDK_NONE;
+    gint        format  = 0;
+    gint        nitems  = 0;
+    gint        number;
+    gchar      *atom_name;
+    guchar     *data    = NULL;
 
-    number = monitor_number (monitor);
+    display = gdk_monitor_get_display (monitor);
+    number  = monitor_number (monitor);
 
     if (number > 0)
       atom_name = g_strdup_printf ("_ICC_PROFILE_%d", number);
