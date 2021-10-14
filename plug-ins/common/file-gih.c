@@ -447,21 +447,27 @@ gih_save (GimpProcedure        *procedure,
       GimpValueArray *save_retvals;
       gchar           spacing[8];
       gchar          *paramstring;
+      GimpValueArray *args;
 
       paramstring = gimp_pixpipe_params_build (&gihparams);
 
-      save_retvals =
-        gimp_pdb_run_procedure (gimp_get_pdb (),
-                                "file-gih-save-internal",
-                                GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
-                                GIMP_TYPE_IMAGE,        image,
-                                G_TYPE_INT,             n_drawables,
-                                GIMP_TYPE_OBJECT_ARRAY, drawables,
-                                G_TYPE_FILE,            file,
-                                G_TYPE_INT,             info.spacing,
-                                G_TYPE_STRING,          info.description,
-                                G_TYPE_STRING,          paramstring,
-                                G_TYPE_NONE);
+      args = gimp_value_array_new_from_types (NULL,
+                                              GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
+                                              GIMP_TYPE_IMAGE,        image,
+                                              G_TYPE_INT,             n_drawables,
+                                              GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                              G_TYPE_FILE,            file,
+                                              G_TYPE_INT,             info.spacing,
+                                              G_TYPE_STRING,          info.description,
+                                              G_TYPE_STRING,          paramstring,
+                                              G_TYPE_NONE);
+      gimp_value_set_object_array (gimp_value_array_index (args, 3),
+                                   GIMP_TYPE_ITEM, (GObject **) drawables, n_drawables);
+
+      save_retvals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                                   "file-gih-save-internal",
+                                                   args);
+      gimp_value_array_unref (args);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
         {
