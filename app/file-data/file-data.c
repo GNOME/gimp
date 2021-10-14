@@ -429,12 +429,17 @@ file_data_init (Gimp *gimp)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "Drawable",
-                                                         "Active drawable "
-                                                         "of input image",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("n-drawables",
+                                                 "Num drawables",
+                                                 "Number of drawables",
+                                                 1, G_MAXINT, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("drawables",
+                                                             "Drawables",
+                                                             "Selected drawables",
+                                                             GIMP_TYPE_DRAWABLE,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "File",

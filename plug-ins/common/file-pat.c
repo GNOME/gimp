@@ -200,16 +200,6 @@ pat_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("PAT format does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
-
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
@@ -219,20 +209,27 @@ pat_save (GimpProcedure        *procedure,
   if (status == GIMP_PDB_SUCCESS)
     {
       GimpValueArray *save_retvals;
+      GimpValueArray *args;
 
       g_object_get (config,
                     "description", &description,
                     NULL);
 
-      save_retvals =
-        gimp_pdb_run_procedure (gimp_get_pdb (),
-                                "file-pat-save-internal",
-                                GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
-                                GIMP_TYPE_IMAGE,        image,
-                                GIMP_TYPE_DRAWABLE,     drawables[0],
-                                G_TYPE_FILE,            file,
-                                G_TYPE_STRING,          description,
-                                G_TYPE_NONE);
+      args = gimp_value_array_new_from_types (NULL,
+                                              GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
+                                              GIMP_TYPE_IMAGE,        image,
+                                              G_TYPE_INT,             n_drawables,
+                                              GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                              G_TYPE_FILE,            file,
+                                              G_TYPE_STRING,          description,
+                                              G_TYPE_NONE);
+      gimp_value_set_object_array (gimp_value_array_index (args, 3),
+                                   GIMP_TYPE_ITEM, (GObject **) drawables, n_drawables);
+
+      save_retvals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                                   "file-pat-save-internal",
+                                                   args);
+      gimp_value_array_unref (args);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
         {
