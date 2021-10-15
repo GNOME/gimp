@@ -186,8 +186,16 @@ load_image (GFile        *file,
   IFDBG(2) g_debug ("Read layer & mask block at offset %" G_GOFFSET_FORMAT,
                     PSD_TELL(input));
   lyr_a = read_layer_block (&img_a, input, &error);
-  /* No layer or layer info is apparently valid so only check for presence of error. */
-  if (error)
+
+  if (merged_image_only)
+    {
+      if (error)
+        {
+          g_debug ("Error loading layer block: %s", error->message);
+          g_clear_error (&error);
+        }
+    }
+  else if (error)
     {
       goto load_error;
     }
