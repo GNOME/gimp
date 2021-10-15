@@ -116,6 +116,7 @@
             "modules": [
                 {
                     "name": "ilmbase",
+                    "subdir": "IlmBase",
                     "config-opts": [
                         "--disable-static"
                     ],
@@ -128,8 +129,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/ilmbase-2.3.0.tar.gz",
-                            "sha256": "456978d1a978a5f823c7c675f3f36b0ae14dba36638aeaa3c4b0e784f12a3862"
+                            "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.7.tar.gz",
+                            "sha256": "36ecb2290cba6fc92b2ec9357f8dc0e364b4f9a90d727bf9a57c84760695272d"
                         },
                         {
                             "type": "shell",
@@ -140,6 +141,7 @@
                     ]
                 }
             ],
+            "subdir": "OpenEXR",
             "config-opts": [
                 "--disable-static",
                 "--disable-ilmbasetest"
@@ -155,8 +157,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/releases/download/v2.3.0/openexr-2.3.0.tar.gz",
-                    "sha256": "fd6cb3a87f8c1a233be17b94c74799e6241d50fc5efd4df75c7a4b9cf4e25ea6",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.7.tar.gz",
+                    "sha256": "36ecb2290cba6fc92b2ec9357f8dc0e364b4f9a90d727bf9a57c84760695272d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,

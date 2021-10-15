@@ -4,36 +4,19 @@ Date: Sun, 24 Apr 2016 13:45:12 +0200
 Subject: [PATCH] Don't build/install the documentation
 
 ---
- Makefile.am | 2 +-
- Makefile.in | 2 +-
+ OpenEXR/Makefile.am | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile.am b/Makefile.am
+diff --git a/OpenEXR/Makefile.am b/OpenEXR/Makefile.am
 index 3a232af..937133b 100644
---- a/Makefile.am
-+++ b/Makefile.am
+--- a/OpenEXR/Makefile.am
++++ b/OpenEXR/Makefile.am
 @@ -5,7 +5,7 @@
  ACLOCAL_AMFLAGS = -I m4
  
  SUBDIRS = config IlmImf IlmImfUtil IlmImfTest IlmImfUtilTest \
 -	  IlmImfFuzzTest exrheader exrmaketiled IlmImfExamples doc \
 +	  IlmImfFuzzTest exrheader exrmaketiled \
- 	  exrstdattr exrmakepreview exrenvmap exrmultiview exrmultipart
+ 	  exrstdattr exrmakepreview exrenvmap exrmultiview exrmultipart exr2aces
  
  DIST_SUBDIRS = \
-diff --git a/Makefile.in b/Makefile.in
-index c63c319..2a9bae8 100644
---- a/Makefile.in
-+++ b/Makefile.in
-@@ -265,7 +265,7 @@ top_srcdir = @top_srcdir@
- # (an alternative to the acinclude.m4 mechanism)
- ACLOCAL_AMFLAGS = -I m4
- SUBDIRS = config IlmImf IlmImfUtil IlmImfTest IlmImfUtilTest \
--	  IlmImfFuzzTest exrheader exrmaketiled IlmImfExamples doc \
-+	  IlmImfFuzzTest exrheader exrmaketiled \
- 	  exrstdattr exrmakepreview exrenvmap exrmultiview exrmultipart
- 
- DIST_SUBDIRS = \
--- 
-2.5.5
-
