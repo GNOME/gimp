@@ -631,8 +631,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/libjxl/libjxl.git",
-                    /* Last commit on v0.6.x branch at time of writing. */
-                    "commit": "20cccbf646158cb128d68db20d12f93d1fb9b6a1"
+                    "tag": "v0.6",
+                    "commit": "25ef9145273eb5fe3db04e196327c77e404308d8"
                 }
             ]
         },
