@@ -547,6 +547,9 @@ load_image (GFile   *file,
   /* hack to handle yet another flavor of incorrect headers, see bug #540969 */
   if (info.alphaBits == 0)
     {
+      if (info.imageType == TGA_TYPE_MAPPED && info.colorMapSize == 32)
+        info.alphaBits = 8;
+
       if (info.imageType == TGA_TYPE_COLOR && info.bpp == 32)
         info.alphaBits = 8;
 
