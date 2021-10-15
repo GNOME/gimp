@@ -121,6 +121,10 @@ Build:
     instead of "x11" to prevent unnecessary X11 access while in Wayland.
   - Fixes to codebase making GIMP 2.99 finally building and running on
     macOS.
+  - Our flatpak manifests now use the flatpak-external-data-checker tool
+    with the Anitya backend allowing to monitor our dependencies and
+    ensure they are always up-to-date. All dependencies have been
+    updated accordingly.
 
 
 Overview of Changes from GIMP 2.99.4 to GIMP 2.99.6
