@@ -497,7 +497,7 @@ load_image (GFile        *file,
       gushort           extra;
       gushort          *extra_types;
       ChannelData      *channel = NULL;
-      uint16            planar  = PLANARCONFIG_CONTIG;
+      uint16_t          planar  = PLANARCONFIG_CONTIG;
       TiffColorMode     tiff_mode;
       gboolean          is_signed;
       gint              i;
@@ -1144,7 +1144,7 @@ load_image (GFile        *file,
       {
         GimpParasite *parasite    = NULL;
         void         *geotag_data = NULL;
-        uint32        count       = 0;
+        uint32_t      count       = 0;
 
         if (TIFFGetField (tif, GEOTIFF_MODELPIXELSCALE, &count, &geotag_data))
           {
@@ -1585,8 +1585,8 @@ load_profile (TIFF *tif)
    * libtiff version that can handle ICC profiles. Otherwise just
    * return a NULL profile.
    */
-  uint32  profile_size;
-  guchar *icc_profile;
+  uint32_t  profile_size;
+  guchar   *icc_profile;
 
   /* set the ICC profile - if found in the TIFF */
   if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile))
@@ -1614,7 +1614,7 @@ load_rgba (TIFF        *tif,
   TIFFGetField (tif, TIFFTAG_IMAGEWIDTH,  &image_width);
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &image_height);
 
-  buffer = g_new (uint32, image_width * image_height);
+  buffer = g_new (uint32_t, image_width * image_height);
 
   if (! TIFFReadRGBAImage (tif, image_width, image_height, buffer, 0))
     {

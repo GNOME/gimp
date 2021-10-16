@@ -420,7 +420,7 @@ load_image (GFile     *file,
       return NULL;
     }
 
-  if ((strncmp (buf + 3, "87a", 3) != 0) && (strncmp (buf + 3, "89a", 3) != 0))
+  if ((strncmp ((gchar *) buf + 3, "87a", 3) != 0) && (strncmp ((gchar *) buf + 3, "89a", 3) != 0))
     {
       g_message ("Bad version number, not '87a' or '89a'");
       fclose (fd);

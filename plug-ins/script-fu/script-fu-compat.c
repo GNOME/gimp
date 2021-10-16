@@ -130,7 +130,7 @@ define_deprecated_scheme_func (const char   *old_name,
                           " (apply --gimp-proc-db-call \"%s\" args))",
                           old_name, new_name);
 
-  sc->vptr->load_string (sc, buff);
+  sc->vptr->load_string ((scheme *) sc, buff);
 
   g_free (buff);
 }

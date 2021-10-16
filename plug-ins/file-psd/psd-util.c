@@ -248,7 +248,7 @@ fread_pascal_string (gint32        *bytes_read,
 
   gchar        *str;
   gchar        *utf8_str;
-  guchar        len;
+  guchar        len = 0;
   gint32        padded_len;
 
   *bytes_read = 0;
@@ -400,7 +400,7 @@ fread_unicode_string (gint32        *bytes_read,
 
   gchar     *utf8_str;
   gunichar2 *utf16_str;
-  gint32     len;
+  gint32     len = 0;
   gint32     i;
   gint32     padded_len;
   glong      utf8_str_len;
@@ -958,7 +958,8 @@ gimp_to_psd_layer_color_tag (GimpColorTag layer_color_tag)
       if (CONVERSION_WARNINGS)
         g_message ("Photoshop doesn't support GIMP layer color tag: %i. Photoshop layer color tag set to none.",
                    layer_color_tag);
-        color_tag = 0;
+
+      color_tag = 0;
     }
 
   return color_tag;
