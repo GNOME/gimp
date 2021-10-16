@@ -238,10 +238,10 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
       priv->fish = babl_fish (priv->src_format,
                               priv->dest_format);
 
-      g_printerr ("%s: using babl for '%s' -> '%s'\n",
-                  G_STRFUNC,
-                  gimp_color_profile_get_label (src_profile),
-                  gimp_color_profile_get_label (dest_profile));
+      g_debug ("%s: using babl for '%s' -> '%s'",
+               G_STRFUNC,
+               gimp_color_profile_get_label (src_profile),
+               gimp_color_profile_get_label (dest_profile));
 
       return transform;
     }
