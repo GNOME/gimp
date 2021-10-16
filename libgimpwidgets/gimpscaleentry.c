@@ -150,7 +150,7 @@ gimp_scale_entry_linear_to_log (GBinding     *binding,
   GtkAdjustment *spin_adjustment;
   gdouble        value = g_value_get_double (from_value);
 
-  spin_adjustment = GTK_ADJUSTMENT (g_binding_get_source (binding));
+  spin_adjustment = GTK_ADJUSTMENT (g_binding_dup_source (binding));
 
   if (gtk_adjustment_get_lower (spin_adjustment) <= 0.0)
     value = log (value - gtk_adjustment_get_lower (spin_adjustment) + 0.1);
@@ -158,6 +158,8 @@ gimp_scale_entry_linear_to_log (GBinding     *binding,
     value = log (value);
 
   g_value_set_double (to_value, value);
+
+  g_clear_object (&spin_adjustment);
 
   return TRUE;
 }
@@ -171,7 +173,7 @@ gimp_scale_entry_log_to_linear (GBinding     *binding,
   GtkAdjustment *spin_adjustment;
   gdouble        value = g_value_get_double (from_value);
 
-  spin_adjustment = GTK_ADJUSTMENT (g_binding_get_source (binding));
+  spin_adjustment = GTK_ADJUSTMENT (g_binding_dup_source (binding));
 
   value = exp (value);
 
@@ -179,6 +181,8 @@ gimp_scale_entry_log_to_linear (GBinding     *binding,
     value += gtk_adjustment_get_lower (spin_adjustment) - 0.1;
 
   g_value_set_double (to_value, value);
+
+  g_clear_object (&spin_adjustment);
 
   return TRUE;
 }
