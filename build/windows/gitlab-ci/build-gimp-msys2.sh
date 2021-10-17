@@ -87,8 +87,8 @@ export CCACHE_DIR="${CCACHE_BASEDIR}/_ccache"
 # See: https://github.com/msys2/MINGW-packages/issues/9677
 #export CC="ccache gcc"
 
-ccache --zero-stats
-ccache --show-stats
+#ccache --zero-stats
+#ccache --show-stats
 
 mkdir "_build${ARTIFACTS_SUFFIX}"
 cd "_build${ARTIFACTS_SUFFIX}"
@@ -105,7 +105,7 @@ make -j4
 make install
 cd ..
 
-ccache --show-stats
+#ccache --show-stats
 
 # XXX Moving back the prefix to be used as artifacts.
 mv "${GIMP_PREFIX}" .
