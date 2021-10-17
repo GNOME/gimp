@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-17 17:42+0300\n"
-"PO-Revision-Date: 2021-10-17 19:05+0300\n"
+"PO-Revision-Date: 2021-10-17 23:16+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -4864,12 +4864,12 @@ msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Очистка истории действий для этого изображения освободит %s памяти."
 
 #: ../app/actions/edit-commands.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
-msgstr[0] "Вырезать слой в буфер обмена"
-msgstr[1] "Вырезать слой в буфер обмена"
-msgstr[2] "Вырезать слой в буфер обмена"
+msgstr[0] "Вырезать %d слой в буфер обмена"
+msgstr[1] "Вырезать %d слоя в буфер обмена"
+msgstr[2] "Вырезать %d слоёв в буфер обмена"
 
 #: ../app/actions/edit-commands.c:248
 msgid "Cut pixels to the clipboard."
@@ -6110,9 +6110,8 @@ msgid "Re-Show Last"
 msgstr "Повторить последний с диалогом"
 
 #: ../app/actions/filters-actions.c:1177 ../app/actions/filters-actions.c:1179
-#, fuzzy
 msgid "No last used filters"
-msgstr "Открыть диалог последнего использованного фильтра"
+msgstr "В этой сессии фильтры ещё не применялись"
 
 #: ../app/actions/fonts-actions.c:44
 msgctxt "fonts-action"
@@ -10419,10 +10418,9 @@ msgid "Set a custom rotation angle"
 msgstr "Указать свой угол вращения"
 
 #: ../app/actions/view-actions.c:136
-#, fuzzy
 msgctxt "view-action"
 msgid "_Reset Flipping"
-msgstr "Выполняется зеркальное отображение"
+msgstr "От_катить зеркальное отображение"
 
 #: ../app/actions/view-actions.c:138
 #, fuzzy
@@ -11647,7 +11645,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:81
 msgid "Show full image content by default."
-msgstr "По умолчанию показывать всё содержимое изображение."
+msgstr "Показывать всё содержимое изображения по умолчанию"
 
 #: ../app/config/gimprc-blurbs.h:84
 msgid ""
@@ -11664,19 +11662,19 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:113
 msgid "Snap to guides by default in new image windows."
-msgstr "По умолчанию прилипать к направляющим в новых окнах изображений."
+msgstr "Прилипать к направляющим в новых окнах изображений по умолчанию"
 
 #: ../app/config/gimprc-blurbs.h:116
 msgid "Snap to the grid by default in new image windows."
-msgstr "По умолчанию прилипать к сетке в новых окнах изображений."
+msgstr "Прилипать к сетке в новых окнах изображений по умолчанию"
 
 #: ../app/config/gimprc-blurbs.h:119
 msgid "Snap to the canvas edges by default in new image windows."
-msgstr "По умолчанию прилипать к краям холста в новых окнах изображений."
+msgstr "Прилипать к краям холста в новых окнах изображений по умолчанию"
 
 #: ../app/config/gimprc-blurbs.h:122
 msgid "Snap to the active path by default in new image windows."
-msgstr "По умолчанию прилипать к активному контуру в новых окнах изображений."
+msgstr "Прилипать к активному контуру в новых окнах изображений по умолчанию"
 
 #: ../app/config/gimprc-blurbs.h:125
 msgid ""
@@ -11775,36 +11773,36 @@ msgstr "Тип файла при экспорте, используемый по
 
 #: ../app/config/gimprc-blurbs.h:224
 msgid "Export the image's color profile by default."
-msgstr "По умолчанию экспортировать цветовой профиль изображения."
+msgstr "Экспортировать цветовой профиль изображения по умолчанию"
 
 #: ../app/config/gimprc-blurbs.h:227
 msgid "Export the image's comment by default."
-msgstr "По умолчанию экспортировать комментарии к изображению."
+msgstr "Экспортировать комментарии к изображению по умолчанию"
 
 #: ../app/config/gimprc-blurbs.h:230 ../app/dialogs/preferences-dialog.c:1555
 msgid "Export the image's thumbnail by default"
-msgstr "По умолчанию экспортировать миниатюры изображений"
+msgstr "Экспортировать миниатюры изображений по умолчанию"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
 #.
 #: ../app/config/gimprc-blurbs.h:236
 msgid "Export Exif metadata by default."
-msgstr "По умолчанию экспортировать метаданные Exif."
+msgstr "Экспортировать метаданные Exif по умолчанию"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle XMP by default.
 #.
 #: ../app/config/gimprc-blurbs.h:242
 msgid "Export XMP metadata by default."
-msgstr "По умолчанию экспортировать метаданные XMP."
+msgstr "Экспортировать метаданные XMP по умолчанию"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle IPTC by default.
 #.
 #: ../app/config/gimprc-blurbs.h:248
 msgid "Export IPTC metadata by default."
-msgstr "По умолчанию экспортировать метаданные IPTC."
+msgstr "Экспортировать метаданные IPTC по умолчанию"
 
 #: ../app/config/gimprc-blurbs.h:251
 msgid "Try generating debug data for bug reporting when appropriate."
@@ -12717,14 +12715,12 @@ msgstr "Сохранять встроенный профиль"
 #: ../app/core/core-enums.c:222
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
-msgstr "Конвертировать во встроенный профиль sRGB или оттенков серого"
+msgstr "Конвертировать во встроенный профиль sRGB / оттенков серого"
 
 #: ../app/core/core-enums.c:223
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
-msgstr ""
-"Конвертировать в предпочитаемый профиль RGB/оттенков серого (встроенный по "
-"умолчанию)"
+msgstr "Конвертировать в предпочитаемый профиль RGB / оттенков серого"
 
 #: ../app/core/core-enums.c:317
 msgctxt "convert-dither-type"
@@ -17214,8 +17210,7 @@ msgstr "Макс. размер _файлов миниатюр:"
 
 #: ../app/dialogs/preferences-dialog.c:1246
 msgid "_Keep record of used files in the Recent Documents list"
-msgstr ""
-"_Хранить список недавно открывавшихся файлов в списке недавних документов"
+msgstr "_Хранить список недавних файлов"
 
 #. TODO: icon needed.
 #: ../app/dialogs/preferences-dialog.c:1264
@@ -17305,7 +17300,7 @@ msgstr "Точность/цветовоспроизведение"
 
 #: ../app/dialogs/preferences-dialog.c:1389
 msgid "_Optimize image display for:"
-msgstr "Оптимизировать _экран изображения для:"
+msgstr "Оптимизировать _показ изображения для:"
 
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1393
@@ -17391,7 +17386,7 @@ msgstr "Показывать дополнительные параметры _у
 #: ../app/dialogs/preferences-dialog.c:1504
 #: ../app/dialogs/preferences-dialog.c:1505
 msgid "Image Import & Export"
-msgstr "Импорт и экспорт изображений"
+msgstr "Импорт и экспорт графики"
 
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1515
@@ -17428,11 +17423,11 @@ msgstr "Правила экспорта"
 
 #: ../app/dialogs/preferences-dialog.c:1549
 msgid "Export the i_mage's color profile by default"
-msgstr "По умолчанию _экспортировать цветовой профиль изображения"
+msgstr "_Экспортировать цветовой профиль изображения по умолчанию"
 
 #: ../app/dialogs/preferences-dialog.c:1552
 msgid "Export the image's comment by default"
-msgstr "По умолчанию экспортировать комментарии для изображений."
+msgstr "Экспортировать комментарии для изображений по умолчанию"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17450,7 +17445,7 @@ msgstr "Экспортировать _метаданные Exif по умолч�
 #.
 #: ../app/dialogs/preferences-dialog.c:1571
 msgid "Export _XMP metadata by default when available"
-msgstr "По умолчанию экспортировать мета_данные XMP, если они доступны"
+msgstr "Экспортировать мета_данные XMP по умолчанию, если они доступны"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17459,7 +17454,7 @@ msgstr "По умолчанию экспортировать мета_данны
 #.
 #: ../app/dialogs/preferences-dialog.c:1579
 msgid "Export _IPTC metadata by default when available"
-msgstr "По умолчанию экспортировать метада_нные IPTC, если они доступны"
+msgstr "Экспортировать метада_нные IPTC по умолчанию, если они доступны"
 
 #: ../app/dialogs/preferences-dialog.c:1582
 msgid "Metadata can contain sensitive information."
@@ -17494,7 +17489,7 @@ msgid ""
 "contribute patches."
 msgstr ""
 "Работа над этими функциями не завершена, в них могут содержаться ошибки. Мы "
-"советуем использовать их только, если вы действительно понимаете, что "
+"советуем использовать их только если вы действительно понимаете, что "
 "делаете, или собираетесь предоставить исправления для этого кода."
 
 #. Hardware Acceleration
@@ -17689,7 +17684,7 @@ msgstr "Удалить все ком_бинации клавиш"
 #: ../app/dialogs/preferences-dialog.c:1940
 #: ../app/dialogs/preferences-dialog.c:1975
 msgid "Theme"
-msgstr "Тема"
+msgstr "Тема интерфейса"
 
 #: ../app/dialogs/preferences-dialog.c:1945
 msgid "Select Theme"
@@ -18219,7 +18214,7 @@ msgstr "Показывать объекты за пределами холста
 
 #: ../app/dialogs/preferences-dialog.c:2897
 msgid "Use \"_Dot for dot\" by default"
-msgstr "Использовать «_Точка за точкой» по умолчанию"
+msgstr "Использовать «_Точка к точке» по умолчанию"
 
 #: ../app/dialogs/preferences-dialog.c:2903
 msgid "Marching ants s_peed:"
@@ -22007,10 +22002,9 @@ msgid "Motion Blur"
 msgstr "Размывание движением"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2648
-#, fuzzy
 msgctxt "undo-type"
 msgid "Median Blur"
-msgstr "_Медианный фильтр…"
+msgstr "Медианный фильтр"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2745
 msgctxt "undo-type"
