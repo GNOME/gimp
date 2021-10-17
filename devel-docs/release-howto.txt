@@ -25,6 +25,9 @@
      this time. An example announcement message is:
      https://mail.gnome.org/archives/gimp-developer-list/2016-October/msg00004.html
 
+     This rule is important for stable releases but can be more lax for
+     unstable releases.
+
  ( ) Announce the planned release on the GNOME I18N mailing list.
 
      Let them know about the planned release, what branch it's based
@@ -42,11 +45,12 @@
 
  ( ) Check that you have working ssh access to master.gnome.org and
      that you are a member of the gimpftpadmin group. If not, ask
-     Michael Natterer or Michael Schumacher for assistance.
+     Michael Natterer, Michael Schumacher or Jehan for assistance.
 
  ( ) Check that download.gimp.org has enough space to upload the
      release and to place it into the download area. If not, make
-     place or ask Michael Natterer or Michael Schumacher to do that.
+     place or ask Michael Natterer, Michael Schumacher or Jehan to do
+     that.
 
  ( ) Check that you have admin access to https://gitlab.gnome.org/GNOME/gimp/
      and commit access to the gimp-web module, or that someone can do
@@ -55,7 +59,7 @@
  ( ) Check if NEWS, authors.xml (and the generated AUTHORS), README or
      INSTALL need to be updated, as well as any release notes on
      gimp.org. Don't forget to add any "Index of new symbols in GIMP
-     2.x" to the gtk-doc generated devel-docs.
+     3.x" to the gtk-doc generated devel-docs.
 
  ( ) Does the splash screen need to be changed?
 
@@ -103,6 +107,13 @@
            checksum files.
 
      If these steps work fine, we are ready to tag and publish.
+
+     Note: the test build will likely take up to 2 hours, especially
+     because of the Windows installer step. And of course, if you ever
+     discover any build or run into issues, the time will be multiplied.
+     It is advised to take this in consideration. This test step could
+     possibly be run well in advance, even the day before, considering
+     you don't plan to push too many changes at the last minute.
 
  ( ) Bump the version number to an even micro in configure.ac and
      commit this change. It should be the version number of the
