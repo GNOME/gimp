@@ -73,7 +73,7 @@
   </provides>
 
   <releases>
-    <release version="2.99.8" date="TODO" type="development">
+    <release version="2.99.8" date="2021-10-17" type="development">
       <description>
         <_p>
         While during this fourth cycle of development, many efforts were devoted to
