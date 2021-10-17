@@ -101,8 +101,8 @@ cd "_build${ARTIFACTS_SUFFIX}"
               --with-directx-sdk="${MSYS2_PREFIX}" \
               --with-javascript=no \
               ${GIMP_OPTIONS}
-make -j4
-make install
+make V=1 -j4
+make V=1 install
 cd ..
 
 #ccache --show-stats
