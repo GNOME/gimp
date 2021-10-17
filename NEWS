@@ -26,7 +26,7 @@ Core:
     shortcut).
   - Config folder migration for GIMP 3 with initial implementation.
   - Action "view-rotate-reset" renamed to "view-reset" (resets both
-    flipping and rotate). New "view-rotate-reset" and "view-flip-rotate"
+    flipping and rotate). New "view-rotate-reset" and "view-flip-reset"
     for resetting rotation and flipping respectively.
   - New GimpEarlyRc class replacing GimpLangRc for very early config
     parsing (it used to be for language setting, now also for the
@@ -34,6 +34,12 @@ Core:
   - All g_memdup() ported to g_memdup2() thanks to GLib version bump.
   - Various leaks and other bugs fixed, notably with several static
     analyzer results
+  - Add metadata preference for saving thumbnail by default: saving a
+    thumbnail is closely related to the other metadata preferences,
+    but so far this was the only one that didn't have a preference for a
+    default user value. A new settings in the "Image Import & Export"
+    section of the Preferences allows to select whether thumbnail saving
+    should be enabled by default or not.
 
 Tools:
 
@@ -62,6 +68,9 @@ API:
     procedure dialogs.
   - All widgets within a same container in a GimpProcedureDialog are
     added to their own GtkSizeGroup.
+  - New function gimp_export_thumbnail() to query the user settings (as
+    set in Preferences) on whether or not a file plug-in should export
+    the image thumbnail.
 
 Plug-ins:
 
@@ -125,6 +134,9 @@ Build:
     with the Anitya backend allowing to monitor our dependencies and
     ensure they are always up-to-date. All dependencies have been
     updated accordingly.
+  - Our desktop file now lists a `StartupWMClass` tag to better
+    associate running GIMP windows with the application icon (and
+    possibly other metadata).
 
 
 Overview of Changes from GIMP 2.99.4 to GIMP 2.99.6
