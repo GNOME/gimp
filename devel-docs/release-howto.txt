@@ -201,10 +201,11 @@
  ( ) Check out or update the 'gimp-web' module, check out its testing
      branch.
 
-     [ ] Update the file 'GIMP_VERSIONS' adding the version, release
-         date, tarball name and its SHA256 and SHA512 hashes under
-         "STABLE".
-         Note: do not add new MD5 sums in 'GIMP_VERSIONS' as well.
+     [ ] Update the file 'content/gimp_versions.json' adding the
+         version, release date, tarball name and its SHA256 and SHA512
+         hashes under "STABLE" for stable releases or "DEVELOPMENT" for
+         dev releases, as well as for any already available packages.
+         Note: do not add new MD5 sums anymore.
 
      [ ] Create a news items for the release in content/news/
 
