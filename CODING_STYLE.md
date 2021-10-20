@@ -12,6 +12,7 @@ allowed exceptions.
 ## Table of contents
 
 - [General rules](#general-rules)
+- [Commit messages](#commit-messages)
 - [Dealing with the old code](#dealing-with-the-old-code)
 - [Indentation](#indentation)
 - [Braces](#braces)
@@ -53,6 +54,72 @@ existence of `pre-commit.sample` or `pre-commit` files.
 You might also find the `git-stripspace` utility helpful, which acts as a filter
 to remove trailing whitespace as well as initial, final, and duplicate blank
 lines.
+
+## Commit messages
+
+Commit messages should follow the following rules:
+
+- Always provide informative titles. No one-word commits saying nothing
+  like "bug fix", so that we can at least search through the git history
+  if needed. It can still be short messages for very simple fixes: for
+  instance "Fix typo" or "Fix small memory leak" are informative of the
+  type of fix.
+- Prefix the title with the codebase section (i.e. the root folder
+  usually) which was changed. For instance: `libgimpbase: fix memory
+  leak` immediately tells us it was a memory leak fix in the
+  `libgimpbase` library. If several sections are touched, list them with
+  comma-separation.
+- Alternatively, when the change is a response to a bug report, you may
+  prefix with `Issue #123:` (where `#123` is the report ID) instead.
+- If the changed code itself is not self-explanatory enough, you can add
+  longer change description (2 lines after the title) to explain more.
+  It is not mandatory, but it is never unwelcome because old code
+  exploration to understand why things were done (possibly years before
+  by people long gone) is a real thing we do all the time. So if it's
+  not obvious, explain us.
+- Explanations can also be made in the shape of links to a bug report
+  (ours, or a third-party project tracker, or some manual), even though
+  additional text explanations may still be useful (unfortunately URLs
+  may change or disappear). If the link is to our own bug tracker,
+  usually giving the ID is enough.
+- Same [as for code](#line-width), wrap your commit message to
+  reasonable line widths, such as 72 or 80 maximum so that other
+  contributors don't have to scroll horizontally on narrow
+  vizualisation. There may be exceptions, for instance when pasting some
+  error messages which may end up confusing when wrapped. But other than
+  this, wrap your text (most `git` client would have a feature to do it
+  for you).
+- If the title is too long because of the max-width settings, a common
+  format is to break it with '…' and to continue the title 2 lines below.
+  Then the description goes again 2 lines below.
+
+Here is an example of a well formatted fix in the `plug-ins/` section:
+
+```
+plug-ins: fix file-gih.
+
+We currently cannot call gimp_pdb_run_procedure() for procedures
+containing arrays because this C-type doesn't contain the size
+information (which is in a second parameter but since the rule is not
+hard-coded, our API can't know this).
+
+See issue #7369.
+```
+
+Here is another as a response to a bug report and a long title:
+
+```
+Issue #6695: Wrong tab after JPG export because of "Show preview"…
+
+… feature.
+
+Using the new gimp_display_present() function in file-jpeg to make sure
+the original display is back to the top.
+```
+
+If you want to see more good examples, this `git` command will list
+commits whose messages are generally well formatted:
+`git log --author="Jehan\|mitch\|Jacob Boerema"`
 
 ## Dealing with the old code
 
