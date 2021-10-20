@@ -147,6 +147,20 @@ Or if you already have a build:
   $ cd <path-to-gimp-repo>/flatpak/build
   $ podman run --rm --privileged -v "$(pwd):/run/host:rw" ghcr.io/flathub/flatpak-external-data-checker:latest /run/host/org.gimp.GIMP-nightly.json
 
+  Our prefered backend for the checker is Anitya, a database maintained
+  by the Fedora project. To set up a new dependency check by Anitya:
+
+  1. verify it is available in the database: https://release-monitoring.org/
+  2. then copy the project ID which is the number in the project URI
+     within the database.
+  3. Finally add a "x-checker-data" field within the "source" dictionary
+     in the manifest with type "anitya", the "project-id" and a
+     "url-template".
+  4. We usually want to depend on stable releases only, i.e. set
+     "stable-only to `true`. On exceptional cases, for very valid
+     reasons only, we might bypass this limitation, adding a comment
+     explaining why we use an unstable release.
+
 * For a stable release, remove the following line from the manifest:
 
 >  "desktop-file-name-prefix": "(Dev) ",
