@@ -100,6 +100,7 @@ cd "_build${ARTIFACTS_SUFFIX}"
 ../autogen.sh --prefix="${GIMP_PREFIX}" \
               --with-directx-sdk="${MSYS2_PREFIX}" \
               --with-javascript=no \
+              --with-build-id=org.gimp.GIMP_official \
               ${GIMP_OPTIONS}
 make -j4
 make install
