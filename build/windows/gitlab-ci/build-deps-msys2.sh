@@ -128,48 +128,46 @@ ninja install
 cd ../..
 
 ## libjxl ##
-if [[ "$MSYS2_ARCH" == "x86_64" ]]; then
-    pacman --noconfirm -S --needed \
-        mingw64/mingw-w64-x86_64-brotli  \
-        mingw64/mingw-w64-x86_64-highway \
-        mingw64/mingw-w64-x86_64-cmake
+pacman --noconfirm -S --needed \
+    mingw-w64-$MSYS2_ARCH-brotli  \
+    mingw-w64-$MSYS2_ARCH-highway \
+    mingw-w64-$MSYS2_ARCH-cmake
 
-    git clone --depth=${GIT_DEPTH} --branch v0.6.x --recursive https://github.com/libjxl/libjxl.git _libjxl
+git clone --depth=${GIT_DEPTH} --branch v0.6 --recursive https://github.com/libjxl/libjxl.git _libjxl
 
-    mkdir _libjxl/_build
-    cd _libjxl/_build
-    cmake -G Ninja \
-        -DCMAKE_INSTALL_PREFIX=${GIMP_PREFIX} \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DJPEGXL_ENABLE_PLUGINS=OFF \
-        -DBUILD_TESTING=OFF \
-        -DJPEGXL_WARNINGS_AS_ERRORS=OFF \
-        -DJPEGXL_ENABLE_SJPEG=OFF \
-        -DJPEGXL_ENABLE_BENCHMARK=OFF \
-        -DJPEGXL_ENABLE_EXAMPLES=OFF \
-        -DJPEGXL_ENABLE_MANPAGES=OFF \
-        -DJPEGXL_ENABLE_SKCMS=ON \
-        -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
-        -DJPEGXL_FORCE_SYSTEM_HWY=ON \
-        -DJPEGXL_ENABLE_JNI=OFF \
-        -DJPEGXL_ENABLE_TCMALLOC=OFF \
-        -DJPEGXL_ENABLE_TOOLS=OFF \
-        -DCMAKE_CXX_FLAGS="-DHWY_COMPILE_ONLY_SCALAR" ..
-    ninja
-    ninja install
+mkdir _libjxl/_build
+cd _libjxl/_build
+cmake -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=${GIMP_PREFIX} \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DJPEGXL_ENABLE_PLUGINS=OFF \
+    -DBUILD_TESTING=OFF \
+    -DJPEGXL_WARNINGS_AS_ERRORS=OFF \
+    -DJPEGXL_ENABLE_SJPEG=OFF \
+    -DJPEGXL_ENABLE_BENCHMARK=OFF \
+    -DJPEGXL_ENABLE_EXAMPLES=OFF \
+    -DJPEGXL_ENABLE_MANPAGES=OFF \
+    -DJPEGXL_ENABLE_SKCMS=ON \
+    -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
+    -DJPEGXL_FORCE_SYSTEM_HWY=ON \
+    -DJPEGXL_ENABLE_JNI=OFF \
+    -DJPEGXL_ENABLE_TCMALLOC=OFF \
+    -DJPEGXL_ENABLE_TOOLS=OFF \
+    -DCMAKE_CXX_FLAGS="-DHWY_COMPILE_ONLY_SCALAR" ..
+ninja
+ninja install
 
-    # move DLLs into correct location
-    if [ -f ${GIMP_PREFIX}/lib/libjxl.dll ]; then
-      mv --target-directory=${GIMP_PREFIX}/bin ${GIMP_PREFIX}/lib/libjxl.dll
-    fi
-
-    if [ -f ${GIMP_PREFIX}/lib/libjxl_threads.dll ]; then
-      mv --target-directory=${GIMP_PREFIX}/bin ${GIMP_PREFIX}/lib/libjxl_threads.dll
-    fi
-
-    # install image/jxl mime type
-    mkdir -p ${GIMP_PREFIX}/share/mime/packages
-    cp --target-directory=${GIMP_PREFIX}/share/mime/packages ../plugins/mime/image-jxl.xml
-
-    cd ../..
+# move DLLs into correct location
+if [ -f ${GIMP_PREFIX}/lib/libjxl.dll ]; then
+  mv --target-directory=${GIMP_PREFIX}/bin ${GIMP_PREFIX}/lib/libjxl.dll
 fi
+
+if [ -f ${GIMP_PREFIX}/lib/libjxl_threads.dll ]; then
+  mv --target-directory=${GIMP_PREFIX}/bin ${GIMP_PREFIX}/lib/libjxl_threads.dll
+fi
+
+# install image/jxl mime type
+mkdir -p ${GIMP_PREFIX}/share/mime/packages
+cp --target-directory=${GIMP_PREFIX}/share/mime/packages ../plugins/mime/image-jxl.xml
+
+cd ../..
