@@ -1,4 +1,5 @@
 xcf
+avif
 bmp
 dds
 g3
@@ -13,6 +14,7 @@ jp2
 j2k
 j2c
 jpc
+jxl
 pcx
 pcc
 pdf
