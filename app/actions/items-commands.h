@@ -23,10 +23,6 @@ void   items_visible_cmd_callback          (GimpAction   *action,
                                             GVariant     *value,
                                             GimpImage    *image,
                                             GimpItem     *item);
-void   items_linked_cmd_callback           (GimpAction   *action,
-                                            GVariant     *value,
-                                            GimpImage    *image,
-                                            GimpItem     *item);
 void   items_lock_content_cmd_callback     (GimpAction   *action,
                                             GVariant     *value,
                                             GimpImage    *image,

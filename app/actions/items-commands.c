@@ -86,30 +86,6 @@ items_visible_cmd_callback (GimpAction *action,
 }
 
 void
-items_linked_cmd_callback (GimpAction *action,
-                           GVariant   *value,
-                           GimpImage  *image,
-                           GimpItem   *item)
-{
-  gboolean linked = g_variant_get_boolean (value);
-
-  if (linked != gimp_item_get_linked (item))
-    {
-      GimpUndo *undo;
-      gboolean  push_undo = TRUE;
-
-      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_ITEM_LINKED);
-
-      if (undo && GIMP_ITEM_UNDO (undo)->item == item)
-        push_undo = FALSE;
-
-      gimp_item_set_linked (item, linked, push_undo);
-      gimp_image_flush (image);
-    }
-}
-
-void
 items_lock_content_cmd_callback (GimpAction *action,
                                  GVariant   *value,
                                  GimpImage  *image,

@@ -497,18 +497,6 @@ channels_visible_cmd_callback (GimpAction *action,
 }
 
 void
-channels_linked_cmd_callback (GimpAction *action,
-                              GVariant   *value,
-                              gpointer    data)
-{
-  GimpImage   *image;
-  GimpChannel *channel;
-  return_if_no_channel (image, channel, data);
-
-  items_linked_cmd_callback (action, value, image, GIMP_ITEM (channel));
-}
-
-void
 channels_lock_content_cmd_callback (GimpAction *action,
                                     GVariant   *value,
                                     gpointer    data)

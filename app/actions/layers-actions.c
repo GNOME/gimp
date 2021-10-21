@@ -323,12 +323,6 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },
 
-  { "layers-linked", GIMP_ICON_LINKED,
-    NC_("layers-action", "Toggle Layer _Linked State"), NULL, NULL,
-    layers_linked_cmd_callback,
-    FALSE,
-    GIMP_HELP_LAYER_LINKED },
-
   { "layers-lock-content", NULL /* GIMP_ICON_LOCK */,
     NC_("layers-action", "L_ock Pixels of Layer"), NULL, NULL,
     layers_lock_content_cmd_callback,

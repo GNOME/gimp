@@ -152,9 +152,6 @@ void   layers_composite_mode_cmd_callback     (GimpAction *action,
 void   layers_visible_cmd_callback            (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   layers_linked_cmd_callback             (GimpAction *action,
-                                               GVariant   *value,
-                                               gpointer    data);
 void   layers_lock_content_cmd_callback       (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);

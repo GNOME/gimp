@@ -77,7 +77,6 @@ items_actions_update (GimpActionGroup *group,
   GEnumValue *value;
   gchar       action[32];
   gboolean    visible       = FALSE;
-  gboolean    linked        = FALSE;
   gboolean    has_color_tag = FALSE;
   gboolean    lock_content      = TRUE;
   gboolean    can_lock_content  = FALSE;
@@ -98,8 +97,7 @@ items_actions_update (GimpActionGroup *group,
        * It's mostly arbitrary and doesn't actually change much to the
        * action.
        */
-      visible      = (visible || gimp_item_get_visible (item));
-      linked       = (linked || gimp_item_get_linked (item));
+      visible = (visible || gimp_item_get_visible (item));
 
       if (gimp_item_can_lock_content (item))
         {
@@ -130,10 +128,6 @@ items_actions_update (GimpActionGroup *group,
   g_snprintf (action, sizeof (action), "%s-visible", prefix);
   SET_SENSITIVE (action, items);
   SET_ACTIVE    (action, visible);
-
-  g_snprintf (action, sizeof (action), "%s-linked", prefix);
-  SET_SENSITIVE (action, items);
-  SET_ACTIVE    (action, linked);
 
   g_snprintf (action, sizeof (action), "%s-lock-content", prefix);
   SET_SENSITIVE (action, can_lock_content);

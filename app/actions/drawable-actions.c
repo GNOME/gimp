@@ -62,12 +62,6 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },
 
-  { "drawable-linked", GIMP_ICON_LINKED,
-    NC_("drawable-action", "Toggle Drawable _Linked State"), NULL, NULL,
-    drawable_linked_cmd_callback,
-    FALSE,
-    GIMP_HELP_LAYER_LINKED },
-
   { "drawable-lock-content", NULL /* GIMP_ICON_LOCK */,
     NC_("drawable-action", "L_ock Pixels of Drawable"), NULL,
     NC_("drawable-action",
@@ -161,7 +155,6 @@ drawable_actions_update (GimpActionGroup *group,
   GimpDrawable *drawable     = NULL;
   GList        *drawables    = NULL;
   gboolean      has_visible  = FALSE;
-  gboolean      has_linked   = FALSE;
   gboolean      is_rgb       = FALSE;
   gboolean      locked       = FALSE;
   gboolean      can_lock     = FALSE;
@@ -184,10 +177,7 @@ drawable_actions_update (GimpActionGroup *group,
           if (gimp_item_get_visible (iter->data))
             has_visible = TRUE;
 
-          if (gimp_item_get_linked (iter->data))
-            has_linked = TRUE;
-
-          if (has_visible && has_linked)
+          if (has_visible)
             break;
         }
 
@@ -223,12 +213,10 @@ drawable_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("drawable-levels-stretch", writable && !children && is_rgb);
 
   SET_SENSITIVE ("drawable-visible",       drawables);
-  SET_SENSITIVE ("drawable-linked",        drawables);
   SET_SENSITIVE ("drawable-lock-content",  can_lock);
   SET_SENSITIVE ("drawable-lock-position", can_lock_pos);
 
   SET_ACTIVE ("drawable-visible",       has_visible);
-  SET_ACTIVE ("drawable-linked",        has_linked);
   SET_ACTIVE ("drawable-lock-content",  locked);
   SET_ACTIVE ("drawable-lock-position", locked_pos);
 

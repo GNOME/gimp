@@ -55,9 +55,6 @@ void   channels_to_selection_cmd_callback    (GimpAction *action,
 void   channels_visible_cmd_callback         (GimpAction *action,
                                               GVariant   *value,
                                               gpointer    data);
-void   channels_linked_cmd_callback          (GimpAction *action,
-                                              GVariant   *value,
-                                              gpointer    data);
 void   channels_lock_content_cmd_callback    (GimpAction *action,
                                               GVariant   *value,
                                               gpointer    data);

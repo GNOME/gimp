@@ -168,12 +168,6 @@ static const GimpToggleActionEntry vectors_toggle_actions[] =
     FALSE,
     GIMP_HELP_PATH_VISIBLE },
 
-  { "vectors-linked", GIMP_ICON_LINKED,
-    NC_("vectors-action", "Toggle Path _Linked State"), NULL, NULL,
-    vectors_linked_cmd_callback,
-    FALSE,
-    GIMP_HELP_PATH_LINKED },
-
   { "vectors-lock-content", NULL /* GIMP_ICON_LOCK */,
     NC_("vectors-action", "L_ock Strokes of Path"), NULL, NULL,
     vectors_lock_content_cmd_callback,
