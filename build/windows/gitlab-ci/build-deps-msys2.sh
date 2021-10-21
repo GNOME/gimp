@@ -89,10 +89,12 @@ wget "https://github.com/msys2/MINGW-packages/raw/master/mingw-w64-gtk3/0002-Rev
 wget "https://github.com/msys2/MINGW-packages/raw/master/mingw-w64-gtk3/0003-gtkwindow-Don-t-force-enable-CSD-under-Windows.patch"
 wget "https://github.com/msys2/MINGW-packages/raw/master/mingw-w64-gtk3/0004-Disable-low-level-keyboard-hook.patch"
 wget "https://github.com/msys2/MINGW-packages/raw/master/mingw-w64-gtk3/0005-gdkkeys-win32.c-fix-initialisation-of-key_state-in-u.patch"
+wget "https://raw.githubusercontent.com/msys2/MINGW-packages/master/mingw-w64-gtk3/0006-avoid-diagnostics-for-gcc-11-false-positive-out-of-bounds.patch"
 patch -p1 < 0002-Revert-Quartz-Set-the-popup-menu-type-hint-before-re.patch
 patch -p1 < 0003-gtkwindow-Don-t-force-enable-CSD-under-Windows.patch
 patch -p1 < 0004-Disable-low-level-keyboard-hook.patch
 patch -p1 < 0005-gdkkeys-win32.c-fix-initialisation-of-key_state-in-u.patch
+patch -p1 < 0006-avoid-diagnostics-for-gcc-11-false-positive-out-of-bounds.patch
 # Patches not in MSYS2 build.
 patch -p1 < ../build/windows/patches/gtk3-24-mr3661-gimp-issue-5475.patch
 
