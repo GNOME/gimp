@@ -105,7 +105,6 @@ static void   layers_new_callback             (GtkWidget             *dialog,
                                                gint                   layer_offset_x,
                                                gint                   layer_offset_y,
                                                gboolean               layer_visible,
-                                               gboolean               layer_linked,
                                                GimpColorTag           layer_color_tag,
                                                gboolean               layer_lock_pixels,
                                                gboolean               layer_lock_position,
@@ -128,7 +127,6 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                gint                   layer_offset_x,
                                                gint                   layer_offset_y,
                                                gboolean               layer_visible,
-                                               gboolean               layer_linked,
                                                GimpColorTag           layer_color_tag,
                                                gboolean               layer_lock_pixels,
                                                gboolean               layer_lock_position,
@@ -279,7 +277,6 @@ layers_edit_attributes_cmd_callback (GimpAction *action,
                                          gimp_layer_get_opacity (layer),
                                          0 /* unused */,
                                          gimp_item_get_visible (item),
-                                         gimp_item_get_linked (item),
                                          gimp_item_get_color_tag (item),
                                          gimp_item_get_lock_content (item),
                                          gimp_item_get_lock_position (item),
@@ -364,7 +361,6 @@ layers_new_cmd_callback (GimpAction *action,
                                          config->layer_new_opacity,
                                          config->layer_new_fill_type,
                                          TRUE,
-                                         FALSE,
                                          GIMP_COLOR_TAG_NONE,
                                          FALSE,
                                          FALSE,
@@ -2226,7 +2222,6 @@ layers_new_callback (GtkWidget              *dialog,
                      gint                    layer_offset_x,
                      gint                    layer_offset_y,
                      gboolean                layer_visible,
-                     gboolean                layer_linked,
                      GimpColorTag            layer_color_tag,
                      gboolean                layer_lock_pixels,
                      gboolean                layer_lock_position,
@@ -2294,7 +2289,6 @@ layers_new_callback (GtkWidget              *dialog,
           gimp_drawable_fill (GIMP_DRAWABLE (layer), context,
                               config->layer_new_fill_type);
           gimp_item_set_visible (GIMP_ITEM (layer), layer_visible, FALSE);
-          gimp_item_set_linked (GIMP_ITEM (layer), layer_linked, FALSE);
           gimp_item_set_color_tag (GIMP_ITEM (layer), layer_color_tag, FALSE);
           gimp_item_set_lock_content (GIMP_ITEM (layer), layer_lock_pixels,
                                       FALSE);
@@ -2341,7 +2335,6 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
                                  gint                    layer_offset_x,
                                  gint                    layer_offset_y,
                                  gboolean                layer_visible,
-                                 gboolean                layer_linked,
                                  GimpColorTag            layer_color_tag,
                                  gboolean                layer_lock_pixels,
                                  gboolean                layer_lock_position,
@@ -2360,7 +2353,6 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
       layer_offset_x        != gimp_item_get_offset_x (item)          ||
       layer_offset_y        != gimp_item_get_offset_y (item)          ||
       layer_visible         != gimp_item_get_visible (item)           ||
-      layer_linked          != gimp_item_get_linked (item)            ||
       layer_color_tag       != gimp_item_get_color_tag (item)         ||
       layer_lock_pixels     != gimp_item_get_lock_content (item)      ||
       layer_lock_position   != gimp_item_get_lock_position (item)     ||
@@ -2409,9 +2401,6 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
 
       if (layer_visible != gimp_item_get_visible (item))
         gimp_item_set_visible (item, layer_visible, TRUE);
-
-      if (layer_linked != gimp_item_get_linked (item))
-        gimp_item_set_linked (item, layer_linked, TRUE);
 
       if (layer_color_tag != gimp_item_get_color_tag (item))
         gimp_item_set_color_tag (item, layer_color_tag, TRUE);
