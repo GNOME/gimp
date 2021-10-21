@@ -40,6 +40,9 @@ Core:
     default user value. A new settings in the "Image Import & Export"
     section of the Preferences allows to select whether thumbnail saving
     should be enabled by default or not.
+  - Preferences now allows to select the input device API on Windows
+    (Wintab or Windows Ink), as Windows Pointer Input Stack (Windows
+    Ink) support was added recently in GTK3.
 
 Tools:
 
@@ -54,11 +57,13 @@ Tools:
 
 User Interface:
 
-  - Preferences now allows to select the input device API on Windows
-    (Wintab or Windows Ink), as Windows Pointer Input Stack (Windows
-    Ink) support was added recently in GTK3.
   - Layout of the Canvas Size dialog re-designed a bit more horizontally
     after the template selector feature made it too high.
+  - Thumbnail icon feature was dropped: when images were opened, the
+    application icon used to be a composition of the active image and
+    the application icon (Wilber). This was confusing, hard to
+    distinguish and working on less and less platforms because of recent
+    OS and desktop rules or logics changes.
 
 API:
 
@@ -112,11 +117,6 @@ Build:
     Installer" and/or "5. Flatpak package" are respectively set in the
     MR labels.
   - Scalable GIMP application icon is installed too.
-  - Thumbnail icon feature was dropped: when images were opened, the
-    application icon used to be a composition of the active image and
-    the application icon (Wilber). This was confusing, hard to
-    distinguish and working on less and less platforms because of recent
-    OS and desktop rules or logics changes.
   - Generate SHA* checksums for CI-generated Windows installers.
   - New `CODING_STYLE.md` document in repository for our coding style
     rules.
