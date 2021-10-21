@@ -101,15 +101,19 @@ static void  usage (int exit_status) G_GNUC_NORETURN;
 
 #ifdef G_OS_WIN32
 
-static gchar *
+static const gchar *
 win32_command (const gchar *command)
 {
-  const gchar *comspec = getenv ("COMSPEC");
+  static gchar *cmd     = NULL;
+  const gchar  *comspec = getenv ("COMSPEC");
 
-  if (!comspec)
+  if (comspec == NULL)
     comspec = "cmd.exe";
 
-  return g_strdup_printf ("%s /c %s", comspec, command);
+  g_free (cmd);
+  cmd = g_strdup_printf ("%s /c %s", comspec, command);
+
+  return (const gchar *) cmd;
 }
 
 #endif
