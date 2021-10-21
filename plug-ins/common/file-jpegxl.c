@@ -497,7 +497,20 @@ load_image (GFile        *file,
       return NULL;
     }
 
-  picture_buffer = g_malloc (result_size);
+  picture_buffer = g_try_malloc (result_size);
+  if (!picture_buffer)
+    {
+      g_set_error (error, G_FILE_ERROR, 0, "Memory could not be allocated.");
+      if (profile)
+        {
+          g_object_unref (profile);
+        }
+      JxlThreadParallelRunnerDestroy (runner);
+      JxlDecoderDestroy (decoder);
+      g_free (memory);
+      return NULL;
+    }
+
   if (JxlDecoderSetImageOutBuffer (decoder, &pixel_format, picture_buffer, result_size) != JXL_DEC_SUCCESS)
     {
       g_set_error (error, G_FILE_ERROR, 0,
