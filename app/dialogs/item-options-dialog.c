@@ -48,7 +48,6 @@ struct _ItemOptionsDialog
   GimpItem                *item;
   GimpContext             *context;
   gboolean                 visible;
-  gboolean                 linked;
   GimpColorTag             color_tag;
   gboolean                 lock_content;
   gboolean                 lock_position;
@@ -94,7 +93,6 @@ item_options_dialog_new (GimpImage               *image,
                          const gchar             *lock_position_label,
                          const gchar             *item_name,
                          gboolean                 item_visible,
-                         gboolean                 item_linked,
                          GimpColorTag             item_color_tag,
                          gboolean                 item_lock_content,
                          gboolean                 item_lock_position,
@@ -125,7 +123,6 @@ item_options_dialog_new (GimpImage               *image,
   private->item          = item;
   private->context       = context;
   private->visible       = item_visible;
-  private->linked        = item_linked;
   private->color_tag     = item_color_tag;
   private->lock_content  = item_lock_content;
   private->lock_position = item_lock_position;
@@ -267,15 +264,6 @@ item_options_dialog_new (GimpImage               *image,
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &private->visible);
-
-  button = check_button_with_icon_new (_("_Linked"),
-                                       GIMP_ICON_LINKED,
-                                       GTK_BOX (private->right_vbox));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                private->linked);
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &private->linked);
 
   button = check_button_with_icon_new (lock_content_label,
                                        lock_content_icon_name,
@@ -448,7 +436,6 @@ item_options_dialog_response (GtkWidget         *dialog,
                          private->context,
                          name,
                          private->visible,
-                         private->linked,
                          private->color_tag,
                          private->lock_content,
                          private->lock_position,

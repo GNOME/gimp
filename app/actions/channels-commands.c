@@ -68,7 +68,6 @@ static void   channels_new_callback             (GtkWidget     *dialog,
                                                  const GimpRGB *channel_color,
                                                  gboolean       save_selection,
                                                  gboolean       channel_visible,
-                                                 gboolean       channel_linked,
                                                  GimpColorTag   channel_color_tag,
                                                  gboolean       channel_lock_content,
                                                  gboolean       channel_lock_position,
@@ -81,7 +80,6 @@ static void   channels_edit_attributes_callback (GtkWidget     *dialog,
                                                  const GimpRGB *channel_color,
                                                  gboolean       save_selection,
                                                  gboolean       channel_visible,
-                                                 gboolean       channel_linked,
                                                  GimpColorTag   channel_color_tag,
                                                  gboolean       channel_lock_content,
                                                  gboolean       channel_lock_position,
@@ -124,7 +122,6 @@ channels_edit_attributes_cmd_callback (GimpAction *action,
                                            gimp_object_get_name (channel),
                                            &channel->color,
                                            gimp_item_get_visible (item),
-                                           gimp_item_get_linked (item),
                                            gimp_item_get_color_tag (item),
                                            gimp_item_get_lock_content (item),
                                            gimp_item_get_lock_position (item),
@@ -170,7 +167,6 @@ channels_new_cmd_callback (GimpAction *action,
                                            config->channel_new_name,
                                            &config->channel_new_color,
                                            TRUE,
-                                           FALSE,
                                            GIMP_COLOR_TAG_NONE,
                                            FALSE,
                                            FALSE,
@@ -612,7 +608,6 @@ channels_new_callback (GtkWidget     *dialog,
                        const GimpRGB *channel_color,
                        gboolean       save_selection,
                        gboolean       channel_visible,
-                       gboolean       channel_linked,
                        GimpColorTag   channel_color_tag,
                        gboolean       channel_lock_content,
                        gboolean       channel_lock_position,
@@ -649,7 +644,6 @@ channels_new_callback (GtkWidget     *dialog,
     }
 
   gimp_item_set_visible (GIMP_ITEM (channel), channel_visible, FALSE);
-  gimp_item_set_linked (GIMP_ITEM (channel), channel_linked, FALSE);
   gimp_item_set_color_tag (GIMP_ITEM (channel), channel_color_tag, FALSE);
   gimp_item_set_lock_content (GIMP_ITEM (channel), channel_lock_content, FALSE);
   gimp_item_set_lock_position (GIMP_ITEM (channel), channel_lock_position, FALSE);
@@ -670,7 +664,6 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
                                    const GimpRGB *channel_color,
                                    gboolean       save_selection,
                                    gboolean       channel_visible,
-                                   gboolean       channel_linked,
                                    GimpColorTag   channel_color_tag,
                                    gboolean       channel_lock_content,
                                    gboolean       channel_lock_position,
@@ -681,7 +674,6 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
   if (strcmp (channel_name, gimp_object_get_name (channel))              ||
       gimp_rgba_distance (channel_color, &channel->color) > RGBA_EPSILON ||
       channel_visible       != gimp_item_get_visible (item)              ||
-      channel_linked        != gimp_item_get_linked (item)               ||
       channel_color_tag     != gimp_item_get_color_tag (item)            ||
       channel_lock_content  != gimp_item_get_lock_content (item)         ||
       channel_lock_position != gimp_item_get_lock_position (item))
@@ -698,9 +690,6 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
 
       if (channel_visible != gimp_item_get_visible (item))
         gimp_item_set_visible (item, channel_visible, TRUE);
-
-      if (channel_linked != gimp_item_get_linked (item))
-        gimp_item_set_linked (item, channel_linked, TRUE);
 
       if (channel_color_tag != gimp_item_get_color_tag (item))
         gimp_item_set_color_tag (item, channel_color_tag, TRUE);
