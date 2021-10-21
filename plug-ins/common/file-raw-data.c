@@ -594,6 +594,12 @@ raw_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("RAW export does not support multiple layers."));
 
+      if (export == GIMP_EXPORT_EXPORT)
+        {
+          gimp_image_delete (image);
+          g_free (drawables);
+        }
+
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_CALLING_ERROR,
                                                error);
