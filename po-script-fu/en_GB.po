@@ -2,23 +2,28 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Piers Cornwell <piers.cornwell@usa.net>, 2000.
 # Gareth Owen <gowen72@yahoo.com>, David Lodge <dave@cirt.net>, 2004.
-# Bruce Cowan <bruce@bcowan.me.uk>, 2009, 2010, 2011.
 # Zander Brown <zbrown@gnome.org>, 2019.
+# Bruce Cowan <bruce@bcowan.me.uk>, 2009-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-08-25 16:14+0000\n"
-"PO-Revision-Date: 2019-08-26 00:30+0100\n"
-"Last-Translator: Zander Brown <zbrown@gnome.org>\n"
-"Language-Team: English - United Kingdom <en_GB@li.org>\n"
+"POT-Creation-Date: 2020-05-26 14:47+0000\n"
+"PO-Revision-Date: 2021-10-21 20:56+0100\n"
+"Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
+"Language-Team: English - United Kingdom <en@li.org>\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 3.32.1\n"
+"X-Generator: Gtranslator 41.0\n"
+"X-DL-Team: en_GB\n"
+"X-DL-Module: gimp\n"
+"X-DL-Branch: gimp-2-10\n"
+"X-DL-Domain: po-script-fu\n"
+"X-DL-State: Translating\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -137,8 +142,7 @@ msgstr "Save Script-Fu Console Output"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
 #: ../plug-ins/script-fu/script-fu-interface.c:236
-#: ../plug-ins/script-fu/script-fu-server.c:834
-#| msgid "En_hance"
+#: ../plug-ins/script-fu/script-fu-server.c:839
 msgid "_Cancel"
 msgstr "_Cancel"
 
@@ -235,27 +239,27 @@ msgstr "Too few arguments to 'script-fu-register' call"
 msgid "Error while loading %s:"
 msgstr "Error while loading %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:830
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Server Options"
 
-#: ../plug-ins/script-fu/script-fu-server.c:835
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "_Start Server"
 msgstr "_Start Server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:868
+#: ../plug-ins/script-fu/script-fu-server.c:873
 msgid "Listen on IP:"
 msgstr "Listen on IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:875
+#: ../plug-ins/script-fu/script-fu-server.c:880
 msgid "Server port:"
 msgstr "Server port:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:881
+#: ../plug-ins/script-fu/script-fu-server.c:886
 msgid "Server logfile:"
 msgstr "Server logfile:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:894
+#: ../plug-ins/script-fu/script-fu-server.c:899
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -601,7 +605,6 @@ msgid "Darken only"
 msgstr "Darken only"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-#| msgid "Difference Clouds..."
 msgid "_Difference Clouds..."
 msgstr "_Difference Clouds..."
 
@@ -618,31 +621,36 @@ msgid "Distress the selection"
 msgstr "Distress the selection"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-msgid "Threshold (bigger 1<-->254 smaller)"
-msgstr "Threshold (bigger 1<-->254 smaller)"
+#| msgid "Threshold (bigger 1<-->254 smaller)"
+msgid "_Threshold (bigger 1<-->254 smaller)"
+msgstr "_Threshold (bigger 1<-->254 smaller)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-msgid "Spread"
-msgstr "Spread"
+#| msgid "Spread"
+msgid "_Spread"
+msgstr "_Spread"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-msgid "Granularity (1 is low)"
-msgstr "Granularity (1 is low)"
+#| msgid "Granularity (1 is low)"
+msgid "_Granularity (1 is low)"
+msgstr "_Granularity (1 is low)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-msgid "Smooth"
-msgstr "Smooth"
+#| msgid "Smooth"
+msgid "S_mooth"
+msgstr "S_mooth"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-msgid "Smooth horizontally"
-msgstr "Smooth horizontally"
+#| msgid "Smooth horizontally"
+msgid "Smooth hor_izontally"
+msgstr "Smooth hor_izontally"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-msgid "Smooth vertically"
-msgstr "Smooth vertically"
+#| msgid "Smooth vertically"
+msgid "Smooth _vertically"
+msgstr "Smooth _vertically"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
-#| msgid "_Drop Shadow..."
 msgid "_Drop Shadow (legacy)..."
 msgstr "_Drop Shadow (legacy)..."
 
@@ -681,49 +689,65 @@ msgstr "Opacity"
 msgid "Allow resizing"
 msgstr "Allow resizing"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "_Erase Every Other Row..."
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Erase every other row or column"
+#| msgid "_Erase Every Other Row..."
+msgid "_Erase Every Nth Row..."
+msgstr "_Erase Every Nth Row..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+#| msgid "Erase every other row or column"
+msgid "Erase every nth row or column"
+msgstr "Erase every nth row or column"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Rows/cols"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Rows"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Columns"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Even/odd"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Even"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Odd"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Erase/fill"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Erase"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Fill with BG"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Erase Every Other Row..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Erase every other row or column"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Even/odd"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Even"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Odd"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
@@ -866,7 +890,6 @@ msgid "_Roadmap"
 msgstr "_Roadmap"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-#| msgid "Bookmark to the GIMP web site"
 msgid "Bookmark to the roadmap of GIMP"
 msgstr "Bookmark to the roadmap of GIMP"
 
@@ -875,7 +898,6 @@ msgid "_Wiki"
 msgstr "_Wiki"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-#| msgid "Bookmark to the GIMP web site"
 msgid "Bookmark to the wiki of GIMP"
 msgstr "Bookmark to the wiki of GIMP"
 
@@ -884,7 +906,6 @@ msgid "_Bug Reports and Feature Requests"
 msgstr "_Bug Reports and Feature Requests"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-#| msgid "Bookmark to the user manual"
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Bookmark to the bug tracker of GIMP"
 
@@ -959,8 +980,9 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-msgid "Direction"
-msgstr "Direction"
+#| msgid "Direction"
+msgid "_Direction"
+msgstr "_Direction"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
@@ -973,8 +995,9 @@ msgid "Vertical"
 msgstr "Vertical"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-msgid "Position (in %)"
-msgstr "Position (in %)"
+#| msgid "Position (in %)"
+msgid "_Position (in %)"
+msgstr "_Position (in %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
@@ -985,8 +1008,9 @@ msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Add a guide at the orientation and position specified (in pixels)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-msgid "Position"
-msgstr "Position"
+#| msgid "Position"
+msgid "_Position"
+msgstr "_Position"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
@@ -1072,8 +1096,6 @@ msgstr "Name"
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:143
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:198
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:268
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
 msgid "Spacing"
 msgstr "Spacing"
 
@@ -1196,15 +1218,23 @@ msgstr "Paste the clipboard contents into a new brush"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-msgid "Brush name"
-msgstr "Brush name"
+#| msgid "Brush name"
+msgid "_Brush name"
+msgstr "_Brush name"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-msgid "File name"
-msgstr "File name"
+#| msgid "File name"
+msgid "_File name"
+msgstr "_File name"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#| msgid "Spacing"
+msgid "_Spacing"
+msgstr "_Spacing"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "New _Pattern..."
@@ -1216,8 +1246,9 @@ msgstr "Paste the clipboard contents into a new pattern"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-msgid "Pattern name"
-msgstr "Pattern name"
+#| msgid "Pattern name"
+msgid "_Pattern name"
+msgstr "_Pattern name"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "_Perspective..."
@@ -1257,16 +1288,15 @@ msgstr "Edge amount"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:130
 msgid "Pixelize"
-msgstr "Pixelize"
+msgstr "Pixelise"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:131
 msgid "Pixel amount"
 msgstr "Pixel amount"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-#| msgid "Reverse Layer Order"
 msgid "Reverse Layer _Order"
-msgstr "RReverse Layer _Order"
+msgstr "Reverse Layer _Order"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
 msgid "Reverse the order of layers in the image"
@@ -1277,8 +1307,6 @@ msgid "_Rippling..."
 msgstr "_Rippling..."
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
-#| msgid ""
-#| "Create a multi-layer image by adding a ripple effect to the current image"
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
@@ -1361,12 +1389,14 @@ msgid "Round the corners of the current selection"
 msgstr "Round the corners of the current selection"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-msgid "Radius (%)"
-msgstr "Radius (%)"
+#| msgid "Radius (%)"
+msgid "R_adius (%)"
+msgstr "R_adius (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-msgid "Concave"
-msgstr "Concave"
+#| msgid "Concave"
+msgid "Co_ncave"
+msgstr "Co_ncave"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
 msgid "To _Brush..."
@@ -1450,7 +1480,6 @@ msgid "_Spyrogimp (older script-fu version)..."
 msgstr "_Spyrogimp (older script-fu version)..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
-#| msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
 msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
 msgstr "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
 
