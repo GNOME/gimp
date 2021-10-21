@@ -323,19 +323,19 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },
 
-  { "layers-lock-content", NULL /* GIMP_ICON_LOCK */,
+  { "layers-lock-content", GIMP_ICON_LOCK_CONTENT,
     NC_("layers-action", "L_ock Pixels of Layer"), NULL, NULL,
     layers_lock_content_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_LOCK_PIXELS },
 
-  { "layers-lock-position", GIMP_ICON_TOOL_MOVE,
+  { "layers-lock-position", GIMP_ICON_LOCK_POSITION,
     NC_("layers-action", "L_ock Position of Layer"), NULL, NULL,
     layers_lock_position_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_LOCK_POSITION },
 
-  { "layers-lock-alpha", GIMP_ICON_TRANSPARENCY,
+  { "layers-lock-alpha", GIMP_ICON_LOCK_ALPHA,
     NC_("layers-action", "Lock Alph_a Channel"), NULL,
     NC_("layers-action",
         "Keep transparency information on this layer from being modified"),

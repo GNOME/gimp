@@ -168,13 +168,13 @@ static const GimpToggleActionEntry vectors_toggle_actions[] =
     FALSE,
     GIMP_HELP_PATH_VISIBLE },
 
-  { "vectors-lock-content", NULL /* GIMP_ICON_LOCK */,
+  { "vectors-lock-content", GIMP_ICON_LOCK_CONTENT,
     NC_("vectors-action", "L_ock Strokes of Path"), NULL, NULL,
     vectors_lock_content_cmd_callback,
     FALSE,
     GIMP_HELP_PATH_LOCK_STROKES },
 
-  { "vectors-lock-position", GIMP_ICON_TOOL_MOVE,
+  { "vectors-lock-position", GIMP_ICON_LOCK_POSITION,
     NC_("vectors-action", "L_ock Position of Path"), NULL, NULL,
     vectors_lock_position_cmd_callback,
     FALSE,

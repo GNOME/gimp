@@ -62,7 +62,7 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },
 
-  { "drawable-lock-content", NULL /* GIMP_ICON_LOCK */,
+  { "drawable-lock-content", GIMP_ICON_LOCK_CONTENT,
     NC_("drawable-action", "L_ock Pixels of Drawable"), NULL,
     NC_("drawable-action",
         "Keep the pixels on this drawable from being modified"),
@@ -70,7 +70,7 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     FALSE,
     GIMP_HELP_LAYER_LOCK_PIXELS },
 
-  { "drawable-lock-position", GIMP_ICON_TOOL_MOVE,
+  { "drawable-lock-position", GIMP_ICON_LOCK_POSITION,
     NC_("drawable-action", "L_ock Position of Drawable"), NULL,
     NC_("drawable-action",
         "Keep the position on this drawable from being modified"),
