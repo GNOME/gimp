@@ -115,12 +115,6 @@ static const GimpToggleActionEntry channels_toggle_actions[] =
     FALSE,
     GIMP_HELP_CHANNEL_VISIBLE },
 
-  { "channels-linked", GIMP_ICON_LINKED,
-    NC_("channels-action", "Toggle Channel _Linked State"), NULL, NULL,
-    channels_linked_cmd_callback,
-    FALSE,
-    GIMP_HELP_CHANNEL_LINKED },
-
   { "channels-lock-content", NULL /* GIMP_ICON_LOCK */,
     NC_("channels-action", "L_ock Pixels of Channel"), NULL, NULL,
     channels_lock_content_cmd_callback,

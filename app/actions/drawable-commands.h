@@ -26,9 +26,6 @@ void   drawable_levels_stretch_cmd_callback (GimpAction *action,
                                              GVariant   *value,
                                              gpointer    data);
 
-void   drawable_linked_cmd_callback         (GimpAction *action,
-                                             GVariant   *value,
-                                             gpointer    data);
 void   drawable_visible_cmd_callback        (GimpAction *action,
                                              GVariant   *value,
                                              gpointer    data);

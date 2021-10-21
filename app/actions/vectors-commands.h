@@ -90,9 +90,6 @@ void   vectors_import_cmd_callback               (GimpAction *action,
 void   vectors_visible_cmd_callback              (GimpAction *action,
                                                   GVariant   *value,
                                                   gpointer    data);
-void   vectors_linked_cmd_callback               (GimpAction *action,
-                                                  GVariant   *value,
-                                                  gpointer    data);
 void   vectors_lock_content_cmd_callback         (GimpAction *action,
                                                   GVariant   *value,
                                                   gpointer    data);

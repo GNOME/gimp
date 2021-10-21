@@ -2027,18 +2027,6 @@ layers_visible_cmd_callback (GimpAction *action,
 }
 
 void
-layers_linked_cmd_callback (GimpAction *action,
-                            GVariant   *value,
-                            gpointer    data)
-{
-  GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
-
-  items_linked_cmd_callback (action, value, image, GIMP_ITEM (layer));
-}
-
-void
 layers_lock_content_cmd_callback (GimpAction *action,
                                   GVariant   *value,
                                   gpointer    data)
