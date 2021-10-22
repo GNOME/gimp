@@ -60,12 +60,14 @@ gimp_widgets_init_foreign_enums (void)
 }
 
 void
-gimp_widgets_init (GimpHelpFunc          standard_help_func,
-                   GimpGetColorFunc      get_foreground_func,
-                   GimpGetColorFunc      get_background_func,
-                   GimpEnsureModulesFunc ensure_modules_func)
+gimp_widgets_init (GimpHelpFunc           standard_help_func,
+                   GimpGetColorFunc       get_foreground_func,
+                   GimpGetColorFunc       get_background_func,
+                   GimpEnsureModulesFunc  ensure_modules_func,
+                   const gchar           *test_base_dir)
 {
-  GList       *icons = NULL;
+  GList       *icons   = NULL;
+  const gchar *cat_dir;
   gchar       *base_dir;
   gchar       *path;
   GdkPixbuf   *pixbuf;
@@ -85,11 +87,20 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   gimp_icons_init ();
 
+  if (test_base_dir)
+    {
+      cat_dir  = "";
+      base_dir = g_build_filename (test_base_dir, "desktop", NULL);
+    }
+  else
+    {
+      cat_dir  = "apps";
 #ifdef ENABLE_RELOCATABLE_RESOURCES
-  base_dir = g_build_filename (gimp_installation_directory (), "share", "icons", "hicolor", NULL);
+      base_dir = g_build_filename (gimp_installation_directory (), "share", "icons", "hicolor", NULL);
 #else
-  base_dir = g_build_filename (DATAROOTDIR, "icons", "hicolor", NULL);
+      base_dir = g_build_filename (DATAROOTDIR, "icons", "hicolor", NULL);
 #endif
+    }
 
   /* Loading the application icons. Unfortunately GTK doesn't know how
    * to load any size from a single SVG, so we have to generate common
@@ -98,7 +109,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
    * then the application icon is dependant to the theme and for now at
    * least, we want the installed icon.
    */
-  path   = g_build_filename (base_dir, "16x16/apps/gimp.png", NULL);
+  path   = g_build_filename (base_dir, "16x16", cat_dir, "gimp.png", NULL);
   pixbuf = gdk_pixbuf_new_from_file (path, &error);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
@@ -107,7 +118,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   g_clear_error (&error);
   g_free (path);
 
-  path   = g_build_filename (base_dir, "32x32/apps/gimp.png", NULL);
+  path   = g_build_filename (base_dir, "32x32", cat_dir, "gimp.png", NULL);
   pixbuf = gdk_pixbuf_new_from_file (path, &error);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
@@ -116,7 +127,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   g_clear_error (&error);
   g_free (path);
 
-  path   = g_build_filename (base_dir, "48x48/apps/gimp.png", NULL);
+  path   = g_build_filename (base_dir, "48x48", cat_dir, "gimp.png", NULL);
   pixbuf = gdk_pixbuf_new_from_file (path, &error);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
@@ -125,7 +136,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   g_clear_error (&error);
   g_free (path);
 
-  path   = g_build_filename (base_dir, "64x64/apps/gimp.png", NULL);
+  path   = g_build_filename (base_dir, "64x64", cat_dir, "gimp.png", NULL);
   pixbuf = gdk_pixbuf_new_from_file (path, &error);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
@@ -134,7 +145,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   g_clear_error (&error);
   g_free (path);
 
-  path   = g_build_filename (base_dir, "scalable/apps/gimp.svg", NULL);
+  path   = g_build_filename (base_dir, "scalable", cat_dir, "gimp.svg", NULL);
   pixbuf = gdk_pixbuf_new_from_file_at_size (path, 128, 128, &error);
   if (pixbuf)
     {
@@ -167,7 +178,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
     }
   g_free (path);
 
-  path   = g_build_filename (base_dir, "256x256/apps/gimp.png", NULL);
+  path   = g_build_filename (base_dir, "256x256", cat_dir, "gimp.png", NULL);
   pixbuf = gdk_pixbuf_new_from_file (path, &error);
   if (pixbuf)
     icons = g_list_prepend (icons, pixbuf);
