@@ -885,13 +885,14 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
         {
           GtkTreePath *path;
           path = gimp_container_tree_view_get_path (tree_view, item->data);
-          if (path == NULL)
-            {
-              g_critical ("%s: item %s has no path!\n",
-                          G_STRFUNC, gimp_object_get_name (GIMP_OBJECT (item->data)));
-              return FALSE;
-            }
-          paths = g_list_prepend (paths, path);
+          if (path != NULL)
+            /* It may happen that some items have no paths when a tree
+             * view has some filtering logics (for instance Palette or
+             * Fonts dockables). Then an item which was selected at
+             * first might become unselected during filtering and has to
+             * be removed from selection.
+             */
+            paths = g_list_prepend (paths, path);
         }
 
       paths = g_list_reverse (paths);
