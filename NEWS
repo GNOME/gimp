@@ -11,6 +11,14 @@ Otherwise, this branch is only for bug-fixes.
 Overview of Changes from GIMP 2.10.28 to GIMP 2.10.30
 =====================================================
 
+Core:
+
+  - Do not follow subpixel font rendering choice from system settings
+    for text layer rendering. These systems are useful for GUI
+    rendering on a screen of a specific type and pixel order. Yet when
+    rendering an image which can be zoomed in or out, showed on various
+    screens or even printed, subpixel font rendering doesn't make sense.
+
 Plug-ins:
 
   - metadata-viewer: improve how XMP tags with multiple values are
@@ -21,6 +29,10 @@ Plug-ins:
     * Comparing XMP tags with equivalent IPTC tags with multiple values,
       each value is compared individually, instead of comparing the list
       as a whole.
+
+Installer:
+
+  - Extension .avif now associated to GIMP.
 
 
 Overview of Changes from GIMP 2.10.26 to GIMP 2.10.28
