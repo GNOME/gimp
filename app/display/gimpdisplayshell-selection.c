@@ -412,12 +412,6 @@ selection_generate_segs (Selection *selection)
                          &selection->n_segs_in, &selection->n_segs_out,
                          0, 0, 0, 0);
 
-  if (selection->n_segs_in || selection->n_segs_out)
-    gtk_widget_translate_coordinates (GTK_WIDGET (selection->shell->canvas),
-                                      GTK_WIDGET (selection->shell),
-                                      0, 0,
-                                      &canvas_offset_x, &canvas_offset_y);
-
   if (selection->n_segs_in)
     {
       selection->segs_in = g_new (GimpSegment, selection->n_segs_in);

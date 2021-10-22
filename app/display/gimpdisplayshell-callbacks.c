@@ -593,6 +593,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
   gimp_canvas_item_draw (shell->unrotated_item, cr);
 
   /* restart (and recalculate) the selection boundaries */
+  gimp_display_shell_selection_draw (shell, cr);
   gimp_display_shell_selection_restart (shell);
 }
 
