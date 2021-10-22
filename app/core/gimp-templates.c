@@ -57,7 +57,18 @@ gimp_templates_load (Gimp *gimp)
           g_clear_error (&error);
           g_object_unref (file);
 
-          file = gimp_sysconf_directory_file ("templaterc", NULL);
+          if (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"))
+            {
+              gchar *path;
+              path = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+                                       "etc", "templaterc", NULL);
+              file = g_file_new_for_path (path);
+              g_free (path);
+            }
+          else
+            {
+              file = gimp_sysconf_directory_file ("templaterc", NULL);
+            }
 
           if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
                                               file, NULL, &error))
