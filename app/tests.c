@@ -138,7 +138,7 @@ gimp_init_for_gui_testing_internal (gboolean  show_gui,
   gimp_set_show_gui (gimp, show_gui);
   gimp_load_config (gimp, gimprc, NULL);
   gimp_gegl_init (gimp);
-  gui_init (gimp, TRUE);
+  gui_init (gimp, TRUE, g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"));
   gimp_init_icon_theme_for_testing ();
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy, NULL);

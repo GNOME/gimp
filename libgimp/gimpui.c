@@ -163,7 +163,7 @@ gimp_ui_init (const gchar *prog_name)
   gimp_widgets_init (gimp_ui_help_func,
                      gimp_context_get_foreground,
                      gimp_context_get_background,
-                     gimp_ensure_modules);
+                     gimp_ensure_modules, NULL);
 
   gimp_dialogs_show_help_button (gimp_show_help_button ());
 

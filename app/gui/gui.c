@@ -213,9 +213,19 @@ gui_abort (const gchar *abort_message)
   exit (EXIT_FAILURE);
 }
 
+/**
+ * gui_init:
+ * @gimp:
+ * @no_splash:
+ * @test_base_dir: a base prefix directory.
+ *
+ * @test_base_dir should be set to %NULL in all our codebase except for
+ * unit testing calls.
+ */
 GimpInitStatusFunc
-gui_init (Gimp     *gimp,
-          gboolean  no_splash)
+gui_init (Gimp        *gimp,
+          gboolean     no_splash,
+          const gchar *test_base_dir)
 {
   GimpInitStatusFunc  status_callback = NULL;
   gchar              *abort_message;
@@ -248,7 +258,7 @@ gui_init (Gimp     *gimp,
   gimp_widgets_init (gui_help_func,
                      gui_get_foreground_func,
                      gui_get_background_func,
-                     NULL);
+                     NULL, test_base_dir);
 
   g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
 

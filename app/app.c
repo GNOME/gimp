@@ -296,7 +296,7 @@ app_run (const gchar         *full_prog_name,
 
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! no_interface)
-    update_status_func = gui_init (gimp, no_splash);
+    update_status_func = gui_init (gimp, no_splash, NULL);
 #endif
 
   if (! update_status_func)

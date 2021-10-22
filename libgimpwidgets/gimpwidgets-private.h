@@ -36,10 +36,11 @@ extern GimpEnsureModulesFunc _gimp_ensure_modules_func;
 G_BEGIN_DECLS
 
 
-void  gimp_widgets_init (GimpHelpFunc          standard_help_func,
-                         GimpGetColorFunc      get_foreground_func,
-                         GimpGetColorFunc      get_background_func,
-                         GimpEnsureModulesFunc ensure_modules_func);
+void  gimp_widgets_init (GimpHelpFunc           standard_help_func,
+                         GimpGetColorFunc       get_foreground_func,
+                         GimpGetColorFunc       get_background_func,
+                         GimpEnsureModulesFunc  ensure_modules_func,
+                         const gchar           *test_base_dir);
 
 
 G_END_DECLS

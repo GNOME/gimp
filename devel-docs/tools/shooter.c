@@ -143,7 +143,8 @@ main (int    argc,
   gimp_widgets_init (shooter_standard_help,
                      shooter_get_foreground,
                      shooter_get_background,
-                     shooter_ensure_modules);
+                     shooter_ensure_modules,
+                     NULL);
 
   toplevels = get_all_widgets ();
 
