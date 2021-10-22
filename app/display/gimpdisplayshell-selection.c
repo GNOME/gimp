@@ -458,20 +458,14 @@ selection_timeout (Selection *selection)
 
   if ((time - selection->shell->selection_update) / 1000 > config->marching_ants_speed)
     {
-      GdkWindow             *window;
-      cairo_rectangle_int_t  rect;
-      cairo_region_t        *region;
+      GdkWindow *window;
 
       window = gtk_widget_get_window (GTK_WIDGET (selection->shell));
 
-      rect.x      = 0;
-      rect.y      = 0;
-      rect.width  = gdk_window_get_width  (window);
-      rect.height = gdk_window_get_height (window);
-
-      region = cairo_region_create_rectangle (&rect);
-      gtk_widget_queue_draw_region (GTK_WIDGET (selection->shell), region);
-      cairo_region_destroy (region);
+      gtk_widget_queue_draw_area (GTK_WIDGET (selection->shell),
+                                  0, 0,
+                                  gdk_window_get_width (window),
+                                  gdk_window_get_height (window));
     }
 
   return G_SOURCE_CONTINUE;
