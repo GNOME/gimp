@@ -4277,77 +4277,84 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
           text = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
 
-          if (default_metadata_tags[i].xmp_type == GIMP_XMP_TEXT ||
-              default_metadata_tags[i].xmp_type == GIMP_XMP_NONE)
+          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                     default_metadata_tags[i].tag);
+
+          if (text && *text)
             {
-              gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                         default_metadata_tags[i].tag);
-              gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
-                                                  default_metadata_tags[i].tag,
-                                                  GEXIV2_STRUCTURE_XA_NONE);
-              if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                    default_metadata_tags[i].tag,
-                                                    text))
+              if (default_metadata_tags[i].xmp_type == GIMP_XMP_TEXT ||
+                  default_metadata_tags[i].xmp_type == GIMP_XMP_NONE)
                 {
-                  set_tag_failed (default_metadata_tags[i].tag);
-                }
-            }
-          else
-            {
-              gchar **multi;
-
-              gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                         default_metadata_tags[i].tag);
-
-              /* We have one value per line. */
-              multi = g_strsplit (text, "\n", 0);
-
-              if (! gexiv2_metadata_set_tag_multiple (GEXIV2_METADATA (g_metadata),
+                  gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
                                                       default_metadata_tags[i].tag,
-                                                      (const gchar **) multi))
-                {
-                  set_tag_failed (default_metadata_tags[i].tag);
+                                                      GEXIV2_STRUCTURE_XA_NONE);
+                  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                                                        default_metadata_tags[i].tag,
+                                                        text))
+                    {
+                      set_tag_failed (default_metadata_tags[i].tag);
+                    }
                 }
+              else
+                {
+                  gchar **multi;
 
-              g_strfreev (multi);
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
+
+                  /* We have one value per line. */
+                  multi = g_strsplit (text, "\n", 0);
+
+                  if (! gexiv2_metadata_set_tag_multiple (GEXIV2_METADATA (g_metadata),
+                                                          default_metadata_tags[i].tag,
+                                                          (const gchar **) multi))
+                    {
+                      set_tag_failed (default_metadata_tags[i].tag);
+                    }
+                  g_strfreev (multi);
+                }
             }
 
             index = default_metadata_tags[i].other_tag_index;
             if (index > -1)
               {
-                gchar **multi;
-
                 gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                                            equivalent_metadata_tags[index].tag);
-                if (! strcmp ("multi", equivalent_metadata_tags[index].mode))
-                  {
-                    multi = g_strsplit (text, "\n", 0);
-                    if (! gexiv2_metadata_set_tag_multiple (GEXIV2_METADATA (g_metadata),
-                                                            equivalent_metadata_tags[index].tag,
-                                                            (const gchar **) multi))
-                      {
-                        set_tag_failed (equivalent_metadata_tags[index].tag);
-                      }
 
-                    g_strfreev (multi);
-                  }
-                else if (! strcmp ("single", equivalent_metadata_tags[index].mode))
+                if (text && *text)
                   {
-                    /* Convert from multiline to single line: keep the \n and just add the whole text. */
-                    if (*text &&
-                        ! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                          equivalent_metadata_tags[index].tag,
-                                                          text))
+                    if (! strcmp ("multi", equivalent_metadata_tags[index].mode))
                       {
-                        set_tag_failed (equivalent_metadata_tags[index].tag);
+                        gchar **multi;
+
+                        multi = g_strsplit (text, "\n", 0);
+
+                        if (! gexiv2_metadata_set_tag_multiple (GEXIV2_METADATA (g_metadata),
+                                                                equivalent_metadata_tags[index].tag,
+                                                                (const gchar **) multi))
+                          {
+                            set_tag_failed (equivalent_metadata_tags[index].tag);
+                          }
+
+                        g_strfreev (multi);
                       }
-                  }
-                else
-                  {
-                    g_warning ("Copying from multiline tag %s to %s tag %s not implemented!",
-                               default_metadata_tags[i].tag,
-                               equivalent_metadata_tags[index].mode,
-                               equivalent_metadata_tags[index].tag);
+                    else if (! strcmp ("single", equivalent_metadata_tags[index].mode))
+                      {
+                        /* Convert from multiline to single line: keep the \n and just add the whole text. */
+                        if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                                                              equivalent_metadata_tags[index].tag,
+                                                              text))
+                          {
+                            set_tag_failed (equivalent_metadata_tags[index].tag);
+                          }
+                      }
+                    else
+                      {
+                        g_warning ("Copying from multiline tag %s to %s tag %s not implemented!",
+                                   default_metadata_tags[i].tag,
+                                   equivalent_metadata_tags[index].mode,
+                                   equivalent_metadata_tags[index].tag);
+                      }
                   }
               }
 
