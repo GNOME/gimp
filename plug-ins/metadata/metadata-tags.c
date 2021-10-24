@@ -27,6 +27,13 @@
 #include "metadata-tags.h"
 
 
+/* The meaning of "single" and "multi" here denotes whether it is used in a
+ * single line or a multi line edit field.
+ * Depending on it's xmp type multi line can be saved as either:
+ * - one tag of type text, possibly including newlines
+ * - an array of tags of the same type for seq and bag, where each line in
+ *   the multi line edit will be one item in the array
+ */
 const metadata_tag default_metadata_tags[] =
 {
   /* Description */
@@ -134,12 +141,16 @@ const metadata_tag default_metadata_tags[] =
 };
 const gint n_default_metadata_tags = G_N_ELEMENTS (default_metadata_tags);
 
+/* Then meaning of "single" and "multi" below is a little different than above.
+ * "single" - for iptc tags that can appear only once,
+ * "multi"  - for iptc tags that are repeatable, i.e. can appear multiple times.
+ */
 const metadata_tag equivalent_metadata_tags[] =
 {
   { "Iptc.Application2.DateCreated",             "single", 10,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  0
   { "Iptc.Application2.TransmissionReference",   "single", 12,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  1
   { "Iptc.Application2.SpecialInstructions",     "single", 13,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  2
-  { "Iptc.Application2.Headline",                "multi",  11,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  3
+  { "Iptc.Application2.Headline",                "single", 11,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  3
   { "Iptc.Application2.Category",                "single", 56,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  4
   { "Iptc.Application2.City",                    "single", 20,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  5
   { "Iptc.Application2.ProvinceState",           "single", 21,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  6
