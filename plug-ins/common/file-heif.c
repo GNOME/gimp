@@ -1240,23 +1240,25 @@ save_image (GFile                        *file,
             GError                      **error,
             enum heif_compression_format  compression)
 {
-  struct heif_image        *image   = NULL;
-  struct heif_context      *context = heif_context_alloc ();
-  struct heif_encoder      *encoder = NULL;
-  struct heif_image_handle *handle  = NULL;
-  struct heif_writer        writer;
-  struct heif_error         err;
-  GOutputStream            *output;
-  GeglBuffer               *buffer;
-  const gchar              *encoding;
-  const Babl               *format;
-  const Babl               *space   = NULL;
-  guint8                   *data;
-  gint                      stride;
-  gint                      width;
-  gint                      height;
-  gboolean                  has_alpha;
-  gboolean                  out_linear = FALSE;
+  struct heif_image                    *image   = NULL;
+  struct heif_context                  *context = heif_context_alloc ();
+  struct heif_encoder                  *encoder = NULL;
+  const struct heif_encoder_descriptor *encoder_descriptor;
+  const char                           *encoder_name;
+  struct heif_image_handle             *handle  = NULL;
+  struct heif_writer                    writer;
+  struct heif_error                     err;
+  GOutputStream                        *output;
+  GeglBuffer                           *buffer;
+  const gchar                          *encoding;
+  const Babl                           *format;
+  const Babl                           *space   = NULL;
+  guint8                               *data;
+  gint                                  stride;
+  gint                                  width;
+  gint                                  height;
+  gboolean                              has_alpha;
+  gboolean                              out_linear = FALSE;
 
   if (!context)
     {
@@ -1265,8 +1267,50 @@ save_image (GFile                        *file,
       return FALSE;
     }
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             g_file_get_parse_name (file));
+  if (compression == heif_compression_HEVC)
+    {
+      if (heif_context_get_encoder_descriptors (context,
+                                                heif_compression_HEVC,
+                                                NULL,
+                                                &encoder_descriptor, 1) == 1)
+        {
+          encoder_name = heif_encoder_descriptor_get_id_name (encoder_descriptor);
+        }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       "Unable to find suitable HEIF encoder");
+          heif_context_free (context);
+          return FALSE;
+        }
+    }
+  else /* AV1 compression */
+    {
+      if (heif_context_get_encoder_descriptors (context,
+                                                compression,
+                                                "aom", /* we prefer aom rather than rav1e */
+                                                &encoder_descriptor, 1) == 1)
+        {
+          encoder_name = heif_encoder_descriptor_get_id_name (encoder_descriptor);
+        }
+      else if (heif_context_get_encoder_descriptors (context,
+                                                     compression,
+                                                     NULL,
+                                                     &encoder_descriptor, 1) == 1)
+        {
+          encoder_name = heif_encoder_descriptor_get_id_name (encoder_descriptor);
+        }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       "Unable to find suitable AVIF encoder");
+          heif_context_free (context);
+          return FALSE;
+        }
+    }
+
+  gimp_progress_init_printf (_("Exporting '%s' using %s encoder"),
+                             g_file_get_parse_name (file), encoder_name);
 
   width   = gimp_drawable_width  (drawable_ID);
   height  = gimp_drawable_height (drawable_ID);
@@ -1523,14 +1567,14 @@ save_image (GFile                        *file,
 
   /*  encode to HEIF file  */
 
-  err = heif_context_get_encoder_for_format (context,
-                                             compression,
-                                             &encoder);
+  err = heif_context_get_encoder (context,
+                                  encoder_descriptor,
+                                  &encoder);
 
   if (err.code != 0)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "Unable to find suitable HEIF encoder");
+                   "Unable to get an encoder instance");
       heif_image_release (image);
       heif_context_free (context);
       return FALSE;
@@ -1556,7 +1600,7 @@ save_image (GFile                        *file,
       err = heif_encoder_set_parameter_string (encoder, "chroma", "444");
       if (err.code != 0)
         {
-          g_printerr ("Failed to set chroma=444 for %s encoder: %s", heif_encoder_get_name (encoder), err.message);
+          g_printerr ("Failed to set chroma=444 for %s encoder: %s", encoder_name, err.message);
         }
     }
 #endif
