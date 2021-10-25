@@ -20,14 +20,8 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <ctype.h>
-
-#include <gegl.h>
-#include <gtk/gtk.h>
 #include <gexiv2/gexiv2.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
@@ -70,7 +64,6 @@ import_file_metadata(metadata_editor *args)
   GimpXmlParser  *xml_parser;
   GError         *error = NULL;
   FILE           *file;
-  gchar          *xmldata;
 
   gimpmetadata = FALSE;
   xmptag = FALSE;
@@ -81,12 +74,13 @@ import_file_metadata(metadata_editor *args)
   file = g_fopen (args->filename, "r");
   if (file != NULL)
     {
-      /* get xml data from file */
-      g_file_get_contents (args->filename, &xmldata, NULL, &error);
-
       /* parse xml data fetched from file */
       xml_parser = xml_parser_new (&xml_markup_parser, args);
-      xml_parser_parse_file (xml_parser, args->filename, &error);
+      if (! xml_parser_parse_file (xml_parser, args->filename, &error))
+        {
+          g_warning ("Error parsing xml: %s.", error? error->message: "");
+          g_clear_error (&error);
+        }
       xml_parser_free (xml_parser);
 
       fclose (file);
@@ -100,12 +94,9 @@ import_file_metadata(metadata_editor *args)
 void
 export_file_metadata (metadata_editor *args)
 {
-  GError *error = NULL;
-  FILE   *file;
-  gchar  *value;
-  gchar  *value_utf;
-  gchar  *xmldata;
-  gint    i, size;
+  FILE    *file;
+  GString *xmldata;
+  gint     i, size;
 
   if (force_write == TRUE)
     {
@@ -115,22 +106,21 @@ export_file_metadata (metadata_editor *args)
       args->metadata = GEXIV2_METADATA (gimp_image_get_metadata (args->image_id));
     }
 
-  xmldata = g_strconcat ("<?xml version=“1.0” encoding=“utf-8”?>\n",
-                         "<gimp-metadata>\n", NULL);
+  xmldata = g_string_new ("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                          "<gimp-metadata>\n");
 
   /* HANDLE IPTC */
   for (i = 0; i < n_equivalent_metadata_tags; i++)
     {
       int index = equivalent_metadata_tags[i].other_tag_index;
-      xmldata = g_strconcat (xmldata, "\t<iptc-tag>\n", NULL);
-      xmldata = g_strconcat (xmldata, "\t\t<tag-name>", NULL);
-      xmldata = g_strconcat (xmldata, equivalent_metadata_tags[i].tag, NULL);
-      xmldata = g_strconcat (xmldata, "</tag-name>\n", NULL);
-      xmldata = g_strconcat (xmldata, "\t\t<tag-mode>", NULL);
-      xmldata = g_strconcat (xmldata, equivalent_metadata_tags[i].mode, NULL);
-      xmldata = g_strconcat (xmldata, "</tag-mode>\n", NULL);
-
-      xmldata = g_strconcat (xmldata, "\t\t<tag-value>", NULL);
+      g_string_append (xmldata, "\t<iptc-tag>\n");
+      g_string_append (xmldata, "\t\t<tag-name>");
+      g_string_append (xmldata, equivalent_metadata_tags[i].tag);
+      g_string_append (xmldata, "</tag-name>\n");
+      g_string_append (xmldata, "\t\t<tag-mode>");
+      g_string_append (xmldata, equivalent_metadata_tags[i].mode);
+      g_string_append (xmldata, "</tag-mode>\n");
+      g_string_append (xmldata, "\t\t<tag-value>");
 
       if (!strcmp("single", default_metadata_tags[index].mode) ||
           !strcmp("multi", default_metadata_tags[index].mode))
@@ -142,103 +132,113 @@ export_file_metadata (metadata_editor *args)
 
           if (value)
             {
+              gchar *value_utf;
+
               value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
-              xmldata = g_strconcat (xmldata, value_utf, NULL);
+              g_string_append (xmldata, value_utf);
+              g_free (value_utf);
             }
         }
       else if (!strcmp("combo", default_metadata_tags[index].mode))
         {
           gint data = get_tag_ui_combo (args, default_metadata_tags[index].tag,
                                          default_metadata_tags[index].mode);
-          value = g_malloc(1024);
-          g_sprintf(value, "%d", data);
-          xmldata = g_strconcat (xmldata, value, NULL);
-          g_free(value);
+          g_string_append_printf (xmldata, "%d", data);
         }
       else if (!strcmp("list", default_metadata_tags[i].mode))
         {
             /* No IPTC lists elements at this point */
         }
 
-      xmldata = g_strconcat (xmldata, "</tag-value>\n", NULL);
-      xmldata = g_strconcat (xmldata, "\t</iptc-tag>\n", NULL);
+      g_string_append (xmldata, "</tag-value>\n");
+      g_string_append (xmldata, "\t</iptc-tag>\n");
     }
 
   /* HANDLE XMP */
   for (i = 0; i < n_default_metadata_tags; i++)
     {
-      xmldata = g_strconcat (xmldata, "\t<xmp-tag>\n", NULL);
-      xmldata = g_strconcat (xmldata, "\t\t<tag-name>", NULL);
-      xmldata = g_strconcat (xmldata, default_metadata_tags[i].tag, NULL);
-      xmldata = g_strconcat (xmldata, "</tag-name>\n", NULL);
-      xmldata = g_strconcat (xmldata, "\t\t<tag-mode>", NULL);
-      xmldata = g_strconcat (xmldata, default_metadata_tags[i].mode, NULL);
-      xmldata = g_strconcat (xmldata, "</tag-mode>\n", NULL);
+      g_string_append (xmldata, "\t<xmp-tag>\n");
+      g_string_append (xmldata, "\t\t<tag-name>");
+      g_string_append (xmldata, default_metadata_tags[i].tag);
+      g_string_append (xmldata, "</tag-name>\n");
+      g_string_append (xmldata, "\t\t<tag-mode>");
+      g_string_append (xmldata, default_metadata_tags[i].mode);
+      g_string_append (xmldata, "</tag-mode>\n");
 
       if (!strcmp("single", default_metadata_tags[i].mode) ||
           !strcmp("multi", default_metadata_tags[i].mode))
         {
           const gchar *value;
 
-          xmldata = g_strconcat (xmldata, "\t\t<tag-value>", NULL);
+          g_string_append (xmldata, "\t\t<tag-value>");
           value = get_tag_ui_text (args, default_metadata_tags[i].tag,
                                    default_metadata_tags[i].mode);
 
           if (value)
             {
+              gchar   *value_utf;
+
               value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
-              xmldata = g_strconcat (xmldata, value_utf, NULL);
+              g_string_append (xmldata, value_utf);
+              g_free (value_utf);
             }
 
-          xmldata = g_strconcat (xmldata, "</tag-value>\n", NULL);
+          g_string_append (xmldata, "</tag-value>\n");
         }
       else if (!strcmp("combo", default_metadata_tags[i].mode))
         {
           gint data;
 
-          xmldata = g_strconcat (xmldata, "\t\t<tag-value>", NULL);
+          g_string_append (xmldata, "\t\t<tag-value>");
 
           data = get_tag_ui_combo (args, default_metadata_tags[i].tag,
                                          default_metadata_tags[i].mode);
-          value = g_malloc(1024);
-          g_sprintf(value, "%d", data);
-          xmldata = g_strconcat (xmldata, value, NULL);
-          g_free(value);
+          g_string_append_printf (xmldata, "%d", data);
 
-          xmldata = g_strconcat (xmldata, "</tag-value>\n", NULL);
+          g_string_append (xmldata, "</tag-value>\n");
         }
       else if (!strcmp("list", default_metadata_tags[i].mode))
         {
           gchar *data;
 
-          xmldata = g_strconcat (xmldata, "\t\t<tag-list-value>\n", NULL);
+          g_string_append (xmldata, "\t\t<tag-list-value>\n");
 
           data = get_tag_ui_list (args, default_metadata_tags[i].tag,
-                                         default_metadata_tags[i].mode);
-          xmldata = g_strconcat (xmldata, data, NULL);
+                                        default_metadata_tags[i].mode);
 
           if (data)
-            g_free(data);
+            {
+              g_string_append (xmldata, data);
+              g_free(data);
+            }
 
-          xmldata = g_strconcat (xmldata, "\t\t</tag-list-value>\n", NULL);
+          g_string_append (xmldata, "\t\t</tag-list-value>\n");
         }
 
-      xmldata = g_strconcat (xmldata, "\t</xmp-tag>\n", NULL);
+      g_string_append (xmldata, "\t</xmp-tag>\n");
+
     }
 
-  xmldata = g_strconcat(xmldata, "</gimp-metadata>\n", NULL);
+  g_string_append (xmldata, "</gimp-metadata>\n");
 
-  size = strlen (xmldata);
+
+  size = strlen (xmldata->str);
   file = g_fopen (args->filename, "w");
   if (file != NULL)
     {
-      g_file_set_contents (args->filename, xmldata, size, &error);
+      GError *error = NULL;
+
+      if (! g_file_set_contents (args->filename, xmldata->str, size, &error))
+        {
+          g_warning ("Error saving file: %s.", error? error->message: "");
+          g_clear_error (&error);
+        }
       fclose (file);
     }
 
   if (xmldata)
     {
-      g_free (xmldata);
+      g_string_free(xmldata, TRUE);
     }
 }
 
