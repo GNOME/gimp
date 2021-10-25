@@ -20,15 +20,7 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <ctype.h>
-
-#include <gegl.h>
-#include <gtk/gtk.h>
 #include <gexiv2/gexiv2.h>
-
-#include <glib.h>
-#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -57,6 +49,11 @@ gchar *str_element;
 gchar *list_tag_data[256][256];
 gint row_count = 0;
 gint item_count = 0;
+
+
+static void get_list_elements                        (GString   *xmldata,
+                                                      int        element_count,
+                                                      gchar    **rowtagdata);
 
 
 void
@@ -168,35 +165,40 @@ set_tag_ui (metadata_editor *args,
             gchar*           mode)
 {
   GtkWidget *widget;
-  gchar *value_utf;
 
   widget = GTK_WIDGET (gtk_builder_get_object (args->builder, str_tag_name));
 
   if (!strcmp ("single", mode))
     {
       GtkEntry *entry_widget;
+      gchar    *value_utf;
 
       value_utf = g_locale_to_utf8 (str_tag_value, -1, NULL, NULL, NULL);
       entry_widget = GTK_ENTRY (widget);
       gtk_entry_set_text (entry_widget, value_utf);
+      g_free (value_utf);
     }
   else if (!strcmp ("multi", mode))
     {
       GtkTextView   *text_view;
       GtkTextBuffer *buffer;
+      gchar         *value_utf;
 
       value_utf = g_locale_to_utf8 (str_tag_value, -1, NULL, NULL, NULL);
       text_view = GTK_TEXT_VIEW (widget);
       buffer = gtk_text_view_get_buffer (text_view);
       gtk_text_buffer_set_text (buffer, value_utf, -1);
+      g_free (value_utf);
     }
   else if (!strcmp ("combo", mode))
     {
-      gint32 value;
+      gint32  value;
+      gchar  *value_utf;
 
       value_utf = g_locale_to_utf8 (str_tag_value, -1, NULL, NULL, NULL);
       value = atoi(value_utf);
       gtk_combo_box_set_active (GTK_COMBO_BOX(widget), value);
+      g_free (value_utf);
     }
   else if (!strcmp ("list", mode))
     {
@@ -576,6 +578,27 @@ get_tag_ui_text (metadata_editor *args,
   return NULL;
 }
 
+static void
+get_list_elements (GString *xmldata, int element_count, gchar **rowtagdata)
+{
+  gint list_idx;
+
+  g_string_append (xmldata, "\t\t\t<list-element>\n");
+
+  for (list_idx = 0; list_idx < element_count; list_idx++)
+    {
+      g_string_append (xmldata, "\t\t\t\t<element>");
+
+      if (rowtagdata && rowtagdata[list_idx] && strlen(rowtagdata[list_idx]) > 0)
+        {
+          g_string_append (xmldata, rowtagdata[list_idx]);
+        }
+
+      g_string_append (xmldata, "</element>\n");
+    }
+  g_string_append (xmldata, "\t\t\t</list-element>\n");
+}
+
 gchar *
 get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
 {
@@ -584,14 +607,15 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
   GtkTreeModel  *treemodel;
   GtkListStore  *liststore;
   GtkTreeIter    iter;
-  gchar         *xmldata;
+  GString       *xmldata;
   gint           number_of_rows;
   gint           row;
   gint           has_data;
   gchar         *tagdata[256][256];
 
   has_data = FALSE;
-  xmldata = (gchar*)g_malloc(262144);
+  xmldata = g_string_new ("");
+
   object = gtk_builder_get_object (args->builder, name);
   widget = GTK_WIDGET(object);
 
@@ -626,18 +650,10 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                   (tagdata[row][6] != NULL && strlen(tagdata[row][6]) > 0) ||
                   (tagdata[row][7] != NULL && strlen(tagdata[row][7]) > 0))
                 {
-                  gint  types;
 
                   has_data = TRUE;
 
-                  xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
-                  for (types = 0; types < 8; types++)
-                    {
-                      xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                      xmldata = g_strconcat (xmldata, tagdata[row][types], NULL);
-                      xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                    }
-                  xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
+                  get_list_elements (xmldata, 8, tagdata[row]);
                 }
             }
           else if (!strcmp (COPYRIGHTOWNER_HEADER, name))
@@ -652,14 +668,14 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                 {
                   has_data = TRUE;
 
-                  xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                  xmldata = g_strconcat (xmldata, tagdata[row][0], NULL);
-                  xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                  xmldata = g_strconcat (xmldata, tagdata[row][1], NULL);
-                  xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
+                  g_string_append (xmldata, "\t\t\t<list-element>\n");
+                  g_string_append (xmldata, "\t\t\t\t<element>");
+                  g_string_append (xmldata, tagdata[row][0]);
+                  g_string_append (xmldata, "</element>\n");
+                  g_string_append (xmldata, "\t\t\t\t<element>");
+                  g_string_append (xmldata, tagdata[row][1]);
+                  g_string_append (xmldata, "</element>\n");
+                  g_string_append (xmldata, "\t\t\t</list-element>\n");
                 }
             }
           else if (!strcmp (IMAGECREATOR_HEADER, name))
@@ -672,18 +688,9 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
               if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0) ||
                   (tagdata[row][1] != NULL && strlen(tagdata[row][1]) > 0))
                 {
-                  gint  types;
-
                   has_data = TRUE;
 
-                  xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
-                  for (types = 0; types < 2; types++)
-                    {
-                      xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                      xmldata = g_strconcat (xmldata, tagdata[row][types], NULL);
-                      xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                    }
-                  xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
+                  get_list_elements (xmldata, 2, tagdata[row]);
                 }
             }
           else if (!strcmp (ARTWORKOROBJECT_HEADER, name))
@@ -704,18 +711,9 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                   (tagdata[row][4] != NULL && strlen(tagdata[row][4]) > 0) ||
                   (tagdata[row][5] != NULL && strlen(tagdata[row][5]) > 0))
                 {
-                  gint  types;
-
                   has_data = TRUE;
 
-                  xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
-                  for (types = 0; types < 6; types++)
-                    {
-                      xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                      xmldata = g_strconcat (xmldata, tagdata[row][types], NULL);
-                      xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                    }
-                  xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
+                  get_list_elements (xmldata, 6, tagdata[row]);
                 }
             }
           else if (!strcmp (REGISTRYID_HEADER, name))
@@ -728,18 +726,9 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
               if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0) ||
                   (tagdata[row][1] != NULL && strlen(tagdata[row][1]) > 0))
                 {
-                  gint  types;
-
                   has_data = TRUE;
 
-                  xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
-                  for (types = 0; types < 2; types++)
-                    {
-                      xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                      xmldata = g_strconcat (xmldata, tagdata[row][types], NULL);
-                      xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                    }
-                  xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
+                  get_list_elements (xmldata, 2, tagdata[row]);
                 }
             }
           else if (!strcmp (LOCATIONSHOWN_HEADER, name))
@@ -760,18 +749,9 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                   (tagdata[row][4] != NULL && strlen(tagdata[row][4]) > 0) ||
                   (tagdata[row][5] != NULL && strlen(tagdata[row][5]) > 0))
                 {
-                  gint  types;
-
                   has_data = TRUE;
 
-                  xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
-                  for (types = 0; types < 6; types++)
-                    {
-                      xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                      xmldata = g_strconcat (xmldata, tagdata[row][types], NULL);
-                      xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                    }
-                  xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
+                  get_list_elements (xmldata, 6, tagdata[row]);
                 }
             }
           else if (!strcmp ("Xmp.iptcExt.OrganisationInImageName", name))
@@ -784,11 +764,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                 {
                   has_data = TRUE;
 
-                  xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                  xmldata = g_strconcat (xmldata, tagdata[row][0], NULL);
-                  xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
+                  get_list_elements (xmldata, 1, tagdata[row]);
                 }
             }
           else if (!strcmp ("Xmp.iptcExt.OrganisationInImageCode", name))
@@ -801,11 +777,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                 {
                   has_data = TRUE;
 
-                  xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                  xmldata = g_strconcat (xmldata, tagdata[row][0], NULL);
-                  xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
+                  get_list_elements (xmldata, 1, tagdata[row]);
                 }
             }
           else if (!strcmp ("Xmp.plus.PropertyReleaseID", name))
@@ -818,11 +790,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                 {
                   has_data = TRUE;
 
-                  xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                  xmldata = g_strconcat (xmldata, tagdata[row][0], NULL);
-                  xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
+                  get_list_elements (xmldata, 1, tagdata[row]);
                 }
             }
           else if (!strcmp ("Xmp.plus.ModelReleaseID", name))
@@ -835,11 +803,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                 {
                   has_data = TRUE;
 
-                  xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t\t<element>", NULL);
-                  xmldata = g_strconcat (xmldata, tagdata[row][0], NULL);
-                  xmldata = g_strconcat (xmldata, "</element>\n", NULL);
-                  xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
+                  get_list_elements (xmldata, 1, tagdata[row]);
                 }
             }
         }
@@ -847,10 +811,14 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
 
   if (has_data == TRUE)
     {
-      return xmldata;
+      gchar *xml;
+
+      xml = g_strdup (xmldata->str);
+      g_string_free(xmldata, TRUE);
+      return xml;
     }
 
-  g_free(xmldata);
+  g_string_free(xmldata, TRUE);
 
   return NULL;
 }
