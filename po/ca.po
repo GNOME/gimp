@@ -44,7 +44,7 @@ msgid ""
 "and image authoring."
 msgstr ""
 "El GIMP és l'acrònim de GNU Image Manipulation Program (Programa de retoc "
-"d'imatges GNU). És un programa que es distribueix de manera lliure per "
+"d'imatges GNU). És un programa que es distribueix de manera lliure per a "
 "tasques com el retoc de fotografies, la composició i la creació d'imatges."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:4
@@ -68,7 +68,7 @@ msgid ""
 msgstr ""
 "El GIMP és ampliable i extensible. Està dissenyat per a ampliar-se amb "
 "connectors i extensions, per a fer-hi gairebé de tot. La interfície avançada"
-" de scripts permet fer un script per qualsevol cosa, des de la tasca més "
+" de scripts permet fer un script per a qualsevol cosa, des de la tasca més "
 "simple als processos més complexos de manipulació d'imatges. El GIMP està "
 "disponible per a Linux, Microsoft Windows i OS X."
 
