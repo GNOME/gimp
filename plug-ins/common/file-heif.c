@@ -1422,33 +1422,34 @@ save_image (GFile                        *file,
             enum heif_compression_format  compression,
             GimpMetadata                 *metadata)
 {
-  struct heif_image        *h_image = NULL;
-  struct heif_context      *context = heif_context_alloc ();
-  struct heif_encoder      *encoder = NULL;
-  struct heif_image_handle *handle  = NULL;
-  struct heif_writer        writer;
-  struct heif_error         err;
-  GOutputStream            *output;
-  GeglBuffer               *buffer;
-  const gchar              *encoding;
-  const Babl               *format;
-  const Babl               *space   = NULL;
-  guint8                   *data;
-  gint                      stride;
-  gint                      width;
-  gint                      height;
-  gboolean                  has_alpha;
-  gboolean                  out_linear = FALSE;
-  gboolean                  lossless;
-  gint                      quality;
-  gboolean                  save_profile;
-  gint                      save_bit_depth = 8;
+  struct heif_image                    *h_image = NULL;
+  struct heif_context                  *context = heif_context_alloc ();
+  struct heif_encoder                  *encoder = NULL;
+  const struct heif_encoder_descriptor *encoder_descriptor;
+  const char                           *encoder_name;
+  struct heif_image_handle             *handle  = NULL;
+  struct heif_writer                    writer;
+  struct heif_error                     err;
+  GOutputStream                        *output;
+  GeglBuffer                           *buffer;
+  const gchar                          *encoding;
+  const Babl                           *format;
+  const Babl                           *space   = NULL;
+  guint8                               *data;
+  gint                                  stride;
+  gint                                  width;
+  gint                                  height;
+  gboolean                              has_alpha;
+  gboolean                              out_linear = FALSE;
+  gboolean                              lossless;
+  gint                                  quality;
+  gboolean                              save_profile;
+  gint                                  save_bit_depth = 8;
 #if LIBHEIF_HAVE_VERSION(1,10,0)
   HeifpluginExportFormat    pixel_format = HEIFPLUGIN_EXPORT_FORMAT_YUV420;
 #endif
 #if LIBHEIF_HAVE_VERSION(1,8,0)
   HeifpluginEncoderSpeed    encoder_speed = HEIFPLUGIN_ENCODER_SPEED_BALANCED;
-  const char               *encoder_name;
   const char               *parameter_value;
   struct heif_color_profile_nclx nclx_profile;
 #endif
@@ -1481,8 +1482,50 @@ save_image (GFile                        *file,
                 "save-xmp", &save_xmp,
                 NULL);
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             g_file_get_parse_name (file));
+  if (compression == heif_compression_HEVC)
+    {
+      if (heif_context_get_encoder_descriptors (context,
+                                                heif_compression_HEVC,
+                                                NULL,
+                                                &encoder_descriptor, 1) == 1)
+        {
+          encoder_name = heif_encoder_descriptor_get_id_name (encoder_descriptor);
+        }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       "Unable to find suitable HEIF encoder");
+          heif_context_free (context);
+          return FALSE;
+        }
+    }
+  else /* AV1 compression */
+    {
+      if (heif_context_get_encoder_descriptors (context,
+                                                compression,
+                                                "aom", /* we prefer aom rather than rav1e */
+                                                &encoder_descriptor, 1) == 1)
+        {
+          encoder_name = heif_encoder_descriptor_get_id_name (encoder_descriptor);
+        }
+      else if (heif_context_get_encoder_descriptors (context,
+                                                     compression,
+                                                     NULL,
+                                                     &encoder_descriptor, 1) == 1)
+        {
+          encoder_name = heif_encoder_descriptor_get_id_name (encoder_descriptor);
+        }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       "Unable to find suitable AVIF encoder");
+          heif_context_free (context);
+          return FALSE;
+        }
+    }
+
+  gimp_progress_init_printf (_("Exporting '%s' using %s encoder"),
+                             g_file_get_parse_name (file), encoder_name);
 
   width   = gimp_drawable_get_width  (drawable);
   height  = gimp_drawable_get_height (drawable);
@@ -1767,14 +1810,14 @@ save_image (GFile                        *file,
   gimp_progress_update (0.33);
 
   /*  encode to HEIF file  */
-  err = heif_context_get_encoder_for_format (context,
-                                             compression,
-                                             &encoder);
+  err = heif_context_get_encoder (context,
+                                  encoder_descriptor,
+                                  &encoder);
 
   if (err.code != 0)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "Unable to find suitable HEIF encoder");
+                   "Unable to get an encoder instance");
       heif_image_release (h_image);
       heif_context_free (context);
       return FALSE;
@@ -1792,21 +1835,6 @@ save_image (GFile                        *file,
   /* heif_encoder_set_logging_level (encoder, logging_level); */
 
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-  if (compression == heif_compression_HEVC)
-    {
-      /* This is an ugly workaround to avoid following issue:
-       * https://github.com/strukturag/libheif/issues/357
-       * When libheif is built on MSYS2 without CPPFLAGS+=" -DX265_API_IMPORTS=1"
-       * x265_plugin_name called by heif_encoder_get_name can crash.
-       * x265 is only HEVC encoder în libheif so we can avoid the call
-       * and set name by ourselves.
-       */
-      encoder_name = "x265 HEVC encoder";
-    }
-  else
-    {
-      encoder_name = heif_encoder_get_name (encoder);
-    }
 #if LIBHEIF_HAVE_VERSION(1,10,0)
 
   if (lossless && pixel_format != HEIFPLUGIN_EXPORT_FORMAT_RGB)
@@ -1873,7 +1901,7 @@ save_image (GFile                        *file,
         }
 
 
-      if (g_ascii_strncasecmp (encoder_name, "AOM", 3) == 0) /* AOMedia AV1 encoder */
+      if (g_strcmp0 (encoder_name, "aom") == 0) /* AOMedia AV1 encoder */
         {
           switch (encoder_speed)
             {
@@ -1902,7 +1930,7 @@ save_image (GFile                        *file,
             }
 
         }
-      else if (g_ascii_strncasecmp (encoder_name, "Rav1e", 5) == 0) /* Rav1e encoder */
+      else if (g_strcmp0 (encoder_name, "rav1e") == 0) /* Rav1e encoder */
         {
           switch (encoder_speed)
             {
