@@ -693,6 +693,13 @@ save_image (GFile                *file,
                 "uses-original-profile", &uses_original_profile,
                 NULL);
 
+  if (lossless)
+    {
+      /* JPEG XL developers recommend enabling uses_original_profile
+       * for better lossless compression efficiency. */
+      uses_original_profile = TRUE;
+    }
+
   drawable_type   = gimp_drawable_type (drawable);
   drawable_width  = gimp_drawable_get_width (drawable);
   drawable_height = gimp_drawable_get_height (drawable);
