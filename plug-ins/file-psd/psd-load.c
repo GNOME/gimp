@@ -1412,7 +1412,7 @@ psd_convert_cmyk_to_srgb (PSDimage *img_a,
               g_object_unref (srgb);
             }
 
-          gimp_color_transform_process_pixels (img_a->cmyk_transform_alpha,
+          gimp_color_transform_process_pixels (img_a->cmyk_transform,
                                                babl_format ("cmyk u8"),
                                                src,
                                                babl_format ("R'G'B' float"),
