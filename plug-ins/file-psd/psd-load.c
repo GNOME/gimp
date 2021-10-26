@@ -811,34 +811,6 @@ read_layer_info (PSDimage  *img_a,
                     }
                 }
 
-              /* sanity checks */
-              if (lyr_a[lidx]->layer_mask.bottom < lyr_a[lidx]->layer_mask.top ||
-                  lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top > GIMP_MAX_IMAGE_SIZE)
-                {
-                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               _("Unsupported or invalid layer mask height: %d"),
-                               lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top);
-                  return NULL;
-                }
-              if (lyr_a[lidx]->layer_mask.right < lyr_a[lidx]->layer_mask.left ||
-                  lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left > GIMP_MAX_IMAGE_SIZE)
-                {
-                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               _("Unsupported or invalid layer mask width: %d"),
-                               lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left);
-                  return NULL;
-                }
-
-              if ((lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left) >
-                  G_MAXINT32 / MAX (lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top, 1))
-                {
-                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               _("Unsupported or invalid layer mask size: %dx%d"),
-                               lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left,
-                               lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top);
-                  return NULL;
-                }
-
               IFDBG(2) g_debug ("Layer mask coords %d %d %d %d",
                                 lyr_a[lidx]->layer_mask.left,
                                 lyr_a[lidx]->layer_mask.top,
@@ -853,6 +825,38 @@ read_layer_info (PSDimage  *img_a,
                                 lyr_a[lidx]->layer_mask.flags,
                                 lyr_a[lidx]->layer_mask.extra_flags,
                                 lyr_a[lidx]->layer_mask.mask_params);
+
+              /* Rendered masks can have invalid dimensions: 0, 0, 0, -1 */
+              if (! lyr_a[lidx]->layer_mask.mask_flags.rendered)
+                {
+                  /* sanity checks */
+                  if (lyr_a[lidx]->layer_mask.bottom < lyr_a[lidx]->layer_mask.top ||
+                      lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top > GIMP_MAX_IMAGE_SIZE)
+                    {
+                      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                   _("Unsupported or invalid layer mask height: %d"),
+                                   lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top);
+                      return NULL;
+                    }
+                  if (lyr_a[lidx]->layer_mask.right < lyr_a[lidx]->layer_mask.left ||
+                      lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left > GIMP_MAX_IMAGE_SIZE)
+                    {
+                      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                   _("Unsupported or invalid layer mask width: %d"),
+                                   lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left);
+                      return NULL;
+                    }
+
+                  if ((lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left) >
+                      G_MAXINT32 / MAX (lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top, 1))
+                    {
+                      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                   _("Unsupported or invalid layer mask size: %dx%d"),
+                                   lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left,
+                                   lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top);
+                      return NULL;
+                    }
+                }
             }
 
           /* Layer blending ranges */           /* FIXME  */
