@@ -81,6 +81,8 @@ perl_env = [
   'srcdir='   + perlsrcdir,
   'destdir='  + meson.build_root(),
   'builddir=' + meson.build_root(),
+]
+perl= [
   perl,
   '-I', perlbindir,
   '-I', perlsrcdir,
@@ -107,8 +109,9 @@ groups_pl = custom_target('groups.pl',
 enums_pl = custom_target('enums.pl',
   input : [ 'enumgen.pl', 'enums-external.pl', enum_headers, ],
   output: [ 'enums.pl', ],
+  evn: perl_env,
   command: [
-    perl_env, '@INPUT0@',
+    perl, '@INPUT0@',
     enum_headers,
   ],
 )
@@ -132,8 +135,9 @@ pdbgen = custom_target('stamp-pdbgen',
     pdb_sources,
   ],
   output: [ 'stamp-pdbgen', ],
+  env: perl_env,
   command: [
-    perl_env, '@INPUT0@',
+    perl, '@INPUT0@',
     'app', 'lib',
   ],
 )
@@ -141,7 +145,8 @@ pdbgen = custom_target('stamp-pdbgen',
 stamp_enumcode = custom_target('stamp-enum-code',
   input : [ 'enumcode.pl', ],
   output: [ 'stamp-enum-code', ],
+  env: perl_env,
   command: [
-    perl_env, '@INPUT0@',
+    perl, '@INPUT0@',
   ],
 )
