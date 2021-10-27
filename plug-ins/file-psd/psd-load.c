@@ -2090,6 +2090,7 @@ add_merged_image (GimpImage     *image,
   gint                  offset;
   gint                  i;
   gboolean              alpha_visible;
+  gboolean              alpha_channel = FALSE;
   GeglBuffer           *buffer;
   GimpImageType         image_type;
   GimpRGB               alpha_rgb;
@@ -2099,6 +2100,14 @@ add_merged_image (GimpImage     *image,
   bps = img_a->bps / 8;
   if (bps == 0)
     bps++;
+
+  if (img_a->num_layers > 0 && img_a->color_mode == PSD_CMYK)
+    {
+      /* In this case there is no conversion. Merged image is RGB. */
+      img_a->color_mode = PSD_RGB;
+      if (! img_a->transparency)
+        total_channels--;
+    }
 
   if ((img_a->color_mode == PSD_BITMAP ||
        img_a->color_mode == PSD_MULTICHANNEL ||
@@ -2126,6 +2135,11 @@ add_merged_image (GimpImage     *image,
 
   if (img_a->merged_image_only)
     {
+      if (! img_a->transparency && extra_channels > 0)
+        {
+          alpha_channel = TRUE;
+          base_channels += 1;
+        }
       extra_channels = 0;
       total_channels = base_channels;
     }
@@ -2226,7 +2240,8 @@ add_merged_image (GimpImage     *image,
   if (img_a->merged_image_only ||
       img_a->num_layers == 0)            /* Merged image - Photoshop 2 style */
     {
-      image_type = get_gimp_image_type (img_a->base_type, img_a->transparency);
+      image_type = get_gimp_image_type (img_a->base_type,
+                                        img_a->transparency || alpha_channel);
 
       layer_size = img_a->columns * img_a->rows;
       pixels = g_malloc (layer_size * base_channels * bps);
@@ -2251,14 +2266,29 @@ add_merged_image (GimpImage     *image,
 
       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
       if (img_a->color_mode == PSD_CMYK)
-        img_a->color_mode = PSD_RGB;
+        {
+          guchar *dst0;
+
+          dst0 = g_malloc (base_channels * layer_size * sizeof(float));
+          psd_convert_cmyk_to_srgb ( img_a,
+                                     dst0, pixels,
+                                     img_a->columns, img_a->rows,
+                                     alpha_channel);
+          g_free (pixels);
+          pixels = dst0;
+       }
 
       gegl_buffer_set (buffer,
                        GEGL_RECTANGLE (0, 0,
                                        gegl_buffer_get_width (buffer),
                                        gegl_buffer_get_height (buffer)),
-                       0, get_layer_format (img_a, (base_channels % 2) == 0),
+                       0, get_layer_format (img_a,
+                                            img_a->transparency ||
+                                            alpha_channel),
                        pixels, GEGL_AUTO_ROWSTRIDE);
+
+      if (img_a->color_mode == PSD_CMYK)
+        img_a->color_mode = PSD_RGB;
 
       /* Merged image data is blended against white.  Unblend it. */
       if (img_a->transparency)
