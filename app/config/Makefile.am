@@ -46,12 +46,12 @@ libappconfig_a_sources = \
 	gimpdisplayconfig.h		\
 	gimpdisplayoptions.c		\
 	gimpdisplayoptions.h		\
+	gimpearlyrc.c			\
+	gimpearlyrc.h			\
 	gimpgeglconfig.c		\
 	gimpgeglconfig.h		\
 	gimpguiconfig.c			\
 	gimpguiconfig.h			\
-	gimplangrc.c			\
-	gimplangrc.h			\
 	gimppluginconfig.c		\
 	gimppluginconfig.h		\
 	gimprc.c			\

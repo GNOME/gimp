@@ -1049,6 +1049,51 @@ gimp_idle_run_async_full (gint             priority,
   return g_object_ref (data->async);
 }
 
+#if defined(G_OS_WIN32)
+
+gboolean
+gimp_win32_have_wintab (void)
+{
+  gunichar2 wchars_buffer[MAX_PATH + 1];
+  UINT      wchars_count = 0;
+
+  memset (wchars_buffer, 0, sizeof (wchars_buffer));
+  wchars_count = GetSystemDirectoryW (wchars_buffer, MAX_PATH);
+  if (wchars_count > 0 && wchars_count < MAX_PATH)
+    {
+      char *system32_directory = g_utf16_to_utf8 (wchars_buffer, -1, NULL, NULL, NULL);
+
+      if (system32_directory)
+        {
+          GFile    *file   = g_file_new_build_filename (system32_directory, "Wintab32.dll", NULL);
+          gboolean  exists = g_file_query_exists (file, NULL);
+
+          g_object_unref (file);
+          g_free (system32_directory);
+
+          return exists;
+        }
+    }
+
+  return FALSE;
+}
+
+gboolean
+gimp_win32_have_windows_ink (void)
+{
+  wchar_t buf[100];
+  DWORD ret;
+
+  memset (buf, 0, sizeof (buf));
+  ret = GetEnvironmentVariableW (L"GDK_WIN32_FEATURES", buf, sizeof (buf) - 1);
+  if (ret > 0 && ret < 100)
+    return wcsstr (buf, L"winpointer") != NULL;
+
+  return FALSE;
+}
+
+#endif
+
 
 /*  debug stuff  */
 

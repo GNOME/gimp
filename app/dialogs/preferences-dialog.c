@@ -35,6 +35,7 @@
 
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
+#include "core/gimp-utils.h"
 
 #include "plug-in/gimppluginmanager.h"
 
@@ -73,7 +74,6 @@
 #include "resolution-calibrate-dialog.h"
 
 #include "gimp-intl.h"
-
 
 #define RESPONSE_RESET 1
 
@@ -3145,6 +3145,19 @@ prefs_dialog_new (Gimp       *gimp,
   /*  Extended Input Devices  */
   vbox2 = prefs_frame_new (_("Extended Input Devices"),
                            GTK_CONTAINER (vbox), FALSE);
+
+#ifdef G_OS_WIN32
+  if (gimp_win32_have_windows_ink ())
+    {
+      GtkWidget *combo;
+
+      table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+      combo = prefs_enum_combo_box_add (object, "win32-pointer-input-api", 0, 0,
+                                        _("Pointer Input API:"),
+                                        GTK_TABLE (table), 0, NULL);
+    }
+#endif
 
   prefs_check_button_add (object, "devices-share-tool",
                           _("S_hare tool and tool options between input devices"),

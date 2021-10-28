@@ -44,7 +44,7 @@
 #endif /* __APPLE__ */
 
 #ifndef GIMP_CONSOLE_COMPILATION
-#include <gdk/gdk.h>
+#include <gtk/gtk.h>
 #else
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #endif
@@ -55,10 +55,12 @@
 
 #include "pdb/pdb-types.h"
 
+#include "config/gimpearlyrc.h"
 #include "config/gimpconfig-dump.h"
 
 #include "core/gimp.h"
 #include "core/gimpbacktrace.h"
+#include "core/gimp-utils.h"
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
@@ -66,6 +68,7 @@
 
 #include "about.h"
 #include "app.h"
+#include "language.h"
 #include "sanity.h"
 #include "signals.h"
 #include "unique.h"
@@ -426,6 +429,84 @@ gimp_macos_setenv (const char * progname)
 }
 #endif
 
+/* gimp_early_configuration () is executed as soon as we can read
+ * the "gimprc" files, but before any library initialization takes
+ * place
+ */
+static void
+gimp_early_configuration (void)
+{
+  GFile       *system_gimprc_file = NULL;
+  GFile       *user_gimprc_file   = NULL;
+  GimpEarlyRc *earlyrc;
+  gchar       *language;
+
+  if (system_gimprc)
+    system_gimprc_file = g_file_new_for_commandline_arg (system_gimprc);
+
+  if (user_gimprc)
+    user_gimprc_file = g_file_new_for_commandline_arg (user_gimprc);
+
+  /* GimpEarlyRc is reponsible for reading "gimprc" files for the
+   * sole purpose of getting some configuration data that is needed
+   * in the early initialization phase
+   */
+  earlyrc = gimp_early_rc_new (system_gimprc_file,
+                               user_gimprc_file,
+                               be_verbose);
+
+  /* Language needs to be determined first, before any GimpContext is
+   * instantiated (which happens when the Gimp object is created)
+   * because its properties need to be properly localized in the
+   * settings language (if different from system language). Otherwise we
+   * end up with pieces of GUI always using the system language (cf. bug
+   * 787457)
+   */
+  language = gimp_early_rc_get_language (earlyrc);
+
+  /*  change the locale if a language if specified  */
+  language_init (language);
+  if (language)
+    g_free (language);
+
+#if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
+  if (gimp_win32_have_windows_ink ())
+    {
+      GimpWin32PointerInputAPI api = gimp_early_rc_get_win32_pointer_input_api (earlyrc);
+
+      switch (api)
+        {
+        case GIMP_WIN32_POINTER_INPUT_API_WINTAB:
+          g_setenv ("GDK_WIN32_TABLET_INPUT_API", "wintab", TRUE);
+          break;
+        case GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK:
+          g_setenv ("GDK_WIN32_TABLET_INPUT_API", "winpointer", TRUE);
+          break;
+        }
+    }
+#endif
+
+  g_object_unref (earlyrc);
+
+  if (system_gimprc_file)
+    g_object_unref (system_gimprc_file);
+
+  if (user_gimprc_file)
+    g_object_unref (user_gimprc_file);
+}
+
+static gboolean
+gimp_options_group_parse_hook (GOptionContext   *context,
+                               GOptionGroup     *group,
+                               gpointer          data,
+                               GError          **error)
+{
+  /*  early initialization from data stored in "gimprc" files  */
+  gimp_early_configuration ();
+
+  return TRUE;
+}
+
 int
 main (int    argc,
       char **argv)
@@ -436,6 +517,7 @@ main (int    argc,
   gchar          *basename;
   GFile          *system_gimprc_file = NULL;
   GFile          *user_gimprc_file   = NULL;
+  GOptionGroup   *gimp_group         = NULL;
   gchar          *backtrace_file     = NULL;
   gint            i;
 
@@ -619,6 +701,16 @@ main (int    argc,
 
   context = g_option_context_new (_("[FILE|URI...]"));
   g_option_context_set_summary (context, GIMP_NAME);
+
+  /* The GIMP option group is just an empty option group, created for the sole
+   * purpose of running a post-parse hook before any other of dependant libraries
+   * are run. This makes it possible to apply options from configuration data
+   * obtained from "gimprc" files, before other libraries have a chance to run
+   * some of their intialization code.
+   */
+  gimp_group = g_option_group_new ("gimp", "", "", NULL, NULL);
+  g_option_group_set_parse_hooks (gimp_group, NULL, gimp_options_group_parse_hook);
+  g_option_context_add_group (context, gimp_group);
 
   g_option_context_add_main_entries (context, main_entries, GETTEXT_PACKAGE);
 
