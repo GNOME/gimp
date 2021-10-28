@@ -684,7 +684,8 @@ save_image (GFile                *file,
   gint               speed = 7;
   gboolean           uses_original_profile = FALSE;
 
-  gimp_progress_init_printf ("Exporting '%s'.", g_file_peek_path (file));
+  gimp_progress_init_printf (_("Exporting '%s'"),
+                             gimp_file_get_utf8_name (file));
 
   g_object_get (config,
                 "lossless",              &lossless,
