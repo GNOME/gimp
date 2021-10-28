@@ -845,7 +845,7 @@ load_image (GFile              *file,
   const char               *encoding;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             g_file_get_parse_name (file));
+                             gimp_file_get_utf8_name (file));
 
   *status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -1525,7 +1525,7 @@ save_image (GFile                        *file,
     }
 
   gimp_progress_init_printf (_("Exporting '%s' using %s encoder"),
-                             g_file_get_parse_name (file), encoder_name);
+                             gimp_file_get_utf8_name (file), encoder_name);
 
   width   = gimp_drawable_get_width  (drawable);
   height  = gimp_drawable_get_height (drawable);
