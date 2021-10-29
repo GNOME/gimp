@@ -692,9 +692,11 @@ load_image (GFile     *file,
   GimpPrecision             precision;
   gboolean                  load_linear;
   const char               *encoding;
+  char                     *filename = g_file_get_parse_name (file);
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             g_file_get_parse_name (file));
+                             filename);
+  g_free (filename);
 
   file_size = get_file_size (file, error);
   if (file_size <= 0)
@@ -1259,6 +1261,7 @@ save_image (GFile                        *file,
   gint                                  height;
   gboolean                              has_alpha;
   gboolean                              out_linear = FALSE;
+  char                                 *filename;
 
   if (!context)
     {
@@ -1309,8 +1312,10 @@ save_image (GFile                        *file,
         }
     }
 
+  filename = g_file_get_parse_name (file);
   gimp_progress_init_printf (_("Exporting '%s' using %s encoder"),
-                             g_file_get_parse_name (file), encoder_name);
+                             filename, encoder_name);
+  g_free (filename);
 
   width   = gimp_drawable_width  (drawable_ID);
   height  = gimp_drawable_height (drawable_ID);
