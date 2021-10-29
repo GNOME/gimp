@@ -989,21 +989,7 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
       return FALSE;
     }
 
-#ifdef G_OS_WIN32
-  filename = g_win32_locale_filename_from_utf8 (path);
-  /* FIXME!
-   * This call can return NULL.
-   */
-  if (! filename)
-    {
-      g_free (path);
-      g_set_error (error, GIMP_METADATA_ERROR, 0,
-                   _("Conversion of the filename to system codepage failed."));
-      return FALSE;
-    }
-#else
   filename = g_strdup (path);
-#endif
 
   g_free (path);
 
