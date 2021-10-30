@@ -1,38 +1,23 @@
 # GIMP Coding Style
 
 This document describes the preferred coding style for the GIMP source code.
-It was strongly inspired by GNU's CODING_STYLE and developed from there.
+It was originally inspired by [GNU's coding
+style](https://www.gnu.org/prep/standards/standards.html#Writing-C) and
+developed from there across the years.
 
-Coding style is a matter of consistency, readability, and maintenance; coding
-style is also completely arbitrary and a matter of taste. This document will
-use examples at the very least to provide authoritative and consistent answers
-to common questions regarding the coding style and will also try to identify the
-allowed exceptions.
+Coding style is completely arbitrary as it is a a matter of consistency,
+readability and maintenance, not taste. Therefore it doesn't matter what
+you prefer (we all have some part of the rules we would like different,
+and we can apply these to our personal projects), just follow these
+rules so that we can work together efficiently.
+
+This document will use examples at the very least to provide
+authoritative and consistent answers to common questions regarding the
+coding style and will also try to identify the allowed exceptions.
 
 ## Table of contents
 
-- [General rules](#general-rules)
-- [Commit messages](#commit-messages)
-- [Dealing with the old code](#dealing-with-the-old-code)
-- [Indentation](#indentation)
-- [Braces](#braces)
-- [Whitespace](#whitespace)
-- [If-else code styling](#if-else-code-styling)
-- [Conditions](#conditions)
-- [Switch statement](#switch-statement)
-- [Functions](#functions)
-- [Macros](#macros)
-- [Includes](#includes)
-- [Structures](#structures)
-- [Memory management](#memory-management)
-- [API Documentation](#api-documentation)
-- [Public API](#public-api)
-- (__Sections below__)
-- [Private API](#private-api)
-- [Headers](#headers)
-- [](#)
-- [](#)
-- [](#)
+[TOC]
 
 ## General rules
 
@@ -134,7 +119,7 @@ Please don't waste your time and reviewers' time with merge requests or patches
 with _only_ code style fixes unless you have push rights to the GIMP's
 repository.
 
-### Line width
+## Line width
 
 The recommended line width for source files is _80 characters_ whenever possible.
 Longer lines are usually an indication that you either need a function or a
@@ -147,7 +132,6 @@ Function definitions in the function forward declaration block don't have to
 obey the 80 characters limit. The only general rule for headers is to align the
 function definitions vertically in three columns.
 See more information in [Headers sections](#Headers)
-
 
 ## Indentation
 
