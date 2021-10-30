@@ -11,8 +11,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-19 14:36+0000\n"
-"PO-Revision-Date: 2021-04-21 10:00+0100\n"
+"POT-Creation-Date: 2021-10-28 19:39+0000\n"
+"PO-Revision-Date: 2021-10-30 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
@@ -92,31 +92,47 @@ msgstr "Gorde koloredun HTML testu gisa"
 msgid "Colored HTML text"
 msgstr "Koloredun HTML testua"
 
-#: ../plug-ins/python/foggify.py:83 ../plug-ins/python/foggify.py:84
+#: ../plug-ins/python/foggify.py:105
+msgid "Layer _name"
+msgstr "Geruzaren i_zena"
+
+#: ../plug-ins/python/foggify.py:106
 msgid "Layer name"
 msgstr "Geruzaren izena"
 
-#: ../plug-ins/python/foggify.py:85
+#: ../plug-ins/python/foggify.py:107
 msgid "Clouds"
 msgstr "Hodeiak"
 
-#: ../plug-ins/python/foggify.py:88 ../plug-ins/python/foggify.py:89
-msgid "Fog color"
-msgstr "Lainoaren kolorea"
+#: ../plug-ins/python/foggify.py:110
+msgid "_Turbulence"
+msgstr "_Turbulentzia"
 
-#: ../plug-ins/python/foggify.py:92 ../plug-ins/python/foggify.py:93
+#: ../plug-ins/python/foggify.py:111
 msgid "Turbulence"
 msgstr "Turbulentzia"
 
-#: ../plug-ins/python/foggify.py:97 ../plug-ins/python/foggify.py:98
+#: ../plug-ins/python/foggify.py:115
+msgid "O_pacity"
+msgstr "_Opakutasuna"
+
+#: ../plug-ins/python/foggify.py:116
 msgid "Opacity"
 msgstr "Opakutasuna"
 
-#: ../plug-ins/python/foggify.py:115
+#: ../plug-ins/python/foggify.py:125
+msgid "Fog _color"
+msgstr "Lainoaren _kolorea"
+
+#: ../plug-ins/python/foggify.py:126
+msgid "Fog color"
+msgstr "Lainoaren kolorea"
+
+#: ../plug-ins/python/foggify.py:142
 msgid "Add a layer of fog"
 msgstr "Gehitu lainoaren geruza"
 
-#: ../plug-ins/python/foggify.py:118
+#: ../plug-ins/python/foggify.py:145
 msgid "_Fog..."
 msgstr "_Lainoa..."
 
@@ -380,29 +396,29 @@ msgstr "Python kontsola"
 msgid "_Browse..."
 msgstr "_Arakatu..."
 
-#: ../plug-ins/python/python-console/python-console.py:179
+#: ../plug-ins/python/python-console/python-console.py:255
 msgid "Python Procedure Browser"
 msgstr "Python-eko prozeduren arakatzailea"
 
-#: ../plug-ins/python/python-console/python-console.py:207
+#: ../plug-ins/python/python-console/python-console.py:283
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Ezin izan da '%s' ireki idazteko: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:222
+#: ../plug-ins/python/python-console/python-console.py:298
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Ezin izan da '%s'(e)n idatzi: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:231
+#: ../plug-ins/python/python-console/python-console.py:307
 msgid "Save Python-Fu Console Output"
 msgstr "Gorde Python-Fu kontsolaren irteera"
 
-#: ../plug-ins/python/python-console/python-console.py:280
+#: ../plug-ins/python/python-console/python-console.py:356
 msgid "Python _Console"
 msgstr "Python _kontsola"
 
-#: ../plug-ins/python/python-console/python-console.py:281
+#: ../plug-ins/python/python-console/python-console.py:357
 msgid "Interactive GIMP Python interpreter"
 msgstr "GIMP Python interpretatzaile interaktiboa"
 
@@ -435,7 +451,7 @@ msgid "Polygon-Star"
 msgstr "Poligonoa-Izarra"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/python/spyro-plus.py:163 ../plug-ins/python/spyro-plus.py:986
+#: ../plug-ins/python/spyro-plus.py:163 ../plug-ins/python/spyro-plus.py:990
 msgid "Sine"
 msgstr "Sinua"
 
@@ -452,85 +468,85 @@ msgstr "Apala"
 msgid "Frame"
 msgstr "Markoa"
 
-#: ../plug-ins/python/spyro-plus.py:435
+#: ../plug-ins/python/spyro-plus.py:439
 msgid "Selection"
 msgstr "Hautapena"
 
-#: ../plug-ins/python/spyro-plus.py:522
+#: ../plug-ins/python/spyro-plus.py:526
 msgid "Pencil"
 msgstr "Arkatza"
 
-#: ../plug-ins/python/spyro-plus.py:538
+#: ../plug-ins/python/spyro-plus.py:542
 msgid "AirBrush"
 msgstr "Aerografoa"
 
-#: ../plug-ins/python/spyro-plus.py:598
+#: ../plug-ins/python/spyro-plus.py:602
 msgid "Preview"
 msgstr "Aurrebista"
 
-#: ../plug-ins/python/spyro-plus.py:603
+#: ../plug-ins/python/spyro-plus.py:607
 msgid "Stroke"
 msgstr "Trazua"
 
-#: ../plug-ins/python/spyro-plus.py:650
+#: ../plug-ins/python/spyro-plus.py:654
 msgid "PaintBrush"
 msgstr "Pintzela"
 
-#: ../plug-ins/python/spyro-plus.py:652
+#: ../plug-ins/python/spyro-plus.py:656
 msgid "Ink"
 msgstr "Tinta"
 
-#: ../plug-ins/python/spyro-plus.py:653
+#: ../plug-ins/python/spyro-plus.py:657
 msgid "MyPaintBrush"
 msgstr "MyPaintBrush"
 
-#: ../plug-ins/python/spyro-plus.py:972
+#: ../plug-ins/python/spyro-plus.py:976
 msgid "Spyrograph"
 msgstr "Espirografoa"
 
-#: ../plug-ins/python/spyro-plus.py:979
+#: ../plug-ins/python/spyro-plus.py:983
 msgid "Epitrochoid"
 msgstr "Epitrokoidea"
 
-#: ../plug-ins/python/spyro-plus.py:1006
+#: ../plug-ins/python/spyro-plus.py:1010
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/python/spyro-plus.py:1453
+#: ../plug-ins/python/spyro-plus.py:1457
 msgid "Curve Type"
 msgstr "Kurba mota"
 
-#: ../plug-ins/python/spyro-plus.py:1454
+#: ../plug-ins/python/spyro-plus.py:1458
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr "Eredu epitrokoidea da mugitzen den gurpila gurpil finkoaren kanpoaldean dagoenean."
 
-#: ../plug-ins/python/spyro-plus.py:1459
+#: ../plug-ins/python/spyro-plus.py:1463
 msgid "Tool"
 msgstr "Tresna"
 
-#: ../plug-ins/python/spyro-plus.py:1460
+#: ../plug-ins/python/spyro-plus.py:1464
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr "Eredua marrazteko erabiliko den tresna. Tresnaren aurrebistak azkar marrazten du."
 
-#: ../plug-ins/python/spyro-plus.py:1465
+#: ../plug-ins/python/spyro-plus.py:1469
 msgid "Long Gradient"
 msgstr "Gradiente luzea"
 
-#: ../plug-ins/python/spyro-plus.py:1467
+#: ../plug-ins/python/spyro-plus.py:1471
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
 msgstr "Markatu gabe dagoenean, uneko tresna-ezarpenak erabiliko dira. Markatuta dagoenean, gradiente luzea erabiliko du ereduaren luzerarekin bat egiteko, gradiente-tresnaren ezarpenetan ezarritako uneko gradientean eta errepikatze moduan oinarrituta."
 
-#: ../plug-ins/python/spyro-plus.py:1487
+#: ../plug-ins/python/spyro-plus.py:1491
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Zehaztu eredua honako fitxetako bat erabilita:"
 
-#: ../plug-ins/python/spyro-plus.py:1489
+#: ../plug-ins/python/spyro-plus.py:1493
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -538,111 +554,111 @@ msgid ""
 "similar."
 msgstr "Eredua fitxa aktiboak soilik zehazten du. Toy Kit eta Gears oso antzekoak dira, baina lehenak jostailuen multzoetan dauden horzdun gurpilak eta zulo-zenbakiak erabiltzen ditu. Jostailuen multzoen eskuliburuetako argibideak jarraituz gero, emaitza antzekoa izango da."
 
-#: ../plug-ins/python/spyro-plus.py:1513
+#: ../plug-ins/python/spyro-plus.py:1517
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
 msgstr "Horzdun gurpil finkoaren hortz kopurua. Gurpil finkoaren tamaina hortz kopuruaren araberakoa da."
 
-#: ../plug-ins/python/spyro-plus.py:1516 ../plug-ins/python/spyro-plus.py:1544
+#: ../plug-ins/python/spyro-plus.py:1520 ../plug-ins/python/spyro-plus.py:1548
 msgid "Fixed Gear Teeth"
 msgstr "Horzdun gurpil finkoaren hortzak"
 
-#: ../plug-ins/python/spyro-plus.py:1524
+#: ../plug-ins/python/spyro-plus.py:1528
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
 msgstr "Horzdun gurpil mugikorraren hortz kopurua. Gurpil mugikorraren tamaina hortz kopuruaren araberakoa da."
 
-#: ../plug-ins/python/spyro-plus.py:1527 ../plug-ins/python/spyro-plus.py:1549
+#: ../plug-ins/python/spyro-plus.py:1531 ../plug-ins/python/spyro-plus.py:1553
 msgid "Moving Gear Teeth"
 msgstr "Horzdun gurpil mugikorraren hortzak"
 
-#: ../plug-ins/python/spyro-plus.py:1532
+#: ../plug-ins/python/spyro-plus.py:1536
 msgid "Hole percent"
 msgstr "Zuloaren ehunekoa"
 
-#: ../plug-ins/python/spyro-plus.py:1533
+#: ../plug-ins/python/spyro-plus.py:1537
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
 msgstr "ZUloa horzdun gurpil mugikorraren erdigunetik zein distantziara dagoen. %100ek esan nahi du zuloa gurpilaren ertzean dagoela."
 
-#: ../plug-ins/python/spyro-plus.py:1554
+#: ../plug-ins/python/spyro-plus.py:1558
 msgid "Hole Number"
 msgstr "Zulo-zenbakia"
 
-#: ../plug-ins/python/spyro-plus.py:1555
+#: ../plug-ins/python/spyro-plus.py:1559
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
 msgstr "#1 zuloa horzdun gurpilaren ertzean dago. Zulo-zenbaki handiena erdigunetik hurbil dago. Zulo-zenbaki handiena desberdina da gurpil bakoitzerako."
 
-#: ../plug-ins/python/spyro-plus.py:1566
+#: ../plug-ins/python/spyro-plus.py:1570
 msgid "Flower Petals"
 msgstr "Lore-petaloak"
 
-#: ../plug-ins/python/spyro-plus.py:1567
+#: ../plug-ins/python/spyro-plus.py:1571
 msgid "The number of petals in the pattern."
 msgstr "Ereduaren petalo kopurua"
 
-#: ../plug-ins/python/spyro-plus.py:1572
+#: ../plug-ins/python/spyro-plus.py:1576
 msgid "Petal Skip"
 msgstr "Petaloen jauzia"
 
-#: ../plug-ins/python/spyro-plus.py:1573
+#: ../plug-ins/python/spyro-plus.py:1577
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "Aurrera egin behar den petalo kopurua hurrengo petaloa marrazteko."
 
-#: ../plug-ins/python/spyro-plus.py:1578
+#: ../plug-ins/python/spyro-plus.py:1582
 msgid "Hole Radius(%)"
 msgstr "Zulo-erradioa (%)"
 
-#: ../plug-ins/python/spyro-plus.py:1579
+#: ../plug-ins/python/spyro-plus.py:1583
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr "Ereduaren erdiguneko zuloaren erradioa. Ereduaren tamainaren ehuneko gisa ematen da. 0 balioak ez du zulorik sortuko. 99 balioak marra mehea sortuko du ertzean."
 
-#: ../plug-ins/python/spyro-plus.py:1600
+#: ../plug-ins/python/spyro-plus.py:1604
 msgid "Width(%)"
 msgstr "Zabalera (%)"
 
-#: ../plug-ins/python/spyro-plus.py:1601
+#: ../plug-ins/python/spyro-plus.py:1605
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 msgstr "Ereduaren zabalera, bere tamainaren ehuneko gisa. 1 balioak eredu mehea marraztuko du. 100 balioak horzdun gurpil finko osoa beteko du."
 
-#: ../plug-ins/python/spyro-plus.py:1612
+#: ../plug-ins/python/spyro-plus.py:1616
 msgid "Visual"
 msgstr "Bisuala"
 
-#: ../plug-ins/python/spyro-plus.py:1618
+#: ../plug-ins/python/spyro-plus.py:1622
 msgid "Toy Kit"
 msgstr "Jostailuen multzoa"
 
-#: ../plug-ins/python/spyro-plus.py:1624
+#: ../plug-ins/python/spyro-plus.py:1628
 msgid "Gears"
 msgstr "Horzdun gurpilak"
 
-#: ../plug-ins/python/spyro-plus.py:1637 ../plug-ins/python/spyro-plus.py:1681
+#: ../plug-ins/python/spyro-plus.py:1641 ../plug-ins/python/spyro-plus.py:1685
 msgid "Rotation"
 msgstr "Biraketa"
 
-#: ../plug-ins/python/spyro-plus.py:1638
+#: ../plug-ins/python/spyro-plus.py:1642
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
 msgstr "Ereduaren biraketa, graduetan. Horzdun gurpil mugikorraren hasierako posizioa horzdun gurpil finkoan."
 
-#: ../plug-ins/python/spyro-plus.py:1661
+#: ../plug-ins/python/spyro-plus.py:1665
 msgid "Shape"
 msgstr "Forma"
 
-#: ../plug-ins/python/spyro-plus.py:1662
+#: ../plug-ins/python/spyro-plus.py:1666
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -651,97 +667,97 @@ msgid ""
 "non-rectangular."
 msgstr "Horzdun gurpil finkoaren forma, uneko hautapenean erabiliko dena. Apala forma luze eta ertz biribilekoa da, jostailuen multzoak hornitzen duena. Markoak hautapen laukizuzenaren mugak besarkatzen ditu, erabili hole=100 horzdun gurpilen notazioan muga ukitzeko. Hautapenak uneko hautapenaren mugak besarkatuko ditu - saiatu laukizuzena ez den zerbait erabiltzen."
 
-#: ../plug-ins/python/spyro-plus.py:1671
+#: ../plug-ins/python/spyro-plus.py:1675
 msgid "Sides"
 msgstr "Alboak"
 
-#: ../plug-ins/python/spyro-plus.py:1671
+#: ../plug-ins/python/spyro-plus.py:1675
 msgid "Number of sides of the shape."
 msgstr "Formaren albo kopurua."
 
-#: ../plug-ins/python/spyro-plus.py:1676
+#: ../plug-ins/python/spyro-plus.py:1680
 msgid "Morph"
 msgstr "Itxuraldatu"
 
-#: ../plug-ins/python/spyro-plus.py:1676
+#: ../plug-ins/python/spyro-plus.py:1680
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Itxuraldatu horzdun gurpil finkoaren forma. Formetako batzuetan soilik du eragina."
 
-#: ../plug-ins/python/spyro-plus.py:1681
+#: ../plug-ins/python/spyro-plus.py:1685
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Horzdun gurpilaren biraketa, graduetan"
 
-#: ../plug-ins/python/spyro-plus.py:1696
+#: ../plug-ins/python/spyro-plus.py:1700
 msgid "Margin (px)"
 msgstr "Marjina (px)"
 
-#: ../plug-ins/python/spyro-plus.py:1696
+#: ../plug-ins/python/spyro-plus.py:1700
 msgid "Margin from edge of selection."
 msgstr "Marjina hautapenaren ertzetik."
 
-#: ../plug-ins/python/spyro-plus.py:1701
+#: ../plug-ins/python/spyro-plus.py:1705
 msgid "Make width and height equal"
 msgstr "Berdindu zabalera eta altuera"
 
-#: ../plug-ins/python/spyro-plus.py:1703
+#: ../plug-ins/python/spyro-plus.py:1707
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
 msgstr "Markatu gabe badago, ereduak uneko irudia edo hautapena beteko du. Markatuta badago, ereduak zabalera eta altuera bera izango du, eta zentratuta egongo da."
 
-#: ../plug-ins/python/spyro-plus.py:1718
+#: ../plug-ins/python/spyro-plus.py:1722
 msgid "Re_draw"
 msgstr "_Birmarraztu"
 
-#: ../plug-ins/python/spyro-plus.py:1720
+#: ../plug-ins/python/spyro-plus.py:1724
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
 msgstr "Tresna baten ezarpenak, kolorea edo hautapen aldatzen baduzu, sakatu hau ereduak zein itxura izango duen aurreikusteko."
 
-#: ../plug-ins/python/spyro-plus.py:1723
+#: ../plug-ins/python/spyro-plus.py:1727
 msgid "_Reset"
 msgstr "_Berrezarri"
 
-#: ../plug-ins/python/spyro-plus.py:1731
+#: ../plug-ins/python/spyro-plus.py:1735
 msgid "Save"
 msgstr "Gorde"
 
-#: ../plug-ins/python/spyro-plus.py:1732
+#: ../plug-ins/python/spyro-plus.py:1736
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 msgstr "Aukeratu geruza berri gisa gordeko den, aktibo egon den azken geruzan berriro marraztuko den, edo bide gisa gordeko den"
 
-#: ../plug-ins/python/spyro-plus.py:1746
+#: ../plug-ins/python/spyro-plus.py:1750
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
-#: ../plug-ins/python/spyro-plus.py:1755 ../plug-ins/python/spyro-plus.py:2292
+#: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Marraztu espirografoak uneko tresnaren ezarpenak eta hautapena erabilita."
 
-#: ../plug-ins/python/spyro-plus.py:1768
+#: ../plug-ins/python/spyro-plus.py:1772
 msgid "Curve Pattern"
 msgstr "Kurba-eredua"
 
-#: ../plug-ins/python/spyro-plus.py:1771
+#: ../plug-ins/python/spyro-plus.py:1775
 msgid "Fixed Gear"
 msgstr "Horzdun gurpil finkoa"
 
-#: ../plug-ins/python/spyro-plus.py:1774
+#: ../plug-ins/python/spyro-plus.py:1778
 msgid "Size"
 msgstr "Tamaina"
 
-#: ../plug-ins/python/spyro-plus.py:2130
+#: ../plug-ins/python/spyro-plus.py:2134
 msgid "Rendering Pattern"
 msgstr "Errendatze-eredua"
 
-#: ../plug-ins/python/spyro-plus.py:2142
+#: ../plug-ins/python/spyro-plus.py:2146
 msgid "Please wait : Rendering Pattern"
 msgstr "Itxaron: Eredua errendatzen"
 
-#: ../plug-ins/python/spyro-plus.py:2296
+#: ../plug-ins/python/spyro-plus.py:2301
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
 
