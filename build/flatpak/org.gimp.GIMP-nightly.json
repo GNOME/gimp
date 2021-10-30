@@ -633,8 +633,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/libjxl/libjxl.git",
-                    "tag": "v0.6",
-                    "commit": "25ef9145273eb5fe3db04e196327c77e404308d8"
+                    "tag": "v0.6.1",
+                    "commit": "a205468bc5d3a353fb15dae2398a101dff52f2d3"
                 }
             ]
         },
