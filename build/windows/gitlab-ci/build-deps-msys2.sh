@@ -135,7 +135,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-highway \
     mingw-w64-$MSYS2_ARCH-cmake
 
-git clone --depth=${GIT_DEPTH} --branch v0.6 --recursive https://github.com/libjxl/libjxl.git _libjxl
+git clone --depth=${GIT_DEPTH} --branch v0.6.1 --recursive https://github.com/libjxl/libjxl.git _libjxl
 
 mkdir _libjxl/_build
 cd _libjxl/_build
