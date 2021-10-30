@@ -134,12 +134,6 @@ project.  For the core components (application and libs) this coding
 style is enforced. See separate CODING_STYLE.md for a detailed description
 of the source code style.
 
-The source tree contains local config files which can be used to set the
-right coding style in common editors: `.dir-locals.el` for Emacs,
-`.kateconfig` for Kate, and `devel-docs/c.vim` for Vim (check the top
-comments to see how to enable it automatically when opening a file in
-the GIMP tree).
-
 Try to make use of GLib's object system as much as possible. Do not
 create wrappers around functions of parent classes. If you end up
 duplicating code, try to create a common parent class and implement

@@ -19,28 +19,21 @@ coding style and will also try to identify the allowed exceptions.
 
 [TOC]
 
-## General rules
+## Dealing with the old code
 
-We recommend enabling the default git pre-commit hook that detects trailing
-whitespace and non-ASCII filenames for you and helps you to avoid corrupting
-GIMP's tree with it.
+__The new GIMP code should adhere to the style explained below.__ The existing
+GIMP code largely follows these conventions, but there are some differences like
+extra or missing whitespace, tabs instead of space, wrong formatting, etc.
 
-In the terminal, navigate into your GIMP source code folder. Then do that as
-follows (one command at a time):
+__Our policy is to update the style of a code block or function if and only if
+you happen to touch that code.__
 
-```shell
-  cp -v .git/hooks/pre-commit.sample .git/hooks/pre-commit
-  chmod a+x .git/hooks/pre-commit
-```
+Please don't waste your time and reviewers' time with merge requests or patches
+with _only_ code style fixes unless you have push rights to the GIMP's
+repository.
 
-If any command above fails, visit your `.git/hooks/` folder and check for the
-existence of `pre-commit.sample` or `pre-commit` files.
-
-You might also find the `git-stripspace` utility helpful, which acts as a filter
-to remove trailing whitespace as well as initial, final, and duplicate blank
-lines.
-
-## Commit messages
+## Git usage
+### Commit messages
 
 Commit messages should follow the following rules:
 
@@ -106,20 +99,32 @@ If you want to see more good examples, this `git` command will list
 commits whose messages are generally well formatted:
 `git log --author="Jehan\|mitch\|Jacob Boerema"`
 
-## Dealing with the old code
+### Linear git log
 
-__The new GIMP code should adhere to the style explained below.__ The existing
-GIMP code largely follows these conventions, but there are some differences like
-extra or missing whitespace, tabs instead of space, wrong formatting, etc.
+Nearly all our repositories (`gimp-web` being the exception) have a
+fully linear history. The "merge commit" workflow is definitely good and
+useful in some projects' workflow, especially with bigger projects with
+many contributors and subdivided maintenance roles (where the main tree
+is mostly about merging public trees of several submaintainers' public
+trees, who themselves applied contributed commits by individuals).
 
-__Our policy is to update the style of a code block or function if and only if
-you happen to touch that code.__
+This doesn't work well with GIMP's current workflow and our number of
+contributors. This is even worse with the completely useless merge
+commits created by hosting tools which completely misused (or even
+misunderstood) the merge concept.
 
-Please don't waste your time and reviewers' time with merge requests or patches
-with _only_ code style fixes unless you have push rights to the GIMP's
-repository.
+This is why our Gitlab projects are configured to only push commits
+linearly. This means that when a contributed tree is behind, you must
+first rebase it through the "Rebase" button in the merge request (which
+requires contributors to check the "*Allow commits from members who can
+merge to the target branch*" option) or by rebasing in the tree then
+force-pushing when Gitlab is unable to merge.
 
-## Line width
+When you push directly (for contributors with push rights), you are also
+expected to never push a merge commit.
+
+## C code
+### Line width
 
 The recommended line width for source files is _80 characters_ whenever possible.
 Longer lines are usually an indication that you either need a function or a
@@ -133,7 +138,8 @@ obey the 80 characters limit. The only general rule for headers is to align the
 function definitions vertically in three columns.
 See more information in [Headers sections](#Headers)
 
-## Indentation
+### Whitespaces
+#### Indentation
 
 Each new level is indented 2 or more spaces than the previous level:
 
@@ -149,36 +155,16 @@ Even if two spaces for each indentation level allow deeper nesting, GIMP favors
 self-documenting function names that can be quite long. For this reason, you
 should avoid deeply nested code.
 
-### Tab characters
-
-Use `\t` instead of literal tab inside the source code strings.
-
-## Braces
-
-Using blocks to group code is discouraged and must not be used in newly
-written code.
-
-```c
-int   retval    = 0;
-gbool condition = retval >= 0;
-
-statement_1 ();
-statement_2 ();
-
-  /* discouraged in newly written code */
-  {
-    int      var1 = 42;
-    gboolean res  = FALSE;
-
-    res = statement_3 (var1);
-    retval = res ? -1 : 1;
-  }
-```
-
-## Whitespace
+#### Vertical spaces (new lines)
 
 Except for one single newline at the end of the file, other empty lines (at the
 beginning and the end) of a file are not allowed.
+
+On the other hand, empty lines in the middle of code are very encouraged
+for well-ventilated code. For instance gathering and separating code by
+logical parts making it easy to read and understand.
+
+#### Horizontal spaces
 
 Always put a space before an opening parenthesis but never after:
 
@@ -209,7 +195,13 @@ fit on 80 characters:
   if (condition) foo (); else bar ();
 ```
 
-## If-else code styling
+#### Tab characters in strings
+
+Use `\t` instead of literal tab inside the source code strings.
+
+### Braces
+
+#### If-else
 
 Don't use curly braces for single statement blocks:
 
@@ -301,55 +293,7 @@ The "no block for single statements" rule has only three exceptions:
       another_single_statement ();
 ```
 
-## Conditions
-
-Do not check boolean values for equality:
-
-```c
-  /* valid */
-  if (another_condition)
-    do_bar ();
-
-  /* invalid */
-  if (condition == TRUE)
-    do_foo ();
-```
-
-Even if C handles NULL equality like a boolean, be explicit:
-
-```c
-  /* valid */
-  if (some_pointer == NULL)
-    do_blah ();
-
-  /* invalid */
-  if (some_other_pointer)
-    do_blurp ();
-```
-
-When conditions split over multiple lines, the logical operators should always
-go at the end of the line. Align the same level boolean operators to show
-explicitly which are on the same level and which are not:
-
-```c
-  /* valid */
-  if (condition1  &&
-      condition2  &&
-      (condition3 || (condition4 && condition5)))
-    {
-      do_blah ();
-    }
-
-  /* invalid */
-  if (condition1
-      || condition2
-      || condition3)
-    {
-      do_foo ();
-    }
-```
-
-## Switch statement
+#### Switch
 
 A `switch()` should open a block on a new indentation level, and each case
 should start on the same indentation level as the curly braces, with the
@@ -435,8 +379,77 @@ blocks (see above) apply; place the break statement outside of the inner block:
 
 Do not add `default:` case if your `switch ()` is supposed to handle _all cases_.
 
+#### Random blocks
 
-## Variables declaration and definition
+Using blocks to group code is discouraged and must not be used in newly
+written code.
+
+```c
+int   retval    = 0;
+gbool condition = retval >= 0;
+
+statement_1 ();
+statement_2 ();
+
+  /* discouraged in newly written code */
+  {
+    int      var1 = 42;
+    gboolean res  = FALSE;
+
+    res = statement_3 (var1);
+    retval = res ? -1 : 1;
+  }
+```
+
+### Conditions
+
+Do not check boolean values for equality:
+
+```c
+  /* valid */
+  if (another_condition)
+    do_bar ();
+
+  /* invalid */
+  if (condition == TRUE)
+    do_foo ();
+```
+
+Even if C handles NULL equality like a boolean, be explicit:
+
+```c
+  /* valid */
+  if (some_pointer == NULL)
+    do_blah ();
+
+  /* invalid */
+  if (some_other_pointer)
+    do_blurp ();
+```
+
+When conditions split over multiple lines, the logical operators should always
+go at the end of the line. Align the same level boolean operators to show
+explicitly which are on the same level and which are not:
+
+```c
+  /* valid */
+  if (condition1  &&
+      condition2  &&
+      (condition3 || (condition4 && condition5)))
+    {
+      do_blah ();
+    }
+
+  /* invalid */
+  if (condition1
+      || condition2
+      || condition3)
+    {
+      do_foo ();
+    }
+```
+
+### Variables declaration and definition
 
 Place each variable on a new line. The variable name must be right-aligned,
 taking into account pointers:
@@ -451,7 +464,7 @@ taking into account pointers:
 Blocks of variable declaration/initialization should align the variable names,
 allowing quick skimming of the variable list.
 
-## Functions
+### Functions
 
 Function header has the return type on one line; the name starting in the first
 column of the following line. Prototype each parameter and place each on a
@@ -520,7 +533,7 @@ hurt readability.
     (argument_the_first, argument_the_second);
 ```
 
-## Macros
+### Macros
 
 Try to avoid private macros unless strictly necessary. Remember to `#undef`
 them at the end of a block or a series of functions needing them.
@@ -528,7 +541,7 @@ them at the end of a block or a series of functions needing them.
 Use inline functions instead of private macro definitions.
 Do not use public macros unless they evaluate to a constant.
 
-## Includes
+### Includes
 
 GIMP source files should never include the global `gimp.h` header, but instead
 include the individual headers that are needed.
@@ -540,7 +553,7 @@ Includes must be in the following order:
  0. GIMP library headers (libgimp* headers);
  0. GIMP core/app headers that it needs including its own;
 
-Sort the includes within the blocks.
+Sort alphabetically the includes within the blocks.
 
 
 ```c
@@ -560,7 +573,7 @@ Sort the includes within the blocks.
 #include "gimpcontainerentry.h"
 ```
 
-## Structures
+### Structures
 
 When declaring a structure type use newlines to separate logical sections:
 
@@ -575,7 +588,7 @@ When declaring a structure type use newlines to separate logical sections:
   } Pages;
 ```
 
-## Memory management
+### Memory management
 
 To dynamically allocate data on the heap, use `g_new()`. To allocate memory for
 multiple small data structures, `g_slice_new()`.
@@ -603,11 +616,41 @@ g_free (p);
 When a transfer of ownership is unavoidable make it clear in the function
 documentation.
 
-## API Documentation
+### Comments
+#### In-code explanation
 
-All public APIs must have proper gtk-doc comments. For functions, these should
-be placed in the source file directly above.
-These annotations are also relevant for [GObject Introspection](https://gi.readthedocs.io/en/latest/annotations/giannotations.html) to generate bindings for other languages.
+The only allowed style is C-style comments `/* */`. In particular C++
+comments `//` are strictly forbidden from our source.
+
+We are not asking contributors to over-comment their code, yet we highly
+value quality comments to explain complicated algorithms or non-obvious
+code. Just ask yourself this: what if someone sees my code 5 years later
+(another contributor or even your future self)…
+
+- will one easily understand what you meant to do?
+- In particular: if it needs to be removed later, won't one be scared to
+  delete now-useless code by fear of unexpected side-effects?
+- Or oppositely: won't someone delete the code by mistake because it
+  looks useless while it was actually dealing with a very particular
+  (yet absolutely non-obvious) issue?
+
+Adding links which explain well a problem or the reason for some
+non-obvious code is also permitted. For instance a link to a bug report
+(ours or some other projects') can sometimes be a good complement to a
+comment.
+Nevertheless it should not be overdone and in particular not for links
+likely to disappear (personal blog posts, forums, corporate websites
+which often revamp their design, breaking URLs, etc.).
+
+#### Public API Documentation
+
+All public APIs (i.e. any function exported in a header inside
+`libgimp*/` folders) **MUST** have proper gtk-doc comments. For
+functions, these should be placed in the source file directly above.
+
+These annotations are also relevant for [GObject
+Introspection](https://gi.readthedocs.io/en/latest/annotations/giannotations.html)
+to generate bindings for other languages.
 
 ```c
 /* valid */
@@ -632,10 +675,30 @@ gimp_object_set_name (GimpObject  *object,
 Doc comments for macros, function types, class structs, etc., should be placed
 next to the definitions, typically in headers.
 
-## Public API
+#### Non-public API documentation
+
+Project-only code (for instance any code from the `app/` folder) can be
+less documented. For instance when a function has obvious naming, not
+explaining it is perfectly acceptable.
+
+Nevertheless adding documentation even for these private APIs is
+welcome, especially when the usage is not as obvious as it looks, or
+to make sure to advertize the proper memory handling (does it allocate
+new memory? Which function to free it with? Or shouldn't the returned
+memory be freed?), avoiding silly bugs and not wasting developer times
+(when we have to look at the implementation to verify each time we use a
+function).
+
+In such a case, using gtk-docs syntax is still a nice idea as we will
+understand it directly (even though we won't generate any docs from it).
+
+### Public API
+#### No variables
 
 Avoid exporting variables as public API since this is cumbersome on some
 platforms. It is always preferable to add getters and setters instead.
+
+#### Def files for Windows
 
 List all public functions alphabetically in the corresponding `.def` file.
 
@@ -643,3 +706,62 @@ List all public functions alphabetically in the corresponding `.def` file.
  - `libgimp/gimp.def`
  - `libgimpbase/gimpbase.def`
  - etc
+
+## Helping tools
+### Git
+
+We recommend enabling the default git pre-commit hook that detects trailing
+whitespace and non-ASCII filenames for you and helps you to avoid corrupting
+GIMP's tree with it.
+
+In the terminal, navigate into your GIMP source code folder. Then do that as
+follows (one command at a time):
+
+```shell
+  cp -v .git/hooks/pre-commit.sample .git/hooks/pre-commit
+  chmod a+x .git/hooks/pre-commit
+```
+
+If any command above fails, visit your `.git/hooks/` folder and check for the
+existence of `pre-commit.sample` or `pre-commit` files.
+
+You might also find the `git-stripspace` utility helpful, which acts as a filter
+to remove trailing whitespace as well as initial, final, and duplicate blank
+lines.
+
+### Code editor / Integrated Development Environment (IDE)
+
+GIMP's codebase is not tied to a specific editor or IDE. The whole build
+can be performed from anywhere, and we don't care what you write your
+code with (as long as it follows syntax rules from this document).
+
+Several configuration files were contributed across the years to
+configure your favorite software to follow our coding style.
+You are very welcome to use them (or improve them and contribute the
+change when they are not perfect):
+
+- [.dir-locals.el](.dir-locals.el) for Emacs;
+- [.kateconfig](.kateconfig) for Kate;
+- [c.vim](devel-docs/c.vim) for Vim (check the top comments to see how
+  to enable it automatically when opening a file in the GIMP tree).
+
+*Note: the Kate and Emacs config file should work out-of-the-box, but
+the Vim one needs to be enabled explicitly because it is too powerful,
+hence is basically [unsafe](https://github.com/vim/vim/issues/1015).*
+
+If you use another software to write code, you are welcome to contribute
+coding style files following our rules.
+
+### Code Formatter
+
+We don't use a code formatter to re-format code because it is unable to
+handle special cases well as far as we know.
+
+Nevertheless we would be interested to use these to perform at least
+some soft verification of contributed patches. A CI-performed check
+could help new contributors to fix their basic newcomer coding style
+mistakes and free up reviewing contributors' time.
+
+The tool Clang-format has been mentionned as relevant, though nobody has
+written syntax files for this tool yet (contribution welcome for this
+too). See also #950.
