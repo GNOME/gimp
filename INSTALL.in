@@ -289,12 +289,6 @@ These are:
      how image data is transported between the core and plug-ins. Usually
      the best way to do this is detected automatically.
 
-  --without-libtiff.  configure will bail out if libtiff can not be
-     found. You better fix the underlying problem and install these
-     libraries with their header files. If you absolutely want to
-     compile GIMP without support for TIFF you need to explicitly
-     disable them using this option.
-
   --without-aa.  The AA plug-in needs libaa and configure checks for
      its presence. Use --without-aa if you run into problems.
 
