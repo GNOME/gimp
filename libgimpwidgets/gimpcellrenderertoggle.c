@@ -492,6 +492,7 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
 
   if (priv->icon_name)
     {
+      GdkPixbuf    *pixbuf;
       GdkScreen    *screen;
       GtkIconTheme *icon_theme;
       GtkIconInfo  *icon_info;
@@ -509,16 +510,21 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
                                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK);
 
       g_free (icon_name);
-      if (icon_info)
+      if (! icon_info)
         {
-          GdkPixbuf *pixbuf;
-
-          pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
-                                                            gtk_widget_get_style_context (widget),
-                                                            NULL, NULL);
-          priv->pixbuf = pixbuf;
-          g_object_unref (icon_info);
+          icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme, "image-missing",
+                                                            priv->icon_size, scale_factor,
+                                                            GTK_ICON_LOOKUP_GENERIC_FALLBACK |
+                                                            GTK_ICON_LOOKUP_USE_BUILTIN);
         }
+
+      g_return_if_fail (icon_info != NULL);
+
+      pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                        gtk_widget_get_style_context (widget),
+                                                        NULL, NULL);
+      priv->pixbuf = pixbuf;
+      g_object_unref (icon_info);
     }
 }
 
