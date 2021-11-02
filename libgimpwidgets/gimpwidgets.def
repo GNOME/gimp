@@ -182,6 +182,7 @@ EXPORTS
 	gimp_enum_store_new_with_values
 	gimp_enum_store_new_with_values_valist
 	gimp_enum_store_set_icon_prefix
+	gimp_event_triggers_context_menu
 	gimp_file_entry_get_entry
 	gimp_file_entry_get_filename
 	gimp_file_entry_get_type
