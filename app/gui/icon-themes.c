@@ -219,7 +219,24 @@ icons_apply_theme (Gimp        *gimp,
   if (gimp->be_verbose)
     g_print ("Loading icon theme '%s'\n", icon_theme_name);
 
-  gimp_icons_set_icon_theme (icon_themes_get_theme_dir (gimp, icon_theme_name));
+  if (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"))
+    {
+      GFile *file;
+      gchar *path;
+
+      path = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+                               "icons", icon_theme_name, NULL);
+      file = g_file_new_for_path (path);
+
+      gimp_icons_set_icon_theme (file);
+
+      g_object_unref (file);
+      g_free (path);
+    }
+  else
+    {
+      gimp_icons_set_icon_theme (icon_themes_get_theme_dir (gimp, icon_theme_name));
+    }
 }
 
 static void
