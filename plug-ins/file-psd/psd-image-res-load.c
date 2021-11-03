@@ -1164,6 +1164,11 @@ load_resource_1039 (const PSDimageres  *res_a,
         {
           img_a->cmyk_profile = profile;
         }
+      else if (img_a->color_mode == PSD_LAB)
+        {
+          g_debug ("LAB color profile ignored.");
+          g_object_unref (profile);
+        }
       else
         {
           gimp_image_set_color_profile (image, profile);

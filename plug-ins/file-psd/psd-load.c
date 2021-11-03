@@ -368,6 +368,7 @@ read_header_block (PSDimage      *img_a,
       && img_a->color_mode != PSD_RGB
       && img_a->color_mode != PSD_MULTICHANNEL
       && img_a->color_mode != PSD_CMYK
+      && img_a->color_mode != PSD_LAB
       && img_a->color_mode != PSD_DUOTONE)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -376,7 +377,7 @@ read_header_block (PSDimage      *img_a,
       return -1;
     }
 
-  if (img_a->color_mode == PSD_CMYK)
+  if (img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB)
     {
       if (img_a->bps != 8)
         {
@@ -1242,6 +1243,7 @@ create_gimp_image (PSDimage *img_a,
       img_a->base_type = GIMP_INDEXED;
       break;
 
+    case PSD_LAB:
     case PSD_CMYK:
     case PSD_RGB:
       img_a->base_type = GIMP_RGB;
@@ -1266,7 +1268,7 @@ create_gimp_image (PSDimage *img_a,
 
       case 8:
       case 1:
-        if (img_a->color_mode == PSD_CMYK)
+        if (img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB)
           precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
         else
           precision = GIMP_PRECISION_U8_NON_LINEAR;
@@ -1431,6 +1433,45 @@ psd_convert_cmyk_to_srgb (PSDimage *img_a,
 
       babl_process (fish, src, dst, width * height);
     }
+
+  return (guchar*) dst;
+}
+
+static guchar *
+psd_convert_lab_to_srgb (PSDimage *img_a,
+                         guchar   *dst,
+                         guchar   *src,
+                         gint      width,
+                         gint      height,
+                         gboolean  alpha)
+{
+  const Babl *fish;
+
+  if (alpha)
+    {
+      /* FIXME remove this check after babl code is ready and dependency is bumped */
+      if (! babl_format_exists("CIE Lab alpha u8"))
+        {
+          babl_format_new (
+            "name", "CIE Lab alpha u8",
+            babl_model ("CIE Lab alpha"),
+
+            babl_type ("CIE u8 L"),
+            babl_component ("CIE L"),
+            babl_type ("CIE u8 ab"),
+            babl_component ("CIE a"),
+            babl_type ("CIE u8 ab"),
+            babl_component ("CIE b"),
+            babl_type ("u8"),
+            babl_component ("A"),
+            NULL);
+        }
+      fish = babl_fish ("CIE Lab alpha u8", "R'G'B'A float");
+    }
+  else
+    fish = babl_fish ("CIE Lab u8", "R'G'B' float");
+
+  babl_process (fish, src, dst, width * height);
 
   return (guchar*) dst;
 }
@@ -1908,7 +1949,7 @@ add_layers (GimpImage     *image,
                           gint                 src_step = bps;
                           gint                 dst_step = bps * layer_channels;
 
-                          if (img_a->color_mode == PSD_CMYK)
+                          if (img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB)
                             {
                               dst0 = gegl_scratch_alloc (layer_channels *
                                                          iter->length);
@@ -1953,6 +1994,16 @@ add_layers (GimpImage     *image,
                           if (img_a->color_mode == PSD_CMYK)
                             {
                               psd_convert_cmyk_to_srgb (
+                                img_a,
+                                iter->items[0].data, dst0,
+                                roi->width, roi->height,
+                                alpha);
+
+                              gegl_scratch_free (dst0);
+                            }
+                          else if (img_a->color_mode == PSD_LAB)
+                            {
+                              psd_convert_lab_to_srgb (
                                 img_a,
                                 iter->items[0].data, dst0,
                                 roi->width, roi->height,
@@ -2265,15 +2316,28 @@ add_merged_image (GimpImage     *image,
       gimp_image_insert_layer (image, layer, NULL, 0);
 
       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
       if (img_a->color_mode == PSD_CMYK)
         {
           guchar *dst0;
 
           dst0 = g_malloc (base_channels * layer_size * sizeof(float));
-          psd_convert_cmyk_to_srgb ( img_a,
-                                     dst0, pixels,
-                                     img_a->columns, img_a->rows,
-                                     alpha_channel);
+          psd_convert_cmyk_to_srgb (img_a,
+                                    dst0, pixels,
+                                    img_a->columns, img_a->rows,
+                                    alpha_channel);
+          g_free (pixels);
+          pixels = dst0;
+       }
+      else if (img_a->color_mode == PSD_LAB)
+        {
+          guchar *dst0;
+
+          dst0 = g_malloc (base_channels * layer_size * sizeof(float));
+          psd_convert_lab_to_srgb (img_a,
+                                   dst0, pixels,
+                                   img_a->columns, img_a->rows,
+                                   img_a->transparency);
           g_free (pixels);
           pixels = dst0;
        }
@@ -2798,8 +2862,8 @@ get_layer_format (PSDimage *img_a,
 
         case 8:
         case 1:
-	  format = babl_format (img_a->color_mode == PSD_CMYK ? "R'G'B' float" : "R'G'B' u8");
-
+          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
+                                "R'G'B' float" : "R'G'B' u8");
           break;
 
         default:
@@ -2821,8 +2885,8 @@ get_layer_format (PSDimage *img_a,
 
         case 8:
         case 1:
-          format = babl_format (img_a->color_mode == PSD_CMYK ? "R'G'B'A float" : "R'G'B'A u8");
-
+          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
+                                "R'G'B'A float" : "R'G'B'A u8");
           break;
 
         default:
