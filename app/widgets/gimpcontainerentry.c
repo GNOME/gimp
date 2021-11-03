@@ -65,6 +65,9 @@ static gboolean  gimp_container_entry_select_items(GimpContainerView      *view,
                                                    GList                  *paths);
 static void     gimp_container_entry_clear_items  (GimpContainerView      *view);
 static void    gimp_container_entry_set_view_size (GimpContainerView      *view);
+static gint     gimp_container_entry_get_selected (GimpContainerView      *view,
+                                                   GList                 **items,
+                                                   GList                 **items_data);
 
 static void     gimp_container_entry_changed      (GtkEntry               *entry,
                                                    GimpContainerView      *view);
@@ -112,6 +115,7 @@ gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface)
   iface->select_items  = gimp_container_entry_select_items;
   iface->clear_items   = gimp_container_entry_clear_items;
   iface->set_view_size = gimp_container_entry_set_view_size;
+  iface->get_selected  = gimp_container_entry_get_selected;
 
   iface->insert_data_free = (GDestroyNotify) gtk_tree_iter_free;
 }
@@ -379,6 +383,24 @@ gimp_container_entry_set_view_size (GimpContainerView *view)
   GtkTreeModel *model = gimp_container_entry_get_model (view);
 
   gimp_container_tree_store_set_view_size (GIMP_CONTAINER_TREE_STORE (model));
+}
+
+static gint
+gimp_container_entry_get_selected (GimpContainerView  *view,
+                                   GList             **items,
+                                   GList             **items_data)
+{
+  GimpContainerEntry *container_entry = GIMP_CONTAINER_ENTRY (view);
+
+  if (items)
+    {
+      if (container_entry->viewable != NULL)
+        *items = g_list_prepend (NULL, container_entry->viewable);
+      else
+        *items = NULL;
+    }
+
+  return container_entry->viewable == NULL ? 0 : 1;
 }
 
 static void
