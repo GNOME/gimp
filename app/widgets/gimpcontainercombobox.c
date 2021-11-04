@@ -79,6 +79,9 @@ static gboolean  gimp_container_combo_box_select_items(GimpContainerView      *v
                                                        GList                  *paths);
 static void     gimp_container_combo_box_clear_items  (GimpContainerView      *view);
 static void    gimp_container_combo_box_set_view_size (GimpContainerView      *view);
+static gint    gimp_container_combo_box_get_selected  (GimpContainerView      *view,
+                                                       GList                 **items,
+                                                       GList                 **items_data);
 
 static void     gimp_container_combo_box_changed      (GtkComboBox            *combo_box,
                                                        GimpContainerView      *view);
@@ -129,6 +132,7 @@ gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface)
   iface->select_items  = gimp_container_combo_box_select_items;
   iface->clear_items   = gimp_container_combo_box_clear_items;
   iface->set_view_size = gimp_container_combo_box_set_view_size;
+  iface->get_selected  = gimp_container_combo_box_get_selected;
 
   iface->insert_data_free = (GDestroyNotify) gtk_tree_iter_free;
 }
@@ -424,6 +428,38 @@ gimp_container_combo_box_set_view_size (GimpContainerView *view)
 
   if (model)
     gimp_container_tree_store_set_view_size (GIMP_CONTAINER_TREE_STORE (model));
+}
+
+static gint
+gimp_container_combo_box_get_selected (GimpContainerView  *view,
+                                       GList             **items,
+                                       GList             **items_data)
+{
+  GtkComboBox      *combo_box = GTK_COMBO_BOX (view);
+  GimpViewRenderer *renderer  = NULL;
+  GtkTreeIter       iter;
+  gint              selected  = 0;
+
+  if (gtk_combo_box_get_active_iter (combo_box, &iter))
+    gtk_tree_model_get (gtk_combo_box_get_model (combo_box), &iter,
+                        GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                        -1);
+
+  if (items)
+    {
+      if (renderer != NULL && renderer->viewable != NULL)
+        {
+          *items   = g_list_prepend (NULL, renderer->viewable);
+          selected = 1;
+        }
+      else
+        {
+          *items = NULL;
+        }
+    }
+  g_clear_object (&renderer);
+
+  return selected;
 }
 
 static void

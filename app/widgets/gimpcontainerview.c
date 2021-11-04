@@ -1023,6 +1023,17 @@ gimp_container_view_real_get_selected (GimpContainerView  *view,
     return 0;
 
   children_type = gimp_container_get_children_type (private->container);
+  if (gimp_context_type_to_property (children_type) == -1)
+    {
+      /* If you experience this warning, it means you should implement
+       * your own definition for get_selected() because the default one
+       * won't work for you (only made for context properties).
+       */
+      g_warning ("%s: TODO: implement GimpContainerViewInterface's get_selected() for type '%s'.\n",
+                 G_STRFUNC, g_type_name (G_OBJECT_TYPE (view)));
+      return 0;
+    }
+
   object = gimp_context_get_by_type (private->context,
                                      children_type);
 
