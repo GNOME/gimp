@@ -1,13 +1,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Rūdofls Mazurs <rudolfs.mazurs@gmail.com>, 2011, 2016, 2018, 2019.
+# Rūdofls Mazurs <rudolfs.mazurs@gmail.com>, 2011, 2016, 2018, 2019, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-20 16:59+0000\n"
-"PO-Revision-Date: 2019-10-05 23:04+0200\n"
+"POT-Creation-Date: 2020-05-26 14:47+0000\n"
+"PO-Revision-Date: 2021-11-04 11:55+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 :"
 " 2);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 21.08.1\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -135,7 +135,7 @@ msgstr "Saglabāt Script-Fu konsoles izvadi"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
 #: ../plug-ins/script-fu/script-fu-interface.c:236
-#: ../plug-ins/script-fu/script-fu-server.c:834
+#: ../plug-ins/script-fu/script-fu-server.c:839
 msgid "_Cancel"
 msgstr "At_celt"
 
@@ -232,27 +232,27 @@ msgstr "Pārāk maz argumentu 'script-fu-register' izsaukumam"
 msgid "Error while loading %s:"
 msgstr "Kļūda, ielādējot %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:830
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu servera opcijas"
 
-#: ../plug-ins/script-fu/script-fu-server.c:835
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "_Start Server"
 msgstr "_Startēt serveri"
 
-#: ../plug-ins/script-fu/script-fu-server.c:868
+#: ../plug-ins/script-fu/script-fu-server.c:873
 msgid "Listen on IP:"
 msgstr "Klausīties IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:875
+#: ../plug-ins/script-fu/script-fu-server.c:880
 msgid "Server port:"
 msgstr "Servera ports:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:881
+#: ../plug-ins/script-fu/script-fu-server.c:886
 msgid "Server logfile:"
 msgstr "Servera žurnāla datne:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:894
+#: ../plug-ins/script-fu/script-fu-server.c:899
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -600,7 +600,6 @@ msgid "Darken only"
 msgstr "Tikai tumšo"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-#| msgid "Difference Clouds..."
 msgid "_Difference Clouds..."
 msgstr "_Atšķirības krāsas..."
 
@@ -617,32 +616,26 @@ msgid "Distress the selection"
 msgstr "Izkliedēt iezīmējumu"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-#| msgid "Threshold (bigger 1<-->254 smaller)"
 msgid "_Threshold (bigger 1<-->254 smaller)"
 msgstr "_Slieksnis (lielāks 1<-->254 mazāks)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-#| msgid "Spread"
 msgid "_Spread"
 msgstr "_Izkaisīt"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-#| msgid "Granularity (1 is low)"
 msgid "_Granularity (1 is low)"
 msgstr "_Smalkums (1 ir mazs)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-#| msgid "Smooth"
 msgid "S_mooth"
 msgstr "G_luds"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-#| msgid "Smooth horizontally"
 msgid "Smooth hor_izontally"
 msgstr "Gludināt hor_izontāli"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-#| msgid "Smooth vertically"
 msgid "Smooth _vertically"
 msgstr "Gludināt _vertikāli"
 
@@ -685,49 +678,65 @@ msgstr "Blīvums"
 msgid "Allow resizing"
 msgstr "Ļaut mainīt izmēru"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "_Dzēst katru otro rindu..."
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Dzēst katru kolonnu un rindu"
+#| msgid "_Erase Every Other Row..."
+msgid "_Erase Every Nth Row..."
+msgstr "_Dzēst katru n-to rindu..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+#| msgid "Erase every other row or column"
+msgid "Erase every nth row or column"
+msgstr "Dzēst katru n-to kolonnu un rindu"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Rindas/kolonnas"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Rindas"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Kolonnas"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Pāra/nepāra"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Pāra"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Nepāra"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Dzēst/aizpildīt"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Dzēst"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Aizpildīt ar priekšpl."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Dzēst katru otro rindu..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Dzēst katru kolonnu un rindu"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Pāra/nepāra"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Pāra"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Nepāra"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
@@ -960,7 +969,6 @@ msgstr "Pievienot palīglīniju vietā, kas norādīta kā procenti no attēla i
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-#| msgid "Direction"
 msgid "_Direction"
 msgstr "_Virziens"
 
@@ -975,7 +983,6 @@ msgid "Vertical"
 msgstr "Vertikāls"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#| msgid "Position (in %)"
 msgid "_Position (in %)"
 msgstr "_Novietojums (izteikts %)"
 
@@ -988,7 +995,6 @@ msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Pievienot palīglīniju norādītajā virzienā un vietā (pikseļos)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-#| msgid "Position"
 msgid "_Position"
 msgstr "_Novietojums"
 
@@ -1197,7 +1203,6 @@ msgstr "Ielīmēt starpliktuves saturu jaunā otā"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-#| msgid "Brush name"
 msgid "_Brush name"
 msgstr "_Otas nosaukums"
 
@@ -1205,13 +1210,11 @@ msgstr "_Otas nosaukums"
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-#| msgid "File name"
 msgid "_File name"
 msgstr "_Datnes nosaukums"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
-#| msgid "Spacing"
 msgid "_Spacing"
 msgstr "At_statums"
 
@@ -1225,7 +1228,6 @@ msgstr "Ielīmēt starpliktuves saturu jaunā rakstā"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-#| msgid "Pattern name"
 msgid "_Pattern name"
 msgstr "_Paletes nosaukums"
 
@@ -1274,7 +1276,6 @@ msgid "Pixel amount"
 msgstr "Pikseļu apjoms"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-#| msgid "Reverse Layer Order"
 msgid "Reverse Layer _Order"
 msgstr "Apgriezta slāņu _secība"
 
@@ -1366,12 +1367,10 @@ msgid "Round the corners of the current selection"
 msgstr "Noapaļot dotā iezīmējuma stūrus"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-#| msgid "Radius (%)"
 msgid "R_adius (%)"
 msgstr "_Rādiuss (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-#| msgid "Concave"
 msgid "Co_ncave"
 msgstr "Ie_liekts"
 
