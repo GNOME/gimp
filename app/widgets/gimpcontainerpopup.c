@@ -275,10 +275,12 @@ gimp_container_popup_set_view_size (GimpContainerPopup *popup,
 static void
 gimp_container_popup_create_view (GimpContainerPopup *popup)
 {
-  GimpEditor *editor;
-  GtkWidget  *button;
-  gint        rows;
-  gint        columns;
+  GimpEditor  *editor;
+  GtkWidget   *button;
+  const gchar *signal_name;
+  GType        children_type;
+  gint         rows;
+  gint         columns;
 
   popup->editor = g_object_new (GIMP_TYPE_CONTAINER_EDITOR,
                                 "view-type",         popup->view_type,
@@ -353,6 +355,26 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
                             popup);
 
   gtk_widget_grab_focus (GTK_WIDGET (popup->editor));
+
+  /* Special-casing the object types managed by the context to make sure
+   * the right items are selected when opening the popup.
+   */
+  children_type = gimp_container_get_children_type (popup->container);
+  signal_name   = gimp_context_type_to_signal_name (children_type);
+
+  if (signal_name)
+    {
+      GimpObject *object;
+      GList      *items = NULL;
+
+      object = gimp_context_get_by_type (popup->context, children_type);
+      if (object)
+        items = g_list_prepend (NULL, object);
+
+      gimp_container_view_select_items (popup->editor->view, items);
+
+      g_list_free (items);
+    }
 }
 
 static void
