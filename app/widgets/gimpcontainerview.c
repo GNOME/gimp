@@ -677,48 +677,12 @@ gimp_container_view_multi_selected (GimpContainerView *view,
                                     GList             *items_data)
 {
   gboolean success = FALSE;
-  guint    selected_count;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
 
-  selected_count = g_list_length (items);
-
-  /* For some types of transient containers, the fact of setting the
-   * context makes the container disappear (i.e. the object is
-   * destroyed). So we add a weak pointer to not send a signal to a dead
-   * reference later.
-   */
-  g_object_add_weak_pointer (G_OBJECT (view), (gpointer) &view);
-  if (selected_count == 1)
-    {
-      GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
-
-      /* HACK for some specific types managed by context. */
-      if (private->container && private->context)
-        {
-          GType        children_type;
-          const gchar *signal_name;
-
-          children_type = gimp_container_get_children_type (private->container);
-          signal_name   = gimp_context_type_to_signal_name (children_type);
-
-          if (signal_name)
-            {
-              gimp_context_set_by_type (private->context, children_type,
-                                        GIMP_OBJECT (items->data));
-            }
-        }
-    }
-
-  if (view)
-    {
-      if (selected_count > 0)
-        {
-          g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
-                         items, items_data, &success);
-        }
-      g_object_remove_weak_pointer (G_OBJECT (view), (gpointer) &view);
-    }
+  if (! gimp_container_view_are_selected_items (view, items))
+    g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
+                   items, items_data, &success);
 
   return success;
 }
