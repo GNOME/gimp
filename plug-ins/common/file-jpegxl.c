@@ -700,6 +700,16 @@ save_image (GFile                *file,
        * for better lossless compression efficiency. */
       uses_original_profile = TRUE;
     }
+  else
+    {
+      /* 0.1 is actually minimal value for lossy in libjxl 0.5
+       * 0.01 is allowed in libjxl 0.6 but
+       * using too low value with lossy compression is not wise */
+      if (compression < 0.1)
+        {
+          compression = 0.1;
+        }
+    }
 
   drawable_type   = gimp_drawable_type (drawable);
   drawable_width  = gimp_drawable_get_width (drawable);
