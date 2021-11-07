@@ -579,11 +579,32 @@ gimp_container_icon_view_selection_changed (GtkIconView           *gtk_icon_view
                                             GimpContainerIconView *icon_view)
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (icon_view);
-  GList             *items;
+  GList             *items = NULL;
   GList             *paths;
+  GList             *list;
 
-  gimp_container_icon_view_get_selected (view, &items, &paths);
+  paths = gtk_icon_view_get_selected_items (icon_view->view);
+
+  for (list = paths; list; list = list->next)
+    {
+      GtkTreeIter       iter;
+      GimpViewRenderer *renderer;
+
+      gtk_tree_model_get_iter (GTK_TREE_MODEL (icon_view->model), &iter,
+                               (GtkTreePath *) list->data);
+
+      gtk_tree_model_get (icon_view->model, &iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
+
+      if (renderer->viewable)
+        items = g_list_prepend (items, renderer->viewable);
+
+      g_object_unref (renderer);
+    }
+
   gimp_container_view_multi_selected (view, items, paths);
+
   g_list_free_full (paths, (GDestroyNotify) gtk_tree_path_free);
   g_list_free (items);
 }
@@ -780,6 +801,43 @@ gimp_container_icon_view_get_selected (GimpContainerView    *view,
   GimpContainerIconView *icon_view = GIMP_CONTAINER_ICON_VIEW (view);
   GList                 *selected_paths;
   gint                   selected_count;
+  GimpContainer         *container;
+
+  container = gimp_container_view_get_container (view);
+
+  if (container)
+    {
+      const gchar *signal_name;
+      GimpContext *context;
+      GType        children_type;
+
+      context       = gimp_container_view_get_context (view);
+      children_type = gimp_container_get_children_type (container);
+      signal_name   = gimp_context_type_to_signal_name (children_type);
+
+      /* As a special case, for containers tied to a context object, we
+       * look up this object as being selected.
+       * */
+      if (signal_name && context)
+        {
+          GimpObject  *object;
+
+          object  = gimp_context_get_by_type (context, children_type);
+
+          selected_count = object ? 1 : 0;
+          if (items)
+            {
+              if (object)
+                *items = g_list_prepend (NULL, object);
+              else
+                *items = NULL;
+            }
+          if (paths)
+            *paths = NULL;
+
+          return selected_count;
+        }
+    }
 
   selected_paths = gtk_icon_view_get_selected_items (icon_view->view);
   selected_count = g_list_length (selected_paths);
