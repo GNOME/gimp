@@ -448,6 +448,19 @@ gimp_container_editor_select_items (GimpContainerView   *view,
   if (klass->select_item)
     klass->select_item (editor, viewable);
 
+  if (editor->priv->container)
+    {
+      const gchar *signal_name;
+      GType        children_type;
+
+      children_type = gimp_container_get_children_type (editor->priv->container);
+      signal_name   = gimp_context_type_to_signal_name (children_type);
+
+      if (signal_name)
+        gimp_context_set_by_type (editor->priv->context, children_type,
+                                  GIMP_OBJECT (viewable));
+    }
+
   if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)))
     gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)),
                             gimp_editor_get_popup_data (GIMP_EDITOR (editor->view)));
