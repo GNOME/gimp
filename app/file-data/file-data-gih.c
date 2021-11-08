@@ -284,6 +284,24 @@ file_gih_image_to_pipe (GimpImage   *image,
 
       gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
 
+      /* Since we assume positive layer offsets we need to make sure this
+       * is always the case or we will crash for grayscale layers.
+       * See issue #6436. */
+      if (offset_x < 0)
+        {
+          g_warning (_("Negative x offset: %d for layer %s corrected."),
+                     offset_x, gimp_object_get_name (layer));
+          width += offset_x;
+          offset_x = 0;
+        }
+      if (offset_y < 0)
+        {
+          g_warning (_("Negative y offset: %d for layer %s corrected."),
+                     offset_y, gimp_object_get_name (layer));
+          height += offset_y;
+          offset_y = 0;
+        }
+
       for (row = 0; row < params.rows; row++)
         {
           gint y, ynext;
