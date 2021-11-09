@@ -145,6 +145,7 @@ file_gex_validate_path (const gchar  *path,
       *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
                             _("Absolute path are forbidden in GIMP extension '%s': %s"),
                             file_name, path);
+      g_free (dirname);
       return FALSE;
     }
 
@@ -263,6 +264,7 @@ file_gex_validate (GFile   *file,
                                                         _("Fatal error when uncompressing GIMP extension '%s': %s"),
                                                         gimp_file_get_utf8_name (file),
                                                         archive_error_string (a));
+                                  g_string_free (appstring, TRUE);
                                   break;
                                 }
                               else if (r == ARCHIVE_EOF)
