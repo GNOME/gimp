@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-09-28 10:47+0000\n"
-"PO-Revision-Date: 2021-09-28 17:14+0300\n"
+"POT-Creation-Date: 2021-11-08 22:14+0000\n"
+"PO-Revision-Date: 2021-11-09 16:16+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -4685,7 +4685,6 @@ msgid "Copy Named"
 msgstr "Копіювання з буфера з назвою"
 
 #: ../app/actions/edit-commands.c:444
-#| msgid "Copy Visible Named "
 msgid "Copy Visible Named"
 msgstr "Копіювати видиме з назвою"
 
@@ -18308,7 +18307,7 @@ msgstr "Навігація на зображенні"
 msgid "Drop image files here to open them"
 msgstr "Перетягніть сюди зображення, які хочете відкрити"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:620
+#: ../app/display/gimpdisplayshell-callbacks.c:621
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -18981,6 +18980,18 @@ msgstr "'%s:' некоректна схема URI"
 #: ../app/file/file-utils.c:132
 msgid "Invalid character sequence in URI"
 msgstr "Неправильна послідовність символів у URL"
+
+#: ../app/file-data/file-data-gih.c:295
+#, c-format
+msgid "Negative x offset: %d for layer %s corrected."
+msgstr ""
+"Виправлено від'ємний зсув за x, %d, для шару %s."
+
+#: ../app/file-data/file-data-gih.c:302
+#, c-format
+msgid "Negative y offset: %d for layer %s corrected."
+msgstr ""
+"Виправлено від'ємний зсув за y, %d, для шару %s."
 
 #: ../app/file-data/file-data.c:59 ../app/file-data/file-data.c:124
 msgid "GIMP brush"
