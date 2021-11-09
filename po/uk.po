@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-10-12 17:34+0000\n"
-"PO-Revision-Date: 2021-10-12 21:30+0300\n"
+"POT-Creation-Date: 2021-11-09 00:07+0000\n"
+"PO-Revision-Date: 2021-11-09 16:40+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -11826,7 +11826,6 @@ msgid "Export the image's comment by default."
 msgstr "Типово експортувати коментар до зображення."
 
 #: ../app/config/gimprc-blurbs.h:230 ../app/dialogs/preferences-dialog.c:1555
-#| msgid "Export the image's comment by default"
 msgid "Export the image's thumbnail by default"
 msgstr "Типово експортувати мініатюру до зображення"
 
@@ -14415,7 +14414,7 @@ msgstr "Помилка завантаження «%s»: "
 
 #: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:95
 #: ../app/file-data/file-data-gex.c:341 ../app/file-data/file-data-gex.c:479
-#: ../app/file-data/file-data-gih.c:99 ../app/file-data/file-data-pat.c:96
+#: ../app/file-data/file-data-gih.c:99 ../app/file-data/file-data-pat.c:102
 #: ../app/xcf/xcf.c:440
 #, c-format
 msgid "Could not open '%s' for reading: "
@@ -19858,6 +19857,18 @@ msgstr "Для розширення GIMP «%s» потрібен файл AppStr
 msgid "Invalid GIMP extension '%s': %s"
 msgstr "Некоректне розширення GIMP «%s»: %s"
 
+#: ../app/file-data/file-data-gih.c:292
+#, c-format
+msgid "Negative x offset: %d for layer %s corrected."
+msgstr ""
+"Виправлено від'ємний зсув за x, %d, для шару %s."
+
+#: ../app/file-data/file-data-gih.c:299
+#, c-format
+msgid "Negative y offset: %d for layer %s corrected."
+msgstr ""
+"Виправлено від'ємний зсув за y, %d, для шару %s."
+
 #: ../app/file-data/file-data.c:61 ../app/file-data/file-data.c:118
 msgid "GIMP brush"
 msgstr "Пензель GIMP"
@@ -19870,7 +19881,7 @@ msgstr "Пензель GIMP (анімований)"
 msgid "GIMP pattern"
 msgstr "Текстура GIMP"
 
-#: ../app/file-data/file-data.c:465
+#: ../app/file-data/file-data.c:470
 msgid "GIMP extension"
 msgstr "Розширення GIMP"
 
