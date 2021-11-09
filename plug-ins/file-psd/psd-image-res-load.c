@@ -341,8 +341,7 @@ load_image_resource (PSDimageres  *res_a,
             break;
 
           case PSD_ALPHA_NAMES:
-            if (! img_a->merged_image_only)
-              load_resource_1006 (res_a, image, img_a, input, error);
+            load_resource_1006 (res_a, image, img_a, input, error);
             break;
 
           case PSD_DISPLAY_INFO:
@@ -383,8 +382,7 @@ load_image_resource (PSDimageres  *res_a,
             break;
 
           case PSD_ALPHA_NAMES_UNI:
-            if (! img_a->merged_image_only)
-              load_resource_1045 (res_a, image, img_a, input, error);
+            load_resource_1045 (res_a, image, img_a, input, error);
             break;
 
           case PSD_IDX_COL_TAB_CNT:

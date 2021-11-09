@@ -206,9 +206,6 @@ load_image (GFile        *file,
           g_warning ("No error message but loading layer failed. This should not happen!");
           goto load_error;
         }
-      else
-        /* Only a merged image present, no layers. */
-        img_a.merged_image_only = TRUE;
     }
   gimp_progress_update (0.4);
 
@@ -2142,6 +2139,7 @@ add_merged_image (GimpImage     *image,
   gint                  i;
   gboolean              alpha_visible;
   gboolean              alpha_channel = FALSE;
+  gboolean              original_mode_CMYK = FALSE;
   GeglBuffer           *buffer;
   GimpImageType         image_type;
   GimpRGB               alpha_rgb;
@@ -2151,14 +2149,6 @@ add_merged_image (GimpImage     *image,
   bps = img_a->bps / 8;
   if (bps == 0)
     bps++;
-
-  if (img_a->num_layers > 0 && img_a->color_mode == PSD_CMYK)
-    {
-      /* In this case there is no conversion. Merged image is RGB. */
-      img_a->color_mode = PSD_RGB;
-      if (! img_a->transparency)
-        total_channels--;
-    }
 
   if ((img_a->color_mode == PSD_BITMAP ||
        img_a->color_mode == PSD_MULTICHANNEL ||
@@ -2180,21 +2170,43 @@ add_merged_image (GimpImage     *image,
     {
       extra_channels = total_channels - 4;
     }
-  if (img_a->transparency && extra_channels > 0)
-    extra_channels--;
-  base_channels = total_channels - extra_channels;
 
-  if (img_a->merged_image_only)
+  if (img_a->merged_image_only &&
+      img_a->color_mode == PSD_CMYK &&
+      img_a->num_layers > 0)
     {
-      if (! img_a->transparency && extra_channels > 0)
+      /* In this case there is no conversion. Merged image is RGB. */
+      img_a->color_mode = PSD_RGB;
+      original_mode_CMYK = TRUE;
+      if (! img_a->transparency)
         {
-          alpha_channel = TRUE;
-          base_channels += 1;
+          total_channels--;
         }
-      extra_channels = 0;
-      total_channels = base_channels;
     }
 
+  if (extra_channels > 0)
+    {
+      if (img_a->transparency)
+        {
+          extra_channels--;
+        }
+      else if (img_a->alpha_names)
+        {
+          gchar *alpha_name;
+
+          /* If first alpha_name is Transparency consider it the alpha channel. */
+          alpha_name = g_ptr_array_index (img_a->alpha_names, 0);
+          if (! g_strcmp0 (alpha_name, "Transparency"))
+            {
+              alpha_channel = TRUE;
+              base_channels += 1;
+              extra_channels--;
+              IFDBG(3) g_debug ("Merged image alpha channel present.");
+            }
+        }
+    }
+
+  base_channels = total_channels - extra_channels;
   /* ----- Read merged image & extra channel pixel data ----- */
   if (img_a->merged_image_only ||
       img_a->num_layers == 0   ||
@@ -2325,7 +2337,7 @@ add_merged_image (GimpImage     *image,
           psd_convert_cmyk_to_srgb (img_a,
                                     dst0, pixels,
                                     img_a->columns, img_a->rows,
-                                    alpha_channel);
+                                    img_a->transparency || alpha_channel);
           g_free (pixels);
           pixels = dst0;
        }
@@ -2337,10 +2349,41 @@ add_merged_image (GimpImage     *image,
           psd_convert_lab_to_srgb (img_a,
                                    dst0, pixels,
                                    img_a->columns, img_a->rows,
-                                   img_a->transparency);
+                                   img_a->transparency || alpha_channel);
           g_free (pixels);
           pixels = dst0;
-       }
+        }
+      else if (original_mode_CMYK && img_a->transparency)
+        {
+          gint    irow;
+          guchar *dst0, *dst;
+          guchar *data;
+
+          dst0 = g_malloc (base_channels * layer_size * sizeof(guchar));
+          dst  = dst0;
+          data = pixels;
+
+          /* CMYKA layers: 5 channels but merged image is RGBA
+           * with RGB in the first 3 layers and A in 5th layer.
+           * Move A to 4th layer. */
+          for (irow = 0; irow < img_a->rows; irow++)
+            {
+              gint icol;
+
+              for (icol = 0; icol < img_a->columns; icol++)
+                {
+                  dst[0] = data[0];
+                  dst[1] = data[1];
+                  dst[2] = data[2];
+                  dst[3] = data[4];
+
+                  dst  += 4;
+                  data += 5;
+                }
+            }
+          g_free (pixels);
+          pixels = dst0;
+        }
 
       gegl_buffer_set (buffer,
                        GEGL_RECTANGLE (0, 0,
@@ -2359,6 +2402,7 @@ add_merged_image (GimpImage     *image,
         {
           GeglBufferIterator *iter;
 
+          IFDBG(4) g_debug ("Unblend merged transparency");
           iter = gegl_buffer_iterator_new (buffer, NULL, 0,
                                            babl_format ("R'G'B'A float"),
                                            GEGL_ACCESS_READWRITE,
