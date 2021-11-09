@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-11-06 15:28+0000\n"
-"PO-Revision-Date: 2021-11-06 19:53+0100\n"
+"POT-Creation-Date: 2021-11-08 22:11+0000\n"
+"PO-Revision-Date: 2021-11-09 01:05+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -11855,7 +11855,7 @@ msgstr "Exportar el comentario de la imagen de forma predeterminada."
 
 #: ../app/config/gimprc-blurbs.h:230 ../app/dialogs/preferences-dialog.c:1555
 msgid "Export the image's thumbnail by default"
-msgstr "Exportar la miniatura de la imagen de forma predeterminada."
+msgstr "Exportar la miniatura de la imagen de forma predeterminada"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
@@ -16160,7 +16160,7 @@ msgstr "Visite el sitio web de GIMP"
 msgid "translator-credits"
 msgstr ""
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2021\n"
-"Rodrigo Lledó <rodhos92@gmail.com>, 2018-2021\n"
+"Rodrigo Lledó <rodhos-hp@ubuntu.com>, 2018-2021\n"
 "Alonso Lara\n"
 "Francisco Javier F. Serrador\n"
 "Pablo G. del Campo\n"
@@ -19976,6 +19976,16 @@ msgstr "La extensión de GIMP «%s» requiere un archivo AppStream: %s"
 #, c-format
 msgid "Invalid GIMP extension '%s': %s"
 msgstr "Extensión de GIMP no válida «%s»: %s"
+
+#: ../app/file-data/file-data-gih.c:292
+#, c-format
+msgid "Negative x offset: %d for layer %s corrected."
+msgstr "Desplazamiento x negativo: corregido %d para la capa %s."
+
+#: ../app/file-data/file-data-gih.c:299
+#, c-format
+msgid "Negative y offset: %d for layer %s corrected."
+msgstr "Desplazamiento y negativo: corregido %d para la capa %s."
 
 #: ../app/file-data/file-data.c:61 ../app/file-data/file-data.c:118
 msgid "GIMP brush"
