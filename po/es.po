@@ -19,9 +19,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-10-03 11:29+0000\n"
-"PO-Revision-Date: 2021-10-07 15:58+0200\n"
-"Last-Translator: Daniel Mustieles García <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2021-11-08 22:14+0000\n"
+"PO-Revision-Date: 2021-11-09 00:59+0100\n"
+"Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -128,7 +128,7 @@ msgstr ""
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
-"Mejorado el soporte de formatos de archivos:HEIF, PSP, TIFF, JPEG, PNG, PDF, "
+"Mejorado el soporte de formatos de archivos: HEIF, PSP, TIFF, JPEG, PNG, PDF, "
 "DDS, BMP, PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
@@ -18449,7 +18449,7 @@ msgstr "Navegar por la imagen"
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:620
+#: ../app/display/gimpdisplayshell-callbacks.c:621
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -19118,6 +19118,16 @@ msgstr "«%s:» no es un esquema de URI válido"
 #: ../app/file/file-utils.c:132
 msgid "Invalid character sequence in URI"
 msgstr "Secuencia de caracteres no válida en el URI"
+
+#: ../app/file-data/file-data-gih.c:295
+#, c-format
+msgid "Negative x offset: %d for layer %s corrected."
+msgstr "Desplazamiento x negativo: corregido %d para la capa %s."
+
+#: ../app/file-data/file-data-gih.c:302
+#, c-format
+msgid "Negative y offset: %d for layer %s corrected."
+msgstr "Desplazamiento y negativo: corregido %d para la capa %s."
 
 #: ../app/file-data/file-data.c:59 ../app/file-data/file-data.c:124
 msgid "GIMP brush"
