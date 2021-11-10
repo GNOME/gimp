@@ -448,7 +448,8 @@ gimp_container_editor_select_items (GimpContainerView   *view,
   if (klass->select_item)
     klass->select_item (editor, viewable);
 
-  if (editor->priv->container)
+  if (editor->priv->container &&
+      editor->priv->view_type == GIMP_VIEW_TYPE_GRID)
     {
       const gchar *signal_name;
       GType        children_type;

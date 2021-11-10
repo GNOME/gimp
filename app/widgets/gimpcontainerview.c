@@ -680,9 +680,8 @@ gimp_container_view_multi_selected (GimpContainerView *view,
 
   g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
 
-  if (! gimp_container_view_are_selected_items (view, items))
-    g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
-                   items, items_data, &success);
+  g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
+                 items, items_data, &success);
 
   return success;
 }
