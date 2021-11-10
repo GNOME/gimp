@@ -92,6 +92,9 @@ static void             psd_to_gimp_color_map      (guchar         *map256);
 static GimpImageType    get_gimp_image_type        (GimpImageBaseType image_base_type,
                                                     gboolean          alpha);
 
+void                    free_lyr_chn               (PSDchannel    **lyr_chn,
+                                                    gint            channel_count);
+
 static gboolean         read_RLE_channel           (PSDimage       *img_a,
                                                     PSDchannel     *lyr_chn,
                                                     guint64         channel_data_len,
@@ -1511,11 +1514,24 @@ read_RLE_channel (PSDimage      *img_a,
                          PSD_COMP_RLE, rle_pack_len, input, 0,
                          error) < 1)
     {
+      psd_set_error (error);
+      g_free (rle_pack_len);
       return FALSE;
     }
 
   g_free (rle_pack_len);
   return TRUE;
+}
+
+void
+free_lyr_chn (PSDchannel **lyr_chn, gint channel_count)
+{
+  gint cidx;
+
+  for (cidx = 0; cidx < channel_count; ++cidx)
+    if (lyr_chn[cidx])
+      g_free (lyr_chn[cidx]);
+  g_free (lyr_chn);
 }
 
 static gint
@@ -1616,7 +1632,7 @@ add_layers (GimpImage     *image,
           /* Load layer channel data */
           IFDBG(2) g_debug ("Number of channels: %d", lyr_a[lidx]->num_channels);
           /* Create pointer array for the channel records */
-          lyr_chn = g_new (PSDchannel *, lyr_a[lidx]->num_channels);
+          lyr_chn = g_new0 (PSDchannel *, lyr_a[lidx]->num_channels);
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             {
               guint16 comp_mode = PSD_COMP_RAW;
@@ -1635,6 +1651,7 @@ add_layers (GimpImage     *image,
                                   G_SEEK_CUR, error))
                     {
                       psd_set_error (error);
+                      free_lyr_chn (lyr_chn, lyr_a[lidx]->num_channels);
                       return -1;
                     }
 
@@ -1679,6 +1696,7 @@ add_layers (GimpImage     *image,
                   if (psd_read (input, &comp_mode, COMP_MODE_SIZE, error) < COMP_MODE_SIZE)
                     {
                       psd_set_error (error);
+                      free_lyr_chn (lyr_chn, lyr_a[lidx]->num_channels);
                       return -1;
                     }
                   comp_mode = GUINT16_FROM_BE (comp_mode);
@@ -1695,6 +1713,8 @@ add_layers (GimpImage     *image,
                                                PSD_COMP_RAW, NULL, input, 0,
                                                error) < 1)
                           {
+                            psd_set_error (error);
+                            free_lyr_chn (lyr_chn, lyr_a[lidx]->num_channels);
                             return -1;
                           }
                         break;
@@ -1703,7 +1723,11 @@ add_layers (GimpImage     *image,
                         if (! read_RLE_channel (img_a, lyr_chn[cidx],
                                                 lyr_a[lidx]->chn_info[cidx].data_len,
                                                 input, error))
-                          return -1;
+                          {
+                            psd_set_error (error);
+                            free_lyr_chn (lyr_chn, lyr_a[lidx]->num_channels);
+                            return -1;
+                          }
                         break;
 
                       case PSD_COMP_ZIP:                 /* ? */
@@ -1713,6 +1737,8 @@ add_layers (GimpImage     *image,
                                                lyr_a[lidx]->chn_info[cidx].data_len - 2,
                                                error) < 1)
                           {
+                            psd_set_error (error);
+                            free_lyr_chn (lyr_chn, lyr_a[lidx]->num_channels);
                             return -1;
                           }
                         break;
@@ -1720,6 +1746,7 @@ add_layers (GimpImage     *image,
                       default:
                         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                     _("Unsupported compression mode: %d"), comp_mode);
+                        free_lyr_chn (lyr_chn, lyr_a[lidx]->num_channels);
                         return -1;
                         break;
                     }
@@ -2094,10 +2121,7 @@ add_layers (GimpImage     *image,
                   }
             }
 
-          for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
-            if (lyr_chn[cidx])
-              g_free (lyr_chn[cidx]);
-          g_free (lyr_chn);
+          free_lyr_chn (lyr_chn, lyr_a[lidx]->num_channels);
         }
       g_free (lyr_a[lidx]->chn_info);
       g_free (lyr_a[lidx]->name);
