@@ -2255,7 +2255,6 @@ add_merged_image (GimpImage     *image,
           if (! g_strcmp0 (alpha_name, "Transparency"))
             {
               alpha_channel = TRUE;
-              base_channels += 1;
               extra_channels--;
               IFDBG(3) g_debug ("Merged image alpha channel present.");
             }
