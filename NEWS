@@ -6,6 +6,19 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 2.99.6 to GIMP 2.99.10
+====================================================
+
+Plug-ins:
+
+  - PSD:
+    * new support for loading 16-bit per channel CMYK images.
+    * new support for files in LAB colorspace.
+  - AVIF:
+    * prefer AOM encoder for export (rather than "rav1e", default of
+      libheif, yet with worse performance).
+
+
 Overview of Changes from GIMP 2.99.6 to GIMP 2.99.8
 ===================================================
 
