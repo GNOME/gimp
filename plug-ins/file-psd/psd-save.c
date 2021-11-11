@@ -1112,7 +1112,7 @@ save_layer_and_mask (GOutputStream  *output,
                    "\t\tY offset: %d\n"
                    "\t\tWidth: %d\n"
                    "\t\tHeight: %d\n",
-                   i, type, offset_x, offset_y,
+                   i-1, type, offset_x, offset_y,
                    layerWidth, layerHeight);
         }
 
@@ -1133,7 +1133,7 @@ save_layer_and_mask (GOutputStream  *output,
 
       /* Create second array dimension (layers, channels) */
 
-      ChannelLengthPos[i] = g_new (goffset, nChannelsLayer);
+      ChannelLengthPos[i-1] = g_new (goffset, nChannelsLayer);
 
       /* Try with gimp_drawable_get_bpp() */
 
@@ -1152,7 +1152,7 @@ save_layer_and_mask (GOutputStream  *output,
           /* Write the length assuming no compression.  In case there is,
              will modify it later when writing data.  */
 
-          ChannelLengthPos[i][j] = g_seekable_tell (G_SEEKABLE (output));
+          ChannelLengthPos[i-1][j] = g_seekable_tell (G_SEEKABLE (output));
           ChanSize = sizeof (gint16) + (layerWidth * layerHeight * bpc);
 
           write_gint32 (output, ChanSize, "Channel Size");
@@ -1324,10 +1324,10 @@ save_layer_and_mask (GOutputStream  *output,
 
       gimp_progress_update ((PSDImageData.nLayers - i - 1.0) / (PSDImageData.nLayers + 1.0));
 
-      IFDBG(1) g_debug ("\t\tWriting pixel data for layer slot %d", i);
-      write_pixel_data (output, GIMP_DRAWABLE (psd_layer->layer), ChannelLengthPos[i], 0,
+      IFDBG(1) g_debug ("\t\tWriting pixel data for layer slot %d", i-1);
+      write_pixel_data (output, GIMP_DRAWABLE (psd_layer->layer), ChannelLengthPos[i-1], 0,
                         psd_layer->type != PSD_LAYER_TYPE_GROUP_END);
-      g_free (ChannelLengthPos[i]);
+      g_free (ChannelLengthPos[i-1]);
     }
 
   gimp_progress_update (PSDImageData.nLayers / (PSDImageData.nLayers + 1.0));
