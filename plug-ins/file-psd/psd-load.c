@@ -92,7 +92,10 @@ static void             psd_to_gimp_color_map      (guchar         *map256);
 static GimpImageType    get_gimp_image_type        (GimpImageBaseType image_base_type,
                                                     gboolean          alpha);
 
-void                    free_lyr_chn               (PSDchannel    **lyr_chn,
+static void             free_lyr_a                 (PSDlayer      **lyr_a,
+                                                    gint            layer_count);
+
+static void             free_lyr_chn               (PSDchannel    **lyr_chn,
                                                     gint            channel_count);
 
 static gboolean         read_RLE_channel           (PSDimage       *img_a,
@@ -535,6 +538,17 @@ read_image_resource_block (PSDimage      *img_a,
   return 0;
 }
 
+static void
+free_lyr_a (PSDlayer **lyr_a, gint layer_count)
+{
+  gint lidx;
+
+  for (lidx = 0; lidx < layer_count; ++lidx)
+    if (lyr_a[lidx])
+      g_free (lyr_a[lidx]);
+  g_free (lyr_a);
+}
+
 static PSDlayer **
 read_layer_info (PSDimage      *img_a,
                  GInputStream  *input,
@@ -573,7 +587,7 @@ read_layer_info (PSDimage      *img_a,
       PSDlayerres  res_a;
 
       /* Create pointer array for the layer records */
-      lyr_a = g_new (PSDlayer *, img_a->num_layers);
+      lyr_a = g_new0 (PSDlayer *, img_a->num_layers);
 
       for (lidx = 0; lidx < img_a->num_layers; ++lidx)
         {
@@ -594,6 +608,7 @@ read_layer_info (PSDimage      *img_a,
               psd_read (input, &lyr_a[lidx]->num_channels, 2, error) < 2)
             {
               psd_set_error (error);
+              free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
             }
 
@@ -608,6 +623,7 @@ read_layer_info (PSDimage      *img_a,
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Too many channels in layer: %d"),
                            lyr_a[lidx]->num_channels);
+              free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
             }
           IFDBG(2) g_debug ("Layer %d, Coords %d %d %d %d, channels %d, ",
@@ -619,14 +635,12 @@ read_layer_info (PSDimage      *img_a,
 
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             {
-              if (psd_read (input, &lyr_a[lidx]->chn_info[cidx].channel_id, 2, error) < 2)
-                {
-                  psd_set_error (error);
-                  return NULL;
-                }
-              if (! psd_read_len (input, &lyr_a[lidx]->chn_info[cidx].data_len,
+              if (psd_read (input, &lyr_a[lidx]->chn_info[cidx].channel_id, 2, error) < 2 ||
+                  ! psd_read_len (input, &lyr_a[lidx]->chn_info[cidx].data_len,
                                   img_a->version, error))
                 {
+                  psd_set_error (error);
+                  free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
               lyr_a[lidx]->chn_info[cidx].channel_id =
@@ -646,6 +660,7 @@ read_layer_info (PSDimage      *img_a,
               psd_read (input, &lyr_a[lidx]->extra_len, 4, error) < 4)
             {
               psd_set_error (error);
+              free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
             }
           /* Not sure if 8B64 is possible here but it won't hurt to check. */
@@ -656,6 +671,7 @@ read_layer_info (PSDimage      *img_a,
                                 lyr_a[lidx]->mode_key);
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("The file is corrupt!"));
+              free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
             }
 
@@ -691,6 +707,7 @@ read_layer_info (PSDimage      *img_a,
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                               _("Unsupported or invalid layer height: %d"),
                               lyr_a[lidx]->bottom - lyr_a[lidx]->top);
+                  free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
               if (lyr_a[lidx]->right < lyr_a[lidx]->left ||
@@ -699,6 +716,7 @@ read_layer_info (PSDimage      *img_a,
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                               _("Unsupported or invalid layer width: %d"),
                               lyr_a[lidx]->right - lyr_a[lidx]->left);
+                  free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
 
@@ -709,6 +727,7 @@ read_layer_info (PSDimage      *img_a,
                               _("Unsupported or invalid layer size: %dx%d"),
                               lyr_a[lidx]->right - lyr_a[lidx]->left,
                               lyr_a[lidx]->bottom - lyr_a[lidx]->top);
+                  free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
             }
@@ -717,6 +736,7 @@ read_layer_info (PSDimage      *img_a,
           if (psd_read (input, &block_len, 4, error) < 4)
             {
               psd_set_error (error);
+              free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
             }
           block_len = GUINT32_FROM_BE (block_len);
@@ -727,6 +747,7 @@ read_layer_info (PSDimage      *img_a,
                            _("Unsupported or invalid mask info size."));
               /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
               g_debug ("Unsupported or invalid mask info size: %" G_GSIZE_FORMAT, block_len);
+              free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
             }
 
@@ -763,6 +784,7 @@ read_layer_info (PSDimage      *img_a,
                   psd_read (input, &lyr_a[lidx]->layer_mask.flags,     1, error) < 1)
                 {
                   psd_set_error (error);
+                  free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
 
@@ -808,6 +830,7 @@ read_layer_info (PSDimage      *img_a,
                       psd_read (input, &lyr_a[lidx]->layer_mask_extra.right,     4, error) < 4)
                     {
                       psd_set_error (error);
+                      free_lyr_a (lyr_a, img_a->num_layers);
                       return NULL;
                     }
                   block_len -= 18;
@@ -835,6 +858,7 @@ read_layer_info (PSDimage      *img_a,
                   if (psd_read (input, &lyr_a[lidx]->layer_mask.mask_params, 1, error) < 1)
                     {
                       psd_set_error (error);
+                      free_lyr_a (lyr_a, img_a->num_layers);
                       return NULL;
                     }
                   block_len--;
@@ -850,6 +874,7 @@ read_layer_info (PSDimage      *img_a,
                   if (! psd_seek (input, extra_bytes, G_SEEK_CUR, error))
                     {
                       psd_set_error (error);
+                      free_lyr_a (lyr_a, img_a->num_layers);
                       return NULL;
                     }
                   block_len -= extra_bytes;
@@ -868,6 +893,7 @@ read_layer_info (PSDimage      *img_a,
                   if (! psd_seek (input, block_len, G_SEEK_CUR, error))
                     {
                       psd_set_error (error);
+                      free_lyr_a (lyr_a, img_a->num_layers);
                       return NULL;
                     }
                 }
@@ -897,6 +923,7 @@ read_layer_info (PSDimage      *img_a,
                       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                    _("Unsupported or invalid layer mask height: %d"),
                                    lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top);
+                      free_lyr_a (lyr_a, img_a->num_layers);
                       return NULL;
                     }
                   if (lyr_a[lidx]->layer_mask.right < lyr_a[lidx]->layer_mask.left ||
@@ -905,6 +932,7 @@ read_layer_info (PSDimage      *img_a,
                       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                    _("Unsupported or invalid layer mask width: %d"),
                                    lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left);
+                      free_lyr_a (lyr_a, img_a->num_layers);
                       return NULL;
                     }
 
@@ -915,6 +943,7 @@ read_layer_info (PSDimage      *img_a,
                                    _("Unsupported or invalid layer mask size: %dx%d"),
                                    lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left,
                                    lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top);
+                      free_lyr_a (lyr_a, img_a->num_layers);
                       return NULL;
                     }
                 }
@@ -924,6 +953,7 @@ read_layer_info (PSDimage      *img_a,
           if (psd_read (input, &block_len, 4, error) < 4)
             {
               psd_set_error (error);
+              free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
             }
 
@@ -939,6 +969,7 @@ read_layer_info (PSDimage      *img_a,
               if (! psd_seek (input, block_len, G_SEEK_CUR, error))
                 {
                   psd_set_error (error);
+                  free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
             }
@@ -946,7 +977,10 @@ read_layer_info (PSDimage      *img_a,
           lyr_a[lidx]->name = fread_pascal_string (&read_len, &write_len,
                                                    4, input, error);
           if (*error)
-            return NULL;
+            {
+              free_lyr_a (lyr_a, img_a->num_layers);
+              return NULL;
+            }
 
           block_rem -= read_len;
           IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", Remaining length %" G_GSIZE_FORMAT,
@@ -963,6 +997,7 @@ read_layer_info (PSDimage      *img_a,
               if (header_size < 0)
                 {
                   psd_set_error (error);
+                  free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
 
@@ -982,11 +1017,15 @@ read_layer_info (PSDimage      *img_a,
                   IFDBG(1) g_debug ("Unexpected end of layer resource data");
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("The file is corrupt!"));
+                  free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
 
               if (load_layer_resource (&res_a, lyr_a[lidx], input, error) < 0)
-                return NULL;
+                {
+                  free_lyr_a (lyr_a, img_a->num_layers);
+                  return NULL;
+                }
               block_rem -= res_a.data_len;
               IFDBG(3) g_debug ("Remaining length in block: %" G_GSIZE_FORMAT, block_rem);
             }
@@ -995,6 +1034,7 @@ read_layer_info (PSDimage      *img_a,
               if (! psd_seek (input, block_rem, G_SEEK_CUR, error))
                 {
                   psd_set_error (error);
+                  free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
             }
@@ -1004,6 +1044,7 @@ read_layer_info (PSDimage      *img_a,
       if (! psd_seek (input, img_a->layer_data_len, G_SEEK_CUR, error))
         {
           psd_set_error (error);
+          free_lyr_a (lyr_a, img_a->num_layers);
           return NULL;
         }
 
@@ -1555,7 +1596,7 @@ read_RLE_channel (PSDimage      *img_a,
   return TRUE;
 }
 
-void
+static void
 free_lyr_chn (PSDchannel **lyr_chn, gint channel_count)
 {
   gint cidx;
@@ -2700,7 +2741,7 @@ read_channel_data (PSDchannel     *channel,
                    guint32         comp_len,
                    GError        **error)
 {
-  gchar    *raw_data;
+  gchar    *raw_data = NULL;
   gchar    *src;
   guint32   readline_len;
   gint      i, j;
@@ -2729,6 +2770,7 @@ read_channel_data (PSDchannel     *channel,
         if (psd_read (input, raw_data, readline_len * channel->rows, error) < readline_len * channel->rows)
           {
             psd_set_error (error);
+            g_free (raw_data);
             return -1;
           }
         break;
@@ -2748,6 +2790,7 @@ read_channel_data (PSDchannel     *channel,
               {
                 psd_set_error (error);
                 gegl_scratch_free (src);
+                g_free (raw_data);
                 return -1;
               }
             /* FIXME check for errors returned from decode packbits */
@@ -2766,6 +2809,7 @@ read_channel_data (PSDchannel     *channel,
             {
               psd_set_error (error);
               g_free (src);
+              g_free (raw_data);
               return -1;
             }
 
@@ -2786,6 +2830,7 @@ read_channel_data (PSDchannel     *channel,
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Failed to decompress data"));
               g_free (src);
+              g_free (raw_data);
               return -1;
             }
 
@@ -2853,6 +2898,7 @@ read_channel_data (PSDchannel     *channel,
         break;
 
       default:
+        g_free (raw_data);
         return -1;
         break;
     }
