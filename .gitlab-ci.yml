@@ -905,10 +905,10 @@ deps-macos:
     - curl https://sh.rustup.rs -sSf | sh -s -- -y
     # Setup Python3
     - curl -L 'https://www.python.org/ftp/python/3.9.7/python-3.9.7-macos11.pkg' > python-3.9.7-macosx11.pkg
-    - sudo installer -pkg python-3.9.7-macosx11.pkg -target /
+    - installer -pkg python-3.9.7-macosx11.pkg -target /
     # Setup 10.12 SDK
     - cd /Library/Developer/CommandLineTools/SDKs
-    - sudo curl -L 'https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.12.sdk.tar.xz' | sudo tar -xzf -
+    - curl -L 'https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.12.sdk.tar.xz' | tar -xzf -
     - echo 'export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX10.12.sdk' > ~/.profile
     - echo 'export MACOSX_DEPLOYMENT_TARGET=10.12' >> ~/.profile
     # Setup JHBuild
