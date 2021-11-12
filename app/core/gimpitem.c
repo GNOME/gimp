@@ -2609,7 +2609,7 @@ gimp_item_mask_bounds (GimpItem *item,
  * @height: (out) (optional): return location for the height
  *
  * Intersect the area of the @item and its image's selection mask.
- * The computed area is the bounding box of he selection within the
+ * The computed area is the bounding box of the selection within the
  * item.
  */
 gboolean

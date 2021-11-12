@@ -1567,7 +1567,7 @@ zoomcombo_changed (GtkWidget *combo,
 {
   gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
-  /* If no index, user is probably editing by hand. We wait for him to click "Enter". */
+  /* If no index, user is probably editing by hand. We wait for them to click "Enter". */
   if (index != -1)
     update_scale (get_scale (index));
 }

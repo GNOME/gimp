@@ -504,7 +504,7 @@ gimp_number_pair_entry_get_ratio (GimpNumberPairEntry *entry)
  * @right: Right number in the entry.
  *
  * Forces setting the numbers displayed by a #GimpNumberPairEntry,
- * ignoring if the user has set his/her own value. The state of
+ * ignoring if the user has set their own value. The state of
  * user-override will not be changed.
  *
  * Since: 2.4
