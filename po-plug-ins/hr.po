@@ -10,14 +10,14 @@
 # Nikola Planinac <>,
 # pr pr <delacko@192.168.0.1>,
 # Robert Sedak <robert.sedak@sk.tel.hr>,
-# Milo Ivir <mail@milotype.de>, 2019., 2020.
+# Milo Ivir <mail@milotype.de>, 2019., 2020., 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-03-04 20:27+0000\n"
-"PO-Revision-Date: 2021-03-05 12:27+0100\n"
+"POT-Creation-Date: 2021-11-04 19:32+0000\n"
+"PO-Revision-Date: 2021-11-05 15:45+0100\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -57,11 +57,11 @@ msgstr "Poravnaj vidljive slojeve"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1847
+#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1896
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:702
 #: ../plug-ins/common/file-pdf-load.c:1282
-#: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3398
+#: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3399
 #: ../plug-ins/common/file-raw-data.c:1835 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
 #: ../plug-ins/common/filter-pack.c:1264 ../plug-ins/common/fractal-trace.c:711
@@ -77,9 +77,9 @@ msgstr "Poravnaj vidljive slojeve"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1308 ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddsread.c:1356 ../plug-ins/file-dds/ddswrite.c:1956
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2430 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2499 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -105,10 +105,10 @@ msgstr "Poravnaj vidljive slojeve"
 #: ../plug-ins/lighting/lighting-ui.c:1162
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
-#: ../plug-ins/metadata/metadata-editor.c:564
-#: ../plug-ins/metadata/metadata-editor.c:830
-#: ../plug-ins/metadata/metadata-editor.c:5717
-#: ../plug-ins/metadata/metadata-editor.c:5752
+#: ../plug-ins/metadata/metadata-editor.c:590
+#: ../plug-ins/metadata/metadata-editor.c:952
+#: ../plug-ins/metadata/metadata-editor.c:4626
+#: ../plug-ins/metadata/metadata-editor.c:4661
 #: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -122,7 +122,7 @@ msgstr "_Odustani"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1848
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1897
 #: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -135,7 +135,7 @@ msgstr "_Odustani"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1309 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1357 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -385,12 +385,12 @@ msgstr "Brzina reprodukcije"
 
 #. 2 styles of default frame disposals: cumulative layers and one frame per layer.
 #: ../plug-ins/common/animation-play.c:931
-#: ../plug-ins/common/file-gif-save.c:1298
+#: ../plug-ins/common/file-gif-save.c:1321
 msgid "Cumulative layers (combine)"
 msgstr "Kumulativni slojevi (spojeni)"
 
 #: ../plug-ins/common/animation-play.c:935
-#: ../plug-ins/common/file-gif-save.c:1300
+#: ../plug-ins/common/file-gif-save.c:1323
 msgid "One frame per layer (replace)"
 msgstr "Jedan kadar po sloju (zamjena)"
 
@@ -446,7 +446,7 @@ msgstr "_Uspravno"
 #.
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1011
 #: ../plug-ins/common/decompose.c:598 ../plug-ins/common/file-cel.c:446
-#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:611
+#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:670
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:992
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
@@ -456,11 +456,11 @@ msgstr "_Uspravno"
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
-#: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
+#: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2016 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1265
+#: ../plug-ins/file-psd/psd-load.c:2035 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-tiff/file-tiff-load.c:1334
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -1034,7 +1034,7 @@ msgstr "Dijagram trenutačnih postavaka"
 #: ../plug-ins/gfig/gfig-dialog.c:1394
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
 #: ../plug-ins/imagemap/imap_menu.c:156
-#: ../plug-ins/metadata/metadata-viewer.c:255
+#: ../plug-ins/metadata/metadata-viewer.c:260
 msgid "_Close"
 msgstr "_Zatvori"
 
@@ -1047,18 +1047,18 @@ msgid "Save CML Explorer Parameters"
 msgstr "Spremi parametre za CML Explorer"
 
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
+#: ../plug-ins/common/file-dicom.c:1470 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
 #: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
+#: ../plug-ins/file-bmp/bmp-save.c:320 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1726
-#: ../plug-ins/file-tiff/file-tiff-save.c:1045
-#: ../plug-ins/file-tiff/file-tiff-save.c:1155 ../plug-ins/flame/flame.c:450
+#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1728
+#: ../plug-ins/file-tiff/file-tiff-save.c:965
+#: ../plug-ins/file-tiff/file-tiff-save.c:1067 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -1077,10 +1077,10 @@ msgstr "Učitaj CML Explorer parametre"
 
 #: ../plug-ins/common/cml-explorer.c:2251 ../plug-ins/common/curve-bend.c:944
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
-#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:342
+#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
-#: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3348
+#: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3349
 #: ../plug-ins/common/file-psp.c:2228 ../plug-ins/common/file-psp.c:2278
 #: ../plug-ins/common/file-raw-data.c:477
 #: ../plug-ins/common/file-raw-data.c:1303 ../plug-ins/common/file-sunras.c:436
@@ -1088,7 +1088,7 @@ msgstr "Učitaj CML Explorer parametre"
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:858
 #: ../plug-ins/common/file-xwd.c:455 ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:234
+#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:236
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
@@ -1520,12 +1520,12 @@ msgid "Uniform"
 msgstr "Proporcionalno"
 
 #: ../plug-ins/common/contrast-retinex.c:319
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "Low"
 msgstr "Niska"
 
 #: ../plug-ins/common/contrast-retinex.c:320
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "High"
 msgstr "Visoka"
 
@@ -2003,7 +2003,7 @@ msgid "Destripe"
 msgstr "Ukloni trake"
 
 #: ../plug-ins/common/destripe.c:500 ../plug-ins/common/file-html-table.c:647
-#: ../plug-ins/common/file-ps.c:3473 ../plug-ins/common/file-ps.c:3678
+#: ../plug-ins/common/file-ps.c:3474 ../plug-ins/common/file-ps.c:3679
 #: ../plug-ins/common/file-raw-data.c:1988
 #: ../plug-ins/common/smooth-palette.c:458 ../plug-ins/common/tile.c:465
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
@@ -2149,9 +2149,9 @@ msgstr "Kraj datoteke ili greška prilikom čitanja zaglavlja slike"
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
+#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:337
 #: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:696 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-heif.c:697 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
@@ -2160,12 +2160,12 @@ msgstr "Kraj datoteke ili greška prilikom čitanja zaglavlja slike"
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
 #: ../plug-ins/common/file-xpm.c:356 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
-#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-faxg3/faxg3.c:220 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:258
+#: ../plug-ins/file-tiff/file-tiff-load.c:259
 #, c-format
 msgid "Opening '%s'"
 msgstr "Otvaranje datoteke „%s”"
@@ -2239,17 +2239,17 @@ msgstr "„%s”: kraj datoteke ili greška prilikom čitanja podataka palete"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
-#: ../plug-ins/common/file-heif.c:1268 ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
-#: ../plug-ins/common/file-png.c:1611 ../plug-ins/common/file-pnm.c:1249
-#: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
-#: ../plug-ins/common/file-tga.c:1213 ../plug-ins/common/file-xbm.c:1040
-#: ../plug-ins/common/file-xpm.c:674 ../plug-ins/common/file-xwd.c:652
-#: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
-#: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1697
-#: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:1035
+#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:880
+#: ../plug-ins/common/file-html-table.c:238 ../plug-ins/common/file-pcx.c:761
+#: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
+#: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1237
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1213
+#: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
+#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:312
+#: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
+#: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:290
+#: ../plug-ins/file-psd/psd-save.c:1699 ../plug-ins/file-sgi/sgi.c:584
+#: ../plug-ins/file-tiff/file-tiff-save.c:955
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Izvozi se „%s”"
@@ -2339,24 +2339,29 @@ msgstr "Poveznica na radnu površinu"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Greška prilikom učitavanja datoteke radne površine „%s”: %s"
 
-#: ../plug-ins/common/file-dicom.c:139
+#: ../plug-ins/common/file-dicom.c:140
 msgid "DICOM image"
 msgstr "DICOM slika"
 
-#: ../plug-ins/common/file-dicom.c:164
+#: ../plug-ins/common/file-dicom.c:165
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Digital Imaging and Communications in Medicine slika"
 
-#: ../plug-ins/common/file-dicom.c:368
+#: ../plug-ins/common/file-dicom.c:371
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "„%s” nije DICOM datoteka."
 
-#: ../plug-ins/common/file-dicom.c:1336
+#: ../plug-ins/common/file-dicom.c:544
+#, c-format
+msgid "Transfer syntax %s is not supported by GIMP."
+msgstr "GIMP ne podržava sintaksu prijenosa %s."
+
+#: ../plug-ins/common/file-dicom.c:1435
 msgid "Cannot save images with alpha channel."
 msgstr "Nije moguće spremiti slike s alfa kanalom."
 
-#: ../plug-ins/common/file-dicom.c:1355 ../plug-ins/common/file-ps.c:1232
+#: ../plug-ins/common/file-dicom.c:1454 ../plug-ins/common/file-ps.c:1232
 #: ../plug-ins/common/file-xwd.c:647 ../plug-ins/file-fits/fits.c:468
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2456,20 +2461,20 @@ msgstr ""
 "GIF format podržava samo komentare u 7-bitnom ASCII kodiranju. Nijedan "
 "komentar nije spremljen."
 
-#: ../plug-ins/common/file-gif-save.c:838
+#: ../plug-ins/common/file-gif-save.c:853
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nije moguće izvesti slike u RGB bojama. Pretvori u indeksirane boje ili u "
 "sive nijanse."
 
-#: ../plug-ins/common/file-gif-save.c:1035
+#: ../plug-ins/common/file-gif-save.c:1058
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Umetnuta je zadrška, kako bi se spriječila animacija koja zahtijeva velike "
 "količine memorije."
 
-#: ../plug-ins/common/file-gif-save.c:1084
+#: ../plug-ins/common/file-gif-save.c:1107
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2477,11 +2482,11 @@ msgstr ""
 "Slika koju pokušavaš izvesti u GIF format sadrži slojeve, koji prekoračuju "
 "granice slike."
 
-#: ../plug-ins/common/file-gif-save.c:1090
+#: ../plug-ins/common/file-gif-save.c:1113
 msgid "Cr_op"
 msgstr "Iz_reži"
 
-#: ../plug-ins/common/file-gif-save.c:1101
+#: ../plug-ins/common/file-gif-save.c:1124
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2489,11 +2494,11 @@ msgstr ""
 "GIF format ne dozvoljava ovu radnju. Možeš obrezati sve slojeve na granice "
 "slike ili odustani od izvoza."
 
-#: ../plug-ins/common/file-gif-save.c:1235
+#: ../plug-ins/common/file-gif-save.c:1258
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1243
+#: ../plug-ins/common/file-gif-save.c:1266
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -2502,11 +2507,11 @@ msgstr ""
 "Greška prilikom učitavanja datoteke grafičkog sučelja „%s”:\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1296
+#: ../plug-ins/common/file-gif-save.c:1319
 msgid "I don't care"
 msgstr "Svejeno mi je"
 
-#: ../plug-ins/common/file-gif-save.c:1317
+#: ../plug-ins/common/file-gif-save.c:1340
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -2515,7 +2520,7 @@ msgstr ""
 "pokušavaš izvesti sadrži samo jedan sloj."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2533
+#: ../plug-ins/common/file-gif-save.c:2556
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Standardni komentar je ograničen na %d slovnih znakova."
@@ -2608,70 +2613,75 @@ msgstr "Izvozi AVIF slike"
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Spremi sliku u AV1 Image File Format (AVIF)"
 
-#: ../plug-ins/common/file-heif.c:734 ../plug-ins/common/file-heif.c:767
-#: ../plug-ins/common/file-heif.c:806 ../plug-ins/common/file-heif.c:872
+#: ../plug-ins/common/file-heif.c:736 ../plug-ins/common/file-heif.c:769
+#: ../plug-ins/common/file-heif.c:808 ../plug-ins/common/file-heif.c:874
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Neuspjelo učitavanje HEIF slike: %s"
 
-#: ../plug-ins/common/file-heif.c:756
+#: ../plug-ins/common/file-heif.c:758
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Neuspjelo učitavanje HEIF slike: Ulazna datoteka ne sadrži slike koje se "
 "mogu čitati"
 
-#: ../plug-ins/common/file-heif.c:999
+#: ../plug-ins/common/file-heif.c:1001
 msgid "image content"
 msgstr "sadržaj slike"
 
-#: ../plug-ins/common/file-heif.c:1318 ../plug-ins/common/file-heif.c:1572
+#: ../plug-ins/common/file-heif.c:1316
+#, c-format
+msgid "Exporting '%s' using %s encoder"
+msgstr "„%s” se izvozi koristeći %s koder"
+
+#: ../plug-ins/common/file-heif.c:1367 ../plug-ins/common/file-heif.c:1621
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Neuspjelo kodiranje HEIF slike: %s"
 
-#: ../plug-ins/common/file-heif.c:1609
+#: ../plug-ins/common/file-heif.c:1658
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Neuspjelo pisanje HEIF slike: %s"
 
-#: ../plug-ins/common/file-heif.c:1698
+#: ../plug-ins/common/file-heif.c:1747
 msgid "primary"
 msgstr "primarno"
 
-#: ../plug-ins/common/file-heif.c:1843
+#: ../plug-ins/common/file-heif.c:1892
 msgid "Load HEIF Image"
 msgstr "Učitaj HEIF sliki"
 
-#: ../plug-ins/common/file-heif.c:1857
+#: ../plug-ins/common/file-heif.c:1906
 msgid "Select Image"
 msgstr "Odaberi sliku"
 
-#: ../plug-ins/common/file-heif.c:2023
+#: ../plug-ins/common/file-heif.c:2072
 msgid "Nearly _lossless"
 msgstr "Umalo _bez gubitka"
 
-#: ../plug-ins/common/file-heif.c:2027 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2076 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Kvaliteta:"
 
-#: ../plug-ins/common/file-heif.c:2070
+#: ../plug-ins/common/file-heif.c:2119
 msgid "Bit depth:"
 msgstr "Količina bitova:"
 
-#: ../plug-ins/common/file-heif.c:2076
+#: ../plug-ins/common/file-heif.c:2125
 msgid "8 bit/channel"
 msgstr "8 bitova/kanal"
 
-#: ../plug-ins/common/file-heif.c:2077
+#: ../plug-ins/common/file-heif.c:2126
 msgid "10 bit/channel"
 msgstr "10 bitova/kanal"
 
-#: ../plug-ins/common/file-heif.c:2078
+#: ../plug-ins/common/file-heif.c:2127
 msgid "12 bit/channel"
 msgstr "12 bitova/kanal"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2087 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2136 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:387
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save color _profile"
@@ -2780,8 +2790,8 @@ msgstr "Broj piksela u rubu tablice."
 msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "Širina svake ćelije tablice. Može biti broj ili postotak."
 
-#: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3486
-#: ../plug-ins/common/file-ps.c:3690 ../plug-ins/common/file-raw-data.c:2004
+#: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3487
+#: ../plug-ins/common/file-ps.c:3691 ../plug-ins/common/file-raw-data.c:2004
 #: ../plug-ins/common/film.c:945 ../plug-ins/common/smooth-palette.c:463
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -3156,9 +3166,9 @@ msgstr "%s-stranica"
 msgid "Import from PDF"
 msgstr "Uvezi iz PDF‑a"
 
-#: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:2431
-#: ../plug-ins/metadata/metadata-editor.c:5718
+#: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3400
+#: ../plug-ins/file-tiff/file-tiff-load.c:2500
+#: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "_Uvezi"
 
@@ -3282,8 +3292,8 @@ msgstr "Slojevi kao stranice (%s)"
 
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
-#: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1267
+#: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1893
+#: ../plug-ins/file-tiff/file-tiff-load.c:1336
 #, c-format
 msgid "Page %d"
 msgstr "Stranica %d"
@@ -3385,13 +3395,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Greška prilikom izvoza „%s”. Nije bilo moguće izvesti sliku."
 
 #: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1232
+#: ../plug-ins/file-tiff/file-tiff-save.c:1160
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Greška prilikom učitavanja datoteke grafičkog sučelja „%s”: %s"
 
 #: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1233
+#: ../plug-ins/file-tiff/file-tiff-save.c:1161
 msgid "Unknown error"
 msgstr "Nepoznata greška"
 
@@ -3498,112 +3508,112 @@ msgstr "Nije bilo moguće interpretirati PostScript datoteku „%s”"
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "PostScript izvoz ne zna raditi sa slikama s alfa kanalima"
 
-#: ../plug-ins/common/file-ps.c:3394
+#: ../plug-ins/common/file-ps.c:3395
 msgid "Import from PostScript"
 msgstr "Uvezi iz PostScripta"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3438
+#: ../plug-ins/common/file-ps.c:3439
 msgid "Rendering"
 msgstr "Iscrtavanje"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3457 ../plug-ins/common/file-svg.c:846
+#: ../plug-ins/common/file-ps.c:3458 ../plug-ins/common/file-svg.c:846
 #: ../plug-ins/common/file-wmf.c:704
 msgid "Resolution:"
 msgstr "Rezolucija:"
 
-#: ../plug-ins/common/file-ps.c:3499
+#: ../plug-ins/common/file-ps.c:3500
 msgid "Pages:"
 msgstr "Stranice:"
 
-#: ../plug-ins/common/file-ps.c:3506
+#: ../plug-ins/common/file-ps.c:3507
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Stranice za učitavanje (npr.: 1-4 ili 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3511 ../plug-ins/common/sphere-designer.c:2657
+#: ../plug-ins/common/file-ps.c:3512 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
 msgstr "Slojevi"
 
-#: ../plug-ins/common/file-ps.c:3514
+#: ../plug-ins/common/file-ps.c:3515
 msgid "Images"
 msgstr "Slike"
 
-#: ../plug-ins/common/file-ps.c:3517
+#: ../plug-ins/common/file-ps.c:3518
 msgid "Open as"
 msgstr "Otvori kao"
 
-#: ../plug-ins/common/file-ps.c:3521
+#: ../plug-ins/common/file-ps.c:3522
 msgid "Try Bounding Box"
 msgstr "Pokušaj granični okvir"
 
 #. Coloring
-#: ../plug-ins/common/file-ps.c:3534
+#: ../plug-ins/common/file-ps.c:3535
 msgid "Coloring"
 msgstr "Bojenje"
 
-#: ../plug-ins/common/file-ps.c:3538
+#: ../plug-ins/common/file-ps.c:3539
 msgid "B/W"
 msgstr "Crno/bijela"
 
-#: ../plug-ins/common/file-ps.c:3539 ../plug-ins/imagemap/imap_menu.c:228
+#: ../plug-ins/common/file-ps.c:3540 ../plug-ins/imagemap/imap_menu.c:228
 msgid "Gray"
 msgstr "Siva"
 
-#: ../plug-ins/common/file-ps.c:3540 ../plug-ins/common/file-xpm.c:485
+#: ../plug-ins/common/file-ps.c:3541 ../plug-ins/common/file-xpm.c:485
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Kolor"
 
-#: ../plug-ins/common/file-ps.c:3541
+#: ../plug-ins/common/file-ps.c:3542
 msgid "Automatic"
 msgstr "Automatski"
 
-#: ../plug-ins/common/file-ps.c:3552
+#: ../plug-ins/common/file-ps.c:3553
 msgid "Text antialiasing"
 msgstr "Zaglađivanje rubova teksta"
 
-#: ../plug-ins/common/file-ps.c:3556 ../plug-ins/common/file-ps.c:3568
+#: ../plug-ins/common/file-ps.c:3557 ../plug-ins/common/file-ps.c:3569
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Bez"
 
-#: ../plug-ins/common/file-ps.c:3557 ../plug-ins/common/file-ps.c:3569
+#: ../plug-ins/common/file-ps.c:3558 ../plug-ins/common/file-ps.c:3570
 msgid "Weak"
 msgstr "Slabo"
 
-#: ../plug-ins/common/file-ps.c:3558 ../plug-ins/common/file-ps.c:3570
+#: ../plug-ins/common/file-ps.c:3559 ../plug-ins/common/file-ps.c:3571
 msgid "Strong"
 msgstr "Jako"
 
-#: ../plug-ins/common/file-ps.c:3564
+#: ../plug-ins/common/file-ps.c:3565
 msgid "Graphic antialiasing"
 msgstr "Zaglađivanje rubova grafika"
 
-#: ../plug-ins/common/file-ps.c:3642
+#: ../plug-ins/common/file-ps.c:3643
 msgid "PostScript"
 msgstr "PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3659
+#: ../plug-ins/common/file-ps.c:3660
 msgid "Image Size"
 msgstr "Veličina slike"
 
-#: ../plug-ins/common/file-ps.c:3702
+#: ../plug-ins/common/file-ps.c:3703
 msgid "_X offset:"
 msgstr "_X odmak:"
 
-#: ../plug-ins/common/file-ps.c:3714
+#: ../plug-ins/common/file-ps.c:3715
 msgid "_Y offset:"
 msgstr "_Y odmak:"
 
-#: ../plug-ins/common/file-ps.c:3720
+#: ../plug-ins/common/file-ps.c:3721
 msgid "_Keep aspect ratio"
 msgstr "_Zadrži omjer"
 
-#: ../plug-ins/common/file-ps.c:3726
+#: ../plug-ins/common/file-ps.c:3727
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -3612,42 +3622,42 @@ msgstr ""
 "bez promjene omjera slike."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3736
+#: ../plug-ins/common/file-ps.c:3737
 msgid "Unit"
 msgstr "Jedinica"
 
-#: ../plug-ins/common/file-ps.c:3740
+#: ../plug-ins/common/file-ps.c:3741
 msgid "_Inch"
 msgstr "_Inč"
 
-#: ../plug-ins/common/file-ps.c:3741
+#: ../plug-ins/common/file-ps.c:3742
 msgid "_Millimeter"
 msgstr "_Milimetar"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3752
+#: ../plug-ins/common/file-ps.c:3753
 #: ../plug-ins/map-object/map-object-ui.c:1019
 msgid "Rotation"
 msgstr "Rotacija"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3767
+#: ../plug-ins/common/file-ps.c:3768
 msgid "Output"
 msgstr "Izlazni"
 
-#: ../plug-ins/common/file-ps.c:3773
+#: ../plug-ins/common/file-ps.c:3774
 msgid "_PostScript level 2"
 msgstr "_PostScript razine 2"
 
-#: ../plug-ins/common/file-ps.c:3782
+#: ../plug-ins/common/file-ps.c:3783
 msgid "_Encapsulated PostScript"
 msgstr "_Encapsulated Postscript"
 
-#: ../plug-ins/common/file-ps.c:3791
+#: ../plug-ins/common/file-ps.c:3792
 msgid "P_review"
 msgstr "P_regled"
 
-#: ../plug-ins/common/file-ps.c:3815
+#: ../plug-ins/common/file-ps.c:3816
 msgid "Preview _size:"
 msgstr "_Veličina pregleda:"
 
@@ -6607,29 +6617,29 @@ msgstr "Neprepoznata ili neipravna količina bitova."
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitmap završava neočekivano."
 
-#: ../plug-ins/file-bmp/bmp-save.c:182 ../plug-ins/file-bmp/bmp-save.c:215
+#: ../plug-ins/file-bmp/bmp-save.c:183 ../plug-ins/file-bmp/bmp-save.c:216
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr "Nije moguće izvoziti indeksiranu sliku s transparentošću u BMP format."
 
-#: ../plug-ins/file-bmp/bmp-save.c:184 ../plug-ins/file-bmp/bmp-save.c:217
+#: ../plug-ins/file-bmp/bmp-save.c:185 ../plug-ins/file-bmp/bmp-save.c:218
 msgid "Alpha channel will be ignored."
 msgstr "Alfa kanal će se zanemariti."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-save.c:920
+#: ../plug-ins/file-bmp/bmp-save.c:924
 msgid "_Run-Length Encoded"
 msgstr "_Kodirano za duljinu trajanja"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-save.c:933
+#: ../plug-ins/file-bmp/bmp-save.c:937
 msgid "Co_mpatibility Options"
 msgstr "Opcije za ko_mpatibilnost"
 
-#: ../plug-ins/file-bmp/bmp-save.c:943
+#: ../plug-ins/file-bmp/bmp-save.c:947
 msgid "_Do not write color space information"
 msgstr "_Ne zapisuj podatke o području boja"
 
-#: ../plug-ins/file-bmp/bmp-save.c:945
+#: ../plug-ins/file-bmp/bmp-save.c:949
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -6641,20 +6651,20 @@ msgstr ""
 
 #. Advanced Options
 #. Advanced expander
-#: ../plug-ins/file-bmp/bmp-save.c:961 ../plug-ins/file-jpeg/jpeg-save.c:1014
+#: ../plug-ins/file-bmp/bmp-save.c:965 ../plug-ins/file-jpeg/jpeg-save.c:1014
 #: ../plug-ins/file-webp/file-webp-dialog.c:221
 msgid "_Advanced Options"
 msgstr "_Napredne opcije"
 
-#: ../plug-ins/file-bmp/bmp-save.c:976
+#: ../plug-ins/file-bmp/bmp-save.c:980
 msgid "16 bits"
 msgstr "16 bitova"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1012
+#: ../plug-ins/file-bmp/bmp-save.c:1016
 msgid "24 bits"
 msgstr "24 bitova"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1029
+#: ../plug-ins/file-bmp/bmp-save.c:1033
 msgid "32 bits"
 msgstr "32 bitova"
 
@@ -6678,15 +6688,15 @@ msgstr "Dekodiraj YCoCg (skalirano)"
 msgid "Decode Alpha exponent"
 msgstr "Dekodiraj alfa ekponent"
 
-#: ../plug-ins/file-dds/ddsread.c:1306
+#: ../plug-ins/file-dds/ddsread.c:1354
 msgid "Load DDS"
 msgstr "Učitaj DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1325
+#: ../plug-ins/file-dds/ddsread.c:1373
 msgid "_Load mipmaps"
 msgstr "_Učitaj mipmaps"
 
-#: ../plug-ins/file-dds/ddsread.c:1332
+#: ../plug-ins/file-dds/ddsread.c:1380
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Automatski dekodiraj YCoCg/AExp slike kad se prepoznaju"
 
@@ -6695,7 +6705,7 @@ msgid "Export as DDS"
 msgstr "Izvezi kao DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:1957
-#: ../plug-ins/metadata/metadata-editor.c:5753
+#: ../plug-ins/metadata/metadata-editor.c:4662
 msgid "_Export"
 msgstr "_Izvezi"
 
@@ -6776,9 +6786,24 @@ msgstr "Greška prilikom traženja vrste slike iz „%s”"
 msgid "Error reading pixel data from '%s'"
 msgstr "Greška prilikom čitanja podataka piksela iz „%s”"
 
-#: ../plug-ins/file-faxg3/faxg3.c:104
+#: ../plug-ins/file-faxg3/faxg3.c:105
 msgid "G3 fax image"
 msgstr "G3 fax slika"
+
+#: ../plug-ins/file-faxg3/faxg3.c:275 ../plug-ins/file-faxg3/faxg3.c:574
+#, c-format
+msgid "Could not create buffer to process image data."
+msgstr "Nije bilo moguće stvoriti međuspremnik za obradu slikovnih podataka."
+
+#: ../plug-ins/file-faxg3/faxg3.c:540
+#, c-format
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr "Neispravna veličina slike (%d x %d). Slika je možda oštećena."
+
+#: ../plug-ins/file-faxg3/faxg3.c:550
+#, c-format
+msgid "Could not create image."
+msgstr "Nije bilo moguće stvoriti sliku."
 
 #: ../plug-ins/file-fits/fits.c:166 ../plug-ins/file-fits/fits.c:186
 msgid "Flexible Image Transport System"
@@ -7121,7 +7146,7 @@ msgid "Unsupported bit depth: %d"
 msgstr "Nepodržana količina bitova: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:409 ../plug-ins/file-psd/psd-load.c:419
-#: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:908
+#: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:912
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Datoteka je neispravna!"
@@ -7151,36 +7176,36 @@ msgstr "Nepodržana ili neispravna veličina sloja: %d × %d"
 msgid "Unsupported or invalid mask info size: %d"
 msgstr "Nepodržana ili neispravna veličina podataka maske: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:819
+#: ../plug-ins/file-psd/psd-load.c:837
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Nepodržana ili neispravna visina maske: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:827
+#: ../plug-ins/file-psd/psd-load.c:845
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Nepodržana ili neispravna širina maske: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:836
+#: ../plug-ins/file-psd/psd-load.c:854
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nepodržana ili neispravna veličina maske: %d × %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1473 ../plug-ins/file-psd/psd-load.c:1990
+#: ../plug-ins/file-psd/psd-load.c:1477 ../plug-ins/file-psd/psd-load.c:2008
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nepodržani način komprimiranja: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2121
+#: ../plug-ins/file-psd/psd-load.c:2155
 msgid "Extra"
 msgstr "Dodatno"
 
-#: ../plug-ins/file-psd/psd-load.c:2299
+#: ../plug-ins/file-psd/psd-load.c:2333
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodržana ili neispravna veličina kanala"
 
-#: ../plug-ins/file-psd/psd-load.c:2365
+#: ../plug-ins/file-psd/psd-load.c:2399
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Neuspjela dekomprimiranje podataka"
@@ -7189,7 +7214,7 @@ msgstr "Neuspjela dekomprimiranje podataka"
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Greška: Nije moguće pretvoriti GIMP sliku u PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1690
+#: ../plug-ins/file-psd/psd-save.c:1692
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7198,7 +7223,7 @@ msgstr ""
 "Nije moguće izvesti „%s”. PSD format ne podržava slike, koje su šire ili "
 "više od 30 000 piksela."
 
-#: ../plug-ins/file-psd/psd-save.c:1711
+#: ../plug-ins/file-psd/psd-save.c:1713
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7392,17 +7417,17 @@ msgstr ""
 msgid "TIFF image"
 msgstr "TIFF slika"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:266
+#: ../plug-ins/file-tiff/file-tiff-load.c:267
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Nije TIFF slika ili je slika pokvarena."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:297
+#: ../plug-ins/file-tiff/file-tiff-load.c:298
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF „%s” ne sadrži direktorije"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:304
+#: ../plug-ins/file-tiff/file-tiff-load.c:305
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7420,7 +7445,7 @@ msgstr[2] ""
 "TIFF „%s” brojanje direktorija po zaglavlju nije uspjelo, mada se čini da "
 "postoji %d stranica. Datoteka će se pokušati učitati s ovom pretpostavkom."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:380
+#: ../plug-ins/file-tiff/file-tiff-load.c:429
 msgid "Extra channels with unspecified data."
 msgstr "Dodatni kanali s neodređenim podacima."
 
@@ -7431,16 +7456,16 @@ msgstr "Dodatni kanali s neodređenim podacima."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:392
+#: ../plug-ins/file-tiff/file-tiff-load.c:441
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Nesuklađeni TIFF: dodatni kanali bez polja „Dodatni uzorci”."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:453
+#: ../plug-ins/file-tiff/file-tiff-load.c:522
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Nije moguće pročitati stranicu %d od %d. Slika je možda oštećena.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:482
+#: ../plug-ins/file-tiff/file-tiff-load.c:551
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7449,7 +7474,7 @@ msgstr ""
 "Ova slika ima linearni profil boje, ali nije postavljena na prvom sloju. "
 "Slojevi ispod sloja broj %d interpretirat će se kao nelinearni."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:490
+#: ../plug-ins/file-tiff/file-tiff-load.c:559
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7458,33 +7483,33 @@ msgstr ""
 "Ova slika ima više profila boja. Koristit ćemo prvu. Ako to prouzroči "
 "netočne rezultate, učitaj svaki sloj kao zasebnu sliku."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:502
+#: ../plug-ins/file-tiff/file-tiff-load.c:571
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "Sumnjiva količina bitova: %d za %d. stranicu. Slika je možda oštećena."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:576
+#: ../plug-ins/file-tiff/file-tiff-load.c:645
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Nepodržana količina bitova: %d za %d. stranicu."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:591
+#: ../plug-ins/file-tiff/file-tiff-load.c:660
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Nije bilo moguće dohvatiti širinu slike iz „%s”"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:599
+#: ../plug-ins/file-tiff/file-tiff-load.c:668
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Nije bilo moguće dohvatiti duljinu slike iz „%s”"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:607
+#: ../plug-ins/file-tiff/file-tiff-load.c:676
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Neispravna veličina slike (%u × %u) za %d. stranicu. Slika je možda oštećena."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:628
+#: ../plug-ins/file-tiff/file-tiff-load.c:697
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -7493,7 +7518,7 @@ msgstr ""
 "Nije moguće dobiti fotometrijsku vrijednost iz „%s”. Slika je CCITT "
 "komprimirana. Pretpostavlja se „min-is-white”"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:635
+#: ../plug-ins/file-tiff/file-tiff-load.c:704
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -7503,7 +7528,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:667
+#: ../plug-ins/file-tiff/file-tiff-load.c:736
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -7511,7 +7536,7 @@ msgstr ""
 "Vrsta alfa kanala nije definirana za %s. Pretpostavlja se da alfa nije "
 "predpomnožena"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:692
+#: ../plug-ins/file-tiff/file-tiff-load.c:761
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7522,77 +7547,77 @@ msgstr ""
 "postavljeno mada su dodatni kanali prisutni. Pretpostavlja se da prvi "
 "dodatni kanal nije predpomnoženi alfa kanal."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:925
+#: ../plug-ins/file-tiff/file-tiff-load.c:994
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 "Neispravno ili nepoznato komprimiranje %u. Vrsta komprimiranja se postavlja "
 "na „Bez”."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:983
+#: ../plug-ins/file-tiff/file-tiff-load.c:1052
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Nije bilo moguće stvoriti novu sliku: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1003
+#: ../plug-ins/file-tiff/file-tiff-load.c:1072
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-od-%d-stranica"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1148
+#: ../plug-ins/file-tiff/file-tiff-load.c:1217
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Nepoznata jedinica komprimiranja %d, pretpostavlja se dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1158
+#: ../plug-ins/file-tiff/file-tiff-load.c:1227
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Upozorenje: rezolucija ne sadrži mjernu jedinicu, pretpostavlja se dpi"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1166
+#: ../plug-ins/file-tiff/file-tiff-load.c:1235
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Upozorenje: bez podataka za y rezoluciju, pretpostavljaju se isti podaci kao "
 "za x rezoluciju"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1225
+#: ../plug-ins/file-tiff/file-tiff-load.c:1294
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Nije bilo moguće dohvatiti palete boja iz „%s”"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1298
+#: ../plug-ins/file-tiff/file-tiff-load.c:1367
 msgid "TIFF Channel"
 msgstr "TIFF kanal"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1436
+#: ../plug-ins/file-tiff/file-tiff-load.c:1505
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Čitanje podataka iz TIFF-a „%s” nije moguće. Datoteka je vjerojatno oštećena."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1507
+#: ../plug-ins/file-tiff/file-tiff-load.c:1576
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: Nepodržan format slika, učitavač RGBA podataka nije dostupan"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1819
-#: ../plug-ins/file-tiff/file-tiff-load.c:2016
+#: ../plug-ins/file-tiff/file-tiff-load.c:1888
+#: ../plug-ins/file-tiff/file-tiff-load.c:2085
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "Neuspjelo čitanje pločice. Slika je vjerojatno oštećena u %d. retku."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1828
-#: ../plug-ins/file-tiff/file-tiff-load.c:2025
+#: ../plug-ins/file-tiff/file-tiff-load.c:1897
+#: ../plug-ins/file-tiff/file-tiff-load.c:2094
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Neuspjelo čitanje iscrtavajućeg retka. Slika je vjerojatno oštećena u %d. "
 "retku."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2426
+#: ../plug-ins/file-tiff/file-tiff-load.c:2495
 msgid "Import from TIFF"
 msgstr "Uvezi iz TIFF‑a"
 
@@ -7600,27 +7625,27 @@ msgstr "Uvezi iz TIFF‑a"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2479
+#: ../plug-ins/file-tiff/file-tiff-load.c:2552
 msgid "_Keep empty space around imported layers"
 msgstr "_Zadrži prazan prostor oko uvezenih slojeva"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2496
+#: ../plug-ins/file-tiff/file-tiff-load.c:2569
 msgid "Process extra channel as:"
 msgstr "Obradi dodatni kanal kao:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2499
+#: ../plug-ins/file-tiff/file-tiff-load.c:2572
 msgid "_Non-premultiplied alpha"
 msgstr "Ne pred-pomnožena alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2500
+#: ../plug-ins/file-tiff/file-tiff-load.c:2573
 msgid "Pre_multiplied alpha"
 msgstr "Pred-po_množena alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2501
+#: ../plug-ins/file-tiff/file-tiff-load.c:2574
 msgid "Channe_l"
 msgstr "Kana_l"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:596
+#: ../plug-ins/file-tiff/file-tiff-save.c:592
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7628,16 +7653,16 @@ msgstr ""
 "Moguće je komprimirati samo jednobojne slike s „CCITT grupa 4” ili „CCITT "
 "grupa 3”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:610
+#: ../plug-ins/file-tiff/file-tiff-save.c:606
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Nije moguće komprimirati indeksirane slike s „JPEG”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:746
+#: ../plug-ins/file-tiff/file-tiff-save.c:742
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Neuspio prikaz %d. iscrtavajućeg retka"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1060
+#: ../plug-ins/file-tiff/file-tiff-save.c:980
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7645,44 +7670,44 @@ msgstr ""
 "TIFF format podržava samo 7bitno ASCII\n"
 "kodiranje. Komentari nisu spremljeni."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1178
+#: ../plug-ins/file-tiff/file-tiff-save.c:1090
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Zapisivanje stranica s raznim količinama bitova je čudno."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1222
+#: ../plug-ins/file-tiff/file-tiff-save.c:1150
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1248
+#: ../plug-ins/file-tiff/file-tiff-save.c:1176
 msgid "Compression"
 msgstr "Komprimiranje"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1252
+#: ../plug-ins/file-tiff/file-tiff-save.c:1180
 msgid "_None"
 msgstr "_Bez"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1253
+#: ../plug-ins/file-tiff/file-tiff-save.c:1181
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1254
+#: ../plug-ins/file-tiff/file-tiff-save.c:1182
 msgid "_Pack Bits"
 msgstr "_Pack Bits"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1255
+#: ../plug-ins/file-tiff/file-tiff-save.c:1183
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1256
+#: ../plug-ins/file-tiff/file-tiff-save.c:1184
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1257
+#: ../plug-ins/file-tiff/file-tiff-save.c:1185
 msgid "CCITT Group _3 fax"
 msgstr "CCITT grupa _3 faks"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1258
+#: ../plug-ins/file-tiff/file-tiff-save.c:1186
 msgid "CCITT Group _4 fax"
 msgstr "CCITT grupa _4 faks"
 
@@ -8741,7 +8766,7 @@ msgstr "Vrsta mreže:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "Normal"
 msgstr "Normalno"
 
@@ -8862,7 +8887,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Mijenja gamu (svjetlost) odabranog kista"
 
 #: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/metadata/metadata-editor.c:587
+#: ../plug-ins/metadata/metadata-editor.c:613
 msgid "Select:"
 msgstr "Odaberi:"
 
@@ -9656,6 +9681,10 @@ msgstr "Spremi Exif pod_atke"
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
 msgid "Save _GeoTIFF data"
 msgstr "Spremi _GeoTIFF podatke"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
+msgid "Keep the GeoTIFF metadata if it was present on import"
+msgstr "Zadrži GeoTIFF metapodatke ako su bili prisutni pri uvozu"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -12002,49 +12031,49 @@ msgstr "Prikaži _mrežni okvir"
 msgid "Update preview _live"
 msgstr "Aktua_liziraj pregled uživo"
 
-#: ../plug-ins/metadata/metadata-editor.c:413
+#: ../plug-ins/metadata/metadata-editor.c:439
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Uredi meta-podatke (IPTC, EXIF, XMP)"
 
-#: ../plug-ins/metadata/metadata-editor.c:421
+#: ../plug-ins/metadata/metadata-editor.c:447
 msgid "_Edit Metadata"
 msgstr "_Uredi meta-podatke"
 
-#: ../plug-ins/metadata/metadata-editor.c:545
+#: ../plug-ins/metadata/metadata-editor.c:571
 msgid "Error loading metadata-editor dialog."
 msgstr "Greška tijekom učitavanja dijaloga uređivača metapodataka."
 
-#: ../plug-ins/metadata/metadata-editor.c:556
+#: ../plug-ins/metadata/metadata-editor.c:582
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Uređivač meta-podataka: %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:565
+#: ../plug-ins/metadata/metadata-editor.c:591
 msgid "_Write Metadata"
 msgstr "_Zapiši meta-podatke"
 
-#: ../plug-ins/metadata/metadata-editor.c:589
+#: ../plug-ins/metadata/metadata-editor.c:615
 msgid "Import metadata"
 msgstr "Uvezi meta-podatke"
 
-#: ../plug-ins/metadata/metadata-editor.c:591
+#: ../plug-ins/metadata/metadata-editor.c:617
 msgid "Export metadata"
 msgstr "Izvezi meta-podatke"
 
-#: ../plug-ins/metadata/metadata-editor.c:799
+#: ../plug-ins/metadata/metadata-editor.c:921
 #, c-format
 msgid "Error loading calendar. %s"
 msgstr "Greška prilikom učitavanja kalendara. %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:827
+#: ../plug-ins/metadata/metadata-editor.c:949
 msgid "Calendar Date:"
 msgstr "Kalendarski datum:"
 
-#: ../plug-ins/metadata/metadata-editor.c:831
+#: ../plug-ins/metadata/metadata-editor.c:953
 msgid "Set Date"
 msgstr "Postavi datum"
 
-#: ../plug-ins/metadata/metadata-editor.c:1565
+#: ../plug-ins/metadata/metadata-editor.c:1687
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -12060,7 +12089,7 @@ msgstr ""
 "ili 10.45\n"
 "Izbriši sav tekst za uklanjanje trenutačne vrijednosti."
 
-#: ../plug-ins/metadata/metadata-editor.c:1571
+#: ../plug-ins/metadata/metadata-editor.c:1693
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -12076,251 +12105,253 @@ msgstr ""
 "ili stopama (ft)\n"
 "Izbriši sav tekst za uklanjanje trenutačne vrijednosti."
 
-#: ../plug-ins/metadata/metadata-editor.c:1707
+#: ../plug-ins/metadata/metadata-editor.c:1829
 msgid "Unrated"
 msgstr "Neocjenjeno"
 
-#: ../plug-ins/metadata/metadata-editor.c:4405
+#: ../plug-ins/metadata/metadata-editor.c:3782
 #, c-format
 msgid "Failed to set metadata tag %s"
 msgstr "Neuspjelo postavljanje oznake metapodataka %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:5714
+#: ../plug-ins/metadata/metadata-editor.c:4623
 msgid "Import Metadata File"
 msgstr "Uvezi datoteku meta-podataka"
 
-#: ../plug-ins/metadata/metadata-editor.c:5749
+#: ../plug-ins/metadata/metadata-editor.c:4658
 msgid "Export Metadata File"
 msgstr "Izvezi datoteku meta-podataka"
 
-#: ../plug-ins/metadata/metadata-tags.c:169
+#: ../plug-ins/metadata/metadata-tags.c:180
+#: ../plug-ins/metadata/metadata-tags.c:194
+#: ../plug-ins/metadata/metadata-tags.c:254
+#: ../plug-ins/metadata/metadata-tags.c:271
+msgid "Select a value"
+msgstr "Odaberi jednu vrijednost"
+
+#: ../plug-ins/metadata/metadata-tags.c:181
 msgid "Original digital capture of a real life scene"
 msgstr "Originalna digitalna snimka svakodnevnice"
 
-#: ../plug-ins/metadata/metadata-tags.c:170
+#: ../plug-ins/metadata/metadata-tags.c:182
 msgid "Digitized from a negative on film"
 msgstr "Digitalizirano iz negativa"
 
-#: ../plug-ins/metadata/metadata-tags.c:171
+#: ../plug-ins/metadata/metadata-tags.c:183
 msgid "Digitized from a positive on film"
 msgstr "Digitalizirano iz pozitiva"
 
-#: ../plug-ins/metadata/metadata-tags.c:172
+#: ../plug-ins/metadata/metadata-tags.c:184
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitalizirano iz tiska na ne-transparentnom mediju"
 
-#: ../plug-ins/metadata/metadata-tags.c:173
+#: ../plug-ins/metadata/metadata-tags.c:185
 msgid "Created by software"
 msgstr "Izrađeno softverom"
 
-#: ../plug-ins/metadata/metadata-tags.c:182
-#: ../plug-ins/metadata/metadata-tags.c:194
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:195
+#: ../plug-ins/metadata/metadata-tags.c:207
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Bez"
 
-#: ../plug-ins/metadata/metadata-tags.c:183
-#: ../plug-ins/metadata/metadata-tags.c:195
+#: ../plug-ins/metadata/metadata-tags.c:196
+#: ../plug-ins/metadata/metadata-tags.c:208
 msgid "Not Applicable"
 msgstr "Nije primijenjivo"
 
-#: ../plug-ins/metadata/metadata-tags.c:184
+#: ../plug-ins/metadata/metadata-tags.c:197
 msgid "Unlimited Model Releases"
 msgstr "Neograničena izdanja modela"
 
-#: ../plug-ins/metadata/metadata-tags.c:185
+#: ../plug-ins/metadata/metadata-tags.c:198
 msgid "Limited or Incomplete Model Releases"
 msgstr "Ograničena ili nezavršena izdanja modela"
 
-#: ../plug-ins/metadata/metadata-tags.c:196
+#: ../plug-ins/metadata/metadata-tags.c:209
 msgid "Unlimited Property Releases"
 msgstr "Neograničena izdanja svojstava"
 
-#: ../plug-ins/metadata/metadata-tags.c:197
+#: ../plug-ins/metadata/metadata-tags.c:210
 msgid "Limited or Incomplete Property Releases"
 msgstr "Ograničena ili nezavršena izdanja svojstava"
 
-#: ../plug-ins/metadata/metadata-tags.c:206
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Age Unknown"
 msgstr "Starost nepoznata"
 
-#: ../plug-ins/metadata/metadata-tags.c:207
+#: ../plug-ins/metadata/metadata-tags.c:220
 msgid "Age 25 or Over"
 msgstr "Starost 25 ili iznad"
 
-#: ../plug-ins/metadata/metadata-tags.c:208
+#: ../plug-ins/metadata/metadata-tags.c:221
 msgid "Age 24"
 msgstr "Starost 24"
 
-#: ../plug-ins/metadata/metadata-tags.c:209
+#: ../plug-ins/metadata/metadata-tags.c:222
 msgid "Age 23"
 msgstr "Starost 23"
 
-#: ../plug-ins/metadata/metadata-tags.c:210
+#: ../plug-ins/metadata/metadata-tags.c:223
 msgid "Age 22"
 msgstr "Starost 22"
 
-#: ../plug-ins/metadata/metadata-tags.c:211
+#: ../plug-ins/metadata/metadata-tags.c:224
 msgid "Age 21"
 msgstr "Starost 21"
 
-#: ../plug-ins/metadata/metadata-tags.c:212
+#: ../plug-ins/metadata/metadata-tags.c:225
 msgid "Age 20"
 msgstr "Starost 20"
 
-#: ../plug-ins/metadata/metadata-tags.c:213
+#: ../plug-ins/metadata/metadata-tags.c:226
 msgid "Age 19"
 msgstr "Starost 19"
 
-#: ../plug-ins/metadata/metadata-tags.c:214
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Age 18"
 msgstr "Starost 18"
 
-#: ../plug-ins/metadata/metadata-tags.c:215
+#: ../plug-ins/metadata/metadata-tags.c:228
 msgid "Age 17"
 msgstr "Starost 17"
 
-#: ../plug-ins/metadata/metadata-tags.c:216
+#: ../plug-ins/metadata/metadata-tags.c:229
 msgid "Age 16"
 msgstr "Starost 16"
 
-#: ../plug-ins/metadata/metadata-tags.c:217
+#: ../plug-ins/metadata/metadata-tags.c:230
 msgid "Age 15"
 msgstr "Starost 15"
 
-#: ../plug-ins/metadata/metadata-tags.c:218
+#: ../plug-ins/metadata/metadata-tags.c:231
 msgid "Age 14 or Under"
 msgstr "Starost 14 ili ispod"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "2"
 msgstr "2"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "3"
 msgstr "3"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "4"
 msgstr "4"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "6"
 msgstr "6"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "7"
 msgstr "7"
 
-#: ../plug-ins/metadata/metadata-tags.c:232
-#: ../plug-ins/metadata/metadata-tags.c:268
-#: ../plug-ins/metadata/metadata-tags.c:275
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:245
+#: ../plug-ins/metadata/metadata-tags.c:281
+#: ../plug-ins/metadata/metadata-tags.c:288
+#: ../plug-ins/metadata/metadata-tags.c:295
 msgid "Unknown"
 msgstr "Nepoznato"
 
 #. DO NOT SAVE
-#: ../plug-ins/metadata/metadata-tags.c:233
+#: ../plug-ins/metadata/metadata-tags.c:246
 msgid "Copyrighted"
 msgstr "Zaštićeno autorskim pravom"
 
 #. TRUE
-#: ../plug-ins/metadata/metadata-tags.c:234
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "Public Domain"
 msgstr "Javno vlasništvo"
 
-#: ../plug-ins/metadata/metadata-tags.c:241
-#: ../plug-ins/metadata/metadata-tags.c:258
-msgid "Select a value"
-msgstr "Odaberi jednu vrijednost"
-
-#: ../plug-ins/metadata/metadata-tags.c:242
+#: ../plug-ins/metadata/metadata-tags.c:255
 msgid "Work"
 msgstr "Posao"
 
-#: ../plug-ins/metadata/metadata-tags.c:243
+#: ../plug-ins/metadata/metadata-tags.c:256
 msgid "Cell"
 msgstr "Mobitel"
 
-#: ../plug-ins/metadata/metadata-tags.c:244
+#: ../plug-ins/metadata/metadata-tags.c:257
 msgid "Fax"
 msgstr "Faks"
 
-#: ../plug-ins/metadata/metadata-tags.c:245
+#: ../plug-ins/metadata/metadata-tags.c:258
 msgid "Home"
 msgstr "Doma"
 
-#: ../plug-ins/metadata/metadata-tags.c:246
+#: ../plug-ins/metadata/metadata-tags.c:259
 msgid "Pager"
 msgstr "Pager"
 
-#: ../plug-ins/metadata/metadata-tags.c:259
+#: ../plug-ins/metadata/metadata-tags.c:272
 msgid "Male"
 msgstr "Muško"
 
-#: ../plug-ins/metadata/metadata-tags.c:260
+#: ../plug-ins/metadata/metadata-tags.c:273
 msgid "Female"
 msgstr "Ženska"
 
-#: ../plug-ins/metadata/metadata-tags.c:261
+#: ../plug-ins/metadata/metadata-tags.c:274
 msgid "Other"
 msgstr "Drugo"
 
-#: ../plug-ins/metadata/metadata-tags.c:268
+#: ../plug-ins/metadata/metadata-tags.c:281
 msgid "Above sea level"
 msgstr "Iznad razine mora"
 
-#: ../plug-ins/metadata/metadata-tags.c:268
+#: ../plug-ins/metadata/metadata-tags.c:281
 msgid "Below sea level"
 msgstr "Ispod razine mora"
 
-#: ../plug-ins/metadata/metadata-tags.c:275
+#: ../plug-ins/metadata/metadata-tags.c:288
 msgid "North"
 msgstr "Sjever"
 
-#: ../plug-ins/metadata/metadata-tags.c:275
+#: ../plug-ins/metadata/metadata-tags.c:288
 msgid "South"
 msgstr "Jug"
 
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:295
 msgid "East"
 msgstr "Istok"
 
-#: ../plug-ins/metadata/metadata-tags.c:282
+#: ../plug-ins/metadata/metadata-tags.c:295
 msgid "West"
 msgstr "Zapad"
 
-#: ../plug-ins/metadata/metadata-viewer.c:135
+#: ../plug-ins/metadata/metadata-viewer.c:140
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Prikaži meta-podatke (Exif, IPTC, XMP)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:142
+#: ../plug-ins/metadata/metadata-viewer.c:147
 msgid "_View Metadata"
 msgstr "_Prikaži meta-podatke"
 
-#: ../plug-ins/metadata/metadata-viewer.c:237
+#: ../plug-ins/metadata/metadata-viewer.c:242
 msgid "Error loading metadata-viewer dialog."
 msgstr "Greška tijekom učitavanja dijaloga preglednika metapodataka."
 
-#: ../plug-ins/metadata/metadata-viewer.c:248
+#: ../plug-ins/metadata/metadata-viewer.c:253
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Preglednik meta-podataka: %s"
 
-#: ../plug-ins/metadata/metadata-viewer.c:340
+#: ../plug-ins/metadata/metadata-viewer.c:345
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu pismovnih znakova više)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:499
+#: ../plug-ins/metadata/metadata-viewer.c:554
 msgid " meter"
 msgstr " metar"
 
-#: ../plug-ins/metadata/metadata-viewer.c:500
+#: ../plug-ins/metadata/metadata-viewer.c:555
 msgid " feet"
 msgstr " stopa"
 
-#: ../plug-ins/metadata/metadata-viewer.c:596
+#: ../plug-ins/metadata/metadata-viewer.c:673
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu bajta više)"
