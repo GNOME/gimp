@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-09-28 10:47+0000\n"
-"PO-Revision-Date: 2021-10-07 21:05+0100\n"
+"POT-Creation-Date: 2021-11-12 14:13+0000\n"
+"PO-Revision-Date: 2021-11-13 17:39+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -6749,7 +6749,7 @@ msgstr "Converte a imagem para ponto flutuante de 64 bits"
 #: ../app/actions/image-actions.c:253
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
-msgstr "Gama perceptível (sRGB) "
+msgstr "Gama perceptível (sRGB)"
 
 #: ../app/actions/image-actions.c:255
 msgctxt "image-convert-action"
@@ -18455,7 +18455,7 @@ msgstr "Navegar pela visualização da imagem"
 msgid "Drop image files here to open them"
 msgstr "Largue aqui os ficheiros para abri-los"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:620
+#: ../app/display/gimpdisplayshell-callbacks.c:621
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -19122,6 +19122,16 @@ msgstr "\"%s\" não é um esquema de URI válido"
 #: ../app/file/file-utils.c:132
 msgid "Invalid character sequence in URI"
 msgstr "Sequência de caracteres inválida no URI"
+
+#: ../app/file-data/file-data-gih.c:295
+#, c-format
+msgid "Negative x offset: %d for layer %s corrected."
+msgstr "Desvio x negativo: %d para a camada %s corrigido."
+
+#: ../app/file-data/file-data-gih.c:302
+#, c-format
+msgid "Negative y offset: %d for layer %s corrected."
+msgstr "Desvio y negativo: %d para a camada %s corrigido."
 
 #: ../app/file-data/file-data.c:59 ../app/file-data/file-data.c:124
 msgid "GIMP brush"
