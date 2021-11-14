@@ -203,7 +203,7 @@ typedef void (* Pass2Func)     (QuantizeObj *quantize_obj,
                                 GeglBuffer  *new_buffer);
 typedef void (* CleanupFunc)   (QuantizeObj *quantize_obj);
 
-typedef gulong ColorFreq;
+typedef guint64 ColorFreq;
 typedef ColorFreq * CFHistogram;
 
 typedef enum { AXIS_UNDEF, AXIS_RED, AXIS_BLUE, AXIS_GREEN } AxisType;
@@ -481,7 +481,7 @@ struct _QuantizeObj
   gint          actual_number_of_colors;  /* Number of colors actually needed  */
   Color         cmap[256];                /* colormap created by quantization  */
   Color         clin[256];                /* .. converted back to linear space */
-  gulong        index_used_count[256];    /* how many times an index was used  */
+  guint64       index_used_count[256];    /* how many times an index was used  */
   CFHistogram   histogram;                /* holds the histogram               */
 
   gboolean      want_dither_alpha;
@@ -504,7 +504,7 @@ typedef struct
   gint    volume;
 
   /*  The number of nonzero histogram cells within this box  */
-  glong   colorcount;
+  gint64  colorcount;
 
   /* The sum of the weighted error within this box */
   guint64 error;
@@ -551,7 +551,7 @@ static gboolean  had_black;
 /**********************************************************/
 typedef struct
 {
-  glong  used_count;
+  gint64 used_count;
   guchar initial_index;
 } PalEntry;
 
@@ -572,20 +572,20 @@ mapping_compare (const void *a,
 static void
 make_remap_table (const guchar  old_palette[],
                   guchar        new_palette[],
-                  const gulong  index_used_count[],
+                  const guint64 index_used_count[],
                   guchar        remap_table[],
                   gint         *num_entries)
 {
   gint      i, j, k;
   guchar    temppal[256 * 3];
-  gulong    tempuse[256];
-  gulong    transmap[256];
+  guint64   tempuse[256];
+  guint64   transmap[256];
   PalEntry *palentries;
   gint      used = 0;
 
   memset (temppal, 0, 256 * 3);
-  memset (tempuse, 0, 256 * sizeof (gulong));
-  memset (transmap, 255, 256 * sizeof (gulong));
+  memset (tempuse, 0, 256 * sizeof (guint64));
+  memset (transmap, 255, 256 * sizeof (guint64));
 
   /* First pass - only collect entries which are marked as being used
    * at all in index_used_count.
@@ -1195,8 +1195,8 @@ generate_histogram_rgb (CFHistogram   histogram,
   gint                nfc_iter;
   gint                row, col, coledge;
   gint                offsetx, offsety;
-  glong               layer_size;
-  glong               total_size = 0;
+  gint64              layer_size;
+  gint64              total_size = 0;
   gint                count      = 0;
   gint                bpp;
   gboolean            has_alpha;
@@ -2688,7 +2688,7 @@ fill_inverse_cmap_gray (QuantizeObj *quantobj,
                         gint         pixel)
 {
   Color *cmap = quantobj->cmap;
-  glong  mindist;
+  gint64 mindist;
   gint   mindisti;
   gint   i;
 
@@ -2699,7 +2699,7 @@ fill_inverse_cmap_gray (QuantizeObj *quantobj,
 
   for (i = 0; i < quantobj->actual_number_of_colors; i++)
     {
-      glong dist = ABS (pixel - cmap[i].red);
+      gint64 dist = ABS (pixel - cmap[i].red);
 
       if (dist < mindist)
         {
@@ -2795,8 +2795,8 @@ snap_to_black_and_white (QuantizeObj *quantobj)
   gint   whitest  = 0;
   gint   blackest = 0;
 
-  glong  white_dist = POW2(255) * 3;
-  glong  black_dist = POW2(255) * 3;
+  gint64 white_dist = POW2(255) * 3;
+  gint64 black_dist = POW2(255) * 3;
   gint   i;
 
   for (i = 0; i < desired; i ++)
@@ -2922,7 +2922,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
   gint                src_bpp;
   gint                dest_bpp;
   gint                has_alpha;
-  gulong             *index_used_count = quantobj->index_used_count;
+  guint64            *index_used_count = quantobj->index_used_count;
   gboolean            dither_alpha     = quantobj->want_dither_alpha;
   gint                offsetx, offsety;
 
@@ -3028,7 +3028,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
   gint                err2;
   Color              *color1;
   Color              *color2;
-  gulong             *index_used_count = quantobj->index_used_count;
+  guint64            *index_used_count = quantobj->index_used_count;
   gboolean            dither_alpha     = quantobj->want_dither_alpha;
   gint                offsetx, offsety;
 
@@ -3197,9 +3197,9 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   gint                alpha_pix        = ALPHA;
   gboolean            dither_alpha     = quantobj->want_dither_alpha;
   gint                offsetx, offsety;
-  gulong             *index_used_count = quantobj->index_used_count;
-  glong               total_size       = 0;
-  glong               layer_size;
+  guint64            *index_used_count = quantobj->index_used_count;
+  gint64              total_size       = 0;
+  gint64              layer_size;
   gint                count            = 0;
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
@@ -3330,9 +3330,9 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   gint                alpha_pix        = ALPHA;
   gboolean            dither_alpha     = quantobj->want_dither_alpha;
   gint                offsetx, offsety;
-  gulong             *index_used_count = quantobj->index_used_count;
-  glong               total_size       = 0;
-  glong               layer_size;
+  guint64            *index_used_count = quantobj->index_used_count;
+  gint64              total_size       = 0;
+  gint64              layer_size;
   gint                count            = 0;
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
@@ -3779,7 +3779,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   gint          offsetx, offsety;
   gboolean      dither_alpha = quantobj->want_dither_alpha;
   gint          width, height;
-  gulong       *index_used_count = quantobj->index_used_count;
+  guint64      *index_used_count = quantobj->index_used_count;
 
   src_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
@@ -3978,7 +3978,7 @@ median_cut_pass2_rgb_init (QuantizeObj *quantobj)
   zero_histogram_rgb (quantobj->histogram);
 
   /* Mark all indices as currently unused */
-  memset (quantobj->index_used_count, 0, 256 * sizeof (gulong));
+  memset (quantobj->index_used_count, 0, 256 * sizeof (guint64));
 
   /* Make a version of our discovered colormap in linear space */
   for (i = 0; i < quantobj->actual_number_of_colors; i++)
@@ -3998,7 +3998,7 @@ median_cut_pass2_gray_init (QuantizeObj *quantobj)
   zero_histogram_gray (quantobj->histogram);
 
   /* Mark all indices as currently unused */
-  memset (quantobj->index_used_count, 0, 256 * sizeof (gulong));
+  memset (quantobj->index_used_count, 0, 256 * sizeof (guint64));
 }
 
 static void
@@ -4039,7 +4039,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   gint          alpha_pix = ALPHA;
   gint          offsetx, offsety;
   gboolean      dither_alpha     = quantobj->want_dither_alpha;
-  gulong       *index_used_count = quantobj->index_used_count;
+  guint64      *index_used_count = quantobj->index_used_count;
   gint          global_rmax = 0, global_rmin = G_MAXINT;
   gint          global_gmax = 0, global_gmin = G_MAXINT;
   gint          global_bmax = 0, global_bmin = G_MAXINT;
