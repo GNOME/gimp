@@ -11,7 +11,7 @@ if [ -n "${UI_TEST}" ]; then
   # Also use dbus-run-session to make sure parallel tests aren't failing
   # as they simultaneously try to own the "org.gimp.GIMP.UI" D-Bus name
 
-  xvfb-run -d --server-args="-screen 0 1280x1024x24" \
+  xvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" \
     dbus-run-session -- "$@"
 
 else
