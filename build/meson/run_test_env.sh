@@ -4,7 +4,7 @@
 #
 # Define the "UI_TEST" for all tests that should run headless
 
-if [[ -n "${UI_TEST}" ]]; then
+if [ -n "${UI_TEST}" ]; then
   # Use Xvfb to simulate a graphical session; note that this needs
   # a new enough version which has the -d option.
   #
