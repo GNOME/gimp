@@ -41,7 +41,7 @@
  *
  * I added the xcfgz bit because having a default extension of xcf.gz
  * can confuse the file selection dialog box somewhat, forcing the
- * user to type sometimes when he/she otherwise wouldn't need to.
+ * user to type sometimes when they otherwise wouldn't need to.
  *
  * I later decided I didn't like it because I don't like to bloat
  * the file-extension namespace.  But I left in the recognition

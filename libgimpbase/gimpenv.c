@@ -1160,7 +1160,7 @@ gimp_path_get_user_writable_dir (GList *path)
       /*  this is tricky:
        *  if a file is e.g. owned by the current user but not user-writable,
        *  the user has no permission to write to the file regardless
-       *  of his group's or other's write permissions
+       *  of their group's or other's write permissions
        */
       if (!err && S_ISDIR (filestat.st_mode) &&
 

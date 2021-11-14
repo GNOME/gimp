@@ -355,7 +355,7 @@ Please read accompanying file COPYING.
      Error Handling
      --------------
 
-     Errors are recovered from without damage. The user can install his
+     Errors are recovered from without damage. The user can install their
      own handler for system errors, by defining *error-hook*. Defining
      to '() gives the default behavior, which is equivalent to "error".
      USE_ERROR_HOOK must be defined.
@@ -390,7 +390,7 @@ Please read accompanying file COPYING.
 
      which makes use of the error hook described above.
 
-     If necessary, the user can devise his own exception mechanism with
+     If necessary, the user can devise their own exception mechanism with
      tagged exceptions etc.
 
 
@@ -416,7 +416,7 @@ Please read accompanying file COPYING.
      where <qualifier> is a symbol not containing any double-colons.
 
      As the definition is recursive, qualifiers can be nested.
-     The user can define his own *colon-hook*, to handle qualified names.
+     The user can define their own *colon-hook*, to handle qualified names.
      By default, "init.scm" defines *colon-hook* as EVAL. Consequently,
      the qualifier must denote a Scheme environment, such as one returned
      by (interaction-environment). "Init.scm" defines a new syntantic form,

@@ -824,7 +824,7 @@ gflare_create_procedure (GimpPlugIn  *plug_in,
                                         "This plug-in produces a lense flare "
                                         "effect using custom gradients. In "
                                         "interactive call, the user can edit "
-                                        "his/her own favorite lense flare "
+                                        "their own favorite lense flare "
                                         "(GFlare) and render it. Edited "
                                         "gflare is saved automatically to "
                                         "the folder in gflare-path, if it is "

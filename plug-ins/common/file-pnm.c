@@ -1102,7 +1102,7 @@ pnm_load_rawpfm (PNMScanner *scan,
           data[x] *= fabsf (info->scale_factor);
           /* Keep values smaller than zero. That is in line with what
            * the TIFF loader does. If the user doesn't want the
-           * negative numbers he has to get rid of them afterwards
+           * negative numbers they have to get rid of them afterwards
            */
           /* data[x] = fmaxf (0.0f, fminf (FLT_MAX, data[x])); */
         }
