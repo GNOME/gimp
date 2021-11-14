@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: lv\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2021-11-08 22:11+0000\n"
-"PO-Revision-Date: 2021-11-14 20:41+0200\n"
+"PO-Revision-Date: 2021-11-14 20:57+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -83,12 +83,16 @@ msgid ""
 "infrastructure, GIMP 2.99.8 still received many welcome improvements, "
 "notably:"
 msgstr ""
+"Lai gan šajā (ceturtajā) izstrādes ciklā uzmanība pārsvarā tika veltīta"
+" infrastruktūrai, GIMP 2.99.8 saņēma daudzus uzlabojumus, būtiskākie:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
 "New modes in Clone, Heal and Perspective Clone tools when multiple layers "
 "are selected"
 msgstr ""
+"Jauni režīmi klonēšanas, lāpīšanas un perspektīvas rīkiem, kad ir izvēlēti"
+" vairāki slāņi."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Windows Ink support for input devices on Windows"
@@ -21824,7 +21828,7 @@ msgstr ""
 #, c-format
 #| msgid "Procedure '%s' returned no return values"
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
-msgstr "SENSProcedūra “%s” atgrieza nederīgu UTF-8 virkni argumentam “%s”."
+msgstr "Procedūra “%s” atgrieza nederīgu UTF-8 virkni argumentam “%s”."
 
 #: ../app/pdb/gimpprocedure.c:1032
 #, c-format
