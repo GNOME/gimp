@@ -106,47 +106,92 @@ groups_pl = custom_target('groups.pl',
   capture: true,
 )
 
-enums_pl = custom_target('enums.pl',
-  input : [ 'enumgen.pl', 'enums-external.pl', enum_headers, ],
-  output: [ 'enums.pl', ],
-  evn: perl_env,
-  command: [
-    perl, '@INPUT0@',
-    enum_headers,
-  ],
-)
+if meson.version().version_compare('>=0.57.0')
+  enums_pl = custom_target('enums.pl',
+    input : [ 'enumgen.pl', 'enums-external.pl', enum_headers, ],
+    output: [ 'enums.pl', ],
+    env: perl_env,
+    command: [
+      perl, '@INPUT0@',
+      enum_headers,
+    ],
+  )
 
+  ## TODO remove that ?
 
-## TODO remove that ?
+  pdbgen = custom_target('stamp-pdbgen',
+    input : [
+      files(
+        'pdbgen.pl',
 
-pdbgen = custom_target('stamp-pdbgen',
-  input : [
-    files(
-      'pdbgen.pl',
+        'app.pl',
+        'lib.pl',
+        'pdb.pl',
+        'stddefs.pdb',
+        'util.pl',
+      ),
+      enums_pl,
+      groups_pl,
+      pdb_sources,
+    ],
+    output: [ 'stamp-pdbgen', ],
+    env: perl_env,
+    command: [
+      perl, '@INPUT0@',
+      'app', 'lib',
+    ],
+  )
 
-      'app.pl',
-      'lib.pl',
-      'pdb.pl',
-      'stddefs.pdb',
-      'util.pl',
-    ),
-    enums_pl,
-    groups_pl,
-    pdb_sources,
-  ],
-  output: [ 'stamp-pdbgen', ],
-  env: perl_env,
-  command: [
-    perl, '@INPUT0@',
-    'app', 'lib',
-  ],
-)
+  stamp_enumcode = custom_target('stamp-enum-code',
+    input : [ 'enumcode.pl', ],
+    output: [ 'stamp-enum-code', ],
+    env: perl_env,
+    command: [
+      perl, '@INPUT0@',
+    ],
+  )
+else
+  # TODO: remove this workaround when we bump meson requirement to >= 0.57.0
+  # See MR !506.
+  # In the meantime, make sure the 2 if/else blocks are well synced.
+  env = find_program('env')
 
-stamp_enumcode = custom_target('stamp-enum-code',
-  input : [ 'enumcode.pl', ],
-  output: [ 'stamp-enum-code', ],
-  env: perl_env,
-  command: [
-    perl, '@INPUT0@',
-  ],
-)
+  enums_pl = custom_target('enums.pl',
+    input : [ 'enumgen.pl', 'enums-external.pl', enum_headers, ],
+    output: [ 'enums.pl', ],
+    command: [
+      env, perl_env, perl, '@INPUT0@',
+      enum_headers,
+    ],
+  )
+
+  pdbgen = custom_target('stamp-pdbgen',
+    input : [
+      files(
+        'pdbgen.pl',
+
+        'app.pl',
+        'lib.pl',
+        'pdb.pl',
+        'stddefs.pdb',
+        'util.pl',
+      ),
+      enums_pl,
+      groups_pl,
+      pdb_sources,
+    ],
+    output: [ 'stamp-pdbgen', ],
+    command: [
+      env, perl_env, perl, '@INPUT0@',
+      'app', 'lib',
+    ],
+  )
+
+  stamp_enumcode = custom_target('stamp-enum-code',
+    input : [ 'enumcode.pl', ],
+    output: [ 'stamp-enum-code', ],
+    command: [
+      env, perl_env, perl, '@INPUT0@',
+    ],
+  )
+endif
