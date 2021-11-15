@@ -112,6 +112,11 @@ static gint             read_channel_data          (PSDchannel     *channel,
                                                     guint32         comp_len,
                                                     GError        **error);
 
+static void             decode_32_bit_predictor    (gchar          *src,
+                                                    gchar          *dst,
+                                                    guint32         rows,
+                                                    guint32         columns);
+
 static void             convert_1_bit              (const gchar    *src,
                                                     gchar          *dst,
                                                     guint32         rows,
@@ -1301,7 +1306,7 @@ create_gimp_image (PSDimage *img_a,
     switch (img_a->bps)
       {
       case 32:
-        precision = GIMP_PRECISION_U32_NON_LINEAR;
+        precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
         break;
 
       case 16:
@@ -1846,6 +1851,7 @@ add_layers (GimpImage     *image,
           IFDBG(3) g_debug ("Re-hash channel indices");
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             {
+              IFDBG(3) g_debug ("Channel: %d - id: %d", cidx, lyr_chn[cidx]->id);
               if (lyr_chn[cidx]->id == PSD_CHANNEL_MASK)
                 {
                   user_mask = TRUE;
@@ -2844,20 +2850,27 @@ read_channel_data (PSDchannel     *channel,
     {
     case 32:
       {
-        guint32 *data = (guint32*) raw_data;
-
-        channel->data = raw_data;
-        raw_data      = NULL;
-
-        for (i = 0; i < channel->rows * channel->columns; ++i)
-          data[i] = GUINT32_FROM_BE (data[i]);
+        guint32 *data;
+        guint64  pos;
 
         if (compression == PSD_COMP_ZIP_PRED)
           {
-            for (i = 0; i < channel->rows; ++i)
-              for (j = 1; j < channel->columns; ++j)
-                data[i * channel->columns + j] += data[i * channel->columns + j - 1];
+            IFDBG(3) g_debug ("Converting 32 bit predictor data");
+            channel->data = (gchar *) g_malloc0 (channel->rows * channel->columns * 4);
+            decode_32_bit_predictor (raw_data, channel->data,
+                                     channel->rows, channel->columns);
           }
+        else
+          {
+            IFDBG(3) g_debug ("32 bit channel data without predictor");
+            channel->data = raw_data;
+            raw_data      = NULL;
+          }
+
+        data = (guint32*) channel->data;
+        for (pos = 0; pos < channel->rows * channel->columns; ++pos)
+          data[pos] = GUINT32_FROM_BE (data[pos]);
+
         break;
       }
 
@@ -2873,6 +2886,7 @@ read_channel_data (PSDchannel     *channel,
 
         if (compression == PSD_COMP_ZIP_PRED)
           {
+            IFDBG(3) g_debug ("Converting 16 bit predictor data");
             for (i = 0; i < channel->rows; ++i)
               for (j = 1; j < channel->columns; ++j)
                 data[i * channel->columns + j] += data[i * channel->columns + j - 1];
@@ -2886,6 +2900,7 @@ read_channel_data (PSDchannel     *channel,
 
         if (compression == PSD_COMP_ZIP_PRED)
           {
+            IFDBG(3) g_debug ("Converting 8 bit predictor data");
             for (i = 0; i < channel->rows; ++i)
               for (j = 1; j < channel->columns; ++j)
                 channel->data[i * channel->columns + j] += channel->data[i * channel->columns + j - 1];
@@ -2906,6 +2921,58 @@ read_channel_data (PSDchannel     *channel,
   g_free (raw_data);
 
   return 1;
+}
+
+/*
+ * For reference on zip predictor see:
+ * - TIFFTN3d1.pdf
+ * - psd_tools
+ */
+
+static void
+decode_32_bit_predictor (gchar   *src,
+                         gchar   *dst,
+                         guint32  rows,
+                         guint32  columns)
+{
+  guint32 rowsize;
+  guint64 row, dstpos;
+
+  rowsize = columns * 4;
+
+  /* decode delta */
+  for (row = 0; row < rows; ++row)
+    {
+      guint32 j;
+      guint64 offset;
+
+      offset = row * rowsize;
+      for (j = 0; j < rowsize-1; ++j)
+        {
+          guint64 pos;
+
+          pos = offset + j;
+          src[pos + 1] += src[pos];
+        }
+    }
+
+  /* restore byte order */
+  dstpos = 0;
+  for (row = 0; row < rows * rowsize; row += rowsize)
+    {
+      guint64 offset;
+
+      for (offset = row; offset < row + columns; offset++)
+        {
+          guint64 x;
+
+          for (x = offset; x < offset + rowsize; x += columns)
+            {
+              dst[dstpos] = src[x];
+              dstpos++;
+            }
+        }
+    }
 }
 
 static void
@@ -2953,7 +3020,7 @@ get_layer_format (PSDimage *img_a,
       switch (img_a->bps)
         {
         case 32:
-          format = babl_format ("Y' u32");
+          format = babl_format ("Y' float");
           break;
 
         case 16:
@@ -2976,7 +3043,7 @@ get_layer_format (PSDimage *img_a,
       switch (img_a->bps)
         {
         case 32:
-          format = babl_format ("Y'A u32");
+          format = babl_format ("Y'A float");
           break;
 
         case 16:
@@ -2998,7 +3065,7 @@ get_layer_format (PSDimage *img_a,
       switch (img_a->bps)
         {
         case 32:
-          format = babl_format ("R'G'B' u32");
+          format = babl_format ("R'G'B' float");
           break;
 
         case 16:
@@ -3021,7 +3088,7 @@ get_layer_format (PSDimage *img_a,
       switch (img_a->bps)
         {
         case 32:
-          format = babl_format ("R'G'B'A u32");
+          format = babl_format ("R'G'B'A float");
           break;
 
         case 16:
@@ -3056,7 +3123,7 @@ get_channel_format (PSDimage *img_a)
   switch (img_a->bps)
     {
     case 32:
-      format = babl_format ("Y u32");
+      format = babl_format ("Y float");
       break;
 
     case 16:
@@ -3084,7 +3151,7 @@ get_mask_format (PSDimage *img_a)
   switch (img_a->bps)
     {
     case 32:
-      format = babl_format ("Y u32");
+      format = babl_format ("Y float");
       break;
 
     case 16:
