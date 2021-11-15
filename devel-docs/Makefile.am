@@ -34,7 +34,6 @@ EXTRA_DIST = \
 	libtool-instructions.txt	\
 	parasites.txt			\
 	pat.txt				\
-	gtkbuilder-porting-guide.txt	\
 	release-howto.txt		\
 	structure.xml			\
 	submitting-patches.txt		\
