@@ -1149,6 +1149,7 @@ gimp_container_tree_view_name_started (GtkCellRendererText   *cell,
                           -1);
 
       real_name = gimp_object_get_name (renderer->viewable);
+      gimp_view_renderer_remove_idle (renderer);
 
       g_object_unref (renderer);
 
