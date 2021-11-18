@@ -184,10 +184,7 @@ the ID of the flipped floating selection.
 If there is no selection or the item is not a drawable, the entire
 item will be flipped around its center if auto_center is set to TRUE,
 otherwise the coordinate of the axis needs to be specified.
-Additionally, if the item has its linked flag set to TRUE, all
-additional items contained in the image which have the linked flag set
-to TRUE will also be flipped around the same axis. The return value
-will be equal to the item ID supplied as input.
+The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
@@ -253,12 +250,6 @@ HELP
           else
             success = FALSE;
         }
-      else if (gimp_item_get_linked (item))
-        {
-          gimp_item_linked_flip (item, context,
-                                 flip_type, axis,
-                                 pdb_context->transform_resize);
-        }
       else
         {
           gimp_item_flip (item, context,
@@ -290,11 +281,8 @@ return value is the ID of the flipped floating selection.
 
 
 If there is no selection or the item is not a drawable, the entire
-item will be flipped around the specified axis. Additionally, if the
-item has its linked flag set to TRUE, all additional items contained
-in the image which have the linked flag set to TRUE will also be
-flipped around the same axis. The return value will be equal to the
-item ID supplied as input.
+item will be flipped around the specified axis.
+The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:

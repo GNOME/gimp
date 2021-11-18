@@ -105,10 +105,7 @@ gimp_item_transform_translate (GimpItem *item,
  * If there is no selection or the item is not a drawable, the entire
  * item will be flipped around its center if auto_center is set to
  * TRUE, otherwise the coordinate of the axis needs to be specified.
- * Additionally, if the item has its linked flag set to TRUE, all
- * additional items contained in the image which have the linked flag
- * set to TRUE will also be flipped around the same axis. The return
- * value will be equal to the item ID supplied as input.
+ * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_transform_resize().
@@ -166,11 +163,8 @@ gimp_item_transform_flip_simple (GimpItem            *item,
  * The return value is the ID of the flipped floating selection.
  *
  * If there is no selection or the item is not a drawable, the entire
- * item will be flipped around the specified axis. Additionally, if the
- * item has its linked flag set to TRUE, all additional items contained
- * in the image which have the linked flag set to TRUE will also be
- * flipped around the same axis. The return value will be equal to the
- * item ID supplied as input.
+ * item will be flipped around the specified axis. The return value
+ * will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),

@@ -11423,7 +11423,6 @@ gimp_item_toggle_exclusive_visible
 <FILE>gimpitem-linked</FILE>
 <TITLE>GimpItem-linked</TITLE>
 gimp_item_linked_translate
-gimp_item_linked_flip
 gimp_item_linked_rotate
 gimp_item_linked_transform
 </SECTION>

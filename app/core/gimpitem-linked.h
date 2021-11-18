@@ -25,11 +25,6 @@ void     gimp_item_linked_translate (GimpItem               *item,
                                      gint                    offset_x,
                                      gint                    offset_y,
                                      gboolean                push_undo);
-void     gimp_item_linked_flip      (GimpItem               *item,
-                                     GimpContext            *context,
-                                     GimpOrientationType     flip_type,
-                                     gdouble                 axis,
-                                     gboolean                clip_result);
 void     gimp_item_linked_rotate    (GimpItem               *item,
                                      GimpContext            *context,
                                      GimpRotationType        rotate_type,
