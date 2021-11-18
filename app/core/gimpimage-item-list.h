@@ -36,7 +36,7 @@ void       gimp_image_item_list_flip      (GimpImage              *image,
                                            GimpContext            *context,
                                            GimpOrientationType     flip_type,
                                            gdouble                 axis,
-                                           gboolean                clip_result);
+                                           GimpTransformResize     expected_clip_result);
 void       gimp_image_item_list_rotate    (GimpImage              *image,
                                            GList                  *list,
                                            GimpContext            *context,

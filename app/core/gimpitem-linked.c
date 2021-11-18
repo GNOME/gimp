@@ -97,34 +97,6 @@ gimp_item_linked_translate (GimpItem *item,
 }
 
 void
-gimp_item_linked_flip (GimpItem            *item,
-                       GimpContext         *context,
-                       GimpOrientationType  flip_type,
-                       gdouble              axis,
-                       gboolean             clip_result)
-{
-  GimpImage *image;
-  GList     *items;
-
-  g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (gimp_item_get_linked (item) == TRUE);
-  g_return_if_fail (gimp_item_is_attached (item));
-
-  image = gimp_item_get_image (item);
-
-  items = gimp_image_item_list_get_list (image,
-                                         GIMP_ITEM_TYPE_ALL,
-                                         GIMP_ITEM_SET_LINKED);
-  items = gimp_image_item_list_filter (items);
-
-  gimp_image_item_list_flip (image, items, context,
-                             flip_type, axis, clip_result);
-
-  g_list_free (items);
-}
-
-void
 gimp_item_linked_rotate (GimpItem         *item,
                          GimpContext      *context,
                          GimpRotationType  rotate_type,

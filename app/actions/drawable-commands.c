@@ -260,15 +260,8 @@ drawable_flip_cmd_callback (GimpAction *action,
       break;
     }
 
-  if (gimp_item_get_linked (item))
-    {
-      gimp_item_linked_flip (item, context, orientation, axis, FALSE);
-    }
-  else
-    {
-      gimp_item_flip (item, context, orientation, axis,
-                      gimp_item_get_clip (item, FALSE));
-    }
+  gimp_item_flip (item, context, orientation, axis,
+                  gimp_item_get_clip (item, FALSE));
 
   gimp_image_flush (image);
 }

@@ -146,7 +146,7 @@ gimp_image_item_list_flip (GimpImage           *image,
                            GimpContext         *context,
                            GimpOrientationType  flip_type,
                            gdouble              axis,
-                           gboolean             clip_result)
+                           GimpTransformResize  expected_clip_result)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -170,7 +170,8 @@ gimp_image_item_list_flip (GimpImage           *image,
 
           gimp_item_flip (item, context,
                           flip_type, axis,
-                          gimp_item_get_clip (item, clip_result));
+                          gimp_item_get_clip (item, expected_clip_result) !=
+                          GIMP_TRANSFORM_RESIZE_ADJUST);
         }
 
       if (list->next)

@@ -152,12 +152,6 @@ item_transform_flip_simple_invoker (GimpProcedure         *procedure,
               else
                 success = FALSE;
             }
-          else if (gimp_item_get_linked (item))
-            {
-              gimp_item_linked_flip (item, context,
-                                     flip_type, axis,
-                                     pdb_context->transform_resize);
-            }
           else
             {
               gimp_item_flip (item, context,
@@ -1077,7 +1071,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If auto_center is set to TRUE, the flip is around the selection's center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped floating selection.\n"
                                      "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be flipped around its center if auto_center is set to TRUE, otherwise the coordinate of the axis needs to be specified. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be flipped around the same axis. The return value will be equal to the item ID supplied as input.\n"
+                                     "If there is no selection or the item is not a drawable, the entire item will be flipped around its center if auto_center is set to TRUE, otherwise the coordinate of the axis needs to be specified. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
                                   NULL);
@@ -1133,7 +1127,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. The axis to flip around is specified by specifying two points from that line. The return value is the ID of the flipped floating selection.\n"
                                      "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be flipped around the specified axis. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be flipped around the same axis. The return value will be equal to the item ID supplied as input.\n"
+                                     "If there is no selection or the item is not a drawable, the entire item will be flipped around the specified axis. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);

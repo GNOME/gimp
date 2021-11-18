@@ -32,8 +32,8 @@
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-flip.h"
+#include "core/gimpimage-item-list.h"
 #include "core/gimpimage-pick-item.h"
-#include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimppickable.h"
@@ -416,30 +416,9 @@ gimp_flip_tool_transform (GimpTransformTool *tr_tool,
   else
     {
       /*  this happens for entire drawables, paths and layer groups  */
-
-      GList *iter;
-
-      for (iter = objects; iter; iter = iter->next)
-        {
-          GimpItem *item;
-
-          g_return_val_if_fail (GIMP_IS_ITEM (iter->data), NULL);
-
-          item = GIMP_ITEM (iter->data);
-
-          if (gimp_item_get_linked (item))
-            {
-              gimp_item_linked_flip (item, context,
-                                     flip_type, axis, clip_result);
-            }
-          else
-            {
-              clip_result = gimp_item_get_clip (item, clip_result);
-
-              gimp_item_flip (item, context,
-                              flip_type, axis, clip_result);
-            }
-        }
+      gimp_image_item_list_flip (gimp_item_get_image (objects->data),
+                                 objects, context,
+                                 flip_type, axis, clip_result);
     }
 
   return ret;
