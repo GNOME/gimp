@@ -54,7 +54,10 @@ static void      gimp_frame_style_updated        (GtkWidget      *widget);
 static gboolean  gimp_frame_draw                 (GtkWidget      *widget,
                                                   cairo_t        *cr);
 static void      gimp_frame_label_widget_notify  (GimpFrame      *frame);
-static void      gimp_frame_child_notify         (GimpFrame      *frame);
+static void      gimp_frame_child_added          (GimpFrame      *frame,
+                                                  GtkWidget      *child,
+                                                  gpointer        user_data);
+static void      gimp_frame_apply_margins        (GimpFrame      *frame);
 static gint      gimp_frame_get_indent           (GimpFrame      *frame);
 static gint      gimp_frame_get_label_spacing    (GimpFrame      *frame);
 
@@ -95,8 +98,8 @@ gimp_frame_init (GimpFrame *frame)
   g_signal_connect (frame, "notify::label-widget",
                     G_CALLBACK (gimp_frame_label_widget_notify),
                     NULL);
-  g_signal_connect (frame, "notify::child",
-                    G_CALLBACK (gimp_frame_child_notify),
+  g_signal_connect (frame, "add",
+                    G_CALLBACK (gimp_frame_child_added),
                     NULL);
 }
 
@@ -109,7 +112,7 @@ gimp_frame_style_updated (GtkWidget *widget)
   g_object_set_data (G_OBJECT (widget), GIMP_FRAME_INDENT_KEY, NULL);
 
   gimp_frame_label_widget_notify (GIMP_FRAME (widget));
-  gimp_frame_child_notify (GIMP_FRAME (widget));
+  gimp_frame_apply_margins (GIMP_FRAME (widget));
 }
 
 static gboolean
@@ -164,7 +167,15 @@ gimp_frame_label_widget_notify (GimpFrame *frame)
 }
 
 static void
-gimp_frame_child_notify (GimpFrame *frame)
+gimp_frame_child_added (GimpFrame *frame,
+                        GtkWidget *child,
+                        gpointer   user_data)
+{
+  gimp_frame_apply_margins (frame);
+}
+
+static void
+gimp_frame_apply_margins (GimpFrame *frame)
 {
   GtkWidget *child = gtk_bin_get_child (GTK_BIN (frame));
 
