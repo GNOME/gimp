@@ -143,7 +143,18 @@ static const gchar *unsupported_tags[] =
      (PreviewResolution, PreviewLength, PreviewImageBorders) also make no sense because
      we are not including a Pentax specific preview image. */
   "Exif.Pentax.Preview",
-  "Exif.PentaxDng.Preview"
+  "Exif.PentaxDng.Preview",
+  /* Never save the complete brand specific MakerNote data. We load and
+   * should only save the specific brand tags inside the MakerNote.
+   * Sometimes the MakerNote is invalid or exiv2 doesn't know how to parse
+   * it. In that case we still get the (invalid) MakerNote, but not the
+   * individual tags or just a subset of them.
+   * If there are recognized brand specific tags, exiv2 will create the
+   * required MakerNote itself (which in can still be invalid but that's an
+   * exiv2 issue not ours). */
+  "Exif.Photo.MakerNote",
+  "Exif.MakerNote.ByteOrder",
+  "Exif.MakerNote.Offset",
 };
 
 static const guint8 minimal_exif[] =
