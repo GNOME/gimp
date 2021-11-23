@@ -6,21 +6,21 @@
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003, 2004, 2005.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2018.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-06 07:34+0000\n"
-"PO-Revision-Date: 2018-07-06 09:41+0200\n"
+"POT-Creation-Date: 2021-11-15 12:49+0000\n"
+"PO-Revision-Date: 2021-11-23 17:48+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 41.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
@@ -51,11 +51,6 @@ msgstr ""
 "sobre la etiqueta de texto de una capa en el diálogo «Capas»."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
-#| msgid ""
-#| "When you save an image to work on it again later, try using XCF, GIMP's "
-#| "native file format (use the file extension <tt>.xcf</tt>). This preserves "
-#| "the layers and many aspects of your work-in-progress. Once a project is "
-#| "completed, you can export it as JPEG, PNG, GIF, etc."
 msgid ""
 "Saving an image uses XCF, GIMP's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
@@ -251,13 +246,13 @@ msgid ""
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
-"Después de activar las «Combinaciones de teclas dinámicas» en el diálogo de "
-"«Preferencias», puede reasignar combinaciones de teclas. Haga esto abriendo "
-"el menú, seleccionando un elemento del menú y pulsando la combinación de "
-"teclas deseada. Si está activado «Guardar las combinaciones de teclas» las "
-"combinaciones se guardarán al salir de GIMP. Porblablemente deba desactivar "
-"después «Combinaciones de teclas dinámicas» para evitar la asignación y "
-"reasignación accidental de combinaciones de teclas."
+"Después de activar las «Atajos del teclado dinámicos» en el diálogo de "
+"«Preferencias», puede reasignar atajos del teclado. Haga esto abriendo el "
+"menú, seleccionando un elemento del menú y pulsando el atajo del teclado que "
+"quiere. Si está activado «Guardar los atajos del teclado» los atajos se "
+"guardarán al salir de GIMP. Probablemente deba desactivar después «Atajos "
+"del teclado dinámicos» para evitar la asignación y reasignación accidental "
+"de atajos."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
