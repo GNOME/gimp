@@ -13,7 +13,7 @@ Minimum dependency versions can be bumped if available in Debian Testing.
 
 ### macOS
 
-Compatibility with 10.10 and over.
+Compatibility with 10.12 and over.
 64-bit only.
 
 ### Windows
