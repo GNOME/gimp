@@ -24,12 +24,21 @@
 #ifndef __DIALOG_H__
 #define __DIALOG_H__
 
+#include <gtk/gtk.h>
 
-void   browser_dialog_open       (const gchar    *plug_in_binary);
-void   browser_dialog_load       (const gchar    *uri);
+#define GIMP_TYPE_HELP_BROWSER_DIALOG (gimp_help_browser_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GimpHelpBrowserDialog, gimp_help_browser_dialog,
+                      GIMP, HELP_BROWSER_DIALOG,
+                      GtkApplicationWindow)
 
-void   browser_dialog_make_index (GimpHelpDomain *domain,
-                                  GimpHelpLocale *locale);
+GimpHelpBrowserDialog * gimp_help_browser_dialog_new         (const char   *plug_in_binary,
+                                                              GApplication *app);
 
+void                    gimp_help_browser_dialog_load        (GimpHelpBrowserDialog *self,
+                                                              const char            *uri);
+
+void                    gimp_help_browser_dialog_make_index  (GimpHelpBrowserDialog *self,
+                                                              GimpHelpDomain        *domain,
+                                                              GimpHelpLocale        *locale);
 
 #endif /* ! __DIALOG_H__ */

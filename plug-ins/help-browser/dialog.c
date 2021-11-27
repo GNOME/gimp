@@ -5,6 +5,7 @@
  * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
  *                         Róman Joost <romanofski@gimp.org>
+ *                         Niels De Graef <nielsdg@redhat.com>
  *
  * dialog.c
  *
@@ -38,9 +39,6 @@
 
 #include "plug-ins/help/gimphelp.h"
 
-#include "gimpthrobber.h"
-#include "gimpthrobberaction.h"
-
 #include "dialog.h"
 #include "uri.h"
 
@@ -48,271 +46,1048 @@
 
 
 #define GIMP_HELP_BROWSER_DIALOG_DATA      "gimp-help-browser-dialog"
-
 #define GIMP_HELP_BROWSER_INDEX_MAX_DEPTH  4
 
 
 typedef struct
 {
-  gint      width;
-  gint      height;
-  gint      paned_position;
-  gboolean  show_index;
-  gdouble   zoom;
+  int      width;
+  int      height;
+  int      paned_position;
+  gboolean show_index;
+  double   zoom;
 } DialogData;
 
-enum
-{
-  HISTORY_TITLE,
-  HISTORY_URI
+struct _GimpHelpBrowserDialog {
+  GtkApplicationWindow parent_instance;
+
+  GHashTable *uri_hash_table; /* (char*) → (GtkTreeIter) */
+
+  GtkWidget  *webview;
+  GtkWidget  *paned;
+  GtkWidget  *sidebar;
+  GtkWidget  *searchbar;
+  GtkWidget  *search_entry;
+  GtkWidget  *tree_view;
+  GtkWidget  *button_prev;
+  GtkWidget  *button_next;
+  GdkCursor  *busy_cursor;
+
+  GMenuModel *popup_menu_model;
+  GMenuModel *copy_popup_menu_model;
 };
 
-/*  local function prototypes  */
+G_DEFINE_TYPE (GimpHelpBrowserDialog, gimp_help_browser_dialog, GTK_TYPE_APPLICATION_WINDOW)
 
-static GtkUIManager * ui_manager_new      (GtkWidget         *window);
-
-static GtkWidget * build_searchbar        (void);
-
-static void       back_callback           (GtkAction         *action,
-                                           gpointer           data);
-static void       forward_callback        (GtkAction         *action,
-                                           gpointer           data);
-static void       reload_callback         (GtkAction         *action,
-                                           gpointer           data);
-static void       stop_callback           (GtkAction         *action,
-                                           gpointer           data);
-static void       home_callback           (GtkAction         *action,
-                                           gpointer           data);
-static void       find_callback           (GtkAction         *action,
-                                           gpointer           data);
-static void       find_again_callback     (GtkAction         *action,
-                                           gpointer           data);
-static void       copy_location_callback  (GtkAction         *action,
-                                           gpointer           data);
-static void       copy_selection_callback (GtkAction         *action,
-                                           gpointer           data);
-static void       show_index_callback     (GtkAction         *action,
-                                           gpointer           data);
-static void       zoom_in_callback        (GtkAction         *action,
-                                           gpointer           data);
-static void       zoom_out_callback       (GtkAction         *action,
-                                           gpointer           data);
-static void       close_callback          (GtkAction         *action,
-                                           gpointer           data);
-static void       website_callback        (GtkAction         *action,
-                                           gpointer           data);
-
-static void       update_actions          (void);
-
-static void       row_activated           (GtkTreeView       *tree_view,
-                                           GtkTreePath       *path,
-                                           GtkTreeViewColumn *column);
-static void       dialog_unmap            (GtkWidget         *window,
-                                           GtkWidget         *paned);
-
-static void       view_realize            (GtkWidget         *widget);
-static void       view_unrealize          (GtkWidget         *widget);
-static gboolean   view_popup_menu         (GtkWidget         *widget,
-                                           GdkEventButton    *event);
-static gboolean   view_button_press       (GtkWidget         *widget,
-                                           GdkEventButton    *event);
-static gboolean   view_key_press          (GtkWidget         *widget,
-                                           GdkEventKey       *event);
-
-static void       title_changed           (WebKitWebView     *view,
-                                           GParamSpec        *pspec,
-                                           GtkWidget         *window);
-
-static void       load_changed            (WebKitWebView     *view,
-                                           WebKitLoadEvent    event);
-
-static void       select_index            (const gchar       *uri);
-
-static void       search_entry_changed    (GtkWidget         *entry);
-static gboolean   search_entry_key_press  (GtkWidget         *entry,
-                                           GdkEventKey       *event);
-static void       search_prev_clicked     (GtkWidget         *button,
-                                           GtkWidget         *entry);
-static void       search_next_clicked     (GtkWidget         *button,
-                                           GtkWidget         *entry);
-static void       search_close_clicked    (GtkWidget         *button);
-static void       search                  (const gchar       *text);
-
-
-/*  private variables  */
-
-static GHashTable   *uri_hash_table = NULL;
-
-static GtkWidget    *view           = NULL;
-static GtkWidget    *sidebar        = NULL;
-static GtkWidget    *searchbar      = NULL;
-static GtkWidget    *tree_view      = NULL;
-static GtkUIManager *ui_manager     = NULL;
-static GtkWidget    *button_prev    = NULL;
-static GtkWidget    *button_next    = NULL;
-static GdkCursor    *busy_cursor    = NULL;
-
-
-/*  public functions  */
-
-void
-browser_dialog_open (const gchar *plug_in_binary)
+static void
+search (GimpHelpBrowserDialog *self,
+        const char            *text)
 {
-  GtkWidget   *window;
-  GtkWidget   *main_vbox;
+  WebKitFindController *find_controller;
+
+  find_controller = webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (self->webview));
+  if (text)
+    {
+      const char *prev_text =
+        webkit_find_controller_get_search_text (find_controller);
+
+      /* The previous search, if any, may need to be canceled. */
+      if (prev_text && strcmp (text, prev_text) != 0)
+        webkit_find_controller_search_finish (find_controller);
+
+      webkit_find_controller_search (find_controller,
+                                     text,
+                                     WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
+                                     WEBKIT_FIND_OPTIONS_WRAP_AROUND,
+                                     G_MAXUINT);
+    }
+  else
+    webkit_find_controller_search_finish (find_controller);
+}
+
+static void
+back_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  webkit_web_view_go_back (WEBKIT_WEB_VIEW (self->webview));
+}
+
+static void
+step_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  gint steps;
+  WebKitBackForwardList *back_fw_list;
+  WebKitBackForwardListItem *back_fw_list_item;
+
+  g_return_if_fail (parameter);
+
+  steps = g_variant_get_int32 (parameter);
+
+  back_fw_list =
+    webkit_web_view_get_back_forward_list (WEBKIT_WEB_VIEW (self->webview));
+  back_fw_list_item = webkit_back_forward_list_get_nth_item (back_fw_list, steps);
+  if (back_fw_list_item)
+    webkit_web_view_go_to_back_forward_list_item (WEBKIT_WEB_VIEW (self->webview),
+                                                  back_fw_list_item);
+}
+
+static void
+forward_action (GSimpleAction *action,
+                GVariant      *parameter,
+                gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  webkit_web_view_go_forward (WEBKIT_WEB_VIEW (self->webview));
+}
+
+static void
+reload_action (GSimpleAction *action,
+               GVariant      *parameter,
+               gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  webkit_web_view_reload (WEBKIT_WEB_VIEW (self->webview));
+}
+
+static void
+stop_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  webkit_web_view_stop_loading (WEBKIT_WEB_VIEW (self->webview));
+}
+
+static void
+home_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  GtkTreeModel          *model;
+  GimpHelpDomain        *domain;
+  GimpHelpLocale        *locale;
+
+  model  = gtk_tree_view_get_model (GTK_TREE_VIEW (self->tree_view));
+  domain = g_object_get_data (G_OBJECT (model), "domain");
+  locale = g_object_get_data (G_OBJECT (model), "locale");
+  if (domain && locale)
+    {
+      gchar *uri = g_strconcat (domain->help_uri,  "/",
+                                locale->locale_id, "/",
+                                gimp_help_locale_map (locale,
+                                                      GIMP_HELP_DEFAULT_ID),
+                                NULL);
+      gimp_help_browser_dialog_load (self, uri);
+      g_free (uri);
+    }
+}
+
+static void
+find_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  gtk_widget_show (self->searchbar);
+  gtk_widget_grab_focus (self->search_entry);
+}
+
+static void
+find_again_action (GSimpleAction *action,
+                   GVariant      *parameter,
+                   gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  gtk_widget_show (self->searchbar);
+  gtk_widget_grab_focus (self->search_entry);
+
+  search (self, gtk_entry_get_text (GTK_ENTRY (self->search_entry)));
+}
+
+static void
+search_next_action (GSimpleAction *action,
+                    GVariant      *parameter,
+                    gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  WebKitFindController *find_controller;
+
+  find_controller =
+    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (self->webview));
+  webkit_find_controller_search_next (find_controller);
+}
+
+static void
+search_previous_action (GSimpleAction *action,
+                        GVariant      *parameter,
+                        gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  WebKitFindController *find_controller;
+
+  find_controller =
+    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (self->webview));
+  webkit_find_controller_search_previous (find_controller);
+}
+
+static void
+copy_location_action (GSimpleAction *action,
+                      GVariant      *parameter,
+                      gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  const char *uri;
+
+  uri = webkit_web_view_get_uri (WEBKIT_WEB_VIEW (self->webview));
+  if (uri)
+    {
+      GtkClipboard *clipboard;
+
+      clipboard = gtk_clipboard_get_for_display (gtk_widget_get_display (self->webview),
+                                                 GDK_SELECTION_CLIPBOARD);
+      gtk_clipboard_set_text (clipboard, uri, -1);
+    }
+}
+
+static void
+copy_selection_action (GSimpleAction *action,
+                       GVariant      *parameter,
+                       gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  WebKitEditorState *editor_state;
+
+  editor_state = webkit_web_view_get_editor_state (WEBKIT_WEB_VIEW (self->webview));
+  if (webkit_editor_state_is_copy_available (editor_state))
+    {
+      webkit_web_view_execute_editing_command (WEBKIT_WEB_VIEW (self->webview),
+                                               WEBKIT_EDITING_COMMAND_COPY);
+    }
+}
+
+static void
+show_index_change_state (GSimpleAction *action,
+                         GVariant      *new_state,
+                         gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  gboolean show_index;
+
+  show_index = g_variant_get_boolean (new_state);
+  g_warning ("NEW STATE %s", show_index? "true" : "false");
+  gtk_widget_set_visible (self->sidebar, show_index);
+  g_simple_action_set_state (action, new_state);
+}
+
+static void
+zoom_in_action (GSimpleAction *action,
+                GVariant      *parameter,
+                gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  double zoom_level;
+
+  zoom_level = webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (self->webview));
+  if (zoom_level < 10.0)
+    webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (self->webview), zoom_level + 0.1);
+}
+
+static void
+zoom_out_action (GSimpleAction *action,
+                 GVariant      *parameter,
+                 gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  double zoom_level;
+
+  zoom_level = webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (self->webview));
+  if (zoom_level > 0.1)
+    webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (self->webview), zoom_level - 0.1);
+}
+
+static void
+load_uri_action (GSimpleAction *action,
+                 GVariant      *parameter,
+                 gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  const char *uri;
+
+  uri = g_variant_get_string (parameter, NULL);
+  gimp_help_browser_dialog_load (self, uri);
+}
+
+static void
+close_action (GSimpleAction *action,
+              GVariant      *parameter,
+              gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  gtk_widget_destroy (GTK_WIDGET (self));
+}
+
+static const GActionEntry ACTIONS[] =
+{
+  { "back", back_action },
+  { "forward", forward_action },
+  { "step", step_action, "i" },
+  { "reload", reload_action },
+  { "stop", stop_action },
+  { "home", home_action },
+  { "load-uri", load_uri_action, "s" },
+  { "copy-location", copy_location_action },
+  { "copy-selection", copy_selection_action },
+  { "zoom-in", zoom_in_action },
+  { "zoom-out", zoom_out_action },
+  { "find", find_action },
+  { "find-again", find_again_action },
+  { "search-next", search_next_action },
+  { "search-previous", search_previous_action },
+  { "close", close_action },
+  { "show-index", NULL, NULL, "true", show_index_change_state },
+};
+
+static GtkWidget *
+build_menu (const GList *items,
+            gboolean     back)
+{
+  GMenu       *menu;
+  const GList *iter;
+  int          steps;
+
+  if (!items)
+    return NULL;
+
+  menu = g_menu_new ();
+
+  /* Go over every item in the back_fw list and add it to the menu */
+  for (iter = items, steps = 1; iter; iter = g_list_next (iter), steps++)
+    {
+      WebKitBackForwardListItem *item = iter->data;
+      const char                *title;
+      char                      *action;
+
+      title = webkit_back_forward_list_item_get_title (item);
+      if (title == NULL)
+        continue;
+
+      action = g_strdup_printf ("steps(%d)", steps);
+      g_menu_insert (menu, steps - 1, title, action);
+      g_free (action);
+    }
+
+  return gtk_menu_new_from_model (G_MENU_MODEL (menu));
+}
+
+static void
+update_actions (GimpHelpBrowserDialog *self)
+{
+  GActionMap            *action_map = G_ACTION_MAP (self);
+  GAction               *action;
+  WebKitBackForwardList *back_forward_list;
+
+  back_forward_list =
+    webkit_web_view_get_back_forward_list (WEBKIT_WEB_VIEW (self->webview));
+
+  /*  update the back button and its menu  */
+  action = g_action_map_lookup_action (action_map, "back");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               webkit_web_view_can_go_back (WEBKIT_WEB_VIEW (self->webview)));
+
+  if (back_forward_list)
+    {
+      const GList *list;
+
+      list = webkit_back_forward_list_get_back_list_with_limit (back_forward_list,
+                                                                12);
+      gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (self->button_prev),
+                                     build_menu (list, TRUE));
+    }
+  else
+    {
+      gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (self->button_prev), NULL);
+    }
+
+  /*  update the forward button and its menu  */
+  action = g_action_map_lookup_action (action_map, "forward");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               webkit_web_view_can_go_forward (WEBKIT_WEB_VIEW (self->webview)));
+
+  if (back_forward_list)
+    {
+      const GList *list;
+
+      list = webkit_back_forward_list_get_forward_list_with_limit (back_forward_list,
+                                                                   12);
+      gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (self->button_next),
+                                     build_menu (list, FALSE));
+    }
+  else
+    {
+      gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (self->button_next), NULL);
+    }
+
+  /*  update the copy-location action  */
+  action = g_action_map_lookup_action (action_map, "copy-location");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               webkit_web_view_get_uri (WEBKIT_WEB_VIEW (self->webview)) != NULL);
+
+  /*  update the show-index action  */
+  action = g_action_map_lookup_action (action_map, "show-index");
+  g_simple_action_set_state (G_SIMPLE_ACTION (action),
+                             g_variant_new_boolean (gtk_widget_get_visible (self->sidebar)));
+}
+
+static void
+webview_realize (GtkWidget *webview,
+                 gpointer   user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  g_return_if_fail (self->busy_cursor == NULL);
+
+  self->busy_cursor = gdk_cursor_new_for_display (gtk_widget_get_display (webview),
+                                                  GDK_WATCH);
+}
+
+static void
+webview_unrealize (GtkWidget *widget,
+                   gpointer   user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  g_clear_object (&self->busy_cursor);
+}
+
+static void
+do_popup_menu (GimpHelpBrowserDialog *self,
+               GtkWidget             *webview,
+               GdkEvent              *event)
+{
+  WebKitEditorState *editor_state;
+  GMenuModel        *menu_model;
+  GtkWidget         *menu;
+
+  editor_state = webkit_web_view_get_editor_state (WEBKIT_WEB_VIEW (webview));
+  if (webkit_editor_state_is_copy_available (editor_state))
+    menu_model = self->copy_popup_menu_model;
+  else
+    menu_model = self->popup_menu_model;
+
+  menu = gtk_menu_new_from_model (menu_model);
+  g_signal_connect (menu, "deactivate",
+                    G_CALLBACK (gtk_widget_destroy), NULL);
+
+  gtk_menu_attach_to_widget (GTK_MENU (menu), webview, NULL);
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), event);
+}
+
+static gboolean
+webview_popup_menu (GtkWidget *webview,
+                    gpointer   user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  do_popup_menu (self, webview, NULL);
+  return TRUE;
+}
+
+static gboolean
+webview_button_press (GtkWidget      *webview,
+                      GdkEventButton *event,
+                      gpointer        user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  if (gdk_event_triggers_context_menu ((GdkEvent *) event))
+    {
+      do_popup_menu (self, webview, (GdkEvent *) event);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+webview_key_press (GtkWidget   *widget,
+                   GdkEventKey *event,
+                   gpointer     user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  if (event->keyval == GDK_KEY_slash)
+    {
+      g_action_group_activate_action (G_ACTION_GROUP (self),
+                                      "find",
+                                      NULL);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static void
+webview_title_changed (WebKitWebView *webview,
+                       GParamSpec    *pspec,
+                       gpointer       user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  const char            *title;
+  char                  *full_title;
+
+  title = webkit_web_view_get_title (webview);
+  full_title = g_strdup_printf ("%s - %s",
+                                title ? title : _("Untitled"),
+                                _("GIMP Help Browser"));
+
+  gtk_window_set_title (GTK_WINDOW (self), full_title);
+  g_free (full_title);
+
+  update_actions (self);
+}
+
+static void
+select_index (GimpHelpBrowserDialog *self,
+              const char            *uri)
+{
+  GtkTreeSelection *selection;
+  GtkTreeIter      *iter = NULL;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (self->tree_view));
+
+  if (uri)
+    iter = g_hash_table_lookup (self->uri_hash_table, uri);
+
+  if (iter)
+    {
+      GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (self->tree_view));
+      GtkTreePath  *path;
+      GtkTreePath  *scroll_path;
+
+      path = gtk_tree_model_get_path (model, iter);
+      scroll_path = gtk_tree_path_copy (path);
+
+      gtk_tree_path_up (path);
+      gtk_tree_view_expand_to_path (GTK_TREE_VIEW (self->tree_view), path);
+      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (self->tree_view), scroll_path,
+                                    NULL, FALSE, 0.0, 0.0);
+
+      gtk_tree_path_free (path);
+      gtk_tree_path_free (scroll_path);
+
+      gtk_tree_selection_select_iter (selection, iter);
+    }
+  else
+    {
+      gtk_tree_selection_unselect_all (selection);
+    }
+}
+
+static gboolean
+webview_decide_policy (WebKitWebView            *webview,
+                       WebKitPolicyDecision     *decision,
+                       WebKitPolicyDecisionType  decision_type,
+                       gpointer                  user_data)
+{
+  /* Some files return mime types like application/x-extension-html,
+   * which is not supported by default */
+  webkit_policy_decision_use (decision);
+  return FALSE;
+}
+
+static gboolean
+webview_load_failed (WebKitWebView  *webview,
+                     WebKitLoadEvent load_event,
+                     char           *failing_uri,
+                     GError         *error,
+                     gpointer        user_data)
+{
+  g_warning ("Failed to load page: %s", error->message);
+  return TRUE;
+}
+
+static void
+webview_load_changed (WebKitWebView   *webview,
+                      WebKitLoadEvent  event,
+                      gpointer         user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  GAction               *action;
+
+  action = g_action_map_lookup_action (G_ACTION_MAP (self), "back");
+  switch (event)
+    {
+    case WEBKIT_LOAD_STARTED:
+      g_simple_action_set_enabled (G_SIMPLE_ACTION (action), TRUE);
+      break;
+
+    case WEBKIT_LOAD_FINISHED:
+      g_simple_action_set_enabled (G_SIMPLE_ACTION (action), FALSE);
+      update_actions (self);
+      select_index (self, webkit_web_view_get_uri (webview));
+      break;
+
+    case WEBKIT_LOAD_REDIRECTED:
+    case WEBKIT_LOAD_COMMITTED:
+      break;
+    }
+}
+
+static void
+row_activated (GtkTreeView       *tree_view,
+               GtkTreePath       *path,
+               GtkTreeViewColumn *column,
+               gpointer           user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  GtkTreeModel          *model;
+  GtkTreeIter            iter;
+  GimpHelpDomain        *domain;
+  GimpHelpLocale        *locale;
+  GimpHelpItem          *item;
+  char                  *uri;
+
+  model = gtk_tree_view_get_model (tree_view);
+  gtk_tree_model_get_iter (model, &iter, path);
+
+  gtk_tree_model_get (model, &iter,
+                      0, &item,
+                      -1);
+
+  domain = g_object_get_data (G_OBJECT (model), "domain");
+  locale = g_object_get_data (G_OBJECT (model), "locale");
+
+  uri = g_strconcat (domain->help_uri,  "/",
+                     locale->locale_id, "/",
+                     item->ref,
+                     NULL);
+
+  gimp_help_browser_dialog_load (self, uri);
+
+  g_free (uri);
+}
+
+static void
+search_close_clicked (GtkWidget *button,
+                      gpointer   user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  WebKitFindController *find_controller =
+    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (self->webview));
+
+  gtk_widget_hide (self->searchbar);
+
+  webkit_find_controller_search_finish (find_controller);
+}
+
+static void
+search_entry_changed (GtkWidget *search_entry,
+                      gpointer   user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+
+  search (self, gtk_entry_get_text (GTK_ENTRY (search_entry)));
+}
+
+static gboolean
+search_entry_key_press (GtkWidget   *search_entry,
+                        GdkEventKey *event,
+                        gpointer     user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  WebKitFindController *find_controller;
+
+  find_controller = webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (self->webview));
+  switch (event->keyval)
+    {
+    case GDK_KEY_Escape:
+      gtk_widget_hide (self->searchbar);
+      webkit_find_controller_search_finish (find_controller);
+      return TRUE;
+
+    case GDK_KEY_Return:
+    case GDK_KEY_KP_Enter:
+    case GDK_KEY_ISO_Enter:
+      search (self, gtk_entry_get_text (GTK_ENTRY (search_entry)));
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static void
+dialog_unmap (GtkWidget *window,
+              gpointer   user_data)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  DialogData data;
+
+  gtk_window_get_size (GTK_WINDOW (window), &data.width, &data.height);
+
+  data.paned_position = gtk_paned_get_position (GTK_PANED (self->paned));
+  data.show_index     = gtk_widget_get_visible (self->sidebar);
+
+  data.zoom = (self->webview ?
+               webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (self->webview)) : 1.0);
+
+  gimp_set_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data, sizeof (data));
+}
+
+static void
+add_tool_button (GtkWidget  *toolbar,
+                 const char *action,
+                 const char *icon,
+                 const char *label,
+                 const char *tooltip)
+{
+  GtkWidget *tool_icon;
+  GtkToolItem *tool_button;
+
+  tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (GTK_WIDGET (tool_icon));
+  tool_button = gtk_tool_button_new (tool_icon, label);
+  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_tool_item_set_tooltip_text (tool_button, tooltip);
+  gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (tool_button), action);
+
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), tool_button, -1);
+}
+
+static GtkWidget *
+build_searchbar (GimpHelpBrowserDialog *self)
+{
+  GtkWidget *button;
+  GtkWidget *hbox;
+  GtkWidget *label;
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+
+  label = gtk_label_new (_("Find:"));
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+  self->search_entry = gtk_entry_new ();
+  gtk_widget_show (self->search_entry);
+  gtk_box_pack_start (GTK_BOX (hbox), self->search_entry, TRUE, TRUE, 0);
+
+  g_signal_connect (self->search_entry, "changed",
+                    G_CALLBACK (search_entry_changed),
+                    self);
+
+  g_signal_connect (self->search_entry, "key-press-event",
+                    G_CALLBACK (search_entry_key_press),
+                    self);
+
+  button = gtk_button_new_with_mnemonic (C_("search", "_Previous"));
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
+                                                      GTK_ICON_SIZE_BUTTON));
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.search-previous");
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_mnemonic (C_("search", "_Next"));
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
+                                                      GTK_ICON_SIZE_BUTTON));
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.search-next");
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_mnemonic (C_("search", "_Close"));
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (search_close_clicked),
+                    self);
+
+  return hbox;
+}
+
+static void
+gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
+{
+  GtkWindow   *window = GTK_WINDOW (self);
   GtkWidget   *vbox;
   GtkWidget   *toolbar;
-  GtkWidget   *paned;
-  GtkWidget   *scrolled;
+  GtkBuilder  *builder;
   GtkToolItem *item;
-  GtkAction   *action;
-  DialogData   data = { 720, 560, 240, TRUE, 1.0 };
-
-  gimp_ui_init (plug_in_binary);
-
-  gimp_get_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data);
+  GtkWidget   *main_vbox;
+  WebKitSettings *settings;
 
   /*  the dialog window  */
-  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
-  gtk_window_set_role (GTK_WINDOW (window), plug_in_binary);
   gtk_window_set_icon_name (GTK_WINDOW (window), GIMP_ICON_HELP_USER_MANUAL);
 
-  gtk_window_set_default_size (GTK_WINDOW (window), data.width, data.height);
-
-  g_signal_connect (window, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+  g_action_map_add_action_entries (G_ACTION_MAP (self),
+                                   ACTIONS, G_N_ELEMENTS (ACTIONS),
+                                   self);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (window), vbox);
   gtk_widget_show (vbox);
 
-  ui_manager = ui_manager_new (window);
+  /* Toolbar */
+  toolbar = gtk_toolbar_new ();
 
-  toolbar = gtk_ui_manager_get_widget (ui_manager, "/help-browser-toolbar");
+  add_tool_button (toolbar, "win.reload", GIMP_ICON_VIEW_REFRESH, _("_Reload"), _("Reload current page"));
+  add_tool_button (toolbar, "win.stop", GIMP_ICON_PROCESS_STOP, _("_Stop"), _("Stop loading this page"));
+  add_tool_button (toolbar, "win.home", GIMP_ICON_GO_HOME, NULL, _("Go to the index page"));
+  item = gtk_separator_tool_item_new ();
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
+  gtk_tool_item_set_expand (item, TRUE);
+  gtk_widget_show (GTK_WIDGET (item));
+  add_tool_button (toolbar, "win.load-uri('https://docs.gimp.org')", GIMP_ICON_HELP_USER_MANUAL, "docs.gimp.org", _("Visit the GIMP documentation website"));
+
+  item = gtk_menu_tool_button_new (gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT, GTK_ICON_SIZE_BUTTON), NULL);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
+  gtk_widget_show (GTK_WIDGET (item));
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "win.forward");
+  self->button_next = GTK_WIDGET (item);
+
+  item = gtk_menu_tool_button_new (gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS, GTK_ICON_SIZE_BUTTON), NULL);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
+  gtk_widget_show (GTK_WIDGET (item));
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "win.back");
+  self->button_prev = GTK_WIDGET (item);
+
   gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
   gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
 
-  item = g_object_new (GTK_TYPE_MENU_TOOL_BUTTON, NULL);
-  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
-  gtk_widget_show (GTK_WIDGET (item));
-
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/help-browser-popup/forward");
-  gtk_activatable_set_related_action (GTK_ACTIVATABLE (item), action);
-  g_object_notify (G_OBJECT (action), "tooltip");
-  button_next = GTK_WIDGET (item);
-
-  item = g_object_new (GTK_TYPE_MENU_TOOL_BUTTON, NULL);
-  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
-  gtk_widget_show (GTK_WIDGET (item));
-
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/help-browser-popup/back");
-  gtk_activatable_set_related_action (GTK_ACTIVATABLE (item), action);
-  g_object_notify (G_OBJECT (action), "tooltip");
-  button_prev = GTK_WIDGET (item);
-
-  item =
-    GTK_TOOL_ITEM (gtk_ui_manager_get_widget (ui_manager,
-                                              "/help-browser-toolbar/space"));
-  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
-  gtk_tool_item_set_expand (item, TRUE);
+  /* Context menu */
+  builder = gtk_builder_new_from_string (
+      "<interface>"
+        "<menu id=\"help_browser_popup_menu\">"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">_Back</attribute>"
+              "<attribute name=\"action\">win.back</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">_Previous</attribute>"
+              "<attribute name=\"action\">win.forward</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">_Reload</attribute>"
+              "<attribute name=\"action\">win.reload</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">_Stop</attribute>"
+              "<attribute name=\"action\">win.stop</attribute>"
+            "</item>"
+          "</section>"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">_Home</attribute>"
+              "<attribute name=\"action\">win.home</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">C_opy location</attribute>"
+              "<attribute name=\"action\">win.copy-location</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">S_how index</attribute>"
+              "<attribute name=\"action\">win.show-index</attribute>"
+            "</item>"
+          "</section>"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Find</attribute>"
+              "<attribute name=\"action\">win.find</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Find _Again</attribute>"
+              "<attribute name=\"action\">win.find-again</attribute>"
+            "</item>"
+          "</section>"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Zoom in</attribute>"
+              "<attribute name=\"action\">win.zoom-in</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Zoom out</attribute>"
+              "<attribute name=\"action\">win.zoom-out</attribute>"
+            "</item>"
+          "</section>"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Close</attribute>"
+              "<attribute name=\"action\">win.close</attribute>"
+            "</item>"
+          "</section>"
+        "</menu>"
+        "<menu id=\"help_browser_copy_popup_menu\">"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Copy selection</attribute>"
+              "<attribute name=\"action\">win.copy-selection</attribute>"
+            "</item>"
+          "</section>"
+        "</menu>"
+      "</interface>",
+      -1);
+  self->popup_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "help_browser_popup_menu"));
+  g_object_ref (self->popup_menu_model);
+  self->copy_popup_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "help_browser_copy_popup_menu"));
+  g_object_ref (self->copy_popup_menu_model);
+  g_object_unref (builder);
 
   /*  the horizontal paned  */
-  paned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
-  gtk_box_pack_start (GTK_BOX (vbox), paned, TRUE, TRUE, 0);
-  gtk_widget_show (paned);
+  self->paned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_pack_start (GTK_BOX (vbox), self->paned, TRUE, TRUE, 0);
+  gtk_widget_show (self->paned);
 
-  scrolled = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+  self->sidebar = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (self->sidebar),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_paned_add1 (GTK_PANED (paned), scrolled);
-  gtk_paned_set_position (GTK_PANED (paned), data.paned_position);
+  gtk_paned_add1 (GTK_PANED (self->paned), self->sidebar);
 
-  sidebar = scrolled;
+  self->tree_view = gtk_tree_view_new ();
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (self->tree_view), FALSE);
+  gtk_container_add (GTK_CONTAINER (self->sidebar), self->tree_view);
+  gtk_widget_show (self->tree_view);
 
-  if (data.show_index)
-    gtk_widget_show (sidebar);
-
-  tree_view = gtk_tree_view_new ();
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree_view), FALSE);
-  gtk_container_add (GTK_CONTAINER (scrolled), tree_view);
-  gtk_widget_show (tree_view);
-
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tree_view), -1,
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (self->tree_view), -1,
                                                NULL,
                                                gtk_cell_renderer_text_new (),
                                                "text", 1,
                                                NULL);
 
-  g_signal_connect (tree_view, "row-activated",
+  g_signal_connect (self->tree_view, "row-activated",
                     G_CALLBACK (row_activated),
-                    NULL);
+                    self);
 
-  /*  HTML view  */
+  /*  HTML webview  */
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_widget_show (main_vbox);
-  gtk_paned_pack2 (GTK_PANED (paned), main_vbox, TRUE, TRUE);
+  gtk_paned_pack2 (GTK_PANED (self->paned), main_vbox, TRUE, TRUE);
 
-  view = webkit_web_view_new ();
-  gtk_widget_set_size_request (view, 300, 200);
-  gtk_widget_show (view);
+  settings = webkit_settings_new_with_settings ("default-charset", "utf-8",
+                                                NULL);
+  self->webview = webkit_web_view_new_with_settings (settings);
+  g_object_unref (settings);
 
-  gtk_box_pack_start (GTK_BOX (main_vbox), view, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (self->webview, 300, 200);
+  gtk_widget_show (self->webview);
 
-  g_signal_connect (view, "realize",
-                    G_CALLBACK (view_realize),
-                    NULL);
-  g_signal_connect (view, "unrealize",
-                    G_CALLBACK (view_unrealize),
-                    NULL);
+  gtk_box_pack_start (GTK_BOX (main_vbox), self->webview, TRUE, TRUE, 0);
 
-  g_signal_connect (view, "popup-menu",
-                    G_CALLBACK (view_popup_menu),
-                    NULL);
-  g_signal_connect (view, "button-press-event",
-                    G_CALLBACK (view_button_press),
-                    NULL);
-  g_signal_connect (view, "key-press-event",
-                    G_CALLBACK (view_key_press),
-                    NULL);
+  g_signal_connect (self->webview, "realize",
+                    G_CALLBACK (webview_realize),
+                    self);
+  g_signal_connect (self->webview, "unrealize",
+                    G_CALLBACK (webview_unrealize),
+                    self);
+  g_signal_connect (self->webview, "popup-menu",
+                    G_CALLBACK (webview_popup_menu),
+                    self);
+  g_signal_connect (self->webview, "button-press-event",
+                    G_CALLBACK (webview_button_press),
+                    self);
+  g_signal_connect (self->webview, "key-press-event",
+                    G_CALLBACK (webview_key_press),
+                    self);
+  g_signal_connect (self->webview, "notify::title",
+                    G_CALLBACK (webview_title_changed),
+                    self);
+  g_signal_connect (self->webview, "load-changed",
+                    G_CALLBACK (webview_load_changed),
+                    self);
+  g_signal_connect (self->webview, "load-failed",
+                    G_CALLBACK (webview_load_failed),
+                    self);
+  g_signal_connect (self->webview, "decide-policy",
+                    G_CALLBACK (webview_decide_policy),
+                    self);
 
-  webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (view), data.zoom);
-
-  g_signal_connect (view, "notify::title",
-                    G_CALLBACK (title_changed),
-                    window);
-
-  g_signal_connect (view, "load-changed",
-                    G_CALLBACK (load_changed),
-                    NULL);
-
-  gtk_widget_grab_focus (view);
+  gtk_widget_grab_focus (self->webview);
 
   g_signal_connect (window, "unmap",
                     G_CALLBACK (dialog_unmap),
-                    paned);
+                    self);
 
-  update_actions ();
+  update_actions (self);
 
   /* Searchbar */
-  searchbar = build_searchbar ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), searchbar, FALSE, FALSE, 0);
+  self->searchbar = build_searchbar (self);
+  gtk_box_pack_start (GTK_BOX (main_vbox), self->searchbar, FALSE, FALSE, 0);
+}
+
+static void
+gimp_help_browser_dialog_finalize (GObject *object)
+{
+  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (object);
+
+  g_clear_pointer (&self->uri_hash_table, g_hash_table_unref);
+  g_clear_object (&self->popup_menu_model);
+  g_clear_object (&self->copy_popup_menu_model);
+
+  G_OBJECT_CLASS (gimp_help_browser_dialog_parent_class)->finalize (object);
+}
+
+static void
+gimp_help_browser_dialog_class_init (GimpHelpBrowserDialogClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->finalize = gimp_help_browser_dialog_finalize;
+}
+
+GimpHelpBrowserDialog *
+gimp_help_browser_dialog_new (const gchar *plug_in_binary, GApplication *app)
+{
+  GimpHelpBrowserDialog *window;
+  DialogData             data = { 720, 560, 240, TRUE, 1.0 };
+
+  gimp_ui_init (plug_in_binary);
+
+  gimp_get_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data);
+
+  window = g_object_new (GIMP_TYPE_HELP_BROWSER_DIALOG,
+                         "application", app,
+                         "role", plug_in_binary,
+                         "default-width", data.width,
+                         "default-height", data.height,
+                         NULL);
+  gtk_paned_set_position (GTK_PANED (window->paned), data.paned_position);
+  if (data.show_index)
+    gtk_widget_show (window->sidebar);
+  webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (window->webview), data.zoom);
+
+  return GTK_WINDOW (window);
 }
 
 void
-browser_dialog_load (const gchar *uri)
+gimp_help_browser_dialog_load (GimpHelpBrowserDialog *self,
+                               const char            *uri)
 {
-  g_return_if_fail (uri != NULL);
+  g_return_if_fail (uri && *uri);
 
-  webkit_web_view_load_uri (WEBKIT_WEB_VIEW (view), uri);
+  webkit_web_view_load_uri (WEBKIT_WEB_VIEW (self->webview), uri);
 
-  select_index (uri);
+  select_index (self, uri);
 
-  gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (view)));
+  gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (self->webview)));
 }
 
 static void
@@ -343,9 +1118,9 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
 
   if (sort_key)
     {
-      const gint max_tokens = GIMP_HELP_BROWSER_INDEX_MAX_DEPTH;
-      gchar* *indices = g_strsplit (sort_key, ".", max_tokens + 1);
-      gint    i;
+      int    max_tokens = GIMP_HELP_BROWSER_INDEX_MAX_DEPTH;
+      char **indices = g_strsplit (sort_key, ".", max_tokens + 1);
+      int    i;
 
       for (i = 0; i < max_tokens; i++)
         {
@@ -410,16 +1185,16 @@ help_item_compare (gconstpointer a,
 }
 
 static void
-add_child (GtkTreeStore   *store,
+add_child (GimpHelpBrowserDialog *self,
+           GtkTreeStore   *store,
            GimpHelpDomain *domain,
            GimpHelpLocale *locale,
            GtkTreeIter    *parent,
            GimpHelpItem   *item,
-           gint            depth)
+           int             depth)
 {
-  GtkTreeIter  iter;
-  GList       *list;
-  gchar       *uri;
+  GtkTreeIter iter;
+  char       *uri;
 
   gtk_tree_store_append (store, &iter, parent);
 
@@ -433,7 +1208,7 @@ add_child (GtkTreeStore   *store,
                      item->ref,
                      NULL);
 
-  g_hash_table_insert (uri_hash_table,
+  g_hash_table_insert (self->uri_hash_table,
                        uri,
                        gtk_tree_iter_copy (&iter));
 
@@ -442,17 +1217,18 @@ add_child (GtkTreeStore   *store,
 
   item->children = g_list_sort (item->children, help_item_compare);
 
-  for (list = item->children; list; list = g_list_next (list))
+  for (GList *list = item->children; list; list = g_list_next (list))
     {
       GimpHelpItem *item = list->data;
 
-      add_child (store, domain, locale, &iter, item, depth + 1);
+      add_child (self, store, domain, locale, &iter, item, depth + 1);
     }
 }
 
 void
-browser_dialog_make_index (GimpHelpDomain *domain,
-                           GimpHelpLocale *locale)
+gimp_help_browser_dialog_make_index (GimpHelpBrowserDialog *self,
+                                     GimpHelpDomain        *domain,
+                                     GimpHelpLocale        *locale)
 {
   GtkTreeStore *store;
   GList        *list;
@@ -474,807 +1250,21 @@ browser_dialog_make_index (GimpHelpDomain *domain,
   g_object_set_data (G_OBJECT (store), "domain", domain);
   g_object_set_data (G_OBJECT (store), "locale", locale);
 
-  if (uri_hash_table)
-    g_hash_table_unref (uri_hash_table);
+  if (self->uri_hash_table)
+    g_hash_table_unref (self->uri_hash_table);
 
-  uri_hash_table = g_hash_table_new_full (g_str_hash,
-                                          g_str_equal,
-                                          (GDestroyNotify) g_free,
-                                          (GDestroyNotify) gtk_tree_iter_free);
+  self->uri_hash_table = g_hash_table_new_full (g_str_hash,
+                                                g_str_equal,
+                                                (GDestroyNotify) g_free,
+                                                (GDestroyNotify) gtk_tree_iter_free);
 
   for (list = locale->toplevel_items; list; list = g_list_next (list))
     {
       GimpHelpItem *item = list->data;
 
-      add_child (store, domain, locale, NULL, item, 0);
+      add_child (self, store, domain, locale, NULL, item, 0);
     }
 
-  gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (store));
+  gtk_tree_view_set_model (GTK_TREE_VIEW (self->tree_view), GTK_TREE_MODEL (store));
   g_object_unref (store);
-}
-
-static void
-select_index (const gchar *uri)
-{
-  GtkTreeSelection *selection;
-  GtkTreeIter      *iter = NULL;
-
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
-
-  if (uri)
-    iter = g_hash_table_lookup (uri_hash_table, uri);
-
-  if (iter)
-    {
-      GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree_view));
-      GtkTreePath  *path;
-      GtkTreePath  *scroll_path;
-
-      path = gtk_tree_model_get_path (model, iter);
-      scroll_path = gtk_tree_path_copy (path);
-
-      gtk_tree_path_up (path);
-      gtk_tree_view_expand_to_path (GTK_TREE_VIEW (tree_view), path);
-      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (tree_view), scroll_path,
-                                    NULL, FALSE, 0.0, 0.0);
-
-      gtk_tree_path_free (path);
-      gtk_tree_path_free (scroll_path);
-
-      gtk_tree_selection_select_iter (selection, iter);
-    }
-  else
-    {
-      gtk_tree_selection_unselect_all (selection);
-    }
-}
-
-
-/*  private functions  */
-
-static GtkUIManager *
-ui_manager_new (GtkWidget *window)
-{
-  static const GtkActionEntry actions[] =
-  {
-    {
-      "back", GIMP_ICON_GO_PREVIOUS,
-      NULL, "<alt>Left", N_("Go back one page"),
-      G_CALLBACK (back_callback)
-    },
-    {
-      "forward", GIMP_ICON_GO_NEXT,
-      NULL, "<alt>Right", N_("Go forward one page"),
-      G_CALLBACK (forward_callback)
-    },
-    {
-      "reload", GIMP_ICON_VIEW_REFRESH,
-       N_("_Reload"), "<control>R", N_("Reload current page"),
-      G_CALLBACK (reload_callback)
-    },
-    {
-      "stop", GIMP_ICON_PROCESS_STOP,
-       N_("_Stop"), "Escape", N_("Stop loading this page"),
-      G_CALLBACK (stop_callback)
-    },
-    {
-      "home", GIMP_ICON_GO_HOME,
-      NULL, "<alt>Home", N_("Go to the index page"),
-      G_CALLBACK (home_callback)
-    },
-    {
-      "copy-location", GIMP_ICON_EDIT_COPY,
-      N_("C_opy location"), "",
-      N_("Copy the location of this page to the clipboard"),
-      G_CALLBACK (copy_location_callback)
-    },
-    {
-      "copy-selection", GIMP_ICON_EDIT_COPY,
-      NULL, "<control>C", NULL,
-      G_CALLBACK (copy_selection_callback)
-    },
-    {
-      "zoom-in", GIMP_ICON_ZOOM_IN,
-      NULL, "<control>plus", NULL,
-      G_CALLBACK (zoom_in_callback)
-    },
-    {
-      "zoom-out", GIMP_ICON_ZOOM_OUT,
-      NULL, "<control>minus", NULL,
-      G_CALLBACK (zoom_out_callback)
-    },
-    {
-      "find", GIMP_ICON_EDIT_FIND,
-      NULL, "<control>F", N_("Find text in current page"),
-      G_CALLBACK (find_callback)
-    },
-    {
-      "find-again", NULL,
-      N_("Find _Again"), "<control>G", NULL,
-      G_CALLBACK (find_again_callback)
-    },
-    {
-      "close", GIMP_ICON_WINDOW_CLOSE,
-      NULL, "<control>W", NULL,
-      G_CALLBACK (close_callback)
-    },
-    {
-      "quit", GIMP_ICON_APPLICATION_EXIT,
-      NULL, "<control>Q", NULL,
-      G_CALLBACK (close_callback)
-    }
-  };
-
-  static const GtkToggleActionEntry toggle_actions[] =
-  {
-    {
-      "show-index", NULL,
-      N_("S_how Index"), "<control>I",
-      N_("Toggle the visibility of the sidebar"),
-      G_CALLBACK (show_index_callback), FALSE
-    }
-  };
-
-  GtkUIManager   *ui_manager = gtk_ui_manager_new ();
-  GtkActionGroup *group      = gtk_action_group_new ("Actions");
-  GtkAction      *action;
-  GError         *error      = NULL;
-
-  gtk_action_group_set_translation_domain (group, NULL);
-  gtk_action_group_add_actions (group,
-                                actions, G_N_ELEMENTS (actions),
-                                NULL);
-  gtk_action_group_add_toggle_actions (group,
-                                       toggle_actions,
-                                       G_N_ELEMENTS (toggle_actions),
-                                       NULL);
-
-  action = gimp_throbber_action_new ("website",
-                                     "docs.gimp.org",
-                                     _("Visit the GIMP documentation website"),
-                                     GIMP_ICON_HELP_USER_MANUAL);
-  g_signal_connect_closure (action, "activate",
-                            g_cclosure_new (G_CALLBACK (website_callback),
-                                            NULL, NULL),
-                            FALSE);
-  gtk_action_group_add_action (group, action);
-  g_object_unref (action);
-
-  gtk_window_add_accel_group (GTK_WINDOW (window),
-                              gtk_ui_manager_get_accel_group (ui_manager));
-  gtk_accel_group_lock (gtk_ui_manager_get_accel_group (ui_manager));
-
-  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
-  g_object_unref (group);
-
-  gtk_ui_manager_add_ui_from_string (ui_manager,
-                                     "<ui>"
-                                     "  <toolbar name=\"help-browser-toolbar\">"
-                                     "    <toolitem action=\"reload\" />"
-                                     "    <toolitem action=\"stop\" />"
-                                     "    <toolitem action=\"home\" />"
-                                     "    <separator name=\"space\" />"
-                                     "    <toolitem action=\"website\" />"
-                                     "  </toolbar>"
-                                     "  <accelerator action=\"close\" />"
-                                     "  <accelerator action=\"quit\" />"
-                                     "</ui>",
-                                     -1, &error);
-
-  if (error)
-    {
-      g_warning ("error parsing ui: %s", error->message);
-      g_clear_error (&error);
-    }
-
-  gtk_ui_manager_add_ui_from_string (ui_manager,
-                                     "<ui>"
-                                     "  <popup name=\"help-browser-popup\">"
-                                     "    <menuitem action=\"back\" />"
-                                     "    <menuitem action=\"forward\" />"
-                                     "    <menuitem action=\"reload\" />"
-                                     "    <menuitem action=\"stop\" />"
-                                     "    <separator />"
-                                     "    <menuitem action=\"home\" />"
-                                     "    <menuitem action=\"copy-location\" />"
-                                     "    <menuitem action=\"show-index\" />"
-                                     "    <separator />"
-                                     "    <menuitem action=\"find\" />"
-                                     "    <menuitem action=\"find-again\" />"
-                                     "    <separator />"
-                                     "    <menuitem action=\"zoom-in\" />"
-                                     "    <menuitem action=\"zoom-out\" />"
-                                     "    <separator />"
-                                     "    <menuitem action=\"close\" />"
-                                     "  </popup>"
-                                     "</ui>",
-                                     -1, &error);
-
-  if (error)
-    {
-      g_warning ("error parsing ui: %s", error->message);
-      g_clear_error (&error);
-    }
-
-  gtk_ui_manager_add_ui_from_string (ui_manager,
-                                     "<ui>"
-                                     "  <popup name=\"help-browser-copy-popup\">"
-                                     "    <menuitem action=\"copy-selection\" />"
-                                     "  </popup>"
-                                     "</ui>",
-                                     -1, &error);
-
-  if (error)
-    {
-      g_warning ("error parsing ui: %s", error->message);
-      g_clear_error (&error);
-    }
-
-  return ui_manager;
-}
-
-static void
-back_callback (GtkAction *action,
-               gpointer   data)
-{
-  webkit_web_view_go_back (WEBKIT_WEB_VIEW (view));
-}
-
-static void
-forward_callback (GtkAction *action,
-                  gpointer   data)
-{
-  webkit_web_view_go_forward (WEBKIT_WEB_VIEW (view));
-}
-
-static void
-reload_callback (GtkAction *action,
-                 gpointer   data)
-{
-  webkit_web_view_reload (WEBKIT_WEB_VIEW (view));
-}
-
-static void
-stop_callback (GtkAction *action,
-               gpointer   data)
-{
-  webkit_web_view_stop_loading (WEBKIT_WEB_VIEW (view));
-}
-
-static void
-home_callback (GtkAction *action,
-               gpointer   data)
-{
-  GtkTreeModel   *model  = gtk_tree_view_get_model (GTK_TREE_VIEW (tree_view));
-  GimpHelpDomain *domain = g_object_get_data (G_OBJECT (model), "domain");
-  GimpHelpLocale *locale = g_object_get_data (G_OBJECT (model), "locale");
-
-  if (domain && locale)
-    {
-      gchar *uri = g_strconcat (domain->help_uri,  "/",
-                                locale->locale_id, "/",
-                                gimp_help_locale_map (locale,
-                                                      GIMP_HELP_DEFAULT_ID),
-                                NULL);
-      browser_dialog_load (uri);
-      g_free (uri);
-    }
-}
-
-static void
-find_callback (GtkAction *action,
-               gpointer   data)
-{
-  GtkWidget *entry = g_object_get_data (G_OBJECT (searchbar), "entry");
-
-  gtk_widget_show (searchbar);
-  gtk_widget_grab_focus (entry);
-}
-
-static void
-find_again_callback (GtkAction *action,
-                     gpointer   data)
-{
-  GtkWidget *entry = g_object_get_data (G_OBJECT (searchbar), "entry");
-
-  gtk_widget_show (searchbar);
-  gtk_widget_grab_focus (entry);
-
-  search (gtk_entry_get_text (GTK_ENTRY (entry)));
-}
-
-static void
-copy_location_callback (GtkAction *action,
-                        gpointer   data)
-{
-  const gchar *uri;
-
-  uri = webkit_web_view_get_uri (WEBKIT_WEB_VIEW (view));
-
-  if (uri)
-    {
-      GtkClipboard *clipboard;
-
-      clipboard = gtk_clipboard_get_for_display (gtk_widget_get_display (view),
-                                                 GDK_SELECTION_CLIPBOARD);
-      gtk_clipboard_set_text (clipboard, uri, -1);
-    }
-}
-
-static void
-copy_selection_callback (GtkAction *action,
-                         gpointer   data)
-{
-  WebKitEditorState *editor_state =
-    webkit_web_view_get_editor_state (WEBKIT_WEB_VIEW (view));
-
-  if (webkit_editor_state_is_copy_available (editor_state))
-    {
-      webkit_web_view_execute_editing_command (WEBKIT_WEB_VIEW (view),
-                                               WEBKIT_EDITING_COMMAND_COPY);
-    }
-}
-
-static void
-show_index_callback (GtkAction *action,
-                     gpointer   data)
-{
-  gtk_widget_set_visible (sidebar,
-                          gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
-}
-
-static void
-zoom_in_callback (GtkAction *action,
-                  gpointer   data)
-{
-  gdouble zoom_level = webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (view));
-  if (zoom_level < 10.0)
-    webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (view), zoom_level + 0.1);
-}
-
-static void
-zoom_out_callback (GtkAction *action,
-                   gpointer   data)
-{
-  gdouble zoom_level = webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (view));
-  if (zoom_level > 0.1)
-    webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (view), zoom_level - 0.1);
-}
-
-static void
-website_callback (GtkAction *action,
-                  gpointer   data)
-{
-  browser_dialog_load ("https://docs.gimp.org/");
-}
-
-static void
-close_callback (GtkAction *action,
-                gpointer   data)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (view));
-}
-
-static void
-menu_callback (GtkWidget *menu,
-               gpointer   data)
-{
-  gint steps = GPOINTER_TO_INT (data);
-
-  WebKitBackForwardList *back_fw_list =
-    webkit_web_view_get_back_forward_list (WEBKIT_WEB_VIEW (view));
-  WebKitBackForwardListItem *back_fw_list_item =
-    webkit_back_forward_list_get_nth_item (back_fw_list, steps);
-
-  if (back_fw_list_item)
-    webkit_web_view_go_to_back_forward_list_item (WEBKIT_WEB_VIEW (view),
-                                                  back_fw_list_item);
-}
-
-static GtkWidget *
-build_menu (const GList *items,
-            gboolean     back)
-{
-  GtkWidget   *menu;
-  const GList *iter;
-  gint         steps;
-
-  if (! items)
-    return NULL;
-
-  menu = gtk_menu_new ();
-
-  for (iter = items, steps = 1; iter; iter = g_list_next (iter), steps++)
-    {
-      WebKitBackForwardListItem *item = iter->data;
-      const gchar               *title;
-
-      title = webkit_back_forward_list_item_get_title (item);
-
-      if (title)
-        {
-          GtkWidget *menu_item = gtk_menu_item_new_with_label (title);
-
-          gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-          gtk_widget_show (menu_item);
-
-          g_signal_connect (menu_item, "activate",
-                            G_CALLBACK (menu_callback),
-                            GINT_TO_POINTER (back ? - steps : steps));
-        }
-    }
-
-  return menu;
-}
-
-static void
-update_actions (void)
-{
-  GtkAction             *action;
-  WebKitBackForwardList *back_forward_list;
-
-  back_forward_list =
-    webkit_web_view_get_back_forward_list (WEBKIT_WEB_VIEW (view));
-
-  /*  update the back button and its menu  */
-
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/help-browser-popup/back");
-  gtk_action_set_sensitive (action,
-                            webkit_web_view_can_go_back (WEBKIT_WEB_VIEW (view)));
-
-  if (back_forward_list)
-    {
-      const GList *list;
-
-      list = webkit_back_forward_list_get_back_list_with_limit (back_forward_list,
-                                                                12);
-      gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_prev),
-                                     build_menu (list, TRUE));
-    }
-  else
-    {
-      gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_prev), NULL);
-    }
-
-  /*  update the forward button and its menu  */
-
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/help-browser-popup/forward");
-  gtk_action_set_sensitive (action,
-                            webkit_web_view_can_go_forward (WEBKIT_WEB_VIEW (view)));
-
-  if (back_forward_list)
-    {
-      const GList *list;
-
-      list = webkit_back_forward_list_get_forward_list_with_limit (back_forward_list,
-                                                                   12);
-      gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_next),
-                                     build_menu (list, FALSE));
-    }
-  else
-    {
-      gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_next), NULL);
-    }
-
-  /*  update the copy-location action  */
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/help-browser-popup/copy-location");
-
-  gtk_action_set_sensitive (action, webkit_web_view_get_uri (WEBKIT_WEB_VIEW (view)) != NULL);
-
-  /*  update the show-index action  */
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/help-browser-popup/show-index");
-  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-                                gtk_widget_get_visible (sidebar));
-}
-
-static void
-row_activated (GtkTreeView       *tree_view,
-               GtkTreePath       *path,
-               GtkTreeViewColumn *column)
-{
-  GtkTreeModel   *model = gtk_tree_view_get_model (tree_view);
-  GtkTreeIter     iter;
-  GimpHelpDomain *domain;
-  GimpHelpLocale *locale;
-  GimpHelpItem   *item;
-  gchar          *uri;
-
-  gtk_tree_model_get_iter (model, &iter, path);
-
-  gtk_tree_model_get (model, &iter,
-                      0, &item,
-                      -1);
-
-  domain = g_object_get_data (G_OBJECT (model), "domain");
-  locale = g_object_get_data (G_OBJECT (model), "locale");
-
-  uri = g_strconcat (domain->help_uri,  "/",
-                     locale->locale_id, "/",
-                     item->ref,
-                     NULL);
-
-  browser_dialog_load (uri);
-
-  g_free (uri);
-}
-
-static void
-dialog_unmap (GtkWidget *window,
-              GtkWidget *paned)
-{
-  DialogData data;
-
-  gtk_window_get_size (GTK_WINDOW (window), &data.width, &data.height);
-
-  data.paned_position = gtk_paned_get_position (GTK_PANED (paned));
-  data.show_index     = gtk_widget_get_visible (sidebar);
-
-  data.zoom = (view ?
-               webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (view)) : 1.0);
-
-  gimp_set_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data, sizeof (data));
-
-  gtk_main_quit ();
-}
-
-static void
-view_realize (GtkWidget *widget)
-{
-  g_return_if_fail (busy_cursor == NULL);
-
-  busy_cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
-                                            GDK_WATCH);
-}
-
-static void
-view_unrealize (GtkWidget *widget)
-{
-  if (busy_cursor)
-    {
-      g_object_unref (busy_cursor);
-      busy_cursor = NULL;
-    }
-}
-
-static gboolean
-view_popup_menu (GtkWidget      *widget,
-                 GdkEventButton *event)
-{
-  GtkWidget   *menu;
-  const gchar *path;
-
-  WebKitEditorState *editor_state =
-    webkit_web_view_get_editor_state (WEBKIT_WEB_VIEW (view));
-
-  if (webkit_editor_state_is_copy_available (editor_state))
-    path = "/help-browser-copy-popup";
-  else
-    path = "/help-browser-popup";
-
-  menu = gtk_ui_manager_get_widget (ui_manager, path);
-
-  gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
-  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
-
-  return TRUE;
-}
-
-static gboolean
-view_button_press (GtkWidget      *widget,
-                   GdkEventButton *event)
-{
-  if (gdk_event_triggers_context_menu ((GdkEvent *) event))
-    return view_popup_menu (widget, event);
-
-  return FALSE;
-}
-
-static gboolean
-view_key_press (GtkWidget   *widget,
-                GdkEventKey *event)
-{
-  if (event->keyval == GDK_KEY_slash)
-    {
-      GtkAction *action;
-
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/help-browser-popup/find");
-      gtk_action_activate (action);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static void
-title_changed (WebKitWebView  *view,
-               GParamSpec     *pspec,
-               GtkWidget      *window)
-{
-  gchar *full_title;
-
-  const char *title = webkit_web_view_get_title (view);
-  full_title = g_strdup_printf ("%s - %s",
-                                title ? title : _("Untitled"),
-                                _("GIMP Help Browser"));
-
-  gtk_window_set_title (GTK_WINDOW (window), full_title);
-  g_free (full_title);
-
-  update_actions ();
-}
-
-static void
-load_changed (WebKitWebView   *view,
-              WebKitLoadEvent  event)
-{
-  GtkAction *action = gtk_ui_manager_get_action (ui_manager,
-                                                 "/ui/help-browser-popup/stop");
-  switch (event)
-    {
-    case WEBKIT_LOAD_STARTED:
-      gtk_action_set_sensitive (action, TRUE);
-      break;
-
-    case WEBKIT_LOAD_FINISHED:
-      gtk_action_set_sensitive (action, FALSE);
-      update_actions ();
-      select_index (webkit_web_view_get_uri (view));
-      break;
-
-    case WEBKIT_LOAD_REDIRECTED:
-    case WEBKIT_LOAD_COMMITTED:
-      break;
-    }
-}
-
-static GtkWidget *
-build_searchbar (void)
-{
-  GtkWidget *button;
-  GtkWidget *entry;
-  GtkWidget *hbox;
-  GtkWidget *label;
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-
-  label = gtk_label_new (_("Find:"));
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-  entry = gtk_entry_new ();
-  gtk_widget_show (entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  g_object_set_data (G_OBJECT (hbox), "entry", entry);
-
-  g_signal_connect (entry, "changed",
-                    G_CALLBACK (search_entry_changed),
-                    NULL);
-
-  g_signal_connect (entry, "key-press-event",
-                    G_CALLBACK (search_entry_key_press),
-                    NULL);
-
-  button = gtk_button_new_with_mnemonic (C_("search", "_Previous"));
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
-                                                      GTK_ICON_SIZE_BUTTON));
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (search_prev_clicked),
-                    entry);
-
-  button = gtk_button_new_with_mnemonic (C_("search", "_Next"));
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
-                                                      GTK_ICON_SIZE_BUTTON));
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (search_next_clicked),
-                    entry);
-
-  button = gtk_button_new_with_mnemonic (C_("search", "_Close"));
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (search_close_clicked),
-                    NULL);
-
-  return hbox;
-}
-
-static void
-search_entry_changed (GtkWidget *entry)
-{
-  search (gtk_entry_get_text (GTK_ENTRY (entry)));
-}
-
-static gboolean
-search_entry_key_press (GtkWidget   *entry,
-                        GdkEventKey *event)
-{
-  WebKitFindController *find_controller =
-    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (view));
-
-  switch (event->keyval)
-    {
-    case GDK_KEY_Escape:
-      gtk_widget_hide (searchbar);
-      webkit_find_controller_search_finish (find_controller);
-      return TRUE;
-
-    case GDK_KEY_Return:
-    case GDK_KEY_KP_Enter:
-    case GDK_KEY_ISO_Enter:
-      search (gtk_entry_get_text (GTK_ENTRY (entry)));
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static void
-search_prev_clicked (GtkWidget *button,
-                     GtkWidget *entry)
-{
-  WebKitFindController *find_controller =
-    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (view));
-  webkit_find_controller_search_previous (find_controller);
-}
-
-static void
-search_next_clicked (GtkWidget *button,
-                     GtkWidget *entry)
-{
-  WebKitFindController *find_controller =
-    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (view));
-  webkit_find_controller_search_next (find_controller);
-}
-
-static void
-search (const gchar *text)
-{
-  WebKitFindController *find_controller =
-    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (view));
-  if (text)
-    {
-      const char *prev_text =
-        webkit_find_controller_get_search_text (find_controller);
-
-      /* The previous search, if any, may need to be canceled. */
-      if (prev_text && strcmp (text, prev_text) != 0)
-        webkit_find_controller_search_finish (find_controller);
-
-      webkit_find_controller_search (find_controller,
-                                     text,
-                                     WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
-                                     WEBKIT_FIND_OPTIONS_WRAP_AROUND,
-                                     G_MAXUINT);
-    }
-  else
-    webkit_find_controller_search_finish (find_controller);
-}
-
-static void
-search_close_clicked (GtkWidget *button)
-{
-  WebKitFindController *find_controller =
-    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (view));
-
-  gtk_widget_hide (searchbar);
-
-  webkit_find_controller_search_finish (find_controller);
 }

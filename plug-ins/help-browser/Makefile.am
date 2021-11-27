@@ -48,10 +48,6 @@ LDADD = \
 	$(help_browser_RC)
 
 help_browser_SOURCES = \
-	gimpthrobber.c		\
-	gimpthrobber.h		\
-	gimpthrobberaction.c	\
-	gimpthrobberaction.h	\
 	help-browser.c		\
 	dialog.c		\
 	dialog.h		\

@@ -173,6 +173,7 @@ void            gimp_plug_in_set_pdb_error_handler  (GimpPlugIn    *plug_in,
 GimpPDBErrorHandler
                 gimp_plug_in_get_pdb_error_handler  (GimpPlugIn    *plug_in);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpPlugIn, g_object_unref);
 
 G_END_DECLS
 

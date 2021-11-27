@@ -4,8 +4,6 @@ plugin_name = 'help-browser'
 
 plugin_sources = [
   'dialog.c',
-  'gimpthrobber.c',
-  'gimpthrobberaction.c',
   'help-browser.c',
   'uri.c',
 ]

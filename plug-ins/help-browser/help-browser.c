@@ -42,28 +42,10 @@
 #define PLUG_IN_ROLE                     "gimp-help-browser"
 
 
-typedef struct _HelpBrowser      HelpBrowser;
-typedef struct _HelpBrowserClass HelpBrowserClass;
-
-struct _HelpBrowser
-{
-  GimpPlugIn      parent_instance;
-};
-
-struct _HelpBrowserClass
-{
-  GimpPlugInClass parent_class;
-};
-
-
-#define HELP_BROWSER_TYPE  (help_browser_get_type ())
-#define HELP_BROWSER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HELP_BROWSER_TYPE, HelpBrowser))
-
-GType                   help_browser_get_type         (void) G_GNUC_CONST;
-
-static GList          * help_browser_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * help_browser_create_procedure (GimpPlugIn           *plug_in,
-                                                       const gchar          *name);
+#define GIMP_TYPE_HELP_BROWSER (gimp_help_browser_get_type ())
+G_DECLARE_FINAL_TYPE (GimpHelpBrowser, gimp_help_browser,
+                      GIMP, HELP_BROWSER,
+                      GimpPlugIn)
 
 static GimpValueArray * help_browser_run              (GimpProcedure        *procedure,
                                                        const GimpValueArray *args,
@@ -74,32 +56,19 @@ static GimpValueArray * temp_proc_run                 (GimpProcedure        *pro
                                                        const GimpValueArray *args,
                                                        gpointer              run_data);
 
-static gboolean         help_browser_show_help        (const gchar          *help_domain,
-                                                       const gchar          *help_locales,
-                                                       const gchar          *help_id);
-
 static GimpHelpProgress * help_browser_progress_new   (void);
 
-
-
-G_DEFINE_TYPE (HelpBrowser, help_browser, GIMP_TYPE_PLUG_IN)
-
-GIMP_MAIN (HELP_BROWSER_TYPE)
-
-
-static void
-help_browser_class_init (HelpBrowserClass *klass)
+struct _GimpHelpBrowser
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  GimpPlugIn parent_instance;
 
-  plug_in_class->query_procedures = help_browser_query_procedures;
-  plug_in_class->create_procedure = help_browser_create_procedure;
-}
+  GtkApplication *app;
+  GimpHelpBrowserDialog *window;
+};
 
-static void
-help_browser_init (HelpBrowser *help_browser)
-{
-}
+G_DEFINE_TYPE (GimpHelpBrowser, gimp_help_browser, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (GIMP_TYPE_HELP_BROWSER)
 
 static GList *
 help_browser_query_procedures (GimpPlugIn *plug_in)
@@ -117,7 +86,7 @@ help_browser_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_procedure_new (plug_in, name,
                                       GIMP_PDB_PROC_TYPE_EXTENSION,
-                                      help_browser_run, NULL, NULL);
+                                      help_browser_run, plug_in, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Browse the GIMP user manual",
@@ -154,11 +123,35 @@ help_browser_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
+static void
+on_app_activate (GApplication *gapp, gpointer user_data)
+{
+  GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
+  GtkApplication *app = GTK_APPLICATION (gapp);
+
+  browser->window = gimp_help_browser_dialog_new (PLUG_IN_BINARY, gapp);
+
+  gtk_application_set_accels_for_action (app, "win.back", (const char*[]) { "<alt>Left", NULL });
+  gtk_application_set_accels_for_action (app, "win.forward", (const char*[]) { "<alt>Right", NULL });
+  gtk_application_set_accels_for_action (app, "win.reload", (const char*[]) { "<control>R", NULL });
+  gtk_application_set_accels_for_action (app, "win.stop", (const char*[]) { "Escape", NULL });
+  gtk_application_set_accels_for_action (app, "win.home", (const char*[]) { "<alt>Home", NULL });
+  gtk_application_set_accels_for_action (app, "win.copy-selection", (const char*[]) { "<control>C", NULL });
+  gtk_application_set_accels_for_action (app, "win.zoom-in", (const char*[]) { "<control>plus", NULL });
+  gtk_application_set_accels_for_action (app, "win.zoom-out", (const char*[]) { "<control>minus", NULL });
+  gtk_application_set_accels_for_action (app, "win.find", (const char*[]) { "<control>F", NULL });
+  gtk_application_set_accels_for_action (app, "win.find-again", (const char*[]) { "<control>G", NULL });
+  gtk_application_set_accels_for_action (app, "win.close", (const char*[]) { "<control>W", "<control>Q", NULL });
+  gtk_application_set_accels_for_action (app, "win.show-index", (const char*[]) { "<control>I", NULL });
+}
+
 static GimpValueArray *
 help_browser_run (GimpProcedure        *procedure,
                   const GimpValueArray *args,
-                  gpointer              run_data)
+                  gpointer              user_data)
 {
+  GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
+
   INIT_I18N ();
 
   if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 1),
@@ -169,14 +162,17 @@ help_browser_run (GimpProcedure        *procedure,
                                                NULL);
     }
 
-  browser_dialog_open (PLUG_IN_BINARY);
-
   temp_proc_install (gimp_procedure_get_plug_in (procedure));
 
   gimp_procedure_extension_ready (procedure);
   gimp_plug_in_extension_enable (gimp_procedure_get_plug_in (procedure));
 
-  gtk_main ();
+  browser->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+  g_signal_connect (browser->app, "activate", G_CALLBACK (on_app_activate), browser);
+
+  g_application_run (G_APPLICATION (browser->app), 0, NULL);
+
+  g_clear_object (&browser->app);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
@@ -188,7 +184,7 @@ temp_proc_install (GimpPlugIn *plug_in)
 
   procedure = gimp_procedure_new (plug_in, GIMP_HELP_BROWSER_TEMP_EXT_PROC,
                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                  temp_proc_run, NULL, NULL);
+                                  temp_proc_run, plug_in, NULL);
 
   gimp_procedure_set_documentation (procedure,
                                     "DON'T USE THIS ONE",
@@ -224,81 +220,94 @@ temp_proc_install (GimpPlugIn *plug_in)
   g_object_unref (procedure);
 }
 
-static GimpValueArray *
-temp_proc_run (GimpProcedure        *procedure,
-               const GimpValueArray *args,
-               gpointer              run_data)
+typedef struct _IdleClosure
 {
-  const gchar *help_domain  = GIMP_HELP_DEFAULT_DOMAIN;
-  const gchar *help_locales = NULL;
-  const gchar *help_id      = GIMP_HELP_DEFAULT_ID;
-  const gchar *string;
+  GimpHelpBrowser *browser;
+  char            *help_domain;
+  char            *help_locales;
+  char            *help_id;
+} IdleClosure;
 
-  string = GIMP_VALUES_GET_STRING (args, 0);
-  if (string && strlen (string))
-    help_domain = string;
+static void
+idle_closure_free (gpointer data)
+{
+  IdleClosure *closure = data;
 
-  string = GIMP_VALUES_GET_STRING (args, 1);
-  if (string && strlen (string))
-    help_locales = string;
-
-  string = GIMP_VALUES_GET_STRING (args, 2);
-  if (string && strlen (string))
-    help_id = string;
-
-  if (! help_browser_show_help (help_domain, help_locales, help_id))
-    {
-      gtk_main_quit ();
-    }
-
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  g_free (closure->help_domain);
+  g_free (closure->help_locales);
+  g_free (closure->help_id);
+  g_free (closure);
 }
 
 static gboolean
-help_browser_show_help (const gchar *help_domain,
-                        const gchar *help_locales,
-                        const gchar *help_id)
+show_help_on_idle (gpointer user_data)
 {
-  GimpHelpDomain *domain;
-  gboolean        success = TRUE;
+  IdleClosure      *closure = user_data;
+  GimpHelpDomain   *domain;
+  GimpHelpProgress *progress = NULL;
+  GimpHelpLocale   *locale;
+  GList            *locales;
+  char             *uri;
+  gboolean          fatal_error;
 
-  domain = gimp_help_lookup_domain (help_domain);
+  /* First get the URI to load */
+  domain = gimp_help_lookup_domain (closure->help_domain);
+  if (!domain)
+    return G_SOURCE_REMOVE;
 
-  if (domain)
+  locales = gimp_help_parse_locales (closure->help_locales);
+
+  if (! g_str_has_prefix (domain->help_uri, "file:"))
+    progress = help_browser_progress_new ();
+
+  uri = gimp_help_domain_map (domain, locales, closure->help_id,
+                              progress, &locale, &fatal_error);
+
+  if (progress)
+    gimp_help_progress_free (progress);
+
+  g_list_free_full (locales, (GDestroyNotify) g_free);
+
+  /* Now actually load it */
+  if (uri)
     {
-      GimpHelpProgress *progress = NULL;
-      GimpHelpLocale   *locale;
-      GList            *locales;
-      gchar            *uri;
-      gboolean          fatal_error;
+      gimp_help_browser_dialog_make_index (closure->browser->window, domain, locale);
+      gimp_help_browser_dialog_load (closure->browser->window, uri);
 
-      locales = gimp_help_parse_locales (help_locales);
-
-      if (! g_str_has_prefix (domain->help_uri, "file:"))
-        progress = help_browser_progress_new ();
-
-      uri = gimp_help_domain_map (domain, locales, help_id,
-                                  progress, &locale, &fatal_error);
-
-      if (progress)
-        gimp_help_progress_free (progress);
-
-      g_list_free_full (locales, (GDestroyNotify) g_free);
-
-      if (uri)
-        {
-          browser_dialog_make_index (domain, locale);
-          browser_dialog_load (uri);
-
-          g_free (uri);
-        }
-      else if (fatal_error)
-        {
-          success = FALSE;
-        }
+      g_free (uri);
     }
 
-  return success;
+  return G_SOURCE_REMOVE;
+}
+
+static GimpValueArray *
+temp_proc_run (GimpProcedure        *procedure,
+               const GimpValueArray *args,
+               gpointer              user_data)
+{
+  GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
+  IdleClosure     *closure;
+  const char      *str;
+
+  closure = g_new0 (IdleClosure, 1);
+  closure->browser = browser;
+
+  str = GIMP_VALUES_GET_STRING (args, 0);
+  closure->help_domain = g_strdup ((str && *str)? str : GIMP_HELP_DEFAULT_DOMAIN);
+
+  str = GIMP_VALUES_GET_STRING (args, 1);
+  if (str && *str)
+    closure->help_locales = g_strdup (str);
+
+  str = GIMP_VALUES_GET_STRING (args, 2);
+  closure->help_id = g_strdup ((str && *str)? str : GIMP_HELP_DEFAULT_ID);
+
+  /* Do this on idle, to make sure everything is initialized already */
+  g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                   show_help_on_idle,
+                   closure, idle_closure_free);
+
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 
@@ -334,4 +343,18 @@ help_browser_progress_new (void)
   };
 
   return gimp_help_progress_new (&vtable, NULL);
+}
+
+static void
+gimp_help_browser_class_init (GimpHelpBrowserClass *klass)
+{
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+
+  plug_in_class->query_procedures = help_browser_query_procedures;
+  plug_in_class->create_procedure = help_browser_create_procedure;
+}
+
+static void
+gimp_help_browser_init (GimpHelpBrowser *help_browser)
+{
 }
