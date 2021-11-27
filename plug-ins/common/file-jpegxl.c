@@ -114,11 +114,11 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            jpegxl_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("JPEG-XL image"));
+      gimp_procedure_set_menu_label (procedure, N_("JPEG XL image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Loads files in the JPEG-XL file format"),
-                                        _("Loads files in the JPEG-XL file format"),
+                                        _("Loads files in the JPEG XL file format"),
+                                        _("Loads files in the JPEG XL file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Daniel Novomesky",
@@ -141,11 +141,11 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
-      gimp_procedure_set_menu_label (procedure, N_("JPEG-XL image"));
+      gimp_procedure_set_menu_label (procedure, N_("JPEG XL image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Saves files in the JPEG-XL file format"),
-                                        _("Saves files in the JPEG-XL file format"),
+                                        _("Saves files in the JPEG XL file format"),
+                                        _("Saves files in the JPEG XL file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Daniel Novomesky",
@@ -153,7 +153,7 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                                       "2021");
 
       gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
-                                           "JPEG-XL");
+                                           "JPEG XL");
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/jxl");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -170,6 +170,12 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                             _("Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = visually lossless."),
                             0, 15, 1,
                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "save-bit-depth",
+                         _("_Bit depth"),
+                         _("Bit depth of exported image"),
+                         8, 16, 8,
+                         G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_INT (procedure, "speed",
                              _("Effort/S_peed"),
@@ -682,6 +688,7 @@ save_image (GFile                *file,
   gdouble            compression = 1.0;
   gboolean           lossless = FALSE;
   gint               speed = 7;
+  gint               bit_depth = 8;
   gboolean           uses_original_profile = FALSE;
 
   gimp_progress_init_printf (_("Exporting '%s'"),
@@ -691,6 +698,7 @@ save_image (GFile                *file,
                 "lossless",              &lossless,
                 "compression",           &compression,
                 "speed",                 &speed,
+                "save-bit-depth",        &bit_depth,
                 "uses-original-profile", &uses_original_profile,
                 NULL);
 
@@ -737,17 +745,27 @@ save_image (GFile                *file,
     }
   else
     {
+      output_info.uses_original_profile = JXL_FALSE;
       space = babl_space ("sRGB");
       out_linear = FALSE;
     }
 
-  pixel_format.data_type = JXL_TYPE_UINT16;
+  if (bit_depth > 8)
+    {
+      pixel_format.data_type = JXL_TYPE_UINT16;
+      output_info.bits_per_sample = 16;
+    }
+  else
+    {
+      pixel_format.data_type = JXL_TYPE_UINT8;
+      output_info.bits_per_sample = 8;
+    }
+
   pixel_format.endianness = JXL_NATIVE_ENDIAN;
   pixel_format.align = 0;
 
   output_info.xsize = drawable_width;
   output_info.ysize = drawable_height;
-  output_info.bits_per_sample = 16;
   output_info.exponent_bits_per_sample = 0;
   output_info.intensity_target = 255.0f;
   output_info.orientation = JXL_ORIENT_IDENTITY;
@@ -759,17 +777,17 @@ save_image (GFile                *file,
     case GIMP_GRAYA_IMAGE:
       if (uses_original_profile && out_linear)
         {
-          file_format = babl_format ("YA u16");
+          file_format = babl_format ( (bit_depth > 8) ? "YA u16" : "YA u8");
           JxlColorEncodingSetToLinearSRGB (&color_profile, JXL_TRUE);
         }
       else
         {
-          file_format = babl_format ("Y'A u16");
+          file_format = babl_format ( (bit_depth > 8) ? "Y'A u16" : "Y'A u8");
           JxlColorEncodingSetToSRGB (&color_profile, JXL_TRUE);
         }
       pixel_format.num_channels = 2;
       output_info.num_color_channels = 1;
-      output_info.alpha_bits = 16;
+      output_info.alpha_bits = (bit_depth > 8) ? 16 : 8;
       output_info.alpha_exponent_bits = 0;
       output_info.num_extra_channels = 1;
 
@@ -778,12 +796,12 @@ save_image (GFile                *file,
     case GIMP_GRAY_IMAGE:
       if (uses_original_profile && out_linear)
         {
-          file_format = babl_format ("Y u16");
+          file_format = babl_format ( (bit_depth > 8) ? "Y u16" : "Y u8");
           JxlColorEncodingSetToLinearSRGB (&color_profile, JXL_TRUE);
         }
       else
         {
-          file_format = babl_format ("Y' u16");
+          file_format = babl_format ( (bit_depth > 8) ? "Y' u16" : "Y' u8");
           JxlColorEncodingSetToSRGB (&color_profile, JXL_TRUE);
         }
       pixel_format.num_channels = 1;
@@ -793,16 +811,31 @@ save_image (GFile                *file,
       uses_original_profile = FALSE;
       break;
     case GIMP_RGBA_IMAGE:
-      file_format = babl_format_with_space (out_linear ? "RGBA u16" : "R'G'B'A u16", space);
+      if (bit_depth > 8)
+        {
+          file_format = babl_format_with_space (out_linear ? "RGBA u16" : "R'G'B'A u16", space);
+          output_info.alpha_bits = 16;
+        }
+      else
+        {
+          file_format = babl_format_with_space (out_linear ? "RGBA u8" : "R'G'B'A u8", space);
+          output_info.alpha_bits = 8;
+        }
       pixel_format.num_channels = 4;
       JxlColorEncodingSetToSRGB (&color_profile, JXL_FALSE);
       output_info.num_color_channels = 3;
-      output_info.alpha_bits = 16;
       output_info.alpha_exponent_bits = 0;
       output_info.num_extra_channels = 1;
       break;
     case GIMP_RGB_IMAGE:
-      file_format = babl_format_with_space (out_linear ? "RGB u16" : "R'G'B' u16", space);
+      if (bit_depth > 8)
+        {
+          file_format = babl_format_with_space (out_linear ? "RGB u16" : "R'G'B' u16", space);
+        }
+      else
+        {
+          file_format = babl_format_with_space (out_linear ? "RGB u8" : "R'G'B' u8", space);
+        }
       pixel_format.num_channels = 3;
       JxlColorEncodingSetToSRGB (&color_profile, JXL_FALSE);
       output_info.num_color_channels = 3;
@@ -818,7 +851,14 @@ save_image (GFile                *file,
     }
 
 
-  buffer_size = 2 * pixel_format.num_channels * (size_t) output_info.xsize * (size_t) output_info.ysize;
+  if (bit_depth > 8)
+    {
+      buffer_size = 2 * pixel_format.num_channels * (size_t) output_info.xsize * (size_t) output_info.ysize;
+    }
+  else
+    {
+      buffer_size = pixel_format.num_channels * (size_t) output_info.xsize * (size_t) output_info.ysize;
+    }
   picture_buffer = g_malloc (buffer_size);
 
   gimp_progress_update (0.3);
@@ -1045,12 +1085,21 @@ save_dialog (GimpImage     *image,
                                        "speed", GIMP_INT_STORE (store));
   g_object_unref (store);
 
+  store = gimp_int_store_new (_("8 bit/channel"),   8,
+                              _("16 bit/channel"), 16,
+                              NULL);
+
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "save-bit-depth", GIMP_INT_STORE (store));
+  g_object_unref (store);
+
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                     "uses-original-profile", GTK_TYPE_CHECK_BUTTON);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "lossless", "compression",
-                              "speed", "uses-original-profile",
+                              "speed", "save-bit-depth",
+                              "uses-original-profile",
                               NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
