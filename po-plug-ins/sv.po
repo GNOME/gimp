@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-10-25 13:04+0000\n"
-"PO-Revision-Date: 2021-10-25 17:19+0200\n"
+"POT-Creation-Date: 2021-11-28 10:00+0000\n"
+"PO-Revision-Date: 2021-11-28 21:16+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -429,8 +429,8 @@ msgstr "_Vertikal"
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:272
 #: ../plug-ins/file-faxg3/faxg3.c:574 ../plug-ins/file-fits/fits.c:556
 #: ../plug-ins/file-jpeg/jpeg-load.c:228
-#: ../plug-ins/file-psd/psd-image-res-load.c:1069
-#: ../plug-ins/file-psd/psd-load.c:2241 ../plug-ins/file-sgi/sgi.c:474
+#: ../plug-ins/file-psd/psd-image-res-load.c:1067
+#: ../plug-ins/file-psd/psd-load.c:2425 ../plug-ins/file-sgi/sgi.c:474
 #: ../plug-ins/file-tiff/file-tiff-load.c:1358
 #: ../plug-ins/file-webp/file-webp-load.c:166
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
@@ -1027,7 +1027,7 @@ msgstr "Läs in parametrar för CML-utforskare"
 #: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
 #: ../plug-ins/file-ico/ico-load.c:673 ../plug-ins/file-ico/ico-load.c:752
 #: ../plug-ins/file-jpeg/jpeg-load.c:99 ../plug-ins/file-jpeg/jpeg-load.c:540
-#: ../plug-ins/file-psd/psd-load.c:144 ../plug-ins/file-psd/psd-load.c:149
+#: ../plug-ins/file-psd/psd-load.c:155 ../plug-ins/file-psd/psd-load.c:160
 #: ../plug-ins/file-psd/psd-save.c:1818
 #: ../plug-ins/file-psd/psd-thumb-load.c:82
 #: ../plug-ins/file-psd/psd-thumb-load.c:87 ../plug-ins/flame/flame.c:477
@@ -1949,7 +1949,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
 #: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
-#: ../plug-ins/file-psd/psd-load.c:157
+#: ../plug-ins/file-psd/psd-load.c:168
 #: ../plug-ins/file-raw/file-darktable.c:415
 #: ../plug-ins/file-raw/file-rawtherapee.c:343 ../plug-ins/file-sgi/sgi.c:331
 #: ../plug-ins/file-tiff/file-tiff-load.c:247
@@ -2023,7 +2023,8 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:903
-#: ../plug-ins/common/file-html-table.c:361 ../plug-ins/common/file-pcx.c:793
+#: ../plug-ins/common/file-html-table.c:361
+#: ../plug-ins/common/file-jpegxl.c:694 ../plug-ins/common/file-pcx.c:793
 #: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1495
 #: ../plug-ins/common/file-pnm.c:1336 ../plug-ins/common/file-ps.c:1323
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
@@ -2545,7 +2546,7 @@ msgstr "YUV420"
 msgid "Pixel format:"
 msgstr "Bildpunktsformat:"
 
-#: ../plug-ins/common/file-heif.c:2653
+#: ../plug-ins/common/file-heif.c:2653 ../plug-ins/common/file-jpegxl.c:1088
 msgid "8 bit/channel"
 msgstr "8 bitar/kanal"
 
@@ -2824,16 +2825,16 @@ msgid "Unsupported color space in JP2 image '%s'."
 msgstr "JP2-bilden ”%s” har en okänd färgrymd."
 
 #: ../plug-ins/common/file-jpegxl.c:117 ../plug-ins/common/file-jpegxl.c:144
-msgid "JPEG-XL image"
-msgstr "JPEG-XL-bild"
+msgid "JPEG XL image"
+msgstr "JPEG XL-bild"
 
 #: ../plug-ins/common/file-jpegxl.c:120 ../plug-ins/common/file-jpegxl.c:121
-msgid "Loads files in the JPEG-XL file format"
-msgstr "Läser in filer i filformatet JPEG-XL"
+msgid "Loads files in the JPEG XL file format"
+msgstr "Läser in filer i filformatet JPEG XL"
 
 #: ../plug-ins/common/file-jpegxl.c:147 ../plug-ins/common/file-jpegxl.c:148
-msgid "Saves files in the JPEG-XL file format"
-msgstr "Sparar filer i filformatet JPEG-XL"
+msgid "Saves files in the JPEG XL file format"
+msgstr "Sparar filer i filformatet JPEG XL"
 
 #: ../plug-ins/common/file-jpegxl.c:163
 msgid "L_ossless"
@@ -2856,48 +2857,60 @@ msgstr ""
 "visuellt förlustfritt."
 
 #: ../plug-ins/common/file-jpegxl.c:175
+msgid "_Bit depth"
+msgstr "_Bitdjup"
+
+#: ../plug-ins/common/file-jpegxl.c:176
+msgid "Bit depth of exported image"
+msgstr "Bitdjup för exporterad bild"
+
+#: ../plug-ins/common/file-jpegxl.c:181
 msgid "Effort/S_peed"
 msgstr "Ansträngning/_Hastighet"
 
-#: ../plug-ins/common/file-jpegxl.c:176
+#: ../plug-ins/common/file-jpegxl.c:182
 msgid "Encoder effort setting"
 msgstr "Inställning för kodaransträngning"
 
-#: ../plug-ins/common/file-jpegxl.c:182
+#: ../plug-ins/common/file-jpegxl.c:188
 msgid "Save ori_ginal profile"
 msgstr "Spara ursprun_glig profil"
 
-#: ../plug-ins/common/file-jpegxl.c:183
+#: ../plug-ins/common/file-jpegxl.c:189
 msgid "Store ICC profile to exported JXL file"
 msgstr "Lagra ICC-profil till exporterad JXL-fil"
 
-#: ../plug-ins/common/file-jpegxl.c:1017
+#: ../plug-ins/common/file-jpegxl.c:1075
 msgid "falcon (faster)"
 msgstr "falk (snabbare)"
 
-#: ../plug-ins/common/file-jpegxl.c:1018
+#: ../plug-ins/common/file-jpegxl.c:1076
 msgid "cheetah"
 msgstr "gepard"
 
-#: ../plug-ins/common/file-jpegxl.c:1019
+#: ../plug-ins/common/file-jpegxl.c:1077
 msgid "hare"
 msgstr "hare"
 
-#: ../plug-ins/common/file-jpegxl.c:1020
+#: ../plug-ins/common/file-jpegxl.c:1078
 msgid "wombat"
 msgstr "vombat"
 
-#: ../plug-ins/common/file-jpegxl.c:1021
+#: ../plug-ins/common/file-jpegxl.c:1079
 msgid "squirrel"
 msgstr "ekorre"
 
-#: ../plug-ins/common/file-jpegxl.c:1022
+#: ../plug-ins/common/file-jpegxl.c:1080
 msgid "kitten"
 msgstr "kattunge"
 
-#: ../plug-ins/common/file-jpegxl.c:1023
+#: ../plug-ins/common/file-jpegxl.c:1081
 msgid "tortoise (slower)"
 msgstr "sköldpadda (långsammare)"
+
+#: ../plug-ins/common/file-jpegxl.c:1089
+msgid "16 bit/channel"
+msgstr "16 bitar/kanal"
 
 #: ../plug-ins/common/file-mng.c:252
 msgid "MNG animation"
@@ -3043,13 +3056,13 @@ msgid "'%s' is not a PCX file"
 msgstr "”%s” är inte en PCX-fil"
 
 #: ../plug-ins/common/file-pcx.c:445 ../plug-ins/file-bmp/bmp-load.c:726
-#: ../plug-ins/file-psd/psd-load.c:351
+#: ../plug-ins/file-psd/psd-load.c:359
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Bildens bredd är ogiltig eller stöds inte: %d"
 
 #: ../plug-ins/common/file-pcx.c:451 ../plug-ins/file-bmp/bmp-load.c:732
-#: ../plug-ins/file-psd/psd-load.c:343
+#: ../plug-ins/file-psd/psd-load.c:351
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
@@ -6855,108 +6868,108 @@ msgstr "Förhandsgranska export"
 msgid "JPEG format does not support multiple layers."
 msgstr "JPEG-formatet stöder inte flera lager."
 
-#: ../plug-ins/file-psd/psd-load.c:269
+#: ../plug-ins/file-psd/psd-load.c:277
 #: ../plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Fel vid inläsning av PSD-fil: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:322
+#: ../plug-ins/file-psd/psd-load.c:330
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Inte en giltig Photoshop-dokumentfil"
 
-#: ../plug-ins/file-psd/psd-load.c:329
+#: ../plug-ins/file-psd/psd-load.c:337
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Filformatets version stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:336
+#: ../plug-ins/file-psd/psd-load.c:344
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "För många kanaler i fil: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:360
+#: ../plug-ins/file-psd/psd-load.c:368
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Bildens storlek är ogiltig eller stöds inte: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:374 ../plug-ins/file-psd/psd-load.c:384
+#: ../plug-ins/file-psd/psd-load.c:383 ../plug-ins/file-psd/psd-load.c:394
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Färgläget stöds inte: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:411
+#: ../plug-ins/file-psd/psd-load.c:421
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Bitdjupet stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:445 ../plug-ins/file-psd/psd-load.c:455
-#: ../plug-ins/file-psd/psd-load.c:656 ../plug-ins/file-psd/psd-load.c:978
+#: ../plug-ins/file-psd/psd-load.c:455 ../plug-ins/file-psd/psd-load.c:465
+#: ../plug-ins/file-psd/psd-load.c:678 ../plug-ins/file-psd/psd-load.c:1024
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Filen är skadad!"
 
-#: ../plug-ins/file-psd/psd-load.c:607
+#: ../plug-ins/file-psd/psd-load.c:629
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "För många kanaler i lager: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:690
+#: ../plug-ins/file-psd/psd-load.c:713
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Bildens höjd stöds inte eller är ogiltig: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:698
+#: ../plug-ins/file-psd/psd-load.c:722
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Bildens bredd stöds inte eller är ogiltig: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:707
+#: ../plug-ins/file-psd/psd-load.c:732
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Lagrets storlek är ogiltig eller stöds inte: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:725
+#: ../plug-ins/file-psd/psd-load.c:752
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Maskinfons storlek är ogiltig eller stöds inte."
 
-#: ../plug-ins/file-psd/psd-load.c:878
+#: ../plug-ins/file-psd/psd-load.c:929
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Lagermaskens höjd är ogiltig eller stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:886
+#: ../plug-ins/file-psd/psd-load.c:938
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Lagermaskens bredd är ogiltig eller stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:895
+#: ../plug-ins/file-psd/psd-load.c:948
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Lagermaskens storlek är ogiltig eller stöds inte: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1680 ../plug-ins/file-psd/psd-load.c:2215
+#: ../plug-ins/file-psd/psd-load.c:1826 ../plug-ins/file-psd/psd-load.c:2398
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Komprimeringsläget stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2346
+#: ../plug-ins/file-psd/psd-load.c:2590
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2524
+#: ../plug-ins/file-psd/psd-load.c:2768
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Kanalstorleken är ogiltig eller stöds inte"
 
-#: ../plug-ins/file-psd/psd-load.c:2590
+#: ../plug-ins/file-psd/psd-load.c:2837
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Misslyckades med att dekomprimera data"
 
-#: ../plug-ins/file-psd/psd-save.c:481
+#: ../plug-ins/file-psd/psd-save.c:470
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Fel: Kan inte konvertera GIMP-basbildtyp till PSD-läge"
 
