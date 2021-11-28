@@ -38,70 +38,62 @@
 
 
 /**
- * SECTION: gimpplugin
- * @title: GimpPlugIn
- * @short_description: The base class for plug-ins to derive from
+ * GimpPlugIn:
  *
- * The base class for plug-ins to derive from. #GimpPlugIn manages the
- * plug-in's #GimpProcedure objects. The procedures a plug-in
- * implements are registered with GIMP by returning a #GList of their
- * names from either #GimpPlugInClass.query_procedures() or
- * #GimpPlugInClass.init_procedures().
+ * The base class for plug-ins to derive from.
  *
- * Every GIMP plug-in has to implement a #GimpPlugIn subclass and make
- * it known to the libgimp infrastructure and the main GIMP
- * application by passing its #GType to GIMP_MAIN().
+ * GimpPlugIn manages the plug-in's [class@Procedure] objects. The procedures a
+ * plug-in implements are registered with GIMP by returning a list of their
+ * names from either [vfunc@GimpPlugIn.query_procedures] or
+ * [vfunc@GimpPlugIn.init_procedures].
  *
- * GIMP_MAIN() passes the 'argc' and 'argv' of the platform's main()
- * function, along with the #GType, to gimp_main(), which creates an
- * instance of the plug-in's #GimpPlugIn subclass and calls its
- * virtual functions, depending on how the plug-in was called by GIMP.
+ * Every GIMP plug-in has to be implemented as a subclass and make it known to
+ * the libgimp infrastructure and the main GIMP application by passing its
+ * `GType` to [func@MAIN].
  *
- * There are three different ways GIMP calls a plug-in, "query",
- * "init" and "run".
+ * [func@MAIN] passes the 'argc' and 'argv' of the platform's main() function,
+ * along with the `GType`, to [func@main], which creates an instance of the
+ * plug-in's `GimpPlugIn` subclass and calls its virtual functions, depending
+ * on how the plug-in was called by GIMP.
  *
- * The plug-in is called in "query" mode once after it was installed,
- * or when the cached plug-in information in the config file
- * "pluginrc" needs to be recreated. In "query" mode,
- * #GimpPlugInClass.query_procedures() is called and returns a #GList
- * of procedure names the plug-in implements. This is the "normal"
- * place to register procedures, because the existence of most
- * procedures doesn't depend on things that change between GIMP
- * sessions.
+ * There are 3 different ways GIMP calls a plug-in: "query", "init" and "run".
+ *
+ * The plug-in is called in "query" mode once after it was installed, or when
+ * the cached plug-in information in the config file "pluginrc" needs to be
+ * recreated. In "query" mode, [vfunc@GimpPlugIn.query_procedures] is called
+ * and returns a list of procedure names the plug-in implements. This is the
+ * "normal" place to register procedures, because the existence of most
+ * procedures doesn't depend on things that change between GIMP sessions.
  *
  * The plug-in is called in "init" mode at each GIMP startup, and
- * #GimpPlugInClass.init_procedures() is called and returns a #GList
- * of procedure names this plug-in implements. This only happens if
- * the plug-in actually implements
- * #GimpPlugInClass.init_procedures(). A plug-in only needs to
- * implement #GimpPlugInClass.init_procedures() if the existence of
- * its procedures can change between GIMP sessions, for example if
- * they depend on the presence of external tools, or hardware like
- * scanners, or online services, or whatever variable circumstances.
+ * [vfunc@PlugIn.init_procedures] is called and returns a list of procedure
+ * names this plug-in implements. This only happens if the plug-in actually
+ * implements [vfunc@GimpPlugIn.init_procedures]. A plug-in only needs to
+ * implement init_procedures if the existence of its procedures can change
+ * between GIMP sessions, for example if they depend on the presence of
+ * external tools, or hardware like scanners, or online services, or whatever
+ * variable circumstances.
  *
- * In order to register the plug-in's procedures with the main GIMP
- * application in the plug-in's "query" and "init" modes, #GimpPlugIn
- * calls #GimpPlugInClass.create_procedure() on all procedure names in
- * the exact order of the #GList returned by
- * #GimpPlugInClass.query_procedures() or
- * #GimpPlugInClass.init_procedures() and then registers the returned
- * #GimpProcedure using #GimpProcedureClass.register().
+ * In order to register the plug-in's procedures with the main GIMP application
+ * in the plug-in's "query" and "init" modes, [class@PlugIn] calls
+ * [vfunc@PlugIn.create_procedure] on all procedure names in the exact order of
+ * the list returned by [vfunc@PlugIn.query_procedures] or
+ * [vfunc@PlugIn.init_procedures] and then registers the returned
+ * [class@Procedure].
  *
- * The plug-in is called in "run" mode whenever one of the procedures
- * it implements is called by either the main GIMP application or any
- * other plug-in. In "run" mode, one of the procedure names returned
- * by #GimpPlugInClass.query_procedures() or
- * #GimpPlugInClass.init_procedures() is passed to
- * #GimpPlugInClass.create_procedure() which must return a
- * #GimpProcedure for the passed name. The procedure is then executed
- * by calling gimp_procedure_run().
+ * The plug-in is called in "run" mode whenever one of the procedures it
+ * implements is called by either the main GIMP application or any other
+ * plug-in. In "run" mode, one of the procedure names returned by
+ * [vfunc@PlugIn.query_procedures] or [vfunc@PlugIn.init_procedures] is passed
+ * to [vfunc@PlugIn.create_procedure] which must return a [class@Procedure] for
+ * the passed name. The procedure is then executed by calling
+ * [method@Procedure.run].
  *
- * In any of the three modes, #GimpPlugInClass.quit() is called before
- * the plug-in process exits, so the plug-in can perform whatever
- * cleanup necessary.
+ * In any of the three modes, [vfunc@PlugIn.quit] is called before the plug-in
+ * process exits, so the plug-in can perform whatever cleanup necessary.
  *
  * Since: 3.0
- **/
+ */
 
 
 #define WRITE_BUFFER_SIZE 1024
@@ -230,6 +222,11 @@ gimp_plug_in_class_init (GimpPlugInClass *klass)
   object_class->set_property = gimp_plug_in_set_property;
   object_class->get_property = gimp_plug_in_get_property;
 
+  /**
+   * GimpPlugIn:read-channel:
+   *
+   * The [struct@GLib.IOChannel] to read from GIMP
+   */
   props[PROP_READ_CHANNEL] =
     g_param_spec_boxed ("read-channel",
                         "Read channel",
@@ -238,6 +235,11 @@ gimp_plug_in_class_init (GimpPlugInClass *klass)
                         GIMP_PARAM_READWRITE |
                         G_PARAM_CONSTRUCT_ONLY);
 
+  /**
+   * GimpPlugIn:write-channel:
+   *
+   * The [struct@GLib.IOChannel] to write to GIMP
+   */
   props[PROP_WRITE_CHANNEL] =
     g_param_spec_boxed ("write-channel",
                         "Write channel",
@@ -378,7 +380,7 @@ gimp_plug_in_get_property (GObject    *object,
  * gimp_plug_in_set_translation_domain:
  * @plug_in:     A #GimpPlugIn.
  * @domain_name: The name of the textdomain (must be unique).
- * @domain_path: (nullable): A #GFile pointing to the compiled message catalog
+ * @domain_path: (nullable): A file pointing to the compiled message catalog
  *               (may be %NULL).
  *
  * Sets a textdomain for localisation for the @plug_in.
@@ -392,7 +394,7 @@ gimp_plug_in_get_property (GObject    *object,
  * location.
  *
  * This function can only be called in the
- * #GimpPlugInClass.query_procedures() function of a plug-in.
+ * [vfunc@PlugIn.query_procedures] function of a plug-in.
  *
  * Since: 3.0
  **/
@@ -420,13 +422,13 @@ gimp_plug_in_set_translation_domain (GimpPlugIn  *plug_in,
  * Set a help domain and path for the @plug_in.
  *
  * This function registers user documentation for the calling plug-in
- * with the GIMP help system. The domain_uri parameter points to the
+ * with the GIMP help system. The @domain_uri parameter points to the
  * root directory where the plug-in help is installed. For each
  * supported language there should be a file called 'gimp-help.xml'
  * that maps the help IDs to the actual help files.
  *
  * This function can only be called in the
- * #GimpPlugInClass.query_procedures() function of a plug-in.
+ * [vfunc@PlugIn.query_procedures] function of a plug-in.
  *
  * Since: 3.0
  **/
@@ -492,19 +494,19 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
  *
  * This function adds a temporary procedure to @plug_in. It is usually
  * called from a %GIMP_PDB_PROC_TYPE_EXTENSION procedure's
- * #GimpProcedureClass.run().
+ * [vfunc@Procedure.run].
  *
  * A temporary procedure is a procedure which is only available while
  * one of your plug-in's "real" procedures is running.
  *
- * The procedure's type <emphasis>must</emphasis> be
+ * The procedure's type _must_ be
  * %GIMP_PDB_PROC_TYPE_TEMPORARY or the function will fail.
  *
  * NOTE: Normally, plug-in communication is triggered by the plug-in
  * and the GIMP core only responds to the plug-in's requests. You must
  * explicitly enable receiving of temporary procedure run requests
- * using either gimp_plug_in_extension_enable() or
- * gimp_plug_in_extension_process(). See this functions' documentation
+ * using either [method@PlugIn.extension_enable] or
+ * [method@PlugIn.extension_process]. See their respective documentation
  * for details.
  *
  * Since: 3.0
@@ -528,7 +530,7 @@ gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
 /**
  * gimp_plug_in_remove_temp_procedure:
  * @plug_in:        A #GimpPlugIn
- * @procedure_name: The name of a #GimpProcedure added to @plug_in.
+ * @procedure_name: The name of a [class@Procedure] added to @plug_in.
  *
  * This function removes a temporary procedure from @plug_in by the
  * procedure's @procedure_name.
@@ -559,10 +561,10 @@ gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
 
 /**
  * gimp_plug_in_get_temp_procedures:
- * @plug_in: A #GimpPlugIn
+ * @plug_in: A plug-in
  *
  * This function retrieves the list of temporary procedure of @plug_in as
- * added with gimp_plug_in_add_temp_procedure().
+ * added with [method@PlugIn.add_temp_procedure].
  *
  * Returns: (transfer none) (element-type GimpProcedure): The list of
  *          procedures.
@@ -580,7 +582,7 @@ gimp_plug_in_get_temp_procedures (GimpPlugIn *plug_in)
 /**
  * gimp_plug_in_get_temp_procedure:
  * @plug_in:        A #GimpPlugIn
- * @procedure_name: The name of a #GimpProcedure added to @plug_in.
+ * @procedure_name: The name of a [class@Procedure] added to @plug_in.
  *
  * This function retrieves a temporary procedure from @plug_in by the
  * procedure's @procedure_name.
@@ -611,7 +613,7 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
 
 /**
  * gimp_plug_in_extension_enable:
- * @plug_in: A #GimpPlugIn
+ * @plug_in: A plug-in
  *
  * Enables asynchronous processing of messages from the main GIMP
  * application.
@@ -622,18 +624,18 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
  * plug-in are just answers to requests the plug-in made.
  *
  * If the plug-in however registered temporary procedures using
- * gimp_plug_in_add_temp_procedure(), it needs to be able to receive
+ * [method@PlugIn.add_temp_procedure], it needs to be able to receive
  * requests to execute them. Usually this will be done by running
- * gimp_plug_in_extension_process() in an endless loop.
+ * [method@PlugIn.extension_process] in an endless loop.
  *
- * If the plug-in cannot use gimp_plug_in_extension_process(), i.e. if
- * it has a GUI and is hanging around in a #GMainLoop, it must call
- * gimp_plug_in_extension_enable().
+ * If the plug-in cannot use [method@PlugIn.extension_process], i.e. if
+ * it has a GUI and is hanging around in a [class@GLib.MainLoop], it must call
+ * [method@PlugIn.extension_enable].
  *
  * Note that the plug-in does not need to be a
- * #GIMP_PDB_PROC_TYPE_EXTENSION to register temporary procedures.
+ * [const@PDBProcType.EXTENSION] to register temporary procedures.
  *
- * See also: gimp_plug_in_add_temp_procedure().
+ * See also: [method@PlugIn.add_temp_procedure].
  *
  * Since: 3.0
  **/
@@ -653,7 +655,7 @@ gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
 
 /**
  * gimp_plug_in_extension_process:
- * @plug_in: A #GimpPlugIn.
+ * @plug_in: A plug-in.
  * @timeout: The timeout (in ms) to use for the select() call.
  *
  * Processes one message sent by GIMP and returns.
@@ -662,10 +664,10 @@ gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
  * gimp_procedure_extension_ready() to process requests for running
  * temporary procedures.
  *
- * See gimp_plug_in_extension_enable() for an asynchronous way of
+ * See [method@PlugIn.extension_enable] for an asynchronous way of
  * doing the same if running an endless loop is not an option.
  *
- * See also: gimp_plug_in_add_temp_procedure().
+ * See also: [method@PlugIn.add_temp_procedure].
  *
  * Since: 3.0
  **/
@@ -736,7 +738,7 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
 
 /**
  * gimp_plug_in_set_pdb_error_handler:
- * @plug_in: A #GimpPlugIn
+ * @plug_in: A plug-in
  * @handler: Who is responsible for handling procedure call errors.
  *
  * Sets an error handler for procedure calls.
@@ -763,7 +765,7 @@ gimp_plug_in_set_pdb_error_handler (GimpPlugIn          *plug_in,
 
 /**
  * gimp_plug_in_get_pdb_error_handler:
- * @plug_in: A #GimpPlugIn
+ * @plug_in: A plug-in
  *
  * Retrieves the active error handler for procedure calls.
  *

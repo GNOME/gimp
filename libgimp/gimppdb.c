@@ -36,14 +36,10 @@
 
 
 /**
- * SECTION: gimppdb
- * @title: GimpPDB
- * @short_description: Functions for querying and changing procedural
- *                     database (PDB) entries.
+ * GimpPDB:
  *
- * Functions for querying and changing procedural database (PDB)
- * entries.
- **/
+ * Provides access to the Procedural DataBase (PDB).
+ */
 
 
 struct _GimpPDBPrivate
@@ -134,7 +130,7 @@ _gimp_pdb_get_plug_in (GimpPDB *pdb)
 
 /**
  * gimp_pdb_procedure_exists:
- * @pdb:            A #GimpPDB instance.
+ * @pdb:            A PDB instance.
  * @procedure_name: A procedure name
  *
  * This function checks if a procedure exists in the procedural
@@ -159,13 +155,12 @@ gimp_pdb_procedure_exists (GimpPDB     *pdb,
  * @pdb:            A #GimpPDB instance.
  * @procedure_name: A procedure name
  *
- * This function returns the #GimpProcedure which is registered
+ * This function returns the [class@Procedure] which is registered
  * with @procedure_name if it exists, or returns %NULL otherwise.
  *
- * The returned #GimpProcedure is owned by @pdb and must not be
- * modified.
+ * The returned [class@Procedure] is owned by @pdb and must not be modified.
  *
- * Return: (nullable) (transfer none): A #GimpProcedure, or %NULL.
+ * Return: (nullable) (transfer none): A [class@Procedure], or %NULL.
  *
  * Since: 3.0
  **/
@@ -236,7 +231,7 @@ gimp_pdb_run_procedure (GimpPDB     *pdb,
  * @args:           the call arguments.
  *
  * Runs the procedure named @procedure_name with @args given in the
- * order as passed to gimp_pdb_run_procedure().
+ * order as passed to [method@PDB.run_procedure].
  *
  * Returns: (transfer full): the return values for the procedure call.
  *

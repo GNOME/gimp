@@ -1,0 +1,108 @@
+[library]
+namespace = "GimpUi"
+version = "@GIMP_VERSION@"
+browse_url = "https://gitlab.gnome.org/GNOME/gimp/"
+repository_url = "https://gitlab.gnome.org/GNOME/gimp.git"
+website_url = "https://www.gimp.org"
+authors = "GIMP contributors"
+logo_url = "@GIMP_LOGO@"
+license = "GPL-3.0-or-later"
+description = "GIMP UI library"
+dependencies = [
+  'Babl-0.1',
+  'GLib-2.0',
+  'GObject-2.0',
+  'GdkPixbuf-2.0',
+  'Gegl-0.4',
+  'Gio-2.0',
+  'Gtk-3.0',
+  'cairo-1.0',
+]
+devhelp = true
+search_index = true
+
+  [dependencies."Babl-0.1"]
+  name = "Babl"
+  description = "Pixel encoding and color space conversion engine"
+  docs_url = "https://gegl.org/babl"
+
+  [dependencies."GLib-2.0"]
+  name = "GLib"
+  description = "C Utility Library"
+  docs_url = "https://developer.gnome.org/glib/stable"
+
+  [dependencies."GObject-2.0"]
+  name = "GObject"
+  description = "The base type system library"
+  docs_url = "https://developer.gnome.org/gobject/stable"
+
+  [dependencies."GdkPixbuf-2.0"]
+  name = "GdkPixbuf"
+  description = "Image loading and scaling"
+  docs_url = "https://docs.gtk.org/gdk-pixbuf/"
+
+  [dependencies."Gegl-0.4"]
+  name = "Gegl"
+  description = "Generic Graphics Library"
+  docs_url = "https://gegl.org/"
+
+  [dependencies."Gio-2.0"]
+  name = "Gio"
+  description = "GObject interfaces and objects"
+  docs_url = "https://developer.gnome.org/gio/stable"
+
+  [dependencies."Gtk-3.0"]
+  name = "GTK"
+  description = "The GTK toolkit"
+  docs_url = "https://developer.gnome.org/gtk3/stable"
+
+  [dependencies."cairo-1.0"]
+  name = "Cairo"
+  description = "A 2D graphics library with support for multiple output devices"
+  docs_url = "https://www.cairographics.org/manual/"
+
+[theme]
+name = "basic"
+show_index_summary = true
+show_class_hierarchy = true
+
+[source-location]
+base_url = "https://gitlab.gnome.org/GNOME/gimp/-/blob/master/"
+
+[extra]
+content_files = [
+  'widget-gallery.md',
+]
+content_images = [
+  'images/browser.png',
+  'images/busy-box.png',
+  'images/button.png',
+  'images/chain-button.png',
+  'images/color-area.png',
+  'images/color-button.png',
+  'images/color-hex-entry.png',
+  'images/color-notebook.png',
+  'images/color-profile-combo-box.png',
+  'images/color-profile-view.png',
+  'images/color-scale.png',
+  'images/color-scales.png',
+  'images/color-select.png',
+  'images/color-selection.png',
+  'images/dialog.png',
+  'images/enum-combo-box.png',
+  'images/enum-label.png',
+  'images/file-entry.png',
+  'images/frame.png',
+  'images/hint-box.png',
+  'images/int-combo-box.png',
+  'images/memsize-entry.png',
+  'images/number-pair-entry.png',
+  'images/offset-area.png',
+  'images/page-selector.png',
+  'images/path-editor.png',
+  'images/pick-button.png',
+  'images/preview-area.png',
+  'images/ruler.png',
+  'images/string-combo-box.png',
+  'images/unit-combo-box.png',
+]

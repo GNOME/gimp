@@ -20,9 +20,6 @@ Beta software can be found at alpha.gnu.org.
     * pkg-config 0.16.0 (or preferably a newer version)
         - https://www.freedesktop.org/software/pkgconfig/
 
-    * gtkdocize
-        - https://ftp.gnome.org/pub/GNOME/sources/gtk-doc/
-
     * xsltproc
         - ftp://ftp.gnome.org/pub/GNOME/sources/libxslt/1.1/
 

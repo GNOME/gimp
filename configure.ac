@@ -2738,22 +2738,20 @@ if test "x$platform_osx" = "xno" &&
   AC_MSG_RESULT([$with_icc_directory])
 fi
 
-######################################
-# Checks for gtk-doc and docbook-tools
-######################################
+########################################
+# Check for gi-docgen
+########################################
 
-# Check for GTK_DOC_CHECK availability. The GTK_DOC_CHECK invocation
-# must be on its own line, gtkdocize relies on it
-m4_ifdef([GTK_DOC_CHECK], [
-GTK_DOC_CHECK([1.0])
-])
+AC_ARG_ENABLE(gi-docgen, [  --enable-gi-docgen       build gi-docgen documentation (default=yes)], , enable_gi_docgen=yes)
 
-# NOTE: We need to use a separate automake conditional for this
-#       to make this work with the tarballs.
-AM_CONDITIONAL(ENABLE_GTK_DOC, test "x$enable_gtk_doc" = xyes)
+if test "x$enable_gi_docgen" = xyes; then
+  AC_PATH_PROG(GI_DOCGEN, gi-docgen, no)
+  if test "x$GI_DOCGEN" = xno; then
+    add_deps_error([gi-docgen], [Could not find gi-docgen in your PATH.])
+  fi
+fi
 
-AC_ARG_ENABLE(gtk-doc-app, [  --enable-gtk-doc-app    build developer documentation for app (default=no)], , enable_gtk_doc_app=no)
-AM_CONDITIONAL(ENABLE_GTK_DOC_APP, test "x$enable_gtk_doc_app" = xyes)
+AM_CONDITIONAL(ENABLE_GI_DOCGEN, test "x$enable_gi_docgen" = xyes)
 
 ########################################
 # Checks for gir-doc-tool and yelp-build
@@ -3099,19 +3097,11 @@ plug-ins/twain/Makefile
 plug-ins/common/Makefile
 modules/Makefile
 devel-docs/Makefile
-devel-docs/version
-devel-docs/app/Makefile
 devel-docs/g-ir-docs/Makefile
-devel-docs/libgimp/Makefile
-devel-docs/libgimpbase/Makefile
-devel-docs/libgimpconfig/Makefile
-devel-docs/libgimpcolor/Makefile
-devel-docs/libgimpmath/Makefile
-devel-docs/libgimpmodule/Makefile
-devel-docs/libgimpthumb/Makefile
-devel-docs/libgimpwidgets/Makefile
+devel-docs/reference/Makefile
+devel-docs/reference/gimp-ui/Makefile
+devel-docs/reference/gimp/Makefile
 devel-docs/performance-logs/Makefile
-devel-docs/tools/Makefile
 docs/Makefile
 menus/Makefile
 cursors/Makefile
