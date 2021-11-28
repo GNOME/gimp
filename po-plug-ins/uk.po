@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-10-25 15:22+0000\n"
-"PO-Revision-Date: 2021-10-25 18:37+0300\n"
+"POT-Creation-Date: 2021-11-28 10:00+0000\n"
+"PO-Revision-Date: 2021-11-28 18:41+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -425,8 +425,8 @@ msgstr "_Вертикально"
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:272
 #: ../plug-ins/file-faxg3/faxg3.c:574 ../plug-ins/file-fits/fits.c:556
 #: ../plug-ins/file-jpeg/jpeg-load.c:228
-#: ../plug-ins/file-psd/psd-image-res-load.c:1069
-#: ../plug-ins/file-psd/psd-load.c:2241 ../plug-ins/file-sgi/sgi.c:474
+#: ../plug-ins/file-psd/psd-image-res-load.c:1067
+#: ../plug-ins/file-psd/psd-load.c:2425 ../plug-ins/file-sgi/sgi.c:474
 #: ../plug-ins/file-tiff/file-tiff-load.c:1358
 #: ../plug-ins/file-webp/file-webp-load.c:166
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
@@ -1021,7 +1021,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
 #: ../plug-ins/file-ico/ico-load.c:673 ../plug-ins/file-ico/ico-load.c:752
 #: ../plug-ins/file-jpeg/jpeg-load.c:99 ../plug-ins/file-jpeg/jpeg-load.c:540
-#: ../plug-ins/file-psd/psd-load.c:144 ../plug-ins/file-psd/psd-load.c:149
+#: ../plug-ins/file-psd/psd-load.c:155 ../plug-ins/file-psd/psd-load.c:160
 #: ../plug-ins/file-psd/psd-save.c:1818
 #: ../plug-ins/file-psd/psd-thumb-load.c:82
 #: ../plug-ins/file-psd/psd-thumb-load.c:87 ../plug-ins/flame/flame.c:477
@@ -1950,7 +1950,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
 #: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
-#: ../plug-ins/file-psd/psd-load.c:157
+#: ../plug-ins/file-psd/psd-load.c:168
 #: ../plug-ins/file-raw/file-darktable.c:415
 #: ../plug-ins/file-raw/file-rawtherapee.c:343 ../plug-ins/file-sgi/sgi.c:331
 #: ../plug-ins/file-tiff/file-tiff-load.c:247
@@ -2024,7 +2024,8 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:903
-#: ../plug-ins/common/file-html-table.c:361 ../plug-ins/common/file-pcx.c:793
+#: ../plug-ins/common/file-html-table.c:361
+#: ../plug-ins/common/file-jpegxl.c:694 ../plug-ins/common/file-pcx.c:793
 #: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1495
 #: ../plug-ins/common/file-pnm.c:1336 ../plug-ins/common/file-ps.c:1323
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
@@ -2497,7 +2498,6 @@ msgstr "вміст зображення"
 
 #: ../plug-ins/common/file-heif.c:1527
 #, c-format
-#| msgid "Exporting '%s'"
 msgid "Exporting '%s' using %s encoder"
 msgstr "Експортуємо «%s» за допомогою кодувальника %s"
 
@@ -2551,7 +2551,7 @@ msgstr "YUV420"
 msgid "Pixel format:"
 msgstr "Формат пікселів:"
 
-#: ../plug-ins/common/file-heif.c:2653
+#: ../plug-ins/common/file-heif.c:2653 ../plug-ins/common/file-jpegxl.c:1088
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
@@ -2834,16 +2834,19 @@ msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Невідомий колірний простір у зображенні JP2 «%s»."
 
 #: ../plug-ins/common/file-jpegxl.c:117 ../plug-ins/common/file-jpegxl.c:144
-msgid "JPEG-XL image"
-msgstr "Зображення JPEG-XL"
+#| msgid "JPEG-XL image"
+msgid "JPEG XL image"
+msgstr "Зображення JPEG XL"
 
 #: ../plug-ins/common/file-jpegxl.c:120 ../plug-ins/common/file-jpegxl.c:121
-msgid "Loads files in the JPEG-XL file format"
-msgstr "Завантажує файли у форматі JPEG-XL"
+#| msgid "Loads files in the JPEG-XL file format"
+msgid "Loads files in the JPEG XL file format"
+msgstr "Завантажує файли у форматі JPEG XL"
 
 #: ../plug-ins/common/file-jpegxl.c:147 ../plug-ins/common/file-jpegxl.c:148
-msgid "Saves files in the JPEG-XL file format"
-msgstr "Зберігає файли у форматі JPEG-XL"
+#| msgid "Saves files in the JPEG-XL file format"
+msgid "Saves files in the JPEG XL file format"
+msgstr "Зберігає файли у форматі JPEG XL"
 
 #: ../plug-ins/common/file-jpegxl.c:163
 msgid "L_ossless"
@@ -2866,48 +2869,63 @@ msgstr ""
 "0 .. 15. 1.0 = візуально без втрат."
 
 #: ../plug-ins/common/file-jpegxl.c:175
+#| msgid "Bit depth:"
+msgid "_Bit depth"
+msgstr "_Бітова глибина"
+
+#: ../plug-ins/common/file-jpegxl.c:176
+msgid "Bit depth of exported image"
+msgstr ""
+"Бітова глибина кольорів експортованого зображення"
+
+#: ../plug-ins/common/file-jpegxl.c:181
 msgid "Effort/S_peed"
 msgstr "Зусилля/_Швидкість"
 
-#: ../plug-ins/common/file-jpegxl.c:176
+#: ../plug-ins/common/file-jpegxl.c:182
 msgid "Encoder effort setting"
 msgstr "Параметр рівня стискання кодувальника"
 
-#: ../plug-ins/common/file-jpegxl.c:182
+#: ../plug-ins/common/file-jpegxl.c:188
 msgid "Save ori_ginal profile"
 msgstr "Зберегти _початковий профіль"
 
-#: ../plug-ins/common/file-jpegxl.c:183
+#: ../plug-ins/common/file-jpegxl.c:189
 msgid "Store ICC profile to exported JXL file"
 msgstr "Зберегти профіль ICC у експортованому файлі JXL"
 
-#: ../plug-ins/common/file-jpegxl.c:1017
+#: ../plug-ins/common/file-jpegxl.c:1075
 msgid "falcon (faster)"
 msgstr "сокіл (швидко)"
 
-#: ../plug-ins/common/file-jpegxl.c:1018
+#: ../plug-ins/common/file-jpegxl.c:1076
 msgid "cheetah"
 msgstr "гепард"
 
-#: ../plug-ins/common/file-jpegxl.c:1019
+#: ../plug-ins/common/file-jpegxl.c:1077
 msgid "hare"
 msgstr "заєць"
 
-#: ../plug-ins/common/file-jpegxl.c:1020
+#: ../plug-ins/common/file-jpegxl.c:1078
 msgid "wombat"
 msgstr "вомбат"
 
-#: ../plug-ins/common/file-jpegxl.c:1021
+#: ../plug-ins/common/file-jpegxl.c:1079
 msgid "squirrel"
 msgstr "білка"
 
-#: ../plug-ins/common/file-jpegxl.c:1022
+#: ../plug-ins/common/file-jpegxl.c:1080
 msgid "kitten"
 msgstr "кошеня"
 
-#: ../plug-ins/common/file-jpegxl.c:1023
+#: ../plug-ins/common/file-jpegxl.c:1081
 msgid "tortoise (slower)"
 msgstr "черепаха (повільно)"
+
+#: ../plug-ins/common/file-jpegxl.c:1089
+#| msgid "10 bit/channel"
+msgid "16 bit/channel"
+msgstr "16 біт/канал"
 
 #: ../plug-ins/common/file-mng.c:252
 msgid "MNG animation"
@@ -3052,13 +3070,13 @@ msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
 #: ../plug-ins/common/file-pcx.c:445 ../plug-ins/file-bmp/bmp-load.c:726
-#: ../plug-ins/file-psd/psd-load.c:351
+#: ../plug-ins/file-psd/psd-load.c:359
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Непідтримувана ширина зображення: %d"
 
 #: ../plug-ins/common/file-pcx.c:451 ../plug-ins/file-bmp/bmp-load.c:732
-#: ../plug-ins/file-psd/psd-load.c:343
+#: ../plug-ins/file-psd/psd-load.c:351
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Непідтримувана висота зображення: %d"
@@ -6878,108 +6896,108 @@ msgstr "Перегляд файлу для експорту"
 msgid "JPEG format does not support multiple layers."
 msgstr "Для формату JPEG не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/file-psd/psd-load.c:269
+#: ../plug-ins/file-psd/psd-load.c:277
 #: ../plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Помилка при відкритті файлу PSD: «%s»"
 
-#: ../plug-ins/file-psd/psd-load.c:322
+#: ../plug-ins/file-psd/psd-load.c:330
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Цей файл — некоректний документ Photoshop"
 
-#: ../plug-ins/file-psd/psd-load.c:329
+#: ../plug-ins/file-psd/psd-load.c:337
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Непідтримувана версія формату файлу: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:336
+#: ../plug-ins/file-psd/psd-load.c:344
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Надто багато каналів у файлі: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:360
+#: ../plug-ins/file-psd/psd-load.c:368
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Непідтримуваний або хибний розмір зображення: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:374 ../plug-ins/file-psd/psd-load.c:384
+#: ../plug-ins/file-psd/psd-load.c:383 ../plug-ins/file-psd/psd-load.c:394
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Непідтримувана модель кольорів: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:411
+#: ../plug-ins/file-psd/psd-load.c:421
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Непідтримувана розрядність на канал: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:445 ../plug-ins/file-psd/psd-load.c:455
-#: ../plug-ins/file-psd/psd-load.c:656 ../plug-ins/file-psd/psd-load.c:978
+#: ../plug-ins/file-psd/psd-load.c:455 ../plug-ins/file-psd/psd-load.c:465
+#: ../plug-ins/file-psd/psd-load.c:678 ../plug-ins/file-psd/psd-load.c:1024
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Цей файл пошкоджений!"
 
-#: ../plug-ins/file-psd/psd-load.c:607
+#: ../plug-ins/file-psd/psd-load.c:629
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Надто багато каналів у шарі: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:690
+#: ../plug-ins/file-psd/psd-load.c:713
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Непідтримувана чи некоректна висота шару: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:698
+#: ../plug-ins/file-psd/psd-load.c:722
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Непідтримувана чи некоректні ширина шару: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:707
+#: ../plug-ins/file-psd/psd-load.c:732
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір шару: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:725
+#: ../plug-ins/file-psd/psd-load.c:752
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Непідтримуваний або некоректний розмір відомостей щодо маски."
 
-#: ../plug-ins/file-psd/psd-load.c:878
+#: ../plug-ins/file-psd/psd-load.c:929
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Непідтримувана чи некоректна висота маски: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:886
+#: ../plug-ins/file-psd/psd-load.c:938
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Непідтримувана чи хибна ширина маски: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:895
+#: ../plug-ins/file-psd/psd-load.c:948
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1680 ../plug-ins/file-psd/psd-load.c:2215
+#: ../plug-ins/file-psd/psd-load.c:1826 ../plug-ins/file-psd/psd-load.c:2398
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2346
+#: ../plug-ins/file-psd/psd-load.c:2590
 msgid "Extra"
 msgstr "Додатково"
 
-#: ../plug-ins/file-psd/psd-load.c:2524
+#: ../plug-ins/file-psd/psd-load.c:2768
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: ../plug-ins/file-psd/psd-load.c:2590
+#: ../plug-ins/file-psd/psd-load.c:2837
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
-#: ../plug-ins/file-psd/psd-save.c:481
+#: ../plug-ins/file-psd/psd-save.c:470
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Помилка: Неможливо перетворити основний тип зображення GIMP на режим PSD"
