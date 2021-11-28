@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-10-26 17:12+0000\n"
-"PO-Revision-Date: 2021-10-27 16:22+0100\n"
+"POT-Creation-Date: 2021-11-28 10:00+0000\n"
+"PO-Revision-Date: 2021-11-28 18:17+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -431,8 +431,8 @@ msgstr "_Vertical"
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:272
 #: ../plug-ins/file-faxg3/faxg3.c:574 ../plug-ins/file-fits/fits.c:556
 #: ../plug-ins/file-jpeg/jpeg-load.c:228
-#: ../plug-ins/file-psd/psd-image-res-load.c:1069
-#: ../plug-ins/file-psd/psd-load.c:2245 ../plug-ins/file-sgi/sgi.c:474
+#: ../plug-ins/file-psd/psd-image-res-load.c:1067
+#: ../plug-ins/file-psd/psd-load.c:2425 ../plug-ins/file-sgi/sgi.c:474
 #: ../plug-ins/file-tiff/file-tiff-load.c:1358
 #: ../plug-ins/file-webp/file-webp-load.c:166
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
@@ -996,12 +996,12 @@ msgstr "Guardar parâmetros do explorador CML"
 #: ../plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Não foi possível abrir \"%s\" para escrita: %s"
+msgstr "Não foi possível abrir '%s' para escrita: %s"
 
 #: ../plug-ins/common/cml-explorer.c:2221
 #, c-format
 msgid "Parameters were saved to '%s'"
-msgstr "Os parâmetros foram guardados em \"%s\""
+msgstr "Os parâmetros foram guardados em '%s'"
 
 #: ../plug-ins/common/cml-explorer.c:2243
 msgid "Load CML Explorer Parameters"
@@ -1025,7 +1025,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
 #: ../plug-ins/file-ico/ico-load.c:673 ../plug-ins/file-ico/ico-load.c:752
 #: ../plug-ins/file-jpeg/jpeg-load.c:99 ../plug-ins/file-jpeg/jpeg-load.c:540
-#: ../plug-ins/file-psd/psd-load.c:144 ../plug-ins/file-psd/psd-load.c:149
+#: ../plug-ins/file-psd/psd-load.c:155 ../plug-ins/file-psd/psd-load.c:160
 #: ../plug-ins/file-psd/psd-save.c:1818
 #: ../plug-ins/file-psd/psd-thumb-load.c:82
 #: ../plug-ins/file-psd/psd-thumb-load.c:87 ../plug-ins/flame/flame.c:477
@@ -1036,7 +1036,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: ../plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Não foi possível abrir \"%s\" para leitura: %s"
+msgstr "Não foi possível abrir '%s' para leitura: %s"
 
 #: ../plug-ins/common/cml-explorer.c:2361
 msgid "Error: it's not CML parameter file."
@@ -1045,13 +1045,13 @@ msgstr "Erro: não é um ficheiro de parâmetros CML."
 #: ../plug-ins/common/cml-explorer.c:2368
 #, c-format
 msgid "Warning: '%s' is an old format file."
-msgstr "Aviso: \"%s\" é um ficheiro com formato antigo."
+msgstr "Aviso: '%s' é um ficheiro com formato antigo."
 
 #: ../plug-ins/common/cml-explorer.c:2372
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
-"Aviso: \"%s\" é um ficheiro de parâmetros para uma versão mais recente do "
+"Aviso: '%s' é um ficheiro de parâmetros para uma versão mais recente do "
 "explorador CML."
 
 #: ../plug-ins/common/cml-explorer.c:2435
@@ -1460,7 +1460,7 @@ msgstr "Não funciona em seleções vazias."
 #: ../plug-ins/common/curve-bend.c:899
 #, c-format
 msgid "Error while reading '%s': %s"
-msgstr "Surgiu um erro ao ler \"%s\": %s"
+msgstr "Surgiu um erro ao ler '%s': %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -1958,13 +1958,13 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
 #: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
-#: ../plug-ins/file-psd/psd-load.c:157
+#: ../plug-ins/file-psd/psd-load.c:168
 #: ../plug-ins/file-raw/file-darktable.c:415
 #: ../plug-ins/file-raw/file-rawtherapee.c:343 ../plug-ins/file-sgi/sgi.c:331
 #: ../plug-ins/file-tiff/file-tiff-load.c:247
 #, c-format
 msgid "Opening '%s'"
-msgstr "A abrir \"%s\""
+msgstr "A abrir '%s'"
 
 #: ../plug-ins/common/file-cel.c:445
 #, c-format
@@ -1999,40 +1999,41 @@ msgstr "EOF ou erro ao ler os dados da imagem"
 #: ../plug-ins/common/file-cel.c:609
 #, c-format
 msgid "Unsupported bit depth (%d)!"
-msgstr "Profundidade de cor não suportada (%d)!"
+msgstr "Profundidade de bit não suportada (%d)!"
 
 #: ../plug-ins/common/file-cel.c:694 ../plug-ins/common/file-cel.c:706
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
-msgstr "\"%s\": EOF ou erro ao ler o cabeçalho da paleta"
+msgstr "'%s': EOF ou erro ao ler o cabeçalho da paleta"
 
 #: ../plug-ins/common/file-cel.c:715
 #, c-format
 msgid "'%s': is not a KCF palette file"
-msgstr "\"%s\": não é um ficheiro de paleta KCF"
+msgstr "'%s': não é um ficheiro de paleta KCF"
 
 #: ../plug-ins/common/file-cel.c:724
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
-msgstr "\"%s\": valor bpp ilegal na paleta: %hhu"
+msgstr "'%s': valor bpp ilegal na paleta: %hhu"
 
 #: ../plug-ins/common/file-cel.c:733
 #, c-format
 msgid "'%s': illegal number of colors: %u"
-msgstr "\"%s\": número de cores ilegal: %u"
+msgstr "'%s': número de cores ilegal: %u"
 
 #: ../plug-ins/common/file-cel.c:748 ../plug-ins/common/file-cel.c:765
 #: ../plug-ins/common/file-cel.c:785
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
-msgstr "\"%s\": EOF ou erro ao ler dados da paleta"
+msgstr "'%s': EOF ou erro ao ler dados da paleta"
 
 #. init the progress meter
 #.
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:903
-#: ../plug-ins/common/file-html-table.c:361 ../plug-ins/common/file-pcx.c:793
+#: ../plug-ins/common/file-html-table.c:361
+#: ../plug-ins/common/file-jpegxl.c:694 ../plug-ins/common/file-pcx.c:793
 #: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1495
 #: ../plug-ins/common/file-pnm.c:1336 ../plug-ins/common/file-ps.c:1323
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
@@ -2044,7 +2045,7 @@ msgstr "\"%s\": EOF ou erro ao ler dados da paleta"
 #: ../plug-ins/file-tiff/file-tiff-save.c:1012
 #, c-format
 msgid "Exporting '%s'"
-msgstr "A exportar \"%s\""
+msgstr "A exportar '%s'"
 
 #: ../plug-ins/common/file-csource.c:119
 msgid "C source code"
@@ -2089,7 +2090,7 @@ msgstr "Guardar canal _alfa (RGBA/RGB)"
 
 #: ../plug-ins/common/file-csource.c:1033
 msgid "Save as _RGB565 (16-bit)"
-msgstr "Guardar como _RGB565 (16-bit)"
+msgstr "Guardar como _RGB565 (16-bits)"
 
 #. Max Alpha Value
 #.
@@ -2116,7 +2117,7 @@ msgstr "Sem extensão definida, a guardar como XCF comprimido."
 #: ../plug-ins/common/file-compressor.c:460
 #, c-format
 msgid "Compressing '%s'"
-msgstr "A comprimir /\"%s/\""
+msgstr "A comprimir '%s'"
 
 #: ../plug-ins/common/file-compressor.c:498
 msgid "No sensible file extension, attempting to load with file magic."
@@ -2130,7 +2131,7 @@ msgstr "Atalho de área de trabalho"
 #: ../plug-ins/common/file-desktop-link.c:196
 #, c-format
 msgid "Error loading desktop file '%s': %s"
-msgstr "Erro ao carregar ficheiro de atalho de área de trabalho \"%s\": %s"
+msgstr "Erro ao carregar ficheiro de atalho de área de trabalho '%s': %s"
 
 #: ../plug-ins/common/file-dicom.c:170
 msgid "DICOM image"
@@ -2148,7 +2149,7 @@ msgstr "O formato Dicom não suporta várias camadas."
 #: ../plug-ins/common/file-dicom.c:402
 #, c-format
 msgid "'%s' is not a DICOM file."
-msgstr "\"%s\" não é um ficheiro DICOM."
+msgstr "'%s' não é um ficheiro DICOM."
 
 #: ../plug-ins/common/file-dicom.c:575
 #, c-format
@@ -2203,7 +2204,7 @@ msgstr "O complemento de exportação GEGL não suporta várias camadas."
 #: ../plug-ins/common/file-gegl.c:366
 #, c-format
 msgid "Could not open '%s'"
-msgstr "Não é possível abrir \"%s\""
+msgstr "Não é possível abrir '%s'"
 
 #: ../plug-ins/common/file-gif-load.c:174
 #: ../plug-ins/common/file-gif-save.c:147
@@ -2226,7 +2227,7 @@ msgstr "Fundo (%d%s)"
 #: ../plug-ins/common/file-gif-load.c:1065
 #, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr "A abrir \"%s\" (fotograma %d)"
+msgstr "A abrir '%s' (fotograma %d)"
 
 #: ../plug-ins/common/file-gif-load.c:1094
 #, c-format
@@ -2270,15 +2271,15 @@ msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Não é possível exportar \"%s\". O formato de ficheiro GIF não suporta "
-"imagens maiores que %d píxeis de largura ou altura."
+"Não é possível exportar '%s'. O formato de ficheiro GIF não suporta imagens "
+"maiores que %d píxeis de largura ou altura."
 
 #: ../plug-ins/common/file-gif-save.c:789
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
-"O formato GIF só suporta comentários com codificação ASCII 7bit. Não foi "
+"O formato GIF só suporta comentários com codificação ASCII 7bits. Não foi "
 "guardado nenhum comentário."
 
 #: ../plug-ins/common/file-gif-save.c:876
@@ -2557,21 +2558,21 @@ msgstr "YUV420"
 msgid "Pixel format:"
 msgstr "Formato do píxel:"
 
-#: ../plug-ins/common/file-heif.c:2653
+#: ../plug-ins/common/file-heif.c:2653 ../plug-ins/common/file-jpegxl.c:1088
 msgid "8 bit/channel"
-msgstr "8 bit / canal"
+msgstr "8 bits/canal"
 
 #: ../plug-ins/common/file-heif.c:2654
 msgid "10 bit/channel"
-msgstr "10 bit / canal"
+msgstr "10 bits/canal"
 
 #: ../plug-ins/common/file-heif.c:2655
 msgid "12 bit/channel"
-msgstr "12 bit / canal"
+msgstr "12 bits/canal"
 
 #: ../plug-ins/common/file-heif.c:2662
 msgid "Bit depth:"
-msgstr "Profundidade de cor:"
+msgstr "Profundidade de bit:"
 
 #: ../plug-ins/common/file-heif.c:2665
 msgid "Slow"
@@ -2781,7 +2782,7 @@ msgstr "Espaço de cores:"
 #: ../plug-ins/common/file-jp2-load.c:1092 ../plug-ins/common/file-wmf.c:1007
 #, c-format
 msgid "Could not open '%s' for reading"
-msgstr "Não foi possível abrir \"%s\" para leitura"
+msgstr "Não foi possível abrir '%s' para leitura"
 
 #: ../plug-ins/common/file-jp2-load.c:1101
 #, c-format
@@ -2791,7 +2792,7 @@ msgstr "Falha ao inicializar o descodificador para “%s”, sem memória RAM?"
 #: ../plug-ins/common/file-jp2-load.c:1117
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
-msgstr "Não foi possível definir os parâmetros no descodificador para \"%s\"."
+msgstr "Não foi possível definir os parâmetros no descodificador para '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1125
 #, c-format
@@ -2801,7 +2802,7 @@ msgstr "Não foi possível ler o cabeçalho JP2 de “%s”."
 #: ../plug-ins/common/file-jp2-load.c:1133
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
-msgstr "Não foi possível descodificar a imagem JP2 em \"%s\"."
+msgstr "Não foi possível descodificar a imagem JP2 em '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1141
 #, c-format
@@ -2816,7 +2817,7 @@ msgstr "Não foi possível descodificar a imagem CIELAB JP2 em “%s”."
 #: ../plug-ins/common/file-jp2-load.c:1229
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
-msgstr "Espaço de cor desconhecido no fluxo de código JP2 \"%s\"."
+msgstr "Espaço de cor desconhecido no fluxo de código JP2 '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1240
 #, c-format
@@ -2839,16 +2840,16 @@ msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Modo de cor não suportado na imagem JP2: “%s”."
 
 #: ../plug-ins/common/file-jpegxl.c:117 ../plug-ins/common/file-jpegxl.c:144
-msgid "JPEG-XL image"
-msgstr "Imagem JPEG-XL"
+msgid "JPEG XL image"
+msgstr "Imagem JPEG XL"
 
 #: ../plug-ins/common/file-jpegxl.c:120 ../plug-ins/common/file-jpegxl.c:121
-msgid "Loads files in the JPEG-XL file format"
-msgstr "Carrega ficheiros no formato de ficheiro JPEG-XL"
+msgid "Loads files in the JPEG XL file format"
+msgstr "Carrega ficheiros no formato de ficheiro JPEG XL"
 
 #: ../plug-ins/common/file-jpegxl.c:147 ../plug-ins/common/file-jpegxl.c:148
-msgid "Saves files in the JPEG-XL file format"
-msgstr "Guarda ficheiros no formato de ficheiro JPEG-XL"
+msgid "Saves files in the JPEG XL file format"
+msgstr "Guarda ficheiros no formato de ficheiro JPEG XL"
 
 #: ../plug-ins/common/file-jpegxl.c:163
 msgid "L_ossless"
@@ -2860,7 +2861,7 @@ msgstr "Usar compressão sem perdas"
 
 #: ../plug-ins/common/file-jpegxl.c:169
 msgid "Co_mpression/maxError"
-msgstr "_Compressão/maxErro"
+msgstr "Co_mpressão/maxErro"
 
 #: ../plug-ins/common/file-jpegxl.c:170
 msgid ""
@@ -2871,48 +2872,60 @@ msgstr ""
 "visualmente sem perdas."
 
 #: ../plug-ins/common/file-jpegxl.c:175
+msgid "_Bit depth"
+msgstr "Profundidade de _bit"
+
+#: ../plug-ins/common/file-jpegxl.c:176
+msgid "Bit depth of exported image"
+msgstr "Profundidade de bit da imagem exportada"
+
+#: ../plug-ins/common/file-jpegxl.c:181
 msgid "Effort/S_peed"
 msgstr "Esforço/Velocidade"
 
-#: ../plug-ins/common/file-jpegxl.c:176
+#: ../plug-ins/common/file-jpegxl.c:182
 msgid "Encoder effort setting"
 msgstr "Definição de esforço do codificador"
 
-#: ../plug-ins/common/file-jpegxl.c:182
+#: ../plug-ins/common/file-jpegxl.c:188
 msgid "Save ori_ginal profile"
 msgstr "Guardar perfil original"
 
-#: ../plug-ins/common/file-jpegxl.c:183
+#: ../plug-ins/common/file-jpegxl.c:189
 msgid "Store ICC profile to exported JXL file"
 msgstr "Armazenar perfil ICC para ficheiro JXL exportado"
 
-#: ../plug-ins/common/file-jpegxl.c:1017
+#: ../plug-ins/common/file-jpegxl.c:1075
 msgid "falcon (faster)"
 msgstr "falcão (mais rápido)"
 
-#: ../plug-ins/common/file-jpegxl.c:1018
+#: ../plug-ins/common/file-jpegxl.c:1076
 msgid "cheetah"
 msgstr "chita"
 
-#: ../plug-ins/common/file-jpegxl.c:1019
+#: ../plug-ins/common/file-jpegxl.c:1077
 msgid "hare"
 msgstr "lebre"
 
-#: ../plug-ins/common/file-jpegxl.c:1020
+#: ../plug-ins/common/file-jpegxl.c:1078
 msgid "wombat"
 msgstr "morcego"
 
-#: ../plug-ins/common/file-jpegxl.c:1021
+#: ../plug-ins/common/file-jpegxl.c:1079
 msgid "squirrel"
 msgstr "esquilo"
 
-#: ../plug-ins/common/file-jpegxl.c:1022
+#: ../plug-ins/common/file-jpegxl.c:1080
 msgid "kitten"
 msgstr "gatinho"
 
-#: ../plug-ins/common/file-jpegxl.c:1023
+#: ../plug-ins/common/file-jpegxl.c:1081
 msgid "tortoise (slower)"
 msgstr "tartaruga (mais lenta)"
+
+#: ../plug-ins/common/file-jpegxl.c:1089
+msgid "16 bit/channel"
+msgstr "10 bits/canal"
 
 #: ../plug-ins/common/file-mng.c:252
 msgid "MNG animation"
@@ -3050,21 +3063,21 @@ msgstr "O formato PCX não suporta várias camadas."
 #: ../plug-ins/common/file-pcx.c:418
 #, c-format
 msgid "Could not read header from '%s'"
-msgstr "Não foi possível ler o cabeçalho de \"%s\""
+msgstr "Não foi possível ler o cabeçalho de '%s'"
 
 #: ../plug-ins/common/file-pcx.c:429
 #, c-format
 msgid "'%s' is not a PCX file"
-msgstr "\"%s\" não é um ficheiro PCX"
+msgstr "'%s' não é um ficheiro PCX"
 
 #: ../plug-ins/common/file-pcx.c:445 ../plug-ins/file-bmp/bmp-load.c:726
-#: ../plug-ins/file-psd/psd-load.c:351
+#: ../plug-ins/file-psd/psd-load.c:359
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Largura da imagem não suportada ou inválida: %d"
 
 #: ../plug-ins/common/file-pcx.c:451 ../plug-ins/file-bmp/bmp-load.c:732
-#: ../plug-ins/file-psd/psd-load.c:343
+#: ../plug-ins/file-psd/psd-load.c:351
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Altura da imagem não suportada ou inválida: %d"
@@ -3113,7 +3126,7 @@ msgstr "Contorno inferior fora dos limites (tem de ser < %d): %d"
 #: ../plug-ins/common/file-pcx.c:974
 #, c-format
 msgid "Writing to file '%s' failed: %s"
-msgstr "Ocorreu uma falha ao escrever no ficheiro \"%s\": %s"
+msgstr "Ocorreu uma falha ao escrever no ficheiro '%s': %s"
 
 #: ../plug-ins/common/file-pdf-load.c:329
 #: ../plug-ins/common/file-pdf-save.c:357
@@ -3151,7 +3164,7 @@ msgstr "Palavra-passe errada! Por favor introduza a correta:"
 #: ../plug-ins/common/file-pdf-load.c:697
 #, c-format
 msgid "Could not load '%s': %s"
-msgstr "Não foi possível carregar \"%s\": %s"
+msgstr "Não foi possível carregar '%s': %s"
 
 #: ../plug-ins/common/file-pdf-load.c:861
 #, c-format
@@ -3347,29 +3360,29 @@ msgstr "Erro ao carregar o ficheiro PNG: %s\n"
 #: ../plug-ins/common/file-png.c:623
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
-msgstr "Erro ao criar a estrutura de leitura PNG ao carregar \"%s\"."
+msgstr "Erro ao criar a estrutura de leitura PNG ao carregar '%s'."
 
 #: ../plug-ins/common/file-png.c:632
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
-"Erro ao ler \"%s\". Não foi possível criar a estrutura de informação do "
+"Erro ao ler '%s'. Não foi possível criar a estrutura de informação do "
 "cabeçalho PNG."
 
 #: ../plug-ins/common/file-png.c:640
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
-msgstr "Erro ao ler o ficheiro \"%s\". Estará corrompido?"
+msgstr "Erro ao ler o ficheiro '%s'. Estará corrompido?"
 
 #: ../plug-ins/common/file-png.c:903
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
-msgstr "Modelo de cor desconhecido no ficheiro PNG \"%s\"."
+msgstr "Modelo de cor desconhecido no ficheiro PNG '%s'."
 
 #: ../plug-ins/common/file-png.c:916 ../plug-ins/file-exr/file-exr.c:253
 #, c-format
 msgid "Could not create new image for '%s': %s"
-msgstr "Não foi possível criar nova imagem para \"%s\": %s"
+msgstr "Não foi possível criar nova imagem para '%s': %s"
 
 #: ../plug-ins/common/file-png.c:984
 msgid ""
@@ -3403,7 +3416,7 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:1460
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Erro ao criar “struct” de escrita PNG ao exportar \"%s\"."
+msgstr "Erro ao criar “struct” de escrita PNG ao exportar '%s'."
 
 #: ../plug-ins/common/file-png.c:1469
 #, c-format
@@ -3415,7 +3428,7 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:1477
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
-msgstr "Erro ao exportar \"%s\". Não foi possível exportar a imagem."
+msgstr "Erro ao exportar '%s'. Não foi possível exportar a imagem."
 
 #: ../plug-ins/common/file-png.c:2289 ../plug-ins/common/file-ps.c:3682
 msgid "Automatic"
@@ -3558,7 +3571,7 @@ msgstr "O complemento PostScript não suporta várias camadas."
 #: ../plug-ins/common/file-ps.c:1157
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
-msgstr "Não foi possível interpretar o ficheiro PostScript \"%s\""
+msgstr "Não foi possível interpretar o ficheiro PostScript '%s'"
 
 #: ../plug-ins/common/file-ps.c:1305
 #, c-format
@@ -3758,7 +3771,7 @@ msgstr "Cabeçalho de bloco inválido"
 #: ../plug-ins/common/file-psp.c:975
 #, c-format
 msgid "Seek error: %s"
-msgstr "Erro de procura: \"%s\""
+msgstr "Erro de procura: '%s'"
 
 #: ../plug-ins/common/file-psp.c:998
 #, c-format
@@ -3778,7 +3791,7 @@ msgstr "Tipo de compressão desconhecido: %d"
 #: ../plug-ins/common/file-psp.c:1071 ../plug-ins/common/file-psp.c:1078
 #, c-format
 msgid "Unsupported bit depth %d"
-msgstr "Profundidade de cor não suportada: %d"
+msgstr "Profundidade de bit não suportada: %d"
 
 #: ../plug-ins/common/file-psp.c:1125
 #, c-format
@@ -3909,7 +3922,7 @@ msgstr "Dados do modelo de elevação digital (DEM)"
 #: ../plug-ins/common/file-raw-data.c:384
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
-msgstr "Não foi possível abrir \"%s\" para verificação do tamanho: %s"
+msgstr "Não foi possível abrir '%s' para verificação do tamanho: %s"
 
 #: ../plug-ins/common/file-raw-data.c:464
 #, c-format
@@ -4026,11 +4039,11 @@ msgstr "Alfa indexada"
 
 #: ../plug-ins/common/file-raw-data.c:1883
 msgid "Gray unsigned 16 bit Big Endian"
-msgstr "Cinzento unsigned 16 bit Big Endian"
+msgstr "Cinzento unsigned 16 bits Big Endian"
 
 #: ../plug-ins/common/file-raw-data.c:1884
 msgid "Gray unsigned 16 bit Little Endian"
-msgstr "Cinzento unsigned 16 bit Little Endian"
+msgstr "Cinzento unsigned 16 bits Little Endian"
 
 #: ../plug-ins/common/file-raw-data.c:1885
 msgid "Gray 16 bit Big Endian"
@@ -4114,7 +4127,7 @@ msgstr "O formato SUNRAS não suporta várias camadas."
 #: ../plug-ins/common/file-sunras.c:466
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
-msgstr "Não foi possível abrir \"%s\" como imagem SUN raster"
+msgstr "Não foi possível abrir '%s' como imagem SUN raster"
 
 #: ../plug-ins/common/file-sunras.c:476
 msgid "The type of this SUN-rasterfile is not supported"
@@ -4123,7 +4136,7 @@ msgstr "O tipo desta imagem SUN raster não é suportado"
 #: ../plug-ins/common/file-sunras.c:505
 #, c-format
 msgid "Could not read color entries from '%s'"
-msgstr "Não foi possível ler os itens de cores de \"%s\""
+msgstr "Não foi possível ler os itens de cores de '%s'"
 
 #: ../plug-ins/common/file-sunras.c:514
 msgid "Type of colormap not supported"
@@ -4136,7 +4149,7 @@ msgid ""
 "'%s':\n"
 "No image width specified"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "Não foi especificada a largura da imagem"
 
 #: ../plug-ins/common/file-sunras.c:529 ../plug-ins/common/file-xbm.c:843
@@ -4146,7 +4159,7 @@ msgid ""
 "'%s':\n"
 "Image width is larger than GIMP can handle"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "A largura da imagem é maior do que o GIMP pode gerir"
 
 #: ../plug-ins/common/file-sunras.c:537 ../plug-ins/common/file-xbm.c:851
@@ -4156,7 +4169,7 @@ msgid ""
 "'%s':\n"
 "No image height specified"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "Não foi especificada a altura da imagem"
 
 #: ../plug-ins/common/file-sunras.c:545 ../plug-ins/common/file-xbm.c:859
@@ -4166,7 +4179,7 @@ msgid ""
 "'%s':\n"
 "Image height is larger than GIMP can handle"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "A altura da imagem é maior do que o GIMP pode gerir"
 
 #: ../plug-ins/common/file-sunras.c:581
@@ -4296,17 +4309,17 @@ msgstr "O formato TGA não suporta várias camadas."
 #: ../plug-ins/common/file-tga.c:455
 #, c-format
 msgid "Cannot read footer from '%s'"
-msgstr "Não foi possível ler o rodapé de \"%s\""
+msgstr "Não foi possível ler o rodapé de '%s'"
 
 #: ../plug-ins/common/file-tga.c:474
 #, c-format
 msgid "Cannot read extension from '%s'"
-msgstr "Não foi possível ler a extensão de \"%s\""
+msgstr "Não foi possível ler a extensão de '%s'"
 
 #: ../plug-ins/common/file-tga.c:487
 #, c-format
 msgid "Cannot read header from '%s'"
-msgstr "Não foi possível ler o cabeçalho de \"%s\""
+msgstr "Não foi possível ler o cabeçalho de '%s'"
 
 #: ../plug-ins/common/file-tga.c:1444
 msgid "Export Image as TGA"
@@ -4367,7 +4380,7 @@ msgid ""
 "'%s':\n"
 "Could not read header (ftell == %ld)"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "Não foi possível ler o cabeçalho (ftell == %ld)"
 
 #: ../plug-ins/common/file-xbm.c:867
@@ -4376,7 +4389,7 @@ msgid ""
 "'%s':\n"
 "No image data type specified"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "Tipo de dados da imagem não especificados"
 
 #. The image is not black-and-white.
@@ -4465,17 +4478,17 @@ msgstr ""
 #: ../plug-ins/common/file-xmc.c:666
 #, c-format
 msgid "'%s' is not a valid X cursor."
-msgstr "\"%s\" não é um cursor X válido."
+msgstr "'%s' não é um cursor X válido."
 
 #: ../plug-ins/common/file-xmc.c:679
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
-msgstr "O fotograma %d de \"%s\" é demasiado largo para o cursor X."
+msgstr "O fotograma %d de '%s' é demasiado largo para o cursor X."
 
 #: ../plug-ins/common/file-xmc.c:687
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
-msgstr "O fotograma %d de \"%s\" é demasiado alto para o cursor X."
+msgstr "O fotograma %d de '%s' é demasiado alto para o cursor X."
 
 #: ../plug-ins/common/file-xmc.c:960
 #, c-format
@@ -4485,12 +4498,12 @@ msgstr "não existe um bocado da imagem em \"%s\"."
 #: ../plug-ins/common/file-xmc.c:1001
 #, c-format
 msgid "'%s' is too wide for an X cursor."
-msgstr "\"%s\" é demasiado largo para o cursor X."
+msgstr "'%s' é demasiado largo para o cursor X."
 
 #: ../plug-ins/common/file-xmc.c:1010
 #, c-format
 msgid "'%s' is too high for an X cursor."
-msgstr "\"%s\" é demasiado alto para o cursor X."
+msgstr "'%s' é demasiado alto para o cursor X."
 
 #: ../plug-ins/common/file-xmc.c:1074
 #, c-format
@@ -4607,26 +4620,26 @@ msgstr "Introduza outros comentários que pretenda incluir."
 #: ../plug-ins/file-webp/file-webp-save.c:589
 #, c-format
 msgid "Saving '%s'"
-msgstr "A guardar \"%s\""
+msgstr "A guardar '%s'"
 
 #: ../plug-ins/common/file-xmc.c:1448
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
-"O fotograma \"%s\" é demasiado largo. Por favor reduza-o para um valor igual "
+"O fotograma '%s' é demasiado largo. Por favor reduza-o para um valor igual "
 "ou inferior a %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1458
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
-"O fotograma \"%s\" é demasiado alto. Por favor reduza-o para um valor igual "
-"ou inferior a %dpx."
+"O fotograma '%s' é demasiado alto. Por favor reduza-o para um valor igual ou "
+"inferior a %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1468
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
-msgstr "A largura e/ou altura do fotograma \"%s\" é zero!"
+msgstr "A largura e/ou altura do fotograma '%s' é zero!"
 
 #: ../plug-ins/common/file-xmc.c:1510
 #, c-format
@@ -4636,7 +4649,7 @@ msgid ""
 "crop."
 msgstr ""
 "Não é possível guardar o cursor porque o ponto quente não está no fotograma "
-"\"%s\".\n"
+"'%s'.\n"
 "Tente mudar a posição do ponto quente, a geometria da camada ou guarde sem "
 "recorte automático."
 
@@ -4699,7 +4712,7 @@ msgstr "O formato XPM não suporta várias camadas."
 #: ../plug-ins/common/file-xpm.c:393 ../plug-ins/common/file-xpm.c:850
 #, c-format
 msgid "Error opening file '%s'"
-msgstr "Erro ao abrir o ficheiro \"%s\""
+msgstr "Erro ao abrir o ficheiro '%s'"
 
 #: ../plug-ins/common/file-xpm.c:399 ../plug-ins/common/file-xpm.c:856
 msgid "XPM file invalid"
@@ -4721,7 +4734,7 @@ msgstr "Despejo da janela X"
 #: ../plug-ins/common/file-xwd.c:490
 #, c-format
 msgid "Could not read XWD header from '%s'"
-msgstr "Não foi possível ler o cabeçalho XWD de \"%s\""
+msgstr "Não foi possível ler o cabeçalho XWD de '%s'"
 
 #: ../plug-ins/common/file-xwd.c:511
 #, c-format
@@ -4729,7 +4742,7 @@ msgid ""
 "'%s':\n"
 "Illegal number of colormap entries: %ld"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "número ilegal de itens de mapa de cores: %ld"
 
 #: ../plug-ins/common/file-xwd.c:521
@@ -4738,7 +4751,7 @@ msgid ""
 "'%s':\n"
 "Number of colormap entries < number of colors"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "número de itens de mapa de cores < número de cores"
 
 #: ../plug-ins/common/file-xwd.c:544
@@ -4761,12 +4774,12 @@ msgstr "Não é possível exportar imagens com canais alfa."
 #: ../plug-ins/common/file-xwd.c:682
 #, c-format
 msgid "Could not open '%s' for writing: "
-msgstr "Não foi possível abrir \"%s\" para escrita: "
+msgstr "Não foi possível abrir '%s' para escrita: "
 
 #: ../plug-ins/common/file-xwd.c:709
 #, c-format
 msgid "Error exporting '%s': "
-msgstr "Erro ao exportar \"%s\": "
+msgstr "Erro ao exportar '%s': "
 
 #: ../plug-ins/common/file-xwd.c:1789 ../plug-ins/common/file-xwd.c:2189
 #, c-format
@@ -5634,7 +5647,7 @@ msgstr "Luz"
 #: ../plug-ins/common/sphere-designer.c:2095
 #, c-format
 msgid "File '%s' is not a valid save file."
-msgstr "\"%s\" não é um ficheiro de gravação válido."
+msgstr "'%s' não é um ficheiro de gravação válido."
 
 #: ../plug-ins/common/sphere-designer.c:2275
 msgid "Open File"
@@ -6289,7 +6302,7 @@ msgstr "Erro desconhecido do Microsoft Windows."
 #: ../plug-ins/common/web-browser.c:217
 #, c-format
 msgid "Failed to open '%s': %s"
-msgstr "Falha ao abrir \"%s\": %s"
+msgstr "Falha ao abrir '%s': %s"
 
 #: ../plug-ins/common/web-page.c:128
 msgid "From _Webpage..."
@@ -6347,7 +6360,7 @@ msgstr "Página web"
 #: ../plug-ins/common/web-page.c:503
 #, c-format
 msgid "Transferring webpage image for '%s'"
-msgstr "A transferir imagem de página web para \"%s\""
+msgstr "A transferir imagem de página web para '%s'"
 
 #: ../plug-ins/common/web-page.c:526
 #, c-format
@@ -6357,7 +6370,7 @@ msgstr "Sem URL especificado"
 #: ../plug-ins/common/web-page.c:588
 #, c-format
 msgid "Downloading webpage '%s'"
-msgstr "A descarregar a página web \"%s\""
+msgstr "A descarregar a página web '%s'"
 
 #: ../plug-ins/file-bmp/bmp-load.c:146
 msgid "Bad colormap"
@@ -6371,19 +6384,19 @@ msgstr "Mapa de cor inadequado"
 #: ../plug-ins/file-bmp/bmp-load.c:556
 #, c-format
 msgid "'%s' is not a valid BMP file"
-msgstr "\"%s\" não é um ficheiro BMP válido"
+msgstr "'%s' não é um ficheiro BMP válido"
 
 #: ../plug-ins/file-bmp/bmp-load.c:298 ../plug-ins/file-bmp/bmp-load.c:325
 #: ../plug-ins/file-bmp/bmp-load.c:357 ../plug-ins/file-bmp/bmp-load.c:398
 #: ../plug-ins/file-bmp/bmp-load.c:429 ../plug-ins/file-bmp/bmp-load.c:471
 #, c-format
 msgid "Error reading BMP file header from '%s'"
-msgstr "Erro ao ler o cabeçalho do ficheiro BMP \"%s\""
+msgstr "Erro ao ler o cabeçalho do ficheiro BMP '%s'"
 
 #: ../plug-ins/file-bmp/bmp-load.c:381
 #, c-format
 msgid "Unsupported compression (%u) in BMP file from '%s'"
-msgstr "Compressão (%u) no ficheiro BMP de \"%s\" não suportada"
+msgstr "Compressão (%u) no ficheiro BMP de '%s' não suportada"
 
 #: ../plug-ins/file-bmp/bmp-load.c:673
 msgid "Unrecognized or invalid BMP compression format."
@@ -6391,7 +6404,7 @@ msgstr "Formato de compressão de BMP não reconhecido ou inválido."
 
 #: ../plug-ins/file-bmp/bmp-load.c:720
 msgid "Unsupported or invalid bitdepth."
-msgstr "Profundidade de cor não suportada."
+msgstr "Profundidade de bit não suportada."
 
 #: ../plug-ins/file-bmp/bmp-load.c:888 ../plug-ins/file-bmp/bmp-load.c:931
 #: ../plug-ins/file-bmp/bmp-load.c:985
@@ -6442,27 +6455,27 @@ msgstr "Codificação RGB"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1032
 msgid "16 bit (R5 G6 B5)"
-msgstr "16 bit (R5 G6 B5)"
+msgstr "16 bits (R5 G6 B5)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1033
 msgid "16 bit (A1 R5 G5 B5)"
-msgstr "16 bit (A1 R5 G5 B5)"
+msgstr "16 bits (A1 R5 G5 B5)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1034
 msgid "16 bit (X1 R5 G5 B5)"
-msgstr "16 bit (X1 R5 G5 B5)"
+msgstr "16 bits (X1 R5 G5 B5)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1035
 msgid "24 bit (R8 G8 B8)"
-msgstr "24 bit (R8 G8 B8)"
+msgstr "24 bits (R8 G8 B8)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1036
 msgid "32 bit (A8 R8 G8 B8)"
-msgstr "32 bit (A8 R8 G8 B8)"
+msgstr "32 bits (A8 R8 G8 B8)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1037
 msgid "32 bit (X8 R8 G8 B8)"
-msgstr "32 bit (X8 R8 G8 B8)"
+msgstr "32 bits (X8 R8 G8 B8)"
 
 #: ../plug-ins/file-bmp/bmp.c:150 ../plug-ins/file-bmp/bmp.c:176
 msgid "Windows BMP image"
@@ -6539,7 +6552,7 @@ msgstr "_Carregar mapas MIP"
 
 #: ../plug-ins/file-dds/ddsread.c:1436
 msgid "_Automatically decode YCoCg/AExp images when detected"
-msgstr "_Decodificar automaticamente imagens YCoCg / AExp quando detetadas"
+msgstr "_Decodificar automaticamente imagens YCoCg/AExp quando detetadas"
 
 #: ../plug-ins/file-dds/ddswrite.c:1953
 msgid "Export Image as DDS"
@@ -6600,27 +6613,27 @@ msgstr "_Limiar do teste alfa:"
 #: ../plug-ins/file-exr/file-exr.c:195
 #, c-format
 msgid "Error opening file '%s' for reading"
-msgstr "Erro ao abrir o ficheiro \"%s\" para leitura"
+msgstr "Erro ao abrir o ficheiro '%s' para leitura"
 
 #: ../plug-ins/file-exr/file-exr.c:206
 #, c-format
 msgid "Error querying image dimensions from '%s'"
-msgstr "Erro ao consultar as dimensões da imagem de \"%s\""
+msgstr "Erro ao consultar as dimensões da imagem de '%s'"
 
 #: ../plug-ins/file-exr/file-exr.c:226
 #, c-format
 msgid "Error querying image precision from '%s'"
-msgstr "Erro ao consultar a precisão da imagem de \"%s\""
+msgstr "Erro ao consultar a precisão da imagem de '%s'"
 
 #: ../plug-ins/file-exr/file-exr.c:243
 #, c-format
 msgid "Error querying image type from '%s'"
-msgstr "Erro ao consultar o tipo da imagem de \"%s\""
+msgstr "Erro ao consultar o tipo da imagem de '%s'"
 
 #: ../plug-ins/file-exr/file-exr.c:303
 #, c-format
 msgid "Error reading pixel data from '%s'"
-msgstr "Erro ao ler dados de píxel de \"%s\""
+msgstr "Erro ao ler dados de píxel de '%s'"
 
 #: ../plug-ins/file-faxg3/faxg3.c:132
 msgid "G3 fax image"
@@ -6765,7 +6778,7 @@ msgstr "24 bpp, 1-bit alfa, sem paleta"
 
 #: ../plug-ins/file-ico/ico-dialog.c:170
 msgid "32 bpp, 8-bit alpha, no palette"
-msgstr "32 bpp, 8-bit alfa, sem paleta"
+msgstr "32 bpp, 8-bits alfa, sem paleta"
 
 #: ../plug-ins/file-ico/ico-dialog.c:184
 msgid "Compressed (PNG)"
@@ -6794,7 +6807,7 @@ msgstr "Ícone nº %i"
 #: ../plug-ins/file-raw/file-rawtherapee.c:459
 #, c-format
 msgid "Opening thumbnail for '%s'"
-msgstr "A abrir miniatura de \"%s\""
+msgstr "A abrir miniatura de '%s'"
 
 #: ../plug-ins/file-ico/ico.c:127 ../plug-ins/file-ico/ico.c:172
 msgid "Microsoft Windows icon"
@@ -6890,108 +6903,108 @@ msgstr "Exportar pré-visualização"
 msgid "JPEG format does not support multiple layers."
 msgstr "O formato JPEG não suporta várias camadas."
 
-#: ../plug-ins/file-psd/psd-load.c:269
+#: ../plug-ins/file-psd/psd-load.c:277
 #: ../plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Erro ao carregar o ficheiro PSD: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:322
+#: ../plug-ins/file-psd/psd-load.c:330
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Não é um ficheiro de Photoshop válido"
 
-#: ../plug-ins/file-psd/psd-load.c:329
+#: ../plug-ins/file-psd/psd-load.c:337
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Versão do formato de ficheiro não suportada: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:336
+#: ../plug-ins/file-psd/psd-load.c:344
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Demasiados canais no ficheiro: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:360
+#: ../plug-ins/file-psd/psd-load.c:368
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Tamanho da imagem não suportado ou inválido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:374 ../plug-ins/file-psd/psd-load.c:384
+#: ../plug-ins/file-psd/psd-load.c:383 ../plug-ins/file-psd/psd-load.c:394
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Modo de cor não suportado: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:411
+#: ../plug-ins/file-psd/psd-load.c:421
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Profundidade de cor não suportada: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:445 ../plug-ins/file-psd/psd-load.c:455
-#: ../plug-ins/file-psd/psd-load.c:656 ../plug-ins/file-psd/psd-load.c:982
+#: ../plug-ins/file-psd/psd-load.c:455 ../plug-ins/file-psd/psd-load.c:465
+#: ../plug-ins/file-psd/psd-load.c:678 ../plug-ins/file-psd/psd-load.c:1024
 #, c-format
 msgid "The file is corrupt!"
 msgstr "O ficheiro está corrompido!"
 
-#: ../plug-ins/file-psd/psd-load.c:607
+#: ../plug-ins/file-psd/psd-load.c:629
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Demasiados canais na camada: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:690
+#: ../plug-ins/file-psd/psd-load.c:713
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Altura da camada não suportada ou inválida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:698
+#: ../plug-ins/file-psd/psd-load.c:722
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Largura da camada não suportada ou inválida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:707
+#: ../plug-ins/file-psd/psd-load.c:732
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Tamanho da camada não suportado ou inválido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:725
+#: ../plug-ins/file-psd/psd-load.c:752
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Tamanho da informação da camada não suportado ou inválido."
 
-#: ../plug-ins/file-psd/psd-load.c:896
+#: ../plug-ins/file-psd/psd-load.c:929
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Altura da máscara da camada não suportada ou inválida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:904
+#: ../plug-ins/file-psd/psd-load.c:938
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Largura da máscara da camada não suportada ou inválida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:913
+#: ../plug-ins/file-psd/psd-load.c:948
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Tamanho da máscara da camada não suportado ou inválido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1684 ../plug-ins/file-psd/psd-load.c:2219
+#: ../plug-ins/file-psd/psd-load.c:1826 ../plug-ins/file-psd/psd-load.c:2398
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Método de compressão não suportado: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2350
+#: ../plug-ins/file-psd/psd-load.c:2590
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2528
+#: ../plug-ins/file-psd/psd-load.c:2768
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Tamanho do canal não suportado ou inválido"
 
-#: ../plug-ins/file-psd/psd-load.c:2594
+#: ../plug-ins/file-psd/psd-load.c:2837
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Falha ao descomprimir os dados"
 
-#: ../plug-ins/file-psd/psd-save.c:481
+#: ../plug-ins/file-psd/psd-save.c:470
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Erro: não foi possível converter o tipo de imagem base do GIMP para o modo "
@@ -7003,8 +7016,8 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Não é possível exportar \"%s\". O formato de ficheiro PSD não suporta "
-"imagens que tenham mais de 30.000 píxeis de largura ou de altura."
+"Não é possível exportar '%s'. O formato de ficheiro PSD não suporta imagens "
+"que tenham mais de 30.000 píxeis de largura ou de altura."
 
 #: ../plug-ins/file-psd/psd-save.c:1793
 #, c-format
@@ -7012,8 +7025,8 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Não é possível exportar \"%s\". O formato de ficheiro PSD não suporta "
-"imagens cujas camadas tenham mais de 30.000 píxeis de largura ou de altura."
+"Não é possível exportar '%s'. O formato de ficheiro PSD não suporta imagens "
+"cujas camadas tenham mais de 30.000 píxeis de largura ou de altura."
 
 #: ../plug-ins/file-psd/psd-util.c:176
 #, c-format
@@ -7164,7 +7177,7 @@ msgstr "O formato SGI não suporta várias camadas."
 #: ../plug-ins/file-sgi/sgi.c:339
 #, c-format
 msgid "Could not open '%s' for reading."
-msgstr "Não foi possível abrir \"%s\" para leitura."
+msgstr "Não foi possível abrir '%s' para leitura."
 
 #: ../plug-ins/file-sgi/sgi.c:355
 #, c-format
@@ -7184,7 +7197,7 @@ msgstr "Número de canais inválido: %hu"
 #: ../plug-ins/file-sgi/sgi.c:654
 #, c-format
 msgid "Could not open '%s' for writing."
-msgstr "Não foi possível abrir \"%s\" para escrita."
+msgstr "Não foi possível abrir '%s' para escrita."
 
 #: ../plug-ins/file-sgi/sgi.c:742
 msgid "Export Image as SGI"
@@ -7228,7 +7241,7 @@ msgstr "Não é uma imagem TIFF ou a imagem está corrompida."
 #: ../plug-ins/file-tiff/file-tiff-load.c:286
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
-msgstr "O TIFF \"%s\" não contém nenhumas pastas"
+msgstr "O TIFF '%s' não contém nenhumas pastas"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:293
 #, c-format
@@ -7301,7 +7314,7 @@ msgstr "Profundidade de cor não suportada: %d para a página %d."
 #: ../plug-ins/file-tiff/file-tiff-load.c:648
 #, c-format
 msgid "Could not get image width from '%s'"
-msgstr "Não foi possível obter a largura da imagem de \"%s\""
+msgstr "Não foi possível obter a largura da imagem de '%s'"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:656
 #, c-format
@@ -7465,7 +7478,7 @@ msgid ""
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
 "O formato TIFF só suporta comentários com\n"
-"codificação ASCII 7bit. Nenhum comentário foi guardado."
+"codificação ASCII 7bits. Nenhum comentário foi guardado."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:808
 #, c-format
@@ -7475,7 +7488,7 @@ msgstr "Falhou a gravação de uma scanline na linha %d"
 #: ../plug-ins/file-tiff/file-tiff-save.c:1123
 #, c-format
 msgid "Writing pages with different bit depth is strange."
-msgstr "Escrever páginas com profundidades de cores diferentes é estranho."
+msgstr "Escrever páginas com profundidades de bits diferentes é estranho."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1225
 #: ../plug-ins/metadata/metadata-tags.c:195
@@ -7561,17 +7574,17 @@ msgstr "Ficheiro WebP “%s” inválido."
 #: ../plug-ins/file-webp/file-webp-load.c:202
 #, c-format
 msgid "Failed to decode animated WebP file '%s'"
-msgstr "Falha ao descodificar o ficheiro WebP animado \"%s\""
+msgstr "Falha ao descodificar o ficheiro WebP animado '%s'"
 
 #: ../plug-ins/file-webp/file-webp-load.c:210
 #, c-format
 msgid "Failed to decode animated WebP information from '%s'"
-msgstr "Falha ao descodificar a informação do WebP animado de \"%s\""
+msgstr "Falha ao descodificar a informação do WebP animado de '%s'"
 
 #: ../plug-ins/file-webp/file-webp-load.c:229
 #, c-format
 msgid "Failed to decode animated WebP frame from '%s'"
-msgstr "Falha ao descodificar o fotograma WebP animado de \"%s\""
+msgstr "Falha ao descodificar o fotograma WebP animado de '%s'"
 
 #: ../plug-ins/file-webp/file-webp-load.c:234
 #, c-format
@@ -7630,12 +7643,12 @@ msgstr "erro desconhecido"
 #: ../plug-ins/file-webp/file-webp-save.c:599
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
-msgstr "Não foi possível abrir \"%s\" para escrita: %s"
+msgstr "Não foi possível abrir '%s' para escrita: %s"
 
 #: ../plug-ins/file-webp/file-webp-save.c:288
 #, c-format
 msgid "WebP error: '%s'"
-msgstr "Erro WebP: \"%s\""
+msgstr "Erro WebP: '%s'"
 
 #: ../plug-ins/flame/flame.c:173
 msgid "_Flame..."
@@ -7652,7 +7665,7 @@ msgstr "A desenhar chamas"
 #: ../plug-ins/flame/flame.c:467
 #, c-format
 msgid "'%s' is not a regular file"
-msgstr "\"%s\" não é um ficheiro normal"
+msgstr "'%s' não é um ficheiro normal"
 
 #: ../plug-ins/flame/flame.c:711
 msgid "Edit Flame"
@@ -8167,7 +8180,7 @@ msgstr "_Fractais"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1559
 #, c-format
 msgid "Could not write '%s': %s"
-msgstr "Não foi possível guardar \"%s\": %s"
+msgstr "Não foi possível guardar '%s': %s"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1634
 msgid "Load Fractal Parameters"
@@ -8180,12 +8193,12 @@ msgstr "Guardar parâmetros fractais"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1870
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
-msgstr "\"%s\" não é um ficheiro FractalExplorer"
+msgstr "'%s' não é um ficheiro FractalExplorer"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1877
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
-msgstr "\"%s\" está corrompido. Secção da opção na linha %d incorreta"
+msgstr "'%s' está corrompido. Secção da opção na linha %d incorreta"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:239
 msgid "_Fractal Explorer..."
@@ -8212,7 +8225,7 @@ msgstr "Eliminar fractal"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1058
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr "O ficheiro \"%s\" não é um ficheiro FractalExplorer"
+msgstr "O ficheiro '%s' não é um ficheiro FractalExplorer"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1068
 #, c-format
@@ -8220,7 +8233,7 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
-"O ficheiro \"%s\" está corrompido.\n"
+"O ficheiro '%s' está corrompido.\n"
 "Secção da opção na linha %d incorreta"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1154
@@ -8648,8 +8661,7 @@ msgstr ""
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
-"Erro ao tentar abrir o ficheiro temporário \"%s\" para carregar o parasita: "
-"%s"
+"Erro ao tentar abrir o ficheiro temporário '%s' para carregar o parasita: %s"
 
 #: ../plug-ins/gimpressionist/brush.c:261
 msgid "Can only save drawables!"
@@ -9121,7 +9133,7 @@ msgstr "A densidade relativa dos traços do pincel"
 #: ../plug-ins/gimpressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
-msgstr "Falha ao guardar o ficheiro PPM \"%s\": %s"
+msgstr "Falha ao guardar o ficheiro PPM '%s': %s"
 
 #: ../plug-ins/gimpressionist/presets.c:638
 msgid "Save Current"
@@ -9763,12 +9775,12 @@ msgstr "Não é possível operar em imagens de cores indexadas."
 #: ../plug-ins/gradient-flare/gradient-flare.c:1374
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
-msgstr "Falha ao abrir o ficheiro GFlare \"%s\": %s"
+msgstr "Falha ao abrir o ficheiro GFlare '%s': %s"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1382
 #, c-format
 msgid "'%s' is not a valid GFlare file."
-msgstr "\"%s\" não é um ficheiro GFlare válido."
+msgstr "'%s' não é um ficheiro GFlare válido."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1436
 #, c-format
@@ -9782,16 +9794,14 @@ msgid ""
 "(gflare-path \"%s\")\n"
 "and make a folder '%s', then you can save your own GFlares into that folder."
 msgstr ""
-"GFlare \"%s\" não está guardado. Se adicionar uma nova entrada em \"%s\", "
-"como:\n"
-"(gflare-path \"%s\")\n"
-"e criar uma pasta \"%s\", poderá guardar os seus próprios GFlares nesta "
-"pasta."
+"GFlare '%s' não está guardado. Se adicionar uma nova entrada em '%s', como:\n"
+"(gflare-path '%s')\n"
+"e criar uma pasta '%s', poderá guardar os seus próprios GFlares nesta pasta."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1596
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr "Falha ao guardar o ficheiro GFlare \"%s\": %s"
+msgstr "Falha ao guardar o ficheiro GFlare '%s': %s"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2568
 msgid "A_uto update preview"
@@ -9870,7 +9880,7 @@ msgstr "Sem nome"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3320
 #, c-format
 msgid "The name '%s' is used already!"
-msgstr "O nome \"%s\" já está a ser utilizado!"
+msgstr "O nome '%s' já está a ser utilizado!"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3294
 msgid "Copy Gradient Flare"
@@ -10102,7 +10112,7 @@ msgstr "_Fechar"
 #: ../plug-ins/help/gimphelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
-msgstr "As páginas de ajuda sobre \"%s\" não estão disponíveis."
+msgstr "As páginas de ajuda sobre '%s' não estão disponíveis."
 
 #: ../plug-ins/help/gimphelpdomain.c:186
 msgid "The GIMP user manual is not available."
@@ -10134,7 +10144,7 @@ msgstr "ID “%s” de tópico da ajuda desconhecido"
 #: ../plug-ins/help/gimphelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
-msgstr "A carregar índice a partir de \"%s\""
+msgstr "A carregar índice a partir de '%s'"
 
 #: ../plug-ins/help/gimphelplocale.c:266
 #, c-format
@@ -10142,7 +10152,7 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
-"Erro de processamento em \"%s\":\n"
+"Erro de processamento em '%s':\n"
 "%s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:370
@@ -10313,7 +10323,7 @@ msgstr "Falha ao abrir"
 #: ../plug-ins/ifs-compose/ifs-compose.c:2518
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
-msgstr "O ficheiro \"%s\" não parece ser um ficheiro de fractal IFS."
+msgstr "O ficheiro '%s' não parece ser um ficheiro de fractal IFS."
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2558
 msgid "Save as IFS Fractal file"
@@ -10725,7 +10735,7 @@ msgstr "Quer mesmo descartar as suas alterações?"
 #: ../plug-ins/imagemap/imap_main.c:895
 #, c-format
 msgid "File \"%s\" saved."
-msgstr "O ficheiro \"%s\" foi guardado."
+msgstr "O ficheiro '%s' foi guardado."
 
 #: ../plug-ins/imagemap/imap_main.c:899
 msgid "Couldn't save file:"
@@ -10908,7 +10918,7 @@ msgstr "Definir área retangular"
 
 #: ../plug-ins/imagemap/imap_menu.c:237
 msgid "Define Circle/Oval area"
-msgstr "Definir área circular / oval"
+msgstr "Definir área circular/oval"
 
 #: ../plug-ins/imagemap/imap_menu.c:239
 msgid "Define Polygon area"
@@ -11127,7 +11137,7 @@ msgstr "Pré-visualização de alta _qualidade"
 
 #: ../plug-ins/lighting/lighting-ui.c:354
 msgid "Enable/disable high quality preview"
-msgstr "Ativa / desativa a pré-visualização de alta qualidade"
+msgstr "Ativa/desativa a pré-visualização de alta qualidade"
 
 #: ../plug-ins/lighting/lighting-ui.c:356
 msgid "Distance:"
@@ -11317,7 +11327,7 @@ msgstr "_Ativar mapeamento de relevo"
 
 #: ../plug-ins/lighting/lighting-ui.c:829
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr "Ativa / desativa o mapeamento de relevo (profundidade da imagem)"
+msgstr "Ativa/desativa o mapeamento de relevo (profundidade da imagem)"
 
 #: ../plug-ins/lighting/lighting-ui.c:852
 msgid "Bumpm_ap image:"
@@ -11345,7 +11355,7 @@ msgstr "Ativar mapeame_nto do ambiente"
 
 #: ../plug-ins/lighting/lighting-ui.c:922
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Ativa / desativa o mapeamento do ambiente (reflexão)"
+msgstr "Ativa/desativa o mapeamento do ambiente (reflexão)"
 
 #: ../plug-ins/lighting/lighting-ui.c:940
 msgid "En_vironment image:"
@@ -11388,7 +11398,7 @@ msgstr "I_nterativo"
 
 #: ../plug-ins/lighting/lighting-ui.c:1116
 msgid "Enable/disable real time preview of changes"
-msgstr "Ativar / desativar pré-visualização em tempo real das alterações"
+msgstr "Ativar/desativar pré-visualização em tempo real das alterações"
 
 #: ../plug-ins/lighting/lighting-ui.c:1159
 msgid "Save Lighting Preset"
@@ -11491,8 +11501,7 @@ msgstr "_Ativar suavização"
 
 #: ../plug-ins/map-object/map-object-ui.c:547
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr ""
-"Ativar / desativar a remoção de margens serrilhadas (antisserrilhamento)"
+msgstr "Ativar/desativar a remoção de margens serrilhadas (antisserrilhamento)"
 
 #: ../plug-ins/map-object/map-object-ui.c:560
 msgid "_Depth:"
@@ -12526,12 +12535,12 @@ msgstr "Este complemento irá capturar uma imagem de um digitalizador TWAIN"
 
 #: ../plug-ins/twain/twain.c:204
 msgid "_Scanner/Camera..."
-msgstr "_Digitalizador / câmara..."
+msgstr "_Digitalizador/câmara..."
 
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:520
 msgid "Transferring data from scanner/camera"
-msgstr "A transferir imagem do digitalizador ou da câmara"
+msgstr "A transferir imagem do digitalizador/câmara"
 
 #~ msgid "PAT format does not support multiple layers."
 #~ msgstr "O formato PAT não suporta várias camadas."
