@@ -1,7 +1,0 @@
-#include <gio/gio.h>
-#include <libgimpconfig/gimpconfig.h>
-
-gimp_config_get_type
-gimp_color_config_get_type
-gimp_config_writer_get_type
-gimp_scanner_get_type

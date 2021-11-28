@@ -1,3 +1,4 @@
+gimp_logo_dir = meson.current_source_dir()
 
 images = [
   'gimp-splash.png',

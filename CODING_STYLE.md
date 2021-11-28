@@ -645,8 +645,8 @@ which often revamp their design, breaking URLs, etc.).
 #### Public API Documentation
 
 All public APIs (i.e. any function exported in a header inside
-`libgimp*/` folders) **MUST** have proper gtk-doc comments. For
-functions, these should be placed in the source file directly above.
+`libgimp*/` folders) **MUST** have proper GObject-introspection (GIR) comments.
+For functions, these should be placed in the source file directly above.
 
 These annotations are also relevant for [GObject
 Introspection](https://gi.readthedocs.io/en/latest/annotations/giannotations.html)

@@ -36,7 +36,6 @@
         "/share/aclocal",
         "/man",
         "/share/man",
-        "/share/gtk-doc",
         "/share/vala",
         "*.la",
         "*.a"
@@ -802,7 +801,7 @@
         {
             "name": "gimp",
             "config-opts": [
-                "-Dgtk-doc=false",
+                "-Dgi-docgen=false",
                 "-Dicc-directory=/run/host/usr/share/color/icc/",
                 "-Dbuild-id=org.gimp.GIMP.flatpak.nightly",
                 "-Dcheck-update=no"

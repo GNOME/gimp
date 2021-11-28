@@ -110,35 +110,6 @@ if test x$LIBTOOLIZE != x; then
     check_version $VER $LIBTOOL_REQUIRED_VERSION
 fi
 
-# check if gtk-doc is explicitly disabled
-for ag_option in $AUTOGEN_CONFIGURE_ARGS $@
-do
-  case $ag_option in
-    -disable-gtk-doc | --disable-gtk-doc)
-    enable_gtk_doc=no
-  ;;
-  esac
-done
-
-if test x$enable_gtk_doc = xno; then
-  echo "skipping test for gtkdocize"
-else
-  printf "checking for gtkdocize ... "
-  if (gtkdocize --version) < /dev/null > /dev/null 2>&1; then
-      echo "yes"
-  else
-      echo
-      echo "  You must have gtk-doc installed to compile $PROJECT."
-      echo "  Install the appropriate package for your distribution,"
-      echo "  or get the source tarball at"
-      echo "  https://ftp.gnome.org/pub/GNOME/sources/gtk-doc/"
-      echo "  You can also use the option --disable-gtk-doc to skip"
-      echo "  this test but then you will not be able to generate a"
-      echo "  configure script that can build the API documentation."
-      DIE=1
-  fi
-fi
-
 printf "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
 if ($AUTOCONF --version) < /dev/null > /dev/null 2>&1; then
     VER=`$AUTOCONF --version | head -n 1 \
@@ -278,19 +249,6 @@ if test $RC -ne 0; then
 fi
 
 $LIBTOOLIZE --force || exit $?
-
-if test x$enable_gtk_doc = xno; then
-    if test -f gtk-doc.make; then :; else
-       echo "EXTRA_DIST = missing-gtk-doc" > gtk-doc.make
-       echo "CLEANFILES = " >> gtk-doc.make
-    fi
-    echo "WARNING: You have disabled gtk-doc."
-    echo "         As a result, you will not be able to generate the API"
-    echo "         documentation and 'make dist' will not work."
-    echo
-else
-    gtkdocize || exit $?
-fi
 
 # optionally feature autoheader
 ($AUTOHEADER --version)  < /dev/null > /dev/null 2>&1 && $AUTOHEADER || exit 1

@@ -554,13 +554,13 @@ gimp_procedure_real_create_config (GimpProcedure  *procedure,
  * Using %GIMP_PDB_PROC_TYPE_EXTENSION means that the plug-in will add
  * temporary procedures. Therefore, the GIMP core will wait until the
  * %GIMP_PDB_PROC_TYPE_EXTENSION procedure has called
- * gimp_procedure_extension_ready(), which means that the procedure
+ * [method@Procedure.extension_ready], which means that the procedure
  * has done its initialization, installed its temporary procedures and
  * is ready to run.
  *
- * <emphasis>Not calling gimp_procedure_extension_ready() from a
+ * *Not calling [method@Procedure.extension_ready] from a
  * %GIMP_PDB_PROC_TYPE_EXTENSION procedure will cause the GIMP core to
- * lock up.</emphasis>
+ * lock up.*
  *
  * Additionally, a %GIMP_PDB_PROC_TYPE_EXTENSION procedure with no
  * arguments added is an "automatic" extension that will be
@@ -568,9 +568,9 @@ gimp_procedure_real_create_config (GimpProcedure  *procedure,
  *
  * %GIMP_PDB_PROC_TYPE_TEMPORARY must be used for temporary procedures
  * that are created during a plug-ins lifetime. They must be added to
- * the #GimpPlugIn using gimp_plug_in_add_temp_procedure().
+ * the #GimpPlugIn using [method@PlugIn.add_temp_procedure].
  *
- * @run_func is called via gimp_procedure_run().
+ * @run_func is called via [method@Procedure.run].
  *
  * For %GIMP_PDB_PROC_TYPE_PLUGIN and %GIMP_PDB_PROC_TYPE_EXTENSION
  * procedures the call of @run_func is basically the lifetime of the
@@ -612,7 +612,7 @@ gimp_procedure_new (GimpPlugIn      *plug_in,
  * gimp_procedure_get_plug_in:
  * @procedure: A #GimpProcedure.
  *
- * Returns: (transfer none): The #GimpPlugIn given in gimp_procedure_new().
+ * Returns: (transfer none): The #GimpPlugIn given in [ctor@Procedure.new].
  *
  * Since: 3.0
  **/
@@ -628,7 +628,7 @@ gimp_procedure_get_plug_in (GimpProcedure *procedure)
  * gimp_procedure_get_name:
  * @procedure: A #GimpProcedure.
  *
- * Returns: The procedure's name given in gimp_procedure_new().
+ * Returns: The procedure's name given in [ctor@Procedure.new].
  *
  * Since: 3.0
  **/
@@ -644,7 +644,7 @@ gimp_procedure_get_name (GimpProcedure *procedure)
  * gimp_procedure_get_proc_type:
  * @procedure: A #GimpProcedure.
  *
- * Returns: The procedure's type given in gimp_procedure_new().
+ * Returns: The procedure's type given in [ctor@Procedure.new].
  *
  * Since: 3.0
  **/
@@ -719,7 +719,7 @@ gimp_procedure_get_image_types (GimpProcedure *procedure)
  * suitable error message.
  *
  * Similarly third-party plug-ins should verify they are allowed to call
- * a procedure with gimp_procedure_get_sensitivity_mask() when running
+ * a procedure with [method@Procedure.get_sensitivity_mask] when running
  * with dynamic contents.
  *
  * Note that by default, a procedure works on an image with a single
@@ -756,7 +756,7 @@ gimp_procedure_set_sensitivity_mask (GimpProcedure *procedure,
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's sensitivity mask given in
- *          gimp_procedure_set_sensitivity_mask().
+ *          [method@Procedure.set_sensitivity_mask].
  *
  * Since: 3.0
  **/
@@ -825,13 +825,7 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
  * label can add a menu path.
  *
  * Menu paths are untranslated paths to menus and submenus with the
- * syntax:
- *
- * &lt;Prefix&gt;/Path/To/Submenu
- *
- * for instance:
- *
- * &lt;Image&gt;/Layer/Transform
+ * syntax `<Prefix>/Path/To/Submenu`, for example `<Image>/Layer/Transform`
  *
  * See also: gimp_plug_in_add_menu_branch().
  *
@@ -938,7 +932,7 @@ gimp_procedure_set_icon_file (GimpProcedure *procedure,
  *
  * Gets the type of data set as @procedure's icon. Depending on the
  * result, you can call the relevant specific function, such as
- * gimp_procedure_get_icon_name().
+ * [method@Procedure.get_icon_name].
  *
  * Returns: the #GimpIconType of @procedure's icon.
  *
@@ -1068,7 +1062,7 @@ gimp_procedure_set_documentation (GimpProcedure *procedure,
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's blurb given in
- *          gimp_procedure_set_documentation().
+ * [method@Procedure.set_documentation].
  *
  * Since: 3.0
  **/
@@ -1085,7 +1079,7 @@ gimp_procedure_get_blurb (GimpProcedure *procedure)
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's help text given in
- *          gimp_procedure_set_documentation().
+ * [method@Procedure.set_documentation].
  *
  * Since: 3.0
  **/
@@ -1102,7 +1096,7 @@ gimp_procedure_get_help (GimpProcedure *procedure)
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's help ID given in
- *          gimp_procedure_set_documentation().
+ * [method@Procedure.set_documentation].
  *
  * Since: 3.0
  **/
@@ -1152,8 +1146,7 @@ gimp_procedure_set_attribution (GimpProcedure *procedure,
  * gimp_procedure_get_authors:
  * @procedure: A #GimpProcedure.
  *
- * Returns: The procedure's authors given in
- *          gimp_procedure_set_attribution().
+ * Returns: The procedure's authors given in [method@Procedure.set_attribution].
  *
  * Since: 3.0
  **/
@@ -1170,7 +1163,7 @@ gimp_procedure_get_authors (GimpProcedure *procedure)
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's copyright given in
- *          gimp_procedure_set_attribution().
+ * [method@Procedure.set_attribution].
  *
  * Since: 3.0
  **/
@@ -1186,8 +1179,7 @@ gimp_procedure_get_copyright (GimpProcedure *procedure)
  * gimp_procedure_get_date:
  * @procedure: A #GimpProcedure.
  *
- * Returns: The procedure's date given in
- *          gimp_procedure_set_attribution().
+ * Returns: The procedure's date given in [method@Procedure.set_attribution].
  *
  * Since: 3.0
  **/
@@ -1206,11 +1198,11 @@ gimp_procedure_get_date (GimpProcedure *procedure)
  *
  * Add a new argument to @procedure according to @pspec specifications.
  * The arguments will be ordered according to the call order to
- * gimp_procedure_add_argument() and
- * gimp_procedure_add_argument_from_property().
+ * [method@Procedure.add_argument] and
+ * [method@Procedure.add_argument_from_property].
  *
  * If @pspec is floating, ownership will be taken over by @procedure,
- * allowing to pass directly g*_param_spec_*() calls as arguments.
+ * allowing to pass directly `g*_param_spec_*()` calls as arguments.
  *
  * Returns: (transfer none): the same @pspec or %NULL in case of error.
  *
@@ -1264,7 +1256,7 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
  * Add a new argument to @procedure according to the specifications of
  * the property @prop_name registered on @config.
  *
- * See gimp_procedure_add_argument() for details.
+ * See [method@Procedure.add_argument] for details.
  *
  * Returns: (transfer none): the added #GParamSpec.
  *
@@ -1385,8 +1377,8 @@ gimp_procedure_add_aux_argument_from_property (GimpProcedure *procedure,
  * specifications.
  *
  * The returned values will be ordered according to the call order to
- * gimp_procedure_add_return_value() and
- * gimp_procedure_add_return_value_from_property().
+ * [method@Procedure.add_return_value] and
+ * [method@Procedure.add_return_value_from_property].
  *
  * Returns: (transfer none): the same @pspec.
  *
@@ -1430,8 +1422,8 @@ gimp_procedure_add_return_value (GimpProcedure *procedure,
  * the property @prop_name registered on @config.
  *
  * The returned values will be ordered according to the call order to
- * gimp_procedure_add_return_value() and
- * gimp_procedure_add_return_value_from_property().
+ * [method@Procedure.add_return_value] and
+ * [method@Procedure.add_return_value_from_property].
  *
  * Returns: (transfer none): the added #GParamSpec.
  *
@@ -1548,7 +1540,7 @@ gimp_procedure_find_return_value (GimpProcedure *procedure,
  *
  * Returns: (transfer none) (array length=n_arguments): An array
  *          of @GParamSpec in the order added with
- *          gimp_procedure_add_argument().
+ *          [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1594,7 +1586,7 @@ gimp_procedure_get_aux_arguments (GimpProcedure *procedure,
  *
  * Returns: (transfer none) (array length=n_return_values): An array
  *          of @GParamSpec in the order added with
- *          gimp_procedure_add_return_value().
+ *          [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1702,7 +1694,7 @@ gimp_procedure_get_argument_sync (GimpProcedure *procedure,
  * @procedure: the #GimpProcedure.
  *
  * Format the expected argument values of procedures, in the order as
- * added with gimp_procedure_add_argument().
+ * added with [method@Procedure.add_argument].
  *
  * Returns: (transfer full): the expected #GimpValueArray which could be given as
  *          arguments to run @procedure, with all values set to
@@ -1736,7 +1728,7 @@ gimp_procedure_new_arguments (GimpProcedure *procedure)
 
 /**
  * gimp_procedure_new_return_values:
- * @procedure: the #GimpProcedure.
+ * @procedure: the procedure.
  * @status:    the success status of the procedure run.
  * @error:     (in) (nullable) (transfer full):
  *             an optional #GError. This parameter should be set if
@@ -1744,10 +1736,10 @@ gimp_procedure_new_arguments (GimpProcedure *procedure)
  *             #GIMP_PDB_CALLING_ERROR.
  *
  * Format the expected return values from procedures, using the return
- * values set with gimp_procedure_add_return_value().
+ * values set with [method@Procedure.add_return_value].
  *
- * Returns: (transfer full): the expected #GimpValueArray as could be returned by a
- *          #GimpRunFunc.
+ * Returns: (transfer full): the expected #GimpValueArray as could be returned
+ * by a [callback@RunFunc].
  *
  * Since: 3.0
  **/
@@ -1818,7 +1810,7 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
  * @procedure: a @GimpProcedure.
  * @args:      the @procedure's arguments.
  *
- * Runs the procedure, calling the run_func given in gimp_procedure_new().
+ * Runs the procedure, calling the run_func given in [ctor@Procedure.new].
  *
  * Returns: (transfer full): The @procedure's return values.
  *
@@ -1930,15 +1922,14 @@ gimp_procedure_run (GimpProcedure  *procedure,
  * Notify the main GIMP application that the extension has been
  * properly initialized and is ready to run.
  *
- * This function <emphasis>must</emphasis> be called from every
- * procedure's #GimpRunFunc that was created as
- * #GIMP_PDB_PROC_TYPE_EXTENSION.
+ * This function _must_ be called from every procedure's [callback@RunFunc]
+ * that was created as #GIMP_PDB_PROC_TYPE_EXTENSION.
  *
  * Subsequently, extensions can process temporary procedure run
- * requests using either gimp_plug_in_extension_enable() or
- * gimp_plug_in_extension_process().
+ * requests using either [method@PlugIn.extension_enable] or
+ * [method@PlugIn.extension_process].
  *
- * See also: gimp_procedure_new().
+ * See also: [ctor@Procedure.new].
  *
  * Since: 3.0
  **/
