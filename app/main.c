@@ -366,9 +366,6 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/lib/gtk-3.0/3.0.0", res_dir);
       g_setenv ("GTK_PATH", tmp, TRUE);
       g_free (tmp);
-      tmp = g_strdup_printf ("%s/etc/gtk-3.0/gtk.immodules", res_dir);
-      g_setenv ("GTK_IM_MODULE_FILE", tmp, TRUE);
-      g_free (tmp);
       tmp = g_strdup_printf ("%s/lib/gegl-0.4", res_dir);
       g_setenv ("GEGL_PATH", tmp, TRUE);
       g_free (tmp);
@@ -384,7 +381,7 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s", res_dir);
       g_setenv ("PYTHONHOME", tmp, TRUE);
       g_free (tmp);
-      tmp = g_strdup_printf ("%s/lib/python2.7:%s/lib/gimp/2.0/python", res_dir, res_dir);
+      tmp = g_strdup_printf ("%s/lib/python3.9", res_dir);
       g_setenv ("PYTHONPATH", tmp, TRUE);
       g_free (tmp);
       tmp = g_strdup_printf ("%s/lib/gio/modules", res_dir);
