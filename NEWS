@@ -14,9 +14,21 @@ Plug-ins:
   - PSD:
     * new support for loading 16-bit per channel CMYK images.
     * new support for files in LAB colorspace.
+    * new support for loading 32-bit per channel images (some code
+      existed yet may have never really worked).
   - AVIF:
     * prefer AOM encoder for export (rather than "rav1e", default of
       libheif, yet with worse performance).
+  - JPEG XL:
+    * Bit depth now selectable in JXL export.
+  - Support for very large PBM files on Windows with explicit usage of
+    64-bit size types.
+
+Build:
+
+  - Improved Coding Style document with commit message styling, git
+    usage, comment styling, natural language text rules, localization
+    and some section reorganization.
 
 
 Overview of Changes from GIMP 2.99.6 to GIMP 2.99.8
