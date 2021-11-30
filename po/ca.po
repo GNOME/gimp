@@ -5750,7 +5750,7 @@ msgstr "_Pas alt..."
 #: ../app/actions/filters-actions.c:397
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "To-_Croma..."
+msgstr "To-_croma..."
 
 #: ../app/actions/filters-actions.c:402
 msgctxt "filters-action"
