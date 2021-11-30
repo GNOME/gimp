@@ -707,6 +707,150 @@ List all public functions alphabetically in the corresponding `.def` file.
  - `libgimpbase/gimpbase.def`
  - etc
 
+## Natural language text
+
+### Base rules
+
+Any text in GIMP source should follow these base rules:
+
+- Our base language is US English, both for historical reason and
+  because this is the usual expectation with `gettext`, the
+  localization tool used by GIMP. In particular when variants of words
+  or idioms exist in several native English countries, we should choose
+  the US variant. Other English variants can be used in specific locales
+  (such as `en_GB` or `en_CA`…).
+- Text meant for technical people, such as API documentation (in-code
+  comments, in-repository documentation, or gtk-doc/docgen style
+  comments for generated docs…) usually does not need localization, and
+  therefore can just be written in US English.
+- Text meant to be viewed by all users should be translatable. In
+  particular in GIMP source code, it means that we need to use `gettext`
+  API.
+- Use gender-neutral terms, in particular not using words such as "she/he"
+  or "her/his" is better. We should not use over-complicated wording to
+  achieve this and should look for simpler writing if necessary.
+- Be nice and open-minded in all text, even in code comments. Remember
+  these will be read by others and that we are here to have fun
+  together, not fight.
+
+### User-visible text in C code
+
+As explained, C code uses the gettext API. Any text which might appear
+in front of people should be translatable, with the following
+exceptions:
+
+- Error or warning output in `stderr` might often be untranslated
+  (because we assume these are mostly used for debugging and people who
+  will see these would be more comfortable with digging into issue
+  causes; also it makes debugging and searches in code easier).
+- Technical error text in the graphical interface when it is made to be
+  reported to developers. Basically error messages meant for users
+  themselves should still be translatable. For instance, if one tries to
+  draw on a layer group, we'd display:
+
+  ```C
+  _("Cannot modify the pixels of layer groups.")
+  ```
+
+  Indeed this is an error message to give an information to the user.
+  It's not a bug.
+  Now when a crash happens, we add a translated header message to
+  explain a problem occured, but the core information stays in English
+  because we are not asking people to understand it, only report it to
+  us.
+
+The most common variant of gettext API is the underscore `_()` (alias of
+`gettext()`) for simple text:
+
+```C
+frame = gimp_frame_new (_("Shadows"));
+```
+
+When used in some widgets, we may want to add mnemonics for
+accessibility. This is done with the underscore:
+
+```C
+label = gtk_label_new_with_mnemonic (_("_Width:"));
+```
+
+Note that it is a good idea to not change well-known mnemonics, such as
+`_("_OK")`, `_("_Cancel")` or `_("_Reset")`. Also you should avoid using
+the same mnemonics in 2 widgets on the same interface (even though GTK
+has some way to handle mnemonic duplicate, but it's not really
+practical).
+
+Translators may (and often will) change mnemonics. It is therefore up to
+them to take care of not having the same mnemonics on a same interface
+in their specific locale.
+
+When some messages cannot be translated at initialization, you must use
+the no-op variant `N_()`. For instance, when we declare and initialize a
+struct:
+
+```C
+static const struct
+{
+  const gchar *name;
+  const gchar *description;
+}
+babl_descriptions[] =
+{
+  { "RGB u8",         N_("RGB") },
+  […]
+  { "Y u8",           N_("Grayscale") },
+  […]
+  { "R u8",           N_("Red component") },
+  […]
+  { "G u8",           N_("Green component") },
+  […]
+};
+```
+
+The normal gettext `_()` would not compile because you must initialize
+struct elements with constants. `N_()` allows the gettext tools to
+detect the strings which will need to go into the translator files.
+Note though that these strings will still need to be translated when
+used at runtime:
+
+```C
+        g_hash_table_insert (babl_description_hash,
+                             (gpointer) babl_descriptions[i].name,
+                             gettext (babl_descriptions[i].description));
+```
+
+Finally note that for any strings which depends on a variable number,
+you must use the ngettext variant:
+
+```C
+  desc = g_strdup_printf (ngettext ("Crop Layer to Selection",
+                                    "Crop %d Layers to Selection",
+                                    g_list_length (layers)),
+                          g_list_length (layers));
+```
+
+It is important to use `ngettext()` even in cases where there will
+always be a count bigger than 1. Say our indexed image do not support
+the monochrome (1 color) case, and even less 0 colors, then this seems
+useless because we will always use the second string only:
+
+```C
+      g_snprintf (buf, sizeof (buf),
+                  ngettext ("Indexed color (monochrome)",
+                            "Indexed color (%d colors)",
+                            gimp_image_get_colormap_size (image)),
+                  gimp_image_get_colormap_size (image));
+```
+
+Yet it's actually not useless as it allows translators for languages
+with more plural forms to translate GIMP correctly. For instance,
+[gettext documentation](https://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms)
+mentions the Polish language has different grammatical agreements for
+2,3,4 and 5-21 or again 22-24 and so on. If we were to use solely
+`_("Indexed color (%d colors)")`, Polish translators would not be able
+to list all these cases (therefore GIMP would have a crappy Polish
+localization), so we have to use `ngettext()` even if it feels useless
+in English.
+
 ## Helping tools
 ### Git
 
