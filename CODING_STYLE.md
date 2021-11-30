@@ -851,6 +851,16 @@ to list all these cases (therefore GIMP would have a crappy Polish
 localization), so we have to use `ngettext()` even if it feels useless
 in English.
 
+Finally when you add translated strings in a file which had none until
+now, for it to be processed by `gettext`, you need to add its path in
+alphabetical order in `po/POTFILES.in` for core files (or other
+`POTFILES.in`, for instance `po-plug-ins/POTFILES.in` for plug-ins). We
+have a test checking this, so the `make distcheck` step will fail anyway
+when you forgot to add a new file with translation. Yet as developers
+don't always run this step locally, the bug may be discovered during CI
+builds. It is obviously prefered to not forget it hence not push code
+which breaks the CI (and localization).
+
 ## Helping tools
 ### Git
 
