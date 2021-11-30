@@ -5489,7 +5489,7 @@ msgstr "_Pas alt..."
 #: ../app/actions/filters-actions.c:393
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "To-_Croma..."
+msgstr "To-_croma..."
 
 # quim: hi ha una altra eina no avançada
 #: ../app/actions/filters-actions.c:398
