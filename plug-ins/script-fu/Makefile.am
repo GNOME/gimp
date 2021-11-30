@@ -34,6 +34,7 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
 	$(GEGL_CFLAGS)		\
+	$(INTROSPECTION_CFLAGS)	\
 	-I$(includedir)		\
 	-I$(srcdir)/libscriptfu \
 	-DG_LOG_DOMAIN=\"scriptfu\"
@@ -80,6 +81,7 @@ script_fu_LDADD = \
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
+	$(INTROSPECTION_LIBS)	\
 	$(script_fu_RC)
 
 

@@ -24,6 +24,8 @@
 
 #include <glib/gstdio.h>
 
+#include <girepository.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimp/gimp.h"
@@ -48,16 +50,16 @@
 
 #undef cons
 
-static void     ts_init_constants                           (scheme    *sc);
-static void     ts_init_enum                                (scheme    *sc,
-                                                             GType      enum_type);
-
+static void     ts_init_constants                           (scheme       *sc,
+                                                             GIRepository *repo);
+static void     ts_init_enums                               (scheme       *sc,
+                                                             GIRepository *repo,
+                                                             const char   *namespace);
 static void     ts_define_procedure                         (scheme       *sc,
                                                              const gchar  *symbol_name,
                                                              TsWrapperFunc func);
 static void     ts_init_procedures                          (scheme    *sc,
                                                              gboolean   register_scipts);
-static void     convert_string                              (gchar     *str);
 static pointer  script_fu_marshal_procedure_call            (scheme    *sc,
                                                              pointer    a,
                                                              gboolean   permissive,
@@ -187,6 +189,10 @@ void
 tinyscheme_init (GList    *path,
                  gboolean  register_scripts)
 {
+  GIRepository *repo;
+  GITypelib    *typelib;
+  GError       *error = NULL;
+
   /* init the interpreter */
   if (! scheme_init (&sc))
     {
@@ -202,8 +208,18 @@ tinyscheme_init (GList    *path,
   init_ftx (&sc);
   script_fu_regex_init (&sc);
 
+  /* Fetch the typelib */
+  repo = g_irepository_get_default ();
+  typelib = g_irepository_require (repo, "Gimp", NULL, 0, &error);
+  if (!typelib)
+    {
+      g_warning ("%s", error->message);
+      g_clear_error (&error);
+      return;
+    }
+
   /* register in the interpreter the gimp functions and types. */
-  ts_init_constants (&sc);
+  ts_init_constants (&sc, repo);
   ts_init_procedures (&sc, register_scripts);
 
   if (path)
@@ -348,13 +364,11 @@ ts_register_post_command_callback (TsCallbackFunc callback)
  * gimp functions and types against the scheme interpreter.
  */
 static void
-ts_init_constants (scheme *sc)
+ts_init_constants (scheme       *sc,
+                   GIRepository *repo)
 {
-  const gchar **enum_type_names;
-  gint          n_enum_type_names;
-  gint          i;
-  pointer       symbol;
-  GQuark        quark;
+  int     i;
+  pointer symbol;
 
   symbol = sc->vptr->mk_symbol (sc, "gimp-directory");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
@@ -381,21 +395,8 @@ ts_init_constants (scheme *sc)
                            sc->vptr->mk_string (sc, gimp_sysconf_directory ()));
   sc->vptr->setimmutable (symbol);
 
-  enum_type_names = gimp_enums_get_type_names (&n_enum_type_names);
-  quark           = g_quark_from_static_string ("gimp-compat-enum");
-
-  for (i = 0; i < n_enum_type_names; i++)
-    {
-      const gchar *enum_name  = enum_type_names[i];
-      GType        enum_type  = g_type_from_name (enum_name);
-
-      ts_init_enum (sc, enum_type);
-
-      enum_type = (GType) g_type_get_qdata (enum_type, quark);
-
-      if (enum_type)
-        ts_init_enum (sc, enum_type);
-    }
+  ts_init_enums (sc, repo, "Gimp");
+  ts_init_enums (sc, repo, "Gegl");
 
   /* Constants used in the register block of scripts */
   for (i = 0; script_constants[i].name != NULL; ++i)
@@ -437,32 +438,83 @@ ts_init_constants (scheme *sc)
 }
 
 static void
-ts_init_enum (scheme *sc,
-              GType   enum_type)
+ts_init_enum (scheme     *sc,
+              GIEnumInfo *info,
+              const char *namespace)
 {
-  GEnumClass  *enum_class = g_type_class_ref (enum_type);
-  GEnumValue  *value;
+  int n_values;
 
-  for (value = enum_class->values; value->value_name; value++)
+  n_values = g_enum_info_get_n_values ((GIEnumInfo *) info);
+  for (int j = 0; j < n_values; j++)
     {
-      if (g_str_has_prefix (value->value_name, "GIMP_"))
+      GIValueInfo *value_info;
+      const char  *c_identifier;
+      char        *scheme_name;
+      int         int_value;
+      pointer     symbol;
+
+      value_info = g_enum_info_get_value (info, j);
+
+      /* Get name & value. Normally, we would use the actual name of the
+       * GIBaseInfo here, but that would break bw-compatibility */
+      c_identifier = g_base_info_get_attribute ((GIBaseInfo *) value_info, "c:identifier");
+      if (c_identifier == NULL)
         {
-          gchar   *scheme_name;
-          pointer  symbol;
-
-          scheme_name = g_strdup (value->value_name + strlen ("GIMP_"));
-          convert_string (scheme_name);
-
-          symbol = sc->vptr->mk_symbol (sc, scheme_name);
-          sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                                   sc->vptr->mk_integer (sc, value->value));
-          sc->vptr->setimmutable (symbol);
-
-          g_free (scheme_name);
+          g_warning ("Problem in the GIR file: enum value without \"c:identifier\"!");
+          g_base_info_unref ((GIBaseInfo *) value_info);
+          continue;
         }
-    }
 
-  g_type_class_unref (enum_class);
+      /* Scheme-ify the name */
+      if (g_strcmp0 (namespace, "Gimp") == 0)
+        {
+          /* Skip the GIMP prefix for GIMP enums */
+          if (g_str_has_prefix (c_identifier, "GIMP_"))
+            c_identifier += strlen ("GIMP_");
+        }
+      else
+        {
+          /* Other namespaces: skip non-prefixed symbols, to prevent clashes */
+          if (g_ascii_strncasecmp (c_identifier, namespace, strlen (namespace)) != 0)
+            {
+              g_base_info_unref ((GIBaseInfo *) value_info);
+              continue;
+            }
+        }
+      scheme_name = g_strdelimit (g_strdup (c_identifier), "_", '-');
+      int_value = g_value_info_get_value (value_info);
+
+      /* Register the symbol */
+      symbol = sc->vptr->mk_symbol (sc, scheme_name);
+      sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                               sc->vptr->mk_integer (sc, int_value));
+      sc->vptr->setimmutable (symbol);
+
+      g_free (scheme_name);
+      g_base_info_unref ((GIBaseInfo *) value_info);
+    }
+}
+
+static void
+ts_init_enums (scheme       *sc,
+               GIRepository *repo,
+               const char   *namespace)
+{
+  int i, n_infos;
+
+  n_infos = g_irepository_get_n_infos (repo, namespace);
+  for (i = 0; i < n_infos; i++)
+    {
+      GIBaseInfo *info;
+
+      info = g_irepository_get_info (repo, namespace, i);
+      if (GI_IS_ENUM_INFO (info))
+        {
+          ts_init_enum (sc, (GIEnumInfo *) info, namespace);
+        }
+
+      g_base_info_unref (info);
+    }
 }
 
 /* Define a symbol into interpreter state,
@@ -576,16 +628,6 @@ ts_load_file (const gchar *dirname,
     }
 
   return FALSE;
-}
-
-static void
-convert_string (gchar *str)
-{
-  while (*str)
-    {
-      if (*str == '_') *str = '-';
-      str++;
-    }
 }
 
 /* Called by the Scheme interpreter on calls to GIMP PDB procedures */

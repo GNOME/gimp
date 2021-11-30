@@ -54,6 +54,7 @@ libscriptfu = library('gimp-scriptfu-'+ gimp_api_version,
   dependencies: [
     libgimpui_dep,
     math,
+    gi,
   ],
   link_whole: [
     scriptfu_tinyscheme,

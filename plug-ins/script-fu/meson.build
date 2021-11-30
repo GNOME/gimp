@@ -50,6 +50,7 @@ executable(executable_name,
   dependencies: [
     libgimpui_dep,
     math,
+    gi,
   ],
   c_args: [
     '-DG_LOG_DOMAIN="scriptfu"',

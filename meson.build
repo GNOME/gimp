@@ -375,6 +375,7 @@ gio_specific      = dependency(gio_specific_name)
 
 glib_minver       = '2.70.0'
 glib              = dependency('glib-2.0',           version: '>='+glib_minver)
+gi                = dependency('gobject-introspection-1.0')
 
 conf.set('G_DISABLE_DEPRECATED', glib.version().version_compare('>=2.57'))
 
