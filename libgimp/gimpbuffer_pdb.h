@@ -32,8 +32,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar**           gimp_buffers_get_list      (const gchar *filter,
-                                              gint        *num_buffers);
+gchar**           gimp_buffers_get_list      (const gchar *filter);
 gchar*            gimp_buffer_rename         (const gchar *buffer_name,
                                               const gchar *new_name);
 gboolean          gimp_buffer_delete         (const gchar *buffer_name);

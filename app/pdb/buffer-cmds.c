@@ -53,7 +53,6 @@ buffers_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gint num_buffers = 0;
   gchar **buffer_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
@@ -61,17 +60,14 @@ buffers_get_list_invoker (GimpProcedure         *procedure,
   if (success)
     {
       buffer_list = gimp_container_get_filtered_name_array (gimp->named_buffers,
-                                                            filter, &num_buffers);
+                                                            filter);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_buffers);
-      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), buffer_list, num_buffers);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), buffer_list);
 
   return return_vals;
 }
@@ -309,16 +305,11 @@ register_buffer_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-buffers",
-                                                     "num buffers",
-                                                     "The number of buffers",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("buffer-list",
-                                                                 "buffer list",
-                                                                 "The list of buffer names",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("buffer-list",
+                                                       "buffer list",
+                                                       "The list of buffer names",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

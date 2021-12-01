@@ -134,7 +134,6 @@ pdb_query_invoker (GimpProcedure         *procedure,
   const gchar *copyright;
   const gchar *date;
   const gchar *proc_type;
-  gint num_matches = 0;
   gchar **procedure_names = NULL;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
@@ -150,7 +149,7 @@ pdb_query_invoker (GimpProcedure         *procedure,
       success = gimp_pdb_query (gimp->pdb,
                                 name, blurb, help, authors,
                                 copyright, date, proc_type,
-                                &num_matches, &procedure_names,
+                                &procedure_names,
                                 error);
     }
 
@@ -158,10 +157,7 @@ pdb_query_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_matches);
-      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), procedure_names, num_matches);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), procedure_names);
 
   return return_vals;
 }
@@ -577,7 +573,6 @@ pdb_get_proc_menu_paths_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *procedure_name;
-  gint num_menu_paths = 0;
   gchar **menu_paths = NULL;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
@@ -592,6 +587,7 @@ pdb_get_proc_menu_paths_invoker (GimpProcedure         *procedure,
           if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
             {
               GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (proc);
+              guint num_menu_paths;
 
               num_menu_paths = g_list_length (plug_in_proc->menu_paths);
 
@@ -621,10 +617,7 @@ pdb_get_proc_menu_paths_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_menu_paths);
-      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), menu_paths, num_menu_paths);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), menu_paths);
 
   return return_vals;
 }
@@ -1331,16 +1324,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-matches",
-                                                     "num matches",
-                                                     "The number of matching procedures",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("procedure-names",
-                                                                 "procedure names",
-                                                                 "The list of procedure names",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("procedure-names",
+                                                       "procedure names",
+                                                       "The list of procedure names",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1696,16 +1684,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-menu-paths",
-                                                     "num menu paths",
-                                                     "The number of menu paths",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("menu-paths",
-                                                                 "menu paths",
-                                                                 "The menu paths of the plug-in",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("menu-paths",
+                                                       "menu paths",
+                                                       "The menu paths of the plug-in",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

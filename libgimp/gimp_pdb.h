@@ -37,7 +37,7 @@ gint          gimp_getpid            (void);
 gboolean      gimp_attach_parasite   (const GimpParasite *parasite);
 gboolean      gimp_detach_parasite   (const gchar        *name);
 GimpParasite* gimp_get_parasite      (const gchar        *name);
-gchar**       gimp_get_parasite_list (gint               *num_parasites);
+gchar**       gimp_get_parasite_list (void);
 GFile*        gimp_temp_file         (const gchar        *extension);
 
 

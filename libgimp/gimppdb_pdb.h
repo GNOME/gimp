@@ -41,7 +41,6 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_query                          (const gcha
                                                                       const gchar       *copyright,
                                                                       const gchar       *date,
                                                                       const gchar       *proc_type,
-                                                                      gint              *num_matches,
                                                                       gchar           ***procedure_names);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_proc_exists                    (const gchar       *procedure_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_get_proc_info                  (const gchar       *procedure_name,
@@ -62,8 +61,7 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_menu_label            (const gcha
 G_GNUC_INTERNAL gchar*      _gimp_pdb_get_proc_menu_label            (const gchar       *procedure_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_add_proc_menu_path             (const gchar       *procedure_name,
                                                                       const gchar       *menu_path);
-G_GNUC_INTERNAL gchar**     _gimp_pdb_get_proc_menu_paths            (const gchar       *procedure_name,
-                                                                      gint              *num_menu_paths);
+G_GNUC_INTERNAL gchar**     _gimp_pdb_get_proc_menu_paths            (const gchar       *procedure_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_icon                  (const gchar       *procedure_name,
                                                                       GimpIconType       icon_type,
                                                                       gint               icon_data_length,

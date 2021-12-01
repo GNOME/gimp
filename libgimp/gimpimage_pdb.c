@@ -3432,7 +3432,6 @@ gimp_image_get_parasite (GimpImage   *image,
 /**
  * gimp_image_get_parasite_list:
  * @image: The image.
- * @num_parasites: (out): The number of attached parasites.
  *
  * List all parasites.
  *
@@ -3440,15 +3439,14 @@ gimp_image_get_parasite (GimpImage   *image,
  * These names can later be used to get the actual #GimpParasite with
  * gimp_image_get_parasite() when needed.
  *
- * Returns: (array length=num_parasites) (element-type gchar*) (transfer full):
+ * Returns: (array zero-terminated=1) (transfer full):
  *          The names of currently attached parasites.
  *          The returned value must be freed with g_strfreev().
  *
  * Since: 2.8
  **/
 gchar **
-gimp_image_get_parasite_list (GimpImage *image,
-                              gint      *num_parasites)
+gimp_image_get_parasite_list (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -3463,13 +3461,8 @@ gimp_image_get_parasite_list (GimpImage *image,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_parasites = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_parasites = GIMP_VALUES_GET_INT (return_vals, 1);
-      parasites = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
-    }
+    parasites = GIMP_VALUES_DUP_STRV (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

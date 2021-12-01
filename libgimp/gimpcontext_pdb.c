@@ -144,8 +144,7 @@ gimp_context_set_defaults (void)
 
 /**
  * gimp_context_list_paint_methods:
- * @num_paint_methods: (out): The number of the available paint methods.
- * @paint_methods: (out) (array length=num_paint_methods) (element-type gchar*) (transfer full): The names of the available paint methods.
+ * @paint_methods: (out) (array zero-terminated=1) (transfer full): The names of the available paint methods.
  *
  * Lists the available paint methods.
  *
@@ -157,8 +156,7 @@ gimp_context_set_defaults (void)
  * Since: 2.4
  **/
 gboolean
-gimp_context_list_paint_methods (gint    *num_paint_methods,
-                                 gchar ***paint_methods)
+gimp_context_list_paint_methods (gchar ***paint_methods)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -172,16 +170,12 @@ gimp_context_list_paint_methods (gint    *num_paint_methods,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_paint_methods = 0;
   *paint_methods = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    {
-      *num_paint_methods = GIMP_VALUES_GET_INT (return_vals, 1);
-      *paint_methods = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
-    }
+    *paint_methods = GIMP_VALUES_DUP_STRV (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

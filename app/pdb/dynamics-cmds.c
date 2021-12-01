@@ -62,7 +62,6 @@ dynamics_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gint num_dynamics = 0;
   gchar **dynamics_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
@@ -70,17 +69,14 @@ dynamics_get_list_invoker (GimpProcedure         *procedure,
   if (success)
     {
       dynamics_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->dynamics_factory),
-                                                              filter, &num_dynamics);
+                                                              filter);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_dynamics);
-      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), dynamics_list, num_dynamics);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), dynamics_list);
 
   return return_vals;
 }
@@ -129,16 +125,11 @@ register_dynamics_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-dynamics",
-                                                     "num dynamics",
-                                                     "The number of available paint dynamics",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("dynamics-list",
-                                                                 "dynamics list",
-                                                                 "The list of paint dynamics names",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("dynamics-list",
+                                                       "dynamics list",
+                                                       "The list of paint dynamics names",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

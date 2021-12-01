@@ -69,7 +69,6 @@ gimp_gradients_refresh (void)
 /**
  * gimp_gradients_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_gradients: (out): The number of loaded gradients.
  *
  * Retrieve the list of loaded gradients.
  *
@@ -77,13 +76,12 @@ gimp_gradients_refresh (void)
  * loaded. You can later use the gimp_context_set_gradient() function
  * to set the active gradient.
  *
- * Returns: (array length=num_gradients) (element-type gchar*) (transfer full):
+ * Returns: (array zero-terminated=1) (transfer full):
  *          The list of gradient names.
  *          The returned value must be freed with g_strfreev().
  **/
 gchar **
-gimp_gradients_get_list (const gchar *filter,
-                         gint        *num_gradients)
+gimp_gradients_get_list (const gchar *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -98,13 +96,8 @@ gimp_gradients_get_list (const gchar *filter,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_gradients = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_gradients = GIMP_VALUES_GET_INT (return_vals, 1);
-      gradient_list = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
-    }
+    gradient_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

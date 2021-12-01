@@ -69,7 +69,6 @@ gimp_brushes_refresh (void)
 /**
  * gimp_brushes_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_brushes: (out): The number of brushes in the brush list.
  *
  * Retrieve a complete listing of the available brushes.
  *
@@ -77,13 +76,11 @@ gimp_brushes_refresh (void)
  * Each name returned can be used as input to the
  * gimp_context_set_brush() procedure.
  *
- * Returns: (array length=num_brushes) (element-type gchar*) (transfer full):
- *          The list of brush names.
+ * Returns: (array zero-terminated=1) (transfer full): The list of brush names.
  *          The returned value must be freed with g_strfreev().
  **/
 gchar **
-gimp_brushes_get_list (const gchar *filter,
-                       gint        *num_brushes)
+gimp_brushes_get_list (const gchar *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -98,13 +95,8 @@ gimp_brushes_get_list (const gchar *filter,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_brushes = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_brushes = GIMP_VALUES_GET_INT (return_vals, 1);
-      brush_list = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
-    }
+    brush_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

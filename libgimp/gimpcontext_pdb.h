@@ -35,8 +35,7 @@ G_BEGIN_DECLS
 gboolean                    gimp_context_push                           (void);
 gboolean                    gimp_context_pop                            (void);
 gboolean                    gimp_context_set_defaults                   (void);
-gboolean                    gimp_context_list_paint_methods             (gint                          *num_paint_methods,
-                                                                         gchar                       ***paint_methods);
+gboolean                    gimp_context_list_paint_methods             (gchar                       ***paint_methods);
 gchar*                      gimp_context_get_paint_method               (void);
 gboolean                    gimp_context_set_paint_method               (const gchar                   *name);
 GimpStrokeMethod            gimp_context_get_stroke_method              (void);

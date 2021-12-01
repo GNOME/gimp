@@ -1004,24 +1004,20 @@ item_get_parasite_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpItem *item;
-  gint num_parasites = 0;
   gchar **parasites = NULL;
 
   item = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      parasites = gimp_item_parasite_list (item, &num_parasites);
+      parasites = gimp_item_parasite_list (item);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_parasites);
-      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), parasites, num_parasites);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), parasites);
 
   return return_vals;
 }
@@ -1990,16 +1986,11 @@ register_item_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-parasites",
-                                                     "num parasites",
-                                                     "The number of attached parasites",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("parasites",
-                                                                 "parasites",
-                                                                 "The names of currently attached parasites",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("parasites",
+                                                       "parasites",
+                                                       "The names of currently attached parasites",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

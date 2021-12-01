@@ -37,22 +37,20 @@
 /**
  * gimp_buffers_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_buffers: (out): The number of buffers.
  *
  * Retrieve a complete listing of the available buffers.
  *
  * This procedure returns a complete listing of available named
  * buffers.
  *
- * Returns: (array length=num_buffers) (element-type gchar*) (transfer full):
+ * Returns: (array zero-terminated=1) (transfer full):
  *          The list of buffer names.
  *          The returned value must be freed with g_strfreev().
  *
  * Since: 2.4
  **/
 gchar **
-gimp_buffers_get_list (const gchar *filter,
-                       gint        *num_buffers)
+gimp_buffers_get_list (const gchar *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -67,13 +65,8 @@ gimp_buffers_get_list (const gchar *filter,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_buffers = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_buffers = GIMP_VALUES_GET_INT (return_vals, 1);
-      buffer_list = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
-    }
+    buffer_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

@@ -72,22 +72,20 @@ gimp_dynamics_refresh (void)
 /**
  * gimp_dynamics_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_dynamics: (out): The number of available paint dynamics.
  *
  * Retrieve the list of loaded paint dynamics.
  *
  * This procedure returns a list of the paint dynamics that are
  * currently available.
  *
- * Returns: (array length=num_dynamics) (element-type gchar*) (transfer full):
+ * Returns: (array zero-terminated=1) (transfer full):
  *          The list of paint dynamics names.
  *          The returned value must be freed with g_strfreev().
  *
  * Since: 2.8
  **/
 gchar **
-gimp_dynamics_get_list (const gchar *filter,
-                        gint        *num_dynamics)
+gimp_dynamics_get_list (const gchar *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -102,13 +100,8 @@ gimp_dynamics_get_list (const gchar *filter,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_dynamics = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_dynamics = GIMP_VALUES_GET_INT (return_vals, 1);
-      dynamics_list = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
-    }
+    dynamics_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

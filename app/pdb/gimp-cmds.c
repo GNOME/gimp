@@ -187,15 +187,12 @@ get_parasite_list_invoker (GimpProcedure         *procedure,
                            GError               **error)
 {
   GimpValueArray *return_vals;
-  gint num_parasites = 0;
   gchar **parasites = NULL;
 
-  parasites = gimp_parasite_list (gimp, &num_parasites);
+  parasites = gimp_parasite_list (gimp);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-
-  g_value_set_int (gimp_value_array_index (return_vals, 1), num_parasites);
-  gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), parasites, num_parasites);
+  g_value_take_boxed (gimp_value_array_index (return_vals, 1), parasites);
 
   return return_vals;
 }
@@ -394,16 +391,11 @@ register_gimp_procs (GimpPDB *pdb)
                                          "Marc Lehmann",
                                          "1999");
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-parasites",
-                                                     "num parasites",
-                                                     "The number of attached parasites",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("parasites",
-                                                                 "parasites",
-                                                                 "The names of currently attached parasites",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("parasites",
+                                                       "parasites",
+                                                       "The names of currently attached parasites",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

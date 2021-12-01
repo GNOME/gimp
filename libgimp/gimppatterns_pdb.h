@@ -33,8 +33,7 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_patterns_refresh  (void);
-gchar**  gimp_patterns_get_list (const gchar *filter,
-                                 gint        *num_patterns);
+gchar**  gimp_patterns_get_list (const gchar *filter);
 
 
 G_END_DECLS

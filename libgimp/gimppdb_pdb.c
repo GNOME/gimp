@@ -103,8 +103,7 @@ _gimp_pdb_dump (GFile *file)
  * @copyright: The regex for procedure copyright.
  * @date: The regex for procedure date.
  * @proc_type: The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-in', 'GIMP Extension', 'Temporary Procedure' }.
- * @num_matches: (out): The number of matching procedures.
- * @procedure_names: (out) (array length=num_matches) (element-type gchar*) (transfer full): The list of procedure names.
+ * @procedure_names: (out) (array zero-terminated=1) (transfer full): The list of procedure names.
  *
  * Queries the procedural database for its contents using regular
  * expression matching.
@@ -132,7 +131,6 @@ _gimp_pdb_query (const gchar   *name,
                  const gchar   *copyright,
                  const gchar   *date,
                  const gchar   *proc_type,
-                 gint          *num_matches,
                  gchar       ***procedure_names)
 {
   GimpValueArray *args;
@@ -154,16 +152,12 @@ _gimp_pdb_query (const gchar   *name,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_matches = 0;
   *procedure_names = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    {
-      *num_matches = GIMP_VALUES_GET_INT (return_vals, 1);
-      *procedure_names = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
-    }
+    *procedure_names = GIMP_VALUES_DUP_STRV (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -578,21 +572,19 @@ _gimp_pdb_add_proc_menu_path (const gchar *procedure_name,
 /**
  * _gimp_pdb_get_proc_menu_paths:
  * @procedure_name: The procedure name.
- * @num_menu_paths: (out): The number of menu paths.
  *
  * Queries the procedural database for the procedure's menu paths.
  *
  * This procedure returns the menu paths of the specified procedure.
  *
- * Returns: (array length=num_menu_paths) (element-type gchar*) (transfer full):
+ * Returns: (array zero-terminated=1) (transfer full):
  *          The menu paths of the plug-in.
  *          The returned value must be freed with g_strfreev().
  *
  * Since: 3.0
  **/
 gchar **
-_gimp_pdb_get_proc_menu_paths (const gchar *procedure_name,
-                               gint        *num_menu_paths)
+_gimp_pdb_get_proc_menu_paths (const gchar *procedure_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -607,13 +599,8 @@ _gimp_pdb_get_proc_menu_paths (const gchar *procedure_name,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_menu_paths = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_menu_paths = GIMP_VALUES_GET_INT (return_vals, 1);
-      menu_paths = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
-    }
+    menu_paths = GIMP_VALUES_DUP_STRV (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

@@ -215,20 +215,19 @@ gimp_get_parasite (const gchar *name)
 
 /**
  * gimp_get_parasite_list:
- * @num_parasites: (out): The number of attached parasites.
  *
  * List all parasites.
  *
  * Returns a list of all currently attached global parasites.
  *
- * Returns: (array length=num_parasites) (element-type gchar*) (transfer full):
+ * Returns: (array zero-terminated=1) (transfer full):
  *          The names of currently attached parasites.
  *          The returned value must be freed with g_strfreev().
  *
  * Since: 2.8
  **/
 gchar **
-gimp_get_parasite_list (gint *num_parasites)
+gimp_get_parasite_list (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -242,13 +241,8 @@ gimp_get_parasite_list (gint *num_parasites)
                                               args);
   gimp_value_array_unref (args);
 
-  *num_parasites = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_parasites = GIMP_VALUES_GET_INT (return_vals, 1);
-      parasites = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
-    }
+    parasites = GIMP_VALUES_DUP_STRV (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

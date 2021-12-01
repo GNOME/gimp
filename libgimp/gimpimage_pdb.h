@@ -196,8 +196,7 @@ gboolean                 gimp_image_detach_parasite            (GimpImage       
                                                                 const gchar         *name);
 GimpParasite*            gimp_image_get_parasite               (GimpImage           *image,
                                                                 const gchar         *name);
-gchar**                  gimp_image_get_parasite_list          (GimpImage           *image,
-                                                                gint                *num_parasites);
+gchar**                  gimp_image_get_parasite_list          (GimpImage           *image);
 gboolean                 gimp_image_policy_rotate              (GimpImage           *image,
                                                                 gboolean             interactive);
 gboolean                 gimp_image_policy_color_profile       (GimpImage           *image,

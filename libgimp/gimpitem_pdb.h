@@ -76,8 +76,7 @@ gboolean      gimp_item_detach_parasite     (GimpItem           *item,
                                              const gchar        *name);
 GimpParasite* gimp_item_get_parasite        (GimpItem           *item,
                                              const gchar        *name);
-gchar**       gimp_item_get_parasite_list   (GimpItem           *item,
-                                             gint               *num_parasites);
+gchar**       gimp_item_get_parasite_list   (GimpItem           *item);
 
 
 G_END_DECLS

@@ -67,7 +67,6 @@ patterns_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gint num_patterns = 0;
   gchar **pattern_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
@@ -75,17 +74,14 @@ patterns_get_list_invoker (GimpProcedure         *procedure,
   if (success)
     {
       pattern_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->pattern_factory),
-                                                             filter, &num_patterns);
+                                                             filter);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_patterns);
-      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), pattern_list, num_patterns);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), pattern_list);
 
   return return_vals;
 }
@@ -134,16 +130,11 @@ register_patterns_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-patterns",
-                                                     "num patterns",
-                                                     "The number of patterns in the pattern list",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("pattern-list",
-                                                                 "pattern list",
-                                                                 "The list of pattern names",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("pattern-list",
+                                                       "pattern list",
+                                                       "The list of pattern names",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

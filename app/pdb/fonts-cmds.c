@@ -63,7 +63,6 @@ fonts_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gint num_fonts = 0;
   gchar **font_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
@@ -76,7 +75,7 @@ fonts_get_list_invoker (GimpProcedure         *procedure,
       if (success)
         {
           font_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->font_factory),
-                                                              filter, &num_fonts);
+                                                              filter);
         }
     }
 
@@ -84,10 +83,7 @@ fonts_get_list_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_fonts);
-      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), font_list, num_fonts);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), font_list);
 
   return return_vals;
 }
@@ -136,16 +132,11 @@ register_fonts_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-fonts",
-                                                     "num fonts",
-                                                     "The number of available fonts",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("font-list",
-                                                                 "font list",
-                                                                 "The list of font names",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("font-list",
+                                                       "font list",
+                                                       "The list of font names",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

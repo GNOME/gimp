@@ -114,16 +114,12 @@ context_list_paint_methods_invoker (GimpProcedure         *procedure,
                                     GError               **error)
 {
   GimpValueArray *return_vals;
-  gint num_paint_methods = 0;
   gchar **paint_methods = NULL;
 
-  paint_methods = gimp_container_get_name_array (gimp->paint_info_list,
-                                                 &num_paint_methods);
+  paint_methods = gimp_container_get_name_array (gimp->paint_info_list);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-
-  g_value_set_int (gimp_value_array_index (return_vals, 1), num_paint_methods);
-  gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), paint_methods, num_paint_methods);
+  g_value_take_boxed (gimp_value_array_index (return_vals, 1), paint_methods);
 
   return return_vals;
 }
@@ -3151,16 +3147,11 @@ register_context_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2007");
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-paint-methods",
-                                                     "num paint methods",
-                                                     "The number of the available paint methods",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("paint-methods",
-                                                                 "paint methods",
-                                                                 "The names of the available paint methods",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("paint-methods",
+                                                       "paint methods",
+                                                       "The names of the available paint methods",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
