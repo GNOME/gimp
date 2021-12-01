@@ -390,6 +390,12 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/share/libwmf/fonts", res_dir);
       g_setenv ("WMF_FONTDIR", tmp, TRUE);
       g_free (tmp);
+      if (g_getenv ("XDG_DATA_DIRS"))
+        tmp = g_strdup_printf ("%s/share:%s", res_dir, g_getenv ("XDG_DATA_DIRS"));
+      else
+        tmp = g_strdup_printf ("%s/share", res_dir);
+      g_setenv ("XDG_DATA_DIRS", tmp, TRUE);
+      g_free (tmp);
       if (g_getenv ("HOME") != NULL)
         {
           tmp = g_strdup_printf ("%s/Library/Application Support/GIMP/3.00/cache",
