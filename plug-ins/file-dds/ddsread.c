@@ -918,7 +918,6 @@ load_layer (FILE            *fp,
       if (hdr->pixelfmt.flags & DDPF_PALETTEINDEXED8)
         {
           type = GIMP_INDEXED_IMAGE;
-          bablfmt = babl_format ("R'G'B' u8");
         }
       else if (hdr->pixelfmt.rmask == 0xe0)
         {
@@ -937,7 +936,12 @@ load_layer (FILE            *fp,
         }
       break;
     case 2:
-      if (hdr->pixelfmt.amask == 0xf000) /* RGBA4 */
+      if ((hdr->pixelfmt.flags & (DDPF_PALETTEINDEXED8 + DDPF_ALPHA)) ==
+          DDPF_PALETTEINDEXED8 + DDPF_ALPHA)
+        {
+          type = GIMP_INDEXEDA_IMAGE;
+        }
+      else if (hdr->pixelfmt.amask == 0xf000) /* RGBA4 */
         {
           type = GIMP_RGBA_IMAGE;
           bablfmt = babl_format ("R'G'B'A u8");
@@ -970,6 +974,9 @@ load_layer (FILE            *fp,
   g_free (layer_name);
 
   gimp_image_insert_layer (image, layer, 0, *l);
+
+  if (type == GIMP_INDEXED_IMAGE || type == GIMP_INDEXEDA_IMAGE)
+    bablfmt = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
 
   if ((*l)++) gimp_item_set_visible (layer, FALSE);
 
