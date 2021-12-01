@@ -1277,7 +1277,16 @@ gimp_stack_trace_print (const gchar   *prog_name,
       /* Child process. */
       gchar *args[9] = { "gdb", "-batch",
                          "-ex", "info threads",
-                         "-ex", "thread apply all backtrace full",
+                         /* We used to be able to ask for the full
+                          * backtrace of all threads, but a bug,
+                          * possibly in gdb, could lock the whole GIMP
+                          * process. So for now, let's just have a
+                          * backtrace of the main process (most bugs
+                          * happen here anyway).
+                          * See issue #7539.
+                          */
+                         /*"-ex", "thread apply all backtrace full",*/
+                         "-ex", "backtrace full",
                          (gchar *) prog_name, NULL, NULL };
 
       if (prog_name == NULL)
