@@ -465,7 +465,7 @@ gimp_scanner_parse_string_no_validate (GimpScanner  *scanner,
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
  * @length: Length of the data to parse
- * @dest: (out) (array): Return location for the parsed data
+ * @dest: (out) (array length=length): Return location for the parsed data
  *
  * Returns: %TRUE on success
  *
@@ -787,7 +787,7 @@ gimp_scanner_parse_color (GimpScanner *scanner,
  * gimp_scanner_parse_matrix2:
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @dest: Pointer to a matrix to store the result
+ * @dest: (out caller-allocates): Pointer to a matrix to store the result
  *
  * Returns: %TRUE on success
  *

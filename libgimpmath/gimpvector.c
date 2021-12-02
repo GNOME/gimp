@@ -268,7 +268,7 @@ gimp_vector2_neg_val (GimpVector2 vector)
 
 /**
  * gimp_vector2_add:
- * @result: destination for the resulting #GimpVector2.
+ * @result: (out caller-allocates): destination for the resulting #GimpVector2.
  * @vector1: a pointer to the first #GimpVector2.
  * @vector2: a pointer to the second #GimpVector2.
  *
@@ -308,7 +308,7 @@ gimp_vector2_add_val (GimpVector2 vector1,
 
 /**
  * gimp_vector2_sub:
- * @result: the destination for the resulting #GimpVector2.
+ * @result: (out caller-allocates): the destination for the resulting #GimpVector2.
  * @vector1: a pointer to the first #GimpVector2.
  * @vector2: a pointer to the second #GimpVector2.
  *
@@ -734,7 +734,7 @@ gimp_vector3_neg_val (GimpVector3 vector)
 
 /**
  * gimp_vector3_add:
- * @result: destination for the resulting #GimpVector3.
+ * @result: (out caller-allocates): destination for the resulting #GimpVector3.
  * @vector1: a pointer to the first #GimpVector3.
  * @vector2: a pointer to the second #GimpVector3.
  *
@@ -776,7 +776,7 @@ gimp_vector3_add_val (GimpVector3 vector1,
 
 /**
  * gimp_vector3_sub:
- * @result: the destination for the resulting #GimpVector3.
+ * @result: (out caller-allocates): the destination for the resulting #GimpVector3.
  * @vector1: a pointer to the first #GimpVector3.
  * @vector2: a pointer to the second #GimpVector3.
  *
