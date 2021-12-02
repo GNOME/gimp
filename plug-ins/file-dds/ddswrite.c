@@ -888,7 +888,7 @@ write_layer (FILE   *fp,
   src = g_malloc (w * h * bpp);
 
   if (basetype == GIMP_INDEXED)
-    format = gimp_drawable_get_format (drawable);
+    format = gimp_drawable_get_format (drawable_id);
   else if (bpp == 1)
     format = babl_format ("Y' u8");
   else if (bpp == 2)

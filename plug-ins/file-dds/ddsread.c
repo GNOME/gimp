@@ -976,7 +976,7 @@ load_layer (FILE            *fp,
   gimp_image_insert_layer (image, layer, 0, *l);
 
   if (type == GIMP_INDEXED_IMAGE || type == GIMP_INDEXEDA_IMAGE)
-    bablfmt = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+    bablfmt = gimp_drawable_get_format (layer);
 
   if ((*l)++) gimp_item_set_visible (layer, FALSE);
 
