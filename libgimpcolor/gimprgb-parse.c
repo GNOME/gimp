@@ -375,8 +375,9 @@ gimp_rgba_parse_css (GimpRGB     *rgba,
 
 /**
  * gimp_rgb_list_names:
- * @names: (out): return location for an array of color names
- * @colors: (out): return location for an array of GimpRGB structs
+ * @names: (out) (array length=n_colors) (transfer container): return location for an array of color names
+ * @colors: (out) (array length=n_colors) (transfer container): return location for an array of GimpRGB structs
+ * @n_colors: (out): The number of named colors
  *
  * Returns the list of <ulink
  * url="https://www.w3.org/TR/SVG/types.html">SVG 1.0 color
@@ -386,22 +387,22 @@ gimp_rgba_parse_css (GimpRGB     *rgba,
  * arrays are allocated dynamically. You must call g_free() on the
  * @names and @colors arrays when they are not any longer needed.
  *
- * Returns: the number of named colors
- *               (i.e. the length of the returned arrays)
- *
  * Since: 2.2
  **/
-gint
+void
 gimp_rgb_list_names (const gchar ***names,
-                     GimpRGB      **colors)
+                     GimpRGB      **colors,
+                     gint          *n_colors)
 {
   gint i;
 
-  g_return_val_if_fail (names != NULL, 0);
-  g_return_val_if_fail (colors != NULL, 0);
+  g_return_if_fail (names != NULL);
+  g_return_if_fail (colors != NULL);
+  g_return_if_fail (n_colors != NULL);
 
   *names  = g_new (const gchar *, G_N_ELEMENTS (named_colors));
   *colors = g_new (GimpRGB, G_N_ELEMENTS (named_colors));
+  *n_colors = G_N_ELEMENTS (named_colors);
 
   for (i = 0; i < G_N_ELEMENTS (named_colors); i++)
     {
@@ -413,10 +414,7 @@ gimp_rgb_list_names (const gchar ***names,
                            named_colors[i].blue,
                            0xFF);
     }
-
-  return G_N_ELEMENTS (named_colors);
 }
-
 
 static gchar *
 gimp_rgb_parse_strip (const gchar *str,

@@ -139,7 +139,7 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
 
   store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, GIMP_TYPE_RGB);
 
-  num_colors = gimp_rgb_list_names (&names, &colors);
+  gimp_rgb_list_names (&names, &colors, &num_colors);
 
   for (i = 0; i < num_colors; i++)
     {

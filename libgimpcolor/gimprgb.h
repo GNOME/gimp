@@ -139,8 +139,9 @@ void      gimp_rgb_composite       (GimpRGB              *color1,
                                     GimpRGBCompositeMode  mode);
 
 /*  access to the list of color names  */
-gint      gimp_rgb_list_names      (const gchar ***names,
-                                    GimpRGB      **colors);
+void      gimp_rgb_list_names      (const gchar ***names,
+                                    GimpRGB      **colors,
+                                    gint          *n_colors);
 
 
 void      gimp_rgba_set            (GimpRGB       *rgba,
