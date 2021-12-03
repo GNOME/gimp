@@ -396,6 +396,9 @@ gimp_macos_setenv (const char * progname)
         tmp = g_strdup_printf ("%s/share", res_dir);
       g_setenv ("XDG_DATA_DIRS", tmp, TRUE);
       g_free (tmp);
+      tmp = g_strdup_printf ("%s/lib/girepository-1.0", res_dir);
+      g_setenv ("GI_TYPELIB_PATH", tmp, TRUE);
+      g_free (tmp);
       if (g_getenv ("HOME") != NULL)
         {
           tmp = g_strdup_printf ("%s/Library/Application Support/GIMP/3.00/cache",
