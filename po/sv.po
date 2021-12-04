@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-09-28 14:16+0000\n"
-"PO-Revision-Date: 2021-09-28 22:20+0200\n"
+"POT-Creation-Date: 2021-11-14 23:28+0000\n"
+"PO-Revision-Date: 2021-12-04 15:27+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18257,7 +18257,7 @@ msgstr "Navigera i bildvisningen"
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:620
+#: ../app/display/gimpdisplayshell-callbacks.c:621
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -18928,6 +18928,16 @@ msgstr "”%s” är inte ett giltigt URI-schema"
 #: ../app/file/file-utils.c:132
 msgid "Invalid character sequence in URI"
 msgstr "Ogiltig teckensekvens i URI"
+
+#: ../app/file-data/file-data-gih.c:295
+#, c-format
+msgid "Negative x offset: %d for layer %s corrected."
+msgstr "Negativ x-förskjutning: %d för lagret %s korrigerad."
+
+#: ../app/file-data/file-data-gih.c:302
+#, c-format
+msgid "Negative y offset: %d for layer %s corrected."
+msgstr "Negativ y-förskjutning: %d för lagret %s korrigerad."
 
 #: ../app/file-data/file-data.c:59 ../app/file-data/file-data.c:124
 msgid "GIMP brush"
