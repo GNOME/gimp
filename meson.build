@@ -1246,6 +1246,7 @@ foreach header : [
     { 'm': 'HAVE_STRING_H',       'v': 'string.h' },
     { 'm': 'HAVE_STRINGS_H',      'v': 'strings.h' },
     { 'm': 'HAVE_SYS_PARAM_H',    'v': 'sys/param.h' },
+    { 'm': 'HAVE_SYS_PRCTL_H',    'v': 'sys/prctl.h' },
     { 'm': 'HAVE_SYS_SELECT_H',   'v': 'sys/select.h' },
     { 'm': 'HAVE_SYS_STAT_H',     'v': 'sys/stat.h' },
     { 'm': 'HAVE_SYS_THR_H',      'v': 'sys/thr.h' },
