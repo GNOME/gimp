@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-10-12 17:34+0000\n"
-"PO-Revision-Date: 2021-10-12 20:40+0200\n"
+"POT-Creation-Date: 2021-12-02 11:46+0000\n"
+"PO-Revision-Date: 2021-12-04 15:30+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1291,11 +1291,11 @@ msgstr "Visa en inställningssida med experimentella funktioner"
 msgid "Show an image submenu with debug actions"
 msgstr "Visa en bildundermeny med felsökningsåtgärder"
 
-#: ../app/main.c:691
+#: ../app/main.c:694
 msgid "[FILE|URI...]"
 msgstr "[FIL|URI…]"
 
-#: ../app/main.c:719
+#: ../app/main.c:722
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1303,20 +1303,20 @@ msgstr ""
 "GIMP kunde inte initiera det grafiska användargränssnittet.\n"
 "Kontrollera att det finns en korrekt konfiguration för din displaymiljö."
 
-#: ../app/main.c:738
+#: ../app/main.c:741
 msgid "Another GIMP instance is already running."
 msgstr "En annan instans av GIMP körs redan."
 
-#: ../app/main.c:829
+#: ../app/main.c:832
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP-utdata. Tryck på en tangent för att stänga fönstret."
 
-#: ../app/main.c:830
+#: ../app/main.c:833
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Tryck på en tangent för att stänga fönstret)\n"
 
-#: ../app/main.c:847
+#: ../app/main.c:850
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP-utdata. Du kan minimera det här fönstret men stäng det inte."
 
@@ -14309,8 +14309,8 @@ msgid "Error loading '%s'"
 msgstr "Fel vid inläsning av ”%s”"
 
 #: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:95
-#: ../app/file-data/file-data-gex.c:341 ../app/file-data/file-data-gex.c:479
-#: ../app/file-data/file-data-gih.c:99 ../app/file-data/file-data-pat.c:96
+#: ../app/file-data/file-data-gex.c:343 ../app/file-data/file-data-gex.c:481
+#: ../app/file-data/file-data-gih.c:99 ../app/file-data/file-data-pat.c:102
 #: ../app/xcf/xcf.c:440
 #, c-format
 msgid "Could not open '%s' for reading: "
@@ -19007,28 +19007,28 @@ msgstr "N"
 msgid "_Sample Merged"
 msgstr "Sa_mpla sammanfogade"
 
-#: ../app/display/gimpdisplayshell.c:503
+#: ../app/display/gimpdisplayshell.c:500
 msgid "Access the image menu"
 msgstr "Kom åt bildmenyn"
 
-#: ../app/display/gimpdisplayshell.c:633
+#: ../app/display/gimpdisplayshell.c:630
 msgid "Zoom image when window size changes"
 msgstr "Zooma bild när fönsterstorlek ändras"
 
-#: ../app/display/gimpdisplayshell.c:662
+#: ../app/display/gimpdisplayshell.c:659
 msgid "Toggle Quick Mask"
 msgstr "Visa snabbmask"
 
-#: ../app/display/gimpdisplayshell.c:677
+#: ../app/display/gimpdisplayshell.c:674
 msgid "Navigate the image display"
 msgstr "Navigera i bildvisningen"
 
-#: ../app/display/gimpdisplayshell.c:730 ../app/display/gimpdisplayshell.c:1418
+#: ../app/display/gimpdisplayshell.c:727 ../app/display/gimpdisplayshell.c:1401
 #: ../app/widgets/gimptoolbox.c:244
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:647
+#: ../app/display/gimpdisplayshell-callbacks.c:648
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -19711,37 +19711,47 @@ msgstr "Ogiltig teckensekvens i URI"
 msgid "Absolute path are forbidden in GIMP extension '%s': %s"
 msgstr "Absolut sökväg är förbjuden i GIMP-tillägget ”%s”: %s"
 
-#: ../app/file-data/file-data-gex.c:156
+#: ../app/file-data/file-data-gex.c:157
 #, c-format
 msgid "File not allowed in root of GIMP extension '%s': %s"
 msgstr "Fil ej tillåten i roten av GIMP-tillägget ”%s”: %s"
 
-#: ../app/file-data/file-data-gex.c:167
+#: ../app/file-data/file-data-gex.c:168
 #, c-format
 msgid "File not in GIMP extension '%s' folder id '%s': %s"
 msgstr "Fil inte i mapp-id ”%2$s” för GIMP-tillägget ”%1$s”: %3$s"
 
-#: ../app/file-data/file-data-gex.c:263 ../app/file-data/file-data-gex.c:409
-#: ../app/file-data/file-data-gex.c:421 ../app/file-data/file-data-gex.c:433
-#: ../app/file-data/file-data-gex.c:446
+#: ../app/file-data/file-data-gex.c:264 ../app/file-data/file-data-gex.c:411
+#: ../app/file-data/file-data-gex.c:423 ../app/file-data/file-data-gex.c:435
+#: ../app/file-data/file-data-gex.c:448
 #, c-format
 msgid "Fatal error when uncompressing GIMP extension '%s': %s"
 msgstr "Ödesdigert fel vid dekomprimering av GIMP-tillägget ”%s”: %s"
 
-#: ../app/file-data/file-data-gex.c:297
+#: ../app/file-data/file-data-gex.c:299
 #, c-format
 msgid "GIMP extension '%s' directory (%s) different from AppStream id: %s"
 msgstr "Katalog för GIMP-tillägget ”%s” (%s) skiljer sig från AppStream-id: %s"
 
-#: ../app/file-data/file-data-gex.c:306
+#: ../app/file-data/file-data-gex.c:308
 #, c-format
 msgid "GIMP extension '%s' requires an AppStream file: %s"
 msgstr "GIMP-tillägget ”%s” kräver en AppStream-fil: %s"
 
-#: ../app/file-data/file-data-gex.c:321 ../app/file-data/file-data-gex.c:456
+#: ../app/file-data/file-data-gex.c:323 ../app/file-data/file-data-gex.c:458
 #, c-format
 msgid "Invalid GIMP extension '%s': %s"
 msgstr "Ogiltigt GIMP-tillägg ”%s”: %s"
+
+#: ../app/file-data/file-data-gih.c:292
+#, c-format
+msgid "Negative x offset: %d for layer %s corrected."
+msgstr "Negativ x-förskjutning: %d för lagret %s korrigerad."
+
+#: ../app/file-data/file-data-gih.c:299
+#, c-format
+msgid "Negative y offset: %d for layer %s corrected."
+msgstr "Negativ y-förskjutning: %d för lagret %s korrigerad."
 
 #: ../app/file-data/file-data.c:61 ../app/file-data/file-data.c:118
 msgid "GIMP brush"
@@ -19755,7 +19765,7 @@ msgstr "GIMP-pensel (animerad)"
 msgid "GIMP pattern"
 msgstr "GIMP-mönster"
 
-#: ../app/file-data/file-data.c:465
+#: ../app/file-data/file-data.c:470
 msgid "GIMP extension"
 msgstr "GIMP-tillägg"
 
