@@ -1629,7 +1629,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
     {
       if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
         {
-          gimp_editor_popup_menu (GIMP_EDITOR (tree_view), NULL, NULL);
+          gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (tree_view), (GdkEvent *) bevent);
         }
 
       return TRUE;

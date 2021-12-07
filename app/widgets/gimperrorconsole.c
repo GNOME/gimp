@@ -272,7 +272,7 @@ gimp_error_console_button_press (GtkWidget        *widget,
 {
   if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
-      return gimp_editor_popup_menu (GIMP_EDITOR (console), NULL, NULL);
+      return gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (console), (GdkEvent *) bevent);
     }
 
   return FALSE;

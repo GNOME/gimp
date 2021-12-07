@@ -503,7 +503,7 @@ gimp_component_editor_button_press (GtkWidget           *widget,
 
       if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
         {
-          gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
+          gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (editor), (GdkEvent *) bevent);
         }
       else if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1 &&
                column != editor->eye_column)

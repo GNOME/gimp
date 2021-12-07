@@ -465,6 +465,23 @@ gimp_editor_popup_menu (GimpEditor           *editor,
   return FALSE;
 }
 
+gboolean
+gimp_editor_popup_menu_at_pointer (GimpEditor     *editor,
+                                   const GdkEvent *trigger_event)
+{
+  g_return_val_if_fail (GIMP_IS_EDITOR (editor), FALSE);
+
+  if (editor->priv->ui_manager && editor->priv->ui_path)
+    {
+      gimp_ui_manager_update (editor->priv->ui_manager, editor->priv->popup_data);
+      gimp_ui_manager_ui_popup_at_pointer (editor->priv->ui_manager, editor->priv->ui_path,
+                                           trigger_event, NULL, NULL);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 GtkWidget *
 gimp_editor_add_button (GimpEditor  *editor,
                         const gchar *icon_name,

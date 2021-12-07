@@ -190,10 +190,7 @@ static void      control_do_hint                  (GimpGradientEditor *editor,
                                                    gint                x,
                                                    gint                y);
 static void      control_button_press             (GimpGradientEditor *editor,
-                                                   gint                x,
-                                                   gint                y,
-                                                   guint               button,
-                                                   guint               state);
+                                                   GdkEventButton     *bevent);
 static gboolean  control_point_in_handle          (GimpGradientEditor *editor,
                                                    GimpGradient       *gradient,
                                                    gint                x,
@@ -1141,7 +1138,7 @@ view_events (GtkWidget          *widget,
 
         if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
           {
-            gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
+            gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (editor), event);
           }
         else if (bevent->button == 1)
           {
@@ -1338,9 +1335,7 @@ control_events (GtkWidget          *widget,
           editor->control_last_x     = bevent->x;
           editor->control_click_time = bevent->time;
 
-          control_button_press (editor,
-                                bevent->x, bevent->y,
-                                bevent->button, bevent->state);
+          control_button_press (editor, bevent);
 
           if (editor->control_drag_mode != GRAD_DRAG_NONE)
             {
@@ -1610,10 +1605,7 @@ control_do_hint (GimpGradientEditor *editor,
 
 static void
 control_button_press (GimpGradientEditor *editor,
-                      gint                x,
-                      gint                y,
-                      guint               button,
-                      guint               state)
+                      GdkEventButton     *bevent)
 {
   GimpGradient           *gradient;
   GimpGradientSegment    *seg;
@@ -1623,19 +1615,19 @@ control_button_press (GimpGradientEditor *editor,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  if (button == 3)
+  if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
-      gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
+      gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (editor), (GdkEvent *) bevent);
       return;
     }
 
   /* Find the closest handle */
 
-  xpos = control_calc_g_pos (editor, x);
+  xpos = control_calc_g_pos (editor, bevent->x);
 
   seg_get_closest_handle (gradient, xpos, &seg, &handle);
 
-  in_handle = control_point_in_handle (editor, gradient, x, y, seg, handle);
+  in_handle = control_point_in_handle (editor, gradient, bevent->x, bevent->y, seg, handle);
 
   /* Now see what we have */
 
@@ -1647,7 +1639,7 @@ control_button_press (GimpGradientEditor *editor,
           if (seg != NULL)
             {
               /* Left handle of some segment */
-              if (state & GDK_SHIFT_MASK)
+              if (bevent->state & GDK_SHIFT_MASK)
                 {
                   if (seg->prev != NULL)
                     {
@@ -1677,7 +1669,7 @@ control_button_press (GimpGradientEditor *editor,
               /* Right handle of last segment */
               seg = gimp_gradient_segment_get_last (gradient->segments);
 
-              if (state & GDK_SHIFT_MASK)
+              if (bevent->state & GDK_SHIFT_MASK)
                 {
                   control_extend_selection (editor, seg, xpos);
                   gimp_gradient_editor_update (editor);
@@ -1692,7 +1684,7 @@ control_button_press (GimpGradientEditor *editor,
           break;
 
         case GRAD_DRAG_MIDDLE:
-          if (state & GDK_SHIFT_MASK)
+          if (bevent->state & GDK_SHIFT_MASK)
             {
               control_extend_selection (editor, seg, xpos);
               gimp_gradient_editor_update (editor);
@@ -1719,7 +1711,7 @@ control_button_press (GimpGradientEditor *editor,
       editor->control_last_gx      = xpos;
       editor->control_orig_pos     = xpos;
 
-      if (state & GDK_SHIFT_MASK)
+      if (bevent->state & GDK_SHIFT_MASK)
         editor->control_compress = TRUE;
     }
 }

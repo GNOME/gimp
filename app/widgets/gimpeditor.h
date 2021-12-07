@@ -58,6 +58,9 @@ void        gimp_editor_create_menu       (GimpEditor           *editor,
 gboolean    gimp_editor_popup_menu        (GimpEditor           *editor,
                                            GimpMenuPositionFunc  position_func,
                                            gpointer              position_data);
+gboolean    gimp_editor_popup_menu_at_pointer
+                                          (GimpEditor           *editor,
+                                           const GdkEvent       *trigger_event);
 
 GtkWidget * gimp_editor_add_button        (GimpEditor           *editor,
                                            const gchar          *icon_name,
