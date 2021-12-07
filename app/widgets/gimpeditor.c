@@ -446,26 +446,6 @@ gimp_editor_create_menu (GimpEditor      *editor,
 }
 
 gboolean
-gimp_editor_popup_menu (GimpEditor           *editor,
-                        GimpMenuPositionFunc  position_func,
-                        gpointer              position_data)
-{
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), FALSE);
-
-  if (editor->priv->ui_manager && editor->priv->ui_path)
-    {
-      gimp_ui_manager_update (editor->priv->ui_manager, editor->priv->popup_data);
-      gimp_ui_manager_ui_popup (editor->priv->ui_manager, editor->priv->ui_path,
-                                GTK_WIDGET (editor),
-                                position_func, position_data,
-                                NULL, NULL);
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-gboolean
 gimp_editor_popup_menu_at_pointer (GimpEditor     *editor,
                                    const GdkEvent *trigger_event)
 {

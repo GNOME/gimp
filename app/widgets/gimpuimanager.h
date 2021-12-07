@@ -126,13 +126,6 @@ void            gimp_ui_manager_ui_register (GimpUIManager          *manager,
                                              const gchar            *basename,
                                              GimpUIManagerSetupFunc  setup_func);
 
-void            gimp_ui_manager_ui_popup    (GimpUIManager          *manager,
-                                             const gchar            *ui_path,
-                                             GtkWidget              *parent,
-                                             GimpMenuPositionFunc    position_func,
-                                             gpointer                position_data,
-                                             GDestroyNotify          popdown_func,
-                                             gpointer                popdown_data);
 void            gimp_ui_manager_ui_popup_at_widget
                                             (GimpUIManager          *manager,
                                              const gchar            *ui_path,
