@@ -134,9 +134,6 @@ static gboolean gimp_item_tree_view_select_items    (GimpContainerView *view,
 static void   gimp_item_tree_view_activate_item     (GimpContainerView *view,
                                                      GimpViewable      *item,
                                                      gpointer           insert_data);
-static void   gimp_item_tree_view_context_item      (GimpContainerView *view,
-                                                     GimpViewable      *item,
-                                                     gpointer           insert_data);
 
 static gboolean gimp_item_tree_view_drop_possible   (GimpContainerTreeView *view,
                                                      GimpDndType        src_type,
@@ -307,7 +304,6 @@ gimp_item_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->select_item        = gimp_item_tree_view_select_item;
   iface->select_items       = gimp_item_tree_view_select_items;
   iface->activate_item      = gimp_item_tree_view_activate_item;
-  iface->context_item       = gimp_item_tree_view_context_item;
 }
 
 static void
@@ -1180,17 +1176,6 @@ gimp_item_tree_view_activate_item (GimpContainerView *view,
                                        item_view_class->action_group,
                                        item_view_class->activate_action);
     }
-}
-
-static void
-gimp_item_tree_view_context_item (GimpContainerView *view,
-                                  GimpViewable      *item,
-                                  gpointer           insert_data)
-{
-  if (parent_view_iface->context_item)
-    parent_view_iface->context_item (view, item, insert_data);
-
-  gimp_editor_popup_menu (GIMP_EDITOR (view), NULL, NULL);
 }
 
 static gboolean

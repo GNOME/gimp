@@ -93,12 +93,6 @@ static void   gimp_container_editor_activate_item    (GtkWidget           *widge
                                                       GimpViewable        *viewable,
                                                       gpointer             insert_data,
                                                       GimpContainerEditor *editor);
-static void   gimp_container_editor_context_item     (GtkWidget           *widget,
-                                                      GimpViewable        *viewable,
-                                                      gpointer             insert_data,
-                                                      GimpContainerEditor *editor);
-static void   gimp_container_editor_real_context_item(GimpContainerEditor *editor,
-                                                      GimpViewable        *viewable);
 
 static GtkWidget * gimp_container_editor_get_preview (GimpDocked       *docked,
                                                       GimpContext      *context,
@@ -136,7 +130,6 @@ gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 
   klass->select_item     = NULL;
   klass->activate_item   = NULL;
-  klass->context_item    = gimp_container_editor_real_context_item;
 
   g_object_class_install_property (object_class, PROP_VIEW_TYPE,
                                    g_param_spec_enum ("view-type",
@@ -288,9 +281,9 @@ gimp_container_editor_constructed (GObject *object)
   g_signal_connect_object (editor->view, "activate-item",
                            G_CALLBACK (gimp_container_editor_activate_item),
                            editor, 0);
-  g_signal_connect_object (editor->view, "context-item",
-                           G_CALLBACK (gimp_container_editor_context_item),
-                           editor, 0);
+  /* g_signal_connect_object (editor->view, "context-item", XXX maybe listen to popup-menu? */
+  /*                          G_CALLBACK (gimp_container_editor_context_item), */
+  /*                          editor, 0); */
 
   {
     GimpObject *object = gimp_context_get_by_type (editor->priv->context,
@@ -459,30 +452,6 @@ gimp_container_editor_activate_item (GtkWidget           *widget,
 
   if (klass->activate_item)
     klass->activate_item (editor, viewable);
-}
-
-static void
-gimp_container_editor_context_item (GtkWidget           *widget,
-                                    GimpViewable        *viewable,
-                                    gpointer             insert_data,
-                                    GimpContainerEditor *editor)
-{
-  GimpContainerEditorClass *klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
-
-  if (klass->context_item)
-    klass->context_item (editor, viewable);
-}
-
-static void
-gimp_container_editor_real_context_item (GimpContainerEditor *editor,
-                                         GimpViewable        *viewable)
-{
-  GimpContainer *container = gimp_container_view_get_container (editor->view);
-
-  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
-    {
-      gimp_editor_popup_menu (GIMP_EDITOR (editor->view), NULL, NULL);
-    }
 }
 
 static GtkWidget *

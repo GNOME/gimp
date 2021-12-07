@@ -241,68 +241,25 @@ gimp_container_icon_view_unmap (GtkWidget *widget)
   GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
-static void
-gimp_container_icon_view_menu_position (GtkMenu  *menu,
-                                        gint     *x,
-                                        gint     *y,
-                                        gpointer  data)
-{
-  GimpContainerIconView *icon_view = GIMP_CONTAINER_ICON_VIEW (data);
-  GtkWidget             *widget    = GTK_WIDGET (icon_view->view);
-  GtkAllocation          allocation;
-#if 0
-  GtkTreeIter            selected_iter;
-#endif
-
-  gtk_widget_get_allocation (widget, &allocation);
-
-  gdk_window_get_origin (gtk_widget_get_window (widget), x, y);
-
-  if (! gtk_widget_get_has_window (widget))
-    {
-      *x += allocation.x;
-      *y += allocation.y;
-    }
-
-#if 0
-  if (gimp_container_icon_view_get_selected_single (icon_view, &selected_iter))
-    {
-      GtkTreePath  *path;
-      GdkRectangle  cell_rect;
-      gint          center;
-
-      path = gtk_tree_model_get_path (icon_view->model, &selected_iter);
-      gtk_icon_view_get_cell_area (icon_view->view, path,
-                                   icon_view->main_column, &cell_rect);
-      gtk_tree_path_free (path);
-
-      center = cell_rect.y + cell_rect.height / 2;
-      center = CLAMP (center, 0, allocation.height);
-
-      *x += allocation.width / 2;
-      *y += center;
-    }
-  else
-#endif
-    {
-      GtkStyleContext *style = gtk_widget_get_style_context (widget);
-      GtkBorder        border;
-
-      gtk_style_context_get_border (style, 0, &border);
-
-      *x += border.left;
-      *y += border.top;
-    }
-
-  gimp_menu_position (menu, x, y);
-}
-
 static gboolean
 gimp_container_icon_view_popup_menu (GtkWidget *widget)
 {
-  return gimp_editor_popup_menu (GIMP_EDITOR (widget),
-                                 gimp_container_icon_view_menu_position,
-                                 widget);
+  GimpContainerIconView *icon_view = GIMP_CONTAINER_ICON_VIEW (widget);
+  GtkTreeIter            iter;
+  GtkTreePath           *path;
+  GdkRectangle           rect;
+
+  if (!gimp_container_icon_view_get_selected_single (icon_view, &iter))
+    return FALSE;
+
+  path = gtk_tree_model_get_path (icon_view->model, &iter);
+  gtk_icon_view_get_cell_rect (icon_view->view, path, NULL, &rect);
+  gtk_tree_path_free (path);
+
+  return gimp_editor_popup_menu_at_rect (GIMP_EDITOR (widget),
+                                         gtk_widget_get_window (GTK_WIDGET (icon_view->view)),
+                                         &rect, GDK_GRAVITY_CENTER, GDK_GRAVITY_NORTH_WEST,
+                                         NULL);
 }
 
 GtkWidget *
@@ -638,7 +595,8 @@ gimp_container_icon_view_button_press (GtkWidget             *widget,
                                        GdkEventButton        *bevent,
                                        GimpContainerIconView *icon_view)
 {
-  GtkTreePath *path;
+  GimpContainerView *container_view = GIMP_CONTAINER_VIEW (icon_view);
+  GtkTreePath       *path;
 
   icon_view->priv->dnd_renderer = NULL;
 
@@ -658,9 +616,31 @@ gimp_container_icon_view_button_press (GtkWidget             *widget,
 
       icon_view->priv->dnd_renderer = renderer;
 
+      if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
+        {
+          /* If the clicked item is not selected, it becomes the new
+           * selection. Otherwise, we use the current selection. This
+           * allows to not break multiple selection when right-clicking.
+           */
+          if (! gimp_container_view_is_item_selected (container_view, renderer->viewable))
+            gimp_container_view_item_selected (container_view, renderer->viewable);
+          /* Show the context menu. */
+          if (gimp_container_view_get_container (container_view))
+            gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (icon_view), (GdkEvent *) bevent);
+        }
+
       g_object_unref (renderer);
 
       gtk_tree_path_free (path);
+    }
+  else
+    {
+      if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
+        {
+          gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (icon_view), (GdkEvent *) bevent);
+        }
+
+      return TRUE;
     }
 
   return FALSE;

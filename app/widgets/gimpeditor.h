@@ -61,6 +61,12 @@ gboolean    gimp_editor_popup_menu        (GimpEditor           *editor,
 gboolean    gimp_editor_popup_menu_at_pointer
                                           (GimpEditor           *editor,
                                            const GdkEvent       *trigger_event);
+gboolean   gimp_editor_popup_menu_at_rect (GimpEditor           *editor,
+                                           GdkWindow            *window,
+                                           const GdkRectangle   *rect,
+                                           GdkGravity            rect_anchor,
+                                           GdkGravity            menu_anchor,
+                                           const GdkEvent       *trigger_event);
 
 GtkWidget * gimp_editor_add_button        (GimpEditor           *editor,
                                            const gchar          *icon_name,

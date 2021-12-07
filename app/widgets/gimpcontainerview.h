@@ -54,9 +54,6 @@ struct _GimpContainerViewInterface
   void     (* activate_item)      (GimpContainerView *view,
                                    GimpViewable      *object,
                                    gpointer           insert_data);
-  void     (* context_item)       (GimpContainerView *view,
-                                   GimpViewable      *object,
-                                   gpointer           insert_data);
 
   /*  virtual functions  */
   void     (* set_container)      (GimpContainerView *view,
@@ -133,8 +130,6 @@ gboolean           gimp_container_view_select_item        (GimpContainerView  *v
                                                            GimpViewable       *viewable);
 void               gimp_container_view_activate_item      (GimpContainerView  *view,
                                                            GimpViewable       *viewable);
-void               gimp_container_view_context_item       (GimpContainerView  *view,
-                                                           GimpViewable       *viewable);
 gint               gimp_container_view_get_selected       (GimpContainerView  *view,
                                                            GList             **items,
                                                            GList             **items_data);
@@ -155,8 +150,6 @@ gboolean           gimp_container_view_multi_selected     (GimpContainerView  *v
                                                            GList              *items,
                                                            GList              *paths);
 void               gimp_container_view_item_activated     (GimpContainerView  *view,
-                                                           GimpViewable       *item);
-void               gimp_container_view_item_context       (GimpContainerView  *view,
                                                            GimpViewable       *item);
 
 /*  convenience functions  */

@@ -58,7 +58,11 @@ static void   gimp_colormap_editor_color_update    (GimpColorDialog      *dialog
                                                     GimpColorDialogState  state,
                                                     GimpColormapEditor   *editor);
 
-static void   gimp_colormap_editor_entry_popup     (GimpEditor           *editor);
+static gboolean   gimp_colormap_editor_entry_button_press (GtkWidget     *widget,
+                                                           GdkEvent      *event,
+                                                           gpointer       user_data);
+static gboolean   gimp_colormap_editor_entry_popup     (GtkWidget            *widget,
+                                                        gpointer              user_data);
 static void   gimp_colormap_editor_color_clicked   (GimpColormapEditor   *editor,
                                                     GimpPaletteEntry     *entry,
                                                     GdkModifierType       state);
@@ -177,15 +181,18 @@ gimp_colormap_editor_set_context (GimpDocked  *docked,
       gtk_box_pack_start (GTK_BOX (editor), editor->selection, TRUE, TRUE, 0);
       gtk_widget_show (editor->selection);
 
-      g_signal_connect_swapped (editor->selection, "color-context",
-                                G_CALLBACK (gimp_colormap_editor_entry_popup),
-                                editor);
       g_signal_connect_swapped (editor->selection, "color-clicked",
                                 G_CALLBACK (gimp_colormap_editor_color_clicked),
                                 editor);
       g_signal_connect_swapped (editor->selection, "color-activated",
                                 G_CALLBACK (gimp_colormap_editor_edit_color),
                                 editor);
+      g_signal_connect (editor->selection, "button-press-event",
+                        G_CALLBACK (gimp_colormap_editor_entry_button_press),
+                        editor);
+      g_signal_connect (editor->selection, "popup-menu",
+                        G_CALLBACK (gimp_colormap_editor_entry_popup),
+                        editor);
     }
 }
 
@@ -361,10 +368,38 @@ gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
     }
 }
 
-static void
-gimp_colormap_editor_entry_popup (GimpEditor *editor)
+static gboolean
+gimp_colormap_editor_entry_button_press (GtkWidget *widget,
+                                         GdkEvent  *event,
+                                         gpointer   user_data)
 {
-  gimp_editor_popup_menu (editor, NULL, NULL);
+  if (gdk_event_triggers_context_menu (event))
+    {
+      gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (user_data), event);
+      return GDK_EVENT_STOP;
+    }
+
+  return GDK_EVENT_PROPAGATE;
+}
+
+static gboolean
+gimp_colormap_editor_entry_popup (GtkWidget *widget,
+                                  gpointer   user_data)
+{
+  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (user_data);
+  GimpColormapSelection *selection = GIMP_COLORMAP_SELECTION (widget);
+  GimpPaletteEntry *selected;
+  GdkRectangle rect;
+
+  selected = gimp_colormap_selection_get_selected_entry (selection);
+  if (!selected)
+    return GDK_EVENT_PROPAGATE;
+
+  gimp_colormap_selection_get_entry_rect (selection, selected, &rect);
+  return gimp_editor_popup_menu_at_rect (GIMP_EDITOR (editor),
+                                         gtk_widget_get_window (widget),
+                                         &rect, GDK_GRAVITY_CENTER, GDK_GRAVITY_NORTH_WEST,
+                                         NULL);
 }
 
 static void

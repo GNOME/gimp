@@ -58,7 +58,6 @@ enum
 
 enum
 {
-  COLOR_CONTEXT,
   COLOR_CLICKED,
   COLOR_ACTIVATED,
   LAST_SIGNAL
@@ -106,9 +105,6 @@ static void   gimp_colormap_selection_entry_selected  (GimpPaletteView       *vi
 static void   gimp_colormap_selection_entry_activated (GimpPaletteView       *view,
                                                        GimpPaletteEntry      *entry,
                                                        GimpColormapSelection *selection);
-static void   gimp_colormap_selection_entry_context   (GimpPaletteView       *view,
-                                                       GimpPaletteEntry      *entry,
-                                                       GimpColormapSelection *selection);
 static void   gimp_colormap_selection_color_dropped   (GimpPaletteView       *view,
                                                        GimpPaletteEntry      *entry,
                                                        const GimpRGB         *color,
@@ -137,14 +133,6 @@ gimp_colormap_selection_class_init (GimpColormapSelectionClass* klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  signals[COLOR_CONTEXT] =
-    g_signal_new ("color-context",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColormapSelectionClass, color_context),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE, 1,
-                  G_TYPE_POINTER);
   signals[COLOR_CLICKED] =
     g_signal_new ("color-clicked",
                   G_TYPE_FROM_CLASS (klass),
@@ -214,9 +202,6 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
                     selection);
   g_signal_connect (selection->view, "entry-activated",
                     G_CALLBACK (gimp_colormap_selection_entry_activated),
-                    selection);
-  g_signal_connect (selection->view, "entry-context",
-                    G_CALLBACK (gimp_colormap_selection_entry_context),
                     selection);
   g_signal_connect (selection->view, "color-dropped",
                     G_CALLBACK (gimp_colormap_selection_color_dropped),
@@ -471,6 +456,32 @@ gimp_colormap_selection_max_index (GimpColormapSelection *selection)
   return MAX (0, gimp_image_get_colormap_size (image) - 1);
 }
 
+GimpPaletteEntry *
+gimp_colormap_selection_get_selected_entry (GimpColormapSelection *selection)
+{
+  g_return_val_if_fail (GIMP_IS_COLORMAP_SELECTION (selection), NULL);
+
+  return gimp_palette_view_get_selected_entry (GIMP_PALETTE_VIEW (selection->view));
+}
+
+void
+gimp_colormap_selection_get_entry_rect (GimpColormapSelection *selection,
+                                        GimpPaletteEntry      *entry,
+                                        GdkRectangle          *rect)
+{
+  GtkAllocation allocation;
+
+  g_return_if_fail (GIMP_IS_COLORMAP_SELECTION (selection));
+  g_return_if_fail (entry);
+  g_return_if_fail (rect);
+
+  gimp_palette_view_get_entry_rect (GIMP_PALETTE_VIEW (selection->view),
+                                    entry, rect);
+  gtk_widget_get_allocation (GTK_WIDGET (selection), &allocation);
+  /* rect->x += allocation.x; */
+  /* rect->y += allocation.y; */
+}
+
 
 /*  private functions  */
 
@@ -601,16 +612,6 @@ gimp_colormap_selection_entry_activated (GimpPaletteView       *view,
   gimp_colormap_selection_set_index (selection, entry->position, NULL);
 
   g_signal_emit (selection, signals[COLOR_ACTIVATED], 0, entry);
-}
-
-static void
-gimp_colormap_selection_entry_context (GimpPaletteView       *view,
-                                       GimpPaletteEntry      *entry,
-                                       GimpColormapSelection *selection)
-{
-  gimp_colormap_selection_set_index (selection, entry->position, NULL);
-
-  g_signal_emit (selection, signals[COLOR_CONTEXT], 0, entry);
 }
 
 static void

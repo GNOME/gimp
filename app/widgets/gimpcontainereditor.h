@@ -50,8 +50,6 @@ struct _GimpContainerEditorClass
                           GimpViewable        *object);
   void (* activate_item) (GimpContainerEditor *editor,
                           GimpViewable        *object);
-  void (* context_item)  (GimpContainerEditor *editor,
-                          GimpViewable        *object);
 };
 
 

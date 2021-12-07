@@ -106,9 +106,11 @@ static void   palette_editor_entry_selected        (GimpPaletteView   *view,
 static void   palette_editor_entry_activated       (GimpPaletteView   *view,
                                                     GimpPaletteEntry  *entry,
                                                     GimpPaletteEditor *editor);
-static void   palette_editor_entry_context         (GimpPaletteView   *view,
-                                                    GimpPaletteEntry  *entry,
-                                                    GimpPaletteEditor *editor);
+static gboolean palette_editor_button_press_event  (GtkWidget *widget,
+                                                    GdkEvent  *event,
+                                                    gpointer   user_data);
+static gboolean palette_editor_popup_menu          (GtkWidget *widget,
+                                                    gpointer   user_data);
 static void   palette_editor_color_dropped         (GimpPaletteView   *view,
                                                     GimpPaletteEntry  *entry,
                                                     const GimpRGB     *color,
@@ -219,11 +221,14 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   g_signal_connect (editor->view, "entry-activated",
                     G_CALLBACK (palette_editor_entry_activated),
                     editor);
-  g_signal_connect (editor->view, "entry-context",
-                    G_CALLBACK (palette_editor_entry_context),
-                    editor);
   g_signal_connect (editor->view, "color-dropped",
                     G_CALLBACK (palette_editor_color_dropped),
+                    editor);
+  g_signal_connect (editor->view, "button-press-event",
+                    G_CALLBACK (palette_editor_button_press_event),
+                    editor);
+  g_signal_connect (editor->view, "popup-menu",
+                    G_CALLBACK (palette_editor_popup_menu),
                     editor);
 
   gimp_dnd_viewable_dest_add (editor->view,
@@ -825,12 +830,39 @@ palette_editor_entry_activated (GimpPaletteView   *view,
     }
 }
 
-static void
-palette_editor_entry_context (GimpPaletteView   *view,
-                              GimpPaletteEntry  *entry,
-                              GimpPaletteEditor *editor)
+static gboolean
+palette_editor_button_press_event (GtkWidget *widget,
+                                   GdkEvent  *event,
+                                   gpointer   user_data)
 {
-  gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (user_data);
+
+  if (gdk_event_triggers_context_menu (event))
+    {
+      gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (editor), event);
+      return GDK_EVENT_STOP;
+    }
+
+  return GDK_EVENT_PROPAGATE;
+}
+
+static gboolean
+palette_editor_popup_menu (GtkWidget *widget,
+                           gpointer   user_data)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (user_data);
+  GimpPaletteEntry *selected;
+  GdkRectangle rect;
+
+  selected = gimp_palette_view_get_selected_entry (GIMP_PALETTE_VIEW (editor->view));
+  if (!selected)
+    return GDK_EVENT_PROPAGATE;
+
+  gimp_palette_view_get_entry_rect (GIMP_PALETTE_VIEW (editor->view), selected, &rect);
+  return gimp_editor_popup_menu_at_rect (GIMP_EDITOR (editor),
+                                         gtk_widget_get_window (GTK_WIDGET (editor->view)),
+                                         &rect, GDK_GRAVITY_CENTER, GDK_GRAVITY_NORTH_WEST,
+                                         NULL);
 }
 
 static void

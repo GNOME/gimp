@@ -420,64 +420,26 @@ gimp_container_tree_view_unmap (GtkWidget *widget)
   GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
-static void
-gimp_container_tree_view_menu_position (GtkMenu  *menu,
-                                        gint     *x,
-                                        gint     *y,
-                                        gpointer  data)
-{
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (data);
-  GtkWidget             *widget    = GTK_WIDGET (tree_view->view);
-  GtkAllocation          allocation;
-  GtkTreeIter            selected_iter;
-
-  gtk_widget_get_allocation (widget, &allocation);
-
-  gdk_window_get_origin (gtk_widget_get_window (widget), x, y);
-
-  if (! gtk_widget_get_has_window (widget))
-    {
-      *x += allocation.x;
-      *y += allocation.y;
-    }
-
-  if (gimp_container_tree_view_get_selected_single (tree_view, &selected_iter))
-    {
-      GtkTreePath  *path;
-      GdkRectangle  cell_rect;
-      gint          center;
-
-      path = gtk_tree_model_get_path (tree_view->model, &selected_iter);
-      gtk_tree_view_get_cell_area (tree_view->view, path,
-                                   tree_view->main_column, &cell_rect);
-      gtk_tree_path_free (path);
-
-      center = cell_rect.y + cell_rect.height / 2;
-      center = CLAMP (center, 0, allocation.height);
-
-      *x += allocation.width / 2;
-      *y += center;
-    }
-  else
-    {
-      GtkStyleContext *style = gtk_widget_get_style_context (widget);
-      GtkBorder        border;
-
-      gtk_style_context_get_border (style, 0, &border);
-
-      *x += border.left;
-      *y += border.top;
-    }
-
-  gimp_menu_position (menu, x, y);
-}
-
 static gboolean
 gimp_container_tree_view_popup_menu (GtkWidget *widget)
 {
-  return gimp_editor_popup_menu (GIMP_EDITOR (widget),
-                                 gimp_container_tree_view_menu_position,
-                                 widget);
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (widget);
+  GtkTreeIter            iter;
+  GtkTreePath           *path;
+  GdkRectangle           rect;
+
+  if (!gimp_container_tree_view_get_selected_single (tree_view, &iter))
+    return FALSE;
+
+  path = gtk_tree_model_get_path (tree_view->model, &iter);
+  gtk_tree_view_get_cell_area (tree_view->view, path,
+                               tree_view->main_column, &rect);
+  gtk_tree_path_free (path);
+
+  return gimp_editor_popup_menu_at_rect (GIMP_EDITOR (widget),
+                                         gtk_tree_view_get_bin_window (tree_view->view),
+                                         &rect, GDK_GRAVITY_CENTER, GDK_GRAVITY_NORTH_WEST,
+                                         NULL);
 }
 
 GtkWidget *
@@ -1484,7 +1446,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
             gimp_container_view_item_selected (container_view, renderer->viewable);
           /* Show the context menu. */
           if (gimp_container_view_get_container (container_view))
-            gimp_container_view_item_context (container_view, renderer->viewable);
+            gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (tree_view), (GdkEvent *) bevent);
         }
       else if (bevent->button == 1)
         {

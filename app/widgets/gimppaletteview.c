@@ -42,7 +42,6 @@ enum
   ENTRY_CLICKED,
   ENTRY_SELECTED,
   ENTRY_ACTIVATED,
-  ENTRY_CONTEXT,
   COLOR_DROPPED,
   LAST_SIGNAL
 };
@@ -115,15 +114,6 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpPaletteViewClass, entry_activated),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE, 1,
-                  G_TYPE_POINTER);
-
-  view_signals[ENTRY_CONTEXT] =
-    g_signal_new ("entry-context",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPaletteViewClass, entry_context),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
@@ -226,7 +216,9 @@ gimp_palette_view_button_press (GtkWidget      *widget,
       if (entry != view->selected)
         gimp_palette_view_select_entry (view, entry);
 
-      g_signal_emit (view, view_signals[ENTRY_CONTEXT], 0, entry);
+      /* Usually the menu is provided by a GimpEditor.
+	   * Make sure it's also run by returning FALSE here */
+      return FALSE;
     }
   else if (bevent->button == 1)
     {
@@ -402,6 +394,39 @@ gimp_palette_view_select_entry (GimpPaletteView  *view,
     gimp_palette_view_expose_entry (view, view->selected);
 
   g_signal_emit (view, view_signals[ENTRY_SELECTED], 0, view->selected);
+}
+
+GimpPaletteEntry *
+gimp_palette_view_get_selected_entry (GimpPaletteView *view)
+{
+  g_return_val_if_fail (GIMP_IS_PALETTE_VIEW (view), NULL);
+
+  return view->selected;
+}
+
+void
+gimp_palette_view_get_entry_rect (GimpPaletteView  *view,
+                                  GimpPaletteEntry *entry,
+                                  GdkRectangle     *rect)
+{
+  GimpViewRendererPalette *renderer;
+  GtkAllocation            allocation;
+  gint                     row, col;
+
+  g_return_if_fail (GIMP_IS_PALETTE_VIEW (view));
+  g_return_if_fail (entry);
+  g_return_if_fail (rect);
+
+  gtk_widget_get_allocation (GTK_WIDGET (view), &allocation);
+
+  renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
+  row = entry->position / renderer->columns;
+  col = entry->position % renderer->columns;
+
+  rect->x = allocation.x + col * renderer->cell_width;
+  rect->y = allocation.y + row * renderer->cell_height;
+  rect->width = renderer->cell_width;
+  rect->height = renderer->cell_height;
 }
 
 
