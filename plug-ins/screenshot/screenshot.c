@@ -28,7 +28,6 @@
 
 #include "screenshot.h"
 #include "screenshot-freedesktop.h"
-#include "screenshot-gnome-shell.h"
 #include "screenshot-icon.h"
 #include "screenshot-kwin.h"
 #include "screenshot-osx.h"
@@ -202,12 +201,7 @@ run (const gchar      *name,
     }
 #endif
 
-  if (! backend && screenshot_gnome_shell_available ())
-    {
-      backend      = SCREENSHOT_BACKEND_GNOME_SHELL;
-      capabilities = screenshot_gnome_shell_get_capabilities ();
-    }
-  else if (! backend && screenshot_kwin_available ())
+  if (! backend && screenshot_kwin_available ())
     {
       backend      = SCREENSHOT_BACKEND_KWIN;
       capabilities = screenshot_kwin_get_capabilities ();
@@ -397,8 +391,6 @@ shoot (GdkScreen  *screen,
 
   if (backend == SCREENSHOT_BACKEND_FREEDESKTOP)
     return screenshot_freedesktop_shoot (&shootvals, screen, image_ID, error);
-  else if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
-    return screenshot_gnome_shell_shoot (&shootvals, screen, image_ID, error);
   else if (backend == SCREENSHOT_BACKEND_KWIN)
     return screenshot_kwin_shoot (&shootvals, screen, image_ID, error);
 
