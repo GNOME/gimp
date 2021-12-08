@@ -28,7 +28,6 @@
 
 #include "screenshot.h"
 #include "screenshot-freedesktop.h"
-#include "screenshot-gnome-shell.h"
 #include "screenshot-icon.h"
 #include "screenshot-kwin.h"
 #include "screenshot-osx.h"
@@ -151,7 +150,7 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
          "passed as a parameter.  The last four parameters "
          "are optional and can be used to specify the corners "
          "of the region to be grabbed."
-         "On Mac OS X or on gnome-shell, "
+         "On Mac OS X, "
          "when called non-interactively, the plug-in"
          "only can take screenshots of the entire root window."
          "Grabbing a window or a region is not supported"
@@ -256,12 +255,7 @@ screenshot_run (GimpProcedure        *procedure,
     }
 #endif
 
-  if (! backend && screenshot_gnome_shell_available ())
-    {
-      backend      = SCREENSHOT_BACKEND_GNOME_SHELL;
-      capabilities = screenshot_gnome_shell_get_capabilities ();
-    }
-  else if (! backend && screenshot_kwin_available ())
+  if (! backend && screenshot_kwin_available ())
     {
       backend      = SCREENSHOT_BACKEND_KWIN;
       capabilities = screenshot_kwin_get_capabilities ();
@@ -432,8 +426,6 @@ shoot (GdkMonitor  *monitor,
 
   if (backend == SCREENSHOT_BACKEND_FREEDESKTOP)
     return screenshot_freedesktop_shoot (&shootvals, monitor, image, error);
-  else if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
-    return screenshot_gnome_shell_shoot (&shootvals, monitor, image, error);
   else if (backend == SCREENSHOT_BACKEND_KWIN)
     return screenshot_kwin_shoot (&shootvals, monitor, image, error);
 
