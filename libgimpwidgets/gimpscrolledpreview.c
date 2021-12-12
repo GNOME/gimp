@@ -55,18 +55,32 @@ struct _GimpScrolledPreviewPrivate
   GdkCursor     *cursor_move;
   GtkPolicyType  hscr_policy;
   GtkPolicyType  vscr_policy;
-  gint           drag_x;
-  gint           drag_y;
   gint           drag_xoff;
   gint           drag_yoff;
   gboolean       in_drag;
   gint           frozen;
 };
 
-#define GET_PRIVATE(obj) (((GimpScrolledPreview *) (obj))->priv)
+#define GET_PRIVATE(obj) (gimp_scrolled_preview_get_instance_private ((GimpScrolledPreview *) (obj)))
 
 
 static void      gimp_scrolled_preview_dispose             (GObject                  *object);
+
+static void      gimp_scrolled_preview_drag_begin          (GtkGestureDrag           *gesture,
+                                                            gdouble                   start_x,
+                                                            gdouble                   start_y,
+                                                            gpointer                  user_data);
+static void      gimp_scrolled_preview_drag_update         (GtkGestureDrag           *gesture,
+                                                            gdouble                   offset_x,
+                                                            gdouble                   offset_y,
+                                                            gpointer                  user_data);
+static void      gimp_scrolled_preview_drag_end            (GtkGestureDrag           *gesture,
+                                                            gdouble                   offset_x,
+                                                            gdouble                   offset_y,
+                                                            gpointer                  user_data);
+static void      gimp_scrolled_preview_drag_cancel         (GtkGesture               *gesture,
+                                                            GdkEventSequence         *sequence,
+                                                            gpointer                  user_data);
 
 static void      gimp_scrolled_preview_area_realize        (GtkWidget                *widget,
                                                             GimpScrolledPreview      *preview);
@@ -110,8 +124,6 @@ gimp_scrolled_preview_class_init (GimpScrolledPreviewClass *klass)
   GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->dispose     = gimp_scrolled_preview_dispose;
 
   preview_class->set_cursor = gimp_scrolled_preview_set_cursor;
@@ -120,17 +132,15 @@ gimp_scrolled_preview_class_init (GimpScrolledPreviewClass *klass)
 static void
 gimp_scrolled_preview_init (GimpScrolledPreview *preview)
 {
-  GimpScrolledPreviewPrivate *priv;
+  GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
   GtkWidget                  *image;
   GtkWidget                  *grid;
   GtkWidget                  *area;
+  GtkGesture                 *gesture;
   GtkAdjustment              *adj;
   gint                        width;
   gint                        height;
 
-  preview->priv = gimp_scrolled_preview_get_instance_private (preview);
-
-  priv = GET_PRIVATE (preview);
 
   priv->nav_popup = NULL;
 
@@ -174,6 +184,21 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                           G_CALLBACK (gimp_scrolled_preview_area_event),
                           preview);
 
+  /* Allow the user to drag the rectangle on the preview */
+  gesture = gtk_gesture_drag_new (GTK_WIDGET (preview));
+  g_signal_connect (gesture, "drag-begin",
+                    G_CALLBACK (gimp_scrolled_preview_drag_begin),
+                    preview);
+  g_signal_connect (gesture, "drag-update",
+                    G_CALLBACK (gimp_scrolled_preview_drag_update),
+                    preview);
+  g_signal_connect (gesture, "drag-end",
+                    G_CALLBACK (gimp_scrolled_preview_drag_end),
+                    preview);
+  g_signal_connect (gesture, "cancel",
+                    G_CALLBACK (gimp_scrolled_preview_drag_cancel),
+                    preview);
+
   g_signal_connect (area, "realize",
                     G_CALLBACK (gimp_scrolled_preview_area_realize),
                     preview);
@@ -209,6 +234,83 @@ gimp_scrolled_preview_dispose (GObject *object)
   g_clear_pointer (&priv->nav_popup, gtk_widget_destroy);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_scrolled_preview_drag_begin (GtkGestureDrag *gesture,
+                                  gdouble         start_x,
+                                  gdouble         start_y,
+                                  gpointer        user_data)
+{
+  GimpScrolledPreview        *preview = GIMP_SCROLLED_PREVIEW (user_data);
+  GimpScrolledPreviewPrivate *priv    = GET_PRIVATE (preview);
+
+  priv->in_drag = TRUE;
+  gimp_preview_get_offsets (GIMP_PREVIEW (preview),
+                            &priv->drag_xoff, &priv->drag_yoff);
+
+}
+
+static void
+gimp_scrolled_preview_drag_update (GtkGestureDrag *gesture,
+                                   gdouble         offset_x,
+                                   gdouble         offset_y,
+                                   gpointer        user_data)
+{
+  GimpScrolledPreview        *preview = GIMP_SCROLLED_PREVIEW (user_data);
+  GimpScrolledPreviewPrivate *priv    = GET_PRIVATE (preview);
+  GtkAdjustment              *hadj;
+  GtkAdjustment              *vadj;
+  gint                        x, y;
+  gint                        xoff, yoff;
+
+  hadj = gtk_range_get_adjustment (GTK_RANGE (priv->hscr));
+  vadj = gtk_range_get_adjustment (GTK_RANGE (priv->vscr));
+
+  x = priv->drag_xoff - (int) offset_x;
+  y = priv->drag_yoff - (int) offset_y;
+
+  x = CLAMP (x,
+             gtk_adjustment_get_lower (hadj),
+             gtk_adjustment_get_upper (hadj) -
+             gtk_adjustment_get_page_size (hadj));
+  y = CLAMP (y,
+             gtk_adjustment_get_lower (vadj),
+             gtk_adjustment_get_upper (vadj) -
+             gtk_adjustment_get_page_size (vadj));
+
+  gimp_preview_get_offsets (GIMP_PREVIEW (preview), &xoff, &yoff);
+  if (xoff == x && yoff == y)
+    return;
+
+  gtk_adjustment_set_value (hadj, x);
+  gtk_adjustment_set_value (vadj, y);
+
+  gimp_preview_draw (GIMP_PREVIEW (preview));
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
+}
+
+static void
+gimp_scrolled_preview_drag_end (GtkGestureDrag *gesture,
+                                gdouble         offset_x,
+                                gdouble         offset_y,
+                                gpointer        user_data)
+{
+  GimpScrolledPreview        *preview = GIMP_SCROLLED_PREVIEW (user_data);
+  GimpScrolledPreviewPrivate *priv    = GET_PRIVATE (preview);
+
+  priv->in_drag = FALSE;
+}
+
+static void
+gimp_scrolled_preview_drag_cancel (GtkGesture       *gesture,
+                                   GdkEventSequence *sequence,
+                                   gpointer          user_data)
+{
+  GimpScrolledPreview        *preview = GIMP_SCROLLED_PREVIEW (user_data);
+  GimpScrolledPreviewPrivate *priv    = GET_PRIVATE (preview);
+
+  priv->in_drag = FALSE;
 }
 
 static void
@@ -345,128 +447,28 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
                                   GimpScrolledPreview *preview)
 {
   GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
-  GdkEventButton             *button_event = (GdkEventButton *) event;
-  GdkSeat                    *seat;
-  GdkCursor                  *cursor;
-  gint                        xoff, yoff;
 
-  seat = gdk_display_get_default_seat (gtk_widget_get_display (area));
-
-  gimp_preview_get_offsets (GIMP_PREVIEW (preview), &xoff, &yoff);
-
-  switch (event->type)
+  if (event->type == GDK_SCROLL)
     {
-    case GDK_BUTTON_PRESS:
-      switch (button_event->button)
-        {
-        case 1:
-        case 2:
-          cursor = gdk_cursor_new_for_display (gtk_widget_get_display (area),
-                                               GDK_FLEUR);
+      GdkEventScroll *sevent = (GdkEventScroll *) event;
+      GtkAdjustment  *adj_x;
+      GtkAdjustment  *adj_y;
+      gdouble         value_x;
+      gdouble         value_y;
 
-          if (gdk_seat_grab (seat, gtk_widget_get_window (area),
-                             GDK_SEAT_CAPABILITY_ALL_POINTING, TRUE,
-                             cursor, event,
-                             NULL, NULL) == GDK_GRAB_SUCCESS)
-            {
-              gdk_window_get_device_position (gtk_widget_get_window (area),
-                                              gdk_event_get_device (event),
-                                              &priv->drag_x, &priv->drag_y,
-                                              NULL);
+      /*  Ctrl-Scroll is reserved for zooming  */
+      if (sevent->state & GDK_CONTROL_MASK)
+        return FALSE;
 
-              priv->drag_xoff = xoff;
-              priv->drag_yoff = yoff;
-              priv->in_drag   = TRUE;
-              gtk_grab_add (area);
-            }
+      adj_x = gtk_range_get_adjustment (GTK_RANGE (priv->hscr));
+      adj_y = gtk_range_get_adjustment (GTK_RANGE (priv->vscr));
 
-          g_object_unref (cursor);
-          break;
+      gimp_scroll_adjustment_values (sevent,
+                                     adj_x, adj_y,
+                                     &value_x, &value_y);
 
-        case 3:
-          return TRUE;
-        }
-      break;
-
-    case GDK_BUTTON_RELEASE:
-      if (priv->in_drag &&
-          (button_event->button == 1 || button_event->button == 2))
-        {
-          gdk_seat_ungrab (seat);
-
-          gtk_grab_remove (area);
-          priv->in_drag = FALSE;
-        }
-      break;
-
-    case GDK_MOTION_NOTIFY:
-      if (priv->in_drag)
-        {
-          GdkEventMotion *mevent = (GdkEventMotion *) event;
-          GtkAdjustment  *hadj;
-          GtkAdjustment  *vadj;
-          gint            x, y;
-
-          hadj = gtk_range_get_adjustment (GTK_RANGE (priv->hscr));
-          vadj = gtk_range_get_adjustment (GTK_RANGE (priv->vscr));
-
-          gdk_window_get_device_position (gtk_widget_get_window (area),
-                                          gdk_event_get_device (event),
-                                          &x, &y,
-                                          NULL);
-
-          x = priv->drag_xoff - (x - priv->drag_x);
-          y = priv->drag_yoff - (y - priv->drag_y);
-
-          x = CLAMP (x,
-                     gtk_adjustment_get_lower (hadj),
-                     gtk_adjustment_get_upper (hadj) -
-                     gtk_adjustment_get_page_size (hadj));
-          y = CLAMP (y,
-                     gtk_adjustment_get_lower (vadj),
-                     gtk_adjustment_get_upper (vadj) -
-                     gtk_adjustment_get_page_size (vadj));
-
-          if (xoff != x ||
-              yoff != y)
-            {
-              gtk_adjustment_set_value (hadj, x);
-              gtk_adjustment_set_value (vadj, y);
-
-              gimp_preview_draw (GIMP_PREVIEW (preview));
-              gimp_preview_invalidate (GIMP_PREVIEW (preview));
-            }
-
-          gdk_event_request_motions (mevent);
-        }
-      break;
-
-    case GDK_SCROLL:
-      {
-        GdkEventScroll *sevent = (GdkEventScroll *) event;
-        GtkAdjustment  *adj_x;
-        GtkAdjustment  *adj_y;
-        gdouble         value_x;
-        gdouble         value_y;
-
-        /*  Ctrl-Scroll is reserved for zooming  */
-        if (sevent->state & GDK_CONTROL_MASK)
-          return FALSE;
-
-        adj_x = gtk_range_get_adjustment (GTK_RANGE (priv->hscr));
-        adj_y = gtk_range_get_adjustment (GTK_RANGE (priv->vscr));
-
-        gimp_scroll_adjustment_values (sevent,
-                                       adj_x, adj_y,
-                                       &value_x, &value_y);
-
-        gtk_adjustment_set_value (adj_x, value_x);
-        gtk_adjustment_set_value (adj_y, value_y);
-      }
-      break;
-
-    default:
-      break;
+      gtk_adjustment_set_value (adj_x, value_x);
+      gtk_adjustment_set_value (adj_y, value_y);
     }
 
   return FALSE;
@@ -818,13 +820,12 @@ gimp_scrolled_preview_set_position (GimpScrolledPreview *preview,
                                     gint                 x,
                                     gint                 y)
 {
-  GimpScrolledPreviewPrivate *priv;
+  GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
   GtkAdjustment              *adj;
   gint                        xmin, ymin;
 
   g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
 
-  priv = GET_PRIVATE (preview);
 
   gimp_scrolled_preview_freeze (preview);
 
@@ -855,11 +856,9 @@ gimp_scrolled_preview_set_policy (GimpScrolledPreview *preview,
                                   GtkPolicyType        hscrollbar_policy,
                                   GtkPolicyType        vscrollbar_policy)
 {
-  GimpScrolledPreviewPrivate *priv;
+  GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
 
   g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
-
-  priv = GET_PRIVATE (preview);
 
   priv->hscr_policy = hscrollbar_policy;
   priv->vscr_policy = vscrollbar_policy;
@@ -878,11 +877,9 @@ gimp_scrolled_preview_get_adjustments (GimpScrolledPreview  *preview,
                                        GtkAdjustment       **hadj,
                                        GtkAdjustment       **vadj)
 {
-  GimpScrolledPreviewPrivate *priv;
+  GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
 
   g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
-
-  priv = GET_PRIVATE (preview);
 
   if (hadj) *hadj = gtk_range_get_adjustment (GTK_RANGE (priv->hscr));
   if (vadj) *vadj = gtk_range_get_adjustment (GTK_RANGE (priv->vscr));
@@ -903,11 +900,9 @@ gimp_scrolled_preview_get_adjustments (GimpScrolledPreview  *preview,
 void
 gimp_scrolled_preview_freeze (GimpScrolledPreview *preview)
 {
-  GimpScrolledPreviewPrivate *priv;
+  GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
 
   g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
-
-  priv = GET_PRIVATE (preview);
 
   priv->frozen++;
 }
@@ -927,16 +922,12 @@ gimp_scrolled_preview_freeze (GimpScrolledPreview *preview)
 void
 gimp_scrolled_preview_thaw (GimpScrolledPreview *preview)
 {
-  GimpScrolledPreviewPrivate *priv;
+  GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
 
   g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
-
-  priv = GET_PRIVATE (preview);
-
   g_return_if_fail (priv->frozen > 0);
 
   priv->frozen--;
-
   if (! priv->frozen)
     {
       gimp_preview_draw (GIMP_PREVIEW (preview));

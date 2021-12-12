@@ -47,8 +47,6 @@ typedef struct _GimpScrolledPreviewClass   GimpScrolledPreviewClass;
 struct _GimpScrolledPreview
 {
   GimpPreview                 parent_instance;
-
-  GimpScrolledPreviewPrivate *priv;
 };
 
 struct _GimpScrolledPreviewClass
