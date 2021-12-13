@@ -319,7 +319,9 @@ libgimpwidgets_sources += \
 	gimppickbutton-default.c 	\
 	gimppickbutton-default.h	\
 	gimppickbutton-kwin.c		\
-	gimppickbutton-kwin.h
+	gimppickbutton-kwin.h		\
+	gimppickbutton-xdg.c		\
+	gimppickbutton-xdg.h
 endif
 
 

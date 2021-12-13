@@ -32,6 +32,7 @@
 #include "gimppickbutton.h"
 #include "gimppickbutton-default.h"
 #include "gimppickbutton-kwin.h"
+#include "gimppickbutton-xdg.h"
 
 #ifdef GDK_WINDOWING_QUARTZ
 #include "gimppickbutton-quartz.h"
@@ -140,7 +141,9 @@ gimp_pick_button_clicked (GtkButton *button)
 #ifdef GDK_WINDOWING_QUARTZ
   _gimp_pick_button_quartz_pick (GIMP_PICK_BUTTON (button));
 #else
-  if (_gimp_pick_button_kwin_available ())
+  if (_gimp_pick_button_xdg_available ())
+    _gimp_pick_button_xdg_pick (GIMP_PICK_BUTTON (button));
+  else if (_gimp_pick_button_kwin_available ())
     _gimp_pick_button_kwin_pick (GIMP_PICK_BUTTON (button));
   else
     _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
