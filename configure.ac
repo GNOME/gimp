@@ -667,7 +667,6 @@ m4_define([add_deps_error], [
 ######################
 
 IT_PROG_INTLTOOL(intltool_required_version)
-AM_GLIB_GNU_GETTEXT
 
 # Testing xgettext version since we had some problem with localizing script-fu. See bug 720052.
 AC_MSG_CHECKING([for xgettext version (>= xgettext_required_version)])
@@ -695,6 +694,8 @@ AC_MSG_RESULT($have_required_xgettext)
 if test "x$have_required_xgettext" = "xno"; then
     add_deps_error([xgettext], [xgettext >= xgettext_required_version])
 fi
+
+AM_GLIB_GNU_GETTEXT
 
 ###########
 # iso-codes
