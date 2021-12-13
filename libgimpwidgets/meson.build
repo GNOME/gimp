@@ -180,6 +180,7 @@ else
   libgimpwidgets_sources += [
     'gimppickbutton-default.c',
     'gimppickbutton-kwin.c',
+    'gimppickbutton-xdg.c',
   ]
 endif
 
