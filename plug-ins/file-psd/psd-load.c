@@ -1954,7 +1954,7 @@ add_layers (GimpImage     *image,
               if (lyr_a[lidx]->group_type != 3)
                 {
                   /* Mode */
-                  psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &mode_info);
+                  psd_to_gimp_blend_mode (lyr_a[lidx], &mode_info);
                   gimp_layer_set_mode (layer, mode_info.mode);
                   gimp_layer_set_blend_space (layer, mode_info.blend_space);
                   gimp_layer_set_composite_space (layer, mode_info.composite_space);
