@@ -129,9 +129,10 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
                               GimpImage        **image,
                               GError           **error)
 {
-  GVariant *retval;
-  gchar    *opath         = NULL;
-  gchar    *parent_window = NULL;
+  GVariant        *retval;
+  GVariantBuilder *options;
+  gchar           *opath         = NULL;
+  gchar           *parent_window = NULL;
 
 #ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
@@ -158,12 +159,23 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
   if (shootvals->screenshot_delay > 0)
     screenshot_delay (shootvals->screenshot_delay);
 
+  options = g_variant_builder_new (G_VARIANT_TYPE ("a{sv}"));
+  /* "interactive" option will display the options first (otherwise, it
+   * makes a screenshot first, then proposes to tweak. Since version 2
+   * of the API. For older implementations, it should just be ignored.
+   */
+  g_variant_builder_add (options, "{sv}", "interactive", g_variant_new_boolean (TRUE));
+
   retval = g_dbus_proxy_call_sync (proxy, "Screenshot",
-                                   g_variant_new ("(sa{sv})", parent_window ? parent_window : "", NULL),
+                                   g_variant_new ("(sa{sv})",
+                                                  parent_window ? parent_window : "",
+                                                  options, NULL),
                                    G_DBUS_CALL_FLAGS_NONE,
                                    -1, NULL, error);
   g_free (parent_window);
   g_object_unref (proxy);
+  g_variant_builder_unref (options);
+
   proxy = NULL;
   if (retval)
     {
