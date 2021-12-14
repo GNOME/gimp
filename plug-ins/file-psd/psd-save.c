@@ -1169,8 +1169,10 @@ save_layer_and_mask (GOutputStream  *output,
       IFDBG(1) g_debug ("\t\tOpacity: %u", layerOpacity);
       write_gchar (output, layerOpacity, "Opacity");
 
-      /* Apparently this field is not used in GIMP */
-      write_gchar (output, 0, "Clipping");
+      if (gimp_layer_get_composite_mode (psd_layer->layer) == GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
+        write_gchar (output, 1, "Clipping");
+      else
+        write_gchar (output, 0, "Clipping");
 
       flags = 0;
       if (gimp_layer_get_lock_alpha (psd_layer->layer)) flags |= 1;

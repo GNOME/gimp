@@ -589,6 +589,7 @@ typedef struct
   gchar                 blend_mode[4];          /* Blend mode */
   guchar                opacity;                /* Opacity - 0 = transparent ... 255 = opaque */
   guchar                clipping;               /* Clipping */
+  guchar                clipping_group_type;    /* Used to track group needed for clipping (1 = group start, 2 = group end) */
   guchar                flags;                  /* Layer flags */
   guchar                filler;                 /* Filler */
   guint64               extra_len;              /* Extra data length */
