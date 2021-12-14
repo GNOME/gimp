@@ -197,10 +197,6 @@ struct _GimpDisplayShell
   GdkDevice         *grab_pointer_source;
   guint32            grab_pointer_time;
 
-  GdkDevice         *grab_keyboard;
-  GdkDevice         *grab_keyboard_source;
-  guint32            grab_keyboard_time;
-
   /*  the state of gimp_display_shell_zoom_gesture_*() */
   gdouble            last_zoom_scale;
   gboolean           zoom_gesture_active;

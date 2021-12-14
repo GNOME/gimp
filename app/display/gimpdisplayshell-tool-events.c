@@ -532,13 +532,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                    GDK_BUTTON_RELEASE_MASK))
               return TRUE;
 
-            if (! shell->space_release_pending)
-              if (! gimp_display_shell_keyboard_grab (shell, event))
-                {
-                  gimp_display_shell_pointer_ungrab (shell, event);
-                  return TRUE;
-                }
-
             if (gimp_display_shell_initialize_tool (shell,
                                                     &image_coords, state))
               {
@@ -669,9 +662,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
              */
             if (! shell->grab_pointer || shell->scrolling)
               return TRUE;
-
-            if (! shell->space_release_pending)
-              gimp_display_shell_keyboard_ungrab (shell, event);
 
             if (active_tool &&
                 (! gimp_image_is_empty (image) ||
@@ -1453,24 +1443,17 @@ gimp_display_shell_ruler_button_press (GtkWidget           *widget,
                                                GDK_POINTER_MOTION_MASK |
                                                GDK_BUTTON_RELEASE_MASK))
             {
-              if (gimp_display_shell_keyboard_grab (shell, (GdkEvent *) event))
+              if (event->state & gimp_get_toggle_behavior_mask ())
                 {
-                  if (event->state & gimp_get_toggle_behavior_mask ())
-                    {
-                      gimp_sample_point_tool_start_new (active_tool, display);
-                    }
-                  else
-                    {
-                      gimp_guide_tool_start_new (active_tool, display,
-                                                 orientation);
-                    }
-
-                  return TRUE;
+                  gimp_sample_point_tool_start_new (active_tool, display);
                 }
               else
                 {
-                  gimp_display_shell_pointer_ungrab (shell, (GdkEvent *) event);
+                  gimp_guide_tool_start_new (active_tool, display,
+                                             orientation);
                 }
+
+              return TRUE;
             }
         }
     }
@@ -1581,21 +1564,9 @@ gimp_display_shell_check_device (GimpDisplayShell *shell,
       /*  While we have a grab, ignore all events from all other devices
        *  of the same type
        */
-      if (event->type == GDK_KEY_PRESS   ||
-          event->type == GDK_KEY_RELEASE ||
-          event->type == GDK_FOCUS_CHANGE)
-        {
-          if ((shell->grab_keyboard && (shell->grab_keyboard != grab_device)) ||
-              (shell->grab_keyboard_source && (shell->grab_keyboard_source != device)))
-            {
-              GIMP_LOG (TOOL_EVENTS,
-                        "ignoring key event from '%s' while waiting for event from '%s'\n",
-                        gdk_device_get_name (device),
-                        gdk_device_get_name (shell->grab_keyboard_source));
-              return TRUE;
-            }
-        }
-      else
+      if (event->type != GDK_KEY_PRESS   &&
+          event->type != GDK_KEY_RELEASE &&
+          event->type != GDK_FOCUS_CHANGE)
         {
           if ((shell->grab_pointer && (shell->grab_pointer != grab_device)) ||
               (shell->grab_pointer_source && (shell->grab_pointer_source != device)))
@@ -1816,9 +1787,6 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
   if (shell->space_release_pending || shell->scrolling)
     return;
 
-  if (! gimp_display_shell_keyboard_grab (shell, event))
-    return;
-
   switch (shell->display->config->space_bar_action)
     {
     case GIMP_SPACE_BAR_ACTION_NONE:
@@ -1915,8 +1883,6 @@ gimp_display_shell_released (GimpDisplayShell *shell,
         }
       break;
     }
-
-  gimp_display_shell_keyboard_ungrab (shell, event);
 
   shell->space_release_pending   = FALSE;
   shell->button1_release_pending = FALSE;

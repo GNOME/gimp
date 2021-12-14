@@ -27,10 +27,5 @@ gboolean   gimp_display_shell_pointer_grab    (GimpDisplayShell *shell,
 void       gimp_display_shell_pointer_ungrab  (GimpDisplayShell *shell,
                                                const GdkEvent   *event);
 
-gboolean   gimp_display_shell_keyboard_grab   (GimpDisplayShell *shell,
-                                               const GdkEvent   *event);
-void       gimp_display_shell_keyboard_ungrab (GimpDisplayShell *shell,
-                                               const GdkEvent   *event);
-
 
 #endif /* __GIMP_DISPLAY_SHELL_GRAB_H__ */
