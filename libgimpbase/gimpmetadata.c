@@ -856,8 +856,26 @@ gimp_metadata_serialize (GimpMetadata *metadata)
               if (values)
                 {
                   gint  vi;
+                  gint  cnt = 0;
 
-                  for (vi = 0; values[vi] != NULL; vi++)
+                  if (! g_strcmp0 (xmp_data[i], "Xmp.photoshop.DocumentAncestors"))
+                    {
+                      /* Issue #7464 Some images can have huge amounts of this
+                       * tag (more than 100000 in certain cases), apparently
+                       * due to a bug in PhotoShop. This makes deserializing it
+                       * in the way we currently do too slow. Until we can
+                       * change this let's remove everything but the first 1000
+                       * values when serializing. */
+                      cnt = g_strv_length (values);
+
+                      if (cnt > 1000)
+                        {
+                          g_message ("Excessive number of Xmp.photoshop.DocumentAncestors tags found: %d. "
+                                     "Only keeping the first 1000 values.", cnt);
+                        }
+                    }
+
+                  for (vi = 0; values[vi] != NULL && (cnt <= 1000 || vi < 1000); vi++)
                     {
                       escaped = gimp_metadata_escape (xmp_data[i], values[vi], &base64);
                       gimp_metadata_append_tag (string, xmp_data[i], escaped, base64);
