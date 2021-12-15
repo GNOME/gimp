@@ -47,11 +47,6 @@
  * offsets from the current position. The offsets will be rounded to
  * the nearest pixel unless the item is a path.
  *
- * If the item is attached to an image and has its linked flag set to
- * TRUE, all additional items contained in the image which have the
- * linked flag set to TRUE will also be translated by the specified
- * offsets.
- *
  * Returns: (transfer none): The translated item.
  *
  * Since: 2.10

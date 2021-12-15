@@ -70,16 +70,7 @@ item_transform_translate_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_item_is_modifiable (item,
                                        GIMP_PDB_ITEM_POSITION, error))
-        {
-          if (gimp_item_get_linked (item) && gimp_item_is_attached (item))
-            {
-              gimp_item_linked_translate (item, off_x, off_y, TRUE);
-            }
-          else
-            {
-              gimp_item_translate (item, off_x, off_y, TRUE);
-            }
-        }
+        gimp_item_translate (item, off_x, off_y, TRUE);
       else
         success = FALSE;
     }
@@ -1024,9 +1015,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                "gimp-item-transform-translate");
   gimp_procedure_set_static_help (procedure,
                                   "Translate the item by the specified offsets.",
-                                  "This procedure translates the item by the amounts specified in the off_x and off_y arguments. These can be negative, and are considered offsets from the current position. The offsets will be rounded to the nearest pixel unless the item is a path.\n"
-                                     "\n"
-                                     "If the item is attached to an image and has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be translated by the specified offsets.",
+                                  "This procedure translates the item by the amounts specified in the off_x and off_y arguments. These can be negative, and are considered offsets from the current position. The offsets will be rounded to the nearest pixel unless the item is a path.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",

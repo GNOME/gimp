@@ -518,14 +518,7 @@ layer_set_offsets_invoker (GimpProcedure         *procedure,
           offx -= offset_x;
           offy -= offset_y;
 
-          if (gimp_item_get_linked (GIMP_ITEM (layer)))
-            {
-              gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-            }
-          else
-            {
-              gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-            }
+          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
         }
       else
         success = FALSE;
