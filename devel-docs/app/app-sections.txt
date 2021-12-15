@@ -11420,12 +11420,6 @@ gimp_item_toggle_exclusive_visible
 </SECTION>
 
 <SECTION>
-<FILE>gimpitem-linked</FILE>
-<TITLE>GimpItem-linked</TITLE>
-gimp_item_linked_transform
-</SECTION>
-
-<SECTION>
 <FILE>gimpitem-preview</FILE>
 <TITLE>GimpItem-preview</TITLE>
 gimp_item_get_preview_size

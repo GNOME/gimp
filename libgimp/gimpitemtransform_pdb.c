@@ -235,10 +235,7 @@ gimp_item_transform_flip (GimpItem *item,
  *
  * If there is no selection or the item is not a drawable, the entire
  * item will be transformed according to the specified mapping.
- * Additionally, if the item has its linked flag set to TRUE, all
- * additional items contained in the image which have the linked flag
- * set to TRUE will also be transformed the same way. The return value
- * will be equal to the item ID supplied as input.
+ * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
@@ -379,11 +376,8 @@ gimp_item_transform_rotate_simple (GimpItem         *item,
  * If there is no selection or the item is not a drawable, the entire
  * item will be rotated around its center if auto_center is set to
  * TRUE, otherwise the coordinate of the center point needs to be
- * specified. Additionally, if the item has its linked flag set to
- * TRUE, all additional items contained in the image which have the
- * linked flag set to TRUE will also be rotated around the same center
- * point. The return value will be equal to the item ID supplied as
- * input.
+ * specified.
+ * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
@@ -448,10 +442,7 @@ gimp_item_transform_rotate (GimpItem *item,
  *
  * If there is no selection or the item is not a drawable, the entire
  * item will be scaled according to the specified coordinates.
- * Additionally, if the item has its linked flag set to TRUE, all
- * additional items contained in the image which have the linked flag
- * set to TRUE will also be scaled the same way. The return value will
- * be equal to the item ID supplied as input.
+ * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
@@ -516,10 +507,7 @@ gimp_item_transform_scale (GimpItem *item,
  *
  * If there is no selection or the item is not a drawable, the entire
  * item will be sheared according to the specified parameters.
- * Additionally, if the item has its linked flag set to TRUE, all
- * additional items contained in the image which have the linked flag
- * set to TRUE will also be sheared the same way. The return value will
- * be equal to the item ID supplied as input.
+ * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
@@ -586,10 +574,7 @@ gimp_item_transform_shear (GimpItem            *item,
  *
  * If there is no selection or the item is not a drawable, the entire
  * item will be transformed according to the specified parameters.
- * Additionally, if the item has its linked flag set to TRUE, all
- * additional items contained in the image which have the linked flag
- * set to TRUE will also be transformed the same way. The return value
- * will be equal to the item ID supplied as input.
+ * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
@@ -666,10 +651,7 @@ gimp_item_transform_2d (GimpItem *item,
  *
  * If there is no selection or the item is not a drawable, the entire
  * item will be transformed according to the specified matrix.
- * Additionally, if the item has its linked flag set to TRUE, all
- * additional items contained in the image which have the linked flag
- * set to TRUE will also be transformed the same way. The return value
- * will be equal to the item ID supplied as input.
+ * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),

@@ -37,7 +37,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
-#include "gimpitem-linked.h"
 #include "gimpitem-preview.h"
 #include "gimpitemtree.h"
 #include "gimplist.h"
@@ -504,10 +503,6 @@ gimp_item_real_is_content_locked (GimpItem *item)
 static gboolean
 gimp_item_real_is_position_locked (GimpItem *item)
 {
-  if (gimp_item_get_linked (item))
-    if (gimp_item_linked_is_locked (item))
-      return TRUE;
-
   return GET_PRIVATE (item)->lock_position;
 }
 

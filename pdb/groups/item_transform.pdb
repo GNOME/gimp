@@ -82,14 +82,6 @@ $assemble_matrix
           else
             success = FALSE;
         }
-      else if (gimp_item_get_linked (item))
-        {
-          gimp_item_linked_transform (item, context, &matrix,
-                                      pdb_context->transform_direction,
-                                      pdb_context->interpolation,
-                                      pdb_context->transform_resize,
-                                      progress);
-        }
       else
         {
           gimp_item_transform (item, context, &matrix,
@@ -329,10 +321,8 @@ The return value is the ID of the transformed floating selection.
 
 If there is no selection or the item is not a drawable, the entire
 item will be transformed according to the specified mapping.
-Additionally, if the item has its linked flag set to TRUE, all
-additional items contained in the image which have the linked flag set
-to TRUE will also be transformed the same way. The return value will be
-equal to the item ID supplied as input.
+
+The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
@@ -514,10 +504,8 @@ floating selection.
 If there is no selection or the item is not a drawable, the entire
 item will be rotated around its center if auto_center is set to TRUE,
 otherwise the coordinate of the center point needs to be specified.
-Additionally, if the item has its linked flag set to TRUE, all
-additional items contained in the image which have the linked flag set
-to TRUE will also be rotated around the same center point. The return
-value will be equal to the item ID supplied as input.
+
+The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
@@ -576,10 +564,8 @@ return value is the ID of the scaled floating selection.
 
 If there is no selection or the item is not a drawable, the entire
 item will be scaled according to the specified coordinates.
-Additionally, if the item has its linked flag set to TRUE, all
-additional items contained in the image which have the linked flag set
-to TRUE will also be scaled the same way. The return value will be
-equal to the item ID supplied as input.
+
+The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
@@ -642,10 +628,8 @@ The return value is the ID of the sheared floating selection.
 
 If there is no selection or the item is not a drawable, the entire
 item will be sheared according to the specified parameters.
-Additionally, if the item has its linked flag set to TRUE, all
-additional items contained in the image which have the linked flag set
-to TRUE will also be sheared the same way. The return value will be
-equal to the item ID supplied as input.
+
+The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
@@ -700,10 +684,8 @@ The return value is the ID of the transformed floating selection.
 
 If there is no selection or the item is not a drawable, the entire
 item will be transformed according to the specified parameters.
-Additionally, if the item has its linked flag set to TRUE, all
-additional items contained in the image which have the linked flag set
-to TRUE will also be transformed the same way. The return value will
-be equal to the item ID supplied as input.
+
+The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
@@ -766,10 +748,8 @@ The return value is the ID of the transformed floating selection.
 
 If there is no selection or the item is not a drawable, the entire
 item will be transformed according to the specified matrix.
-Additionally, if the item has its linked flag set to TRUE, all
-additional items contained in the image which have the linked flag set
-to TRUE will also be transformed the same way. The return value will
-be equal to the item ID supplied as input.
+
+The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
@@ -827,7 +807,6 @@ CODE
               "core/gimpdrawable.h"
               "core/gimpdrawable-transform.h"
               "core/gimpimage.h"
-              "core/gimpitem-linked.h"
               "core/gimpprogress.h"
               "gimppdb-utils.h"
               "gimppdbcontext.h"

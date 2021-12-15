@@ -173,7 +173,6 @@ libappcore_sources = [
   'gimpimageproxy.c',
   'gimpimageundo.c',
   'gimpitem-exclusive.c',
-  'gimpitem-linked.c',
   'gimpitem-preview.c',
   'gimpitem.c',
   'gimpitemlist.c',

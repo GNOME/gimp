@@ -34,7 +34,6 @@
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpitem-linked.h"
 #include "core/gimpitem.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
@@ -231,14 +230,6 @@ item_transform_flip_invoker (GimpProcedure         *procedure,
               else
                 success = FALSE;
             }
-          else if (gimp_item_get_linked (item))
-            {
-              gimp_item_linked_transform (item, context, &matrix,
-                                          pdb_context->transform_direction,
-                                          pdb_context->interpolation,
-                                          pdb_context->transform_resize,
-                                          progress);
-            }
           else
             {
               gimp_item_transform (item, context, &matrix,
@@ -342,14 +333,6 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
                 item = GIMP_ITEM (drawable);
               else
                 success = FALSE;
-            }
-          else if (gimp_item_get_linked (item))
-            {
-              gimp_item_linked_transform (item, context, &matrix,
-                                          pdb_context->transform_direction,
-                                          pdb_context->interpolation,
-                                          pdb_context->transform_resize,
-                                          progress);
             }
           else
             {
@@ -532,14 +515,6 @@ item_transform_rotate_invoker (GimpProcedure         *procedure,
               else
                 success = FALSE;
             }
-          else if (gimp_item_get_linked (item))
-            {
-              gimp_item_linked_transform (item, context, &matrix,
-                                          pdb_context->transform_direction,
-                                          pdb_context->interpolation,
-                                          pdb_context->transform_resize,
-                                          progress);
-            }
           else
             {
               gimp_item_transform (item, context, &matrix,
@@ -636,14 +611,6 @@ item_transform_scale_invoker (GimpProcedure         *procedure,
               else
                 success = FALSE;
             }
-          else if (gimp_item_get_linked (item))
-            {
-              gimp_item_linked_transform (item, context, &matrix,
-                                          pdb_context->transform_direction,
-                                          pdb_context->interpolation,
-                                          pdb_context->transform_resize,
-                                          progress);
-            }
           else
             {
               gimp_item_transform (item, context, &matrix,
@@ -734,14 +701,6 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
                 item = GIMP_ITEM (drawable);
               else
                 success = FALSE;
-            }
-          else if (gimp_item_get_linked (item))
-            {
-              gimp_item_linked_transform (item, context, &matrix,
-                                          pdb_context->transform_direction,
-                                          pdb_context->interpolation,
-                                          pdb_context->transform_resize,
-                                          progress);
             }
           else
             {
@@ -844,14 +803,6 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
                 item = GIMP_ITEM (drawable);
               else
                 success = FALSE;
-            }
-          else if (gimp_item_get_linked (item))
-            {
-              gimp_item_linked_transform (item, context, &matrix,
-                                          pdb_context->transform_direction,
-                                          pdb_context->interpolation,
-                                          pdb_context->transform_resize,
-                                          progress);
             }
           else
             {
@@ -962,14 +913,6 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
                 item = GIMP_ITEM (drawable);
               else
                 success = FALSE;
-            }
-          else if (gimp_item_get_linked (item))
-            {
-              gimp_item_linked_transform (item, context, &matrix,
-                                          pdb_context->transform_direction,
-                                          pdb_context->interpolation,
-                                          pdb_context->transform_resize,
-                                          progress);
             }
           else
             {
@@ -1170,7 +1113,8 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed as specified. The return value is the ID of the transformed floating selection.\n"
                                      "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified mapping. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be transformed the same way. The return value will be equal to the item ID supplied as input.\n"
+                                     "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified mapping.\n"
+                                     "The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
@@ -1314,7 +1258,8 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. If auto_center is set to TRUE, the rotation is around the selection's center. Otherwise, the coordinate of the center point needs to be specified. The return value is the ID of the rotated floating selection.\n"
                                      "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be rotated around the same center point. The return value will be equal to the item ID supplied as input.\n"
+                                     "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified.\n"
+                                     "The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
@@ -1375,7 +1320,8 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled as specified. The return value is the ID of the scaled floating selection.\n"
                                      "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be scaled according to the specified coordinates. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be scaled the same way. The return value will be equal to the item ID supplied as input.\n"
+                                     "If there is no selection or the item is not a drawable, the entire item will be scaled according to the specified coordinates.\n"
+                                     "The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
@@ -1436,7 +1382,8 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then sheared as specified. The return value is the ID of the sheared floating selection.\n"
                                      "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be sheared according to the specified parameters. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be sheared the same way. The return value will be equal to the item ID supplied as input.\n"
+                                     "If there is no selection or the item is not a drawable, the entire item will be sheared according to the specified parameters.\n"
+                                     "The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
@@ -1488,7 +1435,8 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed as specified. The return value is the ID of the transformed floating selection.\n"
                                      "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified parameters. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be transformed the same way. The return value will be equal to the item ID supplied as input.\n"
+                                     "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified parameters.\n"
+                                     "The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
@@ -1567,7 +1515,8 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed as specified. The return value is the ID of the transformed floating selection.\n"
                                      "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified matrix. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be transformed the same way. The return value will be equal to the item ID supplied as input.\n"
+                                     "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified matrix.\n"
+                                     "The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
