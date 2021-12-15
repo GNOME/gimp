@@ -70,35 +70,6 @@ gimp_item_linked_is_locked (GimpItem *item)
 }
 
 void
-gimp_item_linked_rotate (GimpItem         *item,
-                         GimpContext      *context,
-                         GimpRotationType  rotate_type,
-                         gdouble           center_x,
-                         gdouble           center_y,
-                         gboolean          clip_result)
-{
-  GimpImage *image;
-  GList     *items;
-
-  g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (gimp_item_get_linked (item) == TRUE);
-  g_return_if_fail (gimp_item_is_attached (item));
-
-  image = gimp_item_get_image (item);
-
-  items = gimp_image_item_list_get_list (image,
-                                         GIMP_ITEM_TYPE_ALL,
-                                         GIMP_ITEM_SET_LINKED);
-  items = gimp_image_item_list_filter (items);
-
-  gimp_image_item_list_rotate (image, items, context,
-                               rotate_type, center_x, center_y, clip_result);
-
-  g_list_free (items);
-}
-
-void
 gimp_item_linked_transform (GimpItem               *item,
                             GimpContext            *context,
                             const GimpMatrix3      *matrix,

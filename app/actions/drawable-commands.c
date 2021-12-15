@@ -290,17 +290,9 @@ drawable_rotate_cmd_callback (GimpAction *action,
   center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
   center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
 
-  if (gimp_item_get_linked (item))
-    {
-      gimp_item_linked_rotate (item, context, rotation_type,
-                               center_x, center_y, FALSE);
-    }
-  else
-    {
-      gimp_item_rotate (item, context,
-                        rotation_type, center_x, center_y,
-                        gimp_item_get_clip (item, FALSE));
-    }
+  gimp_item_rotate (item, context,
+                    rotation_type, center_x, center_y,
+                    gimp_item_get_clip (item, FALSE));
 
   gimp_image_flush (image);
 }
