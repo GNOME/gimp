@@ -21,12 +21,6 @@
 
 gboolean gimp_item_linked_is_locked (GimpItem               *item);
 
-void     gimp_item_linked_rotate    (GimpItem               *item,
-                                     GimpContext            *context,
-                                     GimpRotationType        rotate_type,
-                                     gdouble                 center_x,
-                                     gdouble                 center_y,
-                                     gboolean                clip_result);
 void     gimp_item_linked_transform (GimpItem               *item,
                                      GimpContext            *context,
                                      const GimpMatrix3      *matrix,

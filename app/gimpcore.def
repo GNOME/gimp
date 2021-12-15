@@ -400,7 +400,6 @@ EXPORTS
 	gimp_item_get_visible
 	gimp_item_height
 	gimp_item_is_text_layer
-	gimp_item_linked_rotate
 	gimp_item_linked_transform
 	gimp_item_offsets
 	gimp_item_rename
