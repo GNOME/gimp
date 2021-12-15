@@ -221,7 +221,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
       /*  this happens for entire drawables, paths and layer groups  */
       g_return_val_if_fail (g_list_length (objects) > 0, NULL);
 
-      items = gimp_image_item_list_linked (gimp_item_get_image (objects->data), objects);
+      items = gimp_image_item_list_filter (g_list_copy (objects));
 
       gimp_image_item_list_transform (gimp_item_get_image (objects->data),
                                       items, context,
@@ -307,7 +307,7 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
           selected_objects &&
           GIMP_IS_ITEM (selected_objects->data))
         {
-          objects = gimp_image_item_list_linked (image, selected_objects);
+          objects = gimp_image_item_list_filter (g_list_copy (selected_objects));
           g_list_free (selected_objects);
         }
       else

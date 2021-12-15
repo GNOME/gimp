@@ -360,68 +360,6 @@ gimp_image_item_list_get_list (GimpImage        *image,
   return g_list_reverse (return_list);
 }
 
-/**
- * gimp_image_item_list_linked:
- * @image:
- * @items: the original list of items. This list is untouched.
- *
- * Returns: a newly allocated list of items, containing @items and their
- * linked items if relevant. Note that the returned list is also
- * filtered by removing redundant children, so the result may sometimes
- * be smaller than the original list.
- * The order of the list is not meaningful and not guaranteed to stay
- * the same even if the contents is not changed.
- */
-GList *
-gimp_image_item_list_linked (GimpImage *image,
-                             GList     *items)
-{
-  GList            *new_items = NULL;
-  GList            *iter;
-  GimpItemTypeMask  type   = 0;
-  gboolean          linked = FALSE;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (g_list_length (items) > 0, NULL);
-
-  for (iter = items; iter; iter = iter->next)
-    {
-      GimpItem *item;
-
-      g_return_val_if_fail (GIMP_IS_ITEM (iter->data), NULL);
-      g_return_val_if_fail (image == gimp_item_get_image (iter->data), NULL);
-
-      item = iter->data;
-
-      if (gimp_item_get_linked (item))
-        linked = TRUE;
-
-      if (GIMP_IS_LAYER (item))
-        type |= GIMP_ITEM_TYPE_LAYERS;
-      else if (GIMP_IS_VECTORS (item))
-        type |= GIMP_ITEM_TYPE_VECTORS;
-      else if (GIMP_IS_CHANNEL (item))
-        type |= GIMP_ITEM_TYPE_CHANNELS;
-    }
-
-  if (linked)
-    {
-      new_items = gimp_image_item_list_get_list (image, type, GIMP_ITEM_SET_LINKED);
-
-      for (iter = items; iter; iter = iter->next)
-        if (! g_list_find (new_items, iter->data))
-          new_items = g_list_prepend (new_items, iter->data);
-    }
-  else
-    {
-      new_items = g_list_copy (items);
-    }
-
-  new_items = gimp_image_item_list_filter (new_items);
-
-  return new_items;
-}
-
 static GList *
 gimp_image_item_list_remove_children (GList          *list,
                                       const GimpItem *parent)
