@@ -2785,9 +2785,6 @@ gimp_item_is_in_set (GimpItem    *item,
 
     case GIMP_ITEM_SET_VISIBLE:
       return gimp_item_get_visible (item);
-
-    case GIMP_ITEM_SET_LINKED:
-      return gimp_item_get_linked (item);
     }
 
   return FALSE;

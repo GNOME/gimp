@@ -57,9 +57,6 @@ GList    * gimp_image_item_list_get_list  (GimpImage              *image,
                                            GimpItemTypeMask        type,
                                            GimpItemSet             set);
 
-GList    * gimp_image_item_list_linked    (GimpImage              *image,
-                                           GList                  *items);
-
 GList    * gimp_image_item_list_filter    (GList                  *list);
 
 

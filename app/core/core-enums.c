@@ -831,7 +831,6 @@ gimp_item_set_get_type (void)
     { GIMP_ITEM_SET_ALL, "GIMP_ITEM_SET_ALL", "all" },
     { GIMP_ITEM_SET_IMAGE_SIZED, "GIMP_ITEM_SET_IMAGE_SIZED", "image-sized" },
     { GIMP_ITEM_SET_VISIBLE, "GIMP_ITEM_SET_VISIBLE", "visible" },
-    { GIMP_ITEM_SET_LINKED, "GIMP_ITEM_SET_LINKED", "linked" },
     { 0, NULL, NULL }
   };
 
@@ -841,7 +840,6 @@ gimp_item_set_get_type (void)
     { GIMP_ITEM_SET_ALL, NC_("item-set", "All layers"), NULL },
     { GIMP_ITEM_SET_IMAGE_SIZED, NC_("item-set", "Image-sized layers"), NULL },
     { GIMP_ITEM_SET_VISIBLE, NC_("item-set", "All visible layers"), NULL },
-    { GIMP_ITEM_SET_LINKED, NC_("item-set", "All linked layers"), NULL },
     { 0, NULL, NULL }
   };
 

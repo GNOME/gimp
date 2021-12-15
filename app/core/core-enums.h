@@ -391,7 +391,6 @@ typedef enum  /*< pdb-skip >*/
   GIMP_ITEM_SET_ALL,         /*< desc="All layers"         >*/
   GIMP_ITEM_SET_IMAGE_SIZED, /*< desc="Image-sized layers" >*/
   GIMP_ITEM_SET_VISIBLE,     /*< desc="All visible layers" >*/
-  GIMP_ITEM_SET_LINKED       /*< desc="All linked layers"  >*/
 } GimpItemSet;
 
 

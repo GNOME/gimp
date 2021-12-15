@@ -727,12 +727,6 @@ gimp_transform_grid_tool_options_notify (GimpTool         *tool,
           gimp_transform_grid_tool_update_preview (tg_tool);
         }
     }
-  else if (! strcmp (pspec->name, "preview-linked") &&
-           tg_tool->filters)
-    {
-      gimp_transform_grid_tool_update_filters (tg_tool);
-      gimp_transform_grid_tool_update_preview (tg_tool);
-    }
   else if (! strcmp (pspec->name, "interpolation") ||
            ! strcmp (pspec->name, "clip")          ||
            ! strcmp (pspec->name, "preview-opacity"))
@@ -1804,10 +1798,7 @@ gimp_transform_grid_tool_update_filters (GimpTransformGridTool *tg_tool)
   if (! tg_tool->filters)
     return;
 
-  if (options->preview_linked)
-    drawables = gimp_image_item_list_linked (image, tool->drawables);
-  else
-    drawables = gimp_image_item_list_filter (g_list_copy (tool->drawables));
+  drawables = gimp_image_item_list_filter (g_list_copy (tool->drawables));
 
   new_drawables = g_hash_table_new (g_direct_hash, g_direct_equal);
 
