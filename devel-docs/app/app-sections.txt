@@ -2514,7 +2514,6 @@ gimp_item_get_visible
 gimp_item_set_visible
 gimp_item_is_visible
 gimp_item_get_linked
-gimp_item_set_linked
 gimp_item_get_lock_content
 gimp_item_set_lock_content
 gimp_item_can_lock_content
@@ -11379,7 +11378,6 @@ gimp_image_undo_push_drawable_mod
 gimp_image_undo_push_mask
 gimp_image_undo_push_item_rename
 gimp_image_undo_push_item_displace
-gimp_image_undo_push_item_linked
 gimp_image_undo_push_item_visibility
 gimp_image_undo_push_item_reorder
 gimp_image_undo_push_item_parasite

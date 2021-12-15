@@ -364,9 +364,6 @@ gboolean        gimp_item_is_visible         (GimpItem           *item);
 void        gimp_item_bind_visible_to_active (GimpItem           *item,
                                               gboolean            bind);
 
-void            gimp_item_set_linked         (GimpItem           *item,
-                                              gboolean            linked,
-                                              gboolean            push_undo);
 gboolean        gimp_item_get_linked         (GimpItem           *item);
 
 void            gimp_item_set_color_tag      (GimpItem           *item,

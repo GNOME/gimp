@@ -41,7 +41,7 @@ possible in the previous API is obviously still possible.
 | `gimp_drawable_bpp()`                           | `gimp_drawable_get_bpp()`                         |
 | `gimp_drawable_delete()`                        | `gimp_item_delete()`                              |
 | `gimp_drawable_get_image()`                     | `gimp_item_get_image()`                           |
-| `gimp_drawable_get_linked()`                    | `gimp_item_get_linked()`                          |
+| `gimp_drawable_get_linked()`                    | *N/A*                                             |
 | `gimp_drawable_get_name()`                      | `gimp_item_get_name()`                            |
 | `gimp_drawable_get_tattoo()`                    | `gimp_item_get_tattoo()`                          |
 | `gimp_drawable_get_visible()`                   | `gimp_item_get_visible()`                         |
@@ -60,7 +60,7 @@ possible in the previous API is obviously still possible.
 | `gimp_drawable_preview_new()`                   | `gimp_drawable_preview_new_from_drawable()`       |
 | `gimp_drawable_preview_new_from_drawable_id()`  | `gimp_drawable_preview_new_from_drawable()`       |
 | `gimp_drawable_set_image()`                     | *N/A*                                             |
-| `gimp_drawable_set_linked()`                    | `gimp_item_set_linked()`                          |
+| `gimp_drawable_set_linked()`                    | *N/A*                                             |
 | `gimp_drawable_set_name()`                      | `gimp_item_set_name()`                            |
 | `gimp_drawable_set_tattoo()`                    | `gimp_item_set_tattoo()`                          |
 | `gimp_drawable_set_visible()`                   | `gimp_item_set_visible()`                         |
@@ -143,6 +143,8 @@ possible in the previous API is obviously still possible.
 | `gimp_image_width()`                            | `gimp_image_get_width()`                          |
 | `gimp_install_cmap()`                           | *N/A*                                             |
 | `gimp_invert()`                                 | `gimp_drawable_invert()`                          |
+| `gimp_item_get_linked()`                        | *N/A*                                             |
+| `gimp_item_set_linked()`                        | *N/A*                                             |
 | `gimp_layer_menu_new()`                         | `gimp_layer_combo_box_new()`                      |
 | `gimp_layer_scale_full()`                       | `gimp_layer_scale()`                              |
 | `gimp_layer_translate()`                        | `gimp_item_transform_translate()`                 |
@@ -162,14 +164,14 @@ possible in the previous API is obviously still possible.
 | `gimp_parasite_name()`                          | `gimp_parasite_get_name()`                        |
 | `gimp_path_delete()`                            | `gimp_image_remove_vectors()`                     |
 | `gimp_path_get_current()`                       | `gimp_image_get_active_vectors()`                 |
-| `gimp_path_get_locked()`                        | `gimp_item_get_linked()`                          |
+| `gimp_path_get_locked()`                        | *N/A*                                             |
 | `gimp_path_get_points()`                        | `gimp_vectors_stroke_get_points()`                |
 | `gimp_path_get_point_at_dist()`                 | `gimp_vectors_stroke_get_point_at_dist()`         |
 | `gimp_path_get_tattoo()`                        | `gimp_item_get_tattoo()`                          |
 | `gimp_path_import()`                            | `gimp_vectors_import_from_file()`                 |
 | `gimp_path_list()`                              | `gimp_image_get_vectors()`                        |
 | `gimp_path_set_current()`                       | `gimp_image_set_active_vectors()`                 |
-| `gimp_path_set_locked()`                        | `gimp_item_set_linked()`                          |
+| `gimp_path_set_locked()`                        | *N/A*                                             |
 | `gimp_path_set_points()`                        | `gimp_vectors_stroke_new_from_points()`           |
 | `gimp_path_set_tattoo()`                        | `gimp_item_set_tattoo()`                          |
 | `gimp_path_stroke_current()`                    | `gimp_edit_stroke_vectors()`                      |
@@ -199,7 +201,7 @@ possible in the previous API is obviously still possible.
 | `gimp_transform_2d()`                           | `gimp_item_transform_2d()`                        |
 | `gimp_unit_menu_update()`                       | `#GimpUnitComboBox`                               |
 | `gimp_vectors_get_image()`                      | `gimp_item_get_image()`                           |
-| `gimp_vectors_get_linked()`                     | `gimp_item_get_linked()`                          |
+| `gimp_vectors_get_linked()`                     | *N/A*                                             |
 | `gimp_vectors_get_name()`                       | `gimp_item_get_name()`                            |
 | `gimp_vectors_get_tattoo()`                     | `gimp_item_get_tattoo()`                          |
 | `gimp_vectors_get_visible()`                    | `gimp_item_get_visible()`                         |
@@ -208,7 +210,7 @@ possible in the previous API is obviously still possible.
 | `gimp_vectors_parasite_detach()`                | `gimp_item_detach_parasite()`                     |
 | `gimp_vectors_parasite_find()`                  | `gimp_item_get_parasite()`                        |
 | `gimp_vectors_parasite_list()`                  | `gimp_item_get_parasite_list()`                   |
-| `gimp_vectors_set_linked()`                     | `gimp_item_set_linked()`                          |
+| `gimp_vectors_set_linked()`                     | *N/A*                                             |
 | `gimp_vectors_set_name()`                       | `gimp_item_set_name()`                            |
 | `gimp_vectors_set_tattoo()`                     | `gimp_item_set_tattoo()`                          |
 | `gimp_vectors_set_visible()`                    | `gimp_item_set_visible()`                         |

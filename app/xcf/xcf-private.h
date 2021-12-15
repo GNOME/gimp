@@ -107,6 +107,15 @@ struct _XcfInfo
   GimpTattoo          tattoo_state;
   GList              *selected_layers;
   GList              *selected_channels;
+
+  /* Old deprecated "linked" concept which we keep in the XcfInfo
+   * probably forever to transform these tags into named stored item
+   * sets instead.
+   */
+  GList              *linked_layers;
+  GList              *linked_channels;
+  GList              *linked_paths;
+
   GimpDrawable       *floating_sel_drawable;
   GimpLayer          *floating_sel;
   goffset             floating_sel_offset;

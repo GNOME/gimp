@@ -635,59 +635,6 @@ item_set_visible_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-item_get_linked_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
-{
-  gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
-  gboolean linked = FALSE;
-
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      linked = gimp_item_get_linked (GIMP_ITEM (item));
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), linked);
-
-  return return_vals;
-}
-
-static GimpValueArray *
-item_set_linked_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
-{
-  gboolean success = TRUE;
-  GimpItem *item;
-  gboolean linked;
-
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  linked = g_value_get_boolean (gimp_value_array_index (args, 1));
-
-  if (success)
-    {
-      gimp_item_set_linked (GIMP_ITEM (item), linked, TRUE);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 item_get_lock_content_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
@@ -1632,64 +1579,6 @@ register_item_procs (GimpPDB *pdb)
                                g_param_spec_boolean ("visible",
                                                      "visible",
                                                      "The new item visibility",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-item-get-linked
-   */
-  procedure = gimp_procedure_new (item_get_linked_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-get-linked");
-  gimp_procedure_set_static_help (procedure,
-                                  "Get the linked state of the specified item.",
-                                  "This procedure returns the specified item's linked state.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Wolfgang Hofer",
-                                         "Wolfgang Hofer",
-                                         "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
-                                                     "item",
-                                                     "The item",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("linked",
-                                                         "linked",
-                                                         "The item linked state (for moves)",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-item-set-linked
-   */
-  procedure = gimp_procedure_new (item_set_linked_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-set-linked");
-  gimp_procedure_set_static_help (procedure,
-                                  "Set the linked state of the specified item.",
-                                  "This procedure sets the specified item's linked state.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Wolfgang Hofer",
-                                         "Wolfgang Hofer",
-                                         "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
-                                                     "item",
-                                                     "The item",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("linked",
-                                                     "linked",
-                                                     "The new item linked state",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

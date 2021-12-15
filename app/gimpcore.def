@@ -374,7 +374,6 @@ EXPORTS
 	gimp_image_undo_push
 	gimp_image_undo_push_drawable_mod
 	gimp_image_undo_push_image_grid
-	gimp_image_undo_push_item_linked
 	gimp_image_undo_push_item_visibility
 	gimp_image_undo_push_text_layer
 	gimp_image_undo_push_text_layer_modified
@@ -405,7 +404,6 @@ EXPORTS
 	gimp_item_resize
 	gimp_item_rotate
 	gimp_item_scale_by_origin
-	gimp_item_set_linked
 	gimp_item_set_visible
 	gimp_item_stroke
 	gimp_item_transform

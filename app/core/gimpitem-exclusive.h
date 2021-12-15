@@ -44,8 +44,6 @@ void   gimp_item_toggle_exclusive         (GimpItem             *item,
                                            GimpUndoType          group_undo_type,
                                            gboolean              only_selected,
                                            GimpContext          *context);
-void   gimp_item_toggle_exclusive_linked  (GimpItem             *item,
-                                           GimpContext          *context);
 
 
 #endif /* __GIMP_ITEM_EXCLUSIVE_H__ */

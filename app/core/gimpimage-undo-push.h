@@ -101,9 +101,6 @@ GimpUndo * gimp_image_undo_push_item_displace       (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_item_visibility     (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpItem      *item);
-GimpUndo * gimp_image_undo_push_item_linked         (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpItem      *item);
 GimpUndo * gimp_image_undo_push_item_color_tag      (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpItem      *item);
