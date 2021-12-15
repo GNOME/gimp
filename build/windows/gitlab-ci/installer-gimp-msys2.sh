@@ -10,21 +10,37 @@ ISCCDIR=`cygpath -u "$ISCCDIR"`
 mkdir -p "${ISCCDIR}/Languages/Unofficial"
 cd "${ISCCDIR}/Languages/Unofficial"
 
+rm -f Basque.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Basque.isl
+rm -f ChineseSimplified.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/ChineseSimplified.isl
+rm -f ChineseTraditional.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/ChineseTraditional.isl
+rm -f EnglishBritish.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/EnglishBritish.isl
+rm -f Esperanto.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Esperanto.isl
+rm -f Greek.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Greek.isl
+rm -f Hungarian.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Hungarian.isl
+rm -f Indonesian.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Indonesian.isl
+rm -f Korean.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Korean.isl
+rm -f Latvian.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Latvian.isl
+rm -f Lithuanian.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Lithuanian.isl
+rm -f Malaysian.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Malaysian.isl
+rm -f Marathi.islu
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Marathi.islu
+rm -f Romanian.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Romanian.isl
+rm -f Swedish.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Swedish.isl
+rm -f Vietnamese.isl
 wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Vietnamese.isl
 cd -
 
