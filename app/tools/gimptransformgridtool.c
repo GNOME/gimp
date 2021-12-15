@@ -193,10 +193,6 @@ static void      gimp_transform_grid_tool_widget_response    (GimpToolWidget    
 static void      gimp_transform_grid_tool_filter_flush       (GimpDrawableFilter     *filter,
                                                               GimpTransformGridTool  *tg_tool);
 
-static void      gimp_transform_grid_tool_image_linked_items_changed
-                                                             (GimpImage              *image,
-                                                              GimpTransformGridTool  *tg_tool);
-
 static void      gimp_transform_grid_tool_halt               (GimpTransformGridTool  *tg_tool);
 static void      gimp_transform_grid_tool_commit             (GimpTransformGridTool  *tg_tool);
 
@@ -401,11 +397,6 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
 
   if (tg_options->direction_chain_button)
     gtk_widget_set_sensitive (tg_options->direction_chain_button, TRUE);
-
-  g_signal_connect (
-    image, "linked-items-changed",
-    G_CALLBACK (gimp_transform_grid_tool_image_linked_items_changed),
-    tg_tool);
 
   return TRUE;
 }
@@ -1157,32 +1148,11 @@ gimp_transform_grid_tool_filter_flush (GimpDrawableFilter    *filter,
 }
 
 static void
-gimp_transform_grid_tool_image_linked_items_changed (GimpImage             *image,
-                                                     GimpTransformGridTool *tg_tool)
-{
-  if (tg_tool->filters)
-    {
-      gimp_transform_grid_tool_update_filters (tg_tool);
-      gimp_transform_grid_tool_update_preview (tg_tool);
-    }
-}
-
-static void
 gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
 {
   GimpTool                 *tool       = GIMP_TOOL (tg_tool);
   GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
   GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
-
-  if (tool->display)
-    {
-      GimpImage *image = gimp_display_get_image (tool->display);
-
-      g_signal_handlers_disconnect_by_func (
-        image,
-        gimp_transform_grid_tool_image_linked_items_changed,
-        tg_tool);
-    }
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tg_tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tg_tool));

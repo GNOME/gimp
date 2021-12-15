@@ -1004,7 +1004,7 @@ gimp_layer_tree_view_set_image (GimpItemTreeView *view,
                         G_CALLBACK (gimp_layer_tree_view_floating_selection_changed),
                         view);
       g_signal_connect (gimp_item_tree_view_get_image (view),
-                        "layer-links-changed",
+                        "layer-sets-changed",
                         G_CALLBACK (gimp_layer_tree_view_layer_links_changed),
                         view);
 
@@ -1116,7 +1116,7 @@ gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
   if (! image)
     return;
 
-  links = gimp_image_get_stored_item_sets (image);
+  links = gimp_image_get_stored_item_sets (image, GIMP_TYPE_LAYER);
 
   label_size = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
   for (iter = links; iter; iter = iter->next)

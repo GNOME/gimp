@@ -123,10 +123,6 @@ gimp_item_prop_undo_constructed (GObject *object)
       item_prop_undo->visible = gimp_item_get_visible (item);
       break;
 
-    case GIMP_UNDO_ITEM_LINKED:
-      item_prop_undo->linked = gimp_item_get_linked (item);
-      break;
-
     case GIMP_UNDO_ITEM_COLOR_TAG:
       item_prop_undo->color_tag = gimp_item_get_color_tag (item);
       break;
@@ -280,16 +276,6 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
         visible = gimp_item_get_visible (item);
         gimp_item_set_visible (item, item_prop_undo->visible, FALSE);
         item_prop_undo->visible = visible;
-      }
-      break;
-
-    case GIMP_UNDO_ITEM_LINKED:
-      {
-        gboolean linked;
-
-        linked = gimp_item_get_linked (item);
-        gimp_item_set_linked (item, item_prop_undo->linked, FALSE);
-        item_prop_undo->linked = linked;
       }
       break;
 

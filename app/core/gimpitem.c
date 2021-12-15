@@ -589,7 +589,6 @@ gimp_item_real_duplicate (GimpItem *item,
   GET_PRIVATE (new_item)->parasites = gimp_parasite_list_copy (private->parasites);
 
   gimp_item_set_visible   (new_item, gimp_item_get_visible   (item), FALSE);
-  gimp_item_set_linked    (new_item, gimp_item_get_linked    (item), FALSE);
   gimp_item_set_color_tag (new_item, gimp_item_get_color_tag (item), FALSE);
 
   if (gimp_item_can_lock_content (new_item))
@@ -2097,7 +2096,6 @@ gimp_item_replace_item (GimpItem *item,
                       gimp_item_get_height (replace));
 
   gimp_item_set_visible       (item, gimp_item_get_visible (replace), FALSE);
-  gimp_item_set_linked        (item, gimp_item_get_linked (replace), FALSE);
   gimp_item_set_color_tag     (item, gimp_item_get_color_tag (replace), FALSE);
   gimp_item_set_lock_content  (item, gimp_item_get_lock_content (replace), FALSE);
   gimp_item_set_lock_position (item, gimp_item_get_lock_position (replace), FALSE);
@@ -2380,34 +2378,6 @@ gimp_item_bind_visible_to_active (GimpItem *item,
 
   if (bind)
     gimp_filter_set_active (GIMP_FILTER (item), gimp_item_get_visible (item));
-}
-
-void
-gimp_item_set_linked (GimpItem *item,
-                      gboolean  linked,
-                      gboolean  push_undo)
-{
-  g_return_if_fail (GIMP_IS_ITEM (item));
-
-  linked = linked ? TRUE : FALSE;
-
-  if (gimp_item_get_linked (item) != linked)
-    {
-      GimpImage *image       = gimp_item_get_image (item);
-      gboolean   is_attached = gimp_item_is_attached (item);
-
-      if (push_undo && is_attached && image)
-        gimp_image_undo_push_item_linked (image, NULL, item);
-
-      GET_PRIVATE (item)->linked = linked;
-
-      g_signal_emit (item, gimp_item_signals[LINKED_CHANGED], 0);
-
-      if (is_attached && image)
-        gimp_image_linked_items_changed (image);
-
-      g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_LINKED]);
-    }
 }
 
 gboolean

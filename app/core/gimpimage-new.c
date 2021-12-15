@@ -219,7 +219,6 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   gimp_item_get_offset (GIMP_ITEM (new_layer), &off_x, &off_y);
   gimp_item_translate (GIMP_ITEM (new_layer), -off_x, -off_y, FALSE);
   gimp_item_set_visible (GIMP_ITEM (new_layer), TRUE, FALSE);
-  gimp_item_set_linked (GIMP_ITEM (new_layer), FALSE, FALSE);
   gimp_layer_set_mode (new_layer,
                        gimp_image_get_default_new_layer_mode (new_image),
                        FALSE);
@@ -315,9 +314,6 @@ gimp_image_new_copy_drawables (GimpImage *image,
 
           gimp_object_set_name (GIMP_OBJECT (new_layer),
                                 gimp_object_get_name (iter->data));
-
-          gimp_item_set_linked (GIMP_ITEM (new_layer),
-                                gimp_item_get_linked (iter->data), FALSE);
 
           /* Visibility, mode and opacity mimic the source image if
            * multiple items are copied. Otherwise we just set them to

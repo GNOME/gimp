@@ -223,8 +223,6 @@ gimp_channel_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
                                         gimp_item_tree_view_get_image (item_view),
                                         item_view_class->item_type);
 
-          gimp_item_set_linked (new_item, FALSE, FALSE);
-
           item_view_class->add_item (image, new_item, parent, index, TRUE);
 
           gimp_image_flush (image);

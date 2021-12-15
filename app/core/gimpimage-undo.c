@@ -642,7 +642,6 @@ gimp_image_undo_dirty_from_type (GimpUndoType undo_type)
       return GIMP_DIRTY_SELECTION;
 
     case GIMP_UNDO_GROUP_ITEM_VISIBILITY:
-    case GIMP_UNDO_GROUP_ITEM_LINKED:
     case GIMP_UNDO_GROUP_ITEM_PROPERTIES:
       return GIMP_DIRTY_ITEM_META;
 

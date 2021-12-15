@@ -104,7 +104,9 @@ struct _GimpImageClass
   void (* undo_event)                   (GimpImage            *image,
                                          GimpUndoEvent         event,
                                          GimpUndo             *undo);
-  void (* layer_links_changed)          (GimpImage            *image);
+  void (* layer_sets_changed)           (GimpImage            *image);
+  void (* channel_sets_changed)         (GimpImage            *image);
+  void (* vectors_sets_changed)         (GimpImage            *image);
 };
 
 
@@ -256,7 +258,6 @@ GimpComponentMask gimp_image_get_visible_mask    (GimpImage          *image);
 void            gimp_image_mode_changed          (GimpImage          *image);
 void            gimp_image_precision_changed     (GimpImage          *image);
 void            gimp_image_alpha_changed         (GimpImage          *image);
-void            gimp_image_linked_items_changed  (GimpImage          *image);
 void            gimp_image_invalidate            (GimpImage          *image,
                                                   gint                x,
                                                   gint                y,
@@ -458,7 +459,8 @@ void            gimp_image_store_item_set        (GimpImage          *image,
                                                   GimpItemList       *set);
 gboolean        gimp_image_unlink_item_set       (GimpImage          *image,
                                                   GimpItemList       *set);
-GList         * gimp_image_get_stored_item_sets   (GimpImage         *image);
+GList         * gimp_image_get_stored_item_sets   (GimpImage         *image,
+                                                   GType              item_type);
 void            gimp_image_select_item_set       (GimpImage          *image,
                                                   GimpItemList       *set);
 void            gimp_image_add_item_set          (GimpImage          *image,

@@ -48,6 +48,7 @@
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpimage-symmetry.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpitemlist.h"
 #include "core/gimpitemstack.h"
 #include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer-new.h"
@@ -683,6 +684,40 @@ xcf_load_image (Gimp     *gimp,
   if (info->selected_channels)
     gimp_image_set_selected_channels (image, info->selected_channels);
 
+  /* We don't have linked items concept anymore. We transform formerly
+   * linked items into stored sets of named items instead.
+   */
+  if (info->linked_layers)
+    {
+      GimpItemList *set;
+
+      set = gimp_item_list_named_new (image, GIMP_TYPE_LAYER,
+                                      _("Linked Layers"),
+                                      info->linked_layers);
+      gimp_image_store_item_set (image, set);
+      g_clear_pointer (&info->linked_layers, g_list_free);
+    }
+  if (info->linked_channels)
+    {
+      GimpItemList *set;
+
+      set = gimp_item_list_named_new (image, GIMP_TYPE_CHANNEL,
+                                      _("Linked Channels"),
+                                      info->linked_channels);
+      gimp_image_store_item_set (image, set);
+      g_clear_pointer (&info->linked_layers, g_list_free);
+    }
+  if (info->linked_paths)
+    {
+      GimpItemList *set;
+
+      set = gimp_item_list_named_new (image, GIMP_TYPE_VECTORS,
+                                      _("Linked Paths"),
+                                      info->linked_paths);
+      gimp_image_store_item_set (image, set);
+      g_clear_pointer (&info->linked_layers, g_list_free);
+    }
+
   if (info->file)
     gimp_image_set_file (image, info->file);
 
@@ -1251,7 +1286,8 @@ xcf_load_layer_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &linked, 1);
 
-            gimp_item_set_linked (GIMP_ITEM (*layer), linked, FALSE);
+            if (linked)
+              info->linked_layers = g_list_prepend (info->linked_layers, *layer);
           }
           break;
 
@@ -1755,7 +1791,8 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_int32 (info, (guint32 *) &linked, 1);
 
-            gimp_item_set_linked (GIMP_ITEM (*channel), linked, FALSE);
+            if (linked)
+              info->linked_channels = g_list_prepend (info->linked_channels, *channel);
           }
           break;
 
@@ -2894,7 +2931,8 @@ xcf_load_old_path (XcfInfo   *info,
   g_free (name);
   g_free (points);
 
-  gimp_item_set_linked (GIMP_ITEM (vectors), locked, FALSE);
+  if (locked)
+    info->linked_paths = g_list_prepend (info->linked_paths, vectors);
 
   if (tattoo)
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
@@ -2989,7 +3027,8 @@ xcf_load_vector (XcfInfo   *info,
   g_free (name);
 
   gimp_item_set_visible (GIMP_ITEM (vectors), visible, FALSE);
-  gimp_item_set_linked (GIMP_ITEM (vectors), linked, FALSE);
+  if (linked)
+    info->linked_paths = g_list_prepend (info->linked_paths, vectors);
 
   if (tattoo)
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);

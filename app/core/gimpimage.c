@@ -103,7 +103,6 @@ enum
   SELECTED_CHANNELS_CHANGED,
   SELECTED_VECTORS_CHANGED,
   SELECTED_LAYERS_CHANGED,
-  LINKED_ITEMS_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
   MASK_CHANGED,
@@ -127,7 +126,9 @@ enum
   PARASITE_DETACHED,
   COLORMAP_CHANGED,
   UNDO_EVENT,
-  LAYER_LINKS_CHANGED,
+  LAYER_SETS_CHANGED,
+  CHANNEL_SETS_CHANGED,
+  VECTORS_SETS_CHANGED,
   LAST_SIGNAL
 };
 
@@ -359,14 +360,6 @@ gimp_image_class_init (GimpImageClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[LINKED_ITEMS_CHANGED] =
-    g_signal_new ("linked-items-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, linked_items_changed),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE, 0);
-
   gimp_image_signals[COMPONENT_VISIBILITY_CHANGED] =
     g_signal_new ("component-visibility-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -574,11 +567,27 @@ gimp_image_class_init (GimpImageClass *klass)
                   GIMP_TYPE_UNDO_EVENT,
                   GIMP_TYPE_UNDO);
 
-  gimp_image_signals[LAYER_LINKS_CHANGED] =
-    g_signal_new ("layer-links-changed",
+  gimp_image_signals[LAYER_SETS_CHANGED] =
+    g_signal_new ("layer-sets-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, layer_links_changed),
+                  G_STRUCT_OFFSET (GimpImageClass, layer_sets_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
+  gimp_image_signals[CHANNEL_SETS_CHANGED] =
+    g_signal_new ("channel-sets-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, channel_sets_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
+  gimp_image_signals[VECTORS_SETS_CHANGED] =
+    g_signal_new ("vectors-sets-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, vectors_sets_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -786,7 +795,9 @@ gimp_image_init (GimpImage *image)
                                                      GIMP_TYPE_VECTORS);
   private->layer_stack         = NULL;
 
-  private->linked_layers       = NULL;
+  private->stored_layer_sets   = NULL;
+  private->stored_channel_sets = NULL;
+  private->stored_vectors_sets = NULL;
 
   g_signal_connect (private->projection, "notify::buffer",
                     G_CALLBACK (gimp_image_projection_buffer_notify),
@@ -1065,7 +1076,9 @@ gimp_image_dispose (GObject *object)
 
   gimp_image_undo_free (image);
 
-  g_list_free_full (private->linked_layers, g_object_unref);
+  g_list_free_full (private->stored_layer_sets, g_object_unref);
+  g_list_free_full (private->stored_channel_sets, g_object_unref);
+  g_list_free_full (private->stored_vectors_sets, g_object_unref);
 
   g_signal_handlers_disconnect_by_func (private->layers->container,
                                         gimp_image_invalidate,
@@ -3576,14 +3589,6 @@ gimp_image_alpha_changed (GimpImage *image)
 }
 
 void
-gimp_image_linked_items_changed (GimpImage *image)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  g_signal_emit (image, gimp_image_signals[LINKED_ITEMS_CHANGED], 0);
-}
-
-void
 gimp_image_invalidate (GimpImage *image,
                        gint       x,
                        gint       y,
@@ -5391,8 +5396,8 @@ gimp_image_add_layers (GimpImage   *image,
 /*
  * gimp_image_store_item_set:
  * @image:
- * @set: (transfer full): a set of linked items which @images takes
- *                        ownership of.
+ * @set: (transfer full): a set of items which @images takes ownership
+ *                        of.
  *
  * Store a new set of @layers.
  * If a set with the same name and type existed, this call will silently
@@ -5402,19 +5407,37 @@ void
 gimp_image_store_item_set (GimpImage    *image,
                            GimpItemList *set)
 {
-  GimpImagePrivate *private;
-  GList            *iter;
+  GimpImagePrivate  *private;
+  GList            **stored_sets;
+  GList             *iter;
+  guint              signal;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_ITEM_LIST (set));
-  /* XXX Only layer sets supported so far as we haven't enabled
-   * multi-selection of channels and vectors yet.
-   */
-  g_return_if_fail (gimp_item_list_get_item_type (set) == GIMP_TYPE_LAYER);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  for (iter = private->linked_layers; iter; iter = iter->next)
+  if (gimp_item_list_get_item_type (set) == GIMP_TYPE_LAYER)
+    {
+      stored_sets = &private->stored_layer_sets;
+      signal = gimp_image_signals[LAYER_SETS_CHANGED];
+    }
+  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_CHANNEL)
+    {
+      stored_sets = &private->stored_channel_sets;
+      signal = gimp_image_signals[CHANNEL_SETS_CHANGED];
+    }
+  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_VECTORS)
+    {
+      stored_sets = &private->stored_vectors_sets;
+      signal = gimp_image_signals[VECTORS_SETS_CHANGED];
+    }
+  else
+    {
+      g_return_if_reached ();
+    }
+
+  for (iter = *stored_sets; iter; iter = iter->next)
     {
       /* Remove a previous item set of same type and name. */
       if (gimp_item_list_is_pattern (iter->data) == gimp_item_list_is_pattern (set) &&
@@ -5424,15 +5447,15 @@ gimp_image_store_item_set (GimpImage    *image,
   if (iter)
     {
       g_object_unref (iter->data);
-      private->linked_layers = g_list_delete_link (private->linked_layers, iter);
+      *stored_sets = g_list_delete_link (*stored_sets, iter);
     }
 
-  private->linked_layers = g_list_prepend (private->linked_layers, set);
-  g_signal_emit (image, gimp_image_signals[LAYER_LINKS_CHANGED], 0);
+  *stored_sets = g_list_prepend (*stored_sets, set);
+  g_signal_emit (image, signal, 0);
 }
 
 /*
- * @gimp_image_unlink_layers:
+ * @gimp_image_unlink_item_set:
  * @image:
  * @link_name:
  *
@@ -5445,21 +5468,43 @@ gboolean
 gimp_image_unlink_item_set (GimpImage    *image,
                             GimpItemList *set)
 {
-  GimpImagePrivate *private;
-  GList            *found;
-  gboolean          success;
+  GimpImagePrivate  *private;
+  GList             *found;
+  GList            **stored_sets;
+  guint              signal;
+  gboolean           success;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  found = g_list_find (private->linked_layers, set);
+  if (gimp_item_list_get_item_type (set) == GIMP_TYPE_LAYER)
+    {
+      stored_sets = &private->stored_layer_sets;
+      signal = gimp_image_signals[LAYER_SETS_CHANGED];
+    }
+  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_CHANNEL)
+    {
+      stored_sets = &private->stored_channel_sets;
+      signal = gimp_image_signals[CHANNEL_SETS_CHANGED];
+    }
+  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_VECTORS)
+    {
+      stored_sets = &private->stored_vectors_sets;
+      signal = gimp_image_signals[VECTORS_SETS_CHANGED];
+    }
+  else
+    {
+      g_return_val_if_reached (FALSE);
+    }
+
+  found = g_list_find (*stored_sets, set);
   success = (found != NULL);
   if (success)
     {
-      private->linked_layers = g_list_delete_link (private->linked_layers, found);
+      *stored_sets = g_list_delete_link (*stored_sets, found);
       g_object_unref (set);
-      g_signal_emit (image, gimp_image_signals[LAYER_LINKS_CHANGED], 0);
+      g_signal_emit (image, signal, 0);
     }
 
   return success;
@@ -5473,7 +5518,8 @@ gimp_image_unlink_item_set (GimpImage    *image,
  *          should not modify). Order of items is not relevant.
  */
 GList *
-gimp_image_get_stored_item_sets (GimpImage *image)
+gimp_image_get_stored_item_sets (GimpImage *image,
+                                 GType      item_type)
 {
   GimpImagePrivate *private;
 
@@ -5481,7 +5527,14 @@ gimp_image_get_stored_item_sets (GimpImage *image)
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  return private->linked_layers;
+  if (item_type == GIMP_TYPE_LAYER)
+    return private->stored_layer_sets;
+  else if (item_type == GIMP_TYPE_CHANNEL)
+    return private->stored_channel_sets;
+  else if (item_type == GIMP_TYPE_VECTORS)
+    return private->stored_vectors_sets;
+
+  g_return_val_if_reached (FALSE);
 }
 
 /*
@@ -5496,18 +5549,29 @@ void
 gimp_image_select_item_set (GimpImage    *image,
                             GimpItemList *set)
 {
-  GList  *linked;
+  GList  *items;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_ITEM_LIST (set));
 
-  linked = gimp_item_list_get_items (set, &error);
+  items = gimp_item_list_get_items (set, &error);
 
   if (! error)
-    gimp_image_set_selected_layers (image, linked);
+    {
+      GType item_type = gimp_item_list_get_item_type (set);
 
-  g_list_free (linked);
+      if (item_type == GIMP_TYPE_LAYER)
+        gimp_image_set_selected_layers (image, items);
+      else if (item_type == GIMP_TYPE_CHANNEL)
+        gimp_image_set_selected_channels (image, items);
+      else if (item_type == GIMP_TYPE_VECTORS)
+        gimp_image_set_selected_vectors (image, items);
+      else
+        g_return_if_reached ();
+    }
+
+  g_list_free (items);
   g_clear_error (&error);
 }
 
@@ -5516,40 +5580,51 @@ gimp_image_select_item_set (GimpImage    *image,
  * @image:
  * @set:
  *
- * Add the layers belonging to the set named @link_name (which must
- * exist) to the layers currently selected in @image.
- *
- * Returns: %TRUE if the selection change is done (even if it turned out
- *          selected layers stay the same), %FALSE if no sets with this
- *          name existed.
+ * Add the layers belonging to @set to the items currently selected in
+ * @image.
  */
 void
 gimp_image_add_item_set (GimpImage    *image,
                          GimpItemList *set)
 {
-  GList  *linked;
+  GList  *items;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_ITEM_LIST (set));
 
-  linked = gimp_item_list_get_items (set, &error);
+  items = gimp_item_list_get_items (set, &error);
 
   if (! error)
     {
-      GList *layers;
+      GList *selected;
       GList *iter;
+      GType  item_type = gimp_item_list_get_item_type (set);
 
-      layers = gimp_image_get_selected_layers (image);
-      layers = g_list_copy (layers);
-      for (iter = linked; iter; iter = iter->next)
+      if (item_type == GIMP_TYPE_LAYER)
+        selected = gimp_image_get_selected_layers (image);
+      else if (item_type == GIMP_TYPE_CHANNEL)
+        selected = gimp_image_get_selected_channels (image);
+      else if (item_type == GIMP_TYPE_VECTORS)
+        selected = gimp_image_get_selected_vectors (image);
+      else
+        g_return_if_reached ();
+
+      selected = g_list_copy (selected);
+      for (iter = items; iter; iter = iter->next)
         {
-          if (! g_list_find (layers, iter->data))
-            layers = g_list_prepend (layers, iter->data);
+          if (! g_list_find (selected, iter->data))
+            selected = g_list_prepend (selected, iter->data);
         }
 
-      gimp_image_set_selected_layers (image, layers);
-      g_list_free (layers);
+      if (item_type == GIMP_TYPE_LAYER)
+        gimp_image_set_selected_layers (image, selected);
+      else if (item_type == GIMP_TYPE_CHANNEL)
+        gimp_image_set_selected_channels (image, selected);
+      else if (item_type == GIMP_TYPE_VECTORS)
+        gimp_image_set_selected_vectors (image, items);
+
+      g_list_free (selected);
     }
   g_clear_error (&error);
 }
@@ -5570,31 +5645,46 @@ void
 gimp_image_remove_item_set (GimpImage    *image,
                             GimpItemList *set)
 {
-  GList  *linked;
+  GList  *items;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_ITEM_LIST (set));
 
-  linked = gimp_item_list_get_items (set, &error);
+  items = gimp_item_list_get_items (set, &error);
 
   if (! error)
     {
-      GList *layers;
+      GList *selected;
       GList *iter;
+      GType  item_type = gimp_item_list_get_item_type (set);
 
-      layers = gimp_image_get_selected_layers (image);
-      layers = g_list_copy (layers);
-      for (iter = linked; iter; iter = iter->next)
+      if (item_type == GIMP_TYPE_LAYER)
+        selected = gimp_image_get_selected_layers (image);
+      else if (item_type == GIMP_TYPE_CHANNEL)
+        selected = gimp_image_get_selected_channels (image);
+      else if (item_type == GIMP_TYPE_VECTORS)
+        selected = gimp_image_get_selected_vectors (image);
+      else
+        g_return_if_reached ();
+
+      selected = g_list_copy (selected);
+      for (iter = items; iter; iter = iter->next)
         {
           GList *remove;
 
-          if ((remove = g_list_find (layers, iter->data)))
-            layers = g_list_delete_link (layers, remove);
+          if ((remove = g_list_find (selected, iter->data)))
+            selected = g_list_delete_link (selected, remove);
         }
 
-      gimp_image_set_selected_layers (image, layers);
-      g_list_free (layers);
+      if (item_type == GIMP_TYPE_LAYER)
+        gimp_image_set_selected_layers (image, selected);
+      else if (item_type == GIMP_TYPE_CHANNEL)
+        gimp_image_set_selected_channels (image, selected);
+      else if (item_type == GIMP_TYPE_VECTORS)
+        gimp_image_set_selected_vectors (image, items);
+
+      g_list_free (selected);
     }
   g_clear_error (&error);
 }
@@ -5616,36 +5706,51 @@ void
 gimp_image_intersect_item_set (GimpImage    *image,
                                GimpItemList *set)
 {
-  GList *linked;
+  GList *items;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_ITEM_LIST (set));
 
-  linked = gimp_item_list_get_items (set, &error);
+  items = gimp_item_list_get_items (set, &error);
 
   if (! error)
     {
-      GList *layers;
+      GList *selected;
       GList *remove = NULL;
       GList *iter;
+      GType  item_type = gimp_item_list_get_item_type (set);
 
-      layers = gimp_image_get_selected_layers (image);
-      layers = g_list_copy (layers);
+      if (item_type == GIMP_TYPE_LAYER)
+        selected = gimp_image_get_selected_layers (image);
+      else if (item_type == GIMP_TYPE_CHANNEL)
+        selected = gimp_image_get_selected_channels (image);
+      else if (item_type == GIMP_TYPE_VECTORS)
+        selected = gimp_image_get_selected_vectors (image);
+      else
+        g_return_if_reached ();
 
-      /* Remove items in layers but not in linked. */
-      for (iter = layers; iter; iter = iter->next)
+      selected = g_list_copy (selected);
+
+      /* Remove items in selected but not in items. */
+      for (iter = selected; iter; iter = iter->next)
         {
-          if (! g_list_find (linked, iter->data))
+          if (! g_list_find (items, iter->data))
             remove = g_list_prepend (remove, iter);
         }
       for (iter = remove; iter; iter = iter->next)
-        layers = g_list_delete_link (layers, iter->data);
+        selected = g_list_delete_link (selected, iter->data);
       g_list_free (remove);
 
       /* Finally select the intersection. */
-      gimp_image_set_selected_layers (image, layers);
-      g_list_free (layers);
+      if (item_type == GIMP_TYPE_LAYER)
+        gimp_image_set_selected_layers (image, selected);
+      else if (item_type == GIMP_TYPE_CHANNEL)
+        gimp_image_set_selected_channels (image, selected);
+      else if (item_type == GIMP_TYPE_VECTORS)
+        gimp_image_set_selected_vectors (image, items);
+
+      g_list_free (selected);
     }
   g_clear_error (&error);
 }

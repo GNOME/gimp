@@ -541,7 +541,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_DRAWABLE_MOD,          /*< desc="Layer/Channel modification"     >*/
   GIMP_UNDO_GROUP_MASK,                  /*< desc="Selection mask"                 >*/
   GIMP_UNDO_GROUP_ITEM_VISIBILITY,       /*< desc="Item visibility"                >*/
-  GIMP_UNDO_GROUP_ITEM_LINKED,           /*< desc="Link/Unlink item"               >*/
   GIMP_UNDO_GROUP_ITEM_LOCK_CONTENTS,    /*< desc="Lock/Unlock contents"           >*/
   GIMP_UNDO_GROUP_ITEM_LOCK_POSITION,    /*< desc="Lock/Unlock position"           >*/
   GIMP_UNDO_GROUP_ITEM_LOCK_VISIBILITY,  /*< desc="Lock/Unlock visibility"         >*/
@@ -593,7 +592,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_ITEM_RENAME,                 /*< desc="Rename item"                    >*/
   GIMP_UNDO_ITEM_DISPLACE,               /*< desc="Move item"                      >*/
   GIMP_UNDO_ITEM_VISIBILITY,             /*< desc="Item visibility"                >*/
-  GIMP_UNDO_ITEM_LINKED,                 /*< desc="Link/Unlink item"               >*/
   GIMP_UNDO_ITEM_COLOR_TAG,              /*< desc="Item color tag"                 >*/
   GIMP_UNDO_ITEM_LOCK_CONTENT,           /*< desc="Lock/Unlock content"            >*/
   GIMP_UNDO_ITEM_LOCK_POSITION,          /*< desc="Lock/Unlock position"           >*/

@@ -55,9 +55,6 @@ gboolean      gimp_item_set_name            (GimpItem           *item,
 gboolean      gimp_item_get_visible         (GimpItem           *item);
 gboolean      gimp_item_set_visible         (GimpItem           *item,
                                              gboolean            visible);
-gboolean      gimp_item_get_linked          (GimpItem           *item);
-gboolean      gimp_item_set_linked          (GimpItem           *item,
-                                             gboolean            linked);
 gboolean      gimp_item_get_lock_content    (GimpItem           *item);
 gboolean      gimp_item_set_lock_content    (GimpItem           *item,
                                              gboolean            lock_content);

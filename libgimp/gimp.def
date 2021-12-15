@@ -512,7 +512,6 @@ EXPORTS
 	gimp_item_get_expanded
 	gimp_item_get_id
 	gimp_item_get_image
-	gimp_item_get_linked
 	gimp_item_get_lock_content
 	gimp_item_get_lock_position
 	gimp_item_get_lock_visibility
@@ -543,7 +542,6 @@ EXPORTS
 	gimp_item_list_children
 	gimp_item_set_color_tag
 	gimp_item_set_expanded
-	gimp_item_set_linked
 	gimp_item_set_lock_content
 	gimp_item_set_lock_position
 	gimp_item_set_lock_visibility
