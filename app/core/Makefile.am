@@ -347,8 +347,6 @@ libappcore_a_sources = \
 	gimpitem.h				\
 	gimpitem-exclusive.c			\
 	gimpitem-exclusive.h			\
-	gimpitem-linked.c			\
-	gimpitem-linked.h			\
 	gimpitem-preview.c			\
 	gimpitem-preview.h			\
 	gimpitemlist.c				\

@@ -34,7 +34,6 @@
 #include "core/gimpimage-item-list.h"
 #include "core/gimpimage-transform.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpprogress.h"

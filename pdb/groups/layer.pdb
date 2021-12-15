@@ -1284,7 +1284,6 @@ CODE
               "core/gimp.h"
               "core/gimpimage-color-profile.h"
               "core/gimpimage-undo.h"
-              "core/gimpitem-linked.h"
               "core/gimpgrouplayer.h"
               "core/gimplayer-new.h"
               "core/gimppickable.h"

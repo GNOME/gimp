@@ -30,7 +30,6 @@
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimpitem-linked.h"
 #include "core/gimpitemundo.h"
 #include "core/gimplayermask.h"
 #include "core/gimpprogress.h"
