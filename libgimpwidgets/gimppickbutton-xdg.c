@@ -19,10 +19,6 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
-#endif
-
 #include "libgimpcolor/gimpcolor.h"
 
 #include "gimpwidgetstypes.h"
@@ -31,7 +27,6 @@
 #include "gimppickbutton-xdg.h"
 
 #include "libgimp/libgimp-intl.h"
-#include "libgimp/gimpui.h"
 
 gboolean
 _gimp_pick_button_xdg_available (void)
@@ -111,23 +106,6 @@ _gimp_pick_button_xdg_pick (GimpPickButton *button)
   GDBusProxy *proxy         = NULL;
   GVariant   *retval        = NULL;
   gchar      *opath         = NULL;
-  gchar      *parent_window = NULL;
-
-#ifdef GDK_WINDOWING_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    {
-      GdkWindow *window;
-
-      window = gtk_widget_get_window (GTK_WIDGET (button));
-      if (window)
-        {
-          gint id;
-
-          id = GDK_WINDOW_XID (window);
-          parent_window = g_strdup_printf ("x11:0x%x", id);
-        }
-    }
-#endif
 
   proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
                                          G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
@@ -142,10 +120,9 @@ _gimp_pick_button_xdg_pick (GimpPickButton *button)
     }
 
   retval = g_dbus_proxy_call_sync (proxy, "PickColor",
-                                   g_variant_new ("(sa{sv})", parent_window ? parent_window : "", NULL),
+                                   g_variant_new ("(sa{sv})", "", NULL),
                                    G_DBUS_CALL_FLAGS_NONE,
                                    -1, NULL, NULL);
-  g_free (parent_window);
   g_clear_object (&proxy);
   if (retval)
     {
