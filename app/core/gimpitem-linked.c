@@ -70,33 +70,6 @@ gimp_item_linked_is_locked (GimpItem *item)
 }
 
 void
-gimp_item_linked_translate (GimpItem *item,
-                            gint      offset_x,
-                            gint      offset_y,
-                            gboolean  push_undo)
-{
-  GimpImage *image;
-  GList     *items;
-
-  g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (gimp_item_get_linked (item) == TRUE);
-  g_return_if_fail (gimp_item_is_attached (item));
-
-  image = gimp_item_get_image (item);
-
-  items = gimp_image_item_list_get_list (image,
-                                         GIMP_ITEM_TYPE_ALL,
-                                         GIMP_ITEM_SET_LINKED);
-
-  items = gimp_image_item_list_filter (items);
-
-  gimp_image_item_list_translate (gimp_item_get_image (item), items,
-                                  offset_x, offset_y, push_undo);
-
-  g_list_free (items);
-}
-
-void
 gimp_item_linked_rotate (GimpItem         *item,
                          GimpContext      *context,
                          GimpRotationType  rotate_type,

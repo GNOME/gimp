@@ -444,6 +444,18 @@ gimp_image_item_list_remove_children (GList          *list,
   return list;
 }
 
+/**
+ * gimp_image_item_list_filter:
+ * @image:
+ * @items: the original list of #GimpItem-s.
+ *
+ * Filter @list by modifying it directly (so the original list should
+ * not be used anymore, only its result), removing all children items
+ * with ancestors also in @list.
+ *
+ * Returns: the modified @list where all items which have an ancestor in
+ *          @list have been removed.
+ */
 GList *
 gimp_image_item_list_filter (GList *list)
 {

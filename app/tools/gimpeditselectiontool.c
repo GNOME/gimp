@@ -38,7 +38,6 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-item-list.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpprojection.h"
@@ -329,7 +328,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
       case GIMP_TRANSLATE_MODE_CHANNEL:
       case GIMP_TRANSLATE_MODE_MASK:
       case GIMP_TRANSLATE_MODE_LAYER_MASK:
-        edit_select->delayed_items = gimp_image_item_list_linked (image, selected_items);
+        edit_select->delayed_items = gimp_image_item_list_filter (g_list_copy (selected_items));
         gimp_image_item_list_bounds (image, edit_select->delayed_items, &x, &y, &w, &h);
         x += off_x;
         y += off_y;
@@ -348,7 +347,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
       case GIMP_TRANSLATE_MODE_LAYER:
       case GIMP_TRANSLATE_MODE_FLOATING_SEL:
       case GIMP_TRANSLATE_MODE_VECTORS:
-        edit_select->live_items = gimp_image_item_list_linked (image, selected_items);
+        edit_select->live_items = gimp_image_item_list_filter (g_list_copy (selected_items));
         gimp_image_item_list_bounds (image, edit_select->live_items, &x, &y, &w, &h);
         break;
       }
@@ -710,7 +709,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
           GList *translate_items;
           gint   x, y, w, h;
 
-          translate_items = gimp_image_item_list_linked (image, selected_items);
+          translate_items = gimp_image_item_list_filter (g_list_copy (selected_items));
           gimp_image_item_list_bounds (image, translate_items, &x, &y, &w, &h);
           g_list_free (translate_items);
 
@@ -1227,34 +1226,8 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
         }
     }
 
-  switch (edit_mode)
-    {
-    case GIMP_TRANSLATE_MODE_LAYER_MASK:
-    case GIMP_TRANSLATE_MODE_MASK:
-      for (iter = selected_items; iter; iter = iter->next)
-        gimp_item_translate (iter->data, inc_x, inc_y, push_undo);
-      break;
-
-    case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
-    case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
-      /*  this won't happen  */
-      break;
-
-    case GIMP_TRANSLATE_MODE_VECTORS:
-    case GIMP_TRANSLATE_MODE_CHANNEL:
-    case GIMP_TRANSLATE_MODE_LAYER:
-      for (iter = selected_items; iter; iter = iter->next)
-        if (gimp_item_get_linked (iter->data))
-          gimp_item_linked_translate (iter->data, inc_x, inc_y, push_undo);
-        else
-          gimp_item_translate (iter->data, inc_x, inc_y, push_undo);
-      break;
-
-    case GIMP_TRANSLATE_MODE_FLOATING_SEL:
-      for (iter = selected_items; iter; iter = iter->next)
-        gimp_item_translate (iter->data, inc_x, inc_y, push_undo);
-      break;
-    }
+  gimp_image_item_list_translate (gimp_item_get_image (selected_items->data),
+                                  selected_items, inc_x, inc_y, push_undo);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
