@@ -173,7 +173,6 @@ app/core/gimpimage-undo-push.c
 app/core/gimpimagefile.c
 app/core/gimpitem.c
 app/core/gimpitem-exclusive.c
-app/core/gimpitem-linked.c
 app/core/gimplayer-floating-selection.c
 app/core/gimplayer.c
 app/core/gimplayermask.c
