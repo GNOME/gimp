@@ -201,12 +201,6 @@ run (const gchar      *name,
     }
 #endif
 
-  if (! backend && screenshot_kwin_available ())
-    {
-      backend      = SCREENSHOT_BACKEND_KWIN;
-      capabilities = screenshot_kwin_get_capabilities ();
-    }
-
 #ifdef GDK_WINDOWING_X11
   if (! backend && screenshot_x11_available ())
     {
@@ -214,10 +208,16 @@ run (const gchar      *name,
       capabilities = screenshot_x11_get_capabilities ();
     }
 #endif
-  else if (! backend && screenshot_freedesktop_available ())
+  if (! backend && screenshot_freedesktop_available ())
     {
       backend      = SCREENSHOT_BACKEND_FREEDESKTOP;
       capabilities = screenshot_freedesktop_get_capabilities ();
+    }
+
+  if (! backend && screenshot_kwin_available ())
+    {
+      backend      = SCREENSHOT_BACKEND_KWIN;
+      capabilities = screenshot_kwin_get_capabilities ();
     }
 
   /* how are we running today? */
