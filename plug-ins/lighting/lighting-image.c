@@ -383,9 +383,12 @@ image_setup (GimpDrawable *drawable,
 void
 bumpmap_setup (GimpDrawable *bumpmap)
 {
-  if (bumpmap && ! bump_buffer)
+  if (bumpmap)
     {
-      bump_buffer = gimp_drawable_get_buffer (bumpmap);
+      if (! bump_buffer)
+        {
+          bump_buffer = gimp_drawable_get_buffer (bumpmap);
+        }
 
       if (gimp_drawable_is_rgb (bumpmap))
         bump_format = babl_format ("R'G'B' u8");
