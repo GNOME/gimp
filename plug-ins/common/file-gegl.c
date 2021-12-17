@@ -109,7 +109,7 @@ static const FileFormat file_formats[] =
     N_("Radiance RGBE"),
     "image/vnd.radiance",
     "hdr",
-    "0,string,?#",
+    "0,string,#?",
 
     "file-load-rgbe",
     "Load files in the RGBE file format",
