@@ -387,7 +387,7 @@ bumpmap_setup (gint32 bumpmap_id)
     {
       if (! bump_buffer)
         {
-          bump_buffer = gimp_drawable_get_buffer (bumpmap);
+          bump_buffer = gimp_drawable_get_buffer (bumpmap_id);
         }
 
       if (gimp_drawable_is_rgb (bumpmap_id))
