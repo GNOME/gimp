@@ -46,10 +46,12 @@ struct _FileFormat
   const gchar *load_proc;
   const gchar *load_blurb;
   const gchar *load_help;
+  const gchar *load_op;
 
   const gchar *save_proc;
   const gchar *save_blurb;
   const gchar *save_help;
+  const gchar *save_op;
 };
 
 
@@ -91,8 +93,10 @@ static GimpValueArray * goat_save             (GimpProcedure        *procedure,
                                                gpointer              run_data);
 
 static GimpImage      * load_image            (GFile                *file,
+                                               const gchar          *gegl_op,
                                                GError              **error);
 static gboolean         save_image            (GFile                *file,
+                                               const gchar          *gegl_op,
                                                GimpImage            *image,
                                                GimpDrawable         *drawable,
                                                GError              **error);
@@ -113,11 +117,13 @@ static const FileFormat file_formats[] =
 
     "file-load-rgbe",
     "Load files in the RGBE file format",
-    "This procedure loads images in the RGBE format, using gegl:load",
+    "This procedure loads images in the RGBE format, using gegl:rgbe-load",
+    "gegl:rgbe-load",
 
     "file-save-rgbe",
     "Saves files in the RGBE file format",
-    "This procedure exports images in the RGBE format, using gegl:save"
+    "This procedure exports images in the RGBE format, using gegl:rgbe-save",
+    "gegl:rgbe-save",
   },
   {
     N_("OpenEXR image"),
@@ -126,11 +132,12 @@ static const FileFormat file_formats[] =
     "0,lelong,20000630",
 
     /* no EXR loading (implemented in native GIMP plug-in) */
-    NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL,
 
     "file-exr-save",
     "Saves files in the OpenEXR file format",
-    "This procedure saves images in the OpenEXR format, using gegl:save"
+    "This procedure saves images in the OpenEXR format, using gegl:exr-save",
+    "gegl:exr-save"
   }
 };
 
@@ -234,14 +241,15 @@ goat_load (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
-  GError         *error = NULL;
+  const FileFormat *format = run_data;
+  GimpValueArray   *return_vals;
+  GimpImage        *image;
+  GError           *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (file, &error);
+  image = load_image (file, format->load_op, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -267,6 +275,7 @@ goat_save (GimpProcedure        *procedure,
            const GimpValueArray *args,
            gpointer              run_data)
 {
+  const FileFormat  *format = run_data;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error = NULL;
@@ -306,7 +315,7 @@ goat_save (GimpProcedure        *procedure,
                                                error);
     }
 
-  if (! save_image (file, image, drawables[0],
+  if (! save_image (file, format->save_op, image, drawables[0],
                     &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
@@ -322,8 +331,9 @@ goat_save (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (GFile   *file,
-            GError **error)
+load_image (GFile        *file,
+            const gchar  *gegl_op,
+            GError      **error)
 {
   GimpImage         *image;
   GimpLayer         *layer;
@@ -345,7 +355,7 @@ load_image (GFile   *file,
   graph = gegl_node_new ();
 
   source = gegl_node_new_child (graph,
-                                "operation", "gegl:load",
+                                "operation", gegl_op,
                                 "path",      g_file_peek_path (file),
                                 NULL);
   sink = gegl_node_new_child (graph,
@@ -478,6 +488,7 @@ load_image (GFile   *file,
 
 static gboolean
 save_image (GFile         *file,
+            const gchar   *gegl_op,
             GimpImage     *image,
             GimpDrawable  *drawable,
             GError       **error)
@@ -496,7 +507,7 @@ save_image (GFile         *file,
                                 "buffer",    src_buf,
                                 NULL);
   sink = gegl_node_new_child (graph,
-                              "operation", "gegl:save",
+                              "operation", gegl_op,
                               "path",      g_file_peek_path (file),
                               NULL);
 
