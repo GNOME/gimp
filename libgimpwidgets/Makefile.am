@@ -7,6 +7,7 @@ libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).
 if PLATFORM_WIN32
 no_undefined = -no-undefined
 libgdi32 = -lgdi32
+libmscms = -lmscms
 else
 libm = -lm
 endif
@@ -133,7 +134,8 @@ libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GTK_LIBS)		\
 	$(LCMS_LIBS)		\
 	$(libm)			\
-	$(libgdi32)
+	$(libgdi32)		\
+	$(libmscms)
 
 BUILT_SOURCES = \
 	$(libgimpwidgets_built_sources)
