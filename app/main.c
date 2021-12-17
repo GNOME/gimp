@@ -483,11 +483,8 @@ gimp_early_configuration (void)
 
   g_object_unref (earlyrc);
 
-  if (system_gimprc_file)
-    g_object_unref (system_gimprc_file);
-
-  if (user_gimprc_file)
-    g_object_unref (user_gimprc_file);
+  g_clear_object (&system_gimprc_file);
+  g_clear_object (&user_gimprc_file);
 }
 
 static gboolean
@@ -785,14 +782,10 @@ main (int    argc,
            pdb_compat_mode,
            backtrace_file);
 
-  if (backtrace_file)
-    g_free (backtrace_file);
+  g_free (backtrace_file);
 
-  if (system_gimprc_file)
-    g_object_unref (system_gimprc_file);
-
-  if (user_gimprc_file)
-    g_object_unref (user_gimprc_file);
+  g_clear_object (&system_gimprc_file);
+  g_clear_object (&user_gimprc_file);
 
   g_strfreev (argv);
 
