@@ -2,7 +2,6 @@ plugin_name = 'screenshot'
 
 plugin_sources = [
   'screenshot-freedesktop.c',
-  'screenshot-kwin.c',
   'screenshot-osx.c',
   'screenshot-win32.c',
   'screenshot-x11.c',

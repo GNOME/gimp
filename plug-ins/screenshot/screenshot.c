@@ -29,7 +29,6 @@
 #include "screenshot.h"
 #include "screenshot-freedesktop.h"
 #include "screenshot-icon.h"
-#include "screenshot-kwin.h"
 #include "screenshot-osx.h"
 #include "screenshot-x11.h"
 #include "screenshot-win32.h"
@@ -255,12 +254,6 @@ screenshot_run (GimpProcedure        *procedure,
     }
 #endif
 
-  if (! backend && screenshot_kwin_available ())
-    {
-      backend      = SCREENSHOT_BACKEND_KWIN;
-      capabilities = screenshot_kwin_get_capabilities ();
-    }
-
 #ifdef GDK_WINDOWING_X11
   if (! backend && screenshot_x11_available ())
     {
@@ -268,7 +261,7 @@ screenshot_run (GimpProcedure        *procedure,
       capabilities = screenshot_x11_get_capabilities ();
     }
 #endif
-  else if (! backend && screenshot_freedesktop_available ())
+  if (! backend && screenshot_freedesktop_available ())
     {
       backend      = SCREENSHOT_BACKEND_FREEDESKTOP;
       capabilities = screenshot_freedesktop_get_capabilities ();
@@ -426,8 +419,6 @@ shoot (GdkMonitor  *monitor,
 
   if (backend == SCREENSHOT_BACKEND_FREEDESKTOP)
     return screenshot_freedesktop_shoot (&shootvals, monitor, image, error);
-  else if (backend == SCREENSHOT_BACKEND_KWIN)
-    return screenshot_kwin_shoot (&shootvals, monitor, image, error);
 
 #ifdef GDK_WINDOWING_X11
   if (backend == SCREENSHOT_BACKEND_X11)
