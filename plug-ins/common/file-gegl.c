@@ -46,10 +46,12 @@ struct _FileFormat
   const gchar *load_proc;
   const gchar *load_blurb;
   const gchar *load_help;
+  const gchar *load_op;
 
   const gchar *save_proc;
   const gchar *save_blurb;
   const gchar *save_help;
+  const gchar *save_op;
 };
 
 
@@ -60,8 +62,10 @@ static void     run        (const gchar      *name,
                             gint             *nreturn_vals,
                             GimpParam       **return_vals);
 static gint32   load_image (const gchar      *filename,
+                            const gchar      *gegl_op,
                             GError          **error);
 static gboolean save_image (const gchar      *filename,
+                            const gchar      *gegl_op,
                             gint32            image_ID,
                             gint32            drawable_ID,
                             GError          **error);
@@ -77,11 +81,13 @@ static const FileFormat file_formats[] =
 
     "file-load-rgbe",
     "Load files in the RGBE file format",
-    "This procedure loads images in the RGBE format, using gegl:load",
+    "This procedure loads images in the RGBE format, using gegl:rgbe-load",
+    "gegl:rgbe-load",
 
     "file-save-rgbe",
     "Saves files in the RGBE file format",
-    "This procedure exports images in the RGBE format, using gegl:save"
+    "This procedure exports images in the RGBE format, using gegl:rgbe-save",
+    "gegl:rgbe-save",
   },
   {
     N_("OpenEXR image"),
@@ -90,11 +96,12 @@ static const FileFormat file_formats[] =
     "0,lelong,20000630",
 
     /* no EXR loading (implemented in native GIMP plug-in) */
-    NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL,
 
     "file-exr-save",
     "Saves files in the OpenEXR file format",
-    "This procedure saves images in the OpenEXR format, using gegl:save"
+    "This procedure saves images in the OpenEXR format, using gegl:exr-save",
+    "gegl:exr-save"
   }
 };
 
@@ -216,7 +223,7 @@ run (const gchar      *name,
 
       if (format->load_proc && !strcmp (name, format->load_proc))
         {
-          image_ID = load_image (param[1].data.d_string, &error);
+          image_ID = load_image (param[1].data.d_string, format->load_op, &error);
 
           if (image_ID != -1)
             {
@@ -263,7 +270,9 @@ run (const gchar      *name,
               break;
             }
 
-          if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
+          if (! save_image (param[3].data.d_string,
+                            format->save_op,
+                            image_ID, drawable_ID,
                             &error))
             {
               status = GIMP_PDB_EXECUTION_ERROR;
@@ -293,6 +302,7 @@ run (const gchar      *name,
 
 static gint32
 load_image (const gchar  *filename,
+            const gchar  *gegl_op,
             GError      **error)
 {
   gint32             image_ID = -1;
@@ -315,7 +325,7 @@ load_image (const gchar  *filename,
   graph = gegl_node_new ();
 
   source = gegl_node_new_child (graph,
-                                "operation", "gegl:load",
+                                "operation", gegl_op,
                                 "path",      filename,
                                 NULL);
   sink = gegl_node_new_child (graph,
@@ -447,6 +457,7 @@ load_image (const gchar  *filename,
 
 static gboolean
 save_image (const gchar  *filename,
+            const gchar  *gegl_op,
             gint32        image_ID,
             gint32        drawable_ID,
             GError      **error)
@@ -465,7 +476,7 @@ save_image (const gchar  *filename,
                                 "buffer",    src_buf,
                                 NULL);
   sink = gegl_node_new_child (graph,
-                              "operation", "gegl:save",
+                              "operation", gegl_op,
                               "path",      filename,
                               NULL);
 
