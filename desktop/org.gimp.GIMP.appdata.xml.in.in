@@ -232,6 +232,15 @@
       </description>
     </release>
 
+    <release version="2.10.30" date="2021-12-19">
+      <description>
+        <_p>
+          GIMP 2.10.30 fixes many bugs, updates backend implementations
+          to follow OS evolutions, improves metadata support as well as
+          support of several formats, such as PSD and AVIF.
+        </_p>
+      </description>
+    </release>
     <release version="2.10.28" date="2021-09-14">
       <description>
         <_p>
