@@ -584,11 +584,11 @@ gimp_screen_get_color_profile (GdkScreen *screen,
         if (EnumDisplayDevices (info.szDevice, 0, &display_device, 0))
           {
             gchar                        *device_key = g_convert (display_device.DeviceKey, -1, "UTF-16LE", "WINDOWS-1252", NULL, NULL, NULL);
-            gchar                        *filename = NULL;
-            gchar                        *dir = NULL;
-            gchar                        *fullpath = NULL;
+            gchar                        *filename   = NULL;
+            gchar                        *dir        = NULL;
+            gchar                        *fullpath   = NULL;
             GFile                        *file;
-            DWORD                         len = 0;
+            DWORD                         len        = 0;
             gboolean                      per_user;
             WCS_PROFILE_MANAGEMENT_SCOPE  scope;
 
@@ -612,7 +612,7 @@ gimp_screen_get_color_profile (GdkScreen *screen,
                                            len,
                                            (LPWSTR)filename_utf16);
 
-                /* _filename must be native endian */
+                /* filename_utf16 must be native endian */
                 filename = g_utf16_to_utf8 ((gunichar2 *)filename_utf16, -1, NULL, NULL, NULL);
                 g_free (filename_utf16);
               }
@@ -630,7 +630,7 @@ gimp_screen_get_color_profile (GdkScreen *screen,
             dir = g_new (gchar, len);
             GetColorDirectory (NULL, dir, &len);
 
-            fullpath = g_strdup_printf ("%s\\%s", dir, filename);
+            fullpath = g_build_filename (dir, filename, NULL);
             file = g_file_new_for_path (fullpath);
 
             profile = gimp_color_profile_new_from_file (file, NULL);
