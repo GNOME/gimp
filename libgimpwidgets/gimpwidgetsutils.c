@@ -27,7 +27,12 @@
 #include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
+#ifdef _WIN32_WINNT
+#undef _WIN32_WINNT
+#endif
+#define _WIN32_WINNT 0x0600
 #include <windows.h>
+#include <icm.h>
 #endif
 
 #ifdef GDK_WINDOWING_QUARTZ
@@ -554,26 +559,88 @@ gimp_screen_get_color_profile (GdkScreen *screen,
   }
 #elif defined G_OS_WIN32
   {
-    HDC hdc = GetDC (NULL);
+    GdkRectangle   monitor_geometry;
+    POINT          point;
+    gint           offsetx = GetSystemMetrics (SM_XVIRTUALSCREEN);
+    gint           offsety = GetSystemMetrics (SM_YVIRTUALSCREEN);
+    HMONITOR       monitor_handle;
+    MONITORINFOEX  info;
+    DISPLAY_DEVICE display_device;
 
-    if (hdc)
+    info.cbSize       = sizeof (MONITORINFOEX);
+    display_device.cb = sizeof (DISPLAY_DEVICE);
+
+    /* If the first monitor is not set as the main monitor,
+     * the monitor variable may not match the index used in
+     * EnumDisplayDevices(devicename, index, displaydevice, flags).
+     */
+    gdk_screen_get_monitor_geometry (screen, monitor, &monitor_geometry);
+    point.x = monitor_geometry.x + offsetx;
+    point.y = monitor_geometry.y + offsety;
+    monitor_handle = MonitorFromPoint (point, MONITOR_DEFAULTTONEAREST);
+
+    if (GetMonitorInfo (monitor_handle, (LPMONITORINFO)&info))
       {
-        gchar  *path;
-        gint32  len = 0;
-
-        GetICMProfile (hdc, (LPDWORD) &len, NULL);
-        path = g_new (gchar, len);
-
-        if (GetICMProfile (hdc, (LPDWORD) &len, path))
+        if (EnumDisplayDevices (info.szDevice, 0, &display_device, 0))
           {
-            GFile *file = g_file_new_for_path (path);
+            gchar                        *device_key = g_convert (display_device.DeviceKey, -1, "UTF-16LE", "WINDOWS-1252", NULL, NULL, NULL);
+            gchar                        *filename = NULL;
+            gchar                        *dir = NULL;
+            gchar                        *fullpath = NULL;
+            GFile                        *file;
+            DWORD                         len = 0;
+            gboolean                      per_user;
+            WCS_PROFILE_MANAGEMENT_SCOPE  scope;
+
+            WcsGetUsePerUserProfiles ((LPWSTR)device_key, CLASS_MONITOR, &per_user);
+            scope = per_user ? WCS_PROFILE_MANAGEMENT_SCOPE_CURRENT_USER : WCS_PROFILE_MANAGEMENT_SCOPE_SYSTEM_WIDE;
+
+            if (WcsGetDefaultColorProfileSize (scope,
+                                               (LPWSTR)device_key,
+                                               CPT_ICC,
+                                               CPST_NONE,
+                                               0,
+                                               &len))
+              {
+                gchar *filename_utf16 = g_new (gchar, len);
+
+                WcsGetDefaultColorProfile (scope,
+                                           (LPWSTR)device_key,
+                                           CPT_ICC,
+                                           CPST_NONE,
+                                           0,
+                                           len,
+                                           (LPWSTR)filename_utf16);
+
+                /* _filename must be native endian */
+                filename = g_utf16_to_utf8 ((gunichar2 *)filename_utf16, -1, NULL, NULL, NULL);
+                g_free (filename_utf16);
+              }
+            else
+              {
+                /* Due to a bug in Windows, the meanings of LCS_sRGB and
+                 * LCS_WINDOWS_COLOR_SPACE are swapped.
+                 */
+                GetStandardColorSpaceProfile (NULL, LCS_sRGB, NULL, &len);
+                filename = g_new (gchar, len);
+                GetStandardColorSpaceProfile (NULL, LCS_sRGB, filename, &len);
+              }
+
+            GetColorDirectory (NULL, NULL, &len);
+            dir = g_new (gchar, len);
+            GetColorDirectory (NULL, dir, &len);
+
+            fullpath = g_strdup_printf ("%s\\%s", dir, filename);
+            file = g_file_new_for_path (fullpath);
 
             profile = gimp_color_profile_new_from_file (file, NULL);
             g_object_unref (file);
-          }
 
-        g_free (path);
-        ReleaseDC (NULL, hdc);
+            g_free (fullpath);
+            g_free (dir);
+            g_free (filename);
+            g_free (device_key);
+          }
       }
   }
 #endif
