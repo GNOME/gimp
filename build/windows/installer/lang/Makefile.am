@@ -31,6 +31,7 @@ languages = \
 	mr:[mr]   		\
 	nl:[nl]		\
 	pl:[pl]		\
+	pt:[pt]		\
 	pt_BR:[pt_BR]	\
 	ro:[ro]		\
 	ru:[ru]		\
