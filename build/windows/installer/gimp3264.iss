@@ -198,6 +198,7 @@ Name: "lv"; MessagesFile: "compiler:Languages\Unofficial\Latvian.isl,lang\lv.set
 Name: "mr"; MessagesFile: "compiler:Languages\Unofficial\Marathi.islu,lang\mr.setup.islu"
 Name: "nl"; MessagesFile: "compiler:Languages\Dutch.isl,lang\nl.setup.isl"
 Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl,lang\pl.setup.isl"
+Name: "pt"; MessagesFile: "compiler:Languages\Portuguese.isl,lang\pt.setup.isl"
 Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,lang\pt_BR.setup.isl"
 Name: "ro"; MessagesFile: "compiler:Languages\Unofficial\Romanian.isl,lang\ro.setup.isl"
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl,lang\ru.setup.isl"
