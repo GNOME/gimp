@@ -18,6 +18,15 @@ Core:
     rendering on a screen of a specific type and pixel order. Yet when
     rendering an image which can be zoomed in or out, showed on various
     screens or even printed, subpixel font rendering doesn't make sense.
+  - Rewrite the core selection drawing logics so that it works on macOS
+    Big Sur and over. This is a backport (adapted to GTK+2) of the fix
+    brought in GIMP 2.99.8 for Wayland and macOS.
+  - Ignore MakerNote metadata tag at export and only store the tags that
+    go in it, hence avoiding partial invalid metadata.
+  - Color picking from Colors dockable can now use the Freedesktop
+    portal.
+  - On Windows, move from GetICMProfile() to WcsGetDefaultColorProfile()
+    because the former is broken in Windows 11.
 
 Plug-ins:
 
@@ -29,10 +38,37 @@ Plug-ins:
     * Comparing XMP tags with equivalent IPTC tags with multiple values,
       each value is compared individually, instead of comparing the list
       as a whole.
+  - Many robustness improvements and other fixes to the metadata
+    plug-ins.
+  - AVIF: prefer AOM encoder for export.
+  - PSD:
+    * Skip sanity check for mask of rendered layers as some layer mask
+      have invalid dimensions in such cases. They will now be loaded
+      correctly.
+    * Fixed loading of CMYK PSD files without alpha.
+    * Fixed loading of CMYK images without layers.
+    * Fixed loading of merged image of a 16 bit per channel RGBA PSD
+      file with the alpha channel opaque.
+   - PBM: large file export now always works and does not depend anymore
+     on the platform's long int size.
+   - Screenshot:
+     * GNOME shell implementation dropped because the D-Bus API has been
+       restricted to core components for security reasons, thus our
+       plug-in was failing.
+     * KDE portal moved as last fallback after the X implementation
+       (when running on X) and Freedesktop portal, because KDE is also
+       starting to block API calls for security reasons.
 
 Installer:
 
   - Extension .avif now associated to GIMP.
+  - Drop codepage conversion, use UTF-8 for language files.
+
+Build:
+
+  - macOS support officially bumped to macOS 10.12 (Sierra). We would
+    usually try to avoid doing this within a stable release but the
+    conditions (lack of contributors) is such that it is hard to avoid.
 
 
 Overview of Changes from GIMP 2.10.26 to GIMP 2.10.28
