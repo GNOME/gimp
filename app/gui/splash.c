@@ -109,9 +109,10 @@ static void        splash_timer_elapsed        (void);
 /*  public functions  */
 
 void
-splash_create (Gimp       *gimp,
-               gboolean    be_verbose,
-               GdkMonitor *monitor)
+splash_create (Gimp         *gimp,
+               gboolean      be_verbose,
+               GdkMonitor   *monitor,
+               GApplication *app)
 {
   GtkWidget          *frame;
   GtkWidget          *vbox;
@@ -123,6 +124,7 @@ splash_create (Gimp       *gimp,
 
   g_return_if_fail (splash == NULL);
   g_return_if_fail (GDK_IS_MONITOR (monitor));
+  g_return_if_fail (G_IS_APPLICATION (app) || app == NULL);
 
   gdk_monitor_get_workarea (monitor, &workarea);
 
@@ -162,13 +164,14 @@ splash_create (Gimp       *gimp,
   splash = g_slice_new0 (GimpSplash);
 
   splash->window =
-    g_object_new (GTK_TYPE_WINDOW,
+    g_object_new (GTK_TYPE_APPLICATION_WINDOW,
                   "type",            GTK_WINDOW_TOPLEVEL,
                   "type-hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
                   "title",           _("GIMP Startup"),
                   "role",            "gimp-startup",
                   "window-position", GTK_WIN_POS_CENTER,
                   "resizable",       FALSE,
+                  "application",     app,
                   NULL);
 
   /* Don't remove this call, it's necessary to remove decorations on Windows

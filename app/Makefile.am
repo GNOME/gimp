@@ -57,6 +57,8 @@ libapp_sources = \
 	app.h			\
 	errors.c		\
 	errors.h		\
+	gimpapp.c		\
+	gimpapp.h		\
 	language.c		\
 	language.h		\
 	sanity.c		\

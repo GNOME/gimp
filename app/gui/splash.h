@@ -19,9 +19,10 @@
 #define __SPLASH_H__
 
 
-void   splash_create    (Gimp        *gimp,
-                         gboolean     be_verbose,
-                         GdkMonitor  *mointor);
+void   splash_create    (Gimp         *gimp,
+                         gboolean      be_verbose,
+                         GdkMonitor   *mointor,
+                         GApplication *app);
 void   splash_destroy   (void);
 
 void   splash_update    (const gchar *label1,

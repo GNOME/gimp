@@ -223,15 +223,17 @@ gui_abort (const gchar *abort_message)
  * unit testing calls.
  */
 GimpInitStatusFunc
-gui_init (Gimp        *gimp,
-          gboolean     no_splash,
-          const gchar *test_base_dir)
+gui_init (Gimp         *gimp,
+          gboolean      no_splash,
+          GApplication *app,
+          const gchar  *test_base_dir)
 {
   GimpInitStatusFunc  status_callback = NULL;
   gchar              *abort_message;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (the_gui_gimp == NULL, NULL);
+  g_return_val_if_fail (G_IS_APPLICATION (app) || app == NULL, NULL);
 
   abort_message = gui_sanity_check ();
   if (abort_message)
@@ -284,7 +286,7 @@ gui_init (Gimp        *gimp,
 
   if (! no_splash)
     {
-      splash_create (gimp, gimp->be_verbose, initial_monitor);
+      splash_create (gimp, gimp->be_verbose, initial_monitor, app);
       status_callback = splash_update;
     }
 

@@ -59,7 +59,7 @@ static gboolean  gimp_window_key_press_event (GtkWidget         *widget,
                                               GdkEventKey       *kevent);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpWindow, gimp_window, GTK_TYPE_WINDOW)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpWindow, gimp_window, GTK_TYPE_APPLICATION_WINDOW)
 
 #define parent_class gimp_window_parent_class
 
