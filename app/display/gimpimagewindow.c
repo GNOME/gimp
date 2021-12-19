@@ -1158,6 +1158,7 @@ gimp_image_window_new (Gimp              *gimp,
                          "gimp",            gimp,
                          "dialog-factory",  dialog_factory,
                          "initial-monitor", monitor,
+                         "application",     g_application_get_default (),
                          /* The window position will be overridden by the
                           * dialog factory, it is only really used on first
                           * startup.

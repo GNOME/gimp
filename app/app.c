@@ -67,6 +67,7 @@
 
 #include "app.h"
 #include "errors.h"
+#include "gimpapp.h"
 #include "sanity.h"
 #include "gimp-debug.h"
 
@@ -83,7 +84,7 @@ static void       app_restore_after_callback (Gimp               *gimp,
                                               GimpInitStatusFunc  status_callback);
 static gboolean   app_exit_after_callback    (Gimp               *gimp,
                                               gboolean            kill_it,
-                                              GMainLoop         **loop);
+                                              GimpApp           **app);
 
 #if 0
 /*  left here as documentation how to do compat enums  */
@@ -161,6 +162,135 @@ app_exit (gint status)
   exit (status);
 }
 
+static void
+app_activate_callback (GApplication *gapp,
+                       gpointer      user_data)
+{
+  GimpApp            *app                = GIMP_APP (gapp);
+  Gimp               *gimp               = NULL;
+  GimpInitStatusFunc  update_status_func = NULL;
+
+  gimp = gimp_app_get_gimp (app);
+
+#ifndef GIMP_CONSOLE_COMPILATION
+  if (! gimp->no_interface)
+    update_status_func = gui_init (gimp, gimp_app_get_no_splash (app), gapp, NULL);
+#endif
+
+  if (! update_status_func)
+    update_status_func = app_init_update_noop;
+
+  /*  Create all members of the global Gimp instance which need an already
+   *  parsed gimprc, e.g. the data factories
+   */
+  gimp_initialize (gimp, update_status_func);
+
+  /*  Load all data files */
+  gimp_restore (gimp, update_status_func, NULL);
+
+  /*  enable autosave late so we don't autosave when the
+   *  monitor resolution is set in gui_init()
+   */
+  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
+
+  /*  check for updates *after* enabling config autosave, so that the timestamp
+   *  is saved
+   */
+  gimp_update_auto_check (gimp->edit_config);
+
+#ifndef GIMP_CONSOLE_COMPILATION
+  if (! gimp->no_interface)
+    {
+      /* Before opening images from command line, check for salvaged images
+       * and query interactively to know if we should recover or discard
+       * them.
+       */
+      GList *recovered_files;
+      GList *iter;
+
+      recovered_files = errors_recovered ();
+      if (recovered_files &&
+          gui_recover (g_list_length (recovered_files)))
+        {
+          for (iter = recovered_files; iter; iter = iter->next)
+            {
+              GFile             *file;
+              GimpImage         *image;
+              GError            *error = NULL;
+              GimpPDBStatusType  status;
+
+              file = g_file_new_for_path (iter->data);
+              image = file_open_with_display (gimp,
+                                              gimp_get_user_context (gimp),
+                                              NULL,
+                                              file,
+                                              gimp_app_get_as_new (app),
+                                              initial_monitor,
+                                              &status, &error);
+              if (image)
+                {
+                  /* Break ties with the backup directory. */
+                  gimp_image_set_file (image, NULL);
+                  /* One of the rare exceptions where we should call
+                   * gimp_image_dirty() directly instead of creating
+                   * an undo. We want the image to be dirty from
+                   * scratch, without anything to undo.
+                   */
+                  gimp_image_dirty (image, GIMP_DIRTY_IMAGE);
+                }
+              else
+                {
+                  g_error_free (error);
+                }
+
+              g_object_unref (file);
+            }
+        }
+      /* Delete backup XCF images. */
+      for (iter = recovered_files; iter; iter = iter->next)
+        {
+          g_unlink (iter->data);
+        }
+      g_list_free_full (recovered_files, g_free);
+    }
+#endif
+
+  //XXX
+#if 0
+  /*  Load the images given on the command-line. */
+  if (filenames)
+    {
+      gint i;
+
+      for (i = 0; filenames[i] != NULL; i++)
+        {
+          if (app)
+            {
+              GFile *file = g_file_new_for_commandline_arg (filenames[i]);
+
+              file_open_from_command_line (gimp, file,
+                                           gimp_app_get_as_new (app),
+                                           initial_monitor);
+
+              g_object_unref (file);
+            }
+        }
+    }
+#endif
+
+  /* The software is now fully loaded and ready to be used and get
+   * external input.
+   */
+  gimp->initialized = TRUE;
+
+  if (app)
+    {
+      gimp_batch_run (gimp,
+                      gimp_app_get_batch_interpreter (app),
+                      gimp_app_get_batch_commands (app));
+    }
+}
+
 void
 app_run (const gchar         *full_prog_name,
          const gchar        **filenames,
@@ -185,14 +315,11 @@ app_run (const gchar         *full_prog_name,
          GimpPDBCompatMode    pdb_compat_mode,
          const gchar         *backtrace_file)
 {
-  GimpInitStatusFunc  update_status_func = NULL;
-  Gimp               *gimp;
-  GMainLoop          *loop;
-  GMainLoop          *run_loop;
-  GFile              *default_folder = NULL;
-  GFile              *gimpdir;
-  const gchar        *abort_message;
-  GError             *font_error = NULL;
+  Gimp               *gimp               = NULL;
+  GApplication       *app                = NULL;
+  GFile              *default_folder     = NULL;
+  GFile              *gimpdir            = NULL;
+  const gchar        *abort_message      = NULL;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -232,13 +359,13 @@ app_run (const gchar         *full_prog_name,
                    stack_trace_mode,
                    pdb_compat_mode);
 
-  if (default_folder)
-    g_object_unref (default_folder);
+  g_clear_object (&default_folder);
+
+  app = gimp_app_new (gimp, no_splash, as_new, batch_interpreter, batch_commands);
 
   gimp_cpu_accel_set_use (use_cpu_accel);
 
-  /*  Check if the user's gimp_directory exists
-   */
+  /*  Check if the user's gimp_directory exists */
   gimpdir = gimp_directory_file (NULL);
 
   if (g_file_query_file_type (gimpdir, G_FILE_QUERY_INFO_NONE, NULL) !=
@@ -294,137 +421,20 @@ app_run (const gchar         *full_prog_name,
                           G_CALLBACK (app_restore_after_callback),
                           NULL);
 
-#ifndef GIMP_CONSOLE_COMPILATION
-  if (! no_interface)
-    update_status_func = gui_init (gimp, no_splash, NULL);
-#endif
-
-  if (! update_status_func)
-    update_status_func = app_init_update_noop;
-
-  /*  Create all members of the global Gimp instance which need an already
-   *  parsed gimprc, e.g. the data factories
-   */
-  gimp_initialize (gimp, update_status_func);
-
-  /*  Load all data files
-   */
-  gimp_restore (gimp, update_status_func, &font_error);
-
-  /*  enable autosave late so we don't autosave when the
-   *  monitor resolution is set in gui_init()
-   */
-  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
-
-  /*  check for updates *after* enabling config autosave, so that the timestamp
-   *  is saved
-   */
-  gimp_update_auto_check (gimp->edit_config);
-
-  loop = run_loop = g_main_loop_new (NULL, FALSE);
-
   g_signal_connect_after (gimp, "exit",
                           G_CALLBACK (app_exit_after_callback),
-                          &run_loop);
+                          &app);
 
-#ifndef GIMP_CONSOLE_COMPILATION
-  if (run_loop && ! no_interface)
-    {
-      /* Before opening images from command line, check for salvaged images
-       * and query interactively to know if we should recover or discard
-       * them.
-       */
-      GList *recovered_files;
-      GList *iter;
+  g_signal_connect (app, "activate",
+                    G_CALLBACK (app_activate_callback),
+                    NULL);
 
-      recovered_files = errors_recovered ();
-      if (recovered_files &&
-          gui_recover (g_list_length (recovered_files)))
-        {
-          for (iter = recovered_files; iter; iter = iter->next)
-            {
-              GFile             *file;
-              GimpImage         *image;
-              GError            *error = NULL;
-              GimpPDBStatusType  status;
-
-              file = g_file_new_for_path (iter->data);
-              image = file_open_with_display (gimp,
-                                              gimp_get_user_context (gimp),
-                                              NULL,
-                                              file, as_new,
-                                              initial_monitor,
-                                              &status, &error);
-              if (image)
-                {
-                  /* Break ties with the backup directory. */
-                  gimp_image_set_file (image, NULL);
-                  /* One of the rare exceptions where we should call
-                   * gimp_image_dirty() directly instead of creating
-                   * an undo. We want the image to be dirty from
-                   * scratch, without anything to undo.
-                   */
-                  gimp_image_dirty (image, GIMP_DIRTY_IMAGE);
-                }
-              else
-                {
-                  g_error_free (error);
-                }
-
-              g_object_unref (file);
-            }
-        }
-      /* Delete backup XCF images. */
-      for (iter = recovered_files; iter; iter = iter->next)
-        {
-          g_unlink (iter->data);
-        }
-      g_list_free_full (recovered_files, g_free);
-    }
-#endif
-
-  /*  Load the images given on the command-line. */
-  if (filenames)
-    {
-      gint i;
-
-      for (i = 0; filenames[i] != NULL; i++)
-        {
-          if (run_loop)
-            {
-              GFile *file = g_file_new_for_commandline_arg (filenames[i]);
-
-              file_open_from_command_line (gimp, file, as_new,
-                                           initial_monitor);
-
-              g_object_unref (file);
-            }
-        }
-    }
-
-  /* The software is now fully loaded and ready to be used and get
-   * external input.
-   */
-  gimp->initialized = TRUE;
-
-  if (font_error)
-    {
-      gimp_message_literal (gimp, NULL,
-                            GIMP_MESSAGE_INFO,
-                            font_error->message);
-      g_error_free (font_error);
-    }
-
-  if (run_loop)
-    gimp_batch_run (gimp, batch_interpreter, batch_commands);
-
-  if (run_loop)
-    g_main_loop_run (loop);
+  g_application_run (app, 0, NULL);
 
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
-  g_main_loop_unref (loop);
+  g_clear_object (&app);
 
   gimp_gegl_exit (gimp);
 
@@ -465,7 +475,7 @@ app_restore_after_callback (Gimp               *gimp,
 static gboolean
 app_exit_after_callback (Gimp       *gimp,
                          gboolean    kill_it,
-                         GMainLoop **loop)
+                         GimpApp   **app)
 {
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
@@ -481,10 +491,8 @@ app_exit_after_callback (Gimp       *gimp,
 
 #ifdef GIMP_UNSTABLE
 
-  if (g_main_loop_is_running (*loop))
-    g_main_loop_quit (*loop);
-
-  *loop = NULL;
+  g_application_quit (G_APPLICATION (*app));
+  *app = NULL;
 
 #else
 

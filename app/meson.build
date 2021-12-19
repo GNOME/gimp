@@ -50,6 +50,7 @@ app_debug_files = files(
 libapp_sources = [
   'app.c',
   'errors.c',
+  'gimpapp.c',
   'gimp-debug.c',
   'gimp-log.c',
   'gimp-update.c',
