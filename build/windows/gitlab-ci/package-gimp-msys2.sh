@@ -90,7 +90,7 @@ echo "bin\gimp-2.99.exe" > ${GIMP_DISTRIB}/gimp.cmd
 
 # Package library data and modules.
 cp -fr ${MSYS_PREFIX}/etc/fonts ${GIMP_DISTRIB}/etc/
-cp -fr ${GIMP_PREFIX}/etc/gtk-3.0 ${GIMP_DISTRIB}/etc/
+cp -fr ${MSYS_PREFIX}/etc/gtk-3.0 ${GIMP_DISTRIB}/etc/
 
 mkdir ${GIMP_DISTRIB}/lib/
 cp -fr ${GIMP_PREFIX}/lib/gimp ${GIMP_DISTRIB}/lib/
@@ -102,7 +102,7 @@ cp -fr ${GIMP_PREFIX}/lib/girepository-1.0/* ${GIMP_DISTRIB}/lib/girepository-1.
 
 cp -fr ${MSYS_PREFIX}/lib/gio ${GIMP_DISTRIB}/lib/
 cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
-cp -fr ${GIMP_PREFIX}/lib/gtk-3.0 ${GIMP_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/gtk-3.0 ${GIMP_DISTRIB}/lib/
 
 cp -fr ${MSYS_PREFIX}/lib/python3.9 ${GIMP_DISTRIB}/lib/
 
