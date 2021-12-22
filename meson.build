@@ -654,13 +654,8 @@ else
 endif
 
 libpng_minver = '1.6.25'
-libpng = dependency('libpng', version: '>='+libpng_minver,
-  required: get_option('png')
-)
-if libpng.found()
-  MIMEtypes += [ 'image/png', 'image/x-icon']
-endif
-
+libpng = dependency('libpng', version: '>='+libpng_minver)
+MIMEtypes += [ 'image/png', 'image/x-icon']
 
 libmng = cc.find_library('mng', required: get_option('mng'))
 
