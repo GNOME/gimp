@@ -391,6 +391,13 @@ gimp_text_style_editor_dispose (GObject *object)
                                             editor);
     }
 
+  if (editor->context)
+    {
+      g_signal_handlers_disconnect_by_func (editor->context,
+                                            gimp_text_style_editor_font_changed,
+                                            editor);
+    }
+
   if (editor->update_idle_id)
     {
       g_source_remove (editor->update_idle_id);
