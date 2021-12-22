@@ -61,7 +61,10 @@ GimpItemList  * gimp_item_list_pattern_new  (GimpImage        *image,
 GType          gimp_item_list_get_item_type (GimpItemList     *set);
 GList        * gimp_item_list_get_items     (GimpItemList     *set,
                                              GError          **error);
-gboolean       gimp_item_list_is_pattern    (GimpItemList     *set);
+gboolean       gimp_item_list_is_pattern    (GimpItemList     *set,
+                                             GimpSelectMethod *pattern_syntax);
 
+void           gimp_item_list_add           (GimpItemList     *set,
+                                             GimpItem         *item);
 
 #endif /* __GIMP_ITEM_LIST_H__ */

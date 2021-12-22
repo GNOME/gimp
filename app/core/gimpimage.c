@@ -2914,6 +2914,21 @@ gimp_image_get_xcf_version (GimpImage    *image,
         }
     }
 
+  if (gimp_image_get_stored_item_sets (image, GIMP_TYPE_LAYER) ||
+      gimp_image_get_stored_item_sets (image, GIMP_TYPE_CHANNEL))
+    {
+      ADD_REASON (g_strdup_printf (_("Item set and pattern search in item's name were "
+                                     "added in %s"), "GIMP 3.0.0"));
+      version = MAX (16, version);
+    }
+  if (g_list_length (gimp_image_get_selected_channels (image)) > 1)
+    {
+      ADD_REASON (g_strdup_printf (_("Multiple channel selection was "
+                                     "added in %s"), "GIMP 3.0.0"));
+      version = MAX (16, version);
+    }
+
+
 #undef ADD_REASON
 
   switch (version)
@@ -2945,6 +2960,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
       break;
     case 14:
     case 15:
+    case 16:
       if (gimp_version)   *gimp_version   = 300;
       if (version_string) *version_string = "GIMP 3.0";
       break;
@@ -5439,8 +5455,16 @@ gimp_image_store_item_set (GimpImage    *image,
 
   for (iter = *stored_sets; iter; iter = iter->next)
     {
+      gboolean         is_pattern;
+      gboolean         is_pattern2;
+      GimpSelectMethod pattern_syntax;
+      GimpSelectMethod pattern_syntax2;
+
+      is_pattern  = gimp_item_list_is_pattern (iter->data, &pattern_syntax);
+      is_pattern2 = gimp_item_list_is_pattern (set, &pattern_syntax2);
+
       /* Remove a previous item set of same type and name. */
-      if (gimp_item_list_is_pattern (iter->data) == gimp_item_list_is_pattern (set) &&
+      if (is_pattern == is_pattern2 && (! is_pattern || pattern_syntax == pattern_syntax2) &&
           g_strcmp0 (gimp_object_get_name (iter->data), gimp_object_get_name (set)) == 0)
         break;
     }
@@ -5513,9 +5537,10 @@ gimp_image_unlink_item_set (GimpImage    *image,
 /*
  * @gimp_image_get_stored_item_sets:
  * @image:
+ * @item_type:
  *
  * Returns: (transfer none): the list of all the layer sets (which you
- *          should not modify). Order of items is not relevant.
+ *          should not modify). Order of items is relevant.
  */
 GList *
 gimp_image_get_stored_item_sets (GimpImage *image,

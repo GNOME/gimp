@@ -185,6 +185,15 @@ Since GIMP 3.0.0, released on TODO.
 PROP_GUIDES now allows off-canvas guide positions, i.e. negative
 positions and over canvas-dimensions positions.
 
+Version 16:
+Since GIMP 3.0.0, released on TODO.
+- Allows multiple channels to have the property PROP_ACTIVE_CHANNEL,
+  hence multiple channels selected at once.
+- PROP_LINKED is deprecated. Old XCF files loaded by newer GIMP will
+  transform linked items into stored item sets PROP_ITEM_SET.
+- New PROP_ITEM_SET and PROP_ITEM_SET_ITEM to store sets of layers,
+  channels or paths.
+
 1. BASIC CONCEPTS
 =================
 
@@ -641,6 +650,10 @@ PROP_LINKED (editing state)
   all other linked elements will be transformed the same way.
   It appears in the property list for layers, channels and paths.
 
+  PROP_LINKED property is deprecated and must not be used since XCF
+  version 16. XCF readers and writers are expected to convert linked
+  items into item sets instead (see PROP_ITEM_SET).
+
 PROP_LOCK_CONTENT (since version 3, editing state)
   uint32  28         Type identification
   uint32  4          Four bytes of payload
@@ -712,6 +725,19 @@ PROP_VISIBLE (essential)
 
   When reading old XCF files that lack this property, assume that
   layers are visible and channels are not.
+
+PROP_ITEM_SET_ITEM (since GIMP 3.0)
+  uint32  41         Type identification
+  uint32  4          Four bytes of payload
+  uint32  set        The PROP_ITEM_SET this item is listed in.
+
+  PROP_ITEM_SET_ITEM can be assigned to layers, channels and paths. They are
+  only organisational properties and have no consequence on render.
+
+  The 'set' attribute corresponds to the numbered PROP_ITEM_SET this
+  item belongs to, considering that the appearance order of
+  PROP_ITEM_SET properties matter. It can only belong to a named item
+  set and all items in a set must be of the proper type.
 
 
 3. THE IMAGE STRUCTURE
@@ -921,7 +947,7 @@ PROP_PATHS
 
   Note: the attribute 'linked' was formerly erroneously called 'locked'
   (but meant 'linked' anyway).
-  
+
   A closed path is a path which has the last and the first point connected,
   for instance a triangle.
 
@@ -956,7 +982,7 @@ PROP_RESOLUTION (not editing state, but not _really_ essential either)
   resolution.
 
 PROP_SAMPLE_POINTS
-  uint32   17       Type identification
+  uint32   39       Type identification
   uint32   plength  Total length of the following payload in bytes
   ,---------------- Repeat for each sample point:
   | uint32 x        X coordinate
@@ -1039,6 +1065,24 @@ PROP_VECTORS
   it is safe for a reader to use the plength word to skip the property
   without parsing the individual parasites. (Note that this is _not_
   the case for PROP_PATHS).
+
+PROP_ITEM_SET (since GIMP 3.0)
+  uint32  40         Type identification
+  uint32  plength    Total length of the following payload in bytes
+  uint32  item_type  The type of item in this set:
+                     0: layers
+                     1: channels
+                     2: paths
+  uint32  method     Selection method:
+                     0: basic text search
+                     1: regular expression search
+                     2: glob pattern search
+                     0xffffffff (max uint32): named item set
+  string  label      Pattern to use for selection or name of the item
+                     set if method is 0xffffffff.
+
+  They are only organisational properties and have no consequence on
+  render. The order matters for display and also for PROP_ITEM_SET_ITEM.
 
 
 4. THE CHANNEL STRUCTURE

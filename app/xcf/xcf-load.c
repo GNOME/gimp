@@ -256,6 +256,10 @@ xcf_load_image (Gimp     *gimp,
 
   GIMP_LOG (XCF, "image props loaded");
 
+  /* Order matters for item sets. */
+  info->layer_sets = g_list_reverse (info->layer_sets);
+  info->channel_sets = g_list_reverse (info->channel_sets);
+
   /* check for a GimpGrid parasite */
   parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
                                        gimp_grid_parasite_name ());
@@ -705,18 +709,48 @@ xcf_load_image (Gimp     *gimp,
                                       _("Linked Channels"),
                                       info->linked_channels);
       gimp_image_store_item_set (image, set);
-      g_clear_pointer (&info->linked_layers, g_list_free);
+      g_clear_pointer (&info->linked_channels, g_list_free);
     }
   if (info->linked_paths)
     {
+      /* It is kind of ugly but vectors are really implemented as
+       * exception in our XCF spec and building over it seems like a
+       * mistake. Since I'm seriously not sure this would be much of an
+       * issue, I'll let it as it for now.
+       * Note that it's still possible to multi-select paths. It's only
+       * not possible to store these selections.
+       *
+       * Only warn for more than 1 linked path. Less is kind of
+       * pointless and doesn't deserve worrying people for no reason.
+       */
+      if (g_list_length (info->linked_paths) > 1)
+        g_printerr ("xcf: some paths were linked. "
+                    "GIMP does not support linked paths since version 3.0.\n");
+
+#if 0
       GimpItemList *set;
 
       set = gimp_item_list_named_new (image, GIMP_TYPE_VECTORS,
                                       _("Linked Paths"),
                                       info->linked_paths);
       gimp_image_store_item_set (image, set);
-      g_clear_pointer (&info->linked_layers, g_list_free);
+#endif
+      g_clear_pointer (&info->linked_paths, g_list_free);
     }
+
+  for (iter = g_list_last (info->layer_sets); iter; iter = iter->prev)
+    {
+      if (iter->data)
+        gimp_image_store_item_set (image, iter->data);
+    }
+  g_list_free (info->layer_sets);
+
+  for (iter = g_list_last (info->channel_sets); iter; iter = iter->prev)
+    {
+      if (iter->data)
+        gimp_image_store_item_set (image, iter->data);
+    }
+  g_list_free (info->channel_sets);
 
   if (info->file)
     gimp_image_set_file (image, info->file);
@@ -1203,6 +1237,74 @@ xcf_load_image_props (XcfInfo   *info,
           }
           break;
 
+        case PROP_ITEM_SET:
+          {
+            GimpItemList *set       = NULL;
+            gchar        *label;
+            GType         item_type = 0;
+            guint32       itype;
+            guint32       method;
+
+            xcf_read_int32  (info, &itype, 1);
+            xcf_read_int32  (info, &method, 1);
+            xcf_read_string (info, &label, 1);
+
+            if (itype == 0)
+              item_type = GIMP_TYPE_LAYER;
+            else
+              item_type = GIMP_TYPE_CHANNEL;
+
+            if (itype > 1)
+              {
+                g_printerr ("xcf: unsupported item set '%s' type: %d (skipping)\n",
+                            label ? label : "unnamed", itype);
+                /* Only case where we break because we wouldn't even
+                 * know where to categorize the item set anyway. */
+                break;
+              }
+            else if (label == NULL)
+              {
+                g_printerr ("xcf: item set without a name or pattern (skipping)\n");
+              }
+            else if (method != G_MAXUINT32 && method > GIMP_SELECT_GLOB_PATTERN)
+              {
+                g_printerr ("xcf: unsupported item set '%s' selection method attribute: 0x%x (skipping)\n",
+                            label, method);
+              }
+            else
+              {
+                if (method == G_MAXUINT32)
+                  {
+                    /* Don't use gimp_item_list_named_new() because it
+                     * doesn't allow NULL items (it would try to get the
+                     * selected items instead).
+                     */
+                    set = g_object_new (GIMP_TYPE_ITEM_LIST,
+                                        "image",      image,
+                                        "name",       label,
+                                        "is-pattern", FALSE,
+                                        "item-type",  item_type,
+                                        "items",      NULL,
+                                        NULL);
+                  }
+                else
+                  {
+                    set = gimp_item_list_pattern_new (image, item_type,
+                                                      method, label);
+                  }
+              }
+
+            /* Note: we are still adding invalid item sets as NULL on
+             * purpose, in order not to break order-base association
+             * between PROP_ITEM_SET and PROP_ITEM_SET_ITEM.
+             */
+            if (item_type == GIMP_TYPE_LAYER)
+              info->layer_sets = g_list_prepend (info->layer_sets, set);
+            else
+              info->channel_sets = g_list_prepend (info->channel_sets, set);
+          }
+          break;
+
         default:
 #ifdef GIMP_UNSTABLE
           g_printerr ("unexpected/unknown image property: %d (skipping)\n",
@@ -1579,6 +1681,29 @@ xcf_load_layer_props (XcfInfo    *info,
           xcf_read_int32 (info, group_layer_flags, 1);
           break;
 
+        case PROP_ITEM_SET_ITEM:
+            {
+              GimpItemList *set;
+              guint32       n;
+
+              xcf_read_int32 (info, &n, 1);
+              set = g_list_nth_data (info->layer_sets, n);
+              if (set == NULL)
+                g_printerr ("xcf: layer '%s' cannot be added to unknown layer set at index %d (skipping)\n",
+                            gimp_object_get_name (*layer), n);
+              else if (! g_type_is_a (G_TYPE_FROM_INSTANCE (*layer),
+                                      gimp_item_list_get_item_type (set)))
+                g_printerr ("xcf: layer '%s' cannot be added to item set '%s' with item type %s (skipping)\n",
+                            gimp_object_get_name (*layer), gimp_object_get_name (set),
+                            g_type_name (gimp_item_list_get_item_type (set)));
+              else if (gimp_item_list_is_pattern (set, NULL))
+                g_printerr ("xcf: layer '%s' cannot be added to pattern item set '%s' (skipping)\n",
+                            gimp_object_get_name (*layer), gimp_object_get_name (set));
+              else
+                gimp_item_list_add (set, GIMP_ITEM (*layer));
+            }
+          break;
+
         default:
 #ifdef GIMP_UNSTABLE
           g_printerr ("unexpected/unknown layer property: %d (skipping)\n",
@@ -1672,6 +1797,7 @@ xcf_check_layer_props (XcfInfo    *info,
         case PROP_COMPOSITE_MODE:
         case PROP_TATTOO:
         case PROP_PARASITES:
+        case PROP_ITEM_SET_ITEM:
           if (! xcf_skip_unknown_prop (info, prop_size))
             return FALSE;
           /* Just ignore for now. */
@@ -1894,6 +2020,25 @@ xcf_load_channel_props (XcfInfo      *info,
                                     GIMP_MESSAGE_WARNING,
                                     "Error while loading a channel's parasites");
           }
+          break;
+
+        case PROP_ITEM_SET_ITEM:
+            {
+              GimpItemList *set;
+              guint32       n;
+
+              xcf_read_int32 (info, &n, 1);
+              set = g_list_nth_data (info->channel_sets, n);
+              if (set == NULL)
+                g_printerr ("xcf: unknown channel set: %d (skipping)\n", n);
+              else if (! g_type_is_a (G_TYPE_FROM_INSTANCE (*channel),
+                                      gimp_item_list_get_item_type (set)))
+                g_printerr ("xcf: channel '%s' cannot be added to item set '%s' with item type %s (skipping)\n",
+                            gimp_object_get_name (*channel), gimp_object_get_name (set),
+                            g_type_name (gimp_item_list_get_item_type (set)));
+              else
+                gimp_item_list_add (set, GIMP_ITEM (*channel));
+            }
           break;
 
         default:
