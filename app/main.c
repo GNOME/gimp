@@ -345,8 +345,24 @@ gimp_macos_setenv (const char * progname)
         }
       else
         {
-          g_free (res_dir);
-          return;
+          tmp = g_strdup_printf ("%s/../share", app_dir);
+          res_dir = g_canonicalize_filename (tmp, NULL);
+          g_free(tmp);
+          if (res_dir && !stat (res_dir, &sb) && S_ISDIR (sb.st_mode))
+            {
+              g_free (res_dir);
+
+              g_print ("GIMP is started in the build directory\n");
+
+              tmp = g_strdup_printf ("%s/..", app_dir); /* running in build dir */
+              res_dir = g_canonicalize_filename (tmp, NULL);
+              g_free(tmp);
+            }
+          else
+            {
+              g_free (res_dir);
+              return;
+            }
         }
 
       path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (app_dir) + 2;
