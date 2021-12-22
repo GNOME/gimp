@@ -347,7 +347,7 @@ gimp_macos_setenv (const char * progname)
         {
           tmp = g_strdup_printf ("%s/../share", app_dir);
           res_dir = g_canonicalize_filename (tmp, NULL);
-          g_free(tmp);
+          g_free (tmp);
           if (res_dir && !stat (res_dir, &sb) && S_ISDIR (sb.st_mode))
             {
               g_free (res_dir);
@@ -356,7 +356,7 @@ gimp_macos_setenv (const char * progname)
 
               tmp = g_strdup_printf ("%s/..", app_dir); /* running in build dir */
               res_dir = g_canonicalize_filename (tmp, NULL);
-              g_free(tmp);
+              g_free (tmp);
             }
           else
             {
