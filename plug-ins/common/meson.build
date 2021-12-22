@@ -150,7 +150,7 @@ if not platform_windows
   common_plugins_list += { 'name': 'mail', }
 endif
 
-if webkit.found()
+if get_option('webkit-unmaintained')
   common_plugins_list += { 'name': 'web-page',
     'deps': [ gtk3, gegl, gdk_pixbuf, webkit, ],
   }

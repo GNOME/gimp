@@ -761,11 +761,18 @@ if have_vala
   endif
 endif
 
+# We disable WebkitGTK as default for now and discourage its use because
+# it is just a horror to build, is not available on Windows anymore
+# (AFAIK), and features brought are not worth the pain. We still leave
+# the code because mitch wants us to be able to look at it later, maybe
+# reinstate it through some shape or another. Yet for now, it is to be
+# considered non-existing feature for packager point of view. It is only
+# there in the hope developers get it back in shape.
 webkit_minver = '2.20.3'
-webkit = dependency('webkit2gtk-4.0', version: '>=' + webkit_minver,
-  required: get_option('webkit')
-)
-conf.set('HAVE_WEBKIT', webkit.found())
+if get_option('webkit-unmaintained')
+  webkit = dependency('webkit2gtk-4.0', version: '>=' + webkit_minver)
+endif
+conf.set('HAVE_WEBKIT', get_option('webkit-unmaintained'))
 
 poppler_minver = '0.69.0'
 poppler_data_minver = '0.4.9'
@@ -1787,7 +1794,6 @@ final_message = [
 '''Optional Plug-Ins:''',
 '''  Ascii Art:           @0@'''.format(libaa.found()),
 '''  Ghostscript:         @0@'''.format(ghostscript.found()),
-'''  Help Browser:        @0@'''.format(webkit.found()),
 '''  JPEG 2000:           @0@'''.format(openjpeg.found()),
 '''  JPEG XL:             @0@'''.format(libjxl.found()),
 '''  MNG:                 @0@'''.format(libmng.found()),
@@ -1807,11 +1813,14 @@ final_message = [
 '''  Lua plug-ins:        @0@'''.format(have_lua),
 '''  Vala plug-ins:       @0@'''.format(have_vala),
 '''  TWAIN (Win32):       @0@'''.format(platform_windows),
-'''  Webpage:             @0@'''.format(webkit.found()),
 '''  WMF:                 @0@'''.format(wmf.found()),
 '''  X11 Mouse Cursor:    @0@'''.format(xmc.found()),
 '''  XPM:                 @0@'''.format(libxpm.found()),
 '''  Email:               @0@'''.format(email_message),
+'',
+'''Unmaintained Plug-Ins (discouraged except for developers):''',
+'''  Help Browser:        @0@'''.format(get_option('webkit-unmaintained')),
+'''  Webpage:             @0@'''.format(get_option('webkit-unmaintained')),
 '',
 '''Optional Modules:''',
 '''  ALSA (MIDI Input):   @0@'''.format(alsa.found()),

@@ -1,4 +1,4 @@
-if webkit.found()
+if get_option('webkit-unmaintained')
 
 plugin_name = 'help-browser'
 

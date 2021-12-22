@@ -1978,14 +1978,23 @@ AC_SUBST(mypaint_brushes_dir)
 # Check for webkit
 ##################
 
-AC_ARG_WITH(webkit, [  --without-webkit        don't build the help-browser and web-page plug-ins])
+# We disable WebkitGTK as default for now and discourage its use because
+# it is just a horror to build, is not available on Windows anymore
+# (AFAIK), and features brought are not worth the pain. We still leave
+# the code because mitch wants us to be able to look at it later, maybe
+# reinstate it through some shape or another. Yet for now, it is to be
+# considered non-existing feature for packager point of view. It is only
+# there in the hope developers get it back in shape.
+
+AC_ARG_WITH(webkit, [  --with-webkit-unmaintained build the help-browser and web-page plug-ins (unmaintained)])
 
 have_webkit=no
-if test "x$with_webkit" != xno; then
+if test "x$with_webkit_unmaintained" = xyes; then
   PKG_CHECK_MODULES(WEBKIT, webkit2gtk-4.0 >= webkitgtk_required_version,
     WEB_PAGE='web-page$(EXEEXT)'
     have_webkit=yes,
-    have_webkit="no (WebKit not found)")
+    [have_webkit="no (WebKit not found)"
+     add_deps_error([webkit2gtk-4.0 >= webkitgtk_required_version])])
 else
   have_webkit="no (WebKit support disabled)"
 fi
@@ -3239,7 +3248,6 @@ Optional Features:
 Optional Plug-Ins:
   Ascii Art:                 $have_libaa
   Ghostscript:               $have_gs
-  Help Browser:              $have_webkit
   JPEG 2000:                 $have_openjpeg
   JPEG XL:                   $have_jpegxl
   MNG:                       $have_libmng
@@ -3254,11 +3262,14 @@ Optional Plug-Ins:
   Lua plug-ins:              $with_lua
   Vala plug-ins:             $with_vala
   TWAIN (Win32):             $os_win32
-  Webpage:                   $have_webkit
   WMF:                       $have_libwmf
   X11 Mouse Cursor:          $have_xmc
   XPM:                       $have_libxpm
   Email:                     $have_email
+
+Unmaintained Plug-Ins (discouraged except for developers):
+  Help Browser:              $have_webkit
+  Webpage:                   $have_webkit
 
 Optional Modules:
   ALSA (MIDI Input):         $have_alsa

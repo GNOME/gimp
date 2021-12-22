@@ -45,7 +45,7 @@ option('mng',               type: 'feature', value: 'auto', description: 'Mng su
 option('openexr',           type: 'feature', value: 'auto', description: 'Openexr support')
 option('png',               type: 'feature', value: 'auto', description: 'PNG support')
 option('print',             type: 'boolean', value: true,   description: 'Print support')
-option('webkit',            type: 'feature', value: 'auto', description: 'Help browser and webpage plugins')
+option('webkit-unmaintained',type: 'boolean', value: false,  description: 'Help browser and webpage plugins (unmaintained)')
 option('webp',              type: 'feature', value: 'auto', description: 'Webp support')
 option('wmf',               type: 'feature', value: 'auto', description: 'Wmf support')
 option('xcursor',           type: 'feature', value: 'auto', description: 'Xcursor support')
