@@ -65,6 +65,8 @@ typedef enum
   PROP_BLEND_SPACE        = 37,
   PROP_FLOAT_COLOR        = 38,
   PROP_SAMPLE_POINTS      = 39,
+  PROP_ITEM_SET           = 40,
+  PROP_ITEM_SET_ITEM      = 41,
 } PropType;
 
 typedef enum
@@ -115,6 +117,9 @@ struct _XcfInfo
   GList              *linked_layers;
   GList              *linked_channels;
   GList              *linked_paths;
+
+  GList              *layer_sets;
+  GList              *channel_sets;
 
   GimpDrawable       *floating_sel_drawable;
   GimpLayer          *floating_sel;

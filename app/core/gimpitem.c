@@ -53,7 +53,6 @@ enum
 {
   REMOVED,
   VISIBILITY_CHANGED,
-  LINKED_CHANGED,
   COLOR_TAG_CHANGED,
   LOCK_CONTENT_CHANGED,
   LOCK_POSITION_CHANGED,
@@ -71,7 +70,6 @@ enum
   PROP_OFFSET_X,
   PROP_OFFSET_Y,
   PROP_VISIBLE,
-  PROP_LINKED,
   PROP_COLOR_TAG,
   PROP_LOCK_CONTENT,
   PROP_LOCK_POSITION,
@@ -97,7 +95,6 @@ struct _GimpItemPrivate
   guint             visible                : 1;  /*  item visibility             */
   guint             bind_visible_to_active : 1;  /*  visibility bound to active  */
 
-  guint             linked                 : 1;  /*  control linkage             */
   guint             lock_content           : 1;  /*  content editability         */
   guint             lock_position          : 1;  /*  content movability          */
   guint             lock_visibility        : 1;  /*  automatic visibility change */
@@ -204,14 +201,6 @@ gimp_item_class_init (GimpItemClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_item_signals[LINKED_CHANGED] =
-    g_signal_new ("linked-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpItemClass, linked_changed),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE, 0);
-
   gimp_item_signals[COLOR_TAG_CHANGED] =
     g_signal_new ("color-tag-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -257,7 +246,6 @@ gimp_item_class_init (GimpItemClass *klass)
 
   klass->removed                   = NULL;
   klass->visibility_changed        = NULL;
-  klass->linked_changed            = NULL;
   klass->color_tag_changed         = NULL;
   klass->lock_content_changed      = NULL;
   klass->lock_position_changed     = NULL;
@@ -328,10 +316,6 @@ gimp_item_class_init (GimpItemClass *klass)
   gimp_item_props[PROP_VISIBLE] = g_param_spec_boolean ("visible", NULL, NULL,
                                                         TRUE,
                                                         GIMP_PARAM_READABLE);
-
-  gimp_item_props[PROP_LINKED] = g_param_spec_boolean ("linked", NULL, NULL,
-                                                       FALSE,
-                                                       GIMP_PARAM_READABLE);
 
   gimp_item_props[PROP_COLOR_TAG] = g_param_spec_enum ("color-tag", NULL, NULL,
                                                        GIMP_TYPE_COLOR_TAG,
@@ -452,9 +436,6 @@ gimp_item_get_property (GObject    *object,
       break;
     case PROP_VISIBLE:
       g_value_set_boolean (value, private->visible);
-      break;
-    case PROP_LINKED:
-      g_value_set_boolean (value, private->linked);
       break;
     case PROP_COLOR_TAG:
       g_value_set_enum (value, private->color_tag);
@@ -2378,14 +2359,6 @@ gimp_item_bind_visible_to_active (GimpItem *item,
 
   if (bind)
     gimp_filter_set_active (GIMP_FILTER (item), gimp_item_get_visible (item));
-}
-
-gboolean
-gimp_item_get_linked (GimpItem *item)
-{
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
-
-  return GET_PRIVATE (item)->linked;
 }
 
 void

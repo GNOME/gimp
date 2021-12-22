@@ -65,7 +65,6 @@ struct _GimpItemListPrivate
 {
   GimpImage        *image;
 
-  gchar            *label;         /* Item set name or pattern.                      */
   gboolean          is_pattern;    /* Whether a named fixed set or a pattern-search. */
   GimpSelectMethod  select_method; /* Pattern format if is_pattern is TRUE           */
 
@@ -174,7 +173,6 @@ gimp_item_list_init (GimpItemList *set)
 {
   set->p = gimp_item_list_get_instance_private (set);
 
-  set->p->label         = NULL;
   set->p->items         = NULL;
   set->p->select_method = GIMP_SELECT_PLAIN_TEXT;
   set->p->is_pattern    = FALSE;
@@ -188,7 +186,6 @@ gimp_item_list_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_assert (GIMP_IS_IMAGE (set->p->image));
-  gimp_assert (set->p->items != NULL || set->p->is_pattern);
   gimp_assert (set->p->item_type == GIMP_TYPE_LAYER   ||
                set->p->item_type == GIMP_TYPE_VECTORS ||
                set->p->item_type == GIMP_TYPE_CHANNEL);
@@ -244,7 +241,6 @@ gimp_item_list_finalize (GObject *object)
   g_list_free (set->p->items);
   g_list_free_full (set->p->deleted_items,
                     (GDestroyNotify) gimp_item_list_free_deleted_item);
-  g_free (set->p->label);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -460,12 +456,45 @@ gimp_item_list_get_items (GimpItemList  *set,
   return items;
 }
 
+/**
+ * gimp_item_list_is_pattern:
+ * @set:            The #GimpItemList.
+ * @pattern_syntax: The type of patterns @set handles.
+ *
+ * Indicate if @set is a pattern list. If the returned value is %TRUE,
+ * then @pattern_syntax will be set to the syntax we are dealing with.
+ *
+ * Returns: %TRUE if @set is a pattern list, %FALSE if it is a named
+ *          list.
+ */
 gboolean
-gimp_item_list_is_pattern (GimpItemList *set)
+gimp_item_list_is_pattern (GimpItemList      *set,
+                           GimpSelectMethod  *pattern_syntax)
 {
   g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), FALSE);
 
+  if (set->p->is_pattern && pattern_syntax)
+    *pattern_syntax = set->p->select_method;
+
   return (set->p->is_pattern);
+}
+
+/**
+ * gimp_item_list_is_pattern:
+ * @set:  The #GimpItemList.
+ * @item: #GimpItem to add to @set.
+ *
+ * Add @item to the named list @set whose item type must also agree.
+ */
+void
+gimp_item_list_add (GimpItemList *set,
+                    GimpItem     *item)
+{
+  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
+  g_return_if_fail (! gimp_item_list_is_pattern (set, NULL));
+  g_return_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (item), set->p->item_type));
+
+  set->p->items = g_list_prepend (set->p->items, item);
 }
 
 

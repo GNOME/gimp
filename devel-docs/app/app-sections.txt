@@ -2513,7 +2513,6 @@ gimp_item_parasite_list
 gimp_item_get_visible
 gimp_item_set_visible
 gimp_item_is_visible
-gimp_item_get_linked
 gimp_item_get_lock_content
 gimp_item_set_lock_content
 gimp_item_can_lock_content

@@ -46,6 +46,7 @@
 #include "core/gimpimage-private.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpimage-symmetry.h"
+#include "core/gimpitemlist.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"
@@ -487,6 +488,14 @@ xcf_save_image_props (XcfInfo    *info,
   g_list_free_full (symmetry_parasites,
                     (GDestroyNotify) gimp_parasite_free);
 
+  info->layer_sets = gimp_image_get_stored_item_sets (image, GIMP_TYPE_LAYER);
+  info->channel_sets = gimp_image_get_stored_item_sets (image, GIMP_TYPE_CHANNEL);
+
+  for (iter = info->layer_sets; iter; iter = iter->next)
+    xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_SET, error, iter->data));
+  for (iter = info->channel_sets; iter; iter = iter->next)
+    xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_SET, error, iter->data));
+
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error));
 
   return TRUE;
@@ -499,6 +508,7 @@ xcf_save_layer_props (XcfInfo    *info,
                       GError    **error)
 {
   GimpParasiteList *parasites;
+  GList            *iter;
   gint              offset_x;
   gint              offset_y;
 
@@ -531,8 +541,6 @@ xcf_save_layer_props (XcfInfo    *info,
                                   gimp_layer_get_opacity (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
                                   gimp_item_get_visible (GIMP_ITEM (layer))));
-  xcf_check_error (xcf_save_prop (info, image, PROP_LINKED, error,
-                                  gimp_item_get_linked (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_COLOR_TAG, error,
                                   gimp_item_get_color_tag (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_CONTENT, error,
@@ -612,6 +620,22 @@ xcf_save_layer_props (XcfInfo    *info,
                                       parasites));
     }
 
+  for (iter = info->layer_sets; iter; iter = iter->next)
+    {
+      GimpItemList *set = iter->data;
+
+      if (! gimp_item_list_is_pattern (set, NULL))
+        {
+          GList *items = gimp_item_list_get_items (set, NULL);
+
+          if (g_list_find (items, GIMP_ITEM (layer)))
+            xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_SET_ITEM, error,
+                                            g_list_position (info->layer_sets, iter)));
+
+          g_list_free (items);
+        }
+    }
+
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error));
 
   return TRUE;
@@ -624,6 +648,7 @@ xcf_save_channel_props (XcfInfo      *info,
                         GError      **error)
 {
   GimpParasiteList *parasites;
+  GList            *iter;
 
   if (g_list_find (gimp_image_get_selected_channels (image), channel))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_CHANNEL, error));
@@ -637,8 +662,6 @@ xcf_save_channel_props (XcfInfo      *info,
                                   gimp_channel_get_opacity (channel)));
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
                                   gimp_item_get_visible (GIMP_ITEM (channel))));
-  xcf_check_error (xcf_save_prop (info, image, PROP_LINKED, error,
-                                  gimp_item_get_linked (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_COLOR_TAG, error,
                                   gimp_item_get_color_tag (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_CONTENT, error,
@@ -660,6 +683,22 @@ xcf_save_channel_props (XcfInfo      *info,
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
                                       parasites));
+    }
+
+  for (iter = info->channel_sets; iter; iter = iter->next)
+    {
+      GimpItemList *set = iter->data;
+
+      if (! gimp_item_list_is_pattern (set, NULL))
+        {
+          GList *items = gimp_item_list_get_items (set, NULL);
+
+          if (g_list_find (items, GIMP_ITEM (channel)))
+            xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_SET_ITEM, error,
+                                            g_list_position (info->channel_sets, iter)));
+
+          g_list_free (items);
+        }
     }
 
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error));
@@ -850,6 +889,9 @@ xcf_save_prop (XcfInfo    *info,
       break;
 
     case PROP_LINKED:
+      /* This code should not be called any longer. */
+      g_return_val_if_reached (FALSE);
+#if 0
       {
         guint32 linked = va_arg (args, guint32);
 
@@ -860,6 +902,7 @@ xcf_save_prop (XcfInfo    *info,
 
         xcf_write_int32_check_error (info, &linked, 1);
       }
+#endif
       break;
 
     case PROP_COLOR_TAG:
@@ -1342,6 +1385,60 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
         xcf_write_int32_check_error (info, &flags, 1);
+      }
+      break;
+
+    case PROP_ITEM_SET:
+      {
+        GimpItemList *set = va_arg (args, GimpItemList *);
+        const gchar  *string;
+        guint32       method;
+        guint32       item_type;
+        goffset       base;
+        goffset       pos;
+
+        size = 0;
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        pos = info->cp;
+        xcf_write_int32_check_error (info, &size, 1);
+        base = info->cp;
+
+        if (gimp_item_list_get_item_type (set) == GIMP_TYPE_LAYER)
+          item_type = 0;
+        else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_CHANNEL)
+          item_type = 1;
+        else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_VECTORS)
+          item_type = 2;
+        else
+          g_return_val_if_reached (FALSE);
+        xcf_write_int32_check_error (info, &item_type, 1);
+
+        if (! gimp_item_list_is_pattern (set, &method))
+          method = G_MAXUINT32;
+        xcf_write_int32_check_error (info, &method, 1);
+
+        string = gimp_object_get_name (set);
+        xcf_write_string_check_error (info, (gchar **) &string, 1);
+
+        /* go back to the saved position and write the length */
+        size = info->cp - base;
+        xcf_check_error (xcf_seek_pos (info, pos, error));
+        xcf_write_int32_check_error (info, &size, 1);
+
+        xcf_check_error (xcf_seek_pos (info, base + size, error));
+      }
+      break;
+
+    case PROP_ITEM_SET_ITEM:
+      {
+        guint32 set_n = va_arg (args, guint32);
+
+        size = 4;
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+        xcf_write_int32_check_error (info, &set_n, 1);
       }
       break;
     }
@@ -2074,7 +2171,8 @@ xcf_save_old_paths (XcfInfo    *info,
        * around to fix that cruft  */
 
       name     = (gchar *) gimp_object_get_name (vectors);
-      locked   = gimp_item_get_linked (GIMP_ITEM (vectors));
+      /* The 'linked' concept does not exist anymore in GIMP 3.0 and over. */
+      locked   = 0;
       state    = closed ? 4 : 2;  /* EDIT : ADD  (editing state, 1.2 compat) */
       version  = 3;
       pathtype = 1;  /* BEZIER  (1.2 compat) */
@@ -2175,7 +2273,8 @@ xcf_save_vectors (XcfInfo    *info,
 
       name          = gimp_object_get_name (vectors);
       visible       = gimp_item_get_visible (GIMP_ITEM (vectors));
-      linked        = gimp_item_get_linked (GIMP_ITEM (vectors));
+      /* The 'linked' concept does not exist anymore in GIMP 3.0 and over. */
+      linked        = 0;
       tattoo        = gimp_item_get_tattoo (GIMP_ITEM (vectors));
       parasites     = gimp_item_get_parasites (GIMP_ITEM (vectors));
       num_parasites = gimp_parasite_list_persistent_length (parasites);

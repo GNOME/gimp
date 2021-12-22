@@ -1122,7 +1122,7 @@ gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
 
       label = gtk_label_new (gimp_object_get_name (iter->data));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      if (gimp_item_list_is_pattern (iter->data))
+      if (gimp_item_list_is_pattern (iter->data, NULL))
         {
           PangoAttrList *attrs = pango_attr_list_new ();
 
