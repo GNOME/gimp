@@ -373,7 +373,7 @@ gimp_item_tree_view_constructed (GObject *object)
   GimpContainerTreeView *tree_view       = GIMP_CONTAINER_TREE_VIEW (object);
   GimpItemTreeView      *item_view       = GIMP_ITEM_TREE_VIEW (object);
   GtkTreeViewColumn     *column;
-  GtkWidget             *lock_image;
+  GtkWidget             *image;
   GtkIconSize            button_icon_size;
   gint                   button_spacing;
 
@@ -399,6 +399,9 @@ gimp_item_tree_view_constructed (GObject *object)
                     item_view);
 
   column = gtk_tree_view_column_new ();
+  image = gtk_image_new_from_icon_name (GIMP_ICON_VISIBLE, button_icon_size);
+  gtk_tree_view_column_set_widget (column, image);
+  gtk_widget_show (image);
   gtk_tree_view_insert_column (tree_view->view, column, 0);
 
   item_view->priv->eye_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_VISIBLE);
@@ -425,9 +428,9 @@ gimp_item_tree_view_constructed (GObject *object)
                     item_view);
 
   column = gtk_tree_view_column_new ();
-  lock_image = gtk_image_new_from_icon_name (GIMP_ICON_LOCK, button_icon_size);
-  gtk_tree_view_column_set_widget (column, lock_image);
-  gtk_widget_show (lock_image);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_LOCK, button_icon_size);
+  gtk_tree_view_column_set_widget (column, image);
+  gtk_widget_show (image);
   gtk_tree_view_insert_column (tree_view->view, column, 1);
 
   item_view->priv->lock_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_LOCK_MULTI);
