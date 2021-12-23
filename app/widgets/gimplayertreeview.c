@@ -80,8 +80,8 @@ struct _GimpLayerTreeViewPrivate
   GtkWidget       *link_popover;
   GtkWidget       *link_list;
   GtkWidget       *link_entry;
-  GtkWidget       *link_regexp_entry;
-  GimpItemList    *link_regexp;
+  GtkWidget       *link_search_entry;
+  GimpItemList    *link_pattern_set;
 
   gint             model_column_mask;
   gint             model_column_mask_visible;
@@ -153,9 +153,11 @@ static gboolean   gimp_layer_tree_view_link_clicked               (GtkWidget    
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_link_popover_shown         (GtkPopover                 *popover,
                                                                    GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_regexp_modified            (GtkEntry                   *entry,
-                                                                   const GParamSpec           *pspec,
+
+static gboolean   gimp_layer_tree_view_search_key_release         (GtkWidget                  *widget,
+                                                                   GdkEventKey                *event,
                                                                    GimpLayerTreeView          *view);
+
 static void       gimp_layer_tree_view_new_link_exit              (GimpLayerTreeView          *view);
 static gboolean   gimp_layer_tree_view_new_link_clicked           (GimpLayerTreeView          *view);
 static gboolean   gimp_layer_tree_view_unlink_clicked             (GtkWidget                  *widget,
@@ -280,7 +282,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   view->priv = gimp_layer_tree_view_get_instance_private (view);
 
-  view->priv->link_regexp = NULL;
+  view->priv->link_pattern_set = NULL;
 
   view->priv->model_column_mask =
     gimp_container_tree_store_columns_add (tree_view->model_columns,
@@ -460,17 +462,17 @@ gimp_layer_tree_view_constructed (GObject *object)
   grid = gtk_grid_new ();
 
   /* Link popover: regexp search. */
-  layer_view->priv->link_regexp_entry = gtk_entry_new ();
-  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (layer_view->priv->link_regexp_entry),
+  layer_view->priv->link_search_entry = gtk_entry_new ();
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (layer_view->priv->link_search_entry),
                                      GTK_ENTRY_ICON_SECONDARY,
                                      "system-search");
   gtk_grid_attach (GTK_GRID (grid),
-                   layer_view->priv->link_regexp_entry,
+                   layer_view->priv->link_search_entry,
                    0, 0, 2, 1);
-  gtk_widget_show (layer_view->priv->link_regexp_entry);
-  g_signal_connect (layer_view->priv->link_regexp_entry,
-                    "notify::text",
-                    G_CALLBACK (gimp_layer_tree_view_regexp_modified),
+  gtk_widget_show (layer_view->priv->link_search_entry);
+  g_signal_connect (layer_view->priv->link_search_entry,
+                    "key-release-event",
+                    G_CALLBACK (gimp_layer_tree_view_search_key_release),
                     layer_view);
 
   /* Link popover: existing links. */
@@ -517,10 +519,6 @@ gimp_layer_tree_view_constructed (GObject *object)
    * of success.
    */
   g_signal_connect_swapped (layer_view->priv->link_entry,
-                            "activate",
-                            G_CALLBACK (gimp_layer_tree_view_new_link_exit),
-                            layer_view);
-  g_signal_connect_swapped (layer_view->priv->link_regexp_entry,
                             "activate",
                             G_CALLBACK (gimp_layer_tree_view_new_link_exit),
                             layer_view);
@@ -1206,7 +1204,7 @@ gimp_layer_tree_view_link_clicked (GtkWidget         *box,
   else
     gimp_image_select_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
 
-  gtk_entry_set_text (GTK_ENTRY (view->priv->link_regexp_entry), "");
+  gtk_entry_set_text (GTK_ENTRY (view->priv->link_search_entry), "");
   /* TODO: if clicking on pattern link, fill in the pattern field? */
 
   return FALSE;
@@ -1223,9 +1221,9 @@ gimp_layer_tree_view_link_popover_shown (GtkPopover    *popover,
 
   if (! image)
     {
-      gtk_widget_set_tooltip_text (view->priv->link_regexp_entry,
+      gtk_widget_set_tooltip_text (view->priv->link_search_entry,
                                    _("Select layers by text search"));
-      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_regexp_entry),
+      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
                                       _("Text search"));
       return;
     }
@@ -1236,48 +1234,65 @@ gimp_layer_tree_view_link_popover_shown (GtkPopover    *popover,
   switch (pattern_syntax)
     {
     case GIMP_SELECT_PLAIN_TEXT:
-      gtk_widget_set_tooltip_text (view->priv->link_regexp_entry,
+      gtk_widget_set_tooltip_text (view->priv->link_search_entry,
                                    _("Select layers by text search"));
-      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_regexp_entry),
+      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
                                       _("Text search"));
       break;
     case GIMP_SELECT_GLOB_PATTERN:
-      gtk_widget_set_tooltip_text (view->priv->link_regexp_entry,
+      gtk_widget_set_tooltip_text (view->priv->link_search_entry,
                                    _("Select layers by glob patterns"));
-      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_regexp_entry),
+      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
                                       _("Glob pattern search"));
       break;
     case GIMP_SELECT_REGEX_PATTERN:
-      gtk_widget_set_tooltip_text (view->priv->link_regexp_entry,
+      gtk_widget_set_tooltip_text (view->priv->link_search_entry,
                                    _("Select layers by regular expressions"));
-      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_regexp_entry),
+      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
                                       _("Regular Expression search"));
       break;
     }
 }
 
-static void
-gimp_layer_tree_view_regexp_modified (GtkEntry         *entry,
-                                      const GParamSpec *pspec,
-                                      GimpLayerTreeView *view)
+static gboolean
+gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
+                                         GdkEventKey       *event,
+                                         GimpLayerTreeView *view)
 {
   GimpImage        *image;
   const gchar      *pattern;
   GimpSelectMethod  pattern_syntax;
 
-  gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_regexp_entry),
+  if (event->keyval == GDK_KEY_Escape   ||
+      event->keyval == GDK_KEY_Return   ||
+      event->keyval == GDK_KEY_KP_Enter ||
+      event->keyval == GDK_KEY_ISO_Enter)
+    {
+      if (event->state & GDK_SHIFT_MASK)
+        {
+          if (gimp_layer_tree_view_new_link_clicked (view))
+            gtk_widget_hide (view->priv->link_popover);
+        }
+      else
+        {
+          gtk_widget_hide (view->priv->link_popover);
+        }
+      return TRUE;
+    }
+
+  gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_search_entry),
                             NULL);
 
   image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-  g_clear_object (&view->priv->link_regexp);
+  g_clear_object (&view->priv->link_pattern_set);
 
   if (! image)
-    return;
+    return TRUE;
 
   g_object_get (image->gimp->config,
                 "items-select-method", &pattern_syntax,
                 NULL);
-  pattern = gtk_entry_get_text (GTK_ENTRY (view->priv->link_regexp_entry));
+  pattern = gtk_entry_get_text (GTK_ENTRY (view->priv->link_search_entry));
   if (pattern && strlen (pattern) > 0)
     {
       GList  *items;
@@ -1286,11 +1301,11 @@ gimp_layer_tree_view_regexp_modified (GtkEntry         *entry,
       gtk_entry_set_text (GTK_ENTRY (view->priv->link_entry), "");
       gtk_widget_set_sensitive (view->priv->link_entry, FALSE);
 
-      view->priv->link_regexp = gimp_item_list_pattern_new (image,
-                                                            GIMP_TYPE_LAYER,
-                                                            pattern_syntax,
-                                                            pattern);
-      items = gimp_item_list_get_items (view->priv->link_regexp, &error);
+      view->priv->link_pattern_set = gimp_item_list_pattern_new (image,
+                                                                 GIMP_TYPE_LAYER,
+                                                                 pattern_syntax,
+                                                                 pattern);
+      items = gimp_item_list_get_items (view->priv->link_pattern_set, &error);
       if (error)
         {
           /* Invalid regular expression. */
@@ -1300,20 +1315,20 @@ gimp_layer_tree_view_regexp_modified (GtkEntry         *entry,
           pango_attr_list_insert (attrs, pango_attr_strikethrough_new (TRUE));
           tooltip = g_strdup_printf (_("Invalid regular expression: %s\n"),
                                      error->message);
-          gtk_widget_set_tooltip_text (view->priv->link_regexp_entry,
+          gtk_widget_set_tooltip_text (view->priv->link_search_entry,
                                        tooltip);
-          gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_regexp_entry),
+          gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_search_entry),
                                     attrs);
           g_free (tooltip);
           g_error_free (error);
           pango_attr_list_unref (attrs);
 
-          g_clear_object (&view->priv->link_regexp);
+          g_clear_object (&view->priv->link_pattern_set);
         }
       else if (items == NULL)
         {
           /* Pattern does not match any results. */
-          gimp_widget_blink (view->priv->link_regexp_entry);
+          gimp_widget_blink (view->priv->link_search_entry);
         }
       else
         {
@@ -1325,6 +1340,8 @@ gimp_layer_tree_view_regexp_modified (GtkEntry         *entry,
     {
       gtk_widget_set_sensitive (view->priv->link_entry, TRUE);
     }
+
+  return TRUE;
 }
 
 static void
@@ -1362,16 +1379,16 @@ gimp_layer_tree_view_new_link_clicked (GimpLayerTreeView *view)
           return FALSE;
         }
     }
-  else if (view->priv->link_regexp != NULL)
+  else if (view->priv->link_pattern_set != NULL)
     {
-      gimp_image_store_item_set (image, view->priv->link_regexp);
-      view->priv->link_regexp = NULL;
-      gtk_entry_set_text (GTK_ENTRY (view->priv->link_regexp_entry), "");
+      gimp_image_store_item_set (image, view->priv->link_pattern_set);
+      view->priv->link_pattern_set = NULL;
+      gtk_entry_set_text (GTK_ENTRY (view->priv->link_search_entry), "");
     }
   else
     {
       gimp_widget_blink (view->priv->link_entry);
-      gimp_widget_blink (view->priv->link_regexp_entry);
+      gimp_widget_blink (view->priv->link_search_entry);
 
       return FALSE;
     }
