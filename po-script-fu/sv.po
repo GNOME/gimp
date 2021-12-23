@@ -1,25 +1,25 @@
 # Swedish messages for GIMP Script-Fu.
-# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017-2020 Free Software Foundation, Inc.
+# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017-2021 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2011.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-26 14:00+0000\n"
-"PO-Revision-Date: 2020-05-27 01:38+0200\n"
+"POT-Creation-Date: 2021-12-23 13:06+0000\n"
+"PO-Revision-Date: 2021-12-23 20:59+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../plug-ins/script-fu/script-fu.c:138
 msgid "Script-Fu _Console"
@@ -137,7 +137,7 @@ msgid "Save Script-Fu Console Output"
 msgstr "Spara utdata från Script-Fu-konsol"
 
 #: ../plug-ins/script-fu/script-fu-console.c:280
-#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-interface.c:239
 #: ../plug-ins/script-fu/script-fu-server.c:834
 msgid "_Cancel"
 msgstr "A_vbryt"
@@ -159,69 +159,69 @@ msgstr "V_erkställ"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu-evalueringsläget tillåter endast icke-interaktiv användning"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:203
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan inte köra två skript på samma gång."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:204
+#: ../plug-ins/script-fu/script-fu-interface.c:205
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kör redan skriptet ”%s”."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:230
+#: ../plug-ins/script-fu/script-fu-interface.c:231
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 msgid "_Reset"
 msgstr "Å_terställ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:239
+#: ../plug-ins/script-fu/script-fu-interface.c:240
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:293
+#: ../plug-ins/script-fu/script-fu-interface.c:294
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:343
+#: ../plug-ins/script-fu/script-fu-interface.c:344
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-färgväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-typsnittsväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-palettväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:492
+#: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu-mönsterväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:501
+#: ../plug-ins/script-fu/script-fu-interface.c:505
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-gradientväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:510
+#: ../plug-ins/script-fu/script-fu-interface.c:514
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:888
+#: ../plug-ins/script-fu/script-fu-interface.c:893
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fel vid körning av %s:"
@@ -282,7 +282,7 @@ msgstr "Tjocklek"
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:198
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/round-corners.scm:145
 #: ../plug-ins/script-fu/scripts/slide.scm:257
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Work on copy"
@@ -540,14 +540,14 @@ msgid "No background (only for separate layer)"
 msgstr "Ingen bakgrund (endast för separat lager)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:138
-#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/lava.scm:141
 #: ../plug-ins/script-fu/scripts/predator.scm:132
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "Behåll markering"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:139
-#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/lava.scm:142
 #: ../plug-ins/script-fu/scripts/predator.scm:133
 msgid "Separate layer"
 msgstr "Separat lager"
@@ -658,7 +658,7 @@ msgstr "Avstånd i Y-led"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
 msgstr "Utsmetningsradie"
 
@@ -1008,31 +1008,36 @@ msgstr "_Ta bort alla hjälplinjer"
 msgid "Remove all horizontal and vertical guides"
 msgstr "Ta bort alla horisontella och vertikala hjälplinjer"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:117
+#. else
+#: ../plug-ins/script-fu/scripts/lava.scm:123
+msgid "Lava works with exactly one selected layer"
+msgstr "Lava fungerar med exakt ett markerat lager"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:129
 msgid "_Lava..."
 msgstr "_Lava…"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:118
+#: ../plug-ins/script-fu/scripts/lava.scm:130
 msgid "Fill the current selection with lava"
 msgstr "Fyll aktuell markering med lava"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:125
+#: ../plug-ins/script-fu/scripts/lava.scm:137
 msgid "Seed"
 msgstr "Slumptalsfrö"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:126
+#: ../plug-ins/script-fu/scripts/lava.scm:138
 msgid "Size"
 msgstr "Storlek"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:127
+#: ../plug-ins/script-fu/scripts/lava.scm:139
 msgid "Roughness"
 msgstr "Strävhet"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/lava.scm:140
 msgid "Gradient"
 msgstr "Gradient"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:131
+#: ../plug-ins/script-fu/scripts/lava.scm:143
 msgid "Use current gradient"
 msgstr "Använd aktuell gradient"
 
@@ -1203,19 +1208,19 @@ msgid "Paste the clipboard contents into a new brush"
 msgstr "Klistra in urklippets innehåll till en ny pensel"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:145
 msgid "_Brush name"
 msgstr "P_enselnamn"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:146
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
 msgid "_File name"
 msgstr "_Filnamn"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:147
 msgid "_Spacing"
 msgstr "Me_llanrum"
 
@@ -1320,34 +1325,34 @@ msgstr "Smeta"
 msgid "Black"
 msgstr "Svart"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: ../plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
 msgstr "_Runda hörn…"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: ../plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
 "Runda av hörnen i en bild och lägg valfritt till en skuggkastning och "
 "bakgrund"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
 msgstr "Hörnradie"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
 msgstr "Lägg till kastad skugga"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
 msgstr "X-avstånd för skugga"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
 msgstr "Y-avstånd för skugga"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: ../plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "Lägg till bakgrund"
 
@@ -1379,11 +1384,11 @@ msgstr "R_adie (%)"
 msgid "Co_ncave"
 msgstr "Ko_nkav"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:137
 msgid "To _Brush..."
 msgstr "Till _pensel…"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:138
 msgid "Convert a selection to a brush"
 msgstr "Konvertera en markering till en pensel"
 
