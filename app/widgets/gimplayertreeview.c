@@ -1119,14 +1119,25 @@ gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
   label_size = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
   for (iter = links; iter; iter = iter->next)
     {
+      GimpSelectMethod method;
+
       grid = gtk_grid_new ();
 
       label = gtk_label_new (gimp_object_get_name (iter->data));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      if (gimp_item_list_is_pattern (iter->data, NULL))
+      if (gimp_item_list_is_pattern (iter->data, &method))
         {
-          PangoAttrList *attrs = pango_attr_list_new ();
+          gchar         *display_name;
+          PangoAttrList *attrs;
 
+          display_name = g_strdup_printf ("<small>[%s]</small> %s",
+                                          method == GIMP_SELECT_PLAIN_TEXT ? _("search") :
+                                          (method == GIMP_SELECT_GLOB_PATTERN ? _("glob") : _("regexp")),
+                                          gimp_object_get_name (iter->data));
+          gtk_label_set_markup (GTK_LABEL (label), display_name);
+          g_free (display_name);
+
+          attrs = pango_attr_list_new ();
           pango_attr_list_insert (attrs, pango_attr_style_new (PANGO_STYLE_OBLIQUE));
           gtk_label_set_attributes (GTK_LABEL (label), attrs);
           pango_attr_list_unref (attrs);
