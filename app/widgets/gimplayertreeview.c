@@ -1320,6 +1320,7 @@ gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
                                      error->message);
           gtk_widget_set_tooltip_text (view->priv->link_search_entry,
                                        tooltip);
+          gimp_image_set_selected_layers (image, NULL);
           gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_search_entry),
                                     attrs);
           g_free (tooltip);
@@ -1331,6 +1332,7 @@ gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
       else if (items == NULL)
         {
           /* Pattern does not match any results. */
+          gimp_image_set_selected_layers (image, NULL);
           gimp_widget_blink (view->priv->link_search_entry);
         }
       else
