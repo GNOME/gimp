@@ -13,26 +13,57 @@ Core:
 
   - Linked layers concept replaced by named sets of layers:
     * One can now store your current selection of layers under any given
-      name and call it layer to get it selected again.
-    * You can also search for layers by their names with patterns.
+      name and select it again later.
+    * You can also search for layers by their names with patterns
+      (as configured in Preferences, see next news item) and save this
+      pattern search if desired.
+  - Preferences > Interface now has an "Item search" with a dropdown
+    settings proposing the following values:
+    * Basic text search: this search does tokenization, case-folding and
+      UTF-8 normalization. Moreover ASCII alternates are compared, which
+      means that e.g. "e" would matched accented versions (such as "é"
+      or others).
+    * Glob pattern search: this is the GLib implementation of this
+      pattern syntax. It matches '*' (wildcard) and '?' (joker). GLib
+      docs notes also: "Note that in contrast to glob(), the '/'
+      character can be matched by the wildcards, there are no '[...]'
+      character ranges and '*' and '?' can not be escaped to include
+      them literally in a pattern."
+    * Regular expression search: Perl-compatible regular expressions as
+      implemented in GLib.
   - New item visibility lock: forbidding to change the state of
     visibility of a given item. This is useful when shift-clicking
     massively items visibility, but you want to exclude some specific
     items from the visibility switch.
+  - New internal API gimp_widget_blink_rect() to blink only specific
+    area of a widget, which may be useful for various notification-type
+    exchanges.
+  - XCF version 16 with support of item sets.
+  - Wayland:
+    * Clean some popup code out of gtk_menu_popup() which is deprecated
+      and won't work anymore on Wayland (wrong positionning).
+    * Use GtkGestureDrag in ColorWheel module and ScrolledPreview widget
+      to avoid unwanted popups and make us future-proof for GTK4.
+  - macOS: various improvements for macOS support of the development
+    version.
+  - The debug dialog only gets a backtrace of the main thread now,
+    because of some bugs in GDB locking GIMP when trying to get a full
+    backtrace for all threads.
 
 User Interface:
 
-  - Lock items are now made visible next to the "Eye" icon (visibility)
-    on each item row.
+  - Link icon removed from the Layers dockable.
+  - Lock icon its now made visible next to the "Eye" icon (visibility)
+    on each item row, where the Link icon was. It raises a popover to
+    switch all available locks (contents, position, visibility, alpha):
     * This makes locks much more obvious rather than when they were at
       the dockable header.
-    * This also works better than toggle buttons with multiple selection
-      of items (indeed when one selected item is locked and another is
-      not, the lock button ends up in some inconsistent state and is
-      much less useful).
+    * This also works better with multiple selection of items (when one
+      selected item is locked and another is not, the lock button were
+      ending up in inconsistent state).
     * This is clearer by showing or not icons (rather than always
       showing several icons, yet with toggle design which is not even so
-      understandable depending on the theme used). If nos locks are set,
+      understandable depending on the theme used). If no locks are set,
       nothing is shown; if only one lock is set, a specific icon is
       shown; if several locks are set, a multi-lock icon is shown (and
       one need to click to get the list of locks).
@@ -42,6 +73,8 @@ User Interface:
   - Alt-click on eye and lock icons allows to massively switch
     visibility/lock state but only within selected items (unlike
     shift-click which switch within all items at same level).
+  - Channels and vectors are now multi-selectable (though actions may
+    have not been all updated yet to handle multiple items).
 
 Plug-ins:
 
@@ -50,13 +83,32 @@ Plug-ins:
     * new support for files in LAB colorspace.
     * new support for loading 32-bit per channel images (some code
       existed yet may have never really worked).
-  - AVIF:
-    * prefer AOM encoder for export (rather than "rav1e", default of
-      libheif, yet with worse performance).
+    * Add extra layer groups when loading PSD images with clipping
+      layers: PhotoShop handles clipping layers in a different way than
+      GIMP. The only way to have it look the same is by adding extra
+      layer groups. PSD layers that have clipping set, combined with the
+      first non clipping layer below it are grouped together in a new
+      layer group. Doing this results in the same image as the PSD
+      merged image unless there are other PSD elements in play that we
+      don't handle yet.
+    * PSD layers with clipping set need clip to backdrop as composite
+      mode: Certain PSD layers have a flag called clipping set to 1. We
+      were not handling this flag and had some reports about colors
+      bleeding where they were not supposed to. We are going to set
+      GIMP's layer composite_mode to GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
+      which is the closest we can get to PhotoShop's clipping. With
+      this, the colors won't bleed anymore.
   - JPEG XL:
     * Bit depth now selectable in JXL export.
-  - Support for very large PBM files on Windows with explicit usage of
-    64-bit size types.
+  - Screenshot:
+    * Remove KDE and GNOME screenshot portal in favor of Freedesktop
+      portal. Security restrictions make them more and more unsuable on
+      recent KDE and GNOME versions.
+    * Set the "interactive" option to TRUE for the Freedesktop API, so
+      that the screenshot options are presented immediately (instead of
+      taking a screenshot, then only proposing options to try again).
+      This is more consistent to how our non-D-Bus screenshot plug-in
+      used to work.
 
 Build:
 
@@ -74,6 +126,7 @@ API:
     using button release events a contextual menu triggering (instead of
     press events), which might be prefered in some cases. Other than
     this, it uses exactly the same conditions as its GDK counterpart.
+  - Removed: gimp_item_set_linked() and gimp_item_get_linked().
 
 
 Overview of Changes from GIMP 2.99.6 to GIMP 2.99.8
