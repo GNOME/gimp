@@ -616,7 +616,6 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->selected_layers_changed      = NULL;
   klass->selected_channels_changed    = NULL;
   klass->selected_vectors_changed     = NULL;
-  klass->linked_items_changed         = NULL;
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
   klass->mask_changed                 = NULL;

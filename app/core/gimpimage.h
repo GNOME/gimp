@@ -57,7 +57,6 @@ struct _GimpImageClass
   void (* selected_channels_changed)    (GimpImage            *image);
   void (* selected_vectors_changed)     (GimpImage            *image);
   void (* selected_layers_changed)      (GimpImage            *image);
-  void (* linked_items_changed)         (GimpImage            *image);
   void (* component_visibility_changed) (GimpImage            *image,
                                          GimpChannelType       channel);
   void (* component_active_changed)     (GimpImage            *image,
