@@ -94,6 +94,7 @@ app/actions/windows-commands.c
 
 app/config/config-enums.c
 app/config/gimpconfig-file.c
+app/config/gimpcoreconfig.c
 app/config/gimpdialogconfig.c
 app/config/gimpdisplayoptions.c
 app/config/gimprc.c
