@@ -6,7 +6,7 @@
 This is the unstable branch of GIMP.
 
 
-Overview of Changes from GIMP 2.99.6 to GIMP 2.99.10
+Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
 ====================================================
 
 Core:
@@ -70,6 +70,8 @@ User Interface:
     * Locks can now be set massively with shift and alt-click (see next
       item) with the same logics as you can change visibility massively
       on the eye button.
+  - Visibility (eye icon) and lock columns in the item dockables are
+    given an icon header to be more discoverable.
   - Alt-click on eye and lock icons allows to massively switch
     visibility/lock state but only within selected items (unlike
     shift-click which switch within all items at same level).
