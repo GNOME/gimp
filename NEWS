@@ -130,6 +130,10 @@ API:
     this, it uses exactly the same conditions as its GDK counterpart.
   - Removed: gimp_item_set_linked() and gimp_item_get_linked().
 
+Translations:
+  - Updated Basque, British English, Catalan, Chinese (China), Hungarian,
+    Italian, Kabyle, Latvian, Lithuanian, Polish, Portuguese, Slovenian,
+    Spanish, Swedish, Ukrainian translations
 
 Overview of Changes from GIMP 2.99.6 to GIMP 2.99.8
 ===================================================
