@@ -33,6 +33,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-drmingw \
     mingw-w64-$MSYS2_ARCH-gexiv2 \
     mingw-w64-$MSYS2_ARCH-ghostscript \
+    mingw-w64-$MSYS2_ARCH-gi-docgen \
     mingw-w64-$MSYS2_ARCH-glib-networking \
     mingw-w64-$MSYS2_ARCH-gobject-introspection \
     mingw-w64-$MSYS2_ARCH-gobject-introspection-runtime \
