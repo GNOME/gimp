@@ -63,7 +63,7 @@ m4_define([gegl_major_minor_version], [0.4])
 m4_define([gegl_micro_version], [34])
 m4_define([gegl_required_version],
           [gegl_major_minor_version.gegl_micro_version])
-m4_define([gexiv2_required_version], [0.10.6])
+m4_define([gexiv2_required_version], [0.12.2)
 m4_define([glib_required_version], [2.68.0])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([gtk_required_version], [3.22.29])
