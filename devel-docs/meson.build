@@ -16,8 +16,7 @@ mkdb_args_common = [
   '--name-space=gimp',
 ]
 
-
-if get_option('gi-docgen')
+if gi_docgen.found()
   subdir('reference')
 endif
 

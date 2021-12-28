@@ -2752,13 +2752,21 @@ fi
 # Check for gi-docgen
 ########################################
 
-AC_ARG_ENABLE(gi-docgen, [  --enable-gi-docgen       build gi-docgen documentation (default=yes)], , enable_gi_docgen=yes)
+AC_ARG_ENABLE(gi-docgen, [  --enable-gi-docgen       build gi-docgen documentation (default=auto)], , enable_gi_docgen=auto)
 
-if test "x$enable_gi_docgen" = xyes; then
+if test "x$enable_gi_docgen" != xno; then
   AC_PATH_PROG(GI_DOCGEN, gi-docgen, no)
   if test "x$GI_DOCGEN" = xno; then
-    add_deps_error([gi-docgen], [Could not find gi-docgen in your PATH.])
+    if test "x$enable_gi_docgen" = xyes; then
+      add_deps_error([gi-docgen], [Could not find gi-docgen in your PATH.])
+    else
+      enable_gi_docgen="no (gi-docgen missing)"
+    fi
+  else
+    enable_gi_docgen="yes"
   fi
+else
+  enable_gi_docgen="no"
 fi
 
 AM_CONDITIONAL(ENABLE_GI_DOCGEN, test "x$enable_gi_docgen" = xyes)
@@ -3272,6 +3280,7 @@ Tests:
   Test desktop file          $have_desktop_file_validate
 
 Documentation:
+  libgimp API Reference:     $enable_gi_docgen
   GObject Introspection:     $enable_g_ir_doc
 
 Bug report URL: $with_bug_report_url

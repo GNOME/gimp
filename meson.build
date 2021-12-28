@@ -1009,6 +1009,9 @@ desktop_validate    = find_program('desktop-file-validate', required: false)
 appstream_util = find_program('appstream-util', required: get_option('appdata-test'))
 
 # Check for doc generation tools
+
+gi_docgen = find_program('gi-docgen', required: get_option('gi-docgen'))
+
 if get_option('g-ir-doc')
   gir_doc_tool = find_program('g-ir-doc-tool', required: true)
   yelp_build   = find_program('yelp-build', required: true)
@@ -1828,6 +1831,7 @@ final_message = [
 '''  Test appdata         @0@'''.format(appstream_util.found()),
 '',
 '''Documentation:''',
+'''  libgimp API Reference: @0@'''.format(gi_docgen.found()),
 '''  GObject Introspection: @0@'''.format(get_option('g-ir-doc')),
 '',
 '''Bug report URL: @0@'''.format(bug_report_url),
