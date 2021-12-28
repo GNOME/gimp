@@ -32,7 +32,7 @@ G_BEGIN_DECLS
  * GimpRenderFunc:
  * @x:
  * @y:
- * @color:
+ * @color: (out caller-allocates): The rendered pixel as RGB
  * @data: (closure):
  */
 typedef void (* GimpRenderFunc)   (gdouble   x,
