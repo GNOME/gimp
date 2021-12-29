@@ -26,6 +26,30 @@
 #include "gimppdb_pdb.h"
 
 
+/**
+ * GimpLoadProcedure:
+ *
+ * A [class@Procedure] subclass that makes it easier to write file load
+ * procedures.
+ *
+ * It automatically adds the standard
+ *
+ * ( [enum@RunMode], [iface@Gio.File] )
+ *
+ * arguments and the standard
+ *
+ * ( [class@Image] )
+ *
+ * return value of a load procedure. It is possible to add additional
+ * arguments.
+ *
+ * When invoked via [method@Procedure.run], it unpacks these standard
+ * arguments and calls @run_func which is a [callback@RunImageFunc]. The
+ * "args" [struct@ValueArray] of [callback@RunImageFunc] only contains
+ * additionally added arguments.
+ */
+
+
 struct _GimpLoadProcedurePrivate
 {
   GimpRunLoadFunc  run_func;
@@ -218,26 +242,7 @@ gimp_load_procedure_create_config (GimpProcedure  *procedure,
  *
  * See gimp_procedure_new() for information about @proc_type.
  *
- * #GimpLoadProcedure is a #GimpProcedure subclass that makes it easier
- * to write file load procedures.
- *
- * It automatically adds the standard
- *
- * (#GimpRunMode, #GFile)
- *
- * arguments and the standard
- *
- * (#GimpImage)
- *
- * return value of a load procedure. It is possible to add additional
- * arguments.
- *
- * When invoked via gimp_procedure_run(), it unpacks these standard
- * arguments and calls @run_func which is a #GimpRunLoadFunc. The
- * "args" #GimpValueArray of #GimpRunLoadFunc only contains
- * additionally added arguments.
- *
- * Returns: a new #GimpProcedure.
+ * Returns: (transfer full): a new #GimpProcedure.
  *
  * Since: 3.0
  **/
@@ -272,11 +277,10 @@ gimp_load_procedure_new (GimpPlugIn      *plug_in,
 
 /**
  * gimp_load_procedure_set_handles_raw:
- * @procedure:   A #GimpLoadProcedure.
+ * @procedure:   A load procedure object.
  * @handles_raw: The procedure's handles raw flag.
  *
- * Registers a load loader procedure as capable of handling raw
- * digital camera loads.
+ * Registers a load procedure as capable of handling raw digital camera loads.
  *
  * Since: 3.0
  **/
@@ -291,10 +295,12 @@ gimp_load_procedure_set_handles_raw (GimpLoadProcedure *procedure,
 
 /**
  * gimp_load_procedure_get_handles_raw:
- * @procedure: A #GimpLoadProcedure.
+ * @procedure: A load procedure object.
  *
- * Returns: The procedure's handles raw flag as set with
- *          gimp_load_procedure_set_handles_raw().
+ * Returns the procedure's 'handles raw' flag as set with
+ * [method@GimpLoadProcedure.set_handles_raw].
+ *
+ * Returns: The procedure's 'handles raw' flag.
  *
  * Since: 3.0
  **/
@@ -308,7 +314,7 @@ gimp_load_procedure_get_handles_raw (GimpLoadProcedure *procedure)
 
 /**
  * gimp_load_procedure_set_thumbnail_loader:
- * @procedure:      A #GimpLoadProcedure.
+ * @procedure:      A load procedure object.
  * @thumbnail_proc: The name of the thumbnail load procedure.
  *
  * Associates a thumbnail loader with a file load procedure.
@@ -334,10 +340,12 @@ gimp_load_procedure_set_thumbnail_loader (GimpLoadProcedure *procedure,
 
 /**
  * gimp_load_procedure_get_thumbnail_loader:
- * @procedure: A #GimpLoadProcedure.
+ * @procedure: A load procedure object.
  *
- * Returns: The procedure's thumbnail loader procedure as set with
- *          gimp_load_procedure_set_thumbnail_loader().
+ * Returns the procedure's thumbnail loader procedure as set with
+ * [method@GimpLoadProcedure.set_thumbnail_loader].
+ *
+ * Returns: The procedure's thumbnail loader procedure
  *
  * Since: 3.0
  **/

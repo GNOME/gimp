@@ -25,6 +25,26 @@
 #include "gimpimageprocedure.h"
 
 
+/**
+ * GimpImageProcedure:
+ *
+ * A [class@Procedure] subclass that makes it easier to write standard plug-in
+ * procedures that operate on drawables.
+ *
+ * It automatically adds the standard
+ *
+ * ( [enum@RunMode], [class@Image], [class@Drawable] )
+ *
+ * arguments of an image procedure. It is possible to add additional
+ * arguments.
+ *
+ * When invoked via [method@Procedure.run], it unpacks these standard
+ * arguments and calls @run_func which is a [callback@RunImageFunc]. The
+ * "args" [struct@ValueArray] of [callback@RunImageFunc] only contains
+ * additionally added arguments.
+ */
+
+
 struct _GimpImageProcedurePrivate
 {
   GimpRunImageFunc run_func;
@@ -206,28 +226,13 @@ gimp_image_procedure_set_sensitivity (GimpProcedure *procedure,
  * @name:             the new procedure's name.
  * @proc_type:        the new procedure's #GimpPDBProcType.
  * @run_func:         the run function for the new procedure.
- * @run_data:         user data passed to @run_func.
- * @run_data_destroy: (nullable): free function for @run_data, or %NULL.
+ * @run_data: (closure run_func): user data passed to @run_func.
+ * @run_data_destroy: (destroy run_func) (nullable): free function for @run_data, or %NULL.
  *
  * Creates a new image procedure named @name which will call @run_func
  * when invoked.
  *
- * See gimp_procedure_new() for information about @proc_type.
- *
- * #GimpImageProcedure is a #GimpProcedure subclass that makes it easier
- * to write standard plug-in procedures that operate on drawables.
- *
- * It automatically adds the standard
- *
- * (#GimpRunMode, #GimpImage, #GimpDrawable)
- *
- * arguments of an image procedure. It is possible to add additional
- * arguments.
- *
- * When invoked via gimp_procedure_run(), it unpacks these standard
- * arguments and calls @run_func which is a #GimpRunImageFunc. The
- * "args" #GimpValueArray of #GimpRunImageFunc only contains
- * additionally added arguments.
+ * See [ctor@Procedure.new] for information about @proc_type.
  *
  * Returns: a new #GimpProcedure.
  *
