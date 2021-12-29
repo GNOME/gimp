@@ -116,31 +116,32 @@ struct _GimpModuleInfo
 
 /**
  * GimpModuleQueryFunc:
- * @module:  The #GimpModule responsible for this loadable module.
- * @Returns: The #GimpModuleInfo struct describing the module.
+ * @module:  The module responsible for this loadable module.
  *
  * The signature of the query function a loadable GIMP module must
- * implement.  In the module, the function must be called
- * gimp_module_query().
+ * implement. In the module, the function must be called [func@Module.query].
  *
- * #GimpModule will copy the returned #GimpModuleInfo struct, so the
+ * [class@Module] will copy the returned [struct@ModuleInfo], so the
  * module doesn't need to keep these values around (however in most
  * cases the module will just return a pointer to a constant
  * structure).
+ *
+ * Returns: The info struct describing the module.
  **/
 typedef const GimpModuleInfo * (* GimpModuleQueryFunc)    (GTypeModule *module);
 
 /**
  * GimpModuleRegisterFunc:
- * @module:  The #GimpModule responsible for this loadable module.
- * @Returns: %TRUE on success, %FALSE otherwise.
+ * @module:  The module responsible for this loadable module.
  *
  * The signature of the register function a loadable GIMP module must
  * implement.  In the module, the function must be called
- * gimp_module_register().
+ * [func@Module.register].
  *
  * When this function is called, the module should register all the types
  * it implements with the passed @module.
+ *
+ * Returns: Whether the registration was succesfull
  **/
 typedef gboolean               (* GimpModuleRegisterFunc) (GTypeModule *module);
 

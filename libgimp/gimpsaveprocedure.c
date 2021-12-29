@@ -525,7 +525,9 @@ gimp_save_procedure_new (GimpPlugIn      *plug_in,
  * Determine whether @procedure supports saving Exif data. By default,
  * it won't (so there is usually no reason to run this function with
  * %FALSE).
- * This will have several consequence:
+ *
+ * This will have several consequences:
+ *
  * - Automatically adds a standard auxiliary argument "save-exif" in the
  *   end of the argument list of @procedure, with relevant blurb and
  *   description.
@@ -535,11 +537,12 @@ gimp_save_procedure_new (GimpPlugIn      *plug_in,
  * - Generated GimpSaveProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
- * - API from #GimpProcedureConfig will automatically process these
+ * - API from [class@ProcedureConfig] will automatically process these
  *   properties to decide whether to save a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
- * the PDB arguments. By default, the value will be gimp_export_exif().
+ * the PDB arguments. By default, the value will be [func@export_exif].
+ *
  * Since: 3.0
  **/
 void
@@ -561,7 +564,9 @@ gimp_save_procedure_set_support_exif (GimpSaveProcedure *procedure,
  * Determine whether @procedure supports saving IPTC data. By default,
  * it won't (so there is usually no reason to run this function with
  * %FALSE).
- * This will have several consequence:
+ *
+ * This will have several consequences:
+ *
  * - Automatically adds a standard auxiliary argument "save-iptc" in the
  *   end of the argument list of @procedure, with relevant blurb and
  *   description.
@@ -571,11 +576,12 @@ gimp_save_procedure_set_support_exif (GimpSaveProcedure *procedure,
  * - Generated GimpSaveProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
- * - API from #GimpProcedureConfig will automatically process these
+ * - API from [class@ProcedureConfig] will automatically process these
  *   properties to decide whether to save a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
- * the PDB arguments. By default, the value will be gimp_export_iptc().
+ * the PDB arguments. By default, the value will be [func@export_iptc].
+ *
  * Since: 3.0
  **/
 void
@@ -597,7 +603,9 @@ gimp_save_procedure_set_support_iptc (GimpSaveProcedure *procedure,
  * Determine whether @procedure supports saving XMP data. By default,
  * it won't (so there is usually no reason to run this function with
  * %FALSE).
- * This will have several consequence:
+ *
+ * This will have several consequences:
+ *
  * - Automatically adds a standard auxiliary argument "save-xmp" in the
  *   end of the argument list of @procedure, with relevant blurb and
  *   description.
@@ -607,11 +615,12 @@ gimp_save_procedure_set_support_iptc (GimpSaveProcedure *procedure,
  * - Generated GimpSaveProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
- * - API from #GimpProcedureConfig will automatically process these
+ * - API from [class@ProcedureConfig] will automatically process these
  *   properties to decide whether to save a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
- * the PDB arguments. By default, the value will be gimp_export_xmp().
+ * the PDB arguments. By default, the value will be [func@export_xmp].
+ *
  * Since: 3.0
  **/
 void
@@ -633,7 +642,9 @@ gimp_save_procedure_set_support_xmp (GimpSaveProcedure *procedure,
  * Determine whether @procedure supports saving ICC color profiles. By
  * default, it won't (so there is usually no reason to run this function
  * with %FALSE).
- * This will have several consequence:
+ *
+ * This will have several consequences:
+ *
  * - Automatically adds a standard auxiliary argument
  *   "save-color-profile" in the end of the argument list of @procedure,
  *   with relevant blurb and description.
@@ -643,12 +654,12 @@ gimp_save_procedure_set_support_xmp (GimpSaveProcedure *procedure,
  * - Generated GimpSaveProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
- * - API from #GimpProcedureConfig will automatically process these
+ * - API from [class@ProcedureConfig] will automatically process these
  *   properties to decide whether to save a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
- * the PDB arguments. By default, the value will be
- * gimp_export_color_profile().
+ * the PDB arguments. By default, the value will be [func@export_color_profile].
+ *
  * Since: 3.0
  **/
 void
@@ -670,7 +681,9 @@ gimp_save_procedure_set_support_profile (GimpSaveProcedure *procedure,
  * Determine whether @procedure supports saving a thumbnail. By default,
  * it won't (so there is usually no reason to run this function with
  * %FALSE).
- * This will have several consequence:
+ *
+ * This will have several consequences:
+ *
  * - Automatically adds a standard auxiliary argument "save-thumbnail"
  *   in the end of the argument list of @procedure, with relevant blurb
  *   and description.
@@ -680,12 +693,13 @@ gimp_save_procedure_set_support_profile (GimpSaveProcedure *procedure,
  * - Generated GimpSaveProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
- * - API from #GimpProcedureConfig will automatically process these
+ * - API from [class@ProcedureConfig] will automatically process these
  *   properties to decide whether to save a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
  * the PDB arguments. By default, the value will be
- * gimp_export_thumbnail().
+ * [func@export_thumbnail].
+ *
  * Since: 3.0
  **/
 void
@@ -707,7 +721,9 @@ gimp_save_procedure_set_support_thumbnail (GimpSaveProcedure *procedure,
  * Determine whether @procedure supports saving a comment. By default,
  * it won't (so there is usually no reason to run this function with
  * %FALSE).
- * This will have several consequence:
+ *
+ * This will have several consequences:
+ *
  * - Automatically adds a standard auxiliary argument "save-comment"
  *   in the end of the argument list of @procedure, with relevant blurb
  *   and description.
@@ -717,12 +733,13 @@ gimp_save_procedure_set_support_thumbnail (GimpSaveProcedure *procedure,
  * - Generated GimpSaveProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
- * - API from #GimpProcedureConfig will automatically process these
+ * - API from [class@ProcedureConfig] will automatically process these
  *   properties to decide whether to save a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
  * the PDB arguments. By default, the value will be
- * gimp_export_comment().
+ * [func@export_comment].
+ *
  * Since: 3.0
  **/
 void

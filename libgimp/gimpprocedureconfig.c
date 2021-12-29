@@ -28,21 +28,18 @@
 
 
 /**
- * SECTION: gimpprocedureconfig
- * @title: GimpProcedureConfig
- * @short_description: Config object for procedure arguments
+ * GimpProcedureConfig:
  *
- * #GimpProcedureConfig is the base class for #GimpProcedure specific
- * config objects and the main interface to manage aspects of
- * #GimpProcedure's arguments such as persistency of the last used
- * arguments across GIMP sessions.
+ * The base class for [class@Procedure] specific config objects and the main
+ * interface to manage aspects of [class@Procedure]'s arguments such as
+ * persistency of the last used arguments across GIMP sessions.
  *
- * A #GimpProcedureConfig is created by a #GimpProcedure using
- * gimp_procedure_create_config() and its properties match the
+ * A procedure config is created by a [class@Procedure] using
+ * [method@Procedure.create_config] and its properties match the
  * procedure's arguments and auxiliary arguments in number, order and
  * type.
  *
- * It implements the #GimpConfig interface and therefore has all its
+ * It implements the [iface@Config] interface and therefore has all its
  * serialization and deserialization features.
  *
  * Since: 3.0
@@ -202,12 +199,12 @@ gimp_procedure_config_get_property (GObject    *object,
 
 /**
  * gimp_procedure_config_get_procedure:
- * @config: a #GimpProcedureConfig
+ * @config: a procedure config
  *
- * This function returns the #GimpProcedure which created @config, see
- * gimp_procedure_create_config().
+ * This function returns the [class@Procedure] which created @config, see
+ * [method@Procedure.create_config].
  *
- * Returns: (transfer none): The #GimpProcedure which created @config.
+ * Returns: (transfer none): The procedure which created this config.
  *
  * Since: 3.0
  **/
@@ -230,8 +227,8 @@ gimp_procedure_config_get_procedure (GimpProcedureConfig *config)
  * number, order and types of @config's properties.
  *
  * This function is meant to be used on @values which are passed as
- * arguments to the run() function of the #GimpProcedure which created
- * this @config. See gimp_procedure_create_config().
+ * arguments to the run() function of the [class@Procedure] which created
+ * this @config. See [method@Procedure.create_config].
  *
  * Since: 3.0
  **/
@@ -275,7 +272,7 @@ gimp_procedure_config_set_values (GimpProcedureConfig  *config,
  * Gets the values from @config's properties and stores them in
  * @values.
  *
- * See gimp_procedure_config_set_values().
+ * See [method@ProcedureConfig.set_values].
  *
  * Since: 3.0
  **/
@@ -439,10 +436,10 @@ gimp_procedure_config_set_parasite (GimpProcedureConfig *config,
  * gimp_procedure_config_begin_run:
  * @config:   a #GimpProcedureConfig
  * @image: (nullable): a #GimpImage or %NULL
- * @run_mode: the #GimpRunMode passed to a #GimpProcedure's run()
- * @args:     the #GimpValueArray passed to a #GimpProcedure's run()
+ * @run_mode: the #GimpRunMode passed to a [class@Procedure]'s run()
+ * @args:     the #GimpValueArray passed to a [class@Procedure]'s run()
  *
- * Populates @config with values for a #GimpProcedure's run(),
+ * Populates @config with values for a [class@Procedure]'s run(),
  * depending on @run_mode.
  *
  * If @run_mode is %GIMP_RUN_INTERACTIVE or %GIMP_RUN_WITH_LAST_VALS,
@@ -453,31 +450,29 @@ gimp_procedure_config_set_parasite (GimpProcedureConfig *config,
  * values are found, the procedure's default argument values are used.
  *
  * If @run_mode is %GIMP_RUN_NONINTERACTIVE, the contents of @args are
- * set on @config using gimp_procedure_config_set_values().
+ * set on @config using [method@ProcedureConfig.set_values].
  *
  * After setting @config's properties like described above, arguments
  * and auxiliary arguments are automatically synced from image
  * parasites of the same name if they were set to
- * %GIMP_ARGUMENT_SYNC_PARASITE with
- * gimp_procedure_set_argument_sync():
+ * %GIMP_ARGUMENT_SYNC_PARASITE with [class@Procedure.set_argument_sync]:
  *
  * String properties are set to the value of the image parasite if
  * @run_mode is %GIMP_RUN_INTERACTIVE or %GIMP_RUN_WITH_LAST_VALS, or
  * if the corresponding argument is an auxiliary argument. As a
  * special case, a property named "gimp-comment" will default to
- * gimp_get_default_comment() if there is no "gimp-comment" parasite.
+ * [func@get_default_comment] if there is no "gimp-comment" parasite.
  *
  * After calling this function, the @args passed to run() should be
  * left alone and @config be treated as the procedure's arguments.
  *
  * It is possible to get @config's resulting values back into @args by
- * calling gimp_procedure_config_get_values(), as long as modified
- * @args are written back to @config using
- * gimp_procedure_config_set_values() before the call to
- * gimp_procedure_config_end_run().
+ * calling [method@ProcedureConfig.get_values], as long as modified
+ * @args are written back to @config using [method@ProcedureConfig.set_values]
+ * before the call to [method@ProcedureConfig.end_run].
  *
  * This function should be used at the beginning of a procedure's
- * run() and be paired with a call to gimp_procedure_config_end_run()
+ * run() and be paired with a call to [method@ProcedureConfig.end_run]
  * at the end of run().
  *
  * Since: 3.0
@@ -571,28 +566,28 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
 /**
  * gimp_procedure_config_end_run:
  * @config: a #GimpProcedureConfig
- * @status: the return status of the #GimpProcedure's run()
+ * @status: the return status of the [class@Procedure]'s run()
  *
  * This function is the counterpart of
- * gimp_procedure_config_begin_run() and must always be called in
+ * [method@ProcedureConfig.begin_run] and must always be called in
  * pairs in a procedure's run(), before returning return values.
  *
- * If the @run_mode passed to gimp_procedure_config_end_run() was
+ * If the @run_mode passed to [method@ProcedureConfig.end_run] was
  * %GIMP_RUN_INTERACTIVE, @config is saved as last used values to be
  * used when the procedure runs again. Additionally, if the #GimpImage
- * passed to gimp_procedure_config_begin_run() was not %NULL, @config is
+ * passed to [method@ProcedureConfig.begin_run] was not %NULL, @config is
  * attached to @image as last used values for this image using a
- * #GimpParasite and gimp_image_attach_parasite().
+ * #GimpParasite and [method@Image.attach_parasite].
  *
  * If @run_mode was not %GIMP_RUN_NONINTERACTIVE, this function also
- * conveniently calls gimp_displays_flush(), which is what most
+ * conveniently calls [func@displays_flush], which is what most
  * procedures want and doesn't do any harm if called redundantly.
  *
  * After a %GIMP_RUN_INTERACTIVE run, %GIMP_ARGUMENT_SYNC_PARASITE
  * values that have been changed are written back to their
  * corresponding image parasite.
  *
- * See gimp_procedure_config_begin_run().
+ * See [method@ProcedureConfig.begin_run].
  *
  * Since: 3.0
  **/
@@ -657,55 +652,49 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
 /**
  * gimp_procedure_config_begin_export:
  * @config:         a #GimpProcedureConfig
- * @original_image: the #GimpImage passed to run()
- * @run_mode:       the #GimpRunMode passed to a #GimpProcedure's run()
- * @args:           the #GimpValueArray passed to a #GimpProcedure's run()
+ * @original_image: the image passed to run()
+ * @run_mode:       the #GimpRunMode passed to a [class@Procedure]'s run()
+ * @args:           the value array passed to a [class@Procedure]'s run()
  * @mime_type: (nullable):  exported file format's mime type, or %NULL.
  *
- * This is a variant of gimp_procedure_config_begin_run() to be used
- * by file export procedures using #GimpSaveProcedure. It must be
- * paired with a call to gimp_procedure_config_end_export() at the end
+ * This is a variant of [method@ProcedureConfig.begin_run] to be used
+ * by file export procedures using [class@SaveProcedure]. It must be
+ * paired with a call to [method@ProcedureConfig.end_export] at the end
  * of run().
  *
- * It does everything gimp_procedure_config_begin_run() does but
+ * It does everything [method@ProcedureConfig.begin_run] does but
  * provides additional features to automate file export:
  *
  * If @mime_type is non-%NULL, exporting metadata is handled
- * automatically, by calling gimp_image_metadata_save_prepare() and
- * syncing its returned #GimpMetadataSaveFlags with @config's
- * properties. (The corresponding gimp_image_metadata_save_finish()
- * will be called by gimp_procedure_config_end_export()).
+ * automatically, by calling [method@Image.metadata_save_prepare] and
+ * syncing its returned [flags@MetadataSaveFlags] with @config's
+ * properties. (The corresponding [method@Image.metadata_save_finish]
+ * will be called by [method@ProcedureConfig.end_export]).
  *
- * The following boolean arguments of the used #GimpSaveProcedure are
+ * The following boolean arguments of the used [class@SaveProcedure] are
  * synced. The procedure can but must not provide these arguments.
  *
- * "save-exif" for %GIMP_METADATA_SAVE_EXIF.
+ * - "save-exif" for %GIMP_METADATA_SAVE_EXIF.
+ * - "save-xmp" for %GIMP_METADATA_SAVE_XMP.
+ * - "save-iptc" for %GIMP_METADATA_SAVE_IPTC.
+ * - "save-thumbnail" for %GIMP_METADATA_SAVE_THUMBNAIL.
+ * - "save-color-profile" for %GIMP_METADATA_SAVE_COLOR_PROFILE.
+ * - "save-comment" for %GIMP_METADATA_SAVE_COMMENT.
  *
- * "save-xmp" for %GIMP_METADATA_SAVE_XMP.
- *
- * "save-iptc" for %GIMP_METADATA_SAVE_IPTC.
- *
- * "save-thumbnail" for %GIMP_METADATA_SAVE_THUMBNAIL.
- *
- * "save-color-profile" for %GIMP_METADATA_SAVE_COLOR_PROFILE.
- *
- * "save-comment" for %GIMP_METADATA_SAVE_COMMENT.
- *
- * The values from the #GimpMetadataSaveFlags will only ever be used
+ * The values from the [flags@MetadataSaveFlags] will only ever be used
  * to set these properties to %FALSE, overriding the user's saved
  * default values for the procedure, but NOT overriding the last used
  * values from exporting @original_image or the last used values from
  * exporting any other image using this procedure.
  *
- * If @mime_type is %NULL, #GimpMetadata handling is skipped. The
+ * If @mime_type is %NULL, [class@Metadata] handling is skipped. The
  * procedure can still have all of the above listed boolean arguments,
  * but must take care of their default values itself. The easiest way
- * to do this is by simply using gimp_export_comment(),
- * gimp_export_exif() etc. as default values for these arguments when
- * adding them using GIMP_PROC_ARG_BOOLEAN() or
- * GIMP_PROC_AUX_ARG_BOOLEAN().
+ * to do this is by simply using [func@export_comment], [func@export_exif] etc.
+ * as default values for these arguments when adding them using
+ * GIMP_PROC_ARG_BOOLEAN() or GIMP_PROC_AUX_ARG_BOOLEAN().
  *
- * Returns: (transfer none) (nullable): The #GimpMetadata to be used
+ * Returns: (transfer none) (nullable): The metadata to be used
  *          for this export, or %NULL if @original_image doesn't have
  *          metadata.
  *
@@ -770,24 +759,24 @@ gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
 /**
  * gimp_procedure_config_end_export:
  * @config:         a #GimpProcedureConfig
- * @exported_image: the #GimpImage that was actually exported
+ * @exported_image: the image that was actually exported
  * @file:           the #GFile @exported_image was written to
- * @status:         the return status of the #GimpProcedure's run()
+ * @status:         the return status of the [class@Procedure]'s run()
  *
- * This is a variant of gimp_procedure_config_end_run() to be used by
- * file export procedures using #GimpSaveProcedure. It must be paired
- * with a call to gimp_procedure_config_begin_export() at the
+ * This is a variant of [method@ProcedureConfig.end_run] to be used by
+ * file export procedures using [class@SaveProcedure]. It must be paired
+ * with a call to [method@ProcedureConfig.begin_export] at the
  * beginning of run().
  *
- * It does everything gimp_procedure_config_begin_run() does but
+ * It does everything [method@ProcedureConfig.begin_run] does but
  * provides additional features to automate file export:
  *
  * If @status is %GIMP_PDB_SUCCESS, and
- * gimp_procedure_config_begin_export() returned a #GimpMetadata, this
- * function calls gimp_procedure_config_save_metadata(), which syncs
+ * [method@ProcedureConfig.begin_export] returned a [class@Metadata], this
+ * function calls [method@ProcedureConfig.save_metadata], which syncs
  * back @config's export properties to the metadata's
- * #GimpMetadataSaveFlags and writes metadata to @file using
- * gimp_image_metadata_save_finish().
+ * [flags@MetadataSaveFlags] and writes metadata to @file using
+ * [method@Image.metadata_save_finish].
  *
  * Since: 3.0
  **/
@@ -817,23 +806,23 @@ gimp_procedure_config_end_export (GimpProcedureConfig *config,
 /**
  * gimp_procedure_config_save_metadata:
  * @config:         a #GimpProcedureConfig
- * @exported_image: the #GimpImage that was actually exported
- * @file:           the #GFile @exported_image was written to
+ * @exported_image: the image that was actually exported
+ * @file:           the file @exported_image was written to
  *
  * Note: There is normally no need to call this function because it's
- * already called from gimp_procedure_config_end_export().
+ * already called from [method@ProcedureConfig.end_export].
  *
- * Only use this function if the #GimpMetadata returned by
- * gimp_procedure_config_begin_run() needs to be written at a specific
+ * Only use this function if the [class@Metadata] returned by
+ * [method@ProcedureConfig.begin_run] needs to be written at a specific
  * point of the export, other than its end.
  *
  * This function syncs back @config's export properties to the
- * metadata's #GimpMetadataSaveFlags and writes the metadata to @file
- * using gimp_image_metadata_save_finish().
+ * metadata's [flags@MetadataSaveFlags] and writes the metadata to @file
+ * using [method@Image.metadata_save_finish].
  *
  * The metadata is only ever written once. If this function has been
  * called explicitly, it will do nothing when called a second time
- * from gimp_procedure_config_end_export().
+ * from [method@ProcedureConfig.end_export].
  *
  * Since: 3.0
  **/
