@@ -488,7 +488,7 @@ gimp-win64:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
-              -Dgi-docgen=false && ninja && ninja install &&
+              -Dgi-docgen=disabled && ninja && ninja install &&
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w64 gimp --run="-"
