@@ -10,6 +10,8 @@ gimp-3.0.toml: gimp-3.0.toml.in
 
 # Markdown content files
 content_files = \
+	porting_guide.md \
+	porting_scriptfu_scripts.md \
 	$(NULL)
 
 Gimp-reference: $(top_builddir)/libgimp/Gimp-@GIMP_API_VERSION@.gir $(content_files) gimp-3.0.toml

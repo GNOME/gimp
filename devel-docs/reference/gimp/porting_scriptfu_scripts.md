@@ -1,21 +1,23 @@
+Title: GIMP 3 script-fu porting guide
 
-
-## About this document
-
+GIMP 3 script-fo porting guide
+==============================
 This describes *some* changes needed to port a Scriptfu script to GIMP 3:
+
 - changes in types
 - changes in PDB signatures for multi-layer support
 - changes in error messages
 - changes in logging
 
 It does *not* document:
+
 - PDB procedures whose names have changed (see pdb-calls.md)
 - PDB procedures that have been removed (see removed_functions.md)
 - PDB procedures that have been added
 - other changes in signature where arguments are reordered or changed in number
 
-## Changes in types of PDB signatures
-
+Changes in types of PDB signatures
+----------------------------------
 Calls from a script to GIMP are calls to PDB procedures.
 PDB procedures are documented in terms of C and GLib types.
 
@@ -32,7 +34,6 @@ This table summarizes the changes:
 (Where "obj" means an object of a GIMP type such as GimpDrawable or similar.)
 
 ### Use one string for a filename instead of two.
-
 Formerly a PDB procedure taking a filename (usually a full path) required two strings (two gchar* .)
 Now such PDB procedures require a GFile.
 
@@ -93,7 +94,6 @@ Example:
 
 
 ### Receiving an array of drawables
-
 Formerly a PDB procedure returning an array of drawables (or other GIMP objects)
 had a signature specifying a returned gint and GimpInt32Array.
 Now the signature specifies a returned gint and GimpObjectArray.
@@ -124,8 +124,8 @@ Meaning a list length of zero, and an empty vector.
 (Since a new image has no layers.)
 
 
-## Changes in error messages
-
+Changes in error messages
+----------------------------
 ScriptFu is now more forgiving.
 
 Formerly, ScriptFu would not accept a call construct where the argument count was wrong,
@@ -149,8 +149,8 @@ When you suspect errors in a script,
 it is now important to run GIMP from a console to see warnings.
 
 
-## ScriptFu logging
-
+ScriptFu logging
+----------------------------
 ScriptFu now does some logging using GLib logging.
 When you define in the environment "G_MESSAGES_DEBUG=scriptfu"
 ScriptFu will print many messages to the console.

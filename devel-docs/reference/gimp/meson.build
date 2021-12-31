@@ -1,5 +1,7 @@
 # Extra markdown files
 gimp_doc_content_files = [
+  'porting_guide.md',
+  'porting_scriptfu_scripts.md',
 ]
 
 gimp_doc_toml = configure_file(

@@ -71,4 +71,6 @@ base_url = "https://gitlab.gnome.org/GNOME/gimp/-/blob/master/"
 
 [extra]
 content_files = [
+  'porting_guide.md',
+  'porting_scriptfu_scripts.md',
 ]
