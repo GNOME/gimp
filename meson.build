@@ -800,7 +800,7 @@ if openjpeg.found()
   MIMEtypes += [ 'image/jp2', 'image/jpeg2000', 'image/jpx', ]
 endif
 
-jpegxl_minver  = '0.5.0'
+jpegxl_minver  = '0.6.1'
 libjxl         = dependency('libjxl',
                             version: '>='+jpegxl_minver,
                             required: get_option('jpeg-xl')

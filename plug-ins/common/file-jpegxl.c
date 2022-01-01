@@ -214,12 +214,15 @@ load_image (GFile        *file,
   size_t            icc_size = 0;
   GimpColorProfile *profile = NULL;
   gboolean          loadlinear = FALSE;
+  size_t            channel_depth;
   size_t            result_size;
   gpointer          picture_buffer;
 
   GimpImage        *image;
   GimpLayer        *layer;
   GeglBuffer       *buffer;
+  GimpPrecision     precision_linear;
+  GimpPrecision     precision_non_linear;
 
   if (!inputFile)
     {
@@ -374,7 +377,28 @@ load_image (GFile        *file,
 
   pixel_format.endianness = JXL_NATIVE_ENDIAN;
   pixel_format.align = 0;
-  pixel_format.data_type = JXL_TYPE_FLOAT;
+
+  if (basicinfo.bits_per_sample <= 8)
+    {
+      pixel_format.data_type = JXL_TYPE_UINT8;
+      channel_depth = 1;
+      precision_linear = GIMP_PRECISION_U8_LINEAR;
+      precision_non_linear = GIMP_PRECISION_U8_NON_LINEAR;
+    }
+  else if (basicinfo.bits_per_sample > 16)
+    {
+      pixel_format.data_type = JXL_TYPE_FLOAT;
+      channel_depth = 4;
+      precision_linear = GIMP_PRECISION_FLOAT_LINEAR;
+      precision_non_linear = GIMP_PRECISION_FLOAT_NON_LINEAR;
+    }
+  else
+    {
+      pixel_format.data_type = JXL_TYPE_UINT16;
+      channel_depth = 2;
+      precision_linear = GIMP_PRECISION_U16_LINEAR;
+      precision_non_linear = GIMP_PRECISION_U16_NON_LINEAR;
+    }
 
   if (basicinfo.num_color_channels == 1) /* grayscale */
     {
@@ -400,7 +424,7 @@ load_image (GFile        *file,
         }
     }
 
-  result_size = 4 * pixel_format.num_channels * (size_t) basicinfo.xsize * (size_t) basicinfo.ysize;
+  result_size = channel_depth * pixel_format.num_channels * (size_t) basicinfo.xsize * (size_t) basicinfo.ysize;
 
   if (JxlDecoderGetColorAsEncodedProfile (decoder, &pixel_format,
                                           JXL_COLOR_PROFILE_TARGET_DATA,
@@ -551,7 +575,7 @@ load_image (GFile        *file,
   if (basicinfo.num_color_channels == 1) /* grayscale */
     {
       image = gimp_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, GIMP_GRAY,
-                                             loadlinear ? GIMP_PRECISION_FLOAT_LINEAR : GIMP_PRECISION_FLOAT_NON_LINEAR);
+                                             loadlinear ? precision_linear : precision_non_linear);
 
       if (profile)
         {
@@ -569,7 +593,7 @@ load_image (GFile        *file,
   else /* RGB */
     {
       image = gimp_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, GIMP_RGB,
-                                             loadlinear ? GIMP_PRECISION_FLOAT_LINEAR : GIMP_PRECISION_FLOAT_NON_LINEAR);
+                                             loadlinear ? precision_linear : precision_non_linear);
 
       if (profile)
         {
@@ -723,7 +747,7 @@ save_image (GFile                *file,
   drawable_width  = gimp_drawable_get_width (drawable);
   drawable_height = gimp_drawable_get_height (drawable);
 
-  memset (&output_info, 0, sizeof output_info);
+  JxlEncoderInitBasicInfo(&output_info);
 
   if (uses_original_profile)
     {
