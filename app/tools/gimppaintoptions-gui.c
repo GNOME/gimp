@@ -214,14 +214,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       g_object_unref (link_group);
 
-      button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options),
-                                           _("Dynamics"), 2,
-                                           "dynamics-view-type",
-                                           "dynamics-view-size",
-                                           "gimp-dynamics-editor",
-                                           _("Edit this dynamics"));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-
       frame = dynamics_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
@@ -304,16 +296,24 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   GtkWidget *menu;
   GtkWidget *combo;
   GtkWidget *checkbox;
+  GtkWidget *button;
   GtkWidget *vbox;
   GtkWidget *inner_vbox;
   GtkWidget *hbox;
   GtkWidget *box;
 
-  frame = gimp_prop_expander_new (config, "dynamics-expanded", NULL);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  frame = gimp_prop_expanding_frame_new (config, "dynamics-enabled",
+                                         NULL, vbox, NULL);
+  button = gimp_prop_dynamics_box_new (NULL,
+                                       GIMP_CONTEXT (config),
+                                       _("Dynamics"), 2,
+                                       "dynamics-view-type",
+                                       "dynamics-view-size",
+                                       "gimp-dynamics-editor",
+                                       _("Edit this dynamics"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   inner_frame = gimp_frame_new (_("Fade Options"));
   gtk_box_pack_start (GTK_BOX (vbox), inner_frame, FALSE, FALSE, 0);

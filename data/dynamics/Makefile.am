@@ -9,7 +9,6 @@ dynamicsdatadir = $(gimpdatadir)/dynamics
 dynamicsdata_DATA = \
 	Basic-Dynamics.gdyn		\
 	Color-From-Gradient.gdyn \
-	Dynamics-Off.gdyn		\
 	Fade-Tapering.gdyn		\
 	Random-Color.gdyn		\
 	Tilt-Angle.gdyn			\

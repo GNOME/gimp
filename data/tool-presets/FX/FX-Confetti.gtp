@@ -13,7 +13,7 @@
     (brush-aspect-ratio 0.100000)
     (use-jitter yes)
     (jitter-amount 5.000000)
-    (dynamics-expanded yes)
+    (dynamics-enabled yes)
     (fade-length 140.000000)
     (fade-unit percent))
 (use-fg-bg no)

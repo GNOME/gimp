@@ -763,7 +763,8 @@ user_update_gimpressionist (const GMatchInfo *matched_value,
   "GimpImageMapOptions"  "|" \
   "GimpBlendOptions"     "|" \
   "gimp-blend-tool"      "|" \
-  "gimp-tool-blend"
+  "gimp-tool-blend"      "|" \
+  "dynamics \"Dynamics Off\""
 
 static gboolean
 user_update_tool_presets (const GMatchInfo *matched_value,
@@ -788,6 +789,10 @@ user_update_tool_presets (const GMatchInfo *matched_value,
     {
       g_string_append (new_value, "gimp-tool-gradient");
     }
+  else if (g_strcmp0 (match, "dynamics \"Dynamics Off\"") == 0)
+    {
+      g_string_append (new_value, "dynamics-enabled no");
+    }
   else
     {
       g_message ("(WARNING) %s: invalid match \"%s\"", G_STRFUNC, match);
@@ -802,7 +807,9 @@ user_update_tool_presets (const GMatchInfo *matched_value,
  * gimp-blend-tool may appear. Apparently that is also "devicerc", as
  * well as "toolrc" (but this one is skipped anyway).
  */
-#define CONTEXTRC_UPDATE_PATTERN "gimp-blend-tool"
+#define CONTEXTRC_UPDATE_PATTERN \
+  "gimp-blend-tool" "|" \
+  "dynamics \"Dynamics Off\""
 
 static gboolean
 user_update_contextrc_over20 (const GMatchInfo *matched_value,
@@ -814,6 +821,10 @@ user_update_contextrc_over20 (const GMatchInfo *matched_value,
   if (g_strcmp0 (match, "gimp-blend-tool") == 0)
     {
       g_string_append (new_value, "gimp-gradient-tool");
+    }
+  if (g_strcmp0 (match, "dynamics \"Dynamics Off\"") == 0)
+    {
+      g_string_append (new_value, "dynamics-enabled no");
     }
   else
     {

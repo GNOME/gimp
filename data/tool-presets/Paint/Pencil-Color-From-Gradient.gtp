@@ -10,7 +10,7 @@
     (gradient "Default")
     (palette "Default")
     (brush-size 500.000000)
-    (dynamics-expanded yes)
+    (dynamics-enabled yes)
     (fade-repeat triangular))
 (use-fg-bg no)
 (use-brush no)

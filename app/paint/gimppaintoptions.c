@@ -62,7 +62,7 @@
 #define DEFAULT_USE_JITTER              FALSE
 #define DEFAULT_JITTER_AMOUNT           0.2
 
-#define DEFAULT_DYNAMICS_EXPANDED       FALSE
+#define DEFAULT_DYNAMICS_ENABLED        TRUE
 
 #define DEFAULT_FADE_LENGTH             100.0
 #define DEFAULT_FADE_REVERSE            FALSE
@@ -108,7 +108,7 @@ enum
   PROP_USE_JITTER,
   PROP_JITTER_AMOUNT,
 
-  PROP_DYNAMICS_EXPANDED,
+  PROP_DYNAMICS_ENABLED,
 
   PROP_FADE_LENGTH,
   PROP_FADE_REVERSE,
@@ -303,19 +303,20 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                             _("Scatter brush as you paint"),
                             DEFAULT_USE_JITTER,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DYNAMICS_ENABLED,
+                            "dynamics-enabled",
+                            _("Enable dynamics"),
+                            _("Apply dynamics curves to paint settings"),
+                            DEFAULT_DYNAMICS_ENABLED,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_JITTER_AMOUNT,
                            "jitter-amount",
                            _("Amount"),
                            _("Distance of scattering"),
                            0.0, 50.0, DEFAULT_JITTER_AMOUNT,
                            GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DYNAMICS_EXPANDED,
-                            "dynamics-expanded",
-                            _("Dynamics Options"),
-                            NULL,
-                            DEFAULT_DYNAMICS_EXPANDED,
-                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
                            "fade-length",
@@ -564,8 +565,8 @@ gimp_paint_options_set_property (GObject      *object,
       jitter_options->jitter_amount = g_value_get_double (value);
       break;
 
-    case PROP_DYNAMICS_EXPANDED:
-      options->dynamics_expanded = g_value_get_boolean (value);
+    case PROP_DYNAMICS_ENABLED:
+      options->dynamics_enabled = g_value_get_boolean (value);
       break;
 
     case PROP_FADE_LENGTH:
@@ -710,8 +711,8 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_double (value, jitter_options->jitter_amount);
       break;
 
-    case PROP_DYNAMICS_EXPANDED:
-      g_value_set_boolean (value, options->dynamics_expanded);
+    case PROP_DYNAMICS_ENABLED:
+      g_value_set_boolean (value, options->dynamics_enabled);
       break;
 
     case PROP_FADE_LENGTH:
@@ -983,6 +984,12 @@ gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
 }
 
 gboolean
+gimp_paint_options_get_dynamics_enabled (GimpPaintOptions *paint_options)
+{
+  return paint_options->dynamics_enabled;
+}
+
+gboolean
 gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
                                        GimpImage        *image,
                                        gdouble           grad_point,
@@ -1180,7 +1187,7 @@ static const gchar *brush_props[] =
 
 static const gchar *dynamics_props[] =
 {
-  "dynamics-expanded",
+  "dynamics-enabled",
   "fade-reverse",
   "fade-length",
   "fade-unit",

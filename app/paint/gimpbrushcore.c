@@ -365,7 +365,17 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   gimp_brush_core_set_brush (core, gimp_context_get_brush (context));
 
-  gimp_brush_core_set_dynamics (core, gimp_context_get_dynamics (context));
+  if (gimp_paint_options_get_dynamics_enabled (paint_options))
+    {
+      gimp_brush_core_set_dynamics (core, gimp_context_get_dynamics (context));
+    }
+  else
+    {
+      GimpDynamics *dynamics_off = GIMP_DYNAMICS (gimp_dynamics_new (context,
+                                                                     "Dynamics Off"));
+      gimp_brush_core_set_dynamics (core, dynamics_off);
+      g_object_unref (dynamics_off);
+    }
 
   if (! core->main_brush)
     {

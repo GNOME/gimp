@@ -8,7 +8,7 @@
     (paint-mode multiply)
     (gradient "FG to Transparent")
     (brush-size 250.000000)
-    (dynamics-expanded yes)
+    (dynamics-enabled yes)
     (fade-length 138.000000)
     (fade-unit percent)
     (gradient-reverse yes)

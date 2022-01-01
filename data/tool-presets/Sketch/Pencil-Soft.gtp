@@ -12,7 +12,7 @@
     (brush-size 200.000000)
     (application-mode incremental)
     (use-jitter yes)
-    (dynamics-expanded yes)
+    (dynamics-enabled yes)
     (fade-length 140.000000)
     (fade-unit percent))
 (use-fg-bg no)

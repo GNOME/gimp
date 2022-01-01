@@ -107,7 +107,7 @@ struct _GimpPaintOptions
 
   GimpJitterOptions        *jitter_options;
 
-  gboolean                  dynamics_expanded;
+  gboolean                  dynamics_enabled;
   GimpFadeOptions          *fade_options;
   GimpGradientPaintOptions *gradient_options;
   GimpSmoothingOptions     *smoothing_options;
@@ -172,5 +172,6 @@ void     gimp_paint_options_copy_props         (GimpPaintOptions    *src,
                                                 GimpPaintOptions    *dest,
                                                 GimpContextPropMask  prop_mask);
 
+gboolean gimp_paint_options_get_dynamics_enabled (GimpPaintOptions *paint_options);
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

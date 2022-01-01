@@ -6,7 +6,7 @@
     (tool "gimp-clone-tool")
     (foreground (color-rgb 0.318741 0.318741 0.318741))
     (brush "2. Hardness 050")
-    (dynamics "Dynamics Off")
+    (enable-dynamics no)
     (pattern "Paper")
     (brush-size 150.000000)
     (sample-merged yes))
