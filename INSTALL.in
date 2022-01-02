@@ -221,6 +221,7 @@ header files installed.
      GJS for Javascript plug-ins
      LuaJIT and LGI for Lua plug-ins
      dot for "Show Image Graph" (unstable branches)
+     xdg-desktop-portal implemented for your desktop for various D-Bus API (screenshot, color-picking…)
 
 
 
