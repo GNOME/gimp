@@ -39,7 +39,6 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-gobject-introspection-runtime \
     mingw-w64-$MSYS2_ARCH-graphviz \
     mingw-w64-$MSYS2_ARCH-gtk3 \
-    mingw-w64-$MSYS2_ARCH-gtk-doc \
     mingw-w64-$MSYS2_ARCH-headers-git \
     mingw-w64-$MSYS2_ARCH-highway \
     mingw-w64-$MSYS2_ARCH-iso-codes \
