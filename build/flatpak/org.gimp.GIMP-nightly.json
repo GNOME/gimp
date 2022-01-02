@@ -801,7 +801,7 @@
         {
             "name": "gimp",
             "config-opts": [
-                "-Dgi-docgen=false",
+                "-Dgi-docgen=disabled",
                 "-Dicc-directory=/run/host/usr/share/color/icc/",
                 "-Dbuild-id=org.gimp.GIMP.flatpak.nightly",
                 "-Dcheck-update=no"
