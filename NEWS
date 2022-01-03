@@ -102,6 +102,8 @@ Plug-ins:
       this, the colors won't bleed anymore.
   - JPEG XL:
     * Bit depth now selectable in JXL export.
+    * Import in 8-bit and 16-bit integer precision now possible (GIMP
+      used to import all JXL images as 32-bit float precision images).
   - Screenshot:
     * Remove KDE and GNOME screenshot portal in favor of Freedesktop
       portal. Security restrictions make them more and more unsuable on
@@ -117,6 +119,9 @@ Build:
   - Improved Coding Style document with commit message styling, git
     usage, comment styling, natural language text rules, localization
     and some section reorganization.
+  - GExiv2 dependency bumped to 0.12.2 (fixing bothersome warnings on
+    some unknown metadata domains).
+  - libjxl dependency bumped to 0.6.1.
 
 API:
 
@@ -129,6 +134,12 @@ API:
     press events), which might be prefered in some cases. Other than
     this, it uses exactly the same conditions as its GDK counterpart.
   - Removed: gimp_item_set_linked() and gimp_item_get_linked().
+
+Documentation:
+
+  - API documentation is now built with `gi-docgen` instead of
+    `gtk-doc`. The syntax for in-comment documentation is slightly
+    changed.
 
 Translations:
   - Updated Basque, British English, Catalan, Chinese (China), Hungarian,
