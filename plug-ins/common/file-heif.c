@@ -1366,25 +1366,71 @@ load_image (GFile              *file,
   return image;
 }
 
+static const gchar *
+heifplugin_fix_xmp_tag (const gchar *tag)
+{
+  gchar *substring;
+
+  /* Due to problems using /Iptc4xmpExt namespace (/iptcExt is used
+   * instead by Exiv2) we replace all occurrences with /iptcExt which
+   * is valid but less common. Not doing so would cause saving xmp
+   * metadata to fail. This has to be done after getting the values
+   * from the source metadata since that source uses the original
+   * tag names and would otherwise return NULL as value.
+   * /Iptc4xmpExt length = 12
+   * /iptcExt     length =  8
+   */
+
+  substring = strstr (tag, "/Iptc4xmpExt");
+  while (substring)
+    {
+      gint len_tag = strlen (tag);
+      gint len_end;
+
+      len_end = len_tag - (substring - tag) - 12;
+      strncpy (substring, "/iptcExt", 8);
+      substring += 8;
+      /* Using memmove: we have overlapping source and dest */
+      memmove (substring, substring+4, len_end);
+      substring[len_end] = '\0';
+      g_debug ("Fixed tag value: %s", tag);
+
+      /* Multiple occurrences are possible: e.g.:
+       * Xmp.iptcExt.ImageRegion[3]/Iptc4xmpExt:RegionBoundary/Iptc4xmpExt:rbVertices[1]/Iptc4xmpExt:rbX
+       */
+      substring = strstr (tag, "/Iptc4xmpExt");
+    }
+  return tag;
+}
+
 static void
 heifplugin_image_metadata_copy_tag (GExiv2Metadata *src,
                                     GExiv2Metadata *dest,
                                     const gchar    *tag)
 {
-  gchar **values = gexiv2_metadata_get_tag_multiple (src, tag);
+  gchar **values = gexiv2_metadata_try_get_tag_multiple (src, tag, NULL);
 
   if (values)
     {
-      gexiv2_metadata_set_tag_multiple (dest, tag, (const gchar **) values);
+      gchar *temp_tag;
+
+      /* Xmp always seems to return multiple values */
+      if (g_str_has_prefix (tag, "Xmp."))
+        temp_tag = (gchar *) heifplugin_fix_xmp_tag (g_strdup (tag));
+      else
+        temp_tag = g_strdup (tag);
+
+      gexiv2_metadata_try_set_tag_multiple (dest, temp_tag, (const gchar **) values, NULL);
+      g_free (temp_tag);
       g_strfreev (values);
     }
   else
     {
-      gchar *value = gexiv2_metadata_get_tag_string (src, tag);
+      gchar *value = gexiv2_metadata_try_get_tag_string (src, tag, NULL);
 
       if (value)
         {
-          gexiv2_metadata_set_tag_string (dest, tag, value);
+          gexiv2_metadata_try_set_tag_string (dest, tag, value, NULL);
           g_free (value);
         }
     }
@@ -1453,9 +1499,7 @@ save_image (GFile                        *file,
   const char               *parameter_value;
   struct heif_color_profile_nclx nclx_profile;
 #endif
-#if GEXIV2_CHECK_VERSION(0, 12, 2)
   gboolean                  save_exif = FALSE;
-#endif
   gboolean                  save_xmp = FALSE;
 
   if (!context)
@@ -1476,9 +1520,7 @@ save_image (GFile                        *file,
                 "encoder-speed",      &encoder_speed,
 #endif
                 "save-color-profile", &save_profile,
-#if GEXIV2_CHECK_VERSION(0, 12, 2)
                 "save-exif", &save_exif,
-#endif
                 "save-xmp", &save_xmp,
                 NULL);
 
@@ -1976,7 +2018,6 @@ save_image (GFile                        *file,
     }
 
   /*  EXIF metadata  */
-#if GEXIV2_CHECK_VERSION(0, 12, 2)
   if (save_exif && metadata)
     {
       if (gexiv2_metadata_get_supports_exif (GEXIV2_METADATA (metadata)) &&
@@ -2033,7 +2074,6 @@ save_image (GFile                        *file,
           g_object_unref (new_exif_metadata);
         }
     }
-#endif
 
   /*  XMP metadata  */
   if (save_xmp && metadata)
@@ -2073,35 +2113,40 @@ save_image (GFile                        *file,
 
           gimp_metadata_add_xmp_history (metadata, "");
 
-          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
-                                          "Xmp.GIMP.TimeStamp",
-                                          ts);
+          gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                              "Xmp.GIMP.TimeStamp",
+                                              ts,
+                                              NULL);
 
-          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
-                                          "Xmp.xmp.CreatorTool",
-                                          "GIMP");
+          gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                              "Xmp.xmp.CreatorTool",
+                                              "GIMP",
+                                              NULL);
 
-          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
-                                          "Xmp.GIMP.Version",
-                                          GIMP_VERSION);
+          gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                              "Xmp.GIMP.Version",
+                                              GIMP_VERSION,
+                                              NULL);
 
-          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
-                                          "Xmp.GIMP.API",
-                                          GIMP_API_VERSION);
-          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
-                                          "Xmp.GIMP.Platform",
+          gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                              "Xmp.GIMP.API",
+                                              GIMP_API_VERSION,
+                                              NULL);
+
+          gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                              "Xmp.GIMP.Platform",
 #if defined(_WIN32) || defined(__CYGWIN__) || defined(__MINGW32__)
-                                          "Windows"
+                                              "Windows",
 #elif defined(__linux__)
-                                          "Linux"
+                                              "Linux",
 #elif defined(__APPLE__) && defined(__MACH__)
-                                          "Mac OS"
+                                              "Mac OS",
 #elif defined(unix) || defined(__unix__) || defined(__unix)
-                                          "Unix"
+                                              "Unix",
 #else
-                                          "Unknown"
+                                              "Unknown",
 #endif
-                                         );
+                                              NULL);
 
 
           xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
@@ -2109,9 +2154,10 @@ save_image (GFile                        *file,
           /* Patch necessary structures */
           for (i = 0; i < (gint) G_N_ELEMENTS (structlist); i++)
             {
-              gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (new_g2metadata),
-                                                  structlist[i].tag,
-                                                  structlist[i].type);
+              gexiv2_metadata_try_set_xmp_tag_struct (GEXIV2_METADATA (new_g2metadata),
+                                                      structlist[i].tag,
+                                                      structlist[i].type,
+                                                      NULL);
             }
 
           for (i = 0; xmp_data[i] != NULL; i++)
@@ -2127,7 +2173,7 @@ save_image (GFile                        *file,
 
           g_strfreev (xmp_data);
 
-          xmp_packet = gexiv2_metadata_generate_xmp_packet (new_g2metadata, GEXIV2_USE_COMPACT_FORMAT | GEXIV2_OMIT_ALL_FORMATTING, 0);
+          xmp_packet = gexiv2_metadata_try_generate_xmp_packet (new_g2metadata, GEXIV2_USE_COMPACT_FORMAT | GEXIV2_OMIT_ALL_FORMATTING, 0, NULL);
           if (xmp_packet)
             {
               int xmp_size = strlen (xmp_packet);
@@ -2682,11 +2728,9 @@ save_dialog (GimpProcedure *procedure,
 #endif
 
   /* Save EXIF data */
-#if GEXIV2_CHECK_VERSION(0, 12, 2)
   button = gimp_prop_check_button_new (config, "save-exif",
                                        _("_Save Exif data"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-#endif
 
   /* XMP metadata */
   button = gimp_prop_check_button_new (config, "save-xmp",
