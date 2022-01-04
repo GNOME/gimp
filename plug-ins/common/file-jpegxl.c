@@ -378,19 +378,19 @@ load_image (GFile        *file,
   pixel_format.endianness = JXL_NATIVE_ENDIAN;
   pixel_format.align = 0;
 
-  if (basicinfo.bits_per_sample <= 8)
-    {
-      pixel_format.data_type = JXL_TYPE_UINT8;
-      channel_depth = 1;
-      precision_linear = GIMP_PRECISION_U8_LINEAR;
-      precision_non_linear = GIMP_PRECISION_U8_NON_LINEAR;
-    }
-  else if (basicinfo.bits_per_sample > 16)
+  if (basicinfo.uses_original_profile == JXL_FALSE || basicinfo.bits_per_sample > 16)
     {
       pixel_format.data_type = JXL_TYPE_FLOAT;
       channel_depth = 4;
       precision_linear = GIMP_PRECISION_FLOAT_LINEAR;
       precision_non_linear = GIMP_PRECISION_FLOAT_NON_LINEAR;
+    }
+  else if (basicinfo.bits_per_sample <= 8)
+    {
+      pixel_format.data_type = JXL_TYPE_UINT8;
+      channel_depth = 1;
+      precision_linear = GIMP_PRECISION_U8_LINEAR;
+      precision_non_linear = GIMP_PRECISION_U8_NON_LINEAR;
     }
   else
     {
