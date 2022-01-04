@@ -102,8 +102,9 @@ Plug-ins:
       this, the colors won't bleed anymore.
   - JPEG XL:
     * Bit depth now selectable in JXL export.
-    * Import in 8-bit and 16-bit integer precision now possible (GIMP
-      used to import all JXL images as 32-bit float precision images).
+    * Import in 8-bit and 16-bit integer precision now possible for
+      lossless images. (GIMP used to import all JXL images as 32-bit float
+      precision images).
   - Screenshot:
     * Remove KDE and GNOME screenshot portal in favor of Freedesktop
       portal. Security restrictions make them more and more unsuable on
