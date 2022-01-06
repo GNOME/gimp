@@ -391,7 +391,9 @@ if meson.is_cross_build() and not get_option('can-crosscompile-gir')
     'GI tools do not manage to properly generate introspection data',
     'while cross-compiling. Nevertheless we consider our introspected',
     'API as a core component of GIMP, thus you are expected to build',
-    'this data natively.'
+    'this data natively.',
+    'To forcefully build with GObject Introspection, set:',
+    '-Dcan-crosscompile-gir=true'
   ])
   warning(gobject_introspection_warning)
   warnings += gobject_introspection_warning

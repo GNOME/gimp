@@ -48,6 +48,14 @@ header files installed.
      GEGL must be built with Cairo support, i.e. -Dcairo=enabled option (required
      for some mandatory operations such as "gegl:npd").
 
+     Introspection must be enabled for both babl and GEGL with
+     -Denable-gir=true and -Dintrospection=true respectively. The only
+     case where we don't build GIR data is when cross-compiling on meson
+     because of the difficulty to make cross-tools for GObject
+     Introspection. Nevertheless if you have working GIR cross-tools,
+     you can force the expected behaviour with GIMP's meson option
+     -Dcan-crosscompile-gir=true
+
      Optional:
 
      - build GEGL with libumfpack (SuiteSparse) (`-Dumfpack=enabled`)
