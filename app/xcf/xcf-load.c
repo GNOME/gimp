@@ -2082,6 +2082,7 @@ xcf_load_layer (XcfInfo    *info,
   gboolean           edit_mask  = FALSE;
   gboolean           show_mask  = FALSE;
   GList             *selected;
+  GList             *linked;
   gboolean           floating;
   guint32            group_layer_flags = 0;
   guint32            text_layer_flags = 0;
@@ -2205,6 +2206,7 @@ xcf_load_layer (XcfInfo    *info,
 
   /* call the evil text layer hack that might change our layer pointer */
   selected = g_list_find (info->selected_layers, layer);
+  linked   = g_list_find (info->linked_layers, layer);
   floating = (info->floating_sel == layer);
 
   if (gimp_text_layer_xcf_load_hack (&layer))
@@ -2216,6 +2218,11 @@ xcf_load_layer (XcfInfo    *info,
         {
           info->selected_layers = g_list_delete_link (info->selected_layers, selected);
           info->selected_layers = g_list_prepend (info->selected_layers, layer);
+        }
+      if (linked)
+        {
+          info->linked_layers = g_list_delete_link (info->linked_layers, linked);
+          info->linked_layers = g_list_prepend (info->linked_layers, layer);
         }
       if (floating)
         info->floating_sel = layer;
