@@ -168,7 +168,7 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_DOUBLE (procedure, "compression",
                             _("Co_mpression/maxError"),
                             _("Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = visually lossless."),
-                            0, 15, 1,
+                            0.1, 15, 1,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "save-bit-depth",
@@ -180,7 +180,7 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_AUX_ARG_INT (procedure, "speed",
                              _("Effort/S_peed"),
                              _("Encoder effort setting"),
-                             3, 9,
+                             1, 9,
                              7,
                              G_PARAM_READWRITE);
 
@@ -1084,6 +1084,8 @@ save_dialog (GimpImage     *image,
 {
   GtkWidget    *dialog;
   GtkListStore *store;
+  GtkWidget    *compression_scale;
+  GtkWidget    *orig_profile_check;
   gboolean      run;
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
@@ -1093,16 +1095,24 @@ save_dialog (GimpImage     *image,
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                     "lossless", GTK_TYPE_CHECK_BUTTON);
 
-  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "compression", GIMP_TYPE_SCALE_ENTRY);
+  compression_scale = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                        "compression",
+                                                        GIMP_TYPE_SCALE_ENTRY);
 
-  store = gimp_int_store_new (_("falcon (faster)"),   3,
-                              _("cheetah"),           4,
-                              _("hare"),              5,
-                              _("wombat"),            6,
-                              _("squirrel"),          7,
-                              _("kitten"),            8,
-                              _("tortoise (slower)"), 9,
+  g_object_bind_property (config,            "lossless",
+                          compression_scale, "sensitive",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_INVERT_BOOLEAN);
+
+  store = gimp_int_store_new (_("lightning (fastest)"), 1,
+                              _("thunder"),             2,
+                              _("falcon (faster)"),     3,
+                              _("cheetah"),             4,
+                              _("hare"),                5,
+                              _("wombat"),              6,
+                              _("squirrel"),            7,
+                              _("kitten"),              8,
+                              _("tortoise (slower)"),   9,
                               NULL);
 
   gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
@@ -1117,8 +1127,14 @@ save_dialog (GimpImage     *image,
                                        "save-bit-depth", GIMP_INT_STORE (store));
   g_object_unref (store);
 
-  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "uses-original-profile", GTK_TYPE_CHECK_BUTTON);
+  orig_profile_check = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                         "uses-original-profile",
+                                                         GTK_TYPE_CHECK_BUTTON);
+
+  g_object_bind_property (config,             "lossless",
+                          orig_profile_check, "sensitive",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_INVERT_BOOLEAN);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "lossless", "compression",
