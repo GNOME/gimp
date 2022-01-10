@@ -33,7 +33,7 @@ add_bom ()
   file "$lang.isl" |grep "with BOM" 2>&1 > /dev/null
   has_bom="$?"
   if [ $has_bom -ne 0 ]; then
-    sed -i "1 i \\\xEF\xBB\xBF" "$lang.isl"
+    sed -i "1s/^/\xEF\xBB\xBF/" "$lang.isl"
   fi
 }
 
