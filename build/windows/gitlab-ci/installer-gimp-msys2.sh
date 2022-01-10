@@ -10,38 +10,52 @@ ISCCDIR=`cygpath -u "$ISCCDIR"`
 mkdir -p "${ISCCDIR}/Languages/Unofficial"
 cd "${ISCCDIR}/Languages/Unofficial"
 
-rm -f Basque.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Basque.isl
-rm -f ChineseSimplified.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/ChineseSimplified.isl
-rm -f ChineseTraditional.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/ChineseTraditional.isl
-rm -f EnglishBritish.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/EnglishBritish.isl
-rm -f Esperanto.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Esperanto.isl
-rm -f Greek.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Greek.isl
-rm -f Hungarian.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Hungarian.isl
-rm -f Indonesian.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Indonesian.isl
-rm -f Korean.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Korean.isl
-rm -f Latvian.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Latvian.isl
-rm -f Lithuanian.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Lithuanian.isl
-rm -f Malaysian.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Malaysian.isl
-rm -f Marathi.islu
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Marathi.islu
-rm -f Romanian.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Romanian.isl
-rm -f Swedish.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Swedish.isl
-rm -f Vietnamese.isl
-wget https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/Vietnamese.isl
+download_lang ()
+{
+  lang="$1"
+  rm -f "$lang.isl"
+  rm -f "$lang.islu"
+  wget "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/$lang.isl"
+  downloaded="$?"
+  if [ $downloaded -ne 0 ]; then
+    wget "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/$lang.islu"
+    downloaded="$?"
+    if [ $downloaded -ne 0 ]; then
+      echo "Download of '$lang.isl(u?)' failed."
+      exit 1
+    fi
+  fi
+}
+
+add_bom ()
+{
+  lang="$1"
+  file "$lang.isl" |grep "with BOM" 2>&1 > /dev/null
+  has_bom="$?"
+  if [ $has_bom -ne 0 ]; then
+    sed -i "1 i \\\xEF\xBB\xBF" "$lang.isl"
+  fi
+}
+
+
+download_lang Basque
+download_lang ChineseSimplified
+download_lang ChineseTraditional
+# Supposed to be UTF-8 yet missing BOM.
+add_bom ChineseTraditional
+download_lang EnglishBritish
+download_lang Esperanto
+download_lang Greek
+download_lang Hungarian
+download_lang Indonesian
+download_lang Korean
+download_lang Latvian
+download_lang Lithuanian
+download_lang Malaysian
+download_lang Marathi
+download_lang Romanian
+download_lang Swedish
+download_lang Vietnamese
 cd -
 
 # Copy generated language files into the source directory.
