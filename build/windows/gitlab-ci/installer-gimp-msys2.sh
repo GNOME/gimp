@@ -12,50 +12,45 @@ cd "${ISCCDIR}/Languages/Unofficial"
 
 download_lang ()
 {
-  lang="$1"
-  rm -f "$lang.isl"
-  rm -f "$lang.islu"
-  wget "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/$lang.isl"
+  langfile="$1"
+  rm -f "$langfile"
+  wget "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/$langfile"
   downloaded="$?"
   if [ $downloaded -ne 0 ]; then
-    wget "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/$lang.islu"
-    downloaded="$?"
-    if [ $downloaded -ne 0 ]; then
-      echo "Download of '$lang.isl(u?)' failed."
-      exit 1
-    fi
+    echo "Download of '$langfile' failed."
+    exit 1
   fi
 }
 
 add_bom ()
 {
-  lang="$1"
-  file "$lang.isl" |grep "with BOM" 2>&1 > /dev/null
+  langfile="$1"
+  file "$langfile" |grep "with BOM" 2>&1 > /dev/null
   has_bom="$?"
   if [ $has_bom -ne 0 ]; then
-    sed -i "1s/^/\xEF\xBB\xBF/" "$lang.isl"
+    sed -i "1s/^/\xEF\xBB\xBF/" "$langfile"
   fi
 }
 
 
-download_lang Basque
-download_lang ChineseSimplified
-download_lang ChineseTraditional
+download_lang Basque.isl
+download_lang ChineseSimplified.isl
+download_lang ChineseTraditional.isl
 # Supposed to be UTF-8 yet missing BOM.
-add_bom ChineseTraditional
-download_lang EnglishBritish
-download_lang Esperanto
-download_lang Greek
-download_lang Hungarian
-download_lang Indonesian
-download_lang Korean
-download_lang Latvian
-download_lang Lithuanian
-download_lang Malaysian
-download_lang Marathi
-download_lang Romanian
-download_lang Swedish
-download_lang Vietnamese
+add_bom ChineseTraditional.isl
+download_lang EnglishBritish.isl
+download_lang Esperanto.isl
+download_lang Greek.isl
+download_lang Hungarian.isl
+download_lang Indonesian.isl
+download_lang Korean.isl
+download_lang Latvian.isl
+download_lang Lithuanian.isl
+download_lang Malaysian.isl
+download_lang Marathi.islu
+download_lang Romanian.isl
+download_lang Swedish.isl
+download_lang Vietnamese.isl
 cd -
 
 # Copy generated language files into the source directory.

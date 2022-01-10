@@ -52,8 +52,8 @@ INSTALLER_LANGS=`grep -rI '^Name:.*MessagesFile.*Unofficial' ${GIMP_TESTING_ABS_
                  sed 's/^.*Unofficial\\\\\([a-zA-Z_.]*\),.*$/\1/' | sort`
 INSTALLER_LANGS=`echo "$INSTALLER_LANGS" | tr '\n\r' ' '`
 
-PULLED_UNOFFICIAL=`grep '^wget .*Unofficial/' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/gitlab-ci/installer-gimp-msys2.sh | \
-                   sed 's$^wget.*Unofficial/\([^.]*.isl.\?\)$\1$' | sort`
+PULLED_UNOFFICIAL=`grep '^download_lang [^(]' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/gitlab-ci/installer-gimp-msys2.sh | \
+                   sed 's$^download_lang \([^.]*.isl.\?\)$\1$' | sort`
 PULLED_UNOFFICIAL=`echo "$PULLED_UNOFFICIAL" | tr '\n\r' ' '`
 
 if [ "$INSTALLER_LANGS" = "$PULLED_UNOFFICIAL" ]; then
