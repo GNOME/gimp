@@ -53,7 +53,7 @@ typedef enum
   GIMP_CURSOR_MODE_TOOL_ICON,       /*< desc="Tool icon"                >*/
   GIMP_CURSOR_MODE_TOOL_CROSSHAIR,  /*< desc="Tool icon with crosshair" >*/
   GIMP_CURSOR_MODE_CROSSHAIR,       /*< desc="Crosshair only"           >*/
-  GIMP_CURSOR_MODE_SINGLE_DOT       /*< desc="Single Dot"               >*/
+  GIMP_CURSOR_MODE_SINGLE_DOT       /*< desc="Single dot"               >*/
 } GimpCursorMode;
 
 
