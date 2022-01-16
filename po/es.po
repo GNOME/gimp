@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-12-22 01:36+0000\n"
-"PO-Revision-Date: 2021-12-22 22:50+0100\n"
+"POT-Creation-Date: 2022-01-11 08:03+0000\n"
+"PO-Revision-Date: 2022-01-16 23:22+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -4758,7 +4758,7 @@ msgstr "Seleccionar todos los errores"
 #: ../app/actions/error-console-actions.c:56
 msgctxt "error-console-action"
 msgid "_Highlight"
-msgstr "_Resaltado"
+msgstr "_Resaltar"
 
 #: ../app/actions/error-console-actions.c:63
 msgctxt "error-console-action"
@@ -5743,7 +5743,7 @@ msgstr "_Sepia…"
 #: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr "_Sombras-Resaltados…"
+msgstr "_Luces-Sombras…"
 
 #: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
@@ -15492,12 +15492,12 @@ msgstr "Visite el sitio web de GIMP"
 #: ../app/dialogs/about-dialog.c:157
 msgid "translator-credits"
 msgstr ""
-"Daniel Mustieles <daniel.mustieles@gmail.com>, 2015\n"
-"Alonso Lara\n"
-"Francisco Javier F. Serrador\n"
-"Pablo G. del Campo\n"
-"Francisco Vila\n"
-"Rodrigo Lledó"
+"Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2021\n"
+"Rodrigo Lledó <rodhos-hp@ubuntu.com>, 2018-2022\n"
+"Alonso Lara 2005\n"
+"Francisco Javier F. Serrador 2003-2006\n"
+"Pablo G. del Campo 2003-2004\n"
+"Francisco Vila 2003-2013"
 
 #: ../app/dialogs/about-dialog.c:355
 msgid "Update available!"
@@ -21864,7 +21864,7 @@ msgstr "Sombras"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:80
 msgid "Highlights"
-msgstr "Resaltados"
+msgstr "Luces"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:98
 msgid "Common"
@@ -22566,7 +22566,7 @@ msgstr "Tipo de convolución  (%s)"
 
 #: ../app/tools/gimpcropoptions.c:79 ../app/tools/gimprectangleselectoptions.c:79
 msgid "Highlight"
-msgstr "Resaltado"
+msgstr "Brillo"
 
 #: ../app/tools/gimpcropoptions.c:80 ../app/tools/gimprectangleselectoptions.c:80
 msgid "Dim everything outside selection"
