@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-03 22:47+0000\n"
-"PO-Revision-Date: 2022-01-04 15:08+0100\n"
+"POT-Creation-Date: 2022-01-11 09:59+0000\n"
+"PO-Revision-Date: 2022-01-16 23:25+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -5055,7 +5055,7 @@ msgstr "Seleccionar todos los errores"
 #: ../app/actions/error-console-actions.c:56
 msgctxt "error-console-action"
 msgid "_Highlight"
-msgstr "_Resaltado"
+msgstr "_Resaltar"
 
 #: ../app/actions/error-console-actions.c:63
 msgctxt "error-console-action"
@@ -6041,7 +6041,7 @@ msgstr "_Sepia…"
 #: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr "_Sombras-Resaltados…"
+msgstr "_Luces-Sombras…"
 
 #: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
@@ -16219,10 +16219,10 @@ msgid "translator-credits"
 msgstr ""
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2021\n"
 "Rodrigo Lledó <rodhos-hp@ubuntu.com>, 2018-2022\n"
-"Alonso Lara\n"
-"Francisco Javier F. Serrador\n"
-"Pablo G. del Campo\n"
-"Francisco Vila"
+"Alonso Lara 2005\n"
+"Francisco Javier F. Serrador 2003-2006\n"
+"Pablo G. del Campo 2003-2004\n"
+"Francisco Vila 2003-2013"
 
 #: ../app/dialogs/about-dialog.c:340
 msgid "Update available!"
@@ -21017,7 +21017,7 @@ msgstr "_Recuperar"
 
 #: ../app/gui/gui.c:354
 msgid "Eeek! It looks like GIMP recovered from a crash!"
-msgstr "Parece que GIMP se ha recuperado de un error grave."
+msgstr "¡Vaya! Parece que GIMP se ha recuperado de un bloqueo."
 
 #. TRANSLATORS: even if English singular form does
 #. * not use %d, you can use %d for translation in
@@ -22855,7 +22855,7 @@ msgstr "Sombras"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:78
 msgid "Highlights"
-msgstr "Resaltados"
+msgstr "Luces"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:94
 msgid "Common"
@@ -23618,7 +23618,7 @@ msgstr "Tipo de convolución  (%s)"
 #: ../app/tools/gimpcropoptions.c:80
 #: ../app/tools/gimprectangleselectoptions.c:80
 msgid "Highlight"
-msgstr "Resaltado"
+msgstr "Brillo"
 
 #: ../app/tools/gimpcropoptions.c:81
 #: ../app/tools/gimprectangleselectoptions.c:81
