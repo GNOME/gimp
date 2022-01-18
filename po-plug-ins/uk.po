@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-08 23:50+0000\n"
-"PO-Revision-Date: 2022-01-09 14:19+0200\n"
+"POT-Creation-Date: 2022-01-18 21:32+0000\n"
+"PO-Revision-Date: 2022-01-19 00:55+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -413,7 +413,7 @@ msgstr "_Вертикально"
 #.
 #: ../plug-ins/common/blinds.c:352 ../plug-ins/common/compose.c:1128
 #: ../plug-ins/common/decompose.c:665 ../plug-ins/common/file-cel.c:498
-#: ../plug-ins/common/file-cel.c:503 ../plug-ins/common/file-dicom.c:701
+#: ../plug-ins/common/file-cel.c:503 ../plug-ins/common/file-dicom.c:746
 #: ../plug-ins/common/file-gegl.c:468 ../plug-ins/common/file-gif-load.c:1036
 #: ../plug-ins/common/file-jp2-load.c:1312 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
@@ -975,7 +975,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "Збереження параметрів CML Explorer"
 
 #: ../plug-ins/common/cml-explorer.c:2166 ../plug-ins/common/curve-bend.c:836
-#: ../plug-ins/common/file-dicom.c:1503 ../plug-ins/common/file-mng.c:873
+#: ../plug-ins/common/file-dicom.c:1557 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1503
 #: ../plug-ins/common/file-raw-data.c:1117
@@ -1005,7 +1005,7 @@ msgstr "Завантажити параметри CML Explorer"
 
 #: ../plug-ins/common/cml-explorer.c:2339 ../plug-ins/common/curve-bend.c:889
 #: ../plug-ins/common/file-cel.c:352 ../plug-ins/common/file-cel.c:403
-#: ../plug-ins/common/file-cel.c:643 ../plug-ins/common/file-dicom.c:376
+#: ../plug-ins/common/file-cel.c:643 ../plug-ins/common/file-dicom.c:377
 #: ../plug-ins/common/file-gif-load.c:403 ../plug-ins/common/file-mng.c:1404
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:666
 #: ../plug-ins/common/file-ps.c:1147 ../plug-ins/common/file-ps.c:3489
@@ -1937,7 +1937,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:394 ../plug-ins/common/file-dicom.c:368
+#: ../plug-ins/common/file-cel.c:394 ../plug-ins/common/file-dicom.c:369
 #: ../plug-ins/common/file-gegl.c:352 ../plug-ins/common/file-gif-load.c:395
 #: ../plug-ins/common/file-heif.c:847 ../plug-ins/common/file-jp2-load.c:1084
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
@@ -2124,34 +2124,40 @@ msgstr "Посилання .desktop"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Помилка при відкритті файлу desktop «%s»: %s"
 
-#: ../plug-ins/common/file-dicom.c:170
+#: ../plug-ins/common/file-dicom.c:171
 msgid "DICOM image"
 msgstr "Зображення DICOM"
 
-#: ../plug-ins/common/file-dicom.c:202
+#: ../plug-ins/common/file-dicom.c:203
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Зображення формату Digital Imaging and Communications in Medicine"
 
-#: ../plug-ins/common/file-dicom.c:300
+#: ../plug-ins/common/file-dicom.c:301
 #, c-format
 msgid "Dicom format does not support multiple layers."
 msgstr "Для формату Dicom не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-dicom.c:402
+#: ../plug-ins/common/file-dicom.c:403
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "«%s»: не DICOM файлом"
 
-#: ../plug-ins/common/file-dicom.c:575
+#: ../plug-ins/common/file-dicom.c:576
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "У GIMP не передбачено підтримки перехідного синтаксису %s."
 
-#: ../plug-ins/common/file-dicom.c:1468
+#: ../plug-ins/common/file-dicom.c:631
+#, c-format
+msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
+msgstr ""
+"Підтримки %s у GIMP не передбачено при поєднанні із кількістю фрагментів на піксель %d"
+
+#: ../plug-ins/common/file-dicom.c:1522
 msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
-#: ../plug-ins/common/file-dicom.c:1487 ../plug-ins/common/file-ps.c:1318
+#: ../plug-ins/common/file-dicom.c:1541 ../plug-ins/common/file-ps.c:1318
 #: ../plug-ins/common/file-xwd.c:670 ../plug-ins/file-fits/fits.c:499
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2890,14 +2896,12 @@ msgid "Store ICC profile to exported JXL file"
 msgstr "Зберегти профіль ICC у експортованому файлі JXL"
 
 #: ../plug-ins/common/file-jpegxl.c:1107
-#| msgid "Lighting Effects"
 msgid "lightning (fastest)"
 msgstr "блискавиця (найшвидше)"
 
 #: ../plug-ins/common/file-jpegxl.c:1108
 msgid "thunder"
-msgstr ""
-"грім"
+msgstr "грім"
 
 #: ../plug-ins/common/file-jpegxl.c:1109
 msgid "falcon (faster)"
@@ -4324,23 +4328,23 @@ msgstr "Не вдається прочитати розширення з «%s»"
 msgid "Cannot read header from '%s'"
 msgstr "Не вдається зчитати заголовок з «%s»"
 
-#: ../plug-ins/common/file-tga.c:1444
+#: ../plug-ins/common/file-tga.c:1447
 msgid "Export Image as TGA"
 msgstr "Експортувати зображення як TGA"
 
-#: ../plug-ins/common/file-tga.c:1454
+#: ../plug-ins/common/file-tga.c:1457
 msgid "_RLE compression"
 msgstr "_RLE стиснення"
 
-#: ../plug-ins/common/file-tga.c:1462
+#: ../plug-ins/common/file-tga.c:1465
 msgid "Or_igin:"
 msgstr "_Початок координат:"
 
-#: ../plug-ins/common/file-tga.c:1466
+#: ../plug-ins/common/file-tga.c:1469
 msgid "Bottom left"
 msgstr "Знизу ліворуч"
 
-#: ../plug-ins/common/file-tga.c:1467
+#: ../plug-ins/common/file-tga.c:1470
 msgid "Top left"
 msgstr "Згори ліворуч"
 
