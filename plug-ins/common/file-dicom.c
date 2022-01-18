@@ -58,6 +58,7 @@ typedef struct _DicomInfo
   gint       high_bit;
   gboolean   is_signed;
   gboolean   planar;
+  gboolean   bw_inverted;
 } DicomInfo;
 
 /* Local function prototypes */
@@ -552,6 +553,8 @@ load_image (const gchar  *filename,
         }
       else if (group_word == 0x0028)
         {
+          gboolean supported = TRUE;
+
           switch (element_word)
             {
             case 0x0002:  /* samples per pixel */
@@ -559,7 +562,49 @@ load_image (const gchar  *filename,
               g_debug ("spp: %d", samples_per_pixel);
               break;
             case 0x0004:  /* photometric interpretation */
-              g_debug ("photometric interpretation: %s", (char*) value);
+              g_debug ("photometric interpretation: %s", (gchar *) value);
+
+              if (samples_per_pixel == 1)
+                {
+                  if (strncmp ((gchar *) value, "MONOCHROME1", 11) == 0)
+                    {
+                      /* The minimum sample value is intended to be displayed
+                       * as white after any VOI gray scale transformations
+                       * have been performed. */
+                      dicominfo->bw_inverted = TRUE;
+                    }
+                  else if (strncmp ((gchar *) value, "MONOCHROME2", 11) == 0)
+                    {
+                      /* The minimum sample value is intended to be displayed
+                       * as black after any VOI gray scale transformations
+                       * have been performed. */
+                      dicominfo->bw_inverted = FALSE;
+                    }
+                  else
+                    supported = FALSE;
+                }
+              else if (samples_per_pixel == 3)
+                {
+                  if (strncmp ((gchar *) value, "RGB", 2) != 0)
+                    {
+                      supported = FALSE;
+                    }
+                }
+              else
+                {
+                  supported = FALSE;
+                }
+              if (! supported)
+                {
+                  g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                               _("%s is not supported by GIMP in combination "
+                                 "with samples per pixel: %d"),
+                               (gchar *) value, samples_per_pixel);
+                  g_free (dicominfo);
+                  fclose (dicom);
+                  return NULL;
+                }
+
               break;
             case 0x0006:  /* planar configuration */
               g_debug ("planar configuration: %u", ctx_us);
@@ -727,7 +772,7 @@ dicom_loader (guint8     *pix_buffer,
        * (i.e., compensate for high_bit and bits_stored).
        */
       for (pix_idx = 0; pix_idx < width * height * samples_per_pixel; pix_idx++)
-        buf16[pix_idx] = g_htons (buf16[pix_idx]) >> shift;
+        buf16[pix_idx] = g_ntohs (GUINT16_SWAP_LE_BE  (buf16[pix_idx])) >> shift;
     }
 
   data = g_malloc (gimp_tile_height () * width * samples_per_pixel);
@@ -762,6 +807,11 @@ dicom_loader (guint8     *pix_buffer,
                    */
                   d[col_idx] = (guint8) (row_start[col_idx] >>
                                          (info->bits_stored - 8));
+                  if (info->bw_inverted)
+                    {
+                      d[col_idx] = ~d[col_idx];
+                    }
+
                   if (info->is_signed)
                     {
                       /* If the data is negative, make it 0. Otherwise,
@@ -791,6 +841,10 @@ dicom_loader (guint8     *pix_buffer,
                        * less than bpp.
                        */
                       d[col_idx] = row_start[col_idx] << (8 - info->bits_stored);
+                      if (info->bw_inverted)
+                        {
+                          d[col_idx] = ~d[col_idx];
+                        }
 
                       if (info->is_signed)
                         {
