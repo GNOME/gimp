@@ -1341,7 +1341,10 @@ save_image (const gchar  *filename,
       fputc (0, fp);
     }
 
-  pixels = g_new (guchar, width * out_bpp);
+  if (dtype == GIMP_INDEXEDA_IMAGE)
+    pixels = g_new (guchar, width * 2);
+  else
+    pixels = g_new (guchar, width * out_bpp);
   data   = g_new (guchar, width * out_bpp);
 
   for (row = 0; row < height; ++row)
