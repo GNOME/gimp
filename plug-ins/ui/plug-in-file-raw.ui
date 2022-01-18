@@ -42,7 +42,7 @@
     <child>
       <object class="GimpFrame" id="palette-type-frame">
         <property name="visible">True</property>
-        <property name="label" translatable="yes">RGB Save Type</property>
+        <property name="label" translatable="yes">Palette Type</property>
         <child>
           <object class="GtkVBox" id="palette-type-vbox">
             <property name="visible">True</property>
