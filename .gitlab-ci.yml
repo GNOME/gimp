@@ -661,6 +661,22 @@ cppcheck:
       - report
   needs: []
 
+clang-format:
+  only:
+    - merge_requests
+  stage: analysis
+  before_script:
+    - apt-get update
+    - apt-get install -y clang-format git
+  allow_failure: true
+  script:
+    - .gitlab/run_style_check_diff.sh
+  artifacts:
+    paths: ['fetch_upstream.log', 'fetch_origin.log']
+    when: on_failure
+    expire_in: 1 week
+  needs: []
+
 ## Ready-to-distribute ##
 
 win-installer-nightly:

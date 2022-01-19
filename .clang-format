@@ -1,0 +1,17 @@
+# For more information, see:
+#
+#   https://clang.llvm.org/docs/ClangFormat.html
+#   https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+#
+---
+
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+AlignArrayOfStructures: Left
+AlwaysBreakAfterReturnType: AllDefinitions
+UseTab: Never
+IndentWidth: 2
+SpaceBeforeParens: Always
+BreakBeforeBraces: GNU
+ColumnLimit: 80
