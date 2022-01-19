@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-18 21:35+0000\n"
-"PO-Revision-Date: 2022-01-19 00:53+0200\n"
+"POT-Creation-Date: 2022-01-18 23:19+0000\n"
+"PO-Revision-Date: 2022-01-19 13:10+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -2354,7 +2354,8 @@ msgstr "У GIMP не передбачено підтримки перехідн�
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr ""
-"Підтримки %s у GIMP не передбачено при поєднанні із кількістю фрагментів на піксель %d"
+"Підтримки %s у GIMP не передбачено при поєднанні із кількістю фрагментів на "
+"піксель %d"
 
 #: ../plug-ins/common/file-dicom.c:1489
 msgid "Cannot save images with alpha channel."
@@ -7121,7 +7122,7 @@ msgstr "З рухомою комою"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1238
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
 #: ../plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "За_вантажити початкові параметри"
@@ -9613,7 +9614,7 @@ msgid "Save color _values from transparent pixels"
 msgstr "Зберігати значення _кольору прозорих точок"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:8
 msgid "S_ave Defaults"
 msgstr "З_робити типовими"
 
@@ -9690,10 +9691,15 @@ msgid "_Planar (RRR,GGG,BBB)"
 msgstr "П_ланарний (RRR,GGG,BBB)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
+#| msgid "_Palette Type:"
+msgid "Palette Type"
+msgstr "Тип палітри"
+
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (звичайний)"
 
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (у стилі BMP)"
 
