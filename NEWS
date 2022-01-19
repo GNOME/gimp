@@ -8,6 +8,31 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.30 to GIMP 2.10.32
+=====================================================
+
+Plug-ins:
+
+  - TGA: improving indexed images with alpha channel support (both
+    import and export).
+  - DICOM: Fix endian conversion for photometric interpretation
+    "MONOCHROME1".
+  - file-raw: "RGB Save Type" confusing dialog label renamed to "Palette
+    Type" as on the main dev branch.
+  - screenshot: option to capture cursor in now available on Windows.
+
+Libgimp:
+
+  - New gimp_plug_in_error_quark() as a generic GQuark/GError domain for
+    plug-ins (backported from 2.99.6).
+
+Libgimpbase:
+
+  - Limit to 1000 ancestors when serializing data with a log of
+    `Xmp.photoshop.DocumentAncestors` tags (possibly because of a bugs
+    of software who created these).
+
+
 Overview of Changes from GIMP 2.10.28 to GIMP 2.10.30
 =====================================================
 
@@ -40,7 +65,8 @@ Plug-ins:
       as a whole.
   - Many robustness improvements and other fixes to the metadata
     plug-ins.
-  - AVIF: prefer AOM encoder for export.
+  - AVIF: prefer AOM encoder for export (rather than "rav1e", default of
+    libheif, yet with worse performance).
   - PSD:
     * Skip sanity check for mask of rendered layers as some layer mask
       have invalid dimensions in such cases. They will now be loaded
