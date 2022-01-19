@@ -601,7 +601,7 @@ load_image (const gchar  *filename,
                                  "with samples per pixel: %d"),
                                (gchar *) value, samples_per_pixel);
                   g_free (dicominfo);
-                  fclose (dicom);
+                  fclose (DICOM);
                   return NULL;
                 }
 
