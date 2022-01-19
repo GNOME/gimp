@@ -29,6 +29,10 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+#define GIMP_PLUG_IN_ERROR         (gimp_plug_in_error_quark ())
+
+
+GQuark   gimp_plug_in_error_quark  (void);
 
 gboolean gimp_plugin_icon_register (const gchar  *procedure_name,
                                     GimpIconType  icon_type,
