@@ -607,6 +607,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
   GimpDisplayShell *shell         = gimp_display_get_shell (display);
   GimpImage        *image         = gimp_display_get_image (display);
   GList            *drawables;
+  gchar            *status        = NULL;
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
@@ -620,8 +621,6 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
   if (gimp_draw_tool_is_active (draw_tool) &&
       draw_tool->display != display)
     gimp_draw_tool_stop (draw_tool);
-
-  gimp_tool_pop_status (tool, display);
 
   if (tool->display            &&
       tool->display != display &&
@@ -642,7 +641,6 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
        (g_list_length (drawables) > 1 && paint_tool->can_multi_paint)) &&
       proximity)
     {
-      gchar    *status;
       gboolean  constrain_mask = gimp_get_constrain_behavior_mask ();
 
       core->cur_coords = *coords;
@@ -703,8 +701,6 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
                                            NULL);
           paint_tool->draw_line = FALSE;
         }
-      gimp_tool_push_status (tool, display, "%s", status);
-      g_free (status);
 
       paint_tool->cursor_x = core->cur_coords.x;
       paint_tool->cursor_y = core->cur_coords.y;
@@ -715,6 +711,16 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
   else if (gimp_draw_tool_is_active (draw_tool))
     {
       gimp_draw_tool_stop (draw_tool);
+    }
+
+  if (status != NULL)
+    {
+      gimp_tool_push_status (tool, display, "%s", status);
+      g_free (status);
+    }
+  else
+    {
+      gimp_tool_pop_status (tool, display);
     }
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
