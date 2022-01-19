@@ -123,6 +123,22 @@ force-pushing when Gitlab is unable to merge.
 When you push directly (for contributors with push rights), you are also
 expected to never push a merge commit.
 
+### Multiple or single commits?
+
+When contributing merge requests or patch files, you should break your
+work into logical changes, not into review timelines.
+
+E.g. after a review, instead of pushing fixes as an additional commit,
+amend your commits to rewrite your local git history as though reviewed
+bugs never existed.
+
+On the other hand, we appreciate separate commits when they are logical
+units. For instance, you could have 1 commit adding a GUI feature, then
+1 commit adding a `libgimp` API to manipulate the new feature and 1
+commit for a plug-in to use this new API. It makes perfect sense to
+separate these 3 changes into their own commits and even help for review
+and later dig through development logs.
+
 ## C code
 ### Line width
 
@@ -550,7 +566,7 @@ Includes must be in the following order:
 
  0. `config.h` first;
  0. System and third-party headers;
- 0. GIMP library headers (libgimp* headers);
+ 0. GIMP library headers (`libgimp*` headers);
  0. GIMP core/app headers that it needs including its own;
 
 Sort alphabetically the includes within the blocks.
@@ -588,13 +604,21 @@ When declaring a structure type use newlines to separate logical sections:
   } Pages;
 ```
 
+When initializing a structure variable with constants, shortly enough
+that it can be done on a single line, then you should add a space after
+the opening curly brace and before the closing one, such as:
+
+```C
+  GimpRGB color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
+```
+
 ### Memory management
 
 To dynamically allocate data on the heap, use `g_new()`. To allocate memory for
 multiple small data structures, `g_slice_new()`.
 
 When possible, all public structure types should be returned fully initialized,
-either explicitly for each member or by using g_new0() or g_slice_new0().
+either explicitly for each member or by using `g_new0()` or `g_slice_new0()`.
 
 As a general programming rule, it is better to allocate and free data on the
 same level. It is much easier to review code because you know that when you
