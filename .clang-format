@@ -6,12 +6,33 @@
 ---
 
 AlignAfterOpenBracket: Align
+AlignArrayOfStructures: Left
 AlignConsecutiveAssignments: Consecutive
 AlignConsecutiveDeclarations: Consecutive
-AlignArrayOfStructures: Left
+AlignConsecutiveMacros: Consecutive
+AlignEscapedNewlines: Left
+
 AlwaysBreakAfterReturnType: AllDefinitions
-UseTab: Never
+BreakBeforeBraces: GNU
 IndentWidth: 2
 SpaceBeforeParens: Always
-BreakBeforeBraces: GNU
-ColumnLimit: 80
+PointerAlignment: Right
+UseTab: Never
+
+# Our column limit is more around 80 characters but we want to avoid
+# this rule to be over-agressive. So for clang-format, let's use a
+# higher limit. Then let's put some biggish penalties on breaking on
+# assignment, or parentheses, or other similar cases. Actually with such
+# limits, if clang-format really ends up re-formatting, there might be
+# something better to do code-wise (i.e. we might be in an akwardly
+# over-nested block case).
+ColumnLimit: 100
+PenaltyBreakAssignment: 40
+PenaltyBreakBeforeFirstCallParameter: 40
+# Uncomment this when we start using clang-format 14 in the CI.
+# PenaltyBreakOpenParenthesis: 40
+PenaltyExcessCharacter: 1
+# Strings are more often longer by usage, so let's give these slightly
+# more space to breath.
+PenaltyBreakString: 60
+PenaltyReturnTypeOnItsOwnLine: 50
