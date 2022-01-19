@@ -81,7 +81,8 @@ static ICONINFO        iconInfo;
 static MAGIMAGEHEADER  returnedSrcheader;
 static int             rectScreensCount = 0;
 
-static gint32    *image_id;
+static gint32         *image_id;
+static gboolean        capturePointer = FALSE;
 
 static void sendBMPToGimp                      (HBITMAP         hBMP,
                                                 HDC             hDC,
@@ -158,7 +159,8 @@ ScreenshotCapabilities
 screenshot_win32_get_capabilities (void)
 {
   return (SCREENSHOT_CAN_SHOOT_DECORATIONS |
-          SCREENSHOT_CAN_SHOOT_WINDOW);
+          SCREENSHOT_CAN_SHOOT_WINDOW      |
+          SCREENSHOT_CAN_SHOOT_POINTER);
 }
 
 GimpPDBStatusType
@@ -176,6 +178,7 @@ screenshot_win32_shoot (ScreenshotValues  *shootvals,
   image_id = image_ID;
 
   winsnapvals.delay = shootvals->screenshot_delay;
+  capturePointer = shootvals->show_cursor;
 
   if (shootvals->shoot_type == SHOOT_ROOT)
     {
@@ -461,6 +464,14 @@ primDoWindowCapture (HDC  hdcWindow,
       formatWindowsError (buffer, sizeof buffer);
       g_error ("Error copying bitmap: %s", buffer);
       return NULL;
+    }
+
+  /* Draw mouse pointer over screenshot if option was selected */
+  if (capturePointer)
+    {
+      CURSORINFO pointer = { sizeof (pointer) };
+      GetCursorInfo (&pointer);
+      DrawIcon (hdcCompat, pointer.ptScreenPos.x, pointer.ptScreenPos.y, GetCursor());
     }
 
   /* Restore the original object */
@@ -768,6 +779,7 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
   HWND            excludeWins[24];
   RECT            round4Rect;
   int             excludeWinsCount = 0;
+  int             magStyles;
 
   if (!LoadMagnificationLibrary ()) return FALSE;
 
@@ -788,9 +800,13 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
 
   SetLayeredWindowAttributes (hwndHost, (COLORREF)0, (BYTE)255, (DWORD)0x02);
 
+  magStyles = WS_CHILD;
+  if (capturePointer)
+    magStyles |= MS_SHOWMAGNIFIEDCURSOR;
+
   /* Create the mag child window inside the host window */
   hwndMag = CreateWindow (WC_MAGNIFIER, TEXT ("MagnifierWindow"),
-                          WS_CHILD /*| MS_SHOWMAGNIFIEDCURSOR*/  /*| WS_VISIBLE*/,
+                          magStyles,
                           0, 0, round4Rect.right - round4Rect.left, round4Rect.bottom - round4Rect.top,
                           hwndHost, NULL, GetModuleHandle (NULL), NULL);
 
