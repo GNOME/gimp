@@ -405,7 +405,7 @@ gimp_image_metadata_convert_tags_to_list (gchar **xmp_tags)
 
   for (i = 0; xmp_tags[i] != NULL; i++)
     {
-      g_debug ("Tag: %s, tag type: %s", xmp_tags[i], gexiv2_metadata_get_tag_type(xmp_tags[i]));
+      g_debug ("Tag: %s, tag type: %s", xmp_tags[i], gexiv2_metadata_try_get_tag_type (xmp_tags[i], NULL));
       list = g_list_prepend (list, xmp_tags[i]);
     }
   return list;
@@ -414,11 +414,20 @@ gimp_image_metadata_convert_tags_to_list (gchar **xmp_tags)
 static GExiv2StructureType
 gimp_image_metadata_get_xmp_struct_type (const gchar *tag)
 {
-  g_debug ("Struct type for tag: %s, type: %s", tag, gexiv2_metadata_get_tag_type (tag));
+  GError *error = NULL;
 
-  if (! g_strcmp0 (gexiv2_metadata_get_tag_type (tag), "XmpSeq"))
+  g_debug ("Struct type for tag: %s, type: %s", tag, gexiv2_metadata_try_get_tag_type (tag, NULL));
+
+  if (! g_strcmp0 (gexiv2_metadata_try_get_tag_type (tag, &error), "XmpSeq"))
     {
       return GEXIV2_STRUCTURE_XA_SEQ;
+    }
+
+  if (error)
+    {
+      g_printerr ("%s: failed to get type of tag '%s': %s\n",
+                  G_STRFUNC, tag, error->message);
+      g_clear_error (&error);
     }
 
   return GEXIV2_STRUCTURE_XA_BAG;
@@ -447,6 +456,8 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
       /* Check if there are at least two parts but don't catch xxx[2]/yyy[1]/zzz */
       if (tag_split && tag_split[1] && ! strstr (tag_split[0], "["))
         {
+          GError *error = NULL;
+
           if (! prev_one || strcmp (tag_split[0], prev_one) != 0)
             {
               GExiv2StructureType  type;
@@ -455,8 +466,14 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
               prev_one = g_strdup (tag_split[0]);
 
               type = gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_split[0]));
-              gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
-                                                  prev_one, type);
+              gexiv2_metadata_try_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
+                                                      prev_one, type, &error);
+              if (error)
+                {
+                  g_printerr ("%s: failed to set XMP struct '%s': %s\n",
+                              G_STRFUNC, prev_one, error->message);
+                  g_clear_error (&error);
+                }
             }
           if (tag_split[2] && (!prev_two || strcmp (tag_split[1], prev_two) != 0))
             {
@@ -468,8 +485,14 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
               second_struct = g_strdup_printf ("%s[1]%s", prev_one, gimp_fix_xmp_tag(prev_two));
 
               type = gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_split[1]));
-              gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
-                                                  second_struct, type);
+              gexiv2_metadata_try_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
+                                                      second_struct, type, &error);
+              if (error)
+                {
+                  g_printerr ("%s: failed to set XMP struct '%s': %s\n",
+                              G_STRFUNC, second_struct, error->message);
+                  g_clear_error (&error);
+                }
               g_free (second_struct);
             }
         }
