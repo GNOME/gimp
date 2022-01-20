@@ -345,7 +345,7 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
                               GExiv2Metadata *dest,
                               const gchar    *tag)
 {
-  gchar  **values = gexiv2_metadata_get_tag_multiple (src, tag);
+  gchar  **values = gexiv2_metadata_try_get_tag_multiple (src, tag, NULL);
   GError  *error  = NULL;
 
   if (values)
@@ -359,13 +359,22 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
         temp_tag = g_strdup (tag);
 
       g_debug ("Copy multi tag %s, first value: %s", temp_tag, values[0]);
-      gexiv2_metadata_set_tag_multiple (dest, temp_tag, (const gchar **) values);
+      gexiv2_metadata_try_set_tag_multiple (dest, temp_tag,
+                                            (const gchar **) values,
+                                            &error);
+      if (error)
+        {
+          g_warning ("%s: failed to set multiple metadata '%s': %s\n",
+                     G_STRFUNC, tag, error->message);
+          g_clear_error (&error);
+        }
+
       g_free (temp_tag);
       g_strfreev (values);
     }
   else
     {
-      gchar *value = gexiv2_metadata_get_tag_string (src, tag);
+      gchar *value = gexiv2_metadata_try_get_tag_string (src, tag, &error);
 
       if (value)
         {
@@ -378,6 +387,12 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
               g_clear_error (&error);
             }
           g_free (value);
+        }
+      else if (error)
+        {
+          g_warning ("%s: failed to get metadata '%s': %s\n",
+                     G_STRFUNC, tag, error->message);
+          g_clear_error (&error);
         }
     }
 }
