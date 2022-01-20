@@ -89,23 +89,40 @@ gimp_image_metadata_interpret_comment (gchar *comment)
    * Let's remove that part and return NULL if there
    * is nothing else left as comment. */
 
-  if (comment && g_str_has_prefix (comment, "charset=Ascii "))
+  if (comment)
     {
-      gchar *real_comment;
-
-      /* Skip "charset=Ascii " (length 14) to find the real comment */
-      real_comment = comment + 14;
-      if (real_comment[0] == '\0' ||
-          ! g_strcmp0 (real_comment, "binary comment"))
+      if (g_str_has_prefix (comment, "charset=Ascii "))
         {
+          gchar *real_comment;
+
+          /* Skip "charset=Ascii " (length 14) to find the real comment */
+          real_comment = g_strdup (comment + 14);
+          g_free (comment);
+          comment = real_comment;
+        }
+
+#warning TODO: remove second "binary comment" condition when Exiv2 minimum requirement >= 0.27.4
+
+      if (comment[0] == '\0' ||
+          /* TODO: this second test is ugly as hell and should be
+           * removed once our Exiv2 dependency is bumped to 0.27.4.
+           *
+           * Basically Exiv2 used to return "binary comment" for some
+           * comments, even just a comment filled of 0s (instead of
+           * returning the empty string). This has recently be reverted.
+           * For now, let's ignore such "comment", though this is weak
+           * too. What if the comment actually contained the "binary
+           * comment" text? (which would be weird anyway and possibly a
+           * result of the previously bugged implementation, so let's
+           * accept the weakness as we can't do anything to distinguish
+           * the 2 cases)
+           * See commit 9b510858 in Exiv2 repository.
+           */
+          ! g_strcmp0 (comment, "binary comment"))
+        {
+          /* Removing an empty comment.*/
           g_free (comment);
           return NULL;
-        }
-      else
-        {
-          real_comment = g_strdup (real_comment);
-          g_free (comment);
-          return real_comment;
         }
     }
 
@@ -137,15 +154,36 @@ gimp_image_metadata_load_finish (GimpImage             *image,
 
   if (flags & GIMP_METADATA_LOAD_COMMENT)
     {
-      gchar *comment;
+      gchar  *comment;
+      GError *error = NULL;
 
-      comment = gexiv2_metadata_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
-                                                            "Exif.Photo.UserComment");
-      comment = gimp_image_metadata_interpret_comment (comment);
+      comment = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
+                                                                "Exif.Photo.UserComment",
+                                                                &error);
+      if (error)
+        {
+          /* XXX. Should this be rather a user-facing error? */
+          g_printerr ("%s: unreadable '%s' metadata tag: %s\n",
+                      G_STRFUNC, "Exif.Photo.UserComment", error->message);
+          g_clear_error (&error);
+        }
+      else if (comment)
+        {
+          comment = gimp_image_metadata_interpret_comment (comment);
+        }
 
       if (! comment)
-        comment = gexiv2_metadata_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
-                                                              "Exif.Image.ImageDescription");
+        {
+          comment = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
+                                                                    "Exif.Image.ImageDescription",
+                                                                    &error);
+          if (error)
+            {
+              g_printerr ("%s: unreadable '%s' metadata tag: %s\n",
+                          G_STRFUNC, "Exif.Image.ImageDescription", error->message);
+              g_clear_error (&error);
+            }
+        }
 
       if (comment)
         {
