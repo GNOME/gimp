@@ -212,7 +212,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
 
   priv->src_format = gimp_color_profile_get_format (src_profile,
                                                     src_format,
-                                                    BABL_ICC_INTENT_RELATIVE_COLORIMETRIC,
+                                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                                     &error);
   if (! priv->src_format)
     {
